@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Lülita automaatse telefonikõne hoiatus sisse või välja",
       "autoCallFooterNote": "Kui uus tellimus jääb umbes 90 sekundiks vastu võtmata, teeme automaatse kõne teie restorani telefonile, et te ei jätaks ühtegi tellimust kahe silma vahele — isegi kui tahvelarvuti on järelevalveta.",
       "autoCallEnabledToast": "Automaatne telefonikõne hoiatus on sisse lülitatud.",
-      "autoCallDisabledToast": "Automaatne telefonikõne hoiatus on välja lülitatud."
+      "autoCallDisabledToast": "Automaatne telefonikõne hoiatus on välja lülitatud.",
+      "autoCallNumberLabel": "Helistame:",
+      "autoCallNumberFromStore": "sinu poe telefonile",
+      "autoCallNumberNone": "Telefoninumber on määramata — lisa see oma restorani profiili, et meil oleks kuhugi helistada.",
+      "autoCallAlertPhoneLabel": "Teavituste telefoninumber (valikuline)",
+      "autoCallAlertPhonePlaceholderFallback": "nt +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Jäta tühjaks, et helistada sinu poe telefonile. Määra teine number — nt sinu mobiil — et saada selle asemel sinna teavitusi vastamata tellimuste kohta.",
+      "autoCallAlertPhoneSave": "Salvesta",
+      "autoCallAlertPhoneSavedToast": "Teavituste number salvestatud.",
+      "autoCallNeedsSetupTitle": "Telefoniteavitused ei ole veel aktiivsed.",
+      "autoCallNeedsSetupBody": "Kõnesid ei saa teha enne, kui platvormi telefoniteenus on seadistatud. Seni ei helista selle sisselülitamine kellelegi."
     },
     "receiptRenderer": {
       "yourRestaurant": "Sinu restoran",

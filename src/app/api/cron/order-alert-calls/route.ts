@@ -43,13 +43,19 @@ export async function POST(req: NextRequest) {
       status: "pending",
       alertCallAt: null,
       notifiedAt: { not: null, lte: cutoff, gte: floor },
-      restaurant: { is: { autoCallOnNewOrder: true, phone: { not: null } } },
+      // Needs SOME number to call: the dedicated alertPhone OR the public phone.
+      restaurant: {
+        is: {
+          autoCallOnNewOrder: true,
+          OR: [{ phone: { not: null } }, { alertPhone: { not: null } }],
+        },
+      },
     },
     select: {
       id: true,
       orderNumber: true,
       type: true,
-      restaurant: { select: { name: true, phone: true, defaultLanguage: true } },
+      restaurant: { select: { name: true, phone: true, alertPhone: true, defaultLanguage: true } },
     },
     take: MAX_PER_RUN,
     orderBy: { notifiedAt: "asc" },
@@ -58,7 +64,8 @@ export async function POST(req: NextRequest) {
   let called = 0;
   const results: Array<{ orderId: string; placed: boolean; reason?: string }> = [];
   for (const o of candidates) {
-    const phone = o.restaurant.phone;
+    // Dedicated alert number wins; otherwise the public phone.
+    const phone = o.restaurant.alertPhone?.trim() || o.restaurant.phone;
     if (!phone) continue;
     // Stamp FIRST so a slow Twilio call or a retry never double-dials.
     await prisma.order.update({ where: { id: o.id }, data: { alertCallAt: new Date() } });

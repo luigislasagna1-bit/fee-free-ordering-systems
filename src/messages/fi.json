@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Ota automaattinen puhelinhälytys käyttöön tai pois käytöstä",
       "autoCallFooterNote": "Jos uusi tilaus jää hyväksymättä noin 90 sekunniksi, soitamme automaattisesti ravintolasi puhelimeen, jotta et koskaan jää paitsi tilauksesta — vaikka tabletti olisi ilman valvontaa.",
       "autoCallEnabledToast": "Automaattinen puhelinhälytys otettu käyttöön.",
-      "autoCallDisabledToast": "Automaattinen puhelinhälytys poistettu käytöstä."
+      "autoCallDisabledToast": "Automaattinen puhelinhälytys poistettu käytöstä.",
+      "autoCallNumberLabel": "Soitamme:",
+      "autoCallNumberFromStore": "myymäläsi puhelimeen",
+      "autoCallNumberNone": "Puhelinnumeroa ei ole asetettu — lisää sellainen ravintolaprofiiliisi, jotta meillä on minne soittaa.",
+      "autoCallAlertPhoneLabel": "Ilmoitusten puhelinnumero (valinnainen)",
+      "autoCallAlertPhonePlaceholderFallback": "esim. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Jätä tyhjäksi, niin soitamme myymäläsi puhelimeen. Aseta eri numero — esim. matkapuhelimesi — niin saat ilmoitukset menetetyistä tilauksista sinne sen sijaan.",
+      "autoCallAlertPhoneSave": "Tallenna",
+      "autoCallAlertPhoneSavedToast": "Ilmoitusnumero tallennettu.",
+      "autoCallNeedsSetupTitle": "Puhelinilmoitukset eivät ole vielä käytössä.",
+      "autoCallNeedsSetupBody": "Soittoja ei voida tehdä ennen kuin alustan puhelinpalvelu on määritetty. Siihen asti tämän käyttöön ottaminen ei soita kenellekään."
     },
     "receiptRenderer": {
       "yourRestaurant": "Ravintolasi",

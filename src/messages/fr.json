@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Activer ou désactiver l'alerte par appel téléphonique automatique",
       "autoCallFooterNote": "Si une nouvelle commande reste non acceptée pendant environ 90 secondes, nous passons un appel automatisé au téléphone de votre restaurant afin que vous ne manquiez jamais une commande, même si la tablette n'est pas surveillée.",
       "autoCallEnabledToast": "Alerte par appel téléphonique automatique activée.",
-      "autoCallDisabledToast": "Alerte par appel téléphonique automatique désactivée."
+      "autoCallDisabledToast": "Alerte par appel téléphonique automatique désactivée.",
+      "autoCallNumberLabel": "Nous appellerons :",
+      "autoCallNumberFromStore": "le téléphone de votre établissement",
+      "autoCallNumberNone": "Aucun numéro de téléphone défini — ajoutez-en un dans le profil de votre restaurant pour que nous sachions où appeler.",
+      "autoCallAlertPhoneLabel": "Numéro de téléphone d'alerte (facultatif)",
+      "autoCallAlertPhonePlaceholderFallback": "p. ex. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Laissez vide pour appeler le téléphone de votre établissement. Indiquez un autre numéro — p. ex. votre mobile — pour y recevoir les alertes de commandes manquées.",
+      "autoCallAlertPhoneSave": "Enregistrer",
+      "autoCallAlertPhoneSavedToast": "Numéro d'alerte enregistré.",
+      "autoCallNeedsSetupTitle": "Les alertes téléphoniques ne sont pas encore actives.",
+      "autoCallNeedsSetupBody": "Les appels ne peuvent pas être passés tant que le service téléphonique de la plateforme n'est pas configuré. D'ici là, activer cette option ne fera sonner personne."
     },
     "receiptRenderer": {
       "yourRestaurant": "Votre restaurant",

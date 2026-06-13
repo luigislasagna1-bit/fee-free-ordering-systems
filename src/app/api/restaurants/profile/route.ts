@@ -53,6 +53,7 @@ export async function PUT(req: NextRequest) {
     kitchenWorkflowMode,
     printNodeEnabled,
     autoCallOnNewOrder,
+    alertPhone,
     scheduledOrderInterval,
     requireCustomerEmail,
     requireCustomerPhone,
@@ -191,6 +192,12 @@ export async function PUT(req: NextRequest) {
   }
   if (printNodeEnabled !== undefined) updateData.printNodeEnabled = !!printNodeEnabled;
   if (autoCallOnNewOrder !== undefined) updateData.autoCallOnNewOrder = !!autoCallOnNewOrder;
+  // Optional alternate alert number; trim, cap length, and store null when blank
+  // so the cron falls back to the public phone.
+  if (alertPhone !== undefined) {
+    const v = typeof alertPhone === "string" ? alertPhone.trim().slice(0, 32) : "";
+    updateData.alertPhone = v || null;
+  }
   // Allow customers to place delivery orders to addresses OUTSIDE every active
   // delivery zone. Default false = block at checkout (restaurant opts in).
   // Reflected on the customer page (OrderingPageClient out-of-zone guard).

@@ -30,10 +30,19 @@ export function KitchenWorkflowToggle({
   initialMode,
   initialPrintNodeEnabled = false,
   initialAutoCall = false,
+  storePhone = null,
+  initialAlertPhone = null,
+  twilioVoiceConfigured = true,
 }: {
   initialMode: "simple" | "tracking";
   initialPrintNodeEnabled?: boolean;
   initialAutoCall?: boolean;
+  /** The restaurant's public phone — the default alert target. */
+  storePhone?: string | null;
+  /** Optional dedicated alert number (overrides storePhone when set). */
+  initialAlertPhone?: string | null;
+  /** Whether platform Twilio VOICE creds exist; false ⇒ calls can't be placed. */
+  twilioVoiceConfigured?: boolean;
 }) {
   const t = useTranslations("admin.kitchenWorkflowToggle");
   const [mode, setMode] = useState<"simple" | "tracking">(initialMode);
@@ -41,6 +50,31 @@ export function KitchenWorkflowToggle({
   const [savingPrintNode, setSavingPrintNode] = useState(false);
   const [autoCall, setAutoCall] = useState<boolean>(initialAutoCall);
   const [savingAutoCall, setSavingAutoCall] = useState(false);
+  const [alertPhone, setAlertPhone] = useState<string>(initialAlertPhone ?? "");
+  const [savedAlertPhone, setSavedAlertPhone] = useState<string>(initialAlertPhone ?? "");
+  const [savingAlertPhone, setSavingAlertPhone] = useState(false);
+  // The number the system will actually ring: dedicated alert number else store phone.
+  const effectiveAlertNumber = (alertPhone.trim() || storePhone || "").trim();
+
+  async function saveAlertPhone() {
+    const v = alertPhone.trim();
+    if (v === savedAlertPhone.trim()) return; // unchanged
+    setSavingAlertPhone(true);
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ alertPhone: v }),
+      });
+      if (!res.ok) throw new Error("Failed to save");
+      setSavedAlertPhone(v);
+      toast.success(t("autoCallAlertPhoneSavedToast"));
+    } catch {
+      toast.error(t("saveErrorToast"));
+    } finally {
+      setSavingAlertPhone(false);
+    }
+  }
   const [saving, setSaving] = useState(false);
   // Auto-expand when the choice is the non-default ("tracking") so an
   // existing customer who already picked tracking sees their setting
@@ -284,6 +318,68 @@ export function KitchenWorkflowToggle({
             />
           </button>
         </div>
+        {/* Not-configured warning: the toggle can read "On" but no call will be
+            placed until the platform Twilio voice account is set up. Surfaced so
+            owners aren't misled into thinking it's working. */}
+        {!twilioVoiceConfigured && (
+          <div className="border-t border-amber-200 px-5 py-3 bg-amber-50">
+            <p className="text-[11px] text-amber-800 leading-relaxed flex items-start gap-2">
+              <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-amber-500" />
+              <span>
+                <strong className="font-semibold">{t("autoCallNeedsSetupTitle")}</strong>{" "}
+                {t("autoCallNeedsSetupBody")}
+              </span>
+            </p>
+          </div>
+        )}
+
+        {/* Which number gets called + an optional override. Only shown when the
+            feature is ON, so it doesn't clutter the card when it's off. */}
+        {autoCall && (
+          <div className="border-t border-gray-100 px-5 py-3.5 bg-white space-y-2.5">
+            <div className="text-[11px] text-gray-700 flex items-center gap-2">
+              <PhoneCall className="w-3.5 h-3.5 flex-shrink-0 text-gray-400" />
+              {effectiveAlertNumber ? (
+                <span>
+                  {t("autoCallNumberLabel")}{" "}
+                  <strong className="font-semibold text-gray-900">{effectiveAlertNumber}</strong>
+                  {!alertPhone.trim() && (
+                    <span className="text-gray-400"> · {t("autoCallNumberFromStore")}</span>
+                  )}
+                </span>
+              ) : (
+                <span className="text-amber-700">{t("autoCallNumberNone")}</span>
+              )}
+            </div>
+            <div>
+              <label className="block text-[11px] font-semibold text-gray-600 mb-1">
+                {t("autoCallAlertPhoneLabel")}
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="tel"
+                  value={alertPhone}
+                  onChange={(e) => setAlertPhone(e.target.value)}
+                  onBlur={saveAlertPhone}
+                  placeholder={storePhone || t("autoCallAlertPhonePlaceholderFallback")}
+                  className="flex-1 max-w-xs border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-400"
+                />
+                {alertPhone.trim() !== savedAlertPhone.trim() && (
+                  <button
+                    type="button"
+                    onClick={saveAlertPhone}
+                    disabled={savingAlertPhone}
+                    className="text-xs font-semibold text-rose-600 hover:text-rose-700 disabled:opacity-50"
+                  >
+                    {t("autoCallAlertPhoneSave")}
+                  </button>
+                )}
+              </div>
+              <p className="text-[11px] text-gray-400 mt-1">{t("autoCallAlertPhoneHint")}</p>
+            </div>
+          </div>
+        )}
+
         <div className="border-t border-gray-100 px-5 py-3 bg-gray-50/50">
           <p className="text-[11px] text-gray-600 leading-relaxed flex items-start gap-2">
             <PhoneCall className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-gray-400" />

@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Otomatik telefon araması uyarısını aç/kapat",
       "autoCallFooterNote": "Yeni bir sipariş yaklaşık 90 saniye boyunca kabul edilmeden beklerse, hiçbir siparişi kaçırmamanız için restoran telefonunuza otomatik bir arama yaparız — tablet başında kimse olmasa bile.",
       "autoCallEnabledToast": "Otomatik telefon araması uyarısı etkinleştirildi.",
-      "autoCallDisabledToast": "Otomatik telefon araması uyarısı devre dışı bırakıldı."
+      "autoCallDisabledToast": "Otomatik telefon araması uyarısı devre dışı bırakıldı.",
+      "autoCallNumberLabel": "Arayacağımız numara:",
+      "autoCallNumberFromStore": "mağaza telefonunuz",
+      "autoCallNumberNone": "Telefon numarası ayarlanmadı — arayabileceğimiz bir yer olması için restoran profilinize bir numara ekleyin.",
+      "autoCallAlertPhoneLabel": "Uyarı telefon numarası (isteğe bağlı)",
+      "autoCallAlertPhonePlaceholderFallback": "örn. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Mağaza telefonunuzu aramak için boş bırakın. Kaçırılan sipariş uyarılarını başka bir yerden almak için farklı bir numara — örneğin cep telefonunuzu — ayarlayın.",
+      "autoCallAlertPhoneSave": "Kaydet",
+      "autoCallAlertPhoneSavedToast": "Uyarı numarası kaydedildi.",
+      "autoCallNeedsSetupTitle": "Telefon uyarıları henüz etkin değil.",
+      "autoCallNeedsSetupBody": "Platform telefon hizmeti kurulana kadar aramalar yapılamaz. O zamana kadar bunu açmak kimseyi aramaz."
     },
     "receiptRenderer": {
       "yourRestaurant": "Restoranınız",

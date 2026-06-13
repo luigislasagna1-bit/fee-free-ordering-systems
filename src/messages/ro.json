@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Comutați alerta prin apel telefonic automat",
       "autoCallFooterNote": "Dacă o comandă nouă rămâne neacceptată timp de aproximativ 90 de secunde, plasăm un apel automat către telefonul restaurantului dvs., astfel încât să nu pierdeți nicio comandă — chiar dacă tableta este nesupravegheată.",
       "autoCallEnabledToast": "Alerta prin apel telefonic automat a fost activată.",
-      "autoCallDisabledToast": "Alerta prin apel telefonic automat a fost dezactivată."
+      "autoCallDisabledToast": "Alerta prin apel telefonic automat a fost dezactivată.",
+      "autoCallNumberLabel": "Vom suna la:",
+      "autoCallNumberFromStore": "telefonul localului dvs.",
+      "autoCallNumberNone": "Nu este setat niciun număr de telefon — adăugați unul în profilul restaurantului, ca să avem unde să sunăm.",
+      "autoCallAlertPhoneLabel": "Număr de telefon pentru alerte (opțional)",
+      "autoCallAlertPhonePlaceholderFallback": "de ex. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Lăsați necompletat pentru a suna la telefonul localului. Setați un alt număr — de ex. mobilul dvs. — pentru a primi acolo alertele privind comenzile ratate.",
+      "autoCallAlertPhoneSave": "Salvați",
+      "autoCallAlertPhoneSavedToast": "Număr pentru alerte salvat.",
+      "autoCallNeedsSetupTitle": "Alertele telefonice nu sunt încă active.",
+      "autoCallNeedsSetupBody": "Apelurile nu pot fi efectuate până când serviciul de telefonie al platformei nu este configurat. Până atunci, activarea acestei opțiuni nu va suna pe nimeni."
     },
     "receiptRenderer": {
       "yourRestaurant": "Restaurantul tău",

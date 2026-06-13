@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Activa o desactiva l'alerta de trucada telefònica automàtica",
       "autoCallFooterNote": "Si una comanda nova queda sense acceptar durant uns 90 segons, fem una trucada automàtica al telèfon del restaurant perquè no perdeu mai cap comanda, fins i tot si la tauleta està desatesa.",
       "autoCallEnabledToast": "Alerta de trucada telefònica automàtica activada.",
-      "autoCallDisabledToast": "Alerta de trucada telefònica automàtica desactivada."
+      "autoCallDisabledToast": "Alerta de trucada telefònica automàtica desactivada.",
+      "autoCallNumberLabel": "Trucarem a:",
+      "autoCallNumberFromStore": "el telèfon del teu local",
+      "autoCallNumberNone": "No hi ha cap número de telèfon configurat — afegeix-ne un al perfil del teu restaurant perquè sapiguem on trucar.",
+      "autoCallAlertPhoneLabel": "Número de telèfon d'alerta (opcional)",
+      "autoCallAlertPhonePlaceholderFallback": "p. ex. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Deixa-ho en blanc per trucar al telèfon del teu local. Indica un número diferent — p. ex. el teu mòbil — per rebre-hi les alertes de comandes perdudes.",
+      "autoCallAlertPhoneSave": "Desa",
+      "autoCallAlertPhoneSavedToast": "Número d'alerta desat.",
+      "autoCallNeedsSetupTitle": "Les alertes per telèfon encara no estan actives.",
+      "autoCallNeedsSetupBody": "No es poden fer trucades fins que el servei telefònic de la plataforma estigui configurat. Fins llavors, activar aquesta opció no farà sonar el telèfon de ningú."
     },
     "receiptRenderer": {
       "yourRestaurant": "El vostre restaurant",

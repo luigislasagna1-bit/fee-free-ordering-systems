@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Automatischen Telefonanruf-Alarm umschalten",
       "autoCallFooterNote": "Wenn eine neue Bestellung etwa 90 Sekunden lang nicht angenommen wird, tätigen wir einen automatischen Anruf an Ihr Restauranttelefon, damit Sie keine Bestellung verpassen — selbst wenn das Tablet unbeaufsichtigt ist.",
       "autoCallEnabledToast": "Automatischer Telefonanruf-Alarm aktiviert.",
-      "autoCallDisabledToast": "Automatischer Telefonanruf-Alarm deaktiviert."
+      "autoCallDisabledToast": "Automatischer Telefonanruf-Alarm deaktiviert.",
+      "autoCallNumberLabel": "Wir rufen an:",
+      "autoCallNumberFromStore": "Ihre Geschäftsnummer",
+      "autoCallNumberNone": "Keine Telefonnummer hinterlegt — fügen Sie eine in Ihrem Restaurantprofil hinzu, damit wir wissen, wo wir anrufen sollen.",
+      "autoCallAlertPhoneLabel": "Telefonnummer für Benachrichtigungen (optional)",
+      "autoCallAlertPhonePlaceholderFallback": "z. B. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Leer lassen, um Ihre Geschäftsnummer anzurufen. Geben Sie eine andere Nummer an — z. B. Ihr Handy —, um Benachrichtigungen über verpasste Bestellungen dort zu erhalten.",
+      "autoCallAlertPhoneSave": "Speichern",
+      "autoCallAlertPhoneSavedToast": "Benachrichtigungsnummer gespeichert.",
+      "autoCallNeedsSetupTitle": "Telefonbenachrichtigungen sind noch nicht aktiv.",
+      "autoCallNeedsSetupBody": "Anrufe können erst getätigt werden, wenn der Telefondienst der Plattform eingerichtet ist. Bis dahin klingelt bei niemandem etwas, wenn Sie dies aktivieren."
     },
     "receiptRenderer": {
       "yourRestaurant": "Ihr Restaurant",

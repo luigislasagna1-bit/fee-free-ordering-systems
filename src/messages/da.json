@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Slå automatisk telefonopkald-besked til/fra",
       "autoCallFooterNote": "Hvis en ny ordre står uaccepteret i omkring 90 sekunder, foretager vi et automatisk opkald til din restaurants telefon, så du aldrig går glip af en ordre — selv hvis tabletten er uden opsyn.",
       "autoCallEnabledToast": "Automatisk telefonopkald-besked aktiveret.",
-      "autoCallDisabledToast": "Automatisk telefonopkald-besked deaktiveret."
+      "autoCallDisabledToast": "Automatisk telefonopkald-besked deaktiveret.",
+      "autoCallNumberLabel": "Vi ringer til:",
+      "autoCallNumberFromStore": "din butikstelefon",
+      "autoCallNumberNone": "Intet telefonnummer angivet — tilføj et i din restaurantprofil, så vi har et sted at ringe til.",
+      "autoCallAlertPhoneLabel": "Telefonnummer til underretning (valgfrit)",
+      "autoCallAlertPhonePlaceholderFallback": "f.eks. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Lad feltet stå tomt for at ringe til din butikstelefon. Angiv et andet nummer — f.eks. din mobil — for at modtage underretninger om mistede ordrer der i stedet.",
+      "autoCallAlertPhoneSave": "Gem",
+      "autoCallAlertPhoneSavedToast": "Underretningsnummer gemt.",
+      "autoCallNeedsSetupTitle": "Telefonunderretninger er ikke aktive endnu.",
+      "autoCallNeedsSetupBody": "Der kan ikke foretages opkald, før platformens telefontjeneste er sat op. Indtil da vil det ikke ringe til nogen at slå dette til."
     },
     "receiptRenderer": {
       "yourRestaurant": "Din restaurant",

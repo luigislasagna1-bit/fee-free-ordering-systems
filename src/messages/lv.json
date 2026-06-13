@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Pārslēgt automātiskā tālruņa zvana brīdinājumu",
       "autoCallFooterNote": "Ja jauns pasūtījums paliek nepieņemts aptuveni 90 sekundes, mēs veicam automātisku zvanu uz jūsu restorāna tālruni, lai jūs nekad nepalaistu garām pasūtījumu — pat ja planšete ir bez uzraudzības.",
       "autoCallEnabledToast": "Automātiskā tālruņa zvana brīdinājums ieslēgts.",
-      "autoCallDisabledToast": "Automātiskā tālruņa zvana brīdinājums izslēgts."
+      "autoCallDisabledToast": "Automātiskā tālruņa zvana brīdinājums izslēgts.",
+      "autoCallNumberLabel": "Mēs zvanīsim:",
+      "autoCallNumberFromStore": "uz jūsu veikala tālruni",
+      "autoCallNumberNone": "Tālruņa numurs nav norādīts — pievienojiet to savā restorāna profilā, lai mums būtu kur zvanīt.",
+      "autoCallAlertPhoneLabel": "Paziņojumu tālruņa numurs (neobligāts)",
+      "autoCallAlertPhonePlaceholderFallback": "piem., +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Atstājiet tukšu, lai zvanītu uz jūsu veikala tālruni. Norādiet citu numuru — piem., savu mobilo tālruni —, lai saņemtu paziņojumus par nokavētajiem pasūtījumiem tur.",
+      "autoCallAlertPhoneSave": "Saglabāt",
+      "autoCallAlertPhoneSavedToast": "Paziņojumu numurs saglabāts.",
+      "autoCallNeedsSetupTitle": "Tālruņa paziņojumi vēl nav aktīvi.",
+      "autoCallNeedsSetupBody": "Zvanus nevar veikt, kamēr nav iestatīts platformas tālruņa pakalpojums. Līdz tam šīs funkcijas ieslēgšana nevienam nezvanīs."
     },
     "receiptRenderer": {
       "yourRestaurant": "Jūsu restorāns",

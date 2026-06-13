@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Preklopi samodejno telefonsko opozorilo",
       "autoCallFooterNote": "Če novo naročilo ostane nesprejeto približno 90 sekund, samodejno pokličemo na telefon vaše restavracije, da ne zamudite nobenega naročila — tudi če tablica ni pod nadzorom.",
       "autoCallEnabledToast": "Samodejno telefonsko opozorilo je omogočeno.",
-      "autoCallDisabledToast": "Samodejno telefonsko opozorilo je onemogočeno."
+      "autoCallDisabledToast": "Samodejno telefonsko opozorilo je onemogočeno.",
+      "autoCallNumberLabel": "Poklicali bomo na:",
+      "autoCallNumberFromStore": "telefon vaše lokacije",
+      "autoCallNumberNone": "Telefonska številka ni nastavljena — dodajte jo v profilu restavracije, da bomo imeli kam poklicati.",
+      "autoCallAlertPhoneLabel": "Telefonska številka za obvestila (neobvezno)",
+      "autoCallAlertPhonePlaceholderFallback": "npr. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Pustite prazno, če želite klicati na telefon lokacije. Nastavite drugo številko — npr. svoj mobilni telefon — da boste obvestila o zamujenih naročilih prejemali tam.",
+      "autoCallAlertPhoneSave": "Shrani",
+      "autoCallAlertPhoneSavedToast": "Številka za obvestila shranjena.",
+      "autoCallNeedsSetupTitle": "Telefonska obvestila še niso aktivna.",
+      "autoCallNeedsSetupBody": "Klicev ni mogoče opraviti, dokler ni nastavljena telefonska storitev platforme. Do takrat vklop te možnosti ne bo nikogar poklical."
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaša restavracija",

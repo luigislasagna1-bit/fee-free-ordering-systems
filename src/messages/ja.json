@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "自動電話通知の切り替え",
       "autoCallFooterNote": "新しい注文が約90秒間承認されないままだと、お店の電話に自動で発信します。タブレットから目を離していても、注文を見逃すことはありません。",
       "autoCallEnabledToast": "自動電話通知を有効にしました。",
-      "autoCallDisabledToast": "自動電話通知を無効にしました。"
+      "autoCallDisabledToast": "自動電話通知を無効にしました。",
+      "autoCallNumberLabel": "発信先：",
+      "autoCallNumberFromStore": "店舗の電話番号",
+      "autoCallNumberNone": "電話番号が未設定です — 発信先を確保するため、レストランプロフィールに番号を追加してください。",
+      "autoCallAlertPhoneLabel": "通知用電話番号（任意）",
+      "autoCallAlertPhonePlaceholderFallback": "例：+1 555 123 4567",
+      "autoCallAlertPhoneHint": "空欄のままにすると店舗の電話番号に発信します。別の番号 — 例えば携帯電話 — を設定すると、未対応注文の通知をそちらで受け取れます。",
+      "autoCallAlertPhoneSave": "保存",
+      "autoCallAlertPhoneSavedToast": "通知用番号を保存しました。",
+      "autoCallNeedsSetupTitle": "電話通知はまだ有効になっていません。",
+      "autoCallNeedsSetupBody": "プラットフォームの電話サービスが設定されるまで発信できません。それまでは、これをオンにしても誰にも発信されません。"
     },
     "receiptRenderer": {
       "yourRestaurant": "レストラン名",

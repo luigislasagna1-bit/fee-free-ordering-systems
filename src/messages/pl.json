@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Przełącz alarm automatycznego połączenia telefonicznego",
       "autoCallFooterNote": "Jeśli nowe zamówienie pozostaje niezaakceptowane przez około 90 sekund, wykonujemy automatyczne połączenie na telefon Twojej restauracji, abyś nigdy nie przegapił zamówienia — nawet gdy tablet jest pozostawiony bez nadzoru.",
       "autoCallEnabledToast": "Alarm automatycznego połączenia telefonicznego włączony.",
-      "autoCallDisabledToast": "Alarm automatycznego połączenia telefonicznego wyłączony."
+      "autoCallDisabledToast": "Alarm automatycznego połączenia telefonicznego wyłączony.",
+      "autoCallNumberLabel": "Zadzwonimy na:",
+      "autoCallNumberFromStore": "telefon Twojego lokalu",
+      "autoCallNumberNone": "Nie ustawiono numeru telefonu — dodaj go w profilu restauracji, abyśmy mieli gdzie dzwonić.",
+      "autoCallAlertPhoneLabel": "Numer telefonu do powiadomień (opcjonalnie)",
+      "autoCallAlertPhonePlaceholderFallback": "np. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Pozostaw puste, aby dzwonić na telefon lokalu. Ustaw inny numer — np. swój telefon komórkowy — aby otrzymywać tam powiadomienia o nieodebranych zamówieniach.",
+      "autoCallAlertPhoneSave": "Zapisz",
+      "autoCallAlertPhoneSavedToast": "Numer do powiadomień zapisany.",
+      "autoCallNeedsSetupTitle": "Powiadomienia telefoniczne nie są jeszcze aktywne.",
+      "autoCallNeedsSetupBody": "Połączenia nie mogą być realizowane, dopóki nie zostanie skonfigurowana usługa telefoniczna platformy. Do tego czasu włączenie tej opcji nie spowoduje żadnego połączenia."
     },
     "receiptRenderer": {
       "yourRestaurant": "Twoja restauracja",

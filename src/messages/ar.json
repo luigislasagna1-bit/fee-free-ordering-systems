@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "تبديل تنبيه المكالمة الهاتفية التلقائية",
       "autoCallFooterNote": "إذا ظل طلب جديد دون قبول لمدة 90 ثانية تقريبًا، فإننا نجري مكالمة تلقائية بهاتف مطعمك حتى لا يفوتك أي طلب أبدًا — حتى لو كان الجهاز اللوحي دون مراقبة.",
       "autoCallEnabledToast": "تم تفعيل تنبيه المكالمة الهاتفية التلقائية.",
-      "autoCallDisabledToast": "تم تعطيل تنبيه المكالمة الهاتفية التلقائية."
+      "autoCallDisabledToast": "تم تعطيل تنبيه المكالمة الهاتفية التلقائية.",
+      "autoCallNumberLabel": "سنتصل بـ:",
+      "autoCallNumberFromStore": "هاتف متجرك",
+      "autoCallNumberNone": "لم يتم تعيين رقم هاتف — أضف رقمًا في ملف مطعمك حتى يكون لدينا مكان للاتصال به.",
+      "autoCallAlertPhoneLabel": "رقم هاتف التنبيه (اختياري)",
+      "autoCallAlertPhonePlaceholderFallback": "مثال: +1 555 123 4567",
+      "autoCallAlertPhoneHint": "اتركه فارغًا للاتصال بهاتف متجرك. عيّن رقمًا مختلفًا — مثل هاتفك المحمول — لتلقي تنبيهات الطلبات الفائتة هناك بدلاً من ذلك.",
+      "autoCallAlertPhoneSave": "حفظ",
+      "autoCallAlertPhoneSavedToast": "تم حفظ رقم التنبيه.",
+      "autoCallNeedsSetupTitle": "تنبيهات الهاتف ليست نشطة بعد.",
+      "autoCallNeedsSetupBody": "لا يمكن إجراء المكالمات حتى يتم إعداد خدمة الهاتف الخاصة بالمنصة. حتى ذلك الحين، لن يؤدي تفعيل هذا إلى الاتصال بأي شخص."
     },
     "receiptRenderer": {
       "yourRestaurant": "مطعمك",

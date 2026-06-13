@@ -1381,7 +1381,17 @@
       "autoCallToggleAriaLabel": "Toggle auto phone-call alert",
       "autoCallFooterNote": "If a new order sits unaccepted for about 90 seconds, we place an automated call to your restaurant phone so you never miss an order — even if the tablet is unattended.",
       "autoCallEnabledToast": "Auto phone-call alert enabled.",
-      "autoCallDisabledToast": "Auto phone-call alert disabled."
+      "autoCallDisabledToast": "Auto phone-call alert disabled.",
+      "autoCallNumberLabel": "We'll call:",
+      "autoCallNumberFromStore": "your store phone",
+      "autoCallNumberNone": "No phone number set — add one in your restaurant profile so we have somewhere to call.",
+      "autoCallAlertPhoneLabel": "Alert phone number (optional)",
+      "autoCallAlertPhonePlaceholderFallback": "e.g. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Leave blank to call your store phone. Set a different number — e.g. your mobile — to receive missed-order alerts there instead.",
+      "autoCallAlertPhoneSave": "Save",
+      "autoCallAlertPhoneSavedToast": "Alert number saved.",
+      "autoCallNeedsSetupTitle": "Phone alerts aren't active yet.",
+      "autoCallNeedsSetupBody": "Calls can't be placed until the platform phone service is set up. Until then, turning this on won't ring anyone."
     },
     "customers": {
       "title": "Customers",

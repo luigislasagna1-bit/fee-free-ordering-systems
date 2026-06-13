@@ -1337,7 +1337,17 @@
       "autoCallToggleAriaLabel": "स्वचालित फ़ोन-कॉल अलर्ट टॉगल करें",
       "autoCallFooterNote": "यदि कोई नया ऑर्डर लगभग 90 सेकंड तक अस्वीकृत रहता है, तो हम आपके रेस्तरां फ़ोन पर एक स्वचालित कॉल करते हैं ताकि आप कभी कोई ऑर्डर न चूकें — भले ही टैबलेट पर कोई न हो।",
       "autoCallEnabledToast": "स्वचालित फ़ोन-कॉल अलर्ट सक्षम किया गया।",
-      "autoCallDisabledToast": "स्वचालित फ़ोन-कॉल अलर्ट अक्षम किया गया।"
+      "autoCallDisabledToast": "स्वचालित फ़ोन-कॉल अलर्ट अक्षम किया गया।",
+      "autoCallNumberLabel": "हम कॉल करेंगे:",
+      "autoCallNumberFromStore": "आपका स्टोर फ़ोन",
+      "autoCallNumberNone": "कोई फ़ोन नंबर सेट नहीं है — अपने रेस्तरां प्रोफ़ाइल में एक नंबर जोड़ें ताकि हमारे पास कॉल करने के लिए कोई जगह हो।",
+      "autoCallAlertPhoneLabel": "अलर्ट फ़ोन नंबर (वैकल्पिक)",
+      "autoCallAlertPhonePlaceholderFallback": "उदा. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "अपने स्टोर फ़ोन पर कॉल करने के लिए खाली छोड़ दें। छूटे हुए ऑर्डर अलर्ट वहाँ प्राप्त करने के लिए एक अलग नंबर — उदा. अपना मोबाइल — सेट करें।",
+      "autoCallAlertPhoneSave": "सहेजें",
+      "autoCallAlertPhoneSavedToast": "अलर्ट नंबर सहेजा गया।",
+      "autoCallNeedsSetupTitle": "फ़ोन अलर्ट अभी सक्रिय नहीं हैं।",
+      "autoCallNeedsSetupBody": "प्लेटफ़ॉर्म फ़ोन सेवा सेट होने तक कॉल नहीं की जा सकतीं। तब तक, इसे चालू करने पर किसी को कॉल नहीं जाएगी।"
     },
     "customers": {
       "title": "ग्राहक",

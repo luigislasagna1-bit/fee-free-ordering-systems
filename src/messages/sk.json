@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Prepnúť upozornenie automatickým telefonátom",
       "autoCallFooterNote": "Ak nová objednávka zostane neprijatá približne 90 sekúnd, zavoláme automaticky na telefón vašej reštaurácie, aby vám neunikla žiadna objednávka — aj keď je tablet bez dozoru.",
       "autoCallEnabledToast": "Upozornenie automatickým telefonátom je zapnuté.",
-      "autoCallDisabledToast": "Upozornenie automatickým telefonátom je vypnuté."
+      "autoCallDisabledToast": "Upozornenie automatickým telefonátom je vypnuté.",
+      "autoCallNumberLabel": "Zavoláme na:",
+      "autoCallNumberFromStore": "telefón vašej prevádzky",
+      "autoCallNumberNone": "Nie je nastavené žiadne telefónne číslo — pridajte ho v profile reštaurácie, aby sme mali kam volať.",
+      "autoCallAlertPhoneLabel": "Telefónne číslo na upozornenia (nepovinné)",
+      "autoCallAlertPhonePlaceholderFallback": "napr. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Nechajte prázdne, ak chcete volať na telefón prevádzky. Nastavte iné číslo — napr. svoj mobil — a upozornenia na zmeškané objednávky budete dostávať tam.",
+      "autoCallAlertPhoneSave": "Uložiť",
+      "autoCallAlertPhoneSavedToast": "Číslo na upozornenia uložené.",
+      "autoCallNeedsSetupTitle": "Telefónne upozornenia zatiaľ nie sú aktívne.",
+      "autoCallNeedsSetupBody": "Hovory nie je možné uskutočniť, kým nie je nastavená telefónna služba platformy. Dovtedy zapnutie tejto možnosti nikomu nezazvoní."
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaša reštaurácia",

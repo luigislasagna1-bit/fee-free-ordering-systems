@@ -181,6 +181,9 @@ model Restaurant {
   /// restaurant's phone so an unattended tablet doesn't drop the order.
   /// Requires the platform Twilio voice creds + a restaurant phone number.
   autoCallOnNewOrder   Boolean @default(false)
+  /// Optional alternate number for the nearly-missed-order auto-call (e.g. the
+  /// owner's cell). Null/blank ⇒ fall back to the public `phone`.
+  alertPhone           String?
   // Stripe Connect (Layer C — restaurant collects payments from customers)
   stripeAccountId      String?
   stripeAccountStatus  String? @default("not_connected")

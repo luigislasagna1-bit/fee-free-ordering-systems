@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Bật/tắt cảnh báo gọi điện tự động",
       "autoCallFooterNote": "Nếu một đơn hàng mới chưa được chấp nhận trong khoảng 90 giây, chúng tôi sẽ thực hiện cuộc gọi tự động đến điện thoại nhà hàng của bạn để bạn không bao giờ bỏ lỡ đơn hàng — ngay cả khi không có ai bên cạnh máy tính bảng.",
       "autoCallEnabledToast": "Đã bật cảnh báo gọi điện tự động.",
-      "autoCallDisabledToast": "Đã tắt cảnh báo gọi điện tự động."
+      "autoCallDisabledToast": "Đã tắt cảnh báo gọi điện tự động.",
+      "autoCallNumberLabel": "Chúng tôi sẽ gọi:",
+      "autoCallNumberFromStore": "điện thoại cửa hàng của bạn",
+      "autoCallNumberNone": "Chưa có số điện thoại — hãy thêm một số vào hồ sơ nhà hàng để chúng tôi có nơi để gọi.",
+      "autoCallAlertPhoneLabel": "Số điện thoại cảnh báo (tùy chọn)",
+      "autoCallAlertPhonePlaceholderFallback": "ví dụ: +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Để trống để gọi điện thoại cửa hàng của bạn. Đặt một số khác — ví dụ điện thoại di động của bạn — để nhận cảnh báo đơn hàng bị bỏ lỡ tại đó.",
+      "autoCallAlertPhoneSave": "Lưu",
+      "autoCallAlertPhoneSavedToast": "Đã lưu số cảnh báo.",
+      "autoCallNeedsSetupTitle": "Cảnh báo qua điện thoại chưa được kích hoạt.",
+      "autoCallNeedsSetupBody": "Không thể thực hiện cuộc gọi cho đến khi dịch vụ điện thoại của nền tảng được thiết lập. Cho đến lúc đó, bật tính năng này sẽ không gọi cho ai."
     },
     "receiptRenderer": {
       "yourRestaurant": "Nhà hàng của bạn",

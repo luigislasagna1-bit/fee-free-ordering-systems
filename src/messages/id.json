@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Alihkan peringatan panggilan telepon otomatis",
       "autoCallFooterNote": "Jika pesanan baru belum diterima selama sekitar 90 detik, kami melakukan panggilan otomatis ke telepon restoran Anda agar Anda tidak pernah melewatkan pesanan — bahkan jika tablet tidak diawasi.",
       "autoCallEnabledToast": "Peringatan panggilan telepon otomatis diaktifkan.",
-      "autoCallDisabledToast": "Peringatan panggilan telepon otomatis dinonaktifkan."
+      "autoCallDisabledToast": "Peringatan panggilan telepon otomatis dinonaktifkan.",
+      "autoCallNumberLabel": "Kami akan menelepon:",
+      "autoCallNumberFromStore": "telepon toko Anda",
+      "autoCallNumberNone": "Belum ada nomor telepon — tambahkan satu di profil restoran Anda agar kami punya tujuan untuk menelepon.",
+      "autoCallAlertPhoneLabel": "Nomor telepon peringatan (opsional)",
+      "autoCallAlertPhonePlaceholderFallback": "mis. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Biarkan kosong untuk menelepon telepon toko Anda. Atur nomor berbeda — mis. ponsel Anda — untuk menerima peringatan pesanan terlewat di sana.",
+      "autoCallAlertPhoneSave": "Simpan",
+      "autoCallAlertPhoneSavedToast": "Nomor peringatan disimpan.",
+      "autoCallNeedsSetupTitle": "Peringatan telepon belum aktif.",
+      "autoCallNeedsSetupBody": "Panggilan tidak dapat dilakukan sampai layanan telepon platform disiapkan. Sampai saat itu, mengaktifkan ini tidak akan menelepon siapa pun."
     },
     "receiptRenderer": {
       "yourRestaurant": "Restoran Anda",

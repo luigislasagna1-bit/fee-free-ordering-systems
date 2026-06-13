@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Växla automatisk telefonavisering",
       "autoCallFooterNote": "Om en ny beställning förblir oaccepterad i cirka 90 sekunder ringer vi automatiskt din restaurangtelefon så att du aldrig missar en beställning – även om surfplattan är obevakad.",
       "autoCallEnabledToast": "Automatisk telefonavisering aktiverad.",
-      "autoCallDisabledToast": "Automatisk telefonavisering inaktiverad."
+      "autoCallDisabledToast": "Automatisk telefonavisering inaktiverad.",
+      "autoCallNumberLabel": "Vi ringer:",
+      "autoCallNumberFromStore": "din butikstelefon",
+      "autoCallNumberNone": "Inget telefonnummer angivet — lägg till ett i din restaurangprofil så vi har någonstans att ringa.",
+      "autoCallAlertPhoneLabel": "Telefonnummer för avisering (valfritt)",
+      "autoCallAlertPhonePlaceholderFallback": "t.ex. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Lämna tomt för att ringa din butikstelefon. Ange ett annat nummer — t.ex. din mobil — för att få aviseringar om missade beställningar där istället.",
+      "autoCallAlertPhoneSave": "Spara",
+      "autoCallAlertPhoneSavedToast": "Aviseringsnummer sparat.",
+      "autoCallNeedsSetupTitle": "Telefonaviseringar är inte aktiva ännu.",
+      "autoCallNeedsSetupBody": "Samtal kan inte ringas förrän plattformens telefontjänst är konfigurerad. Tills dess gör det ingen skillnad att slå på detta — ingen blir uppringd."
     },
     "receiptRenderer": {
       "yourRestaurant": "Din restaurang",

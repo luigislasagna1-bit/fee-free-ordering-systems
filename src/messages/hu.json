@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Automatikus telefonhívásos riasztás be- és kikapcsolása",
       "autoCallFooterNote": "Ha egy új rendelés körülbelül 90 másodpercig elfogadatlan marad, automatikus hívást indítunk az étterem telefonszámára, hogy soha ne maradjon le egyetlen rendelésről sem — még akkor sem, ha a táblagép felügyelet nélkül van.",
       "autoCallEnabledToast": "Automatikus telefonhívásos riasztás engedélyezve.",
-      "autoCallDisabledToast": "Automatikus telefonhívásos riasztás letiltva."
+      "autoCallDisabledToast": "Automatikus telefonhívásos riasztás letiltva.",
+      "autoCallNumberLabel": "Erre hívunk:",
+      "autoCallNumberFromStore": "az üzlet telefonszáma",
+      "autoCallNumberNone": "Nincs megadva telefonszám — adjon meg egyet az étterem profiljában, hogy legyen hová hívnunk.",
+      "autoCallAlertPhoneLabel": "Értesítési telefonszám (nem kötelező)",
+      "autoCallAlertPhonePlaceholderFallback": "pl. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Hagyja üresen, ha az üzlet telefonját szeretné hívni. Adjon meg másik számot — pl. a mobilját —, hogy ott kapja meg az elmaradt rendelésekről szóló értesítéseket.",
+      "autoCallAlertPhoneSave": "Mentés",
+      "autoCallAlertPhoneSavedToast": "Értesítési szám mentve.",
+      "autoCallNeedsSetupTitle": "A telefonos értesítések még nem aktívak.",
+      "autoCallNeedsSetupBody": "A hívásokat addig nem lehet kezdeményezni, amíg a platform telefonszolgáltatása nincs beállítva. Addig ennek bekapcsolása senkit sem hív fel."
     },
     "receiptRenderer": {
       "yourRestaurant": "Az Ön étterme",

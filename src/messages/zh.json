@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "切换自动电话提醒",
       "autoCallFooterNote": "如果新订单约 90 秒内仍未被接受，我们会自动致电您的餐厅电话，确保您绝不漏单 — 即使平板电脑无人看管。",
       "autoCallEnabledToast": "已启用自动电话提醒。",
-      "autoCallDisabledToast": "已停用自动电话提醒。"
+      "autoCallDisabledToast": "已停用自动电话提醒。",
+      "autoCallNumberLabel": "我们将致电：",
+      "autoCallNumberFromStore": "您的店铺电话",
+      "autoCallNumberNone": "尚未设置电话号码——请在您的餐厅资料中添加一个，以便我们有可拨打的号码。",
+      "autoCallAlertPhoneLabel": "提醒电话号码（可选）",
+      "autoCallAlertPhonePlaceholderFallback": "例如 +1 555 123 4567",
+      "autoCallAlertPhoneHint": "留空则拨打您的店铺电话。设置一个不同的号码——例如您的手机——以便在那里接收漏单提醒。",
+      "autoCallAlertPhoneSave": "保存",
+      "autoCallAlertPhoneSavedToast": "提醒号码已保存。",
+      "autoCallNeedsSetupTitle": "电话提醒尚未启用。",
+      "autoCallNeedsSetupBody": "在平台电话服务设置完成之前无法拨打电话。在此之前，开启此功能不会拨打任何号码。"
     },
     "receiptRenderer": {
       "yourRestaurant": "您的餐厅",

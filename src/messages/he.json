@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "החלפת מצב התראת שיחת טלפון אוטומטית",
       "autoCallFooterNote": "אם הזמנה חדשה נשארת לא מאושרת במשך כ-90 שניות, אנחנו מבצעים שיחה אוטומטית לטלפון של המסעדה כדי שלעולם לא תפספסו הזמנה — גם אם הטאבלט אינו מאויש.",
       "autoCallEnabledToast": "התראת שיחת טלפון אוטומטית הופעלה.",
-      "autoCallDisabledToast": "התראת שיחת טלפון אוטומטית כובתה."
+      "autoCallDisabledToast": "התראת שיחת טלפון אוטומטית כובתה.",
+      "autoCallNumberLabel": "נתקשר אל:",
+      "autoCallNumberFromStore": "טלפון החנות שלך",
+      "autoCallNumberNone": "לא הוגדר מספר טלפון — הוסף מספר בפרופיל המסעדה שלך כדי שיהיה לנו לאן להתקשר.",
+      "autoCallAlertPhoneLabel": "מספר טלפון להתראות (אופציונלי)",
+      "autoCallAlertPhonePlaceholderFallback": "לדוגמה: +1 555 123 4567",
+      "autoCallAlertPhoneHint": "השאר ריק כדי להתקשר לטלפון החנות שלך. הגדר מספר אחר — לדוגמה הנייד שלך — כדי לקבל שם התראות על הזמנות שהוחמצו.",
+      "autoCallAlertPhoneSave": "שמור",
+      "autoCallAlertPhoneSavedToast": "מספר ההתראות נשמר.",
+      "autoCallNeedsSetupTitle": "התראות טלפון עדיין לא פעילות.",
+      "autoCallNeedsSetupBody": "לא ניתן לבצע שיחות עד שירות הטלפון של הפלטפורמה יוגדר. עד אז, הפעלת אפשרות זו לא תתקשר לאף אחד."
     },
     "receiptRenderer": {
       "yourRestaurant": "המסעדה שלך",

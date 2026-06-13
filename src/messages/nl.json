@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Automatische telefoonoproep-melding in- of uitschakelen",
       "autoCallFooterNote": "Als een nieuwe bestelling ongeveer 90 seconden niet wordt geaccepteerd, plaatsen we een automatische oproep naar de telefoon van je restaurant, zodat je nooit een bestelling mist — zelfs als de tablet onbeheerd is.",
       "autoCallEnabledToast": "Automatische telefoonoproep-melding ingeschakeld.",
-      "autoCallDisabledToast": "Automatische telefoonoproep-melding uitgeschakeld."
+      "autoCallDisabledToast": "Automatische telefoonoproep-melding uitgeschakeld.",
+      "autoCallNumberLabel": "We bellen:",
+      "autoCallNumberFromStore": "het telefoonnummer van je zaak",
+      "autoCallNumberNone": "Geen telefoonnummer ingesteld — voeg er een toe in je restaurantprofiel, zodat we weten waar we naartoe kunnen bellen.",
+      "autoCallAlertPhoneLabel": "Telefoonnummer voor meldingen (optioneel)",
+      "autoCallAlertPhonePlaceholderFallback": "bijv. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Laat leeg om het telefoonnummer van je zaak te bellen. Stel een ander nummer in — bijv. je mobiel — om daar meldingen over gemiste bestellingen te ontvangen.",
+      "autoCallAlertPhoneSave": "Opslaan",
+      "autoCallAlertPhoneSavedToast": "Meldingsnummer opgeslagen.",
+      "autoCallNeedsSetupTitle": "Telefoonmeldingen zijn nog niet actief.",
+      "autoCallNeedsSetupBody": "Er kunnen geen oproepen worden gedaan totdat de telefoondienst van het platform is ingesteld. Tot die tijd gaat er niemand over wanneer je dit inschakelt."
     },
     "receiptRenderer": {
       "yourRestaurant": "Uw restaurant",

@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Attiva/disattiva l'avviso con chiamata automatica",
       "autoCallFooterNote": "Se un nuovo ordine resta non accettato per circa 90 secondi, effettuiamo una chiamata automatica al telefono del tuo ristorante, così non perdi mai un ordine, anche se il tablet è incustodito.",
       "autoCallEnabledToast": "Avviso con chiamata automatica attivato.",
-      "autoCallDisabledToast": "Avviso con chiamata automatica disattivato."
+      "autoCallDisabledToast": "Avviso con chiamata automatica disattivato.",
+      "autoCallNumberLabel": "Chiameremo:",
+      "autoCallNumberFromStore": "il telefono del tuo locale",
+      "autoCallNumberNone": "Nessun numero di telefono impostato — aggiungine uno nel profilo del tuo ristorante così sappiamo dove chiamare.",
+      "autoCallAlertPhoneLabel": "Numero di telefono per gli avvisi (facoltativo)",
+      "autoCallAlertPhonePlaceholderFallback": "es. +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Lascia vuoto per chiamare il telefono del tuo locale. Imposta un numero diverso — es. il tuo cellulare — per ricevere lì gli avvisi degli ordini persi.",
+      "autoCallAlertPhoneSave": "Salva",
+      "autoCallAlertPhoneSavedToast": "Numero per gli avvisi salvato.",
+      "autoCallNeedsSetupTitle": "Gli avvisi telefonici non sono ancora attivi.",
+      "autoCallNeedsSetupBody": "Non è possibile effettuare chiamate finché il servizio telefonico della piattaforma non è configurato. Fino ad allora, attivare questa opzione non farà squillare nessuno."
     },
     "receiptRenderer": {
       "yourRestaurant": "Il tuo ristorante",

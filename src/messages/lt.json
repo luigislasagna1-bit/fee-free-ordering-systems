@@ -3122,7 +3122,17 @@
       "autoCallToggleAriaLabel": "Perjungti automatinio skambučio įspėjimą",
       "autoCallFooterNote": "Jei naujas užsakymas lieka nepriimtas maždaug 90 sekundžių, automatiškai paskambiname į jūsų restorano telefoną, kad niekada nepraleistumėte užsakymo — net jei planšetė lieka be priežiūros.",
       "autoCallEnabledToast": "Automatinio skambučio įspėjimas įjungtas.",
-      "autoCallDisabledToast": "Automatinio skambučio įspėjimas išjungtas."
+      "autoCallDisabledToast": "Automatinio skambučio įspėjimas išjungtas.",
+      "autoCallNumberLabel": "Skambinsime:",
+      "autoCallNumberFromStore": "į jūsų parduotuvės telefoną",
+      "autoCallNumberNone": "Telefono numeris nenurodytas — pridėkite jį savo restorano profilyje, kad turėtume kur skambinti.",
+      "autoCallAlertPhoneLabel": "Pranešimų telefono numeris (nebūtina)",
+      "autoCallAlertPhonePlaceholderFallback": "pvz., +1 555 123 4567",
+      "autoCallAlertPhoneHint": "Palikite tuščią, kad skambintume į jūsų parduotuvės telefoną. Nurodykite kitą numerį — pvz., savo mobilųjį — kad pranešimus apie praleistus užsakymus gautumėte ten.",
+      "autoCallAlertPhoneSave": "Išsaugoti",
+      "autoCallAlertPhoneSavedToast": "Pranešimų numeris išsaugotas.",
+      "autoCallNeedsSetupTitle": "Telefoniniai pranešimai dar neaktyvūs.",
+      "autoCallNeedsSetupBody": "Skambučių negalima atlikti, kol nesukonfigūruota platformos telefono paslauga. Iki tol įjungus šią funkciją niekam nebus skambinama."
     },
     "receiptRenderer": {
       "yourRestaurant": "Jūsų restoranas",
