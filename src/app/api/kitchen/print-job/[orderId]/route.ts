@@ -42,6 +42,8 @@ import {
   buildKitchenReceiptLines,
   buildCustomerReceiptLines,
 } from "@/lib/receipt-lines";
+import { fetchDriveEstimate, resolveDistanceMatrixKey } from "@/lib/delivery-eta";
+import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 
 export async function GET(
   req: NextRequest,
@@ -116,6 +118,32 @@ export async function GET(
     receiptLogoUrl: (order.restaurant as any).receiptLogoUrl ?? null,
   };
 
+  // Live driving distance + traffic-aware time for the receipt (Luigi
+  // 2026-06-13). Best-effort, fully wrapped — never blocks/breaks the print.
+  let driveDistanceText: string | null = null;
+  let driveTimeText: string | null = null;
+  try {
+    if ((order as any).type === "delivery" && (order as any).deliveryAddress) {
+      const r = await prisma.restaurant.findUnique({
+        where: { id: restaurantId },
+        select: { lat: true, lng: true, address: true, city: true, state: true, zip: true, googleMapsApiKey: true },
+      });
+      const key = r ? resolveDistanceMatrixKey(await resolveEffectiveMapsKey(r.googleMapsApiKey)) : null;
+      if (r && key) {
+        const origin =
+          r.lat != null && r.lng != null
+            ? { lat: r.lat, lng: r.lng }
+            : { address: [r.address, r.city, r.state, r.zip].filter(Boolean).join(", ") };
+        const destination = [(order as any).deliveryAddress, (order as any).deliveryCity].filter(Boolean).join(", ");
+        const est = await fetchDriveEstimate({ apiKey: key, origin, destination });
+        if (est.ok) {
+          driveDistanceText = est.distanceText ?? null;
+          driveTimeText = est.durationInTrafficText ?? est.durationText ?? null;
+        }
+      }
+    }
+  } catch { /* never block the print */ }
+
   const receiptOrder: ReceiptOrder = {
     orderNumber: String((order as any).orderNumber ?? order.id.slice(-6).toUpperCase()),
     type: (order as any).type ?? "pickup",
@@ -127,6 +155,8 @@ export async function GET(
     deliveryCity: (order as any).deliveryCity,
     deliveryZoneName: (order as any).deliveryZoneName ?? null,
     deliveryEstimatedMinutes: (order as any).deliveryEstimatedMinutes ?? null,
+    driveDistanceText,
+    driveTimeText,
     notes: (order as any).notes,
     subtotal: order.subtotal,
     taxAmount: (order as any).taxAmount ?? 0,

@@ -487,6 +487,12 @@ export interface ReceiptOrder {
   deliveryCity?: string | null;
   deliveryZoneName?: string | null;
   deliveryEstimatedMinutes?: number | null;
+  /** Live Google driving distance + traffic-aware time for a DELIVERY order,
+   *  computed at print time (Luigi 2026-06-13). Null when unavailable (no key,
+   *  no coords, or the API failed / is referrer-restricted) — the lines simply
+   *  don't print. Pre-formatted strings, so no extra i18n. */
+  driveDistanceText?: string | null;   // e.g. "3.2 km"
+  driveTimeText?: string | null;        // e.g. "9 mins" (traffic-aware)
   notes?: string | null;
   subtotal: number;
   taxAmount: number;
@@ -680,9 +686,13 @@ async function renderKitchenSection(
       if (order.type === "delivery" && order.deliveryAddress) {
         r.line(order.deliveryAddress);
         if (order.deliveryCity) r.line(order.deliveryCity);
-        if (order.deliveryZoneName || order.deliveryEstimatedMinutes) {
+        if (order.deliveryZoneName || order.deliveryEstimatedMinutes || order.driveDistanceText || order.driveTimeText) {
           const parts: string[] = [];
           if (order.deliveryZoneName) parts.push(`${order.deliveryZoneName}`);
+          // Live Google driving distance + traffic-aware time, appended additively
+          // (pre-formatted strings; no style change). Luigi 2026-06-13.
+          if (order.driveDistanceText) parts.push(order.driveDistanceText);
+          if (order.driveTimeText) parts.push(order.driveTimeText);
           if (order.deliveryEstimatedMinutes) parts.push(`~${order.deliveryEstimatedMinutes} ${t("receipt.kitchen.minutes")}`);
           r.line(parts.join(" · "));
         }

@@ -297,9 +297,13 @@ function renderKitchenSection(
       if (order.type === "delivery" && order.deliveryAddress) {
         r.line(order.deliveryAddress);
         if (order.deliveryCity) r.line(order.deliveryCity);
-        if (order.deliveryZoneName || order.deliveryEstimatedMinutes) {
+        if (order.deliveryZoneName || order.deliveryEstimatedMinutes || order.driveDistanceText || order.driveTimeText) {
           const parts: string[] = [];
           if (order.deliveryZoneName) parts.push(`${order.deliveryZoneName}`);
+          // Live Google driving distance + traffic-aware time, appended additively
+          // (pre-formatted strings; no style change). Luigi 2026-06-13.
+          if (order.driveDistanceText) parts.push(order.driveDistanceText);
+          if (order.driveTimeText) parts.push(order.driveTimeText);
           if (order.deliveryEstimatedMinutes) parts.push(`~${order.deliveryEstimatedMinutes} ${t("receipt.kitchen.minutes")}`);
           r.line(parts.join(" · "));
         }

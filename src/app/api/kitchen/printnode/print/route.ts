@@ -13,6 +13,8 @@ import {
   type PrinterLanguage,
 } from "@/lib/receipt";
 import { parseReceiptConfig } from "@/lib/receipt-schema";
+import { fetchDriveEstimate, resolveDistanceMatrixKey } from "@/lib/delivery-eta";
+import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 
 async function getKeyAndSettings(restaurantId: string) {
   const ps = await prisma.printerSettings.findUnique({ where: { restaurantId } });
@@ -405,6 +407,35 @@ export async function POST(req: NextRequest) {
       select: { partySize: true, date: true, time: true },
     });
 
+    // Live driving distance + traffic-aware time for the receipt (Luigi
+    // 2026-06-13). Best-effort Distance Matrix call, FULLY wrapped so it can
+    // NEVER block or break the print (golden path): any failure (no key,
+    // referrer-locked key, API down) leaves both null and the lines just don't
+    // print. Delivery orders with an address only.
+    let driveDistanceText: string | null = null;
+    let driveTimeText: string | null = null;
+    try {
+      if (order.type === "delivery" && order.deliveryAddress) {
+        const r = await prisma.restaurant.findUnique({
+          where: { id: order.restaurantId },
+          select: { lat: true, lng: true, address: true, city: true, state: true, zip: true, googleMapsApiKey: true },
+        });
+        const key = r ? resolveDistanceMatrixKey(await resolveEffectiveMapsKey(r.googleMapsApiKey)) : null;
+        if (r && key) {
+          const origin =
+            r.lat != null && r.lng != null
+              ? { lat: r.lat, lng: r.lng }
+              : { address: [r.address, r.city, r.state, r.zip].filter(Boolean).join(", ") };
+          const destination = [order.deliveryAddress, order.deliveryCity].filter(Boolean).join(", ");
+          const est = await fetchDriveEstimate({ apiKey: key, origin, destination });
+          if (est.ok) {
+            driveDistanceText = est.distanceText ?? null;
+            driveTimeText = est.durationInTrafficText ?? est.durationText ?? null;
+          }
+        }
+      }
+    } catch { /* never block the print */ }
+
     const receiptOrder: ReceiptOrder = {
       orderNumber:     order.orderNumber,
       type:            order.type,
@@ -416,6 +447,8 @@ export async function POST(req: NextRequest) {
       deliveryCity:    order.deliveryCity,
       deliveryZoneName: order.deliveryZone?.name ?? null,
       deliveryEstimatedMinutes: order.deliveryEstimatedMinutes ?? null,
+      driveDistanceText,
+      driveTimeText,
       notes:           order.notes,
       subtotal:        order.subtotal,
       taxAmount:       order.taxAmount,
