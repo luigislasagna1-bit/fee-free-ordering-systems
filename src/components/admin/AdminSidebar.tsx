@@ -344,9 +344,9 @@ const navGroups: NavGroup[] = [
       { href: "/admin/billing",         labelKey: "billing", label: "Billing", icon: Wallet },
       { href: "/admin/billing/add-ons", labelKey: "addOns",  label: "Add-Ons", icon: Zap },
       { href: "/admin/settings",     labelKey: "settings",    label: "Settings",     icon: Settings },
-      // Map provider config (Leaflet free vs Google Maps API). Optional
-      // config so it lives outside the setup tracking flow.
-      { href: "/admin/map-settings", labelKey: "mapSettings", label: "Map Settings", icon: MapIcon },
+      // Map Settings removed (Luigi 2026-06-13): every restaurant now uses the
+      // free Leaflet/OSM map for tiles + the platform Google key for autocomplete
+      // + distance — no per-restaurant map option to configure.
     ],
   },
 ];

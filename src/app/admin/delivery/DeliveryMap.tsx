@@ -5,7 +5,6 @@ import { MapContainer, TileLayer, Marker as LMarker, Circle as LCircle, Tooltip 
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useGoogleMaps } from "@/lib/use-google-maps";
-import { resolveMapsBrowserKey } from "@/lib/maps-key";
 
 export type Zone = {
   id: string;
@@ -43,13 +42,8 @@ function isValidCoord(lat: number | null, lng: number | null): lat is number {
 }
 
 export default function DeliveryMap(props: Props) {
-  // Use Google whenever a key resolves — the restaurant's own, else the platform
-  // key (resolveMapsBrowserKey). No key (env unset) ⇒ free Leaflet map, so this
-  // is safe before the platform key is configured. Luigi 2026-06-13.
-  const apiKey = resolveMapsBrowserKey(props.googleMapsApiKey);
-  if (apiKey) {
-    return <GoogleVariant {...props} apiKey={apiKey} />;
-  }
+  // Always the free Leaflet/OSM map (Luigi 2026-06-13): Google map tiles aren't
+  // worth the per-load cost; Google is reserved for autocomplete + distance only.
   return <LeafletVariant {...props} />;
 }
 

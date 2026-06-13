@@ -6,7 +6,6 @@ import { MapContainer, TileLayer, Marker as LMarker, Circle as LCircle, Tooltip 
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useGoogleMaps } from "@/lib/use-google-maps";
-import { resolveMapsBrowserKey } from "@/lib/maps-key";
 
 export type CustomerZone = {
   id: string;
@@ -31,13 +30,8 @@ interface Props {
 }
 
 export default function DeliveryZonesMap(props: Props) {
-  const t = useTranslations("customer.deliveryZones");
-  // Google whenever a key resolves — restaurant's own, else the platform key.
-  // No key ⇒ free Leaflet map. Luigi 2026-06-13.
-  const apiKey = resolveMapsBrowserKey(props.googleMapsApiKey);
-  if (apiKey) {
-    return <GoogleVariant {...props} apiKey={apiKey} />;
-  }
+  // Always the free Leaflet/OSM map (Luigi 2026-06-13): Google reserved for
+  // autocomplete + distance only.
   return <LeafletVariant {...props} />;
 }
 

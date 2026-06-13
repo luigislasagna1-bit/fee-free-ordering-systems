@@ -5,7 +5,7 @@ import {
   X, User, Truck, ShoppingBag, Clock, CreditCard, Heart, Edit2, Tag,
   AlertCircle, Loader2, ChevronDown, Utensils, Package,
 } from "lucide-react";
-import { Autocomplete, GoogleMap, Marker } from "@react-google-maps/api";
+import { Autocomplete } from "@react-google-maps/api";
 import { useCurrencyFormat } from "@/lib/currency-context";
 import { pickHoursForService } from "@/lib/service-hours";
 import { parseTheme } from "@/lib/theme";
@@ -897,39 +897,14 @@ export function CheckoutModal({
                         )}
                       </div>
                     )}
-                    {/* Draggable delivery pin (Google-maps restaurants). Shows
-                        once an address is picked; the customer can drag the
-                        marker to the exact door so the driver gets the right
-                        spot. The dragged coords are sent with the order. */}
-                    {deliveryFormConfig.street.show && googleEnabled && gmapsLoaded && mapCenter && (
-                      <div className="rounded-lg overflow-hidden border border-gray-200">
-                        <GoogleMap
-                          mapContainerStyle={{ width: "100%", height: "180px" }}
-                          center={mapCenter}
-                          zoom={16}
-                          options={{ disableDefaultUI: true, zoomControl: true, gestureHandling: "cooperative" }}
-                        >
-                          <Marker
-                            position={{
-                              lat: customerInfo.lat ?? mapCenter.lat,
-                              lng: customerInfo.lng ?? mapCenter.lng,
-                            }}
-                            draggable
-                            onDragEnd={(e) => {
-                              const la = e.latLng?.lat();
-                              const ln = e.latLng?.lng();
-                              if (la != null && ln != null) setCustomerInfo({ ...customerInfo, lat: la, lng: ln });
-                            }}
-                          />
-                        </GoogleMap>
-                        <p className="text-xs text-gray-500 px-2 py-1.5 bg-gray-50">{tc("dragPinHint")}</p>
-                      </div>
-                    )}
-                    {/* Draggable delivery pin (Leaflet / free-map restaurants).
-                        Same behaviour as the Google pin above — appears once an
-                        address suggestion is picked, drag/click to set the exact
-                        door, coords ride along with the order. */}
-                    {deliveryFormConfig.street.show && !googleEnabled && mapCenter && (
+                    {/* Map tiles are always the free Leaflet/OSM pin below now
+                        (Luigi 2026-06-13). Google is reserved for autocomplete +
+                        distance only, to avoid per-map-load cost. */}
+                    {/* Draggable delivery pin — free Leaflet/OSM map for EVERY
+                        restaurant now. Appears once an address is picked; drag/
+                        click to set the exact door, coords ride along with the
+                        order. Google autocomplete above still fills the address. */}
+                    {deliveryFormConfig.street.show && mapCenter && (
                       <div className="rounded-lg overflow-hidden border border-gray-200">
                         <CheckoutLeafletPin
                           center={mapCenter}
