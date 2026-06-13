@@ -465,7 +465,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
                 anything with a delivery address (delivery, catering-delivery)
                 shows the ADDRESS; pickup/dine-in/take-out show the NAME. The
                 order number drops to the grey line below. */}
-            <span className={`font-bold text-sm ${t.text} truncate flex-1 min-w-0`}>
+            <span className={`font-bold text-[1.225rem] leading-tight ${t.text} truncate flex-1 min-w-0`}>
               {order.deliveryAddress
                 ? order.deliveryAddress
                 : order.customerName.replace("[TEST] ", "")}
