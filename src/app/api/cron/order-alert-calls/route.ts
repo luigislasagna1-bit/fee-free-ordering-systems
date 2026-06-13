@@ -3,24 +3,34 @@ import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { placeVoiceCall } from "@/lib/voice-call";
 import { getDict } from "@/lib/i18n-dict";
+import { liveOpenStatus } from "@/lib/restaurant-hours";
+import { holidayEffectToday } from "@/lib/holiday-rules";
 
 /**
  * POST/GET /api/cron/order-alert-calls  (Vercel cron, every minute)
  *
- * "Nearly-missed order" auto-call (report cmpxeph4l). Finds orders that have
- * been released to the kitchen (notifiedAt set) ~90s ago, are still pending
- * (not accepted/rejected), belong to a restaurant that enabled
- * autoCallOnNewOrder + has a phone number, and haven't been called yet —
- * then places one automated voice call so an unattended tablet doesn't drop
- * the order. Idempotent: alertCallAt is stamped so we never call twice.
+ * "Nearly-missed order" auto-call (report cmpxeph4l). Places ONE automated voice
+ * call when an order has gone unaccepted ~90s past the moment it became the
+ * kitchen's LIVE job — so an unattended tablet doesn't drop a real order.
  *
- * No-op when Twilio voice creds aren't configured (placeVoiceCall returns
- * placed=false) — we still stamp alertCallAt so we don't retry every minute.
+ * The 90s timer is anchored on `max(notifiedAt, alertAt, scheduledFor)`, NOT on
+ * when the customer placed the order (Luigi 2026-06-13):
+ *   • notifiedAt  — fired to the kitchen (ASAP order during open hours).
+ *   • alertAt     — deferred ring time for an order PLACED WHILE CLOSED (set to
+ *                   the next opening); so the clock starts when you open.
+ *   • scheduledFor— a SCHEDULED order only becomes "live" at its scheduled time,
+ *                   never hours before. (Fixes: a tomorrow order rang a call 90s
+ *                   after it was placed.)
+ * And we NEVER call while the restaurant is currently closed (holiday-aware).
+ *
+ * Idempotent: alertCallAt is stamped so we never call twice. No-op when Twilio
+ * voice creds aren't configured (placeVoiceCall returns placed=false) — we still
+ * stamp alertCallAt so we don't retry every minute.
  *
  * Authorized callers: Vercel cron (Bearer CRON_SECRET) or a superadmin.
  */
-const THRESHOLD_MS = 90_000; // 1.5 minutes
-const LOOKBACK_MS = 30 * 60_000; // ignore very old orders (cron catch-up safety)
+const THRESHOLD_MS = 90_000; // 1.5 minutes unaccepted past the anchor
+const LOOKBACK_MS = 30 * 60_000; // ignore anchors older than this (cron catch-up safety)
 const MAX_PER_RUN = 50;
 
 export async function POST(req: NextRequest) {
@@ -35,15 +45,28 @@ export async function POST(req: NextRequest) {
   }
 
   const now = Date.now();
-  const cutoff = new Date(now - THRESHOLD_MS);
-  const floor = new Date(now - LOOKBACK_MS);
+  const cutoff = new Date(now - THRESHOLD_MS); // anchor must be at/under this (≥90s old)
+  const floor = new Date(now - LOOKBACK_MS); // anchor must be at/over this (≤30min old)
 
+  // Pre-filter: every anchor candidate present on the row must be ≥90s old, and
+  // AT LEAST ONE must be within the last 30 min — i.e. max(anchors) ∈ [floor,
+  // cutoff]. We re-derive the exact anchor + open status per row below.
   const candidates = await prisma.order.findMany({
     where: {
       status: "pending",
       alertCallAt: null,
-      notifiedAt: { not: null, lte: cutoff, gte: floor },
-      // Needs SOME number to call: the dedicated alertPhone OR the public phone.
+      notifiedAt: { not: null, lte: cutoff },
+      AND: [
+        { OR: [{ alertAt: null }, { alertAt: { lte: cutoff } }] },
+        { OR: [{ scheduledFor: null }, { scheduledFor: { lte: cutoff } }] },
+        {
+          OR: [
+            { notifiedAt: { gte: floor } },
+            { alertAt: { gte: floor } },
+            { scheduledFor: { gte: floor } },
+          ],
+        },
+      ],
       restaurant: {
         is: {
           autoCallOnNewOrder: true,
@@ -55,7 +78,21 @@ export async function POST(req: NextRequest) {
       id: true,
       orderNumber: true,
       type: true,
-      restaurant: { select: { name: true, phone: true, alertPhone: true, defaultLanguage: true } },
+      notifiedAt: true,
+      alertAt: true,
+      scheduledFor: true,
+      restaurant: {
+        select: {
+          name: true,
+          phone: true,
+          alertPhone: true,
+          defaultLanguage: true,
+          timezone: true,
+          hoursFormat: true,
+          openingHours: true,
+          holidays: true,
+        },
+      },
     },
     take: MAX_PER_RUN,
     orderBy: { notifiedAt: "asc" },
@@ -64,16 +101,54 @@ export async function POST(req: NextRequest) {
   let called = 0;
   const results: Array<{ orderId: string; placed: boolean; reason?: string }> = [];
   for (const o of candidates) {
+    const r = o.restaurant;
     // Dedicated alert number wins; otherwise the public phone.
-    const phone = o.restaurant.alertPhone?.trim() || o.restaurant.phone;
+    const phone = r.alertPhone?.trim() || r.phone;
     if (!phone) continue;
+
+    // Anchor = the latest moment the order became the kitchen's LIVE job.
+    const anchorMs = Math.max(
+      o.notifiedAt ? o.notifiedAt.getTime() : 0,
+      o.alertAt ? o.alertAt.getTime() : 0,
+      o.scheduledFor ? o.scheduledFor.getTime() : 0,
+    );
+    const sinceAnchor = now - anchorMs;
+    // Not yet 90s past the anchor (e.g. a scheduled order whose time hasn't come),
+    // or older than the catch-up window — leave it for now / forever.
+    if (sinceAnchor < THRESHOLD_MS || sinceAnchor > LOOKBACK_MS) {
+      results.push({ orderId: o.id, placed: false, reason: "outside alert window" });
+      continue;
+    }
+
+    // NEVER call while the restaurant is currently closed (holiday-aware). A
+    // closed-placed order's anchor is already deferred to opening via alertAt;
+    // this also covers an order that went unaccepted right as the shop closed.
+    const tz = r.timezone ?? undefined;
+    const holiday = holidayEffectToday((r.holidays ?? []) as any, tz, null);
+    const live = liveOpenStatus(
+      (r.openingHours ?? []) as any,
+      new Date(),
+      r.hoursFormat === "12h" ? "12h" : "24h",
+      holiday
+        ? {
+            name: holiday.name ?? undefined,
+            intervals: holiday.kind === "custom_hours" ? holiday.intervals : undefined,
+          }
+        : undefined,
+      tz,
+    );
+    if (live.kind !== "open") {
+      results.push({ orderId: o.id, placed: false, reason: "restaurant closed" });
+      continue;
+    }
+
     // Stamp FIRST so a slow Twilio call or a retry never double-dials.
     await prisma.order.update({ where: { id: o.id }, data: { alertCallAt: new Date() } });
 
-    const locale = o.restaurant.defaultLanguage || "en";
+    const locale = r.defaultLanguage || "en";
     const t = await getDict(locale);
     const message = t("kitchen.autoCallMessage", {
-      restaurant: o.restaurant.name,
+      restaurant: r.name,
       number: o.orderNumber,
     });
     const langTag = bcp47(locale);
