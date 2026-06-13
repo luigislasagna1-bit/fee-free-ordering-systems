@@ -16,6 +16,7 @@ import { useCurrencyFormat, useCurrencySymbol } from "@/lib/currency-context";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { parseComboConfig } from "@/lib/combo";
 import { VisibilityEditor, visibilityFromRow, type VisibilityValue } from "@/components/admin/VisibilityEditor";
+import { HelpTip } from "@/components/HelpTip";
 import toast from "react-hot-toast";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -486,6 +487,24 @@ function ItemModal({
     // "hide" (legacy) = item disappears outside its window; "show" = stays
     // visible but can't be ordered (reseller report cmpxec829).
     availabilityMode: ((item as any)?.availabilityMode === "show" ? "show" : "hide") as "hide" | "show",
+    // Phase 2 Fulfilment Time (Luigi 2026-06-12): the days/times this item can
+    // be ORDERED FOR. It stays visible on the menu every day; outside the
+    // window the customer is asked to schedule (like catering). Replaces the
+    // legacy availableDays/availabilityMode "show" path.
+    fulfilEnabled: (() => {
+      const raw = (item as any)?.fulfilDays;
+      let days: unknown = null;
+      if (typeof raw === "string" && raw) { try { days = JSON.parse(raw); } catch { /* ignore */ } }
+      const hasDays = Array.isArray(days) && days.length > 0 && days.length < 7;
+      return hasDays || !!((item as any)?.fulfilFrom && (item as any)?.fulfilTo);
+    })(),
+    fulfilDays: (() => {
+      const raw = (item as any)?.fulfilDays;
+      if (typeof raw === "string" && raw) { try { const a = JSON.parse(raw); if (Array.isArray(a)) return a.map(Number); } catch { /* ignore */ } }
+      return [] as number[];
+    })(),
+    fulfilFrom: (item as any)?.fulfilFrom ?? "",
+    fulfilTo: (item as any)?.fulfilTo ?? "",
   });
   const [variants, setVariants] = useState<ItemVariant[]>(
     item?.variants?.length ? item.variants : [{ name: "", price: 0, sortOrder: 0, isDefault: true }]
@@ -580,6 +599,14 @@ function ItemModal({
       : [...form.availableDays, d].sort();
     setForm(f => ({ ...f, availableDays: days }));
   };
+  const toggleFulfilDay = (d: number) => {
+    setForm(f => ({
+      ...f,
+      fulfilDays: f.fulfilDays.includes(d)
+        ? f.fulfilDays.filter(x => x !== d)
+        : [...f.fulfilDays, d].sort((a, b) => a - b),
+    }));
+  };
 
   const save = async () => {
     if (!form.name.trim()) {
@@ -662,13 +689,26 @@ function ItemModal({
           return slots.length > 0 ? JSON.stringify({ slots, extrasCharge: comboExtrasCharge }) : null;
         })()
       : null;
+    // Strip the legacy availability fields + the raw fulfil* form fields from
+    // the payload — the order window now travels in the structured `fulfilment`
+    // object below. Sending `fulfilment` makes the API clear the legacy columns,
+    // so leaving them in here would clobber that (they're assigned afterwards).
+    const {
+      availableDays: _ad, availableFrom: _af, availableTo: _at, availabilityMode: _am,
+      fulfilEnabled: _fe, fulfilDays: _fd, fulfilFrom: _ff, fulfilTo: _ft,
+      ...formRest
+    } = form;
     const payload = {
-      ...form,
+      ...formRest,
       price: parseFloat(form.price) || 0,
       variants: form.hasVariants ? variants.filter(v => v.name) : undefined,
       pizzaConfig,
       comboConfig,
       visibility,
+      // Only send a real restriction when enabled; otherwise nulls clear it.
+      fulfilment: form.fulfilEnabled
+        ? { days: form.fulfilDays, from: form.fulfilFrom || null, to: form.fulfilTo || null }
+        : { days: null, from: null, to: null },
     };
     try {
       const url = isNew ? "/api/menu/items" : `/api/menu/items/${item!.id}`;
@@ -787,54 +827,68 @@ function ItemModal({
 
           {tab === "availability" && (
             <div className="space-y-5">
+              {/* Phase 2 Fulfilment Time (GloriaFood-style "Availability"). The
+                  item ALWAYS shows on the menu (that's the Visibility tab); this
+                  controls the days/times it can actually be ORDERED FOR. Outside
+                  the window the customer keeps seeing it and is asked to schedule
+                  for a valid slot — exactly like catering. */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t("availableDays")}</label>
-                <div className="flex gap-2 flex-wrap">
-                  {DAY_NAMES.map((d, i) => (
-                    <button key={i} onClick={() => toggleDay(i)}
-                      className={`w-12 h-10 rounded-lg border text-sm font-medium transition ${form.availableDays.includes(i) ? "bg-emerald-500 border-emerald-500 text-white" : "border-gray-200 text-gray-500 hover:border-gray-400"}`}>
-                      {d}
-                    </button>
-                  ))}
-                  <button onClick={() => setForm(f => ({ ...f, availableDays: [0,1,2,3,4,5,6] }))}
-                    className="px-3 h-10 rounded-lg border border-gray-200 text-xs text-gray-500 hover:border-gray-400">{t("allDays")}</button>
+                <div className="flex items-center gap-1.5 mb-1">
+                  <label className="block text-sm font-semibold text-gray-800">{t("fulfilTitle")}</label>
+                  <HelpTip text={t("fulfilHelp")} />
                 </div>
+                <p className="text-xs text-gray-500">{t("fulfilIntro")}</p>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("availableFrom")}</label>
-                  <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                    value={form.availableFrom} onChange={e => setForm(f => ({ ...f, availableFrom: e.target.value }))} />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("availableUntil")}</label>
-                  <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                    value={form.availableTo} onChange={e => setForm(f => ({ ...f, availableTo: e.target.value }))} />
-                </div>
-              </div>
-              <p className="text-xs text-gray-400">{t("availabilityAllDayHint")}</p>
 
-              {/* Outside-the-window behaviour (reseller report cmpxec829,
-                  Cloudwaitress-style): hide entirely, or keep the item visible
-                  with an "available …" note while blocking add-to-cart. */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t("availabilityModeLabel")}</label>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setForm(f => ({ ...f, availabilityMode: "hide" }))}
-                    className={`flex-1 text-sm font-medium py-2 px-3 rounded-lg border transition ${form.availabilityMode !== "show" ? "border-emerald-400 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600 hover:border-gray-400"}`}
-                  >
-                    {t("availabilityModeHide")}
-                  </button>
-                  <button
-                    onClick={() => setForm(f => ({ ...f, availabilityMode: "show" }))}
-                    className={`flex-1 text-sm font-medium py-2 px-3 rounded-lg border transition ${form.availabilityMode === "show" ? "border-emerald-400 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600 hover:border-gray-400"}`}
-                  >
-                    {t("availabilityModeShow")}
-                  </button>
-                </div>
-                <p className="text-xs text-gray-400 mt-1.5">{t("availabilityModeHint")}</p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setForm(f => ({ ...f, fulfilEnabled: false }))}
+                  className={`flex-1 text-sm font-medium py-2 px-3 rounded-lg border transition ${!form.fulfilEnabled ? "border-emerald-400 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600 hover:border-gray-400"}`}
+                >
+                  {t("fulfilAlways")}
+                </button>
+                <button
+                  onClick={() => setForm(f => ({ ...f, fulfilEnabled: true }))}
+                  className={`flex-1 text-sm font-medium py-2 px-3 rounded-lg border transition ${form.fulfilEnabled ? "border-indigo-400 bg-indigo-50 text-indigo-700" : "border-gray-200 text-gray-600 hover:border-gray-400"}`}
+                >
+                  {t("fulfilRestricted")}
+                </button>
               </div>
+
+              {form.fulfilEnabled && (
+                <div className="space-y-5 rounded-xl border border-indigo-100 bg-indigo-50/40 p-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t("fulfilDaysLabel")}</label>
+                    <div className="flex gap-2 flex-wrap">
+                      {DAY_NAMES.map((d, i) => (
+                        <button key={i} onClick={() => toggleFulfilDay(i)}
+                          className={`w-12 h-10 rounded-lg border text-sm font-medium transition ${form.fulfilDays.includes(i) ? "bg-indigo-500 border-indigo-500 text-white" : "border-gray-200 text-gray-500 hover:border-gray-400 bg-white"}`}>
+                          {d}
+                        </button>
+                      ))}
+                      <button onClick={() => setForm(f => ({ ...f, fulfilDays: [] }))}
+                        className="px-3 h-10 rounded-lg border border-gray-200 bg-white text-xs text-gray-500 hover:border-gray-400">{t("fulfilAnyDay")}</button>
+                    </div>
+                    <p className="text-xs text-gray-400 mt-1.5">{t("fulfilDaysHint")}</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t("availableFrom")}</label>
+                      <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                        value={form.fulfilFrom} onChange={e => setForm(f => ({ ...f, fulfilFrom: e.target.value }))} />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t("availableUntil")}</label>
+                      <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                        value={form.fulfilTo} onChange={e => setForm(f => ({ ...f, fulfilTo: e.target.value }))} />
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-400">{t("fulfilTimeHint")}</p>
+                  <div className="rounded-lg bg-white border border-indigo-200 px-3 py-2 text-xs text-indigo-700 font-medium">
+                    {t("fulfilPreview")}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 

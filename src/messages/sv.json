@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Tillgänglig {window}",
     "testModeBanner": "Testläge — du förhandsgranskar din egen butik",
     "testModeHint": "Beställningar här markeras som TEST: de ringer i köket och skrivs ut normalt men räknas aldrig i rapporter eller intäkter.",
-    "fromPrice": "från {price}"
+    "fromPrice": "från {price}",
+    "fulfilOrderAheadLabel": "Förbeställ · {window}"
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Du har låst upp en kampanj!",
     "unlockedPromoMany": "Du har låst upp kampanjer!",
     "pickADateFirst": "Välj ett datum först",
-    "closedThisDay": "Stängt denna dag"
+    "closedThisDay": "Stängt denna dag",
+    "fulfilSchedulePrompt": "📅 En eller flera varor i din kundvagn kan endast beställas för vissa dagar eller tider. Vi har valt den tidigast tillgängliga tiden nedan – ändra den om du vill."
   },
   "reservation": {
     "title": "Boka ett bord",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Förhandsgranska & testbeställ",
       "masterMenuTitle": "Huvudmeny — {inheriting} av {total} platser ärver den här menyn",
       "masterMenuBody": "Ändringar du gör här visas direkt på varje plats som ärver. Platser med en anpassad meny påverkas inte.",
-      "tabVisibility": "Synlighet"
+      "tabVisibility": "Synlighet",
+      "fulfilTitle": "Tillgänglig för beställning",
+      "fulfilHelp": "Ange vilka dagar och tider den här varan kan beställas FÖR. Den visas fortfarande på menyn varje dag, men utanför tidsfönstret ombeds kunderna att schemalägga sin beställning till en giltig tid – precis som vid catering. Perfekt för dagens rätter (t.ex. en rätt som bara serveras på tisdagar) eller varor som bara finns till lunch.",
+      "fulfilIntro": "Välj när kunderna kan beställa den här varan. Den är alltid synlig på menyn.",
+      "fulfilAlways": "Tillgänglig när som helst",
+      "fulfilRestricted": "Endast vissa dagar/tider",
+      "fulfilDaysLabel": "Kan beställas dessa dagar",
+      "fulfilAnyDay": "Vilken dag som helst",
+      "fulfilDaysHint": "Välj vilka dagar den här varan kan beställas för. Lämna som ”Vilken dag som helst” för att tillåta alla dagar och begränsa endast efter tid.",
+      "fulfilTimeHint": "Valfritt – ange ett tidsfönster (t.ex. 11:00–15:00 för endast lunch). Lämna båda tomma för att tillåta vilken tid som helst på de valda dagarna.",
+      "fulfilPreview": "Kunderna ser den här varan varje dag med en ”Förbeställ”-notis och ombeds schemalägga sin beställning till en tid då den är tillgänglig."
     },
     "promotionsList": {
       "stackingMaster": "Master",

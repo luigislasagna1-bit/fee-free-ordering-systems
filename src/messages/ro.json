@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Disponibil {window}",
     "testModeBanner": "Mod de test — previzualizezi propriul magazin",
     "testModeHint": "Comenzile plasate aici sunt marcate TEST: sună în bucătărie și se tipăresc normal, dar nu se numără niciodată în rapoarte sau venituri.",
-    "fromPrice": "de la {price}"
+    "fromPrice": "de la {price}",
+    "fulfilOrderAheadLabel": "Comandă în avans · {window}"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Ai deblocat o promoție!",
     "unlockedPromoMany": "Ai deblocat promoții!",
     "pickADateFirst": "Alege mai întâi o dată",
-    "closedThisDay": "Închis în această zi"
+    "closedThisDay": "Închis în această zi",
+    "fulfilSchedulePrompt": "📅 Unul sau mai multe produse din coșul tău pot fi comandate doar pentru anumite zile sau ore. Am setat mai jos cel mai apropiat interval disponibil — ajustează-l dacă dorești."
   },
   "reservation": {
     "title": "Rezervă o masă",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Previzualizare și comandă de test",
       "masterMenuTitle": "Meniu principal — {inheriting} din {total} locații moștenesc acest meniu",
       "masterMenuBody": "Modificările făcute aici apar instantaneu în fiecare locație care moștenește. Locațiile cu un meniu personalizat nu sunt afectate.",
-      "tabVisibility": "Vizibilitate"
+      "tabVisibility": "Vizibilitate",
+      "fulfilTitle": "Timp de onorare",
+      "fulfilHelp": "Setează zilele și orele PENTRU CARE poate fi comandat acest produs. Apare în continuare în meniu în fiecare zi, dar în afara intervalului clienții sunt rugați să își programeze comanda pentru un moment valabil — la fel ca la catering. Excelent pentru specialitățile zilei (de ex. un preparat disponibil doar marțea) sau pentru produse doar la prânz.",
+      "fulfilIntro": "Alege când pot comanda clienții acest produs. Rămâne vizibil în meniu în permanență.",
+      "fulfilAlways": "Disponibil oricând",
+      "fulfilRestricted": "Doar anumite zile / ore",
+      "fulfilDaysLabel": "Comandabil în aceste zile",
+      "fulfilAnyDay": "Orice zi",
+      "fulfilDaysHint": "Alege zilele pentru care poate fi comandat acest produs. Lasă „Orice zi” pentru a permite fiecare zi și a limita doar în funcție de oră.",
+      "fulfilTimeHint": "Opțional — setează un interval orar (de ex. 11:00–15:00 doar pentru prânz). Lasă ambele câmpuri goale pentru a permite orice oră în zilele alese.",
+      "fulfilPreview": "Clienții vor vedea acest produs în fiecare zi cu o notă „Comandă în avans” și vor fi rugați să își programeze comanda pentru un moment în care este disponibil."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -778,6 +778,16 @@ model MenuItem {
   /// validation rejects out-of-window items in BOTH modes. Nullable so the
   /// hot MenuItem table needs no rewrite/backfill.
   availabilityMode String?
+  /// FULFILMENT TIME (Luigi 2026-06-12, Phase 2). When set, the item is
+  /// VISIBLE per its visibility settings, but can only be ORDERED FOR these
+  /// days/times — e.g. a Tuesday special shows all week, greys out for ASAP,
+  /// and is orderable only when the order's fulfilment slot lands on Tuesday.
+  /// Independent of `visible*` (show/hide) and the legacy availableDays. null
+  /// = no fulfilment restriction. Restaurant timezone applies. Server rejects
+  /// an order whose effective fulfilment time is outside the window.
+  fulfilDays    String? // JSON [0..6] — null = any day
+  fulfilFrom    String? // "HH:MM"
+  fulfilTo      String? // "HH:MM"
   sortOrder     Int      @default(0)
   calories      Int?
   allergens     String?

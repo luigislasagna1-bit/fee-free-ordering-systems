@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Verfügbar {window}",
     "testModeBanner": "Testmodus — du siehst die Vorschau deines eigenen Shops",
     "testModeHint": "Hier aufgegebene Bestellungen sind als TEST markiert: Sie klingeln in der Küche und drucken normal, zählen aber nie in Berichten oder Umsätzen.",
-    "fromPrice": "ab {price}"
+    "fromPrice": "ab {price}",
+    "fulfilOrderAheadLabel": "Vorbestellen · {window}"
   },
   "pizza": {
     "chooseSize": "Größe wählen",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Du hast eine Promo freigeschaltet!",
     "unlockedPromoMany": "Du hast Promos freigeschaltet!",
     "pickADateFirst": "Zuerst ein Datum wählen",
-    "closedThisDay": "An diesem Tag geschlossen"
+    "closedThisDay": "An diesem Tag geschlossen",
+    "fulfilSchedulePrompt": "📅 Ein oder mehrere Artikel in Ihrem Warenkorb können nur für bestimmte Tage oder Uhrzeiten bestellt werden. Wir haben unten den nächsten verfügbaren Termin ausgewählt — passen Sie ihn bei Bedarf an."
   },
   "reservation": {
     "title": "Tisch reservieren",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Vorschau & Testbestellung",
       "masterMenuTitle": "Hauptmenü — {inheriting} von {total} Standorten erben dieses Menü",
       "masterMenuBody": "Hier vorgenommene Änderungen erscheinen sofort an jedem erbenden Standort. Standorte mit einem eigenen Menü sind nicht betroffen.",
-      "tabVisibility": "Sichtbarkeit"
+      "tabVisibility": "Sichtbarkeit",
+      "fulfilTitle": "Verfügbarkeitszeit",
+      "fulfilHelp": "Legen Sie die Tage und Uhrzeiten fest, FÜR die dieser Artikel bestellt werden kann. Er erscheint weiterhin täglich auf der Speisekarte, aber außerhalb des Zeitfensters werden die Kunden gebeten, ihre Bestellung für eine gültige Uhrzeit zu planen — genau wie beim Catering. Ideal für Tagesgerichte (z. B. ein Gericht nur dienstags) oder Artikel nur zum Mittagessen.",
+      "fulfilIntro": "Wählen Sie, wann Kunden diesen Artikel bestellen können. Er bleibt jederzeit auf der Speisekarte sichtbar.",
+      "fulfilAlways": "Jederzeit verfügbar",
+      "fulfilRestricted": "Nur bestimmte Tage / Uhrzeiten",
+      "fulfilDaysLabel": "Bestellbar an diesen Tagen",
+      "fulfilAnyDay": "Jeder Tag",
+      "fulfilDaysHint": "Wählen Sie die Tage, für die dieser Artikel bestellt werden kann. Lassen Sie es auf „Jeder Tag“, um alle Tage zuzulassen und nur nach Uhrzeit einzuschränken.",
+      "fulfilTimeHint": "Optional — legen Sie ein Zeitfenster fest (z. B. 11:00–15:00 nur zum Mittagessen). Lassen Sie beide Felder leer, um an den gewählten Tagen jede Uhrzeit zuzulassen.",
+      "fulfilPreview": "Kunden sehen diesen Artikel jeden Tag mit dem Hinweis „Vorbestellen“ und werden gebeten, ihre Bestellung für eine Uhrzeit zu planen, zu der er verfügbar ist."
     },
     "promotionsList": {
       "stackingMaster": "Master",

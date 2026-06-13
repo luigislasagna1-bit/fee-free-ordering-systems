@@ -256,7 +256,8 @@
     "availableOnlyLabel": "이용 가능 {window}",
     "testModeBanner": "테스트 모드 — 내 매장을 미리보고 있습니다",
     "testModeHint": "여기서 주문하면 TEST로 표시됩니다. 주방 벨과 인쇄는 정상 작동하지만 보고서나 매출에는 절대 집계되지 않습니다.",
-    "fromPrice": "{price}부터"
+    "fromPrice": "{price}부터",
+    "fulfilOrderAheadLabel": "미리 주문 · {window}"
   },
   "pizza": {
     "chooseSize": "크기 선택",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "프로모션을 잠금 해제했습니다!",
     "unlockedPromoMany": "프로모션을 잠금 해제했습니다!",
     "pickADateFirst": "먼저 날짜를 선택하세요",
-    "closedThisDay": "이 날은 휴무"
+    "closedThisDay": "이 날은 휴무",
+    "fulfilSchedulePrompt": "📅 장바구니에 담긴 항목 중 하나 이상은 특정 요일이나 시간에만 주문할 수 있습니다. 아래에 가장 이른 예약 가능 시간대를 설정해 두었습니다 — 원하시면 변경하세요."
   },
   "reservation": {
     "title": "테이블 예약",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "미리보기 및 테스트 주문",
       "masterMenuTitle": "마스터 메뉴 — {total}개 지점 중 {inheriting}곳이 이 메뉴를 사용",
       "masterMenuBody": "여기서 변경한 내용은 이 메뉴를 사용하는 모든 지점에 즉시 적용됩니다. 맞춤 메뉴를 사용하는 지점은 영향을 받지 않습니다.",
-      "tabVisibility": "노출 설정"
+      "tabVisibility": "노출 설정",
+      "fulfilTitle": "제공 시간",
+      "fulfilHelp": "이 항목을 주문할 수 있는 요일과 시간을 설정하세요. 항목은 매일 메뉴에 계속 표시되지만, 설정한 시간대를 벗어나면 고객은 케이터링과 마찬가지로 유효한 시간에 주문을 예약하도록 안내됩니다. 일일 특선(예: 화요일 한정 요리)이나 점심 전용 항목에 적합합니다.",
+      "fulfilIntro": "고객이 이 항목을 주문할 수 있는 시간을 선택하세요. 항목은 항상 메뉴에 표시됩니다.",
+      "fulfilAlways": "언제든지 주문 가능",
+      "fulfilRestricted": "특정 요일 / 시간만",
+      "fulfilDaysLabel": "이 요일에 주문 가능",
+      "fulfilAnyDay": "아무 요일",
+      "fulfilDaysHint": "이 항목을 주문할 수 있는 요일을 선택하세요. 매일 허용하고 시간으로만 제한하려면 \"아무 요일\"로 두세요.",
+      "fulfilTimeHint": "선택 사항 — 시간대를 설정하세요(예: 점심 전용 11:00–15:00). 선택한 요일의 모든 시간을 허용하려면 둘 다 비워 두세요.",
+      "fulfilPreview": "고객은 매일 이 항목을 \"미리 주문\" 안내와 함께 보게 되며, 항목이 제공되는 시간에 주문을 예약하도록 안내됩니다."
     },
     "promotionsList": {
       "stackingMaster": "마스터",

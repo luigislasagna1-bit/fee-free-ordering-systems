@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Disponibile {window}",
     "testModeBanner": "Modalità test — stai visualizzando il tuo negozio",
     "testModeHint": "Gli ordini effettuati qui sono contrassegnati TEST: suonano in cucina e si stampano normalmente, ma non contano mai nei report né nei ricavi.",
-    "fromPrice": "da {price}"
+    "fromPrice": "da {price}",
+    "fulfilOrderAheadLabel": "Ordina in anticipo · {window}"
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Hai sbloccato una promo!",
     "unlockedPromoMany": "Hai sbloccato delle promo!",
     "pickADateFirst": "Scegli prima una data",
-    "closedThisDay": "Chiuso questo giorno"
+    "closedThisDay": "Chiuso questo giorno",
+    "fulfilSchedulePrompt": "📅 Uno o più articoli nel tuo carrello possono essere ordinati solo per determinati giorni o orari. Abbiamo selezionato qui sotto la fascia disponibile più vicina — modificala se vuoi."
   },
   "reservation": {
     "title": "Prenota un tavolo",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Anteprima e ordine di prova",
       "masterMenuTitle": "Menu principale — {inheriting} di {total} sedi ereditano questo menu",
       "masterMenuBody": "Le modifiche apportate qui vengono applicate immediatamente a ogni sede che eredita. Le sedi con un menu personalizzato non sono interessate.",
-      "tabVisibility": "Visibilità"
+      "tabVisibility": "Visibilità",
+      "fulfilTitle": "Orario di disponibilità",
+      "fulfilHelp": "Imposta i giorni e gli orari PER cui questo articolo può essere ordinato. Resta visibile nel menu tutti i giorni, ma al di fuori della fascia oraria ai clienti viene chiesto di programmare l'ordine per un orario valido — proprio come per il catering. Ottimo per i piatti del giorno (ad es. un piatto solo del martedì) o per gli articoli solo a pranzo.",
+      "fulfilIntro": "Scegli quando i clienti possono ordinare questo articolo. Resta sempre visibile nel menu.",
+      "fulfilAlways": "Disponibile in qualsiasi momento",
+      "fulfilRestricted": "Solo determinati giorni / orari",
+      "fulfilDaysLabel": "Ordinabile in questi giorni",
+      "fulfilAnyDay": "Qualsiasi giorno",
+      "fulfilDaysHint": "Scegli i giorni per cui questo articolo può essere ordinato. Lascia «Qualsiasi giorno» per consentire tutti i giorni e limitare solo per orario.",
+      "fulfilTimeHint": "Facoltativo — imposta una fascia oraria (ad es. 11:00–15:00 solo per pranzo). Lascia entrambi i campi vuoti per consentire qualsiasi orario nei giorni scelti.",
+      "fulfilPreview": "I clienti vedranno questo articolo tutti i giorni con una nota «Ordina in anticipo» e verrà chiesto loro di programmare l'ordine per un orario in cui è disponibile."
     },
     "promotionsList": {
       "stackingMaster": "Master",

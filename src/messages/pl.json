@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Dostępne {window}",
     "testModeBanner": "Tryb testowy — przeglądasz własny sklep",
     "testModeHint": "Zamówienia złożone tutaj są oznaczone jako TEST: dzwonią w kuchni i drukują się normalnie, ale nigdy nie liczą się w raportach ani przychodach.",
-    "fromPrice": "od {price}"
+    "fromPrice": "od {price}",
+    "fulfilOrderAheadLabel": "Zamów z wyprzedzeniem · {window}"
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Odblokowano promocję!",
     "unlockedPromoMany": "Odblokowano promocje!",
     "pickADateFirst": "Najpierw wybierz datę",
-    "closedThisDay": "Zamknięte tego dnia"
+    "closedThisDay": "Zamknięte tego dnia",
+    "fulfilSchedulePrompt": "📅 Co najmniej jedną pozycję w koszyku można zamówić tylko na określone dni lub godziny. Ustawiliśmy poniżej najbliższy dostępny termin — w razie potrzeby możesz go zmienić."
   },
   "reservation": {
     "title": "Zarezerwuj stolik",
@@ -1784,7 +1786,17 @@
       "previewTestOrdering": "Podgląd i zamówienie testowe",
       "masterMenuTitle": "Menu główne — {inheriting} z {total} lokalizacji dziedziczy to menu",
       "masterMenuBody": "Zmiany wprowadzone tutaj pojawiają się natychmiast w każdej dziedziczącej lokalizacji. Lokalizacje z własnym menu nie są zmieniane.",
-      "tabVisibility": "Widoczność"
+      "tabVisibility": "Widoczność",
+      "fulfilTitle": "Czas realizacji",
+      "fulfilHelp": "Ustaw dni i godziny, NA KTÓRE tę pozycję można zamówić. Nadal pojawia się ona w menu każdego dnia, ale poza wyznaczonym oknem klienci proszeni są o zaplanowanie zamówienia na prawidłowy termin — tak jak w przypadku cateringu. Świetne dla dań dnia (np. dania dostępnego tylko we wtorki) lub pozycji wyłącznie na lunch.",
+      "fulfilIntro": "Wybierz, kiedy klienci mogą zamówić tę pozycję. Pozostaje ona widoczna w menu przez cały czas.",
+      "fulfilAlways": "Dostępne zawsze",
+      "fulfilRestricted": "Tylko określone dni / godziny",
+      "fulfilDaysLabel": "Można zamawiać w te dni",
+      "fulfilAnyDay": "Dowolny dzień",
+      "fulfilDaysHint": "Wybierz dni, na które tę pozycję można zamówić. Pozostaw „Dowolny dzień”, aby zezwolić na każdy dzień i ograniczać tylko godzinami.",
+      "fulfilTimeHint": "Opcjonalnie — ustaw okno czasowe (np. 11:00–15:00 tylko na lunch). Pozostaw oba pola puste, aby zezwolić na dowolną godzinę w wybrane dni.",
+      "fulfilPreview": "Klienci będą widzieć tę pozycję każdego dnia z adnotacją „Zamów z wyprzedzeniem” i zostaną poproszeni o zaplanowanie zamówienia na godzinę, w której jest dostępna."
     },
     "promotionsList": {
       "stackingMaster": "Master",

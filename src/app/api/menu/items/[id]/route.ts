@@ -5,6 +5,7 @@ import { syncPizzaConfigAttachments } from "@/lib/pizza-config";
 import { blockIfInheritingMenu } from "@/lib/brand";
 import { hasFeature } from "@/lib/entitlements";
 import { buildVisibilityData } from "@/lib/menu-visibility";
+import { buildFulfilData } from "@/lib/menu-fulfilment";
 
 async function getRestaurantId() {
   const user = await getSessionUser();
@@ -35,7 +36,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const body = await req.json();
   const { name, description, price, categoryId, imageUrl, isAvailable, isFeatured, isHidden,
           isSoldOut, forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
-          availabilityMode, hasVariants, sortOrder, variants, pizzaConfig, comboConfig, visibility } = body;
+          availabilityMode, hasVariants, sortOrder, variants, pizzaConfig, comboConfig, visibility,
+          fulfilment } = body;
 
   const updateData: any = {};
   // GloriaFood-style scheduled visibility (Luigi 2026-06-12). When present,
@@ -44,6 +46,19 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const vis = buildVisibilityData(visibility);
     if (!vis.ok) return NextResponse.json({ error: vis.error }, { status: 400 });
     Object.assign(updateData, vis.data);
+  }
+  // Phase 2 Fulfilment Time — the days/times the item can be ordered FOR
+  // (visible always; forces scheduling). Replaces the legacy availabilityMode
+  // "show" path; sending fulfilment also clears the legacy fields so only one
+  // restriction system is ever active on a given item.
+  if (fulfilment !== undefined) {
+    const f = buildFulfilData(fulfilment);
+    if (!f.ok) return NextResponse.json({ error: f.error }, { status: 400 });
+    Object.assign(updateData, f.data);
+    updateData.availableDays = null;
+    updateData.availableFrom = null;
+    updateData.availableTo = null;
+    updateData.availabilityMode = null;
   }
   if (name !== undefined) updateData.name = name;
   if (description !== undefined) updateData.description = description || null;

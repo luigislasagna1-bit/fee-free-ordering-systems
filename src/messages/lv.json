@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Pieejams {window}",
     "testModeBanner": "Testa režīms — skatāt savu veikalu",
     "testModeHint": "Šeit veiktie pasūtījumi tiek atzīmēti TEST: tie zvana virtuvē un drukājas kā parasti, bet nekad netiek ieskaitīti atskaitēs vai ieņēmumos.",
-    "fromPrice": "no {price}"
+    "fromPrice": "no {price}",
+    "fulfilOrderAheadLabel": "Pasūtīt iepriekš · {window}"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Atbloķēji akciju!",
     "unlockedPromoMany": "Atbloķēji akcijas!",
     "pickADateFirst": "Vispirms izvēlieties datumu",
-    "closedThisDay": "Šajā dienā slēgts"
+    "closedThisDay": "Šajā dienā slēgts",
+    "fulfilSchedulePrompt": "📅 Vienu vai vairākus jūsu grozā esošos produktus var pasūtīt tikai noteiktās dienās vai laikos. Zemāk esam izvēlējušies agrāko pieejamo laiku – mainiet to, ja vēlaties."
   },
   "reservation": {
     "title": "Rezervēt galdu",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Priekšskatījums un testa pasūtījums",
       "masterMenuTitle": "Galvenā ēdienkarte — {inheriting} no {total} vietām manto šo ēdienkarti",
       "masterMenuBody": "Šeit veiktās izmaiņas nekavējoties parādās katrā vietā, kas manto. Vietas ar pielāgotu ēdienkarti netiek ietekmētas.",
-      "tabVisibility": "Redzamība"
+      "tabVisibility": "Redzamība",
+      "fulfilTitle": "Pasūtīšanas laiks",
+      "fulfilHelp": "Norādiet, KURĀM dienām un laikiem šo produktu var pasūtīt. Tas joprojām katru dienu ir redzams ēdienkartē, taču ārpus laika loga klientiem tiek lūgts ieplānot pasūtījumu uz derīgu laiku – tāpat kā ēdināšanas pakalpojumos. Lieliski piemērots dienas piedāvājumiem (piemēram, ēdienam tikai otrdienās) vai produktiem tikai pusdienlaikam.",
+      "fulfilIntro": "Izvēlieties, kad klienti var pasūtīt šo produktu. Tas vienmēr ir redzams ēdienkartē.",
+      "fulfilAlways": "Pieejams jebkurā laikā",
+      "fulfilRestricted": "Tikai noteiktās dienās/laikos",
+      "fulfilDaysLabel": "Pasūtāms šajās dienās",
+      "fulfilAnyDay": "Jebkura diena",
+      "fulfilDaysHint": "Izvēlieties dienas, kurām šo produktu var pasūtīt. Atstājiet kā „Jebkura diena“, lai atļautu visas dienas un ierobežotu tikai pēc laika.",
+      "fulfilTimeHint": "Neobligāti – iestatiet laika logu (piemēram, 11:00–15:00 tikai pusdienām). Atstājiet abus tukšus, lai atļautu jebkuru laiku izvēlētajās dienās.",
+      "fulfilPreview": "Klienti šo produktu redzēs katru dienu ar piezīmi „Pasūtīt iepriekš“, un viņiem tiks lūgts ieplānot pasūtījumu uz laiku, kad tas ir pieejams."
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

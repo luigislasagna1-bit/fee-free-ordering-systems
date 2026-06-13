@@ -5,6 +5,7 @@ import { syncPizzaConfigAttachments } from "@/lib/pizza-config";
 import { blockIfInheritingMenu } from "@/lib/brand";
 import { hasFeature } from "@/lib/entitlements";
 import { buildVisibilityData } from "@/lib/menu-visibility";
+import { buildFulfilData } from "@/lib/menu-fulfilment";
 
 export async function POST(req: NextRequest) {
   const user = await getSessionUser();
@@ -18,7 +19,8 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { name, description, price, categoryId, imageUrl, isHidden, isSoldOut,
           forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
-          availabilityMode, hasVariants, variants, pizzaConfig, comboConfig, visibility } = body;
+          availabilityMode, hasVariants, variants, pizzaConfig, comboConfig, visibility,
+          fulfilment } = body;
   if (!name || price === undefined || !categoryId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
   // Scheduled visibility (GloriaFood-style). Overrides isHidden when supplied.
@@ -27,6 +29,14 @@ export async function POST(req: NextRequest) {
     const v = buildVisibilityData(visibility);
     if (!v.ok) return NextResponse.json({ error: v.error }, { status: 400 });
     visData = v.data;
+  }
+  // Phase 2 Fulfilment Time — when supplied, it's the sole order-window system
+  // for the item (the legacy availability* fields stay null below).
+  let fulfilData: Record<string, unknown> = {};
+  if (fulfilment !== undefined) {
+    const f = buildFulfilData(fulfilment);
+    if (!f.ok) return NextResponse.json({ error: f.error }, { status: 400 });
+    fulfilData = f.data;
   }
 
   const cat = await prisma.menuCategory.findFirst({ where: { id: categoryId, restaurantId } });
@@ -56,6 +66,7 @@ export async function POST(req: NextRequest) {
         pizzaConfig: pizzaConfig ?? null,
         comboConfig: safeComboConfig,
         ...visData,
+        ...fulfilData,
       },
     });
 

@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Dostupno {window}",
     "testModeBanner": "Testni način — pregledavate vlastitu trgovinu",
     "testModeHint": "Narudžbe ovdje označene su TEST: zvone u kuhinji i ispisuju se normalno, ali se nikad ne računaju u izvještaje ni prihod.",
-    "fromPrice": "od {price}"
+    "fromPrice": "od {price}",
+    "fulfilOrderAheadLabel": "Naručite unaprijed · {window}"
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Otključali ste promociju!",
     "unlockedPromoMany": "Otključali ste promocije!",
     "pickADateFirst": "Prvo odaberite datum",
-    "closedThisDay": "Zatvoreno na ovaj dan"
+    "closedThisDay": "Zatvoreno na ovaj dan",
+    "fulfilSchedulePrompt": "📅 Jednu ili više stavki u vašoj košarici moguće je naručiti samo za određene dane ili vremena. U nastavku smo postavili najraniji dostupni termin — po želji ga prilagodite."
   },
   "reservation": {
     "title": "Rezervirajte stol",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Pregled i testna narudžba",
       "masterMenuTitle": "Glavni izbornik — {inheriting} od {total} lokacija nasljeđuje ovaj izbornik",
       "masterMenuBody": "Promjene koje ovdje napravite odmah se prikazuju na svakoj lokaciji koja nasljeđuje. Lokacije s prilagođenim izbornikom nisu zahvaćene.",
-      "tabVisibility": "Vidljivost"
+      "tabVisibility": "Vidljivost",
+      "fulfilTitle": "Vrijeme izvršenja",
+      "fulfilHelp": "Postavite dane i vremena ZA KOJA se ova stavka može naručiti. I dalje se prikazuje u jelovniku svaki dan, ali izvan vremenskog okvira kupci se mole da svoju narudžbu zakažu za valjano vrijeme — baš kao kod cateringa. Izvrsno za dnevne specijalitete (npr. jelo dostupno samo utorkom) ili stavke samo za ručak.",
+      "fulfilIntro": "Odaberite kada kupci mogu naručiti ovu stavku. U jelovniku ostaje vidljiva cijelo vrijeme.",
+      "fulfilAlways": "Dostupno u bilo koje vrijeme",
+      "fulfilRestricted": "Samo određeni dani / vremena",
+      "fulfilDaysLabel": "Može se naručiti ovim danima",
+      "fulfilAnyDay": "Bilo koji dan",
+      "fulfilDaysHint": "Odaberite dane za koje se ova stavka može naručiti. Ostavite „Bilo koji dan“ kako biste dopustili svaki dan i ograničili samo vremenom.",
+      "fulfilTimeHint": "Neobavezno — postavite vremenski okvir (npr. 11:00–15:00 samo za ručak). Ostavite oba polja prazna kako biste dopustili bilo koje vrijeme u odabrane dane.",
+      "fulfilPreview": "Kupci će ovu stavku vidjeti svaki dan uz napomenu „Naručite unaprijed“ i bit će zamoljeni da svoju narudžbu zakažu za vrijeme kada je dostupna."
     },
     "promotionsList": {
       "stackingMaster": "Master",

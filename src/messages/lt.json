@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Galima {window}",
     "testModeBanner": "Bandomasis režimas — peržiūrite savo parduotuvę",
     "testModeHint": "Čia pateikti užsakymai pažymimi TEST: jie skamba virtuvėje ir spausdinami įprastai, bet niekada neįskaičiuojami į ataskaitas ar pajamas.",
-    "fromPrice": "nuo {price}"
+    "fromPrice": "nuo {price}",
+    "fulfilOrderAheadLabel": "Išankstinis užsakymas · {window}"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Atrakinote akciją!",
     "unlockedPromoMany": "Atrakinote akcijas!",
     "pickADateFirst": "Pirma pasirinkite datą",
-    "closedThisDay": "Šią dieną uždaryta"
+    "closedThisDay": "Šią dieną uždaryta",
+    "fulfilSchedulePrompt": "📅 Vieną ar kelias jūsų krepšelyje esančias prekes galima užsisakyti tik tam tikromis dienomis ar valandomis. Žemiau parinkome anksčiausią galimą laiką – pakeiskite jį, jei norite."
   },
   "reservation": {
     "title": "Rezervuoti stalą",
@@ -2488,7 +2490,17 @@
       "previewTestOrdering": "Peržiūra ir bandomasis užsakymas",
       "masterMenuTitle": "Pagrindinis meniu — {inheriting} iš {total} vietų paveldi šį meniu",
       "masterMenuBody": "Čia atlikti pakeitimai iškart atsiranda kiekvienoje paveldinčioje vietoje. Vietos su pritaikytu meniu nepaveikiamos.",
-      "tabVisibility": "Matomumas"
+      "tabVisibility": "Matomumas",
+      "fulfilTitle": "Užsakymo laikas",
+      "fulfilHelp": "Nurodykite, KURIOMS dienoms ir valandoms šią prekę galima užsisakyti. Ji vis tiek kasdien rodoma meniu, tačiau ne laiko intervalo metu klientų prašoma suplanuoti užsakymą tinkamam laikui – kaip ir maitinimo paslaugų atveju. Puikiai tinka dienos patiekalams (pvz., patiekalui tik antradieniais) arba tik pietų prekėms.",
+      "fulfilIntro": "Pasirinkite, kada klientai gali užsisakyti šią prekę. Ji visada matoma meniu.",
+      "fulfilAlways": "Galima bet kada",
+      "fulfilRestricted": "Tik tam tikromis dienomis / valandomis",
+      "fulfilDaysLabel": "Užsakoma šiomis dienomis",
+      "fulfilAnyDay": "Bet kuri diena",
+      "fulfilDaysHint": "Pasirinkite dienas, kurioms šią prekę galima užsisakyti. Palikite „Bet kuri diena“, kad būtų leidžiamos visos dienos ir ribojama tik pagal laiką.",
+      "fulfilTimeHint": "Neprivaloma – nustatykite laiko intervalą (pvz., 11:00–15:00 tik pietums). Palikite abu laukus tuščius, kad pasirinktomis dienomis būtų leidžiamas bet koks laikas.",
+      "fulfilPreview": "Klientai šią prekę matys kiekvieną dieną su žyma „Išankstinis užsakymas“, ir jų bus paprašyta suplanuoti užsakymą laikui, kada ji galima."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Tersedia {window}",
     "testModeBanner": "Mode uji — Anda melihat pratinjau toko sendiri",
     "testModeHint": "Pesanan di sini ditandai TEST: berdering di dapur dan dicetak seperti biasa, tetapi tidak pernah dihitung dalam laporan atau pendapatan.",
-    "fromPrice": "mulai {price}"
+    "fromPrice": "mulai {price}",
+    "fulfilOrderAheadLabel": "Pesan di muka · {window}"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Anda membuka promo!",
     "unlockedPromoMany": "Anda membuka promo!",
     "pickADateFirst": "Pilih tanggal dulu",
-    "closedThisDay": "Tutup pada hari ini"
+    "closedThisDay": "Tutup pada hari ini",
+    "fulfilSchedulePrompt": "📅 Satu atau beberapa item di keranjang Anda hanya bisa dipesan untuk hari atau jam tertentu. Kami telah memilih slot paling awal yang tersedia di bawah ini — sesuaikan jika Anda mau."
   },
   "reservation": {
     "title": "Pesan meja",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Pratinjau & pesanan uji",
       "masterMenuTitle": "Menu utama — {inheriting} dari {total} lokasi mewarisi menu ini",
       "masterMenuBody": "Perubahan yang Anda buat di sini langsung muncul di setiap lokasi yang mewarisi. Lokasi dengan menu kustom tidak terpengaruh.",
-      "tabVisibility": "Visibilitas"
+      "tabVisibility": "Visibilitas",
+      "fulfilTitle": "Waktu pemenuhan",
+      "fulfilHelp": "Tetapkan hari dan jam item ini dapat dipesan UNTUK. Item tetap muncul di menu setiap hari, tetapi di luar rentang waktu tersebut pelanggan diminta menjadwalkan pesanan mereka pada waktu yang valid — sama seperti katering. Cocok untuk menu spesial harian (mis. hidangan khusus hari Selasa) atau item khusus makan siang.",
+      "fulfilIntro": "Pilih kapan pelanggan dapat memesan item ini. Item tetap terlihat di menu setiap saat.",
+      "fulfilAlways": "Tersedia kapan saja",
+      "fulfilRestricted": "Hanya hari / jam tertentu",
+      "fulfilDaysLabel": "Dapat dipesan pada hari-hari ini",
+      "fulfilAnyDay": "Hari apa saja",
+      "fulfilDaysHint": "Pilih hari item ini dapat dipesan untuk. Biarkan sebagai \"Hari apa saja\" untuk mengizinkan setiap hari dan membatasi hanya berdasarkan waktu.",
+      "fulfilTimeHint": "Opsional — tetapkan rentang waktu (mis. 11:00–15:00 untuk makan siang saja). Biarkan keduanya kosong untuk mengizinkan waktu apa saja pada hari yang dipilih.",
+      "fulfilPreview": "Pelanggan akan melihat item ini setiap hari dengan catatan \"Pesan di muka\", dan akan diminta menjadwalkan pesanan mereka pada waktu item tersebut tersedia."
     },
     "promotionsList": {
       "stackingMaster": "Master",

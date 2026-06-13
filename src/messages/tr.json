@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Şu zamanlarda mevcut: {window}",
     "testModeBanner": "Test modu — kendi mağazanızı önizliyorsunuz",
     "testModeHint": "Burada verilen siparişler TEST olarak işaretlenir: mutfakta çalar ve normal yazdırılır ama raporlara veya gelire asla sayılmaz.",
-    "fromPrice": "{price} başlangıç"
+    "fromPrice": "{price} başlangıç",
+    "fulfilOrderAheadLabel": "Önceden sipariş ver · {window}"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Bir promosyon açtınız!",
     "unlockedPromoMany": "Promosyonlar açtınız!",
     "pickADateFirst": "Önce bir tarih seçin",
-    "closedThisDay": "Bu gün kapalı"
+    "closedThisDay": "Bu gün kapalı",
+    "fulfilSchedulePrompt": "📅 Sepetinizdeki bir veya daha fazla ürün yalnızca belirli gün ya da saatlerde sipariş edilebilir. Mevcut en erken zaman dilimini aşağıda seçtik; isterseniz değiştirebilirsiniz."
   },
   "reservation": {
     "title": "Masa Rezervasyonu",
@@ -1784,7 +1786,17 @@
       "previewTestOrdering": "Önizleme ve test siparişi",
       "masterMenuTitle": "Ana menü — {total} konumdan {inheriting} tanesi bu menüyü devralıyor",
       "masterMenuBody": "Burada yaptığınız değişiklikler, devralan her konumda anında görünür. Özel menüsü olan konumlar etkilenmez.",
-      "tabVisibility": "Görünürlük"
+      "tabVisibility": "Görünürlük",
+      "fulfilTitle": "Sipariş zamanı",
+      "fulfilHelp": "Bu ürünün hangi gün ve saatler için sipariş edilebileceğini belirleyin. Ürün menüde her gün görünmeye devam eder, ancak belirlenen zaman aralığının dışında müşterilerden siparişlerini geçerli bir saate planlamaları istenir; tıpkı catering gibi. Günün özel yemekleri (ör. yalnızca salı günü sunulan bir yemek) veya yalnızca öğle yemeği ürünleri için idealdir.",
+      "fulfilIntro": "Müşterilerin bu ürünü ne zaman sipariş edebileceğini seçin. Ürün her zaman menüde görünür kalır.",
+      "fulfilAlways": "Her zaman mevcut",
+      "fulfilRestricted": "Yalnızca belirli gün / saatler",
+      "fulfilDaysLabel": "Bu günlerde sipariş edilebilir",
+      "fulfilAnyDay": "Herhangi bir gün",
+      "fulfilDaysHint": "Bu ürünün hangi günler için sipariş edilebileceğini seçin. Her güne izin vermek ve yalnızca saate göre sınırlamak için \"Herhangi bir gün\" olarak bırakın.",
+      "fulfilTimeHint": "İsteğe bağlı — bir saat aralığı belirleyin (ör. yalnızca öğle yemeği için 11:00–15:00). Seçilen günlerde her saate izin vermek için ikisini de boş bırakın.",
+      "fulfilPreview": "Müşteriler bu ürünü her gün \"Önceden sipariş ver\" notuyla görür ve siparişlerini ürünün mevcut olduğu bir saate planlamaları istenir."
     },
     "promotionsList": {
       "stackingMaster": "Ana",

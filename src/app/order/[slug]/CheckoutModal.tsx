@@ -230,7 +230,7 @@ interface Props {
    *  inside the time-choice section so the customer understands
    *  whether it's a catering rule, a "we're closed right now" rule,
    *  a min-advance rule, or several at once. */
-  scheduleReason?: "catering" | "closed" | "both" | "lead" | null;
+  scheduleReason?: "catering" | "closed" | "both" | "lead" | "fulfil" | null;
   /** The restaurant's next opening moment in datetime-local format
    *  (used by the "we're closed" branch of the banner copy). */
   closedNextOpenLocal?: string;
@@ -1033,6 +1033,8 @@ export function CheckoutModal({
                         })
                       ) : scheduleReason === "lead" ? (
                         tc("leadTimePrompt")
+                      ) : scheduleReason === "fulfil" ? (
+                        tc("fulfilSchedulePrompt")
                       ) : (
                         tc.rich("cateringOnly", {
                           hours: cateringNoticeHours ?? 24,

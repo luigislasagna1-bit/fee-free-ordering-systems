@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Elérhető: {window}",
     "testModeBanner": "Tesztmód — a saját éttermedet nézed",
     "testModeHint": "Az itt leadott rendelések TEST jelölést kapnak: csörögnek a konyhán és normálisan nyomtatódnak, de soha nem számítanak a riportokba vagy a bevételbe.",
-    "fromPrice": "{price}-tól"
+    "fromPrice": "{price}-tól",
+    "fulfilOrderAheadLabel": "Rendelés előre · {window}"
   },
   "pizza": {
     "chooseSize": "Méret választása",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Feloldottál egy promóciót!",
     "unlockedPromoMany": "Feloldottál promóciókat!",
     "pickADateFirst": "Először válassz dátumot",
-    "closedThisDay": "Ezen a napon zárva"
+    "closedThisDay": "Ezen a napon zárva",
+    "fulfilSchedulePrompt": "📅 A kosarában lévő egy vagy több tétel csak bizonyos napokra vagy időpontokra rendelhető. Az alábbiakban beállítottuk a legkorábbi elérhető időpontot — szükség esetén módosíthatja."
   },
   "reservation": {
     "title": "Asztal foglalása",
@@ -1784,7 +1786,17 @@
       "previewTestOrdering": "Előnézet és tesztrendelés",
       "masterMenuTitle": "Fő étlap — {total} helyszínből {inheriting} örökli ezt az étlapot",
       "masterMenuBody": "Az itt végzett módosítások azonnal megjelennek minden öröklő helyszínen. Az egyéni étlappal rendelkező helyszíneket nem érinti.",
-      "tabVisibility": "Láthatóság"
+      "tabVisibility": "Láthatóság",
+      "fulfilTitle": "Teljesítési idő",
+      "fulfilHelp": "Állítsa be, mely napokra és időpontokra rendelhető ez a tétel. A menüben továbbra is minden nap megjelenik, de az időablakon kívül a vendégeket arra kérjük, hogy a rendelésüket egy érvényes időpontra ütemezzék — akárcsak a cateringnél. Kiváló a napi ajánlatokhoz (pl. egy csak keddenként kapható fogás) vagy csak ebédre szánt tételekhez.",
+      "fulfilIntro": "Válassza ki, mikor rendelhetik meg a vendégek ezt a tételt. A menüben mindvégig látható marad.",
+      "fulfilAlways": "Bármikor elérhető",
+      "fulfilRestricted": "Csak bizonyos napok / időpontok",
+      "fulfilDaysLabel": "Ezeken a napokon rendelhető",
+      "fulfilAnyDay": "Bármelyik nap",
+      "fulfilDaysHint": "Válassza ki, mely napokra rendelhető ez a tétel. Hagyja a „Bármelyik nap” beállításon, hogy minden nap engedélyezett legyen, és csak idő szerint korlátozzon.",
+      "fulfilTimeHint": "Választható — állítson be időablakot (pl. 11:00–15:00 csak ebédre). Hagyja mindkét mezőt üresen, hogy a kiválasztott napokon bármely időpont engedélyezett legyen.",
+      "fulfilPreview": "A vendégek minden nap látni fogják ezt a tételt egy „Rendelés előre” megjegyzéssel, és arra kérjük őket, hogy a rendelésüket olyan időpontra ütemezzék, amikor elérhető."
     },
     "promotionsList": {
       "stackingMaster": "Master",

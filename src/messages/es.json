@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Disponible {window}",
     "testModeBanner": "Modo de prueba — estás previsualizando tu propia tienda",
     "testModeHint": "Los pedidos que hagas aquí se marcan como TEST: suenan en cocina y se imprimen con normalidad, pero nunca cuentan en informes ni ingresos.",
-    "fromPrice": "desde {price}"
+    "fromPrice": "desde {price}",
+    "fulfilOrderAheadLabel": "Pedir con antelación · {window}"
   },
   "pizza": {
     "chooseSize": "Elegir tamaño",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "¡Has desbloqueado una promo!",
     "unlockedPromoMany": "¡Has desbloqueado promos!",
     "pickADateFirst": "Primero elige una fecha",
-    "closedThisDay": "Cerrado este día"
+    "closedThisDay": "Cerrado este día",
+    "fulfilSchedulePrompt": "📅 Uno o varios artículos de tu carrito solo se pueden pedir para ciertos días u horas. Hemos seleccionado el horario disponible más próximo a continuación — ajústalo si lo deseas."
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Vista previa y pedido de prueba",
       "masterMenuTitle": "Menú maestro — {inheriting} de {total} ubicaciones heredan este menú",
       "masterMenuBody": "Los cambios que hagas aquí se aplican al instante a cada ubicación que hereda. Las ubicaciones con un menú personalizado no se ven afectadas.",
-      "tabVisibility": "Visibilidad"
+      "tabVisibility": "Visibilidad",
+      "fulfilTitle": "Hora de disponibilidad",
+      "fulfilHelp": "Define los días y las horas PARA los que se puede pedir este artículo. Sigue apareciendo en el menú todos los días, pero fuera de la franja horaria se pide a los clientes que programen su pedido para una hora válida — igual que en el catering. Ideal para platos del día (p. ej. un plato solo de los martes) o artículos solo para el almuerzo.",
+      "fulfilIntro": "Elige cuándo pueden pedir los clientes este artículo. Permanece visible en el menú en todo momento.",
+      "fulfilAlways": "Disponible en cualquier momento",
+      "fulfilRestricted": "Solo ciertos días / horas",
+      "fulfilDaysLabel": "Se puede pedir estos días",
+      "fulfilAnyDay": "Cualquier día",
+      "fulfilDaysHint": "Elige los días para los que se puede pedir este artículo. Deja «Cualquier día» para permitir todos los días y limitar solo por hora.",
+      "fulfilTimeHint": "Opcional — define una franja horaria (p. ej. 11:00–15:00 solo para el almuerzo). Deja ambos campos vacíos para permitir cualquier hora en los días elegidos.",
+      "fulfilPreview": "Los clientes verán este artículo todos los días con una nota de «Pedir con antelación», y se les pedirá que programen su pedido para una hora en la que esté disponible."
     },
     "promotionsList": {
       "stackingMaster": "Maestro",

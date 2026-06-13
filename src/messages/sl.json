@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Na voljo {window}",
     "testModeBanner": "Testni način — predogled lastne trgovine",
     "testModeHint": "Naročila tukaj so označena TEST: zvonijo v kuhinji in se natisnejo normalno, a se nikoli ne štejejo v poročila ali prihodek.",
-    "fromPrice": "od {price}"
+    "fromPrice": "od {price}",
+    "fulfilOrderAheadLabel": "Naročite vnaprej · {window}"
   },
   "pizza": {
     "chooseSize": "Izberite velikost",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Odklenili ste promocijo!",
     "unlockedPromoMany": "Odklenili ste promocije!",
     "pickADateFirst": "Najprej izberite datum",
-    "closedThisDay": "Ta dan zaprto"
+    "closedThisDay": "Ta dan zaprto",
+    "fulfilSchedulePrompt": "📅 Enega ali več izdelkov v vaši košarici je mogoče naročiti le za določene dni ali ure. Spodaj smo nastavili najzgodnejši razpoložljivi termin — po želji ga prilagodite."
   },
   "reservation": {
     "title": "Rezerviraj mizo",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Predogled in testno naročilo",
       "masterMenuTitle": "Glavni meni — {inheriting} od {total} lokacij podeduje ta meni",
       "masterMenuBody": "Spremembe, ki jih naredite tukaj, se takoj prikažejo na vsaki lokaciji, ki podeduje. Lokacije s prilagojenim menijem niso prizadete.",
-      "tabVisibility": "Vidnost"
+      "tabVisibility": "Vidnost",
+      "fulfilTitle": "Čas izvedbe",
+      "fulfilHelp": "Nastavite dneve in ure, ZA KATERE je mogoče naročiti ta izdelek. V meniju je še vedno prikazan vsak dan, vendar so zunaj časovnega okna stranke pozvane, da naročilo načrtujejo za veljaven čas — tako kot pri cateringu. Odlično za dnevne ponudbe (npr. jed samo ob torkih) ali izdelke samo za kosilo.",
+      "fulfilIntro": "Izberite, kdaj lahko stranke naročijo ta izdelek. V meniju ostane viden ves čas.",
+      "fulfilAlways": "Na voljo kadar koli",
+      "fulfilRestricted": "Samo določeni dnevi / ure",
+      "fulfilDaysLabel": "Naročljivo te dni",
+      "fulfilAnyDay": "Kateri koli dan",
+      "fulfilDaysHint": "Izberite dneve, za katere je mogoče naročiti ta izdelek. Pustite „Kateri koli dan“, da omogočite vsak dan in omejite samo s časom.",
+      "fulfilTimeHint": "Izbirno — nastavite časovno okno (npr. 11:00–15:00 samo za kosilo). Pustite obe polji prazni, da omogočite kateri koli čas na izbrane dni.",
+      "fulfilPreview": "Stranke bodo ta izdelek videle vsak dan z opombo „Naročite vnaprej“ in bodo pozvane, da naročilo načrtujejo za čas, ko je na voljo."
     },
     "promotionsList": {
       "stackingMaster": "Master",

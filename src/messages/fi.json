@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Saatavilla {window}",
     "testModeBanner": "Testitila — esikatselet omaa kauppaasi",
     "testModeHint": "Täällä tehdyt tilaukset merkitään TEST: ne soivat keittiössä ja tulostuvat normaalisti, mutta eivät koskaan näy raporteissa tai liikevaihdossa.",
-    "fromPrice": "alkaen {price}"
+    "fromPrice": "alkaen {price}",
+    "fulfilOrderAheadLabel": "Ennakkotilaus · {window}"
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Avasit tarjouksen!",
     "unlockedPromoMany": "Avasit tarjouksia!",
     "pickADateFirst": "Valitse ensin päivä",
-    "closedThisDay": "Suljettu tänä päivänä"
+    "closedThisDay": "Suljettu tänä päivänä",
+    "fulfilSchedulePrompt": "📅 Yhtä tai useampaa ostoskorisi tuotetta voi tilata vain tiettyinä päivinä tai kellonaikoina. Olemme valinneet alle aikaisimman vapaan ajan – muuta sitä halutessasi."
   },
   "reservation": {
     "title": "Varaa pöytä",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Esikatsele ja testitilaa",
       "masterMenuTitle": "Päävalikko — {inheriting}/{total} toimipaikkaa perii tämän valikon",
       "masterMenuBody": "Täällä tekemäsi muutokset näkyvät heti jokaisessa perivässä toimipaikassa. Mukautetun valikon toimipaikkoihin ei vaikuteta.",
-      "tabVisibility": "Näkyvyys"
+      "tabVisibility": "Näkyvyys",
+      "fulfilTitle": "Tilattavissa-aika",
+      "fulfilHelp": "Määritä, MILLOIN tämän tuotteen voi tilata. Se näkyy edelleen ruokalistalla joka päivä, mutta aikaikkunan ulkopuolella asiakkaita pyydetään ajastamaan tilaus kelvolliseen aikaan – aivan kuten pitopalvelussa. Sopii erinomaisesti päivän annoksiin (esim. vain tiistaisin tarjottava annos) tai vain lounaaseen kuuluviin tuotteisiin.",
+      "fulfilIntro": "Valitse, milloin asiakkaat voivat tilata tämän tuotteen. Se näkyy ruokalistalla aina.",
+      "fulfilAlways": "Saatavilla milloin tahansa",
+      "fulfilRestricted": "Vain tiettyinä päivinä/aikoina",
+      "fulfilDaysLabel": "Tilattavissa näinä päivinä",
+      "fulfilAnyDay": "Mikä tahansa päivä",
+      "fulfilDaysHint": "Valitse, minä päivinä tämän tuotteen voi tilata. Jätä asetukseksi ”Mikä tahansa päivä”, jos haluat sallia kaikki päivät ja rajata vain kellonajan mukaan.",
+      "fulfilTimeHint": "Valinnainen – aseta aikaikkuna (esim. 11:00–15:00 vain lounaalle). Jätä molemmat tyhjiksi, jos haluat sallia minkä tahansa ajan valittuina päivinä.",
+      "fulfilPreview": "Asiakkaat näkevät tämän tuotteen joka päivä ”Ennakkotilaus”-merkinnällä, ja heitä pyydetään ajastamaan tilaus ajankohtaan, jolloin se on saatavilla."
     },
     "promotionsList": {
       "stackingMaster": "Master",

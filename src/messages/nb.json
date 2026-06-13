@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Tilgjengelig {window}",
     "testModeBanner": "Testmodus — du forhåndsviser din egen butikk",
     "testModeHint": "Bestillinger her merkes TEST: de ringer på kjøkkenet og skrives ut normalt, men telles aldri i rapporter eller omsetning.",
-    "fromPrice": "fra {price}"
+    "fromPrice": "fra {price}",
+    "fulfilOrderAheadLabel": "Forhåndsbestill · {window}"
   },
   "pizza": {
     "chooseSize": "Velg størrelse",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Du har låst opp en kampanje!",
     "unlockedPromoMany": "Du har låst opp kampanjer!",
     "pickADateFirst": "Velg en dato først",
-    "closedThisDay": "Stengt denne dagen"
+    "closedThisDay": "Stengt denne dagen",
+    "fulfilSchedulePrompt": "📅 Én eller flere varer i handlekurven kan bare bestilles for bestemte dager eller tider. Vi har valgt det tidligste ledige tidspunktet nedenfor – endre det om du vil."
   },
   "reservation": {
     "title": "Bestill bord",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Forhåndsvis & testbestill",
       "masterMenuTitle": "Hovedmeny — {inheriting} av {total} steder arver denne menyen",
       "masterMenuBody": "Endringer du gjør her, vises umiddelbart på hvert sted som arver. Steder med en egendefinert meny påvirkes ikke.",
-      "tabVisibility": "Synlighet"
+      "tabVisibility": "Synlighet",
+      "fulfilTitle": "Tilgjengelig for bestilling",
+      "fulfilHelp": "Angi hvilke dager og tider denne varen kan bestilles FOR. Den vises fortsatt på menyen hver dag, men utenfor tidsrommet blir kundene bedt om å planlegge bestillingen til et gyldig tidspunkt – akkurat som ved catering. Perfekt for dagens retter (f.eks. en rett bare på tirsdager) eller varer kun til lunsj.",
+      "fulfilIntro": "Velg når kundene kan bestille denne varen. Den er alltid synlig på menyen.",
+      "fulfilAlways": "Tilgjengelig når som helst",
+      "fulfilRestricted": "Bare bestemte dager/tider",
+      "fulfilDaysLabel": "Kan bestilles disse dagene",
+      "fulfilAnyDay": "Hvilken som helst dag",
+      "fulfilDaysHint": "Velg hvilke dager denne varen kan bestilles for. La stå som «Hvilken som helst dag» for å tillate alle dager og bare begrense etter tid.",
+      "fulfilTimeHint": "Valgfritt – angi et tidsrom (f.eks. 11:00–15:00 kun til lunsj). La begge stå tomme for å tillate når som helst på de valgte dagene.",
+      "fulfilPreview": "Kundene ser denne varen hver dag med en «Forhåndsbestill»-merknad og blir bedt om å planlegge bestillingen til et tidspunkt da den er tilgjengelig."
     },
     "promotionsList": {
       "stackingMaster": "Master",

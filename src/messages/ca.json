@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Disponible {window}",
     "testModeBanner": "Mode de prova — estàs previsualitzant la teva botiga",
     "testModeHint": "Les comandes fetes aquí es marquen com a TEST: sonen a la cuina i s'imprimeixen normalment, però mai no compten en informes ni ingressos.",
-    "fromPrice": "des de {price}"
+    "fromPrice": "des de {price}",
+    "fulfilOrderAheadLabel": "Demana per endavant · {window}"
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Has desbloquejat una promo!",
     "unlockedPromoMany": "Has desbloquejat promos!",
     "pickADateFirst": "Tria primer una data",
-    "closedThisDay": "Tancat aquest dia"
+    "closedThisDay": "Tancat aquest dia",
+    "fulfilSchedulePrompt": "📅 Un o més articles del teu cistell només es poden demanar per a determinats dies o hores. Hem seleccionat a sota la franja disponible més propera — ajusta-la si vols."
   },
   "reservation": {
     "title": "Reservar taula",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Previsualitza i comanda de prova",
       "masterMenuTitle": "Menú mestre — {inheriting} de {total} ubicacions hereten aquest menú",
       "masterMenuBody": "Els canvis que facis aquí s'apliquen a l'instant a cada ubicació que hereta. Les ubicacions amb un menú personalitzat no es veuen afectades.",
-      "tabVisibility": "Visibilitat"
+      "tabVisibility": "Visibilitat",
+      "fulfilTitle": "Hora de disponibilitat",
+      "fulfilHelp": "Defineix els dies i les hores PER als quals es pot demanar aquest article. Continua apareixent al menú cada dia, però fora de la franja horària es demana als clients que programin la comanda per a una hora vàlida — igual que en el càtering. Ideal per a plats del dia (p. ex. un plat només dels dimarts) o articles només per a l'esmorzar.",
+      "fulfilIntro": "Tria quan els clients poden demanar aquest article. Es manté visible al menú en tot moment.",
+      "fulfilAlways": "Disponible en qualsevol moment",
+      "fulfilRestricted": "Només determinats dies / hores",
+      "fulfilDaysLabel": "Es pot demanar aquests dies",
+      "fulfilAnyDay": "Qualsevol dia",
+      "fulfilDaysHint": "Tria els dies per als quals es pot demanar aquest article. Deixa-ho a «Qualsevol dia» per permetre tots els dies i limitar només per hora.",
+      "fulfilTimeHint": "Opcional — defineix una franja horària (p. ex. 11:00–15:00 només per a l'esmorzar). Deixa els dos camps buits per permetre qualsevol hora en els dies triats.",
+      "fulfilPreview": "Els clients veuran aquest article cada dia amb una nota «Demana per endavant» i se'ls demanarà que programin la comanda per a una hora en què estigui disponible."
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

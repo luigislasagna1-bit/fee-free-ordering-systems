@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Có sẵn {window}",
     "testModeBanner": "Chế độ thử — bạn đang xem trước cửa hàng của mình",
     "testModeHint": "Đơn đặt ở đây được đánh dấu TEST: vẫn reo ở bếp và in bình thường nhưng không bao giờ tính vào báo cáo hay doanh thu.",
-    "fromPrice": "từ {price}"
+    "fromPrice": "từ {price}",
+    "fulfilOrderAheadLabel": "Đặt trước · {window}"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Bạn đã mở khóa ưu đãi!",
     "unlockedPromoMany": "Bạn đã mở khóa các ưu đãi!",
     "pickADateFirst": "Chọn ngày trước",
-    "closedThisDay": "Đóng cửa ngày này"
+    "closedThisDay": "Đóng cửa ngày này",
+    "fulfilSchedulePrompt": "📅 Một hoặc nhiều món trong giỏ hàng của bạn chỉ có thể đặt vào những ngày hoặc giờ nhất định. Chúng tôi đã chọn khung giờ sớm nhất hiện có bên dưới — bạn có thể điều chỉnh nếu muốn."
   },
   "reservation": {
     "title": "Đặt bàn",
@@ -1784,7 +1786,17 @@
       "previewTestOrdering": "Xem trước & đặt thử",
       "masterMenuTitle": "Menu chính — {inheriting}/{total} địa điểm kế thừa menu này",
       "masterMenuBody": "Các thay đổi bạn thực hiện ở đây sẽ xuất hiện ngay lập tức tại mọi địa điểm kế thừa. Các địa điểm có menu tùy chỉnh không bị ảnh hưởng.",
-      "tabVisibility": "Hiển thị"
+      "tabVisibility": "Hiển thị",
+      "fulfilTitle": "Thời gian phục vụ",
+      "fulfilHelp": "Đặt những ngày và giờ mà món này có thể được đặt CHO. Món vẫn xuất hiện trên thực đơn mỗi ngày, nhưng ngoài khung giờ đó khách hàng sẽ được yêu cầu lên lịch đặt món vào một thời điểm hợp lệ — giống như dịch vụ tiệc. Rất phù hợp cho món đặc biệt trong ngày (ví dụ món chỉ phục vụ vào thứ Ba) hoặc các món chỉ phục vụ bữa trưa.",
+      "fulfilIntro": "Chọn thời điểm khách hàng có thể đặt món này. Món luôn hiển thị trên thực đơn mọi lúc.",
+      "fulfilAlways": "Có sẵn bất cứ lúc nào",
+      "fulfilRestricted": "Chỉ một số ngày / giờ nhất định",
+      "fulfilDaysLabel": "Có thể đặt vào những ngày này",
+      "fulfilAnyDay": "Bất kỳ ngày nào",
+      "fulfilDaysHint": "Chọn những ngày mà món này có thể được đặt cho. Để là \"Bất kỳ ngày nào\" để cho phép mọi ngày và chỉ giới hạn theo giờ.",
+      "fulfilTimeHint": "Tùy chọn — đặt một khung giờ (ví dụ 11:00–15:00 chỉ cho bữa trưa). Để trống cả hai để cho phép bất kỳ giờ nào vào những ngày đã chọn.",
+      "fulfilPreview": "Khách hàng sẽ thấy món này mỗi ngày kèm ghi chú \"Đặt trước\", và sẽ được yêu cầu lên lịch đặt món vào thời điểm món có sẵn."
     },
     "promotionsList": {
       "stackingMaster": "Master",

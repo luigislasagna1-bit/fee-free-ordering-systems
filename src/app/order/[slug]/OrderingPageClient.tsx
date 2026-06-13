@@ -13,6 +13,7 @@ import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib
 import { methodsForOrderType, paymentValueToSlug } from "@/lib/payment-methods";
 import { localDowAndHHMM, liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
 import { isVisibleNow } from "@/lib/menu-visibility";
+import { hasFulfilWindow, isFulfilableAt, fulfilWindowLabel } from "@/lib/menu-fulfilment";
 
 /** Convert minutes-since-midnight (0..1440) into "HH:MM" 24-hour format.
  *  Used by the promo-banner usability-window label so a 12-3 PM lunch
@@ -71,6 +72,9 @@ interface MenuItem extends VisibilityProps {
   imageUrl?: string; isFeatured: boolean; isSoldOut: boolean;
   hasVariants: boolean; forPickup: boolean; forDelivery: boolean;
   availableDays?: number[]; availableFrom?: string; availableTo?: string;
+  // Phase 2 Fulfilment Time: item visible all week, orderable only for these
+  // days/times (forces scheduling, like catering). null = no restriction.
+  fulfilDays?: string | null; fulfilFrom?: string | null; fulfilTo?: string | null;
   modifierGroups: ModGroup[]; variants: ItemVariant[];
   categoryId?: string;
   pizzaConfig?: string;
@@ -137,6 +141,38 @@ function itemAvailabilityWindow(item: MenuItem, hoursFmt: "12h" | "24h"): string
     parts.push(`${formatHHMM(item.availableFrom, hoursFmt)} – ${formatHHMM(item.availableTo, hoursFmt)}`);
   }
   return parts.join(" · ");
+}
+
+/** Phase 2 Fulfilment Time window label, e.g. "Tue, Wed · 12:00 – 15:00".
+ *  Day names from Intl in the browser locale; times honour 12h/24h. Used for
+ *  the "Order ahead — available …" badge on a fulfilment-restricted item. */
+function itemFulfilWindow(item: MenuItem, hoursFmt: "12h" | "24h"): string {
+  const fmt = new Intl.DateTimeFormat(undefined, { weekday: "short", timeZone: "UTC" });
+  return fulfilWindowLabel(
+    item,
+    // 2021-08-01 was a Sunday — offsetting by the dow index yields each weekday.
+    (d) => fmt.format(new Date(Date.UTC(2021, 7, 1 + d))),
+    (hhmm) => formatHHMM(hhmm, hoursFmt),
+  );
+}
+
+/** Earliest 15-min slot from `from` at which EVERY supplied fulfilment item is
+ *  simultaneously orderable (restaurant tz). null = already orderable at `from`,
+ *  or no item is restricted, or none opens within 14 days. Drives the forced
+ *  schedule minimum when the cart holds fulfilment-restricted items. */
+function earliestCombinedFulfilSlot(items: MenuItem[], from: Date, timezone?: string): Date | null {
+  const restricted = items.filter(hasFulfilWindow);
+  if (restricted.length === 0) return null;
+  if (restricted.every((it) => isFulfilableAt(it, from, timezone))) return null;
+  const q = 15 * 60 * 1000;
+  let t = Math.ceil(from.getTime() / q) * q;
+  const limit = from.getTime() + 14 * 24 * 3600 * 1000;
+  while (t <= limit) {
+    const d = new Date(t);
+    if (restricted.every((it) => isFulfilableAt(it, d, timezone))) return d;
+    t += q;
+  }
+  return null;
 }
 
 function isItemAvailableNow(item: MenuItem, timezone?: string): boolean {
@@ -476,6 +512,9 @@ function CarouselCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnTy
         {!isSold && !availBlocked && availNote && (
           <p className="mt-1 text-[10px] font-medium text-amber-700 leading-tight">{availNote}</p>
         )}
+        {!isSold && (item as any).__fulfilNote && (
+          <p className="mt-1 text-[10px] font-semibold text-indigo-600 leading-tight">{(item as any).__fulfilNote}</p>
+        )}
         <div className="flex items-center justify-between mt-2">
           <span className="text-sm font-bold" style={{ color: theme.primaryColor }}>
             {item.hasVariants ? t("fromPrice", { price: fmt(basePrice) }) : fmt(basePrice)}
@@ -605,6 +644,9 @@ function GridCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
             {!isSold && !availBlocked && availNote && (
               <p className="text-[11px] font-medium text-amber-700 mt-1">{availNote}</p>
             )}
+            {!isSold && (item as any).__fulfilNote && (
+              <p className="text-[11px] font-semibold text-indigo-600 mt-1">{(item as any).__fulfilNote}</p>
+            )}
           </div>
           <div className="flex-shrink-0 flex flex-col items-end gap-2">
             <div className="font-bold text-base" style={{ color: theme.textColor }}>
@@ -673,6 +715,9 @@ function ListCard({ item, theme, onOpen }: { item: MenuItem; theme: ReturnType<t
           {item.description && <p className="text-sm text-gray-500 mt-1 line-clamp-2 leading-relaxed">{item.description}</p>}
           {!isSold && !availBlocked && availNote && (
             <p className="text-[11px] font-medium text-amber-700 mt-1">{availNote}</p>
+          )}
+          {!isSold && (item as any).__fulfilNote && (
+            <p className="text-[11px] font-semibold text-indigo-600 mt-1">{(item as any).__fulfilNote}</p>
           )}
           <div className="font-bold text-base mt-2" style={{ color: theme.textColor }}>
             {item.hasVariants ? t("fromPrice", { price: fmt(basePrice) }) : fmt(basePrice)}
@@ -1618,7 +1663,11 @@ export function OrderingPageClient({
             // only on days it's actually sold: on an excluded DAY it hides
             // entirely (reseller report cmpxec829 + Fabrizio's follow-up).
             (isItemAvailableNow(i, restaurantTz) ||
-              ((i as any).availabilityMode === "show" && isItemDayAvailable(i, restaurantTz)))
+              ((i as any).availabilityMode === "show" && isItemDayAvailable(i, restaurantTz)) ||
+              // Phase 2 Fulfilment Time: visible EVERY day regardless of the
+              // legacy time gate — the customer schedules the order for a valid
+              // slot (forced, like catering), so it must always be addable.
+              hasFulfilWindow(i))
           )
           .map(item => {
             // Merge: item-level groups first (in their sortOrder), then category-level
@@ -1639,12 +1688,23 @@ export function OrderingPageClient({
             const availabilityNote = window
               ? t("availableOnlyLabel", { window })
               : undefined;
+            // Phase 2 Fulfilment Time badge — shown on the item whenever it
+            // carries a fulfilment window so customers see "Order ahead —
+            // available Tue" before adding. The item stays addable; the cart's
+            // combine-logic forces a valid scheduled slot (like catering).
+            const fulfilWin = hasFulfilWindow(item) ? itemFulfilWindow(item, hoursFmt) : "";
+            const fulfilNote = fulfilWin ? t("fulfilOrderAheadLabel", { window: fulfilWin }) : undefined;
             return {
               ...item,
               categoryId: c.id,
               modifierGroups: [...item.modifierGroups, ...uniqueCatGroups],
               __availabilityNote: availabilityNote,
               __availabilityBlocked: !isItemAvailableNow(item, restaurantTz) || undefined,
+              __fulfilNote: fulfilNote,
+              // Greyed (but addable) when an ASAP order couldn't be fulfilled
+              // right now — signals "you'll need to schedule this".
+              __fulfilNeedsSchedule:
+                (fulfilWin && !isFulfilableAt(item, visNow, restaurantTz)) || undefined,
             };
           }),
       };
@@ -2073,6 +2133,31 @@ export function OrderingPageClient({
     ? toRestaurantWallClock(nextOpenDate.getTime())
     : "";
 
+  // ── Phase 2 Fulfilment Time (Luigi 2026-06-12) ──────────────────────
+  // Cart items with a fulfilment window (visible all week, orderable only
+  // for certain days/times) force scheduling — exactly like catering. We
+  // find the earliest slot at which EVERY such item is simultaneously
+  // orderable, starting no earlier than the other minimums (catering /
+  // lead / closed) so the one forced slot satisfies all constraints. If
+  // they're already orderable now, no extra minimum is added (ASAP is fine).
+  const cartFulfilItems = cart.map((ci) => ci.menuItem).filter(hasFulfilWindow);
+  const cartHasFulfil = cartFulfilItems.length > 0;
+  const fulfilBaseMs = (() => {
+    let ms = Date.now();
+    if (cartHasFulfil) {
+      if (cateringItemIds.size > 0 && cartHasCatering) ms = Math.max(ms, Date.now() + cateringNoticeHours * 3600 * 1000);
+      if (restaurantIsClosedNow && nextOpenDate) ms = Math.max(ms, nextOpenDate.getTime());
+    }
+    return ms;
+  })();
+  const fulfilEarliestSlot = cartHasFulfil
+    ? earliestCombinedFulfilSlot(cartFulfilItems, new Date(fulfilBaseMs), restaurantTz)
+    : null;
+  // Empty when the items are already orderable at the base moment (no forced slot).
+  const fulfilMinScheduledLocal = fulfilEarliestSlot
+    ? toRestaurantWallClock(fulfilEarliestSlot.getTime(), true)
+    : "";
+
   // Scheduled-orders master controls (GloriaFood parity, Fabrizio cmq14gy64).
   // allowScheduledOrders=false → no time picker (ASAP only) unless catering /
   // closed-now forces it. requireScheduledOrders=true → ASAP hidden.
@@ -2101,21 +2186,28 @@ export function OrderingPageClient({
   // customer into schedule mode, we honor the stricter (latest) min slot.
   // A min-lead > 0 means ASAP isn't offered — the order must be placed at
   // least that far ahead.
-  const scheduleRequired = cartHasCatering || restaurantIsClosedNow || orderMinLeadMinutes > 0 || hideAsap;
+  // A fulfilment item that isn't orderable now forces scheduling (fulfilMin set).
+  const fulfilForcesSchedule = cartHasFulfil && !!fulfilMinScheduledLocal;
+  const scheduleRequired = cartHasCatering || restaurantIsClosedNow || orderMinLeadMinutes > 0 || hideAsap || fulfilForcesSchedule;
   // Whether the schedule picker is shown at all. Off only when the owner
-  // disabled scheduling AND nothing forces it (catering / closed now).
-  const schedulingEnabled = schedulingAllowed || cartHasCatering || restaurantIsClosedNow;
+  // disabled scheduling AND nothing forces it (catering / closed now / fulfilment).
+  const schedulingEnabled = schedulingAllowed || cartHasCatering || restaurantIsClosedNow || fulfilForcesSchedule;
   const effectiveMinScheduledLocal = (() => {
     const candidates: string[] = [];
     if (cartHasCatering && cateringMinScheduledLocal) candidates.push(cateringMinScheduledLocal);
     if (restaurantIsClosedNow && closedMinScheduledLocal) candidates.push(closedMinScheduledLocal);
     if (orderMinLeadMinutes > 0 && leadMinScheduledLocal) candidates.push(leadMinScheduledLocal);
+    if (fulfilMinScheduledLocal) candidates.push(fulfilMinScheduledLocal);
     if (candidates.length === 0) return "";
     // Pick the LATEST (string comparison works because both are zero-padded ISO-shaped).
     return candidates.sort()[candidates.length - 1];
   })();
-  const scheduleReason: "catering" | "closed" | "both" | "lead" | null =
-    cartHasCatering && restaurantIsClosedNow ? "both"
+  // Fulfilment is the most specific date constraint ("only Tuesdays"), so it
+  // names the schedule prompt when present — the picker minimum still honours
+  // every other constraint via effectiveMinScheduledLocal above.
+  const scheduleReason: "catering" | "closed" | "both" | "lead" | "fulfil" | null =
+    fulfilForcesSchedule ? "fulfil"
+    : cartHasCatering && restaurantIsClosedNow ? "both"
     : cartHasCatering ? "catering"
     : restaurantIsClosedNow ? "closed"
     : (orderMinLeadMinutes > 0 || hideAsap) ? "lead"

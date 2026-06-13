@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Saadaval {window}",
     "testModeBanner": "Testrežiim — vaatad omaenda poodi",
     "testModeHint": "Siin tehtud tellimused märgitakse TEST: need helisevad köögis ja prinditakse tavapäraselt, kuid ei lähe kunagi aruannetesse ega tulusse.",
-    "fromPrice": "alates {price}"
+    "fromPrice": "alates {price}",
+    "fulfilOrderAheadLabel": "Ettetellimus · {window}"
   },
   "pizza": {
     "chooseSize": "Vali suurus",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Avasid sooduspakkumise!",
     "unlockedPromoMany": "Avasid sooduspakkumisi!",
     "pickADateFirst": "Vali esmalt kuupäev",
-    "closedThisDay": "Sel päeval suletud"
+    "closedThisDay": "Sel päeval suletud",
+    "fulfilSchedulePrompt": "📅 Üht või mitut ostukorvis olevat toodet saab tellida ainult kindlatel päevadel või kellaaegadel. Oleme allpool valinud varaseima vaba aja – muutke seda soovi korral."
   },
   "reservation": {
     "title": "Broneeri laud",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Eelvaade ja testtellimus",
       "masterMenuTitle": "Põhimenüü — {total}-st asukohast {inheriting} pärib selle menüü",
       "masterMenuBody": "Siin tehtud muudatused ilmuvad kohe igas pärivas asukohas. Kohandatud menüüga asukohti ei mõjutata.",
-      "tabVisibility": "Nähtavus"
+      "tabVisibility": "Nähtavus",
+      "fulfilTitle": "Tellitavuse aeg",
+      "fulfilHelp": "Määrake, MILLISTEKS päevadeks ja kellaaegadeks saab seda toodet tellida. See on menüüs endiselt näha iga päev, kuid väljaspool ajavahemikku palutakse klientidel ajastada oma tellimus sobivale ajale – täpselt nagu toitlustuse puhul. Sobib suurepäraselt päevapakkumiste jaoks (nt ainult teisipäeviti pakutav roog) või üksnes lõunaroogadele.",
+      "fulfilIntro": "Valige, millal kliendid saavad seda toodet tellida. See on menüüs alati nähtaval.",
+      "fulfilAlways": "Saadaval igal ajal",
+      "fulfilRestricted": "Ainult kindlad päevad / kellaajad",
+      "fulfilDaysLabel": "Tellitav nendel päevadel",
+      "fulfilAnyDay": "Suvaline päev",
+      "fulfilDaysHint": "Valige, millistel päevadel saab seda toodet tellida. Jätke valikuks „Suvaline päev“, et lubada kõik päevad ja piirata ainult kellaaja järgi.",
+      "fulfilTimeHint": "Valikuline – määrake ajavahemik (nt 11:00–15:00 ainult lõunaks). Jätke mõlemad tühjaks, et lubada valitud päevadel suvaline aeg.",
+      "fulfilPreview": "Kliendid näevad seda toodet iga päev märkega „Ettetellimus“ ja neil palutakse ajastada oma tellimus ajale, mil see on saadaval."
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

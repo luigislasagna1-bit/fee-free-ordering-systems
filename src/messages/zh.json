@@ -256,7 +256,8 @@
     "availableOnlyLabel": "供应时间 {window}",
     "testModeBanner": "测试模式——您正在预览自己的店铺",
     "testModeHint": "在此下的订单会标记为 TEST：厨房正常响铃和打印，但绝不会计入报表或营业额。",
-    "fromPrice": "{price} 起"
+    "fromPrice": "{price} 起",
+    "fulfilOrderAheadLabel": "提前预订 · {window}"
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "您解锁了一个优惠！",
     "unlockedPromoMany": "您解锁了多个优惠！",
     "pickADateFirst": "请先选择日期",
-    "closedThisDay": "当天休息"
+    "closedThisDay": "当天休息",
+    "fulfilSchedulePrompt": "📅 您购物车中的一件或多件商品只能在特定日期或时间下单。我们已在下方为您选择了最早可用的时段——如有需要可自行调整。"
   },
   "reservation": {
     "title": "预订餐桌",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "预览并测试下单",
       "masterMenuTitle": "主菜单 — {total} 个门店中有 {inheriting} 个沿用此菜单",
       "masterMenuBody": "您在此处所做的更改会立即应用到每个沿用此菜单的门店。使用自定义菜单的门店不受影响。",
-      "tabVisibility": "显示设置"
+      "tabVisibility": "显示设置",
+      "fulfilTitle": "可订时间",
+      "fulfilHelp": "设置此商品可供下单的日期和时间。该商品仍会每天显示在菜单上，但在该时间段之外，系统会请顾客将订单安排到一个有效的时间——就像餐饮承办一样。非常适合每日特餐（例如仅周二供应的菜品）或仅限午餐的商品。",
+      "fulfilIntro": "选择顾客可以下单此商品的时间。它会始终显示在菜单上。",
+      "fulfilAlways": "随时可订",
+      "fulfilRestricted": "仅限特定日期／时间",
+      "fulfilDaysLabel": "可在这些日期下单",
+      "fulfilAnyDay": "任意一天",
+      "fulfilDaysHint": "选择此商品可供下单的日期。保留为\"任意一天\"以允许每天下单，仅按时间加以限制。",
+      "fulfilTimeHint": "可选——设置一个时间段（例如仅供午餐的 11:00–15:00）。两者均留空则允许在所选日期的任意时间下单。",
+      "fulfilPreview": "顾客每天都会看到此商品，并附有\"提前预订\"提示，系统会请他们将订单安排到商品可供应的时间。"
     },
     "promotionsList": {
       "stackingMaster": "主控",

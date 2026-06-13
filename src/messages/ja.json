@@ -256,7 +256,8 @@
     "availableOnlyLabel": "提供時間 {window}",
     "testModeBanner": "テストモード — 自分の店舗をプレビュー中",
     "testModeHint": "ここで行った注文は TEST と表示されます。キッチンには通常どおり通知・印刷されますが、レポートや売上には一切計上されません。",
-    "fromPrice": "{price}〜"
+    "fromPrice": "{price}〜",
+    "fulfilOrderAheadLabel": "事前注文 · {window}"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "プロモを獲得しました！",
     "unlockedPromoMany": "プロモを獲得しました！",
     "pickADateFirst": "先に日付を選択",
-    "closedThisDay": "この日は休業"
+    "closedThisDay": "この日は休業",
+    "fulfilSchedulePrompt": "📅 カート内の1つ以上の商品は、特定の曜日または時間帯のみ注文できます。利用可能な最も早い時間枠を以下に設定しました。必要に応じて変更してください。"
   },
   "reservation": {
     "title": "テーブルを予約",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "プレビュー＆テスト注文",
       "masterMenuTitle": "マスターメニュー — {total} 店舗中 {inheriting} 店舗がこのメニューを継承",
       "masterMenuBody": "ここでの変更は、継承している各店舗に即座に反映されます。独自メニューの店舗には影響しません。",
-      "tabVisibility": "表示設定"
+      "tabVisibility": "表示設定",
+      "fulfilTitle": "提供時間",
+      "fulfilHelp": "この商品を注文できる曜日と時間を設定します。商品は毎日メニューに表示されますが、設定した時間帯の外では、お客様はケータリングと同じように、有効な時間に注文を予約するよう求められます。日替わり特別メニュー（例：火曜日限定の料理）やランチ限定の商品に最適です。",
+      "fulfilIntro": "お客様がこの商品を注文できる時間を選択します。商品は常にメニューに表示されたままです。",
+      "fulfilAlways": "いつでも利用可能",
+      "fulfilRestricted": "特定の曜日／時間のみ",
+      "fulfilDaysLabel": "これらの曜日に注文可能",
+      "fulfilAnyDay": "いつでも",
+      "fulfilDaysHint": "この商品を注文できる曜日を選択します。「いつでも」のままにすると、毎日許可され、時間のみで制限されます。",
+      "fulfilTimeHint": "任意 — 時間帯を設定します（例：ランチのみの 11:00–15:00）。両方を空欄にすると、選択した曜日のすべての時間が許可されます。",
+      "fulfilPreview": "お客様には毎日この商品が「事前注文」の注記とともに表示され、商品が利用可能な時間に注文を予約するよう求められます。"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

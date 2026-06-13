@@ -5,6 +5,7 @@ import { generateOrderNumber, formatCurrency } from "@/lib/utils";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
 import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, localDowAndHHMM, dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { holidayEffectForDay, holidayEffectToday, canonicalHolidayService, hhmmInsideIntervals } from "@/lib/holiday-rules";
+import { hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import {
   resolveDeliveryAddressConfig,
@@ -1578,6 +1579,34 @@ export async function POST(req: NextRequest) {
             {
               error: `On this date we're only open ${windows}. Please pick a time within those hours.`,
               code: "holiday_custom_hours",
+            },
+            { status: 400 },
+          );
+        }
+      }
+    }
+
+    // ── Per-item Fulfilment Time enforcement (Luigi 2026-06-12, Phase 2) ──────
+    // An item with a fulfilment window can only be ordered FOR days/times inside
+    // it (visible all week, but e.g. orderable only on Tuesdays). Validate every
+    // cart item against the order's EFFECTIVE fulfilment moment — the scheduled
+    // slot, else now for ASAP. Mirrors catering's "must schedule" gate, per item.
+    {
+      const fulfilTz = (restaurant as any).timezone ?? undefined;
+      const fulfilMoment = hasFutureSchedule ? scheduledForDate! : new Date();
+      for (const vi of validatedItems) {
+        if (!vi.menuItemId) continue; // bundle wrapper
+        const mi = menuItemMap.get(vi.menuItemId) as any;
+        if (!mi || !hasFulfilWindow(mi)) continue;
+        if (!isFulfilableAt(mi, fulfilMoment, fulfilTz)) {
+          return NextResponse.json(
+            {
+              error: `"${mi.name}" can only be ordered for certain days/times. Please schedule your order for when it's available.`,
+              code: "item_fulfilment_window",
+              itemName: mi.name,
+              fulfilDays: mi.fulfilDays ?? null,
+              fulfilFrom: mi.fulfilFrom ?? null,
+              fulfilTo: mi.fulfilTo ?? null,
             },
             { status: 400 },
           );

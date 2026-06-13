@@ -256,7 +256,8 @@
     "availableOnlyLabel": "Beschikbaar {window}",
     "testModeBanner": "Testmodus — je bekijkt je eigen winkel",
     "testModeHint": "Bestellingen die je hier plaatst zijn gemarkeerd als TEST: ze rinkelen in de keuken en printen normaal, maar tellen nooit mee in rapporten of omzet.",
-    "fromPrice": "vanaf {price}"
+    "fromPrice": "vanaf {price}",
+    "fulfilOrderAheadLabel": "Vooraf bestellen · {window}"
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Je hebt een promo ontgrendeld!",
     "unlockedPromoMany": "Je hebt promo's ontgrendeld!",
     "pickADateFirst": "Kies eerst een datum",
-    "closedThisDay": "Deze dag gesloten"
+    "closedThisDay": "Deze dag gesloten",
+    "fulfilSchedulePrompt": "📅 Een of meer artikelen in je winkelwagen kunnen alleen voor bepaalde dagen of tijden worden besteld. We hebben hieronder het eerstvolgende beschikbare tijdslot ingesteld — pas het aan als je wilt."
   },
   "reservation": {
     "title": "Tafel reserveren",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Voorbeeld & testbestelling",
       "masterMenuTitle": "Hoofdmenu — {inheriting} van {total} locaties erven dit menu",
       "masterMenuBody": "Wijzigingen die je hier maakt, verschijnen direct op elke locatie die overerft. Locaties met een aangepast menu worden niet beïnvloed.",
-      "tabVisibility": "Zichtbaarheid"
+      "tabVisibility": "Zichtbaarheid",
+      "fulfilTitle": "Beschikbaarheidstijd",
+      "fulfilHelp": "Stel de dagen en tijden in WAARVOOR dit artikel kan worden besteld. Het blijft elke dag op het menu staan, maar buiten het tijdvenster wordt klanten gevraagd hun bestelling voor een geldig tijdstip in te plannen — net als bij catering. Ideaal voor dagspecials (bijv. een gerecht alleen op dinsdag) of artikelen alleen voor de lunch.",
+      "fulfilIntro": "Kies wanneer klanten dit artikel kunnen bestellen. Het blijft altijd zichtbaar op het menu.",
+      "fulfilAlways": "Altijd beschikbaar",
+      "fulfilRestricted": "Alleen bepaalde dagen / tijden",
+      "fulfilDaysLabel": "Te bestellen op deze dagen",
+      "fulfilAnyDay": "Elke dag",
+      "fulfilDaysHint": "Kies de dagen waarvoor dit artikel kan worden besteld. Laat op «Elke dag» staan om alle dagen toe te staan en alleen op tijd te beperken.",
+      "fulfilTimeHint": "Optioneel — stel een tijdvenster in (bijv. 11:00–15:00 alleen voor de lunch). Laat beide velden leeg om op de gekozen dagen elk tijdstip toe te staan.",
+      "fulfilPreview": "Klanten zien dit artikel elke dag met een notitie «Vooraf bestellen» en wordt gevraagd hun bestelling in te plannen voor een tijdstip waarop het beschikbaar is."
     },
     "promotionsList": {
       "stackingMaster": "Master",

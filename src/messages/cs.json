@@ -256,7 +256,8 @@
     "availableOnlyLabel": "K dispozici {window}",
     "testModeBanner": "Testovací režim — prohlížíte si vlastní podnik",
     "testModeHint": "Objednávky zadané zde jsou označeny TEST: v kuchyni zazvoní a normálně se vytisknou, ale nikdy se nepočítají do reportů ani tržeb.",
-    "fromPrice": "od {price}"
+    "fromPrice": "od {price}",
+    "fulfilOrderAheadLabel": "Objednat předem · {window}"
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",
@@ -449,7 +450,8 @@
     "unlockedPromoOne": "Odemkli jste promo akci!",
     "unlockedPromoMany": "Odemkli jste promo akce!",
     "pickADateFirst": "Nejprve vyberte datum",
-    "closedThisDay": "Tento den zavřeno"
+    "closedThisDay": "Tento den zavřeno",
+    "fulfilSchedulePrompt": "📅 Jednu nebo více položek ve vašem košíku lze objednat pouze na určité dny nebo časy. Níže jsme nastavili nejbližší dostupný termín — v případě potřeby jej upravte."
   },
   "reservation": {
     "title": "Rezervovat stůl",
@@ -1823,7 +1825,17 @@
       "previewTestOrdering": "Náhled a testovací objednávka",
       "masterMenuTitle": "Hlavní menu — {inheriting} z {total} poboček dědí toto menu",
       "masterMenuBody": "Změny, které zde provedete, se okamžitě projeví v každé dědící pobočce. Pobočky s vlastním menu nejsou ovlivněny.",
-      "tabVisibility": "Viditelnost"
+      "tabVisibility": "Viditelnost",
+      "fulfilTitle": "Čas vyřízení",
+      "fulfilHelp": "Nastavte dny a časy, NA KTERÉ lze tuto položku objednat. V nabídce se stále zobrazuje každý den, ale mimo dané okno jsou zákazníci požádáni, aby si objednávku naplánovali na platný čas — stejně jako u cateringu. Skvělé pro denní speciality (např. jídlo pouze na úterý) nebo položky určené jen na oběd.",
+      "fulfilIntro": "Zvolte, kdy si zákazníci mohou tuto položku objednat. V nabídce zůstává viditelná po celou dobu.",
+      "fulfilAlways": "Dostupné kdykoli",
+      "fulfilRestricted": "Pouze určité dny / časy",
+      "fulfilDaysLabel": "Objednatelné v tyto dny",
+      "fulfilAnyDay": "Kterýkoli den",
+      "fulfilDaysHint": "Vyberte dny, na které lze tuto položku objednat. Ponechte „Kterýkoli den“, chcete-li povolit každý den a omezit pouze časem.",
+      "fulfilTimeHint": "Volitelné — nastavte časové okno (např. 11:00–15:00 jen na oběd). Ponechte obě pole prázdná, chcete-li povolit jakýkoli čas ve zvolené dny.",
+      "fulfilPreview": "Zákazníci uvidí tuto položku každý den s poznámkou „Objednat předem“ a budou požádáni, aby si objednávku naplánovali na čas, kdy je dostupná."
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",
