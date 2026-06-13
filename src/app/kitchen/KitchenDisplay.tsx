@@ -461,7 +461,15 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className={`font-bold text-sm ${t.text}`}>#{order.orderNumber}</span>
+            {/* Primary line = WHO/WHERE, not the order # (Luigi 2026-06-13):
+                anything with a delivery address (delivery, catering-delivery)
+                shows the ADDRESS; pickup/dine-in/take-out show the NAME. The
+                order number drops to the grey line below. */}
+            <span className={`font-bold text-sm ${t.text} truncate flex-1 min-w-0`}>
+              {order.deliveryAddress
+                ? order.deliveryAddress
+                : order.customerName.replace("[TEST] ", "")}
+            </span>
             <StatusBadge status={order.status} t={t} rejectionReason={order.rejectionReason} />
             {order.status === "pending" && (
               <Countdown
@@ -497,9 +505,12 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               </span>
             )}
           </div>
+          {/* Secondary grey line = order # (was the bold line). When the bold
+              line above is an address, we keep the customer NAME here too, so
+              the kitchen still sees who it's for. Luigi 2026-06-13. */}
           <div className={`text-sm ${t.textMuted} truncate`}>
-            {order.customerName.replace("[TEST] ", "")}
-            {order.deliveryAddress && ` · ${order.deliveryAddress}`}
+            #{order.orderNumber}
+            {order.deliveryAddress && ` · ${order.customerName.replace("[TEST] ", "")}`}
           </div>
           {/* The out-of-zone heads-up moved into the order detail (next to the
               address) so it only shows once an order is opened. Luigi 2026-06-08. */}
