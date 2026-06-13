@@ -17,6 +17,7 @@ import {
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
+import { resolveInheritedHours } from "@/lib/inherited-data";
 import { usedPromoIds } from "@/lib/coupon-ledger";
 import { hasFeature } from "@/lib/entitlements";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
@@ -182,6 +183,12 @@ export async function POST(req: NextRequest) {
       },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+
+    // Live inheritance (Phase 3, Luigi 2026-06-13): a child that inherits "hours"
+    // is validated against the BRAND's opening hours — the SAME resolution the
+    // customer page uses, so the displayed hours and the server's closed-check
+    // always agree. Non-children skip the extra query.
+    (restaurant as any).openingHours = await resolveInheritedHours(restaurant as any);
 
     // Owner "Preview & test ordering" (reseller report cmq3red6b): honour the
     // client's isTest flag ONLY for a logged-in admin of THIS restaurant (or a

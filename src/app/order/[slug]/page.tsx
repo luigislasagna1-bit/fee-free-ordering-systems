@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import prisma from "@/lib/db";
 import { OrderingPageClient } from "./OrderingPageClient";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
+import { resolveInheritedHours, resolveInheritedZones } from "@/lib/inherited-data";
 
 /**
  * Per-restaurant browser-tab branding: the <title> is the restaurant's name
@@ -93,7 +94,8 @@ export default async function OrderingPage({
   const hostedSiteBackUrl = isBrandedHost ? "/" : `/site/${slug}`;
 
   // 1) Load the restaurant the customer is ordering FROM (the location).
-  // Hours, delivery zones, fees etc. are always per-location — never inherited.
+  // Hours + delivery zones CAN be inherited live from the brand parent (resolved
+  // just below); fees etc. remain per-location. Menu is inherited via useBrandMenu.
   const restaurantBase = await prisma.restaurant.findUnique({
     where: { slug, isActive: true },
     include: {
@@ -114,6 +116,13 @@ export default async function OrderingPage({
   });
 
   if (!restaurantBase) notFound();
+
+  // Live inheritance (Luigi 2026-06-13): a CHILD location that inherits hours or
+  // zones serves the BRAND parent's current rows. Non-children skip both queries.
+  // The order API (closed + zone validation) applies the SAME resolution so the
+  // displayed hours/zones and the server's enforcement always agree.
+  restaurantBase.openingHours = await resolveInheritedHours(restaurantBase);
+  restaurantBase.deliveryZones = await resolveInheritedZones(restaurantBase);
 
   // 2) Resolve which restaurant's MENU to serve. For a standalone restaurant
   // or a customized child, this is the restaurant's own id. For a child
