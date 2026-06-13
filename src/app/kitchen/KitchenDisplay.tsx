@@ -1622,6 +1622,17 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const pendingCount = orders.filter(
     (o) => o.status === "pending" && !(o.alertAt && new Date(o.alertAt).getTime() > nowMs),
   ).length;
+  // A closed-when-placed order rings for the FULL 15-min window (vs ~4 min for a
+  // normal order). The gloriafood alert TRACK is only ~4 min long, so for these
+  // the audio must LOOP or the kitchen goes silent 11 min early (Luigi
+  // 2026-06-13). Normal orders keep play-once — the track is tuned to finish as
+  // they auto-reject. True only while such an order is actively ringing (its
+  // deferred alertAt has passed), so a still-parked closed order stays silent.
+  const longRing = orders.some(
+    (o) => o.status === "pending"
+      && o.placedWhileClosed
+      && !(o.alertAt && new Date(o.alertAt).getTime() > nowMs),
+  );
   // Today / tomorrow as YYYY-MM-DD (restaurant-local via the tablet clock) —
   // used to tell "actionable" bookings apart from the ~30 days of history the
   // feed now carries for the persistent Reservations tab. Luigi 2026-06-08.
@@ -1733,12 +1744,14 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       // full input; the gain does the loudness. Falls back to plain volume = 1
       // if Web Audio routing isn't available.
       ensureLongAlertRouting();
-      // Play ONCE, full length — the track itself IS the countdown (its
-      // louder/faster finish lands as the accept window runs out, and the order
-      // auto-rejects right as the audio ends). No loop, so the audio is never
-      // restarted or cut. Luigi 2026-06-09: "do not adjust the audio, it's that
-      // length for a reason."
-      a.loop = false;
+      // The track is tuned to the ~4-min NORMAL accept window: for those, play
+      // it ONCE so its louder/faster finish lands as the order auto-rejects
+      // (Luigi 2026-06-09: "do not adjust the audio, it's that length for a
+      // reason"). BUT a closed-when-placed order rings for the full 15-min
+      // window — the ~4-min track would leave 11 min of silence — so LOOP it for
+      // those until the kitchen accepts/rejects or the 15-min auto-reject fires
+      // (Luigi 2026-06-13).
+      a.loop = longRing;
       a.volume = 1;
       if (a.paused) {
         try { a.currentTime = 0; } catch {}
@@ -1749,7 +1762,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       if (!a.paused) a.pause();
       try { a.currentTime = 0; } catch {}
     }
-  }, [alerting, alertSound, alertMuted, alertVolume, getLongAlert, ensureLongAlertRouting]);
+  }, [alerting, longRing, alertSound, alertMuted, alertVolume, getLongAlert, ensureLongAlertRouting]);
 
   // ── Re-arm audio when the app returns to the foreground (Luigi 2026-06-07) ──
   // Android (and backgrounded browser tabs) SUSPEND the AudioContext and pause
