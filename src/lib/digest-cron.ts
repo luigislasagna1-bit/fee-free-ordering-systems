@@ -31,7 +31,16 @@ import { dateKeyInTimezone, localDowAndHHMM } from "@/lib/restaurant-hours";
 
 export type DigestSweepMode = "morning" | "closing";
 
-const CLOSING_WINDOW_MIN = 30; // must match the */30 cron cadence
+// Send the end-of-day report ~5 minutes after close (Luigi 2026-06-13: "exactly
+// 5 minutes after closing, not within 30"). The cron runs EVERY MINUTE, so the
+// first run at/after the 5-minute mark fires it; idempotency (lastEodDigestDate)
+// prevents a resend. CATCHUP_WINDOW_MIN is slack so a missed minute still sends.
+const TARGET_DELAY_MIN = 5;
+const CATCHUP_WINDOW_MIN = 30;
+/** Is `deltaMin` (minutes since close) inside the send window [5, 5+30)? */
+function inSendWindow(deltaMin: number): boolean {
+  return deltaMin >= TARGET_DELAY_MIN && deltaMin < TARGET_DELAY_MIN + CATCHUP_WINDOW_MIN;
+}
 
 function toMin(hhmm: string): number {
   const [h, m] = hhmm.split(":").map(Number);
@@ -61,27 +70,25 @@ function dayThatJustEnded(rows: HoursRow[], tz: string, now: Date): string | nul
   const yesterdayRow = rows.find((r) => r.dayOfWeek === yesterdayDow);
 
   // 1. Yesterday's OVERNIGHT row closing in this morning's early hours
-  //    (e.g. Fri 17:00 → Sat 02:00: at 02:00–02:30 Sat, Friday's day ended).
+  //    (e.g. open 10:00 → 02:00: at 02:05 the previous day ended). This is the
+  //    common late-night case — a 2 AM close sends at 2:05 AM.
   if (yesterdayRow?.isOpen && yesterdayRow.closesNextDay && yesterdayRow.closeTime) {
-    const delta = nowMin - toMin(yesterdayRow.closeTime);
-    if (delta >= 0 && delta < CLOSING_WINDOW_MIN) return yesterdayKey;
+    if (inSendWindow(nowMin - toMin(yesterdayRow.closeTime))) return yesterdayKey;
   }
-  // 2. Yesterday's late close (≥23:30) whose send-window spills past midnight.
+  // 2. Yesterday's late close (≥23:25) whose 5-min send mark spills past midnight
+  //    (e.g. close 23:58 → send at 00:03). delta is measured across midnight.
   if (yesterdayRow?.isOpen && !yesterdayRow.closesNextDay && yesterdayRow.closeTime) {
-    const spill = toMin(yesterdayRow.closeTime) + CLOSING_WINDOW_MIN - 24 * 60;
-    if (spill > 0 && nowMin < spill) return yesterdayKey;
+    if (inSendWindow(nowMin - toMin(yesterdayRow.closeTime) + 24 * 60)) return yesterdayKey;
   }
-  // 3. Today's normal close.
+  // 3. Today's normal close (e.g. close 22:00 → send at 22:05).
   if (todayRow?.isOpen && !todayRow.closesNextDay && todayRow.closeTime) {
-    const delta = nowMin - toMin(todayRow.closeTime);
-    if (delta >= 0 && delta < CLOSING_WINDOW_MIN) return todayKey;
+    if (inSendWindow(nowMin - toMin(todayRow.closeTime))) return todayKey;
   }
-  // 4. Closed (or hour-less) today → fall back to a 23:30-local send so any
+  // 4. Closed (or hour-less) today → fall back to a 23:35-local send so any
   //    activity on a "closed" day (scheduled orders, reservations) still
   //    reports. Zero-activity days are skipped by the caller anyway.
   if (!todayRow?.isOpen || !todayRow.closeTime) {
-    const delta = nowMin - toMin("23:30");
-    if (delta >= 0 && delta < CLOSING_WINDOW_MIN) return todayKey;
+    if (inSendWindow(nowMin - toMin("23:30"))) return todayKey;
   }
   return null;
 }
