@@ -471,7 +471,7 @@ export function MarketplaceSettingsClient({
                 <StatCell
                   icon={<DollarSign className="w-3.5 h-3.5" />}
                   label={t("statRevenue")}
-                  value={formatCurrency(stats.currentMonthRevenue)}
+                  value={formatCurrency(stats.currentMonthRevenue, (restaurant as any).currency)}
                   color="text-emerald-600"
                   bg="bg-emerald-50"
                 />

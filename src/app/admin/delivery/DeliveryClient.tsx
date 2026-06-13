@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import NextLink from "next/link";
 import { useTranslations } from "next-intl";
+import { useCurrencyFormat, useCurrencySymbol } from "@/lib/currency-context";
 import {
   DELIVERY_ADDRESS_FIELDS,
   resolveDeliveryAddressConfig,
@@ -90,6 +91,7 @@ export function DeliveryClient({
   const t = useTranslations("admin.delivery");
   const tCommon = useTranslations("common");
   const tToasts = useTranslations("admin.toasts");
+  const curSym = useCurrencySymbol();
   const [zones, setZones] = useState<Zone[]>(initial);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -369,6 +371,7 @@ export function DeliveryClient({
           }}
           provider={restaurant?.mapProvider ?? "leaflet"}
           googleMapsApiKey={restaurant?.googleMapsApiKey ?? undefined}
+          currencySym={curSym}
         />
       </div>
 
@@ -642,6 +645,7 @@ function ZoneRow({
   onDelete: () => void;
   onUpdate: (data: Partial<Zone>) => void;
 }) {
+  const fmt = useCurrencyFormat();
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState({
     name: zone.name,
@@ -679,8 +683,8 @@ function ZoneRow({
             {zone.name}
           </div>
           <div className="text-xs text-gray-400 flex items-center gap-3 mt-0.5">
-            <span>${zone.deliveryFee.toFixed(2)} fee</span>
-            {zone.minimumOrder > 0 && <span>min ${zone.minimumOrder.toFixed(2)}</span>}
+            <span>{fmt(zone.deliveryFee)} fee</span>
+            {zone.minimumOrder > 0 && <span>min {fmt(zone.minimumOrder)}</span>}
             <span>{zone.radiusKm} km</span>
             <span>~{zone.estimatedMinutes} min</span>
           </div>
@@ -711,11 +715,11 @@ function ZoneRow({
                 </div>
                 <div className="bg-white rounded-lg p-2 border border-gray-100">
                   <div className="text-gray-400">Delivery Fee</div>
-                  <div className="font-semibold text-gray-900">${zone.deliveryFee.toFixed(2)}</div>
+                  <div className="font-semibold text-gray-900">{fmt(zone.deliveryFee)}</div>
                 </div>
                 <div className="bg-white rounded-lg p-2 border border-gray-100">
                   <div className="text-gray-400">Min. Order</div>
-                  <div className="font-semibold text-gray-900">${zone.minimumOrder.toFixed(2)}</div>
+                  <div className="font-semibold text-gray-900">{fmt(zone.minimumOrder)}</div>
                 </div>
                 <div className="bg-white rounded-lg p-2 border border-gray-100">
                   <div className="text-gray-400">Std. Time</div>

@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useMemo, type ReactNode } from "react";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, currencySymbol } from "@/lib/utils";
 
 /**
  * Per-restaurant currency context. Wrap any customer-facing tree with
@@ -42,4 +42,10 @@ export function useCurrencyFormat(): (amount: number) => string {
 /** Raw access if you need the ISO code (e.g. to send to Stripe). */
 export function useCurrencyCode(): string {
   return useContext(CurrencyContext);
+}
+
+/** The active restaurant's currency symbol ("€", "$", "£" …) — for input
+ *  adornments and labels where only the symbol is shown, not a full amount. */
+export function useCurrencySymbol(): string {
+  return currencySymbol(useContext(CurrencyContext));
 }

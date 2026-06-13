@@ -1,4 +1,5 @@
 "use client";
+import { currencySymbol } from "@/lib/utils";
 import { useEffect, useState, useCallback } from "react";
 import {
   X, Pause, Play, AlertTriangle, Loader2, Package, Search, CheckCircle2,
@@ -65,6 +66,8 @@ interface StatusModalProps {
   alertVolume: number;
   printerReady: boolean;
   printerLabel: string | null;
+  /** Restaurant currency, for the item-price inputs' symbol. */
+  currency?: string;
 }
 
 const SERVICE_LABELS: Record<ServiceKey, string> = {
@@ -90,8 +93,9 @@ export function RestaurantStatusModal({
   onChange,
   themeMode, onToggleTheme,
   onRefresh, onOpenSound, onOpenPrinter, onOpenDayReport,
-  alertMuted, alertVolume, printerReady, printerLabel,
+  alertMuted, alertVolume, printerReady, printerLabel, currency,
 }: StatusModalProps) {
+  const curSym = currencySymbol(currency ?? "usd");
   const [tab, setTab] = useState<"pause" | "stock" | "prefs">("pause");
   const [selectedServices, setSelectedServices] = useState<Set<ServiceKey>>(new Set());
   const [pauseBusy, setPauseBusy] = useState(false);
@@ -292,7 +296,7 @@ export function RestaurantStatusModal({
         )}
 
         {tab === "stock" && (
-          <StockPanel onChange={onChange} />
+          <StockPanel onChange={onChange} curSym={curSym} />
         )}
 
         {tab === "prefs" && (
@@ -461,7 +465,7 @@ interface StockItem {
   category: { name: string; sortOrder: number } | null;
 }
 
-function StockPanel({ onChange }: { onChange?: () => void }) {
+function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: string }) {
   const [items, setItems] = useState<StockItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
@@ -555,7 +559,7 @@ function StockPanel({ onChange }: { onChange?: () => void }) {
         delete cp[v.id];
         return cp;
       });
-      toast.success(`${it.name} · ${v.name}: $${rounded.toFixed(2)}`);
+      toast.success(`${it.name} · ${v.name}: ${curSym}${rounded.toFixed(2)}`);
       onChange?.();
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Failed to save price");
@@ -615,7 +619,7 @@ function StockPanel({ onChange }: { onChange?: () => void }) {
         delete cp[it.id];
         return cp;
       });
-      toast.success(`Price updated to $${rounded.toFixed(2)}`);
+      toast.success(`Price updated to ${curSym}${rounded.toFixed(2)}`);
       onChange?.();
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Failed to save price");
@@ -706,7 +710,7 @@ function StockPanel({ onChange }: { onChange?: () => void }) {
                         <li key={v.id} className="flex items-center justify-between gap-2">
                           <div className="text-xs text-gray-700 min-w-0 flex-1 truncate">{v.name}</div>
                           <div className="flex-shrink-0 flex items-center gap-1 text-xs">
-                            <span className="text-gray-400">$</span>
+                            <span className="text-gray-400">{curSym}</span>
                             <input
                               type="number"
                               inputMode="decimal"
@@ -762,7 +766,7 @@ function StockPanel({ onChange }: { onChange?: () => void }) {
                     /order/[slug] so changes are immediately reflected
                     everywhere. */}
                 <div className="flex-shrink-0 flex items-center gap-1 text-xs">
-                  <span className="text-gray-400">$</span>
+                  <span className="text-gray-400">{curSym}</span>
                   <input
                     type="number"
                     inputMode="decimal"

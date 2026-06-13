@@ -12,7 +12,7 @@ import {
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, useSortable, verticalListSortingStrategy, rectSortingStrategy, arrayMove } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useCurrencyFormat } from "@/lib/currency-context";
+import { useCurrencyFormat, useCurrencySymbol } from "@/lib/currency-context";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { parseComboConfig } from "@/lib/combo";
 import { VisibilityEditor, visibilityFromRow, type VisibilityValue } from "@/components/admin/VisibilityEditor";
@@ -463,6 +463,7 @@ function ItemModal({
   onClose: () => void; onSaved: () => void;
 }) {
   const t = useTranslations("admin.menuEditor");
+  const curSym = useCurrencySymbol();
   const isNew = !item;
   const [form, setForm] = useState({
     name: item?.name ?? "",
@@ -740,7 +741,7 @@ function ItemModal({
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">{t("basePriceLabel")}</label>
                     <div className="relative">
-                      <span className="absolute left-3 top-2.5 text-gray-400 text-sm">$</span>
+                      <span className="absolute left-3 top-2.5 text-gray-400 text-sm">{curSym}</span>
                       <input type="number" step="0.01" min="0" className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                         value={form.price} onChange={e => setForm(f => ({ ...f, price: e.target.value }))} placeholder="0.00" />
                     </div>
@@ -870,7 +871,7 @@ function ItemModal({
                       value={v.name} onChange={e => setVariants(vs => vs.map((x, j) => j === i ? { ...x, name: e.target.value } : x))} />
                   </div>
                   <div className="w-28 relative">
-                    <span className="absolute left-2 top-2 text-gray-400 text-sm">$</span>
+                    <span className="absolute left-2 top-2 text-gray-400 text-sm">{curSym}</span>
                     <input type="number" step="0.01" min="0" className="w-full border border-gray-300 rounded pl-6 pr-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                       placeholder="0.00"
                       value={v.price || ""} onChange={e => setVariants(vs => vs.map((x, j) => j === i ? { ...x, price: parseFloat(e.target.value) || 0 } : x))} />
@@ -1023,7 +1024,7 @@ function ItemModal({
                                 <div key={v.name} className="flex items-center gap-3">
                                   <span className="text-sm text-gray-700 w-24 flex-shrink-0 truncate">{v.name}</span>
                                   <div className="relative flex-1">
-                                    <span className="absolute left-3 top-2.5 text-gray-400 text-sm">$</span>
+                                    <span className="absolute left-3 top-2.5 text-gray-400 text-sm">{curSym}</span>
                                     <input type="number" step="0.01" min="0" placeholder="0.00"
                                       className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                                       value={pizza.variantToppingPrices[v.name.trim()] ?? ""}
@@ -1042,7 +1043,7 @@ function ItemModal({
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">{t("pricePerExtraTopping")}</label>
                           <div className="relative">
-                            <span className="absolute left-3 top-2.5 text-gray-400 text-sm">$</span>
+                            <span className="absolute left-3 top-2.5 text-gray-400 text-sm">{curSym}</span>
                             <input type="number" step="0.01" min="0" placeholder="0.00"
                               className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                               value={pizza.extraToppingPrice}
@@ -1201,6 +1202,7 @@ function ModifierModal({
   onClose: () => void; onSaved: () => void;
 }) {
   const t = useTranslations("admin.menuEditor");
+  const curSym = useCurrencySymbol();
   const isNew = !group;
   const [form, setForm] = useState({
     name: group?.name ?? "",
@@ -1302,7 +1304,7 @@ function ModifierModal({
                     placeholder={t("optionNamePlaceholder")} value={opt.name}
                     onChange={e => setOptions(os => os.map((o, j) => j === i ? { ...o, name: e.target.value } : o))} />
                   <div className="relative w-24">
-                    <span className="absolute left-2 top-1.5 text-gray-400 text-xs">+$</span>
+                    <span className="absolute left-2 top-1.5 text-gray-400 text-xs">+{curSym}</span>
                     <input type="number" step="0.01" min="0" className="w-full border border-gray-200 rounded pl-7 pr-2 py-1.5 text-sm focus:ring-1 focus:ring-emerald-400 focus:outline-none bg-white"
                       placeholder="0.00" value={opt.priceAdjustment || ""}
                       onChange={e => setOptions(os => os.map((o, j) => j === i ? { ...o, priceAdjustment: parseFloat(e.target.value) || 0 } : o))} />

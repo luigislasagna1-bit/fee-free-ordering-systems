@@ -16,6 +16,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { useCurrencyFormat } from "@/lib/currency-context";
 import {
   Tag, Edit2, Trash2, X, Copy, Eye, EyeOff,
   Star, Crown, Shield, Percent, Gift, Package, Zap, Truck,
@@ -308,11 +309,12 @@ function CouponCard({
   onDuplicate: () => void;
 }) {
   const t = useTranslations("admin.promotionsList");
+  const fmt = useCurrencyFormat();
   const isExpired = coupon.expiresAt && new Date(coupon.expiresAt) < new Date();
   const discountLabel =
     coupon.discountType === "percentage"
       ? `${coupon.discountValue}% off`
-      : `$${parseFloat(coupon.discountValue).toFixed(2)} off`;
+      : `${fmt(parseFloat(coupon.discountValue))} off`;
 
   return (
     <div
@@ -358,7 +360,7 @@ function CouponCard({
             {coupon.minimumOrder > 0 && (
               <span className="text-gray-400 font-normal">
                 {" "}
-                (min ${parseFloat(coupon.minimumOrder).toFixed(2)})
+                (min {fmt(parseFloat(coupon.minimumOrder))})
               </span>
             )}
           </div>

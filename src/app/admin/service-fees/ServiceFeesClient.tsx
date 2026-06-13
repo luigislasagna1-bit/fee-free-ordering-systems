@@ -4,6 +4,7 @@ import { Plus, Wallet, Trash2, Pencil, Loader2, X, ToggleLeft, ToggleRight, Rece
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { SUPPORTED_CURRENCIES } from "@/lib/utils";
+import { useCurrencyFormat } from "@/lib/currency-context";
 
 interface ServiceFee {
   id: string;
@@ -39,8 +40,8 @@ function describeDays(csv: string | null, everyDayLabel: string, shortDay: (i: n
   return days.join(", ");
 }
 
-function formatAmount(fee: ServiceFee) {
-  return fee.feeType === "percent" ? `${fee.amount}%` : `$${fee.amount.toFixed(2)}`;
+function formatAmount(fee: ServiceFee, fmt: (n: number) => string) {
+  return fee.feeType === "percent" ? `${fee.amount}%` : fmt(fee.amount);
 }
 
 export function ServiceFeesClient() {
@@ -48,6 +49,7 @@ export function ServiceFeesClient() {
   const tCommon = useTranslations("common");
   const tToasts = useTranslations("admin.toasts");
   const tInfo = useTranslations("info");
+  const fmt = useCurrencyFormat();
   const [loading, setLoading] = useState(true);
   const [fees, setFees] = useState<ServiceFee[]>([]);
   const [editing, setEditing] = useState<ServiceFee | null>(null);
@@ -587,7 +589,7 @@ export function ServiceFeesClient() {
               {fees.map((fee) => (
                 <tr key={fee.id} className="border-t border-gray-100">
                   <td className="px-4 py-3 font-medium text-gray-900">{fee.name}</td>
-                  <td className="px-4 py-3 text-gray-700">{formatAmount(fee)}</td>
+                  <td className="px-4 py-3 text-gray-700">{formatAmount(fee, fmt)}</td>
                   <td className="px-4 py-3 text-gray-700">{t(fee.appliesTo === "both" ? "both" : fee.appliesTo)}</td>
                   <td className="px-4 py-3 text-gray-700">
                     {fee.publicHolidaysOnly

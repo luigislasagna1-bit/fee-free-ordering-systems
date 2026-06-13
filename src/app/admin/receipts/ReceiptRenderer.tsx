@@ -2,6 +2,7 @@
 import { forwardRef } from "react";
 import { useTranslations } from "next-intl";
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "@/lib/receipt-schema";
+import { formatCurrency } from "@/lib/utils";
 
 // Paper widths in px at 96 dpi:
 //   80 mm thermal = 302 px (default — by far the most common)
@@ -102,7 +103,6 @@ function sectionCSS(s: SectionStyle): React.CSSProperties {
 const DIVIDER: React.CSSProperties = { borderTop: "1px dashed #777", margin: "2px 0" };
 const SOLID: React.CSSProperties  = { borderTop: "1px solid #000",   margin: "4px 0" };
 
-const fmt = (n: number) => `$${n.toFixed(2)}`;
 const fmtTime = (iso: string) =>
   new Date(iso).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
 const fmtDate = (iso: string) =>
@@ -118,6 +118,9 @@ function renderCustomer(
   t: ReturnType<typeof useTranslations<"admin.receiptRenderer">>
 ): React.ReactNode {
   const s = section.style;
+  // Receipt money in the restaurant's currency (printed receipts must match
+  // the menu/checkout currency — Luigi 2026-06-12).
+  const fmt = (n: number) => formatCurrency(n, restaurant?.currency || "usd");
   const dim = s.highlight ? "#cccccc" : "#555555";
   const small: React.CSSProperties = { fontSize: `${Math.max(9, s.fontSize - 2)}px`, color: dim };
   const row: React.CSSProperties = { display: "flex", justifyContent: "space-between", marginBottom: "1px" };

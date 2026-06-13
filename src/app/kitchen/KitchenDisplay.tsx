@@ -3533,6 +3533,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         acceptsReservations={!!(restaurant as any)?.acceptsReservations}
         pausedUntilByService={restaurantPauses}
         onChange={refreshRestaurantPauses}
+        currency={moneyCurrency}
         // Preferences-tab plumbing (Luigi 2026-06-02 header declutter).
         // Each callback closes this modal then opens the corresponding
         // dedicated sub-modal — the originals still exist, we just

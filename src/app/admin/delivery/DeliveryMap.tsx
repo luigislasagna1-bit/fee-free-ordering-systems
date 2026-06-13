@@ -33,6 +33,8 @@ interface Props {
   onZoneResize?: (zoneId: string, newRadiusKm: number) => void;
   provider?: "leaflet" | "google";
   googleMapsApiKey?: string;
+  /** Restaurant currency symbol for the zone popups' fee/min figures. */
+  currencySym?: string;
 }
 
 function isValidCoord(lat: number | null, lng: number | null): lat is number {
@@ -144,7 +146,7 @@ function lngOffsetForKm(latDeg: number, km: number): number {
 }
 
 function LeafletVariant({
-  restaurantLat, restaurantLng, zones, selectedZoneId, onZoneClick, onRestaurantMove, onZoneResize,
+  restaurantLat, restaurantLng, zones, selectedZoneId, onZoneClick, onRestaurantMove, onZoneResize, currencySym = "$",
 }: Props) {
   const hasLocation = isValidCoord(restaurantLat, restaurantLng);
   const initCenter: [number, number] = hasLocation
@@ -200,8 +202,8 @@ function LeafletVariant({
           >
             <LTooltip sticky>
               <strong>{zone.name}</strong>
-              <br />Fee: ${zone.deliveryFee.toFixed(2)}
-              <br />Min: ${zone.minimumOrder.toFixed(2)}
+              <br />Fee: ${currencySym}${zone.deliveryFee.toFixed(2)}
+              <br />Min: ${currencySym}${zone.minimumOrder.toFixed(2)}
               <br />Radius: {zone.radiusKm} km
               <br />ETA: ~{zone.estimatedMinutes} min
               {onZoneResize && isSelected && <><br /><em>Drag the handle to resize</em></>}
