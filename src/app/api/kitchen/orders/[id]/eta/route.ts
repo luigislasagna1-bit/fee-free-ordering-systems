@@ -14,6 +14,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { fetchDriveEstimate, mapsDirectionsUrl, resolveDistanceMatrixKey } from "@/lib/delivery-eta";
+import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -59,7 +60,8 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 
   const mapsUrl = mapsDirectionsUrl(destination);
 
-  const key = resolveDistanceMatrixKey(order.restaurant.googleMapsApiKey);
+  // Restaurant's own key, else the platform key, else the legacy env-var key.
+  const key = resolveDistanceMatrixKey(await resolveEffectiveMapsKey(order.restaurant.googleMapsApiKey));
   if (!key) {
     // No Distance Matrix key wired up yet — the maps button still works.
     return NextResponse.json({ mapsUrl, estimate: { ok: false } });

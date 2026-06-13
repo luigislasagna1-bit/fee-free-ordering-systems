@@ -643,6 +643,13 @@ model PlatformSettings {
   stripeWebhookSecretEnc String?
   stripeWebhookSecretIv  String?
   stripeWebhookSecretTag String?
+  /// Platform-wide Google Maps key (Luigi 2026-06-13): set ONCE in superadmin
+  /// and every restaurant uses it for maps + Places autocomplete + Distance
+  /// Matrix — no per-restaurant Google Cloud setup. A restaurant's OWN
+  /// googleMapsApiKey still wins (cost offload). Stored PLAIN, not encrypted:
+  /// a Maps key is protected by HTTP-referrer + API restrictions, not secrecy,
+  /// and the browser half is necessarily exposed client-side anyway.
+  googleMapsApiKey       String?
   updatedAt              DateTime @updatedAt
   updatedBy              String?
 }

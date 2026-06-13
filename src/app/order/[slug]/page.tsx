@@ -4,6 +4,7 @@ import { cookies, headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import prisma from "@/lib/db";
 import { OrderingPageClient } from "./OrderingPageClient";
+import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 
 /**
  * Per-restaurant browser-tab branding: the <title> is the restaurant's name
@@ -288,6 +289,11 @@ export default async function OrderingPage({
   const restaurant = { ...restaurantBase, menuCategories } as typeof restaurantBase & {
     menuCategories: typeof menuCategories;
   };
+  // Platform Google Maps fallback (Luigi 2026-06-13): a restaurant with no key
+  // of its own uses the platform key (PlatformSettings.googleMapsApiKey), so
+  // Google maps + Places autocomplete work on EVERY ordering page with zero
+  // per-restaurant setup. The restaurant's own key still wins.
+  restaurant.googleMapsApiKey = await resolveEffectiveMapsKey(restaurant.googleMapsApiKey);
 
   // Card payments (KEY-ONLY model) require BOTH:
   //   1. THIS restaurant has saved active Stripe API keys (PaymentProvider)
