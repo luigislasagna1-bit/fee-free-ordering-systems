@@ -56,7 +56,6 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
   const timeoutMinutes =
     opts.timeoutMinutes ?? (Number.isFinite(envValue) && envValue > 0 ? envValue : DEFAULT_TIMEOUT_MINUTES);
   const regularCutoff = new Date(now.getTime() - timeoutMinutes * 60 * 1000);
-  const closedPlacedCutoff = new Date(now.getTime() - CLOSED_PLACED_TIMEOUT_MINUTES * 60 * 1000);
 
   // Pending orders that have been released to the kitchen (notifiedAt
   // set) and have sat for too long. Released card orders are the
@@ -64,23 +63,19 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
   // or a refund. Unreleased card orders (paid not yet → notifiedAt
   // null) are still in payment-confirmation limbo; skip those.
   //
-  // Two timeout buckets:
-  //   • Regular orders (placedWhileClosed=false): cutoff = createdAt +
-  //     4 min, matching the kitchen UI's countdown.
-  //   • Closed-when-placed orders: cutoff = alertAt + 15 min. These sit
-  //     parked in the queue until the restaurant opens; the 15-min
-  //     window starts when alertAt fires, not when the order was placed.
-  //     If alertAt is null or still in the future, the order isn't
-  //     stale yet — skip.
-  const candidates = await prisma.order.findMany({
+  // We pre-filter cheaply in SQL, then apply the precise staleness test in
+  // JS against each order's "go-live" moment (below). `createdAt < regularCutoff`
+  // is a safe SUPERSET: an order's go-live is always ≥ createdAt and the
+  // shortest window is the regular one, so anything stale necessarily has an
+  // old createdAt. The JS pass can only REMOVE rows, never add. Pending+notified
+  // orders are a small working set; cap defensively.
+  const prelim = await prisma.order.findMany({
     where: {
       status: "pending",
       notifiedAt: { not: null },
-      OR: [
-        { placedWhileClosed: false, createdAt: { lt: regularCutoff } },
-        { placedWhileClosed: true, alertAt: { not: null, lt: closedPlacedCutoff } },
-      ],
+      createdAt: { lt: regularCutoff },
     },
+    take: 1000,
     select: {
       id: true,
       orderNumber: true,
@@ -96,11 +91,39 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       marketplaceCounterApplied: true,
       smartLinkCounterApplied: true,
       placedWhileClosed: true,
+      createdAt: true,
+      notifiedAt: true,
+      alertAt: true,
+      scheduledFor: true,
       restaurant: {
         select: { id: true, name: true, slug: true, defaultLanguage: true, stripeAccountId: true },
       },
     },
   });
+
+  // The moment an order becomes the kitchen's responsibility — its "go-live".
+  //   • ASAP orders         → when they hit the kitchen (notifiedAt ≈ createdAt).
+  //   • Closed-when-placed  → the deferred open-time ring (alertAt).
+  //   • SCHEDULED pre-orders→ the slot the customer chose (scheduledFor).
+  // We take the LATEST of these so an order is NEVER auto-rejected before it's
+  // actually due. This fixes pre-orders placed days ahead being killed ~4 min
+  // after PLACEMENT because the window was measured from createdAt (Luigi
+  // 2026-06-13). Same anchor the order-alert-calls cron uses — they must agree.
+  const goLiveMs = (o: {
+    notifiedAt: Date | null; alertAt: Date | null; scheduledFor: Date | null; createdAt: Date;
+  }): number => {
+    const ts = [o.notifiedAt, o.alertAt, o.scheduledFor]
+      .map((d) => (d ? new Date(d).getTime() : NaN))
+      .filter((n) => Number.isFinite(n));
+    return ts.length ? Math.max(...ts) : new Date(o.createdAt).getTime();
+  };
+  // Per-order window: closed-when-placed keeps its 15-min grace; everything
+  // else (including a now-due scheduled order) uses the regular window.
+  const candidates = prelim.filter(
+    (o) =>
+      now.getTime() - goLiveMs(o) >=
+      (o.placedWhileClosed ? CLOSED_PLACED_TIMEOUT_MINUTES : timeoutMinutes) * 60 * 1000,
+  );
 
   const result: AutoRejectResult = {
     scanned: candidates.length,
