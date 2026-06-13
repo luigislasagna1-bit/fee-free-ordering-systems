@@ -8,10 +8,17 @@ export default async function MapsSettingsPage() {
   const session = (await getServerSession(authOptions as any)) as any;
   if (session?.user?.role !== "superadmin") redirect("/login");
 
-  const settings = await prisma.platformSettings.findUnique({
-    where: { id: "singleton" },
-    select: { googleMapsApiKey: true, updatedAt: true },
-  });
+  // Tolerate the column not yet existing on this DB (prod migration may lag the
+  // deploy) — render empty rather than 500 until the schema lands.
+  let settings: { googleMapsApiKey: string | null; updatedAt: Date | null } | null = null;
+  try {
+    settings = await prisma.platformSettings.findUnique({
+      where: { id: "singleton" },
+      select: { googleMapsApiKey: true, updatedAt: true },
+    });
+  } catch {
+    settings = null;
+  }
 
   // Pre-fill suggestion: the oldest restaurant that already has a Google key
   // (e.g. Luigi's own) — one click to adopt it as the platform-wide key.
