@@ -8,15 +8,20 @@ type Provider = "leaflet" | "google";
 
 interface Props {
   initial: { mapProvider: Provider; googleMapsApiKey: string };
+  /** True when the platform provides a Google Maps browser key for every
+   *  restaurant — then Google is included with zero setup and the per-restaurant
+   *  key is only an optional override. */
+  platformKeyConfigured?: boolean;
 }
 
-export function MapSettingsClient({ initial }: Props) {
+export function MapSettingsClient({ initial, platformKeyConfigured = false }: Props) {
   const t = useTranslations("admin.mapSettings");
   const tCommon = useTranslations("common");
   const tToasts = useTranslations("admin.toasts");
   const [provider, setProvider] = useState<Provider>(initial.mapProvider);
   const [apiKey, setApiKey] = useState(initial.googleMapsApiKey ?? "");
   const [showKey, setShowKey] = useState(false);
+  const [showAdvancedKey, setShowAdvancedKey] = useState(false);
   const [saving, setSaving] = useState(false);
 
   const save = async () => {
@@ -26,8 +31,10 @@ export function MapSettingsClient({ initial }: Props) {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          mapProvider: provider,
-          googleMapsApiKey: provider === "google" ? apiKey.trim() : "",
+          // With the platform key, Google is always available — saving here just
+          // records the OPTIONAL own-key override (and keeps provider = google).
+          mapProvider: platformKeyConfigured ? "google" : provider,
+          googleMapsApiKey: platformKeyConfigured || provider === "google" ? apiKey.trim() : "",
         }),
       });
       if (!res.ok) throw new Error((await res.json()).error ?? "Save failed");
@@ -37,6 +44,83 @@ export function MapSettingsClient({ initial }: Props) {
     }
     setSaving(false);
   };
+
+  // ── Platform-provided Google: included for every restaurant, zero setup ──
+  // (Luigi 2026-06-13). The owner no longer makes a Google Cloud project — their
+  // own key is just an optional override. NOTE: the descriptive prose below is
+  // English-only, matching this page's pre-existing hardcoded descriptions; flag
+  // for a full map-settings i18n pass.
+  if (platformKeyConfigured) {
+    return (
+      <div className="max-w-3xl mx-auto p-6 space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
+          <p className="text-sm text-gray-500 mt-1">{t("subtitle")}</p>
+        </div>
+
+        <div className="rounded-2xl border-2 border-emerald-500 bg-emerald-50/40 p-5 flex gap-4">
+          <Globe2 className="w-6 h-6 text-blue-600 flex-shrink-0" />
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="font-bold text-gray-900">{t("google")}</h3>
+              <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-100 rounded-full px-2 py-0.5">
+                <Check className="w-3 h-3" /> Included &amp; active
+              </span>
+            </div>
+            <p className="mt-1.5 text-sm text-gray-600 leading-relaxed">
+              Google Maps is included on all your pages — your ordering page, delivery map, and kitchen distance — at no cost to you. We provide it, so there&apos;s nothing to set up. It&apos;s already live.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <button
+            type="button"
+            onClick={() => setShowAdvancedKey((s) => !s)}
+            className="text-xs font-medium text-gray-500 hover:text-gray-700"
+          >
+            {showAdvancedKey ? "−" : "+"} Advanced: use your own Google key (optional)
+          </button>
+          {showAdvancedKey && (
+            <div className="mt-3 bg-white border border-gray-200 rounded-2xl p-5 space-y-3 shadow-sm">
+              <p className="text-xs text-gray-500 leading-relaxed">
+                Optional. Leave this blank to use the included Google Maps. Add your own Google Cloud key only if you&apos;d rather run the maps on your own Google billing (e.g. very high volume).
+              </p>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">{t("googleApiKey")}</label>
+                <div className="relative">
+                  <input
+                    type={showKey ? "text" : "password"}
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    placeholder="AIzaSy…"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 text-sm font-mono focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowKey((s) => !s)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-gray-400 hover:text-gray-700"
+                    title={showKey ? tCommon("hide") : tCommon("show")}
+                  >
+                    {showKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <button
+                  onClick={save}
+                  disabled={saving}
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-6 py-2.5 rounded-xl transition disabled:opacity-50 inline-flex items-center gap-2"
+                >
+                  {saving ? tCommon("loading") : tCommon("saveChanges")}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-3xl mx-auto p-6 space-y-6">
