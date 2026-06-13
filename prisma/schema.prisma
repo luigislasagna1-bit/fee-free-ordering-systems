@@ -359,6 +359,19 @@ model Restaurant {
   /// location adopts it. Toggling false copies the parent's menu rows
   /// into this location so the owner has something to edit.
   useBrandMenu       Boolean      @default(true)
+  /// Per-option inheritance for a CHILD location (parentRestaurantId != null),
+  /// per Luigi's multi-location spec (2026-06-13): from the child account the
+  /// owner toggles, INDEPENDENTLY per setting, whether the PARENT controls it or
+  /// the child sets it locally — or flips "everything from parent" at once.
+  /// Sparse JSON map { settingKey: true } where true = "inherit from parent".
+  /// Keys today: "hours" | "zones" | "availability" (menu keeps its dedicated
+  /// useBrandMenu boolean above for backward-compat; the UI presents them
+  /// together). A missing key / null column = NOT inheriting, so every EXISTING
+  /// location keeps operating independently — no behaviour change on migration.
+  /// LIVE inheritance (the child reads the parent's current value on each load),
+  /// distinct from the one-time creation snapshot in src/lib/location-inheritance.ts.
+  /// Resolver: src/lib/inherited-settings.ts.
+  inheritedSettings  Json?
 
   // Customer-side email toggles (single set per restaurant)
   customerEmailPickupReady   Boolean @default(true)
