@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
 import {
   X, User, Truck, ShoppingBag, Clock, CreditCard, Heart, Edit2, Tag,
@@ -197,6 +197,10 @@ interface Props {
   /** Restaurant's 2-letter country code — biases the free (Leaflet) address
    *  autocomplete so results favour the restaurant's country. */
   geocodeCountry?: string | null;
+  /** Restaurant coordinates — bias the Google Places autocomplete toward the
+   *  restaurant's area so nearby addresses rank first (Luigi 2026-06-13). */
+  restaurantLat?: number | null;
+  restaurantLng?: number | null;
   onClose: () => void;
   /** True when the current cart contains any catering-tagged item — at
    *  the item level or via its parent category. Forces schedule-for-
@@ -307,7 +311,7 @@ export function CheckoutModal({
   couponCode, setCouponCode, couponId, couponDiscount, couponLoading, applyCoupon,
   estimatedDeliveryMinutes, estimatedPickupMinutes,
   hasZones, geocoding, geocodeError, resolvedZone, acceptOutsideZoneOrders = false,
-  googleMapsApiKey, geocodeCountry,
+  googleMapsApiKey, geocodeCountry, restaurantLat, restaurantLng,
   deliveryFormConfig,
   reservationContext = null,
   onClose,
@@ -344,6 +348,24 @@ export function CheckoutModal({
   const mapsKey = resolveMapsBrowserKey(googleMapsApiKey);
   const googleEnabled = !!mapsKey;
   const { isLoaded: gmapsLoaded } = useGoogleMaps(mapsKey);
+  // Bias Google Places autocomplete toward the restaurant's area so nearby
+  // addresses rank first (Luigi 2026-06-13: "shows far areas until I type the
+  // city"). A ~±0.5° box (≈50 km) around the restaurant; soft bias, not a hard
+  // restrict, so out-of-area addresses still appear if typed.
+  const autocompleteOptions = useMemo<google.maps.places.AutocompleteOptions>(() => {
+    const opts: google.maps.places.AutocompleteOptions = {
+      fields: ["address_components", "formatted_address", "geometry"],
+      types: ["address"],
+    };
+    if (geocodeCountry) opts.componentRestrictions = { country: geocodeCountry.toLowerCase() };
+    if (restaurantLat != null && restaurantLng != null) {
+      opts.bounds = {
+        north: restaurantLat + 0.5, south: restaurantLat - 0.5,
+        east: restaurantLng + 0.5, west: restaurantLng - 0.5,
+      };
+    }
+    return opts;
+  }, [geocodeCountry, restaurantLat, restaurantLng]);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   // Map center is set when an address is picked, but NOT updated while the
   // customer drags the pin — so the map doesn't snap back mid-drag.
@@ -830,7 +852,7 @@ export function CheckoutModal({
                         <Autocomplete
                           onLoad={(ac) => { autocompleteRef.current = ac; }}
                           onPlaceChanged={handlePlaceChanged}
-                          options={{ fields: ["address_components", "formatted_address", "geometry"], types: ["address"] }}
+                          options={autocompleteOptions}
                         >
                           <input
                             id="checkout-delivery-address"

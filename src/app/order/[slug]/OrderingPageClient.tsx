@@ -4840,6 +4840,8 @@ export function OrderingPageClient({
           mapProvider={restaurant.mapProvider ?? "leaflet"}
           googleMapsApiKey={restaurant.googleMapsApiKey ?? null}
           geocodeCountry={(restaurant as any).country ?? null}
+          restaurantLat={restaurant.lat ?? null}
+          restaurantLng={restaurant.lng ?? null}
           cateringMode={scheduleRequired}
           cateringMinScheduledLocal={effectiveMinScheduledLocal}
           toWallClock={toRestaurantWallClock}
