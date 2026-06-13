@@ -10,18 +10,22 @@ import { holidayEffectToday } from "@/lib/holiday-rules";
  * POST/GET /api/cron/order-alert-calls  (Vercel cron, every minute)
  *
  * "Nearly-missed order" auto-call (report cmpxeph4l). Places ONE automated voice
- * call when an order has gone unaccepted ~90s past the moment it became the
- * kitchen's LIVE job — so an unattended tablet doesn't drop a real order.
+ * call when an order has gone unaccepted ~90s past the moment it started RINGING
+ * in the kitchen — so an unattended tablet doesn't drop a real order.
  *
- * The 90s timer is anchored on `max(notifiedAt, alertAt, scheduledFor)`, NOT on
- * when the customer placed the order (Luigi 2026-06-13):
- *   • notifiedAt  — fired to the kitchen (ASAP order during open hours).
- *   • alertAt     — deferred ring time for an order PLACED WHILE CLOSED (set to
- *                   the next opening); so the clock starts when you open.
- *   • scheduledFor— a SCHEDULED order only becomes "live" at its scheduled time,
- *                   never hours before. (Fixes: a tomorrow order rang a call 90s
- *                   after it was placed.)
- * And we NEVER call while the restaurant is currently closed (holiday-aware).
+ * The 90s timer is anchored on `alertAt ?? notifiedAt` — the moment the order
+ * began ringing / its accept-countdown started (Luigi 2026-06-13):
+ *   • notifiedAt — fired to the kitchen the instant it was placed (an order
+ *                  placed during OPEN hours rings immediately, scheduled or not).
+ *   • alertAt    — deferred ring time for an order PLACED WHILE CLOSED (set to
+ *                  the next opening); the clock starts when you open.
+ * scheduledFor is deliberately NOT an anchor: a scheduled pre-order rings and is
+ * accepted just like a standard order (immediately if open, at opening if
+ * closed) — its slot only governs when the food is DUE. So the call lands inside
+ * the SAME acceptance window the kitchen + auto-reject use, warning staff before
+ * the order times out. Earlier this anchored on scheduledFor, so the warning
+ * fired long AFTER the order had already auto-rejected — no useful call ever
+ * reached the owner. We NEVER call while the restaurant is currently closed.
  *
  * Idempotent: alertCallAt is stamped so we never call twice. No-op when Twilio
  * voice creds aren't configured (placeVoiceCall returns placed=false) — we still
@@ -48,24 +52,20 @@ export async function POST(req: NextRequest) {
   const cutoff = new Date(now - THRESHOLD_MS); // anchor must be at/under this (≥90s old)
   const floor = new Date(now - LOOKBACK_MS); // anchor must be at/over this (≤30min old)
 
-  // Pre-filter: every anchor candidate present on the row must be ≥90s old, and
-  // AT LEAST ONE must be within the last 30 min — i.e. max(anchors) ∈ [floor,
-  // cutoff]. We re-derive the exact anchor + open status per row below.
+  // Pre-filter on the ring anchor = alertAt ?? notifiedAt, which must sit in
+  // [floor, cutoff] (≥90s and ≤30min old). Closed-placed orders anchor on
+  // alertAt (the deferred opening ring); everything else on notifiedAt. We
+  // re-derive the exact anchor + open status per row below.
   const candidates = await prisma.order.findMany({
     where: {
       status: "pending",
       alertCallAt: null,
-      notifiedAt: { not: null, lte: cutoff },
-      AND: [
-        { OR: [{ alertAt: null }, { alertAt: { lte: cutoff } }] },
-        { OR: [{ scheduledFor: null }, { scheduledFor: { lte: cutoff } }] },
-        {
-          OR: [
-            { notifiedAt: { gte: floor } },
-            { alertAt: { gte: floor } },
-            { scheduledFor: { gte: floor } },
-          ],
-        },
+      notifiedAt: { not: null },
+      OR: [
+        // Placed-while-closed: ring anchor is the deferred opening time.
+        { alertAt: { gte: floor, lte: cutoff } },
+        // Everything else (incl. scheduled-while-open): ring anchor = notifiedAt.
+        { alertAt: null, notifiedAt: { gte: floor, lte: cutoff } },
       ],
       restaurant: {
         is: {
@@ -80,7 +80,6 @@ export async function POST(req: NextRequest) {
       type: true,
       notifiedAt: true,
       alertAt: true,
-      scheduledFor: true,
       restaurant: {
         select: {
           name: true,
@@ -106,15 +105,12 @@ export async function POST(req: NextRequest) {
     const phone = r.alertPhone?.trim() || r.phone;
     if (!phone) continue;
 
-    // Anchor = the latest moment the order became the kitchen's LIVE job.
-    const anchorMs = Math.max(
-      o.notifiedAt ? o.notifiedAt.getTime() : 0,
-      o.alertAt ? o.alertAt.getTime() : 0,
-      o.scheduledFor ? o.scheduledFor.getTime() : 0,
-    );
+    // Anchor = the moment the order started RINGING: the deferred opening time
+    // (alertAt) for a closed-placed order, else when it hit the kitchen
+    // (notifiedAt). NOT scheduledFor — a pre-order rings/accepts immediately.
+    const anchorMs = o.alertAt ? o.alertAt.getTime() : (o.notifiedAt ? o.notifiedAt.getTime() : 0);
     const sinceAnchor = now - anchorMs;
-    // Not yet 90s past the anchor (e.g. a scheduled order whose time hasn't come),
-    // or older than the catch-up window — leave it for now / forever.
+    // Not yet 90s past the anchor, or older than the catch-up window — leave it.
     if (sinceAnchor < THRESHOLD_MS || sinceAnchor > LOOKBACK_MS) {
       results.push({ orderId: o.id, placed: false, reason: "outside alert window" });
       continue;
