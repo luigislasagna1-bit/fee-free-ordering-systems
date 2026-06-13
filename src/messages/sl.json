@@ -1829,7 +1829,7 @@
       "tabVisibility": "Vidnost",
       "fulfilTitle": "Čas izvedbe",
       "fulfilHelp": "Nastavite dneve in ure, ZA KATERE je mogoče naročiti ta izdelek. V meniju je še vedno prikazan vsak dan, vendar so zunaj časovnega okna stranke pozvane, da naročilo načrtujejo za veljaven čas — tako kot pri cateringu. Odlično za dnevne ponudbe (npr. jed samo ob torkih) ali izdelke samo za kosilo.",
-      "fulfilIntro": "Izberite, kdaj lahko stranke naročijo ta izdelek. V meniju ostane viden ves čas.",
+      "fulfilIntro": "Izberite, kdaj lahko stranke naročijo ta izdelek. V meniju ostane vedno viden, razen če ga skrijete na zavihku Vidnost.",
       "fulfilAlways": "Na voljo kadar koli",
       "fulfilRestricted": "Samo določeni dnevi / ure",
       "fulfilDaysLabel": "Naročljivo te dni",

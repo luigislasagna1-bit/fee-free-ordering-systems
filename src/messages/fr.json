@@ -1829,7 +1829,7 @@
       "tabVisibility": "Visibilité",
       "fulfilTitle": "Heure de disponibilité",
       "fulfilHelp": "Définissez les jours et les heures POUR lesquels cet article peut être commandé. Il reste affiché au menu tous les jours, mais en dehors de la plage horaire, les clients sont invités à programmer leur commande à un horaire valide — tout comme pour un traiteur. Idéal pour les plats du jour (par ex. un plat servi uniquement le mardi) ou les articles réservés au déjeuner.",
-      "fulfilIntro": "Choisissez quand les clients peuvent commander cet article. Il reste visible au menu en permanence.",
+      "fulfilIntro": "Choisissez quand les clients peuvent commander cet article. Il reste toujours visible sur le menu, sauf si vous le masquez dans l'onglet Visibilité.",
       "fulfilAlways": "Disponible à tout moment",
       "fulfilRestricted": "Uniquement certains jours / horaires",
       "fulfilDaysLabel": "Commandable ces jours-là",

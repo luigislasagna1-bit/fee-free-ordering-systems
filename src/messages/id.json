@@ -1829,7 +1829,7 @@
       "tabVisibility": "Visibilitas",
       "fulfilTitle": "Waktu pemenuhan",
       "fulfilHelp": "Tetapkan hari dan jam item ini dapat dipesan UNTUK. Item tetap muncul di menu setiap hari, tetapi di luar rentang waktu tersebut pelanggan diminta menjadwalkan pesanan mereka pada waktu yang valid — sama seperti katering. Cocok untuk menu spesial harian (mis. hidangan khusus hari Selasa) atau item khusus makan siang.",
-      "fulfilIntro": "Pilih kapan pelanggan dapat memesan item ini. Item tetap terlihat di menu setiap saat.",
+      "fulfilIntro": "Pilih kapan pelanggan dapat memesan item ini. Item ini selalu terlihat di menu, kecuali Anda menyembunyikannya di tab Visibilitas.",
       "fulfilAlways": "Tersedia kapan saja",
       "fulfilRestricted": "Hanya hari / jam tertentu",
       "fulfilDaysLabel": "Dapat dipesan pada hari-hari ini",

@@ -1829,7 +1829,7 @@
       "tabVisibility": "Visibilidade",
       "fulfilTitle": "Horário de disponibilidade",
       "fulfilHelp": "Defina os dias e os horários PARA os quais este item pode ser pedido. Ele continua aparecendo no cardápio todos os dias, mas fora da janela de horário pede-se aos clientes que agendem o pedido para um horário válido — assim como no catering. Ótimo para pratos do dia (por ex. um prato só às terças) ou itens só no almoço.",
-      "fulfilIntro": "Escolha quando os clientes podem pedir este item. Ele permanece visível no cardápio o tempo todo.",
+      "fulfilIntro": "Escolha quando os clientes podem pedir este item. Ele permanece sempre visível no cardápio, a menos que você o oculte na aba Visibilidade.",
       "fulfilAlways": "Disponível a qualquer momento",
       "fulfilRestricted": "Apenas determinados dias / horários",
       "fulfilDaysLabel": "Pode ser pedido nestes dias",

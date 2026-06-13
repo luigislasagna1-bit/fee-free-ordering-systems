@@ -214,6 +214,12 @@ interface Props {
    *  ahead a customer can pre-order (per-service max advance days). Empty =
    *  no cap. Applied as the `max` on the schedule date picker. */
   maxScheduledDate?: string;
+  /** Fulfilment-time constraint for the cart (Phase 2). When set, the schedule
+   *  picker offers ONLY valid days/times: a Monday-only item ⇒ only Mondays
+   *  selectable; an 11:00–15:00 item ⇒ only those time slots. null = no limit. */
+  fulfilDays?: number[] | null;
+  fulfilFrom?: string | null;
+  fulfilTo?: string | null;
   /** Formats an absolute ms timestamp as "YYYY-MM-DDTHH:MM" wall clock in
    *  the RESTAURANT's timezone (optionally rounded up to 15 min) — the same
    *  convention the server uses to parse scheduledFor. Used for all
@@ -282,6 +288,9 @@ export function CheckoutModal({
   cateringMode = false,
   cateringMinScheduledLocal,
   maxScheduledDate,
+  fulfilDays = null,
+  fulfilFrom = null,
+  fulfilTo = null,
   toWallClock,
   schedulingEnabled = true,
   schedulingInterval = 15,
@@ -1139,6 +1148,31 @@ export function CheckoutModal({
                         slots.push(`${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`);
                       }
                     }
+                    // Phase 2 — restrict the time slots to the cart's fulfilment
+                    // window (e.g. an 11:00–15:00 item shows only those slots).
+                    if (fulfilFrom && fulfilTo) {
+                      slots = slots.filter((s) =>
+                        fulfilFrom <= fulfilTo ? s >= fulfilFrom && s < fulfilTo : s >= fulfilFrom || s < fulfilTo,
+                      );
+                    }
+                    // Day-restricted fulfilment ⇒ offer a dropdown of ONLY the valid
+                    // upcoming dates (a Monday-only item lists just the next Mondays).
+                    const dayRestricted = Array.isArray(fulfilDays) && fulfilDays.length > 0;
+                    const validDates: string[] = (() => {
+                      if (!dayRestricted) return [];
+                      const out: string[] = [];
+                      const start = new Date(`${minDate}T12:00:00`);
+                      const maxD = maxScheduledDate ? new Date(`${maxScheduledDate}T12:00:00`) : null;
+                      for (let i = 0; i < 120 && out.length < 16; i++) {
+                        const d = new Date(start);
+                        d.setDate(start.getDate() + i);
+                        if (maxD && d > maxD) break;
+                        if (fulfilDays!.includes(d.getDay())) {
+                          out.push(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`);
+                        }
+                      }
+                      return out;
+                    })();
                     const setDate = (d: string) => {
                       // When date changes, snap time to first valid slot if current time
                       // is outside the new slot set.
@@ -1156,8 +1190,11 @@ export function CheckoutModal({
                     // compare lexically because they're zero-padded.
                     const exactMode = schedulingMode === "exact"
                       || (schedulingMode === "both" && scheduleExactPref);
-                    const exactMin = winOpen > minTimeForDate ? winOpen : minTimeForDate;
-                    const exactMax = winClose <= winOpen ? "23:59" : winClose;
+                    let exactMin = winOpen > minTimeForDate ? winOpen : minTimeForDate;
+                    let exactMax = winClose <= winOpen ? "23:59" : winClose;
+                    // Tighten the free-time bounds to the fulfilment window too.
+                    if (fulfilFrom && fulfilFrom > exactMin) exactMin = fulfilFrom;
+                    if (fulfilTo && fulfilTo < exactMax) exactMax = fulfilTo;
                     return (
                       <>
                       {schedulingMode === "both" && (
@@ -1177,15 +1214,31 @@ export function CheckoutModal({
                         </div>
                       )}
                       <div className="grid grid-cols-2 gap-2">
-                        <input
-                          type="date"
-                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
-                          style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                          min={minDate}
-                          max={maxScheduledDate || undefined}
-                          value={datePart}
-                          onChange={(e) => setDate(e.target.value)}
-                        />
+                        {dayRestricted ? (
+                          <select
+                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                            style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                            value={datePart}
+                            onChange={(e) => setDate(e.target.value)}
+                          >
+                            {!validDates.includes(datePart) && <option value="">{tc("pickADateFirst")}</option>}
+                            {validDates.map((d) => (
+                              <option key={d} value={d}>
+                                {new Date(`${d}T12:00:00`).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <input
+                            type="date"
+                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                            style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                            min={minDate}
+                            max={maxScheduledDate || undefined}
+                            value={datePart}
+                            onChange={(e) => setDate(e.target.value)}
+                          />
+                        )}
                         {exactMode ? (
                           <input
                             type="time"

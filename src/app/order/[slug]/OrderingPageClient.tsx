@@ -13,7 +13,7 @@ import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib
 import { methodsForOrderType, paymentValueToSlug } from "@/lib/payment-methods";
 import { localDowAndHHMM, liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
 import { isVisibleNow } from "@/lib/menu-visibility";
-import { hasFulfilWindow, isFulfilableAt, fulfilWindowLabel } from "@/lib/menu-fulfilment";
+import { hasFulfilWindow, isFulfilableAt, fulfilWindowLabel, combinedFulfilConstraint } from "@/lib/menu-fulfilment";
 
 /** Convert minutes-since-midnight (0..1440) into "HH:MM" 24-hour format.
  *  Used by the promo-banner usability-window label so a 12-3 PM lunch
@@ -2197,6 +2197,9 @@ export function OrderingPageClient({
   // least that far ahead.
   // A fulfilment item that isn't orderable now forces scheduling (fulfilMin set).
   const fulfilForcesSchedule = cartHasFulfil && !!fulfilMinScheduledLocal;
+  // The cart's combined order-window so the checkout picker offers ONLY valid
+  // days/times (e.g. a Monday-only item → only Mondays selectable).
+  const cartFulfilConstraint = combinedFulfilConstraint(cartFulfilItems);
   const scheduleRequired = cartHasCatering || restaurantIsClosedNow || orderMinLeadMinutes > 0 || hideAsap || fulfilForcesSchedule;
   // Whether the schedule picker is shown at all. Off only when the owner
   // disabled scheduling AND nothing forces it (catering / closed now / fulfilment).
@@ -4836,6 +4839,9 @@ export function OrderingPageClient({
           toWallClock={toRestaurantWallClock}
           cateringNoticeHours={cateringNoticeHours}
           maxScheduledDate={maxScheduledDate}
+          fulfilDays={cartFulfilConstraint.days}
+          fulfilFrom={cartFulfilConstraint.from}
+          fulfilTo={cartFulfilConstraint.to}
           schedulingEnabled={schedulingEnabled}
           scheduleReason={scheduleReason}
           closedNextOpenLocal={closedMinScheduledLocal}

@@ -2494,7 +2494,7 @@
       "tabVisibility": "Viditeľnosť",
       "fulfilTitle": "Čas vybavenia",
       "fulfilHelp": "Nastavte dni a časy, NA KTORÉ možno túto položku objednať. V ponuke sa stále zobrazuje každý deň, ale mimo daného okna sú zákazníci požiadaní, aby si objednávku naplánovali na platný čas — rovnako ako pri cateringu. Skvelé pre denné špeciality (napr. jedlo len na utorok) alebo položky určené len na obed.",
-      "fulfilIntro": "Zvoľte, kedy si zákazníci môžu túto položku objednať. V ponuke zostáva viditeľná po celý čas.",
+      "fulfilIntro": "Zvoľte, kedy si zákazníci môžu túto položku objednať. V ponuke zostáva vždy viditeľná, pokiaľ ju neskryjete na karte Viditeľnosť.",
       "fulfilAlways": "Dostupné kedykoľvek",
       "fulfilRestricted": "Len určité dni / časy",
       "fulfilDaysLabel": "Objednateľné v tieto dni",

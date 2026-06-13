@@ -1790,7 +1790,7 @@
       "tabVisibility": "Görünürlük",
       "fulfilTitle": "Sipariş zamanı",
       "fulfilHelp": "Bu ürünün hangi gün ve saatler için sipariş edilebileceğini belirleyin. Ürün menüde her gün görünmeye devam eder, ancak belirlenen zaman aralığının dışında müşterilerden siparişlerini geçerli bir saate planlamaları istenir; tıpkı catering gibi. Günün özel yemekleri (ör. yalnızca salı günü sunulan bir yemek) veya yalnızca öğle yemeği ürünleri için idealdir.",
-      "fulfilIntro": "Müşterilerin bu ürünü ne zaman sipariş edebileceğini seçin. Ürün her zaman menüde görünür kalır.",
+      "fulfilIntro": "Müşterilerin bu ürünü ne zaman sipariş edebileceğini seçin. Görünürlük sekmesinde gizlemediğiniz sürece menüde her zaman görünür kalır.",
       "fulfilAlways": "Her zaman mevcut",
       "fulfilRestricted": "Yalnızca belirli gün / saatler",
       "fulfilDaysLabel": "Bu günlerde sipariş edilebilir",

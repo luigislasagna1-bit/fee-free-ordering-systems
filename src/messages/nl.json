@@ -1829,7 +1829,7 @@
       "tabVisibility": "Zichtbaarheid",
       "fulfilTitle": "Beschikbaarheidstijd",
       "fulfilHelp": "Stel de dagen en tijden in WAARVOOR dit artikel kan worden besteld. Het blijft elke dag op het menu staan, maar buiten het tijdvenster wordt klanten gevraagd hun bestelling voor een geldig tijdstip in te plannen — net als bij catering. Ideaal voor dagspecials (bijv. een gerecht alleen op dinsdag) of artikelen alleen voor de lunch.",
-      "fulfilIntro": "Kies wanneer klanten dit artikel kunnen bestellen. Het blijft altijd zichtbaar op het menu.",
+      "fulfilIntro": "Kies wanneer klanten dit item kunnen bestellen. Het blijft altijd zichtbaar op het menu, tenzij u het verbergt op het tabblad Zichtbaarheid.",
       "fulfilAlways": "Altijd beschikbaar",
       "fulfilRestricted": "Alleen bepaalde dagen / tijden",
       "fulfilDaysLabel": "Te bestellen op deze dagen",

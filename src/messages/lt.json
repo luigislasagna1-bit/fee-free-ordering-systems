@@ -2494,7 +2494,7 @@
       "tabVisibility": "Matomumas",
       "fulfilTitle": "Užsakymo laikas",
       "fulfilHelp": "Nurodykite, KURIOMS dienoms ir valandoms šią prekę galima užsisakyti. Ji vis tiek kasdien rodoma meniu, tačiau ne laiko intervalo metu klientų prašoma suplanuoti užsakymą tinkamam laikui – kaip ir maitinimo paslaugų atveju. Puikiai tinka dienos patiekalams (pvz., patiekalui tik antradieniais) arba tik pietų prekėms.",
-      "fulfilIntro": "Pasirinkite, kada klientai gali užsisakyti šią prekę. Ji visada matoma meniu.",
+      "fulfilIntro": "Pasirinkite, kada klientai gali užsisakyti šią prekę. Meniu ji visada lieka matoma, nebent ją paslėpsite skirtuke Matomumas.",
       "fulfilAlways": "Galima bet kada",
       "fulfilRestricted": "Tik tam tikromis dienomis / valandomis",
       "fulfilDaysLabel": "Užsakoma šiomis dienomis",

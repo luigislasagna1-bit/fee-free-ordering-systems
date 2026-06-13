@@ -1829,7 +1829,7 @@
       "tabVisibility": "Vidljivost",
       "fulfilTitle": "Vrijeme izvršenja",
       "fulfilHelp": "Postavite dane i vremena ZA KOJA se ova stavka može naručiti. I dalje se prikazuje u jelovniku svaki dan, ali izvan vremenskog okvira kupci se mole da svoju narudžbu zakažu za valjano vrijeme — baš kao kod cateringa. Izvrsno za dnevne specijalitete (npr. jelo dostupno samo utorkom) ili stavke samo za ručak.",
-      "fulfilIntro": "Odaberite kada kupci mogu naručiti ovu stavku. U jelovniku ostaje vidljiva cijelo vrijeme.",
+      "fulfilIntro": "Odaberite kada kupci mogu naručiti ovu stavku. Uvijek ostaje vidljiva na jelovniku, osim ako je ne sakrijete na kartici Vidljivost.",
       "fulfilAlways": "Dostupno u bilo koje vrijeme",
       "fulfilRestricted": "Samo određeni dani / vremena",
       "fulfilDaysLabel": "Može se naručiti ovim danima",

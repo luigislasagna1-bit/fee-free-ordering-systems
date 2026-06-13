@@ -1829,7 +1829,7 @@
       "tabVisibility": "Redzamība",
       "fulfilTitle": "Pasūtīšanas laiks",
       "fulfilHelp": "Norādiet, KURĀM dienām un laikiem šo produktu var pasūtīt. Tas joprojām katru dienu ir redzams ēdienkartē, taču ārpus laika loga klientiem tiek lūgts ieplānot pasūtījumu uz derīgu laiku – tāpat kā ēdināšanas pakalpojumos. Lieliski piemērots dienas piedāvājumiem (piemēram, ēdienam tikai otrdienās) vai produktiem tikai pusdienlaikam.",
-      "fulfilIntro": "Izvēlieties, kad klienti var pasūtīt šo produktu. Tas vienmēr ir redzams ēdienkartē.",
+      "fulfilIntro": "Izvēlieties, kad klienti var pasūtīt šo vienumu. Tas vienmēr paliek redzams ēdienkartē, ja vien to neslēpjat cilnē Redzamība.",
       "fulfilAlways": "Pieejams jebkurā laikā",
       "fulfilRestricted": "Tikai noteiktās dienās/laikos",
       "fulfilDaysLabel": "Pasūtāms šajās dienās",

@@ -1829,7 +1829,7 @@
       "tabVisibility": "Vidljivost",
       "fulfilTitle": "Vreme realizacije",
       "fulfilHelp": "Podesite dane i termine ZA koje se ova stavka može naručiti. I dalje se prikazuje u meniju svakog dana, ali van zadatog perioda kupci se pozivaju da zakažu svoju porudžbinu za važeći termin — baš kao kod keteringa. Odlično za dnevne specijalitete (npr. jelo samo za utorak) ili stavke samo za ručak.",
-      "fulfilIntro": "Izaberite kada kupci mogu da naruče ovu stavku. Ostaje vidljiva u meniju sve vreme.",
+      "fulfilIntro": "Izaberite kada kupci mogu da naruče ovu stavku. Uvek ostaje vidljiva u meniju, osim ako je ne sakrijete na kartici Vidljivost.",
       "fulfilAlways": "Dostupno u svako doba",
       "fulfilRestricted": "Samo određeni dani / termini",
       "fulfilDaysLabel": "Može se naručiti ovih dana",

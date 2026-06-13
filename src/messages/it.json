@@ -1829,7 +1829,7 @@
       "tabVisibility": "Visibilità",
       "fulfilTitle": "Orario di disponibilità",
       "fulfilHelp": "Imposta i giorni e gli orari PER cui questo articolo può essere ordinato. Resta visibile nel menu tutti i giorni, ma al di fuori della fascia oraria ai clienti viene chiesto di programmare l'ordine per un orario valido — proprio come per il catering. Ottimo per i piatti del giorno (ad es. un piatto solo del martedì) o per gli articoli solo a pranzo.",
-      "fulfilIntro": "Scegli quando i clienti possono ordinare questo articolo. Resta sempre visibile nel menu.",
+      "fulfilIntro": "Scegli quando i clienti possono ordinare questo articolo. Resta sempre visibile nel menu, a meno che non lo nascondi nella scheda Visibilità.",
       "fulfilAlways": "Disponibile in qualsiasi momento",
       "fulfilRestricted": "Solo determinati giorni / orari",
       "fulfilDaysLabel": "Ordinabile in questi giorni",

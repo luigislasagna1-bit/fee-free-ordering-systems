@@ -1829,7 +1829,7 @@
       "tabVisibility": "Vizibilitate",
       "fulfilTitle": "Timp de onorare",
       "fulfilHelp": "Setează zilele și orele PENTRU CARE poate fi comandat acest produs. Apare în continuare în meniu în fiecare zi, dar în afara intervalului clienții sunt rugați să își programeze comanda pentru un moment valabil — la fel ca la catering. Excelent pentru specialitățile zilei (de ex. un preparat disponibil doar marțea) sau pentru produse doar la prânz.",
-      "fulfilIntro": "Alege când pot comanda clienții acest produs. Rămâne vizibil în meniu în permanență.",
+      "fulfilIntro": "Alege când clienții pot comanda acest produs. Rămâne mereu vizibil în meniu, cu excepția cazului în care îl ascunzi în fila Vizibilitate.",
       "fulfilAlways": "Disponibil oricând",
       "fulfilRestricted": "Doar anumite zile / ore",
       "fulfilDaysLabel": "Comandabil în aceste zile",

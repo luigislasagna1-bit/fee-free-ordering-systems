@@ -1829,7 +1829,7 @@
       "tabVisibility": "Visibilitat",
       "fulfilTitle": "Hora de disponibilitat",
       "fulfilHelp": "Defineix els dies i les hores PER als quals es pot demanar aquest article. Continua apareixent al menú cada dia, però fora de la franja horària es demana als clients que programin la comanda per a una hora vàlida — igual que en el càtering. Ideal per a plats del dia (p. ex. un plat només dels dimarts) o articles només per a l'esmorzar.",
-      "fulfilIntro": "Tria quan els clients poden demanar aquest article. Es manté visible al menú en tot moment.",
+      "fulfilIntro": "Tria quan els clients poden demanar aquest article. Es manté sempre visible al menú, tret que l'amaguis a la pestanya Visibilitat.",
       "fulfilAlways": "Disponible en qualsevol moment",
       "fulfilRestricted": "Només determinats dies / hores",
       "fulfilDaysLabel": "Es pot demanar aquests dies",

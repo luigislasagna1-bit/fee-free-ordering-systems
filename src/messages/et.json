@@ -1829,7 +1829,7 @@
       "tabVisibility": "Nähtavus",
       "fulfilTitle": "Tellitavuse aeg",
       "fulfilHelp": "Määrake, MILLISTEKS päevadeks ja kellaaegadeks saab seda toodet tellida. See on menüüs endiselt näha iga päev, kuid väljaspool ajavahemikku palutakse klientidel ajastada oma tellimus sobivale ajale – täpselt nagu toitlustuse puhul. Sobib suurepäraselt päevapakkumiste jaoks (nt ainult teisipäeviti pakutav roog) või üksnes lõunaroogadele.",
-      "fulfilIntro": "Valige, millal kliendid saavad seda toodet tellida. See on menüüs alati nähtaval.",
+      "fulfilIntro": "Vali, millal saavad kliendid seda toodet tellida. See on menüüs alati nähtaval, kui sa seda vahekaardil Nähtavus ei peida.",
       "fulfilAlways": "Saadaval igal ajal",
       "fulfilRestricted": "Ainult kindlad päevad / kellaajad",
       "fulfilDaysLabel": "Tellitav nendel päevadel",

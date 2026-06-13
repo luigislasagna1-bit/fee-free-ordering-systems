@@ -1829,7 +1829,7 @@
       "tabVisibility": "Viditelnost",
       "fulfilTitle": "Čas vyřízení",
       "fulfilHelp": "Nastavte dny a časy, NA KTERÉ lze tuto položku objednat. V nabídce se stále zobrazuje každý den, ale mimo dané okno jsou zákazníci požádáni, aby si objednávku naplánovali na platný čas — stejně jako u cateringu. Skvělé pro denní speciality (např. jídlo pouze na úterý) nebo položky určené jen na oběd.",
-      "fulfilIntro": "Zvolte, kdy si zákazníci mohou tuto položku objednat. V nabídce zůstává viditelná po celou dobu.",
+      "fulfilIntro": "Zvolte, kdy si zákazníci mohou tuto položku objednat. V nabídce zůstává vždy viditelná, pokud ji neskryjete na kartě Viditelnost.",
       "fulfilAlways": "Dostupné kdykoli",
       "fulfilRestricted": "Pouze určité dny / časy",
       "fulfilDaysLabel": "Objednatelné v tyto dny",

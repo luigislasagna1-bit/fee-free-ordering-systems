@@ -1829,7 +1829,7 @@
       "tabVisibility": "Näkyvyys",
       "fulfilTitle": "Tilattavissa-aika",
       "fulfilHelp": "Määritä, MILLOIN tämän tuotteen voi tilata. Se näkyy edelleen ruokalistalla joka päivä, mutta aikaikkunan ulkopuolella asiakkaita pyydetään ajastamaan tilaus kelvolliseen aikaan – aivan kuten pitopalvelussa. Sopii erinomaisesti päivän annoksiin (esim. vain tiistaisin tarjottava annos) tai vain lounaaseen kuuluviin tuotteisiin.",
-      "fulfilIntro": "Valitse, milloin asiakkaat voivat tilata tämän tuotteen. Se näkyy ruokalistalla aina.",
+      "fulfilIntro": "Valitse, milloin asiakkaat voivat tilata tämän tuotteen. Se näkyy aina valikossa, ellet piilota sitä Näkyvyys-välilehdellä.",
       "fulfilAlways": "Saatavilla milloin tahansa",
       "fulfilRestricted": "Vain tiettyinä päivinä/aikoina",
       "fulfilDaysLabel": "Tilattavissa näinä päivinä",

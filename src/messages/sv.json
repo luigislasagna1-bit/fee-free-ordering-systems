@@ -1829,7 +1829,7 @@
       "tabVisibility": "Synlighet",
       "fulfilTitle": "Tillgänglig för beställning",
       "fulfilHelp": "Ange vilka dagar och tider den här varan kan beställas FÖR. Den visas fortfarande på menyn varje dag, men utanför tidsfönstret ombeds kunderna att schemalägga sin beställning till en giltig tid – precis som vid catering. Perfekt för dagens rätter (t.ex. en rätt som bara serveras på tisdagar) eller varor som bara finns till lunch.",
-      "fulfilIntro": "Välj när kunderna kan beställa den här varan. Den är alltid synlig på menyn.",
+      "fulfilIntro": "Välj när kunderna kan beställa den här artikeln. Den är alltid synlig på menyn, om du inte döljer den på fliken Synlighet.",
       "fulfilAlways": "Tillgänglig när som helst",
       "fulfilRestricted": "Endast vissa dagar/tider",
       "fulfilDaysLabel": "Kan beställas dessa dagar",

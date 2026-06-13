@@ -1790,7 +1790,7 @@
       "tabVisibility": "Láthatóság",
       "fulfilTitle": "Teljesítési idő",
       "fulfilHelp": "Állítsa be, mely napokra és időpontokra rendelhető ez a tétel. A menüben továbbra is minden nap megjelenik, de az időablakon kívül a vendégeket arra kérjük, hogy a rendelésüket egy érvényes időpontra ütemezzék — akárcsak a cateringnél. Kiváló a napi ajánlatokhoz (pl. egy csak keddenként kapható fogás) vagy csak ebédre szánt tételekhez.",
-      "fulfilIntro": "Válassza ki, mikor rendelhetik meg a vendégek ezt a tételt. A menüben mindvégig látható marad.",
+      "fulfilIntro": "Válaszd ki, mikor rendelhetik meg a vásárlók ezt a tételt. Mindig látható marad az étlapon, hacsak el nem rejted a Láthatóság lapon.",
       "fulfilAlways": "Bármikor elérhető",
       "fulfilRestricted": "Csak bizonyos napok / időpontok",
       "fulfilDaysLabel": "Ezeken a napokon rendelhető",

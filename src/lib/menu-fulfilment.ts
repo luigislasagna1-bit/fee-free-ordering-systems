@@ -37,7 +37,7 @@ export function buildFulfilData(input: FulfilInput | null | undefined): {
   if (!input) return { ok: true, data: { fulfilDays: null, fulfilFrom: null, fulfilTo: null } };
   let fulfilDays: string | null = null;
   if (Array.isArray(input.days)) {
-    const days = [...new Set(input.days.map(Number).filter((n) => Number.isInteger(n) && n >= 0 && n <= 6))].sort((a, b) => a - b);
+    const days = [...new Set(input.days.filter((x): x is number => typeof x === "number" && Number.isInteger(x) && x >= 0 && x <= 6))].sort((a, b) => a - b);
     if (days.length > 0 && days.length < 7) fulfilDays = JSON.stringify(days);
   }
   const from = input.from && HHMM.test(input.from) ? input.from : null;
@@ -54,7 +54,12 @@ function parseDays(raw: string | null | undefined): number[] | null {
   if (!raw) return null;
   try {
     const a = JSON.parse(raw);
-    if (Array.isArray(a) && a.length > 0) return a.map(Number).filter((n) => n >= 0 && n <= 6);
+    if (Array.isArray(a)) {
+      // Drop junk (null/strings) BEFORE coercion — Number(null) is 0, which would
+      // silently turn a corrupt "[2,null]" into "Sun + Tue".
+      const d = a.filter((x) => typeof x === "number" && Number.isInteger(x) && x >= 0 && x <= 6);
+      if (d.length > 0) return d;
+    }
   } catch { /* ignore */ }
   return null;
 }
@@ -101,6 +106,44 @@ export function fulfilWindowLabel(
   if (days && days.length < 7) parts.push([...days].sort((a, b) => a - b).map(dayName).join(", "));
   if (item.fulfilFrom && item.fulfilTo) parts.push(`${formatTime(item.fulfilFrom)} – ${formatTime(item.fulfilTo)}`);
   return parts.join(" · ");
+}
+
+/** Combined order-window constraint across all fulfilment items in a cart, so the
+ *  checkout picker can offer ONLY valid days/times. days = intersection of each
+ *  item's allowed days (an item with no day rule allows all 7); null ⇒ any day.
+ *  from/to = the tightest common time window (latest start, earliest end) among
+ *  items that set one; null ⇒ no time limit. An empty `days` array means the cart
+ *  items can never be ordered together (disjoint days) — the caller should treat
+ *  that as "no valid slot". */
+export function combinedFulfilConstraint(
+  items: FulfilFields[],
+): { days: number[] | null; from: string | null; to: string | null } {
+  const restricted = items.filter(hasFulfilWindow);
+  if (restricted.length === 0) return { days: null, from: null, to: null };
+  let days: Set<number> | null = null;
+  for (const it of restricted) {
+    const d = parseDays(it.fulfilDays);
+    const set = new Set<number>(d ?? [0, 1, 2, 3, 4, 5, 6]);
+    if (days === null) {
+      days = set;
+    } else {
+      const next = new Set<number>();
+      for (const x of days) if (set.has(x)) next.add(x);
+      days = next;
+    }
+  }
+  const dayArr: number[] | null = days ? Array.from(days).sort((a, b) => a - b) : null;
+  let from: string | null = null;
+  let to: string | null = null;
+  for (const it of restricted) {
+    const f = it.fulfilFrom;
+    const t = it.fulfilTo;
+    if (f && t) {
+      if (from === null || f > from) from = f;
+      if (to === null || t < to) to = t;
+    }
+  }
+  return { days: dayArr && dayArr.length < 7 ? dayArr : null, from, to };
 }
 
 /** Earliest absolute moment from `now` at which the item is orderable, rounded UP

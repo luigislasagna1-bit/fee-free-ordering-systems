@@ -1790,7 +1790,7 @@
       "tabVisibility": "Widoczność",
       "fulfilTitle": "Czas realizacji",
       "fulfilHelp": "Ustaw dni i godziny, NA KTÓRE tę pozycję można zamówić. Nadal pojawia się ona w menu każdego dnia, ale poza wyznaczonym oknem klienci proszeni są o zaplanowanie zamówienia na prawidłowy termin — tak jak w przypadku cateringu. Świetne dla dań dnia (np. dania dostępnego tylko we wtorki) lub pozycji wyłącznie na lunch.",
-      "fulfilIntro": "Wybierz, kiedy klienci mogą zamówić tę pozycję. Pozostaje ona widoczna w menu przez cały czas.",
+      "fulfilIntro": "Wybierz, kiedy klienci mogą zamówić tę pozycję. Pozostaje ona zawsze widoczna w menu, chyba że ukryjesz ją na karcie Widoczność.",
       "fulfilAlways": "Dostępne zawsze",
       "fulfilRestricted": "Tylko określone dni / godziny",
       "fulfilDaysLabel": "Można zamawiać w te dni",

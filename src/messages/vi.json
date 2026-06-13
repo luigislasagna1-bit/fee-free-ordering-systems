@@ -1790,7 +1790,7 @@
       "tabVisibility": "Hiển thị",
       "fulfilTitle": "Thời gian phục vụ",
       "fulfilHelp": "Đặt những ngày và giờ mà món này có thể được đặt CHO. Món vẫn xuất hiện trên thực đơn mỗi ngày, nhưng ngoài khung giờ đó khách hàng sẽ được yêu cầu lên lịch đặt món vào một thời điểm hợp lệ — giống như dịch vụ tiệc. Rất phù hợp cho món đặc biệt trong ngày (ví dụ món chỉ phục vụ vào thứ Ba) hoặc các món chỉ phục vụ bữa trưa.",
-      "fulfilIntro": "Chọn thời điểm khách hàng có thể đặt món này. Món luôn hiển thị trên thực đơn mọi lúc.",
+      "fulfilIntro": "Chọn thời điểm khách hàng có thể đặt món này. Món luôn hiển thị trên thực đơn, trừ khi bạn ẩn nó trong tab Hiển thị.",
       "fulfilAlways": "Có sẵn bất cứ lúc nào",
       "fulfilRestricted": "Chỉ một số ngày / giờ nhất định",
       "fulfilDaysLabel": "Có thể đặt vào những ngày này",

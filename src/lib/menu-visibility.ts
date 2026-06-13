@@ -148,7 +148,8 @@ export function buildVisibilityData(
   if ((v.from == null) !== (v.to == null)) return { ok: false, error: "Set both a start and end time, or neither." };
   let days: number[] | null = null;
   if (Array.isArray(v.days)) {
-    days = [...new Set(v.days.map(Number).filter((n) => n >= 0 && n <= 6))].sort();
+    // Drop junk (null/strings) BEFORE coercion — Number(null) is 0 (Sunday).
+    days = [...new Set(v.days.filter((x) => typeof x === "number" && Number.isInteger(x) && x >= 0 && x <= 6))].sort((a, b) => a - b);
     if (days.length === 0) return { ok: false, error: "Pick at least one day." };
     if (days.length === 7) days = null;
   }

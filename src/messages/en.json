@@ -2033,7 +2033,7 @@
       "availabilityAllDayHint": "Leave time fields empty to be available all day.",
       "fulfilTitle": "Fulfilment time",
       "fulfilHelp": "Set the days and times this item can be ordered FOR. It still appears on the menu every day, but outside the window customers are asked to schedule their order for a valid time — just like catering. Great for day-specials (e.g. a Tuesday-only dish) or lunch-only items.",
-      "fulfilIntro": "Choose when customers can order this item. It stays visible on the menu at all times.",
+      "fulfilIntro": "Choose when customers can order this item. It stays visible on the menu at all times, unless you hide it in the Visibility tab.",
       "fulfilAlways": "Available anytime",
       "fulfilRestricted": "Only certain days / times",
       "fulfilDaysLabel": "Orderable on these days",

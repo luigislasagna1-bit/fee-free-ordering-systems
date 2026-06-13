@@ -1829,7 +1829,7 @@
       "tabVisibility": "Sichtbarkeit",
       "fulfilTitle": "Verfügbarkeitszeit",
       "fulfilHelp": "Legen Sie die Tage und Uhrzeiten fest, FÜR die dieser Artikel bestellt werden kann. Er erscheint weiterhin täglich auf der Speisekarte, aber außerhalb des Zeitfensters werden die Kunden gebeten, ihre Bestellung für eine gültige Uhrzeit zu planen — genau wie beim Catering. Ideal für Tagesgerichte (z. B. ein Gericht nur dienstags) oder Artikel nur zum Mittagessen.",
-      "fulfilIntro": "Wählen Sie, wann Kunden diesen Artikel bestellen können. Er bleibt jederzeit auf der Speisekarte sichtbar.",
+      "fulfilIntro": "Legen Sie fest, wann Kunden diesen Artikel bestellen können. Er bleibt jederzeit im Menü sichtbar, sofern Sie ihn nicht im Tab Sichtbarkeit ausblenden.",
       "fulfilAlways": "Jederzeit verfügbar",
       "fulfilRestricted": "Nur bestimmte Tage / Uhrzeiten",
       "fulfilDaysLabel": "Bestellbar an diesen Tagen",
