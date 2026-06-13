@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency } from "@/lib/utils";
+import { getFiscalConfig, isKnownFiscalCountry } from "@/lib/fiscal-countries";
 import { getTranslations } from "next-intl/server";
 import { ArrowLeft } from "lucide-react";
 import { PrintButton } from "./PrintButton";
@@ -51,6 +52,11 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
   const bp = restaurant.billingProfile;
   const billToName = bp?.legalName || restaurant.name;
   const billToTaxId = bp?.taxId || "";
+  // Country-specific label for the tax id (GST/HST, P.IVA, VAT, EIN…), falling
+  // back to the generic "VAT ID" string for unknown countries.
+  const billToTaxLabel = isKnownFiscalCountry(bp?.country)
+    ? getFiscalConfig(bp?.country).taxIdShort
+    : t("vatId");
   const billToAddress = [
     bp?.addressLine1 || restaurant.address,
     bp?.city || restaurant.city,
@@ -101,7 +107,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
         <div className="py-6">
           <div className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-1">{t("billedTo")}</div>
           <div className="text-sm font-semibold text-gray-900">{billToName}</div>
-          {billToTaxId && <div className="text-sm text-gray-600">{t("vatId")}: {billToTaxId}</div>}
+          {billToTaxId && <div className="text-sm text-gray-600">{billToTaxLabel}: {billToTaxId}</div>}
           {billToAddress && <div className="text-sm text-gray-600">{billToAddress}</div>}
           {billToEmail && <div className="text-sm text-gray-600">{billToEmail}</div>}
         </div>
