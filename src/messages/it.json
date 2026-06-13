@@ -257,7 +257,8 @@
     "testModeBanner": "Modalità test — stai visualizzando il tuo negozio",
     "testModeHint": "Gli ordini effettuati qui sono contrassegnati TEST: suonano in cucina e si stampano normalmente, ma non contano mai nei report né nei ricavi.",
     "fromPrice": "da {price}",
-    "fulfilOrderAheadLabel": "Ordina in anticipo · {window}"
+    "fulfilOrderAheadLabel": "Ordina in anticipo · {window}",
+    "opensAtLabel": "Apre alle {time}"
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",

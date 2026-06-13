@@ -257,7 +257,8 @@
     "testModeBanner": "Mod de test — previzualizezi propriul magazin",
     "testModeHint": "Comenzile plasate aici sunt marcate TEST: sună în bucătărie și se tipăresc normal, dar nu se numără niciodată în rapoarte sau venituri.",
     "fromPrice": "de la {price}",
-    "fulfilOrderAheadLabel": "Comandă în avans · {window}"
+    "fulfilOrderAheadLabel": "Comandă în avans · {window}",
+    "opensAtLabel": "Se deschide la {time}"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",

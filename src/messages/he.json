@@ -257,7 +257,8 @@
     "testModeBanner": "מצב בדיקה — אתה צופה בחנות שלך",
     "testModeHint": "הזמנות כאן מסומנות TEST: הן מצלצלות במטבח ומודפסות כרגיל אך לעולם לא נספרות בדוחות או בהכנסות.",
     "fromPrice": "החל מ-{price}",
-    "fulfilOrderAheadLabel": "הזמנה מראש · {window}"
+    "fulfilOrderAheadLabel": "הזמנה מראש · {window}",
+    "opensAtLabel": "נפתח ב-{time}"
   },
   "pizza": {
     "chooseSize": "בחר גודל",

@@ -257,7 +257,8 @@
     "testModeBanner": "Тестовий режим — ви переглядаєте власний заклад",
     "testModeHint": "Замовлення тут позначаються TEST: вони дзвонять на кухні та друкуються як завжди, але ніколи не враховуються у звітах чи виручці.",
     "fromPrice": "від {price}",
-    "fulfilOrderAheadLabel": "Замовити заздалегідь · {window}"
+    "fulfilOrderAheadLabel": "Замовити заздалегідь · {window}",
+    "opensAtLabel": "Відкриється о {time}"
   },
   "pizza": {
     "chooseSize": "Оберіть розмір",

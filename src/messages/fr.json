@@ -257,7 +257,8 @@
     "testModeBanner": "Mode test — vous prévisualisez votre propre boutique",
     "testModeHint": "Les commandes passées ici sont marquées TEST : elles sonnent en cuisine et s'impriment normalement, mais ne comptent jamais dans les rapports ni le chiffre d'affaires.",
     "fromPrice": "à partir de {price}",
-    "fulfilOrderAheadLabel": "Commande à l'avance · {window}"
+    "fulfilOrderAheadLabel": "Commande à l'avance · {window}",
+    "opensAtLabel": "Ouvre à {time}"
   },
   "pizza": {
     "chooseSize": "Choisir la taille",

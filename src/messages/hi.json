@@ -257,7 +257,8 @@
     "testModeBanner": "परीक्षण मोड — आप अपनी ही दुकान का पूर्वावलोकन कर रहे हैं",
     "testModeHint": "यहाँ किए गए ऑर्डर TEST चिह्नित होते हैं: किचन में सामान्य रूप से बजते और प्रिंट होते हैं, पर रिपोर्ट या आय में कभी नहीं गिने जाते।",
     "fromPrice": "{price} से",
-    "fulfilOrderAheadLabel": "पहले से ऑर्डर करें · {window}"
+    "fulfilOrderAheadLabel": "पहले से ऑर्डर करें · {window}",
+    "opensAtLabel": "{time} पर खुलता है"
   },
   "pizza": {
     "chooseSize": "आकार चुनें",

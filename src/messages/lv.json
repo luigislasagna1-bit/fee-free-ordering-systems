@@ -257,7 +257,8 @@
     "testModeBanner": "Testa režīms — skatāt savu veikalu",
     "testModeHint": "Šeit veiktie pasūtījumi tiek atzīmēti TEST: tie zvana virtuvē un drukājas kā parasti, bet nekad netiek ieskaitīti atskaitēs vai ieņēmumos.",
     "fromPrice": "no {price}",
-    "fulfilOrderAheadLabel": "Pasūtīt iepriekš · {window}"
+    "fulfilOrderAheadLabel": "Pasūtīt iepriekš · {window}",
+    "opensAtLabel": "Atveras plkst. {time}"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",

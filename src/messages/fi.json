@@ -257,7 +257,8 @@
     "testModeBanner": "Testitila — esikatselet omaa kauppaasi",
     "testModeHint": "Täällä tehdyt tilaukset merkitään TEST: ne soivat keittiössä ja tulostuvat normaalisti, mutta eivät koskaan näy raporteissa tai liikevaihdossa.",
     "fromPrice": "alkaen {price}",
-    "fulfilOrderAheadLabel": "Ennakkotilaus · {window}"
+    "fulfilOrderAheadLabel": "Ennakkotilaus · {window}",
+    "opensAtLabel": "Avautuu klo {time}"
   },
   "pizza": {
     "chooseSize": "Valitse koko",

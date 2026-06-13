@@ -257,7 +257,8 @@
     "testModeBanner": "โหมดทดสอบ — คุณกำลังดูร้านของคุณเอง",
     "testModeHint": "ออเดอร์ที่สั่งที่นี่จะถูกทำเครื่องหมาย TEST: จะดังที่ครัวและพิมพ์ตามปกติ แต่จะไม่ถูกนับในรายงานหรือรายได้",
     "fromPrice": "เริ่มต้น {price}",
-    "fulfilOrderAheadLabel": "สั่งล่วงหน้า · {window}"
+    "fulfilOrderAheadLabel": "สั่งล่วงหน้า · {window}",
+    "opensAtLabel": "เปิด {time}"
   },
   "pizza": {
     "chooseSize": "เลือกขนาด",

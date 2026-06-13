@@ -257,7 +257,8 @@
     "testModeBanner": "测试模式——您正在预览自己的店铺",
     "testModeHint": "在此下的订单会标记为 TEST：厨房正常响铃和打印，但绝不会计入报表或营业额。",
     "fromPrice": "{price} 起",
-    "fulfilOrderAheadLabel": "提前预订 · {window}"
+    "fulfilOrderAheadLabel": "提前预订 · {window}",
+    "opensAtLabel": "{time} 开门"
   },
   "pizza": {
     "chooseSize": "选择大小",

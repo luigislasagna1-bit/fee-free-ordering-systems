@@ -257,7 +257,8 @@
     "testModeBanner": "Testni način — pregledavate vlastitu trgovinu",
     "testModeHint": "Narudžbe ovdje označene su TEST: zvone u kuhinji i ispisuju se normalno, ali se nikad ne računaju u izvještaje ni prihod.",
     "fromPrice": "od {price}",
-    "fulfilOrderAheadLabel": "Naručite unaprijed · {window}"
+    "fulfilOrderAheadLabel": "Naručite unaprijed · {window}",
+    "opensAtLabel": "Otvara u {time}"
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",

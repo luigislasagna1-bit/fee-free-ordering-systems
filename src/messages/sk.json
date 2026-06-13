@@ -257,7 +257,8 @@
     "testModeBanner": "Testovací režim — prezeráte si vlastný podnik",
     "testModeHint": "Objednávky zadané tu sú označené TEST: v kuchyni zazvonia a normálne sa vytlačia, ale nikdy sa nepočítajú do reportov ani tržieb.",
     "fromPrice": "od {price}",
-    "fulfilOrderAheadLabel": "Objednať vopred · {window}"
+    "fulfilOrderAheadLabel": "Objednať vopred · {window}",
+    "opensAtLabel": "Otvára o {time}"
   },
   "pizza": {
     "chooseSize": "Vybrať veľkosť",

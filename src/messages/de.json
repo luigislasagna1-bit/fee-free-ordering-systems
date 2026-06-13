@@ -257,7 +257,8 @@
     "testModeBanner": "Testmodus — du siehst die Vorschau deines eigenen Shops",
     "testModeHint": "Hier aufgegebene Bestellungen sind als TEST markiert: Sie klingeln in der Küche und drucken normal, zählen aber nie in Berichten oder Umsätzen.",
     "fromPrice": "ab {price}",
-    "fulfilOrderAheadLabel": "Vorbestellen · {window}"
+    "fulfilOrderAheadLabel": "Vorbestellen · {window}",
+    "opensAtLabel": "Öffnet um {time}"
   },
   "pizza": {
     "chooseSize": "Größe wählen",

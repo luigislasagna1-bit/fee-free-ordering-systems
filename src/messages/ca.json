@@ -257,7 +257,8 @@
     "testModeBanner": "Mode de prova — estàs previsualitzant la teva botiga",
     "testModeHint": "Les comandes fetes aquí es marquen com a TEST: sonen a la cuina i s'imprimeixen normalment, però mai no compten en informes ni ingressos.",
     "fromPrice": "des de {price}",
-    "fulfilOrderAheadLabel": "Demana per endavant · {window}"
+    "fulfilOrderAheadLabel": "Demana per endavant · {window}",
+    "opensAtLabel": "Obre a les {time}"
   },
   "pizza": {
     "chooseSize": "Tria la mida",

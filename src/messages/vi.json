@@ -257,7 +257,8 @@
     "testModeBanner": "Chế độ thử — bạn đang xem trước cửa hàng của mình",
     "testModeHint": "Đơn đặt ở đây được đánh dấu TEST: vẫn reo ở bếp và in bình thường nhưng không bao giờ tính vào báo cáo hay doanh thu.",
     "fromPrice": "từ {price}",
-    "fulfilOrderAheadLabel": "Đặt trước · {window}"
+    "fulfilOrderAheadLabel": "Đặt trước · {window}",
+    "opensAtLabel": "Mở cửa lúc {time}"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",

@@ -257,7 +257,8 @@
     "testModeBanner": "テストモード — 自分の店舗をプレビュー中",
     "testModeHint": "ここで行った注文は TEST と表示されます。キッチンには通常どおり通知・印刷されますが、レポートや売上には一切計上されません。",
     "fromPrice": "{price}〜",
-    "fulfilOrderAheadLabel": "事前注文 · {window}"
+    "fulfilOrderAheadLabel": "事前注文 · {window}",
+    "opensAtLabel": "{time} に開店"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",

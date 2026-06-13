@@ -257,7 +257,8 @@
     "testModeBanner": "Test modu — kendi mağazanızı önizliyorsunuz",
     "testModeHint": "Burada verilen siparişler TEST olarak işaretlenir: mutfakta çalar ve normal yazdırılır ama raporlara veya gelire asla sayılmaz.",
     "fromPrice": "{price} başlangıç",
-    "fulfilOrderAheadLabel": "Önceden sipariş ver · {window}"
+    "fulfilOrderAheadLabel": "Önceden sipariş ver · {window}",
+    "opensAtLabel": "Açılış: {time}"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",

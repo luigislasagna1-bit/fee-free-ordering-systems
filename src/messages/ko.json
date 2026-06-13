@@ -257,7 +257,8 @@
     "testModeBanner": "테스트 모드 — 내 매장을 미리보고 있습니다",
     "testModeHint": "여기서 주문하면 TEST로 표시됩니다. 주방 벨과 인쇄는 정상 작동하지만 보고서나 매출에는 절대 집계되지 않습니다.",
     "fromPrice": "{price}부터",
-    "fulfilOrderAheadLabel": "미리 주문 · {window}"
+    "fulfilOrderAheadLabel": "미리 주문 · {window}",
+    "opensAtLabel": "{time}에 오픈"
   },
   "pizza": {
     "chooseSize": "크기 선택",

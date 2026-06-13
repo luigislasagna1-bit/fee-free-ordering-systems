@@ -257,7 +257,8 @@
     "testModeBanner": "Bandomasis režimas — peržiūrite savo parduotuvę",
     "testModeHint": "Čia pateikti užsakymai pažymimi TEST: jie skamba virtuvėje ir spausdinami įprastai, bet niekada neįskaičiuojami į ataskaitas ar pajamas.",
     "fromPrice": "nuo {price}",
-    "fulfilOrderAheadLabel": "Išankstinis užsakymas · {window}"
+    "fulfilOrderAheadLabel": "Išankstinis užsakymas · {window}",
+    "opensAtLabel": "Atidaroma {time}"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",

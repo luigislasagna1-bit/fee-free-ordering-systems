@@ -2116,6 +2116,15 @@ export function OrderingPageClient({
     restaurantTz,
   );
   const restaurantIsClosedNow = liveStatusForClient.kind !== "open";
+  // Header open/closed chip — drive off the LIVE status (open RIGHT NOW), not
+  // just "has hours today". At 3 AM with 10 AM–2 AM hours the shop is CLOSED, so
+  // the chip must NOT read green "Open" (Luigi live-test 2026-06-13). When we know
+  // the next opening, show it ("Closed · Opens 10:00 AM") instead of a flat label.
+  const headerIsOpenNow = !restaurantIsClosedNow && !todayHolidayClosed;
+  const headerClosedText =
+    liveStatusForClient.kind === "opens_at"
+      ? `${t("closed")} · ${t("opensAtLabel", { time: liveStatusForClient.opensAt })}`
+      : t("closedToday");
   const nextOpenDate = restaurantIsClosedNow
     ? nextOpenAt(
         (restaurant.openingHours ?? []) as any,
@@ -3340,11 +3349,11 @@ export function OrderingPageClient({
             <div className="px-4 py-2 text-xs">
               {/* Holiday closure overrides the weekly row (live-test bug
                   2026-06-12: chip said "Open" on a holiday-closed day). */}
-              <span className={`flex items-center gap-1.5 ${todayHours.isOpen && !todayHolidayClosed ? "text-green-600" : "text-red-600"}`}>
+              <span className={`flex items-center gap-1.5 ${headerIsOpenNow ? "text-green-600" : "text-red-600"}`}>
                 <Clock className="w-3.5 h-3.5" />
-                {todayHours.isOpen && !todayHolidayClosed
+                {headerIsOpenNow
                   ? `${t("open")} · ${formatHHMM(todayHours.openTime, hoursFmt)} – ${formatHHMM(todayHours.closeTime, hoursFmt)}`
-                  : t("closedToday")}
+                  : headerClosedText}
               </span>
             </div>
           </div>
@@ -3361,11 +3370,11 @@ export function OrderingPageClient({
             {todayHours && (
               // Holiday closure overrides the weekly row (live-test bug
               // 2026-06-12: chip said "Open" on a holiday-closed day).
-              <span className={`flex items-center gap-1.5 ${todayHours.isOpen && !todayHolidayClosed ? "text-green-600" : "text-red-600"}`}>
+              <span className={`flex items-center gap-1.5 ${headerIsOpenNow ? "text-green-600" : "text-red-600"}`}>
                 <Clock className="w-4 h-4" />
-                {todayHours.isOpen && !todayHolidayClosed
+                {headerIsOpenNow
                   ? `${t("open")}: ${formatHHMM(todayHours.openTime, hoursFmt)} – ${formatHHMM(todayHours.closeTime, hoursFmt)}`
-                  : t("closedToday")}
+                  : headerClosedText}
               </span>
             )}
             {/* Action group — mobile-friendly (Luigi 2026-06-01):

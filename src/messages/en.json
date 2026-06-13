@@ -257,7 +257,8 @@
     "fulfilOrderAheadLabel": "Order ahead · {window}",
     "testModeBanner": "Test mode — you're previewing your own store",
     "testModeHint": "Orders you place here are marked TEST: they ring the kitchen and print normally but never count in reports or revenue.",
-    "fromPrice": "from {price}"
+    "fromPrice": "from {price}",
+    "opensAtLabel": "Opens {time}"
   },
   "pizza": {
     "chooseSize": "Choose Size",

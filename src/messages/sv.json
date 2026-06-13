@@ -257,7 +257,8 @@
     "testModeBanner": "Testläge — du förhandsgranskar din egen butik",
     "testModeHint": "Beställningar här markeras som TEST: de ringer i köket och skrivs ut normalt men räknas aldrig i rapporter eller intäkter.",
     "fromPrice": "från {price}",
-    "fulfilOrderAheadLabel": "Förbeställ · {window}"
+    "fulfilOrderAheadLabel": "Förbeställ · {window}",
+    "opensAtLabel": "Öppnar {time}"
   },
   "pizza": {
     "chooseSize": "Välj storlek",

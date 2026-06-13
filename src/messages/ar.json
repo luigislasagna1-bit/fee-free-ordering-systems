@@ -257,7 +257,8 @@
     "testModeBanner": "وضع الاختبار — أنت تعاين متجرك",
     "testModeHint": "الطلبات هنا تُوسم TEST: ترن في المطبخ وتُطبع كالمعتاد لكنها لا تُحتسب أبدًا في التقارير أو الإيرادات.",
     "fromPrice": "من {price}",
-    "fulfilOrderAheadLabel": "اطلب مسبقًا · {window}"
+    "fulfilOrderAheadLabel": "اطلب مسبقًا · {window}",
+    "opensAtLabel": "يفتح في {time}"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",

@@ -257,7 +257,8 @@
     "testModeBanner": "Testtilstand — du forhåndsviser din egen butik",
     "testModeHint": "Bestillinger her markeres som TEST: de ringer i køkkenet og printes normalt, men tæller aldrig i rapporter eller omsætning.",
     "fromPrice": "fra {price}",
-    "fulfilOrderAheadLabel": "Forudbestil · {window}"
+    "fulfilOrderAheadLabel": "Forudbestil · {window}",
+    "opensAtLabel": "Åbner {time}"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",

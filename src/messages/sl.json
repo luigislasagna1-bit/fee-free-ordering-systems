@@ -257,7 +257,8 @@
     "testModeBanner": "Testni način — predogled lastne trgovine",
     "testModeHint": "Naročila tukaj so označena TEST: zvonijo v kuhinji in se natisnejo normalno, a se nikoli ne štejejo v poročila ali prihodek.",
     "fromPrice": "od {price}",
-    "fulfilOrderAheadLabel": "Naročite vnaprej · {window}"
+    "fulfilOrderAheadLabel": "Naročite vnaprej · {window}",
+    "opensAtLabel": "Odpre ob {time}"
   },
   "pizza": {
     "chooseSize": "Izberite velikost",

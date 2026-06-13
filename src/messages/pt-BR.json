@@ -257,7 +257,8 @@
     "testModeBanner": "Modo de teste — você está visualizando sua própria loja",
     "testModeHint": "Pedidos feitos aqui são marcados como TEST: tocam na cozinha e imprimem normalmente, mas nunca contam nos relatórios nem na receita.",
     "fromPrice": "a partir de {price}",
-    "fulfilOrderAheadLabel": "Peça com antecedência · {window}"
+    "fulfilOrderAheadLabel": "Peça com antecedência · {window}",
+    "opensAtLabel": "Abre às {time}"
   },
   "pizza": {
     "chooseSize": "Escolha o Tamanho",

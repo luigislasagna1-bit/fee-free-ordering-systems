@@ -257,7 +257,8 @@
     "testModeBanner": "Tryb testowy — przeglądasz własny sklep",
     "testModeHint": "Zamówienia złożone tutaj są oznaczone jako TEST: dzwonią w kuchni i drukują się normalnie, ale nigdy nie liczą się w raportach ani przychodach.",
     "fromPrice": "od {price}",
-    "fulfilOrderAheadLabel": "Zamów z wyprzedzeniem · {window}"
+    "fulfilOrderAheadLabel": "Zamów z wyprzedzeniem · {window}",
+    "opensAtLabel": "Otwarcie o {time}"
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",

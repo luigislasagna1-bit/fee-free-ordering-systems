@@ -257,7 +257,8 @@
     "testModeBanner": "Tesztmód — a saját éttermedet nézed",
     "testModeHint": "Az itt leadott rendelések TEST jelölést kapnak: csörögnek a konyhán és normálisan nyomtatódnak, de soha nem számítanak a riportokba vagy a bevételbe.",
     "fromPrice": "{price}-tól",
-    "fulfilOrderAheadLabel": "Rendelés előre · {window}"
+    "fulfilOrderAheadLabel": "Rendelés előre · {window}",
+    "opensAtLabel": "Nyitás: {time}"
   },
   "pizza": {
     "chooseSize": "Méret választása",

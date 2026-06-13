@@ -257,7 +257,8 @@
     "testModeBanner": "Mode uji — Anda melihat pratinjau toko sendiri",
     "testModeHint": "Pesanan di sini ditandai TEST: berdering di dapur dan dicetak seperti biasa, tetapi tidak pernah dihitung dalam laporan atau pendapatan.",
     "fromPrice": "mulai {price}",
-    "fulfilOrderAheadLabel": "Pesan di muka · {window}"
+    "fulfilOrderAheadLabel": "Pesan di muka · {window}",
+    "opensAtLabel": "Buka {time}"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",

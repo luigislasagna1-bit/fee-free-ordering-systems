@@ -257,7 +257,8 @@
     "testModeBanner": "Testmodus — je bekijkt je eigen winkel",
     "testModeHint": "Bestellingen die je hier plaatst zijn gemarkeerd als TEST: ze rinkelen in de keuken en printen normaal, maar tellen nooit mee in rapporten of omzet.",
     "fromPrice": "vanaf {price}",
-    "fulfilOrderAheadLabel": "Vooraf bestellen · {window}"
+    "fulfilOrderAheadLabel": "Vooraf bestellen · {window}",
+    "opensAtLabel": "Opent om {time}"
   },
   "pizza": {
     "chooseSize": "Kies maat",

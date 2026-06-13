@@ -257,7 +257,8 @@
     "testModeBanner": "Testrežiim — vaatad omaenda poodi",
     "testModeHint": "Siin tehtud tellimused märgitakse TEST: need helisevad köögis ja prinditakse tavapäraselt, kuid ei lähe kunagi aruannetesse ega tulusse.",
     "fromPrice": "alates {price}",
-    "fulfilOrderAheadLabel": "Ettetellimus · {window}"
+    "fulfilOrderAheadLabel": "Ettetellimus · {window}",
+    "opensAtLabel": "Avab kell {time}"
   },
   "pizza": {
     "chooseSize": "Vali suurus",
