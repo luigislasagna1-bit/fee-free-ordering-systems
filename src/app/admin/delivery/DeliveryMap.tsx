@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Marker as LMarker, Circle as LCircle, Tooltip 
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useGoogleMaps } from "@/lib/use-google-maps";
+import { resolveMapsBrowserKey } from "@/lib/maps-key";
 
 export type Zone = {
   id: string;
@@ -42,12 +43,12 @@ function isValidCoord(lat: number | null, lng: number | null): lat is number {
 }
 
 export default function DeliveryMap(props: Props) {
-  const provider = props.provider ?? "leaflet";
-  if (provider === "google") {
-    if (!props.googleMapsApiKey) {
-      return <Placeholder msg="Google Maps API key missing — set it in Admin → Map Settings." />;
-    }
-    return <GoogleVariant {...props} apiKey={props.googleMapsApiKey} />;
+  // Use Google whenever a key resolves — the restaurant's own, else the platform
+  // key (resolveMapsBrowserKey). No key (env unset) ⇒ free Leaflet map, so this
+  // is safe before the platform key is configured. Luigi 2026-06-13.
+  const apiKey = resolveMapsBrowserKey(props.googleMapsApiKey);
+  if (apiKey) {
+    return <GoogleVariant {...props} apiKey={apiKey} />;
   }
   return <LeafletVariant {...props} />;
 }

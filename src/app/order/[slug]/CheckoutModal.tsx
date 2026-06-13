@@ -11,6 +11,7 @@ import { pickHoursForService } from "@/lib/service-hours";
 import { parseTheme } from "@/lib/theme";
 import { formatTime } from "@/lib/format-time";
 import { useGoogleMaps } from "@/lib/use-google-maps";
+import { resolveMapsBrowserKey } from "@/lib/maps-key";
 import { useTranslations } from "next-intl";
 import {
   type DeliveryFieldKey,
@@ -306,7 +307,7 @@ export function CheckoutModal({
   couponCode, setCouponCode, couponId, couponDiscount, couponLoading, applyCoupon,
   estimatedDeliveryMinutes, estimatedPickupMinutes,
   hasZones, geocoding, geocodeError, resolvedZone, acceptOutsideZoneOrders = false,
-  mapProvider, googleMapsApiKey, geocodeCountry,
+  googleMapsApiKey, geocodeCountry,
   deliveryFormConfig,
   reservationContext = null,
   onClose,
@@ -335,8 +336,14 @@ export function CheckoutModal({
   // When the service's time mode is "both", the customer toggles between a
   // slot dropdown (false) and a free exact-time field (true). Fabrizio cmpxdtl9m.
   const [scheduleExactPref, setScheduleExactPref] = useState(false);
-  const googleEnabled = mapProvider === "google" && !!googleMapsApiKey;
-  const { isLoaded: gmapsLoaded } = useGoogleMaps(googleEnabled ? googleMapsApiKey! : "");
+  // Google map + Places autocomplete use the restaurant's own key if they set
+  // one, otherwise the PLATFORM key — so every account gets the full Google
+  // experience with zero per-restaurant setup (Luigi 2026-06-13). Empty key ⇒
+  // gracefully falls back to the free Leaflet map + OSM autocomplete. mapProvider
+  // is no longer a gate: a resolved key means Google.
+  const mapsKey = resolveMapsBrowserKey(googleMapsApiKey);
+  const googleEnabled = !!mapsKey;
+  const { isLoaded: gmapsLoaded } = useGoogleMaps(mapsKey);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   // Map center is set when an address is picked, but NOT updated while the
   // customer drags the pin — so the map doesn't snap back mid-drag.
