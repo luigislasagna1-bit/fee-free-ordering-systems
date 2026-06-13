@@ -2619,11 +2619,16 @@ export function OrderingPageClient({
     // skip this entirely.
     const unitPart = customerInfo.unit?.trim();
     const buzzerPart = customerInfo.buzzer?.trim();
+    // Non-delivery orders carry NO address. Previously this fell back to
+    // customerInfo.address, so a pickup placed after the customer had typed (or
+    // autofilled) an address saved that address on a pickup order — the kitchen
+    // then showed a pickup with a delivery address (Luigi 2026-06-13). The
+    // server enforces this too, but we must not send it in the first place.
     const fullDeliveryAddress = orderType === "delivery"
       ? [customerInfo.address, unitPart ? `Unit ${unitPart}` : null, buzzerPart ? `Buzz ${buzzerPart}` : null]
           .filter(Boolean)
           .join(", ")
-      : customerInfo.address;
+      : "";
     // Structured per-field address for the customizable delivery form. Only
     // fields the restaurant's config SHOWS are included; the server recomposes
     // the flat columns from this. Maps each canonical field to its customerInfo
@@ -2660,7 +2665,8 @@ export function OrderingPageClient({
     restaurantSlug: restaurant.slug, type: orderType,
     customerName: customerInfo.name, customerEmail: customerInfo.email,
     customerPhone: customerInfo.phone, deliveryAddress: fullDeliveryAddress,
-    deliveryCity: customerInfo.city, deliveryZip: customerInfo.zip,
+    deliveryCity: orderType === "delivery" ? customerInfo.city : "",
+    deliveryZip: orderType === "delivery" ? customerInfo.zip : "",
     deliveryAddressData,
     // Precise map-pin coords (delivery only) — driver gets an exact spot.
     deliveryLat: orderType === "delivery" ? customerInfo.lat : null,

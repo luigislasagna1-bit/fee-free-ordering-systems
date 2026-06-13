@@ -280,9 +280,16 @@ export async function POST(req: NextRequest) {
     // deliveryAddress/City/Zip columns from the structured data so receipts,
     // the kitchen display, and dispatch keep working unchanged. Luigi 2026-06-04.
     let deliveryData: DeliveryAddressData | null = null;
-    let flatAddress: string | null = deliveryAddress ? String(deliveryAddress) : null;
-    let flatCity: string | null = deliveryCity ? String(deliveryCity) : null;
-    let flatZip: string | null = deliveryZip ? String(deliveryZip) : null;
+    // Address fields belong ONLY to address-bearing orders (delivery, and
+    // catering when delivered). A pickup / dine-in / take-out order must NEVER
+    // carry a delivery address even if a stale or buggy client sends one — that
+    // produced orders with a pickup icon AND an address on the kitchen tile
+    // (Luigi 2026-06-13). This is the authoritative guard; the customer page
+    // also stops sending it, but the server is the source of truth.
+    const typeAllowsAddress = type === "delivery" || type === "catering";
+    let flatAddress: string | null = typeAllowsAddress && deliveryAddress ? String(deliveryAddress) : null;
+    let flatCity: string | null = typeAllowsAddress && deliveryCity ? String(deliveryCity) : null;
+    let flatZip: string | null = typeAllowsAddress && deliveryZip ? String(deliveryZip) : null;
     if (type === "delivery") {
       const cfg = resolveDeliveryAddressConfig((restaurant as any).deliveryAddressConfig);
       const rawData =

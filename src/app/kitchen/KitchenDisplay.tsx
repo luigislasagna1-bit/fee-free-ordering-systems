@@ -411,6 +411,12 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   const countdownIsPast = readyCountdown?.kind === "due";
 
   const isTest = order.customerName.startsWith("[TEST]");
+  // Show the address as the lead line ONLY for address-bearing order types.
+  // Some legacy orders were saved with a stray deliveryAddress on a pickup/
+  // dine-in (write-path bug fixed 2026-06-13); gating on type here keeps those
+  // tiles correct — a pickup always leads with the NAME, never an address.
+  const showAddress =
+    (order.type === "delivery" || order.type === "catering") && !!order.deliveryAddress;
 
   return (
     <div onClick={onClick} className={`px-4 py-3.5 transition-colors ${rowClass}`}>
@@ -466,7 +472,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
                 shows the ADDRESS; pickup/dine-in/take-out show the NAME. The
                 order number drops to the grey line below. */}
             <span className={`font-bold text-[1.225rem] leading-tight ${t.text} truncate flex-1 min-w-0`}>
-              {order.deliveryAddress
+              {showAddress
                 ? order.deliveryAddress
                 : order.customerName.replace("[TEST] ", "")}
             </span>
@@ -510,7 +516,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               the kitchen still sees who it's for. Luigi 2026-06-13. */}
           <div className={`text-sm ${t.textMuted} truncate`}>
             #{order.orderNumber}
-            {order.deliveryAddress && ` · ${order.customerName.replace("[TEST] ", "")}`}
+            {showAddress && ` · ${order.customerName.replace("[TEST] ", "")}`}
           </div>
           {/* The out-of-zone heads-up moved into the order detail (next to the
               address) so it only shows once an order is opened. Luigi 2026-06-08. */}
