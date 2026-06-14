@@ -3916,7 +3916,9 @@
       "thankYou": "Mulțumim!",
       "phone": "Telefon",
       "customer": "Client",
-      "address": "Adresă"
+      "address": "Adresă",
+      "drivingTime": "Timp de condus",
+      "distance": "Distanță"
     },
     "reservation": {
       "title": "REZERVARE",

@@ -3916,7 +3916,9 @@
       "thankYou": "Takk!",
       "phone": "Telefon",
       "customer": "Kunde",
-      "address": "Adresse"
+      "address": "Adresse",
+      "drivingTime": "Kjøretid",
+      "distance": "Avstand"
     },
     "reservation": {
       "title": "RESERVASJON",

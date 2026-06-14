@@ -26,6 +26,21 @@ export function resolveDistanceMatrixKey(restaurantKey?: string | null): string 
   );
 }
 
+/** 8-point compass bearing FROM the store TO the customer (e.g. "N", "NE") —
+ *  printed on the receipt so staff/driver see roughly which way the delivery is.
+ *  Pure trig; no API. */
+export function cardinalDirection(fromLat: number, fromLng: number, toLat: number, toLng: number): string {
+  const toRad = (d: number) => (d * Math.PI) / 180;
+  const dLng = toRad(toLng - fromLng);
+  const y = Math.sin(dLng) * Math.cos(toRad(toLat));
+  const x =
+    Math.cos(toRad(fromLat)) * Math.sin(toRad(toLat)) -
+    Math.sin(toRad(fromLat)) * Math.cos(toRad(toLat)) * Math.cos(dLng);
+  const brng = (Math.atan2(y, x) * 180) / Math.PI;
+  const dirs = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+  return dirs[Math.round(((brng + 360) % 360) / 45) % 8];
+}
+
 export type DriveEstimate = {
   ok: boolean;
   /** Localised driving distance, e.g. "4.8 km". */

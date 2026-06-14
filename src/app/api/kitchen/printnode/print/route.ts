@@ -13,7 +13,7 @@ import {
   type PrinterLanguage,
 } from "@/lib/receipt";
 import { parseReceiptConfig } from "@/lib/receipt-schema";
-import { fetchDriveEstimate, resolveDistanceMatrixKey } from "@/lib/delivery-eta";
+import { fetchDriveEstimate, resolveDistanceMatrixKey, cardinalDirection } from "@/lib/delivery-eta";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 
 async function getKeyAndSettings(restaurantId: string) {
@@ -414,12 +414,16 @@ export async function POST(req: NextRequest) {
     // print. Delivery orders with an address only.
     let driveDistanceText: string | null = null;
     let driveTimeText: string | null = null;
+    let driveDirection: string | null = null;
     try {
       if (order.type === "delivery" && order.deliveryAddress) {
         const r = await prisma.restaurant.findUnique({
           where: { id: order.restaurantId },
           select: { lat: true, lng: true, address: true, city: true, state: true, zip: true, googleMapsApiKey: true },
         });
+        if (r?.lat != null && r?.lng != null && (order as any).deliveryLat != null && (order as any).deliveryLng != null) {
+          driveDirection = cardinalDirection(r.lat, r.lng, (order as any).deliveryLat, (order as any).deliveryLng);
+        }
         const key = r ? resolveDistanceMatrixKey(await resolveEffectiveMapsKey(r.googleMapsApiKey)) : null;
         if (r && key) {
           const origin =
@@ -449,6 +453,7 @@ export async function POST(req: NextRequest) {
       deliveryEstimatedMinutes: order.deliveryEstimatedMinutes ?? null,
       driveDistanceText,
       driveTimeText,
+      driveDirection,
       notes:           order.notes,
       subtotal:        order.subtotal,
       taxAmount:       order.taxAmount,

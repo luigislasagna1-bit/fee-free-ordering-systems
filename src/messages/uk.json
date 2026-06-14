@@ -3916,7 +3916,9 @@
       "thankYou": "Дякуємо!",
       "phone": "Телефон",
       "customer": "Клієнт",
-      "address": "Адреса"
+      "address": "Адреса",
+      "drivingTime": "Час у дорозі",
+      "distance": "Відстань"
     },
     "reservation": {
       "title": "БРОНЮВАННЯ",

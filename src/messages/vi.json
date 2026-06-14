@@ -3916,7 +3916,9 @@
       "thankYou": "Cảm ơn!",
       "phone": "Điện thoại",
       "customer": "Khách hàng",
-      "address": "Địa chỉ"
+      "address": "Địa chỉ",
+      "drivingTime": "Thời gian lái xe",
+      "distance": "Khoảng cách"
     },
     "reservation": {
       "title": "ĐẶT BÀN",

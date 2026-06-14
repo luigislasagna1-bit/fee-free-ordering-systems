@@ -3916,7 +3916,9 @@
       "thankYou": "Dank u!",
       "phone": "Telefoon",
       "customer": "Klant",
-      "address": "Adres"
+      "address": "Adres",
+      "drivingTime": "Rijtijd",
+      "distance": "Afstand"
     },
     "reservation": {
       "title": "RESERVERING",

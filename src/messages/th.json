@@ -3916,7 +3916,9 @@
       "thankYou": "ขอบคุณ!",
       "phone": "โทรศัพท์",
       "customer": "ลูกค้า",
-      "address": "ที่อยู่"
+      "address": "ที่อยู่",
+      "drivingTime": "เวลาขับรถ",
+      "distance": "ระยะทาง"
     },
     "reservation": {
       "title": "การจอง",

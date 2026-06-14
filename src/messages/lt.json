@@ -3916,7 +3916,9 @@
       "thankYou": "Ačiū!",
       "phone": "Telefonas",
       "customer": "Klientas",
-      "address": "Adresas"
+      "address": "Adresas",
+      "drivingTime": "Kelionės laikas",
+      "distance": "Atstumas"
     },
     "reservation": {
       "title": "REZERVACIJA",

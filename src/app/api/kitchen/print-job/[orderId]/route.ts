@@ -42,7 +42,7 @@ import {
   buildKitchenReceiptLines,
   buildCustomerReceiptLines,
 } from "@/lib/receipt-lines";
-import { fetchDriveEstimate, resolveDistanceMatrixKey } from "@/lib/delivery-eta";
+import { fetchDriveEstimate, resolveDistanceMatrixKey, cardinalDirection } from "@/lib/delivery-eta";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 
 export async function GET(
@@ -122,12 +122,16 @@ export async function GET(
   // 2026-06-13). Best-effort, fully wrapped — never blocks/breaks the print.
   let driveDistanceText: string | null = null;
   let driveTimeText: string | null = null;
+  let driveDirection: string | null = null;
   try {
     if ((order as any).type === "delivery" && (order as any).deliveryAddress) {
       const r = await prisma.restaurant.findUnique({
         where: { id: restaurantId },
         select: { lat: true, lng: true, address: true, city: true, state: true, zip: true, googleMapsApiKey: true },
       });
+      if (r?.lat != null && r?.lng != null && (order as any).deliveryLat != null && (order as any).deliveryLng != null) {
+        driveDirection = cardinalDirection(r.lat, r.lng, (order as any).deliveryLat, (order as any).deliveryLng);
+      }
       const key = r ? resolveDistanceMatrixKey(await resolveEffectiveMapsKey(r.googleMapsApiKey)) : null;
       if (r && key) {
         const origin =
@@ -157,6 +161,7 @@ export async function GET(
     deliveryEstimatedMinutes: (order as any).deliveryEstimatedMinutes ?? null,
     driveDistanceText,
     driveTimeText,
+    driveDirection,
     notes: (order as any).notes,
     subtotal: order.subtotal,
     taxAmount: (order as any).taxAmount ?? 0,

@@ -3916,7 +3916,9 @@
       "thankYou": "Благодарим!",
       "phone": "Телефон",
       "customer": "Клиент",
-      "address": "Адрес"
+      "address": "Адрес",
+      "drivingTime": "Време за шофиране",
+      "distance": "Разстояние"
     },
     "reservation": {
       "title": "РЕЗЕРВАЦИЯ",

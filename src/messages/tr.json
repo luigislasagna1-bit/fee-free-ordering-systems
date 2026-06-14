@@ -3916,7 +3916,9 @@
       "thankYou": "Teşekkürler!",
       "phone": "Telefon",
       "customer": "Müşteri",
-      "address": "Adres"
+      "address": "Adres",
+      "drivingTime": "Sürüş süresi",
+      "distance": "Mesafe"
     },
     "reservation": {
       "title": "REZERVASYON",

@@ -3920,7 +3920,9 @@
       "thankYou": "Thank you!",
       "phone": "Phone",
       "customer": "Customer",
-      "address": "Address"
+      "address": "Address",
+      "drivingTime": "Driving time",
+      "distance": "Distance"
     },
     "reservation": {
       "title": "RESERVATION",

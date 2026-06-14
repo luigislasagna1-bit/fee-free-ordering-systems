@@ -3916,7 +3916,9 @@
       "thankYou": "感谢您的惠顾！",
       "phone": "电话",
       "customer": "顾客",
-      "address": "地址"
+      "address": "地址",
+      "drivingTime": "驾驶时间",
+      "distance": "距离"
     },
     "reservation": {
       "title": "预订",

@@ -3916,7 +3916,9 @@
       "thankYou": "Paldies!",
       "phone": "Tālrunis",
       "customer": "Klients",
-      "address": "Adrese"
+      "address": "Adrese",
+      "drivingTime": "Braukšanas laiks",
+      "distance": "Attālums"
     },
     "reservation": {
       "title": "REZERVĀCIJA",

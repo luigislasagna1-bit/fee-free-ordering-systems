@@ -3916,7 +3916,9 @@
       "thankYou": "धन्यवाद!",
       "phone": "फ़ोन",
       "customer": "ग्राहक",
-      "address": "पता"
+      "address": "पता",
+      "drivingTime": "ड्राइविंग समय",
+      "distance": "दूरी"
     },
     "reservation": {
       "title": "आरक्षण",

@@ -3916,7 +3916,9 @@
       "thankYou": "Hvala!",
       "phone": "Telefon",
       "customer": "Stranka",
-      "address": "Naslov"
+      "address": "Naslov",
+      "drivingTime": "Čas vožnje",
+      "distance": "Razdalja"
     },
     "reservation": {
       "title": "REZERVACIJA",

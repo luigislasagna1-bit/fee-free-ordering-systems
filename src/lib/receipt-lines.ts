@@ -297,12 +297,10 @@ function renderKitchenSection(
       if (order.type === "delivery" && order.deliveryAddress) {
         r.line(order.deliveryAddress);
         if (order.deliveryCity) r.line(order.deliveryCity);
-        if (order.deliveryZoneName || order.deliveryEstimatedMinutes) {
-          const parts: string[] = [];
-          if (order.deliveryZoneName) parts.push(`${order.deliveryZoneName}`);
-          if (order.deliveryEstimatedMinutes) parts.push(`~${order.deliveryEstimatedMinutes} ${t("receipt.kitchen.minutes")}`);
-          r.line(parts.join(" · "));
-        }
+        // Zone name only — the per-zone "estimated minutes" was random/confusing
+        // (Luigi 2026-06-13) and is dropped. The promised READY time lives in the
+        // timing section.
+        if (order.deliveryZoneName) r.line(order.deliveryZoneName);
       }
       break;
 
@@ -449,13 +447,12 @@ function renderCustomerSection(
       if (order.type === "delivery" && order.deliveryAddress) {
         r.line(order.deliveryAddress);
         if (order.deliveryCity) r.line(order.deliveryCity);
-        // Live driving distance + traffic-aware time (Google), in the customer
-        // address area. Additive, plain line. Luigi 2026-06-13.
-        if (order.driveDistanceText || order.driveTimeText) {
-          const dParts: string[] = [];
-          if (order.driveDistanceText) dParts.push(order.driveDistanceText);
-          if (order.driveTimeText) dParts.push(order.driveTimeText);
-          r.line(dParts.join(" · "));
+        // Live driving time + distance (with compass direction), paired in the
+        // customer's address area. Additive plain lines. Luigi 2026-06-13.
+        if (order.driveTimeText) r.line(`${t("receipt.customer.drivingTime")}: ${order.driveTimeText}`);
+        if (order.driveDistanceText) {
+          const dist = order.driveDirection ? `${order.driveDistanceText} ${order.driveDirection}` : order.driveDistanceText;
+          r.line(`${t("receipt.customer.distance")}: ${dist}`);
         }
       }
       break;

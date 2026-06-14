@@ -3916,7 +3916,9 @@
       "thankYou": "Hvala!",
       "phone": "Telefon",
       "customer": "Kupac",
-      "address": "Adresa"
+      "address": "Adresa",
+      "drivingTime": "Време вожње",
+      "distance": "Удаљеност"
     },
     "reservation": {
       "title": "REZERVACIJA",

@@ -3916,7 +3916,9 @@
       "thankYou": "감사합니다!",
       "phone": "전화",
       "customer": "고객",
-      "address": "주소"
+      "address": "주소",
+      "drivingTime": "운전 시간",
+      "distance": "거리"
     },
     "reservation": {
       "title": "예약",

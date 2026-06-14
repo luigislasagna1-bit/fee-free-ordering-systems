@@ -3916,7 +3916,9 @@
       "thankYou": "Kiitos!",
       "phone": "Puhelin",
       "customer": "Asiakas",
-      "address": "Osoite"
+      "address": "Osoite",
+      "drivingTime": "Ajoaika",
+      "distance": "Etäisyys"
     },
     "reservation": {
       "title": "VARAUS",

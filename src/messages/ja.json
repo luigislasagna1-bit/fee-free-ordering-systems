@@ -3916,7 +3916,9 @@
       "thankYou": "ありがとうございます！",
       "phone": "電話",
       "customer": "お客様",
-      "address": "住所"
+      "address": "住所",
+      "drivingTime": "運転時間",
+      "distance": "距離"
     },
     "reservation": {
       "title": "予約",

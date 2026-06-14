@@ -3916,7 +3916,9 @@
       "thankYou": "Спасибо!",
       "phone": "Телефон",
       "customer": "Клиент",
-      "address": "Адрес"
+      "address": "Адрес",
+      "drivingTime": "Время в пути",
+      "distance": "Расстояние"
     },
     "reservation": {
       "title": "БРОНИРОВАНИЕ",

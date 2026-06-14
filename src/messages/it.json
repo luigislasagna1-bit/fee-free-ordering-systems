@@ -3916,7 +3916,9 @@
       "thankYou": "Grazie!",
       "phone": "Telefono",
       "customer": "Cliente",
-      "address": "Indirizzo"
+      "address": "Indirizzo",
+      "drivingTime": "Tempo di guida",
+      "distance": "Distanza"
     },
     "reservation": {
       "title": "PRENOTAZIONE",

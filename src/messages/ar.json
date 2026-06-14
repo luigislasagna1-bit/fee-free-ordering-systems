@@ -3916,7 +3916,9 @@
       "thankYou": "شكراً لك!",
       "phone": "الهاتف",
       "customer": "العميل",
-      "address": "العنوان"
+      "address": "العنوان",
+      "drivingTime": "مدة القيادة",
+      "distance": "المسافة"
     },
     "reservation": {
       "title": "حجز",

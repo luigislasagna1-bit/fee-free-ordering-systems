@@ -3916,7 +3916,9 @@
       "thankYou": "Köszönjük!",
       "phone": "Telefon",
       "customer": "Ügyfél",
-      "address": "Cím"
+      "address": "Cím",
+      "drivingTime": "Menetidő",
+      "distance": "Távolság"
     },
     "reservation": {
       "title": "FOGLALÁS",

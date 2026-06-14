@@ -3916,7 +3916,9 @@
       "thankYou": "Ευχαριστούμε!",
       "phone": "Τηλέφωνο",
       "customer": "Πελάτης",
-      "address": "Διεύθυνση"
+      "address": "Διεύθυνση",
+      "drivingTime": "Χρόνος οδήγησης",
+      "distance": "Απόσταση"
     },
     "reservation": {
       "title": "ΚΡΑΤΗΣΗ",

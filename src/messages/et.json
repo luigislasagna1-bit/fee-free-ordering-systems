@@ -3916,7 +3916,9 @@
       "thankYou": "Täname!",
       "phone": "Telefon",
       "customer": "Klient",
-      "address": "Aadress"
+      "address": "Aadress",
+      "drivingTime": "Sõiduaeg",
+      "distance": "Vahemaa"
     },
     "reservation": {
       "title": "BRONEERING",
