@@ -69,7 +69,18 @@ export type ReceiptLine =
       /** Cap the drawn width in printer dots; renderer also clamps to paper. */
       maxWidthDots?: number;
       align?: "left" | "center" | "right";
-    };
+    }
+  | {
+      /** GloriaFood-style section box: boxStart opens a bordered region with a
+       *  header strip (inverse only when headerHighlight); boxEnd closes it and
+       *  the native renderer strokes the border. Old app builds skip these
+       *  unknown kinds → the section's lines just print box-less, never a crash. */
+      kind: "boxStart";
+      header?: string;
+      headerHighlight?: boolean;
+      fontSize?: number;
+    }
+  | { kind: "boxEnd" };
 
 // ─── Internal builder ────────────────────────────────────────────────────────
 
@@ -144,6 +155,16 @@ class LinesBuilder {
 
   divider(_char: string) {
     this.lines.push({ kind: "divider" });
+    return this;
+  }
+
+  boxStart(header: string, headerHighlight: boolean, fontSize: number) {
+    this.lines.push({ kind: "boxStart", header: sanitize(header), headerHighlight, fontSize });
+    return this;
+  }
+
+  boxEnd() {
+    this.lines.push({ kind: "boxEnd" });
     return this;
   }
 
@@ -616,17 +637,34 @@ function renderSections(
     const s = section.style;
 
     blankLines(r, s.paddingTop);
-    if (s.dividerAbove) r.resetStyle().left().divider("-");
-    applyStyle(r, s);
 
-    if (config.receiptType === "kitchen") {
-      renderKitchenSection(r, section, order, config as KitchenConfig, t);
+    if (s.boxed) {
+      // GloriaFood section box: a header strip (inverse iff highlight) + a
+      // bordered body. The body renders with highlight forced OFF — the header
+      // carries the highlight — matching the on-screen preview. Luigi 2026-06-13.
+      const header = (section.boxTitle && section.boxTitle.trim()) || section.label;
+      r.boxStart(header, s.highlight, s.fontSize);
+      const boxedSection = { ...section, style: { ...s, highlight: false } };
+      applyStyle(r, boxedSection.style);
+      if (config.receiptType === "kitchen") {
+        renderKitchenSection(r, boxedSection, order, config as KitchenConfig, t);
+      } else {
+        renderCustomerSection(r, boxedSection, order, restaurant, config as CustomerConfig, t);
+      }
+      r.resetStyle().left();
+      r.boxEnd();
     } else {
-      renderCustomerSection(r, section, order, restaurant, config as CustomerConfig, t);
+      if (s.dividerAbove) r.resetStyle().left().divider("-");
+      applyStyle(r, s);
+      if (config.receiptType === "kitchen") {
+        renderKitchenSection(r, section, order, config as KitchenConfig, t);
+      } else {
+        renderCustomerSection(r, section, order, restaurant, config as CustomerConfig, t);
+      }
+      r.resetStyle().left();
+      if (s.dividerBelow) r.divider("-");
     }
 
-    r.resetStyle().left();
-    if (s.dividerBelow) r.divider("-");
     blankLines(r, s.paddingBottom);
   }
 }

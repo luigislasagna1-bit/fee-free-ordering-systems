@@ -151,19 +151,31 @@ object StarXpandBridge {
         val leftMargin = 8f
         val rightMargin = 8f
         val drawableWidth = widthDots - leftMargin - rightMargin
+        // Section-box geometry (GloriaFood-style boxes). ADDITIVE: with no
+        // boxStart/boxEnd lines present, boxActive stays false and every other
+        // line renders exactly as before; old app builds skip the two unknown
+        // kinds and just print the plain lines. Luigi 2026-06-13.
+        val boxPadX = 12f
+        val boxPadY = 8f
+        val boxBorder = 2f
+        val boxGap = 6f
 
         // Pre-compute total height by walking lines once. Word-wrapping
         // is done here too so multi-line wraps allocate enough space.
         var totalHeight = 16 // top margin
+        var boxActiveM = false
         for (i in 0 until lines.length()) {
             val item = lines.optJSONObject(i) ?: continue
+            // Inside a box, the wrap width narrows so multi-line wraps reserve
+            // the right height. Identical to drawableWidth when not boxed.
+            val innerWidth = if (boxActiveM) drawableWidth - 2 * boxPadX else drawableWidth
             when (item.optString("kind")) {
                 "text" -> {
                     val fontSize = item.optInt("fontSize", 12)
                     val bold = item.optBoolean("bold", false)
                     val text = item.optString("text", "")
                     val paint = textPaint(scaledTextSize(fontSize), bold)
-                    val wrapped = wrapText(text, paint, drawableWidth)
+                    val wrapped = wrapText(text, paint, innerWidth)
                     totalHeight += lineHeight(paint) * wrapped.size.coerceAtLeast(1)
                 }
                 "twoCol" -> {
@@ -177,8 +189,20 @@ object StarXpandBridge {
                 // returns null on ANY problem, so a bad/absent logo adds no
                 // height and the receipt lays out exactly as before.
                 "image" -> {
-                    val img = decodeImageLine(item, drawableWidth)
+                    val img = decodeImageLine(item, innerWidth)
                     if (img != null) totalHeight += img.height + 8
+                }
+                // GloriaFood section box (additive): header strip + inner pad in
+                // the height budget; boxActiveM narrows the inner lines' wrap.
+                "boxStart" -> {
+                    val fontSize = item.optInt("fontSize", 12)
+                    val headerPaint = textPaint(scaledTextSize(fontSize), true)
+                    totalHeight += boxBorder.toInt() + lineHeight(headerPaint) + 8 + boxPadY.toInt()
+                    boxActiveM = true
+                }
+                "boxEnd" -> {
+                    totalHeight += boxPadY.toInt() + boxBorder.toInt() + boxGap.toInt()
+                    boxActiveM = false
                 }
             }
         }
@@ -189,8 +213,15 @@ object StarXpandBridge {
         canvas.drawColor(Color.WHITE)
 
         var y = 16f
+        var boxActive = false
+        var boxStartY = 0f
         for (i in 0 until lines.length()) {
             val item = lines.optJSONObject(i) ?: continue
+            // Content area — inset while inside a section box so text/rules clear
+            // the border. Identical to the paper margins when not boxed.
+            val cLeft = if (boxActive) leftMargin + boxPadX else leftMargin
+            val cRight = if (boxActive) widthDots - rightMargin - boxPadX else widthDots - rightMargin
+            val cWidth = cRight - cLeft
             when (item.optString("kind")) {
                 "text" -> {
                     val text = item.optString("text", "")
@@ -200,12 +231,13 @@ object StarXpandBridge {
                     val align = item.optString("align", "left")
                     val paint = textPaint(scaledTextSize(fontSize), bold)
                     val lh = lineHeight(paint)
-                    val wrapped = wrapText(text, paint, drawableWidth)
+                    val wrapped = wrapText(text, paint, cWidth)
                     for (line in wrapped) {
                         if (highlight) {
-                            // Black bar spans full paper width.
+                            // Black bar spans the content width (full paper when
+                            // not boxed; inside the border when boxed).
                             val bg = Paint().apply { color = Color.BLACK }
-                            canvas.drawRect(0f, y, widthDots.toFloat(), y + lh, bg)
+                            canvas.drawRect(cLeft, y, cRight, y + lh, bg)
                             paint.color = Color.WHITE
                         } else {
                             paint.color = Color.BLACK
@@ -213,9 +245,9 @@ object StarXpandBridge {
                         val baseline = y + (-paint.ascent())
                         val measured = paint.measureText(line)
                         val x = when (align) {
-                            "center" -> leftMargin + (drawableWidth - measured) / 2f
-                            "right" -> widthDots - rightMargin - measured
-                            else -> leftMargin
+                            "center" -> cLeft + (cWidth - measured) / 2f
+                            "right" -> cRight - measured
+                            else -> cLeft
                         }
                         canvas.drawText(line, x, baseline, paint)
                         y += lh
@@ -231,7 +263,7 @@ object StarXpandBridge {
                     val lh = lineHeight(paint)
                     if (highlight) {
                         val bg = Paint().apply { color = Color.BLACK }
-                        canvas.drawRect(0f, y, widthDots.toFloat(), y + lh, bg)
+                        canvas.drawRect(cLeft, y, cRight, y + lh, bg)
                         paint.color = Color.WHITE
                     }
                     val baseline = y + (-paint.ascent())
@@ -239,10 +271,10 @@ object StarXpandBridge {
                     // first then truncate the left side if the two
                     // would collide. Avoids item name overlapping price.
                     val rightWidth = paint.measureText(right)
-                    val rightX = widthDots - rightMargin - rightWidth
-                    val maxLeftWidth = rightX - leftMargin - 16f // 16px gap
+                    val rightX = cRight - rightWidth
+                    val maxLeftWidth = rightX - cLeft - 16f // 16px gap
                     val truncatedLeft = truncateToWidth(left, paint, maxLeftWidth)
-                    canvas.drawText(truncatedLeft, leftMargin, baseline, paint)
+                    canvas.drawText(truncatedLeft, cLeft, baseline, paint)
                     canvas.drawText(right, rightX, baseline, paint)
                     y += lh
                 }
@@ -252,8 +284,8 @@ object StarXpandBridge {
                         color = Color.BLACK
                         strokeWidth = 2f
                     }
-                    var dx = leftMargin
-                    while (dx < widthDots - rightMargin) {
+                    var dx = cLeft
+                    while (dx < cRight) {
                         canvas.drawLine(dx, baseline, dx + 8f, baseline, dashPaint)
                         dx += 16f
                     }
@@ -267,16 +299,56 @@ object StarXpandBridge {
                 // decodeImageLine; skipped entirely when decoding fails so
                 // the logo can never break a print.
                 "image" -> {
-                    val img = decodeImageLine(item, drawableWidth)
+                    val img = decodeImageLine(item, cWidth)
                     if (img != null) {
                         val x = when (item.optString("align", "center")) {
-                            "left" -> leftMargin
-                            "right" -> widthDots - rightMargin - img.width
-                            else -> leftMargin + (drawableWidth - img.width) / 2f
+                            "left" -> cLeft
+                            "right" -> cRight - img.width
+                            else -> cLeft + (cWidth - img.width) / 2f
                         }
                         canvas.drawBitmap(img, x, y, null)
                         y += img.height + 8
                     }
+                }
+                // GloriaFood section box (additive). boxStart draws the header
+                // strip (inverse only when headerHighlight, else a plain bold
+                // header with a separator rule); boxEnd strokes the border around
+                // the whole region from boxStartY down to here.
+                "boxStart" -> {
+                    val header = item.optString("header", "")
+                    val hl = item.optBoolean("headerHighlight", false)
+                    val fontSize = item.optInt("fontSize", 12)
+                    val headerPaint = textPaint(scaledTextSize(fontSize), true)
+                    val headerH = lineHeight(headerPaint) + 8
+                    val boxLeft = leftMargin
+                    val boxRight = widthDots - rightMargin
+                    boxStartY = y
+                    if (hl) {
+                        val bg = Paint().apply { color = Color.BLACK }
+                        canvas.drawRect(boxLeft, y, boxRight, y + headerH, bg)
+                        headerPaint.color = Color.WHITE
+                    } else {
+                        headerPaint.color = Color.BLACK
+                    }
+                    val baseline = y + 4f + (-headerPaint.ascent())
+                    canvas.drawText(header, boxLeft + boxPadX, baseline, headerPaint)
+                    if (!hl) {
+                        val sep = Paint().apply { color = Color.BLACK; strokeWidth = 1.5f }
+                        canvas.drawLine(boxLeft, y + headerH, boxRight, y + headerH, sep)
+                    }
+                    y += headerH + boxPadY
+                    boxActive = true
+                }
+                "boxEnd" -> {
+                    y += boxPadY
+                    val border = Paint().apply {
+                        color = Color.BLACK
+                        style = Paint.Style.STROKE
+                        strokeWidth = boxBorder
+                    }
+                    canvas.drawRect(leftMargin, boxStartY, widthDots - rightMargin, y, border)
+                    y += boxGap
+                    boxActive = false
                 }
             }
         }

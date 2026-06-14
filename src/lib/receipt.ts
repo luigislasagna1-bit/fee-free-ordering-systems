@@ -1034,17 +1034,41 @@ async function renderSections(
     const s = section.style;
 
     blankLines(r, s.paddingTop);
-    if (s.dividerAbove) r.resetStyle().left().divider("-");
-    applyStyle(r, s);
 
-    if (config.receiptType === "kitchen") {
-      await renderKitchenSection(r, section, order, config as KitchenConfig, t);
+    if (s.boxed) {
+      // ESC/POS can't stroke a real border box, so approximate the GloriaFood
+      // look: a header line (inverse only when highlight) framed by rules, body
+      // below. The StarXpand bitmap path draws the true bordered box. Body
+      // renders with highlight OFF — the header carries it. Luigi 2026-06-13.
+      const header = (section.boxTitle && section.boxTitle.trim()) || section.label;
+      r.resetStyle().left().divider("-");
+      r.invert(s.highlight);
+      r.bold(true);
+      r.sizeMode(s.fontSize);
+      r.line(header);
+      r.resetStyle().left().divider("-");
+      const boxedSection = { ...section, style: { ...s, highlight: false } };
+      applyStyle(r, boxedSection.style);
+      if (config.receiptType === "kitchen") {
+        await renderKitchenSection(r, boxedSection, order, config as KitchenConfig, t);
+      } else {
+        await renderCustomerSection(r, boxedSection, order, restaurant, config as CustomerConfig, t);
+      }
+      r.resetStyle().left().divider("-");
     } else {
-      await renderCustomerSection(r, section, order, restaurant, config as CustomerConfig, t);
+      if (s.dividerAbove) r.resetStyle().left().divider("-");
+      applyStyle(r, s);
+
+      if (config.receiptType === "kitchen") {
+        await renderKitchenSection(r, section, order, config as KitchenConfig, t);
+      } else {
+        await renderCustomerSection(r, section, order, restaurant, config as CustomerConfig, t);
+      }
+
+      r.resetStyle().left();
+      if (s.dividerBelow) r.divider("-");
     }
 
-    r.resetStyle().left();
-    if (s.dividerBelow) r.divider("-");
     blankLines(r, s.paddingBottom);
   }
 }
