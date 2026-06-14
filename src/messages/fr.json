@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total} étapes terminées",
       "requiredCount": "{count, plural, one {# obligatoire} other {# obligatoires}}",
       "comingSoonBadge": "Bientôt",
-      "mobileApp": "Application mobile"
+      "mobileApp": "Application mobile",
+      "pointOfSale": "Point de vente"
     },
     "dashboard": {
       "title": "Tableau de bord",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Application de commande mobile",
       "body": "L'application à votre marque sur l'App Store et Google Play — vos clients commandent, recommandent en un geste et reçoivent des notifications push, le tout à votre nom et avec votre logo. Nous la développons après le lancement."
+    },
+    "posPage": {
+      "subtitle": "Point de vente sur place",
+      "body": "Une caisse intégrée pour votre comptoir — encaissez les commandes sur place et par téléphone sur le même système que vos commandes en ligne, avec un seul menu, un seul jeu de rapports et un seul versement. Nous la développons après le lancement."
     }
   },
   "impersonation": {

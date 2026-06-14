@@ -717,7 +717,8 @@
       "stepsComplete": "Ukończone kroki: {completed}/{total}",
       "requiredCount": "{count, plural, one {# wymagany} few {# wymagane} many {# wymaganych} other {# wymaganego}}",
       "comingSoonBadge": "Wkrótce",
-      "mobileApp": "Aplikacja mobilna"
+      "mobileApp": "Aplikacja mobilna",
+      "pointOfSale": "Punkt sprzedaży"
     },
     "dashboard": {
       "title": "Panel główny",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Mobilna aplikacja do zamawiania",
       "body": "Aplikacja z marką Twojej restauracji w App Store i Google Play — klienci zamawiają, ponawiają zamówienie jednym dotknięciem i otrzymują powiadomienia push, wszystko pod Twoją nazwą i logo. Tworzymy ją po premierze."
+    },
+    "posPage": {
+      "subtitle": "Punkt sprzedaży na miejscu",
+      "body": "Wbudowana kasa do Twojej lady — przyjmuj zamówienia na miejscu i telefoniczne w tym samym systemie co online, z jednym menu, jednym zestawem raportów i jedną wypłatą. Tworzymy ją po premierze."
     }
   },
   "impersonation": {

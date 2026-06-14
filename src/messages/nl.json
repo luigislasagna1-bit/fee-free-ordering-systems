@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total} stappen voltooid",
       "requiredCount": "{count, plural, one {# verplicht} other {# verplicht}}",
       "comingSoonBadge": "Binnenkort",
-      "mobileApp": "Mobiele app"
+      "mobileApp": "Mobiele app",
+      "pointOfSale": "Kassasysteem"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Mobiele bestel-app",
       "body": "Een app met jouw merk in de App Store en Google Play — klanten bestellen, herbestellen met één tik en krijgen pushmeldingen, allemaal onder jouw naam en logo. We bouwen het na de lancering."
+    },
+    "posPage": {
+      "subtitle": "Kassasysteem op locatie",
+      "body": "Een ingebouwde kassa voor je balie — reken loop- en telefoonbestellingen af in hetzelfde systeem als je online bestellingen, met één menu, één set rapporten en één uitbetaling. We bouwen het na de lancering."
     }
   },
   "impersonation": {

@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total} etapas concluídas",
       "requiredCount": "{count, plural, one {# obrigatória} other {# obrigatórias}}",
       "comingSoonBadge": "Em breve",
-      "mobileApp": "App móvel"
+      "mobileApp": "App móvel",
+      "pointOfSale": "Ponto de venda"
     },
     "dashboard": {
       "title": "Painel",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "App de pedidos móvel",
       "body": "O app com a marca do seu restaurante na App Store e Google Play — os clientes pedem, repetem com um toque e recebem notificações push, tudo com seu nome e logo. Estamos desenvolvendo após o lançamento."
+    },
+    "posPage": {
+      "subtitle": "Ponto de venda no local",
+      "body": "Um caixa integrado para o seu balcão — registre pedidos presenciais e por telefone no mesmo sistema dos online, com um só menu, um só conjunto de relatórios e um só repasse. Estamos desenvolvendo após o lançamento."
     }
   },
   "impersonation": {

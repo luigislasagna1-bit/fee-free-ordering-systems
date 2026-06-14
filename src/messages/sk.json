@@ -717,7 +717,8 @@
       "stepsComplete": "Dokončené kroky: {completed}/{total}",
       "requiredCount": "{count, plural, one {# povinný} few {# povinné} other {# povinných}}",
       "comingSoonBadge": "Čoskoro",
-      "mobileApp": "Mobilná aplikácia"
+      "mobileApp": "Mobilná aplikácia",
+      "pointOfSale": "Pokladničný systém"
     },
     "dashboard": {
       "title": "Prehľad",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Mobilná objednávacia aplikácia",
       "body": "Aplikácia s vašou značkou v App Store a Google Play — zákazníci objednávajú, objednávajú znova jedným klepnutím a dostávajú push oznámenia, všetko pod vaším menom a logom. Vyvíjame ju po spustení."
+    },
+    "posPage": {
+      "subtitle": "Vlastný pokladničný systém",
+      "body": "Vstavaná pokladnica pre váš pult — účtujte objednávky na mieste aj cez telefón v rovnakom systéme ako tie online, s jedným menu, jednou sadou prehľadov a jednou výplatou. Vyvíjame ju po spustení."
     }
   },
   "impersonation": {

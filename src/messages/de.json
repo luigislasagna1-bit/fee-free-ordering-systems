@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total} Schritte abgeschlossen",
       "requiredCount": "{count, plural, one {# erforderlich} other {# erforderlich}}",
       "comingSoonBadge": "Bald",
-      "mobileApp": "Mobile App"
+      "mobileApp": "Mobile App",
+      "pointOfSale": "Kassensystem"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Mobile Bestell-App",
       "body": "Eine App mit Ihrer Marke im App Store und bei Google Play — Kunden bestellen, bestellen mit einem Tippen erneut und erhalten Push-Benachrichtigungen, alles unter Ihrem Namen und Logo. Wir entwickeln sie nach dem Start."
+    },
+    "posPage": {
+      "subtitle": "Kassensystem vor Ort",
+      "body": "Eine integrierte Kasse für Ihren Tresen — kassieren Sie Lauf- und Telefonbestellungen im selben System wie Ihre Online-Bestellungen, mit einer Speisekarte, einem Satz Berichte und einer Auszahlung. Wir entwickeln sie nach dem Start."
     }
   },
   "impersonation": {

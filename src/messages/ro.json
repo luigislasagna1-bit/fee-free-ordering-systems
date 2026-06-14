@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total} pași finalizați",
       "requiredCount": "{count, plural, one {# obligatoriu} few {# obligatorii} other {# obligatorii}}",
       "comingSoonBadge": "În curând",
-      "mobileApp": "Aplicație mobilă"
+      "mobileApp": "Aplicație mobilă",
+      "pointOfSale": "Punct de vânzare"
     },
     "dashboard": {
       "title": "Panou de control",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Aplicație mobilă de comenzi",
       "body": "Aplicația cu marca restaurantului tău în App Store și Google Play — clienții comandă, recomandă dintr-o atingere și primesc notificări push, totul sub numele și logoul tău. O construim după lansare."
+    },
+    "posPage": {
+      "subtitle": "Punct de vânzare la fața locului",
+      "body": "O casă de marcat integrată pentru tejgheaua ta — încasează comenzile la fața locului și telefonice în același sistem ca cele online, cu un singur meniu, un singur set de rapoarte și o singură plată. O construim după lansare."
     }
   },
   "impersonation": {

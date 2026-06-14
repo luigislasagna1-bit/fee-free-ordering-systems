@@ -717,7 +717,8 @@
       "stepsComplete": "Pabeigti soļi: {completed}/{total}",
       "requiredCount": "{count, plural, zero {# obligātu} one {# obligāts} other {# obligāti}}",
       "comingSoonBadge": "Drīzumā",
-      "mobileApp": "Mobilā lietotne"
+      "mobileApp": "Mobilā lietotne",
+      "pointOfSale": "Pārdošanas punkts"
     },
     "dashboard": {
       "title": "Panelis",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Mobilā pasūtīšanas lietotne",
       "body": "Lietotne ar jūsu zīmolu App Store un Google Play — klienti pasūta, atkārto pasūtījumu ar vienu pieskārienu un saņem push paziņojumus, viss ar jūsu nosaukumu un logo. Mēs to veidojam pēc palaišanas."
+    },
+    "posPage": {
+      "subtitle": "Pārdošanas punkts uz vietas",
+      "body": "Iebūvēta kase jūsu letei — reģistrējiet klātienes un telefona pasūtījumus tajā pašā sistēmā kā tiešsaistes, ar vienu ēdienkarti, vienu pārskatu kopumu un vienu izmaksu. Mēs to veidojam pēc palaišanas."
     }
   },
   "impersonation": {

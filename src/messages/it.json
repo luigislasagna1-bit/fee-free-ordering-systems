@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total} passaggi completati",
       "requiredCount": "{count, plural, one {# obbligatorio} other {# obbligatori}}",
       "comingSoonBadge": "Presto",
-      "mobileApp": "App mobile"
+      "mobileApp": "App mobile",
+      "pointOfSale": "Punto vendita"
     },
     "dashboard": {
       "title": "Pannello",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "App di ordinazione mobile",
       "body": "L'app con il marchio del tuo ristorante su App Store e Google Play: i clienti ordinano, riordinano con un tocco e ricevono notifiche push, tutto con il tuo nome e logo. La stiamo sviluppando dopo il lancio."
+    },
+    "posPage": {
+      "subtitle": "Punto vendita in sede",
+      "body": "Una cassa integrata per il tuo bancone: registra gli ordini al banco e telefonici sullo stesso sistema di quelli online, con un solo menu, un solo set di report e un solo pagamento. La stiamo sviluppando dopo il lancio."
     }
   },
   "impersonation": {

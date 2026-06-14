@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total} sammu tehtud",
       "requiredCount": "{count, plural, one {# kohustuslik} other {# kohustuslikku}}",
       "comingSoonBadge": "Varsti",
-      "mobileApp": "Mobiilirakendus"
+      "mobileApp": "Mobiilirakendus",
+      "pointOfSale": "Müügipunkt"
     },
     "dashboard": {
       "title": "Juhtpaneel",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Mobiilne tellimisrakendus",
       "body": "Sinu brändiga rakendus App Store'is ja Google Plays — kliendid tellivad, tellivad uuesti ühe puudutusega ja saavad push-teavitusi, kõik sinu nime ja logo all. Ehitame selle pärast käivitamist."
+    },
+    "posPage": {
+      "subtitle": "Kohapealne müügipunkt",
+      "body": "Sisseehitatud kassa sinu leti jaoks — löö kohapealsed ja telefonitellimused sisse samasse süsteemi kui veebitellimused, ühe menüü, ühe aruandekomplekti ja ühe väljamaksega. Ehitame selle pärast käivitamist."
     }
   },
   "impersonation": {

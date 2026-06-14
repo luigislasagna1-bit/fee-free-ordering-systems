@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total} adım tamamlandı",
       "requiredCount": "{count, plural, one {# zorunlu} other {# zorunlu}}",
       "comingSoonBadge": "Yakında",
-      "mobileApp": "Mobil uygulama"
+      "mobileApp": "Mobil uygulama",
+      "pointOfSale": "Satış noktası"
     },
     "dashboard": {
       "title": "Panel",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Mobil sipariş uygulaması",
       "body": "App Store ve Google Play'de kendi markanıza ait uygulama — müşteriler sipariş verir, tek dokunuşla tekrar sipariş eder ve anlık bildirimler alır, hepsi sizin adınız ve logonuzla. Lansmandan sonra geliştiriyoruz."
+    },
+    "posPage": {
+      "subtitle": "Yerinde satış noktası",
+      "body": "Tezgâhınız için yerleşik bir yazarkasa — gel-al ve telefon siparişlerini çevrimiçi siparişlerinizle aynı sistemde işleyin; tek menü, tek rapor seti ve tek ödeme. Lansmandan sonra geliştiriyoruz."
     }
   },
   "impersonation": {

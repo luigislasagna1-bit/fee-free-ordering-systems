@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total} lépés kész",
       "requiredCount": "{count, plural, one {# kötelező} other {# kötelező}}",
       "comingSoonBadge": "Hamarosan",
-      "mobileApp": "Mobilalkalmazás"
+      "mobileApp": "Mobilalkalmazás",
+      "pointOfSale": "Értékesítési pont"
     },
     "dashboard": {
       "title": "Irányítópult",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Mobil rendelési alkalmazás",
       "body": "A saját márkás alkalmazásod az App Store-ban és a Google Playen — a vendégek rendelnek, egy érintéssel újrarendelnek és push-értesítéseket kapnak, mind a te neved és logód alatt. Indulás után építjük meg."
+    },
+    "posPage": {
+      "subtitle": "Helyi értékesítési pont",
+      "body": "Beépített pénztárgép a pultodhoz — a helyi és telefonos rendeléseket ugyanabban a rendszerben üsd be, mint az online-okat, egyetlen étlappal, egyetlen jelentéskészlettel és egyetlen kifizetéssel. Indulás után építjük meg."
     }
   },
   "impersonation": {

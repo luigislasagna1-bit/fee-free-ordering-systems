@@ -6,7 +6,7 @@ import {
   Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
-  Check, Circle, Sparkles, Rocket, Phone, QrCode, Lock, Network, MessageSquare, Bot, MonitorCheck, Smartphone,
+  Check, Circle, Sparkles, Rocket, Phone, QrCode, Lock, Network, MessageSquare, Bot, MonitorCheck, Smartphone, Calculator,
   // Reports sub-section icons — match GloriaFood's iconography by purpose:
   // TrendingUp for Sales (line going up), PieChart for Menu Insights (mix
   // breakdown), Globe2 for Online Ordering family, ListChecks for List View.
@@ -401,6 +401,22 @@ const navGroups: NavGroup[] = [
     comingSoon: true,
     items: [
       { href: "/admin/mobile-app", labelKey: "mobileApp", label: "Mobile App", icon: Smartphone, requiresFeature: "app_store_listing" },
+    ],
+  },
+
+  {
+    // ─── POS MODULE ─────────────────────────────────────────────────────
+    // POS Module — an in-house point-of-sale register, built POST-LAUNCH.
+    // Locked "Soon" teaser category (mirrors KDS / Branded Mobile App / Nabil
+    // AI). comingSoon on the group + the pos_module add-on (comingSoon in
+    // /superadmin/add-ons) drive the lock + Soon badge. Luigi 2026-06-14.
+    key: "pos",
+    labelKey: "categoryPos",
+    label: "POS Module",
+    icon: Calculator,
+    comingSoon: true,
+    items: [
+      { href: "/admin/pos", labelKey: "pointOfSale", label: "Point of Sale", icon: Calculator, requiresFeature: "in_house_pos" },
     ],
   },
 

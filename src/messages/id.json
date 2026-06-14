@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total} langkah selesai",
       "requiredCount": "{count, plural, other {# wajib}}",
       "comingSoonBadge": "Segera",
-      "mobileApp": "Aplikasi seluler"
+      "mobileApp": "Aplikasi seluler",
+      "pointOfSale": "Titik penjualan"
     },
     "dashboard": {
       "title": "Dasbor",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Aplikasi pemesanan seluler",
       "body": "Aplikasi bermerek restoran Anda di App Store dan Google Play — pelanggan memesan, memesan ulang dengan satu ketukan, dan menerima notifikasi push, semuanya dengan nama dan logo Anda. Kami membangunnya setelah peluncuran."
+    },
+    "posPage": {
+      "subtitle": "Titik penjualan di tempat",
+      "body": "Mesin kasir bawaan untuk konter Anda — proses pesanan langsung dan telepon di sistem yang sama dengan pesanan online, dengan satu menu, satu set laporan, dan satu pembayaran. Kami membangunnya setelah peluncuran."
     }
   },
   "impersonation": {

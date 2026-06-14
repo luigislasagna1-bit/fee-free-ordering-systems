@@ -740,7 +740,8 @@
       "stepsComplete": "{completed}/{total} steps complete",
       "requiredCount": "{count, plural, one {# required} other {# required}}",
       "comingSoonBadge": "Soon",
-      "mobileApp": "Mobile App"
+      "mobileApp": "Mobile App",
+      "pointOfSale": "Point of Sale"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Mobile ordering app",
       "body": "Your restaurant's own branded app on the App Store and Google Play — customers order, reorder in a tap, and get push notifications, all under your name and logo. We're building it after launch."
+    },
+    "posPage": {
+      "subtitle": "In-house point of sale",
+      "body": "A built-in point-of-sale register for your counter — ring up walk-in and phone orders on the same system as your online ones, with one menu, one set of reports, and one payout. We're building it after launch."
     }
   },
   "impersonation": {

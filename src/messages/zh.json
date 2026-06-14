@@ -717,7 +717,8 @@
       "stepsComplete": "已完成 {completed}/{total} 个步骤",
       "requiredCount": "{count, plural, other {# 个必需}}",
       "comingSoonBadge": "即将推出",
-      "mobileApp": "移动应用"
+      "mobileApp": "移动应用",
+      "pointOfSale": "销售点"
     },
     "dashboard": {
       "title": "仪表盘",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "移动点餐应用",
       "body": "在 App Store 和 Google Play 上推出你自己品牌的应用——顾客点餐、一键再次下单并接收推送通知，全部使用你的名称和标识。我们将在上线后开发。"
+    },
+    "posPage": {
+      "subtitle": "店内销售点",
+      "body": "为你的柜台内置的收银机——堂食和电话订单与线上订单在同一系统结账，共用一份菜单、一套报表和一次结算。我们将在上线后开发。"
     }
   },
   "impersonation": {

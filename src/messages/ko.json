@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total}단계 완료",
       "requiredCount": "{count, plural, other {필수 #개}}",
       "comingSoonBadge": "출시 예정",
-      "mobileApp": "모바일 앱"
+      "mobileApp": "모바일 앱",
+      "pointOfSale": "판매 시점 관리"
     },
     "dashboard": {
       "title": "대시보드",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "모바일 주문 앱",
       "body": "App Store와 Google Play에 올라가는 매장 전용 브랜드 앱 — 고객이 주문하고, 한 번의 탭으로 재주문하고, 푸시 알림을 받습니다. 모두 매장 이름과 로고로. 출시 후 개발할 예정입니다."
+    },
+    "posPage": {
+      "subtitle": "매장 내 POS",
+      "body": "카운터를 위한 내장형 계산대 — 매장과 전화 주문을 온라인 주문과 같은 시스템에서 처리합니다. 메뉴 하나, 리포트 한 세트, 정산 한 번으로. 출시 후 개발할 예정입니다."
     }
   },
   "impersonation": {

@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total} trin fuldført",
       "requiredCount": "{count, plural, one {# obligatorisk} other {# obligatoriske}}",
       "comingSoonBadge": "Snart",
-      "mobileApp": "Mobilapp"
+      "mobileApp": "Mobilapp",
+      "pointOfSale": "Kassesystem"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Mobil bestillingsapp",
       "body": "En app med dit brand i App Store og Google Play — kunderne bestiller, genbestiller med ét tryk og får push-notifikationer, alt sammen under dit navn og logo. Vi bygger den efter lanceringen."
+    },
+    "posPage": {
+      "subtitle": "Kassesystem på stedet",
+      "body": "En indbygget kasse til din disk — slå besøgs- og telefonbestillinger op i samme system som dine onlinebestillinger, med én menu, ét sæt rapporter og én udbetaling. Vi bygger den efter lanceringen."
     }
   },
   "impersonation": {

@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total} passos completats",
       "requiredCount": "{count, plural, one {# obligatori} other {# obligatoris}}",
       "comingSoonBadge": "Aviat",
-      "mobileApp": "App mòbil"
+      "mobileApp": "App mòbil",
+      "pointOfSale": "Punt de venda"
     },
     "dashboard": {
       "title": "Tauler de control",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "App mòbil de comandes",
       "body": "L'app amb la marca del teu restaurant a l'App Store i Google Play — els clients demanen, repeteixen amb un toc i reben notificacions push, tot amb el teu nom i logotip. L'estem construint després del llançament."
+    },
+    "posPage": {
+      "subtitle": "Punt de venda al local",
+      "body": "Una caixa registradora integrada per al teu taulell — cobra les comandes presencials i per telèfon al mateix sistema que les en línia, amb un sol menú, un sol conjunt d'informes i un sol pagament. L'estem construint després del llançament."
     }
   },
   "impersonation": {

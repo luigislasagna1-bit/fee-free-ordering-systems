@@ -717,7 +717,8 @@
       "stepsComplete": "Dovršeni koraci: {completed}/{total}",
       "requiredCount": "{count, plural, one {# obavezan} few {# obavezna} other {# obaveznih}}",
       "comingSoonBadge": "Uskoro",
-      "mobileApp": "Mobilna aplikacija"
+      "mobileApp": "Mobilna aplikacija",
+      "pointOfSale": "Prodajno mjesto"
     },
     "dashboard": {
       "title": "Upravljačka ploča",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Mobilna aplikacija za naručivanje",
       "body": "Aplikacija s markom vašeg restorana na App Storeu i Google Playu — gosti naručuju, ponovno naručuju jednim dodirom i primaju push obavijesti, sve pod vašim imenom i logotipom. Gradimo je nakon lansiranja."
+    },
+    "posPage": {
+      "subtitle": "Prodajno mjesto na licu mjesta",
+      "body": "Ugrađena blagajna za vaš pult — naplaćujte narudžbe na licu mjesta i telefonske u istom sustavu kao i one online, s jednim jelovnikom, jednim setom izvješća i jednom isplatom. Gradimo je nakon lansiranja."
     }
   },
   "impersonation": {

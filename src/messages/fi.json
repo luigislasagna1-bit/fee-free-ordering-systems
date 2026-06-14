@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total} vaihetta valmiina",
       "requiredCount": "{count, plural, one {# pakollinen} other {# pakollista}}",
       "comingSoonBadge": "Pian",
-      "mobileApp": "Mobiilisovellus"
+      "mobileApp": "Mobiilisovellus",
+      "pointOfSale": "Myyntipiste"
     },
     "dashboard": {
       "title": "Kojelauta",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "Mobiilitilaussovellus",
       "body": "Oma brändätty sovelluksesi App Storessa ja Google Playssä — asiakkaat tilaavat, tilaavat uudelleen yhdellä napautuksella ja saavat push-ilmoituksia, kaikki sinun nimelläsi ja logollasi. Rakennamme sen julkaisun jälkeen."
+    },
+    "posPage": {
+      "subtitle": "Oma myyntipiste",
+      "body": "Sisäänrakennettu kassa tiskillesi — lyö paikan päällä ja puhelimitse tehdyt tilaukset samaan järjestelmään kuin verkkotilaukset, yhdellä menulla, yhdellä raporttisarjalla ja yhdellä tilityksellä. Rakennamme sen julkaisun jälkeen."
     }
   },
   "impersonation": {

@@ -717,7 +717,8 @@
       "stepsComplete": "{completed}/{total}ステップ完了",
       "requiredCount": "{count, plural, other {必須 #件}}",
       "comingSoonBadge": "近日公開",
-      "mobileApp": "モバイルアプリ"
+      "mobileApp": "モバイルアプリ",
+      "pointOfSale": "POSレジ"
     },
     "dashboard": {
       "title": "ダッシュボード",
@@ -3887,6 +3888,10 @@
     "mobileAppPage": {
       "subtitle": "モバイル注文アプリ",
       "body": "App Store と Google Play に並ぶ、あなた専用のブランドアプリ。お客様は注文し、ワンタップで再注文し、プッシュ通知を受け取れます。すべてあなたの名前とロゴで。ローンチ後に開発します。"
+    },
+    "posPage": {
+      "subtitle": "店内POSレジ",
+      "body": "カウンター用の内蔵レジ。来店・電話の注文を、オンライン注文と同じシステムで会計できます。メニューもレポートも入金も一つにまとまります。ローンチ後に開発します。"
     }
   },
   "impersonation": {
