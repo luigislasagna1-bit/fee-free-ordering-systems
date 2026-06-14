@@ -167,7 +167,8 @@ const navGroups: NavGroup[] = [
         setupSectionId: "menu",
         items: [
           { href: "/admin/menu",     labelKey: "menu",     label: "Menu Editor", icon: UtensilsCrossed, step: "menu.categoryExists" },
-          { href: "/admin/receipts", labelKey: "receipts", label: "Receipts",    icon: Receipt },
+          // Receipts moved OUT of here to OTHER (Luigi 2026-06-13) — receipt
+          // templates are an operational/config concern, not a menu-build step.
         ],
       },
       {
@@ -367,6 +368,9 @@ const navGroups: NavGroup[] = [
       { href: "/admin/billing",         labelKey: "billing", label: "Billing", icon: Wallet },
       { href: "/admin/billing/add-ons", labelKey: "addOns",  label: "Add-Ons", icon: Zap },
       { href: "/admin/settings",     labelKey: "settings",    label: "Settings",     icon: Settings },
+      // Receipts moved here from SETUP -> Menu Setup (Luigi 2026-06-13): receipt
+      // templates are an operational/config concern, not a menu-build step.
+      { href: "/admin/receipts",     labelKey: "receipts",    label: "Receipts",     icon: Receipt },
       // Map Settings removed (Luigi 2026-06-13): every restaurant now uses the
       // free Leaflet/OSM map for tiles + the platform Google key for autocomplete
       // + distance — no per-restaurant map option to configure.
