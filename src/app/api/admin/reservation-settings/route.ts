@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
+import { hasFeature } from "@/lib/entitlements";
 import prisma from "@/lib/db";
 
 export async function GET() {
@@ -31,6 +32,16 @@ export async function PUT(req: NextRequest) {
       requireDeposit, depositAmount,
       cancellationPolicy, reservationHours, blackoutDates,
     } = body;
+
+    // Reservation deposits are a paid add-on (take_reservation_deposit). Block
+    // turning them ON without it — locked until subscribed (currently comingSoon,
+    // so locked for everyone). Luigi 2026-06-14.
+    if (requireDeposit === true && !(await hasFeature(restaurantId, "take_reservation_deposit"))) {
+      return NextResponse.json(
+        { error: "Reservation deposits require the Reservation Deposits add-on.", code: "feature_locked", feature: "take_reservation_deposit" },
+        { status: 403 },
+      );
+    }
 
     const settings = await prisma.reservationSettings.upsert({
       where: { restaurantId },
