@@ -64,6 +64,11 @@ export interface SectionStyle {
   paddingBottom: number;   // px
   dividerAbove: boolean;
   dividerBelow: boolean;
+  /** GloriaFood-style section box: a thin border around the whole section with
+   *  an inverse (black) header strip as the first line (the section's boxTitle,
+   *  falling back to its label). Default false → renders exactly as before, so
+   *  existing saved templates are untouched. Luigi 2026-06-13. */
+  boxed: boolean;
 }
 
 export interface Section {
@@ -72,6 +77,10 @@ export interface Section {
   label: string;
   enabled: boolean;
   style: SectionStyle;
+  /** Header text shown in the inverse strip when style.boxed is on. Free text
+   *  (like thankYouMessage / footerText — the restaurant's own wording, not
+   *  translated). Empty → falls back to the section label. */
+  boxTitle?: string;
 }
 
 export interface CustomerConfig {
@@ -96,6 +105,7 @@ const base: SectionStyle = {
   fontSize: 12, bold: false, align: "left", lineHeight: 1.45,
   color: "#000000", bgColor: "transparent", highlight: false,
   paddingTop: 3, paddingBottom: 3, dividerAbove: false, dividerBelow: false,
+  boxed: false,
 };
 const c  = { ...base, align: "center" as const };
 const bl = { ...base, bold: true };

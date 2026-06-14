@@ -96,6 +96,31 @@ function StyleEditor({ section, onChange }: { section: Section; onChange: (s: Se
         </button>
       </div>
 
+      {/* Boxed (GloriaFood-style section box: thin border + inverse header strip) */}
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="text-xs font-semibold text-gray-700">Box this section</div>
+          <div className="text-xs text-gray-400">Thin border + inverse header strip (GloriaFood style)</div>
+        </div>
+        <button onClick={() => set("boxed", !s.boxed)}
+          className={tw("relative w-11 h-6 rounded-full transition-colors flex-shrink-0", s.boxed ? "bg-emerald-500" : "bg-gray-300")}>
+          <div className={tw("absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all", s.boxed ? "left-5" : "left-0.5")} />
+        </button>
+      </div>
+      {s.boxed && (
+        <div>
+          <div className="text-xs font-semibold text-gray-500 uppercase mb-1.5">Box Header Text</div>
+          <input
+            type="text"
+            value={section.boxTitle ?? ""}
+            placeholder={section.label}
+            onChange={(e) => onChange({ ...section, boxTitle: e.target.value })}
+            className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+          />
+          <div className="text-xs text-gray-400 mt-1">Shown in the dark header strip. Blank = uses the section name.</div>
+        </div>
+      )}
+
       {/* Dividers */}
       <div>
         <div className="text-xs font-semibold text-gray-500 uppercase mb-1.5">Divider Lines</div>

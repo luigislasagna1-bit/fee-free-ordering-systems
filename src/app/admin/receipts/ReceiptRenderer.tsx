@@ -455,11 +455,46 @@ export const ReceiptRenderer = forwardRef<HTMLDivElement, Props>(
 
           if (content === null) return null;
 
+          const st = section.style;
+
+          // GloriaFood-style box: thin border around the section + an inverse
+          // header strip (boxTitle, falling back to the section label). Replaces
+          // the dividers for this section. Luigi 2026-06-13.
+          if (st.boxed) {
+            const header = (section.boxTitle && section.boxTitle.trim()) || section.label;
+            const bodyStyle: React.CSSProperties = {
+              ...sectionCSS(st),
+              width: "100%",
+              color: st.highlight ? "#000000" : st.color,
+              backgroundColor: undefined,
+            };
+            return (
+              <div key={section.id} style={{ margin: "5px 8px" }}>
+                <div style={{ border: "1px solid #000", boxSizing: "border-box" }}>
+                  <div
+                    style={{
+                      backgroundColor: "#000000",
+                      color: "#ffffff",
+                      fontWeight: "bold",
+                      fontSize: `${st.fontSize}px`,
+                      lineHeight: 1.35,
+                      padding: "3px 8px",
+                      textAlign: "left",
+                    }}
+                  >
+                    {header}
+                  </div>
+                  <div style={bodyStyle}>{content}</div>
+                </div>
+              </div>
+            );
+          }
+
           return (
             <div key={section.id}>
-              {section.style.dividerAbove && <div style={DIVIDER} />}
-              <div style={sectionCSS(section.style)}>{content}</div>
-              {section.style.dividerBelow && <div style={DIVIDER} />}
+              {st.dividerAbove && <div style={DIVIDER} />}
+              <div style={sectionCSS(st)}>{content}</div>
+              {st.dividerBelow && <div style={DIVIDER} />}
             </div>
           );
         })}
