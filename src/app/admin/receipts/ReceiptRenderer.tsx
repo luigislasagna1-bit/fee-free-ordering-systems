@@ -471,15 +471,19 @@ export const ReceiptRenderer = forwardRef<HTMLDivElement, Props>(
             return (
               <div key={section.id} style={{ margin: "5px 8px" }}>
                 <div style={{ border: "1px solid #000", boxSizing: "border-box" }}>
+                  {/* Header strip — inverse (dark) ONLY when Highlight is on for
+                      this section, so a boxed section can have a plain header
+                      too. Luigi 2026-06-13. */}
                   <div
                     style={{
-                      backgroundColor: "#000000",
-                      color: "#ffffff",
+                      backgroundColor: st.highlight ? "#000000" : "transparent",
+                      color: st.highlight ? "#ffffff" : st.color,
                       fontWeight: "bold",
                       fontSize: `${st.fontSize}px`,
                       lineHeight: 1.35,
                       padding: "3px 8px",
                       textAlign: "left",
+                      borderBottom: st.highlight ? undefined : "1px solid #000",
                     }}
                   >
                     {header}

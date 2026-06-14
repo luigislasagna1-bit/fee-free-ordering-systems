@@ -100,7 +100,7 @@ function StyleEditor({ section, onChange }: { section: Section; onChange: (s: Se
       <div className="flex items-center justify-between">
         <div>
           <div className="text-xs font-semibold text-gray-700">Box this section</div>
-          <div className="text-xs text-gray-400">Thin border + inverse header strip (GloriaFood style)</div>
+          <div className="text-xs text-gray-400">Thin border + header strip (GloriaFood style). Turn on Highlight above for a dark inverse header.</div>
         </div>
         <button onClick={() => set("boxed", !s.boxed)}
           className={tw("relative w-11 h-6 rounded-full transition-colors flex-shrink-0", s.boxed ? "bg-emerald-500" : "bg-gray-300")}>
