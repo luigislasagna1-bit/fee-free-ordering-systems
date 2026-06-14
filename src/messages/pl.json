@@ -3888,21 +3888,21 @@
       "timeOptional": "pozostaw godziny puste, aby ustawić cały dzień"
     },
     "orderCapBanner": {
-      "usage": "{count} z {cap} zamówień w tym miesiącu",
+      "usage": "{count} z {cap} zamówień i rezerwacji w tym miesiącu",
       "removeLimit": "Usuń limit",
-      "help": "Twój darmowy plan obejmuje {cap} zamówień miesięcznie. Wykup dowolny dodatek, aby usunąć limit."
+      "help": "Twój darmowy plan obejmuje {cap} zamówień i rezerwacji miesięcznie. Wykup dowolny dodatek, aby znieść limit."
     },
     "kdsPage": {
       "subtitle": "System wyświetlania kuchennego",
-      "body": "Dedykowana aplikacja ekranu kuchennego: nowe zamówienia pojawiają się na ekranie przy Twoim stanowisku i są odhaczane w miarę przygotowywania — bez papierowych paragonów, bez pominiętych pozycji. Działa jako osobna aplikacja, jak systemy KDS w Toast czy Square. Tworzymy ją po premierze."
+      "body": "Dedykowana aplikacja do wyświetlania zamówień w kuchni: nowe zamówienia pojawiają się na ekranie przy stanowisku i znikają w miarę ich przygotowywania — żadnych papierowych kartek, żadnych pominiętych pozycji. Działa jako osobna aplikacja, tak jak systemy KDS w Toast czy Square. Jest w trakcie tworzenia."
     },
     "mobileAppPage": {
       "subtitle": "Mobilna aplikacja do zamawiania",
-      "body": "Aplikacja z marką Twojej restauracji w App Store i Google Play — klienci zamawiają, ponawiają zamówienie jednym dotknięciem i otrzymują powiadomienia push, wszystko pod Twoją nazwą i logo. Tworzymy ją po premierze."
+      "body": "Własna markowa aplikacja Twojej restauracji w App Store i Google Play — klienci zamawiają, ponawiają zamówienie jednym dotknięciem i otrzymują powiadomienia push, a wszystko pod Twoją nazwą i logo. Jest w trakcie tworzenia."
     },
     "posPage": {
       "subtitle": "Punkt sprzedaży na miejscu",
-      "body": "Wbudowana kasa do Twojej lady — przyjmuj zamówienia na miejscu i telefoniczne w tym samym systemie co online, z jednym menu, jednym zestawem raportów i jedną wypłatą. Tworzymy ją po premierze."
+      "body": "Wbudowana kasa na Twoją ladę — przyjmuj zamówienia osobiste i telefoniczne w tym samym systemie co zamówienia online, z jednym menu, jednym zestawem raportów i jedną wypłatą. Jest w trakcie tworzenia."
     }
   },
   "impersonation": {

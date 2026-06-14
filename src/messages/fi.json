@@ -3888,21 +3888,21 @@
       "timeOptional": "jätä kellonajat tyhjiksi koko päivän ajaksi"
     },
     "orderCapBanner": {
-      "usage": "{count}/{cap} tilausta tässä kuussa",
+      "usage": "{count} / {cap} tilausta ja varausta tässä kuussa",
       "removeLimit": "Poista raja",
-      "help": "Ilmainen tilauksesi sisältää {cap} tilausta kuukaudessa. Tilaa mikä tahansa lisäosa poistaaksesi rajan."
+      "help": "Ilmainen tilauksesi sisältää {cap} tilausta ja varausta kuukaudessa. Tilaa mikä tahansa lisäosa poistaaksesi rajan."
     },
     "kdsPage": {
       "subtitle": "Keittiön näyttöjärjestelmä",
-      "body": "Oma keittiönäyttösovellus: uudet tilaukset ilmestyvät näytölle linjallasi ja kuitataan sitä mukaa kun ne valmistuvat — ei paperilappuja, ei unohtuneita annoksia. Se toimii omana sovelluksenaan, kuten Toastin tai Squaren KDS-järjestelmät. Rakennamme sen julkaisun jälkeen."
+      "body": "Oma keittiönäyttösovellus: uudet tilaukset näkyvät linjastosi näytöllä ja poistuvat sitä mukaa kun ne valmistuvat — ei paperilappuja, ei unohtuneita annoksia. Se toimii omana sovelluksenaan, aivan kuten Toastin tai Squaren KDS-järjestelmät. Se on kehitteillä."
     },
     "mobileAppPage": {
       "subtitle": "Mobiilitilaussovellus",
-      "body": "Oma brändätty sovelluksesi App Storessa ja Google Playssä — asiakkaat tilaavat, tilaavat uudelleen yhdellä napautuksella ja saavat push-ilmoituksia, kaikki sinun nimelläsi ja logollasi. Rakennamme sen julkaisun jälkeen."
+      "body": "Ravintolasi oma brändätty sovellus App Storessa ja Google Playssa — asiakkaat tilaavat, tilaavat uudelleen yhdellä napautuksella ja saavat push-ilmoituksia, kaikki sinun nimelläsi ja logollasi. Se on kehitteillä."
     },
     "posPage": {
       "subtitle": "Oma myyntipiste",
-      "body": "Sisäänrakennettu kassa tiskillesi — lyö paikan päällä ja puhelimitse tehdyt tilaukset samaan järjestelmään kuin verkkotilaukset, yhdellä menulla, yhdellä raporttisarjalla ja yhdellä tilityksellä. Rakennamme sen julkaisun jälkeen."
+      "body": "Sisäänrakennettu kassajärjestelmä tiskillesi — kirjaa paikan päällä tehdyt ja puhelintilaukset samaan järjestelmään verkkotilaustesi kanssa, yhdellä ruokalistalla, yhdellä raporttikokonaisuudella ja yhdellä tilityksellä. Se on kehitteillä."
     }
   },
   "impersonation": {

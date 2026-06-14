@@ -3888,21 +3888,21 @@
       "timeOptional": "ostavite vreme prazno za ceo dan"
     },
     "orderCapBanner": {
-      "usage": "{count} од {cap} поруџбина овог месеца",
+      "usage": "{count} od {cap} porudžbina i rezervacija ovog meseca",
       "removeLimit": "Уклони ограничење",
-      "help": "Ваш бесплатни план укључује {cap} поруџбина месечно. Претплатите се на било који додатак да уклоните ограничење."
+      "help": "Vaš besplatni plan uključuje {cap} porudžbina i rezervacija mesečno. Pretplatite se na bilo koji dodatak da biste uklonili ograničenje."
     },
     "kdsPage": {
       "subtitle": "Систем кухињског екрана",
-      "body": "Наменска апликација кухињског екрана: нове поруџбине се појављују на екрану на вашој линији и означавају се како се припремају — без папирних рачуна, без пропуштених ставки. Ради као засебна апликација, попут KDS система у Toast-у или Square-у. Градимо је након лансирања."
+      "body": "Namenska aplikacija za kuhinjski ekran: nove porudžbine pojavljuju se na ekranu pored vaše linije i nestaju kako se pripremaju — bez papirnih listića, bez propuštenih stavki. Radi kao zasebna aplikacija, baš kao sistemi KDS u Toastu ili Squareu. U izradi je."
     },
     "mobileAppPage": {
       "subtitle": "Мобилна апликација за наручивање",
-      "body": "Апликација са брендом вашег ресторана на App Store-у и Google Play-у — гости наручују, поново наручују једним додиром и примају push обавештења, све под вашим именом и логотипом. Градимо је након лансирања."
+      "body": "Sopstvena brendirana aplikacija vašeg restorana na App Store i Google Play — kupci poručuju, ponavljaju porudžbinu jednim dodirom i primaju push obaveštenja, sve pod vašim imenom i logotipom. U izradi je."
     },
     "posPage": {
       "subtitle": "Продајно место на лицу места",
-      "body": "Уграђена каса за ваш пулт — наплаћујте поруџбине на лицу места и телефонске у истом систему као и оне онлајн, са једним менијем, једним сетом извештаја и једном исплатом. Градимо је након лансирања."
+      "body": "Ugrađena kasa za vaš pult — naplaćujte porudžbine na licu mesta i telefonske porudžbine u istom sistemu kao i one onlajn, sa jednim menijem, jednim skupom izveštaja i jednom isplatom. U izradi je."
     }
   },
   "impersonation": {

@@ -84,7 +84,7 @@ export default async function PrivacyPage() {
       <ul>
         <li><strong>Stripe</strong> — payment processing, Stripe Connect for restaurant payouts. Subject to Stripe&rsquo;s own <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer">privacy policy</a>.</li>
         <li><strong>Resend</strong> — transactional + marketing email delivery</li>
-        <li><strong>PrintNode</strong> — kitchen printer bridge for restaurants who opt to print receipts. (Will be discontinued once our native Kitchen Display app ships.) Restaurants create their own PrintNode account; we never see their PrintNode credentials.</li>
+        <li><strong>PrintNode</strong> — kitchen printer bridge for restaurants who opt to print receipts. (Will be discontinued once our native Kitchen Order App ships.) Restaurants create their own PrintNode account; we never see their PrintNode credentials.</li>
         <li><strong>ShipDay</strong> — optional third-party driver-pool integration for restaurants who use it</li>
         <li><strong>Google Maps Platform</strong> — geocoding addresses and rendering delivery-zone maps</li>
         <li><strong>Vercel</strong> — hosting our application and database edge routing</li>

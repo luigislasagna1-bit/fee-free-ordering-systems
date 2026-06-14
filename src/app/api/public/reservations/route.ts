@@ -4,6 +4,7 @@ import { validateBooking, resolveDayHours, type ReservationSettingsLike } from "
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
 import { notifyStaff, notifyCustomer } from "@/lib/notifications";
 import { hasFeature } from "@/lib/entitlements";
+import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
 import { liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
 import { holidayEffectToday } from "@/lib/holiday-rules";
 
@@ -51,6 +52,21 @@ export async function POST(req: NextRequest) {
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
     if (!restaurant.acceptsReservations) {
       return NextResponse.json({ error: "This restaurant is not accepting reservations." }, { status: 400 });
+    }
+
+    // FREE-plan monthly cap: a table reservation counts toward the SAME
+    // 100/month pool as orders ("100 orders OR reservations combined" — Luigi
+    // 2026-06-14). Block when the pool is exhausted; any active paid add-on
+    // exempts the restaurant. Mirrors /api/orders (status 402, same code).
+    const planCap = await checkOrderCap(restaurant.id);
+    if (!planCap.allowed) {
+      return NextResponse.json(
+        {
+          error: "This restaurant has reached its monthly limit. Please try again next month, or contact the restaurant directly.",
+          code: "monthly_cap_reached",
+        },
+        { status: 402 },
+      );
     }
 
     const settings = restaurant.reservationSettings;
@@ -166,6 +182,13 @@ export async function POST(req: NextRequest) {
         alertAt: reservationAlertAt,
       },
     });
+
+    // Count this booking toward the FREE-plan monthly cap (shared pool with
+    // orders, Luigi 2026-06-14). Fire-and-forget — never fail a booking over
+    // the counter; an off-by-one is acceptable (see src/lib/order-cap.ts).
+    incrementOrderCount(restaurant.id).catch((e) =>
+      console.error("[reservations] incrementOrderCount:", e),
+    );
 
     // CRM: persist marketing consent (+ create the contact) like the order flow,
     // so a reservation opt-in flips the Customers badge + feeds autopilot. Email-

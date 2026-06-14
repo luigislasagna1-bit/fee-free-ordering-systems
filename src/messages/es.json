@@ -3888,21 +3888,21 @@
       "timeOptional": "deja las horas en blanco para todo el día"
     },
     "orderCapBanner": {
-      "usage": "{count} de {cap} pedidos este mes",
+      "usage": "{count} de {cap} pedidos y reservas este mes",
       "removeLimit": "Quitar el límite",
-      "help": "Tu plan gratuito incluye {cap} pedidos al mes. Suscríbete a cualquier complemento para quitar el límite."
+      "help": "Tu plan gratuito incluye {cap} pedidos y reservas al mes. Suscríbete a cualquier complemento para eliminar el límite."
     },
     "kdsPage": {
       "subtitle": "Sistema de pantalla de cocina",
-      "body": "Una app dedicada de pantalla de cocina: los pedidos nuevos aparecen en una pantalla de tu línea y se marcan a medida que se preparan, sin tickets de papel ni olvidos. Funciona como su propia app, como los sistemas KDS de Toast o Square. La estamos desarrollando después del lanzamiento."
+      "body": "Una aplicación de pantalla de cocina específica: los nuevos pedidos aparecen en una pantalla en tu línea y se marcan a medida que se preparan, sin tiques de papel ni artículos olvidados. Funciona como su propia aplicación, como los sistemas KDS de Toast o Square. En desarrollo."
     },
     "mobileAppPage": {
       "subtitle": "App de pedidos móvil",
-      "body": "La app con la marca de tu restaurante en App Store y Google Play: los clientes piden, repiten con un toque y reciben notificaciones push, todo con tu nombre y tu logo. La estamos desarrollando después del lanzamiento."
+      "body": "La aplicación con la marca propia de tu restaurante en la App Store y Google Play: tus clientes piden, repiten su pedido con un toque y reciben notificaciones push, todo con tu nombre y tu logotipo. En desarrollo."
     },
     "posPage": {
       "subtitle": "Punto de venta en local",
-      "body": "Una caja registradora integrada para tu mostrador: cobra los pedidos presenciales y por teléfono en el mismo sistema que los online, con un solo menú, un solo conjunto de informes y un solo pago. La estamos desarrollando después del lanzamiento."
+      "body": "Una caja registradora de punto de venta integrada para tu mostrador: cobra los pedidos presenciales y telefónicos en el mismo sistema que los pedidos en línea, con un solo menú, un solo conjunto de informes y un solo pago. En desarrollo."
     }
   },
   "impersonation": {

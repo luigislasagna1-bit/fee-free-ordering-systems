@@ -3888,21 +3888,21 @@
       "timeOptional": "leave times blank for all day"
     },
     "orderCapBanner": {
-      "usage": "{count} of {cap} orders this month",
+      "usage": "{count} of {cap} orders & reservations this month",
       "removeLimit": "Remove the limit",
-      "help": "Your free plan includes {cap} orders per month. Subscribe to any add-on to remove the cap."
+      "help": "Your free plan includes {cap} orders & reservations per month. Subscribe to any add-on to remove the cap."
     },
     "kdsPage": {
       "subtitle": "Kitchen Display System",
-      "body": "A dedicated kitchen-display app: new orders appear on a screen at your line and get bumped as they're prepared — no paper tickets, no missed items. It runs as its own app, like the KDS systems at Toast or Square. We're building it after launch."
+      "body": "A dedicated kitchen-display app: new orders appear on a screen at your line and get bumped as they're prepared — no paper tickets, no missed items. It runs as its own app, like the KDS systems at Toast or Square. It's under development."
     },
     "mobileAppPage": {
       "subtitle": "Mobile ordering app",
-      "body": "Your restaurant's own branded app on the App Store and Google Play — customers order, reorder in a tap, and get push notifications, all under your name and logo. We're building it after launch."
+      "body": "Your restaurant's own branded app on the App Store and Google Play — customers order, reorder in a tap, and get push notifications, all under your name and logo. It's under development."
     },
     "posPage": {
       "subtitle": "In-house point of sale",
-      "body": "A built-in point-of-sale register for your counter — ring up walk-in and phone orders on the same system as your online ones, with one menu, one set of reports, and one payout. We're building it after launch."
+      "body": "A built-in point-of-sale register for your counter — ring up walk-in and phone orders on the same system as your online ones, with one menu, one set of reports, and one payout. It's under development."
     }
   },
   "impersonation": {

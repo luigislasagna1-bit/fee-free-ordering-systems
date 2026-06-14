@@ -3888,21 +3888,21 @@
       "timeOptional": "jäta kellaajad tühjaks kogu päeva jaoks"
     },
     "orderCapBanner": {
-      "usage": "{count}/{cap} tellimust sel kuul",
+      "usage": "{count} / {cap} tellimust ja broneeringut sel kuul",
       "removeLimit": "Eemalda piirang",
-      "help": "Sinu tasuta pakett sisaldab {cap} tellimust kuus. Telli mõni lisamoodul, et piirang eemaldada."
+      "help": "Sinu tasuta pakett sisaldab {cap} tellimust ja broneeringut kuus. Telli ükskõik milline lisamoodul, et piirang eemaldada."
     },
     "kdsPage": {
       "subtitle": "Köögiekraani süsteem",
-      "body": "Spetsiaalne köögiekraani rakendus: uued tellimused ilmuvad ekraanile sinu liinil ja märgitakse valmimise käigus maha — ei mingeid paberitšekke ega unustatud roogasid. See töötab oma rakendusena, nagu Toasti või Square'i KDS-süsteemid. Ehitame selle pärast käivitamist."
+      "body": "Spetsiaalne köögiekraani rakendus: uued tellimused ilmuvad teie liinil olevale ekraanile ja kustutatakse valmides — ei mingeid paberitšekke ega vahelejäänud tooteid. See töötab eraldi rakendusena, nagu Toasti või Square'i KDS-süsteemid. On arendamisel."
     },
     "mobileAppPage": {
       "subtitle": "Mobiilne tellimisrakendus",
-      "body": "Sinu brändiga rakendus App Store'is ja Google Plays — kliendid tellivad, tellivad uuesti ühe puudutusega ja saavad push-teavitusi, kõik sinu nime ja logo all. Ehitame selle pärast käivitamist."
+      "body": "Teie restorani enda brändiga rakendus App Store'is ja Google Plays — kliendid tellivad, kordavad tellimust ühe puudutusega ja saavad push-teavitusi, kõik teie nime ja logo all. On arendamisel."
     },
     "posPage": {
       "subtitle": "Kohapealne müügipunkt",
-      "body": "Sisseehitatud kassa sinu leti jaoks — löö kohapealsed ja telefonitellimused sisse samasse süsteemi kui veebitellimused, ühe menüü, ühe aruandekomplekti ja ühe väljamaksega. Ehitame selle pärast käivitamist."
+      "body": "Sisseehitatud POS-kassa teie leti jaoks — vormistage kohapealsed ja telefonitellimused samas süsteemis nagu veebitellimused, ühe menüü, ühe aruandekomplekti ja ühe väljamaksega. On arendamisel."
     }
   },
   "impersonation": {

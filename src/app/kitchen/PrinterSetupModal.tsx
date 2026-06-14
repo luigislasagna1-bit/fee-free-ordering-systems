@@ -435,7 +435,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                           <ul className="text-xs text-gray-400 space-y-1.5 leading-relaxed">
                             <li className="flex gap-2">
                               <Tablet className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                              <span><strong className="text-gray-200">Kitchen Display</strong> — a web app. Runs in any browser on <em>any</em> device: iPad, Android tablet, iPhone, Windows tablet, laptop, desktop, even a TV with a Chromecast. Just open the site and log in. On a tablet, use <strong>Add to Home Screen</strong> to launch it like an app.</span>
+                              <span><strong className="text-gray-200">Kitchen Order App</strong> — a web app. Runs in any browser on <em>any</em> device: iPad, Android tablet, iPhone, Windows tablet, laptop, desktop, even a TV with a Chromecast. Just open the site and log in. On a tablet, use <strong>Add to Home Screen</strong> to launch it like an app.</span>
                             </li>
                             <li className="flex gap-2">
                               <Printer className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
@@ -481,7 +481,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                           <div className="flex-1 min-w-0">
                             <div className="text-sm font-semibold text-white flex items-center gap-1.5">
                               <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
-                              Open the Kitchen Display on the device you want to view orders on
+                              Open the Kitchen Order App on the device you want to view orders on
                             </div>
                             <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
                               No install needed — it&apos;s a web app. Open your browser, navigate to <span className="font-mono bg-gray-700 px-1 rounded text-[11px]">/kitchen</span> on this site, sign in with the kitchen-staff account. On iPad / Android, use the browser&apos;s <strong>Add to Home Screen</strong> menu to pin the page — it then launches full-screen like a native app. On Windows you can do the same via Chrome / Edge → Install App.

@@ -3888,21 +3888,21 @@
       "timeOptional": "laisser les heures vides pour toute la journée"
     },
     "orderCapBanner": {
-      "usage": "{count} sur {cap} commandes ce mois-ci",
+      "usage": "{count} sur {cap} commandes et réservations ce mois-ci",
       "removeLimit": "Supprimer la limite",
-      "help": "Votre forfait gratuit inclut {cap} commandes par mois. Abonnez-vous à n'importe quel module pour supprimer la limite."
+      "help": "Votre formule gratuite inclut {cap} commandes et réservations par mois. Abonnez-vous à un module complémentaire pour supprimer la limite."
     },
     "kdsPage": {
       "subtitle": "Système d'affichage cuisine",
-      "body": "Une application d'affichage cuisine dédiée : les nouvelles commandes apparaissent sur un écran à votre poste et sont validées au fur et à mesure de leur préparation — fini les tickets papier et les oublis. Elle fonctionne comme une application autonome, comme les systèmes KDS de Toast ou Square. Nous la développons après le lancement."
+      "body": "Une application d'affichage cuisine dédiée : les nouvelles commandes apparaissent sur un écran à votre poste et sont validées au fur et à mesure de leur préparation — fini les tickets papier, fini les oublis. Elle fonctionne comme une application à part entière, comme les systèmes KDS de Toast ou Square. En cours de développement."
     },
     "mobileAppPage": {
       "subtitle": "Application de commande mobile",
-      "body": "L'application à votre marque sur l'App Store et Google Play — vos clients commandent, recommandent en un geste et reçoivent des notifications push, le tout à votre nom et avec votre logo. Nous la développons après le lancement."
+      "body": "L'application personnalisée de votre restaurant sur l'App Store et Google Play — vos clients commandent, recommandent en un clic et reçoivent des notifications push, le tout à votre nom et avec votre logo. En cours de développement."
     },
     "posPage": {
       "subtitle": "Point de vente sur place",
-      "body": "Une caisse intégrée pour votre comptoir — encaissez les commandes sur place et par téléphone sur le même système que vos commandes en ligne, avec un seul menu, un seul jeu de rapports et un seul versement. Nous la développons après le lancement."
+      "body": "Une caisse enregistreuse intégrée pour votre comptoir — encaissez les commandes au comptoir et par téléphone sur le même système que vos commandes en ligne, avec un seul menu, un seul jeu de rapports et un seul versement. En cours de développement."
     }
   },
   "impersonation": {

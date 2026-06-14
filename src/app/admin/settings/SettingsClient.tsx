@@ -124,7 +124,7 @@ export function SettingsClient({
                       {[
                         "100 orders/month",
                         "Unlimited menu items",
-                        "Kitchen display",
+                        "Kitchen Order App",
                         "Customer accounts",
                       ].map((f) => (
                         <div key={f} className="flex items-center gap-1 text-xs text-gray-600 bg-green-50 border border-green-100 rounded-full px-2.5 py-1">

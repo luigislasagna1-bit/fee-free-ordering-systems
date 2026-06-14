@@ -3888,21 +3888,21 @@
       "timeOptional": "la tidene stå tomme for hele dagen"
     },
     "orderCapBanner": {
-      "usage": "{count} av {cap} bestillinger denne måneden",
+      "usage": "{count} av {cap} bestillinger og reservasjoner denne måneden",
       "removeLimit": "Fjern grensen",
-      "help": "Gratisplanen din inkluderer {cap} bestillinger per måned. Abonner på et tillegg for å fjerne grensen."
+      "help": "Gratisplanen din inkluderer {cap} bestillinger og reservasjoner per måned. Abonner på et tillegg for å fjerne grensen."
     },
     "kdsPage": {
       "subtitle": "Kjøkkenskjermsystem",
-      "body": "En dedikert kjøkkenskjerm-app: nye bestillinger vises på en skjerm ved linjen din og hukes av etter hvert som de lages — ingen papirlapper, ingen glemte varer. Den kjører som sin egen app, som KDS-systemene hos Toast eller Square. Vi bygger den etter lansering."
+      "body": "En dedikert app for kjøkkendisplay: nye bestillinger vises på en skjerm ved linjen din og fjernes etter hvert som de tilberedes — ingen papirlapper, ingen glemte retter. Den kjører som sin egen app, akkurat som KDS-systemene hos Toast eller Square. Den er under utvikling."
     },
     "mobileAppPage": {
       "subtitle": "Mobil bestillingsapp",
-      "body": "En app med din merkevare i App Store og Google Play — kundene bestiller, bestiller på nytt med ett trykk og får push-varsler, alt under ditt navn og logo. Vi bygger den etter lansering."
+      "body": "Restaurantens egen app med din profil på App Store og Google Play — kundene bestiller, bestiller på nytt med ett trykk og får push-varsler, alt under ditt navn og logo. Den er under utvikling."
     },
     "posPage": {
       "subtitle": "Kassasystem på stedet",
-      "body": "En innebygd kasse for disken din — slå inn besøks- og telefonbestillinger i samme system som nettbestillingene dine, med én meny, ett sett rapporter og én utbetaling. Vi bygger den etter lansering."
+      "body": "En innebygd kasse for disken din — slå inn besøks- og telefonbestillinger i samme system som nettbestillingene dine, med én meny, ett sett rapporter og én utbetaling. Den er under utvikling."
     }
   },
   "impersonation": {

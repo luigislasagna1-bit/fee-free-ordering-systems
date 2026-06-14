@@ -3888,21 +3888,21 @@
       "timeOptional": "Uhrzeiten leer lassen für ganztägig"
     },
     "orderCapBanner": {
-      "usage": "{count} von {cap} Bestellungen diesen Monat",
+      "usage": "{count} von {cap} Bestellungen und Reservierungen diesen Monat",
       "removeLimit": "Limit entfernen",
-      "help": "Ihr kostenloser Tarif umfasst {cap} Bestellungen pro Monat. Abonnieren Sie ein beliebiges Add-on, um das Limit aufzuheben."
+      "help": "Ihr kostenloser Tarif umfasst {cap} Bestellungen und Reservierungen pro Monat. Abonnieren Sie ein beliebiges Add-on, um das Limit aufzuheben."
     },
     "kdsPage": {
       "subtitle": "Küchenanzeigesystem",
-      "body": "Eine eigene Küchenanzeige-App: Neue Bestellungen erscheinen auf einem Bildschirm an Ihrer Linie und werden abgehakt, sobald sie zubereitet sind — keine Papierbons, keine vergessenen Artikel. Sie läuft als eigene App, wie die KDS-Systeme von Toast oder Square. Wir entwickeln sie nach dem Start."
+      "body": "Eine eigene Küchendisplay-App: Neue Bestellungen erscheinen auf einem Bildschirm an deiner Station und werden abgehakt, sobald sie zubereitet sind — keine Papierbons, keine vergessenen Positionen. Sie läuft als eigenständige App, wie die KDS-Systeme von Toast oder Square. In Entwicklung."
     },
     "mobileAppPage": {
       "subtitle": "Mobile Bestell-App",
-      "body": "Eine App mit Ihrer Marke im App Store und bei Google Play — Kunden bestellen, bestellen mit einem Tippen erneut und erhalten Push-Benachrichtigungen, alles unter Ihrem Namen und Logo. Wir entwickeln sie nach dem Start."
+      "body": "Die eigene gebrandete App deines Restaurants im App Store und bei Google Play — Kunden bestellen, wiederholen Bestellungen mit einem Tippen und erhalten Push-Benachrichtigungen, alles unter deinem Namen und Logo. In Entwicklung."
     },
     "posPage": {
       "subtitle": "Kassensystem vor Ort",
-      "body": "Eine integrierte Kasse für Ihren Tresen — kassieren Sie Lauf- und Telefonbestellungen im selben System wie Ihre Online-Bestellungen, mit einer Speisekarte, einem Satz Berichte und einer Auszahlung. Wir entwickeln sie nach dem Start."
+      "body": "Eine integrierte Kassenstation für deinen Tresen — kassiere Lauf- und Telefonbestellungen im selben System wie deine Online-Bestellungen, mit einer Speisekarte, einem Satz Berichte und einer Auszahlung. In Entwicklung."
     }
   },
   "impersonation": {

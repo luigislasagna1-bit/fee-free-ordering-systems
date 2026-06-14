@@ -3888,21 +3888,21 @@
       "timeOptional": "tüm gün için saatleri boş bırakın"
     },
     "orderCapBanner": {
-      "usage": "Bu ay {cap} siparişten {count} tanesi",
+      "usage": "Bu ay {cap} siparişten {count} sipariş ve rezervasyon",
       "removeLimit": "Limiti kaldır",
-      "help": "Ücretsiz planınız ayda {cap} sipariş içerir. Limiti kaldırmak için herhangi bir eklentiye abone olun."
+      "help": "Ücretsiz planınız ayda {cap} sipariş ve rezervasyon içerir. Limiti kaldırmak için herhangi bir eklentiye abone olun."
     },
     "kdsPage": {
       "subtitle": "Mutfak ekran sistemi",
-      "body": "Özel bir mutfak ekran uygulaması: yeni siparişler hattınızdaki bir ekranda görünür ve hazırlandıkça işaretlenir — kâğıt fiş yok, atlanan ürün yok. Toast veya Square'deki KDS sistemleri gibi kendi uygulaması olarak çalışır. Lansmandan sonra geliştiriyoruz."
+      "body": "Özel bir mutfak ekranı uygulaması: yeni siparişler hattınızdaki bir ekranda görünür ve hazırlandıkça ekrandan kaldırılır — kâğıt fiş yok, atlanan ürün yok. Toast veya Square'deki KDS sistemleri gibi kendi başına bir uygulama olarak çalışır. Geliştirme aşamasında."
     },
     "mobileAppPage": {
       "subtitle": "Mobil sipariş uygulaması",
-      "body": "App Store ve Google Play'de kendi markanıza ait uygulama — müşteriler sipariş verir, tek dokunuşla tekrar sipariş eder ve anlık bildirimler alır, hepsi sizin adınız ve logonuzla. Lansmandan sonra geliştiriyoruz."
+      "body": "Restoranınızın App Store ve Google Play'deki kendi markalı uygulaması — müşteriler sipariş verir, tek dokunuşla yeniden sipariş eder ve push bildirimleri alır, hepsi sizin adınız ve logonuz altında. Geliştirme aşamasında."
     },
     "posPage": {
       "subtitle": "Yerinde satış noktası",
-      "body": "Tezgâhınız için yerleşik bir yazarkasa — gel-al ve telefon siparişlerini çevrimiçi siparişlerinizle aynı sistemde işleyin; tek menü, tek rapor seti ve tek ödeme. Lansmandan sonra geliştiriyoruz."
+      "body": "Tezgahınız için yerleşik bir POS yazar kasası — gelen müşteri ve telefon siparişlerini çevrimiçi siparişlerinizle aynı sistemde, tek menü, tek rapor seti ve tek ödeme ile kaydedin. Geliştirme aşamasında."
     }
   },
   "impersonation": {

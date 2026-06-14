@@ -3888,21 +3888,21 @@
       "timeOptional": "lascia gli orari vuoti per tutto il giorno"
     },
     "orderCapBanner": {
-      "usage": "{count} di {cap} ordini questo mese",
+      "usage": "{count} di {cap} ordini e prenotazioni questo mese",
       "removeLimit": "Rimuovi il limite",
-      "help": "Il tuo piano gratuito include {cap} ordini al mese. Abbonati a un componente aggiuntivo per rimuovere il limite."
+      "help": "Il tuo piano gratuito include {cap} ordini e prenotazioni al mese. Abbonati a qualsiasi componente aggiuntivo per rimuovere il limite."
     },
     "kdsPage": {
       "subtitle": "Sistema di display da cucina",
-      "body": "Un'app dedicata per il display della cucina: i nuovi ordini compaiono su uno schermo nella tua postazione e vengono spuntati man mano che vengono preparati, niente comande cartacee né dimenticanze. Funziona come app a sé, come i sistemi KDS di Toast o Square. La stiamo sviluppando dopo il lancio."
+      "body": "Un'app dedicata per il display di cucina: i nuovi ordini compaiono su uno schermo alla tua postazione e vengono spuntati man mano che vengono preparati, senza scontrini cartacei né voci dimenticate. Funziona come app autonoma, come i sistemi KDS di Toast o Square. In fase di sviluppo."
     },
     "mobileAppPage": {
       "subtitle": "App di ordinazione mobile",
-      "body": "L'app con il marchio del tuo ristorante su App Store e Google Play: i clienti ordinano, riordinano con un tocco e ricevono notifiche push, tutto con il tuo nome e logo. La stiamo sviluppando dopo il lancio."
+      "body": "L'app personalizzata del tuo ristorante sull'App Store e su Google Play: i clienti ordinano, riordinano con un tocco e ricevono notifiche push, tutto con il tuo nome e il tuo logo. In fase di sviluppo."
     },
     "posPage": {
       "subtitle": "Punto vendita in sede",
-      "body": "Una cassa integrata per il tuo bancone: registra gli ordini al banco e telefonici sullo stesso sistema di quelli online, con un solo menu, un solo set di report e un solo pagamento. La stiamo sviluppando dopo il lancio."
+      "body": "Un registratore di cassa integrato per il tuo bancone: registra gli ordini al banco e telefonici sullo stesso sistema dei tuoi ordini online, con un unico menu, un unico set di report e un unico versamento. In fase di sviluppo."
     }
   },
   "impersonation": {

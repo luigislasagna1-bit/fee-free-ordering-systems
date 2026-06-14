@@ -3888,21 +3888,21 @@
       "timeOptional": "lasă orele goale pentru toată ziua"
     },
     "orderCapBanner": {
-      "usage": "{count} din {cap} comenzi luna aceasta",
+      "usage": "{count} din {cap} comenzi și rezervări luna aceasta",
       "removeLimit": "Elimină limita",
-      "help": "Planul tău gratuit include {cap} comenzi pe lună. Abonează-te la orice supliment pentru a elimina limita."
+      "help": "Planul tău gratuit include {cap} comenzi și rezervări pe lună. Abonează-te la orice supliment pentru a elimina limita."
     },
     "kdsPage": {
       "subtitle": "Sistem de afișare pentru bucătărie",
-      "body": "O aplicație dedicată de afișaj pentru bucătărie: comenzile noi apar pe un ecran la linia ta și sunt bifate pe măsură ce sunt preparate — fără bonuri de hârtie, fără articole uitate. Funcționează ca aplicație de sine stătătoare, ca sistemele KDS de la Toast sau Square. O construim după lansare."
+      "body": "O aplicație dedicată de afișaj pentru bucătărie: comenzile noi apar pe un ecran la stația ta și sunt bifate pe măsură ce sunt preparate — fără bonuri de hârtie, fără produse uitate. Funcționează ca o aplicație de sine stătătoare, asemenea sistemelor KDS de la Toast sau Square. În curs de dezvoltare."
     },
     "mobileAppPage": {
       "subtitle": "Aplicație mobilă de comenzi",
-      "body": "Aplicația cu marca restaurantului tău în App Store și Google Play — clienții comandă, recomandă dintr-o atingere și primesc notificări push, totul sub numele și logoul tău. O construim după lansare."
+      "body": "Aplicația personalizată a restaurantului tău în App Store și Google Play — clienții comandă, recomandă dintr-o atingere și primesc notificări push, totul sub numele și logoul tău. În curs de dezvoltare."
     },
     "posPage": {
       "subtitle": "Punct de vânzare la fața locului",
-      "body": "O casă de marcat integrată pentru tejgheaua ta — încasează comenzile la fața locului și telefonice în același sistem ca cele online, cu un singur meniu, un singur set de rapoarte și o singură plată. O construim după lansare."
+      "body": "O casă de marcat la punctul de vânzare, integrată pentru tejgheaua ta — înregistrează comenzile la fața locului și telefonice în același sistem ca cele online, cu un singur meniu, un singur set de rapoarte și o singură plată. În curs de dezvoltare."
     }
   },
   "impersonation": {

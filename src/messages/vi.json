@@ -3888,21 +3888,21 @@
       "timeOptional": "để trống giờ để áp dụng cả ngày"
     },
     "orderCapBanner": {
-      "usage": "{count} trên {cap} đơn hàng tháng này",
+      "usage": "{count} trên {cap} đơn hàng và đặt bàn trong tháng này",
       "removeLimit": "Gỡ giới hạn",
-      "help": "Gói miễn phí của bạn bao gồm {cap} đơn hàng mỗi tháng. Đăng ký bất kỳ tiện ích bổ sung nào để gỡ giới hạn."
+      "help": "Gói miễn phí của bạn bao gồm {cap} đơn hàng và đặt bàn mỗi tháng. Đăng ký bất kỳ tiện ích bổ sung nào để bỏ giới hạn."
     },
     "kdsPage": {
       "subtitle": "Hệ thống màn hình bếp",
-      "body": "Một ứng dụng màn hình bếp riêng: đơn mới hiện trên màn hình tại khu bếp của bạn và được đánh dấu khi chế biến xong — không phiếu giấy, không bỏ sót món. Nó chạy như một ứng dụng riêng, giống các hệ thống KDS của Toast hay Square. Chúng tôi đang xây dựng sau khi ra mắt."
+      "body": "Ứng dụng màn hình bếp chuyên dụng: đơn hàng mới hiện trên màn hình tại khu vực chế biến của bạn và được đánh dấu hoàn tất khi chuẩn bị xong — không cần phiếu giấy, không bỏ sót món. Nó chạy như một ứng dụng riêng, giống các hệ thống KDS của Toast hay Square. Đang được phát triển."
     },
     "mobileAppPage": {
       "subtitle": "Ứng dụng đặt hàng di động",
-      "body": "Ứng dụng mang thương hiệu nhà hàng của bạn trên App Store và Google Play — khách đặt món, đặt lại chỉ bằng một chạm và nhận thông báo đẩy, tất cả dưới tên và logo của bạn. Chúng tôi đang xây dựng sau khi ra mắt."
+      "body": "Ứng dụng mang thương hiệu riêng của nhà hàng bạn trên App Store và Google Play — khách đặt món, đặt lại chỉ với một chạm, và nhận thông báo đẩy, tất cả dưới tên và logo của bạn. Đang được phát triển."
     },
     "posPage": {
       "subtitle": "Điểm bán hàng tại chỗ",
-      "body": "Một máy tính tiền tích hợp cho quầy của bạn — tính tiền đơn tại chỗ và qua điện thoại trên cùng hệ thống với đơn trực tuyến, với một thực đơn, một bộ báo cáo và một lần chi trả. Chúng tôi đang xây dựng sau khi ra mắt."
+      "body": "Máy tính tiền point-of-sale tích hợp cho quầy của bạn — tính tiền cho khách tại chỗ và đơn đặt qua điện thoại trên cùng hệ thống với đơn trực tuyến, với một thực đơn, một bộ báo cáo và một lần chi trả. Đang được phát triển."
     }
   },
   "impersonation": {

@@ -3888,21 +3888,21 @@
       "timeOptional": "ostavite vrijeme prazno za cijeli dan"
     },
     "orderCapBanner": {
-      "usage": "{count} od {cap} narudžbi ovog mjeseca",
+      "usage": "{count} od {cap} narudžbi i rezervacija ovaj mjesec",
       "removeLimit": "Ukloni ograničenje",
-      "help": "Vaš besplatni plan uključuje {cap} narudžbi mjesečno. Pretplatite se na bilo koji dodatak da uklonite ograničenje."
+      "help": "Vaš besplatni plan uključuje {cap} narudžbi i rezervacija mjesečno. Pretplatite se na bilo koji dodatak da uklonite ograničenje."
     },
     "kdsPage": {
       "subtitle": "Sustav kuhinjskog zaslona",
-      "body": "Namjenska aplikacija kuhinjskog zaslona: nove narudžbe pojavljuju se na zaslonu na vašoj liniji i označavaju se kako se pripremaju — bez papirnatih računa, bez propuštenih stavki. Radi kao zasebna aplikacija, poput KDS sustava u Toastu ili Squareu. Gradimo je nakon lansiranja."
+      "body": "Namjenska aplikacija za kuhinjski zaslon: nove narudžbe pojavljuju se na zaslonu uz vašu liniju i nestaju kako se pripremaju — bez papirnatih listića, bez propuštenih stavki. Radi kao zasebna aplikacija, baš kao sustavi KDS u Toastu ili Squareu. U izradi je."
     },
     "mobileAppPage": {
       "subtitle": "Mobilna aplikacija za naručivanje",
-      "body": "Aplikacija s markom vašeg restorana na App Storeu i Google Playu — gosti naručuju, ponovno naručuju jednim dodirom i primaju push obavijesti, sve pod vašim imenom i logotipom. Gradimo je nakon lansiranja."
+      "body": "Vlastita brendirana aplikacija vašeg restorana na App Storeu i Google Playu — kupci naručuju, ponavljaju narudžbu jednim dodirom i primaju push obavijesti, sve pod vašim imenom i logotipom. U izradi je."
     },
     "posPage": {
       "subtitle": "Prodajno mjesto na licu mjesta",
-      "body": "Ugrađena blagajna za vaš pult — naplaćujte narudžbe na licu mjesta i telefonske u istom sustavu kao i one online, s jednim jelovnikom, jednim setom izvješća i jednom isplatom. Gradimo je nakon lansiranja."
+      "body": "Ugrađena blagajna za vaš pult — naplaćujte narudžbe na licu mjesta i telefonske narudžbe u istom sustavu kao i one online, s jednim jelovnikom, jednim skupom izvješća i jednom isplatom. U izradi je."
     }
   },
   "impersonation": {

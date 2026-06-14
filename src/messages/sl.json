@@ -3888,21 +3888,21 @@
       "timeOptional": "pustite ure prazne za ves dan"
     },
     "orderCapBanner": {
-      "usage": "{count} od {cap} naročil ta mesec",
+      "usage": "{count} od {cap} naročil in rezervacij ta mesec",
       "removeLimit": "Odstrani omejitev",
-      "help": "Vaš brezplačni paket vključuje {cap} naročil na mesec. Naročite se na kateri koli dodatek, da odstranite omejitev."
+      "help": "Vaš brezplačni paket vključuje {cap} naročil in rezervacij na mesec. Naročite se na poljuben dodatek, da odstranite omejitev."
     },
     "kdsPage": {
       "subtitle": "Sistem kuhinjskega zaslona",
-      "body": "Namenska aplikacija kuhinjskega zaslona: nova naročila se prikažejo na zaslonu na vaši liniji in se odkljukajo, ko so pripravljena — brez papirnatih listkov, brez pozabljenih jedi. Deluje kot samostojna aplikacija, kot sistemi KDS pri Toastu ali Squareu. Gradimo jo po lansiranju."
+      "body": "Namenska aplikacija za kuhinjski zaslon: nova naročila se prikažejo na zaslonu ob vaši liniji in izginejo, ko so pripravljena — brez papirnatih listkov, brez spregledanih jedi. Deluje kot samostojna aplikacija, tako kot sistemi KDS pri Toast ali Square. V razvoju je."
     },
     "mobileAppPage": {
       "subtitle": "Mobilna aplikacija za naročanje",
-      "body": "Aplikacija z znamko vaše restavracije v App Store in Google Play — gostje naročajo, znova naročijo z enim dotikom in prejemajo potisna obvestila, vse pod vašim imenom in logotipom. Gradimo jo po lansiranju."
+      "body": "Lastna blagovno znamčena aplikacija vaše restavracije v App Store in Google Play — stranke naročajo, ponovijo naročilo z enim dotikom in prejemajo potisna obvestila, vse pod vašim imenom in logotipom. V razvoju je."
     },
     "posPage": {
       "subtitle": "Prodajno mesto na kraju samem",
-      "body": "Vgrajena blagajna za vaš pult — zaračunajte naročila na kraju samem in po telefonu v istem sistemu kot spletna, z enim menijem, enim naborom poročil in enim izplačilom. Gradimo jo po lansiranju."
+      "body": "Vgrajena blagajna za vaš pult — vnašajte naročila strank na licu mesta in po telefonu v istem sistemu kot spletna, z enim menijem, enim naborom poročil in enim izplačilom. V razvoju je."
     }
   },
   "impersonation": {

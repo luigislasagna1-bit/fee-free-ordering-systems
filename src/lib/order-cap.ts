@@ -2,7 +2,8 @@
  * FREE-plan order cap enforcement.
  *
  * Every restaurant lands on the FREE plan by default and is limited to
- * 100 orders per calendar month. Restaurants with ANY active paid add-on
+ * 100 orders per calendar month — table reservations count toward the SAME
+ * pool (Luigi 2026-06-14). Restaurants with ANY active paid add-on
  * are exempt — that's the deal: pay for a feature, get unlimited orders
  * thrown in. The dedicated `unlimited_orders` add-on at $14.99/mo is for
  * restaurants who want the cap lifted without committing to a feature

@@ -3888,21 +3888,21 @@
       "timeOptional": "lad tidspunkter stå tomme for hele dagen"
     },
     "orderCapBanner": {
-      "usage": "{count} af {cap} ordrer denne måned",
+      "usage": "{count} af {cap} ordrer og reservationer denne måned",
       "removeLimit": "Fjern grænsen",
-      "help": "Din gratis plan inkluderer {cap} ordrer om måneden. Abonner på et tilføjelsesprogram for at fjerne grænsen."
+      "help": "Din gratis plan inkluderer {cap} ordrer og reservationer pr. måned. Abonnér på et tilføjelsesprogram for at fjerne grænsen."
     },
     "kdsPage": {
       "subtitle": "Køkkenskærmsystem",
-      "body": "En dedikeret køkkenskærm-app: nye ordrer vises på en skærm ved din linje og afkrydses, efterhånden som de tilberedes — ingen papirsedler, ingen oversete varer. Den kører som sin egen app, ligesom KDS-systemerne hos Toast eller Square. Vi bygger den efter lanceringen."
+      "body": "En dedikeret app til køkkendisplay: nye ordrer vises på en skærm ved din linje og fjernes, efterhånden som de tilberedes — ingen papirsedler, ingen oversete varer. Den kører som sin egen app, ligesom KDS-systemerne hos Toast eller Square. Den er under udvikling."
     },
     "mobileAppPage": {
       "subtitle": "Mobil bestillingsapp",
-      "body": "En app med dit brand i App Store og Google Play — kunderne bestiller, genbestiller med ét tryk og får push-notifikationer, alt sammen under dit navn og logo. Vi bygger den efter lanceringen."
+      "body": "Din restaurants egen app med dit brand på App Store og Google Play — kunderne bestiller, genbestiller med ét tryk og får push-beskeder, alt sammen under dit navn og logo. Den er under udvikling."
     },
     "posPage": {
       "subtitle": "Kassesystem på stedet",
-      "body": "En indbygget kasse til din disk — slå besøgs- og telefonbestillinger op i samme system som dine onlinebestillinger, med én menu, ét sæt rapporter og én udbetaling. Vi bygger den efter lanceringen."
+      "body": "En indbygget kasse til din disk — slå walk-in- og telefonordrer op i samme system som dine onlineordrer, med én menu, ét sæt rapporter og én udbetaling. Den er under udvikling."
     }
   },
   "impersonation": {

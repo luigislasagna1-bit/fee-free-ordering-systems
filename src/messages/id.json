@@ -3888,21 +3888,21 @@
       "timeOptional": "kosongkan jam untuk sepanjang hari"
     },
     "orderCapBanner": {
-      "usage": "{count} dari {cap} pesanan bulan ini",
+      "usage": "{count} dari {cap} pesanan & reservasi bulan ini",
       "removeLimit": "Hapus batas",
-      "help": "Paket gratis Anda mencakup {cap} pesanan per bulan. Berlangganan add-on apa pun untuk menghapus batas."
+      "help": "Paket gratis Anda mencakup {cap} pesanan dan reservasi per bulan. Berlangganan add-on apa pun untuk menghapus batas."
     },
     "kdsPage": {
       "subtitle": "Sistem layar dapur",
-      "body": "Aplikasi layar dapur khusus: pesanan baru muncul di layar di lini Anda dan ditandai saat disiapkan — tanpa tiket kertas, tanpa item terlewat. Berjalan sebagai aplikasi tersendiri, seperti sistem KDS di Toast atau Square. Kami membangunnya setelah peluncuran."
+      "body": "Aplikasi khusus tampilan dapur: pesanan baru muncul di layar di area kerja Anda dan ditandai selesai saat disiapkan — tanpa tiket kertas, tanpa item yang terlewat. Berjalan sebagai aplikasi tersendiri, seperti sistem KDS di Toast atau Square. Sedang dalam pengembangan."
     },
     "mobileAppPage": {
       "subtitle": "Aplikasi pemesanan seluler",
-      "body": "Aplikasi bermerek restoran Anda di App Store dan Google Play — pelanggan memesan, memesan ulang dengan satu ketukan, dan menerima notifikasi push, semuanya dengan nama dan logo Anda. Kami membangunnya setelah peluncuran."
+      "body": "Aplikasi bermerek milik restoran Anda sendiri di App Store dan Google Play — pelanggan memesan, memesan ulang dengan sekali ketuk, dan menerima notifikasi push, semuanya dengan nama dan logo Anda. Sedang dalam pengembangan."
     },
     "posPage": {
       "subtitle": "Titik penjualan di tempat",
-      "body": "Mesin kasir bawaan untuk konter Anda — proses pesanan langsung dan telepon di sistem yang sama dengan pesanan online, dengan satu menu, satu set laporan, dan satu pembayaran. Kami membangunnya setelah peluncuran."
+      "body": "Mesin kasir point-of-sale bawaan untuk konter Anda — catat pesanan langsung dan via telepon di sistem yang sama dengan pesanan online Anda, dengan satu menu, satu set laporan, dan satu pembayaran. Sedang dalam pengembangan."
     }
   },
   "impersonation": {

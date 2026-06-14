@@ -3888,21 +3888,21 @@
       "timeOptional": "deixe as horas em branco para o dia todo"
     },
     "orderCapBanner": {
-      "usage": "{count} de {cap} pedidos este mês",
+      "usage": "{count} de {cap} pedidos e reservas este mês",
       "removeLimit": "Remover o limite",
-      "help": "O seu plano gratuito inclui {cap} pedidos por mês. Subscreva qualquer extra para remover o limite."
+      "help": "O seu plano gratuito inclui {cap} pedidos e reservas por mês. Subscreva qualquer extra para remover o limite."
     },
     "kdsPage": {
       "subtitle": "Sistema de ecrã de cozinha",
-      "body": "Uma app dedicada de ecrã de cozinha: os novos pedidos surgem num ecrã na sua linha e são marcados à medida que são preparados — sem talões de papel, sem itens esquecidos. Funciona como uma app própria, como os sistemas KDS da Toast ou Square. Estamos a criá-la após o lançamento."
+      "body": "Uma aplicação dedicada de ecrã de cozinha: os novos pedidos aparecem num ecrã na sua linha e são despachados à medida que são preparados — sem talões de papel, sem itens esquecidos. Funciona como uma aplicação própria, tal como os sistemas KDS da Toast ou da Square. Em desenvolvimento."
     },
     "mobileAppPage": {
       "subtitle": "App de pedidos móvel",
-      "body": "A app com a marca do seu restaurante na App Store e Google Play — os clientes pedem, repetem com um toque e recebem notificações push, tudo com o seu nome e logótipo. Estamos a criá-la após o lançamento."
+      "body": "A aplicação com a marca própria do seu restaurante na App Store e no Google Play — os clientes fazem pedidos, repetem-nos com um toque e recebem notificações push, tudo com o seu nome e logótipo. Em desenvolvimento."
     },
     "posPage": {
       "subtitle": "Ponto de venda no local",
-      "body": "Uma caixa registadora integrada para o seu balcão — cobre pedidos presenciais e por telefone no mesmo sistema dos online, com um só menu, um só conjunto de relatórios e um só pagamento. Estamos a criá-la após o lançamento."
+      "body": "Uma caixa registadora de ponto de venda integrada para o seu balcão — registe pedidos presenciais e por telefone no mesmo sistema dos pedidos online, com um único menu, um único conjunto de relatórios e um único pagamento. Em desenvolvimento."
     }
   },
   "impersonation": {

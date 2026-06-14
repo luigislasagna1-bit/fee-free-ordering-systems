@@ -3888,21 +3888,21 @@
       "timeOptional": "deixa les hores en blanc per a tot el dia"
     },
     "orderCapBanner": {
-      "usage": "{count} de {cap} comandes aquest mes",
+      "usage": "{count} de {cap} comandes i reserves aquest mes",
       "removeLimit": "Elimina el límit",
-      "help": "El teu pla gratuït inclou {cap} comandes al mes. Subscriu-te a qualsevol complement per eliminar el límit."
+      "help": "El teu pla gratuït inclou {cap} comandes i reserves al mes. Subscriu-te a qualsevol complement per eliminar el límit."
     },
     "kdsPage": {
       "subtitle": "Sistema de pantalla de cuina",
-      "body": "Una app dedicada de pantalla de cuina: les comandes noves apareixen en una pantalla de la teva línia i es marquen a mesura que es preparen — sense tiquets de paper ni oblits. Funciona com a app pròpia, com els sistemes KDS de Toast o Square. L'estem construint després del llançament."
+      "body": "Una aplicació dedicada de pantalla de cuina: les noves comandes apareixen en una pantalla a la teva línia i es marquen a mesura que es preparen, sense tiquets de paper ni articles oblidats. Funciona com una aplicació pròpia, com els sistemes KDS de Toast o Square. En desenvolupament."
     },
     "mobileAppPage": {
       "subtitle": "App mòbil de comandes",
-      "body": "L'app amb la marca del teu restaurant a l'App Store i Google Play — els clients demanen, repeteixen amb un toc i reben notificacions push, tot amb el teu nom i logotip. L'estem construint després del llançament."
+      "body": "L'aplicació amb la marca pròpia del teu restaurant a l'App Store i Google Play: els clients fan comandes, les repeteixen amb un toc i reben notificacions push, tot amb el teu nom i el teu logotip. En desenvolupament."
     },
     "posPage": {
       "subtitle": "Punt de venda al local",
-      "body": "Una caixa registradora integrada per al teu taulell — cobra les comandes presencials i per telèfon al mateix sistema que les en línia, amb un sol menú, un sol conjunt d'informes i un sol pagament. L'estem construint després del llançament."
+      "body": "Una caixa registradora de punt de venda integrada per al teu taulell: cobra les comandes presencials i telefòniques al mateix sistema que les comandes en línia, amb un sol menú, un sol conjunt d'informes i un sol pagament. En desenvolupament."
     }
   },
   "impersonation": {

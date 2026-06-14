@@ -3888,21 +3888,21 @@
       "timeOptional": "hagyja üresen az időt az egész naphoz"
     },
     "orderCapBanner": {
-      "usage": "{count} / {cap} rendelés ebben a hónapban",
+      "usage": "{count} / {cap} rendelés és foglalás ebben a hónapban",
       "removeLimit": "Korlát eltávolítása",
-      "help": "Az ingyenes csomag havi {cap} rendelést tartalmaz. Fizessen elő bármelyik kiegészítőre a korlát eltávolításához."
+      "help": "Az ingyenes csomag {cap} rendelést és foglalást tartalmaz havonta. Fizessen elő bármelyik kiegészítőre a korlát feloldásához."
     },
     "kdsPage": {
       "subtitle": "Konyhai kijelzőrendszer",
-      "body": "Dedikált konyhai kijelző alkalmazás: az új rendelések megjelennek egy képernyőn a vonaladnál, és elkészülésükkor lehúzhatók — nincs papírcédula, nincs kihagyott tétel. Saját alkalmazásként fut, mint a Toast vagy a Square KDS-rendszerei. Indulás után építjük meg."
+      "body": "Dedikált konyhai kijelző alkalmazás: az új rendelések megjelennek egy képernyőn a sornál, és elkészülésükkor lekerülnek róla — nincs papíralapú rendelési cédula, nincs kihagyott tétel. Önálló alkalmazásként fut, akárcsak a Toast vagy a Square KDS rendszerei. Fejlesztés alatt áll."
     },
     "mobileAppPage": {
       "subtitle": "Mobil rendelési alkalmazás",
-      "body": "A saját márkás alkalmazásod az App Store-ban és a Google Playen — a vendégek rendelnek, egy érintéssel újrarendelnek és push-értesítéseket kapnak, mind a te neved és logód alatt. Indulás után építjük meg."
+      "body": "Éttermed saját, márkázott alkalmazása az App Store és a Google Play kínálatában — a vendégek rendelnek, egy érintéssel újrarendelnek, és push értesítéseket kapnak, mindezt a te neved és logód alatt. Fejlesztés alatt áll."
     },
     "posPage": {
       "subtitle": "Helyi értékesítési pont",
-      "body": "Beépített pénztárgép a pultodhoz — a helyi és telefonos rendeléseket ugyanabban a rendszerben üsd be, mint az online-okat, egyetlen étlappal, egyetlen jelentéskészlettel és egyetlen kifizetéssel. Indulás után építjük meg."
+      "body": "Beépített POS pénztárgép a pultodhoz — a helyben és telefonon leadott rendeléseket ugyanabban a rendszerben rögzítheted, mint az online rendeléseket, egyetlen étlappal, egyetlen jelentéskészlettel és egyetlen kifizetéssel. Fejlesztés alatt áll."
     }
   },
   "impersonation": {

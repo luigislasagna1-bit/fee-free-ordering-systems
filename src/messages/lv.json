@@ -3888,21 +3888,21 @@
       "timeOptional": "atstājiet laikus tukšus, lai rādītu visu dienu"
     },
     "orderCapBanner": {
-      "usage": "{count} no {cap} pasūtījumiem šomēnes",
+      "usage": "{count} no {cap} pasūtījumiem un rezervācijām šomēnes",
       "removeLimit": "Noņemt ierobežojumu",
-      "help": "Jūsu bezmaksas plāns ietver {cap} pasūtījumus mēnesī. Abonējiet jebkuru papildinājumu, lai noņemtu ierobežojumu."
+      "help": "Jūsu bezmaksas plāns ietver {cap} pasūtījumus un rezervācijas mēnesī. Abonējiet jebkuru papildinājumu, lai noņemtu ierobežojumu."
     },
     "kdsPage": {
       "subtitle": "Virtuves displeja sistēma",
-      "body": "Īpaša virtuves displeja lietotne: jaunie pasūtījumi parādās ekrānā pie jūsu līnijas un tiek atzīmēti, kad tie tiek gatavoti — bez papīra čekiem, bez aizmirstiem ēdieniem. Tā darbojas kā atsevišķa lietotne, līdzīgi kā Toast vai Square KDS sistēmas. Mēs to veidojam pēc palaišanas."
+      "body": "Īpaša virtuves displeja lietotne: jaunie pasūtījumi parādās ekrānā pie jūsu līnijas un tiek izņemti, tiklīdz tie ir pagatavoti — bez papīra čekiem, bez nokavētiem ēdieniem. Tā darbojas kā atsevišķa lietotne, tāpat kā Toast vai Square KDS sistēmas. Tiek izstrādāta."
     },
     "mobileAppPage": {
       "subtitle": "Mobilā pasūtīšanas lietotne",
-      "body": "Lietotne ar jūsu zīmolu App Store un Google Play — klienti pasūta, atkārto pasūtījumu ar vienu pieskārienu un saņem push paziņojumus, viss ar jūsu nosaukumu un logo. Mēs to veidojam pēc palaišanas."
+      "body": "Jūsu restorāna paša zīmola lietotne App Store un Google Play — klienti pasūta, atkārto pasūtījumu ar vienu pieskārienu un saņem push paziņojumus, viss ar jūsu vārdu un logotipu. Tiek izstrādāta."
     },
     "posPage": {
       "subtitle": "Pārdošanas punkts uz vietas",
-      "body": "Iebūvēta kase jūsu letei — reģistrējiet klātienes un telefona pasūtījumus tajā pašā sistēmā kā tiešsaistes, ar vienu ēdienkarti, vienu pārskatu kopumu un vienu izmaksu. Mēs to veidojam pēc palaišanas."
+      "body": "Iebūvēta POS kase jūsu letei — reģistrējiet klātienes un telefona pasūtījumus tajā pašā sistēmā, kurā tiešsaistes pasūtījumus, ar vienu ēdienkarti, vienu atskaišu kopumu un vienu izmaksu. Tiek izstrādāta."
     }
   },
   "impersonation": {

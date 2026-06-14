@@ -3888,21 +3888,21 @@
       "timeOptional": "palikite laukus tuščius – visai dienai"
     },
     "orderCapBanner": {
-      "usage": "{count} iš {cap} užsakymų šį mėnesį",
+      "usage": "{count} iš {cap} užsakymų ir rezervacijų šį mėnesį",
       "removeLimit": "Pašalinti limitą",
-      "help": "Jūsų nemokamas planas apima {cap} užsakymus per mėnesį. Užsiprenumeruokite bet kurį priedą, kad pašalintumėte limitą."
+      "help": "Jūsų nemokamas planas apima {cap} užsakymų ir rezervacijų per mėnesį. Užsiprenumeruokite bet kurį priedą, kad pašalintumėte limitą."
     },
     "kdsPage": {
       "subtitle": "Virtuvės ekrano sistema",
-      "body": "Speciali virtuvės ekrano programėlė: nauji užsakymai pasirodo ekrane prie jūsų linijos ir pažymimi juos ruošiant — jokių popierinių kvitų, jokių pamirštų patiekalų. Ji veikia kaip atskira programėlė, kaip Toast ar Square KDS sistemos. Kuriame ją po paleidimo."
+      "body": "Speciali virtuvės ekrano programėlė: nauji užsakymai pasirodo ekrane prie jūsų linijos ir pašalinami juos paruošus — jokių popierinių kvitų, jokių praleistų patiekalų. Ji veikia kaip atskira programėlė, kaip Toast ar Square KDS sistemos. Kuriama."
     },
     "mobileAppPage": {
       "subtitle": "Mobilioji užsakymų programėlė",
-      "body": "Programėlė su jūsų prekės ženklu App Store ir Google Play — klientai užsako, pakartoja užsakymą vienu palietimu ir gauna push pranešimus, viskas su jūsų vardu ir logotipu. Kuriame ją po paleidimo."
+      "body": "Jūsų restorano nuosava prekės ženklo programėlė App Store ir Google Play — klientai užsako, pakartoja užsakymą vienu palietimu ir gauna push pranešimus, viskas su jūsų vardu ir logotipu. Kuriama."
     },
     "posPage": {
       "subtitle": "Vietinė pardavimo vieta",
-      "body": "Integruotas kasos aparatas jūsų prekystaliui — registruokite užsakymus vietoje ir telefonu toje pačioje sistemoje kaip ir internetinius, su vienu meniu, vienu ataskaitų rinkiniu ir viena išmoka. Kuriame ją po paleidimo."
+      "body": "Integruotas POS kasos aparatas jūsų prekystaliui — registruokite vietoje ir telefonu pateiktus užsakymus toje pačioje sistemoje kaip ir internetinius, su vienu meniu, vienu ataskaitų rinkiniu ir viena išmoka. Kuriama."
     }
   },
   "impersonation": {

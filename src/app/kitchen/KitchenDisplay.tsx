@@ -2722,7 +2722,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             <div className={`font-bold text-sm sm:text-base ${t.text} leading-tight truncate`}>{restaurant?.name ?? "Kitchen"}</div>
             {/* Subtitle hidden on phones — they're already on the kitchen page, the chef-hat
                 + restaurant name is enough orientation. Frees ~14px vertical for the tabs. */}
-            <div className={`text-xs ${t.muted} hidden sm:block`}>Kitchen Display</div>
+            <div className={`text-xs ${t.muted} hidden sm:block`}>Kitchen Order App</div>
           </div>
         </div>
 

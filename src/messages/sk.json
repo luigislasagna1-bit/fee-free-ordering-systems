@@ -3888,21 +3888,21 @@
       "timeOptional": "časy nechajte prázdne pre celý deň"
     },
     "orderCapBanner": {
-      "usage": "{count} z {cap} objednávok tento mesiac",
+      "usage": "{count} z {cap} objednávok a rezervácií tento mesiac",
       "removeLimit": "Odstrániť limit",
-      "help": "Váš bezplatný plán zahŕňa {cap} objednávok mesačne. Predplaťte si ľubovoľný doplnok a limit zmizne."
+      "help": "Váš bezplatný plán zahŕňa {cap} objednávok a rezervácií mesačne. Predplaťte si akýkoľvek doplnok na zrušenie limitu."
     },
     "kdsPage": {
       "subtitle": "Kuchynský zobrazovací systém",
-      "body": "Vyhradená aplikácia kuchynského displeja: nové objednávky sa zobrazujú na obrazovke pri vašom stanovišti a odbavujú sa podľa toho, ako sa pripravujú — žiadne papierové účtenky, žiadne zabudnuté položky. Beží ako vlastná aplikácia, ako systémy KDS u Toastu alebo Square. Vyvíjame ju po spustení."
+      "body": "Vyhradená aplikácia pre kuchynský displej: nové objednávky sa zobrazia na obrazovke pri vašom výdajnom mieste a zmiznú, hneď ako sú pripravené — žiadne papierové lístky, žiadne prehliadnuté položky. Beží ako samostatná aplikácia, rovnako ako systémy KDS u Toast alebo Square. Je vo vývoji."
     },
     "mobileAppPage": {
       "subtitle": "Mobilná objednávacia aplikácia",
-      "body": "Aplikácia s vašou značkou v App Store a Google Play — zákazníci objednávajú, objednávajú znova jedným klepnutím a dostávajú push oznámenia, všetko pod vaším menom a logom. Vyvíjame ju po spustení."
+      "body": "Vlastná značková aplikácia vašej reštaurácie v App Store a Google Play — zákazníci objednávajú, opakujú objednávku jedným ťuknutím a dostávajú push oznámenia, to všetko pod vaším menom a logom. Je vo vývoji."
     },
     "posPage": {
       "subtitle": "Vlastný pokladničný systém",
-      "body": "Vstavaná pokladnica pre váš pult — účtujte objednávky na mieste aj cez telefón v rovnakom systéme ako tie online, s jedným menu, jednou sadou prehľadov a jednou výplatou. Vyvíjame ju po spustení."
+      "body": "Vstavaná pokladnica pre váš pult — účtujte objednávky na mieste aj cez telefón v rovnakom systéme ako tie online, s jedným menu, jednou sadou prehľadov a jednou výplatou. Je vo vývoji."
     }
   },
   "impersonation": {

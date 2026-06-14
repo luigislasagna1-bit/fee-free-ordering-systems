@@ -3888,21 +3888,21 @@
       "timeOptional": "laat tijden leeg voor de hele dag"
     },
     "orderCapBanner": {
-      "usage": "{count} van {cap} bestellingen deze maand",
+      "usage": "{count} van {cap} bestellingen en reserveringen deze maand",
       "removeLimit": "Limiet verwijderen",
-      "help": "Je gratis abonnement bevat {cap} bestellingen per maand. Neem een add-on om de limiet te verwijderen."
+      "help": "Je gratis abonnement bevat {cap} bestellingen en reserveringen per maand. Abonneer je op een add-on om de limiet op te heffen."
     },
     "kdsPage": {
       "subtitle": "Keukenweergavesysteem",
-      "body": "Een aparte keukenscherm-app: nieuwe bestellingen verschijnen op een scherm aan je lijn en worden afgevinkt terwijl ze worden bereid — geen papieren bonnen, geen gemiste items. Het draait als eigen app, zoals de KDS-systemen van Toast of Square. We bouwen het na de lancering."
+      "body": "Een speciale keukendisplay-app: nieuwe bestellingen verschijnen op een scherm bij je lijn en worden afgevinkt zodra ze klaar zijn — geen papieren bonnen, geen gemiste items. De app draait als een zelfstandige app, net als de KDS-systemen van Toast of Square. In ontwikkeling."
     },
     "mobileAppPage": {
       "subtitle": "Mobiele bestel-app",
-      "body": "Een app met jouw merk in de App Store en Google Play — klanten bestellen, herbestellen met één tik en krijgen pushmeldingen, allemaal onder jouw naam en logo. We bouwen het na de lancering."
+      "body": "De eigen app met de huisstijl van je restaurant in de App Store en Google Play — klanten bestellen, herhalen een bestelling met één tik en ontvangen pushmeldingen, allemaal onder je eigen naam en logo. In ontwikkeling."
     },
     "posPage": {
       "subtitle": "Kassasysteem op locatie",
-      "body": "Een ingebouwde kassa voor je balie — reken loop- en telefoonbestellingen af in hetzelfde systeem als je online bestellingen, met één menu, één set rapporten en één uitbetaling. We bouwen het na de lancering."
+      "body": "Een ingebouwde kassa voor je toonbank — reken loop- en telefonische bestellingen af op hetzelfde systeem als je online bestellingen, met één menu, één set rapporten en één uitbetaling. In ontwikkeling."
     }
   },
   "impersonation": {

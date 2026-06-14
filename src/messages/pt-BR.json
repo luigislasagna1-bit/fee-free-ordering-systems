@@ -3888,21 +3888,21 @@
       "timeOptional": "deixe os horários em branco para o dia todo"
     },
     "orderCapBanner": {
-      "usage": "{count} de {cap} pedidos este mês",
+      "usage": "{count} de {cap} pedidos e reservas neste mês",
       "removeLimit": "Remover o limite",
-      "help": "Seu plano gratuito inclui {cap} pedidos por mês. Assine qualquer complemento para remover o limite."
+      "help": "Seu plano gratuito inclui {cap} pedidos e reservas por mês. Assine qualquer complemento para remover o limite."
     },
     "kdsPage": {
       "subtitle": "Sistema de tela da cozinha",
-      "body": "Um app dedicado de tela da cozinha: os novos pedidos aparecem em uma tela na sua linha e são baixados conforme são preparados — sem comandas de papel, sem itens esquecidos. Funciona como um app próprio, como os sistemas KDS da Toast ou Square. Estamos desenvolvendo após o lançamento."
+      "body": "Um aplicativo dedicado de tela de cozinha: os novos pedidos aparecem em uma tela na sua linha e são baixados à medida que são preparados — sem comandas de papel, sem itens esquecidos. Funciona como um aplicativo próprio, como os sistemas KDS da Toast ou da Square. Em desenvolvimento."
     },
     "mobileAppPage": {
       "subtitle": "App de pedidos móvel",
-      "body": "O app com a marca do seu restaurante na App Store e Google Play — os clientes pedem, repetem com um toque e recebem notificações push, tudo com seu nome e logo. Estamos desenvolvendo após o lançamento."
+      "body": "O aplicativo com a marca do seu restaurante na App Store e no Google Play — os clientes fazem pedidos, repetem com um toque e recebem notificações push, tudo com o seu nome e a sua logo. Em desenvolvimento."
     },
     "posPage": {
       "subtitle": "Ponto de venda no local",
-      "body": "Um caixa integrado para o seu balcão — registre pedidos presenciais e por telefone no mesmo sistema dos online, com um só menu, um só conjunto de relatórios e um só repasse. Estamos desenvolvendo após o lançamento."
+      "body": "Uma caixa registradora de ponto de venda integrada para o seu balcão — registre pedidos presenciais e por telefone no mesmo sistema dos seus pedidos on-line, com um único cardápio, um único conjunto de relatórios e um único repasse. Em desenvolvimento."
     }
   },
   "impersonation": {

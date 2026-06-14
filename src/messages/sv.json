@@ -3888,21 +3888,21 @@
       "timeOptional": "lämna tiderna tomma för hela dagen"
     },
     "orderCapBanner": {
-      "usage": "{count} av {cap} beställningar denna månad",
+      "usage": "{count} av {cap} beställningar och bokningar den här månaden",
       "removeLimit": "Ta bort gränsen",
-      "help": "Ditt gratisabonnemang inkluderar {cap} beställningar per månad. Prenumerera på ett tillägg för att ta bort gränsen."
+      "help": "Din gratisplan inkluderar {cap} beställningar och bokningar per månad. Prenumerera på ett tillägg för att ta bort gränsen."
     },
     "kdsPage": {
       "subtitle": "Köksskärmssystem",
-      "body": "En dedikerad köksskärmsapp: nya beställningar visas på en skärm vid din linje och bockas av allt eftersom de tillagas — inga papperslappar, inga missade rätter. Den körs som en egen app, som KDS-systemen hos Toast eller Square. Vi bygger den efter lanseringen."
+      "body": "En dedikerad app för köksdisplay: nya beställningar visas på en skärm vid din linje och bockas av allt eftersom de tillagas — inga papperslappar, inga missade rätter. Den körs som en egen app, precis som KDS-systemen hos Toast eller Square. Den är under utveckling."
     },
     "mobileAppPage": {
       "subtitle": "Mobil beställningsapp",
-      "body": "En app med ditt varumärke i App Store och Google Play — kunderna beställer, beställer om med en tryckning och får pushnotiser, allt under ditt namn och din logotyp. Vi bygger den efter lanseringen."
+      "body": "Din restaurangs egen app med din profil på App Store och Google Play — kunderna beställer, beställer om med ett tryck och får push-notiser, allt under ditt namn och din logotyp. Den är under utveckling."
     },
     "posPage": {
       "subtitle": "Kassasystem på plats",
-      "body": "En inbyggd kassaapparat för din disk — slå in besöks- och telefonbeställningar i samma system som dina onlinebeställningar, med en meny, en uppsättning rapporter och en utbetalning. Vi bygger den efter lanseringen."
+      "body": "En inbyggd kassaregister för din disk — slå in besöks- och telefonbeställningar i samma system som dina onlinebeställningar, med en meny, en uppsättning rapporter och en utbetalning. Den är under utveckling."
     }
   },
   "impersonation": {
