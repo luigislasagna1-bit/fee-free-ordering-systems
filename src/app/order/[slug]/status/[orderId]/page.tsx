@@ -371,7 +371,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                     return null;
                   })();
                   const tsLabel = stepTs && (done || active)
-                    ? stepTs.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hour12: order.restaurant?.hoursFormat !== "24h" })
+                    ? stepTs.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hourCycle: order.restaurant?.hoursFormat === "24h" ? "h23" : "h12" })
                     : null;
                   return (
                     <div key={step.key} className="flex items-start gap-4">
@@ -476,7 +476,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                   <div className="text-2xl font-bold text-emerald-700">
                     {new Date(order.scheduledFor).toLocaleString(undefined, {
                       weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
-                      hour12: order.restaurant?.hoursFormat !== "24h",
+                      hourCycle: order.restaurant?.hoursFormat === "24h" ? "h23" : "h12",
                       ...(order.restaurant?.timezone ? { timeZone: order.restaurant.timezone } : {}),
                     })}
                   </div>
@@ -503,7 +503,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 } else {
                   line = t("etaReadyNMin", { min: minLeft });
                 }
-                const targetLabel = new Date(target).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hour12: order.restaurant?.hoursFormat !== "24h" });
+                const targetLabel = new Date(target).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hourCycle: order.restaurant?.hoursFormat === "24h" ? "h23" : "h12" });
                 return (
                   <div className={`mt-6 rounded-xl p-4 text-center border ${
                     isPending

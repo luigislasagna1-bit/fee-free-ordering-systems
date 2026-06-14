@@ -110,19 +110,19 @@ const STATUS_LABEL: Record<string, string> = {
 
 function fmtTime(d: string | Date | null | undefined, hoursFormat: "12h" | "24h" = "12h") {
   if (!d) return "—";
-  return new Date(d).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: hoursFormat !== "24h" });
+  return new Date(d).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hourCycle: hoursFormat === "24h" ? "h23" : "h12" });
 }
 
 /** Time only (no date) — used for the ASAP "received at" line. */
 function fmtTimeOnly(d: string | Date | null | undefined, hoursFormat: "12h" | "24h" = "12h") {
   if (!d) return "—";
-  return new Date(d).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hour12: hoursFormat !== "24h" });
+  return new Date(d).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hourCycle: hoursFormat === "24h" ? "h23" : "h12" });
 }
 
 /** Full weekday + date + time — used for the scheduled "order for later" line. */
 function fmtDateTime(d: string | Date | null | undefined, hoursFormat: "12h" | "24h" = "12h") {
   if (!d) return "—";
-  return new Date(d).toLocaleString(undefined, { weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: hoursFormat !== "24h" });
+  return new Date(d).toLocaleString(undefined, { weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hourCycle: hoursFormat === "24h" ? "h23" : "h12" });
 }
 
 export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady, workflowMode = "simple", fromInProgress = false, hoursFormat = "12h", currency = "usd", onReservationStatusChange }: Props) {

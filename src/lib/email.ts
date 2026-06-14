@@ -291,7 +291,7 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
         timeZone: params.timezone || "UTC",
         weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
         // Follow the restaurant's 12h/24h setting, not the locale default.
-        hour12: params.hoursFormat !== "24h",
+        hourCycle: params.hoursFormat === "24h" ? "h23" : "h12",
       })
     : null;
   // Reserve-then-order: a friendly "Tuesday, Jun 8 at 19:00" label for the
@@ -466,7 +466,7 @@ export async function sendOrderStatusUpdateEmail(params: {
         day: "numeric",
         hour: "numeric",
         minute: "2-digit",
-        hour12: params.hoursFormat !== "24h",
+        hourCycle: params.hoursFormat === "24h" ? "h23" : "h12",
       })
     : null;
   const html = await renderEmail(

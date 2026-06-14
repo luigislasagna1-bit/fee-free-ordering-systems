@@ -3248,9 +3248,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                       hour: "numeric",
                       minute: "2-digit",
                       // Respect the restaurant's 12h/24h preference instead of the
-                      // OS locale default (which showed 22:00 for a 12h shop).
-                      // Luigi 2026-06-08.
-                      hour12: hoursFmt === "12h",
+                      // OS locale default. Use hourCycle (not hour12) so midnight
+                      // reads "12:00 AM", not "0:00 am", on locales whose 12h cycle
+                      // defaults to h11. Luigi 2026-06-08 / 2026-06-14.
+                      hourCycle: hoursFmt === "12h" ? "h12" : "h23",
                     })}
                   </div>
                 </div>
