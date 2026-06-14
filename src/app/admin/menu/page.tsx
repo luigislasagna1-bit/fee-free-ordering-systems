@@ -6,6 +6,7 @@ import { RevertToBrandMenuBanner } from "./RevertToBrandMenuBanner";
 import { InheritedMenuView } from "./InheritedMenuView";
 import { MasterMenuBanner } from "./MasterMenuBanner";
 import { isInheritingMenu, resolveMenuRestaurantId } from "@/lib/brand";
+import { isLocked } from "@/lib/inherited-settings";
 import { resolveActiveMenuId } from "@/lib/menu";
 import { hasFeature } from "@/lib/entitlements";
 import { getTranslations } from "next-intl/server";
@@ -33,7 +34,7 @@ export default async function MenuPage({
     const menuRestaurantId = await resolveMenuRestaurantId(restaurantId);
     // Mirror the brand's ACTIVE menu only (multi-menu) — not every version.
     const brandActiveMenuId = await resolveActiveMenuId(menuRestaurantId);
-    const [parent, categories] = await Promise.all([
+    const [parent, categories, childLock] = await Promise.all([
       prisma.restaurant.findUnique({
         where: { id: menuRestaurantId },
         select: { id: true, name: true },
@@ -50,6 +51,12 @@ export default async function MenuPage({
           },
         },
       }),
+      // The brand may LOCK the menu so the location can't customize away from it
+      // — in that case we hide the "Customize" CTA below. Luigi 2026-06-14.
+      prisma.restaurant.findUnique({
+        where: { id: restaurantId },
+        select: { parentRestaurantId: true, lockedSettings: true },
+      }),
     ]);
     const inheritedCategories = categories.map((c) => ({
       id: c.id,
@@ -61,6 +68,7 @@ export default async function MenuPage({
       <InheritedMenuView
         brandName={parent?.name ?? "Brand"}
         categories={inheritedCategories}
+        locked={!!childLock && isLocked(childLock as any, "menu")}
       />
     );
   }

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Layers, Eye, AlertCircle, Loader2 } from "lucide-react";
+import { Layers, Eye, AlertCircle, Loader2, Lock } from "lucide-react";
 import { useCurrencyFormat } from "@/lib/currency-context";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -35,13 +35,18 @@ type InheritedCategory = {
 export function InheritedMenuView({
   brandName,
   categories,
+  locked = false,
 }: {
   brandName: string;
   categories: InheritedCategory[];
+  /** True when the BRAND PARENT has LOCKED this location's menu — hide the
+   *  "Customize" CTA (the customize endpoint refuses it anyway). Luigi 2026-06-14. */
+  locked?: boolean;
 }) {
   const formatCurrency = useCurrencyFormat();
   const router = useRouter();
   const t = useTranslations("admin.inheritedMenu");
+  const tLoc = useTranslations("admin.locations");
   const [customizing, setCustomizing] = useState(false);
 
   const totalItems = categories.reduce((s, c) => s + c.itemCount, 0);
@@ -84,29 +89,37 @@ export function InheritedMenuView({
           </div>
         </div>
 
-        {/* Customize CTA */}
-        <div className="mt-4 bg-white/15 border border-white/25 rounded-xl p-4">
-          <div className="flex items-start gap-2 mb-3">
-            <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-            <div className="text-sm">
-              <p className="font-semibold mb-0.5">{t("customizeHeading")}</p>
-              <p className="text-white/80">
-                {t("customizeDescription")}
-              </p>
-            </div>
+        {/* Customize CTA — hidden when the brand has LOCKED this location's menu;
+            then we just show a "Managed by your brand" note instead. */}
+        {locked ? (
+          <div className="mt-4 bg-white/15 border border-white/25 rounded-xl p-4 flex items-center gap-2 text-sm font-semibold">
+            <Lock className="w-4 h-4 flex-shrink-0" />
+            {tLoc("lockedByBrand")}
           </div>
-          <button
-            onClick={handleCustomize}
-            disabled={customizing}
-            className="w-full sm:w-auto bg-white text-amber-700 hover:bg-amber-50 disabled:opacity-60 disabled:cursor-wait font-bold px-5 py-2.5 rounded-xl text-sm transition flex items-center justify-center gap-2"
-          >
-            {customizing ? (
-              <><Loader2 className="w-4 h-4 animate-spin" /> {t("buttonCopying")}</>
-            ) : (
-              <><Eye className="w-4 h-4" /> {t("buttonCustomize")}</>
-            )}
-          </button>
-        </div>
+        ) : (
+          <div className="mt-4 bg-white/15 border border-white/25 rounded-xl p-4">
+            <div className="flex items-start gap-2 mb-3">
+              <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <div className="text-sm">
+                <p className="font-semibold mb-0.5">{t("customizeHeading")}</p>
+                <p className="text-white/80">
+                  {t("customizeDescription")}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={handleCustomize}
+              disabled={customizing}
+              className="w-full sm:w-auto bg-white text-amber-700 hover:bg-amber-50 disabled:opacity-60 disabled:cursor-wait font-bold px-5 py-2.5 rounded-xl text-sm transition flex items-center justify-center gap-2"
+            >
+              {customizing ? (
+                <><Loader2 className="w-4 h-4 animate-spin" /> {t("buttonCopying")}</>
+              ) : (
+                <><Eye className="w-4 h-4" /> {t("buttonCustomize")}</>
+              )}
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Read-only preview */}
