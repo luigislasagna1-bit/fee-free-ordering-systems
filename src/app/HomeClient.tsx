@@ -305,7 +305,7 @@ export function HomeClient({ locale }: { locale: string }) {
               { icon: CreditCard,  title: "Online Payments",  body: "Stripe Connect. Money lands in YOUR account directly. We never touch it.", free: false, addon: "$29.99/mo" },
               { icon: Bell,        title: "Notifications",    body: "Email + browser notifications for every new order. Never miss a sale.", free: true },
               { icon: MapPin,      title: "Delivery Zones",   body: "Define your own delivery radius + fees. Auto-calculated at checkout.", free: true },
-              { icon: Smartphone,  title: "Mobile Friendly",  body: "The whole platform works on phones — customer ordering, kitchen display, admin.", free: true },
+              { icon: Smartphone,  title: "Mobile Friendly",  body: "The whole platform works on phones — customer ordering, Kitchen Order App, admin.", free: true },
               { icon: Languages,   title: "Multi-Language",   body: "Customer ordering page in 5 languages — English, French, Spanish, Italian, Portuguese.", free: true },
               { icon: Users,       title: "Customer Database", body: "Every order builds your customer list. Names, emails, order history — yours forever.", free: true },
             ].map((f) => (
@@ -428,7 +428,7 @@ export function HomeClient({ locale }: { locale: string }) {
               <div className="px-4 py-3 border-b border-gray-800 flex items-center justify-between">
                 <div className="flex items-center gap-2 text-emerald-400 font-bold">
                   <ChefHat className="w-5 h-5" />
-                  Kitchen Display
+                  Kitchen Order App
                 </div>
                 <div className="text-xs text-gray-500">2 new orders</div>
               </div>

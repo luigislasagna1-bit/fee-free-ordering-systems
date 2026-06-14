@@ -505,7 +505,7 @@
     "holdMinutesNote": "Mantemos a sua mesa durante {minutes} min após a hora da sua reserva — agradecemos que chegue a horas."
   },
   "kitchen": {
-    "title": "Tela da cozinha",
+    "title": "Kitchen Order App",
     "newOrders": "Novos pedidos",
     "inProgress": "Em preparo",
     "ready": "Pronto",
@@ -595,7 +595,7 @@
     "refundExceeds": "O montante excede o saldo reembolsável.",
     "refundFailed": "O reembolso falhou. Tente novamente.",
     "refundSuccess": "Reembolso emitido.",
-    "autoCallMessage": "O novo pedido {number} em {restaurant} está em espera e ainda não foi aceite. Por favor, abra o ecrã da cozinha para o aceitar ou rejeitar.",
+    "autoCallMessage": "O novo pedido {number} em {restaurant} está em espera e ainda não foi aceite. Abra a sua Kitchen Order App para o aceitar ou recusar.",
     "outsideZoneNote": "Esta encomenda poderá estar fora da sua zona de entrega habitual",
     "readyIn": "Pronto em",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, one {# obrigatório} other {# obrigatórios}}",
       "comingSoonBadge": "Em breve",
       "mobileApp": "App móvel",
-      "pointOfSale": "Ponto de venda"
+      "pointOfSale": "Ponto de venda",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Painel",
@@ -761,7 +762,7 @@
       "deliveryFee": "Taxa de entrega",
       "taxRate": "Taxa de imposto (%)",
       "language": "Idioma",
-      "defaultLanguageLabel": "Idioma padrão da página de pedidos, tela da cozinha e painel admin",
+      "defaultLanguageLabel": "Idioma predefinido para a sua página de pedidos de clientes, a Kitchen Order App e o painel de administração",
       "languageHelp": "Os clientes podem trocar o idioma com o seletor na página de pedidos.",
       "infoPage": "Página de informações",
       "reviewLink": "Link de avaliação Google / Yelp",
@@ -773,7 +774,7 @@
       "faviconHelp": "Ícone quadrado exibido no separador do navegador. Imagens não quadradas são recortadas ao centro — um PNG de 350×350 é o ideal.",
       "loadingMap": "A carregar o mapa…",
       "kitchenSoundTitle": "Som de alerta da cozinha",
-      "kitchenSoundHelp": "Carregue um som de toque personalizado para os alertas de novos pedidos. Depois de guardado, aparece como uma terceira opção (junto de <strong>Ding GloriaFood</strong> e <strong>Campainha Clássica</strong>) nas Definições de Som do Ecrã de Cozinha. Melhores resultados: um clipe curto de 1 a 5 segundos, com menos de 2 MB. MP3, WAV ou OGG.",
+      "kitchenSoundHelp": "Carregue um som de toque personalizado para os alertas de novos pedidos. Depois de guardado, aparece como uma terceira opção (juntamente com <strong>GloriaFood Ding</strong> e <strong>Classic Bell</strong>) nas definições de som da Kitchen Order App. Para melhores resultados: um clipe curto de 1 a 5 segundos, com menos de 2 MB. MP3, WAV ou OGG.",
       "kitchenSoundFileTooLarge": "O ficheiro deve ter menos de 2 MB.",
       "kitchenSoundWrongType": "Escolha um ficheiro de áudio (MP3, WAV ou OGG).",
       "kitchenSoundUploadFailed": "Falha no carregamento",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "Falha ao guardar — tente novamente",
       "autoCallLabel": "Alerta por chamada telefónica automática",
       "autoCallStatusOn": "Ativo — ligamos para o seu telefone se um novo pedido não for aceite no prazo de cerca de 90 segundos.",
-      "autoCallStatusOff": "Inativo — os novos pedidos são assinalados apenas no ecrã da cozinha.",
+      "autoCallStatusOff": "Desligado — os novos pedidos são assinalados apenas na Kitchen Order App.",
       "autoCallToggleAriaLabel": "Alternar alerta por chamada telefónica automática",
       "autoCallFooterNote": "Se um novo pedido ficar por aceitar durante cerca de 90 segundos, fazemos uma chamada automática para o telefone do seu restaurante, para que nunca perca um pedido — mesmo que o tablet esteja sem ninguém a vigiá-lo.",
       "autoCallEnabledToast": "Alerta por chamada telefónica automática ativado.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Voltar ao painel",
       "pageTitle": "Pedidos por Telefone Automatizados",
       "comingSoon": "Em breve",
-      "pageSubtitle": "Um agente de IA que atende o telefone do seu restaurante 24 horas por dia, 7 dias por semana, recebe pedidos e os envia diretamente para o seu display de cozinha.",
+      "pageSubtitle": "Um agente de IA que atende o telefone do seu restaurante 24 horas por dia, 7 dias por semana, recebe os pedidos e envia-os diretamente para a sua Kitchen Order App.",
       "heroBadge": "Em desenvolvimento ativo",
       "heroHeadline": "Nunca perca outro pedido por telefone",
-      "heroBody": "Todas as ligações atendidas, todos os pedidos registrados, sempre — mesmo nos momentos de maior movimento. Nosso agente de IA cuida do telefone para que sua equipe possa se concentrar na comida. Os pedidos chegam diretamente ao seu display de cozinha junto com os pedidos online. Os clientes têm a mesma experiência rápida e amigável, seja clicando ou falando.",
+      "heroBody": "Todas as chamadas atendidas, todos os pedidos recebidos, sempre — mesmo durante as horas de maior movimento. O nosso agente de IA trata do telefone para que a sua equipa se possa concentrar na comida. Os pedidos chegam diretamente à sua Kitchen Order App, juntamente com os pedidos online. Os clientes têm a mesma experiência rápida e simpática, quer toquem no ecrã quer falem.",
       "chip247": "Disponível 24/7",
       "chipMenuTrained": "Treinado no seu cardápio",
       "chipNaturalConversation": "Conversa natural",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "Soa humano",
       "featureVoiceBody": "Conversa natural, não uma árvore telefônica robótica. Os clientes não perceberão que estão falando com IA. Lida com sotaques, ruído de fundo e o inevitável \"espera, pode mudar para\".",
       "featureKitchenTitle": "Mesmo fluxo de cozinha",
-      "featureKitchenBody": "Os pedidos por telefone chegam ao seu display de cozinha existente junto com os pedidos online. Nenhum novo app, nenhum novo treinamento — sua equipe os aceita da mesma forma.",
+      "featureKitchenBody": "Os pedidos por telefone chegam à sua Kitchen Order App existente, juntamente com os pedidos online. Sem nova aplicação, sem nova formação — a sua equipa aceita-os da mesma forma.",
       "statusHeading": "Onde isso está hoje",
       "statusBody1": "Estamos com a cabeça baixa construindo a base. O agente de voz, a integração com Twilio, a transferência para a cozinha — tudo em desenvolvimento ativo. Esperamos lançar para restaurantes em acesso antecipado em breve após o lançamento da plataforma principal.",
       "statusBody2": "Quando estiver pronto, você poderá assinar na sua página de faturamento como qualquer outro add-on. Até lá, esta página é apenas um aviso de que está chegando.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0% de comissão nos pedidos",
       "heroTitle": "Aceite pedidos online sem taxas.",
-      "heroSubtitle": "Gerencie retirada, entrega, reservas e tela de cozinha em um lugar. Fique com 100% de cada pedido.",
+      "heroSubtitle": "Faça a gestão de recolha, entrega, reservas de mesa e da Kitchen Order App num só lugar. Mantenha 100% de cada pedido.",
       "startTrial": "Começar grátis",
       "viewDemo": "Ver demo",
       "trustedBy": "Confiado por restaurantes independentes",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Operações da cozinha",
-        "display": "Tela de cozinha",
+        "display": "Kitchen Order App",
         "displayDesc": "Pedidos aparecem ao vivo com botões de status e tempos.",
         "printing": "Impressão de recibos",
         "printingDesc": "Imprima em impressoras térmicas via PrintNode — recibos cliente e cozinha.",
@@ -4325,7 +4326,7 @@
         "Pedidos online ilimitados",
         "Página de pedidos do cliente",
         "Widget incorporável no seu site atual",
-        "App para receber pedidos (cozinha)",
+        "Kitchen Order App",
         "Painel admin",
         "Construtor de menu + fotos",
         "Retirada, entrega, no local, reservas",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Pedidos ilimitados",
         "Página de pedidos do cliente",
-        "Tela de cozinha",
+        "Kitchen Order App",
         "Painel admin",
         "Notificações por e-mail",
         "5+ idiomas",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Quais idiomas são suportados?",
-          "a": "Inglês, francês, espanhol, italiano e português — em pedidos, cozinha, admin e e-mails."
+          "a": "Inglês, francês, espanhol, italiano e português — nos pedidos de clientes, na Kitchen Order App, no painel de administração e nos e-mails."
         },
         {
           "q": "Posso fazer promoções?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Pedidos do cliente",
         "orderingDesc": "Navegue pelo menu e faça um pedido de teste como cliente.",
-        "kitchen": "Tela de cozinha",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Veja pedidos chegando na tela de cozinha em tempo real.",
         "admin": "Painel admin",
         "adminDesc": "Gerencie menu, horários, pedidos e configurações como dono."

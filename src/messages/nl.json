@@ -505,7 +505,7 @@
     "holdMinutesNote": "We houden uw tafel tot {minutes} min na uw reserveringstijd vrij — kom alstublieft op tijd."
   },
   "kitchen": {
-    "title": "Keukenweergave",
+    "title": "Kitchen Order App",
     "newOrders": "Nieuwe bestellingen",
     "inProgress": "In behandeling",
     "ready": "Gereed",
@@ -595,7 +595,7 @@
     "refundExceeds": "Bedrag overschrijdt het terugbetaalbare saldo.",
     "refundFailed": "Terugbetaling mislukt. Probeer het opnieuw.",
     "refundSuccess": "Terugbetaling uitgevoerd.",
-    "autoCallMessage": "Nieuwe bestelling {number} bij {restaurant} staat te wachten en is nog niet geaccepteerd. Open je keukenscherm om de bestelling te accepteren of te weigeren.",
+    "autoCallMessage": "De nieuwe bestelling {number} bij {restaurant} staat te wachten en is nog niet geaccepteerd. Open je Kitchen Order App om deze te accepteren of te weigeren.",
     "outsideZoneNote": "Deze bestelling valt mogelijk buiten je gebruikelijke bezorggebied",
     "readyIn": "Klaar over",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, one {# verplicht} other {# verplicht}}",
       "comingSoonBadge": "Binnenkort",
       "mobileApp": "Mobiele app",
-      "pointOfSale": "Kassasysteem"
+      "pointOfSale": "Kassasysteem",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -761,7 +762,7 @@
       "deliveryFee": "Bezorgkosten",
       "taxRate": "Btw-tarief (%)",
       "language": "Taal",
-      "defaultLanguageLabel": "Standaardtaal voor uw klantbestelpagina, keukenweergave en beheerpaneel",
+      "defaultLanguageLabel": "Standaardtaal voor je bestelpagina voor klanten, de Kitchen Order App en het beheerderspaneel",
       "languageHelp": "Klanten kunnen deze taal overschrijven met de kiezer op uw bestelpagina.",
       "infoPage": "Infopagina",
       "reviewLink": "Google / Yelp recensielink",
@@ -773,7 +774,7 @@
       "faviconHelp": "Vierkant icoon dat wordt weergegeven in het browsertabblad. Niet-vierkante afbeeldingen worden in het midden bijgesneden — een PNG van 350×350 is ideaal.",
       "loadingMap": "Kaart laden…",
       "kitchenSoundTitle": "Keukenwaarschuwingsgeluid",
-      "kitchenSoundHelp": "Upload een aangepast belgeluid voor meldingen van nieuwe bestellingen. Na het opslaan verschijnt het als derde optie (naast <strong>GloriaFood Ding</strong> en <strong>Klassieke Bel</strong>) in de Geluidsinstellingen van het Kitchen Display. Beste resultaat: een korte clip van 1–5 seconden, kleiner dan 2 MB. MP3, WAV of OGG.",
+      "kitchenSoundHelp": "Upload een eigen belgeluid voor meldingen van nieuwe bestellingen. Eenmaal opgeslagen verschijnt het als derde optie (naast <strong>GloriaFood Ding</strong> en <strong>Classic Bell</strong>) in de geluidsinstellingen van de Kitchen Order App. Beste resultaat: een korte clip van 1–5 seconden, onder 2 MB. MP3, WAV of OGG.",
       "kitchenSoundFileTooLarge": "Bestand moet kleiner zijn dan 2 MB.",
       "kitchenSoundWrongType": "Kies een audiobestand (MP3, WAV of OGG).",
       "kitchenSoundUploadFailed": "Uploaden mislukt",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "Opslaan mislukt — probeer opnieuw",
       "autoCallLabel": "Automatische telefoonoproep-melding",
       "autoCallStatusOn": "Aan — we bellen je telefoon als een nieuwe bestelling niet binnen ~90 seconden wordt geaccepteerd.",
-      "autoCallStatusOff": "Uit — nieuwe bestellingen worden alleen op het keukenscherm gemeld.",
+      "autoCallStatusOff": "Uit — nieuwe bestellingen worden alleen op de Kitchen Order App gemeld.",
       "autoCallToggleAriaLabel": "Automatische telefoonoproep-melding in- of uitschakelen",
       "autoCallFooterNote": "Als een nieuwe bestelling ongeveer 90 seconden niet wordt geaccepteerd, plaatsen we een automatische oproep naar de telefoon van je restaurant, zodat je nooit een bestelling mist — zelfs als de tablet onbeheerd is.",
       "autoCallEnabledToast": "Automatische telefoonoproep-melding ingeschakeld.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Terug naar beheer",
       "pageTitle": "Geautomatiseerde telefonische bestellingen",
       "comingSoon": "Binnenkort beschikbaar",
-      "pageSubtitle": "Een AI-agent die 24/7 de telefoon opneemt, bestellingen noteert en ze direct doorstuur naar je keukenweergave.",
+      "pageSubtitle": "Een AI-agent die de telefoon van je restaurant 24/7 beantwoordt, bestellingen aanneemt en ze rechtstreeks in je Kitchen Order App zet.",
       "heroBadge": "In actieve ontwikkeling",
       "heroHeadline": "Mis nooit meer een telefonische bestelling",
-      "heroBody": "Elk gesprek beantwoord, elke bestelling aangenomen, altijd — zelfs tijdens je drukste rushuren. Onze AI-agent beheert de telefoon zodat je personeel zich op het eten kan concentreren. Bestellingen stromen rechtstreeks door naar je keukenweergave naast online bestellingen. Klanten krijgen dezelfde snelle, vriendelijke ervaring, of ze nu tikken of spreken.",
+      "heroBody": "Elk gesprek beantwoord, elke bestelling aangenomen, elke keer weer — zelfs tijdens je drukste piek. Onze AI-agent neemt de telefoon voor zijn rekening, zodat je personeel zich op het eten kan richten. Bestellingen komen rechtstreeks binnen in je Kitchen Order App, naast de online bestellingen. Klanten krijgen dezelfde snelle, vriendelijke ervaring, of ze nu tikken of bellen.",
       "chip247": "24/7 beschikbaar",
       "chipMenuTrained": "Getraind op jouw menu",
       "chipNaturalConversation": "Natuurlijk gesprek",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "Klinkt menselijk",
       "featureVoiceBody": "Natuurlijk gesprek, geen robotachtig keuzemenu. Klanten zullen niet merken dat ze met AI praten. Verwerkt accenten, achtergrondgeluid en het onvermijdelijke \"wacht, kun je dat veranderen naar\".",
       "featureKitchenTitle": "Dezelfde keukenflow",
-      "featureKitchenBody": "Telefonische bestellingen komen in je bestaande keukenweergave naast online bestellingen. Geen nieuwe app, geen nieuwe training — je team accepteert ze op dezelfde manier.",
+      "featureKitchenBody": "Telefonische bestellingen komen binnen in je bestaande Kitchen Order App, naast de online bestellingen. Geen nieuwe app, geen nieuwe training — je team accepteert ze op dezelfde manier.",
       "statusHeading": "Waar dit vandaag staat",
       "statusBody1": "We werken hard aan de basis. De spraakagent, de Twilio-integratie, de keukenovergang — alles in actieve ontwikkeling. We verwachten dit binnenkort uit te rollen naar restaurants met vroege toegang, kort na de lancering van het hoofdplatform.",
       "statusBody2": "Wanneer het klaar is, kun je je er via je factureringspagina op abonneren zoals elke andere add-on. Tot die tijd is deze pagina alleen een voorbeschouwing.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0% commissie op bestellingen",
       "heroTitle": "Ontvang online bestellingen zonder kosten.",
-      "heroSubtitle": "Beheer afhalen, bezorging, tafelreserveringen en een keukenweergave vanuit één plek. Houd 100% van elke bestelling.",
+      "heroSubtitle": "Beheer afhalen, bezorgen, tafelreserveringen en de Kitchen Order App vanaf één plek. Houd 100% van elke bestelling.",
       "startTrial": "Gratis aan de slag",
       "viewDemo": "Demo bekijken",
       "trustedBy": "Vertrouwd door zelfstandige restaurants",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Keukenactiviteiten",
-        "display": "Keukenweergave",
+        "display": "Kitchen Order App",
         "displayDesc": "Bestellingen verschijnen live op het keukenscherm met statusbuttons en bereidingstijden.",
         "printing": "Bonafdrukken",
         "printingDesc": "Afdrukken op thermische printers via PrintNode — klant- en keukenbonnen.",
@@ -4325,7 +4326,7 @@
         "Onbeperkte online bestellingen",
         "Klantbestelpagina",
         "Insluitbare widget voor uw bestaande site",
-        "Bestellingsbeheer-app (keukenweergave)",
+        "Kitchen Order App",
         "Beheerdashboard",
         "Menubouwer + foto's",
         "Afhalen, bezorging, ter plaatse, reserveringen",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Onbeperkte bestellingen",
         "Klantbestelpagina",
-        "Keukenweergave",
+        "Kitchen Order App",
         "Beheerdashboard",
         "E-mailmeldingen",
         "5+ talen",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Welke talen worden ondersteund?",
-          "a": "Engels, Frans, Spaans, Italiaans en Portugees — voor klantbestelling, keukenweergave, beheerpaneel en e-mails."
+          "a": "Engels, Frans, Spaans, Italiaans en Portugees — voor klantbestellingen, de Kitchen Order App, het beheerderspaneel en e-mails."
         },
         {
           "q": "Kan ik promoties uitvoeren?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Klantbestelling",
         "orderingDesc": "Blader door het menu en plaats een testbestelling als klant.",
-        "kitchen": "Keukenweergave",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Bekijk inkomende bestellingen op het keukenscherm in realtime.",
         "admin": "Beheerpaneel",
         "adminDesc": "Beheer menu, openingstijden, bestellingen en instellingen als restauranteigenaar."

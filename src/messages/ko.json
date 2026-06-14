@@ -505,7 +505,7 @@
     "holdMinutesNote": "예약 시간 이후 {minutes}분 동안 자리를 잡아 둡니다 — 시간에 맞춰 도착해 주세요."
   },
   "kitchen": {
-    "title": "주방 디스플레이",
+    "title": "Kitchen Order App",
     "newOrders": "신규 주문",
     "inProgress": "진행 중",
     "ready": "준비 완료",
@@ -595,7 +595,7 @@
     "refundExceeds": "금액이 환불 가능 잔액을 초과합니다.",
     "refundFailed": "환불에 실패했습니다. 다시 시도해 주세요.",
     "refundSuccess": "환불이 처리되었습니다.",
-    "autoCallMessage": "{restaurant}의 신규 주문 {number}번이 대기 중이며 아직 접수되지 않았습니다. 주방 디스플레이를 열어 주문을 접수하거나 거절해 주세요.",
+    "autoCallMessage": "{restaurant}의 새 주문 {number}이(가) 대기 중이며 아직 수락되지 않았습니다. Kitchen Order App을 열어 주문을 수락하거나 거부하세요.",
     "outsideZoneNote": "이 주문은 정규 배달 구역을 벗어날 수 있습니다",
     "readyIn": "준비 완료까지",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, other {필수 #개}}",
       "comingSoonBadge": "출시 예정",
       "mobileApp": "모바일 앱",
-      "pointOfSale": "판매 시점 관리"
+      "pointOfSale": "판매 시점 관리",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "대시보드",
@@ -761,7 +762,7 @@
       "deliveryFee": "배달료",
       "taxRate": "세율 (%)",
       "language": "언어",
-      "defaultLanguageLabel": "고객 주문 페이지, 주방 디스플레이, 관리자 패널의 기본 언어",
+      "defaultLanguageLabel": "고객 주문 페이지, Kitchen Order App, 관리자 패널의 기본 언어",
       "languageHelp": "고객은 주문 페이지의 언어 선택기로 언어를 변경할 수 있습니다.",
       "infoPage": "정보 페이지",
       "reviewLink": "Google / Yelp 리뷰 링크",
@@ -773,7 +774,7 @@
       "faviconHelp": "브라우저 탭에 표시되는 정사각형 아이콘입니다. 정사각형이 아닌 이미지는 중앙을 기준으로 잘립니다 — 350×350 PNG가 이상적입니다.",
       "loadingMap": "지도 불러오는 중…",
       "kitchenSoundTitle": "주방 알림음",
-      "kitchenSoundHelp": "새 주문 알림에 사용할 맞춤 벨소리를 업로드하세요. 저장하면 주방 디스플레이의 사운드 설정에서 (<strong>GloriaFood 딩</strong> 및 <strong>클래식 벨</strong>과 함께) 세 번째 옵션으로 표시됩니다. 권장 사항: 1~5초 길이의 짧은 클립, 2MB 미만. MP3, WAV 또는 OGG.",
+      "kitchenSoundHelp": "새 주문 알림용 맞춤 벨소리를 업로드하세요. 저장하면 Kitchen Order App의 사운드 설정에서 세 번째 옵션으로(<strong>GloriaFood Ding</strong> 및 <strong>Classic Bell</strong>과 함께) 표시됩니다. 최상의 결과: 1~5초의 짧은 클립, 2 MB 미만. MP3, WAV 또는 OGG.",
       "kitchenSoundFileTooLarge": "파일은 2MB 미만이어야 합니다.",
       "kitchenSoundWrongType": "오디오 파일(MP3, WAV 또는 OGG)을 선택하세요.",
       "kitchenSoundUploadFailed": "업로드 실패",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "저장에 실패했습니다 — 다시 시도하세요",
       "autoCallLabel": "자동 전화 알림",
       "autoCallStatusOn": "켜짐 — 신규 주문이 약 90초 이내에 접수되지 않으면 매장 전화로 전화를 드립니다.",
-      "autoCallStatusOff": "꺼짐 — 신규 주문은 주방 디스플레이에서만 알림이 표시됩니다.",
+      "autoCallStatusOff": "끄기 — 새 주문은 Kitchen Order App에서만 알립니다.",
       "autoCallToggleAriaLabel": "자동 전화 알림 켜기/끄기",
       "autoCallFooterNote": "신규 주문이 약 90초 동안 접수되지 않은 채로 남아 있으면, 매장 전화로 자동 전화를 걸어 드려 태블릿을 지켜보지 않을 때도 주문을 놓치지 않도록 해 드립니다.",
       "autoCallEnabledToast": "자동 전화 알림이 활성화되었습니다.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "관리자로 돌아가기",
       "pageTitle": "자동화 전화 주문",
       "comingSoon": "출시 예정",
-      "pageSubtitle": "레스토랑 전화를 24시간 연중무휴 응대하고, 주문을 받아 바로 주방 디스플레이에 전달하는 AI 에이전트.",
+      "pageSubtitle": "레스토랑의 전화를 연중무휴 24시간 응대하고, 주문을 받아 곧바로 Kitchen Order App으로 넣어주는 AI 에이전트입니다.",
       "heroBadge": "개발 중",
       "heroHeadline": "전화 주문을 놓치지 마세요",
-      "heroBody": "모든 전화에 응답하고, 모든 주문을 접수합니다 — 가장 바쁜 시간에도. AI 에이전트가 전화를 처리하므로 직원은 음식에 집중할 수 있습니다. 주문은 온라인 주문과 함께 주방 디스플레이로 바로 전달됩니다. 고객은 탭하든 말하든 동일하게 빠르고 친절한 경험을 받습니다.",
+      "heroBody": "모든 전화에 응답하고, 모든 주문을 받아내며, 매번 — 가장 바쁜 러시 시간에도. 저희 AI 에이전트가 전화를 처리하므로 직원은 음식에 집중할 수 있습니다. 주문은 온라인 주문과 함께 Kitchen Order App으로 곧바로 들어옵니다. 고객은 탭하든 말하든 동일하게 빠르고 친절한 경험을 얻습니다.",
       "chip247": "24시간 이용 가능",
       "chipMenuTrained": "메뉴 기반 학습",
       "chipNaturalConversation": "자연스러운 대화",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "사람처럼 들립니다",
       "featureVoiceBody": "로봇 같은 전화 안내가 아닌 자연스러운 대화. 고객은 AI와 대화하는 것을 모를 수 있습니다. 억양, 배경 소음, \"잠깐, 그거 바꿔줄 수 있나요?\"도 처리합니다.",
       "featureKitchenTitle": "동일한 주방 흐름",
-      "featureKitchenBody": "전화 주문이 온라인 주문과 함께 기존 주방 디스플레이에 표시됩니다. 새 앱도, 새 교육도 필요 없습니다 — 팀이 동일한 방식으로 수락합니다.",
+      "featureKitchenBody": "전화 주문은 온라인 주문과 함께 기존 Kitchen Order App으로 들어옵니다. 새 앱도, 새 교육도 필요 없습니다 — 팀은 동일한 방식으로 주문을 수락합니다.",
       "statusHeading": "현재 진행 상황",
       "statusBody1": "기반을 구축하는 데 집중하고 있습니다. 음성 에이전트, Twilio 통합, 주방 연동 — 모두 활발히 개발 중입니다. 메인 플랫폼 출시 직후 얼리 액세스 레스토랑에 배포할 예정입니다.",
       "statusBody2": "준비되면 결제 페이지에서 다른 애드온처럼 구독할 수 있습니다. 그때까지 이 페이지는 출시 예정 안내입니다.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "주문 수수료 0%",
       "heroTitle": "수수료 없이 온라인 주문을 받으세요.",
-      "heroSubtitle": "픽업, 배달, 테이블 예약, 주방 디스플레이를 한 곳에서 운영하세요. 모든 주문의 100%를 가져가세요.",
+      "heroSubtitle": "픽업, 배달, 테이블 예약, 그리고 Kitchen Order App을 한곳에서 운영하세요. 모든 주문의 100%를 지키세요.",
       "startTrial": "무료로 시작하기",
       "viewDemo": "데모 보기",
       "trustedBy": "독립 레스토랑이 신뢰합니다",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "주방 운영",
-        "display": "주방 디스플레이",
+        "display": "Kitchen Order App",
         "displayDesc": "주방 화면에 주문이 실시간으로 표시되며 상태 버튼과 준비 시간이 포함됩니다.",
         "printing": "영수증 인쇄",
         "printingDesc": "PrintNode를 통해 열 프린터로 인쇄 — 고객 및 주방 영수증.",
@@ -4325,7 +4326,7 @@
         "무제한 온라인 주문",
         "고객 주문 페이지",
         "기존 사이트에 삽입 가능한 위젯",
-        "주문 앱 (주방 디스플레이)",
+        "Kitchen Order App",
         "관리자 대시보드",
         "메뉴 빌더 + 사진",
         "픽업, 배달, 매장 식사, 예약",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "무제한 주문",
         "고객 주문 페이지",
-        "주방 디스플레이",
+        "Kitchen Order App",
         "관리자 대시보드",
         "이메일 알림",
         "5개 이상의 언어",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "어떤 언어를 지원하나요?",
-          "a": "영어, 프랑스어, 스페인어, 이탈리아어, 포르투갈어 — 고객 주문, 주방 디스플레이, 관리자 패널, 이메일 모두 지원."
+          "a": "영어, 프랑스어, 스페인어, 이탈리아어, 포르투갈어 — 고객 주문, Kitchen Order App, 관리자 패널, 이메일 전반에 걸쳐."
         },
         {
           "q": "프로모션을 운영할 수 있나요?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "고객 주문",
         "orderingDesc": "고객으로서 메뉴를 둘러보고 테스트 주문을 해보세요.",
-        "kitchen": "주방 디스플레이",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "주방 화면에서 실시간으로 들어오는 주문을 확인하세요.",
         "admin": "관리자 패널",
         "adminDesc": "레스토랑 오너로서 메뉴, 영업시간, 주문, 설정을 관리하세요."

@@ -505,7 +505,7 @@
     "holdMinutesNote": "Pidämme pöytäsi varattuna {minutes} min varausaikasi jälkeen — saavuthan ajoissa."
   },
   "kitchen": {
-    "title": "Keittiönäyttö",
+    "title": "Kitchen Order App",
     "newOrders": "Uudet tilaukset",
     "inProgress": "Käynnissä",
     "ready": "Valmis",
@@ -595,7 +595,7 @@
     "refundExceeds": "Summa ylittää hyvitettävän saldon.",
     "refundFailed": "Hyvitys epäonnistui. Yritä uudelleen.",
     "refundSuccess": "Hyvitys tehty.",
-    "autoCallMessage": "Uusi tilaus {number} ravintolassa {restaurant} odottaa eikä sitä ole vielä hyväksytty. Avaa keittiönäyttö hyväksyäksesi tai hylätäksesi sen.",
+    "autoCallMessage": "Uusi tilaus {number} ravintolassa {restaurant} odottaa, eikä sitä ole vielä hyväksytty. Avaa Kitchen Order App hyväksyäksesi tai hylätäksesi sen.",
     "outsideZoneNote": "Tämä tilaus saattaa olla tavallisen toimitusalueesi ulkopuolella",
     "readyIn": "Valmis",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, one {# pakollinen} other {# pakollista}}",
       "comingSoonBadge": "Pian",
       "mobileApp": "Mobiilisovellus",
-      "pointOfSale": "Myyntipiste"
+      "pointOfSale": "Myyntipiste",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Kojelauta",
@@ -761,7 +762,7 @@
       "deliveryFee": "Toimitusmaksu",
       "taxRate": "Veroprosentti (%)",
       "language": "Kieli",
-      "defaultLanguageLabel": "Asiakkaiden tilaussivun, keittiönäytön ja hallintapaneelin oletuskieli",
+      "defaultLanguageLabel": "Asiakkaiden tilaussivun, Kitchen Order Appin ja hallintapaneelin oletuskieli",
       "languageHelp": "Asiakkaat voivat vaihtaa kielen tilaussivun kielenvalitsimella.",
       "infoPage": "Tietosivu",
       "reviewLink": "Google / Yelp -arvostelulinkki",
@@ -773,7 +774,7 @@
       "faviconHelp": "Neliömäinen kuvake, joka näkyy selaimen välilehdellä. Ei-neliömäiset kuvat rajataan keskikohtaan — ihanteellinen koko on 350×350 PNG.",
       "loadingMap": "Ladataan karttaa…",
       "kitchenSoundTitle": "Keittiön hälytysääni",
-      "kitchenSoundHelp": "Lataa mukautettu soittoääni uusien tilausten hälytyksiin. Tallennettuna se näkyy kolmantena vaihtoehtona (<strong>GloriaFood-pirahdus</strong> ja <strong>Klassinen kello</strong> -vaihtoehtojen rinnalla) keittiönäytön ääniasetuksissa. Paras tulos: lyhyt 1–5 sekunnin leike, alle 2 Mt. MP3, WAV tai OGG.",
+      "kitchenSoundHelp": "Lataa mukautettu soittoääni uusien tilausten ilmoituksille. Kun se on tallennettu, se näkyy kolmantena vaihtoehtona (yhdessä <strong>GloriaFood Ding</strong>- ja <strong>Classic Bell</strong> -äänten kanssa) Kitchen Order Appin ääniasetuksissa. Paras tulos: lyhyt 1–5 sekunnin leike, alle 2 Mt. MP3, WAV tai OGG.",
       "kitchenSoundFileTooLarge": "Tiedoston on oltava alle 2 Mt.",
       "kitchenSoundWrongType": "Valitse äänitiedosto (MP3, WAV tai OGG).",
       "kitchenSoundUploadFailed": "Lataus epäonnistui",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "Tallennus epäonnistui — yritä uudelleen",
       "autoCallLabel": "Automaattinen puhelinhälytys",
       "autoCallStatusOn": "Päällä — soitamme puhelimeesi, jos uutta tilausta ei hyväksytä noin 90 sekunnin kuluessa.",
-      "autoCallStatusOff": "Pois päältä — uusista tilauksista ilmoitetaan vain keittiönäytöllä.",
+      "autoCallStatusOff": "Pois — uusista tilauksista ilmoitetaan vain Kitchen Order Appissa.",
       "autoCallToggleAriaLabel": "Ota automaattinen puhelinhälytys käyttöön tai pois käytöstä",
       "autoCallFooterNote": "Jos uusi tilaus jää hyväksymättä noin 90 sekunniksi, soitamme automaattisesti ravintolasi puhelimeen, jotta et koskaan jää paitsi tilauksesta — vaikka tabletti olisi ilman valvontaa.",
       "autoCallEnabledToast": "Automaattinen puhelinhälytys otettu käyttöön.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Takaisin hallintaan",
       "pageTitle": "Automatisoitu puhelintilaus",
       "comingSoon": "Tulossa pian",
-      "pageSubtitle": "Tekoälyagentti vastaa ravintolasi puhelimeen 24/7, ottaa tilauksia ja lähettää ne suoraan keittiönäyttöösi.",
+      "pageSubtitle": "Tekoälyagentti, joka vastaa ravintolasi puhelimeen ympäri vuorokauden, ottaa tilauksia vastaan ja siirtää ne suoraan Kitchen Order Appiisi.",
       "heroBadge": "Aktiivisessa kehityksessä",
       "heroHeadline": "Älä koskaan menetä puhelintilauksia",
-      "heroBody": "Jokainen puhelu vastataan, jokainen tilaus otetaan, aina — jopa kiireisimpien ruuhka-aikojen aikana. Tekoälyagenttimme hoitaa puhelimen, jotta henkilökuntasi voi keskittyä ruokaan. Tilaukset virtaavat suoraan keittiönäyttöösi online-tilausten rinnalle. Asiakkaat saavat saman nopean, ystävällisen kokemuksen riippumatta siitä, napautatko vai puhutko.",
+      "heroBody": "Jokaiseen puheluun vastataan, jokainen tilaus otetaan vastaan, joka kerta – myös kiireisimmän ruuhkan aikana. Tekoälyagenttimme hoitaa puhelimen, jotta henkilökuntasi voi keskittyä ruokaan. Tilaukset siirtyvät suoraan Kitchen Order Appiisi verkkotilausten rinnalle. Asiakkaat saavat saman nopean ja ystävällisen kokemuksen riippumatta siitä, napauttavatko he vai puhuvatko.",
       "chip247": "Saatavilla 24/7",
       "chipMenuTrained": "Koulutettu ruokalistallesi",
       "chipNaturalConversation": "Luonteva keskustelu",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "Kuulostaa ihmiseltä",
       "featureVoiceBody": "Luonteva keskustelu, ei robottinen puhelinvalikko. Asiakkaat eivät tajua puhuvansa tekoälylle. Käsittelee aksentit, taustamelun ja väistämättömät \"odota, voitko muuttaa sen\".",
       "featureKitchenTitle": "Sama keittiövirta",
-      "featureKitchenBody": "Puhelintilaukset saapuvat olemassa olevaan keittiönäyttöösi online-tilausten rinnalle. Ei uutta sovellusta, ei uutta koulutusta — tiimisi hyväksyy ne samalla tavalla.",
+      "featureKitchenBody": "Puhelintilaukset päätyvät nykyiseen Kitchen Order Appiisi verkkotilausten rinnalle. Ei uutta sovellusta, ei uutta koulutusta – tiimisi hyväksyy ne samalla tavalla.",
       "statusHeading": "Missä tämä seisoo tänään",
       "statusBody1": "Rakennnamme perustan täysipainoisesti. Ääniagentki, Twilio-integraatio, keittiön luovutus — kaikki aktiivisessa kehityksessä. Odotamme ottavamme tämän käyttöön varhaisessa vaiheessa ravintoloissa pian pääalustan julkaisun jälkeen.",
       "statusBody2": "Kun se on valmis, voit tilata sen laskutussivultasi kuten minkä tahansa muun lisäosan. Siihen asti tämä sivu on vain ennakkoilmoitus sen tulosta.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0 % provisio tilauksista",
       "heroTitle": "Ota tilauksia verkossa ilman maksuja.",
-      "heroSubtitle": "Hallinnoi noutoa, toimitusta, pöytävarauksia ja keittiönäyttöä yhdestä paikasta. Pidä 100 % jokaisesta tilauksesta.",
+      "heroSubtitle": "Hallitse noutoa, toimitusta, pöytävarauksia ja Kitchen Order Appia yhdestä paikasta. Pidä 100 % jokaisesta tilauksesta.",
       "startTrial": "Aloita ilmaiseksi",
       "viewDemo": "Katso demo",
       "trustedBy": "Itsenäisten ravintoloiden luottama",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Keittiötoiminnot",
-        "display": "Keittiönäyttö",
+        "display": "Kitchen Order App",
         "displayDesc": "Tilaukset näkyvät keittiönäytöllä reaaliajassa tilapainikkeiden ja valmistusaikojen kanssa.",
         "printing": "Kuitin tulostus",
         "printingDesc": "Tulosta termotulostimille PrintNoden kautta — asiakas- ja keittiökuitit.",
@@ -4325,7 +4326,7 @@
         "Rajattomat verkko-tilaukset",
         "Asiakkaan tilaussivu",
         "Upotettava widget olemassa olevalle sivustollesi",
-        "Tilausten vastaanottosovellus (keittiönäyttö)",
+        "Kitchen Order App",
         "Hallintakojelauta",
         "Menurakentaja + kuvat",
         "Nouto, toimitus, ravintolassa syöminen, varaukset",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Rajattomat tilaukset",
         "Asiakkaan tilaussivu",
-        "Keittiönäyttö",
+        "Kitchen Order App",
         "Hallintakojelauta",
         "Sähköposti-ilmoitukset",
         "5+ kieltä",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Mitä kieliä tuetaan?",
-          "a": "Englanti, ranska, espanja, italia ja portugali — asiakastilaukset, keittiönäyttö, hallintapaneeli ja sähköpostit."
+          "a": "Englanti, ranska, espanja, italia ja portugali – asiakastilauksissa, Kitchen Order Appissa, hallintapaneelissa ja sähköposteissa."
         },
         {
           "q": "Voinko luoda tarjouksia?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Asiakkaan tilaaminen",
         "orderingDesc": "Selaa menua ja tee testitilaus asiakkaana.",
-        "kitchen": "Keittiönäyttö",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Katso saapuvat tilaukset keittiönäytöllä reaaliajassa.",
         "admin": "Hallintapaneeli",
         "adminDesc": "Hallinnoi menua, aukioloaikoja, tilauksia ja asetuksia ravintolan omistajana."

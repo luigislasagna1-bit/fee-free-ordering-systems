@@ -505,7 +505,7 @@
     "holdMinutesNote": "Hoiame teie lauda {minutes} min pärast broneeringu aega — palun saabuge õigeks ajaks."
   },
   "kitchen": {
-    "title": "Köögi ekraan",
+    "title": "Kitchen Order App",
     "newOrders": "Uued tellimused",
     "inProgress": "Töös",
     "ready": "Valmis",
@@ -595,7 +595,7 @@
     "refundExceeds": "Summa ületab tagasimakstava jäägi.",
     "refundFailed": "Tagasimakse ebaõnnestus. Palun proovi uuesti.",
     "refundSuccess": "Tagasimakse tehtud.",
-    "autoCallMessage": "Uus tellimus {number} restoranis {restaurant} ootab ja seda pole veel vastu võetud. Palun avage köögiekraan, et see vastu võtta või tagasi lükata.",
+    "autoCallMessage": "Uus tellimus {number} restoranis {restaurant} ootab ja pole veel vastu võetud. Palun ava oma Kitchen Order App, et see vastu võtta või tagasi lükata.",
     "outsideZoneNote": "See tellimus võib jääda väljapoole teie tavapärast tarnepiirkonda",
     "readyIn": "Valmis",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, one {# kohustuslik} other {# kohustuslikku}}",
       "comingSoonBadge": "Varsti",
       "mobileApp": "Mobiilirakendus",
-      "pointOfSale": "Müügipunkt"
+      "pointOfSale": "Müügipunkt",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Juhtpaneel",
@@ -761,7 +762,7 @@
       "deliveryFee": "Kojuveo tasu",
       "taxRate": "Maksumäär (%)",
       "language": "Keel",
-      "defaultLanguageLabel": "Vaikimisi keel kliendi tellimislehe, köögi ekraani ja administraatori jaoks",
+      "defaultLanguageLabel": "Teie klientide tellimuslehe, Kitchen Order App'i ja halduspaneeli vaikekeel",
       "languageHelp": "Kliendid saavad seda keelt tellimislehel olevast valijast muuta.",
       "infoPage": "Info leht",
       "reviewLink": "Google / Yelp arvustuste link",
@@ -773,7 +774,7 @@
       "faviconHelp": "Ruudukujuline ikoon, mis kuvatakse brauseri vahekaardil. Mitteruudukujulised pildid kärbitakse keskelt — ideaalne on 350×350 PNG.",
       "loadingMap": "Kaardi laadimine…",
       "kitchenSoundTitle": "Köögi märguandeheli",
-      "kitchenSoundHelp": "Laadi üles kohandatud helin uute tellimuste märguannete jaoks. Pärast salvestamist kuvatakse see kolmanda valikuna (koos valikutega <strong>GloriaFood Ding</strong> ja <strong>Klassikaline kelluke</strong>) köögiekraani heliseadetes. Parim tulemus: lühike 1–5-sekundiline klipp, alla 2 MB. MP3, WAV või OGG.",
+      "kitchenSoundHelp": "Laadi üles kohandatud helin uute tellimuste teavituste jaoks. Pärast salvestamist kuvatakse see kolmanda valikuna (kõrvuti valikutega <strong>GloriaFood Ding</strong> ja <strong>Classic Bell</strong>) Kitchen Order App'i heliseadetes. Parim tulemus: lühike 1–5-sekundiline klipp, alla 2 MB. MP3, WAV või OGG.",
       "kitchenSoundFileTooLarge": "Fail peab olema väiksem kui 2 MB.",
       "kitchenSoundWrongType": "Palun vali helifail (MP3, WAV või OGG).",
       "kitchenSoundUploadFailed": "Üleslaadimine ebaõnnestus",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "Salvestamine ebaõnnestus — palun proovi uuesti",
       "autoCallLabel": "Automaatne telefonikõne hoiatus",
       "autoCallStatusOn": "Sees — helistame teie telefonile, kui uut tellimust ei võeta vastu umbes 90 sekundi jooksul.",
-      "autoCallStatusOff": "Väljas — uutest tellimustest teavitatakse ainult köögiekraanil.",
+      "autoCallStatusOff": "Väljas — uutest tellimustest teavitab ainult Kitchen Order App.",
       "autoCallToggleAriaLabel": "Lülita automaatse telefonikõne hoiatus sisse või välja",
       "autoCallFooterNote": "Kui uus tellimus jääb umbes 90 sekundiks vastu võtmata, teeme automaatse kõne teie restorani telefonile, et te ei jätaks ühtegi tellimust kahe silma vahele — isegi kui tahvelarvuti on järelevalveta.",
       "autoCallEnabledToast": "Automaatne telefonikõne hoiatus on sisse lülitatud.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Tagasi haldusesse",
       "pageTitle": "Automaatne telefonitellimus",
       "comingSoon": "Tulemas",
-      "pageSubtitle": "Tehisintellekti agent, mis vastab teie restorani telefonile ööpäevaringselt, võtab tellimusi vastu ja saadab need otse teie köögiekraanile.",
+      "pageSubtitle": "Tehisintellekti agent, kes vastab teie restorani telefonile ööpäev läbi, võtab vastu tellimusi ja edastab need otse teie Kitchen Order App'i.",
       "heroBadge": "Aktiivses arenduses",
       "heroHeadline": "Ärge jätke enam ühtegi telefonitellimust vahele",
-      "heroBody": "Iga kõne vastatud, iga tellimus vastu võetud, alati — isegi teie kiirel tipptunnil. Meie tehisintellekti agent hoolitseb telefoni eest, et teie töötajad saaksid keskenduda toidule. Tellimused jõuavad otse teie köögiekraanile koos veebitellimustega. Kliendid saavad sama kiire ja sõbraliku kogemuse, kas nad puudutavad ekraani või räägivad.",
+      "heroBody": "Iga kõne vastatud, iga tellimus vastu võetud, iga kord — isegi kõige kiiremal tipptunnil. Meie tehisintellekti agent hoolitseb telefoni eest, et teie personal saaks keskenduda toidule. Tellimused liiguvad otse teie Kitchen Order App'i koos veebitellimustega. Kliendid saavad sama kiire ja sõbraliku kogemuse, olgu nad puudutavad ekraani või räägivad.",
       "chip247": "Saadaval ööpäevaringselt",
       "chipMenuTrained": "Koolitatud teie menüül",
       "chipNaturalConversation": "Loomulik vestlus",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "Kõlab inimlikult",
       "featureVoiceBody": "Loomulik vestlus, mitte roboti telefonipuu. Kliendid ei saa aru, et nad räägivad tehisintellektiga. Tuleb toime aksentide, taustamüra ja paratamatute \"oota, kas saad seda muuta\" olukordadega.",
       "featureKitchenTitle": "Sama köögivoog",
-      "featureKitchenBody": "Telefonitellimused jõuavad teie olemasolevale köögiekraanile koos veebitellimustega. Uut rakendust ega uut koolitust pole vaja — teie meeskond võtab need vastu samal viisil.",
+      "featureKitchenBody": "Telefonitellimused jõuavad teie olemasolevasse Kitchen Order App'i koos veebitellimustega. Ühtegi uut rakendust, ühtegi uut koolitust — teie meeskond võtab need vastu samal viisil.",
       "statusHeading": "Kus see täna seisab",
       "statusBody1": "Oleme põhjaliku arenduse keskel. Häälassistent, Twilio integratsioon, köögi üleandmine — kõik aktiivses arenduses. Ootame seda varsti pärast peaplatvormi käivitamist varajuurdepääsuga restoranidele väljaandmist.",
       "statusBody2": "Kui see on valmis, saate selle tellida arveldusleheküljelt nagu iga teise lisandmooduli. Seni on see leht lihtsalt eelteade, et see on tulemas.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0% komisjonitasu tellimustelt",
       "heroTitle": "Võta veebis tellimusi vastu ilma tasudeta.",
-      "heroSubtitle": "Halda järeletulemist, kojuvedu, laua broneeringuid ja köögi ekraani ühest kohast. Hoia 100% igast tellimusest.",
+      "heroSubtitle": "Halda järeletulemist, kohaletoimetamist, lauabroneeringuid ja Kitchen Order App'i ühest kohast. Säilita iga tellimuse 100%.",
       "startTrial": "Alusta tasuta",
       "viewDemo": "Vaata demot",
       "trustedBy": "Sõltumatute restoranide usaldusväärne partner",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Köögi toimingud",
-        "display": "Köögi ekraan",
+        "display": "Kitchen Order App",
         "displayDesc": "Tellimused ilmuvad reaalajas köögi ekraanile olekuklahvide ja ettevalmistusaegadega.",
         "printing": "Kviitungi printimine",
         "printingDesc": "Prindi termoprinteritele PrintNode kaudu — kliendi ja köögi kviitungid.",
@@ -4325,7 +4326,7 @@
         "Piiramatu arv veebitellimuseid",
         "Kliendi tellimisleht",
         "Manustav vidin olemasolevale saidile",
-        "Tellimuste vastuvõtu rakendus (köögi ekraan)",
+        "Kitchen Order App",
         "Administraatori juhtpaneel",
         "Menüü koostaja + fotod",
         "Järeletulek, kojuvedu, kohapeal söömine, broneeringud",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Piiramatu arv tellimusi",
         "Kliendi tellimisleht",
-        "Köögi ekraan",
+        "Kitchen Order App",
         "Administraatori juhtpaneel",
         "Meiliteavitused",
         "5+ keelt",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Milliseid keeli toetatakse?",
-          "a": "Inglise, prantsuse, hispaania, itaalia ja portugali — klientide tellimisel, köögi ekraanil, administraatoris ja meilides."
+          "a": "Inglise, prantsuse, hispaania, itaalia ja portugali keel — klientide tellimustes, Kitchen Order App'is, halduspaneelil ja e-kirjades."
         },
         {
           "q": "Kas saan kampaaniaid korraldada?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Kliendi tellimine",
         "orderingDesc": "Sirvi menüüd ja esita testtellimus kliendina.",
-        "kitchen": "Köögi ekraan",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Vaata saabuvaid tellimusi köögi ekraanil reaalajas.",
         "admin": "Administraatori paneel",
         "adminDesc": "Halda menüüd, lahtiolekuaegu, tellimusi ja seadeid restoranipidajana."

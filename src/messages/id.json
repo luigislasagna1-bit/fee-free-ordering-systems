@@ -505,7 +505,7 @@
     "holdMinutesNote": "Kami menahan meja Anda selama {minutes} mnt setelah waktu reservasi — mohon datang tepat waktu."
   },
   "kitchen": {
-    "title": "Tampilan Dapur",
+    "title": "Kitchen Order App",
     "newOrders": "Pesanan Baru",
     "inProgress": "Sedang Diproses",
     "ready": "Siap",
@@ -595,7 +595,7 @@
     "refundExceeds": "Jumlah melebihi saldo yang dapat dikembalikan.",
     "refundFailed": "Pengembalian dana gagal. Silakan coba lagi.",
     "refundSuccess": "Pengembalian dana diproses.",
-    "autoCallMessage": "Pesanan baru {number} di {restaurant} sedang menunggu dan belum diterima. Silakan buka layar dapur Anda untuk menerima atau menolaknya.",
+    "autoCallMessage": "Pesanan baru {number} di {restaurant} sedang menunggu dan belum diterima. Silakan buka Kitchen Order App Anda untuk menerima atau menolaknya.",
     "outsideZoneNote": "Pesanan ini mungkin berada di luar zona pengiriman reguler Anda",
     "readyIn": "Siap dalam",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, other {# wajib}}",
       "comingSoonBadge": "Segera",
       "mobileApp": "Aplikasi seluler",
-      "pointOfSale": "Titik penjualan"
+      "pointOfSale": "Titik penjualan",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Dasbor",
@@ -761,7 +762,7 @@
       "deliveryFee": "Biaya Pengiriman",
       "taxRate": "Tarif Pajak (%)",
       "language": "Bahasa",
-      "defaultLanguageLabel": "Bahasa default untuk halaman pemesanan pelanggan, tampilan dapur, dan panel admin Anda",
+      "defaultLanguageLabel": "Bahasa default untuk halaman pemesanan pelanggan, Kitchen Order App, dan panel admin Anda",
       "languageHelp": "Pelanggan dapat mengganti bahasa ini dengan pemilih di halaman pemesanan Anda.",
       "infoPage": "Halaman Info",
       "reviewLink": "Tautan Ulasan Google / Yelp",
@@ -773,7 +774,7 @@
       "faviconHelp": "Ikon persegi yang ditampilkan di tab browser. Gambar yang tidak persegi akan dipotong ke bagian tengah — PNG 350×350 adalah ukuran yang ideal.",
       "loadingMap": "Memuat peta…",
       "kitchenSoundTitle": "Suara Peringatan Dapur",
-      "kitchenSoundHelp": "Unggah suara dering khusus untuk peringatan pesanan baru. Setelah disimpan, suara ini muncul sebagai opsi ketiga (bersama <strong>GloriaFood Ding</strong> dan <strong>Bel Klasik</strong>) di Pengaturan Suara pada Kitchen Display. Hasil terbaik: klip pendek 1–5 detik, di bawah 2 MB. MP3, WAV, atau OGG.",
+      "kitchenSoundHelp": "Unggah suara dering khusus untuk peringatan pesanan baru. Setelah disimpan, suara itu muncul sebagai opsi ketiga (di samping <strong>GloriaFood Ding</strong> dan <strong>Classic Bell</strong>) di Pengaturan Suara Kitchen Order App. Hasil terbaik: klip pendek 1–5 detik, di bawah 2 MB. MP3, WAV, atau OGG.",
       "kitchenSoundFileTooLarge": "Berkas harus di bawah 2 MB.",
       "kitchenSoundWrongType": "Silakan pilih berkas audio (MP3, WAV, atau OGG).",
       "kitchenSoundUploadFailed": "Pengunggahan gagal",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "Gagal menyimpan — silakan coba lagi",
       "autoCallLabel": "Peringatan panggilan telepon otomatis",
       "autoCallStatusOn": "Aktif — kami menelepon Anda jika pesanan baru tidak diterima dalam waktu sekitar 90 detik.",
-      "autoCallStatusOff": "Nonaktif — pesanan baru hanya diberi tahu di layar dapur.",
+      "autoCallStatusOff": "Nonaktif — pesanan baru hanya memberi peringatan di Kitchen Order App.",
       "autoCallToggleAriaLabel": "Alihkan peringatan panggilan telepon otomatis",
       "autoCallFooterNote": "Jika pesanan baru belum diterima selama sekitar 90 detik, kami melakukan panggilan otomatis ke telepon restoran Anda agar Anda tidak pernah melewatkan pesanan — bahkan jika tablet tidak diawasi.",
       "autoCallEnabledToast": "Peringatan panggilan telepon otomatis diaktifkan.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Kembali ke admin",
       "pageTitle": "Pemesanan Telepon Otomatis",
       "comingSoon": "Segera Hadir",
-      "pageSubtitle": "Agen AI yang menjawab telepon restoran Anda 24/7, menerima pesanan, dan langsung memasukkannya ke tampilan dapur Anda.",
+      "pageSubtitle": "Agen AI yang menjawab telepon restoran Anda 24/7, menerima pesanan, dan langsung memasukkannya ke Kitchen Order App Anda.",
       "heroBadge": "Dalam pengembangan aktif",
       "heroHeadline": "Jangan pernah melewatkan pesanan telepon lagi",
-      "heroBody": "Setiap panggilan dijawab, setiap pesanan diterima, setiap saat — bahkan saat jam tersibuk. Agen AI kami menangani telepon agar staf Anda bisa fokus pada makanan. Pesanan langsung masuk ke tampilan dapur Anda bersama pesanan online. Pelanggan mendapat pengalaman cepat dan ramah yang sama baik mereka mengetuk maupun berbicara.",
+      "heroBody": "Setiap panggilan dijawab, setiap pesanan diterima, setiap saat — bahkan saat jam tersibuk Anda. Agen AI kami menangani telepon agar staf Anda dapat fokus pada makanan. Pesanan mengalir langsung ke Kitchen Order App Anda bersama pesanan online. Pelanggan mendapatkan pengalaman cepat dan ramah yang sama, baik mereka mengetuk maupun berbicara.",
       "chip247": "Tersedia 24/7",
       "chipMenuTrained": "Terlatih pada menu Anda",
       "chipNaturalConversation": "Percakapan natural",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "Terdengar seperti manusia",
       "featureVoiceBody": "Percakapan natural, bukan pohon telepon robotik. Pelanggan tidak akan menyadari mereka berbicara dengan AI. Menangani aksen, kebisingan latar belakang, dan permintaan yang tak terhindarkan \"tunggu, bisa ganti itu jadi\".",
       "featureKitchenTitle": "Alur dapur yang sama",
-      "featureKitchenBody": "Pesanan telepon masuk ke tampilan dapur Anda yang sudah ada bersama pesanan online. Tidak ada aplikasi baru, tidak ada pelatihan baru — tim Anda menerimanya dengan cara yang sama.",
+      "featureKitchenBody": "Pesanan telepon masuk ke Kitchen Order App Anda yang sudah ada bersama pesanan online. Tanpa aplikasi baru, tanpa pelatihan baru — tim Anda menerimanya dengan cara yang sama.",
       "statusHeading": "Status saat ini",
       "statusBody1": "Kami sedang membangun fondasinya. Agen suara, integrasi Twilio, serah terima ke dapur — semua dalam pengembangan aktif. Kami berharap dapat meluncurkan ini ke restoran akses awal segera setelah platform utama diluncurkan.",
       "statusBody2": "Ketika sudah siap, Anda akan dapat berlangganannya dari halaman penagihan seperti add-on lainnya. Hingga saat itu, halaman ini hanya pemberitahuan bahwa fitur ini akan segera hadir.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0% komisi pesanan",
       "heroTitle": "Terima pesanan online tanpa biaya.",
-      "heroSubtitle": "Kelola pengambilan, pengiriman, reservasi meja, dan tampilan dapur dari satu tempat. Simpan 100% setiap pesanan.",
+      "heroSubtitle": "Jalankan pickup, pengiriman, reservasi meja, dan Kitchen Order App dari satu tempat. Pertahankan 100% dari setiap pesanan.",
       "startTrial": "Mulai Gratis",
       "viewDemo": "Lihat Demo",
       "trustedBy": "Dipercaya oleh restoran independen",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Operasional dapur",
-        "display": "Tampilan dapur",
+        "display": "Kitchen Order App",
         "displayDesc": "Pesanan muncul secara langsung di layar dapur dengan tombol status dan waktu persiapan.",
         "printing": "Cetak kwitansi",
         "printingDesc": "Cetak ke printer termal melalui PrintNode — kwitansi pelanggan dan dapur.",
@@ -4325,7 +4326,7 @@
         "Pesanan online tanpa batas",
         "Halaman pemesanan pelanggan",
         "Widget yang dapat disematkan untuk situs Anda yang sudah ada",
-        "Aplikasi penerima pesanan (tampilan dapur)",
+        "Kitchen Order App",
         "Dasbor admin",
         "Pembuat menu + foto",
         "Pengambilan, pengiriman, makan di tempat, reservasi",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Pesanan tanpa batas",
         "Halaman pemesanan pelanggan",
-        "Tampilan dapur",
+        "Kitchen Order App",
         "Dasbor admin",
         "Notifikasi email",
         "5+ bahasa",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Bahasa apa yang didukung?",
-          "a": "Inggris, Prancis, Spanyol, Italia, dan Portugis — di seluruh pemesanan pelanggan, tampilan dapur, panel admin, dan email."
+          "a": "Inggris, Prancis, Spanyol, Italia, dan Portugis — di seluruh pemesanan pelanggan, Kitchen Order App, panel admin, dan email."
         },
         {
           "q": "Bisakah saya menjalankan promosi?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Pemesanan Pelanggan",
         "orderingDesc": "Jelajahi menu dan tempatkan pesanan uji sebagai pelanggan.",
-        "kitchen": "Tampilan Dapur",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Lihat pesanan masuk di layar dapur secara real time.",
         "admin": "Panel Admin",
         "adminDesc": "Kelola menu, jam, pesanan, dan pengaturan sebagai pemilik restoran."

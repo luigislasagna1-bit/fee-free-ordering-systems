@@ -505,7 +505,7 @@
     "holdMinutesNote": "予約時間から{minutes}分間お席をお取り置きします — 時間どおりにお越しください。"
   },
   "kitchen": {
-    "title": "キッチンディスプレイ",
+    "title": "Kitchen Order App",
     "newOrders": "新規注文",
     "inProgress": "調理中",
     "ready": "準備完了",
@@ -595,7 +595,7 @@
     "refundExceeds": "金額が返金可能残高を超えています。",
     "refundFailed": "返金に失敗しました。もう一度お試しください。",
     "refundSuccess": "返金を処理しました。",
-    "autoCallMessage": "{restaurant}の新しい注文 {number} が承認待ちです。キッチンディスプレイを開いて、承認または拒否してください。",
+    "autoCallMessage": "{restaurant} の新規注文 {number} が保留中で、まだ受け付けられていません。Kitchen Order App を開いて、注文を受け付けるか拒否してください。",
     "outsideZoneNote": "この注文は通常の配達エリア外の可能性があります",
     "readyIn": "あと",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, other {必須 #件}}",
       "comingSoonBadge": "近日公開",
       "mobileApp": "モバイルアプリ",
-      "pointOfSale": "POSレジ"
+      "pointOfSale": "POSレジ",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "ダッシュボード",
@@ -761,7 +762,7 @@
       "deliveryFee": "配達料（$）",
       "taxRate": "税率（%）",
       "language": "言語",
-      "defaultLanguageLabel": "顧客の注文ページ、キッチンディスプレイ、管理パネルのデフォルト言語",
+      "defaultLanguageLabel": "顧客の注文ページ、Kitchen Order App、管理パネルのデフォルト言語",
       "languageHelp": "顧客は注文ページの言語選択で変更できます。",
       "infoPage": "情報ページ",
       "reviewLink": "Google / Yelp レビューリンク",
@@ -773,7 +774,7 @@
       "faviconHelp": "ブラウザのタブに表示される正方形のアイコンです。正方形でない画像は中央でトリミングされます — 350×350のPNGが最適です。",
       "loadingMap": "マップを読み込み中…",
       "kitchenSoundTitle": "キッチン通知音",
-      "kitchenSoundHelp": "新規注文の通知用にカスタム着信音をアップロードできます。保存すると、キッチンディスプレイのサウンド設定で（<strong>GloriaFood Ding</strong>と<strong>クラシックベル</strong>に加えて）3つ目の選択肢として表示されます。推奨：1〜5秒程度の短いクリップで、2MB未満。MP3、WAV、またはOGG形式。",
+      "kitchenSoundHelp": "新規注文アラート用のカスタム着信音をアップロードします。保存すると、Kitchen Order App のサウンド設定に 3 つ目の選択肢として（<strong>GloriaFood Ding</strong> と <strong>Classic Bell</strong> と並んで）表示されます。最適な条件: 1〜5 秒の短いクリップ、2 MB 未満。MP3、WAV、または OGG。",
       "kitchenSoundFileTooLarge": "ファイルは2MB未満にしてください。",
       "kitchenSoundWrongType": "オーディオファイル（MP3、WAV、またはOGG）を選択してください。",
       "kitchenSoundUploadFailed": "アップロードに失敗しました",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "保存に失敗しました — もう一度お試しください",
       "autoCallLabel": "自動電話通知",
       "autoCallStatusOn": "オン — 新しい注文が約90秒以内に承認されない場合、お店の電話に発信します。",
-      "autoCallStatusOff": "オフ — 新しい注文はキッチンディスプレイのみで通知されます。",
+      "autoCallStatusOff": "オフ — 新規注文は Kitchen Order App でのみアラートします。",
       "autoCallToggleAriaLabel": "自動電話通知の切り替え",
       "autoCallFooterNote": "新しい注文が約90秒間承認されないままだと、お店の電話に自動で発信します。タブレットから目を離していても、注文を見逃すことはありません。",
       "autoCallEnabledToast": "自動電話通知を有効にしました。",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "管理画面に戻る",
       "pageTitle": "自動電話注文",
       "comingSoon": "近日公開",
-      "pageSubtitle": "24時間365日レストランの電話に応答し、注文を受け付けてキッチンディスプレイに直接送信する AI エージェント。",
+      "pageSubtitle": "レストランの電話に 24 時間 365 日対応し、注文を受け、そのまま Kitchen Order App に取り込む AI エージェントです。",
       "heroBadge": "開発中",
       "heroHeadline": "電話注文を取り逃さない",
-      "heroBody": "すべての通話に応答し、すべての注文を受け付け、どんな混雑時でも対応 — スタッフが料理に集中できるように AI エージェントが電話を担当します。注文はオンライン注文と並んでキッチンディスプレイに直接届きます。顧客はタップでも会話でも同じ迅速で丁寧な体験を得られます。",
+      "heroBody": "すべての電話に応答し、すべての注文を受け、毎回確実に — 最も忙しいピーク時でも。当社の AI エージェントが電話に対応するので、スタッフは料理に集中できます。注文はオンライン注文とともに Kitchen Order App に直接流れ込みます。お客様はタップでも通話でも、同じように迅速でフレンドリーな体験を得られます。",
       "chip247": "24時間365日対応",
       "chipMenuTrained": "メニューを学習済み",
       "chipNaturalConversation": "自然な会話",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "人間らしい声",
       "featureVoiceBody": "機械的な自動応答ではなく、自然な会話。顧客は AI と話していることに気づきません。アクセント、背景ノイズ、「ちょっと待って、それを変えてください」にも対応します。",
       "featureKitchenTitle": "同じキッチンフロー",
-      "featureKitchenBody": "電話注文はオンライン注文と並んで既存のキッチンディスプレイに届きます。新しいアプリも、新しいトレーニングも不要 — スタッフは同じ方法で受け付けます。",
+      "featureKitchenBody": "電話注文はオンライン注文とともに、既存の Kitchen Order App に届きます。新しいアプリも新しい研修も不要 — チームは同じ方法で注文を受け付けます。",
       "statusHeading": "現在の開発状況",
       "statusBody1": "基盤構築に集中して取り組んでいます。音声エージェント、Twilio 統合、キッチンへの受け渡し — すべて開発中です。メインプラットフォームのローンチ後まもなく早期アクセスのレストランに展開する予定です。",
       "statusBody2": "準備ができたら、他のアドオンと同様に請求ページから購読できるようになります。それまでこのページは予告のためのものです。",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "注文手数料 0%",
       "heroTitle": "手数料なしでオンライン注文を受け付けよう。",
-      "heroSubtitle": "テイクアウト、デリバリー、テーブル予約、キッチンディスプレイを1か所で管理。すべての注文を100%手元に。",
+      "heroSubtitle": "テイクアウト、配達、テーブル予約、そして Kitchen Order App を 1 か所で運用。すべての注文の 100% を確保します。",
       "startTrial": "無料で始める",
       "viewDemo": "デモを見る",
       "trustedBy": "独立系レストランに信頼されています",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "キッチン業務",
-        "display": "キッチンディスプレイ",
+        "display": "Kitchen Order App",
         "displayDesc": "注文がリアルタイムでキッチン画面に表示され、ステータスボタンと調理時間も確認できます。",
         "printing": "レシート印刷",
         "printingDesc": "PrintNode 経由でサーマルプリンターに印刷 — 顧客用とキッチン用のレシート。",
@@ -4325,7 +4326,7 @@
         "注文数無制限",
         "顧客注文ページ",
         "既存サイトに埋め込み可能なウィジェット",
-        "注文受付アプリ（キッチンディスプレイ）",
+        "Kitchen Order App",
         "管理ダッシュボード",
         "メニュービルダー＋写真",
         "テイクアウト、デリバリー、店内飲食、予約",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "注文数無制限",
         "顧客注文ページ",
-        "キッチンディスプレイ",
+        "Kitchen Order App",
         "管理ダッシュボード",
         "メール通知",
         "5か国語以上対応",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "対応言語は何ですか？",
-          "a": "英語、フランス語、スペイン語、イタリア語、ポルトガル語 — 顧客注文、キッチンディスプレイ、管理パネル、メールすべてに対応。"
+          "a": "英語、フランス語、スペイン語、イタリア語、ポルトガル語 — 顧客の注文、Kitchen Order App、管理パネル、メールにわたって対応。"
         },
         {
           "q": "プロモーションは実施できますか？",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "顧客注文",
         "orderingDesc": "メニューを閲覧してテスト注文を行ってください。",
-        "kitchen": "キッチンディスプレイ",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "リアルタイムでキッチン画面に注文が届く様子を確認。",
         "admin": "管理パネル",
         "adminDesc": "レストランオーナーとしてメニュー、営業時間、注文、設定を管理。"

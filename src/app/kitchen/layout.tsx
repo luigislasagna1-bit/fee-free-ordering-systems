@@ -11,7 +11,7 @@ import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 // so installing it from the browser pins an icon that always opens straight
 // into the kitchen display (not the marketing site or customer order page).
 export const metadata: Metadata = {
-  title: "Kitchen Display",
+  title: "Kitchen Order App",
   manifest: "/manifest-kitchen.webmanifest",
   appleWebApp: {
     capable: true,

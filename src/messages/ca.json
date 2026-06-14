@@ -505,7 +505,7 @@
     "holdMinutesNote": "Reservem la teva taula {minutes} min després de l'hora de la reserva — si us plau, arriba puntual."
   },
   "kitchen": {
-    "title": "Pantalla de cuina",
+    "title": "Kitchen Order App",
     "newOrders": "Comandes noves",
     "inProgress": "En curs",
     "ready": "Llest",
@@ -595,7 +595,7 @@
     "refundExceeds": "L'import supera el saldo reemborsable.",
     "refundFailed": "El reemborsament ha fallat. Torneu-ho a provar.",
     "refundSuccess": "Reemborsament emès.",
-    "autoCallMessage": "La comanda nova {number} a {restaurant} està esperant i encara no s'ha acceptat. Si us plau, obriu la pantalla de cuina per acceptar-la o rebutjar-la.",
+    "autoCallMessage": "La nova comanda {number} a {restaurant} està en espera i encara no s'ha acceptat. Obre la teva Kitchen Order App per acceptar-la o rebutjar-la.",
     "outsideZoneNote": "Aquesta comanda pot estar fora de la teva zona de repartiment habitual",
     "readyIn": "A punt en",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, one {# obligatori} other {# obligatoris}}",
       "comingSoonBadge": "Aviat",
       "mobileApp": "App mòbil",
-      "pointOfSale": "Punt de venda"
+      "pointOfSale": "Punt de venda",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Tauler de control",
@@ -761,7 +762,7 @@
       "deliveryFee": "Tarifa de lliurament",
       "taxRate": "Taxa d'impost (%)",
       "language": "Idioma",
-      "defaultLanguageLabel": "Idioma predeterminat per a la pàgina de comandes dels clients, la pantalla de cuina i el panell d'administració",
+      "defaultLanguageLabel": "Idioma predeterminat per a la teva pàgina de comandes de clients, la Kitchen Order App i el panell d'administració",
       "languageHelp": "Els clients poden canviar l'idioma amb el selector de la pàgina de comandes.",
       "infoPage": "Pàgina d'informació",
       "reviewLink": "Enllaç a ressenya de Google / Yelp",
@@ -773,7 +774,7 @@
       "faviconHelp": "Icona quadrada que es mostra a la pestanya del navegador. Les imatges no quadrades es retallen pel centre — un PNG de 350×350 és ideal.",
       "loadingMap": "S'està carregant el mapa…",
       "kitchenSoundTitle": "So d'avís de la cuina",
-      "kitchenSoundHelp": "Puja un to personalitzat per als avisos de comandes noves. Un cop desat, apareix com a tercera opció (juntament amb <strong>So GloriaFood</strong> i <strong>Campana clàssica</strong>) a la configuració de so de la pantalla de cuina. Per a un resultat òptim: un clip curt d'1 a 5 segons, de menys de 2 MB. MP3, WAV o OGG.",
+      "kitchenSoundHelp": "Penja un so de timbre personalitzat per a les alertes de noves comandes. Un cop desat, apareix com a tercera opció (al costat de <strong>GloriaFood Ding</strong> i <strong>Classic Bell</strong>) a la configuració de so de la Kitchen Order App. Per a millors resultats: un clip curt d'1 a 5 segons, de menys de 2 MB. MP3, WAV o OGG.",
       "kitchenSoundFileTooLarge": "El fitxer ha de ser de menys de 2 MB.",
       "kitchenSoundWrongType": "Tria un fitxer d'àudio (MP3, WAV o OGG).",
       "kitchenSoundUploadFailed": "La pujada ha fallat",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "No s'ha pogut desar — torneu-ho a intentar",
       "autoCallLabel": "Alerta de trucada telefònica automàtica",
       "autoCallStatusOn": "Activada: us truquem al telèfon si una comanda nova no s'accepta en uns 90 segons.",
-      "autoCallStatusOff": "Desactivada: les comandes noves només avisen a la pantalla de cuina.",
+      "autoCallStatusOff": "Desactivat — les noves comandes només s'avisen a la Kitchen Order App.",
       "autoCallToggleAriaLabel": "Activa o desactiva l'alerta de trucada telefònica automàtica",
       "autoCallFooterNote": "Si una comanda nova queda sense acceptar durant uns 90 segons, fem una trucada automàtica al telèfon del restaurant perquè no perdeu mai cap comanda, fins i tot si la tauleta està desatesa.",
       "autoCallEnabledToast": "Alerta de trucada telefònica automàtica activada.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Tornar a l'administrador",
       "pageTitle": "Comandes telefòniques automatitzades",
       "comingSoon": "Pròximament",
-      "pageSubtitle": "Un agent d'IA que respon el telèfon del teu restaurant 24/7, pren comandes i les envia directament al teu visualitzador de cuina.",
+      "pageSubtitle": "Un agent d'IA que respon el telèfon del teu restaurant les 24 hores del dia, els 7 dies de la setmana, pren les comandes i les envia directament a la teva Kitchen Order App.",
       "heroBadge": "En desenvolupament actiu",
       "heroHeadline": "No et perdis cap comanda telefònica",
-      "heroBody": "Cada trucada atesa, cada comanda presa, sempre — fins i tot durant els moments de màxima afluència. El nostre agent d'IA s'encarrega del telèfon perquè el teu equip pugui centrar-se en el menjar. Les comandes arriben directament al teu visualitzador de cuina juntament amb les comandes en línia. Els clients gaudeixen d'una experiència ràpida i amigable tant si truquen com si fan comandes en línia.",
+      "heroBody": "Cada trucada atesa, cada comanda presa, sempre — fins i tot durant les hores de més activitat. El nostre agent d'IA gestiona el telèfon perquè el teu personal es pugui concentrar en el menjar. Les comandes arriben directament a la teva Kitchen Order App, al costat de les comandes en línia. Els clients gaudeixen de la mateixa experiència ràpida i agradable, tant si demanen amb un toc com parlant.",
       "chip247": "Disponible 24/7",
       "chipMenuTrained": "Entrenat amb el teu menú",
       "chipNaturalConversation": "Conversa natural",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "Sona com una persona",
       "featureVoiceBody": "Conversa natural, no un arbre de telèfon robòtic. Els clients no s'adonaran que parlen amb una IA. Gestiona accents, soroll de fons i el inevitable «espera, puc canviar-ho?».",
       "featureKitchenTitle": "El mateix flux de cuina",
-      "featureKitchenBody": "Les comandes telefòniques arriben al teu visualitzador de cuina existent juntament amb les comandes en línia. Cap app nova, cap formació nova — el teu equip les accepta de la mateixa manera.",
+      "featureKitchenBody": "Les comandes telefòniques arriben a la teva Kitchen Order App actual, al costat de les comandes en línia. Sense cap aplicació nova ni cap formació nova: el teu equip les accepta de la mateixa manera.",
       "statusHeading": "On som avui",
       "statusBody1": "Estem treballant de valent en els fonaments. L'agent de veu, la integració amb Twilio, el traspàs a cuina — tot en desenvolupament actiu. Esperem llançar-ho a restaurants d'accés anticipat aviat després del llançament de la plataforma principal.",
       "statusBody2": "Quan estigui llest, podràs subscriure't des de la teva pàgina de facturació com qualsevol altre complement. Fins llavors, aquesta pàgina és simplement un avis que s'acosta.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0% de comissió en les comandes",
       "heroTitle": "Accepteu comandes en línia sense comissions.",
-      "heroSubtitle": "Gestioneu recollides, lliuraments, reserves de taula i una pantalla de cuina des d'un sol lloc. Quedeu-vos el 100% de cada comanda.",
+      "heroSubtitle": "Gestiona la recollida, el lliurament, les reserves de taula i la Kitchen Order App des d'un sol lloc. Conserva el 100 % de cada comanda.",
       "startTrial": "Comença gratis",
       "viewDemo": "Veure la demo",
       "trustedBy": "De confiança per a restaurants independents",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Operacions de cuina",
-        "display": "Pantalla de cuina",
+        "display": "Kitchen Order App",
         "displayDesc": "Les comandes apareixen en directe a la pantalla de cuina amb botons d'estat i temps de preparació.",
         "printing": "Impressió de rebuts",
         "printingDesc": "Imprimiu en impressores tèrmiques via PrintNode — rebuts per al client i la cuina.",
@@ -4325,7 +4326,7 @@
         "Comandes en línia il·limitades",
         "Pàgina de comandes per als clients",
         "Widget integrable per al vostre lloc web existent",
-        "App de gestió de comandes (pantalla de cuina)",
+        "Kitchen Order App",
         "Tauler d'administració",
         "Constructor de carta + fotos",
         "Recollida, lliurament, taula, reserves",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Comandes il·limitades",
         "Pàgina de comandes dels clients",
-        "Pantalla de cuina",
+        "Kitchen Order App",
         "Tauler d'administració",
         "Notificacions per correu electrònic",
         "5+ idiomes",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Quins idiomes s'admeten?",
-          "a": "Anglès, francès, espanyol, italià i portuguès — en la pàgina de comandes dels clients, la pantalla de cuina, el panell d'administració i els correus."
+          "a": "Anglès, francès, espanyol, italià i portuguès — a les comandes de clients, la Kitchen Order App, el panell d'administració i els correus electrònics."
         },
         {
           "q": "Puc fer promocions?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Comandes dels clients",
         "orderingDesc": "Navegueu per la carta i feu una comanda de prova com a client.",
-        "kitchen": "Pantalla de cuina",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Veieu les comandes entrants a la pantalla de cuina en temps real.",
         "admin": "Panell d'administració",
         "adminDesc": "Gestioneu la carta, els horaris, les comandes i la configuració com a propietari del restaurant."

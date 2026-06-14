@@ -505,7 +505,7 @@
     "holdMinutesNote": "Mēs paturam jūsu galdiņu {minutes} min pēc rezervācijas laika — lūdzu, ierodieties laikā."
   },
   "kitchen": {
-    "title": "Virtuves ekrāns",
+    "title": "Kitchen Order App",
     "newOrders": "Jauni pasūtījumi",
     "inProgress": "Gatavošanā",
     "ready": "Gatavs",
@@ -595,7 +595,7 @@
     "refundExceeds": "Summa pārsniedz atmaksājamo atlikumu.",
     "refundFailed": "Atmaksa neizdevās. Lūdzu, mēģiniet vēlreiz.",
     "refundSuccess": "Atmaksa veikta.",
-    "autoCallMessage": "Jauns pasūtījums {number} restorānā {restaurant} gaida un vēl nav pieņemts. Lūdzu, atveriet virtuves displeju, lai to pieņemtu vai noraidītu.",
+    "autoCallMessage": "Jaunais pasūtījums {number} restorānā {restaurant} gaida un vēl nav pieņemts. Lūdzu, atveriet savu Kitchen Order App, lai to pieņemtu vai noraidītu.",
     "outsideZoneNote": "Šis pasūtījums var būt ārpus jūsu parastās piegādes zonas",
     "readyIn": "Gatavs pēc",
     "asap": "Tūlīt",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, zero {# obligātu} one {# obligāts} other {# obligāti}}",
       "comingSoonBadge": "Drīzumā",
       "mobileApp": "Mobilā lietotne",
-      "pointOfSale": "Pārdošanas punkts"
+      "pointOfSale": "Pārdošanas punkts",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Panelis",
@@ -761,7 +762,7 @@
       "deliveryFee": "Piegādes maksa",
       "taxRate": "Nodokļa likme (%)",
       "language": "Valoda",
-      "defaultLanguageLabel": "Noklusētā valoda klientu pasūtīšanas lapai, virtuves ekrānam un administratora panelim",
+      "defaultLanguageLabel": "Noklusējuma valoda jūsu klientu pasūtīšanas lapai, Kitchen Order App un administratora panelim",
       "languageHelp": "Klienti var mainīt šo valodu ar izvēles rīku jūsu pasūtīšanas lapā.",
       "infoPage": "Informācijas lapa",
       "reviewLink": "Google / Yelp atsauksmju saite",
@@ -773,7 +774,7 @@
       "faviconHelp": "Kvadrātveida ikona, kas redzama pārlūkprogrammas cilnē. Nekvadrātveida attēli tiek apgriezti no centra — ideāls variants ir 350×350 PNG.",
       "loadingMap": "Ielādē karti…",
       "kitchenSoundTitle": "Virtuves brīdinājuma skaņa",
-      "kitchenSoundHelp": "Augšupielādējiet pielāgotu zvana skaņu jaunu pasūtījumu brīdinājumiem. Pēc saglabāšanas tā parādīsies kā trešā iespēja (līdzās <strong>GloriaFood zvanam</strong> un <strong>klasiskajam zvanam</strong>) virtuves displeja skaņas iestatījumos. Labākais rezultāts: īss 1–5 sekunžu klips, mazāks par 2 MB. MP3, WAV vai OGG.",
+      "kitchenSoundHelp": "Augšupielādējiet pielāgotu zvana skaņu jaunu pasūtījumu paziņojumiem. Pēc saglabāšanas tā parādās kā trešā iespēja (līdzās <strong>GloriaFood Ding</strong> un <strong>Classic Bell</strong>) Kitchen Order App skaņas iestatījumos. Labākais rezultāts: īss 1–5 sekunžu klips, mazāks par 2 MB. MP3, WAV vai OGG.",
       "kitchenSoundFileTooLarge": "Failam jābūt mazākam par 2 MB.",
       "kitchenSoundWrongType": "Lūdzu, izvēlieties audio failu (MP3, WAV vai OGG).",
       "kitchenSoundUploadFailed": "Augšupielāde neizdevās",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "Neizdevās saglabāt — lūdzu, mēģiniet vēlreiz",
       "autoCallLabel": "Automātiskā tālruņa zvana brīdinājums",
       "autoCallStatusOn": "Ieslēgts — mēs piezvanām uz jūsu tālruni, ja jauns pasūtījums netiek pieņemts aptuveni 90 sekunžu laikā.",
-      "autoCallStatusOff": "Izslēgts — par jauniem pasūtījumiem brīdina tikai virtuves displejs.",
+      "autoCallStatusOff": "Izslēgts — par jauniem pasūtījumiem paziņo tikai Kitchen Order App.",
       "autoCallToggleAriaLabel": "Pārslēgt automātiskā tālruņa zvana brīdinājumu",
       "autoCallFooterNote": "Ja jauns pasūtījums paliek nepieņemts aptuveni 90 sekundes, mēs veicam automātisku zvanu uz jūsu restorāna tālruni, lai jūs nekad nepalaistu garām pasūtījumu — pat ja planšete ir bez uzraudzības.",
       "autoCallEnabledToast": "Automātiskā tālruņa zvana brīdinājums ieslēgts.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Atpakaļ uz administrāciju",
       "pageTitle": "Automatizēti telefona pasūtījumi",
       "comingSoon": "Drīzumā",
-      "pageSubtitle": "Mākslīgā intelekta aģents, kas atbild uz jūsu restorāna tālruņa zvaniem 24/7, pieņem pasūtījumus un tos tieši nosūta uz jūsu virtuves displeju.",
+      "pageSubtitle": "MI aģents, kas atbild uz jūsu restorāna tālruni visu diennakti, pieņem pasūtījumus un nosūta tos tieši uz jūsu Kitchen Order App.",
       "heroBadge": "Aktīvā izstrādē",
       "heroHeadline": "Nekad vairs nepalaidiet garām nevienu telefona pasūtījumu",
-      "heroBody": "Katrs zvans atbildēts, katrs pasūtījums pieņemts, vienmēr — pat visaizņemtākajā laikā. Mūsu MI aģents apstrādā tālruni, lai darbinieki var koncentrēties uz ēdienu. Pasūtījumi tieši nonāk jūsu virtuves displejā kopā ar tiešsaistes pasūtījumiem. Klienti saņem tādu pašu ātru, draudzīgu pieredzi, vai nu nospiežot vai runājot.",
+      "heroBody": "Katrs zvans atbildēts, katrs pasūtījums pieņemts, ikreiz — pat vislielākajā noslodzes laikā. Mūsu MI aģents rūpējas par tālruni, lai jūsu personāls varētu koncentrēties uz ēdienu. Pasūtījumi nonāk tieši jūsu Kitchen Order App kopā ar tiešsaistes pasūtījumiem. Klienti saņem to pašu ātro un draudzīgo pieredzi neatkarīgi no tā, vai viņi pieskaras ekrānam vai runā.",
       "chip247": "Pieejams 24/7",
       "chipMenuTrained": "Apmācīts uz jūsu izvēlni",
       "chipNaturalConversation": "Dabiska saruna",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "Izklausās cilvēciski",
       "featureVoiceBody": "Dabiska saruna, nevis robots telefona kokā. Klienti nepamanīs, ka runā ar MI. Tiek apstrādāti akcenti, fona troksnis un neizbēgamais \"uzgaidiet, vai varat to mainīt uz\".",
       "featureKitchenTitle": "Tāda pati virtuves plūsma",
-      "featureKitchenBody": "Telefona pasūtījumi nonāk jūsu esošajā virtuves displejā kopā ar tiešsaistes pasūtījumiem. Nav jaunas lietotnes, nav jauna apmācības — jūsu komanda tos pieņem tāpat.",
+      "featureKitchenBody": "Telefoniskie pasūtījumi nonāk jūsu esošajā Kitchen Order App kopā ar tiešsaistes pasūtījumiem. Nekādas jaunas lietotnes, nekādas jaunas apmācības — jūsu komanda tos pieņem tādā pašā veidā.",
       "statusHeading": "Pašreizējais stāvoklis",
       "statusBody1": "Mēs intensīvi veidojam pamatu. Balss aģents, Twilio integrācija, virtuves nodošana — viss aktīvā izstrādē. Paredzam ieviest šo agrīnas piekļuves restorānos drīz pēc galvenās platformas palaišanas.",
       "statusBody2": "Kad tas būs gatavs, varēsiet to abonēt no norēķinu lapas tāpat kā jebkuru citu papildinājumu. Līdz tam šī lapa ir tikai paziņojums, ka tas nāk.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0% komisija par pasūtījumiem",
       "heroTitle": "Pieņemiet pasūtījumus tiešsaistē bez maksām.",
-      "heroSubtitle": "Pārvaldiet paņemšanu, piegādi, galdu rezervācijas un virtuves ekrānu vienā vietā. Paturiet 100% no katra pasūtījuma.",
+      "heroSubtitle": "Pārvaldiet izņemšanu, piegādi, galdiņu rezervācijas un Kitchen Order App no vienas vietas. Paturiet 100% no katra pasūtījuma.",
       "startTrial": "Sākt bezmaksas",
       "viewDemo": "Skatīt demo",
       "trustedBy": "Uzticējas neatkarīgie restorāni",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Virtuves darbības",
-        "display": "Virtuves ekrāns",
+        "display": "Kitchen Order App",
         "displayDesc": "Pasūtījumi parādās tiešraidē virtuves ekrānā ar statusa pogām un sagatavošanas laikiem.",
         "printing": "Čeku drukāšana",
         "printingDesc": "Drukājiet uz termiskiem printeriem caur PrintNode — klientu un virtuves čekus.",
@@ -4325,7 +4326,7 @@
         "Neierobežoti tiešsaistes pasūtījumi",
         "Klientu pasūtīšanas lapa",
         "Iegulstams logrīks jūsu esošajā vietnē",
-        "Pasūtījumu pieņemšanas lietotne (virtuves ekrāns)",
+        "Kitchen Order App",
         "Administratora panelis",
         "Ēdienkartes veidotājs + fotoattēli",
         "Paņemšana, piegāde, ēšana uz vietas, rezervācijas",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Neierobežoti pasūtījumi",
         "Klientu pasūtīšanas lapa",
-        "Virtuves ekrāns",
+        "Kitchen Order App",
         "Administratora panelis",
         "E-pasta paziņojumi",
         "5+ valodas",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Kādas valodas tiek atbalstītas?",
-          "a": "Angļu, franču, spāņu, itāļu un portugāļu — klientu pasūtīšanā, virtuves ekrānā, administratora panelī un e-pastos."
+          "a": "Angļu, franču, spāņu, itāļu un portugāļu valoda — klientu pasūtījumos, Kitchen Order App, administratora panelī un e-pastos."
         },
         {
           "q": "Vai var vadīt akcijas?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Klientu pasūtīšana",
         "orderingDesc": "Pārlūkojiet ēdienkarti un veiciet testa pasūtījumu kā klients.",
-        "kitchen": "Virtuves ekrāns",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Skatiet ienākošos pasūtījumus virtuves ekrānā reāllaikā.",
         "admin": "Administratora panelis",
         "adminDesc": "Pārvaldiet ēdienkarti, darba laikus, pasūtījumus un iestatījumus kā restorāna īpašnieks."

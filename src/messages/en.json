@@ -505,7 +505,7 @@
     "holdMinutesNote": "We hold your table for {minutes} min after your reservation time — please arrive on time."
   },
   "kitchen": {
-    "title": "Kitchen Display",
+    "title": "Kitchen Order App",
     "newOrders": "New Orders",
     "inProgress": "In Progress",
     "ready": "Ready",
@@ -604,7 +604,7 @@
     "refundExceeds": "Amount exceeds the refundable balance.",
     "refundFailed": "Refund failed. Please try again.",
     "refundSuccess": "Refund issued.",
-    "autoCallMessage": "New order {number} at {restaurant} is waiting and has not been accepted yet. Please open your kitchen display to accept or reject it.",
+    "autoCallMessage": "New order {number} at {restaurant} is waiting and has not been accepted yet. Please open your Kitchen Order App to accept or reject it.",
     "soundTitle": "Alert Sound",
     "soundDesc": "The bell rings whenever a new order is waiting. Spaced out at first, then escalates to rapid in the final 30 seconds before the order is auto-rejected. Keep it loud so you never miss one.",
     "soundPickerLabel": "Alert sound",
@@ -743,7 +743,8 @@
       "requiredCount": "{count, plural, one {# required} other {# required}}",
       "comingSoonBadge": "Soon",
       "mobileApp": "Mobile App",
-      "pointOfSale": "Point of Sale"
+      "pointOfSale": "Point of Sale",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -784,7 +785,7 @@
       "deliveryFee": "Delivery Fee",
       "taxRate": "Tax Rate (%)",
       "language": "Language",
-      "defaultLanguageLabel": "Default language for your customer ordering page, kitchen display, and admin panel",
+      "defaultLanguageLabel": "Default language for your customer ordering page, Kitchen Order App, and admin panel",
       "languageHelp": "Customers can override this language with the picker on your ordering page.",
       "infoPage": "Info Page",
       "reviewLink": "Google / Yelp Review Link",
@@ -796,7 +797,7 @@
       "faviconHelp": "Square icon shown in the browser tab. Non-square images are cropped to the center — a 350×350 PNG is ideal.",
       "loadingMap": "Loading map…",
       "kitchenSoundTitle": "Kitchen Alert Sound",
-      "kitchenSoundHelp": "Upload a custom ring sound for new-order alerts. Once saved, it shows up as a third option (alongside <strong>GloriaFood Ding</strong> and <strong>Classic Bell</strong>) in the Kitchen Display's Sound Settings. Best results: a short 1–5 second clip, under 2 MB. MP3, WAV, or OGG.",
+      "kitchenSoundHelp": "Upload a custom ring sound for new-order alerts. Once saved, it shows up as a third option (alongside <strong>GloriaFood Ding</strong> and <strong>Classic Bell</strong>) in the Kitchen Order App's Sound Settings. Best results: a short 1–5 second clip, under 2 MB. MP3, WAV, or OGG.",
       "kitchenSoundFileTooLarge": "File must be under 2 MB.",
       "kitchenSoundWrongType": "Please choose an audio file (MP3, WAV, or OGG).",
       "kitchenSoundUploadFailed": "Upload failed",
@@ -1383,7 +1384,7 @@
       "saveErrorToast": "Failed to save — please try again",
       "autoCallLabel": "Auto phone-call alert",
       "autoCallStatusOn": "On — we call your phone if a new order is not accepted within ~90 seconds.",
-      "autoCallStatusOff": "Off — new orders alert on the kitchen display only.",
+      "autoCallStatusOff": "Off — new orders alert on the Kitchen Order App only.",
       "autoCallToggleAriaLabel": "Toggle auto phone-call alert",
       "autoCallFooterNote": "If a new order sits unaccepted for about 90 seconds, we place an automated call to your restaurant phone so you never miss an order — even if the tablet is unattended.",
       "autoCallEnabledToast": "Auto phone-call alert enabled.",
@@ -3547,10 +3548,10 @@
       "backToAdmin": "Back to admin",
       "pageTitle": "Automated Phone Ordering",
       "comingSoon": "Coming Soon",
-      "pageSubtitle": "An AI agent that answers your restaurant's phone 24/7, takes orders, and drops them straight into your kitchen display.",
+      "pageSubtitle": "An AI agent that answers your restaurant's phone 24/7, takes orders, and drops them straight into your Kitchen Order App.",
       "heroBadge": "In active development",
       "heroHeadline": "Never miss another phone order",
-      "heroBody": "Every call answered, every order taken, every time — even during your busiest rush. Our AI agent handles the phone so your staff can focus on the food. Orders flow directly into your kitchen display alongside online orders. Customers get the same fast, friendly experience whether they tap or talk.",
+      "heroBody": "Every call answered, every order taken, every time — even during your busiest rush. Our AI agent handles the phone so your staff can focus on the food. Orders flow directly into your Kitchen Order App alongside online orders. Customers get the same fast, friendly experience whether they tap or talk.",
       "chip247": "Available 24/7",
       "chipMenuTrained": "Trained on your menu",
       "chipNaturalConversation": "Natural conversation",
@@ -3561,7 +3562,7 @@
       "featureVoiceTitle": "Sounds human",
       "featureVoiceBody": "Natural conversation, not a robotic phone tree. Customers won't realize they're talking to AI. Handles accents, background noise, and the inevitable \"wait can you change that to\".",
       "featureKitchenTitle": "Same kitchen flow",
-      "featureKitchenBody": "Phone orders land in your existing kitchen display alongside online orders. No new app, no new training — your team accepts them the same way.",
+      "featureKitchenBody": "Phone orders land in your existing Kitchen Order App alongside online orders. No new app, no new training — your team accepts them the same way.",
       "statusHeading": "Where this stands today",
       "statusBody1": "We're heads-down building the foundation. The voice agent, the Twilio integration, the kitchen handoff — all in active development. We expect to roll this out to early-access restaurants soon after the main platform launches.",
       "statusBody2": "When it's ready you'll be able to subscribe to it from your billing page like any other add-on. Until then this page is just a heads-up that it's coming.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0% commission on orders",
       "heroTitle": "Take orders online without the fees.",
-      "heroSubtitle": "Run pickup, delivery, table reservations, and a kitchen display from one place. Keep 100% of every order.",
+      "heroSubtitle": "Run pickup, delivery, table reservations, and the Kitchen Order App from one place. Keep 100% of every order.",
       "startTrial": "Get Started Free",
       "viewDemo": "View Demo",
       "trustedBy": "Trusted by independent restaurants",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Kitchen operations",
-        "display": "Kitchen display",
+        "display": "Kitchen Order App",
         "displayDesc": "Orders show up live on the kitchen screen with status buttons and prep times.",
         "printing": "Receipt printing",
         "printingDesc": "Print to thermal printers via PrintNode — customer and kitchen receipts.",
@@ -4325,7 +4326,7 @@
         "Unlimited online orders",
         "Customer ordering page",
         "Embeddable widget for your existing site",
-        "Order-taking app (kitchen display)",
+        "Kitchen Order App",
         "Admin dashboard",
         "Menu builder + photos",
         "Pickup, delivery, dine-in, reservations",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Unlimited orders",
         "Customer ordering page",
-        "Kitchen display",
+        "Kitchen Order App",
         "Admin dashboard",
         "Email notifications",
         "5+ languages",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "What languages are supported?",
-          "a": "English, French, Spanish, Italian, and Portuguese — across customer ordering, kitchen display, admin panel, and emails."
+          "a": "English, French, Spanish, Italian, and Portuguese — across customer ordering, Kitchen Order App, admin panel, and emails."
         },
         {
           "q": "Can I run promotions?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Customer Ordering",
         "orderingDesc": "Browse the menu and place a test order as a customer.",
-        "kitchen": "Kitchen Display",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "See incoming orders on the kitchen screen in real time.",
         "admin": "Admin Panel",
         "adminDesc": "Manage menu, hours, orders, and settings as a restaurant owner."

@@ -505,7 +505,7 @@
     "holdMinutesNote": "Váš stůl držíme {minutes} min po čase rezervace — dorazte prosím včas."
   },
   "kitchen": {
-    "title": "Kuchyňský displej",
+    "title": "Kitchen Order App",
     "newOrders": "Nové objednávky",
     "inProgress": "Probíhá",
     "ready": "Připraveno",
@@ -595,7 +595,7 @@
     "refundExceeds": "Částka přesahuje zůstatek, který lze vrátit.",
     "refundFailed": "Vrácení platby se nezdařilo. Zkuste to prosím znovu.",
     "refundSuccess": "Platba byla vrácena.",
-    "autoCallMessage": "Nová objednávka {number} v podniku {restaurant} čeká a zatím nebyla přijata. Otevřete prosím kuchyňský displej a objednávku přijměte nebo odmítněte.",
+    "autoCallMessage": "Nová objednávka {number} v {restaurant} čeká a dosud nebyla přijata. Otevřete aplikaci Kitchen Order App a přijměte ji nebo odmítněte.",
     "outsideZoneNote": "Tato objednávka může být mimo vaši běžnou doručovací zónu",
     "readyIn": "Hotovo za",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, one {# povinný} few {# povinné} other {# povinných}}",
       "comingSoonBadge": "Brzy",
       "mobileApp": "Mobilní aplikace",
-      "pointOfSale": "Pokladní systém"
+      "pointOfSale": "Pokladní systém",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Přehled",
@@ -761,7 +762,7 @@
       "deliveryFee": "Poplatek za doručení (Kč)",
       "taxRate": "Sazba DPH (%)",
       "language": "Jazyk",
-      "defaultLanguageLabel": "Výchozí jazyk pro stránku objednávek zákazníků, kuchyňský displej a administraci",
+      "defaultLanguageLabel": "Výchozí jazyk vaší zákaznické objednávkové stránky, aplikace Kitchen Order App a administračního panelu",
       "languageHelp": "Zákazníci mohou tento jazyk změnit pomocí výběru jazyka na stránce objednávek.",
       "infoPage": "Informační stránka",
       "reviewLink": "Google / Yelp odkaz pro recenzi",
@@ -773,7 +774,7 @@
       "faviconHelp": "Čtvercová ikona zobrazená na záložce prohlížeče. Nečtvercové obrázky jsou oříznuty na střed — ideální je PNG 350×350.",
       "loadingMap": "Načítání mapy…",
       "kitchenSoundTitle": "Zvuk upozornění kuchyně",
-      "kitchenSoundHelp": "Nahrajte vlastní zvuk vyzvánění pro upozornění na nové objednávky. Po uložení se zobrazí jako třetí možnost (vedle <strong>GloriaFood Ding</strong> a <strong>Klasický zvonek</strong>) v nastavení zvuku na Kitchen Display. Nejlepší výsledky: krátká nahrávka 1–5 sekund, do 2 MB. MP3, WAV nebo OGG.",
+      "kitchenSoundHelp": "Nahrajte vlastní zvuk zvonění pro upozornění na nové objednávky. Po uložení se zobrazí jako třetí možnost (vedle <strong>GloriaFood Ding</strong> a <strong>Classic Bell</strong>) v nastavení zvuku aplikace Kitchen Order App. Nejlepší výsledky: krátká ukázka v délce 1–5 sekund, do 2 MB. MP3, WAV nebo OGG.",
       "kitchenSoundFileTooLarge": "Soubor musí být menší než 2 MB.",
       "kitchenSoundWrongType": "Zvolte prosím zvukový soubor (MP3, WAV nebo OGG).",
       "kitchenSoundUploadFailed": "Nahrávání se nezdařilo",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "Uložení selhalo — zkuste to prosím znovu",
       "autoCallLabel": "Automatické telefonické upozornění",
       "autoCallStatusOn": "Zapnuto — pokud nová objednávka není přijata do cca 90 sekund, zavoláme vám na telefon.",
-      "autoCallStatusOff": "Vypnuto — nové objednávky se zobrazují pouze na kuchyňském displeji.",
+      "autoCallStatusOff": "Vypnuto — nové objednávky upozorňují pouze v aplikaci Kitchen Order App.",
       "autoCallToggleAriaLabel": "Přepnout automatické telefonické upozornění",
       "autoCallFooterNote": "Pokud nová objednávka zůstane nepřijatá přibližně 90 sekund, automaticky zavoláme na telefon vaší restaurace, abyste žádnou objednávku nezmeškali — i když tablet nikdo nesleduje.",
       "autoCallEnabledToast": "Automatické telefonické upozornění bylo zapnuto.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Zpět do administrace",
       "pageTitle": "Automatizované telefonické objednávky",
       "comingSoon": "Připravujeme",
-      "pageSubtitle": "AI agent, který přijímá telefonáty vaší restaurace 24/7, přijímá objednávky a odesílá je přímo do vaší kuchyňské obrazovky.",
+      "pageSubtitle": "Agent s umělou inteligencí, který nepřetržitě odpovídá na telefon vaší restaurace, přijímá objednávky a vkládá je přímo do vaší aplikace Kitchen Order App.",
       "heroBadge": "Aktivně ve vývoji",
       "heroHeadline": "Nikdy nezmeškejte telefonickou objednávku",
-      "heroBody": "Každý hovor přijat, každá objednávka vyřízena, pokaždé — i v nejrušnějším provozu. Náš AI agent vyřizuje telefon, aby se váš personál mohl soustředit na jídlo. Objednávky proudí přímo do vaší kuchyňské obrazovky vedle online objednávek. Zákazníci dostávají stejně rychlou a přátelskou obsluhu, ať ťukají nebo mluví.",
+      "heroBody": "Každý hovor přijatý, každá objednávka přijata, pokaždé – i během nejrušnějšího náporu. Náš AI agent se stará o telefon, takže se váš personál může soustředit na jídlo. Objednávky proudí přímo do vaší aplikace Kitchen Order App spolu s online objednávkami. Zákazníci získají stejně rychlou a přívětivou obsluhu, ať už klepnou, nebo promluví.",
       "chip247": "Dostupné 24/7",
       "chipMenuTrained": "Natrénované na vašem menu",
       "chipNaturalConversation": "Přirozená konverzace",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "Zní jako člověk",
       "featureVoiceBody": "Přirozená konverzace, ne robotický telefonní strom. Zákazníci nepoznají, že mluví s AI. Zvládá přízvuky, hluk na pozadí i nevyhnutelné „počkejte, to změňte na\".",
       "featureKitchenTitle": "Stejný kuchyňský tok",
-      "featureKitchenBody": "Telefonické objednávky se zobrazují ve vaší stávající kuchyňské obrazovce vedle online objednávek. Žádná nová aplikace, žádné nové školení — váš tým je přijímá stejným způsobem.",
+      "featureKitchenBody": "Telefonické objednávky přicházejí do vaší stávající aplikace Kitchen Order App spolu s online objednávkami. Žádná nová aplikace, žádné nové školení – váš tým je přijímá stejným způsobem.",
       "statusHeading": "Kde to dnes stojíme",
       "statusBody1": "Intenzivně pracujeme na základech. Hlasový agent, integrace Twilio, předání do kuchyně — vše aktivně ve vývoji. Očekáváme, že tuto funkci spustíme pro restaurace s předčasným přístupem brzy po spuštění hlavní platformy.",
       "statusBody2": "Až bude připraveno, budete se moci přihlásit k odběru z vaší fakturační stránky jako k jakémukoli jinému doplňku. Do té doby je tato stránka jen předzvěstí toho, co přichází.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0% provize z objednávek",
       "heroTitle": "Přijímejte online objednávky bez poplatků.",
-      "heroSubtitle": "Spravujte vyzvednutí, doručení, stolní rezervace a kuchyňský displej na jednom místě. Ponechte si 100 % každé objednávky.",
+      "heroSubtitle": "Spravujte vyzvednutí, doručení, rezervace stolů a aplikaci Kitchen Order App z jednoho místa. Ponechte si 100 % z každé objednávky.",
       "startTrial": "Začít zdarma",
       "viewDemo": "Zobrazit demo",
       "trustedBy": "Důvěřují nám nezávislé restaurace",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Provoz kuchyně",
-        "display": "Kuchyňský displej",
+        "display": "Kitchen Order App",
         "displayDesc": "Objednávky se zobrazují živě na kuchyňské obrazovce s tlačítky stavu a časy přípravy.",
         "printing": "Tisk účtenek",
         "printingDesc": "Tiskněte na termální tiskárny přes PrintNode — účtenky pro zákazníky i kuchyni.",
@@ -4325,7 +4326,7 @@
         "Neomezené online objednávky",
         "Stránka objednávek zákazníků",
         "Vložitelný widget pro váš stávající web",
-        "Aplikace pro příjem objednávek (kuchyňský displej)",
+        "Kitchen Order App",
         "Administrační panel",
         "Tvůrce menu + fotografie",
         "Vyzvednutí, doručení, na místě, rezervace",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Neomezené objednávky",
         "Stránka objednávek zákazníků",
-        "Kuchyňský displej",
+        "Kitchen Order App",
         "Administrační panel",
         "E-mailová oznámení",
         "5+ jazyků",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Jaké jazyky jsou podporovány?",
-          "a": "Angličtina, francouzština, španělština, italština a portugalština — pro objednávání zákazníků, kuchyňský displej, administraci a e-maily."
+          "a": "Angličtina, francouzština, španělština, italština a portugalština – napříč zákaznickými objednávkami, aplikací Kitchen Order App, administračním panelem a e-maily."
         },
         {
           "q": "Mohu provozovat akce?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Objednávání zákazníků",
         "orderingDesc": "Procházejte menu a zadejte testovací objednávku jako zákazník.",
-        "kitchen": "Kuchyňský displej",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Sledujte příchozí objednávky na kuchyňské obrazovce v reálném čase.",
         "admin": "Administrační panel",
         "adminDesc": "Spravujte menu, hodiny, objednávky a nastavení jako majitel restaurace."

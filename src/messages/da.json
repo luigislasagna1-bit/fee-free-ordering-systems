@@ -505,7 +505,7 @@
     "holdMinutesNote": "Vi holder dit bord i {minutes} min efter din reservationstid — mød venligst til tiden."
   },
   "kitchen": {
-    "title": "Køkkenskærm",
+    "title": "Kitchen Order App",
     "newOrders": "Nye ordrer",
     "inProgress": "I gang",
     "ready": "Klar",
@@ -595,7 +595,7 @@
     "refundExceeds": "Beløbet overstiger den refunderbare saldo.",
     "refundFailed": "Refusion mislykkedes. Prøv igen.",
     "refundSuccess": "Refusion udstedt.",
-    "autoCallMessage": "Ny ordre {number} hos {restaurant} venter og er endnu ikke blevet accepteret. Åbn venligst dit køkkendisplay for at acceptere eller afvise den.",
+    "autoCallMessage": "Ny ordre {number} hos {restaurant} venter og er endnu ikke blevet accepteret. Åbn din Kitchen Order App for at acceptere eller afvise den.",
     "outsideZoneNote": "Denne ordre er muligvis uden for dit normale leveringsområde",
     "readyIn": "Klar om",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, one {# obligatorisk} other {# obligatoriske}}",
       "comingSoonBadge": "Snart",
       "mobileApp": "Mobilapp",
-      "pointOfSale": "Kassesystem"
+      "pointOfSale": "Kassesystem",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -761,7 +762,7 @@
       "deliveryFee": "Leveringsgebyr (kr.)",
       "taxRate": "Momssats (%)",
       "language": "Sprog",
-      "defaultLanguageLabel": "Standardsprog for din kundebestillingsside, køkkenskærm og adminpanel",
+      "defaultLanguageLabel": "Standardsprog for din kundebestillingsside, Kitchen Order App og adminpanel",
       "languageHelp": "Kunder kan tilsidesætte dette sprog med sprogvælgeren på din bestillingsside.",
       "infoPage": "Infoside",
       "reviewLink": "Google / Yelp anmeldelseslink",
@@ -773,7 +774,7 @@
       "faviconHelp": "Kvadratisk ikon vist i browserfanen. Ikke-kvadratiske billeder beskæres til midten — et 350×350 PNG er ideelt.",
       "loadingMap": "Indlæser kort…",
       "kitchenSoundTitle": "Lyd til køkkenadvarsel",
-      "kitchenSoundHelp": "Upload en brugerdefineret ringelyd til advarsler om nye ordrer. Når den er gemt, vises den som en tredje mulighed (sammen med <strong>GloriaFood Ding</strong> og <strong>Klassisk klokke</strong>) under Lydindstillinger i Køkkenskærm. Bedste resultat: et kort klip på 1-5 sekunder, under 2 MB. MP3, WAV eller OGG.",
+      "kitchenSoundHelp": "Upload en brugerdefineret ringelyd til notifikationer om nye ordrer. Når den er gemt, vises den som en tredje mulighed (ved siden af <strong>GloriaFood Ding</strong> og <strong>Classic Bell</strong>) i Kitchen Order Appens lydindstillinger. Bedste resultat: et kort klip på 1–5 sekunder, under 2 MB. MP3, WAV eller OGG.",
       "kitchenSoundFileTooLarge": "Filen skal være under 2 MB.",
       "kitchenSoundWrongType": "Vælg venligst en lydfil (MP3, WAV eller OGG).",
       "kitchenSoundUploadFailed": "Upload mislykkedes",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "Gemning mislykkedes — prøv venligst igen",
       "autoCallLabel": "Automatisk telefonopkald-besked",
       "autoCallStatusOn": "Til — vi ringer til din telefon, hvis en ny ordre ikke accepteres inden for ca. 90 sekunder.",
-      "autoCallStatusOff": "Fra — nye ordrer giver kun besked på køkkendisplayet.",
+      "autoCallStatusOff": "Fra — nye ordrer giver kun besked i Kitchen Order App.",
       "autoCallToggleAriaLabel": "Slå automatisk telefonopkald-besked til/fra",
       "autoCallFooterNote": "Hvis en ny ordre står uaccepteret i omkring 90 sekunder, foretager vi et automatisk opkald til din restaurants telefon, så du aldrig går glip af en ordre — selv hvis tabletten er uden opsyn.",
       "autoCallEnabledToast": "Automatisk telefonopkald-besked aktiveret.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Tilbage til admin",
       "pageTitle": "Automatisk telefonbestilling",
       "comingSoon": "Kommer snart",
-      "pageSubtitle": "En AI-agent, der besvarer din restaurants telefon 24/7, tager imod ordrer og sender dem direkte til dit køkkendisplay.",
+      "pageSubtitle": "En AI-agent, der besvarer din restaurants telefon døgnet rundt, modtager bestillinger og sender dem direkte til din Kitchen Order App.",
       "heroBadge": "Under aktiv udvikling",
       "heroHeadline": "Gå aldrig glip af en telefonordre",
-      "heroBody": "Hvert opkald besvares, hver ordre modtages, hver gang — selv under dit travleste mylder. Vores AI-agent håndterer telefonen, så dit personale kan fokusere på maden. Ordrer flyder direkte ind i dit køkkendisplay side om side med onlineordrer. Kunder får den samme hurtige, venlige oplevelse, hvad enten de trykker eller taler.",
+      "heroBody": "Hvert opkald besvaret, hver bestilling modtaget, hver gang – selv i de travleste perioder. Vores AI-agent passer telefonen, så dit personale kan fokusere på maden. Bestillinger flyder direkte ind i din Kitchen Order App sammen med onlinebestillinger. Kunderne får den samme hurtige og venlige oplevelse, uanset om de trykker eller taler.",
       "chip247": "Tilgængelig 24/7",
       "chipMenuTrained": "Trænet på din menu",
       "chipNaturalConversation": "Naturlig samtale",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "Lyder menneskeligt",
       "featureVoiceBody": "Naturlig samtale, ikke et robotagtigt telefontræ. Kunder vil ikke opdage, at de taler med AI. Håndterer accenter, baggrundsstøj og det uundgåelige \"vent, kan du ændre det til\".",
       "featureKitchenTitle": "Samme køkkenflow",
-      "featureKitchenBody": "Telefonordrer lander i dit eksisterende køkkendisplay side om side med onlineordrer. Ingen ny app, ingen ny oplæring — dit team accepterer dem på samme måde.",
+      "featureKitchenBody": "Telefonbestillinger lander i din eksisterende Kitchen Order App sammen med onlinebestillinger. Ingen ny app, ingen ny oplæring – dit team accepterer dem på samme måde.",
       "statusHeading": "Hvor dette står i dag",
       "statusBody1": "Vi er dybt i gang med at bygge fundamentet. Stemmeagenten, Twilio-integrationen, køkkenoverlevering — alt er under aktiv udvikling. Vi forventer at rulle dette ud til early-access-restauranter snart efter platformens hovedlancering.",
       "statusBody2": "Når det er klar, vil du kunne abonnere på det fra din faktureringsside som enhver anden tilføjelse. Indtil da er denne side blot en forhåndsmeddelelse om, at det kommer.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0% kommission på ordrer",
       "heroTitle": "Modtag online ordrer uden gebyrer.",
-      "heroSubtitle": "Kør afhentning, levering, bordbooking og køkkenskærm ét sted. Behold 100% af hver ordre.",
+      "heroSubtitle": "Administrer afhentning, levering, bordreservationer og Kitchen Order App fra ét sted. Behold 100 % af hver ordre.",
       "startTrial": "Kom gratis i gang",
       "viewDemo": "Se demo",
       "trustedBy": "Betroet af uafhængige restauranter",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Køkkendrift",
-        "display": "Køkkenskærm",
+        "display": "Kitchen Order App",
         "displayDesc": "Ordrer vises live på køkkenskærmen med statusknapper og forberedelsestider.",
         "printing": "Kvitteringsudskrivning",
         "printingDesc": "Udskriv til termiske printere via PrintNode — kunde- og køkkenkvitteringer.",
@@ -4325,7 +4326,7 @@
         "Ubegrænsede online ordrer",
         "Kundebestillingsside",
         "Indlejrbart widget til din eksisterende hjemmeside",
-        "Ordremodtagelsesapp (køkkenskærm)",
+        "Kitchen Order App",
         "Admin-dashboard",
         "Menubygger + fotos",
         "Afhentning, levering, spis her, reservationer",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Ubegrænsede ordrer",
         "Kundebestillingsside",
-        "Køkkenskærm",
+        "Kitchen Order App",
         "Admin-dashboard",
         "E-mailnotifikationer",
         "5+ sprog",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Hvilke sprog understøttes?",
-          "a": "Engelsk, fransk, spansk, italiensk og portugisisk — på tværs af kundebestilling, køkkenskærm, adminpanel og e-mails."
+          "a": "Engelsk, fransk, spansk, italiensk og portugisisk – på tværs af kundebestilling, Kitchen Order App, adminpanel og e-mails."
         },
         {
           "q": "Kan jeg køre kampagner?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Kundebestilling",
         "orderingDesc": "Gennemse menuen og afgiv en testordre som kunde.",
-        "kitchen": "Køkkenskærm",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Se indgående ordrer på køkkenskærmen i realtid.",
         "admin": "Adminpanel",
         "adminDesc": "Administrer menu, åbningstider, ordrer og indstillinger som restaurantejer."

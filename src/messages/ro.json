@@ -505,7 +505,7 @@
     "holdMinutesNote": "Vă păstrăm masa timp de {minutes} min după ora rezervării — vă rugăm să ajungeți la timp."
   },
   "kitchen": {
-    "title": "Display Bucătărie",
+    "title": "Kitchen Order App",
     "newOrders": "Comenzi noi",
     "inProgress": "În curs",
     "ready": "Gata",
@@ -595,7 +595,7 @@
     "refundExceeds": "Suma depășește soldul rambursabil.",
     "refundFailed": "Rambursarea a eșuat. Încercați din nou.",
     "refundSuccess": "Rambursare emisă.",
-    "autoCallMessage": "Comanda nouă {number} de la {restaurant} așteaptă și nu a fost încă acceptată. Vă rugăm să deschideți afișajul de bucătărie pentru a o accepta sau a o refuza.",
+    "autoCallMessage": "Noua comandă {number} la {restaurant} așteaptă și nu a fost încă acceptată. Te rugăm să deschizi Kitchen Order App pentru a o accepta sau a o refuza.",
     "outsideZoneNote": "Această comandă ar putea fi în afara zonei dvs. obișnuite de livrare",
     "readyIn": "Gata în",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, one {# obligatoriu} few {# obligatorii} other {# obligatorii}}",
       "comingSoonBadge": "În curând",
       "mobileApp": "Aplicație mobilă",
-      "pointOfSale": "Punct de vânzare"
+      "pointOfSale": "Punct de vânzare",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Panou de control",
@@ -761,7 +762,7 @@
       "deliveryFee": "Taxă livrare",
       "taxRate": "Cotă TVA (%)",
       "language": "Limbă",
-      "defaultLanguageLabel": "Limba implicită pentru pagina de comandă a clienților, display-ul bucătăriei și panoul de administrare",
+      "defaultLanguageLabel": "Limba implicită pentru pagina de comenzi a clienților, Kitchen Order App și panoul de administrare",
       "languageHelp": "Clienții pot schimba această limbă folosind selectorul de pe pagina de comandă.",
       "infoPage": "Pagina de informații",
       "reviewLink": "Link recenzie Google / Yelp",
@@ -773,7 +774,7 @@
       "faviconHelp": "Pictogramă pătrată afișată în fila browserului. Imaginile non-pătrate sunt decupate din centru — un PNG de 350×350 este ideal.",
       "loadingMap": "Se încarcă harta…",
       "kitchenSoundTitle": "Sunet de alertă pentru bucătărie",
-      "kitchenSoundHelp": "Încarcă un sunet de sonerie personalizat pentru alertele de comenzi noi. După salvare, va apărea ca a treia opțiune (alături de <strong>GloriaFood Ding</strong> și <strong>Clopoțel clasic</strong>) în Setările de sunet ale afișajului de bucătărie. Cele mai bune rezultate: un clip scurt de 1–5 secunde, sub 2 MB. MP3, WAV sau OGG.",
+      "kitchenSoundHelp": "Încarcă un sunet de sonerie personalizat pentru alertele de comenzi noi. După salvare, apare ca a treia opțiune (alături de <strong>GloriaFood Ding</strong> și <strong>Classic Bell</strong>) în setările de sunet ale Kitchen Order App. Pentru cele mai bune rezultate: un clip scurt de 1-5 secunde, sub 2 MB. MP3, WAV sau OGG.",
       "kitchenSoundFileTooLarge": "Fișierul trebuie să fie sub 2 MB.",
       "kitchenSoundWrongType": "Te rugăm să alegi un fișier audio (MP3, WAV sau OGG).",
       "kitchenSoundUploadFailed": "Încărcarea a eșuat",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "Salvarea a eșuat — încearcă din nou",
       "autoCallLabel": "Alertă prin apel telefonic automat",
       "autoCallStatusOn": "Activat — vă apelăm telefonul dacă o comandă nouă nu este acceptată în aproximativ 90 de secunde.",
-      "autoCallStatusOff": "Dezactivat — comenzile noi sunt semnalate doar pe afișajul de bucătărie.",
+      "autoCallStatusOff": "Dezactivat — comenzile noi sunt semnalate doar pe Kitchen Order App.",
       "autoCallToggleAriaLabel": "Comutați alerta prin apel telefonic automat",
       "autoCallFooterNote": "Dacă o comandă nouă rămâne neacceptată timp de aproximativ 90 de secunde, plasăm un apel automat către telefonul restaurantului dvs., astfel încât să nu pierdeți nicio comandă — chiar dacă tableta este nesupravegheată.",
       "autoCallEnabledToast": "Alerta prin apel telefonic automat a fost activată.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Înapoi la admin",
       "pageTitle": "Preluare automată comenzi telefonice",
       "comingSoon": "În curând",
-      "pageSubtitle": "Un agent AI care răspunde la telefonul restaurantului tău 24/7, preia comenzi și le trimite direct pe ecranul bucătăriei.",
+      "pageSubtitle": "Un agent IA care răspunde la telefonul restaurantului tău non-stop, preia comenzile și le trimite direct în Kitchen Order App.",
       "heroBadge": "În dezvoltare activă",
       "heroHeadline": "Nu mai pierde nicio comandă telefonică",
-      "heroBody": "Fiecare apel răspuns, fiecare comandă preluată, de fiecare dată — chiar și în orele de vârf. Agentul nostru AI se ocupă de telefon pentru ca personalul tău să se poată concentra pe mâncare. Comenzile intră direct pe ecranul bucătăriei alături de comenzile online. Clienții au parte de aceeași experiență rapidă și prietenoasă, indiferent dacă tastează sau vorbesc.",
+      "heroBody": "Fiecare apel preluat, fiecare comandă înregistrată, de fiecare dată — chiar și în cele mai aglomerate momente. Agentul nostru IA se ocupă de telefon, astfel încât personalul tău se poate concentra pe mâncare. Comenzile ajung direct în Kitchen Order App, alături de comenzile online. Clienții au parte de aceeași experiență rapidă și prietenoasă, fie că comandă cu o atingere, fie vorbind.",
       "chip247": "Disponibil 24/7",
       "chipMenuTrained": "Instruit pe meniul tău",
       "chipNaturalConversation": "Conversație naturală",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "Sună uman",
       "featureVoiceBody": "Conversație naturală, nu un robot telefonic. Clienții nu vor realiza că vorbesc cu un AI. Gestionează accente, zgomot de fundal și inevitabilul „stai, poți schimba asta cu”.",
       "featureKitchenTitle": "Același flux în bucătărie",
-      "featureKitchenBody": "Comenzile telefonice apar pe ecranul bucătăriei tale alături de comenzile online. Nicio aplicație nouă, nicio instruire nouă — echipa ta le acceptă la fel.",
+      "featureKitchenBody": "Comenzile telefonice ajung în Kitchen Order App existentă, alături de comenzile online. Nicio aplicație nouă, niciun instructaj nou — echipa ta le acceptă în același mod.",
       "statusHeading": "Stadiul actual",
       "statusBody1": "Suntem cu capul plecat construind fundația. Agentul vocal, integrarea Twilio, transferul în bucătărie — toate în dezvoltare activă. Ne așteptăm să lansăm acest serviciu pentru restaurantele cu acces timpuriu curând după lansarea platformei principale.",
       "statusBody2": "Când va fi gata, vei putea să te abonezi de pe pagina de facturare ca la orice alt add-on. Până atunci, această pagină este doar o notificare că urmează.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0% comision pe comenzi",
       "heroTitle": "Primește comenzi online fără comisioane.",
-      "heroSubtitle": "Gestionează ridicarea, livrarea, rezervările de masă și un display de bucătărie dintr-un singur loc. Păstrează 100% din fiecare comandă.",
+      "heroSubtitle": "Gestionează ridicarea, livrarea, rezervările de masă și Kitchen Order App dintr-un singur loc. Păstrează 100% din fiecare comandă.",
       "startTrial": "Începe gratuit",
       "viewDemo": "Vezi Demo",
       "trustedBy": "De încredere pentru restaurantele independente",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Operațiuni bucătărie",
-        "display": "Display bucătărie",
+        "display": "Kitchen Order App",
         "displayDesc": "Comenzile apar live pe ecranul bucătăriei cu butoane de stare și timpi de preparare.",
         "printing": "Tipărire chitanțe",
         "printingDesc": "Tipărește pe imprimante termice prin PrintNode — chitanțe pentru client și bucătărie.",
@@ -4325,7 +4326,7 @@
         "Comenzi online nelimitate",
         "Pagină de comandă pentru clienți",
         "Widget încorporabil pentru site-ul tău existent",
-        "Aplicație de primire comenzi (display bucătărie)",
+        "Kitchen Order App",
         "Panou de administrare",
         "Constructor meniu + fotografii",
         "Ridicare, livrare, la restaurant, rezervări",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Comenzi nelimitate",
         "Pagină de comandă pentru clienți",
-        "Display bucătărie",
+        "Kitchen Order App",
         "Panou de administrare",
         "Notificări email",
         "5+ limbi",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Ce limbi sunt suportate?",
-          "a": "Engleză, franceză, spaniolă, italiană și portugheză — în pagina de comandă, display bucătărie, panoul de administrare și emailuri."
+          "a": "Engleză, franceză, spaniolă, italiană și portugheză — în comenzile clienților, Kitchen Order App, panoul de administrare și e-mailuri."
         },
         {
           "q": "Pot rula promoții?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Comandă clienți",
         "orderingDesc": "Răsfoiește meniul și plasează o comandă de test ca client.",
-        "kitchen": "Display bucătărie",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Vezi comenzile primite pe ecranul bucătăriei în timp real.",
         "admin": "Panou de administrare",
         "adminDesc": "Gestionează meniu, program, comenzi și setări ca proprietar de restaurant."

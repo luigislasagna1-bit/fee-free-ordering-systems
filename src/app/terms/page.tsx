@@ -25,7 +25,7 @@ export default async function TermsPage() {
   return (
     <LegalPageShell title="Terms of Service" lastUpdated="May 23, 2026" locale={locale}>
       <p>
-        These Terms of Service (the &ldquo;<strong>Terms</strong>&rdquo;) govern your use of Fee Free Ordering Systems (&ldquo;<strong>Fee Free</strong>,&rdquo; &ldquo;<strong>we</strong>,&rdquo; &ldquo;<strong>us</strong>&rdquo;) — including the platform at <strong>feefreeordering.com</strong>, the public marketplace at <strong>feefreefood.com</strong>, every restaurant&rsquo;s ordering page hosted by us, our kitchen display, and any future apps we publish. By creating an account or placing an order, you agree to these Terms.
+        These Terms of Service (the &ldquo;<strong>Terms</strong>&rdquo;) govern your use of Fee Free Ordering Systems (&ldquo;<strong>Fee Free</strong>,&rdquo; &ldquo;<strong>we</strong>,&rdquo; &ldquo;<strong>us</strong>&rdquo;) — including the platform at <strong>feefreeordering.com</strong>, the public marketplace at <strong>feefreefood.com</strong>, every restaurant&rsquo;s ordering page hosted by us, our Kitchen Order App, and any future apps we publish. By creating an account or placing an order, you agree to these Terms.
       </p>
 
       <h2>1. Who we are</h2>
@@ -35,7 +35,7 @@ export default async function TermsPage() {
       <p>Different users have different relationships with Fee Free:</p>
       <ul>
         <li><strong>Restaurant Owners</strong> — sign up at /signup, run a restaurant on our platform, optionally subscribe to paid add-ons, optionally list on the marketplace. Sections 4, 5, 6, and 7 apply specifically to you.</li>
-        <li><strong>Restaurant Staff</strong> — added by a Restaurant Owner to operate the kitchen display or admin panel. Section 8 applies.</li>
+        <li><strong>Restaurant Staff</strong> — added by a Restaurant Owner to operate the Kitchen Order App or admin panel. Section 8 applies.</li>
         <li><strong>Customers</strong> — place orders through a restaurant&rsquo;s ordering page, the marketplace, or one of our native apps. Section 9 applies.</li>
         <li><strong>Resellers / Partners</strong> — refer restaurants to Fee Free in exchange for commission. Section 10 applies; the full Reseller Agreement also applies.</li>
       </ul>
@@ -49,7 +49,7 @@ export default async function TermsPage() {
       </ul>
 
       <h2>4. The Fee Free service for restaurants</h2>
-      <p>The core platform — admin panel, ordering widget, hosted website, kitchen display, customer database, opening-hours editor, menu editor, basic promotions — is free to use forever. There is no per-order fee on direct orders placed through your own ordering page or hosted site, regardless of order volume.</p>
+      <p>The core platform — admin panel, ordering widget, hosted website, Kitchen Order App, customer database, opening-hours editor, menu editor, basic promotions — is free to use forever. There is no per-order fee on direct orders placed through your own ordering page or hosted site, regardless of order volume.</p>
       <p>Paid add-ons are optional. You only pay for the ones you turn on. Add-on pricing is shown on /pricing and inside /admin/billing/add-ons; we may change pricing on 30 days&rsquo; notice for active subscribers. The current paid add-ons include:</p>
       <ul>
         <li><strong>Online Payments</strong> — accept credit cards via Stripe Connect</li>
@@ -84,7 +84,7 @@ export default async function TermsPage() {
       <p>We retain ownership of the platform itself — the software, design, branding, marketing copy, and any aggregated, anonymized analytics derived from how the platform is used.</p>
 
       <h2>8. Restaurant staff accounts</h2>
-      <p>If you&rsquo;re a Restaurant Staff user added by a Restaurant Owner, you may use the kitchen display or admin panel only to perform work for that restaurant. You may not export customer data, modify menu content beyond your assigned permissions, or take any action outside the scope your Owner has granted. Your access ends when the Restaurant Owner removes you or when their account is closed.</p>
+      <p>If you&rsquo;re a Restaurant Staff user added by a Restaurant Owner, you may use the Kitchen Order App or admin panel only to perform work for that restaurant. You may not export customer data, modify menu content beyond your assigned permissions, or take any action outside the scope your Owner has granted. Your access ends when the Restaurant Owner removes you or when their account is closed.</p>
 
       <h2>9. Customer orders</h2>
       <p>When you place an order through Fee Free:</p>

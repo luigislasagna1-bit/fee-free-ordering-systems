@@ -505,7 +505,7 @@
     "holdMinutesNote": "我们会在您的预订时间后为您保留座位 {minutes} 分钟 — 请准时到达。"
   },
   "kitchen": {
-    "title": "厨房显示屏",
+    "title": "Kitchen Order App",
     "newOrders": "新订单",
     "inProgress": "进行中",
     "ready": "已备好",
@@ -595,7 +595,7 @@
     "refundExceeds": "金额超出可退款余额。",
     "refundFailed": "退款失败。请重试。",
     "refundSuccess": "退款已发起。",
-    "autoCallMessage": "{restaurant} 的新订单 {number} 正在等待，尚未被接受。请打开您的厨房显示屏，接受或拒绝该订单。",
+    "autoCallMessage": "{restaurant} 的新订单 {number} 正在等待，尚未被接受。请打开您的 Kitchen Order App 以接受或拒绝该订单。",
     "outsideZoneNote": "此订单可能超出您的常规配送范围",
     "readyIn": "还有",
     "asap": "尽快",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, other {# 个必需}}",
       "comingSoonBadge": "即将推出",
       "mobileApp": "移动应用",
-      "pointOfSale": "销售点"
+      "pointOfSale": "销售点",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "仪表盘",
@@ -761,7 +762,7 @@
       "deliveryFee": "配送费（元）",
       "taxRate": "税率（%）",
       "language": "语言",
-      "defaultLanguageLabel": "顾客点餐页面、厨房显示屏和管理后台的默认语言",
+      "defaultLanguageLabel": "您的顾客点餐页面、Kitchen Order App 和管理后台的默认语言",
       "languageHelp": "顾客可在点餐页面通过语言切换器覆盖此设置。",
       "infoPage": "信息页",
       "reviewLink": "Google / Yelp 评价链接",
@@ -773,7 +774,7 @@
       "faviconHelp": "显示在浏览器标签页中的方形图标。非方形图片将从中心裁剪——建议使用 350×350 的 PNG 图片。",
       "loadingMap": "正在加载地图…",
       "kitchenSoundTitle": "厨房提醒铃声",
-      "kitchenSoundHelp": "上传自定义铃声，用于新订单提醒。保存后，它会作为第三个选项（与 <strong>GloriaFood 叮咚</strong> 和 <strong>经典铃声</strong> 并列）显示在厨房显示屏的声音设置中。效果最佳：时长 1–5 秒的短音频，小于 2 MB。支持 MP3、WAV 或 OGG。",
+      "kitchenSoundHelp": "上传自定义铃声用于新订单提醒。保存后，它会作为第三个选项（与 <strong>GloriaFood Ding</strong> 和 <strong>Classic Bell</strong> 并列）显示在 Kitchen Order App 的声音设置中。最佳效果：1–5 秒的短音频，小于 2 MB。支持 MP3、WAV 或 OGG。",
       "kitchenSoundFileTooLarge": "文件必须小于 2 MB。",
       "kitchenSoundWrongType": "请选择音频文件（MP3、WAV 或 OGG）。",
       "kitchenSoundUploadFailed": "上传失败",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "保存失败 — 请重试",
       "autoCallLabel": "自动电话提醒",
       "autoCallStatusOn": "已开启 — 如果新订单在约 90 秒内未被接受，我们会致电您的电话。",
-      "autoCallStatusOff": "已关闭 — 新订单仅在厨房显示屏上提醒。",
+      "autoCallStatusOff": "关闭 — 新订单仅在 Kitchen Order App 上提醒。",
       "autoCallToggleAriaLabel": "切换自动电话提醒",
       "autoCallFooterNote": "如果新订单约 90 秒内仍未被接受，我们会自动致电您的餐厅电话，确保您绝不漏单 — 即使平板电脑无人看管。",
       "autoCallEnabledToast": "已启用自动电话提醒。",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "返回管理后台",
       "pageTitle": "自动电话点餐",
       "comingSoon": "即将上线",
-      "pageSubtitle": "AI 智能体全天候接听您餐厅的电话、接受订单，并直接将订单发送至厨房显示屏。",
+      "pageSubtitle": "一个 AI 助手，全天候 24/7 接听您餐厅的电话、接收订单，并将订单直接送入您的 Kitchen Order App。",
       "heroBadge": "积极开发中",
       "heroHeadline": "再也不会错过电话订单",
-      "heroBody": "每通电话都有人接、每笔订单都被接受、任何时候都不例外——即使在最繁忙的高峰期。我们的 AI 智能体负责接听电话，让您的员工专注于餐食制作。订单与在线订单一同直接流入厨房显示屏。无论顾客是点击还是语音下单，都能获得同样快速友好的体验。",
+      "heroBody": "每通电话都被接听，每笔订单都被接收，次次如此 — 即使在最繁忙的高峰时段。我们的 AI 助手负责接听电话，让您的员工可以专注于美食。订单与在线订单一起直接流入您的 Kitchen Order App。无论顾客是点击还是开口，都能获得同样快速、友好的体验。",
       "chip247": "全天候可用",
       "chipMenuTrained": "基于您的菜单训练",
       "chipNaturalConversation": "自然对话",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "听起来像真人",
       "featureVoiceBody": "自然对话，而非机械的电话菜单。顾客不会察觉在与 AI 交谈。能处理口音、背景噪音，以及那句不可避免的「等等，能帮我改一下吗」。",
       "featureKitchenTitle": "沿用现有厨房流程",
-      "featureKitchenBody": "电话订单与在线订单一同出现在您现有的厨房显示屏上。无需新应用、无需重新培训——您的团队以同样的方式接单。",
+      "featureKitchenBody": "电话订单与在线订单一起进入您现有的 Kitchen Order App。无需新应用，无需新培训 — 您的团队以相同的方式接受订单。",
       "statusHeading": "目前进展",
       "statusBody1": "我们正在全力搭建基础架构。语音智能体、Twilio 集成、厨房交接——均在积极开发中。我们预计在主平台上线后不久向早期体验餐厅推出此功能。",
       "statusBody2": "准备就绪后，您可以像其他附加服务一样从账单页面订阅。在此之前，本页面仅作提前告知。",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "订单零佣金",
       "heroTitle": "在线接单，无需支付任何费用。",
-      "heroSubtitle": "在一个平台上管理自取、配送、餐桌预订和厨房显示屏，100% 保留每笔订单收入。",
+      "heroSubtitle": "在一个地方管理自取、配送、餐桌预订和 Kitchen Order App。保留每笔订单的 100%。",
       "startTrial": "免费开始",
       "viewDemo": "查看演示",
       "trustedBy": "深受独立餐厅信赖",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "厨房运营",
-        "display": "厨房显示屏",
+        "display": "Kitchen Order App",
         "displayDesc": "订单实时显示在厨房屏幕上，配有状态按钮和备餐时间。",
         "printing": "收据打印",
         "printingDesc": "通过 PrintNode 打印到热敏打印机——支持顾客和厨房收据。",
@@ -4325,7 +4326,7 @@
         "无限在线订单",
         "顾客点餐页面",
         "可嵌入现有网站的小部件",
-        "接单应用（厨房显示屏）",
+        "Kitchen Order App",
         "管理后台",
         "菜单构建器 + 图片",
         "自取、配送、堂食、预订",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "无限订单",
         "顾客点餐页面",
-        "厨房显示屏",
+        "Kitchen Order App",
         "管理后台",
         "邮件通知",
         "5 种以上语言",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "支持哪些语言？",
-          "a": "英语、法语、西班牙语、意大利语和葡萄牙语——涵盖顾客点餐、厨房显示屏、管理后台和邮件。"
+          "a": "英语、法语、西班牙语、意大利语和葡萄牙语 — 涵盖顾客点餐、Kitchen Order App、管理后台和电子邮件。"
         },
         {
           "q": "可以做促销活动吗？",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "顾客点餐",
         "orderingDesc": "浏览菜单并以顾客身份下测试订单。",
-        "kitchen": "厨房显示屏",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "实时查看厨房屏幕上的传入订单。",
         "admin": "管理后台",
         "adminDesc": "以餐厅老板身份管理菜单、营业时间、订单和设置。"

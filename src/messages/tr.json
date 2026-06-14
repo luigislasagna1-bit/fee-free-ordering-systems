@@ -505,7 +505,7 @@
     "holdMinutesNote": "Masanızı rezervasyon saatinden sonra {minutes} dk tutuyoruz — lütfen zamanında gelin."
   },
   "kitchen": {
-    "title": "Mutfak Ekranı",
+    "title": "Kitchen Order App",
     "newOrders": "Yeni Siparişler",
     "inProgress": "Hazırlanıyor",
     "ready": "Hazır",
@@ -595,7 +595,7 @@
     "refundExceeds": "Tutar, iade edilebilir bakiyeyi aşıyor.",
     "refundFailed": "İade başarısız oldu. Lütfen tekrar deneyin.",
     "refundSuccess": "İade yapıldı.",
-    "autoCallMessage": "{restaurant} işletmesindeki {number} numaralı yeni sipariş beklemede ve henüz kabul edilmedi. Lütfen siparişi kabul etmek veya reddetmek için mutfak ekranınızı açın.",
+    "autoCallMessage": "{restaurant} restoranındaki {number} numaralı yeni sipariş bekliyor ve henüz kabul edilmedi. Lütfen kabul etmek veya reddetmek için Kitchen Order App uygulamanızı açın.",
     "outsideZoneNote": "Bu sipariş normal teslimat bölgenizin dışında olabilir",
     "readyIn": "Hazır olma süresi",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, one {# zorunlu} other {# zorunlu}}",
       "comingSoonBadge": "Yakında",
       "mobileApp": "Mobil uygulama",
-      "pointOfSale": "Satış noktası"
+      "pointOfSale": "Satış noktası",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Panel",
@@ -761,7 +762,7 @@
       "deliveryFee": "Teslimat Ücreti (₺)",
       "taxRate": "Vergi Oranı (%)",
       "language": "Dil",
-      "defaultLanguageLabel": "Müşteri sipariş sayfanız, mutfak ekranınız ve yönetici paneliniz için varsayılan dil",
+      "defaultLanguageLabel": "Müşteri sipariş sayfanız, Kitchen Order App ve yönetim paneli için varsayılan dil",
       "languageHelp": "Müşteriler, sipariş sayfanızdaki dil seçiciyle bu dili değiştirebilir.",
       "infoPage": "Bilgi Sayfası",
       "reviewLink": "Google / Yelp Yorum Bağlantısı",
@@ -773,7 +774,7 @@
       "faviconHelp": "Tarayıcı sekmesinde görünen kare simge. Kare olmayan görüntüler ortadan kırpılır — ideal olan 350×350 piksel PNG dosyasıdır.",
       "loadingMap": "Harita yükleniyor…",
       "kitchenSoundTitle": "Mutfak Uyarı Sesi",
-      "kitchenSoundHelp": "Yeni sipariş uyarıları için özel bir zil sesi yükleyin. Kaydedildikten sonra, Mutfak Ekranı'nın Ses Ayarları bölümünde (<strong>GloriaFood Çınlaması</strong> ve <strong>Klasik Zil</strong> ile birlikte) üçüncü bir seçenek olarak görünür. En iyi sonuç için: 1–5 saniyelik kısa bir klip, 2 MB altında. MP3, WAV veya OGG.",
+      "kitchenSoundHelp": "Yeni sipariş uyarıları için özel bir zil sesi yükleyin. Kaydedildikten sonra, Kitchen Order App'in Ses Ayarları'nda üçüncü bir seçenek olarak (<strong>GloriaFood Ding</strong> ve <strong>Classic Bell</strong> ile birlikte) görünür. En iyi sonuç: 1–5 saniyelik kısa bir klip, 2 MB'ın altında. MP3, WAV veya OGG.",
       "kitchenSoundFileTooLarge": "Dosya 2 MB'tan küçük olmalıdır.",
       "kitchenSoundWrongType": "Lütfen bir ses dosyası seçin (MP3, WAV veya OGG).",
       "kitchenSoundUploadFailed": "Yükleme başarısız oldu",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "Kaydedilemedi — lütfen tekrar deneyin",
       "autoCallLabel": "Otomatik telefon araması uyarısı",
       "autoCallStatusOn": "Açık — yeni bir sipariş yaklaşık 90 saniye içinde kabul edilmezse telefonunuzu ararız.",
-      "autoCallStatusOff": "Kapalı — yeni siparişler yalnızca mutfak ekranında uyarı verir.",
+      "autoCallStatusOff": "Kapalı — yeni siparişler yalnızca Kitchen Order App üzerinde uyarı verir.",
       "autoCallToggleAriaLabel": "Otomatik telefon araması uyarısını aç/kapat",
       "autoCallFooterNote": "Yeni bir sipariş yaklaşık 90 saniye boyunca kabul edilmeden beklerse, hiçbir siparişi kaçırmamanız için restoran telefonunuza otomatik bir arama yaparız — tablet başında kimse olmasa bile.",
       "autoCallEnabledToast": "Otomatik telefon araması uyarısı etkinleştirildi.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Yönetime geri dön",
       "pageTitle": "Otomatik Telefon Siparişi",
       "comingSoon": "Yakında",
-      "pageSubtitle": "Restoranınızın telefonunu 7/24 yanıtlayan, sipariş alan ve doğrudan mutfak ekranınıza ileten bir yapay zeka ajanı.",
+      "pageSubtitle": "Restoranınızın telefonuna 7/24 yanıt veren, sipariş alan ve bunları doğrudan Kitchen Order App'inize aktaran bir yapay zeka aracısı.",
       "heroBadge": "Aktif geliştirmede",
       "heroHeadline": "Hiçbir telefon siparişini kaçırmayın",
-      "heroBody": "Her çağrı yanıtlanır, her sipariş alınır, her zaman — en yoğun saatlerinizde bile. Yapay zeka ajanımız telefonu halleder, personeliniz yemeğe odaklanır. Siparişler, online siparişlerin yanında doğrudan mutfak ekranınıza akar. Müşteriler tıklasın ya da konuşsun, aynı hızlı ve güler yüzlü deneyimi yaşarlar.",
+      "heroBody": "Her çağrı yanıtlanır, her sipariş alınır, her seferinde — en yoğun saatlerinizde bile. Yapay zeka aracımız telefonu üstlenir, böylece personeliniz yemeğe odaklanabilir. Siparişler, çevrimiçi siparişlerle birlikte doğrudan Kitchen Order App'inize akar. Müşteriler ister dokunsun ister konuşsun, aynı hızlı ve güler yüzlü deneyimi yaşar.",
       "chip247": "7/24 Kullanılabilir",
       "chipMenuTrained": "Menünüze göre eğitilmiş",
       "chipNaturalConversation": "Doğal konuşma",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "İnsan gibi konuşur",
       "featureVoiceBody": "Robotik bir telefon ağacı değil, doğal konuşma. Müşteriler yapay zeka ile konuştuklarını fark etmez. Aksanları, arka plan gürültüsünü ve kaçınılmaz \"bir dakika, şunu değiştirebilir misiniz\" durumlarını yönetir.",
       "featureKitchenTitle": "Aynı mutfak akışı",
-      "featureKitchenBody": "Telefon siparişleri, online siparişlerin yanında mevcut mutfak ekranınıza düşer. Yeni uygulama yok, yeni eğitim yok — ekibiniz aynı şekilde kabul eder.",
+      "featureKitchenBody": "Telefon siparişleri, çevrimiçi siparişlerle birlikte mevcut Kitchen Order App'inize ulaşır. Yeni uygulama yok, yeni eğitim yok — ekibiniz onları aynı şekilde kabul eder.",
       "statusHeading": "Bugün nerede duruyoruz",
       "statusBody1": "Temeli oluşturmak için yoğun çalışıyoruz. Ses ajanı, Twilio entegrasyonu, mutfak devri — hepsi aktif geliştirmede. Ana platform yayına girdikten kısa süre sonra bunu erken erişim restoranlarına sunmayı bekliyoruz.",
       "statusBody2": "Hazır olduğunda fatura sayfanızdan diğer eklentiler gibi abone olabileceksiniz. O zamana kadar bu sayfa yalnızca geliyor olduğuna dair bir ön bildirimdir.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "%0 komisyon",
       "heroTitle": "Ücret ödemeden online sipariş alın.",
-      "heroSubtitle": "Gel al, teslimat, masa rezervasyonları ve mutfak ekranını tek yerden yönetin. Her siparişin %100'ünü elinizde tutun.",
+      "heroSubtitle": "Paket servis, teslimat, masa rezervasyonları ve Kitchen Order App'i tek bir yerden yönetin. Her siparişin %100'ünü elinizde tutun.",
       "startTrial": "Ücretsiz Başla",
       "viewDemo": "Demoyu Gör",
       "trustedBy": "Bağımsız restoranların tercihi",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Mutfak operasyonları",
-        "display": "Mutfak ekranı",
+        "display": "Kitchen Order App",
         "displayDesc": "Siparişler durum düğmeleri ve hazırlama süreleriyle mutfak ekranında canlı görünür.",
         "printing": "Makbuz yazdırma",
         "printingDesc": "PrintNode aracılığıyla termal yazıcılara yazdırın — müşteri ve mutfak makbuzları.",
@@ -4325,7 +4326,7 @@
         "Sınırsız online sipariş",
         "Müşteri sipariş sayfası",
         "Mevcut siteniz için gömülebilir widget",
-        "Sipariş alma uygulaması (mutfak ekranı)",
+        "Kitchen Order App",
         "Yönetici paneli",
         "Menü oluşturucu + fotoğraflar",
         "Gel al, teslimat, yerinde yeme, rezervasyonlar",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Sınırsız sipariş",
         "Müşteri sipariş sayfası",
-        "Mutfak ekranı",
+        "Kitchen Order App",
         "Yönetici paneli",
         "E-posta bildirimleri",
         "5+ dil",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Hangi diller destekleniyor?",
-          "a": "İngilizce, Fransızca, İspanyolca, İtalyanca ve Portekizce — müşteri siparişi, mutfak ekranı, yönetici paneli ve e-postalar dahil."
+          "a": "İngilizce, Fransızca, İspanyolca, İtalyanca ve Portekizce — müşteri siparişi, Kitchen Order App, yönetim paneli ve e-postalarda."
         },
         {
           "q": "Promosyon çalıştırabilir miyim?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Müşteri Siparişi",
         "orderingDesc": "Menüye göz atın ve müşteri olarak test siparişi verin.",
-        "kitchen": "Mutfak Ekranı",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Gelen siparişleri mutfak ekranında gerçek zamanlı görün.",
         "admin": "Yönetici Paneli",
         "adminDesc": "Menüyü, saatleri, siparişleri ve ayarları restoran sahibi olarak yönetin."

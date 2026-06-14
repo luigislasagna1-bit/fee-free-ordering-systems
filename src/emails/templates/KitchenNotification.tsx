@@ -156,10 +156,10 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
           </InfoCard>
         )}
 
-        <EmailButton href={dashboardUrl}>Open kitchen display</EmailButton>
+        <EmailButton href={dashboardUrl}>Open Kitchen Order App</EmailButton>
 
         <P size="sm" muted>
-          Accept this order from the kitchen display app or the admin dashboard. Auto-reject runs if no action is taken within your configured timeout.
+          Accept this order from the Kitchen Order App or the admin dashboard. Auto-reject runs if no action is taken within your configured timeout.
         </P>
       </EmailBody>
       <EmailFooter imprint={imprint} />

@@ -505,7 +505,7 @@
     "holdMinutesNote": "Chúng tôi giữ bàn cho bạn {minutes} phút sau giờ đặt chỗ — vui lòng đến đúng giờ."
   },
   "kitchen": {
-    "title": "Màn hình bếp",
+    "title": "Kitchen Order App",
     "newOrders": "Đơn mới",
     "inProgress": "Đang làm",
     "ready": "Sẵn sàng",
@@ -595,7 +595,7 @@
     "refundExceeds": "Số tiền vượt quá số dư có thể hoàn.",
     "refundFailed": "Hoàn tiền thất bại. Vui lòng thử lại.",
     "refundSuccess": "Đã thực hiện hoàn tiền.",
-    "autoCallMessage": "Đơn hàng mới {number} tại {restaurant} đang chờ và chưa được chấp nhận. Vui lòng mở màn hình bếp để chấp nhận hoặc từ chối đơn hàng.",
+    "autoCallMessage": "Đơn hàng mới {number} tại {restaurant} đang chờ và chưa được chấp nhận. Vui lòng mở Kitchen Order App của bạn để chấp nhận hoặc từ chối đơn.",
     "outsideZoneNote": "Đơn hàng này có thể nằm ngoài khu vực giao hàng thông thường của bạn",
     "readyIn": "Sẵn sàng sau",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, other {# bắt buộc}}",
       "comingSoonBadge": "Sắp có",
       "mobileApp": "Ứng dụng di động",
-      "pointOfSale": "Điểm bán hàng"
+      "pointOfSale": "Điểm bán hàng",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Bảng điều khiển",
@@ -761,7 +762,7 @@
       "deliveryFee": "Phí giao hàng",
       "taxRate": "Thuế suất (%)",
       "language": "Ngôn ngữ",
-      "defaultLanguageLabel": "Ngôn ngữ mặc định cho trang đặt hàng, màn hình bếp và bảng điều khiển quản trị",
+      "defaultLanguageLabel": "Ngôn ngữ mặc định cho trang đặt hàng của khách, Kitchen Order App và bảng quản trị của bạn",
       "languageHelp": "Khách hàng có thể chọn ngôn ngữ khác trên trang đặt hàng.",
       "infoPage": "Trang thông tin",
       "reviewLink": "Link đánh giá Google / Yelp",
@@ -773,7 +774,7 @@
       "faviconHelp": "Biểu tượng hình vuông hiển thị trên tab trình duyệt. Hình ảnh không vuông sẽ được cắt từ giữa — PNG 350×350 là lý tưởng nhất.",
       "loadingMap": "Đang tải bản đồ…",
       "kitchenSoundTitle": "Âm báo bếp",
-      "kitchenSoundHelp": "Tải lên âm chuông tùy chỉnh cho thông báo đơn hàng mới. Sau khi lưu, âm này sẽ xuất hiện như một tùy chọn thứ ba (bên cạnh <strong>Tiếng Ding GloriaFood</strong> và <strong>Chuông cổ điển</strong>) trong Cài đặt âm thanh của Màn hình bếp. Hiệu quả tốt nhất: đoạn ngắn 1–5 giây, dưới 2 MB. MP3, WAV hoặc OGG.",
+      "kitchenSoundHelp": "Tải lên âm chuông tùy chỉnh cho cảnh báo đơn hàng mới. Sau khi lưu, nó sẽ xuất hiện như tùy chọn thứ ba (bên cạnh <strong>GloriaFood Ding</strong> và <strong>Classic Bell</strong>) trong Cài đặt Âm thanh của Kitchen Order App. Kết quả tốt nhất: đoạn ngắn 1–5 giây, dưới 2 MB. MP3, WAV hoặc OGG.",
       "kitchenSoundFileTooLarge": "Tệp phải nhỏ hơn 2 MB.",
       "kitchenSoundWrongType": "Vui lòng chọn một tệp âm thanh (MP3, WAV hoặc OGG).",
       "kitchenSoundUploadFailed": "Tải lên thất bại",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "Lưu thất bại — vui lòng thử lại",
       "autoCallLabel": "Cảnh báo gọi điện tự động",
       "autoCallStatusOn": "Bật — chúng tôi sẽ gọi vào điện thoại của bạn nếu một đơn hàng mới không được chấp nhận trong khoảng 90 giây.",
-      "autoCallStatusOff": "Tắt — đơn hàng mới chỉ cảnh báo trên màn hình bếp.",
+      "autoCallStatusOff": "Tắt — đơn hàng mới chỉ cảnh báo trên Kitchen Order App.",
       "autoCallToggleAriaLabel": "Bật/tắt cảnh báo gọi điện tự động",
       "autoCallFooterNote": "Nếu một đơn hàng mới chưa được chấp nhận trong khoảng 90 giây, chúng tôi sẽ thực hiện cuộc gọi tự động đến điện thoại nhà hàng của bạn để bạn không bao giờ bỏ lỡ đơn hàng — ngay cả khi không có ai bên cạnh máy tính bảng.",
       "autoCallEnabledToast": "Đã bật cảnh báo gọi điện tự động.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Quay lại trang quản trị",
       "pageTitle": "Đặt hàng qua điện thoại tự động",
       "comingSoon": "Sắp ra mắt",
-      "pageSubtitle": "Một AI tự động trả lời điện thoại nhà hàng 24/7, nhận đơn hàng và gửi thẳng vào màn hình bếp.",
+      "pageSubtitle": "Một trợ lý AI trả lời điện thoại nhà hàng của bạn 24/7, nhận đơn hàng và đưa thẳng vào Kitchen Order App của bạn.",
       "heroBadge": "Đang phát triển",
       "heroHeadline": "Không bỏ lỡ cuộc gọi đặt hàng nào",
-      "heroBody": "Mọi cuộc gọi đều được trả lời, mọi đơn hàng đều được nhận, mọi lúc — kể cả giờ cao điểm bận rộn nhất. AI của chúng tôi xử lý điện thoại để nhân viên tập trung vào đồ ăn. Đơn hàng chạy thẳng vào màn hình bếp cùng với đơn trực tuyến. Khách hàng có trải nghiệm nhanh, thân thiện như nhau dù bấm hay nói.",
+      "heroBody": "Mọi cuộc gọi đều được trả lời, mọi đơn hàng đều được nhận, mọi lúc — ngay cả trong giờ cao điểm bận rộn nhất. Trợ lý AI của chúng tôi xử lý điện thoại để nhân viên của bạn có thể tập trung vào món ăn. Đơn hàng chảy thẳng vào Kitchen Order App của bạn cùng với đơn hàng trực tuyến. Khách hàng nhận được trải nghiệm nhanh chóng, thân thiện như nhau, dù họ chạm hay nói.",
       "chip247": "Hoạt động 24/7",
       "chipMenuTrained": "Được huấn luyện theo menu của bạn",
       "chipNaturalConversation": "Hội thoại tự nhiên",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "Nghe như người thật",
       "featureVoiceBody": "Hội thoại tự nhiên, không phải cây điện thoại máy móc. Khách không nhận ra họ đang nói chuyện với AI. Xử lý được giọng vùng miền, tiếng ồn nền và câu hỏi kiểu \"khoan, đổi lại cái đó nhé\".",
       "featureKitchenTitle": "Cùng quy trình bếp",
-      "featureKitchenBody": "Đơn điện thoại vào màn hình bếp hiện có cùng với đơn trực tuyến. Không cần ứng dụng mới, không cần đào tạo thêm — nhân viên chấp nhận theo cách tương tự.",
+      "featureKitchenBody": "Đơn hàng qua điện thoại đến Kitchen Order App hiện có của bạn cùng với đơn hàng trực tuyến. Không cần ứng dụng mới, không cần đào tạo mới — nhóm của bạn chấp nhận chúng theo cùng một cách.",
       "statusHeading": "Tình trạng hiện tại",
       "statusBody1": "Chúng tôi đang tập trung xây dựng nền tảng. Tác nhân giọng nói, tích hợp Twilio, kết nối bếp — tất cả đang được phát triển tích cực. Chúng tôi dự kiến triển khai cho các nhà hàng truy cập sớm ngay sau khi nền tảng chính ra mắt.",
       "statusBody2": "Khi sẵn sàng, bạn có thể đăng ký từ trang thanh toán như bất kỳ tiện ích nào khác. Cho đến lúc đó trang này chỉ là thông báo trước rằng nó sắp đến.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0% hoa hồng đơn hàng",
       "heroTitle": "Nhận đơn online không mất phí.",
-      "heroSubtitle": "Quản lý lấy hàng, giao hàng, đặt bàn và màn hình bếp tại một nơi. Giữ 100% mỗi đơn hàng.",
+      "heroSubtitle": "Vận hành nhận tại quầy, giao hàng, đặt bàn và Kitchen Order App từ một nơi. Giữ lại 100% mỗi đơn hàng.",
       "startTrial": "Bắt đầu miễn phí",
       "viewDemo": "Xem Demo",
       "trustedBy": "Được tin dùng bởi nhà hàng độc lập",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Vận hành bếp",
-        "display": "Màn hình bếp",
+        "display": "Kitchen Order App",
         "displayDesc": "Đơn hiển thị trực tiếp trên màn hình bếp với nút trạng thái và thời gian chuẩn bị.",
         "printing": "In hóa đơn",
         "printingDesc": "In trên máy in nhiệt qua PrintNode — hóa đơn khách hàng và phiếu bếp.",
@@ -4325,7 +4326,7 @@
         "Đơn hàng online không giới hạn",
         "Trang đặt hàng cho khách",
         "Widget nhúng cho website hiện có",
-        "Ứng dụng nhận đơn (màn hình bếp)",
+        "Kitchen Order App",
         "Bảng điều khiển quản trị",
         "Menu builder + ảnh",
         "Lấy hàng, giao hàng, ăn tại quán, đặt bàn",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Đơn hàng không giới hạn",
         "Trang đặt hàng cho khách",
-        "Màn hình bếp",
+        "Kitchen Order App",
         "Bảng điều khiển quản trị",
         "Thông báo qua email",
         "5+ ngôn ngữ",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Hỗ trợ những ngôn ngữ nào?",
-          "a": "Tiếng Anh, Pháp, Tây Ban Nha, Ý và Bồ Đào Nha — trên trang đặt hàng, màn hình bếp, bảng quản trị và email."
+          "a": "Tiếng Anh, tiếng Pháp, tiếng Tây Ban Nha, tiếng Ý và tiếng Bồ Đào Nha — trên trang đặt hàng của khách, Kitchen Order App, bảng quản trị và email."
         },
         {
           "q": "Tôi có thể chạy khuyến mãi không?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Đặt hàng cho khách",
         "orderingDesc": "Duyệt thực đơn và đặt đơn thử như khách hàng.",
-        "kitchen": "Màn hình bếp",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Xem đơn mới trực tiếp trên màn hình bếp.",
         "admin": "Bảng quản trị",
         "adminDesc": "Quản lý thực đơn, giờ, đơn hàng và cài đặt với vai trò chủ nhà hàng."

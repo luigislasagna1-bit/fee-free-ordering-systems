@@ -505,7 +505,7 @@
     "holdMinutesNote": "Jūsų staliuką laikome {minutes} min po rezervacijos laiko — prašome atvykti laiku."
   },
   "kitchen": {
-    "title": "Virtuvės ekranas",
+    "title": "Kitchen Order App",
     "newOrders": "Nauji užsakymai",
     "inProgress": "Vykdoma",
     "ready": "Paruošta",
@@ -595,7 +595,7 @@
     "refundExceeds": "Suma viršija galimą grąžinti likutį.",
     "refundFailed": "Grąžinimas nepavyko. Bandykite dar kartą.",
     "refundSuccess": "Grąžinimas atliktas.",
-    "autoCallMessage": "Naujas užsakymas {number} restorane {restaurant} laukia ir dar nebuvo priimtas. Atidarykite virtuvės ekraną, kad jį priimtumėte arba atmestumėte.",
+    "autoCallMessage": "Naujas užsakymas {number} restorane {restaurant} laukia ir dar nepriimtas. Atidarykite savo Kitchen Order App, kad jį priimtumėte arba atmestumėte.",
     "outsideZoneNote": "Šis užsakymas gali būti už įprastos pristatymo zonos ribų",
     "readyIn": "Bus paruošta po",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, one {# privalomas} few {# privalomi} other {# privalomų}}",
       "comingSoonBadge": "Netrukus",
       "mobileApp": "Mobilioji programėlė",
-      "pointOfSale": "Pardavimo vieta"
+      "pointOfSale": "Pardavimo vieta",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Skydelis",
@@ -761,7 +762,7 @@
       "deliveryFee": "Pristatymo mokestis",
       "taxRate": "Mokesčio tarifas (%)",
       "language": "Kalba",
-      "defaultLanguageLabel": "Numatytoji kalba jūsų kliento užsakymų puslapiui, virtuvės ekranui ir administravimo skydeliui",
+      "defaultLanguageLabel": "Numatytoji jūsų klientų užsakymų puslapio, Kitchen Order App ir administravimo skydelio kalba",
       "languageHelp": "Klientai gali pakeisti kalbą jūsų užsakymų puslapio kalbos pasirinkikliu.",
       "infoPage": "Informacijos puslapis",
       "reviewLink": "Google / Yelp atsiliepimų nuoroda",
@@ -773,7 +774,7 @@
       "faviconHelp": "Kvadratinė piktograma, rodoma naršyklės skirtuke. Nekvadratiniai vaizdai apkarpomi iš centro — idealiai tinka 350×350 PNG failas.",
       "loadingMap": "Įkeliamas žemėlapis…",
       "kitchenSoundTitle": "Virtuvės įspėjimo garsas",
-      "kitchenSoundHelp": "Įkelkite pasirinktinį skambučio garsą naujų užsakymų įspėjimams. Įrašius, jis atsiranda kaip trečioji parinktis (greta <strong>GloriaFood skambučio</strong> ir <strong>Klasikinio varpelio</strong>) virtuvės ekrano garsų nustatymuose. Geriausi rezultatai: trumpas 1–5 sekundžių įrašas, mažesnis nei 2 MB. MP3, WAV arba OGG.",
+      "kitchenSoundHelp": "Įkelkite pasirinktinį skambučio garsą naujų užsakymų pranešimams. Išsaugojus jis rodomas kaip trečiasis pasirinkimas (šalia <strong>GloriaFood Ding</strong> ir <strong>Classic Bell</strong>) Kitchen Order App garso nustatymuose. Geriausias rezultatas: trumpas 1–5 sekundžių klipas, mažesnis nei 2 MB. MP3, WAV arba OGG.",
       "kitchenSoundFileTooLarge": "Failas turi būti mažesnis nei 2 MB.",
       "kitchenSoundWrongType": "Pasirinkite garso failą (MP3, WAV arba OGG).",
       "kitchenSoundUploadFailed": "Įkelti nepavyko",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "Nepavyko įrašyti — bandykite dar kartą",
       "autoCallLabel": "Automatinio skambučio įspėjimas",
       "autoCallStatusOn": "Įjungta — paskambinsime jums, jei naujas užsakymas nebus priimtas per maždaug 90 sekundžių.",
-      "autoCallStatusOff": "Išjungta — apie naujus užsakymus įspėjama tik virtuvės ekrane.",
+      "autoCallStatusOff": "Išjungta — apie naujus užsakymus praneša tik Kitchen Order App.",
       "autoCallToggleAriaLabel": "Perjungti automatinio skambučio įspėjimą",
       "autoCallFooterNote": "Jei naujas užsakymas lieka nepriimtas maždaug 90 sekundžių, automatiškai paskambiname į jūsų restorano telefoną, kad niekada nepraleistumėte užsakymo — net jei planšetė lieka be priežiūros.",
       "autoCallEnabledToast": "Automatinio skambučio įspėjimas įjungtas.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Atgal į administravimą",
       "pageTitle": "Automatizuotas telefono užsakymas",
       "comingSoon": "Jau greitai",
-      "pageSubtitle": "Dirbtinio intelekto agentas, atsakantis į jūsų restorano telefono skambučius 24/7, priimdamas užsakymus ir juos tiesiogiai perduodamas į jūsų virtuvės ekraną.",
+      "pageSubtitle": "DI agentas, kuris atsiliepia į jūsų restorano telefoną visą parą, priima užsakymus ir perduoda juos tiesiai į jūsų Kitchen Order App.",
       "heroBadge": "Aktyviai kuriama",
       "heroHeadline": "Niekada nepraleiskite telefono užsakymo",
-      "heroBody": "Kiekvienas skambutis atsakytas, kiekvienas užsakymas priimtas, visada — net pačiu užimčiausiu metu. Mūsų DI agentas rūpinasi telefonu, kad jūsų darbuotojai galėtų koncentruotis į maistą. Užsakymai tiesiogiai patenka į jūsų virtuvės ekraną kartu su internetiniais užsakymais. Klientai gauna tą pačią greitą, draugišką patirtį — nesvarbu, ar jie spaudžia, ar kalba.",
+      "heroBody": "Į kiekvieną skambutį atsiliepiama, kiekvienas užsakymas priimamas, kiekvieną kartą — net ir didžiausio užimtumo metu. Mūsų DI agentas tvarko telefoną, kad jūsų personalas galėtų sutelkti dėmesį į maistą. Užsakymai patenka tiesiai į jūsų Kitchen Order App kartu su internetiniais užsakymais. Klientai gauna tą pačią greitą ir draugišką patirtį, nesvarbu, ar jie liečia ekraną, ar kalba.",
       "chip247": "Pasiekiama 24/7",
       "chipMenuTrained": "Apmokytas pagal jūsų meniu",
       "chipNaturalConversation": "Natūralus pokalbis",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "Skamba kaip žmogus",
       "featureVoiceBody": "Natūralus pokalbis, o ne robotizuotas telefono medis. Klientai nesupras, kad kalba su DI. Apdoroja akcentus, foninį triukšmą ir neišvengiamą palaukite, ar galite pakeisti tai į.",
       "featureKitchenTitle": "Ta pati virtuvės eiga",
-      "featureKitchenBody": "Telefono užsakymai patenka į jūsų esamą virtuvės ekraną kartu su internetiniais užsakymais. Jokios naujos programos, jokio naujo mokymosi — jūsų komanda juos priima tuo pačiu būdu.",
+      "featureKitchenBody": "Telefoniniai užsakymai patenka į jūsų esamą Kitchen Order App kartu su internetiniais užsakymais. Jokios naujos programėlės, jokio naujo mokymo — jūsų komanda priima juos tuo pačiu būdu.",
       "statusHeading": "Dabartinė situacija",
       "statusBody1": "Mes intensyviai kuriame pagrindą. Balso agentas, Twilio integracija, virtuvės perdavimas — visa tai aktyviai kuriama. Tikimės pristatyti ankstyvosios prieigos restoranams netrukus po pagrindinės platformos paleidimo.",
       "statusBody2": "Kai bus paruošta, galėsite užsisakyti iš atsiskaitymo puslapio kaip bet kurį kitą priedą. Kol kas šis puslapis tik perspėja, kad tai artėja.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0% komisinių nuo užsakymų",
       "heroTitle": "Priimkite užsakymus internetu be mokesčių.",
-      "heroSubtitle": "Valdykite atsiėmimą, pristatymą, stalo rezervacijas ir virtuvės ekraną iš vienos vietos. Pasilikite 100% kiekvieno užsakymo.",
+      "heroSubtitle": "Valdykite atsiėmimą, pristatymą, staliukų rezervacijas ir Kitchen Order App iš vienos vietos. Pasilikite 100% kiekvieno užsakymo.",
       "startTrial": "Pradėti nemokamai",
       "viewDemo": "Žiūrėti demo",
       "trustedBy": "Pasitiki nepriklausomi restoranai",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Virtuvės operacijos",
-        "display": "Virtuvės ekranas",
+        "display": "Kitchen Order App",
         "displayDesc": "Užsakymai rodomi tiesiogiai virtuvės ekrane su būsenos mygtukais ir paruošimo laikais.",
         "printing": "Kvitų spausdinimas",
         "printingDesc": "Spausdinkite į terminius spausdintuvus per PrintNode — kliento ir virtuvės kvitai.",
@@ -4325,7 +4326,7 @@
         "Neriboti internetiniai užsakymai",
         "Kliento užsakymų puslapis",
         "Įterpiamas valdiklis jūsų esamai svetainei",
-        "Užsakymų priėmimo programa (virtuvės ekranas)",
+        "Kitchen Order App",
         "Administravimo skydelis",
         "Meniu kūrėjas + nuotraukos",
         "Atsiėmimas, pristatymas, valgymas vietoje, rezervacijos",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Neriboti užsakymai",
         "Kliento užsakymų puslapis",
-        "Virtuvės ekranas",
+        "Kitchen Order App",
         "Administravimo skydelis",
         "El. pašto pranešimai",
         "5+ kalbos",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Kokios kalbos palaikomos?",
-          "a": "Anglų, prancūzų, ispanų, italų ir portugalų — kliento užsakymų puslapyje, virtuvės ekrane, administravimo skydelyje ir el. laiškuose."
+          "a": "Anglų, prancūzų, ispanų, italų ir portugalų — klientų užsakymuose, Kitchen Order App, administravimo skydelyje ir el. laiškuose."
         },
         {
           "q": "Ar galima vykdyti akcijas?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Kliento užsakymai",
         "orderingDesc": "Naršykite meniu ir pateikite bandomąjį užsakymą kaip klientas.",
-        "kitchen": "Virtuvės ekranas",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Žiūrėkite gaunamus užsakymus virtuvės ekrane realiuoju laiku.",
         "admin": "Administravimo skydelis",
         "adminDesc": "Valdykite meniu, darbo laiką, užsakymus ir nustatymus kaip restorano savininkas."

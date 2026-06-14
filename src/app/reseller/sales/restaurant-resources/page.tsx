@@ -45,7 +45,7 @@ export default function ResellerRestaurantResourcesPage() {
           icon={<Video className="w-5 h-5" />}
           title="2-minute demo video"
           status="coming-soon"
-          body="Short walkthrough of the customer ordering flow + restaurant kitchen display. Drops the &ldquo;is it real?&rdquo; objection in 2 minutes."
+          body="Short walkthrough of the customer ordering flow + restaurant Kitchen Order App. Drops the &ldquo;is it real?&rdquo; objection in 2 minutes."
         />
         <Resource
           icon={<MessageCircle className="w-5 h-5" />}

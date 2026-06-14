@@ -505,7 +505,7 @@
     "holdMinutesNote": "Az asztalát a foglalás időpontja után még {minutes} percig fenntartjuk — kérjük, érkezzen időben."
   },
   "kitchen": {
-    "title": "Konyhai kijelző",
+    "title": "Kitchen Order App",
     "newOrders": "Új rendelések",
     "inProgress": "Folyamatban",
     "ready": "Kész",
@@ -595,7 +595,7 @@
     "refundExceeds": "Az összeg meghaladja a visszatéríthető egyenleget.",
     "refundFailed": "A visszatérítés sikertelen. Kérjük, próbálja újra.",
     "refundSuccess": "Visszatérítés kiadva.",
-    "autoCallMessage": "A(z) {number} számú új rendelés a(z) {restaurant} étteremben várakozik, és még nincs elfogadva. Kérjük, nyissa meg a konyhai kijelzőt az elfogadáshoz vagy elutasításhoz.",
+    "autoCallMessage": "A(z) {number} számú új rendelés a(z) {restaurant} étteremnél várakozik, és még nincs elfogadva. Kérjük, nyissa meg a Kitchen Order App alkalmazást az elfogadáshoz vagy elutasításhoz.",
     "outsideZoneNote": "Ez a rendelés a megszokott kiszállítási zónán kívül eshet",
     "readyIn": "Kész",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, one {# kötelező} other {# kötelező}}",
       "comingSoonBadge": "Hamarosan",
       "mobileApp": "Mobilalkalmazás",
-      "pointOfSale": "Értékesítési pont"
+      "pointOfSale": "Értékesítési pont",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Irányítópult",
@@ -761,7 +762,7 @@
       "deliveryFee": "Szállítási díj",
       "taxRate": "Adókulcs (%)",
       "language": "Nyelv",
-      "defaultLanguageLabel": "Alapértelmezett nyelv az ügyfél rendelési oldalához, konyhai kijelzőhöz és admin panelhez",
+      "defaultLanguageLabel": "Az ügyfélrendelési oldal, a Kitchen Order App és az adminisztrációs felület alapértelmezett nyelve",
       "languageHelp": "Az ügyfelek ezt a nyelvet felülírhatják a rendelési oldal nyelvválasztójával.",
       "infoPage": "Info oldal",
       "reviewLink": "Google / Yelp értékelési link",
@@ -773,7 +774,7 @@
       "faviconHelp": "Négyzet alakú ikon, amely a böngésző lapján jelenik meg. A nem négyzet alakú képeket középre vágja a rendszer — ideális egy 350×350-es PNG.",
       "loadingMap": "Térkép betöltése…",
       "kitchenSoundTitle": "Konyhai értesítő hang",
-      "kitchenSoundHelp": "Tölts fel egyéni csengőhangot az új rendelésekről szóló értesítésekhez. Mentés után harmadik lehetőségként jelenik meg (a <strong>GloriaFood csengés</strong> és a <strong>Klasszikus csengő</strong> mellett) a Kitchen Display Hangbeállításaiban. A legjobb eredmény: rövid, 1–5 másodperces felvétel, 2 MB alatt. MP3, WAV vagy OGG.",
+      "kitchenSoundHelp": "Töltsön fel egyéni csengőhangot az új rendelésekről szóló értesítésekhez. Mentés után harmadik lehetőségként jelenik meg (a <strong>GloriaFood Ding</strong> és a <strong>Classic Bell</strong> mellett) a Kitchen Order App Hangbeállításaiban. A legjobb eredmény: rövid, 1–5 másodperces klip, 2 MB alatt. MP3, WAV vagy OGG.",
       "kitchenSoundFileTooLarge": "A fájl mérete legyen 2 MB alatt.",
       "kitchenSoundWrongType": "Válassz egy hangfájlt (MP3, WAV vagy OGG).",
       "kitchenSoundUploadFailed": "A feltöltés sikertelen",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "Nem sikerült menteni — kérjük, próbálja újra",
       "autoCallLabel": "Automatikus telefonhívásos riasztás",
       "autoCallStatusOn": "Bekapcsolva — felhívjuk a telefonját, ha egy új rendelést nem fogadnak el körülbelül 90 másodpercen belül.",
-      "autoCallStatusOff": "Kikapcsolva — az új rendelésekről csak a konyhai kijelzőn jelenik meg riasztás.",
+      "autoCallStatusOff": "Kikapcsolva — az új rendelésekről kizárólag a Kitchen Order App értesít.",
       "autoCallToggleAriaLabel": "Automatikus telefonhívásos riasztás be- és kikapcsolása",
       "autoCallFooterNote": "Ha egy új rendelés körülbelül 90 másodpercig elfogadatlan marad, automatikus hívást indítunk az étterem telefonszámára, hogy soha ne maradjon le egyetlen rendelésről sem — még akkor sem, ha a táblagép felügyelet nélkül van.",
       "autoCallEnabledToast": "Automatikus telefonhívásos riasztás engedélyezve.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Vissza az adminhoz",
       "pageTitle": "Automatizált telefonos rendelés",
       "comingSoon": "Hamarosan",
-      "pageSubtitle": "Egy AI-ügynök, amely éjjel-nappal fogadja az étterem telefonhívásait, felveszi a rendeléseket, és közvetlenül a konyhai kijelzőre küldi azokat.",
+      "pageSubtitle": "Egy AI-ügynök, amely a nap 24 órájában fogadja az étterme telefonhívásait, felveszi a rendeléseket, és egyenesen a Kitchen Order App alkalmazásba továbbítja őket.",
       "heroBadge": "Aktív fejlesztés alatt",
       "heroHeadline": "Soha többé ne maradjon le egy telefonos rendelésről",
-      "heroBody": "Minden hívás megválaszolva, minden rendelés felvéve, mindig — még a legforgalmasabb időszakban is. AI-ügynökünk kezeli a telefont, hogy a személyzet a főzésre koncentrálhasson. A rendelések közvetlenül a konyhai kijelzőre kerülnek az online rendelések mellé. A vásárlók ugyanolyan gyors, barátságos élményt kapnak, akár koppintanak, akár beszélnek.",
+      "heroBody": "Minden hívás megválaszolva, minden rendelés felvéve, minden alkalommal — még a legnagyobb csúcsforgalomban is. AI-ügynökünk kezeli a telefont, így a személyzete az ételekre összpontosíthat. A rendelések közvetlenül a Kitchen Order App alkalmazásba érkeznek az online rendelések mellé. Az ügyfelek ugyanazt a gyors és barátságos élményt kapják, akár koppintanak, akár beszélnek.",
       "chip247": "Éjjel-nappal elérhető",
       "chipMenuTrained": "Betanítva a menüre",
       "chipNaturalConversation": "Természetes párbeszéd",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "Emberszerűen hangzik",
       "featureVoiceBody": "Természetes párbeszéd, nem robotikus telefonfa. A vásárlók nem veszik észre, hogy AI-jal beszélnek. Kezeli az akcentusokat, a háttérzajt és az elkerülhetetlen „várjon, módosíthatja azt\".",
       "featureKitchenTitle": "Ugyanaz a konyhai folyamat",
-      "featureKitchenBody": "A telefonos rendelések a meglévő konyhai kijelzőn jelennek meg az online rendelések mellett. Nincs új alkalmazás, nincs új képzés — a csapata ugyanúgy fogadja el őket.",
+      "featureKitchenBody": "A telefonos rendelések a meglévő Kitchen Order App alkalmazásába érkeznek az online rendelések mellé. Nincs új alkalmazás, nincs új betanítás — csapata ugyanúgy fogadja őket.",
       "statusHeading": "A jelenlegi állás",
       "statusBody1": "Az alapokat építjük. A hangügynök, a Twilio integráció, a konyhai átadás — mind aktív fejlesztés alatt áll. Várhatóan hamarosan elindítjuk a korai hozzáférésű éttermek számára a fő platform indítása után.",
       "statusBody2": "Ha készen lesz, a számlázási oldaláról előfizethet rá, mint bármely más bővítményre. Addig ez az oldal csak egy előzetes értesítés arról, hogy jön.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0% jutalék a rendeléseken",
       "heroTitle": "Fogadjon online rendeléseket díjak nélkül.",
-      "heroSubtitle": "Kezelje az elvitelt, szállítást, asztalfoglalásokat és a konyhai kijelzőt egy helyről. Tartsa meg a bevétel 100%-át.",
+      "heroSubtitle": "Kezelje az elvitelt, a kiszállítást, az asztalfoglalásokat és a Kitchen Order App alkalmazást egy helyről. Tartsa meg minden rendelés 100%-át.",
       "startTrial": "Ingyenes kezdés",
       "viewDemo": "Demo megtekintése",
       "trustedBy": "Független éttermek bíznak benne",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Konyhai működés",
-        "display": "Konyhai kijelző",
+        "display": "Kitchen Order App",
         "displayDesc": "A rendelések élőben jelennek meg a konyhai képernyőn, állapotgombokkal és elkészítési időkkel.",
         "printing": "Nyugtanyomtatás",
         "printingDesc": "Nyomtatás termális nyomtatókra PrintNode-on keresztül — vevői és konyhai nyugták.",
@@ -4325,7 +4326,7 @@
         "Korlátlan online rendelés",
         "Ügyfél rendelési oldal",
         "Beágyazható widget meglévő oldalához",
-        "Rendelésfogadó alkalmazás (konyhai kijelző)",
+        "Kitchen Order App",
         "Admin irányítópult",
         "Étlap-készítő + fotók",
         "Elvitel, szállítás, helybeni fogyasztás, foglalások",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Korlátlan rendelés",
         "Ügyfél rendelési oldal",
-        "Konyhai kijelző",
+        "Kitchen Order App",
         "Admin irányítópult",
         "E-mail értesítések",
         "5+ nyelv",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Milyen nyelvek támogatottak?",
-          "a": "Angol, francia, spanyol, olasz és portugál — az ügyfél rendelésben, konyhai kijelzőn, admin panelen és e-mailekben."
+          "a": "Angol, francia, spanyol, olasz és portugál — az ügyfélrendelés, a Kitchen Order App, az adminisztrációs felület és az e-mailek terén."
         },
         {
           "q": "Futtathatok-e promóciókat?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Ügyfél rendelés",
         "orderingDesc": "Böngésszen az étlapon és adjon le próba rendelést ügyfélként.",
-        "kitchen": "Konyhai kijelző",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Tekintse meg a beérkező rendeléseket a konyhai képernyőn valós időben.",
         "admin": "Admin panel",
         "adminDesc": "Kezelje az étlapot, nyitvatartást, rendeléseket és beállításokat étteremtulajdonosként."

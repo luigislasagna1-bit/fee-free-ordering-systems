@@ -505,7 +505,7 @@
     "holdMinutesNote": "Vašo mizo zadržimo {minutes} min po terminu rezervacije — prosimo, pridite pravočasno."
   },
   "kitchen": {
-    "title": "Kuhinjski zaslon",
+    "title": "Kitchen Order App",
     "newOrders": "Nova naročila",
     "inProgress": "V pripravi",
     "ready": "Pripravljeno",
@@ -595,7 +595,7 @@
     "refundExceeds": "Znesek presega razpoložljivo stanje za povračilo.",
     "refundFailed": "Povračilo ni uspelo. Poskusite znova.",
     "refundSuccess": "Povračilo je bilo izvedeno.",
-    "autoCallMessage": "Novo naročilo {number} pri {restaurant} čaka in še ni bilo sprejeto. Prosimo, odprite kuhinjski zaslon, da ga sprejmete ali zavrnete.",
+    "autoCallMessage": "Novo naročilo {number} v {restaurant} čaka in še ni bilo sprejeto. Odprite aplikacijo Kitchen Order App in ga sprejmite ali zavrnite.",
     "outsideZoneNote": "To naročilo je morda zunaj vašega običajnega dostavnega območja",
     "readyIn": "Pripravljeno čez",
     "asap": "ASAP",
@@ -720,7 +720,8 @@
       "requiredCount": "{count, plural, one {# obvezen} two {# obvezna} few {# obvezni} other {# obveznih}}",
       "comingSoonBadge": "Kmalu",
       "mobileApp": "Mobilna aplikacija",
-      "pointOfSale": "Prodajno mesto"
+      "pointOfSale": "Prodajno mesto",
+      "kitchenOrderApp": "Kitchen Order App"
     },
     "dashboard": {
       "title": "Nadzorna plošča",
@@ -761,7 +762,7 @@
       "deliveryFee": "Strošek dostave",
       "taxRate": "Davčna stopnja (%)",
       "language": "Jezik",
-      "defaultLanguageLabel": "Privzeti jezik za stran naročanja strank, kuhinjski zaslon in admin ploščo",
+      "defaultLanguageLabel": "Privzeti jezik za vašo stran za naročanje strank, aplikacijo Kitchen Order App in skrbniško ploščo",
       "languageHelp": "Stranke lahko ta jezik spremenijo z izbirnikom na strani za naročanje.",
       "infoPage": "Informacijska stran",
       "reviewLink": "Povezava za Google / Yelp oceno",
@@ -773,7 +774,7 @@
       "faviconHelp": "Kvadratna ikona, prikazana v zavihku brskalnika. Nekvadrarne slike so obrezane na sredino — idealna je slika PNG 350×350.",
       "loadingMap": "Nalaganje zemljevida…",
       "kitchenSoundTitle": "Zvok opozorila v kuhinji",
-      "kitchenSoundHelp": "Naložite zvonjenje po meri za opozorila o novih naročilih. Ko ga shranite, se prikaže kot tretja možnost (poleg <strong>GloriaFood Ding</strong> in <strong>Klasični zvonec</strong>) v nastavitvah zvoka kuhinjskega prikaza. Najboljši rezultati: kratek 1–5 sekundni posnetek, manjši od 2 MB. MP3, WAV ali OGG.",
+      "kitchenSoundHelp": "Naložite zvok zvonjenja po meri za opozorila o novih naročilih. Ko ga shranite, se prikaže kot tretja možnost (poleg <strong>GloriaFood Ding</strong> in <strong>Classic Bell</strong>) v nastavitvah zvoka aplikacije Kitchen Order App. Najboljši rezultati: kratek posnetek dolžine 1–5 sekund, manj kot 2 MB. MP3, WAV ali OGG.",
       "kitchenSoundFileTooLarge": "Datoteka mora biti manjša od 2 MB.",
       "kitchenSoundWrongType": "Izberite zvočno datoteko (MP3, WAV ali OGG).",
       "kitchenSoundUploadFailed": "Nalaganje ni uspelo",
@@ -3142,7 +3143,7 @@
       "saveErrorToast": "Shranjevanje ni uspelo — poskusite znova",
       "autoCallLabel": "Samodejno telefonsko opozorilo",
       "autoCallStatusOn": "Vklopljeno — na vaš telefon pokličemo, če novo naročilo ni sprejeto v približno 90 sekundah.",
-      "autoCallStatusOff": "Izklopljeno — nova naročila se prikažejo samo na kuhinjskem zaslonu.",
+      "autoCallStatusOff": "Izklopljeno — nova naročila opozarjajo samo v aplikaciji Kitchen Order App.",
       "autoCallToggleAriaLabel": "Preklopi samodejno telefonsko opozorilo",
       "autoCallFooterNote": "Če novo naročilo ostane nesprejeto približno 90 sekund, samodejno pokličemo na telefon vaše restavracije, da ne zamudite nobenega naročila — tudi če tablica ni pod nadzorom.",
       "autoCallEnabledToast": "Samodejno telefonsko opozorilo je omogočeno.",
@@ -3257,10 +3258,10 @@
       "backToAdmin": "Nazaj na skrbniško ploščo",
       "pageTitle": "Avtomatizirano telefonsko naročanje",
       "comingSoon": "Kmalu na voljo",
-      "pageSubtitle": "Umetna inteligenca, ki 24/7 odgovarja na telefon vaše restavracije, sprejema naročila in jih neposredno pošilja na kuhinjski zaslon.",
+      "pageSubtitle": "Agent z umetno inteligenco, ki se 24 ur na dan oglaša na telefon vaše restavracije, sprejema naročila in jih pošilja neposredno v vašo aplikacijo Kitchen Order App.",
       "heroBadge": "V aktivnem razvoju",
       "heroHeadline": "Ne zamudite nobenega telefonskega naročila",
-      "heroBody": "Vsak klic sprejet, vsako naročilo sprejeto, vsakič — tudi med vašo najzaposlenejšo uro. Naš AI agent skrbi za telefon, da se vaše osebje lahko osredotoči na hrano. Naročila se neposredno pretakajo na vaš kuhinjski zaslon skupaj s spletnimi naročili. Kupci dobijo enako hitro, prijazno izkušnjo, ne glede na to, ali tipkajo ali govorijo.",
+      "heroBody": "Vsak klic sprejet, vsako naročilo prevzeto, vsakič – tudi med največjo gnečo. Naš agent z umetno inteligenco skrbi za telefon, da se vaše osebje lahko osredotoči na hrano. Naročila se stekajo neposredno v vašo aplikacijo Kitchen Order App skupaj s spletnimi naročili. Stranke dobijo enako hitro in prijazno izkušnjo, ne glede na to, ali se dotaknejo zaslona ali govorijo.",
       "chip247": "Na voljo 24/7",
       "chipMenuTrained": "Usposobljen na vašem meniju",
       "chipNaturalConversation": "Naravni pogovor",
@@ -3271,7 +3272,7 @@
       "featureVoiceTitle": "Zveni človeško",
       "featureVoiceBody": "Naravni pogovor, ne robotsko telefonsko drevo. Kupci ne bodo vedeli, da govorijo z AI. Obvladuje naglase, hrup v ozadju in neizogibno \"počakajte, ali lahko to spremenite v\".",
       "featureKitchenTitle": "Enak potek v kuhinji",
-      "featureKitchenBody": "Telefonska naročila pristanejo na vašem obstoječem kuhinjskem zaslonu skupaj s spletnimi naročili. Brez nove aplikacije, brez novega usposabljanja — vaša ekipa jih sprejme na enak način.",
+      "featureKitchenBody": "Telefonska naročila pristanejo v vaši obstoječi aplikaciji Kitchen Order App skupaj s spletnimi naročili. Brez nove aplikacije, brez novega usposabljanja – vaša ekipa jih sprejema na enak način.",
       "statusHeading": "Kje smo danes",
       "statusBody1": "Intenzivno gradimo temelje. Glasovni agent, integracija Twilio, predaja kuhinji — vse v aktivnem razvoju. Pričakujemo, da bo to na voljo restavracijam z zgodnjim dostopom kmalu po zagonu glavne platforme.",
       "statusBody2": "Ko bo pripravljeno, se boste lahko naročili iz strani za obračunavanje kot katerikoli drug dodatek. Do takrat je ta stran le napoved, da prihaja.",
@@ -4265,7 +4266,7 @@
     "home": {
       "heroBadge": "0 % provizije na naročila",
       "heroTitle": "Sprejemajte spletna naročila brez stroškov.",
-      "heroSubtitle": "Upravljajte prevzem, dostavo, rezervacije miz in kuhinjski zaslon na enem mestu. Obdržite 100 % vsakega naročila.",
+      "heroSubtitle": "Upravljajte prevzem, dostavo, rezervacije miz in aplikacijo Kitchen Order App z enega mesta. Obdržite 100 % vsakega naročila.",
       "startTrial": "Začni brezplačno",
       "viewDemo": "Oglej si demo",
       "trustedBy": "Zaupanje neodvisnih restavracij",
@@ -4296,7 +4297,7 @@
       },
       "kitchen": {
         "title": "Kuhinjsko delovanje",
-        "display": "Kuhinjski zaslon",
+        "display": "Kitchen Order App",
         "displayDesc": "Naročila se prikazujejo v živo na kuhinjskem zaslonu z gumbi stanja in časi priprave.",
         "printing": "Tiskanje računov",
         "printingDesc": "Tiskajte na termalne tiskalnike prek PrintNode — računi za stranke in kuhinjo.",
@@ -4325,7 +4326,7 @@
         "Neomejeno spletnih naročil",
         "Stran za naročanje strank",
         "Vdelan widget za vašo obstoječo stran",
-        "Aplikacija za naročanje (kuhinjski zaslon)",
+        "Kitchen Order App",
         "Admin nadzorna plošča",
         "Graditelj menija + fotografije",
         "Prevzem, dostava, v restavraciji, rezervacije",
@@ -4374,7 +4375,7 @@
       "compareItems": [
         "Neomejeno naročil",
         "Stran za naročanje strank",
-        "Kuhinjski zaslon",
+        "Kitchen Order App",
         "Admin nadzorna plošča",
         "E-poštna obvestila",
         "5+ jezikov",
@@ -4414,7 +4415,7 @@
         },
         {
           "q": "Kateri jeziki so podprti?",
-          "a": "Angleščina, francoščina, španščina, italijanščina in portugalščina — za naročanje strank, kuhinjski zaslon, admin ploščo in e-pošto."
+          "a": "Angleščina, francoščina, španščina, italijanščina in portugalščina – pri naročanju strank, aplikaciji Kitchen Order App, skrbniški plošči in e-poštnih sporočilih."
         },
         {
           "q": "Ali lahko zaganjam promocije?",
@@ -4436,7 +4437,7 @@
       "cards": {
         "ordering": "Naročanje strank",
         "orderingDesc": "Preglejte meni in oddajte testno naročilo kot stranka.",
-        "kitchen": "Kuhinjski zaslon",
+        "kitchen": "Kitchen Order App",
         "kitchenDesc": "Oglejte si dohodna naročila na kuhinjskem zaslonu v realnem času.",
         "admin": "Admin plošča",
         "adminDesc": "Upravljajte meni, ure, naročila in nastavitve kot lastnik restavracije."

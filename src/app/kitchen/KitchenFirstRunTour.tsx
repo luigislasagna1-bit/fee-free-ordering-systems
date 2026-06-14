@@ -182,7 +182,7 @@ const SLIDES: Slide[] = [
   {
     icon: <ChefHat className="w-8 h-8" />,
     iconBg: "bg-emerald-500",
-    title: "Welcome to your Kitchen Display",
+    title: "Welcome to your Kitchen Order App",
     body: (
       <>
         This is where you&apos;ll see every customer order in real time. Quick walkthrough — should take less than a minute.
