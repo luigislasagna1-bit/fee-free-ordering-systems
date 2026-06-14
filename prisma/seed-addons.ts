@@ -279,6 +279,9 @@ async function main() {
       monthlyPriceCents: 1999, // $19.99 / month
       displayOrder: 95,
       enabledFeatures: ["customer_sms"],
+      // Held back from sale until release (Luigi 2026-06-13) — catalog +
+      // GrowthNet hide the price/subscribe; the sidebar shows a "Soon" badge.
+      comingSoon: true,
     },
     {
       // Marketing Studio — trackable QR codes + smart links + branded
@@ -294,6 +297,8 @@ async function main() {
       monthlyPriceCents: 999, // $9.99 placeholder — superadmin sets real price
       displayOrder: 96,
       enabledFeatures: ["marketing_studio"],
+      // Held back from sale until release (Luigi 2026-06-13).
+      comingSoon: true,
     },
     {
       // Kickstarter — launch / win-back campaign tools. The page lives under

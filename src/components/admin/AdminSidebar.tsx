@@ -232,11 +232,11 @@ const navGroups: NavGroup[] = [
         items: [
           { href: "/admin/kickstarter",      labelKey: "kickstarter",     label: "Kickstarter",      icon: Rocket, requiresFeature: "kickstarter" },
           { href: "/admin/autopilot",        labelKey: "autopilot",       label: "Autopilot",        icon: Zap,    requiresFeature: "automated_campaigns" },
-          { href: "/admin/marketing-studio", labelKey: "marketingStudio", label: "Marketing Studio", icon: QrCode, requiresFeature: "marketing_studio" },
-          { href: "/admin/customer-sms",     labelKey: "customerSms",     label: "Customer SMS",     icon: MessageSquare, requiresFeature: "customer_sms" },
+          { href: "/admin/marketing-studio", labelKey: "marketingStudio", label: "Marketing Studio", icon: QrCode, requiresFeature: "marketing_studio", comingSoon: true },
+          { href: "/admin/customer-sms",     labelKey: "customerSms",     label: "Customer SMS",     icon: MessageSquare, requiresFeature: "customer_sms", comingSoon: true },
           // ContentPilot — AI social media manager (brand name, untranslated).
           // comingSoon add-on: the page is a teaser until it ships.
-          { href: "/admin/contentpilot",     labelKey: "contentPilot",    label: "ContentPilot",     icon: Bot, requiresFeature: "contentpilot" },
+          { href: "/admin/contentpilot",     labelKey: "contentPilot",    label: "ContentPilot",     icon: Bot, requiresFeature: "contentpilot", comingSoon: true },
         ],
       },
     ],
@@ -651,7 +651,10 @@ export function AdminSidebar({
     // The link still points at the page, which renders the upsell wall.
     const locked = !!item.requiresFeature && !entitled.has(item.requiresFeature);
     // Unreleased feature → lock + "Soon" badge. Still links to its teaser page.
-    const comingSoon = !!item.comingSoon;
+    // A restaurant that already subscribed to the feature keeps the normal item
+    // (don't badge "Soon" on something they're actively using); comingSoon items
+    // without a requiresFeature (e.g. Nabil AI) always show it.
+    const comingSoon = !!item.comingSoon && !(item.requiresFeature ? entitled.has(item.requiresFeature) : false);
 
     return (
       <Link
