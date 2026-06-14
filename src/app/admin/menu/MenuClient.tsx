@@ -1478,27 +1478,40 @@ const MenuHoursFormatCtx = createContext<HoursFormat>("24h");
  *  right menu (a draft, not necessarily the live one). Multi-menu Phase 2. */
 const MenuEditCtx = createContext<{ menuId?: string }>({});
 
-/** Day-or-time availability reminder badge text for the menu list.
- *  Returns null when the item is available all week, all day. Shows the
- *  time window when set; otherwise a generic "limited days" label. The
- *  badge reminds the restaurant a dish has a day/time restriction
- *  (GloriaFood-style). */
+/** Day-or-time restriction reminder badge for the menu list. Returns null when
+ *  the item has no day/time limit. Reads the new Fulfilment Time fields (what
+ *  the item editor now saves) FIRST, falling back to the legacy availability
+ *  fields for items not re-saved since Phase 2 — so the badge always matches the
+ *  restriction the owner actually set. Previously it only read the legacy
+ *  available* fields, so a fulfilment restriction never showed. (R5, 2026-06-14) */
 function availabilityBadgeText(
-  item: { availableDays?: number[] | string | null; availableFrom?: string | null; availableTo?: string | null },
+  item: {
+    fulfilDays?: number[] | string | null; fulfilFrom?: string | null; fulfilTo?: string | null;
+    availableDays?: number[] | string | null; availableFrom?: string | null; availableTo?: string | null;
+  },
   t: (k: string) => string,
   hoursFormat: HoursFormat = "24h",
 ): string | null {
-  let days: number[] | null = null;
-  const d = item.availableDays;
-  if (Array.isArray(d)) days = d;
-  else if (typeof d === "string" && d) { try { const a = JSON.parse(d); if (Array.isArray(a)) days = a; } catch { /* ignore */ } }
+  const parseDayList = (d: number[] | string | null | undefined): number[] | null => {
+    if (Array.isArray(d)) return d;
+    if (typeof d === "string" && d) { try { const a = JSON.parse(d); if (Array.isArray(a)) return a; } catch { /* ignore */ } }
+    return null;
+  };
+  // Prefer the Fulfilment Time fields; fall back to legacy availability so an
+  // older, un-re-saved item still shows its badge.
+  const fDays = parseDayList(item.fulfilDays);
+  const fRestricted = (fDays !== null && fDays.length > 0 && fDays.length < 7) || !!(item.fulfilFrom && item.fulfilTo);
+  const days = fRestricted ? fDays : parseDayList(item.availableDays);
+  const from = fRestricted ? item.fulfilFrom : item.availableFrom;
+  const to = fRestricted ? item.fulfilTo : item.availableTo;
+
   const dayLimited = days !== null && days.length > 0 && days.length < 7;
-  const timeLimited = !!(item.availableFrom && item.availableTo);
+  const timeLimited = !!(from && to);
   if (!dayLimited && !timeLimited) return null;
   if (timeLimited) {
     // Time window is the clearest reminder ("lunch only"); append a small
     // calendar mark when days are ALSO restricted.
-    const win = `${formatTime(item.availableFrom!, hoursFormat)}–${formatTime(item.availableTo!, hoursFormat)}`;
+    const win = `${formatTime(from!, hoursFormat)}–${formatTime(to!, hoursFormat)}`;
     return dayLimited ? `${win} 📅` : win;
   }
   return t("limitedDaysBadge");
