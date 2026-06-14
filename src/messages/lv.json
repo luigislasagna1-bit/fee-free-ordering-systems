@@ -3878,6 +3878,10 @@
       "usage": "{count} no {cap} pasūtījumiem šomēnes",
       "removeLimit": "Noņemt ierobežojumu",
       "help": "Jūsu bezmaksas plāns ietver {cap} pasūtījumus mēnesī. Abonējiet jebkuru papildinājumu, lai noņemtu ierobežojumu."
+    },
+    "kdsPage": {
+      "subtitle": "Virtuves displeja sistēma",
+      "body": "Īpaša virtuves displeja lietotne: jaunie pasūtījumi parādās ekrānā pie jūsu līnijas un tiek atzīmēti, kad tie tiek gatavoti — bez papīra čekiem, bez aizmirstiem ēdieniem. Tā darbojas kā atsevišķa lietotne, līdzīgi kā Toast vai Square KDS sistēmas. Mēs to veidojam pēc palaišanas."
     }
   },
   "impersonation": {

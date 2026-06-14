@@ -708,7 +708,7 @@
       "settings": "Pengaturan",
       "viewOrderingPage": "Lihat halaman pemesanan",
       "logOut": "Logout",
-      "kitchenDisplay": "Layar Dapur",
+      "kitchenDisplay": "Layar dapur",
       "marketingStudio": "Marketing Studio",
       "closeSidebar": "Tutup bilah samping",
       "readyToPublish": "Siap diterbitkan",
@@ -3878,6 +3878,10 @@
       "usage": "{count} dari {cap} pesanan bulan ini",
       "removeLimit": "Hapus batas",
       "help": "Paket gratis Anda mencakup {cap} pesanan per bulan. Berlangganan add-on apa pun untuk menghapus batas."
+    },
+    "kdsPage": {
+      "subtitle": "Sistem layar dapur",
+      "body": "Aplikasi layar dapur khusus: pesanan baru muncul di layar di lini Anda dan ditandai saat disiapkan — tanpa tiket kertas, tanpa item terlewat. Berjalan sebagai aplikasi tersendiri, seperti sistem KDS di Toast atau Square. Kami membangunnya setelah peluncuran."
     }
   },
   "impersonation": {

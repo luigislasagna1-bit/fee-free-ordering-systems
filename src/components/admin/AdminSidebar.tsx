@@ -6,7 +6,7 @@ import {
   Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
-  Check, Circle, Sparkles, Rocket, Phone, QrCode, Lock, Network, MessageSquare, Bot,
+  Check, Circle, Sparkles, Rocket, Phone, QrCode, Lock, Network, MessageSquare, Bot, MonitorCheck,
   // Reports sub-section icons — match GloriaFood's iconography by purpose:
   // TrendingUp for Sales (line going up), PieChart for Menu Insights (mix
   // breakdown), Globe2 for Online Ordering family, ListChecks for List View.
@@ -368,6 +368,23 @@ const navGroups: NavGroup[] = [
       // /superadmin/add-ons). The Nabil AI section header keeps its own
       // comingSoon flag as the section indicator. Luigi 2026-06-14.
       { href: "/admin/phone-ordering", labelKey: "phoneOrdering", label: "Phone Ordering", icon: Phone, requiresFeature: "phone_ordering_agent" },
+    ],
+  },
+
+  {
+    // ─── KDS SCREEN ─────────────────────────────────────────────────────
+    // KDS Screen — a standalone Kitchen Display System app (Toast/Square-style),
+    // built POST-LAUNCH. For now it's a locked "Soon" teaser category so owners
+    // see it on the roadmap. comingSoon on the group + the kds_screen add-on
+    // (comingSoon in /superadmin/add-ons) drive the lock + Soon badge.
+    // Luigi 2026-06-14.
+    key: "kds",
+    labelKey: "categoryKds",
+    label: "KDS Screen",
+    icon: MonitorCheck,
+    comingSoon: true,
+    items: [
+      { href: "/admin/kds", labelKey: "kitchenDisplay", label: "Kitchen Display", icon: MonitorCheck, requiresFeature: "kds_screen" },
     ],
   },
 

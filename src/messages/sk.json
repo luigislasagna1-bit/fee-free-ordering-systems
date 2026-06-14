@@ -3878,6 +3878,10 @@
       "usage": "{count} z {cap} objednávok tento mesiac",
       "removeLimit": "Odstrániť limit",
       "help": "Váš bezplatný plán zahŕňa {cap} objednávok mesačne. Predplaťte si ľubovoľný doplnok a limit zmizne."
+    },
+    "kdsPage": {
+      "subtitle": "Kuchynský zobrazovací systém",
+      "body": "Vyhradená aplikácia kuchynského displeja: nové objednávky sa zobrazujú na obrazovke pri vašom stanovišti a odbavujú sa podľa toho, ako sa pripravujú — žiadne papierové účtenky, žiadne zabudnuté položky. Beží ako vlastná aplikácia, ako systémy KDS u Toastu alebo Square. Vyvíjame ju po spustení."
     }
   },
   "impersonation": {

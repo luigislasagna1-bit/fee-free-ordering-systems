@@ -708,7 +708,7 @@
       "settings": "Podešavanja",
       "viewOrderingPage": "Pogledaj stranicu za naručivanje",
       "logOut": "Odjavi se",
-      "kitchenDisplay": "Kuhinjski ekran",
+      "kitchenDisplay": "Кухињски екран",
       "marketingStudio": "Marketing Studio",
       "closeSidebar": "Затвори бочну траку",
       "readyToPublish": "Спремно за објављивање",
@@ -3878,6 +3878,10 @@
       "usage": "{count} од {cap} поруџбина овог месеца",
       "removeLimit": "Уклони ограничење",
       "help": "Ваш бесплатни план укључује {cap} поруџбина месечно. Претплатите се на било који додатак да уклоните ограничење."
+    },
+    "kdsPage": {
+      "subtitle": "Систем кухињског екрана",
+      "body": "Наменска апликација кухињског екрана: нове поруџбине се појављују на екрану на вашој линији и означавају се како се припремају — без папирних рачуна, без пропуштених ставки. Ради као засебна апликација, попут KDS система у Toast-у или Square-у. Градимо је након лансирања."
     }
   },
   "impersonation": {

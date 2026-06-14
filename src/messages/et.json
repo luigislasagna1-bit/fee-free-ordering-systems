@@ -708,7 +708,7 @@
       "settings": "Seaded",
       "viewOrderingPage": "Vaata tellimislehte",
       "logOut": "Logi välja",
-      "kitchenDisplay": "Köögi ekraan",
+      "kitchenDisplay": "Köögiekraan",
       "marketingStudio": "Marketing Studio",
       "closeSidebar": "Sulge külgriba",
       "readyToPublish": "Avaldamiseks valmis",
@@ -3878,6 +3878,10 @@
       "usage": "{count}/{cap} tellimust sel kuul",
       "removeLimit": "Eemalda piirang",
       "help": "Sinu tasuta pakett sisaldab {cap} tellimust kuus. Telli mõni lisamoodul, et piirang eemaldada."
+    },
+    "kdsPage": {
+      "subtitle": "Köögiekraani süsteem",
+      "body": "Spetsiaalne köögiekraani rakendus: uued tellimused ilmuvad ekraanile sinu liinil ja märgitakse valmimise käigus maha — ei mingeid paberitšekke ega unustatud roogasid. See töötab oma rakendusena, nagu Toasti või Square'i KDS-süsteemid. Ehitame selle pärast käivitamist."
     }
   },
   "impersonation": {

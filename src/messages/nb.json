@@ -3878,6 +3878,10 @@
       "usage": "{count} av {cap} bestillinger denne måneden",
       "removeLimit": "Fjern grensen",
       "help": "Gratisplanen din inkluderer {cap} bestillinger per måned. Abonner på et tillegg for å fjerne grensen."
+    },
+    "kdsPage": {
+      "subtitle": "Kjøkkenskjermsystem",
+      "body": "En dedikert kjøkkenskjerm-app: nye bestillinger vises på en skjerm ved linjen din og hukes av etter hvert som de lages — ingen papirlapper, ingen glemte varer. Den kjører som sin egen app, som KDS-systemene hos Toast eller Square. Vi bygger den etter lansering."
     }
   },
   "impersonation": {

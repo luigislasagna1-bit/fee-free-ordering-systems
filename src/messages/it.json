@@ -708,7 +708,7 @@
       "viewOrderingPage": "Vedi pagina ordini",
       "logOut": "Esci",
       "socialMedia": "Social media",
-      "kitchenDisplay": "Schermo Cucina",
+      "kitchenDisplay": "Display cucina",
       "marketingStudio": "Marketing Studio",
       "closeSidebar": "Chiudi la barra laterale",
       "readyToPublish": "Pronto per la pubblicazione",
@@ -3878,6 +3878,10 @@
       "usage": "{count} di {cap} ordini questo mese",
       "removeLimit": "Rimuovi il limite",
       "help": "Il tuo piano gratuito include {cap} ordini al mese. Abbonati a un componente aggiuntivo per rimuovere il limite."
+    },
+    "kdsPage": {
+      "subtitle": "Sistema di display da cucina",
+      "body": "Un'app dedicata per il display della cucina: i nuovi ordini compaiono su uno schermo nella tua postazione e vengono spuntati man mano che vengono preparati, niente comande cartacee né dimenticanze. Funziona come app a sé, come i sistemi KDS di Toast o Square. La stiamo sviluppando dopo il lancio."
     }
   },
   "impersonation": {

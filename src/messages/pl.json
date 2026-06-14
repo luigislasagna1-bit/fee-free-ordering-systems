@@ -708,7 +708,7 @@
       "settings": "Ustawienia",
       "viewOrderingPage": "Otwórz stronę zamówień",
       "logOut": "Wyloguj",
-      "kitchenDisplay": "Wyświetlacz kuchni",
+      "kitchenDisplay": "Ekran kuchenny",
       "marketingStudio": "Marketing Studio",
       "closeSidebar": "Zamknij pasek boczny",
       "readyToPublish": "Gotowe do publikacji",
@@ -3878,6 +3878,10 @@
       "usage": "{count} z {cap} zamówień w tym miesiącu",
       "removeLimit": "Usuń limit",
       "help": "Twój darmowy plan obejmuje {cap} zamówień miesięcznie. Wykup dowolny dodatek, aby usunąć limit."
+    },
+    "kdsPage": {
+      "subtitle": "System wyświetlania kuchennego",
+      "body": "Dedykowana aplikacja ekranu kuchennego: nowe zamówienia pojawiają się na ekranie przy Twoim stanowisku i są odhaczane w miarę przygotowywania — bez papierowych paragonów, bez pominiętych pozycji. Działa jako osobna aplikacja, jak systemy KDS w Toast czy Square. Tworzymy ją po premierze."
     }
   },
   "impersonation": {

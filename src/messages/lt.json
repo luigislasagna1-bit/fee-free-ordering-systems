@@ -3878,6 +3878,10 @@
       "usage": "{count} iš {cap} užsakymų šį mėnesį",
       "removeLimit": "Pašalinti limitą",
       "help": "Jūsų nemokamas planas apima {cap} užsakymus per mėnesį. Užsiprenumeruokite bet kurį priedą, kad pašalintumėte limitą."
+    },
+    "kdsPage": {
+      "subtitle": "Virtuvės ekrano sistema",
+      "body": "Speciali virtuvės ekrano programėlė: nauji užsakymai pasirodo ekrane prie jūsų linijos ir pažymimi juos ruošiant — jokių popierinių kvitų, jokių pamirštų patiekalų. Ji veikia kaip atskira programėlė, kaip Toast ar Square KDS sistemos. Kuriame ją po paleidimo."
     }
   },
   "impersonation": {

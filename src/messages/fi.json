@@ -3878,6 +3878,10 @@
       "usage": "{count}/{cap} tilausta tässä kuussa",
       "removeLimit": "Poista raja",
       "help": "Ilmainen tilauksesi sisältää {cap} tilausta kuukaudessa. Tilaa mikä tahansa lisäosa poistaaksesi rajan."
+    },
+    "kdsPage": {
+      "subtitle": "Keittiön näyttöjärjestelmä",
+      "body": "Oma keittiönäyttösovellus: uudet tilaukset ilmestyvät näytölle linjallasi ja kuitataan sitä mukaa kun ne valmistuvat — ei paperilappuja, ei unohtuneita annoksia. Se toimii omana sovelluksenaan, kuten Toastin tai Squaren KDS-järjestelmät. Rakennamme sen julkaisun jälkeen."
     }
   },
   "impersonation": {

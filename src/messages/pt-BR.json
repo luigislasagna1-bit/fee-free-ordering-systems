@@ -708,7 +708,7 @@
       "settings": "Configurações",
       "viewOrderingPage": "Ver página de pedidos",
       "logOut": "Sair",
-      "kitchenDisplay": "Tela da Cozinha",
+      "kitchenDisplay": "Tela da cozinha",
       "marketingStudio": "Marketing Studio",
       "closeSidebar": "Fechar a barra lateral",
       "readyToPublish": "Pronto para publicar",
@@ -3878,6 +3878,10 @@
       "usage": "{count} de {cap} pedidos este mês",
       "removeLimit": "Remover o limite",
       "help": "Seu plano gratuito inclui {cap} pedidos por mês. Assine qualquer complemento para remover o limite."
+    },
+    "kdsPage": {
+      "subtitle": "Sistema de tela da cozinha",
+      "body": "Um app dedicado de tela da cozinha: os novos pedidos aparecem em uma tela na sua linha e são baixados conforme são preparados — sem comandas de papel, sem itens esquecidos. Funciona como um app próprio, como os sistemas KDS da Toast ou Square. Estamos desenvolvendo após o lançamento."
     }
   },
   "impersonation": {

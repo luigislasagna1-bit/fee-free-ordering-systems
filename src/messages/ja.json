@@ -708,7 +708,7 @@
       "settings": "設定",
       "viewOrderingPage": "注文ページを見る",
       "logOut": "ログアウト",
-      "kitchenDisplay": "キッチン画面",
+      "kitchenDisplay": "キッチンディスプレイ",
       "marketingStudio": "Marketing Studio",
       "closeSidebar": "サイドバーを閉じる",
       "readyToPublish": "公開の準備完了",
@@ -3878,6 +3878,10 @@
       "usage": "今月 {count}/{cap} 件の注文",
       "removeLimit": "上限を解除",
       "help": "無料プランには月 {cap} 件の注文が含まれます。いずれかのアドオンに登録すると上限が解除されます。"
+    },
+    "kdsPage": {
+      "subtitle": "キッチンディスプレイシステム",
+      "body": "専用のキッチンディスプレイアプリ：新しい注文がライン上の画面に表示され、調理が進むごとに消し込めます。紙の伝票も見落としもありません。Toast や Square の KDS のように独立したアプリとして動作します。ローンチ後に開発します。"
     }
   },
   "impersonation": {

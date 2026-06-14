@@ -708,7 +708,7 @@
       "settings": "Setări",
       "viewOrderingPage": "Vezi pagina de comandă",
       "logOut": "Ieșire",
-      "kitchenDisplay": "Ecran Bucătărie",
+      "kitchenDisplay": "Afișaj bucătărie",
       "marketingStudio": "Marketing Studio",
       "closeSidebar": "Închide bara laterală",
       "readyToPublish": "Gata de publicare",
@@ -3878,6 +3878,10 @@
       "usage": "{count} din {cap} comenzi luna aceasta",
       "removeLimit": "Elimină limita",
       "help": "Planul tău gratuit include {cap} comenzi pe lună. Abonează-te la orice supliment pentru a elimina limita."
+    },
+    "kdsPage": {
+      "subtitle": "Sistem de afișare pentru bucătărie",
+      "body": "O aplicație dedicată de afișaj pentru bucătărie: comenzile noi apar pe un ecran la linia ta și sunt bifate pe măsură ce sunt preparate — fără bonuri de hârtie, fără articole uitate. Funcționează ca aplicație de sine stătătoare, ca sistemele KDS de la Toast sau Square. O construim după lansare."
     }
   },
   "impersonation": {

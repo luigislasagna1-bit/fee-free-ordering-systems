@@ -708,7 +708,7 @@
       "viewOrderingPage": "Voir la page de commande",
       "logOut": "Déconnexion",
       "socialMedia": "Réseaux sociaux",
-      "kitchenDisplay": "Écran cuisine",
+      "kitchenDisplay": "Affichage cuisine",
       "marketingStudio": "Marketing Studio",
       "closeSidebar": "Fermer la barre latérale",
       "readyToPublish": "Prêt à publier",
@@ -3878,6 +3878,10 @@
       "usage": "{count} sur {cap} commandes ce mois-ci",
       "removeLimit": "Supprimer la limite",
       "help": "Votre forfait gratuit inclut {cap} commandes par mois. Abonnez-vous à n'importe quel module pour supprimer la limite."
+    },
+    "kdsPage": {
+      "subtitle": "Système d'affichage cuisine",
+      "body": "Une application d'affichage cuisine dédiée : les nouvelles commandes apparaissent sur un écran à votre poste et sont validées au fur et à mesure de leur préparation — fini les tickets papier et les oublis. Elle fonctionne comme une application autonome, comme les systèmes KDS de Toast ou Square. Nous la développons après le lancement."
     }
   },
   "impersonation": {

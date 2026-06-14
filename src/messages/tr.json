@@ -708,7 +708,7 @@
       "settings": "Ayarlar",
       "viewOrderingPage": "Sipariş sayfasını gör",
       "logOut": "Çıkış Yap",
-      "kitchenDisplay": "Mutfak Ekranı",
+      "kitchenDisplay": "Mutfak ekranı",
       "marketingStudio": "Marketing Studio",
       "closeSidebar": "Kenar çubuğunu kapat",
       "readyToPublish": "Yayınlamaya hazır",
@@ -3878,6 +3878,10 @@
       "usage": "Bu ay {cap} siparişten {count} tanesi",
       "removeLimit": "Limiti kaldır",
       "help": "Ücretsiz planınız ayda {cap} sipariş içerir. Limiti kaldırmak için herhangi bir eklentiye abone olun."
+    },
+    "kdsPage": {
+      "subtitle": "Mutfak ekran sistemi",
+      "body": "Özel bir mutfak ekran uygulaması: yeni siparişler hattınızdaki bir ekranda görünür ve hazırlandıkça işaretlenir — kâğıt fiş yok, atlanan ürün yok. Toast veya Square'deki KDS sistemleri gibi kendi uygulaması olarak çalışır. Lansmandan sonra geliştiriyoruz."
     }
   },
   "impersonation": {

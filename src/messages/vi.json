@@ -3878,6 +3878,10 @@
       "usage": "{count} trên {cap} đơn hàng tháng này",
       "removeLimit": "Gỡ giới hạn",
       "help": "Gói miễn phí của bạn bao gồm {cap} đơn hàng mỗi tháng. Đăng ký bất kỳ tiện ích bổ sung nào để gỡ giới hạn."
+    },
+    "kdsPage": {
+      "subtitle": "Hệ thống màn hình bếp",
+      "body": "Một ứng dụng màn hình bếp riêng: đơn mới hiện trên màn hình tại khu bếp của bạn và được đánh dấu khi chế biến xong — không phiếu giấy, không bỏ sót món. Nó chạy như một ứng dụng riêng, giống các hệ thống KDS của Toast hay Square. Chúng tôi đang xây dựng sau khi ra mắt."
     }
   },
   "impersonation": {

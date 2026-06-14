@@ -3878,6 +3878,10 @@
       "usage": "{count} od {cap} naročil ta mesec",
       "removeLimit": "Odstrani omejitev",
       "help": "Vaš brezplačni paket vključuje {cap} naročil na mesec. Naročite se na kateri koli dodatek, da odstranite omejitev."
+    },
+    "kdsPage": {
+      "subtitle": "Sistem kuhinjskega zaslona",
+      "body": "Namenska aplikacija kuhinjskega zaslona: nova naročila se prikažejo na zaslonu na vaši liniji in se odkljukajo, ko so pripravljena — brez papirnatih listkov, brez pozabljenih jedi. Deluje kot samostojna aplikacija, kot sistemi KDS pri Toastu ali Squareu. Gradimo jo po lansiranju."
     }
   },
   "impersonation": {

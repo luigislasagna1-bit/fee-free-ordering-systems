@@ -3878,6 +3878,10 @@
       "usage": "{count} of {cap} orders this month",
       "removeLimit": "Remove the limit",
       "help": "Your free plan includes {cap} orders per month. Subscribe to any add-on to remove the cap."
+    },
+    "kdsPage": {
+      "subtitle": "Kitchen Display System",
+      "body": "A dedicated kitchen-display app: new orders appear on a screen at your line and get bumped as they're prepared — no paper tickets, no missed items. It runs as its own app, like the KDS systems at Toast or Square. We're building it after launch."
     }
   },
   "impersonation": {

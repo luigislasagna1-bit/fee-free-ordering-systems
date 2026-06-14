@@ -3878,6 +3878,10 @@
       "usage": "{count} / {cap} rendelés ebben a hónapban",
       "removeLimit": "Korlát eltávolítása",
       "help": "Az ingyenes csomag havi {cap} rendelést tartalmaz. Fizessen elő bármelyik kiegészítőre a korlát eltávolításához."
+    },
+    "kdsPage": {
+      "subtitle": "Konyhai kijelzőrendszer",
+      "body": "Dedikált konyhai kijelző alkalmazás: az új rendelések megjelennek egy képernyőn a vonaladnál, és elkészülésükkor lehúzhatók — nincs papírcédula, nincs kihagyott tétel. Saját alkalmazásként fut, mint a Toast vagy a Square KDS-rendszerei. Indulás után építjük meg."
     }
   },
   "impersonation": {

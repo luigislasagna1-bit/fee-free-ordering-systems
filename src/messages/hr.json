@@ -3878,6 +3878,10 @@
       "usage": "{count} od {cap} narudžbi ovog mjeseca",
       "removeLimit": "Ukloni ograničenje",
       "help": "Vaš besplatni plan uključuje {cap} narudžbi mjesečno. Pretplatite se na bilo koji dodatak da uklonite ograničenje."
+    },
+    "kdsPage": {
+      "subtitle": "Sustav kuhinjskog zaslona",
+      "body": "Namjenska aplikacija kuhinjskog zaslona: nove narudžbe pojavljuju se na zaslonu na vašoj liniji i označavaju se kako se pripremaju — bez papirnatih računa, bez propuštenih stavki. Radi kao zasebna aplikacija, poput KDS sustava u Toastu ili Squareu. Gradimo je nakon lansiranja."
     }
   },
   "impersonation": {

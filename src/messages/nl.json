@@ -708,7 +708,7 @@
       "settings": "Instellingen",
       "viewOrderingPage": "Bestelpagina bekijken",
       "logOut": "Uitloggen",
-      "kitchenDisplay": "Keukenweergave",
+      "kitchenDisplay": "Keukenscherm",
       "marketingStudio": "Marketing Studio",
       "closeSidebar": "Zijbalk sluiten",
       "readyToPublish": "Klaar om te publiceren",
@@ -3878,6 +3878,10 @@
       "usage": "{count} van {cap} bestellingen deze maand",
       "removeLimit": "Limiet verwijderen",
       "help": "Je gratis abonnement bevat {cap} bestellingen per maand. Neem een add-on om de limiet te verwijderen."
+    },
+    "kdsPage": {
+      "subtitle": "Keukenweergavesysteem",
+      "body": "Een aparte keukenscherm-app: nieuwe bestellingen verschijnen op een scherm aan je lijn en worden afgevinkt terwijl ze worden bereid — geen papieren bonnen, geen gemiste items. Het draait als eigen app, zoals de KDS-systemen van Toast of Square. We bouwen het na de lancering."
     }
   },
   "impersonation": {

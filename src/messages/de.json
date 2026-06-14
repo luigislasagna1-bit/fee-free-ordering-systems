@@ -3878,6 +3878,10 @@
       "usage": "{count} von {cap} Bestellungen diesen Monat",
       "removeLimit": "Limit entfernen",
       "help": "Ihr kostenloser Tarif umfasst {cap} Bestellungen pro Monat. Abonnieren Sie ein beliebiges Add-on, um das Limit aufzuheben."
+    },
+    "kdsPage": {
+      "subtitle": "Küchenanzeigesystem",
+      "body": "Eine eigene Küchenanzeige-App: Neue Bestellungen erscheinen auf einem Bildschirm an Ihrer Linie und werden abgehakt, sobald sie zubereitet sind — keine Papierbons, keine vergessenen Artikel. Sie läuft als eigene App, wie die KDS-Systeme von Toast oder Square. Wir entwickeln sie nach dem Start."
     }
   },
   "impersonation": {

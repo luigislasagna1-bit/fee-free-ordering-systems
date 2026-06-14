@@ -3878,6 +3878,10 @@
       "usage": "{count} av {cap} beställningar denna månad",
       "removeLimit": "Ta bort gränsen",
       "help": "Ditt gratisabonnemang inkluderar {cap} beställningar per månad. Prenumerera på ett tillägg för att ta bort gränsen."
+    },
+    "kdsPage": {
+      "subtitle": "Köksskärmssystem",
+      "body": "En dedikerad köksskärmsapp: nya beställningar visas på en skärm vid din linje och bockas av allt eftersom de tillagas — inga papperslappar, inga missade rätter. Den körs som en egen app, som KDS-systemen hos Toast eller Square. Vi bygger den efter lanseringen."
     }
   },
   "impersonation": {
