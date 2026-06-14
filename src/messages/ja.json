@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "メニューをブランドのものに戻しますか？この店舗のカスタムメニューは置き換えられます。",
       "brandControlsLabel": "ブランド設定",
       "lockedByBrand": "ブランドが管理",
-      "lockHelp": "設定をロックすると、この店舗は変更できなくなり、ブランド側で管理します。"
+      "lockHelp": "設定をロックすると、この店舗は変更できなくなり、ブランド側で管理します。",
+      "brandManagedEditNotice": "ここで編集するには、まずこの設定をオフにして、ブランドの管理から外してください。"
     },
     "menuEditor": {
       "sectionSizeLabel": "サイズ選択",

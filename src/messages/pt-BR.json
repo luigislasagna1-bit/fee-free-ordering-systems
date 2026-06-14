@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "Voltar para o cardápio da marca? O cardápio personalizado deste local será substituído.",
       "brandControlsLabel": "Controles da marca",
       "lockedByBrand": "Gerenciado pela sua marca",
-      "lockHelp": "Bloqueie uma configuração para que este local não possa alterá-la — você a controla pela marca."
+      "lockHelp": "Bloqueie uma configuração para que este local não possa alterá-la — você a controla pela marca.",
+      "brandManagedEditNotice": "Para editar aqui, primeiro desative esta configuração para que sua marca pare de gerenciá-la."
     },
     "menuEditor": {
       "sectionSizeLabel": "Seleção de tamanho",

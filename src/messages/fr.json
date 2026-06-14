@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "Revenir au menu de la marque ? Le menu personnalisé de cet établissement sera remplacé.",
       "brandControlsLabel": "Contrôles de la marque",
       "lockedByBrand": "Géré par votre marque",
-      "lockHelp": "Verrouillez un paramètre pour que cet établissement ne puisse pas le modifier — vous le contrôlez depuis la marque."
+      "lockHelp": "Verrouillez un paramètre pour que cet établissement ne puisse pas le modifier — vous le contrôlez depuis la marque.",
+      "brandManagedEditNotice": "Pour le modifier ici, désactivez d'abord ce paramètre afin que votre marque ne le gère plus."
     },
     "menuEditor": {
       "sectionSizeLabel": "Sélection de la taille",

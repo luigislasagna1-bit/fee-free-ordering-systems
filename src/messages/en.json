@@ -1973,7 +1973,8 @@
       "menuRevertConfirm": "Switch the menu back to the brand's? This location's custom menu will be replaced.",
       "brandControlsLabel": "Brand controls",
       "lockedByBrand": "Managed by your brand",
-      "lockHelp": "Lock a setting so this location can't change it themselves — you control it from the brand."
+      "lockHelp": "Lock a setting so this location can't change it themselves — you control it from the brand.",
+      "brandManagedEditNotice": "To edit it here, first turn this setting off so your brand no longer manages it."
     },
     "menuEditor": {
       "sectionSizeLabel": "Size selection",

@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "Vratiti jelovnik na onaj brenda? Prilagođeni jelovnik ove lokacije bit će zamijenjen.",
       "brandControlsLabel": "Postavke robne marke",
       "lockedByBrand": "Upravlja vaša robna marka",
-      "lockHelp": "Zaključajte postavku da je ova lokacija ne može mijenjati — kontrolirate je iz robne marke."
+      "lockHelp": "Zaključajte postavku da je ova lokacija ne može mijenjati — kontrolirate je iz robne marke.",
+      "brandManagedEditNotice": "Da biste to uredili ovdje, najprije isključite ovu postavku kako je vaša robna marka više ne bi upravljala."
     },
     "menuEditor": {
       "sectionSizeLabel": "Odabir veličine",

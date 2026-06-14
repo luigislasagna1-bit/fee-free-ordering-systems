@@ -1,5 +1,7 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { isInheriting } from "@/lib/inherited-settings";
+import { BrandManagedBanner } from "@/components/admin/BrandManagedBanner";
 import { HoursClient } from "./HoursClient";
 
 export default async function HoursPage() {
@@ -23,6 +25,9 @@ export default async function HoursPage() {
       where: { id: restaurantId },
       select: {
         hoursFormat: true,
+        // Inheritance state — a child that inherits its hours from the brand
+        // sees the editor below read-only.
+        parentRestaurantId: true, inheritedSettings: true,
         // Drive the holiday "affected services" chips off the services the
         // restaurant actually offers — no point letting an owner close a
         // service they don't run (Luigi 2026-06-12, report cmpxds2d2).
@@ -51,21 +56,34 @@ export default async function HoursPage() {
     r?.acceptsReservations && "reservation",
   ].filter(Boolean) as string[];
 
+  // When this child location inherits its opening hours from the brand, the
+  // editor is read-only — dim it + show the banner (the save endpoint also
+  // refuses the write). Luigi 2026-06-14.
+  const inherited = !!restaurant && isInheriting(restaurant as any, "hours");
+
   return (
-    <HoursClient
-      hours={hours as any}
-      hoursFormat={(restaurant?.hoursFormat as "12h" | "24h") || "24h"}
-      offeredServices={offeredServices}
-      holidays={holidays.map((h) => ({
-        id: h.id,
-        // Send ISO date string to the client to avoid timezone smear
-        // — the holiday-add UI also speaks YYYY-MM-DD throughout.
-        date: h.date.toISOString().slice(0, 10),
-        name: h.name,
-        endDate: (h as any).endDate ? (h as any).endDate.toISOString().slice(0, 10) : null,
-        message: (h as any).message ?? null,
-        rules: (h as any).rules ?? null,
-      }))}
-    />
+    <>
+      {inherited && <BrandManagedBanner />}
+      <div
+        className={inherited ? "pointer-events-none opacity-60 select-none" : undefined}
+        aria-disabled={inherited || undefined}
+      >
+        <HoursClient
+          hours={hours as any}
+          hoursFormat={(restaurant?.hoursFormat as "12h" | "24h") || "24h"}
+          offeredServices={offeredServices}
+          holidays={holidays.map((h) => ({
+            id: h.id,
+            // Send ISO date string to the client to avoid timezone smear
+            // — the holiday-add UI also speaks YYYY-MM-DD throughout.
+            date: h.date.toISOString().slice(0, 10),
+            name: h.name,
+            endDate: (h as any).endDate ? (h as any).endDate.toISOString().slice(0, 10) : null,
+            message: (h as any).message ?? null,
+            rules: (h as any).rules ?? null,
+          }))}
+        />
+      </div>
+    </>
   );
 }

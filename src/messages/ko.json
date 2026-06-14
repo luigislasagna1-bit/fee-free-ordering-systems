@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "메뉴를 브랜드 메뉴로 되돌릴까요? 이 매장의 맞춤 메뉴가 대체됩니다.",
       "brandControlsLabel": "브랜드 설정",
       "lockedByBrand": "브랜드에서 관리",
-      "lockHelp": "설정을 잠그면 이 지점에서 변경할 수 없으며, 브랜드에서 관리합니다."
+      "lockHelp": "설정을 잠그면 이 지점에서 변경할 수 없으며, 브랜드에서 관리합니다.",
+      "brandManagedEditNotice": "여기서 편집하려면 먼저 이 설정을 꺼서 브랜드가 더 이상 관리하지 않도록 하세요."
     },
     "menuEditor": {
       "sectionSizeLabel": "크기 선택",

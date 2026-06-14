@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "Skift menuen tilbage til brandets? Denne lokations tilpassede menu erstattes.",
       "brandControlsLabel": "Mærkestyring",
       "lockedByBrand": "Administreres af dit mærke",
-      "lockHelp": "Lås en indstilling, så denne lokation ikke selv kan ændre den — du styrer den fra mærket."
+      "lockHelp": "Lås en indstilling, så denne lokation ikke selv kan ændre den — du styrer den fra mærket.",
+      "brandManagedEditNotice": "For at redigere her skal du først slå denne indstilling fra, så dit mærke ikke længere styrer den."
     },
     "menuEditor": {
       "sectionSizeLabel": "Størrelsesvalg",

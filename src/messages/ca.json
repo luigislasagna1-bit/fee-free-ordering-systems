@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "Vols tornar el menú al de la marca? El menú personalitzat d'aquest local se substituirà.",
       "brandControlsLabel": "Controls de la marca",
       "lockedByBrand": "Gestionat per la teva marca",
-      "lockHelp": "Bloqueja una opció perquè aquesta ubicació no la pugui canviar — la controles des de la marca."
+      "lockHelp": "Bloqueja una opció perquè aquesta ubicació no la pugui canviar — la controles des de la marca.",
+      "brandManagedEditNotice": "Per editar-ho aquí, primer desactiva aquesta opció perquè la teva marca deixi de gestionar-la."
     },
     "menuEditor": {
       "sectionSizeLabel": "Selecció de mida",

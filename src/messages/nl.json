@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "Terug naar het menu van het merk? Het aangepaste menu van deze locatie wordt vervangen.",
       "brandControlsLabel": "Merkbeheer",
       "lockedByBrand": "Beheerd door uw merk",
-      "lockHelp": "Vergrendel een instelling zodat deze locatie die niet zelf kan wijzigen — u beheert die vanuit het merk."
+      "lockHelp": "Vergrendel een instelling zodat deze locatie die niet zelf kan wijzigen — u beheert die vanuit het merk.",
+      "brandManagedEditNotice": "Om dit hier te bewerken, schakelt u eerst deze instelling uit zodat uw merk die niet meer beheert."
     },
     "menuEditor": {
       "sectionSizeLabel": "Maatkeuze",

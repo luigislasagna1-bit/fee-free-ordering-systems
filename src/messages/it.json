@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "Tornare al menu del brand? Il menu personalizzato di questa sede verrà sostituito.",
       "brandControlsLabel": "Controlli del marchio",
       "lockedByBrand": "Gestito dal tuo marchio",
-      "lockHelp": "Blocca un'impostazione così questa sede non può modificarla — la controlli dal marchio."
+      "lockHelp": "Blocca un'impostazione così questa sede non può modificarla — la controlli dal marchio.",
+      "brandManagedEditNotice": "Per modificarlo qui, disattiva prima questa impostazione così il tuo marchio non la gestisce più."
     },
     "menuEditor": {
       "sectionSizeLabel": "Selezione taglia",

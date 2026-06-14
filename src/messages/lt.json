@@ -1518,7 +1518,8 @@
       "menuRevertConfirm": "Grąžinti meniu į prekės ženklo? Šios vietos pritaikytas meniu bus pakeistas.",
       "brandControlsLabel": "Prekės ženklo valdymas",
       "lockedByBrand": "Valdo jūsų prekės ženklas",
-      "lockHelp": "Užrakinkite nustatymą, kad ši vieta negalėtų jo keisti — valdote jį iš prekės ženklo."
+      "lockHelp": "Užrakinkite nustatymą, kad ši vieta negalėtų jo keisti — valdote jį iš prekės ženklo.",
+      "brandManagedEditNotice": "Norėdami tai redaguoti čia, pirmiausia išjunkite šį nustatymą, kad jūsų prekės ženklas jo nebevaldytų."
     },
     "toasts": {
       "saved": "Pakeitimai išsaugoti",

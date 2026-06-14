@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "¿Volver al menú de la marca? El menú personalizado de esta ubicación se reemplazará.",
       "brandControlsLabel": "Controles de la marca",
       "lockedByBrand": "Gestionado por tu marca",
-      "lockHelp": "Bloquea un ajuste para que esta ubicación no pueda cambiarlo — tú lo controlas desde la marca."
+      "lockHelp": "Bloquea un ajuste para que esta ubicación no pueda cambiarlo — tú lo controlas desde la marca.",
+      "brandManagedEditNotice": "Para editarlo aquí, primero desactiva este ajuste para que tu marca deje de gestionarlo."
     },
     "menuEditor": {
       "sectionSizeLabel": "Selección de tamaño",

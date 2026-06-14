@@ -2382,7 +2382,8 @@
       "menuRevertConfirm": "Menü markanınkine geri döndürülsün mü? Bu şubenin özel menüsü değiştirilecek.",
       "brandControlsLabel": "Marka kontrolleri",
       "lockedByBrand": "Markanız tarafından yönetiliyor",
-      "lockHelp": "Bir ayarı kilitleyin, böylece bu konum onu değiştiremez — markadan siz kontrol edersiniz."
+      "lockHelp": "Bir ayarı kilitleyin, böylece bu konum onu değiştiremez — markadan siz kontrol edersiniz.",
+      "brandManagedEditNotice": "Burada düzenlemek için önce bu ayarı kapatın, böylece markanız artık onu yönetmez."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Marka paneli",

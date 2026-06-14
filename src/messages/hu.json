@@ -2382,7 +2382,8 @@
       "menuRevertConfirm": "Visszaállítod az étlapot a márka étlapjára? Ennek a helyszínnek az egyéni étlapja felülíródik.",
       "brandControlsLabel": "Márkabeállítások",
       "lockedByBrand": "A márkája kezeli",
-      "lockHelp": "Zárolja a beállítást, hogy ez a hely ne módosíthassa — a márkából vezérli."
+      "lockHelp": "Zárolja a beállítást, hogy ez a hely ne módosíthassa — a márkából vezérli.",
+      "brandManagedEditNotice": "Az itteni szerkesztéshez először kapcsolja ki ezt a beállítást, hogy a márkája már ne kezelje."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Márka irányítópult",

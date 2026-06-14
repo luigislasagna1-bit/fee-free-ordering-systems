@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "Kas lülitada menüü tagasi brändi omale? Selle asukoha kohandatud menüü asendatakse.",
       "brandControlsLabel": "Brändi sätted",
       "lockedByBrand": "Haldab teie bränd",
-      "lockHelp": "Lukusta säte, et see asukoht ei saaks seda muuta — haldate seda brändist."
+      "lockHelp": "Lukusta säte, et see asukoht ei saaks seda muuta — haldate seda brändist.",
+      "brandManagedEditNotice": "Selle muutmiseks siin lülitage esmalt see säte välja, et teie bränd seda enam ei halda."
     },
     "menuEditor": {
       "sectionSizeLabel": "Suuruse valik",

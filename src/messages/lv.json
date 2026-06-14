@@ -1518,7 +1518,8 @@
       "menuRevertConfirm": "Pārslēgt ēdienkarti atpakaļ uz zīmola? Šīs atrašanās vietas pielāgotā ēdienkarte tiks aizstāta.",
       "brandControlsLabel": "Zīmola iestatījumi",
       "lockedByBrand": "Pārvalda jūsu zīmols",
-      "lockHelp": "Bloķējiet iestatījumu, lai šī atrašanās vieta to nevarētu mainīt — jūs to kontrolējat no zīmola."
+      "lockHelp": "Bloķējiet iestatījumu, lai šī atrašanās vieta to nevarētu mainīt — jūs to kontrolējat no zīmola.",
+      "brandManagedEditNotice": "Lai to rediģētu šeit, vispirms izslēdziet šo iestatījumu, lai jūsu zīmols to vairs nepārvalda."
     },
     "toasts": {
       "saved": "Izmaiņas saglabātas",

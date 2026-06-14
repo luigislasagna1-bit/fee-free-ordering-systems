@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "Kembalikan menu ke milik merek? Menu khusus lokasi ini akan diganti.",
       "brandControlsLabel": "Kontrol merek",
       "lockedByBrand": "Dikelola oleh merek Anda",
-      "lockHelp": "Kunci pengaturan agar lokasi ini tidak dapat mengubahnya — Anda mengontrolnya dari merek."
+      "lockHelp": "Kunci pengaturan agar lokasi ini tidak dapat mengubahnya — Anda mengontrolnya dari merek.",
+      "brandManagedEditNotice": "Untuk mengeditnya di sini, nonaktifkan dulu pengaturan ini agar merek Anda tidak lagi mengelolanya."
     },
     "menuEditor": {
       "sectionSizeLabel": "Pilihan ukuran",

@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "Želite meni vrniti na meni znamke? Meni te lokacije po meri bo zamenjan.",
       "brandControlsLabel": "Nastavitve znamke",
       "lockedByBrand": "Upravlja vaša znamka",
-      "lockHelp": "Zaklenite nastavitev, da je ta lokacija ne more spremeniti — nadzorujete jo iz znamke."
+      "lockHelp": "Zaklenite nastavitev, da je ta lokacija ne more spremeniti — nadzorujete jo iz znamke.",
+      "brandManagedEditNotice": "Če želite to urediti tukaj, najprej izklopite to nastavitev, da je vaša znamka ne upravlja več."
     },
     "menuEditor": {
       "sectionSizeLabel": "Izbira velikosti",

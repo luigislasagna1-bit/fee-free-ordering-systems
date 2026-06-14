@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "将菜单切换回品牌菜单？本门店的自定义菜单将被替换。",
       "brandControlsLabel": "品牌控制",
       "lockedByBrand": "由您的品牌管理",
-      "lockHelp": "锁定某项设置，使该门店无法自行更改——由您从品牌端控制。"
+      "lockHelp": "锁定某项设置，使该门店无法自行更改——由您从品牌端控制。",
+      "brandManagedEditNotice": "若要在此处编辑，请先关闭此设置，使其不再由您的品牌管理。"
     },
     "menuEditor": {
       "sectionSizeLabel": "尺寸选择",

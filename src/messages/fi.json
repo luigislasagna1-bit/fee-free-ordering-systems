@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "Palautetaanko ruokalista brändin mukaiseksi? Tämän toimipisteen mukautettu ruokalista korvataan.",
       "brandControlsLabel": "Brändihallinta",
       "lockedByBrand": "Brändisi hallinnoi",
-      "lockHelp": "Lukitse asetus, jotta tämä toimipiste ei voi muuttaa sitä — hallitset sitä brändistä."
+      "lockHelp": "Lukitse asetus, jotta tämä toimipiste ei voi muuttaa sitä — hallitset sitä brändistä.",
+      "brandManagedEditNotice": "Muokataksesi tätä täällä, poista ensin tämä asetus käytöstä, jotta brändisi ei enää hallitse sitä."
     },
     "menuEditor": {
       "sectionSizeLabel": "Koon valinta",

@@ -1596,7 +1596,8 @@
       "menuRevertConfirm": "Vrátit menu zpět na menu značky? Vlastní menu této pobočky bude nahrazeno.",
       "brandControlsLabel": "Nastavení značky",
       "lockedByBrand": "Spravováno vaší značkou",
-      "lockHelp": "Uzamkněte nastavení, aby ho tato pobočka nemohla měnit — řídíte ho ze značky."
+      "lockHelp": "Uzamkněte nastavení, aby ho tato pobočka nemohla měnit — řídíte ho ze značky.",
+      "brandManagedEditNotice": "Chcete-li to upravit zde, nejprve toto nastavení vypněte, aby ho vaše značka už nespravovala."
     },
     "menuEditor": {
       "sectionSizeLabel": "Výběr velikosti",
