@@ -24,6 +24,7 @@
 
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "./receipt-schema";
 import type { ReceiptOrder, ReceiptRestaurant, ReservationReceiptData } from "./receipt";
+import { boxedSectionHasNoContent } from "./receipt";
 import { formatCurrency } from "./utils";
 import type { DigestStats } from "./email";
 import { getDict, type Translator } from "./i18n-dict";
@@ -635,6 +636,10 @@ function renderSections(
     // logo see zero change at the top of their receipts.
     if (section.type === "store_logo" && !restaurant.receiptLogoUrl) continue;
     const s = section.style;
+
+    // A boxed section with no content (no promos / notes …) must not print as an
+    // empty box — skip it entirely (header, border, padding and all).
+    if (s.boxed && boxedSectionHasNoContent(section.type, order)) continue;
 
     blankLines(r, s.paddingTop);
 

@@ -1010,6 +1010,29 @@ async function renderCustomerSection(
 // renderer.  They do NOT render as their own block in the section loop.
 const STYLE_ONLY_SECTIONS = new Set<string>(["k_modifiers", "modifiers"]);
 
+/**
+ * A boxed section whose body is CONDITIONAL (promos, notes) and currently has
+ * nothing to show would otherwise print as an EMPTY box — a header + border with
+ * no content. Returns true for those empty cases so renderSections skips the
+ * whole section. Every other section always renders something. Shared by the
+ * ESC/POS and StarXpand-bitmap paths so both behave identically. Luigi 2026-06-13.
+ */
+export function boxedSectionHasNoContent(sectionType: string, order: ReceiptOrder): boolean {
+  if (sectionType === "promos" || sectionType === "k_promos") {
+    if (!order.appliedPromos) return true;
+    try {
+      const promos = JSON.parse(order.appliedPromos);
+      return !Array.isArray(promos) || promos.length === 0;
+    } catch {
+      return true;
+    }
+  }
+  if (sectionType === "notes" || sectionType === "k_notes") {
+    return !order.notes;
+  }
+  return false;
+}
+
 async function renderSections(
   r: EscPos,
   config: CustomerConfig | KitchenConfig,
@@ -1032,6 +1055,10 @@ async function renderSections(
     // the StarXpand bitmap path (receipt-lines.ts). Luigi 2026-06-11.
     if (section.type === "store_logo") continue;
     const s = section.style;
+
+    // A boxed section with no content (no promos / notes …) must not print as an
+    // empty box — skip it entirely (header, border, padding and all).
+    if (s.boxed && boxedSectionHasNoContent(section.type, order)) continue;
 
     blankLines(r, s.paddingTop);
 
