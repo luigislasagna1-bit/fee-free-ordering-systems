@@ -258,7 +258,8 @@
     "testModeHint": "Les comandes fetes aquí es marquen com a TEST: sonen a la cuina i s'imprimeixen normalment, però mai no compten en informes ni ingressos.",
     "fromPrice": "des de {price}",
     "fulfilOrderAheadLabel": "Demana per endavant · {window}",
-    "opensAtLabel": "Obre a les {time}"
+    "opensAtLabel": "Obre a les {time}",
+    "marketingConsentLabel": "Sí, vull rebre comunicacions de màrqueting d'aquest restaurant. Pots donar-te de baixa en qualsevol moment."
   },
   "pizza": {
     "chooseSize": "Tria la mida",

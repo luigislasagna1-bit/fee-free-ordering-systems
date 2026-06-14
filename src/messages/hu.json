@@ -258,7 +258,8 @@
     "testModeHint": "Az itt leadott rendelések TEST jelölést kapnak: csörögnek a konyhán és normálisan nyomtatódnak, de soha nem számítanak a riportokba vagy a bevételbe.",
     "fromPrice": "{price}-tól",
     "fulfilOrderAheadLabel": "Rendelés előre · {window}",
-    "opensAtLabel": "Nyitás: {time}"
+    "opensAtLabel": "Nyitás: {time}",
+    "marketingConsentLabel": "Igen, szeretnék marketingüzeneteket kapni ettől az étteremtől. Bármikor leiratkozhat."
   },
   "pizza": {
     "chooseSize": "Méret választása",

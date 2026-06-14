@@ -258,7 +258,8 @@
     "testModeHint": "Siin tehtud tellimused märgitakse TEST: need helisevad köögis ja prinditakse tavapäraselt, kuid ei lähe kunagi aruannetesse ega tulusse.",
     "fromPrice": "alates {price}",
     "fulfilOrderAheadLabel": "Ettetellimus · {window}",
-    "opensAtLabel": "Avab kell {time}"
+    "opensAtLabel": "Avab kell {time}",
+    "marketingConsentLabel": "Jah, soovin saada selle restorani turundusteateid. Saate end igal ajal loobuda."
   },
   "pizza": {
     "chooseSize": "Vali suurus",

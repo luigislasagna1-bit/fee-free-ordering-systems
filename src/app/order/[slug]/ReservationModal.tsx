@@ -263,6 +263,10 @@ export function ReservationModal({
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
+  // Marketing consent — default CHECKED (opt-out), mirrors the order checkout
+  // (Fabrizio 2026-06-14, GloriaFood parity). Persisted via the reservations
+  // route's Customer upsert so it lands in the same consent field as orders.
+  const [marketingConsent, setMarketingConsent] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [confirmationCode, setConfirmationCode] = useState<string | null>(null);
   const [finalStatus, setFinalStatus] = useState<"confirmed" | "pending" | null>(null);
@@ -508,7 +512,7 @@ export function ReservationModal({
         body: JSON.stringify({
           restaurantSlug,
           customerName: name, customerEmail: email, customerPhone: phone,
-          partySize, date, time, notes,
+          partySize, date, time, notes, marketingConsent,
         }),
       });
       const data = await res.json();
@@ -679,6 +683,21 @@ export function ReservationModal({
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2"
                 style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
               />
+
+              {/* Marketing consent — only when an email is present (consent is
+                  meaningless without an inbox), default checked. Mirrors checkout. */}
+              {email.trim().length > 0 && (
+                <label className="flex items-start gap-2 text-xs text-gray-600 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="mt-0.5"
+                    checked={marketingConsent}
+                    onChange={e => setMarketingConsent(e.target.checked)}
+                    style={{ accentColor: theme.primaryColor }}
+                  />
+                  <span>{tOrd("marketingConsentLabel")}</span>
+                </label>
+              )}
 
               {/* Comments */}
               <textarea

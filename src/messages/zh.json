@@ -258,7 +258,8 @@
     "testModeHint": "在此下的订单会标记为 TEST：厨房正常响铃和打印，但绝不会计入报表或营业额。",
     "fromPrice": "{price} 起",
     "fulfilOrderAheadLabel": "提前预订 · {window}",
-    "opensAtLabel": "{time} 开门"
+    "opensAtLabel": "{time} 开门",
+    "marketingConsentLabel": "是的，我希望接收这家餐厅的营销信息。您可以随时取消订阅。"
   },
   "pizza": {
     "chooseSize": "选择大小",

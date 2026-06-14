@@ -258,7 +258,8 @@
     "testModeHint": "الطلبات هنا تُوسم TEST: ترن في المطبخ وتُطبع كالمعتاد لكنها لا تُحتسب أبدًا في التقارير أو الإيرادات.",
     "fromPrice": "من {price}",
     "fulfilOrderAheadLabel": "اطلب مسبقًا · {window}",
-    "opensAtLabel": "يفتح في {time}"
+    "opensAtLabel": "يفتح في {time}",
+    "marketingConsentLabel": "نعم، أرغب في تلقي رسائل تسويقية من هذا المطعم. يمكنك إلغاء الاشتراك في أي وقت."
   },
   "pizza": {
     "chooseSize": "اختر الحجم",

@@ -258,7 +258,8 @@
     "testModeBanner": "Test mode — you're previewing your own store",
     "testModeHint": "Orders you place here are marked TEST: they ring the kitchen and print normally but never count in reports or revenue.",
     "fromPrice": "from {price}",
-    "opensAtLabel": "Opens {time}"
+    "opensAtLabel": "Opens {time}",
+    "marketingConsentLabel": "Yes, I'd like to receive marketing communications from this restaurant. You can unsubscribe at any time."
   },
   "pizza": {
     "chooseSize": "Choose Size",

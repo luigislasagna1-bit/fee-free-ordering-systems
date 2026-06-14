@@ -258,7 +258,8 @@
     "testModeHint": "Les commandes passées ici sont marquées TEST : elles sonnent en cuisine et s'impriment normalement, mais ne comptent jamais dans les rapports ni le chiffre d'affaires.",
     "fromPrice": "à partir de {price}",
     "fulfilOrderAheadLabel": "Commande à l'avance · {window}",
-    "opensAtLabel": "Ouvre à {time}"
+    "opensAtLabel": "Ouvre à {time}",
+    "marketingConsentLabel": "Oui, je souhaite recevoir des communications marketing de ce restaurant. Vous pouvez vous désabonner à tout moment."
   },
   "pizza": {
     "chooseSize": "Choisir la taille",

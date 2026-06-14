@@ -258,7 +258,8 @@
     "testModeHint": "Čia pateikti užsakymai pažymimi TEST: jie skamba virtuvėje ir spausdinami įprastai, bet niekada neįskaičiuojami į ataskaitas ar pajamas.",
     "fromPrice": "nuo {price}",
     "fulfilOrderAheadLabel": "Išankstinis užsakymas · {window}",
-    "opensAtLabel": "Atidaroma {time}"
+    "opensAtLabel": "Atidaroma {time}",
+    "marketingConsentLabel": "Taip, noriu gauti šio restorano rinkodaros pranešimus. Galite atsisakyti bet kuriuo metu."
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",

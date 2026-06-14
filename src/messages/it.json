@@ -258,7 +258,8 @@
     "testModeHint": "Gli ordini effettuati qui sono contrassegnati TEST: suonano in cucina e si stampano normalmente, ma non contano mai nei report né nei ricavi.",
     "fromPrice": "da {price}",
     "fulfilOrderAheadLabel": "Ordina in anticipo · {window}",
-    "opensAtLabel": "Apre alle {time}"
+    "opensAtLabel": "Apre alle {time}",
+    "marketingConsentLabel": "Sì, desidero ricevere comunicazioni di marketing da questo ristorante. Puoi annullare l'iscrizione in qualsiasi momento."
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",

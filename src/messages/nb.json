@@ -258,7 +258,8 @@
     "testModeHint": "Bestillinger her merkes TEST: de ringer på kjøkkenet og skrives ut normalt, men telles aldri i rapporter eller omsetning.",
     "fromPrice": "fra {price}",
     "fulfilOrderAheadLabel": "Forhåndsbestill · {window}",
-    "opensAtLabel": "Åpner {time}"
+    "opensAtLabel": "Åpner {time}",
+    "marketingConsentLabel": "Ja, jeg vil gjerne motta markedsføringskommunikasjon fra denne restauranten. Du kan melde deg av når som helst."
   },
   "pizza": {
     "chooseSize": "Velg størrelse",

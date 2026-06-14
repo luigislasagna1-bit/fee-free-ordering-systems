@@ -19,6 +19,7 @@ export async function POST(req: NextRequest) {
       customerName, customerEmail, customerPhone,
       partySize, date, time, notes,
       preOrderItems,
+      marketingConsent,
     } = body;
 
     if (!restaurantSlug || !customerName || !customerPhone || !partySize || !date || !time) {
@@ -165,6 +166,43 @@ export async function POST(req: NextRequest) {
         alertAt: reservationAlertAt,
       },
     });
+
+    // CRM: persist marketing consent (+ create the contact) like the order flow,
+    // so a reservation opt-in flips the Customers badge + feeds autopilot. Email-
+    // guarded (consent needs an inbox); fire-and-forget-safe — a CRM failure must
+    // never fail the booking. Does NOT touch totalOrders/lastOrderAt (a booking
+    // isn't an order). Luigi 2026-06-14.
+    const cleanEmailForCrm = customerEmail ? sanitize(customerEmail, 254).toLowerCase() : null;
+    if (cleanEmailForCrm) {
+      try {
+        const consentChoice = marketingConsent === true;
+        const existing = await prisma.customer.findFirst({
+          where: { restaurantId: restaurant.id, email: cleanEmailForCrm },
+          select: { id: true, marketingConsent: true },
+        });
+        if (existing) {
+          if (existing.marketingConsent !== consentChoice) {
+            await prisma.customer.update({
+              where: { id: existing.id },
+              data: { marketingConsent: consentChoice, marketingConsentAt: new Date() },
+            });
+          }
+        } else {
+          await prisma.customer.create({
+            data: {
+              restaurantId: restaurant.id,
+              name: sanitize(customerName, 100),
+              email: cleanEmailForCrm,
+              phone: sanitize(customerPhone, 30),
+              marketingConsent: consentChoice,
+              marketingConsentAt: new Date(),
+            },
+          });
+        }
+      } catch (e) {
+        console.error("[reservations] customer consent upsert failed", e);
+      }
+    }
 
     // ── Notifications (toggle-aware fan-out) ─────────────────────────────
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";

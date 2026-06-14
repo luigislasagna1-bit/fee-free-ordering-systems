@@ -258,7 +258,8 @@
     "testModeHint": "Bestellingen die je hier plaatst zijn gemarkeerd als TEST: ze rinkelen in de keuken en printen normaal, maar tellen nooit mee in rapporten of omzet.",
     "fromPrice": "vanaf {price}",
     "fulfilOrderAheadLabel": "Vooraf bestellen · {window}",
-    "opensAtLabel": "Opent om {time}"
+    "opensAtLabel": "Opent om {time}",
+    "marketingConsentLabel": "Ja, ik wil graag marketingcommunicatie van dit restaurant ontvangen. Je kunt je op elk moment afmelden."
   },
   "pizza": {
     "chooseSize": "Kies maat",

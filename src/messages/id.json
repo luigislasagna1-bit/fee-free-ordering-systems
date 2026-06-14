@@ -258,7 +258,8 @@
     "testModeHint": "Pesanan di sini ditandai TEST: berdering di dapur dan dicetak seperti biasa, tetapi tidak pernah dihitung dalam laporan atau pendapatan.",
     "fromPrice": "mulai {price}",
     "fulfilOrderAheadLabel": "Pesan di muka · {window}",
-    "opensAtLabel": "Buka {time}"
+    "opensAtLabel": "Buka {time}",
+    "marketingConsentLabel": "Ya, saya ingin menerima komunikasi pemasaran dari restoran ini. Anda dapat berhenti berlangganan kapan saja."
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",

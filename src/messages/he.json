@@ -258,7 +258,8 @@
     "testModeHint": "הזמנות כאן מסומנות TEST: הן מצלצלות במטבח ומודפסות כרגיל אך לעולם לא נספרות בדוחות או בהכנסות.",
     "fromPrice": "החל מ-{price}",
     "fulfilOrderAheadLabel": "הזמנה מראש · {window}",
-    "opensAtLabel": "נפתח ב-{time}"
+    "opensAtLabel": "נפתח ב-{time}",
+    "marketingConsentLabel": "כן, אני רוצה לקבל תקשורת שיווקית מהמסעדה הזו. אפשר לבטל את ההרשמה בכל עת."
   },
   "pizza": {
     "chooseSize": "בחר גודל",

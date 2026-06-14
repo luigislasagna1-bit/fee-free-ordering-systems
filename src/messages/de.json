@@ -258,7 +258,8 @@
     "testModeHint": "Hier aufgegebene Bestellungen sind als TEST markiert: Sie klingeln in der Küche und drucken normal, zählen aber nie in Berichten oder Umsätzen.",
     "fromPrice": "ab {price}",
     "fulfilOrderAheadLabel": "Vorbestellen · {window}",
-    "opensAtLabel": "Öffnet um {time}"
+    "opensAtLabel": "Öffnet um {time}",
+    "marketingConsentLabel": "Ja, ich möchte Marketing-Mitteilungen von diesem Restaurant erhalten. Sie können sich jederzeit abmelden."
   },
   "pizza": {
     "chooseSize": "Größe wählen",

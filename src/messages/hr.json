@@ -258,7 +258,8 @@
     "testModeHint": "Narudžbe ovdje označene su TEST: zvone u kuhinji i ispisuju se normalno, ali se nikad ne računaju u izvještaje ni prihod.",
     "fromPrice": "od {price}",
     "fulfilOrderAheadLabel": "Naručite unaprijed · {window}",
-    "opensAtLabel": "Otvara u {time}"
+    "opensAtLabel": "Otvara u {time}",
+    "marketingConsentLabel": "Da, želim primati marketinške poruke od ovog restorana. Možete se odjaviti u bilo kojem trenutku."
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",

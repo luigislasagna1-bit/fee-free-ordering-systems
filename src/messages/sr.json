@@ -258,7 +258,8 @@
     "testModeHint": "Наруџбе овде су означене TEST: звоне у кухињи и штампају се нормално, али се никад не рачунају у извештаје или приход.",
     "fromPrice": "од {price}",
     "fulfilOrderAheadLabel": "Naručite unapred · {window}",
-    "opensAtLabel": "Отвара у {time}"
+    "opensAtLabel": "Отвара у {time}",
+    "marketingConsentLabel": "Да, желим да примам маркетиншке поруке од овог ресторана. Можете се одјавити у било ком тренутку."
   },
   "pizza": {
     "chooseSize": "Izaberite veličinu",

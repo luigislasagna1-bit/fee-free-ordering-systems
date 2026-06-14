@@ -258,7 +258,8 @@
     "testModeHint": "Objednávky zadané tu sú označené TEST: v kuchyni zazvonia a normálne sa vytlačia, ale nikdy sa nepočítajú do reportov ani tržieb.",
     "fromPrice": "od {price}",
     "fulfilOrderAheadLabel": "Objednať vopred · {window}",
-    "opensAtLabel": "Otvára o {time}"
+    "opensAtLabel": "Otvára o {time}",
+    "marketingConsentLabel": "Áno, chcem dostávať marketingové oznámenia od tejto reštaurácie. Odber môžete kedykoľvek zrušiť."
   },
   "pizza": {
     "chooseSize": "Vybrať veľkosť",

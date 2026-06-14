@@ -258,7 +258,8 @@
     "testModeHint": "Burada verilen siparişler TEST olarak işaretlenir: mutfakta çalar ve normal yazdırılır ama raporlara veya gelire asla sayılmaz.",
     "fromPrice": "{price} başlangıç",
     "fulfilOrderAheadLabel": "Önceden sipariş ver · {window}",
-    "opensAtLabel": "Açılış: {time}"
+    "opensAtLabel": "Açılış: {time}",
+    "marketingConsentLabel": "Evet, bu restorandan pazarlama iletileri almak istiyorum. İstediğiniz zaman aboneliğinizi iptal edebilirsiniz."
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",

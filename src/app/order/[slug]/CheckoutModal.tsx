@@ -786,10 +786,7 @@ export function CheckoutModal({
                       }
                       style={{ accentColor: theme.primaryColor }}
                     />
-                    <span>
-                      Yes, I&apos;d like to receive marketing communications from this
-                      restaurant. You can unsubscribe at any time.
-                    </span>
+                    <span>{tOrd("marketingConsentLabel")}</span>
                   </label>
                 )}
               </SectionCard>

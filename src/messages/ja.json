@@ -258,7 +258,8 @@
     "testModeHint": "ここで行った注文は TEST と表示されます。キッチンには通常どおり通知・印刷されますが、レポートや売上には一切計上されません。",
     "fromPrice": "{price}〜",
     "fulfilOrderAheadLabel": "事前注文 · {window}",
-    "opensAtLabel": "{time} に開店"
+    "opensAtLabel": "{time} に開店",
+    "marketingConsentLabel": "はい、このレストランからのマーケティング情報を受け取りたいです。いつでも配信を停止できます。"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",

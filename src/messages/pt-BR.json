@@ -258,7 +258,8 @@
     "testModeHint": "Pedidos feitos aqui são marcados como TEST: tocam na cozinha e imprimem normalmente, mas nunca contam nos relatórios nem na receita.",
     "fromPrice": "a partir de {price}",
     "fulfilOrderAheadLabel": "Peça com antecedência · {window}",
-    "opensAtLabel": "Abre às {time}"
+    "opensAtLabel": "Abre às {time}",
+    "marketingConsentLabel": "Sim, quero receber comunicações de marketing deste restaurante. Você pode cancelar a inscrição a qualquer momento."
   },
   "pizza": {
     "chooseSize": "Escolha o Tamanho",

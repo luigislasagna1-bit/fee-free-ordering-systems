@@ -258,7 +258,8 @@
     "testModeHint": "Comenzile plasate aici sunt marcate TEST: sună în bucătărie și se tipăresc normal, dar nu se numără niciodată în rapoarte sau venituri.",
     "fromPrice": "de la {price}",
     "fulfilOrderAheadLabel": "Comandă în avans · {window}",
-    "opensAtLabel": "Se deschide la {time}"
+    "opensAtLabel": "Se deschide la {time}",
+    "marketingConsentLabel": "Da, doresc să primesc comunicări de marketing de la acest restaurant. Te poți dezabona oricând."
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
