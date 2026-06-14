@@ -123,7 +123,7 @@ const navGroups: NavGroup[] = [
           { href: "/admin/services",      labelKey: "services",      label: "Services",       icon: Layers,       step: "services.atLeastOne" },
           { href: "/admin/hours",         labelKey: "openingHours",  label: "Opening Hours",  icon: Clock,        step: "services.openingHours" },
           { href: "/admin/delivery",      labelKey: "deliveryZones", label: "Delivery Zones", icon: Truck,        step: "services.deliveryZones" },
-          { href: "/admin/delivery/pool", labelKey: "driverPool",    label: "Driver Pool",    icon: Truck,        step: "services.deliveryManagement" },
+          { href: "/admin/delivery/pool", labelKey: "driverPool",    label: "Driver Pool",    icon: Truck,        step: "services.deliveryManagement", requiresFeature: "driver_pool" },
           { href: "/admin/reservations",  labelKey: "reservations",  label: "Reservations",   icon: CalendarDays },
           { href: "/admin/locations",     labelKey: "locations",     label: "Locations",      icon: MapIcon },
         ],
@@ -189,7 +189,7 @@ const navGroups: NavGroup[] = [
           // entitlement (custom_domain_routing) isn't active. Visible
           // even without the add-on because the page doubles as a
           // conversion surface explaining what the upgrade unlocks.
-          { href: "/admin/website/domain", labelKey: "customDomain", label: "Custom Domain",  icon: Globe },
+          { href: "/admin/website/domain", labelKey: "customDomain", label: "Custom Domain",  icon: Globe, requiresFeature: "custom_domain_routing" },
         ],
       },
       // NOTE: "Subscription & Billing" used to live here. Moved to OTHER —
