@@ -647,14 +647,19 @@ export function AdminSidebar({
     const active = exact ? pathname === href : pathname.startsWith(href);
     const badge = badgeKey === "orders" && pendingOrders > 0 ? pendingOrders : null;
     const isStepComplete = step ? stepComplete.get(step) : undefined;
-    // Paid item without the entitlement → keep it visible but show a lock.
-    // The link still points at the page, which renders the upsell wall.
-    const locked = !!item.requiresFeature && !entitled.has(item.requiresFeature);
-    // Unreleased feature → lock + "Soon" badge. Still links to its teaser page.
-    // A restaurant that already subscribed to the feature keeps the normal item
-    // (don't badge "Soon" on something they're actively using); comingSoon items
-    // without a requiresFeature (e.g. Nabil AI) always show it.
-    const comingSoon = !!item.comingSoon && !(item.requiresFeature ? entitled.has(item.requiresFeature) : false);
+    // Two INDEPENDENT signals (Luigi 2026-06-14):
+    //   • "Soon" = RELEASE status. Shown whenever the item is flagged comingSoon,
+    //     to EVERYONE — the feature simply isn't public yet.
+    //   • Lock   = ACCESS status. Shown when THIS restaurant doesn't have the
+    //     feature: a paid add-on it hasn't bought, OR a coming-soon feature it
+    //     hasn't been granted early backend access to. Cleared by buying it
+    //     (paid add-on) or a backend grant (coming-soon, which isn't for sale).
+    // So an early-access (granted) restaurant still sees "Soon" but NO lock; a
+    // paying restaurant on a shipped add-on sees neither. The link still points
+    // at the page, which renders the upsell wall / teaser.
+    const granted = !!item.requiresFeature && entitled.has(item.requiresFeature);
+    const comingSoon = !!item.comingSoon;
+    const locked = (!!item.requiresFeature || comingSoon) && !granted;
 
     return (
       <Link
@@ -679,7 +684,7 @@ export function AdminSidebar({
         )}
       >
         <div className="relative flex-shrink-0">
-          <Icon className={cn(nested ? "w-3.5 h-3.5" : "w-4 h-4", (locked || comingSoon) && !active && "opacity-60")} />
+          <Icon className={cn(nested ? "w-3.5 h-3.5" : "w-4 h-4", locked && !active && "opacity-60")} />
           {badge !== null && (
             <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-bold rounded-full min-w-[16px] h-4 flex items-center justify-center px-1">
               {badge > 99 ? "99+" : badge}
@@ -688,8 +693,8 @@ export function AdminSidebar({
         </div>
         {!collapsed && (
           <>
-            <span className={cn("flex-1 truncate", (locked || comingSoon) && !active && "opacity-70")}>{display}</span>
-            {/* Unreleased feature → "Soon" pill + lock (Luigi 2026-06-13). */}
+            <span className={cn("flex-1 truncate", locked && !active && "opacity-70")}>{display}</span>
+            {/* Unreleased feature → "Soon" pill, shown to EVERYONE (release status). */}
             {comingSoon && (
               <span className={cn(
                 "text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full flex-shrink-0",
@@ -698,10 +703,10 @@ export function AdminSidebar({
                 {tr("comingSoonBadge", "Soon")}
               </span>
             )}
-            {/* Lock marker for paid items the restaurant hasn't unlocked OR an
-                unreleased (comingSoon) feature. Sits where the badge/step marker
-                would; badges/steps never co-occur with these so no collision. */}
-            {(locked || comingSoon) && (
+            {/* Lock marker = no ACCESS (paid-but-unbought, or coming-soon without
+                a backend grant). A granted early-access restaurant shows "Soon"
+                above but no lock. Badges/steps never co-occur, so no collision. */}
+            {locked && (
               <Lock className={cn("w-3.5 h-3.5 flex-shrink-0", active ? "text-white" : "text-amber-400/80")} />
             )}
             {!locked && !comingSoon && isStepComplete === true && (
