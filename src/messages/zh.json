@@ -716,7 +716,8 @@
       "setupProgress": "设置进度",
       "stepsComplete": "已完成 {completed}/{total} 个步骤",
       "requiredCount": "{count, plural, other {# 个必需}}",
-      "comingSoonBadge": "即将推出"
+      "comingSoonBadge": "即将推出",
+      "mobileApp": "移动应用"
     },
     "dashboard": {
       "title": "仪表盘",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "厨房显示系统",
       "body": "专属的厨房显示应用：新订单会显示在你工作台的屏幕上，并在备餐时逐项划除——无需纸质单据，不会漏单。它作为独立应用运行，就像 Toast 或 Square 的 KDS 系统。我们将在上线后开发。"
+    },
+    "mobileAppPage": {
+      "subtitle": "移动点餐应用",
+      "body": "在 App Store 和 Google Play 上推出你自己品牌的应用——顾客点餐、一键再次下单并接收推送通知，全部使用你的名称和标识。我们将在上线后开发。"
     }
   },
   "impersonation": {

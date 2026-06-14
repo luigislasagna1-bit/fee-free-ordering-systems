@@ -716,7 +716,8 @@
       "setupProgress": "Priebeh nastavenia",
       "stepsComplete": "Dokončené kroky: {completed}/{total}",
       "requiredCount": "{count, plural, one {# povinný} few {# povinné} other {# povinných}}",
-      "comingSoonBadge": "Čoskoro"
+      "comingSoonBadge": "Čoskoro",
+      "mobileApp": "Mobilná aplikácia"
     },
     "dashboard": {
       "title": "Prehľad",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Kuchynský zobrazovací systém",
       "body": "Vyhradená aplikácia kuchynského displeja: nové objednávky sa zobrazujú na obrazovke pri vašom stanovišti a odbavujú sa podľa toho, ako sa pripravujú — žiadne papierové účtenky, žiadne zabudnuté položky. Beží ako vlastná aplikácia, ako systémy KDS u Toastu alebo Square. Vyvíjame ju po spustení."
+    },
+    "mobileAppPage": {
+      "subtitle": "Mobilná objednávacia aplikácia",
+      "body": "Aplikácia s vašou značkou v App Store a Google Play — zákazníci objednávajú, objednávajú znova jedným klepnutím a dostávajú push oznámenia, všetko pod vaším menom a logom. Vyvíjame ju po spustení."
     }
   },
   "impersonation": {

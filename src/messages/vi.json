@@ -716,7 +716,8 @@
       "setupProgress": "Tiến độ thiết lập",
       "stepsComplete": "Đã hoàn thành {completed}/{total} bước",
       "requiredCount": "{count, plural, other {# bắt buộc}}",
-      "comingSoonBadge": "Sắp có"
+      "comingSoonBadge": "Sắp có",
+      "mobileApp": "Ứng dụng di động"
     },
     "dashboard": {
       "title": "Bảng điều khiển",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Hệ thống màn hình bếp",
       "body": "Một ứng dụng màn hình bếp riêng: đơn mới hiện trên màn hình tại khu bếp của bạn và được đánh dấu khi chế biến xong — không phiếu giấy, không bỏ sót món. Nó chạy như một ứng dụng riêng, giống các hệ thống KDS của Toast hay Square. Chúng tôi đang xây dựng sau khi ra mắt."
+    },
+    "mobileAppPage": {
+      "subtitle": "Ứng dụng đặt hàng di động",
+      "body": "Ứng dụng mang thương hiệu nhà hàng của bạn trên App Store và Google Play — khách đặt món, đặt lại chỉ bằng một chạm và nhận thông báo đẩy, tất cả dưới tên và logo của bạn. Chúng tôi đang xây dựng sau khi ra mắt."
     }
   },
   "impersonation": {

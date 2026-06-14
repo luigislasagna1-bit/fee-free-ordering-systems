@@ -716,7 +716,8 @@
       "setupProgress": "Iestatīšanas progress",
       "stepsComplete": "Pabeigti soļi: {completed}/{total}",
       "requiredCount": "{count, plural, zero {# obligātu} one {# obligāts} other {# obligāti}}",
-      "comingSoonBadge": "Drīzumā"
+      "comingSoonBadge": "Drīzumā",
+      "mobileApp": "Mobilā lietotne"
     },
     "dashboard": {
       "title": "Panelis",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Virtuves displeja sistēma",
       "body": "Īpaša virtuves displeja lietotne: jaunie pasūtījumi parādās ekrānā pie jūsu līnijas un tiek atzīmēti, kad tie tiek gatavoti — bez papīra čekiem, bez aizmirstiem ēdieniem. Tā darbojas kā atsevišķa lietotne, līdzīgi kā Toast vai Square KDS sistēmas. Mēs to veidojam pēc palaišanas."
+    },
+    "mobileAppPage": {
+      "subtitle": "Mobilā pasūtīšanas lietotne",
+      "body": "Lietotne ar jūsu zīmolu App Store un Google Play — klienti pasūta, atkārto pasūtījumu ar vienu pieskārienu un saņem push paziņojumus, viss ar jūsu nosaukumu un logo. Mēs to veidojam pēc palaišanas."
     }
   },
   "impersonation": {

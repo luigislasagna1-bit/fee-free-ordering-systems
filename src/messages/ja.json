@@ -716,7 +716,8 @@
       "setupProgress": "セットアップの進捗",
       "stepsComplete": "{completed}/{total}ステップ完了",
       "requiredCount": "{count, plural, other {必須 #件}}",
-      "comingSoonBadge": "近日公開"
+      "comingSoonBadge": "近日公開",
+      "mobileApp": "モバイルアプリ"
     },
     "dashboard": {
       "title": "ダッシュボード",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "キッチンディスプレイシステム",
       "body": "専用のキッチンディスプレイアプリ：新しい注文がライン上の画面に表示され、調理が進むごとに消し込めます。紙の伝票も見落としもありません。Toast や Square の KDS のように独立したアプリとして動作します。ローンチ後に開発します。"
+    },
+    "mobileAppPage": {
+      "subtitle": "モバイル注文アプリ",
+      "body": "App Store と Google Play に並ぶ、あなた専用のブランドアプリ。お客様は注文し、ワンタップで再注文し、プッシュ通知を受け取れます。すべてあなたの名前とロゴで。ローンチ後に開発します。"
     }
   },
   "impersonation": {

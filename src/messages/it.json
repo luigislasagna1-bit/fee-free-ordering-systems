@@ -716,7 +716,8 @@
       "setupProgress": "Avanzamento della configurazione",
       "stepsComplete": "{completed}/{total} passaggi completati",
       "requiredCount": "{count, plural, one {# obbligatorio} other {# obbligatori}}",
-      "comingSoonBadge": "Presto"
+      "comingSoonBadge": "Presto",
+      "mobileApp": "App mobile"
     },
     "dashboard": {
       "title": "Pannello",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Sistema di display da cucina",
       "body": "Un'app dedicata per il display della cucina: i nuovi ordini compaiono su uno schermo nella tua postazione e vengono spuntati man mano che vengono preparati, niente comande cartacee né dimenticanze. Funziona come app a sé, come i sistemi KDS di Toast o Square. La stiamo sviluppando dopo il lancio."
+    },
+    "mobileAppPage": {
+      "subtitle": "App di ordinazione mobile",
+      "body": "L'app con il marchio del tuo ristorante su App Store e Google Play: i clienti ordinano, riordinano con un tocco e ricevono notifiche push, tutto con il tuo nome e logo. La stiamo sviluppando dopo il lancio."
     }
   },
   "impersonation": {

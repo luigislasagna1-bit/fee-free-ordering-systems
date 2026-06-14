@@ -716,7 +716,8 @@
       "setupProgress": "Progresso da configuração",
       "stepsComplete": "{completed}/{total} etapas concluídas",
       "requiredCount": "{count, plural, one {# obrigatória} other {# obrigatórias}}",
-      "comingSoonBadge": "Em breve"
+      "comingSoonBadge": "Em breve",
+      "mobileApp": "App móvel"
     },
     "dashboard": {
       "title": "Painel",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Sistema de tela da cozinha",
       "body": "Um app dedicado de tela da cozinha: os novos pedidos aparecem em uma tela na sua linha e são baixados conforme são preparados — sem comandas de papel, sem itens esquecidos. Funciona como um app próprio, como os sistemas KDS da Toast ou Square. Estamos desenvolvendo após o lançamento."
+    },
+    "mobileAppPage": {
+      "subtitle": "App de pedidos móvel",
+      "body": "O app com a marca do seu restaurante na App Store e Google Play — os clientes pedem, repetem com um toque e recebem notificações push, tudo com seu nome e logo. Estamos desenvolvendo após o lançamento."
     }
   },
   "impersonation": {

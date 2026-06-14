@@ -716,7 +716,8 @@
       "setupProgress": "Status for opsætning",
       "stepsComplete": "{completed}/{total} trin fuldført",
       "requiredCount": "{count, plural, one {# obligatorisk} other {# obligatoriske}}",
-      "comingSoonBadge": "Snart"
+      "comingSoonBadge": "Snart",
+      "mobileApp": "Mobilapp"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Køkkenskærmsystem",
       "body": "En dedikeret køkkenskærm-app: nye ordrer vises på en skærm ved din linje og afkrydses, efterhånden som de tilberedes — ingen papirsedler, ingen oversete varer. Den kører som sin egen app, ligesom KDS-systemerne hos Toast eller Square. Vi bygger den efter lanceringen."
+    },
+    "mobileAppPage": {
+      "subtitle": "Mobil bestillingsapp",
+      "body": "En app med dit brand i App Store og Google Play — kunderne bestiller, genbestiller med ét tryk og får push-notifikationer, alt sammen under dit navn og logo. Vi bygger den efter lanceringen."
     }
   },
   "impersonation": {

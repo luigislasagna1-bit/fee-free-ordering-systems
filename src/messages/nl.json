@@ -716,7 +716,8 @@
       "setupProgress": "Configuratievoortgang",
       "stepsComplete": "{completed}/{total} stappen voltooid",
       "requiredCount": "{count, plural, one {# verplicht} other {# verplicht}}",
-      "comingSoonBadge": "Binnenkort"
+      "comingSoonBadge": "Binnenkort",
+      "mobileApp": "Mobiele app"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Keukenweergavesysteem",
       "body": "Een aparte keukenscherm-app: nieuwe bestellingen verschijnen op een scherm aan je lijn en worden afgevinkt terwijl ze worden bereid — geen papieren bonnen, geen gemiste items. Het draait als eigen app, zoals de KDS-systemen van Toast of Square. We bouwen het na de lancering."
+    },
+    "mobileAppPage": {
+      "subtitle": "Mobiele bestel-app",
+      "body": "Een app met jouw merk in de App Store en Google Play — klanten bestellen, herbestellen met één tik en krijgen pushmeldingen, allemaal onder jouw naam en logo. We bouwen het na de lancering."
     }
   },
   "impersonation": {

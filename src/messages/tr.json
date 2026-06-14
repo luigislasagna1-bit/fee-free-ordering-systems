@@ -716,7 +716,8 @@
       "setupProgress": "Kurulum ilerlemesi",
       "stepsComplete": "{completed}/{total} adım tamamlandı",
       "requiredCount": "{count, plural, one {# zorunlu} other {# zorunlu}}",
-      "comingSoonBadge": "Yakında"
+      "comingSoonBadge": "Yakında",
+      "mobileApp": "Mobil uygulama"
     },
     "dashboard": {
       "title": "Panel",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Mutfak ekran sistemi",
       "body": "Özel bir mutfak ekran uygulaması: yeni siparişler hattınızdaki bir ekranda görünür ve hazırlandıkça işaretlenir — kâğıt fiş yok, atlanan ürün yok. Toast veya Square'deki KDS sistemleri gibi kendi uygulaması olarak çalışır. Lansmandan sonra geliştiriyoruz."
+    },
+    "mobileAppPage": {
+      "subtitle": "Mobil sipariş uygulaması",
+      "body": "App Store ve Google Play'de kendi markanıza ait uygulama — müşteriler sipariş verir, tek dokunuşla tekrar sipariş eder ve anlık bildirimler alır, hepsi sizin adınız ve logonuzla. Lansmandan sonra geliştiriyoruz."
     }
   },
   "impersonation": {

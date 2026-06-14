@@ -6,7 +6,7 @@ import {
   Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
-  Check, Circle, Sparkles, Rocket, Phone, QrCode, Lock, Network, MessageSquare, Bot, MonitorCheck,
+  Check, Circle, Sparkles, Rocket, Phone, QrCode, Lock, Network, MessageSquare, Bot, MonitorCheck, Smartphone,
   // Reports sub-section icons — match GloriaFood's iconography by purpose:
   // TrendingUp for Sales (line going up), PieChart for Menu Insights (mix
   // breakdown), Globe2 for Online Ordering family, ListChecks for List View.
@@ -385,6 +385,22 @@ const navGroups: NavGroup[] = [
     comingSoon: true,
     items: [
       { href: "/admin/kds", labelKey: "kitchenDisplay", label: "Kitchen Display", icon: MonitorCheck, requiresFeature: "kds_screen" },
+    ],
+  },
+
+  {
+    // ─── BRANDED MOBILE APP ─────────────────────────────────────────────
+    // Branded Mobile App — your restaurant's own iOS/Android app, built
+    // POST-LAUNCH. Locked "Soon" teaser category (mirrors KDS / Nabil AI).
+    // comingSoon on the group + the branded_mobile_app add-on (comingSoon in
+    // /superadmin/add-ons) drive the lock + Soon badge. Luigi 2026-06-14.
+    key: "mobile-app",
+    labelKey: "categoryMobileApp",
+    label: "Branded Mobile App",
+    icon: Smartphone,
+    comingSoon: true,
+    items: [
+      { href: "/admin/mobile-app", labelKey: "mobileApp", label: "Mobile App", icon: Smartphone, requiresFeature: "app_store_listing" },
     ],
   },
 

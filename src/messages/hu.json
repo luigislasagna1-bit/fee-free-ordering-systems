@@ -716,7 +716,8 @@
       "setupProgress": "Beállítás folyamata",
       "stepsComplete": "{completed}/{total} lépés kész",
       "requiredCount": "{count, plural, one {# kötelező} other {# kötelező}}",
-      "comingSoonBadge": "Hamarosan"
+      "comingSoonBadge": "Hamarosan",
+      "mobileApp": "Mobilalkalmazás"
     },
     "dashboard": {
       "title": "Irányítópult",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Konyhai kijelzőrendszer",
       "body": "Dedikált konyhai kijelző alkalmazás: az új rendelések megjelennek egy képernyőn a vonaladnál, és elkészülésükkor lehúzhatók — nincs papírcédula, nincs kihagyott tétel. Saját alkalmazásként fut, mint a Toast vagy a Square KDS-rendszerei. Indulás után építjük meg."
+    },
+    "mobileAppPage": {
+      "subtitle": "Mobil rendelési alkalmazás",
+      "body": "A saját márkás alkalmazásod az App Store-ban és a Google Playen — a vendégek rendelnek, egy érintéssel újrarendelnek és push-értesítéseket kapnak, mind a te neved és logód alatt. Indulás után építjük meg."
     }
   },
   "impersonation": {

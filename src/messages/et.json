@@ -716,7 +716,8 @@
       "setupProgress": "Seadistuse edenemine",
       "stepsComplete": "{completed}/{total} sammu tehtud",
       "requiredCount": "{count, plural, one {# kohustuslik} other {# kohustuslikku}}",
-      "comingSoonBadge": "Varsti"
+      "comingSoonBadge": "Varsti",
+      "mobileApp": "Mobiilirakendus"
     },
     "dashboard": {
       "title": "Juhtpaneel",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Köögiekraani süsteem",
       "body": "Spetsiaalne köögiekraani rakendus: uued tellimused ilmuvad ekraanile sinu liinil ja märgitakse valmimise käigus maha — ei mingeid paberitšekke ega unustatud roogasid. See töötab oma rakendusena, nagu Toasti või Square'i KDS-süsteemid. Ehitame selle pärast käivitamist."
+    },
+    "mobileAppPage": {
+      "subtitle": "Mobiilne tellimisrakendus",
+      "body": "Sinu brändiga rakendus App Store'is ja Google Plays — kliendid tellivad, tellivad uuesti ühe puudutusega ja saavad push-teavitusi, kõik sinu nime ja logo all. Ehitame selle pärast käivitamist."
     }
   },
   "impersonation": {

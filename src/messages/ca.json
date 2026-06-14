@@ -716,7 +716,8 @@
       "setupProgress": "Progrés de la configuració",
       "stepsComplete": "{completed}/{total} passos completats",
       "requiredCount": "{count, plural, one {# obligatori} other {# obligatoris}}",
-      "comingSoonBadge": "Aviat"
+      "comingSoonBadge": "Aviat",
+      "mobileApp": "App mòbil"
     },
     "dashboard": {
       "title": "Tauler de control",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Sistema de pantalla de cuina",
       "body": "Una app dedicada de pantalla de cuina: les comandes noves apareixen en una pantalla de la teva línia i es marquen a mesura que es preparen — sense tiquets de paper ni oblits. Funciona com a app pròpia, com els sistemes KDS de Toast o Square. L'estem construint després del llançament."
+    },
+    "mobileAppPage": {
+      "subtitle": "App mòbil de comandes",
+      "body": "L'app amb la marca del teu restaurant a l'App Store i Google Play — els clients demanen, repeteixen amb un toc i reben notificacions push, tot amb el teu nom i logotip. L'estem construint després del llançament."
     }
   },
   "impersonation": {

@@ -716,7 +716,8 @@
       "setupProgress": "Sąrankos eiga",
       "stepsComplete": "Atlikta žingsnių: {completed}/{total}",
       "requiredCount": "{count, plural, one {# privalomas} few {# privalomi} other {# privalomų}}",
-      "comingSoonBadge": "Netrukus"
+      "comingSoonBadge": "Netrukus",
+      "mobileApp": "Mobilioji programėlė"
     },
     "dashboard": {
       "title": "Skydelis",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Virtuvės ekrano sistema",
       "body": "Speciali virtuvės ekrano programėlė: nauji užsakymai pasirodo ekrane prie jūsų linijos ir pažymimi juos ruošiant — jokių popierinių kvitų, jokių pamirštų patiekalų. Ji veikia kaip atskira programėlė, kaip Toast ar Square KDS sistemos. Kuriame ją po paleidimo."
+    },
+    "mobileAppPage": {
+      "subtitle": "Mobilioji užsakymų programėlė",
+      "body": "Programėlė su jūsų prekės ženklu App Store ir Google Play — klientai užsako, pakartoja užsakymą vienu palietimu ir gauna push pranešimus, viskas su jūsų vardu ir logotipu. Kuriame ją po paleidimo."
     }
   },
   "impersonation": {

@@ -716,7 +716,8 @@
       "setupProgress": "Progres penyiapan",
       "stepsComplete": "{completed}/{total} langkah selesai",
       "requiredCount": "{count, plural, other {# wajib}}",
-      "comingSoonBadge": "Segera"
+      "comingSoonBadge": "Segera",
+      "mobileApp": "Aplikasi seluler"
     },
     "dashboard": {
       "title": "Dasbor",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Sistem layar dapur",
       "body": "Aplikasi layar dapur khusus: pesanan baru muncul di layar di lini Anda dan ditandai saat disiapkan — tanpa tiket kertas, tanpa item terlewat. Berjalan sebagai aplikasi tersendiri, seperti sistem KDS di Toast atau Square. Kami membangunnya setelah peluncuran."
+    },
+    "mobileAppPage": {
+      "subtitle": "Aplikasi pemesanan seluler",
+      "body": "Aplikasi bermerek restoran Anda di App Store dan Google Play — pelanggan memesan, memesan ulang dengan satu ketukan, dan menerima notifikasi push, semuanya dengan nama dan logo Anda. Kami membangunnya setelah peluncuran."
     }
   },
   "impersonation": {

@@ -716,7 +716,8 @@
       "setupProgress": "Einrichtungsfortschritt",
       "stepsComplete": "{completed}/{total} Schritte abgeschlossen",
       "requiredCount": "{count, plural, one {# erforderlich} other {# erforderlich}}",
-      "comingSoonBadge": "Bald"
+      "comingSoonBadge": "Bald",
+      "mobileApp": "Mobile App"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Küchenanzeigesystem",
       "body": "Eine eigene Küchenanzeige-App: Neue Bestellungen erscheinen auf einem Bildschirm an Ihrer Linie und werden abgehakt, sobald sie zubereitet sind — keine Papierbons, keine vergessenen Artikel. Sie läuft als eigene App, wie die KDS-Systeme von Toast oder Square. Wir entwickeln sie nach dem Start."
+    },
+    "mobileAppPage": {
+      "subtitle": "Mobile Bestell-App",
+      "body": "Eine App mit Ihrer Marke im App Store und bei Google Play — Kunden bestellen, bestellen mit einem Tippen erneut und erhalten Push-Benachrichtigungen, alles unter Ihrem Namen und Logo. Wir entwickeln sie nach dem Start."
     }
   },
   "impersonation": {

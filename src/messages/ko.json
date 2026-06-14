@@ -716,7 +716,8 @@
       "setupProgress": "설정 진행률",
       "stepsComplete": "{completed}/{total}단계 완료",
       "requiredCount": "{count, plural, other {필수 #개}}",
-      "comingSoonBadge": "출시 예정"
+      "comingSoonBadge": "출시 예정",
+      "mobileApp": "모바일 앱"
     },
     "dashboard": {
       "title": "대시보드",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "주방 디스플레이 시스템",
       "body": "전용 주방 디스플레이 앱: 새 주문이 라인의 화면에 표시되고 조리되는 대로 처리됩니다 — 종이 전표도, 누락된 항목도 없습니다. Toast나 Square의 KDS처럼 독립 앱으로 실행됩니다. 출시 후 개발할 예정입니다."
+    },
+    "mobileAppPage": {
+      "subtitle": "모바일 주문 앱",
+      "body": "App Store와 Google Play에 올라가는 매장 전용 브랜드 앱 — 고객이 주문하고, 한 번의 탭으로 재주문하고, 푸시 알림을 받습니다. 모두 매장 이름과 로고로. 출시 후 개발할 예정입니다."
     }
   },
   "impersonation": {

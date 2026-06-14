@@ -716,7 +716,8 @@
       "setupProgress": "Postęp konfiguracji",
       "stepsComplete": "Ukończone kroki: {completed}/{total}",
       "requiredCount": "{count, plural, one {# wymagany} few {# wymagane} many {# wymaganych} other {# wymaganego}}",
-      "comingSoonBadge": "Wkrótce"
+      "comingSoonBadge": "Wkrótce",
+      "mobileApp": "Aplikacja mobilna"
     },
     "dashboard": {
       "title": "Panel główny",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "System wyświetlania kuchennego",
       "body": "Dedykowana aplikacja ekranu kuchennego: nowe zamówienia pojawiają się na ekranie przy Twoim stanowisku i są odhaczane w miarę przygotowywania — bez papierowych paragonów, bez pominiętych pozycji. Działa jako osobna aplikacja, jak systemy KDS w Toast czy Square. Tworzymy ją po premierze."
+    },
+    "mobileAppPage": {
+      "subtitle": "Mobilna aplikacja do zamawiania",
+      "body": "Aplikacja z marką Twojej restauracji w App Store i Google Play — klienci zamawiają, ponawiają zamówienie jednym dotknięciem i otrzymują powiadomienia push, wszystko pod Twoją nazwą i logo. Tworzymy ją po premierze."
     }
   },
   "impersonation": {

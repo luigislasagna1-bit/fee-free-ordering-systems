@@ -716,7 +716,8 @@
       "setupProgress": "Progresul configurării",
       "stepsComplete": "{completed}/{total} pași finalizați",
       "requiredCount": "{count, plural, one {# obligatoriu} few {# obligatorii} other {# obligatorii}}",
-      "comingSoonBadge": "În curând"
+      "comingSoonBadge": "În curând",
+      "mobileApp": "Aplicație mobilă"
     },
     "dashboard": {
       "title": "Panou de control",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Sistem de afișare pentru bucătărie",
       "body": "O aplicație dedicată de afișaj pentru bucătărie: comenzile noi apar pe un ecran la linia ta și sunt bifate pe măsură ce sunt preparate — fără bonuri de hârtie, fără articole uitate. Funcționează ca aplicație de sine stătătoare, ca sistemele KDS de la Toast sau Square. O construim după lansare."
+    },
+    "mobileAppPage": {
+      "subtitle": "Aplicație mobilă de comenzi",
+      "body": "Aplicația cu marca restaurantului tău în App Store și Google Play — clienții comandă, recomandă dintr-o atingere și primesc notificări push, totul sub numele și logoul tău. O construim după lansare."
     }
   },
   "impersonation": {

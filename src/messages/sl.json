@@ -716,7 +716,8 @@
       "setupProgress": "Napredek nastavitve",
       "stepsComplete": "Dokončani koraki: {completed}/{total}",
       "requiredCount": "{count, plural, one {# obvezen} two {# obvezna} few {# obvezni} other {# obveznih}}",
-      "comingSoonBadge": "Kmalu"
+      "comingSoonBadge": "Kmalu",
+      "mobileApp": "Mobilna aplikacija"
     },
     "dashboard": {
       "title": "Nadzorna plošča",
@@ -3882,6 +3883,10 @@
     "kdsPage": {
       "subtitle": "Sistem kuhinjskega zaslona",
       "body": "Namenska aplikacija kuhinjskega zaslona: nova naročila se prikažejo na zaslonu na vaši liniji in se odkljukajo, ko so pripravljena — brez papirnatih listkov, brez pozabljenih jedi. Deluje kot samostojna aplikacija, kot sistemi KDS pri Toastu ali Squareu. Gradimo jo po lansiranju."
+    },
+    "mobileAppPage": {
+      "subtitle": "Mobilna aplikacija za naročanje",
+      "body": "Aplikacija z znamko vaše restavracije v App Store in Google Play — gostje naročajo, znova naročijo z enim dotikom in prejemajo potisna obvestila, vse pod vašim imenom in logotipom. Gradimo jo po lansiranju."
     }
   },
   "impersonation": {
