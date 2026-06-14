@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { validateBooking, resolveDayHours, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
 import { notifyStaff, notifyCustomer } from "@/lib/notifications";
+import { hasFeature } from "@/lib/entitlements";
 
 function sanitize(s: unknown, max = 500): string {
   return String(s ?? "").trim().slice(0, max);
@@ -116,7 +117,13 @@ export async function POST(req: NextRequest) {
     }
 
     const code = generateConfirmationCode();
-    const wantsDeposit = settings.requireDeposit && settings.depositAmount > 0;
+    // take_reservation_deposit is a paid add-on — never charge a deposit without
+    // it, even if a stale requireDeposit flag is set (defense-in-depth alongside
+    // the admin settings gate). Luigi 2026-06-14.
+    const wantsDeposit =
+      settings.requireDeposit &&
+      settings.depositAmount > 0 &&
+      (await hasFeature(restaurant.id, "take_reservation_deposit"));
     const initialStatus = wantsDeposit ? "pending" : (settings.autoConfirm ? "confirmed" : "pending");
 
     const reservation = await prisma.reservation.create({
