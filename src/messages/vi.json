@@ -3873,6 +3873,11 @@
       "from": "Từ",
       "to": "Đến",
       "timeOptional": "để trống giờ để áp dụng cả ngày"
+    },
+    "orderCapBanner": {
+      "usage": "{count} trên {cap} đơn hàng tháng này",
+      "removeLimit": "Gỡ giới hạn",
+      "help": "Gói miễn phí của bạn bao gồm {cap} đơn hàng mỗi tháng. Đăng ký bất kỳ tiện ích bổ sung nào để gỡ giới hạn."
     }
   },
   "impersonation": {

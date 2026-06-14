@@ -3873,6 +3873,11 @@
       "from": "Alates",
       "to": "Kuni",
       "timeOptional": "jäta kellaajad tühjaks kogu päeva jaoks"
+    },
+    "orderCapBanner": {
+      "usage": "{count}/{cap} tellimust sel kuul",
+      "removeLimit": "Eemalda piirang",
+      "help": "Sinu tasuta pakett sisaldab {cap} tellimust kuus. Telli mõni lisamoodul, et piirang eemaldada."
     }
   },
   "impersonation": {

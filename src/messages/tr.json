@@ -3873,6 +3873,11 @@
       "from": "Başlangıç",
       "to": "Bitiş",
       "timeOptional": "tüm gün için saatleri boş bırakın"
+    },
+    "orderCapBanner": {
+      "usage": "Bu ay {cap} siparişten {count} tanesi",
+      "removeLimit": "Limiti kaldır",
+      "help": "Ücretsiz planınız ayda {cap} sipariş içerir. Limiti kaldırmak için herhangi bir eklentiye abone olun."
     }
   },
   "impersonation": {

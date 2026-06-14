@@ -3873,6 +3873,11 @@
       "from": "Van",
       "to": "Tot",
       "timeOptional": "laat tijden leeg voor de hele dag"
+    },
+    "orderCapBanner": {
+      "usage": "{count} van {cap} bestellingen deze maand",
+      "removeLimit": "Limiet verwijderen",
+      "help": "Je gratis abonnement bevat {cap} bestellingen per maand. Neem een add-on om de limiet te verwijderen."
     }
   },
   "impersonation": {

@@ -3873,6 +3873,11 @@
       "from": "Od",
       "to": "Do",
       "timeOptional": "časy nechte prázdné pro celý den"
+    },
+    "orderCapBanner": {
+      "usage": "{count} z {cap} objednávek tento měsíc",
+      "removeLimit": "Odebrat limit",
+      "help": "Váš bezplatný plán zahrnuje {cap} objednávek měsíčně. Předplaťte si jakýkoli doplněk a limit zmizí."
     }
   },
   "impersonation": {

@@ -3873,6 +3873,11 @@
       "from": "De",
       "to": "Até",
       "timeOptional": "deixe os horários em branco para o dia todo"
+    },
+    "orderCapBanner": {
+      "usage": "{count} de {cap} pedidos este mês",
+      "removeLimit": "Remover o limite",
+      "help": "Seu plano gratuito inclui {cap} pedidos por mês. Assine qualquer complemento para remover o limite."
     }
   },
   "impersonation": {

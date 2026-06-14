@@ -3873,6 +3873,11 @@
       "from": "Nuo",
       "to": "Iki",
       "timeOptional": "palikite laukus tuščius – visai dienai"
+    },
+    "orderCapBanner": {
+      "usage": "{count} iš {cap} užsakymų šį mėnesį",
+      "removeLimit": "Pašalinti limitą",
+      "help": "Jūsų nemokamas planas apima {cap} užsakymus per mėnesį. Užsiprenumeruokite bet kurį priedą, kad pašalintumėte limitą."
     }
   },
   "impersonation": {

@@ -16,6 +16,8 @@ import { authOptions } from "@/lib/auth";
 import { loadSetupProgress } from "@/lib/setup-checklist-loader";
 import type { SetupProgress } from "@/lib/setup-checklist";
 import { getEntitlements } from "@/lib/entitlements";
+import { getOrderCapUsage } from "@/lib/order-cap";
+import { FreePlanCapBanner } from "@/components/admin/FreePlanCapBanner";
 import { CurrencyProvider } from "@/lib/currency-context";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -59,6 +61,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   /** True iff the active restaurant is a brand CHILD — exempts the Locations
    *  tab from the multi_location lock (children manage inheritance without it). */
   let isChildAdmin = false;
+  /** FREE-plan monthly order-cap usage → drives the always-on admin banner.
+   *  null = not loaded; the banner also hides when exempt (any paid add-on). */
+  let capUsage: Awaited<ReturnType<typeof getOrderCapUsage>> | null = null;
   let ownerEmail: string | null = null;
   let ownerEmailVerified = true; // default true so we don't nag superadmins / staff
   let locationsForSwitcher: Array<{ id: string; name: string; city: string | null; isParent: boolean }> = [];
@@ -175,6 +180,17 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     } catch (err) {
       console.error("[admin-layout] comingSoon features failed", err);
       comingSoonFeatures = [];
+    }
+
+    // FREE-plan order-cap usage for the always-on admin banner. The banner only
+    // renders when !exempt (a paid add-on lifts the cap). NOTE (scale): ~2 light
+    // reads per admin page load; cache by restaurantId for ~30-60s if the admin
+    // layout ever gets hot. Luigi 2026-06-14.
+    try {
+      capUsage = await getOrderCapUsage(restaurantId);
+    } catch (err) {
+      console.error("[admin-layout] getOrderCapUsage failed", err);
+      capUsage = null;
     }
 
     // Build the location list for the switcher — rooted in the user's CANONICAL
@@ -309,6 +325,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 activeLocationId={restaurantId}
                 setupProgress={setupProgress}
               />
+              {capUsage && !capUsage.exempt && (
+                <FreePlanCapBanner count={capUsage.count} cap={capUsage.cap} level={capUsage.level} />
+              )}
               <main className="flex-1 overflow-y-auto p-4 sm:p-6">{children}</main>
             </div>
           </div>

@@ -3873,6 +3873,11 @@
       "from": "Od",
       "to": "Do",
       "timeOptional": "ostavite vreme prazno za ceo dan"
+    },
+    "orderCapBanner": {
+      "usage": "{count} од {cap} поруџбина овог месеца",
+      "removeLimit": "Уклони ограничење",
+      "help": "Ваш бесплатни план укључује {cap} поруџбина месечно. Претплатите се на било који додатак да уклоните ограничење."
     }
   },
   "impersonation": {

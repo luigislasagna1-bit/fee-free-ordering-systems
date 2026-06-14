@@ -3873,6 +3873,11 @@
       "from": "Fra",
       "to": "Til",
       "timeOptional": "la tidene stå tomme for hele dagen"
+    },
+    "orderCapBanner": {
+      "usage": "{count} av {cap} bestillinger denne måneden",
+      "removeLimit": "Fjern grensen",
+      "help": "Gratisplanen din inkluderer {cap} bestillinger per måned. Abonner på et tillegg for å fjerne grensen."
     }
   },
   "impersonation": {

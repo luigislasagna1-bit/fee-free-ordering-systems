@@ -3873,6 +3873,11 @@
       "from": "Des de",
       "to": "Fins a",
       "timeOptional": "deixa les hores en blanc per a tot el dia"
+    },
+    "orderCapBanner": {
+      "usage": "{count} de {cap} comandes aquest mes",
+      "removeLimit": "Elimina el límit",
+      "help": "El teu pla gratuït inclou {cap} comandes al mes. Subscriu-te a qualsevol complement per eliminar el límit."
     }
   },
   "impersonation": {

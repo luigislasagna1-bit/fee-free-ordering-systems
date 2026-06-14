@@ -3873,6 +3873,11 @@
       "from": "从",
       "to": "至",
       "timeOptional": "时段留空表示全天"
+    },
+    "orderCapBanner": {
+      "usage": "本月 {count}/{cap} 个订单",
+      "removeLimit": "移除上限",
+      "help": "您的免费套餐每月包含 {cap} 个订单。订阅任意附加功能即可解除上限。"
     }
   },
   "impersonation": {

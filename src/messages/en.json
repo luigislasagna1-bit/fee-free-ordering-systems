@@ -3873,6 +3873,11 @@
       "from": "From",
       "to": "To",
       "timeOptional": "leave times blank for all day"
+    },
+    "orderCapBanner": {
+      "usage": "{count} of {cap} orders this month",
+      "removeLimit": "Remove the limit",
+      "help": "Your free plan includes {cap} orders per month. Subscribe to any add-on to remove the cap."
     }
   },
   "impersonation": {

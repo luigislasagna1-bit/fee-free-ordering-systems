@@ -3873,6 +3873,11 @@
       "from": "No",
       "to": "Līdz",
       "timeOptional": "atstājiet laikus tukšus, lai rādītu visu dienu"
+    },
+    "orderCapBanner": {
+      "usage": "{count} no {cap} pasūtījumiem šomēnes",
+      "removeLimit": "Noņemt ierobežojumu",
+      "help": "Jūsu bezmaksas plāns ietver {cap} pasūtījumus mēnesī. Abonējiet jebkuru papildinājumu, lai noņemtu ierobežojumu."
     }
   },
   "impersonation": {

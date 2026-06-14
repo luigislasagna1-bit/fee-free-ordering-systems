@@ -3873,6 +3873,11 @@
       "from": "시작",
       "to": "종료",
       "timeOptional": "하루 종일이면 시간을 비워 두세요"
+    },
+    "orderCapBanner": {
+      "usage": "이번 달 주문 {count}/{cap}건",
+      "removeLimit": "한도 해제",
+      "help": "무료 요금제는 월 {cap}건의 주문을 포함합니다. 애드온을 구독하면 한도가 해제됩니다."
     }
   },
   "impersonation": {

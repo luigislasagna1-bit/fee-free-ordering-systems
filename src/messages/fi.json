@@ -3873,6 +3873,11 @@
       "from": "Alkaen",
       "to": "Asti",
       "timeOptional": "jätä kellonajat tyhjiksi koko päivän ajaksi"
+    },
+    "orderCapBanner": {
+      "usage": "{count}/{cap} tilausta tässä kuussa",
+      "removeLimit": "Poista raja",
+      "help": "Ilmainen tilauksesi sisältää {cap} tilausta kuukaudessa. Tilaa mikä tahansa lisäosa poistaaksesi rajan."
     }
   },
   "impersonation": {

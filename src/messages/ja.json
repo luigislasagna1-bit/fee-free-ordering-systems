@@ -3873,6 +3873,11 @@
       "from": "開始",
       "to": "終了",
       "timeOptional": "終日にする場合は時間を空欄のままにします"
+    },
+    "orderCapBanner": {
+      "usage": "今月 {count}/{cap} 件の注文",
+      "removeLimit": "上限を解除",
+      "help": "無料プランには月 {cap} 件の注文が含まれます。いずれかのアドオンに登録すると上限が解除されます。"
     }
   },
   "impersonation": {

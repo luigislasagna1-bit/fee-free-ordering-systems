@@ -3873,6 +3873,11 @@
       "from": "Dari",
       "to": "Sampai",
       "timeOptional": "kosongkan jam untuk sepanjang hari"
+    },
+    "orderCapBanner": {
+      "usage": "{count} dari {cap} pesanan bulan ini",
+      "removeLimit": "Hapus batas",
+      "help": "Paket gratis Anda mencakup {cap} pesanan per bulan. Berlangganan add-on apa pun untuk menghapus batas."
     }
   },
   "impersonation": {

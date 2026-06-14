@@ -3873,6 +3873,11 @@
       "from": "Od",
       "to": "Do",
       "timeOptional": "ostavite vrijeme prazno za cijeli dan"
+    },
+    "orderCapBanner": {
+      "usage": "{count} od {cap} narudžbi ovog mjeseca",
+      "removeLimit": "Ukloni ograničenje",
+      "help": "Vaš besplatni plan uključuje {cap} narudžbi mjesečno. Pretplatite se na bilo koji dodatak da uklonite ograničenje."
     }
   },
   "impersonation": {

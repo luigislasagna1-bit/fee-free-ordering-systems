@@ -3873,6 +3873,11 @@
       "from": "Od",
       "to": "Do",
       "timeOptional": "pozostaw godziny puste, aby ustawić cały dzień"
+    },
+    "orderCapBanner": {
+      "usage": "{count} z {cap} zamówień w tym miesiącu",
+      "removeLimit": "Usuń limit",
+      "help": "Twój darmowy plan obejmuje {cap} zamówień miesięcznie. Wykup dowolny dodatek, aby usunąć limit."
     }
   },
   "impersonation": {

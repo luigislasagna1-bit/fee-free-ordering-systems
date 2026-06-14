@@ -3873,6 +3873,11 @@
       "from": "De la",
       "to": "Până la",
       "timeOptional": "lasă orele goale pentru toată ziua"
+    },
+    "orderCapBanner": {
+      "usage": "{count} din {cap} comenzi luna aceasta",
+      "removeLimit": "Elimină limita",
+      "help": "Planul tău gratuit include {cap} comenzi pe lună. Abonează-te la orice supliment pentru a elimina limita."
     }
   },
   "impersonation": {

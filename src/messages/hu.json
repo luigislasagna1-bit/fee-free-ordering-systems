@@ -3873,6 +3873,11 @@
       "from": "Ettől",
       "to": "Eddig",
       "timeOptional": "hagyja üresen az időt az egész naphoz"
+    },
+    "orderCapBanner": {
+      "usage": "{count} / {cap} rendelés ebben a hónapban",
+      "removeLimit": "Korlát eltávolítása",
+      "help": "Az ingyenes csomag havi {cap} rendelést tartalmaz. Fizessen elő bármelyik kiegészítőre a korlát eltávolításához."
     }
   },
   "impersonation": {

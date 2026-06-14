@@ -3873,6 +3873,11 @@
       "from": "Du",
       "to": "Au",
       "timeOptional": "laisser les heures vides pour toute la journée"
+    },
+    "orderCapBanner": {
+      "usage": "{count} sur {cap} commandes ce mois-ci",
+      "removeLimit": "Supprimer la limite",
+      "help": "Votre forfait gratuit inclut {cap} commandes par mois. Abonnez-vous à n'importe quel module pour supprimer la limite."
     }
   },
   "impersonation": {

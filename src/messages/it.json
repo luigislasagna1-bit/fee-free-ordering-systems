@@ -3873,6 +3873,11 @@
       "from": "Dal",
       "to": "Al",
       "timeOptional": "lascia gli orari vuoti per tutto il giorno"
+    },
+    "orderCapBanner": {
+      "usage": "{count} di {cap} ordini questo mese",
+      "removeLimit": "Rimuovi il limite",
+      "help": "Il tuo piano gratuito include {cap} ordini al mese. Abbonati a un componente aggiuntivo per rimuovere il limite."
     }
   },
   "impersonation": {
