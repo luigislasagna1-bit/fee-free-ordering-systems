@@ -2380,7 +2380,9 @@
       "inheritSaved": "Zaktualizowano",
       "inheritSaveError": "Nie udało się zaktualizować – spróbuj ponownie.",
       "menuRevertConfirm": "Przywrócić menu do menu marki? Niestandardowe menu tej lokalizacji zostanie zastąpione.",
-      "brandControlsLabel": "Ustawienia marki"
+      "brandControlsLabel": "Ustawienia marki",
+      "lockedByBrand": "Zarządzane przez Twoją markę",
+      "lockHelp": "Zablokuj ustawienie, aby ta lokalizacja nie mogła go zmienić — kontrolujesz je z poziomu marki."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Panel marki",

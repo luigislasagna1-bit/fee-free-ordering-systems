@@ -1594,7 +1594,9 @@
       "inheritSaved": "Uuendatud",
       "inheritSaveError": "Uuendamine ebaõnnestus — proovige uuesti.",
       "menuRevertConfirm": "Kas lülitada menüü tagasi brändi omale? Selle asukoha kohandatud menüü asendatakse.",
-      "brandControlsLabel": "Brändi sätted"
+      "brandControlsLabel": "Brändi sätted",
+      "lockedByBrand": "Haldab teie bränd",
+      "lockHelp": "Lukusta säte, et see asukoht ei saaks seda muuta — haldate seda brändist."
     },
     "menuEditor": {
       "sectionSizeLabel": "Suuruse valik",

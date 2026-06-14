@@ -1594,7 +1594,9 @@
       "inheritSaved": "Actualitzat",
       "inheritSaveError": "No s'ha pogut actualitzar — torna-ho a provar.",
       "menuRevertConfirm": "Vols tornar el menú al de la marca? El menú personalitzat d'aquest local se substituirà.",
-      "brandControlsLabel": "Controls de la marca"
+      "brandControlsLabel": "Controls de la marca",
+      "lockedByBrand": "Gestionat per la teva marca",
+      "lockHelp": "Bloqueja una opció perquè aquesta ubicació no la pugui canviar — la controles des de la marca."
     },
     "menuEditor": {
       "sectionSizeLabel": "Selecció de mida",

@@ -1594,7 +1594,9 @@
       "inheritSaved": "已更新",
       "inheritSaveError": "更新失败，请重试。",
       "menuRevertConfirm": "将菜单切换回品牌菜单？本门店的自定义菜单将被替换。",
-      "brandControlsLabel": "品牌控制"
+      "brandControlsLabel": "品牌控制",
+      "lockedByBrand": "由您的品牌管理",
+      "lockHelp": "锁定某项设置，使该门店无法自行更改——由您从品牌端控制。"
     },
     "menuEditor": {
       "sectionSizeLabel": "尺寸选择",

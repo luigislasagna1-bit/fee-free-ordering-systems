@@ -1594,7 +1594,9 @@
       "inheritSaved": "업데이트됨",
       "inheritSaveError": "업데이트하지 못했습니다. 다시 시도해 주세요.",
       "menuRevertConfirm": "메뉴를 브랜드 메뉴로 되돌릴까요? 이 매장의 맞춤 메뉴가 대체됩니다.",
-      "brandControlsLabel": "브랜드 설정"
+      "brandControlsLabel": "브랜드 설정",
+      "lockedByBrand": "브랜드에서 관리",
+      "lockHelp": "설정을 잠그면 이 지점에서 변경할 수 없으며, 브랜드에서 관리합니다."
     },
     "menuEditor": {
       "sectionSizeLabel": "크기 선택",

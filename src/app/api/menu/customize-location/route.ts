@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { copyBrandMenuToLocation } from "@/lib/brand";
+import { isLocked } from "@/lib/inherited-settings";
 
 /**
  * POST /api/menu/customize-location
@@ -31,7 +32,7 @@ export async function POST() {
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: user.restaurantId },
-    select: { id: true, parentRestaurantId: true, useBrandMenu: true },
+    select: { id: true, parentRestaurantId: true, useBrandMenu: true, lockedSettings: true },
   });
   if (!restaurant) {
     return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
@@ -40,6 +41,13 @@ export async function POST() {
     return NextResponse.json(
       { error: "This restaurant is not a child location — there's no brand menu to customize." },
       { status: 400 },
+    );
+  }
+  // The brand parent has LOCKED the menu — the child may not change it.
+  if (isLocked(restaurant, "menu")) {
+    return NextResponse.json(
+      { error: "The menu is managed by your brand and can't be changed here.", code: "locked", setting: "menu" },
+      { status: 403 },
     );
   }
   if (!restaurant.useBrandMenu) {

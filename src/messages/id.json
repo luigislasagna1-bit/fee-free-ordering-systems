@@ -1594,7 +1594,9 @@
       "inheritSaved": "Diperbarui",
       "inheritSaveError": "Tidak dapat memperbarui — silakan coba lagi.",
       "menuRevertConfirm": "Kembalikan menu ke milik merek? Menu khusus lokasi ini akan diganti.",
-      "brandControlsLabel": "Kontrol merek"
+      "brandControlsLabel": "Kontrol merek",
+      "lockedByBrand": "Dikelola oleh merek Anda",
+      "lockHelp": "Kunci pengaturan agar lokasi ini tidak dapat mengubahnya — Anda mengontrolnya dari merek."
     },
     "menuEditor": {
       "sectionSizeLabel": "Pilihan ukuran",

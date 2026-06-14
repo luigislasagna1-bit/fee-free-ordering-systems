@@ -1594,7 +1594,9 @@
       "inheritSaved": "Actualizado",
       "inheritSaveError": "No se pudo actualizar; inténtalo de nuevo.",
       "menuRevertConfirm": "¿Volver al menú de la marca? El menú personalizado de esta ubicación se reemplazará.",
-      "brandControlsLabel": "Controles de la marca"
+      "brandControlsLabel": "Controles de la marca",
+      "lockedByBrand": "Gestionado por tu marca",
+      "lockHelp": "Bloquea un ajuste para que esta ubicación no pueda cambiarlo — tú lo controlas desde la marca."
     },
     "menuEditor": {
       "sectionSizeLabel": "Selección de tamaño",

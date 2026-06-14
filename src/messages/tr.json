@@ -2380,7 +2380,9 @@
       "inheritSaved": "Güncellendi",
       "inheritSaveError": "Güncellenemedi — lütfen tekrar deneyin.",
       "menuRevertConfirm": "Menü markanınkine geri döndürülsün mü? Bu şubenin özel menüsü değiştirilecek.",
-      "brandControlsLabel": "Marka kontrolleri"
+      "brandControlsLabel": "Marka kontrolleri",
+      "lockedByBrand": "Markanız tarafından yönetiliyor",
+      "lockHelp": "Bir ayarı kilitleyin, böylece bu konum onu değiştiremez — markadan siz kontrol edersiniz."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Marka paneli",

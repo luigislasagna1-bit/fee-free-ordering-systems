@@ -2380,7 +2380,9 @@
       "inheritSaved": "Đã cập nhật",
       "inheritSaveError": "Không thể cập nhật — vui lòng thử lại.",
       "menuRevertConfirm": "Chuyển thực đơn về của thương hiệu? Thực đơn tùy chỉnh của địa điểm này sẽ bị thay thế.",
-      "brandControlsLabel": "Kiểm soát thương hiệu"
+      "brandControlsLabel": "Kiểm soát thương hiệu",
+      "lockedByBrand": "Được quản lý bởi thương hiệu của bạn",
+      "lockHelp": "Khóa một cài đặt để địa điểm này không thể tự thay đổi — bạn kiểm soát nó từ thương hiệu."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Bảng điều khiển thương hiệu",

@@ -1594,7 +1594,9 @@
       "inheritSaved": "Päivitetty",
       "inheritSaveError": "Päivitys epäonnistui – yritä uudelleen.",
       "menuRevertConfirm": "Palautetaanko ruokalista brändin mukaiseksi? Tämän toimipisteen mukautettu ruokalista korvataan.",
-      "brandControlsLabel": "Brändihallinta"
+      "brandControlsLabel": "Brändihallinta",
+      "lockedByBrand": "Brändisi hallinnoi",
+      "lockHelp": "Lukitse asetus, jotta tämä toimipiste ei voi muuttaa sitä — hallitset sitä brändistä."
     },
     "menuEditor": {
       "sectionSizeLabel": "Koon valinta",

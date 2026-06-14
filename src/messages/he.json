@@ -1594,7 +1594,9 @@
       "inheritSaved": "עודכן",
       "inheritSaveError": "העדכון נכשל — נסה שוב.",
       "menuRevertConfirm": "להחזיר את התפריט לתפריט המותג? התפריט המותאם אישית של הסניף הזה יוחלף.",
-      "brandControlsLabel": "בקרות מותג"
+      "brandControlsLabel": "בקרות מותג",
+      "lockedByBrand": "מנוהל על ידי המותג שלך",
+      "lockHelp": "נעל הגדרה כך שמיקום זה לא יוכל לשנות אותה — אתה שולט בה מהמותג."
     },
     "menuEditor": {
       "sectionSizeLabel": "בחירת גודל",

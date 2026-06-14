@@ -1594,7 +1594,9 @@
       "inheritSaved": "Atualizado",
       "inheritSaveError": "Não foi possível atualizar — tente novamente.",
       "menuRevertConfirm": "Voltar para o cardápio da marca? O cardápio personalizado deste local será substituído.",
-      "brandControlsLabel": "Controles da marca"
+      "brandControlsLabel": "Controles da marca",
+      "lockedByBrand": "Gerenciado pela sua marca",
+      "lockHelp": "Bloqueie uma configuração para que este local não possa alterá-la — você a controla pela marca."
     },
     "menuEditor": {
       "sectionSizeLabel": "Seleção de tamanho",

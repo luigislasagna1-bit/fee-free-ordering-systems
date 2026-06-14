@@ -5,6 +5,7 @@ import {
   buildInheritedSettingsJson,
   parseInheritedSettings,
   JSON_INHERITABLE_SETTINGS,
+  isLocked,
   inheritanceState,
 } from "@/lib/inherited-settings";
 
@@ -30,7 +31,7 @@ export async function GET() {
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: user.restaurantId },
-    select: { parentRestaurantId: true, useBrandMenu: true, inheritedSettings: true },
+    select: { parentRestaurantId: true, useBrandMenu: true, inheritedSettings: true, lockedSettings: true },
   });
   if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
 
@@ -46,7 +47,7 @@ export async function PATCH(req: NextRequest) {
   // body. Re-fetch to merge onto the current config + verify it's a child.
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: user.restaurantId },
-    select: { id: true, parentRestaurantId: true, inheritedSettings: true },
+    select: { id: true, parentRestaurantId: true, inheritedSettings: true, lockedSettings: true },
   });
   if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
   if (!restaurant.parentRestaurantId) {
@@ -57,6 +58,17 @@ export async function PATCH(req: NextRequest) {
   }
 
   const body = (await req.json().catch(() => ({}))) as Record<string, unknown>;
+  // Reject any change to a setting the BRAND PARENT has LOCKED — the child may
+  // see it but not change it. Defense-in-depth: the child UI also disables the
+  // locked toggles, but never trust the client. Luigi 2026-06-14.
+  for (const key of JSON_INHERITABLE_SETTINGS) {
+    if (typeof body[key] === "boolean" && isLocked(restaurant, key)) {
+      return NextResponse.json(
+        { error: "This setting is managed by your brand and can't be changed here.", code: "locked", setting: key },
+        { status: 403 },
+      );
+    }
+  }
   // Merge the requested boolean changes onto the current config; ignore
   // unknown keys and non-booleans. Menu is intentionally NOT handled here.
   const next = parseInheritedSettings(restaurant.inheritedSettings);

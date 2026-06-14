@@ -1594,7 +1594,9 @@
       "inheritSaved": "Ažurirano",
       "inheritSaveError": "Ažuriranje nije uspjelo — pokušajte ponovno.",
       "menuRevertConfirm": "Vratiti jelovnik na onaj brenda? Prilagođeni jelovnik ove lokacije bit će zamijenjen.",
-      "brandControlsLabel": "Postavke robne marke"
+      "brandControlsLabel": "Postavke robne marke",
+      "lockedByBrand": "Upravlja vaša robna marka",
+      "lockHelp": "Zaključajte postavku da je ova lokacija ne može mijenjati — kontrolirate je iz robne marke."
     },
     "menuEditor": {
       "sectionSizeLabel": "Odabir veličine",

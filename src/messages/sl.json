@@ -1594,7 +1594,9 @@
       "inheritSaved": "Posodobljeno",
       "inheritSaveError": "Posodobitev ni uspela — poskusite znova.",
       "menuRevertConfirm": "Želite meni vrniti na meni znamke? Meni te lokacije po meri bo zamenjan.",
-      "brandControlsLabel": "Nastavitve znamke"
+      "brandControlsLabel": "Nastavitve znamke",
+      "lockedByBrand": "Upravlja vaša znamka",
+      "lockHelp": "Zaklenite nastavitev, da je ta lokacija ne more spremeniti — nadzorujete jo iz znamke."
     },
     "menuEditor": {
       "sectionSizeLabel": "Izbira velikosti",

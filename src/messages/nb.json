@@ -1594,7 +1594,9 @@
       "inheritSaved": "Oppdatert",
       "inheritSaveError": "Kunne ikke oppdatere – prøv igjen.",
       "menuRevertConfirm": "Bytte menyen tilbake til merkevarens? Denne lokasjonens tilpassede meny erstattes.",
-      "brandControlsLabel": "Merkevarekontroller"
+      "brandControlsLabel": "Merkevarekontroller",
+      "lockedByBrand": "Administreres av merkevaren din",
+      "lockHelp": "Lås en innstilling så dette stedet ikke kan endre den selv — du styrer den fra merkevaren."
     },
     "menuEditor": {
       "sectionSizeLabel": "Størrelsesvalg",

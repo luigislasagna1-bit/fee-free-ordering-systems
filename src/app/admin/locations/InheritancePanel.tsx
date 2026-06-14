@@ -25,7 +25,7 @@ export function InheritancePanel() {
         const res = await fetch("/api/restaurants/inheritance");
         if (!res.ok) return null;
         const data = await res.json();
-        return { perSetting: data.perSetting, isChild: !!data.isChild };
+        return { perSetting: data.perSetting, locks: data.locks, isChild: !!data.isChild };
       },
       saveJson: async (next) => {
         const res = await fetch("/api/restaurants/inheritance", {

@@ -6,6 +6,9 @@ import {
   buildInheritedSettingsJson,
   parseInheritedSettings,
   JSON_INHERITABLE_SETTINGS,
+  INHERITABLE_SETTINGS,
+  buildLockedSettingsJson,
+  parseLockedSettings,
   inheritanceState,
 } from "@/lib/inherited-settings";
 
@@ -36,6 +39,7 @@ type ResolvedChild = {
   parentRestaurantId: string | null;
   useBrandMenu: boolean | null;
   inheritedSettings: unknown;
+  lockedSettings: unknown;
 };
 
 async function resolveParentAndChild(
@@ -64,7 +68,7 @@ async function resolveParentAndChild(
     }),
     prisma.restaurant.findUnique({
       where: { id: childId },
-      select: { id: true, parentRestaurantId: true, useBrandMenu: true, inheritedSettings: true },
+      select: { id: true, parentRestaurantId: true, useBrandMenu: true, inheritedSettings: true, lockedSettings: true },
     }),
   ]);
 
@@ -133,10 +137,31 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ ch
     });
   }
 
+  // ── Locks (brand parent only): which settings the child may NOT change
+  //    itself. Merge onto the current map; covers every setting incl. menu.
+  //    The child's own endpoints enforce these server-side. Luigi 2026-06-14. ──
+  if (body.locks && typeof body.locks === "object" && !Array.isArray(body.locks)) {
+    const reqLocks = body.locks as Record<string, unknown>;
+    const nextLocks = parseLockedSettings(child.lockedSettings);
+    let touchedLocks = false;
+    for (const key of INHERITABLE_SETTINGS) {
+      if (typeof reqLocks[key] === "boolean") {
+        nextLocks[key] = reqLocks[key] as boolean;
+        touchedLocks = true;
+      }
+    }
+    if (touchedLocks) {
+      await prisma.restaurant.update({
+        where: { id: child.id },
+        data: { lockedSettings: buildLockedSettingsJson(nextLocks) },
+      });
+    }
+  }
+
   // Re-read so the client renders the authoritative post-write state.
   const fresh = await prisma.restaurant.findUnique({
     where: { id: child.id },
-    select: { parentRestaurantId: true, useBrandMenu: true, inheritedSettings: true },
+    select: { parentRestaurantId: true, useBrandMenu: true, inheritedSettings: true, lockedSettings: true },
   });
   return NextResponse.json(inheritanceState(fresh ?? child));
 }

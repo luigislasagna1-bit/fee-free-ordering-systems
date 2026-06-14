@@ -1594,7 +1594,9 @@
       "inheritSaved": "Aggiornato",
       "inheritSaveError": "Impossibile aggiornare — riprova.",
       "menuRevertConfirm": "Tornare al menu del brand? Il menu personalizzato di questa sede verrà sostituito.",
-      "brandControlsLabel": "Controlli del marchio"
+      "brandControlsLabel": "Controlli del marchio",
+      "lockedByBrand": "Gestito dal tuo marchio",
+      "lockHelp": "Blocca un'impostazione così questa sede non può modificarla — la controlli dal marchio."
     },
     "menuEditor": {
       "sectionSizeLabel": "Selezione taglia",

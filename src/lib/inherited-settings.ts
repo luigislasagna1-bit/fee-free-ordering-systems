@@ -36,6 +36,9 @@ export type InheritanceShape = {
   parentRestaurantId: string | null;
   useBrandMenu?: boolean | null;
   inheritedSettings?: unknown;
+  /** Sparse { settingKey: true } map of settings the BRAND PARENT has LOCKED so
+   *  the child can't change them itself. See lockedSettings on the schema. */
+  lockedSettings?: unknown;
 };
 
 /** Normalise the raw JSON column into a clean { key: boolean } map, dropping
@@ -74,16 +77,60 @@ export function resolveSettingSourceId(
     : restaurant.id;
 }
 
-/** The full inheritance state for the admin UI: one boolean per setting, plus
+/** Normalise the lockedSettings JSON column into a clean { key: boolean } map. */
+export function parseLockedSettings(
+  raw: unknown,
+): Partial<Record<InheritableSetting, boolean>> {
+  const out: Partial<Record<InheritableSetting, boolean>> = {};
+  if (raw && typeof raw === "object" && !Array.isArray(raw)) {
+    const obj = raw as Record<string, unknown>;
+    for (const key of INHERITABLE_SETTINGS) {
+      if (typeof obj[key] === "boolean") out[key] = obj[key] as boolean;
+    }
+  }
+  return out;
+}
+
+/** Is `setting` LOCKED by the brand parent (the child may NOT change it)? Only a
+ *  child can be locked; a missing key ⇒ unlocked, so existing locations are
+ *  unaffected. Locks cover EVERY inheritable setting, menu included. */
+export function isLocked(restaurant: InheritanceShape, setting: InheritableSetting): boolean {
+  if (!restaurant.parentRestaurantId) return false;
+  return parseLockedSettings(restaurant.lockedSettings)[setting] === true;
+}
+
+/** Build the sparse lockedSettings JSON from a desired per-setting map — only
+ *  stores `true` keys so the column stays sparse. */
+export function buildLockedSettingsJson(
+  desired: Partial<Record<InheritableSetting, boolean>>,
+): Record<string, boolean> {
+  const out: Record<string, boolean> = {};
+  for (const key of INHERITABLE_SETTINGS) {
+    if (desired[key] === true) out[key] = true;
+  }
+  return out;
+}
+
+/** The full inheritance state for the admin UI: one boolean per setting (is it
+ *  inheriting), one per setting for whether the parent has LOCKED it, plus
  *  whether the child is inheriting EVERYTHING (drives the master toggle). */
 export function inheritanceState(
   restaurant: InheritanceShape,
-): { perSetting: Record<InheritableSetting, boolean>; all: boolean; isChild: boolean } {
+): {
+  perSetting: Record<InheritableSetting, boolean>;
+  locks: Record<InheritableSetting, boolean>;
+  all: boolean;
+  isChild: boolean;
+} {
   const perSetting = Object.fromEntries(
     INHERITABLE_SETTINGS.map((s) => [s, isInheriting(restaurant, s)]),
   ) as Record<InheritableSetting, boolean>;
+  const locks = Object.fromEntries(
+    INHERITABLE_SETTINGS.map((s) => [s, isLocked(restaurant, s)]),
+  ) as Record<InheritableSetting, boolean>;
   return {
     perSetting,
+    locks,
     all: INHERITABLE_SETTINGS.every((s) => perSetting[s]),
     isChild: !!restaurant.parentRestaurantId,
   };

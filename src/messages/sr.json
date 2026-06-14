@@ -1594,7 +1594,9 @@
       "inheritSaved": "Ažurirano",
       "inheritSaveError": "Ažuriranje nije uspelo — pokušajte ponovo.",
       "menuRevertConfirm": "Vratiti meni na brendov? Prilagođeni meni ove lokacije biće zamenjen.",
-      "brandControlsLabel": "Подешавања бренда"
+      "brandControlsLabel": "Подешавања бренда",
+      "lockedByBrand": "Управља ваш бренд",
+      "lockHelp": "Закључајте подешавање да га ова локација не може мењати — контролишете га из бренда."
     },
     "menuEditor": {
       "sectionSizeLabel": "Izbor veličine",

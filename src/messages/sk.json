@@ -2259,7 +2259,9 @@
       "inheritSaved": "Aktualizované",
       "inheritSaveError": "Nepodarilo sa aktualizovať – skúste to znova.",
       "menuRevertConfirm": "Vrátiť menu späť na menu značky? Vlastné menu tejto pobočky bude nahradené.",
-      "brandControlsLabel": "Nastavenia značky"
+      "brandControlsLabel": "Nastavenia značky",
+      "lockedByBrand": "Spravované vašou značkou",
+      "lockHelp": "Uzamknite nastavenie, aby ho táto prevádzka nemohla meniť — riadite ho zo značky."
     },
     "menuEditor": {
       "sectionSizeLabel": "Výber veľkosti",

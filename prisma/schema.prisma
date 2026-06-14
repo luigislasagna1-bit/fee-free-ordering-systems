@@ -372,6 +372,16 @@ model Restaurant {
   /// distinct from the one-time creation snapshot in src/lib/location-inheritance.ts.
   /// Resolver: src/lib/inherited-settings.ts.
   inheritedSettings  Json?
+  /// Per-option LOCK for a CHILD location, set by the BRAND PARENT (Luigi's
+  /// franchise-control spec, 2026-06-14). A sparse JSON map { settingKey: true }
+  /// where true = the child may NOT change this setting themselves — the parent
+  /// controls it. Keys mirror the inheritable settings: "menu" | "hours" |
+  /// "zones" | "availability". Missing key / null column = UNLOCKED (the child
+  /// may toggle it), so every EXISTING location is unaffected on migration. The
+  /// child's inheritance + menu endpoints reject changes to a locked setting;
+  /// the child UI greys it out as "Managed by your brand".
+  /// Resolver: src/lib/inherited-settings.ts.
+  lockedSettings     Json?
 
   // Customer-side email toggles (single set per restaurant)
   customerEmailPickupReady   Boolean @default(true)

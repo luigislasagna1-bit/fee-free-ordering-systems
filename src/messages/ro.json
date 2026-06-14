@@ -1594,7 +1594,9 @@
       "inheritSaved": "Actualizat",
       "inheritSaveError": "Nu s-a putut actualiza — încearcă din nou.",
       "menuRevertConfirm": "Revii la meniul brandului? Meniul personalizat al acestei locații va fi înlocuit.",
-      "brandControlsLabel": "Controale de brand"
+      "brandControlsLabel": "Controale de brand",
+      "lockedByBrand": "Gestionat de marca dvs.",
+      "lockHelp": "Blocați o setare astfel încât această locație să nu o poată schimba — o controlați de la marcă."
     },
     "menuEditor": {
       "sectionSizeLabel": "Selecție mărime",

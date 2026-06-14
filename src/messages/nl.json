@@ -1594,7 +1594,9 @@
       "inheritSaved": "Bijgewerkt",
       "inheritSaveError": "Bijwerken mislukt — probeer het opnieuw.",
       "menuRevertConfirm": "Terug naar het menu van het merk? Het aangepaste menu van deze locatie wordt vervangen.",
-      "brandControlsLabel": "Merkbeheer"
+      "brandControlsLabel": "Merkbeheer",
+      "lockedByBrand": "Beheerd door uw merk",
+      "lockHelp": "Vergrendel een instelling zodat deze locatie die niet zelf kan wijzigen — u beheert die vanuit het merk."
     },
     "menuEditor": {
       "sectionSizeLabel": "Maatkeuze",

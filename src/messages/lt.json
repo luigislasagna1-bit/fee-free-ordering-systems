@@ -1516,7 +1516,9 @@
       "inheritSaved": "Atnaujinta",
       "inheritSaveError": "Nepavyko atnaujinti — bandykite dar kartą.",
       "menuRevertConfirm": "Grąžinti meniu į prekės ženklo? Šios vietos pritaikytas meniu bus pakeistas.",
-      "brandControlsLabel": "Prekės ženklo valdymas"
+      "brandControlsLabel": "Prekės ženklo valdymas",
+      "lockedByBrand": "Valdo jūsų prekės ženklas",
+      "lockHelp": "Užrakinkite nustatymą, kad ši vieta negalėtų jo keisti — valdote jį iš prekės ženklo."
     },
     "toasts": {
       "saved": "Pakeitimai išsaugoti",

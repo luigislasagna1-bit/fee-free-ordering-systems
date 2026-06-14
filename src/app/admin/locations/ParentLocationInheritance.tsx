@@ -32,7 +32,7 @@ export function ParentLocationInheritance({
         const res = await fetch(`/api/restaurants/locations/${childId}/inheritance`);
         if (!res.ok) return null;
         const data = await res.json();
-        return { perSetting: data.perSetting, isChild: !!data.isChild };
+        return { perSetting: data.perSetting, locks: data.locks, isChild: !!data.isChild };
       },
       saveJson: async (next) => {
         const res = await fetch(`/api/restaurants/locations/${childId}/inheritance`, {
@@ -41,6 +41,14 @@ export function ParentLocationInheritance({
           body: JSON.stringify(next),
         });
         if (!res.ok) throw new Error("patch failed");
+      },
+      setLock: async (setting, locked) => {
+        const res = await fetch(`/api/restaurants/locations/${childId}/inheritance`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ locks: { [setting]: locked } }),
+        });
+        if (!res.ok) throw new Error("lock toggle failed");
       },
       saveMenu: async (inherit) => {
         // Turning menu inheritance ON wipes THIS child's custom menu — confirm,

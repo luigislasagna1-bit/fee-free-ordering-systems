@@ -2380,7 +2380,9 @@
       "inheritSaved": "Frissítve",
       "inheritSaveError": "Nem sikerült frissíteni – próbáld újra.",
       "menuRevertConfirm": "Visszaállítod az étlapot a márka étlapjára? Ennek a helyszínnek az egyéni étlapja felülíródik.",
-      "brandControlsLabel": "Márkabeállítások"
+      "brandControlsLabel": "Márkabeállítások",
+      "lockedByBrand": "A márkája kezeli",
+      "lockHelp": "Zárolja a beállítást, hogy ez a hely ne módosíthassa — a márkából vezérli."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Márka irányítópult",

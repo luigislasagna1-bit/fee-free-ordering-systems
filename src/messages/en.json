@@ -1971,7 +1971,9 @@
       "inheritSaved": "Updated",
       "inheritSaveError": "Couldn't update — please try again.",
       "menuRevertConfirm": "Switch the menu back to the brand's? This location's custom menu will be replaced.",
-      "brandControlsLabel": "Brand controls"
+      "brandControlsLabel": "Brand controls",
+      "lockedByBrand": "Managed by your brand",
+      "lockHelp": "Lock a setting so this location can't change it themselves — you control it from the brand."
     },
     "menuEditor": {
       "sectionSizeLabel": "Size selection",
