@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
+import { hasFeature } from "@/lib/entitlements";
+import { FeatureLockedNotice } from "@/components/admin/FeatureLockedNotice";
 import { LocationsClient } from "./LocationsClient";
 
 const LOCATION_SELECT = {
@@ -55,6 +57,13 @@ export default async function LocationsPage() {
   }
 
   const parentId = canonical.id;
+  // Multi-Location is a paid add-on ($49.99). A brand parent / solo restaurant
+  // WITHOUT it can't manage locations — show the upsell instead of the tree.
+  // (Children never reach this branch; they get their own view above, needing
+  // no add-on for brand inheritance.) Luigi 2026-06-14.
+  if (!(await hasFeature(parentId, "multi_location_management"))) {
+    return <FeatureLockedNotice featureName="Multi-Location" />;
+  }
   const [parent, children] = await Promise.all([
     prisma.restaurant.findUnique({ where: { id: parentId }, select: LOCATION_SELECT }),
     prisma.restaurant.findMany({
