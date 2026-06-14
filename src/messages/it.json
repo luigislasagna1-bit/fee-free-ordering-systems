@@ -1592,7 +1592,8 @@
       "stateCustom": "Impostato qui",
       "inheritSaved": "Aggiornato",
       "inheritSaveError": "Impossibile aggiornare — riprova.",
-      "menuRevertConfirm": "Tornare al menu del brand? Il menu personalizzato di questa sede verrà sostituito."
+      "menuRevertConfirm": "Tornare al menu del brand? Il menu personalizzato di questa sede verrà sostituito.",
+      "brandControlsLabel": "Controlli del marchio"
     },
     "menuEditor": {
       "sectionSizeLabel": "Selezione taglia",

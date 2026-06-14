@@ -1592,7 +1592,8 @@
       "stateCustom": "单独设置",
       "inheritSaved": "已更新",
       "inheritSaveError": "更新失败，请重试。",
-      "menuRevertConfirm": "将菜单切换回品牌菜单？本门店的自定义菜单将被替换。"
+      "menuRevertConfirm": "将菜单切换回品牌菜单？本门店的自定义菜单将被替换。",
+      "brandControlsLabel": "品牌控制"
     },
     "menuEditor": {
       "sectionSizeLabel": "尺寸选择",

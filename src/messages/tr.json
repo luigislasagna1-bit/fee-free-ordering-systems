@@ -2378,7 +2378,8 @@
       "stateCustom": "Burada ayarlandı",
       "inheritSaved": "Güncellendi",
       "inheritSaveError": "Güncellenemedi — lütfen tekrar deneyin.",
-      "menuRevertConfirm": "Menü markanınkine geri döndürülsün mü? Bu şubenin özel menüsü değiştirilecek."
+      "menuRevertConfirm": "Menü markanınkine geri döndürülsün mü? Bu şubenin özel menüsü değiştirilecek.",
+      "brandControlsLabel": "Marka kontrolleri"
     },
     "brandDashboard": {
       "brandDashboardBadge": "Marka paneli",

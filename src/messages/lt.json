@@ -1514,7 +1514,8 @@
       "stateCustom": "Nustatyta čia",
       "inheritSaved": "Atnaujinta",
       "inheritSaveError": "Nepavyko atnaujinti — bandykite dar kartą.",
-      "menuRevertConfirm": "Grąžinti meniu į prekės ženklo? Šios vietos pritaikytas meniu bus pakeistas."
+      "menuRevertConfirm": "Grąžinti meniu į prekės ženklo? Šios vietos pritaikytas meniu bus pakeistas.",
+      "brandControlsLabel": "Prekės ženklo valdymas"
     },
     "toasts": {
       "saved": "Pakeitimai išsaugoti",

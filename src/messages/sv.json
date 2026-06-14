@@ -1592,7 +1592,8 @@
       "stateCustom": "Anges här",
       "inheritSaved": "Uppdaterad",
       "inheritSaveError": "Kunde inte uppdatera – försök igen.",
-      "menuRevertConfirm": "Återställ menyn till varumärkets? Den här platsens anpassade meny ersätts."
+      "menuRevertConfirm": "Återställ menyn till varumärkets? Den här platsens anpassade meny ersätts.",
+      "brandControlsLabel": "Varumärkeskontroller"
     },
     "menuEditor": {
       "sectionSizeLabel": "Storleksval",

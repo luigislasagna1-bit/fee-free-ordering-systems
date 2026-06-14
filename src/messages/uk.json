@@ -1592,7 +1592,8 @@
       "stateCustom": "Задано тут",
       "inheritSaved": "Оновлено",
       "inheritSaveError": "Не вдалося оновити — спробуйте ще раз.",
-      "menuRevertConfirm": "Повернути меню до бренду? Власне меню цієї точки буде замінено."
+      "menuRevertConfirm": "Повернути меню до бренду? Власне меню цієї точки буде замінено.",
+      "brandControlsLabel": "Налаштування бренду"
     },
     "menuEditor": {
       "sectionSizeLabel": "Вибір розміру",

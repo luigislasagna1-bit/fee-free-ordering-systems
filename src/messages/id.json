@@ -1592,7 +1592,8 @@
       "stateCustom": "Diatur di sini",
       "inheritSaved": "Diperbarui",
       "inheritSaveError": "Tidak dapat memperbarui — silakan coba lagi.",
-      "menuRevertConfirm": "Kembalikan menu ke milik merek? Menu khusus lokasi ini akan diganti."
+      "menuRevertConfirm": "Kembalikan menu ke milik merek? Menu khusus lokasi ini akan diganti.",
+      "brandControlsLabel": "Kontrol merek"
     },
     "menuEditor": {
       "sectionSizeLabel": "Pilihan ukuran",

@@ -2378,7 +2378,8 @@
       "stateCustom": "Itt beállítva",
       "inheritSaved": "Frissítve",
       "inheritSaveError": "Nem sikerült frissíteni – próbáld újra.",
-      "menuRevertConfirm": "Visszaállítod az étlapot a márka étlapjára? Ennek a helyszínnek az egyéni étlapja felülíródik."
+      "menuRevertConfirm": "Visszaállítod az étlapot a márka étlapjára? Ennek a helyszínnek az egyéni étlapja felülíródik.",
+      "brandControlsLabel": "Márkabeállítások"
     },
     "brandDashboard": {
       "brandDashboardBadge": "Márka irányítópult",

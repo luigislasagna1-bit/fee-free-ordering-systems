@@ -2378,7 +2378,8 @@
       "stateCustom": "Ustawione tutaj",
       "inheritSaved": "Zaktualizowano",
       "inheritSaveError": "Nie udało się zaktualizować – spróbuj ponownie.",
-      "menuRevertConfirm": "Przywrócić menu do menu marki? Niestandardowe menu tej lokalizacji zostanie zastąpione."
+      "menuRevertConfirm": "Przywrócić menu do menu marki? Niestandardowe menu tej lokalizacji zostanie zastąpione.",
+      "brandControlsLabel": "Ustawienia marki"
     },
     "brandDashboard": {
       "brandDashboardBadge": "Panel marki",

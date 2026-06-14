@@ -1592,7 +1592,8 @@
       "stateCustom": "Défini ici",
       "inheritSaved": "Mis à jour",
       "inheritSaveError": "Échec de la mise à jour — veuillez réessayer.",
-      "menuRevertConfirm": "Revenir au menu de la marque ? Le menu personnalisé de cet établissement sera remplacé."
+      "menuRevertConfirm": "Revenir au menu de la marque ? Le menu personnalisé de cet établissement sera remplacé.",
+      "brandControlsLabel": "Contrôles de la marque"
     },
     "menuEditor": {
       "sectionSizeLabel": "Sélection de la taille",

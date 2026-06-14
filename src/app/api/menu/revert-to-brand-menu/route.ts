@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
+import { deleteLocationMenuAndInherit } from "@/lib/brand";
 
 /**
  * POST /api/menu/revert-to-brand-menu
@@ -51,54 +52,10 @@ export async function POST() {
     return NextResponse.json({ ok: true, alreadyInheriting: true });
   }
 
-  // Delete in a single transaction so we never leave the location in a
-  // half-deleted state.
-  //
-  // ⚠️ ORDER MATTERS — the schema has Restrict FKs (Prisma's default
-  // when no onDelete is set) on:
-  //   - MenuItem.category   → MenuCategory  (line 483)
-  //   - ModifierGroup.menuItem  → MenuItem  (line 530)
-  //   - ModifierGroup.category → MenuCategory (line 532)
-  //
-  // If you try to delete categories first, every MenuItem referencing
-  // them blocks the delete and the transaction fails with a foreign-key
-  // violation (which Vercel surfaces as a 500 with empty body — that's
-  // what was breaking the UAT click).
-  //
-  // Correct order: deepest references first.
-  //   1. ModifierGroup — references both MenuItem + MenuCategory
-  //   2. MenuItem      — references MenuCategory
-  //   3. MenuCategory  — top of the tree, nothing references it after (1)+(2)
-  //
-  // ItemVariant + ModifierOption auto-cascade off MenuItem/ModifierGroup
-  // via onDelete: Cascade rules (lines 502 etc.), so we don't need to
-  // delete them explicitly.
+  // Shared, FK-ordered delete + inherit flip — see deleteLocationMenuAndInherit
+  // in src/lib/brand.ts (same logic the brand parent's per-child control uses).
   try {
-    const result = await prisma.$transaction(async (tx) => {
-      const modifierGroupsDeleted = await tx.modifierGroup.deleteMany({
-        where: { restaurantId: restaurant.id },
-      });
-      const itemsDeleted = await tx.menuItem.deleteMany({
-        where: { restaurantId: restaurant.id },
-      });
-      const categoriesDeleted = await tx.menuCategory.deleteMany({
-        where: { restaurantId: restaurant.id },
-      });
-      // Flip the inheritance flag LAST so a partial failure above leaves
-      // the location on its old custom menu (consistent state) rather
-      // than pointing at the brand menu while half the local data still
-      // exists in the DB.
-      await tx.restaurant.update({
-        where: { id: restaurant.id },
-        data: { useBrandMenu: true },
-      });
-      return {
-        categoriesDeleted: categoriesDeleted.count,
-        itemsDeleted: itemsDeleted.count,
-        modifierGroupsDeleted: modifierGroupsDeleted.count,
-      };
-    });
-
+    const result = await deleteLocationMenuAndInherit(restaurant.id);
     return NextResponse.json({ ok: true, ...result });
   } catch (err) {
     // Surface the real error to the caller instead of letting Vercel

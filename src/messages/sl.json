@@ -1592,7 +1592,8 @@
       "stateCustom": "Nastavljeno tukaj",
       "inheritSaved": "Posodobljeno",
       "inheritSaveError": "Posodobitev ni uspela — poskusite znova.",
-      "menuRevertConfirm": "Želite meni vrniti na meni znamke? Meni te lokacije po meri bo zamenjan."
+      "menuRevertConfirm": "Želite meni vrniti na meni znamke? Meni te lokacije po meri bo zamenjan.",
+      "brandControlsLabel": "Nastavitve znamke"
     },
     "menuEditor": {
       "sectionSizeLabel": "Izbira velikosti",

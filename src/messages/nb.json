@@ -1592,7 +1592,8 @@
       "stateCustom": "Angitt her",
       "inheritSaved": "Oppdatert",
       "inheritSaveError": "Kunne ikke oppdatere – prøv igjen.",
-      "menuRevertConfirm": "Bytte menyen tilbake til merkevarens? Denne lokasjonens tilpassede meny erstattes."
+      "menuRevertConfirm": "Bytte menyen tilbake til merkevarens? Denne lokasjonens tilpassede meny erstattes.",
+      "brandControlsLabel": "Merkevarekontroller"
     },
     "menuEditor": {
       "sectionSizeLabel": "Størrelsesvalg",

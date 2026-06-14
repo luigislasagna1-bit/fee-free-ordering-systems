@@ -1592,7 +1592,8 @@
       "stateCustom": "Määritetty tässä",
       "inheritSaved": "Päivitetty",
       "inheritSaveError": "Päivitys epäonnistui – yritä uudelleen.",
-      "menuRevertConfirm": "Palautetaanko ruokalista brändin mukaiseksi? Tämän toimipisteen mukautettu ruokalista korvataan."
+      "menuRevertConfirm": "Palautetaanko ruokalista brändin mukaiseksi? Tämän toimipisteen mukautettu ruokalista korvataan.",
+      "brandControlsLabel": "Brändihallinta"
     },
     "menuEditor": {
       "sectionSizeLabel": "Koon valinta",

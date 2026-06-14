@@ -237,6 +237,51 @@ export async function copyBrandMenuToLocation(parentRestaurantId: string, childR
 }
 
 /**
+ * Destructive: delete ALL of a child location's local menu rows and flip it
+ * back onto the brand (inherited) menu. Shared core of BOTH
+ * POST /api/menu/revert-to-brand-menu (the child reverting itself) AND the
+ * brand parent's per-child inheritance control — one source of truth so the
+ * delicate delete order can never drift between the two call sites. Caller MUST
+ * confirm with the owner first: a customized location's prices / availability /
+ * overrides are permanently lost.
+ *
+ * ⚠️ DELETE ORDER MATTERS — the schema has Restrict FKs on
+ * ModifierGroup→MenuItem, ModifierGroup→MenuCategory, and MenuItem→MenuCategory.
+ * Deleting categories first throws an FK violation (Vercel surfaces it as an
+ * empty-body 500). Correct order is deepest-reference-first:
+ *   1. ModifierGroup  2. MenuItem  3. MenuCategory
+ * ItemVariant + ModifierOption auto-cascade off their parents. The useBrandMenu
+ * flip is LAST and inside the transaction so a partial failure leaves the
+ * location on its old custom menu (consistent) rather than half-deleted.
+ */
+export async function deleteLocationMenuAndInherit(childRestaurantId: string): Promise<{
+  categoriesDeleted: number;
+  itemsDeleted: number;
+  modifierGroupsDeleted: number;
+}> {
+  return prisma.$transaction(async (tx) => {
+    const modifierGroupsDeleted = await tx.modifierGroup.deleteMany({
+      where: { restaurantId: childRestaurantId },
+    });
+    const itemsDeleted = await tx.menuItem.deleteMany({
+      where: { restaurantId: childRestaurantId },
+    });
+    const categoriesDeleted = await tx.menuCategory.deleteMany({
+      where: { restaurantId: childRestaurantId },
+    });
+    await tx.restaurant.update({
+      where: { id: childRestaurantId },
+      data: { useBrandMenu: true },
+    });
+    return {
+      categoriesDeleted: categoriesDeleted.count,
+      itemsDeleted: itemsDeleted.count,
+      modifierGroupsDeleted: modifierGroupsDeleted.count,
+    };
+  });
+}
+
+/**
  * Returns the brand summary for the parent restaurant, plus quick stats for
  * each location tile on the dashboard.
  *

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Loader2, Plus, MapPin, X, ExternalLink, ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { InheritancePanel } from "./InheritancePanel";
+import { ParentLocationInheritance } from "./ParentLocationInheritance";
 
 type Location = {
   id: string;
@@ -192,6 +193,13 @@ export function LocationsClient({
                   </a>
                 </div>
               </div>
+              {/* Brand parent controls each CHILD's live inheritance here — what
+                  it pulls from the brand vs. sets on its own — without logging
+                  into that location. Not shown for the parent row (nothing to
+                  inherit). Luigi 2026-06-13. */}
+              {isBrandParent && !loc.isParent && (
+                <ParentLocationInheritance childId={loc.id} childName={loc.name} />
+              )}
             </div>
           );
         })}

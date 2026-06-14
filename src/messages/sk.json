@@ -2257,7 +2257,8 @@
       "stateCustom": "Nastavené tu",
       "inheritSaved": "Aktualizované",
       "inheritSaveError": "Nepodarilo sa aktualizovať – skúste to znova.",
-      "menuRevertConfirm": "Vrátiť menu späť na menu značky? Vlastné menu tejto pobočky bude nahradené."
+      "menuRevertConfirm": "Vrátiť menu späť na menu značky? Vlastné menu tejto pobočky bude nahradené.",
+      "brandControlsLabel": "Nastavenia značky"
     },
     "menuEditor": {
       "sectionSizeLabel": "Výber veľkosti",

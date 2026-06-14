@@ -1592,7 +1592,8 @@
       "stateCustom": "Hier festgelegt",
       "inheritSaved": "Aktualisiert",
       "inheritSaveError": "Aktualisierung fehlgeschlagen — bitte erneut versuchen.",
-      "menuRevertConfirm": "Zum Menü der Marke zurückwechseln? Das individuelle Menü dieses Standorts wird ersetzt."
+      "menuRevertConfirm": "Zum Menü der Marke zurückwechseln? Das individuelle Menü dieses Standorts wird ersetzt.",
+      "brandControlsLabel": "Markensteuerung"
     },
     "menuEditor": {
       "sectionSizeLabel": "Größenauswahl",

@@ -1592,7 +1592,8 @@
       "stateCustom": "Задано здесь",
       "inheritSaved": "Обновлено",
       "inheritSaveError": "Не удалось обновить — повторите попытку.",
-      "menuRevertConfirm": "Вернуть меню к бренду? Собственное меню этой точки будет заменено."
+      "menuRevertConfirm": "Вернуть меню к бренду? Собственное меню этой точки будет заменено.",
+      "brandControlsLabel": "Настройки бренда"
     },
     "menuEditor": {
       "sectionSizeLabel": "Выбор размера",

@@ -1592,7 +1592,8 @@
       "stateCustom": "Määratud siin",
       "inheritSaved": "Uuendatud",
       "inheritSaveError": "Uuendamine ebaõnnestus — proovige uuesti.",
-      "menuRevertConfirm": "Kas lülitada menüü tagasi brändi omale? Selle asukoha kohandatud menüü asendatakse."
+      "menuRevertConfirm": "Kas lülitada menüü tagasi brändi omale? Selle asukoha kohandatud menüü asendatakse.",
+      "brandControlsLabel": "Brändi sätted"
     },
     "menuEditor": {
       "sectionSizeLabel": "Suuruse valik",

@@ -1592,7 +1592,8 @@
       "stateCustom": "Configurat aquí",
       "inheritSaved": "Actualitzat",
       "inheritSaveError": "No s'ha pogut actualitzar — torna-ho a provar.",
-      "menuRevertConfirm": "Vols tornar el menú al de la marca? El menú personalitzat d'aquest local se substituirà."
+      "menuRevertConfirm": "Vols tornar el menú al de la marca? El menú personalitzat d'aquest local se substituirà.",
+      "brandControlsLabel": "Controls de la marca"
     },
     "menuEditor": {
       "sectionSizeLabel": "Selecció de mida",

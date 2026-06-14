@@ -1592,7 +1592,8 @@
       "stateCustom": "Hier ingesteld",
       "inheritSaved": "Bijgewerkt",
       "inheritSaveError": "Bijwerken mislukt — probeer het opnieuw.",
-      "menuRevertConfirm": "Terug naar het menu van het merk? Het aangepaste menu van deze locatie wordt vervangen."
+      "menuRevertConfirm": "Terug naar het menu van het merk? Het aangepaste menu van deze locatie wordt vervangen.",
+      "brandControlsLabel": "Merkbeheer"
     },
     "menuEditor": {
       "sectionSizeLabel": "Maatkeuze",

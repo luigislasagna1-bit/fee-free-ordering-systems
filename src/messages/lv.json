@@ -1514,7 +1514,8 @@
       "stateCustom": "Iestatīts šeit",
       "inheritSaved": "Atjaunināts",
       "inheritSaveError": "Neizdevās atjaunināt — lūdzu, mēģiniet vēlreiz.",
-      "menuRevertConfirm": "Pārslēgt ēdienkarti atpakaļ uz zīmola? Šīs atrašanās vietas pielāgotā ēdienkarte tiks aizstāta."
+      "menuRevertConfirm": "Pārslēgt ēdienkarti atpakaļ uz zīmola? Šīs atrašanās vietas pielāgotā ēdienkarte tiks aizstāta.",
+      "brandControlsLabel": "Zīmola iestatījumi"
     },
     "toasts": {
       "saved": "Izmaiņas saglabātas",

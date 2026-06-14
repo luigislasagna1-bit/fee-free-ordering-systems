@@ -1592,7 +1592,8 @@
       "stateCustom": "מוגדר כאן",
       "inheritSaved": "עודכן",
       "inheritSaveError": "העדכון נכשל — נסה שוב.",
-      "menuRevertConfirm": "להחזיר את התפריט לתפריט המותג? התפריט המותאם אישית של הסניף הזה יוחלף."
+      "menuRevertConfirm": "להחזיר את התפריט לתפריט המותג? התפריט המותאם אישית של הסניף הזה יוחלף.",
+      "brandControlsLabel": "בקרות מותג"
     },
     "menuEditor": {
       "sectionSizeLabel": "בחירת גודל",

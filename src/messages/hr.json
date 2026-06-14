@@ -1592,7 +1592,8 @@
       "stateCustom": "Postavljeno ovdje",
       "inheritSaved": "Ažurirano",
       "inheritSaveError": "Ažuriranje nije uspjelo — pokušajte ponovno.",
-      "menuRevertConfirm": "Vratiti jelovnik na onaj brenda? Prilagođeni jelovnik ove lokacije bit će zamijenjen."
+      "menuRevertConfirm": "Vratiti jelovnik na onaj brenda? Prilagođeni jelovnik ove lokacije bit će zamijenjen.",
+      "brandControlsLabel": "Postavke robne marke"
     },
     "menuEditor": {
       "sectionSizeLabel": "Odabir veličine",

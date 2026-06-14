@@ -1592,7 +1592,8 @@
       "stateCustom": "Postavljeno ovde",
       "inheritSaved": "Ažurirano",
       "inheritSaveError": "Ažuriranje nije uspelo — pokušajte ponovo.",
-      "menuRevertConfirm": "Vratiti meni na brendov? Prilagođeni meni ove lokacije biće zamenjen."
+      "menuRevertConfirm": "Vratiti meni na brendov? Prilagođeni meni ove lokacije biće zamenjen.",
+      "brandControlsLabel": "Подешавања бренда"
     },
     "menuEditor": {
       "sectionSizeLabel": "Izbor veličine",

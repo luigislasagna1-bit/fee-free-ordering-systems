@@ -1969,7 +1969,8 @@
       "stateCustom": "Set here",
       "inheritSaved": "Updated",
       "inheritSaveError": "Couldn't update — please try again.",
-      "menuRevertConfirm": "Switch the menu back to the brand's? This location's custom menu will be replaced."
+      "menuRevertConfirm": "Switch the menu back to the brand's? This location's custom menu will be replaced.",
+      "brandControlsLabel": "Brand controls"
     },
     "menuEditor": {
       "sectionSizeLabel": "Size selection",
