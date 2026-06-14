@@ -386,7 +386,11 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
     ? totalCountdownMs - (now - new Date(countdownReference).getTime())
     : Number.POSITIVE_INFINITY;
   const isUrgent = isPending && !alertParked && msLeft <= 30 * 1000;
-  const baseRowClass = selected ? t.rowSelected : isPending && !alertParked ? `${t.rowNew} cursor-pointer` : t.row;
+  // Background highlight keys off the PENDING state alone (Luigi 2026-06-14 —
+  // every unaccepted order must stand out at a glance, even one parked while
+  // closed). The flash / urgent pulse + ring stay gated on !alertParked, so a
+  // parked order is highlighted-but-calm (no pulsing, no sound) until it goes live.
+  const baseRowClass = selected ? t.rowSelected : isPending ? `${t.rowNew} cursor-pointer` : t.row;
   const flashClass = isUrgent ? "kitchen-flash-urgent" : "kitchen-flash-new";
   const rowClass = isPending && !alertParked ? `${baseRowClass} ${flashClass}` : baseRowClass;
   // Live countdown to the order's promised ready time. We prefer
@@ -471,7 +475,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
                 anything with a delivery address (delivery, catering-delivery)
                 shows the ADDRESS; pickup/dine-in/take-out show the NAME. The
                 order number drops to the grey line below. */}
-            <span className={`font-bold text-[1.225rem] leading-tight ${t.text} truncate flex-1 min-w-0`}>
+            <span className={`font-bold text-[1.225rem] leading-tight ${t.text} truncate min-w-0`}>
               {showAddress
                 ? order.deliveryAddress
                 : order.customerName.replace("[TEST] ", "")}

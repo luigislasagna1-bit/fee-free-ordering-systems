@@ -135,7 +135,7 @@ const THEMES = {
     tabActive: "border-emerald-500 text-emerald-600",
     tabInactive: "border-transparent text-gray-500 hover:text-gray-800",
     row: "bg-white border-b border-gray-100 hover:bg-emerald-50 cursor-pointer",
-    rowNew: "bg-emerald-50 border-b border-gray-100",
+    rowNew: "bg-amber-50 border-b border-gray-100",
     rowSelected: "bg-emerald-50 border-l-4 border-emerald-500 cursor-pointer",
     detail: "bg-white border-l border-gray-200",
     modal: "bg-white shadow-2xl",
