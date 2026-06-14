@@ -4,6 +4,8 @@ import { validateBooking, resolveDayHours, type ReservationSettingsLike } from "
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
 import { notifyStaff, notifyCustomer } from "@/lib/notifications";
 import { hasFeature } from "@/lib/entitlements";
+import { liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
+import { holidayEffectToday } from "@/lib/holiday-rules";
 
 function sanitize(s: unknown, max = 500): string {
   return String(s ?? "").trim().slice(0, max);
@@ -34,18 +36,15 @@ export async function POST(req: NextRequest) {
       where: { slug: restaurantSlug, isActive: true },
       select: {
         id: true, name: true, email: true, slug: true, acceptsReservations: true,
-        reservationSettings: true, defaultLanguage: true, timezone: true,
-        // openingHours powers the closed-day server-side guard. Mirror
-        // the client check: if the owner explicitly marked the day off
-        // (in reservationHours JSON OR Restaurant.openingHours), refuse
-        // the booking. Belt-and-suspenders to the disabled client
-        // button — hand-crafted POSTs can't sneak through. Luigi
-        // 2026-06-01: "if the restaurant is closed in settings, it
-        // shouldn't allow anyone to put in a reservation."
-        // openTime/closeTime added so the validator can see a cross-midnight
-        // close (e.g. 04:00) when this restaurant relies on opening-hours
-        // fallback for reservations. Luigi 2026-06-08.
-        openingHours: { select: { dayOfWeek: true, isOpen: true, service: true, openTime: true, closeTime: true } },
+        reservationSettings: true, defaultLanguage: true, timezone: true, hoursFormat: true,
+        // openingHours powers BOTH the closed-day server-side guard (refuse a
+        // booking on a day the owner marked off) AND the closed-when-placed alert
+        // deferral (alertAt). Loaded in full so liveOpenStatus / nextOpenAt see
+        // closesNextDay etc. Luigi 2026-06-01 / 2026-06-08 / 2026-06-14.
+        openingHours: { orderBy: { dayOfWeek: "asc" } },
+        // Holidays → the deferred kitchen alert must skip holiday-closed days,
+        // mirroring the order flow.
+        holidays: true,
       },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
@@ -116,6 +115,28 @@ export async function POST(req: NextRequest) {
         sum + (Number(it.price) * Number(it.quantity || 1)), 0);
     }
 
+    // Closed-when-placed → defer the kitchen ring to opening (mirrors the order
+    // flow at /api/orders). A booking made overnight shows in the kitchen
+    // (highlighted, calm) but doesn't ring until the restaurant next opens.
+    // Luigi 2026-06-14.
+    let reservationAlertAt: Date | null = null;
+    {
+      const tz = restaurant.timezone ?? undefined;
+      const holidayToday = holidayEffectToday((restaurant as any).holidays, tz, null);
+      const live = liveOpenStatus(
+        restaurant.openingHours as any,
+        new Date(),
+        restaurant.hoursFormat === "12h" ? "12h" : "24h",
+        holidayToday
+          ? { name: holidayToday.name ?? undefined, intervals: holidayToday.kind === "custom_hours" ? holidayToday.intervals : undefined }
+          : undefined,
+        tz,
+      );
+      if (live.kind !== "open") {
+        reservationAlertAt = nextOpenAt(restaurant.openingHours as any, new Date(), tz, (restaurant as any).holidays ?? []) ?? null;
+      }
+    }
+
     const code = generateConfirmationCode();
     // take_reservation_deposit is a paid add-on — never charge a deposit without
     // it, even if a stale requireDeposit flag is set (defense-in-depth alongside
@@ -141,6 +162,7 @@ export async function POST(req: NextRequest) {
         depositAmount: wantsDeposit ? settings.depositAmount * parseInt(String(partySize)) : 0,
         depositPaid: false,
         preOrderTotal,
+        alertAt: reservationAlertAt,
       },
     });
 

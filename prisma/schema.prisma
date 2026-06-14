@@ -2080,6 +2080,12 @@ model Reservation {
   depositPaid      Boolean  @default(false)
   preOrderTotal    Float    @default(0)
   paymentIntentId  String?
+  /// When set + in the future, the kitchen treats this booking as "parked": it
+  /// shows (highlighted, calm) but does NOT ring until this moment. Stamped =
+  /// nextOpenAt() when a reservation lands while the restaurant is CLOSED, so an
+  /// overnight booking rings at opening — exactly like takeaway/delivery orders —
+  /// instead of waking the kitchen. Null = ring immediately. Luigi 2026-06-14.
+  alertAt          DateTime?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 

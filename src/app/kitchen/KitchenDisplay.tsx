@@ -96,6 +96,14 @@ function ReservationCard({
     if (!Number.isFinite(dueTs)) return null;
     return formatDueLabel(dueTs, now).text;
   })();
+  // Parked = booking placed while CLOSED; its kitchen alert is deferred to the
+  // next opening. The tile still shows (highlighted) but stays calm — no flash,
+  // and it's excluded from the ring counts — until alertAt passes, exactly like
+  // a closed-placed order. Luigi 2026-06-14.
+  const parked = !!(r.alertAt && now && new Date(r.alertAt).getTime() > now);
+  const opensLabel = parked && now
+    ? (() => { const l = formatDueLabel(new Date(r.alertAt!).getTime(), now); return l.kind === "day" ? l.text.toUpperCase() : `OPENS IN ${l.text.toUpperCase()}`; })()
+    : null;
   // A reservation tile carries NO action buttons — tapping it opens the
   // reservation detail panel where Accept / Reject (pending) and Seated /
   // No-show (confirmed) live, exactly like an order tile opens OrderDetail.
@@ -106,7 +114,7 @@ function ReservationCard({
       onClick={() => onOpen(r)}
       className={`w-full text-left ${r.status === "pending" ? t.rowNew : t.row} rounded-xl p-${compact ? "3" : "4"} border transition ${
         selected ? "border-blue-500 ring-1 ring-blue-500" : `${t.border} hover:border-blue-400`
-      } ${r.status === "pending" ? "kitchen-flash-new" : ""}`}
+      } ${r.status === "pending" && !parked ? "kitchen-flash-new" : ""}`}
     >
       <div className="flex items-start gap-3">
         {/* Walk-up table reservation icon — indigo calendar, distinct from the
@@ -123,6 +131,11 @@ function ReservationCard({
             )}
             <span className={`font-bold ${t.text} ${compact ? "text-sm" : ""}`}>{r.customerName}</span>
             <ReservationStatusBadge status={r.status} t={t} />
+            {opensLabel && (
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-300">
+                {opensLabel}
+              </span>
+            )}
             {/* Purple TABLE RESERVATION label on every booking tile, matching the
                 order tile's flag. Pre-order bookings also show the amber PRE-ORDER
                 badge below. Luigi 2026-06-08. */}
@@ -652,6 +665,9 @@ type KitchenReservation = {
   preOrderTotal: number;
   depositPaid: boolean;
   depositAmount: number;
+  /** Deferred kitchen-alert time — set when the booking was placed while the
+   *  restaurant was CLOSED, so it doesn't ring until opening. Luigi 2026-06-14. */
+  alertAt: string | null;
   /** Reserve-then-order: set when this booking was placed WITH a food order.
    *  Tapping such a booking opens the linked ORDER's full detail (food +
    *  reservation banner), and the booking is NOT shown as its own tile in the
@@ -1652,7 +1668,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // Only TODAY-or-future pendings ring — a stale past pending the feed still
   // carries for history must not ring the bell forever. Luigi 2026-06-08.
   const pendingReservationCount = reservations.filter(
-    (r) => r.status === "pending" && r.date >= todayISO,
+    (r) => r.status === "pending" && r.date >= todayISO
+      // Parked (placed while closed) bookings stay silent until alertAt passes —
+      // mirrors the order pendingCount / longRing guards above. Luigi 2026-06-14.
+      && !(r.alertAt && new Date(r.alertAt).getTime() > nowMs),
   ).length;
   const alerting = (pendingCount + pendingReservationCount) > 0 && !acknowledged;
 
