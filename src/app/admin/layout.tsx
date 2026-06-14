@@ -149,20 +149,29 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       hasHostedSite = false;
     }
 
-    // Coming-soon FEATURES — union of enabledFeatures across every add-on flagged
-    // comingSoon in /superadmin/add-ons. Passed to the sidebar so its "Soon" badge
-    // is DB-driven: toggling Coming Soon there reflects live, no code change
-    // (Luigi 2026-06-14). Non-fatal on failure.
+    // Coming-soon FEATURES — granted by an add-on flagged comingSoon in
+    // /superadmin/add-ons, EXCEPT any feature an active, purchasable add-on also
+    // grants. e.g. driver_pool ships via the standalone Driver Pool add-on even
+    // though the comingSoon Marketplace bundle includes it — so it's purchasable
+    // NOW, not "Soon". DB-driven; non-fatal on failure. Luigi 2026-06-14.
     try {
-      const soon = await prisma.addOn.findMany({ where: { comingSoon: true }, select: { enabledFeatures: true } });
-      const set = new Set<string>();
-      for (const a of soon) {
-        try {
-          const arr = JSON.parse(a.enabledFeatures || "[]");
-          if (Array.isArray(arr)) for (const f of arr) if (typeof f === "string") set.add(f);
-        } catch {}
-      }
-      comingSoonFeatures = [...set];
+      const [soon, sellable] = await Promise.all([
+        prisma.addOn.findMany({ where: { comingSoon: true }, select: { enabledFeatures: true } }),
+        prisma.addOn.findMany({ where: { comingSoon: false, isActive: true }, select: { enabledFeatures: true } }),
+      ]);
+      const parseInto = (rows: { enabledFeatures: string }[], target: Set<string>) => {
+        for (const a of rows) {
+          try {
+            const arr = JSON.parse(a.enabledFeatures || "[]");
+            if (Array.isArray(arr)) for (const f of arr) if (typeof f === "string") target.add(f);
+          } catch {}
+        }
+      };
+      const purchasable = new Set<string>();
+      parseInto(sellable, purchasable);
+      const soonSet = new Set<string>();
+      parseInto(soon, soonSet);
+      comingSoonFeatures = [...soonSet].filter((f) => !purchasable.has(f));
     } catch (err) {
       console.error("[admin-layout] comingSoon features failed", err);
       comingSoonFeatures = [];
