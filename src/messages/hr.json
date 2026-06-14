@@ -226,7 +226,8 @@
       "itemUnavailable": "Ova stavka nije dostupna",
       "scheduledInPast": "Odabrano zakazano vrijeme već je prošlo. Odaberite novo vrijeme.",
       "holidayClosedFull": "Na ovaj datum smo zatvoreni. Odaberite drugi dan.",
-      "holidayServiceClosed": "{service} nije dostupna na ovaj datum. Odaberite drugi dan ili uslugu."
+      "holidayServiceClosed": "{service} nije dostupna na ovaj datum. Odaberite drugi dan ili uslugu.",
+      "fullNameRequired": "Unesite svoje ime i prezime."
     },
     "searchMenu": "Pretraži jelovnik…",
     "signIn": "Prijava",

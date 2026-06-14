@@ -226,7 +226,8 @@
       "itemUnavailable": "Dit item is niet beschikbaar",
       "scheduledInPast": "De gekozen geplande tijd is al verstreken. Kies een nieuwe tijd.",
       "holidayClosedFull": "We zijn gesloten op deze datum. Kies een andere dag.",
-      "holidayServiceClosed": "{service} is niet beschikbaar op deze datum. Kies een andere dag of service."
+      "holidayServiceClosed": "{service} is niet beschikbaar op deze datum. Kies een andere dag of service.",
+      "fullNameRequired": "Voer je voor- en achternaam in."
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",

@@ -226,7 +226,8 @@
       "itemUnavailable": "Tato položka není dostupná",
       "scheduledInPast": "Zvolený naplánovaný čas už uplynul. Vyberte prosím nový čas.",
       "holidayClosedFull": "V tento den máme zavřeno. Vyberte jiný den.",
-      "holidayServiceClosed": "{service} není v tento den dostupná. Vyberte jiný den nebo službu."
+      "holidayServiceClosed": "{service} není v tento den dostupná. Vyberte jiný den nebo službu.",
+      "fullNameRequired": "Zadejte své jméno a příjmení."
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",

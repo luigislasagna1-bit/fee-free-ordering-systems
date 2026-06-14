@@ -226,7 +226,8 @@
       "itemUnavailable": "פריט זה אינו זמין",
       "scheduledInPast": "השעה המתוזמנת שבחרת כבר עברה. אנא בחר שעה חדשה.",
       "holidayClosedFull": "אנחנו סגורים בתאריך זה. אנא בחר יום אחר.",
-      "holidayServiceClosed": "{service} אינו זמין בתאריך זה. אנא בחר יום אחר או שירות אחר."
+      "holidayServiceClosed": "{service} אינו זמין בתאריך זה. אנא בחר יום אחר או שירות אחר.",
+      "fullNameRequired": "יש להזין שם פרטי ושם משפחה."
     },
     "searchMenu": "חפש בתפריט…",
     "signIn": "התחברות",

@@ -226,7 +226,8 @@
       "itemUnavailable": "Acest produs nu este disponibil",
       "scheduledInPast": "Ora programată aleasă a trecut deja. Te rugăm să alegi o oră nouă.",
       "holidayClosedFull": "Suntem închiși în această dată. Alege altă zi.",
-      "holidayServiceClosed": "{service} nu este disponibil în această dată. Alege altă zi sau alt serviciu."
+      "holidayServiceClosed": "{service} nu este disponibil în această dată. Alege altă zi sau alt serviciu.",
+      "fullNameRequired": "Introdu prenumele și numele de familie."
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",

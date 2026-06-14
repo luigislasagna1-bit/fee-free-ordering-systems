@@ -226,7 +226,8 @@
       "itemUnavailable": "Denne vare er ikke tilgængelig",
       "scheduledInPast": "Det planlagte tidspunkt, du valgte, er allerede passeret. Vælg venligst et nyt tidspunkt.",
       "holidayClosedFull": "Vi har lukket på denne dato. Vælg en anden dag.",
-      "holidayServiceClosed": "{service} er ikke tilgængelig på denne dato. Vælg en anden dag eller service."
+      "holidayServiceClosed": "{service} er ikke tilgængelig på denne dato. Vælg en anden dag eller service.",
+      "fullNameRequired": "Indtast dit fornavn og efternavn."
     },
     "searchMenu": "Søg i menuen…",
     "signIn": "Log ind",

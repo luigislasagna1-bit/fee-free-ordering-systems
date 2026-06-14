@@ -225,7 +225,8 @@
       "itemUnavailable": "Questo articolo non è disponibile",
       "scheduledInPast": "L'orario programmato che hai scelto è già passato. Scegli un nuovo orario.",
       "holidayClosedFull": "Siamo chiusi in questa data. Scegli un altro giorno.",
-      "holidayServiceClosed": "{service} non è disponibile in questa data. Scegli un altro giorno o servizio."
+      "holidayServiceClosed": "{service} non è disponibile in questa data. Scegli un altro giorno o servizio.",
+      "fullNameRequired": "Inserisci il tuo nome e cognome."
     },
     "followUs": "Seguici",
     "searchMenu": "Cerca nel menu…",

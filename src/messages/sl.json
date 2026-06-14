@@ -226,7 +226,8 @@
       "itemUnavailable": "Ta izdelek ni na voljo",
       "scheduledInPast": "Izbrani načrtovani čas je že minil. Izberite nov čas.",
       "holidayClosedFull": "Na ta dan smo zaprti. Izberite drug dan.",
-      "holidayServiceClosed": "{service} na ta dan ni na voljo. Izberite drug dan ali storitev."
+      "holidayServiceClosed": "{service} na ta dan ni na voljo. Izberite drug dan ali storitev.",
+      "fullNameRequired": "Vnesite svoje ime in priimek."
     },
     "searchMenu": "Iskanje po meniju…",
     "signIn": "Prijava",

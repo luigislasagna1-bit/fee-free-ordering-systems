@@ -2780,10 +2780,19 @@ export function OrderingPageClient({
         try { el.focus({ preventScroll: true }); } catch { /* iOS quirks */ }
       }, 50);
     };
-    if (!customerInfo.name || !customerInfo.phone) {
+    const nameTokens = customerInfo.name.trim().split(/\s+/).filter(Boolean);
+    if (nameTokens.length === 0 || !customerInfo.phone) {
       setEditingSection("contact");
-      focusField(!customerInfo.name ? "checkout-contact-name" : "checkout-contact-phone");
+      focusField(nameTokens.length === 0 ? "checkout-contact-first-name" : "checkout-contact-phone");
       toast.error(tT("nameAndPhone"));
+      return;
+    }
+    // Last name is required — both name inputs show a "*". A single token means
+    // only a first name was entered; block and point at the last-name box. (R6)
+    if (nameTokens.length < 2) {
+      setEditingSection("contact");
+      focusField("checkout-contact-last-name");
+      toast.error(tT("fullNameRequired"));
       return;
     }
     // Phone must be a real number — no letters, at least 6 digits. Catches

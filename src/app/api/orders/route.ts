@@ -157,6 +157,12 @@ export async function POST(req: NextRequest) {
     if (sanitize(customerName).length < 2) {
       return NextResponse.json({ error: "Invalid customer name" }, { status: 400 });
     }
+    // First AND last name required (the checkout marks both name fields with a
+    // "*"). Two+ space-separated tokens; defense-in-depth behind the client
+    // guard so a single-name submit can't slip through. (R6, 2026-06-14)
+    if (sanitize(customerName).split(/\s+/).filter(Boolean).length < 2) {
+      return NextResponse.json({ error: "Please enter a first and last name.", code: "full_name_required" }, { status: 400 });
+    }
     // Delivery required-field validation is CONFIG-DRIVEN (customizable form):
     // a restaurant chooses which fields show + are required. We validate after
     // the restaurant (and its deliveryAddressConfig) is loaded — see the

@@ -226,7 +226,8 @@
       "itemUnavailable": "Šī prece nav pieejama",
       "scheduledInPast": "Izvēlētais ieplānotais laiks jau ir pagājis. Lūdzu, izvēlieties jaunu laiku.",
       "holidayClosedFull": "Šajā datumā esam slēgti. Lūdzu, izvēlieties citu dienu.",
-      "holidayServiceClosed": "{service} šajā datumā nav pieejama. Lūdzu, izvēlieties citu dienu vai pakalpojumu."
+      "holidayServiceClosed": "{service} šajā datumā nav pieejama. Lūdzu, izvēlieties citu dienu vai pakalpojumu.",
+      "fullNameRequired": "Ievadiet savu vārdu un uzvārdu."
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",

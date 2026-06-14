@@ -230,7 +230,8 @@
       "itemUnavailable": "This item is unavailable",
       "scheduledInPast": "The scheduled time you picked has already passed. Please choose a new time.",
       "holidayClosedFull": "We're closed on this date. Please choose a different day.",
-      "holidayServiceClosed": "{service} isn't available on this date. Please choose a different day or service."
+      "holidayServiceClosed": "{service} isn't available on this date. Please choose a different day or service.",
+      "fullNameRequired": "Please enter your first and last name."
     },
     "searchMenu": "Search the menu…",
     "expandAll": "Expand all",

@@ -226,7 +226,8 @@
       "itemUnavailable": "Ši prekė neprieinama",
       "scheduledInPast": "Pasirinktas suplanuotas laikas jau praėjo. Pasirinkite naują laiką.",
       "holidayClosedFull": "Šią dieną nedirbame. Pasirinkite kitą dieną.",
-      "holidayServiceClosed": "{service} šią dieną neprieinama. Pasirinkite kitą dieną arba paslaugą."
+      "holidayServiceClosed": "{service} šią dieną neprieinama. Pasirinkite kitą dieną arba paslaugą.",
+      "fullNameRequired": "Įveskite savo vardą ir pavardę."
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",

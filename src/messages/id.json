@@ -226,7 +226,8 @@
       "itemUnavailable": "Item ini tidak tersedia",
       "scheduledInPast": "Waktu terjadwal yang Anda pilih sudah lewat. Silakan pilih waktu baru.",
       "holidayClosedFull": "Kami tutup pada tanggal ini. Silakan pilih hari lain.",
-      "holidayServiceClosed": "{service} tidak tersedia pada tanggal ini. Silakan pilih hari atau layanan lain."
+      "holidayServiceClosed": "{service} tidak tersedia pada tanggal ini. Silakan pilih hari atau layanan lain.",
+      "fullNameRequired": "Masukkan nama depan dan nama belakang Anda."
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",

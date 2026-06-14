@@ -226,7 +226,8 @@
       "itemUnavailable": "この商品は現在ご利用いただけません",
       "scheduledInPast": "選択した予約時間はすでに過ぎています。新しい時間を選んでください。",
       "holidayClosedFull": "この日は休業しています。別の日をお選びください。",
-      "holidayServiceClosed": "{service}はこの日はご利用いただけません。別の日またはサービスをお選びください。"
+      "holidayServiceClosed": "{service}はこの日はご利用いただけません。別の日またはサービスをお選びください。",
+      "fullNameRequired": "姓と名を入力してください。"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",

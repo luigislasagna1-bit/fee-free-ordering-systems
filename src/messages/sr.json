@@ -226,7 +226,8 @@
       "itemUnavailable": "Ова ставка није доступна",
       "scheduledInPast": "Изабрано заказано време је већ прошло. Изаберите ново време.",
       "holidayClosedFull": "На овај датум смо затворени. Изаберите други дан.",
-      "holidayServiceClosed": "{service} није доступна на овај датум. Изаберите други дан или услугу."
+      "holidayServiceClosed": "{service} није доступна на овај датум. Изаберите други дан или услугу.",
+      "fullNameRequired": "Унесите своје име и презиме."
     },
     "searchMenu": "Pretražite meni…",
     "signIn": "Prijavite se",

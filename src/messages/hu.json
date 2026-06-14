@@ -226,7 +226,8 @@
       "itemUnavailable": "Ez a tétel nem elérhető",
       "scheduledInPast": "A kiválasztott időpont már elmúlt. Kérjük, válassz új időpontot.",
       "holidayClosedFull": "Ezen a napon zárva tartunk. Válassz másik napot.",
-      "holidayServiceClosed": "{service} ezen a napon nem érhető el. Válassz másik napot vagy szolgáltatást."
+      "holidayServiceClosed": "{service} ezen a napon nem érhető el. Válassz másik napot vagy szolgáltatást.",
+      "fullNameRequired": "Adja meg a vezeték- és keresztnevét."
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",

@@ -226,7 +226,8 @@
       "itemUnavailable": "See toode pole saadaval",
       "scheduledInPast": "Valitud aeg on juba möödas. Palun vali uus aeg.",
       "holidayClosedFull": "Sel kuupäeval oleme suletud. Palun valige teine päev.",
-      "holidayServiceClosed": "{service} ei ole sel kuupäeval saadaval. Palun valige teine päev või teenus."
+      "holidayServiceClosed": "{service} ei ole sel kuupäeval saadaval. Palun valige teine päev või teenus.",
+      "fullNameRequired": "Sisestage oma ees- ja perekonnanimi."
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",

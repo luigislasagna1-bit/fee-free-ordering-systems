@@ -226,7 +226,8 @@
       "itemUnavailable": "Tämä tuote ei ole saatavilla",
       "scheduledInPast": "Valitsemasi ajankohta on jo mennyt. Valitse uusi aika.",
       "holidayClosedFull": "Olemme suljettuna tänä päivänä. Valitse toinen päivä.",
-      "holidayServiceClosed": "{service} ei ole saatavilla tänä päivänä. Valitse toinen päivä tai palvelu."
+      "holidayServiceClosed": "{service} ei ole saatavilla tänä päivänä. Valitse toinen päivä tai palvelu.",
+      "fullNameRequired": "Anna etu- ja sukunimesi."
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",

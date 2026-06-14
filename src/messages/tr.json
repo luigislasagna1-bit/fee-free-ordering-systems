@@ -226,7 +226,8 @@
       "itemUnavailable": "Bu ürün mevcut değil",
       "scheduledInPast": "Seçtiğiniz planlanan saat geçti. Lütfen yeni bir saat seçin.",
       "holidayClosedFull": "Bu tarihte kapalıyız. Lütfen başka bir gün seçin.",
-      "holidayServiceClosed": "{service} bu tarihte mevcut değil. Lütfen başka bir gün veya hizmet seçin."
+      "holidayServiceClosed": "{service} bu tarihte mevcut değil. Lütfen başka bir gün veya hizmet seçin.",
+      "fullNameRequired": "Lütfen adınızı ve soyadınızı girin."
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",
