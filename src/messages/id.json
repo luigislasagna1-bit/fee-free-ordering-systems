@@ -453,7 +453,8 @@
     "unlockedPromoMany": "Anda membuka promo!",
     "pickADateFirst": "Pilih tanggal dulu",
     "closedThisDay": "Tutup pada hari ini",
-    "fulfilSchedulePrompt": "📅 Satu atau beberapa item di keranjang Anda hanya bisa dipesan untuk hari atau jam tertentu. Kami telah memilih slot paling awal yang tersedia di bawah ini — sesuaikan jika Anda mau."
+    "fulfilSchedulePrompt": "📅 Satu atau beberapa item di keranjang Anda hanya bisa dipesan untuk hari atau jam tertentu. Kami telah memilih slot paling awal yang tersedia di bawah ini — sesuaikan jika Anda mau.",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> hanya dapat dipesan pada hari atau waktu tertentu. Waktu pemesanan yang tersedia telah dibatasi sesuai dengan itu."
   },
   "reservation": {
     "title": "Pesan meja",

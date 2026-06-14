@@ -453,7 +453,8 @@
     "unlockedPromoMany": "Du hast Promos freigeschaltet!",
     "pickADateFirst": "Zuerst ein Datum wählen",
     "closedThisDay": "An diesem Tag geschlossen",
-    "fulfilSchedulePrompt": "📅 Ein oder mehrere Artikel in Ihrem Warenkorb können nur für bestimmte Tage oder Uhrzeiten bestellt werden. Wir haben unten den nächsten verfügbaren Termin ausgewählt — passen Sie ihn bei Bedarf an."
+    "fulfilSchedulePrompt": "📅 Ein oder mehrere Artikel in Ihrem Warenkorb können nur für bestimmte Tage oder Uhrzeiten bestellt werden. Wir haben unten den nächsten verfügbaren Termin ausgewählt — passen Sie ihn bei Bedarf an.",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> kann nur an bestimmten Tagen oder zu bestimmten Zeiten bestellt werden. Die verfügbaren Bestellzeiten wurden entsprechend eingeschränkt."
   },
   "reservation": {
     "title": "Tisch reservieren",

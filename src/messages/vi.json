@@ -453,7 +453,8 @@
     "unlockedPromoMany": "Bạn đã mở khóa các ưu đãi!",
     "pickADateFirst": "Chọn ngày trước",
     "closedThisDay": "Đóng cửa ngày này",
-    "fulfilSchedulePrompt": "📅 Một hoặc nhiều món trong giỏ hàng của bạn chỉ có thể đặt vào những ngày hoặc giờ nhất định. Chúng tôi đã chọn khung giờ sớm nhất hiện có bên dưới — bạn có thể điều chỉnh nếu muốn."
+    "fulfilSchedulePrompt": "📅 Một hoặc nhiều món trong giỏ hàng của bạn chỉ có thể đặt vào những ngày hoặc giờ nhất định. Chúng tôi đã chọn khung giờ sớm nhất hiện có bên dưới — bạn có thể điều chỉnh nếu muốn.",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> chỉ có thể đặt vào những ngày hoặc giờ nhất định. Thời gian đặt hàng khả dụng đã được giới hạn tương ứng."
   },
   "reservation": {
     "title": "Đặt bàn",

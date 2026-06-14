@@ -453,7 +453,8 @@
     "unlockedPromoMany": "Avasit tarjouksia!",
     "pickADateFirst": "Valitse ensin päivä",
     "closedThisDay": "Suljettu tänä päivänä",
-    "fulfilSchedulePrompt": "📅 Yhtä tai useampaa ostoskorisi tuotetta voi tilata vain tiettyinä päivinä tai kellonaikoina. Olemme valinneet alle aikaisimman vapaan ajan – muuta sitä halutessasi."
+    "fulfilSchedulePrompt": "📅 Yhtä tai useampaa ostoskorisi tuotetta voi tilata vain tiettyinä päivinä tai kellonaikoina. Olemme valinneet alle aikaisimman vapaan ajan – muuta sitä halutessasi.",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> voidaan tilata vain tiettyinä päivinä tai kellonaikoina. Käytettävissä olevia tilausaikoja on rajoitettu vastaavasti."
   },
   "reservation": {
     "title": "Varaa pöytä",

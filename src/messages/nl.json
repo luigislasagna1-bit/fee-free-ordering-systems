@@ -453,7 +453,8 @@
     "unlockedPromoMany": "Je hebt promo's ontgrendeld!",
     "pickADateFirst": "Kies eerst een datum",
     "closedThisDay": "Deze dag gesloten",
-    "fulfilSchedulePrompt": "📅 Een of meer artikelen in je winkelwagen kunnen alleen voor bepaalde dagen of tijden worden besteld. We hebben hieronder het eerstvolgende beschikbare tijdslot ingesteld — pas het aan als je wilt."
+    "fulfilSchedulePrompt": "📅 Een of meer artikelen in je winkelwagen kunnen alleen voor bepaalde dagen of tijden worden besteld. We hebben hieronder het eerstvolgende beschikbare tijdslot ingesteld — pas het aan als je wilt.",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> kan alleen op bepaalde dagen of tijden worden besteld. De beschikbare besteltijden zijn dienovereenkomstig beperkt."
   },
   "reservation": {
     "title": "Tafel reserveren",

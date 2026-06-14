@@ -453,7 +453,8 @@
     "unlockedPromoMany": "프로모션을 잠금 해제했습니다!",
     "pickADateFirst": "먼저 날짜를 선택하세요",
     "closedThisDay": "이 날은 휴무",
-    "fulfilSchedulePrompt": "📅 장바구니에 담긴 항목 중 하나 이상은 특정 요일이나 시간에만 주문할 수 있습니다. 아래에 가장 이른 예약 가능 시간대를 설정해 두었습니다 — 원하시면 변경하세요."
+    "fulfilSchedulePrompt": "📅 장바구니에 담긴 항목 중 하나 이상은 특정 요일이나 시간에만 주문할 수 있습니다. 아래에 가장 이른 예약 가능 시간대를 설정해 두었습니다 — 원하시면 변경하세요.",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong>은(는) 특정 요일이나 시간에만 주문할 수 있습니다. 이용 가능한 주문 시간이 그에 따라 제한되었습니다."
   },
   "reservation": {
     "title": "테이블 예약",

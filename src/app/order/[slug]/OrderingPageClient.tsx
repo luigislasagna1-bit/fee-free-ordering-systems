@@ -877,6 +877,7 @@ export function OrderingPageClient({
   const tT = useTranslations("ordering.toasts");
   const tCombo = useTranslations("customer.combo");
   const tAddr = useTranslations("checkout.addressFields");
+  const tCheckout = useTranslations("checkout");
   const tPromoDetail = useTranslations("customer.promoDetail");
   const theme = parseTheme(themeSettings);
   // Owner's chosen clock display format ("12h" → AM/PM, "24h" → 14:30).
@@ -2151,6 +2152,12 @@ export function OrderingPageClient({
   // they're already orderable now, no extra minimum is added (ASAP is fine).
   const cartFulfilItems = cart.map((ci) => ci.menuItem).filter(hasFulfilWindow);
   const cartHasFulfil = cartFulfilItems.length > 0;
+  // Distinct dish names of the time-restricted items in the cart — used to
+  // NAME them in the "only available certain days/times" heads-up (cart +
+  // checkout), per reseller R4. Shown whenever a restricted item is in the
+  // cart, even when it's orderable right now (so the customer understands
+  // why the order time is constrained before they schedule).
+  const fulfilItemNames = Array.from(new Set(cartFulfilItems.map((i) => i.name)));
   const fulfilBaseMs = (() => {
     let ms = Date.now();
     if (cartHasFulfil) {
@@ -4424,6 +4431,14 @@ export function OrderingPageClient({
                             {ci.bundlePromoName ?? ci.menuItem.name}
                           </div>
                           {ci.variant && <div className="text-xs mt-0.5 font-medium" style={{ color: theme.primaryColor }}>{ci.variant.name}</div>}
+                          {/* Time-restricted item → "Order ahead · <window>" note,
+                              mirroring the menu badge so the customer is reminded
+                              in the cart that this dish has order-time limits (R4). */}
+                          {!ci.isBundle && hasFulfilWindow(ci.menuItem) && (
+                            <div className="text-[11px] mt-0.5 font-medium text-amber-700">
+                              {t("fulfilOrderAheadLabel", { window: itemFulfilWindow(ci.menuItem, hoursFmt) })}
+                            </div>
+                          )}
                           {/* Bundle child rows — indented under the parent. */}
                           {ci.isBundle && ci.bundleItems && ci.bundleItems.length > 0 && (
                             <div className="mt-1 pl-4 border-l-2 border-gray-100 space-y-0.5">
@@ -4487,6 +4502,17 @@ export function OrderingPageClient({
 
             {cart.length > 0 && (
               <div className="flex-shrink-0 border-t border-gray-100">
+                {/* Time-restriction heads-up — named, shown whenever the cart
+                    holds a fulfilment-restricted item so the customer knows the
+                    order time is constrained before they reach checkout (R4). */}
+                {cartHasFulfil && (
+                  <div className="px-4 py-2.5 bg-amber-50 border-b border-amber-100 text-amber-800 text-[11px] leading-snug">
+                    {tCheckout.rich("fulfilSchedulePromptNamed", {
+                      items: fulfilItemNames.join(", "),
+                      strong: (c) => <strong>{c}</strong>,
+                    })}
+                  </div>
+                )}
                 {/* Promo results — each applied deal can be removed (X) so the
                     customer can choose a different non-stackable deal. Luigi
                     2026-06-07. */}
@@ -4850,6 +4876,8 @@ export function OrderingPageClient({
           fulfilDays={cartFulfilConstraint.days}
           fulfilFrom={cartFulfilConstraint.from}
           fulfilTo={cartFulfilConstraint.to}
+          fulfilItemsPresent={cartHasFulfil}
+          fulfilItemNames={fulfilItemNames}
           schedulingEnabled={schedulingEnabled}
           scheduleReason={scheduleReason}
           closedNextOpenLocal={closedMinScheduledLocal}

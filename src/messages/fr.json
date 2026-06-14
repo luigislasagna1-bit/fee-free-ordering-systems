@@ -453,7 +453,8 @@
     "unlockedPromoMany": "Vous avez débloqué des promos !",
     "pickADateFirst": "Choisissez d'abord une date",
     "closedThisDay": "Fermé ce jour",
-    "fulfilSchedulePrompt": "📅 Un ou plusieurs articles de votre panier ne peuvent être commandés que certains jours ou à certaines heures. Nous avons sélectionné le créneau disponible le plus proche ci-dessous — modifiez-le si vous le souhaitez."
+    "fulfilSchedulePrompt": "📅 Un ou plusieurs articles de votre panier ne peuvent être commandés que certains jours ou à certaines heures. Nous avons sélectionné le créneau disponible le plus proche ci-dessous — modifiez-le si vous le souhaitez.",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> ne peut être commandé que certains jours ou à certaines heures. Les horaires de commande disponibles ont été limités en conséquence."
   },
   "reservation": {
     "title": "Réserver une table",

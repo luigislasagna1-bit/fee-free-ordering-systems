@@ -453,7 +453,8 @@
     "unlockedPromoMany": "Has desbloquejat promos!",
     "pickADateFirst": "Tria primer una data",
     "closedThisDay": "Tancat aquest dia",
-    "fulfilSchedulePrompt": "📅 Un o més articles del teu cistell només es poden demanar per a determinats dies o hores. Hem seleccionat a sota la franja disponible més propera — ajusta-la si vols."
+    "fulfilSchedulePrompt": "📅 Un o més articles del teu cistell només es poden demanar per a determinats dies o hores. Hem seleccionat a sota la franja disponible més propera — ajusta-la si vols.",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> només es pot demanar determinats dies o hores. Els horaris de comanda disponibles s'han limitat en conseqüència."
   },
   "reservation": {
     "title": "Reservar taula",

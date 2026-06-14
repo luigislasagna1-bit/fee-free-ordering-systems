@@ -453,7 +453,8 @@
     "unlockedPromoMany": "Odklenili ste promocije!",
     "pickADateFirst": "Najprej izberite datum",
     "closedThisDay": "Ta dan zaprto",
-    "fulfilSchedulePrompt": "📅 Enega ali več izdelkov v vaši košarici je mogoče naročiti le za določene dni ali ure. Spodaj smo nastavili najzgodnejši razpoložljivi termin — po želji ga prilagodite."
+    "fulfilSchedulePrompt": "📅 Enega ali več izdelkov v vaši košarici je mogoče naročiti le za določene dni ali ure. Spodaj smo nastavili najzgodnejši razpoložljivi termin — po želji ga prilagodite.",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> je mogoče naročiti le ob določenih dneh ali urah. Razpoložljivi časi naročanja so bili ustrezno omejeni."
   },
   "reservation": {
     "title": "Rezerviraj mizo",

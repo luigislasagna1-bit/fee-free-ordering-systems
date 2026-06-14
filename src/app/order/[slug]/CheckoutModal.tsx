@@ -225,6 +225,13 @@ interface Props {
   fulfilDays?: number[] | null;
   fulfilFrom?: string | null;
   fulfilTo?: string | null;
+  /** True when the cart holds any fulfilment-time-restricted item. Drives the
+   *  NAMED "only available certain days/times" heads-up in the time section —
+   *  shown even when the item is orderable right now (so the customer knows the
+   *  order time is constrained before scheduling), not just when forced. R4. */
+  fulfilItemsPresent?: boolean;
+  /** Distinct dish names of those restricted items, for the named heads-up. */
+  fulfilItemNames?: string[];
   /** Formats an absolute ms timestamp as "YYYY-MM-DDTHH:MM" wall clock in
    *  the RESTAURANT's timezone (optionally rounded up to 15 min) — the same
    *  convention the server uses to parse scheduledFor. Used for all
@@ -296,6 +303,8 @@ export function CheckoutModal({
   fulfilDays = null,
   fulfilFrom = null,
   fulfilTo = null,
+  fulfilItemsPresent = false,
+  fulfilItemNames = [],
   toWallClock,
   schedulingEnabled = true,
   schedulingInterval = 15,
@@ -1020,36 +1029,52 @@ export function CheckoutModal({
                 primary={theme.primaryColor}
               >
                 <div className="pt-3 space-y-2">
-                  {cateringMode && (
-                    <div className="rounded-lg border border-amber-200 bg-amber-50 text-amber-800 px-3 py-2 text-xs">
-                      {scheduleReason === "closed" ? (
-                        <>
-                          {tc("closedSchedulePrompt")}
-                          {closedNextOpenLocal && (
-                            <span className="block mt-1 text-amber-900 font-semibold">
-                              {tc("nextOpening", {
-                                date: new Date(closedNextOpenLocal).toLocaleString(undefined, {
-                                  weekday: "short", month: "short", day: "numeric",
-                                  hour: "numeric", minute: "2-digit",
-                                }),
-                              })}
-                            </span>
+                  {(cateringMode || fulfilItemsPresent) && (
+                    <div className="rounded-lg border border-amber-200 bg-amber-50 text-amber-800 px-3 py-2 text-xs space-y-1">
+                      {/* Forced-schedule reason (closed / catering / lead). The
+                          pure-fulfil case is covered by the named line below, so
+                          it's skipped here to avoid a generic + named duplicate. */}
+                      {cateringMode && scheduleReason !== "fulfil" && (
+                        <div>
+                          {scheduleReason === "closed" ? (
+                            <>
+                              {tc("closedSchedulePrompt")}
+                              {closedNextOpenLocal && (
+                                <span className="block mt-1 text-amber-900 font-semibold">
+                                  {tc("nextOpening", {
+                                    date: new Date(closedNextOpenLocal).toLocaleString(undefined, {
+                                      weekday: "short", month: "short", day: "numeric",
+                                      hour: "numeric", minute: "2-digit",
+                                    }),
+                                  })}
+                                </span>
+                              )}
+                            </>
+                          ) : scheduleReason === "both" ? (
+                            tc.rich("closedAndCatering", {
+                              hours: cateringNoticeHours ?? 24,
+                              strong: (c) => <strong>{c}</strong>,
+                            })
+                          ) : scheduleReason === "lead" ? (
+                            tc("leadTimePrompt")
+                          ) : (
+                            tc.rich("cateringOnly", {
+                              hours: cateringNoticeHours ?? 24,
+                              strong: (c) => <strong>{c}</strong>,
+                            })
                           )}
-                        </>
-                      ) : scheduleReason === "both" ? (
-                        tc.rich("closedAndCatering", {
-                          hours: cateringNoticeHours ?? 24,
-                          strong: (c) => <strong>{c}</strong>,
-                        })
-                      ) : scheduleReason === "lead" ? (
-                        tc("leadTimePrompt")
-                      ) : scheduleReason === "fulfil" ? (
-                        tc("fulfilSchedulePrompt")
-                      ) : (
-                        tc.rich("cateringOnly", {
-                          hours: cateringNoticeHours ?? 24,
-                          strong: (c) => <strong>{c}</strong>,
-                        })
+                        </div>
+                      )}
+                      {/* Named time-restriction heads-up — shown whenever the cart
+                          holds a fulfilment-restricted item, named, even when it's
+                          orderable now. Replaces the old generic fulfil prompt. R4. */}
+                      {fulfilItemsPresent && (
+                        <div>
+                          {tc.rich("fulfilSchedulePromptNamed", {
+                            items: fulfilItemNames.join(", "),
+                            strong: (c) => <strong>{c}</strong>,
+                          })}
+                        </div>
                       )}
                     </div>
                   )}

@@ -453,7 +453,8 @@
     "unlockedPromoMany": "Hai sbloccato delle promo!",
     "pickADateFirst": "Scegli prima una data",
     "closedThisDay": "Chiuso questo giorno",
-    "fulfilSchedulePrompt": "📅 Uno o più articoli nel tuo carrello possono essere ordinati solo per determinati giorni o orari. Abbiamo selezionato qui sotto la fascia disponibile più vicina — modificala se vuoi."
+    "fulfilSchedulePrompt": "📅 Uno o più articoli nel tuo carrello possono essere ordinati solo per determinati giorni o orari. Abbiamo selezionato qui sotto la fascia disponibile più vicina — modificala se vuoi.",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> può essere ordinato solo in determinati giorni o orari. Gli orari di ordinazione disponibili sono stati limitati di conseguenza."
   },
   "reservation": {
     "title": "Prenota un tavolo",

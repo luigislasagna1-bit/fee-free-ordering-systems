@@ -453,7 +453,8 @@
     "unlockedPromoMany": "Odomkli ste promo akcie!",
     "pickADateFirst": "Najprv vyberte dátum",
     "closedThisDay": "Tento deň zatvorené",
-    "fulfilSchedulePrompt": "📅 Jednu alebo viac položiek vo vašom košíku možno objednať len na určité dni alebo časy. Nižšie sme nastavili najbližší dostupný termín — v prípade potreby ho upravte."
+    "fulfilSchedulePrompt": "📅 Jednu alebo viac položiek vo vašom košíku možno objednať len na určité dni alebo časy. Nižšie sme nastavili najbližší dostupný termín — v prípade potreby ho upravte.",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> možno objednať len v určité dni alebo časy. Dostupné časy objednávok boli zodpovedajúcim spôsobom obmedzené."
   },
   "reservation": {
     "title": "Rezervovať stôl",

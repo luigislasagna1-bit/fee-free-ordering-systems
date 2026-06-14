@@ -453,7 +453,8 @@
     "unlockedPromoMany": "Atbloķēji akcijas!",
     "pickADateFirst": "Vispirms izvēlieties datumu",
     "closedThisDay": "Šajā dienā slēgts",
-    "fulfilSchedulePrompt": "📅 Vienu vai vairākus jūsu grozā esošos produktus var pasūtīt tikai noteiktās dienās vai laikos. Zemāk esam izvēlējušies agrāko pieejamo laiku – mainiet to, ja vēlaties."
+    "fulfilSchedulePrompt": "📅 Vienu vai vairākus jūsu grozā esošos produktus var pasūtīt tikai noteiktās dienās vai laikos. Zemāk esam izvēlējušies agrāko pieejamo laiku – mainiet to, ja vēlaties.",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> var pasūtīt tikai noteiktās dienās vai laikos. Pieejamie pasūtīšanas laiki ir attiecīgi ierobežoti."
   },
   "reservation": {
     "title": "Rezervēt galdu",

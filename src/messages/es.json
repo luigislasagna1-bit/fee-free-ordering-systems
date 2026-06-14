@@ -453,7 +453,8 @@
     "unlockedPromoMany": "¡Has desbloqueado promos!",
     "pickADateFirst": "Primero elige una fecha",
     "closedThisDay": "Cerrado este día",
-    "fulfilSchedulePrompt": "📅 Uno o varios artículos de tu carrito solo se pueden pedir para ciertos días u horas. Hemos seleccionado el horario disponible más próximo a continuación — ajústalo si lo deseas."
+    "fulfilSchedulePrompt": "📅 Uno o varios artículos de tu carrito solo se pueden pedir para ciertos días u horas. Hemos seleccionado el horario disponible más próximo a continuación — ajústalo si lo deseas.",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> solo se puede pedir en determinados días u horarios. Los horarios de pedido disponibles se han limitado en consecuencia."
   },
   "reservation": {
     "title": "Reservar mesa",

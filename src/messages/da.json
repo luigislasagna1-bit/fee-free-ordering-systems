@@ -453,7 +453,8 @@
     "unlockedPromoMany": "Du har låst op for kampagner!",
     "pickADateFirst": "Vælg en dato først",
     "closedThisDay": "Lukket denne dag",
-    "fulfilSchedulePrompt": "📅 En eller flere varer i din kurv kan kun bestilles til bestemte dage eller tidspunkter. Vi har valgt det tidligst tilgængelige tidspunkt nedenfor – ret det, hvis du vil."
+    "fulfilSchedulePrompt": "📅 En eller flere varer i din kurv kan kun bestilles til bestemte dage eller tidspunkter. Vi har valgt det tidligst tilgængelige tidspunkt nedenfor – ret det, hvis du vil.",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> kan kun bestilles på bestemte dage eller tidspunkter. De tilgængelige bestillingstidspunkter er begrænset i overensstemmelse hermed."
   },
   "reservation": {
     "title": "Book et bord",

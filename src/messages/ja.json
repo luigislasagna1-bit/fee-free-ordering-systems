@@ -453,7 +453,8 @@
     "unlockedPromoMany": "プロモを獲得しました！",
     "pickADateFirst": "先に日付を選択",
     "closedThisDay": "この日は休業",
-    "fulfilSchedulePrompt": "📅 カート内の1つ以上の商品は、特定の曜日または時間帯のみ注文できます。利用可能な最も早い時間枠を以下に設定しました。必要に応じて変更してください。"
+    "fulfilSchedulePrompt": "📅 カート内の1つ以上の商品は、特定の曜日または時間帯のみ注文できます。利用可能な最も早い時間枠を以下に設定しました。必要に応じて変更してください。",
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> は特定の曜日や時間帯のみ注文できます。利用可能な注文時間はそれに応じて制限されています。"
   },
   "reservation": {
     "title": "テーブルを予約",
