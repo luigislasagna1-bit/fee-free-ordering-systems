@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import prisma from "@/lib/db";
 import { resolveLocale, loadMessages } from "@/lib/i18n-server";
+import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 import { RestaurantInfoClient } from "./RestaurantInfoClient";
 
 export default async function RestaurantInfoPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -30,6 +31,11 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
   });
 
   if (!restaurant) notFound();
+
+  // The "Our delivery areas" map here is a prominent sales visual, so it uses
+  // Google tiles — resolve the restaurant's own key, else the platform key
+  // (Luigi 2026-06-13). The functional pin/zone maps stay free Leaflet.
+  (restaurant as any).googleMapsApiKey = await resolveEffectiveMapsKey(restaurant.googleMapsApiKey);
 
   const locale = await resolveLocale({ restaurantId: restaurant.id });
   const messages = await loadMessages(locale);

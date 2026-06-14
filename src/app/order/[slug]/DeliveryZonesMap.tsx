@@ -30,8 +30,12 @@ interface Props {
 }
 
 export default function DeliveryZonesMap(props: Props) {
-  // Always the free Leaflet/OSM map (Luigi 2026-06-13): Google reserved for
-  // autocomplete + distance only.
+  // This delivery-AREAS map is a prominent sales visual (info + hosted pages),
+  // so it uses Google tiles when a key is available — the server resolves the
+  // platform key into googleMapsApiKey. No key ⇒ free Leaflet. Luigi 2026-06-13.
+  if (props.googleMapsApiKey) {
+    return <GoogleVariant {...props} apiKey={props.googleMapsApiKey} />;
+  }
   return <LeafletVariant {...props} />;
 }
 
