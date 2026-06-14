@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Teslimat ücretleri",
       "breakdownTips": "Bahşişler",
       "breakdownOtherFees": "Diğer ücretler",
-      "breakdownTotal": "Toplam tahsilat"
+      "breakdownTotal": "Toplam tahsilat",
+      "salesPerformanceHeading": "Satış performansı",
+      "salesBreakdownHeading": "Satış dökümü",
+      "cardSales": "Satışlar",
+      "cardOrders": "Siparişler",
+      "prevDay": "Önceki gün",
+      "nextDay": "Sonraki gün",
+      "todayBadge": "Bugün"
     },
     "reportClientsList": {
       "pageTitle": "Liste Görünümü — Müşteriler",

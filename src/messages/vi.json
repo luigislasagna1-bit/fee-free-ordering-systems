@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Phí giao hàng",
       "breakdownTips": "Tiền tip",
       "breakdownOtherFees": "Phí khác",
-      "breakdownTotal": "Tổng thu"
+      "breakdownTotal": "Tổng thu",
+      "salesPerformanceHeading": "Hiệu suất bán hàng",
+      "salesBreakdownHeading": "Phân tích doanh số",
+      "cardSales": "Doanh số",
+      "cardOrders": "Đơn hàng",
+      "prevDay": "Ngày trước",
+      "nextDay": "Ngày sau",
+      "todayBadge": "Hôm nay"
     },
     "reportClientsList": {
       "pageTitle": "Danh sách — Khách hàng",

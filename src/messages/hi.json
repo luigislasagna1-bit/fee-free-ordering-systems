@@ -1427,7 +1427,14 @@
       "breakdownDeliveryFees": "डिलीवरी शुल्क",
       "breakdownTips": "टिप्स",
       "breakdownOtherFees": "अन्य शुल्क",
-      "breakdownTotal": "कुल प्राप्त राशि"
+      "breakdownTotal": "कुल प्राप्त राशि",
+      "salesPerformanceHeading": "बिक्री प्रदर्शन",
+      "salesBreakdownHeading": "बिक्री विवरण",
+      "cardSales": "बिक्री",
+      "cardOrders": "ऑर्डर",
+      "prevDay": "पिछला दिन",
+      "nextDay": "अगला दिन",
+      "todayBadge": "आज"
     },
     "reportClientsList": {
       "pageTitle": "सूची दृश्य — ग्राहक",

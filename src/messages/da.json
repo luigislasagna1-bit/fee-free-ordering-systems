@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Leveringsgebyrer",
       "breakdownTips": "Drikkepenge",
       "breakdownOtherFees": "Andre gebyrer",
-      "breakdownTotal": "Total modtaget"
+      "breakdownTotal": "Total modtaget",
+      "salesPerformanceHeading": "Salgsresultat",
+      "salesBreakdownHeading": "Salgsfordeling",
+      "cardSales": "Salg",
+      "cardOrders": "Ordrer",
+      "prevDay": "Forrige dag",
+      "nextDay": "Næste dag",
+      "todayBadge": "I dag"
     },
     "reportClientsList": {
       "pageTitle": "Listevisning — Kunder",

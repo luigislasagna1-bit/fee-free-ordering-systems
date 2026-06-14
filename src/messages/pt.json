@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Taxas de entrega",
       "breakdownTips": "Gorjetas",
       "breakdownOtherFees": "Outras taxas",
-      "breakdownTotal": "Total recebido"
+      "breakdownTotal": "Total recebido",
+      "salesPerformanceHeading": "Desempenho de vendas",
+      "salesBreakdownHeading": "Detalhe das vendas",
+      "cardSales": "Vendas",
+      "cardOrders": "Pedidos",
+      "prevDay": "Dia anterior",
+      "nextDay": "Dia seguinte",
+      "todayBadge": "Hoje"
     },
     "reportClientsList": {
       "pageTitle": "Visualização em Lista — Clientes",

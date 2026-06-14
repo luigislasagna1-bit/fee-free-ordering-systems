@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Pristatymo mokesčiai",
       "breakdownTips": "Arbatpinigiai",
       "breakdownOtherFees": "Kiti mokesčiai",
-      "breakdownTotal": "Iš viso gauta"
+      "breakdownTotal": "Iš viso gauta",
+      "salesPerformanceHeading": "Pardavimų rezultatai",
+      "salesBreakdownHeading": "Pardavimų suvestinė",
+      "cardSales": "Pardavimai",
+      "cardOrders": "Užsakymai",
+      "prevDay": "Ankstesnė diena",
+      "nextDay": "Kita diena",
+      "todayBadge": "Šiandien"
     },
     "reportClientsList": {
       "pageTitle": "Sąrašo rodinys — Klientai",

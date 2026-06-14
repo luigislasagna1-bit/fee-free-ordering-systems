@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Opłaty za dostawę",
       "breakdownTips": "Napiwki",
       "breakdownOtherFees": "Inne opłaty",
-      "breakdownTotal": "Łącznie pobrano"
+      "breakdownTotal": "Łącznie pobrano",
+      "salesPerformanceHeading": "Wyniki sprzedaży",
+      "salesBreakdownHeading": "Podział sprzedaży",
+      "cardSales": "Sprzedaż",
+      "cardOrders": "Zamówienia",
+      "prevDay": "Poprzedni dzień",
+      "nextDay": "Następny dzień",
+      "todayBadge": "Dziś"
     },
     "reportClientsList": {
       "pageTitle": "Widok listy — Klienci",

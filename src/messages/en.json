@@ -1471,7 +1471,14 @@
       "breakdownDeliveryFees": "Delivery fees",
       "breakdownTips": "Tips",
       "breakdownOtherFees": "Other fees",
-      "breakdownTotal": "Total taken in"
+      "breakdownTotal": "Total taken in",
+      "salesPerformanceHeading": "Sales performance",
+      "salesBreakdownHeading": "Sales breakdown",
+      "cardSales": "Sales",
+      "cardOrders": "Orders",
+      "prevDay": "Previous day",
+      "nextDay": "Next day",
+      "todayBadge": "Today"
     },
     "reportClientsList": {
       "pageTitle": "List View — Clients",

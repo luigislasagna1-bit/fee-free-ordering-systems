@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Szállítási díjak",
       "breakdownTips": "Borravalók",
       "breakdownOtherFees": "Egyéb díjak",
-      "breakdownTotal": "Összesen befolyt"
+      "breakdownTotal": "Összesen befolyt",
+      "salesPerformanceHeading": "Értékesítési teljesítmény",
+      "salesBreakdownHeading": "Értékesítés részletezése",
+      "cardSales": "Értékesítés",
+      "cardOrders": "Rendelések",
+      "prevDay": "Előző nap",
+      "nextDay": "Következő nap",
+      "todayBadge": "Ma"
     },
     "reportClientsList": {
       "pageTitle": "Lista nézet — Ügyfelek",

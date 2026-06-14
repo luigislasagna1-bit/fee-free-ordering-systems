@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Toimitusmaksut",
       "breakdownTips": "Juomarahat",
       "breakdownOtherFees": "Muut maksut",
-      "breakdownTotal": "Vastaanotettu yhteensä"
+      "breakdownTotal": "Vastaanotettu yhteensä",
+      "salesPerformanceHeading": "Myynnin tulos",
+      "salesBreakdownHeading": "Myynnin erittely",
+      "cardSales": "Myynti",
+      "cardOrders": "Tilaukset",
+      "prevDay": "Edellinen päivä",
+      "nextDay": "Seuraava päivä",
+      "todayBadge": "Tänään"
     },
     "reportClientsList": {
       "pageTitle": "Listasnäkymä — Asiakkaat",

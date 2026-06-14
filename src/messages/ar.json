@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "رسوم التوصيل",
       "breakdownTips": "الإكراميات",
       "breakdownOtherFees": "رسوم أخرى",
-      "breakdownTotal": "إجمالي المحصّل"
+      "breakdownTotal": "إجمالي المحصّل",
+      "salesPerformanceHeading": "أداء المبيعات",
+      "salesBreakdownHeading": "تفصيل المبيعات",
+      "cardSales": "المبيعات",
+      "cardOrders": "الطلبات",
+      "prevDay": "اليوم السابق",
+      "nextDay": "اليوم التالي",
+      "todayBadge": "اليوم"
     },
     "reportClientsList": {
       "pageTitle": "العرض القائمة — العملاء",

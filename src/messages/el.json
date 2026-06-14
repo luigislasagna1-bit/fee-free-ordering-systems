@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Τέλη παράδοσης",
       "breakdownTips": "Φιλοδωρήματα",
       "breakdownOtherFees": "Άλλα τέλη",
-      "breakdownTotal": "Συνολικά εισπραχθέντα"
+      "breakdownTotal": "Συνολικά εισπραχθέντα",
+      "salesPerformanceHeading": "Απόδοση πωλήσεων",
+      "salesBreakdownHeading": "Ανάλυση πωλήσεων",
+      "cardSales": "Πωλήσεις",
+      "cardOrders": "Παραγγελίες",
+      "prevDay": "Προηγούμενη ημέρα",
+      "nextDay": "Επόμενη ημέρα",
+      "todayBadge": "Σήμερα"
     },
     "reportClientsList": {
       "pageTitle": "Λίστα — Πελάτες",

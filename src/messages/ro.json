@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Taxe de livrare",
       "breakdownTips": "Bacșișuri",
       "breakdownOtherFees": "Alte taxe",
-      "breakdownTotal": "Total încasat"
+      "breakdownTotal": "Total încasat",
+      "salesPerformanceHeading": "Performanța vânzărilor",
+      "salesBreakdownHeading": "Defalcarea vânzărilor",
+      "cardSales": "Vânzări",
+      "cardOrders": "Comenzi",
+      "prevDay": "Ziua anterioară",
+      "nextDay": "Ziua următoare",
+      "todayBadge": "Astăzi"
     },
     "reportClientsList": {
       "pageTitle": "Vizualizare listă — Clienți",

@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "דמי משלוח",
       "breakdownTips": "טיפים",
       "breakdownOtherFees": "עמלות אחרות",
-      "breakdownTotal": "סה\"כ נגבה"
+      "breakdownTotal": "סה\"כ נגבה",
+      "salesPerformanceHeading": "ביצועי מכירות",
+      "salesBreakdownHeading": "פירוט מכירות",
+      "cardSales": "מכירות",
+      "cardOrders": "הזמנות",
+      "prevDay": "היום הקודם",
+      "nextDay": "היום הבא",
+      "todayBadge": "היום"
     },
     "reportClientsList": {
       "pageTitle": "תצוגת רשימה — לקוחות",

@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Naknade za dostavu",
       "breakdownTips": "Napojnice",
       "breakdownOtherFees": "Ostale naknade",
-      "breakdownTotal": "Ukupno primljeno"
+      "breakdownTotal": "Ukupno primljeno",
+      "salesPerformanceHeading": "Uspješnost prodaje",
+      "salesBreakdownHeading": "Raščlamba prodaje",
+      "cardSales": "Prodaja",
+      "cardOrders": "Narudžbe",
+      "prevDay": "Prethodni dan",
+      "nextDay": "Sljedeći dan",
+      "todayBadge": "Danas"
     },
     "reportClientsList": {
       "pageTitle": "Prikaz popisa — Klijenti",

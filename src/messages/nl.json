@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Bezorgkosten",
       "breakdownTips": "Fooien",
       "breakdownOtherFees": "Overige kosten",
-      "breakdownTotal": "Totaal ontvangen"
+      "breakdownTotal": "Totaal ontvangen",
+      "salesPerformanceHeading": "Verkoopprestaties",
+      "salesBreakdownHeading": "Verkoopuitsplitsing",
+      "cardSales": "Verkoop",
+      "cardOrders": "Bestellingen",
+      "prevDay": "Vorige dag",
+      "nextDay": "Volgende dag",
+      "todayBadge": "Vandaag"
     },
     "reportClientsList": {
       "pageTitle": "Lijstweergave — Klanten",

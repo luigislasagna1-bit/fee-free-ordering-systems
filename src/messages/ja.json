@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "配達料",
       "breakdownTips": "チップ",
       "breakdownOtherFees": "その他手数料",
-      "breakdownTotal": "合計受取額"
+      "breakdownTotal": "合計受取額",
+      "salesPerformanceHeading": "売上実績",
+      "salesBreakdownHeading": "売上内訳",
+      "cardSales": "売上",
+      "cardOrders": "注文",
+      "prevDay": "前日",
+      "nextDay": "翌日",
+      "todayBadge": "今日"
     },
     "reportClientsList": {
       "pageTitle": "リスト表示 — 顧客",

@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Piegādes maksas",
       "breakdownTips": "Dzeramnauda",
       "breakdownOtherFees": "Citas maksas",
-      "breakdownTotal": "Kopā saņemts"
+      "breakdownTotal": "Kopā saņemts",
+      "salesPerformanceHeading": "Pārdošanas rezultāti",
+      "salesBreakdownHeading": "Pārdošanas sadalījums",
+      "cardSales": "Pārdošana",
+      "cardOrders": "Pasūtījumi",
+      "prevDay": "Iepriekšējā diena",
+      "nextDay": "Nākamā diena",
+      "todayBadge": "Šodien"
     },
     "reportClientsList": {
       "pageTitle": "Saraksta skats — klienti",

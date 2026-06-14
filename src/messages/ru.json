@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Стоимость доставки",
       "breakdownTips": "Чаевые",
       "breakdownOtherFees": "Прочие сборы",
-      "breakdownTotal": "Итого получено"
+      "breakdownTotal": "Итого получено",
+      "salesPerformanceHeading": "Показатели продаж",
+      "salesBreakdownHeading": "Структура продаж",
+      "cardSales": "Продажи",
+      "cardOrders": "Заказы",
+      "prevDay": "Предыдущий день",
+      "nextDay": "Следующий день",
+      "todayBadge": "Сегодня"
     },
     "reportClientsList": {
       "pageTitle": "Список — Клиенты",

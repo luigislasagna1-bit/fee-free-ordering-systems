@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Leveransavgifter",
       "breakdownTips": "Dricks",
       "breakdownOtherFees": "Övriga avgifter",
-      "breakdownTotal": "Totalt inkommet"
+      "breakdownTotal": "Totalt inkommet",
+      "salesPerformanceHeading": "Försäljningsresultat",
+      "salesBreakdownHeading": "Försäljningsfördelning",
+      "cardSales": "Försäljning",
+      "cardOrders": "Beställningar",
+      "prevDay": "Föregående dag",
+      "nextDay": "Nästa dag",
+      "todayBadge": "Idag"
     },
     "reportClientsList": {
       "pageTitle": "Listvy — Kunder",

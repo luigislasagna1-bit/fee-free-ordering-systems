@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Costi di consegna",
       "breakdownTips": "Mance",
       "breakdownOtherFees": "Altre commissioni",
-      "breakdownTotal": "Totale incassato"
+      "breakdownTotal": "Totale incassato",
+      "salesPerformanceHeading": "Performance delle vendite",
+      "salesBreakdownHeading": "Dettaglio delle vendite",
+      "cardSales": "Vendite",
+      "cardOrders": "Ordini",
+      "prevDay": "Giorno precedente",
+      "nextDay": "Giorno successivo",
+      "todayBadge": "Oggi"
     },
     "reportClientsList": {
       "pageTitle": "Vista elenco — Clienti",

@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Frais de livraison",
       "breakdownTips": "Pourboires",
       "breakdownOtherFees": "Autres frais",
-      "breakdownTotal": "Total encaissé"
+      "breakdownTotal": "Total encaissé",
+      "salesPerformanceHeading": "Performance des ventes",
+      "salesBreakdownHeading": "Détail des ventes",
+      "cardSales": "Ventes",
+      "cardOrders": "Commandes",
+      "prevDay": "Jour précédent",
+      "nextDay": "Jour suivant",
+      "todayBadge": "Aujourd'hui"
     },
     "reportClientsList": {
       "pageTitle": "Vue liste — Clients",

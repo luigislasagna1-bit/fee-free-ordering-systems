@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "配送费",
       "breakdownTips": "小费",
       "breakdownOtherFees": "其他费用",
-      "breakdownTotal": "总收入"
+      "breakdownTotal": "总收入",
+      "salesPerformanceHeading": "销售业绩",
+      "salesBreakdownHeading": "销售明细",
+      "cardSales": "销售额",
+      "cardOrders": "订单",
+      "prevDay": "前一天",
+      "nextDay": "后一天",
+      "todayBadge": "今天"
     },
     "reportClientsList": {
       "pageTitle": "列表视图 — 客户",

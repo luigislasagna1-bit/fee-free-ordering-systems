@@ -22,8 +22,18 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { kitchenAuthOptions } from "@/lib/auth-kitchen";
 import prisma from "@/lib/db";
-import { buildTodaySnapshot } from "@/lib/digests";
+import { buildTodaySnapshot, buildDayReport, currentOperationalDayKey } from "@/lib/digests";
 import { buildEndOfDayReceiptLines } from "@/lib/receipt-lines";
+
+/** How many operational days back the stepper can look (today + the prior 7). */
+const LOOKBACK_DAYS = 7;
+
+/** Shift a "YYYY-MM-DD" key by N days (noon-UTC anchor, DST-safe). */
+function shiftKey(key: string, delta: number): string {
+  const d = new Date(`${key}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + delta);
+  return d.toISOString().slice(0, 10);
+}
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession(kitchenAuthOptions);
@@ -34,11 +44,25 @@ export async function GET(req: NextRequest) {
 
   const paperWidth = req.nextUrl.searchParams.get("width") === "58" ? "58mm" : "80mm";
 
+  // Resolve the date window. The current OPERATIONAL day is the upper bound;
+  // the stepper can go back LOOKBACK_DAYS. A client-supplied ?date= is validated
+  // + clamped server-side (never trust the client date).
+  const todayKey = await currentOperationalDayKey(restaurantId);
+  if (!todayKey) {
+    return NextResponse.json({ error: "snapshot_failed" }, { status: 500 });
+  }
+  const minDayKey = shiftKey(todayKey, -LOOKBACK_DAYS);
+  const raw = req.nextUrl.searchParams.get("date");
+  let dayKey = todayKey;
+  if (raw && /^\d{4}-\d{2}-\d{2}$/.test(raw)) {
+    dayKey = raw < minDayKey ? minDayKey : raw > todayKey ? todayKey : raw;
+  }
+
   const [stats, restaurant] = await Promise.all([
-    buildTodaySnapshot(restaurantId),
+    dayKey === todayKey ? buildTodaySnapshot(restaurantId) : buildDayReport(restaurantId, dayKey),
     prisma.restaurant.findUnique({
       where: { id: restaurantId },
-      select: { defaultLanguage: true },
+      select: { defaultLanguage: true, currency: true },
     }),
   ]);
   if (!stats) {
@@ -46,7 +70,10 @@ export async function GET(req: NextRequest) {
   }
 
   const locale = restaurant?.defaultLanguage || "en";
-  const lines = await buildEndOfDayReceiptLines(stats, paperWidth, locale);
+  // Currency was previously omitted → the printed slip always showed USD. Pass
+  // the restaurant's own currency so the print matches the screen. Luigi 2026-06-14.
+  const currency = restaurant?.currency || "usd";
+  const lines = await buildEndOfDayReceiptLines(stats, paperWidth, locale, currency);
 
   return NextResponse.json({
     ok: true,
@@ -54,5 +81,8 @@ export async function GET(req: NextRequest) {
     width: paperWidth === "58mm" ? 58 : 80,
     stats,
     lines,
+    dayKey,
+    todayKey,
+    minDayKey,
   });
 }

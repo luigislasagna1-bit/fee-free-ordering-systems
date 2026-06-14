@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Збори за доставку",
       "breakdownTips": "Чайові",
       "breakdownOtherFees": "Інші збори",
-      "breakdownTotal": "Разом отримано"
+      "breakdownTotal": "Разом отримано",
+      "salesPerformanceHeading": "Показники продажів",
+      "salesBreakdownHeading": "Структура продажів",
+      "cardSales": "Продажі",
+      "cardOrders": "Замовлення",
+      "prevDay": "Попередній день",
+      "nextDay": "Наступний день",
+      "todayBadge": "Сьогодні"
     },
     "reportClientsList": {
       "pageTitle": "Список — Клієнти",

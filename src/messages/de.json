@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Liefergebühren",
       "breakdownTips": "Trinkgeld",
       "breakdownOtherFees": "Sonstige Gebühren",
-      "breakdownTotal": "Gesamteinnahmen"
+      "breakdownTotal": "Gesamteinnahmen",
+      "salesPerformanceHeading": "Verkaufsleistung",
+      "salesBreakdownHeading": "Verkaufsaufschlüsselung",
+      "cardSales": "Umsatz",
+      "cardOrders": "Bestellungen",
+      "prevDay": "Vorheriger Tag",
+      "nextDay": "Nächster Tag",
+      "todayBadge": "Heute"
     },
     "reportClientsList": {
       "pageTitle": "Listenansicht — Kunden",

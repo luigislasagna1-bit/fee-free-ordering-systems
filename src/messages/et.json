@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Tarnetasud",
       "breakdownTips": "Jootraha",
       "breakdownOtherFees": "Muud tasud",
-      "breakdownTotal": "Kokku laekunud"
+      "breakdownTotal": "Kokku laekunud",
+      "salesPerformanceHeading": "Müügitulemus",
+      "salesBreakdownHeading": "Müügi jaotus",
+      "cardSales": "Müük",
+      "cardOrders": "Tellimused",
+      "prevDay": "Eelmine päev",
+      "nextDay": "Järgmine päev",
+      "todayBadge": "Täna"
     },
     "reportClientsList": {
       "pageTitle": "Loendvaade — Kliendid",

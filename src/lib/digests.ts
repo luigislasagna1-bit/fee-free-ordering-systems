@@ -1,14 +1,16 @@
 /**
  * Daily + monthly digest computation.
  *
- * Aggregates yesterday's (or last month's) orders for a single restaurant
- * into the `DigestStats` shape consumed by `sendDailyDigestEmail` /
- * `sendMonthlyDigestEmail`. The "previous period" deltas compare against the
- * same weekday a week ago (for daily) or the same calendar month a year ago
- * (for monthly) — a simple, predictable baseline.
+ * Aggregates a restaurant's orders for an OPERATIONAL day (or last month) into
+ * the `DigestStats` shape consumed by the End-of-Day report (kitchen + admin),
+ * the emailed digests, and the print builder. "Previous period" deltas compare
+ * against the previous operational day (daily) or the same calendar month a
+ * year ago (monthly).
  *
- * Called by the cron handlers at `/api/cron/daily-digest` and
- * `/api/cron/monthly-digest`.
+ * Operational day vs. calendar day: a restaurant open until 02:00 has those
+ * after-midnight orders counted in the PREVIOUS business day's report — not the
+ * next calendar day. The window follows store hours (`OpeningHours.closesNextDay`).
+ * Luigi 2026-06-14 (reseller report: EOD must align with store hours).
  */
 
 import prisma from "@/lib/db";
@@ -18,9 +20,7 @@ import { parseLocalDateTimeInTz, dateKeyInTimezone } from "@/lib/restaurant-hour
 // ── Local-date key math (DST-safe) ──────────────────────────────────────────
 // Windows are computed in the RESTAURANT's local timezone, then projected to
 // UTC instants (via parseLocalDateTimeInTz) for comparison against order
-// timestamps. This fixes "yesterday in UTC" reports for restaurants far from
-// UTC — a Sydney restaurant's "yesterday" is now their local yesterday, not
-// the UTC one. (Phase 2b timezone sweep.)
+// timestamps.
 
 /** Shift a "YYYY-MM-DD" key by N days. Noon-UTC anchor dodges DST edges. */
 function addDaysToKey(key: string, delta: number): string {
@@ -34,24 +34,6 @@ function monthFirstKey(key: string, monthDelta = 0): string {
   const [y, m] = key.split("-").map(Number);
   const d = new Date(Date.UTC(y, m - 1 + monthDelta, 1, 12));
   return d.toISOString().slice(0, 10);
-}
-
-/** [start, end) for the previous local day in the restaurant's timezone. */
-function dailyWindow(now: Date, tz: string): [Date, Date] {
-  const todayKey = dateKeyInTimezone(now, tz);
-  return [
-    parseLocalDateTimeInTz(addDaysToKey(todayKey, -1), 0, 0, tz),
-    parseLocalDateTimeInTz(todayKey, 0, 0, tz),
-  ];
-}
-
-/** Same one-day window a week earlier — daily-comparison baseline. */
-function priorDailyWindow(now: Date, tz: string): [Date, Date] {
-  const todayKey = dateKeyInTimezone(now, tz);
-  return [
-    parseLocalDateTimeInTz(addDaysToKey(todayKey, -8), 0, 0, tz),
-    parseLocalDateTimeInTz(addDaysToKey(todayKey, -7), 0, 0, tz),
-  ];
 }
 
 /** [startOfLastMonth, startOfThisMonth) in the restaurant's timezone. */
@@ -71,24 +53,85 @@ function priorMonthlyWindow(now: Date, tz: string): [Date, Date] {
   ];
 }
 
+// ── Operational-day window (store-hours aware) ───────────────────────────────
+
+type HoursRow = {
+  dayOfWeek: number;
+  isOpen: boolean;
+  openTime: string | null;
+  closeTime: string | null;
+  closesNextDay: boolean;
+  service: string | null;
+};
+
+/** Day-of-week (0=Sun) for a YYYY-MM-DD key (noon-UTC anchor). */
+function dowOfKey(key: string): number {
+  return new Date(`${key}T12:00:00Z`).getUTCDay();
+}
+
+/** The hours row for a weekday — prefer the default (service=null) row. */
+function pickHoursRow(rows: HoursRow[], dow: number): HoursRow | null {
+  const dayRows = rows.filter((r) => r.dayOfWeek === dow);
+  return dayRows.find((r) => r.service == null) ?? dayRows[0] ?? null;
+}
+
+function parseHHMM(t: string | null | undefined): { h: number; m: number } | null {
+  if (!t) return null;
+  const [h, m] = t.split(":").map(Number);
+  if (!Number.isFinite(h) || !Number.isFinite(m)) return null;
+  return { h, m };
+}
+
+/**
+ * Operational-day [start, end) for `dayKey` in the restaurant's tz, honoring
+ * close-after-midnight: `end` EXTENDS past midnight only when the day
+ * `closesNextDay`; `start` PUSHES later only when the PREVIOUS day closed past
+ * midnight (those early hours belong to the previous business day). Falls back
+ * to the calendar day when hours are absent or degenerate.
+ */
+function operationalDayWindow(rows: HoursRow[], dayKey: string, tz: string): [Date, Date] {
+  const nextKey = addDaysToKey(dayKey, 1);
+  const calStart = parseLocalDateTimeInTz(dayKey, 0, 0, tz);
+  const calEnd = parseLocalDateTimeInTz(nextKey, 0, 0, tz);
+  if (!rows.length) return [calStart, calEnd];
+
+  const today = pickHoursRow(rows, dowOfKey(dayKey));
+  const prev = pickHoursRow(rows, dowOfKey(addDaysToKey(dayKey, -1)));
+
+  let start = calStart;
+  const pc = prev && prev.isOpen && prev.closesNextDay ? parseHHMM(prev.closeTime) : null;
+  if (pc) start = parseLocalDateTimeInTz(dayKey, pc.h, pc.m, tz);
+
+  let end = calEnd;
+  const tc = today && today.isOpen && today.closesNextDay ? parseHHMM(today.closeTime) : null;
+  if (tc) end = parseLocalDateTimeInTz(nextKey, tc.h, tc.m, tz);
+
+  if (start.getTime() >= end.getTime()) return [calStart, calEnd];
+  return [start, end];
+}
+
+/** The operational-day key that `now` currently falls in (early-morning hours
+ *  belong to the previous business day for overnight closers). */
+function operationalDayKeyOf(rows: HoursRow[], now: Date, tz: string): string {
+  const todayKey = dateKeyInTimezone(now, tz);
+  const [start] = operationalDayWindow(rows, todayKey, tz);
+  return now.getTime() < start.getTime() ? addDaysToKey(todayKey, -1) : todayKey;
+}
+
 function pct(current: number, prior: number): number {
   if (!prior) return 0;
   return ((current - prior) / prior) * 100;
 }
 
 /** Core aggregator. Pulls every order in the window for one restaurant and
- *  rolls it into a single stats row. Excludes rejected/cancelled orders so
- *  the numbers match what the owner actually earned. */
+ *  rolls it into a single stats row. Excludes rejected/cancelled + TEST orders
+ *  so the numbers match what the owner actually earned. */
 async function aggregate(restaurantId: string, start: Date, end: Date) {
   const orders = await prisma.order.findMany({
     where: {
       restaurantId,
       createdAt: { gte: start, lt: end },
       status: { notIn: ["rejected", "cancelled"] },
-      // Exclude kitchen "Test Order" rows (orderNumber "TEST-…") so a
-      // restaurant's real takings aren't inflated in the EOD/EOM/today
-      // figures. Luigi 2026-06-11 (reseller report: test orders must never
-      // hit reports, or end-of-day bookkeeping won't reconcile).
       orderNumber: { not: { startsWith: "TEST-" } },
     },
     select: {
@@ -100,6 +143,8 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
       type: true,
       paymentMethod: true,
       paymentStatus: true,
+      // Per-order service fees (JSON [{name, amount}]) → the "Other fees" line.
+      appliedServiceFees: true,
     },
   });
 
@@ -125,6 +170,15 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
     taxAmount += o.taxAmount ?? 0;
     deliveryFees += o.deliveryFee ?? 0;
     tips += o.tip ?? 0;
+
+    // "Other fees" = sum of the order's applied service fees. Stored as JSON
+    // (array or string depending on column type) — parse defensively.
+    const rawFees: unknown = (o as any).appliedServiceFees;
+    let fees: any[] = Array.isArray(rawFees) ? (rawFees as any[]) : [];
+    if (!fees.length && typeof rawFees === "string") {
+      try { const p = JSON.parse(rawFees); if (Array.isArray(p)) fees = p; } catch {}
+    }
+    for (const f of fees) { const a = Number(f?.amount); if (Number.isFinite(a)) otherFees += a; }
 
     const t = (o.type ?? "").toLowerCase();
     if (t === "delivery") { deliveryOrders++; deliverySales += o.total; }
@@ -155,6 +209,8 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
   };
 }
 
+type Aggregated = Awaited<ReturnType<typeof aggregate>>;
+
 function weekdayLabel(d: Date, tz: string): string {
   return d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: tz });
 }
@@ -163,26 +219,18 @@ function monthLabel(d: Date, tz: string): string {
   return d.toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: tz });
 }
 
-/** Build the DigestStats for "yesterday" for a single restaurant. */
-export async function buildDailyDigest(restaurantId: string, now = new Date()): Promise<DigestStats | null> {
-  const restaurant = await prisma.restaurant.findUnique({
-    where: { id: restaurantId },
-    select: { name: true, timezone: true },
-  });
-  if (!restaurant) return null;
-  const tz = restaurant.timezone ?? "UTC";
-
-  const [start, end] = dailyWindow(now, tz);
-  const [priorStart, priorEnd] = priorDailyWindow(now, tz);
-  const [current, prior] = await Promise.all([
-    aggregate(restaurantId, start, end),
-    aggregate(restaurantId, priorStart, priorEnd),
-  ]);
-
+/** Assemble the DigestStats object from a current + prior aggregate. */
+function buildStats(
+  restaurantName: string,
+  periodLabel: string,
+  comparisonLabel: string,
+  current: Aggregated,
+  prior: Aggregated,
+): DigestStats {
   return {
-    restaurantName: restaurant.name,
-    periodLabel: weekdayLabel(start, tz),
-    comparisonLabel: `vs previous ${start.toLocaleDateString("en-US", { weekday: "long", timeZone: tz })}`,
+    restaurantName,
+    periodLabel,
+    comparisonLabel,
     sales: current.sales,
     salesDelta: pct(current.sales, prior.sales),
     orders: current.orders,
@@ -210,63 +258,82 @@ export async function buildDailyDigest(restaurantId: string, now = new Date()): 
   };
 }
 
-/** Build the DigestStats for TODAY (live snapshot), for an
- *  in-app end-of-day report viewable from /admin/reports/end-of-day.
- *  Same numbers the email digest would compute tomorrow, but using
- *  today's window so the owner can glance at where they stand
- *  mid-service (Fabrizio 2026-06-01). Compares to yesterday rather
- *  than the same weekday last week. */
-export async function buildTodaySnapshot(restaurantId: string, now = new Date()): Promise<DigestStats | null> {
+async function reportContext(restaurantId: string) {
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
-    select: { name: true, timezone: true },
+    select: {
+      name: true,
+      timezone: true,
+      openingHours: {
+        select: { dayOfWeek: true, isOpen: true, openTime: true, closeTime: true, closesNextDay: true, service: true },
+      },
+    },
   });
   if (!restaurant) return null;
-  const tz = restaurant.timezone ?? "UTC";
+  return {
+    name: restaurant.name,
+    tz: restaurant.timezone ?? "UTC",
+    rows: (restaurant.openingHours ?? []) as HoursRow[],
+  };
+}
 
-  // Today's window in the restaurant's local timezone: [startOfToday, startOfTomorrow).
-  const todayKey = dateKeyInTimezone(now, tz);
-  const startOfToday = parseLocalDateTimeInTz(todayKey, 0, 0, tz);
-  const startOfTomorrow = parseLocalDateTimeInTz(addDaysToKey(todayKey, 1), 0, 0, tz);
-  // Comparison: same hours yesterday so the delta is apples-to-apples
-  // mid-service (e.g. 2 PM vs 2 PM yesterday).
-  const yesterdaySoFarStart = parseLocalDateTimeInTz(addDaysToKey(todayKey, -1), 0, 0, tz);
-  const yesterdaySoFarEnd = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+/** Build the report for an operational `dayKey`. `isLive` = the day currently
+ *  in progress (caps the comparison window to the same elapsed time). */
+async function buildOperationalReport(
+  restaurantId: string,
+  name: string,
+  tz: string,
+  rows: HoursRow[],
+  dayKey: string,
+  now: Date,
+  isLive: boolean,
+): Promise<DigestStats> {
+  const [start, end] = operationalDayWindow(rows, dayKey, tz);
+  const [prevStart, prevEndFull] = operationalDayWindow(rows, addDaysToKey(dayKey, -1), tz);
+  const prevEnd = isLive
+    ? new Date(Math.min(prevEndFull.getTime(), prevStart.getTime() + Math.max(0, now.getTime() - start.getTime())))
+    : prevEndFull;
 
   const [current, prior] = await Promise.all([
-    aggregate(restaurantId, startOfToday, startOfTomorrow),
-    aggregate(restaurantId, yesterdaySoFarStart, yesterdaySoFarEnd),
+    aggregate(restaurantId, start, end),
+    aggregate(restaurantId, prevStart, prevEnd),
   ]);
 
-  return {
-    restaurantName: restaurant.name,
-    periodLabel: weekdayLabel(startOfToday, tz),
-    comparisonLabel: "vs same time yesterday",
-    sales: current.sales,
-    salesDelta: pct(current.sales, prior.sales),
-    orders: current.orders,
-    ordersDelta: pct(current.orders, prior.orders),
-    avgOrderValue: current.avgOrderValue,
-    avgOrderValueDelta: pct(current.avgOrderValue, prior.avgOrderValue),
-    tableReservations: current.tableReservations,
-    reservationsDelta: pct(current.tableReservations, prior.tableReservations),
-    pickupOrders: current.pickupOrders,
-    pickupSales: current.pickupSales,
-    deliveryOrders: current.deliveryOrders,
-    deliverySales: current.deliverySales,
-    dineInOrders: current.dineInOrders,
-    dineInSales: current.dineInSales,
-    offlinePayments: current.offlinePayments,
-    offlinePaymentsAmount: current.offlinePaymentsAmount,
-    onlinePayments: current.onlinePayments,
-    onlinePaymentsAmount: current.onlinePaymentsAmount,
-    subTotals: current.subTotals,
-    taxAmount: current.taxAmount,
-    deliveryFees: current.deliveryFees,
-    tips: current.tips,
-    otherFees: current.otherFees,
-    total: current.total,
-  };
+  const periodLabel = weekdayLabel(parseLocalDateTimeInTz(dayKey, 12, 0, tz), tz);
+  return buildStats(name, periodLabel, isLive ? "vs same time yesterday" : "vs previous day", current, prior);
+}
+
+/** DigestStats for "yesterday" (the operational day that just ended) — email digest. */
+export async function buildDailyDigest(restaurantId: string, now = new Date()): Promise<DigestStats | null> {
+  const ctx = await reportContext(restaurantId);
+  if (!ctx) return null;
+  const yesterdayKey = addDaysToKey(dateKeyInTimezone(now, ctx.tz), -1);
+  return buildOperationalReport(restaurantId, ctx.name, ctx.tz, ctx.rows, yesterdayKey, now, false);
+}
+
+/** DigestStats for TODAY (the operational day in progress) — live EOD snapshot. */
+export async function buildTodaySnapshot(restaurantId: string, now = new Date()): Promise<DigestStats | null> {
+  const ctx = await reportContext(restaurantId);
+  if (!ctx) return null;
+  const dayKey = operationalDayKeyOf(ctx.rows, now, ctx.tz);
+  return buildOperationalReport(restaurantId, ctx.name, ctx.tz, ctx.rows, dayKey, now, true);
+}
+
+/** DigestStats for an arbitrary operational `dayKey` (YYYY-MM-DD) — powers the
+ *  date stepper / previous-day reports. `isLive` is derived (today vs past). */
+export async function buildDayReport(restaurantId: string, dayKey: string, now = new Date()): Promise<DigestStats | null> {
+  const ctx = await reportContext(restaurantId);
+  if (!ctx) return null;
+  const todayKey = operationalDayKeyOf(ctx.rows, now, ctx.tz);
+  return buildOperationalReport(restaurantId, ctx.name, ctx.tz, ctx.rows, dayKey, now, dayKey === todayKey);
+}
+
+/** The current operational-day key (YYYY-MM-DD) for a restaurant — for the API
+ *  to validate a requested `?date=` against the 7-day look-back window. */
+export async function currentOperationalDayKey(restaurantId: string, now = new Date()): Promise<string | null> {
+  const ctx = await reportContext(restaurantId);
+  if (!ctx) return null;
+  return operationalDayKeyOf(ctx.rows, now, ctx.tz);
 }
 
 /** Build the DigestStats for the previous calendar month. */
@@ -284,34 +351,5 @@ export async function buildMonthlyDigest(restaurantId: string, now = new Date())
     aggregate(restaurantId, start, end),
     aggregate(restaurantId, priorStart, priorEnd),
   ]);
-
-  return {
-    restaurantName: restaurant.name,
-    periodLabel: monthLabel(start, tz),
-    comparisonLabel: "vs same month last year",
-    sales: current.sales,
-    salesDelta: pct(current.sales, prior.sales),
-    orders: current.orders,
-    ordersDelta: pct(current.orders, prior.orders),
-    avgOrderValue: current.avgOrderValue,
-    avgOrderValueDelta: pct(current.avgOrderValue, prior.avgOrderValue),
-    tableReservations: current.tableReservations,
-    reservationsDelta: pct(current.tableReservations, prior.tableReservations),
-    pickupOrders: current.pickupOrders,
-    pickupSales: current.pickupSales,
-    deliveryOrders: current.deliveryOrders,
-    deliverySales: current.deliverySales,
-    dineInOrders: current.dineInOrders,
-    dineInSales: current.dineInSales,
-    offlinePayments: current.offlinePayments,
-    offlinePaymentsAmount: current.offlinePaymentsAmount,
-    onlinePayments: current.onlinePayments,
-    onlinePaymentsAmount: current.onlinePaymentsAmount,
-    subTotals: current.subTotals,
-    taxAmount: current.taxAmount,
-    deliveryFees: current.deliveryFees,
-    tips: current.tips,
-    otherFees: current.otherFees,
-    total: current.total,
-  };
+  return buildStats(restaurant.name, monthLabel(start, tz), "vs same month last year", current, prior);
 }

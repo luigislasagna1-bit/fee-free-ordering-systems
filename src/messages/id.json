@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Biaya pengiriman",
       "breakdownTips": "Tips",
       "breakdownOtherFees": "Biaya lainnya",
-      "breakdownTotal": "Total yang diterima"
+      "breakdownTotal": "Total yang diterima",
+      "salesPerformanceHeading": "Kinerja penjualan",
+      "salesBreakdownHeading": "Rincian penjualan",
+      "cardSales": "Penjualan",
+      "cardOrders": "Pesanan",
+      "prevDay": "Hari sebelumnya",
+      "nextDay": "Hari berikutnya",
+      "todayBadge": "Hari ini"
     },
     "reportClientsList": {
       "pageTitle": "Tampilan Daftar — Klien",

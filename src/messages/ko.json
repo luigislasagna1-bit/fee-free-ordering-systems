@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "배달 수수료",
       "breakdownTips": "팁",
       "breakdownOtherFees": "기타 수수료",
-      "breakdownTotal": "총 수취액"
+      "breakdownTotal": "총 수취액",
+      "salesPerformanceHeading": "매출 실적",
+      "salesBreakdownHeading": "매출 내역",
+      "cardSales": "매출",
+      "cardOrders": "주문",
+      "prevDay": "이전 날",
+      "nextDay": "다음 날",
+      "todayBadge": "오늘"
     },
     "reportClientsList": {
       "pageTitle": "목록 보기 — 고객",

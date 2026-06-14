@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Poplatky za dopravu",
       "breakdownTips": "Spropitné",
       "breakdownOtherFees": "Ostatní poplatky",
-      "breakdownTotal": "Celková přijatá částka"
+      "breakdownTotal": "Celková přijatá částka",
+      "salesPerformanceHeading": "Výkon prodeje",
+      "salesBreakdownHeading": "Rozpis prodeje",
+      "cardSales": "Tržby",
+      "cardOrders": "Objednávky",
+      "prevDay": "Předchozí den",
+      "nextDay": "Další den",
+      "todayBadge": "Dnes"
     },
     "reportClientsList": {
       "pageTitle": "Přehled — Klienti",

@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Такси за доставка",
       "breakdownTips": "Бакшиши",
       "breakdownOtherFees": "Други такси",
-      "breakdownTotal": "Общо събрани"
+      "breakdownTotal": "Общо събрани",
+      "salesPerformanceHeading": "Резултати от продажбите",
+      "salesBreakdownHeading": "Разбивка на продажбите",
+      "cardSales": "Продажби",
+      "cardOrders": "Поръчки",
+      "prevDay": "Предишен ден",
+      "nextDay": "Следващ ден",
+      "todayBadge": "Днес"
     },
     "reportClientsList": {
       "pageTitle": "Изглед списък — Клиенти",

@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "ค่าจัดส่ง",
       "breakdownTips": "ทิป",
       "breakdownOtherFees": "ค่าธรรมเนียมอื่นๆ",
-      "breakdownTotal": "ยอดรวมที่รับ"
+      "breakdownTotal": "ยอดรวมที่รับ",
+      "salesPerformanceHeading": "ผลการขาย",
+      "salesBreakdownHeading": "รายละเอียดการขาย",
+      "cardSales": "ยอดขาย",
+      "cardOrders": "ออเดอร์",
+      "prevDay": "วันก่อนหน้า",
+      "nextDay": "วันถัดไป",
+      "todayBadge": "วันนี้"
     },
     "reportClientsList": {
       "pageTitle": "มุมมองรายการ — ลูกค้า",

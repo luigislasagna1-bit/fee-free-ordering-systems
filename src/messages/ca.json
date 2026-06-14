@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Tarifes de lliurament",
       "breakdownTips": "Propines",
       "breakdownOtherFees": "Altres tarifes",
-      "breakdownTotal": "Total recaptat"
+      "breakdownTotal": "Total recaptat",
+      "salesPerformanceHeading": "Rendiment de vendes",
+      "salesBreakdownHeading": "Desglossament de vendes",
+      "cardSales": "Vendes",
+      "cardOrders": "Comandes",
+      "prevDay": "Dia anterior",
+      "nextDay": "Dia següent",
+      "todayBadge": "Avui"
     },
     "reportClientsList": {
       "pageTitle": "Vista de llista — Clients",

@@ -3446,7 +3446,14 @@
       "breakdownDeliveryFees": "Stroški dostave",
       "breakdownTips": "Napitnine",
       "breakdownOtherFees": "Drugi stroški",
-      "breakdownTotal": "Skupaj prejeto"
+      "breakdownTotal": "Skupaj prejeto",
+      "salesPerformanceHeading": "Uspešnost prodaje",
+      "salesBreakdownHeading": "Razčlenitev prodaje",
+      "cardSales": "Prodaja",
+      "cardOrders": "Naročila",
+      "prevDay": "Prejšnji dan",
+      "nextDay": "Naslednji dan",
+      "todayBadge": "Danes"
     },
     "reportClientsList": {
       "pageTitle": "Preglednica — Kupci",
