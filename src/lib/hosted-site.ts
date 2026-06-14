@@ -7,6 +7,7 @@
  */
 
 import prisma from "@/lib/db";
+import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 import { hasFeature } from "@/lib/entitlements";
 import {
   parseHostedSiteSettings,
@@ -324,7 +325,10 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       lat: restaurant.lat,
       lng: restaurant.lng,
       mapProvider: (restaurant.mapProvider === "google" ? "google" : "leaflet") as "leaflet" | "google",
-      googleMapsApiKey: restaurant.googleMapsApiKey ?? null,
+      // Sales-facing "delivery areas" map → Google tiles when a key is
+      // available (the restaurant's own, else the platform key). The functional
+      // pin/zone maps stay free Leaflet. Luigi 2026-06-14.
+      googleMapsApiKey: (await resolveEffectiveMapsKey(restaurant.googleMapsApiKey)) ?? null,
       deliveryZones,
       settings: parseHostedSiteSettings(restaurant.hostedSiteSettings),
     },
