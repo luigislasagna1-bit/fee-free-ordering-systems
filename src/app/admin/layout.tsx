@@ -50,9 +50,15 @@ export default async function AdminLayout({ children }: { children: React.ReactN
    *  paid marketing items (Marketplace / Autopilot / Marketing Studio /
    *  Kickstarter). Empty for free accounts. */
   let entitlements: string[] = [];
+  /** Feature slugs whose granting add-on is flagged comingSoon in
+   *  /superadmin/add-ons — drives the sidebar "Soon" badge live (DB-driven). */
+  let comingSoonFeatures: string[] = [];
   /** True iff Restaurant.publishedAt is set — hides the "Ready to publish"
    *  sidebar chip once the restaurant is actually live. */
   let isPublished = false;
+  /** True iff the active restaurant is a brand CHILD — exempts the Locations
+   *  tab from the multi_location lock (children manage inheritance without it). */
+  let isChildAdmin = false;
   let ownerEmail: string | null = null;
   let ownerEmailVerified = true; // default true so we don't nag superadmins / staff
   let locationsForSwitcher: Array<{ id: string; name: string; city: string | null; isParent: boolean }> = [];
@@ -105,6 +111,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     restaurantDefaultLanguage = restaurant?.defaultLanguage ?? null;
     restaurantCurrency = restaurant?.currency || "usd";
     isPublished = !!restaurant?.publishedAt;
+    isChildAdmin = !!restaurant?.parentRestaurantId;
 
     // Email-verification state — only relevant for restaurant_admin users
     // (the actual owner). Superadmin / reseller impersonators bypass the
@@ -140,6 +147,25 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       console.error("[admin-layout] getEntitlements failed", err);
       entitlements = [];
       hasHostedSite = false;
+    }
+
+    // Coming-soon FEATURES — union of enabledFeatures across every add-on flagged
+    // comingSoon in /superadmin/add-ons. Passed to the sidebar so its "Soon" badge
+    // is DB-driven: toggling Coming Soon there reflects live, no code change
+    // (Luigi 2026-06-14). Non-fatal on failure.
+    try {
+      const soon = await prisma.addOn.findMany({ where: { comingSoon: true }, select: { enabledFeatures: true } });
+      const set = new Set<string>();
+      for (const a of soon) {
+        try {
+          const arr = JSON.parse(a.enabledFeatures || "[]");
+          if (Array.isArray(arr)) for (const f of arr) if (typeof f === "string") set.add(f);
+        } catch {}
+      }
+      comingSoonFeatures = [...set];
+    } catch (err) {
+      console.error("[admin-layout] comingSoon features failed", err);
+      comingSoonFeatures = [];
     }
 
     // Build the location list for the switcher — rooted in the user's CANONICAL
@@ -261,6 +287,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               setupProgress={setupProgress}
               hasHostedSite={hasHostedSite}
               entitlements={entitlements}
+              comingSoonFeatures={comingSoonFeatures}
+              isChildAdmin={isChildAdmin}
               isPublished={isPublished}
             />
             <div className="flex-1 flex flex-col overflow-hidden">

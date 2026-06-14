@@ -27,6 +27,12 @@ export type Feature =
   | "app_store_listing"
   | "branded_pwa"
   | "in_house_pos"
+  /** Automated phone-ordering agent. Granted by the `phone_ordering`
+   *  add-on (comingSoon until it ships). */
+  | "phone_ordering_agent"
+  /** Kitchen Display System screen. Granted by the `kds_screen` add-on
+   *  (comingSoon, price TBD — Luigi 2026-06-14). */
+  | "kds_screen"
   | "take_reservation_deposit"
   | "multi_location_management"
   /** Listed on the public Fee Free Ordering Marketplace at /marketplace.
@@ -178,6 +184,8 @@ export const ALL_FEATURES: readonly Feature[] = [
   "app_store_listing",
   "branded_pwa",
   "in_house_pos",
+  "phone_ordering_agent",
+  "kds_screen",
   "take_reservation_deposit",
   "multi_location_management",
   "marketplace_listing",

@@ -46,6 +46,10 @@ type NavItem = {
    *  "not ready to release" gate (Luigi 2026-06-13) — set it on any item OR
    *  top-level group to lock a feature in the nav without hiding its teaser. */
   comingSoon?: boolean;
+  /** Locations special-case: lock for a solo/parent restaurant WITHOUT the
+   *  feature, but NEVER a child admin — children use the page for brand
+   *  inheritance toggles without owning multi_location. Luigi 2026-06-14. */
+  childExempt?: boolean;
 };
 
 type NavSubGroup = {
@@ -125,7 +129,10 @@ const navGroups: NavGroup[] = [
           { href: "/admin/delivery",      labelKey: "deliveryZones", label: "Delivery Zones", icon: Truck,        step: "services.deliveryZones" },
           { href: "/admin/delivery/pool", labelKey: "driverPool",    label: "Driver Pool",    icon: Truck,        step: "services.deliveryManagement", requiresFeature: "driver_pool" },
           { href: "/admin/reservations",  labelKey: "reservations",  label: "Reservations",   icon: CalendarDays },
-          { href: "/admin/locations",     labelKey: "locations",     label: "Locations",      icon: MapIcon },
+          // Multi-location management ($49.99) — locked for a solo/parent
+          // restaurant WITHOUT the add-on, but childExempt so a CHILD admin
+          // always reaches its brand-inheritance toggles. Luigi 2026-06-14.
+          { href: "/admin/locations",     labelKey: "locations",     label: "Locations",      icon: MapIcon, requiresFeature: "multi_location_management", childExempt: true },
         ],
       },
       {
@@ -136,7 +143,10 @@ const navGroups: NavGroup[] = [
         setupSectionId: "payments",
         items: [
           { href: "/admin/payments",           labelKey: "paymentMethods", label: "Accepted Methods",   icon: CreditCard, step: "payments.methodsSelected" },
-          { href: "/admin/payments/providers", labelKey: "payments",       label: "Stripe Connect",     icon: CreditCard, step: "payments.methodConfigured" },
+          // Online card payments (Stripe Connect + PayPal) require the
+          // online_payments add-on ($39.99). Without it a restaurant can still
+          // take cash / card-at-counter via "Accepted Methods" above. Luigi 2026-06-14.
+          { href: "/admin/payments/providers", labelKey: "payments",       label: "Stripe Connect",     icon: CreditCard, step: "payments.methodConfigured", requiresFeature: "card_payments" },
           { href: "/admin/service-fees",       labelKey: "serviceFees",    label: "Service Fees & Tax", icon: Wallet,     step: "payments.taxation" },
         ],
       },
@@ -180,9 +190,11 @@ const navGroups: NavGroup[] = [
         items: [
           { href: "/admin/publishing",     labelKey: "publishing",   label: "Publishing",     icon: Globe },
           { href: "/admin/website",        labelKey: "websiteTheme", label: "Website Theme",  icon: Palette },
-          // Gated on hasHostedSite — Sales Optimized Website add-on
-          // subscribers see this; non-subscribers don't even get the link.
-          { href: "/admin/website/editor", labelKey: "websiteEditor", label: "Website Editor", icon: Palette, requiresHostedSite: true },
+          // Sales Optimized Website (hosted_website add-on). SHOWN to everyone
+          // with a LOCK for non-subscribers (Luigi 2026-06-14 — "don't hide it");
+          // the page behind it is the marketing/conversion upsell. Unlocks on
+          // subscribing to hosted_marketing_page.
+          { href: "/admin/website/editor", labelKey: "salesOptimizedWebsite", label: "Sales Optimized Website", icon: Palette, requiresFeature: "hosted_marketing_page" },
           // Custom Domain — direct sidebar link to the bring-your-own-
           // domain page. Always visible; the page itself surfaces the
           // $9.99/mo Custom Domain add-on upgrade CTA when the
@@ -232,11 +244,12 @@ const navGroups: NavGroup[] = [
         items: [
           { href: "/admin/kickstarter",      labelKey: "kickstarter",     label: "Kickstarter",      icon: Rocket, requiresFeature: "kickstarter" },
           { href: "/admin/autopilot",        labelKey: "autopilot",       label: "Autopilot",        icon: Zap,    requiresFeature: "automated_campaigns" },
-          { href: "/admin/marketing-studio", labelKey: "marketingStudio", label: "Marketing Studio", icon: QrCode, requiresFeature: "marketing_studio", comingSoon: true },
-          { href: "/admin/customer-sms",     labelKey: "customerSms",     label: "Customer SMS",     icon: MessageSquare, requiresFeature: "customer_sms", comingSoon: true },
+          // "Soon" is DB-driven now (these add-ons are flagged comingSoon in
+          // /superadmin/add-ons) — no hardcoded comingSoon. Luigi 2026-06-14.
+          { href: "/admin/marketing-studio", labelKey: "marketingStudio", label: "Marketing Studio", icon: QrCode, requiresFeature: "marketing_studio" },
+          { href: "/admin/customer-sms",     labelKey: "customerSms",     label: "Customer SMS",     icon: MessageSquare, requiresFeature: "customer_sms" },
           // ContentPilot — AI social media manager (brand name, untranslated).
-          // comingSoon add-on: the page is a teaser until it ships.
-          { href: "/admin/contentpilot",     labelKey: "contentPilot",    label: "ContentPilot",     icon: Bot, requiresFeature: "contentpilot", comingSoon: true },
+          { href: "/admin/contentpilot",     labelKey: "contentPilot",    label: "ContentPilot",     icon: Bot, requiresFeature: "contentpilot" },
         ],
       },
     ],
@@ -305,7 +318,7 @@ const navGroups: NavGroup[] = [
           // stays as the editable list (different concern).
           { href: "/admin/reports/online-ordering/clients",      labelKey: "reportsClients",      label: "Clients",           icon: Users },
           { href: "/admin/reports/online-ordering/reservations", labelKey: "reportsReservations", label: "Table Reservations", icon: CalendarDays },
-          { href: "/admin/reports/online-ordering/google-rank",  labelKey: "reportsGoogleRank",   label: "Google Ranking",    icon: Sparkles },
+          { href: "/admin/reports/online-ordering/google-rank",  labelKey: "reportsGoogleRank",   label: "Google Ranking",    icon: Sparkles, requiresFeature: "hosted_marketing_page" },
           { href: "/admin/reports/online-ordering/visits",       labelKey: "reportsVisits",       label: "Website Visits",    icon: BarChart3 },
           { href: "/admin/reports/online-ordering/heatmap",      labelKey: "reportsHeatmap",      label: "Delivery Heatmap",  icon: MapIcon },
           { href: "/admin/reports/online-ordering/connectivity", labelKey: "reportsConnectivity", label: "Connectivity Health", icon: Wifi },
@@ -351,7 +364,10 @@ const navGroups: NavGroup[] = [
     icon: Bot,
     comingSoon: true,
     items: [
-      { href: "/admin/phone-ordering", labelKey: "phoneOrdering", label: "Phone Ordering", icon: Phone, comingSoon: true },
+      // "Soon" + lock are DB-driven (phone_ordering add-on is comingSoon in
+      // /superadmin/add-ons). The Nabil AI section header keeps its own
+      // comingSoon flag as the section indicator. Luigi 2026-06-14.
+      { href: "/admin/phone-ordering", labelKey: "phoneOrdering", label: "Phone Ordering", icon: Phone, requiresFeature: "phone_ordering_agent" },
     ],
   },
 
@@ -471,26 +487,34 @@ export function AdminSidebar({
   setupProgress: setupProgressProp,
   hasHostedSite = false,
   entitlements = [],
+  comingSoonFeatures = [],
+  isChildAdmin = false,
   isPublished = false,
 }: {
   session: Session;
   pendingOrders?: number;
   setupProgress?: SetupProgress | null;
   /** True iff this restaurant has the `hosted_marketing_page` entitlement.
-   *  Computed in the admin layout (single Prisma round-trip), passed in so
-   *  the Website Editor link can be hidden cleanly for non-subscribers
-   *  without flashing in and out as the page renders. */
+   *  Computed in the admin layout (single Prisma round-trip). */
   hasHostedSite?: boolean;
   /** The restaurant's full set of unlocked feature slugs (from getEntitlements
-   *  in the layout). Drives the lock icon on paid marketing items flagged with
+   *  in the layout). Drives the lock icon on paid items flagged with
    *  `requiresFeature`. */
   entitlements?: string[];
+  /** Feature slugs whose granting add-on is flagged comingSoon in
+   *  /superadmin/add-ons. Drives the DB-driven "Soon" badge. Luigi 2026-06-14. */
+  comingSoonFeatures?: string[];
+  /** True iff the active restaurant is a brand CHILD — exempts childExempt
+   *  items (Locations) from the lock so children keep inheritance access. */
+  isChildAdmin?: boolean;
   /** True iff Restaurant.publishedAt is set. Hides the "Ready to publish"
    *  chip once the restaurant is already live — no nudge needed. */
   isPublished?: boolean;
 }) {
   // Set for O(1) lookups when deciding whether a paid item is locked.
   const entitled = new Set(entitlements);
+  // DB-driven "Soon": features whose add-on is flagged comingSoon in superadmin.
+  const comingSoonFeatureSet = new Set(comingSoonFeatures);
   // Reuse the already-translated "Paid add-on" badge for the lock tooltip.
   const tLock = useTranslations("admin.featureLocked");
   const tr = useSafeT();
@@ -648,17 +672,19 @@ export function AdminSidebar({
     const badge = badgeKey === "orders" && pendingOrders > 0 ? pendingOrders : null;
     const isStepComplete = step ? stepComplete.get(step) : undefined;
     // Two INDEPENDENT signals (Luigi 2026-06-14):
-    //   • "Soon" = RELEASE status. Shown whenever the item is flagged comingSoon,
-    //     to EVERYONE — the feature simply isn't public yet.
-    //   • Lock   = ACCESS status. Shown when THIS restaurant doesn't have the
-    //     feature: a paid add-on it hasn't bought, OR a coming-soon feature it
-    //     hasn't been granted early backend access to. Cleared by buying it
-    //     (paid add-on) or a backend grant (coming-soon, which isn't for sale).
-    // So an early-access (granted) restaurant still sees "Soon" but NO lock; a
-    // paying restaurant on a shipped add-on sees neither. The link still points
-    // at the page, which renders the upsell wall / teaser.
-    const granted = !!item.requiresFeature && entitled.has(item.requiresFeature);
-    const comingSoon = !!item.comingSoon;
+    //   • "Soon" = RELEASE status, DB-driven. An item is coming-soon if its own
+    //     flag is set OR the add-on granting its feature is flagged comingSoon in
+    //     /superadmin/add-ons — so toggling it there reflects here live.
+    //   • Lock   = ACCESS status. Shown when THIS restaurant lacks the feature
+    //     (paid add-on unbought, or coming-soon without a backend grant). A child
+    //     admin is EXEMPT on childExempt items (Locations) — they use the page for
+    //     brand inheritance without owning the add-on.
+    // Granted → "Soon" may still show (preview) but NO lock; paid+shipped → neither.
+    const comingSoon =
+      !!item.comingSoon || (!!item.requiresFeature && comingSoonFeatureSet.has(item.requiresFeature));
+    const granted =
+      (!!item.requiresFeature && entitled.has(item.requiresFeature)) ||
+      (!!item.childExempt && isChildAdmin);
     const locked = (!!item.requiresFeature || comingSoon) && !granted;
 
     return (
