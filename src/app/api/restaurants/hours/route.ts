@@ -25,6 +25,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { blockIfInheritingSetting } from "@/lib/brand";
 
 const VALID_HHMM = /^([01]\d|2[0-3]):[0-5]\d$/;
 
@@ -32,6 +33,11 @@ export async function PUT(req: NextRequest) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  // A child location that INHERITS its hours from the brand can't edit them here
+  // — it must turn "Opening hours" off in Locations first. Luigi 2026-06-14.
+  const blocked = await blockIfInheritingSetting(restaurantId, "hours");
+  if (blocked) return blocked;
 
   const body = await req.json().catch(() => ({}));
   const hours = Array.isArray(body?.hours) ? body.hours : [];

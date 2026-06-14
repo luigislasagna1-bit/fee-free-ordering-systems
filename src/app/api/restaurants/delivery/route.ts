@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { blockIfInheritingSetting } from "@/lib/brand";
 
 export async function GET() {
   const user = await getSessionUser();
@@ -17,6 +18,10 @@ export async function POST(req: NextRequest) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  // A child inheriting its delivery zones from the brand can't add one here.
+  const blocked = await blockIfInheritingSetting(restaurantId, "zones");
+  if (blocked) return blocked;
 
   const { name, color, radiusKm, deliveryFee, minimumOrder, estimatedMinutes } = await req.json();
   if (!name) return NextResponse.json({ error: "Zone name is required" }, { status: 400 });

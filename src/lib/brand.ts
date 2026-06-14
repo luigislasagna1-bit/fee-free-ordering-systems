@@ -15,6 +15,7 @@
 
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
+import { isInheriting, type InheritableSetting } from "@/lib/inherited-settings";
 
 export interface BrandSummary {
   id: string;
@@ -94,6 +95,35 @@ export async function blockIfInheritingMenu(restaurantId: string): Promise<NextR
       {
         error: "This location uses the master menu from your brand. Open /admin/menu and click \"Customize this location's menu\" before editing.",
         code: "menu_inherited",
+      },
+      { status: 403 },
+    );
+  }
+  return null;
+}
+
+/**
+ * Like blockIfInheritingMenu, but for the JSON-inherited settings (hours / zones
+ * / availability). When the location currently INHERITS `setting` from its brand
+ * parent, its own editor for that setting is read-only — return a 403 so the
+ * write is refused. The location must turn that setting OFF ("Set here") under
+ * Locations → "What your brand controls" before editing it. Luigi 2026-06-14.
+ */
+export async function blockIfInheritingSetting(
+  restaurantId: string,
+  setting: InheritableSetting,
+): Promise<NextResponse | null> {
+  const r = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: { parentRestaurantId: true, useBrandMenu: true, inheritedSettings: true },
+  });
+  if (r && isInheriting(r, setting)) {
+    return NextResponse.json(
+      {
+        error:
+          "This is managed by your brand. Turn it off under Locations → \"What your brand controls\" before editing it here.",
+        code: "setting_inherited",
+        setting,
       },
       { status: 403 },
     );
