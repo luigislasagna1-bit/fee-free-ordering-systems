@@ -41,6 +41,11 @@ type NavItem = {
    *  shows an upsell wall (Luigi 2026-06-11 — "show with lock + upgrade"). This
    *  differs from requiresHostedSite, which HIDES the item entirely. */
   requiresFeature?: Feature;
+  /** When true, this feature isn't released yet: the nav entry renders a lock +
+   *  "Soon" badge and (for a leaf) still links to its teaser page. The reusable
+   *  "not ready to release" gate (Luigi 2026-06-13) — set it on any item OR
+   *  top-level group to lock a feature in the nav without hiding its teaser. */
+  comingSoon?: boolean;
 };
 
 type NavSubGroup = {
@@ -70,6 +75,9 @@ type NavGroup = {
   /** Nested sub-groups (e.g. "Services & Hours" inside SETUP). Each sub-group
    *  expands/collapses independently with single-open accordion behavior. */
   subGroups?: NavSubGroup[];
+  /** When true, this whole section is an unreleased feature — its header shows a
+   *  lock + "Soon" badge. Same reusable gate as NavItem.comingSoon. */
+  comingSoon?: boolean;
 };
 
 // ─── Sidebar structure ─────────────────────────────────────────────────────
@@ -323,11 +331,26 @@ const navGroups: NavGroup[] = [
     icon: ShoppingBag,
     items: [
       { href: "/admin/orders", labelKey: "orders", label: "Orders", icon: ShoppingBag, badgeKey: "orders" },
-      // Phone Ordering placeholder page (Coming Soon). Lives in ONLINE
-      // ORDERING because it's an order-intake channel (the AI agent
-      // takes phone orders and pushes them to the same kitchen display).
-      // No `step:` prop — doesn't affect setup-completion counts.
-      { href: "/admin/phone-ordering", labelKey: "phoneOrdering", label: "Phone Ordering", icon: Phone },
+    ],
+  },
+
+  {
+    // ─── NABIL AI ───────────────────────────────────────────────────────
+    // Nabil AI — our automated phone-ordering agent, now its OWN top-level
+    // section (Luigi 2026-06-13) and branded as the product. "Nabil AI" is a
+    // brand name → untranslated (tr falls back to the label, like GrowthNet).
+    //
+    // comingSoon: true is the reusable "not ready to release" gate: it renders a
+    // lock + "Soon" badge so we can show a feature's teaser without implying it's
+    // live. To lock any future not-ready feature, set comingSoon on its nav entry
+    // (group and/or item) and keep its page a teaser.
+    key: "nabil-ai",
+    labelKey: "categoryNabilAi",
+    label: "Nabil AI",
+    icon: Bot,
+    comingSoon: true,
+    items: [
+      { href: "/admin/phone-ordering", labelKey: "phoneOrdering", label: "Phone Ordering", icon: Phone, comingSoon: true },
     ],
   },
 
@@ -623,6 +646,8 @@ export function AdminSidebar({
     // Paid item without the entitlement → keep it visible but show a lock.
     // The link still points at the page, which renders the upsell wall.
     const locked = !!item.requiresFeature && !entitled.has(item.requiresFeature);
+    // Unreleased feature → lock + "Soon" badge. Still links to its teaser page.
+    const comingSoon = !!item.comingSoon;
 
     return (
       <Link
@@ -647,7 +672,7 @@ export function AdminSidebar({
         )}
       >
         <div className="relative flex-shrink-0">
-          <Icon className={cn(nested ? "w-3.5 h-3.5" : "w-4 h-4", locked && !active && "opacity-60")} />
+          <Icon className={cn(nested ? "w-3.5 h-3.5" : "w-4 h-4", (locked || comingSoon) && !active && "opacity-60")} />
           {badge !== null && (
             <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-bold rounded-full min-w-[16px] h-4 flex items-center justify-center px-1">
               {badge > 99 ? "99+" : badge}
@@ -656,17 +681,26 @@ export function AdminSidebar({
         </div>
         {!collapsed && (
           <>
-            <span className={cn("flex-1 truncate", locked && !active && "opacity-70")}>{display}</span>
-            {/* Lock marker for paid items the restaurant hasn't unlocked. Sits
-                where the badge/step marker would; badges/steps never co-occur
-                with requiresFeature items so there's no collision. */}
-            {locked && (
+            <span className={cn("flex-1 truncate", (locked || comingSoon) && !active && "opacity-70")}>{display}</span>
+            {/* Unreleased feature → "Soon" pill + lock (Luigi 2026-06-13). */}
+            {comingSoon && (
+              <span className={cn(
+                "text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full flex-shrink-0",
+                active ? "bg-white/20 text-white" : "bg-amber-100 text-amber-700"
+              )}>
+                {tr("comingSoonBadge", "Soon")}
+              </span>
+            )}
+            {/* Lock marker for paid items the restaurant hasn't unlocked OR an
+                unreleased (comingSoon) feature. Sits where the badge/step marker
+                would; badges/steps never co-occur with these so no collision. */}
+            {(locked || comingSoon) && (
               <Lock className={cn("w-3.5 h-3.5 flex-shrink-0", active ? "text-white" : "text-amber-400/80")} />
             )}
-            {!locked && isStepComplete === true && (
+            {!locked && !comingSoon && isStepComplete === true && (
               <Check className={cn("w-3.5 h-3.5 flex-shrink-0", active ? "text-white" : "text-green-400")} />
             )}
-            {!locked && isStepComplete === false && (
+            {!locked && !comingSoon && isStepComplete === false && (
               <Circle className={cn("w-3.5 h-3.5 flex-shrink-0", active ? "text-white" : "text-gray-500")} />
             )}
             {badge !== null && (
@@ -851,6 +885,17 @@ export function AdminSidebar({
                   <span className="flex items-center gap-2.5">
                     <GroupIcon className="w-4 h-4" />
                     {tr(group.labelKey, group.label)}
+                    {group.comingSoon && (
+                      <span
+                        className={cn(
+                          "inline-flex items-center gap-1 text-[9px] font-bold px-1.5 py-0.5 rounded-full normal-case tracking-normal",
+                          activeInGroup ? "bg-emerald-500/20 text-emerald-300" : "bg-amber-100 text-amber-700"
+                        )}
+                      >
+                        <Lock className="w-2.5 h-2.5" />
+                        {tr("comingSoonBadge", "Soon")}
+                      </span>
+                    )}
                     {rolled && (
                       <span
                         className={cn(

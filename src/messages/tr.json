@@ -715,7 +715,8 @@
       "allStepsComplete": "{total} adımın tümü tamamlandı · yayına almak için tıklayın",
       "setupProgress": "Kurulum ilerlemesi",
       "stepsComplete": "{completed}/{total} adım tamamlandı",
-      "requiredCount": "{count, plural, one {# zorunlu} other {# zorunlu}}"
+      "requiredCount": "{count, plural, one {# zorunlu} other {# zorunlu}}",
+      "comingSoonBadge": "Yakında"
     },
     "dashboard": {
       "title": "Panel",

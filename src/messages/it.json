@@ -715,7 +715,8 @@
       "allStepsComplete": "Tutti i {total} passaggi completati · clicca per andare online",
       "setupProgress": "Avanzamento della configurazione",
       "stepsComplete": "{completed}/{total} passaggi completati",
-      "requiredCount": "{count, plural, one {# obbligatorio} other {# obbligatori}}"
+      "requiredCount": "{count, plural, one {# obbligatorio} other {# obbligatori}}",
+      "comingSoonBadge": "Presto"
     },
     "dashboard": {
       "title": "Pannello",

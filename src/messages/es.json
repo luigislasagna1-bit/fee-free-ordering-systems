@@ -715,7 +715,8 @@
       "allStepsComplete": "Los {total} pasos completados · haz clic para publicar",
       "setupProgress": "Progreso de la configuración",
       "stepsComplete": "{completed}/{total} pasos completados",
-      "requiredCount": "{count, plural, one {# obligatorio} other {# obligatorios}}"
+      "requiredCount": "{count, plural, one {# obligatorio} other {# obligatorios}}",
+      "comingSoonBadge": "Pronto"
     },
     "dashboard": {
       "title": "Panel principal",

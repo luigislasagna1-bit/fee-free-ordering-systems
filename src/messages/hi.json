@@ -738,7 +738,8 @@
       "allStepsComplete": "सभी {total} चरण पूरे हुए · लाइव होने के लिए क्लिक करें",
       "setupProgress": "सेटअप प्रगति",
       "stepsComplete": "{completed}/{total} चरण पूरे हुए",
-      "requiredCount": "{count, plural, one {# आवश्यक} other {# आवश्यक}}"
+      "requiredCount": "{count, plural, one {# आवश्यक} other {# आवश्यक}}",
+      "comingSoonBadge": "जल्द ही"
     },
     "dashboard": {
       "title": "डैशबोर्ड",

@@ -715,7 +715,8 @@
       "allStepsComplete": "Visi žingsniai atlikti ({total}) · spustelėkite, kad publikuotumėte",
       "setupProgress": "Sąrankos eiga",
       "stepsComplete": "Atlikta žingsnių: {completed}/{total}",
-      "requiredCount": "{count, plural, one {# privalomas} few {# privalomi} other {# privalomų}}"
+      "requiredCount": "{count, plural, one {# privalomas} few {# privalomi} other {# privalomų}}",
+      "comingSoonBadge": "Netrukus"
     },
     "dashboard": {
       "title": "Skydelis",

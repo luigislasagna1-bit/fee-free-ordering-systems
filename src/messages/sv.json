@@ -715,7 +715,8 @@
       "allStepsComplete": "Alla {total} steg är klara · klicka för att gå live",
       "setupProgress": "Konfigurationsförlopp",
       "stepsComplete": "{completed}/{total} steg klara",
-      "requiredCount": "{count, plural, one {# obligatoriskt} other {# obligatoriska}}"
+      "requiredCount": "{count, plural, one {# obligatoriskt} other {# obligatoriska}}",
+      "comingSoonBadge": "Snart"
     },
     "dashboard": {
       "title": "Instrumentpanel",

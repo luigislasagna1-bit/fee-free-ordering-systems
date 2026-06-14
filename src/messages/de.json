@@ -715,7 +715,8 @@
       "allStepsComplete": "Alle {total} Schritte abgeschlossen · klicken, um live zu gehen",
       "setupProgress": "Einrichtungsfortschritt",
       "stepsComplete": "{completed}/{total} Schritte abgeschlossen",
-      "requiredCount": "{count, plural, one {# erforderlich} other {# erforderlich}}"
+      "requiredCount": "{count, plural, one {# erforderlich} other {# erforderlich}}",
+      "comingSoonBadge": "Bald"
     },
     "dashboard": {
       "title": "Dashboard",

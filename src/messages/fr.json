@@ -715,7 +715,8 @@
       "allStepsComplete": "Les {total} étapes sont terminées · cliquez pour mettre en ligne",
       "setupProgress": "Progression de la configuration",
       "stepsComplete": "{completed}/{total} étapes terminées",
-      "requiredCount": "{count, plural, one {# obligatoire} other {# obligatoires}}"
+      "requiredCount": "{count, plural, one {# obligatoire} other {# obligatoires}}",
+      "comingSoonBadge": "Bientôt"
     },
     "dashboard": {
       "title": "Tableau de bord",

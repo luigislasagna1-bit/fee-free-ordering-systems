@@ -715,7 +715,8 @@
       "allStepsComplete": "전체 {total}단계 완료 · 클릭하여 게시",
       "setupProgress": "설정 진행률",
       "stepsComplete": "{completed}/{total}단계 완료",
-      "requiredCount": "{count, plural, other {필수 #개}}"
+      "requiredCount": "{count, plural, other {필수 #개}}",
+      "comingSoonBadge": "출시 예정"
     },
     "dashboard": {
       "title": "대시보드",

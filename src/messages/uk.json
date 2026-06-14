@@ -715,7 +715,8 @@
       "allStepsComplete": "Усі кроки виконано ({total}) · натисніть, щоб опублікувати",
       "setupProgress": "Прогрес налаштування",
       "stepsComplete": "Виконано кроків: {completed}/{total}",
-      "requiredCount": "{count, plural, one {# обовʼязковий} few {# обовʼязкові} many {# обовʼязкових} other {# обовʼязкового}}"
+      "requiredCount": "{count, plural, one {# обовʼязковий} few {# обовʼязкові} many {# обовʼязкових} other {# обовʼязкового}}",
+      "comingSoonBadge": "Незабаром"
     },
     "dashboard": {
       "title": "Панель керування",

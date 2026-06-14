@@ -715,7 +715,8 @@
       "allStepsComplete": "Todas as {total} etapas concluídas · clique para entrar no ar",
       "setupProgress": "Progresso da configuração",
       "stepsComplete": "{completed}/{total} etapas concluídas",
-      "requiredCount": "{count, plural, one {# obrigatória} other {# obrigatórias}}"
+      "requiredCount": "{count, plural, one {# obrigatória} other {# obrigatórias}}",
+      "comingSoonBadge": "Em breve"
     },
     "dashboard": {
       "title": "Painel",

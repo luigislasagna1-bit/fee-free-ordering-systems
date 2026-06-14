@@ -715,7 +715,8 @@
       "allStepsComplete": "Ukończono wszystkie kroki ({total}) · kliknij, aby opublikować",
       "setupProgress": "Postęp konfiguracji",
       "stepsComplete": "Ukończone kroki: {completed}/{total}",
-      "requiredCount": "{count, plural, one {# wymagany} few {# wymagane} many {# wymaganych} other {# wymaganego}}"
+      "requiredCount": "{count, plural, one {# wymagany} few {# wymagane} many {# wymaganych} other {# wymaganego}}",
+      "comingSoonBadge": "Wkrótce"
     },
     "dashboard": {
       "title": "Panel główny",

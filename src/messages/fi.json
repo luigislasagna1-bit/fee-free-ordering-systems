@@ -715,7 +715,8 @@
       "allStepsComplete": "Kaikki {total} vaihetta valmiina · siirry julkaisuun napsauttamalla",
       "setupProgress": "Määrityksen edistyminen",
       "stepsComplete": "{completed}/{total} vaihetta valmiina",
-      "requiredCount": "{count, plural, one {# pakollinen} other {# pakollista}}"
+      "requiredCount": "{count, plural, one {# pakollinen} other {# pakollista}}",
+      "comingSoonBadge": "Pian"
     },
     "dashboard": {
       "title": "Kojelauta",

@@ -715,7 +715,8 @@
       "allStepsComplete": "Tots els {total} passos completats · feu clic per publicar",
       "setupProgress": "Progrés de la configuració",
       "stepsComplete": "{completed}/{total} passos completats",
-      "requiredCount": "{count, plural, one {# obligatori} other {# obligatoris}}"
+      "requiredCount": "{count, plural, one {# obligatori} other {# obligatoris}}",
+      "comingSoonBadge": "Aviat"
     },
     "dashboard": {
       "title": "Tauler de control",

@@ -715,7 +715,8 @@
       "allStepsComplete": "Vsi koraki dokončani ({total}) · kliknite za objavo",
       "setupProgress": "Napredek nastavitve",
       "stepsComplete": "Dokončani koraki: {completed}/{total}",
-      "requiredCount": "{count, plural, one {# obvezen} two {# obvezna} few {# obvezni} other {# obveznih}}"
+      "requiredCount": "{count, plural, one {# obvezen} two {# obvezna} few {# obvezni} other {# obveznih}}",
+      "comingSoonBadge": "Kmalu"
     },
     "dashboard": {
       "title": "Nadzorna plošča",

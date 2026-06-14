@@ -715,7 +715,8 @@
       "allStepsComplete": "Toți pașii sunt finalizați ({total}) · faceți clic pentru lansare",
       "setupProgress": "Progresul configurării",
       "stepsComplete": "{completed}/{total} pași finalizați",
-      "requiredCount": "{count, plural, one {# obligatoriu} few {# obligatorii} other {# obligatorii}}"
+      "requiredCount": "{count, plural, one {# obligatoriu} few {# obligatorii} other {# obligatorii}}",
+      "comingSoonBadge": "În curând"
     },
     "dashboard": {
       "title": "Panou de control",

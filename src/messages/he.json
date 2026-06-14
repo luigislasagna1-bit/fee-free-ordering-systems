@@ -715,7 +715,8 @@
       "allStepsComplete": "כל {total} השלבים הושלמו · לחצו כדי לעלות לאוויר",
       "setupProgress": "התקדמות ההגדרה",
       "stepsComplete": "הושלמו {completed}/{total} שלבים",
-      "requiredCount": "{count, plural, one {# חובה} other {# חובה}}"
+      "requiredCount": "{count, plural, one {# חובה} other {# חובה}}",
+      "comingSoonBadge": "בקרוב"
     },
     "dashboard": {
       "title": "לוח בקרה",

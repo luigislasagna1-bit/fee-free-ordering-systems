@@ -715,7 +715,8 @@
       "allStepsComplete": "Και τα {total} βήματα ολοκληρώθηκαν · κάντε κλικ για δημοσίευση",
       "setupProgress": "Πρόοδος ρύθμισης",
       "stepsComplete": "{completed}/{total} βήματα ολοκληρώθηκαν",
-      "requiredCount": "{count, plural, one {# υποχρεωτικό} other {# υποχρεωτικά}}"
+      "requiredCount": "{count, plural, one {# υποχρεωτικό} other {# υποχρεωτικά}}",
+      "comingSoonBadge": "Σύντομα"
     },
     "dashboard": {
       "title": "Πίνακας ελέγχου",

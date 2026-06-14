@@ -715,7 +715,8 @@
       "allStepsComplete": "Alle {total} stappen voltooid · klik om live te gaan",
       "setupProgress": "Configuratievoortgang",
       "stepsComplete": "{completed}/{total} stappen voltooid",
-      "requiredCount": "{count, plural, one {# verplicht} other {# verplicht}}"
+      "requiredCount": "{count, plural, one {# verplicht} other {# verplicht}}",
+      "comingSoonBadge": "Binnenkort"
     },
     "dashboard": {
       "title": "Dashboard",

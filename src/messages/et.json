@@ -715,7 +715,8 @@
       "allStepsComplete": "Kõik {total} sammu on tehtud · klõpsake avaldamiseks",
       "setupProgress": "Seadistuse edenemine",
       "stepsComplete": "{completed}/{total} sammu tehtud",
-      "requiredCount": "{count, plural, one {# kohustuslik} other {# kohustuslikku}}"
+      "requiredCount": "{count, plural, one {# kohustuslik} other {# kohustuslikku}}",
+      "comingSoonBadge": "Varsti"
     },
     "dashboard": {
       "title": "Juhtpaneel",

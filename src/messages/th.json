@@ -715,7 +715,8 @@
       "allStepsComplete": "ทำครบทั้ง {total} ขั้นตอนแล้ว · คลิกเพื่อเผยแพร่",
       "setupProgress": "ความคืบหน้าการตั้งค่า",
       "stepsComplete": "เสร็จแล้ว {completed}/{total} ขั้นตอน",
-      "requiredCount": "{count, plural, other {ต้องทำอีก # ขั้นตอน}}"
+      "requiredCount": "{count, plural, other {ต้องทำอีก # ขั้นตอน}}",
+      "comingSoonBadge": "เร็วๆ นี้"
     },
     "dashboard": {
       "title": "แดชบอร์ด",

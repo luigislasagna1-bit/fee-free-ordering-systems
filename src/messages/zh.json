@@ -715,7 +715,8 @@
       "allStepsComplete": "全部 {total} 个步骤已完成 · 点击即可上线",
       "setupProgress": "设置进度",
       "stepsComplete": "已完成 {completed}/{total} 个步骤",
-      "requiredCount": "{count, plural, other {# 个必需}}"
+      "requiredCount": "{count, plural, other {# 个必需}}",
+      "comingSoonBadge": "即将推出"
     },
     "dashboard": {
       "title": "仪表盘",

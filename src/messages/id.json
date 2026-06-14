@@ -715,7 +715,8 @@
       "allStepsComplete": "Semua {total} langkah selesai · klik untuk tayang",
       "setupProgress": "Progres penyiapan",
       "stepsComplete": "{completed}/{total} langkah selesai",
-      "requiredCount": "{count, plural, other {# wajib}}"
+      "requiredCount": "{count, plural, other {# wajib}}",
+      "comingSoonBadge": "Segera"
     },
     "dashboard": {
       "title": "Dasbor",

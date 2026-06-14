@@ -49,13 +49,19 @@ export default async function PhoneOrderingPage() {
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
+              {/* "Nabil AI" is the product brand — untranslated, identical in
+                  every locale (Luigi 2026-06-13). The translated descriptor sits
+                  just beneath it. */}
+              <h1 className="text-2xl font-bold text-gray-900">Nabil AI</h1>
               <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
                 <Rocket className="w-3 h-3" />
                 {t("comingSoon")}
               </span>
             </div>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-amber-600 mt-1">
+              {t("pageTitle")}
+            </p>
+            <p className="text-sm text-gray-600 mt-0.5">
               {t("pageSubtitle")}
             </p>
           </div>

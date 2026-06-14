@@ -715,7 +715,8 @@
       "allStepsComplete": "Все шаги выполнены ({total}) · нажмите, чтобы опубликовать",
       "setupProgress": "Прогресс настройки",
       "stepsComplete": "Выполнено шагов: {completed}/{total}",
-      "requiredCount": "{count, plural, one {# обязательный} few {# обязательных} many {# обязательных} other {# обязательного}}"
+      "requiredCount": "{count, plural, one {# обязательный} few {# обязательных} many {# обязательных} other {# обязательного}}",
+      "comingSoonBadge": "Скоро"
     },
     "dashboard": {
       "title": "Панель управления",

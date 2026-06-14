@@ -715,7 +715,8 @@
       "allStepsComplete": "Đã hoàn thành tất cả {total} bước · nhấp để xuất bản",
       "setupProgress": "Tiến độ thiết lập",
       "stepsComplete": "Đã hoàn thành {completed}/{total} bước",
-      "requiredCount": "{count, plural, other {# bắt buộc}}"
+      "requiredCount": "{count, plural, other {# bắt buộc}}",
+      "comingSoonBadge": "Sắp có"
     },
     "dashboard": {
       "title": "Bảng điều khiển",

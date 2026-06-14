@@ -715,7 +715,8 @@
       "allStepsComplete": "Всички {total} стъпки са завършени · щракнете, за да публикувате",
       "setupProgress": "Напредък на настройката",
       "stepsComplete": "{completed}/{total} завършени стъпки",
-      "requiredCount": "{count, plural, one {# задължителна} other {# задължителни}}"
+      "requiredCount": "{count, plural, one {# задължителна} other {# задължителни}}",
+      "comingSoonBadge": "Скоро"
     },
     "dashboard": {
       "title": "Табло",

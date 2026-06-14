@@ -715,7 +715,8 @@
       "allStepsComplete": "Visi soļi pabeigti ({total}) · noklikšķiniet, lai publicētu",
       "setupProgress": "Iestatīšanas progress",
       "stepsComplete": "Pabeigti soļi: {completed}/{total}",
-      "requiredCount": "{count, plural, zero {# obligātu} one {# obligāts} other {# obligāti}}"
+      "requiredCount": "{count, plural, zero {# obligātu} one {# obligāts} other {# obligāti}}",
+      "comingSoonBadge": "Drīzumā"
     },
     "dashboard": {
       "title": "Panelis",

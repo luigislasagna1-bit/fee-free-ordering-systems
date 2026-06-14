@@ -738,7 +738,8 @@
       "allStepsComplete": "All {total} steps complete · click to go live",
       "setupProgress": "Setup progress",
       "stepsComplete": "{completed}/{total} steps complete",
-      "requiredCount": "{count, plural, one {# required} other {# required}}"
+      "requiredCount": "{count, plural, one {# required} other {# required}}",
+      "comingSoonBadge": "Soon"
     },
     "dashboard": {
       "title": "Dashboard",

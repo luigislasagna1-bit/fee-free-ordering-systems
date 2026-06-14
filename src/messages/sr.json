@@ -715,7 +715,8 @@
       "allStepsComplete": "Сви кораци су завршени ({total}) · кликните за објаву",
       "setupProgress": "Напредак подешавања",
       "stepsComplete": "Завршени кораци: {completed}/{total}",
-      "requiredCount": "{count, plural, one {# обавезан} few {# обавезна} other {# обавезних}}"
+      "requiredCount": "{count, plural, one {# обавезан} few {# обавезна} other {# обавезних}}",
+      "comingSoonBadge": "Ускоро"
     },
     "dashboard": {
       "title": "Kontrolna tabla",

@@ -715,7 +715,8 @@
       "allStepsComplete": "Alle {total} trin er fuldført · klik for at gå live",
       "setupProgress": "Status for opsætning",
       "stepsComplete": "{completed}/{total} trin fuldført",
-      "requiredCount": "{count, plural, one {# obligatorisk} other {# obligatoriske}}"
+      "requiredCount": "{count, plural, one {# obligatorisk} other {# obligatoriske}}",
+      "comingSoonBadge": "Snart"
     },
     "dashboard": {
       "title": "Dashboard",

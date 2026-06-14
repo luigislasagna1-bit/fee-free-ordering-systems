@@ -715,7 +715,8 @@
       "allStepsComplete": "Všetky kroky dokončené ({total}) · kliknutím web zverejníte",
       "setupProgress": "Priebeh nastavenia",
       "stepsComplete": "Dokončené kroky: {completed}/{total}",
-      "requiredCount": "{count, plural, one {# povinný} few {# povinné} other {# povinných}}"
+      "requiredCount": "{count, plural, one {# povinný} few {# povinné} other {# povinných}}",
+      "comingSoonBadge": "Čoskoro"
     },
     "dashboard": {
       "title": "Prehľad",

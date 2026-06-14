@@ -715,7 +715,8 @@
       "allStepsComplete": "Svi koraci dovršeni ({total}) · kliknite za objavu",
       "setupProgress": "Napredak postavljanja",
       "stepsComplete": "Dovršeni koraci: {completed}/{total}",
-      "requiredCount": "{count, plural, one {# obavezan} few {# obavezna} other {# obaveznih}}"
+      "requiredCount": "{count, plural, one {# obavezan} few {# obavezna} other {# obaveznih}}",
+      "comingSoonBadge": "Uskoro"
     },
     "dashboard": {
       "title": "Upravljačka ploča",

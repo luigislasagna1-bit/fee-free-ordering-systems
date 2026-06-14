@@ -715,7 +715,8 @@
       "allStepsComplete": "Mind a(z) {total} lépés kész · kattintson a közzétételhez",
       "setupProgress": "Beállítás folyamata",
       "stepsComplete": "{completed}/{total} lépés kész",
-      "requiredCount": "{count, plural, one {# kötelező} other {# kötelező}}"
+      "requiredCount": "{count, plural, one {# kötelező} other {# kötelező}}",
+      "comingSoonBadge": "Hamarosan"
     },
     "dashboard": {
       "title": "Irányítópult",

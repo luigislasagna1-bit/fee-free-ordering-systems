@@ -715,7 +715,8 @@
       "allStepsComplete": "全{total}ステップ完了 · クリックして公開",
       "setupProgress": "セットアップの進捗",
       "stepsComplete": "{completed}/{total}ステップ完了",
-      "requiredCount": "{count, plural, other {必須 #件}}"
+      "requiredCount": "{count, plural, other {必須 #件}}",
+      "comingSoonBadge": "近日公開"
     },
     "dashboard": {
       "title": "ダッシュボード",

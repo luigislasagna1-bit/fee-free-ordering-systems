@@ -715,7 +715,8 @@
       "allStepsComplete": "اكتملت جميع الخطوات ({total}) · انقر للنشر",
       "setupProgress": "تقدّم الإعداد",
       "stepsComplete": "الخطوات المكتملة: {completed}/{total}",
-      "requiredCount": "{count, plural, other {# مطلوبة}}"
+      "requiredCount": "{count, plural, other {# مطلوبة}}",
+      "comingSoonBadge": "قريباً"
     },
     "dashboard": {
       "title": "لوحة التحكم",
