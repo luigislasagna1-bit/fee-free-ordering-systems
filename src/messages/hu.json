@@ -2166,7 +2166,8 @@
       "pageTitle": "Asztalfoglalások",
       "pageSubtitle": "Foglalások és foglalási beállítások kezelése",
       "tabReservations": "Foglalások",
-      "tabSettings": "Beállítások"
+      "tabSettings": "Beállítások",
+      "depositsSoonDesc": "Kérjen előleget foglaláskor a meg nem jelenések csökkentésére. Hamarosan fizetős kiegészítőként."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

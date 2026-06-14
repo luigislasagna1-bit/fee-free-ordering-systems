@@ -2166,7 +2166,8 @@
       "pageTitle": "Masa Rezervasyonları",
       "pageSubtitle": "Rezervasyonları ve rezervasyon ayarlarını yönetin",
       "tabReservations": "Rezervasyonlar",
-      "tabSettings": "Ayarlar"
+      "tabSettings": "Ayarlar",
+      "depositsSoonDesc": "Gelmeme durumlarını azaltmak için rezervasyonda kapora alın. Yakında ücretli eklenti olarak."
     },
     "autopilotClient": {
       "pageTitle": "Otomatik Pilot",

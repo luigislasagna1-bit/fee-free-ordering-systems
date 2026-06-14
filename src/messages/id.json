@@ -2222,7 +2222,8 @@
       "pageTitle": "Reservasi Meja",
       "pageSubtitle": "Kelola pemesanan dan pengaturan reservasi",
       "tabReservations": "Reservasi",
-      "tabSettings": "Pengaturan"
+      "tabSettings": "Pengaturan",
+      "depositsSoonDesc": "Tarik deposit saat tamu memesan untuk mengurangi no-show. Segera hadir sebagai add-on berbayar."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

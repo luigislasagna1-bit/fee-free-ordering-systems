@@ -2222,7 +2222,8 @@
       "pageTitle": "Rezervace stolů",
       "pageSubtitle": "Správa rezervací a nastavení rezervací",
       "tabReservations": "Rezervace",
-      "tabSettings": "Nastavení"
+      "tabSettings": "Nastavení",
+      "depositsSoonDesc": "Vyberte zálohu při rezervaci a omezte neúčast hostů. Brzy jako placený doplněk."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

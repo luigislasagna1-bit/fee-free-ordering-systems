@@ -2222,7 +2222,8 @@
       "pageTitle": "Pöytävaraukset",
       "pageSubtitle": "Hallinnoi varauksia ja varausasetuksia",
       "tabReservations": "Varaukset",
-      "tabSettings": "Asetukset"
+      "tabSettings": "Asetukset",
+      "depositsSoonDesc": "Peri varausmaksu varauksen yhteydessä vähentääksesi peruuttamatta jättämisiä. Tulossa pian maksullisena lisäosana."
     },
     "autopilotClient": {
       "pageTitle": "Autopilotti",

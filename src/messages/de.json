@@ -2222,7 +2222,8 @@
       "pageTitle": "Tischreservierungen",
       "pageSubtitle": "Buchungen und Reservierungseinstellungen verwalten",
       "tabReservations": "Reservierungen",
-      "tabSettings": "Einstellungen"
+      "tabSettings": "Einstellungen",
+      "depositsSoonDesc": "Erheben Sie eine Anzahlung bei der Buchung, um No-Shows zu reduzieren. Bald als kostenpflichtiges Add-on verfügbar."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

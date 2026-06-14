@@ -2222,7 +2222,8 @@
       "pageTitle": "Reserves de taula",
       "pageSubtitle": "Gestiona les reserves i la configuració",
       "tabReservations": "Reserves",
-      "tabSettings": "Configuració"
+      "tabSettings": "Configuració",
+      "depositsSoonDesc": "Cobra un dipòsit en reservar per reduir les absències. Aviat com a complement de pagament."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

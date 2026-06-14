@@ -2166,7 +2166,8 @@
       "pageTitle": "Rezerwacje stolików",
       "pageSubtitle": "Zarządzaj rezerwacjami i ustawieniami",
       "tabReservations": "Rezerwacje",
-      "tabSettings": "Ustawienia"
+      "tabSettings": "Ustawienia",
+      "depositsSoonDesc": "Pobieraj zaliczkę przy rezerwacji, aby ograniczyć nieobecności. Wkrótce jako płatny dodatek."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

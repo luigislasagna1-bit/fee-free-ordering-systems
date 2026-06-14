@@ -2222,7 +2222,8 @@
       "pageTitle": "הזמנות שולחנות",
       "pageSubtitle": "נהל הזמנות והגדרות הזמנות שולחן",
       "tabReservations": "הזמנות",
-      "tabSettings": "הגדרות"
+      "tabSettings": "הגדרות",
+      "depositsSoonDesc": "גבה פיקדון בעת ההזמנה כדי לצמצם אי-הגעות. בקרוב כתוסף בתשלום."
     },
     "autopilotClient": {
       "pageTitle": "אוטופיילוט",

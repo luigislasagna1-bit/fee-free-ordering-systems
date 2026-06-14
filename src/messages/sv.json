@@ -2222,7 +2222,8 @@
       "pageTitle": "Bordsreservationer",
       "pageSubtitle": "Hantera bokningar och reservationsinställningar",
       "tabReservations": "Reservationer",
-      "tabSettings": "Inställningar"
+      "tabSettings": "Inställningar",
+      "depositsSoonDesc": "Ta en deposition vid bokning för att minska uteblivna besök. Kommer snart som ett betaltillägg."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

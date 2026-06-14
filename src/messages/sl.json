@@ -2222,7 +2222,8 @@
       "pageTitle": "Rezervacije miz",
       "pageSubtitle": "Upravljajte rezervacije in nastavitve rezervacij",
       "tabReservations": "Rezervacije",
-      "tabSettings": "Nastavitve"
+      "tabSettings": "Nastavitve",
+      "depositsSoonDesc": "Zaračunajte polog ob rezervaciji za zmanjšanje neprihodov. Kmalu kot plačljiv dodatek."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

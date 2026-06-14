@@ -2222,7 +2222,8 @@
       "pageTitle": "테이블 예약",
       "pageSubtitle": "예약 및 예약 설정 관리",
       "tabReservations": "예약",
-      "tabSettings": "설정"
+      "tabSettings": "설정",
+      "depositsSoonDesc": "예약 시 보증금을 받아 노쇼를 줄이세요. 유료 애드온으로 곧 제공됩니다."
     },
     "autopilotClient": {
       "pageTitle": "자동화",

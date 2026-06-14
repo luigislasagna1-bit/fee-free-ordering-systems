@@ -2222,7 +2222,8 @@
       "pageTitle": "Reservas de mesa",
       "pageSubtitle": "Gestiona reservas y su configuración",
       "tabReservations": "Reservas",
-      "tabSettings": "Configuración"
+      "tabSettings": "Configuración",
+      "depositsSoonDesc": "Cobra un depósito al reservar para reducir las ausencias. Próximamente como complemento de pago."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

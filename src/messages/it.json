@@ -2222,7 +2222,8 @@
       "pageTitle": "Prenotazioni tavolo",
       "pageSubtitle": "Gestisci prenotazioni e impostazioni",
       "tabReservations": "Prenotazioni",
-      "tabSettings": "Impostazioni"
+      "tabSettings": "Impostazioni",
+      "depositsSoonDesc": "Incassa una caparra al momento della prenotazione per ridurre le mancate presentazioni. Presto come componente aggiuntivo a pagamento."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

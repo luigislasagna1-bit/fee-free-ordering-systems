@@ -2222,7 +2222,8 @@
       "pageTitle": "Bordreservasjoner",
       "pageSubtitle": "Administrer bestillinger og reservasjonsinnstillinger",
       "tabReservations": "Reservasjoner",
-      "tabSettings": "Innstillinger"
+      "tabSettings": "Innstillinger",
+      "depositsSoonDesc": "Ta et depositum ved booking for å redusere no-shows. Kommer snart som et betalt tillegg."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

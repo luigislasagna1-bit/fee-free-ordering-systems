@@ -2222,7 +2222,8 @@
       "pageTitle": "Rezervări mese",
       "pageSubtitle": "Gestionează rezervările și setările de rezervare",
       "tabReservations": "Rezervări",
-      "tabSettings": "Setări"
+      "tabSettings": "Setări",
+      "depositsSoonDesc": "Încasează un avans la rezervare pentru a reduce neprezentările. În curând ca supliment plătit."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

@@ -2887,7 +2887,8 @@
       "pageTitle": "Staliukų rezervacijos",
       "pageSubtitle": "Tvarkykite rezervacijas ir rezervacijų nustatymus",
       "tabReservations": "Rezervacijos",
-      "tabSettings": "Nustatymai"
+      "tabSettings": "Nustatymai",
+      "depositsSoonDesc": "Imkite užstatą rezervuojant, kad sumažintumėte neatvykimus. Netrukus kaip mokamas priedas."
     },
     "autopilotClient": {
       "pageTitle": "Autopilotas",

@@ -2222,7 +2222,8 @@
       "pageTitle": "حجوزات الطاولات",
       "pageSubtitle": "إدارة الحجوزات وإعداداتها",
       "tabReservations": "الحجوزات",
-      "tabSettings": "الإعدادات"
+      "tabSettings": "الإعدادات",
+      "depositsSoonDesc": "حصّل عربونًا عند الحجز لتقليل حالات عدم الحضور. قريبًا كإضافة مدفوعة."
     },
     "autopilotClient": {
       "pageTitle": "الطيار الآلي",

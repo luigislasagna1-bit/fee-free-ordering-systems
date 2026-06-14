@@ -2222,7 +2222,8 @@
       "pageTitle": "Κρατήσεις τραπεζιών",
       "pageSubtitle": "Διαχείριση κρατήσεων και ρυθμίσεων",
       "tabReservations": "Κρατήσεις",
-      "tabSettings": "Ρυθμίσεις"
+      "tabSettings": "Ρυθμίσεις",
+      "depositsSoonDesc": "Χρεώστε προκαταβολή κατά την κράτηση για να μειώσετε τις μη εμφανίσεις. Σύντομα ως πρόσθετο επί πληρωμή."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

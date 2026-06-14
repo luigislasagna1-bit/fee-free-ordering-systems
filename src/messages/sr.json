@@ -2222,7 +2222,8 @@
       "pageTitle": "Rezervacije stolova",
       "pageSubtitle": "Upravljajte rezervacijama i podešavanjima",
       "tabReservations": "Rezervacije",
-      "tabSettings": "Podešavanja"
+      "tabSettings": "Podešavanja",
+      "depositsSoonDesc": "Наплатите депозит при резервацији да смањите недоласке. Ускоро као плаћени додатак."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

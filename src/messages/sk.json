@@ -2887,7 +2887,8 @@
       "pageTitle": "Rezervácie stolov",
       "pageSubtitle": "Spravujte rezervácie a nastavenia rezervácií",
       "tabReservations": "Rezervácie",
-      "tabSettings": "Nastavenia"
+      "tabSettings": "Nastavenia",
+      "depositsSoonDesc": "Vyberte zálohu pri rezervácii a obmedzte neúčasť hostí. Čoskoro ako platený doplnok."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

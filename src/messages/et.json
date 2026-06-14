@@ -2222,7 +2222,8 @@
       "pageTitle": "Laua broneeringud",
       "pageSubtitle": "Halda broneeringuid ja seadeid",
       "tabReservations": "Broneeringud",
-      "tabSettings": "Seaded"
+      "tabSettings": "Seaded",
+      "depositsSoonDesc": "Võtke broneerimisel tagatisraha, et vähendada kohale ilmumata jätmisi. Peagi tasulise lisamoodulina."
     },
     "autopilotClient": {
       "pageTitle": "Autopiloot",

@@ -28,6 +28,11 @@ export async function GET() {
       requireCustomerEmail: true,
       requireCustomerPhone: true,
       showCustomerMenuSearch: true,
+      // acceptsReservations so the Reservations → Settings page loads the REAL
+      // value. It previously defaulted to "Yes" when this field was absent from
+      // the response, conflicting with the Services page's Table Reservations
+      // toggle (which reads the same flag). Luigi 2026-06-14.
+      acceptsReservations: true,
       // Surface the owner-uploaded custom alarm sound URL so the KDS
       // can offer it as a third option in its Sound Settings picker.
       kitchenAlertSoundUrl: true,

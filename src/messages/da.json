@@ -2222,7 +2222,8 @@
       "pageTitle": "Bordbookinger",
       "pageSubtitle": "Administrer bookinger og reservationsindstillinger",
       "tabReservations": "Reservationer",
-      "tabSettings": "Indstillinger"
+      "tabSettings": "Indstillinger",
+      "depositsSoonDesc": "Opkræv et depositum ved booking for at reducere udeblivelser. Kommer snart som et betalt tilføjelsesprogram."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

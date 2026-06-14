@@ -2222,7 +2222,8 @@
       "pageTitle": "Réservations de table",
       "pageSubtitle": "Gérez les réservations et les paramètres",
       "tabReservations": "Réservations",
-      "tabSettings": "Paramètres"
+      "tabSettings": "Paramètres",
+      "depositsSoonDesc": "Encaissez un acompte lors de la réservation pour réduire les absences. Bientôt disponible en module payant."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

@@ -2222,7 +2222,8 @@
       "pageTitle": "餐桌预订",
       "pageSubtitle": "管理预订及相关设置",
       "tabReservations": "预订",
-      "tabSettings": "设置"
+      "tabSettings": "设置",
+      "depositsSoonDesc": "在客人预订时收取押金，减少爽约。即将作为付费附加功能推出。"
     },
     "autopilotClient": {
       "pageTitle": "自动营销",

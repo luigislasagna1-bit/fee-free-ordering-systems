@@ -2222,7 +2222,8 @@
       "pageTitle": "การจองโต๊ะ",
       "pageSubtitle": "จัดการการจองและการตั้งค่า",
       "tabReservations": "การจอง",
-      "tabSettings": "การตั้งค่า"
+      "tabSettings": "การตั้งค่า",
+      "depositsSoonDesc": "เก็บมัดจำเมื่อลูกค้าจองเพื่อลดการไม่มาตามนัด เร็วๆ นี้ในรูปแบบส่วนเสริมแบบชำระเงิน"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

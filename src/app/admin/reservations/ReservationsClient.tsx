@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import {
   CalendarDays, Plus, X, Edit2, Trash2, Settings,
   Users, Clock, Phone, Mail, Table2, Loader2, Save,
-  RefreshCw, Search,
+  RefreshCw, Search, Wallet, Lock,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
@@ -404,6 +404,7 @@ const SLOT_INTERVAL_OPTIONS = [5, 10, 15, 20, 30, 45, 60] as const;
 
 function SettingsTab() {
   const t = useTranslations("admin.reservationsList");
+  const tSidebar = useTranslations("admin.sidebar");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState<SimpleSettingsForm>({
@@ -678,6 +679,29 @@ function SettingsTab() {
               </button>
             </label>
           </div>
+        </div>
+      </div>
+
+      {/* Reservation Deposits — paid add-on, COMING SOON. Locked teaser so owners
+          see it on the roadmap; the take_reservation_deposit feature is comingSoon
+          and server-gated in the reservation routes. Luigi 2026-06-14. */}
+      <div className="bg-gradient-to-br from-white to-amber-50/40 rounded-2xl border border-amber-200 shadow-sm p-5 select-none">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-start gap-3 min-w-0">
+            <div className="w-9 h-9 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center flex-shrink-0">
+              <Wallet className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="font-semibold text-gray-900">Reservation Deposits</h3>
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
+                  <Lock className="w-2.5 h-2.5" /> {tSidebar("comingSoonBadge")}
+                </span>
+              </div>
+              <p className="text-sm text-gray-600 mt-1 leading-relaxed">{t("depositsSoonDesc")}</p>
+            </div>
+          </div>
+          <Lock className="w-4 h-4 text-amber-400 flex-shrink-0 mt-1" />
         </div>
       </div>
     </div>

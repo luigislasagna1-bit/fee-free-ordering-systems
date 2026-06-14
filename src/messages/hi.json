@@ -2562,7 +2562,8 @@
       "pageTitle": "टेबल आरक्षण",
       "pageSubtitle": "बुकिंग और आरक्षण सेटिंग्स प्रबंधित करें",
       "tabReservations": "आरक्षण",
-      "tabSettings": "सेटिंग्स"
+      "tabSettings": "सेटिंग्स",
+      "depositsSoonDesc": "नो-शो कम करने के लिए बुकिंग के समय जमा राशि लें। जल्द ही एक सशुल्क ऐड-ऑन के रूप में।"
     },
     "autopilotClient": {
       "pageTitle": "ऑटोपायलट",

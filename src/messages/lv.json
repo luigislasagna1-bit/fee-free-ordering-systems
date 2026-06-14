@@ -2222,7 +2222,8 @@
       "pageTitle": "Galda rezervācijas",
       "pageSubtitle": "Pārvaldīt rezervācijas un to iestatījumus",
       "tabReservations": "Rezervācijas",
-      "tabSettings": "Iestatījumi"
+      "tabSettings": "Iestatījumi",
+      "depositsSoonDesc": "Iekasējiet depozītu rezervēšanas laikā, lai samazinātu neierašanos. Drīzumā kā maksas papildinājums."
     },
     "autopilotClient": {
       "pageTitle": "Autopilots",

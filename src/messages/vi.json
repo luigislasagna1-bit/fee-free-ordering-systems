@@ -2166,7 +2166,8 @@
       "pageTitle": "Đặt Bàn",
       "pageSubtitle": "Quản lý đặt chỗ và cài đặt đặt bàn",
       "tabReservations": "Đặt bàn",
-      "tabSettings": "Cài đặt"
+      "tabSettings": "Cài đặt",
+      "depositsSoonDesc": "Thu đặt cọc khi khách đặt bàn để giảm tình trạng không đến. Sắp ra mắt dưới dạng tiện ích trả phí."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

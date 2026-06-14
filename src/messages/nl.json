@@ -2222,7 +2222,8 @@
       "pageTitle": "Tafelreserveringen",
       "pageSubtitle": "Boekingen en reserveringsinstellingen beheren",
       "tabReservations": "Reserveringen",
-      "tabSettings": "Instellingen"
+      "tabSettings": "Instellingen",
+      "depositsSoonDesc": "Vraag een aanbetaling bij het boeken om no-shows te verminderen. Binnenkort als betaalde add-on."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

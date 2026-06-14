@@ -2606,7 +2606,8 @@
       "pageTitle": "Table Reservations",
       "pageSubtitle": "Manage bookings and reservation settings",
       "tabReservations": "Reservations",
-      "tabSettings": "Settings"
+      "tabSettings": "Settings",
+      "depositsSoonDesc": "Collect a deposit when guests book to cut down on no-shows. Coming soon as a paid add-on."
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
