@@ -1,0 +1,54 @@
+# Codemagic CI/CD — automated iOS builds for the Fee Free Order App.
+#
+# Use this AFTER the first manual Xcode session has added the StarIO10
+# Swift Package to the App target (committed to project.pbxproj). From
+# then on, every push to GitHub builds + signs + ships to TestFlight with
+# NO Mac needed — so you can cancel the rented Mac once it compiles clean.
+#
+# One-time setup in the Codemagic UI:
+#   1. Sign up at codemagic.io with your GitHub, connect this repo.
+#   2. Teams > Integrations > App Store Connect: add an API key, name it
+#      "FeeFree-ASC" (App Store Connect > Users and Access > Integrations
+#      > generate an API key with "App Manager" role).
+#   3. That's it — push to main and it builds.
+workflows:
+  ios-testflight:
+    name: Fee Free Order App — iOS (TestFlight)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    integrations:
+      app_store_connect: FeeFree-ASC
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.feefreeordering.kitchen
+      vars:
+        XCODE_WORKSPACE: "ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+      node: 20
+      xcode: latest
+    scripts:
+      - name: Install JS dependencies
+        script: npm ci
+      - name: Capacitor sync (iOS)
+        script: npx cap sync ios
+      - name: Set up code signing
+        script: xcode-project use-profiles
+      - name: Resolve Swift packages
+        script: |
+          xcodebuild -resolvePackageDependencies \
+            -workspace "$XCODE_WORKSPACE" -scheme "$XCODE_SCHEME"
+      - name: Build signed IPA
+        script: |
+          xcode-project build-ipa \
+            --workspace "$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        # No auto-submit to App Store review — we promote manually after
+        # testing the TestFlight build on a real printer.

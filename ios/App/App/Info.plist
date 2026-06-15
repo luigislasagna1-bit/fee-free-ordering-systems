@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>Fee Free Kitchen</string>
+        <string>Fee Free Order App</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -68,5 +68,11 @@
 		<string>_ipp._tcp</string>
 		<string>_printer._tcp</string>
 	</array>
+	<!-- Export compliance: the app uses only standard HTTPS/TLS provided by
+	     iOS (and unencrypted raw TCP to the local printer) — no custom or
+	     non-exempt encryption. NO here auto-answers App Store Connect's
+	     export-compliance question on every upload. -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

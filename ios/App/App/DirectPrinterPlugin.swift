@@ -2,15 +2,14 @@ import Foundation
 import Capacitor
 import Network
 
-// TODO(post-MVP): integrate Star's iOS SDK (StarIO_Extension SPM)
-// for the same "Star printers just work" behavior the Android plugin
-// now has via the StarIOPort path. Until then, iOS users with Star
-// printers will need to manually switch the printer's emulation
-// mode to ESC/POS via Star's PC utility. SPM dependency:
-//   https://github.com/star-micronics/StarIO10-SDK-iOS
-// The integration is analogous to the Android tryStarPrint() helper
-// in DirectPrinterPlugin.java — try Star SDK first, fall back to
-// raw TCP on non-Star printers.
+// Star printing path: StarXpandBridge.swift (StarIO10 SDK) renders the
+// receipt to a bitmap and prints it via actionPrintImage — a faithful
+// port of the proven Android StarXpandBridge.kt. print() below tries
+// StarXpand FIRST (the only reliable path for Star printers like the
+// TSP143IIIW), then falls back to the raw-TCP code in this file for
+// non-Star printers (Epson/Bixolon). The StarIO10 SDK is added to the
+// App target via Swift Package Manager (Xcode > File > Add Packages):
+//   https://github.com/star-micronics/StarXpand-SDK-iOS  (module: StarIO10)
 
 /**
  * DirectPrinter — iOS counterpart to the Android plugin.
@@ -301,8 +300,13 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
         }
     }
 
-    /// Send raw bytes to a network printer over TCP.
-    /// Required params: ip, bytes (base64). Optional: port, timeoutMs.
+    /// Print a receipt. Mirrors the Android plugin's contract:
+    ///   ip (string, required), plus ONE of:
+    ///     - lines (array): structured receipt → StarXpand bitmap path
+    ///     - bytes (base64): raw ESC/POS → raw-TCP path (non-Star printers)
+    ///   Optional: port (9100), timeoutMs (5000), paperWidthDots (576).
+    /// Tries Star's SDK FIRST (the only reliable path for Star printers),
+    /// then falls back to raw TCP. Resolves { ok, method }.
     @objc func print(_ call: CAPPluginCall) {
         guard let ip = call.getString("ip"), !ip.isEmpty else {
             call.reject("ip parameter is required")
@@ -310,24 +314,51 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
         }
         let port = UInt16(call.getInt("port") ?? Int(Self.DEFAULT_PORT))
         let timeoutMs = call.getInt("timeoutMs") ?? Self.DEFAULT_TIMEOUT_MS
-        guard let bytesB64 = call.getString("bytes"), !bytesB64.isEmpty else {
-            call.reject("bytes parameter (base64) is required")
-            return
+        let paperWidthDots = call.getInt("paperWidthDots") ?? 576
+
+        // Optional structured receipt for the StarXpand bitmap renderer.
+        var linesJson: String? = nil
+        if let linesArr = call.getArray("lines"),
+           let data = try? JSONSerialization.data(withJSONObject: linesArr, options: []),
+           let json = String(data: data, encoding: .utf8) {
+            linesJson = json
         }
-        guard let payload = Data(base64Encoded: bytesB64) else {
-            call.reject("bytes is not valid base64")
+        // Optional legacy ESC/POS bytes for non-Star printers.
+        let bytesB64 = call.getString("bytes")
+        let payload: Data? = (bytesB64?.isEmpty == false) ? Data(base64Encoded: bytesB64!) : nil
+
+        if linesJson == nil && (payload?.isEmpty != false) {
+            call.reject("either bytes or lines parameter is required")
             return
         }
 
-        connectAndSend(ip: ip, port: port, payload: payload, timeoutMs: timeoutMs) { result in
-            switch result {
-            case .success(let bytesWritten):
-                call.resolve([
-                    "ok": true,
-                    "bytesWritten": bytesWritten,
-                ])
-            case .failure(let err):
-                call.reject(err.message, err.reason)
+        // Strategy (mirrors Android): StarXpand FIRST for Star printers,
+        // then raw TCP for Epson/Bixolon/Citizen.
+        Task {
+            let xpandResult: String
+            if let linesJson = linesJson {
+                xpandResult = await StarXpandBridge.printLines(
+                    ip: ip, linesJson: linesJson, widthDots: paperWidthDots, timeoutMs: timeoutMs)
+            } else {
+                xpandResult = await StarXpandBridge.testPrint(ip: ip, timeoutMs: timeoutMs)
+            }
+            if xpandResult == "ok" {
+                call.resolve(["ok": true, "method": "starxpand"])
+                return
+            }
+
+            // Raw TCP fallback — requires ESC/POS bytes.
+            guard let payload = payload, !payload.isEmpty else {
+                call.reject("StarXpand print failed: \(xpandResult)", "io_error")
+                return
+            }
+            self.connectAndSend(ip: ip, port: port, payload: payload, timeoutMs: timeoutMs) { result in
+                switch result {
+                case .success(let bytesWritten):
+                    call.resolve(["ok": true, "bytesWritten": bytesWritten, "method": "raw"])
+                case .failure(let err):
+                    call.reject(err.message, err.reason)
+                }
             }
         }
     }

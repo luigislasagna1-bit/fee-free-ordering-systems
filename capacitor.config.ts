@@ -35,7 +35,7 @@ import type { CapacitorConfig } from "@capacitor/cli";
  */
 const config: CapacitorConfig = {
   appId: "com.feefreeordering.kitchen",
-  appName: "Fee Free Kitchen",
+  appName: "Fee Free Order App",
   // Dummy webDir — required by CLI validation but unused at runtime
   // because server.url is set. Vendor it in /public so it exists.
   webDir: "public",
