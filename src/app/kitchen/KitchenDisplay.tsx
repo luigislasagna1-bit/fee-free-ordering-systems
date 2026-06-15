@@ -23,6 +23,7 @@ import {
   nativePrint,
   nativePrinterErrorCopy,
 } from "@/lib/native-printer";
+import { registerKitchenPush } from "@/lib/native-push";
 import { NativePrinterSetup, getDirectPrinterConfig } from "./NativePrinterSetup";
 import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
 import { useTranslations } from "next-intl";
@@ -737,6 +738,13 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // (status "pending") re-arms the alarm loop the same way a new order
   // does; auto-accept (status "confirmed") shows a single toast so staff
   // know a booking just landed without the alarm cadence.
+  // Native push: register this device's FCM/APNs token on launch so a new
+  // order rings even with the screen off / app backgrounded. No-op on the web
+  // (only acts inside the Capacitor app shell). Luigi 2026-06-15.
+  useEffect(() => {
+    registerKitchenPush();
+  }, []);
+
   useEffect(() => {
     // Poll on EVERY tab. Bookings now appear in In Progress (confirmed/seated)
     // and Complete (finished) as well as the Reservations / All tabs, and an

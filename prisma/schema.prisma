@@ -248,6 +248,15 @@ model Restaurant {
   stripeSubscriptionId String?   @unique
   currentPeriodEnd     DateTime?
   cancelAtPeriodEnd    Boolean   @default(false)
+  /// Dunning / failed-payment grace (Luigi 2026-06-15). A failed charge does
+  /// NOT cut service — it starts a grace clock; paid features stay ON until
+  /// graceEndsAt, then drop to the free tier (ordering always keeps working).
+  /// dunningStartedAt anchors the "day X of N" countdown; lastDunnedOn is the
+  /// YYYY-MM-DD of the last daily reminder (one nudge/day idempotency). Null =
+  /// billing healthy. See src/lib/entitlements.ts + /api/cron/dunning.
+  dunningStartedAt     DateTime?
+  graceEndsAt          DateTime?
+  lastDunnedOn         String?
   reviewLink           String?
   infoContent          String? // JSON for info page custom CTAs etc
   themeSettings        String? // JSON for customer-facing website theme
@@ -424,6 +433,10 @@ model Restaurant {
   @@index([resellerProfileId])
   @@index([parentRestaurantId])
   @@index([publishedAt])
+  // Dunning cron scans only restaurants currently in a grace period; the
+  // in-grace set is tiny, so indexing graceEndsAt keeps the daily sweep off
+  // a full-table scan as the platform grows.
+  @@index([graceEndsAt])
 }
 
 /// Brand → location invite tokens. When a multi-location brand owner wants
@@ -2423,6 +2436,14 @@ model RestaurantAddOn {
   currentPeriodEnd     DateTime?
   cancelAtPeriodEnd    Boolean   @default(false)
   trialEndsAt          DateTime?
+  /// Failed-payment grace deadline (Luigi 2026-06-15). When this add-on's
+  /// charge fails we set status=past_due AND graceEndsAt=now+10d; the
+  /// entitlement check (src/lib/entitlements.ts) keeps GRANTING this add-on's
+  /// features while past_due AND graceEndsAt > now, so service doesn't cut on
+  /// day 1. Once graceEndsAt passes the feature drops automatically. Mirrors
+  /// the restaurant-level Restaurant.graceEndsAt clock; denormalized here so
+  /// the hot-path entitlement query stays a single flat table read (no join).
+  graceEndsAt          DateTime?
   activatedAt          DateTime  @default(now())
 
   createdAt DateTime @default(now())
@@ -3151,5 +3172,28 @@ model ResellerReportInvite {
   /// because the User table may move under us and the invite shouldn't
   /// vanish if an admin account is removed.
   invitedById String
+}
+
+/// A registered kitchen device (phone/tablet running the native Kitchen Order
+/// App) that should receive a PUSH notification when a new order arrives — so
+/// staff are alerted even with the screen off / app backgrounded. One row per
+/// FCM (Android) / APNs-via-FCM (iOS) token. Dead tokens are pruned when FCM
+/// reports them unregistered; a device re-registers (upsert) on every launch,
+/// refreshing lastSeenAt. No relation back to Restaurant (a hot, large table)
+/// — restaurantId + index is enough and keeps device writes cheap.
+/// Push notifications. Named KitchenPushToken (not KitchenDevice — that model
+/// already exists for device fingerprinting). Luigi 2026-06-15.
+model KitchenPushToken {
+  id           String   @id @default(cuid())
+  restaurantId String
+  /// FCM/APNs registration token. Unique so a re-register upserts in place.
+  token        String   @unique
+  /// "android" | "ios" | "web" — drives platform-specific payload tweaks.
+  platform     String   @default("android")
+  createdAt    DateTime @default(now())
+  /// Refreshed on every app launch; lets a future cron prune long-silent devices.
+  lastSeenAt   DateTime @default(now())
+
+  @@index([restaurantId])
 }
 

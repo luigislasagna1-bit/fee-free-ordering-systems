@@ -19,6 +19,8 @@
 import prisma from "@/lib/db";
 import { notifyStaff, notifyCustomer } from "@/lib/notifications";
 import { recordAppliedCoupons } from "@/lib/coupon-ledger";
+import { sendKitchenPush } from "@/lib/push";
+import { formatCurrency } from "@/lib/utils";
 
 export async function fireOrderNotifications(orderId: string): Promise<{ fired: boolean }> {
   // Atomic claim: only ONE caller wins the right to fire notifications.
@@ -44,6 +46,7 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
           estimatedPickup: true,
           estimatedDelivery: true,
           defaultLanguage: true,
+          currency: true,
         },
       },
       items: {
@@ -182,6 +185,18 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
         : undefined,
     },
   }).catch((e) => console.error("[fireOrderNotifications] notifyStaff:", e));
+
+  // Native push to the kitchen's registered devices (phone/tablet) so a NEW
+  // ORDER rings even with the screen off / app backgrounded. Fire-and-forget —
+  // a push hiccup must NEVER fail order release (Stripe would retry the whole
+  // webhook). Gated: a silent no-op until FIREBASE_SERVICE_ACCOUNT is set AND a
+  // device has registered. Body is language-neutral (order data only), so it
+  // needs no per-locale translation. Luigi 2026-06-15.
+  sendKitchenPush(order.restaurant.id, {
+    title: order.restaurant.name || "New order",
+    body: `#${order.orderNumber} · ${order.customerName} · ${formatCurrency(order.total, order.restaurant.currency)}`,
+    data: { type: "new_order", orderId: order.id },
+  }).catch((e) => console.error("[fireOrderNotifications] sendKitchenPush:", e));
 
   return { fired: true };
 }

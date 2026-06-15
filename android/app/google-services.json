@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "720779870480",
+    "project_id": "fee-free-ordering",
+    "storage_bucket": "fee-free-ordering.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720779870480:android:88dcf7018b684e47f0e595",
+        "android_client_info": {
+          "package_name": "com.feefreeordering.kitchen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHMaB1o8vqJK_ZyuOuCzTg4tMnO9Svmvg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
