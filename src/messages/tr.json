@@ -4258,7 +4258,8 @@
       "faq": "SSS",
       "demo": "Demo",
       "login": "Giriş",
-      "startTrial": "Ücretsiz Başla"
+      "startTrial": "Ücretsiz Başla",
+      "bookDemo": "Demo ayarlayın"
     },
     "footer": {
       "product": "Ürün",

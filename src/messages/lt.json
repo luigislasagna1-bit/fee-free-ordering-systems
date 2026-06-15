@@ -4258,7 +4258,8 @@
       "faq": "DUK",
       "demo": "Demo",
       "login": "Prisijungti",
-      "startTrial": "Pradėti nemokamai"
+      "startTrial": "Pradėti nemokamai",
+      "bookDemo": "Užsisakyti demo"
     },
     "footer": {
       "product": "Produktas",

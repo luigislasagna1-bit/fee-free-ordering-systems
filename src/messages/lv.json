@@ -4258,7 +4258,8 @@
       "faq": "BUJ",
       "demo": "Demo",
       "login": "Pieteikties",
-      "startTrial": "Sākt bezmaksas"
+      "startTrial": "Sākt bezmaksas",
+      "bookDemo": "Rezervēt demo"
     },
     "footer": {
       "product": "Produkts",

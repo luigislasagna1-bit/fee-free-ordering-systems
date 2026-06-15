@@ -4258,7 +4258,8 @@
       "faq": "FAQ",
       "demo": "Demo",
       "login": "Einloggen",
-      "startTrial": "Kostenlos starten"
+      "startTrial": "Kostenlos starten",
+      "bookDemo": "Demo buchen"
     },
     "footer": {
       "product": "Produkt",

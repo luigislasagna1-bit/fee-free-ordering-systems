@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, ChefHat, Globe } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { BookDemoButton } from "@/components/BookDemoButton";
 
 const LOCALES: { code: string; label: string }[] = [
   { code: "en", label: "English" },
@@ -62,6 +63,7 @@ export function PublicNav({ currentLocale = "en" }: Props) {
               ))}
             </select>
           </div>
+          <BookDemoButton label={t("bookDemo")} className="text-emerald-600 font-semibold hover:text-emerald-700 transition cursor-pointer" />
           <Link href="/login" className="text-gray-700 font-medium hover:text-emerald-500 transition">
             {t("login")}
           </Link>
@@ -100,6 +102,7 @@ export function PublicNav({ currentLocale = "en" }: Props) {
                 <option key={o.code} value={o.code}>{o.label}</option>
               ))}
             </select>
+            <BookDemoButton label={t("bookDemo")} className="block text-left w-full text-emerald-600 font-semibold py-1 cursor-pointer" />
             <Link href="/login" className="block text-gray-700 font-medium py-1">{t("login")}</Link>
             <Link href="/signup" className="block bg-emerald-500 text-white font-semibold px-5 py-2 rounded-lg text-center">
               {t("startTrial")}

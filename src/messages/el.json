@@ -4258,7 +4258,8 @@
       "faq": "Συχνές ερωτήσεις",
       "demo": "Demo",
       "login": "Είσοδος",
-      "startTrial": "Ξεκινήστε δωρεάν"
+      "startTrial": "Ξεκινήστε δωρεάν",
+      "bookDemo": "Κλείστε demo"
     },
     "footer": {
       "product": "Προϊόν",

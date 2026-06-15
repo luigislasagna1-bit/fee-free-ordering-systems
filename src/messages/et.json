@@ -4258,7 +4258,8 @@
       "faq": "KKK",
       "demo": "Demo",
       "login": "Logi sisse",
-      "startTrial": "Alusta tasuta"
+      "startTrial": "Alusta tasuta",
+      "bookDemo": "Broneeri demo"
     },
     "footer": {
       "product": "Toode",

@@ -4258,7 +4258,8 @@
       "faq": "UKK",
       "demo": "Demo",
       "login": "Kirjaudu",
-      "startTrial": "Aloita ilmaiseksi"
+      "startTrial": "Aloita ilmaiseksi",
+      "bookDemo": "Varaa esittely"
     },
     "footer": {
       "product": "Tuote",

@@ -4258,7 +4258,8 @@
       "faq": "FAQ",
       "demo": "Демо",
       "login": "Войти",
-      "startTrial": "Начать бесплатно"
+      "startTrial": "Начать бесплатно",
+      "bookDemo": "Заказать демо"
     },
     "footer": {
       "product": "Продукт",
