@@ -132,6 +132,10 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
   const tc = useTranslations("checkout");
   const tCommon = useTranslations("common");
   const tReceipt = useTranslations("receipt.orderTypes");
+  // Reuse the already-translated receipt labels (all 38 locales) for the
+  // relabeled reprint buttons — Kitchen Receipt / Customer Receipt / Both.
+  const tReceipts = useTranslations("admin.receipts");
+  const tFees = useTranslations("admin.serviceFees");
   const [showReject, setShowReject] = useState(false);
   const [showCancel, setShowCancel] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
@@ -753,14 +757,11 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           )}
         </div>
 
-        {/* Print buttons */}
-        <div className={`grid grid-cols-3 gap-1.5 border-t ${t.border} pt-3`}>
-          <PrintBtn label={tk("title")} icon={<UtensilsCrossed className="w-3.5 h-3.5" />} onClick={() => print("kitchen")} loading={printing === "kitchen"} t={t} />
-          <PrintBtn label={tk("print")} icon={<ReceiptText className="w-3.5 h-3.5" />} onClick={() => print("customer")} loading={printing === "customer"} t={t} />
-          <PrintBtn label={tCommon("all")} icon={<RefreshCw className="w-3.5 h-3.5" />} onClick={() => print("both")} loading={printing === "both"} t={t} />
-        </div>
+        {/* Reprint buttons moved INTO "Manage order" below (Luigi 2026-06-15) —
+            auto-print is on when a printer's configured, so the tile stays clean
+            and reprint is one tap away under Manage order when actually needed. */}
 
-        {/* Manage order — Cancel + Refund. HIDDEN while the order is still
+        {/* Manage order — reprint receipts + Cancel + Refund. HIDDEN while the order is still
             PENDING (not yet accepted): a pending order can only be Rejected,
             never Cancelled — Reject (above) is the single exit and handles the
             money. Once it's accepted this appears (Cancel + Refund), and it
@@ -778,6 +779,14 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           </button>
           {showActions && (
             <div className="mt-2 space-y-2">
+              {/* Reprint — Kitchen / Customer / Both receipts, each with a
+                  printer icon. Auto-print already fires on accept; this is the
+                  manual re-run. Luigi 2026-06-15. */}
+              <div className="grid grid-cols-3 gap-1.5">
+                <PrintBtn label={tReceipts("kitchenReceipt")} icon={<Printer className="w-3.5 h-3.5" />} onClick={() => print("kitchen")} loading={printing === "kitchen"} t={t} />
+                <PrintBtn label={tReceipts("customerReceipt")} icon={<Printer className="w-3.5 h-3.5" />} onClick={() => print("customer")} loading={printing === "customer"} t={t} />
+                <PrintBtn label={tFees("both")} icon={<Printer className="w-3.5 h-3.5" />} onClick={() => print("both")} loading={printing === "both"} t={t} />
+              </div>
               {/* Refund (full/partial) */}
               <button
                 onClick={() => { if (canRefund) { setRefundMode("full"); setRefundAmount(""); setShowRefund(true); } }}

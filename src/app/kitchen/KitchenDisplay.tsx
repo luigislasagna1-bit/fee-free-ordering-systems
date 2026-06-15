@@ -3189,7 +3189,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         const scheduledFor = scheduledForRaw ? new Date(scheduledForRaw) : null;
         const isScheduled = scheduledFor !== null && Number.isFinite(scheduledFor.getTime());
         return (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
           <div className={`${t.modal} rounded-2xl w-full max-w-sm p-6`}>
             <h3 className={`text-xl font-bold ${t.text} mb-4`}>
               {isScheduled ? "Confirm Scheduled Order" : "Accept Order"}
