@@ -113,11 +113,11 @@ function ReservationCard({
     <button
       type="button"
       onClick={() => onOpen(r)}
-      className={`w-full text-left ${r.status === "pending" ? t.rowNew : t.row} rounded-xl p-${compact ? "3" : "4"} border transition ${
+      className={`w-full text-left ${r.status === "pending" ? t.rowNew : t.row} rounded-xl p-${compact ? "3" : "4"} border transition min-h-[80px] flex items-center ${
         selected ? "border-blue-500 ring-1 ring-blue-500" : `${t.border} hover:border-blue-400`
       } ${r.status === "pending" && !parked ? "kitchen-flash-new" : ""}`}
     >
-      <div className="flex items-start gap-3">
+      <div className="flex items-start gap-3 w-full">
         {/* Walk-up table reservation icon — indigo calendar, distinct from the
             fuchsia pre-order-reservation icon on order tiles. Luigi 2026-06-08. */}
         <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 bg-indigo-500/20">
@@ -416,8 +416,8 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
     (order.type === "delivery" || order.type === "catering") && !!order.deliveryAddress;
 
   return (
-    <div onClick={onClick} className={`px-4 py-3.5 transition-colors ${rowClass}`}>
-      <div className="flex items-start gap-3">
+    <div onClick={onClick} className={`px-4 py-3 min-h-[80px] flex items-center transition-colors ${rowClass}`}>
+      <div className="flex items-start gap-3 w-full">
         {/* Icon column + chip underneath (Luigi 2026-06-02 GloriaFood
             parity). The chip is either a live countdown to the order's
             due time (today's items) or a day-of-week abbreviation
@@ -500,9 +500,9 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               the "ready in" caption also disappears so the row is
               quiet, not loud. */}
           {readyCountdown && !["pending", "rejected", "cancelled", "completed", "refunded", "no_show"].includes(order.status) && !(order as any).manuallyClearedAt && !(hideZeroCountdown && countdownIsPast) && (
-            <div className="mt-2 text-right">
+            <div className="mt-1 text-right">
               <div
-                className={`text-xl font-bold tabular-nums leading-none whitespace-nowrap ${
+                className={`text-base font-semibold tabular-nums leading-none whitespace-nowrap ${
                   // Day-away ("Thursday") and hours-away orders render in a
                   // calmer sky tone so staff instantly read "this is far out,
                   // not imminent"; minute timers keep the normal emphatic
@@ -2811,7 +2811,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 key={tab}
                 type="button"
                 onClick={() => setActiveTab(tab)}
-                className={`flex-1 min-w-0 px-1.5 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-sm font-semibold flex items-center justify-center sm:justify-start gap-1 sm:gap-2 border-b-2 transition touch-manipulation cursor-pointer whitespace-nowrap ${
+                className={`flex-1 min-w-0 px-1.5 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-[13px] font-medium flex items-center justify-center sm:justify-start gap-1 sm:gap-2 border-b-2 transition touch-manipulation cursor-pointer whitespace-nowrap ${
                   isActive
                     ? `${styles.activeBorder} ${styles.activeText} ${styles.activeBg}`
                     : `border-transparent ${themeMode === "dark" ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`
@@ -2837,21 +2837,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           })}
         </div>
 
-        {/* Clear history — a small fixed-size trash icon (tooltip on hover) so
-            it never widens with a text label and squeezes the tabs in portrait.
-            Luigi 2026-06-08. */}
-        {((activeTab === "orders" && (tabCounts.orders > 0 || allTabReservations.length > 0)) ||
-          (activeTab === "complete" && (tabCounts.complete > 0 || completeTabReservations.length > 0))) && (
-          <button
-            type="button"
-            onClick={() => setClearConfirm(activeTab === "orders" ? "orders" : "complete")}
-            aria-label={tk("clearOrders")}
-            title={tk("clearOrders")}
-            className={`flex-shrink-0 my-1.5 mr-1.5 sm:mr-2 flex items-center justify-center w-10 h-10 sm:w-8 sm:h-8 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 active:bg-red-500/20 transition touch-manipulation cursor-pointer`}
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
-        )}
+        {/* Clear history now lives in the top-right 3-dot menu (Luigi 2026-06-15).
+            The always-visible trash button was removed so the tab bar stays clean. */}
       </div>
 
       {/* Render a reservation card, reused on both Reservations tab and Orders tab. */}
