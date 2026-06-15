@@ -9,6 +9,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getReportAccess } from "@/lib/reseller-reports-access";
+import { markReportSeen } from "@/lib/reseller-reports-workflow";
 
 export async function POST(
   _req: NextRequest,
@@ -49,6 +50,10 @@ export async function POST(
       kind: "UPVOTED",
     },
   });
+  // The upvoter has obviously seen the report — clear their OWN new badge so a
+  // "me too" doesn't flag the report unread for the very person who upvoted.
+  // Mirrors the comment / confirm / status-change paths. Luigi 2026-06-15.
+  await markReportSeen(id, lowerEmail);
   return NextResponse.json({ ok: true });
 }
 

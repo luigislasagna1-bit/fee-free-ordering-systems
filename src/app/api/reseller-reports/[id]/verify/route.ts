@@ -17,7 +17,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getReportAccess, VERIFICATION_VOTES, type VerificationVote } from "@/lib/reseller-reports-access";
-import { onVerificationVote } from "@/lib/reseller-reports-workflow";
+import { onVerificationVote, markReportSeen } from "@/lib/reseller-reports-workflow";
 
 export async function POST(
   req: NextRequest,
@@ -83,6 +83,11 @@ export async function POST(
   } catch (err) {
     console.error("[reseller-reports/verify] lifecycle hook failed", { id, err });
   }
+  // The voter has obviously seen the report — mark seen AFTER the lifecycle
+  // hook (an auto-close to FIXED bumps updatedAt again) so casting a
+  // verification ("confirm") never flags the report as new for the voter
+  // themselves. Mirrors the comment + status-change paths. Luigi 2026-06-15.
+  await markReportSeen(id, lowerEmail);
   return NextResponse.json({ verification, autoClosed });
 }
 
