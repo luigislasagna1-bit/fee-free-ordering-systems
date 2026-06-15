@@ -212,12 +212,16 @@ export async function proxy(req: NextRequest) {
   let slug: string | null;
   let hasHostedSite = false;
   let resellerProfileId: string | null = null;
+  let customDomainActive = true;
+  let tenantSubdomain: string | null = null;
 
   const cached = getCached(cacheKey);
   if (cached.hit) {
     slug = cached.info.slug;
     hasHostedSite = cached.info.hasHostedSite;
     resellerProfileId = cached.info.resellerProfileId ?? null;
+    customDomainActive = cached.info.customDomainActive ?? true;
+    tenantSubdomain = cached.info.subdomain ?? null;
   } else {
     try {
       const resolveUrl = new URL("/api/internal/resolve-host", req.url);
@@ -228,11 +232,13 @@ export async function proxy(req: NextRequest) {
         headers["x-internal-key"] = process.env.INTERNAL_API_SECRET;
       }
       const res = await fetch(resolveUrl, { headers });
-      const data = (await res.json()) as { slug: string | null; hasHostedSite?: boolean; resellerProfileId?: string | null };
+      const data = (await res.json()) as { slug: string | null; hasHostedSite?: boolean; resellerProfileId?: string | null; customDomainActive?: boolean; subdomain?: string | null };
       slug = data.slug ?? null;
       hasHostedSite = !!data.hasHostedSite;
       resellerProfileId = data.resellerProfileId ?? null;
-      setCached(cacheKey, { slug, hasHostedSite, resellerProfileId });
+      customDomainActive = data.customDomainActive ?? true;
+      tenantSubdomain = data.subdomain ?? null;
+      setCached(cacheKey, { slug, hasHostedSite, resellerProfileId, customDomainActive, subdomain: tenantSubdomain });
     } catch {
       // If the resolver is unreachable, fail open to the marketing page. This
       // matters because a transient resolver outage shouldn't 500 the whole
@@ -297,6 +303,41 @@ export async function proxy(req: NextRequest) {
     // marketing tree if we have one, otherwise fall back to the marketing root.
     // For now: rewrite to /not-found so Next renders its default 404.
     return NextResponse.rewrite(new URL("/not-found", req.url));
+  }
+
+  // ── Lapsed Custom Domain → redirect to the free platform link ──────
+  // The host matched only because customDomain + customDomainStatus are still
+  // on the row, but the Custom Domain add-on (custom_domain_routing) has
+  // lapsed. Don't keep serving the paid vanity domain — but DON'T 404 either:
+  // real diners type this URL, so a dead page would cost the restaurant
+  // orders. 302-redirect to the restaurant's FREE link — their
+  // <subdomain>.<platform> if set (its proxy prefixes /order/<slug>
+  // identically, so the path carries over 1:1), else <platform>/order/<slug>
+  // with the internal path resolved so deep links still land. Entitlement-
+  // dependent, so the redirect must never be cached (AGENTS.md). Mirrors the
+  // reseller-domain lapse behavior, just gentler (redirect vs 404).
+  if (lookupBy === "customDomain" && !customDomainActive) {
+    const qs = req.nextUrl.search;
+    let target: URL;
+    if (tenantSubdomain) {
+      target = new URL(`https://${tenantSubdomain}.${PLATFORM_DOMAIN}${pathname}${qs}`);
+    } else {
+      const internalPath =
+        pathname === "/" || pathname === ""
+          ? `/order/${slug}`
+          : pathname === `/order/${slug}` ||
+              pathname.startsWith(`/order/${slug}/`) ||
+              pathname === `/site/${slug}` ||
+              pathname.startsWith(`/site/${slug}/`)
+            ? pathname
+            : `/order/${slug}${pathname}`;
+      target = new URL(`https://${PLATFORM_DOMAIN}${internalPath}${qs}`);
+    }
+    const res = NextResponse.redirect(target, 302);
+    res.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+    res.headers.set("Pragma", "no-cache");
+    res.headers.set("Expires", "0");
+    return res;
   }
 
   const { search } = req.nextUrl;

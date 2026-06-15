@@ -67,7 +67,7 @@ export async function GET(req: NextRequest) {
 
   const r = await prisma.restaurant.findFirst({
     where: where as any,
-    select: { id: true, slug: true },
+    select: { id: true, slug: true, subdomain: true },
   });
 
   if (r) {
@@ -76,7 +76,21 @@ export async function GET(req: NextRequest) {
     // active add-on rows per restaurant) but we still cache the result in the
     // middleware LRU so steady-state traffic avoids ever doing this lookup.
     const hasHostedSite = await hasFeature(r.id, "hosted_marketing_page");
-    return NextResponse.json({ slug: r.slug, hasHostedSite });
+    // A CUSTOM DOMAIN only keeps routing while the Custom Domain add-on
+    // (custom_domain_routing) is active. The row stays (customDomain +
+    // verified) after the add-on lapses — connecting is gated, but continued
+    // routing was not, so the domain used to serve for free forever. We now
+    // flag the lapse so the proxy 302-redirects to the free platform link
+    // instead (NOT a 404 — real diners type this URL). Subdomain hits are
+    // free, so they're always "active". Mirrors the reseller domain check.
+    const customDomainActive =
+      by === "customDomain" ? await hasFeature(r.id, "custom_domain_routing") : true;
+    return NextResponse.json({
+      slug: r.slug,
+      hasHostedSite,
+      customDomainActive,
+      subdomain: r.subdomain ?? null,
+    });
   }
 
   // ── Reseller GENERIC subdomain fallback ────────────────────────────

@@ -35,6 +35,17 @@ export type TenantInfo = {
    *  is null. The middleware rewrites all paths on that host to
    *  /login?reseller=<id> for the branded login screen. */
   resellerProfileId?: string | null;
+  /** For a CUSTOM-DOMAIN hit: whether the restaurant's Custom Domain
+   *  add-on (`custom_domain_routing`) is still active. When false the
+   *  domain row still matches (customDomain + verified) but the add-on
+   *  has lapsed — the proxy 302-redirects to the free platform link
+   *  instead of serving the paid vanity domain. Always true for
+   *  subdomain hits (the platform subdomain is free). */
+  customDomainActive?: boolean;
+  /** The restaurant's free platform subdomain label, if set. Used as the
+   *  redirect target (`<subdomain>.<platform>`) when a custom domain has
+   *  lapsed; null falls back to `<platform>/order/<slug>`. */
+  subdomain?: string | null;
 };
 
 type Entry = TenantInfo & { expiresAt: number };
@@ -53,7 +64,7 @@ export function getCached(host: string): { hit: true; info: TenantInfo } | { hit
   // Refresh LRU order: re-insert so this entry becomes "most recent".
   cache.delete(host);
   cache.set(host, e);
-  return { hit: true, info: { slug: e.slug, hasHostedSite: e.hasHostedSite, resellerProfileId: e.resellerProfileId ?? null } };
+  return { hit: true, info: { slug: e.slug, hasHostedSite: e.hasHostedSite, resellerProfileId: e.resellerProfileId ?? null, customDomainActive: e.customDomainActive ?? true, subdomain: e.subdomain ?? null } };
 }
 
 export function setCached(host: string, info: TenantInfo): void {
