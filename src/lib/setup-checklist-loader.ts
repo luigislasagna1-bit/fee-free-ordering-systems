@@ -11,6 +11,7 @@ import prisma from "@/lib/db";
 import { computeSetupProgress, type SetupProgress } from "@/lib/setup-checklist";
 import { hasLiveKitchenDevice } from "@/lib/kitchen-devices";
 import { hasFeature } from "@/lib/entitlements";
+import { parsePaymentMethods } from "@/lib/payment-methods";
 
 /** Pull the most-recent kitchen device (any freshness) so the setup
  *  checklist can render "<device label> · <X ago>" as a live status
@@ -136,16 +137,16 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
   // Parse accepted payment methods. Empty array / null = owner hasn't picked
   // yet, which makes the methodsSelected step incomplete. Defensive parse:
   // legacy rows may have malformed JSON; treat any parse error as empty.
-  let paymentMethods: string[] = [];
-  if (restaurant.paymentMethods) {
-    try {
-      const parsed = JSON.parse(restaurant.paymentMethods);
-      if (Array.isArray(parsed)) paymentMethods = parsed.filter((s) => typeof s === "string");
-    } catch {
-      // Leave as empty — checklist will surface this as incomplete and the
-      // owner can re-pick in /admin/payments.
-    }
-  }
+  // Accepted methods may be a flat array (legacy) OR a per-order-type object
+  // (GloriaFood per-type config). Flatten to the UNION across types so the
+  // "methods selected" step + online_card detection work for BOTH shapes —
+  // without this, per-type restaurants showed "no payment methods" in the
+  // checklist and the online-card step never surfaced. Luigi 2026-06-15.
+  const pmCfg = parsePaymentMethods(restaurant.paymentMethods);
+  const paymentMethods: string[] =
+    pmCfg.mode === "all"
+      ? pmCfg.methods
+      : Array.from(new Set(Object.values(pmCfg.perType).flat()));
 
   const sourceRaw = shipdayConfig?.deliverySource;
   const deliverySource =
@@ -153,8 +154,22 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
       ? sourceRaw
       : null;
 
+  // Email-verified keys off the OWNER's User.emailVerifiedAt — the same signal
+  // the resend banner uses — so the checklist step and the banner can never
+  // disagree (which previously stranded owners: step incomplete but the
+  // banner + resend hidden). Falls back to the denormalized restaurant flag.
+  // Luigi 2026-06-15.
+  const ownerUser = await prisma.user.findFirst({
+    where: { restaurantId, role: "restaurant_admin" },
+    orderBy: { createdAt: "asc" },
+    select: { emailVerifiedAt: true },
+  });
+
   return computeSetupProgress({
-    restaurant,
+    restaurant: {
+      ...restaurant,
+      ownerEmailVerifiedAt: ownerUser?.emailVerifiedAt ?? restaurant.ownerEmailVerifiedAt,
+    },
     hours,
     categories,
     menuItems,
