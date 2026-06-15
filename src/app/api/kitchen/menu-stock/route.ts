@@ -12,6 +12,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { kitchenAuthOptions } from "@/lib/auth-kitchen";
 import prisma from "@/lib/db";
+import { resolveActiveMenuId } from "@/lib/menu";
 
 export async function GET() {
   const session = await getServerSession(kitchenAuthOptions);
@@ -19,8 +20,18 @@ export async function GET() {
   if (!restaurantId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  // Scope to the ACTIVE menu only. A restaurant that cloned its menu (a draft
+  // copy, isActive=false) would otherwise show every dish twice here. Match the
+  // customer ordering page: filter items to the active menu's categories, and
+  // fall back to a restaurant-wide list only when there's no active menu yet
+  // (un-migrated / legacy data with null category.menuId). Luigi 2026-06-15.
+  const activeMenuId = await resolveActiveMenuId(restaurantId);
   const items = await prisma.menuItem.findMany({
-    where: { restaurantId, isHidden: false },
+    where: {
+      restaurantId,
+      isHidden: false,
+      ...(activeMenuId ? { category: { menuId: activeMenuId } } : {}),
+    },
     select: {
       id: true,
       name: true,
