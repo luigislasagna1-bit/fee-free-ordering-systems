@@ -308,8 +308,13 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
 
   return (
     <div className={`flex flex-col h-full ${t.detail}`}>
-      {/* Header */}
-      <div className={`flex items-center gap-3 px-5 py-4 border-b ${t.border} flex-shrink-0`}>
+      {/* Header — paddingTop respects the device notch / status bar so the
+          back arrow + order number never clip under it (Fabrizio safe-area
+          report, Luigi 2026-06-15). */}
+      <div
+        className={`flex items-center gap-3 px-5 py-4 border-b ${t.border} flex-shrink-0`}
+        style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}
+      >
         {/* Back to the order list (full-screen detail). Always visible now that
             the detail opens over the whole screen. Luigi 2026-06-08. */}
         <button onClick={onClose} className={`p-1.5 rounded-lg ${t.btn} flex-shrink-0`} aria-label="Back">
@@ -675,8 +680,13 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
         </div>
       </div>
 
-      {/* Action buttons */}
-      <div className={`border-t ${t.border} p-4 flex-shrink-0 space-y-3`}>
+      {/* Action buttons — paddingBottom clears the Android gesture/nav bar so
+          Accept / Reject are never hidden behind it (Fabrizio safe-area report,
+          Luigi 2026-06-15). */}
+      <div
+        className={`border-t ${t.border} p-4 flex-shrink-0 space-y-3`}
+        style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
+      >
         {/* Status actions */}
         <div className="grid grid-cols-2 gap-2">
           {order.status === "pending" && (

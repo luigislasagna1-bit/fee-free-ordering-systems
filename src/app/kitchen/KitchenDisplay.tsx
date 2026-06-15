@@ -95,7 +95,11 @@ function ReservationCard({
     if (dayChip || !now || !isActiveBooking) return null;
     const dueTs = new Date(`${r.date}T${r.time}:00`).getTime();
     if (!Number.isFinite(dueTs)) return null;
-    return formatDueLabel(dueTs, now).text;
+    const label = formatDueLabel(dueTs, now);
+    // Past its booking time → no chip at all (don't show a stale "00:00" on a
+    // seated / no-show / expired booking). Luigi 2026-06-15.
+    if (label.kind === "due") return null;
+    return label.text;
   })();
   // Parked = booking placed while CLOSED; its kitchen alert is deferred to the
   // next opening. The tile still shows (highlighted) but stays calm — no flash,
@@ -189,7 +193,10 @@ function ReservationDetail({
   };
   return (
     <div className={`flex flex-col h-full ${t.detail}`}>
-      <div className={`flex items-center gap-2 p-4 border-b ${t.border} flex-shrink-0`}>
+      <div
+        className={`flex items-center gap-2 p-4 border-b ${t.border} flex-shrink-0`}
+        style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}
+      >
         <button onClick={onClose} className={`p-1.5 rounded-lg ${t.btn} flex-shrink-0`} aria-label="Back">
           <ArrowLeft className="w-5 h-5" />
         </button>
@@ -236,7 +243,10 @@ function ReservationDetail({
         <div className="text-[10px] font-mono text-gray-400">#{r.confirmationCode}</div>
       </div>
 
-      <div className={`border-t ${t.border} p-4 flex-shrink-0 space-y-2`}>
+      <div
+        className={`border-t ${t.border} p-4 flex-shrink-0 space-y-2`}
+        style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
+      >
         {/* Pending → Accept/Reject; once accepted, a full floor-status switcher
             (Confirmed / Seated / No-show / Completed) lets staff move it forward
             OR fix a mistake. Luigi 2026-06-08. */}
