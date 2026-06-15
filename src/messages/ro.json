@@ -260,7 +260,10 @@
     "fromPrice": "de la {price}",
     "fulfilOrderAheadLabel": "Comandă în avans · {window}",
     "opensAtLabel": "Se deschide la {time}",
-    "marketingConsentLabel": "Da, doresc să primesc comunicări de marketing de la acest restaurant. Te poți dezabona oricând."
+    "marketingConsentLabel": "Da, doresc să primesc comunicări de marketing de la acest restaurant. Te poți dezabona oricând.",
+    "fulfilConflictTitle": "Aceste produse nu pot fi comandate împreună",
+    "fulfilConflictBody": "Sunt disponibile în zile sau la ore diferite, așa că nu pot fi în aceeași comandă. Eliminați unul pentru a continua comanda:",
+    "fulfilConflictRemove": "Elimină"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",

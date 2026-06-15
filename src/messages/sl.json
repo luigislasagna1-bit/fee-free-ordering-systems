@@ -260,7 +260,10 @@
     "fromPrice": "od {price}",
     "fulfilOrderAheadLabel": "Naročite vnaprej · {window}",
     "opensAtLabel": "Odpre ob {time}",
-    "marketingConsentLabel": "Da, želim prejemati tržna sporočila te restavracije. Odjavite se lahko kadar koli."
+    "marketingConsentLabel": "Da, želim prejemati tržna sporočila te restavracije. Odjavite se lahko kadar koli.",
+    "fulfilConflictTitle": "Teh izdelkov ni mogoče naročiti skupaj",
+    "fulfilConflictBody": "Na voljo so ob različnih dneh ali urah, zato ne morejo biti v istem naročilu. Odstranite enega in nadaljujte z naročanjem:",
+    "fulfilConflictRemove": "Odstrani"
   },
   "pizza": {
     "chooseSize": "Izberite velikost",

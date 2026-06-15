@@ -260,7 +260,10 @@
     "fromPrice": "{price} başlangıç",
     "fulfilOrderAheadLabel": "Önceden sipariş ver · {window}",
     "opensAtLabel": "Açılış: {time}",
-    "marketingConsentLabel": "Evet, bu restorandan pazarlama iletileri almak istiyorum. İstediğiniz zaman aboneliğinizi iptal edebilirsiniz."
+    "marketingConsentLabel": "Evet, bu restorandan pazarlama iletileri almak istiyorum. İstediğiniz zaman aboneliğinizi iptal edebilirsiniz.",
+    "fulfilConflictTitle": "Bu ürünler birlikte sipariş edilemez",
+    "fulfilConflictBody": "Farklı günlerde veya saatlerde sunulduğundan aynı siparişte yer alamazlar. Siparişe devam etmek için birini kaldırın:",
+    "fulfilConflictRemove": "Kaldır"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",

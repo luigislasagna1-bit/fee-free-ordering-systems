@@ -260,7 +260,10 @@
     "fromPrice": "من {price}",
     "fulfilOrderAheadLabel": "اطلب مسبقًا · {window}",
     "opensAtLabel": "يفتح في {time}",
-    "marketingConsentLabel": "نعم، أرغب في تلقي رسائل تسويقية من هذا المطعم. يمكنك إلغاء الاشتراك في أي وقت."
+    "marketingConsentLabel": "نعم، أرغب في تلقي رسائل تسويقية من هذا المطعم. يمكنك إلغاء الاشتراك في أي وقت.",
+    "fulfilConflictTitle": "لا يمكن طلب هذه العناصر معًا",
+    "fulfilConflictBody": "إنها متوفرة في أيام أو أوقات مختلفة، لذا لا يمكن أن تكون في الطلب نفسه. أزل أحدها لمتابعة الطلب:",
+    "fulfilConflictRemove": "إزالة"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",

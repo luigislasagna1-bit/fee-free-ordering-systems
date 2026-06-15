@@ -260,7 +260,10 @@
     "fromPrice": "alkaen {price}",
     "fulfilOrderAheadLabel": "Ennakkotilaus · {window}",
     "opensAtLabel": "Avautuu klo {time}",
-    "marketingConsentLabel": "Kyllä, haluan vastaanottaa markkinointiviestintää tältä ravintolalta. Voit peruuttaa tilauksen milloin tahansa."
+    "marketingConsentLabel": "Kyllä, haluan vastaanottaa markkinointiviestintää tältä ravintolalta. Voit peruuttaa tilauksen milloin tahansa.",
+    "fulfilConflictTitle": "Näitä tuotteita ei voi tilata yhdessä",
+    "fulfilConflictBody": "Ne ovat saatavilla eri päivinä tai eri aikoina, joten ne eivät voi olla samassa tilauksessa. Poista yksi jatkaaksesi tilaamista:",
+    "fulfilConflictRemove": "Poista"
   },
   "pizza": {
     "chooseSize": "Valitse koko",

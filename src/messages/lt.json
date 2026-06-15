@@ -260,7 +260,10 @@
     "fromPrice": "nuo {price}",
     "fulfilOrderAheadLabel": "Išankstinis užsakymas · {window}",
     "opensAtLabel": "Atidaroma {time}",
-    "marketingConsentLabel": "Taip, noriu gauti šio restorano rinkodaros pranešimus. Galite atsisakyti bet kuriuo metu."
+    "marketingConsentLabel": "Taip, noriu gauti šio restorano rinkodaros pranešimus. Galite atsisakyti bet kuriuo metu.",
+    "fulfilConflictTitle": "Šių prekių negalima užsakyti kartu",
+    "fulfilConflictBody": "Jos pasiekiamos skirtingomis dienomis arba skirtingu laiku, todėl negali būti tame pačiame užsakyme. Pašalinkite vieną, kad galėtumėte tęsti užsakymą:",
+    "fulfilConflictRemove": "Pašalinti"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",

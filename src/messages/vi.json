@@ -260,7 +260,10 @@
     "fromPrice": "từ {price}",
     "fulfilOrderAheadLabel": "Đặt trước · {window}",
     "opensAtLabel": "Mở cửa lúc {time}",
-    "marketingConsentLabel": "Có, tôi muốn nhận thông tin tiếp thị từ nhà hàng này. Bạn có thể hủy đăng ký bất cứ lúc nào."
+    "marketingConsentLabel": "Có, tôi muốn nhận thông tin tiếp thị từ nhà hàng này. Bạn có thể hủy đăng ký bất cứ lúc nào.",
+    "fulfilConflictTitle": "Không thể đặt các món này cùng nhau",
+    "fulfilConflictBody": "Chúng có sẵn vào các ngày hoặc giờ khác nhau nên không thể nằm trong cùng một đơn hàng. Hãy xóa một món để tiếp tục đặt hàng:",
+    "fulfilConflictRemove": "Xóa"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",

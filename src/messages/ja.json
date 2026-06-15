@@ -260,7 +260,10 @@
     "fromPrice": "{price}〜",
     "fulfilOrderAheadLabel": "事前注文 · {window}",
     "opensAtLabel": "{time} に開店",
-    "marketingConsentLabel": "はい、このレストランからのマーケティング情報を受け取りたいです。いつでも配信を停止できます。"
+    "marketingConsentLabel": "はい、このレストランからのマーケティング情報を受け取りたいです。いつでも配信を停止できます。",
+    "fulfilConflictTitle": "これらの商品は一緒に注文できません",
+    "fulfilConflictBody": "提供される曜日や時間帯が異なるため、同じ注文に入れることはできません。1つを削除して注文を続けてください：",
+    "fulfilConflictRemove": "削除"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",

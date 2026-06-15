@@ -260,7 +260,10 @@
     "fromPrice": "החל מ-{price}",
     "fulfilOrderAheadLabel": "הזמנה מראש · {window}",
     "opensAtLabel": "נפתח ב-{time}",
-    "marketingConsentLabel": "כן, אני רוצה לקבל תקשורת שיווקית מהמסעדה הזו. אפשר לבטל את ההרשמה בכל עת."
+    "marketingConsentLabel": "כן, אני רוצה לקבל תקשורת שיווקית מהמסעדה הזו. אפשר לבטל את ההרשמה בכל עת.",
+    "fulfilConflictTitle": "לא ניתן להזמין פריטים אלה יחד",
+    "fulfilConflictBody": "הם זמינים בימים או בשעות שונים, ולכן לא ניתן לכלול אותם באותה הזמנה. הסר אחד מהם כדי להמשיך בהזמנה:",
+    "fulfilConflictRemove": "הסר"
   },
   "pizza": {
     "chooseSize": "בחר גודל",

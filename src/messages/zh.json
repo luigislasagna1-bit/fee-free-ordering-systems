@@ -260,7 +260,10 @@
     "fromPrice": "{price} 起",
     "fulfilOrderAheadLabel": "提前预订 · {window}",
     "opensAtLabel": "{time} 开门",
-    "marketingConsentLabel": "是的，我希望接收这家餐厅的营销信息。您可以随时取消订阅。"
+    "marketingConsentLabel": "是的，我希望接收这家餐厅的营销信息。您可以随时取消订阅。",
+    "fulfilConflictTitle": "这些商品无法一起下单",
+    "fulfilConflictBody": "它们在不同的日期或时间供应，因此无法放在同一个订单中。请移除其中一项以继续下单：",
+    "fulfilConflictRemove": "移除"
   },
   "pizza": {
     "chooseSize": "选择大小",

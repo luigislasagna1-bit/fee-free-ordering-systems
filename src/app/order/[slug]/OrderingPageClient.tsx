@@ -175,6 +175,20 @@ function earliestCombinedFulfilSlot(items: MenuItem[], from: Date, timezone?: st
   return null;
 }
 
+/** The restricted cart items that, together, share NO orderable day/time, so
+ *  they can't be fulfilled in one order (e.g. a Monday-only + a Tuesday-only
+ *  special). Returns [] when the fulfilment items CAN share a slot or there are
+ *  fewer than two. Drives the "can't be ordered together" prompt. */
+function conflictingFulfilItems(items: MenuItem[], from: Date, timezone?: string): MenuItem[] {
+  const restricted = items.filter(hasFulfilWindow);
+  if (restricted.length < 2) return [];
+  // Orderable together right now → fine.
+  if (restricted.every((it) => isFulfilableAt(it, from, timezone))) return [];
+  // A future slot where all are simultaneously orderable → fine (just schedule).
+  if (earliestCombinedFulfilSlot(restricted, from, timezone) !== null) return [];
+  return restricted;
+}
+
 function isItemAvailableNow(item: MenuItem, timezone?: string): boolean {
   // Day-of-week and HH:MM must be computed in the RESTAURANT's local
   // timezone so an out-of-town customer (e.g. delivery scheduled from
@@ -946,6 +960,10 @@ export function OrderingPageClient({
       : "pickup",
   );
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  // "These items can't be ordered together" prompt — opens when the cart holds
+  // two fulfilment-restricted items whose windows don't overlap. Luigi 2026-06-14.
+  const [fulfilConflictOpen, setFulfilConflictOpen] = useState(false);
+  const fulfilConflictShownRef = useRef(false);
   const [reservationOpen, setReservationOpen] = useState(false);
   // Reserve-then-order (Luigi 2026-06-08): when set, the customer is building
   // an order that will be submitted TOGETHER with this table booking (one
@@ -2158,6 +2176,24 @@ export function OrderingPageClient({
   // cart, even when it's orderable right now (so the customer understands
   // why the order time is constrained before they schedule).
   const fulfilItemNames = Array.from(new Set(cartFulfilItems.map((i) => i.name)));
+  // Two restricted items whose windows can't overlap can't be made for one order
+  // (e.g. Monday-only + Tuesday-only). Detect that and prompt to drop one rather
+  // than dead-end at checkout. Only scans when 2+ restricted items are present.
+  const fulfilConflictItems =
+    cartFulfilItems.length >= 2 ? conflictingFulfilItems(cartFulfilItems, new Date(), restaurantTz) : [];
+  const hasFulfilConflict = fulfilConflictItems.length >= 2;
+  const removeConflictItem = (menuItemId: string) =>
+    setCart((prev) => prev.filter((ci) => ci.menuItem.id !== menuItemId));
+  // Surface the prompt the moment a conflict appears (covers every add path) and
+  // auto-close when resolved. The ref makes it open once per onset, not per render.
+  useEffect(() => {
+    if (hasFulfilConflict) {
+      if (!fulfilConflictShownRef.current) { setFulfilConflictOpen(true); fulfilConflictShownRef.current = true; }
+    } else {
+      fulfilConflictShownRef.current = false;
+      setFulfilConflictOpen(false);
+    }
+  }, [hasFulfilConflict]);
   const fulfilBaseMs = (() => {
     let ms = Date.now();
     if (cartHasFulfil) {
@@ -2761,6 +2797,10 @@ export function OrderingPageClient({
   };
 
   const placeOrder = async () => {
+    // Block ordering while the cart holds items that can't share a fulfilment
+    // slot — re-surface the conflict prompt instead. (Backstop; the cart's
+    // checkout buttons are already guarded.) Luigi 2026-06-14.
+    if (hasFulfilConflict) { setFulfilConflictOpen(true); return; }
     // Mark the cart-session as having reached checkout — the next
     // heartbeat will persist this flag so cart-abandonment reporting
     // can distinguish "browsed only" vs "entered details but didn't pay."
@@ -4703,6 +4743,7 @@ export function OrderingPageClient({
                     <div className="flex gap-2">
                       <button
                         onClick={() => {
+                          if (hasFulfilConflict) { setFulfilConflictOpen(true); return; }
                           setCartOpen(false);
                           setCheckoutOpen(true);
                           setEditingSection("ordering");
@@ -4732,7 +4773,7 @@ export function OrderingPageClient({
 
                 <div className="p-4">
                   <button
-                    onClick={() => { setCartOpen(false); setCheckoutOpen(true); }}
+                    onClick={() => { if (hasFulfilConflict) { setFulfilConflictOpen(true); return; } setCartOpen(false); setCheckoutOpen(true); }}
                     disabled={orderType === "delivery" && minimumOrderForType > 0 && subtotal < minimumOrderForType}
                     className="w-full text-white font-bold py-4 rounded-xl transition text-base disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ backgroundColor: theme.primaryColor }}>
@@ -4901,6 +4942,38 @@ export function OrderingPageClient({
           reservationContext={reservationDraft ? { date: reservationDraft.date, time: reservationDraft.time, partySize: reservationDraft.partySize } : null}
           onClose={() => setCheckoutOpen(false)}
         />
+      )}
+
+      {/* ── "Items can't be ordered together" conflict prompt ─────────
+          Two fulfilment-restricted items whose windows don't overlap can't be
+          made for one order; prompt the customer to remove one. Luigi 2026-06-14. */}
+      {fulfilConflictOpen && fulfilConflictItems.length >= 2 && (
+        <div
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 p-4"
+          onClick={() => setFulfilConflictOpen(false)}
+        >
+          <div className="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-lg font-bold text-gray-900">{t("fulfilConflictTitle")}</h3>
+            <p className="text-sm text-gray-600 mt-1.5">{t("fulfilConflictBody")}</p>
+            <div className="mt-4 space-y-2">
+              {fulfilConflictItems.map((mi) => (
+                <div key={mi.id} className="flex items-center justify-between gap-3 rounded-lg border border-gray-200 px-3 py-2">
+                  <div className="min-w-0">
+                    <div className="font-semibold text-gray-900 text-sm truncate">{mi.name}</div>
+                    <div className="text-xs text-amber-700">{t("availableOnlyLabel", { window: itemFulfilWindow(mi, hoursFmt) })}</div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removeConflictItem(mi.id)}
+                    className="flex-shrink-0 text-xs font-semibold text-red-600 hover:text-red-700 border border-red-200 hover:bg-red-50 rounded-lg px-3 py-1.5 transition"
+                  >
+                    {t("fulfilConflictRemove")}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       )}
 
       {/* ── Promo walkthrough modal ───────────────────────────────────

@@ -260,7 +260,10 @@
     "fromPrice": "{price}-tól",
     "fulfilOrderAheadLabel": "Rendelés előre · {window}",
     "opensAtLabel": "Nyitás: {time}",
-    "marketingConsentLabel": "Igen, szeretnék marketingüzeneteket kapni ettől az étteremtől. Bármikor leiratkozhat."
+    "marketingConsentLabel": "Igen, szeretnék marketingüzeneteket kapni ettől az étteremtől. Bármikor leiratkozhat.",
+    "fulfilConflictTitle": "Ezeket a tételeket nem lehet együtt megrendelni",
+    "fulfilConflictBody": "Különböző napokon vagy időpontokban érhetők el, ezért nem szerepelhetnek ugyanabban a rendelésben. Távolítson el egyet a rendelés folytatásához:",
+    "fulfilConflictRemove": "Eltávolítás"
   },
   "pizza": {
     "chooseSize": "Méret választása",

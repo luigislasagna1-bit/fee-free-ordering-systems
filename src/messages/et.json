@@ -260,7 +260,10 @@
     "fromPrice": "alates {price}",
     "fulfilOrderAheadLabel": "Ettetellimus · {window}",
     "opensAtLabel": "Avab kell {time}",
-    "marketingConsentLabel": "Jah, soovin saada selle restorani turundusteateid. Saate end igal ajal loobuda."
+    "marketingConsentLabel": "Jah, soovin saada selle restorani turundusteateid. Saate end igal ajal loobuda.",
+    "fulfilConflictTitle": "Neid tooteid ei saa koos tellida",
+    "fulfilConflictBody": "Need on saadaval erinevatel päevadel või kellaaegadel, seega ei saa need olla samas tellimuses. Eemaldage üks, et tellimist jätkata:",
+    "fulfilConflictRemove": "Eemalda"
   },
   "pizza": {
     "chooseSize": "Vali suurus",

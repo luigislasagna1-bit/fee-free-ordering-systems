@@ -260,7 +260,10 @@
     "fromPrice": "no {price}",
     "fulfilOrderAheadLabel": "Pasūtīt iepriekš · {window}",
     "opensAtLabel": "Atveras plkst. {time}",
-    "marketingConsentLabel": "Jā, es vēlos saņemt šī restorāna mārketinga paziņojumus. Jūs varat atrakstīties jebkurā laikā."
+    "marketingConsentLabel": "Jā, es vēlos saņemt šī restorāna mārketinga paziņojumus. Jūs varat atrakstīties jebkurā laikā.",
+    "fulfilConflictTitle": "Šīs preces nevar pasūtīt kopā",
+    "fulfilConflictBody": "Tās ir pieejamas dažādās dienās vai laikos, tāpēc tās nevar būt vienā pasūtījumā. Noņemiet vienu, lai turpinātu pasūtīšanu:",
+    "fulfilConflictRemove": "Noņemt"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",

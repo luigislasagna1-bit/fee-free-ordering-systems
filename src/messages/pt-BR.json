@@ -260,7 +260,10 @@
     "fromPrice": "a partir de {price}",
     "fulfilOrderAheadLabel": "Peça com antecedência · {window}",
     "opensAtLabel": "Abre às {time}",
-    "marketingConsentLabel": "Sim, quero receber comunicações de marketing deste restaurante. Você pode cancelar a inscrição a qualquer momento."
+    "marketingConsentLabel": "Sim, quero receber comunicações de marketing deste restaurante. Você pode cancelar a inscrição a qualquer momento.",
+    "fulfilConflictTitle": "Estes itens não podem ser pedidos juntos",
+    "fulfilConflictBody": "Eles estão disponíveis em dias ou horários diferentes, então não podem ir no mesmo pedido. Remova um para continuar pedindo:",
+    "fulfilConflictRemove": "Remover"
   },
   "pizza": {
     "chooseSize": "Escolha o Tamanho",

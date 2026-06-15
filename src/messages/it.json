@@ -260,7 +260,10 @@
     "fromPrice": "da {price}",
     "fulfilOrderAheadLabel": "Ordina in anticipo · {window}",
     "opensAtLabel": "Apre alle {time}",
-    "marketingConsentLabel": "Sì, desidero ricevere comunicazioni di marketing da questo ristorante. Puoi annullare l'iscrizione in qualsiasi momento."
+    "marketingConsentLabel": "Sì, desidero ricevere comunicazioni di marketing da questo ristorante. Puoi annullare l'iscrizione in qualsiasi momento.",
+    "fulfilConflictTitle": "Questi articoli non possono essere ordinati insieme",
+    "fulfilConflictBody": "Sono disponibili in giorni o orari diversi, quindi non possono essere inseriti nello stesso ordine. Rimuovine uno per continuare a ordinare:",
+    "fulfilConflictRemove": "Rimuovi"
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",

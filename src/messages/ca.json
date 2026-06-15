@@ -260,7 +260,10 @@
     "fromPrice": "des de {price}",
     "fulfilOrderAheadLabel": "Demana per endavant · {window}",
     "opensAtLabel": "Obre a les {time}",
-    "marketingConsentLabel": "Sí, vull rebre comunicacions de màrqueting d'aquest restaurant. Pots donar-te de baixa en qualsevol moment."
+    "marketingConsentLabel": "Sí, vull rebre comunicacions de màrqueting d'aquest restaurant. Pots donar-te de baixa en qualsevol moment.",
+    "fulfilConflictTitle": "Aquests articles no es poden demanar junts",
+    "fulfilConflictBody": "Estan disponibles en dies o horaris diferents, així que no poden anar a la mateixa comanda. Elimineu-ne un per continuar la comanda:",
+    "fulfilConflictRemove": "Elimina"
   },
   "pizza": {
     "chooseSize": "Tria la mida",

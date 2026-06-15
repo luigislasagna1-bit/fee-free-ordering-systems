@@ -260,7 +260,10 @@
     "fromPrice": "od {price}",
     "fulfilOrderAheadLabel": "Objednať vopred · {window}",
     "opensAtLabel": "Otvára o {time}",
-    "marketingConsentLabel": "Áno, chcem dostávať marketingové oznámenia od tejto reštaurácie. Odber môžete kedykoľvek zrušiť."
+    "marketingConsentLabel": "Áno, chcem dostávať marketingové oznámenia od tejto reštaurácie. Odber môžete kedykoľvek zrušiť.",
+    "fulfilConflictTitle": "Tieto položky nie je možné objednať spolu",
+    "fulfilConflictBody": "Sú dostupné v rôzne dni alebo časy, takže nemôžu byť v tej istej objednávke. Odstráňte jednu a pokračujte v objednávaní:",
+    "fulfilConflictRemove": "Odstrániť"
   },
   "pizza": {
     "chooseSize": "Vybrať veľkosť",
