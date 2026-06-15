@@ -80,6 +80,14 @@ export function methodsForOrderType(raw: unknown, orderType: string): string[] {
 /** True when `paymentValue` (checkout VALUE, e.g. "card"/"cash") is accepted
  *  for `orderType`. Used for server-side defense-in-depth in /api/orders. */
 export function isPaymentMethodAcceptedForType(raw: unknown, orderType: string, paymentValue: string): boolean {
-  const slugs = methodsForOrderType(raw, orderType);
-  return slugs.includes(paymentValueToSlug(paymentValue));
+  const slug = paymentValueToSlug(paymentValue);
+  // In-person methods (cash, card-in-person) settle on pickup/delivery and
+  // need no provider, so they can never become an uncollectable "ghost" order
+  // — they're always acceptable. This also keeps checkout working when a
+  // restaurant's only configured method is an online one whose provider isn't
+  // ready: the customer falls back to Cash (CheckoutModal's cash safety-net)
+  // and the order still goes through. Only ONLINE methods (online_card /
+  // paypal) are gated against the restaurant's per-type accepted list.
+  if (slug === "cash" || slug === "card_in_person") return true;
+  return methodsForOrderType(raw, orderType).includes(slug);
 }

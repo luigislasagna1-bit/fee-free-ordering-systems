@@ -1358,12 +1358,18 @@ export function CheckoutModal({
                   // Connect data) while the capability is OFF — offering them
                   // would create a ghost order that never gets paid or reaches
                   // the kitchen. Hide them unless truly available. (Luigi 2026-06-04)
-                  const visible = all.filter(
+                  let visible = all.filter(
                     (p) =>
                       acceptedMethods.includes(p.slug) &&
                       !(p.slug === "online_card" && !cardPaymentEnabled) &&
                       !(p.slug === "paypal" && !paypalEnabled),
                   );
+                  // Safety net: if a restaurant's only configured methods for
+                  // this order type are online card / PayPal but those are OFF
+                  // (no add-on / Stripe not finished), the picker would be empty
+                  // and the customer couldn't check out. Fall back to Cash (pay
+                  // on pickup/delivery) so an order can always be placed.
+                  if (visible.length === 0) visible = [all[0]];
                   const cols = visible.length >= 4 ? "grid-cols-2 sm:grid-cols-4" : visible.length === 3 ? "grid-cols-3" : "grid-cols-2";
                   return (
                     <div className={`pt-3 grid ${cols} gap-2`}>

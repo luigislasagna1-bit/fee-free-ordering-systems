@@ -39,49 +39,52 @@ export async function PUT(req: NextRequest) {
   //   • { methodsByType: { pickup:[...], delivery:[...], ... } }  (per-order-type, new)
   //   • { methods: [...] }                                         (flat, legacy)
   // Luigi 2026-06-08.
-  let toStore: string;
-  let allChosen: string[];
+  let perType: Record<string, string[]> | null = null;
+  let flat: string[] | null = null;
   if (body && body.methodsByType && typeof body.methodsByType === "object") {
-    const perType: Record<string, string[]> = {};
+    const map: Record<string, string[]> = {};
     for (const ot of ORDER_TYPES) {
       const list = cleanList(body.methodsByType[ot]);
-      if (list.length > 0) perType[ot] = list;
+      if (list.length > 0) map[ot] = list;
     }
-    const keys = Object.keys(perType);
-    if (keys.length === 0) {
-      return NextResponse.json({ error: "Pick at least one payment method." }, { status: 400 });
-    }
-    toStore = JSON.stringify(perType);
-    allChosen = Array.from(new Set(Object.values(perType).flat()));
+    perType = map;
   } else if (body && Array.isArray(body.methods)) {
-    const clean = cleanList(body.methods);
-    if (clean.length === 0) {
-      return NextResponse.json({ error: "Pick at least one payment method." }, { status: 400 });
-    }
-    toStore = JSON.stringify(clean);
-    allChosen = clean;
+    flat = cleanList(body.methods);
   } else {
     return NextResponse.json({ error: "methods or methodsByType is required" }, { status: 400 });
   }
 
-  // Gate: online_card / paypal both require the online_payments add-on.
-  // Tampered clients can't bypass the UI lock by POSTing direct —
-  // re-check entitlement server-side. If they don't have it, return 412
-  // (Precondition Failed) so the client UI can show the right path.
-  const wantsEntitled = allChosen.some((m) => ENTITLED_METHODS.has(m));
-  if (wantsEntitled) {
+  // Online card / PayPal require the online_payments add-on. We DON'T reject
+  // the whole save when one is present without the add-on — that left
+  // restaurants permanently stuck: they couldn't drop a stale online_card
+  // (UI lock) AND its presence 412'd every save, so cash/card-in-person could
+  // never be turned on either. Instead, STRIP the entitled methods server-side
+  // and save the rest. Security is identical — online_card / paypal never
+  // persist without entitlement — but a stale pick can no longer block saving
+  // the methods the restaurant CAN use. Luigi 2026-06-15.
+  const chosenNow = perType ? Object.values(perType).flat() : (flat ?? []);
+  if (chosenNow.some((m) => ENTITLED_METHODS.has(m))) {
     const entitled = await hasFeature(restaurantId, "card_payments");
     if (!entitled) {
-      return NextResponse.json(
-        {
-          error: "Subscribe to the Online Payments add-on to enable online payment methods.",
-          code: "addon_required",
-          addOnSlug: "online_payments",
-        },
-        { status: 412 },
-      );
+      if (perType) {
+        const next: Record<string, string[]> = {};
+        for (const [ot, list] of Object.entries(perType)) {
+          const keep = list.filter((m) => !ENTITLED_METHODS.has(m));
+          if (keep.length) next[ot] = keep;
+        }
+        perType = next;
+      } else if (flat) {
+        flat = flat.filter((m) => !ENTITLED_METHODS.has(m));
+      }
     }
   }
+
+  // After any stripping, at least one usable method must remain.
+  const finalChosen = perType ? Object.values(perType).flat() : (flat ?? []);
+  if (finalChosen.length === 0) {
+    return NextResponse.json({ error: "Pick at least one payment method." }, { status: 400 });
+  }
+  const toStore = JSON.stringify(perType ?? flat);
 
   await prisma.restaurant.update({
     where: { id: restaurantId },
