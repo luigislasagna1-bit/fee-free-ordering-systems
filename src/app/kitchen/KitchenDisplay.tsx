@@ -313,7 +313,7 @@ function Countdown({
       const label = formatDueLabel(alertMs, now);
       const badge = label.kind === "day" ? label.text.toUpperCase() : `OPENS IN ${label.text.toUpperCase()}`;
       return (
-        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-300"
+        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-300 whitespace-nowrap"
           title={`Alert at ${new Date(alertAt).toLocaleString(undefined, { weekday: "short", hour: "numeric", minute: "2-digit" })}`}
         >
           {badge}
@@ -328,11 +328,11 @@ function Countdown({
   // a few min late arriving after open). Normal orders keep 3 min.
   const totalMs = placedWhileClosed ? 15 * 60 * 1000 : ACCEPT_WINDOW_MS;
   const ms = totalMs - (now - new Date(reference).getTime());
-  if (ms <= 0) return <span className="text-xs font-bold text-red-500 animate-pulse">URGENT</span>;
+  if (ms <= 0) return <span className="text-[10px] font-bold text-red-500 animate-pulse whitespace-nowrap">URGENT</span>;
   const m = Math.floor(ms / 60000);
   const s = Math.floor((ms % 60000) / 1000);
   const color = ms < 60000 ? "text-red-500 font-bold" : "text-emerald-500 font-semibold";
-  return <span className={`text-xs ${color} font-mono`}>{m}:{s.toString().padStart(2, "0")}</span>;
+  return <span className={`text-[10px] ${color} font-mono whitespace-nowrap`}>{m}:{s.toString().padStart(2, "0")}</span>;
 }
 
 
@@ -452,7 +452,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
           })()}
           {dayChip && (
             <span
-              className={`text-[10px] mt-1 font-bold tracking-wider tabular-nums ${
+              className={`text-[9px] mt-0.5 font-semibold tabular-nums whitespace-nowrap leading-none ${
                 /^\d/.test(dayChip)
                   ? t.muted // countdown digits — neutral grey, same vibe as GloriaFood
                   : "text-sky-700" // future-day chip — sky like before
@@ -475,7 +475,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               marketplace / first-order / reservation flags — now lives in the
               detail view (tap to open), so the tile stays uncluttered. The
               pending accept-countdown is the one time-critical cue we keep. */}
-          <div className="mt-1 flex items-center gap-2 flex-wrap">
+          <div className="mt-1 flex items-center gap-1.5 min-w-0">
             <StatusBadge status={order.status} t={t} rejectionReason={order.rejectionReason} />
             {order.status === "pending" && (
               <Countdown
