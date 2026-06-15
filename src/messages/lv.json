@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Jā, es vēlos saņemt šī restorāna mārketinga paziņojumus. Jūs varat atrakstīties jebkurā laikā.",
     "fulfilConflictTitle": "Šīs preces nevar pasūtīt kopā",
     "fulfilConflictBody": "Tās ir pieejamas dažādās dienās vai laikos, tāpēc tās nevar būt vienā pasūtījumā. Noņemiet vienu, lai turpinātu pasūtīšanu:",
-    "fulfilConflictRemove": "Noņemt"
+    "fulfilConflictRemove": "Noņemt",
+    "closedOrderLater": "Jūs joprojām varat pasūtīt vēlākam laikam.",
+    "closedNowBanner": "Pašlaik esam slēgti, taču varat veikt priekšpasūtījumu vēlākam laikam.",
+    "seeMenuOrderAhead": "Skatīt ēdienkarti un pasūtīt"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",

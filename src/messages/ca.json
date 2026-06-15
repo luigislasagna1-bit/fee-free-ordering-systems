@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Sí, vull rebre comunicacions de màrqueting d'aquest restaurant. Pots donar-te de baixa en qualsevol moment.",
     "fulfilConflictTitle": "Aquests articles no es poden demanar junts",
     "fulfilConflictBody": "Estan disponibles en dies o horaris diferents, així que no poden anar a la mateixa comanda. Elimineu-ne un per continuar la comanda:",
-    "fulfilConflictRemove": "Elimina"
+    "fulfilConflictRemove": "Elimina",
+    "closedOrderLater": "Encara pots fer una comanda per a més tard.",
+    "closedNowBanner": "Ara estem tancats, però pots fer una comanda anticipada per a més tard.",
+    "seeMenuOrderAhead": "Veure menú i demanar"
   },
   "pizza": {
     "chooseSize": "Tria la mida",

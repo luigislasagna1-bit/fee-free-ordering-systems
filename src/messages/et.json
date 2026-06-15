@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Jah, soovin saada selle restorani turundusteateid. Saate end igal ajal loobuda.",
     "fulfilConflictTitle": "Neid tooteid ei saa koos tellida",
     "fulfilConflictBody": "Need on saadaval erinevatel päevadel või kellaaegadel, seega ei saa need olla samas tellimuses. Eemaldage üks, et tellimist jätkata:",
-    "fulfilConflictRemove": "Eemalda"
+    "fulfilConflictRemove": "Eemalda",
+    "closedOrderLater": "Saad siiski tellida hilisemaks ajaks.",
+    "closedNowBanner": "Oleme praegu suletud, kuid saate ette tellida hilisemaks ajaks.",
+    "seeMenuOrderAhead": "Vaata menüüd ja telli ette"
   },
   "pizza": {
     "chooseSize": "Vali suurus",

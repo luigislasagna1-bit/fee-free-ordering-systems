@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Da, želim prejemati tržna sporočila te restavracije. Odjavite se lahko kadar koli.",
     "fulfilConflictTitle": "Teh izdelkov ni mogoče naročiti skupaj",
     "fulfilConflictBody": "Na voljo so ob različnih dneh ali urah, zato ne morejo biti v istem naročilu. Odstranite enega in nadaljujte z naročanjem:",
-    "fulfilConflictRemove": "Odstrani"
+    "fulfilConflictRemove": "Odstrani",
+    "closedOrderLater": "Še vedno lahko naročite za pozneje.",
+    "closedNowBanner": "Trenutno smo zaprti, vendar lahko prednaročite za pozneje.",
+    "seeMenuOrderAhead": "Oglejte si meni in prednaročite"
   },
   "pizza": {
     "chooseSize": "Izberite velikost",

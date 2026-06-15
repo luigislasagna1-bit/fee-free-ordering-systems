@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Sim, quero receber comunicações de marketing deste restaurante. Pode cancelar a subscrição a qualquer momento.",
     "fulfilConflictTitle": "Estes artigos não podem ser pedidos em conjunto",
     "fulfilConflictBody": "Estão disponíveis em dias ou horários diferentes, por isso não podem ir no mesmo pedido. Remova um para continuar a pedir:",
-    "fulfilConflictRemove": "Remover"
+    "fulfilConflictRemove": "Remover",
+    "closedOrderLater": "Ainda pode encomendar para mais tarde.",
+    "closedNowBanner": "Estamos fechados agora, mas pode encomendar para mais tarde.",
+    "seeMenuOrderAhead": "Ver menu e encomendar"
   },
   "pizza": {
     "chooseSize": "Escolher tamanho",

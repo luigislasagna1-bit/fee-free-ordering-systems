@@ -263,7 +263,10 @@
     "marketingConsentLabel": "네, 이 레스토랑의 마케팅 정보를 받고 싶습니다. 언제든지 수신을 거부할 수 있습니다.",
     "fulfilConflictTitle": "이 항목들은 함께 주문할 수 없습니다",
     "fulfilConflictBody": "제공되는 요일이나 시간이 달라 같은 주문에 담을 수 없습니다. 하나를 삭제하고 주문을 계속하세요:",
-    "fulfilConflictRemove": "삭제"
+    "fulfilConflictRemove": "삭제",
+    "closedOrderLater": "나중 시간으로 주문하실 수 있습니다.",
+    "closedNowBanner": "지금은 영업 종료 상태이지만 나중 시간으로 미리 주문하실 수 있습니다.",
+    "seeMenuOrderAhead": "메뉴 보고 미리 주문"
   },
   "pizza": {
     "chooseSize": "크기 선택",

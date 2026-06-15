@@ -3566,7 +3566,38 @@ export function OrderingPageClient({
         );
       })()}
 
-      <div className="max-w-5xl mx-auto px-4 py-5">
+      {/* ── Closed-now banner (regular weekly hours) — GloriaFood parity ──
+          When the restaurant is closed by its WEEKLY schedule (opens at noon,
+          it's 10 AM — or closed for the rest of today) we still want the
+          prominent "you can order for later" strip, not just the small status
+          chip in the info bar. The holiday/extraordinary-closure banner above
+          only covered RestaurantHoliday days; this covers the ordinary case
+          (reseller report). Gated to NOT fire when that holiday banner is
+          showing, so the two never stack. liveStatusForClient already folds
+          in holidays + timezone, so a custom-hours holiday between intervals
+          shows the holiday banner (its gate is true) and suppresses this one. */}
+      {!(todayHolidayClosed || todayHolidayName || todayHolidayMessage || (todayHolidayIntervals?.length ?? 0) > 0 || holidayClosedServices.length > 0) &&
+        (liveStatusForClient.kind === "opens_at" || liveStatusForClient.kind === "closed_today") && (
+        <div className="w-full bg-amber-400 border-b border-amber-500 px-4 sm:px-6 py-3">
+          <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3">
+            <div className="flex items-start gap-2 text-amber-950 font-semibold text-sm min-w-0">
+              <Clock className="w-5 h-5 flex-shrink-0 mt-0.5" />
+              <span>{t("closedNowBanner")}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() =>
+                document.getElementById("ff-menu-start")?.scrollIntoView({ behavior: "smooth", block: "start" })
+              }
+              className="self-start sm:self-auto flex-shrink-0 rounded-lg bg-white px-3.5 py-2 text-xs sm:text-sm font-bold text-amber-900 shadow-sm hover:bg-amber-50 transition"
+            >
+              {t("seeMenuOrderAhead")}
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div id="ff-menu-start" className="max-w-5xl mx-auto px-4 py-5">
         {/* ── Owner test-mode banner (reseller report cmq3red6b) ───────── */}
         {isTestPreview && (
           <div className="mb-4 rounded-xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm">

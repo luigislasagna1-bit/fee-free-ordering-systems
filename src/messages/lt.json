@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Taip, noriu gauti šio restorano rinkodaros pranešimus. Galite atsisakyti bet kuriuo metu.",
     "fulfilConflictTitle": "Šių prekių negalima užsakyti kartu",
     "fulfilConflictBody": "Jos pasiekiamos skirtingomis dienomis arba skirtingu laiku, todėl negali būti tame pačiame užsakyme. Pašalinkite vieną, kad galėtumėte tęsti užsakymą:",
-    "fulfilConflictRemove": "Pašalinti"
+    "fulfilConflictRemove": "Pašalinti",
+    "closedOrderLater": "Vis tiek galite užsisakyti vėlesniam laikui.",
+    "closedNowBanner": "Dabar esame uždaryti, bet galite iš anksto užsisakyti vėlesniam laikui.",
+    "seeMenuOrderAhead": "Žiūrėti meniu ir užsisakyti"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",

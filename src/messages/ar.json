@@ -263,7 +263,10 @@
     "marketingConsentLabel": "نعم، أرغب في تلقي رسائل تسويقية من هذا المطعم. يمكنك إلغاء الاشتراك في أي وقت.",
     "fulfilConflictTitle": "لا يمكن طلب هذه العناصر معًا",
     "fulfilConflictBody": "إنها متوفرة في أيام أو أوقات مختلفة، لذا لا يمكن أن تكون في الطلب نفسه. أزل أحدها لمتابعة الطلب:",
-    "fulfilConflictRemove": "إزالة"
+    "fulfilConflictRemove": "إزالة",
+    "closedOrderLater": "لا يزال بإمكانك الطلب لوقت لاحق.",
+    "closedNowBanner": "نحن مغلقون الآن، لكن يمكنك الطلب مسبقًا لوقت لاحق.",
+    "seeMenuOrderAhead": "عرض القائمة والطلب مسبقًا"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",

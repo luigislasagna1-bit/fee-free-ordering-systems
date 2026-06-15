@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Igen, szeretnék marketingüzeneteket kapni ettől az étteremtől. Bármikor leiratkozhat.",
     "fulfilConflictTitle": "Ezeket a tételeket nem lehet együtt megrendelni",
     "fulfilConflictBody": "Különböző napokon vagy időpontokban érhetők el, ezért nem szerepelhetnek ugyanabban a rendelésben. Távolítson el egyet a rendelés folytatásához:",
-    "fulfilConflictRemove": "Eltávolítás"
+    "fulfilConflictRemove": "Eltávolítás",
+    "closedOrderLater": "Későbbre továbbra is rendelhetsz.",
+    "closedNowBanner": "Most zárva vagyunk, de előre rendelhetsz későbbre.",
+    "seeMenuOrderAhead": "Menü és előrendelés"
   },
   "pizza": {
     "chooseSize": "Méret választása",

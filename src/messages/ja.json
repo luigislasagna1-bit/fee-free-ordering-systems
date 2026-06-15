@@ -263,7 +263,10 @@
     "marketingConsentLabel": "はい、このレストランからのマーケティング情報を受け取りたいです。いつでも配信を停止できます。",
     "fulfilConflictTitle": "これらの商品は一緒に注文できません",
     "fulfilConflictBody": "提供される曜日や時間帯が異なるため、同じ注文に入れることはできません。1つを削除して注文を続けてください：",
-    "fulfilConflictRemove": "削除"
+    "fulfilConflictRemove": "削除",
+    "closedOrderLater": "後ほどの注文も承れます。",
+    "closedNowBanner": "現在は営業時間外ですが、後ほどの分をご予約いただけます。",
+    "seeMenuOrderAhead": "メニューを見て予約注文"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",

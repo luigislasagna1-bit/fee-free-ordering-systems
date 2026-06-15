@@ -85,7 +85,12 @@ export default async function OrderingPage({
     host !== appSubdomain &&
     !host.startsWith("localhost") &&
     !host.startsWith("127.0.0.1");
-  const fromHostedSite = sp.from === "hosted" || isBrandedHost;
+  // Whether the customer explicitly arrived from the hosted site (?from=hosted).
+  // The branded-host INFERENCE (any custom domain / subdomain) is additionally
+  // gated on the hosted-site entitlement below — without that gate the "Back to
+  // <name>'s site" breadcrumb showed even for restaurants with NO Sales
+  // Optimized Website to return to (Luigi 2026-06-15).
+  const fromHostedParam = sp.from === "hosted";
   // Compute the back-link URL. On a branded host (luigispizzapastawings.com,
   // luigis.feefreeordering.com), the proxy rewrites `/` to `/site/${slug}`
   // so the cleanest link is just `/`. On the platform domain the
@@ -311,13 +316,21 @@ export default async function OrderingPage({
   //      Payments add-on subscription in /admin/billing/add-ons).
   // The old Stripe Connect path (stripeAccountId / stripeChargesEnabled /
   // platform stripeReady) is gone — restaurants connect with their own keys.
-  const [provider, hasCardPayments] = await Promise.all([
+  const [provider, hasCardPayments, hasHostedSite] = await Promise.all([
     prisma.paymentProvider.findUnique({
       where: { restaurantId: restaurant.id },
       select: { isActive: true, publishableKey: true },
     }),
     hasFeature(restaurant.id, "card_payments"),
+    // Gate the "Back to <name>'s site" breadcrumb: a branded host only has a
+    // real marketing site to return to when the Sales Optimized Website add-on
+    // is active AND the site is published.
+    hasFeature(restaurant.id, "hosted_marketing_page"),
   ]);
+  // Final hosted-site flag: trust an explicit ?from=hosted; otherwise only
+  // infer it from a branded host when the hosted site genuinely exists.
+  const fromHostedSite =
+    fromHostedParam || (isBrandedHost && hasHostedSite && !!(restaurant as any).publishedAt);
   const providerReady = !!(provider?.isActive && provider.publishableKey);
   const cardPaymentEnabled = providerReady && hasCardPayments;
 

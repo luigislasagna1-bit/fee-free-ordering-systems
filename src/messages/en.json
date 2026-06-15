@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Yes, I'd like to receive marketing communications from this restaurant. You can unsubscribe at any time.",
     "fulfilConflictTitle": "These items can't be ordered together",
     "fulfilConflictBody": "They're available on different days or times, so they can't go in the same order. Remove one to keep ordering:",
-    "fulfilConflictRemove": "Remove"
+    "fulfilConflictRemove": "Remove",
+    "closedOrderLater": "You can still place an order for later.",
+    "closedNowBanner": "We're closed now but you can pre-order for later.",
+    "seeMenuOrderAhead": "See menu & order ahead"
   },
   "pizza": {
     "chooseSize": "Choose Size",

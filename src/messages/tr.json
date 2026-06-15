@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Evet, bu restorandan pazarlama iletileri almak istiyorum. İstediğiniz zaman aboneliğinizi iptal edebilirsiniz.",
     "fulfilConflictTitle": "Bu ürünler birlikte sipariş edilemez",
     "fulfilConflictBody": "Farklı günlerde veya saatlerde sunulduğundan aynı siparişte yer alamazlar. Siparişe devam etmek için birini kaldırın:",
-    "fulfilConflictRemove": "Kaldır"
+    "fulfilConflictRemove": "Kaldır",
+    "closedOrderLater": "Yine de daha sonrası için sipariş verebilirsiniz.",
+    "closedNowBanner": "Şu anda kapalıyız, ancak daha sonrası için ön sipariş verebilirsiniz.",
+    "seeMenuOrderAhead": "Menüyü gör & ön sipariş ver"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",

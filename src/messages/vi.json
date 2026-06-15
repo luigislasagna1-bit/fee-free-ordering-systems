@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Có, tôi muốn nhận thông tin tiếp thị từ nhà hàng này. Bạn có thể hủy đăng ký bất cứ lúc nào.",
     "fulfilConflictTitle": "Không thể đặt các món này cùng nhau",
     "fulfilConflictBody": "Chúng có sẵn vào các ngày hoặc giờ khác nhau nên không thể nằm trong cùng một đơn hàng. Hãy xóa một món để tiếp tục đặt hàng:",
-    "fulfilConflictRemove": "Xóa"
+    "fulfilConflictRemove": "Xóa",
+    "closedOrderLater": "Bạn vẫn có thể đặt hàng cho lúc khác.",
+    "closedNowBanner": "Hiện chúng tôi đang đóng cửa, nhưng bạn có thể đặt trước cho lúc khác.",
+    "seeMenuOrderAhead": "Xem thực đơn & đặt trước"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",

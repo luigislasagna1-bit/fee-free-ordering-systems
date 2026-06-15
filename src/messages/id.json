@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Ya, saya ingin menerima komunikasi pemasaran dari restoran ini. Anda dapat berhenti berlangganan kapan saja.",
     "fulfilConflictTitle": "Item ini tidak dapat dipesan bersamaan",
     "fulfilConflictBody": "Item tersedia pada hari atau waktu yang berbeda, jadi tidak bisa berada dalam satu pesanan yang sama. Hapus salah satu untuk melanjutkan pemesanan:",
-    "fulfilConflictRemove": "Hapus"
+    "fulfilConflictRemove": "Hapus",
+    "closedOrderLater": "Anda tetap dapat memesan untuk nanti.",
+    "closedNowBanner": "Kami sedang tutup, tetapi Anda dapat memesan di muka untuk nanti.",
+    "seeMenuOrderAhead": "Lihat menu & pesan di muka"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",

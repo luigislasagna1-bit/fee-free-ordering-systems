@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Ja, ik wil graag marketingcommunicatie van dit restaurant ontvangen. Je kunt je op elk moment afmelden.",
     "fulfilConflictTitle": "Deze artikelen kunnen niet samen worden besteld",
     "fulfilConflictBody": "Ze zijn op verschillende dagen of tijden beschikbaar, dus ze kunnen niet in dezelfde bestelling. Verwijder er een om verder te bestellen:",
-    "fulfilConflictRemove": "Verwijderen"
+    "fulfilConflictRemove": "Verwijderen",
+    "closedOrderLater": "Je kunt nog steeds bestellen voor later.",
+    "closedNowBanner": "We zijn nu gesloten, maar je kunt vooruit bestellen voor later.",
+    "seeMenuOrderAhead": "Menu bekijken & vooruit bestellen"
   },
   "pizza": {
     "chooseSize": "Kies maat",

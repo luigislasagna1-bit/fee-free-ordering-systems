@@ -33,6 +33,11 @@ import { usePathname } from "next/navigation";
  *   - /order/*      (customer-facing ordering pages — we don't want
  *                    pizza customers asking Luigi about their order;
  *                    that's the restaurant owner's job)
+ *   - /site/*       (the restaurant's own hosted marketing site —
+ *                    same reason: it's the diner's view, not ours)
+ *   - any branded host (custom domain / <slug>.<platform> subdomain) —
+ *                    the proxy rewrites "/" so the path can't reveal it;
+ *                    see isBrandedHost() below
  *   - /kitchen/*    (busy staff screens — a floating bubble covers
  *                    incoming order tickets)
  *   - /superadmin/* (Luigi's own dashboard — no point messaging himself)
@@ -46,7 +51,7 @@ import { usePathname } from "next/navigation";
  * hides the bubble when it lands on the customer page.
  */
 
-const HIDE_PREFIXES = ["/order/", "/kitchen/", "/superadmin/", "/embed/"];
+const HIDE_PREFIXES = ["/order/", "/site/", "/kitchen/", "/superadmin/", "/embed/"];
 
 declare global {
   interface Window {
@@ -59,7 +64,36 @@ declare global {
   }
 }
 
+/**
+ * Branded-host detection (client mirror of isBrandedHost in
+ * src/app/order/[slug]/page.tsx). On a custom domain or a
+ * <slug>.<platform> subdomain the edge proxy REWRITES "/" →
+ * "/order/[slug]" or "/site/[slug]", so usePathname() reports "/" and the
+ * path-based HIDE_PREFIXES never match — which is why the chat leaked onto
+ * customer ordering pages served on custom domains (Luigi 2026-06-15).
+ * Those hosts only ever serve customer-facing pages, so the support chat is
+ * hidden on ALL of them. The platform apex, www, the app subdomain, and the
+ * marketplace domain (marketing / admin / reseller / marketplace) still show it.
+ */
+function isBrandedHost(): boolean {
+  if (typeof window === "undefined") return false;
+  const host = window.location.hostname.toLowerCase();
+  if (!host || host.startsWith("localhost") || host.startsWith("127.0.0.1")) return false;
+  const platformDomain = (process.env.NEXT_PUBLIC_PLATFORM_DOMAIN || "feefreeordering.com").toLowerCase();
+  const marketplaceDomain = (process.env.NEXT_PUBLIC_MARKETPLACE_DOMAIN || "feefreefood.com").toLowerCase();
+  return (
+    host !== platformDomain &&
+    host !== `www.${platformDomain}` &&
+    host !== marketplaceDomain &&
+    host !== `www.${marketplaceDomain}` &&
+    host !== `app.${platformDomain}`
+  );
+}
+
 function shouldHide(pathname: string | null): boolean {
+  // Branded customer hosts first — the proxy rewrites "/" so the path alone
+  // can't tell us we're on a customer page (see isBrandedHost above).
+  if (isBrandedHost()) return true;
   if (!pathname) return false;
   return HIDE_PREFIXES.some((p) => pathname === p.replace(/\/$/, "") || pathname.startsWith(p));
 }

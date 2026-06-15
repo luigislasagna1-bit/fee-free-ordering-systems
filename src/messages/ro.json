@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Da, doresc să primesc comunicări de marketing de la acest restaurant. Te poți dezabona oricând.",
     "fulfilConflictTitle": "Aceste produse nu pot fi comandate împreună",
     "fulfilConflictBody": "Sunt disponibile în zile sau la ore diferite, așa că nu pot fi în aceeași comandă. Eliminați unul pentru a continua comanda:",
-    "fulfilConflictRemove": "Elimină"
+    "fulfilConflictRemove": "Elimină",
+    "closedOrderLater": "Poți totuși plasa o comandă pentru mai târziu.",
+    "closedNowBanner": "Acum suntem închiși, dar poți precomanda pentru mai târziu.",
+    "seeMenuOrderAhead": "Vezi meniul și precomandă"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",

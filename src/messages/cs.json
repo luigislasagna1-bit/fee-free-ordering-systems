@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Ano, chci dostávat marketingová sdělení od této restaurace. Odběr můžete kdykoli zrušit.",
     "fulfilConflictTitle": "Tyto položky nelze objednat společně",
     "fulfilConflictBody": "Jsou dostupné v různé dny nebo časy, takže nemohou být ve stejné objednávce. Odeberte jednu a pokračujte v objednávání:",
-    "fulfilConflictRemove": "Odebrat"
+    "fulfilConflictRemove": "Odebrat",
+    "closedOrderLater": "Stále můžete objednat na později.",
+    "closedNowBanner": "Nyní máme zavřeno, ale můžete si předobjednat na později.",
+    "seeMenuOrderAhead": "Zobrazit menu a předobjednat"
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",

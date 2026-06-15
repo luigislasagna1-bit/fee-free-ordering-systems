@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Kyllä, haluan vastaanottaa markkinointiviestintää tältä ravintolalta. Voit peruuttaa tilauksen milloin tahansa.",
     "fulfilConflictTitle": "Näitä tuotteita ei voi tilata yhdessä",
     "fulfilConflictBody": "Ne ovat saatavilla eri päivinä tai eri aikoina, joten ne eivät voi olla samassa tilauksessa. Poista yksi jatkaaksesi tilaamista:",
-    "fulfilConflictRemove": "Poista"
+    "fulfilConflictRemove": "Poista",
+    "closedOrderLater": "Voit silti tilata myöhemmäksi.",
+    "closedNowBanner": "Olemme nyt suljettu, mutta voit tehdä ennakkotilauksen myöhemmäksi.",
+    "seeMenuOrderAhead": "Katso menu & ennakkotilaa"
   },
   "pizza": {
     "chooseSize": "Valitse koko",

@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl";
 const DeliveryZonesMap = dynamic(() => import("../DeliveryZonesMap"), { ssr: false });
 
 import { formatTime as fmt, type HoursFormat } from "@/lib/format-time";
-import { localDowAndHHMM } from "@/lib/restaurant-hours";
+import { localDowAndHHMM, liveOpenStatus } from "@/lib/restaurant-hours";
 
 function formatTime(t: string, hoursFmt: HoursFormat = "24h") {
   return fmt(t, hoursFmt);
@@ -114,6 +114,19 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
   // the restaurant. Luigi 2026-05-30: "consistent EVERYWHERE."
   const { dow: todayIndex } = localDowAndHHMM(new Date(), restaurant.timezone);
   const todayHours = restaurant.openingHours.find((h) => h.dayOfWeek === todayIndex);
+  // Live "open right now" status (not just "is today an open day") so the
+  // callout reflects reality: at 10 AM with a noon opening it reads
+  // "Closed · Opens 12:00", not a misleading green "Open". The info page
+  // doesn't load holiday rows, so this is weekly-hours + timezone only —
+  // the ordering page and hosted site handle holidays in full.
+  const infoLiveStatus = liveOpenStatus(
+    restaurant.openingHours as any,
+    new Date(),
+    hoursFmt,
+    undefined,
+    restaurant.timezone,
+  );
+  const infoIsOpenNow = infoLiveStatus.kind === "open";
 
   const pickupTime = svcSettings.pickup?.estimatedTime ?? restaurant.estimatedPickup;
   const deliveryTime = svcSettings.delivery?.estimatedTime ?? restaurant.estimatedDelivery;
@@ -183,19 +196,31 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
           </div>
         </div>
 
-        {/* Today's hours callout */}
+        {/* Today's hours callout — driven by LIVE open-now status so it never
+            shows a green "Open" while the shop is actually closed (e.g. before
+            its noon opening). Closed states use amber + an "order for later"
+            hint, mirroring the ordering page banner. */}
         {todayHours && (
-          <div className={`flex items-center gap-3 px-4 py-3 rounded-xl border text-sm font-medium ${
-            todayHours.isOpen
+          <div className={`px-4 py-3 rounded-xl border text-sm font-medium ${
+            infoIsOpenNow
               ? "bg-green-50 border-green-200 text-green-800"
-              : "bg-red-50 border-red-200 text-red-800"
+              : "bg-amber-50 border-amber-200 text-amber-900"
           }`}>
-            <Clock className="w-4 h-4 flex-shrink-0" />
-            <span>
-              {todayHours.isOpen
-                ? `${tInfo("open")} · ${formatTime(todayHours.openTime, hoursFmt)} – ${formatTime(todayHours.closeTime, hoursFmt)}`
-                : tInfo("closedToday")}
-            </span>
+            <div className="flex items-center gap-3">
+              <Clock className="w-4 h-4 flex-shrink-0" />
+              <span>
+                {infoLiveStatus.kind === "open"
+                  ? (todayHours.isOpen && todayHours.openTime && todayHours.closeTime
+                      ? `${tInfo("open")} · ${formatTime(todayHours.openTime, hoursFmt)} – ${formatTime(todayHours.closeTime, hoursFmt)}`
+                      : tInfo("open"))
+                  : infoLiveStatus.kind === "opens_at"
+                    ? `${tInfo("closed")} · ${tOrdering("opensAtLabel", { time: infoLiveStatus.opensAt })}`
+                    : tInfo("closedToday")}
+              </span>
+            </div>
+            {!infoIsOpenNow && (
+              <div className="mt-1 ml-7 text-xs">{tOrdering("closedOrderLater")}</div>
+            )}
           </div>
         )}
 

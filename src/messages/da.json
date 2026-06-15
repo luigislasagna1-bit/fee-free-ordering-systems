@@ -263,7 +263,10 @@
     "marketingConsentLabel": "Ja, jeg vil gerne modtage markedsføringskommunikation fra denne restaurant. Du kan til enhver tid afmelde dig.",
     "fulfilConflictTitle": "Disse varer kan ikke bestilles sammen",
     "fulfilConflictBody": "De er tilgængelige på forskellige dage eller tidspunkter, så de kan ikke være i samme bestilling. Fjern en for at fortsætte bestillingen:",
-    "fulfilConflictRemove": "Fjern"
+    "fulfilConflictRemove": "Fjern",
+    "closedOrderLater": "Du kan stadig bestille til senere.",
+    "closedNowBanner": "Vi har lukket nu, men du kan forudbestille til senere.",
+    "seeMenuOrderAhead": "Se menu & forudbestil"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",

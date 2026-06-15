@@ -25,6 +25,7 @@ import {
   dateKeyInTimezone,
   type LiveOpenStatus,
 } from "@/lib/restaurant-hours";
+import { resolveLocale, loadMessages } from "@/lib/i18n-server";
 import { holidayEffectForDay } from "@/lib/holiday-rules";
 // Hosted-page map uses the same component as /order/[slug]/info. The
 // dynamic import (ssr:false) lives in the client wrapper because Next 16
@@ -187,6 +188,23 @@ export default async function HostedSitePage({
     };
     return map[wk] ?? now.getDay();
   })();
+
+  // ── Closed-now banner (GloriaFood parity) ──────────────────────────
+  // When the restaurant is closed RIGHT NOW (opens later today, or closed
+  // for the day) we surface a prominent yellow strip telling the customer
+  // they can still order for later — the small OpenNowBadge alone isn't
+  // enough (reseller report). Reuses the holiday-aware openStatus above;
+  // the "holiday" variant is intentionally excluded so a special-closure
+  // shows its own (rose) badge, not this ordinary-hours strip. Translated
+  // into the restaurant's language (this page is otherwise English-only).
+  const showClosedNowBanner =
+    openStatus.kind === "opens_at" || openStatus.kind === "closed_today";
+  const tOrd: Record<string, string> = showClosedNowBanner
+    ? (((await loadMessages(await resolveLocale({ restaurantId: r.id }))) as { ordering?: Record<string, string> }).ordering ?? {})
+    : {};
+  const closedNowBannerText = tOrd.closedNowBanner ?? "We're closed now but you can pre-order for later.";
+  const seeMenuText = tOrd.seeMenuOrderAhead ?? "See menu & order ahead";
+
   // ?from=hosted tells the ordering page to render a "Back to <Restaurant>"
   // breadcrumb at the top so customers who arrived from the marketing site
   // can return to it. Without this they hit a dead-end on /order with no
@@ -329,6 +347,27 @@ export default async function HostedSitePage({
 
   return (
     <main className="min-h-screen bg-white">
+      {/* Closed-now strip — full-width yellow banner at the very top so a
+          customer landing on the marketing site immediately sees the shop
+          is closed but can still order for later. Sits above the sticky nav
+          in normal flow; scrolls away as the nav pins to the top. */}
+      {showClosedNowBanner && (
+        <div className="w-full bg-amber-400 border-b border-amber-500 px-4 sm:px-6 py-3">
+          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3">
+            <div className="flex items-start gap-2 text-amber-950 font-semibold text-sm min-w-0">
+              <Clock className="w-5 h-5 flex-shrink-0 mt-0.5" />
+              <span>{closedNowBannerText}</span>
+            </div>
+            <Link
+              href={orderUrl}
+              className="self-start sm:self-auto flex-shrink-0 rounded-lg bg-white px-3.5 py-2 text-xs sm:text-sm font-bold text-amber-900 shadow-sm hover:bg-amber-50 transition"
+            >
+              {seeMenuText}
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* Reports — fire the visit beacon on the hosted marketing site
           too, not just /order/<slug>. Hosted-site visitors who never
           progress to the ordering page still count as "visits" in
