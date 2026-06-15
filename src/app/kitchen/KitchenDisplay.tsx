@@ -7,6 +7,7 @@ import {
   Package, Clock, Truck, ShoppingBag, CheckCircle, Trash2,
   FlaskConical, Loader2, Volume2, VolumeX, AlertTriangle, XCircle,
   CalendarDays, X, ChevronRight, ArrowLeft, CalendarClock, UtensilsCrossed,
+  MoreVertical, Settings, ClipboardList,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
@@ -123,53 +124,32 @@ function ReservationCard({
           <CalendarDays className="w-4 h-4 text-indigo-600" />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
+          {/* Lead line = customer name (only black text on the tile). */}
+          <div className={`font-bold ${t.text} ${compact ? "text-base" : "text-lg"} leading-tight truncate`}>
+            {r.customerName}
+          </div>
+          {/* Status chip + a single time cue below (GloriaFood-clean,
+              Luigi 2026-06-15). Party size, table, deposit, notes, booking
+              code + exact date/time now live in the detail (tap to open). */}
+          <div className="mt-1 flex items-center gap-2 flex-wrap">
+            <ReservationStatusBadge status={r.status} t={t} />
             {dayChip && (
               <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-100 text-sky-700 tracking-wider">
                 {dayChip}
               </span>
             )}
-            <span className={`font-bold ${t.text} ${compact ? "text-sm" : ""}`}>{r.customerName}</span>
-            <ReservationStatusBadge status={r.status} t={t} />
-            {opensLabel && (
-              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-300">
-                {opensLabel}
-              </span>
-            )}
-            {/* Purple TABLE RESERVATION label on every booking tile, matching the
-                order tile's flag. Pre-order bookings also show the amber PRE-ORDER
-                badge below. Luigi 2026-06-08. */}
-            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-700 dark:text-purple-300">
-              🪑 {tk("tableReservation").toUpperCase()}
-            </span>
-            {r.depositPaid && (
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
-                {tk("depositPaid").toUpperCase()}
-              </span>
-            )}
-            {r.preOrderTotal > 0 && (
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">
-                {tk("preOrder").toUpperCase()}
-              </span>
-            )}
-          </div>
-          <div className={`text-xs ${t.muted} mt-1 flex gap-3 flex-wrap items-center`}>
             {autoCountdown && (
               <span className="inline-flex items-center gap-1 text-[11px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">
                 <Clock className="w-3 h-3" /> {autoCountdown}
               </span>
             )}
-            <span>{r.date} · {formatTime(r.time, hoursFormat)}</span>
-            <span>{tk("partyOf", { n: r.partySize })}</span>
-            {r.table && <span>{r.table.name}</span>}
-            {!compact && r.customerPhone && <span>📞 {r.customerPhone}</span>}
+            {opensLabel && (
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-300">
+                {opensLabel}
+              </span>
+            )}
           </div>
-          {!compact && r.notes && (
-            <div className={`text-xs ${t.muted} mt-1 italic`}>&quot;{r.notes}&quot;</div>
-          )}
-          <div className="text-[10px] font-mono text-gray-400 mt-1">#{r.confirmationCode}</div>
         </div>
-        <ChevronRight className={`w-4 h-4 flex-shrink-0 mt-0.5 ${t.muted}`} />
       </div>
     </button>
   );
@@ -483,16 +463,19 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            {/* Primary line = WHO/WHERE, not the order # (Luigi 2026-06-13):
-                anything with a delivery address (delivery, catering-delivery)
-                shows the ADDRESS; pickup/dine-in/take-out show the NAME. The
-                order number drops to the grey line below. */}
-            <span className={`font-bold text-[1.225rem] leading-tight ${t.text} truncate min-w-0`}>
-              {showAddress
-                ? order.deliveryAddress
-                : order.customerName.replace("[TEST] ", "")}
-            </span>
+          {/* Lead line = WHO / WHERE — the only black text on the tile.
+              Delivery / catering show the ADDRESS; everything else the NAME. */}
+          <div className={`font-bold text-[1.15rem] leading-tight ${t.text} truncate`}>
+            {showAddress
+              ? order.deliveryAddress
+              : order.customerName.replace("[TEST] ", "")}
+          </div>
+          {/* Status chip on its own line directly below (GloriaFood-clean,
+              Luigi 2026-06-15). Everything else — order #, item count,
+              marketplace / first-order / reservation flags — now lives in the
+              detail view (tap to open), so the tile stays uncluttered. The
+              pending accept-countdown is the one time-critical cue we keep. */}
+          <div className="mt-1 flex items-center gap-2 flex-wrap">
             <StatusBadge status={order.status} t={t} rejectionReason={order.rejectionReason} />
             {order.status === "pending" && (
               <Countdown
@@ -503,42 +486,6 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
                 now={now}
               />
             )}
-            {order.viaMarketplace && (
-              // Marketplace channel attribution — purple to differentiate
-              // from direct widget/walk-up orders. Staff sees at a glance
-              // which orders came from /marketplace discovery.
-              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-300">
-                MARKETPLACE
-              </span>
-            )}
-            {isTest && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-400 text-amber-950">TEST</span>}
-            {/* Reserve-then-order: this order came with a table booking — flag it
-                so the kitchen treats it as one unit (the due-chip already shows
-                the reservation time). Luigi 2026-06-08. */}
-            {order.reservation && (
-              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-700 dark:text-purple-300">
-                🪑 {tk("tableReservation").toUpperCase()} + {tk("preOrder").toUpperCase()} · {tk("partyOf", { n: order.reservation.partySize })}
-              </span>
-            )}
-            {/* First-ever order from this customer — staff can give them extra
-                care / a warm welcome. Reseller report cmq3knaqj. Luigi 2026-06-09. */}
-            {order.isFirstOrder && (
-              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-teal-500/20 text-teal-700 dark:text-teal-300">
-                ⭐ {tk("firstOrder").toUpperCase()}
-              </span>
-            )}
-          </div>
-          {/* Secondary grey line = order # (was the bold line). When the bold
-              line above is an address, we keep the customer NAME here too, so
-              the kitchen still sees who it's for. Luigi 2026-06-13. */}
-          <div className={`text-sm ${t.textMuted} truncate`}>
-            #{order.orderNumber}
-            {showAddress && ` · ${order.customerName.replace("[TEST] ", "")}`}
-          </div>
-          {/* The out-of-zone heads-up moved into the order detail (next to the
-              address) so it only shows once an order is opened. Luigi 2026-06-08. */}
-          <div className={`text-xs ${t.subtle} mt-0.5`}>
-            {order.items.length} {tk("items")}
           </div>
         </div>
         <div className="flex flex-col items-end flex-shrink-0">
@@ -1847,6 +1794,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // without breaking. Drop the migration block in a follow-up once
   // every kitchen device has loaded the new build at least once.
   const [clearConfirm, setClearConfirm] = useState<"orders" | "complete" | "reservations" | null>(null);
+  // Top-right 3-dot quick-actions menu (Luigi 2026-06-15). Holds Test Order,
+  // Clear current tab, Language, Log out — declutters the header. Full settings
+  // live on the bottom bar's gear.
+  const [showQuickMenu, setShowQuickMenu] = useState(false);
 
   const seenIdsRef = useRef<Set<string>>(new Set(initialOrders.map(o => o.id)));
   // Stable ref to ringBellOnce so fetchOrders (deps=[]) can call the
@@ -2715,7 +2666,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   return (
     <div className={`h-screen flex flex-col ${t.base}`}>
       {/* ── Header ── */}
-      <header className={`${t.header} px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between flex-shrink-0 gap-2`}>
+      <header
+        className={`${t.header} px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between flex-shrink-0 gap-2`}
+        // Clear the Android status bar / notch so the title + menu never clip
+        // the "safe area" (Fabrizio feedback 2026-06-15).
+        style={{ paddingTop: "max(0.625rem, env(safe-area-inset-top))" }}
+      >
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <ChefHat className="w-6 h-6 text-emerald-500 flex-shrink-0" />
           <div className="min-w-0">
@@ -2748,62 +2704,65 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             </button>
           )}
 
-          {/* Settings — the new hub. Hosts pause services, item availability +
-              pricing, AND Preferences (sound, day/night, printer, refresh,
-              day report). Luigi 2026-06-02 header declutter: these five
-              buttons used to each get their own slot on the header — they
-              all live inside this modal now. The button itself doubles as
-              the "paused services" indicator: amber when any service is
-              currently paused. */}
-          <button
-            type="button"
-            onClick={() => setShowStatusModal(true)}
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${
-              anyServicePaused
-                ? "border-amber-500/60 text-amber-600 bg-amber-500/10"
-                : "border-gray-500/30 text-gray-600"
-            } ${t.btn}`}
-            title="Pause services, item availability, sound, day/night, printer, end-of-day"
-          >
-            {anyServicePaused ? "⏸ Paused" : "Settings"}
-          </button>
-
-          {/* Delivery dispatch toggle — only renders for restaurants on
-              "both" mode (own + ShipDay), where staff can swap which
-              source new orders dispatch to. Hidden for own-only or
-              shipday-only restaurants (those are admin-controlled). */}
-          <DispatchModeToggle themeBtnClass={t.btn} />
-
-          {/* Test Order — fires a real order through the full pipeline
-              (DB row + customer-confirmation email to owner inbox + staff
-              notification fan-out + kitchen bell + auto-print on accept).
-              Prominent purple pill, visible on every screen size so owners
-              can validate the end-to-end flow at any time. */}
-          <button
-            onClick={createTestOrder}
-            disabled={testOrdering}
-            className="flex items-center gap-1.5 text-xs sm:text-sm px-3 py-1.5 sm:py-2 rounded-lg font-bold transition disabled:opacity-60 bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white shadow-sm"
-            title={tk("testOrder")}
-            aria-label={tk("testOrder")}
-          >
-            {testOrdering
-              ? <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin" />
-              : <FlaskConical className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
-            <span>{tk("testOrder")}</span>
-          </button>
-
-          {/* Per-staff language for THIS console (kitchen tablets often never
-              touch the admin dashboard). Writes the ff-staff-locale cookie +
-              reloads — same mechanism as the dashboard switcher. Luigi 2026-06-07. */}
-          <StaffLanguageSwitcher />
-
-          <button
-            onClick={() => signOut({ callbackUrl: "/kitchen/login" })}
-            className={`p-2 rounded-lg ${t.btn} ${t.muted}`}
-            title={tk("logOut")}
-          >
-            <LogOut className="w-4 h-4" />
-          </button>
+          {/* Quick-actions menu (Luigi 2026-06-15 header declutter) — the
+              squished Test Order / Language / Log-out buttons now live behind a
+              single 3-dot button, GloriaFood-style. The full in-depth settings
+              hub moved to the bottom bar's gear. */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setShowQuickMenu((v) => !v)}
+              className={`p-2 rounded-lg ${t.btn} ${t.muted}`}
+              aria-label="Menu"
+              aria-haspopup="menu"
+              aria-expanded={showQuickMenu}
+            >
+              <MoreVertical className="w-5 h-5" />
+            </button>
+            {showQuickMenu && (
+              <>
+                {/* click-away backdrop */}
+                <div className="fixed inset-0 z-40" onClick={() => setShowQuickMenu(false)} aria-hidden="true" />
+                <div className={`absolute right-0 mt-1.5 w-60 rounded-xl border ${t.border} ${t.modal} shadow-xl z-50 py-1.5`}>
+                  <button
+                    type="button"
+                    onClick={() => { setShowQuickMenu(false); createTestOrder(); }}
+                    disabled={testOrdering}
+                    className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium ${t.text} hover:bg-gray-500/10 disabled:opacity-60 transition text-left`}
+                  >
+                    {testOrdering
+                      ? <Loader2 className="w-4 h-4 animate-spin flex-shrink-0" />
+                      : <FlaskConical className="w-4 h-4 flex-shrink-0 text-amber-500" />}
+                    <span>{tk("testOrder")}</span>
+                  </button>
+                  {(activeTab === "orders" || activeTab === "complete") && (
+                    <button
+                      type="button"
+                      onClick={() => { setShowQuickMenu(false); setClearConfirm(activeTab === "orders" ? "orders" : "complete"); }}
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-red-500 hover:bg-red-500/10 transition text-left"
+                    >
+                      <Trash2 className="w-4 h-4 flex-shrink-0" />
+                      <span>{tk("clearOrders")}</span>
+                    </button>
+                  )}
+                  <div className={`my-1 border-t ${t.border}`} />
+                  {/* Per-staff console language (kitchen tablets rarely touch admin). */}
+                  <div className="px-3 py-1.5"><StaffLanguageSwitcher /></div>
+                  {/* Dispatch-source toggle — self-hides unless the restaurant is on "both". */}
+                  <DispatchModeToggle themeBtnClass={t.btn} />
+                  <div className={`my-1 border-t ${t.border}`} />
+                  <button
+                    type="button"
+                    onClick={() => { setShowQuickMenu(false); signOut({ callbackUrl: "/kitchen/login" }); }}
+                    className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium ${t.text} hover:bg-gray-500/10 transition text-left`}
+                  >
+                    <LogOut className="w-4 h-4 flex-shrink-0" />
+                    <span>{tk("logOut")}</span>
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </header>
 
@@ -2833,7 +2792,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
            mobile so it doesn't push the reservations tab off-screen. */}
       <div className={`${t.tabs} flex items-stretch flex-shrink-0`}>
         <div className="flex flex-1 min-w-0">
-          {(["orders", "inprogress", "complete", "reservations"] as KTab[]).map(tab => {
+          {/* 3 tabs only (GloriaFood parity, Luigi 2026-06-15). The dedicated
+              Reservations tab was removed — bookings still appear in All and In
+              Progress exactly as before, so nothing is missed. */}
+          {(["orders", "inprogress", "complete"] as KTab[]).map(tab => {
             const labels: Record<KTab, string> = {
               orders: tk("allOrders"),
               inprogress: tk("inProgress"),
@@ -2879,13 +2841,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
             it never widens with a text label and squeezes the tabs in portrait.
             Luigi 2026-06-08. */}
         {((activeTab === "orders" && (tabCounts.orders > 0 || allTabReservations.length > 0)) ||
-          (activeTab === "complete" && (tabCounts.complete > 0 || completeTabReservations.length > 0)) ||
-          (activeTab === "reservations" && reservationsTabItems.length > 0)) && (
+          (activeTab === "complete" && (tabCounts.complete > 0 || completeTabReservations.length > 0))) && (
           <button
             type="button"
-            onClick={() => setClearConfirm(
-              activeTab === "orders" ? "orders" : activeTab === "complete" ? "complete" : "reservations",
-            )}
+            onClick={() => setClearConfirm(activeTab === "orders" ? "orders" : "complete")}
             aria-label={tk("clearOrders")}
             title={tk("clearOrders")}
             className={`flex-shrink-0 my-1.5 mr-1.5 sm:mr-2 flex items-center justify-center w-10 h-10 sm:w-8 sm:h-8 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 active:bg-red-500/20 transition touch-manipulation cursor-pointer`}
@@ -2904,33 +2863,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           right. Luigi 2026-06-08. */}
       {/* Reservations tab — full-width list. Tapping a booking opens the
           full-screen detail overlay (rendered once, below). Luigi 2026-06-08. */}
-      {activeTab === "reservations" && (
-        <div className="flex-1 flex overflow-hidden">
-          <div className="flex flex-col w-full overflow-y-auto p-4 space-y-3">
-            {reservationsTabItems.length === 0 ? (
-              <div className={`flex flex-col items-center justify-center py-20 ${t.muted}`}>
-                <Clock className="w-10 h-10 mb-3 opacity-30" />
-                <p className="text-sm">{tk("noReservations")}</p>
-              </div>
-            ) : reservationsTabItems.map(r => (
-              <ReservationCard
-                key={r.id}
-                r={r}
-                t={t}
-                hoursFormat={hoursFmt}
-                onOpen={openReservation}
-                selected={selectedReservationId === r.id}
-                now={now}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* ── Main content (orders / in-progress / complete) ──
           Full-width list. Tapping any order/reservation opens the full-screen
           detail overlay (rendered once, below) — no split view. Luigi 2026-06-08. */}
-      {activeTab !== "reservations" && (
       <div className="flex-1 flex overflow-hidden">
         {/* Order list — full width */}
         <div className="flex flex-col w-full overflow-y-auto">
@@ -3166,7 +3101,37 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         </div>
 
       </div>
-      )}
+
+      {/* ── Bottom bar (Luigi 2026-06-15, GloriaFood parity) ──
+          Orders (back to the list / closes any open detail) + Settings (the
+          full in-depth hub: pause services, item availability, sound, printer,
+          day/night, end-of-day). flex-shrink-0 keeps it pinned at the bottom;
+          safe-area-inset-bottom clears the Android nav bar. The Settings icon
+          turns amber when a service is paused. */}
+      <nav
+        className={`flex-shrink-0 flex items-center justify-around border-t ${t.border} ${t.header}`}
+        style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
+      >
+        <button
+          type="button"
+          onClick={() => { setSelectedId(null); setSelectedReservationId(null); }}
+          className="flex flex-col items-center gap-0.5 px-8 py-2 text-orange-500"
+          aria-label="Orders"
+          title="Orders"
+        >
+          <ClipboardList className="w-6 h-6" />
+        </button>
+        <button
+          type="button"
+          onClick={() => setShowStatusModal(true)}
+          className={`relative flex flex-col items-center gap-0.5 px-8 py-2 ${anyServicePaused ? "text-amber-500" : t.muted}`}
+          aria-label="Settings"
+          title="Pause services, item availability, sound, day/night, printer, end-of-day"
+        >
+          <Settings className="w-6 h-6" />
+          {anyServicePaused && <span className="absolute top-1 right-6 w-2 h-2 rounded-full bg-amber-500" />}
+        </button>
+      </nav>
 
       {/* ── Full-screen order / reservation detail overlay ──
           Tapping any tile (in any tab) opens its detail FULL-SCREEN over the
