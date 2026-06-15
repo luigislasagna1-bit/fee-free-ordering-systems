@@ -31,6 +31,94 @@ currencies; timezones triple-checked. Full plan: `~/.claude/plans/zazzy-beaming-
     - **Rich-tag cleanup done** — restored the dropped `<strong>`/`<q>` tags in `legacyWidget.wixWarn1` (nb/et/tr/uk/id/vi), `legacyWidget.wordpressStep2` (sr/ja/ko), `paygOptInPage.switch.timelineUndoBody` (lt), `marketplaceLocked.recommendationBody` (ja). All **38 locales** now match en.json's tag multiset exactly.
   - **Remaining (lower priority):** static `<head>` SEO metadata on `/marketplace` (title/description) is still English — localizing needs `generateMetadata` + `getLocale`; deferred.
 
+## 🚀 PRE-LAUNCH BLOCKER — Native Kitchen Order App on the app stores (Luigi 2026-06-14)
+
+**Decision (2026-06-14):** the native **iOS + Android Kitchen Order App** — with
+**direct WiFi printing to thermal receipt printers** — is now **MANDATORY before
+launch.** This supersedes the old "post-soft-launch" sequencing in Phase G below.
+Apple Developer account ✅ exists. Pre-launch order: chat + demo-booking ✅ →
+**THIS** → marketing revamp → flip Stripe live → launch.
+
+**Current state**
+- **Android** Capacitor app (`com.feefreeordering.kitchen`, launcher label "Fee
+  Free Order App") loads the remote `/kitchen` URL. **Direct LAN printing WORKS**
+  via the native StarXpand bridge (GOLDEN, verified 2026-05-24). Currently a
+  sideloaded *debug* APK — not yet on the Play Store.
+- **iOS** — no project yet. The printer bridge is Android/Kotlin only.
+
+### 2A — Android → Google Play Store (do first; app + printing already work)
+
+Fastest path to "an app is live" — mostly packaging + a listing.
+
+1. **Release keystore** — generate via `keytool`. 🔴 CRITICAL: back up the
+   keystore file **and** its passwords offline + in a password manager. Lose it =
+   you can NEVER update the app again. (Generate together; Luigi safeguards it.)
+2. **Gradle release signing** — `signingConfigs.release` reading a gitignored
+   `keystore.properties` (never commit the keystore/passwords). [Claude]
+3. **App metadata** — `versionCode`/`versionName`, name, icon, splash. [Claude]
+4. **Signed release AAB** — `gradlew bundleRelease` (Android App Bundle, not APK).
+   [Claude, run on Luigi's machine]
+5. 🔴 **Google Play Console account** — $25 one-time. [Luigi]
+6. **Store listing** — title, short + full description (Claude drafts),
+   screenshots (kitchen on phone + tablet), feature graphic, icon, category
+   (Business / Food & Drink), contact email, **privacy policy URL** (`/privacy`
+   exists). [Luigi + Claude drafts copy]
+7. **Data Safety form + content rating** — declare data (minimal: a webview to our
+   own site); rating likely "Everyone". [Luigi/Claude]
+8. **Internal testing track → Production → review** — Google review, hours–days.
+   [Luigi]
+
+Risk: Play may scrutinize the webview wrapper — the **native printing** + the B2B
+use case justify it. Timeline ≈ 1–2 weeks (mostly review + assets).
+
+### 2B — iOS → Apple App Store (the big lift)
+
+🔴 **GATING DECISION — build environment.** iOS only compiles on **macOS/Xcode**;
+Luigi is on Windows.
+- **Physical Mac** (used Mac mini ≈ $400–600) — **strongly recommended**, because
+  the Swift printer bridge has to be tested on a **real iPhone/iPad with the Star
+  printer on the same WiFi**, which is painful via cloud CI alone.
+- **Cloud-Mac CI** (Codemagic / EAS) — builds in the cloud, no physical Mac, but
+  on-device printer debugging is hard without a local Mac + device.
+
+Steps:
+1. **Add the iOS platform** — `npx cap add ios` → Xcode project. [Claude]
+2. **Configure** — bundle ID `com.feefreeordering.kitchen`, name "Fee Free Order
+   App", icon/splash, `server.url` → `/kitchen`, **and the iOS LAN-printing
+   permissions**: `NSLocalNetworkUsageDescription` + `NSBonjourServices` in
+   `Info.plist` (iOS 14+ requires the Local Network permission to reach a LAN
+   printer — the classic iOS-printing pitfall). [Claude]
+3. **Swift StarXpand printer bridge** — THE big task: re-implement the Android
+   Kotlin bridge in **Swift** using Star's **iOS StarXpand SDK** (discover printer
+   → render the receipt bitmap → `actionPrintImage`). It's the GOLDEN pipeline
+   rebuilt for iOS — verify on a real device + printer. [Claude, needs a Mac]
+4. **Signing** — certs + provisioning profiles (Apple account ✅), Xcode managed
+   signing. [Claude/Luigi on the Mac]
+5. **App Store Connect** — listing (name, description (Claude drafts), iPhone +
+   iPad screenshots, keywords, category, privacy "nutrition label", privacy URL).
+   [Luigi + Claude]
+6. 🔴 **Apple review** — STRICT on thin web-wrappers (Guideline 4.2). Our native
+   printing is the justification → it must be working + give the reviewer notes +
+   a demo login. [Luigi/Claude]
+7. **TestFlight → submit → review (1–3+ days) → live.**
+
+Risk: the Swift bridge is net-new (the Android one "took many iterations"); the
+iOS Local Network permission; Apple 4.2 review. Timeline: several weeks.
+
+### Sequencing + ownership
+
+1. **Android release → Play Store** (Claude starts the signing + AAB on "go").
+2. **In parallel, Luigi:** Play Console account ($25) · a **Mac** for iOS · store
+   assets (icon, screenshots — Claude drafts the text).
+3. **iOS:** add the project + build the Swift printer bridge (on the Mac) → App
+   Store.
+
+**Luigi lines up:** Play Console ($25) · a Mac (recommended) for iOS · store
+assets · **keep the Android keystore safe**.
+**Claude owns:** gradle release config + AAB · iOS scaffolding + the Swift
+StarXpand bridge · capacitor config + `Info.plist` perms + icons/splash · draft
+listing copy · on-device printing verification for both.
+
 ## 🔬 Shipped 2026-05-21 → 2026-05-22 (this sprint)
 
 ### Live + verified end-to-end ✅
@@ -300,6 +388,13 @@ Estimated size: ~700 lines. 1 PR.
 ---
 
 ## Phase G — Native apps: Kitchen Display + Marketplace (Capacitor)
+
+> ⚠️ **PARTLY SUPERSEDED (2026-06-14).** The Kitchen-app half is now the
+> "🚀 PRE-LAUNCH BLOCKER" section near the top: it's **mandatory before launch**
+> (not post-launch), the Android native printer is **already built + verified**
+> (GOLDEN), and the live work is publishing to the stores + the iOS Swift bridge.
+> The Capacitor rationale + supported-printer list below still apply; the
+> Marketplace app (App 2) stays a later/optional item.
 
 **Strategic decision 2026-05-23** (Luigi + Claude): build TWO native apps
 post-soft-launch, both on **Capacitor** (Ionic team's WebView wrapper),
