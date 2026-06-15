@@ -19,8 +19,9 @@ import { usePathname } from "next/navigation";
  *   NEXT_PUBLIC_TAWK_WIDGET_ID    — the widget id (usually "default"
  *                                   or "1abcdef234")
  *
- * If either env is unset the widget no-ops — safe to mount globally
- * before Luigi has registered with Tawk.
+ * The IDs default to Fee Free's own Tawk property (baked in below — they're
+ * public anyway, shipping in the client embed); an env var overrides if the
+ * property is ever moved.
  *
  * ── Where it shows / hides ──────────────────────────────────────────
  * SHOW on:
@@ -65,8 +66,10 @@ function shouldHide(pathname: string | null): boolean {
 
 export function SupportChat() {
   const pathname = usePathname();
-  const propertyId = process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID;
-  const widgetId = process.env.NEXT_PUBLIC_TAWK_WIDGET_ID || "default";
+  // Fee Free's Tawk.to support property (Luigi 2026-06-14). Public IDs, so baked
+  // in as the default — the widget works with no Vercel env setup; env overrides.
+  const propertyId = process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID || "6a2f49dbccc4ac1d4891bee5";
+  const widgetId = process.env.NEXT_PUBLIC_TAWK_WIDGET_ID || "1jr4bh0k0";
 
   useEffect(() => {
     // No env wired up yet → bail. Component is safe to render before

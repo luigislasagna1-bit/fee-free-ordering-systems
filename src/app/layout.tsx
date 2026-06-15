@@ -44,8 +44,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Providers>{children}</Providers>
           {/* Tawk.to support chat — globally mounted, self-hides on
               customer-facing /order/* + kitchen + superadmin + embed
-              routes. No-ops until NEXT_PUBLIC_TAWK_PROPERTY_ID is set
-              in the Vercel env. See src/components/SupportChat.tsx. */}
+              routes. Active by default with Fee Free's Tawk property; an
+              env var can override. See src/components/SupportChat.tsx. */}
           <SupportChat />
         </NextIntlClientProvider>
       </body>
