@@ -10,7 +10,10 @@ import { useEffect } from "react";
  * before Calendly is configured — the moment the URL is wired the button appears.
  * Same env-driven pattern as the support chat. Luigi 2026-06-14.
  */
-const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL || "";
+// Fee Free's Calendly demo link (Luigi 2026-06-14). Public URL, baked in as the
+// default so the button works with no env setup; NEXT_PUBLIC_CALENDLY_URL overrides.
+const CALENDLY_URL =
+  process.env.NEXT_PUBLIC_CALENDLY_URL || "https://calendly.com/feefreeordering-support/30min";
 
 export function BookDemoButton({
   className,
