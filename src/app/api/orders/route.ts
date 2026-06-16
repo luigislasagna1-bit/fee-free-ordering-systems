@@ -1619,10 +1619,18 @@ export async function POST(req: NextRequest) {
         const mi = menuItemMap.get(vi.menuItemId) as any;
         if (!mi || !hasFulfilWindow(mi)) continue;
         if (!isFulfilableAt(mi, fulfilMoment, fulfilTz)) {
+          // In reservation mode the order time is LOCKED to the booking (no
+          // schedule picker), so "schedule your order for when it's available" is
+          // a dead-end — tell them to remove it or rebook on a day it's offered.
+          // The client localizes BOTH variants from `code` + itemName (so neither
+          // is an English-only string). Luigi 2026-06-16.
+          const forReservation = !!reservationData;
           return NextResponse.json(
             {
-              error: `"${mi.name}" can only be ordered for certain days/times. Please schedule your order for when it's available.`,
-              code: "item_fulfilment_window",
+              error: forReservation
+                ? `"${mi.name}" isn't available on your reservation day. Please remove it, or book your table on a day it's offered.`
+                : `"${mi.name}" can only be ordered for certain days/times. Please schedule your order for when it's available.`,
+              code: forReservation ? "item_fulfilment_window_reservation" : "item_fulfilment_window",
               itemName: mi.name,
               fulfilDays: mi.fulfilDays ?? null,
               fulfilFrom: mi.fulfilFrom ?? null,

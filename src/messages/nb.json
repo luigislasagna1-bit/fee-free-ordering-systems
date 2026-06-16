@@ -227,7 +227,9 @@
       "scheduledInPast": "Det planlagte tidspunktet du valgte har allerede passert. Velg et nytt tidspunkt.",
       "holidayClosedFull": "Vi har stengt denne datoen. Velg en annen dag.",
       "holidayServiceClosed": "{service} er ikke tilgjengelig denne datoen. Velg en annen dag eller tjeneste.",
-      "fullNameRequired": "Skriv inn fornavn og etternavn."
+      "fullNameRequired": "Skriv inn fornavn og etternavn.",
+      "fulfilWindowOrderError": "\"{name}\" kan bare bestilles på bestemte dager/tidspunkter. Planlegg bestillingen din til når den er tilgjengelig.",
+      "fulfilWindowReservationError": "\"{name}\" er ikke tilgjengelig på reservasjonsdagen din. Fjern den, eller reserver bordet ditt en dag den tilbys."
     },
     "searchMenu": "Søk i menyen…",
     "signIn": "Logg inn",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Fjern",
     "closedOrderLater": "Du kan fortsatt bestille til senere.",
     "closedNowBanner": "Vi har stengt nå, men du kan forhåndsbestille til senere.",
-    "seeMenuOrderAhead": "Se meny & forhåndsbestill"
+    "seeMenuOrderAhead": "Se meny & forhåndsbestill",
+    "fulfilNotForReservationLabel": "Ikke tilgjengelig for reservasjonen din — kun {window}"
   },
   "pizza": {
     "chooseSize": "Velg størrelse",

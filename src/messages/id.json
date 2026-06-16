@@ -227,7 +227,9 @@
       "scheduledInPast": "Waktu terjadwal yang Anda pilih sudah lewat. Silakan pilih waktu baru.",
       "holidayClosedFull": "Kami tutup pada tanggal ini. Silakan pilih hari lain.",
       "holidayServiceClosed": "{service} tidak tersedia pada tanggal ini. Silakan pilih hari atau layanan lain.",
-      "fullNameRequired": "Masukkan nama depan dan nama belakang Anda."
+      "fullNameRequired": "Masukkan nama depan dan nama belakang Anda.",
+      "fulfilWindowOrderError": "\"{name}\" hanya dapat dipesan pada hari/jam tertentu. Jadwalkan pesanan Anda untuk saat tersedia.",
+      "fulfilWindowReservationError": "\"{name}\" tidak tersedia pada hari reservasi Anda. Harap hapus, atau pesan meja pada hari saat tersedia."
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Hapus",
     "closedOrderLater": "Anda tetap dapat memesan untuk nanti.",
     "closedNowBanner": "Kami sedang tutup, tetapi Anda dapat memesan di muka untuk nanti.",
-    "seeMenuOrderAhead": "Lihat menu & pesan di muka"
+    "seeMenuOrderAhead": "Lihat menu & pesan di muka",
+    "fulfilNotForReservationLabel": "Tidak tersedia untuk reservasi Anda — hanya {window}"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",

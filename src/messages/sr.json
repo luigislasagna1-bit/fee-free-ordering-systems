@@ -227,7 +227,9 @@
       "scheduledInPast": "Изабрано заказано време је већ прошло. Изаберите ново време.",
       "holidayClosedFull": "На овај датум смо затворени. Изаберите други дан.",
       "holidayServiceClosed": "{service} није доступна на овај датум. Изаберите други дан или услугу.",
-      "fullNameRequired": "Унесите своје име и презиме."
+      "fullNameRequired": "Унесите своје име и презиме.",
+      "fulfilWindowOrderError": "\"{name}\" се може наручити само одређеним данима/сатима. Закажите поруџбину за време када је доступно.",
+      "fulfilWindowReservationError": "\"{name}\" није доступно на дан ваше резервације. Уклоните га или резервишите сто за дан када је у понуди."
     },
     "searchMenu": "Pretražite meni…",
     "signIn": "Prijavite se",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Уклони",
     "closedOrderLater": "И даље можете наручити за касније.",
     "closedNowBanner": "Тренутно смо затворени, али можете унапред наручити за касније.",
-    "seeMenuOrderAhead": "Погледај мени и наручи"
+    "seeMenuOrderAhead": "Погледај мени и наручи",
+    "fulfilNotForReservationLabel": "Није доступно за вашу резервацију — само {window}"
   },
   "pizza": {
     "chooseSize": "Izaberite veličinu",

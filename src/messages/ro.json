@@ -227,7 +227,9 @@
       "scheduledInPast": "Ora programată aleasă a trecut deja. Te rugăm să alegi o oră nouă.",
       "holidayClosedFull": "Suntem închiși în această dată. Alege altă zi.",
       "holidayServiceClosed": "{service} nu este disponibil în această dată. Alege altă zi sau alt serviciu.",
-      "fullNameRequired": "Introdu prenumele și numele de familie."
+      "fullNameRequired": "Introdu prenumele și numele de familie.",
+      "fulfilWindowOrderError": "\"{name}\" poate fi comandat doar în anumite zile/ore. Programează-ți comanda pentru când este disponibil.",
+      "fulfilWindowReservationError": "\"{name}\" nu este disponibil în ziua rezervării tale. Te rugăm să-l elimini sau să rezervi masa într-o zi în care este oferit."
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Elimină",
     "closedOrderLater": "Poți totuși plasa o comandă pentru mai târziu.",
     "closedNowBanner": "Acum suntem închiși, dar poți precomanda pentru mai târziu.",
-    "seeMenuOrderAhead": "Vezi meniul și precomandă"
+    "seeMenuOrderAhead": "Vezi meniul și precomandă",
+    "fulfilNotForReservationLabel": "Indisponibil pentru rezervarea ta — doar {window}"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",

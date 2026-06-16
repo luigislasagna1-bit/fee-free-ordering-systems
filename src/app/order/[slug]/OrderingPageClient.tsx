@@ -11,7 +11,7 @@ import { formatCurrency } from "@/lib/utils";
 import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
 import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib/format-time";
 import { methodsForOrderType, paymentValueToSlug } from "@/lib/payment-methods";
-import { localDowAndHHMM, liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
+import { localDowAndHHMM, liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
 import { isVisibleNow } from "@/lib/menu-visibility";
 import { hasFulfilWindow, isFulfilableAt, fulfilWindowLabel, combinedFulfilConstraint } from "@/lib/menu-fulfilment";
 
@@ -1665,6 +1665,24 @@ export function OrderingPageClient({
   // Visibility (show/hide, scheduled) is the GloriaFood-style isVisibleNow model;
   // a separate availability path below still gates ordering (Phase 2 territory).
   const visNow = new Date();
+  // Reserve-then-order LOCKS the order time to the booking moment (there's no
+  // schedule picker — the food is for the table). So a day/time-restricted item
+  // must be judged against that booking moment, NOT "now", and if it doesn't fit
+  // it can't be ordered at all (it can't be rescheduled to a valid slot). Built
+  // from the booking's restaurant-local wall clock so the day/time match the
+  // reservation regardless of the customer's own timezone. null = not ordering
+  // for a reservation (ASAP / order-ahead keep the schedule-to-a-valid-slot
+  // behaviour). Luigi 2026-06-16.
+  const reservationMoment: Date | null = (() => {
+    if (!reservationDraft) return null;
+    const [hh, mm] = reservationDraft.time.split(":").map((s) => parseInt(s, 10));
+    return parseLocalDateTimeInTz(
+      reservationDraft.date,
+      Number.isFinite(hh) ? hh : 0,
+      Number.isFinite(mm) ? mm : 0,
+      restaurantTz,
+    );
+  })();
   const visibleCategories: Category[] = (restaurant.menuCategories as Category[])
     .filter(c => isVisibleNow(c, visNow, restaurantTz))
     .map(c => {
@@ -1712,18 +1730,37 @@ export function OrderingPageClient({
             // available Tue" before adding. The item stays addable; the cart's
             // combine-logic forces a valid scheduled slot (like catering).
             const fulfilWin = hasFulfilWindow(item) ? itemFulfilWindow(item, hoursFmt) : "";
-            const fulfilNote = fulfilWin ? t("fulfilOrderAheadLabel", { window: fulfilWin }) : undefined;
+            // In reservation mode judge the fulfilment window against the BOOKING
+            // moment: true/false = fits / doesn't fit the booking; null = not in
+            // reservation mode (so the normal "order ahead" path applies).
+            const reservationFulfilable =
+              reservationMoment && hasFulfilWindow(item)
+                ? isFulfilableAt(item, reservationMoment, restaurantTz)
+                : null;
+            const fulfilNote = !fulfilWin
+              ? undefined
+              : reservationMoment
+                // Reservation: flag it only when it DOESN'T fit the booking (then
+                // it's blocked below); if it fits, it's a normal addable item.
+                ? (reservationFulfilable ? undefined : t("fulfilNotForReservationLabel", { window: fulfilWin }))
+                // ASAP / order-ahead: the schedulable "Order ahead · …" hint.
+                : t("fulfilOrderAheadLabel", { window: fulfilWin });
             return {
               ...item,
               categoryId: c.id,
               modifierGroups: [...item.modifierGroups, ...uniqueCatGroups],
               __availabilityNote: availabilityNote,
-              __availabilityBlocked: !isItemAvailableNow(item, restaurantTz) || undefined,
+              // Blocked (greyed + not addable) by the legacy time gate OR, in
+              // reservation mode, when the item can't be made for the booking
+              // day/time — there's no picker to reschedule it onto a valid slot.
+              __availabilityBlocked:
+                (!isItemAvailableNow(item, restaurantTz) || reservationFulfilable === false) || undefined,
               __fulfilNote: fulfilNote,
               // Greyed (but addable) when an ASAP order couldn't be fulfilled
-              // right now — signals "you'll need to schedule this".
+              // right now — signals "you'll need to schedule this". Only OUTSIDE
+              // reservation mode, where a valid future slot can actually be picked.
               __fulfilNeedsSchedule:
-                (fulfilWin && !isFulfilableAt(item, visNow, restaurantTz)) || undefined,
+                (!reservationMoment && fulfilWin && !isFulfilableAt(item, visNow, restaurantTz)) || undefined,
             };
           }),
       };
@@ -2535,7 +2572,9 @@ export function OrderingPageClient({
     // informationally while the item is purchasable.
     const availNote = (selectedItem as any).__availabilityNote as string | undefined;
     if ((selectedItem as any).__availabilityBlocked) {
-      toast.error(availNote || tT("itemUnavailable"));
+      // Prefer the specific note (legacy window, or the reservation "not on your
+      // booking day" message) over the generic fallback.
+      toast.error(availNote || (selectedItem as any).__fulfilNote || tT("itemUnavailable"));
       return;
     }
     if (selectedItem.hasVariants && !selectedVariant) { toast.error(tT("chooseSize")); return; }
@@ -2923,6 +2962,15 @@ export function OrderingPageClient({
         // Localized message for the past-schedule rejection; everything else
         // falls back to the server's English error string (existing pattern).
         if (orderData.code === "scheduled_in_past") throw new Error(tT("scheduledInPast"));
+        // Per-item fulfilment window — the item can only be ordered for certain
+        // days/times. In reservation mode the order time is LOCKED to the booking,
+        // so the wording tells them to remove it / rebook (not "schedule your
+        // order"). Localized client-side from the code + item name so it's never
+        // an English-only string. Luigi 2026-06-16.
+        if (orderData.code === "item_fulfilment_window_reservation")
+          throw new Error(tT("fulfilWindowReservationError", { name: orderData.itemName ?? "" }));
+        if (orderData.code === "item_fulfilment_window")
+          throw new Error(tT("fulfilWindowOrderError", { name: orderData.itemName ?? "" }));
         // Holiday closure — name the affected service when it's a
         // single-service closure (the restaurant is still open otherwise),
         // and append the owner's optional message. Luigi 2026-06-12.

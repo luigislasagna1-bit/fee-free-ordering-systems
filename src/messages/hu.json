@@ -227,7 +227,9 @@
       "scheduledInPast": "A kiválasztott időpont már elmúlt. Kérjük, válassz új időpontot.",
       "holidayClosedFull": "Ezen a napon zárva tartunk. Válassz másik napot.",
       "holidayServiceClosed": "{service} ezen a napon nem érhető el. Válassz másik napot vagy szolgáltatást.",
-      "fullNameRequired": "Adja meg a vezeték- és keresztnevét."
+      "fullNameRequired": "Adja meg a vezeték- és keresztnevét.",
+      "fulfilWindowOrderError": "A(z) \"{name}\" csak bizonyos napokon/időpontokban rendelhető. Ütemezze a rendelését arra az időpontra, amikor elérhető.",
+      "fulfilWindowReservationError": "A(z) \"{name}\" nem érhető el a foglalása napján. Távolítsa el, vagy foglaljon asztalt egy olyan napra, amikor elérhető."
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Eltávolítás",
     "closedOrderLater": "Későbbre továbbra is rendelhetsz.",
     "closedNowBanner": "Most zárva vagyunk, de előre rendelhetsz későbbre.",
-    "seeMenuOrderAhead": "Menü és előrendelés"
+    "seeMenuOrderAhead": "Menü és előrendelés",
+    "fulfilNotForReservationLabel": "A foglalásához nem érhető el — csak {window}"
   },
   "pizza": {
     "chooseSize": "Méret választása",

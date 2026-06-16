@@ -227,7 +227,9 @@
       "scheduledInPast": "選択した予約時間はすでに過ぎています。新しい時間を選んでください。",
       "holidayClosedFull": "この日は休業しています。別の日をお選びください。",
       "holidayServiceClosed": "{service}はこの日はご利用いただけません。別の日またはサービスをお選びください。",
-      "fullNameRequired": "姓と名を入力してください。"
+      "fullNameRequired": "姓と名を入力してください。",
+      "fulfilWindowOrderError": "「{name}」は特定の曜日・時間帯のみ注文できます。ご利用可能な時間に合わせてご注文を予約してください。",
+      "fulfilWindowReservationError": "「{name}」はご予約日にはご利用いただけません。削除するか、提供日にテーブルをご予約ください。"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "削除",
     "closedOrderLater": "後ほどの注文も承れます。",
     "closedNowBanner": "現在は営業時間外ですが、後ほどの分をご予約いただけます。",
-    "seeMenuOrderAhead": "メニューを見て予約注文"
+    "seeMenuOrderAhead": "メニューを見て予約注文",
+    "fulfilNotForReservationLabel": "ご予約ではご利用いただけません — {window} のみ"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",

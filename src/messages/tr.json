@@ -227,7 +227,9 @@
       "scheduledInPast": "Seçtiğiniz planlanan saat geçti. Lütfen yeni bir saat seçin.",
       "holidayClosedFull": "Bu tarihte kapalıyız. Lütfen başka bir gün seçin.",
       "holidayServiceClosed": "{service} bu tarihte mevcut değil. Lütfen başka bir gün veya hizmet seçin.",
-      "fullNameRequired": "Lütfen adınızı ve soyadınızı girin."
+      "fullNameRequired": "Lütfen adınızı ve soyadınızı girin.",
+      "fulfilWindowOrderError": "\"{name}\" yalnızca belirli gün/saatlerde sipariş edilebilir. Lütfen siparişinizi uygun olduğu zamana planlayın.",
+      "fulfilWindowReservationError": "\"{name}\" rezervasyon gününüzde mevcut değil. Lütfen kaldırın ya da masanızı sunulduğu bir güne ayırtın."
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Kaldır",
     "closedOrderLater": "Yine de daha sonrası için sipariş verebilirsiniz.",
     "closedNowBanner": "Şu anda kapalıyız, ancak daha sonrası için ön sipariş verebilirsiniz.",
-    "seeMenuOrderAhead": "Menüyü gör & ön sipariş ver"
+    "seeMenuOrderAhead": "Menüyü gör & ön sipariş ver",
+    "fulfilNotForReservationLabel": "Rezervasyonunuz için uygun değil — yalnızca {window}"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",

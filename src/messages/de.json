@@ -227,7 +227,9 @@
       "scheduledInPast": "Die gewählte Vorbestellzeit liegt bereits in der Vergangenheit. Bitte wählen Sie eine neue Zeit.",
       "holidayClosedFull": "An diesem Datum haben wir geschlossen. Bitte wählen Sie einen anderen Tag.",
       "holidayServiceClosed": "{service} ist an diesem Datum nicht verfügbar. Bitte wählen Sie einen anderen Tag oder Service.",
-      "fullNameRequired": "Bitte geben Sie Ihren Vor- und Nachnamen ein."
+      "fullNameRequired": "Bitte geben Sie Ihren Vor- und Nachnamen ein.",
+      "fulfilWindowOrderError": "\"{name}\" kann nur an bestimmten Tagen/Zeiten bestellt werden. Bitte planen Sie Ihre Bestellung für einen verfügbaren Zeitpunkt.",
+      "fulfilWindowReservationError": "\"{name}\" ist am Tag Ihrer Reservierung nicht verfügbar. Bitte entfernen Sie es oder reservieren Sie Ihren Tisch an einem Tag, an dem es angeboten wird."
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Entfernen",
     "closedOrderLater": "Du kannst trotzdem für später bestellen.",
     "closedNowBanner": "Wir haben gerade geschlossen, aber du kannst für später vorbestellen.",
-    "seeMenuOrderAhead": "Menü ansehen & vorbestellen"
+    "seeMenuOrderAhead": "Menü ansehen & vorbestellen",
+    "fulfilNotForReservationLabel": "Für Ihre Reservierung nicht verfügbar — nur {window}"
   },
   "pizza": {
     "chooseSize": "Größe wählen",

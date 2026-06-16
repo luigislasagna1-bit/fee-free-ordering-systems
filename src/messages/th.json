@@ -227,7 +227,9 @@
       "scheduledInPast": "เวลาที่คุณเลือกได้ผ่านไปแล้ว กรุณาเลือกเวลาใหม่",
       "holidayClosedFull": "เราปิดทำการในวันนี้ กรุณาเลือกวันอื่น",
       "holidayServiceClosed": "{service} ไม่พร้อมให้บริการในวันนี้ กรุณาเลือกวันอื่นหรือบริการอื่น",
-      "fullNameRequired": "กรุณากรอกชื่อและนามสกุลของคุณ"
+      "fullNameRequired": "กรุณากรอกชื่อและนามสกุลของคุณ",
+      "fulfilWindowOrderError": "\"{name}\" สั่งได้เฉพาะบางวัน/เวลาเท่านั้น โปรดกำหนดเวลาสั่งซื้อเป็นช่วงที่พร้อมจำหน่าย",
+      "fulfilWindowReservationError": "\"{name}\" ไม่พร้อมจำหน่ายในวันจองของคุณ โปรดนำออก หรือจองโต๊ะในวันที่มีจำหน่าย"
     },
     "searchMenu": "ค้นหาเมนู…",
     "signIn": "เข้าสู่ระบบ",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "ลบ",
     "closedOrderLater": "คุณยังสั่งล่วงหน้าไว้ทีหลังได้",
     "closedNowBanner": "ขณะนี้เราปิดอยู่ แต่คุณสามารถสั่งล่วงหน้าสำหรับภายหลังได้",
-    "seeMenuOrderAhead": "ดูเมนูและสั่งล่วงหน้า"
+    "seeMenuOrderAhead": "ดูเมนูและสั่งล่วงหน้า",
+    "fulfilNotForReservationLabel": "ไม่พร้อมสำหรับการจองของคุณ — เฉพาะ {window}"
   },
   "pizza": {
     "chooseSize": "เลือกขนาด",

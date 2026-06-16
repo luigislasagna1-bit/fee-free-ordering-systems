@@ -227,7 +227,9 @@
       "scheduledInPast": "Valitud aeg on juba möödas. Palun vali uus aeg.",
       "holidayClosedFull": "Sel kuupäeval oleme suletud. Palun valige teine päev.",
       "holidayServiceClosed": "{service} ei ole sel kuupäeval saadaval. Palun valige teine päev või teenus.",
-      "fullNameRequired": "Sisestage oma ees- ja perekonnanimi."
+      "fullNameRequired": "Sisestage oma ees- ja perekonnanimi.",
+      "fulfilWindowOrderError": "\"{name}\" saab tellida ainult teatud päevadel/kellaaegadel. Planeerige tellimus ajaks, mil see on saadaval.",
+      "fulfilWindowReservationError": "\"{name}\" pole teie broneeringu päeval saadaval. Eemaldage see või broneerige laud päevaks, mil seda pakutakse."
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Eemalda",
     "closedOrderLater": "Saad siiski tellida hilisemaks ajaks.",
     "closedNowBanner": "Oleme praegu suletud, kuid saate ette tellida hilisemaks ajaks.",
-    "seeMenuOrderAhead": "Vaata menüüd ja telli ette"
+    "seeMenuOrderAhead": "Vaata menüüd ja telli ette",
+    "fulfilNotForReservationLabel": "Teie broneeringu jaoks pole saadaval — ainult {window}"
   },
   "pizza": {
     "chooseSize": "Vali suurus",

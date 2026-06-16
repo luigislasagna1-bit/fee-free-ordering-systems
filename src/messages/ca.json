@@ -227,7 +227,9 @@
       "scheduledInPast": "L'hora programada que has triat ja ha passat. Tria una hora nova.",
       "holidayClosedFull": "Estem tancats en aquesta data. Tria un altre dia.",
       "holidayServiceClosed": "{service} no està disponible en aquesta data. Tria un altre dia o servei.",
-      "fullNameRequired": "Introdueix el teu nom i cognoms."
+      "fullNameRequired": "Introdueix el teu nom i cognoms.",
+      "fulfilWindowOrderError": "\"{name}\" només es pot demanar en certs dies/horaris. Programa la teva comanda per a quan estigui disponible.",
+      "fulfilWindowReservationError": "\"{name}\" no està disponible el dia de la teva reserva. Elimina'l o reserva la taula un dia en què s'ofereixi."
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Elimina",
     "closedOrderLater": "Encara pots fer una comanda per a més tard.",
     "closedNowBanner": "Ara estem tancats, però pots fer una comanda anticipada per a més tard.",
-    "seeMenuOrderAhead": "Veure menú i demanar"
+    "seeMenuOrderAhead": "Veure menú i demanar",
+    "fulfilNotForReservationLabel": "No disponible per a la teva reserva — només {window}"
   },
   "pizza": {
     "chooseSize": "Tria la mida",

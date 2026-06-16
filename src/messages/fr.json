@@ -226,7 +226,9 @@
       "scheduledInPast": "L'heure programmée que vous avez choisie est déjà passée. Veuillez choisir un nouvel horaire.",
       "holidayClosedFull": "Nous sommes fermés à cette date. Veuillez choisir un autre jour.",
       "holidayServiceClosed": "{service} n'est pas disponible à cette date. Veuillez choisir un autre jour ou service.",
-      "fullNameRequired": "Veuillez saisir votre nom et votre prénom."
+      "fullNameRequired": "Veuillez saisir votre nom et votre prénom.",
+      "fulfilWindowOrderError": "« {name} » ne peut être commandé qu'à certains jours/horaires. Veuillez programmer votre commande pour un moment où il est disponible.",
+      "fulfilWindowReservationError": "« {name} » n'est pas disponible le jour de votre réservation. Veuillez le retirer ou réserver votre table un jour où il est proposé."
     },
     "followUs": "Suivez-nous",
     "searchMenu": "Rechercher dans le menu…",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Retirer",
     "closedOrderLater": "Vous pouvez quand même commander pour plus tard.",
     "closedNowBanner": "Nous sommes fermés, mais vous pouvez précommander pour plus tard.",
-    "seeMenuOrderAhead": "Voir le menu et précommander"
+    "seeMenuOrderAhead": "Voir le menu et précommander",
+    "fulfilNotForReservationLabel": "Indisponible pour votre réservation — uniquement {window}"
   },
   "pizza": {
     "chooseSize": "Choisir la taille",

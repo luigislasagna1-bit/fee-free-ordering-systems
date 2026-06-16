@@ -227,7 +227,9 @@
       "scheduledInPast": "您选择的预约时间已过。请选择新的时间。",
       "holidayClosedFull": "我们在这一天休息。请选择其他日期。",
       "holidayServiceClosed": "{service}在这一天不可用。请选择其他日期或服务。",
-      "fullNameRequired": "请输入您的姓和名。"
+      "fullNameRequired": "请输入您的姓和名。",
+      "fulfilWindowOrderError": "“{name}”只能在特定日期/时间订购。请将您的订单安排在可订购的时间。",
+      "fulfilWindowReservationError": "“{name}”在您预订的当天不可供应。请将其移除，或预订在供应当天就餐。"
     },
     "searchMenu": "搜索菜单…",
     "signIn": "登录",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "移除",
     "closedOrderLater": "您仍可预订稍后时间。",
     "closedNowBanner": "我们现在已打烊，但您可以预订稍后取餐。",
-    "seeMenuOrderAhead": "查看菜单并预订"
+    "seeMenuOrderAhead": "查看菜单并预订",
+    "fulfilNotForReservationLabel": "您的预订无法选择 — 仅限 {window}"
   },
   "pizza": {
     "chooseSize": "选择大小",

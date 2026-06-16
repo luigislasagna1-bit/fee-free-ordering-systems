@@ -227,7 +227,9 @@
       "scheduledInPast": "Valitsemasi ajankohta on jo mennyt. Valitse uusi aika.",
       "holidayClosedFull": "Olemme suljettuna tänä päivänä. Valitse toinen päivä.",
       "holidayServiceClosed": "{service} ei ole saatavilla tänä päivänä. Valitse toinen päivä tai palvelu.",
-      "fullNameRequired": "Anna etu- ja sukunimesi."
+      "fullNameRequired": "Anna etu- ja sukunimesi.",
+      "fulfilWindowOrderError": "\"{name}\" voidaan tilata vain tiettyinä päivinä/aikoina. Ajoita tilauksesi ajankohtaan, jolloin se on saatavilla.",
+      "fulfilWindowReservationError": "\"{name}\" ei ole saatavilla varauspäivänäsi. Poista se tai varaa pöytäsi päivälle, jolloin se on tarjolla."
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Poista",
     "closedOrderLater": "Voit silti tilata myöhemmäksi.",
     "closedNowBanner": "Olemme nyt suljettu, mutta voit tehdä ennakkotilauksen myöhemmäksi.",
-    "seeMenuOrderAhead": "Katso menu & ennakkotilaa"
+    "seeMenuOrderAhead": "Katso menu & ennakkotilaa",
+    "fulfilNotForReservationLabel": "Ei saatavilla varauksellesi — vain {window}"
   },
   "pizza": {
     "chooseSize": "Valitse koko",

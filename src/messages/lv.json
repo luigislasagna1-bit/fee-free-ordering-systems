@@ -227,7 +227,9 @@
       "scheduledInPast": "Izvēlētais ieplānotais laiks jau ir pagājis. Lūdzu, izvēlieties jaunu laiku.",
       "holidayClosedFull": "Šajā datumā esam slēgti. Lūdzu, izvēlieties citu dienu.",
       "holidayServiceClosed": "{service} šajā datumā nav pieejama. Lūdzu, izvēlieties citu dienu vai pakalpojumu.",
-      "fullNameRequired": "Ievadiet savu vārdu un uzvārdu."
+      "fullNameRequired": "Ievadiet savu vārdu un uzvārdu.",
+      "fulfilWindowOrderError": "\"{name}\" var pasūtīt tikai noteiktās dienās/laikos. Ieplānojiet pasūtījumu laikam, kad tas ir pieejams.",
+      "fulfilWindowReservationError": "\"{name}\" nav pieejams jūsu rezervācijas dienā. Lūdzu, noņemiet to vai rezervējiet galdiņu dienā, kad tas tiek piedāvāts."
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Noņemt",
     "closedOrderLater": "Jūs joprojām varat pasūtīt vēlākam laikam.",
     "closedNowBanner": "Pašlaik esam slēgti, taču varat veikt priekšpasūtījumu vēlākam laikam.",
-    "seeMenuOrderAhead": "Skatīt ēdienkarti un pasūtīt"
+    "seeMenuOrderAhead": "Skatīt ēdienkarti un pasūtīt",
+    "fulfilNotForReservationLabel": "Nav pieejams jūsu rezervācijai — tikai {window}"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",

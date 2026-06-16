@@ -227,7 +227,9 @@
       "scheduledInPast": "Zvolený naplánovaný čas už uplynul. Vyberte prosím nový čas.",
       "holidayClosedFull": "V tento den máme zavřeno. Vyberte jiný den.",
       "holidayServiceClosed": "{service} není v tento den dostupná. Vyberte jiný den nebo službu.",
-      "fullNameRequired": "Zadejte své jméno a příjmení."
+      "fullNameRequired": "Zadejte své jméno a příjmení.",
+      "fulfilWindowOrderError": "\"{name}\" lze objednat pouze v určité dny/časy. Naplánujte si objednávku na dobu, kdy je dostupné.",
+      "fulfilWindowReservationError": "\"{name}\" není dostupné v den vaší rezervace. Odeberte ho nebo si rezervujte stůl na den, kdy je nabízeno."
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Odebrat",
     "closedOrderLater": "Stále můžete objednat na později.",
     "closedNowBanner": "Nyní máme zavřeno, ale můžete si předobjednat na později.",
-    "seeMenuOrderAhead": "Zobrazit menu a předobjednat"
+    "seeMenuOrderAhead": "Zobrazit menu a předobjednat",
+    "fulfilNotForReservationLabel": "Nedostupné pro vaši rezervaci — pouze {window}"
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",

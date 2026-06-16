@@ -227,7 +227,9 @@
       "scheduledInPast": "Pasirinktas suplanuotas laikas jau praėjo. Pasirinkite naują laiką.",
       "holidayClosedFull": "Šią dieną nedirbame. Pasirinkite kitą dieną.",
       "holidayServiceClosed": "{service} šią dieną neprieinama. Pasirinkite kitą dieną arba paslaugą.",
-      "fullNameRequired": "Įveskite savo vardą ir pavardę."
+      "fullNameRequired": "Įveskite savo vardą ir pavardę.",
+      "fulfilWindowOrderError": "\"{name}\" galima užsisakyti tik tam tikromis dienomis ar valandomis. Suplanuokite užsakymą laikui, kai jis bus prieinamas.",
+      "fulfilWindowReservationError": "\"{name}\" nepasiekiamas jūsų rezervacijos dieną. Pašalinkite jį arba rezervuokite staliuką dienai, kurią jis siūlomas."
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Pašalinti",
     "closedOrderLater": "Vis tiek galite užsisakyti vėlesniam laikui.",
     "closedNowBanner": "Dabar esame uždaryti, bet galite iš anksto užsisakyti vėlesniam laikui.",
-    "seeMenuOrderAhead": "Žiūrėti meniu ir užsisakyti"
+    "seeMenuOrderAhead": "Žiūrėti meniu ir užsisakyti",
+    "fulfilNotForReservationLabel": "Nepasiekiama jūsų rezervacijai — tik {window}"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",

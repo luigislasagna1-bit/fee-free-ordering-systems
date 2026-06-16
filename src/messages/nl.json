@@ -227,7 +227,9 @@
       "scheduledInPast": "De gekozen geplande tijd is al verstreken. Kies een nieuwe tijd.",
       "holidayClosedFull": "We zijn gesloten op deze datum. Kies een andere dag.",
       "holidayServiceClosed": "{service} is niet beschikbaar op deze datum. Kies een andere dag of service.",
-      "fullNameRequired": "Voer je voor- en achternaam in."
+      "fullNameRequired": "Voer je voor- en achternaam in.",
+      "fulfilWindowOrderError": "\"{name}\" kan alleen op bepaalde dagen/tijden worden besteld. Plan je bestelling voor een moment waarop het beschikbaar is.",
+      "fulfilWindowReservationError": "\"{name}\" is niet beschikbaar op de dag van uw reservering. Verwijder het of reserveer uw tafel op een dag waarop het wordt aangeboden."
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "Verwijderen",
     "closedOrderLater": "Je kunt nog steeds bestellen voor later.",
     "closedNowBanner": "We zijn nu gesloten, maar je kunt vooruit bestellen voor later.",
-    "seeMenuOrderAhead": "Menu bekijken & vooruit bestellen"
+    "seeMenuOrderAhead": "Menu bekijken & vooruit bestellen",
+    "fulfilNotForReservationLabel": "Niet beschikbaar voor uw reservering — alleen {window}"
   },
   "pizza": {
     "chooseSize": "Kies maat",

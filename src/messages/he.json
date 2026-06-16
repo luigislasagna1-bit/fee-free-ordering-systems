@@ -227,7 +227,9 @@
       "scheduledInPast": "השעה המתוזמנת שבחרת כבר עברה. אנא בחר שעה חדשה.",
       "holidayClosedFull": "אנחנו סגורים בתאריך זה. אנא בחר יום אחר.",
       "holidayServiceClosed": "{service} אינו זמין בתאריך זה. אנא בחר יום אחר או שירות אחר.",
-      "fullNameRequired": "יש להזין שם פרטי ושם משפחה."
+      "fullNameRequired": "יש להזין שם פרטי ושם משפחה.",
+      "fulfilWindowOrderError": "ניתן להזמין את \"{name}\" רק בימים/שעות מסוימים. אנא תזמן את ההזמנה שלך למועד שבו הוא זמין.",
+      "fulfilWindowReservationError": "\"{name}\" אינו זמין ביום ההזמנה שלך. אנא הסר אותו, או הזמן שולחן ליום שבו הוא מוצע."
     },
     "searchMenu": "חפש בתפריט…",
     "signIn": "התחברות",
@@ -266,7 +268,8 @@
     "fulfilConflictRemove": "הסר",
     "closedOrderLater": "עדיין אפשר להזמין למועד מאוחר יותר.",
     "closedNowBanner": "אנחנו סגורים כעת, אך ניתן להזמין מראש למועד מאוחר יותר.",
-    "seeMenuOrderAhead": "צפו בתפריט והזמינו מראש"
+    "seeMenuOrderAhead": "צפו בתפריט והזמינו מראש",
+    "fulfilNotForReservationLabel": "לא זמין להזמנה שלך — רק {window}"
   },
   "pizza": {
     "chooseSize": "בחר גודל",
