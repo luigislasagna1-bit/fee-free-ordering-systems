@@ -13,7 +13,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
     const { id } = await params;
     const body = await req.json();
-    const { status, tableId, staffNotes, durationMinutes, depositPaid } = body;
+    const { status, tableId, staffNotes, durationMinutes, depositPaid, autoMissed } = body;
 
     const existing = await prisma.reservation.findFirst({ where: { id, restaurantId } });
     if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 });
@@ -22,10 +22,24 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       return NextResponse.json({ error: "Invalid status" }, { status: 400 });
     }
 
+    // The kitchen client auto-declines a PENDING booking whose accept countdown
+    // elapsed (KitchenDisplay) by PATCHing status:"rejected" with autoMissed:true.
+    // That's a MISSED booking, not a manual staff reject — stamp the same
+    // "Auto-rejected:" marker an order gets so the kitchen badge reads "MISSED"
+    // and the customer email reads "missed". A manual Reject sends no flag, so it
+    // stays a plain rejected/"declined". 15-min window if it was placed while
+    // closed (alertAt set), else 4 min. Luigi 2026-06-16.
+    const isAutoMiss =
+      status === "rejected" && autoMissed === true && existing.status === "pending";
+    const missReason = isAutoMiss
+      ? `Auto-rejected: not accepted within ${existing.alertAt ? 15 : 4} minutes.`
+      : null;
+
     const updated = await prisma.reservation.update({
       where: { id },
       data: {
         ...(status      !== undefined && { status }),
+        ...(isAutoMiss && { rejectionReason: missReason }),
         ...(tableId     !== undefined && { tableId: tableId || null }),
         ...(staffNotes  !== undefined && { staffNotes }),
         ...(durationMinutes !== undefined && { durationMinutes }),
@@ -63,7 +77,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
           date: existing.date,
           time: existing.time,
           confirmationCode: existing.confirmationCode,
-          status: becameConfirmed ? "confirmed" : "declined",
+          status: becameConfirmed ? "confirmed" : isAutoMiss ? "missed" : "declined",
           depositAmount: existing.depositAmount,
           preOrderTotal: existing.preOrderTotal ?? undefined,
         },

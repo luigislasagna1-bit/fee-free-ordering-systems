@@ -4158,7 +4158,8 @@
       "closingRequested": "近日中にご連絡いたします。しばらくお待ちいただけますと幸いです。",
       "closingDeclined": "ご不便をおかけし大変申し訳ございません。別の日時でのご予約をお試しいただくか、直接レストランまでお問い合わせください。",
       "subjectRequested": "ご予約リクエストを受け付けました — 確認待ち",
-      "subjectDeclined": "ご予約リクエストに関するご連絡"
+      "subjectDeclined": "ご予約リクエストに関するご連絡",
+      "badgeMissed": "見逃し"
     },
     "newReservation": {
       "subject": "新しい予約 — {restaurant}",

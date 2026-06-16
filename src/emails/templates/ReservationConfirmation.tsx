@@ -9,8 +9,10 @@ import { EmailBody, P, InfoCard, Badge } from "../components/EmailParts";
 export type ReservationConfirmationProps = {
   t: Translator;
   /** "requested" = received, awaiting manual confirmation; "confirmed" =
-   *  accepted; "declined" = rejected by the restaurant. Drives the copy. */
-  status?: "requested" | "confirmed" | "declined";
+   *  accepted; "declined" = rejected by the restaurant; "missed" = auto-declined
+   *  for not being accepted in time. "missed" reuses the (neutral) "declined"
+   *  copy and only swaps the badge word. Drives the copy. */
+  status?: "requested" | "confirmed" | "declined" | "missed";
   customerName: string;
   reservationNumber: string;
   restaurantName: string;
@@ -31,10 +33,13 @@ export default function ReservationConfirmation(props: ReservationConfirmationPr
     specialRequests, restaurantAddress, restaurantUrl, restaurantEmail,
     restaurantPhone, imprint } = props;
 
-  const suffix = status === "declined" ? "Declined" : status === "requested" ? "Requested" : "";
+  // "missed" reuses the neutral "Declined" copy (header "Reservation update",
+  // "was not able to accommodate…") — only the badge word differs. Luigi 2026-06-16.
+  const suffix = (status === "declined" || status === "missed") ? "Declined" : status === "requested" ? "Requested" : "";
   const k = (base: string) => `email.reservationConfirmed.${base}${suffix}`;
   const statusBadge =
-    status === "declined" ? <Badge color="rose">{t("email.reservationConfirmed.badgeDeclined")}</Badge>
+    status === "missed" ? <Badge color="amber">{t("email.reservationConfirmed.badgeMissed")}</Badge>
+    : status === "declined" ? <Badge color="rose">{t("email.reservationConfirmed.badgeDeclined")}</Badge>
     : status === "requested" ? <Badge color="slate">{t("email.reservationConfirmed.badgeRequested")}</Badge>
     : <Badge color="emerald">{t("email.reservationConfirmed.badgeConfirmed")}</Badge>;
 

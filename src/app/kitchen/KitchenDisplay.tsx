@@ -45,7 +45,7 @@ function useNow(intervalMs = 1000) {
 }
 
 // ── Status badge ──────────────────────────────────────────────────────────────
-function ReservationStatusBadge({ status, t }: { status: string; t: T }) {
+function ReservationStatusBadge({ status, t, rejectionReason }: { status: string; t: T; rejectionReason?: string | null }) {
   const tk = useTranslations("kitchen");
   const map: Record<string, { bg: string; key: string }> = {
     pending:   { bg: "bg-yellow-100 text-yellow-800",    key: "pending" },
@@ -55,7 +55,15 @@ function ReservationStatusBadge({ status, t }: { status: string; t: T }) {
     completed: { bg: t.badgeCompleted ?? "bg-gray-100 text-gray-700", key: "done" },
     cancelled: { bg: "bg-gray-100 text-gray-500",        key: "cancelled" },
   };
-  const m = map[status] ?? { bg: "bg-gray-100 text-gray-700", key: "" };
+  // A booking auto-declined for sitting un-accepted past its window is MISSED,
+  // not a manual reject — the auto paths stamp rejectionReason "Auto-rejected:".
+  // Relabel it "MISSED" in the same orange tone as a missed ORDER's badge so the
+  // tile never looks like a staff REJECT. A genuine staff decline (no reason)
+  // stays the plain "REJECTED". Same rule as the order StatusBadge. Luigi 2026-06-16.
+  const isMissed = status === "rejected" && (rejectionReason?.startsWith("Auto-rejected") ?? false);
+  const m = isMissed
+    ? { bg: t.badgeMissed, key: "missed" }
+    : (map[status] ?? { bg: "bg-gray-100 text-gray-700", key: "" });
   const label = m.key ? tk(m.key).toUpperCase() : status.toUpperCase();
   return <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap ${m.bg}`}>{label}</span>;
 }
@@ -142,7 +150,7 @@ function ReservationCard({
               Luigi 2026-06-15). Party size, table, deposit, notes, booking
               code + exact date/time now live in the detail (tap to open). */}
           <div className="mt-1 flex items-center gap-2 flex-wrap">
-            <ReservationStatusBadge status={r.status} t={t} />
+            <ReservationStatusBadge status={r.status} t={t} rejectionReason={r.rejectionReason} />
             {dayChip && (
               <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-100 text-sky-700 tracking-wider">
                 {dayChip}
@@ -222,7 +230,7 @@ function ReservationDetail({
         </button>
         <div className="flex items-center gap-2 min-w-0 flex-wrap">
           <span className={`font-bold ${t.text} truncate`}>{r.customerName}</span>
-          <ReservationStatusBadge status={r.status} t={t} />
+          <ReservationStatusBadge status={r.status} t={t} rejectionReason={r.rejectionReason} />
           {r.depositPaid && (
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
               {tk("depositPaid").toUpperCase()}
@@ -633,6 +641,10 @@ type KitchenReservation = {
   id: string;
   confirmationCode: string;
   status: string;
+  /** "Auto-rejected: ..." when a pending booking was auto-declined for not being
+   *  accepted in time → the badge reads "MISSED" (orange), like a missed order.
+   *  Null/absent on a manual staff decline → plain "REJECTED". Luigi 2026-06-16. */
+  rejectionReason?: string | null;
   customerName: string;
   customerPhone: string | null;
   partySize: number;
@@ -1945,7 +1957,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       fetch(`/api/admin/reservations/${r.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: "rejected" }),
+        // autoMissed:true → the route stamps the "Auto-rejected:" marker so this
+        // un-accepted booking reads "MISSED", not a manual "REJECTED". Luigi 2026-06-16.
+        body: JSON.stringify({ status: "rejected", autoMissed: true }),
       })
         .then(async (resp) => {
           if (!resp.ok && resp.status !== 409 && resp.status !== 400) {

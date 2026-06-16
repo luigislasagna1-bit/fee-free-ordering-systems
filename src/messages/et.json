@@ -4158,7 +4158,8 @@
       "closingRequested": "Võtame teiega peagi ühendust. Täname kannatlikkuse eest!",
       "closingDeclined": "Vabandame ebamugavuste pärast. Palun proovige teist kuupäeva või kellaaega või võtke otse restoraniga ühendust.",
       "subjectRequested": "Reserveerimise päring vastu võetud — ootab kinnitamist",
-      "subjectDeclined": "Värskendus teie reserveerimise päringu kohta"
+      "subjectDeclined": "Värskendus teie reserveerimise päringu kohta",
+      "badgeMissed": "Vastamata"
     },
     "newReservation": {
       "subject": "Uus broneering — {restaurant}",

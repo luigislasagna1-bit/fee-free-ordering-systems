@@ -4158,7 +4158,8 @@
       "closingRequested": "我们会尽快与您联系，感谢您的耐心等待！",
       "closingDeclined": "对此带来的不便深感抱歉，您可以尝试选择其他日期或时间，或直接联系餐厅进行安排。",
       "subjectRequested": "预订申请已收到 — 等待确认中",
-      "subjectDeclined": "您的预订申请最新状态"
+      "subjectDeclined": "您的预订申请最新状态",
+      "badgeMissed": "已错过"
     },
     "newReservation": {
       "subject": "新预订 — {restaurant}",

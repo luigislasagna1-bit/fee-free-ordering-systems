@@ -738,7 +738,10 @@ export async function sendReservationConfirmation(params: {
   date: string;
   time: string;
   confirmationCode: string;
-  status: "requested" | "confirmed" | "declined";
+  // "missed" = auto-declined for not being accepted in time. Reuses the
+  // (already-neutral) "declined" copy — header "Reservation update", "was not
+  // able to accommodate…" — but renders a "Missed" badge instead of "Declined".
+  status: "requested" | "confirmed" | "declined" | "missed";
   depositPaid?: boolean;
   depositAmount?: number;
   preOrderTotal?: number;
@@ -761,7 +764,7 @@ export async function sendReservationConfirmation(params: {
       imprint: currentImprint(),
     })
   );
-  const subjectSuffix = params.status === "declined" ? "Declined" : params.status === "requested" ? "Requested" : "";
+  const subjectSuffix = (params.status === "declined" || params.status === "missed") ? "Declined" : params.status === "requested" ? "Requested" : "";
   return send({
     to: params.to,
     subject: t(`email.reservationConfirmed.subject${subjectSuffix}`),

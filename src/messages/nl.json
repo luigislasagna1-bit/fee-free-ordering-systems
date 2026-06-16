@@ -4158,7 +4158,8 @@
       "closingRequested": "We nemen spoedig contact met u op. Bedankt voor uw geduld!",
       "closingDeclined": "Onze excuses voor het ongemak. Probeer een andere datum of tijd, of neem rechtstreeks contact op met het restaurant.",
       "subjectRequested": "Reserveringsverzoek ontvangen — wacht op bevestiging",
-      "subjectDeclined": "Update over uw reserveringsverzoek"
+      "subjectDeclined": "Update over uw reserveringsverzoek",
+      "badgeMissed": "Gemist"
     },
     "newReservation": {
       "subject": "Nieuwe reservering — {restaurant}",

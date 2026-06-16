@@ -4158,7 +4158,8 @@
       "closingRequested": "Vă vom contacta în curând. Vă mulțumim pentru răbdare!",
       "closingDeclined": "Ne cerem scuze pentru inconveniență. Vă rugăm să încercați o altă dată sau oră, sau să contactați direct restaurantul.",
       "subjectRequested": "Cerere de rezervare primită — în așteptarea confirmării",
-      "subjectDeclined": "Actualizare privind cererea dvs. de rezervare"
+      "subjectDeclined": "Actualizare privind cererea dvs. de rezervare",
+      "badgeMissed": "Ratată"
     },
     "newReservation": {
       "subject": "Rezervare nouă — {restaurant}",

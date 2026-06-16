@@ -4158,7 +4158,8 @@
       "closingRequested": "En kısa sürede sizinle iletişime geçeceğiz. Sabrınız için teşekkür ederiz!",
       "closingDeclined": "Yaşanan aksaklık için özür dileriz. Lütfen farklı bir tarih veya saat deneyin ya da restoranla doğrudan iletişime geçin.",
       "subjectRequested": "Rezervasyon talebiniz alındı — onay bekleniyor",
-      "subjectDeclined": "Rezervasyon talebinizle ilgili güncelleme"
+      "subjectDeclined": "Rezervasyon talebinizle ilgili güncelleme",
+      "badgeMissed": "Kaçırıldı"
     },
     "newReservation": {
       "subject": "Yeni rezervasyon — {restaurant}",

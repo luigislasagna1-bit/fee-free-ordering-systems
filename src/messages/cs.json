@@ -4158,7 +4158,8 @@
       "closingRequested": "Brzy se vám ozveme. Děkujeme za vaši trpělivost!",
       "closingDeclined": "Omlouváme se za způsobené nepříjemnosti. Zkuste prosím jiný termín nebo čas, případně se obraťte přímo na restauraci.",
       "subjectRequested": "Žádost o rezervaci přijata — čeká na potvrzení",
-      "subjectDeclined": "Aktualizace vaší žádosti o rezervaci"
+      "subjectDeclined": "Aktualizace vaší žádosti o rezervaci",
+      "badgeMissed": "Zmeškáno"
     },
     "newReservation": {
       "subject": "Nová rezervace — {restaurant}",

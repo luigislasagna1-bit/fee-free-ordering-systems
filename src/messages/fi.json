@@ -4158,7 +4158,8 @@
       "closingRequested": "Otamme sinuun pian yhteyttä. Kiitos kärsivällisyydestäsi!",
       "closingDeclined": "Pahoittelemme aiheutunutta haittaa. Kokeile toista päivää tai kellonaikaa, tai ota yhteyttä ravintolaan suoraan.",
       "subjectRequested": "Varauspyyntö vastaanotettu — odottaa vahvistusta",
-      "subjectDeclined": "Päivitys varauspyyntöösi"
+      "subjectDeclined": "Päivitys varauspyyntöösi",
+      "badgeMissed": "Menetetty"
     },
     "newReservation": {
       "subject": "Uusi varaus — {restaurant}",

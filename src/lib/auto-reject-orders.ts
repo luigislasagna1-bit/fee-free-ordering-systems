@@ -391,7 +391,7 @@ export async function autoRejectStaleReservations(opts: { now?: Date; restaurant
     select: {
       id: true, customerName: true, customerEmail: true, partySize: true,
       date: true, time: true, confirmationCode: true, depositAmount: true,
-      preOrderTotal: true, restaurantId: true,
+      preOrderTotal: true, restaurantId: true, alertAt: true,
       restaurant: { select: { defaultLanguage: true } },
     },
     take: 100,
@@ -400,11 +400,19 @@ export async function autoRejectStaleReservations(opts: { now?: Date; restaurant
   let rejected = 0;
   for (const r of candidates) {
     try {
+      // A booking auto-declined for sitting un-accepted past its window is a
+      // MISSED booking, not a manual reject — stamp the SAME "Auto-rejected:"
+      // marker an order gets so the kitchen badge reads "MISSED" (orange) and
+      // the customer email reads "missed", never "rejected"/"declined". A
+      // closed-when-placed booking had the 15-min window; a regular one 4 min.
+      // Luigi 2026-06-16.
+      const mins = r.alertAt ? CLOSED_PLACED_TIMEOUT_MINUTES : DEFAULT_TIMEOUT_MINUTES;
+      const reasonText = `Auto-rejected: not accepted within ${mins} minutes.`;
       // Idempotent claim: only flip a row that's STILL pending (staff may have
       // just accepted, or the client trigger already declined it).
       const upd = await prisma.reservation.updateMany({
         where: { id: r.id, status: "pending" },
-        data: { status: "rejected" },
+        data: { status: "rejected", rejectionReason: reasonText },
       });
       if (upd.count === 0) continue;
       rejected += 1;
@@ -420,7 +428,7 @@ export async function autoRejectStaleReservations(opts: { now?: Date; restaurant
             date: r.date,
             time: r.time,
             confirmationCode: r.confirmationCode,
-            status: "declined",
+            status: "missed",
             depositAmount: r.depositAmount,
             preOrderTotal: r.preOrderTotal ?? undefined,
           },

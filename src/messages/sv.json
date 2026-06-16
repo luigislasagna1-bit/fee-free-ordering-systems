@@ -4158,7 +4158,8 @@
       "closingRequested": "Vi återkommer inom kort. Tack för ditt tålamod!",
       "closingDeclined": "Vi beklagar besväret. Prova gärna ett annat datum eller en annan tid, eller kontakta restaurangen direkt.",
       "subjectRequested": "Bokningsförfrågan mottagen — inväntar bekräftelse",
-      "subjectDeclined": "Uppdatering om din bokningsförfrågan"
+      "subjectDeclined": "Uppdatering om din bokningsförfrågan",
+      "badgeMissed": "Missad"
     },
     "newReservation": {
       "subject": "Ny reservation — {restaurant}",

@@ -4158,7 +4158,8 @@
       "closingRequested": "Wir werden uns in Kürze bei Ihnen melden. Vielen Dank für Ihre Geduld!",
       "closingDeclined": "Wir entschuldigen uns für die Unannehmlichkeiten. Bitte versuchen Sie es mit einem anderen Datum oder einer anderen Uhrzeit, oder wenden Sie sich direkt an das Restaurant.",
       "subjectRequested": "Reservierungsanfrage eingegangen — Bestätigung ausstehend",
-      "subjectDeclined": "Aktualisierung zu Ihrer Reservierungsanfrage"
+      "subjectDeclined": "Aktualisierung zu Ihrer Reservierungsanfrage",
+      "badgeMissed": "Verpasst"
     },
     "newReservation": {
       "subject": "Neue Reservierung — {restaurant}",

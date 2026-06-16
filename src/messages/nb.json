@@ -4158,7 +4158,8 @@
       "closingRequested": "Vi tar kontakt med deg snart. Takk for tålmodigheten!",
       "closingDeclined": "Vi beklager ulempene dette medfører. Prøv gjerne en annen dato eller et annet tidspunkt, eller ta direkte kontakt med restauranten.",
       "subjectRequested": "Reservasjonsforespørsel mottatt — venter på bekreftelse",
-      "subjectDeclined": "Oppdatering om din reservasjonsforespørsel"
+      "subjectDeclined": "Oppdatering om din reservasjonsforespørsel",
+      "badgeMissed": "Mistet"
     },
     "newReservation": {
       "subject": "Ny reservasjon — {restaurant}",

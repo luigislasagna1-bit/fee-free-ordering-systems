@@ -4158,7 +4158,8 @@
       "closingRequested": "Uskoro ćemo vam se javiti. Hvala na strpljenju!",
       "closingDeclined": "Žao nam je zbog neprijatnosti. Molimo pokušajte sa drugim datumom ili vremenom, ili se direktno obratite restoranu.",
       "subjectRequested": "Zahtev za rezervaciju primljen — čeka potvrdu",
-      "subjectDeclined": "Ažuriranje vašeg zahteva za rezervaciju"
+      "subjectDeclined": "Ažuriranje vašeg zahteva za rezervaciju",
+      "badgeMissed": "Пропуштено"
     },
     "newReservation": {
       "subject": "Nova rezervacija — {restaurant}",

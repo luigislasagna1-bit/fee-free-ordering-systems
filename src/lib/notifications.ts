@@ -80,8 +80,24 @@ function buildCustomerSms(
       const eta = payload.newEstimatedReady ? clock(new Date(payload.newEstimatedReady)) : null;
       return `${restaurantName}: Heads up — order #${payload.orderNumber} is delayed about ${payload.delayMinutes} minutes${eta ? `, new ETA ~${eta}` : ""}.${payload.reason ? ` ${payload.reason}` : ""}`;
     }
-    case "reservationConfirmation":
-      return `${restaurantName}: Reservation for ${payload.partySize} on ${payload.date} at ${formatTime(payload.time, hoursFormat)} confirmed. Code ${payload.confirmationCode}.`;
+    case "reservationConfirmation": {
+      // Respect the status — previously this always said "confirmed", so a
+      // declined (and now a missed) booking texted the customer "confirmed".
+      // "missed" = auto-declined for not being accepted in time; mirror the
+      // kind "couldn't get to it in time" tone of a missed order, and never
+      // imply the restaurant actively turned them away. Luigi 2026-06-16.
+      const when = `${payload.date} at ${formatTime(payload.time, hoursFormat)}`;
+      if (payload.status === "missed") {
+        return `${restaurantName}: Sorry — we couldn't get to your reservation for ${payload.partySize} on ${when} in time. Please try another time or contact us.`;
+      }
+      if (payload.status === "declined") {
+        return `${restaurantName}: Sorry — we couldn't confirm your reservation for ${payload.partySize} on ${when}. Please try another time or contact us.`;
+      }
+      if (payload.status === "requested") {
+        return `${restaurantName}: Reservation request for ${payload.partySize} on ${when} received — pending confirmation. Code ${payload.confirmationCode}.`;
+      }
+      return `${restaurantName}: Reservation for ${payload.partySize} on ${when} confirmed. Code ${payload.confirmationCode}.`;
+    }
     default:
       return null;
   }
@@ -403,7 +419,7 @@ export type CustomerEventPayload =
    *  always gets this (no toggle gate) because a delay is the kind of news
    *  a paying customer should hear about regardless of restaurant settings. */
   | { event: "orderDelayed"; customerName: string; orderNumber: string; newEstimatedReady: Date; delayMinutes: number; reason: string | null }
-  | { event: "reservationConfirmation"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "requested" | "confirmed" | "declined"; depositPaid?: boolean; depositAmount?: number; preOrderTotal?: number };
+  | { event: "reservationConfirmation"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "requested" | "confirmed" | "declined" | "missed"; depositPaid?: boolean; depositAmount?: number; preOrderTotal?: number };
 
 /**
  * Send a customer-facing email gated by the matching `Restaurant.customerEmail*`

@@ -4158,7 +4158,8 @@
       "closingRequested": "Ens posarem en contacte amb vosaltres aviat. Gràcies per la vostra paciència!",
       "closingDeclined": "Us demanem disculpes per les molèsties. Si us plau, proveu una data o hora diferent, o contacteu directament amb el restaurant.",
       "subjectRequested": "Sol·licitud de reserva rebuda — pendent de confirmació",
-      "subjectDeclined": "Actualització sobre la vostra sol·licitud de reserva"
+      "subjectDeclined": "Actualització sobre la vostra sol·licitud de reserva",
+      "badgeMissed": "Perduda"
     },
     "newReservation": {
       "subject": "Nova reserva — {restaurant}",

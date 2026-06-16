@@ -2081,6 +2081,13 @@ model Reservation {
   durationMinutes  Int      @default(90)
   notes            String?
   staffNotes       String?
+  /// Mirrors Order.rejectionReason. Stamped "Auto-rejected: ..." when a PENDING
+  /// booking is auto-declined for not being accepted within its window (the
+  /// kitchen "MISSED" case). A manual staff decline leaves this null. The
+  /// kitchen badge + the customer email branch on this so an un-attended booking
+  /// reads MISSED, never REJECTED/declined. Additive nullable column — cheap.
+  /// Luigi 2026-06-16.
+  rejectionReason  String?
   /// Per-tab kitchen "Clear" flags — a walk-up booking shows in the All and
   /// Complete tabs just like an order, so it needs the SAME independent per-tab
   /// clear flags an Order has, plus its own Reservations-tab flag. Clearing one

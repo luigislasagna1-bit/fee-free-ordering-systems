@@ -4158,7 +4158,8 @@
       "closingRequested": "Netrukus susisieksime su jumis. Dėkojame už kantrybę!",
       "closingDeclined": "Atsiprašome už nepatogumus. Pabandykite pasirinkti kitą datą ar laiką arba susisiekite su restoranu tiesiogiai.",
       "subjectRequested": "Rezervacijos užklausa gauta — laukiama patvirtinimo",
-      "subjectDeclined": "Informacija apie jūsų rezervacijos užklausą"
+      "subjectDeclined": "Informacija apie jūsų rezervacijos užklausą",
+      "badgeMissed": "Praleista"
     },
     "newReservation": {
       "subject": "Nauja rezervacija — {restaurant}",

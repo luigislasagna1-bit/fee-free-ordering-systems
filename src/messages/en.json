@@ -4158,7 +4158,8 @@
       "closingRequested": "We will be in touch shortly. Thank you for your patience!",
       "closingDeclined": "We are sorry for the inconvenience. Please try a different date or time, or contact the restaurant directly.",
       "subjectRequested": "Reservation request received — pending confirmation",
-      "subjectDeclined": "Update on your reservation request"
+      "subjectDeclined": "Update on your reservation request",
+      "badgeMissed": "Missed"
     },
     "newReservation": {
       "subject": "New reservation — {restaurant}",

@@ -4158,7 +4158,8 @@
       "closingRequested": "Hamarosan visszajelzünk. Köszönjük türelmét!",
       "closingDeclined": "Elnézést kérünk a kellemetlenségért. Kérjük, válasszon másik időpontot, vagy vegye fel a kapcsolatot közvetlenül az étteremmel.",
       "subjectRequested": "Foglalási kérelem beérkezett — megerősítésre vár",
-      "subjectDeclined": "Tájékoztatás foglalási kérelmével kapcsolatban"
+      "subjectDeclined": "Tájékoztatás foglalási kérelmével kapcsolatban",
+      "badgeMissed": "Elmulasztott"
     },
     "newReservation": {
       "subject": "Új foglalás — {restaurant}",

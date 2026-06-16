@@ -4158,7 +4158,8 @@
       "closingRequested": "سنتواصل معك قريبًا. شكرًا على صبرك وتفهمك!",
       "closingDeclined": "نعتذر عن هذا الإزعاج. يُرجى تجربة تاريخ أو وقت آخر، أو التواصل مع المطعم مباشرةً.",
       "subjectRequested": "تم استلام طلب الحجز — في انتظار التأكيد",
-      "subjectDeclined": "تحديث بشأن طلب حجزك"
+      "subjectDeclined": "تحديث بشأن طلب حجزك",
+      "badgeMissed": "فائت"
     },
     "newReservation": {
       "subject": "حجز جديد — {restaurant}",

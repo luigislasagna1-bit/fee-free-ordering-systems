@@ -4158,7 +4158,8 @@
       "closingRequested": "Mēs drīzumā sazināsimies ar jums. Paldies par pacietību!",
       "closingDeclined": "Atvainojamies par sagādātajām neērtībām. Lūdzu, mēģiniet izvēlēties citu datumu vai laiku vai sazinieties ar restorānu tieši.",
       "subjectRequested": "Rezervācijas pieprasījums saņemts — gaida apstiprinājumu",
-      "subjectDeclined": "Informācija par jūsu rezervācijas pieprasījumu"
+      "subjectDeclined": "Informācija par jūsu rezervācijas pieprasījumu",
+      "badgeMissed": "Nokavēts"
     },
     "newReservation": {
       "subject": "Jauna rezervācija — {restaurant}",

@@ -4158,7 +4158,8 @@
       "closingRequested": "Kami akan segera menghubungi Anda kembali. Terima kasih atas kesabaran Anda!",
       "closingDeclined": "Kami mohon maaf atas ketidaknyamanan ini. Silakan coba tanggal atau waktu lain, atau hubungi restoran secara langsung.",
       "subjectRequested": "Permintaan reservasi diterima — menunggu konfirmasi",
-      "subjectDeclined": "Pembaruan mengenai permintaan reservasi Anda"
+      "subjectDeclined": "Pembaruan mengenai permintaan reservasi Anda",
+      "badgeMissed": "Terlewat"
     },
     "newReservation": {
       "subject": "Reservasi baru — {restaurant}",

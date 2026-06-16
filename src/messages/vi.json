@@ -4158,7 +4158,8 @@
       "closingRequested": "Chúng tôi sẽ liên hệ với bạn sớm. Cảm ơn bạn đã kiên nhẫn chờ đợi!",
       "closingDeclined": "Chúng tôi xin lỗi vì sự bất tiện này. Vui lòng thử chọn ngày hoặc giờ khác, hoặc liên hệ trực tiếp với nhà hàng.",
       "subjectRequested": "Đã nhận yêu cầu đặt bàn — chờ xác nhận",
-      "subjectDeclined": "Cập nhật về yêu cầu đặt bàn của bạn"
+      "subjectDeclined": "Cập nhật về yêu cầu đặt bàn của bạn",
+      "badgeMissed": "Bị bỏ lỡ"
     },
     "newReservation": {
       "subject": "Đặt bàn mới — {restaurant}",

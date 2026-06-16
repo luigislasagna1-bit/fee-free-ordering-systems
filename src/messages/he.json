@@ -4158,7 +4158,8 @@
       "closingRequested": "ניצור איתך קשר בקרוב. תודה על הסבלנות!",
       "closingDeclined": "אנו מתנצלים על אי הנוחות. אנא נסה תאריך או שעה אחרים, או פנה ישירות למסעדה.",
       "subjectRequested": "בקשת הזמנת מקום התקבלה — ממתינה לאישור",
-      "subjectDeclined": "עדכון בנושא בקשת ההזמנה שלך"
+      "subjectDeclined": "עדכון בנושא בקשת ההזמנה שלך",
+      "badgeMissed": "הוחמצה"
     },
     "newReservation": {
       "subject": "הזמנת שולחן חדשה — {restaurant}",

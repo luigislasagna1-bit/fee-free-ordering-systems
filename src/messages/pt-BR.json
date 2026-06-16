@@ -4158,7 +4158,8 @@
       "closingRequested": "Entraremos em contato em breve. Agradecemos sua paciência!",
       "closingDeclined": "Pedimos desculpas pelo transtorno. Por favor, tente uma data ou horário diferente, ou entre em contato diretamente com o restaurante.",
       "subjectRequested": "Solicitação de reserva recebida — aguardando confirmação",
-      "subjectDeclined": "Atualização sobre sua solicitação de reserva"
+      "subjectDeclined": "Atualização sobre sua solicitação de reserva",
+      "badgeMissed": "Perdido"
     },
     "newReservation": {
       "subject": "Nova reserva — {restaurant}",
