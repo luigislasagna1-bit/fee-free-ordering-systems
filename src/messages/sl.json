@@ -672,7 +672,8 @@
     "firstOrder": "Prvo naročilo",
     "openInMaps": "Odpri v Zemljevidih",
     "calculatingEta": "Računanje razdalje…",
-    "etaTrafficNote": "Čas vožnje glede na trenutni promet"
+    "etaTrafficNote": "Čas vožnje glede na trenutni promet",
+    "autoCallReservationMessage": "Nova rezervacija mize v {restaurant} čaka in še ni bila sprejeta. Odprite svojo aplikacijo Kitchen Order App, da jo sprejmete ali zavrnete."
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Izberite po enega artikel iz vsake skupine — cenejši je {pct} % ceneje.",
       "hintBogoPricierFree": "Izberite po enega artikel iz vsake skupine — dražji je BREZPLAČNO.",
       "hintBogoPricierPct": "Izberite po enega artikel iz vsake skupine — dražji je {pct} % ceneje."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Plačilo zapadlo — prosimo, posodobite svojo kartico",
+    "ownerHeadline": "Vašega plačila še vedno nismo mogli obdelati",
+    "ownerBody": "Poskušali smo bremeniti vašo kartico za naročnino Fee Free Ordering, vendar plačilo ni bilo uspešno. Kot vljudnost ostaja vaš račun še naprej v celoti aktiven. Število preostalih dni do zaustavitve vaših plačljivih funkcij: {days}. Prosimo, da zdaj posodobite svoje plačilne podatke — vaše brezplačne funkcije bodo delovale naprej v vsakem primeru.",
+    "ownerCta": "Posodobi način plačila",
+    "ownerSms": "Fee Free Ordering: vaše kartice nismo mogli bremeniti. Storitev ostaja vklopljena, vendar se bodo plačljive funkcije kmalu zaustavile — preostali dnevi: {days}. Posodobite plačilo: {url}",
+    "downgradedSubject": "Vaše plačljive funkcije so zdaj zaustavljene",
+    "downgradedHeadline": "Nekatere funkcije so bile izklopljene",
+    "downgradedBody": "Vašega plačila nismo mogli pravočasno obdelati, zato so vaši plačljivi dodatki zdaj zaustavljeni. Vaše brezplačne funkcije delujejo naprej in lahko še naprej sprejemate naročila. Ponovno se naročite kadar koli, da znova vklopite svoje plačljive funkcije.",
+    "downgradedCta": "Obnovi moje dodatke",
+    "resellerSubject": "Restavracija, ki ste jo priporočili, ima težavo z obračunavanjem",
+    "resellerHeadline": "{restaurant} ni mogla dokončati svojega plačila",
+    "resellerBody": "Nismo mogli obdelati zadnjega plačila naročnine za {restaurant}, restavracijo v vašem partnerskem omrežju. Njihova storitev je kot vljudnost še vedno aktivna, vendar se bodo njihove plačljive funkcije zaustavile, če težava ne bo odpravljena. Morda jih boste želeli kontaktirati in jim pomagati posodobiti njihove plačilne podatke.",
+    "resellerCta": "Odpri partnersko nadzorno ploščo",
+    "childWarnSubject": "Naročnina vaše blagovne znamke ni plačana — morda bo potrebno ukrepanje",
+    "childWarnHeadline": "Pomembno obvestilo glede {brand}",
+    "childWarnBody": "Vaša lokacija {child} je povezana z blagovno znamko {brand}, ki trenutno upravlja vaš skupni meni, delovni čas in območja dostave. Naročnina Multi-Location blagovne znamke {brand} ni plačana. Če težava ne bo odpravljena, se bo povezava z blagovno znamko končala in {child} bo prešla na upravljanje svojega lastnega menija, delovnega časa in območij dostave. Vaše naročanje deluje naprej — vendar se bodo posodobitve na ravni celotne blagovne znamke ustavile. Pripravite se lahko na samostojno delovanje ali pa za odpravo težave kontaktirajte {brand}.",
+    "childWarnCta": "Odpri nastavitve moje lokacije",
+    "childResetSubject": "{child} zdaj upravlja svoje lastne nastavitve",
+    "childResetHeadline": "Povezava z vašo blagovno znamko se je končala",
+    "childResetBody": "Ker naročnina Multi-Location blagovne znamke {brand} ni bila plačana, je bila lokacija {child} preklopljena na upravljanje svojega lastnega menija, delovnega časa in območij dostave. Ohranili smo kopijo menija blagovne znamke, tako da lahko strežete naprej brez prekinitve — uredite ga lahko kadar koli. Če {brand} obnovi svojo naročnino, se lahko v nastavitvah svoje lokacije znova povežete.",
+    "childResetCta": "Upravljaj mojo lokacijo",
+    "bannerText": "Plačila vaše naročnine nismo mogli obdelati. Vaša storitev je še vedno vklopljena — posodobite svojo kartico, da ohranite svoje plačljive funkcije. Preostali dnevi: {days}.",
+    "bannerCta": "Posodobi plačilo"
+  },
+  "addOnBilling": {
+    "graceTitle": "Vašega zadnjega plačila nismo mogli prejeti",
+    "graceBody": "Plačilo za ta dodatek ni bilo uspešno. Kot vljudnost ostaja v celoti aktiven — dnevi, ki so vam na voljo za posodobitev kartice, preden bo izklopljen: {days}. Zdaj posodobite svoje plačilo, da ga ohranite.",
+    "graceCta": "Posodobi način plačila",
+    "downgradedTitle": "Ta dodatek je izklopljen",
+    "downgradedBody": "Vaše plačilo ni bilo uspešno, zato je bil ta dodatek izklopljen. {consequence} Ponovno se naročite, da ga znova vklopite.",
+    "downgradedCta": "Ponovno se naroči",
+    "consequenceGeneric": "Njegove plačljive funkcije so zaustavljene, dokler plačilo ni obnovljeno; vaše brezplačne funkcije delujejo naprej.",
+    "consequence": {
+      "custom_domain": "Vaša domena zdaj preusmerja obiskovalce na vašo brezplačno povezavo Fee Free Ordering, tako da lahko stranke še vedno naročajo — v trenutku, ko bo plačilo uspešno, bo znova usmerjala na vašo lastno domeno.",
+      "hosted_website": "Vaše tržno spletno mesto je zaustavljeno in prikazuje kratko obvestilo o nadgradnji; vaša stran za naročanje deluje naprej — prizadeto je le tržno spletno mesto.",
+      "online_payments": "Plačevanje s kartico je izklopljeno. Stranke lahko še vedno naročajo z vašimi drugimi načini plačila (gotovina / plačilo v lokalu), tako da še naprej sprejemate naročila.",
+      "unlimited_orders": "Vaša omejitev 100 naročil/rezervacij na mesec je znova v veljavi; naročila nad omejitvijo so blokirana, dokler plačilo ni obnovljeno.",
+      "advanced_promos": "Napredne promocije, segmenti strank in avtomatizirane kampanje so zaustavljeni; vaše osnovne vrste promocij še naprej delujejo.",
+      "multi_location": "Upravljanje več lokacij je zaustavljeno in vsaka lokacija zdaj upravlja svoj lastni meni, delovni čas in območja dostave; naročanje na vsaki posamezni lokaciji deluje naprej.",
+      "marketplace": "Vaša javna objava na Marketplace je skrita, tako da vas nove stranke tam ne bodo odkrile; vaša lastna stran za naročanje in neposredna naročila niso prizadeti.",
+      "kickstarter": "Vaša orodja za zagonske kampanje in kampanje za vračanje strank so zaklenjena; kampanje, ki ste jih že poslali, niso prizadete.",
+      "growthnet": "Vaš paket GrowthNet je zaustavljen, zato se vsa njegova orodja (Napredne promocije, Marketing Studio, Kickstarter, SMS za stranke) izklopijo skupaj — ponovno se naročite, da obnovite celoten paket."
     }
   }
 }

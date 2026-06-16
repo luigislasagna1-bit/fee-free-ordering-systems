@@ -672,7 +672,8 @@
     "firstOrder": "Primeiro pedido",
     "openInMaps": "Abrir no Maps",
     "calculatingEta": "A calcular distância…",
-    "etaTrafficNote": "Tempo de condução com o trânsito atual"
+    "etaTrafficNote": "Tempo de condução com o trânsito atual",
+    "autoCallReservationMessage": "Uma nova reserva de mesa em {restaurant} está aguardando e ainda não foi aceita. Abra o seu Kitchen Order App para aceitá-la ou recusá-la."
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Escolha um item de cada grupo — o item mais barato fica com {pct}% de desconto.",
       "hintBogoPricierFree": "Escolha um item de cada grupo — o item mais caro é GRÁTIS.",
       "hintBogoPricierPct": "Escolha um item de cada grupo — o item mais caro fica com {pct}% de desconto."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Pagamento em atraso — atualize o seu cartão",
+    "ownerHeadline": "Continuámos sem conseguir processar o seu pagamento",
+    "ownerBody": "Tentámos cobrar a subscrição Fee Free Ordering no seu cartão, mas o pagamento não foi concluído. Por cortesia, a sua conta continua totalmente ativa. Dias restantes antes de as suas funcionalidades pagas serem suspensas: {days}. Atualize já os seus dados de pagamento — as suas funcionalidades gratuitas continuarão a funcionar de qualquer forma.",
+    "ownerCta": "Atualizar método de pagamento",
+    "ownerSms": "Fee Free Ordering: não conseguimos cobrar o seu cartão. O serviço mantém-se ativo, mas as funcionalidades pagas serão suspensas em breve — dias restantes: {days}. Atualize o pagamento: {url}",
+    "downgradedSubject": "As suas funcionalidades pagas estão agora suspensas",
+    "downgradedHeadline": "Algumas funcionalidades foram desativadas",
+    "downgradedBody": "Não conseguimos processar o seu pagamento a tempo, pelo que os seus extras pagos estão agora suspensos. As suas funcionalidades gratuitas continuam a funcionar e pode continuar a receber encomendas. Volte a subscrever a qualquer momento para reativar as suas funcionalidades pagas.",
+    "downgradedCta": "Restaurar os meus extras",
+    "resellerSubject": "Um restaurante que recomendou tem um problema de faturação",
+    "resellerHeadline": "{restaurant} não conseguiu concluir o pagamento",
+    "resellerBody": "Não conseguimos processar o pagamento da subscrição mais recente de {restaurant}, um restaurante da sua rede de parceiros. O serviço continua ativo por cortesia, mas as funcionalidades pagas serão suspensas se a situação não for resolvida. Pode ser útil contactá-lo e ajudá-lo a atualizar a faturação.",
+    "resellerCta": "Abrir painel de parceiros",
+    "childWarnSubject": "O plano da sua marca está por pagar — poderá ser necessária uma ação",
+    "childWarnHeadline": "Atenção relativamente a {brand}",
+    "childWarnBody": "O seu estabelecimento {child} está associado à marca {brand}, que atualmente gere o seu menu, horários e zonas de entrega partilhados. A subscrição Multi-Location de {brand} está por pagar. Se não for resolvida, essa associação à marca terminará e {child} passará a gerir o seu próprio menu, horários e zonas de entrega. As suas encomendas continuam a funcionar — mas as atualizações ao nível da marca deixarão de ser aplicadas. Pode preparar-se para funcionar de forma independente ou contactar {brand} para resolver a situação.",
+    "childWarnCta": "Abrir as definições do meu estabelecimento",
+    "childResetSubject": "{child} passou a gerir as suas próprias definições",
+    "childResetHeadline": "A associação à sua marca terminou",
+    "childResetBody": "Como a subscrição Multi-Location de {brand} ficou por pagar, {child} passou a gerir o seu próprio menu, horários e zonas de entrega. Guardámos uma cópia do menu da marca para que possa continuar a servir sem interrupções — pode editá-lo a qualquer momento. Se {brand} reativar o plano, poderá voltar a associar a partir das definições do seu estabelecimento.",
+    "childResetCta": "Gerir o meu estabelecimento",
+    "bannerText": "Não conseguimos processar o pagamento da sua subscrição. O seu serviço mantém-se ativo — atualize o seu cartão para manter as suas funcionalidades pagas. Dias restantes: {days}.",
+    "bannerCta": "Atualizar pagamento"
+  },
+  "addOnBilling": {
+    "graceTitle": "Não conseguimos cobrar o seu último pagamento",
+    "graceBody": "O pagamento deste extra não foi concluído. Por cortesia, mantém-se totalmente ativo — dias restantes para atualizar o seu cartão antes de ser desativado: {days}. Atualize já o seu pagamento para o manter.",
+    "graceCta": "Atualizar método de pagamento",
+    "downgradedTitle": "Este extra está desativado",
+    "downgradedBody": "O seu pagamento não foi concluído, pelo que este extra foi desativado. {consequence} Volte a subscrever para o reativar.",
+    "downgradedCta": "Voltar a subscrever",
+    "consequenceGeneric": "As suas funcionalidades pagas ficam suspensas até o pagamento ser regularizado; as suas funcionalidades gratuitas continuam a funcionar.",
+    "consequence": {
+      "custom_domain": "O seu domínio passa agora a encaminhar os visitantes para o seu link gratuito Fee Free Ordering, para que os clientes possam continuar a encomendar — voltará a apontar para o seu próprio domínio assim que o pagamento for concluído.",
+      "hosted_website": "O seu site de marketing está suspenso e apresenta um breve aviso de atualização; a sua página de encomendas continua a funcionar — apenas o site de marketing é afetado.",
+      "online_payments": "O pagamento com cartão está desativado. Os clientes podem continuar a encomendar utilizando os seus outros métodos de pagamento (dinheiro / pagamento no estabelecimento), pelo que continua a receber encomendas.",
+      "unlimited_orders": "O seu limite de 100 encomendas/reservas por mês volta a estar em vigor; as encomendas acima do limite ficam bloqueadas até o pagamento ser regularizado.",
+      "advanced_promos": "As promoções avançadas, os segmentos de clientes e as campanhas automatizadas ficam suspensos; os seus tipos de promoção básicos continuam a funcionar.",
+      "multi_location": "A gestão de vários estabelecimentos fica suspensa e cada estabelecimento passa a gerir o seu próprio menu, horários e zonas de entrega; as encomendas de cada estabelecimento continuam a funcionar.",
+      "marketplace": "A sua listagem pública no Marketplace fica oculta, pelo que os novos clientes não o vão descobrir aí; a sua própria página de encomendas e as encomendas diretas não são afetadas.",
+      "kickstarter": "As suas ferramentas de campanhas de lançamento e de reconquista ficam bloqueadas; as campanhas que já enviou não são afetadas.",
+      "growthnet": "O seu pacote GrowthNet fica suspenso, pelo que todas as suas ferramentas (Promoções Avançadas, Marketing Studio, Kickstarter, SMS para Clientes) são desativadas em conjunto — volte a subscrever para restaurar o pacote completo."
     }
   }
 }

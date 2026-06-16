@@ -672,7 +672,8 @@
     "firstOrder": "Primo ordine",
     "openInMaps": "Apri in Maps",
     "calculatingEta": "Calcolo distanza…",
-    "etaTrafficNote": "Tempo di guida con il traffico attuale"
+    "etaTrafficNote": "Tempo di guida con il traffico attuale",
+    "autoCallReservationMessage": "Una nuova prenotazione al tavolo presso {restaurant} è in attesa e non è ancora stata accettata. Apri la tua Kitchen Order App per accettarla o rifiutarla."
   },
   "admin": {
     "welcomeBack": "Bentornato",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Scegli un articolo da ciascun gruppo: il più economico ha uno sconto del {pct}%.",
       "hintBogoPricierFree": "Scegli un articolo da ciascun gruppo: il più costoso è GRATIS.",
       "hintBogoPricierPct": "Scegli un articolo da ciascun gruppo: il più costoso ha uno sconto del {pct}%."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Pagamento scaduto — aggiorna la tua carta",
+    "ownerHeadline": "Non siamo ancora riusciti a elaborare il tuo pagamento",
+    "ownerBody": "Abbiamo provato ad addebitare sulla tua carta l'abbonamento Fee Free Ordering, ma il pagamento non è andato a buon fine. Per cortesia, il tuo account è ancora pienamente attivo. Giorni rimanenti prima che le tue funzionalità a pagamento vengano sospese: {days}. Aggiorna ora i tuoi dati di pagamento — le tue funzionalità gratuite continueranno a funzionare in ogni caso.",
+    "ownerCta": "Aggiorna metodo di pagamento",
+    "ownerSms": "Fee Free Ordering: non siamo riusciti ad addebitare sulla tua carta. Il servizio resta attivo, ma le funzionalità a pagamento verranno sospese a breve — giorni rimanenti: {days}. Aggiorna il pagamento: {url}",
+    "downgradedSubject": "Le tue funzionalità a pagamento sono ora sospese",
+    "downgradedHeadline": "Alcune funzionalità sono state disattivate",
+    "downgradedBody": "Non siamo riusciti a elaborare il tuo pagamento in tempo, quindi i tuoi componenti aggiuntivi a pagamento sono ora sospesi. Le tue funzionalità gratuite continuano a funzionare e puoi continuare ad accettare ordini. Riabbonati in qualsiasi momento per riattivare le tue funzionalità a pagamento.",
+    "downgradedCta": "Ripristina i miei componenti aggiuntivi",
+    "resellerSubject": "Un ristorante che hai segnalato ha un problema di fatturazione",
+    "resellerHeadline": "{restaurant} non è riuscito a completare il pagamento",
+    "resellerBody": "Non siamo riusciti a elaborare l'ultimo pagamento dell'abbonamento per {restaurant}, un ristorante della tua rete di partner. Il loro servizio è ancora attivo per cortesia, ma le loro funzionalità a pagamento verranno sospese se il problema non viene risolto. Potresti contattarli e aiutarli ad aggiornare i loro dati di fatturazione.",
+    "resellerCta": "Apri la dashboard partner",
+    "childWarnSubject": "Il piano del tuo brand non è stato pagato — potrebbe essere necessario intervenire",
+    "childWarnHeadline": "Attenzione riguardo a {brand}",
+    "childWarnBody": "La tua sede {child} è collegata al brand {brand}, che attualmente gestisce il menu, gli orari e le zone di consegna condivisi. L'abbonamento Multi-Location di {brand} non è stato pagato. Se il problema non viene risolto, il collegamento al brand terminerà e {child} passerà a gestire il proprio menu, i propri orari e le proprie zone di consegna. I tuoi ordini continueranno a funzionare — ma gli aggiornamenti a livello di brand si interromperanno. Puoi prepararti a operare in modo indipendente oppure contattare {brand} per risolvere il problema.",
+    "childWarnCta": "Apri le impostazioni della mia sede",
+    "childResetSubject": "{child} ora gestisce le proprie impostazioni",
+    "childResetHeadline": "Il collegamento al tuo brand è terminato",
+    "childResetBody": "Poiché l'abbonamento Multi-Location di {brand} non è stato pagato, {child} è stato impostato per gestire il proprio menu, i propri orari e le proprie zone di consegna. Abbiamo conservato una copia del menu del brand così puoi continuare a servire senza interruzioni — modificalo in qualsiasi momento. Se {brand} ripristina il proprio piano, potrai ricollegarti dalle impostazioni della tua sede.",
+    "childResetCta": "Gestisci la mia sede",
+    "bannerText": "Non siamo riusciti a elaborare il pagamento del tuo abbonamento. Il tuo servizio è ancora attivo — aggiorna la tua carta per mantenere le tue funzionalità a pagamento. Giorni rimanenti: {days}.",
+    "bannerCta": "Aggiorna pagamento"
+  },
+  "addOnBilling": {
+    "graceTitle": "Non siamo riusciti a registrare il tuo ultimo pagamento",
+    "graceBody": "Il pagamento di questo componente aggiuntivo non è andato a buon fine. Per cortesia resta pienamente attivo — giorni rimanenti per aggiornare la tua carta prima che venga disattivato: {days}. Aggiorna ora il tuo pagamento per mantenerlo.",
+    "graceCta": "Aggiorna metodo di pagamento",
+    "downgradedTitle": "Questo componente aggiuntivo è disattivato",
+    "downgradedBody": "Il tuo pagamento non è andato a buon fine, quindi questo componente aggiuntivo è stato disattivato. {consequence} Riabbonati per riattivarlo.",
+    "downgradedCta": "Riabbonati",
+    "consequenceGeneric": "Le sue funzionalità a pagamento sono sospese finché il pagamento non viene ripristinato; le tue funzionalità gratuite continuano a funzionare.",
+    "consequence": {
+      "custom_domain": "Il tuo dominio ora reindirizza i visitatori al tuo link gratuito Fee Free Ordering, così i clienti possono comunque ordinare — tornerà a puntare al tuo dominio nel momento in cui il pagamento andrà a buon fine.",
+      "hosted_website": "Il tuo sito web di marketing è sospeso e mostra un breve avviso di upgrade; la tua pagina degli ordini continua a funzionare — è interessato solo il sito di marketing.",
+      "online_payments": "Il pagamento con carta è disattivato. I clienti possono comunque ordinare utilizzando gli altri metodi di pagamento (contanti / pagamento in negozio), così continui ad accettare ordini.",
+      "unlimited_orders": "Il tuo limite di 100 ordini/prenotazioni al mese è di nuovo attivo; gli ordini oltre il limite sono bloccati finché il pagamento non viene ripristinato.",
+      "advanced_promos": "Le promozioni avanzate, i segmenti di clienti e le campagne automatizzate sono sospesi; i tuoi tipi di promozioni di base continuano a funzionare.",
+      "multi_location": "La gestione di più sedi è sospesa e ogni sede ora gestisce il proprio menu, i propri orari e le proprie zone di consegna; gli ordini di ciascuna sede continuano a funzionare.",
+      "marketplace": "La tua scheda pubblica sul Marketplace è nascosta, quindi i nuovi clienti non potranno scoprirti lì; la tua pagina degli ordini e gli ordini diretti non sono interessati.",
+      "kickstarter": "I tuoi strumenti per le campagne di lancio e di riconquista sono bloccati; le campagne che hai già inviato non sono interessate.",
+      "growthnet": "Il tuo pacchetto GrowthNet è sospeso, quindi tutti i suoi strumenti (Advanced Promos, Marketing Studio, Kickstarter, SMS ai clienti) vengono disattivati insieme — riabbonati per ripristinare l'intero pacchetto."
     }
   }
 }

@@ -672,7 +672,8 @@
     "firstOrder": "Pierwsze zamówienie",
     "openInMaps": "Otwórz w Mapach",
     "calculatingEta": "Obliczanie odległości…",
-    "etaTrafficNote": "Czas jazdy przy obecnym ruchu"
+    "etaTrafficNote": "Czas jazdy przy obecnym ruchu",
+    "autoCallReservationMessage": "Nowa rezerwacja stolika w {restaurant} czeka i nie została jeszcze zaakceptowana. Otwórz aplikację Kitchen Order App, aby ją zaakceptować lub odrzucić."
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Wybierz po jednej pozycji z każdej grupy — tańsza pozycja ma {pct}% rabatu.",
       "hintBogoPricierFree": "Wybierz po jednej pozycji z każdej grupy — droższa pozycja jest GRATIS.",
       "hintBogoPricierPct": "Wybierz po jednej pozycji z każdej grupy — droższa pozycja ma {pct}% rabatu."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Zaległa płatność — zaktualizuj swoją kartę",
+    "ownerHeadline": "Nadal nie udało nam się przetworzyć Twojej płatności",
+    "ownerBody": "Próbowaliśmy obciążyć Twoją kartę za subskrypcję Fee Free Ordering, ale płatność nie doszła do skutku. W ramach uprzejmości Twoje konto pozostaje w pełni aktywne. Liczba dni do wstrzymania funkcji płatnych: {days}. Zaktualizuj teraz dane płatności — Twoje funkcje bezpłatne będą działać bez względu na wszystko.",
+    "ownerCta": "Zaktualizuj metodę płatności",
+    "ownerSms": "Fee Free Ordering: nie udało nam się obciążyć Twojej karty. Usługa pozostaje aktywna, ale funkcje płatne wkrótce zostaną wstrzymane — pozostało dni: {days}. Zaktualizuj płatność: {url}",
+    "downgradedSubject": "Twoje funkcje płatne zostały wstrzymane",
+    "downgradedHeadline": "Niektóre funkcje zostały wyłączone",
+    "downgradedBody": "Nie udało nam się przetworzyć Twojej płatności na czas, więc Twoje płatne dodatki zostały wstrzymane. Twoje funkcje bezpłatne nadal działają i możesz dalej przyjmować zamówienia. Odnów subskrypcję w dowolnej chwili, aby ponownie włączyć funkcje płatne.",
+    "downgradedCta": "Przywróć moje dodatki",
+    "resellerSubject": "Restauracja, którą poleciłeś, ma problem z płatnością",
+    "resellerHeadline": "{restaurant} nie zdołała sfinalizować płatności",
+    "resellerBody": "Nie udało nam się przetworzyć ostatniej płatności za subskrypcję dla {restaurant}, restauracji w Twojej sieci partnerskiej. Jej usługa pozostaje aktywna w ramach uprzejmości, ale funkcje płatne zostaną wstrzymane, jeśli problem nie zostanie rozwiązany. Możesz skontaktować się z nią i pomóc w aktualizacji danych rozliczeniowych.",
+    "resellerCta": "Otwórz panel partnera",
+    "childWarnSubject": "Plan Twojej marki jest nieopłacony — może być wymagane działanie",
+    "childWarnHeadline": "Ważna informacja dotycząca {brand}",
+    "childWarnBody": "Twoja lokalizacja {child} jest powiązana z marką {brand}, która obecnie zarządza Twoim wspólnym menu, godzinami otwarcia i strefami dostawy. Subskrypcja Multi-Location marki {brand} jest nieopłacona. Jeśli problem nie zostanie rozwiązany, powiązanie z marką wygaśnie, a {child} przejdzie na samodzielne zarządzanie własnym menu, godzinami otwarcia i strefami dostawy. Twoje zamówienia nadal będą działać — ale aktualizacje na poziomie całej marki zostaną wstrzymane. Możesz przygotować się do samodzielnego działania lub skontaktować się z {brand}, aby rozwiązać ten problem.",
+    "childWarnCta": "Otwórz ustawienia mojej lokalizacji",
+    "childResetSubject": "{child} zarządza teraz własnymi ustawieniami",
+    "childResetHeadline": "Twoje powiązanie z marką wygasło",
+    "childResetBody": "Ponieważ subskrypcja Multi-Location marki {brand} pozostała nieopłacona, {child} przeszła na samodzielne zarządzanie własnym menu, godzinami otwarcia i strefami dostawy. Zachowaliśmy kopię menu marki, abyś mógł obsługiwać klientów bez przerwy — możesz je edytować w dowolnej chwili. Jeśli {brand} przywróci swój plan, możesz ponownie połączyć się z poziomu ustawień lokalizacji.",
+    "childResetCta": "Zarządzaj moją lokalizacją",
+    "bannerText": "Nie udało nam się przetworzyć płatności za Twoją subskrypcję. Usługa nadal działa — zaktualizuj kartę, aby zachować funkcje płatne. Pozostało dni: {days}.",
+    "bannerCta": "Zaktualizuj płatność"
+  },
+  "addOnBilling": {
+    "graceTitle": "Nie udało nam się pobrać Twojej ostatniej płatności",
+    "graceBody": "Płatność za ten dodatek nie doszła do skutku. W ramach uprzejmości pozostaje on w pełni aktywny — liczba dni na aktualizację karty, zanim zostanie wyłączony: {days}. Zaktualizuj teraz płatność, aby go zachować.",
+    "graceCta": "Zaktualizuj metodę płatności",
+    "downgradedTitle": "Ten dodatek jest wyłączony",
+    "downgradedBody": "Twoja płatność nie doszła do skutku, więc ten dodatek został wyłączony. {consequence} Odnów subskrypcję, aby go ponownie włączyć.",
+    "downgradedCta": "Odnów subskrypcję",
+    "consequenceGeneric": "Jego funkcje płatne są wstrzymane do czasu przywrócenia płatności; Twoje funkcje bezpłatne nadal działają.",
+    "consequence": {
+      "custom_domain": "Twoja domena przekierowuje teraz odwiedzających na Twój bezpłatny link Fee Free Ordering, dzięki czemu klienci nadal mogą składać zamówienia — wskaże ona z powrotem na Twoją własną domenę w chwili, gdy płatność zostanie zrealizowana.",
+      "hosted_website": "Twoja witryna marketingowa jest wstrzymana i wyświetla krótkie powiadomienie o ulepszeniu; Twoja strona do składania zamówień nadal działa — wpływ dotyczy wyłącznie witryny marketingowej.",
+      "online_payments": "Płatność kartą przy kasie jest wyłączona. Klienci nadal mogą składać zamówienia, korzystając z innych metod płatności (gotówka / płatność w lokalu), więc nadal przyjmujesz zamówienia.",
+      "unlimited_orders": "Twój limit 100 zamówień/rezerwacji miesięcznie ponownie obowiązuje; zamówienia powyżej limitu są blokowane do czasu przywrócenia płatności.",
+      "advanced_promos": "Zaawansowane promocje, segmenty klientów i zautomatyzowane kampanie są wstrzymane; Twoje podstawowe typy promocji nadal działają.",
+      "multi_location": "Zarządzanie wieloma lokalizacjami jest wstrzymane, a każda lokalizacja zarządza teraz własnym menu, godzinami otwarcia i strefami dostawy; składanie zamówień w każdej lokalizacji nadal działa.",
+      "marketplace": "Twoja publiczna oferta w Marketplace jest ukryta, więc nowi klienci nie odkryją Cię tam; Twoja własna strona do składania zamówień i zamówienia bezpośrednie pozostają bez zmian.",
+      "kickstarter": "Twoje narzędzia do kampanii startowych i odzyskiwania klientów są zablokowane; kampanie, które już wysłałeś, pozostają bez zmian.",
+      "growthnet": "Twój pakiet GrowthNet jest wstrzymany, więc wszystkie jego narzędzia (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) wyłączają się razem — odnów subskrypcję, aby przywrócić cały pakiet."
     }
   }
 }

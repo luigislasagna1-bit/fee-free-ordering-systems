@@ -672,7 +672,8 @@
     "firstOrder": "Pirmais pasūtījums",
     "openInMaps": "Atvērt Maps",
     "calculatingEta": "Aprēķina attālumu…",
-    "etaTrafficNote": "Brauciena laiks pašreizējā satiksmē"
+    "etaTrafficNote": "Brauciena laiks pašreizējā satiksmē",
+    "autoCallReservationMessage": "Jauna galdiņa rezervācija {restaurant} gaida un vēl nav apstiprināta. Atveriet savu Kitchen Order App, lai to apstiprinātu vai noraidītu."
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Izvēlieties pa vienam ēdienam no katras grupas — lētākajam ēdienam ir {pct}% atlaide.",
       "hintBogoPricierFree": "Izvēlieties pa vienam ēdienam no katras grupas — dārgākais ēdiens ir BEZMAKSAS.",
       "hintBogoPricierPct": "Izvēlieties pa vienam ēdienam no katras grupas — dārgākajam ēdienam ir {pct}% atlaide."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Maksājums nokavēts — lūdzu, atjauniniet savu karti",
+    "ownerHeadline": "Mēs joprojām nevarējām apstrādāt jūsu maksājumu",
+    "ownerBody": "Mēs mēģinājām norakstīt no jūsu kartes maksu par jūsu Fee Free Ordering abonementu, taču tas neizdevās. Pieklājības pēc jūsu konts joprojām ir pilnībā aktīvs. Atlikušās dienas, līdz jūsu maksas funkcijas tiks apturētas: {days}. Lūdzu, atjauniniet maksājuma informāciju jau tagad — jūsu bezmaksas funkcijas darbosies neatkarīgi no apstākļiem.",
+    "ownerCta": "Atjaunināt maksājuma metodi",
+    "ownerSms": "Fee Free Ordering: mēs nevarējām norakstīt no jūsu kartes. Pakalpojums turpina darboties, taču maksas funkcijas drīz tiks apturētas — atlikušās dienas: {days}. Atjaunināt maksājumu: {url}",
+    "downgradedSubject": "Jūsu maksas funkcijas tagad ir apturētas",
+    "downgradedHeadline": "Dažas funkcijas tika izslēgtas",
+    "downgradedBody": "Mēs nevarējām laikā apstrādāt jūsu maksājumu, tāpēc jūsu maksas papildinājumi tagad ir apturēti. Jūsu bezmaksas funkcijas turpina darboties, un jūs varat turpināt pieņemt pasūtījumus. Atjaunojiet abonementu jebkurā laikā, lai atkal ieslēgtu maksas funkcijas.",
+    "downgradedCta": "Atjaunot manus papildinājumus",
+    "resellerSubject": "Restorānam, kuru ieteicāt, ir norēķinu problēma",
+    "resellerHeadline": "{restaurant} nevarēja pabeigt maksājumu",
+    "resellerBody": "Mēs nevarējām apstrādāt jaunāko abonementa maksājumu restorānam {restaurant}, kas ir jūsu partneru tīkla restorāns. Tā pakalpojums pieklājības pēc joprojām ir aktīvs, taču tā maksas funkcijas tiks apturētas, ja problēma netiks atrisināta. Iespējams, vēlēsieties sazināties un palīdzēt viņiem atjaunināt norēķinu informāciju.",
+    "resellerCta": "Atvērt partneru paneli",
+    "childWarnSubject": "Jūsu zīmola plāns nav apmaksāts — var būt nepieciešama rīcība",
+    "childWarnHeadline": "Informācija par {brand}",
+    "childWarnBody": "Jūsu atrašanās vieta {child} ir saistīta ar zīmolu {brand}, kas pašlaik pārvalda jūsu kopīgo ēdienkarti, darba laiku un piegādes zonas. Zīmola {brand} Multi-Location abonements nav apmaksāts. Ja tas netiks atrisināts, šī zīmola saite tiks pārtraukta un {child} pāries uz savas ēdienkartes, darba laika un piegādes zonu pārvaldīšanu. Jūsu pasūtīšana turpina darboties — taču zīmola mēroga atjauninājumi tiks apturēti. Jūs varat sagatavoties darbam neatkarīgi vai sazināties ar {brand}, lai to atrisinātu.",
+    "childWarnCta": "Atvērt manas atrašanās vietas iestatījumus",
+    "childResetSubject": "{child} tagad pārvalda savus iestatījumus",
+    "childResetHeadline": "Jūsu zīmola saite ir pārtraukta",
+    "childResetBody": "Tā kā zīmola {brand} Multi-Location abonements palika neapmaksāts, {child} ir pārslēgts uz savas ēdienkartes, darba laika un piegādes zonu pārvaldīšanu. Mēs saglabājām zīmola ēdienkartes kopiju, lai jūs varētu turpināt apkalpot bez pārtraukuma — rediģējiet to jebkurā laikā. Ja {brand} atjaunos savu plānu, jūs varat atkārtoti izveidot saiti savas atrašanās vietas iestatījumos.",
+    "childResetCta": "Pārvaldīt manu atrašanās vietu",
+    "bannerText": "Mēs nevarējām apstrādāt jūsu abonementa maksājumu. Jūsu pakalpojums joprojām darbojas — atjauniniet karti, lai saglabātu maksas funkcijas. Atlikušās dienas: {days}.",
+    "bannerCta": "Atjaunināt maksājumu"
+  },
+  "addOnBilling": {
+    "graceTitle": "Mēs nevarējām saņemt jūsu pēdējo maksājumu",
+    "graceBody": "Šī papildinājuma maksājums neizdevās. Pieklājības pēc tas paliek pilnībā aktīvs — atlikušās dienas kartes atjaunināšanai pirms tā izslēgšanas: {days}. Atjauniniet maksājumu tagad, lai to saglabātu.",
+    "graceCta": "Atjaunināt maksājuma metodi",
+    "downgradedTitle": "Šis papildinājums ir izslēgts",
+    "downgradedBody": "Jūsu maksājums neizdevās, tāpēc šis papildinājums tika izslēgts. {consequence} Atjaunojiet abonementu, lai to atkal ieslēgtu.",
+    "downgradedCta": "Atjaunot abonementu",
+    "consequenceGeneric": "Tā maksas funkcijas ir apturētas, līdz maksājums tiek atjaunots; jūsu bezmaksas funkcijas turpina darboties.",
+    "consequence": {
+      "custom_domain": "Jūsu domēns tagad pārvirza apmeklētājus uz jūsu bezmaksas Fee Free Ordering saiti, tāpēc klienti joprojām var pasūtīt — tas atgriežas uz jūsu paša domēnu, tiklīdz maksājums izdodas.",
+      "hosted_website": "Jūsu mārketinga vietne ir apturēta un rāda īsu jaunināšanas paziņojumu; jūsu pasūtīšanas lapa turpina darboties — ietekmēta tiek tikai mārketinga vietne.",
+      "online_payments": "Norēķini ar karti ir izslēgti. Klienti joprojām var pasūtīt, izmantojot citas jūsu maksājuma metodes (skaidra nauda / apmaksa veikalā), tāpēc jūs turpināt pieņemt pasūtījumus.",
+      "unlimited_orders": "Jūsu 100 pasūtījumu/rezervāciju mēnesī ierobežojums ir atjaunots; pasūtījumi, kas pārsniedz ierobežojumu, ir bloķēti, līdz maksājums tiek atjaunots.",
+      "advanced_promos": "Uzlabotās akcijas, klientu segmenti un automatizētās kampaņas ir apturētas; jūsu pamata akciju veidi joprojām darbojas.",
+      "multi_location": "Vairāku atrašanās vietu pārvaldība ir apturēta, un katra atrašanās vieta tagad pārvalda savu ēdienkarti, darba laiku un piegādes zonas; katras atrašanās vietas pasūtīšana turpina darboties.",
+      "marketplace": "Jūsu publiskais Marketplace ieraksts ir paslēpts, tāpēc jaunie klienti jūs tur neatradīs; jūsu paša pasūtīšanas lapa un tiešie pasūtījumi netiek ietekmēti.",
+      "kickstarter": "Jūsu palaišanas un klientu atgriešanas kampaņu rīki ir bloķēti; jau nosūtītās kampaņas netiek ietekmētas.",
+      "growthnet": "Jūsu GrowthNet komplekts ir apturēts, tāpēc visi tā rīki (Uzlabotās akcijas, Marketing Studio, Kickstarter, Klientu SMS) tiek izslēgti kopā — atjaunojiet abonementu, lai atjaunotu visu komplektu."
     }
   }
 }

@@ -672,7 +672,8 @@
     "firstOrder": "Primera comanda",
     "openInMaps": "Obre a Maps",
     "calculatingEta": "Calculant distància…",
-    "etaTrafficNote": "Temps de conducció amb el trànsit actual"
+    "etaTrafficNote": "Temps de conducció amb el trànsit actual",
+    "autoCallReservationMessage": "Una nova reserva de taula a {restaurant} està esperant i encara no s'ha acceptat. Obre la teva Kitchen Order App per acceptar-la o rebutjar-la."
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Tria un article de cada grup: l'article més barat té un {pct}% de descompte.",
       "hintBogoPricierFree": "Tria un article de cada grup: l'article més car és GRATIS.",
       "hintBogoPricierPct": "Tria un article de cada grup: l'article més car té un {pct}% de descompte."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Pagament pendent — actualitzeu la vostra targeta",
+    "ownerHeadline": "Encara no hem pogut processar el vostre pagament",
+    "ownerBody": "Hem intentat cobrar la vostra targeta per a la subscripció de Fee Free Ordering, però no s'ha pogut completar. Per cortesia, el vostre compte continua plenament actiu. Dies restants abans que es pausin les vostres funcions de pagament: {days}. Actualitzeu les vostres dades de pagament ara mateix — les vostres funcions gratuïtes seguiran funcionant en qualsevol cas.",
+    "ownerCta": "Actualitzar el mètode de pagament",
+    "ownerSms": "Fee Free Ordering: no hem pogut cobrar la vostra targeta. El servei continua actiu, però les funcions de pagament es pausaran aviat — dies restants: {days}. Actualitzeu el pagament: {url}",
+    "downgradedSubject": "Les vostres funcions de pagament estan ara pausades",
+    "downgradedHeadline": "S'han desactivat algunes funcions",
+    "downgradedBody": "No hem pogut processar el vostre pagament a temps, així que els vostres complements de pagament estan ara pausats. Les vostres funcions gratuïtes continuen funcionant i podeu seguir rebent comandes. Torneu a subscriure-us en qualsevol moment per reactivar les funcions de pagament.",
+    "downgradedCta": "Restaurar els meus complements",
+    "resellerSubject": "Un restaurant que heu recomanat té un problema de facturació",
+    "resellerHeadline": "{restaurant} no ha pogut completar el pagament",
+    "resellerBody": "No hem pogut processar el darrer pagament de subscripció de {restaurant}, un restaurant de la vostra xarxa de socis. El seu servei continua actiu per cortesia, però les seves funcions de pagament es pausaran si no es resol. Potser voleu posar-vos en contacte amb ells i ajudar-los a actualitzar la seva facturació.",
+    "resellerCta": "Obrir el tauler de socis",
+    "childWarnSubject": "El pla de la vostra marca no està pagat — pot caldre actuar",
+    "childWarnHeadline": "Avís sobre {brand}",
+    "childWarnBody": "La vostra ubicació {child} està vinculada a la marca {brand}, que actualment gestiona el vostre menú, horaris i zones de lliurament compartits. La subscripció Multi-Location de {brand} no està pagada. Si no es resol, aquest vincle de marca finalitzarà i {child} passarà a gestionar el seu propi menú, horaris i zones de lliurament. Les vostres comandes seguiran funcionant — però s'aturaran les actualitzacions per a tota la marca. Podeu preparar-vos per funcionar de manera independent, o contactar amb {brand} per resoldre-ho.",
+    "childWarnCta": "Obrir la configuració de la meva ubicació",
+    "childResetSubject": "{child} ara gestiona la seva pròpia configuració",
+    "childResetHeadline": "El vostre vincle de marca ha finalitzat",
+    "childResetBody": "Com que la subscripció Multi-Location de {brand} no s'ha pagat, {child} ha passat a gestionar el seu propi menú, horaris i zones de lliurament. Hem conservat una còpia del menú de la marca perquè pugueu continuar servint sense interrupcions — editeu-lo en qualsevol moment. Si {brand} restaura el seu pla, podeu tornar a vincular-vos des de la configuració de la vostra ubicació.",
+    "childResetCta": "Gestionar la meva ubicació",
+    "bannerText": "No hem pogut processar el pagament de la vostra subscripció. El servei continua actiu — actualitzeu la targeta per conservar les funcions de pagament. Dies restants: {days}.",
+    "bannerCta": "Actualitzar el pagament"
+  },
+  "addOnBilling": {
+    "graceTitle": "No hem pogut cobrar el vostre darrer pagament",
+    "graceBody": "El pagament d'aquest complement no s'ha pogut completar. Per cortesia continua plenament actiu — dies restants per actualitzar la targeta abans que es desactivi: {days}. Actualitzeu el pagament ara per conservar-lo.",
+    "graceCta": "Actualitzar el mètode de pagament",
+    "downgradedTitle": "Aquest complement està desactivat",
+    "downgradedBody": "El vostre pagament no s'ha pogut completar, així que aquest complement s'ha desactivat. {consequence} Torneu a subscriure-us per reactivar-lo.",
+    "downgradedCta": "Tornar a subscriure's",
+    "consequenceGeneric": "Les seves funcions de pagament estan pausades fins que es restauri el pagament; les vostres funcions gratuïtes continuen funcionant.",
+    "consequence": {
+      "custom_domain": "El vostre domini ara redirigeix els visitants al vostre enllaç gratuït de Fee Free Ordering, de manera que els clients encara poden fer comandes — tornarà a apuntar al vostre propi domini tan bon punt es completi el pagament.",
+      "hosted_website": "El vostre lloc web de màrqueting està pausat i mostra un breu avís d'actualització; la vostra pàgina de comandes continua funcionant — només es veu afectat el lloc de màrqueting.",
+      "online_payments": "El pagament amb targeta està desactivat. Els clients encara poden fer comandes amb els vostres altres mètodes de pagament (efectiu / pagar a la botiga), així que seguiu rebent comandes.",
+      "unlimited_orders": "El vostre límit de 100 comandes/reserves al mes torna a estar vigent; les comandes que superin el límit es bloquegen fins que es restauri el pagament.",
+      "advanced_promos": "Les promocions avançades, els segments de clients i les campanyes automatitzades estan pausats; els vostres tipus de promoció bàsics continuen funcionant.",
+      "multi_location": "La gestió de múltiples ubicacions està pausada, i cada ubicació gestiona ara el seu propi menú, horaris i zones de lliurament; les comandes de cada ubicació continuen funcionant.",
+      "marketplace": "La vostra fitxa pública al Marketplace està oculta, així que els nous clients no us hi descobriran; la vostra pròpia pàgina de comandes i les comandes directes no es veuen afectades.",
+      "kickstarter": "Les vostres eines de campanya de llançament i de recuperació de clients estan bloquejades; les campanyes que ja heu enviat no es veuen afectades.",
+      "growthnet": "El vostre paquet de GrowthNet està pausat, així que totes les seves eines (Promocions avançades, Marketing Studio, Kickstarter, SMS a clients) es desactiven alhora — torneu a subscriure-us per restaurar tot el paquet."
     }
   }
 }

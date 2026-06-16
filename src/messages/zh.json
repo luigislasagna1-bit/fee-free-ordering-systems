@@ -672,7 +672,8 @@
     "firstOrder": "首次下单",
     "openInMaps": "在地图中打开",
     "calculatingEta": "正在计算距离…",
-    "etaTrafficNote": "按当前路况的驾车时间"
+    "etaTrafficNote": "按当前路况的驾车时间",
+    "autoCallReservationMessage": "{restaurant} 有一个新的餐桌预订正在等待，尚未被接受。请打开您的 Kitchen Order App 来接受或拒绝它。"
   },
   "admin": {
     "welcomeBack": "欢迎回来",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "从每组中各选一件商品 —— 较便宜的那件可享 {pct}% 折扣。",
       "hintBogoPricierFree": "从每组中各选一件商品 —— 较贵的那件免费。",
       "hintBogoPricierPct": "从每组中各选一件商品 —— 较贵的那件可享 {pct}% 折扣。"
+    }
+  },
+  "dunning": {
+    "ownerSubject": "付款逾期 — 请更新您的银行卡",
+    "ownerHeadline": "我们仍然无法处理您的付款",
+    "ownerBody": "我们尝试为您的 Fee Free Ordering 订阅扣款，但未能成功。出于善意，您的账户目前仍完全有效。您的付费功能暂停前的剩余天数：{days}。请立即更新您的付款信息 — 无论如何，您的免费功能都将持续可用。",
+    "ownerCta": "更新付款方式",
+    "ownerSms": "Fee Free Ordering：我们无法为您的银行卡扣款。您的服务仍在运行，但付费功能即将暂停 — 剩余天数：{days}。更新付款：{url}",
+    "downgradedSubject": "您的付费功能现已暂停",
+    "downgradedHeadline": "部分功能已被关闭",
+    "downgradedBody": "我们未能及时处理您的付款，因此您的付费插件现已暂停。您的免费功能将持续可用，您可以继续接收订单。随时重新订阅即可重新开启您的付费功能。",
+    "downgradedCta": "恢复我的插件",
+    "resellerSubject": "您推荐的一家餐厅出现了账单问题",
+    "resellerHeadline": "{restaurant} 未能完成付款",
+    "resellerBody": "我们未能处理 {restaurant} 的最新订阅付款，该餐厅属于您的合作伙伴网络。出于善意，其服务目前仍然有效，但如果问题未解决，其付费功能将会暂停。您不妨主动联系他们，帮助其更新账单信息。",
+    "resellerCta": "打开合作伙伴仪表板",
+    "childWarnSubject": "您品牌的套餐尚未付款 — 可能需要采取措施",
+    "childWarnHeadline": "关于 {brand} 的提醒",
+    "childWarnBody": "您的门店 {child} 已关联到品牌 {brand}，该品牌目前管理着您共享的菜单、营业时间和配送区域。{brand} 的 Multi-Location 订阅尚未付款。如果问题未解决，该品牌关联将会终止，{child} 将转为自行管理其菜单、营业时间和配送区域。您的订单功能将持续运行 — 但品牌范围内的更新将会停止。您可以做好独立运营的准备，或联系 {brand} 来解决此问题。",
+    "childWarnCta": "打开我的门店设置",
+    "childResetSubject": "{child} 现已自行管理其设置",
+    "childResetHeadline": "您的品牌关联已终止",
+    "childResetBody": "由于 {brand} 的 Multi-Location 订阅未付款，{child} 已转为自行管理其菜单、营业时间和配送区域。我们保留了一份该品牌菜单的副本，以便您可以不间断地继续经营 — 随时可以编辑。如果 {brand} 恢复其套餐，您可以从门店设置中重新关联。",
+    "childResetCta": "管理我的门店",
+    "bannerText": "我们未能处理您的订阅付款。您的服务仍在运行 — 请更新您的银行卡以保留付费功能。剩余天数：{days}。",
+    "bannerCta": "更新付款"
+  },
+  "addOnBilling": {
+    "graceTitle": "我们未能完成您上次的付款",
+    "graceBody": "此插件的付款未能成功。出于善意，它仍完全有效 — 在它被关闭前更新银行卡的剩余天数：{days}。请立即更新您的付款以保留它。",
+    "graceCta": "更新付款方式",
+    "downgradedTitle": "此插件已被关闭",
+    "downgradedBody": "您的付款未能成功，因此此插件已被关闭。{consequence} 重新订阅即可重新开启。",
+    "downgradedCta": "重新订阅",
+    "consequenceGeneric": "其付费功能将暂停，直到付款恢复；您的免费功能将持续可用。",
+    "consequence": {
+      "custom_domain": "您的域名现在会将访客转至您的免费 Fee Free Ordering 链接，因此客户仍可下单 — 一旦付款成功，它会立即重新指向您自己的域名。",
+      "hosted_website": "您的营销网站已暂停，并显示一条简短的升级提示；您的订单页面将持续可用 — 仅营销网站受到影响。",
+      "online_payments": "银行卡结账已被关闭。客户仍可使用您的其他付款方式（现金/到店支付）下单，因此您可以继续接收订单。",
+      "unlimited_orders": "您每月 100 笔订单/预订的上限将重新生效；超出上限的订单将被阻止，直到付款恢复。",
+      "advanced_promos": "高级促销、客户分群和自动化营销活动将暂停；您的基础促销类型仍可运行。",
+      "multi_location": "多门店管理将暂停，每家门店现在将自行管理其菜单、营业时间和配送区域；每家门店自身的订单功能将持续运行。",
+      "marketplace": "您在 Marketplace 上的公开展示将被隐藏，因此新客户将无法在那里发现您；您自己的订单页面和直接订单不受影响。",
+      "kickstarter": "您的启动和挽回营销活动工具将被锁定；您已经发送的任何营销活动不受影响。",
+      "growthnet": "您的 GrowthNet 套件将暂停，因此其所有工具（高级促销、营销工作室、Kickstarter、客户短信）将一并关闭 — 重新订阅即可恢复整个套件。"
     }
   }
 }

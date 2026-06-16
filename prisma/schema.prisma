@@ -2099,6 +2099,10 @@ model Reservation {
   /// overnight booking rings at opening — exactly like takeaway/delivery orders —
   /// instead of waking the kitchen. Null = ring immediately. Luigi 2026-06-14.
   alertAt          DateTime?
+  /// Idempotency stamp for the "missed reservation" auto-call (mirrors
+  /// Order.alertCallAt). Set when we place the warning call so the cron never
+  /// double-dials. Luigi 2026-06-15.
+  alertCallAt      DateTime?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 

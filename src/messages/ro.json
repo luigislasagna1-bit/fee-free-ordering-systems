@@ -672,7 +672,8 @@
     "firstOrder": "Prima comandă",
     "openInMaps": "Deschide în Maps",
     "calculatingEta": "Se calculează distanța…",
-    "etaTrafficNote": "Timp de condus cu traficul actual"
+    "etaTrafficNote": "Timp de condus cu traficul actual",
+    "autoCallReservationMessage": "O nouă rezervare de masă la {restaurant} așteaptă și nu a fost încă acceptată. Deschideți aplicația Kitchen Order App pentru a o accepta sau a o refuza."
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Alege câte un produs din fiecare grup — produsul mai ieftin are {pct}% reducere.",
       "hintBogoPricierFree": "Alege câte un produs din fiecare grup — produsul mai scump este GRATUIT.",
       "hintBogoPricierPct": "Alege câte un produs din fiecare grup — produsul mai scump are {pct}% reducere."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Plată restantă — actualizați-vă cardul",
+    "ownerHeadline": "Tot nu am putut procesa plata dvs.",
+    "ownerBody": "Am încercat să debităm cardul dvs. pentru abonamentul Fee Free Ordering, dar tranzacția nu a reușit. Din amabilitate, contul dvs. rămâne complet activ. Zile rămase până când funcțiile plătite se vor suspenda: {days}. Vă rugăm să actualizați acum datele de plată — funcțiile gratuite vor continua să funcționeze indiferent de situație.",
+    "ownerCta": "Actualizați metoda de plată",
+    "ownerSms": "Fee Free Ordering: nu am putut debita cardul dvs. Serviciul rămâne activ, dar funcțiile plătite se suspendă curând — zile rămase: {days}. Actualizați plata: {url}",
+    "downgradedSubject": "Funcțiile dvs. plătite sunt acum suspendate",
+    "downgradedHeadline": "Unele funcții au fost dezactivate",
+    "downgradedBody": "Nu am reușit să procesăm plata la timp, așa că suplimentele dvs. plătite sunt acum suspendate. Funcțiile gratuite continuă să funcționeze și puteți primi în continuare comenzi. Reabonați-vă oricând pentru a reactiva funcțiile plătite.",
+    "downgradedCta": "Restabiliți suplimentele",
+    "resellerSubject": "Un restaurant pe care l-ați recomandat are o problemă de facturare",
+    "resellerHeadline": "{restaurant} nu a putut finaliza plata",
+    "resellerBody": "Nu am putut procesa cea mai recentă plată a abonamentului pentru {restaurant}, un restaurant din rețeaua dvs. de parteneri. Serviciul lor rămâne activ din amabilitate, dar funcțiile plătite se vor suspenda dacă problema nu este rezolvată. Poate doriți să îi contactați și să îi ajutați să își actualizeze facturarea.",
+    "resellerCta": "Deschideți panoul de parteneri",
+    "childWarnSubject": "Planul brandului dvs. este neplătit — ar putea fi necesară o acțiune",
+    "childWarnHeadline": "Atenție cu privire la {brand}",
+    "childWarnBody": "Locația dvs. {child} este asociată brandului {brand}, care gestionează în prezent meniul, programul și zonele de livrare comune. Abonamentul Multi-Location al {brand} este neplătit. Dacă problema nu este rezolvată, asocierea cu brandul va înceta, iar {child} va trece la gestionarea propriului meniu, program și zone de livrare. Comenzile dvs. continuă să funcționeze — dar actualizările la nivel de brand se vor opri. Vă puteți pregăti să operați independent sau puteți contacta {brand} pentru a rezolva problema.",
+    "childWarnCta": "Deschideți setările locației mele",
+    "childResetSubject": "{child} își gestionează acum propriile setări",
+    "childResetHeadline": "Asocierea cu brandul dvs. a încetat",
+    "childResetBody": "Deoarece abonamentul Multi-Location al {brand} a rămas neplătit, {child} a fost trecut la gestionarea propriului meniu, program și zone de livrare. Am păstrat o copie a meniului brandului, astfel încât să puteți continua să serviți fără întreruperi — îl puteți edita oricând. Dacă {brand} își reia planul, vă puteți reasocia din setările locației.",
+    "childResetCta": "Gestionați locația mea",
+    "bannerText": "Nu am putut procesa plata abonamentului dvs. Serviciul rămâne activ — actualizați-vă cardul pentru a păstra funcțiile plătite. Zile rămase: {days}.",
+    "bannerCta": "Actualizați plata"
+  },
+  "addOnBilling": {
+    "graceTitle": "Nu am putut prelua ultima dvs. plată",
+    "graceBody": "Plata pentru acest supliment nu a reușit. Din amabilitate, rămâne complet activ — zile rămase pentru a vă actualiza cardul înainte de dezactivare: {days}. Actualizați acum plata pentru a-l păstra.",
+    "graceCta": "Actualizați metoda de plată",
+    "downgradedTitle": "Acest supliment este dezactivat",
+    "downgradedBody": "Plata dvs. nu a reușit, așa că acest supliment a fost dezactivat. {consequence} Reabonați-vă pentru a-l reactiva.",
+    "downgradedCta": "Reabonați-vă",
+    "consequenceGeneric": "Funcțiile sale plătite sunt suspendate până la restabilirea plății; funcțiile gratuite continuă să funcționeze.",
+    "consequence": {
+      "custom_domain": "Domeniul dvs. redirecționează acum vizitatorii către linkul dvs. gratuit Fee Free Ordering, astfel încât clienții pot comanda în continuare — va reveni la propriul dvs. domeniu în momentul în care plata reușește.",
+      "hosted_website": "Site-ul dvs. de marketing este suspendat și afișează o scurtă notificare de upgrade; pagina dvs. de comenzi continuă să funcționeze — doar site-ul de marketing este afectat.",
+      "online_payments": "Plata cu cardul este dezactivată. Clienții pot comanda în continuare folosind celelalte metode de plată (numerar / plată la magazin), așa că primiți în continuare comenzi.",
+      "unlimited_orders": "Limita dvs. de 100 de comenzi/rezervări pe lună este reactivată; comenzile care depășesc limita sunt blocate până la restabilirea plății.",
+      "advanced_promos": "Promoțiile avansate, segmentele de clienți și campaniile automatizate sunt suspendate; tipurile dvs. de promoții de bază continuă să funcționeze.",
+      "multi_location": "Gestionarea mai multor locații este suspendată, iar fiecare locație își gestionează acum propriul meniu, program și zone de livrare; comenzile proprii ale fiecărei locații continuă să funcționeze.",
+      "marketplace": "Anunțul dvs. public din Marketplace este ascuns, așa că noii clienți nu vă vor descoperi acolo; pagina dvs. de comenzi și comenzile directe nu sunt afectate.",
+      "kickstarter": "Instrumentele dvs. pentru campaniile de lansare și de recâștigare sunt blocate; campaniile pe care le-ați trimis deja nu sunt afectate.",
+      "growthnet": "Pachetul dvs. GrowthNet este suspendat, așa că toate instrumentele sale (Promoții Avansate, Marketing Studio, Kickstarter, SMS pentru Clienți) se dezactivează împreună — reabonați-vă pentru a restabili întregul pachet."
     }
   }
 }

@@ -672,7 +672,8 @@
     "firstOrder": "Ensimmäinen tilaus",
     "openInMaps": "Avaa Mapsissa",
     "calculatingEta": "Lasketaan etäisyyttä…",
-    "etaTrafficNote": "Ajoaika nykyisellä liikenteellä"
+    "etaTrafficNote": "Ajoaika nykyisellä liikenteellä",
+    "autoCallReservationMessage": "Uusi pöytävaraus ravintolassa {restaurant} odottaa eikä sitä ole vielä hyväksytty. Avaa Kitchen Order App hyväksyäksesi tai hylätäksesi sen."
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Valitse yksi tuote kustakin ryhmästä — halvemmasta tuotteesta saat {pct} % alennuksen.",
       "hintBogoPricierFree": "Valitse yksi tuote kustakin ryhmästä — kalliimpi tuote on ILMAINEN.",
       "hintBogoPricierPct": "Valitse yksi tuote kustakin ryhmästä — kalliimmasta tuotteesta saat {pct} % alennuksen."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Maksu myöhässä — päivitäthän korttisi",
+    "ownerHeadline": "Maksuasi ei vieläkään saatu käsiteltyä",
+    "ownerBody": "Yritimme veloittaa korttiasi Fee Free Ordering -tilauksestasi, mutta veloitus ei onnistunut. Hyvänä eleenä tilisi on edelleen täysin käytössä. Päiviä jäljellä ennen kuin maksulliset ominaisuutesi keskeytetään: {days}. Päivitäthän maksutietosi nyt — ilmaiset ominaisuutesi toimivat joka tapauksessa jatkossakin.",
+    "ownerCta": "Päivitä maksutapa",
+    "ownerSms": "Fee Free Ordering: korttiasi ei voitu veloittaa. Palvelusi pysyy päällä, mutta maksulliset ominaisuudet keskeytyvät pian — päiviä jäljellä: {days}. Päivitä maksu: {url}",
+    "downgradedSubject": "Maksulliset ominaisuutesi on nyt keskeytetty",
+    "downgradedHeadline": "Osa ominaisuuksista kytkettiin pois päältä",
+    "downgradedBody": "Maksuasi ei saatu käsiteltyä ajoissa, joten maksulliset lisäosasi on nyt keskeytetty. Ilmaiset ominaisuutesi toimivat edelleen ja voit jatkaa tilausten vastaanottamista. Voit tilata uudelleen milloin tahansa kytkeäksesi maksulliset ominaisuutesi takaisin päälle.",
+    "downgradedCta": "Palauta lisäosani",
+    "resellerSubject": "Suosittelemallasi ravintolalla on laskutusongelma",
+    "resellerHeadline": "{restaurant} ei saanut maksuaan suoritettua",
+    "resellerBody": "Emme saaneet käsiteltyä viimeisintä tilausmaksua ravintolalle {restaurant}, joka kuuluu kumppaniverkostoosi. Sen palvelu on edelleen aktiivinen hyvänä eleenä, mutta sen maksulliset ominaisuudet keskeytyvät, ellei asiaa ratkaista. Voit halutessasi ottaa yhteyttä ja auttaa heitä päivittämään laskutuksensa.",
+    "resellerCta": "Avaa kumppanihallinta",
+    "childWarnSubject": "Brändisi tilaus on maksamatta — toimia voidaan tarvita",
+    "childWarnHeadline": "Huomioitavaa brändistä {brand}",
+    "childWarnBody": "Toimipisteesi {child} on liitetty brändiin {brand}, joka hallinnoi tällä hetkellä yhteistä ruokalistaanne, aukioloaikojanne ja toimitusalueitanne. Brändin {brand} Multi-Location -tilaus on maksamatta. Ellei asiaa ratkaista, brändilinkitys päättyy ja {child} siirtyy hallinnoimaan omaa ruokalistaansa, aukioloaikojaan ja toimitusalueitaan. Tilausten vastaanotto toimii edelleen — mutta brändinlaajuiset päivitykset loppuvat. Voit valmistautua toimimaan itsenäisesti tai ottaa yhteyttä brändiin {brand} asian ratkaisemiseksi.",
+    "childWarnCta": "Avaa toimipisteeni asetukset",
+    "childResetSubject": "{child} hallinnoi nyt omia asetuksiaan",
+    "childResetHeadline": "Brändilinkityksesi on päättynyt",
+    "childResetBody": "Koska brändin {brand} Multi-Location -tilaus jäi maksamatta, {child} on siirretty hallinnoimaan omaa ruokalistaansa, aukioloaikojaan ja toimitusalueitaan. Säilytimme kopion brändin ruokalistasta, jotta voit jatkaa palvelua keskeytyksettä — voit muokata sitä milloin tahansa. Jos brändi {brand} palauttaa tilauksensa, voit linkittää uudelleen toimipisteesi asetuksista.",
+    "childResetCta": "Hallinnoi toimipistettäni",
+    "bannerText": "Tilausmaksuasi ei saatu käsiteltyä. Palvelusi on edelleen päällä — päivitä korttisi säilyttääksesi maksulliset ominaisuutesi. Päiviä jäljellä: {days}.",
+    "bannerCta": "Päivitä maksu"
+  },
+  "addOnBilling": {
+    "graceTitle": "Viimeisintä maksuasi ei saatu veloitettua",
+    "graceBody": "Tämän lisäosan maksu ei onnistunut. Hyvänä eleenä se pysyy täysin aktiivisena — päiviä jäljellä korttisi päivittämiseen ennen kuin se kytketään pois päältä: {days}. Päivitä maksusi nyt säilyttääksesi sen.",
+    "graceCta": "Päivitä maksutapa",
+    "downgradedTitle": "Tämä lisäosa on kytketty pois päältä",
+    "downgradedBody": "Maksusi ei onnistunut, joten tämä lisäosa kytkettiin pois päältä. {consequence} Tilaa uudelleen kytkeäksesi sen takaisin päälle.",
+    "downgradedCta": "Tilaa uudelleen",
+    "consequenceGeneric": "Sen maksulliset ominaisuudet ovat keskeytettyinä, kunnes maksu on palautettu; ilmaiset ominaisuutesi toimivat edelleen.",
+    "consequence": {
+      "custom_domain": "Verkkotunnuksesi ohjaa kävijät nyt ilmaiseen Fee Free Ordering -linkkiisi, joten asiakkaat voivat yhä tilata — se ohjautuu takaisin omaan verkkotunnukseesi heti, kun maksu menee läpi.",
+      "hosted_website": "Markkinointisivustosi on keskeytetty ja näyttää lyhyen päivitysilmoituksen; tilaussivusi toimii edelleen — vain markkinointisivusto on vaikutuksen alaisena.",
+      "online_payments": "Korttimaksu on kytketty pois päältä. Asiakkaat voivat yhä tilata muilla maksutavoillasi (käteinen / maksu liikkeessä), joten tilausten vastaanotto jatkuu.",
+      "unlimited_orders": "100 tilauksen/varauksen kuukausiraja on jälleen voimassa; rajan ylittävät tilaukset estetään, kunnes maksu on palautettu.",
+      "advanced_promos": "Edistyneet kampanjat, asiakassegmentit ja automatisoidut kampanjat ovat keskeytettyinä; perustason kampanjatyyppisi toimivat edelleen.",
+      "multi_location": "Useiden toimipisteiden hallinta on keskeytetty, ja kukin toimipiste hallinnoi nyt omaa ruokalistaansa, aukioloaikojaan ja toimitusalueitaan; jokaisen toimipisteen oma tilausten vastaanotto jatkuu.",
+      "marketplace": "Julkinen Marketplace-listauksesi on piilotettu, joten uudet asiakkaat eivät löydä sinua sieltä; oma tilaussivusi ja suorat tilaukset eivät ole vaikutuksen alaisena.",
+      "kickstarter": "Lanseeraus- ja takaisinvoittokampanjatyökalusi ovat lukittuina; jo lähettämäsi kampanjat eivät ole vaikutuksen alaisena.",
+      "growthnet": "GrowthNet-pakettisi on keskeytetty, joten kaikki sen työkalut (Edistyneet kampanjat, Marketing Studio, Kickstarter, Asiakas-SMS) kytkeytyvät pois päältä yhdessä — tilaa uudelleen palauttaaksesi koko paketin."
     }
   }
 }

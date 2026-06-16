@@ -672,7 +672,8 @@
     "firstOrder": "Esimene tellimus",
     "openInMaps": "Ava Mapsis",
     "calculatingEta": "Vahemaa arvutamine…",
-    "etaTrafficNote": "Sõiduaeg praeguse liiklusega"
+    "etaTrafficNote": "Sõiduaeg praeguse liiklusega",
+    "autoCallReservationMessage": "Uus lauabroneering restoranis {restaurant} ootab ja pole veel kinnitatud. Ava oma Kitchen Order App, et see kinnitada või tagasi lükata."
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Vali kummastki rühmast üks toode — odavam toode on {pct}% soodsam.",
       "hintBogoPricierFree": "Vali kummastki rühmast üks toode — kallim toode on TASUTA.",
       "hintBogoPricierPct": "Vali kummastki rühmast üks toode — kallim toode on {pct}% soodsam."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Makse on tähtaja ületanud — palun uuendage oma kaarti",
+    "ownerHeadline": "Teie makset ei õnnestunud ikkagi töödelda",
+    "ownerBody": "Üritasime teie Fee Free Ordering tellimuse eest teie kaarti debiteerida, kuid see ei õnnestunud. Viisakuse mõttes on teie konto endiselt täielikult aktiivne. Päevi, mis on jäänud enne teie tasuliste funktsioonide peatamist: {days}. Palun uuendage oma makseandmed kohe — teie tasuta funktsioonid jätkavad tööd ükskõik mis.",
+    "ownerCta": "Uuenda makseviisi",
+    "ownerSms": "Fee Free Ordering: teie kaardilt ei õnnestunud makset võtta. Teie teenus jääb aktiivseks, kuid tasulised funktsioonid peatuvad peagi — päevi jäänud: {days}. Uuenda makset: {url}",
+    "downgradedSubject": "Teie tasulised funktsioonid on nüüd peatatud",
+    "downgradedHeadline": "Mõned funktsioonid lülitati välja",
+    "downgradedBody": "Me ei suutnud teie makset õigeaegselt töödelda, mistõttu on teie tasulised lisad nüüd peatatud. Teie tasuta funktsioonid jätkavad tööd ja saate tellimusi edasi vastu võtta. Tellige uuesti igal ajal, et oma tasulised funktsioonid taas sisse lülitada.",
+    "downgradedCta": "Taasta minu lisad",
+    "resellerSubject": "Teie soovitatud restoranil on arveldusprobleem",
+    "resellerHeadline": "{restaurant} ei suutnud oma makset lõpule viia",
+    "resellerBody": "Me ei suutnud töödelda viimast tellimusmakset restoranile {restaurant}, mis kuulub teie partnerivõrku. Nende teenus on viisakuse mõttes endiselt aktiivne, kuid nende tasulised funktsioonid peatuvad, kui probleem jääb lahendamata. Võiksite nendega ühendust võtta ja aidata neil oma arveldust uuendada.",
+    "resellerCta": "Ava partneri töölaud",
+    "childWarnSubject": "Teie kaubamärgi pakett on tasumata — võib olla vaja tegutseda",
+    "childWarnHeadline": "Teadmiseks kaubamärgi {brand} kohta",
+    "childWarnBody": "Teie asukoht {child} on seotud kaubamärgiga {brand}, mis praegu haldab teie ühist menüüd, lahtiolekuaegu ja kohaletoimetamise piirkondi. {brand} Multi-Location tellimus on tasumata. Kui seda ei lahendata, lõpeb kaubamärgi seos ja {child} läheb üle oma menüü, lahtiolekuaegade ja kohaletoimetamise piirkondade haldamisele. Teie tellimuste vastuvõtt jätkub — kuid kaubamärgiülesed uuendused peatuvad. Saate valmistuda iseseisvalt tegutsemiseks või võtta probleemi lahendamiseks ühendust kaubamärgiga {brand}.",
+    "childWarnCta": "Ava minu asukoha seaded",
+    "childResetSubject": "{child} haldab nüüd oma seadeid ise",
+    "childResetHeadline": "Teie kaubamärgi seos on lõppenud",
+    "childResetBody": "Kuna {brand} Multi-Location tellimus jäi tasumata, on {child} viidud üle oma menüü, lahtiolekuaegade ja kohaletoimetamise piirkondade haldamisele. Säilitasime kaubamärgi menüü koopia, et saaksite katkestusteta edasi teenindada — muutke seda igal ajal. Kui {brand} oma paketi taastab, saate oma asukoha seadetest uuesti seose luua.",
+    "childResetCta": "Halda minu asukohta",
+    "bannerText": "Me ei suutnud teie tellimusmakset töödelda. Teie teenus on endiselt aktiivne — uuendage oma kaarti, et säilitada oma tasulised funktsioonid. Päevi jäänud: {days}.",
+    "bannerCta": "Uuenda makset"
+  },
+  "addOnBilling": {
+    "graceTitle": "Me ei suutnud teie viimast makset võtta",
+    "graceBody": "Selle lisa makse ei õnnestunud. Viisakuse mõttes jääb see täielikult aktiivseks — päevi kaardi uuendamiseks enne väljalülitamist: {days}. Uuendage oma makse kohe, et see säilitada.",
+    "graceCta": "Uuenda makseviisi",
+    "downgradedTitle": "See lisa on välja lülitatud",
+    "downgradedBody": "Teie makse ei õnnestunud, mistõttu see lisa lülitati välja. {consequence} Tellige uuesti, et see taas sisse lülitada.",
+    "downgradedCta": "Telli uuesti",
+    "consequenceGeneric": "Selle tasulised funktsioonid on peatatud kuni makse taastamiseni; teie tasuta funktsioonid jätkavad tööd.",
+    "consequence": {
+      "custom_domain": "Teie domeen suunab külastajad nüüd teie tasuta Fee Free Ordering lingile, et kliendid saaksid endiselt tellida — see suunatakse tagasi teie enda domeenile niipea, kui makse õnnestub.",
+      "hosted_website": "Teie turundusveebisait on peatatud ja kuvab lühikese täiendusteate; teie tellimisleht jätkab tööd — mõjutatud on ainult turundussait.",
+      "online_payments": "Kaardimakse on välja lülitatud. Kliendid saavad endiselt tellida teie muude makseviiside abil (sularaha / maksmine kohapeal), nii et te saate tellimusi edasi vastu võtta.",
+      "unlimited_orders": "Teie 100 tellimuse/broneeringu kuulimiit on taas jõus; piiri ületavad tellimused on blokeeritud kuni makse taastamiseni.",
+      "advanced_promos": "Täpsemad kampaaniad, kliendisegmendid ja automatiseeritud kampaaniad on peatatud; teie põhilised kampaaniatüübid jätkavad tööd.",
+      "multi_location": "Mitme asukoha haldamine on peatatud ja iga asukoht haldab nüüd oma menüüd, lahtiolekuaegu ja kohaletoimetamise piirkondi; iga asukoha enda tellimuste vastuvõtt jätkub.",
+      "marketplace": "Teie avalik Marketplace kuulutus on peidetud, nii et uued kliendid ei avasta teid sealt; teie enda tellimisleht ja otsetellimused ei ole mõjutatud.",
+      "kickstarter": "Teie käivitamis- ja tagasivõitmiskampaaniate tööriistad on lukustatud; juba saadetud kampaaniad ei ole mõjutatud.",
+      "growthnet": "Teie GrowthNet komplekt on peatatud, nii et kõik selle tööriistad (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) lülituvad koos välja — tellige uuesti, et taastada kogu komplekt."
     }
   }
 }

@@ -672,7 +672,8 @@
     "firstOrder": "Első rendelés",
     "openInMaps": "Megnyitás a Térképen",
     "calculatingEta": "Távolság számítása…",
-    "etaTrafficNote": "Menetidő a jelenlegi forgalommal"
+    "etaTrafficNote": "Menetidő a jelenlegi forgalommal",
+    "autoCallReservationMessage": "Egy új asztalfoglalás a(z) {restaurant} étteremben várakozik, és még nem fogadták el. Nyisd meg a Kitchen Order App alkalmazást az elfogadásához vagy elutasításához."
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Válasszon egy-egy terméket mindkét csoportból — az olcsóbbik {pct}% kedvezménnyel jár.",
       "hintBogoPricierFree": "Válasszon egy-egy terméket mindkét csoportból — a drágábbik INGYEN van.",
       "hintBogoPricierPct": "Válasszon egy-egy terméket mindkét csoportból — a drágábbik {pct}% kedvezménnyel jár."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Lejárt fizetés — kérjük, frissítse kártyaadatait",
+    "ownerHeadline": "Még mindig nem sikerült feldolgoznunk a fizetését",
+    "ownerBody": "Megpróbáltuk megterhelni a kártyáját a Fee Free Ordering előfizetéséért, de a tranzakció nem ment át. Szívességként fiókja továbbra is teljesen aktív. Hátralévő napok, mielőtt fizetős funkciói szünetelnek: {days}. Kérjük, frissítse most a fizetési adatait — ingyenes funkciói mindenképp tovább működnek.",
+    "ownerCta": "Fizetési mód frissítése",
+    "ownerSms": "Fee Free Ordering: nem sikerült megterhelnünk a kártyáját. A szolgáltatás aktív marad, de a fizetős funkciók hamarosan szünetelnek — hátralévő napok: {days}. Fizetés frissítése: {url}",
+    "downgradedSubject": "Fizetős funkciói mostantól szünetelnek",
+    "downgradedHeadline": "Néhány funkció kikapcsolásra került",
+    "downgradedBody": "Nem tudtuk időben feldolgozni a fizetését, ezért a fizetős kiegészítői mostantól szünetelnek. Ingyenes funkciói tovább működnek, és továbbra is fogadhat rendeléseket. Bármikor előfizethet újra, hogy visszakapcsolja a fizetős funkcióit.",
+    "downgradedCta": "Kiegészítőim visszaállítása",
+    "resellerSubject": "Egy Ön által ajánlott étteremnél számlázási probléma merült fel",
+    "resellerHeadline": "A(z) {restaurant} nem tudta teljesíteni a fizetését",
+    "resellerBody": "Nem tudtuk feldolgozni a(z) {restaurant} legutóbbi előfizetési fizetését, amely az Ön partnerhálózatába tartozó étterem. Szolgáltatásuk szívességként továbbra is aktív, de fizetős funkcióik szünetelni fognak, ha a probléma nem oldódik meg. Érdemes lehet felvenni velük a kapcsolatot, és segíteni nekik a számlázásuk frissítésében.",
+    "resellerCta": "Partner-irányítópult megnyitása",
+    "childWarnSubject": "Márkája csomagja kifizetetlen — beavatkozásra lehet szükség",
+    "childWarnHeadline": "Figyelmeztetés a(z) {brand} márkáról",
+    "childWarnBody": "Az Ön {child} telephelye a(z) {brand} márkához kapcsolódik, amely jelenleg a közös étlapját, nyitvatartását és kiszállítási zónáit kezeli. A(z) {brand} Multi-Location előfizetése kifizetetlen. Ha nem rendeződik, a márkakapcsolat megszűnik, és a(z) {child} átáll saját étlapja, nyitvatartása és kiszállítási zónái kezelésére. A rendelésfelvétel tovább működik — de a márkaszintű frissítések leállnak. Felkészülhet az önálló működésre, vagy felveheti a kapcsolatot a(z) {brand} márkával a rendezéshez.",
+    "childWarnCta": "Telephelyem beállításainak megnyitása",
+    "childResetSubject": "A(z) {child} mostantól saját beállításait kezeli",
+    "childResetHeadline": "Márkakapcsolata megszűnt",
+    "childResetBody": "Mivel a(z) {brand} Multi-Location előfizetése kifizetetlen maradt, a(z) {child} átállt saját étlapja, nyitvatartása és kiszállítási zónái kezelésére. Megőriztük a márka étlapjának másolatát, így megszakítás nélkül folytathatja a kiszolgálást — bármikor szerkesztheti. Ha a(z) {brand} visszaállítja a csomagját, telephelye beállításaiból újra összekapcsolhatja.",
+    "childResetCta": "Telephelyem kezelése",
+    "bannerText": "Nem tudtuk feldolgozni az előfizetési fizetését. Szolgáltatása továbbra is aktív — frissítse kártyáját, hogy megtartsa fizetős funkcióit. Hátralévő napok: {days}.",
+    "bannerCta": "Fizetés frissítése"
+  },
+  "addOnBilling": {
+    "graceTitle": "Nem tudtuk levonni a legutóbbi fizetését",
+    "graceBody": "Ennek a kiegészítőnek a fizetése nem ment át. Szívességként teljesen aktív marad — hátralévő napok a kártya frissítésére, mielőtt kikapcsoljuk: {days}. Frissítse most a fizetését, hogy megtartsa.",
+    "graceCta": "Fizetési mód frissítése",
+    "downgradedTitle": "Ez a kiegészítő ki van kapcsolva",
+    "downgradedBody": "A fizetése nem ment át, ezért ezt a kiegészítőt kikapcsoltuk. {consequence} Fizessen elő újra a visszakapcsolásához.",
+    "downgradedCta": "Újra-előfizetés",
+    "consequenceGeneric": "Fizetős funkciói szünetelnek a fizetés helyreállításáig; ingyenes funkciói tovább működnek.",
+    "consequence": {
+      "custom_domain": "Domainje mostantól az ingyenes Fee Free Ordering linkjére irányítja a látogatókat, így az ügyfelek továbbra is rendelhetnek — a fizetés teljesítésének pillanatában visszamutat a saját domainjére.",
+      "hosted_website": "Marketing weboldala szünetel, és egy rövid felhasználói értesítést jelenít meg; rendelési oldala tovább működik — csak a marketing oldal érintett.",
+      "online_payments": "A kártyás fizetés ki van kapcsolva. Az ügyfelek továbbra is rendelhetnek más fizetési módjaival (készpénz / fizetés az üzletben), így folyamatosan fogadhat rendeléseket.",
+      "unlimited_orders": "A havi 100 rendelés/foglalás korlátja ismét érvényben van; a korlát feletti rendeléseket letiltjuk a fizetés helyreállításáig.",
+      "advanced_promos": "A speciális promóciók, ügyfélszegmensek és automatizált kampányok szünetelnek; alapszintű promóciótípusai tovább futnak.",
+      "multi_location": "A több telephely kezelése szünetel, és mostantól minden telephely saját étlapját, nyitvatartását és kiszállítási zónáit kezeli; az egyes telephelyek saját rendelésfelvétele tovább működik.",
+      "marketplace": "Nyilvános Marketplace-hirdetése rejtve van, így új ügyfelek nem fedezhetik fel ott; saját rendelési oldala és közvetlen rendelései nem érintettek.",
+      "kickstarter": "Az indítási és visszanyerő kampányeszközei zárolva vannak; a már elküldött kampányai nem érintettek.",
+      "growthnet": "A GrowthNet csomagja szünetel, így annak összes eszköze (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) együtt kikapcsol — fizessen elő újra a teljes csomag visszaállításához."
     }
   }
 }

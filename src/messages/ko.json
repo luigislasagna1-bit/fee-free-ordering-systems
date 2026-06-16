@@ -672,7 +672,8 @@
     "firstOrder": "첫 주문",
     "openInMaps": "지도에서 열기",
     "calculatingEta": "거리 계산 중…",
-    "etaTrafficNote": "현재 교통 상황 기준 운전 시간"
+    "etaTrafficNote": "현재 교통 상황 기준 운전 시간",
+    "autoCallReservationMessage": "{restaurant}의 새로운 테이블 예약이 대기 중이며 아직 수락되지 않았습니다. Kitchen Order App을 열어 수락하거나 거절하세요."
   },
   "admin": {
     "welcomeBack": "환영합니다",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "각 그룹에서 메뉴를 하나씩 고르세요 — 더 저렴한 메뉴가 {pct}% 할인됩니다.",
       "hintBogoPricierFree": "각 그룹에서 메뉴를 하나씩 고르세요 — 더 비싼 메뉴가 무료입니다.",
       "hintBogoPricierPct": "각 그룹에서 메뉴를 하나씩 고르세요 — 더 비싼 메뉴가 {pct}% 할인됩니다."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "결제 연체 — 카드 정보를 업데이트해 주세요",
+    "ownerHeadline": "여전히 결제를 처리하지 못했습니다",
+    "ownerBody": "Fee Free Ordering 구독료를 카드로 청구하려 했으나 결제가 승인되지 않았습니다. 양해 차원에서 계정은 여전히 완전히 활성화된 상태입니다. 유료 기능이 일시 중지되기까지 남은 일수: {days}. 지금 결제 정보를 업데이트해 주세요 — 무료 기능은 어떤 경우에도 계속 사용하실 수 있습니다.",
+    "ownerCta": "결제 수단 업데이트",
+    "ownerSms": "Fee Free Ordering: 카드 결제를 처리하지 못했습니다. 서비스는 계속 유지되지만 유료 기능은 곧 일시 중지됩니다 — 남은 일수: {days}. 결제 업데이트: {url}",
+    "downgradedSubject": "유료 기능이 일시 중지되었습니다",
+    "downgradedHeadline": "일부 기능이 비활성화되었습니다",
+    "downgradedBody": "기한 내에 결제를 처리하지 못해 유료 부가 기능이 일시 중지되었습니다. 무료 기능은 계속 작동하며 주문도 계속 받으실 수 있습니다. 언제든지 다시 구독하시면 유료 기능을 다시 활성화하실 수 있습니다.",
+    "downgradedCta": "부가 기능 복원",
+    "resellerSubject": "추천하신 매장에 결제 문제가 있습니다",
+    "resellerHeadline": "{restaurant} 매장이 결제를 완료하지 못했습니다",
+    "resellerBody": "파트너 네트워크에 속한 매장 {restaurant}의 최근 구독 결제를 처리하지 못했습니다. 양해 차원에서 해당 매장의 서비스는 여전히 활성화되어 있으나, 문제가 해결되지 않으면 유료 기능이 일시 중지됩니다. 매장에 연락하여 결제 정보 업데이트를 도와주시는 것이 좋습니다.",
+    "resellerCta": "파트너 대시보드 열기",
+    "childWarnSubject": "브랜드 요금제가 미납 상태입니다 — 조치가 필요할 수 있습니다",
+    "childWarnHeadline": "{brand} 관련 안내",
+    "childWarnBody": "귀하의 매장 {child}은(는) 브랜드 {brand}에 연결되어 있으며, 현재 공유 메뉴, 영업시간 및 배달 지역을 관리하고 있습니다. {brand}의 Multi-Location 구독이 미납 상태입니다. 해결되지 않으면 브랜드 연결이 종료되어 {child}이(가) 자체 메뉴, 영업시간 및 배달 지역을 직접 관리하도록 전환됩니다. 주문은 계속 작동하지만 브랜드 전체 업데이트는 중단됩니다. 독립 운영을 준비하시거나 {brand}에 연락하여 문제를 해결하실 수 있습니다.",
+    "childWarnCta": "내 매장 설정 열기",
+    "childResetSubject": "{child}이(가) 이제 자체 설정을 관리합니다",
+    "childResetHeadline": "브랜드 연결이 종료되었습니다",
+    "childResetBody": "{brand}의 Multi-Location 구독이 미납되어 {child}이(가) 자체 메뉴, 영업시간 및 배달 지역을 직접 관리하도록 전환되었습니다. 중단 없이 계속 운영하실 수 있도록 브랜드 메뉴의 사본을 보관해 두었으니 언제든지 수정하실 수 있습니다. {brand}이(가) 요금제를 복원하면 매장 설정에서 다시 연결하실 수 있습니다.",
+    "childResetCta": "내 매장 관리",
+    "bannerText": "구독 결제를 처리하지 못했습니다. 서비스는 계속 유지되고 있습니다 — 유료 기능을 유지하려면 카드 정보를 업데이트해 주세요. 남은 일수: {days}.",
+    "bannerCta": "결제 업데이트"
+  },
+  "addOnBilling": {
+    "graceTitle": "최근 결제를 처리하지 못했습니다",
+    "graceBody": "이 부가 기능의 결제가 승인되지 않았습니다. 양해 차원에서 완전히 활성화된 상태로 유지됩니다 — 비활성화되기 전 카드 정보를 업데이트할 수 있는 남은 일수: {days}. 기능을 유지하려면 지금 결제 정보를 업데이트해 주세요.",
+    "graceCta": "결제 수단 업데이트",
+    "downgradedTitle": "이 부가 기능이 비활성화되었습니다",
+    "downgradedBody": "결제가 승인되지 않아 이 부가 기능이 비활성화되었습니다. {consequence} 다시 활성화하려면 재구독해 주세요.",
+    "downgradedCta": "재구독",
+    "consequenceGeneric": "결제가 복원될 때까지 유료 기능이 일시 중지됩니다. 무료 기능은 계속 작동합니다.",
+    "consequence": {
+      "custom_domain": "현재 도메인이 방문자를 무료 Fee Free Ordering 링크로 전달하므로 고객은 계속 주문할 수 있습니다 — 결제가 완료되는 즉시 다시 귀하의 도메인을 가리킵니다.",
+      "hosted_website": "마케팅 웹사이트가 일시 중지되어 간단한 업그레이드 안내가 표시됩니다. 주문 페이지는 계속 작동하며 마케팅 사이트만 영향을 받습니다.",
+      "online_payments": "카드 결제가 비활성화됩니다. 고객은 다른 결제 수단(현금 / 매장 결제)으로 계속 주문할 수 있으므로 주문 접수가 유지됩니다.",
+      "unlimited_orders": "월 100건의 주문/예약 한도가 다시 적용됩니다. 결제가 복원될 때까지 한도를 초과하는 주문은 차단됩니다.",
+      "advanced_promos": "고급 프로모션, 고객 세그먼트 및 자동화 캠페인이 일시 중지됩니다. 기본 프로모션 유형은 계속 실행됩니다.",
+      "multi_location": "여러 매장 관리가 일시 중지되며, 각 매장이 자체 메뉴, 영업시간 및 배달 지역을 직접 관리합니다. 각 매장의 주문은 계속 작동합니다.",
+      "marketplace": "공개 Marketplace 등록이 숨겨져 신규 고객이 그곳에서 매장을 발견할 수 없습니다. 귀하의 주문 페이지와 직접 주문은 영향을 받지 않습니다.",
+      "kickstarter": "런칭 및 재유치 캠페인 도구가 잠깁니다. 이미 발송한 캠페인은 영향을 받지 않습니다.",
+      "growthnet": "GrowthNet 번들이 일시 중지되어 모든 도구(Advanced Promos, Marketing Studio, Kickstarter, Customer SMS)가 함께 비활성화됩니다 — 전체 번들을 복원하려면 재구독해 주세요."
     }
   }
 }

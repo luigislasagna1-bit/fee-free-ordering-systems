@@ -672,7 +672,8 @@
     "firstOrder": "Eerste bestelling",
     "openInMaps": "Openen in Maps",
     "calculatingEta": "Afstand berekenen…",
-    "etaTrafficNote": "Rijtijd met huidig verkeer"
+    "etaTrafficNote": "Rijtijd met huidig verkeer",
+    "autoCallReservationMessage": "Een nieuwe tafelreservering bij {restaurant} wacht en is nog niet geaccepteerd. Open je Kitchen Order App om deze te accepteren of te weigeren."
   },
   "admin": {
     "welcomeBack": "Welkom terug",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Kies één item uit elke groep — op het goedkoopste item krijg je {pct}% korting.",
       "hintBogoPricierFree": "Kies één item uit elke groep — het duurste item is GRATIS.",
       "hintBogoPricierPct": "Kies één item uit elke groep — op het duurste item krijg je {pct}% korting."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Betaling achterstallig — werk je kaart bij",
+    "ownerHeadline": "We konden je betaling nog steeds niet verwerken",
+    "ownerBody": "We probeerden je kaart te belasten voor je Fee Free Ordering-abonnement, maar dat is niet gelukt. Als blijk van goede wil blijft je account volledig actief. Aantal resterende dagen voordat je betaalde functies worden gepauzeerd: {days}. Werk je betaalgegevens nu bij — je gratis functies blijven hoe dan ook werken.",
+    "ownerCta": "Betaalmethode bijwerken",
+    "ownerSms": "Fee Free Ordering: we konden je kaart niet belasten. Je service blijft actief, maar betaalde functies worden binnenkort gepauzeerd — resterende dagen: {days}. Betaling bijwerken: {url}",
+    "downgradedSubject": "Je betaalde functies zijn nu gepauzeerd",
+    "downgradedHeadline": "Enkele functies zijn uitgeschakeld",
+    "downgradedBody": "We konden je betaling niet op tijd verwerken, dus je betaalde add-ons zijn nu gepauzeerd. Je gratis functies blijven werken en je kunt bestellingen blijven aannemen. Abonneer je op elk moment opnieuw om je betaalde functies weer in te schakelen.",
+    "downgradedCta": "Mijn add-ons herstellen",
+    "resellerSubject": "Een restaurant dat je hebt aangebracht heeft een factureringsprobleem",
+    "resellerHeadline": "{restaurant} kon de betaling niet voltooien",
+    "resellerBody": "We konden de laatste abonnementsbetaling voor {restaurant} niet verwerken, een restaurant in je partnernetwerk. Hun service is nog steeds actief als blijk van goede wil, maar hun betaalde functies worden gepauzeerd als dit niet wordt opgelost. Misschien wil je contact met hen opnemen en hen helpen hun facturering bij te werken.",
+    "resellerCta": "Partnerdashboard openen",
+    "childWarnSubject": "Het abonnement van je merk is onbetaald — actie is mogelijk nodig",
+    "childWarnHeadline": "Let op betreffende {brand}",
+    "childWarnBody": "Je locatie {child} is gekoppeld aan het merk {brand}, dat momenteel je gedeelde menu, openingstijden en bezorgzones beheert. Het Multi-Location-abonnement van {brand} is onbetaald. Als dit niet wordt opgelost, eindigt die merkkoppeling en gaat {child} over op het beheren van het eigen menu, de eigen openingstijden en bezorgzones. Je bestelfunctie blijft werken — maar merkbrede updates stoppen. Je kunt je voorbereiden om zelfstandig te werken, of contact opnemen met {brand} om het op te lossen.",
+    "childWarnCta": "Mijn locatie-instellingen openen",
+    "childResetSubject": "{child} beheert nu de eigen instellingen",
+    "childResetHeadline": "Je merkkoppeling is beëindigd",
+    "childResetBody": "Omdat het Multi-Location-abonnement van {brand} onbetaald bleef, is {child} overgezet naar het beheren van het eigen menu, de eigen openingstijden en bezorgzones. We hebben een kopie van het menu van het merk bewaard zodat je zonder onderbreking kunt blijven serveren — pas het op elk moment aan. Als {brand} het abonnement herstelt, kun je opnieuw koppelen vanuit je locatie-instellingen.",
+    "childResetCta": "Mijn locatie beheren",
+    "bannerText": "We konden je abonnementsbetaling niet verwerken. Je service is nog steeds actief — werk je kaart bij om je betaalde functies te behouden. Resterende dagen: {days}.",
+    "bannerCta": "Betaling bijwerken"
+  },
+  "addOnBilling": {
+    "graceTitle": "We konden je laatste betaling niet innen",
+    "graceBody": "De betaling voor deze add-on is niet gelukt. Als blijk van goede wil blijft hij volledig actief — resterende dagen om je kaart bij te werken voordat hij wordt uitgeschakeld: {days}. Werk je betaling nu bij om hem te behouden.",
+    "graceCta": "Betaalmethode bijwerken",
+    "downgradedTitle": "Deze add-on is uitgeschakeld",
+    "downgradedBody": "Je betaling is niet gelukt, dus deze add-on is uitgeschakeld. {consequence} Abonneer je opnieuw om hem weer in te schakelen.",
+    "downgradedCta": "Opnieuw abonneren",
+    "consequenceGeneric": "De betaalde functies zijn gepauzeerd totdat de betaling is hersteld; je gratis functies blijven werken.",
+    "consequence": {
+      "custom_domain": "Je domein leidt bezoekers nu door naar je gratis Fee Free Ordering-link, zodat klanten nog steeds kunnen bestellen — het verwijst weer naar je eigen domein zodra de betaling is verwerkt.",
+      "hosted_website": "Je marketingwebsite is gepauzeerd en toont een korte upgrademelding; je bestelpagina blijft werken — alleen de marketingsite wordt beïnvloed.",
+      "online_payments": "Afrekenen met kaart is uitgeschakeld. Klanten kunnen nog steeds bestellen met je andere betaalmethoden (contant / betalen in de zaak), zodat je bestellingen blijft aannemen.",
+      "unlimited_orders": "Je limiet van 100 bestellingen/reserveringen per maand geldt weer; bestellingen boven de limiet worden geblokkeerd totdat de betaling is hersteld.",
+      "advanced_promos": "Geavanceerde promoties, klantsegmenten en geautomatiseerde campagnes zijn gepauzeerd; je standaard promotietypes blijven actief.",
+      "multi_location": "Het beheren van meerdere locaties is gepauzeerd, en elke locatie beheert nu het eigen menu, de eigen openingstijden en bezorgzones; de eigen bestelfunctie van elke locatie blijft werken.",
+      "marketplace": "Je openbare Marketplace-vermelding is verborgen, dus nieuwe klanten zullen je daar niet ontdekken; je eigen bestelpagina en directe bestellingen worden niet beïnvloed.",
+      "kickstarter": "Je tools voor lancerings- en win-backcampagnes zijn vergrendeld; campagnes die je al hebt verzonden, worden niet beïnvloed.",
+      "growthnet": "Je GrowthNet-bundel is gepauzeerd, dus alle bijbehorende tools (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) worden samen uitgeschakeld — abonneer je opnieuw om de hele bundel te herstellen."
     }
   }
 }

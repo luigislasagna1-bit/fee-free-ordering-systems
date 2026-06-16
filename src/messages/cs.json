@@ -672,7 +672,8 @@
     "firstOrder": "První objednávka",
     "openInMaps": "Otevřít v Mapách",
     "calculatingEta": "Výpočet vzdálenosti…",
-    "etaTrafficNote": "Doba jízdy při aktuálním provozu"
+    "etaTrafficNote": "Doba jízdy při aktuálním provozu",
+    "autoCallReservationMessage": "Nová rezervace stolu v {restaurant} čeká a dosud nebyla přijata. Otevřete aplikaci Kitchen Order App a přijměte ji nebo odmítněte."
   },
   "admin": {
     "welcomeBack": "Vítejte zpět",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Vyberte jednu položku z každé skupiny — na levnější položku získáte slevu {pct} %.",
       "hintBogoPricierFree": "Vyberte jednu položku z každé skupiny — dražší položku máte ZDARMA.",
       "hintBogoPricierPct": "Vyberte jednu položku z každé skupiny — na dražší položku získáte slevu {pct} %."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Platba po splatnosti — aktualizujte prosím svou kartu",
+    "ownerHeadline": "Vaši platbu se nám stále nepodařilo zpracovat",
+    "ownerBody": "Pokusili jsme se z vaší karty strhnout platbu za předplatné Fee Free Ordering, ale platba neproběhla. Z naší strany zůstává váš účet i nadále plně aktivní. Počet dní, které zbývají, než se vaše placené funkce pozastaví: {days}. Aktualizujte prosím své platební údaje hned teď — vaše bezplatné funkce budou fungovat dál za všech okolností.",
+    "ownerCta": "Aktualizovat platební metodu",
+    "ownerSms": "Fee Free Ordering: nepodařilo se nám strhnout platbu z vaší karty. Vaše služba zůstává zapnutá, ale placené funkce se brzy pozastaví — zbývá dní: {days}. Aktualizovat platbu: {url}",
+    "downgradedSubject": "Vaše placené funkce jsou nyní pozastaveny",
+    "downgradedHeadline": "Některé funkce byly vypnuty",
+    "downgradedBody": "Vaši platbu se nám nepodařilo zpracovat včas, takže vaše placené doplňky jsou nyní pozastaveny. Vaše bezplatné funkce fungují dál a můžete dál přijímat objednávky. Kdykoli si můžete předplatné obnovit a placené funkce opět zapnout.",
+    "downgradedCta": "Obnovit mé doplňky",
+    "resellerSubject": "Restaurace, kterou jste doporučili, má problém s platbou",
+    "resellerHeadline": "Restauraci {restaurant} se nepodařilo dokončit platbu",
+    "resellerBody": "Nepodařilo se nám zpracovat poslední platbu za předplatné restaurace {restaurant}, která je součástí vaší partnerské sítě. Její služba je z naší strany i nadále aktivní, ale její placené funkce se pozastaví, pokud problém nevyřeší. Možná by bylo vhodné se s ní spojit a pomoci jí aktualizovat platební údaje.",
+    "resellerCta": "Otevřít partnerský přehled",
+    "childWarnSubject": "Tarif vaší značky je neuhrazen — může být potřeba zasáhnout",
+    "childWarnHeadline": "Upozornění ohledně značky {brand}",
+    "childWarnBody": "Vaše pobočka {child} je propojena se značkou {brand}, která aktuálně spravuje vaše sdílené menu, otevírací dobu a zóny rozvozu. Předplatné Multi-Location značky {brand} je neuhrazené. Pokud problém nebude vyřešen, propojení se značkou skončí a pobočka {child} přejde na samostatnou správu vlastního menu, otevírací doby a zón rozvozu. Vaše objednávky fungují dál — ale aktualizace napříč celou značkou se zastaví. Můžete se připravit na samostatný provoz, nebo kontaktovat značku {brand} a problém vyřešit.",
+    "childWarnCta": "Otevřít nastavení mé pobočky",
+    "childResetSubject": "Pobočka {child} nyní spravuje vlastní nastavení",
+    "childResetHeadline": "Vaše propojení se značkou skončilo",
+    "childResetBody": "Protože předplatné Multi-Location značky {brand} zůstalo neuhrazené, pobočka {child} byla přepnuta na samostatnou správu vlastního menu, otevírací doby a zón rozvozu. Uchovali jsme kopii menu značky, abyste mohli i nadále obsluhovat zákazníky bez přerušení — kdykoli ji můžete upravit. Pokud značka {brand} své předplatné obnoví, můžete se v nastavení své pobočky znovu propojit.",
+    "childResetCta": "Spravovat mou pobočku",
+    "bannerText": "Nepodařilo se nám zpracovat platbu za vaše předplatné. Vaše služba je stále zapnutá — aktualizujte svou kartu, abyste si zachovali placené funkce. Zbývá dní: {days}.",
+    "bannerCta": "Aktualizovat platbu"
+  },
+  "addOnBilling": {
+    "graceTitle": "Vaši poslední platbu se nám nepodařilo strhnout",
+    "graceBody": "Platba za tento doplněk neproběhla. Z naší strany zůstává plně aktivní — počet dní na aktualizaci karty, než bude vypnut: {days}. Aktualizujte platbu hned teď, abyste si jej zachovali.",
+    "graceCta": "Aktualizovat platební metodu",
+    "downgradedTitle": "Tento doplněk je vypnutý",
+    "downgradedBody": "Vaše platba neproběhla, takže tento doplněk byl vypnut. {consequence} Obnovte předplatné, abyste jej znovu zapnuli.",
+    "downgradedCta": "Obnovit předplatné",
+    "consequenceGeneric": "Jeho placené funkce jsou pozastaveny, dokud nebude platba obnovena; vaše bezplatné funkce fungují dál.",
+    "consequence": {
+      "custom_domain": "Vaše doména nyní přesměrovává návštěvníky na váš bezplatný odkaz Fee Free Ordering, takže zákazníci mohou stále objednávat — jakmile platba proběhne, doména se okamžitě vrátí na vaši vlastní.",
+      "hosted_website": "Váš marketingový web je pozastaven a zobrazuje stručné upozornění o nutnosti upgradu; vaše objednávková stránka funguje dál — ovlivněn je pouze marketingový web.",
+      "online_payments": "Platba kartou je vypnutá. Zákazníci mohou stále objednávat pomocí vašich ostatních platebních metod (hotovost / platba na místě), takže dál přijímáte objednávky.",
+      "unlimited_orders": "Váš limit 100 objednávek/rezervací za měsíc je opět v platnosti; objednávky nad tento limit jsou blokovány, dokud nebude platba obnovena.",
+      "advanced_promos": "Pokročilé akce, zákaznické segmenty a automatizované kampaně jsou pozastaveny; vaše základní typy akcí běží dál.",
+      "multi_location": "Správa více poboček je pozastavena a každá pobočka nyní spravuje vlastní menu, otevírací dobu a zóny rozvozu; objednávky každé pobočky fungují dál.",
+      "marketplace": "Váš veřejný záznam v Marketplace je skrytý, takže vás zde noví zákazníci neobjeví; vaše vlastní objednávková stránka a přímé objednávky tím nejsou dotčeny.",
+      "kickstarter": "Vaše nástroje pro spouštěcí a reaktivační kampaně jsou uzamčeny; kampaně, které jste již odeslali, tím nejsou dotčeny.",
+      "growthnet": "Váš balíček GrowthNet je pozastaven, takže všechny jeho nástroje (Pokročilé akce, Marketing Studio, Kickstarter, Zákaznické SMS) se vypnou společně — obnovte předplatné a vrátíte celý balíček."
     }
   }
 }

@@ -672,7 +672,8 @@
     "firstOrder": "İlk sipariş",
     "openInMaps": "Haritalar'da aç",
     "calculatingEta": "Mesafe hesaplanıyor…",
-    "etaTrafficNote": "Mevcut trafikle sürüş süresi"
+    "etaTrafficNote": "Mevcut trafikle sürüş süresi",
+    "autoCallReservationMessage": "{restaurant} için yeni bir masa rezervasyonu bekliyor ve henüz kabul edilmedi. Kabul etmek veya reddetmek için Kitchen Order App uygulamanızı açın."
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Her gruptan bir ürün seçin — ucuz olan üründe %{pct} indirim var.",
       "hintBogoPricierFree": "Her gruptan bir ürün seçin — pahalı olan ürün ÜCRETSİZ.",
       "hintBogoPricierPct": "Her gruptan bir ürün seçin — pahalı olan üründe %{pct} indirim var."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Ödeme gecikti — lütfen kartınızı güncelleyin",
+    "ownerHeadline": "Ödemenizi yine de işleme alamadık",
+    "ownerBody": "Fee Free Ordering aboneliğiniz için kartınızdan ücret tahsil etmeye çalıştık ancak işlem gerçekleşmedi. Size bir kolaylık olarak hesabınız hâlâ tamamen aktiftir. Ücretli özellikleriniz duraklatılmadan önce kalan gün sayısı: {days}. Lütfen ödeme bilgilerinizi şimdi güncelleyin — ücretsiz özellikleriniz her durumda çalışmaya devam edecek.",
+    "ownerCta": "Ödeme yöntemini güncelle",
+    "ownerSms": "Fee Free Ordering: kartınızdan ücret tahsil edemedik. Hizmetiniz açık kalıyor, ancak ücretli özellikler yakında duraklatılacak — kalan gün: {days}. Ödemeyi güncelleyin: {url}",
+    "downgradedSubject": "Ücretli özellikleriniz artık duraklatıldı",
+    "downgradedHeadline": "Bazı özellikler kapatıldı",
+    "downgradedBody": "Ödemenizi zamanında işleme alamadığımız için ücretli eklentileriniz şimdi duraklatıldı. Ücretsiz özellikleriniz çalışmaya devam ediyor ve sipariş almayı sürdürebilirsiniz. Ücretli özelliklerinizi yeniden açmak için istediğiniz zaman yeniden abone olabilirsiniz.",
+    "downgradedCta": "Eklentilerimi geri yükle",
+    "resellerSubject": "Yönlendirdiğiniz bir restoranda faturalandırma sorunu var",
+    "resellerHeadline": "{restaurant} ödemesini tamamlayamadı",
+    "resellerBody": "İş ortağı ağınızdaki bir restoran olan {restaurant} için en son abonelik ödemesini işleme alamadık. Hizmetleri size bir kolaylık olarak hâlâ aktif, ancak sorun çözülmezse ücretli özellikleri duraklatılacak. Onlara ulaşıp faturalandırmalarını güncellemelerine yardımcı olmak isteyebilirsiniz.",
+    "resellerCta": "İş ortağı panelini aç",
+    "childWarnSubject": "Markanızın planı ödenmemiş — işlem gerekebilir",
+    "childWarnHeadline": "{brand} hakkında bilgi",
+    "childWarnBody": "{child} konumunuz, şu anda ortak menünüzü, çalışma saatlerinizi ve teslimat bölgelerinizi yöneten {brand} markasına bağlı. {brand} markasının Multi-Location aboneliği ödenmemiş durumda. Sorun çözülmezse bu marka bağlantısı sona erecek ve {child} kendi menüsünü, çalışma saatlerini ve teslimat bölgelerini yönetmeye geçecek. Sipariş alımınız çalışmaya devam eder — ancak marka genelindeki güncellemeler duracaktır. Bağımsız çalışmaya hazırlanabilir veya sorunu çözmek için {brand} ile iletişime geçebilirsiniz.",
+    "childWarnCta": "Konum ayarlarımı aç",
+    "childResetSubject": "{child} artık kendi ayarlarını yönetiyor",
+    "childResetHeadline": "Marka bağlantınız sona erdi",
+    "childResetBody": "{brand} markasının Multi-Location aboneliği ödenmediği için {child} kendi menüsünü, çalışma saatlerini ve teslimat bölgelerini yönetmeye geçirildi. Kesintisiz hizmet vermeye devam edebilmeniz için markanın menüsünün bir kopyasını sakladık — istediğiniz zaman düzenleyebilirsiniz. {brand} planını yeniden etkinleştirirse, konum ayarlarınızdan yeniden bağlantı kurabilirsiniz.",
+    "childResetCta": "Konumumu yönet",
+    "bannerText": "Abonelik ödemenizi işleme alamadık. Hizmetiniz hâlâ açık — ücretli özelliklerinizi korumak için kartınızı güncelleyin. Kalan gün: {days}.",
+    "bannerCta": "Ödemeyi güncelle"
+  },
+  "addOnBilling": {
+    "graceTitle": "Son ödemenizi tahsil edemedik",
+    "graceBody": "Bu eklentinin ödemesi gerçekleşmedi. Size bir kolaylık olarak tamamen aktif kalıyor — kapatılmadan önce kartınızı güncellemek için kalan gün: {days}. Korumak için ödemenizi şimdi güncelleyin.",
+    "graceCta": "Ödeme yöntemini güncelle",
+    "downgradedTitle": "Bu eklenti kapatıldı",
+    "downgradedBody": "Ödemeniz gerçekleşmediği için bu eklenti kapatıldı. {consequence} Yeniden açmak için yeniden abone olun.",
+    "downgradedCta": "Yeniden abone ol",
+    "consequenceGeneric": "Ödeme yeniden yapılana kadar ücretli özellikleri duraklatılır; ücretsiz özellikleriniz çalışmaya devam eder.",
+    "consequence": {
+      "custom_domain": "Alan adınız artık ziyaretçileri ücretsiz Fee Free Ordering bağlantınıza yönlendiriyor, böylece müşteriler hâlâ sipariş verebilir — ödeme gerçekleştiği anda kendi alan adınıza geri yönlenir.",
+      "hosted_website": "Pazarlama web siteniz duraklatıldı ve kısa bir yükseltme bildirimi gösteriyor; sipariş sayfanız çalışmaya devam ediyor — yalnızca pazarlama sitesi etkilenir.",
+      "online_payments": "Kartla ödeme kapatıldı. Müşteriler diğer ödeme yöntemlerinizi (nakit / mağazada ödeme) kullanarak hâlâ sipariş verebilir, böylece sipariş almaya devam edersiniz.",
+      "unlimited_orders": "Aylık 100 sipariş/rezervasyon sınırınız yeniden geçerli; sınırın üzerindeki siparişler ödeme yapılana kadar engellenir.",
+      "advanced_promos": "Gelişmiş promosyonlar, müşteri segmentleri ve otomatik kampanyalar duraklatıldı; temel promosyon türleriniz çalışmaya devam eder.",
+      "multi_location": "Birden fazla konumu yönetme duraklatıldı ve her konum artık kendi menüsünü, çalışma saatlerini ve teslimat bölgelerini yönetiyor; her konumun kendi sipariş alımı çalışmaya devam eder.",
+      "marketplace": "Herkese açık Marketplace ilanınız gizlendi, böylece yeni müşteriler sizi orada keşfedemeyecek; kendi sipariş sayfanız ve doğrudan siparişleriniz etkilenmez.",
+      "kickstarter": "Lansman ve geri kazanma kampanyası araçlarınız kilitlendi; daha önce gönderdiğiniz kampanyalar etkilenmez.",
+      "growthnet": "GrowthNet paketiniz duraklatıldı, böylece tüm araçları (Gelişmiş Promosyonlar, Pazarlama Stüdyosu, Kickstarter, Müşteri SMS) birlikte kapanır — paketin tamamını geri yüklemek için yeniden abone olun."
     }
   }
 }

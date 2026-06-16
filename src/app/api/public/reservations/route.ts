@@ -269,7 +269,9 @@ export async function POST(req: NextRequest) {
     // booking was placed while CLOSED (reservationAlertAt set) so it doesn't ring
     // overnight — it shows parked and the in-app ring picks it up at opening.
     // Fire-and-forget; no-op until push is configured. Luigi 2026-06-15.
-    if (!reservationAlertAt) {
+    // Skip deposit-required bookings too — those are pending on the CUSTOMER's
+    // payment, not the kitchen, so ringing the kitchen now would be premature.
+    if (!reservationAlertAt && !wantsDeposit) {
       sendKitchenPush(restaurant.id, {
         title: restaurant.name || "New reservation",
         body: `📅 ${reservation.customerName} · ${reservation.partySize}p · ${reservation.time}`,

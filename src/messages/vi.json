@@ -672,7 +672,8 @@
     "firstOrder": "Đơn hàng đầu tiên",
     "openInMaps": "Mở trong Maps",
     "calculatingEta": "Đang tính khoảng cách…",
-    "etaTrafficNote": "Thời gian lái xe theo giao thông hiện tại"
+    "etaTrafficNote": "Thời gian lái xe theo giao thông hiện tại",
+    "autoCallReservationMessage": "Một đặt bàn mới tại {restaurant} đang chờ và chưa được chấp nhận. Mở Kitchen Order App của bạn để chấp nhận hoặc từ chối."
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Chọn một món từ mỗi nhóm — món rẻ hơn được giảm {pct}%.",
       "hintBogoPricierFree": "Chọn một món từ mỗi nhóm — món đắt hơn sẽ được MIỄN PHÍ.",
       "hintBogoPricierPct": "Chọn một món từ mỗi nhóm — món đắt hơn được giảm {pct}%."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Quá hạn thanh toán — vui lòng cập nhật thẻ của bạn",
+    "ownerHeadline": "Chúng tôi vẫn chưa thể xử lý khoản thanh toán của bạn",
+    "ownerBody": "Chúng tôi đã thử thu phí trên thẻ của bạn cho gói đăng ký Fee Free Ordering, nhưng giao dịch không thành công. Để hỗ trợ bạn, tài khoản của bạn vẫn được kích hoạt đầy đủ. Số ngày còn lại trước khi các tính năng trả phí của bạn tạm dừng: {days}. Vui lòng cập nhật thông tin thanh toán ngay bây giờ — các tính năng miễn phí của bạn vẫn sẽ hoạt động trong mọi trường hợp.",
+    "ownerCta": "Cập nhật phương thức thanh toán",
+    "ownerSms": "Fee Free Ordering: chúng tôi không thể thu phí trên thẻ của bạn. Dịch vụ vẫn hoạt động, nhưng các tính năng trả phí sẽ sớm tạm dừng — số ngày còn lại: {days}. Cập nhật thanh toán: {url}",
+    "downgradedSubject": "Các tính năng trả phí của bạn hiện đã tạm dừng",
+    "downgradedHeadline": "Một số tính năng đã bị tắt",
+    "downgradedBody": "Chúng tôi không thể xử lý khoản thanh toán của bạn kịp thời, vì vậy các tiện ích bổ sung trả phí của bạn hiện đã tạm dừng. Các tính năng miễn phí của bạn vẫn hoạt động và bạn vẫn có thể tiếp tục nhận đơn hàng. Đăng ký lại bất cứ lúc nào để bật lại các tính năng trả phí của bạn.",
+    "downgradedCta": "Khôi phục tiện ích bổ sung của tôi",
+    "resellerSubject": "Một nhà hàng bạn giới thiệu đang gặp vấn đề về thanh toán",
+    "resellerHeadline": "{restaurant} không thể hoàn tất thanh toán",
+    "resellerBody": "Chúng tôi không thể xử lý khoản thanh toán đăng ký mới nhất cho {restaurant}, một nhà hàng trong mạng lưới đối tác của bạn. Dịch vụ của họ vẫn được kích hoạt như một hỗ trợ, nhưng các tính năng trả phí của họ sẽ tạm dừng nếu vấn đề không được giải quyết. Bạn có thể muốn liên hệ và giúp họ cập nhật thông tin thanh toán.",
+    "resellerCta": "Mở bảng điều khiển đối tác",
+    "childWarnSubject": "Gói của thương hiệu bạn chưa được thanh toán — có thể cần hành động",
+    "childWarnHeadline": "Lưu ý về {brand}",
+    "childWarnBody": "Địa điểm {child} của bạn được liên kết với thương hiệu {brand}, hiện đang quản lý thực đơn, giờ mở cửa và khu vực giao hàng dùng chung của bạn. Gói đăng ký Multi-Location của {brand} chưa được thanh toán. Nếu vấn đề không được giải quyết, liên kết thương hiệu đó sẽ kết thúc và {child} sẽ chuyển sang tự quản lý thực đơn, giờ mở cửa và khu vực giao hàng của riêng mình. Việc đặt hàng của bạn vẫn hoạt động — nhưng các cập nhật trên toàn thương hiệu sẽ ngừng lại. Bạn có thể chuẩn bị để hoạt động độc lập, hoặc liên hệ với {brand} để giải quyết.",
+    "childWarnCta": "Mở cài đặt địa điểm của tôi",
+    "childResetSubject": "{child} hiện đang tự quản lý các cài đặt của mình",
+    "childResetHeadline": "Liên kết thương hiệu của bạn đã kết thúc",
+    "childResetBody": "Vì gói đăng ký Multi-Location của {brand} chưa được thanh toán, {child} đã được chuyển sang tự quản lý thực đơn, giờ mở cửa và khu vực giao hàng của riêng mình. Chúng tôi đã giữ lại một bản sao thực đơn của thương hiệu để bạn có thể tiếp tục phục vụ mà không bị gián đoạn — chỉnh sửa bất cứ lúc nào. Nếu {brand} khôi phục gói của họ, bạn có thể liên kết lại từ cài đặt địa điểm của mình.",
+    "childResetCta": "Quản lý địa điểm của tôi",
+    "bannerText": "Chúng tôi không thể xử lý khoản thanh toán đăng ký của bạn. Dịch vụ của bạn vẫn hoạt động — cập nhật thẻ của bạn để giữ các tính năng trả phí. Số ngày còn lại: {days}.",
+    "bannerCta": "Cập nhật thanh toán"
+  },
+  "addOnBilling": {
+    "graceTitle": "Chúng tôi không thể thu khoản thanh toán gần nhất của bạn",
+    "graceBody": "Khoản thanh toán cho tiện ích bổ sung này không thành công. Để hỗ trợ bạn, tiện ích vẫn được kích hoạt đầy đủ — số ngày còn lại để cập nhật thẻ của bạn trước khi nó bị tắt: {days}. Cập nhật thanh toán ngay bây giờ để giữ lại tính năng này.",
+    "graceCta": "Cập nhật phương thức thanh toán",
+    "downgradedTitle": "Tiện ích bổ sung này đã bị tắt",
+    "downgradedBody": "Khoản thanh toán của bạn không thành công, vì vậy tiện ích bổ sung này đã bị tắt. {consequence} Đăng ký lại để bật lại.",
+    "downgradedCta": "Đăng ký lại",
+    "consequenceGeneric": "Các tính năng trả phí của nó sẽ tạm dừng cho đến khi thanh toán được khôi phục; các tính năng miễn phí của bạn vẫn hoạt động.",
+    "consequence": {
+      "custom_domain": "Tên miền của bạn hiện chuyển tiếp khách truy cập đến liên kết Fee Free Ordering miễn phí của bạn, vì vậy khách hàng vẫn có thể đặt hàng — nó sẽ trỏ lại tên miền riêng của bạn ngay khi thanh toán thành công.",
+      "hosted_website": "Trang web tiếp thị của bạn đã tạm dừng và hiển thị một thông báo nâng cấp ngắn gọn; trang đặt hàng của bạn vẫn hoạt động — chỉ trang web tiếp thị bị ảnh hưởng.",
+      "online_payments": "Thanh toán bằng thẻ đã bị tắt. Khách hàng vẫn có thể đặt hàng bằng các phương thức thanh toán khác của bạn (tiền mặt / thanh toán tại cửa hàng), nên bạn vẫn tiếp tục nhận đơn hàng.",
+      "unlimited_orders": "Giới hạn 100 đơn hàng/đặt chỗ mỗi tháng của bạn được áp dụng trở lại; các đơn hàng vượt quá giới hạn sẽ bị chặn cho đến khi thanh toán được khôi phục.",
+      "advanced_promos": "Khuyến mãi nâng cao, phân khúc khách hàng và chiến dịch tự động sẽ tạm dừng; các loại khuyến mãi cơ bản của bạn vẫn chạy.",
+      "multi_location": "Việc quản lý nhiều địa điểm sẽ tạm dừng, và mỗi địa điểm giờ đây sẽ tự quản lý thực đơn, giờ mở cửa và khu vực giao hàng của riêng mình; việc đặt hàng riêng của mỗi địa điểm vẫn tiếp tục hoạt động.",
+      "marketplace": "Danh sách Marketplace công khai của bạn sẽ bị ẩn, vì vậy khách hàng mới sẽ không tìm thấy bạn ở đó; trang đặt hàng riêng và các đơn hàng trực tiếp của bạn không bị ảnh hưởng.",
+      "kickstarter": "Các công cụ chiến dịch ra mắt và thu hút lại khách hàng của bạn sẽ bị khóa; bất kỳ chiến dịch nào bạn đã gửi đều không bị ảnh hưởng.",
+      "growthnet": "Gói GrowthNet của bạn sẽ tạm dừng, vì vậy tất cả các công cụ của nó (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) sẽ cùng bị tắt — đăng ký lại để khôi phục toàn bộ gói."
     }
   }
 }

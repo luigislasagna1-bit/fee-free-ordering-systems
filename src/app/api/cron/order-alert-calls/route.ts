@@ -153,7 +153,89 @@ export async function POST(req: NextRequest) {
     results.push({ orderId: o.id, placed: res.placed, reason: res.reason });
   }
 
-  return NextResponse.json({ scanned: candidates.length, called, results });
+  // ── Reservations: the SAME "missed → call the store" safety net (Luigi
+  // 2026-06-15). A PENDING (un-accepted) table booking ~90s past its ring anchor
+  // gets the same warning call orders do. Anchor = alertAt ?? createdAt (a
+  // booking rings on creation, or at opening when placed while closed). Deposit-
+  // awaiting bookings are excluded — they wait on the CUSTOMER's payment, not the
+  // kitchen. Same open-hours + idempotency (alertCallAt) guards as orders.
+  const resCandidates = await prisma.reservation.findMany({
+    where: {
+      status: "pending",
+      alertCallAt: null,
+      AND: [
+        {
+          OR: [
+            { alertAt: { gte: floor, lte: cutoff } },
+            { alertAt: null, createdAt: { gte: floor, lte: cutoff } },
+          ],
+        },
+        { OR: [{ depositAmount: { lte: 0 } }, { depositPaid: true }] },
+      ],
+      restaurant: {
+        is: {
+          autoCallOnNewOrder: true,
+          OR: [{ phone: { not: null } }, { alertPhone: { not: null } }],
+        },
+      },
+    },
+    select: {
+      id: true,
+      alertAt: true,
+      createdAt: true,
+      restaurant: {
+        select: {
+          name: true, phone: true, alertPhone: true, defaultLanguage: true,
+          timezone: true, hoursFormat: true, openingHours: true, holidays: true,
+        },
+      },
+    },
+    take: MAX_PER_RUN,
+    orderBy: { createdAt: "asc" },
+  });
+
+  let resCalled = 0;
+  for (const b of resCandidates) {
+    const r = b.restaurant;
+    const phone = r.alertPhone?.trim() || r.phone;
+    if (!phone) continue;
+    const anchorMs = b.alertAt ? b.alertAt.getTime() : (b.createdAt ? b.createdAt.getTime() : 0);
+    const sinceAnchor = now - anchorMs;
+    if (sinceAnchor < THRESHOLD_MS || sinceAnchor > LOOKBACK_MS) {
+      results.push({ orderId: `res:${b.id}`, placed: false, reason: "outside alert window" });
+      continue;
+    }
+    const tz = r.timezone ?? undefined;
+    const holiday = holidayEffectToday((r.holidays ?? []) as any, tz, null);
+    const live = liveOpenStatus(
+      (r.openingHours ?? []) as any,
+      new Date(),
+      r.hoursFormat === "12h" ? "12h" : "24h",
+      holiday
+        ? { name: holiday.name ?? undefined, intervals: holiday.kind === "custom_hours" ? holiday.intervals : undefined }
+        : undefined,
+      tz,
+    );
+    if (live.kind !== "open") {
+      results.push({ orderId: `res:${b.id}`, placed: false, reason: "restaurant closed" });
+      continue;
+    }
+    // Stamp FIRST so a slow call or retry never double-dials.
+    await prisma.reservation.update({ where: { id: b.id }, data: { alertCallAt: new Date() } });
+    const locale = r.defaultLanguage || "en";
+    const t = await getDict(locale);
+    const message = t("kitchen.autoCallReservationMessage", { restaurant: r.name });
+    const langTag = bcp47(locale);
+    const callRes = await placeVoiceCall({ to: phone, message, language: langTag });
+    if (callRes.placed) resCalled++;
+    results.push({ orderId: `res:${b.id}`, placed: callRes.placed, reason: callRes.reason });
+  }
+
+  return NextResponse.json({
+    scanned: candidates.length + resCandidates.length,
+    called: called + resCalled,
+    results,
+  });
 }
 
 export async function GET(req: NextRequest) {

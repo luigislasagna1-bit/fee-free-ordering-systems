@@ -672,7 +672,8 @@
     "firstOrder": "Primer pedido",
     "openInMaps": "Abrir en Maps",
     "calculatingEta": "Calculando distancia…",
-    "etaTrafficNote": "Tiempo de viaje con el tráfico actual"
+    "etaTrafficNote": "Tiempo de viaje con el tráfico actual",
+    "autoCallReservationMessage": "Una nueva reserva de mesa en {restaurant} está esperando y aún no ha sido aceptada. Abre tu Kitchen Order App para aceptarla o rechazarla."
   },
   "admin": {
     "welcomeBack": "Bienvenido de nuevo",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Elige un artículo de cada grupo: el artículo más barato tiene un {pct}% de descuento.",
       "hintBogoPricierFree": "Elige un artículo de cada grupo: el artículo más caro es GRATIS.",
       "hintBogoPricierPct": "Elige un artículo de cada grupo: el artículo más caro tiene un {pct}% de descuento."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Pago vencido — actualiza tu tarjeta, por favor",
+    "ownerHeadline": "Aún no hemos podido procesar tu pago",
+    "ownerBody": "Intentamos cobrar en tu tarjeta la suscripción de Fee Free Ordering, pero no se pudo completar. Como cortesía, tu cuenta sigue totalmente activa. Días restantes antes de que se pausen tus funciones de pago: {days}. Actualiza tus datos de pago ahora — tus funciones gratuitas seguirán funcionando pase lo que pase.",
+    "ownerCta": "Actualizar método de pago",
+    "ownerSms": "Fee Free Ordering: no pudimos cobrar tu tarjeta. Tu servicio sigue activo, pero tus funciones de pago se pausarán pronto — días restantes: {days}. Actualiza el pago: {url}",
+    "downgradedSubject": "Tus funciones de pago están ahora en pausa",
+    "downgradedHeadline": "Se han desactivado algunas funciones",
+    "downgradedBody": "No pudimos procesar tu pago a tiempo, así que tus complementos de pago están ahora en pausa. Tus funciones gratuitas siguen funcionando y puedes seguir recibiendo pedidos. Vuelve a suscribirte cuando quieras para reactivar tus funciones de pago.",
+    "downgradedCta": "Restaurar mis complementos",
+    "resellerSubject": "Un restaurante que recomendaste tiene un problema de facturación",
+    "resellerHeadline": "{restaurant} no pudo completar su pago",
+    "resellerBody": "No pudimos procesar el último pago de suscripción de {restaurant}, un restaurante de tu red de partners. Su servicio sigue activo como cortesía, pero sus funciones de pago se pausarán si no se resuelve. Quizás quieras ponerte en contacto y ayudarles a actualizar su facturación.",
+    "resellerCta": "Abrir panel de partner",
+    "childWarnSubject": "El plan de tu marca está impago — puede que necesites actuar",
+    "childWarnHeadline": "Atención sobre {brand}",
+    "childWarnBody": "Tu local {child} está vinculado a la marca {brand}, que actualmente gestiona vuestro menú, horario y zonas de reparto compartidos. La suscripción Multi-Location de {brand} está impaga. Si no se resuelve, ese vínculo de marca finalizará y {child} pasará a gestionar su propio menú, horario y zonas de reparto. Tus pedidos seguirán funcionando, pero las actualizaciones a nivel de marca se detendrán. Puedes prepararte para operar de forma independiente o contactar con {brand} para resolverlo.",
+    "childWarnCta": "Abrir la configuración de mi local",
+    "childResetSubject": "{child} ahora gestiona su propia configuración",
+    "childResetHeadline": "Tu vínculo de marca ha finalizado",
+    "childResetBody": "Como la suscripción Multi-Location de {brand} quedó impaga, {child} ha pasado a gestionar su propio menú, horario y zonas de reparto. Guardamos una copia del menú de la marca para que puedas seguir atendiendo sin interrupciones — edítalo cuando quieras. Si {brand} restablece su plan, podrás volver a vincularte desde la configuración de tu local.",
+    "childResetCta": "Gestionar mi local",
+    "bannerText": "No pudimos procesar el pago de tu suscripción. Tu servicio sigue activo — actualiza tu tarjeta para conservar tus funciones de pago. Días restantes: {days}.",
+    "bannerCta": "Actualizar pago"
+  },
+  "addOnBilling": {
+    "graceTitle": "No pudimos cobrar tu último pago",
+    "graceBody": "El pago de este complemento no se pudo completar. Como cortesía, sigue totalmente activo — días restantes para actualizar tu tarjeta antes de que se desactive: {days}. Actualiza tu pago ahora para conservarlo.",
+    "graceCta": "Actualizar método de pago",
+    "downgradedTitle": "Este complemento está desactivado",
+    "downgradedBody": "Tu pago no se pudo completar, así que este complemento se desactivó. {consequence} Vuelve a suscribirte para reactivarlo.",
+    "downgradedCta": "Volver a suscribirse",
+    "consequenceGeneric": "Sus funciones de pago están en pausa hasta que se restablezca el pago; tus funciones gratuitas siguen funcionando.",
+    "consequence": {
+      "custom_domain": "Tu dominio ahora redirige a los visitantes a tu enlace gratuito de Fee Free Ordering, de modo que los clientes pueden seguir haciendo pedidos — volverá a apuntar a tu propio dominio en cuanto se complete el pago.",
+      "hosted_website": "Tu sitio web de marketing está en pausa y muestra un breve aviso de actualización; tu página de pedidos sigue funcionando — solo se ve afectado el sitio de marketing.",
+      "online_payments": "El pago con tarjeta está desactivado. Los clientes pueden seguir haciendo pedidos con tus otros métodos de pago (efectivo / pago en el local), así que sigues recibiendo pedidos.",
+      "unlimited_orders": "Tu límite de 100 pedidos/reservas al mes vuelve a estar en vigor; los pedidos que superen el límite se bloquean hasta que se restablezca el pago.",
+      "advanced_promos": "Las promociones avanzadas, los segmentos de clientes y las campañas automatizadas están en pausa; tus tipos de promoción básicos siguen funcionando.",
+      "multi_location": "La gestión de varios locales está en pausa, y ahora cada local gestiona su propio menú, horario y zonas de reparto; los pedidos propios de cada local siguen funcionando.",
+      "marketplace": "Tu ficha pública en Marketplace está oculta, por lo que los nuevos clientes no te descubrirán ahí; tu propia página de pedidos y los pedidos directos no se ven afectados.",
+      "kickstarter": "Tus herramientas de campañas de lanzamiento y recuperación de clientes están bloqueadas; las campañas que ya enviaste no se ven afectadas.",
+      "growthnet": "Tu paquete GrowthNet está en pausa, así que todas sus herramientas (Promociones Avanzadas, Marketing Studio, Kickstarter, SMS a Clientes) se desactivan a la vez — vuelve a suscribirte para restaurar todo el paquete."
     }
   }
 }

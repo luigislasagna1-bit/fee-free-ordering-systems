@@ -672,7 +672,8 @@
     "firstOrder": "Erste Bestellung",
     "openInMaps": "In Maps öffnen",
     "calculatingEta": "Entfernung wird berechnet…",
-    "etaTrafficNote": "Fahrzeit mit aktuellem Verkehr"
+    "etaTrafficNote": "Fahrzeit mit aktuellem Verkehr",
+    "autoCallReservationMessage": "Eine neue Tischreservierung bei {restaurant} wartet und wurde noch nicht angenommen. Öffnen Sie Ihre Kitchen Order App, um sie anzunehmen oder abzulehnen."
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Wähle einen Artikel aus jeder Gruppe – auf den günstigeren Artikel gibt es {pct} % Rabatt.",
       "hintBogoPricierFree": "Wähle einen Artikel aus jeder Gruppe – der teurere Artikel ist GRATIS.",
       "hintBogoPricierPct": "Wähle einen Artikel aus jeder Gruppe – auf den teureren Artikel gibt es {pct} % Rabatt."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Zahlung überfällig — bitte aktualisieren Sie Ihre Karte",
+    "ownerHeadline": "Wir konnten Ihre Zahlung weiterhin nicht verarbeiten",
+    "ownerBody": "Wir haben versucht, Ihre Karte für Ihr Fee Free Ordering-Abonnement zu belasten, doch die Zahlung ist fehlgeschlagen. Als Entgegenkommen bleibt Ihr Konto weiterhin vollständig aktiv. Verbleibende Tage, bis Ihre kostenpflichtigen Funktionen pausiert werden: {days}. Bitte aktualisieren Sie jetzt Ihre Zahlungsdaten — Ihre kostenlosen Funktionen bleiben in jedem Fall erhalten.",
+    "ownerCta": "Zahlungsmethode aktualisieren",
+    "ownerSms": "Fee Free Ordering: Wir konnten Ihre Karte nicht belasten. Ihr Service bleibt aktiv, doch kostenpflichtige Funktionen werden bald pausiert — verbleibende Tage: {days}. Zahlung aktualisieren: {url}",
+    "downgradedSubject": "Ihre kostenpflichtigen Funktionen sind jetzt pausiert",
+    "downgradedHeadline": "Einige Funktionen wurden deaktiviert",
+    "downgradedBody": "Wir konnten Ihre Zahlung nicht rechtzeitig verarbeiten, daher sind Ihre kostenpflichtigen Add-ons jetzt pausiert. Ihre kostenlosen Funktionen bleiben aktiv und Sie können weiterhin Bestellungen entgegennehmen. Abonnieren Sie jederzeit erneut, um Ihre kostenpflichtigen Funktionen wieder zu aktivieren.",
+    "downgradedCta": "Meine Add-ons wiederherstellen",
+    "resellerSubject": "Ein von Ihnen empfohlenes Restaurant hat ein Abrechnungsproblem",
+    "resellerHeadline": "{restaurant} konnte die Zahlung nicht abschließen",
+    "resellerBody": "Wir konnten die letzte Abonnementzahlung für {restaurant}, ein Restaurant in Ihrem Partnernetzwerk, nicht verarbeiten. Der Service ist als Entgegenkommen weiterhin aktiv, doch die kostenpflichtigen Funktionen werden pausiert, wenn das Problem nicht behoben wird. Vielleicht möchten Sie sich melden und beim Aktualisieren der Abrechnungsdaten helfen.",
+    "resellerCta": "Partner-Dashboard öffnen",
+    "childWarnSubject": "Der Tarif Ihrer Marke ist unbezahlt — möglicherweise ist eine Aktion erforderlich",
+    "childWarnHeadline": "Hinweis zu {brand}",
+    "childWarnBody": "Ihr Standort {child} ist mit der Marke {brand} verknüpft, die derzeit Ihr gemeinsames Menü, Ihre Öffnungszeiten und Liefergebiete verwaltet. Das Multi-Location-Abonnement von {brand} ist unbezahlt. Wenn dies nicht behoben wird, endet die Markenverknüpfung und {child} verwaltet künftig sein eigenes Menü, seine Öffnungszeiten und Liefergebiete selbst. Ihre Bestellannahme funktioniert weiterhin — doch markenweite Aktualisierungen werden eingestellt. Sie können sich darauf vorbereiten, eigenständig zu arbeiten, oder {brand} kontaktieren, um das Problem zu lösen.",
+    "childWarnCta": "Meine Standorteinstellungen öffnen",
+    "childResetSubject": "{child} verwaltet jetzt seine eigenen Einstellungen",
+    "childResetHeadline": "Ihre Markenverknüpfung wurde beendet",
+    "childResetBody": "Da das Multi-Location-Abonnement von {brand} unbezahlt blieb, wurde {child} auf die Verwaltung des eigenen Menüs, der eigenen Öffnungszeiten und Liefergebiete umgestellt. Wir haben eine Kopie des Markenmenüs aufbewahrt, damit Sie ohne Unterbrechung weiter servieren können — Sie können es jederzeit bearbeiten. Wenn {brand} den Tarif wiederherstellt, können Sie die Verknüpfung in Ihren Standorteinstellungen wiederherstellen.",
+    "childResetCta": "Meinen Standort verwalten",
+    "bannerText": "Wir konnten Ihre Abonnementzahlung nicht verarbeiten. Ihr Service ist weiterhin aktiv — aktualisieren Sie Ihre Karte, um Ihre kostenpflichtigen Funktionen zu behalten. Verbleibende Tage: {days}.",
+    "bannerCta": "Zahlung aktualisieren"
+  },
+  "addOnBilling": {
+    "graceTitle": "Wir konnten Ihre letzte Zahlung nicht einziehen",
+    "graceBody": "Die Zahlung für dieses Add-on ist fehlgeschlagen. Als Entgegenkommen bleibt es vollständig aktiv — verbleibende Tage, um Ihre Karte zu aktualisieren, bevor es deaktiviert wird: {days}. Aktualisieren Sie jetzt Ihre Zahlung, um es zu behalten.",
+    "graceCta": "Zahlungsmethode aktualisieren",
+    "downgradedTitle": "Dieses Add-on ist deaktiviert",
+    "downgradedBody": "Ihre Zahlung ist fehlgeschlagen, daher wurde dieses Add-on deaktiviert. {consequence} Abonnieren Sie erneut, um es wieder zu aktivieren.",
+    "downgradedCta": "Erneut abonnieren",
+    "consequenceGeneric": "Die kostenpflichtigen Funktionen sind pausiert, bis die Zahlung wiederhergestellt ist; Ihre kostenlosen Funktionen bleiben aktiv.",
+    "consequence": {
+      "custom_domain": "Ihre Domain leitet Besucher jetzt zu Ihrem kostenlosen Fee Free Ordering-Link weiter, sodass Kunden weiterhin bestellen können — sie verweist wieder auf Ihre eigene Domain, sobald die Zahlung erfolgt ist.",
+      "hosted_website": "Ihre Marketing-Website ist pausiert und zeigt einen kurzen Upgrade-Hinweis; Ihre Bestellseite bleibt aktiv — nur die Marketing-Website ist betroffen.",
+      "online_payments": "Die Kartenzahlung ist deaktiviert. Kunden können weiterhin mit Ihren anderen Zahlungsmethoden (Bar / Zahlung vor Ort) bestellen, sodass Sie weiterhin Bestellungen entgegennehmen.",
+      "unlimited_orders": "Ihr Limit von 100 Bestellungen/Reservierungen pro Monat gilt wieder; Bestellungen über das Limit hinaus werden blockiert, bis die Zahlung wiederhergestellt ist.",
+      "advanced_promos": "Erweiterte Aktionen, Kundensegmente und automatisierte Kampagnen sind pausiert; Ihre grundlegenden Aktionstypen laufen weiterhin.",
+      "multi_location": "Die Verwaltung mehrerer Standorte ist pausiert, und jeder Standort verwaltet nun sein eigenes Menü, seine Öffnungszeiten und Liefergebiete; die Bestellannahme jedes Standorts läuft weiter.",
+      "marketplace": "Ihr öffentlicher Marketplace-Eintrag ist ausgeblendet, sodass neue Kunden Sie dort nicht entdecken; Ihre eigene Bestellseite und Direktbestellungen sind nicht betroffen.",
+      "kickstarter": "Ihre Tools für Launch- und Rückgewinnungskampagnen sind gesperrt; bereits versendete Kampagnen sind nicht betroffen.",
+      "growthnet": "Ihr GrowthNet-Paket ist pausiert, sodass alle zugehörigen Tools (Erweiterte Aktionen, Marketing Studio, Kickstarter, Kunden-SMS) gemeinsam deaktiviert werden — abonnieren Sie erneut, um das gesamte Paket wiederherzustellen."
     }
   }
 }

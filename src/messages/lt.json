@@ -672,7 +672,8 @@
     "firstOrder": "Pirmasis užsakymas",
     "openInMaps": "Atidaryti Maps",
     "calculatingEta": "Skaičiuojamas atstumas…",
-    "etaTrafficNote": "Kelionės laikas esant dabartiniam eismui"
+    "etaTrafficNote": "Kelionės laikas esant dabartiniam eismui",
+    "autoCallReservationMessage": "Naujas staliuko rezervavimas {restaurant} laukia ir dar nepatvirtintas. Atidarykite savo Kitchen Order App, kad jį priimtumėte arba atmestumėte."
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Iš kiekvienos grupės pasirinkite po vieną prekę — pigesnei prekei taikoma {pct}% nuolaida.",
       "hintBogoPricierFree": "Iš kiekvienos grupės pasirinkite po vieną prekę — brangesnė prekė atiteks NEMOKAMAI.",
       "hintBogoPricierPct": "Iš kiekvienos grupės pasirinkite po vieną prekę — brangesnei prekei taikoma {pct}% nuolaida."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Mokėjimas pradelstas — atnaujinkite kortelės duomenis",
+    "ownerHeadline": "Vis dar nepavyko apdoroti jūsų mokėjimo",
+    "ownerBody": "Bandėme nuskaityti mokestį iš jūsų kortelės už „Fee Free Ordering“ prenumeratą, tačiau mokėjimas neįvyko. Kaip mandagumo gestą jūsų paskyra tebėra visiškai aktyvi. Dienų, likusių iki jūsų mokamų funkcijų pristabdymo: {days}. Prašome dabar atnaujinti mokėjimo duomenis — nemokamos funkcijos veiks toliau, kad ir kas nutiktų.",
+    "ownerCta": "Atnaujinti mokėjimo būdą",
+    "ownerSms": "Fee Free Ordering: nepavyko nuskaityti mokesčio iš jūsų kortelės. Paslauga lieka aktyvi, tačiau mokamos funkcijos netrukus bus pristabdytos — liko dienų: {days}. Atnaujinkite mokėjimą: {url}",
+    "downgradedSubject": "Jūsų mokamos funkcijos dabar pristabdytos",
+    "downgradedHeadline": "Kai kurios funkcijos buvo išjungtos",
+    "downgradedBody": "Nepavyko laiku apdoroti jūsų mokėjimo, todėl jūsų mokami papildiniai dabar pristabdyti. Nemokamos funkcijos veikia toliau ir galite priimti užsakymus. Bet kada atnaujinkite prenumeratą, kad vėl įjungtumėte mokamas funkcijas.",
+    "downgradedCta": "Atkurti mano papildinius",
+    "resellerSubject": "Jūsų rekomenduotas restoranas turi atsiskaitymo problemą",
+    "resellerHeadline": "{restaurant} nepavyko užbaigti mokėjimo",
+    "resellerBody": "Nepavyko apdoroti naujausio prenumeratos mokėjimo už {restaurant} — restoraną iš jūsų partnerių tinklo. Jų paslauga kaip mandagumo gestas tebėra aktyvi, tačiau mokamos funkcijos bus pristabdytos, jei problema nebus išspręsta. Galbūt norėtumėte su jais susisiekti ir padėti atnaujinti atsiskaitymo duomenis.",
+    "resellerCta": "Atidaryti partnerio skydelį",
+    "childWarnSubject": "Jūsų prekės ženklo planas neapmokėtas — gali prireikti veiksmų",
+    "childWarnHeadline": "Svarbi informacija apie {brand}",
+    "childWarnBody": "Jūsų vieta {child} yra susieta su prekės ženklu {brand}, kuris šiuo metu valdo jūsų bendrą meniu, darbo laiką ir pristatymo zonas. {brand} „Multi-Location“ prenumerata neapmokėta. Jei tai nebus išspręsta, sąsaja su prekės ženklu nutruks ir {child} pradės valdyti savo meniu, darbo laiką ir pristatymo zonas. Jūsų užsakymų priėmimas veiks toliau, tačiau viso prekės ženklo atnaujinimai nutruks. Galite pasiruošti veikti savarankiškai arba susisiekti su {brand}, kad išspręstumėte problemą.",
+    "childWarnCta": "Atidaryti mano vietos nustatymus",
+    "childResetSubject": "{child} dabar valdo savo nustatymus",
+    "childResetHeadline": "Jūsų sąsaja su prekės ženklu nutrūko",
+    "childResetBody": "Kadangi {brand} „Multi-Location“ prenumerata liko neapmokėta, {child} buvo perjungta valdyti savo meniu, darbo laiką ir pristatymo zonas. Išsaugojome prekės ženklo meniu kopiją, kad galėtumėte aptarnauti be pertrūkių — redaguokite jį bet kada. Jei {brand} atnaujins savo planą, galėsite vėl susieti iš savo vietos nustatymų.",
+    "childResetCta": "Valdyti mano vietą",
+    "bannerText": "Nepavyko apdoroti jūsų prenumeratos mokėjimo. Jūsų paslauga vis dar aktyvi — atnaujinkite kortelės duomenis, kad išlaikytumėte mokamas funkcijas. Liko dienų: {days}.",
+    "bannerCta": "Atnaujinti mokėjimą"
+  },
+  "addOnBilling": {
+    "graceTitle": "Nepavyko nuskaityti jūsų paskutinio mokėjimo",
+    "graceBody": "Šio papildinio mokėjimas neįvyko. Kaip mandagumo gestą jis lieka visiškai aktyvus — dienų, likusių atnaujinti kortelės duomenis, kol jis nebus išjungtas: {days}. Atnaujinkite mokėjimą dabar, kad jį išlaikytumėte.",
+    "graceCta": "Atnaujinti mokėjimo būdą",
+    "downgradedTitle": "Šis papildinys išjungtas",
+    "downgradedBody": "Jūsų mokėjimas neįvyko, todėl šis papildinys buvo išjungtas. {consequence} Atnaujinkite prenumeratą, kad vėl jį įjungtumėte.",
+    "downgradedCta": "Atnaujinti prenumeratą",
+    "consequenceGeneric": "Jo mokamos funkcijos pristabdytos, kol bus atkurtas mokėjimas; jūsų nemokamos funkcijos veikia toliau.",
+    "consequence": {
+      "custom_domain": "Jūsų domenas dabar nukreipia lankytojus į jūsų nemokamą „Fee Free Ordering“ nuorodą, kad klientai vis tiek galėtų užsisakyti — jis vėl nurodys į jūsų domeną iškart, kai mokėjimas įvyks.",
+      "hosted_website": "Jūsų rinkodaros svetainė pristabdyta ir rodo trumpą pranešimą apie atnaujinimą; jūsų užsakymų puslapis veikia toliau — paveikta tik rinkodaros svetainė.",
+      "online_payments": "Atsiskaitymas kortele išjungtas. Klientai vis tiek gali užsisakyti naudodami kitus jūsų mokėjimo būdus (grynaisiais / mokant vietoje), todėl ir toliau priimsite užsakymus.",
+      "unlimited_orders": "Jūsų 100 užsakymų / rezervacijų per mėnesį limitas vėl įsigaliojo; užsakymai, viršijantys limitą, blokuojami, kol bus atkurtas mokėjimas.",
+      "advanced_promos": "Išplėstinės akcijos, klientų segmentai ir automatinės kampanijos pristabdyti; jūsų pagrindiniai akcijų tipai vis dar veikia.",
+      "multi_location": "Kelių vietų valdymas pristabdytas, ir kiekviena vieta dabar valdo savo meniu, darbo laiką ir pristatymo zonas; kiekvienos vietos užsakymų priėmimas veikia toliau.",
+      "marketplace": "Jūsų viešas „Marketplace“ skelbimas paslėptas, todėl nauji klientai jus ten neras; jūsų užsakymų puslapis ir tiesioginiai užsakymai nepaveikti.",
+      "kickstarter": "Jūsų paleidimo ir klientų susigrąžinimo kampanijų įrankiai užrakinti; jau išsiųstos kampanijos nepaveiktos.",
+      "growthnet": "Jūsų GrowthNet rinkinys pristabdytas, todėl visi jo įrankiai (Išplėstinės akcijos, „Marketing Studio“, „Kickstarter“, klientų SMS) išjungiami kartu — atnaujinkite prenumeratą, kad atkurtumėte visą rinkinį."
     }
   }
 }

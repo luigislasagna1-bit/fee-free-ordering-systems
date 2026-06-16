@@ -672,7 +672,8 @@
     "firstOrder": "Første bestilling",
     "openInMaps": "Åpne i Maps",
     "calculatingEta": "Beregner avstand…",
-    "etaTrafficNote": "Kjøretid med dagens trafikk"
+    "etaTrafficNote": "Kjøretid med dagens trafikk",
+    "autoCallReservationMessage": "En ny bordreservasjon hos {restaurant} venter og er ennå ikke akseptert. Åpne Kitchen Order App for å akseptere eller avvise den."
   },
   "admin": {
     "welcomeBack": "Velkommen tilbake",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Velg én vare fra hver gruppe — den billigste varen får {pct}% rabatt.",
       "hintBogoPricierFree": "Velg én vare fra hver gruppe — den dyreste varen er GRATIS.",
       "hintBogoPricierPct": "Velg én vare fra hver gruppe — den dyreste varen får {pct}% rabatt."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Betaling forfalt — vennligst oppdater kortet ditt",
+    "ownerHeadline": "Vi fikk fortsatt ikke gjennomført betalingen din",
+    "ownerBody": "Vi prøvde å belaste kortet ditt for Fee Free Ordering-abonnementet, men betalingen gikk ikke gjennom. Som en imøtekommenhet er kontoen din fortsatt fullt aktiv. Dager igjen før de betalte funksjonene dine settes på pause: {days}. Vennligst oppdater betalingsopplysningene dine nå — de gratis funksjonene dine fortsetter å fungere uansett.",
+    "ownerCta": "Oppdater betalingsmetode",
+    "ownerSms": "Fee Free Ordering: vi fikk ikke belastet kortet ditt. Tjenesten din forblir aktiv, men betalte funksjoner settes snart på pause — dager igjen: {days}. Oppdater betaling: {url}",
+    "downgradedSubject": "De betalte funksjonene dine er nå satt på pause",
+    "downgradedHeadline": "Noen funksjoner ble slått av",
+    "downgradedBody": "Vi klarte ikke å gjennomføre betalingen din i tide, så de betalte tilleggene dine er nå satt på pause. De gratis funksjonene dine fortsetter å fungere, og du kan fortsatt ta imot bestillinger. Abonner på nytt når som helst for å slå de betalte funksjonene dine på igjen.",
+    "downgradedCta": "Gjenopprett tilleggene mine",
+    "resellerSubject": "En restaurant du har henvist har et faktureringsproblem",
+    "resellerHeadline": "{restaurant} fikk ikke fullført betalingen sin",
+    "resellerBody": "Vi klarte ikke å gjennomføre den siste abonnementsbetalingen for {restaurant}, en restaurant i partnernettverket ditt. Tjenesten deres er fortsatt aktiv som en imøtekommenhet, men de betalte funksjonene deres settes på pause hvis det ikke løses. Du vil kanskje ta kontakt og hjelpe dem med å oppdatere faktureringen sin.",
+    "resellerCta": "Åpne partnerdashbordet",
+    "childWarnSubject": "Merkevarens abonnement er ubetalt — handling kan være nødvendig",
+    "childWarnHeadline": "Til orientering om {brand}",
+    "childWarnBody": "Avdelingen din {child} er knyttet til merkevaren {brand}, som for øyeblikket administrerer den felles menyen, åpningstidene og leveringssonene dine. {brand}s Multi-Location-abonnement er ubetalt. Hvis det ikke løses, opphører merkevaretilknytningen, og {child} går over til å administrere sin egen meny, sine egne åpningstider og leveringssoner. Bestillingen din fortsetter å fungere — men oppdateringer på tvers av merkevaren stopper. Du kan forberede deg på å drive selvstendig, eller kontakte {brand} for å løse det.",
+    "childWarnCta": "Åpne avdelingsinnstillingene mine",
+    "childResetSubject": "{child} administrerer nå sine egne innstillinger",
+    "childResetHeadline": "Merkevaretilknytningen din er opphørt",
+    "childResetBody": "Fordi {brand}s Multi-Location-abonnement forble ubetalt, har {child} blitt satt over til å administrere sin egen meny, sine egne åpningstider og leveringssoner. Vi beholdt en kopi av merkevarens meny slik at du kan fortsette å servere uten avbrudd — rediger den når som helst. Hvis {brand} gjenoppretter abonnementet sitt, kan du koble til på nytt fra avdelingsinnstillingene dine.",
+    "childResetCta": "Administrer avdelingen min",
+    "bannerText": "Vi klarte ikke å gjennomføre abonnementsbetalingen din. Tjenesten din er fortsatt aktiv — oppdater kortet ditt for å beholde de betalte funksjonene dine. Dager igjen: {days}.",
+    "bannerCta": "Oppdater betaling"
+  },
+  "addOnBilling": {
+    "graceTitle": "Vi klarte ikke å trekke den siste betalingen din",
+    "graceBody": "Betalingen for dette tillegget gikk ikke gjennom. Som en imøtekommenhet forblir det fullt aktivt — dager igjen til å oppdatere kortet ditt før det slås av: {days}. Oppdater betalingen din nå for å beholde det.",
+    "graceCta": "Oppdater betalingsmetode",
+    "downgradedTitle": "Dette tillegget er slått av",
+    "downgradedBody": "Betalingen din gikk ikke gjennom, så dette tillegget ble slått av. {consequence} Abonner på nytt for å slå det på igjen.",
+    "downgradedCta": "Abonner på nytt",
+    "consequenceGeneric": "De betalte funksjonene er satt på pause til betalingen er gjenopprettet; de gratis funksjonene dine fortsetter å fungere.",
+    "consequence": {
+      "custom_domain": "Domenet ditt videresender nå besøkende til din gratis Fee Free Ordering-lenke, slik at kunder fortsatt kan bestille — det peker tilbake til ditt eget domene i det øyeblikket betalingen går gjennom.",
+      "hosted_website": "Markedsføringsnettstedet ditt er satt på pause og viser et kort oppgraderingsvarsel; bestillingssiden din fortsetter å fungere — bare markedsføringsnettstedet er berørt.",
+      "online_payments": "Kortbetaling i kassen er slått av. Kunder kan fortsatt bestille med de andre betalingsmetodene dine (kontant / betal i butikk), så du fortsetter å ta imot bestillinger.",
+      "unlimited_orders": "Grensen din på 100 bestillinger/reservasjoner per måned er på plass igjen; bestillinger utover grensen blokkeres til betalingen er gjenopprettet.",
+      "advanced_promos": "Avanserte kampanjer, kundesegmenter og automatiserte kampanjer er satt på pause; de grunnleggende kampanjetypene dine kjører fortsatt.",
+      "multi_location": "Administrasjon av flere avdelinger er satt på pause, og hver avdeling administrerer nå sin egen meny, sine egne åpningstider og leveringssoner; hver avdelings egen bestilling fortsetter å kjøre.",
+      "marketplace": "Den offentlige Marketplace-oppføringen din er skjult, så nye kunder vil ikke oppdage deg der; din egen bestillingsside og direktebestillinger er upåvirket.",
+      "kickstarter": "Verktøyene dine for lansering og tilbakevinningskampanjer er låst; kampanjer du allerede har sendt, er upåvirket.",
+      "growthnet": "GrowthNet-pakken din er satt på pause, så alle verktøyene i den (Avanserte kampanjer, Marketing Studio, Kickstarter, Kunde-SMS) slås av samtidig — abonner på nytt for å gjenopprette hele pakken."
     }
   }
 }

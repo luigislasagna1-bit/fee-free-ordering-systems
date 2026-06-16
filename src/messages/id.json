@@ -672,7 +672,8 @@
     "firstOrder": "Pesanan pertama",
     "openInMaps": "Buka di Maps",
     "calculatingEta": "Menghitung jarak…",
-    "etaTrafficNote": "Waktu berkendara dengan lalu lintas saat ini"
+    "etaTrafficNote": "Waktu berkendara dengan lalu lintas saat ini",
+    "autoCallReservationMessage": "Reservasi meja baru di {restaurant} sedang menunggu dan belum diterima. Buka Kitchen Order App Anda untuk menerima atau menolaknya."
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Pilih satu item dari tiap grup — item yang lebih murah diskon {pct}%.",
       "hintBogoPricierFree": "Pilih satu item dari tiap grup — item yang lebih mahal GRATIS.",
       "hintBogoPricierPct": "Pilih satu item dari tiap grup — item yang lebih mahal diskon {pct}%."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Pembayaran tertunggak — harap perbarui kartu Anda",
+    "ownerHeadline": "Kami masih belum dapat memproses pembayaran Anda",
+    "ownerBody": "Kami mencoba menagih kartu Anda untuk langganan Fee Free Ordering, tetapi pembayaran gagal. Sebagai kemudahan, akun Anda tetap sepenuhnya aktif. Sisa hari sebelum fitur berbayar Anda dijeda: {days}. Harap perbarui detail pembayaran Anda sekarang — fitur gratis Anda akan tetap berfungsi apa pun yang terjadi.",
+    "ownerCta": "Perbarui metode pembayaran",
+    "ownerSms": "Fee Free Ordering: kami tidak dapat menagih kartu Anda. Layanan Anda tetap aktif, tetapi fitur berbayar akan segera dijeda — sisa hari: {days}. Perbarui pembayaran: {url}",
+    "downgradedSubject": "Fitur berbayar Anda kini dijeda",
+    "downgradedHeadline": "Beberapa fitur telah dinonaktifkan",
+    "downgradedBody": "Kami tidak dapat memproses pembayaran Anda tepat waktu, sehingga add-on berbayar Anda kini dijeda. Fitur gratis Anda tetap berfungsi dan Anda masih dapat menerima pesanan. Berlangganan kembali kapan saja untuk mengaktifkan kembali fitur berbayar Anda.",
+    "downgradedCta": "Pulihkan add-on saya",
+    "resellerSubject": "Restoran yang Anda rujuk mengalami masalah penagihan",
+    "resellerHeadline": "{restaurant} tidak dapat menyelesaikan pembayaran mereka",
+    "resellerBody": "Kami tidak dapat memproses pembayaran langganan terbaru untuk {restaurant}, sebuah restoran dalam jaringan mitra Anda. Layanan mereka tetap aktif sebagai kemudahan, tetapi fitur berbayar mereka akan dijeda jika masalah ini tidak diselesaikan. Anda mungkin ingin menghubungi mereka dan membantu memperbarui penagihan mereka.",
+    "resellerCta": "Buka dasbor mitra",
+    "childWarnSubject": "Paket merek Anda belum dibayar — tindakan mungkin diperlukan",
+    "childWarnHeadline": "Pemberitahuan tentang {brand}",
+    "childWarnBody": "Lokasi Anda {child} terhubung dengan merek {brand}, yang saat ini mengelola menu, jam operasional, dan zona pengiriman bersama Anda. Langganan Multi-Location milik {brand} belum dibayar. Jika tidak diselesaikan, tautan merek tersebut akan berakhir dan {child} akan beralih untuk mengelola menu, jam operasional, dan zona pengirimannya sendiri. Pemesanan Anda tetap berfungsi — tetapi pembaruan untuk seluruh merek akan berhenti. Anda dapat bersiap untuk beroperasi secara mandiri, atau menghubungi {brand} untuk menyelesaikannya.",
+    "childWarnCta": "Buka pengaturan lokasi saya",
+    "childResetSubject": "{child} kini mengelola pengaturannya sendiri",
+    "childResetHeadline": "Tautan merek Anda telah berakhir",
+    "childResetBody": "Karena langganan Multi-Location milik {brand} belum dibayar, {child} telah dialihkan untuk mengelola menu, jam operasional, dan zona pengirimannya sendiri. Kami menyimpan salinan menu merek tersebut agar Anda dapat terus melayani tanpa gangguan — sunting kapan saja. Jika {brand} memulihkan paket mereka, Anda dapat menautkan kembali dari pengaturan lokasi Anda.",
+    "childResetCta": "Kelola lokasi saya",
+    "bannerText": "Kami tidak dapat memproses pembayaran langganan Anda. Layanan Anda tetap aktif — perbarui kartu Anda untuk mempertahankan fitur berbayar Anda. Sisa hari: {days}.",
+    "bannerCta": "Perbarui pembayaran"
+  },
+  "addOnBilling": {
+    "graceTitle": "Kami tidak dapat menerima pembayaran terakhir Anda",
+    "graceBody": "Pembayaran untuk add-on ini gagal. Sebagai kemudahan, add-on ini tetap sepenuhnya aktif — sisa hari untuk memperbarui kartu Anda sebelum dinonaktifkan: {days}. Perbarui pembayaran Anda sekarang untuk mempertahankannya.",
+    "graceCta": "Perbarui metode pembayaran",
+    "downgradedTitle": "Add-on ini dinonaktifkan",
+    "downgradedBody": "Pembayaran Anda gagal, sehingga add-on ini dinonaktifkan. {consequence} Berlangganan kembali untuk mengaktifkannya lagi.",
+    "downgradedCta": "Berlangganan kembali",
+    "consequenceGeneric": "Fitur berbayarnya dijeda hingga pembayaran dipulihkan; fitur gratis Anda tetap berfungsi.",
+    "consequence": {
+      "custom_domain": "Domain Anda kini meneruskan pengunjung ke tautan Fee Free Ordering gratis Anda, sehingga pelanggan masih dapat memesan — domain akan kembali mengarah ke domain Anda sendiri begitu pembayaran berhasil.",
+      "hosted_website": "Situs web pemasaran Anda dijeda dan menampilkan pemberitahuan peningkatan singkat; halaman pemesanan Anda tetap berfungsi — hanya situs pemasaran yang terpengaruh.",
+      "online_payments": "Pembayaran kartu dinonaktifkan. Pelanggan masih dapat memesan menggunakan metode pembayaran Anda yang lain (tunai / bayar di tempat), sehingga Anda tetap dapat menerima pesanan.",
+      "unlimited_orders": "Batas 100 pesanan/reservasi per bulan Anda kembali berlaku; pesanan yang melebihi batas akan diblokir hingga pembayaran dipulihkan.",
+      "advanced_promos": "Promosi lanjutan, segmen pelanggan, dan kampanye otomatis dijeda; jenis promo dasar Anda tetap berjalan.",
+      "multi_location": "Pengelolaan beberapa lokasi dijeda, dan setiap lokasi kini mengelola menu, jam operasional, dan zona pengirimannya sendiri; pemesanan masing-masing lokasi tetap berjalan.",
+      "marketplace": "Daftar Marketplace publik Anda disembunyikan, sehingga pelanggan baru tidak akan menemukan Anda di sana; halaman pemesanan Anda sendiri dan pesanan langsung tidak terpengaruh.",
+      "kickstarter": "Perangkat kampanye peluncuran dan win-back Anda terkunci; kampanye apa pun yang sudah Anda kirim tidak terpengaruh.",
+      "growthnet": "Paket GrowthNet Anda dijeda, sehingga semua perangkatnya (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) nonaktif bersamaan — berlangganan kembali untuk memulihkan seluruh paket."
     }
   }
 }

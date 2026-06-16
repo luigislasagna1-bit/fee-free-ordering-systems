@@ -672,7 +672,8 @@
     "firstOrder": "Första beställning",
     "openInMaps": "Öppna i Maps",
     "calculatingEta": "Beräknar avstånd…",
-    "etaTrafficNote": "Körtid med aktuell trafik"
+    "etaTrafficNote": "Körtid med aktuell trafik",
+    "autoCallReservationMessage": "En ny bordsbokning på {restaurant} väntar och har ännu inte accepterats. Öppna din Kitchen Order App för att acceptera eller avböja den."
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Välj en vara från varje grupp – den billigare varan får {pct} % rabatt.",
       "hintBogoPricierFree": "Välj en vara från varje grupp – den dyrare varan är GRATIS.",
       "hintBogoPricierPct": "Välj en vara från varje grupp – den dyrare varan får {pct} % rabatt."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Betalning förfallen — uppdatera ditt kort",
+    "ownerHeadline": "Vi kunde fortfarande inte genomföra din betalning",
+    "ownerBody": "Vi försökte debitera ditt kort för din Fee Free Ordering-prenumeration, men det gick inte igenom. Som en kulans är ditt konto fortfarande fullt aktivt. Antal dagar kvar innan dina betalda funktioner pausas: {days}. Uppdatera dina betalningsuppgifter nu — dina kostnadsfria funktioner fortsätter att fungera oavsett vad.",
+    "ownerCta": "Uppdatera betalningsmetod",
+    "ownerSms": "Fee Free Ordering: vi kunde inte debitera ditt kort. Din tjänst förblir aktiv, men betalda funktioner pausas snart — dagar kvar: {days}. Uppdatera betalning: {url}",
+    "downgradedSubject": "Dina betalda funktioner är nu pausade",
+    "downgradedHeadline": "Vissa funktioner stängdes av",
+    "downgradedBody": "Vi kunde inte genomföra din betalning i tid, så dina betalda tillägg är nu pausade. Dina kostnadsfria funktioner fortsätter att fungera och du kan fortsätta ta emot beställningar. Prenumerera igen när som helst för att aktivera dina betalda funktioner på nytt.",
+    "downgradedCta": "Återställ mina tillägg",
+    "resellerSubject": "En restaurang du hänvisat har ett faktureringsproblem",
+    "resellerHeadline": "{restaurant} kunde inte slutföra sin betalning",
+    "resellerBody": "Vi kunde inte genomföra den senaste prenumerationsbetalningen för {restaurant}, en restaurang i ditt partnernätverk. Deras tjänst är fortfarande aktiv som en kulans, men deras betalda funktioner pausas om problemet inte löses. Du kanske vill kontakta dem och hjälpa dem att uppdatera sin fakturering.",
+    "resellerCta": "Öppna partnerpanelen",
+    "childWarnSubject": "Ditt varumärkes plan är obetald — åtgärd kan behövas",
+    "childWarnHeadline": "Att tänka på gällande {brand}",
+    "childWarnBody": "Din plats {child} är kopplad till varumärket {brand}, som för närvarande hanterar er gemensamma meny, öppettider och leveranszoner. {brand}s Multi-Location-prenumeration är obetald. Om problemet inte löses upphör varumärkeskopplingen och {child} går över till att hantera sin egen meny, sina egna öppettider och leveranszoner. Din beställningstjänst fortsätter att fungera — men varumärkesövergripande uppdateringar upphör. Du kan förbereda dig för att drivas självständigt, eller kontakta {brand} för att lösa det.",
+    "childWarnCta": "Öppna inställningarna för min plats",
+    "childResetSubject": "{child} hanterar nu sina egna inställningar",
+    "childResetHeadline": "Din varumärkeskoppling har upphört",
+    "childResetBody": "Eftersom {brand}s Multi-Location-prenumeration förblev obetald har {child} gått över till att hantera sin egen meny, sina egna öppettider och leveranszoner. Vi har sparat en kopia av varumärkets meny så att du kan fortsätta servera utan avbrott — redigera den när som helst. Om {brand} återställer sin plan kan du koppla på nytt via inställningarna för din plats.",
+    "childResetCta": "Hantera min plats",
+    "bannerText": "Vi kunde inte genomföra din prenumerationsbetalning. Din tjänst är fortfarande aktiv — uppdatera ditt kort för att behålla dina betalda funktioner. Dagar kvar: {days}.",
+    "bannerCta": "Uppdatera betalning"
+  },
+  "addOnBilling": {
+    "graceTitle": "Vi kunde inte genomföra din senaste betalning",
+    "graceBody": "Betalningen för det här tillägget gick inte igenom. Som en kulans förblir det fullt aktivt — dagar kvar att uppdatera ditt kort innan det stängs av: {days}. Uppdatera din betalning nu för att behålla det.",
+    "graceCta": "Uppdatera betalningsmetod",
+    "downgradedTitle": "Det här tillägget är avstängt",
+    "downgradedBody": "Din betalning gick inte igenom, så det här tillägget stängdes av. {consequence} Prenumerera igen för att aktivera det på nytt.",
+    "downgradedCta": "Prenumerera igen",
+    "consequenceGeneric": "Dess betalda funktioner är pausade tills betalningen återställs; dina kostnadsfria funktioner fortsätter att fungera.",
+    "consequence": {
+      "custom_domain": "Din domän vidarebefordrar nu besökare till din kostnadsfria Fee Free Ordering-länk, så att kunder fortfarande kan beställa — den pekar tillbaka till din egen domän så snart betalningen går igenom.",
+      "hosted_website": "Din marknadsföringswebbplats är pausad och visar ett kort meddelande om uppgradering; din beställningssida fortsätter att fungera — endast marknadsföringswebbplatsen påverkas.",
+      "online_payments": "Kortbetalning i kassan är avstängd. Kunder kan fortfarande beställa med dina andra betalningsmetoder (kontant / betala i butik), så du fortsätter att ta emot beställningar.",
+      "unlimited_orders": "Din gräns på 100 beställningar/bokningar per månad gäller igen; beställningar utöver gränsen blockeras tills betalningen återställs.",
+      "advanced_promos": "Avancerade kampanjer, kundsegment och automatiserade kampanjer är pausade; dina grundläggande kampanjtyper fungerar fortfarande.",
+      "multi_location": "Hanteringen av flera platser är pausad, och varje plats hanterar nu sin egen meny, sina egna öppettider och leveranszoner; varje plats egen beställningstjänst fortsätter att fungera.",
+      "marketplace": "Din offentliga Marketplace-annons är dold, så nya kunder hittar dig inte där; din egen beställningssida och dina direktbeställningar påverkas inte.",
+      "kickstarter": "Dina verktyg för lanserings- och återvinningskampanjer är låsta; kampanjer som du redan skickat påverkas inte.",
+      "growthnet": "Ditt GrowthNet-paket är pausat, så alla dess verktyg (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) stängs av tillsammans — prenumerera igen för att återställa hela paketet."
     }
   }
 }

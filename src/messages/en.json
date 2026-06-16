@@ -672,7 +672,8 @@
     "firstOrder": "First order",
     "openInMaps": "Open in Maps",
     "calculatingEta": "Calculating distance…",
-    "etaTrafficNote": "Drive time with current traffic"
+    "etaTrafficNote": "Drive time with current traffic",
+    "autoCallReservationMessage": "A new table reservation at {restaurant} is waiting and has not been accepted yet. Please open your Kitchen Order App to accept or reject it."
   },
   "admin": {
     "comingSoonPlaceholder": {
@@ -4915,6 +4916,51 @@
       "alreadyHaveAccount": "Already have an account?",
       "signIn": "Sign in",
       "scopeNote": "This account is for <strong>{name}</strong> only — separate from any marketplace account you may have at feefreefood.com."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Payment overdue — please update your card",
+    "ownerHeadline": "We still couldn't process your payment",
+    "ownerBody": "We tried to charge your card for your Fee Free Ordering subscription, but it didn't go through. As a courtesy your account is still fully active. Days remaining before your paid features pause: {days}. Please update your payment details now — your free features will keep working no matter what.",
+    "ownerCta": "Update payment method",
+    "ownerSms": "Fee Free Ordering: we couldn't charge your card. Your service stays on, but paid features pause soon — days left: {days}. Update payment: {url}",
+    "downgradedSubject": "Your paid features are now paused",
+    "downgradedHeadline": "Some features were switched off",
+    "downgradedBody": "We weren't able to process your payment in time, so your paid add-ons are now paused. Your free features keep working and you can keep taking orders. Resubscribe any time to switch your paid features back on.",
+    "downgradedCta": "Restore my add-ons",
+    "resellerSubject": "A restaurant you referred has a billing issue",
+    "resellerHeadline": "{restaurant} couldn't complete their payment",
+    "resellerBody": "We couldn't process the latest subscription payment for {restaurant}, a restaurant in your partner network. Their service is still active as a courtesy, but their paid features will pause if it isn't resolved. You may want to reach out and help them update their billing.",
+    "resellerCta": "Open partner dashboard",
+    "childWarnSubject": "Your brand's plan is unpaid — action may be needed",
+    "childWarnHeadline": "Heads up about {brand}",
+    "childWarnBody": "Your location {child} is linked to the brand {brand}, which currently manages your shared menu, hours and delivery zones. {brand}'s Multi-Location subscription is unpaid. If it isn't resolved, that brand link will end and {child} will switch to managing its own menu, hours and delivery zones. Your ordering keeps working — but brand-wide updates will stop. You can prepare to run independently, or contact {brand} to resolve it.",
+    "childWarnCta": "Open my location settings",
+    "childResetSubject": "{child} is now managing its own settings",
+    "childResetHeadline": "Your brand link has ended",
+    "childResetBody": "Because {brand}'s Multi-Location subscription went unpaid, {child} has been switched to managing its own menu, hours and delivery zones. We kept a copy of the brand's menu so you can keep serving without interruption — edit it any time. If {brand} restores their plan, you can re-link from your location settings.",
+    "childResetCta": "Manage my location",
+    "bannerText": "We couldn't process your subscription payment. Your service is still on — update your card to keep your paid features. Days left: {days}.",
+    "bannerCta": "Update payment"
+  },
+  "addOnBilling": {
+    "graceTitle": "We couldn't take your last payment",
+    "graceBody": "This add-on's payment didn't go through. As a courtesy it stays fully active — days left to update your card before it's switched off: {days}. Update your payment now to keep it.",
+    "graceCta": "Update payment method",
+    "downgradedTitle": "This add-on is switched off",
+    "downgradedBody": "Your payment didn't go through, so this add-on was switched off. {consequence} Re-subscribe to turn it back on.",
+    "downgradedCta": "Re-subscribe",
+    "consequenceGeneric": "Its paid features are paused until payment is restored; your free features keep working.",
+    "consequence": {
+      "custom_domain": "Your domain now forwards visitors to your free Fee Free Ordering link, so customers can still order — it points back to your own domain the moment payment goes through.",
+      "hosted_website": "Your marketing website is paused and shows a brief upgrade notice; your ordering page keeps working — only the marketing site is affected.",
+      "online_payments": "Card checkout is switched off. Customers can still order using your other payment methods (cash / pay at store), so you keep taking orders.",
+      "unlimited_orders": "Your 100 orders/reservations-per-month cap is back in place; orders beyond the cap are blocked until payment is restored.",
+      "advanced_promos": "Advanced promotions, customer segments and automated campaigns are paused; your basic promo types still run.",
+      "multi_location": "Managing multiple locations is paused, and each location now manages its own menu, hours and delivery zones; every location's own ordering keeps running.",
+      "marketplace": "Your public Marketplace listing is hidden, so new customers won't discover you there; your own ordering page and direct orders are unaffected.",
+      "kickstarter": "Your launch and win-back campaign tools are locked; any campaigns you already sent are unaffected.",
+      "growthnet": "Your GrowthNet bundle is paused, so all its tools (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) switch off together — re-subscribe to restore the whole bundle."
     }
   }
 }

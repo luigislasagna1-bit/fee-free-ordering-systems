@@ -672,7 +672,8 @@
     "firstOrder": "Prva narudžba",
     "openInMaps": "Otvori u Kartama",
     "calculatingEta": "Izračun udaljenosti…",
-    "etaTrafficNote": "Vrijeme vožnje uz trenutni promet"
+    "etaTrafficNote": "Vrijeme vožnje uz trenutni promet",
+    "autoCallReservationMessage": "Nova rezervacija stola u {restaurant} čeka i još nije prihvaćena. Otvorite svoju Kitchen Order App da je prihvatite ili odbijete."
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Odaberite jedan artikl iz svake skupine — jeftiniji artikl ima {pct}% popusta.",
       "hintBogoPricierFree": "Odaberite jedan artikl iz svake skupine — skuplji artikl je BESPLATAN.",
       "hintBogoPricierPct": "Odaberite jedan artikl iz svake skupine — skuplji artikl ima {pct}% popusta."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Plaćanje je dospjelo — molimo ažurirajte svoju karticu",
+    "ownerHeadline": "I dalje nismo mogli obraditi vaše plaćanje",
+    "ownerBody": "Pokušali smo naplatiti vašu karticu za pretplatu na Fee Free Ordering, no transakcija nije prošla. Iz ljubaznosti vaš je račun i dalje potpuno aktivan. Broj preostalih dana prije nego što se vaše plaćene značajke pauziraju: {days}. Molimo odmah ažurirajte podatke za plaćanje — vaše će besplatne značajke nastaviti raditi bez obzira na sve.",
+    "ownerCta": "Ažuriraj način plaćanja",
+    "ownerSms": "Fee Free Ordering: nismo mogli naplatiti vašu karticu. Vaša usluga ostaje aktivna, ali plaćene značajke uskoro se pauziraju — preostalo dana: {days}. Ažurirajte plaćanje: {url}",
+    "downgradedSubject": "Vaše plaćene značajke sada su pauzirane",
+    "downgradedHeadline": "Neke značajke su isključene",
+    "downgradedBody": "Nismo uspjeli obraditi vaše plaćanje na vrijeme, pa su vaši plaćeni dodaci sada pauzirani. Vaše besplatne značajke nastavljaju raditi i možete i dalje primati narudžbe. Ponovno se pretplatite u bilo kojem trenutku kako biste opet uključili svoje plaćene značajke.",
+    "downgradedCta": "Vrati moje dodatke",
+    "resellerSubject": "Restoran kojeg ste preporučili ima problem s naplatom",
+    "resellerHeadline": "{restaurant} nije mogao dovršiti svoje plaćanje",
+    "resellerBody": "Nismo mogli obraditi posljednje plaćanje pretplate za {restaurant}, restoran u vašoj partnerskoj mreži. Njihova je usluga i dalje aktivna iz ljubaznosti, ali plaćene značajke će se pauzirati ako se problem ne riješi. Možda biste ih željeli kontaktirati i pomoći im ažurirati naplatu.",
+    "resellerCta": "Otvori partnersku nadzornu ploču",
+    "childWarnSubject": "Plan vašeg brenda nije plaćen — možda je potrebna radnja",
+    "childWarnHeadline": "Obavijest o {brand}",
+    "childWarnBody": "Vaša lokacija {child} povezana je s brendom {brand}, koji trenutačno upravlja vašim zajedničkim jelovnikom, radnim vremenom i zonama dostave. Pretplata na Multi-Location brenda {brand} nije plaćena. Ako se to ne riješi, ta će veza s brendom prestati i {child} će prijeći na upravljanje vlastitim jelovnikom, radnim vremenom i zonama dostave. Vaše naručivanje nastavlja raditi — ali ažuriranja na razini brenda će se zaustaviti. Možete se pripremiti za samostalan rad ili kontaktirati {brand} kako biste to riješili.",
+    "childWarnCta": "Otvori postavke moje lokacije",
+    "childResetSubject": "{child} sada upravlja vlastitim postavkama",
+    "childResetHeadline": "Vaša veza s brendom je prekinuta",
+    "childResetBody": "Budući da pretplata na Multi-Location brenda {brand} nije plaćena, {child} je prebačen na upravljanje vlastitim jelovnikom, radnim vremenom i zonama dostave. Sačuvali smo kopiju jelovnika brenda kako biste mogli nastaviti s posluživanjem bez prekida — uredite ga u bilo kojem trenutku. Ako {brand} obnovi svoj plan, možete se ponovno povezati iz postavki svoje lokacije.",
+    "childResetCta": "Upravljaj mojom lokacijom",
+    "bannerText": "Nismo mogli obraditi plaćanje vaše pretplate. Vaša usluga je i dalje aktivna — ažurirajte svoju karticu kako biste zadržali plaćene značajke. Preostalo dana: {days}.",
+    "bannerCta": "Ažuriraj plaćanje"
+  },
+  "addOnBilling": {
+    "graceTitle": "Nismo mogli naplatiti vaše posljednje plaćanje",
+    "graceBody": "Plaćanje za ovaj dodatak nije prošlo. Iz ljubaznosti ostaje potpuno aktivan — preostalo dana za ažuriranje kartice prije nego što se isključi: {days}. Ažurirajte plaćanje odmah kako biste ga zadržali.",
+    "graceCta": "Ažuriraj način plaćanja",
+    "downgradedTitle": "Ovaj dodatak je isključen",
+    "downgradedBody": "Vaše plaćanje nije prošlo, pa je ovaj dodatak isključen. {consequence} Ponovno se pretplatite kako biste ga opet uključili.",
+    "downgradedCta": "Ponovno se pretplati",
+    "consequenceGeneric": "Njegove plaćene značajke pauzirane su dok se plaćanje ne obnovi; vaše besplatne značajke nastavljaju raditi.",
+    "consequence": {
+      "custom_domain": "Vaša domena sada preusmjerava posjetitelje na vašu besplatnu Fee Free Ordering poveznicu, pa kupci i dalje mogu naručivati — vraća se na vašu vlastitu domenu čim plaćanje prođe.",
+      "hosted_website": "Vaša marketinška web stranica je pauzirana i prikazuje kratku obavijest o nadogradnji; vaša stranica za naručivanje nastavlja raditi — pogođena je samo marketinška stranica.",
+      "online_payments": "Plaćanje karticom je isključeno. Kupci i dalje mogu naručivati pomoću vaših drugih načina plaćanja (gotovina / plaćanje u trgovini), pa nastavljate primati narudžbe.",
+      "unlimited_orders": "Ponovno je na snazi vaše ograničenje od 100 narudžbi/rezervacija mjesečno; narudžbe iznad ograničenja blokirane su dok se plaćanje ne obnovi.",
+      "advanced_promos": "Napredne promocije, segmenti kupaca i automatizirane kampanje su pauzirani; vaše osnovne vrste promocija i dalje rade.",
+      "multi_location": "Upravljanje s više lokacija je pauzirano, a svaka lokacija sada upravlja vlastitim jelovnikom, radnim vremenom i zonama dostave; naručivanje svake lokacije nastavlja raditi.",
+      "marketplace": "Vaš javni Marketplace oglas je skriven, pa vas novi kupci tamo neće otkriti; vaša vlastita stranica za naručivanje i izravne narudžbe nisu pogođene.",
+      "kickstarter": "Vaši alati za lansiranje i kampanje za povratak kupaca su zaključani; sve kampanje koje ste već poslali nisu pogođene.",
+      "growthnet": "Vaš GrowthNet paket je pauziran, pa se svi njegovi alati (Napredne promocije, Marketing Studio, Kickstarter, SMS kupcima) isključuju zajedno — ponovno se pretplatite kako biste vratili cijeli paket."
     }
   }
 }

@@ -672,7 +672,8 @@
     "firstOrder": "Première commande",
     "openInMaps": "Ouvrir dans Maps",
     "calculatingEta": "Calcul de la distance…",
-    "etaTrafficNote": "Temps de trajet avec le trafic actuel"
+    "etaTrafficNote": "Temps de trajet avec le trafic actuel",
+    "autoCallReservationMessage": "Une nouvelle réservation de table chez {restaurant} est en attente et n'a pas encore été acceptée. Ouvrez votre Kitchen Order App pour l'accepter ou la refuser."
   },
   "admin": {
     "welcomeBack": "Bon retour",
@@ -4915,6 +4916,51 @@
       "hintBogoCheaperPct": "Choisissez un article dans chaque groupe — l'article le moins cher est à -{pct} %.",
       "hintBogoPricierFree": "Choisissez un article dans chaque groupe — l'article le plus cher est GRATUIT.",
       "hintBogoPricierPct": "Choisissez un article dans chaque groupe — l'article le plus cher est à -{pct} %."
+    }
+  },
+  "dunning": {
+    "ownerSubject": "Paiement en retard — veuillez mettre à jour votre carte",
+    "ownerHeadline": "Nous n'avons toujours pas pu traiter votre paiement",
+    "ownerBody": "Nous avons tenté de débiter votre carte pour votre abonnement Fee Free Ordering, mais le paiement n'a pas abouti. Par courtoisie, votre compte reste entièrement actif. Jours restants avant la suspension de vos fonctionnalités payantes : {days}. Veuillez mettre à jour vos informations de paiement dès maintenant — vos fonctionnalités gratuites continueront de fonctionner quoi qu'il arrive.",
+    "ownerCta": "Mettre à jour le moyen de paiement",
+    "ownerSms": "Fee Free Ordering : nous n'avons pas pu débiter votre carte. Votre service reste actif, mais les fonctionnalités payantes seront bientôt suspendues — jours restants : {days}. Mettre à jour le paiement : {url}",
+    "downgradedSubject": "Vos fonctionnalités payantes sont désormais suspendues",
+    "downgradedHeadline": "Certaines fonctionnalités ont été désactivées",
+    "downgradedBody": "Nous n'avons pas pu traiter votre paiement à temps, vos modules payants sont donc désormais suspendus. Vos fonctionnalités gratuites continuent de fonctionner et vous pouvez continuer à prendre des commandes. Réabonnez-vous à tout moment pour réactiver vos fonctionnalités payantes.",
+    "downgradedCta": "Rétablir mes modules",
+    "resellerSubject": "Un restaurant que vous avez parrainé rencontre un problème de facturation",
+    "resellerHeadline": "{restaurant} n'a pas pu finaliser son paiement",
+    "resellerBody": "Nous n'avons pas pu traiter le dernier paiement d'abonnement de {restaurant}, un restaurant de votre réseau de partenaires. Son service reste actif par courtoisie, mais ses fonctionnalités payantes seront suspendues si le problème n'est pas résolu. Vous pourriez le contacter pour l'aider à mettre à jour sa facturation.",
+    "resellerCta": "Ouvrir le tableau de bord partenaire",
+    "childWarnSubject": "Le forfait de votre marque est impayé — une action peut être nécessaire",
+    "childWarnHeadline": "Information importante concernant {brand}",
+    "childWarnBody": "Votre établissement {child} est rattaché à la marque {brand}, qui gère actuellement votre menu, vos horaires et vos zones de livraison partagés. L'abonnement Multi-Location de {brand} est impayé. Si le problème n'est pas résolu, ce rattachement à la marque prendra fin et {child} gérera alors son propre menu, ses horaires et ses zones de livraison. Vos commandes continuent de fonctionner — mais les mises à jour à l'échelle de la marque s'arrêteront. Vous pouvez vous préparer à fonctionner de manière autonome ou contacter {brand} pour résoudre la situation.",
+    "childWarnCta": "Ouvrir les paramètres de mon établissement",
+    "childResetSubject": "{child} gère désormais ses propres paramètres",
+    "childResetHeadline": "Votre rattachement à la marque a pris fin",
+    "childResetBody": "L'abonnement Multi-Location de {brand} étant resté impayé, {child} gère désormais son propre menu, ses horaires et ses zones de livraison. Nous avons conservé une copie du menu de la marque afin que vous puissiez continuer votre service sans interruption — modifiez-le à tout moment. Si {brand} rétablit son forfait, vous pourrez vous rattacher de nouveau depuis les paramètres de votre établissement.",
+    "childResetCta": "Gérer mon établissement",
+    "bannerText": "Nous n'avons pas pu traiter le paiement de votre abonnement. Votre service reste actif — mettez à jour votre carte pour conserver vos fonctionnalités payantes. Jours restants : {days}.",
+    "bannerCta": "Mettre à jour le paiement"
+  },
+  "addOnBilling": {
+    "graceTitle": "Nous n'avons pas pu encaisser votre dernier paiement",
+    "graceBody": "Le paiement de ce module n'a pas abouti. Par courtoisie, il reste entièrement actif — jours restants pour mettre à jour votre carte avant sa désactivation : {days}. Mettez à jour votre paiement dès maintenant pour le conserver.",
+    "graceCta": "Mettre à jour le moyen de paiement",
+    "downgradedTitle": "Ce module est désactivé",
+    "downgradedBody": "Votre paiement n'a pas abouti, ce module a donc été désactivé. {consequence} Réabonnez-vous pour le réactiver.",
+    "downgradedCta": "Se réabonner",
+    "consequenceGeneric": "Ses fonctionnalités payantes sont suspendues jusqu'au rétablissement du paiement ; vos fonctionnalités gratuites continuent de fonctionner.",
+    "consequence": {
+      "custom_domain": "Votre domaine redirige désormais les visiteurs vers votre lien gratuit Fee Free Ordering, afin que les clients puissent toujours commander — il pointera de nouveau vers votre propre domaine dès que le paiement sera effectué.",
+      "hosted_website": "Votre site web marketing est suspendu et affiche un bref avis de mise à niveau ; votre page de commande continue de fonctionner — seul le site marketing est concerné.",
+      "online_payments": "Le paiement par carte est désactivé. Les clients peuvent toujours commander avec vos autres moyens de paiement (espèces / paiement sur place), vous continuez donc à prendre des commandes.",
+      "unlimited_orders": "Votre plafond de 100 commandes/réservations par mois est de nouveau en vigueur ; les commandes au-delà du plafond sont bloquées jusqu'au rétablissement du paiement.",
+      "advanced_promos": "Les promotions avancées, les segments de clientèle et les campagnes automatisées sont suspendus ; vos types de promotions de base restent actifs.",
+      "multi_location": "La gestion de plusieurs établissements est suspendue, et chaque établissement gère désormais son propre menu, ses horaires et ses zones de livraison ; les commandes propres à chaque établissement continuent de fonctionner.",
+      "marketplace": "Votre fiche publique Marketplace est masquée, les nouveaux clients ne pourront donc pas vous y découvrir ; votre propre page de commande et vos commandes directes ne sont pas affectées.",
+      "kickstarter": "Vos outils de campagnes de lancement et de reconquête sont verrouillés ; les campagnes que vous avez déjà envoyées ne sont pas affectées.",
+      "growthnet": "Votre offre groupée GrowthNet est suspendue, tous ses outils (Promotions avancées, Marketing Studio, Kickstarter, SMS clients) sont donc désactivés ensemble — réabonnez-vous pour rétablir l'ensemble de l'offre."
     }
   }
 }
