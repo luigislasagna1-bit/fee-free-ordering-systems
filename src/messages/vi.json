@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Lưu",
       "autoCallAlertPhoneSavedToast": "Đã lưu số cảnh báo.",
       "autoCallNeedsSetupTitle": "Cảnh báo qua điện thoại chưa được kích hoạt.",
-      "autoCallNeedsSetupBody": "Không thể thực hiện cuộc gọi cho đến khi dịch vụ điện thoại của nền tảng được thiết lập. Cho đến lúc đó, bật tính năng này sẽ không gọi cho ai."
+      "autoCallNeedsSetupBody": "Không thể thực hiện cuộc gọi cho đến khi dịch vụ điện thoại của nền tảng được thiết lập. Cho đến lúc đó, bật tính năng này sẽ không gọi cho ai.",
+      "testCallButton": "Gửi cuộc gọi thử",
+      "testCallSending": "Đang gọi…",
+      "testCallPlacedToast": "Đã gọi thử đến {number}.",
+      "testCallFailedToast": "Cuộc gọi thử thất bại: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Nhà hàng của bạn",

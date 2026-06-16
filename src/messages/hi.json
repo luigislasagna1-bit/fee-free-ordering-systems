@@ -1362,7 +1362,11 @@
       "autoCallAlertPhoneSave": "सहेजें",
       "autoCallAlertPhoneSavedToast": "अलर्ट नंबर सहेजा गया।",
       "autoCallNeedsSetupTitle": "फ़ोन अलर्ट अभी सक्रिय नहीं हैं।",
-      "autoCallNeedsSetupBody": "प्लेटफ़ॉर्म फ़ोन सेवा सेट होने तक कॉल नहीं की जा सकतीं। तब तक, इसे चालू करने पर किसी को कॉल नहीं जाएगी।"
+      "autoCallNeedsSetupBody": "प्लेटफ़ॉर्म फ़ोन सेवा सेट होने तक कॉल नहीं की जा सकतीं। तब तक, इसे चालू करने पर किसी को कॉल नहीं जाएगी।",
+      "testCallButton": "टेस्ट कॉल भेजें",
+      "testCallSending": "कॉल हो रही है…",
+      "testCallPlacedToast": "{number} पर टेस्ट कॉल भेजी गई।",
+      "testCallFailedToast": "टेस्ट कॉल विफल: {reason}"
     },
     "customers": {
       "title": "ग्राहक",

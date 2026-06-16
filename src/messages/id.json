@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Simpan",
       "autoCallAlertPhoneSavedToast": "Nomor peringatan disimpan.",
       "autoCallNeedsSetupTitle": "Peringatan telepon belum aktif.",
-      "autoCallNeedsSetupBody": "Panggilan tidak dapat dilakukan sampai layanan telepon platform disiapkan. Sampai saat itu, mengaktifkan ini tidak akan menelepon siapa pun."
+      "autoCallNeedsSetupBody": "Panggilan tidak dapat dilakukan sampai layanan telepon platform disiapkan. Sampai saat itu, mengaktifkan ini tidak akan menelepon siapa pun.",
+      "testCallButton": "Kirim panggilan uji",
+      "testCallSending": "Memanggil…",
+      "testCallPlacedToast": "Panggilan uji dilakukan ke {number}.",
+      "testCallFailedToast": "Panggilan uji gagal: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Restoran Anda",

@@ -22,7 +22,10 @@ const LANG: Record<string, string> = {
 };
 
 export async function GET() {
-  const user = await getSessionUser({ preferKitchen: true });
+  // Admin/owner-triggered (the "Test call" button on the Orders settings page),
+  // so use the admin session — NOT preferKitchen, which could resolve to a
+  // different location for a multi-location owner with a stale kitchen session.
+  const user = await getSessionUser();
   if (!user?.restaurantId) {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }

@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Salvați",
       "autoCallAlertPhoneSavedToast": "Număr pentru alerte salvat.",
       "autoCallNeedsSetupTitle": "Alertele telefonice nu sunt încă active.",
-      "autoCallNeedsSetupBody": "Apelurile nu pot fi efectuate până când serviciul de telefonie al platformei nu este configurat. Până atunci, activarea acestei opțiuni nu va suna pe nimeni."
+      "autoCallNeedsSetupBody": "Apelurile nu pot fi efectuate până când serviciul de telefonie al platformei nu este configurat. Până atunci, activarea acestei opțiuni nu va suna pe nimeni.",
+      "testCallButton": "Trimite un apel de test",
+      "testCallSending": "Se apelează…",
+      "testCallPlacedToast": "Apel de test trimis către {number}.",
+      "testCallFailedToast": "Apelul de test a eșuat: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Restaurantul tău",

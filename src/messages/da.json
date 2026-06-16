@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Gem",
       "autoCallAlertPhoneSavedToast": "Underretningsnummer gemt.",
       "autoCallNeedsSetupTitle": "Telefonunderretninger er ikke aktive endnu.",
-      "autoCallNeedsSetupBody": "Der kan ikke foretages opkald, før platformens telefontjeneste er sat op. Indtil da vil det ikke ringe til nogen at slå dette til."
+      "autoCallNeedsSetupBody": "Der kan ikke foretages opkald, før platformens telefontjeneste er sat op. Indtil da vil det ikke ringe til nogen at slå dette til.",
+      "testCallButton": "Send et testopkald",
+      "testCallSending": "Ringer…",
+      "testCallPlacedToast": "Testopkald foretaget til {number}.",
+      "testCallFailedToast": "Testopkaldet mislykkedes: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Din restaurant",

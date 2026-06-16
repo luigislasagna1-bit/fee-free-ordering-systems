@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Salvesta",
       "autoCallAlertPhoneSavedToast": "Teavituste number salvestatud.",
       "autoCallNeedsSetupTitle": "Telefoniteavitused ei ole veel aktiivsed.",
-      "autoCallNeedsSetupBody": "Kõnesid ei saa teha enne, kui platvormi telefoniteenus on seadistatud. Seni ei helista selle sisselülitamine kellelegi."
+      "autoCallNeedsSetupBody": "Kõnesid ei saa teha enne, kui platvormi telefoniteenus on seadistatud. Seni ei helista selle sisselülitamine kellelegi.",
+      "testCallButton": "Saada testkõne",
+      "testCallSending": "Helistamine…",
+      "testCallPlacedToast": "Testkõne tehtud numbrile {number}.",
+      "testCallFailedToast": "Testkõne ebaõnnestus: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Sinu restoran",

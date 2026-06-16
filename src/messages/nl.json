@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Opslaan",
       "autoCallAlertPhoneSavedToast": "Meldingsnummer opgeslagen.",
       "autoCallNeedsSetupTitle": "Telefoonmeldingen zijn nog niet actief.",
-      "autoCallNeedsSetupBody": "Er kunnen geen oproepen worden gedaan totdat de telefoondienst van het platform is ingesteld. Tot die tijd gaat er niemand over wanneer je dit inschakelt."
+      "autoCallNeedsSetupBody": "Er kunnen geen oproepen worden gedaan totdat de telefoondienst van het platform is ingesteld. Tot die tijd gaat er niemand over wanneer je dit inschakelt.",
+      "testCallButton": "Testoproep versturen",
+      "testCallSending": "Bellen…",
+      "testCallPlacedToast": "Testoproep geplaatst naar {number}.",
+      "testCallFailedToast": "Testoproep mislukt: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Uw restaurant",

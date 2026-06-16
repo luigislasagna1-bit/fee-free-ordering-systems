@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Zapisz",
       "autoCallAlertPhoneSavedToast": "Numer do powiadomień zapisany.",
       "autoCallNeedsSetupTitle": "Powiadomienia telefoniczne nie są jeszcze aktywne.",
-      "autoCallNeedsSetupBody": "Połączenia nie mogą być realizowane, dopóki nie zostanie skonfigurowana usługa telefoniczna platformy. Do tego czasu włączenie tej opcji nie spowoduje żadnego połączenia."
+      "autoCallNeedsSetupBody": "Połączenia nie mogą być realizowane, dopóki nie zostanie skonfigurowana usługa telefoniczna platformy. Do tego czasu włączenie tej opcji nie spowoduje żadnego połączenia.",
+      "testCallButton": "Wyślij połączenie testowe",
+      "testCallSending": "Dzwonię…",
+      "testCallPlacedToast": "Połączenie testowe na {number} wykonane.",
+      "testCallFailedToast": "Połączenie testowe nie powiodło się: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Twoja restauracja",

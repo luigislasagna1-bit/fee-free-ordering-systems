@@ -1406,7 +1406,11 @@
       "autoCallAlertPhoneSave": "Save",
       "autoCallAlertPhoneSavedToast": "Alert number saved.",
       "autoCallNeedsSetupTitle": "Phone alerts aren't active yet.",
-      "autoCallNeedsSetupBody": "Calls can't be placed until the platform phone service is set up. Until then, turning this on won't ring anyone."
+      "autoCallNeedsSetupBody": "Calls can't be placed until the platform phone service is set up. Until then, turning this on won't ring anyone.",
+      "testCallButton": "Send a test call",
+      "testCallSending": "Calling…",
+      "testCallPlacedToast": "Test call placed to {number}.",
+      "testCallFailedToast": "Test call failed: {reason}"
     },
     "customers": {
       "title": "Customers",

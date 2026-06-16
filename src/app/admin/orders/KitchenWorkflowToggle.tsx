@@ -53,6 +53,7 @@ export function KitchenWorkflowToggle({
   const [alertPhone, setAlertPhone] = useState<string>(initialAlertPhone ?? "");
   const [savedAlertPhone, setSavedAlertPhone] = useState<string>(initialAlertPhone ?? "");
   const [savingAlertPhone, setSavingAlertPhone] = useState(false);
+  const [testingCall, setTestingCall] = useState(false);
   // The number the system will actually ring: dedicated alert number else store phone.
   const effectiveAlertNumber = (alertPhone.trim() || storePhone || "").trim();
 
@@ -73,6 +74,26 @@ export function KitchenWorkflowToggle({
       toast.error(t("saveErrorToast"));
     } finally {
       setSavingAlertPhone(false);
+    }
+  }
+
+  // Owner-triggered test of the missed-order auto-call: rings the saved alert
+  // number now and reports Twilio's exact result, so they can verify it works
+  // (and see why if it doesn't — e.g. an international number Twilio blocks).
+  async function sendTestCall() {
+    setTestingCall(true);
+    try {
+      const res = await fetch("/api/admin/test-alert-call");
+      const data = await res.json().catch(() => ({}) as Record<string, unknown>);
+      if (data?.placed) {
+        toast.success(t("testCallPlacedToast", { number: String(data.calledNumber ?? effectiveAlertNumber) }));
+      } else {
+        toast.error(t("testCallFailedToast", { reason: String(data?.reason ?? data?.error ?? "unknown") }));
+      }
+    } catch {
+      toast.error(t("saveErrorToast"));
+    } finally {
+      setTestingCall(false);
     }
   }
   const [saving, setSaving] = useState(false);
@@ -377,6 +398,17 @@ export function KitchenWorkflowToggle({
               </div>
               <p className="text-[11px] text-gray-400 mt-1">{t("autoCallAlertPhoneHint")}</p>
             </div>
+            {effectiveAlertNumber && (
+              <button
+                type="button"
+                onClick={sendTestCall}
+                disabled={testingCall}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-600 hover:text-rose-700 border border-rose-200 rounded-lg px-3 py-1.5 disabled:opacity-50"
+              >
+                <PhoneCall className="w-3.5 h-3.5" />
+                {testingCall ? t("testCallSending") : t("testCallButton")}
+              </button>
+            )}
           </div>
         )}
 

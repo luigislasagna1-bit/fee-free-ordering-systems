@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Mentés",
       "autoCallAlertPhoneSavedToast": "Értesítési szám mentve.",
       "autoCallNeedsSetupTitle": "A telefonos értesítések még nem aktívak.",
-      "autoCallNeedsSetupBody": "A hívásokat addig nem lehet kezdeményezni, amíg a platform telefonszolgáltatása nincs beállítva. Addig ennek bekapcsolása senkit sem hív fel."
+      "autoCallNeedsSetupBody": "A hívásokat addig nem lehet kezdeményezni, amíg a platform telefonszolgáltatása nincs beállítva. Addig ennek bekapcsolása senkit sem hív fel.",
+      "testCallButton": "Teszthívás küldése",
+      "testCallSending": "Hívás…",
+      "testCallPlacedToast": "Teszthívás elindítva ide: {number}.",
+      "testCallFailedToast": "A teszthívás sikertelen: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Az Ön étterme",

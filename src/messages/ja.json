@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "保存",
       "autoCallAlertPhoneSavedToast": "通知用番号を保存しました。",
       "autoCallNeedsSetupTitle": "電話通知はまだ有効になっていません。",
-      "autoCallNeedsSetupBody": "プラットフォームの電話サービスが設定されるまで発信できません。それまでは、これをオンにしても誰にも発信されません。"
+      "autoCallNeedsSetupBody": "プラットフォームの電話サービスが設定されるまで発信できません。それまでは、これをオンにしても誰にも発信されません。",
+      "testCallButton": "テストコールを送信",
+      "testCallSending": "発信中…",
+      "testCallPlacedToast": "{number} にテストコールを発信しました。",
+      "testCallFailedToast": "テストコールに失敗しました: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "レストラン名",

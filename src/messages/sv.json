@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Spara",
       "autoCallAlertPhoneSavedToast": "Aviseringsnummer sparat.",
       "autoCallNeedsSetupTitle": "Telefonaviseringar är inte aktiva ännu.",
-      "autoCallNeedsSetupBody": "Samtal kan inte ringas förrän plattformens telefontjänst är konfigurerad. Tills dess gör det ingen skillnad att slå på detta — ingen blir uppringd."
+      "autoCallNeedsSetupBody": "Samtal kan inte ringas förrän plattformens telefontjänst är konfigurerad. Tills dess gör det ingen skillnad att slå på detta — ingen blir uppringd.",
+      "testCallButton": "Skicka ett testsamtal",
+      "testCallSending": "Ringer…",
+      "testCallPlacedToast": "Testsamtal till {number} skickat.",
+      "testCallFailedToast": "Testsamtalet misslyckades: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Din restaurang",

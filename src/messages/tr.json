@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Kaydet",
       "autoCallAlertPhoneSavedToast": "Uyarı numarası kaydedildi.",
       "autoCallNeedsSetupTitle": "Telefon uyarıları henüz etkin değil.",
-      "autoCallNeedsSetupBody": "Platform telefon hizmeti kurulana kadar aramalar yapılamaz. O zamana kadar bunu açmak kimseyi aramaz."
+      "autoCallNeedsSetupBody": "Platform telefon hizmeti kurulana kadar aramalar yapılamaz. O zamana kadar bunu açmak kimseyi aramaz.",
+      "testCallButton": "Test araması gönder",
+      "testCallSending": "Aranıyor…",
+      "testCallPlacedToast": "{number} numarasına test araması yapıldı.",
+      "testCallFailedToast": "Test araması başarısız: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Restoranınız",

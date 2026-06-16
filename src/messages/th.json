@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "บันทึก",
       "autoCallAlertPhoneSavedToast": "บันทึกหมายเลขแจ้งเตือนแล้ว",
       "autoCallNeedsSetupTitle": "การแจ้งเตือนทางโทรศัพท์ยังไม่เปิดใช้งาน",
-      "autoCallNeedsSetupBody": "ยังไม่สามารถโทรออกได้จนกว่าจะตั้งค่าบริการโทรศัพท์ของแพลตฟอร์ม จนกว่าจะถึงตอนนั้น การเปิดใช้งานนี้จะไม่โทรหาใคร"
+      "autoCallNeedsSetupBody": "ยังไม่สามารถโทรออกได้จนกว่าจะตั้งค่าบริการโทรศัพท์ของแพลตฟอร์ม จนกว่าจะถึงตอนนั้น การเปิดใช้งานนี้จะไม่โทรหาใคร",
+      "testCallButton": "ส่งสายโทรทดสอบ",
+      "testCallSending": "กำลังโทร…",
+      "testCallPlacedToast": "โทรทดสอบไปที่ {number} แล้ว",
+      "testCallFailedToast": "โทรทดสอบล้มเหลว: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "ร้านอาหารของคุณ",

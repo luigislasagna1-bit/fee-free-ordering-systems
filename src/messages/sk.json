@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Uložiť",
       "autoCallAlertPhoneSavedToast": "Číslo na upozornenia uložené.",
       "autoCallNeedsSetupTitle": "Telefónne upozornenia zatiaľ nie sú aktívne.",
-      "autoCallNeedsSetupBody": "Hovory nie je možné uskutočniť, kým nie je nastavená telefónna služba platformy. Dovtedy zapnutie tejto možnosti nikomu nezazvoní."
+      "autoCallNeedsSetupBody": "Hovory nie je možné uskutočniť, kým nie je nastavená telefónna služba platformy. Dovtedy zapnutie tejto možnosti nikomu nezazvoní.",
+      "testCallButton": "Odoslať testovací hovor",
+      "testCallSending": "Volanie…",
+      "testCallPlacedToast": "Testovací hovor na {number} odoslaný.",
+      "testCallFailedToast": "Testovací hovor zlyhal: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaša reštaurácia",

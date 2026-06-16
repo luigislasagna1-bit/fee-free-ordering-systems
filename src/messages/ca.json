@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Desa",
       "autoCallAlertPhoneSavedToast": "Número d'alerta desat.",
       "autoCallNeedsSetupTitle": "Les alertes per telèfon encara no estan actives.",
-      "autoCallNeedsSetupBody": "No es poden fer trucades fins que el servei telefònic de la plataforma estigui configurat. Fins llavors, activar aquesta opció no farà sonar el telèfon de ningú."
+      "autoCallNeedsSetupBody": "No es poden fer trucades fins que el servei telefònic de la plataforma estigui configurat. Fins llavors, activar aquesta opció no farà sonar el telèfon de ningú.",
+      "testCallButton": "Envia una trucada de prova",
+      "testCallSending": "Trucant…",
+      "testCallPlacedToast": "Trucada de prova feta a {number}.",
+      "testCallFailedToast": "La trucada de prova ha fallat: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "El vostre restaurant",

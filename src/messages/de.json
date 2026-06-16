@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Speichern",
       "autoCallAlertPhoneSavedToast": "Benachrichtigungsnummer gespeichert.",
       "autoCallNeedsSetupTitle": "Telefonbenachrichtigungen sind noch nicht aktiv.",
-      "autoCallNeedsSetupBody": "Anrufe können erst getätigt werden, wenn der Telefondienst der Plattform eingerichtet ist. Bis dahin klingelt bei niemandem etwas, wenn Sie dies aktivieren."
+      "autoCallNeedsSetupBody": "Anrufe können erst getätigt werden, wenn der Telefondienst der Plattform eingerichtet ist. Bis dahin klingelt bei niemandem etwas, wenn Sie dies aktivieren.",
+      "testCallButton": "Testanruf senden",
+      "testCallSending": "Anruf läuft…",
+      "testCallPlacedToast": "Testanruf an {number} gestartet.",
+      "testCallFailedToast": "Testanruf fehlgeschlagen: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Ihr Restaurant",

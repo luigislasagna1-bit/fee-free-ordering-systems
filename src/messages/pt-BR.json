@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Salvar",
       "autoCallAlertPhoneSavedToast": "Número de alerta salvo.",
       "autoCallNeedsSetupTitle": "Os alertas por telefone ainda não estão ativos.",
-      "autoCallNeedsSetupBody": "Não é possível fazer chamadas até o serviço telefônico da plataforma estar configurado. Até lá, ativar esta opção não fará tocar o telefone de ninguém."
+      "autoCallNeedsSetupBody": "Não é possível fazer chamadas até o serviço telefônico da plataforma estar configurado. Até lá, ativar esta opção não fará tocar o telefone de ninguém.",
+      "testCallButton": "Enviar uma chamada de teste",
+      "testCallSending": "Ligando…",
+      "testCallPlacedToast": "Chamada de teste feita para {number}.",
+      "testCallFailedToast": "A chamada de teste falhou: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Seu Restaurante",

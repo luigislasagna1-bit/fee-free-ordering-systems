@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Сохранить",
       "autoCallAlertPhoneSavedToast": "Номер для оповещений сохранён.",
       "autoCallNeedsSetupTitle": "Телефонные оповещения ещё не активны.",
-      "autoCallNeedsSetupBody": "Звонки невозможны, пока не настроена телефонная служба платформы. До этого включение этой опции никому не дозвонится."
+      "autoCallNeedsSetupBody": "Звонки невозможны, пока не настроена телефонная служба платформы. До этого включение этой опции никому не дозвонится.",
+      "testCallButton": "Отправить тестовый звонок",
+      "testCallSending": "Звоним…",
+      "testCallPlacedToast": "Тестовый звонок отправлен на {number}.",
+      "testCallFailedToast": "Тестовый звонок не удался: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Ваш ресторан",

@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "حفظ",
       "autoCallAlertPhoneSavedToast": "تم حفظ رقم التنبيه.",
       "autoCallNeedsSetupTitle": "تنبيهات الهاتف ليست نشطة بعد.",
-      "autoCallNeedsSetupBody": "لا يمكن إجراء المكالمات حتى يتم إعداد خدمة الهاتف الخاصة بالمنصة. حتى ذلك الحين، لن يؤدي تفعيل هذا إلى الاتصال بأي شخص."
+      "autoCallNeedsSetupBody": "لا يمكن إجراء المكالمات حتى يتم إعداد خدمة الهاتف الخاصة بالمنصة. حتى ذلك الحين، لن يؤدي تفعيل هذا إلى الاتصال بأي شخص.",
+      "testCallButton": "إرسال مكالمة تجريبية",
+      "testCallSending": "جارٍ الاتصال…",
+      "testCallPlacedToast": "تم إجراء مكالمة تجريبية إلى {number}.",
+      "testCallFailedToast": "فشلت المكالمة التجريبية: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "مطعمك",

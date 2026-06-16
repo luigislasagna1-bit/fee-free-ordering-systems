@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Tallenna",
       "autoCallAlertPhoneSavedToast": "Ilmoitusnumero tallennettu.",
       "autoCallNeedsSetupTitle": "Puhelinilmoitukset eivät ole vielä käytössä.",
-      "autoCallNeedsSetupBody": "Soittoja ei voida tehdä ennen kuin alustan puhelinpalvelu on määritetty. Siihen asti tämän käyttöön ottaminen ei soita kenellekään."
+      "autoCallNeedsSetupBody": "Soittoja ei voida tehdä ennen kuin alustan puhelinpalvelu on määritetty. Siihen asti tämän käyttöön ottaminen ei soita kenellekään.",
+      "testCallButton": "Lähetä testipuhelu",
+      "testCallSending": "Soitetaan…",
+      "testCallPlacedToast": "Testipuhelu soitettu numeroon {number}.",
+      "testCallFailedToast": "Testipuhelu epäonnistui: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Ravintolasi",

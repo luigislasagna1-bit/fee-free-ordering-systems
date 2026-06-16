@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Išsaugoti",
       "autoCallAlertPhoneSavedToast": "Pranešimų numeris išsaugotas.",
       "autoCallNeedsSetupTitle": "Telefoniniai pranešimai dar neaktyvūs.",
-      "autoCallNeedsSetupBody": "Skambučių negalima atlikti, kol nesukonfigūruota platformos telefono paslauga. Iki tol įjungus šią funkciją niekam nebus skambinama."
+      "autoCallNeedsSetupBody": "Skambučių negalima atlikti, kol nesukonfigūruota platformos telefono paslauga. Iki tol įjungus šią funkciją niekam nebus skambinama.",
+      "testCallButton": "Siųsti bandomąjį skambutį",
+      "testCallSending": "Skambinama…",
+      "testCallPlacedToast": "Bandomasis skambutis atliktas į {number}.",
+      "testCallFailedToast": "Bandomasis skambutis nepavyko: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Jūsų restoranas",

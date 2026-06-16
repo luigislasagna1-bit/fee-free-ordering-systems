@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "저장",
       "autoCallAlertPhoneSavedToast": "알림 번호가 저장되었습니다.",
       "autoCallNeedsSetupTitle": "전화 알림이 아직 활성화되지 않았습니다.",
-      "autoCallNeedsSetupBody": "플랫폼 전화 서비스가 설정될 때까지 전화를 걸 수 없습니다. 그때까지는 이 기능을 켜도 아무에게도 전화가 가지 않습니다."
+      "autoCallNeedsSetupBody": "플랫폼 전화 서비스가 설정될 때까지 전화를 걸 수 없습니다. 그때까지는 이 기능을 켜도 아무에게도 전화가 가지 않습니다.",
+      "testCallButton": "테스트 전화 보내기",
+      "testCallSending": "전화 거는 중…",
+      "testCallPlacedToast": "{number}(으)로 테스트 전화를 걸었습니다.",
+      "testCallFailedToast": "테스트 전화 실패: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "내 레스토랑",

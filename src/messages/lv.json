@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Saglabāt",
       "autoCallAlertPhoneSavedToast": "Paziņojumu numurs saglabāts.",
       "autoCallNeedsSetupTitle": "Tālruņa paziņojumi vēl nav aktīvi.",
-      "autoCallNeedsSetupBody": "Zvanus nevar veikt, kamēr nav iestatīts platformas tālruņa pakalpojums. Līdz tam šīs funkcijas ieslēgšana nevienam nezvanīs."
+      "autoCallNeedsSetupBody": "Zvanus nevar veikt, kamēr nav iestatīts platformas tālruņa pakalpojums. Līdz tam šīs funkcijas ieslēgšana nevienam nezvanīs.",
+      "testCallButton": "Sūtīt testa zvanu",
+      "testCallSending": "Zvana…",
+      "testCallPlacedToast": "Testa zvans veikts uz {number}.",
+      "testCallFailedToast": "Testa zvans neizdevās: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Jūsu restorāns",

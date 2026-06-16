@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "Shrani",
       "autoCallAlertPhoneSavedToast": "Številka za obvestila shranjena.",
       "autoCallNeedsSetupTitle": "Telefonska obvestila še niso aktivna.",
-      "autoCallNeedsSetupBody": "Klicev ni mogoče opraviti, dokler ni nastavljena telefonska storitev platforme. Do takrat vklop te možnosti ne bo nikogar poklical."
+      "autoCallNeedsSetupBody": "Klicev ni mogoče opraviti, dokler ni nastavljena telefonska storitev platforme. Do takrat vklop te možnosti ne bo nikogar poklical.",
+      "testCallButton": "Pošlji testni klic",
+      "testCallSending": "Klicanje…",
+      "testCallPlacedToast": "Testni klic poslan na {number}.",
+      "testCallFailedToast": "Testni klic ni uspel: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaša restavracija",

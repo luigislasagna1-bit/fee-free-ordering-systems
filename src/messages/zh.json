@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "保存",
       "autoCallAlertPhoneSavedToast": "提醒号码已保存。",
       "autoCallNeedsSetupTitle": "电话提醒尚未启用。",
-      "autoCallNeedsSetupBody": "在平台电话服务设置完成之前无法拨打电话。在此之前，开启此功能不会拨打任何号码。"
+      "autoCallNeedsSetupBody": "在平台电话服务设置完成之前无法拨打电话。在此之前，开启此功能不会拨打任何号码。",
+      "testCallButton": "发送测试来电",
+      "testCallSending": "正在拨打…",
+      "testCallPlacedToast": "已向 {number} 发起测试来电。",
+      "testCallFailedToast": "测试来电失败：{reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "您的餐厅",

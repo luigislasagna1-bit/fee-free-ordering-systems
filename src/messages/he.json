@@ -3165,7 +3165,11 @@
       "autoCallAlertPhoneSave": "שמור",
       "autoCallAlertPhoneSavedToast": "מספר ההתראות נשמר.",
       "autoCallNeedsSetupTitle": "התראות טלפון עדיין לא פעילות.",
-      "autoCallNeedsSetupBody": "לא ניתן לבצע שיחות עד שירות הטלפון של הפלטפורמה יוגדר. עד אז, הפעלת אפשרות זו לא תתקשר לאף אחד."
+      "autoCallNeedsSetupBody": "לא ניתן לבצע שיחות עד שירות הטלפון של הפלטפורמה יוגדר. עד אז, הפעלת אפשרות זו לא תתקשר לאף אחד.",
+      "testCallButton": "שלח שיחת בדיקה",
+      "testCallSending": "מתקשר…",
+      "testCallPlacedToast": "שיחת בדיקה בוצעה אל {number}.",
+      "testCallFailedToast": "שיחת הבדיקה נכשלה: {reason}"
     },
     "receiptRenderer": {
       "yourRestaurant": "המסעדה שלך",
