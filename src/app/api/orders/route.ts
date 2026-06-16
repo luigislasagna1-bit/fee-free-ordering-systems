@@ -22,6 +22,7 @@ import { usedPromoIds } from "@/lib/coupon-ledger";
 import { hasFeature } from "@/lib/entitlements";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
+import { notifyCapWarning80, notifyCapReached100 } from "@/lib/cap-notify";
 import {
   computeUberEatsEquivalentCents,
   recordMarketplaceOrder,
@@ -1481,6 +1482,15 @@ export async function POST(req: NextRequest) {
     // until next month" message rather than a generic error.
     const cap = await checkOrderCap(restaurant.id);
     if (!cap.allowed) {
+      // Owner alert: a real order just got turned away ("you're losing orders").
+      // Fire AFTER the response (rate-limited ~3h inside) so the rejection isn't
+      // slowed by an email round-trip. Luigi 2026-06-16.
+      after(
+        (async () => {
+          try { await notifyCapReached100(restaurant.id); }
+          catch (e) { console.error("[orders POST] notifyCapReached100:", e); }
+        })(),
+      );
       return NextResponse.json(
         {
           error:
@@ -1894,7 +1904,10 @@ export async function POST(req: NextRequest) {
     after(
       (async () => {
         try {
-          await incrementOrderCount(restaurant.id);
+          const newCount = await incrementOrderCount(restaurant.id);
+          // First order to land in the 80-99 band this month → email the owner
+          // a heads-up (sender is idempotent per month + skips paid restaurants).
+          if (newCount >= 80 && newCount < 100) await notifyCapWarning80(restaurant.id);
         } catch (e) {
           console.error("[orders POST] incrementOrderCount:", e);
         }

@@ -4973,5 +4973,12 @@
       "kickstarter": "Ihre Tools für Launch- und Rückgewinnungskampagnen sind gesperrt; bereits versendete Kampagnen sind nicht betroffen.",
       "growthnet": "Ihr GrowthNet-Paket ist pausiert, sodass alle zugehörigen Tools (Erweiterte Aktionen, Marketing Studio, Kickstarter, Kunden-SMS) gemeinsam deaktiviert werden — abonnieren Sie erneut, um das gesamte Paket wiederherzustellen."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Sie nähern sich Ihrem monatlichen Bestelllimit",
+    "warnBody": "Sie haben diesen Monat {count} Ihrer {cap} kostenlosen Bestellungen genutzt — {remaining} übrig. Bei Erreichen von {cap} werden neue Bestellungen und Reservierungen pausiert, bis Ihr Limit am {resetDate} zurückgesetzt wird. Entfernen Sie das Limit jederzeit, um ohne Unterbrechung weiter Bestellungen anzunehmen.",
+    "blockTitle": "Limit erreicht — Ihnen entgehen möglicherweise Bestellungen",
+    "blockBody": "Ihr Restaurant hat seine {cap} kostenlosen Bestellungen für diesen Monat erreicht, daher werden neue Bestellungen und Reservierungen abgelehnt, bis Ihr Limit am {resetDate} zurückgesetzt wird. Entfernen Sie das Limit jetzt, um sie sofort wieder anzunehmen.",
+    "cta": "Limit entfernen"
   }
 }

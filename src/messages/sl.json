@@ -4973,5 +4973,12 @@
       "kickstarter": "Vaša orodja za zagonske kampanje in kampanje za vračanje strank so zaklenjena; kampanje, ki ste jih že poslali, niso prizadete.",
       "growthnet": "Vaš paket GrowthNet je zaustavljen, zato se vsa njegova orodja (Napredne promocije, Marketing Studio, Kickstarter, SMS za stranke) izklopijo skupaj — ponovno se naročite, da obnovite celoten paket."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Bližate se mesečni omejitvi naročil",
+    "warnBody": "Ta mesec ste porabili {count} od {cap} brezplačnih naročil — ostalo je še {remaining}. Ko dosežete {cap}, se nova naročila in rezervacije začasno ustavijo, dokler se vaša omejitev ne ponastavi {resetDate}. Omejitev lahko kadar koli odstranite in brez prekinitve sprejemate naročila.",
+    "blockTitle": "Dosegli ste omejitev — morda izgubljate naročila",
+    "blockBody": "Vaša restavracija je dosegla svojih {cap} brezplačnih naročil za ta mesec, zato se nova naročila in rezervacije zavračajo, dokler se omejitev ne ponastavi {resetDate}. Odstranite omejitev zdaj in jih začnite takoj znova sprejemati.",
+    "cta": "Odstrani omejitev"
   }
 }

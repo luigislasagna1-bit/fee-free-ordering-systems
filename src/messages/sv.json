@@ -4973,5 +4973,12 @@
       "kickstarter": "Dina verktyg för lanserings- och återvinningskampanjer är låsta; kampanjer som du redan skickat påverkas inte.",
       "growthnet": "Ditt GrowthNet-paket är pausat, så alla dess verktyg (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) stängs av tillsammans — prenumerera igen för att återställa hela paketet."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Du närmar dig din månatliga beställningsgräns",
+    "warnBody": "Du har använt {count} av dina {cap} gratis beställningar denna månad — {remaining} kvar. När du når {cap} pausas nya beställningar och bokningar tills din gräns återställs den {resetDate}. Ta bort gränsen när som helst för att fortsätta ta emot beställningar utan avbrott.",
+    "blockTitle": "Du har nått din gräns — du kan gå miste om beställningar",
+    "blockBody": "Din restaurang har nått sina {cap} gratis beställningar för denna månad, så nya beställningar och bokningar avvisas tills din gräns återställs den {resetDate}. Ta bort gränsen nu för att börja ta emot dem igen direkt.",
+    "cta": "Ta bort gränsen"
   }
 }

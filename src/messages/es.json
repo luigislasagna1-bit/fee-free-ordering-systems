@@ -4973,5 +4973,12 @@
       "kickstarter": "Tus herramientas de campañas de lanzamiento y recuperación de clientes están bloqueadas; las campañas que ya enviaste no se ven afectadas.",
       "growthnet": "Tu paquete GrowthNet está en pausa, así que todas sus herramientas (Promociones Avanzadas, Marketing Studio, Kickstarter, SMS a Clientes) se desactivan a la vez — vuelve a suscribirte para restaurar todo el paquete."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Estás cerca de tu límite mensual de pedidos",
+    "warnBody": "Has usado {count} de tus {cap} pedidos gratis este mes — quedan {remaining}. Cuando llegues a {cap}, los nuevos pedidos y reservas se pausan hasta que tu límite se restablezca el {resetDate}. Quita el límite cuando quieras para seguir recibiendo pedidos sin interrupción.",
+    "blockTitle": "Has alcanzado tu límite — podrías estar perdiendo pedidos",
+    "blockBody": "Tu restaurante ha alcanzado sus {cap} pedidos gratis de este mes, así que los nuevos pedidos y reservas se están rechazando hasta que tu límite se restablezca el {resetDate}. Quita el límite ahora para volver a aceptarlos de inmediato.",
+    "cta": "Quitar el límite"
   }
 }

@@ -4973,5 +4973,12 @@
       "kickstarter": "Jūsų paleidimo ir klientų susigrąžinimo kampanijų įrankiai užrakinti; jau išsiųstos kampanijos nepaveiktos.",
       "growthnet": "Jūsų GrowthNet rinkinys pristabdytas, todėl visi jo įrankiai (Išplėstinės akcijos, „Marketing Studio“, „Kickstarter“, klientų SMS) išjungiami kartu — atnaujinkite prenumeratą, kad atkurtumėte visą rinkinį."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Artėjate prie mėnesio užsakymų limito",
+    "warnBody": "Šį mėnesį panaudojote {count} iš {cap} nemokamų užsakymų — liko {remaining}. Pasiekus {cap}, nauji užsakymai ir rezervacijos pristabdomi, kol jūsų limitas atsinaujins {resetDate}. Pašalinkite limitą bet kada, kad galėtumėte be pertrūkių priimti užsakymus.",
+    "blockTitle": "Pasiekėte limitą — galite prarasti užsakymų",
+    "blockBody": "Jūsų restoranas pasiekė savo {cap} nemokamų užsakymų šį mėnesį, todėl nauji užsakymai ir rezervacijos atmetami, kol limitas atsinaujins {resetDate}. Pašalinkite limitą dabar, kad iškart vėl pradėtumėte juos priimti.",
+    "cta": "Pašalinti limitą"
   }
 }

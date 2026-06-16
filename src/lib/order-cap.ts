@@ -91,6 +91,9 @@ export async function checkOrderCap(restaurantId: string): Promise<CapCheckResul
       data: {
         currentMonthOrderCount: 0,
         currentMonthResetAt: nextMonthStartUtc(now),
+        // New month → re-arm the owner cap-notifications.
+        capWarn80SentAt: null,
+        capBlockAlertSentAt: null,
       },
     });
     effectiveCount = 0;
@@ -120,32 +123,39 @@ export async function checkOrderCap(restaurantId: string): Promise<CapCheckResul
  * cap check entirely). Fire-and-forget safe — if this fails we
  * tolerate the dropped count rather than failing the order.
  */
-export async function incrementOrderCount(restaurantId: string): Promise<void> {
+export async function incrementOrderCount(restaurantId: string): Promise<number> {
   try {
     const now = new Date();
     const r = await prisma.restaurant.findUnique({
       where: { id: restaurantId },
       select: { currentMonthResetAt: true },
     });
-    if (!r) return;
+    if (!r) return 0;
     if (!r.currentMonthResetAt || now >= r.currentMonthResetAt) {
-      // Rollover + this order is the first of the new month.
+      // Rollover + this order is the first of the new month. Re-arm the owner
+      // cap-notification guards so they can fire again this month.
       await prisma.restaurant.update({
         where: { id: restaurantId },
         data: {
           currentMonthOrderCount: 1,
           currentMonthResetAt: nextMonthStartUtc(now),
+          capWarn80SentAt: null,
+          capBlockAlertSentAt: null,
         },
       });
-      return;
+      return 1;
     }
-    await prisma.restaurant.update({
+    const updated = await prisma.restaurant.update({
       where: { id: restaurantId },
       data: { currentMonthOrderCount: { increment: 1 } },
+      select: { currentMonthOrderCount: true },
     });
+    return updated.currentMonthOrderCount;
   } catch (e) {
     console.error("[order-cap] incrementOrderCount failed:", e);
-    // Swallow — order already exists; analytics may be off by one.
+    // Swallow — order already exists; analytics may be off by one. Return 0 so
+    // the caller's threshold check stays inert (no spurious notification).
+    return 0;
   }
 }
 

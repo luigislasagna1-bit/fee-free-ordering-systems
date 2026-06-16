@@ -4973,5 +4973,12 @@
       "kickstarter": "Je tools voor lancerings- en win-backcampagnes zijn vergrendeld; campagnes die je al hebt verzonden, worden niet beïnvloed.",
       "growthnet": "Je GrowthNet-bundel is gepauzeerd, dus alle bijbehorende tools (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) worden samen uitgeschakeld — abonneer je opnieuw om de hele bundel te herstellen."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Je nadert je maandelijkse bestellimiet",
+    "warnBody": "Je hebt deze maand {count} van je {cap} gratis bestellingen gebruikt — nog {remaining} over. Bij {cap} worden nieuwe bestellingen en reserveringen gepauzeerd tot je limiet op {resetDate} wordt gereset. Verwijder de limiet wanneer je wilt om zonder onderbreking bestellingen te blijven ontvangen.",
+    "blockTitle": "Limiet bereikt — je loopt mogelijk bestellingen mis",
+    "blockBody": "Je restaurant heeft zijn {cap} gratis bestellingen voor deze maand bereikt, dus nieuwe bestellingen en reserveringen worden geweigerd tot je limiet op {resetDate} wordt gereset. Verwijder de limiet nu om ze meteen weer te accepteren.",
+    "cta": "Limiet verwijderen"
   }
 }

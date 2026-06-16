@@ -4973,5 +4973,12 @@
       "kickstarter": "I tuoi strumenti per le campagne di lancio e di riconquista sono bloccati; le campagne che hai già inviato non sono interessate.",
       "growthnet": "Il tuo pacchetto GrowthNet è sospeso, quindi tutti i suoi strumenti (Advanced Promos, Marketing Studio, Kickstarter, SMS ai clienti) vengono disattivati insieme — riabbonati per ripristinare l'intero pacchetto."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Sei vicino al tuo limite mensile di ordini",
+    "warnBody": "Hai usato {count} dei tuoi {cap} ordini gratuiti questo mese — ne restano {remaining}. Al raggiungimento di {cap}, nuovi ordini e prenotazioni vengono sospesi fino al ripristino del limite il {resetDate}. Rimuovi il limite quando vuoi per continuare a ricevere ordini senza interruzioni.",
+    "blockTitle": "Hai raggiunto il limite — potresti perdere ordini",
+    "blockBody": "Il tuo ristorante ha raggiunto i suoi {cap} ordini gratuiti di questo mese, quindi nuovi ordini e prenotazioni vengono rifiutati fino al ripristino del limite il {resetDate}. Rimuovi il limite ora per ricominciare ad accettarli subito.",
+    "cta": "Rimuovi il limite"
   }
 }

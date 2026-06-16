@@ -4973,5 +4973,12 @@
       "kickstarter": "Jūsu palaišanas un klientu atgriešanas kampaņu rīki ir bloķēti; jau nosūtītās kampaņas netiek ietekmētas.",
       "growthnet": "Jūsu GrowthNet komplekts ir apturēts, tāpēc visi tā rīki (Uzlabotās akcijas, Marketing Studio, Kickstarter, Klientu SMS) tiek izslēgti kopā — atjaunojiet abonementu, lai atjaunotu visu komplektu."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Tuvojaties savam mēneša pasūtījumu limitam",
+    "warnBody": "Šomēnes esat izmantojis {count} no saviem {cap} bezmaksas pasūtījumiem — atlikuši {remaining}. Sasniedzot {cap}, jauni pasūtījumi un rezervācijas tiek apturēti, līdz jūsu limits tiek atiestatīts {resetDate}. Noņemiet limitu jebkurā laikā, lai bez pārtraukuma turpinātu pieņemt pasūtījumus.",
+    "blockTitle": "Esat sasniedzis limitu — iespējams, zaudējat pasūtījumus",
+    "blockBody": "Jūsu restorāns ir sasniedzis savus {cap} bezmaksas pasūtījumus šim mēnesim, tāpēc jauni pasūtījumi un rezervācijas tiek noraidīti, līdz limits tiek atiestatīts {resetDate}. Noņemiet limitu tagad, lai uzreiz atsāktu tos pieņemt.",
+    "cta": "Noņemt limitu"
   }
 }

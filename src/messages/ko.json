@@ -4973,5 +4973,12 @@
       "kickstarter": "런칭 및 재유치 캠페인 도구가 잠깁니다. 이미 발송한 캠페인은 영향을 받지 않습니다.",
       "growthnet": "GrowthNet 번들이 일시 중지되어 모든 도구(Advanced Promos, Marketing Studio, Kickstarter, Customer SMS)가 함께 비활성화됩니다 — 전체 번들을 복원하려면 재구독해 주세요."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "월간 주문 한도에 거의 도달했습니다",
+    "warnBody": "이번 달 무료 주문 {cap}건 중 {count}건을 사용했으며 {remaining}건 남았습니다. {cap}건에 도달하면 {resetDate}에 한도가 초기화될 때까지 새 주문과 예약이 일시 중지됩니다. 언제든지 한도를 해제하여 중단 없이 주문을 계속 받으세요.",
+    "blockTitle": "한도에 도달했습니다 — 주문을 놓치고 있을 수 있습니다",
+    "blockBody": "귀하의 레스토랑이 이번 달 무료 주문 {cap}건에 도달하여 {resetDate}에 한도가 초기화될 때까지 새 주문과 예약이 거절되고 있습니다. 지금 한도를 해제하면 즉시 다시 받을 수 있습니다.",
+    "cta": "한도 해제"
   }
 }

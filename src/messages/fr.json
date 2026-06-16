@@ -4973,5 +4973,12 @@
       "kickstarter": "Vos outils de campagnes de lancement et de reconquête sont verrouillés ; les campagnes que vous avez déjà envoyées ne sont pas affectées.",
       "growthnet": "Votre offre groupée GrowthNet est suspendue, tous ses outils (Promotions avancées, Marketing Studio, Kickstarter, SMS clients) sont donc désactivés ensemble — réabonnez-vous pour rétablir l'ensemble de l'offre."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Vous approchez de votre limite mensuelle de commandes",
+    "warnBody": "Vous avez utilisé {count} de vos {cap} commandes gratuites ce mois-ci — il en reste {remaining}. Une fois {cap} atteint, les nouvelles commandes et réservations sont suspendues jusqu'à la réinitialisation de votre limite le {resetDate}. Supprimez la limite à tout moment pour continuer à recevoir des commandes sans interruption.",
+    "blockTitle": "Vous avez atteint votre limite — vous perdez peut-être des commandes",
+    "blockBody": "Votre restaurant a atteint ses {cap} commandes gratuites pour ce mois-ci ; les nouvelles commandes et réservations sont donc refusées jusqu'à la réinitialisation de votre limite le {resetDate}. Supprimez la limite maintenant pour recommencer à les accepter immédiatement.",
+    "cta": "Supprimer la limite"
   }
 }

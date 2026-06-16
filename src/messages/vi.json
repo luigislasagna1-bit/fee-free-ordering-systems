@@ -4973,5 +4973,12 @@
       "kickstarter": "Các công cụ chiến dịch ra mắt và thu hút lại khách hàng của bạn sẽ bị khóa; bất kỳ chiến dịch nào bạn đã gửi đều không bị ảnh hưởng.",
       "growthnet": "Gói GrowthNet của bạn sẽ tạm dừng, vì vậy tất cả các công cụ của nó (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) sẽ cùng bị tắt — đăng ký lại để khôi phục toàn bộ gói."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Bạn sắp đạt giới hạn đơn hàng hàng tháng",
+    "warnBody": "Bạn đã dùng {count} trong số {cap} đơn miễn phí tháng này — còn lại {remaining}. Khi đạt {cap}, đơn hàng và đặt bàn mới sẽ tạm dừng cho đến khi giới hạn của bạn đặt lại vào {resetDate}. Gỡ giới hạn bất cứ lúc nào để tiếp tục nhận đơn mà không bị gián đoạn.",
+    "blockTitle": "Bạn đã đạt giới hạn — bạn có thể đang mất đơn hàng",
+    "blockBody": "Nhà hàng của bạn đã đạt {cap} đơn miễn phí trong tháng này, nên đơn hàng và đặt bàn mới đang bị từ chối cho đến khi giới hạn đặt lại vào {resetDate}. Gỡ giới hạn ngay để bắt đầu nhận lại chúng ngay lập tức.",
+    "cta": "Gỡ giới hạn"
   }
 }

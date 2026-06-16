@@ -4973,5 +4973,12 @@
       "kickstarter": "Lanseeraus- ja takaisinvoittokampanjatyökalusi ovat lukittuina; jo lähettämäsi kampanjat eivät ole vaikutuksen alaisena.",
       "growthnet": "GrowthNet-pakettisi on keskeytetty, joten kaikki sen työkalut (Edistyneet kampanjat, Marketing Studio, Kickstarter, Asiakas-SMS) kytkeytyvät pois päältä yhdessä — tilaa uudelleen palauttaaksesi koko paketin."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Lähestyt kuukausittaista tilausrajaasi",
+    "warnBody": "Olet käyttänyt tässä kuussa {count}/{cap} ilmaisesta tilauksestasi — {remaining} jäljellä. Kun saavutat {cap}, uudet tilaukset ja varaukset keskeytetään, kunnes rajasi nollautuu {resetDate}. Poista raja milloin tahansa jatkaaksesi tilausten vastaanottamista keskeytyksettä.",
+    "blockTitle": "Olet saavuttanut rajasi — saatat menettää tilauksia",
+    "blockBody": "Ravintolasi on saavuttanut {cap} ilmaista tilaustaan tässä kuussa, joten uudet tilaukset ja varaukset hylätään, kunnes rajasi nollautuu {resetDate}. Poista raja nyt, niin voit ottaa niitä taas heti vastaan.",
+    "cta": "Poista raja"
   }
 }

@@ -4973,5 +4973,12 @@
       "kickstarter": "Lansman ve geri kazanma kampanyası araçlarınız kilitlendi; daha önce gönderdiğiniz kampanyalar etkilenmez.",
       "growthnet": "GrowthNet paketiniz duraklatıldı, böylece tüm araçları (Gelişmiş Promosyonlar, Pazarlama Stüdyosu, Kickstarter, Müşteri SMS) birlikte kapanır — paketin tamamını geri yüklemek için yeniden abone olun."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Aylık sipariş limitinize yaklaşıyorsunuz",
+    "warnBody": "Bu ay {cap} ücretsiz siparişinizden {count} tanesini kullandınız — {remaining} kaldı. {cap} sayısına ulaştığınızda, yeni siparişler ve rezervasyonlar, limitiniz {resetDate} tarihinde sıfırlanana kadar duraklatılır. Kesintisiz sipariş almaya devam etmek için limiti istediğiniz zaman kaldırın.",
+    "blockTitle": "Limitinize ulaştınız — sipariş kaybediyor olabilirsiniz",
+    "blockBody": "Restoranınız bu ay için {cap} ücretsiz siparişine ulaştı, bu nedenle yeni siparişler ve rezervasyonlar, limitiniz {resetDate} tarihinde sıfırlanana kadar reddediliyor. Hemen tekrar kabul etmeye başlamak için limiti şimdi kaldırın.",
+    "cta": "Limiti kaldır"
   }
 }

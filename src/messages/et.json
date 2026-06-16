@@ -4973,5 +4973,12 @@
       "kickstarter": "Teie käivitamis- ja tagasivõitmiskampaaniate tööriistad on lukustatud; juba saadetud kampaaniad ei ole mõjutatud.",
       "growthnet": "Teie GrowthNet komplekt on peatatud, nii et kõik selle tööriistad (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) lülituvad koos välja — tellige uuesti, et taastada kogu komplekt."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Lähenete oma igakuisele tellimuste piirile",
+    "warnBody": "Olete sel kuul kasutanud {count} oma {cap} tasuta tellimusest — jäänud on {remaining}. Kui jõuate {cap}-ni, peatatakse uued tellimused ja broneeringud, kuni teie piir lähtestatakse {resetDate}. Eemaldage piir igal ajal, et jätkata tellimuste vastuvõtmist katkestusteta.",
+    "blockTitle": "Olete jõudnud oma piirini — võite tellimusi kaotada",
+    "blockBody": "Teie restoran on jõudnud oma {cap} tasuta tellimuseni sel kuul, mistõttu uued tellimused ja broneeringud lükatakse tagasi, kuni piir lähtestatakse {resetDate}. Eemaldage piir nüüd, et neid kohe taas vastu võtta.",
+    "cta": "Eemalda piir"
   }
 }

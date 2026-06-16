@@ -4973,5 +4973,12 @@
       "kickstarter": "Az indítási és visszanyerő kampányeszközei zárolva vannak; a már elküldött kampányai nem érintettek.",
       "growthnet": "A GrowthNet csomagja szünetel, így annak összes eszköze (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) együtt kikapcsol — fizessen elő újra a teljes csomag visszaállításához."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Közeledik a havi rendelési korlátjához",
+    "warnBody": "Ebben a hónapban {count}/{cap} ingyenes rendelését használta fel — {remaining} maradt. A(z) {cap} elérésekor az új rendelések és foglalások szünetelnek, amíg a korlátja vissza nem áll {resetDate} napon. Bármikor távolítsa el a korlátot, hogy megszakítás nélkül fogadhasson rendeléseket.",
+    "blockTitle": "Elérte a korlátját — lehet, hogy rendeléseket veszít",
+    "blockBody": "Étterme elérte a havi {cap} ingyenes rendelését, ezért az új rendeléseket és foglalásokat elutasítja, amíg a korlátja vissza nem áll {resetDate} napon. Távolítsa el a korlátot most, hogy azonnal újra fogadhassa őket.",
+    "cta": "Korlát eltávolítása"
   }
 }

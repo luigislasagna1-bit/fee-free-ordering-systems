@@ -219,6 +219,13 @@ model Restaurant {
   // (counter still increments for analytics but isn't enforced).
   currentMonthOrderCount Int       @default(0)
   currentMonthResetAt    DateTime?
+  // Order-cap owner-notification guards (Luigi 2026-06-16). capWarn80SentAt: set
+  // when the "approaching your limit" email goes out at 80, reset to null on the
+  // monthly rollover so it fires once per month. capBlockAlertSentAt: set when
+  // the "you're losing orders" alert fires at the cap, rate-limited ~3h. Both
+  // are nullable timestamps on this small table — cheap, no hot-table bloat.
+  capWarn80SentAt        DateTime?
+  capBlockAlertSentAt    DateTime?
 
   /// JSON array of accepted payment methods chosen by the owner.
   /// Allowed values today: "cash" | "card_in_person" | "online_card" | "paypal".

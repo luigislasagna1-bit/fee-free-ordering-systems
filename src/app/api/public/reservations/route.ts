@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import prisma from "@/lib/db";
 import { validateBooking, resolveDayHours, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
@@ -6,6 +6,7 @@ import { notifyStaff, notifyCustomer } from "@/lib/notifications";
 import { sendKitchenPush } from "@/lib/push";
 import { hasFeature } from "@/lib/entitlements";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
+import { notifyCapWarning80, notifyCapReached100 } from "@/lib/cap-notify";
 import { liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
 import { holidayEffectToday } from "@/lib/holiday-rules";
 
@@ -61,6 +62,14 @@ export async function POST(req: NextRequest) {
     // exempts the restaurant. Mirrors /api/orders (status 402, same code).
     const planCap = await checkOrderCap(restaurant.id);
     if (!planCap.allowed) {
+      // Owner alert: a booking just got turned away at the cap. Post-response,
+      // rate-limited ~3h inside. Luigi 2026-06-16.
+      after(
+        (async () => {
+          try { await notifyCapReached100(restaurant.id); }
+          catch (e) { console.error("[reservations] notifyCapReached100:", e); }
+        })(),
+      );
       return NextResponse.json(
         {
           error: "This restaurant has reached its monthly limit. Please try again next month, or contact the restaurant directly.",
@@ -187,8 +196,16 @@ export async function POST(req: NextRequest) {
     // Count this booking toward the FREE-plan monthly cap (shared pool with
     // orders, Luigi 2026-06-14). Fire-and-forget — never fail a booking over
     // the counter; an off-by-one is acceptable (see src/lib/order-cap.ts).
-    incrementOrderCount(restaurant.id).catch((e) =>
-      console.error("[reservations] incrementOrderCount:", e),
+    after(
+      (async () => {
+        try {
+          const newCount = await incrementOrderCount(restaurant.id);
+          // First booking/order to land in the 80-99 band this month → owner heads-up.
+          if (newCount >= 80 && newCount < 100) await notifyCapWarning80(restaurant.id);
+        } catch (e) {
+          console.error("[reservations] incrementOrderCount:", e);
+        }
+      })(),
     );
 
     // CRM: persist marketing consent (+ create the contact) like the order flow,

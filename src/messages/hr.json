@@ -4973,5 +4973,12 @@
       "kickstarter": "Vaši alati za lansiranje i kampanje za povratak kupaca su zaključani; sve kampanje koje ste već poslali nisu pogođene.",
       "growthnet": "Vaš GrowthNet paket je pauziran, pa se svi njegovi alati (Napredne promocije, Marketing Studio, Kickstarter, SMS kupcima) isključuju zajedno — ponovno se pretplatite kako biste vratili cijeli paket."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Približavate se mjesečnom ograničenju narudžbi",
+    "warnBody": "Ovaj ste mjesec iskoristili {count} od {cap} besplatnih narudžbi — preostalo je {remaining}. Kad dosegnete {cap}, nove narudžbe i rezervacije pauziraju se dok se vaše ograničenje ne resetira {resetDate}. Uklonite ograničenje bilo kada kako biste bez prekida primali narudžbe.",
+    "blockTitle": "Dosegli ste ograničenje — možda gubite narudžbe",
+    "blockBody": "Vaš je restoran dosegnuo svojih {cap} besplatnih narudžbi za ovaj mjesec, pa se nove narudžbe i rezervacije odbijaju dok se ograničenje ne resetira {resetDate}. Uklonite ograničenje sada kako biste ih odmah ponovno počeli primati.",
+    "cta": "Ukloni ograničenje"
   }
 }

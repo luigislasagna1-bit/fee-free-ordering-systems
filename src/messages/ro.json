@@ -4973,5 +4973,12 @@
       "kickstarter": "Instrumentele dvs. pentru campaniile de lansare și de recâștigare sunt blocate; campaniile pe care le-ați trimis deja nu sunt afectate.",
       "growthnet": "Pachetul dvs. GrowthNet este suspendat, așa că toate instrumentele sale (Promoții Avansate, Marketing Studio, Kickstarter, SMS pentru Clienți) se dezactivează împreună — reabonați-vă pentru a restabili întregul pachet."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Te apropii de limita lunară de comenzi",
+    "warnBody": "Ai folosit {count} din cele {cap} comenzi gratuite din această lună — au mai rămas {remaining}. Când atingi {cap}, comenzile și rezervările noi se suspendă până când limita ta se resetează pe {resetDate}. Elimină limita oricând pentru a continua să primești comenzi fără întrerupere.",
+    "blockTitle": "Ai atins limita — s-ar putea să pierzi comenzi",
+    "blockBody": "Restaurantul tău a atins cele {cap} comenzi gratuite pentru această lună, așa că noile comenzi și rezervări sunt refuzate până când limita se resetează pe {resetDate}. Elimină limita acum pentru a le accepta din nou imediat.",
+    "cta": "Elimină limita"
   }
 }

@@ -4973,5 +4973,12 @@
       "kickstarter": "Twoje narzędzia do kampanii startowych i odzyskiwania klientów są zablokowane; kampanie, które już wysłałeś, pozostają bez zmian.",
       "growthnet": "Twój pakiet GrowthNet jest wstrzymany, więc wszystkie jego narzędzia (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) wyłączają się razem — odnów subskrypcję, aby przywrócić cały pakiet."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Zbliżasz się do miesięcznego limitu zamówień",
+    "warnBody": "W tym miesiącu wykorzystałeś {count} z {cap} darmowych zamówień — pozostało {remaining}. Po osiągnięciu {cap} nowe zamówienia i rezerwacje zostaną wstrzymane do zresetowania limitu w dniu {resetDate}. Usuń limit w dowolnym momencie, aby bez przerwy przyjmować zamówienia.",
+    "blockTitle": "Osiągnięto limit — możesz tracić zamówienia",
+    "blockBody": "Twoja restauracja osiągnęła {cap} darmowych zamówień w tym miesiącu, więc nowe zamówienia i rezerwacje są odrzucane do zresetowania limitu w dniu {resetDate}. Usuń limit teraz, aby od razu znów je przyjmować.",
+    "cta": "Usuń limit"
   }
 }

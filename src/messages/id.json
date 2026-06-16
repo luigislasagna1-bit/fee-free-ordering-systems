@@ -4973,5 +4973,12 @@
       "kickstarter": "Perangkat kampanye peluncuran dan win-back Anda terkunci; kampanye apa pun yang sudah Anda kirim tidak terpengaruh.",
       "growthnet": "Paket GrowthNet Anda dijeda, sehingga semua perangkatnya (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) nonaktif bersamaan — berlangganan kembali untuk memulihkan seluruh paket."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Anda mendekati batas pesanan bulanan Anda",
+    "warnBody": "Anda telah menggunakan {count} dari {cap} pesanan gratis bulan ini — tersisa {remaining}. Saat mencapai {cap}, pesanan dan reservasi baru dijeda hingga batas Anda disetel ulang pada {resetDate}. Hapus batas kapan saja untuk terus menerima pesanan tanpa gangguan.",
+    "blockTitle": "Anda telah mencapai batas — Anda mungkin kehilangan pesanan",
+    "blockBody": "Restoran Anda telah mencapai {cap} pesanan gratis untuk bulan ini, jadi pesanan dan reservasi baru ditolak hingga batas Anda disetel ulang pada {resetDate}. Hapus batas sekarang untuk mulai menerimanya lagi seketika.",
+    "cta": "Hapus batas"
   }
 }

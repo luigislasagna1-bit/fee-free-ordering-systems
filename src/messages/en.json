@@ -4973,5 +4973,12 @@
       "kickstarter": "Your launch and win-back campaign tools are locked; any campaigns you already sent are unaffected.",
       "growthnet": "Your GrowthNet bundle is paused, so all its tools (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) switch off together — re-subscribe to restore the whole bundle."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "You're close to your monthly order limit",
+    "warnBody": "You've used {count} of your {cap} free orders this month — {remaining} left. When you reach {cap}, new orders and reservations pause until your limit resets on {resetDate}. Remove the limit anytime to keep taking orders without interruption.",
+    "blockTitle": "You've hit your limit — you may be losing orders",
+    "blockBody": "Your restaurant has reached its {cap} free orders for this month, so new orders and reservations are being turned away until your limit resets on {resetDate}. Remove the limit now to start accepting them again right away.",
+    "cta": "Remove the limit"
   }
 }

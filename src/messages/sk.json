@@ -4973,5 +4973,12 @@
       "kickstarter": "Vaše nástroje na spúšťacie a opätovne získavajúce kampane sú uzamknuté; kampane, ktoré ste už odoslali, nie sú ovplyvnené.",
       "growthnet": "Váš balík GrowthNet je pozastavený, takže všetky jeho nástroje (Pokročilé propagácie, Marketing Studio, Kickstarter, Zákaznícke SMS) sa vypnú naraz — obnovte predplatné a obnovíte celý balík."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "Blížite sa k mesačnému limitu objednávok",
+    "warnBody": "Tento mesiac ste využili {count} z {cap} bezplatných objednávok — zostáva {remaining}. Po dosiahnutí {cap} sa nové objednávky a rezervácie pozastavia, kým sa váš limit neobnoví dňa {resetDate}. Limit môžete kedykoľvek odstrániť a prijímať objednávky bez prerušenia.",
+    "blockTitle": "Dosiahli ste limit — možno prichádzate o objednávky",
+    "blockBody": "Vaša reštaurácia dosiahla {cap} bezplatných objednávok za tento mesiac, takže nové objednávky a rezervácie sú odmietané, kým sa limit neobnoví dňa {resetDate}. Odstráňte limit teraz a začnite ich hneď znova prijímať.",
+    "cta": "Odstrániť limit"
   }
 }

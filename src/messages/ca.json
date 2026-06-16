@@ -4973,5 +4973,12 @@
       "kickstarter": "Les vostres eines de campanya de llançament i de recuperació de clients estan bloquejades; les campanyes que ja heu enviat no es veuen afectades.",
       "growthnet": "El vostre paquet de GrowthNet està pausat, així que totes les seves eines (Promocions avançades, Marketing Studio, Kickstarter, SMS a clients) es desactiven alhora — torneu a subscriure-us per restaurar tot el paquet."
     }
+  },
+  "orderCapNotify": {
+    "warnTitle": "T'estàs acostant al teu límit mensual de comandes",
+    "warnBody": "Aquest mes has fet servir {count} de les teves {cap} comandes gratuïtes — en queden {remaining}. En arribar a {cap}, les noves comandes i reserves es pausen fins que el teu límit es restableixi el {resetDate}. Elimina el límit quan vulguis per continuar rebent comandes sense interrupció.",
+    "blockTitle": "Has assolit el teu límit — pot ser que perdis comandes",
+    "blockBody": "El teu restaurant ha assolit les seves {cap} comandes gratuïtes d'aquest mes, així que les noves comandes i reserves es rebutgen fins que el teu límit es restableixi el {resetDate}. Elimina el límit ara per tornar a acceptar-les immediatament.",
+    "cta": "Elimina el límit"
   }
 }
