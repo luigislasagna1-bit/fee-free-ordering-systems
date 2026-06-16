@@ -140,19 +140,24 @@ export async function sendKitchenPush(
 
     await Promise.allSettled(
       devices.map(async (d) => {
+        // DATA-ONLY message. Our custom KitchenMessagingService (Android) handles
+        // it even when backgrounded / screen-off / app-closed and fires the loud
+        // looping order alarm + full-screen notification. A `notification` block
+        // would instead be auto-shown by the system (a quiet single ding) and our
+        // service would NOT run in the background — so we deliberately omit it.
+        // title/body travel inside data so the native alarm can render them.
         const message = {
           message: {
             token: d.token,
-            notification: { title: payload.title, body: payload.body },
-            data: payload.data ?? {},
-            // High priority + sound so the device wakes the screen and rings.
-            android: {
-              priority: "high",
-              notification: { sound: "default", channelId: "orders" },
+            data: {
+              ...(payload.data ?? {}),
+              title: payload.title,
+              body: payload.body,
             },
+            android: { priority: "high" },
             apns: {
-              headers: { "apns-priority": "10" },
-              payload: { aps: { sound: "default" } },
+              headers: { "apns-priority": "10", "apns-push-type": "background" },
+              payload: { aps: { "content-available": 1 } },
             },
           },
         };
