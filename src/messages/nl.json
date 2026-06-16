@@ -679,7 +679,14 @@
     "openInMaps": "Openen in Maps",
     "calculatingEta": "Afstand berekenen…",
     "etaTrafficNote": "Rijtijd met huidig verkeer",
-    "autoCallReservationMessage": "Een nieuwe tafelreservering bij {restaurant} wacht en is nog niet geaccepteerd. Open je Kitchen Order App om deze te accepteren of te weigeren."
+    "autoCallReservationMessage": "Een nieuwe tafelreservering bij {restaurant} wacht en is nog niet geaccepteerd. Open je Kitchen Order App om deze te accepteren of te weigeren.",
+    "printerManageLabel": "Printerverbinding",
+    "printerDisconnect": "Verbinding verbreken",
+    "printerForget": "Printer vergeten",
+    "printerForgetConfirm": "Tik nogmaals om te bevestigen",
+    "printerManageHint": "Verbinding verbreken stopt het printen maar bewaart deze printer. Vergeten wist alle opgeslagen printerinstellingen zodat je opnieuw kunt beginnen.",
+    "printerDisconnectedToast": "Printer losgekoppeld.",
+    "printerForgotToast": "Printerinstellingen gewist — begin opnieuw."
   },
   "admin": {
     "welcomeBack": "Welkom terug",

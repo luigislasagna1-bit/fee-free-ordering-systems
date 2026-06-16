@@ -679,7 +679,14 @@
     "openInMaps": "मैप्स में खोलें",
     "calculatingEta": "दूरी की गणना…",
     "etaTrafficNote": "मौजूदा ट्रैफ़िक के साथ ड्राइव समय",
-    "autoCallReservationMessage": "{restaurant} पर एक नया टेबल आरक्षण प्रतीक्षा कर रहा है और अभी तक स्वीकार नहीं किया गया है। इसे स्वीकार या अस्वीकार करने के लिए अपना Kitchen Order App खोलें।"
+    "autoCallReservationMessage": "{restaurant} पर एक नया टेबल आरक्षण प्रतीक्षा कर रहा है और अभी तक स्वीकार नहीं किया गया है। इसे स्वीकार या अस्वीकार करने के लिए अपना Kitchen Order App खोलें।",
+    "printerManageLabel": "प्रिंटर कनेक्शन",
+    "printerDisconnect": "डिस्कनेक्ट करें",
+    "printerForget": "प्रिंटर भूलें",
+    "printerForgetConfirm": "पुष्टि के लिए फिर से टैप करें",
+    "printerManageHint": "डिस्कनेक्ट करने से प्रिंटिंग रुक जाती है पर यह प्रिंटर सहेजा रहता है। भूलें सभी सहेजी गई प्रिंटर सेटिंग्स हटा देता है ताकि आप नए सिरे से सेटअप कर सकें।",
+    "printerDisconnectedToast": "प्रिंटर डिस्कनेक्ट हो गया।",
+    "printerForgotToast": "प्रिंटर सेटिंग्स साफ़ कर दी गईं — नए सिरे से शुरू करें।"
   },
   "admin": {
     "comingSoonPlaceholder": {

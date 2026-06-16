@@ -679,7 +679,14 @@
     "openInMaps": "Haritalar'da aç",
     "calculatingEta": "Mesafe hesaplanıyor…",
     "etaTrafficNote": "Mevcut trafikle sürüş süresi",
-    "autoCallReservationMessage": "{restaurant} için yeni bir masa rezervasyonu bekliyor ve henüz kabul edilmedi. Kabul etmek veya reddetmek için Kitchen Order App uygulamanızı açın."
+    "autoCallReservationMessage": "{restaurant} için yeni bir masa rezervasyonu bekliyor ve henüz kabul edilmedi. Kabul etmek veya reddetmek için Kitchen Order App uygulamanızı açın.",
+    "printerManageLabel": "Yazıcı bağlantısı",
+    "printerDisconnect": "Bağlantıyı kes",
+    "printerForget": "Yazıcıyı unut",
+    "printerForgetConfirm": "Onaylamak için tekrar dokunun",
+    "printerManageHint": "Bağlantıyı kesmek yazdırmayı durdurur ama bu yazıcıyı kayıtlı tutar. Unutmak tüm kayıtlı ayarları siler, böylece sıfırdan kurabilirsiniz.",
+    "printerDisconnectedToast": "Yazıcı bağlantısı kesildi.",
+    "printerForgotToast": "Yazıcı ayarları temizlendi — sıfırdan başlayın."
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",

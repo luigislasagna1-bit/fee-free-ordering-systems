@@ -679,7 +679,14 @@
     "openInMaps": "Otwórz w Mapach",
     "calculatingEta": "Obliczanie odległości…",
     "etaTrafficNote": "Czas jazdy przy obecnym ruchu",
-    "autoCallReservationMessage": "Nowa rezerwacja stolika w {restaurant} czeka i nie została jeszcze zaakceptowana. Otwórz aplikację Kitchen Order App, aby ją zaakceptować lub odrzucić."
+    "autoCallReservationMessage": "Nowa rezerwacja stolika w {restaurant} czeka i nie została jeszcze zaakceptowana. Otwórz aplikację Kitchen Order App, aby ją zaakceptować lub odrzucić.",
+    "printerManageLabel": "Połączenie drukarki",
+    "printerDisconnect": "Rozłącz",
+    "printerForget": "Zapomnij drukarkę",
+    "printerForgetConfirm": "Dotknij ponownie, aby potwierdzić",
+    "printerManageHint": "Rozłącz zatrzymuje drukowanie, ale zachowuje zapisaną drukarkę. Zapomnij usuwa wszystkie zapisane ustawienia, aby zacząć od nowa.",
+    "printerDisconnectedToast": "Drukarka rozłączona.",
+    "printerForgotToast": "Ustawienia drukarki wyczyszczone — zacznij od nowa."
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",

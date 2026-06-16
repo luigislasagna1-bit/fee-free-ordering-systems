@@ -679,7 +679,14 @@
     "openInMaps": "Avaa Mapsissa",
     "calculatingEta": "Lasketaan etäisyyttä…",
     "etaTrafficNote": "Ajoaika nykyisellä liikenteellä",
-    "autoCallReservationMessage": "Uusi pöytävaraus ravintolassa {restaurant} odottaa eikä sitä ole vielä hyväksytty. Avaa Kitchen Order App hyväksyäksesi tai hylätäksesi sen."
+    "autoCallReservationMessage": "Uusi pöytävaraus ravintolassa {restaurant} odottaa eikä sitä ole vielä hyväksytty. Avaa Kitchen Order App hyväksyäksesi tai hylätäksesi sen.",
+    "printerManageLabel": "Tulostimen yhteys",
+    "printerDisconnect": "Katkaise yhteys",
+    "printerForget": "Unohda tulostin",
+    "printerForgetConfirm": "Vahvista napauttamalla uudelleen",
+    "printerManageHint": "Katkaise yhteys lopettaa tulostuksen mutta säilyttää tulostimen tallennettuna. Unohda poistaa kaikki tallennetut asetukset, jotta voit aloittaa alusta.",
+    "printerDisconnectedToast": "Tulostimen yhteys katkaistu.",
+    "printerForgotToast": "Tulostimen asetukset tyhjennetty – aloita alusta."
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

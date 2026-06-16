@@ -679,7 +679,14 @@
     "openInMaps": "Open in Maps",
     "calculatingEta": "Calculating distance…",
     "etaTrafficNote": "Drive time with current traffic",
-    "autoCallReservationMessage": "A new table reservation at {restaurant} is waiting and has not been accepted yet. Please open your Kitchen Order App to accept or reject it."
+    "autoCallReservationMessage": "A new table reservation at {restaurant} is waiting and has not been accepted yet. Please open your Kitchen Order App to accept or reject it.",
+    "printerManageLabel": "Printer connection",
+    "printerDisconnect": "Disconnect",
+    "printerForget": "Forget printer",
+    "printerForgetConfirm": "Tap again to confirm",
+    "printerManageHint": "Disconnect stops printing but keeps this printer saved. Forget clears all saved printer settings so you can set up from scratch.",
+    "printerDisconnectedToast": "Disconnected from printer.",
+    "printerForgotToast": "Printer settings cleared — start fresh."
   },
   "admin": {
     "comingSoonPlaceholder": {

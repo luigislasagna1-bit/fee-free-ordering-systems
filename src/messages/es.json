@@ -679,7 +679,14 @@
     "openInMaps": "Abrir en Maps",
     "calculatingEta": "Calculando distancia…",
     "etaTrafficNote": "Tiempo de viaje con el tráfico actual",
-    "autoCallReservationMessage": "Una nueva reserva de mesa en {restaurant} está esperando y aún no ha sido aceptada. Abre tu Kitchen Order App para aceptarla o rechazarla."
+    "autoCallReservationMessage": "Una nueva reserva de mesa en {restaurant} está esperando y aún no ha sido aceptada. Abre tu Kitchen Order App para aceptarla o rechazarla.",
+    "printerManageLabel": "Conexión de la impresora",
+    "printerDisconnect": "Desconectar",
+    "printerForget": "Olvidar impresora",
+    "printerForgetConfirm": "Toca de nuevo para confirmar",
+    "printerManageHint": "Desconectar detiene la impresión pero mantiene esta impresora guardada. Olvidar borra todos los ajustes guardados para empezar de cero.",
+    "printerDisconnectedToast": "Impresora desconectada.",
+    "printerForgotToast": "Ajustes de la impresora borrados: empieza de cero."
   },
   "admin": {
     "welcomeBack": "Bienvenido de nuevo",

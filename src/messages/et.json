@@ -679,7 +679,14 @@
     "openInMaps": "Ava Mapsis",
     "calculatingEta": "Vahemaa arvutamine…",
     "etaTrafficNote": "Sõiduaeg praeguse liiklusega",
-    "autoCallReservationMessage": "Uus lauabroneering restoranis {restaurant} ootab ja pole veel kinnitatud. Ava oma Kitchen Order App, et see kinnitada või tagasi lükata."
+    "autoCallReservationMessage": "Uus lauabroneering restoranis {restaurant} ootab ja pole veel kinnitatud. Ava oma Kitchen Order App, et see kinnitada või tagasi lükata.",
+    "printerManageLabel": "Printeri ühendus",
+    "printerDisconnect": "Katkesta ühendus",
+    "printerForget": "Unusta printer",
+    "printerForgetConfirm": "Kinnitamiseks puudutage uuesti",
+    "printerManageHint": "Ühenduse katkestamine peatab printimise, kuid jätab printeri salvestatuks. Unustamine kustutab kõik salvestatud sätted, et saaksite uuesti alustada.",
+    "printerDisconnectedToast": "Printer lahti ühendatud.",
+    "printerForgotToast": "Printeri sätted kustutatud – alusta uuesti."
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",

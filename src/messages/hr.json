@@ -679,7 +679,14 @@
     "openInMaps": "Otvori u Kartama",
     "calculatingEta": "Izračun udaljenosti…",
     "etaTrafficNote": "Vrijeme vožnje uz trenutni promet",
-    "autoCallReservationMessage": "Nova rezervacija stola u {restaurant} čeka i još nije prihvaćena. Otvorite svoju Kitchen Order App da je prihvatite ili odbijete."
+    "autoCallReservationMessage": "Nova rezervacija stola u {restaurant} čeka i još nije prihvaćena. Otvorite svoju Kitchen Order App da je prihvatite ili odbijete.",
+    "printerManageLabel": "Veza s pisačem",
+    "printerDisconnect": "Prekini vezu",
+    "printerForget": "Zaboravi pisač",
+    "printerForgetConfirm": "Dodirnite ponovno za potvrdu",
+    "printerManageHint": "Prekid veze zaustavlja ispis, ali zadržava spremljeni pisač. Zaboravljanje briše sve spremljene postavke da možete krenuti ispočetka.",
+    "printerDisconnectedToast": "Pisač je odspojen.",
+    "printerForgotToast": "Postavke pisača izbrisane — krenite ispočetka."
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",

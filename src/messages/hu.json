@@ -679,7 +679,14 @@
     "openInMaps": "Megnyitás a Térképen",
     "calculatingEta": "Távolság számítása…",
     "etaTrafficNote": "Menetidő a jelenlegi forgalommal",
-    "autoCallReservationMessage": "Egy új asztalfoglalás a(z) {restaurant} étteremben várakozik, és még nem fogadták el. Nyisd meg a Kitchen Order App alkalmazást az elfogadásához vagy elutasításához."
+    "autoCallReservationMessage": "Egy új asztalfoglalás a(z) {restaurant} étteremben várakozik, és még nem fogadták el. Nyisd meg a Kitchen Order App alkalmazást az elfogadásához vagy elutasításához.",
+    "printerManageLabel": "Nyomtató kapcsolat",
+    "printerDisconnect": "Leválasztás",
+    "printerForget": "Nyomtató elfelejtése",
+    "printerForgetConfirm": "A megerősítéshez koppintson újra",
+    "printerManageHint": "A Leválasztás leállítja a nyomtatást, de megtartja a mentett nyomtatót. Az Elfelejtés törli az összes mentett beállítást, hogy elölről kezdhesd.",
+    "printerDisconnectedToast": "Nyomtató leválasztva.",
+    "printerForgotToast": "Nyomtató beállításai törölve – kezdd elölről."
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",

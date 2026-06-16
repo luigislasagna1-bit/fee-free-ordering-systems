@@ -679,7 +679,14 @@
     "openInMaps": "เปิดในแผนที่",
     "calculatingEta": "กำลังคำนวณระยะทาง…",
     "etaTrafficNote": "เวลาขับขี่ตามการจราจรปัจจุบัน",
-    "autoCallReservationMessage": "การจองโต๊ะใหม่ที่ {restaurant} กำลังรอและยังไม่ได้รับการยอมรับ เปิด Kitchen Order App ของคุณเพื่อยอมรับหรือปฏิเสธ"
+    "autoCallReservationMessage": "การจองโต๊ะใหม่ที่ {restaurant} กำลังรอและยังไม่ได้รับการยอมรับ เปิด Kitchen Order App ของคุณเพื่อยอมรับหรือปฏิเสธ",
+    "printerManageLabel": "การเชื่อมต่อเครื่องพิมพ์",
+    "printerDisconnect": "ยกเลิกการเชื่อมต่อ",
+    "printerForget": "ลืมเครื่องพิมพ์",
+    "printerForgetConfirm": "แตะอีกครั้งเพื่อยืนยัน",
+    "printerManageHint": "การยกเลิกการเชื่อมต่อจะหยุดการพิมพ์แต่ยังเก็บเครื่องพิมพ์นี้ไว้ การลืมจะลบการตั้งค่าที่บันทึกไว้ทั้งหมดเพื่อให้เริ่มต้นใหม่",
+    "printerDisconnectedToast": "ยกเลิกการเชื่อมต่อเครื่องพิมพ์แล้ว",
+    "printerForgotToast": "ล้างการตั้งค่าเครื่องพิมพ์แล้ว — เริ่มใหม่ได้เลย"
   },
   "admin": {
     "welcomeBack": "ยินดีต้อนรับกลับ",

@@ -24,8 +24,9 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import toast from "react-hot-toast";
 import {
-  X, Printer, CheckCircle2, XCircle, Loader2, Wifi, AlertCircle, Sparkles, Search,
+  X, Printer, CheckCircle2, XCircle, Loader2, Wifi, AlertCircle, Sparkles, Search, Unplug, Trash2,
 } from "lucide-react";
 import {
   isNativePrinterAvailable,
@@ -101,6 +102,8 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
   // clicks the "Enter IP manually" link (or auto-expand if discovery
   // came up empty).
   const [showManualEntry, setShowManualEntry] = useState(false);
+  // Two-tap confirm guard for the destructive "Forget printer" reset.
+  const [confirmForget, setConfirmForget] = useState(false);
 
   // Load current settings on mount
   useEffect(() => {
@@ -126,6 +129,42 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
       localStorage.setItem(LS_KEYS.paperWidth, paperWidth);
       localStorage.setItem(LS_KEYS.autoprint, autoprint ? "1" : "0");
     } catch { /* noop */ }
+  }
+
+  // Disconnect: stop printing to the current printer but KEEP it saved, so the
+  // operator can turn "Use direct printing" back on to reconnect to the same
+  // one. Soft / reversible. Luigi 2026-06-16.
+  function disconnect() {
+    setEnabled(false);
+    setTestState({ kind: "idle" });
+    try { localStorage.setItem(LS_KEYS.enabled, "0"); } catch { /* noop */ }
+    toast.success(tk("printerDisconnectedToast"));
+  }
+
+  // Forget: wipe ALL saved printer info + reset the form to fresh defaults so the
+  // operator can set up from scratch. Two-tap confirm (destructive). The persist
+  // effect re-writes the reset defaults, so getDirectPrinterConfig() returns null
+  // afterwards (enabled "0" + empty ip) — a clean slate. Luigi 2026-06-16.
+  function forgetPrinter() {
+    if (!confirmForget) {
+      setConfirmForget(true);
+      setTimeout(() => setConfirmForget(false), 4000);
+      return;
+    }
+    setConfirmForget(false);
+    try {
+      Object.values(LS_KEYS).forEach((k) => localStorage.removeItem(k));
+    } catch { /* noop */ }
+    setEnabled(false);
+    setIp("");
+    setPort("9100");
+    setPaperWidth("80");
+    setAutoprint(true);
+    setDiscovered([]);
+    setDiscoveredAtLeastOnce(false);
+    setShowManualEntry(false);
+    setTestState({ kind: "idle" });
+    toast.success(tk("printerForgotToast"));
   }
 
   async function findPrinters() {
@@ -524,40 +563,43 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
             </div>
           )}
 
-          {/* Star printer help notice. Star TSP143III/IV/mPOP ship in
-              Star Line Mode and silently ignore ESC/POS commands —
-              user sees "Test Print sent" but no paper. The fix is a
-              one-time emulation-mode switch via Star's PC utility. */}
-          <details className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">
-            <summary className="cursor-pointer font-bold flex items-center gap-1.5">
-              <AlertCircle className="w-3.5 h-3.5" />
-              {tk("printerHelpSummary")}
-            </summary>
-            {/* Technical steps below are intentionally kept in English: they
-                reference the EXACT English menu labels in Star's own PC utility
-                ("Star Line Mode", "ESC/POS Mode", "Emulation") and link to
-                English vendor docs — translating them would send users hunting
-                for labels that don't exist in their printer tool. */}
-            <div className="mt-2 space-y-2 leading-relaxed">
-              <p>
-                <strong>If you have a Star TSP143III, TSP100, or mPOP printer:</strong> these models ship in &quot;Star Line Mode&quot; by default and ignore the standard print commands our app sends. The TCP connection works (Test Connection passes) but the printer silently discards the print job. You&apos;ll need to switch the printer to &quot;ESC/POS Mode&quot; one time — takes ~5 minutes.
-              </p>
-              <ol className="list-decimal pl-5 space-y-1">
-                <li>Download <strong>Star Printer Utility</strong> from <a href="https://www.starmicronics.com/support/" target="_blank" rel="noopener noreferrer" className="underline">starmicronics.com/support</a> (Windows or Mac)</li>
-                <li>Connect the printer to your computer via USB cable</li>
-                <li>Open the utility → <strong>Printer Settings</strong> → change <strong>Emulation</strong> from &quot;Star Line Mode&quot; to <strong>&quot;Standard ESC/POS Mode&quot;</strong></li>
-                <li>Save + unplug + plug in the printer (power-cycle)</li>
-                <li>Verify: hold the FEED button while powering on. The self-test page should show &quot;Emulation: ESC/POS&quot;</li>
-                <li>Try Test Print again — receipt should come out</li>
-              </ol>
-              <p>
-                <strong>Other printer brands</strong> (Epson, Bixolon, Citizen): these usually work without configuration. If still no paper, check paper roll + cover + power LED.
-              </p>
-              <p className="text-amber-700">
-                We&apos;re adding native Star SDK support in a future update so this manual step won&apos;t be needed.
+          {/* Manage the saved printer — Disconnect (soft: stop printing but keep
+              it saved) or Forget (wipe ALL saved settings + start fresh). Only
+              shown once a printer is saved. NB: the old "switch to ESC/POS mode"
+              Star troubleshooting note was removed here — the native Star SDK
+              (StarXpand) now prints regardless of the printer's emulation, so
+              that "test print succeeded but no paper" step is obsolete. Luigi
+              2026-06-16. */}
+          {ip && (
+            <div className="border-t border-gray-100 pt-4 space-y-2">
+              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                {tk("printerManageLabel")}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={disconnect}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-sm font-semibold text-gray-700 transition"
+                >
+                  <Unplug className="w-4 h-4" /> {tk("printerDisconnect")}
+                </button>
+                <button
+                  type="button"
+                  onClick={forgetPrinter}
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition ${
+                    confirmForget
+                      ? "bg-red-600 hover:bg-red-700 text-white"
+                      : "border border-red-200 text-red-600 hover:bg-red-50"
+                  }`}
+                >
+                  <Trash2 className="w-4 h-4" /> {confirmForget ? tk("printerForgetConfirm") : tk("printerForget")}
+                </button>
+              </div>
+              <p className="text-[11px] text-gray-500 leading-relaxed">
+                {tk("printerManageHint")}
               </p>
             </div>
-          </details>
+          )}
         </div>
 
         <div className="sticky bottom-0 bg-gray-50 border-t border-gray-100 px-6 py-3 flex items-center justify-end gap-2">

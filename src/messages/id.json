@@ -679,7 +679,14 @@
     "openInMaps": "Buka di Maps",
     "calculatingEta": "Menghitung jarak…",
     "etaTrafficNote": "Waktu berkendara dengan lalu lintas saat ini",
-    "autoCallReservationMessage": "Reservasi meja baru di {restaurant} sedang menunggu dan belum diterima. Buka Kitchen Order App Anda untuk menerima atau menolaknya."
+    "autoCallReservationMessage": "Reservasi meja baru di {restaurant} sedang menunggu dan belum diterima. Buka Kitchen Order App Anda untuk menerima atau menolaknya.",
+    "printerManageLabel": "Koneksi printer",
+    "printerDisconnect": "Putuskan",
+    "printerForget": "Lupakan printer",
+    "printerForgetConfirm": "Ketuk lagi untuk konfirmasi",
+    "printerManageHint": "Putuskan menghentikan pencetakan tetapi tetap menyimpan printer ini. Lupakan menghapus semua pengaturan tersimpan agar Anda bisa mulai dari awal.",
+    "printerDisconnectedToast": "Printer terputus.",
+    "printerForgotToast": "Pengaturan printer dihapus — mulai dari awal."
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",

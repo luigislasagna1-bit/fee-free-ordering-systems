@@ -679,7 +679,14 @@
     "openInMaps": "In Maps öffnen",
     "calculatingEta": "Entfernung wird berechnet…",
     "etaTrafficNote": "Fahrzeit mit aktuellem Verkehr",
-    "autoCallReservationMessage": "Eine neue Tischreservierung bei {restaurant} wartet und wurde noch nicht angenommen. Öffnen Sie Ihre Kitchen Order App, um sie anzunehmen oder abzulehnen."
+    "autoCallReservationMessage": "Eine neue Tischreservierung bei {restaurant} wartet und wurde noch nicht angenommen. Öffnen Sie Ihre Kitchen Order App, um sie anzunehmen oder abzulehnen.",
+    "printerManageLabel": "Druckerverbindung",
+    "printerDisconnect": "Trennen",
+    "printerForget": "Drucker entfernen",
+    "printerForgetConfirm": "Zum Bestätigen erneut tippen",
+    "printerManageHint": "„Trennen\" stoppt das Drucken, behält den Drucker aber gespeichert. „Drucker entfernen\" löscht alle gespeicherten Einstellungen, um neu zu beginnen.",
+    "printerDisconnectedToast": "Drucker getrennt.",
+    "printerForgotToast": "Druckereinstellungen gelöscht – neu beginnen."
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",

@@ -679,7 +679,14 @@
     "openInMaps": "Atidaryti Maps",
     "calculatingEta": "Skaičiuojamas atstumas…",
     "etaTrafficNote": "Kelionės laikas esant dabartiniam eismui",
-    "autoCallReservationMessage": "Naujas staliuko rezervavimas {restaurant} laukia ir dar nepatvirtintas. Atidarykite savo Kitchen Order App, kad jį priimtumėte arba atmestumėte."
+    "autoCallReservationMessage": "Naujas staliuko rezervavimas {restaurant} laukia ir dar nepatvirtintas. Atidarykite savo Kitchen Order App, kad jį priimtumėte arba atmestumėte.",
+    "printerManageLabel": "Spausdintuvo ryšys",
+    "printerDisconnect": "Atjungti",
+    "printerForget": "Pamiršti spausdintuvą",
+    "printerForgetConfirm": "Bakstelėkite dar kartą norėdami patvirtinti",
+    "printerManageHint": "Atjungimas sustabdo spausdinimą, bet išsaugo šį spausdintuvą. Pamiršimas ištrina visus išsaugotus nustatymus, kad galėtumėte pradėti iš naujo.",
+    "printerDisconnectedToast": "Spausdintuvas atjungtas.",
+    "printerForgotToast": "Spausdintuvo nustatymai išvalyti — pradėkite iš naujo."
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",

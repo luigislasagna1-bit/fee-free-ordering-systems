@@ -679,7 +679,14 @@
     "openInMaps": "פתח במפות",
     "calculatingEta": "מחשב מרחק…",
     "etaTrafficNote": "זמן נסיעה לפי התנועה הנוכחית",
-    "autoCallReservationMessage": "הזמנת שולחן חדשה ב-{restaurant} ממתינה ועדיין לא אושרה. פתח את אפליקציית Kitchen Order App כדי לאשר או לדחות אותה."
+    "autoCallReservationMessage": "הזמנת שולחן חדשה ב-{restaurant} ממתינה ועדיין לא אושרה. פתח את אפליקציית Kitchen Order App כדי לאשר או לדחות אותה.",
+    "printerManageLabel": "חיבור המדפסת",
+    "printerDisconnect": "נתק",
+    "printerForget": "שכח מדפסת",
+    "printerForgetConfirm": "הקש שוב לאישור",
+    "printerManageHint": "ניתוק עוצר את ההדפסה אך שומר את המדפסת. שכחה מוחקת את כל ההגדרות השמורות כדי שתוכל להתחיל מחדש.",
+    "printerDisconnectedToast": "המדפסת נותקה.",
+    "printerForgotToast": "הגדרות המדפסת נמחקו — התחל מחדש."
   },
   "admin": {
     "welcomeBack": "ברוך שובך",

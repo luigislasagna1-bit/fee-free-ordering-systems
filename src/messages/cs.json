@@ -679,7 +679,14 @@
     "openInMaps": "Otevřít v Mapách",
     "calculatingEta": "Výpočet vzdálenosti…",
     "etaTrafficNote": "Doba jízdy při aktuálním provozu",
-    "autoCallReservationMessage": "Nová rezervace stolu v {restaurant} čeká a dosud nebyla přijata. Otevřete aplikaci Kitchen Order App a přijměte ji nebo odmítněte."
+    "autoCallReservationMessage": "Nová rezervace stolu v {restaurant} čeká a dosud nebyla přijata. Otevřete aplikaci Kitchen Order App a přijměte ji nebo odmítněte.",
+    "printerManageLabel": "Připojení tiskárny",
+    "printerDisconnect": "Odpojit",
+    "printerForget": "Zapomenout tiskárnu",
+    "printerForgetConfirm": "Potvrďte dalším klepnutím",
+    "printerManageHint": "Odpojit zastaví tisk, ale tiskárnu ponechá uloženou. Zapomenout vymaže všechna uložená nastavení, abyste mohli začít znovu.",
+    "printerDisconnectedToast": "Tiskárna odpojena.",
+    "printerForgotToast": "Nastavení tiskárny vymazáno — začněte znovu."
   },
   "admin": {
     "welcomeBack": "Vítejte zpět",

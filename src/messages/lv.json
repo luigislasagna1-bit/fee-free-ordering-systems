@@ -679,7 +679,14 @@
     "openInMaps": "Atvērt Maps",
     "calculatingEta": "Aprēķina attālumu…",
     "etaTrafficNote": "Brauciena laiks pašreizējā satiksmē",
-    "autoCallReservationMessage": "Jauna galdiņa rezervācija {restaurant} gaida un vēl nav apstiprināta. Atveriet savu Kitchen Order App, lai to apstiprinātu vai noraidītu."
+    "autoCallReservationMessage": "Jauna galdiņa rezervācija {restaurant} gaida un vēl nav apstiprināta. Atveriet savu Kitchen Order App, lai to apstiprinātu vai noraidītu.",
+    "printerManageLabel": "Printera savienojums",
+    "printerDisconnect": "Atvienot",
+    "printerForget": "Aizmirst printeri",
+    "printerForgetConfirm": "Pieskarieties vēlreiz, lai apstiprinātu",
+    "printerManageHint": "Atvienošana pārtrauc drukāšanu, bet saglabā šo printeri. Aizmiršana dzēš visus saglabātos iestatījumus, lai sāktu no jauna.",
+    "printerDisconnectedToast": "Printeris atvienots.",
+    "printerForgotToast": "Printera iestatījumi notīrīti — sāciet no jauna."
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",

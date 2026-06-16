@@ -679,7 +679,14 @@
     "openInMaps": "Obre a Maps",
     "calculatingEta": "Calculant distància…",
     "etaTrafficNote": "Temps de conducció amb el trànsit actual",
-    "autoCallReservationMessage": "Una nova reserva de taula a {restaurant} està esperant i encara no s'ha acceptat. Obre la teva Kitchen Order App per acceptar-la o rebutjar-la."
+    "autoCallReservationMessage": "Una nova reserva de taula a {restaurant} està esperant i encara no s'ha acceptat. Obre la teva Kitchen Order App per acceptar-la o rebutjar-la.",
+    "printerManageLabel": "Connexió de la impressora",
+    "printerDisconnect": "Desconnecta",
+    "printerForget": "Oblida la impressora",
+    "printerForgetConfirm": "Torna a tocar per confirmar",
+    "printerManageHint": "Desconnectar atura la impressió però manté aquesta impressora desada. Oblidar esborra tots els ajustos desats per començar de zero.",
+    "printerDisconnectedToast": "Impressora desconnectada.",
+    "printerForgotToast": "Ajustos de la impressora esborrats: comença de zero."
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",

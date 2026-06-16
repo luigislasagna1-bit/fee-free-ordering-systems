@@ -679,7 +679,14 @@
     "openInMaps": "افتح في الخرائط",
     "calculatingEta": "جارٍ حساب المسافة…",
     "etaTrafficNote": "وقت القيادة وفقًا لحركة المرور الحالية",
-    "autoCallReservationMessage": "حجز طاولة جديد في {restaurant} في الانتظار ولم يتم قبوله بعد. افتح تطبيق Kitchen Order App لقبوله أو رفضه."
+    "autoCallReservationMessage": "حجز طاولة جديد في {restaurant} في الانتظار ولم يتم قبوله بعد. افتح تطبيق Kitchen Order App لقبوله أو رفضه.",
+    "printerManageLabel": "اتصال الطابعة",
+    "printerDisconnect": "قطع الاتصال",
+    "printerForget": "نسيان الطابعة",
+    "printerForgetConfirm": "انقر مرة أخرى للتأكيد",
+    "printerManageHint": "قطع الاتصال يوقف الطباعة لكنه يبقي هذه الطابعة محفوظة. النسيان يمسح جميع إعدادات الطابعة المحفوظة لتبدأ من جديد.",
+    "printerDisconnectedToast": "تم قطع الاتصال بالطابعة.",
+    "printerForgotToast": "تم مسح إعدادات الطابعة — ابدأ من جديد."
   },
   "admin": {
     "welcomeBack": "مرحباً بعودتك",

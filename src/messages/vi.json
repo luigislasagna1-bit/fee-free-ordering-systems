@@ -679,7 +679,14 @@
     "openInMaps": "Mở trong Maps",
     "calculatingEta": "Đang tính khoảng cách…",
     "etaTrafficNote": "Thời gian lái xe theo giao thông hiện tại",
-    "autoCallReservationMessage": "Một đặt bàn mới tại {restaurant} đang chờ và chưa được chấp nhận. Mở Kitchen Order App của bạn để chấp nhận hoặc từ chối."
+    "autoCallReservationMessage": "Một đặt bàn mới tại {restaurant} đang chờ và chưa được chấp nhận. Mở Kitchen Order App của bạn để chấp nhận hoặc từ chối.",
+    "printerManageLabel": "Kết nối máy in",
+    "printerDisconnect": "Ngắt kết nối",
+    "printerForget": "Quên máy in",
+    "printerForgetConfirm": "Chạm lại để xác nhận",
+    "printerManageHint": "Ngắt kết nối dừng in nhưng vẫn lưu máy in này. Quên sẽ xóa mọi cài đặt đã lưu để bạn thiết lập lại từ đầu.",
+    "printerDisconnectedToast": "Đã ngắt kết nối máy in.",
+    "printerForgotToast": "Đã xóa cài đặt máy in — thiết lập lại từ đầu."
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",

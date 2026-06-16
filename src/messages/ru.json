@@ -679,7 +679,14 @@
     "openInMaps": "Открыть в Картах",
     "calculatingEta": "Расчёт расстояния…",
     "etaTrafficNote": "Время в пути с учётом текущего трафика",
-    "autoCallReservationMessage": "Новое бронирование столика в {restaurant} ожидает и ещё не принято. Откройте приложение Kitchen Order App, чтобы принять или отклонить его."
+    "autoCallReservationMessage": "Новое бронирование столика в {restaurant} ожидает и ещё не принято. Откройте приложение Kitchen Order App, чтобы принять или отклонить его.",
+    "printerManageLabel": "Подключение принтера",
+    "printerDisconnect": "Отключить",
+    "printerForget": "Забыть принтер",
+    "printerForgetConfirm": "Нажмите ещё раз для подтверждения",
+    "printerManageHint": "Отключение останавливает печать, но сохраняет принтер. Забыть удаляет все сохранённые настройки, чтобы начать заново.",
+    "printerDisconnectedToast": "Принтер отключён.",
+    "printerForgotToast": "Настройки принтера очищены — начните заново."
   },
   "admin": {
     "welcomeBack": "С возвращением",

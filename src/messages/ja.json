@@ -679,7 +679,14 @@
     "openInMaps": "マップで開く",
     "calculatingEta": "距離を計算中…",
     "etaTrafficNote": "現在の交通状況での所要時間",
-    "autoCallReservationMessage": "{restaurant} の新しいテーブル予約が承認待ちです。Kitchen Order App を開いて承認または拒否してください。"
+    "autoCallReservationMessage": "{restaurant} の新しいテーブル予約が承認待ちです。Kitchen Order App を開いて承認または拒否してください。",
+    "printerManageLabel": "プリンター接続",
+    "printerDisconnect": "切断",
+    "printerForget": "プリンターを削除",
+    "printerForgetConfirm": "もう一度タップして確認",
+    "printerManageHint": "「切断」は印刷を停止しますが、このプリンターは保存されたままです。「削除」は保存されたプリンター設定をすべて消去し、最初から設定し直せます。",
+    "printerDisconnectedToast": "プリンターを切断しました。",
+    "printerForgotToast": "プリンター設定を消去しました — 最初から設定できます。"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",

@@ -679,7 +679,14 @@
     "openInMaps": "Åpne i Maps",
     "calculatingEta": "Beregner avstand…",
     "etaTrafficNote": "Kjøretid med dagens trafikk",
-    "autoCallReservationMessage": "En ny bordreservasjon hos {restaurant} venter og er ennå ikke akseptert. Åpne Kitchen Order App for å akseptere eller avvise den."
+    "autoCallReservationMessage": "En ny bordreservasjon hos {restaurant} venter og er ennå ikke akseptert. Åpne Kitchen Order App for å akseptere eller avvise den.",
+    "printerManageLabel": "Skrivertilkobling",
+    "printerDisconnect": "Koble fra",
+    "printerForget": "Glem skriver",
+    "printerForgetConfirm": "Trykk igjen for å bekrefte",
+    "printerManageHint": "Koble fra stopper utskrift, men beholder skriveren lagret. Glem fjerner alle lagrede innstillinger så du kan begynne på nytt.",
+    "printerDisconnectedToast": "Skriver frakoblet.",
+    "printerForgotToast": "Skriverinnstillinger fjernet – start på nytt."
   },
   "admin": {
     "welcomeBack": "Velkommen tilbake",

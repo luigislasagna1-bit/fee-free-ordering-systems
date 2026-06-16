@@ -679,7 +679,14 @@
     "openInMaps": "Отвори в Карти",
     "calculatingEta": "Изчисляване на разстояние…",
     "etaTrafficNote": "Време за път при текущия трафик",
-    "autoCallReservationMessage": "Нова резервация за маса в {restaurant} чака и все още не е приета. Отворете своето приложение Kitchen Order App, за да я приемете или отхвърлите."
+    "autoCallReservationMessage": "Нова резервация за маса в {restaurant} чака и все още не е приета. Отворете своето приложение Kitchen Order App, за да я приемете или отхвърлите.",
+    "printerManageLabel": "Връзка с принтера",
+    "printerDisconnect": "Прекъсни връзката",
+    "printerForget": "Забрави принтера",
+    "printerForgetConfirm": "Докоснете отново за потвърждение",
+    "printerManageHint": "Прекъсването спира печата, но запазва принтера. Забравянето изтрива всички запазени настройки, за да започнете отначало.",
+    "printerDisconnectedToast": "Принтерът е изключен.",
+    "printerForgotToast": "Настройките на принтера са изчистени — започнете отначало."
   },
   "admin": {
     "welcomeBack": "Добре дошъл отново",
