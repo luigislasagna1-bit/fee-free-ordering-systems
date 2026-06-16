@@ -126,19 +126,31 @@ export async function PUT(req: NextRequest) {
   const blocked = await blockIfInheritingMenu(restaurantId);
   if (blocked) return blocked;
 
-  // Imported categories belong to the active menu (so they show to customers).
-  const activeMenuId = await resolveActiveMenuId(restaurantId);
-
   const body = (await req.json().catch(() => ({}))) as {
     preview?: ImportPreview;
     /** Per-category override: sourceId → existing FFOS category id to merge into. */
     mergeMap?: Record<string, string>;
+    /** The menu the owner was viewing — import lands HERE (validated to this
+     *  restaurant), else the active/live menu. Fabrizio 2026-06-16. */
+    menuId?: string;
   };
   const preview = body.preview;
   if (!preview || !Array.isArray(preview.categories)) {
     return NextResponse.json({ error: "preview required" }, { status: 400 });
   }
   const mergeMap = body.mergeMap ?? {};
+
+  // Resolve the TARGET menu: the one the owner was viewing if it's theirs, else
+  // the active/live menu. Validated (id + restaurantId) so a bad or foreign id
+  // can never write into another tenant's menu. Previously this always used the
+  // live menu, so importing while viewing a different (e.g. brand-new) menu
+  // landed everything in the wrong one. Fabrizio 2026-06-16.
+  let targetMenuId: string | null = null;
+  if (typeof body.menuId === "string" && body.menuId) {
+    const m = await prisma.menu.findFirst({ where: { id: body.menuId, restaurantId }, select: { id: true } });
+    targetMenuId = m?.id ?? null;
+  }
+  if (!targetMenuId) targetMenuId = await resolveActiveMenuId(restaurantId);
 
   let categoriesCreated = 0;
   let itemsCreated = 0;
@@ -220,16 +232,25 @@ export async function PUT(req: NextRequest) {
       const PARALLEL = 8;
       const urls = [...sourceUrls];
       let idx = 0;
-      const worker = async () => {
-        while (idx < urls.length) {
-          const my = idx++;
-          const src = urls[my];
+      // Download + re-host one image, RETRYING transient failures (timeouts,
+      // 5xx, dropped connections). This is the fix for "only some photos
+      // imported": GloriaFood's CDN intermittently drops connections under the
+      // 8-way parallel load, and the old single-shot attempt silently lost
+      // those. A 4xx is permanent → no retry. Each attempt is time-boxed so a
+      // hung socket can't stall a worker. Fabrizio 2026-06-16.
+      const ATTEMPTS = 3;
+      const fetchAndStore = async (src: string, my: number): Promise<boolean> => {
+        for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
+          const ctrl = new AbortController();
+          const timer = setTimeout(() => ctrl.abort(), 20_000);
           try {
-            const imgRes = await fetch(src, { cache: "no-store" });
+            const imgRes = await fetch(src, { cache: "no-store", signal: ctrl.signal });
             if (!imgRes.ok) {
-              imagesFailed++;
-              console.warn(`[import-gloriafood] image ${src} → HTTP ${imgRes.status}`);
-              continue;
+              if (imgRes.status >= 400 && imgRes.status < 500) {
+                console.warn(`[import-gloriafood] image ${src} -> HTTP ${imgRes.status} (permanent)`);
+                return false;
+              }
+              throw new Error(`HTTP ${imgRes.status}`); // 5xx → retry
             }
             const buf = Buffer.from(await imgRes.arrayBuffer());
             // Keep the original filename so the blob URL is human-readable
@@ -241,11 +262,24 @@ export async function PUT(req: NextRequest) {
               contentType: imgRes.headers.get("content-type") ?? "image/jpeg",
             });
             blobUrlBySource.set(src, blob.url);
-            imagesImported++;
+            return true;
           } catch (e) {
-            imagesFailed++;
-            console.warn(`[import-gloriafood] image upload failed for ${src}:`, e instanceof Error ? e.message : String(e));
+            if (attempt >= ATTEMPTS) {
+              console.warn(`[import-gloriafood] image failed after ${ATTEMPTS} tries for ${src}:`, e instanceof Error ? e.message : String(e));
+              return false;
+            }
+            await new Promise((r) => setTimeout(r, 500 * attempt)); // backoff
+          } finally {
+            clearTimeout(timer);
           }
+        }
+        return false;
+      };
+      const worker = async () => {
+        while (idx < urls.length) {
+          const my = idx++;
+          if (await fetchAndStore(urls[my], my)) imagesImported++;
+          else imagesFailed++;
         }
       };
       await Promise.all(Array.from({ length: PARALLEL }, worker));
@@ -326,7 +360,7 @@ export async function PUT(req: NextRequest) {
           const created = await tx.menuCategory.create({
             data: {
               restaurantId,
-              menuId: activeMenuId ?? undefined,
+              menuId: targetMenuId ?? undefined,
               name: cat.name,
               description: cat.description,
               imageUrl: cat.sourceImageUrl ? (blobUrlBySource.get(cat.sourceImageUrl) ?? null) : null,

@@ -2816,7 +2816,9 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
               off Sams Restaurant Systems (sunsetting April 2027) or any
               GloriaFood-powered platform paste their embed snippet and
               their entire menu (incl. modifiers) lands in seconds. */}
-          <a href="/admin/menu/import-gloriafood"
+          {/* Carry the CURRENTLY-VIEWED menu id so the import lands in THIS menu,
+              not the live one. Fabrizio 2026-06-16. */}
+          <a href={`/admin/menu/import-gloriafood${menuId ? `?menuId=${encodeURIComponent(menuId)}` : ""}`}
             className="flex items-center gap-2 bg-white border border-gray-300 text-gray-700 font-semibold px-4 py-2.5 rounded-xl hover:bg-gray-50 transition text-sm shadow-sm">
             <Download className="w-4 h-4" /> {t("importFromGloriaFood")}
           </a>

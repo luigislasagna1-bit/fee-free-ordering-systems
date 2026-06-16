@@ -25,7 +25,7 @@ import { useTranslations } from "next-intl";
  * Step 3: commit + redirect to /admin/menu with a success toast
  *         summarising what landed.
  */
-export function ImportGloriaFoodClient() {
+export function ImportGloriaFoodClient({ menuId }: { menuId?: string }) {
   const router = useRouter();
   const t = useTranslations("admin.importGloriaFood");
 
@@ -72,7 +72,7 @@ export function ImportGloriaFoodClient() {
       const res = await fetch("/api/menu/import-gloriafood", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ preview, mergeMap }),
+        body: JSON.stringify({ preview, mergeMap, menuId }),
       });
       const data = await res.json();
       if (!res.ok) {

@@ -20,7 +20,11 @@ export const metadata = {
  *
  * Backed by /api/menu/import-gloriafood (POST = preview, PUT = commit).
  */
-export default async function ImportGloriaFoodPage() {
+export default async function ImportGloriaFoodPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ menuId?: string }>;
+}) {
   const t = await getTranslations("admin.importGloriaFoodPage");
   const user = await getSessionUser();
   if (!user) redirect("/login");
@@ -40,5 +44,10 @@ export default async function ImportGloriaFoodPage() {
     );
   }
 
-  return <ImportGloriaFoodClient />;
+  // The menu the owner was viewing (from ?menuId=). The import commits into THIS
+  // menu instead of the live one. Fabrizio 2026-06-16.
+  const sp = await searchParams;
+  const menuId = typeof sp.menuId === "string" && sp.menuId ? sp.menuId : undefined;
+
+  return <ImportGloriaFoodClient menuId={menuId} />;
 }
