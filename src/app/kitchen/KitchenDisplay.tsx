@@ -1671,6 +1671,36 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   ).length;
   const alerting = (pendingCount + pendingReservationCount) > 0 && !acknowledged;
 
+  // Per-order ring hush (Luigi 2026-06-16, GloriaFood parity). Each pending
+  // order/reservation rings on its OWN: opening one full-screen silences ONLY
+  // that one — any OTHER still-pending order keeps ringing so staff are nagged to
+  // back out and accept it too. The room only goes quiet when nothing pending is
+  // left UNopened. Backing out re-arms (the open item rejoins the ring set);
+  // reopening the app re-arms too (selectedId resets on mount). Implemented by
+  // removing the currently-open item from the ringing set IF it's itself a live
+  // pending (same pending + not-parked test as the counts above; at most one of
+  // order/reservation is open at a time — they clear each other). Gates ONLY the
+  // audio: the visual "X new" badge, the per-tile pulse, the live countdown, and
+  // the server-side auto-reject + alert-call crons all key off `alerting` /
+  // pendingCount / the DB and are deliberately left untouched. Reverses the older
+  // "clicking must not stop the ring" guard.
+  const openOrderIsPending =
+    selectedId !== null &&
+    orders.some(
+      (o) => o.id === selectedId && o.status === "pending" && !(o.alertAt && new Date(o.alertAt).getTime() > nowMs),
+    );
+  const openReservationIsPending =
+    selectedReservationId !== null &&
+    reservations.some(
+      (r) =>
+        r.id === selectedReservationId && r.status === "pending" && r.date >= todayISO &&
+        !(r.alertAt && new Date(r.alertAt).getTime() > nowMs),
+    );
+  const ringAudible =
+    (pendingCount - (openOrderIsPending ? 1 : 0)) +
+      (pendingReservationCount - (openReservationIsPending ? 1 : 0)) > 0 &&
+    !acknowledged;
+
   // Silence the current alarm. Bell stops; the visual "X new" badge
   // stays so the kitchen still sees there's work waiting. Auto-cleared
   // when fetchOrders detects a brand-new pending order arrival.
@@ -1714,7 +1744,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     return 3000;
   };
   useEffect(() => {
-    if (!alerting || alertMuted || alertVolume <= 0) return;
+    if (!ringAudible || alertMuted || alertVolume <= 0) return;
     // "gloriafood" rings via the full-length uploaded alert TRACK (the
     // dedicated long-alert effect below), NOT this short-ding cadence — Luigi
     // wants his exact full-length GloriaFood alert at max volume, not a trimmed
@@ -1745,7 +1775,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       cancelled = true;
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [alerting, alertMuted, alertVolume, ringBellOnce]);
+  }, [ringAudible, alertMuted, alertVolume, ringBellOnce]);
 
   // Full-length GloriaFood alert track — the owner's uploaded
   // /sounds/gloriafood-alert.mp3, played at MAX volume and LOOPED until the
@@ -1756,7 +1786,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   useEffect(() => {
     const a = getLongAlert();
     if (!a) return;
-    const shouldPlay = alerting && alertSound === "gloriafood" && !alertMuted && alertVolume > 0;
+    const shouldPlay = ringAudible && alertSound === "gloriafood" && !alertMuted && alertVolume > 0;
     if (shouldPlay) {
       // Route through the gain+limiter chain so the track plays WAY louder than
       // the file's own level (without clipping). volume = 1 feeds the chain at
@@ -1781,7 +1811,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       if (!a.paused) a.pause();
       try { a.currentTime = 0; } catch {}
     }
-  }, [alerting, longRing, alertSound, alertMuted, alertVolume, getLongAlert, ensureLongAlertRouting]);
+  }, [ringAudible, longRing, alertSound, alertMuted, alertVolume, getLongAlert, ensureLongAlertRouting]);
 
   // ── Re-arm audio when the app returns to the foreground (Luigi 2026-06-07) ──
   // Android (and backgrounded browser tabs) SUSPEND the AudioContext and pause
@@ -1800,7 +1830,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     const rearm = () => {
       if (typeof document !== "undefined" && document.visibilityState !== "visible") return;
       try { audioCtxRef.current?.resume?.().catch?.(() => {}); } catch {}
-      if (!alerting || alertMuted || alertVolume <= 0) return;
+      if (!ringAudible || alertMuted || alertVolume <= 0) return;
       // gloriafood resumes its full-length track; other sounds fire one ding
       // (the cadence effect keeps them going). Luigi 2026-06-09.
       if (alertSound === "gloriafood") {
@@ -1819,7 +1849,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       window.removeEventListener("focus", rearm);
       window.removeEventListener("pageshow", rearm);
     };
-  }, [alerting, alertMuted, alertVolume, alertSound, ringBellOnce, ensureLongAlertRouting]);
+  }, [ringAudible, alertMuted, alertVolume, alertSound, ringBellOnce, ensureLongAlertRouting]);
 
   const testAlertSound = useCallback(() => {
     // ONE strike only — restaurants confused "I keep hearing it" with
