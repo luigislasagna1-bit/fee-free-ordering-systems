@@ -1484,21 +1484,22 @@ const MenuEditCtx = createContext<{ menuId?: string }>({});
  *  fields for items not re-saved since Phase 2 — so the badge always matches the
  *  restriction the owner actually set. Previously it only read the legacy
  *  available* fields, so a fulfilment restriction never showed. (R5, 2026-06-14) */
-function availabilityBadgeText(
+function availabilityBadge(
   item: {
     fulfilDays?: number[] | string | null; fulfilFrom?: string | null; fulfilTo?: string | null;
     availableDays?: number[] | string | null; availableFrom?: string | null; availableTo?: string | null;
   },
-  t: (k: string) => string,
   hoursFormat: HoursFormat = "24h",
-): string | null {
+): { text: string; kind: "fulfil" | "visibility" } | null {
   const parseDayList = (d: number[] | string | null | undefined): number[] | null => {
     if (Array.isArray(d)) return d;
     if (typeof d === "string" && d) { try { const a = JSON.parse(d); if (Array.isArray(a)) return a; } catch { /* ignore */ } }
     return null;
   };
-  // Prefer the Fulfilment Time fields; fall back to legacy availability so an
-  // older, un-re-saved item still shows its badge.
+  // Prefer the Fulfilment Time fields (the orderable "Availability" window); fall
+  // back to the legacy "Visibility" (show/hide) fields so an older, un-re-saved
+  // item still shows its badge. The KIND drives the colour (Fabrizio 2026-06-16):
+  // amber for an availability/fulfilment restriction, blue for a visibility one.
   const fDays = parseDayList(item.fulfilDays);
   const fRestricted = (fDays !== null && fDays.length > 0 && fDays.length < 7) || !!(item.fulfilFrom && item.fulfilTo);
   const days = fRestricted ? fDays : parseDayList(item.availableDays);
@@ -1508,13 +1509,12 @@ function availabilityBadgeText(
   const dayLimited = days !== null && days.length > 0 && days.length < 7;
   const timeLimited = !!(from && to);
   if (!dayLimited && !timeLimited) return null;
-  if (timeLimited) {
-    // Time window is the clearest reminder ("lunch only"); append a small
-    // calendar mark when days are ALSO restricted.
-    const win = `${formatTime(from!, hoursFormat)}–${formatTime(to!, hoursFormat)}`;
-    return dayLimited ? `${win} 📅` : win;
-  }
-  return t("limitedDaysBadge");
+  // Show the actual DAYS (Fabrizio: "I would also write the days") AND the time
+  // window, e.g. "Mon, Wed, Fri · 10:00–20:00".
+  const parts: string[] = [];
+  if (dayLimited) parts.push([...days!].sort((a, b) => a - b).map((d) => DAY_NAMES[d] ?? "").filter(Boolean).join(", "));
+  if (timeLimited) parts.push(`${formatTime(from!, hoursFormat)}–${formatTime(to!, hoursFormat)}`);
+  return { text: parts.join(" · "), kind: fRestricted ? "fulfil" : "visibility" };
 }
 
 function SortableItemRow({
@@ -1591,15 +1591,21 @@ function SortableItemRow({
             <span className="text-xs bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded">🍕 Pizza</span>
           )}
           {(() => {
-            const lbl = availabilityBadgeText(item, t, itemHoursFormat);
-            return lbl ? (
+            const badge = availabilityBadge(item, itemHoursFormat);
+            if (!badge) return null;
+            // Amber = availability (orderable / Fulfilment Time) restriction;
+            // light blue = visibility (show/hide) restriction. Fabrizio 2026-06-16.
+            const cls = badge.kind === "fulfil"
+              ? "bg-amber-100 text-amber-700"
+              : "bg-sky-100 text-sky-700";
+            return (
               <span
-                className="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded inline-flex items-center gap-1"
+                className={`text-xs ${cls} px-1.5 py-0.5 rounded inline-flex items-center gap-1`}
                 title={t("limitedAvailabilityTitle")}
               >
-                <Clock className="w-3 h-3" /> {lbl}
+                <Clock className="w-3 h-3" /> {badge.text}
               </span>
-            ) : null;
+            );
           })()}
         </div>
         {item.description && <div className="text-xs text-gray-400 truncate mt-0.5">{item.description}</div>}

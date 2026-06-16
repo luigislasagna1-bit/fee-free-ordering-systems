@@ -1748,8 +1748,13 @@ export function OrderingPageClient({
                 // Reservation: flag it only when it DOESN'T fit the booking (then
                 // it's blocked below); if it fits, it's a normal addable item.
                 ? (reservationFulfilable ? undefined : t("fulfilNotForReservationLabel", { window: fulfilWin }))
-                // ASAP / order-ahead: the schedulable "Order ahead · …" hint.
-                : t("fulfilOrderAheadLabel", { window: fulfilWin });
+                // ASAP / order-ahead: when it's orderable RIGHT NOW, show just the
+                // window (Fabrizio 2026-06-16: drop "Order ahead" when it can be
+                // ordered now). Keep the "Order ahead · …" hint only when it's not
+                // yet orderable and must be scheduled.
+                : isFulfilableAt(item, visNow, restaurantTz)
+                  ? t("availableOnlyLabel", { window: fulfilWin })
+                  : t("fulfilOrderAheadLabel", { window: fulfilWin });
             return {
               ...item,
               categoryId: c.id,
@@ -4587,7 +4592,9 @@ export function OrderingPageClient({
                               in the cart that this dish has order-time limits (R4). */}
                           {!ci.isBundle && hasFulfilWindow(ci.menuItem) && (
                             <div className="text-[11px] mt-0.5 font-medium text-amber-700">
-                              {t("fulfilOrderAheadLabel", { window: itemFulfilWindow(ci.menuItem, hoursFmt) })}
+                              {isFulfilableAt(ci.menuItem, visNow, restaurantTz)
+                                ? t("availableOnlyLabel", { window: itemFulfilWindow(ci.menuItem, hoursFmt) })
+                                : t("fulfilOrderAheadLabel", { window: itemFulfilWindow(ci.menuItem, hoursFmt) })}
                             </div>
                           )}
                           {/* Bundle child rows — indented under the parent. */}
