@@ -150,6 +150,7 @@ export async function POST(req: NextRequest) {
     const langTag = bcp47(locale);
     const res = await placeVoiceCall({ to: phone, message, language: langTag });
     if (res.placed) called++;
+    else console.error("[order-alert-calls] order voice call NOT placed", { orderId: o.id, to: phone, reason: res.reason });
     results.push({ orderId: o.id, placed: res.placed, reason: res.reason });
   }
 
@@ -228,6 +229,7 @@ export async function POST(req: NextRequest) {
     const langTag = bcp47(locale);
     const callRes = await placeVoiceCall({ to: phone, message, language: langTag });
     if (callRes.placed) resCalled++;
+    else console.error("[order-alert-calls] reservation voice call NOT placed", { resId: b.id, to: phone, reason: callRes.reason });
     results.push({ orderId: `res:${b.id}`, placed: callRes.placed, reason: callRes.reason });
   }
 
