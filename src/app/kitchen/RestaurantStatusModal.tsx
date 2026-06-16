@@ -96,7 +96,7 @@ export function RestaurantStatusModal({
   alertMuted, alertVolume, printerReady, printerLabel, currency,
 }: StatusModalProps) {
   const curSym = currencySymbol(currency ?? "usd");
-  const [tab, setTab] = useState<"pause" | "stock" | "prefs">("pause");
+  const [tab, setTab] = useState<"pause" | "stock" | "prefs" | "report">("pause");
   const [selectedServices, setSelectedServices] = useState<Set<ServiceKey>>(new Set());
   const [pauseBusy, setPauseBusy] = useState(false);
 
@@ -176,7 +176,7 @@ export function RestaurantStatusModal({
           </button>
         </div>
 
-        <div className="flex gap-1 px-5 pt-3 border-b border-gray-100 flex-shrink-0">
+        <div className="flex gap-1 px-5 pt-3 border-b border-gray-100 flex-shrink-0 overflow-x-auto">
           <button
             type="button"
             onClick={() => setTab("pause")}
@@ -203,6 +203,15 @@ export function RestaurantStatusModal({
             }`}
           >
             <Sliders className="w-4 h-4 inline mr-1.5" /> Preferences
+          </button>
+          <button
+            type="button"
+            onClick={() => setTab("report")}
+            className={`px-3 py-2 text-sm font-semibold border-b-2 transition whitespace-nowrap ${
+              tab === "report" ? "border-emerald-500 text-emerald-700" : "border-transparent text-gray-500 hover:text-gray-800"
+            }`}
+          >
+            <BarChart3 className="w-4 h-4 inline mr-1.5" /> Day report
           </button>
         </div>
 
@@ -306,12 +315,30 @@ export function RestaurantStatusModal({
             onRefresh={() => { onRefresh(); onClose(); }}
             onOpenSound={() => { onOpenSound(); onClose(); }}
             onOpenPrinter={() => { onOpenPrinter(); onClose(); }}
-            onOpenDayReport={() => { onOpenDayReport(); onClose(); }}
             alertMuted={alertMuted}
             alertVolume={alertVolume}
             printerReady={printerReady}
             printerLabel={printerLabel}
           />
+        )}
+
+        {/* End-of-day report — its OWN tab/section now (Luigi 2026-06-16), no
+            longer buried inside Preferences. Opens the full day-report modal. */}
+        {tab === "report" && (
+          <div className="flex-1 overflow-y-auto p-5 space-y-3">
+            <p className="text-xs text-gray-600 leading-relaxed">
+              Today&apos;s sales totals — order count, revenue, and a breakdown you
+              can view on screen or print for your records.
+            </p>
+            <PrefRow
+              icon={<BarChart3 className="w-5 h-5" />}
+              iconBg="bg-amber-50"
+              iconColor="text-amber-600"
+              title="End-of-day report"
+              subtitle="Today's totals — view + print"
+              onClick={() => { onOpenDayReport(); onClose(); }}
+            />
+          </div>
         )}
       </div>
     </div>
@@ -325,7 +352,7 @@ export function RestaurantStatusModal({
  *  surface them from a cleaner control-panel hub. */
 function PreferencesPanel({
   themeMode, onToggleTheme,
-  onRefresh, onOpenSound, onOpenPrinter, onOpenDayReport,
+  onRefresh, onOpenSound, onOpenPrinter,
   alertMuted, alertVolume, printerReady, printerLabel,
 }: {
   themeMode: "light" | "dark";
@@ -333,7 +360,6 @@ function PreferencesPanel({
   onRefresh: () => void;
   onOpenSound: () => void;
   onOpenPrinter: () => void;
-  onOpenDayReport: () => void;
   alertMuted: boolean;
   alertVolume: number;
   printerReady: boolean;
@@ -354,8 +380,7 @@ function PreferencesPanel({
     <div className="flex-1 overflow-y-auto p-5 space-y-2">
       <p className="text-xs text-gray-600 leading-relaxed mb-3">
         Everything that used to live on the kitchen header lives here
-        now — sound, day/night, printer setup, refresh, end-of-day
-        report. Tap a row to open it.
+        now — sound, day/night, printer setup, and refresh. Tap a row to open it.
       </p>
 
       {/* Sound */}
@@ -402,16 +427,6 @@ function PreferencesPanel({
         title="Printer setup"
         subtitle={printerLabel ?? "No printer connected — tap to set up"}
         onClick={onOpenPrinter}
-      />
-
-      {/* End-of-day report */}
-      <PrefRow
-        icon={<BarChart3 className="w-5 h-5" />}
-        iconBg="bg-amber-50"
-        iconColor="text-amber-600"
-        title="End-of-day report"
-        subtitle="Today's totals — view + print"
-        onClick={onOpenDayReport}
       />
 
       {/* Refresh */}
