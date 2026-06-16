@@ -3175,7 +3175,14 @@
       "testCallButton": "Envia una trucada de prova",
       "testCallSending": "Trucant…",
       "testCallPlacedToast": "Trucada de prova feta a {number}.",
-      "testCallFailedToast": "La trucada de prova ha fallat: {reason}"
+      "testCallFailedToast": "La trucada de prova ha fallat: {reason}",
+      "vibrateLabel": "Vibració per a noves comandes",
+      "vibrateStatusOn": "So + vibració en noves comandes",
+      "vibrateStatusOff": "Només so — sense vibració",
+      "vibrateHelp": "Quan està activada, el teu dispositiu de cuina vibra a més del so en rebre una comanda nova. Desactiva-la per conservar només el so. Afecta l'app Kitchen Order.",
+      "vibrateToggleAriaLabel": "Activa/desactiva la vibració de noves comandes",
+      "vibrateEnabledToast": "Vibració activada — so + vibració.",
+      "vibrateDisabledToast": "Vibració desactivada — només so."
     },
     "receiptRenderer": {
       "yourRestaurant": "El vostre restaurant",

@@ -3175,7 +3175,14 @@
       "testCallButton": "Testoproep versturen",
       "testCallSending": "Bellen…",
       "testCallPlacedToast": "Testoproep geplaatst naar {number}.",
-      "testCallFailedToast": "Testoproep mislukt: {reason}"
+      "testCallFailedToast": "Testoproep mislukt: {reason}",
+      "vibrateLabel": "Trillen bij nieuwe bestellingen",
+      "vibrateStatusOn": "Geluid + trillen bij nieuwe bestellingen",
+      "vibrateStatusOff": "Alleen geluid — geen trillen",
+      "vibrateHelp": "Indien aan, trilt je keukenapparaat samen met het geluid bij een nieuwe bestelling. Zet het uit om alleen het geluid te houden. Geldt voor de Kitchen Order App.",
+      "vibrateToggleAriaLabel": "Trillen bij nieuwe bestellingen aan/uit",
+      "vibrateEnabledToast": "Trillen aan — geluid + trillen.",
+      "vibrateDisabledToast": "Trillen uit — alleen geluid."
     },
     "receiptRenderer": {
       "yourRestaurant": "Uw restaurant",

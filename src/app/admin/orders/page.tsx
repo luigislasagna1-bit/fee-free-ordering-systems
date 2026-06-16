@@ -20,7 +20,7 @@ export default async function OrdersPage() {
     restaurantId
       ? prisma.restaurant.findUnique({
           where: { id: restaurantId },
-          select: { kitchenWorkflowMode: true, printNodeEnabled: true, autoCallOnNewOrder: true, phone: true, alertPhone: true },
+          select: { kitchenWorkflowMode: true, printNodeEnabled: true, autoCallOnNewOrder: true, kitchenVibrate: true, phone: true, alertPhone: true },
         })
       : null,
   ]);
@@ -30,6 +30,8 @@ export default async function OrdersPage() {
     | "tracking";
   const printNodeEnabled = !!restaurant?.printNodeEnabled;
   const autoCall = !!restaurant?.autoCallOnNewOrder;
+  // Default ON: existing restaurants (null) + new ones vibrate unless turned off.
+  const kitchenVibrate = restaurant?.kitchenVibrate !== false;
   // Platform Twilio VOICE creds present? Read server-side so the toggle can warn
   // when calls physically can't be placed (avoids a toggle that reads "On" but
   // silently no-ops). These are platform-level — one account for all restaurants.
@@ -45,6 +47,7 @@ export default async function OrdersPage() {
         initialMode={mode}
         initialPrintNodeEnabled={printNodeEnabled}
         initialAutoCall={autoCall}
+        initialKitchenVibrate={kitchenVibrate}
         storePhone={restaurant?.phone ?? null}
         initialAlertPhone={restaurant?.alertPhone ?? null}
         twilioVoiceConfigured={twilioVoiceConfigured}

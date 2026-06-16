@@ -1416,7 +1416,14 @@
       "testCallButton": "Send a test call",
       "testCallSending": "Calling…",
       "testCallPlacedToast": "Test call placed to {number}.",
-      "testCallFailedToast": "Test call failed: {reason}"
+      "testCallFailedToast": "Test call failed: {reason}",
+      "vibrateLabel": "New-order vibration",
+      "vibrateStatusOn": "Ring + vibrate on new orders",
+      "vibrateStatusOff": "Ring only — no vibration",
+      "vibrateHelp": "When on, your kitchen device vibrates along with the ring for a new order. Turn it off to keep just the sound. Affects the Kitchen Order App.",
+      "vibrateToggleAriaLabel": "Toggle new-order vibration",
+      "vibrateEnabledToast": "Vibration on — ring + vibrate.",
+      "vibrateDisabledToast": "Vibration off — ring only."
     },
     "customers": {
       "title": "Customers",

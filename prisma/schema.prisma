@@ -181,6 +181,11 @@ model Restaurant {
   /// restaurant's phone so an unattended tablet doesn't drop the order.
   /// Requires the platform Twilio voice creds + a restaurant phone number.
   autoCallOnNewOrder   Boolean @default(false)
+  /// Kitchen device alarm: vibrate alongside the ring on a new order. Default
+  /// true (ring + vibrate); false = ring only. Read by the FCM push + the
+  /// alarm-state poll, then honored by the native OrderAlarmService. Luigi
+  /// 2026-06-16 (Fabrizio: let the restaurant choose ring+vibrate vs ring-only).
+  kitchenVibrate       Boolean @default(true)
   /// Optional alternate number for the nearly-missed-order auto-call (e.g. the
   /// owner's cell). Null/blank ⇒ fall back to the public `phone`.
   alertPhone           String?

@@ -58,6 +58,7 @@ export async function PUT(req: NextRequest) {
     kitchenWorkflowMode,
     printNodeEnabled,
     autoCallOnNewOrder,
+    kitchenVibrate,
     alertPhone,
     scheduledOrderInterval,
     requireCustomerEmail,
@@ -197,6 +198,7 @@ export async function PUT(req: NextRequest) {
   }
   if (printNodeEnabled !== undefined) updateData.printNodeEnabled = !!printNodeEnabled;
   if (autoCallOnNewOrder !== undefined) updateData.autoCallOnNewOrder = !!autoCallOnNewOrder;
+  if (kitchenVibrate !== undefined) updateData.kitchenVibrate = !!kitchenVibrate;
   // Optional alternate alert number; trim, cap length, and store null when blank
   // so the cron falls back to the public phone.
   if (alertPhone !== undefined) {

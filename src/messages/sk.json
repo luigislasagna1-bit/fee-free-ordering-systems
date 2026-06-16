@@ -3175,7 +3175,14 @@
       "testCallButton": "Odoslať testovací hovor",
       "testCallSending": "Volanie…",
       "testCallPlacedToast": "Testovací hovor na {number} odoslaný.",
-      "testCallFailedToast": "Testovací hovor zlyhal: {reason}"
+      "testCallFailedToast": "Testovací hovor zlyhal: {reason}",
+      "vibrateLabel": "Vibrácie pri nových objednávkach",
+      "vibrateStatusOn": "Zvonenie + vibrácie pri nových objednávkach",
+      "vibrateStatusOff": "Len zvonenie — bez vibrácií",
+      "vibrateHelp": "Keď je zapnuté, vaše kuchynské zariadenie vibruje spolu so zvonením pri novej objednávke. Vypnite, ak chcete ponechať len zvuk. Týka sa aplikácie Kitchen Order.",
+      "vibrateToggleAriaLabel": "Prepnúť vibrácie pri nových objednávkach",
+      "vibrateEnabledToast": "Vibrácie zapnuté — zvonenie + vibrácie.",
+      "vibrateDisabledToast": "Vibrácie vypnuté — len zvonenie."
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaša reštaurácia",

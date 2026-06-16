@@ -40,6 +40,9 @@ public class KitchenMessagingService extends MessagingService {
         Intent i = new Intent(this, OrderAlarmService.class);
         i.putExtra("title", data.get("title") != null ? data.get("title") : "New order");
         i.putExtra("body", data.get("body") != null ? data.get("body") : "");
+        // Restaurant ring+vibrate vs ring-only preference (default true unless the
+        // push data explicitly carries "false"). Luigi 2026-06-16.
+        i.putExtra("vibrate", !"false".equals(data.get("vibrate")));
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(i);

@@ -97,6 +97,7 @@ export function pickInheritedScalars(parent: ParentWithConfig) {
     requireCustomerEmail: parent.requireCustomerEmail,
     requireCustomerPhone: parent.requireCustomerPhone,
     autoCallOnNewOrder: parent.autoCallOnNewOrder,
+    kitchenVibrate: parent.kitchenVibrate,
     autoAcceptOrders: parent.autoAcceptOrders,
     paymentMethods: parent.paymentMethods,
 

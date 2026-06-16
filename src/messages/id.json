@@ -3175,7 +3175,14 @@
       "testCallButton": "Kirim panggilan uji",
       "testCallSending": "Memanggil…",
       "testCallPlacedToast": "Panggilan uji dilakukan ke {number}.",
-      "testCallFailedToast": "Panggilan uji gagal: {reason}"
+      "testCallFailedToast": "Panggilan uji gagal: {reason}",
+      "vibrateLabel": "Getaran untuk pesanan baru",
+      "vibrateStatusOn": "Dering + getaran untuk pesanan baru",
+      "vibrateStatusOff": "Hanya dering — tanpa getaran",
+      "vibrateHelp": "Saat aktif, perangkat dapur Anda bergetar bersama dering untuk pesanan baru. Matikan untuk hanya menyisakan suara. Berlaku untuk aplikasi Kitchen Order.",
+      "vibrateToggleAriaLabel": "Alihkan getaran pesanan baru",
+      "vibrateEnabledToast": "Getaran aktif — dering + getaran.",
+      "vibrateDisabledToast": "Getaran nonaktif — hanya dering."
     },
     "receiptRenderer": {
       "yourRestaurant": "Restoran Anda",

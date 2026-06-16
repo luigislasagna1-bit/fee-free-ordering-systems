@@ -3175,7 +3175,14 @@
       "testCallButton": "Αποστολή δοκιμαστικής κλήσης",
       "testCallSending": "Κλήση…",
       "testCallPlacedToast": "Η δοκιμαστική κλήση στάλθηκε στο {number}.",
-      "testCallFailedToast": "Η δοκιμαστική κλήση απέτυχε: {reason}"
+      "testCallFailedToast": "Η δοκιμαστική κλήση απέτυχε: {reason}",
+      "vibrateLabel": "Δόνηση για νέες παραγγελίες",
+      "vibrateStatusOn": "Κουδούνισμα + δόνηση για νέες παραγγελίες",
+      "vibrateStatusOff": "Μόνο κουδούνισμα — χωρίς δόνηση",
+      "vibrateHelp": "Όταν είναι ενεργό, η συσκευή της κουζίνας δονείται μαζί με το κουδούνισμα για μια νέα παραγγελία. Απενεργοποιήστε το για να κρατήσετε μόνο τον ήχο. Αφορά την εφαρμογή Kitchen Order.",
+      "vibrateToggleAriaLabel": "Εναλλαγή δόνησης για νέες παραγγελίες",
+      "vibrateEnabledToast": "Δόνηση ενεργή — κουδούνισμα + δόνηση.",
+      "vibrateDisabledToast": "Δόνηση ανενεργή — μόνο κουδούνισμα."
     },
     "receiptRenderer": {
       "yourRestaurant": "Το εστιατόριό σας",

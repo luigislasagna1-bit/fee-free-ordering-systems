@@ -3175,7 +3175,14 @@
       "testCallButton": "Saada testkõne",
       "testCallSending": "Helistamine…",
       "testCallPlacedToast": "Testkõne tehtud numbrile {number}.",
-      "testCallFailedToast": "Testkõne ebaõnnestus: {reason}"
+      "testCallFailedToast": "Testkõne ebaõnnestus: {reason}",
+      "vibrateLabel": "Värin uute tellimuste puhul",
+      "vibrateStatusOn": "Heli + värin uute tellimuste puhul",
+      "vibrateStatusOff": "Ainult heli — ilma värinata",
+      "vibrateHelp": "Kui sees, vibreerib teie köögiseade uue tellimuse korral koos heliga. Lülitage välja, et jätta ainult heli. Puudutab Kitchen Orderi rakendust.",
+      "vibrateToggleAriaLabel": "Lülita uute tellimuste värin sisse/välja",
+      "vibrateEnabledToast": "Värin sees — heli + värin.",
+      "vibrateDisabledToast": "Värin väljas — ainult heli."
     },
     "receiptRenderer": {
       "yourRestaurant": "Sinu restoran",

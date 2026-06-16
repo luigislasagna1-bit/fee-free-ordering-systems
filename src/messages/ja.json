@@ -3175,7 +3175,14 @@
       "testCallButton": "テストコールを送信",
       "testCallSending": "発信中…",
       "testCallPlacedToast": "{number} にテストコールを発信しました。",
-      "testCallFailedToast": "テストコールに失敗しました: {reason}"
+      "testCallFailedToast": "テストコールに失敗しました: {reason}",
+      "vibrateLabel": "新規注文時のバイブ",
+      "vibrateStatusOn": "新規注文で着信音＋バイブ",
+      "vibrateStatusOff": "着信音のみ — バイブなし",
+      "vibrateHelp": "オンにすると、新規注文時にキッチン端末が着信音とともに振動します。オフにすると音だけになります。Kitchen Order アプリが対象です。",
+      "vibrateToggleAriaLabel": "新規注文のバイブを切り替え",
+      "vibrateEnabledToast": "バイブ オン — 着信音＋バイブ。",
+      "vibrateDisabledToast": "バイブ オフ — 着信音のみ。"
     },
     "receiptRenderer": {
       "yourRestaurant": "レストラン名",

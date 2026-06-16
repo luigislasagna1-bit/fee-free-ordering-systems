@@ -3175,7 +3175,14 @@
       "testCallButton": "Skicka ett testsamtal",
       "testCallSending": "Ringer…",
       "testCallPlacedToast": "Testsamtal till {number} skickat.",
-      "testCallFailedToast": "Testsamtalet misslyckades: {reason}"
+      "testCallFailedToast": "Testsamtalet misslyckades: {reason}",
+      "vibrateLabel": "Vibration vid nya beställningar",
+      "vibrateStatusOn": "Ljud + vibration vid nya beställningar",
+      "vibrateStatusOff": "Endast ljud — ingen vibration",
+      "vibrateHelp": "När den är på vibrerar din köksenhet tillsammans med ljudet vid en ny beställning. Stäng av den för att bara behålla ljudet. Gäller Kitchen Order-appen.",
+      "vibrateToggleAriaLabel": "Växla vibration vid nya beställningar",
+      "vibrateEnabledToast": "Vibration på — ljud + vibration.",
+      "vibrateDisabledToast": "Vibration av — endast ljud."
     },
     "receiptRenderer": {
       "yourRestaurant": "Din restaurang",

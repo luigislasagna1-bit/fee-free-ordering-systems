@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Zap, Activity, ChevronDown, ChevronUp, Info, Printer, ServerCrash, PhoneCall } from "lucide-react";
+import { Zap, Activity, ChevronDown, ChevronUp, Info, Printer, ServerCrash, PhoneCall, Vibrate } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { HelpTip } from "@/components/HelpTip";
 
 /**
  * Kitchen workflow mode toggle for the Orders page.
@@ -30,6 +31,7 @@ export function KitchenWorkflowToggle({
   initialMode,
   initialPrintNodeEnabled = false,
   initialAutoCall = false,
+  initialKitchenVibrate = true,
   storePhone = null,
   initialAlertPhone = null,
   twilioVoiceConfigured = true,
@@ -37,6 +39,8 @@ export function KitchenWorkflowToggle({
   initialMode: "simple" | "tracking";
   initialPrintNodeEnabled?: boolean;
   initialAutoCall?: boolean;
+  /** Kitchen device alarm: vibrate alongside the ring (default true). */
+  initialKitchenVibrate?: boolean;
   /** The restaurant's public phone — the default alert target. */
   storePhone?: string | null;
   /** Optional dedicated alert number (overrides storePhone when set). */
@@ -54,6 +58,8 @@ export function KitchenWorkflowToggle({
   const [savedAlertPhone, setSavedAlertPhone] = useState<string>(initialAlertPhone ?? "");
   const [savingAlertPhone, setSavingAlertPhone] = useState(false);
   const [testingCall, setTestingCall] = useState(false);
+  const [kitchenVibrate, setKitchenVibrate] = useState<boolean>(initialKitchenVibrate);
+  const [savingVibrate, setSavingVibrate] = useState(false);
   // The number the system will actually ring: dedicated alert number else store phone.
   const effectiveAlertNumber = (alertPhone.trim() || storePhone || "").trim();
 
@@ -142,6 +148,25 @@ export function KitchenWorkflowToggle({
       toast.error(t("saveErrorToast"));
     } finally {
       setSavingAutoCall(false);
+    }
+  }
+
+  async function toggleVibrate(enabled: boolean) {
+    setSavingVibrate(true);
+    setKitchenVibrate(enabled); // optimistic
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kitchenVibrate: enabled }),
+      });
+      if (!res.ok) throw new Error("Failed to save");
+      toast.success(enabled ? t("vibrateEnabledToast") : t("vibrateDisabledToast"));
+    } catch {
+      setKitchenVibrate(!enabled);
+      toast.error(t("saveErrorToast"));
+    } finally {
+      setSavingVibrate(false);
     }
   }
 
@@ -417,6 +442,47 @@ export function KitchenWorkflowToggle({
             <PhoneCall className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-gray-400" />
             <span>{t("autoCallFooterNote")}</span>
           </p>
+        </div>
+      </div>
+
+      {/* ── New-order vibration ─────────────────────────────────────────
+          Kitchen devices vibrate alongside the ring on a new order. Default
+          ON; off = ring only (the sound stays). Stored per-restaurant, read by
+          the FCM push + the alarm-state poll, and honored by the native Kitchen
+          Order App alarm. Luigi 2026-06-16 (Fabrizio request). */}
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+        <div className="px-5 py-3.5 flex items-center gap-3">
+          <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
+            kitchenVibrate ? "bg-indigo-100 text-indigo-700" : "bg-gray-100 text-gray-400"
+          }`}>
+            <Vibrate className="w-5 h-5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-1.5">
+              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                {t("vibrateLabel")}
+              </div>
+              <HelpTip text={t("vibrateHelp")} />
+            </div>
+            <div className="text-sm text-gray-900 mt-0.5 leading-snug">
+              {kitchenVibrate ? t("vibrateStatusOn") : t("vibrateStatusOff")}
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => toggleVibrate(!kitchenVibrate)}
+            disabled={savingVibrate}
+            aria-label={t("vibrateToggleAriaLabel")}
+            className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${
+              kitchenVibrate ? "bg-indigo-500" : "bg-gray-300"
+            } ${savingVibrate ? "opacity-50" : ""}`}
+          >
+            <div
+              className={`w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${
+                kitchenVibrate ? "translate-x-6" : "translate-x-0"
+              }`}
+            />
+          </button>
         </div>
       </div>
     </div>

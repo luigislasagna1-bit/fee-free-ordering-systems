@@ -3175,7 +3175,14 @@
       "testCallButton": "Pošlji testni klic",
       "testCallSending": "Klicanje…",
       "testCallPlacedToast": "Testni klic poslan na {number}.",
-      "testCallFailedToast": "Testni klic ni uspel: {reason}"
+      "testCallFailedToast": "Testni klic ni uspel: {reason}",
+      "vibrateLabel": "Vibriranje ob novih naročilih",
+      "vibrateStatusOn": "Zvonjenje + vibriranje ob novih naročilih",
+      "vibrateStatusOff": "Samo zvonjenje — brez vibriranja",
+      "vibrateHelp": "Ko je vklopljeno, vaša kuhinjska naprava ob novem naročilu poleg zvonjenja tudi vibrira. Izklopite, če želite obdržati le zvok. Velja za aplikacijo Kitchen Order.",
+      "vibrateToggleAriaLabel": "Preklopi vibriranje ob novih naročilih",
+      "vibrateEnabledToast": "Vibriranje vklopljeno — zvonjenje + vibriranje.",
+      "vibrateDisabledToast": "Vibriranje izklopljeno — samo zvonjenje."
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaša restavracija",

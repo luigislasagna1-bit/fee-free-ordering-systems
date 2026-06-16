@@ -3175,7 +3175,14 @@
       "testCallButton": "Sūtīt testa zvanu",
       "testCallSending": "Zvana…",
       "testCallPlacedToast": "Testa zvans veikts uz {number}.",
-      "testCallFailedToast": "Testa zvans neizdevās: {reason}"
+      "testCallFailedToast": "Testa zvans neizdevās: {reason}",
+      "vibrateLabel": "Vibrācija jauniem pasūtījumiem",
+      "vibrateStatusOn": "Skaņa + vibrācija jauniem pasūtījumiem",
+      "vibrateStatusOff": "Tikai skaņa — bez vibrācijas",
+      "vibrateHelp": "Kad ieslēgts, jūsu virtuves ierīce jauna pasūtījuma gadījumā vibrē līdzās skaņai. Izslēdziet to, lai paliktu tikai skaņa. Attiecas uz Kitchen Order lietotni.",
+      "vibrateToggleAriaLabel": "Pārslēgt vibrāciju jauniem pasūtījumiem",
+      "vibrateEnabledToast": "Vibrācija ieslēgta — skaņa + vibrācija.",
+      "vibrateDisabledToast": "Vibrācija izslēgta — tikai skaņa."
     },
     "receiptRenderer": {
       "yourRestaurant": "Jūsu restorāns",

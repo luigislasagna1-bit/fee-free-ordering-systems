@@ -3175,7 +3175,14 @@
       "testCallButton": "Test araması gönder",
       "testCallSending": "Aranıyor…",
       "testCallPlacedToast": "{number} numarasına test araması yapıldı.",
-      "testCallFailedToast": "Test araması başarısız: {reason}"
+      "testCallFailedToast": "Test araması başarısız: {reason}",
+      "vibrateLabel": "Yeni siparişlerde titreşim",
+      "vibrateStatusOn": "Yeni siparişlerde zil + titreşim",
+      "vibrateStatusOff": "Yalnızca zil — titreşim yok",
+      "vibrateHelp": "Açıkken, mutfak cihazınız yeni bir siparişte zille birlikte titreşir. Yalnızca sesi tutmak için kapatın. Kitchen Order uygulamasını etkiler.",
+      "vibrateToggleAriaLabel": "Yeni sipariş titreşimini aç/kapat",
+      "vibrateEnabledToast": "Titreşim açık — zil + titreşim.",
+      "vibrateDisabledToast": "Titreşim kapalı — yalnızca zil."
     },
     "receiptRenderer": {
       "yourRestaurant": "Restoranınız",

@@ -3175,7 +3175,14 @@
       "testCallButton": "Teszthívás küldése",
       "testCallSending": "Hívás…",
       "testCallPlacedToast": "Teszthívás elindítva ide: {number}.",
-      "testCallFailedToast": "A teszthívás sikertelen: {reason}"
+      "testCallFailedToast": "A teszthívás sikertelen: {reason}",
+      "vibrateLabel": "Rezgés új rendeléseknél",
+      "vibrateStatusOn": "Csengés + rezgés új rendeléseknél",
+      "vibrateStatusOff": "Csak csengés — rezgés nélkül",
+      "vibrateHelp": "Ha be van kapcsolva, a konyhai eszköz a csengés mellett rezeg is új rendelésnél. Kapcsold ki, hogy csak a hang maradjon. A Kitchen Order appra vonatkozik.",
+      "vibrateToggleAriaLabel": "Új rendelések rezgésének be-/kikapcsolása",
+      "vibrateEnabledToast": "Rezgés bekapcsolva — csengés + rezgés.",
+      "vibrateDisabledToast": "Rezgés kikapcsolva — csak csengés."
     },
     "receiptRenderer": {
       "yourRestaurant": "Az Ön étterme",

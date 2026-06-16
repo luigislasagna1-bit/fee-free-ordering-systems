@@ -3175,7 +3175,14 @@
       "testCallButton": "שלח שיחת בדיקה",
       "testCallSending": "מתקשר…",
       "testCallPlacedToast": "שיחת בדיקה בוצעה אל {number}.",
-      "testCallFailedToast": "שיחת הבדיקה נכשלה: {reason}"
+      "testCallFailedToast": "שיחת הבדיקה נכשלה: {reason}",
+      "vibrateLabel": "רטט בהזמנות חדשות",
+      "vibrateStatusOn": "צלצול + רטט בהזמנות חדשות",
+      "vibrateStatusOff": "צלצול בלבד — ללא רטט",
+      "vibrateHelp": "כשמופעל, מכשיר המטבח שלך רוטט יחד עם הצלצול בהזמנה חדשה. כבה כדי להשאיר רק את הצליל. משפיע על אפליקציית Kitchen Order.",
+      "vibrateToggleAriaLabel": "החלף רטט בהזמנות חדשות",
+      "vibrateEnabledToast": "רטט מופעל — צלצול + רטט.",
+      "vibrateDisabledToast": "רטט כבוי — צלצול בלבד."
     },
     "receiptRenderer": {
       "yourRestaurant": "המסעדה שלך",

@@ -3175,7 +3175,14 @@
       "testCallButton": "Gửi cuộc gọi thử",
       "testCallSending": "Đang gọi…",
       "testCallPlacedToast": "Đã gọi thử đến {number}.",
-      "testCallFailedToast": "Cuộc gọi thử thất bại: {reason}"
+      "testCallFailedToast": "Cuộc gọi thử thất bại: {reason}",
+      "vibrateLabel": "Rung khi có đơn mới",
+      "vibrateStatusOn": "Chuông + rung khi có đơn mới",
+      "vibrateStatusOff": "Chỉ chuông — không rung",
+      "vibrateHelp": "Khi bật, thiết bị bếp của bạn sẽ rung cùng với chuông khi có đơn mới. Tắt đi để chỉ giữ âm thanh. Áp dụng cho ứng dụng Kitchen Order.",
+      "vibrateToggleAriaLabel": "Bật/tắt rung khi có đơn mới",
+      "vibrateEnabledToast": "Đã bật rung — chuông + rung.",
+      "vibrateDisabledToast": "Đã tắt rung — chỉ chuông."
     },
     "receiptRenderer": {
       "yourRestaurant": "Nhà hàng của bạn",

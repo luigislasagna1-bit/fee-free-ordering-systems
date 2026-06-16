@@ -3175,7 +3175,14 @@
       "testCallButton": "Изпрати тестово обаждане",
       "testCallSending": "Обаждане…",
       "testCallPlacedToast": "Тестовото обаждане е извършено до {number}.",
-      "testCallFailedToast": "Тестовото обаждане е неуспешно: {reason}"
+      "testCallFailedToast": "Тестовото обаждане е неуспешно: {reason}",
+      "vibrateLabel": "Вибрация при нови поръчки",
+      "vibrateStatusOn": "Звън + вибрация при нови поръчки",
+      "vibrateStatusOff": "Само звън — без вибрация",
+      "vibrateHelp": "Когато е включено, кухненското ви устройство вибрира заедно със звъна при нова поръчка. Изключете го, за да остане само звукът. Отнася се за приложението Kitchen Order.",
+      "vibrateToggleAriaLabel": "Превключи вибрацията при нови поръчки",
+      "vibrateEnabledToast": "Вибрацията е включена — звън + вибрация.",
+      "vibrateDisabledToast": "Вибрацията е изключена — само звън."
     },
     "receiptRenderer": {
       "yourRestaurant": "Вашият ресторант",

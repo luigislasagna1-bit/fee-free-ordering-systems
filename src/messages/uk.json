@@ -3175,7 +3175,14 @@
       "testCallButton": "Надіслати тестовий дзвінок",
       "testCallSending": "Дзвонимо…",
       "testCallPlacedToast": "Тестовий дзвінок надіслано на {number}.",
-      "testCallFailedToast": "Тестовий дзвінок не вдався: {reason}"
+      "testCallFailedToast": "Тестовий дзвінок не вдався: {reason}",
+      "vibrateLabel": "Вібрація для нових замовлень",
+      "vibrateStatusOn": "Звук + вібрація для нових замовлень",
+      "vibrateStatusOff": "Лише звук — без вібрації",
+      "vibrateHelp": "Коли увімкнено, ваш кухонний пристрій під час нового замовлення вібрує разом зі звуком. Вимкніть, щоб залишився лише звук. Стосується додатка Kitchen Order.",
+      "vibrateToggleAriaLabel": "Перемкнути вібрацію для нових замовлень",
+      "vibrateEnabledToast": "Вібрацію увімкнено — звук + вібрація.",
+      "vibrateDisabledToast": "Вібрацію вимкнено — лише звук."
     },
     "receiptRenderer": {
       "yourRestaurant": "Ваш ресторан",

@@ -3175,7 +3175,14 @@
       "testCallButton": "发送测试来电",
       "testCallSending": "正在拨打…",
       "testCallPlacedToast": "已向 {number} 发起测试来电。",
-      "testCallFailedToast": "测试来电失败：{reason}"
+      "testCallFailedToast": "测试来电失败：{reason}",
+      "vibrateLabel": "新订单振动",
+      "vibrateStatusOn": "新订单响铃 + 振动",
+      "vibrateStatusOff": "仅响铃 — 无振动",
+      "vibrateHelp": "开启后，有新订单时您的厨房设备会在响铃的同时振动。关闭则只保留声音。适用于 Kitchen Order 应用。",
+      "vibrateToggleAriaLabel": "切换新订单振动",
+      "vibrateEnabledToast": "已开启振动 — 响铃 + 振动。",
+      "vibrateDisabledToast": "已关闭振动 — 仅响铃。"
     },
     "receiptRenderer": {
       "yourRestaurant": "您的餐厅",

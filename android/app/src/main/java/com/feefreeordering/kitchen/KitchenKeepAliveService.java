@@ -38,6 +38,9 @@ public class KitchenKeepAliveService extends Service {
     private PowerManager.WakeLock wakeLock;
     private static final String POLL_URL = "https://feefreeordering.com/api/kitchen/alarm-state?token=";
     private volatile boolean polling = false;
+    // Restaurant ring+vibrate vs ring-only preference, refreshed on each poll
+    // (default true). Passed to OrderAlarmService when the alarm starts. 2026-06-16.
+    private volatile boolean lastVibrate = true;
     private Thread pollThread;
 
     @Override
@@ -101,6 +104,7 @@ public class KitchenKeepAliveService extends Service {
                     if (ringing && !MainActivity.isForeground) {
                         if (!OrderAlarmService.isRunning) {
                             Intent i = new Intent(this, OrderAlarmService.class);
+                            i.putExtra("vibrate", lastVibrate);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 startForegroundService(i);
                             } else {
@@ -133,7 +137,11 @@ public class KitchenKeepAliveService extends Service {
             String line;
             while ((line = br.readLine()) != null) sb.append(line);
             br.close();
-            return sb.toString().contains("\"ringing\":true");
+            String resp = sb.toString();
+            // Vibration preference rides along on the same poll (default true unless
+            // the response explicitly says "vibrate":false). Luigi 2026-06-16.
+            lastVibrate = !resp.contains("\"vibrate\":false");
+            return resp.contains("\"ringing\":true");
         } catch (Exception e) {
             return false;
         } finally {

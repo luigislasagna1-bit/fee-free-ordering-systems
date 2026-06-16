@@ -3175,7 +3175,14 @@
       "testCallButton": "Testanruf senden",
       "testCallSending": "Anruf läuft…",
       "testCallPlacedToast": "Testanruf an {number} gestartet.",
-      "testCallFailedToast": "Testanruf fehlgeschlagen: {reason}"
+      "testCallFailedToast": "Testanruf fehlgeschlagen: {reason}",
+      "vibrateLabel": "Vibration bei neuen Bestellungen",
+      "vibrateStatusOn": "Klingeln + Vibration bei neuen Bestellungen",
+      "vibrateStatusOff": "Nur Klingeln — keine Vibration",
+      "vibrateHelp": "Wenn aktiviert, vibriert Ihr Küchengerät zusätzlich zum Klingeln bei einer neuen Bestellung. Deaktivieren Sie sie, um nur den Ton zu behalten. Betrifft die Kitchen Order App.",
+      "vibrateToggleAriaLabel": "Vibration bei neuen Bestellungen umschalten",
+      "vibrateEnabledToast": "Vibration an — Klingeln + Vibration.",
+      "vibrateDisabledToast": "Vibration aus — nur Klingeln."
     },
     "receiptRenderer": {
       "yourRestaurant": "Ihr Restaurant",

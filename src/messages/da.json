@@ -3175,7 +3175,14 @@
       "testCallButton": "Send et testopkald",
       "testCallSending": "Ringer…",
       "testCallPlacedToast": "Testopkald foretaget til {number}.",
-      "testCallFailedToast": "Testopkaldet mislykkedes: {reason}"
+      "testCallFailedToast": "Testopkaldet mislykkedes: {reason}",
+      "vibrateLabel": "Vibration ved nye bestillinger",
+      "vibrateStatusOn": "Lyd + vibration ved nye bestillinger",
+      "vibrateStatusOff": "Kun lyd — ingen vibration",
+      "vibrateHelp": "Når den er slået til, vibrerer din køkkenenhed sammen med lyden ved en ny bestilling. Slå den fra for kun at beholde lyden. Gælder Kitchen Order-appen.",
+      "vibrateToggleAriaLabel": "Slå vibration ved nye bestillinger til/fra",
+      "vibrateEnabledToast": "Vibration til — lyd + vibration.",
+      "vibrateDisabledToast": "Vibration fra — kun lyd."
     },
     "receiptRenderer": {
       "yourRestaurant": "Din restaurant",

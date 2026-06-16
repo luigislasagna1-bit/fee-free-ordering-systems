@@ -3175,7 +3175,14 @@
       "testCallButton": "ส่งสายโทรทดสอบ",
       "testCallSending": "กำลังโทร…",
       "testCallPlacedToast": "โทรทดสอบไปที่ {number} แล้ว",
-      "testCallFailedToast": "โทรทดสอบล้มเหลว: {reason}"
+      "testCallFailedToast": "โทรทดสอบล้มเหลว: {reason}",
+      "vibrateLabel": "การสั่นเมื่อมีออเดอร์ใหม่",
+      "vibrateStatusOn": "เสียง + การสั่นเมื่อมีออเดอร์ใหม่",
+      "vibrateStatusOff": "เสียงอย่างเดียว — ไม่มีการสั่น",
+      "vibrateHelp": "เมื่อเปิด อุปกรณ์ในครัวของคุณจะสั่นพร้อมกับเสียงเมื่อมีออเดอร์ใหม่ ปิดเพื่อเก็บไว้เฉพาะเสียง มีผลกับแอป Kitchen Order",
+      "vibrateToggleAriaLabel": "สลับการสั่นเมื่อมีออเดอร์ใหม่",
+      "vibrateEnabledToast": "เปิดการสั่นแล้ว — เสียง + การสั่น",
+      "vibrateDisabledToast": "ปิดการสั่นแล้ว — เสียงอย่างเดียว"
     },
     "receiptRenderer": {
       "yourRestaurant": "ร้านอาหารของคุณ",

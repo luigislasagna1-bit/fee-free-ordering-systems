@@ -79,5 +79,18 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  return NextResponse.json({ ringing });
+  // Per-restaurant alarm preference (ring + vibrate vs ring only). Only read it
+  // when we're actually about to ring — keeps the common "nothing pending" poll a
+  // single-purpose ringing check with no extra query. The native keep-alive poll
+  // reads `vibrate` and passes it to OrderAlarmService. Luigi 2026-06-16.
+  let vibrate = true;
+  if (ringing) {
+    const r = await prisma.restaurant.findUnique({
+      where: { id: restaurantId },
+      select: { kitchenVibrate: true },
+    });
+    vibrate = r?.kitchenVibrate !== false;
+  }
+
+  return NextResponse.json({ ringing, vibrate });
 }

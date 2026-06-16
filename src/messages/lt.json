@@ -3175,7 +3175,14 @@
       "testCallButton": "Siųsti bandomąjį skambutį",
       "testCallSending": "Skambinama…",
       "testCallPlacedToast": "Bandomasis skambutis atliktas į {number}.",
-      "testCallFailedToast": "Bandomasis skambutis nepavyko: {reason}"
+      "testCallFailedToast": "Bandomasis skambutis nepavyko: {reason}",
+      "vibrateLabel": "Vibracija dėl naujų užsakymų",
+      "vibrateStatusOn": "Skambutis + vibracija dėl naujų užsakymų",
+      "vibrateStatusOff": "Tik skambutis — be vibracijos",
+      "vibrateHelp": "Kai įjungta, jūsų virtuvės įrenginys gavus naują užsakymą vibruoja kartu su skambučiu. Išjunkite, kad liktų tik garsas. Taikoma Kitchen Order programėlei.",
+      "vibrateToggleAriaLabel": "Perjungti vibraciją dėl naujų užsakymų",
+      "vibrateEnabledToast": "Vibracija įjungta — skambutis + vibracija.",
+      "vibrateDisabledToast": "Vibracija išjungta — tik skambutis."
     },
     "receiptRenderer": {
       "yourRestaurant": "Jūsų restoranas",

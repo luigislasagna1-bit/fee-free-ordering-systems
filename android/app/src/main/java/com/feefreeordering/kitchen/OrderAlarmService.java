@@ -46,6 +46,9 @@ public class OrderAlarmService extends Service {
 
     private MediaPlayer player;
     private Vibrator vibrator;
+    /** Per-restaurant: vibrate alongside the ring? Set from the start intent's
+     *  "vibrate" extra (default true). Ring-only when false. Luigi 2026-06-16. */
+    private boolean vibrateEnabled = true;
     private PowerManager.WakeLock wakeLock;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable autoStop;
@@ -75,6 +78,10 @@ public class OrderAlarmService extends Service {
         }
         String title = intent != null && intent.getStringExtra("title") != null ? intent.getStringExtra("title") : "New order";
         String body = intent != null && intent.getStringExtra("body") != null ? intent.getStringExtra("body") : "";
+        // Restaurant preference forwarded by the FCM push + the keep-alive poll:
+        // ring + vibrate (default) vs ring only. Read on the FIRST start — a
+        // re-trigger while already ringing returns early above. Luigi 2026-06-16.
+        vibrateEnabled = intent == null || intent.getBooleanExtra("vibrate", true);
 
         Notification n = buildNotification(title, body);
         try {
@@ -152,15 +159,20 @@ public class OrderAlarmService extends Service {
             player.start();
         } catch (Exception ignored) {}
 
-        try {
-            vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            long[] pattern = {0, 800, 600};
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0));
-            } else {
-                vibrator.vibrate(pattern, 0);
-            }
-        } catch (Exception ignored) {}
+        // Vibration is OPTIONAL per the restaurant's setting; the ring above always
+        // plays. The notification channel has vibration off, so this explicit
+        // waveform is the only buzz source — skipping it gives true ring-only.
+        if (vibrateEnabled) {
+            try {
+                vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                long[] pattern = {0, 800, 600};
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0));
+                } else {
+                    vibrator.vibrate(pattern, 0);
+                }
+            } catch (Exception ignored) {}
+        }
     }
 
     @Override

@@ -3175,7 +3175,14 @@
       "testCallButton": "Wyślij połączenie testowe",
       "testCallSending": "Dzwonię…",
       "testCallPlacedToast": "Połączenie testowe na {number} wykonane.",
-      "testCallFailedToast": "Połączenie testowe nie powiodło się: {reason}"
+      "testCallFailedToast": "Połączenie testowe nie powiodło się: {reason}",
+      "vibrateLabel": "Wibracja przy nowych zamówieniach",
+      "vibrateStatusOn": "Dźwięk + wibracja przy nowych zamówieniach",
+      "vibrateStatusOff": "Tylko dźwięk — bez wibracji",
+      "vibrateHelp": "Gdy włączone, urządzenie w kuchni wibruje oprócz dźwięku przy nowym zamówieniu. Wyłącz, aby zostawić tylko dźwięk. Dotyczy aplikacji Kitchen Order.",
+      "vibrateToggleAriaLabel": "Przełącz wibrację przy nowych zamówieniach",
+      "vibrateEnabledToast": "Wibracja włączona — dźwięk + wibracja.",
+      "vibrateDisabledToast": "Wibracja wyłączona — tylko dźwięk."
     },
     "receiptRenderer": {
       "yourRestaurant": "Twoja restauracja",

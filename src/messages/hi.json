@@ -1372,7 +1372,14 @@
       "testCallButton": "टेस्ट कॉल भेजें",
       "testCallSending": "कॉल हो रही है…",
       "testCallPlacedToast": "{number} पर टेस्ट कॉल भेजी गई।",
-      "testCallFailedToast": "टेस्ट कॉल विफल: {reason}"
+      "testCallFailedToast": "टेस्ट कॉल विफल: {reason}",
+      "vibrateLabel": "नए ऑर्डर पर कंपन",
+      "vibrateStatusOn": "नए ऑर्डर पर रिंग + कंपन",
+      "vibrateStatusOff": "केवल रिंग — कंपन नहीं",
+      "vibrateHelp": "चालू होने पर, नए ऑर्डर पर आपका किचन डिवाइस रिंग के साथ कंपन भी करता है। केवल ध्वनि रखने के लिए इसे बंद करें। यह Kitchen Order ऐप पर लागू होता है।",
+      "vibrateToggleAriaLabel": "नए ऑर्डर का कंपन टॉगल करें",
+      "vibrateEnabledToast": "कंपन चालू — रिंग + कंपन।",
+      "vibrateDisabledToast": "कंपन बंद — केवल रिंग।"
     },
     "customers": {
       "title": "ग्राहक",

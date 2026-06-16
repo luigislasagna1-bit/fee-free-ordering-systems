@@ -3175,7 +3175,14 @@
       "testCallButton": "Trimite un apel de test",
       "testCallSending": "Se apelează…",
       "testCallPlacedToast": "Apel de test trimis către {number}.",
-      "testCallFailedToast": "Apelul de test a eșuat: {reason}"
+      "testCallFailedToast": "Apelul de test a eșuat: {reason}",
+      "vibrateLabel": "Vibrație la comenzi noi",
+      "vibrateStatusOn": "Sonerie + vibrație la comenzi noi",
+      "vibrateStatusOff": "Doar sonerie — fără vibrație",
+      "vibrateHelp": "Când este activată, dispozitivul din bucătărie vibrează pe lângă sonerie la o comandă nouă. Dezactiveaz-o ca să păstrezi doar sunetul. Afectează aplicația Kitchen Order.",
+      "vibrateToggleAriaLabel": "Comută vibrația la comenzi noi",
+      "vibrateEnabledToast": "Vibrație activată — sonerie + vibrație.",
+      "vibrateDisabledToast": "Vibrație dezactivată — doar sonerie."
     },
     "receiptRenderer": {
       "yourRestaurant": "Restaurantul tău",

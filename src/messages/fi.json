@@ -3175,7 +3175,14 @@
       "testCallButton": "Lähetä testipuhelu",
       "testCallSending": "Soitetaan…",
       "testCallPlacedToast": "Testipuhelu soitettu numeroon {number}.",
-      "testCallFailedToast": "Testipuhelu epäonnistui: {reason}"
+      "testCallFailedToast": "Testipuhelu epäonnistui: {reason}",
+      "vibrateLabel": "Värinä uusista tilauksista",
+      "vibrateStatusOn": "Ääni + värinä uusista tilauksista",
+      "vibrateStatusOff": "Vain ääni — ei värinää",
+      "vibrateHelp": "Kun käytössä, keittiölaitteesi värisee äänen lisäksi uudesta tilauksesta. Poista se käytöstä säilyttääksesi vain äänen. Koskee Kitchen Order -sovellusta.",
+      "vibrateToggleAriaLabel": "Vaihda uusien tilausten värinä",
+      "vibrateEnabledToast": "Värinä päällä — ääni + värinä.",
+      "vibrateDisabledToast": "Värinä pois — vain ääni."
     },
     "receiptRenderer": {
       "yourRestaurant": "Ravintolasi",

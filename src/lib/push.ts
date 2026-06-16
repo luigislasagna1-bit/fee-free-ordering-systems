@@ -141,6 +141,16 @@ export async function sendKitchenPush(
     });
     if (devices.length === 0) return { sent: 0, pruned: 0 };
 
+    // Per-restaurant alarm preference: ring + vibrate (default) vs ring only.
+    // Forwarded in the push data so the native OrderAlarmService knows whether
+    // to buzz. Default ON unless the owner explicitly turned vibration off.
+    // Luigi 2026-06-16.
+    const rest = await prisma.restaurant.findUnique({
+      where: { id: restaurantId },
+      select: { kitchenVibrate: true },
+    });
+    const vibrate = rest?.kitchenVibrate !== false;
+
     const accessToken = await getAccessToken(sa);
     if (!accessToken) return { sent: 0, pruned: 0 };
 
@@ -169,7 +179,7 @@ export async function sendKitchenPush(
             // right away when delivered (modern devices); on a throttled old
             // Samsung it simply doesn't arrive and the ~4s poll covers it.
             // Luigi 2026-06-16.
-            data: { ...(payload.data ?? {}), title: payload.title, body: payload.body },
+            data: { ...(payload.data ?? {}), title: payload.title, body: payload.body, vibrate: vibrate ? "true" : "false" },
             android: { priority: "high" },
             apns: {
               headers: { "apns-priority": "10", "apns-push-type": "background" },

@@ -3175,7 +3175,14 @@
       "testCallButton": "Enviar una llamada de prueba",
       "testCallSending": "Llamando…",
       "testCallPlacedToast": "Llamada de prueba realizada a {number}.",
-      "testCallFailedToast": "La llamada de prueba falló: {reason}"
+      "testCallFailedToast": "La llamada de prueba falló: {reason}",
+      "vibrateLabel": "Vibración de nuevos pedidos",
+      "vibrateStatusOn": "Sonido + vibración en nuevos pedidos",
+      "vibrateStatusOff": "Solo sonido — sin vibración",
+      "vibrateHelp": "Cuando está activada, tu dispositivo de cocina vibra además del sonido al recibir un nuevo pedido. Desactívala para conservar solo el sonido. Afecta a la app Kitchen Order.",
+      "vibrateToggleAriaLabel": "Activar/desactivar la vibración de nuevos pedidos",
+      "vibrateEnabledToast": "Vibración activada — sonido + vibración.",
+      "vibrateDisabledToast": "Vibración desactivada — solo sonido."
     },
     "receiptRenderer": {
       "yourRestaurant": "Tu Restaurante",

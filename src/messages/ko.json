@@ -3175,7 +3175,14 @@
       "testCallButton": "테스트 전화 보내기",
       "testCallSending": "전화 거는 중…",
       "testCallPlacedToast": "{number}(으)로 테스트 전화를 걸었습니다.",
-      "testCallFailedToast": "테스트 전화 실패: {reason}"
+      "testCallFailedToast": "테스트 전화 실패: {reason}",
+      "vibrateLabel": "새 주문 진동",
+      "vibrateStatusOn": "새 주문 시 벨소리 + 진동",
+      "vibrateStatusOff": "벨소리만 — 진동 없음",
+      "vibrateHelp": "켜면 새 주문 시 주방 기기가 벨소리와 함께 진동합니다. 끄면 소리만 유지됩니다. Kitchen Order 앱에 적용됩니다.",
+      "vibrateToggleAriaLabel": "새 주문 진동 전환",
+      "vibrateEnabledToast": "진동 켜짐 — 벨소리 + 진동.",
+      "vibrateDisabledToast": "진동 꺼짐 — 벨소리만."
     },
     "receiptRenderer": {
       "yourRestaurant": "내 레스토랑",
