@@ -269,7 +269,10 @@
     "closedOrderLater": "Anda tetap dapat memesan untuk nanti.",
     "closedNowBanner": "Kami sedang tutup, tetapi Anda dapat memesan di muka untuk nanti.",
     "seeMenuOrderAhead": "Lihat menu & pesan di muka",
-    "fulfilNotForReservationLabel": "Tidak tersedia untuk reservasi Anda — hanya {window}"
+    "fulfilNotForReservationLabel": "Tidak tersedia untuk reservasi Anda — hanya {window}",
+    "reservationCartConflictTitle": "Tidak tersedia untuk reservasi Anda",
+    "reservationCartConflictBody": "Item ini tidak tersedia pada hari reservasi Anda. Hapus untuk melanjutkan, atau ubah reservasi Anda ke hari saat tersedia:",
+    "reservationCartChangeDay": "Ubah hari reservasi"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",

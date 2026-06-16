@@ -269,7 +269,10 @@
     "closedOrderLater": "Ви все одно можете замовити на пізніше.",
     "closedNowBanner": "Зараз ми зачинені, але ви можете зробити попереднє замовлення на пізніше.",
     "seeMenuOrderAhead": "Меню та попереднє замовлення",
-    "fulfilNotForReservationLabel": "Недоступно для вашого бронювання — лише {window}"
+    "fulfilNotForReservationLabel": "Недоступно для вашого бронювання — лише {window}",
+    "reservationCartConflictTitle": "Недоступно для вашого бронювання",
+    "reservationCartConflictBody": "Ці позиції не пропонуються в день вашого бронювання. Видаліть їх, щоб продовжити, або змініть бронювання на день, коли вони доступні:",
+    "reservationCartChangeDay": "Змінити день бронювання"
   },
   "pizza": {
     "chooseSize": "Оберіть розмір",

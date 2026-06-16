@@ -269,7 +269,10 @@
     "closedOrderLater": "Du kan stadig bestille til senere.",
     "closedNowBanner": "Vi har lukket nu, men du kan forudbestille til senere.",
     "seeMenuOrderAhead": "Se menu & forudbestil",
-    "fulfilNotForReservationLabel": "Ikke tilgængelig til din reservation — kun {window}"
+    "fulfilNotForReservationLabel": "Ikke tilgængelig til din reservation — kun {window}",
+    "reservationCartConflictTitle": "Ikke tilgængelig til din reservation",
+    "reservationCartConflictBody": "Disse varer tilbydes ikke på din reservationsdag. Fjern dem for at fortsætte, eller skift din reservation til en dag, hvor de er tilgængelige:",
+    "reservationCartChangeDay": "Skift reservationsdag"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",

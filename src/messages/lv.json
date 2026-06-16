@@ -269,7 +269,10 @@
     "closedOrderLater": "Jūs joprojām varat pasūtīt vēlākam laikam.",
     "closedNowBanner": "Pašlaik esam slēgti, taču varat veikt priekšpasūtījumu vēlākam laikam.",
     "seeMenuOrderAhead": "Skatīt ēdienkarti un pasūtīt",
-    "fulfilNotForReservationLabel": "Nav pieejams jūsu rezervācijai — tikai {window}"
+    "fulfilNotForReservationLabel": "Nav pieejams jūsu rezervācijai — tikai {window}",
+    "reservationCartConflictTitle": "Nav pieejams jūsu rezervācijai",
+    "reservationCartConflictBody": "Šīs preces jūsu rezervācijas dienā netiek piedāvātas. Noņemiet tās, lai turpinātu, vai mainiet rezervāciju uz dienu, kad tās ir pieejamas:",
+    "reservationCartChangeDay": "Mainīt rezervācijas dienu"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",

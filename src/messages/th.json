@@ -269,7 +269,10 @@
     "closedOrderLater": "คุณยังสั่งล่วงหน้าไว้ทีหลังได้",
     "closedNowBanner": "ขณะนี้เราปิดอยู่ แต่คุณสามารถสั่งล่วงหน้าสำหรับภายหลังได้",
     "seeMenuOrderAhead": "ดูเมนูและสั่งล่วงหน้า",
-    "fulfilNotForReservationLabel": "ไม่พร้อมสำหรับการจองของคุณ — เฉพาะ {window}"
+    "fulfilNotForReservationLabel": "ไม่พร้อมสำหรับการจองของคุณ — เฉพาะ {window}",
+    "reservationCartConflictTitle": "ไม่พร้อมสำหรับการจองของคุณ",
+    "reservationCartConflictBody": "รายการเหล่านี้ไม่มีจำหน่ายในวันจองของคุณ โปรดนำออกเพื่อสั่งต่อ หรือเปลี่ยนการจองเป็นวันที่มีจำหน่าย:",
+    "reservationCartChangeDay": "เปลี่ยนวันจอง"
   },
   "pizza": {
     "chooseSize": "เลือกขนาด",

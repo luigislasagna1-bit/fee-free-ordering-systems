@@ -269,7 +269,10 @@
     "closedOrderLater": "Vous pouvez quand même commander pour plus tard.",
     "closedNowBanner": "Nous sommes fermés, mais vous pouvez précommander pour plus tard.",
     "seeMenuOrderAhead": "Voir le menu et précommander",
-    "fulfilNotForReservationLabel": "Indisponible pour votre réservation — uniquement {window}"
+    "fulfilNotForReservationLabel": "Indisponible pour votre réservation — uniquement {window}",
+    "reservationCartConflictTitle": "Indisponible pour votre réservation",
+    "reservationCartConflictBody": "Ces articles ne sont pas proposés le jour de votre réservation. Retirez-les pour continuer, ou changez votre réservation pour un jour où ils sont disponibles :",
+    "reservationCartChangeDay": "Changer le jour de réservation"
   },
   "pizza": {
     "chooseSize": "Choisir la taille",

@@ -269,7 +269,10 @@
     "closedOrderLater": "Bạn vẫn có thể đặt hàng cho lúc khác.",
     "closedNowBanner": "Hiện chúng tôi đang đóng cửa, nhưng bạn có thể đặt trước cho lúc khác.",
     "seeMenuOrderAhead": "Xem thực đơn & đặt trước",
-    "fulfilNotForReservationLabel": "Không có sẵn cho lượt đặt bàn của bạn — chỉ {window}"
+    "fulfilNotForReservationLabel": "Không có sẵn cho lượt đặt bàn của bạn — chỉ {window}",
+    "reservationCartConflictTitle": "Không có sẵn cho lượt đặt bàn của bạn",
+    "reservationCartConflictBody": "Những món này không được phục vụ vào ngày đặt bàn của bạn. Hãy xóa để tiếp tục, hoặc đổi lượt đặt bàn sang ngày có phục vụ:",
+    "reservationCartChangeDay": "Đổi ngày đặt bàn"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",

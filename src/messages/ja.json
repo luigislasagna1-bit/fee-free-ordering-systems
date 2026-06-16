@@ -269,7 +269,10 @@
     "closedOrderLater": "後ほどの注文も承れます。",
     "closedNowBanner": "現在は営業時間外ですが、後ほどの分をご予約いただけます。",
     "seeMenuOrderAhead": "メニューを見て予約注文",
-    "fulfilNotForReservationLabel": "ご予約ではご利用いただけません — {window} のみ"
+    "fulfilNotForReservationLabel": "ご予約ではご利用いただけません — {window} のみ",
+    "reservationCartConflictTitle": "ご予約ではご利用いただけません",
+    "reservationCartConflictBody": "これらの商品はご予約日には提供されません。続けるには削除するか、提供日にご予約を変更してください：",
+    "reservationCartChangeDay": "予約日を変更"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",

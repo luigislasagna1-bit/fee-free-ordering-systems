@@ -269,7 +269,10 @@
     "closedOrderLater": "لا يزال بإمكانك الطلب لوقت لاحق.",
     "closedNowBanner": "نحن مغلقون الآن، لكن يمكنك الطلب مسبقًا لوقت لاحق.",
     "seeMenuOrderAhead": "عرض القائمة والطلب مسبقًا",
-    "fulfilNotForReservationLabel": "غير متاح لحجزك — فقط {window}"
+    "fulfilNotForReservationLabel": "غير متاح لحجزك — فقط {window}",
+    "reservationCartConflictTitle": "غير متاح لحجزك",
+    "reservationCartConflictBody": "هذه العناصر غير متوفرة في يوم حجزك. أزِلها للمتابعة، أو غيّر حجزك إلى يوم تتوفر فيه:",
+    "reservationCartChangeDay": "تغيير يوم الحجز"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",

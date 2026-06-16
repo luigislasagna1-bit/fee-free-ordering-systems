@@ -269,7 +269,10 @@
     "closedOrderLater": "Vis tiek galite užsisakyti vėlesniam laikui.",
     "closedNowBanner": "Dabar esame uždaryti, bet galite iš anksto užsisakyti vėlesniam laikui.",
     "seeMenuOrderAhead": "Žiūrėti meniu ir užsisakyti",
-    "fulfilNotForReservationLabel": "Nepasiekiama jūsų rezervacijai — tik {window}"
+    "fulfilNotForReservationLabel": "Nepasiekiama jūsų rezervacijai — tik {window}",
+    "reservationCartConflictTitle": "Nepasiekiama jūsų rezervacijai",
+    "reservationCartConflictBody": "Šie produktai jūsų rezervacijos dieną nesiūlomi. Pašalinkite juos, kad tęstumėte, arba pakeiskite rezervaciją į dieną, kai jie prieinami:",
+    "reservationCartChangeDay": "Keisti rezervacijos dieną"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",

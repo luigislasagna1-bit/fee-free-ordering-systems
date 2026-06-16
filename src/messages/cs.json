@@ -269,7 +269,10 @@
     "closedOrderLater": "Stále můžete objednat na později.",
     "closedNowBanner": "Nyní máme zavřeno, ale můžete si předobjednat na později.",
     "seeMenuOrderAhead": "Zobrazit menu a předobjednat",
-    "fulfilNotForReservationLabel": "Nedostupné pro vaši rezervaci — pouze {window}"
+    "fulfilNotForReservationLabel": "Nedostupné pro vaši rezervaci — pouze {window}",
+    "reservationCartConflictTitle": "Nedostupné pro vaši rezervaci",
+    "reservationCartConflictBody": "Tyto položky se v den vaší rezervace nenabízejí. Odeberte je a pokračujte, nebo změňte rezervaci na den, kdy jsou dostupné:",
+    "reservationCartChangeDay": "Změnit den rezervace"
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",

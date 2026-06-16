@@ -269,7 +269,10 @@
     "closedOrderLater": "Je kunt nog steeds bestellen voor later.",
     "closedNowBanner": "We zijn nu gesloten, maar je kunt vooruit bestellen voor later.",
     "seeMenuOrderAhead": "Menu bekijken & vooruit bestellen",
-    "fulfilNotForReservationLabel": "Niet beschikbaar voor uw reservering — alleen {window}"
+    "fulfilNotForReservationLabel": "Niet beschikbaar voor uw reservering — alleen {window}",
+    "reservationCartConflictTitle": "Niet beschikbaar voor uw reservering",
+    "reservationCartConflictBody": "Deze items worden niet aangeboden op de dag van uw reservering. Verwijder ze om door te gaan, of wijzig uw reservering naar een dag waarop ze beschikbaar zijn:",
+    "reservationCartChangeDay": "Reserveringsdag wijzigen"
   },
   "pizza": {
     "chooseSize": "Kies maat",

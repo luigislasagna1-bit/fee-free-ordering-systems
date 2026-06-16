@@ -269,7 +269,10 @@
     "closedOrderLater": "Későbbre továbbra is rendelhetsz.",
     "closedNowBanner": "Most zárva vagyunk, de előre rendelhetsz későbbre.",
     "seeMenuOrderAhead": "Menü és előrendelés",
-    "fulfilNotForReservationLabel": "A foglalásához nem érhető el — csak {window}"
+    "fulfilNotForReservationLabel": "A foglalásához nem érhető el — csak {window}",
+    "reservationCartConflictTitle": "A foglalásához nem érhető el",
+    "reservationCartConflictBody": "Ezeket a tételeket nem kínáljuk a foglalása napján. Távolítsa el őket a folytatáshoz, vagy módosítsa a foglalást egy olyan napra, amikor elérhetők:",
+    "reservationCartChangeDay": "Foglalás napjának módosítása"
   },
   "pizza": {
     "chooseSize": "Méret választása",

@@ -269,7 +269,10 @@
     "closedOrderLater": "Вы всё ещё можете оформить заказ на потом.",
     "closedNowBanner": "Сейчас мы закрыты, но вы можете оформить предзаказ на потом.",
     "seeMenuOrderAhead": "Меню и предзаказ",
-    "fulfilNotForReservationLabel": "Недоступно для вашей брони — только {window}"
+    "fulfilNotForReservationLabel": "Недоступно для вашей брони — только {window}",
+    "reservationCartConflictTitle": "Недоступно для вашей брони",
+    "reservationCartConflictBody": "Эти позиции не предлагаются в день вашей брони. Удалите их, чтобы продолжить, или измените бронь на день, когда они доступны:",
+    "reservationCartChangeDay": "Изменить день брони"
   },
   "pizza": {
     "chooseSize": "Выберите размер",

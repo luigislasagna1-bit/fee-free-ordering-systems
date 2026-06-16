@@ -964,6 +964,11 @@ export function OrderingPageClient({
   // two fulfilment-restricted items whose windows don't overlap. Luigi 2026-06-14.
   const [fulfilConflictOpen, setFulfilConflictOpen] = useState(false);
   const fulfilConflictShownRef = useRef(false);
+  // "Not available for your reservation" prompt — opens when the reservation
+  // cart holds an item that isn't offered on the booking day (remove it / rebook
+  // a day it's offered), instead of dead-ending at checkout. Luigi 2026-06-16.
+  const [reservationCartOpen, setReservationCartOpen] = useState(false);
+  const reservationCartShownRef = useRef(false);
   const [reservationOpen, setReservationOpen] = useState(false);
   // Reserve-then-order (Luigi 2026-06-08): when set, the customer is building
   // an order that will be submitted TOGETHER with this table booking (one
@@ -2231,6 +2236,23 @@ export function OrderingPageClient({
       setFulfilConflictOpen(false);
     }
   }, [hasFulfilConflict]);
+  // Reserve-then-order: a cart item that ISN'T offered on the booking day can't
+  // be fulfilled (the order time is locked to the table). Prompt to remove it or
+  // rebook a day it's offered — rather than dead-ending at "Place order". Mirrors
+  // the conflict prompt above; `reservationMoment` is null outside reservation
+  // mode so this is inert for normal/ASAP/order-ahead orders. Luigi 2026-06-16.
+  const reservationCartConflictItems = reservationMoment
+    ? cartFulfilItems.filter((mi) => !isFulfilableAt(mi, reservationMoment, restaurantTz))
+    : [];
+  const hasReservationCartConflict = reservationCartConflictItems.length > 0;
+  useEffect(() => {
+    if (hasReservationCartConflict) {
+      if (!reservationCartShownRef.current) { setReservationCartOpen(true); reservationCartShownRef.current = true; }
+    } else {
+      reservationCartShownRef.current = false;
+      setReservationCartOpen(false);
+    }
+  }, [hasReservationCartConflict]);
   const fulfilBaseMs = (() => {
     let ms = Date.now();
     if (cartHasFulfil) {
@@ -2840,6 +2862,7 @@ export function OrderingPageClient({
     // slot — re-surface the conflict prompt instead. (Backstop; the cart's
     // checkout buttons are already guarded.) Luigi 2026-06-14.
     if (hasFulfilConflict) { setFulfilConflictOpen(true); return; }
+    if (hasReservationCartConflict) { setReservationCartOpen(true); return; }
     // Mark the cart-session as having reached checkout — the next
     // heartbeat will persist this flag so cart-abandonment reporting
     // can distinguish "browsed only" vs "entered details but didn't pay."
@@ -4823,6 +4846,7 @@ export function OrderingPageClient({
                       <button
                         onClick={() => {
                           if (hasFulfilConflict) { setFulfilConflictOpen(true); return; }
+                          if (hasReservationCartConflict) { setReservationCartOpen(true); return; }
                           setCartOpen(false);
                           setCheckoutOpen(true);
                           setEditingSection("ordering");
@@ -4852,7 +4876,7 @@ export function OrderingPageClient({
 
                 <div className="p-4">
                   <button
-                    onClick={() => { if (hasFulfilConflict) { setFulfilConflictOpen(true); return; } setCartOpen(false); setCheckoutOpen(true); }}
+                    onClick={() => { if (hasFulfilConflict) { setFulfilConflictOpen(true); return; } if (hasReservationCartConflict) { setReservationCartOpen(true); return; } setCartOpen(false); setCheckoutOpen(true); }}
                     disabled={orderType === "delivery" && minimumOrderForType > 0 && subtotal < minimumOrderForType}
                     className="w-full text-white font-bold py-4 rounded-xl transition text-base disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ backgroundColor: theme.primaryColor }}>
@@ -5051,6 +5075,48 @@ export function OrderingPageClient({
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── "Not available for your reservation" prompt ───────────────
+          A cart item that isn't offered on the booking day can't be made for
+          the table (the order time is locked to the reservation). Prompt to
+          remove it or rebook a day it's offered, instead of dead-ending at
+          "Place order" (the server still rejects as a backstop). Luigi 2026-06-16. */}
+      {reservationCartOpen && reservationCartConflictItems.length > 0 && (
+        <div
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 p-4"
+          onClick={() => setReservationCartOpen(false)}
+        >
+          <div className="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-lg font-bold text-gray-900">{t("reservationCartConflictTitle")}</h3>
+            <p className="text-sm text-gray-600 mt-1.5">{t("reservationCartConflictBody")}</p>
+            <div className="mt-4 space-y-2">
+              {reservationCartConflictItems.map((mi) => (
+                <div key={mi.id} className="flex items-center justify-between gap-3 rounded-lg border border-gray-200 px-3 py-2">
+                  <div className="min-w-0">
+                    <div className="font-semibold text-gray-900 text-sm truncate">{mi.name}</div>
+                    <div className="text-xs text-amber-700">{t("availableOnlyLabel", { window: itemFulfilWindow(mi, hoursFmt) })}</div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removeConflictItem(mi.id)}
+                    className="flex-shrink-0 text-xs font-semibold text-red-600 hover:text-red-700 border border-red-200 hover:bg-red-50 rounded-lg px-3 py-1.5 transition"
+                  >
+                    {t("fulfilConflictRemove")}
+                  </button>
+                </div>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => { setReservationCartOpen(false); setReservationOpen(true); }}
+              className="mt-4 w-full text-sm font-semibold py-2.5 rounded-lg border-2 transition"
+              style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
+            >
+              {t("reservationCartChangeDay")}
+            </button>
           </div>
         </div>
       )}

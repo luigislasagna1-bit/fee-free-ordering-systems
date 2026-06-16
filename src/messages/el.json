@@ -269,7 +269,10 @@
     "closedOrderLater": "Μπορείτε ακόμη να παραγγείλετε για αργότερα.",
     "closedNowBanner": "Είμαστε κλειστά τώρα, αλλά μπορείτε να παραγγείλετε εκ των προτέρων για αργότερα.",
     "seeMenuOrderAhead": "Δείτε το μενού & παραγγείλετε",
-    "fulfilNotForReservationLabel": "Μη διαθέσιμο για την κράτησή σας — μόνο {window}"
+    "fulfilNotForReservationLabel": "Μη διαθέσιμο για την κράτησή σας — μόνο {window}",
+    "reservationCartConflictTitle": "Μη διαθέσιμο για την κράτησή σας",
+    "reservationCartConflictBody": "Αυτά τα προϊόντα δεν προσφέρονται την ημέρα της κράτησής σας. Αφαιρέστε τα για να συνεχίσετε ή αλλάξτε την κράτησή σας σε ημέρα που είναι διαθέσιμα:",
+    "reservationCartChangeDay": "Αλλαγή ημέρας κράτησης"
   },
   "pizza": {
     "chooseSize": "Επιλογή μεγέθους",

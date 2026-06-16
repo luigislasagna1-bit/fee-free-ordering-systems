@@ -269,7 +269,10 @@
     "closedOrderLater": "עדיין אפשר להזמין למועד מאוחר יותר.",
     "closedNowBanner": "אנחנו סגורים כעת, אך ניתן להזמין מראש למועד מאוחר יותר.",
     "seeMenuOrderAhead": "צפו בתפריט והזמינו מראש",
-    "fulfilNotForReservationLabel": "לא זמין להזמנה שלך — רק {window}"
+    "fulfilNotForReservationLabel": "לא זמין להזמנה שלך — רק {window}",
+    "reservationCartConflictTitle": "לא זמין להזמנה שלך",
+    "reservationCartConflictBody": "פריטים אלה אינם מוצעים ביום ההזמנה שלך. הסר אותם כדי להמשיך, או שנה את ההזמנה ליום שבו הם זמינים:",
+    "reservationCartChangeDay": "שנה את יום ההזמנה"
   },
   "pizza": {
     "chooseSize": "בחר גודל",

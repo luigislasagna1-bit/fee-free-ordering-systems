@@ -269,7 +269,10 @@
     "closedOrderLater": "您仍可预订稍后时间。",
     "closedNowBanner": "我们现在已打烊，但您可以预订稍后取餐。",
     "seeMenuOrderAhead": "查看菜单并预订",
-    "fulfilNotForReservationLabel": "您的预订无法选择 — 仅限 {window}"
+    "fulfilNotForReservationLabel": "您的预订无法选择 — 仅限 {window}",
+    "reservationCartConflictTitle": "您的预订无法选择",
+    "reservationCartConflictBody": "这些商品在您预订的当天不供应。请将其移除以继续，或将预订改到供应的日子：",
+    "reservationCartChangeDay": "更改预订日期"
   },
   "pizza": {
     "chooseSize": "选择大小",

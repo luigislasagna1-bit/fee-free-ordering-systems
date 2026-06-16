@@ -269,7 +269,10 @@
     "closedOrderLater": "Voit silti tilata myöhemmäksi.",
     "closedNowBanner": "Olemme nyt suljettu, mutta voit tehdä ennakkotilauksen myöhemmäksi.",
     "seeMenuOrderAhead": "Katso menu & ennakkotilaa",
-    "fulfilNotForReservationLabel": "Ei saatavilla varauksellesi — vain {window}"
+    "fulfilNotForReservationLabel": "Ei saatavilla varauksellesi — vain {window}",
+    "reservationCartConflictTitle": "Ei saatavilla varaukseesi",
+    "reservationCartConflictBody": "Näitä tuotteita ei tarjota varauspäivänäsi. Poista ne jatkaaksesi tai vaihda varauksesi päivälle, jolloin ne ovat saatavilla:",
+    "reservationCartChangeDay": "Vaihda varauspäivää"
   },
   "pizza": {
     "chooseSize": "Valitse koko",

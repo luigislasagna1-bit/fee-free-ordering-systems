@@ -269,7 +269,10 @@
     "closedOrderLater": "Poți totuși plasa o comandă pentru mai târziu.",
     "closedNowBanner": "Acum suntem închiși, dar poți precomanda pentru mai târziu.",
     "seeMenuOrderAhead": "Vezi meniul și precomandă",
-    "fulfilNotForReservationLabel": "Indisponibil pentru rezervarea ta — doar {window}"
+    "fulfilNotForReservationLabel": "Indisponibil pentru rezervarea ta — doar {window}",
+    "reservationCartConflictTitle": "Indisponibil pentru rezervarea ta",
+    "reservationCartConflictBody": "Aceste produse nu sunt oferite în ziua rezervării tale. Elimină-le pentru a continua sau schimbă rezervarea într-o zi în care sunt disponibile:",
+    "reservationCartChangeDay": "Schimbă ziua rezervării"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",

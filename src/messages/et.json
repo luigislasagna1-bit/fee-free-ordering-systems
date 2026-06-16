@@ -269,7 +269,10 @@
     "closedOrderLater": "Saad siiski tellida hilisemaks ajaks.",
     "closedNowBanner": "Oleme praegu suletud, kuid saate ette tellida hilisemaks ajaks.",
     "seeMenuOrderAhead": "Vaata menüüd ja telli ette",
-    "fulfilNotForReservationLabel": "Teie broneeringu jaoks pole saadaval — ainult {window}"
+    "fulfilNotForReservationLabel": "Teie broneeringu jaoks pole saadaval — ainult {window}",
+    "reservationCartConflictTitle": "Teie broneeringu jaoks pole saadaval",
+    "reservationCartConflictBody": "Neid tooteid teie broneeringu päeval ei pakuta. Eemaldage need jätkamiseks või muutke broneering päevaks, mil need on saadaval:",
+    "reservationCartChangeDay": "Muuda broneeringu päeva"
   },
   "pizza": {
     "chooseSize": "Vali suurus",

@@ -269,7 +269,10 @@
     "closedOrderLater": "आप बाद के लिए ऑर्डर कर सकते हैं।",
     "closedNowBanner": "हम अभी बंद हैं, लेकिन आप बाद के लिए पहले से ऑर्डर कर सकते हैं।",
     "seeMenuOrderAhead": "मेन्यू देखें और पहले से ऑर्डर करें",
-    "fulfilNotForReservationLabel": "आपके आरक्षण के लिए उपलब्ध नहीं — केवल {window}"
+    "fulfilNotForReservationLabel": "आपके आरक्षण के लिए उपलब्ध नहीं — केवल {window}",
+    "reservationCartConflictTitle": "आपके आरक्षण के लिए उपलब्ध नहीं",
+    "reservationCartConflictBody": "ये आइटम आपके आरक्षण के दिन उपलब्ध नहीं हैं। जारी रखने के लिए इन्हें हटाएँ, या अपनी बुकिंग को उस दिन बदलें जब ये उपलब्ध हों:",
+    "reservationCartChangeDay": "आरक्षण का दिन बदलें"
   },
   "pizza": {
     "chooseSize": "आकार चुनें",

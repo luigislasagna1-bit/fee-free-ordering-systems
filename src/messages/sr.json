@@ -269,7 +269,10 @@
     "closedOrderLater": "И даље можете наручити за касније.",
     "closedNowBanner": "Тренутно смо затворени, али можете унапред наручити за касније.",
     "seeMenuOrderAhead": "Погледај мени и наручи",
-    "fulfilNotForReservationLabel": "Није доступно за вашу резервацију — само {window}"
+    "fulfilNotForReservationLabel": "Није доступно за вашу резервацију — само {window}",
+    "reservationCartConflictTitle": "Није доступно за вашу резервацију",
+    "reservationCartConflictBody": "Ови артикли нису у понуди на дан ваше резервације. Уклоните их да наставите или промените резервацију за дан када су доступни:",
+    "reservationCartChangeDay": "Промени дан резервације"
   },
   "pizza": {
     "chooseSize": "Izaberite veličinu",

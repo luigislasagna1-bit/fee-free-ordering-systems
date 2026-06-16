@@ -269,7 +269,10 @@
     "closedOrderLater": "Du kan fortfarande beställa till senare.",
     "closedNowBanner": "Vi har stängt nu, men du kan förbeställa till senare.",
     "seeMenuOrderAhead": "Se meny & förbeställ",
-    "fulfilNotForReservationLabel": "Inte tillgänglig för din bokning — endast {window}"
+    "fulfilNotForReservationLabel": "Inte tillgänglig för din bokning — endast {window}",
+    "reservationCartConflictTitle": "Inte tillgänglig för din bokning",
+    "reservationCartConflictBody": "Dessa varor erbjuds inte på din bokningsdag. Ta bort dem för att fortsätta, eller ändra din bokning till en dag då de är tillgängliga:",
+    "reservationCartChangeDay": "Ändra bokningsdag"
   },
   "pizza": {
     "chooseSize": "Välj storlek",
