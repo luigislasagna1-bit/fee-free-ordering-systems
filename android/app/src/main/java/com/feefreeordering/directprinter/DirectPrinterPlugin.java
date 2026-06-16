@@ -201,7 +201,20 @@ public class DirectPrinterPlugin extends Plugin {
                 call.resolve(ret);
                 return;
             }
-            Log.w(TAG, "StarXpand print failed (" + xpandResult + "); falling back to raw TCP");
+            Log.w(TAG, "StarXpand print failed (" + xpandResult + ")");
+
+            // STAR printer (structured `lines` = StarXpand bitmap path): StarXpand
+            // is the ONLY path that actually prints — the TSP143 silently ignores
+            // raw ESC/POS. So if StarXpand failed here, the print genuinely failed:
+            // report it HONESTLY instead of the old fake-success "test" fallback
+            // (which printed nothing yet returned ok:true, so the app said "✓" with
+            // no paper). The raw-TCP fallback below is ONLY for non-Star printers
+            // the server targeted with ESC/POS bytes and no lines. Luigi 2026-06-16.
+            if (linesArr != null && linesArr.length() > 0) {
+                call.reject("Printer did not respond — the receipt was not printed (" + xpandResult + ")");
+                return;
+            }
+            Log.w(TAG, "Falling back to raw TCP (non-Star path)");
 
             // Phase 1 — try Star IPort (works on Star printers)
             if (tryStarPrint(ip, payload, timeoutMs, call)) {

@@ -478,36 +478,77 @@ object StarXpandBridge {
         return (paint.descent() - paint.ascent()).toInt() + 4
     }
 
+    // Connection-phase timeouts. The OLD code wrapped open+print in ONE timeout
+    // and had NO timeout on close — so a hung close froze the whole call
+    // ("spinner forever") and left the printer's single LAN session half-open,
+    // which broke EVERY following print until a restart (the cascade). Each
+    // phase is now bounded independently; close ALWAYS runs with its own cap so
+    // the session is always released; and a failed attempt is retried once on a
+    // fresh connection. Luigi 2026-06-16.
+    private const val OPEN_TIMEOUT_MS = 10_000L
+    private const val CLOSE_TIMEOUT_MS = 6_000L
+    private const val RETRY_DELAY_MS = 1_200L
+
     private inline fun runPrint(
         context: Context,
         ip: String,
         timeoutMs: Long,
         configure: (PrinterBuilder) -> PrinterBuilder
     ): String {
-        val settings = StarConnectionSettings(InterfaceType.Lan, ip)
-        val printer = StarPrinter(settings, context)
-        return try {
+        val commands = try {
             val printerBuilder = PrinterBuilder()
             configure(printerBuilder)
             val docBuilder = DocumentBuilder().addPrinter(printerBuilder)
-            val commands = StarXpandCommandBuilder().addDocument(docBuilder).getCommands()
-            Log.i(TAG, "StarXpand: commands len=${commands.length}; opening printer at $ip")
-            runBlocking {
-                withTimeout(timeoutMs) {
-                    printer.openAsync().await()
-                    Log.i(TAG, "StarXpand: printer opened; sending print")
-                    printer.printAsync(commands).await()
-                    Log.i(TAG, "StarXpand: print returned SUCCESS")
-                }
-            }
-            "ok"
+            StarXpandCommandBuilder().addDocument(docBuilder).getCommands()
         } catch (e: Throwable) {
-            Log.w(TAG, "StarXpand failed: ${e.javaClass.simpleName}: ${e.message}", e)
-            "${e.javaClass.simpleName}: ${e.message}"
-        } finally {
-            try {
-                runBlocking { printer.closeAsync().await() }
-            } catch (ignore: Throwable) { }
+            Log.w(TAG, "StarXpand: command build failed: ${e.message}", e)
+            return "BuildError: ${e.message}"
         }
+        Log.i(TAG, "StarXpand: commands len=${commands.length}; printing to $ip")
+        var lastErr = "unknown"
+        for (attempt in 1..2) {
+            val res = sendOnce(context, ip, commands, timeoutMs)
+            if (res == "ok") {
+                if (attempt > 1) Log.i(TAG, "StarXpand: succeeded on retry (attempt $attempt)")
+                return "ok"
+            }
+            lastErr = res
+            Log.w(TAG, "StarXpand: attempt $attempt failed: $res")
+            if (attempt < 2) {
+                // Let the printer fully release its single LAN session before retrying.
+                try { Thread.sleep(RETRY_DELAY_MS) } catch (ignore: InterruptedException) {}
+            }
+        }
+        return lastErr
+    }
+
+    /** One open -> print -> close cycle with INDEPENDENT bounded timeouts and a
+     *  guaranteed close, so it can never hang the call and always frees the
+     *  printer's session for the next job. */
+    private fun sendOnce(context: Context, ip: String, commands: String, printTimeoutMs: Long): String {
+        val settings = StarConnectionSettings(InterfaceType.Lan, ip)
+        val printer = StarPrinter(settings, context)
+        var result: String
+        try {
+            runBlocking {
+                withTimeout(OPEN_TIMEOUT_MS) { printer.openAsync().await() }
+                Log.i(TAG, "StarXpand: printer opened; sending print")
+                withTimeout(printTimeoutMs) { printer.printAsync(commands).await() }
+                Log.i(TAG, "StarXpand: print returned SUCCESS")
+            }
+            result = "ok"
+        } catch (e: Throwable) {
+            Log.w(TAG, "StarXpand send failed: ${e.javaClass.simpleName}: ${e.message}")
+            result = "${e.javaClass.simpleName}: ${e.message}"
+        } finally {
+            // ALWAYS close, with its OWN timeout, so a stuck close can't freeze
+            // the call and the printer session is always released for the next job.
+            try {
+                runBlocking { withTimeout(CLOSE_TIMEOUT_MS) { printer.closeAsync().await() } }
+            } catch (ignore: Throwable) {
+                Log.w(TAG, "StarXpand: close failed/timed out (continuing): ${ignore.message}")
+            }
+        }
+        return result
     }
 }
