@@ -2225,10 +2225,20 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     // double-gate the same intent. Manual-accept path leaves `force`
     // undefined so the toggles still control "do I want a receipt
     // when I tap Accept?".
+    // Default BOTH copies when the saved preferences aren't loaded. `printer
+    // Settings` starts null and only fills in after the /printnode/settings
+    // fetch — so a slow/failed fetch, the PWA offline shell, or simply no row
+    // yet would otherwise make this fall through to "kitchen" and SILENTLY drop
+    // the customer copy on auto-accept (manual "Both" is hardcoded, so it kept
+    // working — exactly the split Luigi hit 2026-06-16). The DB default for
+    // printKitchen/printCustomer is TRUE, so "unknown" must mean both, not
+    // kitchen-only. Only an EXPLICIT false now suppresses a copy.
+    const wantKitchen = printerSettings?.printKitchen ?? true;
+    const wantCustomer = printerSettings?.printCustomer ?? true;
     const printType: "kitchen" | "customer" | "both" =
-      printerSettings?.printKitchen && printerSettings?.printCustomer ? "both"
-      : printerSettings?.printCustomer ? "customer"
-      : "kitchen"; // default — chef always wants the ticket
+      wantKitchen && wantCustomer ? "both"
+      : wantCustomer ? "customer"
+      : "kitchen"; // chef always wants the ticket
 
     const direct = getDirectPrinterConfig();
     if (direct && (opts?.force || direct.autoprint)) {
@@ -2312,15 +2322,28 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     });
   };
 
-  /** Print one or more receipt types in sequence. "both" prints kitchen
-   *  first (chef needs to see it ASAP), then customer. */
+  /** Print receipts directly to the LAN printer, honoring the per-restaurant
+   *  COPY COUNTS (PrinterSettings.kitchenCopies / customerCopies — the same
+   *  "Print copies" the admin Receipts page sets) so the Order App matches the
+   *  PrintNode path. "both" prints kitchen first (chef needs it ASAP) then
+   *  customer. A short settle delay between consecutive jobs stops Star TSP
+   *  printers dropping a job fired immediately after the previous one (the
+   *  back-to-back buffer drop Luigi hit 2026-06-16). Copies default to 1 when
+   *  settings haven't loaded (so the customer copy is never silently dropped);
+   *  0 skips that type. */
   const doPrintDirect = async (orderId: string, type: "kitchen" | "customer" | "both" = "kitchen") => {
+    const clampCopies = (n: number | null | undefined) =>
+      Math.min(Math.max(0, Math.round(Number(n ?? 1))), 5);
+    const kN = type === "both" || type === "kitchen" ? clampCopies(printerSettings?.kitchenCopies) : 0;
+    const cN = type === "both" || type === "customer" ? clampCopies(printerSettings?.customerCopies) : 0;
+    const jobs: Array<"kitchen" | "customer"> = [];
+    for (let i = 0; i < kN; i++) jobs.push("kitchen");
+    for (let i = 0; i < cN; i++) jobs.push("customer");
+    if (jobs.length === 0) return;
     try {
-      if (type === "both" || type === "kitchen") {
-        await doPrintDirectOne(orderId, "kitchen");
-      }
-      if (type === "both" || type === "customer") {
-        await doPrintDirectOne(orderId, "customer");
+      for (let i = 0; i < jobs.length; i++) {
+        if (i > 0) await new Promise((r) => setTimeout(r, 600)); // settle between jobs
+        await doPrintDirectOne(orderId, jobs[i]);
       }
       toast.success("Receipt printed ✓");
     } catch (err: any) {
