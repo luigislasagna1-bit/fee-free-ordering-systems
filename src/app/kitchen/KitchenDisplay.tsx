@@ -110,6 +110,11 @@ function ReservationCard({
   const opensLabel = parked && now
     ? (() => { const l = formatDueLabel(new Date(r.alertAt!).getTime(), now); return l.kind === "day" ? l.text.toUpperCase() : `OPENS IN ${l.text.toUpperCase()}`; })()
     : null;
+  // Pending booking with no deposit owed → show the SAME accept countdown an
+  // order uses (Luigi 2026-06-15 chose full order parity — it auto-declines when
+  // it elapses). Confirmed/seated keep the table-time countdown; a deposit-owed
+  // booking waits on the customer, so it gets no accept clock.
+  const showAcceptCountdown = r.status === "pending" && r.depositAmount === 0;
   // A reservation tile carries NO action buttons — tapping it opens the
   // reservation detail panel where Accept / Reject (pending) and Seated /
   // No-show (confirmed) live, exactly like an order tile opens OrderDetail.
@@ -143,15 +148,29 @@ function ReservationCard({
                 {dayChip}
               </span>
             )}
-            {autoCountdown && (
-              <span className="inline-flex items-center gap-1 text-[11px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">
-                <Clock className="w-3 h-3" /> {autoCountdown}
-              </span>
-            )}
-            {opensLabel && (
-              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-300">
-                {opensLabel}
-              </span>
+            {showAcceptCountdown ? (
+              /* Pending → the order-style accept countdown (handles the parked
+                 "OPENS IN" state internally). Auto-declines on elapse. */
+              <Countdown
+                notifiedAt={null}
+                createdAt={r.createdAt}
+                alertAt={r.alertAt}
+                placedWhileClosed={!!r.alertAt}
+                now={now ?? 0}
+              />
+            ) : (
+              <>
+                {autoCountdown && (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">
+                    <Clock className="w-3 h-3" /> {autoCountdown}
+                  </span>
+                )}
+                {opensLabel && (
+                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-300">
+                    {opensLabel}
+                  </span>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -1907,6 +1926,41 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orders, now]);
+
+  // ── Client-side auto-decline when a PENDING reservation's accept countdown
+  // elapses (Luigi 2026-06-15 chose full order parity). Mirrors the order
+  // trigger above; the auto-reject-stale-orders cron is the 5-min backstop.
+  // Deposit-owed bookings are skipped (they wait on the customer's payment).
+  const autoRejectingResRef = useRef<Set<string>>(new Set());
+  useEffect(() => {
+    if (!now) return;
+    for (const r of reservations) {
+      if (r.status !== "pending" || r.depositAmount > 0) continue;
+      if (autoRejectingResRef.current.has(r.id)) continue;
+      if (r.alertAt && new Date(r.alertAt).getTime() > now) continue; // parked — not ringing yet
+      const reference = r.alertAt ?? r.createdAt;
+      const totalMs = r.alertAt ? 15 * 60 * 1000 : ACCEPT_WINDOW_MS;
+      if (now - new Date(reference).getTime() < totalMs + 5_000) continue; // 5s grace
+      autoRejectingResRef.current.add(r.id);
+      fetch(`/api/admin/reservations/${r.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "rejected" }),
+      })
+        .then(async (resp) => {
+          if (!resp.ok && resp.status !== 409 && resp.status !== 400) {
+            const body = await resp.text().catch(() => "");
+            console.warn(`[kds auto-reject reservation] ${r.id} PATCH failed:`, resp.status, body.slice(0, 200));
+          }
+        })
+        .catch((e) => console.warn(`[kds auto-reject reservation] ${r.id} network error:`, e));
+    }
+    const pendingResIds = new Set(reservations.filter((r) => r.status === "pending").map((r) => r.id));
+    for (const id of Array.from(autoRejectingResRef.current)) {
+      if (!pendingResIds.has(id)) autoRejectingResRef.current.delete(id);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reservations, now]);
 
   // Migration: scrub the historical localStorage cleared-sets the very
   // first time this build mounts. They're authoritative server-side

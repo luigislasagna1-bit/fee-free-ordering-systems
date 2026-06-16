@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { autoRejectStaleOrders } from "@/lib/auto-reject-orders";
+import { autoRejectStaleOrders, autoRejectStaleReservations } from "@/lib/auto-reject-orders";
 import { getSessionUser } from "@/lib/session";
 
 /**
@@ -32,7 +32,16 @@ export async function POST(req: NextRequest) {
   const timeoutMinutes = minutesRaw ? Math.max(1, parseInt(minutesRaw, 10)) : undefined;
 
   const result = await autoRejectStaleOrders({ timeoutMinutes });
-  return NextResponse.json(result);
+  // Same sweep for stale PENDING reservations — auto-decline them (Luigi
+  // 2026-06-15 chose order parity). Best-effort: a reservation failure never
+  // affects the order sweep result.
+  let reservations = { scanned: 0, rejected: 0 };
+  try {
+    reservations = await autoRejectStaleReservations();
+  } catch (e) {
+    console.error("[auto-reject cron] reservations sweep failed", e);
+  }
+  return NextResponse.json({ ...result, reservations });
 }
 
 /** Vercel runs cron jobs as GET by default. Mirror so the same endpoint

@@ -359,3 +359,74 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
   );
   return result;
 }
+
+/**
+ * Auto-decline stale PENDING reservations — the booking equivalent of
+ * autoRejectStaleOrders (Luigi 2026-06-15 chose full order parity). A
+ * non-deposit booking that's sat un-accepted past its accept window — 4 min
+ * from createdAt, or 15 min from alertAt for one placed while CLOSED — is
+ * declined and the customer emailed (same "declined" email a manual reject
+ * sends). Deposit bookings are excluded (they wait on the customer's payment,
+ * and an auto-decline there would need a refund). The kitchen client also
+ * fires an instant decline the moment the countdown elapses; this cron is the
+ * safety net for an offline / unloaded tablet.
+ */
+export async function autoRejectStaleReservations(opts: { now?: Date } = {}): Promise<{ scanned: number; rejected: number }> {
+  const now = opts.now ?? new Date();
+  const regularCutoff = new Date(now.getTime() - DEFAULT_TIMEOUT_MINUTES * 60 * 1000);
+  const closedPlacedCutoff = new Date(now.getTime() - CLOSED_PLACED_TIMEOUT_MINUTES * 60 * 1000);
+
+  const candidates = await prisma.reservation.findMany({
+    where: {
+      status: "pending",
+      depositAmount: { lte: 0 },
+      OR: [
+        { alertAt: null, createdAt: { lt: regularCutoff } },
+        { alertAt: { not: null, lt: closedPlacedCutoff } },
+      ],
+    },
+    select: {
+      id: true, customerName: true, customerEmail: true, partySize: true,
+      date: true, time: true, confirmationCode: true, depositAmount: true,
+      preOrderTotal: true, restaurantId: true,
+      restaurant: { select: { defaultLanguage: true } },
+    },
+    take: 100,
+  });
+
+  let rejected = 0;
+  for (const r of candidates) {
+    try {
+      // Idempotent claim: only flip a row that's STILL pending (staff may have
+      // just accepted, or the client trigger already declined it).
+      const upd = await prisma.reservation.updateMany({
+        where: { id: r.id, status: "pending" },
+        data: { status: "rejected" },
+      });
+      if (upd.count === 0) continue;
+      rejected += 1;
+      if (r.customerEmail) {
+        notifyCustomer({
+          restaurantId: r.restaurantId,
+          customerEmail: r.customerEmail,
+          customerLocale: r.restaurant.defaultLanguage || "en",
+          payload: {
+            event: "reservationConfirmation",
+            customerName: r.customerName,
+            partySize: r.partySize,
+            date: r.date,
+            time: r.time,
+            confirmationCode: r.confirmationCode,
+            status: "declined",
+            depositAmount: r.depositAmount,
+            preOrderTotal: r.preOrderTotal ?? undefined,
+          },
+        }).catch((e) => console.error("[auto-reject reservation notifyCustomer]", e));
+      }
+    } catch (e) {
+      console.error("[auto-reject-stale-reservations]", r.id, e instanceof Error ? e.message : e);
+    }
+  }
+  console.log(`[auto-reject-stale-reservations] scanned=${candidates.length} rejected=${rejected}`);
+  return { scanned: candidates.length, rejected };
+}
