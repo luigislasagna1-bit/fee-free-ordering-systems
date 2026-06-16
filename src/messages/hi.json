@@ -1548,7 +1548,8 @@
       "recommendedAddOnsSubtitle": "लोकप्रिय अपग्रेड जो अपनी कीमत वसूल करते हैं — एक क्लिक में सक्षम करें।",
       "popularBadge": "लोकप्रिय",
       "addOnEnableCta": "सक्षम करें",
-      "perMonth": "/माह"
+      "perMonth": "/माह",
+      "kitchenAlertsSection": "रसोई और ऑर्डर अलर्ट"
     },
     "coupons": {
       "title": "कूपन",

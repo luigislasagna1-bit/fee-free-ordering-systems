@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "שדרוגים פופולריים שמשתלמים — הפעלה בלחיצה אחת.",
       "popularBadge": "פופולרי",
       "addOnEnableCta": "הפעל",
-      "perMonth": "/לחודש"
+      "perMonth": "/לחודש",
+      "kitchenAlertsSection": "מטבח והתראות הזמנות"
     },
     "coupons": {
       "title": "קופונים",

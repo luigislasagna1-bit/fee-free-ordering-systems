@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Популярные улучшения, которые окупаются — включите в один клик.",
       "popularBadge": "Популярно",
       "addOnEnableCta": "Включить",
-      "perMonth": "/мес."
+      "perMonth": "/мес.",
+      "kitchenAlertsSection": "Кухня и оповещения о заказах"
     },
     "coupons": {
       "title": "Купоны",

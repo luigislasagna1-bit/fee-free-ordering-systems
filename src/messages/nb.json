@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Populære oppgraderinger som lønner seg — aktiver med ett klikk.",
       "popularBadge": "Populær",
       "addOnEnableCta": "Aktiver",
-      "perMonth": "/md"
+      "perMonth": "/md",
+      "kitchenAlertsSection": "Kjøkken og ordrevarsler"
     },
     "coupons": {
       "title": "Kuponger",

@@ -74,5 +74,20 @@ export default async function SettingsPage() {
     .slice(0, 4)
     .map((a) => ({ slug: a.slug, name: a.name, description: a.description, monthlyPriceCents: a.monthlyPriceCents }));
 
-  return <SettingsClient restaurant={restaurant} activeAddOns={activeAddOns} recommendedAddOns={recommendedAddOns} />;
+  // Platform Twilio VOICE creds present? Drives the auto-call "not configured"
+  // warning on the kitchen-alerts panel (one account for all restaurants).
+  const twilioVoiceConfigured = !!(
+    process.env.FFOS_TWILIO_ACCOUNT_SID &&
+    process.env.FFOS_TWILIO_AUTH_TOKEN &&
+    process.env.FFOS_TWILIO_FROM_NUMBER
+  );
+
+  return (
+    <SettingsClient
+      restaurant={restaurant}
+      activeAddOns={activeAddOns}
+      recommendedAddOns={recommendedAddOns}
+      twilioVoiceConfigured={twilioVoiceConfigured}
+    />
+  );
 }

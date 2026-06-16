@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Populaarsed täiendused, mis tasuvad end ära — aktiveeri ühe klikiga.",
       "popularBadge": "Populaarne",
       "addOnEnableCta": "Aktiveeri",
-      "perMonth": "/kuus"
+      "perMonth": "/kuus",
+      "kitchenAlertsSection": "Köök ja tellimuste teavitused"
     },
     "coupons": {
       "title": "Kupongid",

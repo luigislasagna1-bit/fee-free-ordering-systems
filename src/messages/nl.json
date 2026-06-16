@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Populaire upgrades die zichzelf terugverdienen — activeer met één klik.",
       "popularBadge": "Populair",
       "addOnEnableCta": "Activeren",
-      "perMonth": "/mnd"
+      "perMonth": "/mnd",
+      "kitchenAlertsSection": "Keuken en bestelmeldingen"
     },
     "coupons": {
       "title": "Coupons",

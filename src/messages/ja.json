@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "コストに見合う人気のアップグレード — ワンクリックで有効化。",
       "popularBadge": "人気",
       "addOnEnableCta": "有効化",
-      "perMonth": "/月"
+      "perMonth": "/月",
+      "kitchenAlertsSection": "キッチンと注文アラート"
     },
     "coupons": {
       "title": "クーポン",

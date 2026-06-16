@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Peningkatan populer yang menguntungkan — aktifkan sekali klik.",
       "popularBadge": "Populer",
       "addOnEnableCta": "Aktifkan",
-      "perMonth": "/bln"
+      "perMonth": "/bln",
+      "kitchenAlertsSection": "Dapur & peringatan pesanan"
     },
     "coupons": {
       "title": "Kupon",

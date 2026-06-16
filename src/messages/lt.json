@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Populiarūs patobulinimai, kurie atsiperka — įjunkite vienu paspaudimu.",
       "popularBadge": "Populiaru",
       "addOnEnableCta": "Įjungti",
-      "perMonth": "/mėn."
+      "perMonth": "/mėn.",
+      "kitchenAlertsSection": "Virtuvė ir užsakymų įspėjimai"
     },
     "coupons": {
       "title": "Kuponai",

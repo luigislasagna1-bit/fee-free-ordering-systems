@@ -1279,7 +1279,8 @@
       "recommendedAddOnsSubtitle": "Mejoras populares que se pagan solas: actívalas con un clic.",
       "popularBadge": "Popular",
       "addOnEnableCta": "Activar",
-      "perMonth": "/mes"
+      "perMonth": "/mes",
+      "kitchenAlertsSection": "Cocina y alertas de pedidos"
     },
     "coupons": {
       "title": "Cupones",

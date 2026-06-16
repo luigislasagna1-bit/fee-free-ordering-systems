@@ -1279,7 +1279,8 @@
       "recommendedAddOnsSubtitle": "Des améliorations populaires qui se rentabilisent — activez-les en un clic.",
       "popularBadge": "Populaire",
       "addOnEnableCta": "Activer",
-      "perMonth": "/mois"
+      "perMonth": "/mois",
+      "kitchenAlertsSection": "Cuisine et alertes de commande"
     },
     "coupons": {
       "title": "Coupons",

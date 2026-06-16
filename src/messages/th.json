@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "อัปเกรดยอดนิยมที่คุ้มค่า — เปิดใช้ได้ในคลิกเดียว",
       "popularBadge": "ยอดนิยม",
       "addOnEnableCta": "เปิดใช้งาน",
-      "perMonth": "/เดือน"
+      "perMonth": "/เดือน",
+      "kitchenAlertsSection": "ครัวและการแจ้งเตือนออเดอร์"
     },
     "coupons": {
       "title": "คูปอง",

@@ -5,6 +5,10 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrencyFormat } from "@/lib/currency-context";
+// Kitchen workflow / backup printer / auto phone-call / new-order vibration —
+// moved here from the Orders screen (Luigi 2026-06-16). The component still
+// lives in ../orders for now; it's purely a settings panel.
+import { KitchenWorkflowToggle } from "../orders/KitchenWorkflowToggle";
 
 /**
  * Shape of an active or trialing add-on subscription as it arrives
@@ -36,10 +40,14 @@ export function SettingsClient({
   restaurant,
   activeAddOns = [],
   recommendedAddOns = [],
+  twilioVoiceConfigured = false,
 }: {
   restaurant: any;
   activeAddOns?: ActiveAddOn[];
   recommendedAddOns?: RecommendedAddOn[];
+  /** Platform Twilio VOICE creds present — drives the auto-call "not configured"
+   *  warning on the moved kitchen-alerts panel. Computed server-side. */
+  twilioVoiceConfigured?: boolean;
 }) {
   const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.settings");
@@ -61,6 +69,27 @@ export function SettingsClient({
       </div>
 
       <div className="space-y-6">
+        {/* Kitchen & order alerts — moved here from the Orders screen (Luigi
+            2026-06-16) so Orders is purely the live list. Holds workflow mode,
+            backup printer, missed-order phone call, and new-order vibration —
+            each its own labeled card under one settings category. */}
+        {restaurant && (
+          <div>
+            <h2 className="font-semibold text-gray-800 text-sm uppercase tracking-wide mb-3 px-1">
+              {t("kitchenAlertsSection")}
+            </h2>
+            <KitchenWorkflowToggle
+              initialMode={restaurant.kitchenWorkflowMode === "tracking" ? "tracking" : "simple"}
+              initialPrintNodeEnabled={!!restaurant.printNodeEnabled}
+              initialAutoCall={!!restaurant.autoCallOnNewOrder}
+              initialKitchenVibrate={restaurant.kitchenVibrate !== false}
+              storePhone={restaurant.phone ?? null}
+              initialAlertPhone={restaurant.alertPhone ?? null}
+              twilioVoiceConfigured={twilioVoiceConfigured}
+            />
+          </div>
+        )}
+
         {/* Customer Payment Processing — link to Payments page */}
         <Section title={tSidebar("payments")}>
           <div className="flex items-start gap-5">

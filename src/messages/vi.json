@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Các nâng cấp phổ biến đáng đồng tiền — bật chỉ với một cú nhấp.",
       "popularBadge": "Phổ biến",
       "addOnEnableCta": "Bật",
-      "perMonth": "/tháng"
+      "perMonth": "/tháng",
+      "kitchenAlertsSection": "Bếp & cảnh báo đơn hàng"
     },
     "coupons": {
       "title": "Phiếu giảm giá",

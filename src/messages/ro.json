@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Upgrade-uri populare care se amortizează — activează-le cu un clic.",
       "popularBadge": "Popular",
       "addOnEnableCta": "Activează",
-      "perMonth": "/lună"
+      "perMonth": "/lună",
+      "kitchenAlertsSection": "Bucătărie și alerte comenzi"
     },
     "coupons": {
       "title": "Cupoane",

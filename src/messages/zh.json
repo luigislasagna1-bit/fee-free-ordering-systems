@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "热门升级，物超所值——一键启用。",
       "popularBadge": "热门",
       "addOnEnableCta": "启用",
-      "perMonth": "/月"
+      "perMonth": "/月",
+      "kitchenAlertsSection": "厨房与订单提醒"
     },
     "coupons": {
       "title": "优惠券",

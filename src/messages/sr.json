@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Популарне надоградње које се исплате — активирајте једним кликом.",
       "popularBadge": "Популарно",
       "addOnEnableCta": "Активирај",
-      "perMonth": "/мес."
+      "perMonth": "/мес.",
+      "kitchenAlertsSection": "Кухиња и обавештења о поруџбинама"
     },
     "coupons": {
       "title": "Kuponi",

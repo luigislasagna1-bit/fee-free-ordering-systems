@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Δημοφιλείς αναβαθμίσεις που αποσβένονται — ενεργοποιήστε με ένα κλικ.",
       "popularBadge": "Δημοφιλές",
       "addOnEnableCta": "Ενεργοποίηση",
-      "perMonth": "/μήνα"
+      "perMonth": "/μήνα",
+      "kitchenAlertsSection": "Κουζίνα και ειδοποιήσεις παραγγελιών"
     },
     "coupons": {
       "title": "Κουπόνια",

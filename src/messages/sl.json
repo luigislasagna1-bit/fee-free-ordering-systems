@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Priljubljene nadgradnje, ki se izplačajo — aktivirajte z enim klikom.",
       "popularBadge": "Priljubljeno",
       "addOnEnableCta": "Aktiviraj",
-      "perMonth": "/mes."
+      "perMonth": "/mes.",
+      "kitchenAlertsSection": "Kuhinja in opozorila o naročilih"
     },
     "coupons": {
       "title": "Kuponi",

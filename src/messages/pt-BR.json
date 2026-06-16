@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Upgrades populares que se pagam — ative com um clique.",
       "popularBadge": "Popular",
       "addOnEnableCta": "Ativar",
-      "perMonth": "/mês"
+      "perMonth": "/mês",
+      "kitchenAlertsSection": "Cozinha e alertas de pedidos"
     },
     "coupons": {
       "title": "Cupons",

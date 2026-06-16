@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "비용 이상의 가치를 주는 인기 업그레이드 — 한 번의 클릭으로 사용 설정.",
       "popularBadge": "인기",
       "addOnEnableCta": "사용 설정",
-      "perMonth": "/월"
+      "perMonth": "/월",
+      "kitchenAlertsSection": "주방 및 주문 알림"
     },
     "coupons": {
       "title": "쿠폰",

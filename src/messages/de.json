@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Beliebte Upgrades, die sich rentieren — mit einem Klick aktivieren.",
       "popularBadge": "Beliebt",
       "addOnEnableCta": "Aktivieren",
-      "perMonth": "/Mon."
+      "perMonth": "/Mon.",
+      "kitchenAlertsSection": "Küche & Bestellbenachrichtigungen"
     },
     "coupons": {
       "title": "Gutscheine",

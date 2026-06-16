@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Популярні покращення, що окупляються — увімкніть одним кліком.",
       "popularBadge": "Популярне",
       "addOnEnableCta": "Увімкнути",
-      "perMonth": "/міс."
+      "perMonth": "/міс.",
+      "kitchenAlertsSection": "Кухня та сповіщення про замовлення"
     },
     "coupons": {
       "title": "Купони",

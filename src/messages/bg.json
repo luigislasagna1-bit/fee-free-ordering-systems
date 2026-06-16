@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Популярни надстройки, които се изплащат — активирайте с едно кликване.",
       "popularBadge": "Популярно",
       "addOnEnableCta": "Активиране",
-      "perMonth": "/мес."
+      "perMonth": "/мес.",
+      "kitchenAlertsSection": "Кухня и сигнали за поръчки"
     },
     "coupons": {
       "title": "Купони",

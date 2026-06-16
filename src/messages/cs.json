@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Oblíbená vylepšení, která se vyplatí — aktivujte jedním kliknutím.",
       "popularBadge": "Oblíbené",
       "addOnEnableCta": "Aktivovat",
-      "perMonth": "/měs."
+      "perMonth": "/měs.",
+      "kitchenAlertsSection": "Kuchyně a upozornění na objednávky"
     },
     "coupons": {
       "title": "Kupóny",

@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Kendini amorti eden popüler yükseltmeler — tek tıkla etkinleştirin.",
       "popularBadge": "Popüler",
       "addOnEnableCta": "Etkinleştir",
-      "perMonth": "/ay"
+      "perMonth": "/ay",
+      "kitchenAlertsSection": "Mutfak ve sipariş uyarıları"
     },
     "coupons": {
       "title": "Kuponlar",

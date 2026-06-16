@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Populāri uzlabojumi, kas atmaksājas — aktivizējiet ar vienu klikšķi.",
       "popularBadge": "Populārs",
       "addOnEnableCta": "Aktivizēt",
-      "perMonth": "/mēn."
+      "perMonth": "/mēn.",
+      "kitchenAlertsSection": "Virtuve un pasūtījumu brīdinājumi"
     },
     "coupons": {
       "title": "Kuponi",

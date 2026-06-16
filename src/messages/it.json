@@ -1279,7 +1279,8 @@
       "recommendedAddOnsSubtitle": "Upgrade popolari che si ripagano da soli — attivali con un clic.",
       "popularBadge": "Popolare",
       "addOnEnableCta": "Attiva",
-      "perMonth": "/mese"
+      "perMonth": "/mese",
+      "kitchenAlertsSection": "Cucina e avvisi ordini"
     },
     "coupons": {
       "title": "Coupon",

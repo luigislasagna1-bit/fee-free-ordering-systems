@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Millores populars que s'amortitzen — activa-les amb un clic.",
       "popularBadge": "Popular",
       "addOnEnableCta": "Activa",
-      "perMonth": "/mes"
+      "perMonth": "/mes",
+      "kitchenAlertsSection": "Cuina i alertes de comandes"
     },
     "coupons": {
       "title": "Cupons",

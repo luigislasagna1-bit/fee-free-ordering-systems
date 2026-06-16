@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Suosittuja päivityksiä, jotka maksavat itsensä takaisin — ota käyttöön yhdellä klikkauksella.",
       "popularBadge": "Suosittu",
       "addOnEnableCta": "Ota käyttöön",
-      "perMonth": "/kk"
+      "perMonth": "/kk",
+      "kitchenAlertsSection": "Keittiö ja tilaushälytykset"
     },
     "coupons": {
       "title": "Kupongit",

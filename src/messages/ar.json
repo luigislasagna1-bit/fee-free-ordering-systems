@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "ترقيات شائعة تستحق تكلفتها — فعّلها بنقرة واحدة.",
       "popularBadge": "شائع",
       "addOnEnableCta": "تفعيل",
-      "perMonth": "/شهر"
+      "perMonth": "/شهر",
+      "kitchenAlertsSection": "المطبخ وتنبيهات الطلبات"
     },
     "coupons": {
       "title": "الكوبونات",

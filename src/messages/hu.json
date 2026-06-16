@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Népszerű bővítések, amelyek megtérülnek — aktiváld egy kattintással.",
       "popularBadge": "Népszerű",
       "addOnEnableCta": "Aktiválás",
-      "perMonth": "/hó"
+      "perMonth": "/hó",
+      "kitchenAlertsSection": "Konyha és rendelési értesítések"
     },
     "coupons": {
       "title": "Kuponok",

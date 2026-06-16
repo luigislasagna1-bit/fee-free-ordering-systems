@@ -1592,7 +1592,8 @@
       "recommendedAddOnsSubtitle": "Popular upgrades that pay for themselves — enable in one click.",
       "popularBadge": "Popular",
       "addOnEnableCta": "Enable",
-      "perMonth": "/mo"
+      "perMonth": "/mo",
+      "kitchenAlertsSection": "Kitchen & order alerts"
     },
     "coupons": {
       "title": "Coupons",

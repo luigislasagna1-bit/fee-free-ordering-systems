@@ -1290,7 +1290,8 @@
       "recommendedAddOnsSubtitle": "Popularne ulepszenia, które się zwracają — włącz jednym kliknięciem.",
       "popularBadge": "Popularne",
       "addOnEnableCta": "Włącz",
-      "perMonth": "/mies."
+      "perMonth": "/mies.",
+      "kitchenAlertsSection": "Kuchnia i alerty zamówień"
     },
     "coupons": {
       "title": "Kupony",
