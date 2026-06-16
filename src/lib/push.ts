@@ -124,10 +124,20 @@ export async function sendKitchenPush(
     const sa = getServiceAccount();
     if (!sa) return { sent: 0, pruned: 0 };
 
+    // Single ACTIVE device per kitchen, mirroring the single-session login rule
+    // (logging in on one device logs the others out). Push ONLY to the
+    // most-recently-registered token — the live device — so a phone that was
+    // logged in earlier never buzzes on new orders after being logged out. A
+    // logged-out device can't refresh its lastSeenAt (its register-device call
+    // 401s), so the active device is always the freshest. register-device also
+    // prunes the others on (re)launch; this is the belt-and-suspenders that
+    // silences stale devices immediately, with no app relaunch needed. Luigi
+    // 2026-06-16 (Fabrizio multi-device "logged-out phones still vibrate" report).
     const devices = await prisma.kitchenPushToken.findMany({
       where: { restaurantId },
       select: { id: true, token: true },
-      take: 50, // a kitchen has a handful of devices; cap defensively
+      orderBy: { lastSeenAt: "desc" },
+      take: 1,
     });
     if (devices.length === 0) return { sent: 0, pruned: 0 };
 

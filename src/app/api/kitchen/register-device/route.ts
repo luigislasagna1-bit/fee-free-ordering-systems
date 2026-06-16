@@ -42,6 +42,20 @@ export async function POST(req: NextRequest) {
     create: { restaurantId, token, platform },
   });
 
+  // Single ACTIVE device per kitchen — mirror the single-session login rule.
+  // The kitchen logs in on one device at a time (a new login logs the others
+  // out), so only ONE device should ring/buzz. This device just (re)registered
+  // as the active one, so retire every OTHER push token for the restaurant.
+  // Without this, a phone that was logged in earlier keeps its token and still
+  // VIBRATES on every new order even after it's been logged out — the active
+  // device gets the ring, the stale ones get a silent buzz. Fixes the Fabrizio
+  // multi-device report (Luigi 2026-06-16). The native app POSTs here on launch
+  // and on FCM token refresh, so the live device reclaims sole ownership; a
+  // superseded device sends no orders and is simply dropped from the push list.
+  await prisma.kitchenPushToken.deleteMany({
+    where: { restaurantId, token: { not: token } },
+  });
+
   return NextResponse.json({ ok: true });
 }
 
