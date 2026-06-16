@@ -1,7 +1,11 @@
 package com.feefreeordering.directprinter;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
+import android.net.LinkAddress;
+import android.net.LinkProperties;
+import android.net.Network;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.net.wifi.WifiManager;
@@ -33,6 +37,7 @@ import com.starmicronics.starioextension.StarIoExt;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -588,16 +593,28 @@ public class DirectPrinterPlugin extends Plugin {
      * too long.
      */
     private void subnetScan(Context ctx, Map<String, JSObject> byIp, int timeoutMs, int threads) {
-        WifiManager wifi = (WifiManager) ctx.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        if (wifi == null) return;
-        DhcpInfo dhcp = wifi.getDhcpInfo();
-        if (dhcp == null || dhcp.ipAddress == 0) return;
-
-        int ip = dhcp.ipAddress;
-        int mask = dhcp.netmask == 0 ? 0xFFFFFF00 : dhcp.netmask; // assume /24 if not reported
-        // ipAddress is little-endian; convert.
-        int localIp = Integer.reverseBytes(ip);
-        int netmask = Integer.reverseBytes(mask);
+        // Device IPv4 + subnet mask. WifiManager.getDhcpInfo() is DEPRECATED and
+        // returns 0.0.0.0 on Android 12+ (API 31+) — which silently broke
+        // auto-discovery on newer tablets (it found the device IP as 0, bailed,
+        // and never scanned). Luigi/Fabrizio 2026-06-15. Use the modern
+        // ConnectivityManager/LinkProperties path first; fall back to legacy
+        // DHCP info only on older devices where it still works.
+        int localIp;
+        int netmask;
+        int[] modern = getLocalIpv4AndPrefix(ctx);
+        if (modern != null) {
+            localIp = modern[0];
+            int prefix = modern[1];
+            netmask = (prefix <= 0 || prefix > 32) ? 0xFFFFFF00 : (int) (0xFFFFFFFFL << (32 - prefix));
+        } else {
+            WifiManager wifi = (WifiManager) ctx.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            if (wifi == null) return;
+            DhcpInfo dhcp = wifi.getDhcpInfo();
+            if (dhcp == null || dhcp.ipAddress == 0) return;
+            // ipAddress + netmask are little-endian from DhcpInfo; convert.
+            localIp = Integer.reverseBytes(dhcp.ipAddress);
+            netmask = Integer.reverseBytes(dhcp.netmask == 0 ? 0xFFFFFF00 : dhcp.netmask);
+        }
 
         int network = localIp & netmask;
         int broadcast = network | ~netmask;
@@ -646,6 +663,38 @@ public class DirectPrinterPlugin extends Plugin {
             latch.await(timeoutMs * 3L, TimeUnit.MILLISECONDS);
         } catch (InterruptedException ignore) {}
         pool.shutdownNow();
+    }
+
+    /**
+     * Device IPv4 address + subnet prefix length via the modern Connectivity
+     * APIs, as { ipBigEndian, prefixLen }. Replaces the deprecated
+     * WifiManager.getDhcpInfo() (returns 0 on Android 12+), so the subnet scan
+     * works on current tablets. Uses only ACCESS_NETWORK_STATE (already
+     * declared) — no WiFi-scan / nearby-devices permission needed. Returns null
+     * when no usable IPv4 link address is found (caller falls back to DHCP).
+     */
+    private int[] getLocalIpv4AndPrefix(Context ctx) {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) ctx.getApplicationContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (cm == null) return null;
+            Network net = cm.getActiveNetwork();
+            if (net == null) return null;
+            LinkProperties lp = cm.getLinkProperties(net);
+            if (lp == null) return null;
+            for (LinkAddress la : lp.getLinkAddresses()) {
+                InetAddress addr = la.getAddress();
+                if (addr instanceof Inet4Address && !addr.isLoopbackAddress() && !addr.isLinkLocalAddress()) {
+                    byte[] b = addr.getAddress();
+                    int ipInt = ((b[0] & 0xff) << 24) | ((b[1] & 0xff) << 16)
+                              | ((b[2] & 0xff) << 8) | (b[3] & 0xff);
+                    return new int[] { ipInt, la.getPrefixLength() };
+                }
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "modern IPv4 detection failed; will fall back to DHCP", e);
+        }
+        return null;
     }
 
     /** Convert a 32-bit int IP (big-endian) to "a.b.c.d" string. */
