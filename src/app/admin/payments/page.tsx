@@ -2,6 +2,8 @@ import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
+import { getAddOnBillingState } from "@/lib/dunning";
+import { AddOnBillingNotice } from "@/components/admin/AddOnBillingNotice";
 import { parsePaymentMethods } from "@/lib/payment-methods";
 import { PaymentMethodsClient } from "./PaymentMethodsClient";
 
@@ -71,13 +73,22 @@ export default async function PaymentMethodsPage() {
   // an active subscription, the tile is locked and the API rejects writes.
   const onlinePaymentsUnlocked = await hasFeature(user.restaurantId, "card_payments");
 
+  // Online Payments add-on dunning state → grace / downgraded notice so the
+  // owner knows why card checkout turned off (Luigi 2026-06-15).
+  const billingState = await getAddOnBillingState(user.restaurantId, "online_payments");
+
   return (
-    <PaymentMethodsClient
-      initialByType={initialByType}
-      orderTypes={orderTypes}
-      stripeReady={stripeReady}
-      stripeStatus={restaurant.stripeAccountStatus ?? "not_connected"}
-      onlinePaymentsUnlocked={onlinePaymentsUnlocked}
-    />
+    <>
+      <div className="max-w-3xl mx-auto px-4 pt-4">
+        <AddOnBillingNotice state={billingState} addOnSlug="online_payments" />
+      </div>
+      <PaymentMethodsClient
+        initialByType={initialByType}
+        orderTypes={orderTypes}
+        stripeReady={stripeReady}
+        stripeStatus={restaurant.stripeAccountStatus ?? "not_connected"}
+        onlinePaymentsUnlocked={onlinePaymentsUnlocked}
+      />
+    </>
   );
 }

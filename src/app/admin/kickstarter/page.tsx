@@ -22,6 +22,8 @@ import {
   getOrCreateKickstarterState,
 } from "@/lib/kickstarter";
 import { featureGate } from "@/lib/feature-gate";
+import { getAddOnBillingState } from "@/lib/dunning";
+import { AddOnBillingNotice } from "@/components/admin/AddOnBillingNotice";
 import { KickstarterClient } from "./KickstarterClient";
 
 export const dynamic = "force-dynamic";
@@ -33,8 +35,19 @@ export default async function KickstarterPage() {
   const restaurantId = user.restaurantId;
 
   // Paid add-on: free accounts see the locked upsell. Luigi 2026-06-11.
+  const billingState = await getAddOnBillingState(restaurantId, "kickstarter");
   const gate = await featureGate(restaurantId, "kickstarter", "kickstarter");
-  if (gate) return gate;
+  if (gate) {
+    // Downgraded (grace expired) lands here — explain why above the locked view.
+    return (
+      <>
+        <div className="max-w-3xl mx-auto px-4 pt-4">
+          <AddOnBillingNotice state={billingState} addOnSlug="kickstarter" />
+        </div>
+        {gate}
+      </>
+    );
+  }
 
   const [state, firstBuyPromo, imports] = await Promise.all([
     getOrCreateKickstarterState(restaurantId),
@@ -50,7 +63,11 @@ export default async function KickstarterPage() {
   ]);
 
   return (
-    <KickstarterClient
+    <>
+      <div className="max-w-3xl mx-auto px-4 pt-4">
+        <AddOnBillingNotice state={billingState} addOnSlug="kickstarter" />
+      </div>
+      <KickstarterClient
       initialFirstBuyEnabled={state.firstBuyPromoEnabled}
       initialInviteEnabled={state.inviteProspectsEnabled}
       initialFirstBuyPromoId={firstBuyPromo?.id ?? null}
@@ -66,5 +83,6 @@ export default async function KickstarterPage() {
         uploadedAt: i.uploadedAt.toISOString(),
       }))}
     />
+    </>
   );
 }

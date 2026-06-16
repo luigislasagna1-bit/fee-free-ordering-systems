@@ -77,6 +77,31 @@ export type Feature =
  *  Stripe handler maps incoming "trialing" → "active" on receipt. */
 const GRANTING_STATUSES = ["active", "trialing"] as const;
 
+/**
+ * Prisma `where` fragment matching the add-on rows that currently GRANT
+ * entitlements for a restaurant:
+ *   - active / trialing (the normal granting statuses), OR
+ *   - past_due BUT still inside the failed-payment grace window
+ *     (graceEndsAt in the future).
+ *
+ * The grace arm is the heart of the dunning system (Luigi 2026-06-15): when a
+ * charge fails the add-on flips to past_due AND gets graceEndsAt = now + 10d,
+ * and this keeps its features alive until the grace expires — service is NOT
+ * cut the instant a payment fails. Once graceEndsAt passes, the row stops
+ * matching and the feature drops automatically (no cron required for the
+ * deactivation itself). Single flat table read — no join — so the hot path
+ * (order page, admin layout) stays fast.
+ */
+function grantingAddOnWhere(restaurantId: string) {
+  return {
+    restaurantId,
+    OR: [
+      { status: { in: [...GRANTING_STATUSES] } },
+      { status: "past_due", graceEndsAt: { gt: new Date() } },
+    ],
+  };
+}
+
 /** Returns true iff the restaurant has an active add-on whose
  *  enabledFeatures array contains the requested feature slug. */
 export async function hasFeature(restaurantId: string, feature: Feature): Promise<boolean> {
@@ -97,10 +122,7 @@ export async function hasFeature(restaurantId: string, feature: Feature): Promis
  *  add-on," we'd add a separate `hasAnyBillableAddOn` helper. */
 export async function hasAnyPaidAddOn(restaurantId: string): Promise<boolean> {
   const count = await prisma.restaurantAddOn.count({
-    where: {
-      restaurantId,
-      status: { in: [...GRANTING_STATUSES] },
-    },
+    where: grantingAddOnWhere(restaurantId),
   });
   return count > 0;
 }
@@ -115,10 +137,7 @@ export const GROWTHNET_SLUG = "growthnet";
  *  for rendering UI (e.g. "all add-ons you have" page) and for bulk gating. */
 export async function getEntitlements(restaurantId: string): Promise<Set<Feature>> {
   const rows = await prisma.restaurantAddOn.findMany({
-    where: {
-      restaurantId,
-      status: { in: [...GRANTING_STATUSES] },
-    },
+    where: grantingAddOnWhere(restaurantId),
     select: { addOn: { select: { slug: true, enabledFeatures: true } } },
   });
 

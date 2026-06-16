@@ -18,6 +18,8 @@ import type { SetupProgress } from "@/lib/setup-checklist";
 import { getEntitlements } from "@/lib/entitlements";
 import { getOrderCapUsage } from "@/lib/order-cap";
 import { FreePlanCapBanner } from "@/components/admin/FreePlanCapBanner";
+import { DunningBanner } from "@/components/admin/DunningBanner";
+import { daysLeft as graceDaysLeft } from "@/lib/dunning";
 import { CurrencyProvider } from "@/lib/currency-context";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -70,6 +72,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   // The restaurant's chosen language — used as the admin-console default locale
   // when the viewer hasn't explicitly picked one. Luigi 2026-06-11.
   let restaurantDefaultLanguage: string | null = null;
+  /** Days left in the failed-payment grace window → drives the dunning banner.
+   *  null = not in dunning (banner hidden). */
+  let dunningDaysLeft: number | null = null;
   if (restaurantId) {
     // "New orders" notification = pending orders that arrived since the owner
     // last opened the Orders page. The /admin/orders page stamps a per-restaurant
@@ -98,6 +103,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           name: true,
           subscriptionStatus: true,
           trialEndsAt: true,
+          // Dunning grace clock — keeps the admin unlocked + drives the
+          // countdown banner while a failed payment is within its grace window.
+          graceEndsAt: true,
           parentRestaurantId: true,
           id: true,
           currency: true,
@@ -117,6 +125,14 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     restaurantCurrency = restaurant?.currency || "usd";
     isPublished = !!restaurant?.publishedAt;
     isChildAdmin = !!restaurant?.parentRestaurantId;
+
+    // Dunning grace (Luigi 2026-06-15): when a failed-payment grace clock is
+    // live, surface the countdown banner AND keep the admin unlocked (see the
+    // billing gate below). Cleared automatically once grace expires.
+    const inGrace = !!restaurant?.graceEndsAt && restaurant.graceEndsAt > new Date();
+    if (inGrace && restaurant?.graceEndsAt) {
+      dunningDaysLeft = graceDaysLeft(restaurant.graceEndsAt);
+    }
 
     // Email-verification state — only relevant for restaurant_admin users
     // (the actual owner). Superadmin / reseller impersonators bypass the
@@ -266,7 +282,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     // the kitchen display remain accessible regardless.
     if (role !== "superadmin" && role !== "reseller_partner") {
       const status = restaurant?.subscriptionStatus;
-      const needsBilling = status === "past_due" || status === "cancelled";
+      // During the dunning grace window keep the admin FULLY UNLOCKED — the owner
+      // needs it to fix billing and keep running; the DunningBanner shows the
+      // countdown. Only lock once grace has expired (or a real cancellation).
+      const needsBilling = (status === "past_due" || status === "cancelled") && !inGrace;
       if (needsBilling) {
         const h = await headers();
         const pathname = h.get("x-pathname") || "";
@@ -287,6 +306,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <CurrencyProvider currency={restaurantCurrency}>
       <div className="flex h-screen bg-gray-50 overflow-hidden flex-col">
         <EmailVerificationBanner email={ownerEmail} verified={ownerEmailVerified} />
+        {dunningDaysLeft !== null && <DunningBanner daysLeft={dunningDaysLeft} />}
         {user?.isImpersonating && (
           <ImpersonationBanner
             restaurantName={restaurantName}

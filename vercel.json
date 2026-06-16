@@ -44,6 +44,10 @@
     {
       "path": "/api/cron/publish-scheduled-menus",
       "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/dunning",
+      "schedule": "0 13 * * *"
     }
   ]
 }

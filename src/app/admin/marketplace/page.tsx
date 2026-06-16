@@ -7,6 +7,8 @@ import {
   computeMonthlyChargeCents,
   getMarketplaceMembership,
 } from "@/lib/marketplace";
+import { getAddOnBillingState } from "@/lib/dunning";
+import { AddOnBillingNotice } from "@/components/admin/AddOnBillingNotice";
 import { MarketplaceLockedView } from "./MarketplaceLockedView";
 import { MarketplaceSettingsClient } from "./MarketplaceSettingsClient";
 
@@ -35,9 +37,18 @@ export default async function MarketplaceAdminPage() {
   // Membership = "monthly" (paid subscription) | "payg" (opted into PAYG) | "none".
   // Only "none" sees the upsell; both billing modes get the editor.
   const membership = await getMarketplaceMembership(user.restaurantId);
+  // Marketplace add-on dunning state → grace / downgraded notice.
+  const billingState = await getAddOnBillingState(user.restaurantId, "marketplace");
 
   if (membership === "none") {
-    return <MarketplaceLockedView />;
+    return (
+      <>
+        <div className="max-w-5xl mx-auto px-4 pt-4">
+          <AddOnBillingNotice state={billingState} addOnSlug="marketplace" />
+        </div>
+        <MarketplaceLockedView />
+      </>
+    );
   }
 
   // Ensure listing exists (defensive against webhook race conditions)
@@ -61,7 +72,11 @@ export default async function MarketplaceAdminPage() {
   const billing = computeMonthlyChargeCents(listing.currentMonthOrders);
 
   return (
-    <MarketplaceSettingsClient
+    <>
+      <div className="max-w-5xl mx-auto px-4 pt-4">
+        <AddOnBillingNotice state={billingState} addOnSlug="marketplace" />
+      </div>
+      <MarketplaceSettingsClient
       initialListing={{
         id: listing.id,
         isListed: listing.isListed,
@@ -95,6 +110,7 @@ export default async function MarketplaceAdminPage() {
       billingMode={membership}
       isSuperadmin={user.role === "superadmin"}
     />
+    </>
   );
 }
 

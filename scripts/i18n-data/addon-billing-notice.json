@@ -1,0 +1,18 @@
+{
+  "addOnBilling.graceTitle": { "en": "We couldn't take your last payment" },
+  "addOnBilling.graceBody": { "en": "This add-on's payment didn't go through. As a courtesy it stays fully active — days left to update your card before it's switched off: {days}. Update your payment now to keep it." },
+  "addOnBilling.graceCta": { "en": "Update payment method" },
+  "addOnBilling.downgradedTitle": { "en": "This add-on is switched off" },
+  "addOnBilling.downgradedBody": { "en": "Your payment didn't go through, so this add-on was switched off. {consequence} Re-subscribe to turn it back on." },
+  "addOnBilling.downgradedCta": { "en": "Re-subscribe" },
+  "addOnBilling.consequenceGeneric": { "en": "Its paid features are paused until payment is restored; your free features keep working." },
+  "addOnBilling.consequence.custom_domain": { "en": "Your domain now forwards visitors to your free Fee Free Ordering link, so customers can still order — it points back to your own domain the moment payment goes through." },
+  "addOnBilling.consequence.hosted_website": { "en": "Your marketing website is paused and shows a brief upgrade notice; your ordering page keeps working — only the marketing site is affected." },
+  "addOnBilling.consequence.online_payments": { "en": "Card checkout is switched off. Customers can still order using your other payment methods (cash / pay at store), so you keep taking orders." },
+  "addOnBilling.consequence.unlimited_orders": { "en": "Your 100 orders/reservations-per-month cap is back in place; orders beyond the cap are blocked until payment is restored." },
+  "addOnBilling.consequence.advanced_promos": { "en": "Advanced promotions, customer segments and automated campaigns are paused; your basic promo types still run." },
+  "addOnBilling.consequence.multi_location": { "en": "Managing multiple locations is paused, and each location now manages its own menu, hours and delivery zones; every location's own ordering keeps running." },
+  "addOnBilling.consequence.marketplace": { "en": "Your public Marketplace listing is hidden, so new customers won't discover you there; your own ordering page and direct orders are unaffected." },
+  "addOnBilling.consequence.kickstarter": { "en": "Your launch and win-back campaign tools are locked; any campaigns you already sent are unaffected." },
+  "addOnBilling.consequence.growthnet": { "en": "Your GrowthNet bundle is paused, so all its tools (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) switch off together — re-subscribe to restore the whole bundle." }
+}

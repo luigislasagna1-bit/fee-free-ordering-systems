@@ -2,6 +2,7 @@ import type Stripe from "stripe";
 import prisma from "@/lib/db";
 import { sendBillingNotificationEmail } from "@/lib/email";
 import { recordCommissionForInvoice } from "@/lib/commission";
+import { startRestaurantGrace, clearRestaurantGrace, GRACE_DAYS } from "@/lib/dunning";
 
 /**
  * Handle invoice.* events for the platform subscription billing (Layer B).
@@ -113,6 +114,15 @@ export async function handleInvoiceEvent(event: Stripe.Event) {
         currentPeriodEnd: invoice.period_end ? new Date(invoice.period_end * 1000) : null,
       },
     });
+    // Recovery — a successful charge clears any dunning grace clock so the
+    // daily reminders stop and the account reads healthy again. (Per-add-on
+    // RestaurantAddOn.graceEndsAt is cleared by the subscription.updated→active
+    // event that accompanies a successful add-on charge.)
+    try {
+      await clearRestaurantGrace(restaurant.id);
+    } catch (e) {
+      console.error("[stripe/invoice.paid] clearRestaurantGrace failed", e);
+    }
     // Reseller Partner Program — record commission if the restaurant has an
     // approved reseller. No-op for direct (non-reseller) restaurants.
     try {
@@ -125,16 +135,27 @@ export async function handleInvoiceEvent(event: Stripe.Event) {
       where: { id: restaurant.id },
       data: { subscriptionStatus: "past_due" },
     });
-    if (restaurant.email) {
+    // Dunning (Luigi 2026-06-15): DON'T cut service. Start a GRACE_DAYS grace
+    // clock — paid features stay on (entitlements honor the window) and the
+    // daily /api/cron/dunning job sends the countdown to the owner + reseller.
+    // Fire the immediate "day 0" notice only when a NEW clock starts, so Stripe
+    // retries / a second failing sub don't re-spam or reset the deadline.
+    let graceStarted = false;
+    try {
+      graceStarted = await startRestaurantGrace(restaurant.id);
+    } catch (e) {
+      console.error("[stripe/invoice.payment_failed] startRestaurantGrace failed", e);
+    }
+    if (graceStarted && restaurant.email) {
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
       // IMPORTANT: await — Vercel kills unawaited promises after webhook 200.
       try {
         await sendBillingNotificationEmail({
           to: restaurant.email,
           restaurantName: restaurant.name,
-          subject: "Your subscription payment failed",
-          headline: "Your last payment didn't go through",
-          body: "Your subscription is now past due. Update your card to keep your account active — admin tools are locked until billing is restored.",
+          subject: "We couldn't process your subscription payment",
+          headline: "Your payment didn't go through — but your service is still on",
+          body: `We weren't able to charge your card. As a courtesy we've kept your account fully active and given you ${GRACE_DAYS} days to sort it out. Please update your payment details to avoid any interruption — and remember your free features keep working no matter what.`,
           ctaLabel: "Update payment method",
           ctaUrl: invoice.hosted_invoice_url || `${baseUrl}/admin/billing`,
         });

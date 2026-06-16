@@ -2,6 +2,7 @@ import type Stripe from "stripe";
 import prisma from "@/lib/db";
 import { ensureMarketplaceListing } from "@/lib/marketplace";
 import { notifyAddOnChange } from "@/lib/platform-notifications";
+import { graceDeadline, startRestaurantGrace } from "@/lib/dunning";
 
 /**
  * Handle customer.subscription.* events.
@@ -130,7 +131,7 @@ async function handleAddOnSubscriptionEvent(
   // failures never affect the webhook — notifyAddOnChange is best-effort.)
   const prior = await prisma.restaurantAddOn.findUnique({
     where: { restaurantId_addOnId: { restaurantId, addOnId: addOn.id } },
-    select: { status: true },
+    select: { status: true, graceEndsAt: true },
   });
   const wasActive = !!prior && (prior.status === "active" || prior.status === "trialing");
 
@@ -160,6 +161,14 @@ async function handleAddOnSubscriptionEvent(
   const trialEndSec = sAny.trial_end as number | undefined;
   const status = mapStripeStatus(sub.status);
 
+  // Dunning grace (Luigi 2026-06-15): when this add-on goes past_due, keep its
+  // features alive for the grace window instead of dropping them immediately —
+  // stamp a deadline, preserving any existing one so Stripe retries don't push
+  // it out. The entitlement check (grantingAddOnWhere) reads this column. Any
+  // granting / other status clears it (recovery restores the feature).
+  const addOnGraceEndsAt =
+    status === "past_due" ? (prior?.graceEndsAt ?? graceDeadline()) : null;
+
   await prisma.restaurantAddOn.upsert({
     where: { restaurantId_addOnId: { restaurantId, addOnId: addOn.id } },
     create: {
@@ -170,6 +179,7 @@ async function handleAddOnSubscriptionEvent(
       currentPeriodEnd: periodEndSec ? new Date(periodEndSec * 1000) : null,
       cancelAtPeriodEnd: sub.cancel_at_period_end ?? false,
       trialEndsAt: trialEndSec ? new Date(trialEndSec * 1000) : null,
+      graceEndsAt: addOnGraceEndsAt,
       activatedAt: new Date(),
     },
     update: {
@@ -178,8 +188,20 @@ async function handleAddOnSubscriptionEvent(
       currentPeriodEnd: periodEndSec ? new Date(periodEndSec * 1000) : null,
       cancelAtPeriodEnd: sub.cancel_at_period_end ?? false,
       trialEndsAt: trialEndSec ? new Date(trialEndSec * 1000) : null,
+      graceEndsAt: addOnGraceEndsAt,
     },
   });
+
+  // A failed add-on charge also starts the restaurant-level dunning clock, so
+  // the daily cron nudges the owner + their reseller and the admin shows the
+  // banner. Idempotent — won't reset a clock that's already running.
+  if (status === "past_due") {
+    try {
+      await startRestaurantGrace(restaurantId);
+    } catch (e) {
+      console.error("[stripe] add-on past_due: startRestaurantGrace failed", e);
+    }
+  }
 
   // ── Side effects on activation ───────────────────────────────────────
   // When specific add-ons go active/trialing, create the related rows so

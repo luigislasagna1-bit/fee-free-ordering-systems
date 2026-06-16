@@ -1,13 +1,15 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
+import { getAddOnBillingState } from "@/lib/dunning";
+import { AddOnBillingNotice } from "@/components/admin/AddOnBillingNotice";
 import { DomainClient } from "./DomainClient";
 
 export default async function DomainPage() {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId ?? "";
 
-  const [r, hasCustomDomain] = await Promise.all([
+  const [r, hasCustomDomain, billingState] = await Promise.all([
     prisma.restaurant.findUnique({
       where: { id: restaurantId },
       select: {
@@ -25,12 +27,20 @@ export default async function DomainPage() {
     // upgrade CTA (cleaner than hiding the page entirely, since the
     // page also explains what the add-on does).
     hasFeature(restaurantId, "custom_domain_routing"),
+    // Dunning state for the Custom Domain add-on — drives the grace /
+    // downgraded notice so the owner knows exactly why their domain is now
+    // forwarding to the free link (Luigi 2026-06-15).
+    getAddOnBillingState(restaurantId, "custom_domain"),
   ]);
 
   if (!r) return null;
 
   return (
-    <DomainClient
+    <>
+      <div className="max-w-3xl mx-auto px-4 pt-4">
+        <AddOnBillingNotice state={billingState} addOnSlug="custom_domain" />
+      </div>
+      <DomainClient
       initial={{
         slug: r.slug,
         subdomain: r.subdomain ?? r.slug,
@@ -41,5 +51,6 @@ export default async function DomainPage() {
       providerIsDevStub={(process.env.DOMAIN_PROVIDER || "local").toLowerCase() === "local"}
       hasCustomDomainAddOn={hasCustomDomain}
     />
+    </>
   );
 }
