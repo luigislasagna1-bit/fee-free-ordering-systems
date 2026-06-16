@@ -36,7 +36,13 @@ public class OrderAlarmService extends Service {
     static final String CHANNEL_ID = "orders_alarm";
     static final int NOTIF_ID = 4711;
     static final String ACTION_STOP = "com.feefreeordering.kitchen.STOP_ALARM";
-    static final long MAX_RING_MS = 120_000L; // safety cap
+    // 5-min safety cap. Normally the keep-alive poll stops the alarm MUCH sooner
+    // — the instant the order is accepted (leaves "pending") or its accept window
+    // expires. This cap only matters if the poll dies. Luigi 2026-06-16.
+    static final long MAX_RING_MS = 300_000L;
+    /** True while the alarm is ringing — the keep-alive poll + FCM both read this
+     *  so a re-trigger never restarts the sound, and the poll knows when to stop. */
+    static volatile boolean isRunning = false;
 
     private MediaPlayer player;
     private Vibrator vibrator;
@@ -62,6 +68,11 @@ public class OrderAlarmService extends Service {
             stopSelf();
             return START_NOT_STICKY;
         }
+        // Idempotent: a second start while already ringing (the poll AND an FCM
+        // push can both ask) must NOT restart the sound — just keep ringing.
+        if (isRunning && player != null) {
+            return START_STICKY;
+        }
         String title = intent != null && intent.getStringExtra("title") != null ? intent.getStringExtra("title") : "New order";
         String body = intent != null && intent.getStringExtra("body") != null ? intent.getStringExtra("body") : "";
 
@@ -77,6 +88,7 @@ public class OrderAlarmService extends Service {
             return START_NOT_STICKY;
         }
 
+        isRunning = true;
         startAlarm();
         autoStop = this::stopSelf;
         handler.postDelayed(autoStop, MAX_RING_MS);
@@ -153,6 +165,7 @@ public class OrderAlarmService extends Service {
 
     @Override
     public void onDestroy() {
+        isRunning = false;
         if (autoStop != null) handler.removeCallbacks(autoStop);
         try { if (player != null) { player.stop(); player.release(); player = null; } } catch (Exception ignored) {}
         try { if (vibrator != null) vibrator.cancel(); } catch (Exception ignored) {}

@@ -151,18 +151,19 @@ export async function sendKitchenPush(
         const message = {
           message: {
             token: d.token,
-            notification: { title: payload.title, body: payload.body },
-            data: payload.data ?? {},
-            android: {
-              priority: "high",
-              notification: {
-                sound: "order_alarm",
-                channelId: "orders_loud",
-              },
-            },
+            // DATA-ONLY: the alarm is driven by the native keep-alive POLL (the
+            // reliable path on every device — it rings until the order is accepted
+            // or its window expires). So we do NOT ring via a system notification
+            // here (that would double up + couldn't stop on accept). This push is
+            // just an instant nudge — KitchenMessagingService starts the alarm
+            // right away when delivered (modern devices); on a throttled old
+            // Samsung it simply doesn't arrive and the ~4s poll covers it.
+            // Luigi 2026-06-16.
+            data: { ...(payload.data ?? {}), title: payload.title, body: payload.body },
+            android: { priority: "high" },
             apns: {
-              headers: { "apns-priority": "10" },
-              payload: { aps: { sound: "order_alarm.caf" } },
+              headers: { "apns-priority": "10", "apns-push-type": "background" },
+              payload: { aps: { "content-available": 1 } },
             },
           },
         };

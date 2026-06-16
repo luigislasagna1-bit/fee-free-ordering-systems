@@ -56,6 +56,17 @@
             android:name=".OrderAlarmService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
+
+        <!-- Always-on keep-alive so Android never app-standby / deep-sleep
+             throttles the order alarm push. Luigi 2026-06-16. -->
+        <service
+            android:name=".KitchenKeepAliveService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Keeps the kitchen order app connected so new-order alerts ring in real time, even with the screen off." />
+        </service>
     </application>
 
     <!-- Permissions -->
@@ -73,7 +84,12 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- Lets the app prompt the owner (one tap) to exempt it from battery
+         optimization, so Android doesn't sleep it and drop the new-order alarm
+         push when the screen is off. Luigi 2026-06-16. -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 </manifest>

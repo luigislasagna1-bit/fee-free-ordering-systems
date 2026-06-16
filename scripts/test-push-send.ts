@@ -71,7 +71,7 @@ async function main() {
         // channel.
         notification: { title: "Test order 🔔", body: "If this rings, push works!" },
         data: { type: "new_order", orderId: "test" },
-        android: { priority: "high", notification: { sound: "order_alarm", channelId: "orders_loud" } },
+        android: { priority: "high", notification: { sound: "order_alarm_long", channelId: "orders_loud2" } },
       },
     }),
   });
