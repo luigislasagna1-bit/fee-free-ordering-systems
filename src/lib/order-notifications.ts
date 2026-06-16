@@ -188,15 +188,21 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
 
   // Native push to the kitchen's registered devices (phone/tablet) so a NEW
   // ORDER rings even with the screen off / app backgrounded. Fire-and-forget —
-  // a push hiccup must NEVER fail order release (Stripe would retry the whole
-  // webhook). Gated: a silent no-op until FIREBASE_SERVICE_ACCOUNT is set AND a
-  // device has registered. Body is language-neutral (order data only), so it
-  // needs no per-locale translation. Luigi 2026-06-15.
-  sendKitchenPush(order.restaurant.id, {
-    title: order.restaurant.name || "New order",
-    body: `#${order.orderNumber} · ${order.customerName} · ${formatCurrency(order.total, order.restaurant.currency)}`,
-    data: { type: "new_order", orderId: order.id },
-  }).catch((e) => console.error("[fireOrderNotifications] sendKitchenPush:", e));
+  // a push hiccup must NEVER fail order release. Gated: a silent no-op until
+  // FIREBASE_SERVICE_ACCOUNT is set AND a device has registered. Body is
+  // language-neutral (order data only). Luigi 2026-06-15.
+  //
+  // Closed-when-placed orders defer their alert to opening (alertAt in the
+  // future) — do NOT fire the loud alarm overnight. The order shows parked in
+  // the kitchen and the in-app ring picks it up when staff next open the app.
+  const pushDeferred = (order as any).alertAt && new Date((order as any).alertAt).getTime() > Date.now();
+  if (!pushDeferred) {
+    sendKitchenPush(order.restaurant.id, {
+      title: order.restaurant.name || "New order",
+      body: `#${order.orderNumber} · ${order.customerName} · ${formatCurrency(order.total, order.restaurant.currency)}`,
+      data: { type: "new_order", orderId: order.id },
+    }).catch((e) => console.error("[fireOrderNotifications] sendKitchenPush:", e));
+  }
 
   return { fired: true };
 }

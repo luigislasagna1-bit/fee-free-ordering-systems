@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { validateBooking, resolveDayHours, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
 import { notifyStaff, notifyCustomer } from "@/lib/notifications";
+import { sendKitchenPush } from "@/lib/push";
 import { hasFeature } from "@/lib/entitlements";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
 import { liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
@@ -262,6 +263,19 @@ export async function POST(req: NextRequest) {
         dashboardUrl: `${baseUrl}/admin/reservations`,
       },
     }).catch((e) => console.error("[notifyStaff reservation]", e));
+
+    // Loud kitchen push — the SAME alarm orders fire (reuse data type "new_order"
+    // so the native alarm rings WITHOUT needing an app update). Skipped when the
+    // booking was placed while CLOSED (reservationAlertAt set) so it doesn't ring
+    // overnight — it shows parked and the in-app ring picks it up at opening.
+    // Fire-and-forget; no-op until push is configured. Luigi 2026-06-15.
+    if (!reservationAlertAt) {
+      sendKitchenPush(restaurant.id, {
+        title: restaurant.name || "New reservation",
+        body: `📅 ${reservation.customerName} · ${reservation.partySize}p · ${reservation.time}`,
+        data: { type: "new_order", reservationId: reservation.id },
+      }).catch((e) => console.error("[reservations] sendKitchenPush:", e));
+    }
 
     return NextResponse.json({
       ok: true,
