@@ -1,10 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Clock } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ReservationModal } from "../ReservationModal";
 import { parseTheme } from "@/lib/theme";
+import { formatTime } from "@/lib/format-time";
 
 /**
  * Standalone reservation page wrapper around the existing ReservationModal.
@@ -21,7 +22,7 @@ import { parseTheme } from "@/lib/theme";
  * The modal renders in `embedded` mode (no dark overlay, no duplicate header)
  * in both layouts.
  */
-export function ReservationPageClient({ restaurant }: { restaurant: any }) {
+export function ReservationPageClient({ restaurant, closure }: { restaurant: any; closure?: any }) {
   const router = useRouter();
   const tOrd = useTranslations("ordering");
   const theme = parseTheme(restaurant.themeSettings);
@@ -82,27 +83,52 @@ export function ReservationPageClient({ restaurant }: { restaurant: any }) {
     />
   );
 
-  // ── Full-screen banner background ──────────────────────────────────────────
-  if (fullBg) {
-    const overlay = Math.min(0.85, (theme.bannerOpacity ?? 60) / 100);
-    return (
-      <div
-        className="min-h-screen bg-cover bg-center bg-fixed"
-        style={{ backgroundColor: theme.backgroundColor, backgroundImage: `url(${restaurant.bannerUrl})` }}
-      >
-        <div
-          className="relative min-h-screen flex flex-col items-center justify-center gap-5 px-3 sm:px-4 py-16"
-          style={{ backgroundColor: `rgba(0,0,0,${overlay})` }}
-        >
-          {backButton}
-          {brand}
-          <div className="w-full flex justify-center">{modal}</div>
+  // ── Closure banner — parity with the ordering page (Luigi reseller report) ──
+  // A website "Book a table" link can deep-link straight here, so the closed /
+  // extraordinary-closure warning has to show on this surface too, not just the
+  // order page. The holiday/special-day banner takes precedence; the plain
+  // weekly-hours "closed now" banner shows otherwise. Same amber strips + the
+  // generic (non-order-specific) copy. closure is computed server-side.
+  const c = closure ?? {};
+  const fmt = restaurant.hoursFormat === "12h" ? "12h" : "24h";
+  const serviceLabel = (s: string) =>
+    s === "pickup" ? tOrd("pickup")
+    : s === "delivery" ? tOrd("delivery")
+    : s === "dine_in" ? tOrd("dineIn")
+    : s === "take_out" ? tOrd("takeOut")
+    : s === "reservation" ? tOrd("tableReservation")
+    : s.charAt(0).toUpperCase() + s.slice(1);
+  const holidayActive =
+    c.todayHolidayClosed || !!c.todayHolidayName || !!c.todayHolidayMessage ||
+    (c.todayHolidayIntervals?.length ?? 0) > 0 || (c.holidayClosedServices?.length ?? 0) > 0;
+  const closureBanner = holidayActive ? (
+    <div className="w-full bg-amber-500 border-b border-amber-600 px-4 sm:px-6 py-3 text-sm">
+      <div className="max-w-2xl mx-auto">
+        <div className="font-bold text-amber-950">
+          {c.todayHolidayClosed
+            ? <>⛔ {tOrd("holidayClosedToday")}{c.todayHolidayName ? ` — ${c.todayHolidayName}` : ""}</>
+            : (c.todayHolidayIntervals?.length ?? 0) > 0
+              ? <>🕒 {tOrd("holidaySpecialHours")}{c.todayHolidayName ? ` — ${c.todayHolidayName}` : ""}: {c.todayHolidayIntervals.map((iv: any) => `${formatTime(iv.open, fmt)} – ${formatTime(iv.close, fmt)}`).join(", ")}</>
+              : <>⛔ {tOrd("holidayNotAvailableToday", { services: (c.holidayClosedServices ?? []).map(serviceLabel).join(", ") })}{c.todayHolidayName ? ` — ${c.todayHolidayName}` : ""}</>}
         </div>
+        {c.todayHolidayMessage && <div className="text-xs text-amber-900 mt-0.5">{c.todayHolidayMessage}</div>}
       </div>
-    );
-  }
+    </div>
+  ) : c.regularClosedKind ? (
+    <div className="w-full bg-amber-400 border-b border-amber-500 px-4 sm:px-6 py-3">
+      <div className="max-w-2xl mx-auto flex items-center gap-2 text-amber-950 font-semibold text-sm">
+        <Clock className="w-5 h-5 flex-shrink-0" />
+        <span>
+          {c.regularClosedKind === "opens_at" && c.opensAt
+            ? `${tOrd("closed")} · ${tOrd("opensAtLabel", { time: c.opensAt })}`
+            : tOrd("closedToday")}
+        </span>
+      </div>
+    </div>
+  ) : null;
 
-  // ── Default: branded hero band on top, card below ──────────────────────────
+  // ── Layout: full-screen banner background, or branded hero band on top ──────
+  const overlay = Math.min(0.85, (theme.bannerOpacity ?? 60) / 100);
   const heroStyle = hasBanner
     ? {
         backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.65)), url(${restaurant.bannerUrl})`,
@@ -111,7 +137,21 @@ export function ReservationPageClient({ restaurant }: { restaurant: any }) {
       }
     : { background: `linear-gradient(135deg, ${primary}, ${darkenHex(primary, 0.28)})` };
 
-  return (
+  const body = fullBg ? (
+    <div
+      className="min-h-screen bg-cover bg-center bg-fixed"
+      style={{ backgroundColor: theme.backgroundColor, backgroundImage: `url(${restaurant.bannerUrl})` }}
+    >
+      <div
+        className="relative min-h-screen flex flex-col items-center justify-center gap-5 px-3 sm:px-4 py-16"
+        style={{ backgroundColor: `rgba(0,0,0,${overlay})` }}
+      >
+        {backButton}
+        {brand}
+        <div className="w-full flex justify-center">{modal}</div>
+      </div>
+    </div>
+  ) : (
     <div className="min-h-screen" style={{ backgroundColor: theme.backgroundColor, color: theme.textColor }}>
       <div className="relative h-56 sm:h-64 flex flex-col items-center justify-center" style={heroStyle}>
         {backButton}
@@ -119,6 +159,13 @@ export function ReservationPageClient({ restaurant }: { restaurant: any }) {
       </div>
       <div className="px-3 sm:px-4 pb-12 -mt-8 relative z-10 flex justify-center">{modal}</div>
     </div>
+  );
+
+  return (
+    <>
+      {closureBanner}
+      {body}
+    </>
   );
 }
 

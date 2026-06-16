@@ -32,7 +32,7 @@ import { isSupportedLocale, type Locale } from "@/i18n/request";
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { resolveScheduledMenuId } from "@/lib/menu-schedule";
-import { holidayEffectToday } from "@/lib/holiday-rules";
+import { resolveTodayHolidayClosure } from "@/lib/holiday-rules";
 import { isOnMarketplace } from "@/lib/marketplace";
 import { getCurrentCustomer } from "@/lib/customer-session";
 import { getSessionUser } from "@/lib/session";
@@ -439,37 +439,7 @@ export default async function OrderingPage({
         marketplaceAccount={marketplaceAccount}
         customerIsReturning={customerIsReturning}
         isTestPreview={isTestPreview}
-        {...(() => {
-          // Gloriafood-parity special days (Luigi 2026-06-11): resolve today's
-          // GENERAL effect (banner + open-status override) and which specific
-          // services are holiday-closed while the rest stays open.
-          const holRows = (restaurant as any).holidays;
-          const holTz = (restaurant as any).timezone;
-          const general = holidayEffectToday(holRows, holTz, null);
-          const generalClosed = general?.kind === "closed";
-          const holidayClosedServices = generalClosed
-            ? []
-            : ["pickup", "delivery", "dine_in", "take_out", "catering", "reservation"].filter(
-                (s) => holidayEffectToday(holRows, holTz, s)?.kind === "closed",
-              );
-          // Message: prefer the general entry's; else surface the first
-          // service-specific closed entry's message so it isn't lost.
-          const serviceMessage = !general && holidayClosedServices.length > 0
-            ? (holidayEffectToday(holRows, holTz, holidayClosedServices[0])?.message ?? null)
-            : null;
-          return {
-            todayHolidayName: general?.name ?? null,
-            todayHolidayMessage: general?.message ?? serviceMessage,
-            todayHolidayIntervals: general?.kind === "custom_hours" ? general.intervals : null,
-            // Explicit flag — name and message are both OPTIONAL, so the
-            // client can't infer "fully closed today" from their presence
-            // (a blank-name closure rendered the wrong banner variant and
-            // never reached closed-now detection — found in Luigi's live
-            // test of cmpxds2d2, 2026-06-12).
-            todayHolidayClosed: generalClosed,
-            holidayClosedServices,
-          };
-        })()}
+        {...resolveTodayHolidayClosure((restaurant as any).holidays, (restaurant as any).timezone)}
         currentCustomer={currentCustomer
           ? {
               id: currentCustomer.id,

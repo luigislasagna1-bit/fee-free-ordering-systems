@@ -182,3 +182,49 @@ export function holidayEffectToday(
 export function hhmmInsideIntervals(hhmm: string, intervals: HolidayInterval[]): boolean {
   return intervals.some((iv) => hhmm >= iv.open && hhmm < iv.close);
 }
+
+/**
+ * Resolve today's holiday / extraordinary-closure BANNER state for a restaurant,
+ * in its own timezone. The SHARED source of truth behind the amber "we're closed
+ * / special hours today" banner on BOTH the ordering page and the standalone
+ * reservation page — Luigi reseller report: a website "Book a table" link can
+ * deep-link straight to the reservation page, so the same closure warning has to
+ * show there too, not only on the order surface.
+ *
+ * Returns the GENERAL (page-level) closure plus which specific services are
+ * holiday-closed while the rest stays open. A blank-name closure still reports
+ * `todayHolidayClosed: true` (name/message are both optional — never infer
+ * "closed" from their presence).
+ */
+export function resolveTodayHolidayClosure(
+  holidays: HolidayRow[] | null | undefined,
+  timezone: string | undefined,
+  now: Date = new Date(),
+): {
+  todayHolidayName: string | null;
+  todayHolidayMessage: string | null;
+  todayHolidayIntervals: HolidayInterval[] | null;
+  todayHolidayClosed: boolean;
+  holidayClosedServices: string[];
+} {
+  const general = holidayEffectToday(holidays, timezone, null, now);
+  const generalClosed = general?.kind === "closed";
+  const holidayClosedServices = generalClosed
+    ? []
+    : ["pickup", "delivery", "dine_in", "take_out", "catering", "reservation"].filter(
+        (s) => holidayEffectToday(holidays, timezone, s, now)?.kind === "closed",
+      );
+  // Prefer the general entry's message; else surface the first service-specific
+  // closed entry's message so it isn't lost.
+  const serviceMessage =
+    !general && holidayClosedServices.length > 0
+      ? holidayEffectToday(holidays, timezone, holidayClosedServices[0], now)?.message ?? null
+      : null;
+  return {
+    todayHolidayName: general?.name ?? null,
+    todayHolidayMessage: general?.message ?? serviceMessage,
+    todayHolidayIntervals: general?.kind === "custom_hours" ? general.intervals : null,
+    todayHolidayClosed: generalClosed,
+    holidayClosedServices,
+  };
+}

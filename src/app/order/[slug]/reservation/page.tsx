@@ -23,6 +23,8 @@
  */
 import { notFound } from "next/navigation";
 import prisma from "@/lib/db";
+import { resolveTodayHolidayClosure } from "@/lib/holiday-rules";
+import { liveOpenStatus } from "@/lib/restaurant-hours";
 import { ReservationPageClient } from "./ReservationPageClient";
 
 export const dynamic = "force-dynamic";
@@ -38,12 +40,42 @@ export default async function ReservationPage({
     include: {
       openingHours: { orderBy: { dayOfWeek: "asc" } },
       reservationSettings: true,
+      // Special-day / extraordinary-closure rows — needed so the SAME amber
+      // closure banner the ordering page shows also appears here (Luigi reseller
+      // report: a website "Book a table" link deep-links straight to this page,
+      // bypassing the order surface where that warning currently lives).
+      holidays: true,
     },
   });
   if (!restaurant) notFound();
   if (!restaurant.acceptsReservations || !restaurant.reservationSettings) {
     notFound();
   }
+
+  // Closure banner state — shared logic with the ordering page. The holiday
+  // banner (extraordinary closure / special hours) takes precedence; the plain
+  // weekly-hours "closed now" banner only shows when there's no special day,
+  // exactly like the ordering page's two-banner gating.
+  const hol = resolveTodayHolidayClosure((restaurant as any).holidays, restaurant.timezone ?? undefined);
+  const holidayActive =
+    hol.todayHolidayClosed || !!hol.todayHolidayName || !!hol.todayHolidayMessage ||
+    (hol.todayHolidayIntervals?.length ?? 0) > 0 || hol.holidayClosedServices.length > 0;
+  const hoursFmt = restaurant.hoursFormat === "12h" ? "12h" : "24h";
+  const live = liveOpenStatus(
+    (restaurant.openingHours ?? []) as any,
+    new Date(),
+    hoursFmt,
+    hol.todayHolidayClosed || (hol.todayHolidayIntervals?.length ?? 0) > 0
+      ? { name: hol.todayHolidayName ?? undefined, intervals: hol.todayHolidayIntervals ?? undefined }
+      : undefined,
+    restaurant.timezone ?? undefined,
+  );
+  const closure = {
+    ...hol,
+    regularClosedKind:
+      !holidayActive && (live.kind === "opens_at" || live.kind === "closed_today") ? live.kind : null,
+    opensAt: live.kind === "opens_at" ? live.opensAt : null,
+  };
 
   // Strip relations/Date instances down to plain JSON-serialisable
   // shape so the client component can consume them without prisma
@@ -73,5 +105,5 @@ export default async function ReservationPage({
     },
   };
 
-  return <ReservationPageClient restaurant={serialized as any} />;
+  return <ReservationPageClient restaurant={serialized as any} closure={closure} />;
 }
