@@ -3417,7 +3417,7 @@ export function OrderingPageClient({
               <span className={`flex items-center gap-1.5 ${headerIsOpenNow ? "text-green-600" : "text-red-600"}`}>
                 <Clock className="w-3.5 h-3.5" />
                 {headerIsOpenNow
-                  ? `${t("open")} · ${formatHHMM(todayHours.openTime, hoursFmt)} – ${formatHHMM(todayHours.closeTime, hoursFmt)}`
+                  ? `${t("open")} · ${formatHHMM(todayHours.openTime, hoursFmt)} – ${liveStatusForClient.kind === "open" ? liveStatusForClient.closesAt : formatHHMM(todayHours.closeTime, hoursFmt)}`
                   : headerClosedText}
               </span>
             </div>
@@ -3438,7 +3438,7 @@ export function OrderingPageClient({
               <span className={`flex items-center gap-1.5 ${headerIsOpenNow ? "text-green-600" : "text-red-600"}`}>
                 <Clock className="w-4 h-4" />
                 {headerIsOpenNow
-                  ? `${t("open")}: ${formatHHMM(todayHours.openTime, hoursFmt)} – ${formatHHMM(todayHours.closeTime, hoursFmt)}`
+                  ? `${t("open")}: ${formatHHMM(todayHours.openTime, hoursFmt)} – ${liveStatusForClient.kind === "open" ? liveStatusForClient.closesAt : formatHHMM(todayHours.closeTime, hoursFmt)}`
                   : headerClosedText}
               </span>
             )}

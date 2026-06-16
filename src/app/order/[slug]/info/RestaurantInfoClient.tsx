@@ -211,7 +211,10 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
               <span>
                 {infoLiveStatus.kind === "open"
                   ? (todayHours.isOpen && todayHours.openTime && todayHours.closeTime
-                      ? `${tInfo("open")} · ${formatTime(todayHours.openTime, hoursFmt)} – ${formatTime(todayHours.closeTime, hoursFmt)}`
+                      // Show the LIVE close (handles being open via YESTERDAY's
+                      // overnight window) instead of today's calendar row, so at
+                      // 1 AM it reads "– 3:00" not "– 00:00". Luigi 2026-06-16.
+                      ? `${tInfo("open")} · ${formatTime(todayHours.openTime, hoursFmt)} – ${infoLiveStatus.closesAt}`
                       : tInfo("open"))
                   : infoLiveStatus.kind === "opens_at"
                     ? `${tInfo("closed")} · ${tOrdering("opensAtLabel", { time: infoLiveStatus.opensAt })}`
