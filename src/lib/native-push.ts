@@ -61,27 +61,33 @@ let started = false;
  */
 export async function registerKitchenPush(): Promise<void> {
   const push = getPushPlugin();
-  if (!push || started) return;
+  if (!push) return;
+
+  // Android 8+ routes a notification's sound + importance through a CHANNEL.
+  // Create the loud "orders_loud" channel whose sound is the restaurant's order
+  // ring (res/raw/order_alarm, bundled in the app) at high importance, so a new
+  // order rings + heads-up even from the lock screen. Created on EVERY call
+  // (idempotent) so a WebView reload picks it up without a full app restart. The
+  // server's notification push targets channelId "orders_loud". Luigi 2026-06-16.
+  if (typeof push.createChannel === "function") {
+    try {
+      await push.createChannel({
+        id: "orders_loud",
+        name: "New orders",
+        description: "Loud alert when a new order arrives",
+        importance: 5, // IMPORTANCE_HIGH — heads-up banner + sound
+        visibility: 1,
+        sound: "order_alarm", // res/raw/order_alarm.mp3 (the order ring)
+        vibration: true,
+      });
+    } catch {
+      /* channel creation is best-effort */
+    }
+  }
+
+  if (started) return;
   started = true;
   try {
-    // Android 8+ needs a high-importance channel for the alert to ring + wake
-    // the screen. Must match the channelId the server send uses ("orders").
-    if (typeof push.createChannel === "function") {
-      try {
-        await push.createChannel({
-          id: "orders",
-          name: "New orders",
-          description: "Alerts when a new order arrives",
-          importance: 5, // IMPORTANCE_HIGH — heads-up banner + sound
-          visibility: 1,
-          sound: "default",
-          vibration: true,
-        });
-      } catch {
-        /* channel creation is best-effort */
-      }
-    }
-
     await push.addListener("registration", (info: { value?: string }) => {
       if (info?.value) void postToken(info.value);
     });

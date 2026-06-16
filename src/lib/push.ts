@@ -140,24 +140,29 @@ export async function sendKitchenPush(
 
     await Promise.allSettled(
       devices.map(async (d) => {
-        // DATA-ONLY message. Our custom KitchenMessagingService (Android) handles
-        // it even when backgrounded / screen-off / app-closed and fires the loud
-        // looping order alarm + full-screen notification. A `notification` block
-        // would instead be auto-shown by the system (a quiet single ding) and our
-        // service would NOT run in the background — so we deliberately omit it.
-        // title/body travel inside data so the native alarm can render them.
+        // NOTIFICATION message (Luigi 2026-06-16). The data-only "wake the app +
+        // loop a custom alarm" approach proved unreliable when the device had
+        // been asleep a while — Android throttles waking a backgrounded app, so
+        // orders/reservations silently didn't ring. A NOTIFICATION message is
+        // delivered + shown by the SYSTEM even in deep sleep (rock-solid), and we
+        // point it at the high-importance "orders_loud" channel whose sound is the
+        // restaurant's order ring (order_alarm), so it's loud + reliable. data is
+        // kept for foreground handling + the tap target.
         const message = {
           message: {
             token: d.token,
-            data: {
-              ...(payload.data ?? {}),
-              title: payload.title,
-              body: payload.body,
+            notification: { title: payload.title, body: payload.body },
+            data: payload.data ?? {},
+            android: {
+              priority: "high",
+              notification: {
+                sound: "order_alarm",
+                channelId: "orders_loud",
+              },
             },
-            android: { priority: "high" },
             apns: {
-              headers: { "apns-priority": "10", "apns-push-type": "background" },
-              payload: { aps: { "content-available": 1 } },
+              headers: { "apns-priority": "10" },
+              payload: { aps: { sound: "order_alarm.caf" } },
             },
           },
         };

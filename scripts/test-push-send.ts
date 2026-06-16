@@ -66,10 +66,12 @@ async function main() {
     body: JSON.stringify({
       message: {
         token: tok.token,
-        // data-only → exercises the custom alarm service (loud loop + full-screen),
-        // matching what the server now sends on a real order.
-        data: { type: "new_order", orderId: "test", title: "Test order 🔔", body: "Loud alarm test" },
-        android: { priority: "high" },
+        // NOTIFICATION message matching the server — the SYSTEM shows it (reliable
+        // even in deep sleep) and plays the order ring on the loud "orders_loud"
+        // channel.
+        notification: { title: "Test order 🔔", body: "If this rings, push works!" },
+        data: { type: "new_order", orderId: "test" },
+        android: { priority: "high", notification: { sound: "order_alarm", channelId: "orders_loud" } },
       },
     }),
   });
