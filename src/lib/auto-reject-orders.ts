@@ -50,7 +50,7 @@ export type AutoRejectResult = {
   errors: Array<{ orderId: string; reason: string }>;
 };
 
-export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?: number } = {}): Promise<AutoRejectResult> {
+export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?: number; restaurantId?: string } = {}): Promise<AutoRejectResult> {
   const now = opts.now ?? new Date();
   const envValue = parseInt(process.env.AUTO_REJECT_TIMEOUT_MINUTES ?? "", 10);
   const timeoutMinutes =
@@ -76,6 +76,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
     where: {
       status: "pending",
       notifiedAt: { not: null },
+      ...(opts.restaurantId ? { restaurantId: opts.restaurantId } : {}),
       OR: [
         { placedWhileClosed: false, createdAt: { lt: regularCutoff } },
         { placedWhileClosed: true, alertAt: { not: null, lt: closedPlacedCutoff } },
@@ -140,6 +141,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
     where: {
       status: "pending",
       notifiedAt: null,
+      ...(opts.restaurantId ? { restaurantId: opts.restaurantId } : {}),
       paymentStatus: { in: ["pending", "requires_action", "processing"] },
       createdAt: { lt: abandonedCutoff },
     },
@@ -371,7 +373,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
  * fires an instant decline the moment the countdown elapses; this cron is the
  * safety net for an offline / unloaded tablet.
  */
-export async function autoRejectStaleReservations(opts: { now?: Date } = {}): Promise<{ scanned: number; rejected: number }> {
+export async function autoRejectStaleReservations(opts: { now?: Date; restaurantId?: string } = {}): Promise<{ scanned: number; rejected: number }> {
   const now = opts.now ?? new Date();
   const regularCutoff = new Date(now.getTime() - DEFAULT_TIMEOUT_MINUTES * 60 * 1000);
   const closedPlacedCutoff = new Date(now.getTime() - CLOSED_PLACED_TIMEOUT_MINUTES * 60 * 1000);
@@ -380,6 +382,7 @@ export async function autoRejectStaleReservations(opts: { now?: Date } = {}): Pr
     where: {
       status: "pending",
       depositAmount: { lte: 0 },
+      ...(opts.restaurantId ? { restaurantId: opts.restaurantId } : {}),
       OR: [
         { alertAt: null, createdAt: { lt: regularCutoff } },
         { alertAt: { not: null, lt: closedPlacedCutoff } },
