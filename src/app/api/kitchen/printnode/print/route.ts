@@ -225,6 +225,10 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json() as {
       type?: "kitchen" | "customer" | "both" | "test" | "test_kitchen" | "test_customer";
+      // Manual reprints pass single:true → one copy of each, regardless of the
+      // configured kitchen/customer copy counts (those apply to auto-print on
+      // accept). Luigi 2026-06-16.
+      single?: boolean;
       orderId?: string;
       reservationId?: string;
       // Optional inline templates — used for "test this current draft" prints from
@@ -497,7 +501,7 @@ export async function POST(req: NextRequest) {
         copies: ps.kitchenCopies,
         firstBytes: buf.slice(0, 8).toString("hex"),
       });
-      const jobId = await submitJob(apiKey, ps.selectedPrinterId, `Kitchen #${order.orderNumber}`, buf, ps.kitchenCopies);
+      const jobId = await submitJob(apiKey, ps.selectedPrinterId, `Kitchen #${order.orderNumber}`, buf, body.single ? 1 : ps.kitchenCopies);
       await prisma.printLog.create({
         data: {
           restaurantId: user.restaurantId, orderId: order.id,
@@ -516,7 +520,7 @@ export async function POST(req: NextRequest) {
         copies: ps.customerCopies,
         firstBytes: buf.slice(0, 8).toString("hex"),
       });
-      const jobId = await submitJob(apiKey, ps.selectedPrinterId, `Customer #${order.orderNumber}`, buf, ps.customerCopies);
+      const jobId = await submitJob(apiKey, ps.selectedPrinterId, `Customer #${order.orderNumber}`, buf, body.single ? 1 : ps.customerCopies);
       await prisma.printLog.create({
         data: {
           restaurantId: user.restaurantId, orderId: order.id,

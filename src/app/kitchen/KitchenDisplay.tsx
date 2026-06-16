@@ -2331,9 +2331,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
    *  back-to-back buffer drop Luigi hit 2026-06-16). Copies default to 1 when
    *  settings haven't loaded (so the customer copy is never silently dropped);
    *  0 skips that type. */
-  const doPrintDirect = async (orderId: string, type: "kitchen" | "customer" | "both" = "kitchen") => {
+  const doPrintDirect = async (orderId: string, type: "kitchen" | "customer" | "both" = "kitchen", opts?: { single?: boolean }) => {
+    // opts.single → exactly ONE of each requested type. Manual reprints are
+    // "extras" so they print a single copy; only the acceptance auto-print uses
+    // the configured per-restaurant copy counts. Luigi 2026-06-16.
     const clampCopies = (n: number | null | undefined) =>
-      Math.min(Math.max(0, Math.round(Number(n ?? 1))), 5);
+      opts?.single ? 1 : Math.min(Math.max(0, Math.round(Number(n ?? 1))), 5);
     const kN = type === "both" || type === "kitchen" ? clampCopies(printerSettings?.kitchenCopies) : 0;
     const cN = type === "both" || type === "customer" ? clampCopies(printerSettings?.customerCopies) : 0;
     const jobs: Array<"kitchen" | "customer"> = [];
@@ -2354,13 +2357,13 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     }
   };
 
-  const doPrint = async (orderId: string, type: "kitchen" | "customer" | "both") => {
+  const doPrint = async (orderId: string, type: "kitchen" | "customer" | "both", opts?: { single?: boolean }) => {
     // Direct LAN printer takes precedence when configured. Falls back
     // to PrintNode only when direct printing isn't set up or fails.
     const direct = getDirectPrinterConfig();
     if (direct) {
       try {
-        await doPrintDirect(orderId, type);
+        await doPrintDirect(orderId, type, opts);
         return;
       } catch {
         // fall through to PrintNode if also configured
@@ -2374,7 +2377,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     const res = await fetch("/api/kitchen/printnode/print", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ type, orderId }),
+      body: JSON.stringify({ type, orderId, single: opts?.single === true }),
     });
     const data = await res.json().catch(() => ({ error: "Invalid response" }));
     if (!res.ok) throw new Error(data.error ?? "Print failed");
@@ -3245,7 +3248,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 if (status === "accepted") setPrepModal(id);
                 else await updateStatus(id, status, extra);
               }}
-              onPrint={doPrint}
+              // Manual reprint from the order detail = a single extra of each
+              // requested type (auto-print on accept already did the full count).
+              onPrint={(id, type) => doPrint(id, type, { single: true })}
               printerReady={printerReady}
               workflowMode={workflowMode}
               currency={moneyCurrency}
