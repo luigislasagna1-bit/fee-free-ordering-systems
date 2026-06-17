@@ -480,7 +480,12 @@ export function ReservationModal({
       return false;
     }
     if (!validation.ok) { toast.error(validation.reason); return false; }
-    if (!name.trim()) { toast.error(tr("nameAndPhone")); return false; }
+    // Require BOTH first and last name. The form shows two "*" fields, but the
+    // submit is an onClick (not a <form> submit) so the inputs' `required` never
+    // fires — a first-name-only entry used to slip straight through. Mirrors
+    // checkout + the server guard below. (Fabrizio: the reservation panel let
+    // bookings complete with no last name even after checkout was fixed.)
+    if (!firstName.trim() || !lastName.trim()) { toast.error(tOrd("toasts.fullNameRequired")); return false; }
     if (requireCustomerPhone && !phone.trim()) { toast.error(tr("nameAndPhone")); return false; }
     // Phone must be a real number — no letters, at least 6 digits. Mirrors the
     // order checkout guard (cmq0vafk5) + catches autofill that bypasses the

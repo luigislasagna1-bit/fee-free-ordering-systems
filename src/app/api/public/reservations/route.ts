@@ -29,6 +29,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
+    // First AND last name required — mirror /api/orders (the checkout fix) and
+    // the reservation form's two "*" name fields. Two+ space-separated tokens;
+    // defense-in-depth behind the client guard so a single-name booking can't
+    // slip through. (Fabrizio: the reservation panel let no-last-name bookings
+    // complete even after checkout was fixed.) 2026-06-17.
+    if (sanitize(customerName).split(/\s+/).filter(Boolean).length < 2) {
+      return NextResponse.json({ error: "Please enter a first and last name.", code: "full_name_required" }, { status: 400 });
+    }
+
     // Phone must be an actual number — no letters, at least 6 digits. Mirrors
     // the order route's guard (cmq0vafk5); defense-in-depth against autofill /
     // clients that bypass the keystroke filter on the reservation form.
