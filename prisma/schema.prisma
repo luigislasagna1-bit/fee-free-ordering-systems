@@ -804,6 +804,9 @@ model PendingMenuImage {
   sourceUrl      String
   attempts       Int       @default(0)
   lastTriedAt    DateTime?
+  /// Last failure reason (HTTP status or error message) — visibility into why a
+  /// photo isn't landing yet, so stuck rows can be diagnosed from the DB.
+  lastError      String?
   createdAt      DateTime  @default(now())
 
   @@index([attempts, createdAt])
