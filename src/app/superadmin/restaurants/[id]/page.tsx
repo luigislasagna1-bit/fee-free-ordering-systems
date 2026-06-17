@@ -5,6 +5,7 @@ import { getSessionUser } from "@/lib/session";
 import { loadSetupProgress } from "@/lib/setup-checklist-loader";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { RestaurantControls } from "./RestaurantControls";
+import { AssignResellerControl } from "./AssignResellerControl";
 import { ImpersonateButton } from "../ImpersonateButton";
 import {
   Store, Globe, Calendar, CreditCard, ShoppingBag, Users, UtensilsCrossed,
@@ -127,6 +128,19 @@ export default async function SuperadminRestaurantDetail({
   ]);
 
   if (!restaurant) notFound();
+
+  // Approved resellers — populate the "assign reseller" dropdown so a superadmin
+  // can attribute (or re-attribute) this restaurant, e.g. retro-fixing a signup
+  // that lost its ?ref=. One row per partner; not a hot path.
+  const approvedResellers = await prisma.resellerProfile.findMany({
+    where: { status: "approved" },
+    select: { id: true, companyName: true, user: { select: { name: true, email: true } } },
+    orderBy: { companyName: "asc" },
+  });
+  const resellerOptions = approvedResellers.map((p) => ({
+    id: p.id,
+    label: p.companyName?.trim() || p.user?.name?.trim() || p.user?.email || "(unnamed reseller)",
+  }));
 
   const owner = restaurant.users.find((u) => u.role === "restaurant_admin");
   const ownerEmail = owner?.email ?? restaurant.email ?? null;
@@ -430,15 +444,26 @@ export default async function SuperadminRestaurantDetail({
         </Card>
 
         {/* ── Reseller attribution ─────────────────────────────────── */}
-        {restaurant.resellerProfile && (
-          <Card title="Reseller attribution" icon={<Users className="w-4 h-4" />}>
-            <Field label="Reseller" value={restaurant.resellerProfile.companyName ?? "(no name)"} />
-            <Field label="Reseller status" value={<span className={`text-xs font-bold uppercase px-2 py-0.5 rounded ${subscriptionTextClass(restaurant.resellerProfile.status)}`}>{restaurant.resellerProfile.status}</span>} />
-            <Link href={`/superadmin/resellers/${restaurant.resellerProfile.id}`} className="text-xs text-blue-600 hover:underline mt-1 inline-block">
-              View reseller profile →
-            </Link>
-          </Card>
-        )}
+        {/* Always rendered — even when unattributed — so a superadmin can ASSIGN
+            a reseller (retro-fix a signup that lost its ?ref=), not just view. */}
+        <Card title="Reseller attribution" icon={<Users className="w-4 h-4" />}>
+          {restaurant.resellerProfile ? (
+            <>
+              <Field label="Reseller" value={restaurant.resellerProfile.companyName ?? "(no name)"} />
+              <Field label="Reseller status" value={<span className={`text-xs font-bold uppercase px-2 py-0.5 rounded ${subscriptionTextClass(restaurant.resellerProfile.status)}`}>{restaurant.resellerProfile.status}</span>} />
+              <Link href={`/superadmin/resellers/${restaurant.resellerProfile.id}`} className="text-xs text-blue-600 hover:underline mt-1 inline-block">
+                View reseller profile →
+              </Link>
+            </>
+          ) : (
+            <p className="text-sm text-gray-500 italic">Direct signup — not attributed to any reseller.</p>
+          )}
+          <AssignResellerControl
+            restaurantId={restaurant.id}
+            currentResellerProfileId={restaurant.resellerProfile?.id ?? null}
+            resellers={resellerOptions}
+          />
+        </Card>
 
         {/* ── Domain + widget ──────────────────────────────────────── */}
         <Card title="Domain & widget" icon={<Globe className="w-4 h-4" />}>

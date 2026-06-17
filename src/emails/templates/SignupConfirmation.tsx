@@ -19,11 +19,19 @@ export type SignupConfirmationProps = {
   restaurantName: string;
   loginUrl: string;
   verifyUrl: string;
+  /** When the signup came through a reseller's referral link, who referred
+   *  them + how to reach their local partner for help. */
+  referredBy?: { name: string; contact: string | null; website: string | null } | null;
   imprint?: string;
 };
 
+/** Normalize a possibly-bare website ("example.com") into a valid href. */
+function websiteHref(url: string): string {
+  return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+}
+
 export default function SignupConfirmation({
-  name, restaurantName, loginUrl, verifyUrl, imprint,
+  name, restaurantName, loginUrl, verifyUrl, referredBy, imprint,
 }: SignupConfirmationProps) {
   return (
     <EmailLayout preview={`Welcome to Fee Free Ordering, ${restaurantName}`}>
@@ -61,6 +69,25 @@ export default function SignupConfirmation({
         </div>
 
         <EmailButton href={loginUrl} variant="secondary">Open admin dashboard</EmailButton>
+
+        {referredBy && (
+          <InfoCard label="Your Fee Free partner" accent="slate">
+            <strong>{referredBy.name}</strong> recommended Fee Free Ordering to you and is your local
+            partner. Need a hand getting set up or have a question? You can reach them
+            {referredBy.contact && (
+              <> at <a href={`mailto:${referredBy.contact}`} style={{ color: "#059669" }}>{referredBy.contact}</a></>
+            )}
+            {referredBy.website && (
+              <>
+                {referredBy.contact ? " or at " : " at "}
+                <a href={websiteHref(referredBy.website)} style={{ color: "#059669", wordBreak: "break-all" }}>
+                  {referredBy.website}
+                </a>
+              </>
+            )}
+            {!referredBy.contact && !referredBy.website ? " directly." : "."}
+          </InfoCard>
+        )}
 
         <P size="sm" muted>
           Need help? Reply to this email — we read every message.

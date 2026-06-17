@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChefHat, Loader2, Building2, AlertCircle } from "lucide-react";
@@ -17,16 +17,39 @@ export interface InviteContext {
   used: boolean;
 }
 
+/** Read the reseller referral code that was persisted to a cookie on a prior
+ *  /signup?ref= visit — so attribution survives if the owner navigates away
+ *  and returns to /signup without the query string. */
+function readRefCookie(): string | null {
+  if (typeof document === "undefined") return null;
+  const m = document.cookie.match(/(?:^|;\s*)feefree_ref=([^;]+)/);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
 export function SignupForm({
   locale,
   inviteContext,
+  refCode,
 }: {
   locale: string;
   inviteContext: InviteContext | null;
+  /** Reseller referral code from ?ref= on the signup URL (if any). */
+  refCode?: string | null;
 }) {
   const t = useTranslations("marketing.signup");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
+  // Persist the referral code to a 30-day cookie the moment the owner lands on
+  // /signup?ref=<code>. Two reasons: (1) attribution survives if they wander
+  // off and come back to a bare /signup, and (2) /api/auth/register reads the
+  // same feefree_ref cookie as a fallback. The submit below ALSO sends it in
+  // the body, so attribution works even with cookies disabled. Fabrizio 2026-06-16.
+  useEffect(() => {
+    if (refCode && typeof document !== "undefined") {
+      document.cookie = `feefree_ref=${encodeURIComponent(refCode)}; path=/; max-age=${60 * 60 * 24 * 30}; samesite=lax`;
+    }
+  }, [refCode]);
 
   // Pre-fill restaurant name + email from the invite (if any). The brand
   // owner suggested these when generating the invite; the recipient can edit.
@@ -67,6 +90,9 @@ export function SignupForm({
           // Pass the invite token through so the register route can link the
           // new Restaurant to the inviting brand via parentRestaurantId.
           invite: inviteContext?.token,
+          // Forward the reseller referral code (from the URL, falling back to
+          // the cookie) so the new restaurant is attributed to the reseller.
+          ref: refCode || readRefCookie(),
         }),
       });
       const data = await res.json();

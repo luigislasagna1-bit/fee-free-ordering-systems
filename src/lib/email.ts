@@ -857,6 +857,9 @@ export async function sendSignupConfirmationEmail(params: {
    *  button instead of (or in addition to) the Log in CTA. */
   verifyUrl?: string;
   locale?: string;
+  /** When the signup was attributed to a reseller, surface who referred them +
+   *  how to reach their local partner for help. */
+  referredBy?: { name: string; contact: string | null; website: string | null } | null;
 }) {
   const t = await getDict(params.locale);
   // If no verifyUrl supplied, fall back to login as the primary CTA in both
@@ -868,6 +871,7 @@ export async function sendSignupConfirmationEmail(params: {
       restaurantName: params.restaurantName,
       loginUrl: params.loginUrl,
       verifyUrl,
+      referredBy: params.referredBy ?? null,
       imprint: currentImprint(),
     })
   );

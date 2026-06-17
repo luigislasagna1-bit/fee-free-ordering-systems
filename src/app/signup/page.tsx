@@ -13,11 +13,19 @@ import prisma from "@/lib/db";
 export default async function SignupPage({
   searchParams,
 }: {
-  searchParams: Promise<{ invite?: string }>;
+  searchParams: Promise<{ invite?: string; ref?: string }>;
 }) {
   const locale = await resolveLocale();
   const params = await searchParams;
   const inviteToken = params.invite?.trim() || null;
+
+  // Reseller referral code (?ref=<code>). The reseller's share link is
+  // /signup?ref=<code>; we capture it here and hand it to the form so it can
+  // forward it to /api/auth/register, which stamps resellerProfileId on the
+  // new restaurant. This hand-off was MISSING — the form never read or sent
+  // the ref, and nothing set the feefree_ref cookie, so every reseller signup
+  // was silently recorded as a direct (unattributed) signup. Fabrizio 2026-06-16.
+  const refCode = params.ref?.trim() || null;
 
   let inviteContext: {
     token: string;
@@ -45,5 +53,5 @@ export default async function SignupPage({
     }
   }
 
-  return <SignupForm locale={locale} inviteContext={inviteContext} />;
+  return <SignupForm locale={locale} inviteContext={inviteContext} refCode={refCode} />;
 }

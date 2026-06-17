@@ -237,6 +237,46 @@ export async function notifyRestaurantSignup(restaurantId: string): Promise<void
 }
 
 /**
+ * A superadmin manually attributed an existing restaurant to a reseller (e.g.
+ * retro-fixing a signup whose ?ref= was lost). Notify just that reseller so
+ * the new client shows up for them. Best-effort; never throws.
+ */
+export async function notifyResellerRestaurantAssigned(
+  restaurantId: string,
+  resellerProfileId: string,
+): Promise<void> {
+  let r: { id: string; name: string; city: string | null; country: string | null } | null = null;
+  try {
+    r = await prisma.restaurant.findUnique({
+      where: { id: restaurantId },
+      select: { id: true, name: true, city: true, country: true },
+    });
+  } catch (e) {
+    console.error("[platform-notifications] assign lookup failed", e);
+    return;
+  }
+  if (!r) return;
+
+  const reseller = await resellerRecipient(resellerProfileId);
+  if (!reseller) return;
+
+  const where = [r.city, r.country].filter(Boolean).join(", ");
+  const whereSuffix = where ? ` (${where})` : "";
+
+  await dispatch({ inApp: [reseller], email: [reseller] }, {
+    kind: "restaurant_assigned",
+    inAppTitle: `Restaurant added to your account: ${r.name}`,
+    inAppBody: where || null,
+    link: `/reseller/restaurants/${r.id}`,
+    emailSubject: `A restaurant was added to your account: ${r.name}`,
+    emailTitle: "A restaurant was added to your account",
+    emailSubtitle: r.name,
+    emailBody: `${r.name}${whereSuffix} is now linked to your reseller account. You'll start earning commission once they subscribe to a paid plan or add-on.`,
+    emailCtaLabel: "View in your dashboard",
+  });
+}
+
+/**
  * A restaurant subscribed to, or cancelled, a paid add-on. Notify all
  * superadmins + the attributed reseller. Called from the Stripe webhook on the
  * real state transition (activated = first time it goes active; cancelled =

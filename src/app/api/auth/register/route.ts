@@ -62,6 +62,7 @@ export async function POST(req: NextRequest) {
     // reseller is approved. This is the *only* place the link is set —
     // restaurants cannot self-claim a reseller later.
     let resellerProfileId: string | null = null;
+    let referredBy: { name: string; contact: string | null; website: string | null } | null = null;
     const cookieStore0 = await cookies();
     const refCode: string | null =
       (typeof ref === "string" && ref.trim()) ||
@@ -70,10 +71,23 @@ export async function POST(req: NextRequest) {
     if (refCode) {
       const profile = await prisma.resellerProfile.findUnique({
         where: { referralCode: refCode },
-        select: { id: true, status: true },
+        select: {
+          id: true,
+          status: true,
+          companyName: true,
+          website: true,
+          user: { select: { email: true, name: true } },
+        },
       });
       if (profile?.status === "approved") {
         resellerProfileId = profile.id;
+        // Surfaced in the welcome email so the new owner knows who referred
+        // them and can reach their local Fee Free partner for help.
+        referredBy = {
+          name: profile.companyName?.trim() || profile.user?.name?.trim() || "your Fee Free partner",
+          contact: profile.user?.email?.trim() || null,
+          website: profile.website?.trim() || null,
+        };
       }
     }
 
@@ -271,6 +285,7 @@ export async function POST(req: NextRequest) {
       // then redirects to /verify-email?status=ok|invalid for the UX.
       verifyUrl: `${baseUrl}/api/auth/verify-email?token=${emailVerifyToken}`,
       locale: signupLocale,
+      referredBy,
     }).catch(() => {});
 
     // Tell the superadmin(s) + the referring reseller (if any) about the new
