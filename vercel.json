@@ -48,6 +48,10 @@
     {
       "path": "/api/cron/dunning",
       "schedule": "0 13 * * *"
+    },
+    {
+      "path": "/api/cron/import-menu-images",
+      "schedule": "* * * * *"
     }
   ]
 }

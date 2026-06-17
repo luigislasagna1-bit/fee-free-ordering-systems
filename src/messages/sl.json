@@ -2945,7 +2945,8 @@
       "previewFailed": "Predogled ni uspel (HTTP {status})",
       "importFailed": "Uvoz ni uspel (HTTP {status})",
       "networkError": "Napaka omrežja",
-      "toastImported": "Uvoženih {count} artiklov!"
+      "toastImported": "Uvoženih {count} artiklov!",
+      "imagesImportingBackground": "{count} fotografij se uvaža v ozadju — na vašem meniju se bodo prikazale v naslednjih nekaj minutah."
     },
     "publishToggle": {
       "actionFailed": "Dejanje ni uspelo",

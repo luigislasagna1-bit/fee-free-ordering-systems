@@ -2102,7 +2102,8 @@
       "previewFailed": "Náhľad zlyhal (HTTP {status})",
       "importFailed": "Import zlyhal (HTTP {status})",
       "networkError": "Chyba siete",
-      "toastImported": "Importovaných {count} položiek!"
+      "toastImported": "Importovaných {count} položiek!",
+      "imagesImportingBackground": "{count} fotiek sa importuje na pozadí — objavia sa vo vašom menu počas niekoľkých nasledujúcich minút."
     },
     "publishToggle": {
       "actionFailed": "Akcia zlyhala",

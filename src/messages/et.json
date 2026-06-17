@@ -2945,7 +2945,8 @@
       "previewFailed": "Eelvaade ebaõnnestus (HTTP {status})",
       "importFailed": "Import ebaõnnestus (HTTP {status})",
       "networkError": "Võrgu tõrge",
-      "toastImported": "Imporditi {count} toodet!"
+      "toastImported": "Imporditi {count} toodet!",
+      "imagesImportingBackground": "{count} fotot imporditakse taustal — need ilmuvad teie menüüsse järgmise paari minuti jooksul."
     },
     "publishToggle": {
       "actionFailed": "Toiming ebaõnnestus",

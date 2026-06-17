@@ -11,11 +11,13 @@ import {
   type ImportPreview,
 } from "@/lib/menu-import/gloriafood";
 
-// Preview is fast (menu + pictures fetch ~2 s + parse ~100 ms). Commit
-// is the slow path now that image import is wired in: 157 image
-// downloads + Vercel Blob uploads for Luigi's menu, capped at 8x
-// parallelism. Bumped maxDuration to 300s (Vercel Pro ceiling) so the
-// commit doesn't get truncated on chains with hundreds of images.
+// Preview is fast (menu + pictures fetch ~2 s + parse ~100 ms). Commit is
+// now ALSO fast: it writes the menu rows and ENQUEUES photos as
+// PendingMenuImage rows instead of downloading them inline — the GloriaFood
+// CDN burst-bans 200+ rapid fetches (only ~24/200 landed when we tried
+// inline), so a separate per-minute cron (/api/cron/import-menu-images)
+// drip-downloads them with low concurrency until every one lands. 300s
+// ceiling kept as headroom for very large menus.
 export const maxDuration = 300;
 
 /**
@@ -208,85 +210,15 @@ export async function PUT(req: NextRequest) {
   }
   for (const g of preview.categoryGroups) collectLib(g);
 
-  // ── Image pre-fetch ────────────────────────────────────────────────
-  // Download every category/item image referenced in the preview from
-  // FoodBooking's CDN and re-host on Vercel Blob. We do this BEFORE the
-  // DB transaction so the slow part (network I/O) doesn't lock the
-  // transaction. The resulting urlByPreviewKey map is consulted by the
-  // category/item create calls below. Images that fail to download or
-  // upload are silently skipped — the rest of the import still lands,
-  // owner just doesn't get those specific images.
-  let imagesImported = 0;
-  let imagesFailed = 0;
-  const blobUrlBySource = new Map<string, string>(); // source URL → blob URL
-  if (process.env.BLOB_READ_WRITE_TOKEN) {
-    const sourceUrls = new Set<string>();
-    for (const cat of preview.categories) {
-      if (cat.sourceImageUrl) sourceUrls.add(cat.sourceImageUrl);
-      for (const it of cat.items) {
-        if (it.sourceImageUrl) sourceUrls.add(it.sourceImageUrl);
-      }
-    }
-    if (sourceUrls.size > 0) {
-      const { put } = await import("@vercel/blob");
-      const PARALLEL = 8;
-      const urls = [...sourceUrls];
-      let idx = 0;
-      // Download + re-host one image, RETRYING transient failures (timeouts,
-      // 5xx, dropped connections). This is the fix for "only some photos
-      // imported": GloriaFood's CDN intermittently drops connections under the
-      // 8-way parallel load, and the old single-shot attempt silently lost
-      // those. A 4xx is permanent → no retry. Each attempt is time-boxed so a
-      // hung socket can't stall a worker. Fabrizio 2026-06-16.
-      const ATTEMPTS = 3;
-      const fetchAndStore = async (src: string, my: number): Promise<boolean> => {
-        for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
-          const ctrl = new AbortController();
-          const timer = setTimeout(() => ctrl.abort(), 20_000);
-          try {
-            const imgRes = await fetch(src, { cache: "no-store", signal: ctrl.signal });
-            if (!imgRes.ok) {
-              if (imgRes.status >= 400 && imgRes.status < 500) {
-                console.warn(`[import-gloriafood] image ${src} -> HTTP ${imgRes.status} (permanent)`);
-                return false;
-              }
-              throw new Error(`HTTP ${imgRes.status}`); // 5xx → retry
-            }
-            const buf = Buffer.from(await imgRes.arrayBuffer());
-            // Keep the original filename so the blob URL is human-readable
-            // and stable across re-imports of the same image.
-            const filename = src.split("/").pop() || `gf-${my}.jpg`;
-            const blob = await put(`${restaurantId}/menu/${filename}`, buf, {
-              access: "public",
-              addRandomSuffix: false,
-              contentType: imgRes.headers.get("content-type") ?? "image/jpeg",
-            });
-            blobUrlBySource.set(src, blob.url);
-            return true;
-          } catch (e) {
-            if (attempt >= ATTEMPTS) {
-              console.warn(`[import-gloriafood] image failed after ${ATTEMPTS} tries for ${src}:`, e instanceof Error ? e.message : String(e));
-              return false;
-            }
-            await new Promise((r) => setTimeout(r, 500 * attempt)); // backoff
-          } finally {
-            clearTimeout(timer);
-          }
-        }
-        return false;
-      };
-      const worker = async () => {
-        while (idx < urls.length) {
-          const my = idx++;
-          if (await fetchAndStore(urls[my], my)) imagesImported++;
-          else imagesFailed++;
-        }
-      };
-      await Promise.all(Array.from({ length: PARALLEL }, worker));
-    }
-  } else {
-    console.warn("[import-gloriafood] BLOB_READ_WRITE_TOKEN not set — skipping image import");
-  }
+  // ── Photos: QUEUED, not downloaded here (Luigi/Fabrizio 2026-06-16) ─────
+  // GloriaFood's CDN bans bursts, so pulling 200+ images inline during this one
+  // request only ever got ~24 through before the rest were blocked. Instead we
+  // enqueue one PendingMenuImage row per image (filled inside the transaction
+  // below, where the created row ids exist) and the `import-menu-images` cron
+  // drips them in over the next few minutes — low concurrency + retries across
+  // runs — until EVERY photo is re-hosted on Vercel Blob. The menu itself lands
+  // instantly; photos appear as the cron lands them.
+  const pendingImages: Array<{ restaurantId: string; menuItemId?: string; menuCategoryId?: string; sourceUrl: string }> = [];
 
   // Bigger commits than the PDF importer — 12k+ options for Luigi's
   // menu — so bump the transaction timeout from the Prisma default
@@ -363,7 +295,7 @@ export async function PUT(req: NextRequest) {
               menuId: targetMenuId ?? undefined,
               name: cat.name,
               description: cat.description,
-              imageUrl: cat.sourceImageUrl ? (blobUrlBySource.get(cat.sourceImageUrl) ?? null) : null,
+              imageUrl: null, // queued — the import-menu-images cron re-hosts + sets it shortly
               sortOrder: nextCatSort++,
               isActive: cat.isActive,
               isHidden: cat.isHidden,
@@ -372,6 +304,7 @@ export async function PUT(req: NextRequest) {
           });
           categoryId = created.id;
           categoriesCreated++;
+          if (cat.sourceImageUrl) pendingImages.push({ restaurantId, menuCategoryId: created.id, sourceUrl: cat.sourceImageUrl });
         }
         catIdMap.set(cat.sourceId, categoryId);
 
@@ -398,7 +331,7 @@ export async function PUT(req: NextRequest) {
               categoryId,
               name: item.name,
               description: item.description,
-              imageUrl: item.sourceImageUrl ? (blobUrlBySource.get(item.sourceImageUrl) ?? null) : null,
+              imageUrl: null, // queued — the import-menu-images cron re-hosts + sets it shortly
               price: item.basePrice,
               isAvailable: item.isAvailable,
               isHidden: item.isHidden,
@@ -410,6 +343,7 @@ export async function PUT(req: NextRequest) {
             select: { id: true },
           });
           itemsCreated++;
+          if (item.sourceImageUrl) pendingImages.push({ restaurantId, menuItemId: createdItem.id, sourceUrl: item.sourceImageUrl });
 
           // Variants — preserved in order. Each variant carries its own
           // set of modifier groups (e.g. "Toppings (Large)" vs "(Small)").
@@ -529,6 +463,14 @@ export async function PUT(req: NextRequest) {
           optionsCreated += g.options.length;
         }
       }
+
+      // Queue every imported photo for the background drip-importer — the
+      // import-menu-images cron re-hosts them on Vercel Blob a few at a time and
+      // retries until they all land (GloriaFood's CDN won't serve 200+ at once).
+      // Luigi/Fabrizio 2026-06-16.
+      if (pendingImages.length > 0) {
+        await tx.pendingMenuImage.createMany({ data: pendingImages });
+      }
     },
     {
       maxWait: 10_000,
@@ -537,7 +479,7 @@ export async function PUT(req: NextRequest) {
   );
 
   console.log(
-    `[import-gloriafood] committed: ${categoriesCreated} cats, ${itemsCreated} items (${itemsSkippedDuplicate} dupes skipped), ${variantsCreated} variants, ${libraryGroupsCreated} library groups, ${groupsCreated} attached groups, ${optionsCreated} options, ${imagesImported} images (${imagesFailed} failed)`,
+    `[import-gloriafood] committed: ${categoriesCreated} cats, ${itemsCreated} items (${itemsSkippedDuplicate} dupes skipped), ${variantsCreated} variants, ${libraryGroupsCreated} library groups, ${groupsCreated} attached groups, ${optionsCreated} options, ${pendingImages.length} images queued`,
   );
 
   return NextResponse.json({
@@ -548,7 +490,6 @@ export async function PUT(req: NextRequest) {
     libraryGroupsCreated,
     optionsCreated,
     itemsSkippedDuplicate,
-    imagesImported,
-    imagesFailed,
+    imagesQueued: pendingImages.length,
   });
 }

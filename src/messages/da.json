@@ -2945,7 +2945,8 @@
       "previewFailed": "Forhåndsvisning mislykkedes (HTTP {status})",
       "importFailed": "Import mislykkedes (HTTP {status})",
       "networkError": "Netværksfejl",
-      "toastImported": "Importerede {count} varer!"
+      "toastImported": "Importerede {count} varer!",
+      "imagesImportingBackground": "{count} fotos importeres i baggrunden – de vises på din menu i løbet af de næste par minutter."
     },
     "publishToggle": {
       "actionFailed": "Handlingen mislykkedes",

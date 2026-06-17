@@ -2945,7 +2945,8 @@
       "previewFailed": "Förhandsvisning misslyckades (HTTP {status})",
       "importFailed": "Import misslyckades (HTTP {status})",
       "networkError": "Nätverksfel",
-      "toastImported": "Importerade {count} artiklar!"
+      "toastImported": "Importerade {count} artiklar!",
+      "imagesImportingBackground": "{count} foton importeras i bakgrunden – de visas på din meny inom de närmaste minuterna."
     },
     "publishToggle": {
       "actionFailed": "Åtgärden misslyckades",

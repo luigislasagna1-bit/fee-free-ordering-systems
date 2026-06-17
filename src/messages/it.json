@@ -2945,7 +2945,8 @@
       "previewFailed": "Anteprima non riuscita (HTTP {status})",
       "importFailed": "Importazione non riuscita (HTTP {status})",
       "networkError": "Errore di rete",
-      "toastImported": "Importati {count} articoli!"
+      "toastImported": "Importati {count} articoli!",
+      "imagesImportingBackground": "{count} foto sono in fase di importazione in background — appariranno nel tuo menu nei prossimi minuti."
     },
     "publishToggle": {
       "actionFailed": "Azione non riuscita",

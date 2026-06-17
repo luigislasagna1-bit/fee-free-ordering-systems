@@ -2945,7 +2945,8 @@
       "previewFailed": "미리보기 실패 (HTTP {status})",
       "importFailed": "가져오기 실패 (HTTP {status})",
       "networkError": "네트워크 오류",
-      "toastImported": "{count}개 항목을 가져왔습니다!"
+      "toastImported": "{count}개 항목을 가져왔습니다!",
+      "imagesImportingBackground": "{count}장의 사진을 백그라운드에서 가져오는 중입니다. 잠시 후 메뉴에 표시됩니다."
     },
     "publishToggle": {
       "actionFailed": "작업에 실패했습니다",

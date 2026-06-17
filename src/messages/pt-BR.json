@@ -2945,7 +2945,8 @@
       "previewFailed": "Falha na prévia (HTTP {status})",
       "importFailed": "Falha na importação (HTTP {status})",
       "networkError": "Erro de rede",
-      "toastImported": "Importados {count} itens!"
+      "toastImported": "Importados {count} itens!",
+      "imagesImportingBackground": "{count} fotos estão sendo importadas em segundo plano — elas aparecerão no seu cardápio nos próximos minutos."
     },
     "publishToggle": {
       "actionFailed": "Ação falhou",

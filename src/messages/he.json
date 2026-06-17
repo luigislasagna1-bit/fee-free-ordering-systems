@@ -2945,7 +2945,8 @@
       "previewFailed": "התצוגה המקדימה נכשלה (HTTP {status})",
       "importFailed": "הייבוא נכשל (HTTP {status})",
       "networkError": "שגיאת רשת",
-      "toastImported": "יובאו {count} פריטים!"
+      "toastImported": "יובאו {count} פריטים!",
+      "imagesImportingBackground": "{count} תמונות מיובאות ברקע — הן יופיעו בתפריט שלך בדקות הקרובות."
     },
     "publishToggle": {
       "actionFailed": "הפעולה נכשלה",

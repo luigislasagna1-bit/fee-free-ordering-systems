@@ -288,14 +288,9 @@ export function ImportGloriaFoodClient({ menuId }: { menuId?: string }) {
               groups: commitResult.groupsCreated ?? 0,
               options: commitResult.optionsCreated ?? 0,
             })}
-            {typeof commitResult.imagesImported === "number" && (
+            {typeof commitResult.imagesQueued === "number" && commitResult.imagesQueued > 0 && (
               <span className="block text-xs text-gray-500 mt-1">
-                {commitResult.imagesFailed > 0
-                  ? t("imagesImportedWithFailures", {
-                      imported: commitResult.imagesImported ?? 0,
-                      failed: commitResult.imagesFailed ?? 0,
-                    })
-                  : t("imagesImported", { imported: commitResult.imagesImported ?? 0 })}
+                {t("imagesImportingBackground", { count: commitResult.imagesQueued })}
               </span>
             )}
             {commitResult.itemsSkippedDuplicate > 0 && (

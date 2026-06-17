@@ -2945,7 +2945,8 @@
       "previewFailed": "Vorschau fehlgeschlagen (HTTP {status})",
       "importFailed": "Import fehlgeschlagen (HTTP {status})",
       "networkError": "Netzwerkfehler",
-      "toastImported": "{count} Artikel importiert!"
+      "toastImported": "{count} Artikel importiert!",
+      "imagesImportingBackground": "{count} Fotos werden im Hintergrund importiert – sie erscheinen in den nächsten Minuten in Ihrer Speisekarte."
     },
     "publishToggle": {
       "actionFailed": "Aktion fehlgeschlagen",

@@ -2945,7 +2945,8 @@
       "previewFailed": "Önizleme başarısız (HTTP {status})",
       "importFailed": "İçe aktarma başarısız (HTTP {status})",
       "networkError": "Ağ hatası",
-      "toastImported": "{count} ürün içe aktarıldı!"
+      "toastImported": "{count} ürün içe aktarıldı!",
+      "imagesImportingBackground": "{count} fotoğraf arka planda içe aktarılıyor — önümüzdeki birkaç dakika içinde menünüzde görünecekler."
     },
     "publishToggle": {
       "actionFailed": "İşlem başarısız",

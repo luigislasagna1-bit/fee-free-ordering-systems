@@ -2945,7 +2945,8 @@
       "previewFailed": "Előnézet sikertelen (HTTP {status})",
       "importFailed": "Importálás sikertelen (HTTP {status})",
       "networkError": "Hálózati hiba",
-      "toastImported": "{count} tétel importálva!"
+      "toastImported": "{count} tétel importálva!",
+      "imagesImportingBackground": "{count} fotó importálása folyik a háttérben – a következő néhány percben megjelennek az étlapodon."
     },
     "publishToggle": {
       "actionFailed": "Művelet sikertelen",

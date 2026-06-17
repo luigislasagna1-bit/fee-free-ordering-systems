@@ -2945,7 +2945,8 @@
       "previewFailed": "Прегледът е неуспешен (HTTP {status})",
       "importFailed": "Импортирането е неуспешно (HTTP {status})",
       "networkError": "Мрежова грешка",
-      "toastImported": "Импортирани {count} артикула!"
+      "toastImported": "Импортирани {count} артикула!",
+      "imagesImportingBackground": "{count} снимки се импортират на заден план — ще се появят в менюто ви през следващите няколко минути."
     },
     "publishToggle": {
       "actionFailed": "Действието е неуспешно",

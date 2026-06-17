@@ -2945,7 +2945,8 @@
       "previewFailed": "Pratinjau gagal (HTTP {status})",
       "importFailed": "Impor gagal (HTTP {status})",
       "networkError": "Error jaringan",
-      "toastImported": "Diimpor {count} item!"
+      "toastImported": "Diimpor {count} item!",
+      "imagesImportingBackground": "{count} foto sedang diimpor di latar belakang — akan muncul di menu Anda dalam beberapa menit ke depan."
     },
     "publishToggle": {
       "actionFailed": "Tindakan gagal",

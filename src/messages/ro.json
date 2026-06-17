@@ -2945,7 +2945,8 @@
       "previewFailed": "Previzualizarea a eșuat (HTTP {status})",
       "importFailed": "Importul a eșuat (HTTP {status})",
       "networkError": "Eroare de rețea",
-      "toastImported": "Importate {count} produse!"
+      "toastImported": "Importate {count} produse!",
+      "imagesImportingBackground": "{count} fotografii se importă în fundal — vor apărea în meniul dvs. în următoarele minute."
     },
     "publishToggle": {
       "actionFailed": "Acțiunea a eșuat",

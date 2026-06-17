@@ -2945,7 +2945,8 @@
       "previewFailed": "Pregled nije uspio (HTTP {status})",
       "importFailed": "Uvoz nije uspio (HTTP {status})",
       "networkError": "Mrežna greška",
-      "toastImported": "Uvezeno {count} stavki!"
+      "toastImported": "Uvezeno {count} stavki!",
+      "imagesImportingBackground": "{count} fotografija uvozi se u pozadini — pojavit će se na vašem jelovniku u sljedećih nekoliko minuta."
     },
     "publishToggle": {
       "actionFailed": "Radnja nije uspjela",

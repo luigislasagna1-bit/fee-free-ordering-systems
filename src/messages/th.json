@@ -2945,7 +2945,8 @@
       "previewFailed": "ตัวอย่างล้มเหลว (HTTP {status})",
       "importFailed": "นำเข้าล้มเหลว (HTTP {status})",
       "networkError": "เกิดข้อผิดพลาดเครือข่าย",
-      "toastImported": "นำเข้า {count} รายการแล้ว!"
+      "toastImported": "นำเข้า {count} รายการแล้ว!",
+      "imagesImportingBackground": "กำลังนำเข้ารูปภาพ {count} รูปในเบื้องหลัง — รูปภาพจะปรากฏในเมนูของคุณภายในไม่กี่นาทีข้างหน้า"
     },
     "publishToggle": {
       "actionFailed": "การดำเนินการล้มเหลว",

@@ -786,6 +786,30 @@ model MenuCategory {
   @@index([menuId])
 }
 
+/// Background photo-import queue (Luigi/Fabrizio 2026-06-16). A GloriaFood
+/// import enqueues one row per item/category image instead of downloading them
+/// inline — GloriaFood's CDN bans bursts, so a single request can't pull 200+
+/// photos (24 land, the rest get blocked). The `import-menu-images` cron drips
+/// them in (low concurrency + retries across runs) until every photo is
+/// re-hosted on Vercel Blob, then deletes the row. A SIDE-TABLE — NOT nullable
+/// columns on the hot MenuItem — per the scaling rule; only ever holds PENDING
+/// images so it stays tiny.
+model PendingMenuImage {
+  id             String    @id @default(cuid())
+  restaurantId   String
+  /// Exactly one target is set (the item OR the category the photo belongs to).
+  menuItemId     String?
+  menuCategoryId String?
+  /// GloriaFood CDN URL to fetch + re-host on Vercel Blob.
+  sourceUrl      String
+  attempts       Int       @default(0)
+  lastTriedAt    DateTime?
+  createdAt      DateTime  @default(now())
+
+  @@index([attempts, createdAt])
+  @@index([restaurantId])
+}
+
 model MenuItem {
   id            String   @id @default(cuid())
   restaurantId  String

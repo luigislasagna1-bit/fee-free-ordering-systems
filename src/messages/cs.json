@@ -2945,7 +2945,8 @@
       "previewFailed": "Náhled selhal (HTTP {status})",
       "importFailed": "Import selhal (HTTP {status})",
       "networkError": "Chyba sítě",
-      "toastImported": "Importováno {count} položek!"
+      "toastImported": "Importováno {count} položek!",
+      "imagesImportingBackground": "{count} fotek se importuje na pozadí — objeví se ve vašem menu během několika příštích minut."
     },
     "publishToggle": {
       "actionFailed": "Akce selhala",

@@ -2945,7 +2945,8 @@
       "previewFailed": "Xem trước thất bại (HTTP {status})",
       "importFailed": "Nhập thất bại (HTTP {status})",
       "networkError": "Lỗi mạng",
-      "toastImported": "Đã nhập {count} món!"
+      "toastImported": "Đã nhập {count} món!",
+      "imagesImportingBackground": "{count} ảnh đang được nhập ở chế độ nền — chúng sẽ xuất hiện trên thực đơn của bạn trong vài phút tới."
     },
     "publishToggle": {
       "actionFailed": "Hành động thất bại",

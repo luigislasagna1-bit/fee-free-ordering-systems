@@ -2945,7 +2945,8 @@
       "previewFailed": "プレビューに失敗しました（HTTP {status}）",
       "importFailed": "インポートに失敗しました（HTTP {status}）",
       "networkError": "ネットワークエラー",
-      "toastImported": "{count} 件の商品をインポートしました！"
+      "toastImported": "{count} 件の商品をインポートしました！",
+      "imagesImportingBackground": "{count} 枚の写真をバックグラウンドでインポートしています。数分以内にメニューに表示されます。"
     },
     "publishToggle": {
       "actionFailed": "操作に失敗しました",

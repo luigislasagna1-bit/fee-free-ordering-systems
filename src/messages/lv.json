@@ -2945,7 +2945,8 @@
       "previewFailed": "Priekšskatījums neizdevās (HTTP {status})",
       "importFailed": "Imports neizdevās (HTTP {status})",
       "networkError": "Tīkla kļūda",
-      "toastImported": "Importētas {count} preces!"
+      "toastImported": "Importētas {count} preces!",
+      "imagesImportingBackground": "{count} fotoattēli tiek importēti fonā — tie parādīsies jūsu ēdienkartē tuvāko minūšu laikā."
     },
     "publishToggle": {
       "actionFailed": "Darbība neizdevās",

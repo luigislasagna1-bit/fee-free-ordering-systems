@@ -2945,7 +2945,8 @@
       "previewFailed": "Αποτυχία προεπισκόπησης (HTTP {status})",
       "importFailed": "Αποτυχία εισαγωγής (HTTP {status})",
       "networkError": "Σφάλμα δικτύου",
-      "toastImported": "Εισήχθησαν {count} αντικείμενα!"
+      "toastImported": "Εισήχθησαν {count} αντικείμενα!",
+      "imagesImportingBackground": "{count} φωτογραφίες εισάγονται στο παρασκήνιο — θα εμφανιστούν στο μενού σας μέσα στα επόμενα λεπτά."
     },
     "publishToggle": {
       "actionFailed": "Η ενέργεια απέτυχε",

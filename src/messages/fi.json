@@ -2910,7 +2910,8 @@
       "previewFailed": "Esikatselu epäonnistui (HTTP {status})",
       "importFailed": "Tuonti epäonnistui (HTTP {status})",
       "networkError": "Verkkovirhe",
-      "toastImported": "Tuotiin {count} tuotetta!"
+      "toastImported": "Tuotiin {count} tuotetta!",
+      "imagesImportingBackground": "{count} kuvaa tuodaan taustalla – ne ilmestyvät ruokalistallesi muutaman minuutin kuluessa."
     },
     "publishToggle": {
       "actionFailed": "Toiminto epäonnistui",

@@ -2945,7 +2945,8 @@
       "previewFailed": "预览失败（HTTP {status}）",
       "importFailed": "导入失败（HTTP {status}）",
       "networkError": "网络错误",
-      "toastImported": "已导入 {count} 个商品！"
+      "toastImported": "已导入 {count} 个商品！",
+      "imagesImportingBackground": "{count} 张照片正在后台导入——它们将在接下来几分钟内显示在您的菜单上。"
     },
     "publishToggle": {
       "actionFailed": "操作失败",

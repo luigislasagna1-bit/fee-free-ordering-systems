@@ -2945,7 +2945,8 @@
       "previewFailed": "Aperçu échoué (HTTP {status})",
       "importFailed": "Importation échouée (HTTP {status})",
       "networkError": "Erreur réseau",
-      "toastImported": "Importé {count} articles !"
+      "toastImported": "Importé {count} articles !",
+      "imagesImportingBackground": "{count} photos sont en cours d'importation en arrière-plan — elles apparaîtront sur votre menu dans les prochaines minutes."
     },
     "publishToggle": {
       "actionFailed": "Action échouée",

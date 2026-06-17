@@ -2093,7 +2093,8 @@
       "previewFailed": "Peržiūra nepavyko (HTTP {status})",
       "importFailed": "Importas nepavyko (HTTP {status})",
       "networkError": "Tinklo klaida",
-      "toastImported": "Importuota {count} prekių!"
+      "toastImported": "Importuota {count} prekių!",
+      "imagesImportingBackground": "{count} nuotraukos importuojamos fone — jos pasirodys jūsų meniu per artimiausias kelias minutes."
     },
     "publishToggle": {
       "actionFailed": "Veiksmas nepavyko",

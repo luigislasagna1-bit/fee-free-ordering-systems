@@ -2945,7 +2945,8 @@
       "previewFailed": "Voorbeeld mislukt (HTTP {status})",
       "importFailed": "Importeren mislukt (HTTP {status})",
       "networkError": "Netwerkfout",
-      "toastImported": "{count} artikelen geïmporteerd!"
+      "toastImported": "{count} artikelen geïmporteerd!",
+      "imagesImportingBackground": "{count} foto's worden op de achtergrond geïmporteerd — ze verschijnen de komende minuten op uw menu."
     },
     "publishToggle": {
       "actionFailed": "Actie mislukt",

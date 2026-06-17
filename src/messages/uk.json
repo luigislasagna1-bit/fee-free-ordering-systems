@@ -2945,7 +2945,8 @@
       "previewFailed": "Перегляд не вдався (HTTP {status})",
       "importFailed": "Імпорт не вдався (HTTP {status})",
       "networkError": "Помилка мережі",
-      "toastImported": "Імпортовано {count} позицій!"
+      "toastImported": "Імпортовано {count} позицій!",
+      "imagesImportingBackground": "{count} фотографій імпортуються у фоновому режимі — вони з'являться у вашому меню протягом наступних кількох хвилин."
     },
     "publishToggle": {
       "actionFailed": "Дія не вдалася",

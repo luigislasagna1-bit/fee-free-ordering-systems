@@ -2945,7 +2945,8 @@
       "previewFailed": "Ошибка предпросмотра (HTTP {status})",
       "importFailed": "Ошибка импорта (HTTP {status})",
       "networkError": "Ошибка сети",
-      "toastImported": "Импортировано {count} позиций!"
+      "toastImported": "Импортировано {count} позиций!",
+      "imagesImportingBackground": "{count} фотографий импортируются в фоновом режиме — они появятся в вашем меню в течение следующих нескольких минут."
     },
     "publishToggle": {
       "actionFailed": "Действие не выполнено",

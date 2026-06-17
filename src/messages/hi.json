@@ -3257,7 +3257,8 @@
       "previewFailed": "पूर्वावलोकन विफल (HTTP {status})",
       "importFailed": "आयात विफल (HTTP {status})",
       "networkError": "नेटवर्क त्रुटि",
-      "toastImported": "{count} आइटम आयात किए गए!"
+      "toastImported": "{count} आइटम आयात किए गए!",
+      "imagesImportingBackground": "{count} तस्वीरें पृष्ठभूमि में आयात हो रही हैं — वे अगले कुछ मिनटों में आपके मेनू पर दिखाई देंगी।"
     },
     "importGloriaFoodPage": {
       "inheritingHeading": "GloriaFood से आयात करें",

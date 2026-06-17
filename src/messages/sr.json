@@ -2945,7 +2945,8 @@
       "previewFailed": "Pregled nije uspeo (HTTP {status})",
       "importFailed": "Uvoz nije uspeo (HTTP {status})",
       "networkError": "Greška mreže",
-      "toastImported": "Uvezeno {count} stavki!"
+      "toastImported": "Uvezeno {count} stavki!",
+      "imagesImportingBackground": "{count} фотографија се увози у позадини — појавиће се у вашем менију у наредних неколико минута."
     },
     "publishToggle": {
       "actionFailed": "Akcija nije uspela",

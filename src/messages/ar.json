@@ -2945,7 +2945,8 @@
       "previewFailed": "فشلت المعاينة (HTTP {status})",
       "importFailed": "فشل الاستيراد (HTTP {status})",
       "networkError": "خطأ في الشبكة",
-      "toastImported": "تم استيراد {count} صنف!"
+      "toastImported": "تم استيراد {count} صنف!",
+      "imagesImportingBackground": "يتم استيراد {count} صورة في الخلفية — ستظهر في قائمتك خلال الدقائق القليلة القادمة."
     },
     "publishToggle": {
       "actionFailed": "فشل الإجراء",

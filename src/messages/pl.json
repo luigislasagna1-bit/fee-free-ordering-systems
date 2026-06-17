@@ -2945,7 +2945,8 @@
       "previewFailed": "Podgląd nie powiódł się (HTTP {status})",
       "importFailed": "Import nie powiódł się (HTTP {status})",
       "networkError": "Błąd sieci",
-      "toastImported": "Zaimportowano {count} pozycji!"
+      "toastImported": "Zaimportowano {count} pozycji!",
+      "imagesImportingBackground": "{count} zdjęć jest importowanych w tle — pojawią się w Twoim menu w ciągu kilku najbliższych minut."
     },
     "publishToggle": {
       "actionFailed": "Akcja nie powiodła się",

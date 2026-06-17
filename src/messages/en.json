@@ -3301,7 +3301,8 @@
       "previewFailed": "Preview failed (HTTP {status})",
       "importFailed": "Import failed (HTTP {status})",
       "networkError": "Network error",
-      "toastImported": "Imported {count} items!"
+      "toastImported": "Imported {count} items!",
+      "imagesImportingBackground": "{count} photos are importing in the background — they'll appear on your menu over the next few minutes."
     },
     "importGloriaFoodPage": {
       "inheritingHeading": "Import from GloriaFood",

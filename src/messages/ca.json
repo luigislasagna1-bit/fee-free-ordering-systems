@@ -2945,7 +2945,8 @@
       "previewFailed": "Error en la vista prèvia (HTTP {status})",
       "importFailed": "Error en la importació (HTTP {status})",
       "networkError": "Error de xarxa",
-      "toastImported": "S'han importat {count} articles!"
+      "toastImported": "S'han importat {count} articles!",
+      "imagesImportingBackground": "{count} fotos s'estan important en segon pla — apareixeran al vostre menú en els propers minuts."
     },
     "publishToggle": {
       "actionFailed": "L'acció ha fallat",
