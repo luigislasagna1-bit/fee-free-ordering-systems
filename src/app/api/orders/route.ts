@@ -1010,6 +1010,11 @@ export async function POST(req: NextRequest) {
           { restaurantId: { in: promoOwnerIds }, scope: "brand" },
         ],
       },
+      // Cap per the standing scaling rule (no unbounded findMany on a hot path).
+      // No real restaurant has anywhere near this many ACTIVE promos, so this
+      // never truncates a real result; it only bounds worst-case memory. No
+      // orderBy → evaluation order is unchanged for every real case. (Audit fix.)
+      take: 500,
     });
     // Honour the customer's manual promo removals so the charged discount
     // matches the cart preview (apply-promos does the same).
