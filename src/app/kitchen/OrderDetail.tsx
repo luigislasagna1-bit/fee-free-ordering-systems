@@ -10,7 +10,7 @@ import { formatDueLabel } from "@/lib/format-time";
 import toast from "react-hot-toast";
 import type { T, Order } from "./kitchen-types";
 import { paymentStatusLabel } from "./kitchen-types";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { RejectOrderModal } from "./RejectOrderModal";
 
 interface Props {
@@ -108,27 +108,30 @@ const STATUS_LABEL: Record<string, string> = {
   cancelled: "Cancelled",
 };
 
-function fmtTime(d: string | Date | null | undefined, hoursFormat: "12h" | "24h" = "12h") {
+// `locale` (the kitchen's selected language) is threaded in so weekday + month
+// names follow the panel language, not the browser default. Fabrizio 2026-06-16.
+function fmtTime(d: string | Date | null | undefined, hoursFormat: "12h" | "24h" = "12h", locale?: string) {
   if (!d) return "—";
-  return new Date(d).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hourCycle: hoursFormat === "24h" ? "h23" : "h12" });
+  return new Date(d).toLocaleString(locale || undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hourCycle: hoursFormat === "24h" ? "h23" : "h12" });
 }
 
 /** Time only (no date) — used for the ASAP "received at" line. */
-function fmtTimeOnly(d: string | Date | null | undefined, hoursFormat: "12h" | "24h" = "12h") {
+function fmtTimeOnly(d: string | Date | null | undefined, hoursFormat: "12h" | "24h" = "12h", locale?: string) {
   if (!d) return "—";
-  return new Date(d).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hourCycle: hoursFormat === "24h" ? "h23" : "h12" });
+  return new Date(d).toLocaleTimeString(locale || undefined, { hour: "numeric", minute: "2-digit", hourCycle: hoursFormat === "24h" ? "h23" : "h12" });
 }
 
 /** Full weekday + date + time — used for the scheduled "order for later" line. */
-function fmtDateTime(d: string | Date | null | undefined, hoursFormat: "12h" | "24h" = "12h") {
+function fmtDateTime(d: string | Date | null | undefined, hoursFormat: "12h" | "24h" = "12h", locale?: string) {
   if (!d) return "—";
-  return new Date(d).toLocaleString(undefined, { weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hourCycle: hoursFormat === "24h" ? "h23" : "h12" });
+  return new Date(d).toLocaleString(locale || undefined, { weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hourCycle: hoursFormat === "24h" ? "h23" : "h12" });
 }
 
 export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady, workflowMode = "simple", fromInProgress = false, hoursFormat = "12h", currency = "usd", onReservationStatusChange }: Props) {
   const formatCurrency = (n: number) => fmtCurrency(n, currency);
   const isSimpleMode = workflowMode === "simple";
   const tk = useTranslations("kitchen");
+  const locale = useLocale();
   const tc = useTranslations("checkout");
   const tCommon = useTranslations("common");
   const tReceipt = useTranslations("receipt.orderTypes");
@@ -322,7 +325,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
         </button>
         <div className="min-w-0">
           <div className={`font-bold text-lg ${t.text}`}>{tk("orderNumber")}{order.orderNumber}</div>
-          <div className={`text-xs ${t.muted}`}>{fmtTime(order.createdAt, hoursFormat)}</div>
+          <div className={`text-xs ${t.muted}`}>{fmtTime(order.createdAt, hoursFormat, locale)}</div>
         </div>
         <StatusBadge />
         {order.viaMarketplace && (
@@ -347,7 +350,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               <div className="text-sm opacity-95 mt-0.5">
                 {tk("partyOf", { n: order.reservation.partySize })}
                 {" · "}
-                {order.reservation.date} {fmtTimeOnly(`${order.reservation.date}T${order.reservation.time}`, hoursFormat)}
+                {order.reservation.date} {fmtTimeOnly(`${order.reservation.date}T${order.reservation.time}`, hoursFormat, locale)}
                 {" · #"}{order.reservation.confirmationCode}
               </div>
             </div>
@@ -431,10 +434,10 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                 </div>
                 <div className={`text-lg font-bold mt-0.5 ${t.text}`}>
                   {isLater
-                    ? fmtDateTime((order as any).scheduledFor, hoursFormat)
+                    ? fmtDateTime((order as any).scheduledFor, hoursFormat, locale)
                     : hasReady
-                      ? `${tk("ready")} ${fmtTimeOnly(order.estimatedReady, hoursFormat)}`
-                      : fmtTimeOnly(order.createdAt, hoursFormat)}
+                      ? `${tk("ready")} ${fmtTimeOnly(order.estimatedReady, hoursFormat, locale)}`
+                      : fmtTimeOnly(order.createdAt, hoursFormat, locale)}
                 </div>
               </div>
             );
@@ -444,10 +447,10 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           {(order.acceptedAt || order.estimatedReady || order.completedAt) && (
             <Section title={tk("estimatedTime")} t={t}>
               <div className="space-y-1.5">
-                {order.acceptedAt && <Row icon={<CheckCircle className="w-4 h-4 text-green-500" />} t={t}>{tk("accepted")}: {fmtTime(order.acceptedAt, hoursFormat)}</Row>}
-                {order.estimatedReady && <Row icon={<Clock className="w-4 h-4 text-blue-500" />} t={t}>{tk("ready")}: {fmtTime(order.estimatedReady, hoursFormat)}</Row>}
+                {order.acceptedAt && <Row icon={<CheckCircle className="w-4 h-4 text-green-500" />} t={t}>{tk("accepted")}: {fmtTime(order.acceptedAt, hoursFormat, locale)}</Row>}
+                {order.estimatedReady && <Row icon={<Clock className="w-4 h-4 text-blue-500" />} t={t}>{tk("ready")}: {fmtTime(order.estimatedReady, hoursFormat, locale)}</Row>}
                 {order.preparationTime && <Row icon={<Clock className="w-4 h-4" />} t={t}>{tk("preparationTime")}: {order.preparationTime} {tk("minAway", { minutes: "" })}</Row>}
-                {order.completedAt && <Row icon={<Package className="w-4 h-4 text-gray-500" />} t={t}>{tk("completed")}: {fmtTime(order.completedAt, hoursFormat)}</Row>}
+                {order.completedAt && <Row icon={<Package className="w-4 h-4 text-gray-500" />} t={t}>{tk("completed")}: {fmtTime(order.completedAt, hoursFormat, locale)}</Row>}
               </div>
 
               {/* Live countdown — ticks once per second once the order is

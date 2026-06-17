@@ -26,7 +26,7 @@ import {
 import { registerKitchenPush } from "@/lib/native-push";
 import { NativePrinterSetup, getDirectPrinterConfig } from "./NativePrinterSetup";
 import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { StaffLanguageSwitcher } from "@/components/StaffLanguageSwitcher";
 
 // ── Countdown hook ────────────────────────────────────────────────────────────
@@ -93,6 +93,7 @@ function ReservationCard({
   now?: number;
 }) {
   const tk = useTranslations("kitchen");
+  const locale = useLocale();
   // Countdown to the booking time, shown only for still-active bookings
   // (pending / confirmed / seated) and only when the caller didn't already
   // pass a dayChip (the In Progress tab supplies its own). Past/terminal
@@ -104,7 +105,7 @@ function ReservationCard({
     if (dayChip || !now || !isActiveBooking) return null;
     const dueTs = new Date(`${r.date}T${r.time}:00`).getTime();
     if (!Number.isFinite(dueTs)) return null;
-    const label = formatDueLabel(dueTs, now);
+    const label = formatDueLabel(dueTs, now, locale);
     // Past its booking time → no chip at all (don't show a stale "00:00" on a
     // seated / no-show / expired booking). Luigi 2026-06-15.
     if (label.kind === "due") return null;
@@ -116,7 +117,7 @@ function ReservationCard({
   // a closed-placed order. Luigi 2026-06-14.
   const parked = !!(r.alertAt && now && new Date(r.alertAt).getTime() > now);
   const opensLabel = parked && now
-    ? (() => { const l = formatDueLabel(new Date(r.alertAt!).getTime(), now); return l.kind === "day" ? l.text.toUpperCase() : `OPENS IN ${l.text.toUpperCase()}`; })()
+    ? (() => { const l = formatDueLabel(new Date(r.alertAt!).getTime(), now, locale); return l.kind === "day" ? l.text.toUpperCase() : `OPENS IN ${l.text.toUpperCase()}`; })()
     : null;
   // Pending booking with no deposit owed → show the SAME accept countdown an
   // order uses (Luigi 2026-06-15 chose full order parity — it auto-declines when
@@ -339,6 +340,7 @@ function Countdown({
   placedWhileClosed?: boolean;
   now: number;
 }) {
+  const locale = useLocale();
   // Stable placeholder until the client mounts (now === 0) to avoid hydration mismatch.
   if (!now) return <span className="text-xs font-mono text-gray-400">--:--</span>;
   // If alertAt is set AND still in the future, the order is parked —
@@ -348,11 +350,11 @@ function Countdown({
     if (alertMs > now) {
       // Cap at 24h → weekday name (e.g. "OPENS THURSDAY") so a scheduled order
       // days out never shows "OPENS IN 158H 0M". Luigi 2026-06-05.
-      const label = formatDueLabel(alertMs, now);
+      const label = formatDueLabel(alertMs, now, locale);
       const badge = label.kind === "day" ? label.text.toUpperCase() : `OPENS IN ${label.text.toUpperCase()}`;
       return (
         <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-300 whitespace-nowrap"
-          title={`Alert at ${new Date(alertAt).toLocaleString(undefined, { weekday: "short", hour: "numeric", minute: "2-digit" })}`}
+          title={`Alert at ${new Date(alertAt).toLocaleString(locale || undefined, { weekday: "short", hour: "numeric", minute: "2-digit" })}`}
         >
           {badge}
         </span>
@@ -391,6 +393,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   hideZeroCountdown?: boolean;
 }) {
   const tk = useTranslations("kitchen");
+  const locale = useLocale();
   // `now === 0` means the client hasn't mounted yet (see useNow). Render
   // stable, time-independent values during SSR/first paint to match hydration.
   // ALL pending (unaccepted) orders flash — not just <30s old. A pending
@@ -442,7 +445,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
     if (Number.isFinite(er)) return er;
     return NaN;
   })();
-  const readyCountdown = (!now || !Number.isFinite(dueTs)) ? null : formatDueLabel(dueTs, now);
+  const readyCountdown = (!now || !Number.isFinite(dueTs)) ? null : formatDueLabel(dueTs, now, locale);
   const countdownIsPast = readyCountdown?.kind === "due";
 
   const isTest = order.customerName.startsWith("[TEST]");
@@ -711,6 +714,7 @@ const ACCEPT_WINDOW_MS = 245 * 1000;
 
 export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any; initialOrders: Order[] }) {
   const tk = useTranslations("kitchen");
+  const locale = useLocale();
   const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
     if (typeof window === "undefined") return "light";
     return (localStorage.getItem("kds-theme") as ThemeMode) ?? "light";
@@ -3138,7 +3142,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                 if (!Number.isFinite(sortTs)) return undefined;
                 // > 24h away → weekday name ("Thursday"); ≤ 24h → unambiguous
                 // hours/minutes countdown. Single source: formatDueLabel.
-                return formatDueLabel(sortTs, nowMs).text;
+                return formatDueLabel(sortTs, nowMs, locale).text;
               };
               return (
                 <>
@@ -3335,7 +3339,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                     Scheduled for
                   </div>
                   <div className="text-lg font-bold text-emerald-900 leading-tight">
-                    {scheduledFor!.toLocaleString(undefined, {
+                    {scheduledFor!.toLocaleString(locale || undefined, {
                       weekday: "long",
                       month: "short",
                       day: "numeric",

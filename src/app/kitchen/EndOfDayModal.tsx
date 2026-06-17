@@ -18,7 +18,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { X, Printer, RefreshCw, ChevronLeft, ChevronRight } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import type { ThemeMode } from "./kitchen-types";
 import { formatCurrency } from "@/lib/utils";
 
@@ -77,6 +77,7 @@ export function EndOfDayModal({
 }) {
   activeCurrency = currency;
   const t = useTranslations("admin.endOfDayPage");
+  const locale = useLocale();
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState<Stats | null>(null);
   const [printing, setPrinting] = useState(false);
@@ -135,7 +136,7 @@ export function EndOfDayModal({
   const canPrev = !!bounds && bounds.dayKey > bounds.minDayKey;
   const canNext = !!bounds && bounds.dayKey < bounds.todayKey;
   const dateLabel = bounds
-    ? new Date(`${bounds.dayKey}T12:00:00Z`).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" })
+    ? new Date(`${bounds.dayKey}T12:00:00Z`).toLocaleDateString(locale || undefined, { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" })
     : stats?.periodLabel ?? "";
 
   const card = isDark ? "bg-gray-700/40" : "bg-gray-50";

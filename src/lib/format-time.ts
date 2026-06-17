@@ -60,10 +60,14 @@ export function formatDueCountdown(diffMs: number): { text: string; unit: "hours
  * multi-day hours value like "158h 33m". ≤ 24h → the hours/minutes countdown.
  * `kind` lets callers colour day/hours rows distinctly from minute timers.
  */
-export function formatDueLabel(dueTs: number, nowMs: number): { text: string; kind: "day" | "hours" | "minutes" | "due" } {
+export function formatDueLabel(dueTs: number, nowMs: number, locale?: string): { text: string; kind: "day" | "hours" | "minutes" | "due" } {
   const diffMs = dueTs - nowMs;
   if (diffMs > 24 * 60 * 60 * 1000) {
-    return { text: new Date(dueTs).toLocaleDateString(undefined, { weekday: "long" }), kind: "day" };
+    // Render the weekday in the CALLER's locale (the kitchen's selected
+    // language), not the browser default — otherwise switching the panel to
+    // English still showed Italian day names. Fabrizio 2026-06-16. Falls back
+    // to the browser locale when no locale is passed.
+    return { text: new Date(dueTs).toLocaleDateString(locale || undefined, { weekday: "long" }), kind: "day" };
   }
   const c = formatDueCountdown(diffMs);
   return { text: c.text, kind: c.unit };
