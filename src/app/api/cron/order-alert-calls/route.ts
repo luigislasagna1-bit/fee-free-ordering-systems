@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { placeVoiceCall } from "@/lib/voice-call";
+import { placeVoiceCall, pollyVoiceForLocale } from "@/lib/voice-call";
 import { getDict } from "@/lib/i18n-dict";
 import { liveOpenStatus } from "@/lib/restaurant-hours";
 import { holidayEffectToday } from "@/lib/holiday-rules";
@@ -143,12 +143,9 @@ export async function POST(req: NextRequest) {
 
     const locale = r.defaultLanguage || "en";
     const t = await getDict(locale);
-    const message = t("kitchen.autoCallMessage", {
-      restaurant: r.name,
-      number: o.orderNumber,
-    });
+    const message = t("kitchen.autoCallMessage");
     const langTag = bcp47(locale);
-    const res = await placeVoiceCall({ to: phone, message, language: langTag });
+    const res = await placeVoiceCall({ to: phone, message, language: langTag, voice: pollyVoiceForLocale(locale) });
     if (res.placed) called++;
     else console.error("[order-alert-calls] order voice call NOT placed", { orderId: o.id, to: phone, reason: res.reason });
     results.push({ orderId: o.id, placed: res.placed, reason: res.reason });
@@ -225,9 +222,9 @@ export async function POST(req: NextRequest) {
     await prisma.reservation.update({ where: { id: b.id }, data: { alertCallAt: new Date() } });
     const locale = r.defaultLanguage || "en";
     const t = await getDict(locale);
-    const message = t("kitchen.autoCallReservationMessage", { restaurant: r.name });
+    const message = t("kitchen.autoCallReservationMessage");
     const langTag = bcp47(locale);
-    const callRes = await placeVoiceCall({ to: phone, message, language: langTag });
+    const callRes = await placeVoiceCall({ to: phone, message, language: langTag, voice: pollyVoiceForLocale(locale) });
     if (callRes.placed) resCalled++;
     else console.error("[order-alert-calls] reservation voice call NOT placed", { resId: b.id, to: phone, reason: callRes.reason });
     results.push({ orderId: `res:${b.id}`, placed: callRes.placed, reason: callRes.reason });

@@ -32,12 +32,53 @@ function escapeXml(s: string): string {
     .replace(/'/g, "&apos;");
 }
 
+/**
+ * Natural-sounding Amazon Polly voices per locale (Twilio supports Polly in
+ * <Say voice="...">). Neural voices where available — far less robotic than the
+ * classic "alice". Twilio REJECTS an unknown voice, but placeVoiceCall FALLS
+ * BACK to alice on any failure, so a wrong/unsupported name can never drop the
+ * alert. Keyed by our app locale; falls back to the base language. Luigi 2026-06-17.
+ */
+const POLLY_VOICE: Record<string, string> = {
+  en: "Polly.Joanna-Neural",
+  it: "Polly.Bianca-Neural",
+  fr: "Polly.Lea-Neural",
+  es: "Polly.Lucia-Neural",
+  de: "Polly.Vicki-Neural",
+  pt: "Polly.Ines-Neural",
+  "pt-BR": "Polly.Camila-Neural",
+  nl: "Polly.Laura-Neural",
+  pl: "Polly.Ola-Neural",
+  sv: "Polly.Elin-Neural",
+  da: "Polly.Sofie-Neural",
+  nb: "Polly.Ida-Neural",
+  fi: "Polly.Suvi-Neural",
+  ru: "Polly.Tatyana",
+  tr: "Polly.Filiz",
+  ar: "Polly.Hala-Neural",
+  ja: "Polly.Takumi-Neural",
+  ko: "Polly.Seoyeon-Neural",
+  zh: "Polly.Zhiyu-Neural",
+  ca: "Polly.Arlet-Neural",
+  ro: "Polly.Carmen",
+};
+
+/** Best natural voice for a restaurant's chosen language, or undefined (→ alice). */
+export function pollyVoiceForLocale(locale: string): string | undefined {
+  if (!locale) return undefined;
+  return POLLY_VOICE[locale] ?? POLLY_VOICE[locale.split("-")[0]];
+}
+
 export async function placeVoiceCall(args: {
   to: string;
   /** Plain-text message to speak. */
   message: string;
   /** BCP-47 voice language, e.g. "en-US", "it-IT". Defaults to en-US. */
   language?: string;
+  /** Optional Amazon Polly voice (e.g. "Polly.Bianca-Neural"). When set we use
+   *  it with a boosted volume; on any Twilio failure we retry with alice so the
+   *  alert still rings. */
+  voice?: string;
 }): Promise<CallResult> {
   const sid = process.env.FFOS_TWILIO_ACCOUNT_SID;
   const token = process.env.FFOS_TWILIO_AUTH_TOKEN;
@@ -52,30 +93,48 @@ export async function placeVoiceCall(args: {
 
   const lang = args.language || "en-US";
   const spoken = escapeXml(args.message.slice(0, 400));
+
   // Repeat the message twice with a short pause so a half-asleep owner who
   // picks up mid-sentence still hears the whole thing.
-  const twiml = `<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="alice" language="${lang}">${spoken}</Say><Pause length="1"/><Say voice="alice" language="${lang}">${spoken}</Say></Response>`;
+  const sayAlice = `<Say voice="alice" language="${lang}">${spoken}</Say>`;
+  const aliceTwiml = `<?xml version="1.0" encoding="UTF-8"?><Response>${sayAlice}<Pause length="1"/>${sayAlice}</Response>`;
+
+  const usePolly = !!args.voice && args.voice.startsWith("Polly.");
+  let primaryTwiml = aliceTwiml;
+  if (usePolly) {
+    // Polly supports SSML in Twilio <Say> — boost the volume (Luigi: louder +
+    // less robotic). The voice value comes from our own map, not user input.
+    const sayPolly = `<Say voice="${args.voice}"><prosody volume="x-loud">${spoken}</prosody></Say>`;
+    primaryTwiml = `<?xml version="1.0" encoding="UTF-8"?><Response>${sayPolly}<Pause length="1"/>${sayPolly}</Response>`;
+  }
 
   const url = `${TWILIO_API}/${encodeURIComponent(sid)}/Calls.json`;
   const auth = Buffer.from(`${sid}:${token}`).toString("base64");
-  const form = new URLSearchParams({ From: from, To: to, Twiml: twiml });
 
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: `Basic ${auth}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: form.toString(),
-    });
-    if (!res.ok) {
-      const txt = await res.text().catch(() => "");
-      return { placed: false, reason: `twilio ${res.status}: ${txt.slice(0, 200)}` };
+  const doCall = async (twiml: string): Promise<CallResult> => {
+    const form = new URLSearchParams({ From: from, To: to, Twiml: twiml });
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { Authorization: `Basic ${auth}`, "Content-Type": "application/x-www-form-urlencoded" },
+        body: form.toString(),
+      });
+      if (!res.ok) {
+        const txt = await res.text().catch(() => "");
+        return { placed: false, reason: `twilio ${res.status}: ${txt.slice(0, 200)}` };
+      }
+      const j = await res.json().catch(() => ({} as { sid?: string }));
+      return { placed: true, sid: j.sid };
+    } catch (e) {
+      return { placed: false, reason: e instanceof Error ? e.message : String(e) };
     }
-    const j = await res.json().catch(() => ({} as { sid?: string }));
-    return { placed: true, sid: j.sid };
-  } catch (e) {
-    return { placed: false, reason: e instanceof Error ? e.message : String(e) };
-  }
+  };
+
+  const r1 = await doCall(primaryTwiml);
+  if (r1.placed || !usePolly) return r1;
+  // Polly attempt failed (e.g. unknown/unsupported voice for this Twilio
+  // account) → fall back to the always-works "alice" voice so the alert still
+  // rings in the restaurant's language.
+  console.warn("[voice-call] Polly voice failed, falling back to alice", { voice: args.voice, reason: r1.reason });
+  return doCall(aliceTwiml);
 }

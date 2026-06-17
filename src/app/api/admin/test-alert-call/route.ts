@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { placeVoiceCall } from "@/lib/voice-call";
+import { placeVoiceCall, pollyVoiceForLocale } from "@/lib/voice-call";
 import { getDict } from "@/lib/i18n-dict";
 
 /**
@@ -51,8 +51,8 @@ export async function GET() {
 
   const locale = r?.defaultLanguage || "en";
   const t = await getDict(locale);
-  const message = t("kitchen.autoCallMessage", { restaurant: r?.name ?? "", number: "TEST" });
-  const res = await placeVoiceCall({ to, message, language: LANG[locale] ?? "en-US" });
+  const message = t("kitchen.autoCallMessage");
+  const res = await placeVoiceCall({ to, message, language: LANG[locale] ?? "en-US", voice: pollyVoiceForLocale(locale) });
 
   return NextResponse.json({
     ok: res.placed,
