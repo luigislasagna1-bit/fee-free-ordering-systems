@@ -271,8 +271,11 @@ export function parseSource(input: string): ParsedSource {
   }
 
   // 2) Embed-snippet style — data-glf-ruid / data-glf-cuid
-  const ruidAttr = trimmed.match(/data-glf-ruid\s*=\s*"([^"]+)"/i)?.[1];
-  const cuidAttr = trimmed.match(/data-glf-cuid\s*=\s*"([^"]+)"/i)?.[1];
+  // Accept single OR double quotes — pasted snippets come both ways, and the
+  // ruid attr MUST win over the plain-UUID fallback below (which would grab the
+  // cuid, since it appears first → "account deleted" 404). Verified 2026-06-17.
+  const ruidAttr = trimmed.match(/data-glf-ruid\s*=\s*["']([^"']+)["']/i)?.[1];
+  const cuidAttr = trimmed.match(/data-glf-cuid\s*=\s*["']([^"']+)["']/i)?.[1];
   if (!restaurantUid && ruidAttr && UUID.test(ruidAttr)) restaurantUid = ruidAttr;
   if (!companyUid && cuidAttr && UUID.test(cuidAttr)) companyUid = cuidAttr;
 
@@ -318,12 +321,13 @@ export async function fetchGloriaFoodPictures(src: ParsedSource): Promise<Map<st
     const pics = rest.pictures ?? {};
     for (const entry of Object.values(pics)) {
       if (!entry?.filename || typeof entry.filename !== "string") continue;
-      // Pattern verified 2026-05-31: high-density variants live at
-      //   https://www.fbgcdn.com/pictures/{filename-without-.jpg}_d2.jpg
-      // Plain {filename} also works for standard density 1 — we prefer
-      // d2 because customers on retina displays expect it.
+      // Use the PLAIN {filename}.jpg variant — it exists for 100% of photos.
+      // The _d2 (high-density/retina) variant is only generated for a MINORITY
+      // (~25%); the rest 404, which silently lost ~75% of every menu's photos
+      // (only 24/202 landed). Standard density is fine for menu cards/thumbs.
+      // Verified 2026-06-17 against Fabrizio's menu: plain 20/20, _d2 5/20.
       const stem = entry.filename.replace(/\.jpg$/i, "");
-      const url = `https://www.fbgcdn.com/pictures/${stem}_d2.jpg`;
+      const url = `https://www.fbgcdn.com/pictures/${stem}.jpg`;
       const key = `${entry.thumbnail_type}-${entry.entity_id}`;
       map.set(key, url);
     }
