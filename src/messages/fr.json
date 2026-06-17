@@ -742,7 +742,8 @@
       "comingSoonBadge": "Bientôt",
       "mobileApp": "Application mobile",
       "pointOfSale": "Point de vente",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Intégrations"
     },
     "dashboard": {
       "title": "Tableau de bord",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Abonnez-vous d'abord au Driver Pool, ou choisissez « Mes livreurs ».",
       "toastAddApiKeyFirst": "Ajoutez d'abord votre clé API ShipDay, ou changez la source pour « Mes livreurs ».",
       "toastFailedToSave": "Impossible d'enregistrer",
-      "toastSaved": "Paramètres du pool de livreurs enregistrés"
+      "toastSaved": "Paramètres du pool de livreurs enregistrés",
+      "testConnection": "Tester la connexion",
+      "testing": "Test en cours…",
+      "testSuccess": "Connecté — votre clé Shipday fonctionne.",
+      "testFailed": "Impossible de se connecter : {error}",
+      "partnerOfferTitle": "Votre avantage partenaire Fee Free Ordering",
+      "partnerOfferBody": "Connectez Shipday via Fee Free Ordering et notre partenaire Shipday vous offre environ 20% de réduction sur le plan standard, environ 60 jours de crédits pour couvrir les frais de démarrage, et un accompagnement guidé — exclusif aux restaurants qui nous rejoignent.",
+      "accountQuestion": "Avez-vous un compte Shipday ?",
+      "accountYes": "Oui, j'en ai un",
+      "accountNo": "Non, j'en ai besoin d'un",
+      "noAccountConnectNote": "Pas de problème — créez votre compte Shipday gratuit, puis revenez et entrez votre clé. Lorsque vous activez Shipday, nous vous présenterons à notre partenaire Shipday pour appliquer la réduction + les crédits et organiser votre accompagnement.",
+      "createAccount": "Créer un compte Shipday",
+      "haveAccountInstead": "J'ai déjà un compte"
     },
     "driverPoolLocked": {
       "addonBadge": "Module",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Point de vente sur place",
       "body": "Une caisse enregistreuse intégrée pour votre comptoir — encaissez les commandes au comptoir et par téléphone sur le même système que vos commandes en ligne, avec un seul menu, un seul jeu de rapports et un seul versement. En cours de développement."
+    },
+    "integrations": {
+      "title": "Intégrations",
+      "subtitle": "Connectez Fee Free Ordering aux outils que vous utilisez déjà. D'autres arrivent bientôt.",
+      "comingSoon": "Bientôt disponible",
+      "setUp": "Configurer",
+      "catMarketing": "Marketing et suivi",
+      "catDelivery": "Livraison",
+      "descTracking": "Ajoutez {name} à votre site de commande pour suivre les visiteurs et les conversions.",
+      "descDispatch": "Envoyez automatiquement les commandes de livraison à {name} pour l'expédition et le suivi en direct.",
+      "descMarketplace": "Recevez et synchronisez les commandes de la marketplace {name}."
     }
   },
   "impersonation": {

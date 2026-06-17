@@ -742,7 +742,8 @@
       "comingSoonBadge": "قريباً",
       "mobileApp": "تطبيق الجوال",
       "pointOfSale": "نقطة البيع",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "التكاملات"
     },
     "dashboard": {
       "title": "لوحة التحكم",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "اشترك في Driver Pool أولاً، أو اختر «سائقون خاصون».",
       "toastAddApiKeyFirst": "أضف مفتاح ShipDay API أولاً، أو غيّر المصدر إلى «سائقون خاصون».",
       "toastFailedToSave": "فشل الحفظ",
-      "toastSaved": "تم حفظ إعدادات مجموعة السائقين"
+      "toastSaved": "تم حفظ إعدادات مجموعة السائقين",
+      "testConnection": "اختبار الاتصال",
+      "testing": "جارٍ الاختبار…",
+      "testSuccess": "متصل — مفتاح Shipday الخاص بك يعمل.",
+      "testFailed": "تعذّر الاتصال: {error}",
+      "partnerOfferTitle": "ميزة شراكتك في Fee Free Ordering",
+      "partnerOfferBody": "قم بتوصيل Shipday من خلال Fee Free Ordering وسيُعدّك شريكنا في Shipday بخصم حوالي 20% على الخطة القياسية، وما يقارب 60 يومًا من الاعتمادات لتغطية تكاليف البدء، وتأهيل موجَّه — حصرًا للمطاعم التي تنضم من خلالنا.",
+      "accountQuestion": "هل لديك حساب في Shipday؟",
+      "accountYes": "نعم، لديّ واحد",
+      "accountNo": "لا، أحتاج إلى واحد",
+      "noAccountConnectNote": "لا مشكلة — أنشئ حساب Shipday المجاني الخاص بك، ثم عُد وأدخل مفتاحك. عندما تفعّل Shipday، سنعرّفك على شريكنا في Shipday لتطبيق الخصم + الاعتمادات وإعداد تأهيلك.",
+      "createAccount": "إنشاء حساب Shipday",
+      "haveAccountInstead": "لديّ حساب بالفعل"
     },
     "driverPoolLocked": {
       "addonBadge": "إضافة",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "نقطة بيع داخلية",
       "body": "صندوق نقاط بيع point-of-sale مدمج لمنضدتك — سجّل طلبات الحضور الشخصي والهاتف على النظام نفسه الذي تستخدمه لطلباتك عبر الإنترنت، بقائمة واحدة ومجموعة تقارير واحدة ودفعة واحدة. قيد التطوير حاليًا."
+    },
+    "integrations": {
+      "title": "التكاملات",
+      "subtitle": "قم بربط Fee Free Ordering بالأدوات التي تستخدمها بالفعل. المزيد قريبًا.",
+      "comingSoon": "قريبًا",
+      "setUp": "إعداد",
+      "catMarketing": "التسويق والتتبع",
+      "catDelivery": "التوصيل",
+      "descTracking": "أضف {name} إلى موقع الطلبات الخاص بك لتتبع الزوار والتحويلات.",
+      "descDispatch": "أرسل طلبات التوصيل تلقائيًا إلى {name} للإرسال والتتبع المباشر.",
+      "descMarketplace": "استقبل وزامن الطلبات من سوق {name}."
     }
   },
   "impersonation": {

@@ -742,7 +742,8 @@
       "comingSoonBadge": "Binnenkort",
       "mobileApp": "Mobiele app",
       "pointOfSale": "Kassasysteem",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integraties"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Abonneer u eerst op Chauffeurpool, of kies 'Eigen chauffeurs'.",
       "toastAddApiKeyFirst": "Voeg eerst uw ShipDay API-sleutel toe, of schakel de bron over naar 'Eigen chauffeurs'.",
       "toastFailedToSave": "Opslaan mislukt",
-      "toastSaved": "Chauffeurpool-instellingen opgeslagen"
+      "toastSaved": "Chauffeurpool-instellingen opgeslagen",
+      "testConnection": "Verbinding testen",
+      "testing": "Testen…",
+      "testSuccess": "Verbonden — uw Shipday-sleutel werkt.",
+      "testFailed": "Kon geen verbinding maken: {error}",
+      "partnerOfferTitle": "Uw Fee Free Ordering partnersvoordeel",
+      "partnerOfferBody": "Verbind Shipday via Fee Free Ordering en onze Shipday-partner stelt u in met ongeveer 20% korting op het standaardplan, ongeveer 60 dagen aan credits voor opstartkosten en begeleide onboarding — exclusief voor restaurants die via ons aansluiten.",
+      "accountQuestion": "Heeft u een Shipday-account?",
+      "accountYes": "Ja, ik heb er een",
+      "accountNo": "Nee, ik heb er een nodig",
+      "noAccountConnectNote": "Geen probleem — maak uw gratis Shipday-account aan, kom dan terug en voer uw sleutel in. Wanneer u Shipday inschakelt, stellen wij u voor aan onze Shipday-partner om de korting + credits toe te passen en uw onboarding in te stellen.",
+      "createAccount": "Een Shipday-account aanmaken",
+      "haveAccountInstead": "Ik heb al een account"
     },
     "driverPoolLocked": {
       "addonBadge": "Add-on",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Kassasysteem op locatie",
       "body": "Een ingebouwde kassa voor je toonbank — reken loop- en telefonische bestellingen af op hetzelfde systeem als je online bestellingen, met één menu, één set rapporten en één uitbetaling. In ontwikkeling."
+    },
+    "integrations": {
+      "title": "Integraties",
+      "subtitle": "Verbind Fee Free Ordering met de tools die u al gebruikt. Meer komt binnenkort.",
+      "comingSoon": "Binnenkort",
+      "setUp": "Instellen",
+      "catMarketing": "Marketing & tracking",
+      "catDelivery": "Bezorging",
+      "descTracking": "Voeg {name} toe aan uw bestelsite om bezoekers en conversies bij te houden.",
+      "descDispatch": "Stuur leveringsbestellingen automatisch naar {name} voor verzending en live tracking.",
+      "descMarketplace": "Ontvang en synchroniseer bestellingen van de {name}-marktplaats."
     }
   },
   "impersonation": {

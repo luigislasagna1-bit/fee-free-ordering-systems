@@ -742,7 +742,8 @@
       "comingSoonBadge": "Aviat",
       "mobileApp": "App mòbil",
       "pointOfSale": "Punt de venda",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integracions"
     },
     "dashboard": {
       "title": "Tauler de control",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Subscriviu-vos primer al Pool de conductors o trieu «Conductors propis».",
       "toastAddApiKeyFirst": "Afegiu primer la vostra clau API de ShipDay o canvieu la font a «Conductors propis».",
       "toastFailedToSave": "No s'ha pogut desar",
-      "toastSaved": "Configuració del pool de conductors desada"
+      "toastSaved": "Configuració del pool de conductors desada",
+      "testConnection": "Prova la connexió",
+      "testing": "Provant…",
+      "testSuccess": "Connectat — la vostra clau de Shipday funciona.",
+      "testFailed": "No s'ha pogut connectar: {error}",
+      "partnerOfferTitle": "El vostre benefici de soci Fee Free Ordering",
+      "partnerOfferBody": "Connecteu Shipday a través de Fee Free Ordering i el nostre soci de Shipday us configura amb aproximadament un 20% de descompte en el pla estàndard, uns 60 dies de crèdits per cobrir els costos inicials i una incorporació guiada — exclusiu per als restaurants que s'uneixen a través de nosaltres.",
+      "accountQuestion": "Teniu un compte de Shipday?",
+      "accountYes": "Sí, en tinc un",
+      "accountNo": "No, en necessito un",
+      "noAccountConnectNote": "Cap problema — creeu el vostre compte gratuït de Shipday, torneu i introduïu la vostra clau. Quan activeu Shipday, us presentarem al nostre soci de Shipday per aplicar el descompte + crèdits i configurar la vostra incorporació.",
+      "createAccount": "Crear un compte de Shipday",
+      "haveAccountInstead": "Ja tinc un compte"
     },
     "driverPoolLocked": {
       "addonBadge": "Complement",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Punt de venda al local",
       "body": "Una caixa registradora de punt de venda integrada per al teu taulell: cobra les comandes presencials i telefòniques al mateix sistema que les comandes en línia, amb un sol menú, un sol conjunt d'informes i un sol pagament. En desenvolupament."
+    },
+    "integrations": {
+      "title": "Integracions",
+      "subtitle": "Connecta Fee Free Ordering amb les eines que ja fas servir. Aviat n'hi haurà més.",
+      "comingSoon": "Pròximament",
+      "setUp": "Configura",
+      "catMarketing": "Màrqueting i seguiment",
+      "catDelivery": "Lliurament",
+      "descTracking": "Afegiu {name} al vostre lloc de comandes per fer el seguiment dels visitants i les conversions.",
+      "descDispatch": "Envieu automàticament les comandes de lliurament a {name} per a l'expedició i el seguiment en viu.",
+      "descMarketplace": "Rebeu i sincronitzeu les comandes del marketplace {name}."
     }
   },
   "impersonation": {

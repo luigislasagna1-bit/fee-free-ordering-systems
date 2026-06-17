@@ -742,7 +742,8 @@
       "comingSoonBadge": "Hamarosan",
       "mobileApp": "Mobilalkalmazás",
       "pointOfSale": "Értékesítési pont",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integrációk"
     },
     "dashboard": {
       "title": "Irányítópult",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Először iratkozzon fel a Driver Pool-ra, vagy válassza a „Saját sofőrök” lehetőséget.",
       "toastAddApiKeyFirst": "Először adja meg a ShipDay API-kulcsát, vagy váltson forrást „Saját sofőrök” értékre.",
       "toastFailedToSave": "Mentés sikertelen",
-      "toastSaved": "Driver pool beállítások mentve"
+      "toastSaved": "Driver pool beállítások mentve",
+      "testConnection": "Kapcsolat tesztelése",
+      "testing": "Tesztelés…",
+      "testSuccess": "Csatlakozva — a Shipday kulcsa működik.",
+      "testFailed": "Nem sikerült csatlakozni: {error}",
+      "partnerOfferTitle": "Az Ön Fee Free Ordering partnerjuttatása",
+      "partnerOfferBody": "Csatlakoztassa a Shipday-t a Fee Free Ordering-on keresztül, és Shipday partnerünk körülbelül 20% kedvezménnyel az alaptervhez, nagyjából 60 nap kredittel az indulási költségek fedezésére és irányított bevezetéssel állítja be Önt — kizárólag az általunk csatlakozó éttermek számára.",
+      "accountQuestion": "Van Shipday-fiókja?",
+      "accountYes": "Igen, van",
+      "accountNo": "Nem, szükségem van egyre",
+      "noAccountConnectNote": "Semmi gond — hozza létre ingyenes Shipday-fiókját, majd térjen vissza és adja meg kulcsát. Amikor bekapcsolja a Shipday-t, bemutatjuk Önt Shipday partnerünknek a kedvezmény + kreditek alkalmazásához és a bevezetés beállításához.",
+      "createAccount": "Shipday-fiók létrehozása",
+      "haveAccountInstead": "Már van fiókom"
     },
     "driverPoolLocked": {
       "addonBadge": "Bővítmény",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Helyi értékesítési pont",
       "body": "Beépített POS pénztárgép a pultodhoz — a helyben és telefonon leadott rendeléseket ugyanabban a rendszerben rögzítheted, mint az online rendeléseket, egyetlen étlappal, egyetlen jelentéskészlettel és egyetlen kifizetéssel. Fejlesztés alatt áll."
+    },
+    "integrations": {
+      "title": "Integrációk",
+      "subtitle": "Csatlakoztassa a Fee Free Ordering-ot a már használt eszközökhöz. Hamarosan több is jön.",
+      "comingSoon": "Hamarosan",
+      "setUp": "Beállítás",
+      "catMarketing": "Marketing és követés",
+      "catDelivery": "Kiszállítás",
+      "descTracking": "Adja hozzá a {name} elemet a rendelési oldalához a látogatók és a konverziók nyomon követéséhez.",
+      "descDispatch": "Automatikusan küldje a szállítási rendeléseket a {name} részére az expedicióhoz és az élő követéshez.",
+      "descMarketplace": "Fogadja és szinkronizálja a rendeléseket a {name} piactérről."
     }
   },
   "impersonation": {

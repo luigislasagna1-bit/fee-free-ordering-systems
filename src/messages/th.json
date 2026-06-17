@@ -742,7 +742,8 @@
       "comingSoonBadge": "เร็วๆ นี้",
       "mobileApp": "แอปมือถือ",
       "pointOfSale": "จุดขาย",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "การผสานรวม"
     },
     "dashboard": {
       "title": "แดชบอร์ด",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "สมัคร Driver Pool ก่อน หรือเลือก 'ไดรเวอร์ของตัวเอง'",
       "toastAddApiKeyFirst": "เพิ่ม ShipDay API key ก่อน หรือเปลี่ยนแหล่งเป็น 'ไดรเวอร์ของตัวเอง'",
       "toastFailedToSave": "บันทึกไม่สำเร็จ",
-      "toastSaved": "บันทึกการตั้งค่า driver pool แล้ว"
+      "toastSaved": "บันทึกการตั้งค่า driver pool แล้ว",
+      "testConnection": "ทดสอบการเชื่อมต่อ",
+      "testing": "กำลังทดสอบ…",
+      "testSuccess": "เชื่อมต่อแล้ว — คีย์ Shipday ของคุณใช้งานได้",
+      "testFailed": "ไม่สามารถเชื่อมต่อได้: {error}",
+      "partnerOfferTitle": "สิทธิประโยชน์พาร์ทเนอร์ Fee Free Ordering ของคุณ",
+      "partnerOfferBody": "เชื่อมต่อ Shipday ผ่าน Fee Free Ordering และพาร์ทเนอร์ Shipday ของเราจะตั้งค่าให้คุณได้รับส่วนลดประมาณ 20% จากแผนมาตรฐาน เครดิตประมาณ 60 วันเพื่อครอบคลุมค่าใช้จ่ายเริ่มต้น และการแนะนำแบบมีผู้ดูแล — เฉพาะร้านอาหารที่เข้าร่วมผ่านเรา",
+      "accountQuestion": "คุณมีบัญชี Shipday หรือไม่?",
+      "accountYes": "ใช่ ฉันมี",
+      "accountNo": "ไม่ ฉันต้องการ",
+      "noAccountConnectNote": "ไม่มีปัญหา — สร้างบัญชี Shipday ฟรีของคุณ จากนั้นกลับมาและป้อนคีย์ของคุณ เมื่อคุณเปิด Shipday เราจะแนะนำคุณกับพาร์ทเนอร์ Shipday ของเราเพื่อใช้ส่วนลด + เครดิตและตั้งค่าการเตรียมความพร้อมของคุณ",
+      "createAccount": "สร้างบัญชี Shipday",
+      "haveAccountInstead": "ฉันมีบัญชีอยู่แล้ว"
     },
     "driverPoolLocked": {
       "addonBadge": "ส่วนเสริม",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "จุดขายหน้าร้าน",
       "body": "เครื่องแคชเชียร์ point-of-sale ในตัวสำหรับเคาน์เตอร์ของคุณ — คิดเงินออเดอร์หน้าร้านและทางโทรศัพท์บนระบบเดียวกับออเดอร์ออนไลน์ ด้วยเมนูเดียว ชุดรายงานเดียว และการจ่ายเงินเข้าบัญชีครั้งเดียว กำลังอยู่ระหว่างการพัฒนา"
+    },
+    "integrations": {
+      "title": "การผสานรวม",
+      "subtitle": "เชื่อมต่อ Fee Free Ordering กับเครื่องมือที่คุณใช้อยู่แล้ว เพิ่มเติมเร็วๆ นี้",
+      "comingSoon": "เร็วๆ นี้",
+      "setUp": "ตั้งค่า",
+      "catMarketing": "การตลาดและการติดตาม",
+      "catDelivery": "การจัดส่ง",
+      "descTracking": "เพิ่ม {name} ลงในเว็บไซต์สั่งซื้อของคุณเพื่อติดตามผู้เยี่ยมชมและ Conversion",
+      "descDispatch": "ส่งคำสั่งซื้อจัดส่งไปยัง {name} โดยอัตโนมัติเพื่อการจัดส่งและติดตามแบบเรียลไทม์",
+      "descMarketplace": "รับและซิงค์คำสั่งซื้อจากตลาด {name}"
     }
   },
   "impersonation": {

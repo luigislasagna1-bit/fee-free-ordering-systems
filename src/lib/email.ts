@@ -131,9 +131,12 @@ function applyFromName(from: string, displayName: string | null | undefined): st
 }
 
 async function send({
-  to, subject, html, text, replyTo, listUnsubscribeUrl, fromName,
+  to, cc, subject, html, text, replyTo, listUnsubscribeUrl, fromName,
 }: {
   to: string;
+  /** Optional CC recipient(s). Used by partner-intro emails that loop several
+   *  parties (partner + merchant + ops) into one thread. */
+  cc?: string | string[] | null;
   subject: string;
   html: string;
   text?: string;
@@ -169,9 +172,11 @@ async function send({
       headers["List-Unsubscribe"] = `<${listUnsubscribeUrl}>`;
       headers["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click";
     }
+    const ccList = Array.isArray(cc) ? cc.filter(Boolean) : cc ? [cc] : [];
     const { data, error } = await client.emails.send({
       from,
       to,
+      ...(ccList.length > 0 ? { cc: ccList } : {}),
       subject,
       html,
       text,
@@ -278,6 +283,74 @@ interface OrderEmailParams {
     discount: number;
     couponCode?: string;
   }>;
+}
+
+/**
+ * Shipday partner intro — sent ONCE when a restaurant connects Shipday. Loops
+ * Justin (Shipday) + the merchant + our ops inbox into one thread and asks
+ * Justin to create the account, apply the partner discount, add credits, and
+ * schedule onboarding — exactly the handoff Justin requested (so nothing falls
+ * through the cracks). Partner address defaults to Justin's, overridable via
+ * SHIPDAY_PARTNER_EMAIL. English (it's a partner/ops email). Luigi 2026-06-17.
+ */
+export async function sendShipdayPartnerIntro(params: {
+  restaurantName: string;
+  restaurantAddress?: string | null;
+  ownerName?: string | null;
+  ownerEmail?: string | null;
+  ownerPhone?: string | null;
+}) {
+  const partnerEmail = (process.env.SHIPDAY_PARTNER_EMAIL || "justin.brandon@shipday.com").trim();
+  const opsEmail = (process.env.PLATFORM_OPS_EMAIL || process.env.REPORTS_OPS_EMAIL || "support@feefreeordering.com")
+    .trim()
+    .toLowerCase();
+  const calendly = "https://calendly.com/justin-brandon/";
+  const esc = (s: string) =>
+    s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] ?? c);
+
+  // Loop the merchant + our ops inbox into the same thread, deduped.
+  const cc = Array.from(
+    new Set(
+      [params.ownerEmail, opsEmail]
+        .filter((e): e is string => !!e && e.trim().length > 0)
+        .map((e) => e.trim().toLowerCase()),
+    ),
+  );
+
+  const rows: Array<[string, string | null | undefined]> = [
+    ["Restaurant", params.restaurantName],
+    ["Address", params.restaurantAddress],
+    ["Owner", params.ownerName],
+    ["Email", params.ownerEmail],
+    ["Phone", params.ownerPhone],
+  ];
+  const table = rows
+    .filter(([, v]) => v && String(v).trim())
+    .map(
+      ([k, v]) =>
+        `<tr><td style="padding:4px 12px 4px 0;color:#6b7280;font-size:13px;white-space:nowrap">${k}</td><td style="padding:4px 0;color:#111827;font-size:13px;font-weight:600">${esc(String(v))}</td></tr>`,
+    )
+    .join("");
+  const firstName = params.ownerName?.trim().split(/\s+/)[0] || "there";
+
+  const html = `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;color:#111827">
+    <p style="font-size:15px">Hi Justin,</p>
+    <p style="font-size:15px;line-height:1.6"><strong>${esc(params.restaurantName)}</strong> on Fee Free Ordering has selected the Shipday delivery add-on. Please create their account, apply the partner discount, add credits, and schedule onboarding.</p>
+    <table style="border-collapse:collapse;margin:14px 0">${table}</table>
+    <p style="font-size:14px;line-height:1.6">${esc(firstName)} (CC&rsquo;d) — meet <strong>Justin Brandon</strong>, your Shipday delivery contact. He&rsquo;ll set up your account with the partner discount + credits and walk you through onboarding.</p>
+    <p style="font-size:14px;line-height:1.6">Book a setup call: <a href="${calendly}" style="color:#059669">${calendly}</a></p>
+    <p style="font-size:12px;color:#9ca3af;margin-top:20px">Sent automatically by Fee Free Ordering when a restaurant connects Shipday.</p>
+  </div>`;
+
+  return send({
+    to: partnerEmail,
+    cc,
+    subject: `New Fee Free Ordering restaurant for Shipday — ${params.restaurantName}`,
+    html,
+    // A reply from Justin should reach the restaurant directly (he's connecting
+    // with the merchant); ops is CC'd on the original either way.
+    replyTo: params.ownerEmail || opsEmail,
+  });
 }
 
 export async function sendOrderConfirmationEmail(params: OrderEmailParams) {

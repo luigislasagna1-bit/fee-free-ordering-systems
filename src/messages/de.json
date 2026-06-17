@@ -742,7 +742,8 @@
       "comingSoonBadge": "Bald",
       "mobileApp": "Mobile App",
       "pointOfSale": "Kassensystem",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integrationen"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Zuerst Driver Pool abonnieren oder „Eigene Fahrer\" wählen.",
       "toastAddApiKeyFirst": "Zuerst Ihren ShipDay-API-Schlüssel hinzufügen oder die Quelle auf „Eigene Fahrer\" umstellen.",
       "toastFailedToSave": "Speichern fehlgeschlagen",
-      "toastSaved": "Fahrerpool-Einstellungen gespeichert"
+      "toastSaved": "Fahrerpool-Einstellungen gespeichert",
+      "testConnection": "Verbindung testen",
+      "testing": "Teste…",
+      "testSuccess": "Verbunden — Ihr Shipday-Schlüssel funktioniert.",
+      "testFailed": "Verbindung fehlgeschlagen: {error}",
+      "partnerOfferTitle": "Ihr Fee Free Ordering Partnervorteil",
+      "partnerOfferBody": "Verbinden Sie Shipday über Fee Free Ordering und unser Shipday-Partner richtet Sie mit etwa 20% Rabatt auf den Standardplan, ungefähr 60 Tagen Guthaben zur Deckung der Startkosten und einer geführten Einarbeitung ein — exklusiv für Restaurants, die über uns beitreten.",
+      "accountQuestion": "Haben Sie ein Shipday-Konto?",
+      "accountYes": "Ja, ich habe eines",
+      "accountNo": "Nein, ich brauche eines",
+      "noAccountConnectNote": "Kein Problem — erstellen Sie Ihr kostenloses Shipday-Konto, kommen Sie dann zurück und geben Sie Ihren Schlüssel ein. Wenn Sie Shipday aktivieren, stellen wir Sie unserem Shipday-Partner vor, um den Rabatt + Guthaben anzuwenden und Ihre Einarbeitung einzurichten.",
+      "createAccount": "Ein Shipday-Konto erstellen",
+      "haveAccountInstead": "Ich habe bereits ein Konto"
     },
     "driverPoolLocked": {
       "addonBadge": "Add-on",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Kassensystem vor Ort",
       "body": "Eine integrierte Kassenstation für deinen Tresen — kassiere Lauf- und Telefonbestellungen im selben System wie deine Online-Bestellungen, mit einer Speisekarte, einem Satz Berichte und einer Auszahlung. In Entwicklung."
+    },
+    "integrations": {
+      "title": "Integrationen",
+      "subtitle": "Verbinden Sie Fee Free Ordering mit den Tools, die Sie bereits verwenden. Weitere kommen bald.",
+      "comingSoon": "Demnächst",
+      "setUp": "Einrichten",
+      "catMarketing": "Marketing & Tracking",
+      "catDelivery": "Lieferung",
+      "descTracking": "Fügen Sie {name} zu Ihrer Bestellseite hinzu, um Besucher und Conversions zu verfolgen.",
+      "descDispatch": "Senden Sie Lieferbestellungen automatisch an {name} für den Versand und die Live-Verfolgung.",
+      "descMarketplace": "Empfangen und synchronisieren Sie Bestellungen vom {name}-Marktplatz."
     }
   },
   "impersonation": {

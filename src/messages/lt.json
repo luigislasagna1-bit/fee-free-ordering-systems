@@ -742,7 +742,8 @@
       "comingSoonBadge": "Netrukus",
       "mobileApp": "Mobilioji programėlė",
       "pointOfSale": "Pardavimo vieta",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integracijos"
     },
     "dashboard": {
       "title": "Skydelis",
@@ -1956,7 +1957,19 @@
       "toastSubscribeFirst": "Pirmiausia užsiprenumeruokite Vairuotojų telkinį arba pasirinkite „Savi vairuotojai”.",
       "toastAddApiKeyFirst": "Pirmiausia pridėkite savo ShipDay API raktą arba perjunkite šaltinį į „Savi vairuotojai”.",
       "toastFailedToSave": "Nepavyko išsaugoti",
-      "toastSaved": "Vairuotojų telkinio nustatymai išsaugoti"
+      "toastSaved": "Vairuotojų telkinio nustatymai išsaugoti",
+      "testConnection": "Tikrinti ryšį",
+      "testing": "Tikrinama…",
+      "testSuccess": "Prisijungta — jūsų Shipday raktas veikia.",
+      "testFailed": "Nepavyko prisijungti: {error}",
+      "partnerOfferTitle": "Jūsų Fee Free Ordering partnerio nauda",
+      "partnerOfferBody": "Prijunkite Shipday per Fee Free Ordering ir mūsų Shipday partneris jus nustatys su maždaug 20% nuolaida standartiniam planui, maždaug 60 dienų kreditų pradžios išlaidoms padengti ir gidų įvedimo programa — išskirtinai restoranams, kurie prisijungia per mus.",
+      "accountQuestion": "Ar turite Shipday paskyrą?",
+      "accountYes": "Taip, turiu",
+      "accountNo": "Ne, man reikia",
+      "noAccountConnectNote": "Nėra problema — sukurkite savo nemokamą Shipday paskyrą, tada grįžkite ir įveskite savo raktą. Kai įjungsite Shipday, supažindinsime jus su mūsų Shipday partneriu, kad pritaikytų nuolaidą + kreditus ir nustatytų jūsų įvedimo programą.",
+      "createAccount": "Sukurti Shipday paskyrą",
+      "haveAccountInstead": "Jau turiu paskyrą"
     },
     "driverPoolLocked": {
       "addonBadge": "Papildinys",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Vietinė pardavimo vieta",
       "body": "Integruotas POS kasos aparatas jūsų prekystaliui — registruokite vietoje ir telefonu pateiktus užsakymus toje pačioje sistemoje kaip ir internetinius, su vienu meniu, vienu ataskaitų rinkiniu ir viena išmoka. Kuriama."
+    },
+    "integrations": {
+      "title": "Integracijos",
+      "subtitle": "Sujunkite Fee Free Ordering su įrankiais, kuriuos jau naudojate. Netrukus bus daugiau.",
+      "comingSoon": "Netrukus",
+      "setUp": "Nustatyti",
+      "catMarketing": "Rinkodara ir stebėjimas",
+      "catDelivery": "Pristatymas",
+      "descTracking": "Pridėkite {name} prie savo užsakymų svetainės, kad galėtumėte stebėti lankytojus ir konversijas.",
+      "descDispatch": "Automatiškai siųskite pristatymo užsakymus į {name} išsiuntimui ir stebėjimui realiuoju laiku.",
+      "descMarketplace": "Gaukite ir sinchronizuokite užsakymus iš {name} rinkos."
     }
   },
   "impersonation": {

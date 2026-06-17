@@ -742,7 +742,8 @@
       "comingSoonBadge": "בקרוב",
       "mobileApp": "אפליקציה לנייד",
       "pointOfSale": "נקודת מכירה",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "אינטגרציות"
     },
     "dashboard": {
       "title": "לוח בקרה",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "ראשית הירשמו ל-Driver Pool, או בחרו 'נהגים משלכם'.",
       "toastAddApiKeyFirst": "ראשית הוסיפו את מפתח ה-API של ShipDay, או החליפו את המקור ל'נהגים משלכם'.",
       "toastFailedToSave": "השמירה נכשלה",
-      "toastSaved": "הגדרות מאגר הנהגים נשמרו"
+      "toastSaved": "הגדרות מאגר הנהגים נשמרו",
+      "testConnection": "בדוק חיבור",
+      "testing": "בודק…",
+      "testSuccess": "מחובר — מפתח Shipday שלך פועל.",
+      "testFailed": "לא ניתן להתחבר: {error}",
+      "partnerOfferTitle": "הטבת השותפות שלך ב-Fee Free Ordering",
+      "partnerOfferBody": "חברו את Shipday דרך Fee Free Ordering ושותף ה-Shipday שלנו יגדיר עבורכם הנחה של כ-20% על התוכנית הסטנדרטית, כ-60 יום של קרדיטים לכיסוי עלויות ההפעלה, וקליטה מונחית — בלעדי למסעדות שמצטרפות דרכנו.",
+      "accountQuestion": "האם יש לך חשבון Shipday?",
+      "accountYes": "כן, יש לי",
+      "accountNo": "לא, אני צריך אחד",
+      "noAccountConnectNote": "אין בעיה — צרו את חשבון Shipday החינמי שלכם, חזרו ואז הזינו את המפתח שלכם. כשתפעילו את Shipday, נציג אתכם לשותף Shipday שלנו להחלת ההנחה + הקרדיטים ולהגדרת הקליטה שלכם.",
+      "createAccount": "צרו חשבון Shipday",
+      "haveAccountInstead": "כבר יש לי חשבון"
     },
     "driverPoolLocked": {
       "addonBadge": "תוסף",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "נקודת מכירה בעסק",
       "body": "קופה רושמת point-of-sale מובנית לדלפק שלך — קלוט הזמנות מזדמנות וטלפוניות באותה מערכת כמו ההזמנות המקוונות, עם תפריט אחד, מערך דוחות אחד ותשלום אחד. בפיתוח כעת."
+    },
+    "integrations": {
+      "title": "אינטגרציות",
+      "subtitle": "חבר את Fee Free Ordering לכלים שאתה כבר משתמש בהם. עוד בקרוב.",
+      "comingSoon": "בקרוב",
+      "setUp": "הגדר",
+      "catMarketing": "שיווק ומעקב",
+      "catDelivery": "משלוח",
+      "descTracking": "הוסף את {name} לאתר ההזמנות שלך כדי לעקוב אחר מבקרים והמרות.",
+      "descDispatch": "שלח הזמנות משלוח אוטומטית אל {name} לשיגור ומעקב בזמן אמת.",
+      "descMarketplace": "קבל וסנכרן הזמנות מהשוק {name}."
     }
   },
   "impersonation": {

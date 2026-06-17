@@ -742,7 +742,8 @@
       "comingSoonBadge": "Yakında",
       "mobileApp": "Mobil uygulama",
       "pointOfSale": "Satış noktası",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Entegrasyonlar"
     },
     "dashboard": {
       "title": "Panel",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Önce Driver Pool'a abone olun ya da 'Kendi sürücülerim'i seçin.",
       "toastAddApiKeyFirst": "Önce ShipDay API anahtarınızı ekleyin ya da kaynağı 'Kendi sürücülerim' olarak değiştirin.",
       "toastFailedToSave": "Kaydedilemedi",
-      "toastSaved": "Sürücü havuzu ayarları kaydedildi"
+      "toastSaved": "Sürücü havuzu ayarları kaydedildi",
+      "testConnection": "Bağlantıyı test et",
+      "testing": "Test ediliyor…",
+      "testSuccess": "Bağlandı — Shipday anahtarınız çalışıyor.",
+      "testFailed": "Bağlanılamadı: {error}",
+      "partnerOfferTitle": "Fee Free Ordering ortaklık avantajınız",
+      "partnerOfferBody": "Shipday'i Fee Free Ordering aracılığıyla bağlayın; Shipday ortağımız sizi standart planın yaklaşık 20% indirimiyle, başlangıç maliyetlerini karşılamak için yaklaşık 60 günlük krediyle ve rehberli işe alım süreciyle kurar — yalnızca biz aracılığıyla katılan restoranlar için.",
+      "accountQuestion": "Bir Shipday hesabınız var mı?",
+      "accountYes": "Evet, var",
+      "accountNo": "Hayır, ihtiyacım var",
+      "noAccountConnectNote": "Sorun değil — ücretsiz Shipday hesabınızı oluşturun, sonra geri dönün ve anahtarınızı girin. Shipday'i açtığınızda, sizi Shipday ortağımızla tanıştıracağız; bu sayede indirim + kredi uygulanacak ve işe alım süreciniz kurulacak.",
+      "createAccount": "Shipday hesabı oluştur",
+      "haveAccountInstead": "Zaten bir hesabım var"
     },
     "driverPoolLocked": {
       "addonBadge": "Eklenti",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Yerinde satış noktası",
       "body": "Tezgahınız için yerleşik bir POS yazar kasası — gelen müşteri ve telefon siparişlerini çevrimiçi siparişlerinizle aynı sistemde, tek menü, tek rapor seti ve tek ödeme ile kaydedin. Geliştirme aşamasında."
+    },
+    "integrations": {
+      "title": "Entegrasyonlar",
+      "subtitle": "Fee Free Ordering'i zaten kullandığınız araçlara bağlayın. Yakında daha fazlası.",
+      "comingSoon": "Yakında",
+      "setUp": "Kur",
+      "catMarketing": "Pazarlama ve takip",
+      "catDelivery": "Teslimat",
+      "descTracking": "Ziyaretçileri ve dönüşümleri takip etmek için {name}'i sipariş sitenize ekleyin.",
+      "descDispatch": "Teslimat siparişlerini sevkiyat ve canlı takip için otomatik olarak {name}'e gönderin.",
+      "descMarketplace": "{name} pazaryerinden siparişleri alın ve senkronize edin."
     }
   },
   "impersonation": {

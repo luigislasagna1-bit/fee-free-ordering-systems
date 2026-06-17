@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, ShoppingBag, UtensilsCrossed, Users, BarChart3,
-  Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu,
+  Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu, Plug,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
   Check, Circle, Sparkles, Rocket, Phone, QrCode, Lock, Network, MessageSquare, Bot, MonitorCheck, Smartphone, Calculator,
@@ -433,6 +433,7 @@ const navGroups: NavGroup[] = [
       { href: "/admin/billing",         labelKey: "billing", label: "Billing", icon: Wallet },
       { href: "/admin/billing/add-ons", labelKey: "addOns",  label: "Add-Ons", icon: Zap },
       { href: "/admin/settings",     labelKey: "settings",    label: "Settings",     icon: Settings },
+      { href: "/admin/integrations", labelKey: "integrations", label: "Integrations", icon: Plug },
       // Receipts moved here from SETUP -> Menu Setup (Luigi 2026-06-13): receipt
       // templates are an operational/config concern, not a menu-build step.
       { href: "/admin/receipts",     labelKey: "receipts",    label: "Receipts",     icon: Receipt },

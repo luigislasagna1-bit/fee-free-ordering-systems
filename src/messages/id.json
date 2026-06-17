@@ -742,7 +742,8 @@
       "comingSoonBadge": "Segera",
       "mobileApp": "Aplikasi seluler",
       "pointOfSale": "Titik penjualan",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integrasi"
     },
     "dashboard": {
       "title": "Dasbor",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Berlangganan Driver Pool terlebih dahulu, atau pilih 'Driver sendiri'.",
       "toastAddApiKeyFirst": "Tambahkan kunci API ShipDay Anda terlebih dahulu, atau ganti sumber ke 'Driver sendiri'.",
       "toastFailedToSave": "Gagal menyimpan",
-      "toastSaved": "Pengaturan driver pool tersimpan"
+      "toastSaved": "Pengaturan driver pool tersimpan",
+      "testConnection": "Uji koneksi",
+      "testing": "Menguji…",
+      "testSuccess": "Terhubung — kunci Shipday Anda berfungsi.",
+      "testFailed": "Tidak dapat terhubung: {error}",
+      "partnerOfferTitle": "Manfaat mitra Fee Free Ordering Anda",
+      "partnerOfferBody": "Hubungkan Shipday melalui Fee Free Ordering dan mitra Shipday kami menyiapkan Anda dengan sekitar 20% diskon dari paket standar, sekitar 60 hari kredit untuk menutupi biaya awal, dan orientasi terpandu — eksklusif untuk restoran yang bergabung melalui kami.",
+      "accountQuestion": "Apakah Anda memiliki akun Shipday?",
+      "accountYes": "Ya, saya punya",
+      "accountNo": "Tidak, saya perlu satu",
+      "noAccountConnectNote": "Tidak masalah — buat akun Shipday gratis Anda, lalu kembali dan masukkan kunci Anda. Saat Anda mengaktifkan Shipday, kami akan memperkenalkan Anda kepada mitra Shipday kami untuk menerapkan diskon + kredit dan menyiapkan orientasi Anda.",
+      "createAccount": "Buat akun Shipday",
+      "haveAccountInstead": "Saya sudah punya akun"
     },
     "driverPoolLocked": {
       "addonBadge": "Add-on",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Titik penjualan di tempat",
       "body": "Mesin kasir point-of-sale bawaan untuk konter Anda — catat pesanan langsung dan via telepon di sistem yang sama dengan pesanan online Anda, dengan satu menu, satu set laporan, dan satu pembayaran. Sedang dalam pengembangan."
+    },
+    "integrations": {
+      "title": "Integrasi",
+      "subtitle": "Hubungkan Fee Free Ordering dengan alat yang sudah Anda gunakan. Lebih banyak segera hadir.",
+      "comingSoon": "Segera hadir",
+      "setUp": "Atur",
+      "catMarketing": "Pemasaran & pelacakan",
+      "catDelivery": "Pengiriman",
+      "descTracking": "Tambahkan {name} ke situs pemesanan Anda untuk melacak pengunjung dan konversi.",
+      "descDispatch": "Kirim pesanan pengiriman secara otomatis ke {name} untuk pengiriman dan pelacakan langsung.",
+      "descMarketplace": "Terima dan sinkronkan pesanan dari marketplace {name}."
     }
   },
   "impersonation": {

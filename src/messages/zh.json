@@ -742,7 +742,8 @@
       "comingSoonBadge": "即将推出",
       "mobileApp": "移动应用",
       "pointOfSale": "销售点",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "集成"
     },
     "dashboard": {
       "title": "仪表盘",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "请先订阅 Driver Pool，或选择「自有司机」。",
       "toastAddApiKeyFirst": "请先添加您的 ShipDay API 密钥，或将来源切换为「自有司机」。",
       "toastFailedToSave": "保存失败",
-      "toastSaved": "司机池设置已保存"
+      "toastSaved": "司机池设置已保存",
+      "testConnection": "测试连接",
+      "testing": "测试中…",
+      "testSuccess": "已连接 — 您的 Shipday 密钥有效。",
+      "testFailed": "无法连接：{error}",
+      "partnerOfferTitle": "您的 Fee Free Ordering 合作伙伴权益",
+      "partnerOfferBody": "通过 Fee Free Ordering 连接 Shipday，我们的 Shipday 合作伙伴将为您提供标准套餐约 20% 的折扣、大约 60 天的积分以覆盖启动成本以及全程引导式入职服务——仅限通过我们加入的餐厅。",
+      "accountQuestion": "您有 Shipday 账户吗？",
+      "accountYes": "是的，我有",
+      "accountNo": "没有，我需要一个",
+      "noAccountConnectNote": "没问题 — 创建您的免费 Shipday 账户，然后回来输入您的密钥。当您开启 Shipday 时，我们将为您介绍我们的 Shipday 合作伙伴，以应用折扣 + 积分并设置您的入职流程。",
+      "createAccount": "创建 Shipday 账户",
+      "haveAccountInstead": "我已经有账户了"
     },
     "driverPoolLocked": {
       "addonBadge": "附加功能",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "店内销售点",
       "body": "为你的柜台提供内置的 point-of-sale 收银机 — 在与线上订单相同的系统上为到店和电话订单结账，共用一份菜单、一套报表和一次结算。正在开发中。"
+    },
+    "integrations": {
+      "title": "集成",
+      "subtitle": "将 Fee Free Ordering 连接到您已在使用的工具。更多即将推出。",
+      "comingSoon": "即将推出",
+      "setUp": "设置",
+      "catMarketing": "营销与追踪",
+      "catDelivery": "配送",
+      "descTracking": "将 {name} 添加到您的点餐网站，以追踪访客和转化率。",
+      "descDispatch": "自动将配送订单发送至 {name} 进行派送和实时追踪。",
+      "descMarketplace": "接收并同步来自 {name} 市场的订单。"
     }
   },
   "impersonation": {

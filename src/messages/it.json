@@ -742,7 +742,8 @@
       "comingSoonBadge": "Presto",
       "mobileApp": "App mobile",
       "pointOfSale": "Punto vendita",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integrazioni"
     },
     "dashboard": {
       "title": "Pannello",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Abbonati prima a Driver Pool, o scegli «Autisti propri».",
       "toastAddApiKeyFirst": "Aggiungi prima la tua chiave API ShipDay, o cambia fonte a «Autisti propri».",
       "toastFailedToSave": "Salvataggio non riuscito",
-      "toastSaved": "Impostazioni driver pool salvate"
+      "toastSaved": "Impostazioni driver pool salvate",
+      "testConnection": "Testa connessione",
+      "testing": "Test in corso…",
+      "testSuccess": "Connesso — la tua chiave Shipday funziona.",
+      "testFailed": "Impossibile connettersi: {error}",
+      "partnerOfferTitle": "Il tuo vantaggio partner Fee Free Ordering",
+      "partnerOfferBody": "Collega Shipday tramite Fee Free Ordering e il nostro partner Shipday ti configura con circa il 20% di sconto sul piano standard, circa 60 giorni di crediti per coprire i costi di avvio e un onboarding guidato — esclusivo per i ristoranti che si uniscono tramite noi.",
+      "accountQuestion": "Hai un account Shipday?",
+      "accountYes": "Sì, ne ho uno",
+      "accountNo": "No, ne ho bisogno di uno",
+      "noAccountConnectNote": "Nessun problema — crea il tuo account Shipday gratuito, poi torna e inserisci la tua chiave. Quando attivi Shipday, ti presenteremo al nostro partner Shipday per applicare lo sconto + i crediti e configurare il tuo onboarding.",
+      "createAccount": "Crea un account Shipday",
+      "haveAccountInstead": "Ho già un account"
     },
     "driverPoolLocked": {
       "addonBadge": "Componente aggiuntivo",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Punto vendita in sede",
       "body": "Un registratore di cassa integrato per il tuo bancone: registra gli ordini al banco e telefonici sullo stesso sistema dei tuoi ordini online, con un unico menu, un unico set di report e un unico versamento. In fase di sviluppo."
+    },
+    "integrations": {
+      "title": "Integrazioni",
+      "subtitle": "Collega Fee Free Ordering agli strumenti che già utilizzi. Altre integrazioni in arrivo.",
+      "comingSoon": "Prossimamente",
+      "setUp": "Configura",
+      "catMarketing": "Marketing e tracciamento",
+      "catDelivery": "Consegna",
+      "descTracking": "Aggiungi {name} al tuo sito di ordini per tracciare visitatori e conversioni.",
+      "descDispatch": "Invia automaticamente gli ordini di consegna a {name} per la spedizione e il tracciamento in tempo reale.",
+      "descMarketplace": "Ricevi e sincronizza gli ordini dal marketplace {name}."
     }
   },
   "impersonation": {

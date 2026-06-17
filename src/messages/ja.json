@@ -742,7 +742,8 @@
       "comingSoonBadge": "近日公開",
       "mobileApp": "モバイルアプリ",
       "pointOfSale": "POSレジ",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "インテグレーション"
     },
     "dashboard": {
       "title": "ダッシュボード",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "先にドライバープールにサブスクライブするか、「自社ドライバー」を選択してください。",
       "toastAddApiKeyFirst": "先に ShipDay API キーを追加するか、配達元を「自社ドライバー」に切り替えてください。",
       "toastFailedToSave": "保存に失敗しました",
-      "toastSaved": "ドライバープールの設定を保存しました"
+      "toastSaved": "ドライバープールの設定を保存しました",
+      "testConnection": "接続をテスト",
+      "testing": "テスト中…",
+      "testSuccess": "接続しました — Shipday キーが有効です。",
+      "testFailed": "接続できませんでした：{error}",
+      "partnerOfferTitle": "あなたの Fee Free Ordering パートナー特典",
+      "partnerOfferBody": "Fee Free Ordering を通じて Shipday を接続すると、私たちの Shipday パートナーが標準プランの約 20% 割引、スタートアップコストをカバーするための約 60 日分のクレジット、および丁寧なオンボーディングを提供します — 私たちを通じて参加されたレストラン限定。",
+      "accountQuestion": "Shipday アカウントをお持ちですか？",
+      "accountYes": "はい、持っています",
+      "accountNo": "いいえ、必要です",
+      "noAccountConnectNote": "問題ありません — 無料の Shipday アカウントを作成し、戻ってきてキーを入力してください。Shipday をオンにすると、割引 + クレジットを適用しオンボーディングを設定するために、私たちの Shipday パートナーをご紹介します。",
+      "createAccount": "Shipday アカウントを作成する",
+      "haveAccountInstead": "すでにアカウントを持っています"
     },
     "driverPoolLocked": {
       "addonBadge": "アドオン",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "店内POSレジ",
       "body": "カウンター向けの内蔵 point-of-sale レジ — 来店注文や電話注文を、オンライン注文と同じシステムで会計できます。メニューもレポートも入金も一つにまとまります。現在開発中です。"
+    },
+    "integrations": {
+      "title": "インテグレーション",
+      "subtitle": "Fee Free Ordering をすでにお使いのツールと連携させましょう。近日公開予定。",
+      "comingSoon": "近日公開",
+      "setUp": "設定する",
+      "catMarketing": "マーケティングとトラッキング",
+      "catDelivery": "配達",
+      "descTracking": "注文サイトに {name} を追加して、訪問者とコンバージョンを追跡しましょう。",
+      "descDispatch": "配達注文を自動的に {name} に送信して、配送とリアルタイム追跡を行います。",
+      "descMarketplace": "{name} マーケットプレイスからの注文を受信・同期します。"
     }
   },
   "impersonation": {

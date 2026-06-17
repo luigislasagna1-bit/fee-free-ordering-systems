@@ -2681,6 +2681,11 @@ model ShipdayConfig {
   /// Defaults to "own" — safer to keep new orders in-house by default.
   activeDispatchMode String @default("own")
 
+  /// One-shot claim: when we emailed the Shipday partner (Justin) the intro for
+  /// this restaurant. Set the first time they connect Shipday so the auto-intro
+  /// fires EXACTLY once, not on every settings save. Luigi/Justin 2026-06-17.
+  partnerNotifiedAt DateTime?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

@@ -742,7 +742,8 @@
       "comingSoonBadge": "Sắp có",
       "mobileApp": "Ứng dụng di động",
       "pointOfSale": "Điểm bán hàng",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Tích hợp"
     },
     "dashboard": {
       "title": "Bảng điều khiển",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Đăng ký Driver Pool trước, hoặc chọn 'Tài xế của nhà hàng'.",
       "toastAddApiKeyFirst": "Thêm API key ShipDay trước, hoặc chuyển nguồn sang 'Tài xế của nhà hàng'.",
       "toastFailedToSave": "Không thể lưu",
-      "toastSaved": "Đã lưu cài đặt Driver pool"
+      "toastSaved": "Đã lưu cài đặt Driver pool",
+      "testConnection": "Kiểm tra kết nối",
+      "testing": "Đang kiểm tra…",
+      "testSuccess": "Đã kết nối — khóa Shipday của bạn hoạt động.",
+      "testFailed": "Không thể kết nối: {error}",
+      "partnerOfferTitle": "Quyền lợi đối tác Fee Free Ordering của bạn",
+      "partnerOfferBody": "Kết nối Shipday qua Fee Free Ordering và đối tác Shipday của chúng tôi sẽ thiết lập cho bạn khoảng 20% giảm giá so với gói tiêu chuẩn, khoảng 60 ngày tín dụng để trang trải chi phí khởi động và hướng dẫn onboarding — độc quyền cho các nhà hàng tham gia qua chúng tôi.",
+      "accountQuestion": "Bạn có tài khoản Shipday không?",
+      "accountYes": "Có, tôi có",
+      "accountNo": "Không, tôi cần một cái",
+      "noAccountConnectNote": "Không vấn đề — tạo tài khoản Shipday miễn phí của bạn, sau đó quay lại và nhập khóa của bạn. Khi bạn bật Shipday, chúng tôi sẽ giới thiệu bạn với đối tác Shipday của chúng tôi để áp dụng giảm giá + tín dụng và thiết lập quy trình onboarding của bạn.",
+      "createAccount": "Tạo tài khoản Shipday",
+      "haveAccountInstead": "Tôi đã có tài khoản"
     },
     "driverPoolLocked": {
       "addonBadge": "Tiện ích bổ sung",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Điểm bán hàng tại chỗ",
       "body": "Máy tính tiền point-of-sale tích hợp cho quầy của bạn — tính tiền cho khách tại chỗ và đơn đặt qua điện thoại trên cùng hệ thống với đơn trực tuyến, với một thực đơn, một bộ báo cáo và một lần chi trả. Đang được phát triển."
+    },
+    "integrations": {
+      "title": "Tích hợp",
+      "subtitle": "Kết nối Fee Free Ordering với các công cụ bạn đã sử dụng. Sắp có thêm nhiều hơn.",
+      "comingSoon": "Sắp ra mắt",
+      "setUp": "Thiết lập",
+      "catMarketing": "Tiếp thị & theo dõi",
+      "catDelivery": "Giao hàng",
+      "descTracking": "Thêm {name} vào trang đặt hàng của bạn để theo dõi khách truy cập và chuyển đổi.",
+      "descDispatch": "Tự động gửi đơn đặt hàng giao hàng đến {name} để điều phối và theo dõi trực tiếp.",
+      "descMarketplace": "Nhận và đồng bộ hóa đơn hàng từ thị trường {name}."
     }
   },
   "impersonation": {

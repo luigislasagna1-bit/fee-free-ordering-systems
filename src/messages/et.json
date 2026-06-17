@@ -742,7 +742,8 @@
       "comingSoonBadge": "Varsti",
       "mobileApp": "Mobiilirakendus",
       "pointOfSale": "Müügipunkt",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integratsioonid"
     },
     "dashboard": {
       "title": "Juhtpaneel",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Telli esmalt Juhtide kogum või vali „Oma juhid“.",
       "toastAddApiKeyFirst": "Lisa esmalt oma ShipDay API võti või lülitu allikaks „Oma juhid“.",
       "toastFailedToSave": "Salvestamine ebaõnnestus",
-      "toastSaved": "Juhtide kogumi seaded salvestatud"
+      "toastSaved": "Juhtide kogumi seaded salvestatud",
+      "testConnection": "Testi ühendust",
+      "testing": "Testimine…",
+      "testSuccess": "Ühendatud — teie Shipday võti töötab.",
+      "testFailed": "Ühendamine ebaõnnestus: {error}",
+      "partnerOfferTitle": "Teie Fee Free Ordering partnersoodustus",
+      "partnerOfferBody": "Ühendage Shipday Fee Free Ordering kaudu ja meie Shipday partner seadistab teid umbes 20% allahindlusega standardplaanist, ligikaudu 60 päeva krediitidega käivituskulude katmiseks ja juhendatud sisseelamisprogrammiga — ainult restoranidele, kes liituvad meie kaudu.",
+      "accountQuestion": "Kas teil on Shipday konto?",
+      "accountYes": "Jah, mul on",
+      "accountNo": "Ei, vajan seda",
+      "noAccountConnectNote": "Pole probleemi — looge oma tasuta Shipday konto, tulge siis tagasi ja sisestage oma võti. Kui lülitate Shipday sisse, tutvustame teid meie Shipday partnerile, et rakendada allahindlust + krediite ja seadistada teie sisseelamisprogramm.",
+      "createAccount": "Looge Shipday konto",
+      "haveAccountInstead": "Mul on juba konto"
     },
     "driverPoolLocked": {
       "addonBadge": "Lisandmoodul",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Kohapealne müügipunkt",
       "body": "Sisseehitatud POS-kassa teie leti jaoks — vormistage kohapealsed ja telefonitellimused samas süsteemis nagu veebitellimused, ühe menüü, ühe aruandekomplekti ja ühe väljamaksega. On arendamisel."
+    },
+    "integrations": {
+      "title": "Integratsioonid",
+      "subtitle": "Ühendage Fee Free Ordering tööriistadega, mida juba kasutate. Varsti tuleb juurde.",
+      "comingSoon": "Tulemas varsti",
+      "setUp": "Seadista",
+      "catMarketing": "Turundus ja jälgimine",
+      "catDelivery": "Tarne",
+      "descTracking": "Lisage {name} oma tellimissaidile, et jälgida külastajaid ja konversioone.",
+      "descDispatch": "Saatke tarnetellimused automaatselt {name} aadressile lähetamiseks ja reaalajas jälgimiseks.",
+      "descMarketplace": "Võtke vastu ja sünkroonige tellimused {name} turul."
     }
   },
   "impersonation": {

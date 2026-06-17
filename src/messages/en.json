@@ -765,7 +765,8 @@
       "comingSoonBadge": "Soon",
       "mobileApp": "Mobile App",
       "pointOfSale": "Point of Sale",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integrations"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -2852,7 +2853,19 @@
       "toastSubscribeFirst": "Subscribe to Driver Pool first, or choose 'Own drivers'.",
       "toastAddApiKeyFirst": "Add your ShipDay API key first, or switch source to 'Own drivers'.",
       "toastFailedToSave": "Failed to save",
-      "toastSaved": "Driver pool settings saved"
+      "toastSaved": "Driver pool settings saved",
+      "testConnection": "Test connection",
+      "testing": "Testing…",
+      "testSuccess": "Connected — your Shipday key works.",
+      "testFailed": "Couldn't connect: {error}",
+      "partnerOfferTitle": "Your Fee Free Ordering partner benefit",
+      "partnerOfferBody": "Connect Shipday through Fee Free Ordering and our Shipday partner sets you up with about 20% off the standard plan, roughly 60 days of credits to cover startup costs, and guided onboarding — exclusive to restaurants who join through us.",
+      "accountQuestion": "Do you have a Shipday account?",
+      "accountYes": "Yes, I have one",
+      "accountNo": "No, I need one",
+      "noAccountConnectNote": "No problem — create your free Shipday account, then come back and enter your key. When you turn Shipday on, we'll introduce you to our Shipday partner to apply the discount + credits and set up your onboarding.",
+      "createAccount": "Create a Shipday account",
+      "haveAccountInstead": "I already have an account"
     },
     "brandDashboard": {
       "brandDashboardBadge": "Brand dashboard",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "In-house point of sale",
       "body": "A built-in point-of-sale register for your counter — ring up walk-in and phone orders on the same system as your online ones, with one menu, one set of reports, and one payout. It's under development."
+    },
+    "integrations": {
+      "title": "Integrations",
+      "subtitle": "Connect Fee Free Ordering to the tools you already use. More coming soon.",
+      "comingSoon": "Coming soon",
+      "setUp": "Set up",
+      "catMarketing": "Marketing & tracking",
+      "catDelivery": "Delivery",
+      "descTracking": "Add {name} to your ordering site to track visitors and conversions.",
+      "descDispatch": "Automatically send delivery orders to {name} for dispatch and live tracking.",
+      "descMarketplace": "Receive and sync orders from the {name} marketplace."
     }
   },
   "impersonation": {

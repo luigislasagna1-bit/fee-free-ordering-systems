@@ -742,7 +742,8 @@
       "comingSoonBadge": "Uskoro",
       "mobileApp": "Mobilna aplikacija",
       "pointOfSale": "Prodajno mjesto",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integracije"
     },
     "dashboard": {
       "title": "Upravljačka ploča",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Najprije se pretplatite na Skup vozača, ili odaberite 'Vlastiti vozači'.",
       "toastAddApiKeyFirst": "Najprije dodajte vaš ShipDay API ključ, ili prebacite izvor na 'Vlastiti vozači'.",
       "toastFailedToSave": "Spremanje nije uspjelo",
-      "toastSaved": "Postavke skupa vozača spremljene"
+      "toastSaved": "Postavke skupa vozača spremljene",
+      "testConnection": "Testiraj vezu",
+      "testing": "Testiranje…",
+      "testSuccess": "Spojeno — vaš Shipday ključ radi.",
+      "testFailed": "Nije moguće spojiti: {error}",
+      "partnerOfferTitle": "Vaša partnerska pogodnost Fee Free Ordering",
+      "partnerOfferBody": "Povežite Shipday putem Fee Free Ordering i naš Shipday partner vas postavi s otprilike 20% popusta na standardni plan, otprilike 60 dana kredita za pokrivanje troškova pokretanja i vođenim uvodenjem — isključivo za restorane koji se pridružuju putem nas.",
+      "accountQuestion": "Imate li Shipday račun?",
+      "accountYes": "Da, imam",
+      "accountNo": "Ne, trebam jedan",
+      "noAccountConnectNote": "Nema problema — stvorite besplatan Shipday račun, a zatim se vratite i unesite svoj ključ. Kada uključite Shipday, upoznat ćemo vas s našim Shipday partnerom kako bi primijenili popust + kredite i postavili vaše uvođenje.",
+      "createAccount": "Stvorite Shipday račun",
+      "haveAccountInstead": "Već imam račun"
     },
     "driverPoolLocked": {
       "addonBadge": "Dodatak",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Prodajno mjesto na licu mjesta",
       "body": "Ugrađena blagajna za vaš pult — naplaćujte narudžbe na licu mjesta i telefonske narudžbe u istom sustavu kao i one online, s jednim jelovnikom, jednim skupom izvješća i jednom isplatom. U izradi je."
+    },
+    "integrations": {
+      "title": "Integracije",
+      "subtitle": "Povežite Fee Free Ordering s alatima koje već koristite. Više uskoro.",
+      "comingSoon": "Uskoro",
+      "setUp": "Postavi",
+      "catMarketing": "Marketing i praćenje",
+      "catDelivery": "Dostava",
+      "descTracking": "Dodajte {name} na svoju stranicu za narudžbe kako biste pratili posjetitelje i konverzije.",
+      "descDispatch": "Automatski šaljite narudžbe dostave na {name} za otpremu i praćenje u stvarnom vremenu.",
+      "descMarketplace": "Primajte i sinkronizirajte narudžbe s tržnice {name}."
     }
   },
   "impersonation": {

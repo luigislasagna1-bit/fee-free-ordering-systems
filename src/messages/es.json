@@ -742,7 +742,8 @@
       "comingSoonBadge": "Pronto",
       "mobileApp": "App móvil",
       "pointOfSale": "Punto de venta",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integraciones"
     },
     "dashboard": {
       "title": "Panel principal",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Suscríbete primero al Driver Pool, o elige «Conductores propios».",
       "toastAddApiKeyFirst": "Añade tu clave API de ShipDay primero, o cambia el origen a «Conductores propios».",
       "toastFailedToSave": "No se pudo guardar",
-      "toastSaved": "Configuración del pool de conductores guardada"
+      "toastSaved": "Configuración del pool de conductores guardada",
+      "testConnection": "Probar conexión",
+      "testing": "Probando…",
+      "testSuccess": "Conectado — tu clave de Shipday funciona.",
+      "testFailed": "No se pudo conectar: {error}",
+      "partnerOfferTitle": "Tu beneficio de socio Fee Free Ordering",
+      "partnerOfferBody": "Conecta Shipday a través de Fee Free Ordering y nuestro socio de Shipday te configura con alrededor de un 20% de descuento en el plan estándar, aproximadamente 60 días de créditos para cubrir los costos iniciales, y una incorporación guiada — exclusivo para restaurantes que se unen a través de nosotros.",
+      "accountQuestion": "¿Tienes una cuenta de Shipday?",
+      "accountYes": "Sí, tengo uno",
+      "accountNo": "No, necesito uno",
+      "noAccountConnectNote": "Sin problema — crea tu cuenta gratuita de Shipday, luego regresa e ingresa tu clave. Cuando actives Shipday, te presentaremos a nuestro socio de Shipday para aplicar el descuento + créditos y configurar tu incorporación.",
+      "createAccount": "Crear una cuenta de Shipday",
+      "haveAccountInstead": "Ya tengo una cuenta"
     },
     "driverPoolLocked": {
       "addonBadge": "Complemento",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Punto de venta en local",
       "body": "Una caja registradora de punto de venta integrada para tu mostrador: cobra los pedidos presenciales y telefónicos en el mismo sistema que los pedidos en línea, con un solo menú, un solo conjunto de informes y un solo pago. En desarrollo."
+    },
+    "integrations": {
+      "title": "Integraciones",
+      "subtitle": "Conecta Fee Free Ordering con las herramientas que ya usas. Más próximamente.",
+      "comingSoon": "Próximamente",
+      "setUp": "Configurar",
+      "catMarketing": "Marketing y seguimiento",
+      "catDelivery": "Entrega",
+      "descTracking": "Añade {name} a tu sitio de pedidos para rastrear visitantes y conversiones.",
+      "descDispatch": "Envía automáticamente los pedidos de entrega a {name} para su despacho y seguimiento en tiempo real.",
+      "descMarketplace": "Recibe y sincroniza pedidos del marketplace {name}."
     }
   },
   "impersonation": {

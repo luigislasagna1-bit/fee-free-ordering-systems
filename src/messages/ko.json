@@ -742,7 +742,8 @@
       "comingSoonBadge": "출시 예정",
       "mobileApp": "모바일 앱",
       "pointOfSale": "판매 시점 관리",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "통합"
     },
     "dashboard": {
       "title": "대시보드",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "먼저 Driver Pool을 구독하거나 '자체 드라이버'를 선택하세요.",
       "toastAddApiKeyFirst": "먼저 ShipDay API 키를 추가하거나 소스를 '자체 드라이버'로 변경하세요.",
       "toastFailedToSave": "저장에 실패했습니다",
-      "toastSaved": "드라이버 풀 설정이 저장되었습니다"
+      "toastSaved": "드라이버 풀 설정이 저장되었습니다",
+      "testConnection": "연결 테스트",
+      "testing": "테스트 중…",
+      "testSuccess": "연결됨 — Shipday 키가 작동합니다.",
+      "testFailed": "연결할 수 없습니다: {error}",
+      "partnerOfferTitle": "귀하의 Fee Free Ordering 파트너 혜택",
+      "partnerOfferBody": "Fee Free Ordering을 통해 Shipday를 연결하면 저희 Shipday 파트너가 표준 플랜에서 약 20% 할인, 시작 비용을 충당하는 약 60일의 크레딧, 그리고 안내 온보딩을 제공해 드립니다 — 저희를 통해 가입하는 레스토랑에만 제공됩니다.",
+      "accountQuestion": "Shipday 계정이 있으신가요?",
+      "accountYes": "네, 있습니다",
+      "accountNo": "아니요, 필요합니다",
+      "noAccountConnectNote": "문제없습니다 — 무료 Shipday 계정을 만든 후 돌아와서 키를 입력하세요. Shipday를 켜면 할인 + 크레딧을 적용하고 온보딩을 설정하기 위해 저희 Shipday 파트너를 소개해 드립니다.",
+      "createAccount": "Shipday 계정 만들기",
+      "haveAccountInstead": "이미 계정이 있습니다"
     },
     "driverPoolLocked": {
       "addonBadge": "추가 기능",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "매장 내 POS",
       "body": "카운터를 위한 내장형 point-of-sale 계산대 — 매장 방문 주문과 전화 주문을 온라인 주문과 동일한 시스템에서 계산하세요. 하나의 메뉴, 하나의 보고서, 하나의 정산으로 끝납니다. 현재 개발 중입니다."
+    },
+    "integrations": {
+      "title": "통합",
+      "subtitle": "Fee Free Ordering을 이미 사용 중인 도구와 연결하세요. 더 많은 기능이 곧 출시됩니다.",
+      "comingSoon": "곧 출시",
+      "setUp": "설정",
+      "catMarketing": "마케팅 및 추적",
+      "catDelivery": "배달",
+      "descTracking": "{name}을 주문 사이트에 추가하여 방문자와 전환율을 추적하세요.",
+      "descDispatch": "배달 주문을 {name}에 자동으로 전송하여 배차 및 실시간 추적을 하세요.",
+      "descMarketplace": "{name} 마켓플레이스에서 주문을 수신하고 동기화하세요."
     }
   },
   "impersonation": {

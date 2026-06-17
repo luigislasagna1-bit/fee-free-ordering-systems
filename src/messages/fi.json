@@ -742,7 +742,8 @@
       "comingSoonBadge": "Pian",
       "mobileApp": "Mobiilisovellus",
       "pointOfSale": "Myyntipiste",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integraatiot"
     },
     "dashboard": {
       "title": "Kojelauta",
@@ -2773,7 +2774,19 @@
       "toastSubscribeFirst": "Tilaa Kuljettajapooli ensin tai valitse 'Omat kuljettajat'.",
       "toastAddApiKeyFirst": "Lisää ShipDay API-avaimesi ensin tai vaihda lähde 'Omiin kuljettajiin'.",
       "toastFailedToSave": "Tallennus epäonnistui",
-      "toastSaved": "Kuljettajapoolin asetukset tallennettu"
+      "toastSaved": "Kuljettajapoolin asetukset tallennettu",
+      "testConnection": "Testaa yhteys",
+      "testing": "Testataan…",
+      "testSuccess": "Yhdistetty — Shipday-avaimesi toimii.",
+      "testFailed": "Yhteys epäonnistui: {error}",
+      "partnerOfferTitle": "Fee Free Ordering -kumppanietusi",
+      "partnerOfferBody": "Yhdistä Shipday Fee Free Ordering -palvelun kautta, niin Shipday-kumppanimme järjestää sinulle noin 20% alennuksen standardipaketista, noin 60 päivän krediittejä käynnistyskustannusten kattamiseen sekä ohjatun perehdytyksen — yksinoikeudella ravintoloille, jotka liittyvät meidän kauttamme.",
+      "accountQuestion": "Onko sinulla Shipday-tili?",
+      "accountYes": "Kyllä, minulla on",
+      "accountNo": "Ei, tarvitsen sellaisen",
+      "noAccountConnectNote": "Ei hätää — luo ilmainen Shipday-tilisi, palaa sitten takaisin ja syötä avaimesi. Kun otat Shipday-palvelun käyttöön, esittelemme sinut Shipday-kumppanillemme alennuksen + kreditien soveltamiseksi ja perehdytyksesi järjestämiseksi.",
+      "createAccount": "Luo Shipday-tili",
+      "haveAccountInstead": "Minulla on jo tili"
     },
     "driverPoolLocked": {
       "addonBadge": "Lisäosa",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Oma myyntipiste",
       "body": "Sisäänrakennettu kassajärjestelmä tiskillesi — kirjaa paikan päällä tehdyt ja puhelintilaukset samaan järjestelmään verkkotilaustesi kanssa, yhdellä ruokalistalla, yhdellä raporttikokonaisuudella ja yhdellä tilityksellä. Se on kehitteillä."
+    },
+    "integrations": {
+      "title": "Integraatiot",
+      "subtitle": "Yhdistä Fee Free Ordering jo käyttämiisi työkaluihin. Lisää tulossa pian.",
+      "comingSoon": "Tulossa pian",
+      "setUp": "Määritä",
+      "catMarketing": "Markkinointi ja seuranta",
+      "catDelivery": "Toimitus",
+      "descTracking": "Lisää {name} tilaussivustollesi seurataksesi kävijöitä ja konversioita.",
+      "descDispatch": "Lähetä toimitustilaukset automaattisesti {name}:lle lähetystä ja reaaliaikaista seurantaa varten.",
+      "descMarketplace": "Vastaanota ja synkronoi tilaukset {name}-markkinapaikalta."
     }
   },
   "impersonation": {

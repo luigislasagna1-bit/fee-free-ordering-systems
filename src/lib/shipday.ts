@@ -73,6 +73,36 @@ export async function shouldDispatchToShipday(restaurantId: string): Promise<boo
   return false;
 }
 
+/**
+ * Validate a ShipDay API key with a lightweight authenticated call, so an
+ * owner can confirm their key works from the "Test connection" button WITHOUT
+ * placing a real delivery order. GET /orders requires a valid key — a 2xx means
+ * the key is good; 401/403 means it's wrong. Never logs the key. Luigi 2026-06-17.
+ */
+export async function testShipdayKey(apiKey: string): Promise<{ ok: boolean; status?: number; error?: string }> {
+  const key = apiKey.trim();
+  if (!key) return { ok: false, error: "No API key provided" };
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 12_000);
+  try {
+    const res = await fetch(`${SHIPDAY_BASE_URL}/orders`, {
+      method: "GET",
+      headers: { Authorization: `Basic ${key}` },
+      signal: ctrl.signal,
+    });
+    if (res.ok) return { ok: true, status: res.status };
+    return {
+      ok: false,
+      status: res.status,
+      error: res.status === 401 || res.status === 403 ? "Invalid API key" : `ShipDay returned ${res.status}`,
+    };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "Network error" };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 type DispatchInput = {
   orderId: string;
   orderNumber: string;

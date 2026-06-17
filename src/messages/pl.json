@@ -742,7 +742,8 @@
       "comingSoonBadge": "Wkrótce",
       "mobileApp": "Aplikacja mobilna",
       "pointOfSale": "Punkt sprzedaży",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integracje"
     },
     "dashboard": {
       "title": "Panel główny",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Najpierw subskrybuj Driver Pool lub wybierz «Własni kierowcy».",
       "toastAddApiKeyFirst": "Najpierw dodaj klucz API ShipDay lub przełącz źródło na «Własni kierowcy».",
       "toastFailedToSave": "Nie udało się zapisać",
-      "toastSaved": "Ustawienia puli kierowców zapisane"
+      "toastSaved": "Ustawienia puli kierowców zapisane",
+      "testConnection": "Testuj połączenie",
+      "testing": "Testowanie…",
+      "testSuccess": "Połączono — Twój klucz Shipday działa.",
+      "testFailed": "Nie można połączyć: {error}",
+      "partnerOfferTitle": "Twoja korzyść partnerska Fee Free Ordering",
+      "partnerOfferBody": "Połącz Shipday przez Fee Free Ordering, a nasz partner Shipday skonfiguruje Cię z około 20% zniżką na standardowy plan, mniej więcej 60 dniami kredytów na pokrycie kosztów startowych i z prowadzonym wdrożeniem — wyłącznie dla restauracji, które dołączają przez nas.",
+      "accountQuestion": "Czy masz konto Shipday?",
+      "accountYes": "Tak, mam",
+      "accountNo": "Nie, potrzebuję",
+      "noAccountConnectNote": "Żaden problem — utwórz bezpłatne konto Shipday, a następnie wróć i wprowadź swój klucz. Gdy włączysz Shipday, przedstawimy Cię naszemu partnerowi Shipday, aby zastosować zniżkę + kredyty i skonfigurować Twoje wdrożenie.",
+      "createAccount": "Utwórz konto Shipday",
+      "haveAccountInstead": "Mam już konto"
     },
     "driverPoolLocked": {
       "addonBadge": "Dodatek",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Punkt sprzedaży na miejscu",
       "body": "Wbudowana kasa na Twoją ladę — przyjmuj zamówienia osobiste i telefoniczne w tym samym systemie co zamówienia online, z jednym menu, jednym zestawem raportów i jedną wypłatą. Jest w trakcie tworzenia."
+    },
+    "integrations": {
+      "title": "Integracje",
+      "subtitle": "Połącz Fee Free Ordering z narzędziami, których już używasz. Wkrótce więcej.",
+      "comingSoon": "Wkrótce",
+      "setUp": "Skonfiguruj",
+      "catMarketing": "Marketing i śledzenie",
+      "catDelivery": "Dostawa",
+      "descTracking": "Dodaj {name} do swojej strony zamówień, aby śledzić odwiedzających i konwersje.",
+      "descDispatch": "Automatycznie wysyłaj zamówienia dostawy do {name} w celu wysyłki i śledzenia na żywo.",
+      "descMarketplace": "Odbieraj i synchronizuj zamówienia z platformy {name}."
     }
   },
   "impersonation": {

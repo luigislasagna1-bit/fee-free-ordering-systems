@@ -42,6 +42,11 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
   const [apiKey, setApiKey] = useState<string>("");
   const [replacingKey, setReplacingKey] = useState(!initial.hasApiKey);
   const [saving, setSaving] = useState(false);
+  const [testing, setTesting] = useState(false);
+  const [testResult, setTestResult] = useState<{ ok: boolean; msg: string } | null>(null);
+  // "Do you have a Shipday account?" gate — a saved key implies yes; otherwise
+  // ask, so a brand-new restaurant is routed to create one. Luigi/Justin 2026-06-17.
+  const [hasAccount, setHasAccount] = useState<"yes" | "no" | null>(initial.hasApiKey ? "yes" : null);
 
   // Shipday is required when source is "shipday" or "both" — surface a
   // soft warning if they pick those without credentials.
@@ -98,6 +103,31 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
       toast.error(e?.message || t("toastFailedToSave"));
     } finally {
       setSaving(false);
+    }
+  }
+
+  // "Test connection" — validate the key against ShipDay WITHOUT placing a real
+  // order. Tests the key being typed (if any), else the saved one. Luigi 2026-06-17.
+  async function testConnection() {
+    if (!driverPoolEntitled) { toast.error(t("toastSubscribeFirst")); return; }
+    setTesting(true);
+    setTestResult(null);
+    try {
+      const res = await fetch("/api/admin/driver-pool/test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ apiKey: apiKey.trim() || undefined }),
+      });
+      const data = await res.json();
+      if (data?.ok) {
+        setTestResult({ ok: true, msg: t("testSuccess") });
+      } else {
+        setTestResult({ ok: false, msg: t("testFailed", { error: data?.error || "Unknown error" }) });
+      }
+    } catch (e: any) {
+      setTestResult({ ok: false, msg: t("testFailed", { error: e?.message || "Network error" }) });
+    } finally {
+      setTesting(false);
     }
   }
 
@@ -171,7 +201,17 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
           description={t("credentialsDescription")}
         >
           <div className="space-y-3">
+            {/* Partner benefit — exclusive to restaurants connecting Shipday
+                THROUGH Fee Free Ordering. Surfaces Justin's offer (≈20% off +
+                ≈60 days credits + guided onboarding) so owners see the value.
+                Luigi/Justin 2026-06-17. */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg px-4 py-3">
+              <div className="text-sm font-bold text-blue-900">{t("partnerOfferTitle")}</div>
+              <p className="text-[13px] text-blue-900/90 mt-1 leading-snug">{t("partnerOfferBody")}</p>
+            </div>
+
             {initial.hasApiKey && !replacingKey ? (
+              /* A key is already saved. */
               <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-3">
                 <div className="flex items-center gap-2 text-sm text-emerald-900">
                   <Check className="w-4 h-4 text-emerald-600" />
@@ -186,7 +226,39 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
                   {t("replaceKey")}
                 </button>
               </div>
+            ) : hasAccount === null ? (
+              /* Account-check gate — CloudWaitress-style "do you have an account?" */
+              <div className="border border-gray-200 rounded-lg px-4 py-3">
+                <div className="text-sm font-medium text-gray-800 mb-2">{t("accountQuestion")}</div>
+                <div className="flex gap-2">
+                  <button type="button" onClick={() => setHasAccount("yes")} className="px-3 py-1.5 rounded-lg text-sm font-semibold border border-gray-300 hover:bg-gray-50">
+                    {t("accountYes")}
+                  </button>
+                  <button type="button" onClick={() => setHasAccount("no")} className="px-3 py-1.5 rounded-lg text-sm font-semibold border border-gray-300 hover:bg-gray-50">
+                    {t("accountNo")}
+                  </button>
+                </div>
+              </div>
+            ) : hasAccount === "no" ? (
+              /* No account — send them to Shipday + explain the partner handoff. */
+              <div className="border border-gray-200 rounded-lg px-4 py-3 space-y-2">
+                <p className="text-[13px] text-gray-700 leading-snug">{t("noAccountConnectNote")}</p>
+                <div className="flex items-center gap-3 flex-wrap">
+                  <a
+                    href="https://www.shipday.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    {t("createAccount")} <ArrowRight className="w-4 h-4" />
+                  </a>
+                  <button type="button" onClick={() => setHasAccount("yes")} className="text-xs text-gray-500 hover:underline">
+                    {t("haveAccountInstead")}
+                  </button>
+                </div>
+              </div>
             ) : (
+              /* Yes, they have an account — enter the API key. */
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
                   {t("apiKeyLabel")}
@@ -214,6 +286,29 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
                 <p className="text-[11px] text-gray-500 mt-2 leading-snug">
                   {t("apiKeyHint")}
                 </p>
+              </div>
+            )}
+
+            {/* Test connection — only when a key is in play (saved or being
+                entered). Confirms the key works WITHOUT placing a real order.
+                (Luigi 2026-06-17 "need to test this".) */}
+            {((initial.hasApiKey && !replacingKey) || hasAccount === "yes") && (
+              <div className="flex items-center gap-3 flex-wrap pt-1">
+                <button
+                  type="button"
+                  onClick={testConnection}
+                  disabled={testing}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold border border-gray-300 hover:bg-gray-50 disabled:opacity-50"
+                >
+                  {testing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Key className="w-4 h-4" />}
+                  {testing ? t("testing") : t("testConnection")}
+                </button>
+                {testResult && (
+                  <span className={`inline-flex items-center gap-1 text-sm font-medium ${testResult.ok ? "text-emerald-700" : "text-rose-700"}`}>
+                    {testResult.ok ? <Check className="w-4 h-4" /> : <X className="w-4 h-4" />}
+                    {testResult.msg}
+                  </span>
+                )}
               </div>
             )}
 

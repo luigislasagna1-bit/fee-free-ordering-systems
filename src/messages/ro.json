@@ -742,7 +742,8 @@
       "comingSoonBadge": "În curând",
       "mobileApp": "Aplicație mobilă",
       "pointOfSale": "Punct de vânzare",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integrări"
     },
     "dashboard": {
       "title": "Panou de control",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Abonează-te mai întâi la Driver Pool sau alege 'Proprii șoferi'.",
       "toastAddApiKeyFirst": "Adaugă mai întâi cheia API ShipDay sau schimbă sursa la 'Proprii șoferi'.",
       "toastFailedToSave": "Salvarea a eșuat",
-      "toastSaved": "Setările pool-ului de șoferi salvate"
+      "toastSaved": "Setările pool-ului de șoferi salvate",
+      "testConnection": "Testează conexiunea",
+      "testing": "Se testează…",
+      "testSuccess": "Conectat — cheia dvs. Shipday funcționează.",
+      "testFailed": "Nu s-a putut conecta: {error}",
+      "partnerOfferTitle": "Beneficiul dvs. de partener Fee Free Ordering",
+      "partnerOfferBody": "Conectați Shipday prin Fee Free Ordering și partenerul nostru Shipday vă configurează cu aproximativ 20% reducere la planul standard, aproximativ 60 de zile de credite pentru acoperirea costurilor de pornire și integrare ghidată — exclusiv pentru restaurantele care ni se alătură prin noi.",
+      "accountQuestion": "Aveți un cont Shipday?",
+      "accountYes": "Da, am unul",
+      "accountNo": "Nu, am nevoie de unul",
+      "noAccountConnectNote": "Nicio problemă — creați-vă contul Shipday gratuit, apoi reveniți și introduceți cheia dvs. Când activați Shipday, vă vom prezenta partenerului nostru Shipday pentru a aplica reducerea + creditele și a vă configura integrarea.",
+      "createAccount": "Creați un cont Shipday",
+      "haveAccountInstead": "Am deja un cont"
     },
     "driverPoolLocked": {
       "addonBadge": "Supliment",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Punct de vânzare la fața locului",
       "body": "O casă de marcat la punctul de vânzare, integrată pentru tejgheaua ta — înregistrează comenzile la fața locului și telefonice în același sistem ca cele online, cu un singur meniu, un singur set de rapoarte și o singură plată. În curs de dezvoltare."
+    },
+    "integrations": {
+      "title": "Integrări",
+      "subtitle": "Conectați Fee Free Ordering la instrumentele pe care le folosiți deja. Mai multe în curând.",
+      "comingSoon": "În curând",
+      "setUp": "Configurare",
+      "catMarketing": "Marketing și urmărire",
+      "catDelivery": "Livrare",
+      "descTracking": "Adăugați {name} pe site-ul dvs. de comenzi pentru a urmări vizitatorii și conversiile.",
+      "descDispatch": "Trimiteți automat comenzile de livrare către {name} pentru expediere și urmărire în timp real.",
+      "descMarketplace": "Primiți și sincronizați comenzile din piața {name}."
     }
   },
   "impersonation": {

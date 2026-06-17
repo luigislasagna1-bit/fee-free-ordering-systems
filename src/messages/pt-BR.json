@@ -742,7 +742,8 @@
       "comingSoonBadge": "Em breve",
       "mobileApp": "App móvel",
       "pointOfSale": "Ponto de venda",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integrações"
     },
     "dashboard": {
       "title": "Painel",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Assine o Driver Pool primeiro, ou escolha «Motoristas próprios».",
       "toastAddApiKeyFirst": "Adicione sua chave de API do ShipDay primeiro, ou mude a fonte para «Motoristas próprios».",
       "toastFailedToSave": "Falha ao salvar",
-      "toastSaved": "Configurações do pool de motoristas salvas"
+      "toastSaved": "Configurações do pool de motoristas salvas",
+      "testConnection": "Testar conexão",
+      "testing": "Testando…",
+      "testSuccess": "Conectado — sua chave do Shipday funciona.",
+      "testFailed": "Não foi possível conectar: {error}",
+      "partnerOfferTitle": "Seu benefício de parceiro Fee Free Ordering",
+      "partnerOfferBody": "Conecte o Shipday pelo Fee Free Ordering e nosso parceiro Shipday te configura com cerca de 20% de desconto no plano padrão, aproximadamente 60 dias de créditos para cobrir os custos iniciais e integração guiada — exclusivo para restaurantes que se juntam através de nós.",
+      "accountQuestion": "Você tem uma conta no Shipday?",
+      "accountYes": "Sim, tenho um",
+      "accountNo": "Não, preciso de um",
+      "noAccountConnectNote": "Sem problema — crie sua conta gratuita no Shipday, depois volte e insira sua chave. Quando você ativar o Shipday, vamos te apresentar ao nosso parceiro Shipday para aplicar o desconto + créditos e configurar seu onboarding.",
+      "createAccount": "Criar uma conta no Shipday",
+      "haveAccountInstead": "Já tenho uma conta"
     },
     "driverPoolLocked": {
       "addonBadge": "Complemento",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Ponto de venda no local",
       "body": "Uma caixa registradora de ponto de venda integrada para o seu balcão — registre pedidos presenciais e por telefone no mesmo sistema dos seus pedidos on-line, com um único cardápio, um único conjunto de relatórios e um único repasse. Em desenvolvimento."
+    },
+    "integrations": {
+      "title": "Integrações",
+      "subtitle": "Conecte o Fee Free Ordering às ferramentas que você já usa. Mais em breve.",
+      "comingSoon": "Em breve",
+      "setUp": "Configurar",
+      "catMarketing": "Marketing e rastreamento",
+      "catDelivery": "Entrega",
+      "descTracking": "Adicione {name} ao seu site de pedidos para rastrear visitantes e conversões.",
+      "descDispatch": "Envie automaticamente os pedidos de entrega para {name} para despacho e rastreamento ao vivo.",
+      "descMarketplace": "Receba e sincronize pedidos do marketplace {name}."
     }
   },
   "impersonation": {

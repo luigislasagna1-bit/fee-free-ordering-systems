@@ -742,7 +742,8 @@
       "comingSoonBadge": "Drīzumā",
       "mobileApp": "Mobilā lietotne",
       "pointOfSale": "Pārdošanas punkts",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integrācijas"
     },
     "dashboard": {
       "title": "Panelis",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Vispirms abonējiet Vadītāju kopu vai izvēlieties 'Savi vadītāji'.",
       "toastAddApiKeyFirst": "Vispirms pievienojiet savu ShipDay API atslēgu vai pārslēdzieties uz 'Savi vadītāji'.",
       "toastFailedToSave": "Neizdevās saglabāt",
-      "toastSaved": "Vadītāju kopas iestatījumi saglabāti"
+      "toastSaved": "Vadītāju kopas iestatījumi saglabāti",
+      "testConnection": "Pārbaudīt savienojumu",
+      "testing": "Pārbauda…",
+      "testSuccess": "Savienots — jūsu Shipday atslēga darbojas.",
+      "testFailed": "Neizdevās izveidot savienojumu: {error}",
+      "partnerOfferTitle": "Jūsu Fee Free Ordering partnera priekšrocība",
+      "partnerOfferBody": "Savienojiet Shipday caur Fee Free Ordering un mūsu Shipday partneris jūs iestata ar aptuveni 20% atlaidi standarta plānam, aptuveni 60 dienu kredītiem lai segtu startēšanas izmaksas un vadītu ievadapmācību — ekskluzīvi restorāniem, kas pievienojas caur mums.",
+      "accountQuestion": "Vai jums ir Shipday konts?",
+      "accountYes": "Jā, man ir",
+      "accountNo": "Nē, man tas vajadzīgs",
+      "noAccountConnectNote": "Nekas — izveidojiet savu bezmaksas Shipday kontu, pēc tam atgriezieties un ievadiet savu atslēgu. Kad ieslēgsit Shipday, iepazīstināsim jūs ar mūsu Shipday partneri, lai piemērotu atlaidi + kredītus un iestatītu jūsu ievadapmācību.",
+      "createAccount": "Izveidot Shipday kontu",
+      "haveAccountInstead": "Man jau ir konts"
     },
     "driverPoolLocked": {
       "addonBadge": "Papildinājums",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Pārdošanas punkts uz vietas",
       "body": "Iebūvēta POS kase jūsu letei — reģistrējiet klātienes un telefona pasūtījumus tajā pašā sistēmā, kurā tiešsaistes pasūtījumus, ar vienu ēdienkarti, vienu atskaišu kopumu un vienu izmaksu. Tiek izstrādāta."
+    },
+    "integrations": {
+      "title": "Integrācijas",
+      "subtitle": "Savienojiet Fee Free Ordering ar rīkiem, ko jau izmantojat. Drīzumā būs vairāk.",
+      "comingSoon": "Drīzumā",
+      "setUp": "Iestatīt",
+      "catMarketing": "Mārketings un izsekošana",
+      "catDelivery": "Piegāde",
+      "descTracking": "Pievienojiet {name} savam pasūtījumu vietnei, lai izsekotu apmeklētājus un konversijas.",
+      "descDispatch": "Automātiski nosūtiet piegādes pasūtījumus uz {name} nosūtīšanai un tiešraides izsekošanai.",
+      "descMarketplace": "Saņemiet un sinhronizējiet pasūtījumus no {name} tirgus."
     }
   },
   "impersonation": {

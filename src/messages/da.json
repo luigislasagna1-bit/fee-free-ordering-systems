@@ -742,7 +742,8 @@
       "comingSoonBadge": "Snart",
       "mobileApp": "Mobilapp",
       "pointOfSale": "Kassesystem",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integrationer"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Abonner på Driver Pool først, eller vælg 'Egne chauffører'.",
       "toastAddApiKeyFirst": "Tilføj din ShipDay API-nøgle først, eller skift kilde til 'Egne chauffører'.",
       "toastFailedToSave": "Kunne ikke gemme",
-      "toastSaved": "Chaufførpuljeindstillinger gemt"
+      "toastSaved": "Chaufførpuljeindstillinger gemt",
+      "testConnection": "Test forbindelse",
+      "testing": "Tester…",
+      "testSuccess": "Forbundet — din Shipday-nøgle virker.",
+      "testFailed": "Kunne ikke oprette forbindelse: {error}",
+      "partnerOfferTitle": "Din Fee Free Ordering partnerfordel",
+      "partnerOfferBody": "Tilslut Shipday via Fee Free Ordering, og vores Shipday-partner opsætter dig med cirka 20% rabat på standardplanen, cirka 60 dages kreditter til dækning af startomkostninger og guidet introduktion — eksklusivt for restauranter, der tilslutter sig via os.",
+      "accountQuestion": "Har du en Shipday-konto?",
+      "accountYes": "Ja, jeg har et",
+      "accountNo": "Nej, jeg har brug for et",
+      "noAccountConnectNote": "Intet problem — opret din gratis Shipday-konto, kom derefter tilbage og indtast din nøgle. Når du tænder for Shipday, præsenterer vi dig for vores Shipday-partner for at anvende rabatten + kreditterne og konfigurere din introduktion.",
+      "createAccount": "Opret en Shipday-konto",
+      "haveAccountInstead": "Jeg har allerede en konto"
     },
     "driverPoolLocked": {
       "addonBadge": "Tilvalg",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Kassesystem på stedet",
       "body": "En indbygget kasse til din disk — slå walk-in- og telefonordrer op i samme system som dine onlineordrer, med én menu, ét sæt rapporter og én udbetaling. Den er under udvikling."
+    },
+    "integrations": {
+      "title": "Integrationer",
+      "subtitle": "Forbind Fee Free Ordering til de værktøjer, du allerede bruger. Flere kommer snart.",
+      "comingSoon": "Kommer snart",
+      "setUp": "Opsæt",
+      "catMarketing": "Marketing og sporing",
+      "catDelivery": "Levering",
+      "descTracking": "Tilføj {name} til dit bestillingssite for at spore besøgende og konverteringer.",
+      "descDispatch": "Send automatisk leveringsordrer til {name} til afsendelse og live-sporing.",
+      "descMarketplace": "Modtag og synkroniser bestillinger fra {name}-markedspladsen."
     }
   },
   "impersonation": {

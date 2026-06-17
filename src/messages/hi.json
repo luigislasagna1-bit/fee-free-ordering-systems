@@ -765,7 +765,8 @@
       "comingSoonBadge": "जल्द ही",
       "mobileApp": "मोबाइल ऐप",
       "pointOfSale": "पॉइंट ऑफ सेल",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "इंटीग्रेशन"
     },
     "dashboard": {
       "title": "डैशबोर्ड",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "पहले Driver Pool की सदस्यता लें, या 'अपने ड्राइवर' चुनें।",
       "toastAddApiKeyFirst": "पहले अपनी ShipDay API कुंजी जोड़ें, या स्रोत को 'अपने ड्राइवर' पर स्विच करें।",
       "toastFailedToSave": "सहेजने में विफल",
-      "toastSaved": "Driver pool सेटिंग सहेजी गई"
+      "toastSaved": "Driver pool सेटिंग सहेजी गई",
+      "testConnection": "कनेक्शन परीक्षण करें",
+      "testing": "परीक्षण हो रहा है…",
+      "testSuccess": "कनेक्ट हो गया — आपकी Shipday कुंजी काम करती है।",
+      "testFailed": "कनेक्ट नहीं हो सका: {error}",
+      "partnerOfferTitle": "आपका Fee Free Ordering पार्टनर लाभ",
+      "partnerOfferBody": "Fee Free Ordering के माध्यम से Shipday से कनेक्ट करें और हमारा Shipday पार्टनर आपको स्टैंडर्ड प्लान पर लगभग 20% की छूट, स्टार्टअप लागत को कवर करने के लिए लगभग 60 दिनों के क्रेडिट, और गाइडेड ऑनबोर्डिंग के साथ सेट करता है — केवल उन रेस्तरां के लिए जो हमारे माध्यम से जुड़ते हैं।",
+      "accountQuestion": "क्या आपके पास Shipday अकाउंट है?",
+      "accountYes": "हाँ, मेरे पास है",
+      "accountNo": "नहीं, मुझे एक चाहिए",
+      "noAccountConnectNote": "कोई समस्या नहीं — अपना मुफ़्त Shipday अकाउंट बनाएं, फिर वापस आएं और अपनी कुंजी दर्ज करें। जब आप Shipday चालू करते हैं, तो हम आपको हमारे Shipday पार्टनर से मिलवाएंगे ताकि छूट + क्रेडिट लागू किए जा सकें और आपका ऑनबोर्डिंग सेट किया जा सके।",
+      "createAccount": "Shipday अकाउंट बनाएं",
+      "haveAccountInstead": "मेरे पास पहले से एक अकाउंट है"
     },
     "brandDashboard": {
       "brandDashboardBadge": "ब्रांड डैशबोर्ड",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "इन-हाउस पॉइंट ऑफ सेल",
       "body": "आपके काउंटर के लिए एक अंतर्निहित point-of-sale रजिस्टर — वॉक-इन और फ़ोन ऑर्डर को अपने ऑनलाइन ऑर्डर वाले उसी सिस्टम पर बिल करें, एक मेन्यू, एक ही रिपोर्ट सेट और एक ही पेआउट के साथ। यह विकासाधीन है।"
+    },
+    "integrations": {
+      "title": "इंटीग्रेशन",
+      "subtitle": "Fee Free Ordering को उन टूल्स से कनेक्ट करें जिनका आप पहले से उपयोग करते हैं। जल्द ही और भी आएगा।",
+      "comingSoon": "जल्द आ रहा है",
+      "setUp": "सेट अप करें",
+      "catMarketing": "मार्केटिंग और ट्रैकिंग",
+      "catDelivery": "डिलीवरी",
+      "descTracking": "आगंतुकों और रूपांतरणों को ट्रैक करने के लिए {name} को अपनी ऑर्डरिंग साइट में जोड़ें।",
+      "descDispatch": "डिलीवरी ऑर्डर को स्वचालित रूप से {name} को डिस्पैच और लाइव ट्रैकिंग के लिए भेजें।",
+      "descMarketplace": "{name} मार्केटप्लेस से ऑर्डर प्राप्त करें और सिंक करें।"
     }
   },
   "impersonation": {

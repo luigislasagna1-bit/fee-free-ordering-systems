@@ -540,18 +540,16 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
           {readyCountdown && !["pending", "rejected", "cancelled", "completed", "refunded", "no_show"].includes(order.status) && !(order as any).manuallyClearedAt && !(hideZeroCountdown && countdownIsPast) && (
             <div className="mt-1 text-right">
               <div
-                className={`text-base font-semibold tabular-nums leading-none whitespace-nowrap ${
-                  // Day-away ("Thursday") and hours-away orders render in a
-                  // calmer sky tone so staff instantly read "this is far out,
-                  // not imminent"; minute timers keep the normal emphatic
-                  // colour. (Reports 2026-06-04 / 2026-06-05.)
-                  readyCountdown.kind === "hours" || readyCountdown.kind === "day"
-                    ? "text-sky-600 dark:text-sky-300"
-                    : t.text
-                }`}
+                // ALL countdowns — minute timers included — render in the same
+                // sky tone as the day-of-week chips so the "ready in" time reads
+                // one consistent colour. (Luigi 2026-06-17: match the timer to
+                // the day-of-week colour.)
+                className="text-base font-semibold tabular-nums leading-none whitespace-nowrap text-sky-600 dark:text-sky-300"
                 title="Promised ready time"
               >
-                {readyCountdown.text}
+                {/* Day-of-week labels (>24h out) in block capitals — "GIOVEDÌ" —
+                    keeping the sky colour; numeric countdowns left as-is. */}
+                {readyCountdown.kind === "day" ? readyCountdown.text.toUpperCase() : readyCountdown.text}
               </div>
               {!countdownIsPast && (
                 <div className={`text-[10px] uppercase tracking-wider mt-0.5 ${t.muted}`}>

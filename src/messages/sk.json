@@ -742,7 +742,8 @@
       "comingSoonBadge": "Čoskoro",
       "mobileApp": "Mobilná aplikácia",
       "pointOfSale": "Pokladničný systém",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integrácie"
     },
     "dashboard": {
       "title": "Prehľad",
@@ -1965,7 +1966,19 @@
       "toastSubscribeFirst": "Najprv sa prihláste na odber Driver Pool alebo vyberte „Vlastní vodiči”.",
       "toastAddApiKeyFirst": "Najprv pridajte API kľúč ShipDay alebo prepnite zdroj na „Vlastní vodiči”.",
       "toastFailedToSave": "Uloženie zlyhalo",
-      "toastSaved": "Nastavenia Driver Pool uložené"
+      "toastSaved": "Nastavenia Driver Pool uložené",
+      "testConnection": "Testovať pripojenie",
+      "testing": "Testovanie…",
+      "testSuccess": "Pripojené — váš kľúč Shipday funguje.",
+      "testFailed": "Nepodarilo sa pripojiť: {error}",
+      "partnerOfferTitle": "Váš partnerský benefit Fee Free Ordering",
+      "partnerOfferBody": "Pripojte Shipday cez Fee Free Ordering a náš partner Shipday vás nastaví s približne 20% zľavou na štandardný plán, zhruba 60 dňami kreditov na pokrytie nákladov na spustenie a riadeným zavádzaním — výhradne pre reštaurácie, ktoré sa pripoja cez nás.",
+      "accountQuestion": "Máte účet Shipday?",
+      "accountYes": "Áno, mám",
+      "accountNo": "Nie, potrebujem",
+      "noAccountConnectNote": "Žiadny problém — vytvorte si bezplatný účet Shipday, potom sa vráťte a zadajte svoj kľúč. Keď zapnete Shipday, predstavíme vás nášmu partnerovi Shipday, aby uplatnil zľavu + kredity a nastavil vaše zavádzanie.",
+      "createAccount": "Vytvoriť účet Shipday",
+      "haveAccountInstead": "Už mám účet"
     },
     "driverPoolLocked": {
       "addonBadge": "Doplnok",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Vlastný pokladničný systém",
       "body": "Vstavaná pokladnica pre váš pult — účtujte objednávky na mieste aj cez telefón v rovnakom systéme ako tie online, s jedným menu, jednou sadou prehľadov a jednou výplatou. Je vo vývoji."
+    },
+    "integrations": {
+      "title": "Integrácie",
+      "subtitle": "Prepojte Fee Free Ordering s nástrojmi, ktoré už používate. Čoskoro pribudne viac.",
+      "comingSoon": "Čoskoro",
+      "setUp": "Nastaviť",
+      "catMarketing": "Marketing a sledovanie",
+      "catDelivery": "Doručenie",
+      "descTracking": "Pridajte {name} na svoju objednávkovú stránku a sledujte návštevníkov a konverzie.",
+      "descDispatch": "Automaticky posielajte objednávky doručenia do {name} na odoslanie a sledovanie v reálnom čase.",
+      "descMarketplace": "Prijímajte a synchronizujte objednávky z trhoviska {name}."
     }
   },
   "impersonation": {

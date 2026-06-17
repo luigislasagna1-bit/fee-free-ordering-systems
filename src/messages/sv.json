@@ -742,7 +742,8 @@
       "comingSoonBadge": "Snart",
       "mobileApp": "Mobilapp",
       "pointOfSale": "Kassasystem",
-      "kitchenOrderApp": "Kitchen Order App"
+      "kitchenOrderApp": "Kitchen Order App",
+      "integrations": "Integrationer"
     },
     "dashboard": {
       "title": "Instrumentpanel",
@@ -2808,7 +2809,19 @@
       "toastSubscribeFirst": "Prenumerera på Chaufförspool först, eller välj 'Egna chaufförer'.",
       "toastAddApiKeyFirst": "Lägg till din ShipDay API-nyckel först, eller byt källa till 'Egna chaufförer'.",
       "toastFailedToSave": "Det gick inte att spara",
-      "toastSaved": "Inställningar för chaufförspool sparade"
+      "toastSaved": "Inställningar för chaufförspool sparade",
+      "testConnection": "Testa anslutning",
+      "testing": "Testar…",
+      "testSuccess": "Ansluten — din Shipday-nyckel fungerar.",
+      "testFailed": "Kunde inte ansluta: {error}",
+      "partnerOfferTitle": "Din Fee Free Ordering partnerförmån",
+      "partnerOfferBody": "Anslut Shipday via Fee Free Ordering så konfigurerar vår Shipday-partner dig med ungefär 20% rabatt på standardplanen, ungefär 60 dagars krediter för att täcka startkostnader och guidad introduktion — exklusivt för restauranger som ansluter via oss.",
+      "accountQuestion": "Har du ett Shipday-konto?",
+      "accountYes": "Ja, jag har ett",
+      "accountNo": "Nej, jag behöver ett",
+      "noAccountConnectNote": "Inga problem — skapa ditt kostnadsfria Shipday-konto, kom sedan tillbaka och ange din nyckel. När du aktiverar Shipday presenterar vi dig för vår Shipday-partner för att tillämpa rabatten + krediterna och konfigurera din introduktion.",
+      "createAccount": "Skapa ett Shipday-konto",
+      "haveAccountInstead": "Jag har redan ett konto"
     },
     "driverPoolLocked": {
       "addonBadge": "Tillägg",
@@ -3937,6 +3950,17 @@
     "posPage": {
       "subtitle": "Kassasystem på plats",
       "body": "En inbyggd kassaregister för din disk — slå in besöks- och telefonbeställningar i samma system som dina onlinebeställningar, med en meny, en uppsättning rapporter och en utbetalning. Den är under utveckling."
+    },
+    "integrations": {
+      "title": "Integrationer",
+      "subtitle": "Anslut Fee Free Ordering till de verktyg du redan använder. Fler kommer snart.",
+      "comingSoon": "Kommer snart",
+      "setUp": "Konfigurera",
+      "catMarketing": "Marknadsföring och spårning",
+      "catDelivery": "Leverans",
+      "descTracking": "Lägg till {name} på din beställningssajt för att spåra besökare och konverteringar.",
+      "descDispatch": "Skicka automatiskt leveransbeställningar till {name} för avsändning och livespårning.",
+      "descMarketplace": "Ta emot och synkronisera beställningar från {name}-marknadsplatsen."
     }
   },
   "impersonation": {
