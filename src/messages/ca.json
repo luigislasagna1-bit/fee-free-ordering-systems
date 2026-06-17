@@ -3960,7 +3960,13 @@
       "catDelivery": "Lliurament",
       "descTracking": "Afegiu {name} al vostre lloc de comandes per fer el seguiment dels visitants i les conversions.",
       "descDispatch": "Envieu automàticament les comandes de lliurament a {name} per a l'expedició i el seguiment en viu.",
-      "descMarketplace": "Rebeu i sincronitzeu les comandes del marketplace {name}."
+      "descMarketplace": "Rebeu i sincronitzeu les comandes del marketplace {name}.",
+      "save": "Desa",
+      "pixelHint": "Trobeu el vostre Pixel ID a Meta Events Manager → Data Sources.",
+      "gaHint": "Trobeu el vostre Measurement ID a Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "Seguiment desat — ara és actiu a la vostra pàgina de comandes.",
+      "trackingCleared": "Seguiment eliminat.",
+      "trackingConsentNote": "Sou responsable de divulgar aquest seguiment a l'avís de privacitat/galetes del vostre lloc."
     }
   },
   "impersonation": {

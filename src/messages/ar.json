@@ -3960,7 +3960,13 @@
       "catDelivery": "التوصيل",
       "descTracking": "أضف {name} إلى موقع الطلبات الخاص بك لتتبع الزوار والتحويلات.",
       "descDispatch": "أرسل طلبات التوصيل تلقائيًا إلى {name} للإرسال والتتبع المباشر.",
-      "descMarketplace": "استقبل وزامن الطلبات من سوق {name}."
+      "descMarketplace": "استقبل وزامن الطلبات من سوق {name}.",
+      "save": "حفظ",
+      "pixelHint": "ابحث عن Pixel ID الخاص بك في Meta Events Manager → Data Sources.",
+      "gaHint": "ابحث عن Measurement ID الخاص بك في Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "تم حفظ التتبع — إنه الآن نشط على صفحة الطلب الخاصة بك.",
+      "trackingCleared": "تم إزالة التتبع.",
+      "trackingConsentNote": "أنت مسؤول عن الإفصاح عن هذا التتبع في إشعار الخصوصية/ملفات تعريف الارتباط الخاص بموقعك."
     }
   },
   "impersonation": {

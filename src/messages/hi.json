@@ -3960,7 +3960,13 @@
       "catDelivery": "डिलीवरी",
       "descTracking": "आगंतुकों और रूपांतरणों को ट्रैक करने के लिए {name} को अपनी ऑर्डरिंग साइट में जोड़ें।",
       "descDispatch": "डिलीवरी ऑर्डर को स्वचालित रूप से {name} को डिस्पैच और लाइव ट्रैकिंग के लिए भेजें।",
-      "descMarketplace": "{name} मार्केटप्लेस से ऑर्डर प्राप्त करें और सिंक करें।"
+      "descMarketplace": "{name} मार्केटप्लेस से ऑर्डर प्राप्त करें और सिंक करें।",
+      "save": "सहेजें",
+      "pixelHint": "अपना Pixel ID Meta Events Manager → Data Sources में खोजें।",
+      "gaHint": "अपना Measurement ID Google Analytics → Admin → Data Streams में खोजें।",
+      "trackingSaved": "ट्रैकिंग सहेजी गई — यह अब आपके ऑर्डर पेज पर सक्रिय है।",
+      "trackingCleared": "ट्रैकिंग हटा दी गई।",
+      "trackingConsentNote": "आप अपनी साइट के गोपनीयता/कुकी नोटिस में इस ट्रैकिंग का खुलासा करने के लिए जिम्मेदार हैं।"
     }
   },
   "impersonation": {

@@ -3960,7 +3960,13 @@
       "catDelivery": "Levering",
       "descTracking": "Legg til {name} på bestillingssiden din for å spore besøkende og konverteringer.",
       "descDispatch": "Send leveringsordrer automatisk til {name} for utsending og live-sporing.",
-      "descMarketplace": "Motta og synkroniser bestillinger fra {name}-markedsplassen."
+      "descMarketplace": "Motta og synkroniser bestillinger fra {name}-markedsplassen.",
+      "save": "Lagre",
+      "pixelHint": "Finn Pixel ID-en din i Meta Events Manager → Data Sources.",
+      "gaHint": "Finn Measurement ID-en din i Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "Sporing lagret — den er nå aktiv på bestillingssiden din.",
+      "trackingCleared": "Sporing fjernet.",
+      "trackingConsentNote": "Du er ansvarlig for å opplyse om denne sporingen i personvern-/informasjonskapselvarselet på nettstedet ditt."
     }
   },
   "impersonation": {

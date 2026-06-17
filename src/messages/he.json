@@ -3960,7 +3960,13 @@
       "catDelivery": "משלוח",
       "descTracking": "הוסף את {name} לאתר ההזמנות שלך כדי לעקוב אחר מבקרים והמרות.",
       "descDispatch": "שלח הזמנות משלוח אוטומטית אל {name} לשיגור ומעקב בזמן אמת.",
-      "descMarketplace": "קבל וסנכרן הזמנות מהשוק {name}."
+      "descMarketplace": "קבל וסנכרן הזמנות מהשוק {name}.",
+      "save": "שמור",
+      "pixelHint": "מצא את Pixel ID שלך ב-Meta Events Manager → Data Sources.",
+      "gaHint": "מצא את Measurement ID שלך ב-Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "המעקב נשמר — הוא פעיל כעת בדף ההזמנות שלך.",
+      "trackingCleared": "המעקב הוסר.",
+      "trackingConsentNote": "אתה אחראי לגלות מעקב זה בהודעת הפרטיות/עוגיות של האתר שלך."
     }
   },
   "impersonation": {

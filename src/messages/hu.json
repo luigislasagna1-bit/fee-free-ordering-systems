@@ -3960,7 +3960,13 @@
       "catDelivery": "Kiszállítás",
       "descTracking": "Adja hozzá a {name} elemet a rendelési oldalához a látogatók és a konverziók nyomon követéséhez.",
       "descDispatch": "Automatikusan küldje a szállítási rendeléseket a {name} részére az expedicióhoz és az élő követéshez.",
-      "descMarketplace": "Fogadja és szinkronizálja a rendeléseket a {name} piactérről."
+      "descMarketplace": "Fogadja és szinkronizálja a rendeléseket a {name} piactérről.",
+      "save": "Mentés",
+      "pixelHint": "Keresse Pixel ID-jét a Meta Events Manager → Data Sources menüpontban.",
+      "gaHint": "Keresse Measurement ID-jét a Google Analytics → Admin → Data Streams menüpontban.",
+      "trackingSaved": "Követés mentve — most már aktív a rendelési oldalán.",
+      "trackingCleared": "Követés eltávolítva.",
+      "trackingConsentNote": "Ön felelős azért, hogy ezt a követést közzétegye webhelye adatvédelmi/cookie-értesítőjében."
     }
   },
   "impersonation": {

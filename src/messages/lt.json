@@ -3960,7 +3960,13 @@
       "catDelivery": "Pristatymas",
       "descTracking": "Pridėkite {name} prie savo užsakymų svetainės, kad galėtumėte stebėti lankytojus ir konversijas.",
       "descDispatch": "Automatiškai siųskite pristatymo užsakymus į {name} išsiuntimui ir stebėjimui realiuoju laiku.",
-      "descMarketplace": "Gaukite ir sinchronizuokite užsakymus iš {name} rinkos."
+      "descMarketplace": "Gaukite ir sinchronizuokite užsakymus iš {name} rinkos.",
+      "save": "Išsaugoti",
+      "pixelHint": "Raskite savo Pixel ID Meta Events Manager → Data Sources.",
+      "gaHint": "Raskite savo Measurement ID Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "Stebėjimas išsaugotas — dabar jis aktyvus jūsų užsakymų puslapyje.",
+      "trackingCleared": "Stebėjimas pašalintas.",
+      "trackingConsentNote": "Jūs esate atsakingas už šio stebėjimo atskleidimą savo svetainės privatumo/slapukų pranešime."
     }
   },
   "impersonation": {

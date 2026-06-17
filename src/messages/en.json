@@ -3960,7 +3960,13 @@
       "catDelivery": "Delivery",
       "descTracking": "Add {name} to your ordering site to track visitors and conversions.",
       "descDispatch": "Automatically send delivery orders to {name} for dispatch and live tracking.",
-      "descMarketplace": "Receive and sync orders from the {name} marketplace."
+      "descMarketplace": "Receive and sync orders from the {name} marketplace.",
+      "save": "Save",
+      "pixelHint": "Find your Pixel ID in Meta Events Manager → Data Sources.",
+      "gaHint": "Find your Measurement ID in Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "Tracking saved — it's now active on your ordering page.",
+      "trackingCleared": "Tracking removed.",
+      "trackingConsentNote": "You're responsible for disclosing this tracking in your site's privacy/cookie notice."
     }
   },
   "impersonation": {

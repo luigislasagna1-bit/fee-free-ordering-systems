@@ -3960,7 +3960,13 @@
       "catDelivery": "Dostava",
       "descTracking": "Dodajte {name} na svoju stranicu za narudžbe kako biste pratili posetioce i konverzije.",
       "descDispatch": "Automatski šaljite narudžbe dostave na {name} za otpremu i praćenje u realnom vremenu.",
-      "descMarketplace": "Primajte i sinhronizujte narudžbe sa tržišta {name}."
+      "descMarketplace": "Primajte i sinhronizujte narudžbe sa tržišta {name}.",
+      "save": "Сачувај",
+      "pixelHint": "Пронађите свој Pixel ID у Meta Events Manager → Data Sources.",
+      "gaHint": "Пронађите свој Measurement ID у Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "Праћење сачувано — сада је активно на вашој страни за наручивање.",
+      "trackingCleared": "Праћење уклоњено.",
+      "trackingConsentNote": "Ви сте одговорни за обелодањивање овог праћења у обавештењу о приватности/колачићима вашег сајта."
     }
   },
   "impersonation": {

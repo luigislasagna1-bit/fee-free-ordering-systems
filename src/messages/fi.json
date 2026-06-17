@@ -3960,7 +3960,13 @@
       "catDelivery": "Toimitus",
       "descTracking": "Lisää {name} tilaussivustollesi seurataksesi kävijöitä ja konversioita.",
       "descDispatch": "Lähetä toimitustilaukset automaattisesti {name}:lle lähetystä ja reaaliaikaista seurantaa varten.",
-      "descMarketplace": "Vastaanota ja synkronoi tilaukset {name}-markkinapaikalta."
+      "descMarketplace": "Vastaanota ja synkronoi tilaukset {name}-markkinapaikalta.",
+      "save": "Tallenna",
+      "pixelHint": "Löydät Pixel ID:n Meta Events Manager → Data Sources -osiosta.",
+      "gaHint": "Löydät Measurement ID:n Google Analytics → Admin → Data Streams -osiosta.",
+      "trackingSaved": "Seuranta tallennettu — se on nyt aktiivinen tilaussivullasi.",
+      "trackingCleared": "Seuranta poistettu.",
+      "trackingConsentNote": "Olet vastuussa tämän seurannan ilmoittamisesta sivustosi tietosuoja-/evästeilmoituksessa."
     }
   },
   "impersonation": {

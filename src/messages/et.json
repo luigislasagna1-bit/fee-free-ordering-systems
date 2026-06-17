@@ -3960,7 +3960,13 @@
       "catDelivery": "Tarne",
       "descTracking": "Lisage {name} oma tellimissaidile, et jälgida külastajaid ja konversioone.",
       "descDispatch": "Saatke tarnetellimused automaatselt {name} aadressile lähetamiseks ja reaalajas jälgimiseks.",
-      "descMarketplace": "Võtke vastu ja sünkroonige tellimused {name} turul."
+      "descMarketplace": "Võtke vastu ja sünkroonige tellimused {name} turul.",
+      "save": "Salvesta",
+      "pixelHint": "Leidke oma Pixel ID Meta Events Manager → Data Sources alt.",
+      "gaHint": "Leidke oma Measurement ID Google Analytics → Admin → Data Streams alt.",
+      "trackingSaved": "Jälgimine salvestatud — see on nüüd aktiivne teie tellimislehel.",
+      "trackingCleared": "Jälgimine eemaldatud.",
+      "trackingConsentNote": "Olete vastutav selle jälgimise avalikustamise eest oma saidi privaatsus-/küpsiseteates."
     }
   },
   "impersonation": {

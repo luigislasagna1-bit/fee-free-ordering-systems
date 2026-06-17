@@ -3960,7 +3960,13 @@
       "catDelivery": "Teslimat",
       "descTracking": "Ziyaretçileri ve dönüşümleri takip etmek için {name}'i sipariş sitenize ekleyin.",
       "descDispatch": "Teslimat siparişlerini sevkiyat ve canlı takip için otomatik olarak {name}'e gönderin.",
-      "descMarketplace": "{name} pazaryerinden siparişleri alın ve senkronize edin."
+      "descMarketplace": "{name} pazaryerinden siparişleri alın ve senkronize edin.",
+      "save": "Kaydet",
+      "pixelHint": "Pixel ID'nizi Meta Events Manager → Data Sources bölümünde bulabilirsiniz.",
+      "gaHint": "Measurement ID'nizi Google Analytics → Admin → Data Streams bölümünde bulabilirsiniz.",
+      "trackingSaved": "Takip kaydedildi — sipariş sayfanızda artık aktif.",
+      "trackingCleared": "Takip kaldırıldı.",
+      "trackingConsentNote": "Bu takibi sitenizin gizlilik/çerez bildiriminde açıklamaktan siz sorumlusunuz."
     }
   },
   "impersonation": {

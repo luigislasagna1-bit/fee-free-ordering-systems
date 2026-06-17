@@ -28,6 +28,7 @@ export async function generateMetadata(
   };
 }
 import { VisitTracker } from "@/components/order/VisitTracker";
+import { TrackingScripts } from "@/components/order/TrackingScripts";
 import { isSupportedLocale, type Locale } from "@/i18n/request";
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
@@ -423,6 +424,12 @@ export default async function OrderingPage({
           Website Visits + Website Funnel reports have data to render.
           Renders null; safe to mount alongside the order client. */}
       <VisitTracker restaurantId={restaurant.id} />
+      {/* Owner-configured Facebook Pixel + Google Analytics (Integrations page).
+          Injects only what they've set; no-op otherwise. Luigi 2026-06-17. */}
+      <TrackingScripts
+        facebookPixelId={(restaurant as any).facebookPixelId}
+        googleAnalyticsId={(restaurant as any).googleAnalyticsId}
+      />
       <OrderingPageClient
         restaurant={restaurant as any}
         cardPaymentEnabled={cardPaymentEnabled}

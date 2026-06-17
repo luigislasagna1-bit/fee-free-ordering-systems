@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { BarChart3, Truck, ArrowRight, CheckCircle2, Lock } from "lucide-react";
+import { IntegrationTrackingCard } from "./IntegrationTrackingCard";
 
 // Auth-gated + reads the restaurant's Shipday status — never cache.
 export const dynamic = "force-dynamic";
@@ -49,7 +50,7 @@ export default async function IntegrationsPage() {
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: user.restaurantId },
-    select: { shipdayConfig: { select: { id: true } } },
+    select: { shipdayConfig: { select: { id: true } }, facebookPixelId: true, googleAnalyticsId: true },
   });
   const shipdayActive = !!restaurant?.shipdayConfig;
 
@@ -63,6 +64,15 @@ export default async function IntegrationsPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {CARDS.map((c) => {
+          // Facebook Pixel + Google Analytics are configurable (the owner enters
+          // their own ID) — render the interactive tracking card instead of a
+          // static coming-soon tile. Luigi 2026-06-17.
+          if (c.name === "Facebook Pixel") {
+            return <IntegrationTrackingCard key={c.name} provider="facebook" name={c.name} initialValue={restaurant?.facebookPixelId ?? null} />;
+          }
+          if (c.name === "Google Analytics") {
+            return <IntegrationTrackingCard key={c.name} provider="google" name={c.name} initialValue={restaurant?.googleAnalyticsId ?? null} />;
+          }
           const Icon = c.icon;
           const isShipday = c.name === "Shipday";
           const linked = !!c.href;

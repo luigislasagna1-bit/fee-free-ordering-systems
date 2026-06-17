@@ -3960,7 +3960,13 @@
       "catDelivery": "Livrare",
       "descTracking": "Adăugați {name} pe site-ul dvs. de comenzi pentru a urmări vizitatorii și conversiile.",
       "descDispatch": "Trimiteți automat comenzile de livrare către {name} pentru expediere și urmărire în timp real.",
-      "descMarketplace": "Primiți și sincronizați comenzile din piața {name}."
+      "descMarketplace": "Primiți și sincronizați comenzile din piața {name}.",
+      "save": "Salvează",
+      "pixelHint": "Găsiți Pixel ID-ul dvs. în Meta Events Manager → Data Sources.",
+      "gaHint": "Găsiți Measurement ID-ul dvs. în Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "Urmărire salvată — este acum activă pe pagina dvs. de comandă.",
+      "trackingCleared": "Urmărire eliminată.",
+      "trackingConsentNote": "Ești responsabil pentru dezvăluirea acestei urmăriri în notificarea de confidențialitate/cookie-uri a site-ului tău."
     }
   },
   "impersonation": {

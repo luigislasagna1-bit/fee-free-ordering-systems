@@ -3960,7 +3960,13 @@
       "catDelivery": "Doručení",
       "descTracking": "Přidejte {name} na svůj objednávkový web a sledujte návštěvníky a konverze.",
       "descDispatch": "Automaticky odesílejte objednávky doručení do {name} pro expedici a sledování v reálném čase.",
-      "descMarketplace": "Přijímejte a synchronizujte objednávky z tržiště {name}."
+      "descMarketplace": "Přijímejte a synchronizujte objednávky z tržiště {name}.",
+      "save": "Uložit",
+      "pixelHint": "Nalezněte své Pixel ID v Meta Events Manager → Data Sources.",
+      "gaHint": "Nalezněte své Measurement ID v Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "Sledování uloženo — nyní je aktivní na vaší objednávkové stránce.",
+      "trackingCleared": "Sledování odstraněno.",
+      "trackingConsentNote": "Jste odpovědní za zveřejnění tohoto sledování v oznámení o ochraně osobních údajů/cookies vašich stránek."
     }
   },
   "impersonation": {

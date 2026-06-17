@@ -3960,7 +3960,13 @@
       "catDelivery": "Livraison",
       "descTracking": "Ajoutez {name} à votre site de commande pour suivre les visiteurs et les conversions.",
       "descDispatch": "Envoyez automatiquement les commandes de livraison à {name} pour l'expédition et le suivi en direct.",
-      "descMarketplace": "Recevez et synchronisez les commandes de la marketplace {name}."
+      "descMarketplace": "Recevez et synchronisez les commandes de la marketplace {name}.",
+      "save": "Enregistrer",
+      "pixelHint": "Trouvez votre Pixel ID dans Meta Events Manager → Data Sources.",
+      "gaHint": "Trouvez votre Measurement ID dans Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "Suivi enregistré — il est maintenant actif sur votre page de commande.",
+      "trackingCleared": "Suivi supprimé.",
+      "trackingConsentNote": "Vous êtes responsable de la divulgation de ce suivi dans la politique de confidentialité/cookies de votre site."
     }
   },
   "impersonation": {

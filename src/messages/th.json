@@ -3960,7 +3960,13 @@
       "catDelivery": "การจัดส่ง",
       "descTracking": "เพิ่ม {name} ลงในเว็บไซต์สั่งซื้อของคุณเพื่อติดตามผู้เยี่ยมชมและ Conversion",
       "descDispatch": "ส่งคำสั่งซื้อจัดส่งไปยัง {name} โดยอัตโนมัติเพื่อการจัดส่งและติดตามแบบเรียลไทม์",
-      "descMarketplace": "รับและซิงค์คำสั่งซื้อจากตลาด {name}"
+      "descMarketplace": "รับและซิงค์คำสั่งซื้อจากตลาด {name}",
+      "save": "บันทึก",
+      "pixelHint": "ค้นหา Pixel ID ของคุณใน Meta Events Manager → Data Sources",
+      "gaHint": "ค้นหา Measurement ID ของคุณใน Google Analytics → Admin → Data Streams",
+      "trackingSaved": "บันทึกการติดตามแล้ว — ขณะนี้ใช้งานอยู่บนหน้าสั่งซื้อของคุณ",
+      "trackingCleared": "ลบการติดตามแล้ว",
+      "trackingConsentNote": "คุณมีหน้าที่รับผิดชอบในการเปิดเผยการติดตามนี้ในประกาศความเป็นส่วนตัว/คุกกี้ของเว็บไซต์ของคุณ"
     }
   },
   "impersonation": {

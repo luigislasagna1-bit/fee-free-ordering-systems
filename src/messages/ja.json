@@ -3960,7 +3960,13 @@
       "catDelivery": "配達",
       "descTracking": "注文サイトに {name} を追加して、訪問者とコンバージョンを追跡しましょう。",
       "descDispatch": "配達注文を自動的に {name} に送信して、配送とリアルタイム追跡を行います。",
-      "descMarketplace": "{name} マーケットプレイスからの注文を受信・同期します。"
+      "descMarketplace": "{name} マーケットプレイスからの注文を受信・同期します。",
+      "save": "保存",
+      "pixelHint": "Meta Events Manager → Data Sources でPixel IDを確認してください。",
+      "gaHint": "Google Analytics → Admin → Data Streams でMeasurement IDを確認してください。",
+      "trackingSaved": "トラッキングが保存されました — 注文ページで有効になりました。",
+      "trackingCleared": "トラッキングが削除されました。",
+      "trackingConsentNote": "このトラッキングについて、サイトのプライバシー/Cookieポリシーで開示する責任があります。"
     }
   },
   "impersonation": {

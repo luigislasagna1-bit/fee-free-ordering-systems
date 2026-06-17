@@ -3960,7 +3960,13 @@
       "catDelivery": "Bezorging",
       "descTracking": "Voeg {name} toe aan uw bestelsite om bezoekers en conversies bij te houden.",
       "descDispatch": "Stuur leveringsbestellingen automatisch naar {name} voor verzending en live tracking.",
-      "descMarketplace": "Ontvang en synchroniseer bestellingen van de {name}-marktplaats."
+      "descMarketplace": "Ontvang en synchroniseer bestellingen van de {name}-marktplaats.",
+      "save": "Opslaan",
+      "pixelHint": "Vind uw Pixel ID in Meta Events Manager → Data Sources.",
+      "gaHint": "Vind uw Measurement ID in Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "Tracking opgeslagen — het is nu actief op uw bestelpagina.",
+      "trackingCleared": "Tracking verwijderd.",
+      "trackingConsentNote": "U bent verantwoordelijk voor het bekendmaken van deze tracking in de privacy-/cookieverklaring van uw site."
     }
   },
   "impersonation": {

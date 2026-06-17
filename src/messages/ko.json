@@ -3960,7 +3960,13 @@
       "catDelivery": "배달",
       "descTracking": "{name}을 주문 사이트에 추가하여 방문자와 전환율을 추적하세요.",
       "descDispatch": "배달 주문을 {name}에 자동으로 전송하여 배차 및 실시간 추적을 하세요.",
-      "descMarketplace": "{name} 마켓플레이스에서 주문을 수신하고 동기화하세요."
+      "descMarketplace": "{name} 마켓플레이스에서 주문을 수신하고 동기화하세요.",
+      "save": "저장",
+      "pixelHint": "Meta Events Manager → Data Sources에서 Pixel ID를 찾으세요.",
+      "gaHint": "Google Analytics → Admin → Data Streams에서 Measurement ID를 찾으세요.",
+      "trackingSaved": "추적이 저장되었습니다 — 주문 페이지에서 이제 활성화되었습니다.",
+      "trackingCleared": "추적이 제거되었습니다.",
+      "trackingConsentNote": "귀하의 사이트 개인정보 보호/쿠키 공지에 이 추적을 공개할 책임이 있습니다."
     }
   },
   "impersonation": {

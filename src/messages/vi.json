@@ -3960,7 +3960,13 @@
       "catDelivery": "Giao hàng",
       "descTracking": "Thêm {name} vào trang đặt hàng của bạn để theo dõi khách truy cập và chuyển đổi.",
       "descDispatch": "Tự động gửi đơn đặt hàng giao hàng đến {name} để điều phối và theo dõi trực tiếp.",
-      "descMarketplace": "Nhận và đồng bộ hóa đơn hàng từ thị trường {name}."
+      "descMarketplace": "Nhận và đồng bộ hóa đơn hàng từ thị trường {name}.",
+      "save": "Lưu",
+      "pixelHint": "Tìm Pixel ID của bạn trong Meta Events Manager → Data Sources.",
+      "gaHint": "Tìm Measurement ID của bạn trong Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "Đã lưu theo dõi — hiện đang hoạt động trên trang đặt hàng của bạn.",
+      "trackingCleared": "Đã xóa theo dõi.",
+      "trackingConsentNote": "Bạn có trách nhiệm tiết lộ việc theo dõi này trong thông báo quyền riêng tư/cookie của trang web."
     }
   },
   "impersonation": {

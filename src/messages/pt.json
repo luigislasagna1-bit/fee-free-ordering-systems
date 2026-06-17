@@ -3960,7 +3960,13 @@
       "catDelivery": "Entrega",
       "descTracking": "Adicione {name} ao seu site de pedidos para rastrear visitantes e conversões.",
       "descDispatch": "Envie automaticamente os pedidos de entrega para {name} para despacho e rastreamento ao vivo.",
-      "descMarketplace": "Receba e sincronize pedidos do marketplace {name}."
+      "descMarketplace": "Receba e sincronize pedidos do marketplace {name}.",
+      "save": "Guardar",
+      "pixelHint": "Encontre o seu Pixel ID em Meta Events Manager → Data Sources.",
+      "gaHint": "Encontre o seu Measurement ID em Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "Rastreio guardado — está agora ativo na sua página de encomendas.",
+      "trackingCleared": "Rastreio removido.",
+      "trackingConsentNote": "É responsável por divulgar este rastreio no aviso de privacidade/cookies do seu site."
     }
   },
   "impersonation": {

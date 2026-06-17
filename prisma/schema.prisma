@@ -297,6 +297,12 @@ model Restaurant {
   defaultLanguage      String    @default("en")
   socialLinks          String? // JSON: { instagram, facebook, tiktok, x, youtube, linkedin, pinterest, snapchat, threads, whatsapp, yelp, googleBusiness, tripadvisor, website }
   marketingTier        String    @default("free") // "free" | "social_basic" | "social_pro" | "social_managed" — gates AI-post / scheduling features
+  /// Marketing & tracking integrations the OWNER configures for their own
+  /// ordering site (Integrations page). The restaurant is the data controller
+  /// for this tracking — injected on /order/<slug> when set. Validated to the
+  /// provider's ID shape before storage. Luigi 2026-06-17.
+  facebookPixelId      String? // numeric Meta Pixel ID
+  googleAnalyticsId    String? // GA4 Measurement ID, "G-XXXXXXXXXX"
 
   // Domain routing: "subdomain" → <sub>.<PLATFORM_DOMAIN>, "customDomain" → bring-your-own.
   // slug stays internal-stable (used by /order/[slug] paths and order references);

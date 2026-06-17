@@ -3960,7 +3960,13 @@
       "catDelivery": "配送",
       "descTracking": "将 {name} 添加到您的点餐网站，以追踪访客和转化率。",
       "descDispatch": "自动将配送订单发送至 {name} 进行派送和实时追踪。",
-      "descMarketplace": "接收并同步来自 {name} 市场的订单。"
+      "descMarketplace": "接收并同步来自 {name} 市场的订单。",
+      "save": "保存",
+      "pixelHint": "在 Meta Events Manager → Data Sources 中找到您的 Pixel ID。",
+      "gaHint": "在 Google Analytics → Admin → Data Streams 中找到您的 Measurement ID。",
+      "trackingSaved": "跟踪已保存 — 现已在您的订购页面上生效。",
+      "trackingCleared": "跟踪已移除。",
+      "trackingConsentNote": "您有责任在您网站的隐私/Cookie声明中披露此跟踪。"
     }
   },
   "impersonation": {

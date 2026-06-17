@@ -3960,7 +3960,13 @@
       "catDelivery": "Pengiriman",
       "descTracking": "Tambahkan {name} ke situs pemesanan Anda untuk melacak pengunjung dan konversi.",
       "descDispatch": "Kirim pesanan pengiriman secara otomatis ke {name} untuk pengiriman dan pelacakan langsung.",
-      "descMarketplace": "Terima dan sinkronkan pesanan dari marketplace {name}."
+      "descMarketplace": "Terima dan sinkronkan pesanan dari marketplace {name}.",
+      "save": "Simpan",
+      "pixelHint": "Temukan Pixel ID Anda di Meta Events Manager → Data Sources.",
+      "gaHint": "Temukan Measurement ID Anda di Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "Pelacakan disimpan — sekarang aktif di halaman pemesanan Anda.",
+      "trackingCleared": "Pelacakan dihapus.",
+      "trackingConsentNote": "Anda bertanggung jawab untuk mengungkapkan pelacakan ini dalam pemberitahuan privasi/cookie situs Anda."
     }
   },
   "impersonation": {

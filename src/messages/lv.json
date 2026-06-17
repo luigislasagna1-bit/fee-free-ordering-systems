@@ -3960,7 +3960,13 @@
       "catDelivery": "Piegāde",
       "descTracking": "Pievienojiet {name} savam pasūtījumu vietnei, lai izsekotu apmeklētājus un konversijas.",
       "descDispatch": "Automātiski nosūtiet piegādes pasūtījumus uz {name} nosūtīšanai un tiešraides izsekošanai.",
-      "descMarketplace": "Saņemiet un sinhronizējiet pasūtījumus no {name} tirgus."
+      "descMarketplace": "Saņemiet un sinhronizējiet pasūtījumus no {name} tirgus.",
+      "save": "Saglabāt",
+      "pixelHint": "Atrodiet savu Pixel ID Meta Events Manager → Data Sources.",
+      "gaHint": "Atrodiet savu Measurement ID Google Analytics → Admin → Data Streams.",
+      "trackingSaved": "Izsekošana saglabāta — tā tagad ir aktīva jūsu pasūtījumu lapā.",
+      "trackingCleared": "Izsekošana noņemta.",
+      "trackingConsentNote": "Jūs esat atbildīgs par šīs izsekošanas atklāšanu savas vietnes privātuma/sīkfailu paziņojumā."
     }
   },
   "impersonation": {
