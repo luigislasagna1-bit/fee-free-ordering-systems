@@ -18,6 +18,7 @@
 import { NextRequest, NextResponse, after } from "next/server";
 import prisma from "@/lib/db";
 import { autoRejectStaleOrders, autoRejectStaleReservations } from "@/lib/auto-reject-orders";
+import { withDbRetry, isTransient } from "@/lib/db-retry";
 
 const ORDER_WINDOW_MS = 4 * 60 * 1000; // matches the kitchen accept countdown
 const CLOSED_WINDOW_MS = 15 * 60 * 1000; // placed-while-closed gets the longer window
@@ -26,71 +27,93 @@ export async function GET(req: NextRequest) {
   const token = new URL(req.url).searchParams.get("token")?.trim();
   if (!token) return NextResponse.json({ ringing: false });
 
-  const device = await prisma.kitchenPushToken.findUnique({
-    where: { token },
-    select: { restaurantId: true },
-  });
-  if (!device) return NextResponse.json({ ringing: false });
+  try {
+    const device = await withDbRetry(() =>
+      prisma.kitchenPushToken.findUnique({
+        where: { token },
+        select: { restaurantId: true },
+      }),
+    );
+    if (!device) return NextResponse.json({ ringing: false });
 
-  const now = Date.now();
-  const restaurantId = device.restaurantId;
+    const now = Date.now();
+    const restaurantId = device.restaurantId;
 
-  // Orders: pending + released (notifiedAt set), past their ring anchor
-  // (alertAt ?? notifiedAt) but still inside the accept window.
-  const orders = await prisma.order.findMany({
-    where: { restaurantId, status: "pending", notifiedAt: { not: null } },
-    select: { notifiedAt: true, alertAt: true, placedWhileClosed: true },
-    take: 30,
-  });
-  let ringing = false;
-  let hasExpired = false; // pending but PAST its accept window → should be missed
-  for (const o of orders) {
-    const anchor = o.alertAt ? o.alertAt.getTime() : (o.notifiedAt ? o.notifiedAt.getTime() : 0);
-    if (anchor > now) continue; // parked / not started ringing yet
-    const window = o.placedWhileClosed ? CLOSED_WINDOW_MS : ORDER_WINDOW_MS;
-    if (now - anchor < window) ringing = true;
-    else hasExpired = true;
+    // Orders: pending + released (notifiedAt set), past their ring anchor
+    // (alertAt ?? notifiedAt) but still inside the accept window.
+    const orders = await withDbRetry(() =>
+      prisma.order.findMany({
+        where: { restaurantId, status: "pending", notifiedAt: { not: null } },
+        select: { notifiedAt: true, alertAt: true, placedWhileClosed: true },
+        take: 30,
+      }),
+    );
+    let ringing = false;
+    let hasExpired = false; // pending but PAST its accept window → should be missed
+    for (const o of orders) {
+      const anchor = o.alertAt ? o.alertAt.getTime() : (o.notifiedAt ? o.notifiedAt.getTime() : 0);
+      if (anchor > now) continue; // parked / not started ringing yet
+      const window = o.placedWhileClosed ? CLOSED_WINDOW_MS : ORDER_WINDOW_MS;
+      if (now - anchor < window) ringing = true;
+      else hasExpired = true;
+    }
+
+    // Reservations: pending, no deposit owed.
+    const resv = await withDbRetry(() =>
+      prisma.reservation.findMany({
+        where: { restaurantId, status: "pending", depositAmount: { lte: 0 } },
+        select: { createdAt: true, alertAt: true },
+        take: 30,
+      }),
+    );
+    for (const r of resv) {
+      const anchor = r.alertAt ? r.alertAt.getTime() : r.createdAt.getTime();
+      if (anchor > now) continue;
+      const window = r.alertAt ? CLOSED_WINDOW_MS : ORDER_WINDOW_MS;
+      if (now - anchor < window) ringing = true;
+      else hasExpired = true;
+    }
+
+    // The INSTANT an order/reservation's accept window expires, mark it MISSED
+    // (auto-decline + customer email + refund) — don't wait for the app to reopen
+    // or the 5-min backstop cron. The device polls every ~4s, so this fires within
+    // a few seconds of expiry. Scoped to this restaurant; runs AFTER the response
+    // so the poll stays fast; the rejects are claim-based + idempotent so two
+    // devices polling can't double-reject. Luigi 2026-06-16.
+    if (hasExpired) {
+      after(async () => {
+        try { await autoRejectStaleOrders({ restaurantId }); } catch (e) { console.error("[alarm-state] order auto-reject", e); }
+        try { await autoRejectStaleReservations({ restaurantId }); } catch (e) { console.error("[alarm-state] reservation auto-reject", e); }
+      });
+    }
+
+    // Per-restaurant alarm preference (ring + vibrate vs ring only). Only read it
+    // when we're actually about to ring — keeps the common "nothing pending" poll a
+    // single-purpose ringing check with no extra query. The native keep-alive poll
+    // reads `vibrate` and passes it to OrderAlarmService. Luigi 2026-06-16.
+    let vibrate = true;
+    if (ringing) {
+      const r = await withDbRetry(() =>
+        prisma.restaurant.findUnique({
+          where: { id: restaurantId },
+          select: { kitchenVibrate: true },
+        }),
+      );
+      vibrate = r?.kitchenVibrate !== false;
+    }
+
+    return NextResponse.json({ ringing, vibrate });
+  } catch (err) {
+    // A transient DB connection drop (Neon recycles pooled connections, so the
+    // ~4s poll occasionally hits a just-closed one) must NOT 500 the kitchen poll
+    // or spam Sentry. Return a safe "not ringing" for this cycle — the next poll
+    // re-evaluates ~4s later, and every query here is an idempotent read, so
+    // nothing is lost. Non-transient errors are re-thrown so genuine bugs still
+    // surface in Sentry. Luigi 2026-06-18.
+    if (isTransient(err)) {
+      console.warn("[alarm-state] transient DB error, returning ringing:false:", err instanceof Error ? err.message : err);
+      return NextResponse.json({ ringing: false });
+    }
+    throw err;
   }
-
-  // Reservations: pending, no deposit owed.
-  const resv = await prisma.reservation.findMany({
-    where: { restaurantId, status: "pending", depositAmount: { lte: 0 } },
-    select: { createdAt: true, alertAt: true },
-    take: 30,
-  });
-  for (const r of resv) {
-    const anchor = r.alertAt ? r.alertAt.getTime() : r.createdAt.getTime();
-    if (anchor > now) continue;
-    const window = r.alertAt ? CLOSED_WINDOW_MS : ORDER_WINDOW_MS;
-    if (now - anchor < window) ringing = true;
-    else hasExpired = true;
-  }
-
-  // The INSTANT an order/reservation's accept window expires, mark it MISSED
-  // (auto-decline + customer email + refund) — don't wait for the app to reopen
-  // or the 5-min backstop cron. The device polls every ~4s, so this fires within
-  // a few seconds of expiry. Scoped to this restaurant; runs AFTER the response
-  // so the poll stays fast; the rejects are claim-based + idempotent so two
-  // devices polling can't double-reject. Luigi 2026-06-16.
-  if (hasExpired) {
-    after(async () => {
-      try { await autoRejectStaleOrders({ restaurantId }); } catch (e) { console.error("[alarm-state] order auto-reject", e); }
-      try { await autoRejectStaleReservations({ restaurantId }); } catch (e) { console.error("[alarm-state] reservation auto-reject", e); }
-    });
-  }
-
-  // Per-restaurant alarm preference (ring + vibrate vs ring only). Only read it
-  // when we're actually about to ring — keeps the common "nothing pending" poll a
-  // single-purpose ringing check with no extra query. The native keep-alive poll
-  // reads `vibrate` and passes it to OrderAlarmService. Luigi 2026-06-16.
-  let vibrate = true;
-  if (ringing) {
-    const r = await prisma.restaurant.findUnique({
-      where: { id: restaurantId },
-      select: { kitchenVibrate: true },
-    });
-    vibrate = r?.kitchenVibrate !== false;
-  }
-
-  return NextResponse.json({ ringing, vibrate });
 }
