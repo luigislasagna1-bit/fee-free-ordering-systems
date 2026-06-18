@@ -139,8 +139,8 @@ function ReservationCard({
       <div className="flex items-start gap-3 w-full">
         {/* Walk-up table reservation icon — indigo calendar, distinct from the
             fuchsia pre-order-reservation icon on order tiles. Luigi 2026-06-08. */}
-        <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 bg-indigo-500/20">
-          <CalendarDays className="w-4 h-4 text-indigo-600" />
+        <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 bg-slate-500/15">
+          <CalendarDays className="w-4 h-4 text-slate-500 dark:text-slate-300" />
         </div>
         <div className="flex-1 min-w-0">
           {/* Lead line = customer name (only black text on the tile). */}
@@ -471,23 +471,26 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
             // them apart at a glance. A pre-order-with-reservation gets its own
             // (fuchsia calendar) icon, separate from a plain dine-in. Luigi
             // 2026-06-08.
+            // Icon SHAPE still distinguishes the order type at a glance, but the
+            // colour is now a single neutral grey for ALL tiles (Luigi 2026-06-18
+            // — wanted the left-of-name icons uniform, not multi-coloured).
             const ic = isTest
-              ? { Icon: FlaskConical, bg: "bg-amber-500/20", fg: "text-amber-500" }
+              ? { Icon: FlaskConical }
               : order.reservation
-                ? { Icon: CalendarClock, bg: "bg-fuchsia-500/20", fg: "text-fuchsia-600" }
+                ? { Icon: CalendarClock }
                 : order.type === "delivery"
-                  ? { Icon: Truck, bg: "bg-blue-500/20", fg: "text-blue-500" }
+                  ? { Icon: Truck }
                   : order.type === "take_out"
-                    ? { Icon: Package, bg: "bg-orange-500/20", fg: "text-orange-500" }
+                    ? { Icon: Package }
                     : order.type === "dine_in"
-                      ? { Icon: UtensilsCrossed, bg: "bg-violet-500/20", fg: "text-violet-600" }
+                      ? { Icon: UtensilsCrossed }
                       : order.type === "catering"
-                        ? { Icon: ChefHat, bg: "bg-rose-500/20", fg: "text-rose-600" }
-                        : { Icon: ShoppingBag, bg: "bg-emerald-500/20", fg: "text-emerald-500" }; // pickup
+                        ? { Icon: ChefHat }
+                        : { Icon: ShoppingBag }; // pickup
             const Icon = ic.Icon;
             return (
-              <div className={`w-9 h-9 rounded-full flex items-center justify-center ${ic.bg}`}>
-                <Icon className={`w-4 h-4 ${ic.fg}`} />
+              <div className="w-9 h-9 rounded-full flex items-center justify-center bg-slate-500/15">
+                <Icon className="w-4 h-4 text-slate-500 dark:text-slate-300" />
               </div>
             );
           })()}
