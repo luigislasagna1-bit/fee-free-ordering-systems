@@ -29,6 +29,15 @@ workflows:
     integrations:
       app_store_connect: ff-asc-key
     environment:
+      groups:
+        # Secure variable group holding IOS_SIGNING_KEY_PEM — the stored iOS
+        # distribution PRIVATE KEY (full PEM, multi-line). With it present,
+        # every build REUSES one certificate instead of minting a new one, so
+        # we never accumulate certs against Apple's distribution-cert limit.
+        # Create this group + variable in the Codemagic UI (one-time). If the
+        # group/variable is absent the signing step below falls back to minting
+        # a fresh cert, so the build still works either way.
+        - ios_signing
       vars:
         XCODE_PROJECT: "ios/App/App.xcodeproj"
         XCODE_SCHEME: "App"
@@ -49,24 +58,38 @@ workflows:
         # NOT CocoaPods — there is no Podfile; Xcode resolves the Swift packages at
         # build time, so no separate install step is needed.
         script: npx cap sync ios
-      - name: Set up code signing (mint cert + profile)
-        # Apple's API can't expose the private key of the account's existing
-        # distribution certificate (made on a Mac), and `certificates create`
-        # won't mint one without a key. So: generate a fresh RSA private key on
-        # the build machine, mint a new Apple Distribution certificate FROM that
-        # key (Codemagic then holds both halves), create the App Store profile
-        # using the same key, install the cert, and apply the profile.
-        # `set -e` so any failure goes RED instead of silently passing.
-        # NOTE: Apple allows 2 distribution certs; this adds one. Once green we
-        # switch to a stored/reused key so repeat builds don't keep minting certs.
+      - name: Set up code signing (REUSE one cert if stored key is present)
+        # CERT REUSE — stops repeat builds from piling up distribution certs
+        # against Apple's limit.
+        #
+        # If IOS_SIGNING_KEY_PEM is set (secure var in the `ios_signing` group,
+        # holding our stored distribution private key): write it out and let
+        # `fetch-signing-files --create` find the matching certificate. On the
+        # FIRST build it creates ONE cert from this key; EVERY build after
+        # reuses it — no new certs, ever.
+        #
+        # If the variable is ABSENT (group not set up yet): fall back to the old
+        # behavior — generate a key + mint a fresh cert — so the build still
+        # works. (This path is the one that accumulates certs, so set up the
+        # variable to avoid it.)
+        #
+        # `set -e` so any failure goes RED instead of silently passing. Note:
+        # the reuse path mints NOTHING on a failed/iterating build, so retrying
+        # a broken build is safe.
         script: |
           set -e
           keychain initialize
-          openssl genrsa -out /tmp/ff_signing_key.pem 2048
-          app-store-connect certificates create \
-            --type IOS_DISTRIBUTION \
-            --certificate-key @file:/tmp/ff_signing_key.pem \
-            --save
+          if [ -n "$IOS_SIGNING_KEY_PEM" ]; then
+            echo "Cert reuse: using stored distribution key (no new cert minted)."
+            printf '%s\n' "$IOS_SIGNING_KEY_PEM" > /tmp/ff_signing_key.pem
+          else
+            echo "WARNING: IOS_SIGNING_KEY_PEM not set — minting a NEW distribution cert (counts against Apple's limit). Set up the ios_signing group to enable reuse."
+            openssl genrsa -out /tmp/ff_signing_key.pem 2048
+            app-store-connect certificates create \
+              --type IOS_DISTRIBUTION \
+              --certificate-key @file:/tmp/ff_signing_key.pem \
+              --save
+          fi
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type IOS_APP_STORE \
             --certificate-key @file:/tmp/ff_signing_key.pem \
