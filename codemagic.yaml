@@ -96,11 +96,28 @@ workflows:
             --create
           keychain add-certificates
           xcode-project use-profiles
-      - name: Set build number to latest TestFlight + 1
+      - name: Set build number (monotonic; higher than any prior upload)
+        # CFBundleVersion must STRICTLY INCREASE on every TestFlight upload.
+        # The old step called get-latest-testflight-build-number with the BUNDLE
+        # id, but that command wants the numeric App Store app id — so it always
+        # returned 0 and the version defaulted to 1. That worked once, then
+        # collided ("bundle version 1 already used"). Codemagic's BUILD_NUMBER is
+        # a per-app monotonic counter (already well past 1), so use it as the
+        # source of truth, and still take the max with TestFlight's latest+1 in
+        # case a higher version was ever uploaded by other means. Floor at 2
+        # since version 1 is taken.
         script: |
-          BUILD_NUMBER=$(app-store-connect get-latest-testflight-build-number "$BUNDLE_ID" 2>/dev/null || echo 0)
+          set -e
+          LATEST=$(app-store-connect get-latest-testflight-build-number "$BUNDLE_ID" 2>/dev/null || echo 0)
+          [[ "$LATEST" =~ ^[0-9]+$ ]] || LATEST=0
+          CI="${BUILD_NUMBER:-0}"
+          [[ "$CI" =~ ^[0-9]+$ ]] || CI=0
+          NEXT=$((LATEST + 1))
+          if [ "$CI" -gt "$NEXT" ]; then NEXT="$CI"; fi
+          if [ "$NEXT" -lt 2 ]; then NEXT=2; fi
+          echo "CFBundleVersion -> $NEXT (TestFlight latest=$LATEST, CI build=$CI)"
           cd ios/App
-          agvtool new-version -all $((BUILD_NUMBER + 1))
+          agvtool new-version -all "$NEXT"
       - name: Build IPA
         script: |
           xcode-project build-ipa \
