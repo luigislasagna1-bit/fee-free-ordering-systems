@@ -48,6 +48,35 @@ import StarIO10
  * file in /docs/native-app-build.md so the App Store reviewer knows
  * why we ask for it.
  */
+/// LAN print failure modes. Declared TOP-LEVEL with a deliberately unique
+/// name so it can never be shadowed by a same-named type exported from
+/// StarIO10 (which is what made the nested `PrinterError` ambiguous and broke
+/// every `Result.failure(...)` reference). The JS layer maps `reason` to
+/// actionable copy, matching the Android plugin's reject reason codes 1:1.
+enum FFLanPrintFailure {
+    case timeout
+    case refused
+    case unreachable
+    case ioError(String)
+
+    var reason: String {
+        switch self {
+        case .timeout:     return "timeout"
+        case .refused:     return "refused"
+        case .unreachable: return "unreachable"
+        case .ioError:     return "io_error"
+        }
+    }
+    var message: String {
+        switch self {
+        case .timeout:        return "Printer did not respond in time"
+        case .refused:        return "Printer reachable but RAW print port not open"
+        case .unreachable:    return "Cannot reach printer (wrong IP or network)"
+        case .ioError(let m): return "Print I/O error: \(m)"
+        }
+    }
+}
+
 @objc(DirectPrinterPlugin)
 public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
     public let identifier = "DirectPrinterPlugin"
@@ -395,40 +424,16 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
     }
 
     // ─── Internal ────────────────────────────────────────────────────
-
-    /// Specific failure modes the JS layer can format into actionable
-    /// guidance ("printer offline" vs "wrong port" vs "network down").
-    /// Matches the Android plugin's reject reason codes 1:1.
-    enum PrintFailure {
-        case timeout
-        case refused
-        case unreachable
-        case ioError(String)
-
-        var reason: String {
-            switch self {
-            case .timeout:     return "timeout"
-            case .refused:     return "refused"
-            case .unreachable: return "unreachable"
-            case .ioError:     return "io_error"
-            }
-        }
-        var message: String {
-            switch self {
-            case .timeout:        return "Printer did not respond in time"
-            case .refused:        return "Printer reachable but RAW print port not open"
-            case .unreachable:    return "Cannot reach printer (wrong IP or network)"
-            case .ioError(let m): return "Print I/O error: \(m)"
-            }
-        }
-    }
+    // Failure type is the top-level `FFLanPrintFailure` (declared above the
+    // class) — moved out of the class + uniquely named so StarIO10 can't
+    // shadow it.
 
     private func connectAndSend(
         ip: String,
         port: UInt16,
         payload: Data,
         timeoutMs: Int,
-        completion: @escaping (Swift.Result<Int, PrintFailure>) -> Void
+        completion: @escaping (Swift.Result<Int, FFLanPrintFailure>) -> Void
     ) {
         let host = NWEndpoint.Host(ip)
         guard let nwPort = NWEndpoint.Port(rawValue: port) else {
@@ -542,7 +547,7 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
     private func printViaStarXpand(
         ip: String,
         command: String,
-        completion: @escaping (Swift.Result<Void, PrintFailure>) -> Void
+        completion: @escaping (Swift.Result<Void, FFLanPrintFailure>) -> Void
     ) {
         let settings = StarConnectionSettings(interfaceType: .lan, identifier: ip)
         let printer = StarPrinter(settings)
@@ -584,7 +589,7 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
     /// textual description — deliberately NOT pattern-matching the SDK's
     /// (version-specific) error enum cases, so this compiles across
     /// StarIO10 versions. Reason codes feed the same UI copy as Android.
-    private func mapStarError(_ error: Error) -> PrintFailure {
+    private func mapStarError(_ error: Error) -> FFLanPrintFailure {
         let d = String(describing: error).lowercased()
         if d.contains("timeout") { return .timeout }
         if d.contains("inuse") || d.contains("in use") { return .refused }
