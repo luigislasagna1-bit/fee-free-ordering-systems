@@ -68,6 +68,13 @@
 		<string>_ipp._tcp</string>
 		<string>_printer._tcp</string>
 	</array>
+	<!-- Bluetooth usage description. We connect to receipt printers over Wi-Fi
+	     (LAN), but the bundled Star StarXpand SDK also contains Bluetooth-printer
+	     code that references CoreBluetooth APIs. Apple's static analysis (ITMS-90683)
+	     requires a purpose string whenever those APIs are linked, even if unused at
+	     runtime. Without this key the App Store upload is flagged. -->
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>This app can connect to nearby Star Bluetooth receipt printers to print your order tickets.</string>
 	<!-- Export compliance: the app uses only the standard HTTPS encryption
 	     provided by iOS (WebView + login traffic) and plain local TCP to the
 	     printer — no proprietary or additional encryption. Declaring it exempt
