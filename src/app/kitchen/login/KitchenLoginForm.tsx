@@ -39,21 +39,26 @@ function KitchenLoginFormInner({ locale }: { locale: string }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4 relative">
+    <div
+      className="min-h-screen [min-height:100dvh] bg-gray-900 flex items-center justify-center px-4 relative overflow-y-auto"
+      style={{
+        paddingTop: "max(0.75rem, env(safe-area-inset-top))",
+        paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))",
+      }}
+    >
       <AuthLanguageSwitcher currentLocale={locale} />
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-500 rounded-2xl mb-4 shadow-lg shadow-emerald-500/30">
-            <ChefHat className="w-9 h-9 text-white" />
+      <div className="w-full max-w-md py-4">
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center justify-center w-14 h-14 bg-emerald-500 rounded-2xl mb-3 shadow-lg shadow-emerald-500/30">
+            <ChefHat className="w-8 h-8 text-white" />
           </div>
-          <div className="inline-flex items-center gap-2 bg-gray-800 border border-gray-700 text-emerald-400 font-semibold px-4 py-1.5 rounded-full text-sm mb-3">
-            <Monitor className="w-4 h-4" /> {tAuth("kitchenLogin")}
-          </div>
-          <h1 className="text-3xl font-bold text-white">{tAuth("kitchenLogin")}</h1>
+          <h1 className="text-2xl font-bold text-white flex items-center justify-center gap-2">
+            <Monitor className="w-5 h-5 text-emerald-400" /> {tAuth("kitchenLogin")}
+          </h1>
           <p className="text-gray-400 text-sm mt-1">{tAuth("kitchenLoginHelp")}</p>
         </div>
 
-        <div className="bg-gray-800 border border-gray-700 rounded-2xl p-8 shadow-xl">
+        <div className="bg-gray-800 border border-gray-700 rounded-2xl p-6 shadow-xl">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1.5">{tAuth("login")}</label>
