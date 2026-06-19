@@ -49,14 +49,22 @@ workflows:
         # NOT CocoaPods — there is no Podfile; Xcode resolves the Swift packages at
         # build time, so no separate install step is needed.
         script: npx cap sync ios
-      - name: Set up code signing (creates cert + profile if missing)
-        # Uses the ff-asc-key App Store Connect API key to CREATE the
-        # distribution certificate + provisioning profile for the bundle id if
-        # they don't already exist (a brand-new app has neither), install the
-        # cert into the build keychain, then point the Xcode project at the
-        # fetched profile. Requires the API key role to be App Manager/Admin.
+      - name: Set up code signing (creates cert + profile)
+        # The account's existing distribution certificate was created on a Mac,
+        # so its private key isn't available to CI — fetch-signing-files alone
+        # failed with "Cannot save Signing Certificates without certificate
+        # private key". So generate a FRESH Apple Distribution certificate that
+        # Codemagic itself creates the private key for, then create the App Store
+        # provisioning profile, install the cert into the build keychain, and
+        # apply the profile to the Xcode project.
+        # NOTE: Apple allows 2 distribution certs per account; this adds one. Once
+        # the pipeline is green we switch to a stored/reused cert so repeat builds
+        # don't keep minting new ones.
         script: |
           keychain initialize
+          app-store-connect create-certificate \
+            --type IOS_DISTRIBUTION \
+            --save
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type IOS_APP_STORE \
             --create
