@@ -77,6 +77,17 @@ enum FFLanPrintFailure: Error {
     }
 }
 
+/// Thread-safe collector for subnet-scan hits. A reference type so the
+/// concurrent (escaping) scan closures can capture it — Swift forbids capturing
+/// an `inout` parameter in an escaping closure, which is why the scan can't
+/// write the result dictionary directly.
+private final class SubnetScanHits {
+    private let lock = NSLock()
+    private var ips: [String] = []
+    func add(_ ip: String) { lock.lock(); ips.append(ip); lock.unlock() }
+    func snapshot() -> [String] { lock.lock(); defer { lock.unlock() }; return ips }
+}
+
 @objc(DirectPrinterPlugin)
 public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
     public let identifier = "DirectPrinterPlugin"
@@ -218,6 +229,10 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
         let scanQueue = DispatchQueue(label: "ffo.subnet-scan", attributes: .concurrent)
         let semaphore = DispatchSemaphore(value: 32) // cap concurrent connects
 
+        // Collect hits in a reference-type box — an escaping closure may capture
+        // a class instance but NOT an `inout` parameter. We merge into `byIp`
+        // synchronously AFTER group.wait(), so the inout is never captured.
+        let hits = SubnetScanHits()
         for i in 1...254 {
             let target = "\(prefix)\(i)"
             group.enter()
@@ -228,20 +243,25 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
                     group.leave()
                 }
                 if self.tcpProbe(host: target, port: 9100, timeoutMs: timeoutMs) {
-                    lock.lock()
-                    if byIp[target] == nil {
-                        byIp[target] = [
-                            "name": "Printer at \(target)",
-                            "ip": target,
-                            "port": 9100,
-                            "type": "subnet-scan",
-                        ]
-                    }
-                    lock.unlock()
+                    hits.add(target)
                 }
             }
         }
         group.wait()
+
+        // Merge under the shared lock (mDNS may still be writing byIp).
+        for target in hits.snapshot() {
+            lock.lock()
+            if byIp[target] == nil {
+                byIp[target] = [
+                    "name": "Printer at \(target)",
+                    "ip": target,
+                    "port": 9100,
+                    "type": "subnet-scan",
+                ]
+            }
+            lock.unlock()
+        }
     }
 
     /// Synchronous TCP probe — returns true if the target accepts a
