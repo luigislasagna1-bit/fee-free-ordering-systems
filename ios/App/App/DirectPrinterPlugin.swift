@@ -399,7 +399,7 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
     /// Specific failure modes the JS layer can format into actionable
     /// guidance ("printer offline" vs "wrong port" vs "network down").
     /// Matches the Android plugin's reject reason codes 1:1.
-    enum PrinterError {
+    enum PrintFailure {
         case timeout
         case refused
         case unreachable
@@ -428,7 +428,7 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
         port: UInt16,
         payload: Data,
         timeoutMs: Int,
-        completion: @escaping (Result<Int, PrinterError>) -> Void
+        completion: @escaping (Swift.Result<Int, PrintFailure>) -> Void
     ) {
         let host = NWEndpoint.Host(ip)
         guard let nwPort = NWEndpoint.Port(rawValue: port) else {
@@ -542,7 +542,7 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
     private func printViaStarXpand(
         ip: String,
         command: String,
-        completion: @escaping (Result<Void, PrinterError>) -> Void
+        completion: @escaping (Swift.Result<Void, PrintFailure>) -> Void
     ) {
         let settings = StarConnectionSettings(interfaceType: .lan, identifier: ip)
         let printer = StarPrinter(settings)
@@ -584,7 +584,7 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
     /// textual description — deliberately NOT pattern-matching the SDK's
     /// (version-specific) error enum cases, so this compiles across
     /// StarIO10 versions. Reason codes feed the same UI copy as Android.
-    private func mapStarError(_ error: Error) -> PrinterError {
+    private func mapStarError(_ error: Error) -> PrintFailure {
         let d = String(describing: error).lowercased()
         if d.contains("timeout") { return .timeout }
         if d.contains("inuse") || d.contains("in use") { return .refused }
