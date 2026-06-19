@@ -53,7 +53,7 @@ import StarIO10
 /// StarIO10 (which is what made the nested `PrinterError` ambiguous and broke
 /// every `Result.failure(...)` reference). The JS layer maps `reason` to
 /// actionable copy, matching the Android plugin's reject reason codes 1:1.
-enum FFLanPrintFailure {
+enum FFLanPrintFailure: Error {
     case timeout
     case refused
     case unreachable
