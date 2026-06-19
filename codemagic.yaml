@@ -29,9 +29,6 @@ workflows:
     integrations:
       app_store_connect: ff-asc-key
     environment:
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.feefreeordering.kitchen
       vars:
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
@@ -51,13 +48,24 @@ workflows:
       - name: Install CocoaPods dependencies
         script: |
           cd ios/App && pod install
+      - name: Set up code signing (creates cert + profile if missing)
+        # Uses the ff-asc-key App Store Connect API key to CREATE the
+        # distribution certificate + provisioning profile for the bundle id if
+        # they don't already exist (a brand-new app has neither), install the
+        # cert into the build keychain, then point the Xcode project at the
+        # fetched profile. Requires the API key role to be App Manager/Admin.
+        script: |
+          keychain initialize
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --create
+          keychain add-certificates
+          xcode-project use-profiles
       - name: Set build number to latest TestFlight + 1
         script: |
           BUILD_NUMBER=$(app-store-connect get-latest-testflight-build-number "$BUNDLE_ID" 2>/dev/null || echo 0)
           cd ios/App
           agvtool new-version -all $((BUILD_NUMBER + 1))
-      - name: Fetch signing profiles
-        script: xcode-project use-profiles
       - name: Build IPA
         script: |
           xcode-project build-ipa \
