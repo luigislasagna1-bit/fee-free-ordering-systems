@@ -68,5 +68,12 @@
 		<string>_ipp._tcp</string>
 		<string>_printer._tcp</string>
 	</array>
+	<!-- Export compliance: the app uses only the standard HTTPS encryption
+	     provided by iOS (WebView + login traffic) and plain local TCP to the
+	     printer — no proprietary or additional encryption. Declaring it exempt
+	     here stops TestFlight / App Store from prompting for export docs on
+	     every build. -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
