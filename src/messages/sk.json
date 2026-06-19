@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Potvrďte ďalším ťuknutím",
     "printerManageHint": "Odpojiť zastaví tlač, ale tlačiareň ponechá uloženú. Zabudnúť vymaže všetky uložené nastavenia, aby ste mohli začať odznova.",
     "printerDisconnectedToast": "Tlačiareň odpojená.",
-    "printerForgotToast": "Nastavenia tlačiarne vymazané — začnite odznova."
+    "printerForgotToast": "Nastavenia tlačiarne vymazané — začnite odznova.",
+    "soundGateTitle": "Klepnite na aktiváciu upozornení na objednávky",
+    "soundGateSubtitle": "Klepnite kdekoľvek pre zapnutie zvuku, aby ste počuli každú novú objednávku."
   },
   "admin": {
     "welcomeBack": "Vitajte späť",

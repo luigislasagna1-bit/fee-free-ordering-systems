@@ -686,7 +686,9 @@
     "printerForgetConfirm": "הקש שוב לאישור",
     "printerManageHint": "ניתוק עוצר את ההדפסה אך שומר את המדפסת. שכחה מוחקת את כל ההגדרות השמורות כדי שתוכל להתחיל מחדש.",
     "printerDisconnectedToast": "המדפסת נותקה.",
-    "printerForgotToast": "הגדרות המדפסת נמחקו — התחל מחדש."
+    "printerForgotToast": "הגדרות המדפסת נמחקו — התחל מחדש.",
+    "soundGateTitle": "הקש כדי להפעיל התראות הזמנות",
+    "soundGateSubtitle": "הקש בכל מקום להפעלת הצליל כדי שתשמע כל הזמנה חדשה."
   },
   "admin": {
     "welcomeBack": "ברוך שובך",

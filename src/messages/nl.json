@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Tik nogmaals om te bevestigen",
     "printerManageHint": "Verbinding verbreken stopt het printen maar bewaart deze printer. Vergeten wist alle opgeslagen printerinstellingen zodat je opnieuw kunt beginnen.",
     "printerDisconnectedToast": "Printer losgekoppeld.",
-    "printerForgotToast": "Printerinstellingen gewist — begin opnieuw."
+    "printerForgotToast": "Printerinstellingen gewist — begin opnieuw.",
+    "soundGateTitle": "Tik om bestellingsmeldingen in te schakelen",
+    "soundGateSubtitle": "Tik ergens om het geluid in te schakelen, zodat je elke nieuwe bestelling hoort."
   },
   "admin": {
     "welcomeBack": "Welkom terug",

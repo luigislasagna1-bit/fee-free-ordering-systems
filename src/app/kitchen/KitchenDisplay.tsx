@@ -1080,6 +1080,19 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   const audioCtxRef = useRef<AudioContext | null>(null);
   const audioUnlockedRef = useRef(false);
 
+  // iOS WebView blocks audio until a user gesture; the kitchen sits idle waiting
+  // for orders, so without a tap the alarm is SILENT for the first order (Luigi
+  // hit this on iPhone). Show a one-tap "enable sound" gate on iOS until the
+  // audio is unlocked. Web fix, no rebuild. Luigi 2026-06-19.
+  const [soundGateOpen, setSoundGateOpen] = useState(false);
+  useEffect(() => {
+    const ua = typeof navigator !== "undefined" ? navigator.userAgent : "";
+    const isIOS =
+      /iPad|iPhone|iPod/.test(ua) ||
+      (typeof navigator !== "undefined" && navigator.maxTouchPoints > 1 && /Macintosh/.test(ua));
+    if (isIOS && !audioUnlockedRef.current) setSoundGateOpen(true);
+  }, []);
+
   // Full-length "GloriaFood" new-order alert (Luigi 2026-06-04): a ~4-minute
   // MP3 that plays ONCE per alerting period — until the kitchen accepts or the
   // track ends — instead of a short ding looped on a cadence. We stream it via
@@ -1395,6 +1408,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // AudioContext alive for the lifetime of the session.
   useEffect(() => {
     const unlock = () => {
+      // Any gesture also dismisses the iOS "tap to enable sound" gate.
+      setSoundGateOpen(false);
       if (audioUnlockedRef.current) return;
       try {
         const Ctx = (window.AudioContext || (window as any).webkitAudioContext);
@@ -2822,6 +2837,24 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
   return (
     <div className={`h-[100dvh] flex flex-col overflow-hidden ${t.base}`}>
+      {/* iOS "tap to enable sound" gate. iOS blocks audio until a user gesture,
+          so an order arriving before staff tap anything would be SILENT. Tapping
+          fires the window pointerdown unlock (resumes the AudioContext + primes
+          the long-alert <audio>) and dismisses this. iOS-only — Android autoplays. */}
+      {soundGateOpen && (
+        <button
+          type="button"
+          onClick={() => setSoundGateOpen(false)}
+          aria-label={tk("soundGateTitle")}
+          className="fixed inset-0 z-[200] flex flex-col items-center justify-center gap-5 bg-gray-900/95 px-8 text-center select-none cursor-pointer"
+        >
+          <span className="flex items-center justify-center w-24 h-24 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/40 animate-pulse">
+            <Bell className="w-12 h-12 text-white" />
+          </span>
+          <span className="text-white text-2xl font-bold">{tk("soundGateTitle")}</span>
+          <span className="text-gray-300 text-base max-w-sm">{tk("soundGateSubtitle")}</span>
+        </button>
+      )}
       {/* ── Header ── */}
       <header
         className={`${t.header} px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between flex-shrink-0 gap-2`}

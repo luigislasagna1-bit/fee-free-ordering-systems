@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Tryk igen for at bekræfte",
     "printerManageHint": "Afbryd stopper udskrivning, men beholder printeren gemt. Glem rydder alle gemte indstillinger, så du kan starte forfra.",
     "printerDisconnectedToast": "Printer afbrudt.",
-    "printerForgotToast": "Printerindstillinger ryddet – start forfra."
+    "printerForgotToast": "Printerindstillinger ryddet – start forfra.",
+    "soundGateTitle": "Tryk for at aktivere ordreadvarsler",
+    "soundGateSubtitle": "Tryk et vilkårligt sted for at slå lyden til, så du hører hver ny ordre."
   },
   "admin": {
     "welcomeBack": "Velkommen tilbage",

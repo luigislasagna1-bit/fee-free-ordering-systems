@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Onaylamak için tekrar dokunun",
     "printerManageHint": "Bağlantıyı kesmek yazdırmayı durdurur ama bu yazıcıyı kayıtlı tutar. Unutmak tüm kayıtlı ayarları siler, böylece sıfırdan kurabilirsiniz.",
     "printerDisconnectedToast": "Yazıcı bağlantısı kesildi.",
-    "printerForgotToast": "Yazıcı ayarları temizlendi — sıfırdan başlayın."
+    "printerForgotToast": "Yazıcı ayarları temizlendi — sıfırdan başlayın.",
+    "soundGateTitle": "Sipariş uyarılarını etkinleştirmek için dokunun",
+    "soundGateSubtitle": "Her yeni siparişi duyabilmek için sesi açmak üzere herhangi bir yere dokunun."
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",

@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Dodirnite ponovno za potvrdu",
     "printerManageHint": "Prekid veze zaustavlja ispis, ali zadržava spremljeni pisač. Zaboravljanje briše sve spremljene postavke da možete krenuti ispočetka.",
     "printerDisconnectedToast": "Pisač je odspojen.",
-    "printerForgotToast": "Postavke pisača izbrisane — krenite ispočetka."
+    "printerForgotToast": "Postavke pisača izbrisane — krenite ispočetka.",
+    "soundGateTitle": "Dodirnite za aktivaciju upozorenja o narudžbama",
+    "soundGateSubtitle": "Dodirnite bilo gdje da uključite zvuk i čujete svaku novu narudžbu."
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",

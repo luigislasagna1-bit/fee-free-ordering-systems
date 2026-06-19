@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Kinnitamiseks puudutage uuesti",
     "printerManageHint": "Ühenduse katkestamine peatab printimise, kuid jätab printeri salvestatuks. Unustamine kustutab kõik salvestatud sätted, et saaksite uuesti alustada.",
     "printerDisconnectedToast": "Printer lahti ühendatud.",
-    "printerForgotToast": "Printeri sätted kustutatud – alusta uuesti."
+    "printerForgotToast": "Printeri sätted kustutatud – alusta uuesti.",
+    "soundGateTitle": "Puudutage tellimuste teavituste aktiveerimiseks",
+    "soundGateSubtitle": "Puudutage ükskõik kus, et lülitada heli sisse ja kuulda iga uut tellimust."
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",

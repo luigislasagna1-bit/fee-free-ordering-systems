@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Zum Bestätigen erneut tippen",
     "printerManageHint": "„Trennen\" stoppt das Drucken, behält den Drucker aber gespeichert. „Drucker entfernen\" löscht alle gespeicherten Einstellungen, um neu zu beginnen.",
     "printerDisconnectedToast": "Drucker getrennt.",
-    "printerForgotToast": "Druckereinstellungen gelöscht – neu beginnen."
+    "printerForgotToast": "Druckereinstellungen gelöscht – neu beginnen.",
+    "soundGateTitle": "Tippen um Bestellbenachrichtigungen zu aktivieren",
+    "soundGateSubtitle": "Tippe irgendwo, um den Ton einzuschalten und jede neue Bestellung zu hören."
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",

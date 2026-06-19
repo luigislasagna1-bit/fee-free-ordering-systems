@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Chạm lại để xác nhận",
     "printerManageHint": "Ngắt kết nối dừng in nhưng vẫn lưu máy in này. Quên sẽ xóa mọi cài đặt đã lưu để bạn thiết lập lại từ đầu.",
     "printerDisconnectedToast": "Đã ngắt kết nối máy in.",
-    "printerForgotToast": "Đã xóa cài đặt máy in — thiết lập lại từ đầu."
+    "printerForgotToast": "Đã xóa cài đặt máy in — thiết lập lại từ đầu.",
+    "soundGateTitle": "Chạm để bật thông báo đơn hàng",
+    "soundGateSubtitle": "Chạm vào bất kỳ đâu để bật âm thanh và nghe mọi đơn hàng mới."
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",

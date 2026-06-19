@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Tap again to confirm",
     "printerManageHint": "Disconnect stops printing but keeps this printer saved. Forget clears all saved printer settings so you can set up from scratch.",
     "printerDisconnectedToast": "Disconnected from printer.",
-    "printerForgotToast": "Printer settings cleared — start fresh."
+    "printerForgotToast": "Printer settings cleared — start fresh.",
+    "soundGateTitle": "Tap to enable order alerts",
+    "soundGateSubtitle": "Tap anywhere to turn on sound so you hear every new order."
   },
   "admin": {
     "comingSoonPlaceholder": {

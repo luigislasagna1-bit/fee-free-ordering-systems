@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Trykk igjen for å bekrefte",
     "printerManageHint": "Koble fra stopper utskrift, men beholder skriveren lagret. Glem fjerner alle lagrede innstillinger så du kan begynne på nytt.",
     "printerDisconnectedToast": "Skriver frakoblet.",
-    "printerForgotToast": "Skriverinnstillinger fjernet – start på nytt."
+    "printerForgotToast": "Skriverinnstillinger fjernet – start på nytt.",
+    "soundGateTitle": "Trykk for å aktivere ordrevarsler",
+    "soundGateSubtitle": "Trykk hvor som helst for å slå på lyden slik at du hører hver nye ordre."
   },
   "admin": {
     "welcomeBack": "Velkommen tilbake",

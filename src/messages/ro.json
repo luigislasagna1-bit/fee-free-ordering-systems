@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Atinge din nou pentru a confirma",
     "printerManageHint": "Deconectează oprește tipărirea dar păstrează această imprimantă salvată. Uită șterge toate setările salvate ca să o iei de la capăt.",
     "printerDisconnectedToast": "Imprimantă deconectată.",
-    "printerForgotToast": "Setările imprimantei au fost șterse — începe de la capăt."
+    "printerForgotToast": "Setările imprimantei au fost șterse — începe de la capăt.",
+    "soundGateTitle": "Atingeți pentru a activa alertele de comenzi",
+    "soundGateSubtitle": "Atingeți oriunde pentru a activa sunetul și a auzi fiecare comandă nouă."
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",

@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Tocca di nuovo per confermare",
     "printerManageHint": "Disconnetti interrompe la stampa ma mantiene questa stampante salvata. Dimentica cancella tutte le impostazioni salvate per ricominciare da capo.",
     "printerDisconnectedToast": "Stampante disconnessa.",
-    "printerForgotToast": "Impostazioni stampante cancellate — ricomincia da capo."
+    "printerForgotToast": "Impostazioni stampante cancellate — ricomincia da capo.",
+    "soundGateTitle": "Tocca per attivare gli avvisi sugli ordini",
+    "soundGateSubtitle": "Tocca ovunque per attivare il suono e sentire ogni nuovo ordine."
   },
   "admin": {
     "welcomeBack": "Bentornato",

@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Ketuk lagi untuk konfirmasi",
     "printerManageHint": "Putuskan menghentikan pencetakan tetapi tetap menyimpan printer ini. Lupakan menghapus semua pengaturan tersimpan agar Anda bisa mulai dari awal.",
     "printerDisconnectedToast": "Printer terputus.",
-    "printerForgotToast": "Pengaturan printer dihapus — mulai dari awal."
+    "printerForgotToast": "Pengaturan printer dihapus — mulai dari awal.",
+    "soundGateTitle": "Ketuk untuk mengaktifkan notifikasi pesanan",
+    "soundGateSubtitle": "Ketuk di mana saja untuk mengaktifkan suara agar Anda mendengar setiap pesanan baru."
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",

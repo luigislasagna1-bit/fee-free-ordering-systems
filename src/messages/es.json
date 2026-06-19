@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Toca de nuevo para confirmar",
     "printerManageHint": "Desconectar detiene la impresión pero mantiene esta impresora guardada. Olvidar borra todos los ajustes guardados para empezar de cero.",
     "printerDisconnectedToast": "Impresora desconectada.",
-    "printerForgotToast": "Ajustes de la impresora borrados: empieza de cero."
+    "printerForgotToast": "Ajustes de la impresora borrados: empieza de cero.",
+    "soundGateTitle": "Toca para activar las alertas de pedidos",
+    "soundGateSubtitle": "Toca en cualquier lugar para activar el sonido y escuchar cada nuevo pedido."
   },
   "admin": {
     "welcomeBack": "Bienvenido de nuevo",

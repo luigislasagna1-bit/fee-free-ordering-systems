@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Bakstelėkite dar kartą norėdami patvirtinti",
     "printerManageHint": "Atjungimas sustabdo spausdinimą, bet išsaugo šį spausdintuvą. Pamiršimas ištrina visus išsaugotus nustatymus, kad galėtumėte pradėti iš naujo.",
     "printerDisconnectedToast": "Spausdintuvas atjungtas.",
-    "printerForgotToast": "Spausdintuvo nustatymai išvalyti — pradėkite iš naujo."
+    "printerForgotToast": "Spausdintuvo nustatymai išvalyti — pradėkite iš naujo.",
+    "soundGateTitle": "Palieskite, kad įjungtumėte užsakymų įspėjimus",
+    "soundGateSubtitle": "Palieskite bet kur, kad įjungtumėte garsą ir girdėtumėte kiekvieną naują užsakymą."
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",

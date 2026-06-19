@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Appuyez à nouveau pour confirmer",
     "printerManageHint": "Déconnecter arrête l'impression mais garde cette imprimante enregistrée. Oublier efface tous les réglages enregistrés pour repartir de zéro.",
     "printerDisconnectedToast": "Imprimante déconnectée.",
-    "printerForgotToast": "Réglages de l'imprimante effacés — repartez de zéro."
+    "printerForgotToast": "Réglages de l'imprimante effacés — repartez de zéro.",
+    "soundGateTitle": "Appuyez pour activer les alertes de commandes",
+    "soundGateSubtitle": "Appuyez n'importe où pour activer le son et entendre chaque nouvelle commande."
   },
   "admin": {
     "welcomeBack": "Bon retour",

@@ -686,7 +686,9 @@
     "printerForgetConfirm": "もう一度タップして確認",
     "printerManageHint": "「切断」は印刷を停止しますが、このプリンターは保存されたままです。「削除」は保存されたプリンター設定をすべて消去し、最初から設定し直せます。",
     "printerDisconnectedToast": "プリンターを切断しました。",
-    "printerForgotToast": "プリンター設定を消去しました — 最初から設定できます。"
+    "printerForgotToast": "プリンター設定を消去しました — 最初から設定できます。",
+    "soundGateTitle": "タップして注文アラートを有効にする",
+    "soundGateSubtitle": "どこかをタップして音をオンにして、すべての新しい注文を聞き逃さないようにしましょう。"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",

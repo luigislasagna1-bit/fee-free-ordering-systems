@@ -686,7 +686,9 @@
     "printerForgetConfirm": "再次点按以确认",
     "printerManageHint": "断开连接会停止打印，但保留此打印机。忘记会清除所有已保存的打印机设置，让你重新设置。",
     "printerDisconnectedToast": "已断开打印机连接。",
-    "printerForgotToast": "已清除打印机设置 — 重新开始。"
+    "printerForgotToast": "已清除打印机设置 — 重新开始。",
+    "soundGateTitle": "点击以启用订单提醒",
+    "soundGateSubtitle": "点击任意位置开启声音，确保您听到每一个新订单。"
   },
   "admin": {
     "welcomeBack": "欢迎回来",

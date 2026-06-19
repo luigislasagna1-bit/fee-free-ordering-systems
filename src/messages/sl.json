@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Znova tapnite za potrditev",
     "printerManageHint": "Prekinitev povezave ustavi tiskanje, a ohrani shranjeni tiskalnik. Pozabi izbriše vse shranjene nastavitve, da lahko začnete znova.",
     "printerDisconnectedToast": "Tiskalnik je odklopljen.",
-    "printerForgotToast": "Nastavitve tiskalnika počiščene – začnite znova."
+    "printerForgotToast": "Nastavitve tiskalnika počiščene – začnite znova.",
+    "soundGateTitle": "Dotaknite se za aktiviranje opozoril o naročilih",
+    "soundGateSubtitle": "Dotaknite se kjerkoli, da vklopite zvok in slišite vsako novo naročilo."
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",

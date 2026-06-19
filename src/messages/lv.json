@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Pieskarieties vēlreiz, lai apstiprinātu",
     "printerManageHint": "Atvienošana pārtrauc drukāšanu, bet saglabā šo printeri. Aizmiršana dzēš visus saglabātos iestatījumus, lai sāktu no jauna.",
     "printerDisconnectedToast": "Printeris atvienots.",
-    "printerForgotToast": "Printera iestatījumi notīrīti — sāciet no jauna."
+    "printerForgotToast": "Printera iestatījumi notīrīti — sāciet no jauna.",
+    "soundGateTitle": "Pieskarieties, lai iespējotu pasūtījumu paziņojumus",
+    "soundGateSubtitle": "Pieskarieties jebkur, lai ieslēgtu skaņu un dzirdētu katru jaunu pasūtījumu."
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",

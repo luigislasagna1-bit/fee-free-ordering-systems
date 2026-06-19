@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Dotknij ponownie, aby potwierdzić",
     "printerManageHint": "Rozłącz zatrzymuje drukowanie, ale zachowuje zapisaną drukarkę. Zapomnij usuwa wszystkie zapisane ustawienia, aby zacząć od nowa.",
     "printerDisconnectedToast": "Drukarka rozłączona.",
-    "printerForgotToast": "Ustawienia drukarki wyczyszczone — zacznij od nowa."
+    "printerForgotToast": "Ustawienia drukarki wyczyszczone — zacznij od nowa.",
+    "soundGateTitle": "Stuknij, aby włączyć powiadomienia o zamówieniach",
+    "soundGateSubtitle": "Stuknij gdziekolwiek, aby włączyć dźwięk i słyszeć każde nowe zamówienie."
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",

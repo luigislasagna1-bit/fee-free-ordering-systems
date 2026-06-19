@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Toque novamente para confirmar",
     "printerManageHint": "Desligar para a impressão mas mantém esta impressora guardada. Esquecer apaga todas as definições guardadas para começar do zero.",
     "printerDisconnectedToast": "Impressora desligada.",
-    "printerForgotToast": "Definições da impressora apagadas — comece do zero."
+    "printerForgotToast": "Definições da impressora apagadas — comece do zero.",
+    "soundGateTitle": "Toque para ativar os alertas de encomendas",
+    "soundGateSubtitle": "Toque em qualquer lugar para ligar o som e ouvir cada nova encomenda."
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",

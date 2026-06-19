@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Vahvista napauttamalla uudelleen",
     "printerManageHint": "Katkaise yhteys lopettaa tulostuksen mutta säilyttää tulostimen tallennettuna. Unohda poistaa kaikki tallennetut asetukset, jotta voit aloittaa alusta.",
     "printerDisconnectedToast": "Tulostimen yhteys katkaistu.",
-    "printerForgotToast": "Tulostimen asetukset tyhjennetty – aloita alusta."
+    "printerForgotToast": "Tulostimen asetukset tyhjennetty – aloita alusta.",
+    "soundGateTitle": "Napauta ottaaksesi tilaushälytykset käyttöön",
+    "soundGateSubtitle": "Napauta mitä tahansa kohtaa ottaaksesi äänen käyttöön, jotta kuulet jokaisen uuden tilauksen."
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

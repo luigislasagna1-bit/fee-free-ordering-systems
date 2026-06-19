@@ -686,7 +686,9 @@
     "printerForgetConfirm": "Tryck igen för att bekräfta",
     "printerManageHint": "Koppla från stoppar utskriften men behåller skrivaren sparad. Glöm rensar alla sparade inställningar så att du kan börja om.",
     "printerDisconnectedToast": "Skrivaren frånkopplad.",
-    "printerForgotToast": "Skrivarinställningar rensade – börja om."
+    "printerForgotToast": "Skrivarinställningar rensade – börja om.",
+    "soundGateTitle": "Tryck för att aktivera ordervarningar",
+    "soundGateSubtitle": "Tryck var som helst för att slå på ljudet så att du hör varje ny order."
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",
