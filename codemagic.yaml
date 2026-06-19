@@ -41,7 +41,9 @@ workflows:
       events: []
     scripts:
       - name: Install npm dependencies
-        script: npm ci
+        # `npm install` (not `npm ci`) — ci fails fast if package-lock.json is
+        # even slightly out of sync with package.json; install reconciles it.
+        script: npm install --no-audit --no-fund
       - name: Capacitor sync (iOS)
         # Copies the web config + native plugins into the iOS project.
         script: npx cap sync ios
