@@ -1,0 +1,74 @@
+# Codemagic CI — cloud-Mac build for the Fee Free Order App (iOS).
+#
+# This builds the Capacitor iOS app (a WebView shell that loads the live
+# kitchen at feefreeordering.com/kitchen + the native DirectPrinter plugin),
+# signs it with the App Store distribution profile, and uploads it to
+# TestFlight. No local Mac required.
+#
+# ── ONE-TIME SETUP (done in the Codemagic UI, not here) ──────────────────
+#  1. Sign up at codemagic.io with the GitHub account that owns this repo and
+#     add the repository.
+#  2. In App Store Connect → Users and Access → Integrations → App Store
+#     Connect API, create a key with access role "App Manager". Download the
+#     .p8 (one time only), and note the Key ID + Issuer ID.
+#  3. In Codemagic → Team settings → Integrations → Developer Portal, add that
+#     key. NAME THE INTEGRATION EXACTLY:  ff-asc-key
+#     (the `app_store_connect:` reference below must match this name).
+#  4. Push this file; Codemagic auto-detects it and shows the "ios-kitchen"
+#     workflow. Run it.
+#
+# Codemagic uses the API key to (a) auto-create the signing certificate +
+# provisioning profile for com.feefreeordering.kitchen and (b) upload the
+# build to TestFlight — so there are no certificates to manage by hand.
+
+workflows:
+  ios-kitchen:
+    name: Fee Free Order App (iOS)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    integrations:
+      app_store_connect: ff-asc-key
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.feefreeordering.kitchen
+      vars:
+        XCODE_WORKSPACE: "ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+        BUNDLE_ID: "com.feefreeordering.kitchen"
+      node: 20
+      cocoapods: default
+    triggering:
+      # Manual builds only for now (we trigger from the Codemagic UI). We can
+      # add branch/tag triggers later once the pipeline is proven.
+      events: []
+    scripts:
+      - name: Install npm dependencies
+        script: npm ci
+      - name: Capacitor sync (iOS)
+        # Copies the web config + native plugins into the iOS project.
+        script: npx cap sync ios
+      - name: Install CocoaPods dependencies
+        script: |
+          cd ios/App && pod install
+      - name: Set build number to latest TestFlight + 1
+        script: |
+          BUILD_NUMBER=$(app-store-connect get-latest-testflight-build-number "$BUNDLE_ID" 2>/dev/null || echo 0)
+          cd ios/App
+          agvtool new-version -all $((BUILD_NUMBER + 1))
+      - name: Fetch signing profiles
+        script: xcode-project use-profiles
+      - name: Build IPA
+        script: |
+          xcode-project build-ipa \
+            --workspace "$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        # Upload to TestFlight (internal testers can install immediately). We
+        # do NOT auto-submit to App Store review yet — that's a later step.
+        submit_to_testflight: true
