@@ -33,7 +33,7 @@ workflows:
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
         BUNDLE_ID: "com.feefreeordering.kitchen"
-      node: 20
+      node: 22
       cocoapods: default
     triggering:
       # Manual builds only for now (we trigger from the Codemagic UI). We can
