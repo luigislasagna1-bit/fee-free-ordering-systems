@@ -49,24 +49,27 @@ workflows:
         # NOT CocoaPods — there is no Podfile; Xcode resolves the Swift packages at
         # build time, so no separate install step is needed.
         script: npx cap sync ios
-      - name: Set up code signing (creates cert + profile)
-        # The account's existing distribution certificate was created on a Mac,
-        # so its private key isn't available to CI — fetch-signing-files alone
-        # failed with "Cannot save Signing Certificates without certificate
-        # private key". So generate a FRESH Apple Distribution certificate that
-        # Codemagic itself creates the private key for, then create the App Store
-        # provisioning profile, install the cert into the build keychain, and
-        # apply the profile to the Xcode project.
-        # NOTE: Apple allows 2 distribution certs per account; this adds one. Once
-        # the pipeline is green we switch to a stored/reused cert so repeat builds
-        # don't keep minting new ones.
+      - name: Set up code signing (mint cert + profile)
+        # Apple's API can't expose the private key of the account's existing
+        # distribution certificate (made on a Mac), and `certificates create`
+        # won't mint one without a key. So: generate a fresh RSA private key on
+        # the build machine, mint a new Apple Distribution certificate FROM that
+        # key (Codemagic then holds both halves), create the App Store profile
+        # using the same key, install the cert, and apply the profile.
+        # `set -e` so any failure goes RED instead of silently passing.
+        # NOTE: Apple allows 2 distribution certs; this adds one. Once green we
+        # switch to a stored/reused key so repeat builds don't keep minting certs.
         script: |
+          set -e
           keychain initialize
-          app-store-connect create-certificate \
+          openssl genrsa -out /tmp/ff_signing_key.pem 2048
+          app-store-connect certificates create \
             --type IOS_DISTRIBUTION \
+            --certificate-key @file:/tmp/ff_signing_key.pem \
             --save
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type IOS_APP_STORE \
+            --certificate-key @file:/tmp/ff_signing_key.pem \
             --create
           keychain add-certificates
           xcode-project use-profiles
