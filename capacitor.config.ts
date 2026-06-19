@@ -85,9 +85,15 @@ const config: CapacitorConfig = {
     // The DirectPrinter plugin opens TCP sockets directly (not HTTP)
     // so ATS doesn't apply to printer connections; those are handled
     // by Network framework with explicit user-supplied IP.
-    contentInset: "always",
-    // Prevent automatic content-inset adjustment that fights with our
-    // sticky headers in the kitchen UI.
+    //
+    // contentInset: "never" — the kitchen pages use viewport-fit=cover +
+    // CSS env(safe-area-inset-*) padding to handle the notch/home-indicator
+    // themselves. With "always" the WebView ALSO inset the scroll content,
+    // double-handling the safe areas: the h-[100dvh] kitchen ended up taller
+    // than the visible area on iPhone, so the page scrolled and the bottom bar
+    // (gear) was pushed off-screen. "never" lets the CSS own the insets so the
+    // screen fills exactly with no page scroll. (Verify sticky header on build.)
+    contentInset: "never",
     scrollEnabled: true,
   },
 };

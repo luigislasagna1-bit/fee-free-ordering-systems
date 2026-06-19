@@ -2821,7 +2821,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     : null;
 
   return (
-    <div className={`h-screen flex flex-col ${t.base}`}>
+    <div className={`h-[100dvh] flex flex-col overflow-hidden ${t.base}`}>
       {/* ── Header ── */}
       <header
         className={`${t.header} px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between flex-shrink-0 gap-2`}
