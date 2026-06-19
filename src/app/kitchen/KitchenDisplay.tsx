@@ -792,7 +792,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     let cancelled = false;
     const fetchRes = async () => {
       try {
-        const res = await fetch("/api/admin/reservations/upcoming");
+        // Cache-bust + no-store — same iOS WKWebView stale-GET issue as the
+        // orders poll; without it new reservations never surfaced on iPhone.
+        const res = await fetch(`/api/admin/reservations/upcoming?t=${Date.now()}`, { cache: "no-store" });
         if (!res.ok) return;
         const data: KitchenReservation[] = await res.json();
         if (cancelled) return;
@@ -1018,7 +1020,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   });
   const refreshRestaurantPauses = useCallback(async () => {
     try {
-      const r = await fetch("/api/kitchen/restaurant-status");
+      // no-store + cache-bust — iOS WKWebView would otherwise show stale
+      // pause/open-closed state after the first load.
+      const r = await fetch(`/api/kitchen/restaurant-status?t=${Date.now()}`, { cache: "no-store" });
       if (!r.ok) return;
       const d = await r.json();
       setRestaurantPauses({
@@ -2034,7 +2038,13 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
   const fetchOrders = useCallback(async () => {
     try {
-      const res = await fetch("/api/kitchen/orders");
+      // Cache-bust + no-store. iOS WKWebView aggressively caches same-URL GET
+      // polls, so after the first load every 4s poll returned the STALE cached
+      // response — new orders never appeared (and never rang, since new-order
+      // detection runs off this data). A unique ?t= per poll + no-store
+      // guarantees a fresh fetch each tick. Android's WebView didn't cache the
+      // same way, so this only broke on iPhone. Luigi 2026-06-19.
+      const res = await fetch(`/api/kitchen/orders?t=${Date.now()}`, { cache: "no-store" });
       if (!res.ok) return;
       const body = await res.json();
       // Response shape evolved 2026-05-24: was Order[]; is now
