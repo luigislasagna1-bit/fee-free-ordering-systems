@@ -331,7 +331,9 @@ export function HomeClient({ locale }: { locale: string }) {
             <div>
               <div className="font-bold text-gray-900">24/7 Canadian support</div>
               <p className="text-sm text-gray-600 leading-relaxed mt-0.5">
-                Call or live-chat the people who actually built it — any time, day or night.
+                Real humans, any time — day or night. Call{" "}
+                <a href="tel:+18886188765" className="font-semibold text-emerald-700 hover:underline whitespace-nowrap">1-888-618-8765</a>{" "}
+                or live-chat the people who actually built it.
               </p>
             </div>
           </div>

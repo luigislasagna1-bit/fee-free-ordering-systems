@@ -1085,10 +1085,6 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // hit this on iPhone). Show a one-tap "enable sound" gate on iOS until the
   // audio is unlocked. Web fix, no rebuild. Luigi 2026-06-19.
   const [soundGateOpen, setSoundGateOpen] = useState(false);
-  // TEMP diagnostic (gated to one restaurant in the JSX below): timestamp of the
-  // last SUCCESSFUL orders poll, surfaced in an on-screen status readout to debug
-  // the iOS phantom-ring / stale-state issue. Remove once the alarm is confirmed.
-  const [lastSyncAt, setLastSyncAt] = useState<number | null>(null);
   useEffect(() => {
     const ua = typeof navigator !== "undefined" ? navigator.userAgent : "";
     const isIOS =
@@ -2131,7 +2127,6 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       }
 
       setOrders(fresh);
-      setLastSyncAt(Date.now());
       setWorkflowMode(mode);
       setPrintNodeEnabled(pnEnabled);
     } catch {}
@@ -2859,22 +2854,6 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           <span className="text-white text-2xl font-bold">{tk("soundGateTitle")}</span>
           <span className="text-gray-300 text-base max-w-sm">{tk("soundGateSubtitle")}</span>
         </button>
-      )}
-      {/* TEMP alarm-state readout — gated to Luigi's restaurant only, to debug
-          the iOS phantom-ring / delayed-ring. Codes (no prose, so no i18n):
-          o=orders loaded, pend=ringing/total-pending, res=reservations/ringing,
-          ring=alarm armed, long=looping ring, ack=silenced, au=audio unlocked,
-          gate=sound-gate open, sync=secs since last successful poll. Remove after. */}
-      {restaurant?.id === "cmp7xhd3900000al2jz0db5vi" && (
-        <div
-          className="fixed bottom-0 left-0 z-[300] bg-black/80 text-[10px] leading-tight font-mono text-emerald-300 px-2 py-0.5 pointer-events-none select-none"
-          style={{ paddingBottom: "max(2px, env(safe-area-inset-bottom))" }}
-        >
-          {`o${orders.length} pend${pendingCount}/${orders.filter((o) => o.status === "pending").length} `}
-          {`res${reservations.length}/${pendingReservationCount} ring${ringAudible ? 1 : 0} long${longRing ? 1 : 0} `}
-          {`ack${acknowledged ? 1 : 0} au${audioUnlockedRef.current ? 1 : 0} gate${soundGateOpen ? 1 : 0} `}
-          {`sync${lastSyncAt ? Math.round((nowMs - lastSyncAt) / 1000) : "-"}s`}
-        </div>
       )}
       {/* ── Header ── */}
       <header
