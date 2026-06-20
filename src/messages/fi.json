@@ -4689,7 +4689,7 @@
       "freeSubtitle": "Kaikki mitä tarvitset aloittaaksesi tilausten vastaanottamisen tänään.",
       "freeCta": "Aloita ilmaiseksi",
       "freeIncludes": [
-        "Rajattomat verkko-tilaukset",
+        "Enintään 100 tilausta/kk",
         "Asiakkaan tilaussivu",
         "Upotettava widget olemassa olevalle sivustollesi",
         "Kitchen Order App",
@@ -4739,7 +4739,7 @@
       },
       "compareTitle": "Jokainen ravintola saa",
       "compareItems": [
-        "Rajattomat tilaukset",
+        "0 % komissiota suorista tilauksista",
         "Asiakkaan tilaussivu",
         "Kitchen Order App",
         "Hallintakojelauta",

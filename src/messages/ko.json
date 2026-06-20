@@ -4689,7 +4689,7 @@
       "freeSubtitle": "오늘부터 주문을 받기 위한 모든 것.",
       "freeCta": "무료로 시작하기",
       "freeIncludes": [
-        "무제한 온라인 주문",
+        "월 최대 주문 100건",
         "고객 주문 페이지",
         "기존 사이트에 삽입 가능한 위젯",
         "Kitchen Order App",
@@ -4739,7 +4739,7 @@
       },
       "compareTitle": "모든 레스토랑이 받는 것",
       "compareItems": [
-        "무제한 주문",
+        "직접 주문 수수료 0%",
         "고객 주문 페이지",
         "Kitchen Order App",
         "관리자 대시보드",

@@ -4689,7 +4689,7 @@
       "freeSubtitle": "Viss, kas nepieciešams, lai sāktu pieņemt pasūtījumus šodien.",
       "freeCta": "Sākt bezmaksas",
       "freeIncludes": [
-        "Neierobežoti tiešsaistes pasūtījumi",
+        "Līdz 100 pasūtījumiem mēnesī",
         "Klientu pasūtīšanas lapa",
         "Iegulstams logrīks jūsu esošajā vietnē",
         "Kitchen Order App",
@@ -4739,7 +4739,7 @@
       },
       "compareTitle": "Katrs restorāns saņem",
       "compareItems": [
-        "Neierobežoti pasūtījumi",
+        "0% komisijas par tiešajiem pasūtījumiem",
         "Klientu pasūtīšanas lapa",
         "Kitchen Order App",
         "Administratora panelis",

@@ -4689,7 +4689,7 @@
       "freeSubtitle": "Vse kar potrebujete za začetek sprejemanja naročil danes.",
       "freeCta": "Začni brezplačno",
       "freeIncludes": [
-        "Neomejeno spletnih naročil",
+        "Do 100 naročil na mesec",
         "Stran za naročanje strank",
         "Vdelan widget za vašo obstoječo stran",
         "Kitchen Order App",
@@ -4739,7 +4739,7 @@
       },
       "compareTitle": "Vsaka restavracija dobi",
       "compareItems": [
-        "Neomejeno naročil",
+        "0 % provizije na neposredna naročila",
         "Stran za naročanje strank",
         "Kitchen Order App",
         "Admin nadzorna plošča",

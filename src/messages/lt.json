@@ -4689,7 +4689,7 @@
       "freeSubtitle": "Viskas, ko reikia, kad šiandien pradėtumėte priimti užsakymus.",
       "freeCta": "Pradėti nemokamai",
       "freeIncludes": [
-        "Neriboti internetiniai užsakymai",
+        "Iki 100 užsakymų per mėnesį",
         "Kliento užsakymų puslapis",
         "Įterpiamas valdiklis jūsų esamai svetainei",
         "Kitchen Order App",
@@ -4739,7 +4739,7 @@
       },
       "compareTitle": "Kiekvienas restoranas gauna",
       "compareItems": [
-        "Neriboti užsakymai",
+        "0 % komisinių už tiesioginius užsakymus",
         "Kliento užsakymų puslapis",
         "Kitchen Order App",
         "Administravimo skydelis",
