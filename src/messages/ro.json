@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Descarcă din",
           "androidLine1": "Disponibil pe"
+        },
+        "softlaunch": {
+          "eyebrow": "Lansare în avanpremieră",
+          "title": "Se pregătește ceva <accent>mare</accent>.",
+          "body": "Invităm un grup select de proprietari de restaurante să se alăture din timp și să crească împreună cu Fee Free Ordering.",
+          "tick1": "Fii parte din viitorul comenzilor online",
+          "tick2": "Asigură-ți beneficiile de acces timpuriu",
+          "tick3": "Ajută la modelarea platformei",
+          "cta": "Alătură-te lansării în avanpremieră",
+          "imgAlt": "Fee Free Ordering — în curând disponibil"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Conduce afacerea",
+            "title": "Cunoaște-ți cifrele. Stăpânește-ți clienții.",
+            "b1": "Rapoarte și analize în timp real",
+            "b2": "Bază de date și istoric al clienților",
+            "b3": "Instrumente de promoții și fidelizare",
+            "b4": "Exportă-ți datele oricând"
+          },
+          "app": {
+            "eyebrow": "Descarcă aplicația",
+            "title": "Kitchen Order App pentru echipa ta.",
+            "body": "Gestionează comenzile, printează bonurile și actualizează statusul — totul de pe tableta ta."
+          },
+          "growth": {
+            "eyebrow": "Creat pentru creștere",
+            "title": "Mai multe comenzi. Comisioane mai mici. Profit mai mare.",
+            "b1": "Comenzi nelimitate",
+            "b2": "Fără taxe ascunse",
+            "b3": "Fără taxe de configurare",
+            "b4": "Anulează oricând"
+          },
+          "data": {
+            "eyebrow": "De încredere și securizat",
+            "title": "Datele tale sunt în siguranță. Afacerea ta rămâne a ta.",
+            "body": "Nu îți vindem niciodată datele. Niciodată.",
+            "b1": "Clienții tăi sunt ai tăi",
+            "b2": "Exportă-ți datele oricând",
+            "b3": "Securizat și criptat",
+            "b4": "Creat în Canada"
+          }
         }
       }
     },

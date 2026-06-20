@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Preuzmite na",
           "androidLine1": "Nabavite na"
+        },
+        "softlaunch": {
+          "eyebrow": "Probno lansiranje",
+          "title": "Nešto <accent>veliko</accent> se sprema.",
+          "body": "Pozivamo izabranu grupu vlasnika restorana da se priključe na vreme i rastu uz Fee Free Ordering.",
+          "tick1": "Budite deo budućnosti online naručivanja",
+          "tick2": "Obezbedite pogodnosti ranog pristupa",
+          "tick3": "Pomozite da oblikujemo platformu",
+          "cta": "Priključite se probnom lansiranju",
+          "imgAlt": "Fee Free Ordering — uskoro počinjemo"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Vodite posao",
+            "title": "Poznajte svoje brojke. Posedujte svoje goste.",
+            "b1": "Izveštaji i uvidi u realnom vremenu",
+            "b2": "Baza podataka o gostima i istorija",
+            "b3": "Alati za promocije i lojalnost",
+            "b4": "Izvezite svoje podatke u svakom trenutku"
+          },
+          "app": {
+            "eyebrow": "Preuzmite aplikaciju",
+            "title": "Kitchen Order App za vaš tim.",
+            "body": "Upravljajte porudžbinama, štampajte račune i ažurirajte status — sve sa vašeg tableta."
+          },
+          "growth": {
+            "eyebrow": "Stvoreno za rast",
+            "title": "Više porudžbina. Niže provizije. Veći profit.",
+            "b1": "Neograničen broj porudžbina",
+            "b2": "Bez skrivenih troškova",
+            "b3": "Bez troškova podešavanja",
+            "b4": "Otkažite u svakom trenutku"
+          },
+          "data": {
+            "eyebrow": "Pouzdano i bezbedno",
+            "title": "Vaši podaci su bezbedni. Vaš posao ostaje vaš.",
+            "body": "Nikada ne prodajemo vaše podatke. Nikada.",
+            "b1": "Vaši gosti pripadaju vama",
+            "b2": "Izvezite svoje podatke u svakom trenutku",
+            "b3": "Bezbedno i šifrovano",
+            "b4": "Napravljeno u Kanadi"
+          }
         }
       }
     },

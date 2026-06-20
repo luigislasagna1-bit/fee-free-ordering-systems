@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Descarregar na",
           "androidLine1": "Disponível no"
+        },
+        "softlaunch": {
+          "eyebrow": "Lançamento exclusivo",
+          "title": "Está a fervilhar algo <accent>grande</accent>.",
+          "body": "Estamos a convidar um grupo seleto de proprietários de restaurantes para aderirem desde o início e crescerem connosco no Fee Free Ordering.",
+          "tick1": "Faça parte do futuro das encomendas online",
+          "tick2": "Garanta vantagens de acesso antecipado",
+          "tick3": "Ajude a moldar a plataforma",
+          "cta": "Aderir ao lançamento exclusivo",
+          "imgAlt": "Fee Free Ordering — em breve"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Faça o negócio crescer",
+            "title": "Conheça os seus números. Seja dono dos seus clientes.",
+            "b1": "Relatórios e análises em tempo real",
+            "b2": "Base de dados e histórico de clientes",
+            "b3": "Ferramentas de promoções e fidelização",
+            "b4": "Exporte os seus dados a qualquer momento"
+          },
+          "app": {
+            "eyebrow": "Obtenha a aplicação",
+            "title": "Kitchen Order App para a sua equipa.",
+            "body": "Faça a gestão de encomendas, imprima recibos e atualize o estado — tudo a partir do seu tablet."
+          },
+          "growth": {
+            "eyebrow": "Feito para crescer",
+            "title": "Mais encomendas. Menos taxas. Mais lucro.",
+            "b1": "Encomendas ilimitadas",
+            "b2": "Sem taxas ocultas",
+            "b3": "Sem taxas de configuração",
+            "b4": "Cancele quando quiser"
+          },
+          "data": {
+            "eyebrow": "Fiável e seguro",
+            "title": "Os seus dados estão seguros. O seu negócio continua a ser seu.",
+            "body": "Nunca vendemos os seus dados. Nunca.",
+            "b1": "Os seus clientes são seus",
+            "b2": "Exporte os seus dados a qualquer momento",
+            "b3": "Seguro e encriptado",
+            "b4": "Feito no Canadá"
+          }
         }
       }
     },

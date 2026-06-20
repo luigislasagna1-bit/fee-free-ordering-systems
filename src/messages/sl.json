@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Prenesite v",
           "androidLine1": "Prenesite na"
+        },
+        "softlaunch": {
+          "eyebrow": "Mehki zagon",
+          "title": "Nekaj <accent>velikega</accent> se kuha.",
+          "body": "Izbrano skupino lastnikov restavracij vabimo, da se nam pridružijo zgodaj in rastejo skupaj s Fee Free Ordering.",
+          "tick1": "Bodite del prihodnosti spletnega naročanja",
+          "tick2": "Zagotovite si ugodnosti zgodnjega dostopa",
+          "tick3": "Pomagajte oblikovati platformo",
+          "cta": "Pridružite se mehkemu zagonu",
+          "imgAlt": "Fee Free Ordering — kmalu na voljo"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Vodite posel",
+            "title": "Poznajte svoje številke. Imejte svoje stranke.",
+            "b1": "Poročila in vpogledi v realnem času",
+            "b2": "Baza strank in zgodovina",
+            "b3": "Orodja za promocije in zvestobo",
+            "b4": "Izvozite svoje podatke kadar koli"
+          },
+          "app": {
+            "eyebrow": "Prenesite aplikacijo",
+            "title": "Kitchen Order App za vašo ekipo.",
+            "body": "Upravljajte naročila, tiskajte račune in posodabljajte status — vse s svoje tablice."
+          },
+          "growth": {
+            "eyebrow": "Ustvarjeno za rast",
+            "title": "Več naročil. Nižje provizije. Višji dobiček.",
+            "b1": "Neomejena naročila",
+            "b2": "Brez skritih stroškov",
+            "b3": "Brez stroškov nastavitve",
+            "b4": "Prekličite kadar koli"
+          },
+          "data": {
+            "eyebrow": "Zaupanja vredno in varno",
+            "title": "Vaši podatki so varni. Vaš posel ostane vaš.",
+            "body": "Vaših podatkov nikoli ne prodajamo. Nikoli.",
+            "b1": "Vaše stranke so vaše",
+            "b2": "Izvozite svoje podatke kadar koli",
+            "b3": "Varno in šifrirano",
+            "b4": "Ustvarjeno v Kanadi"
+          }
         }
       }
     },

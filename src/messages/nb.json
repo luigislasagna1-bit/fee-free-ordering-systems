@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Last ned i",
           "androidLine1": "Få den på"
+        },
+        "softlaunch": {
+          "eyebrow": "Myk lansering",
+          "title": "Noe <accent>stort</accent> putrer i gryta.",
+          "body": "Vi inviterer en utvalgt gruppe restauranteiere til å bli med tidlig og vokse sammen med Fee Free Ordering.",
+          "tick1": "Bli en del av fremtiden for nettbestilling",
+          "tick2": "Sikre deg fordelene ved tidlig tilgang",
+          "tick3": "Vær med på å forme plattformen",
+          "cta": "Bli med på den myke lanseringen",
+          "imgAlt": "Fee Free Ordering — lanseres snart"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Driv virksomheten",
+            "title": "Kjenn tallene dine. Eier kundene dine.",
+            "b1": "Rapporter og innsikt i sanntid",
+            "b2": "Kundedatabase og historikk",
+            "b3": "Kampanje- og lojalitetsverktøy",
+            "b4": "Eksporter dataene dine når som helst"
+          },
+          "app": {
+            "eyebrow": "Last ned appen",
+            "title": "Kitchen Order App for teamet ditt.",
+            "body": "Håndter bestillinger, skriv ut kvitteringer og oppdater status — alt fra nettbrettet ditt."
+          },
+          "growth": {
+            "eyebrow": "Bygget for vekst",
+            "title": "Flere bestillinger. Lavere gebyrer. Høyere fortjeneste.",
+            "b1": "Ubegrenset antall bestillinger",
+            "b2": "Ingen skjulte gebyrer",
+            "b3": "Ingen oppstartsgebyrer",
+            "b4": "Si opp når som helst"
+          },
+          "data": {
+            "eyebrow": "Trygt og sikkert",
+            "title": "Dataene dine er trygge. Virksomheten din forblir din.",
+            "body": "Vi selger aldri dataene dine. Aldri.",
+            "b1": "Kundene dine er dine",
+            "b2": "Eksporter dataene dine når som helst",
+            "b3": "Sikkert og kryptert",
+            "b4": "Bygget i Canada"
+          }
         }
       }
     },

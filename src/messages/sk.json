@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Stiahnite si v",
           "androidLine1": "Získajte na"
+        },
+        "softlaunch": {
+          "eyebrow": "Soft launch",
+          "title": "Niečo <accent>veľké</accent> sa varí.",
+          "body": "Pozývame vybranú skupinu majiteľov reštaurácií, aby sa pridali medzi prvými a rástli spolu s Fee Free Ordering.",
+          "tick1": "Buďte súčasťou budúcnosti online objednávania",
+          "tick2": "Zaistite si výhody skorého prístupu",
+          "tick3": "Pomôžte formovať platformu",
+          "cta": "Pridajte sa k soft launchu",
+          "imgAlt": "Fee Free Ordering — už čoskoro spúšťame"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Riaďte svoj biznis",
+            "title": "Poznajte svoje čísla. Vlastnite svojich zákazníkov.",
+            "b1": "Reporty a prehľady v reálnom čase",
+            "b2": "Databáza zákazníkov a história",
+            "b3": "Akcie a vernostné nástroje",
+            "b4": "Exportujte svoje dáta kedykoľvek"
+          },
+          "app": {
+            "eyebrow": "Stiahnite si aplikáciu",
+            "title": "Kitchen Order App pre váš tím.",
+            "body": "Spravujte objednávky, tlačte účtenky a aktualizujte stav — všetko z vášho tabletu."
+          },
+          "growth": {
+            "eyebrow": "Stvorené pre rast",
+            "title": "Viac objednávok. Nižšie poplatky. Vyššie zisky.",
+            "b1": "Neobmedzené objednávky",
+            "b2": "Žiadne skryté poplatky",
+            "b3": "Žiadne poplatky za nastavenie",
+            "b4": "Zrušte kedykoľvek"
+          },
+          "data": {
+            "eyebrow": "Dôveryhodné a bezpečné",
+            "title": "Vaše dáta sú v bezpečí. Váš biznis zostáva váš.",
+            "body": "Vaše dáta nikdy nepredávame. Nikdy.",
+            "b1": "Vaši zákazníci patria vám",
+            "b2": "Exportujte svoje dáta kedykoľvek",
+            "b3": "Zabezpečené a šifrované",
+            "b4": "Vyrobené v Kanade"
+          }
         }
       }
     },

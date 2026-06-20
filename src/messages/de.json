@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Laden im",
           "androidLine1": "Jetzt bei"
+        },
+        "softlaunch": {
+          "eyebrow": "Soft-Launch",
+          "title": "Hier brodelt etwas <accent>Großes</accent>.",
+          "body": "Wir laden eine ausgewählte Gruppe von Restaurantbesitzern ein, früh einzusteigen und gemeinsam mit Fee Free Ordering zu wachsen.",
+          "tick1": "Gestalten Sie die Zukunft der Online-Bestellung mit",
+          "tick2": "Sichern Sie sich exklusive Early-Access-Vorteile",
+          "tick3": "Prägen Sie die Plattform aktiv mit",
+          "cta": "Am Soft-Launch teilnehmen",
+          "imgAlt": "Fee Free Ordering — startet in Kürze"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Betrieb steuern",
+            "title": "Kennen Sie Ihre Zahlen. Behalten Sie Ihre Kunden.",
+            "b1": "Berichte & Einblicke in Echtzeit",
+            "b2": "Kundendatenbank & Verlauf",
+            "b3": "Aktionen & Treue-Tools",
+            "b4": "Exportieren Sie Ihre Daten jederzeit"
+          },
+          "app": {
+            "eyebrow": "App holen",
+            "title": "Kitchen Order App für Ihr Team.",
+            "body": "Bestellungen verwalten, Belege drucken und Status aktualisieren — alles direkt vom Tablet."
+          },
+          "growth": {
+            "eyebrow": "Für Wachstum gemacht",
+            "title": "Mehr Bestellungen. Weniger Gebühren. Höhere Gewinne.",
+            "b1": "Unbegrenzte Bestellungen",
+            "b2": "Keine versteckten Gebühren",
+            "b3": "Keine Einrichtungsgebühren",
+            "b4": "Jederzeit kündbar"
+          },
+          "data": {
+            "eyebrow": "Vertrauenswürdig & sicher",
+            "title": "Ihre Daten sind sicher. Ihr Geschäft bleibt Ihres.",
+            "body": "Wir verkaufen Ihre Daten niemals. Niemals.",
+            "b1": "Ihre Kunden gehören Ihnen",
+            "b2": "Exportieren Sie Ihre Daten jederzeit",
+            "b3": "Sicher & verschlüsselt",
+            "b4": "Entwickelt in Kanada"
+          }
         }
       }
     },

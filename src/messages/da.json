@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Download i",
           "androidLine1": "Hent den på"
+        },
+        "softlaunch": {
+          "eyebrow": "Soft launch",
+          "title": "Noget <accent>stort</accent> simrer.",
+          "body": "Vi inviterer en udvalgt gruppe restaurantejere til at komme tidligt med og vokse sammen med Fee Free Ordering.",
+          "tick1": "Bliv en del af fremtidens onlinebestilling",
+          "tick2": "Sikr dig fordele som tidlig bruger",
+          "tick3": "Vær med til at forme platformen",
+          "cta": "Vær med i vores soft launch",
+          "imgAlt": "Fee Free Ordering — snart klar"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Driv forretningen",
+            "title": "Kend dine tal. Ej dine kunder.",
+            "b1": "Rapporter & indsigt i realtid",
+            "b2": "Kundedatabase & historik",
+            "b3": "Kampagner & loyalitetsværktøjer",
+            "b4": "Eksportér dine data når som helst"
+          },
+          "app": {
+            "eyebrow": "Hent appen",
+            "title": "Kitchen Order App til dit team.",
+            "body": "Håndtér ordrer, udskriv kvitteringer og opdater status — alt sammen fra din tablet."
+          },
+          "growth": {
+            "eyebrow": "Skabt til vækst",
+            "title": "Flere ordrer. Lavere gebyrer. Større overskud.",
+            "b1": "Ubegrænset antal ordrer",
+            "b2": "Ingen skjulte gebyrer",
+            "b3": "Ingen oprettelsesgebyrer",
+            "b4": "Opsig når som helst"
+          },
+          "data": {
+            "eyebrow": "Sikker & troværdig",
+            "title": "Dine data er trygge. Din forretning forbliver din.",
+            "body": "Vi sælger aldrig dine data. Aldrig.",
+            "b1": "Dine kunder er dine",
+            "b2": "Eksportér dine data når som helst",
+            "b3": "Sikker & krypteret",
+            "b4": "Bygget i Canada"
+          }
         }
       }
     },

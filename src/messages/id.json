@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Unduh di",
           "androidLine1": "Dapatkan di"
+        },
+        "softlaunch": {
+          "eyebrow": "Soft launch",
+          "title": "Ada yang <accent>besar</accent> sedang dimasak.",
+          "body": "Kami mengundang sekelompok pemilik restoran terpilih untuk bergabung lebih awal dan berkembang bersama Fee Free Ordering.",
+          "tick1": "Jadilah bagian dari masa depan pemesanan online",
+          "tick2": "Kunci keuntungan akses awal",
+          "tick3": "Bantu wujudkan platform ini",
+          "cta": "Ikut soft launch",
+          "imgAlt": "Fee Free Ordering — segera hadir"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Jalankan bisnis",
+            "title": "Pahami angka Anda. Miliki pelanggan Anda.",
+            "b1": "Laporan & wawasan real-time",
+            "b2": "Basis data & riwayat pelanggan",
+            "b3": "Alat promosi & loyalitas",
+            "b4": "Ekspor data Anda kapan saja"
+          },
+          "app": {
+            "eyebrow": "Dapatkan aplikasinya",
+            "title": "Kitchen Order App untuk tim Anda.",
+            "body": "Kelola pesanan, cetak struk, dan perbarui status — semua dari tablet Anda."
+          },
+          "growth": {
+            "eyebrow": "Dirancang untuk berkembang",
+            "title": "Lebih banyak pesanan. Biaya lebih rendah. Keuntungan lebih tinggi.",
+            "b1": "Pesanan tanpa batas",
+            "b2": "Tanpa biaya tersembunyi",
+            "b3": "Tanpa biaya pemasangan",
+            "b4": "Batalkan kapan saja"
+          },
+          "data": {
+            "eyebrow": "Tepercaya & aman",
+            "title": "Data Anda aman. Bisnis Anda tetap milik Anda.",
+            "body": "Kami tidak pernah menjual data Anda. Selamanya.",
+            "b1": "Pelanggan Anda adalah milik Anda",
+            "b2": "Ekspor data Anda kapan saja",
+            "b3": "Aman & terenkripsi",
+            "b4": "Dibuat di Kanada"
+          }
         }
       }
     },

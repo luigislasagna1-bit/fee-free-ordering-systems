@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Töltsd le innen:",
           "androidLine1": "Szerezd be itt:"
+        },
+        "softlaunch": {
+          "eyebrow": "Soft launch",
+          "title": "Valami <accent>nagy</accent> készülődik a konyhában.",
+          "body": "Éttermesek egy szűk körét hívjuk meg, hogy korán csatlakozzanak és együtt növekedjenek a Fee Free Ordering rendszerrel.",
+          "tick1": "Légy része az online rendelés jövőjének",
+          "tick2": "Rögzítsd a korai hozzáférés előnyeit",
+          "tick3": "Segíts alakítani a platformot",
+          "cta": "Csatlakozz a soft launchhoz",
+          "imgAlt": "Fee Free Ordering — hamarosan indul"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Vezesd a vállalkozást",
+            "title": "Ismerd a számaidat. A vendégeid a tieid.",
+            "b1": "Valós idejű jelentések és elemzések",
+            "b2": "Vendégadatbázis és előzmények",
+            "b3": "Promóciós és hűségeszközök",
+            "b4": "Exportáld az adataidat bármikor"
+          },
+          "app": {
+            "eyebrow": "Töltsd le az appot",
+            "title": "Kitchen Order App a csapatodnak.",
+            "body": "Kezeld a rendeléseket, nyomtass nyugtákat és frissítsd a státuszt — mindezt a tabletedről."
+          },
+          "growth": {
+            "eyebrow": "A növekedésre tervezve",
+            "title": "Több rendelés. Alacsonyabb díjak. Magasabb profit.",
+            "b1": "Korlátlan rendelés",
+            "b2": "Nincsenek rejtett díjak",
+            "b3": "Nincs beállítási díj",
+            "b4": "Bármikor lemondható"
+          },
+          "data": {
+            "eyebrow": "Megbízható és biztonságos",
+            "title": "Az adataid biztonságban vannak. A vállalkozásod a tiéd marad.",
+            "body": "Soha nem adjuk el az adataidat. Soha.",
+            "b1": "A vendégeid a tieid",
+            "b2": "Exportáld az adataidat bármikor",
+            "b3": "Biztonságos és titkosított",
+            "b4": "Kanadában készült"
+          }
         }
       }
     },

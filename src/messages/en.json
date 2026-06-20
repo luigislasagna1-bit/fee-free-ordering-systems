@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Download on the",
           "androidLine1": "Get it on"
+        },
+        "softlaunch": {
+          "eyebrow": "Soft launch",
+          "title": "Something <accent>big</accent> is cooking.",
+          "body": "We're inviting a select group of restaurant owners to join early and grow with Fee Free Ordering.",
+          "tick1": "Be part of the future of online ordering",
+          "tick2": "Lock in early-access benefits",
+          "tick3": "Help shape the platform",
+          "cta": "Join the soft launch",
+          "imgAlt": "Fee Free Ordering — launching soon"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Run the business",
+            "title": "Know your numbers. Own your customers.",
+            "b1": "Real-time reports & insights",
+            "b2": "Customer database & history",
+            "b3": "Promotions & loyalty tools",
+            "b4": "Export your data anytime"
+          },
+          "app": {
+            "eyebrow": "Get the app",
+            "title": "Kitchen Order App for your team.",
+            "body": "Manage orders, print receipts and update status — all from your tablet."
+          },
+          "growth": {
+            "eyebrow": "Built for growth",
+            "title": "More orders. Lower fees. Higher profits.",
+            "b1": "Unlimited orders",
+            "b2": "No hidden fees",
+            "b3": "No setup fees",
+            "b4": "Cancel anytime"
+          },
+          "data": {
+            "eyebrow": "Trusted & secure",
+            "title": "Your data is safe. Your business stays yours.",
+            "body": "We never sell your data. Ever.",
+            "b1": "Your customers are yours",
+            "b2": "Export your data anytime",
+            "b3": "Secure & encrypted",
+            "b4": "Built in Canada"
+          }
         }
       }
     },

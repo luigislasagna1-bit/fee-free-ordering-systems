@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Tải về trên",
           "androidLine1": "Tải về tại"
+        },
+        "softlaunch": {
+          "eyebrow": "Ra mắt giới hạn",
+          "title": "Điều <accent>lớn lao</accent> đang được nhào nặn.",
+          "body": "Chúng tôi đang mời một nhóm chủ nhà hàng chọn lọc tham gia sớm và cùng phát triển với Fee Free Ordering.",
+          "tick1": "Trở thành một phần của tương lai đặt món trực tuyến",
+          "tick2": "Giữ trọn ưu đãi dành cho người tham gia sớm",
+          "tick3": "Góp phần định hình nền tảng",
+          "cta": "Tham gia ra mắt giới hạn",
+          "imgAlt": "Fee Free Ordering — sắp ra mắt"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Vận hành doanh nghiệp",
+            "title": "Nắm rõ những con số. Làm chủ khách hàng của bạn.",
+            "b1": "Báo cáo & phân tích theo thời gian thực",
+            "b2": "Cơ sở dữ liệu & lịch sử khách hàng",
+            "b3": "Công cụ khuyến mãi & tích điểm",
+            "b4": "Xuất dữ liệu của bạn bất cứ lúc nào"
+          },
+          "app": {
+            "eyebrow": "Tải ứng dụng",
+            "title": "Kitchen Order App cho đội ngũ của bạn.",
+            "body": "Quản lý đơn hàng, in hóa đơn và cập nhật trạng thái — tất cả ngay trên máy tính bảng của bạn."
+          },
+          "growth": {
+            "eyebrow": "Sinh ra để tăng trưởng",
+            "title": "Nhiều đơn hơn. Phí thấp hơn. Lợi nhuận cao hơn.",
+            "b1": "Đơn hàng không giới hạn",
+            "b2": "Không có phí ẩn",
+            "b3": "Không có phí cài đặt",
+            "b4": "Hủy bất cứ lúc nào"
+          },
+          "data": {
+            "eyebrow": "Đáng tin cậy & an toàn",
+            "title": "Dữ liệu của bạn được bảo vệ. Doanh nghiệp của bạn vẫn là của bạn.",
+            "body": "Chúng tôi không bao giờ bán dữ liệu của bạn. Không bao giờ.",
+            "b1": "Khách hàng của bạn là của bạn",
+            "b2": "Xuất dữ liệu của bạn bất cứ lúc nào",
+            "b3": "An toàn & mã hóa",
+            "b4": "Xây dựng tại Canada"
+          }
         }
       }
     },

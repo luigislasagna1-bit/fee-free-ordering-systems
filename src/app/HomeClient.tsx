@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
 import {
-  ArrowRight, Users, Tag, QrCode, Store, Upload, Repeat, Percent, DollarSign, Leaf,
+  ArrowRight, Users, Tag, QrCode, Store, Upload, Repeat, Percent, DollarSign, Leaf, Rocket, CheckCircle2,
   CreditCard, Globe, Building2, Infinity as InfinityIcon, Link2, Truck, Smartphone, Monitor, Phone, CalendarCheck,
   BellRing, PhoneCall, RefreshCw, ShieldCheck, Receipt, ScanLine, BarChart3, Database, TrendingUp, Headset,
 } from "lucide-react";
@@ -145,6 +145,99 @@ export function HomeClient({ locale }: { locale: string }) {
           </div>
         </div>
       </section>
+
+      {/* ── S1b · SOFT LAUNCH (m2/m3) ─────────────────────────────────────── */}
+      <MarketingSection tone="emeraldTint">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+          <div>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 text-emerald-700 px-3 py-1 text-xs font-bold uppercase tracking-wide">
+              <Rocket className="w-3.5 h-3.5" /> {t("softlaunch.eyebrow")}
+            </span>
+            <h2 className="mt-4 text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-[1.08] tracking-tight">
+              {t.rich("softlaunch.title", { accent: (c) => <span className="text-emerald-600">{c}</span> })}
+            </h2>
+            <p className="mt-4 text-lg text-gray-600 leading-relaxed max-w-xl">{t("softlaunch.body")}</p>
+            <ul className="mt-6 space-y-2.5">
+              {["tick1", "tick2", "tick3"].map((k) => (
+                <li key={k} className="flex items-center gap-2.5 text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-500 flex-shrink-0" />
+                  <span className="font-medium">{t(`softlaunch.${k}`)}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8">
+              <PrimaryButton href="/signup">{t("softlaunch.cta")}<ArrowRight className="w-4 h-4" /></PrimaryButton>
+            </div>
+          </div>
+          <div className="relative">
+            <img
+              src="/marketing/soft-launch-rocket.png"
+              alt={t("softlaunch.imgAlt")}
+              width={300}
+              height={495}
+              className="w-full h-auto max-w-[16rem] sm:max-w-xs mx-auto drop-shadow-[0_24px_50px_rgba(16,185,129,0.18)]"
+            />
+          </div>
+        </div>
+      </MarketingSection>
+
+      {/* ── S1c · 4-CARD OVERVIEW (m2) ────────────────────────────────────── */}
+      <MarketingSection tone="light">
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Card A — run the business */}
+          <div className="rounded-3xl border border-gray-200/80 bg-white p-7 shadow-[0_8px_30px_-14px_rgba(16,24,40,0.12)]">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600">{t("cards.reports.eyebrow")}</span>
+            <h3 className="mt-2 text-xl md:text-2xl font-bold text-gray-900 tracking-tight">{t("cards.reports.title")}</h3>
+            <ul className="mt-5 grid sm:grid-cols-2 gap-x-5 gap-y-2.5">
+              {["b1", "b2", "b3", "b4"].map((b) => (
+                <li key={b} className="flex items-center gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> {t(`cards.reports.${b}`)}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Card B — get the app */}
+          <div className="rounded-3xl border border-gray-200/80 bg-white p-7 shadow-[0_8px_30px_-14px_rgba(16,24,40,0.12)] flex flex-col">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600">{t("cards.app.eyebrow")}</span>
+            <h3 className="mt-2 text-xl md:text-2xl font-bold text-gray-900 tracking-tight">{t("cards.app.title")}</h3>
+            <p className="mt-3 text-sm text-gray-600 leading-relaxed">{t("cards.app.body")}</p>
+            <div className="mt-auto pt-5"><AppDownloadBadges /></div>
+          </div>
+
+          {/* Card C — built for growth */}
+          <div className="rounded-3xl border border-gray-200/80 bg-white p-7 shadow-[0_8px_30px_-14px_rgba(16,24,40,0.12)]">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600">{t("cards.growth.eyebrow")}</span>
+            <h3 className="mt-2 text-xl md:text-2xl font-bold text-gray-900 tracking-tight">
+              {t("cards.growth.title")} <TrendingUp className="inline w-6 h-6 text-emerald-500 align-text-bottom" />
+            </h3>
+            <ul className="mt-5 grid sm:grid-cols-2 gap-x-5 gap-y-2.5">
+              {["b1", "b2", "b3", "b4"].map((b) => (
+                <li key={b} className="flex items-center gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> {t(`cards.growth.${b}`)}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Card D — trusted & secure (shield illustration) */}
+          <div className="rounded-3xl border border-gray-200/80 bg-white p-7 shadow-[0_8px_30px_-14px_rgba(16,24,40,0.12)] flex items-start gap-5">
+            <div className="flex-1">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600">{t("cards.data.eyebrow")}</span>
+              <h3 className="mt-2 text-xl md:text-2xl font-bold text-gray-900 tracking-tight">{t("cards.data.title")}</h3>
+              <p className="mt-3 text-sm text-gray-600 leading-relaxed">{t("cards.data.body")}</p>
+              <ul className="mt-4 space-y-2">
+                {["b1", "b2", "b3", "b4"].map((b) => (
+                  <li key={b} className="flex items-center gap-2 text-sm text-gray-700">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> {t(`cards.data.${b}`)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <img src="/marketing/data-shield.png" alt="" width={216} height={240} className="hidden sm:block w-24 h-auto flex-shrink-0 self-center" />
+          </div>
+        </div>
+      </MarketingSection>
 
       {/* ── S2 · FUNNEL ───────────────────────────────────────────────────── */}
       <MarketingSection tone="emeraldTint">

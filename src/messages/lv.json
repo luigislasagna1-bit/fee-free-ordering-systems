@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Lejupielādē no",
           "androidLine1": "Iegūsti to"
+        },
+        "softlaunch": {
+          "eyebrow": "Mīkstā palaišana",
+          "title": "Kaut kas <accent>liels</accent> jau gatavojas.",
+          "body": "Aicinām izraudzītu restorānu īpašnieku loku pievienoties jau tagad un augt kopā ar Fee Free Ordering.",
+          "tick1": "Esiet daļa no tiešsaistes pasūtīšanas nākotnes",
+          "tick2": "Nodrošiniet sev agrīnās pieejas priekšrocības",
+          "tick3": "Palīdziet veidot platformu",
+          "cta": "Pievienoties mīkstajai palaišanai",
+          "imgAlt": "Fee Free Ordering — drīzumā tiek palaists"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Vadiet biznesu",
+            "title": "Ziniet savus skaitļus. Pārvaldiet savus klientus.",
+            "b1": "Reāllaika atskaites un ieskati",
+            "b2": "Klientu datubāze un vēsture",
+            "b3": "Akciju un lojalitātes rīki",
+            "b4": "Eksportējiet savus datus jebkurā brīdī"
+          },
+          "app": {
+            "eyebrow": "Iegūstiet lietotni",
+            "title": "Kitchen Order App jūsu komandai.",
+            "body": "Pārvaldiet pasūtījumus, drukājiet čekus un atjauniniet statusu — viss no jūsu planšetdatora."
+          },
+          "growth": {
+            "eyebrow": "Veidots izaugsmei",
+            "title": "Vairāk pasūtījumu. Zemākas maksas. Lielāka peļņa.",
+            "b1": "Neierobežots pasūtījumu skaits",
+            "b2": "Bez slēptām maksām",
+            "b3": "Bez iestatīšanas maksas",
+            "b4": "Atceliet jebkurā brīdī"
+          },
+          "data": {
+            "eyebrow": "Uzticams un drošs",
+            "title": "Jūsu dati ir drošībā. Jūsu bizness paliek jūsu.",
+            "body": "Mēs nekad nepārdodam jūsu datus. Nekad.",
+            "b1": "Jūsu klienti pieder jums",
+            "b2": "Eksportējiet savus datus jebkurā brīdī",
+            "b3": "Drošs un šifrēts",
+            "b4": "Veidots Kanādā"
+          }
         }
       }
     },

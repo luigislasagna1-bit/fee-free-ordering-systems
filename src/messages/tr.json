@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Şuradan indirin:",
           "androidLine1": "Şuradan edinin:"
+        },
+        "softlaunch": {
+          "eyebrow": "Yumuşak lansman",
+          "title": "Mutfakta <accent>büyük</accent> bir şeyler pişiyor.",
+          "body": "Seçkin bir restoran sahibi grubunu erkenden katılmaya ve Fee Free Ordering ile birlikte büyümeye davet ediyoruz.",
+          "tick1": "Online siparişin geleceğinin bir parçası olun",
+          "tick2": "Erken erişim avantajlarını şimdiden kilitleyin",
+          "tick3": "Platformu şekillendirmeye yardımcı olun",
+          "cta": "Yumuşak lansmana katılın",
+          "imgAlt": "Fee Free Ordering — çok yakında"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "İşletmeyi yönetin",
+            "title": "Rakamlarınızı bilin. Müşterilerinize sahip çıkın.",
+            "b1": "Gerçek zamanlı raporlar ve içgörüler",
+            "b2": "Müşteri veritabanı ve geçmişi",
+            "b3": "Promosyon ve sadakat araçları",
+            "b4": "Verilerinizi istediğiniz zaman dışa aktarın"
+          },
+          "app": {
+            "eyebrow": "Uygulamayı edinin",
+            "title": "Ekibiniz için Kitchen Order App.",
+            "body": "Siparişleri yönetin, fişleri yazdırın ve durumu güncelleyin — hepsi tabletinizden."
+          },
+          "growth": {
+            "eyebrow": "Büyüme için tasarlandı",
+            "title": "Daha çok sipariş. Daha düşük ücret. Daha yüksek kâr.",
+            "b1": "Sınırsız sipariş",
+            "b2": "Gizli ücret yok",
+            "b3": "Kurulum ücreti yok",
+            "b4": "İstediğiniz zaman iptal edin"
+          },
+          "data": {
+            "eyebrow": "Güvenilir ve güvenli",
+            "title": "Verileriniz güvende. İşletmeniz size ait kalır.",
+            "body": "Verilerinizi asla satmayız. Asla.",
+            "b1": "Müşterileriniz size aittir",
+            "b2": "Verilerinizi istediğiniz zaman dışa aktarın",
+            "b3": "Güvenli ve şifreli",
+            "b4": "Kanada'da üretildi"
+          }
         }
       }
     },

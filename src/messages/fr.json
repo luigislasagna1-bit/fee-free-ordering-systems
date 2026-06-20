@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Télécharger sur l'",
           "androidLine1": "Disponible sur"
+        },
+        "softlaunch": {
+          "eyebrow": "Lancement en avant-première",
+          "title": "Quelque chose de <accent>grand</accent> se prépare.",
+          "body": "Nous invitons un groupe sélect de restaurateurs à nous rejoindre dès le départ et à grandir avec Fee Free Ordering.",
+          "tick1": "Participez à l'avenir de la commande en ligne",
+          "tick2": "Profitez d'avantages réservés aux premiers inscrits",
+          "tick3": "Contribuez à façonner la plateforme",
+          "cta": "Rejoindre l'avant-première",
+          "imgAlt": "Fee Free Ordering — bientôt disponible"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Pilotez votre entreprise",
+            "title": "Maîtrisez vos chiffres. Gardez vos clients.",
+            "b1": "Rapports et analyses en temps réel",
+            "b2": "Base de données et historique clients",
+            "b3": "Outils de promotions et de fidélité",
+            "b4": "Exportez vos données à tout moment"
+          },
+          "app": {
+            "eyebrow": "Téléchargez l'application",
+            "title": "Kitchen Order App pour votre équipe.",
+            "body": "Gérez les commandes, imprimez les reçus et mettez à jour les statuts — le tout depuis votre tablette."
+          },
+          "growth": {
+            "eyebrow": "Conçu pour la croissance",
+            "title": "Plus de commandes. Moins de frais. Plus de profits.",
+            "b1": "Commandes illimitées",
+            "b2": "Aucuns frais cachés",
+            "b3": "Aucuns frais d'installation",
+            "b4": "Annulez à tout moment"
+          },
+          "data": {
+            "eyebrow": "Fiable et sécurisé",
+            "title": "Vos données sont protégées. Votre entreprise reste la vôtre.",
+            "body": "Nous ne vendons jamais vos données. Jamais.",
+            "b1": "Vos clients vous appartiennent",
+            "b2": "Exportez vos données à tout moment",
+            "b3": "Sécurisé et chiffré",
+            "b4": "Conçu au Canada"
+          }
         }
       }
     },

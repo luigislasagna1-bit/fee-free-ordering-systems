@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Scarica su",
           "androidLine1": "Disponibile su"
+        },
+        "softlaunch": {
+          "eyebrow": "Soft launch",
+          "title": "Qualcosa di <accent>grande</accent> bolle in pentola.",
+          "body": "Stiamo invitando un gruppo selezionato di ristoratori a unirsi sin da subito e a crescere con Fee Free Ordering.",
+          "tick1": "Entra a far parte del futuro degli ordini online",
+          "tick2": "Assicurati i vantaggi dell'accesso anticipato",
+          "tick3": "Contribuisci a dare forma alla piattaforma",
+          "cta": "Partecipa al soft launch",
+          "imgAlt": "Fee Free Ordering — in arrivo a breve"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Gestisci l'attività",
+            "title": "Conosci i tuoi numeri. I clienti sono tuoi.",
+            "b1": "Report e analisi in tempo reale",
+            "b2": "Database e storico dei clienti",
+            "b3": "Strumenti per promozioni e fidelizzazione",
+            "b4": "Esporta i tuoi dati quando vuoi"
+          },
+          "app": {
+            "eyebrow": "Scarica l'app",
+            "title": "Kitchen Order App per il tuo team.",
+            "body": "Gestisci gli ordini, stampa le ricevute e aggiorna lo stato — tutto dal tuo tablet."
+          },
+          "growth": {
+            "eyebrow": "Pensato per crescere",
+            "title": "Più ordini. Meno commissioni. Più profitti.",
+            "b1": "Ordini illimitati",
+            "b2": "Nessun costo nascosto",
+            "b3": "Nessun costo di attivazione",
+            "b4": "Disdici quando vuoi"
+          },
+          "data": {
+            "eyebrow": "Affidabile e sicuro",
+            "title": "I tuoi dati sono al sicuro. La tua attività resta tua.",
+            "body": "Non vendiamo mai i tuoi dati. Mai.",
+            "b1": "I tuoi clienti sono tuoi",
+            "b2": "Esporta i tuoi dati quando vuoi",
+            "b3": "Sicuro e crittografato",
+            "b4": "Realizzato in Canada"
+          }
         }
       }
     },

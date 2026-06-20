@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Pobierz w",
           "androidLine1": "Pobierz z"
+        },
+        "softlaunch": {
+          "eyebrow": "Soft launch",
+          "title": "Szykuje się coś <accent>wielkiego</accent>.",
+          "body": "Zapraszamy wybraną grupę restauratorów, by dołączyli już teraz i rozwijali się razem z Fee Free Ordering.",
+          "tick1": "Bądź częścią przyszłości zamówień online",
+          "tick2": "Zapewnij sobie korzyści wczesnego dostępu",
+          "tick3": "Pomóż kształtować platformę",
+          "cta": "Dołącz do soft launchu",
+          "imgAlt": "Fee Free Ordering — już wkrótce"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Prowadź biznes",
+            "title": "Poznaj swoje liczby. Miej własnych klientów.",
+            "b1": "Raporty i analizy w czasie rzeczywistym",
+            "b2": "Baza klientów i historia zamówień",
+            "b3": "Narzędzia do promocji i programów lojalnościowych",
+            "b4": "Eksportuj swoje dane w każdej chwili"
+          },
+          "app": {
+            "eyebrow": "Pobierz aplikację",
+            "title": "Kitchen Order App dla Twojego zespołu.",
+            "body": "Zarządzaj zamówieniami, drukuj paragony i aktualizuj status — wszystko z poziomu tabletu."
+          },
+          "growth": {
+            "eyebrow": "Stworzone z myślą o rozwoju",
+            "title": "Więcej zamówień. Niższe opłaty. Wyższe zyski.",
+            "b1": "Nielimitowane zamówienia",
+            "b2": "Bez ukrytych opłat",
+            "b3": "Bez opłat za konfigurację",
+            "b4": "Anuluj w dowolnym momencie"
+          },
+          "data": {
+            "eyebrow": "Zaufane i bezpieczne",
+            "title": "Twoje dane są bezpieczne. Twój biznes pozostaje Twój.",
+            "body": "Nigdy nie sprzedajemy Twoich danych. Nigdy.",
+            "b1": "Twoi klienci należą do Ciebie",
+            "b2": "Eksportuj swoje dane w każdej chwili",
+            "b3": "Bezpieczne i szyfrowane",
+            "b4": "Stworzone w Kanadzie"
+          }
         }
       }
     },

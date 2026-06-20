@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Ladda ner i",
           "androidLine1": "Hämta den på"
+        },
+        "softlaunch": {
+          "eyebrow": "Mjuklansering",
+          "title": "Något <accent>stort</accent> puttrar på spisen.",
+          "body": "Vi bjuder in en utvald grupp restaurangägare att gå med tidigt och växa tillsammans med Fee Free Ordering.",
+          "tick1": "Var en del av framtidens onlinebeställningar",
+          "tick2": "Säkra dina förmåner som tidig användare",
+          "tick3": "Hjälp till att forma plattformen",
+          "cta": "Gå med i mjuklanseringen",
+          "imgAlt": "Fee Free Ordering — lanseras snart"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Driv verksamheten",
+            "title": "Håll koll på siffrorna. Äg dina kunder.",
+            "b1": "Rapporter & insikter i realtid",
+            "b2": "Kunddatabas & historik",
+            "b3": "Kampanj- & lojalitetsverktyg",
+            "b4": "Exportera dina data när som helst"
+          },
+          "app": {
+            "eyebrow": "Skaffa appen",
+            "title": "Kitchen Order App för ditt team.",
+            "body": "Hantera beställningar, skriv ut kvitton och uppdatera status — allt från din surfplatta."
+          },
+          "growth": {
+            "eyebrow": "Byggd för tillväxt",
+            "title": "Fler beställningar. Lägre avgifter. Högre vinst.",
+            "b1": "Obegränsat antal beställningar",
+            "b2": "Inga dolda avgifter",
+            "b3": "Inga startavgifter",
+            "b4": "Avsluta när som helst"
+          },
+          "data": {
+            "eyebrow": "Pålitligt & säkert",
+            "title": "Dina data är trygga. Ditt företag förblir ditt.",
+            "body": "Vi säljer aldrig dina data. Aldrig någonsin.",
+            "b1": "Dina kunder är dina",
+            "b2": "Exportera dina data när som helst",
+            "b3": "Säkert & krypterat",
+            "b4": "Byggd i Kanada"
+          }
         }
       }
     },

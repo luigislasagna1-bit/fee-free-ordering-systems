@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Stáhnout v",
           "androidLine1": "Stáhnout na"
+        },
+        "softlaunch": {
+          "eyebrow": "Měkký start",
+          "title": "Něco <accent>velkého</accent> se vaří.",
+          "body": "Zveme vybranou skupinu majitelů restaurací, aby se připojili včas a rostli společně s Fee Free Ordering.",
+          "tick1": "Buďte součástí budoucnosti online objednávání",
+          "tick2": "Zajistěte si výhody předčasného přístupu",
+          "tick3": "Pomozte utvářet platformu",
+          "cta": "Připojte se k měkkému startu",
+          "imgAlt": "Fee Free Ordering — brzy spouštíme"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Řiďte svůj podnik",
+            "title": "Mějte svá čísla pod kontrolou. Vlastněte své zákazníky.",
+            "b1": "Reporty a přehledy v reálném čase",
+            "b2": "Databáze a historie zákazníků",
+            "b3": "Nástroje pro akce a věrnostní programy",
+            "b4": "Exportujte svá data kdykoli"
+          },
+          "app": {
+            "eyebrow": "Stáhněte si aplikaci",
+            "title": "Kitchen Order App pro váš tým.",
+            "body": "Spravujte objednávky, tiskněte účtenky a aktualizujte stav — vše z vašeho tabletu."
+          },
+          "growth": {
+            "eyebrow": "Stvořeno pro růst",
+            "title": "Více objednávek. Nižší poplatky. Vyšší zisky.",
+            "b1": "Neomezené objednávky",
+            "b2": "Žádné skryté poplatky",
+            "b3": "Žádné poplatky za zřízení",
+            "b4": "Zrušte kdykoli"
+          },
+          "data": {
+            "eyebrow": "Důvěryhodné a bezpečné",
+            "title": "Vaše data jsou v bezpečí. Váš podnik zůstává váš.",
+            "body": "Vaše data nikdy neprodáváme. Nikdy.",
+            "b1": "Vaši zákazníci patří vám",
+            "b2": "Exportujte svá data kdykoli",
+            "b3": "Zabezpečené a šifrované",
+            "b4": "Vyrobeno v Kanadě"
+          }
         }
       }
     },

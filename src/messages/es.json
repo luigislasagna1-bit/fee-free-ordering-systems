@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Descárgala en la",
           "androidLine1": "Disponible en"
+        },
+        "softlaunch": {
+          "eyebrow": "Lanzamiento anticipado",
+          "title": "Se está cocinando algo <accent>grande</accent>.",
+          "body": "Estamos invitando a un grupo selecto de propietarios de restaurantes a unirse desde el principio y crecer con Fee Free Ordering.",
+          "tick1": "Sé parte del futuro de los pedidos en línea",
+          "tick2": "Asegura beneficios de acceso anticipado",
+          "tick3": "Ayuda a dar forma a la plataforma",
+          "cta": "Únete al lanzamiento anticipado",
+          "imgAlt": "Fee Free Ordering — próximamente"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Dirige el negocio",
+            "title": "Conoce tus números. Sé dueño de tus clientes.",
+            "b1": "Informes e insights en tiempo real",
+            "b2": "Base de datos e historial de clientes",
+            "b3": "Herramientas de promociones y fidelización",
+            "b4": "Exporta tus datos cuando quieras"
+          },
+          "app": {
+            "eyebrow": "Consigue la app",
+            "title": "Kitchen Order App para tu equipo.",
+            "body": "Gestiona pedidos, imprime recibos y actualiza el estado, todo desde tu tableta."
+          },
+          "growth": {
+            "eyebrow": "Diseñado para crecer",
+            "title": "Más pedidos. Menos comisiones. Mayores beneficios.",
+            "b1": "Pedidos ilimitados",
+            "b2": "Sin comisiones ocultas",
+            "b3": "Sin costes de instalación",
+            "b4": "Cancela cuando quieras"
+          },
+          "data": {
+            "eyebrow": "Confiable y seguro",
+            "title": "Tus datos están a salvo. Tu negocio sigue siendo tuyo.",
+            "body": "Nunca vendemos tus datos. Jamás.",
+            "b1": "Tus clientes son tuyos",
+            "b2": "Exporta tus datos cuando quieras",
+            "b3": "Seguro y cifrado",
+            "b4": "Hecho en Canadá"
+          }
         }
       }
     },

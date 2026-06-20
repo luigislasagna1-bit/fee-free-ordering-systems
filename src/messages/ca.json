@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Descarrega-la a l'",
           "androidLine1": "Aconsegueix-la a"
+        },
+        "softlaunch": {
+          "eyebrow": "Llançament suau",
+          "title": "S'està coent <accent>quelcom</accent> gros.",
+          "body": "Estem convidant un grup selecte de restauradors a unir-s'hi des del principi i créixer amb Fee Free Ordering.",
+          "tick1": "Forma part del futur de les comandes en línia",
+          "tick2": "Assegura't avantatges d'accés anticipat",
+          "tick3": "Ajuda a donar forma a la plataforma",
+          "cta": "Uneix-te al llançament suau",
+          "imgAlt": "Fee Free Ordering — properament"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Gestiona el negoci",
+            "title": "Coneix les teves xifres. Fes teus els teus clients.",
+            "b1": "Informes i anàlisis en temps real",
+            "b2": "Base de dades i historial de clients",
+            "b3": "Eines de promocions i fidelització",
+            "b4": "Exporta les teves dades quan vulguis"
+          },
+          "app": {
+            "eyebrow": "Aconsegueix l'app",
+            "title": "Kitchen Order App per al teu equip.",
+            "body": "Gestiona comandes, imprimeix tiquets i actualitza l'estat — tot des de la teva tauleta."
+          },
+          "growth": {
+            "eyebrow": "Pensat per créixer",
+            "title": "Més comandes. Menys comissions. Més beneficis.",
+            "b1": "Comandes il·limitades",
+            "b2": "Sense comissions ocultes",
+            "b3": "Sense costos d'instal·lació",
+            "b4": "Cancel·la quan vulguis"
+          },
+          "data": {
+            "eyebrow": "De confiança i segur",
+            "title": "Les teves dades estan segures. El teu negoci segueix sent teu.",
+            "body": "Mai venem les teves dades. Mai.",
+            "b1": "Els teus clients són teus",
+            "b2": "Exporta les teves dades quan vulguis",
+            "b3": "Segur i xifrat",
+            "b4": "Fet al Canadà"
+          }
         }
       }
     },

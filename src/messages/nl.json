@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Download in de",
           "androidLine1": "Verkrijgbaar in"
+        },
+        "softlaunch": {
+          "eyebrow": "Soft launch",
+          "title": "Er staat iets <accent>groots</accent> te koken.",
+          "body": "We nodigen een selecte groep restauranthouders uit om vroeg in te stappen en samen te groeien met Fee Free Ordering.",
+          "tick1": "Maak deel uit van de toekomst van online bestellen",
+          "tick2": "Verzeker u van early-accessvoordelen",
+          "tick3": "Help het platform vormgeven",
+          "cta": "Doe mee aan de soft launch",
+          "imgAlt": "Fee Free Ordering — binnenkort beschikbaar"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Run de zaak",
+            "title": "Ken uw cijfers. Bezit uw klanten.",
+            "b1": "Realtime rapportages & inzichten",
+            "b2": "Klantendatabase & geschiedenis",
+            "b3": "Promoties & loyaliteitstools",
+            "b4": "Exporteer uw gegevens wanneer u wilt"
+          },
+          "app": {
+            "eyebrow": "Download de app",
+            "title": "Kitchen Order App voor uw team.",
+            "body": "Beheer bestellingen, print bonnen en werk de status bij — allemaal vanaf uw tablet."
+          },
+          "growth": {
+            "eyebrow": "Gebouwd voor groei",
+            "title": "Meer bestellingen. Lagere kosten. Hogere winst.",
+            "b1": "Onbeperkt bestellingen",
+            "b2": "Geen verborgen kosten",
+            "b3": "Geen opstartkosten",
+            "b4": "Altijd opzegbaar"
+          },
+          "data": {
+            "eyebrow": "Betrouwbaar & veilig",
+            "title": "Uw gegevens zijn veilig. Uw zaak blijft van u.",
+            "body": "We verkopen uw gegevens nooit. Echt nooit.",
+            "b1": "Uw klanten zijn van u",
+            "b2": "Exporteer uw gegevens wanneer u wilt",
+            "b3": "Veilig & versleuteld",
+            "b4": "Gebouwd in Canada"
+          }
         }
       }
     },

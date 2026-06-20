@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Baixe na",
           "androidLine1": "Disponível na"
+        },
+        "softlaunch": {
+          "eyebrow": "Soft launch",
+          "title": "Algo <accent>grande</accent> está fervendo.",
+          "body": "Estamos convidando um grupo seleto de donos de restaurantes para entrar cedo e crescer com a Fee Free Ordering.",
+          "tick1": "Faça parte do futuro dos pedidos online",
+          "tick2": "Garanta benefícios de acesso antecipado",
+          "tick3": "Ajude a moldar a plataforma",
+          "cta": "Participe do soft launch",
+          "imgAlt": "Fee Free Ordering — em breve"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Gerencie o negócio",
+            "title": "Conheça seus números. Seja dono dos seus clientes.",
+            "b1": "Relatórios e insights em tempo real",
+            "b2": "Banco de dados e histórico de clientes",
+            "b3": "Ferramentas de promoções e fidelidade",
+            "b4": "Exporte seus dados quando quiser"
+          },
+          "app": {
+            "eyebrow": "Baixe o app",
+            "title": "Kitchen Order App para a sua equipe.",
+            "body": "Gerencie pedidos, imprima recibos e atualize o status — tudo pelo seu tablet."
+          },
+          "growth": {
+            "eyebrow": "Feito para crescer",
+            "title": "Mais pedidos. Taxas menores. Lucros maiores.",
+            "b1": "Pedidos ilimitados",
+            "b2": "Sem taxas ocultas",
+            "b3": "Sem taxas de configuração",
+            "b4": "Cancele quando quiser"
+          },
+          "data": {
+            "eyebrow": "Confiável e seguro",
+            "title": "Seus dados estão seguros. Seu negócio continua sendo seu.",
+            "body": "Nunca vendemos seus dados. Jamais.",
+            "b1": "Seus clientes são seus",
+            "b2": "Exporte seus dados quando quiser",
+            "b3": "Seguro e criptografado",
+            "b4": "Feito no Canadá"
+          }
         }
       }
     },

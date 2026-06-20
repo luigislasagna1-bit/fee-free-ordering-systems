@@ -4604,6 +4604,48 @@
         "appBadges": {
           "iosLine1": "Atsisiųskite iš",
           "androidLine1": "Gaukite iš"
+        },
+        "softlaunch": {
+          "eyebrow": "Tylusis startas",
+          "title": "Verda kažkas <accent>didelio</accent>.",
+          "body": "Kviečiame išskirtinę restoranų savininkų grupę prisijungti anksti ir augti kartu su Fee Free Ordering.",
+          "tick1": "Tapkite internetinio užsakymo ateities dalimi",
+          "tick2": "Užsitikrinkite ankstyvosios prieigos privalumus",
+          "tick3": "Padėkite kurti platformą",
+          "cta": "Prisijunkite prie tyliojo starto",
+          "imgAlt": "Fee Free Ordering — netrukus startuoja"
+        },
+        "cards": {
+          "reports": {
+            "eyebrow": "Valdykite verslą",
+            "title": "Žinokite savo skaičius. Valdykite savo klientus.",
+            "b1": "Ataskaitos ir įžvalgos realiu laiku",
+            "b2": "Klientų duomenų bazė ir istorija",
+            "b3": "Akcijos ir lojalumo įrankiai",
+            "b4": "Eksportuokite duomenis bet kada"
+          },
+          "app": {
+            "eyebrow": "Atsisiųskite programėlę",
+            "title": "Kitchen Order App jūsų komandai.",
+            "body": "Tvarkykite užsakymus, spausdinkite čekius ir atnaujinkite būseną — viskas tiesiog iš jūsų planšetės."
+          },
+          "growth": {
+            "eyebrow": "Sukurta augimui",
+            "title": "Daugiau užsakymų. Mažesni mokesčiai. Didesnis pelnas.",
+            "b1": "Neriboti užsakymai",
+            "b2": "Jokių paslėptų mokesčių",
+            "b3": "Jokių paleidimo mokesčių",
+            "b4": "Atšaukite bet kada"
+          },
+          "data": {
+            "eyebrow": "Patikima ir saugu",
+            "title": "Jūsų duomenys saugūs. Jūsų verslas lieka jūsų.",
+            "body": "Mes niekada neparduodame jūsų duomenų. Niekada.",
+            "b1": "Jūsų klientai priklauso jums",
+            "b2": "Eksportuokite duomenis bet kada",
+            "b3": "Saugu ir užšifruota",
+            "b4": "Sukurta Kanadoje"
+          }
         }
       }
     },
