@@ -1,17 +1,18 @@
 "use client";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
 import {
-  ArrowRight, Target, Users, Tag, QrCode, Store, Pizza, Upload, Repeat,
+  ArrowRight, Target, Users, Tag, QrCode, Store, Upload, Repeat,
   CreditCard, Globe, Building2, Infinity as InfinityIcon, Link2, Truck, Smartphone, Monitor, Phone, CalendarCheck,
   BellRing, PhoneCall, RefreshCw, ShieldCheck, Receipt, ScanLine, BarChart3, Database, TrendingUp, Headset,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import {
   MarketingSection, SectionEyebrow, SectionHeading, PrimaryButton, SecondaryButton,
-  ScreenshotFrame, StatTrustStrip, AltFeatureRow, IconFeatureGrid,
-  NumberedSteps, CTASection, type IconFeature,
+  ScreenshotFrame, StatTrustStrip, AltFeatureRow, IconFeatureGrid, type IconFeature,
+  NumberedSteps, CTASection,
 } from "@/components/marketing/sections";
 import { FunnelGraphic } from "@/components/marketing/FunnelGraphic";
 import { GrowthNetShowcase } from "@/components/marketing/GrowthNetShowcase";
@@ -24,13 +25,8 @@ import { AppDownloadBadges } from "@/components/marketing/AppDownloadBadges";
  * Craft over colour: real product screenshots in clean frames, generous
  * whitespace, soft shadows, refined type. EXACT existing palette (emerald-500 +
  * gray/slate; amber/orange only as soft mockup bg). Light throughout — NO dark
- * sections. Hardcoded English (i18n later). "Highlights on the homepage,
- * exhaustive depth on /features."
- *
- * Coverage: this page now showcases the half-and-half pizza builder, the
- * never-miss-an-order kitchen reliability stack, the reports/CRM/promos suite,
- * GloriaFood/PDF menu migration, grouped integrations, and the (true,
- * code-backed) Canadian-built + 24/7 support positioning.
+ * sections. Fully translated across all 38 locales via the `marketing.home.v2.*`
+ * namespace (text is in src/messages/*; structure/icons stay here).
  *
  * SCREENSHOT SLOTS (capture from the polished demo into /public/marketing/screenshots/):
  *   ordering-home (browser,S1) · menu-item (phone,S3) · checkout (phone,S4)
@@ -38,52 +34,61 @@ import { AppDownloadBadges } from "@/components/marketing/AppDownloadBadges";
  *   menu-import (browser,S10) · storefront (browser,S13)
  */
 
-/* À-la-carte add-ons (NOT GrowthNet members). Live first, coming-soon after. Price-light. */
-const ADDONS: IconFeature[] = [
-  { icon: CreditCard, title: "Online Payments", body: "Accept card payments online — money lands directly in your own Stripe or PayPal account." },
-  { icon: Globe, title: "Sales-Optimized Website", body: "A hosted, SEO-ready marketing + ordering site, auto-built from your menu, on your own domain." },
-  { icon: Building2, title: "Multi-Location", body: "Run several locations from one account — each with its own menu, orders and payments." },
-  { icon: Store, title: "Marketplace listing", body: "Get discovered on the Fee Free marketplace — a low-cost new-customer channel, no 30% fees." },
-  { icon: InfinityIcon, title: "Unlimited Orders", body: "Lift the free plan's 100-orders/month cap — unlimited volume, no per-order fees." },
-  { icon: Link2, title: "Custom Domain", body: "Point your own domain at your hosted Fee Free site.", comingSoon: true },
-  { icon: Truck, title: "Driver Pool", body: "Tap our Shipday driver network when your own drivers are busy.", comingSoon: true },
-  { icon: Smartphone, title: "Branded Mobile App", body: "Your own native iOS + Android app in the App Store and Play Store.", comingSoon: true },
-  { icon: Monitor, title: "POS Module", body: "In-house POS for staff to ring up dine-in and takeaway from the same admin.", comingSoon: true },
-  { icon: Phone, title: "AI Phone Ordering", body: "An AI agent answers the phone and takes orders 24/7, straight to your kitchen.", comingSoon: true },
-  { icon: CalendarCheck, title: "Reservation Deposits", body: "Charge a refundable deposit when customers book a table — protects against no-shows.", comingSoon: true },
+/* Structural defs — icons + comingSoon flags live here; all visible text comes
+   from t() so it translates. The `key` maps to marketing.home.v2.<group>.<key>.* */
+const ADDON_DEFS: { icon: LucideIcon; key: string; comingSoon?: boolean }[] = [
+  { icon: CreditCard, key: "payments" },
+  { icon: Globe, key: "website" },
+  { icon: Building2, key: "multiLocation" },
+  { icon: Store, key: "marketplace" },
+  { icon: InfinityIcon, key: "unlimited" },
+  { icon: Link2, key: "domain", comingSoon: true },
+  { icon: Truck, key: "driver", comingSoon: true },
+  { icon: Smartphone, key: "brandedApp", comingSoon: true },
+  { icon: Monitor, key: "pos", comingSoon: true },
+  { icon: Phone, key: "aiPhone", comingSoon: true },
+  { icon: CalendarCheck, key: "deposits", comingSoon: true },
 ];
 
-/* "Never miss an order" — kitchen reliability safety-net. */
-const RELIABILITY: { icon: LucideIcon; title: string; body: string }[] = [
-  { icon: BellRing, title: "Screen-off loud ring", body: "A full-screen alarm wakes the tablet the instant an order lands — even asleep." },
-  { icon: PhoneCall, title: "Missed-order phone call", body: "If nobody taps Accept in ~90 seconds, we phone you and read the order aloud." },
-  { icon: RefreshCw, title: "Auto-reject + auto-refund", body: "Unanswered orders auto-reject and the customer is refunded automatically." },
-  { icon: ShieldCheck, title: "Charged only on accept", body: "Never cook an unpaid order — and never charge a customer for one you decline." },
-  { icon: Receipt, title: "Custom branded receipts", body: "Design your own kitchen + customer tickets, reservation and end-of-day slips." },
-  { icon: ScanLine, title: "One-tap printer setup", body: "“Find Printers” scans your WiFi and lists your thermal printer — no IP hunting." },
+const RELIABILITY_DEFS: { icon: LucideIcon; key: string }[] = [
+  { icon: BellRing, key: "ring" },
+  { icon: PhoneCall, key: "call" },
+  { icon: RefreshCw, key: "autoReject" },
+  { icon: ShieldCheck, key: "chargeOnAccept" },
+  { icon: Receipt, key: "receipts" },
+  { icon: ScanLine, key: "printer" },
 ];
 
-/* "Run the business" — reports + CRM + promos (free core). */
-const RUN_BUSINESS: IconFeature[] = [
-  { icon: BarChart3, title: "Reports dashboard", body: "Revenue, orders, average ticket and customers — with day-over-day trends." },
-  { icon: Database, title: "Your customer list (CRM)", body: "Every customer, total spend, segments and CSV export. You own them — not an aggregator." },
-  { icon: Tag, title: "Promotions engine", body: "13 promo types — BOGO, bundles, free items, coupons, timed deals. 5 free, guided wizard." },
-  { icon: TrendingUp, title: "Sales insights & funnel", body: "Best and worst sellers, your online-ordering conversion funnel, a delivery heatmap." },
-  { icon: Repeat, title: "One-click reorder", body: "Returning customers reorder their usual in a tap — more repeat orders, bigger tickets." },
-  { icon: Users, title: "Customer accounts", body: "Saved addresses, order history and personal coupons keep diners coming back." },
+const RUN_DEFS: { icon: LucideIcon; key: string }[] = [
+  { icon: BarChart3, key: "reports" },
+  { icon: Database, key: "crm" },
+  { icon: Tag, key: "promos" },
+  { icon: TrendingUp, key: "insights" },
+  { icon: Repeat, key: "reorder" },
+  { icon: Users, key: "accounts" },
 ];
 
-const INTEGRATION_GROUPS: { group: string; logos: string[] }[] = [
-  { group: "Payments", logos: ["Stripe", "PayPal"] },
-  { group: "Printers", logos: ["Star Micronics", "Epson", "Bixolon", "Citizen"] },
-  { group: "Delivery", logos: ["Shipday"] },
-  { group: "Analytics & Ads", logos: ["Google Analytics", "Facebook Pixel"] },
-  { group: "Migration", logos: ["GloriaFood", "PDF import"] },
-  { group: "Voice", logos: ["Twilio"] },
+const INTEGRATION_GROUPS: { key: string; logos: string[] }[] = [
+  { key: "payments", logos: ["Stripe", "PayPal"] },
+  { key: "printers", logos: ["Star Micronics", "Epson", "Bixolon", "Citizen"] },
+  { key: "delivery", logos: ["Shipday"] },
+  { key: "analytics", logos: ["Google Analytics", "Facebook Pixel"] },
+  { key: "migration", logos: ["GloriaFood", "PDF import"] },
+  { key: "voice", logos: ["Twilio"] },
 ];
 const INTEGRATIONS_ROADMAP = ["Uber Eats", "DoorDash", "Tookan", "Lalamove"];
 
 export function HomeClient({ locale }: { locale: string }) {
+  const t = useTranslations("marketing.home.v2");
+  const soon = t("soon");
+
+  const addons: IconFeature[] = ADDON_DEFS.map((a) => ({
+    icon: a.icon, title: t(`addons.${a.key}.title`), body: t(`addons.${a.key}.body`), comingSoon: a.comingSoon,
+  }));
+  const runBusiness: IconFeature[] = RUN_DEFS.map((r) => ({
+    icon: r.icon, title: t(`run.${r.key}.title`), body: t(`run.${r.key}.body`),
+  }));
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <PublicNav currentLocale={locale} />
@@ -95,28 +100,27 @@ export function HomeClient({ locale }: { locale: string }) {
       >
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
-            <SectionEyebrow icon={Target}>For restaurant owners</SectionEyebrow>
+            <SectionEyebrow icon={Target}>{t("hero.eyebrow")}</SectionEyebrow>
             <h1 className="mt-5 text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-[1.05] tracking-tight">
-              Your own ordering page.{" "}
-              <span className="text-emerald-600">0% commission.</span>
+              {t.rich("hero.title", { accent: (c) => <span className="text-emerald-600">{c}</span> })}
             </h1>
             <p className="mt-5 text-lg text-gray-600 leading-relaxed max-w-xl">
-              Branded online ordering for pickup, delivery, dine-in &amp; catering — in 38 languages, free forever. Keep 100% of every direct order.
+              {t("hero.subtitle")}
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <PrimaryButton href="/signup">Start free<ArrowRight className="w-4 h-4" /></PrimaryButton>
-              <SecondaryButton href="/demo">See a live storefront</SecondaryButton>
+              <PrimaryButton href="/signup">{t("hero.ctaStart")}<ArrowRight className="w-4 h-4" /></PrimaryButton>
+              <SecondaryButton href="/demo">{t("hero.ctaDemo")}</SecondaryButton>
             </div>
             <StatTrustStrip
               className="mt-7"
-              items={["No credit card", "0% on direct orders", "38 languages", "Built in Canada 🍁"]}
+              items={[t("hero.trust1"), t("hero.trust2"), t("hero.trust3"), t("hero.trust4")]}
             />
           </div>
 
           <div className="relative">
-            <ScreenshotFrame variant="browser" glow url="luigis.feefreeordering.com" alt="Luigi's Lasagna — a real branded ordering page" src="/marketing/screenshots/luigis-order-top-desktop.png" />
+            <ScreenshotFrame variant="browser" glow url="luigis.feefreeordering.com" alt={t("hero.frameAlt")} src="/marketing/screenshots/luigis-order-top-desktop.png" />
             <div className="absolute -top-3 -right-3 bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg rotate-3">
-              0% commission
+              {t("hero.badge")}
             </div>
           </div>
         </div>
@@ -126,9 +130,9 @@ export function HomeClient({ locale }: { locale: string }) {
       <MarketingSection tone="emeraldTint">
         <div className="grid lg:grid-cols-2 gap-14 lg:gap-16 items-center">
           <SectionHeading
-            eyebrow="The growth angle"
-            title={<>Catch the traffic. <span className="text-emerald-600">Keep the repeat.</span></>}
-            subtitle="Marketplaces are great at one thing — sending you a first-time customer. Give every one of them a reason to come back and order direct, on your brand, at 0% commission."
+            eyebrow={t("funnel.eyebrow")}
+            title={t.rich("funnel.title", { accent: (c) => <span className="text-emerald-600">{c}</span> })}
+            subtitle={t("funnel.subtitle")}
           />
           <FunnelGraphic />
         </div>
@@ -138,23 +142,23 @@ export function HomeClient({ locale }: { locale: string }) {
       <MarketingSection tone="light">
         <AltFeatureRow
           reverse
-          eyebrow="Free forever"
-          title="A branded ordering page customers love."
-          body="Your menu, photos, modifiers and prices — beautiful on every phone, in 38 languages, with your logo and colors."
-          bullets={["Pickup, delivery, dine-in & catering", "Scheduling & pre-orders", "Embeds into your existing website"]}
-          cta={{ href: "/signup", label: "Start free" }}
-          image={<ScreenshotFrame variant="phone" alt="Menu & item options" src="/marketing/screenshots/luigis-menu-mobile.png" />}
+          eyebrow={t("ordering.eyebrow")}
+          title={t("ordering.title")}
+          body={t("ordering.body")}
+          bullets={[t("ordering.bullet1"), t("ordering.bullet2"), t("ordering.bullet3")]}
+          cta={{ href: "/signup", label: t("ordering.cta") }}
+          image={<ScreenshotFrame variant="phone" alt={t("ordering.frameAlt")} src="/marketing/screenshots/luigis-menu-mobile.png" />}
         />
       </MarketingSection>
 
       {/* ── S4 · FREE CORE — checkout & reservations ──────────────────────── */}
       <MarketingSection tone="emeraldTint">
         <AltFeatureRow
-          eyebrow="Free forever"
-          title="Checkout your way. Get paid your way."
-          body="Take cash and card-at-counter for free, or add online card payments. Reservations and reserve-then-order are built in."
-          bullets={["Cash & card-at-counter — free", "Built-in tipping, taxes & service fees", "Reservations + reserve-then-order"]}
-          image={<ScreenshotFrame variant="phone" alt="Cart & checkout" />}
+          eyebrow={t("checkout.eyebrow")}
+          title={t("checkout.title")}
+          body={t("checkout.body")}
+          bullets={[t("checkout.bullet1"), t("checkout.bullet2"), t("checkout.bullet3")]}
+          image={<ScreenshotFrame variant="phone" alt={t("checkout.frameAlt")} />}
         />
       </MarketingSection>
 
@@ -162,14 +166,10 @@ export function HomeClient({ locale }: { locale: string }) {
       <MarketingSection tone="light">
         <AltFeatureRow
           reverse
-          eyebrow="Built for pizza shops"
-          title="A half-and-half builder customers actually enjoy."
-          body="Let customers design a one-of-a-kind pie — different toppings on each half, placed left, right or whole, light, normal or extra."
-          bullets={[
-            "Split any pizza into halves — different toppings each side",
-            "Fair half-topping pricing (two halves count as one whole)",
-            "Combos & meal deals that open the full builder",
-          ]}
+          eyebrow={t("pizza.eyebrow")}
+          title={t("pizza.title")}
+          body={t("pizza.body")}
+          bullets={[t("pizza.bullet1"), t("pizza.bullet2"), t("pizza.bullet3")]}
           image={<PizzaSplitGraphic />}
         />
       </MarketingSection>
@@ -179,29 +179,29 @@ export function HomeClient({ locale }: { locale: string }) {
         <div className="mb-12">
           <SectionHeading
             center
-            eyebrow="Free · iOS + Android"
-            title="Never miss a paying order."
-            subtitle="The native Kitchen Order App turns any iPhone, iPad or Android tablet into a bulletproof order station — with a safety net so a busy night never costs you a sale."
+            eyebrow={t("kitchen.eyebrow")}
+            title={t("kitchen.title")}
+            subtitle={t("kitchen.subtitle")}
           />
         </div>
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <ScreenshotFrame variant="phone" alt="Kitchen Order App — incoming order" />
+          <ScreenshotFrame variant="phone" alt={t("kitchen.frameAlt")} />
           <div className="grid sm:grid-cols-2 gap-x-6 gap-y-6">
-            {RELIABILITY.map((r) => (
-              <div key={r.title} className="flex items-start gap-3">
+            {RELIABILITY_DEFS.map((r) => (
+              <div key={r.key} className="flex items-start gap-3">
                 <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-white text-emerald-600 ring-1 ring-emerald-100 flex-shrink-0 shadow-sm">
                   <r.icon className="w-5 h-5" />
                 </span>
                 <div>
-                  <div className="font-bold text-gray-900 text-sm leading-tight">{r.title}</div>
-                  <p className="text-sm text-gray-600 leading-relaxed mt-0.5">{r.body}</p>
+                  <div className="font-bold text-gray-900 text-sm leading-tight">{t(`kitchen.${r.key}.title`)}</div>
+                  <p className="text-sm text-gray-600 leading-relaxed mt-0.5">{t(`kitchen.${r.key}.body`)}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
         <div className="mt-14 text-center">
-          <p className="text-sm font-semibold text-gray-700 mb-4">Get the free Kitchen Order App on your tablet</p>
+          <p className="text-sm font-semibold text-gray-700 mb-4">{t("kitchen.getApp")}</p>
           <div className="flex justify-center"><AppDownloadBadges /></div>
         </div>
       </MarketingSection>
@@ -211,15 +211,15 @@ export function HomeClient({ locale }: { locale: string }) {
         <div className="mb-12">
           <SectionHeading
             center
-            eyebrow="Run the business"
-            title="Know your numbers. Own your customers."
-            subtitle="A full analytics, customer and promotions suite is built in — free. The relationship with your diners is yours, not locked inside an aggregator."
+            eyebrow={t("run.eyebrow")}
+            title={t("run.title")}
+            subtitle={t("run.subtitle")}
           />
         </div>
         <div className="mb-12 max-w-4xl mx-auto">
-          <ScreenshotFrame variant="browser" url="app.feefreeordering.com/reports" alt="Reports dashboard — revenue, orders & customer trends" />
+          <ScreenshotFrame variant="browser" url="app.feefreeordering.com/reports" alt={t("run.frameAlt")} />
         </div>
-        <IconFeatureGrid items={RUN_BUSINESS} />
+        <IconFeatureGrid items={runBusiness} soonLabel={soon} />
       </MarketingSection>
 
       {/* ── S8 · GROWTHNET BUNDLE ─────────────────────────────────────────── */}
@@ -227,9 +227,9 @@ export function HomeClient({ locale }: { locale: string }) {
         <div className="mb-12">
           <SectionHeading
             center
-            eyebrow="GrowthNet — the growth bundle"
-            title="Turn first orders into regulars."
-            subtitle="Marketing, retention and customer-acquisition tools that bring people back — bundled at one discounted price, or added one at a time."
+            eyebrow={t("growthnet.eyebrow")}
+            title={t("growthnet.title")}
+            subtitle={t("growthnet.subtitle")}
           />
         </div>
         <GrowthNetShowcase />
@@ -240,18 +240,18 @@ export function HomeClient({ locale }: { locale: string }) {
         <div className="mb-12">
           <SectionHeading
             center
-            eyebrow="Add-ons — no tiers"
-            title="Start free. Add only what you value."
-            subtitle="Every add-on is separately subscribable. Pick one, pick a few, pick all — or stay free forever."
+            eyebrow={t("addons.eyebrow")}
+            title={t("addons.title")}
+            subtitle={t("addons.subtitle")}
           />
         </div>
-        <IconFeatureGrid items={ADDONS} />
+        <IconFeatureGrid items={addons} soonLabel={soon} />
         <div className="mt-10 text-center">
           <p className="text-sm text-gray-500">
-            The free plan includes <span className="font-semibold text-gray-700">100 orders/month</span>. Any paid add-on lifts the cap.
+            {t.rich("addons.capNote", { b: (c) => <span className="font-semibold text-gray-700">{c}</span> })}
           </p>
           <Link href="/pricing" className="mt-3 inline-flex items-center gap-1.5 text-emerald-700 font-bold hover:gap-2.5 transition-all">
-            See full pricing <ArrowRight className="w-4 h-4" />
+            {t("addons.pricingCta")} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </MarketingSection>
@@ -260,39 +260,35 @@ export function HomeClient({ locale }: { locale: string }) {
       <MarketingSection tone="emeraldTint">
         <AltFeatureRow
           reverse
-          eyebrow="Switch in minutes"
-          title="Bring your whole menu — without retyping it."
-          body="Coming from GloriaFood, FoodBooking or a printed PDF? Import your entire menu — photos and all — in a few clicks."
-          bullets={[
-            "Import directly from GloriaFood",
-            "Upload a PDF menu — our AI builds it for you",
-            "Item photos import automatically in the background",
-          ]}
-          cta={{ href: "/signup", label: "Start your import" }}
-          image={<ScreenshotFrame variant="browser" url="app.feefreeordering.com/menu/import" alt="Menu import wizard" />}
+          eyebrow={t("migrate.eyebrow")}
+          title={t("migrate.title")}
+          body={t("migrate.body")}
+          bullets={[t("migrate.bullet1"), t("migrate.bullet2"), t("migrate.bullet3")]}
+          cta={{ href: "/signup", label: t("migrate.cta") }}
+          image={<ScreenshotFrame variant="browser" url="app.feefreeordering.com/menu/import" alt={t("migrate.frameAlt")} />}
         />
       </MarketingSection>
 
       {/* ── S11 · HOW IT WORKS + INTEGRATIONS ─────────────────────────────── */}
       <MarketingSection tone="light">
         <div className="mb-12">
-          <SectionHeading center title="Live in three steps." />
+          <SectionHeading center title={t("steps.title")} />
         </div>
         <NumberedSteps
           steps={[
-            { title: "Add your menu", body: "Build it, or import from GloriaFood or a PDF in a few clicks.", icon: Upload },
-            { title: "Share your link & QR", body: "Drop the order button on your site, or share your Fee Free page and QR code.", icon: QrCode },
-            { title: "Take orders, keep 100%", body: "Orders hit your kitchen app and print. No commission on direct orders.", icon: Store },
+            { title: t("steps.step1.title"), body: t("steps.step1.body"), icon: Upload },
+            { title: t("steps.step2.title"), body: t("steps.step2.body"), icon: QrCode },
+            { title: t("steps.step3.title"), body: t("steps.step3.body"), icon: Store },
           ]}
         />
 
         {/* Integrations — grouped */}
         <div className="mt-16 border-t border-gray-100 pt-12">
-          <div className="text-center text-xs font-bold uppercase tracking-wider text-gray-400 mb-7">Plays nice with your stack</div>
+          <div className="text-center text-xs font-bold uppercase tracking-wider text-gray-400 mb-7">{t("integrations.heading")}</div>
           <div className="flex flex-wrap items-start justify-center gap-x-10 gap-y-6">
             {INTEGRATION_GROUPS.map((g) => (
-              <div key={g.group} className="text-center">
-                <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 mb-2">{g.group}</div>
+              <div key={g.key} className="text-center">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 mb-2">{t(`integrations.${g.key}`)}</div>
                 <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
                   {g.logos.map((l) => (
                     <span key={l} className="text-sm font-semibold text-gray-500">{l}</span>
@@ -302,7 +298,7 @@ export function HomeClient({ locale }: { locale: string }) {
             ))}
           </div>
           <div className="mt-7 text-center text-xs text-gray-400">
-            On the roadmap:{" "}
+            {t("integrations.roadmap")}{" "}
             {INTEGRATIONS_ROADMAP.map((r, i) => (
               <span key={r} className="font-medium text-gray-400">{r}{i < INTEGRATIONS_ROADMAP.length - 1 ? " · " : ""}</span>
             ))}
@@ -315,13 +311,13 @@ export function HomeClient({ locale }: { locale: string }) {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 grid md:grid-cols-2 gap-8 items-center">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-emerald-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-emerald-700">
-              <span aria-hidden>🍁</span> Proudly Canadian
+              <span aria-hidden>🍁</span> {t("canada.badge")}
             </div>
             <h2 className="mt-4 text-2xl md:text-3xl font-bold text-gray-900 tracking-tight leading-tight">
-              Built &amp; operated in Ontario, Canada.
+              {t("canada.title")}
             </h2>
             <p className="mt-2 text-gray-600 leading-relaxed max-w-lg">
-              A Canadian company — not a faceless overseas aggregator. Your fees, data and customers stay yours.
+              {t("canada.body")}
             </p>
           </div>
           <div className="md:justify-self-end flex items-start gap-3 rounded-2xl bg-white border border-gray-200/80 p-5 shadow-[0_8px_30px_-12px_rgba(16,24,40,0.12)] max-w-sm">
@@ -329,11 +325,11 @@ export function HomeClient({ locale }: { locale: string }) {
               <Headset className="w-5 h-5" />
             </span>
             <div>
-              <div className="font-bold text-gray-900">24/7 Canadian support</div>
+              <div className="font-bold text-gray-900">{t("canada.supportTitle")}</div>
               <p className="text-sm text-gray-600 leading-relaxed mt-0.5">
-                Real humans, any time — day or night. Call{" "}
-                <a href="tel:+18886188765" className="font-semibold text-emerald-700 hover:underline whitespace-nowrap">1-888-618-8765</a>{" "}
-                or live-chat the people who actually built it.
+                {t.rich("canada.supportBody", {
+                  phone: (c) => <a href="tel:+18886188765" className="font-semibold text-emerald-700 hover:underline whitespace-nowrap">{c}</a>,
+                })}
               </p>
             </div>
           </div>
@@ -345,14 +341,14 @@ export function HomeClient({ locale }: { locale: string }) {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
             <SectionHeading
-              title="See a real storefront."
-              subtitle="Take a live demo for a spin — order like a customer and watch it land on the kitchen app."
+              title={t("demo.title")}
+              subtitle={t("demo.subtitle")}
             />
             <div className="mt-8">
-              <PrimaryButton href="/demo" className="!px-6 !py-3">Open the live demo<ArrowRight className="w-4 h-4" /></PrimaryButton>
+              <PrimaryButton href="/demo" className="!px-6 !py-3">{t("demo.cta")}<ArrowRight className="w-4 h-4" /></PrimaryButton>
             </div>
           </div>
-          <ScreenshotFrame variant="browser" url="luigis.feefreeordering.com" alt="A live Fee Free storefront" src="/marketing/screenshots/luigis-root-desktop.png" />
+          <ScreenshotFrame variant="browser" url="luigis.feefreeordering.com" alt={t("demo.frameAlt")} src="/marketing/screenshots/luigis-root-desktop.png" />
         </div>
       </MarketingSection>
 
@@ -363,20 +359,20 @@ export function HomeClient({ locale }: { locale: string }) {
             <Users className="w-5 h-5" />
           </span>
           <span className="text-gray-700">
-            Set up restaurants for a living? Earn <strong>recurring commission</strong> as a Fee Free partner.
+            {t.rich("reseller.text", { b: (c) => <strong>{c}</strong> })}
           </span>
           <Link href="/partners" className="text-emerald-700 font-bold hover:underline whitespace-nowrap">
-            Partner program →
+            {t("reseller.cta")}
           </Link>
         </div>
       </section>
 
       {/* ── S15 · FINAL CTA ───────────────────────────────────────────────── */}
       <CTASection
-        title="Start taking your own orders today."
-        body="Free core. 0% commission on direct orders. 5-minute setup. No credit card."
-        primary={{ href: "/signup", label: "Start free" }}
-        secondary={{ href: "/demo", label: "See it live" }}
+        title={t("finalCta.title")}
+        body={t("finalCta.body")}
+        primary={{ href: "/signup", label: t("finalCta.primary") }}
+        secondary={{ href: "/demo", label: t("finalCta.secondary") }}
       />
 
       <PublicFooter />

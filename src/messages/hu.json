@@ -4349,7 +4349,259 @@
       "featuresTitle": "Minden, ami az online rendeléshez szükséges",
       "ctaTitle": "Készen áll megtartani az értékesítés 100%-át?",
       "ctaSubtitle": "Nem szükséges bankkártya. Bármikor lemondható.",
-      "ctaButton": "Ingyenes kezdés"
+      "ctaButton": "Ingyenes kezdés",
+      "v2": {
+        "hero": {
+          "eyebrow": "Éttermeseknek",
+          "title": "A saját rendelési oldalad. <accent>0% jutalék.</accent>",
+          "subtitle": "Márkázott online rendelés elvitelre, kiszállításra, helyben fogyasztásra és rendezvényekre — 38 nyelven, örökre ingyen. Minden közvetlen rendelés 100%-a a tiéd marad.",
+          "ctaStart": "Kezdd el ingyen",
+          "ctaDemo": "Nézz meg egy élő rendelési oldalt",
+          "badge": "0% jutalék",
+          "trust1": "Bankkártya nélkül",
+          "trust2": "0% a közvetlen rendelésekre",
+          "trust3": "38 nyelv",
+          "trust4": "Kanadában készült 🍁",
+          "frameAlt": "Luigi's Lasagna — egy valódi, márkázott rendelési oldal"
+        },
+        "funnel": {
+          "eyebrow": "A növekedés kulcsa",
+          "title": "Fogd meg a forgalmat. <accent>Tartsd meg a visszatérőket.</accent>",
+          "subtitle": "A piacterek egy dologban verhetetlenek — új vendéget küldenek hozzád. Adj mindegyiküknek okot arra, hogy legközelebb a te márkádon, közvetlenül, 0% jutalékkal rendeljenek.",
+          "sourcesCaption": "A piacterek elhozzák hozzád az új vendéget.",
+          "neck": "QR-kód + Smart Link",
+          "yourBrand": "A te márkád",
+          "directOrders": "Közvetlen rendelések · 0% jutalék",
+          "chip1": "0% jutalék",
+          "chip2": "A vendégeid a tieid",
+          "chip3": "Több visszatérő rendelés"
+        },
+        "ordering": {
+          "eyebrow": "Örökre ingyen",
+          "title": "Márkázott rendelési oldal, amit a vendégek imádnak.",
+          "body": "Az étlapod, fotóid, választható összetevőid és áraid — gyönyörűen minden telefonon, 38 nyelven, a saját logóddal és színeiddel.",
+          "bullet1": "Elvitel, kiszállítás, helyben fogyasztás és rendezvények",
+          "bullet2": "Időzítés és előrendelés",
+          "bullet3": "Beágyazható a meglévő weboldaladba",
+          "cta": "Kezdd el ingyen",
+          "frameAlt": "Étlap és termékopciók"
+        },
+        "checkout": {
+          "eyebrow": "Örökre ingyen",
+          "title": "Fizettess úgy, ahogy neked jó. Kapd meg a pénzed, ahogy szeretnéd.",
+          "body": "Fogadj el készpénzt és kártyát a pultnál ingyen, vagy adj hozzá online kártyás fizetést. A foglalás és a foglalj-majd-rendelj funkció beépítve.",
+          "bullet1": "Készpénz és kártya a pultnál — ingyen",
+          "bullet2": "Beépített borravaló, adók és szervizdíj",
+          "bullet3": "Foglalás + foglalj-majd-rendelj",
+          "frameAlt": "Kosár és fizetés"
+        },
+        "pizza": {
+          "eyebrow": "Pizzériáknak tervezve",
+          "title": "Fél-fél pizzaépítő, amit a vendégek tényleg élveznek.",
+          "body": "Hagyd, hogy a vendégek egyedi pizzát állítsanak össze — más feltét mindkét felére, bal oldalra, jobb oldalra vagy az egészre, kevés, normál vagy extra adaggal.",
+          "bullet1": "Oszd ketté bármelyik pizzát — más feltét mindkét oldalon",
+          "bullet2": "Tisztességes fél-feltét árazás (két fél egy egésznek számít)",
+          "bullet3": "Kombók és menüajánlatok, amelyek megnyitják a teljes építőt",
+          "leftHalf": "Bal fél",
+          "rightHalf": "Jobb fél",
+          "ariaLabel": "Fél-fél pizza",
+          "chipLeft": "½ Bal",
+          "chipRight": "½ Jobb",
+          "chipWhole": "Egész",
+          "chipAmount": "Kevés · Normál · Extra"
+        },
+        "kitchen": {
+          "eyebrow": "Ingyenes · iOS + Android",
+          "title": "Soha ne maradj le egy fizető rendelésről sem.",
+          "subtitle": "A natív Kitchen Order App bármelyik iPhone-t, iPad-et vagy Android táblagépet golyóálló rendelésfogadó állomássá alakít — biztonsági hálóval, hogy egy mozgalmas este se kerüljön egyetlen eladásodba sem.",
+          "frameAlt": "Kitchen Order App — beérkező rendelés",
+          "getApp": "Töltsd le az ingyenes Kitchen Order App-ot a táblagépedre",
+          "ring": {
+            "title": "Hangos csengés kikapcsolt képernyővel",
+            "body": "Egy teljes képernyős riasztás felébreszti a táblagépet abban a pillanatban, ahogy a rendelés megérkezik — még alvó állapotból is."
+          },
+          "call": {
+            "title": "Telefonhívás a kihagyott rendelésről",
+            "body": "Ha senki sem nyomja meg az Elfogadás gombot ~90 másodpercen belül, felhívunk és felolvassuk a rendelést."
+          },
+          "autoReject": {
+            "title": "Automatikus elutasítás + automatikus visszatérítés",
+            "body": "A megválaszolatlan rendeléseket a rendszer automatikusan elutasítja, a vendég pénzét pedig automatikusan visszatéríti."
+          },
+          "chargeOnAccept": {
+            "title": "Csak elfogadáskor terhelünk",
+            "body": "Soha ne főzz ki egy fizetetlen rendelést — és soha ne terhelj meg egy vendéget olyanért, amit visszautasítasz."
+          },
+          "receipts": {
+            "title": "Egyedi, márkázott nyugták",
+            "body": "Tervezd meg a saját konyhai és vendég bizonylataidat, foglalási és napzárási szelvényeidet."
+          },
+          "printer": {
+            "title": "Egyérintéses nyomtatóbeállítás",
+            "body": "A „Nyomtatók keresése” átvizsgálja a WiFi-d, és kilistázza a hőnyomtatódat — nincs többé IP-cím keresgélés."
+          }
+        },
+        "run": {
+          "eyebrow": "Vezesd az üzletet",
+          "title": "Ismerd a számaidat. A vendégeid a tieid.",
+          "subtitle": "Teljes analitikai, vendég- és promóciós csomag beépítve — ingyen. A vendégeiddel való kapcsolat a tiéd, nem egy közvetítő platform foglya.",
+          "frameAlt": "Jelentések irányítópult — bevétel, rendelések és vendégtrendek",
+          "reports": {
+            "title": "Jelentések irányítópult",
+            "body": "Bevétel, rendelések, átlagos kosárérték és vendégek — napi szintű trendekkel."
+          },
+          "crm": {
+            "title": "A vendéglistád (CRM)",
+            "body": "Minden vendég, összköltés, szegmensek és CSV-export. Ők a tieid — nem egy közvetítő platformé."
+          },
+          "promos": {
+            "title": "Promóciós motor",
+            "body": "13 promóciótípus — BOGO, csomagok, ingyenes termékek, kuponok, időzített akciók. 5 ingyen, vezetett varázslóval."
+          },
+          "insights": {
+            "title": "Értékesítési betekintés és tölcsér",
+            "body": "Legjobban és legrosszabbul fogyó termékek, az online rendelési konverziós tölcséred, kiszállítási hőtérkép."
+          },
+          "reorder": {
+            "title": "Egykattintásos újrarendelés",
+            "body": "A visszatérő vendégek egyetlen érintéssel rendelhetik újra a szokásosukat — több visszatérő rendelés, nagyobb kosárérték."
+          },
+          "accounts": {
+            "title": "Vendégfiókok",
+            "body": "Mentett címek, rendelési előzmények és személyre szabott kuponok hozzák vissza a vendégeket."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — a növekedési csomag",
+          "title": "Tedd az első rendelésekből törzsvendégeket.",
+          "subtitle": "Marketing-, megtartási és vendégszerző eszközök, amelyek visszahozzák az embereket — egyetlen kedvezményes árú csomagban, vagy darabonként hozzáadva.",
+          "frameAlt": "Smart Link analitika — szkennelésekből valódi rendelések és bevétel",
+          "badge": "Egy csomag · öt eszköz",
+          "blurb": "Minden marketing-, megtartási és szerzési eszköz egy kedvezményes áron — vagy add hozzá bármelyiket önállóan.",
+          "pricingCta": "Nézd meg a GrowthNet árazását",
+          "apmBody": "8 haladó promóciótípus, vendégszegmensek és automatizált e-mail kampányok.",
+          "studioBody": "Követhető QR-kódok, Smart Links és márkázott szórólapok — lásd, mi alakítja a szkenneléseket rendelésekké.",
+          "kickstarterBody": "Indításra kész első-rendelés és visszahívó kampányok, amelyek már az első naptól behozzák a vendégeket.",
+          "smsBody": "Üzenj a vendégeknek, ahogy a rendelésük halad a konyhán — visszaigazolva, kész, befejezve.",
+          "contentpilotBody": "Az AI közösségi médiamenedzsered — bejegyzéseket fogalmaz és ütemez az Instagram, Facebook, X és TikTok platformokra.",
+          "saveTitle": "Csomagolj és spórolj",
+          "saveBody": "Vedd meg az egész csomagot olcsóbban, mint külön-külön minden eszközt. <link>Nézd meg a számítást →</link>"
+        },
+        "addons": {
+          "eyebrow": "Kiegészítők — csomagok nélkül",
+          "title": "Kezdd ingyen. Csak azt add hozzá, ami fontos neked.",
+          "subtitle": "Minden kiegészítő külön előfizethető. Válassz egyet, válassz néhányat, válaszd az összeset — vagy maradj örökre ingyenes.",
+          "capNote": "Az ingyenes csomag <b>havi 100 rendelést</b> tartalmaz. Bármelyik fizetős kiegészítő megemeli a limitet.",
+          "pricingCta": "Nézd meg a teljes árazást",
+          "payments": {
+            "title": "Online fizetés",
+            "body": "Fogadj el online kártyás fizetést — a pénz közvetlenül a saját Stripe vagy PayPal fiókodba érkezik."
+          },
+          "website": {
+            "title": "Értékesítésre optimalizált weboldal",
+            "body": "Tárhelyes, SEO-kész marketing- és rendelési oldal, az étlapodból automatikusan felépítve, a saját domaineden."
+          },
+          "multiLocation": {
+            "title": "Több telephely",
+            "body": "Több telephelyet vezess egyetlen fiókból — mindegyiknek saját étlapja, rendelései és fizetése van."
+          },
+          "marketplace": {
+            "title": "Piactéri megjelenés",
+            "body": "Találjanak rád a Fee Free piactéren — olcsó új-vendég csatorna, 30% díjak nélkül."
+          },
+          "unlimited": {
+            "title": "Korlátlan rendelés",
+            "body": "Emeld meg az ingyenes csomag havi 100 rendeléses limitjét — korlátlan mennyiség, rendelésenkénti díj nélkül."
+          },
+          "domain": {
+            "title": "Egyedi domain",
+            "body": "Irányítsd a saját domained a tárhelyes Fee Free oldaladra."
+          },
+          "driver": {
+            "title": "Futárflotta",
+            "body": "Vedd igénybe a Shipday futárhálózatunkat, amikor a saját futáraid foglaltak."
+          },
+          "brandedApp": {
+            "title": "Márkázott mobilalkalmazás",
+            "body": "A saját natív iOS + Android alkalmazásod az App Store-ban és a Play Store-ban."
+          },
+          "pos": {
+            "title": "POS modul",
+            "body": "Házon belüli POS, amellyel a személyzet ugyanabból az adminból ütheti be a helyben fogyasztott és elvitelre szánt rendeléseket."
+          },
+          "aiPhone": {
+            "title": "AI telefonos rendelés",
+            "body": "Egy AI ügynök veszi fel a telefont és vesz fel rendeléseket a nap 24 órájában, egyenesen a konyhádba."
+          },
+          "deposits": {
+            "title": "Foglalási előleg",
+            "body": "Számíts fel visszatéríthető előleget, amikor a vendégek asztalt foglalnak — véd a meg nem jelenések ellen."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Válts percek alatt",
+          "title": "Hozd át a teljes étlapod — anélkül, hogy újra kellene gépelned.",
+          "body": "A GloriaFood-ról, a FoodBooking-ról vagy egy nyomtatott PDF-ből érkezel? Importáld a teljes étlapodat — a fotókkal együtt — néhány kattintással.",
+          "bullet1": "Importálj közvetlenül a GloriaFood-ról",
+          "bullet2": "Tölts fel egy PDF étlapot — az AI-unk felépíti helyetted",
+          "bullet3": "A termékfotók automatikusan, a háttérben importálódnak",
+          "cta": "Indítsd el az importálást",
+          "frameAlt": "Étlap-importáló varázsló"
+        },
+        "steps": {
+          "title": "Élesben, három lépésben.",
+          "step1": {
+            "title": "Add hozzá az étlapodat",
+            "body": "Építsd fel, vagy importáld a GloriaFood-ról vagy egy PDF-ből néhány kattintással."
+          },
+          "step2": {
+            "title": "Oszd meg a linkedet és a QR-kódodat",
+            "body": "Helyezd el a rendelés gombot a weboldaladon, vagy oszd meg a Fee Free oldaladat és QR-kódodat."
+          },
+          "step3": {
+            "title": "Vegyél fel rendeléseket, tartsd meg a 100%-ot",
+            "body": "A rendelések megérkeznek a konyhai alkalmazásodba és kinyomtatódnak. Nincs jutalék a közvetlen rendeléseken."
+          }
+        },
+        "integrations": {
+          "heading": "Jól kijön a meglévő rendszereddel",
+          "payments": "Fizetés",
+          "printers": "Nyomtatók",
+          "delivery": "Kiszállítás",
+          "analytics": "Analitika és hirdetések",
+          "migration": "Migráció",
+          "voice": "Hang",
+          "roadmap": "A tervek között:"
+        },
+        "canada": {
+          "badge": "Büszkén kanadai",
+          "title": "A kanadai Ontarióban épült és üzemeltetve.",
+          "body": "Egy kanadai cég — nem egy arctalan tengerentúli közvetítő. A díjaid, az adataid és a vendégeid a tieid maradnak.",
+          "supportTitle": "24/7 kanadai ügyfélszolgálat",
+          "supportBody": "Valódi emberek, bármikor — éjjel-nappal. Hívd a <phone>1-888-618-8765</phone> számot, vagy chatelj élőben azokkal, akik tényleg megépítették."
+        },
+        "demo": {
+          "title": "Nézz meg egy valódi rendelési oldalt.",
+          "subtitle": "Próbálj ki egy élő demót — rendelj, mint egy vendég, és nézd, ahogy megérkezik a konyhai alkalmazásba.",
+          "cta": "Nyisd meg az élő demót",
+          "frameAlt": "Egy élő Fee Free rendelési oldal"
+        },
+        "reseller": {
+          "text": "Éttermeket állítasz be hivatásszerűen? Szerezz <b>visszatérő jutalékot</b> Fee Free partnerként.",
+          "cta": "Partnerprogram →"
+        },
+        "finalCta": {
+          "title": "Kezdd el a saját rendeléseid felvételét még ma.",
+          "body": "Ingyenes alapcsomag. 0% jutalék a közvetlen rendeléseken. 5 perces beállítás. Bankkártya nélkül.",
+          "primary": "Kezdd el ingyen",
+          "secondary": "Nézd meg élőben"
+        },
+        "soon": "Hamarosan",
+        "appBadges": {
+          "iosLine1": "Töltsd le innen:",
+          "androidLine1": "Szerezd be itt:"
+        }
+      }
     },
     "features": {
       "title": "Funkciók",

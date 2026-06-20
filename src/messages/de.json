@@ -4349,7 +4349,259 @@
       "featuresTitle": "Alles, was Sie für Online-Bestellungen benötigen",
       "ctaTitle": "Bereit, 100 % Ihres Umsatzes zu behalten?",
       "ctaSubtitle": "Keine Kreditkarte erforderlich. Jederzeit kündbar.",
-      "ctaButton": "Kostenlos starten"
+      "ctaButton": "Kostenlos starten",
+      "v2": {
+        "hero": {
+          "eyebrow": "Für Restaurantbetreiber",
+          "title": "Ihre eigene Bestellseite. <accent>0 % Provision.</accent>",
+          "subtitle": "Ihre eigene Online-Bestellung für Abholung, Lieferung, Vor-Ort-Verzehr & Catering – in 38 Sprachen, für immer kostenlos. Behalten Sie 100 % jeder Direktbestellung.",
+          "ctaStart": "Kostenlos starten",
+          "ctaDemo": "Live-Shop ansehen",
+          "badge": "0 % Provision",
+          "trust1": "Keine Kreditkarte nötig",
+          "trust2": "0 % bei Direktbestellungen",
+          "trust3": "38 Sprachen",
+          "trust4": "Made in Canada 🍁",
+          "frameAlt": "Luigi's Lasagna – eine echte Bestellseite im eigenen Branding"
+        },
+        "funnel": {
+          "eyebrow": "Der Wachstumshebel",
+          "title": "Holen Sie sich den Traffic. <accent>Behalten Sie die Stammkunden.</accent>",
+          "subtitle": "Marktplätze sind in einer Sache stark – sie bringen Ihnen Erstkunden. Geben Sie jedem einzelnen einen Grund, wiederzukommen und direkt zu bestellen – in Ihrem Branding, mit 0 % Provision.",
+          "sourcesCaption": "Marktplätze bringen Ihnen einen Erstkunden.",
+          "neck": "QR-Code + Smart Link",
+          "yourBrand": "Ihre Marke",
+          "directOrders": "Direktbestellungen · 0 % Provision",
+          "chip1": "0 % Provision",
+          "chip2": "Ihre Kunden gehören Ihnen",
+          "chip3": "Mehr Folgebestellungen"
+        },
+        "ordering": {
+          "eyebrow": "Für immer kostenlos",
+          "title": "Eine Bestellseite im eigenen Branding, die Kunden lieben.",
+          "body": "Ihre Speisekarte, Fotos, Optionen und Preise – auf jedem Smartphone schön dargestellt, in 38 Sprachen, mit Ihrem Logo und Ihren Farben.",
+          "bullet1": "Abholung, Lieferung, Vor-Ort-Verzehr & Catering",
+          "bullet2": "Terminplanung & Vorbestellungen",
+          "bullet3": "Einbettung in Ihre bestehende Website",
+          "cta": "Kostenlos starten",
+          "frameAlt": "Speisekarte & Artikeloptionen"
+        },
+        "checkout": {
+          "eyebrow": "Für immer kostenlos",
+          "title": "Kassieren, wie Sie wollen. Bezahlt werden, wie Sie wollen.",
+          "body": "Nehmen Sie Bar- und Kartenzahlung am Tresen kostenlos an oder ergänzen Sie Online-Kartenzahlungen. Reservierungen und Reservieren-dann-Bestellen sind bereits integriert.",
+          "bullet1": "Bar & Karte am Tresen – kostenlos",
+          "bullet2": "Integriertes Trinkgeld, Steuern & Servicegebühren",
+          "bullet3": "Reservierungen + Reservieren-dann-Bestellen",
+          "frameAlt": "Warenkorb & Kasse"
+        },
+        "pizza": {
+          "eyebrow": "Gemacht für Pizzerien",
+          "title": "Ein Halb-und-halb-Konfigurator, der Kunden wirklich Spaß macht.",
+          "body": "Lassen Sie Kunden ihre einzigartige Pizza gestalten – unterschiedliche Beläge auf jeder Hälfte, platziert links, rechts oder ganz, dünn, normal oder extra.",
+          "bullet1": "Jede Pizza in zwei Hälften teilen – unterschiedliche Beläge je Seite",
+          "bullet2": "Faire Preise für halbe Beläge (zwei Hälften zählen als eine ganze)",
+          "bullet3": "Kombis & Menü-Angebote, die den vollen Konfigurator öffnen",
+          "leftHalf": "Linke Hälfte",
+          "rightHalf": "Rechte Hälfte",
+          "ariaLabel": "Halb-und-halb-Pizza",
+          "chipLeft": "½ Links",
+          "chipRight": "½ Rechts",
+          "chipWhole": "Ganz",
+          "chipAmount": "Dünn · Normal · Extra"
+        },
+        "kitchen": {
+          "eyebrow": "Kostenlos · iOS + Android",
+          "title": "Verpassen Sie nie wieder eine bezahlte Bestellung.",
+          "subtitle": "Die native Kitchen Order App verwandelt jedes iPhone, iPad oder Android-Tablet in eine zuverlässige Bestellstation – mit einem Sicherheitsnetz, damit ein voller Abend Sie nie einen Verkauf kostet.",
+          "frameAlt": "Kitchen Order App – eingehende Bestellung",
+          "getApp": "Holen Sie sich die kostenlose Kitchen Order App auf Ihr Tablet",
+          "ring": {
+            "title": "Lautes Klingeln bei ausgeschaltetem Bildschirm",
+            "body": "Ein Vollbild-Alarm weckt das Tablet in dem Moment, in dem eine Bestellung eingeht – selbst im Ruhezustand."
+          },
+          "call": {
+            "title": "Anruf bei verpasster Bestellung",
+            "body": "Tippt innerhalb von ~90 Sekunden niemand auf „Annehmen“, rufen wir Sie an und lesen die Bestellung laut vor."
+          },
+          "autoReject": {
+            "title": "Auto-Ablehnung + Auto-Erstattung",
+            "body": "Unbeantwortete Bestellungen werden automatisch abgelehnt und der Kunde erhält automatisch eine Erstattung."
+          },
+          "chargeOnAccept": {
+            "title": "Belastung erst bei Annahme",
+            "body": "Kochen Sie nie eine unbezahlte Bestellung – und belasten Sie nie einen Kunden für eine, die Sie ablehnen."
+          },
+          "receipts": {
+            "title": "Individuelle Belege im eigenen Branding",
+            "body": "Gestalten Sie Ihre eigenen Küchen- und Kundenbons, Reservierungs- und Tagesabschlussbelege."
+          },
+          "printer": {
+            "title": "Druckereinrichtung mit einem Tipp",
+            "body": "„Drucker suchen“ durchsucht Ihr WiFi und listet Ihren Thermodrucker auf – kein Suchen nach IP-Adressen."
+          }
+        },
+        "run": {
+          "eyebrow": "Das Geschäft führen",
+          "title": "Kennen Sie Ihre Zahlen. Besitzen Sie Ihre Kunden.",
+          "subtitle": "Eine vollständige Suite für Analysen, Kunden und Promotions ist integriert – kostenlos. Die Beziehung zu Ihren Gästen gehört Ihnen, nicht einem Aggregator.",
+          "frameAlt": "Berichts-Dashboard – Umsatz, Bestellungen & Kundentrends",
+          "reports": {
+            "title": "Berichts-Dashboard",
+            "body": "Umsatz, Bestellungen, durchschnittlicher Bon und Kunden – mit Trends von Tag zu Tag."
+          },
+          "crm": {
+            "title": "Ihre Kundenliste (CRM)",
+            "body": "Jeder Kunde, Gesamtumsatz, Segmente und CSV-Export. Sie gehören Ihnen – nicht einem Aggregator."
+          },
+          "promos": {
+            "title": "Promotion-Engine",
+            "body": "13 Promo-Typen – BOGO, Bundles, Gratisartikel, Gutscheine, zeitlich begrenzte Angebote. 5 kostenlos, geführter Assistent."
+          },
+          "insights": {
+            "title": "Verkaufseinblicke & Funnel",
+            "body": "Bestseller und Ladenhüter, Ihr Conversion-Funnel für Online-Bestellungen, eine Liefer-Heatmap."
+          },
+          "reorder": {
+            "title": "Nachbestellen mit einem Klick",
+            "body": "Stammkunden bestellen ihr Übliches mit einem Tipp erneut – mehr Folgebestellungen, höhere Bons."
+          },
+          "accounts": {
+            "title": "Kundenkonten",
+            "body": "Gespeicherte Adressen, Bestellhistorie und persönliche Gutscheine sorgen dafür, dass Gäste wiederkommen."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet – das Wachstumspaket",
+          "title": "Machen Sie aus Erstbestellungen Stammgäste.",
+          "subtitle": "Marketing-, Bindungs- und Kundengewinnungstools, die Menschen zurückbringen – gebündelt zu einem vergünstigten Preis oder einzeln hinzubuchbar.",
+          "frameAlt": "Smart-Link-Analysen – Scans, die zu echten Bestellungen & Umsatz werden",
+          "badge": "Ein Paket · fünf Tools",
+          "blurb": "Jedes Marketing-, Bindungs- und Akquise-Tool zu einem vergünstigten Preis – oder buchen Sie jedes einzeln dazu.",
+          "pricingCta": "GrowthNet-Preise ansehen",
+          "apmBody": "8 erweiterte Promo-Typen, Kundensegmente und automatisierte E-Mail-Kampagnen.",
+          "studioBody": "Nachverfolgbare QR-Codes, Smart Links und gebrandete Flyer – sehen Sie, was Scans in Bestellungen verwandelt.",
+          "kickstarterBody": "Sofort versandfertige Erstbestellungs- und Rückgewinnungskampagnen, die Kunden vom ersten Tag an bringen.",
+          "smsBody": "Schreiben Sie Kunden, während ihre Bestellung die Küche durchläuft – bestätigt, fertig, abgeschlossen.",
+          "contentpilotBody": "Ihr KI-Social-Manager – entwirft und plant Beiträge für Instagram, Facebook, X & TikTok.",
+          "saveTitle": "Bündeln & sparen",
+          "saveBody": "Holen Sie sich das ganze Paket für weniger, als jedes Tool einzeln zu kaufen. <link>Sehen Sie die Rechnung →</link>"
+        },
+        "addons": {
+          "eyebrow": "Add-ons – keine Tarifstufen",
+          "title": "Kostenlos starten. Nur hinzufügen, was Ihnen etwas wert ist.",
+          "subtitle": "Jedes Add-on ist einzeln abonnierbar. Wählen Sie eines, ein paar oder alle – oder bleiben Sie für immer kostenlos.",
+          "capNote": "Der kostenlose Plan umfasst <b>100 Bestellungen/Monat</b>. Jedes kostenpflichtige Add-on hebt das Limit auf.",
+          "pricingCta": "Vollständige Preise ansehen",
+          "payments": {
+            "title": "Online-Zahlungen",
+            "body": "Nehmen Sie Kartenzahlungen online an – das Geld landet direkt auf Ihrem eigenen Stripe- oder PayPal-Konto."
+          },
+          "website": {
+            "title": "Verkaufsoptimierte Website",
+            "body": "Eine gehostete, SEO-fertige Marketing- + Bestellseite, automatisch aus Ihrer Speisekarte erstellt, auf Ihrer eigenen Domain."
+          },
+          "multiLocation": {
+            "title": "Mehrere Standorte",
+            "body": "Führen Sie mehrere Standorte über ein Konto – jeder mit eigener Speisekarte, eigenen Bestellungen und Zahlungen."
+          },
+          "marketplace": {
+            "title": "Marktplatz-Eintrag",
+            "body": "Werden Sie auf dem Fee Free Marktplatz gefunden – ein günstiger Kanal für Neukunden, ohne 30 % Gebühren."
+          },
+          "unlimited": {
+            "title": "Unbegrenzte Bestellungen",
+            "body": "Heben Sie das Limit von 100 Bestellungen/Monat des kostenlosen Plans auf – unbegrenztes Volumen, keine Gebühren pro Bestellung."
+          },
+          "domain": {
+            "title": "Eigene Domain",
+            "body": "Verweisen Sie Ihre eigene Domain auf Ihre gehostete Fee Free Seite."
+          },
+          "driver": {
+            "title": "Fahrer-Pool",
+            "body": "Nutzen Sie unser Shipday Fahrernetzwerk, wenn Ihre eigenen Fahrer ausgelastet sind."
+          },
+          "brandedApp": {
+            "title": "Eigene Mobile App",
+            "body": "Ihre eigene native iOS- + Android-App im App Store und Play Store."
+          },
+          "pos": {
+            "title": "POS-Modul",
+            "body": "Hauseigenes POS, mit dem Ihr Personal Vor-Ort- und Mitnahmebestellungen aus demselben Admin abrechnet."
+          },
+          "aiPhone": {
+            "title": "KI-Telefonbestellung",
+            "body": "Ein KI-Agent geht ans Telefon und nimmt rund um die Uhr Bestellungen entgegen – direkt in Ihre Küche."
+          },
+          "deposits": {
+            "title": "Reservierungsanzahlungen",
+            "body": "Erheben Sie eine erstattbare Anzahlung, wenn Kunden einen Tisch buchen – schützt vor Nichterscheinen."
+          }
+        },
+        "migrate": {
+          "eyebrow": "In Minuten wechseln",
+          "title": "Bringen Sie Ihre ganze Speisekarte mit – ohne sie neu abzutippen.",
+          "body": "Kommen Sie von GloriaFood, FoodBooking oder einem gedruckten PDF? Importieren Sie Ihre gesamte Speisekarte – mit allen Fotos – in wenigen Klicks.",
+          "bullet1": "Direkter Import aus GloriaFood",
+          "bullet2": "Laden Sie eine PDF-Speisekarte hoch – unsere KI baut sie für Sie auf",
+          "bullet3": "Artikelfotos werden automatisch im Hintergrund importiert",
+          "cta": "Import starten",
+          "frameAlt": "Assistent zum Speisekarten-Import"
+        },
+        "steps": {
+          "title": "In drei Schritten live.",
+          "step1": {
+            "title": "Speisekarte hinzufügen",
+            "body": "Erstellen Sie sie selbst oder importieren Sie sie aus GloriaFood oder einem PDF in wenigen Klicks."
+          },
+          "step2": {
+            "title": "Link & QR teilen",
+            "body": "Platzieren Sie den Bestellbutton auf Ihrer Website oder teilen Sie Ihre Fee Free Seite und Ihren QR-Code."
+          },
+          "step3": {
+            "title": "Bestellungen annehmen, 100 % behalten",
+            "body": "Bestellungen landen in Ihrer Küchen-App und werden gedruckt. Keine Provision bei Direktbestellungen."
+          }
+        },
+        "integrations": {
+          "heading": "Versteht sich mit Ihrem Setup",
+          "payments": "Zahlungen",
+          "printers": "Drucker",
+          "delivery": "Lieferung",
+          "analytics": "Analysen & Anzeigen",
+          "migration": "Migration",
+          "voice": "Sprache",
+          "roadmap": "Auf der Roadmap:"
+        },
+        "canada": {
+          "badge": "Stolz kanadisch",
+          "title": "Entwickelt & betrieben in Ontario, Kanada.",
+          "body": "Ein kanadisches Unternehmen – kein gesichtsloser Aggregator aus Übersee. Ihre Gebühren, Daten und Kunden bleiben Ihre.",
+          "supportTitle": "24/7 kanadischer Support",
+          "supportBody": "Echte Menschen, jederzeit – Tag und Nacht. Rufen Sie <phone>1-888-618-8765</phone> an oder chatten Sie live mit den Leuten, die es tatsächlich gebaut haben."
+        },
+        "demo": {
+          "title": "Sehen Sie sich einen echten Shop an.",
+          "subtitle": "Testen Sie eine Live-Demo – bestellen Sie wie ein Kunde und beobachten Sie, wie es in der Küchen-App landet.",
+          "cta": "Live-Demo öffnen",
+          "frameAlt": "Ein echter Fee Free Shop"
+        },
+        "reseller": {
+          "text": "Richten Sie Restaurants beruflich ein? Verdienen Sie als Fee Free Partner eine <b>wiederkehrende Provision</b>.",
+          "cta": "Partnerprogramm →"
+        },
+        "finalCta": {
+          "title": "Nehmen Sie ab heute Ihre eigenen Bestellungen an.",
+          "body": "Kostenloser Kern. 0 % Provision bei Direktbestellungen. Einrichtung in 5 Minuten. Keine Kreditkarte.",
+          "primary": "Kostenlos starten",
+          "secondary": "Live ansehen"
+        },
+        "soon": "Bald",
+        "appBadges": {
+          "iosLine1": "Laden im",
+          "androidLine1": "Jetzt bei"
+        }
+      }
     },
     "features": {
       "title": "Funktionen",

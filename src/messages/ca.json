@@ -4349,7 +4349,259 @@
       "featuresTitle": "Tot el que necessiteu per gestionar les comandes en línia",
       "ctaTitle": "Preparats per quedar-vos el 100% de les vendes?",
       "ctaSubtitle": "No cal targeta de crèdit. Cancel·leu en qualsevol moment.",
-      "ctaButton": "Comença gratis"
+      "ctaButton": "Comença gratis",
+      "v2": {
+        "hero": {
+          "eyebrow": "Per a propietaris de restaurants",
+          "title": "La teva pròpia pàgina de comandes. <accent>0% de comissió.</accent>",
+          "subtitle": "Comandes en línia amb la teva marca per a recollida, lliurament, consum al local i càtering — en 38 idiomes, gratis per sempre. Queda't el 100% de cada comanda directa.",
+          "ctaStart": "Comença gratis",
+          "ctaDemo": "Mira una botiga real",
+          "badge": "0% de comissió",
+          "trust1": "Sense targeta de crèdit",
+          "trust2": "0% en comandes directes",
+          "trust3": "38 idiomes",
+          "trust4": "Fet al Canadà 🍁",
+          "frameAlt": "Luigi's Lasagna — una pàgina de comandes real amb marca pròpia"
+        },
+        "funnel": {
+          "eyebrow": "L'enfocament de creixement",
+          "title": "Capta el trànsit. <accent>Conserva els clients que tornen.</accent>",
+          "subtitle": "Els marketplaces són molt bons en una cosa: portar-te un client per primer cop. Dona a cadascun d'ells un motiu per tornar i demanar directament, amb la teva marca, a 0% de comissió.",
+          "sourcesCaption": "Els marketplaces et porten un client per primer cop.",
+          "neck": "Codi QR + Smart Link",
+          "yourBrand": "La teva marca",
+          "directOrders": "Comandes directes · 0% de comissió",
+          "chip1": "0% de comissió",
+          "chip2": "Fes teus els teus clients",
+          "chip3": "Més comandes repetides"
+        },
+        "ordering": {
+          "eyebrow": "Gratis per sempre",
+          "title": "Una pàgina de comandes amb marca que els clients adoren.",
+          "body": "El teu menú, fotos, modificadors i preus — preciosos a cada mòbil, en 38 idiomes, amb el teu logotip i els teus colors.",
+          "bullet1": "Recollida, lliurament, consum al local i càtering",
+          "bullet2": "Programació i comandes anticipades",
+          "bullet3": "S'integra al teu lloc web existent",
+          "cta": "Comença gratis",
+          "frameAlt": "Menú i opcions del producte"
+        },
+        "checkout": {
+          "eyebrow": "Gratis per sempre",
+          "title": "Paga a la teva manera. Cobra a la teva manera.",
+          "body": "Accepta efectiu i targeta al taulell de franc, o afegeix pagaments amb targeta en línia. Les reserves i el reserva-i-demana ja vénen incorporats.",
+          "bullet1": "Efectiu i targeta al taulell — gratis",
+          "bullet2": "Propines, impostos i càrrecs de servei integrats",
+          "bullet3": "Reserves + reserva-i-demana",
+          "frameAlt": "Cistella i pagament"
+        },
+        "pizza": {
+          "eyebrow": "Pensat per a pizzeries",
+          "title": "Un creador de pizzes meitat i meitat que els clients gaudeixen de debò.",
+          "body": "Deixa que els clients dissenyin una pizza única — ingredients diferents a cada meitat, col·locats a l'esquerra, a la dreta o a tota la pizza, en quantitat poca, normal o extra.",
+          "bullet1": "Divideix qualsevol pizza en meitats — ingredients diferents a cada costat",
+          "bullet2": "Preu just per als ingredients de mitja pizza (dues meitats compten com una de sencera)",
+          "bullet3": "Combos i menús que obren el creador complet",
+          "leftHalf": "Meitat esquerra",
+          "rightHalf": "Meitat dreta",
+          "ariaLabel": "Pizza meitat i meitat",
+          "chipLeft": "½ Esquerra",
+          "chipRight": "½ Dreta",
+          "chipWhole": "Sencera",
+          "chipAmount": "Poca · Normal · Extra"
+        },
+        "kitchen": {
+          "eyebrow": "Gratis · iOS + Android",
+          "title": "No perdis mai una comanda pagada.",
+          "subtitle": "La Kitchen Order App nativa converteix qualsevol iPhone, iPad o tauleta Android en una estació de comandes a prova de bombes — amb una xarxa de seguretat perquè una nit de molta feina no et costi mai una venda.",
+          "frameAlt": "Kitchen Order App — comanda entrant",
+          "getApp": "Aconsegueix la Kitchen Order App gratuïta a la teva tauleta",
+          "ring": {
+            "title": "So fort amb la pantalla apagada",
+            "body": "Una alarma a pantalla completa desperta la tauleta a l'instant que arriba una comanda — fins i tot adormida."
+          },
+          "call": {
+            "title": "Trucada per comanda perduda",
+            "body": "Si ningú no prem Acceptar en ~90 segons, et truquem i et llegim la comanda en veu alta."
+          },
+          "autoReject": {
+            "title": "Rebuig automàtic + reemborsament automàtic",
+            "body": "Les comandes sense resposta es rebutgen automàticament i el client rep el reemborsament de manera automàtica."
+          },
+          "chargeOnAccept": {
+            "title": "Es cobra només en acceptar",
+            "body": "No cuinis mai una comanda no pagada — i no cobris mai un client per una comanda que rebutges."
+          },
+          "receipts": {
+            "title": "Tiquets personalitzats amb la teva marca",
+            "body": "Dissenya els teus propis tiquets de cuina i de client, els de reserva i els de tancament de jornada."
+          },
+          "printer": {
+            "title": "Configuració de la impressora amb un toc",
+            "body": "«Cerca impressores» escaneja la teva WiFi i mostra la teva impressora tèrmica — sense haver de buscar cap IP."
+          }
+        },
+        "run": {
+          "eyebrow": "Gestiona el negoci",
+          "title": "Coneix les teves xifres. Fes teus els teus clients.",
+          "subtitle": "Una suite completa d'analítica, clients i promocions ja ve incorporada — gratis. La relació amb els teus comensals és teva, no està tancada dins d'un agregador.",
+          "frameAlt": "Tauler d'informes — ingressos, comandes i tendències de clients",
+          "reports": {
+            "title": "Tauler d'informes",
+            "body": "Ingressos, comandes, tiquet mitjà i clients — amb tendències dia a dia."
+          },
+          "crm": {
+            "title": "La teva llista de clients (CRM)",
+            "body": "Cada client, despesa total, segments i exportació a CSV. Són teus — no d'un agregador."
+          },
+          "promos": {
+            "title": "Motor de promocions",
+            "body": "13 tipus de promoció — BOGO, paquets, productes gratuïts, cupons, ofertes amb temps. 5 gratuïtes, amb assistent guiat."
+          },
+          "insights": {
+            "title": "Anàlisi de vendes i embut",
+            "body": "Els productes que més i menys es venen, l'embut de conversió de les teves comandes en línia i un mapa de calor de lliuraments."
+          },
+          "reorder": {
+            "title": "Torna a demanar amb un sol clic",
+            "body": "Els clients que tornen repeteixen la seva comanda habitual amb un toc — més comandes repetides i tiquets més grans."
+          },
+          "accounts": {
+            "title": "Comptes de client",
+            "body": "Adreces desades, historial de comandes i cupons personals fan que els comensals tornin."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — el paquet de creixement",
+          "title": "Converteix les primeres comandes en habituals.",
+          "subtitle": "Eines de màrqueting, fidelització i captació de clients que fan tornar la gent — empaquetades a un preu únic amb descompte, o afegides una a una.",
+          "frameAlt": "Analítica de Smart Link — escaneigs que es converteixen en comandes i ingressos reals",
+          "badge": "Un paquet · cinc eines",
+          "blurb": "Totes les eines de màrqueting, fidelització i captació a un preu únic amb descompte — o afegeix-ne qualsevol per separat.",
+          "pricingCta": "Mira els preus de GrowthNet",
+          "apmBody": "8 tipus de promoció avançats, segments de clients i campanyes de correu electrònic automatitzades.",
+          "studioBody": "Codis QR rastrejables, Smart Links i fullets amb la teva marca — descobreix què converteix els escaneigs en comandes.",
+          "kickstarterBody": "Campanyes de primera comanda i de recuperació a punt per enviar que porten clients des del primer dia.",
+          "smsBody": "Envia missatges de text als clients a mesura que la seva comanda avança per la cuina — confirmada, llesta, completada.",
+          "contentpilotBody": "El teu gestor de xarxes amb AI — redacta i programa publicacions a Instagram, Facebook, X i TikTok.",
+          "saveTitle": "Empaqueta i estalvia",
+          "saveBody": "Aconsegueix tot el paquet per menys que comprant cada eina per separat. <link>Mira els números →</link>"
+        },
+        "addons": {
+          "eyebrow": "Complements — sense nivells",
+          "title": "Comença gratis. Afegeix només allò que valores.",
+          "subtitle": "Cada complement es pot subscriure per separat. Tria'n un, tria'n uns quants, tria'ls tots — o queda't gratis per sempre.",
+          "capNote": "El pla gratuït inclou <b>100 comandes/mes</b>. Qualsevol complement de pagament aixeca el límit.",
+          "pricingCta": "Mira tots els preus",
+          "payments": {
+            "title": "Pagaments en línia",
+            "body": "Accepta pagaments amb targeta en línia — els diners arriben directament al teu propi compte de Stripe o PayPal."
+          },
+          "website": {
+            "title": "Lloc web optimitzat per a vendes",
+            "body": "Un lloc de màrqueting i comandes allotjat i preparat per a SEO, construït automàticament a partir del teu menú, al teu propi domini."
+          },
+          "multiLocation": {
+            "title": "Multilocal",
+            "body": "Gestiona diversos locals des d'un sol compte — cadascun amb el seu propi menú, comandes i pagaments."
+          },
+          "marketplace": {
+            "title": "Llistat al marketplace",
+            "body": "Fes-te descobrir al marketplace de Fee Free — un canal de captació de clients de baix cost, sense comissions del 30%."
+          },
+          "unlimited": {
+            "title": "Comandes il·limitades",
+            "body": "Aixeca el límit de 100 comandes/mes del pla gratuït — volum il·limitat, sense càrrecs per comanda."
+          },
+          "domain": {
+            "title": "Domini propi",
+            "body": "Apunta el teu propi domini cap al teu lloc allotjat de Fee Free."
+          },
+          "driver": {
+            "title": "Pool de repartidors",
+            "body": "Recorre a la nostra xarxa de repartidors de Shipday quan els teus repartidors estiguin ocupats."
+          },
+          "brandedApp": {
+            "title": "App mòbil amb la teva marca",
+            "body": "La teva pròpia app nativa per a iOS i Android a l'App Store i a Google Play."
+          },
+          "pos": {
+            "title": "Mòdul POS",
+            "body": "POS intern perquè el personal registri comandes de consum al local i per emportar des del mateix panell d'administració."
+          },
+          "aiPhone": {
+            "title": "Comandes per telèfon amb AI",
+            "body": "Un agent d'AI respon el telèfon i pren comandes 24/7, directament cap a la teva cuina."
+          },
+          "deposits": {
+            "title": "Dipòsits per a reserves",
+            "body": "Cobra un dipòsit reemborsable quan els clients reserven taula — et protegeix de les absències."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Canvia en minuts",
+          "title": "Porta tot el teu menú — sense haver de tornar-lo a teclejar.",
+          "body": "Véns de GloriaFood, FoodBooking o d'un PDF imprès? Importa tot el teu menú — amb fotos i tot — en uns quants clics.",
+          "bullet1": "Importa directament des de GloriaFood",
+          "bullet2": "Puja un menú en PDF — la nostra AI te'l construeix",
+          "bullet3": "Les fotos dels productes s'importen automàticament en segon pla",
+          "cta": "Comença la importació",
+          "frameAlt": "Assistent d'importació de menús"
+        },
+        "steps": {
+          "title": "En marxa en tres passos.",
+          "step1": {
+            "title": "Afegeix el teu menú",
+            "body": "Construeix-lo, o importa'l des de GloriaFood o un PDF en uns quants clics."
+          },
+          "step2": {
+            "title": "Comparteix el teu enllaç i QR",
+            "body": "Posa el botó de comanda al teu lloc web, o comparteix la teva pàgina de Fee Free i el codi QR."
+          },
+          "step3": {
+            "title": "Pren comandes, queda't el 100%",
+            "body": "Les comandes arriben a la teva app de cuina i s'imprimeixen. Cap comissió en les comandes directes."
+          }
+        },
+        "integrations": {
+          "heading": "Funciona bé amb les teves eines",
+          "payments": "Pagaments",
+          "printers": "Impressores",
+          "delivery": "Lliurament",
+          "analytics": "Analítica i anuncis",
+          "migration": "Migració",
+          "voice": "Veu",
+          "roadmap": "Al full de ruta:"
+        },
+        "canada": {
+          "badge": "Orgullosament canadenc",
+          "title": "Creat i operat a Ontario, Canadà.",
+          "body": "Una empresa canadenca — no un agregador estranger sense rostre. Les teves comissions, dades i clients continuen sent teus.",
+          "supportTitle": "Suport canadenc 24/7",
+          "supportBody": "Persones reals, a qualsevol hora — dia o nit. Truca al <phone>1-888-618-8765</phone> o xateja en directe amb la gent que de debò el va construir."
+        },
+        "demo": {
+          "title": "Mira una botiga real.",
+          "subtitle": "Prova una demostració en directe — demana com un client i mira com arriba a l'app de cuina.",
+          "cta": "Obre la demostració en directe",
+          "frameAlt": "Una botiga real de Fee Free"
+        },
+        "reseller": {
+          "text": "Et dediques a muntar restaurants? Guanya <b>comissions recurrents</b> com a soci de Fee Free.",
+          "cta": "Programa de socis →"
+        },
+        "finalCta": {
+          "title": "Comença a prendre les teves pròpies comandes avui.",
+          "body": "Nucli gratuït. 0% de comissió en comandes directes. Configuració en 5 minuts. Sense targeta de crèdit.",
+          "primary": "Comença gratis",
+          "secondary": "Mira-ho en directe"
+        },
+        "soon": "Aviat",
+        "appBadges": {
+          "iosLine1": "Descarrega-la a l'",
+          "androidLine1": "Aconsegueix-la a"
+        }
+      }
     },
     "features": {
       "title": "Funcionalitats",

@@ -4349,7 +4349,259 @@
       "featuresTitle": "Viss, kas nepieciešams tiešsaistes pasūtīšanas pārvaldībai",
       "ctaTitle": "Gatavs paturēt 100% no saviem pārdošanas apjomiem?",
       "ctaSubtitle": "Nav nepieciešama kredītkarte. Atceliet jebkurā laikā.",
-      "ctaButton": "Sākt bezmaksas"
+      "ctaButton": "Sākt bezmaksas",
+      "v2": {
+        "hero": {
+          "eyebrow": "Restorānu īpašniekiem",
+          "title": "Tava paša pasūtīšanas lapa. <accent>0% komisijas.</accent>",
+          "subtitle": "Zīmolam pielāgota tiešsaistes pasūtīšana ēdiena izņemšanai, piegādei, ēšanai uz vietas un ketringam — 38 valodās, mūžīgi bez maksas. Paturi 100% no katra tiešā pasūtījuma.",
+          "ctaStart": "Sākt bez maksas",
+          "ctaDemo": "Apskati reālu veikalu",
+          "badge": "0% komisijas",
+          "trust1": "Bez kredītkartes",
+          "trust2": "0% par tiešajiem pasūtījumiem",
+          "trust3": "38 valodas",
+          "trust4": "Veidots Kanādā 🍁",
+          "frameAlt": "Luigi's Lasagna — īsta zīmolam pielāgota pasūtīšanas lapa"
+        },
+        "funnel": {
+          "eyebrow": "Izaugsmes leņķis",
+          "title": "Pieķer plūsmu. <accent>Paturi atkārtotos.</accent>",
+          "subtitle": "Tirgus platformas ir lieliskas vienā lietā — tās atsūta pirmreizēju klientu. Dod katram no viņiem iemeslu atgriezties un pasūtīt tieši, tavā zīmolā, ar 0% komisijas.",
+          "sourcesCaption": "Tirgus platformas atved pirmreizēju klientu.",
+          "neck": "QR kods + Smart Link",
+          "yourBrand": "Tavs zīmols",
+          "directOrders": "Tiešie pasūtījumi · 0% komisijas",
+          "chip1": "0% komisijas",
+          "chip2": "Klienti pieder tev",
+          "chip3": "Vairāk atkārtotu pasūtījumu"
+        },
+        "ordering": {
+          "eyebrow": "Mūžīgi bez maksas",
+          "title": "Zīmolam pielāgota pasūtīšanas lapa, kuru klienti iemīl.",
+          "body": "Tava ēdienkarte, fotoattēli, papildinājumi un cenas — skaisti izskatās katrā telefonā, 38 valodās, ar tavu logo un krāsām.",
+          "bullet1": "Izņemšana, piegāde, ēšana uz vietas un ketrings",
+          "bullet2": "Plānošana un iepriekšēji pasūtījumi",
+          "bullet3": "Iegulstas tavā esošajā vietnē",
+          "cta": "Sākt bez maksas",
+          "frameAlt": "Ēdienkarte un produkta opcijas"
+        },
+        "checkout": {
+          "eyebrow": "Mūžīgi bez maksas",
+          "title": "Norēķini, kā tev ērtāk. Saņem samaksu, kā tev ērtāk.",
+          "body": "Pieņem skaidru naudu un karti pie letes bez maksas vai pievieno tiešsaistes karšu maksājumus. Galdiņu rezervācijas un rezervē-tad-pasūti ir iebūvētas.",
+          "bullet1": "Skaidra nauda un karte pie letes — bez maksas",
+          "bullet2": "Iebūvēta dzeramnauda, nodokļi un apkalpošanas maksa",
+          "bullet3": "Rezervācijas + rezervē-tad-pasūti",
+          "frameAlt": "Grozs un norēķini"
+        },
+        "pizza": {
+          "eyebrow": "Veidots picērijām",
+          "title": "Puse-uz-puses veidotājs, kas klientiem patiešām patīk.",
+          "body": "Ļauj klientiem izveidot vienreizēju picu — atšķirīgus piedevu izvēli katrai pusei, izvietotus pa kreisi, pa labi vai uz visas picas, plānā, parastā vai pastiprinātā kārtā.",
+          "bullet1": "Sadali jebkuru picu pa pusēm — atšķirīgas piedevas katrā pusē",
+          "bullet2": "Godīga pusbaļa piedevu cena (divas puses skaitās kā viena vesela)",
+          "bullet3": "Komplekti un maltīšu piedāvājumi, kas atver pilno veidotāju",
+          "leftHalf": "Kreisā puse",
+          "rightHalf": "Labā puse",
+          "ariaLabel": "Puse-uz-puses pica",
+          "chipLeft": "½ kreisā",
+          "chipRight": "½ labā",
+          "chipWhole": "Visa",
+          "chipAmount": "Plāni · Parasti · Pastiprināti"
+        },
+        "kitchen": {
+          "eyebrow": "Bez maksas · iOS + Android",
+          "title": "Nekad nepalaid garām apmaksātu pasūtījumu.",
+          "subtitle": "Vietējā Kitchen Order App pārvērš jebkuru iPhone, iPad vai Android planšeti par neapturamu pasūtījumu staciju — ar drošības tīklu, lai aizņemts vakars nekad neizmaksātu tev pārdošanu.",
+          "frameAlt": "Kitchen Order App — ienākošs pasūtījums",
+          "getApp": "Iegūsti bezmaksas Kitchen Order App savā planšetē",
+          "ring": {
+            "title": "Skaļš zvans pat ar izslēgtu ekrānu",
+            "body": "Pilnekrāna trauksme pamodina planšeti tajā pašā brīdī, kad pienāk pasūtījums — pat miega režīmā."
+          },
+          "call": {
+            "title": "Telefona zvans par nokavētu pasūtījumu",
+            "body": "Ja neviens nepieskaras pogai Pieņemt ~90 sekundēs, mēs tev piezvanām un nolasām pasūtījumu skaļi."
+          },
+          "autoReject": {
+            "title": "Automātiska noraidīšana + automātiska atmaksa",
+            "body": "Neatbildēti pasūtījumi tiek automātiski noraidīti, un klientam tiek automātiski atmaksāta nauda."
+          },
+          "chargeOnAccept": {
+            "title": "Maksa tiek ieturēta tikai pēc pieņemšanas",
+            "body": "Nekad negatavo neapmaksātu pasūtījumu — un nekad neiekasē naudu no klienta par to, ko noraidi."
+          },
+          "receipts": {
+            "title": "Pielāgoti zīmola čeki",
+            "body": "Izveido savus virtuves un klientu pasūtījumu talonus, rezervāciju un dienas beigu izdrukas."
+          },
+          "printer": {
+            "title": "Printera iestatīšana ar vienu pieskārienu",
+            "body": "“Find Printers” skenē tavu WiFi un parāda tavu termoprinteri — bez IP meklēšanas."
+          }
+        },
+        "run": {
+          "eyebrow": "Vadi biznesu",
+          "title": "Zini savus skaitļus. Klienti pieder tev.",
+          "subtitle": "Pilns analītikas, klientu un akciju komplekts ir iebūvēts — bez maksas. Attiecības ar taviem viesiem pieder tev, nevis ir ieslēgtas kādā agregatorā.",
+          "frameAlt": "Atskaišu informācijas panelis — ieņēmumi, pasūtījumi un klientu tendences",
+          "reports": {
+            "title": "Atskaišu informācijas panelis",
+            "body": "Ieņēmumi, pasūtījumi, vidējais čeks un klienti — ar tendencēm dienu pret dienu."
+          },
+          "crm": {
+            "title": "Tavs klientu saraksts (CRM)",
+            "body": "Katrs klients, kopējie tēriņi, segmenti un CSV eksports. Tie pieder tev — nevis agregatoram."
+          },
+          "promos": {
+            "title": "Akciju dzinis",
+            "body": "13 akciju veidi — BOGO, komplekti, bezmaksas produkti, kuponi, laika ierobežoti piedāvājumi. 5 bez maksas, vadīts vednis."
+          },
+          "insights": {
+            "title": "Pārdošanas ieskati un piltuve",
+            "body": "Labākie un sliktākie pārdevēji, tava tiešsaistes pasūtīšanas konversijas piltuve, piegāžu siltuma karte."
+          },
+          "reorder": {
+            "title": "Atkārtots pasūtījums ar vienu klikšķi",
+            "body": "Atgriezušies klienti atkārto savu ierasto pasūtījumu ar vienu pieskārienu — vairāk atkārtotu pasūtījumu, lielāki čeki."
+          },
+          "accounts": {
+            "title": "Klientu konti",
+            "body": "Saglabātas adreses, pasūtījumu vēsture un personīgie kuponi mudina viesus atgriezties."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — izaugsmes komplekts",
+          "title": "Pārvērt pirmos pasūtījumus par pastāvīgiem klientiem.",
+          "subtitle": "Mārketinga, noturēšanas un klientu piesaistes rīki, kas atved cilvēkus atpakaļ — apvienoti vienā izdevīgā cenā vai pievienojami pa vienam.",
+          "frameAlt": "Smart Link analītika — skenējumi, kas pārvēršas reālos pasūtījumos un ieņēmumos",
+          "badge": "Viens komplekts · pieci rīki",
+          "blurb": "Katrs mārketinga, noturēšanas un piesaistes rīks vienā izdevīgā cenā — vai pievieno jebkuru vienu atsevišķi.",
+          "pricingCta": "Apskati GrowthNet cenas",
+          "apmBody": "8 uzlaboti akciju veidi, klientu segmenti un automatizētas e-pasta kampaņas.",
+          "studioBody": "Izsekojami QR kodi, Smart Links un zīmola bukleti — redzi, kas pārvērš skenējumus pasūtījumos.",
+          "kickstarterBody": "Gatavi nosūtīšanai pirmā pasūtījuma un atgriešanas kampaņas, kas atved klientus jau no pirmās dienas.",
+          "smsBody": "Sūti klientiem īsziņas, kamēr viņu pasūtījums virzās caur virtuvi — apstiprināts, gatavs, pabeigts.",
+          "contentpilotBody": "Tavs AI sociālo tīklu pārvaldnieks — sagatavo un ieplāno ierakstus Instagram, Facebook, X un TikTok.",
+          "saveTitle": "Apvieno un ietaupi",
+          "saveBody": "Iegūsti visu komplektu par mazāku cenu, nekā pērkot katru rīku atsevišķi. <link>Apskati aprēķinus →</link>"
+        },
+        "addons": {
+          "eyebrow": "Papildinājumi — bez līmeņiem",
+          "title": "Sāc bez maksas. Pievieno tikai to, ko novērtē.",
+          "subtitle": "Katrs papildinājums ir abonējams atsevišķi. Izvēlies vienu, izvēlies dažus, izvēlies visus — vai paliec bez maksas mūžīgi.",
+          "capNote": "Bezmaksas plāns ietver <b>100 pasūtījumus mēnesī</b>. Jebkurš maksas papildinājums noņem šo ierobežojumu.",
+          "pricingCta": "Apskati pilnās cenas",
+          "payments": {
+            "title": "Tiešsaistes maksājumi",
+            "body": "Pieņem karšu maksājumus tiešsaistē — nauda nonāk tieši tavā paša Stripe vai PayPal kontā."
+          },
+          "website": {
+            "title": "Pārdošanai optimizēta vietne",
+            "body": "Mitināta, SEO gatava mārketinga un pasūtīšanas vietne, automātiski izveidota no tavas ēdienkartes, tavā paša domēnā."
+          },
+          "multiLocation": {
+            "title": "Vairākas atrašanās vietas",
+            "body": "Vadi vairākas atrašanās vietas no viena konta — katra ar savu ēdienkarti, pasūtījumiem un maksājumiem."
+          },
+          "marketplace": {
+            "title": "Tirgus platformas saraksts",
+            "body": "Kļūsti pamanāms Fee Free tirgus platformā — lēts jaunu klientu kanāls, bez 30% maksas."
+          },
+          "unlimited": {
+            "title": "Neierobežoti pasūtījumi",
+            "body": "Noņem bezmaksas plāna 100 pasūtījumu mēnesī ierobežojumu — neierobežots apjoms, bez maksas par pasūtījumu."
+          },
+          "domain": {
+            "title": "Pielāgots domēns",
+            "body": "Norādi savu paša domēnu uz tavu mitināto Fee Free vietni."
+          },
+          "driver": {
+            "title": "Kurjeru tīkls",
+            "body": "Izmanto mūsu Shipday kurjeru tīklu, kad tavi paša kurjeri ir aizņemti."
+          },
+          "brandedApp": {
+            "title": "Zīmola mobilā lietotne",
+            "body": "Tava paša vietējā iOS un Android lietotne App Store un Play Store."
+          },
+          "pos": {
+            "title": "POS modulis",
+            "body": "Iekšējais POS, lai personāls reģistrētu ēšanu uz vietas un līdzņemšanu no tā paša administratora."
+          },
+          "aiPhone": {
+            "title": "AI telefona pasūtījumi",
+            "body": "AI aģents atbild uz telefona zvaniem un pieņem pasūtījumus 24/7, tieši uz tavu virtuvi."
+          },
+          "deposits": {
+            "title": "Rezervācijas depozīti",
+            "body": "Iekasē atmaksājamu depozītu, kad klienti rezervē galdiņu — aizsargā pret neierašanos."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Pārej dažās minūtēs",
+          "title": "Atved visu savu ēdienkarti — bez pārrakstīšanas.",
+          "body": "Nāc no GloriaFood, FoodBooking vai drukāta PDF? Importē visu savu ēdienkarti — ar fotoattēliem un visu pārējo — dažos klikšķos.",
+          "bullet1": "Importē tieši no GloriaFood",
+          "bullet2": "Augšupielādē PDF ēdienkarti — mūsu AI to izveido tavā vietā",
+          "bullet3": "Produktu fotoattēli tiek importēti automātiski fonā",
+          "cta": "Sāc importēšanu",
+          "frameAlt": "Ēdienkartes importēšanas vednis"
+        },
+        "steps": {
+          "title": "Darbojas trīs soļos.",
+          "step1": {
+            "title": "Pievieno savu ēdienkarti",
+            "body": "Izveido to vai importē no GloriaFood vai PDF dažos klikšķos."
+          },
+          "step2": {
+            "title": "Dalies ar savu saiti un QR",
+            "body": "Ievieto pasūtīšanas pogu savā vietnē vai dalies ar savu Fee Free lapu un QR kodu."
+          },
+          "step3": {
+            "title": "Pieņem pasūtījumus, paturi 100%",
+            "body": "Pasūtījumi nonāk tavā virtuves lietotnē un izdrukājas. Bez komisijas par tiešajiem pasūtījumiem."
+          }
+        },
+        "integrations": {
+          "heading": "Lieliski sastrādājas ar tavu tehnoloģiju kopumu",
+          "payments": "Maksājumi",
+          "printers": "Printeri",
+          "delivery": "Piegāde",
+          "analytics": "Analītika un reklāmas",
+          "migration": "Migrācija",
+          "voice": "Balss",
+          "roadmap": "Attīstības plānā:"
+        },
+        "canada": {
+          "badge": "Lepni kanādisks",
+          "title": "Veidots un vadīts Ontario, Kanādā.",
+          "body": "Kanādas uzņēmums — nevis bezsejas aizjūras agregators. Tavas maksas, dati un klienti paliek tavi.",
+          "supportTitle": "24/7 kanādisks atbalsts",
+          "supportBody": "Īsti cilvēki, jebkurā laikā — dienu vai nakti. Zvani <phone>1-888-618-8765</phone> vai tērzē tiešsaistē ar cilvēkiem, kuri to patiešām izveidoja."
+        },
+        "demo": {
+          "title": "Apskati īstu veikalu.",
+          "subtitle": "Izmēģini reālu demo — pasūti kā klients un vēro, kā tas nonāk virtuves lietotnē.",
+          "cta": "Atvērt reālo demo",
+          "frameAlt": "Reāls Fee Free veikals"
+        },
+        "reseller": {
+          "text": "Iekārto restorānus kā nodarbi? Pelni <b>regulāru komisiju</b> kā Fee Free partneris.",
+          "cta": "Partneru programma →"
+        },
+        "finalCta": {
+          "title": "Sāc pieņemt savus pasūtījumus jau šodien.",
+          "body": "Bezmaksas pamatfunkcijas. 0% komisijas par tiešajiem pasūtījumiem. 5 minūšu iestatīšana. Bez kredītkartes.",
+          "primary": "Sākt bez maksas",
+          "secondary": "Apskati to dzīvē"
+        },
+        "soon": "Drīzumā",
+        "appBadges": {
+          "iosLine1": "Lejupielādē no",
+          "androidLine1": "Iegūsti to"
+        }
+      }
     },
     "features": {
       "title": "Funkcijas",

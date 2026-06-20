@@ -4349,7 +4349,259 @@
       "featuresTitle": "Tot ce ai nevoie pentru comenzi online",
       "ctaTitle": "Gata să păstrezi 100% din vânzările tale?",
       "ctaSubtitle": "Nu e necesar un card de credit. Anulează oricând.",
-      "ctaButton": "Începe gratuit"
+      "ctaButton": "Începe gratuit",
+      "v2": {
+        "hero": {
+          "eyebrow": "Pentru proprietarii de restaurante",
+          "title": "Pagina ta de comenzi. <accent>0% comision.</accent>",
+          "subtitle": "Comenzi online cu brandul tău pentru ridicare, livrare, servire la masă și catering — în 38 de limbi, gratuit pentru totdeauna. Păstrezi 100% din fiecare comandă directă.",
+          "ctaStart": "Începe gratuit",
+          "ctaDemo": "Vezi un magazin live",
+          "badge": "0% comision",
+          "trust1": "Fără card de credit",
+          "trust2": "0% la comenzile directe",
+          "trust3": "38 de limbi",
+          "trust4": "Creat în Canada 🍁",
+          "frameAlt": "Luigi's Lasagna — o pagină de comenzi reală, cu brand propriu"
+        },
+        "funnel": {
+          "eyebrow": "Perspectiva creșterii",
+          "title": "Atrage traficul. <accent>Păstrează clienții fideli.</accent>",
+          "subtitle": "Platformele de tip marketplace excelează la un singur lucru — îți aduc un client nou. Oferă fiecăruia un motiv să revină și să comande direct, pe brandul tău, cu 0% comision.",
+          "sourcesCaption": "Marketplace-urile îți aduc un client nou.",
+          "neck": "Cod QR + Smart Link",
+          "yourBrand": "Brandul tău",
+          "directOrders": "Comenzi directe · 0% comision",
+          "chip1": "0% comision",
+          "chip2": "Clienții îți aparțin",
+          "chip3": "Mai multe comenzi repetate"
+        },
+        "ordering": {
+          "eyebrow": "Gratuit pentru totdeauna",
+          "title": "O pagină de comenzi cu brandul tău, pe placul clienților.",
+          "body": "Meniul, fotografiile, opțiunile și prețurile tale — impecabile pe orice telefon, în 38 de limbi, cu logoul și culorile tale.",
+          "bullet1": "Ridicare, livrare, servire la masă și catering",
+          "bullet2": "Programări și precomenzi",
+          "bullet3": "Se integrează în site-ul tău existent",
+          "cta": "Începe gratuit",
+          "frameAlt": "Meniu și opțiuni pentru produs"
+        },
+        "checkout": {
+          "eyebrow": "Gratuit pentru totdeauna",
+          "title": "Plătești cum vrei. Încasezi cum vrei.",
+          "body": "Acceptă numerar și card la tejghea gratuit, sau adaugă plăți online cu cardul. Rezervările și rezervă-apoi-comandă sunt incluse.",
+          "bullet1": "Numerar și card la tejghea — gratuit",
+          "bullet2": "Bacșiș, taxe și comisioane de serviciu incluse",
+          "bullet3": "Rezervări + rezervă-apoi-comandă",
+          "frameAlt": "Coș și finalizarea comenzii"
+        },
+        "pizza": {
+          "eyebrow": "Creat pentru pizzerii",
+          "title": "Un configurator jumătate-jumătate pe care clienții chiar îl adoră.",
+          "body": "Lasă clienții să creeze o pizza unică — toppinguri diferite pe fiecare jumătate, plasate la stânga, la dreapta sau pe toată pizza, puțin, normal sau extra.",
+          "bullet1": "Împarte orice pizza în jumătăți — toppinguri diferite pe fiecare parte",
+          "bullet2": "Prețuri corecte pentru jumătăți de topping (două jumătăți contează ca un întreg)",
+          "bullet3": "Combo-uri și oferte care deschid configuratorul complet",
+          "leftHalf": "Jumătatea stângă",
+          "rightHalf": "Jumătatea dreaptă",
+          "ariaLabel": "Pizza jumătate-jumătate",
+          "chipLeft": "½ Stânga",
+          "chipRight": "½ Dreapta",
+          "chipWhole": "Întreagă",
+          "chipAmount": "Puțin · Normal · Extra"
+        },
+        "kitchen": {
+          "eyebrow": "Gratuit · iOS + Android",
+          "title": "Nu rata nicio comandă plătită.",
+          "subtitle": "Aplicația nativă Kitchen Order App transformă orice iPhone, iPad sau tabletă Android într-o stație de comenzi de neclintit — cu o plasă de siguranță, ca o seară aglomerată să nu te coste niciodată o vânzare.",
+          "frameAlt": "Kitchen Order App — comandă în curs",
+          "getApp": "Descarcă gratuit Kitchen Order App pe tableta ta",
+          "ring": {
+            "title": "Sonerie puternică cu ecranul stins",
+            "body": "O alarmă pe tot ecranul trezește tableta în clipa în care sosește o comandă — chiar și în repaus."
+          },
+          "call": {
+            "title": "Apel telefonic pentru comenzi ratate",
+            "body": "Dacă nimeni nu apasă Acceptă în ~90 de secunde, te sunăm și îți citim comanda cu voce tare."
+          },
+          "autoReject": {
+            "title": "Respingere automată + rambursare automată",
+            "body": "Comenzile fără răspuns sunt respinse automat, iar clientul este rambursat automat."
+          },
+          "chargeOnAccept": {
+            "title": "Taxat doar la acceptare",
+            "body": "Nu gătești niciodată o comandă neplătită — și nu taxezi niciodată un client pentru una pe care o refuzi."
+          },
+          "receipts": {
+            "title": "Bonuri personalizate cu brandul tău",
+            "body": "Creează-ți propriile bonuri pentru bucătărie și client, pentru rezervări și pentru închiderea zilei."
+          },
+          "printer": {
+            "title": "Configurarea imprimantei dintr-o atingere",
+            "body": "„Caută imprimante” scanează rețeaua WiFi și îți afișează imprimanta termică — fără să cauți IP-uri."
+          }
+        },
+        "run": {
+          "eyebrow": "Gestionează afacerea",
+          "title": "Cunoaște-ți cifrele. Clienții îți aparțin.",
+          "subtitle": "O suită completă de analize, gestionare a clienților și promoții este inclusă — gratuit. Relația cu clienții tăi este a ta, nu blocată într-un agregator.",
+          "frameAlt": "Tablou de bord cu rapoarte — venituri, comenzi și tendințe ale clienților",
+          "reports": {
+            "title": "Tablou de bord cu rapoarte",
+            "body": "Venituri, comenzi, valoare medie a comenzii și clienți — cu tendințe de la o zi la alta."
+          },
+          "crm": {
+            "title": "Lista ta de clienți (CRM)",
+            "body": "Fiecare client, cheltuiala totală, segmente și export CSV. Sunt ai tăi — nu ai unui agregator."
+          },
+          "promos": {
+            "title": "Motor de promoții",
+            "body": "13 tipuri de promoții — BOGO, pachete, produse gratuite, cupoane, oferte limitate în timp. 5 gratuite, asistent ghidat."
+          },
+          "insights": {
+            "title": "Analize de vânzări și pâlnie de conversie",
+            "body": "Cele mai bine și cele mai slab vândute produse, pâlnia ta de conversie pentru comenzi online, o hartă termică a livrărilor."
+          },
+          "reorder": {
+            "title": "Recomandă dintr-un clic",
+            "body": "Clienții care revin recomandă favoritul lor dintr-o atingere — mai multe comenzi repetate, valori mai mari."
+          },
+          "accounts": {
+            "title": "Conturi de client",
+            "body": "Adresele salvate, istoricul comenzilor și cupoanele personale îi aduc pe clienți înapoi."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — pachetul de creștere",
+          "title": "Transformă primele comenzi în clienți fideli.",
+          "subtitle": "Instrumente de marketing, fidelizare și atragere de clienți care îi readuc pe oameni — grupate la un preț redus sau adăugate pe rând.",
+          "frameAlt": "Analize Smart Link — scanări transformate în comenzi și venituri reale",
+          "badge": "Un pachet · cinci instrumente",
+          "blurb": "Fiecare instrument de marketing, fidelizare și atragere la un preț redus — sau adaugă oricare separat.",
+          "pricingCta": "Vezi prețurile GrowthNet",
+          "apmBody": "8 tipuri avansate de promoții, segmente de clienți și campanii de e-mail automatizate.",
+          "studioBody": "Coduri QR urmăribile, Smart Links și flyere cu brandul tău — vezi ce transformă scanările în comenzi.",
+          "kickstarterBody": "Campanii gata de trimis pentru prima comandă și pentru recâștigarea clienților, care aduc oamenii din prima zi.",
+          "smsBody": "Trimite SMS clienților pe măsură ce comanda lor avansează în bucătărie — confirmată, gata, finalizată.",
+          "contentpilotBody": "Managerul tău AI de social media — redactează și programează postări pe Instagram, Facebook, X și TikTok.",
+          "saveTitle": "Grupează și economisește",
+          "saveBody": "Ia întregul pachet pentru mai puțin decât dacă ai cumpăra fiecare instrument separat. <link>Vezi calculul →</link>"
+        },
+        "addons": {
+          "eyebrow": "Suplimente — fără niveluri",
+          "title": "Începe gratuit. Adaugă doar ce contează pentru tine.",
+          "subtitle": "Fiecare supliment se abonează separat. Alege unul, alege câteva, alege-le pe toate — sau rămâi gratuit pentru totdeauna.",
+          "capNote": "Planul gratuit include <b>100 de comenzi/lună</b>. Orice supliment plătit ridică limita.",
+          "pricingCta": "Vezi toate prețurile",
+          "payments": {
+            "title": "Plăți online",
+            "body": "Acceptă plăți cu cardul online — banii ajung direct în propriul tău cont Stripe sau PayPal."
+          },
+          "website": {
+            "title": "Site optimizat pentru vânzări",
+            "body": "Un site de marketing și comenzi găzduit, pregătit pentru SEO, construit automat din meniul tău, pe propriul tău domeniu."
+          },
+          "multiLocation": {
+            "title": "Locații multiple",
+            "body": "Gestionează mai multe locații dintr-un singur cont — fiecare cu propriul meniu, comenzi și plăți."
+          },
+          "marketplace": {
+            "title": "Listare în marketplace",
+            "body": "Fii descoperit în marketplace-ul Fee Free — un canal accesibil de clienți noi, fără comisioane de 30%."
+          },
+          "unlimited": {
+            "title": "Comenzi nelimitate",
+            "body": "Ridică limita de 100 de comenzi/lună a planului gratuit — volum nelimitat, fără taxe per comandă."
+          },
+          "domain": {
+            "title": "Domeniu personalizat",
+            "body": "Direcționează propriul tău domeniu către site-ul tău Fee Free găzduit."
+          },
+          "driver": {
+            "title": "Rețea de curieri",
+            "body": "Apelează la rețeaua noastră de curieri Shipday când curierii tăi sunt ocupați."
+          },
+          "brandedApp": {
+            "title": "Aplicație mobilă cu brandul tău",
+            "body": "Propria ta aplicație nativă iOS + Android în App Store și Google Play."
+          },
+          "pos": {
+            "title": "Modul POS",
+            "body": "POS intern prin care personalul înregistrează comenzile la masă și la pachet din aceeași zonă de administrare."
+          },
+          "aiPhone": {
+            "title": "Comenzi telefonice cu AI",
+            "body": "Un agent AI răspunde la telefon și preia comenzi 24/7, direct către bucătăria ta."
+          },
+          "deposits": {
+            "title": "Depozite pentru rezervări",
+            "body": "Percepe un depozit rambursabil când clienții rezervă o masă — te protejează împotriva neprezentărilor."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Treci în câteva minute",
+          "title": "Adu-ți tot meniul — fără să-l reintroduci.",
+          "body": "Vii de la GloriaFood, FoodBooking sau de la un PDF tipărit? Importă-ți întregul meniu — cu tot cu fotografii — din câteva clicuri.",
+          "bullet1": "Importă direct din GloriaFood",
+          "bullet2": "Încarcă un meniu PDF — AI-ul nostru îl construiește pentru tine",
+          "bullet3": "Fotografiile produselor se importă automat în fundal",
+          "cta": "Începe importul",
+          "frameAlt": "Asistent de import al meniului"
+        },
+        "steps": {
+          "title": "Live în trei pași.",
+          "step1": {
+            "title": "Adaugă-ți meniul",
+            "body": "Construiește-l sau importă-l din GloriaFood ori dintr-un PDF în câteva clicuri."
+          },
+          "step2": {
+            "title": "Distribuie linkul și codul QR",
+            "body": "Adaugă butonul de comandă pe site-ul tău sau distribuie pagina Fee Free și codul QR."
+          },
+          "step3": {
+            "title": "Preia comenzi, păstrează 100%",
+            "body": "Comenzile ajung în aplicația ta de bucătărie și se tipăresc. Fără comision la comenzile directe."
+          }
+        },
+        "integrations": {
+          "heading": "Se înțelege bine cu instrumentele tale",
+          "payments": "Plăți",
+          "printers": "Imprimante",
+          "delivery": "Livrare",
+          "analytics": "Analize și reclame",
+          "migration": "Migrare",
+          "voice": "Voce",
+          "roadmap": "În planuri:"
+        },
+        "canada": {
+          "badge": "Cu mândrie canadian",
+          "title": "Creat și operat în Ontario, Canada.",
+          "body": "O companie canadiană — nu un agregator anonim de peste hotare. Comisioanele, datele și clienții tăi rămân ai tăi.",
+          "supportTitle": "Asistență canadiană 24/7",
+          "supportBody": "Oameni reali, oricând — zi sau noapte. Sună la <phone>1-888-618-8765</phone> sau discută live cu cei care chiar au construit produsul."
+        },
+        "demo": {
+          "title": "Vezi un magazin real.",
+          "subtitle": "Testează o demonstrație live — comandă ca un client și urmărește cum ajunge în aplicația de bucătărie.",
+          "cta": "Deschide demonstrația live",
+          "frameAlt": "Un magazin Fee Free live"
+        },
+        "reseller": {
+          "text": "Configurezi restaurante ca meserie? Câștigă <b>comision recurent</b> ca partener Fee Free.",
+          "cta": "Program de parteneriat →"
+        },
+        "finalCta": {
+          "title": "Începe să-ți preiei propriile comenzi chiar azi.",
+          "body": "Nucleu gratuit. 0% comision la comenzile directe. Configurare în 5 minute. Fără card de credit.",
+          "primary": "Începe gratuit",
+          "secondary": "Vezi-l live"
+        },
+        "soon": "În curând",
+        "appBadges": {
+          "iosLine1": "Descarcă din",
+          "androidLine1": "Disponibil pe"
+        }
+      }
     },
     "features": {
       "title": "Funcționalități",

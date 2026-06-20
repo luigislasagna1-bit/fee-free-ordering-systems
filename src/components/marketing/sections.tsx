@@ -261,7 +261,7 @@ export function AltFeatureRow({
 export type IconFeature = { icon: LucideIcon; title: string; body: string; comingSoon?: boolean; tag?: string };
 
 /** Compact icon + title + 1-line body grid (free-vs-soon aware). */
-export function IconFeatureGrid({ items, cols = 3 }: { items: IconFeature[]; cols?: 2 | 3 }) {
+export function IconFeatureGrid({ items, cols = 3, soonLabel = "Soon" }: { items: IconFeature[]; cols?: 2 | 3; soonLabel?: string }) {
   const grid = cols === 2 ? "sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3";
   return (
     <div className={`grid ${grid} gap-5`}>
@@ -276,7 +276,7 @@ export function IconFeatureGrid({ items, cols = 3 }: { items: IconFeature[]; col
           <div className="flex items-center gap-2 mb-1.5">
             <h3 className="font-bold text-gray-900">{f.title}</h3>
             {f.comingSoon ? (
-              <span className="text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Soon</span>
+              <span className="text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">{soonLabel}</span>
             ) : f.tag ? (
               <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full ring-1 ring-emerald-100">{f.tag}</span>
             ) : null}

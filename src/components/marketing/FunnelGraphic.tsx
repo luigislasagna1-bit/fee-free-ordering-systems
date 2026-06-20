@@ -1,3 +1,5 @@
+"use client";
+import { useTranslations } from "next-intl";
 import { ArrowDown, QrCode, Store } from "lucide-react";
 
 /**
@@ -9,7 +11,7 @@ import { ArrowDown, QrCode, Store } from "lucide-react";
  * ACCURACY: this conveys that GrowthNet gives every marketplace customer a
  * reason to RETURN DIRECT (via QR codes + Smart Links + Autopilot email). It
  * does NOT import/sync orders from Uber/DoorDash (that's coming-soon) — the copy
- * never implies order ingestion.
+ * never implies order ingestion. Source names are brands → never translated.
  */
 const SOURCES: { name: string; dot: string }[] = [
   { name: "Uber Eats", dot: "#06C167" },
@@ -18,6 +20,7 @@ const SOURCES: { name: string; dot: string }[] = [
 ];
 
 export function FunnelGraphic() {
+  const t = useTranslations("marketing.home.v2");
   return (
     <div className="mx-auto max-w-md">
       {/* Sources */}
@@ -32,7 +35,7 @@ export function FunnelGraphic() {
           </span>
         ))}
       </div>
-      <p className="text-center text-sm text-gray-500 mt-3">Marketplaces bring you a first-time customer.</p>
+      <p className="text-center text-sm text-gray-500 mt-3">{t("funnel.sourcesCaption")}</p>
 
       <div className="flex justify-center my-2.5">
         <ArrowDown className="w-5 h-5 text-emerald-400" />
@@ -44,7 +47,7 @@ export function FunnelGraphic() {
         style={{ clipPath: "polygon(0 0, 100% 0, 72% 100%, 28% 100%)" }}
       >
         <QrCode className="w-5 h-5" />
-        <span className="text-sm font-bold">QR code + Smart Link</span>
+        <span className="text-sm font-bold">{t("funnel.neck")}</span>
       </div>
 
       <div className="flex justify-center my-2.5">
@@ -55,14 +58,14 @@ export function FunnelGraphic() {
       <div className="rounded-2xl bg-emerald-500 text-center px-5 py-5 shadow-[0_16px_40px_-16px_rgba(16,185,129,0.55)]">
         <div className="flex items-center justify-center gap-2 text-white">
           <Store className="w-5 h-5" />
-          <span className="font-extrabold text-lg leading-tight">Your brand</span>
+          <span className="font-extrabold text-lg leading-tight">{t("funnel.yourBrand")}</span>
         </div>
-        <div className="text-emerald-50 text-sm font-semibold mt-1">Direct orders · 0% commission</div>
+        <div className="text-emerald-50 text-sm font-semibold mt-1">{t("funnel.directOrders")}</div>
       </div>
 
       {/* Outcome chips */}
       <div className="mt-6 flex items-center justify-center gap-2 flex-wrap">
-        {["0% commission", "Own your customers", "More repeat orders"].map((c) => (
+        {[t("funnel.chip1"), t("funnel.chip2"), t("funnel.chip3")].map((c) => (
           <span key={c} className="rounded-full bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100 px-3 py-1 text-xs font-semibold">
             {c}
           </span>

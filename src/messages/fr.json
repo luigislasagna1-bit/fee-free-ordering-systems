@@ -4349,7 +4349,259 @@
       "featuresTitle": "Tout ce qu'il faut pour la commande en ligne",
       "ctaTitle": "Prêt à garder 100 % de vos ventes ?",
       "ctaSubtitle": "Aucune carte de crédit requise. Annulez à tout moment.",
-      "ctaButton": "Commencer gratuitement"
+      "ctaButton": "Commencer gratuitement",
+      "v2": {
+        "hero": {
+          "eyebrow": "Pour les restaurateurs",
+          "title": "Votre propre page de commande. <accent>0 % de commission.</accent>",
+          "subtitle": "Une page de commande en ligne à votre image pour la cueillette, la livraison, le sur place et les commandes de groupe — en 38 langues, gratuite à vie. Gardez 100 % de chaque commande directe.",
+          "ctaStart": "Commencer gratuitement",
+          "ctaDemo": "Voir une vitrine en direct",
+          "badge": "0 % de commission",
+          "trust1": "Sans carte de crédit",
+          "trust2": "0 % sur les commandes directes",
+          "trust3": "38 langues",
+          "trust4": "Conçu au Canada 🍁",
+          "frameAlt": "Luigi's Lasagna — une vraie page de commande personnalisée"
+        },
+        "funnel": {
+          "eyebrow": "L'angle de croissance",
+          "title": "Captez le trafic. <accent>Fidélisez vos clients.</accent>",
+          "subtitle": "Les plateformes de livraison excellent dans une seule chose : vous envoyer un nouveau client. Donnez à chacun d'eux une raison de revenir et de commander en direct, sous votre marque, à 0 % de commission.",
+          "sourcesCaption": "Les plateformes vous amènent un nouveau client.",
+          "neck": "Code QR + Smart Link",
+          "yourBrand": "Votre marque",
+          "directOrders": "Commandes directes · 0 % de commission",
+          "chip1": "0 % de commission",
+          "chip2": "Vos clients vous appartiennent",
+          "chip3": "Plus de commandes répétées"
+        },
+        "ordering": {
+          "eyebrow": "Gratuit à vie",
+          "title": "Une page de commande à votre image que les clients adorent.",
+          "body": "Votre menu, vos photos, vos options et vos prix — superbes sur chaque téléphone, en 38 langues, avec votre logo et vos couleurs.",
+          "bullet1": "Cueillette, livraison, sur place et commandes de groupe",
+          "bullet2": "Planification et précommandes",
+          "bullet3": "S'intègre à votre site web existant",
+          "cta": "Commencer gratuitement",
+          "frameAlt": "Menu et options des articles"
+        },
+        "checkout": {
+          "eyebrow": "Gratuit à vie",
+          "title": "Le paiement à votre façon. Encaissez comme vous voulez.",
+          "body": "Acceptez l'argent comptant et le paiement par carte au comptoir gratuitement, ou ajoutez le paiement par carte en ligne. Les réservations et la formule réserver-puis-commander sont intégrées.",
+          "bullet1": "Comptant et carte au comptoir — gratuit",
+          "bullet2": "Pourboires, taxes et frais de service intégrés",
+          "bullet3": "Réservations + réserver-puis-commander",
+          "frameAlt": "Panier et paiement"
+        },
+        "pizza": {
+          "eyebrow": "Conçu pour les pizzérias",
+          "title": "Un configurateur moitié-moitié que les clients adorent vraiment.",
+          "body": "Laissez vos clients créer une pizza unique — des garnitures différentes sur chaque moitié, placées à gauche, à droite ou sur toute la pizza, en version légère, normale ou extra.",
+          "bullet1": "Divisez n'importe quelle pizza en deux moitiés — des garnitures différentes de chaque côté",
+          "bullet2": "Tarification équitable des demi-garnitures (deux moitiés comptent pour une entière)",
+          "bullet3": "Combos et menus qui ouvrent le configurateur complet",
+          "leftHalf": "Moitié gauche",
+          "rightHalf": "Moitié droite",
+          "ariaLabel": "Pizza moitié-moitié",
+          "chipLeft": "½ Gauche",
+          "chipRight": "½ Droite",
+          "chipWhole": "Entière",
+          "chipAmount": "Légère · Normale · Extra"
+        },
+        "kitchen": {
+          "eyebrow": "Gratuit · iOS + Android",
+          "title": "Ne ratez plus jamais une commande payante.",
+          "subtitle": "La Kitchen Order App native transforme n'importe quel iPhone, iPad ou tablette Android en une station de commande à toute épreuve — avec un filet de sécurité pour qu'une soirée chargée ne vous coûte jamais une vente.",
+          "frameAlt": "Kitchen Order App — commande entrante",
+          "getApp": "Obtenez la Kitchen Order App gratuite sur votre tablette",
+          "ring": {
+            "title": "Sonnerie forte écran éteint",
+            "body": "Une alarme plein écran réveille la tablette dès qu'une commande arrive — même en veille."
+          },
+          "call": {
+            "title": "Appel téléphonique pour commande ratée",
+            "body": "Si personne ne touche Accepter en ~90 secondes, nous vous appelons et lisons la commande à voix haute."
+          },
+          "autoReject": {
+            "title": "Rejet auto + remboursement auto",
+            "body": "Les commandes sans réponse sont rejetées automatiquement et le client est remboursé automatiquement."
+          },
+          "chargeOnAccept": {
+            "title": "Facturé uniquement à l'acceptation",
+            "body": "Ne préparez jamais une commande impayée — et ne facturez jamais un client pour une commande que vous refusez."
+          },
+          "receipts": {
+            "title": "Reçus personnalisés à votre image",
+            "body": "Concevez vos propres tickets de cuisine et clients, vos bons de réservation et de fin de journée."
+          },
+          "printer": {
+            "title": "Configuration de l'imprimante en un toucher",
+            "body": "« Trouver les imprimantes » analyse votre WiFi et liste votre imprimante thermique — sans chercher d'adresse IP."
+          }
+        },
+        "run": {
+          "eyebrow": "Gérez votre entreprise",
+          "title": "Connaissez vos chiffres. Possédez vos clients.",
+          "subtitle": "Une suite complète d'analyses, de gestion de la clientèle et de promotions est intégrée — gratuitement. La relation avec vos clients vous appartient, elle n'est pas enfermée dans une plateforme tierce.",
+          "frameAlt": "Tableau de bord des rapports — revenus, commandes et tendances clients",
+          "reports": {
+            "title": "Tableau de bord des rapports",
+            "body": "Revenus, commandes, panier moyen et clients — avec les tendances d'un jour à l'autre."
+          },
+          "crm": {
+            "title": "Votre liste de clients (CRM)",
+            "body": "Chaque client, ses dépenses totales, vos segments et l'export CSV. Ils vous appartiennent — pas à une plateforme tierce."
+          },
+          "promos": {
+            "title": "Moteur de promotions",
+            "body": "13 types de promos — BOGO, formules, articles gratuits, coupons, offres minutées. 5 gratuits, assistant guidé."
+          },
+          "insights": {
+            "title": "Analyses des ventes et tunnel de conversion",
+            "body": "Vos meilleures et vos moins bonnes ventes, votre tunnel de conversion des commandes en ligne, une carte thermique des livraisons."
+          },
+          "reorder": {
+            "title": "Recommande en un clic",
+            "body": "Les clients fidèles recommandent leur habituel en un toucher — plus de commandes répétées, des paniers plus gros."
+          },
+          "accounts": {
+            "title": "Comptes clients",
+            "body": "Adresses enregistrées, historique des commandes et coupons personnels incitent les clients à revenir."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — le forfait de croissance",
+          "title": "Transformez les premières commandes en habitués.",
+          "subtitle": "Des outils de marketing, de fidélisation et d'acquisition de clients qui les font revenir — réunis à un prix réduit, ou ajoutés un à la fois.",
+          "frameAlt": "Analyses Smart Link — des scans qui se transforment en commandes et en revenus réels",
+          "badge": "Un forfait · cinq outils",
+          "blurb": "Tous les outils de marketing, de fidélisation et d'acquisition à un prix réduit — ou ajoutez-en un seul à la carte.",
+          "pricingCta": "Voir les tarifs GrowthNet",
+          "apmBody": "8 types de promos avancées, segments de clients et campagnes courriel automatisées.",
+          "studioBody": "Des codes QR traçables, des Smart Links et des dépliants à votre image — voyez ce qui transforme les scans en commandes.",
+          "kickstarterBody": "Des campagnes prêtes à envoyer pour la première commande et la reconquête qui attirent des clients dès le premier jour.",
+          "smsBody": "Envoyez des textos à vos clients au fil de leur commande en cuisine — confirmée, prête, terminée.",
+          "contentpilotBody": "Votre gestionnaire de réseaux sociaux par IA — rédige et planifie vos publications sur Instagram, Facebook, X et TikTok.",
+          "saveTitle": "Le forfait, plus économique",
+          "saveBody": "Obtenez le forfait complet pour moins cher que l'achat de chaque outil séparément. <link>Voir le calcul →</link>"
+        },
+        "addons": {
+          "eyebrow": "Modules — sans paliers",
+          "title": "Commencez gratuitement. N'ajoutez que ce qui compte pour vous.",
+          "subtitle": "Chaque module est abonnable séparément. Choisissez-en un, plusieurs, ou tous — ou restez gratuit à vie.",
+          "capNote": "Le forfait gratuit comprend <b>100 commandes/mois</b>. Tout module payant lève le plafond.",
+          "pricingCta": "Voir tous les tarifs",
+          "payments": {
+            "title": "Paiements en ligne",
+            "body": "Acceptez les paiements par carte en ligne — l'argent arrive directement dans votre propre compte Stripe ou PayPal."
+          },
+          "website": {
+            "title": "Site web optimisé pour les ventes",
+            "body": "Un site marketing et de commande hébergé, prêt pour le SEO, généré automatiquement à partir de votre menu, sur votre propre domaine."
+          },
+          "multiLocation": {
+            "title": "Multi-établissements",
+            "body": "Gérez plusieurs établissements depuis un seul compte — chacun avec son propre menu, ses commandes et ses paiements."
+          },
+          "marketplace": {
+            "title": "Référencement sur la place de marché",
+            "body": "Faites-vous découvrir sur la place de marché Fee Free — un canal d'acquisition à faible coût, sans frais de 30 %."
+          },
+          "unlimited": {
+            "title": "Commandes illimitées",
+            "body": "Levez le plafond de 100 commandes/mois du forfait gratuit — volume illimité, sans frais par commande."
+          },
+          "domain": {
+            "title": "Domaine personnalisé",
+            "body": "Pointez votre propre domaine vers votre site Fee Free hébergé."
+          },
+          "driver": {
+            "title": "Réseau de livreurs",
+            "body": "Faites appel à notre réseau de livreurs Shipday lorsque vos propres livreurs sont occupés."
+          },
+          "brandedApp": {
+            "title": "Application mobile à votre image",
+            "body": "Votre propre application native iOS + Android dans l'App Store et le Play Store."
+          },
+          "pos": {
+            "title": "Module POS",
+            "body": "Un POS interne permettant au personnel d'encaisser le sur place et les plats à emporter depuis le même panneau d'administration."
+          },
+          "aiPhone": {
+            "title": "Commande téléphonique par IA",
+            "body": "Un agent IA répond au téléphone et prend les commandes 24/7, directement vers votre cuisine."
+          },
+          "deposits": {
+            "title": "Acomptes de réservation",
+            "body": "Demandez un acompte remboursable lorsque les clients réservent une table — une protection contre les absences."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Changez en quelques minutes",
+          "title": "Apportez tout votre menu — sans le retaper.",
+          "body": "Vous venez de GloriaFood, FoodBooking ou d'un PDF imprimé ? Importez tout votre menu — photos comprises — en quelques clics.",
+          "bullet1": "Importez directement depuis GloriaFood",
+          "bullet2": "Téléversez un menu PDF — notre IA le construit pour vous",
+          "bullet3": "Les photos des articles s'importent automatiquement en arrière-plan",
+          "cta": "Lancer votre import",
+          "frameAlt": "Assistant d'import de menu"
+        },
+        "steps": {
+          "title": "En ligne en trois étapes.",
+          "step1": {
+            "title": "Ajoutez votre menu",
+            "body": "Créez-le, ou importez-le depuis GloriaFood ou un PDF en quelques clics."
+          },
+          "step2": {
+            "title": "Partagez votre lien et votre QR",
+            "body": "Ajoutez le bouton de commande sur votre site, ou partagez votre page Fee Free et votre code QR."
+          },
+          "step3": {
+            "title": "Prenez les commandes, gardez 100 %",
+            "body": "Les commandes arrivent dans votre app de cuisine et s'impriment. Aucune commission sur les commandes directes."
+          }
+        },
+        "integrations": {
+          "heading": "S'intègre parfaitement à vos outils",
+          "payments": "Paiements",
+          "printers": "Imprimantes",
+          "delivery": "Livraison",
+          "analytics": "Analyses et publicités",
+          "migration": "Migration",
+          "voice": "Voix",
+          "roadmap": "Sur la feuille de route :"
+        },
+        "canada": {
+          "badge": "Fièrement canadien",
+          "title": "Conçu et exploité en Ontario, au Canada.",
+          "body": "Une entreprise canadienne — pas une plateforme étrangère sans visage. Vos frais, vos données et vos clients restent les vôtres.",
+          "supportTitle": "Soutien canadien 24/7",
+          "supportBody": "De vraies personnes, à tout moment — jour et nuit. Appelez le <phone>1-888-618-8765</phone> ou clavardez en direct avec ceux qui l'ont vraiment conçu."
+        },
+        "demo": {
+          "title": "Découvrez une vraie vitrine.",
+          "subtitle": "Essayez une démo en direct — commandez comme un client et regardez la commande arriver dans l'app de cuisine.",
+          "cta": "Ouvrir la démo en direct",
+          "frameAlt": "Une vitrine Fee Free en direct"
+        },
+        "reseller": {
+          "text": "Vous configurez des restaurants pour gagner votre vie ? Touchez une <b>commission récurrente</b> en tant que partenaire Fee Free.",
+          "cta": "Programme partenaire →"
+        },
+        "finalCta": {
+          "title": "Commencez à prendre vos propres commandes dès aujourd'hui.",
+          "body": "Cœur gratuit. 0 % de commission sur les commandes directes. Configuration en 5 minutes. Sans carte de crédit.",
+          "primary": "Commencer gratuitement",
+          "secondary": "Voir en direct"
+        },
+        "soon": "Bientôt",
+        "appBadges": {
+          "iosLine1": "Télécharger sur l'",
+          "androidLine1": "Disponible sur"
+        }
+      }
     },
     "features": {
       "title": "Fonctionnalités",

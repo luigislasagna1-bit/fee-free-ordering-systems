@@ -1,3 +1,6 @@
+"use client";
+import { useTranslations } from "next-intl";
+
 /**
  * Decorative half-and-half pizza — communicates the split-pizza builder at a
  * glance. Warm food tones are allowed here as soft "mockup" imagery (same
@@ -6,16 +9,17 @@
  * presentational; can be swapped for a real builder screenshot later.
  */
 export function PizzaSplitGraphic() {
+  const t = useTranslations("marketing.home.v2");
   return (
     <div className="relative mx-auto max-w-sm">
       <div className="rounded-3xl border border-gray-200/80 bg-gradient-to-br from-amber-50 via-white to-orange-50/60 p-8 shadow-[0_24px_60px_-20px_rgba(16,24,40,0.18)]">
         {/* split labels */}
         <div className="flex items-center justify-between mb-4 text-xs font-bold uppercase tracking-wide">
-          <span className="inline-flex items-center gap-1.5 text-emerald-700"><span className="w-2 h-2 rounded-full bg-emerald-500" />Left half</span>
-          <span className="inline-flex items-center gap-1.5 text-emerald-700">Right half<span className="w-2 h-2 rounded-full bg-emerald-500" /></span>
+          <span className="inline-flex items-center gap-1.5 text-emerald-700"><span className="w-2 h-2 rounded-full bg-emerald-500" />{t("pizza.leftHalf")}</span>
+          <span className="inline-flex items-center gap-1.5 text-emerald-700">{t("pizza.rightHalf")}<span className="w-2 h-2 rounded-full bg-emerald-500" /></span>
         </div>
 
-        <svg viewBox="0 0 240 240" className="w-full h-auto" role="img" aria-label="Half-and-half pizza">
+        <svg viewBox="0 0 240 240" className="w-full h-auto" role="img" aria-label={t("pizza.ariaLabel")}>
           <defs>
             <clipPath id="leftHalf"><rect x="0" y="0" width="120" height="240" /></clipPath>
             <clipPath id="rightHalf"><rect x="120" y="0" width="120" height="240" /></clipPath>
@@ -50,7 +54,7 @@ export function PizzaSplitGraphic() {
 
         {/* placement chips */}
         <div className="mt-5 flex items-center justify-center gap-2 flex-wrap">
-          {["½ Left", "½ Right", "Whole", "Light · Normal · Extra"].map((c) => (
+          {[t("pizza.chipLeft"), t("pizza.chipRight"), t("pizza.chipWhole"), t("pizza.chipAmount")].map((c) => (
             <span key={c} className="rounded-full bg-white border border-gray-200 px-3 py-1 text-xs font-semibold text-gray-600 shadow-sm">{c}</span>
           ))}
         </div>

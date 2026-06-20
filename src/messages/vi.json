@@ -4349,7 +4349,259 @@
       "featuresTitle": "Tất cả những gì bạn cần để vận hành đặt hàng online",
       "ctaTitle": "Sẵn sàng giữ 100% doanh thu?",
       "ctaSubtitle": "Không cần thẻ tín dụng. Hủy bất kỳ lúc nào.",
-      "ctaButton": "Bắt đầu miễn phí"
+      "ctaButton": "Bắt đầu miễn phí",
+      "v2": {
+        "hero": {
+          "eyebrow": "Dành cho chủ nhà hàng",
+          "title": "Trang đặt món của riêng bạn. <accent>0% hoa hồng.</accent>",
+          "subtitle": "Trang đặt món trực tuyến mang thương hiệu của bạn cho lấy tại quầy, giao hàng, ăn tại chỗ & tiệc — bằng 38 ngôn ngữ, miễn phí mãi mãi. Giữ trọn 100% mỗi đơn đặt trực tiếp.",
+          "ctaStart": "Bắt đầu miễn phí",
+          "ctaDemo": "Xem cửa hàng trực tuyến mẫu",
+          "badge": "0% hoa hồng",
+          "trust1": "Không cần thẻ tín dụng",
+          "trust2": "0% trên đơn đặt trực tiếp",
+          "trust3": "38 ngôn ngữ",
+          "trust4": "Được xây dựng tại Canada 🍁",
+          "frameAlt": "Luigi's Lasagna — một trang đặt món mang thương hiệu thực tế"
+        },
+        "funnel": {
+          "eyebrow": "Góc nhìn tăng trưởng",
+          "title": "Đón lượng khách. <accent>Giữ chân khách quay lại.</accent>",
+          "subtitle": "Các sàn giao dịch giỏi một việc — đưa đến cho bạn một khách hàng lần đầu. Hãy cho mỗi người trong số họ một lý do để quay lại và đặt trực tiếp, trên thương hiệu của bạn, với 0% hoa hồng.",
+          "sourcesCaption": "Các sàn giao dịch mang đến cho bạn khách hàng lần đầu.",
+          "neck": "Mã QR + Smart Link",
+          "yourBrand": "Thương hiệu của bạn",
+          "directOrders": "Đơn đặt trực tiếp · 0% hoa hồng",
+          "chip1": "0% hoa hồng",
+          "chip2": "Sở hữu khách hàng của bạn",
+          "chip3": "Nhiều đơn quay lại hơn"
+        },
+        "ordering": {
+          "eyebrow": "Miễn phí mãi mãi",
+          "title": "Một trang đặt món mang thương hiệu mà khách hàng yêu thích.",
+          "body": "Thực đơn, hình ảnh, tùy chọn và giá của bạn — đẹp mắt trên mọi điện thoại, bằng 38 ngôn ngữ, với logo và màu sắc của bạn.",
+          "bullet1": "Lấy tại quầy, giao hàng, ăn tại chỗ & tiệc",
+          "bullet2": "Lên lịch & đặt trước",
+          "bullet3": "Nhúng vào website hiện có của bạn",
+          "cta": "Bắt đầu miễn phí",
+          "frameAlt": "Thực đơn & tùy chọn món"
+        },
+        "checkout": {
+          "eyebrow": "Miễn phí mãi mãi",
+          "title": "Thanh toán theo cách của bạn. Nhận tiền theo cách của bạn.",
+          "body": "Nhận tiền mặt và quẹt thẻ tại quầy hoàn toàn miễn phí, hoặc thêm thanh toán thẻ trực tuyến. Đặt bàn và đặt bàn-rồi-gọi món được tích hợp sẵn.",
+          "bullet1": "Tiền mặt & quẹt thẻ tại quầy — miễn phí",
+          "bullet2": "Tích hợp sẵn tiền tip, thuế & phí dịch vụ",
+          "bullet3": "Đặt bàn + đặt bàn-rồi-gọi món",
+          "frameAlt": "Giỏ hàng & thanh toán"
+        },
+        "pizza": {
+          "eyebrow": "Thiết kế cho tiệm pizza",
+          "title": "Công cụ tạo pizza nửa-nửa mà khách hàng thực sự thích thú.",
+          "body": "Để khách hàng tự thiết kế một chiếc bánh độc nhất vô nhị — topping khác nhau trên mỗi nửa, đặt bên trái, bên phải hay cả bánh, ít, vừa hay nhiều.",
+          "bullet1": "Chia đôi bất kỳ chiếc pizza nào — topping khác nhau mỗi bên",
+          "bullet2": "Tính giá nửa-topping công bằng (hai nửa tính bằng một chiếc nguyên)",
+          "bullet3": "Combo & gói ưu đãi mở ra trình tạo bánh đầy đủ",
+          "leftHalf": "Nửa trái",
+          "rightHalf": "Nửa phải",
+          "ariaLabel": "Pizza nửa-nửa",
+          "chipLeft": "½ Trái",
+          "chipRight": "½ Phải",
+          "chipWhole": "Cả bánh",
+          "chipAmount": "Ít · Vừa · Nhiều"
+        },
+        "kitchen": {
+          "eyebrow": "Miễn phí · iOS + Android",
+          "title": "Không bao giờ bỏ lỡ một đơn hàng có tiền.",
+          "subtitle": "Kitchen Order App gốc biến mọi iPhone, iPad hay máy tính bảng Android thành một trạm nhận đơn vững chắc — với lớp an toàn để một đêm bận rộn không bao giờ khiến bạn mất một đơn hàng.",
+          "frameAlt": "Kitchen Order App — đơn hàng mới đến",
+          "getApp": "Tải Kitchen Order App miễn phí về máy tính bảng của bạn",
+          "ring": {
+            "title": "Chuông lớn khi tắt màn hình",
+            "body": "Báo động toàn màn hình đánh thức máy tính bảng ngay khoảnh khắc đơn hàng đến — kể cả khi đang ngủ."
+          },
+          "call": {
+            "title": "Cuộc gọi cho đơn bị bỏ lỡ",
+            "body": "Nếu không ai bấm Chấp nhận trong ~90 giây, chúng tôi sẽ gọi cho bạn và đọc to nội dung đơn hàng."
+          },
+          "autoReject": {
+            "title": "Tự động từ chối + tự động hoàn tiền",
+            "body": "Đơn không được phản hồi sẽ tự động bị từ chối và khách hàng được hoàn tiền tự động."
+          },
+          "chargeOnAccept": {
+            "title": "Chỉ tính tiền khi chấp nhận",
+            "body": "Không bao giờ nấu một đơn chưa thanh toán — và không bao giờ tính tiền khách cho đơn bạn từ chối."
+          },
+          "receipts": {
+            "title": "Hóa đơn mang thương hiệu tùy chỉnh",
+            "body": "Tự thiết kế phiếu bếp + phiếu khách hàng, phiếu đặt bàn và phiếu cuối ngày của riêng bạn."
+          },
+          "printer": {
+            "title": "Cài đặt máy in chỉ một chạm",
+            "body": "“Tìm máy in” quét mạng WiFi của bạn và liệt kê máy in nhiệt — không cần dò địa chỉ IP."
+          }
+        },
+        "run": {
+          "eyebrow": "Vận hành công việc kinh doanh",
+          "title": "Nắm rõ các con số. Sở hữu khách hàng của bạn.",
+          "subtitle": "Bộ công cụ phân tích, khách hàng và khuyến mãi đầy đủ được tích hợp sẵn — miễn phí. Mối quan hệ với thực khách là của bạn, không bị khóa bên trong một sàn trung gian.",
+          "frameAlt": "Bảng điều khiển báo cáo — doanh thu, đơn hàng & xu hướng khách hàng",
+          "reports": {
+            "title": "Bảng điều khiển báo cáo",
+            "body": "Doanh thu, đơn hàng, giá trị đơn trung bình và khách hàng — kèm xu hướng so với từng ngày."
+          },
+          "crm": {
+            "title": "Danh sách khách hàng của bạn (CRM)",
+            "body": "Mọi khách hàng, tổng chi tiêu, phân nhóm và xuất CSV. Bạn sở hữu họ — không phải một sàn trung gian."
+          },
+          "promos": {
+            "title": "Cỗ máy khuyến mãi",
+            "body": "13 loại khuyến mãi — BOGO, gói combo, món miễn phí, mã giảm giá, ưu đãi theo giờ. 5 loại miễn phí, trình hướng dẫn từng bước."
+          },
+          "insights": {
+            "title": "Thông tin bán hàng & phễu chuyển đổi",
+            "body": "Món bán chạy và bán chậm nhất, phễu chuyển đổi đặt món trực tuyến, bản đồ nhiệt giao hàng."
+          },
+          "reorder": {
+            "title": "Đặt lại chỉ một chạm",
+            "body": "Khách hàng quay lại đặt lại món quen thuộc chỉ trong một chạm — nhiều đơn lặp lại hơn, giá trị đơn lớn hơn."
+          },
+          "accounts": {
+            "title": "Tài khoản khách hàng",
+            "body": "Địa chỉ đã lưu, lịch sử đơn hàng và mã giảm giá cá nhân giữ chân thực khách quay lại."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — gói tăng trưởng",
+          "title": "Biến đơn đầu tiên thành khách quen.",
+          "subtitle": "Các công cụ tiếp thị, giữ chân và thu hút khách hàng đưa mọi người quay lại — gói chung với một mức giá ưu đãi, hoặc thêm từng cái một.",
+          "frameAlt": "Phân tích Smart Link — lượt quét biến thành đơn hàng & doanh thu thực tế",
+          "badge": "Một gói · năm công cụ",
+          "blurb": "Mọi công cụ tiếp thị, giữ chân và thu hút khách hàng với một mức giá ưu đãi — hoặc thêm riêng lẻ bất kỳ công cụ nào.",
+          "pricingCta": "Xem bảng giá GrowthNet",
+          "apmBody": "8 loại khuyến mãi nâng cao, phân nhóm khách hàng và chiến dịch email tự động.",
+          "studioBody": "Mã QR theo dõi được, Smart Links và tờ rơi mang thương hiệu — xem điều gì biến lượt quét thành đơn hàng.",
+          "kickstarterBody": "Các chiến dịch đơn-đầu-tiên và giành-lại-khách sẵn sàng gửi, đưa khách hàng đến ngay từ ngày đầu.",
+          "smsBody": "Nhắn tin cho khách khi đơn của họ di chuyển qua bếp — đã xác nhận, sẵn sàng, hoàn tất.",
+          "contentpilotBody": "Trợ lý mạng xã hội AI của bạn — soạn và lên lịch bài đăng lên Instagram, Facebook, X & TikTok.",
+          "saveTitle": "Mua gói & tiết kiệm",
+          "saveBody": "Nhận trọn gói với giá rẻ hơn mua từng công cụ riêng lẻ. <link>Xem cách tính →</link>"
+        },
+        "addons": {
+          "eyebrow": "Tiện ích bổ sung — không phân hạng",
+          "title": "Bắt đầu miễn phí. Chỉ thêm những gì bạn thấy giá trị.",
+          "subtitle": "Mỗi tiện ích bổ sung đều có thể đăng ký riêng. Chọn một, chọn vài cái, chọn tất cả — hoặc giữ miễn phí mãi mãi.",
+          "capNote": "Gói miễn phí bao gồm <b>100 đơn/tháng</b>. Bất kỳ tiện ích trả phí nào cũng gỡ bỏ giới hạn này.",
+          "pricingCta": "Xem bảng giá đầy đủ",
+          "payments": {
+            "title": "Thanh toán trực tuyến",
+            "body": "Nhận thanh toán thẻ trực tuyến — tiền vào thẳng tài khoản Stripe hoặc PayPal của riêng bạn."
+          },
+          "website": {
+            "title": "Website tối ưu bán hàng",
+            "body": "Một trang tiếp thị + đặt món được lưu trữ sẵn, chuẩn SEO, tự động dựng từ thực đơn của bạn, trên tên miền của riêng bạn."
+          },
+          "multiLocation": {
+            "title": "Nhiều chi nhánh",
+            "body": "Vận hành nhiều chi nhánh từ một tài khoản — mỗi nơi có thực đơn, đơn hàng và thanh toán riêng."
+          },
+          "marketplace": {
+            "title": "Hiển thị trên sàn",
+            "body": "Được khám phá trên sàn Fee Free — một kênh khách mới chi phí thấp, không phí 30%."
+          },
+          "unlimited": {
+            "title": "Đơn hàng không giới hạn",
+            "body": "Gỡ bỏ giới hạn 100 đơn/tháng của gói miễn phí — số lượng không giới hạn, không phí theo từng đơn."
+          },
+          "domain": {
+            "title": "Tên miền tùy chỉnh",
+            "body": "Trỏ tên miền của riêng bạn về trang Fee Free được lưu trữ của bạn."
+          },
+          "driver": {
+            "title": "Mạng lưới tài xế",
+            "body": "Tận dụng mạng lưới tài xế Shipday của chúng tôi khi tài xế của bạn đang bận."
+          },
+          "brandedApp": {
+            "title": "Ứng dụng di động thương hiệu",
+            "body": "Ứng dụng iOS + Android gốc của riêng bạn trên App Store và Play Store."
+          },
+          "pos": {
+            "title": "Mô-đun POS",
+            "body": "POS nội bộ để nhân viên ghi đơn ăn tại chỗ và mang đi ngay trong cùng trang quản trị."
+          },
+          "aiPhone": {
+            "title": "Đặt món qua điện thoại bằng AI",
+            "body": "Một trợ lý AI trả lời điện thoại và nhận đơn 24/7, chuyển thẳng vào bếp của bạn."
+          },
+          "deposits": {
+            "title": "Tiền cọc đặt bàn",
+            "body": "Thu một khoản cọc có thể hoàn lại khi khách đặt bàn — bảo vệ bạn khỏi việc khách không đến."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Chuyển đổi trong vài phút",
+          "title": "Mang toàn bộ thực đơn của bạn — mà không cần gõ lại.",
+          "body": "Đang dùng GloriaFood, FoodBooking hay một file PDF in sẵn? Nhập toàn bộ thực đơn — kèm hình ảnh — chỉ trong vài cú nhấp.",
+          "bullet1": "Nhập trực tiếp từ GloriaFood",
+          "bullet2": "Tải lên thực đơn PDF — AI của chúng tôi tự dựng cho bạn",
+          "bullet3": "Hình ảnh món tự động nhập ở chế độ nền",
+          "cta": "Bắt đầu nhập thực đơn",
+          "frameAlt": "Trình hướng dẫn nhập thực đơn"
+        },
+        "steps": {
+          "title": "Hoạt động chỉ với ba bước.",
+          "step1": {
+            "title": "Thêm thực đơn của bạn",
+            "body": "Tự dựng, hoặc nhập từ GloriaFood hay một file PDF chỉ trong vài cú nhấp."
+          },
+          "step2": {
+            "title": "Chia sẻ liên kết & mã QR của bạn",
+            "body": "Đặt nút đặt món lên website, hoặc chia sẻ trang Fee Free và mã QR của bạn."
+          },
+          "step3": {
+            "title": "Nhận đơn, giữ trọn 100%",
+            "body": "Đơn hàng đến thẳng ứng dụng bếp và in ra. Không hoa hồng trên đơn đặt trực tiếp."
+          }
+        },
+        "integrations": {
+          "heading": "Tương thích tốt với hệ thống của bạn",
+          "payments": "Thanh toán",
+          "printers": "Máy in",
+          "delivery": "Giao hàng",
+          "analytics": "Phân tích & Quảng cáo",
+          "migration": "Chuyển đổi",
+          "voice": "Giọng nói",
+          "roadmap": "Trong lộ trình:"
+        },
+        "canada": {
+          "badge": "Tự hào Canada",
+          "title": "Được xây dựng & vận hành tại Ontario, Canada.",
+          "body": "Một công ty Canada — không phải một sàn trung gian vô danh ở nước ngoài. Phí, dữ liệu và khách hàng của bạn vẫn là của bạn.",
+          "supportTitle": "Hỗ trợ Canada 24/7",
+          "supportBody": "Người thật, bất cứ lúc nào — ngày hay đêm. Gọi <phone>1-888-618-8765</phone> hoặc trò chuyện trực tiếp với chính những người đã xây dựng nó."
+        },
+        "demo": {
+          "title": "Xem một cửa hàng trực tuyến thực tế.",
+          "subtitle": "Thử trải nghiệm bản demo trực tiếp — đặt món như một khách hàng và xem nó hiện lên trên ứng dụng bếp.",
+          "cta": "Mở bản demo trực tiếp",
+          "frameAlt": "Một cửa hàng trực tuyến Fee Free thực tế"
+        },
+        "reseller": {
+          "text": "Chuyên thiết lập cho các nhà hàng? Kiếm <b>hoa hồng định kỳ</b> với tư cách đối tác Fee Free.",
+          "cta": "Chương trình đối tác →"
+        },
+        "finalCta": {
+          "title": "Bắt đầu nhận đơn của riêng bạn ngay hôm nay.",
+          "body": "Tính năng cốt lõi miễn phí. 0% hoa hồng trên đơn đặt trực tiếp. Cài đặt trong 5 phút. Không cần thẻ tín dụng.",
+          "primary": "Bắt đầu miễn phí",
+          "secondary": "Xem trực tiếp"
+        },
+        "soon": "Sắp ra mắt",
+        "appBadges": {
+          "iosLine1": "Tải về trên",
+          "androidLine1": "Tải về tại"
+        }
+      }
     },
     "features": {
       "title": "Tính năng",

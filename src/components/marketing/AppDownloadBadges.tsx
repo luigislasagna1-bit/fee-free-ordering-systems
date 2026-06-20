@@ -1,3 +1,6 @@
+"use client";
+import { useTranslations } from "next-intl";
+
 /**
  * App Store + Google Play download badges (Kitchen Order App).
  *
@@ -7,6 +10,8 @@
  * URLs exist, pass `iosUrl` / `androidUrl` and set `comingSoon={false}` and
  * they become live links. Self-contained styled badges (Apple + Google Play
  * marks inline) — swap for the official badge artwork before launch if desired.
+ * "App Store" / "Google Play" are brand names → never translated; the prefix
+ * lines + "Soon" badge translate via marketing.home.v2.*.
  */
 type Props = {
   iosUrl?: string;
@@ -33,7 +38,7 @@ function PlayMark() {
   );
 }
 
-function Badge({ href, comingSoon, mark, line1, line2 }: { href?: string; comingSoon: boolean; mark: React.ReactNode; line1: string; line2: string }) {
+function Badge({ href, comingSoon, soonLabel, mark, line1, line2 }: { href?: string; comingSoon: boolean; soonLabel: string; mark: React.ReactNode; line1: string; line2: string }) {
   const inner = (
     <span className="inline-flex items-center gap-2.5 rounded-xl bg-gray-900 text-white px-4 py-2.5 border border-gray-900 shadow-sm hover:bg-gray-800 transition">
       {mark}
@@ -47,7 +52,7 @@ function Badge({ href, comingSoon, mark, line1, line2 }: { href?: string; coming
     return (
       <span className="relative inline-block opacity-90">
         {inner}
-        <span className="absolute -top-2 -right-2 bg-emerald-500 text-white text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full shadow">Soon</span>
+        <span className="absolute -top-2 -right-2 bg-emerald-500 text-white text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full shadow">{soonLabel}</span>
       </span>
     );
   }
@@ -55,10 +60,12 @@ function Badge({ href, comingSoon, mark, line1, line2 }: { href?: string; coming
 }
 
 export function AppDownloadBadges({ iosUrl, androidUrl, comingSoon = true, className = "" }: Props) {
+  const t = useTranslations("marketing.home.v2");
+  const soonLabel = t("soon");
   return (
     <div className={`flex flex-wrap items-center gap-3 ${className}`}>
-      <Badge href={iosUrl} comingSoon={comingSoon} mark={<AppleMark />} line1="Download on the" line2="App Store" />
-      <Badge href={androidUrl} comingSoon={comingSoon} mark={<PlayMark />} line1="Get it on" line2="Google Play" />
+      <Badge href={iosUrl} comingSoon={comingSoon} soonLabel={soonLabel} mark={<AppleMark />} line1={t("appBadges.iosLine1")} line2="App Store" />
+      <Badge href={androidUrl} comingSoon={comingSoon} soonLabel={soonLabel} mark={<PlayMark />} line1={t("appBadges.androidLine1")} line2="Google Play" />
     </div>
   );
 }

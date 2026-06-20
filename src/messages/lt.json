@@ -4349,7 +4349,259 @@
       "featuresTitle": "Viskas, ko reikia internetiniams užsakymams valdyti",
       "ctaTitle": "Pasiruošę pasilaikyti 100% pardavimų?",
       "ctaSubtitle": "Nereikia kredito kortelės. Galima atsisakyti bet kada.",
-      "ctaButton": "Pradėti nemokamai"
+      "ctaButton": "Pradėti nemokamai",
+      "v2": {
+        "hero": {
+          "eyebrow": "Restoranų savininkams",
+          "title": "Jūsų pačių užsakymų puslapis. <accent>0 % komisinių.</accent>",
+          "subtitle": "Su jūsų prekės ženklu suderintas užsakymų puslapis atsiėmimui, pristatymui, valgymui vietoje ir maitinimo paslaugoms — 38 kalbomis, nemokamai amžinai. Pasilikite 100 % kiekvieno tiesioginio užsakymo.",
+          "ctaStart": "Pradėkite nemokamai",
+          "ctaDemo": "Pažiūrėkite veikiančią parduotuvę",
+          "badge": "0 % komisinių",
+          "trust1": "Nereikia kredito kortelės",
+          "trust2": "0 % už tiesioginius užsakymus",
+          "trust3": "38 kalbos",
+          "trust4": "Sukurta Kanadoje 🍁",
+          "frameAlt": "Luigi's Lasagna — tikras prekės ženklu pažymėtas užsakymų puslapis"
+        },
+        "funnel": {
+          "eyebrow": "Augimo perspektyva",
+          "title": "Pagaukite srautą. <accent>Pasilikite pakartotinį.</accent>",
+          "subtitle": "Prekyvietės puikiai atlieka vieną dalyką — atveda pirmąjį klientą. Suteikite kiekvienam iš jų priežastį grįžti ir užsisakyti tiesiogiai, su jūsų prekės ženklu, be jokių komisinių — 0 %.",
+          "sourcesCaption": "Prekyvietės atveda pirmąjį klientą.",
+          "neck": "QR kodas + Smart Link",
+          "yourBrand": "Jūsų prekės ženklas",
+          "directOrders": "Tiesioginiai užsakymai · 0 % komisinių",
+          "chip1": "0 % komisinių",
+          "chip2": "Klientai priklauso jums",
+          "chip3": "Daugiau pakartotinių užsakymų"
+        },
+        "ordering": {
+          "eyebrow": "Nemokamai amžinai",
+          "title": "Prekės ženklu pažymėtas užsakymų puslapis, kurį klientai pamilsta.",
+          "body": "Jūsų meniu, nuotraukos, priedai ir kainos — gražu kiekviename telefone, 38 kalbomis, su jūsų logotipu ir spalvomis.",
+          "bullet1": "Atsiėmimas, pristatymas, valgymas vietoje ir maitinimo paslaugos",
+          "bullet2": "Planavimas ir išankstiniai užsakymai",
+          "bullet3": "Įterpiama į jūsų esamą svetainę",
+          "cta": "Pradėkite nemokamai",
+          "frameAlt": "Meniu ir patiekalų parinktys"
+        },
+        "checkout": {
+          "eyebrow": "Nemokamai amžinai",
+          "title": "Atsiskaitymas jūsų būdu. Apmokėjimas jūsų būdu.",
+          "body": "Priimkite grynuosius ir mokėjimą kortele prie kasos nemokamai arba pridėkite atsiskaitymą kortele internetu. Rezervacijos ir užsakymas iš anksto su rezervacija jau įdiegti.",
+          "bullet1": "Grynieji ir kortelė prie kasos — nemokamai",
+          "bullet2": "Integruoti arbatpinigiai, mokesčiai ir aptarnavimo rinkliavos",
+          "bullet3": "Rezervacijos + užsakymas su rezervacija",
+          "frameAlt": "Krepšelis ir atsiskaitymas"
+        },
+        "pizza": {
+          "eyebrow": "Sukurta picerijoms",
+          "title": "Pusės ir pusės pica, kurią klientai iš tiesų mėgsta kurti.",
+          "body": "Leiskite klientams sukurti vienintelę savo picą — skirtingi priedai ant kiekvienos pusės, dedami kairėje, dešinėje ar ant visos picos, mažiau, įprastai ar daugiau.",
+          "bullet1": "Padalykite bet kurią picą per pusę — skirtingi priedai kiekvienoje pusėje",
+          "bullet2": "Sąžininga pusės priedų kaina (dvi pusės skaičiuojamos kaip viena visa)",
+          "bullet3": "Rinkiniai ir patiekalų pasiūlymai, atveriantys pilną kūrimo įrankį",
+          "leftHalf": "Kairioji pusė",
+          "rightHalf": "Dešinioji pusė",
+          "ariaLabel": "Pusės ir pusės pica",
+          "chipLeft": "½ kairė",
+          "chipRight": "½ dešinė",
+          "chipWhole": "Visa",
+          "chipAmount": "Mažiau · Įprastai · Daugiau"
+        },
+        "kitchen": {
+          "eyebrow": "Nemokama · iOS + Android",
+          "title": "Niekada nepraleiskite apmokėto užsakymo.",
+          "subtitle": "Natyvioji Kitchen Order App paverčia bet kurį iPhone, iPad ar Android planšetę nepralaidžia užsakymų stotimi — su apsauginiu tinklu, kad įtemptas vakaras niekada nekainuotų jums pardavimo.",
+          "frameAlt": "Kitchen Order App — gaunamas užsakymas",
+          "getApp": "Gaukite nemokamą Kitchen Order App savo planšetėje",
+          "ring": {
+            "title": "Garsus skambutis net užgesusiu ekranu",
+            "body": "Viso ekrano signalas pažadina planšetę vos tik gavus užsakymą — net jai miegant."
+          },
+          "call": {
+            "title": "Skambutis dėl praleisto užsakymo",
+            "body": "Jei niekas nepaspaudžia „Priimti“ per ~90 sekundžių, jums paskambiname ir balsu perskaitome užsakymą."
+          },
+          "autoReject": {
+            "title": "Automatinis atmetimas + automatinis grąžinimas",
+            "body": "Neatsakyti užsakymai automatiškai atmetami, o klientui pinigai grąžinami automatiškai."
+          },
+          "chargeOnAccept": {
+            "title": "Apmokestinama tik priėmus",
+            "body": "Niekada negaminkite neapmokėto užsakymo — ir niekada neapmokestinkite kliento už tą, kurį atmetate."
+          },
+          "receipts": {
+            "title": "Pritaikyti prekės ženklo kvitai",
+            "body": "Sukurkite savo virtuvės ir kliento čekius, rezervacijos bei dienos pabaigos lapelius."
+          },
+          "printer": {
+            "title": "Spausdintuvo nustatymas vienu paspaudimu",
+            "body": "„Rasti spausdintuvus“ nuskaito jūsų WiFi ir parodo jūsų terminį spausdintuvą — nereikia ieškoti IP."
+          }
+        },
+        "run": {
+          "eyebrow": "Valdykite verslą",
+          "title": "Žinokite savo skaičius. Klientai priklauso jums.",
+          "subtitle": "Pilnas analitikos, klientų ir akcijų rinkinys jau integruotas — nemokamai. Santykiai su jūsų lankytojais priklauso jums, o ne užrakinti agregatoriuje.",
+          "frameAlt": "Ataskaitų skydelis — pajamos, užsakymai ir klientų tendencijos",
+          "reports": {
+            "title": "Ataskaitų skydelis",
+            "body": "Pajamos, užsakymai, vidutinė sąskaita ir klientai — su dienos tendencijomis."
+          },
+          "crm": {
+            "title": "Jūsų klientų sąrašas (CRM)",
+            "body": "Kiekvienas klientas, bendros išlaidos, segmentai ir CSV eksportas. Jie priklauso jums — ne agregatoriui."
+          },
+          "promos": {
+            "title": "Akcijų variklis",
+            "body": "13 akcijų tipų — BOGO, rinkiniai, nemokami patiekalai, kuponai, laiko pasiūlymai. 5 nemokami, su žingsnis po žingsnio vedliu."
+          },
+          "insights": {
+            "title": "Pardavimų įžvalgos ir kelias",
+            "body": "Geriausiai ir prasčiausiai parduodami patiekalai, jūsų internetinių užsakymų konversijos kelias, pristatymų šilumos žemėlapis."
+          },
+          "reorder": {
+            "title": "Pakartotinis užsakymas vienu paspaudimu",
+            "body": "Grįžtantys klientai vienu paspaudimu užsisako įprastą rinkinį — daugiau pakartotinių užsakymų, didesnės sąskaitos."
+          },
+          "accounts": {
+            "title": "Klientų paskyros",
+            "body": "Išsaugoti adresai, užsakymų istorija ir asmeniniai kuponai skatina lankytojus grįžti."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — augimo rinkinys",
+          "title": "Paverskite pirmuosius užsakymus nuolatiniais klientais.",
+          "subtitle": "Rinkodaros, lojalumo ir klientų pritraukimo įrankiai, grąžinantys žmones — sujungti į vieną rinkinį už sumažintą kainą arba pridedami po vieną.",
+          "frameAlt": "Smart Link analitika — nuskaitymai, virstantys tikrais užsakymais ir pajamomis",
+          "badge": "Vienas rinkinys · penki įrankiai",
+          "blurb": "Visi rinkodaros, lojalumo ir pritraukimo įrankiai už vieną sumažintą kainą — arba pridėkite bet kurį atskirai.",
+          "pricingCta": "Peržiūrėti GrowthNet kainas",
+          "apmBody": "8 pažangūs akcijų tipai, klientų segmentai ir automatizuotos el. pašto kampanijos.",
+          "studioBody": "Sekami QR kodai, Smart Links ir prekės ženklu pažymėti lankstinukai — matykite, kas paverčia nuskaitymus užsakymais.",
+          "kickstarterBody": "Paruoštos siųsti pirmojo užsakymo ir susigrąžinimo kampanijos, pritraukiančios klientus nuo pirmos dienos.",
+          "smsBody": "Rašykite klientams žinutes, kai jų užsakymas keliauja per virtuvę — patvirtinta, paruošta, įvykdyta.",
+          "contentpilotBody": "Jūsų AI socialinių tinklų vadybininkas — rengia ir suplanuoja įrašus Instagram, Facebook, X ir TikTok.",
+          "saveTitle": "Rinkinys ir taupymas",
+          "saveBody": "Gaukite visą rinkinį pigiau nei perkant kiekvieną įrankį atskirai. <link>Pažiūrėkite skaičiavimus →</link>"
+        },
+        "addons": {
+          "eyebrow": "Papildiniai — jokių pakopų",
+          "title": "Pradėkite nemokamai. Pridėkite tik tai, ką vertinate.",
+          "subtitle": "Kiekvienas papildinys užsakomas atskirai. Pasirinkite vieną, kelis, visus — arba likite nemokamai amžinai.",
+          "capNote": "Nemokamas planas apima <b>100 užsakymų per mėnesį</b>. Bet kuris mokamas papildinys panaikina šią ribą.",
+          "pricingCta": "Peržiūrėti visas kainas",
+          "payments": {
+            "title": "Mokėjimai internetu",
+            "body": "Priimkite mokėjimus kortele internetu — pinigai patenka tiesiai į jūsų pačių Stripe ar PayPal paskyrą."
+          },
+          "website": {
+            "title": "Pardavimams pritaikyta svetainė",
+            "body": "Talpinama, SEO parengta rinkodaros ir užsakymų svetainė, automatiškai sukurta iš jūsų meniu, jūsų pačių domene."
+          },
+          "multiLocation": {
+            "title": "Kelios vietos",
+            "body": "Valdykite kelias vietas iš vienos paskyros — kiekviena su savo meniu, užsakymais ir mokėjimais."
+          },
+          "marketplace": {
+            "title": "Įtraukimas į prekyvietę",
+            "body": "Būkite pastebėti Fee Free prekyvietėje — nebrangus naujų klientų kanalas be 30 % mokesčių."
+          },
+          "unlimited": {
+            "title": "Neriboti užsakymai",
+            "body": "Panaikinkite nemokamo plano 100 užsakymų per mėnesį ribą — neribota apimtis, jokių mokesčių už užsakymą."
+          },
+          "domain": {
+            "title": "Pasirinktinis domenas",
+            "body": "Nukreipkite savo domeną į jūsų talpinamą Fee Free svetainę."
+          },
+          "driver": {
+            "title": "Vairuotojų tinklas",
+            "body": "Pasinaudokite mūsų Shipday vairuotojų tinklu, kai jūsų pačių vairuotojai užimti."
+          },
+          "brandedApp": {
+            "title": "Prekės ženklo mobilioji programėlė",
+            "body": "Jūsų pačių natyvioji iOS ir Android programėlė App Store ir Google Play parduotuvėse."
+          },
+          "pos": {
+            "title": "POS modulis",
+            "body": "Vidinis POS, kad darbuotojai galėtų registruoti valgymo vietoje ir išsinešimo užsakymus iš to paties administravimo skydelio."
+          },
+          "aiPhone": {
+            "title": "AI užsakymai telefonu",
+            "body": "AI agentas atsiliepia telefonu ir priima užsakymus 24/7, tiesiai į jūsų virtuvę."
+          },
+          "deposits": {
+            "title": "Rezervacijos užstatai",
+            "body": "Imkite grąžinamą užstatą, kai klientai rezervuoja staliuką — apsauga nuo neatvykusiųjų."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Persikelkite per kelias minutes",
+          "title": "Perkelkite visą meniu — neperrašydami jo iš naujo.",
+          "body": "Ateinate iš GloriaFood, FoodBooking ar spausdinto PDF? Importuokite visą meniu — su visomis nuotraukomis — keliais paspaudimais.",
+          "bullet1": "Importuokite tiesiai iš GloriaFood",
+          "bullet2": "Įkelkite PDF meniu — mūsų AI jį sukurs už jus",
+          "bullet3": "Patiekalų nuotraukos importuojamos automatiškai fone",
+          "cta": "Pradėkite importą",
+          "frameAlt": "Meniu importavimo vedlys"
+        },
+        "steps": {
+          "title": "Pradėkite veikti trimis žingsniais.",
+          "step1": {
+            "title": "Pridėkite meniu",
+            "body": "Sukurkite jį arba importuokite iš GloriaFood ar PDF keliais paspaudimais."
+          },
+          "step2": {
+            "title": "Pasidalykite nuoroda ir QR",
+            "body": "Įdėkite užsakymo mygtuką į savo svetainę arba pasidalykite Fee Free puslapiu ir QR kodu."
+          },
+          "step3": {
+            "title": "Priimkite užsakymus, pasilikite 100 %",
+            "body": "Užsakymai patenka į jūsų virtuvės programėlę ir atsispausdina. Jokių komisinių už tiesioginius užsakymus."
+          }
+        },
+        "integrations": {
+          "heading": "Puikiai dera su jūsų įrankiais",
+          "payments": "Mokėjimai",
+          "printers": "Spausdintuvai",
+          "delivery": "Pristatymas",
+          "analytics": "Analitika ir reklama",
+          "migration": "Migracija",
+          "voice": "Balsas",
+          "roadmap": "Planuose:"
+        },
+        "canada": {
+          "badge": "Su pasididžiavimu kanadietiška",
+          "title": "Sukurta ir valdoma Ontarijuje, Kanadoje.",
+          "body": "Kanados įmonė — ne beveidis užjūrio agregatorius. Jūsų mokesčiai, duomenys ir klientai lieka jūsų.",
+          "supportTitle": "24/7 kanadietiškas palaikymas",
+          "supportBody": "Tikri žmonės, bet kuriuo metu — dieną ar naktį. Skambinkite <phone>1-888-618-8765</phone> arba bendraukite gyvai su tais, kurie tai iš tiesų sukūrė."
+        },
+        "demo": {
+          "title": "Pažiūrėkite tikrą parduotuvę.",
+          "subtitle": "Išbandykite veikiančią demonstraciją — užsisakykite kaip klientas ir stebėkite, kaip užsakymas patenka į virtuvės programėlę.",
+          "cta": "Atidaryti veikiančią demonstraciją",
+          "frameAlt": "Veikianti Fee Free parduotuvė"
+        },
+        "reseller": {
+          "text": "Įrenginėjate restoranus profesionaliai? Uždirbkite <b>pasikartojančius komisinius</b> kaip Fee Free partneris.",
+          "cta": "Partnerių programa →"
+        },
+        "finalCta": {
+          "title": "Pradėkite priimti savo užsakymus jau šiandien.",
+          "body": "Nemokamas pagrindas. 0 % komisinių už tiesioginius užsakymus. 5 minučių nustatymas. Nereikia kredito kortelės.",
+          "primary": "Pradėkite nemokamai",
+          "secondary": "Pažiūrėkite veikiant"
+        },
+        "soon": "Netrukus",
+        "appBadges": {
+          "iosLine1": "Atsisiųskite iš",
+          "androidLine1": "Gaukite iš"
+        }
+      }
     },
     "features": {
       "title": "Funkcijos",

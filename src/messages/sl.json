@@ -4349,7 +4349,259 @@
       "featuresTitle": "Vse kar potrebujete za spletno naročanje",
       "ctaTitle": "Pripravljeni obdržati 100 % prodaje?",
       "ctaSubtitle": "Kreditna kartica ni potrebna. Kadarkoli odpovejte.",
-      "ctaButton": "Začni brezplačno"
+      "ctaButton": "Začni brezplačno",
+      "v2": {
+        "hero": {
+          "eyebrow": "Za lastnike restavracij",
+          "title": "Vaša lastna stran za naročanje. <accent>0% provizije.</accent>",
+          "subtitle": "Naročanje s svojo blagovno znamko za prevzem, dostavo, jedi na kraju samem in catering — v 38 jezikih, za vedno brezplačno. Obdržite 100% vsakega neposrednega naročila.",
+          "ctaStart": "Začnite brezplačno",
+          "ctaDemo": "Oglejte si delujočo trgovino",
+          "badge": "0% provizije",
+          "trust1": "Brez kreditne kartice",
+          "trust2": "0% pri neposrednih naročilih",
+          "trust3": "38 jezikov",
+          "trust4": "Ustvarjeno v Kanadi 🍁",
+          "frameAlt": "Luigi's Lasagna — resnična stran za naročanje z lastno blagovno znamko"
+        },
+        "funnel": {
+          "eyebrow": "Pogled na rast",
+          "title": "Ujemite promet. <accent>Obdržite stranke.</accent>",
+          "subtitle": "Platforme za dostavo so odlične v eni stvari — pripeljejo vam novo stranko. Dajte vsaki od njih razlog, da se vrne in naroči neposredno, pod vašo blagovno znamko in z 0% provizije.",
+          "sourcesCaption": "Platforme za dostavo vam pripeljejo novo stranko.",
+          "neck": "QR koda + Smart Link",
+          "yourBrand": "Vaša blagovna znamka",
+          "directOrders": "Neposredna naročila · 0% provizije",
+          "chip1": "0% provizije",
+          "chip2": "Lastništvo nad strankami",
+          "chip3": "Več ponovnih naročil"
+        },
+        "ordering": {
+          "eyebrow": "Za vedno brezplačno",
+          "title": "Stran za naročanje, ki jo stranke obožujejo.",
+          "body": "Vaš jedilnik, fotografije, dodatki in cene — lepi na vsakem telefonu, v 38 jezikih, z vašim logotipom in barvami.",
+          "bullet1": "Prevzem, dostava, jedi na kraju samem in catering",
+          "bullet2": "Razporejanje in prednaročila",
+          "bullet3": "Vgradite ga v svojo obstoječo spletno stran",
+          "cta": "Začnite brezplačno",
+          "frameAlt": "Jedilnik in možnosti jedi"
+        },
+        "checkout": {
+          "eyebrow": "Za vedno brezplačno",
+          "title": "Plačilo po vaše. Prejem denarja po vaše.",
+          "body": "Brezplačno sprejemajte gotovino in plačilo s kartico na pultu ali dodajte spletna plačila s kartico. Rezervacije in rezervacija-z-naročilom so že vgrajene.",
+          "bullet1": "Gotovina in kartica na pultu — brezplačno",
+          "bullet2": "Vgrajena napitnina, davki in stroški storitve",
+          "bullet3": "Rezervacije + rezervacija-z-naročilom",
+          "frameAlt": "Košarica in plačilo"
+        },
+        "pizza": {
+          "eyebrow": "Ustvarjeno za picerije",
+          "title": "Sestavljalnik pol-pol, v katerem stranke resnično uživajo.",
+          "body": "Pustite strankam, da oblikujejo edinstveno pico — različni dodatki na vsaki polovici, postavljeni levo, desno ali čez celo, malo, normalno ali ekstra.",
+          "bullet1": "Razdelite poljubno pico na polovici — različni dodatki na vsaki strani",
+          "bullet2": "Pošteno obračunavanje dodatkov na polovici (dve polovici štejeta kot ena cela)",
+          "bullet3": "Kombinacije in meniji, ki odprejo celoten sestavljalnik",
+          "leftHalf": "Leva polovica",
+          "rightHalf": "Desna polovica",
+          "ariaLabel": "Pica pol-pol",
+          "chipLeft": "½ leva",
+          "chipRight": "½ desna",
+          "chipWhole": "Cela",
+          "chipAmount": "Malo · Normalno · Ekstra"
+        },
+        "kitchen": {
+          "eyebrow": "Brezplačno · iOS + Android",
+          "title": "Nikoli več ne zamudite plačanega naročila.",
+          "subtitle": "Domorodna aplikacija Kitchen Order App spremeni vsak iPhone, iPad ali tablico Android v neprebojno postajo za naročila — z varnostno mrežo, da vas naporen večer nikoli ne stane prodaje.",
+          "frameAlt": "Kitchen Order App — prihajajoče naročilo",
+          "getApp": "Prenesite brezplačno aplikacijo Kitchen Order App na svojo tablico",
+          "ring": {
+            "title": "Glasno zvonjenje pri ugasnjenem zaslonu",
+            "body": "Celozaslonski alarm zbudi tablico v trenutku, ko prispe naročilo — tudi če miruje."
+          },
+          "call": {
+            "title": "Telefonski klic ob zamujenem naročilu",
+            "body": "Če v ~90 sekundah nihče ne pritisne Sprejmi, vas pokličemo in vam naročilo preberemo na glas."
+          },
+          "autoReject": {
+            "title": "Samodejna zavrnitev + samodejno vračilo",
+            "body": "Neodgovorjena naročila se samodejno zavrnejo, stranki pa se denar samodejno vrne."
+          },
+          "chargeOnAccept": {
+            "title": "Bremenitev šele ob sprejemu",
+            "body": "Nikoli ne pripravljajte neplačanega naročila — in nikoli ne bremenite stranke za naročilo, ki ga zavrnete."
+          },
+          "receipts": {
+            "title": "Računi z lastno blagovno znamko",
+            "body": "Oblikujte svoje kuhinjske in kupčeve listke, rezervacijske in zaključne listke za konec dneva."
+          },
+          "printer": {
+            "title": "Nastavitev tiskalnika z enim dotikom",
+            "body": "»Najdi tiskalnike« preišče vaš WiFi in izpiše vaš termalni tiskalnik — brez iskanja IP-naslovov."
+          }
+        },
+        "run": {
+          "eyebrow": "Vodite posel",
+          "title": "Poznajte svoje številke. Bodite lastnik svojih strank.",
+          "subtitle": "Celotna zbirka za analitiko, stranke in promocije je že vgrajena — brezplačno. Odnos z vašimi gosti je vaš, ne zaklenjen znotraj posrednika.",
+          "frameAlt": "Nadzorna plošča s poročili — prihodki, naročila in trendi strank",
+          "reports": {
+            "title": "Nadzorna plošča s poročili",
+            "body": "Prihodki, naročila, povprečni račun in stranke — s trendi iz dneva v dan."
+          },
+          "crm": {
+            "title": "Vaš seznam strank (CRM)",
+            "body": "Vsaka stranka, skupna poraba, segmenti in izvoz CSV. Vaše so — ne posrednikove."
+          },
+          "promos": {
+            "title": "Promocijski stroj",
+            "body": "13 vrst promocij — BOGO, paketi, brezplačne jedi, kuponi, časovno omejene ponudbe. 5 brezplačnih, voden čarovnik."
+          },
+          "insights": {
+            "title": "Vpogledi v prodajo in lijak",
+            "body": "Najboljši in najslabši prodajalci, vaš lijak konverzije spletnega naročanja, toplotni zemljevid dostav."
+          },
+          "reorder": {
+            "title": "Ponovno naročilo z enim klikom",
+            "body": "Vrnjene stranke z enim dotikom znova naročijo svojo običajno izbiro — več ponovnih naročil, večji računi."
+          },
+          "accounts": {
+            "title": "Računi strank",
+            "body": "Shranjeni naslovi, zgodovina naročil in osebni kuponi poskrbijo, da se gostje vračajo."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — paket za rast",
+          "title": "Spremenite prva naročila v stalne goste.",
+          "subtitle": "Orodja za trženje, zadrževanje in pridobivanje strank, ki ljudi pripeljejo nazaj — v paketu po eni znižani ceni ali dodana posamično.",
+          "frameAlt": "Analitika Smart Link — skeniranja, ki se spremenijo v resnična naročila in prihodke",
+          "badge": "En paket · pet orodij",
+          "blurb": "Vsako orodje za trženje, zadrževanje in pridobivanje po eni znižani ceni — ali dodajte katero koli posamično.",
+          "pricingCta": "Oglejte si cene GrowthNet",
+          "apmBody": "8 naprednih vrst promocij, segmenti strank in samodejne e-poštne kampanje.",
+          "studioBody": "Sledljive QR kode, Smart Links in letaki z lastno blagovno znamko — poglejte, kaj spremeni skeniranja v naročila.",
+          "kickstarterBody": "Kampanje za prvo naročilo in vrnitev strank, pripravljene za pošiljanje, ki pripeljejo stranke že od prvega dne.",
+          "smsBody": "Pošiljajte sporočila strankam, ko se njihovo naročilo premika skozi kuhinjo — potrjeno, pripravljeno, dokončano.",
+          "contentpilotBody": "Vaš upravitelj družbenih omrežij z AI — pripravlja in razporeja objave na Instagram, Facebook, X in TikTok.",
+          "saveTitle": "Paket in prihranek",
+          "saveBody": "Dobite celoten paket za manj, kot če bi vsako orodje kupili posebej. <link>Poglejte izračun →</link>"
+        },
+        "addons": {
+          "eyebrow": "Dodatki — brez stopenj",
+          "title": "Začnite brezplačno. Dodajte le tisto, kar cenite.",
+          "subtitle": "Na vsak dodatek se lahko naročite ločeno. Izberite enega, izberite nekaj, izberite vse — ali ostanite za vedno brezplačni.",
+          "capNote": "Brezplačni paket vključuje <b>100 naročil/mesec</b>. Kateri koli plačljiv dodatek dvigne to omejitev.",
+          "pricingCta": "Oglejte si celoten cenik",
+          "payments": {
+            "title": "Spletna plačila",
+            "body": "Sprejemajte plačila s kartico prek spleta — denar prispe neposredno na vaš lastni račun Stripe ali PayPal."
+          },
+          "website": {
+            "title": "Prodajno optimizirana spletna stran",
+            "body": "Gostovana, za SEO pripravljena trženjska in naročilna stran, samodejno zgrajena iz vašega jedilnika, na vaši lastni domeni."
+          },
+          "multiLocation": {
+            "title": "Več lokacij",
+            "body": "Upravljajte več lokacij iz enega računa — vsaka s svojim jedilnikom, naročili in plačili."
+          },
+          "marketplace": {
+            "title": "Objava na tržnici",
+            "body": "Naj vas odkrijejo na tržnici Fee Free — poceni kanal za nove stranke, brez 30% provizij."
+          },
+          "unlimited": {
+            "title": "Neomejena naročila",
+            "body": "Dvignite omejitev brezplačnega paketa na 100 naročil/mesec — neomejen obseg, brez provizij na naročilo."
+          },
+          "domain": {
+            "title": "Lastna domena",
+            "body": "Usmerite svojo lastno domeno na svojo gostovano stran Fee Free."
+          },
+          "driver": {
+            "title": "Bazen voznikov",
+            "body": "Izkoristite naše omrežje voznikov Shipday, ko so vaši lastni vozniki zasedeni."
+          },
+          "brandedApp": {
+            "title": "Mobilna aplikacija z lastno blagovno znamko",
+            "body": "Vaša lastna domorodna aplikacija za iOS in Android v App Store in Google Play."
+          },
+          "pos": {
+            "title": "Modul POS",
+            "body": "Interni POS, da osebje zabeleži naročila za na kraju samem in s seboj iz iste skrbniške plošče."
+          },
+          "aiPhone": {
+            "title": "Telefonsko naročanje z AI",
+            "body": "Agent AI se oglasi na telefon in sprejema naročila 24/7, naravnost v vašo kuhinjo."
+          },
+          "deposits": {
+            "title": "Pologi za rezervacije",
+            "body": "Zaračunajte vračljiv polog, ko stranke rezervirajo mizo — zaščita pred neprihodi."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Preklopite v nekaj minutah",
+          "title": "Prinesite celoten jedilnik — brez ponovnega tipkanja.",
+          "body": "Prihajate iz GloriaFood, FoodBooking ali natisnjenega PDF-ja? Uvozite celoten jedilnik — vključno s fotografijami — z nekaj kliki.",
+          "bullet1": "Uvozite neposredno iz GloriaFood",
+          "bullet2": "Naložite jedilnik v PDF — naš AI ga zgradi za vas",
+          "bullet3": "Fotografije jedi se samodejno uvozijo v ozadju",
+          "cta": "Začnite uvoz",
+          "frameAlt": "Čarovnik za uvoz jedilnika"
+        },
+        "steps": {
+          "title": "Na spletu v treh korakih.",
+          "step1": {
+            "title": "Dodajte svoj jedilnik",
+            "body": "Zgradite ga ali uvozite iz GloriaFood ali PDF-ja z nekaj kliki."
+          },
+          "step2": {
+            "title": "Delite svojo povezavo in QR",
+            "body": "Postavite gumb za naročilo na svojo stran ali delite svojo stran Fee Free in QR kodo."
+          },
+          "step3": {
+            "title": "Sprejemajte naročila, obdržite 100%",
+            "body": "Naročila prispejo v vašo kuhinjsko aplikacijo in se natisnejo. Brez provizije pri neposrednih naročilih."
+          }
+        },
+        "integrations": {
+          "heading": "Dobro se ujema z vašim naborom orodij",
+          "payments": "Plačila",
+          "printers": "Tiskalniki",
+          "delivery": "Dostava",
+          "analytics": "Analitika in oglasi",
+          "migration": "Migracija",
+          "voice": "Glas",
+          "roadmap": "Na načrtu:"
+        },
+        "canada": {
+          "badge": "Ponosno kanadsko",
+          "title": "Ustvarjeno in vodeno v Ontariu v Kanadi.",
+          "body": "Kanadsko podjetje — ne brezimni čezmorski posrednik. Vaše provizije, podatki in stranke ostanejo vaši.",
+          "supportTitle": "Kanadska podpora 24/7",
+          "supportBody": "Pravi ljudje, kadar koli — podnevi ali ponoči. Pokličite <phone>1-888-618-8765</phone> ali klepetajte v živo z ljudmi, ki so to dejansko ustvarili."
+        },
+        "demo": {
+          "title": "Oglejte si pravo trgovino.",
+          "subtitle": "Preizkusite delujočo demo različico — naročite kot stranka in opazujte, kako naročilo prispe v kuhinjsko aplikacijo.",
+          "cta": "Odprite delujočo demo različico",
+          "frameAlt": "Delujoča trgovina Fee Free"
+        },
+        "reseller": {
+          "text": "Se preživljate z urejanjem restavracij? Zaslužite <b>ponavljajočo se provizijo</b> kot partner Fee Free.",
+          "cta": "Partnerski program →"
+        },
+        "finalCta": {
+          "title": "Začnite sprejemati svoja naročila že danes.",
+          "body": "Brezplačno jedro. 0% provizije pri neposrednih naročilih. 5-minutna nastavitev. Brez kreditne kartice.",
+          "primary": "Začnite brezplačno",
+          "secondary": "Oglejte si v živo"
+        },
+        "soon": "Kmalu",
+        "appBadges": {
+          "iosLine1": "Prenesite v",
+          "androidLine1": "Prenesite na"
+        }
+      }
     },
     "features": {
       "title": "Funkcije",

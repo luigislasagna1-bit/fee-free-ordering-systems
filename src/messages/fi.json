@@ -4349,7 +4349,259 @@
       "featuresTitle": "Kaikki mitä tarvitset verkko-tilauksiin",
       "ctaTitle": "Valmis pitämään 100 % myynnistäsi?",
       "ctaSubtitle": "Ei luottokorttia tarvita. Peruuta milloin tahansa.",
-      "ctaButton": "Aloita ilmaiseksi"
+      "ctaButton": "Aloita ilmaiseksi",
+      "v2": {
+        "hero": {
+          "eyebrow": "Ravintoloitsijoille",
+          "title": "Oma tilaussivusi. <accent>0 % komissiota.</accent>",
+          "subtitle": "Brändätty verkkotilaus noutoon, kotiinkuljetukseen, paikan päällä syömiseen ja pitopalveluun — 38 kielellä, ikuisesti ilmaiseksi. Pidä jokaisesta suorasta tilauksesta 100 %.",
+          "ctaStart": "Aloita ilmaiseksi",
+          "ctaDemo": "Katso elävä tilaussivu",
+          "badge": "0 % komissiota",
+          "trust1": "Ei luottokorttia",
+          "trust2": "0 % suorista tilauksista",
+          "trust3": "38 kieltä",
+          "trust4": "Tehty Kanadassa 🍁",
+          "frameAlt": "Luigi's Lasagna — aito brändätty tilaussivu"
+        },
+        "funnel": {
+          "eyebrow": "Kasvun näkökulma",
+          "title": "Nappaa liikenne. <accent>Pidä vakioasiakkaat.</accent>",
+          "subtitle": "Markkinapaikat ovat hyviä yhdessä asiassa — ne lähettävät sinulle ensikertalaisen asiakkaan. Anna jokaiselle heistä syy palata ja tilata suoraan, sinun brändilläsi, 0 % komissiolla.",
+          "sourcesCaption": "Markkinapaikat tuovat sinulle ensikertalaisen asiakkaan.",
+          "neck": "QR-koodi + Smart Link",
+          "yourBrand": "Sinun brändisi",
+          "directOrders": "Suorat tilaukset · 0 % komissiota",
+          "chip1": "0 % komissiota",
+          "chip2": "Omista asiakkaasi",
+          "chip3": "Enemmän toistuvia tilauksia"
+        },
+        "ordering": {
+          "eyebrow": "Ikuisesti ilmainen",
+          "title": "Brändätty tilaussivu, jota asiakkaat rakastavat.",
+          "body": "Sinun ruokalistasi, kuvasi, lisävalintasi ja hintasi — kauniina jokaisella puhelimella, 38 kielellä, sinun logollasi ja väreilläsi.",
+          "bullet1": "Nouto, kotiinkuljetus, paikan päällä syöminen ja pitopalvelu",
+          "bullet2": "Aikataulutus ja ennakkotilaukset",
+          "bullet3": "Upotettavissa nykyiselle verkkosivustollesi",
+          "cta": "Aloita ilmaiseksi",
+          "frameAlt": "Ruokalista ja tuotevalinnat"
+        },
+        "checkout": {
+          "eyebrow": "Ikuisesti ilmainen",
+          "title": "Kassa sinun tyylilläsi. Maksut sinun tyylilläsi.",
+          "body": "Ota vastaan käteistä ja korttimaksuja tiskillä ilmaiseksi, tai lisää korttimaksut verkossa. Pöytävaraukset ja varaa-ja-tilaa ovat valmiina mukana.",
+          "bullet1": "Käteinen ja kortti tiskillä — ilmaista",
+          "bullet2": "Sisäänrakennetut tipit, verot ja palvelumaksut",
+          "bullet3": "Pöytävaraukset + varaa-ja-tilaa",
+          "frameAlt": "Ostoskori ja kassa"
+        },
+        "pizza": {
+          "eyebrow": "Tehty pizzerioille",
+          "title": "Puolikas-puolikas-rakentaja, josta asiakkaat oikeasti nauttivat.",
+          "body": "Anna asiakkaiden suunnitella ainutlaatuinen pizza — eri täytteet kummallekin puolikkaalle, sijoitettuna vasemmalle, oikealle tai koko pizzaan, vähän, normaalisti tai runsaasti.",
+          "bullet1": "Jaa mikä tahansa pizza puolikkaisiin — eri täytteet kummallekin puolelle",
+          "bullet2": "Reilu täytehinnoittelu puolikkaille (kaksi puolikasta lasketaan yhdeksi kokonaiseksi)",
+          "bullet3": "Ateriapaketit ja tarjoukset, jotka avaavat täyden rakentajan",
+          "leftHalf": "Vasen puolisko",
+          "rightHalf": "Oikea puolisko",
+          "ariaLabel": "Puolikas-puolikas-pizza",
+          "chipLeft": "½ Vasen",
+          "chipRight": "½ Oikea",
+          "chipWhole": "Koko",
+          "chipAmount": "Vähän · Normaali · Runsaasti"
+        },
+        "kitchen": {
+          "eyebrow": "Ilmainen · iOS + Android",
+          "title": "Älä koskaan menetä maksavaa tilausta.",
+          "subtitle": "Natiivi Kitchen Order App muuttaa minkä tahansa iPhonen, iPadin tai Android-tabletin luotettavaksi tilausasemaksi — turvaverkolla, jonka ansiosta kiireinen ilta ei koskaan maksa sinulle myyntiä.",
+          "frameAlt": "Kitchen Order App — saapuva tilaus",
+          "getApp": "Hanki ilmainen Kitchen Order App tabletillesi",
+          "ring": {
+            "title": "Äänekäs hälytys näytön ollessa sammuksissa",
+            "body": "Koko näytön hälytys herättää tabletin heti tilauksen saapuessa — vaikka se nukkuisi."
+          },
+          "call": {
+            "title": "Puhelu menetetystä tilauksesta",
+            "body": "Jos kukaan ei napauta Hyväksy ~90 sekunnissa, soitamme sinulle ja luemme tilauksen ääneen."
+          },
+          "autoReject": {
+            "title": "Automaattihylkäys + automaattipalautus",
+            "body": "Vastaamatta jääneet tilaukset hylätään automaattisesti ja asiakkaalle palautetaan rahat automaattisesti."
+          },
+          "chargeOnAccept": {
+            "title": "Veloitus vasta hyväksyttäessä",
+            "body": "Älä koskaan valmista maksamatonta tilausta — äläkä koskaan veloita asiakasta tilauksesta, jonka hylkäät."
+          },
+          "receipts": {
+            "title": "Räätälöidyt brändätyt kuitit",
+            "body": "Suunnittele omat keittiö- ja asiakaskuittisi, varaus- ja päivänpäätöstositteesi."
+          },
+          "printer": {
+            "title": "Tulostimen asennus yhdellä napautuksella",
+            "body": "”Etsi tulostimet” skannaa WiFi-verkkosi ja listaa lämpötulostimesi — ei IP-osoitteiden metsästystä."
+          }
+        },
+        "run": {
+          "eyebrow": "Pyöritä liiketoimintaa",
+          "title": "Tunne lukusi. Omista asiakkaasi.",
+          "subtitle": "Täysi analytiikka-, asiakas- ja kampanjapaketti on mukana — ilmaiseksi. Suhde asiakkaisiisi on sinun, ei lukittuna jonkin välittäjän sisään.",
+          "frameAlt": "Raporttinäkymä — liikevaihto, tilaukset ja asiakastrendit",
+          "reports": {
+            "title": "Raporttinäkymä",
+            "body": "Liikevaihto, tilaukset, keskiostos ja asiakkaat — päivittäisin trendein."
+          },
+          "crm": {
+            "title": "Asiakaslistasi (CRM)",
+            "body": "Jokainen asiakas, kokonaiskulutus, segmentit ja CSV-vienti. Sinä omistat heidät — ei välittäjä."
+          },
+          "promos": {
+            "title": "Kampanjamoottori",
+            "body": "13 kampanjatyyppiä — BOGO, paketit, ilmaistuotteet, kupongit, ajastetut tarjoukset. 5 ilmaista, ohjattu velho."
+          },
+          "insights": {
+            "title": "Myyntinäkemykset ja suppilo",
+            "body": "Parhaat ja heikoimmat myyjät, verkkotilauksen konversiosuppilosi ja kuljetusten lämpökartta."
+          },
+          "reorder": {
+            "title": "Uudelleentilaus yhdellä klikkauksella",
+            "body": "Palaavat asiakkaat tilaavat vakiotuotteensa yhdellä napautuksella — enemmän toistuvia tilauksia, suuremmat ostokset."
+          },
+          "accounts": {
+            "title": "Asiakastilit",
+            "body": "Tallennetut osoitteet, tilaushistoria ja henkilökohtaiset kupongit pitävät asiakkaat palaamassa."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — kasvupaketti",
+          "title": "Muuta ensitilaukset vakioasiakkaiksi.",
+          "subtitle": "Markkinointi-, sitouttamis- ja asiakashankintatyökalut, jotka tuovat ihmiset takaisin — koottuna yhteen alennettuun hintaan, tai lisättynä yksi kerrallaan.",
+          "frameAlt": "Smart Link -analytiikka — skannaukset muuttuvat aidoiksi tilauksiksi ja liikevaihdoksi",
+          "badge": "Yksi paketti · viisi työkalua",
+          "blurb": "Jokainen markkinointi-, sitouttamis- ja hankintatyökalu yhteen alennettuun hintaan — tai lisää mikä tahansa yksittäinen omana valintanaan.",
+          "pricingCta": "Katso GrowthNet-hinnoittelu",
+          "apmBody": "8 edistynyttä kampanjatyyppiä, asiakassegmentit ja automatisoidut sähköpostikampanjat.",
+          "studioBody": "Seurattavat QR-koodit, Smart Links ja brändätyt esitteet — näe, mikä muuttaa skannaukset tilauksiksi.",
+          "kickstarterBody": "Lähetysvalmiit ensitilaus- ja takaisinvoittokampanjat, jotka tuovat asiakkaita heti ensimmäisestä päivästä.",
+          "smsBody": "Lähetä asiakkaille tekstiviestejä tilauksen edetessä keittiössä — vahvistettu, valmis, valmistunut.",
+          "contentpilotBody": "AI-somemanagerisi — luonnostelee ja ajastaa julkaisuja Instagramiin, Facebookiin, X:ään ja TikTokiin.",
+          "saveTitle": "Niputa ja säästä",
+          "saveBody": "Saat koko paketin halvemmalla kuin ostamalla jokaisen työkalun erikseen. <link>Katso laskelma →</link>"
+        },
+        "addons": {
+          "eyebrow": "Lisäosat — ei tasoja",
+          "title": "Aloita ilmaiseksi. Lisää vain se, mitä arvostat.",
+          "subtitle": "Jokaiselle lisäosalle voi tilata erikseen tilauksen. Valitse yksi, valitse muutama, valitse kaikki — tai pysy ikuisesti ilmaisena.",
+          "capNote": "Ilmaiseen pakettiin sisältyy <b>100 tilausta/kuukausi</b>. Mikä tahansa maksullinen lisäosa nostaa rajan.",
+          "pricingCta": "Katso täysi hinnoittelu",
+          "payments": {
+            "title": "Verkkomaksut",
+            "body": "Ota vastaan korttimaksuja verkossa — rahat saapuvat suoraan omalle Stripe- tai PayPal-tilillesi."
+          },
+          "website": {
+            "title": "Myyntioptimoitu verkkosivusto",
+            "body": "Isännöity, SEO-valmis markkinointi- ja tilaussivusto, joka rakennetaan automaattisesti ruokalistastasi, omalla verkkotunnuksellasi."
+          },
+          "multiLocation": {
+            "title": "Useat toimipisteet",
+            "body": "Hallinnoi useita toimipisteitä yhdeltä tililtä — jokaisella oma ruokalistansa, tilauksensa ja maksunsa."
+          },
+          "marketplace": {
+            "title": "Markkinapaikkalistaus",
+            "body": "Tule löydetyksi Fee Free -markkinapaikalla — edullinen uusasiakaskanava, ei 30 % maksuja."
+          },
+          "unlimited": {
+            "title": "Rajattomat tilaukset",
+            "body": "Nosta ilmaispaketin 100 tilausta/kuukausi -raja — rajaton volyymi, ei tilauskohtaisia maksuja."
+          },
+          "domain": {
+            "title": "Oma verkkotunnus",
+            "body": "Osoita oma verkkotunnuksesi isännöityyn Fee Free -sivustoosi."
+          },
+          "driver": {
+            "title": "Kuljettajaverkosto",
+            "body": "Hyödynnä Shipday-kuljettajaverkostoamme, kun omat kuljettajasi ovat varattuja."
+          },
+          "brandedApp": {
+            "title": "Brändätty mobiilisovellus",
+            "body": "Oma natiivi iOS- ja Android-sovelluksesi App Storessa ja Play Storessa."
+          },
+          "pos": {
+            "title": "POS-moduuli",
+            "body": "Talon sisäinen POS, jolla henkilökunta kirjaa paikan päällä syömisen ja noudon samasta hallintapaneelista."
+          },
+          "aiPhone": {
+            "title": "AI-puhelintilaus",
+            "body": "AI-agentti vastaa puhelimeen ja ottaa tilauksia vastaan 24/7, suoraan keittiöösi."
+          },
+          "deposits": {
+            "title": "Varauksen ennakkomaksut",
+            "body": "Veloita palautettava ennakkomaksu, kun asiakkaat varaavat pöydän — suojaa peruuttamattomilta poisjäänneiltä."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Vaihda minuuteissa",
+          "title": "Tuo koko ruokalistasi — ilman uudelleenkirjoittamista.",
+          "body": "Tuletko GloriaFoodista, FoodBookingista tai painetusta PDF:stä? Tuo koko ruokalistasi — kuvineen kaikkineen — muutamalla klikkauksella.",
+          "bullet1": "Tuo suoraan GloriaFoodista",
+          "bullet2": "Lataa PDF-ruokalista — AI:mme rakentaa sen puolestasi",
+          "bullet3": "Tuotekuvat tuodaan automaattisesti taustalla",
+          "cta": "Aloita tuonti",
+          "frameAlt": "Ruokalistan tuontivelho"
+        },
+        "steps": {
+          "title": "Käytössä kolmessa vaiheessa.",
+          "step1": {
+            "title": "Lisää ruokalistasi",
+            "body": "Rakenna se, tai tuo GloriaFoodista tai PDF:stä muutamalla klikkauksella."
+          },
+          "step2": {
+            "title": "Jaa linkkisi ja QR-koodisi",
+            "body": "Pudota tilauspainike sivustollesi, tai jaa Fee Free -sivusi ja QR-koodisi."
+          },
+          "step3": {
+            "title": "Ota tilauksia vastaan, pidä 100 %",
+            "body": "Tilaukset saapuvat keittiösovellukseesi ja tulostuvat. Ei komissiota suorista tilauksista."
+          }
+        },
+        "integrations": {
+          "heading": "Toimii saumattomasti työkalujesi kanssa",
+          "payments": "Maksut",
+          "printers": "Tulostimet",
+          "delivery": "Kuljetus",
+          "analytics": "Analytiikka ja mainonta",
+          "migration": "Siirto",
+          "voice": "Ääni",
+          "roadmap": "Tiekartalla:"
+        },
+        "canada": {
+          "badge": "Ylpeästi kanadalainen",
+          "title": "Rakennettu ja operoitu Ontariossa, Kanadassa.",
+          "body": "Kanadalainen yritys — ei kasvoton merentakainen välittäjä. Maksusi, datasi ja asiakkaasi pysyvät sinun.",
+          "supportTitle": "24/7 kanadalainen tuki",
+          "supportBody": "Aitoja ihmisiä, milloin tahansa — päivin tai öin. Soita <phone>1-888-618-8765</phone> tai chattaile suoraan sen rakentaneiden ihmisten kanssa."
+        },
+        "demo": {
+          "title": "Katso aito tilaussivu.",
+          "subtitle": "Kokeile elävää demoa — tilaa kuin asiakas ja katso, kuinka se saapuu keittiösovellukseen.",
+          "cta": "Avaa elävä demo",
+          "frameAlt": "Elävä Fee Free -tilaussivu"
+        },
+        "reseller": {
+          "text": "Pystytätkö ravintoloita ammatiksesi? Ansaitse <b>toistuvaa komissiota</b> Fee Free -kumppanina.",
+          "cta": "Kumppaniohjelma →"
+        },
+        "finalCta": {
+          "title": "Ala ottaa omia tilauksiasi vastaan jo tänään.",
+          "body": "Ilmainen ydin. 0 % komissiota suorista tilauksista. 5 minuutin käyttöönotto. Ei luottokorttia.",
+          "primary": "Aloita ilmaiseksi",
+          "secondary": "Katso se elävänä"
+        },
+        "soon": "Pian",
+        "appBadges": {
+          "iosLine1": "Lataa",
+          "androidLine1": "Hanki sovellus"
+        }
+      }
     },
     "features": {
       "title": "Ominaisuudet",

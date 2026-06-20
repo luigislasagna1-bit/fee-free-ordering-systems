@@ -4349,7 +4349,259 @@
       "featuresTitle": "Alt du behøver til online bestilling",
       "ctaTitle": "Klar til at beholde 100% af dit salg?",
       "ctaSubtitle": "Intet kreditkort nødvendigt. Annullér når som helst.",
-      "ctaButton": "Kom gratis i gang"
+      "ctaButton": "Kom gratis i gang",
+      "v2": {
+        "hero": {
+          "eyebrow": "Til restauratører",
+          "title": "Din egen bestillingsside. <accent>0% i kommission.</accent>",
+          "subtitle": "Brandet onlinebestilling til afhentning, levering, spisning i restauranten og catering — på 38 sprog, gratis for altid. Behold 100% af hver eneste direkte bestilling.",
+          "ctaStart": "Kom gratis i gang",
+          "ctaDemo": "Se en live bestillingsside",
+          "badge": "0% i kommission",
+          "trust1": "Intet kreditkort",
+          "trust2": "0% på direkte bestillinger",
+          "trust3": "38 sprog",
+          "trust4": "Bygget i Canada 🍁",
+          "frameAlt": "Luigi's Lasagna — en ægte brandet bestillingsside"
+        },
+        "funnel": {
+          "eyebrow": "Vækstvinklen",
+          "title": "Fang trafikken. <accent>Behold de faste kunder.</accent>",
+          "subtitle": "Markedspladser er gode til én ting — at sende dig en førstegangskunde. Giv hver enkelt en grund til at komme tilbage og bestille direkte, på dit eget brand, med 0% i kommission.",
+          "sourcesCaption": "Markedspladser sender dig en førstegangskunde.",
+          "neck": "QR-kode + Smart Link",
+          "yourBrand": "Dit brand",
+          "directOrders": "Direkte bestillinger · 0% i kommission",
+          "chip1": "0% i kommission",
+          "chip2": "Ej dine kunder selv",
+          "chip3": "Flere gentagne bestillinger"
+        },
+        "ordering": {
+          "eyebrow": "Gratis for altid",
+          "title": "En brandet bestillingsside, kunderne elsker.",
+          "body": "Din menu, dine billeder, dine tilvalg og dine priser — flotte på enhver mobil, på 38 sprog, med dit logo og dine farver.",
+          "bullet1": "Afhentning, levering, spisning i restauranten og catering",
+          "bullet2": "Tidsbestilling og forudbestilling",
+          "bullet3": "Indlejres på din eksisterende hjemmeside",
+          "cta": "Kom gratis i gang",
+          "frameAlt": "Menu og varemuligheder"
+        },
+        "checkout": {
+          "eyebrow": "Gratis for altid",
+          "title": "Betaling på din måde. Få pengene på din måde.",
+          "body": "Tag imod kontanter og kortbetaling ved disken gratis, eller tilføj kortbetaling online. Bordreservationer og reservér-og-bestil er indbygget.",
+          "bullet1": "Kontanter og kort ved disken — gratis",
+          "bullet2": "Indbygget drikkepenge, moms og serviceafgifter",
+          "bullet3": "Bordreservationer + reservér-og-bestil",
+          "frameAlt": "Kurv og betaling"
+        },
+        "pizza": {
+          "eyebrow": "Skabt til pizzeriaer",
+          "title": "En halv-og-halv-bygger, kunderne faktisk nyder.",
+          "body": "Lad kunderne designe en helt unik pizza — forskellig fyld på hver halvdel, placeret til venstre, til højre eller på hele pizzaen, med lidt, normalt eller ekstra.",
+          "bullet1": "Del enhver pizza i to halvdele — forskelligt fyld på hver side",
+          "bullet2": "Fair prissætning på halvt fyld (to halvdele tæller som én hel)",
+          "bullet3": "Combos og menutilbud, der åbner hele byggeren",
+          "leftHalf": "Venstre halvdel",
+          "rightHalf": "Højre halvdel",
+          "ariaLabel": "Halv-og-halv-pizza",
+          "chipLeft": "½ venstre",
+          "chipRight": "½ højre",
+          "chipWhole": "Hel",
+          "chipAmount": "Lidt · Normalt · Ekstra"
+        },
+        "kitchen": {
+          "eyebrow": "Gratis · iOS + Android",
+          "title": "Gå aldrig glip af en betalende bestilling.",
+          "subtitle": "Den native Kitchen Order App forvandler enhver iPhone, iPad eller Android-tablet til en skudsikker bestillingsstation — med et sikkerhedsnet, så en travl aften aldrig koster dig et salg.",
+          "frameAlt": "Kitchen Order App — indkommende bestilling",
+          "getApp": "Hent den gratis Kitchen Order App på din tablet",
+          "ring": {
+            "title": "Høj ringen med slukket skærm",
+            "body": "En alarm på fuld skærm vækker tabletten i samme øjeblik en bestilling lander — selv i dvale."
+          },
+          "call": {
+            "title": "Telefonopkald ved oversete bestillinger",
+            "body": "Hvis ingen trykker Accepter inden for ~90 sekunder, ringer vi til dig og læser bestillingen højt."
+          },
+          "autoReject": {
+            "title": "Auto-afvisning + auto-refundering",
+            "body": "Ubesvarede bestillinger afvises automatisk, og kunden refunderes automatisk."
+          },
+          "chargeOnAccept": {
+            "title": "Først trukket ved accept",
+            "body": "Tilbered aldrig en ubetalt bestilling — og træk aldrig en kunde for en, du afviser."
+          },
+          "receipts": {
+            "title": "Brandede kvitteringer efter eget design",
+            "body": "Design dine egne køkken- og kundebonner samt reservations- og dagsafslutningssedler."
+          },
+          "printer": {
+            "title": "Printeropsætning med ét tryk",
+            "body": "“Find printere” scanner dit WiFi og viser din termoprinter — ingen jagt på IP-adresser."
+          }
+        },
+        "run": {
+          "eyebrow": "Driv forretningen",
+          "title": "Kend dine tal. Ej dine kunder.",
+          "subtitle": "En komplet pakke til analyse, kunder og kampagner er indbygget — gratis. Forholdet til dine gæster er dit, ikke låst inde hos en aggregator.",
+          "frameAlt": "Rapporteringsoversigt — omsætning, bestillinger og kundetendenser",
+          "reports": {
+            "title": "Rapporteringsoversigt",
+            "body": "Omsætning, bestillinger, gennemsnitlig ordrestørrelse og kunder — med tendenser dag for dag."
+          },
+          "crm": {
+            "title": "Din kundeliste (CRM)",
+            "body": "Hver kunde, samlet forbrug, segmenter og CSV-eksport. Du ejer dem — ikke en aggregator."
+          },
+          "promos": {
+            "title": "Kampagnemotor",
+            "body": "13 kampagnetyper — BOGO, bundter, gratis varer, kuponer, tidsbegrænsede tilbud. 5 gratis, guidet trin for trin."
+          },
+          "insights": {
+            "title": "Salgsindsigt og tragt",
+            "body": "Bedst- og dårligst sælgende varer, din konverteringstragt for onlinebestilling og et leveringsvarmekort."
+          },
+          "reorder": {
+            "title": "Genbestilling med ét klik",
+            "body": "Tilbagevendende kunder genbestiller deres faste valg med ét tryk — flere gentagne bestillinger, større ordrer."
+          },
+          "accounts": {
+            "title": "Kundekonti",
+            "body": "Gemte adresser, ordrehistorik og personlige kuponer får gæsterne til at vende tilbage."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — vækstpakken",
+          "title": "Forvandl førstegangsordrer til faste kunder.",
+          "subtitle": "Værktøjer til markedsføring, fastholdelse og kundeerhvervelse, der får folk til at komme tilbage — samlet til én rabatpris eller tilføjet ét ad gangen.",
+          "frameAlt": "Smart Link-analyse — scanninger, der bliver til rigtige bestillinger og omsætning",
+          "badge": "Én pakke · fem værktøjer",
+          "blurb": "Alle værktøjer til markedsføring, fastholdelse og erhvervelse til én rabatpris — eller tilføj et enkelt af dem alene.",
+          "pricingCta": "Se GrowthNet-priser",
+          "apmBody": "8 avancerede kampagnetyper, kundesegmenter og automatiserede e-mailkampagner.",
+          "studioBody": "Sporbare QR-koder, Smart Links og brandede flyers — se, hvad der gør scanninger til bestillinger.",
+          "kickstarterBody": "Klar-til-at-sende kampagner til førstegangsordrer og tilbageerobring, der trækker kunder ind fra dag ét.",
+          "smsBody": "Send sms til kunderne, mens deres bestilling bevæger sig gennem køkkenet — bekræftet, klar, færdig.",
+          "contentpilotBody": "Din AI-socialmediechef — skriver og planlægger opslag til Instagram, Facebook, X og TikTok.",
+          "saveTitle": "Saml og spar",
+          "saveBody": "Få hele pakken for mindre end at købe hvert værktøj for sig. <link>Se regnestykket →</link>"
+        },
+        "addons": {
+          "eyebrow": "Tilvalg — ingen niveauer",
+          "title": "Start gratis. Tilføj kun det, du sætter pris på.",
+          "subtitle": "Hvert tilvalg kan abonneres på hver for sig. Vælg ét, vælg nogle få, vælg alle — eller bliv gratis for altid.",
+          "capNote": "Gratis-planen inkluderer <b>100 bestillinger/måned</b>. Ethvert betalt tilvalg hæver grænsen.",
+          "pricingCta": "Se alle priser",
+          "payments": {
+            "title": "Onlinebetalinger",
+            "body": "Tag imod kortbetaling online — pengene lander direkte på din egen Stripe- eller PayPal-konto."
+          },
+          "website": {
+            "title": "Salgsoptimeret hjemmeside",
+            "body": "En hostet, SEO-klar markedsførings- og bestillingsside, der automatisk bygges ud fra din menu, på dit eget domæne."
+          },
+          "multiLocation": {
+            "title": "Flere lokationer",
+            "body": "Driv flere lokationer fra én konto — hver med sin egen menu, sine egne bestillinger og betalinger."
+          },
+          "marketplace": {
+            "title": "Markedspladsannoncering",
+            "body": "Bliv opdaget på Fee Free-markedspladsen — en billig kanal til nye kunder, uden 30% i gebyrer."
+          },
+          "unlimited": {
+            "title": "Ubegrænsede bestillinger",
+            "body": "Hæv gratis-planens grænse på 100 bestillinger/måned — ubegrænset volumen, ingen gebyrer pr. bestilling."
+          },
+          "domain": {
+            "title": "Eget domæne",
+            "body": "Peg dit eget domæne mod din hostede Fee Free-side."
+          },
+          "driver": {
+            "title": "Chaufførpulje",
+            "body": "Træk på vores Shipday-chaufførnetværk, når dine egne chauffører har travlt."
+          },
+          "brandedApp": {
+            "title": "Brandet mobilapp",
+            "body": "Din egen native iOS- og Android-app i App Store og Google Play."
+          },
+          "pos": {
+            "title": "POS-modul",
+            "body": "Intern POS, så personalet kan slå spisning i restauranten og takeaway ind fra samme administration."
+          },
+          "aiPhone": {
+            "title": "AI-telefonbestilling",
+            "body": "En AI-agent tager telefonen og modtager bestillinger 24/7, direkte til dit køkken."
+          },
+          "deposits": {
+            "title": "Depositum ved reservation",
+            "body": "Opkræv et refunderbart depositum, når kunder reserverer et bord — beskytter mod udeblivelser."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Skift på få minutter",
+          "title": "Tag hele din menu med — uden at skrive den om.",
+          "body": "Kommer du fra GloriaFood, FoodBooking eller en printet PDF? Importér hele din menu — billeder og det hele — med få klik.",
+          "bullet1": "Importér direkte fra GloriaFood",
+          "bullet2": "Upload en PDF-menu — vores AI bygger den for dig",
+          "bullet3": "Varebilleder importeres automatisk i baggrunden",
+          "cta": "Start din import",
+          "frameAlt": "Guide til menuimport"
+        },
+        "steps": {
+          "title": "Live på tre trin.",
+          "step1": {
+            "title": "Tilføj din menu",
+            "body": "Byg den selv, eller importér fra GloriaFood eller en PDF med få klik."
+          },
+          "step2": {
+            "title": "Del dit link og din QR",
+            "body": "Læg bestil-knappen på din hjemmeside, eller del din Fee Free-side og QR-kode."
+          },
+          "step3": {
+            "title": "Tag imod bestillinger, behold 100%",
+            "body": "Bestillinger lander i din køkken-app og printes. Ingen kommission på direkte bestillinger."
+          }
+        },
+        "integrations": {
+          "heading": "Spiller godt sammen med dit setup",
+          "payments": "Betalinger",
+          "printers": "Printere",
+          "delivery": "Levering",
+          "analytics": "Analyse og annoncer",
+          "migration": "Migrering",
+          "voice": "Stemme",
+          "roadmap": "På køreplanen:"
+        },
+        "canada": {
+          "badge": "Stolt canadisk",
+          "title": "Bygget og drevet i Ontario, Canada.",
+          "body": "En canadisk virksomhed — ikke en ansigtsløs udenlandsk aggregator. Dine gebyrer, dine data og dine kunder forbliver dine.",
+          "supportTitle": "24/7 canadisk support",
+          "supportBody": "Rigtige mennesker, når som helst — dag eller nat. Ring til <phone>1-888-618-8765</phone> eller chat live med dem, der rent faktisk byggede det."
+        },
+        "demo": {
+          "title": "Se en rigtig bestillingsside.",
+          "subtitle": "Tag en live demo for en tur — bestil som en kunde og se det lande i køkken-appen.",
+          "cta": "Åbn live-demoen",
+          "frameAlt": "En live Fee Free-bestillingsside"
+        },
+        "reseller": {
+          "text": "Sætter du restauranter op for et levebrød? Tjen <b>løbende kommission</b> som Fee Free-partner.",
+          "cta": "Partnerprogram →"
+        },
+        "finalCta": {
+          "title": "Begynd at tage imod dine egne bestillinger i dag.",
+          "body": "Gratis kernefunktioner. 0% i kommission på direkte bestillinger. 5 minutters opsætning. Intet kreditkort.",
+          "primary": "Kom gratis i gang",
+          "secondary": "Se det live"
+        },
+        "soon": "Snart",
+        "appBadges": {
+          "iosLine1": "Download i",
+          "androidLine1": "Hent den på"
+        }
+      }
     },
     "features": {
       "title": "Funktioner",

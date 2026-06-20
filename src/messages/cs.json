@@ -4349,7 +4349,259 @@
       "featuresTitle": "Vše, co potřebujete pro online objednávání",
       "ctaTitle": "Připraveni si ponechat 100 % svých tržeb?",
       "ctaSubtitle": "Kreditní karta není vyžadována. Kdykoli zrušit.",
-      "ctaButton": "Začít zdarma"
+      "ctaButton": "Začít zdarma",
+      "v2": {
+        "hero": {
+          "eyebrow": "Pro majitele restaurací",
+          "title": "Vlastní objednávková stránka. <accent>0% provize.</accent>",
+          "subtitle": "Značková online objednávka pro vyzvednutí, rozvoz, jídlo na místě i catering — ve 38 jazycích, zdarma navždy. Z každé přímé objednávky vám zůstane 100 %.",
+          "ctaStart": "Začít zdarma",
+          "ctaDemo": "Prohlédnout živou stránku",
+          "badge": "0% provize",
+          "trust1": "Bez platební karty",
+          "trust2": "0 % z přímých objednávek",
+          "trust3": "38 jazyků",
+          "trust4": "Vyrobeno v Kanadě 🍁",
+          "frameAlt": "Luigi's Lasagna — skutečná značková objednávková stránka"
+        },
+        "funnel": {
+          "eyebrow": "Cesta k růstu",
+          "title": "Zachyťte návštěvnost. <accent>Udržte si stálé zákazníky.</accent>",
+          "subtitle": "Tržiště umí jednu věc skvěle — pošlou vám zákazníka, který přichází poprvé. Dejte každému z nich důvod, aby se vrátil a objednal přímo, pod vaší značkou, s 0% provizí.",
+          "sourcesCaption": "Tržiště vám přivedou zákazníka, který přichází poprvé.",
+          "neck": "QR kód + Smart Link",
+          "yourBrand": "Vaše značka",
+          "directOrders": "Přímé objednávky · 0% provize",
+          "chip1": "0% provize",
+          "chip2": "Zákazníci patří vám",
+          "chip3": "Více opakovaných objednávek"
+        },
+        "ordering": {
+          "eyebrow": "Zdarma navždy",
+          "title": "Značková objednávková stránka, kterou si zákazníci zamilují.",
+          "body": "Vaše menu, fotky, varianty a ceny — krásné na každém telefonu, ve 38 jazycích, s vaším logem a barvami.",
+          "bullet1": "Vyzvednutí, rozvoz, jídlo na místě i catering",
+          "bullet2": "Plánování a předobjednávky",
+          "bullet3": "Vložení do vašeho stávajícího webu",
+          "cta": "Začít zdarma",
+          "frameAlt": "Menu a možnosti položek"
+        },
+        "checkout": {
+          "eyebrow": "Zdarma navždy",
+          "title": "Objednávejte podle sebe. Plaťte podle sebe.",
+          "body": "Přijímejte hotovost a platbu kartou na pultu zdarma, nebo přidejte online platby kartou. Rezervace i rezervace s objednávkou jsou součástí.",
+          "bullet1": "Hotovost a karta na pultu — zdarma",
+          "bullet2": "Vestavěné spropitné, daně a servisní poplatky",
+          "bullet3": "Rezervace + rezervace s objednávkou",
+          "frameAlt": "Košík a pokladna"
+        },
+        "pizza": {
+          "eyebrow": "Stvořeno pro pizzerie",
+          "title": "Skládání půlených pizz, které zákazníky opravdu baví.",
+          "body": "Nechte zákazníky navrhnout si jedinečnou pizzu — jiné ingredience na každou půlku, vlevo, vpravo nebo na celou, méně, normálně nebo navíc.",
+          "bullet1": "Rozdělte libovolnou pizzu na půlky — jiné ingredience na každou stranu",
+          "bullet2": "Spravedlivé ceny za půlky (dvě půlky se počítají jako jeden celek)",
+          "bullet3": "Kombinace a výhodná menu, která otevřou kompletní skládání",
+          "leftHalf": "Levá půlka",
+          "rightHalf": "Pravá půlka",
+          "ariaLabel": "Půlená pizza",
+          "chipLeft": "½ vlevo",
+          "chipRight": "½ vpravo",
+          "chipWhole": "Celá",
+          "chipAmount": "Méně · Normálně · Navíc"
+        },
+        "kitchen": {
+          "eyebrow": "Zdarma · iOS + Android",
+          "title": "Nikdy nepřijdete o placenou objednávku.",
+          "subtitle": "Nativní Kitchen Order App promění libovolný iPhone, iPad nebo Android tablet v neprůstřelnou objednávkovou stanici — s pojistkou, aby vás rušný večer nikdy nestál tržbu.",
+          "frameAlt": "Kitchen Order App — příchozí objednávka",
+          "getApp": "Získejte aplikaci Kitchen Order App zdarma na svůj tablet",
+          "ring": {
+            "title": "Hlasité zvonění i při zhasnuté obrazovce",
+            "body": "Celoobrazovkový alarm probudí tablet v okamžiku, kdy přijde objednávka — i když je uspaný."
+          },
+          "call": {
+            "title": "Telefonát při zmeškané objednávce",
+            "body": "Pokud do ~90 sekund nikdo neklepne na Přijmout, zavoláme vám a objednávku přečteme nahlas."
+          },
+          "autoReject": {
+            "title": "Automatické odmítnutí + automatické vrácení peněz",
+            "body": "Nevyřízené objednávky se automaticky odmítnou a zákazníkovi se automaticky vrátí peníze."
+          },
+          "chargeOnAccept": {
+            "title": "Účtováno až po přijetí",
+            "body": "Nikdy nevařte nezaplacenou objednávku — a nikdy neúčtujte zákazníkovi za tu, kterou odmítnete."
+          },
+          "receipts": {
+            "title": "Vlastní značkové účtenky",
+            "body": "Navrhněte si vlastní kuchyňské i zákaznické lístky, rezervační a denní uzávěrkové stvrzenky."
+          },
+          "printer": {
+            "title": "Nastavení tiskárny jedním klepnutím",
+            "body": "„Najít tiskárny“ prohledá vaši WiFi a zobrazí vaši termotiskárnu — žádné hledání IP adres."
+          }
+        },
+        "run": {
+          "eyebrow": "Řiďte svůj podnik",
+          "title": "Mějte čísla pod kontrolou. Zákazníci patří vám.",
+          "subtitle": "Kompletní sada analytiky, správy zákazníků a akcí je součástí — zdarma. Vztah s vašimi hosty patří vám, ne nějakému tržišti.",
+          "frameAlt": "Přehled reportů — tržby, objednávky a trendy zákazníků",
+          "reports": {
+            "title": "Přehled reportů",
+            "body": "Tržby, objednávky, průměrná útrata a zákazníci — s trendy den po dni."
+          },
+          "crm": {
+            "title": "Váš seznam zákazníků (CRM)",
+            "body": "Každý zákazník, celková útrata, segmenty a export do CSV. Patří vám — ne nějakému tržišti."
+          },
+          "promos": {
+            "title": "Engine pro akce",
+            "body": "13 typů akcí — BOGO, balíčky, položky zdarma, kupony, časově omezené nabídky. 5 zdarma, krok za krokem."
+          },
+          "insights": {
+            "title": "Prodejní přehledy a trychtýř",
+            "body": "Nejlepší a nejhorší prodejci, konverzní trychtýř vašeho online objednávání, teplotní mapa rozvozů."
+          },
+          "reorder": {
+            "title": "Opakování objednávky jedním klikem",
+            "body": "Vracející se zákazníci si svou oblíbenou objednávku zopakují jedním klepnutím — více opakovaných objednávek, vyšší útraty."
+          },
+          "accounts": {
+            "title": "Zákaznické účty",
+            "body": "Uložené adresy, historie objednávek a osobní kupony udrží hosty, aby se vraceli."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — balíček pro růst",
+          "title": "Proměňte první objednávky ve stálé zákazníky.",
+          "subtitle": "Nástroje pro marketing, udržení a získávání zákazníků, které přivádějí lidi zpět — v jednom zvýhodněném balíčku, nebo přidávané po jednom.",
+          "frameAlt": "Analytika Smart Link — skeny, které se mění ve skutečné objednávky a tržby",
+          "badge": "Jeden balíček · pět nástrojů",
+          "blurb": "Všechny nástroje pro marketing, udržení a získávání zákazníků za jednu zvýhodněnou cenu — nebo přidejte kterýkoli jednotlivě.",
+          "pricingCta": "Zobrazit ceny GrowthNet",
+          "apmBody": "8 pokročilých typů akcí, zákaznické segmenty a automatizované e-mailové kampaně.",
+          "studioBody": "Sledovatelné QR kódy, Smart Links a značkové letáky — uvidíte, co mění skeny v objednávky.",
+          "kickstarterBody": "Připravené kampaně na první objednávku a získání zpět, které přivedou zákazníky hned od prvního dne.",
+          "smsBody": "Posílejte zákazníkům zprávy, jak jejich objednávka prochází kuchyní — potvrzeno, hotovo, dokončeno.",
+          "contentpilotBody": "Váš AI správce sociálních sítí — připraví a naplánuje příspěvky na Instagram, Facebook, X a TikTok.",
+          "saveTitle": "Balíček a úspora",
+          "saveBody": "Získejte celý balíček levněji, než kdybyste kupovali každý nástroj zvlášť. <link>Spočítejte si to →</link>"
+        },
+        "addons": {
+          "eyebrow": "Doplňky — žádné tarify",
+          "title": "Začněte zdarma. Přidejte jen to, co oceníte.",
+          "subtitle": "Každý doplněk lze předplatit zvlášť. Vyberte jeden, několik, nebo všechny — anebo zůstaňte zdarma navždy.",
+          "capNote": "Bezplatný plán zahrnuje <b>100 objednávek měsíčně</b>. Jakýkoli placený doplněk tento limit zruší.",
+          "pricingCta": "Zobrazit kompletní ceník",
+          "payments": {
+            "title": "Online platby",
+            "body": "Přijímejte platby kartou online — peníze přistanou přímo na vašem vlastním účtu Stripe nebo PayPal."
+          },
+          "website": {
+            "title": "Web optimalizovaný pro prodej",
+            "body": "Hostovaný, pro SEO připravený marketingový a objednávkový web, automaticky sestavený z vašeho menu, na vaší vlastní doméně."
+          },
+          "multiLocation": {
+            "title": "Více poboček",
+            "body": "Řiďte několik poboček z jednoho účtu — každou s vlastním menu, objednávkami a platbami."
+          },
+          "marketplace": {
+            "title": "Zařazení do tržiště",
+            "body": "Nechte se najít na tržišti Fee Free — levný kanál pro nové zákazníky, bez 30% poplatků."
+          },
+          "unlimited": {
+            "title": "Neomezené objednávky",
+            "body": "Zrušte limit 100 objednávek měsíčně bezplatného plánu — neomezený objem, žádné poplatky za objednávku."
+          },
+          "domain": {
+            "title": "Vlastní doména",
+            "body": "Nasměrujte vlastní doménu na svůj hostovaný web Fee Free."
+          },
+          "driver": {
+            "title": "Pool řidičů",
+            "body": "Využijte naši síť řidičů Shipday, když jsou vaši vlastní řidiči zaneprázdněni."
+          },
+          "brandedApp": {
+            "title": "Značková mobilní aplikace",
+            "body": "Vaše vlastní nativní aplikace pro iOS i Android v App Store a Google Play."
+          },
+          "pos": {
+            "title": "Modul POS",
+            "body": "Interní POS, kde personál naúčtuje konzumaci na místě i odnos z téhož administračního prostředí."
+          },
+          "aiPhone": {
+            "title": "AI telefonické objednávání",
+            "body": "AI agent zvedá telefon a přijímá objednávky 24/7, rovnou do vaší kuchyně."
+          },
+          "deposits": {
+            "title": "Zálohy za rezervace",
+            "body": "Naúčtujte vratnou zálohu, když si zákazníci rezervují stůl — ochrana proti nepříchozím."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Přejděte během pár minut",
+          "title": "Přeneste celé své menu — bez přepisování.",
+          "body": "Přecházíte z GloriaFood, FoodBooking nebo z tištěného PDF? Naimportujte celé své menu — včetně fotek — na pár kliknutí.",
+          "bullet1": "Import přímo z GloriaFood",
+          "bullet2": "Nahrajte PDF menu — naše AI ho sestaví za vás",
+          "bullet3": "Fotky položek se importují automaticky na pozadí",
+          "cta": "Spustit import",
+          "frameAlt": "Průvodce importem menu"
+        },
+        "steps": {
+          "title": "Spuštěno ve třech krocích.",
+          "step1": {
+            "title": "Přidejte své menu",
+            "body": "Sestavte ho, nebo naimportujte z GloriaFood či z PDF na pár kliknutí."
+          },
+          "step2": {
+            "title": "Sdílejte svůj odkaz a QR",
+            "body": "Vložte objednávací tlačítko na svůj web, nebo sdílejte svou stránku Fee Free a QR kód."
+          },
+          "step3": {
+            "title": "Přijímejte objednávky, nechte si 100 %",
+            "body": "Objednávky dorazí do vaší kuchyňské aplikace a vytisknou se. Žádná provize z přímých objednávek."
+          }
+        },
+        "integrations": {
+          "heading": "Bez problémů s vaším vybavením",
+          "payments": "Platby",
+          "printers": "Tiskárny",
+          "delivery": "Rozvoz",
+          "analytics": "Analytika a reklama",
+          "migration": "Migrace",
+          "voice": "Hlas",
+          "roadmap": "Na plánu:"
+        },
+        "canada": {
+          "badge": "Hrdě kanadské",
+          "title": "Vytvořeno a provozováno v Ontariu v Kanadě.",
+          "body": "Kanadská společnost — ne bezejmenné zámořské tržiště. Vaše poplatky, data i zákazníci zůstávají vaše.",
+          "supportTitle": "Kanadská podpora 24/7",
+          "supportBody": "Skuteční lidé, kdykoli — ve dne i v noci. Zavolejte na <phone>1-888-618-8765</phone> nebo si pište přes živý chat s lidmi, kteří to skutečně vytvořili."
+        },
+        "demo": {
+          "title": "Prohlédněte si skutečnou stránku.",
+          "subtitle": "Vyzkoušejte si živé demo — objednejte si jako zákazník a sledujte, jak to dorazí do kuchyňské aplikace.",
+          "cta": "Otevřít živé demo",
+          "frameAlt": "Živá stránka Fee Free"
+        },
+        "reseller": {
+          "text": "Zařizujete restaurace pro obživu? Vydělávejte <b>opakovanou provizi</b> jako partner Fee Free.",
+          "cta": "Partnerský program →"
+        },
+        "finalCta": {
+          "title": "Začněte ještě dnes přijímat vlastní objednávky.",
+          "body": "Základ zdarma. 0% provize z přímých objednávek. Nastavení za 5 minut. Bez platební karty.",
+          "primary": "Začít zdarma",
+          "secondary": "Podívat se naživo"
+        },
+        "soon": "Brzy",
+        "appBadges": {
+          "iosLine1": "Stáhnout v",
+          "androidLine1": "Stáhnout na"
+        }
+      }
     },
     "features": {
       "title": "Funkce",

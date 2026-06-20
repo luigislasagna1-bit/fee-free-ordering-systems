@@ -4349,7 +4349,259 @@
       "featuresTitle": "Sve što vam je potrebno za online naručivanje",
       "ctaTitle": "Spremni da zadržite 100% prodaje?",
       "ctaSubtitle": "Nije potrebna kreditna kartica. Otkaži u bilo kom trenutku.",
-      "ctaButton": "Počnite besplatno"
+      "ctaButton": "Počnite besplatno",
+      "v2": {
+        "hero": {
+          "eyebrow": "Za vlasnike restorana",
+          "title": "Vaša sopstvena stranica za naručivanje. <accent>0% provizije.</accent>",
+          "subtitle": "Brendirano onlajn naručivanje za preuzimanje, dostavu, obrok u restoranu i ketering — na 38 jezika, besplatno zauvek. Zadržite 100% svake direktne porudžbine.",
+          "ctaStart": "Počnite besplatno",
+          "ctaDemo": "Pogledajte radnju uživo",
+          "badge": "0% provizije",
+          "trust1": "Bez kreditne kartice",
+          "trust2": "0% na direktne porudžbine",
+          "trust3": "38 jezika",
+          "trust4": "Napravljeno u Kanadi 🍁",
+          "frameAlt": "Luigi's Lasagna — prava brendirana stranica za naručivanje"
+        },
+        "funnel": {
+          "eyebrow": "Ugao rasta",
+          "title": "Uhvatite saobraćaj. <accent>Zadržite ponovne goste.</accent>",
+          "subtitle": "Platforme za naručivanje su sjajne u jednoj stvari — da vam pošalju gosta po prvi put. Dajte svakom od njih razlog da se vrati i naruči direktno, na vašem brendu, uz 0% provizije.",
+          "sourcesCaption": "Platforme vam dovode gosta po prvi put.",
+          "neck": "QR kôd + Smart Link",
+          "yourBrand": "Vaš brend",
+          "directOrders": "Direktne porudžbine · 0% provizije",
+          "chip1": "0% provizije",
+          "chip2": "Vaši gosti su vaši",
+          "chip3": "Više ponovljenih porudžbina"
+        },
+        "ordering": {
+          "eyebrow": "Besplatno zauvek",
+          "title": "Brendirana stranica za naručivanje koju gosti vole.",
+          "body": "Vaš meni, fotografije, dodaci i cene — prelepi na svakom telefonu, na 38 jezika, sa vašim logom i bojama.",
+          "bullet1": "Preuzimanje, dostava, obrok u restoranu i ketering",
+          "bullet2": "Zakazivanje i pretporudžbine",
+          "bullet3": "Ugrađuje se u vaš postojeći sajt",
+          "cta": "Počnite besplatno",
+          "frameAlt": "Meni i opcije artikla"
+        },
+        "checkout": {
+          "eyebrow": "Besplatno zauvek",
+          "title": "Naplata na vaš način. Naplata kako vama odgovara.",
+          "body": "Primajte gotovinu i karticu na pultu besplatno, ili dodajte onlajn plaćanje karticom. Rezervacije i opcija „rezerviši pa naruči“ su ugrađene.",
+          "bullet1": "Gotovina i kartica na pultu — besplatno",
+          "bullet2": "Ugrađeni napojnice, porezi i naknade za uslugu",
+          "bullet3": "Rezervacije + rezerviši pa naruči",
+          "frameAlt": "Korpa i naplata"
+        },
+        "pizza": {
+          "eyebrow": "Napravljeno za picerije",
+          "title": "Alat za pola-pola pice u kom gosti zaista uživaju.",
+          "body": "Dozvolite gostima da osmisle jedinstvenu picu — različiti dodaci na svakoj polovini, postavljeni levo, desno ili preko cele, malo, normalno ili ekstra.",
+          "bullet1": "Podelite bilo koju picu na polovine — različiti dodaci sa svake strane",
+          "bullet2": "Poštene cene za pola dodatka (dve polovine se računaju kao jedna cela)",
+          "bullet3": "Kombo i menu ponude koje otvaraju kompletan alat za sastavljanje",
+          "leftHalf": "Leva polovina",
+          "rightHalf": "Desna polovina",
+          "ariaLabel": "Pica pola-pola",
+          "chipLeft": "½ leva",
+          "chipRight": "½ desna",
+          "chipWhole": "Cela",
+          "chipAmount": "Malo · Normalno · Ekstra"
+        },
+        "kitchen": {
+          "eyebrow": "Besplatno · iOS + Android",
+          "title": "Nikada ne propustite porudžbinu koja se plaća.",
+          "subtitle": "Nativna Kitchen Order App pretvara svaki iPhone, iPad ili Android tablet u nepogrešivu stanicu za porudžbine — sa sigurnosnom mrežom koja garantuje da vam ni najprometnija noć ne odnese nijednu prodaju.",
+          "frameAlt": "Kitchen Order App — pristigla porudžbina",
+          "getApp": "Preuzmite besplatnu Kitchen Order App na svoj tablet",
+          "ring": {
+            "title": "Glasno zvono čak i kad je ekran ugašen",
+            "body": "Alarm preko celog ekrana budi tablet onog trenutka kad porudžbina stigne — čak i kada je u stanju mirovanja."
+          },
+          "call": {
+            "title": "Telefonski poziv za propuštenu porudžbinu",
+            "body": "Ako niko ne pritisne „Prihvati“ za ~90 sekundi, pozovemo vas i naglas vam pročitamo porudžbinu."
+          },
+          "autoReject": {
+            "title": "Automatsko odbijanje + automatski povraćaj",
+            "body": "Porudžbine na koje niko ne odgovori automatski se odbijaju, a gostu se automatski vraća novac."
+          },
+          "chargeOnAccept": {
+            "title": "Naplata tek po prihvatanju",
+            "body": "Nikada ne kuvajte neplaćenu porudžbinu — i nikada ne naplaćujte gostu onu koju odbijete."
+          },
+          "receipts": {
+            "title": "Prilagođeni brendirani računi",
+            "body": "Osmislite sopstvene listiće za kuhinju i goste, kao i listiće za rezervacije i kraj dana."
+          },
+          "printer": {
+            "title": "Podešavanje štampača u jednom dodiru",
+            "body": "„Pronađi štampače“ pretražuje vaš WiFi i izlistava vaš termalni štampač — bez traženja IP adresa."
+          }
+        },
+        "run": {
+          "eyebrow": "Vodite posao",
+          "title": "Poznajte svoje brojke. Vaši gosti su vaši.",
+          "subtitle": "Kompletan paket za analitiku, goste i promocije je ugrađen — besplatno. Odnos sa vašim gostima pripada vama, a ne nekoj posredničkoj platformi.",
+          "frameAlt": "Tabla sa izveštajima — prihodi, porudžbine i trendovi gostiju",
+          "reports": {
+            "title": "Tabla sa izveštajima",
+            "body": "Prihodi, porudžbine, prosečan račun i gosti — sa trendovima iz dana u dan."
+          },
+          "crm": {
+            "title": "Vaša lista gostiju (CRM)",
+            "body": "Svaki gost, ukupna potrošnja, segmenti i CSV izvoz. Oni pripadaju vama — a ne posredniku."
+          },
+          "promos": {
+            "title": "Mašina za promocije",
+            "body": "13 tipova promocija — BOGO, paketi, besplatni artikli, kuponi, vremenski ograničene ponude. 5 besplatnih, uz vođeni čarobnjak."
+          },
+          "insights": {
+            "title": "Uvidi u prodaju i levak",
+            "body": "Najbolji i najslabiji artikli, levak konverzije vašeg onlajn naručivanja i toplotna mapa dostave."
+          },
+          "reorder": {
+            "title": "Ponovna porudžbina u jednom kliku",
+            "body": "Gosti koji se vraćaju ponovo poručuju svoje uobičajeno jednim dodirom — više ponovljenih porudžbina, veći računi."
+          },
+          "accounts": {
+            "title": "Nalozi gostiju",
+            "body": "Sačuvane adrese, istorija porudžbina i lični kuponi vraćaju goste iznova."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — paket za rast",
+          "title": "Pretvorite prve porudžbine u stalne goste.",
+          "subtitle": "Alati za marketing, zadržavanje i privlačenje gostiju koji ih vraćaju — u jednom paketu po sniženoj ceni, ili dodati jedan po jedan.",
+          "frameAlt": "Smart Link analitika — skeniranja koja se pretvaraju u prave porudžbine i prihod",
+          "badge": "Jedan paket · pet alata",
+          "blurb": "Svaki alat za marketing, zadržavanje i privlačenje gostiju po jednoj sniženoj ceni — ili dodajte bilo koji pojedinačno.",
+          "pricingCta": "Pogledajte cene GrowthNet-a",
+          "apmBody": "8 naprednih tipova promocija, segmenti gostiju i automatizovane imejl kampanje.",
+          "studioBody": "QR kodovi koji se prate, Smart Links i brendirani flajeri — vidite šta pretvara skeniranja u porudžbine.",
+          "kickstarterBody": "Kampanje za prvu porudžbinu i povratak gostiju, spremne za slanje, koje dovode goste od prvog dana.",
+          "smsBody": "Šaljite poruke gostima dok njihova porudžbina prolazi kroz kuhinju — potvrđena, spremna, završena.",
+          "contentpilotBody": "Vaš AI menadžer za društvene mreže — piše i zakazuje objave na Instagram, Facebook, X i TikTok.",
+          "saveTitle": "Uzmite paket i uštedite",
+          "saveBody": "Nabavite ceo paket jeftinije nego kad svaki alat kupujete posebno. <link>Pogledajte računicu →</link>"
+        },
+        "addons": {
+          "eyebrow": "Dodaci — bez paketa nivoa",
+          "title": "Počnite besplatno. Dodajte samo ono što vam vredi.",
+          "subtitle": "Na svaki dodatak se može pretplatiti zasebno. Odaberite jedan, nekoliko ili sve — ili ostanite besplatno zauvek.",
+          "capNote": "Besplatni plan uključuje <b>100 porudžbina mesečno</b>. Bilo koji plaćeni dodatak ukida ograničenje.",
+          "pricingCta": "Pogledajte sve cene",
+          "payments": {
+            "title": "Onlajn plaćanja",
+            "body": "Primajte plaćanja karticom onlajn — novac sleće direktno na vaš sopstveni Stripe ili PayPal nalog."
+          },
+          "website": {
+            "title": "Sajt optimizovan za prodaju",
+            "body": "Hostovan, SEO spreman marketing i sajt za naručivanje, automatski izgrađen iz vašeg menija, na vašem sopstvenom domenu."
+          },
+          "multiLocation": {
+            "title": "Više lokacija",
+            "body": "Vodite više lokacija sa jednog naloga — svaka sa sopstvenim menijem, porudžbinama i plaćanjima."
+          },
+          "marketplace": {
+            "title": "Oglas na pijaci",
+            "body": "Budite otkriveni na Fee Free pijaci — jeftin kanal za nove goste, bez naknada od 30%."
+          },
+          "unlimited": {
+            "title": "Neograničene porudžbine",
+            "body": "Ukinite ograničenje besplatnog plana od 100 porudžbina mesečno — neograničen obim, bez naknada po porudžbini."
+          },
+          "domain": {
+            "title": "Prilagođeni domen",
+            "body": "Usmerite svoj sopstveni domen na vaš hostovani Fee Free sajt."
+          },
+          "driver": {
+            "title": "Mreža vozača",
+            "body": "Iskoristite našu Shipday mrežu vozača kada su vaši sopstveni vozači zauzeti."
+          },
+          "brandedApp": {
+            "title": "Brendirana mobilna aplikacija",
+            "body": "Vaša sopstvena nativna iOS i Android aplikacija u App Store-u i Play Store-u."
+          },
+          "pos": {
+            "title": "POS modul",
+            "body": "Interni POS da osoblje naplaćuje obroke u restoranu i za poneti iz istog admin panela."
+          },
+          "aiPhone": {
+            "title": "AI naručivanje telefonom",
+            "body": "AI agent se javlja na telefon i prima porudžbine 24/7, pravo u vašu kuhinju."
+          },
+          "deposits": {
+            "title": "Depoziti za rezervacije",
+            "body": "Naplatite povratni depozit kada gosti rezervišu sto — štiti vas od onih koji se ne pojave."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Pređite za nekoliko minuta",
+          "title": "Prenesite ceo svoj meni — bez ponovnog kucanja.",
+          "body": "Dolazite sa GloriaFood, FoodBooking ili odštampanog PDF-a? Uvezite ceo svoj meni — sa svim fotografijama — u nekoliko klikova.",
+          "bullet1": "Uvezite direktno iz GloriaFood-a",
+          "bullet2": "Otpremite PDF meni — naš AI ga gradi umesto vas",
+          "bullet3": "Fotografije artikala se uvoze automatski u pozadini",
+          "cta": "Započnite uvoz",
+          "frameAlt": "Čarobnjak za uvoz menija"
+        },
+        "steps": {
+          "title": "Uživo u tri koraka.",
+          "step1": {
+            "title": "Dodajte svoj meni",
+            "body": "Napravite ga, ili uvezite iz GloriaFood-a ili PDF-a u nekoliko klikova."
+          },
+          "step2": {
+            "title": "Podelite svoj link i QR",
+            "body": "Postavite dugme za naručivanje na svoj sajt, ili podelite svoju Fee Free stranicu i QR kôd."
+          },
+          "step3": {
+            "title": "Primajte porudžbine, zadržite 100%",
+            "body": "Porudžbine stižu u vašu kuhinjsku aplikaciju i štampaju se. Bez provizije na direktne porudžbine."
+          }
+        },
+        "integrations": {
+          "heading": "Sjajno se uklapa u vaš sistem",
+          "payments": "Plaćanja",
+          "printers": "Štampači",
+          "delivery": "Dostava",
+          "analytics": "Analitika i oglasi",
+          "migration": "Migracija",
+          "voice": "Glas",
+          "roadmap": "U planu:"
+        },
+        "canada": {
+          "badge": "Ponosno kanadski",
+          "title": "Napravljeno i vođeno u Ontariju, Kanada.",
+          "body": "Kanadska kompanija — a ne bezlični prekomorski posrednik. Vaše naknade, podaci i gosti ostaju vaši.",
+          "supportTitle": "Kanadska podrška 24/7",
+          "supportBody": "Pravi ljudi, u svako doba — danju ili noću. Pozovite <phone>1-888-618-8765</phone> ili ćaskajte uživo sa ljudima koji su ovo zaista napravili."
+        },
+        "demo": {
+          "title": "Pogledajte pravu radnju.",
+          "subtitle": "Isprobajte demo uživo — naručite kao gost i gledajte kako porudžbina sleće u kuhinjsku aplikaciju.",
+          "cta": "Otvorite demo uživo",
+          "frameAlt": "Fee Free radnja uživo"
+        },
+        "reseller": {
+          "text": "Otvarate restorane za život? Zaradite <b>ponavljajuću proviziju</b> kao Fee Free partner.",
+          "cta": "Partnerski program →"
+        },
+        "finalCta": {
+          "title": "Počnite da primate sopstvene porudžbine već danas.",
+          "body": "Besplatna osnova. 0% provizije na direktne porudžbine. Podešavanje za 5 minuta. Bez kreditne kartice.",
+          "primary": "Počnite besplatno",
+          "secondary": "Pogledajte uživo"
+        },
+        "soon": "Uskoro",
+        "appBadges": {
+          "iosLine1": "Preuzmite na",
+          "androidLine1": "Nabavite na"
+        }
+      }
     },
     "features": {
       "title": "Funkcije",

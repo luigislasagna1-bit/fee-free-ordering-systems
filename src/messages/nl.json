@@ -4349,7 +4349,259 @@
       "featuresTitle": "Alles wat u nodig heeft voor online bestellen",
       "ctaTitle": "Klaar om 100% van uw omzet te houden?",
       "ctaSubtitle": "Geen creditcard vereist. Op elk moment opzeggen.",
-      "ctaButton": "Gratis aan de slag"
+      "ctaButton": "Gratis aan de slag",
+      "v2": {
+        "hero": {
+          "eyebrow": "Voor restauranthouders",
+          "title": "Je eigen bestelpagina. <accent>0% commissie.</accent>",
+          "subtitle": "Online bestellen met je eigen huisstijl voor afhalen, bezorgen, ter plaatse eten & catering — in 38 talen, voor altijd gratis. Houd 100% van elke directe bestelling.",
+          "ctaStart": "Gratis starten",
+          "ctaDemo": "Bekijk een live winkel",
+          "badge": "0% commissie",
+          "trust1": "Geen creditcard",
+          "trust2": "0% op directe bestellingen",
+          "trust3": "38 talen",
+          "trust4": "Gemaakt in Canada 🍁",
+          "frameAlt": "Luigi's Lasagna — een echte bestelpagina met eigen huisstijl"
+        },
+        "funnel": {
+          "eyebrow": "De groeihoek",
+          "title": "Vang het verkeer. <accent>Houd de vaste klant.</accent>",
+          "subtitle": "Marktplaatsen zijn in één ding goed — je een nieuwe klant bezorgen. Geef ieder van hen een reden om terug te komen en direct te bestellen, in jouw huisstijl, tegen 0% commissie.",
+          "sourcesCaption": "Marktplaatsen brengen je een nieuwe klant.",
+          "neck": "QR-code + Smart Link",
+          "yourBrand": "Jouw merk",
+          "directOrders": "Directe bestellingen · 0% commissie",
+          "chip1": "0% commissie",
+          "chip2": "Je klanten zijn van jou",
+          "chip3": "Meer herhaalbestellingen"
+        },
+        "ordering": {
+          "eyebrow": "Voor altijd gratis",
+          "title": "Een bestelpagina met huisstijl waar klanten dol op zijn.",
+          "body": "Je menu, foto's, opties en prijzen — prachtig op elke telefoon, in 38 talen, met je eigen logo en kleuren.",
+          "bullet1": "Afhalen, bezorgen, ter plaatse eten & catering",
+          "bullet2": "Inplannen & voorbestellingen",
+          "bullet3": "Integreert in je bestaande website",
+          "cta": "Gratis starten",
+          "frameAlt": "Menu & gerechtopties"
+        },
+        "checkout": {
+          "eyebrow": "Voor altijd gratis",
+          "title": "Afrekenen op jouw manier. Betaald worden op jouw manier.",
+          "body": "Accepteer gratis contant en pinnen aan de balie, of voeg online kaartbetalingen toe. Reserveringen en reserveren-dan-bestellen zitten standaard ingebouwd.",
+          "bullet1": "Contant & pinnen aan de balie — gratis",
+          "bullet2": "Ingebouwde fooien, btw & servicekosten",
+          "bullet3": "Reserveringen + reserveren-dan-bestellen",
+          "frameAlt": "Winkelwagen & afrekenen"
+        },
+        "pizza": {
+          "eyebrow": "Gemaakt voor pizzeria's",
+          "title": "Een half-en-half-bouwer waar klanten echt plezier aan beleven.",
+          "body": "Laat klanten een unieke pizza samenstellen — andere toppings op elke helft, links, rechts of op de hele pizza, met weinig, normaal of extra.",
+          "bullet1": "Splits elke pizza in twee helften — andere toppings per kant",
+          "bullet2": "Eerlijke prijs voor halve toppings (twee helften tellen als één hele)",
+          "bullet3": "Combo's & menudeals die de volledige bouwer openen",
+          "leftHalf": "Linkerhelft",
+          "rightHalf": "Rechterhelft",
+          "ariaLabel": "Half-en-half-pizza",
+          "chipLeft": "½ Links",
+          "chipRight": "½ Rechts",
+          "chipWhole": "Heel",
+          "chipAmount": "Weinig · Normaal · Extra"
+        },
+        "kitchen": {
+          "eyebrow": "Gratis · iOS + Android",
+          "title": "Mis nooit meer een betalende bestelling.",
+          "subtitle": "De native Kitchen Order App maakt van elke iPhone, iPad of Android-tablet een kogelvrij bestelstation — met een vangnet, zodat een drukke avond je nooit een verkoop kost.",
+          "frameAlt": "Kitchen Order App — binnenkomende bestelling",
+          "getApp": "Haal de gratis Kitchen Order App op je tablet",
+          "ring": {
+            "title": "Luide melding met scherm uit",
+            "body": "Een schermvullend alarm wekt de tablet op het moment dat er een bestelling binnenkomt — zelfs in slaapstand."
+          },
+          "call": {
+            "title": "Telefoontje bij gemiste bestelling",
+            "body": "Tikt er niemand binnen ~90 seconden op Accepteren, dan bellen we je en lezen de bestelling voor."
+          },
+          "autoReject": {
+            "title": "Automatisch afwijzen + automatisch terugbetalen",
+            "body": "Onbeantwoorde bestellingen worden automatisch afgewezen en de klant krijgt automatisch zijn geld terug."
+          },
+          "chargeOnAccept": {
+            "title": "Pas bij accepteren in rekening gebracht",
+            "body": "Kook nooit een onbetaalde bestelling — en breng een klant nooit iets in rekening voor een bestelling die je weigert."
+          },
+          "receipts": {
+            "title": "Aangepaste bonnen met huisstijl",
+            "body": "Ontwerp je eigen keuken- + klantbonnen, reserverings- en eindedagboekjes."
+          },
+          "printer": {
+            "title": "Printer instellen met één tik",
+            "body": "“Printers zoeken” scant je WiFi en toont je thermische printer — geen gedoe met IP-adressen."
+          }
+        },
+        "run": {
+          "eyebrow": "Run de zaak",
+          "title": "Ken je cijfers. Je klanten zijn van jou.",
+          "subtitle": "Een volledige suite voor analyse, klanten en promoties zit ingebouwd — gratis. De band met je gasten is van jou, niet opgesloten in een platform.",
+          "frameAlt": "Rapportagedashboard — omzet, bestellingen & klanttrends",
+          "reports": {
+            "title": "Rapportagedashboard",
+            "body": "Omzet, bestellingen, gemiddelde besteding en klanten — met dagelijkse trends."
+          },
+          "crm": {
+            "title": "Je klantenlijst (CRM)",
+            "body": "Elke klant, totale besteding, segmenten en CSV-export. Ze zijn van jou — niet van een platform."
+          },
+          "promos": {
+            "title": "Promotiemotor",
+            "body": "13 promotietypes — BOGO, bundels, gratis gerechten, kortingsbonnen, tijdelijke deals. 5 gratis, met begeleide wizard."
+          },
+          "insights": {
+            "title": "Verkoopinzichten & funnel",
+            "body": "Best- en slechtstverkopende gerechten, je conversiefunnel voor online bestellen, een bezorgheatmap."
+          },
+          "reorder": {
+            "title": "Opnieuw bestellen met één klik",
+            "body": "Terugkerende klanten bestellen hun vaste keuze met één tik — meer herhaalbestellingen, hogere bonnen."
+          },
+          "accounts": {
+            "title": "Klantaccounts",
+            "body": "Opgeslagen adressen, bestelgeschiedenis en persoonlijke kortingsbonnen houden gasten terugkomend."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — de groeibundel",
+          "title": "Maak van eerste bestellingen vaste klanten.",
+          "subtitle": "Tools voor marketing, retentie en klantenwerving die mensen terugbrengen — gebundeld tegen één voordelige prijs, of stuk voor stuk toegevoegd.",
+          "frameAlt": "Smart Link-analyse — scans die echte bestellingen & omzet worden",
+          "badge": "Eén bundel · vijf tools",
+          "blurb": "Elke tool voor marketing, retentie en werving tegen één voordelige prijs — of voeg er los eentje toe.",
+          "pricingCta": "Bekijk GrowthNet-prijzen",
+          "apmBody": "8 geavanceerde promotietypes, klantsegmenten en geautomatiseerde e-mailcampagnes.",
+          "studioBody": "Traceerbare QR-codes, Smart Links en flyers met huisstijl — zie wat scans in bestellingen omzet.",
+          "kickstarterBody": "Kant-en-klare campagnes voor eerste bestellingen en terugwinnen die vanaf dag één klanten binnenhalen.",
+          "smsBody": "Stuur klanten een sms terwijl hun bestelling door de keuken gaat — bevestigd, klaar, voltooid.",
+          "contentpilotBody": "Je AI-socialmanager — schrijft en plant berichten voor Instagram, Facebook, X & TikTok.",
+          "saveTitle": "Bundel & bespaar",
+          "saveBody": "Krijg de hele bundel voor minder dan elke tool apart te kopen. <link>Bekijk de rekensom →</link>"
+        },
+        "addons": {
+          "eyebrow": "Add-ons — geen abonnementsniveaus",
+          "title": "Start gratis. Voeg alleen toe wat je waardevol vindt.",
+          "subtitle": "Elke add-on is los af te nemen. Kies er één, kies er een paar, kies ze allemaal — of blijf voor altijd gratis.",
+          "capNote": "Het gratis abonnement bevat <b>100 bestellingen/maand</b>. Elke betaalde add-on verhoogt de limiet.",
+          "pricingCta": "Bekijk volledige prijzen",
+          "payments": {
+            "title": "Online betalingen",
+            "body": "Accepteer online kaartbetalingen — het geld komt rechtstreeks binnen op je eigen Stripe- of PayPal-account."
+          },
+          "website": {
+            "title": "Verkoopgerichte website",
+            "body": "Een gehoste, SEO-klare marketing- + bestelsite, automatisch gebouwd uit je menu, op je eigen domein."
+          },
+          "multiLocation": {
+            "title": "Meerdere vestigingen",
+            "body": "Beheer meerdere vestigingen vanuit één account — elk met een eigen menu, bestellingen en betalingen."
+          },
+          "marketplace": {
+            "title": "Marktplaatsvermelding",
+            "body": "Word ontdekt op de Fee Free-marktplaats — een goedkoop kanaal voor nieuwe klanten, geen 30% kosten."
+          },
+          "unlimited": {
+            "title": "Onbeperkt bestellen",
+            "body": "Hef de limiet van 100 bestellingen/maand van het gratis abonnement op — onbeperkt volume, geen kosten per bestelling."
+          },
+          "domain": {
+            "title": "Eigen domein",
+            "body": "Koppel je eigen domein aan je gehoste Fee Free-site."
+          },
+          "driver": {
+            "title": "Bezorgerspool",
+            "body": "Maak gebruik van ons Shipday-bezorgersnetwerk wanneer je eigen bezorgers bezet zijn."
+          },
+          "brandedApp": {
+            "title": "Mobiele app met huisstijl",
+            "body": "Je eigen native iOS- + Android-app in de App Store en Play Store."
+          },
+          "pos": {
+            "title": "POS-module",
+            "body": "Eigen POS waarmee personeel bestellingen voor ter plaatse eten en afhalen aanslaat vanuit dezelfde admin."
+          },
+          "aiPhone": {
+            "title": "AI-telefoonbestellingen",
+            "body": "Een AI-agent neemt de telefoon op en noteert bestellingen 24/7, rechtstreeks naar je keuken."
+          },
+          "deposits": {
+            "title": "Reserveringsaanbetalingen",
+            "body": "Vraag een terugbetaalbare aanbetaling wanneer klanten een tafel boeken — beschermt tegen no-shows."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Binnen minuten overstappen",
+          "title": "Neem je hele menu mee — zonder het over te typen.",
+          "body": "Kom je van GloriaFood, FoodBooking of een geprinte PDF? Importeer je volledige menu — inclusief alle foto's — in een paar klikken.",
+          "bullet1": "Importeer rechtstreeks uit GloriaFood",
+          "bullet2": "Upload een PDF-menu — onze AI bouwt het voor je op",
+          "bullet3": "Gerechtfoto's worden automatisch op de achtergrond geïmporteerd",
+          "cta": "Start je import",
+          "frameAlt": "Wizard voor menu-import"
+        },
+        "steps": {
+          "title": "Live in drie stappen.",
+          "step1": {
+            "title": "Voeg je menu toe",
+            "body": "Bouw het zelf, of importeer in een paar klikken uit GloriaFood of een PDF."
+          },
+          "step2": {
+            "title": "Deel je link & QR",
+            "body": "Plaats de bestelknop op je site, of deel je Fee Free-pagina en QR-code."
+          },
+          "step3": {
+            "title": "Neem bestellingen aan, houd 100%",
+            "body": "Bestellingen komen binnen op je keuken-app en worden geprint. Geen commissie op directe bestellingen."
+          }
+        },
+        "integrations": {
+          "heading": "Werkt prima samen met jouw systemen",
+          "payments": "Betalingen",
+          "printers": "Printers",
+          "delivery": "Bezorging",
+          "analytics": "Analyse & advertenties",
+          "migration": "Migratie",
+          "voice": "Spraak",
+          "roadmap": "Op de roadmap:"
+        },
+        "canada": {
+          "badge": "Trots Canadees",
+          "title": "Gebouwd & beheerd in Ontario, Canada.",
+          "body": "Een Canadees bedrijf — geen gezichtloos buitenlands platform. Je kosten, gegevens en klanten blijven van jou.",
+          "supportTitle": "24/7 Canadese support",
+          "supportBody": "Echte mensen, op elk moment — dag en nacht. Bel <phone>1-888-618-8765</phone> of chat live met de mensen die het echt gebouwd hebben."
+        },
+        "demo": {
+          "title": "Bekijk een echte winkel.",
+          "subtitle": "Maak een proefrit met een live demo — bestel als een klant en zie het binnenkomen op de keuken-app.",
+          "cta": "Open de live demo",
+          "frameAlt": "Een live Fee Free-winkel"
+        },
+        "reseller": {
+          "text": "Richt je voor de kost restaurants in? Verdien <b>terugkerende commissie</b> als Fee Free-partner.",
+          "cta": "Partnerprogramma →"
+        },
+        "finalCta": {
+          "title": "Begin vandaag met je eigen bestellingen aannemen.",
+          "body": "Gratis basis. 0% commissie op directe bestellingen. In 5 minuten ingesteld. Geen creditcard.",
+          "primary": "Gratis starten",
+          "secondary": "Bekijk het live"
+        },
+        "soon": "Binnenkort",
+        "appBadges": {
+          "iosLine1": "Download in de",
+          "androidLine1": "Verkrijgbaar in"
+        }
+      }
     },
     "features": {
       "title": "Functies",

@@ -4349,7 +4349,259 @@
       "featuresTitle": "Kõik, mida vajad veebitellimusteservise käitamiseks",
       "ctaTitle": "Valmis hoidma 100% oma müügist?",
       "ctaSubtitle": "Krediitkaarti ei nõuta. Tühista millal tahes.",
-      "ctaButton": "Alusta tasuta"
+      "ctaButton": "Alusta tasuta",
+      "v2": {
+        "hero": {
+          "eyebrow": "Restoranipidajatele",
+          "title": "Sinu enda tellimisleht. <accent>0% komisjonitasu.</accent>",
+          "subtitle": "Brändiga veebitellimine kaasamüügi, kohaletoimetamise, kohapeal söömise ja toitlustuse jaoks — 38 keeles, igavesti tasuta. Hoia 100% iga otsetellimuse käibest endale.",
+          "ctaStart": "Alusta tasuta",
+          "ctaDemo": "Vaata päris tellimislehte",
+          "badge": "0% komisjonitasu",
+          "trust1": "Ilma pangakaardita",
+          "trust2": "0% otsetellimustelt",
+          "trust3": "38 keelt",
+          "trust4": "Loodud Kanadas 🍁",
+          "frameAlt": "Luigi's Lasagna — päris brändiga tellimisleht"
+        },
+        "funnel": {
+          "eyebrow": "Kasvuvaade",
+          "title": "Püüa liiklus. <accent>Hoia korduvkliendid.</accent>",
+          "subtitle": "Turuplatsid on ühes asjas suurepärased — toovad sulle esmakordse kliendi. Anna igaühele neist põhjus naasta ja tellida otse, sinu brändi alt, 0% komisjonitasuga.",
+          "sourcesCaption": "Turuplatsid toovad sulle esmakordse kliendi.",
+          "neck": "QR-kood + Smart Link",
+          "yourBrand": "Sinu bränd",
+          "directOrders": "Otsetellimused · 0% komisjonitasu",
+          "chip1": "0% komisjonitasu",
+          "chip2": "Sinu kliendid kuuluvad sulle",
+          "chip3": "Rohkem korduvtellimusi"
+        },
+        "ordering": {
+          "eyebrow": "Igavesti tasuta",
+          "title": "Brändiga tellimisleht, mida kliendid armastavad.",
+          "body": "Sinu menüü, fotod, lisavalikud ja hinnad — kaunilt igas telefonis, 38 keeles, sinu logo ja värvidega.",
+          "bullet1": "Kaasamüük, kohaletoimetamine, kohapeal söömine ja toitlustus",
+          "bullet2": "Ajastamine ja ettetellimine",
+          "bullet3": "Põimub sinu olemasolevale veebilehele",
+          "cta": "Alusta tasuta",
+          "frameAlt": "Menüü ja toote valikud"
+        },
+        "checkout": {
+          "eyebrow": "Igavesti tasuta",
+          "title": "Maksa nii, nagu sulle sobib. Saa raha nii, nagu sulle sobib.",
+          "body": "Võta sularaha ja kaardimakseid leti taga tasuta vastu või lisa veebikaardimaksed. Laua broneerimine ja broneeri-siis-telli on juba sisse ehitatud.",
+          "bullet1": "Sularaha ja kaardimakse leti taga — tasuta",
+          "bullet2": "Sisseehitatud jootraha, maksud ja teenustasud",
+          "bullet3": "Broneeringud + broneeri-siis-telli",
+          "frameAlt": "Ostukorv ja maksmine"
+        },
+        "pizza": {
+          "eyebrow": "Loodud pitsakohtadele",
+          "title": "Pool-pool koostaja, mida kliendid tõeliselt naudivad.",
+          "body": "Lase klientidel kujundada täiesti ainulaadne pitsa — erinevad katted igale poolele, paigutatud vasakule, paremale või üle terve, õhukeselt, tavaliselt või ekstra.",
+          "bullet1": "Jaga iga pitsa pooleks — erinevad katted mõlemal poolel",
+          "bullet2": "Õiglane poolkatte hinnastamine (kaks poolt loevad ühe tervena)",
+          "bullet3": "Komplektid ja sööginpakkumised, mis avavad täieliku koostaja",
+          "leftHalf": "Vasak pool",
+          "rightHalf": "Parem pool",
+          "ariaLabel": "Pool-pool pitsa",
+          "chipLeft": "½ Vasak",
+          "chipRight": "½ Parem",
+          "chipWhole": "Terve",
+          "chipAmount": "Õhuke · Tavaline · Ekstra"
+        },
+        "kitchen": {
+          "eyebrow": "Tasuta · iOS + Android",
+          "title": "Ära jäta ühtegi tasulist tellimust märkamata.",
+          "subtitle": "Natiivne Kitchen Order App muudab iga iPhone'i, iPadi või Androidi tahvelarvuti kuulikindlaks tellimisjaamaks — turvavõrguga, et tegus õhtu ei läheks sulle kunagi maksma müügi.",
+          "frameAlt": "Kitchen Order App — saabuv tellimus",
+          "getApp": "Hangi tasuta Kitchen Order App oma tahvelarvutisse",
+          "ring": {
+            "title": "Vali helin ekraan väljas",
+            "body": "Täisekraani äratus äratab tahvelarvuti hetkel, mil tellimus saabub — isegi unerežiimis."
+          },
+          "call": {
+            "title": "Märkamata jäänud tellimuse telefonikõne",
+            "body": "Kui keegi ei vajuta ~90 sekundi jooksul „Nõustu“, helistame sulle ja loeme tellimuse ette."
+          },
+          "autoReject": {
+            "title": "Automaatne tagasilükkamine + automaatne tagasimakse",
+            "body": "Vastamata tellimused lükatakse automaatselt tagasi ja kliendile tehakse automaatselt tagasimakse."
+          },
+          "chargeOnAccept": {
+            "title": "Tasu võetakse alles nõustumisel",
+            "body": "Ära valmista kunagi tasumata tellimust — ja ära võta kunagi tasu kliendilt, kelle tellimuse keeldud."
+          },
+          "receipts": {
+            "title": "Kohandatud brändiga tšekid",
+            "body": "Kujunda oma köögi- ja kliendipiletid, broneeringu- ja päevalõpukviitungid."
+          },
+          "printer": {
+            "title": "Printeri seadistus ühe puudutusega",
+            "body": "„Leia printerid“ skannib su WiFi-võrgu ja kuvab su termoprinteri — IP-aadressi jahtimist pole vaja."
+          }
+        },
+        "run": {
+          "eyebrow": "Juhi äri",
+          "title": "Tunne oma numbreid. Sinu kliendid kuuluvad sulle.",
+          "subtitle": "Täielik analüütika-, kliendi- ja kampaaniakomplekt on juba sisse ehitatud — tasuta. Suhe su külalistega kuulub sulle, mitte mõnele agregaatorile.",
+          "frameAlt": "Aruannete töölaud — käive, tellimused ja kliendisuundumused",
+          "reports": {
+            "title": "Aruannete töölaud",
+            "body": "Käive, tellimused, keskmine tšekk ja kliendid — koos päev-päevalt suundumustega."
+          },
+          "crm": {
+            "title": "Sinu kliendinimekiri (CRM)",
+            "body": "Iga klient, kogukulu, segmendid ja CSV-eksport. Nad kuuluvad sulle — mitte agregaatorile."
+          },
+          "promos": {
+            "title": "Kampaaniamootor",
+            "body": "13 kampaaniatüüpi — BOGO, komplektid, tasuta tooted, kupongid, ajastatud pakkumised. 5 tasuta, juhendatud viisard."
+          },
+          "insights": {
+            "title": "Müügiülevaated ja müügilehter",
+            "body": "Parimad ja kehvimad müüjad, su veebitellimuste konversioonilehter, kohaletoimetamise soojuskaart."
+          },
+          "reorder": {
+            "title": "Korduvtellimus ühe klikiga",
+            "body": "Naasvad kliendid tellivad oma tavapärase ühe puudutusega — rohkem korduvtellimusi, suuremad tšekid."
+          },
+          "accounts": {
+            "title": "Kliendikontod",
+            "body": "Salvestatud aadressid, tellimuste ajalugu ja isiklikud kupongid toovad külalised ikka tagasi."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — kasvukomplekt",
+          "title": "Muuda esimesed tellimused püsiklientideks.",
+          "subtitle": "Turundus-, hoidmis- ja kliendihankimistööriistad, mis toovad inimesed tagasi — koondatud ühe soodushinna alla või lisatud ükshaaval.",
+          "frameAlt": "Smart Linki analüütika — skannimised, mis muutuvad päris tellimusteks ja käibeks",
+          "badge": "Üks komplekt · viis tööriista",
+          "blurb": "Iga turundus-, hoidmis- ja hankimistööriist ühe soodushinnaga — või lisa neist ükskõik milline üksikuna.",
+          "pricingCta": "Vaata GrowthNet'i hindu",
+          "apmBody": "8 täiustatud kampaaniatüüpi, kliendisegmendid ja automatiseeritud e-kirja kampaaniad.",
+          "studioBody": "Jälgitavad QR-koodid, Smart Links ja brändiga flaierid — näe, mis muudab skannimised tellimusteks.",
+          "kickstarterBody": "Saatmisvalmis esimese tellimuse ja tagasivõitmise kampaaniad, mis toovad kliendid kohale juba esimesest päevast.",
+          "smsBody": "Saada klientidele sõnumeid, kui nende tellimus köögis edeneb — kinnitatud, valmis, lõpetatud.",
+          "contentpilotBody": "Sinu AI sotsiaalmeedia haldur — koostab ja ajastab postitusi Instagrami, Facebooki, X-i ja TikTokisse.",
+          "saveTitle": "Komplekt ja sääst",
+          "saveBody": "Saa kogu komplekt odavamalt, kui iga tööriista eraldi ostes. <link>Vaata arvutust →</link>"
+        },
+        "addons": {
+          "eyebrow": "Lisad — ilma tasemeteta",
+          "title": "Alusta tasuta. Lisa ainult see, mida väärtustad.",
+          "subtitle": "Iga lisa on eraldi tellitav. Vali üks, vali mõni, vali kõik — või jää igavesti tasuta.",
+          "capNote": "Tasuta pakett sisaldab <b>100 tellimust kuus</b>. Iga tasuline lisa tõstab limiidi.",
+          "pricingCta": "Vaata täielikku hinnakirja",
+          "payments": {
+            "title": "Veebimaksed",
+            "body": "Võta kaardimakseid veebis vastu — raha jõuab otse sinu enda Stripe'i või PayPali kontole."
+          },
+          "website": {
+            "title": "Müügile optimeeritud veebileht",
+            "body": "Majutatud, SEO-valmis turundus- ja tellimisleht, mis ehitatakse automaatselt su menüüst, sinu enda domeenil."
+          },
+          "multiLocation": {
+            "title": "Mitu asukohta",
+            "body": "Halda mitut asukohta ühest kontost — igaühel oma menüü, tellimused ja maksed."
+          },
+          "marketplace": {
+            "title": "Turuplatsi nimekiri",
+            "body": "Lase end leida Fee Free turuplatsil — soodne uute klientide kanal, ilma 30% tasudeta."
+          },
+          "unlimited": {
+            "title": "Piiramatud tellimused",
+            "body": "Tõsta tasuta paketi 100 tellimuse kuulimiit — piiramatu maht, ilma tellimusepõhiste tasudeta."
+          },
+          "domain": {
+            "title": "Kohandatud domeen",
+            "body": "Suuna oma domeen su majutatud Fee Free lehele."
+          },
+          "driver": {
+            "title": "Kulleritebaas",
+            "body": "Kasuta meie Shipday kulleritevõrku, kui su enda kullerid on hõivatud."
+          },
+          "brandedApp": {
+            "title": "Brändiga mobiilirakendus",
+            "body": "Sinu enda natiivne iOS- ja Android-rakendus App Store'is ja Google Play poes."
+          },
+          "pos": {
+            "title": "POS-moodul",
+            "body": "Sisemine POS, et töötajad saaksid samast administraatorist arvestada kohapeal söömise ja kaasamüügi tellimusi."
+          },
+          "aiPhone": {
+            "title": "AI telefonitellimine",
+            "body": "AI-agent vastab telefonile ja võtab tellimusi vastu 24/7, otse sinu kööki."
+          },
+          "deposits": {
+            "title": "Broneeringu ettemaksed",
+            "body": "Võta tagastatav ettemaks, kui kliendid broneerivad laua — kaitseb kohale ilmumata jätmise eest."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Vaheta minutitega",
+          "title": "Too kogu oma menüü kaasa — ilma seda uuesti trükkimata.",
+          "body": "Tuled GloriaFoodist, FoodBookingist või prinditud PDF-ist? Impordi kogu oma menüü — koos fotodega — mõne klikiga.",
+          "bullet1": "Impordi otse GloriaFoodist",
+          "bullet2": "Lae üles PDF-menüü — meie AI ehitab selle sulle valmis",
+          "bullet3": "Toodete fotod imporditakse taustal automaatselt",
+          "cta": "Alusta importi",
+          "frameAlt": "Menüü impordiviisard"
+        },
+        "steps": {
+          "title": "Töövalmis kolme sammuga.",
+          "step1": {
+            "title": "Lisa oma menüü",
+            "body": "Ehita see ise või impordi GloriaFoodist või PDF-ist mõne klikiga."
+          },
+          "step2": {
+            "title": "Jaga oma linki ja QR-koodi",
+            "body": "Aseta tellimisnupp oma veebilehele või jaga oma Fee Free lehte ja QR-koodi."
+          },
+          "step3": {
+            "title": "Võta tellimusi vastu, hoia 100%",
+            "body": "Tellimused jõuavad su kööginrakendusse ja prinditakse. Otsetellimustelt ei võeta komisjonitasu."
+          }
+        },
+        "integrations": {
+          "heading": "Sobib su tehnoloogiavalikuga",
+          "payments": "Maksed",
+          "printers": "Printerid",
+          "delivery": "Kohaletoimetamine",
+          "analytics": "Analüütika ja reklaamid",
+          "migration": "Migratsioon",
+          "voice": "Hääl",
+          "roadmap": "Tegevuskavas:"
+        },
+        "canada": {
+          "badge": "Uhkelt kanadalik",
+          "title": "Loodud ja juhitud Ontarios, Kanadas.",
+          "body": "Kanada ettevõte — mitte näotu välismaine agregaator. Su tasud, andmed ja kliendid jäävad sinu omaks.",
+          "supportTitle": "24/7 kanadalik tugi",
+          "supportBody": "Päris inimesed, igal ajal — päeval või öösel. Helista <phone>1-888-618-8765</phone> või vestle reaalajas inimestega, kes selle päriselt ehitasid."
+        },
+        "demo": {
+          "title": "Vaata päris tellimislehte.",
+          "subtitle": "Proovi päris demo järele — telli nagu klient ja vaata, kuidas see kööginrakendusse jõuab.",
+          "cta": "Ava päris demo",
+          "frameAlt": "Päris Fee Free tellimisleht"
+        },
+        "reseller": {
+          "text": "Seadistad restorane elatise teenimiseks? Teeni <b>korduvat komisjonitasu</b> Fee Free partnerina.",
+          "cta": "Partnerprogramm →"
+        },
+        "finalCta": {
+          "title": "Hakka juba täna oma tellimusi ise vastu võtma.",
+          "body": "Tasuta põhifunktsioonid. 0% komisjonitasu otsetellimustelt. 5-minutiline seadistus. Ilma pangakaardita.",
+          "primary": "Alusta tasuta",
+          "secondary": "Vaata seda päriselt"
+        },
+        "soon": "Varsti",
+        "appBadges": {
+          "iosLine1": "Laadi alla",
+          "androidLine1": "Hangi rakendus"
+        }
+      }
     },
     "features": {
       "title": "Funktsioonid",

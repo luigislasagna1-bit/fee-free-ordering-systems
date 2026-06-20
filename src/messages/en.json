@@ -4349,7 +4349,259 @@
       "featuresTitle": "Everything you need to run online ordering",
       "ctaTitle": "Ready to keep 100% of your sales?",
       "ctaSubtitle": "No credit card required. Cancel anytime.",
-      "ctaButton": "Get Started Free"
+      "ctaButton": "Get Started Free",
+      "v2": {
+        "hero": {
+          "eyebrow": "For restaurant owners",
+          "title": "Your own ordering page. <accent>0% commission.</accent>",
+          "subtitle": "Branded online ordering for pickup, delivery, dine-in & catering — in 38 languages, free forever. Keep 100% of every direct order.",
+          "ctaStart": "Start free",
+          "ctaDemo": "See a live storefront",
+          "badge": "0% commission",
+          "trust1": "No credit card",
+          "trust2": "0% on direct orders",
+          "trust3": "38 languages",
+          "trust4": "Built in Canada 🍁",
+          "frameAlt": "Luigi's Lasagna — a real branded ordering page"
+        },
+        "funnel": {
+          "eyebrow": "The growth angle",
+          "title": "Catch the traffic. <accent>Keep the repeat.</accent>",
+          "subtitle": "Marketplaces are great at one thing — sending you a first-time customer. Give every one of them a reason to come back and order direct, on your brand, at 0% commission.",
+          "sourcesCaption": "Marketplaces bring you a first-time customer.",
+          "neck": "QR code + Smart Link",
+          "yourBrand": "Your brand",
+          "directOrders": "Direct orders · 0% commission",
+          "chip1": "0% commission",
+          "chip2": "Own your customers",
+          "chip3": "More repeat orders"
+        },
+        "ordering": {
+          "eyebrow": "Free forever",
+          "title": "A branded ordering page customers love.",
+          "body": "Your menu, photos, modifiers and prices — beautiful on every phone, in 38 languages, with your logo and colors.",
+          "bullet1": "Pickup, delivery, dine-in & catering",
+          "bullet2": "Scheduling & pre-orders",
+          "bullet3": "Embeds into your existing website",
+          "cta": "Start free",
+          "frameAlt": "Menu & item options"
+        },
+        "checkout": {
+          "eyebrow": "Free forever",
+          "title": "Checkout your way. Get paid your way.",
+          "body": "Take cash and card-at-counter for free, or add online card payments. Reservations and reserve-then-order are built in.",
+          "bullet1": "Cash & card-at-counter — free",
+          "bullet2": "Built-in tipping, taxes & service fees",
+          "bullet3": "Reservations + reserve-then-order",
+          "frameAlt": "Cart & checkout"
+        },
+        "pizza": {
+          "eyebrow": "Built for pizza shops",
+          "title": "A half-and-half builder customers actually enjoy.",
+          "body": "Let customers design a one-of-a-kind pie — different toppings on each half, placed left, right or whole, light, normal or extra.",
+          "bullet1": "Split any pizza into halves — different toppings each side",
+          "bullet2": "Fair half-topping pricing (two halves count as one whole)",
+          "bullet3": "Combos & meal deals that open the full builder",
+          "leftHalf": "Left half",
+          "rightHalf": "Right half",
+          "ariaLabel": "Half-and-half pizza",
+          "chipLeft": "½ Left",
+          "chipRight": "½ Right",
+          "chipWhole": "Whole",
+          "chipAmount": "Light · Normal · Extra"
+        },
+        "kitchen": {
+          "eyebrow": "Free · iOS + Android",
+          "title": "Never miss a paying order.",
+          "subtitle": "The native Kitchen Order App turns any iPhone, iPad or Android tablet into a bulletproof order station — with a safety net so a busy night never costs you a sale.",
+          "frameAlt": "Kitchen Order App — incoming order",
+          "getApp": "Get the free Kitchen Order App on your tablet",
+          "ring": {
+            "title": "Screen-off loud ring",
+            "body": "A full-screen alarm wakes the tablet the instant an order lands — even asleep."
+          },
+          "call": {
+            "title": "Missed-order phone call",
+            "body": "If nobody taps Accept in ~90 seconds, we phone you and read the order aloud."
+          },
+          "autoReject": {
+            "title": "Auto-reject + auto-refund",
+            "body": "Unanswered orders auto-reject and the customer is refunded automatically."
+          },
+          "chargeOnAccept": {
+            "title": "Charged only on accept",
+            "body": "Never cook an unpaid order — and never charge a customer for one you decline."
+          },
+          "receipts": {
+            "title": "Custom branded receipts",
+            "body": "Design your own kitchen + customer tickets, reservation and end-of-day slips."
+          },
+          "printer": {
+            "title": "One-tap printer setup",
+            "body": "“Find Printers” scans your WiFi and lists your thermal printer — no IP hunting."
+          }
+        },
+        "run": {
+          "eyebrow": "Run the business",
+          "title": "Know your numbers. Own your customers.",
+          "subtitle": "A full analytics, customer and promotions suite is built in — free. The relationship with your diners is yours, not locked inside an aggregator.",
+          "frameAlt": "Reports dashboard — revenue, orders & customer trends",
+          "reports": {
+            "title": "Reports dashboard",
+            "body": "Revenue, orders, average ticket and customers — with day-over-day trends."
+          },
+          "crm": {
+            "title": "Your customer list (CRM)",
+            "body": "Every customer, total spend, segments and CSV export. You own them — not an aggregator."
+          },
+          "promos": {
+            "title": "Promotions engine",
+            "body": "13 promo types — BOGO, bundles, free items, coupons, timed deals. 5 free, guided wizard."
+          },
+          "insights": {
+            "title": "Sales insights & funnel",
+            "body": "Best and worst sellers, your online-ordering conversion funnel, a delivery heatmap."
+          },
+          "reorder": {
+            "title": "One-click reorder",
+            "body": "Returning customers reorder their usual in a tap — more repeat orders, bigger tickets."
+          },
+          "accounts": {
+            "title": "Customer accounts",
+            "body": "Saved addresses, order history and personal coupons keep diners coming back."
+          }
+        },
+        "growthnet": {
+          "eyebrow": "GrowthNet — the growth bundle",
+          "title": "Turn first orders into regulars.",
+          "subtitle": "Marketing, retention and customer-acquisition tools that bring people back — bundled at one discounted price, or added one at a time.",
+          "frameAlt": "Smart Link analytics — scans turning into real orders & revenue",
+          "badge": "One bundle · five tools",
+          "blurb": "Every marketing, retention and acquisition tool at one discounted price — or add any single one on its own.",
+          "pricingCta": "See GrowthNet pricing",
+          "apmBody": "8 advanced promo types, customer segments, and automated email campaigns.",
+          "studioBody": "Trackable QR codes, Smart Links and branded flyers — see what turns scans into orders.",
+          "kickstarterBody": "Ready-to-send first-order and win-back campaigns that bring customers in from day one.",
+          "smsBody": "Text customers as their order moves through the kitchen — confirmed, ready, complete.",
+          "contentpilotBody": "Your AI social manager — drafts and schedules posts to Instagram, Facebook, X & TikTok.",
+          "saveTitle": "Bundle & save",
+          "saveBody": "Get the whole bundle for less than buying each tool separately. <link>See the math →</link>"
+        },
+        "addons": {
+          "eyebrow": "Add-ons — no tiers",
+          "title": "Start free. Add only what you value.",
+          "subtitle": "Every add-on is separately subscribable. Pick one, pick a few, pick all — or stay free forever.",
+          "capNote": "The free plan includes <b>100 orders/month</b>. Any paid add-on lifts the cap.",
+          "pricingCta": "See full pricing",
+          "payments": {
+            "title": "Online Payments",
+            "body": "Accept card payments online — money lands directly in your own Stripe or PayPal account."
+          },
+          "website": {
+            "title": "Sales-Optimized Website",
+            "body": "A hosted, SEO-ready marketing + ordering site, auto-built from your menu, on your own domain."
+          },
+          "multiLocation": {
+            "title": "Multi-Location",
+            "body": "Run several locations from one account — each with its own menu, orders and payments."
+          },
+          "marketplace": {
+            "title": "Marketplace listing",
+            "body": "Get discovered on the Fee Free marketplace — a low-cost new-customer channel, no 30% fees."
+          },
+          "unlimited": {
+            "title": "Unlimited Orders",
+            "body": "Lift the free plan's 100-orders/month cap — unlimited volume, no per-order fees."
+          },
+          "domain": {
+            "title": "Custom Domain",
+            "body": "Point your own domain at your hosted Fee Free site."
+          },
+          "driver": {
+            "title": "Driver Pool",
+            "body": "Tap our Shipday driver network when your own drivers are busy."
+          },
+          "brandedApp": {
+            "title": "Branded Mobile App",
+            "body": "Your own native iOS + Android app in the App Store and Play Store."
+          },
+          "pos": {
+            "title": "POS Module",
+            "body": "In-house POS for staff to ring up dine-in and takeaway from the same admin."
+          },
+          "aiPhone": {
+            "title": "AI Phone Ordering",
+            "body": "An AI agent answers the phone and takes orders 24/7, straight to your kitchen."
+          },
+          "deposits": {
+            "title": "Reservation Deposits",
+            "body": "Charge a refundable deposit when customers book a table — protects against no-shows."
+          }
+        },
+        "migrate": {
+          "eyebrow": "Switch in minutes",
+          "title": "Bring your whole menu — without retyping it.",
+          "body": "Coming from GloriaFood, FoodBooking or a printed PDF? Import your entire menu — photos and all — in a few clicks.",
+          "bullet1": "Import directly from GloriaFood",
+          "bullet2": "Upload a PDF menu — our AI builds it for you",
+          "bullet3": "Item photos import automatically in the background",
+          "cta": "Start your import",
+          "frameAlt": "Menu import wizard"
+        },
+        "steps": {
+          "title": "Live in three steps.",
+          "step1": {
+            "title": "Add your menu",
+            "body": "Build it, or import from GloriaFood or a PDF in a few clicks."
+          },
+          "step2": {
+            "title": "Share your link & QR",
+            "body": "Drop the order button on your site, or share your Fee Free page and QR code."
+          },
+          "step3": {
+            "title": "Take orders, keep 100%",
+            "body": "Orders hit your kitchen app and print. No commission on direct orders."
+          }
+        },
+        "integrations": {
+          "heading": "Plays nice with your stack",
+          "payments": "Payments",
+          "printers": "Printers",
+          "delivery": "Delivery",
+          "analytics": "Analytics & Ads",
+          "migration": "Migration",
+          "voice": "Voice",
+          "roadmap": "On the roadmap:"
+        },
+        "canada": {
+          "badge": "Proudly Canadian",
+          "title": "Built & operated in Ontario, Canada.",
+          "body": "A Canadian company — not a faceless overseas aggregator. Your fees, data and customers stay yours.",
+          "supportTitle": "24/7 Canadian support",
+          "supportBody": "Real humans, any time — day or night. Call <phone>1-888-618-8765</phone> or live-chat the people who actually built it."
+        },
+        "demo": {
+          "title": "See a real storefront.",
+          "subtitle": "Take a live demo for a spin — order like a customer and watch it land on the kitchen app.",
+          "cta": "Open the live demo",
+          "frameAlt": "A live Fee Free storefront"
+        },
+        "reseller": {
+          "text": "Set up restaurants for a living? Earn <b>recurring commission</b> as a Fee Free partner.",
+          "cta": "Partner program →"
+        },
+        "finalCta": {
+          "title": "Start taking your own orders today.",
+          "body": "Free core. 0% commission on direct orders. 5-minute setup. No credit card.",
+          "primary": "Start free",
+          "secondary": "See it live"
+        },
+        "soon": "Soon",
+        "appBadges": {
+          "iosLine1": "Download on the",
+          "androidLine1": "Get it on"
+        }
+      }
     },
     "features": {
       "title": "Features",
