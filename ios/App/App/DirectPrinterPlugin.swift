@@ -77,15 +77,36 @@ enum FFLanPrintFailure: Error {
     }
 }
 
-/// Thread-safe collector for subnet-scan hits. A reference type so the
-/// concurrent (escaping) scan closures can capture it — Swift forbids capturing
-/// an `inout` parameter in an escaping closure, which is why the scan can't
-/// write the result dictionary directly.
-private final class SubnetScanHits {
+/// Thread-safe accumulator for printer discovery. A REFERENCE type so the many
+/// concurrent escaping closures (mDNS browser handlers + subnet-scan probes) can
+/// all share it safely. Replaces the old `var byIp` local that was captured
+/// by-reference and passed `inout` into an escaping `async` — which compiled but
+/// TRAPPED at runtime under Swift's exclusive-access enforcement ("simultaneous
+/// accesses … modification requires exclusive access"), crashing the app the
+/// instant "Find Printers" ran. All access is serialized by the internal lock;
+/// nothing is captured `inout`.
+private final class DiscoveryAccumulator {
     private let lock = NSLock()
-    private var ips: [String] = []
-    func add(_ ip: String) { lock.lock(); ips.append(ip); lock.unlock() }
-    func snapshot() -> [String] { lock.lock(); defer { lock.unlock() }; return ips }
+    private var byIp: [String: [String: Any]] = [:]
+    private var finished = false
+    /// mDNS result — the friendlier advertised name always wins.
+    func put(_ ip: String, _ entry: [String: Any]) {
+        lock.lock(); byIp[ip] = entry; lock.unlock()
+    }
+    /// Subnet-scan placeholder — keep only if mDNS hasn't named this IP.
+    func putIfAbsent(_ ip: String, _ entry: [String: Any]) {
+        lock.lock(); if byIp[ip] == nil { byIp[ip] = entry }; lock.unlock()
+    }
+    func snapshot() -> [[String: Any]] {
+        lock.lock(); defer { lock.unlock() }; return Array(byIp.values)
+    }
+    /// Returns true to exactly ONE caller, so discovery resolves once.
+    func claimFinish() -> Bool {
+        lock.lock(); defer { lock.unlock() }
+        if finished { return false }
+        finished = true
+        return true
+    }
 }
 
 @objc(DirectPrinterPlugin)
@@ -123,9 +144,7 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
         // (or advertise on uncommon service types) — Star TSP143IIIW
         // is a known offender. Subnet scan picks up any device that
         // accepts a TCP connection on port 9100 = print server.
-        var byIp: [String: [String: Any]] = [:]
-        let lock = NSLock()
-        var didComplete = false
+        let acc = DiscoveryAccumulator()
 
         let serviceTypes = [
             "_pdl-datastream._tcp", // RAW print (Star, Epson, Bixolon)
@@ -137,18 +156,11 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
         var browsers: [NWBrowser] = []
 
         let finish = {
-            lock.lock()
-            if didComplete {
-                lock.unlock()
-                return
-            }
-            didComplete = true
+            guard acc.claimFinish() else { return }
             for b in browsers { b.cancel() }
-            let printers = Array(byIp.values)
-            lock.unlock()
             call.resolve([
                 "ok": true,
-                "printers": printers,
+                "printers": acc.snapshot(),
             ])
         }
 
@@ -172,16 +184,14 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
                                     @unknown default: ip = ""
                                     }
                                     if !ip.isEmpty {
-                                        lock.lock()
-                                        // mDNS name overwrites subnet-scan
-                                        // placeholder because it's friendlier
-                                        byIp[ip] = [
+                                        // mDNS name overwrites the subnet-scan
+                                        // placeholder because it's friendlier.
+                                        acc.put(ip, [
                                             "name": name,
                                             "ip": ip,
                                             "port": 9100,
                                             "type": type,
-                                        ]
-                                        lock.unlock()
+                                        ])
                                     }
                                 }
                                 conn.cancel()
@@ -201,7 +211,7 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
         // de-duped by IP. Most printers will be found by both methods;
         // the merge is harmless.
         DispatchQueue.global(qos: .userInitiated).async {
-            self.subnetScan(byIp: &byIp, lock: lock, timeoutMs: 400)
+            self.subnetScan(into: acc, timeoutMs: 400)
         }
 
         // Time-box the whole discovery.
@@ -214,9 +224,9 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
     /// for port 9100 responders. Parallel via DispatchGroup. ~3 seconds
     /// for a typical /24 with concurrent connections.
     ///
-    /// IMPORTANT: byIp is passed inout but accessed under `lock`. Swift
-    /// inout doesn't synchronize — the lock does.
-    private func subnetScan(byIp: inout [String: [String: Any]], lock: NSLock, timeoutMs: Int) {
+    /// Writes hits straight into the shared thread-safe `acc` (no `inout`, no
+    /// captured-by-reference local — that's what crashed the app).
+    private func subnetScan(into acc: DiscoveryAccumulator, timeoutMs: Int) {
         // Get the device's IPv4 address on the active Wi-Fi interface
         // via getifaddrs. Network.framework doesn't expose the local
         // IP directly so we use the BSD socket helpers.
@@ -229,10 +239,6 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
         let scanQueue = DispatchQueue(label: "ffo.subnet-scan", attributes: .concurrent)
         let semaphore = DispatchSemaphore(value: 32) // cap concurrent connects
 
-        // Collect hits in a reference-type box — an escaping closure may capture
-        // a class instance but NOT an `inout` parameter. We merge into `byIp`
-        // synchronously AFTER group.wait(), so the inout is never captured.
-        let hits = SubnetScanHits()
         for i in 1...254 {
             let target = "\(prefix)\(i)"
             group.enter()
@@ -243,25 +249,17 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
                     group.leave()
                 }
                 if self.tcpProbe(host: target, port: 9100, timeoutMs: timeoutMs) {
-                    hits.add(target)
+                    // Thread-safe; only kept if mDNS hasn't already named this IP.
+                    acc.putIfAbsent(target, [
+                        "name": "Printer at \(target)",
+                        "ip": target,
+                        "port": 9100,
+                        "type": "subnet-scan",
+                    ])
                 }
             }
         }
         group.wait()
-
-        // Merge under the shared lock (mDNS may still be writing byIp).
-        for target in hits.snapshot() {
-            lock.lock()
-            if byIp[target] == nil {
-                byIp[target] = [
-                    "name": "Printer at \(target)",
-                    "ip": target,
-                    "port": 9100,
-                    "type": "subnet-scan",
-                ]
-            }
-            lock.unlock()
-        }
     }
 
     /// Synchronous TCP probe — returns true if the target accepts a
