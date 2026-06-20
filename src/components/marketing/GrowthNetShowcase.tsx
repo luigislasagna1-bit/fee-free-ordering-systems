@@ -17,7 +17,7 @@ import { ScreenshotFrame } from "./sections";
  * only not-yet-built member → tagged "Soon".
  */
 const MEMBERS: { icon: typeof Tag; name: string; body: string; comingSoon?: boolean }[] = [
-  { icon: Tag, name: "Advanced Promo Marketing", body: "8 advanced promo types, customer segments, and Autopilot automated email campaigns." },
+  { icon: Tag, name: "APM (Advanced Promo Marketing)", body: "8 advanced promo types, customer segments, and automated email campaigns." },
   { icon: QrCode, name: "Marketing Studio", body: "Trackable QR codes, Smart Links and branded flyers — see what turns scans into orders." },
   { icon: Rocket, name: "Kickstarter", body: "Ready-to-send first-order and win-back campaigns that bring customers in from day one." },
   { icon: MessageSquare, name: "Customer SMS", body: "Text customers as their order moves through the kitchen — confirmed, ready, complete." },

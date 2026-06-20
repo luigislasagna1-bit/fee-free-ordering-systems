@@ -58,6 +58,7 @@ declare global {
     Tawk_API?: {
       hideWidget?: () => void;
       showWidget?: () => void;
+      minimize?: () => void;
       onLoad?: () => void;
     };
     Tawk_LoadStart?: Date;
@@ -120,8 +121,37 @@ export function SupportChat() {
       window.Tawk_API = {};
       window.Tawk_LoadStart = new Date();
     }
+    // Boot the widget MINIMIZED so it never restores into a maximized state from
+    // a prior session's cookie.
+    window.Tawk_API.onLoad = function () {
+      try {
+        window.Tawk_API?.minimize?.();
+      } catch {
+        /* Tawk not ready / method missing — safe to ignore */
+      }
+    };
+
     const id = "tawk-loader";
-    if (!document.getElementById(id)) {
+    if (document.getElementById(id)) return; // already injected (e.g. SPA nav)
+
+    // LAZY-LOAD the chat — only inject Tawk after the visitor's first interaction
+    // (or a short fallback timeout). Two reasons:
+    //   1) MOBILE BUG FIX: a Tawk dashboard "proactive greeting" trigger pops a
+    //      ~350px "👋 Welcome…" panel a beat after the script loads. On a phone
+    //      that panel sits on top of the hero CTAs ("Start free" / "See a live
+    //      storefront") and eats taps, so visitors literally couldn't reach
+    //      signup. Deferring injection means the landing screen has NO chat iframe
+    //      at all, so the above-the-fold CTAs are directly clickable; the very
+    //      first tap on a CTA navigates away before Tawk ever loads.
+    //      (The greeting itself is best scoped to desktop-only in the Tawk
+    //      dashboard → Messaging ▸ Triggers — but this keeps mobile safe
+    //      regardless.) (Luigi 2026-06-20)
+    //   2) Faster first paint — no third-party JS in the critical path.
+    let injected = false;
+    const inject = () => {
+      if (injected) return;
+      injected = true;
+      cleanup();
       const s = document.createElement("script");
       s.id = id;
       s.async = true;
@@ -129,7 +159,16 @@ export function SupportChat() {
       s.charset = "UTF-8";
       s.setAttribute("crossorigin", "*");
       document.head.appendChild(s);
+    };
+    const events: (keyof WindowEventMap)[] = ["pointerdown", "touchstart", "scroll", "keydown", "mousemove"];
+    const onIntent = () => inject();
+    events.forEach((e) => window.addEventListener(e, onIntent, { once: true, passive: true }));
+    const timer = window.setTimeout(inject, 12000);
+    function cleanup() {
+      window.clearTimeout(timer);
+      events.forEach((e) => window.removeEventListener(e, onIntent));
     }
+    return cleanup;
   }, [propertyId, widgetId, pathname]);
 
   // On every client-side navigation, toggle visibility based on the

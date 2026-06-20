@@ -247,7 +247,7 @@ const navGroups: NavGroup[] = [
         href: "/admin/growthnet",
         items: [
           { href: "/admin/kickstarter",      labelKey: "kickstarter",     label: "Kickstarter",      icon: Rocket, requiresFeature: "kickstarter" },
-          { href: "/admin/autopilot",        labelKey: "autopilot",       label: "Autopilot",        icon: Zap,    requiresFeature: "automated_campaigns" },
+          { href: "/admin/autopilot",        labelKey: "apm",             label: "APM (Advanced Promo Marketing)", icon: Zap, requiresFeature: "automated_campaigns" },
           // "Soon" is DB-driven now (these add-ons are flagged comingSoon in
           // /superadmin/add-ons) — no hardcoded comingSoon. Luigi 2026-06-14.
           { href: "/admin/marketing-studio", labelKey: "marketingStudio", label: "Marketing Studio", icon: QrCode, requiresFeature: "marketing_studio" },

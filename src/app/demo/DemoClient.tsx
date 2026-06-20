@@ -48,10 +48,10 @@ export function DemoClient({ locale, demoSlug }: { locale: string; demoSlug: str
               <h2 className="text-xl font-bold text-gray-900 mb-3">{t("cards.kitchen")}</h2>
               <p className="text-gray-600 mb-6">{t("cards.kitchenDesc")}</p>
               <Link
-                href="/kitchen"
+                href="/signup"
                 className="inline-flex items-center gap-2 bg-slate-900 text-white font-semibold px-6 py-3 rounded-xl hover:bg-slate-800 transition"
               >
-                {t("tryIt")} <ArrowRight className="w-4 h-4" />
+                {tNav("startTrial")} <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
 
@@ -62,10 +62,10 @@ export function DemoClient({ locale, demoSlug }: { locale: string; demoSlug: str
               <h2 className="text-xl font-bold text-gray-900 mb-3">{t("cards.admin")}</h2>
               <p className="text-gray-600 mb-6">{t("cards.adminDesc")}</p>
               <Link
-                href="/admin"
+                href="/signup"
                 className="inline-flex items-center gap-2 bg-amber-500 text-white font-semibold px-6 py-3 rounded-xl hover:bg-amber-600 transition"
               >
-                {t("tryIt")} <ArrowRight className="w-4 h-4" />
+                {tNav("startTrial")} <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
