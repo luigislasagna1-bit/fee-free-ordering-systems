@@ -1,77 +1,113 @@
 "use client";
 import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
-import Link from "next/link";
-import { ChefHat, Smartphone, BarChart3, Bell, Star, Printer, Globe, Calendar, Megaphone, Languages } from "lucide-react";
 import { useTranslations } from "next-intl";
+import type { LucideIcon } from "lucide-react";
+import {
+  ArrowRight, Tag, Users, Repeat, CreditCard, Globe, Building2, Store, Smartphone, Monitor, Phone,
+  CalendarCheck, Link2, Truck, Infinity as InfinityIcon, BellRing, PhoneCall, RefreshCw, ShieldCheck,
+  Receipt, ScanLine, BarChart3, Database, TrendingUp,
+} from "lucide-react";
+import {
+  MarketingSection, SectionHeading, PrimaryButton, SecondaryButton, ScreenshotFrame,
+  AltFeatureRow, IconFeatureGrid, CTASection, type IconFeature,
+} from "@/components/marketing/sections";
+import { GrowthNetShowcase } from "@/components/marketing/GrowthNetShowcase";
+import { PizzaSplitGraphic } from "@/components/marketing/PizzaSplitGraphic";
+
+/* Reuse the homepage's translated feature content (marketing.home.v2.*) so the
+   features page is exhaustive + cohesive with zero new translation. */
+const RELIABILITY: { icon: LucideIcon; key: string }[] = [
+  { icon: BellRing, key: "ring" }, { icon: PhoneCall, key: "call" }, { icon: RefreshCw, key: "autoReject" },
+  { icon: ShieldCheck, key: "chargeOnAccept" }, { icon: Receipt, key: "receipts" }, { icon: ScanLine, key: "printer" },
+];
+const RUN: { icon: LucideIcon; key: string }[] = [
+  { icon: BarChart3, key: "reports" }, { icon: Database, key: "crm" }, { icon: Tag, key: "promos" },
+  { icon: TrendingUp, key: "insights" }, { icon: Repeat, key: "reorder" }, { icon: Users, key: "accounts" },
+];
+const ADDONS: { icon: LucideIcon; key: string; comingSoon?: boolean }[] = [
+  { icon: CreditCard, key: "payments" }, { icon: Globe, key: "website" }, { icon: Building2, key: "multiLocation" },
+  { icon: Store, key: "marketplace" }, { icon: InfinityIcon, key: "unlimited" }, { icon: Link2, key: "domain", comingSoon: true },
+  { icon: Truck, key: "driver", comingSoon: true }, { icon: Smartphone, key: "brandedApp", comingSoon: true },
+  { icon: Monitor, key: "pos", comingSoon: true }, { icon: Phone, key: "aiPhone", comingSoon: true },
+  { icon: CalendarCheck, key: "deposits", comingSoon: true },
+];
 
 export function FeaturesClient({ locale }: { locale: string }) {
   const t = useTranslations("marketing.features");
+  const h = useTranslations("marketing.home.v2");
   const tNav = useTranslations("marketing.nav");
 
-  const sections = [
-    {
-      title: t("ordering.title"),
-      items: [
-        { icon: Globe,       title: t("ordering.browse"),       desc: t("ordering.browseDesc") },
-        { icon: ChefHat,     title: t("ordering.pizza"),        desc: t("ordering.pizzaDesc") },
-        { icon: Calendar,    title: t("ordering.reservations"), desc: t("ordering.reservationsDesc") },
-      ],
-    },
-    {
-      title: t("kitchen.title"),
-      items: [
-        { icon: Smartphone,  title: t("kitchen.display"),       desc: t("kitchen.displayDesc") },
-        { icon: Printer,     title: t("kitchen.printing"),      desc: t("kitchen.printingDesc") },
-        { icon: Bell,        title: t("kitchen.notifications"), desc: t("kitchen.notificationsDesc") },
-      ],
-    },
-    {
-      title: t("growth.title"),
-      items: [
-        { icon: Star,        title: t("growth.promotions"),     desc: t("growth.promotionsDesc") },
-        { icon: BarChart3,   title: t("growth.autopilot"),      desc: t("growth.autopilotDesc") },
-        { icon: Languages,   title: t("growth.multilingual"),   desc: t("growth.multilingualDesc") },
-      ],
-    },
-  ];
+  const reliability: IconFeature[] = RELIABILITY.map((r) => ({ icon: r.icon, title: h(`kitchen.${r.key}.title`), body: h(`kitchen.${r.key}.body`) }));
+  const run: IconFeature[] = RUN.map((r) => ({ icon: r.icon, title: h(`run.${r.key}.title`), body: h(`run.${r.key}.body`) }));
+  const addons: IconFeature[] = ADDONS.map((a) => ({ icon: a.icon, title: h(`addons.${a.key}.title`), body: h(`addons.${a.key}.body`), comingSoon: a.comingSoon }));
+  const soon = h("soon");
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       <PublicNav currentLocale={locale} />
       <main className="flex-1">
-        <section className="bg-gradient-to-br from-emerald-50 to-white py-20 px-4 text-center">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">{t("title")}</h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">{t("subtitle")}</p>
-          <Link href="/signup" className="bg-emerald-500 text-white font-bold px-8 py-4 rounded-xl text-lg hover:bg-emerald-600 transition">
-            {tNav("startTrial")}
-          </Link>
-        </section>
-
-        {sections.map((section) => (
-          <section key={section.title} className="py-16 px-4 even:bg-gray-50">
-            <div className="max-w-5xl mx-auto">
-              <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">{section.title}</h2>
-              <div className="grid md:grid-cols-3 gap-8">
-                {section.items.map((item) => (
-                  <div key={item.title} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
-                      <item.icon className="w-6 h-6 text-emerald-500" />
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
-                    <p className="text-gray-600">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
+        {/* Hero */}
+        <section className="relative overflow-hidden bg-white" style={{ background: "radial-gradient(80% 80% at 50% 0%, #ecfdf5 0%, rgba(236,253,245,0) 60%), #ffffff" }}>
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 text-center">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-[1.05]">{t("title")}</h1>
+            <p className="mt-5 text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">{t("subtitle")}</p>
+            <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+              <PrimaryButton href="/signup">{tNav("startTrial")}<ArrowRight className="w-4 h-4" /></PrimaryButton>
+              <SecondaryButton href="/demo">{h("demo.cta")}</SecondaryButton>
             </div>
-          </section>
-        ))}
-
-        <section className="py-16 px-4 bg-emerald-500 text-white text-center">
-          <Link href="/signup" className="bg-white text-emerald-600 font-bold px-8 py-3 rounded-xl text-lg hover:bg-emerald-50 transition">
-            {tNav("startTrial")}
-          </Link>
+          </div>
         </section>
+
+        {/* Ordering page */}
+        <MarketingSection tone="light">
+          <AltFeatureRow
+            reverse
+            eyebrow={h("ordering.eyebrow")}
+            title={h("ordering.title")}
+            body={h("ordering.body")}
+            bullets={[h("ordering.bullet1"), h("ordering.bullet2"), h("ordering.bullet3")]}
+            image={<ScreenshotFrame variant="phone" alt={h("ordering.frameAlt")} src="/marketing/screenshots/luigis-menu-mobile.png" />}
+          />
+        </MarketingSection>
+
+        {/* Pizza builder */}
+        <MarketingSection tone="emeraldTint">
+          <AltFeatureRow
+            eyebrow={h("pizza.eyebrow")}
+            title={h("pizza.title")}
+            body={h("pizza.body")}
+            bullets={[h("pizza.bullet1"), h("pizza.bullet2"), h("pizza.bullet3")]}
+            image={<PizzaSplitGraphic />}
+          />
+        </MarketingSection>
+
+        {/* Never miss an order */}
+        <MarketingSection tone="light">
+          <div className="mb-12"><SectionHeading center eyebrow={h("kitchen.eyebrow")} title={h("kitchen.title")} subtitle={h("kitchen.subtitle")} /></div>
+          <IconFeatureGrid items={reliability} soonLabel={soon} />
+        </MarketingSection>
+
+        {/* Run the business */}
+        <MarketingSection tone="emeraldTint">
+          <div className="mb-12"><SectionHeading center eyebrow={h("run.eyebrow")} title={h("run.title")} subtitle={h("run.subtitle")} /></div>
+          <IconFeatureGrid items={run} soonLabel={soon} />
+        </MarketingSection>
+
+        {/* GrowthNet */}
+        <MarketingSection tone="light">
+          <div className="mb-12"><SectionHeading center eyebrow={h("growthnet.eyebrow")} title={h("growthnet.title")} subtitle={h("growthnet.subtitle")} /></div>
+          <GrowthNetShowcase />
+        </MarketingSection>
+
+        {/* Add-ons */}
+        <MarketingSection tone="gray">
+          <div className="mb-12"><SectionHeading center eyebrow={h("addons.eyebrow")} title={h("addons.title")} subtitle={h("addons.subtitle")} /></div>
+          <IconFeatureGrid items={addons} soonLabel={soon} />
+        </MarketingSection>
+
+        {/* CTA */}
+        <CTASection title={h("finalCta.title")} body={h("finalCta.body")} primary={{ href: "/signup", label: h("finalCta.primary") }} secondary={{ href: "/pricing", label: tNav("pricing") }} />
       </main>
       <PublicFooter />
     </div>
