@@ -341,7 +341,10 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
     }
     private func fdSet(_ fd: Int32, _ set: inout fd_set) {
         let index = Int(fd) / 32
-        let mask = Int32(1 << (Int(fd) % 32))
+        // Build the bit in UNSIGNED space then reinterpret: `1 << 31` overflows
+        // Int32 and Swift TRAPS (crash) on the conversion, which is what crashed
+        // "Find Printers" the moment a probe socket's fd hit fd % 32 == 31.
+        let mask = Int32(bitPattern: UInt32(1) << UInt32(Int(fd) % 32))
         switch index {
         case 0: set.fds_bits.0 = set.fds_bits.0 | mask
         case 1: set.fds_bits.1 = set.fds_bits.1 | mask
@@ -369,7 +372,7 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
             call.reject("ip parameter is required")
             return
         }
-        let port = UInt16(call.getInt("port") ?? Int(Self.DEFAULT_PORT))
+        let port = UInt16(clamping: call.getInt("port") ?? Int(Self.DEFAULT_PORT))
         let timeoutMs = call.getInt("timeoutMs") ?? Self.DEFAULT_TIMEOUT_MS
         let widthDots = call.getInt("paperWidthDots") ?? 576
         let jsLines: [[String: Any]] = (call.getArray("lines") ?? []).compactMap { $0 as? [String: Any] }
@@ -427,7 +430,7 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
             call.reject("ip parameter is required")
             return
         }
-        let port = UInt16(call.getInt("port") ?? Int(Self.DEFAULT_PORT))
+        let port = UInt16(clamping: call.getInt("port") ?? Int(Self.DEFAULT_PORT))
         let timeoutMs = call.getInt("timeoutMs") ?? Self.DEFAULT_TIMEOUT_MS
 
         // Empty payload — just open the connection and close it.
