@@ -6,7 +6,7 @@ import {
   Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu, Plug,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
-  Check, Circle, Sparkles, Rocket, Phone, QrCode, Lock, Network, MessageSquare, Bot, MonitorCheck, Smartphone, Calculator,
+  Check, Circle, Sparkles, Rocket, QrCode, Lock, Network, MessageSquare, Bot, MonitorCheck, Smartphone, Calculator,
   // Reports sub-section icons — match GloriaFood's iconography by purpose:
   // TrendingUp for Sales (line going up), PieChart for Menu Insights (mix
   // breakdown), Globe2 for Online Ordering family, ListChecks for List View.
@@ -202,6 +202,10 @@ const navGroups: NavGroup[] = [
           // even without the add-on because the page doubles as a
           // conversion surface explaining what the upgrade unlocks.
           { href: "/admin/website/domain", labelKey: "customDomain", label: "Custom Domain",  icon: Globe, requiresFeature: "custom_domain_routing" },
+          // Branded Mobile App — your own iOS/Android app (post-launch). Moved here
+          // under Publishing (Luigi 2026-06-20) from its own top-level section to
+          // de-clutter the sidebar. "Soon" + lock are DB-driven via app_store_listing.
+          { href: "/admin/mobile-app", labelKey: "categoryMobileApp", label: "Branded Mobile App", icon: Smartphone, comingSoon: true, requiresFeature: "app_store_listing" },
         ],
       },
       // NOTE: "Subscription & Billing" used to live here. Moved to OTHER —
@@ -339,84 +343,23 @@ const navGroups: NavGroup[] = [
   },
 
   {
+    // ─── ORDERING ───────────────────────────────────────────────────────
+    // Consolidated order-channel hub (Luigi 2026-06-20): Orders + the
+    // coming-soon channels (Nabil AI phone ordering, KDS Screen, POS Module)
+    // nested as items here instead of sprawling as four separate top-level
+    // sections. Branded Mobile App moved to SETUP → Publishing. Each item's
+    // "Soon" badge + lock come from its own comingSoon flag + requiresFeature
+    // (DB-driven via the matching add-on in /superadmin/add-ons). Brand names
+    // reuse existing i18n keys (categoryNabilAi/Kds/Pos) — no new locale strings.
     key: "online-ordering",
     labelKey: "categoryOnlineOrdering",
-    label: "Online Ordering",
+    label: "Ordering",
     icon: ShoppingBag,
     items: [
       { href: "/admin/orders", labelKey: "orders", label: "Orders", icon: ShoppingBag, badgeKey: "orders" },
-    ],
-  },
-
-  {
-    // ─── NABIL AI ───────────────────────────────────────────────────────
-    // Nabil AI — our automated phone-ordering agent, now its OWN top-level
-    // section (Luigi 2026-06-13) and branded as the product. "Nabil AI" is a
-    // brand name → untranslated (tr falls back to the label, like GrowthNet).
-    //
-    // comingSoon: true is the reusable "not ready to release" gate: it renders a
-    // lock + "Soon" badge so we can show a feature's teaser without implying it's
-    // live. To lock any future not-ready feature, set comingSoon on its nav entry
-    // (group and/or item) and keep its page a teaser.
-    key: "nabil-ai",
-    labelKey: "categoryNabilAi",
-    label: "Nabil AI",
-    icon: Bot,
-    comingSoon: true,
-    items: [
-      // "Soon" + lock are DB-driven (phone_ordering add-on is comingSoon in
-      // /superadmin/add-ons). The Nabil AI section header keeps its own
-      // comingSoon flag as the section indicator. Luigi 2026-06-14.
-      { href: "/admin/phone-ordering", labelKey: "phoneOrdering", label: "Phone Ordering", icon: Phone, requiresFeature: "phone_ordering_agent" },
-    ],
-  },
-
-  {
-    // ─── KDS SCREEN ─────────────────────────────────────────────────────
-    // KDS Screen — a standalone Kitchen Display System app (Toast/Square-style),
-    // built POST-LAUNCH. For now it's a locked "Soon" teaser category so owners
-    // see it on the roadmap. comingSoon on the group + the kds_screen add-on
-    // (comingSoon in /superadmin/add-ons) drive the lock + Soon badge.
-    // Luigi 2026-06-14.
-    key: "kds",
-    labelKey: "categoryKds",
-    label: "KDS Screen",
-    icon: MonitorCheck,
-    comingSoon: true,
-    items: [
-      { href: "/admin/kds", labelKey: "kitchenDisplay", label: "Kitchen Display", icon: MonitorCheck, requiresFeature: "kds_screen" },
-    ],
-  },
-
-  {
-    // ─── BRANDED MOBILE APP ─────────────────────────────────────────────
-    // Branded Mobile App — your restaurant's own iOS/Android app, built
-    // POST-LAUNCH. Locked "Soon" teaser category (mirrors KDS / Nabil AI).
-    // comingSoon on the group + the branded_mobile_app add-on (comingSoon in
-    // /superadmin/add-ons) drive the lock + Soon badge. Luigi 2026-06-14.
-    key: "mobile-app",
-    labelKey: "categoryMobileApp",
-    label: "Branded Mobile App",
-    icon: Smartphone,
-    comingSoon: true,
-    items: [
-      { href: "/admin/mobile-app", labelKey: "mobileApp", label: "Mobile App", icon: Smartphone, requiresFeature: "app_store_listing" },
-    ],
-  },
-
-  {
-    // ─── POS MODULE ─────────────────────────────────────────────────────
-    // POS Module — an in-house point-of-sale register, built POST-LAUNCH.
-    // Locked "Soon" teaser category (mirrors KDS / Branded Mobile App / Nabil
-    // AI). comingSoon on the group + the pos_module add-on (comingSoon in
-    // /superadmin/add-ons) drive the lock + Soon badge. Luigi 2026-06-14.
-    key: "pos",
-    labelKey: "categoryPos",
-    label: "POS Module",
-    icon: Calculator,
-    comingSoon: true,
-    items: [
-      { href: "/admin/pos", labelKey: "pointOfSale", label: "Point of Sale", icon: Calculator, requiresFeature: "in_house_pos" },
+      { href: "/admin/phone-ordering", labelKey: "categoryNabilAi", label: "Nabil AI", icon: Bot, comingSoon: true, requiresFeature: "phone_ordering_agent" },
+      { href: "/admin/kds", labelKey: "categoryKds", label: "KDS Screen", icon: MonitorCheck, comingSoon: true, requiresFeature: "kds_screen" },
+      { href: "/admin/pos", labelKey: "categoryPos", label: "POS Module", icon: Calculator, comingSoon: true, requiresFeature: "in_house_pos" },
     ],
   },
 
@@ -755,8 +698,8 @@ export function AdminSidebar({
           active
             ? "bg-emerald-500 text-white"
             : nested
-              ? "text-gray-400 hover:bg-gray-800 hover:text-white"
-              : "text-gray-300 hover:bg-gray-800 hover:text-white"
+              ? "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+              : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
         )}
       >
         <div className="relative flex-shrink-0">
@@ -783,10 +726,10 @@ export function AdminSidebar({
                 a backend grant). A granted early-access restaurant shows "Soon"
                 above but no lock. Badges/steps never co-occur, so no collision. */}
             {locked && (
-              <Lock className={cn("w-3.5 h-3.5 flex-shrink-0", active ? "text-white" : "text-amber-400/80")} />
+              <Lock className={cn("w-3.5 h-3.5 flex-shrink-0", active ? "text-white" : "text-amber-500")} />
             )}
             {!locked && !comingSoon && isStepComplete === true && (
-              <Check className={cn("w-3.5 h-3.5 flex-shrink-0", active ? "text-white" : "text-green-400")} />
+              <Check className={cn("w-3.5 h-3.5 flex-shrink-0", active ? "text-white" : "text-green-600")} />
             )}
             {!locked && !comingSoon && isStepComplete === false && (
               <Circle className={cn("w-3.5 h-3.5 flex-shrink-0", active ? "text-white" : "text-gray-500")} />
@@ -816,7 +759,7 @@ export function AdminSidebar({
         />
       )}
     <aside className={cn(
-      "bg-gray-900 text-white flex flex-col transition-transform duration-300",
+      "bg-white text-gray-900 border-r border-gray-200 flex flex-col transition-transform duration-300",
       // Width: same on desktop, but on mobile we ignore the collapsed
       // toggle and always use the full-width (256px) drawer when open.
       collapsed ? "md:w-16" : "md:w-64",
@@ -828,16 +771,16 @@ export function AdminSidebar({
       "fixed inset-y-0 left-0 z-40",
       mobileOpen ? "translate-x-0" : "-translate-x-full",
     )}>
-      <div className="h-16 flex items-center justify-between px-4 border-b border-gray-700">
+      <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
         {!collapsed && (
-          <Link href="/admin" className="flex items-center gap-2 text-emerald-400 font-bold text-lg truncate">
+          <Link href="/admin" className="flex items-center gap-2 text-emerald-600 font-bold text-lg truncate">
             <ChefHat className="w-6 h-6 flex-shrink-0" />
             <span className="truncate">{tr("dashboard", "Dashboard")}</span>
           </Link>
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className={cn("text-gray-400 hover:text-white transition flex-shrink-0", collapsed && "mx-auto")}
+          className={cn("text-gray-500 hover:text-gray-900 transition flex-shrink-0", collapsed && "mx-auto")}
         >
           {collapsed ? <Menu className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
         </button>
@@ -868,10 +811,10 @@ export function AdminSidebar({
             className="mx-2 mt-3 mb-1 bg-gradient-to-r from-emerald-500/20 to-emerald-500/10 border border-emerald-500/40 rounded-lg px-3 py-2 text-xs hover:border-emerald-500/70 transition"
           >
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-emerald-400">{tr("readyToPublish", "Ready to publish")}</span>
-              <Rocket className="w-3.5 h-3.5 text-emerald-300" />
+              <span className="font-semibold text-emerald-600">{tr("readyToPublish", "Ready to publish")}</span>
+              <Rocket className="w-3.5 h-3.5 text-emerald-700" />
             </div>
-            <div className="text-[10px] text-gray-400 mt-1">
+            <div className="text-[10px] text-gray-500 mt-1">
               {tr(
                 "allStepsComplete",
                 `All ${setupProgress.totalSteps} steps complete · click to go live`,
@@ -885,16 +828,16 @@ export function AdminSidebar({
             className="mx-2 mt-3 mb-1 bg-gradient-to-r from-emerald-500/20 to-emerald-500/10 border border-emerald-500/40 rounded-lg px-3 py-2 text-xs hover:border-emerald-500/70 transition"
           >
             <div className="flex items-center justify-between mb-1.5">
-              <span className="font-semibold text-emerald-400">{tr("setupProgress", "Setup progress")}</span>
-              <span className="text-emerald-300 font-bold">{setupProgress.percent}%</span>
+              <span className="font-semibold text-emerald-600">{tr("setupProgress", "Setup progress")}</span>
+              <span className="text-emerald-700 font-bold">{setupProgress.percent}%</span>
             </div>
-            <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden">
+            <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
               <div
                 className="h-full bg-emerald-400 transition-all"
                 style={{ width: `${setupProgress.percent}%` }}
               />
             </div>
-            <div className="text-[10px] text-gray-400 mt-1">
+            <div className="text-[10px] text-gray-500 mt-1">
               {tr(
                 "stepsComplete",
                 `${setupProgress.completedSteps}/${setupProgress.totalSteps} steps complete`,
@@ -932,7 +875,7 @@ export function AdminSidebar({
                 title={tr(group.labelKey, group.label)}
                 className={cn(
                   "w-full flex items-center justify-center py-3 transition mx-2 rounded-lg mb-1 relative",
-                  activeInGroup ? "bg-emerald-500 text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                  activeInGroup ? "bg-emerald-500 text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                 )}
               >
                 <div className="relative">
@@ -966,8 +909,8 @@ export function AdminSidebar({
                     // as one tier of navigation.
                     "w-full flex items-center justify-between px-4 py-2.5 text-[11px] font-bold uppercase tracking-wider transition",
                     activeInGroup
-                      ? "text-emerald-400"
-                      : "text-gray-400 hover:text-white"
+                      ? "text-emerald-600"
+                      : "text-gray-500 hover:text-gray-900"
                   )}
                 >
                   <span className="flex items-center gap-2.5">
@@ -977,7 +920,7 @@ export function AdminSidebar({
                       <span
                         className={cn(
                           "inline-flex items-center gap-1 text-[9px] font-bold px-1.5 py-0.5 rounded-full normal-case tracking-normal",
-                          activeInGroup ? "bg-emerald-500/20 text-emerald-300" : "bg-amber-100 text-amber-700"
+                          activeInGroup ? "bg-emerald-500/20 text-emerald-700" : "bg-amber-100 text-amber-700"
                         )}
                       >
                         <Lock className="w-2.5 h-2.5" />
@@ -989,8 +932,8 @@ export function AdminSidebar({
                         className={cn(
                           "text-[9px] font-bold px-1.5 py-0.5 rounded-full normal-case tracking-normal",
                           rolled.done === rolled.total
-                            ? "bg-green-500/20 text-green-400"
-                            : "bg-gray-800 text-gray-400"
+                            ? "bg-green-500/20 text-green-600"
+                            : "bg-gray-100 text-gray-500"
                         )}
                       >
                         {rolled.done}/{rolled.total}
@@ -1032,8 +975,8 @@ export function AdminSidebar({
                               // gray-300/400) so parents read "above" children.
                               "flex items-center justify-between px-3 py-2 rounded-lg text-sm font-semibold transition",
                               headerActive
-                                ? "text-emerald-300 bg-gray-800/60"
-                                : "text-gray-200 hover:bg-gray-800/40 hover:text-white"
+                                ? "text-emerald-700 bg-gray-100/60"
+                                : "text-gray-700 hover:bg-gray-100/40 hover:text-white"
                             );
                             const labelContent = (
                               <>
@@ -1044,8 +987,8 @@ export function AdminSidebar({
                                     className={cn(
                                       "text-[9px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0",
                                       counts.done === counts.total
-                                        ? "bg-green-500/20 text-green-400"
-                                        : "bg-gray-800 text-gray-400"
+                                        ? "bg-green-500/20 text-green-600"
+                                        : "bg-gray-100 text-gray-500"
                                     )}
                                   >
                                     {counts.done}/{counts.total}
@@ -1068,7 +1011,7 @@ export function AdminSidebar({
                                     type="button"
                                     onClick={() => toggleSubGroup(sg.key)}
                                     aria-label={tr(sg.labelKey, sg.label)}
-                                    className="ml-1 -mr-1 p-1 rounded hover:bg-gray-700/50"
+                                    className="ml-1 -mr-1 p-1 rounded hover:bg-gray-200/70"
                                   >
                                     {chevron}
                                   </button>
@@ -1089,7 +1032,7 @@ export function AdminSidebar({
                             // Tree guide-line: vertical rail anchored under the
                             // sub-group's icon, so nested items visibly hang off
                             // their parent instead of floating at the same level.
-                            <div className="ml-5 pl-1.5 mt-0.5 border-l border-gray-700/70">
+                            <div className="ml-5 pl-1.5 mt-0.5 border-l border-gray-200/70">
                               {sg.items.map((it) => renderItem(it, true))}
                             </div>
                           )}
@@ -1104,7 +1047,7 @@ export function AdminSidebar({
         )}
       </nav>
 
-      <div className="border-t border-gray-700 p-4 space-y-2">
+      <div className="border-t border-gray-200 p-4 space-y-2">
         {/* Quick access to the Kitchen Order App — persistent bottom-left link so
             staff can jump to /kitchen without typing the URL (Luigi 2026-06-04).
             Opens in a new tab so the admin panel stays put. Visible collapsed
@@ -1114,7 +1057,7 @@ export function AdminSidebar({
           target="_blank"
           title={tr("kitchenOrderApp", "Kitchen Order App")}
           className={cn(
-            "flex items-center gap-2 text-sm font-medium text-emerald-400 hover:text-emerald-300 transition",
+            "flex items-center gap-2 text-sm font-medium text-emerald-600 hover:text-emerald-700 transition",
             collapsed && "justify-center"
           )}
         >
@@ -1125,7 +1068,7 @@ export function AdminSidebar({
           <Link
             href={`/order/${restaurantSlug}`}
             target="_blank"
-            className="flex items-center gap-2 text-xs text-blue-400 hover:text-blue-300 transition"
+            className="flex items-center gap-2 text-xs text-blue-600 hover:text-blue-700 transition"
           >
             <Store className="w-4 h-4" /> {tr("viewOrderingPage", "View ordering page")}
           </Link>
@@ -1139,7 +1082,7 @@ export function AdminSidebar({
           onClick={() => signOut({ callbackUrl: "/login" })}
           title={tr("logOut", "Log out")}
           className={cn(
-            "flex items-center gap-2 text-sm text-gray-400 hover:text-red-400 transition",
+            "flex items-center gap-2 text-sm text-gray-500 hover:text-red-400 transition",
             collapsed && "justify-center"
           )}
         >

@@ -84,7 +84,7 @@ export const COMPETITORS: Competitor[] = [
       { feature: "Marketplace fee structure",            feefree: "$3 max/order or $199.99/mo flat", competitor: "N/A" },
       { feature: "Card auth-then-capture",               feefree: "Yes",                            competitor: "Immediate charge + refund" },
       { feature: "Partner / reseller program",           feefree: "Up to 10% lifetime",             competitor: "No" },
-      { feature: "Languages supported",                  feefree: "EN / FR / ES / IT / PT",         competitor: "20+ (Oracle scale)" },
+      { feature: "Languages supported",                  feefree: "38 languages",         competitor: "20+ (Oracle scale)" },
       { feature: "Hosted website included",              feefree: "$19.99/mo add-on",               competitor: "Bundled with paid plans" },
       { feature: "Email/SMS marketing automation",       feefree: "Built-in (Autopilot)",           competitor: "Paid add-on" },
       { feature: "Founded",                              feefree: "2025",                            competitor: "2014 (Oracle since 2018)" },
@@ -239,13 +239,13 @@ export const COMPETITORS: Competitor[] = [
     whyFeeFree: [
       { title: "0% on direct orders, anywhere",
         body: "Fee Free Ordering runs on standard Stripe Connect — works in every country Stripe supports. Skip Foodpanda's 20-35% per-order cut on the customers you bring back." },
-      { title: "Hosted in 5 languages (en/fr/es/it/pt)",
+      { title: "Hosted in 38 languages",
         body: "Customer ordering pages translate automatically. Your customers see the menu in their language without you doing extra work." },
     ],
     comparison: [
       { feature: "Commission per order",                 feefree: "0% on direct",                   competitor: "20-35%" },
       { feature: "Customer service fees",                feefree: "None",                           competitor: "Variable per market" },
-      { feature: "Language support",                     feefree: "EN / FR / ES / IT / PT",         competitor: "30+ markets" },
+      { feature: "Language support",                     feefree: "38 languages",         competitor: "30+ markets" },
     ],
     faqs: [
       { q: "Is there a Foodpanda alternative with lower fees?",

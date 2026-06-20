@@ -21,13 +21,13 @@ export default async function SuperadminLayout({ children }: { children: React.R
 
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden">
-      <aside className="w-60 bg-gray-900 text-white flex flex-col">
-        <div className="h-16 flex items-center px-5 border-b border-gray-700">
-          <ChefHat className="w-6 h-6 text-emerald-400 mr-2" />
-          <span className="font-bold text-emerald-400">Super Admin</span>
+      <aside className="w-60 bg-white text-gray-900 border-r border-gray-200 flex flex-col">
+        <div className="h-16 flex items-center px-5 border-b border-gray-200">
+          <ChefHat className="w-6 h-6 text-emerald-600 mr-2" />
+          <span className="font-bold text-emerald-600">Super Admin</span>
         </div>
         <SuperadminNav reportsNewCount={reportsNewCount} notificationsCount={notificationsCount} />
-        <div className="p-4 border-t border-gray-700 text-xs text-gray-500">
+        <div className="p-4 border-t border-gray-200 text-xs text-gray-500">
           {(session.user as any)?.email}
         </div>
       </aside>

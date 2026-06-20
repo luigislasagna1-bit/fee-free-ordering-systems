@@ -5,9 +5,12 @@ import Link from "next/link";
 import { ArrowRight, ShoppingCart, ChefHat, BarChart3 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-export function DemoClient({ locale }: { locale: string }) {
+export function DemoClient({ locale, demoSlug }: { locale: string; demoSlug: string | null }) {
   const t = useTranslations("marketing.demo");
   const tNav = useTranslations("marketing.nav");
+  // Live demo storefront if one exists; otherwise send visitors to the public
+  // marketplace so the card is never a dead end.
+  const orderingHref = demoSlug ? `/order/${demoSlug}` : "/marketplace";
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -27,7 +30,7 @@ export function DemoClient({ locale }: { locale: string }) {
               <h2 className="text-xl font-bold text-gray-900 mb-3">{t("cards.ordering")}</h2>
               <p className="text-gray-600 mb-6">{t("cards.orderingDesc")}</p>
               <Link
-                href="/order/demo-pizza-palace"
+                href={orderingHref}
                 className="inline-flex items-center gap-2 bg-emerald-500 text-white font-semibold px-6 py-3 rounded-xl hover:bg-emerald-600 transition"
               >
                 {t("tryIt")} <ArrowRight className="w-4 h-4" />

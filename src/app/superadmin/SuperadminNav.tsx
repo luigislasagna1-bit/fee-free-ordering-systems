@@ -34,7 +34,7 @@ export function SuperadminNav({ reportsNewCount = 0, notificationsCount = 0 }: {
           href === "/reseller-reports" ? reportsNewCount :
           href === "/reseller-reports/notifications" ? notificationsCount : 0;
         return (
-          <Link key={href} href={href} className={cn("flex items-center gap-3 px-4 py-3 text-sm font-medium mx-2 rounded-lg mb-1 transition", active ? "bg-emerald-500 text-white" : "text-gray-300 hover:bg-gray-800")}>
+          <Link key={href} href={href} className={cn("flex items-center gap-3 px-4 py-3 text-sm font-medium mx-2 rounded-lg mb-1 transition", active ? "bg-emerald-500 text-white" : "text-gray-600 hover:bg-gray-100")}>
             <Icon className="w-4 h-4" /> <span className="flex-1">{label}</span>
             {badgeCount > 0 && (
               <span className="ml-auto inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full bg-rose-500 text-white text-[11px] font-bold">
@@ -44,7 +44,7 @@ export function SuperadminNav({ reportsNewCount = 0, notificationsCount = 0 }: {
           </Link>
         );
       })}
-      <button onClick={() => signOut({ callbackUrl: "/login" })} className="flex items-center gap-3 px-4 py-3 text-sm text-gray-400 hover:text-red-400 mx-2 transition w-full mt-2">
+      <button onClick={() => signOut({ callbackUrl: "/login" })} className="flex items-center gap-3 px-4 py-3 text-sm text-gray-600 hover:text-red-500 mx-2 transition w-full mt-2">
         <LogOut className="w-4 h-4" /> Log out
       </button>
     </nav>
