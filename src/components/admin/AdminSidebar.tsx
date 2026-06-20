@@ -909,8 +909,10 @@ export function AdminSidebar({
                     // as one tier of navigation.
                     "w-full flex items-center justify-between px-4 py-2.5 text-[11px] font-bold uppercase tracking-wider transition",
                     activeInGroup
-                      ? "text-emerald-600"
-                      : "text-gray-500 hover:text-gray-900"
+                      ? "text-emerald-700 bg-emerald-50"
+                      : isOpen
+                        ? "text-gray-900 bg-gray-50"
+                        : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
                   )}
                 >
                   <span className="flex items-center gap-2.5">
@@ -976,7 +978,7 @@ export function AdminSidebar({
                               "flex items-center justify-between px-3 py-2 rounded-lg text-sm font-semibold transition",
                               headerActive
                                 ? "text-emerald-700 bg-gray-100/60"
-                                : "text-gray-700 hover:bg-gray-100/40 hover:text-white"
+                                : "text-gray-700 hover:bg-gray-100/60 hover:text-gray-900"
                             );
                             const labelContent = (
                               <>
