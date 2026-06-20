@@ -140,7 +140,7 @@ export function HomeClient({ locale }: { locale: string }) {
               alt={t("hero.frameAlt")}
               width={884}
               height={1024}
-              className="w-full h-auto max-w-sm mx-auto lg:max-w-none drop-shadow-[0_24px_55px_rgba(16,185,129,0.16)]"
+              className="w-full h-auto max-w-sm mx-auto lg:max-w-none"
             />
           </div>
         </div>
@@ -175,7 +175,7 @@ export function HomeClient({ locale }: { locale: string }) {
               alt={t("softlaunch.imgAlt")}
               width={300}
               height={495}
-              className="w-full h-auto max-w-[16rem] sm:max-w-xs mx-auto drop-shadow-[0_24px_50px_rgba(16,185,129,0.18)]"
+              className="w-full h-auto max-w-[16rem] sm:max-w-xs mx-auto"
             />
           </div>
         </div>
