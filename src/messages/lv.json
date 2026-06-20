@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Restorānu īpašniekiem",
-          "title": "Tava paša pasūtīšanas lapa. <accent>0% komisijas.</accent>",
-          "subtitle": "Zīmolam pielāgota tiešsaistes pasūtīšana ēdiena izņemšanai, piegādei, ēšanai uz vietas un ketringam — 38 valodās, mūžīgi bez maksas. Paturi 100% no katra tiešā pasūtījuma.",
+          "title": "Jūsu restorāns. <accent>0% komisijas. 100% jūsu.</accent>",
+          "subtitle": "Zīmola tiešsaistes pasūtīšana izņemšanai, piegādei, ēšanai uz vietas & ēdināšanai pasākumos — 38 valodās. Paturiet 100% no katra tiešā pasūtījuma.",
           "ctaStart": "Sākt bez maksas",
           "ctaDemo": "Apskati reālu veikalu",
           "badge": "0% komisijas",
@@ -4362,7 +4362,11 @@
           "trust2": "0% par tiešajiem pasūtījumiem",
           "trust3": "38 valodas",
           "trust4": "Veidots Kanādā 🍁",
-          "frameAlt": "Luigi's Lasagna — īsta zīmolam pielāgota pasūtīšanas lapa"
+          "frameAlt": "Jūsu zīmola veikals un piltuve, kas pārvērš tirgus laukuma apmeklētājus klientos, kuri pieder jums.",
+          "feat1": "0% komisijas par tiešajiem pasūtījumiem",
+          "feat2": "Paturiet 100% no katra pasūtījuma",
+          "feat3": "38 valodas iebūvētas",
+          "feat4": "Ar lepnumu radīts Kanādā"
         },
         "funnel": {
           "eyebrow": "Izaugsmes leņķis",

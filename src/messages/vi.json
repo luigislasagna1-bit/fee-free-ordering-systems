@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Dành cho chủ nhà hàng",
-          "title": "Trang đặt món của riêng bạn. <accent>0% hoa hồng.</accent>",
-          "subtitle": "Trang đặt món trực tuyến mang thương hiệu của bạn cho lấy tại quầy, giao hàng, ăn tại chỗ & tiệc — bằng 38 ngôn ngữ, miễn phí mãi mãi. Giữ trọn 100% mỗi đơn đặt trực tiếp.",
+          "title": "Nhà Hàng Của Bạn. <accent>0% Hoa Hồng. 100% Của Bạn.</accent>",
+          "subtitle": "Đặt hàng trực tuyến mang thương hiệu riêng cho mang đi, giao hàng, ăn tại chỗ & tiệc — bằng 38 ngôn ngữ. Giữ lại 100% mỗi đơn hàng trực tiếp.",
           "ctaStart": "Bắt đầu miễn phí",
           "ctaDemo": "Xem cửa hàng trực tuyến mẫu",
           "badge": "0% hoa hồng",
@@ -4362,7 +4362,11 @@
           "trust2": "0% trên đơn đặt trực tiếp",
           "trust3": "38 ngôn ngữ",
           "trust4": "Được xây dựng tại Canada 🍁",
-          "frameAlt": "Luigi's Lasagna — một trang đặt món mang thương hiệu thực tế"
+          "frameAlt": "Gian hàng mang thương hiệu của bạn, cùng phễu biến lưu lượng từ sàn thương mại thành khách hàng của riêng bạn.",
+          "feat1": "0% hoa hồng trên đơn hàng trực tiếp",
+          "feat2": "Giữ lại 100% mỗi đơn hàng",
+          "feat3": "Tích hợp sẵn 38 ngôn ngữ",
+          "feat4": "Tự hào sản xuất tại Canada"
         },
         "funnel": {
           "eyebrow": "Góc nhìn tăng trưởng",

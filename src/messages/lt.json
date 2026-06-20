@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Restoranų savininkams",
-          "title": "Jūsų pačių užsakymų puslapis. <accent>0 % komisinių.</accent>",
-          "subtitle": "Su jūsų prekės ženklu suderintas užsakymų puslapis atsiėmimui, pristatymui, valgymui vietoje ir maitinimo paslaugoms — 38 kalbomis, nemokamai amžinai. Pasilikite 100 % kiekvieno tiesioginio užsakymo.",
+          "title": "Jūsų restoranas. <accent>0 % komisinių. 100 % jūsų.</accent>",
+          "subtitle": "Firminis užsakymų portalas atsiėmimui, pristatymui, valgymui vietoje ir aptarnavimui renginiuose — 38 kalbomis. Pasilikite 100 % kiekvieno tiesioginio užsakymo.",
           "ctaStart": "Pradėkite nemokamai",
           "ctaDemo": "Pažiūrėkite veikiančią parduotuvę",
           "badge": "0 % komisinių",
@@ -4362,7 +4362,11 @@
           "trust2": "0 % už tiesioginius užsakymus",
           "trust3": "38 kalbos",
           "trust4": "Sukurta Kanadoje 🍁",
-          "frameAlt": "Luigi's Lasagna — tikras prekės ženklu pažymėtas užsakymų puslapis"
+          "frameAlt": "Jūsų firminė parduotuvė ir piltuvas, kuris paverčia prekyvietės srautą jums priklausančiais klientais.",
+          "feat1": "0 % komisinių už tiesioginius užsakymus",
+          "feat2": "Pasilikite 100 % kiekvieno užsakymo",
+          "feat3": "38 kalbos jau įdiegtos",
+          "feat4": "Su pasididžiavimu sukurta Kanadoje"
         },
         "funnel": {
           "eyebrow": "Augimo perspektyva",

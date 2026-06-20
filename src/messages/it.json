@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Per ristoratori",
-          "title": "La tua pagina di ordinazione. <accent>0% di commissioni.</accent>",
-          "subtitle": "Ordini online con il tuo brand per asporto, consegna, al tavolo e catering — in 38 lingue, gratis per sempre. Tieni il 100% di ogni ordine diretto.",
+          "title": "Il tuo ristorante. <accent>0% di commissioni. 100% tuo.</accent>",
+          "subtitle": "Ordinazioni online personalizzate per asporto, consegna, in sala e catering — in 38 lingue. Tieni il 100% di ogni ordine diretto.",
           "ctaStart": "Inizia gratis",
           "ctaDemo": "Guarda una vetrina dal vivo",
           "badge": "0% di commissioni",
@@ -4362,7 +4362,11 @@
           "trust2": "0% sugli ordini diretti",
           "trust3": "38 lingue",
           "trust4": "Realizzato in Canada 🍁",
-          "frameAlt": "Luigi's Lasagna — una vera pagina di ordinazione con brand"
+          "frameAlt": "La tua vetrina personalizzata e il funnel che trasforma il traffico dei marketplace in clienti che sono davvero tuoi.",
+          "feat1": "0% di commissioni sugli ordini diretti",
+          "feat2": "Tieni il 100% di ogni ordine",
+          "feat3": "38 lingue integrate",
+          "feat4": "Orgogliosamente realizzato in Canada"
         },
         "funnel": {
           "eyebrow": "La leva della crescita",

@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Für Restaurantbetreiber",
-          "title": "Ihre eigene Bestellseite. <accent>0 % Provision.</accent>",
-          "subtitle": "Ihre eigene Online-Bestellung für Abholung, Lieferung, Vor-Ort-Verzehr & Catering – in 38 Sprachen, für immer kostenlos. Behalten Sie 100 % jeder Direktbestellung.",
+          "title": "Ihr Restaurant. <accent>0% Provision. 100% Ihres.</accent>",
+          "subtitle": "Online-Bestellungen im eigenen Branding für Abholung, Lieferung, Vor-Ort & Catering — in 38 Sprachen. Behalten Sie 100% jeder Direktbestellung.",
           "ctaStart": "Kostenlos starten",
           "ctaDemo": "Live-Shop ansehen",
           "badge": "0 % Provision",
@@ -4362,7 +4362,11 @@
           "trust2": "0 % bei Direktbestellungen",
           "trust3": "38 Sprachen",
           "trust4": "Made in Canada 🍁",
-          "frameAlt": "Luigi's Lasagna – eine echte Bestellseite im eigenen Branding"
+          "frameAlt": "Ihr Storefront im eigenen Branding und der Funnel, der Marktplatz-Traffic in Kunden verwandelt, die Ihnen gehören.",
+          "feat1": "0% Provision auf Direktbestellungen",
+          "feat2": "Behalten Sie 100% jeder Bestellung",
+          "feat3": "38 Sprachen integriert",
+          "feat4": "Mit Stolz in Kanada entwickelt"
         },
         "funnel": {
           "eyebrow": "Der Wachstumshebel",

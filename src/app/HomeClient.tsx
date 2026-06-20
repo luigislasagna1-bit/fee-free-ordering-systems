@@ -4,13 +4,13 @@ import { useTranslations } from "next-intl";
 import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
 import {
-  ArrowRight, Target, Users, Tag, QrCode, Store, Upload, Repeat,
+  ArrowRight, Users, Tag, QrCode, Store, Upload, Repeat, Percent, DollarSign, Leaf,
   CreditCard, Globe, Building2, Infinity as InfinityIcon, Link2, Truck, Smartphone, Monitor, Phone, CalendarCheck,
   BellRing, PhoneCall, RefreshCw, ShieldCheck, Receipt, ScanLine, BarChart3, Database, TrendingUp, Headset,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import {
-  MarketingSection, SectionEyebrow, SectionHeading, PrimaryButton, SecondaryButton,
+  MarketingSection, SectionHeading, PrimaryButton, SecondaryButton,
   ScreenshotFrame, StatTrustStrip, AltFeatureRow, IconFeatureGrid, type IconFeature,
   NumberedSteps, CTASection,
 } from "@/components/marketing/sections";
@@ -78,6 +78,14 @@ const INTEGRATION_GROUPS: { key: string; logos: string[] }[] = [
 ];
 const INTEGRATIONS_ROADMAP = ["Uber Eats", "DoorDash", "Tookan", "Lalamove"];
 
+/* Hero value chips (m6 layout) — icon + short translated label. */
+const HERO_FEATURES: { icon: LucideIcon; k: string }[] = [
+  { icon: Percent, k: "feat1" },
+  { icon: DollarSign, k: "feat2" },
+  { icon: Globe, k: "feat3" },
+  { icon: Leaf, k: "feat4" },
+];
+
 export function HomeClient({ locale }: { locale: string }) {
   const t = useTranslations("marketing.home.v2");
   const soon = t("soon");
@@ -93,20 +101,29 @@ export function HomeClient({ locale }: { locale: string }) {
     <div className="min-h-screen bg-white flex flex-col">
       <PublicNav currentLocale={locale} />
 
-      {/* ── S1 · HERO ─────────────────────────────────────────────────────── */}
+      {/* ── S1 · HERO (m6 design) ─────────────────────────────────────────── */}
       <section
         className="relative overflow-hidden bg-white"
-        style={{ background: "radial-gradient(80% 90% at 12% 0%, #ecfdf5 0%, rgba(236,253,245,0) 55%), #ffffff" }}
+        style={{ background: "radial-gradient(95% 90% at 88% 5%, #ecfdf5 0%, rgba(236,253,245,0) 60%), #ffffff" }}
       >
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20 grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           <div>
-            <SectionEyebrow icon={Target}>{t("hero.eyebrow")}</SectionEyebrow>
-            <h1 className="mt-5 text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-[1.05] tracking-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-[3.4rem] font-extrabold text-gray-900 leading-[1.05] tracking-tight">
               {t.rich("hero.title", { accent: (c) => <span className="text-emerald-600">{c}</span> })}
             </h1>
             <p className="mt-5 text-lg text-gray-600 leading-relaxed max-w-xl">
               {t("hero.subtitle")}
             </p>
+            <div className="mt-7 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl">
+              {HERO_FEATURES.map((f) => (
+                <div key={f.k} className="flex flex-col items-center text-center gap-2 rounded-2xl bg-white border border-gray-200/70 px-2 py-3.5 shadow-[0_4px_14px_-8px_rgba(16,24,40,0.12)]">
+                  <span className="flex items-center justify-center w-9 h-9 rounded-full bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100">
+                    <f.icon className="w-4 h-4" />
+                  </span>
+                  <span className="text-[11px] font-semibold text-gray-700 leading-snug">{t(`hero.${f.k}`)}</span>
+                </div>
+              ))}
+            </div>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <PrimaryButton href="/signup">{t("hero.ctaStart")}<ArrowRight className="w-4 h-4" /></PrimaryButton>
               <SecondaryButton href="/demo">{t("hero.ctaDemo")}</SecondaryButton>
@@ -118,10 +135,13 @@ export function HomeClient({ locale }: { locale: string }) {
           </div>
 
           <div className="relative">
-            <ScreenshotFrame variant="browser" glow url="luigis.feefreeordering.com" alt={t("hero.frameAlt")} src="/marketing/screenshots/luigis-order-top-desktop.png" />
-            <div className="absolute -top-3 -right-3 bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg rotate-3">
-              {t("hero.badge")}
-            </div>
+            <img
+              src="/marketing/hero-funnel.png"
+              alt={t("hero.frameAlt")}
+              width={884}
+              height={1024}
+              className="w-full h-auto max-w-sm mx-auto lg:max-w-none drop-shadow-[0_24px_55px_rgba(16,185,129,0.16)]"
+            />
           </div>
         </div>
       </section>

@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Za lastnike restavracij",
-          "title": "Vaša lastna stran za naročanje. <accent>0% provizije.</accent>",
-          "subtitle": "Naročanje s svojo blagovno znamko za prevzem, dostavo, jedi na kraju samem in catering — v 38 jezikih, za vedno brezplačno. Obdržite 100% vsakega neposrednega naročila.",
+          "title": "Vaša restavracija. <accent>0 % provizije. 100 % vaše.</accent>",
+          "subtitle": "Naročanje prek spleta z lastno blagovno znamko za prevzem, dostavo, strežbo na mizo & catering — v 38 jezikih. Obdržite 100 % vsakega neposrednega naročila.",
           "ctaStart": "Začnite brezplačno",
           "ctaDemo": "Oglejte si delujočo trgovino",
           "badge": "0% provizije",
@@ -4362,7 +4362,11 @@
           "trust2": "0% pri neposrednih naročilih",
           "trust3": "38 jezikov",
           "trust4": "Ustvarjeno v Kanadi 🍁",
-          "frameAlt": "Luigi's Lasagna — resnična stran za naročanje z lastno blagovno znamko"
+          "frameAlt": "Vaša spletna trgovina z lastno blagovno znamko in lijak, ki obiskovalce s tržnic spremeni v stranke, ki so vaše.",
+          "feat1": "0 % provizije na neposredna naročila",
+          "feat2": "Obdržite 100 % vsakega naročila",
+          "feat3": "38 vgrajenih jezikov",
+          "feat4": "S ponosom ustvarjeno v Kanadi"
         },
         "funnel": {
           "eyebrow": "Pogled na rast",

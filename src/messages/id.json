@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Untuk pemilik restoran",
-          "title": "Halaman pemesanan milik Anda sendiri. <accent>Komisi 0%.</accent>",
-          "subtitle": "Pemesanan online berlabel merek Anda untuk ambil sendiri, antar, makan di tempat & katering — dalam 38 bahasa, gratis selamanya. Simpan 100% dari setiap pesanan langsung.",
+          "title": "Restoran Anda. <accent>Komisi 0%. 100% Milik Anda.</accent>",
+          "subtitle": "Pemesanan online berlabel merek Anda untuk ambil sendiri, antar, makan di tempat & katering — dalam 38 bahasa. Simpan 100% dari setiap pesanan langsung.",
           "ctaStart": "Mulai gratis",
           "ctaDemo": "Lihat etalase langsung",
           "badge": "Komisi 0%",
@@ -4362,7 +4362,11 @@
           "trust2": "0% untuk pesanan langsung",
           "trust3": "38 bahasa",
           "trust4": "Dibuat di Kanada 🍁",
-          "frameAlt": "Luigi's Lasagna — halaman pemesanan berlabel merek yang nyata"
+          "frameAlt": "Etalase berlabel merek Anda, dan corong yang mengubah lalu lintas marketplace menjadi pelanggan milik Anda sendiri.",
+          "feat1": "Komisi 0% untuk pesanan langsung",
+          "feat2": "Simpan 100% dari setiap pesanan",
+          "feat3": "38 bahasa bawaan",
+          "feat4": "Dengan bangga dibuat di Kanada"
         },
         "funnel": {
           "eyebrow": "Sudut pandang pertumbuhan",

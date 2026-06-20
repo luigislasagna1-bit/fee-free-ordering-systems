@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Pro majitele restaurací",
-          "title": "Vlastní objednávková stránka. <accent>0% provize.</accent>",
-          "subtitle": "Značková online objednávka pro vyzvednutí, rozvoz, jídlo na místě i catering — ve 38 jazycích, zdarma navždy. Z každé přímé objednávky vám zůstane 100 %.",
+          "title": "Vaše restaurace. <accent>0% provize. 100% vaše.</accent>",
+          "subtitle": "Online objednávky pod vaší značkou pro vyzvednutí, rozvoz, stolování i catering — v 38 jazycích. Z každé přímé objednávky si necháte 100 %.",
           "ctaStart": "Začít zdarma",
           "ctaDemo": "Prohlédnout živou stránku",
           "badge": "0% provize",
@@ -4362,7 +4362,11 @@
           "trust2": "0 % z přímých objednávek",
           "trust3": "38 jazyků",
           "trust4": "Vyrobeno v Kanadě 🍁",
-          "frameAlt": "Luigi's Lasagna — skutečná značková objednávková stránka"
+          "frameAlt": "Váš vlastní výklad pod vaší značkou a cesta, která promění návštěvníky tržiště v zákazníky, kteří patří vám.",
+          "feat1": "0% provize z přímých objednávek",
+          "feat2": "Z každé objednávky si necháte 100 %",
+          "feat3": "38 jazyků v základu",
+          "feat4": "Hrdě vyrobeno v Kanadě"
         },
         "funnel": {
           "eyebrow": "Cesta k růstu",

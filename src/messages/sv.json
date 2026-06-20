@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "För restaurangägare",
-          "title": "Din egen beställningssida. <accent>0% i provision.</accent>",
-          "subtitle": "Onlinebeställning med din egen profil för avhämtning, leverans, servering på plats och catering – på 38 språk, gratis för alltid. Behåll 100% av varje direktbeställning.",
+          "title": "Din restaurang. <accent>0% provision. 100% din.</accent>",
+          "subtitle": "Beställningar online med din egen profil för avhämtning, leverans, servering på plats & catering — på 38 språk. Behåll 100% av varje direktbeställning.",
           "ctaStart": "Kom igång gratis",
           "ctaDemo": "Se en livebutik",
           "badge": "0% i provision",
@@ -4362,7 +4362,11 @@
           "trust2": "0% på direktbeställningar",
           "trust3": "38 språk",
           "trust4": "Byggd i Kanada 🍁",
-          "frameAlt": "Luigi's Lasagna – en riktig beställningssida med egen profil"
+          "frameAlt": "Din egen profilerade butik och tratten som förvandlar trafik från marknadsplatser till kunder som är dina egna.",
+          "feat1": "0% provision på direktbeställningar",
+          "feat2": "Behåll 100% av varje beställning",
+          "feat3": "38 språk inbyggda",
+          "feat4": "Stolt byggd i Kanada"
         },
         "funnel": {
           "eyebrow": "Tillväxtvinkeln",

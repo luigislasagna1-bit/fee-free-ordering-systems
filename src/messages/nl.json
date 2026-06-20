@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Voor restauranthouders",
-          "title": "Je eigen bestelpagina. <accent>0% commissie.</accent>",
-          "subtitle": "Online bestellen met je eigen huisstijl voor afhalen, bezorgen, ter plaatse eten & catering — in 38 talen, voor altijd gratis. Houd 100% van elke directe bestelling.",
+          "title": "Jouw restaurant. <accent>0% commissie. 100% van jou.</accent>",
+          "subtitle": "Online bestellen met je eigen merk voor afhalen, bezorgen, ter plaatse eten & catering — in 38 talen. Houd 100% van elke directe bestelling.",
           "ctaStart": "Gratis starten",
           "ctaDemo": "Bekijk een live winkel",
           "badge": "0% commissie",
@@ -4362,7 +4362,11 @@
           "trust2": "0% op directe bestellingen",
           "trust3": "38 talen",
           "trust4": "Gemaakt in Canada 🍁",
-          "frameAlt": "Luigi's Lasagna — een echte bestelpagina met eigen huisstijl"
+          "frameAlt": "Je eigen merkwinkel, en de funnel die marktplaatsverkeer omzet in klanten die echt van jou zijn.",
+          "feat1": "0% commissie op directe bestellingen",
+          "feat2": "Houd 100% van elke bestelling",
+          "feat3": "38 talen standaard ingebouwd",
+          "feat4": "Met trots gemaakt in Canada"
         },
         "funnel": {
           "eyebrow": "De groeihoek",

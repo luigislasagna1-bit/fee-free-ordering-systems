@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Ravintoloitsijoille",
-          "title": "Oma tilaussivusi. <accent>0 % komissiota.</accent>",
-          "subtitle": "Brändätty verkkotilaus noutoon, kotiinkuljetukseen, paikan päällä syömiseen ja pitopalveluun — 38 kielellä, ikuisesti ilmaiseksi. Pidä jokaisesta suorasta tilauksesta 100 %.",
+          "title": "Sinun ravintolasi. <accent>0 % komissiota. 100 % omasi.</accent>",
+          "subtitle": "Brändätty verkkotilaaminen noutoon, kotiinkuljetukseen, paikan päällä syömiseen & pitopalveluun — 38 kielellä. Pidä 100 % jokaisesta suorasta tilauksesta.",
           "ctaStart": "Aloita ilmaiseksi",
           "ctaDemo": "Katso elävä tilaussivu",
           "badge": "0 % komissiota",
@@ -4362,7 +4362,11 @@
           "trust2": "0 % suorista tilauksista",
           "trust3": "38 kieltä",
           "trust4": "Tehty Kanadassa 🍁",
-          "frameAlt": "Luigi's Lasagna — aito brändätty tilaussivu"
+          "frameAlt": "Sinun brändätty verkkokauppasi ja suppilo, joka muuntaa markkinapaikan liikenteen omiksi asiakkaiksesi.",
+          "feat1": "0 % komissiota suorista tilauksista",
+          "feat2": "Pidä 100 % jokaisesta tilauksesta",
+          "feat3": "38 kieltä valmiina",
+          "feat4": "Ylpeästi valmistettu Kanadassa"
         },
         "funnel": {
           "eyebrow": "Kasvun näkökulma",

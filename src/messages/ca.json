@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Per a propietaris de restaurants",
-          "title": "La teva pròpia pàgina de comandes. <accent>0% de comissió.</accent>",
-          "subtitle": "Comandes en línia amb la teva marca per a recollida, lliurament, consum al local i càtering — en 38 idiomes, gratis per sempre. Queda't el 100% de cada comanda directa.",
+          "title": "El teu restaurant. <accent>0% de comissió. 100% teu.</accent>",
+          "subtitle": "Comandes en línia amb la teva marca per a recollida, lliurament, a taula i càtering — en 38 idiomes. Queda't el 100% de cada comanda directa.",
           "ctaStart": "Comença gratis",
           "ctaDemo": "Mira una botiga real",
           "badge": "0% de comissió",
@@ -4362,7 +4362,11 @@
           "trust2": "0% en comandes directes",
           "trust3": "38 idiomes",
           "trust4": "Fet al Canadà 🍁",
-          "frameAlt": "Luigi's Lasagna — una pàgina de comandes real amb marca pròpia"
+          "frameAlt": "La teva botiga en línia amb marca pròpia i l'embut que converteix el trànsit dels marketplaces en clients que són teus.",
+          "feat1": "0% de comissió en comandes directes",
+          "feat2": "Queda't el 100% de cada comanda",
+          "feat3": "38 idiomes integrats",
+          "feat4": "Fet amb orgull al Canadà"
         },
         "funnel": {
           "eyebrow": "L'enfocament de creixement",

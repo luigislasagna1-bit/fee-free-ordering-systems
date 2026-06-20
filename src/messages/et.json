@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Restoranipidajatele",
-          "title": "Sinu enda tellimisleht. <accent>0% komisjonitasu.</accent>",
-          "subtitle": "Brändiga veebitellimine kaasamüügi, kohaletoimetamise, kohapeal söömise ja toitlustuse jaoks — 38 keeles, igavesti tasuta. Hoia 100% iga otsetellimuse käibest endale.",
+          "title": "Sinu restoran. <accent>0% vahendustasu. 100% sinu oma.</accent>",
+          "subtitle": "Sinu brändiga online-tellimine kaasaostuks, kohaletoimetamiseks, kohapeal söömiseks & toitlustuseks — 38 keeles. Hoia iga otsetellimusest 100% endale.",
           "ctaStart": "Alusta tasuta",
           "ctaDemo": "Vaata päris tellimislehte",
           "badge": "0% komisjonitasu",
@@ -4362,7 +4362,11 @@
           "trust2": "0% otsetellimustelt",
           "trust3": "38 keelt",
           "trust4": "Loodud Kanadas 🍁",
-          "frameAlt": "Luigi's Lasagna — päris brändiga tellimisleht"
+          "frameAlt": "Sinu brändiga e-pood ja müügilehter, mis muudab turuplatsi liikluse klientideks, kes kuuluvad sulle.",
+          "feat1": "0% vahendustasu otsetellimustelt",
+          "feat2": "Hoia igast tellimusest 100% endale",
+          "feat3": "38 keelt sisseehitatult",
+          "feat4": "Uhkusega valmistatud Kanadas"
         },
         "funnel": {
           "eyebrow": "Kasvuvaade",

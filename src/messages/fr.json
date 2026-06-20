@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Pour les restaurateurs",
-          "title": "Votre propre page de commande. <accent>0 % de commission.</accent>",
-          "subtitle": "Une page de commande en ligne à votre image pour la cueillette, la livraison, le sur place et les commandes de groupe — en 38 langues, gratuite à vie. Gardez 100 % de chaque commande directe.",
+          "title": "Votre restaurant. <accent>0 % de commission. 100 % à vous.</accent>",
+          "subtitle": "Commande en ligne à votre image pour l'emporter, la livraison, sur place et le traiteur — en 38 langues. Gardez 100 % de chaque commande directe.",
           "ctaStart": "Commencer gratuitement",
           "ctaDemo": "Voir une vitrine en direct",
           "badge": "0 % de commission",
@@ -4362,7 +4362,11 @@
           "trust2": "0 % sur les commandes directes",
           "trust3": "38 langues",
           "trust4": "Conçu au Canada 🍁",
-          "frameAlt": "Luigi's Lasagna — une vraie page de commande personnalisée"
+          "frameAlt": "Votre vitrine personnalisée et l'entonnoir qui transforme le trafic des plateformes en clients qui vous appartiennent.",
+          "feat1": "0 % de commission sur les commandes directes",
+          "feat2": "Gardez 100 % de chaque commande",
+          "feat3": "38 langues intégrées",
+          "feat4": "Fièrement conçu au Canada"
         },
         "funnel": {
           "eyebrow": "L'angle de croissance",

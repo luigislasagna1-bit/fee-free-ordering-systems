@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Pentru proprietarii de restaurante",
-          "title": "Pagina ta de comenzi. <accent>0% comision.</accent>",
-          "subtitle": "Comenzi online cu brandul tău pentru ridicare, livrare, servire la masă și catering — în 38 de limbi, gratuit pentru totdeauna. Păstrezi 100% din fiecare comandă directă.",
+          "title": "Restaurantul tău. <accent>0% comision. 100% al tău.</accent>",
+          "subtitle": "Comenzi online personalizate pentru ridicare, livrare, servire la masă & catering — în 38 de limbi. Păstrează 100% din fiecare comandă directă.",
           "ctaStart": "Începe gratuit",
           "ctaDemo": "Vezi un magazin live",
           "badge": "0% comision",
@@ -4362,7 +4362,11 @@
           "trust2": "0% la comenzile directe",
           "trust3": "38 de limbi",
           "trust4": "Creat în Canada 🍁",
-          "frameAlt": "Luigi's Lasagna — o pagină de comenzi reală, cu brand propriu"
+          "frameAlt": "Vitrina ta cu brand propriu și pâlnia care transformă traficul din marketplace în clienți care îți aparțin.",
+          "feat1": "0% comision la comenzile directe",
+          "feat2": "Păstrează 100% din fiecare comandă",
+          "feat3": "38 de limbi incluse",
+          "feat4": "Creat cu mândrie în Canada"
         },
         "funnel": {
           "eyebrow": "Perspectiva creșterii",

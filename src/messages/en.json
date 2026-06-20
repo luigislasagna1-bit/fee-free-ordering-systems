@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "For restaurant owners",
-          "title": "Your own ordering page. <accent>0% commission.</accent>",
-          "subtitle": "Branded online ordering for pickup, delivery, dine-in & catering — in 38 languages, free forever. Keep 100% of every direct order.",
+          "title": "Your Restaurant. <accent>0% Commission. 100% Yours.</accent>",
+          "subtitle": "Branded online ordering for pickup, delivery, dine-in & catering — in 38 languages. Keep 100% of every direct order.",
           "ctaStart": "Start free",
           "ctaDemo": "See a live storefront",
           "badge": "0% commission",
@@ -4362,7 +4362,11 @@
           "trust2": "0% on direct orders",
           "trust3": "38 languages",
           "trust4": "Built in Canada 🍁",
-          "frameAlt": "Luigi's Lasagna — a real branded ordering page"
+          "frameAlt": "Your branded storefront, and the funnel that turns marketplace traffic into customers you own.",
+          "feat1": "0% commission on direct orders",
+          "feat2": "Keep 100% of every order",
+          "feat3": "38 languages built-in",
+          "feat4": "Proudly built in Canada"
         },
         "funnel": {
           "eyebrow": "The growth angle",

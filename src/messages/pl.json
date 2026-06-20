@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Dla właścicieli restauracji",
-          "title": "Własna strona zamówień. <accent>0% prowizji.</accent>",
-          "subtitle": "Markowe zamówienia online na odbiór, dostawę, na miejscu i catering — w 38 językach, za darmo na zawsze. Zatrzymujesz 100% każdego zamówienia bezpośredniego.",
+          "title": "Twoja restauracja. <accent>0% prowizji. 100% Twoje.</accent>",
+          "subtitle": "Markowe zamówienia online — odbiór, dostawa, na miejscu i catering — w 38 językach. Zatrzymaj 100% z każdego zamówienia bezpośredniego.",
           "ctaStart": "Zacznij za darmo",
           "ctaDemo": "Zobacz działający sklep",
           "badge": "0% prowizji",
@@ -4362,7 +4362,11 @@
           "trust2": "0% od zamówień bezpośrednich",
           "trust3": "38 języków",
           "trust4": "Stworzone w Kanadzie 🍁",
-          "frameAlt": "Luigi's Lasagna — prawdziwa, markowa strona zamówień"
+          "frameAlt": "Twój markowy sklep online oraz lejek, który zamienia ruch z platform w klientów należących do Ciebie.",
+          "feat1": "0% prowizji od zamówień bezpośrednich",
+          "feat2": "Zatrzymaj 100% z każdego zamówienia",
+          "feat3": "38 języków w standardzie",
+          "feat4": "Z dumą stworzone w Kanadzie"
         },
         "funnel": {
           "eyebrow": "Perspektywa wzrostu",

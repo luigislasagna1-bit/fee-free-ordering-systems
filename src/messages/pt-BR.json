@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Para donos de restaurante",
-          "title": "Sua própria página de pedidos. <accent>0% de comissão.</accent>",
-          "subtitle": "Pedidos online com a sua marca para retirada, entrega, consumo no local e catering — em 38 idiomas, grátis para sempre. Fique com 100% de cada pedido direto.",
+          "title": "O Seu Restaurante. <accent>0% de Comissão. 100% Seu.</accent>",
+          "subtitle": "Pedidos online com a sua marca para retirada, entrega, consumo no local e catering — em 38 idiomas. Fique com 100% de cada pedido direto.",
           "ctaStart": "Comece grátis",
           "ctaDemo": "Veja uma loja ao vivo",
           "badge": "0% de comissão",
@@ -4362,7 +4362,11 @@
           "trust2": "0% nos pedidos diretos",
           "trust3": "38 idiomas",
           "trust4": "Feito no Canadá 🍁",
-          "frameAlt": "Luigi's Lasagna — uma página de pedidos real com marca própria"
+          "frameAlt": "A sua loja com a sua marca e o funil que transforma o tráfego dos marketplaces em clientes que são seus.",
+          "feat1": "0% de comissão em pedidos diretos",
+          "feat2": "Fique com 100% de cada pedido",
+          "feat3": "38 idiomas integrados",
+          "feat4": "Feito com orgulho no Canadá"
         },
         "funnel": {
           "eyebrow": "A estratégia de crescimento",

@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Restoran sahipleri için",
-          "title": "Kendi sipariş sayfanız. <accent>%0 komisyon.</accent>",
-          "subtitle": "Gel-al, teslimat, masada sipariş ve catering için markalı online sipariş — 38 dilde, sonsuza dek ücretsiz. Her doğrudan siparişin %100'ü sizde kalsın.",
+          "title": "Restoranınız. <accent>0% Komisyon. 100% Sizin.</accent>",
+          "subtitle": "Gel-al, teslimat, restoranda ve catering için markalı online sipariş — 38 dilde. Her doğrudan siparişin 100%'ini kendinizde tutun.",
           "ctaStart": "Ücretsiz başlayın",
           "ctaDemo": "Canlı bir vitrini görün",
           "badge": "%0 komisyon",
@@ -4362,7 +4362,11 @@
           "trust2": "Doğrudan siparişlerde %0",
           "trust3": "38 dil",
           "trust4": "Kanada'da üretildi 🍁",
-          "frameAlt": "Luigi's Lasagna — gerçek bir markalı sipariş sayfası"
+          "frameAlt": "Kendi markalı vitrininiz ve pazar yeri trafiğini size ait müşterilere dönüştüren huni.",
+          "feat1": "Doğrudan siparişlerde 0% komisyon",
+          "feat2": "Her siparişin 100%'ini kendinizde tutun",
+          "feat3": "38 dil yerleşik olarak",
+          "feat4": "Gururla Kanada'da geliştirildi"
         },
         "funnel": {
           "eyebrow": "Büyüme bakış açısı",

@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Éttermeseknek",
-          "title": "A saját rendelési oldalad. <accent>0% jutalék.</accent>",
-          "subtitle": "Márkázott online rendelés elvitelre, kiszállításra, helyben fogyasztásra és rendezvényekre — 38 nyelven, örökre ingyen. Minden közvetlen rendelés 100%-a a tiéd marad.",
+          "title": "Az Ön étterme. <accent>0% jutalék. 100% az Öné.</accent>",
+          "subtitle": "Saját márkás online rendelés elvitelre, házhozszállításra, helyben fogyasztásra és rendezvényekre — 38 nyelven. Tartson meg minden közvetlen rendelésből 100%-ot.",
           "ctaStart": "Kezdd el ingyen",
           "ctaDemo": "Nézz meg egy élő rendelési oldalt",
           "badge": "0% jutalék",
@@ -4362,7 +4362,11 @@
           "trust2": "0% a közvetlen rendelésekre",
           "trust3": "38 nyelv",
           "trust4": "Kanadában készült 🍁",
-          "frameAlt": "Luigi's Lasagna — egy valódi, márkázott rendelési oldal"
+          "frameAlt": "Az Ön márkás üzlete, és a tölcsér, amely a piactéri forgalmat olyan vendégekké alakítja, akik valóban az Önéi.",
+          "feat1": "0% jutalék a közvetlen rendeléseken",
+          "feat2": "Tartsa meg minden rendelés 100%-át",
+          "feat3": "38 nyelv beépítve",
+          "feat4": "Büszkén Kanadában készült"
         },
         "funnel": {
           "eyebrow": "A növekedés kulcsa",

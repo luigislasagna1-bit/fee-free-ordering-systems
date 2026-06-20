@@ -4353,8 +4353,8 @@
       "v2": {
         "hero": {
           "eyebrow": "Za vlasnike restorana",
-          "title": "Vlastita stranica za naručivanje. <accent>0% provizije.</accent>",
-          "subtitle": "Brendirano online naručivanje za preuzimanje, dostavu, konzumaciju u restoranu i catering — na 38 jezika, zauvijek besplatno. Zadržite 100% svake izravne narudžbe.",
+          "title": "Vaš restoran. <accent>0% provizije. 100% vaše.</accent>",
+          "subtitle": "Brendirano online naručivanje za preuzimanje, dostavu, posluživanje za stolom i catering — na 38 jezika. Zadržite 100% svake izravne narudžbe.",
           "ctaStart": "Započnite besplatno",
           "ctaDemo": "Pogledajte živu stranicu",
           "badge": "0% provizije",
@@ -4362,7 +4362,11 @@
           "trust2": "0% na izravne narudžbe",
           "trust3": "38 jezika",
           "trust4": "Stvoreno u Kanadi 🍁",
-          "frameAlt": "Luigi's Lasagna — prava brendirana stranica za naručivanje"
+          "frameAlt": "Vaš brendirani izlog i lijevak koji promet s tržnica pretvara u kupce koji su vaši.",
+          "feat1": "0% provizije na izravne narudžbe",
+          "feat2": "Zadržite 100% svake narudžbe",
+          "feat3": "38 jezika ugrađeno",
+          "feat4": "S ponosom izrađeno u Kanadi"
         },
         "funnel": {
           "eyebrow": "Kut rasta",
