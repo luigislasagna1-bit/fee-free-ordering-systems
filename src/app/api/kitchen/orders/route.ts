@@ -27,9 +27,12 @@ export async function GET() {
     // simple-mode auto-complete sweep below.
     const restaurant = await prisma.restaurant.findUnique({
       where: { id: restaurantId },
-      select: { kitchenWorkflowMode: true, printNodeEnabled: true, timezone: true },
+      select: { kitchenWorkflowMode: true, printNodeEnabled: true, timezone: true, kitchenDeliveryShowName: true, kitchenShowItemCategory: true },
     });
     const resolvedMode = restaurant?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple";
+    // Only join each line's menu category when the restaurant enabled the
+    // feature — keeps the 4s-poll query lean by default (Fabrizio 2026-06-21).
+    const showItemCategory = !!restaurant?.kitchenShowItemCategory;
 
     // Start of TODAY in the restaurant's timezone. Used below so an order that
     // belongs in the In Progress tab (today's work) is NEVER dropped from the
@@ -110,7 +113,11 @@ export async function GET() {
       take: 500,
       include: {
         items: {
-          include: { modifiers: { select: { name: true, priceAdjustment: true } } },
+          include: {
+            modifiers: { select: { name: true, priceAdjustment: true } },
+            // Category join only when enabled — O(1) Prisma join, never N+1.
+            ...(showItemCategory ? { menuItem: { select: { category: { select: { name: true } } } } } : {}),
+          },
         },
       },
     });
@@ -187,6 +194,12 @@ export async function GET() {
         earliest !== undefined && earliest === new Date(o.createdAt).getTime();
       return {
         ...o,
+        // Surface each line's category name (when the join ran) + drop the nested
+        // menuItem so the item shape the client reads stays flat. Fabrizio 2026-06-21.
+        items: o.items.map((it: any) => {
+          const { menuItem, ...rest } = it;
+          return { ...rest, categoryName: menuItem?.category?.name ?? null };
+        }),
         isFirstOrder,
         reservation: b
           ? { id: b.id, partySize: b.partySize, date: b.date, time: b.time, confirmationCode: b.confirmationCode, status: b.status }
@@ -203,6 +216,8 @@ export async function GET() {
       // has not turned it on. Default false — Direct LAN printer is
       // the main path; PrintNode is opt-in backup only.
       printNodeEnabled: !!restaurant?.printNodeEnabled,
+      kitchenDeliveryShowName: !!restaurant?.kitchenDeliveryShowName,
+      kitchenShowItemCategory: showItemCategory,
     });
   } catch (err: any) {
     console.error("[kitchen/orders GET]", err);

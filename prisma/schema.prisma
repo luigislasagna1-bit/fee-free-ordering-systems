@@ -186,6 +186,14 @@ model Restaurant {
   /// alarm-state poll, then honored by the native OrderAlarmService. Luigi
   /// 2026-06-16 (Fabrizio: let the restaurant choose ring+vibrate vs ring-only).
   kitchenVibrate       Boolean @default(true)
+  /// Kitchen order TILE: for DELIVERY orders, lead the tile with the customer
+  /// NAME instead of the street address, so staff can identify an order by name
+  /// when a customer calls. Default false = address (current). Fabrizio 2026-06-21.
+  kitchenDeliveryShowName Boolean @default(false)
+  /// Kitchen order DETAIL: show each dish's menu CATEGORY under its name (helps
+  /// when the same dish name appears in different categories, e.g. Japanese
+  /// menus). Default false = off. Fabrizio 2026-06-21.
+  kitchenShowItemCategory Boolean @default(false)
   /// Optional alternate number for the nearly-missed-order auto-call (e.g. the
   /// owner's cell). Null/blank ⇒ fall back to the public `phone`.
   alertPhone           String?

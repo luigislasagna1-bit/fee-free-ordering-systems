@@ -380,7 +380,17 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           <Section title={tk("customer")} t={t}>
             <div className="space-y-2">
               <Row icon={<User className="w-4 h-4" />} t={t}>{order.customerName}</Row>
-              {order.customerPhone && <Row icon={<Phone className="w-4 h-4" />} t={t}>{order.customerPhone}</Row>}
+              {order.customerPhone && (
+                <Row icon={<Phone className="w-4 h-4" />} t={t}>
+                  {/* Tap-to-call: sanitise to digits/+ for the tel: URI, keep the
+                      formatted number on screen. Reseller request, Fabrizio
+                      2026-06-21. Underline signals it's tappable; inherits the
+                      theme text colour so it reads in both light + dark. */}
+                  <a href={`tel:${order.customerPhone.replace(/[^\d+]/g, "")}`} className="underline decoration-dotted underline-offset-2">
+                    {order.customerPhone}
+                  </a>
+                </Row>
+              )}
               {order.customerEmail && <Row icon={<Mail className="w-4 h-4" />} t={t}>{order.customerEmail}</Row>}
             </div>
           </Section>
@@ -525,6 +535,12 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                       <span className={`text-sm font-medium ${t.text}`}>{formatCurrency(item.subtotal)}</span>
                     </div>
                     {item.variantName && <div className={`text-xs ${t.muted} pl-3`}>{item.variantName}</div>}
+                    {/* Menu category under the dish name — only present when the
+                        restaurant enabled "show item category" (Fabrizio 2026-06-21).
+                        Lighter than the dish name so it reads as a sub-label. */}
+                    {(item as any).categoryName && (
+                      <div className={`text-[11px] ${t.subtle} pl-3`}>{(item as any).categoryName}</div>
+                    )}
                     {bundle && bundle.length > 0 && (
                       <div className={`mt-1 pl-3 border-l-2 ${t.border} space-y-0.5`}>
                         {bundle.map((child, i) => (

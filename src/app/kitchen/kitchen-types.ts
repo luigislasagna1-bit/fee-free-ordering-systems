@@ -105,6 +105,9 @@ export type Order = {
     subtotal: number;
     notes: string | null;
     modifiers: { name: string; priceAdjustment: number }[];
+    /** Menu category name, surfaced only when the restaurant enables
+     *  kitchenShowItemCategory (else null/absent). Fabrizio 2026-06-21. */
+    categoryName?: string | null;
   }[];
 };
 

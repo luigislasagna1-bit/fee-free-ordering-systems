@@ -377,8 +377,8 @@ function Countdown({
 
 
 // ── Order row ─────────────────────────────────────────────────────────────────
-function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown, currency }: {
-  order: Order; selected: boolean; onClick: () => void; t: T; now: number; currency: string;
+function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown, currency, deliveryShowName }: {
+  order: Order; selected: boolean; onClick: () => void; t: T; now: number; currency: string; deliveryShowName?: boolean;
   /** Optional day-of-week pill (MON/TUE/…) rendered alongside the
    *  order number. Used by the In Progress LATER section so the
    *  kitchen can spot which day each scheduled order is for. */
@@ -454,7 +454,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   // dine-in (write-path bug fixed 2026-06-13); gating on type here keeps those
   // tiles correct — a pickup always leads with the NAME, never an address.
   const showAddress =
-    (order.type === "delivery" || order.type === "catering") && !!order.deliveryAddress;
+    (order.type === "delivery" || order.type === "catering") && !!order.deliveryAddress && !deliveryShowName;
 
   return (
     <div onClick={onClick} className={`px-4 py-3 min-h-[80px] flex items-center transition-colors ${rowClass}`}>
@@ -746,6 +746,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // explicit backup option.
   const [printNodeEnabled, setPrintNodeEnabled] = useState<boolean>(
     !!restaurant?.printNodeEnabled,
+  );
+  // Delivery tile lead label: customer name vs street address (Fabrizio
+  // 2026-06-21). Initial from the SSR prop; the poll below keeps it live.
+  const [deliveryShowName, setDeliveryShowName] = useState<boolean>(
+    !!restaurant?.kitchenDeliveryShowName,
   );
 
   // Track which reservation IDs the kitchen has already seen — same
@@ -2213,6 +2218,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       setOrders(fresh);
       setWorkflowMode(mode);
       setPrintNodeEnabled(pnEnabled);
+      setDeliveryShowName(Array.isArray(body) ? false : !!body?.kitchenDeliveryShowName);
     } catch {}
   }, []);
 
@@ -3325,6 +3331,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                   <OrderRow
                     key={`o-${it.order.id}`}
                     order={it.order}
+                    deliveryShowName={deliveryShowName}
                     selected={selectedId === it.order.id}
                     onClick={() => {
                       // Clicking any order — including a new/ringing pending one

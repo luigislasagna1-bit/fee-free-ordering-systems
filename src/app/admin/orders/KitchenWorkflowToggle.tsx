@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Zap, Activity, ChevronDown, ChevronUp, Info, Printer, ServerCrash, PhoneCall, Vibrate } from "lucide-react";
+import { Zap, Activity, ChevronDown, ChevronUp, Info, Printer, ServerCrash, PhoneCall, Vibrate, User, Tag } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { HelpTip } from "@/components/HelpTip";
 
@@ -32,6 +32,8 @@ export function KitchenWorkflowToggle({
   initialPrintNodeEnabled = false,
   initialAutoCall = false,
   initialKitchenVibrate = true,
+  initialDeliveryShowName = false,
+  initialShowItemCategory = false,
   storePhone = null,
   initialAlertPhone = null,
   twilioVoiceConfigured = true,
@@ -41,6 +43,10 @@ export function KitchenWorkflowToggle({
   initialAutoCall?: boolean;
   /** Kitchen device alarm: vibrate alongside the ring (default true). */
   initialKitchenVibrate?: boolean;
+  /** Delivery tile leads with the customer name vs the street address (default false). */
+  initialDeliveryShowName?: boolean;
+  /** Show each dish's menu category on incoming orders (default false). */
+  initialShowItemCategory?: boolean;
   /** The restaurant's public phone — the default alert target. */
   storePhone?: string | null;
   /** Optional dedicated alert number (overrides storePhone when set). */
@@ -60,6 +66,10 @@ export function KitchenWorkflowToggle({
   const [testingCall, setTestingCall] = useState(false);
   const [kitchenVibrate, setKitchenVibrate] = useState<boolean>(initialKitchenVibrate);
   const [savingVibrate, setSavingVibrate] = useState(false);
+  const [deliveryShowName, setDeliveryShowName] = useState<boolean>(initialDeliveryShowName);
+  const [savingDeliveryName, setSavingDeliveryName] = useState(false);
+  const [showItemCategory, setShowItemCategory] = useState<boolean>(initialShowItemCategory);
+  const [savingItemCategory, setSavingItemCategory] = useState(false);
   // The number the system will actually ring: dedicated alert number else store phone.
   const effectiveAlertNumber = (alertPhone.trim() || storePhone || "").trim();
 
@@ -167,6 +177,44 @@ export function KitchenWorkflowToggle({
       toast.error(t("saveErrorToast"));
     } finally {
       setSavingVibrate(false);
+    }
+  }
+
+  async function toggleDeliveryName(enabled: boolean) {
+    setSavingDeliveryName(true);
+    setDeliveryShowName(enabled); // optimistic
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kitchenDeliveryShowName: enabled }),
+      });
+      if (!res.ok) throw new Error("Failed to save");
+      toast.success(t("displaySavedToast"));
+    } catch {
+      setDeliveryShowName(!enabled);
+      toast.error(t("saveErrorToast"));
+    } finally {
+      setSavingDeliveryName(false);
+    }
+  }
+
+  async function toggleItemCategory(enabled: boolean) {
+    setSavingItemCategory(true);
+    setShowItemCategory(enabled); // optimistic
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kitchenShowItemCategory: enabled }),
+      });
+      if (!res.ok) throw new Error("Failed to save");
+      toast.success(t("displaySavedToast"));
+    } catch {
+      setShowItemCategory(!enabled);
+      toast.error(t("saveErrorToast"));
+    } finally {
+      setSavingItemCategory(false);
     }
   }
 
@@ -482,6 +530,68 @@ export function KitchenWorkflowToggle({
                 kitchenVibrate ? "translate-x-6" : "translate-x-0"
               }`}
             />
+          </button>
+        </div>
+      </div>
+
+      {/* ── Delivery tile label: customer name vs street address ───────────
+          Reseller request (Fabrizio 2026-06-21): so staff can identify a
+          delivery order by name when the customer calls. */}
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+        <div className="px-5 py-3.5 flex items-center gap-3">
+          <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
+            deliveryShowName ? "bg-teal-100 text-teal-700" : "bg-gray-100 text-gray-400"
+          }`}>
+            <User className="w-5 h-5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-sm font-medium text-gray-900 leading-snug">
+              {t("deliveryNameLabel")}
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => toggleDeliveryName(!deliveryShowName)}
+            disabled={savingDeliveryName}
+            aria-label={t("deliveryNameLabel")}
+            className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${
+              deliveryShowName ? "bg-teal-500" : "bg-gray-300"
+            } ${savingDeliveryName ? "opacity-50" : ""}`}
+          >
+            <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${
+              deliveryShowName ? "translate-x-6" : "translate-x-0"
+            }`} />
+          </button>
+        </div>
+      </div>
+
+      {/* ── Show each dish's menu category on incoming orders ──────────────
+          Reseller request (Fabrizio 2026-06-21): disambiguates same-named
+          dishes across categories (e.g. Japanese menus). */}
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+        <div className="px-5 py-3.5 flex items-center gap-3">
+          <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
+            showItemCategory ? "bg-cyan-100 text-cyan-700" : "bg-gray-100 text-gray-400"
+          }`}>
+            <Tag className="w-5 h-5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-sm font-medium text-gray-900 leading-snug">
+              {t("showCategoryLabel")}
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => toggleItemCategory(!showItemCategory)}
+            disabled={savingItemCategory}
+            aria-label={t("showCategoryLabel")}
+            className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${
+              showItemCategory ? "bg-cyan-500" : "bg-gray-300"
+            } ${savingItemCategory ? "opacity-50" : ""}`}
+          >
+            <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${
+              showItemCategory ? "translate-x-6" : "translate-x-0"
+            }`} />
           </button>
         </div>
       </div>

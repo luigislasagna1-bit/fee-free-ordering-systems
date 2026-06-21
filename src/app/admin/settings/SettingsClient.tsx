@@ -83,6 +83,8 @@ export function SettingsClient({
               initialPrintNodeEnabled={!!restaurant.printNodeEnabled}
               initialAutoCall={!!restaurant.autoCallOnNewOrder}
               initialKitchenVibrate={restaurant.kitchenVibrate !== false}
+              initialDeliveryShowName={!!restaurant.kitchenDeliveryShowName}
+              initialShowItemCategory={!!restaurant.kitchenShowItemCategory}
               storePhone={restaurant.phone ?? null}
               initialAlertPhone={restaurant.alertPhone ?? null}
               twilioVoiceConfigured={twilioVoiceConfigured}
