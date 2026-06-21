@@ -4835,6 +4835,22 @@
       "signIn": "Sign in",
       "errorGeneric": "Couldn't create your account. Please try again.",
       "errorEmailTaken": "That email is already registered."
+    },
+    "importPage": {
+      "eyebrow": "No account needed",
+      "title": "See your restaurant live in 30 seconds",
+      "subtitle": "Paste your GloriaFood menu and we'll build your branded ordering page — photos, sizes and toppings included.",
+      "emailLabel": "Your email",
+      "emailPlaceholder": "you@restaurant.com",
+      "linkLabel": "Your GloriaFood menu link",
+      "linkPlaceholder": "Paste your GloriaFood ordering link or embed snippet…",
+      "linkHint": "In GloriaFood: Publish → Ordering Button → copy the snippet. Or paste your ordering page URL.",
+      "submit": "Build my live preview",
+      "building": "Building your live menu…",
+      "errorGeneric": "Something went wrong — please try again.",
+      "b1": "Your real menu — photos, sizes & toppings",
+      "b2": "Order from it instantly, just like a customer",
+      "b3": "Love it? Sign up and keep it — no re-import"
     }
   },
   "addressBook": {

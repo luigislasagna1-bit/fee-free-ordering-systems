@@ -447,6 +447,7 @@ model Restaurant {
   websiteFunnelEvents  WebsiteFunnelEvent[]
   menuItemViews        MenuItemView[]
   connectivityEvents   ConnectivityEvent[]
+  sandbox              SandboxRestaurant?
 
   @@index([resellerProfileId])
   @@index([parentRestaurantId])
@@ -478,6 +479,30 @@ model LocationInvite {
 
   @@index([brandId])
   @@index([token])
+  @@index([expiresAt])
+}
+
+/// Anonymous "import-to-try" sandbox: a temp Restaurant provisioned by the public
+/// /import flow (no account) so a visitor can see their real GloriaFood menu live
+/// before signing up. claimToken attaches this exact restaurant to a new account
+/// at signup (go live with zero re-import). Unclaimed rows are cleaned up after
+/// expiresAt by a cron. Side table (sparse) so we never add sandbox columns to
+/// the hot Restaurant row. (Luigi 2026-06-21 — import-to-try growth wedge.)
+model SandboxRestaurant {
+  id              String     @id @default(cuid())
+  restaurantId    String     @unique
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  email           String
+  sourceLabel     String? // parsed GloriaFood UID/host — support/debug only
+  ipHash          String? // hashed client IP for abuse review (never the raw IP)
+  claimToken      String     @unique
+  expiresAt       DateTime // unclaimed sandboxes are deleted after this
+  claimedAt       DateTime?
+  claimedByUserId String?
+  createdAt       DateTime   @default(now())
+
+  @@index([email])
+  @@index([claimToken])
   @@index([expiresAt])
 }
 

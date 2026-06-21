@@ -4835,6 +4835,22 @@
       "signIn": "Bejelentkezés",
       "errorGeneric": "Nem sikerült létrehozni a fiókot. Kérjük, próbálja újra.",
       "errorEmailTaken": "Ez az e-mail-cím már regisztrálva van."
+    },
+    "importPage": {
+      "eyebrow": "Nincs szükség fiókra",
+      "title": "Lássa éttermét élőben 30 másodperc alatt",
+      "subtitle": "Illessze be a GloriaFood étlapját, és elkészítjük az arculatához igazított rendelési oldalát — fotókkal, méretekkel és feltétekkel együtt.",
+      "emailLabel": "Az Ön e-mail-címe",
+      "emailPlaceholder": "on@etterem.com",
+      "linkLabel": "A GloriaFood étlap hivatkozása",
+      "linkPlaceholder": "Illessze be a GloriaFood rendelési hivatkozását vagy a beágyazó kódot…",
+      "linkHint": "A GloriaFoodban: Publish → Ordering Button → másolja ki a kódot. Vagy illessze be a rendelési oldal URL-címét.",
+      "submit": "Élő előnézet készítése",
+      "building": "Az élő étlap készül…",
+      "errorGeneric": "Hiba történt — kérjük, próbálja újra.",
+      "b1": "Az igazi étlapja — fotók, méretek és feltétek",
+      "b2": "Rendeljen róla azonnal, akárcsak egy vendég",
+      "b3": "Tetszik? Regisztráljon és tartsa meg — nincs újraimportálás"
     }
   },
   "addressBook": {

@@ -4835,6 +4835,22 @@
       "signIn": "Kirjaudu sisään",
       "errorGeneric": "Tilin luominen epäonnistui. Yritä uudelleen.",
       "errorEmailTaken": "Tämä sähköpostiosoite on jo rekisteröity."
+    },
+    "importPage": {
+      "eyebrow": "Tiliä ei tarvita",
+      "title": "Näe ravintolasi livenä 30 sekunnissa",
+      "subtitle": "Liitä GloriaFood-menusi, niin rakennamme sinulle brändätyn tilaussivun — kuvat, koot ja täytteet mukana.",
+      "emailLabel": "Sähköpostisi",
+      "emailPlaceholder": "sina@ravintola.com",
+      "linkLabel": "GloriaFood-menun linkkisi",
+      "linkPlaceholder": "Liitä GloriaFood-tilauslinkkisi tai upotuskoodi…",
+      "linkHint": "GloriaFoodissa: Publish → Ordering Button → kopioi koodi. Tai liitä tilaussivusi URL-osoite.",
+      "submit": "Rakenna live-esikatseluni",
+      "building": "Rakennetaan live-menuasi…",
+      "errorGeneric": "Jokin meni pieleen — yritä uudelleen.",
+      "b1": "Aito menusi — kuvat, koot ja täytteet",
+      "b2": "Tilaa siitä heti, aivan kuin asiakas",
+      "b3": "Pidätkö siitä? Rekisteröidy ja pidä se — ei uutta tuontia"
     }
   },
   "addressBook": {

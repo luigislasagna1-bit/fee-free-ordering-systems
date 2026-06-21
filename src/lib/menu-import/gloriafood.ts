@@ -294,6 +294,29 @@ export function parseSource(input: string): ParsedSource {
   return { restaurantUid, companyUid, brandedDomain };
 }
 
+/** True for hosts owned by GloriaFood / FoodBooking. The menu + picture fetch
+ *  hits `https://<brandedDomain>/...` where brandedDomain is taken from the
+ *  user's pasted URL (parseSource). Behind admin auth that's fine, but for the
+ *  UNAUTHENTICATED public import it's an SSRF vector — so the public endpoint
+ *  MUST clamp the host with clampToGloriaFoodHost() below. */
+export function isGloriaFoodHost(host: string): boolean {
+  const h = host.toLowerCase();
+  return (
+    h === "gloriafood.com" || h.endsWith(".gloriafood.com") ||
+    h === "foodbooking.com" || h.endsWith(".foodbooking.com") ||
+    h === "fbgcdn.com" || h.endsWith(".fbgcdn.com")
+  );
+}
+
+/** Clamp a parsed source to a SAFE GloriaFood host for public/unauthenticated
+ *  imports. A non-GloriaFood brandedDomain (e.g. a crafted URL pointing at an
+ *  internal IP) is replaced with the canonical www.gloriafood.com — the API
+ *  serves any restaurant by UID, so we keep functionality while making it
+ *  impossible to fetch an arbitrary/internal host. */
+export function clampToGloriaFoodHost(src: ParsedSource): ParsedSource {
+  return isGloriaFoodHost(src.brandedDomain) ? src : { ...src, brandedDomain: "www.gloriafood.com" };
+}
+
 // ────────────────────────────────────────────────────────────────────
 // Network — fetch menu JSON
 // ────────────────────────────────────────────────────────────────────

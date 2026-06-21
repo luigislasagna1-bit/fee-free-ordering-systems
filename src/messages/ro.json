@@ -4835,6 +4835,22 @@
       "signIn": "Conectare",
       "errorGeneric": "Nu s-a putut crea contul. Te rugăm să încerci din nou.",
       "errorEmailTaken": "Acel email este deja înregistrat."
+    },
+    "importPage": {
+      "eyebrow": "Nu ai nevoie de cont",
+      "title": "Vezi-ți restaurantul live în 30 de secunde",
+      "subtitle": "Lipește meniul tău din GloriaFood și îți construim pagina de comenzi personalizată — cu poze, mărimi și toppinguri.",
+      "emailLabel": "E-mailul tău",
+      "emailPlaceholder": "tu@restaurant.com",
+      "linkLabel": "Linkul meniului tău din GloriaFood",
+      "linkPlaceholder": "Lipește linkul de comenzi sau fragmentul de încorporare din GloriaFood…",
+      "linkHint": "În GloriaFood: Publish → Ordering Button → copiază fragmentul. Sau lipește URL-ul paginii tale de comenzi.",
+      "submit": "Creează previzualizarea live",
+      "building": "Îți construim meniul live…",
+      "errorGeneric": "Ceva nu a mers — încearcă din nou.",
+      "b1": "Meniul tău real — poze, mărimi & toppinguri",
+      "b2": "Comandă instant, exact ca un client",
+      "b3": "Îți place? Înregistrează-te și păstrează-l — fără reimport"
     }
   },
   "addressBook": {

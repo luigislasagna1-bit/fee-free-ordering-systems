@@ -4835,6 +4835,22 @@
       "signIn": "Prisijungti",
       "errorGeneric": "Nepavyko sukurti paskyros. Bandykite dar kartą.",
       "errorEmailTaken": "Šis el. paštas jau užregistruotas."
+    },
+    "importPage": {
+      "eyebrow": "Paskyros nereikia",
+      "title": "Pamatykite savo restoraną tiesiogiai per 30 sekundžių",
+      "subtitle": "Įklijuokite savo GloriaFood meniu ir mes sukursime jūsų firminį užsakymų puslapį — su nuotraukomis, dydžiais ir priedais.",
+      "emailLabel": "Jūsų el. paštas",
+      "emailPlaceholder": "jus@restoranas.com",
+      "linkLabel": "Jūsų GloriaFood meniu nuoroda",
+      "linkPlaceholder": "Įklijuokite GloriaFood užsakymų nuorodą arba įterptinį kodą…",
+      "linkHint": "GloriaFood: Publish → Ordering Button → nukopijuokite kodą. Arba įklijuokite savo užsakymų puslapio URL.",
+      "submit": "Sukurti tiesioginę peržiūrą",
+      "building": "Kuriame jūsų tiesioginį meniu…",
+      "errorGeneric": "Kažkas nepavyko — bandykite dar kartą.",
+      "b1": "Tikras jūsų meniu — nuotraukos, dydžiai ir priedai",
+      "b2": "Užsisakykite iš karto, kaip tikras klientas",
+      "b3": "Patiko? Užsiregistruokite ir pasilikite — be pakartotinio importavimo"
     }
   },
   "addressBook": {

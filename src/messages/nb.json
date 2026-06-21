@@ -4835,6 +4835,22 @@
       "signIn": "Logg inn",
       "errorGeneric": "Kunne ikke opprette kontoen din. Prøv igjen.",
       "errorEmailTaken": "Den e-postadressen er allerede registrert."
+    },
+    "importPage": {
+      "eyebrow": "Ingen konto nødvendig",
+      "title": "Se restauranten din live på 30 sekunder",
+      "subtitle": "Lim inn GloriaFood-menyen din, så bygger vi din egen bestillingsside — med bilder, størrelser og tilbehør.",
+      "emailLabel": "Din e-post",
+      "emailPlaceholder": "deg@restaurant.com",
+      "linkLabel": "Lenken til GloriaFood-menyen din",
+      "linkPlaceholder": "Lim inn GloriaFood-bestillingslenken eller innbyggingskoden…",
+      "linkHint": "I GloriaFood: Publish → Ordering Button → kopier kodebiten. Eller lim inn URL-en til bestillingssiden din.",
+      "submit": "Lag min live forhåndsvisning",
+      "building": "Bygger live-menyen din…",
+      "errorGeneric": "Noe gikk galt — prøv igjen.",
+      "b1": "Din ekte meny — bilder, størrelser og tilbehør",
+      "b2": "Bestill fra den med en gang, akkurat som en kunde",
+      "b3": "Liker du den? Registrer deg og behold den — ingen ny import"
     }
   },
   "addressBook": {

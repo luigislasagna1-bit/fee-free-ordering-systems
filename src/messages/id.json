@@ -4835,6 +4835,22 @@
       "signIn": "Masuk",
       "errorGeneric": "Tidak dapat membuat akun Anda. Silakan coba lagi.",
       "errorEmailTaken": "Email tersebut sudah terdaftar."
+    },
+    "importPage": {
+      "eyebrow": "Tidak perlu akun",
+      "title": "Lihat restoran Anda tayang dalam 30 detik",
+      "subtitle": "Tempel menu GloriaFood Anda dan kami akan membangun halaman pemesanan bermerek Anda — lengkap dengan foto, ukuran, dan topping.",
+      "emailLabel": "Email Anda",
+      "emailPlaceholder": "anda@restoran.com",
+      "linkLabel": "Tautan menu GloriaFood Anda",
+      "linkPlaceholder": "Tempel tautan pemesanan GloriaFood atau cuplikan embed Anda…",
+      "linkHint": "Di GloriaFood: Publish → Ordering Button → salin cuplikannya. Atau tempel URL halaman pemesanan Anda.",
+      "submit": "Buat pratinjau langsung saya",
+      "building": "Membangun menu langsung Anda…",
+      "errorGeneric": "Terjadi kesalahan — silakan coba lagi.",
+      "b1": "Menu asli Anda — foto, ukuran & topping",
+      "b2": "Pesan langsung dari sana, persis seperti pelanggan",
+      "b3": "Suka? Daftar dan simpan — tanpa impor ulang"
     }
   },
   "addressBook": {

@@ -4835,6 +4835,22 @@
       "signIn": "Logga in",
       "errorGeneric": "Det gick inte att skapa ditt konto. Försök igen.",
       "errorEmailTaken": "Den e-postadressen är redan registrerad."
+    },
+    "importPage": {
+      "eyebrow": "Inget konto behövs",
+      "title": "Se din restaurang live på 30 sekunder",
+      "subtitle": "Klistra in din GloriaFood-meny så bygger vi din egen beställningssida – med bilder, storlekar och tillbehör.",
+      "emailLabel": "Din e-post",
+      "emailPlaceholder": "du@restaurang.com",
+      "linkLabel": "Länk till din GloriaFood-meny",
+      "linkPlaceholder": "Klistra in din GloriaFood-beställningslänk eller inbäddningskod…",
+      "linkHint": "I GloriaFood: Publish → Ordering Button → kopiera koden. Eller klistra in URL:en till din beställningssida.",
+      "submit": "Bygg min liveförhandsvisning",
+      "building": "Bygger din livemeny…",
+      "errorGeneric": "Något gick fel – försök igen.",
+      "b1": "Din riktiga meny – bilder, storlekar & tillbehör",
+      "b2": "Beställ direkt från den, precis som en kund",
+      "b3": "Gillar du den? Skapa konto och behåll den – ingen ny import"
     }
   },
   "addressBook": {

@@ -4835,6 +4835,22 @@
       "signIn": "Logi sisse",
       "errorGeneric": "Konto loomine ebaõnnestus. Palun proovi uuesti.",
       "errorEmailTaken": "See e-posti aadress on juba registreeritud."
+    },
+    "importPage": {
+      "eyebrow": "Kontot pole vaja",
+      "title": "Näe oma restorani elavana 30 sekundiga",
+      "subtitle": "Kleebi oma GloriaFoodi menüü ja meie ehitame sinu brändiga tellimislehe — koos fotode, suuruste ja lisanditega.",
+      "emailLabel": "Sinu e-post",
+      "emailPlaceholder": "sina@restoran.com",
+      "linkLabel": "Sinu GloriaFoodi menüü link",
+      "linkPlaceholder": "Kleebi oma GloriaFoodi tellimislink või manustamiskood…",
+      "linkHint": "GloriaFoodis: Publish → Ordering Button → kopeeri kood. Või kleebi oma tellimislehe URL.",
+      "submit": "Loo minu reaalajas eelvaade",
+      "building": "Loome sinu reaalajas menüüd…",
+      "errorGeneric": "Midagi läks valesti — palun proovi uuesti.",
+      "b1": "Sinu päris menüü — fotod, suurused ja lisandid",
+      "b2": "Telli sealt kohe, just nagu klient",
+      "b3": "Meeldib? Registreeru ja jäta see alles — uut importi pole vaja"
     }
   },
   "addressBook": {

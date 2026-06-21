@@ -4835,6 +4835,22 @@
       "signIn": "Prijava",
       "errorGeneric": "Računa ni bilo mogoče ustvariti. Prosimo, poskusite znova.",
       "errorEmailTaken": "Ta e-pošta je že registrirana."
+    },
+    "importPage": {
+      "eyebrow": "Račun ni potreben",
+      "title": "Oglejte si svojo restavracijo v živo v 30 sekundah",
+      "subtitle": "Prilepite svoj meni iz GloriaFood in zgradili bomo vašo lastno stran za naročanje — s fotografijami, velikostmi in dodatki.",
+      "emailLabel": "Vaš e-poštni naslov",
+      "emailPlaceholder": "vi@restavracija.com",
+      "linkLabel": "Povezava do vašega menija v GloriaFood",
+      "linkPlaceholder": "Prilepite povezavo za naročanje ali kodo za vdelavo iz GloriaFood…",
+      "linkHint": "V GloriaFood: Publish → Ordering Button → kopirajte kodo. Ali prilepite URL svoje strani za naročanje.",
+      "submit": "Ustvari predogled v živo",
+      "building": "Gradimo vaš meni v živo…",
+      "errorGeneric": "Nekaj je šlo narobe — poskusite znova.",
+      "b1": "Vaš pravi meni — fotografije, velikosti & dodatki",
+      "b2": "Naročite takoj, tako kot stranka",
+      "b3": "Vam je všeč? Registrirajte se in ga obdržite — brez ponovnega uvoza"
     }
   },
   "addressBook": {

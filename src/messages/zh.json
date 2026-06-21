@@ -4835,6 +4835,22 @@
       "signIn": "登录",
       "errorGeneric": "账户创建失败，请重试。",
       "errorEmailTaken": "该邮箱已被注册。"
+    },
+    "importPage": {
+      "eyebrow": "无需注册账户",
+      "title": "30 秒内看到你的餐厅上线",
+      "subtitle": "粘贴你的 GloriaFood 菜单，我们就为你生成专属品牌的点餐页面——图片、规格和配料一应俱全。",
+      "emailLabel": "你的邮箱",
+      "emailPlaceholder": "you@restaurant.com",
+      "linkLabel": "你的 GloriaFood 菜单链接",
+      "linkPlaceholder": "粘贴你的 GloriaFood 点餐链接或嵌入代码…",
+      "linkHint": "在 GloriaFood 中：Publish → Ordering Button → 复制代码。或粘贴你的点餐页面网址。",
+      "submit": "生成我的实时预览",
+      "building": "正在生成你的实时菜单…",
+      "errorGeneric": "出了点问题——请重试。",
+      "b1": "你真实的菜单——图片、规格和配料",
+      "b2": "立即下单体验，就像真正的顾客一样",
+      "b3": "喜欢吗？注册即可保留——无需重新导入"
     }
   },
   "addressBook": {

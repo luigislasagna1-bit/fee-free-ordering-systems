@@ -4835,6 +4835,22 @@
       "signIn": "Iniciar sesión",
       "errorGeneric": "No se pudo crear tu cuenta. Inténtalo de nuevo.",
       "errorEmailTaken": "Este correo ya está registrado."
+    },
+    "importPage": {
+      "eyebrow": "Sin cuenta",
+      "title": "Ve tu restaurante en vivo en 30 segundos",
+      "subtitle": "Pega tu menú de GloriaFood y crearemos tu página de pedidos con tu marca — con fotos, tamaños e ingredientes.",
+      "emailLabel": "Tu correo",
+      "emailPlaceholder": "tu@restaurante.com",
+      "linkLabel": "El enlace de tu menú de GloriaFood",
+      "linkPlaceholder": "Pega tu enlace de pedidos de GloriaFood o el código para insertar…",
+      "linkHint": "En GloriaFood: Publish → Ordering Button → copia el código. O pega la URL de tu página de pedidos.",
+      "submit": "Crear mi vista previa en vivo",
+      "building": "Creando tu menú en vivo…",
+      "errorGeneric": "Algo salió mal — inténtalo de nuevo.",
+      "b1": "Tu menú real — fotos, tamaños e ingredientes",
+      "b2": "Pide desde él al instante, igual que un cliente",
+      "b3": "¿Te gusta? Regístrate y consérvalo — sin volver a importar"
     }
   },
   "addressBook": {

@@ -4835,6 +4835,22 @@
       "signIn": "Giriş Yap",
       "errorGeneric": "Hesabınız oluşturulamadı. Lütfen tekrar deneyin.",
       "errorEmailTaken": "Bu e-posta zaten kayıtlı."
+    },
+    "importPage": {
+      "eyebrow": "Hesap gerekmez",
+      "title": "Restoranınızı 30 saniyede canlı görün",
+      "subtitle": "GloriaFood menünüzü yapıştırın, markanıza özel sipariş sayfanızı biz hazırlayalım — fotoğraflar, boyutlar ve malzemeler dahil.",
+      "emailLabel": "E-postanız",
+      "emailPlaceholder": "siz@restoran.com",
+      "linkLabel": "GloriaFood menü bağlantınız",
+      "linkPlaceholder": "GloriaFood sipariş bağlantınızı veya yerleştirme kodunu yapıştırın…",
+      "linkHint": "GloriaFood'da: Publish → Ordering Button → kodu kopyalayın. Ya da sipariş sayfanızın URL'sini yapıştırın.",
+      "submit": "Canlı önizlememi oluştur",
+      "building": "Canlı menünüz hazırlanıyor…",
+      "errorGeneric": "Bir şeyler ters gitti — lütfen tekrar deneyin.",
+      "b1": "Gerçek menünüz — fotoğraflar, boyutlar & malzemeler",
+      "b2": "Tıpkı bir müşteri gibi anında sipariş verin",
+      "b3": "Beğendiniz mi? Kaydolun ve saklayın — yeniden içe aktarma yok"
     }
   },
   "addressBook": {

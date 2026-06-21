@@ -4835,6 +4835,22 @@
       "signIn": "Pierakstīties",
       "errorGeneric": "Nevarēja izveidot jūsu kontu. Lūdzu, mēģiniet vēlreiz.",
       "errorEmailTaken": "Šis e-pasts jau ir reģistrēts."
+    },
+    "importPage": {
+      "eyebrow": "Konts nav nepieciešams",
+      "title": "Skatiet savu restorānu tiešsaistē 30 sekundēs",
+      "subtitle": "Ielīmējiet savu GloriaFood ēdienkarti, un mēs izveidosim jūsu zīmola pasūtīšanas lapu — ar fotoattēliem, izmēriem un piedevām.",
+      "emailLabel": "Jūsu e-pasts",
+      "emailPlaceholder": "jus@restorans.com",
+      "linkLabel": "Jūsu GloriaFood ēdienkartes saite",
+      "linkPlaceholder": "Ielīmējiet GloriaFood pasūtīšanas saiti vai iegultā koda fragmentu…",
+      "linkHint": "GloriaFood: Publish → Ordering Button → nokopējiet fragmentu. Vai ielīmējiet savas pasūtīšanas lapas URL.",
+      "submit": "Izveidot manu tiešo priekšskatījumu",
+      "building": "Veidojam jūsu tiešo ēdienkarti…",
+      "errorGeneric": "Kaut kas nogāja greizi — lūdzu, mēģiniet vēlreiz.",
+      "b1": "Jūsu īstā ēdienkarte — fotoattēli, izmēri un piedevas",
+      "b2": "Pasūtiet uzreiz, tāpat kā klients",
+      "b3": "Patīk? Reģistrējieties un paturiet to — bez atkārtotas importēšanas"
     }
   },
   "addressBook": {

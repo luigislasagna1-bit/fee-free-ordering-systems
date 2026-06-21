@@ -4835,6 +4835,22 @@
       "signIn": "Přihlásit se",
       "errorGeneric": "Nepodařilo se vytvořit účet. Zkuste to znovu.",
       "errorEmailTaken": "Tento e-mail je již zaregistrován."
+    },
+    "importPage": {
+      "eyebrow": "Bez registrace",
+      "title": "Uvidíte svou restauraci živě za 30 sekund",
+      "subtitle": "Vložte své menu z GloriaFood a my vytvoříme vaši objednávkovou stránku v duchu vaší značky — včetně fotek, velikostí a ingrediencí.",
+      "emailLabel": "Váš e-mail",
+      "emailPlaceholder": "vy@restaurace.cz",
+      "linkLabel": "Odkaz na vaše menu z GloriaFood",
+      "linkPlaceholder": "Vložte objednávkový odkaz z GloriaFood nebo kód pro vložení…",
+      "linkHint": "V GloriaFood: Publish → Ordering Button → zkopírujte kód. Nebo vložte URL své objednávkové stránky.",
+      "submit": "Vytvořit můj živý náhled",
+      "building": "Vytváříme vaše živé menu…",
+      "errorGeneric": "Něco se pokazilo — zkuste to prosím znovu.",
+      "b1": "Vaše skutečné menu — fotky, velikosti a ingredience",
+      "b2": "Objednejte si z něj okamžitě, stejně jako zákazník",
+      "b3": "Líbí se vám? Zaregistrujte se a ponechte si ho — bez nového importu"
     }
   },
   "addressBook": {

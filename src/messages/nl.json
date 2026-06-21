@@ -4835,6 +4835,22 @@
       "signIn": "Inloggen",
       "errorGeneric": "Account kon niet worden aangemaakt. Probeer het opnieuw.",
       "errorEmailTaken": "Dat e-mailadres is al geregistreerd."
+    },
+    "importPage": {
+      "eyebrow": "Geen account nodig",
+      "title": "Zie je restaurant live binnen 30 seconden",
+      "subtitle": "Plak je GloriaFood-menu en wij bouwen je eigen bestelpagina — inclusief foto's, maten en toppings.",
+      "emailLabel": "Je e-mailadres",
+      "emailPlaceholder": "jij@restaurant.com",
+      "linkLabel": "De link naar je GloriaFood-menu",
+      "linkPlaceholder": "Plak je GloriaFood-bestellink of embed-code…",
+      "linkHint": "In GloriaFood: Publish → Ordering Button → kopieer het fragment. Of plak de URL van je bestelpagina.",
+      "submit": "Maak mijn livevoorbeeld",
+      "building": "Je livemenu wordt gebouwd…",
+      "errorGeneric": "Er ging iets mis — probeer het opnieuw.",
+      "b1": "Je echte menu — foto's, maten & toppings",
+      "b2": "Bestel er meteen vanaf, net als een klant",
+      "b3": "Vind je het mooi? Meld je aan en behoud het — geen herimport"
     }
   },
   "addressBook": {

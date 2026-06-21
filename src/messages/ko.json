@@ -4835,6 +4835,22 @@
       "signIn": "로그인",
       "errorGeneric": "계정을 만들 수 없습니다. 다시 시도해 주세요.",
       "errorEmailTaken": "이미 등록된 이메일입니다."
+    },
+    "importPage": {
+      "eyebrow": "계정 없이 바로 시작",
+      "title": "30초 만에 내 매장을 온라인으로 만나보세요",
+      "subtitle": "GloriaFood 메뉴를 붙여넣기만 하면 사진, 사이즈, 토핑까지 담긴 나만의 주문 페이지를 만들어 드립니다.",
+      "emailLabel": "이메일",
+      "emailPlaceholder": "you@restaurant.com",
+      "linkLabel": "GloriaFood 메뉴 링크",
+      "linkPlaceholder": "GloriaFood 주문 링크 또는 임베드 코드를 붙여넣으세요…",
+      "linkHint": "GloriaFood에서 Publish → Ordering Button 으로 이동해 스니펫을 복사하세요. 또는 주문 페이지 URL을 붙여넣으세요.",
+      "submit": "라이브 미리보기 만들기",
+      "building": "라이브 메뉴를 만드는 중…",
+      "errorGeneric": "문제가 발생했습니다 — 다시 시도해 주세요.",
+      "b1": "실제 메뉴 그대로 — 사진, 사이즈, 토핑 포함",
+      "b2": "고객처럼 바로 주문해 볼 수 있어요",
+      "b3": "마음에 드시나요? 가입하면 그대로 사용 — 다시 가져올 필요 없음"
     }
   },
   "addressBook": {

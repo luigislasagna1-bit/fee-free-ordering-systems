@@ -4835,6 +4835,22 @@
       "signIn": "Anmelden",
       "errorGeneric": "Konto konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
       "errorEmailTaken": "Diese E-Mail-Adresse ist bereits registriert."
+    },
+    "importPage": {
+      "eyebrow": "Kein Konto nötig",
+      "title": "Sieh dein Restaurant in 30 Sekunden live",
+      "subtitle": "Füge dein GloriaFood-Menü ein und wir bauen deine gebrandete Bestellseite — mit Fotos, Größen und Extras.",
+      "emailLabel": "Deine E-Mail",
+      "emailPlaceholder": "du@restaurant.de",
+      "linkLabel": "Link zu deinem GloriaFood-Menü",
+      "linkPlaceholder": "Füge deinen GloriaFood-Bestelllink oder Einbettungscode ein…",
+      "linkHint": "In GloriaFood: Publish → Ordering Button → Code kopieren. Oder füge die URL deiner Bestellseite ein.",
+      "submit": "Meine Live-Vorschau erstellen",
+      "building": "Dein Live-Menü wird erstellt…",
+      "errorGeneric": "Etwas ist schiefgelaufen — bitte versuche es erneut.",
+      "b1": "Dein echtes Menü — Fotos, Größen & Extras",
+      "b2": "Bestelle sofort daraus, genau wie ein Gast",
+      "b3": "Gefällt's dir? Registrieren und behalten — ohne neuen Import"
     }
   },
   "addressBook": {

@@ -4835,6 +4835,22 @@
       "signIn": "サインイン",
       "errorGeneric": "アカウントを作成できませんでした。もう一度お試しください。",
       "errorEmailTaken": "そのメールアドレスはすでに登録されています。"
+    },
+    "importPage": {
+      "eyebrow": "アカウント登録は不要",
+      "title": "30秒であなたのお店をオンラインで公開",
+      "subtitle": "GloriaFoodのメニューを貼り付けるだけで、写真・サイズ・トッピングまで含めたオリジナルの注文ページが完成します。",
+      "emailLabel": "メールアドレス",
+      "emailPlaceholder": "you@restaurant.com",
+      "linkLabel": "GloriaFoodメニューのリンク",
+      "linkPlaceholder": "GloriaFoodの注文リンクまたは埋め込みコードを貼り付けてください…",
+      "linkHint": "GloriaFoodで Publish → Ordering Button を開き、スニペットをコピーしてください。または注文ページのURLを貼り付けます。",
+      "submit": "ライブプレビューを作成",
+      "building": "ライブメニューを作成しています…",
+      "errorGeneric": "問題が発生しました — もう一度お試しください。",
+      "b1": "実際のメニューそのまま — 写真・サイズ・トッピング付き",
+      "b2": "お客様と同じように、その場で注文できます",
+      "b3": "気に入ったら？登録するだけでそのまま使えます — 再インポート不要"
     }
   },
   "addressBook": {
