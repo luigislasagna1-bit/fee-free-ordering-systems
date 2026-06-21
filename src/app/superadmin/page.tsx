@@ -36,19 +36,24 @@ export default async function SuperadminDashboard() {
     addOns,
     activeAddOnRows,
   ] = await Promise.all([
-    prisma.restaurant.count(),
-    prisma.restaurant.count({ where: { isActive: true } }),
-    prisma.restaurant.count({ where: { publishedAt: { not: null } } }),
+    // `sandbox: { is: null }` everywhere → exclude UNCLAIMED import-to-try trial
+    // menus from every platform count (they're not real restaurants until
+    // claimed). Luigi 2026-06-21.
+    prisma.restaurant.count({ where: { sandbox: { is: null } } }),
+    prisma.restaurant.count({ where: { isActive: true, sandbox: { is: null } } }),
+    prisma.restaurant.count({ where: { publishedAt: { not: null }, sandbox: { is: null } } }),
     // "Paid" = has at least one active or trialing add-on subscription.
     // We use a distinct restaurantAddOn count rather than a relational
     // exists() so the query stays simple — same definition the
     // /superadmin/restaurants tier filter uses.
     prisma.restaurant.count({
       where: {
+        sandbox: { is: null },
         addOns: { some: { status: { in: ["active", "trialing"] } } },
       },
     }),
     prisma.restaurant.findMany({
+      where: { sandbox: { is: null } },
       orderBy: { createdAt: "desc" },
       take: 10,
       include: {

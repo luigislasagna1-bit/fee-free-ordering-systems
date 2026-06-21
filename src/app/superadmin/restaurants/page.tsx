@@ -28,6 +28,10 @@ export const dynamic = "force-dynamic";
 
 export default async function SuperadminRestaurants() {
   const restaurants = await prisma.restaurant.findMany({
+    // Exclude UNCLAIMED import-to-try sandboxes — they're anonymous trial menus,
+    // not real restaurants, until someone signs up to claim one (claiming deletes
+    // the SandboxRestaurant row, so the restaurant reappears here). Luigi 2026-06-21.
+    where: { sandbox: { is: null } },
     orderBy: { createdAt: "desc" },
     include: {
       _count: { select: { orders: true, customers: true, menuItems: true } },
