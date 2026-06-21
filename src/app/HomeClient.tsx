@@ -261,7 +261,7 @@ export function HomeClient({ locale }: { locale: string }) {
           body={t("ordering.body")}
           bullets={[t("ordering.bullet1"), t("ordering.bullet2"), t("ordering.bullet3")]}
           cta={{ href: "/signup", label: t("ordering.cta") }}
-          image={<ScreenshotFrame variant="phone" alt={t("ordering.frameAlt")} src="/marketing/screenshots/luigis-menu-mobile.png" />}
+          image={<ScreenshotFrame variant="phone" alt={t("ordering.frameAlt")} src="/marketing/screenshots/luigis-menu-mobile.webp" />}
         />
       </MarketingSection>
 
@@ -272,7 +272,7 @@ export function HomeClient({ locale }: { locale: string }) {
           title={t("checkout.title")}
           body={t("checkout.body")}
           bullets={[t("checkout.bullet1"), t("checkout.bullet2"), t("checkout.bullet3")]}
-          image={<ScreenshotFrame variant="phone" alt={t("checkout.frameAlt")} />}
+          image={<ScreenshotFrame variant="phone" alt={t("checkout.frameAlt")} src="/marketing/screenshots/luigis-order-mobile.webp" />}
         />
       </MarketingSection>
 
@@ -299,7 +299,7 @@ export function HomeClient({ locale }: { locale: string }) {
           />
         </div>
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <ScreenshotFrame variant="phone" alt={t("kitchen.frameAlt")} />
+          <ScreenshotFrame variant="phone" alt={t("kitchen.frameAlt")} src="/marketing/screenshots/app-kitchen.png" />
           <div className="grid sm:grid-cols-2 gap-x-6 gap-y-6">
             {RELIABILITY_DEFS.map((r) => (
               <div key={r.key} className="flex items-start gap-3">
@@ -331,7 +331,7 @@ export function HomeClient({ locale }: { locale: string }) {
           />
         </div>
         <div className="mb-12 max-w-4xl mx-auto">
-          <ScreenshotFrame variant="browser" url="app.feefreeordering.com/reports" alt={t("run.frameAlt")} />
+          <ScreenshotFrame variant="browser" url="app.feefreeordering.com/reports" alt={t("run.frameAlt")} src="/marketing/screenshots/app-reports.png" />
         </div>
         <IconFeatureGrid items={runBusiness} soonLabel={soon} />
       </MarketingSection>
@@ -346,7 +346,7 @@ export function HomeClient({ locale }: { locale: string }) {
             subtitle={t("growthnet.subtitle")}
           />
         </div>
-        <GrowthNetShowcase />
+        <GrowthNetShowcase analyticsSrc="/marketing/screenshots/app-growthnet.png" />
       </MarketingSection>
 
       {/* ── S9 · À-LA-CARTE ADD-ONS (no tiers) ────────────────────────────── */}
@@ -379,7 +379,7 @@ export function HomeClient({ locale }: { locale: string }) {
           body={t("migrate.body")}
           bullets={[t("migrate.bullet1"), t("migrate.bullet2"), t("migrate.bullet3")]}
           cta={{ href: "/signup", label: t("migrate.cta") }}
-          image={<ScreenshotFrame variant="browser" url="app.feefreeordering.com/menu/import" alt={t("migrate.frameAlt")} />}
+          image={<ScreenshotFrame variant="browser" url="app.feefreeordering.com/menu/import" alt={t("migrate.frameAlt")} src="/marketing/screenshots/app-import.png" />}
         />
       </MarketingSection>
 
@@ -462,7 +462,7 @@ export function HomeClient({ locale }: { locale: string }) {
               <PrimaryButton href="/demo" className="!px-6 !py-3">{t("demo.cta")}<ArrowRight className="w-4 h-4" /></PrimaryButton>
             </div>
           </div>
-          <ScreenshotFrame variant="browser" url="luigis.feefreeordering.com" alt={t("demo.frameAlt")} src="/marketing/screenshots/luigis-root-desktop.png" />
+          <ScreenshotFrame variant="browser" url="luigis.feefreeordering.com" alt={t("demo.frameAlt")} src="/marketing/screenshots/luigis-root-desktop.webp" />
         </div>
       </MarketingSection>
 
