@@ -4799,6 +4799,42 @@
         {
           "q": "¿Puedo cancelar cuando quiera?",
           "a": "Sí. Sin contratos, sin compromisos."
+        },
+        {
+          "q": "¿Puedo importar mi menú actual?",
+          "a": "Sí, y puedes probarlo incluso antes de registrarte. Pega el enlace de tu menú de GloriaFood en nuestra página de importación y lo reconstruimos en una página de pedidos en vivo en segundos: cada categoría, plato, tamaño, grupo de modificadores y foto. ¿Te gusta lo que ves? Reclámalo y se convierte en tu cuenta, con tu menú ya cargado."
+        },
+        {
+          "q": "¿Hay una app para mi cocina?",
+          "a": "Sí: la Kitchen Order App para iPhone, iPad y Android. Los nuevos pedidos suenan en cuanto llegan (incluso con la pantalla apagada), se imprimen directamente en una impresora térmica de recibos por WiFi y, si un pedido queda sin aceptar, puede llamarte por teléfono para que nunca se te escape ninguno."
+        },
+        {
+          "q": "¿Qué herramientas de marketing están incluidas?",
+          "a": "Gratis tienes tu base de datos de clientes, promociones básicas y herramientas para redes sociales. GrowthNet —nuestro paquete de marketing con descuento— añade Smart Links, códigos QR, campañas de recuperación con Autopilot, SMS a clientes y el Marketing Studio, todo pensado para convertir a los clientes ocasionales de los marketplaces en clientes directos y habituales que son tuyos."
+        },
+        {
+          "q": "¿De quién son mis datos de clientes?",
+          "a": "Tuyos, al 100%. Cada cliente, pedido y dirección de correo te pertenece y puedes exportarlo cuando quieras. A diferencia de las grandes apps de reparto, nunca nos interponemos entre tú y tus clientes ni te alquilamos de vuelta sus datos."
+        },
+        {
+          "q": "¿Hay un límite de pedidos que puedo recibir?",
+          "a": "El plan gratuito incluye 100 pedidos al mes. Añadir cualquier complemento de pago elimina ese tope, y existe un complemento específico de pedidos ilimitados si es lo único que necesitas. En cualquier caso, te quedas con el 100% de cada pedido y sin comisiones."
+        },
+        {
+          "q": "¿Puedo añadir pedidos a una web que ya tengo?",
+          "a": "Sí. Tienes una página de pedidos con tu marca lista desde el primer momento, y puedes insertar un botón o un widget de pedidos en tu web actual. ¿Prefieres que la alojemos nosotros entera? Tenemos disponible como complemento una web optimizada para vender."
+        },
+        {
+          "q": "¿Puedo gestionar más de un local?",
+          "a": "Sí: la gestión de varios locales es un complemento, así que puedes administrar varios restaurantes desde un solo acceso, cada uno con sus propios menús, horarios e informes."
+        },
+        {
+          "q": "¿Cómo consigo ayuda si me atasco?",
+          "a": "Soporte canadiense 24/7, con personas reales de día y de noche. Llama al 1-888-618-8765 o usa el chat en vivo en cualquier página; incluso te ayudamos a importar tu menú y a ponerlo todo en marcha."
+        },
+        {
+          "q": "¿Admiten catering y pedidos programados?",
+          "a": "Sí. Además de recogida, reparto y consumo en el local, puedes ofrecer catering con sus propios ajustes, y los clientes pueden programar pedidos con antelación. La opción de reservar y luego pedir incluso permite a un cliente reservar mesa y encargar su comida en un solo paso."
         }
       ]
     },

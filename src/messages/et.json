@@ -4799,6 +4799,42 @@
         {
           "q": "Kas saan millal tahes tühistada?",
           "a": "Jah. Lepinguid pole, kohustusi pole."
+        },
+        {
+          "q": "Kas saan oma olemasoleva menüü importida?",
+          "a": "Jah, ja seda saad proovida juba enne registreerumist. Kleebi oma GloriaFoodi menüü link meie impordilehele ja me ehitame selle sekunditega elavale tellimislehele üles: iga kategooria, roog, suurus, lisandite rühm ja foto. Meeldib, mida näed? Võta see endale ja sellest saab sinu konto, menüü juba laaditud."
+        },
+        {
+          "q": "Kas mu köögi jaoks on olemas rakendus?",
+          "a": "Jah: Kitchen Order App iPhone'i, iPadi ja Androidi jaoks. Uued tellimused helisevad kohe, kui need saabuvad (isegi väljalülitatud ekraaniga), prinditakse otse WiFi kaudu termoprinterisse ja kui tellimus jääb vastu võtmata, võib see sulle helistada, et sa ühtegi tellimust ei jätaks."
+        },
+        {
+          "q": "Millised turundustööriistad on kaasas?",
+          "a": "Tasuta saad oma kliendiandmebaasi, põhipakkumised ja sotsiaalmeedia tööriistad. GrowthNet — meie soodushinnaga turunduspakett — lisab Smart Linksi, QR-koodid, Autopiloti tagasivõitmiskampaaniad, klientidele SMS-id ja Marketing Studio, kõik loodud selleks, et muuta turuplatside ühekordsed kliendid otseseks korduvklientideks, kes kuuluvad sulle."
+        },
+        {
+          "q": "Kellele kuuluvad minu kliendiandmed?",
+          "a": "Sulle — 100%. Iga klient, tellimus ja meiliaadress kuulub sulle ja seda saab igal ajal eksportida. Erinevalt suurtest toidukulleri rakendustest ei seisa me kunagi sinu ja su klientide vahel ega rendi nende andmeid sulle tagasi."
+        },
+        {
+          "q": "Kas tellimuste arvule on piir?",
+          "a": "Tasuta pakett sisaldab 100 tellimust kuus. Mis tahes tasulise lisa lisamine tõstab selle piiri ära ja kui vajad ainult seda, on olemas eraldi piiramatute tellimuste lisa. Kummalgi juhul hoiad 100% igast tellimusest ilma igasuguse komisjonitasuta."
+        },
+        {
+          "q": "Kas saan tellimise lisada veebisaidile, mis mul juba on?",
+          "a": "Jah. Saad kohe oma kaubamärgiga täieliku tellimislehe ja võid lisada tellimisnupu või vidina oma olemasolevale saidile. Eelistad, et majutame kogu asja ise? Müügile optimeeritud veebisait on saadaval lisana."
+        },
+        {
+          "q": "Kas saan hallata rohkem kui ühte asukohta?",
+          "a": "Jah: mitme asukoha haldus on lisa, nii et saad juhtida mitut restorani ühest sisselogimisest, igaüks oma menüüde, lahtiolekuaegade ja aruannetega."
+        },
+        {
+          "q": "Kuidas saan abi, kui jään hätta?",
+          "a": "24/7 Kanada tugi, päeval ja öösel päris inimestega. Helista numbril 1-888-618-8765 või kasuta otsevestlust igal lehel — me aitame sul isegi menüü importida ja kõik seadistada."
+        },
+        {
+          "q": "Kas toetate toitlustust ja ajastatud tellimusi?",
+          "a": "Jah. Lisaks järeletulemisele, kohaletoimetamisele ja kohapeal söömisele saad pakkuda toitlustust oma seadetega ja kliendid saavad tellimusi ette ajastada. Broneeri-siis-telli võimalus laseb külalisel isegi laua broneerida ja toidu ühe sammuga ette tellida."
         }
       ]
     },

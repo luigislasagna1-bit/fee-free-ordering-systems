@@ -4799,6 +4799,42 @@
         {
           "q": "Puis-je annuler à tout moment ?",
           "a": "Oui. Aucun contrat, aucun engagement."
+        },
+        {
+          "q": "Puis-je importer mon menu existant ?",
+          "a": "Oui, et vous pouvez l'essayer avant même de vous inscrire. Collez le lien de votre menu GloriaFood sur notre page d'import et nous le reconstruisons sur une page de commande en direct en quelques secondes : chaque catégorie, plat, taille, groupe d'options et photo. Vous aimez ce que vous voyez ? Récupérez-le et il devient votre compte, avec votre menu déjà chargé."
+        },
+        {
+          "q": "Existe-t-il une application pour ma cuisine ?",
+          "a": "Oui : la Kitchen Order App pour iPhone, iPad et Android. Les nouvelles commandes sonnent dès qu'elles arrivent (même écran éteint), s'impriment directement sur une imprimante thermique à reçus en WiFi, et si une commande reste non acceptée, elle peut vous appeler pour que vous n'en ratiez aucune."
+        },
+        {
+          "q": "Quels outils marketing sont inclus ?",
+          "a": "Gratuitement, vous avez votre base de données clients, des promotions de base et des outils pour les réseaux sociaux. GrowthNet — notre pack marketing à prix réduit — ajoute Smart Links, codes QR, campagnes de reconquête Autopilot, SMS clients et le Marketing Studio, le tout conçu pour transformer les clients ponctuels des marketplaces en clients directs et fidèles qui vous appartiennent."
+        },
+        {
+          "q": "À qui appartiennent mes données clients ?",
+          "a": "À vous — 100%. Chaque client, commande et adresse e-mail vous appartient et s'exporte à tout moment. Contrairement aux grandes applis de livraison, nous ne nous plaçons jamais entre vous et vos clients et ne vous relouons jamais leurs données."
+        },
+        {
+          "q": "Y a-t-il une limite au nombre de commandes que je peux prendre ?",
+          "a": "Le plan gratuit comprend 100 commandes par mois. Ajouter n'importe quel module payant fait sauter ce plafond, et il existe un module dédié aux commandes illimitées si c'est tout ce qu'il vous faut. Dans tous les cas, vous gardez 100% de chaque commande, sans aucune commission."
+        },
+        {
+          "q": "Puis-je ajouter la commande à un site que j'ai déjà ?",
+          "a": "Oui. Vous obtenez d'emblée une page de commande complète à votre image, et vous pouvez intégrer un bouton ou un widget de commande sur votre site existant. Vous préférez qu'on héberge le tout ? Un site web optimisé pour la vente est disponible en module."
+        },
+        {
+          "q": "Puis-je gérer plusieurs établissements ?",
+          "a": "Oui : la gestion multi-établissements est un module, vous pouvez donc piloter plusieurs restaurants depuis une seule connexion, chacun avec ses propres menus, horaires et rapports."
+        },
+        {
+          "q": "Comment obtenir de l'aide si je suis bloqué ?",
+          "a": "Support canadien 24/7, avec de vraies personnes jour et nuit. Appelez le 1-888-618-8765 ou utilisez le chat en direct sur n'importe quelle page — nous vous aidons même à importer votre menu et à tout mettre en place."
+        },
+        {
+          "q": "Prenez-vous en charge le traiteur et les commandes programmées ?",
+          "a": "Oui. En plus du retrait, de la livraison et du sur-place, vous pouvez proposer un service traiteur avec ses propres réglages, et les clients peuvent programmer leurs commandes à l'avance. L'option réserver-puis-commander permet même à un client de réserver une table et de précommander son repas en une seule étape."
         }
       ]
     },

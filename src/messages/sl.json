@@ -4799,6 +4799,42 @@
         {
           "q": "Ali lahko kadarkoli odpovem?",
           "a": "Da. Brez pogodb, brez obveznosti."
+        },
+        {
+          "q": "Ali lahko uvozim svoj obstoječi meni?",
+          "a": "Da — in preizkusite ga lahko še preden se sploh registrirate. Na naši strani za uvoz prilepite povezavo do svojega menija GloriaFood in v nekaj sekundah ga znova zgradimo na živi strani za naročanje: vsako kategorijo, izdelek, velikost, skupino dodatkov in fotografijo. Vam je všeč, kar vidite? Prevzemite ga in postane vaš račun z že naloženim menijem."
+        },
+        {
+          "q": "Ali obstaja aplikacija za mojo kuhinjo?",
+          "a": "Da — Kitchen Order App za iPhone, iPad in Android. Nova naročila zazvonijo takoj, ko prispejo (tudi ko je zaslon ugasnjen), se natisnejo neposredno na WiFi termični tiskalnik za račune, in če naročilo ostane nesprejeto, vas lahko pokliče, da vam nobeno ne uide."
+        },
+        {
+          "q": "Katera marketinška orodja so vključena?",
+          "a": "Brezplačno dobite svojo bazo strank, osnovne akcije in orodja za družbena omrežja. GrowthNet — naš ugoden marketinški paket — dodaja Smart Links, kode QR, kampanje Autopilot za vračanje strank, SMS za stranke in Marketing Studio. Vse je zasnovano tako, da enkratne stranke s tržnic spremeni v neposredne, redne stranke, ki pripadajo vam."
+        },
+        {
+          "q": "Komu pripadajo podatki o mojih strankah?",
+          "a": "Vam — 100%. Vsaka stranka, naročilo in e-poštni naslov pripada vam in jih lahko kadar koli izvozite. Za razliko od velikih dostavnih aplikacij se nikoli ne postavimo med vas in vaše stranke ter vam njihovih podatkov ne oddajamo nazaj."
+        },
+        {
+          "q": "Ali obstaja omejitev, koliko naročil lahko sprejmem?",
+          "a": "Brezplačni paket vključuje 100 naročil na mesec. Dodajanje katerega koli plačljivega dodatka to omejitev odpravi, na voljo pa je tudi poseben dodatek za neomejena naročila, če potrebujete le to. Tako ali tako obdržite 100% vsakega naročila brez kakršne koli provizije."
+        },
+        {
+          "q": "Ali lahko dodam naročanje na spletno stran, ki jo že imam?",
+          "a": "Da. Že takoj dobite popolnoma blagovno znamčeno stran za naročanje, na svojo obstoječo spletno stran pa lahko vgradite gumb ali pripomoček za naročanje. Bi raje, da vse gostujemo mi? Za prodajo optimizirana spletna stran je na voljo kot dodatek."
+        },
+        {
+          "q": "Ali lahko upravljam več kot eno lokacijo?",
+          "a": "Da — upravljanje več lokacij je dodatek, tako da lahko vodite več restavracij z eno prijavo, vsako z lastnim menijem, urnikom in poročili."
+        },
+        {
+          "q": "Kako dobim pomoč, če obtičim?",
+          "a": "Kanadska podpora 24/7 s pravimi ljudmi podnevi in ponoči. Pokličite 1-888-618-8765 ali uporabite klepet v živo na kateri koli strani — pomagali vam bomo celo uvoziti meni in vse nastaviti."
+        },
+        {
+          "q": "Ali podpirate catering in vnaprej načrtovana naročila?",
+          "a": "Da. Poleg prevzema, dostave in strežbe na mestu lahko ponudite catering z lastnimi nastavitvami, stranke pa lahko naročila načrtujejo vnaprej. Funkcija rezervacije z naročilom gostu celo omogoča, da v enem koraku rezervira mizo in vnaprej naroči hrano."
         }
       ]
     },

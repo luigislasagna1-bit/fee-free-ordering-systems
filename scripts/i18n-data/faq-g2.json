@@ -1,0 +1,268 @@
+{
+  "es": [
+    {
+      "q": "¿Puedo importar mi menú actual?",
+      "a": "Sí, y puedes probarlo incluso antes de registrarte. Pega el enlace de tu menú de GloriaFood en nuestra página de importación y lo reconstruimos en una página de pedidos en vivo en segundos: cada categoría, plato, tamaño, grupo de modificadores y foto. ¿Te gusta lo que ves? Reclámalo y se convierte en tu cuenta, con tu menú ya cargado."
+    },
+    {
+      "q": "¿Hay una app para mi cocina?",
+      "a": "Sí: la Kitchen Order App para iPhone, iPad y Android. Los nuevos pedidos suenan en cuanto llegan (incluso con la pantalla apagada), se imprimen directamente en una impresora térmica de recibos por WiFi y, si un pedido queda sin aceptar, puede llamarte por teléfono para que nunca se te escape ninguno."
+    },
+    {
+      "q": "¿Qué herramientas de marketing están incluidas?",
+      "a": "Gratis tienes tu base de datos de clientes, promociones básicas y herramientas para redes sociales. GrowthNet —nuestro paquete de marketing con descuento— añade Smart Links, códigos QR, campañas de recuperación con Autopilot, SMS a clientes y el Marketing Studio, todo pensado para convertir a los clientes ocasionales de los marketplaces en clientes directos y habituales que son tuyos."
+    },
+    {
+      "q": "¿De quién son mis datos de clientes?",
+      "a": "Tuyos, al 100%. Cada cliente, pedido y dirección de correo te pertenece y puedes exportarlo cuando quieras. A diferencia de las grandes apps de reparto, nunca nos interponemos entre tú y tus clientes ni te alquilamos de vuelta sus datos."
+    },
+    {
+      "q": "¿Hay un límite de pedidos que puedo recibir?",
+      "a": "El plan gratuito incluye 100 pedidos al mes. Añadir cualquier complemento de pago elimina ese tope, y existe un complemento específico de pedidos ilimitados si es lo único que necesitas. En cualquier caso, te quedas con el 100% de cada pedido y sin comisiones."
+    },
+    {
+      "q": "¿Puedo añadir pedidos a una web que ya tengo?",
+      "a": "Sí. Tienes una página de pedidos con tu marca lista desde el primer momento, y puedes insertar un botón o un widget de pedidos en tu web actual. ¿Prefieres que la alojemos nosotros entera? Tenemos disponible como complemento una web optimizada para vender."
+    },
+    {
+      "q": "¿Puedo gestionar más de un local?",
+      "a": "Sí: la gestión de varios locales es un complemento, así que puedes administrar varios restaurantes desde un solo acceso, cada uno con sus propios menús, horarios e informes."
+    },
+    {
+      "q": "¿Cómo consigo ayuda si me atasco?",
+      "a": "Soporte canadiense 24/7, con personas reales de día y de noche. Llama al 1-888-618-8765 o usa el chat en vivo en cualquier página; incluso te ayudamos a importar tu menú y a ponerlo todo en marcha."
+    },
+    {
+      "q": "¿Admiten catering y pedidos programados?",
+      "a": "Sí. Además de recogida, reparto y consumo en el local, puedes ofrecer catering con sus propios ajustes, y los clientes pueden programar pedidos con antelación. La opción de reservar y luego pedir incluso permite a un cliente reservar mesa y encargar su comida en un solo paso."
+    }
+  ],
+  "et": [
+    {
+      "q": "Kas saan oma olemasoleva menüü importida?",
+      "a": "Jah, ja seda saad proovida juba enne registreerumist. Kleebi oma GloriaFoodi menüü link meie impordilehele ja me ehitame selle sekunditega elavale tellimislehele üles: iga kategooria, roog, suurus, lisandite rühm ja foto. Meeldib, mida näed? Võta see endale ja sellest saab sinu konto, menüü juba laaditud."
+    },
+    {
+      "q": "Kas mu köögi jaoks on olemas rakendus?",
+      "a": "Jah: Kitchen Order App iPhone'i, iPadi ja Androidi jaoks. Uued tellimused helisevad kohe, kui need saabuvad (isegi väljalülitatud ekraaniga), prinditakse otse WiFi kaudu termoprinterisse ja kui tellimus jääb vastu võtmata, võib see sulle helistada, et sa ühtegi tellimust ei jätaks."
+    },
+    {
+      "q": "Millised turundustööriistad on kaasas?",
+      "a": "Tasuta saad oma kliendiandmebaasi, põhipakkumised ja sotsiaalmeedia tööriistad. GrowthNet — meie soodushinnaga turunduspakett — lisab Smart Linksi, QR-koodid, Autopiloti tagasivõitmiskampaaniad, klientidele SMS-id ja Marketing Studio, kõik loodud selleks, et muuta turuplatside ühekordsed kliendid otseseks korduvklientideks, kes kuuluvad sulle."
+    },
+    {
+      "q": "Kellele kuuluvad minu kliendiandmed?",
+      "a": "Sulle — 100%. Iga klient, tellimus ja meiliaadress kuulub sulle ja seda saab igal ajal eksportida. Erinevalt suurtest toidukulleri rakendustest ei seisa me kunagi sinu ja su klientide vahel ega rendi nende andmeid sulle tagasi."
+    },
+    {
+      "q": "Kas tellimuste arvule on piir?",
+      "a": "Tasuta pakett sisaldab 100 tellimust kuus. Mis tahes tasulise lisa lisamine tõstab selle piiri ära ja kui vajad ainult seda, on olemas eraldi piiramatute tellimuste lisa. Kummalgi juhul hoiad 100% igast tellimusest ilma igasuguse komisjonitasuta."
+    },
+    {
+      "q": "Kas saan tellimise lisada veebisaidile, mis mul juba on?",
+      "a": "Jah. Saad kohe oma kaubamärgiga täieliku tellimislehe ja võid lisada tellimisnupu või vidina oma olemasolevale saidile. Eelistad, et majutame kogu asja ise? Müügile optimeeritud veebisait on saadaval lisana."
+    },
+    {
+      "q": "Kas saan hallata rohkem kui ühte asukohta?",
+      "a": "Jah: mitme asukoha haldus on lisa, nii et saad juhtida mitut restorani ühest sisselogimisest, igaüks oma menüüde, lahtiolekuaegade ja aruannetega."
+    },
+    {
+      "q": "Kuidas saan abi, kui jään hätta?",
+      "a": "24/7 Kanada tugi, päeval ja öösel päris inimestega. Helista numbril 1-888-618-8765 või kasuta otsevestlust igal lehel — me aitame sul isegi menüü importida ja kõik seadistada."
+    },
+    {
+      "q": "Kas toetate toitlustust ja ajastatud tellimusi?",
+      "a": "Jah. Lisaks järeletulemisele, kohaletoimetamisele ja kohapeal söömisele saad pakkuda toitlustust oma seadetega ja kliendid saavad tellimusi ette ajastada. Broneeri-siis-telli võimalus laseb külalisel isegi laua broneerida ja toidu ühe sammuga ette tellida."
+    }
+  ],
+  "fi": [
+    {
+      "q": "Voinko tuoda nykyisen menuni?",
+      "a": "Kyllä, ja voit kokeilla sitä jo ennen rekisteröitymistä. Liitä GloriaFood-menusi linkki tuontisivullemme, niin rakennamme sen sekunneissa eläväksi tilaussivuksi: jokainen kategoria, annos, koko, lisukeryhmä ja kuva. Pidätkö näkemästäsi? Lunasta se, niin siitä tulee tilisi menu jo valmiiksi ladattuna."
+    },
+    {
+      "q": "Onko keittiölleni oma sovellus?",
+      "a": "Kyllä: Kitchen Order App iPhonelle, iPadille ja Androidille. Uudet tilaukset soivat heti niiden saapuessa (myös näytön ollessa sammuksissa), tulostuvat suoraan WiFi-lämpökuittitulostimeen, ja jos tilaus jää hyväksymättä, se voi soittaa sinulle, jotta yksikään ei jää huomaamatta."
+    },
+    {
+      "q": "Mitä markkinointityökaluja on mukana?",
+      "a": "Ilmaiseksi saat asiakasrekisterisi, perustarjoukset ja sosiaalisen median työkalut. GrowthNet — alennettu markkinointipakettimme — lisää Smart Linksin, QR-koodit, Autopilot-takaisinvoittokampanjat, asiakas-SMS:t ja Marketing Studion, kaikki rakennettu muuttamaan markkinapaikkojen kertaluonteiset asiakkaat suoriksi, toistuviksi asiakkaiksi, jotka ovat sinun."
+    },
+    {
+      "q": "Kuka omistaa asiakastietoni?",
+      "a": "Sinä — 100%. Jokainen asiakas, tilaus ja sähköpostiosoite kuuluu sinulle, ja voit viedä ne milloin tahansa. Toisin kuin suuret ruokalähettisovellukset, emme koskaan asetu sinun ja asiakkaidesi väliin emmekä vuokraa heidän tietojaan takaisin sinulle."
+    },
+    {
+      "q": "Onko tilausten määrällä rajaa?",
+      "a": "Ilmainen paketti sisältää 100 tilausta kuukaudessa. Minkä tahansa maksullisen lisäosan lisääminen poistaa tuon rajan, ja jos tarvitset vain sitä, tarjolla on erillinen rajattomien tilausten lisäosa. Joka tapauksessa pidät 100 % jokaisesta tilauksesta ilman provisiota."
+    },
+    {
+      "q": "Voinko lisätä tilaamisen sivustolle, joka minulla jo on?",
+      "a": "Kyllä. Saat heti valmiin, omalla brändilläsi varustetun tilaussivun, ja voit upottaa tilauspainikkeen tai widgetin nykyiselle sivustollesi. Haluatko mieluummin, että isännöimme koko sivun? Myyntiin optimoitu verkkosivusto on saatavilla lisäosana."
+    },
+    {
+      "q": "Voinko hallita useampaa kuin yhtä toimipistettä?",
+      "a": "Kyllä: monen toimipisteen hallinta on lisäosa, joten voit pyörittää useita ravintoloita yhdellä kirjautumisella, kullakin omat menut, aukioloajat ja raportit."
+    },
+    {
+      "q": "Miten saan apua, jos jään jumiin?",
+      "a": "24/7 kanadalainen tuki, oikeita ihmisiä päivin ja öin. Soita numeroon 1-888-618-8765 tai käytä live-chattia millä tahansa sivulla — autamme jopa tuomaan menusi ja saamaan kaiken valmiiksi."
+    },
+    {
+      "q": "Tuetteko pitopalvelua ja ajastettuja tilauksia?",
+      "a": "Kyllä. Noudon, toimituksen ja paikan päällä syömisen lisäksi voit tarjota pitopalvelua omilla asetuksillaan, ja asiakkaat voivat ajastaa tilauksia etukäteen. Varaa-ja-tilaa antaa vieraan jopa varata pöydän ja tilata ruokansa ennakkoon yhdellä kertaa."
+    }
+  ],
+  "fr": [
+    {
+      "q": "Puis-je importer mon menu existant ?",
+      "a": "Oui, et vous pouvez l'essayer avant même de vous inscrire. Collez le lien de votre menu GloriaFood sur notre page d'import et nous le reconstruisons sur une page de commande en direct en quelques secondes : chaque catégorie, plat, taille, groupe d'options et photo. Vous aimez ce que vous voyez ? Récupérez-le et il devient votre compte, avec votre menu déjà chargé."
+    },
+    {
+      "q": "Existe-t-il une application pour ma cuisine ?",
+      "a": "Oui : la Kitchen Order App pour iPhone, iPad et Android. Les nouvelles commandes sonnent dès qu'elles arrivent (même écran éteint), s'impriment directement sur une imprimante thermique à reçus en WiFi, et si une commande reste non acceptée, elle peut vous appeler pour que vous n'en ratiez aucune."
+    },
+    {
+      "q": "Quels outils marketing sont inclus ?",
+      "a": "Gratuitement, vous avez votre base de données clients, des promotions de base et des outils pour les réseaux sociaux. GrowthNet — notre pack marketing à prix réduit — ajoute Smart Links, codes QR, campagnes de reconquête Autopilot, SMS clients et le Marketing Studio, le tout conçu pour transformer les clients ponctuels des marketplaces en clients directs et fidèles qui vous appartiennent."
+    },
+    {
+      "q": "À qui appartiennent mes données clients ?",
+      "a": "À vous — 100%. Chaque client, commande et adresse e-mail vous appartient et s'exporte à tout moment. Contrairement aux grandes applis de livraison, nous ne nous plaçons jamais entre vous et vos clients et ne vous relouons jamais leurs données."
+    },
+    {
+      "q": "Y a-t-il une limite au nombre de commandes que je peux prendre ?",
+      "a": "Le plan gratuit comprend 100 commandes par mois. Ajouter n'importe quel module payant fait sauter ce plafond, et il existe un module dédié aux commandes illimitées si c'est tout ce qu'il vous faut. Dans tous les cas, vous gardez 100% de chaque commande, sans aucune commission."
+    },
+    {
+      "q": "Puis-je ajouter la commande à un site que j'ai déjà ?",
+      "a": "Oui. Vous obtenez d'emblée une page de commande complète à votre image, et vous pouvez intégrer un bouton ou un widget de commande sur votre site existant. Vous préférez qu'on héberge le tout ? Un site web optimisé pour la vente est disponible en module."
+    },
+    {
+      "q": "Puis-je gérer plusieurs établissements ?",
+      "a": "Oui : la gestion multi-établissements est un module, vous pouvez donc piloter plusieurs restaurants depuis une seule connexion, chacun avec ses propres menus, horaires et rapports."
+    },
+    {
+      "q": "Comment obtenir de l'aide si je suis bloqué ?",
+      "a": "Support canadien 24/7, avec de vraies personnes jour et nuit. Appelez le 1-888-618-8765 ou utilisez le chat en direct sur n'importe quelle page — nous vous aidons même à importer votre menu et à tout mettre en place."
+    },
+    {
+      "q": "Prenez-vous en charge le traiteur et les commandes programmées ?",
+      "a": "Oui. En plus du retrait, de la livraison et du sur-place, vous pouvez proposer un service traiteur avec ses propres réglages, et les clients peuvent programmer leurs commandes à l'avance. L'option réserver-puis-commander permet même à un client de réserver une table et de précommander son repas en une seule étape."
+    }
+  ],
+  "he": [
+    {
+      "q": "אפשר לייבא את התפריט הקיים שלי?",
+      "a": "כן, ואפשר אפילו להתנסות בו עוד לפני שנרשמים. הדביקו את הקישור לתפריט ה-GloriaFood שלכם בעמוד הייבוא שלנו ואנחנו בונים אותו מחדש בעמוד הזמנות חי תוך שניות: כל קטגוריה, פריט, גודל, קבוצת תוספות ותמונה. אהבתם את מה שאתם רואים? תפסו אותו והוא הופך לחשבון שלכם, עם התפריט שלכם כבר טעון."
+    },
+    {
+      "q": "יש אפליקציה למטבח שלי?",
+      "a": "כן: ה-Kitchen Order App ל-iPhone, ל-iPad ול-Android. הזמנות חדשות מצלצלות ברגע שהן נכנסות (גם כשהמסך כבוי), מודפסות ישירות למדפסת קבלות תרמית ב-WiFi, ואם הזמנה נשארת ללא אישור היא יכולה להתקשר אליכם כדי שלא תפספסו אף אחת."
+    },
+    {
+      "q": "אילו כלי שיווק כלולים?",
+      "a": "בחינם אתם מקבלים את מאגר הלקוחות שלכם, מבצעים בסיסיים וכלים לרשתות חברתיות. GrowthNet — חבילת השיווק המוזלת שלנו — מוסיפה Smart Links, קודי QR, קמפיינים להחזרת לקוחות עם Autopilot, SMS ללקוחות ואת ה-Marketing Studio, הכול בנוי כדי להפוך לקוחות חד-פעמיים מהמרקטפלייסים ללקוחות חוזרים וישירים ששייכים לכם."
+    },
+    {
+      "q": "למי שייכים נתוני הלקוחות שלי?",
+      "a": "לכם — 100%. כל לקוח, הזמנה וכתובת מייל שייכים לכם וניתנים לייצוא בכל עת. בניגוד לאפליקציות המשלוחים הגדולות, אנחנו אף פעם לא עומדים ביניכם לבין הלקוחות שלכם ולא משכירים לכם בחזרה את הנתונים שלהם."
+    },
+    {
+      "q": "יש הגבלה על כמות ההזמנות שאני יכול לקבל?",
+      "a": "התוכנית החינמית כוללת 100 הזמנות בחודש. הוספת כל תוסף בתשלום מסירה את התקרה הזו, ויש תוסף ייעודי להזמנות בלתי מוגבלות אם זה כל מה שאתם צריכים. כך או כך אתם שומרים 100% מכל הזמנה וללא שום עמלה."
+    },
+    {
+      "q": "אפשר להוסיף הזמנות לאתר שכבר יש לי?",
+      "a": "כן. אתם מקבלים עמוד הזמנות מלא וממותג מהרגע הראשון, ואפשר להטמיע כפתור או ווידג'ט הזמנות באתר הקיים שלכם. מעדיפים שנארח את הכול? אתר מותאם למכירות זמין כתוסף."
+    },
+    {
+      "q": "אפשר לנהל יותר מסניף אחד?",
+      "a": "כן: ניהול ריבוי סניפים הוא תוסף, כך שתוכלו להפעיל כמה מסעדות מהתחברות אחת, כל אחת עם התפריטים, שעות הפעילות והדוחות שלה."
+    },
+    {
+      "q": "איך אקבל עזרה אם נתקעתי?",
+      "a": "תמיכה קנדית 24/7, עם אנשים אמיתיים יום ולילה. התקשרו אל 1-888-618-8765 או השתמשו בצ'אט החי בכל עמוד — אנחנו אפילו נעזור לכם לייבא את התפריט ולהקים הכול."
+    },
+    {
+      "q": "אתם תומכים בקייטרינג ובהזמנות מתוזמנות?",
+      "a": "כן. לצד איסוף עצמי, משלוח וישיבה במקום, תוכלו להציע קייטרינג עם הגדרות משלו, והלקוחות יכולים לתזמן הזמנות מראש. האפשרות להזמין שולחן ואז להזמין אוכל אפילו מאפשרת לאורח לשריין שולחן ולהזמין את האוכל שלו מראש בצעד אחד."
+    }
+  ],
+  "hi": [
+    {
+      "q": "क्या मैं अपना मौजूदा मेन्यू इम्पोर्ट कर सकता हूँ?",
+      "a": "हाँ, और आप साइन अप करने से पहले ही इसे आज़मा सकते हैं। हमारे इम्पोर्ट पेज पर अपना GloriaFood मेन्यू लिंक पेस्ट करें और हम उसे सेकंडों में एक लाइव ऑर्डरिंग पेज पर फिर से बना देते हैं: हर श्रेणी, आइटम, साइज़, मॉडिफायर समूह और फ़ोटो। जो दिख रहा है पसंद आया? उसे क्लेम कर लें और वह आपका अकाउंट बन जाता है, आपका मेन्यू पहले से लोड किए हुए।"
+    },
+    {
+      "q": "क्या मेरी रसोई के लिए कोई ऐप है?",
+      "a": "हाँ: iPhone, iPad और Android के लिए Kitchen Order App। नए ऑर्डर आते ही बजने लगते हैं (स्क्रीन बंद होने पर भी), सीधे WiFi थर्मल रसीद प्रिंटर पर प्रिंट होते हैं, और अगर कोई ऑर्डर बिना स्वीकार किए रह जाए तो वह आपको फ़ोन कर सकता है ताकि आप कोई भी ऑर्डर न चूकें।"
+    },
+    {
+      "q": "कौन से मार्केटिंग टूल शामिल हैं?",
+      "a": "मुफ़्त में आपको अपना ग्राहक डेटाबेस, बुनियादी प्रोमोशन और सोशल-मीडिया टूल मिलते हैं। GrowthNet — हमारा रियायती मार्केटिंग बंडल — Smart Links, QR कोड, Autopilot वापस-जीतने वाले कैम्पेन, ग्राहक SMS और Marketing Studio जोड़ता है, ये सब मार्केटप्लेस के एक-बार के ग्राहकों को सीधे, बार-बार आने वाले अपने ग्राहकों में बदलने के लिए बने हैं।"
+    },
+    {
+      "q": "मेरे ग्राहक डेटा का मालिक कौन है?",
+      "a": "आप — 100%। हर ग्राहक, ऑर्डर और ईमेल पता आपका है और कभी भी एक्सपोर्ट किया जा सकता है। बड़ी डिलीवरी ऐप्स के उलट, हम कभी आपके और आपके ग्राहकों के बीच नहीं आते और न ही उनका डेटा आपको वापस किराए पर देते हैं।"
+    },
+    {
+      "q": "मैं कितने ऑर्डर ले सकता हूँ, इसकी कोई सीमा है?",
+      "a": "मुफ़्त प्लान में हर महीने 100 ऑर्डर शामिल हैं। कोई भी पेड ऐड-ऑन जोड़ने पर यह सीमा हट जाती है, और अगर आपको बस यही चाहिए तो एक अलग अनलिमिटेड-ऑर्डर ऐड-ऑन भी है। किसी भी तरह, आप बिना किसी कमीशन के हर ऑर्डर का 100% अपने पास रखते हैं।"
+    },
+    {
+      "q": "क्या मैं अपनी पहले से मौजूद वेबसाइट में ऑर्डरिंग जोड़ सकता हूँ?",
+      "a": "हाँ। आपको शुरू से ही अपनी ब्रांडिंग वाला पूरा ऑर्डरिंग पेज मिलता है, और आप अपनी मौजूदा साइट पर ऑर्डरिंग बटन या विजेट एम्बेड कर सकते हैं। चाहते हैं कि हम पूरी साइट होस्ट करें? सेल्स के लिए ऑप्टिमाइज़्ड वेबसाइट एक ऐड-ऑन के रूप में उपलब्ध है।"
+    },
+    {
+      "q": "क्या मैं एक से ज़्यादा लोकेशन मैनेज कर सकता हूँ?",
+      "a": "हाँ: मल्टी-लोकेशन मैनेजमेंट एक ऐड-ऑन है, इसलिए आप एक ही लॉगिन से कई रेस्टोरेंट चला सकते हैं, हर एक के अपने मेन्यू, समय और रिपोर्ट के साथ।"
+    },
+    {
+      "q": "अगर मैं अटक जाऊँ तो मदद कैसे मिलेगी?",
+      "a": "24/7 कैनेडियन सपोर्ट, दिन हो या रात असली लोगों के साथ। 1-888-618-8765 पर कॉल करें या किसी भी पेज पर लाइव चैट का इस्तेमाल करें — हम आपका मेन्यू इम्पोर्ट करने और सब कुछ सेट करने में भी मदद करेंगे।"
+    },
+    {
+      "q": "क्या आप कैटरिंग और शेड्यूल किए गए ऑर्डर सपोर्ट करते हैं?",
+      "a": "हाँ। पिकअप, डिलीवरी और डाइन-इन के साथ-साथ, आप अपनी सेटिंग्स के साथ कैटरिंग दे सकते हैं, और ग्राहक पहले से ऑर्डर शेड्यूल कर सकते हैं। टेबल बुक करके फिर ऑर्डर करने की सुविधा तो ग्राहक को एक ही कदम में टेबल बुक करने और अपना खाना पहले से ऑर्डर करने तक देती है।"
+    }
+  ],
+  "hr": [
+    {
+      "q": "Mogu li uvesti svoj postojeći jelovnik?",
+      "a": "Da, i možete ga isprobati još prije nego što se registrirate. Zalijepite poveznicu svog GloriaFood jelovnika na našu stranicu za uvoz i mi ga u nekoliko sekundi ponovno izgradimo na stranici za narudžbe uživo: svaku kategoriju, stavku, veličinu, skupinu dodataka i fotografiju. Sviđa vam se ono što vidite? Preuzmite ga i postaje vaš račun, s već učitanim jelovnikom."
+    },
+    {
+      "q": "Postoji li aplikacija za moju kuhinju?",
+      "a": "Da: Kitchen Order App za iPhone, iPad i Android. Nove narudžbe zazvone čim stignu (čak i kad je zaslon ugašen), ispisuju se izravno na WiFi termalni pisač računa, a ako narudžba ostane neprihvaćena, može vas nazvati kako vam nijedna ne bi promaknula."
+    },
+    {
+      "q": "Koji su marketinški alati uključeni?",
+      "a": "Besplatno dobivate svoju bazu kupaca, osnovne promocije i alate za društvene mreže. GrowthNet — naš marketinški paket po sniženoj cijeni — dodaje Smart Links, QR kodove, Autopilot kampanje za vraćanje kupaca, SMS kupcima i Marketing Studio, sve osmišljeno da jednokratne kupce s tržnica pretvori u izravne, stalne kupce koji su vaši."
+    },
+    {
+      "q": "Tko je vlasnik mojih podataka o kupcima?",
+      "a": "Vi — 100%. Svaki kupac, narudžba i e-mail adresa pripadaju vama i možete ih izvesti u svakom trenutku. Za razliku od velikih dostavnih aplikacija, mi se nikada ne postavljamo između vas i vaših kupaca niti vam njihove podatke iznajmljujemo natrag."
+    },
+    {
+      "q": "Postoji li ograničenje broja narudžbi koje mogu primiti?",
+      "a": "Besplatni plan uključuje 100 narudžbi mjesečno. Dodavanje bilo kojeg plaćenog dodatka ukida to ograničenje, a postoji i poseban dodatak za neograničene narudžbe ako vam je samo to potrebno. U svakom slučaju, zadržavate 100% svake narudžbe bez ikakve provizije."
+    },
+    {
+      "q": "Mogu li dodati naručivanje na web-stranicu koju već imam?",
+      "a": "Da. Odmah dobivate potpunu stranicu za narudžbe s vašim brendom, a možete ugraditi gumb ili widget za naručivanje na svoju postojeću stranicu. Želite radije da mi ugostimo sve? Web-stranica optimizirana za prodaju dostupna je kao dodatak."
+    },
+    {
+      "q": "Mogu li upravljati s više lokacija?",
+      "a": "Da: upravljanje s više lokacija je dodatak, pa možete voditi nekoliko restorana s jedne prijave, svaki sa svojim jelovnicima, radnim vremenom i izvješćima."
+    },
+    {
+      "q": "Kako da dobijem pomoć ako zapnem?",
+      "a": "Kanadska podrška 24/7, sa stvarnim ljudima danju i noću. Nazovite 1-888-618-8765 ili koristite chat uživo na bilo kojoj stranici — pomoći ćemo vam čak i uvesti jelovnik te sve postaviti."
+    },
+    {
+      "q": "Podržavate li catering i zakazane narudžbe?",
+      "a": "Da. Uz preuzimanje, dostavu i objedovanje u restoranu, možete ponuditi catering s vlastitim postavkama, a kupci mogu zakazati narudžbe unaprijed. Opcija rezerviraj pa naruči gostu čak omogućuje da u jednom koraku rezervira stol i unaprijed naruči svoju hranu."
+    }
+  ]
+}

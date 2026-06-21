@@ -4799,6 +4799,42 @@
         {
           "q": "Bisakah saya membatalkan kapan saja?",
           "a": "Ya. Tidak ada kontrak, tidak ada komitmen."
+        },
+        {
+          "q": "Bisakah saya mengimpor menu yang sudah ada?",
+          "a": "Bisa – dan Anda bahkan bisa mencobanya sebelum mendaftar. Tempelkan tautan menu GloriaFood Anda di halaman impor kami, lalu kami bangun ulang dalam halaman pemesanan langsung hanya dalam hitungan detik: setiap kategori, item, ukuran, grup tambahan, dan foto. Suka dengan yang Anda lihat? Klaim saja dan halaman itu menjadi akun Anda, lengkap dengan menu yang sudah dimuat."
+        },
+        {
+          "q": "Apakah ada aplikasi untuk dapur saya?",
+          "a": "Ya – Kitchen Order App untuk iPhone, iPad, dan Android. Pesanan baru langsung berdering begitu masuk (bahkan saat layar mati), tercetak langsung ke printer struk termal WiFi, dan jika sebuah pesanan dibiarkan tanpa diterima, aplikasi bisa menelepon Anda agar tidak ada pesanan yang terlewat."
+        },
+        {
+          "q": "Alat pemasaran apa saja yang termasuk?",
+          "a": "Gratis, Anda mendapatkan basis data pelanggan, promosi dasar, dan alat media sosial. GrowthNet – paket pemasaran berdiskon kami – menambahkan Smart Links, kode QR, kampanye win-back Autopilot, SMS pelanggan, dan Marketing Studio, semuanya dirancang untuk mengubah pelanggan marketplace yang sekali pesan menjadi pelanggan langsung yang kembali lagi dan menjadi milik Anda."
+        },
+        {
+          "q": "Siapa pemilik data pelanggan saya?",
+          "a": "Anda – 100%. Setiap pelanggan, pesanan, dan alamat email adalah milik Anda dan bisa diekspor kapan saja. Tidak seperti aplikasi pengiriman besar, kami tidak pernah berdiri di antara Anda dan pelanggan, atau menyewakan kembali data mereka kepada Anda."
+        },
+        {
+          "q": "Apakah ada batasan jumlah pesanan yang bisa saya terima?",
+          "a": "Paket gratis mencakup 100 orders per bulan. Menambahkan add-on berbayar apa pun akan menghapus batas itu, dan ada add-on pesanan tanpa batas khusus jika hanya itu yang Anda butuhkan. Bagaimanapun, Anda tetap menyimpan 100% dari setiap pesanan tanpa komisi."
+        },
+        {
+          "q": "Bisakah saya menambahkan pemesanan ke situs web yang sudah saya miliki?",
+          "a": "Bisa. Anda langsung mendapatkan halaman pemesanan ber-branding lengkap, dan Anda bisa menyematkan tombol atau widget pemesanan di situs Anda yang sudah ada. Lebih suka kami yang meng-host semuanya? Situs web yang dioptimalkan untuk penjualan tersedia sebagai add-on."
+        },
+        {
+          "q": "Bisakah saya mengelola lebih dari satu lokasi?",
+          "a": "Bisa – pengelolaan multi-lokasi adalah add-on, jadi Anda bisa menjalankan beberapa restoran dari satu login, masing-masing dengan menu, jam buka, dan laporannya sendiri."
+        },
+        {
+          "q": "Bagaimana cara mendapatkan bantuan jika saya kesulitan?",
+          "a": "Dukungan Kanada 24/7, dengan staf manusia sungguhan siang atau malam. Telepon 1-888-618-8765 atau gunakan live chat di halaman mana pun – kami bahkan akan membantu Anda mengimpor menu dan menyiapkan semuanya."
+        },
+        {
+          "q": "Apakah Anda mendukung katering dan pesanan terjadwal?",
+          "a": "Ya. Selain pickup, pengiriman, dan makan di tempat, Anda bisa menawarkan katering dengan pengaturannya sendiri, dan pelanggan bisa menjadwalkan pesanan di muka. Fitur pesan setelah reservasi (reserve-then-order) bahkan memungkinkan tamu memesan meja dan memesan makanannya sekaligus dalam satu langkah."
         }
       ]
     },

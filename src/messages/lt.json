@@ -4799,6 +4799,42 @@
         {
           "q": "Ar galima atsisakyti bet kada?",
           "a": "Taip. Jokių sutarčių, jokių įsipareigojimų."
+        },
+        {
+          "q": "Ar galiu importuoti esamą savo meniu?",
+          "a": "Taip – ir galite tai išbandyti dar prieš užsiregistruodami. Įklijuokite savo GloriaFood meniu nuorodą mūsų importavimo puslapyje, ir mes per kelias sekundes atkursime jį gyvame užsakymų puslapyje: kiekvieną kategoriją, prekę, dydį, priedų grupę ir nuotrauką. Patinka, ką matote? Pasiimkite jį ir jis taps jūsų paskyra su jau įkeltu meniu."
+        },
+        {
+          "q": "Ar yra programėlė mano virtuvei?",
+          "a": "Taip – Kitchen Order App, skirta iPhone, iPad ir Android. Nauji užsakymai suskamba tą pačią akimirką, kai gaunami (net ir išjungus ekraną), spausdinami tiesiai į WiFi terminį čekių spausdintuvą, o jei užsakymas lieka nepatvirtintas, programėlė gali jums paskambinti, kad nepraleistumėte nė vieno."
+        },
+        {
+          "q": "Kokie rinkodaros įrankiai įtraukti?",
+          "a": "Nemokamai gaunate savo klientų duomenų bazę, pagrindines akcijas ir socialinių tinklų įrankius. GrowthNet – mūsų rinkodaros paketas su nuolaida – prideda Smart Links, QR kodus, Autopilot susigrąžinimo kampanijas, klientų SMS žinutes ir Marketing Studio, ir visa tai sukurta tam, kad vienkartinius prekyvietės klientus paverstumėte tiesioginiais, sugrįžtančiais klientais, kurie priklauso jums."
+        },
+        {
+          "q": "Kam priklauso mano klientų duomenys?",
+          "a": "Jums – 100 %. Kiekvienas klientas, užsakymas ir el. pašto adresas priklauso jums ir bet kada gali būti eksportuojamas. Skirtingai nei didžiosios pristatymo programėlės, mes niekada nestojame tarp jūsų ir jūsų klientų ir nenuomojame jums jų duomenų atgal."
+        },
+        {
+          "q": "Ar yra riba, kiek užsakymų galiu priimti?",
+          "a": "Nemokamas planas apima 100 orders per mėnesį. Pridėjus bet kurį mokamą papildinį ši riba panaikinama, o jei jums reikia tik to, yra atskiras neriboto užsakymų skaičiaus papildinys. Bet kuriuo atveju jūs pasiliekate 100 % kiekvieno užsakymo be jokio komisinio mokesčio."
+        },
+        {
+          "q": "Ar galiu pridėti užsakymus prie jau turimos svetainės?",
+          "a": "Taip. Iškart gaunate visavertį prekės ženklą atitinkantį užsakymų puslapį ir galite įterpti užsakymo mygtuką ar valdiklį į savo esamą svetainę. Norite, kad viską talpintume mes? Pardavimams optimizuota svetainė prieinama kaip papildinys."
+        },
+        {
+          "q": "Ar galiu valdyti daugiau nei vieną vietą?",
+          "a": "Taip – kelių vietų valdymas yra papildinys, todėl iš vieno prisijungimo galite valdyti kelis restoranus, kiekvieną su savo meniu, darbo laiku ir ataskaitomis."
+        },
+        {
+          "q": "Kaip gauti pagalbą, jei užstrigau?",
+          "a": "24/7 Kanados pagalba su tikrais žmonėmis dieną ar naktį. Skambinkite 1-888-618-8765 arba naudokitės tiesioginiu pokalbiu bet kuriame puslapyje – mes net padėsime importuoti jūsų meniu ir viską sukonfigūruoti."
+        },
+        {
+          "q": "Ar palaikote maitinimo (catering) ir suplanuotus užsakymus?",
+          "a": "Taip. Be išsinešimo, pristatymo ir vietoje valgymo, galite siūlyti maitinimo paslaugas su atskirais nustatymais, o klientai gali užsakymus suplanuoti iš anksto. Funkcija „rezervuok ir užsakyk“ (reserve-then-order) leidžia svečiui vienu žingsniu užsisakyti staliuką ir iš anksto užsakyti maistą."
         }
       ]
     },

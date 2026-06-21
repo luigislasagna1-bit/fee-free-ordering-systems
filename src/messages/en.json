@@ -4799,6 +4799,42 @@
         {
           "q": "Can I cancel anytime?",
           "a": "Yes. No contracts, no commitments."
+        },
+        {
+          "q": "Can I import my existing menu?",
+          "a": "Yes — and you can try it before you even sign up. Paste your GloriaFood menu link on our import page and we rebuild it on a live ordering page in seconds: every category, item, size, modifier group, and photo. Like what you see? Claim it and it becomes your account, with your menu already loaded."
+        },
+        {
+          "q": "Is there an app for my kitchen?",
+          "a": "Yes — the Kitchen Order App for iPhone, iPad, and Android. New orders ring the moment they land (even with the screen off), print straight to a WiFi thermal receipt printer, and if an order sits unaccepted it can phone you so you never miss one."
+        },
+        {
+          "q": "What marketing tools are included?",
+          "a": "Free, you get your customer database, basic promotions, and social-media tools. GrowthNet — our discounted marketing bundle — adds Smart Links, QR codes, Autopilot win-back campaigns, customer SMS, and the Marketing Studio, all built to turn one-time marketplace customers into direct, repeat customers you own."
+        },
+        {
+          "q": "Who owns my customer data?",
+          "a": "You do — 100%. Every customer, order, and email address belongs to you and exports anytime. Unlike the big delivery apps, we never sit between you and your customers or rent their data back to you."
+        },
+        {
+          "q": "Is there a limit on how many orders I can take?",
+          "a": "The free plan includes 100 orders per month. Adding any paid add-on lifts that cap, and there is a dedicated unlimited-orders add-on if that is all you need. Either way you keep 100% of every order with zero commission."
+        },
+        {
+          "q": "Can I add ordering to a website I already have?",
+          "a": "Yes. You get a full branded ordering page out of the box, and you can embed an ordering button or widget on your existing site. Prefer us to host the whole thing? A sales-optimized website is available as an add-on."
+        },
+        {
+          "q": "Can I manage more than one location?",
+          "a": "Yes — multi-location management is an add-on, so you can run several restaurants from one login, each with their own menus, hours, and reports."
+        },
+        {
+          "q": "How do I get help if I am stuck?",
+          "a": "24/7 Canadian support, with real humans day or night. Call 1-888-618-8765 or use the live chat on any page — we will even help you import your menu and get set up."
+        },
+        {
+          "q": "Do you support catering and scheduled orders?",
+          "a": "Yes. Alongside pickup, delivery, and dine-in, you can offer catering with its own settings, and customers can schedule orders in advance. Reserve-then-order even lets a guest book a table and pre-order their food in one step."
         }
       ]
     },

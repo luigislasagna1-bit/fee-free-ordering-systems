@@ -4799,6 +4799,42 @@
         {
           "q": "Posso cancelar a qualquer momento?",
           "a": "Sim. Sem contratos, sem compromissos."
+        },
+        {
+          "q": "Posso importar a minha ementa atual?",
+          "a": "Sim – e pode experimentá-la antes mesmo de se registar. Cole a ligação da sua ementa do GloriaFood na nossa página de importação e nós reconstruímo-la numa página de encomendas ao vivo em segundos: cada categoria, prato, tamanho, grupo de extras e fotografia. Gosta do que vê? Basta assumi-la e passa a ser a sua conta, com a ementa já carregada."
+        },
+        {
+          "q": "Existe uma aplicação para a minha cozinha?",
+          "a": "Sim – a Kitchen Order App para iPhone, iPad e Android. As novas encomendas tocam no momento em que chegam (mesmo com o ecrã desligado), são impressas diretamente numa impressora térmica de recibos por WiFi e, se uma encomenda ficar por aceitar, a aplicação pode ligar-lhe, para que nunca lhe escape nenhuma."
+        },
+        {
+          "q": "Que ferramentas de marketing estão incluídas?",
+          "a": "Gratuitamente, tem a sua base de dados de clientes, promoções básicas e ferramentas de redes sociais. O GrowthNet – o nosso pacote de marketing com desconto – acrescenta Smart Links, códigos QR, campanhas Autopilot para reconquistar clientes, SMS para clientes e o Marketing Studio, tudo concebido para transformar clientes pontuais dos marketplaces em clientes fiéis que encomendam diretamente consigo."
+        },
+        {
+          "q": "A quem pertencem os dados dos meus clientes?",
+          "a": "A si – a 100%. Cada cliente, encomenda e endereço de email pertence-lhe e pode ser exportado a qualquer momento. Ao contrário das grandes aplicações de entregas, nunca nos colocamos entre si e os seus clientes nem lhe alugamos os dados deles de volta."
+        },
+        {
+          "q": "Existe um limite para o número de encomendas que posso receber?",
+          "a": "O plano gratuito inclui 100 encomendas por mês. Adicionar qualquer extra pago elimina esse limite, e existe um extra dedicado de encomendas ilimitadas, caso seja apenas disso que precisa. Seja como for, fica com 100% de cada encomenda, sem comissão."
+        },
+        {
+          "q": "Posso adicionar encomendas a um site que já tenho?",
+          "a": "Sim. Recebe logo à partida uma página de encomendas completa com a sua marca e pode incorporar um botão ou widget de encomendas no seu site atual. Prefere que sejamos nós a alojar tudo? Um site otimizado para vendas está disponível como extra."
+        },
+        {
+          "q": "Posso gerir mais do que um estabelecimento?",
+          "a": "Sim – a gestão de vários estabelecimentos é um extra, para que possa gerir vários restaurantes a partir de um único início de sessão, cada um com as suas próprias ementas, horários e relatórios."
+        },
+        {
+          "q": "Como obtenho ajuda se ficar bloqueado?",
+          "a": "Apoio canadiano 24/7, com pessoas reais de dia ou de noite. Ligue para 1-888-618-8765 ou utilize o chat ao vivo em qualquer página – ajudamo-lo até a importar a ementa e a configurar tudo."
+        },
+        {
+          "q": "Suportam catering e encomendas agendadas?",
+          "a": "Sim. Além de levantamento, entrega e refeição no local, pode oferecer catering com definições próprias, e os clientes podem agendar encomendas com antecedência. A reserva com encomenda permite a um cliente reservar uma mesa e encomendar logo a comida num único passo."
         }
       ]
     },

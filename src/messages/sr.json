@@ -4799,6 +4799,42 @@
         {
           "q": "Mogu li otkazati u bilo kom trenutku?",
           "a": "Da. Bez ugovora, bez obaveza."
+        },
+        {
+          "q": "Da li mogu da uvezem svoj postojeći meni?",
+          "a": "Da — i možete da ga isprobate čak i pre nego što se registrujete. Nalepite link svog GloriaFood menija na našoj stranici za uvoz i mi ga za nekoliko sekundi ponovo izgradimo na živoj stranici za poručivanje: svaku kategoriju, stavku, veličinu, grupu dodataka i fotografiju. Sviđa vam se to što vidite? Preuzmite ga i postaje vaš nalog sa već učitanim menijem."
+        },
+        {
+          "q": "Da li postoji aplikacija za moju kuhinju?",
+          "a": "Da — Kitchen Order App za iPhone, iPad i Android. Nove porudžbine zazvone čim stignu (čak i kada je ekran ugašen), štampaju se direktno na WiFi termalnom štampaču za račune, a ako porudžbina ostane neprihvaćena, može da vas pozove, tako da nijednu ne propustite."
+        },
+        {
+          "q": "Koji su marketinški alati uključeni?",
+          "a": "Besplatno dobijate svoju bazu kupaca, osnovne akcije i alate za društvene mreže. GrowthNet — naš povoljniji marketinški paket — dodaje Smart Links, QR kodove, Autopilot kampanje za vraćanje kupaca, SMS za kupce i Marketing Studio. Sve je napravljeno tako da jednokratne kupce sa platformi pretvori u direktne, stalne kupce koji pripadaju vama."
+        },
+        {
+          "q": "Kome pripadaju podaci o mojim kupcima?",
+          "a": "Vama — 100%. Svaki kupac, porudžbina i imejl adresa pripadaju vama i možete ih izvesti u svakom trenutku. Za razliku od velikih aplikacija za dostavu, nikada ne stajemo između vas i vaših kupaca niti vam njihove podatke iznajmljujemo nazad."
+        },
+        {
+          "q": "Da li postoji ograničenje koliko porudžbina mogu da primim?",
+          "a": "Besplatni plan uključuje 100 porudžbina mesečno. Dodavanje bilo kog plaćenog dodatka uklanja to ograničenje, a postoji i poseban dodatak za neograničene porudžbine ako vam je samo to potrebno. U svakom slučaju zadržavate 100% svake porudžbine bez ikakve provizije."
+        },
+        {
+          "q": "Da li mogu da dodam poručivanje na sajt koji već imam?",
+          "a": "Da. Odmah dobijate potpuno brendiranu stranicu za poručivanje, a na svoj postojeći sajt možete da ugradite dugme ili vidžet za poručivanje. Više volite da mi hostujemo sve? Sajt optimizovan za prodaju dostupan je kao dodatak."
+        },
+        {
+          "q": "Da li mogu da upravljam sa više od jedne lokacije?",
+          "a": "Da — upravljanje sa više lokacija je dodatak, tako da možete da vodite nekoliko restorana sa jedne prijave, svaku sa sopstvenim menijem, radnim vremenom i izveštajima."
+        },
+        {
+          "q": "Kako da dobijem pomoć ako zapnem?",
+          "a": "Kanadska podrška 24/7, sa pravim ljudima danju i noću. Pozovite 1-888-618-8765 ili koristite čet uživo na bilo kojoj stranici — pomoći ćemo vam čak i da uvezete meni i sve podesite."
+        },
+        {
+          "q": "Da li podržavate ketering i zakazane porudžbine?",
+          "a": "Da. Pored preuzimanja, dostave i usluživanja u lokalu, možete da ponudite ketering sa sopstvenim podešavanjima, a kupci mogu da zakažu porudžbine unapred. Opcija rezervacije sa poručivanjem čak omogućava gostu da rezerviše sto i unapred naruči hranu u jednom koraku."
         }
       ]
     },

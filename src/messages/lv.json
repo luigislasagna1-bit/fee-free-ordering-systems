@@ -4799,6 +4799,42 @@
         {
           "q": "Vai var atcelt jebkurā laikā?",
           "a": "Jā. Nav līgumu, nav saistību."
+        },
+        {
+          "q": "Vai varu importēt savu esošo ēdienkarti?",
+          "a": "Jā – un to var izmēģināt vēl pirms reģistrēšanās. Ielīmējiet savu GloriaFood ēdienkartes saiti mūsu importēšanas lapā, un mēs to dažu sekunžu laikā atveidosim tiešsaistes pasūtīšanas lapā: katru kategoriju, vienību, izmēru, piedevu grupu un fotoattēlu. Patīk redzētais? Pieprasiet to, un tā kļūst par jūsu kontu ar jau ielādētu ēdienkarti."
+        },
+        {
+          "q": "Vai manai virtuvei ir lietotne?",
+          "a": "Jā – Kitchen Order App iPhone, iPad un Android ierīcēm. Jauni pasūtījumi iezvanās tieši tajā brīdī, kad tie pienāk (pat ar izslēgtu ekrānu), tiek drukāti tieši uz WiFi termo čeku printera, un, ja pasūtījums paliek neapstiprināts, lietotne var jums piezvanīt, lai jūs nepalaistu garām nevienu."
+        },
+        {
+          "q": "Kādi mārketinga rīki ir iekļauti?",
+          "a": "Bez maksas jūs iegūstat savu klientu datubāzi, pamata akcijas un sociālo tīklu rīkus. GrowthNet – mūsu mārketinga komplekts ar atlaidi – pievieno Smart Links, QR kodus, Autopilot atgriešanas kampaņas, klientu SMS un Marketing Studio, un tas viss veidots tā, lai vienreizējos tirdzniecības vietas klientus pārvērstu par tiešiem, atkārtotiem klientiem, kas pieder jums."
+        },
+        {
+          "q": "Kam pieder mani klientu dati?",
+          "a": "Jums – 100%. Katrs klients, pasūtījums un e-pasta adrese pieder jums un jebkurā brīdī ir eksportējami. Atšķirībā no lielajām piegādes lietotnēm mēs nekad nenostājamies starp jums un jūsu klientiem un neiznomājam jums viņu datus atpakaļ."
+        },
+        {
+          "q": "Vai pastāv ierobežojums, cik pasūtījumu varu pieņemt?",
+          "a": "Bezmaksas plāns ietver 100 orders mēnesī. Pievienojot jebkuru maksas papildinājumu, šis ierobežojums tiek atcelts, un, ja jums vajadzīgs tikai tas, ir atsevišķs neierobežotu pasūtījumu papildinājums. Jebkurā gadījumā jūs paturat 100% no katra pasūtījuma bez komisijas maksas."
+        },
+        {
+          "q": "Vai varu pievienot pasūtīšanu vietnei, kas man jau ir?",
+          "a": "Jā. Jūs uzreiz iegūstat pilnvērtīgu, jūsu zīmolam pielāgotu pasūtīšanas lapu, un savā esošajā vietnē varat iegult pasūtīšanas pogu vai logrīku. Vēlaties, lai visu mitinām mēs? Pārdošanai optimizēta vietne ir pieejama kā papildinājums."
+        },
+        {
+          "q": "Vai varu pārvaldīt vairāk nekā vienu atrašanās vietu?",
+          "a": "Jā – vairāku atrašanās vietu pārvaldība ir papildinājums, tāpēc no viena pieteikšanās konta varat vadīt vairākus restorānus, katru ar savu ēdienkarti, darba laiku un atskaitēm."
+        },
+        {
+          "q": "Kā saņemt palīdzību, ja esmu iestrēdzis?",
+          "a": "24/7 Kanādas atbalsts ar īstiem cilvēkiem dienu un nakti. Zvaniet 1-888-618-8765 vai izmantojiet tiešsaistes tērzēšanu jebkurā lapā – mēs pat palīdzēsim importēt jūsu ēdienkarti un visu iestatīt."
+        },
+        {
+          "q": "Vai atbalstāt ēdināšanu (catering) un plānotus pasūtījumus?",
+          "a": "Jā. Līdzās līdzņemšanai, piegādei un ēšanai uz vietas jūs varat piedāvāt ēdināšanas pakalpojumus ar atsevišķiem iestatījumiem, un klienti var plānot pasūtījumus jau iepriekš. Funkcija “rezervē un pasūti” (reserve-then-order) ļauj viesim vienā solī rezervēt galdiņu un iepriekš pasūtīt ēdienu."
         }
       ]
     },

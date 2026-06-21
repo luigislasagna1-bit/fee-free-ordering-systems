@@ -4799,6 +4799,42 @@
         {
           "q": "Voinko peruuttaa milloin tahansa?",
           "a": "Kyllä. Ei sopimuksia, ei sitoumuksia."
+        },
+        {
+          "q": "Voinko tuoda nykyisen menuni?",
+          "a": "Kyllä, ja voit kokeilla sitä jo ennen rekisteröitymistä. Liitä GloriaFood-menusi linkki tuontisivullemme, niin rakennamme sen sekunneissa eläväksi tilaussivuksi: jokainen kategoria, annos, koko, lisukeryhmä ja kuva. Pidätkö näkemästäsi? Lunasta se, niin siitä tulee tilisi menu jo valmiiksi ladattuna."
+        },
+        {
+          "q": "Onko keittiölleni oma sovellus?",
+          "a": "Kyllä: Kitchen Order App iPhonelle, iPadille ja Androidille. Uudet tilaukset soivat heti niiden saapuessa (myös näytön ollessa sammuksissa), tulostuvat suoraan WiFi-lämpökuittitulostimeen, ja jos tilaus jää hyväksymättä, se voi soittaa sinulle, jotta yksikään ei jää huomaamatta."
+        },
+        {
+          "q": "Mitä markkinointityökaluja on mukana?",
+          "a": "Ilmaiseksi saat asiakasrekisterisi, perustarjoukset ja sosiaalisen median työkalut. GrowthNet — alennettu markkinointipakettimme — lisää Smart Linksin, QR-koodit, Autopilot-takaisinvoittokampanjat, asiakas-SMS:t ja Marketing Studion, kaikki rakennettu muuttamaan markkinapaikkojen kertaluonteiset asiakkaat suoriksi, toistuviksi asiakkaiksi, jotka ovat sinun."
+        },
+        {
+          "q": "Kuka omistaa asiakastietoni?",
+          "a": "Sinä — 100%. Jokainen asiakas, tilaus ja sähköpostiosoite kuuluu sinulle, ja voit viedä ne milloin tahansa. Toisin kuin suuret ruokalähettisovellukset, emme koskaan asetu sinun ja asiakkaidesi väliin emmekä vuokraa heidän tietojaan takaisin sinulle."
+        },
+        {
+          "q": "Onko tilausten määrällä rajaa?",
+          "a": "Ilmainen paketti sisältää 100 tilausta kuukaudessa. Minkä tahansa maksullisen lisäosan lisääminen poistaa tuon rajan, ja jos tarvitset vain sitä, tarjolla on erillinen rajattomien tilausten lisäosa. Joka tapauksessa pidät 100 % jokaisesta tilauksesta ilman provisiota."
+        },
+        {
+          "q": "Voinko lisätä tilaamisen sivustolle, joka minulla jo on?",
+          "a": "Kyllä. Saat heti valmiin, omalla brändilläsi varustetun tilaussivun, ja voit upottaa tilauspainikkeen tai widgetin nykyiselle sivustollesi. Haluatko mieluummin, että isännöimme koko sivun? Myyntiin optimoitu verkkosivusto on saatavilla lisäosana."
+        },
+        {
+          "q": "Voinko hallita useampaa kuin yhtä toimipistettä?",
+          "a": "Kyllä: monen toimipisteen hallinta on lisäosa, joten voit pyörittää useita ravintoloita yhdellä kirjautumisella, kullakin omat menut, aukioloajat ja raportit."
+        },
+        {
+          "q": "Miten saan apua, jos jään jumiin?",
+          "a": "24/7 kanadalainen tuki, oikeita ihmisiä päivin ja öin. Soita numeroon 1-888-618-8765 tai käytä live-chattia millä tahansa sivulla — autamme jopa tuomaan menusi ja saamaan kaiken valmiiksi."
+        },
+        {
+          "q": "Tuetteko pitopalvelua ja ajastettuja tilauksia?",
+          "a": "Kyllä. Noudon, toimituksen ja paikan päällä syömisen lisäksi voit tarjota pitopalvelua omilla asetuksillaan, ja asiakkaat voivat ajastaa tilauksia etukäteen. Varaa-ja-tilaa antaa vieraan jopa varata pöydän ja tilata ruokansa ennakkoon yhdellä kertaa."
         }
       ]
     },

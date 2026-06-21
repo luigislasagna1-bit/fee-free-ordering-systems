@@ -4799,6 +4799,42 @@
         {
           "q": "Kan jag avbryta när som helst?",
           "a": "Ja. Inga kontrakt, inga åtaganden."
+        },
+        {
+          "q": "Kan jag importera min befintliga meny?",
+          "a": "Ja — och du kan testa den redan innan du registrerar dig. Klistra in länken till din GloriaFood-meny på vår importsida, så bygger vi upp den på en live-beställningssida på några sekunder: varje kategori, artikel, storlek, tillvalsgrupp och bild. Gillar du det du ser? Gör den till din, så blir den ditt konto med menyn redan inläst."
+        },
+        {
+          "q": "Finns det en app för mitt kök?",
+          "a": "Ja — Kitchen Order App för iPhone, iPad och Android. Nya beställningar ringer i samma stund de kommer in (även när skärmen är avstängd), skrivs ut direkt på en WiFi-termoskrivare för kvitton, och om en beställning blir liggande oaccepterad kan den ringa upp dig så att du aldrig missar någon."
+        },
+        {
+          "q": "Vilka marknadsföringsverktyg ingår?",
+          "a": "Gratis får du din kunddatabas, grundläggande kampanjer och verktyg för sociala medier. GrowthNet — vårt rabatterade marknadsföringspaket — lägger till Smart Links, QR-koder, Autopilot-kampanjer för att vinna tillbaka kunder, kund-SMS och Marketing Studio, allt byggt för att förvandla engångskunder från marknadsplatserna till direkta, återkommande kunder som är dina."
+        },
+        {
+          "q": "Vem äger mina kunduppgifter?",
+          "a": "Du — till 100%. Varje kund, beställning och e-postadress tillhör dig och kan exporteras när som helst. Till skillnad från de stora leveransapparna ställer vi oss aldrig mellan dig och dina kunder eller hyr ut deras uppgifter till dig."
+        },
+        {
+          "q": "Finns det någon gräns för hur många beställningar jag kan ta emot?",
+          "a": "Gratisplanen omfattar 100 beställningar per månad. Att lägga till valfritt betalt tillägg tar bort den gränsen, och det finns ett särskilt tillägg för obegränsade beställningar om det är allt du behöver. Oavsett vilket behåller du 100% av varje beställning utan någon provision."
+        },
+        {
+          "q": "Kan jag lägga till beställning på en webbplats jag redan har?",
+          "a": "Ja. Du får en helt varumärkesanpassad beställningssida direkt, och du kan bädda in en beställningsknapp eller widget på din befintliga webbplats. Vill du hellre att vi sköter allt? En säljoptimerad webbplats finns som tillägg."
+        },
+        {
+          "q": "Kan jag hantera fler än en plats?",
+          "a": "Ja — hantering av flera platser är ett tillägg, så du kan driva flera restauranger från en enda inloggning, var och en med egna menyer, öppettider och rapporter."
+        },
+        {
+          "q": "Hur får jag hjälp om jag kör fast?",
+          "a": "Kanadensisk support 24/7, med riktiga människor dag som natt. Ring 1-888-618-8765 eller använd livechatten på vilken sida som helst — vi hjälper dig till och med att importera din meny och komma igång."
+        },
+        {
+          "q": "Stöder ni catering och schemalagda beställningar?",
+          "a": "Ja. Vid sidan av avhämtning, leverans och bordsservering kan du erbjuda catering med egna inställningar, och kunderna kan schemalägga beställningar i förväg. Med boka-och-beställ kan en gäst dessutom boka ett bord och förbeställa sin mat i ett enda steg."
         }
       ]
     },

@@ -4799,6 +4799,42 @@
         {
           "q": "Puc cancel·lar en qualsevol moment?",
           "a": "Sí. Sense contractes ni compromisos."
+        },
+        {
+          "q": "Puc importar el meu menú actual?",
+          "a": "Sí, i el pots provar fins i tot abans de registrar-te. Enganxa l'enllaç del teu menú de GloriaFood a la nostra pàgina d'importació i el reconstruïm en una pàgina de comandes en directe en segons: cada categoria, article, mida, grup d'opcions i foto. T'agrada el que veus? Reclama'l i es converteix en el teu compte, amb el menú ja carregat."
+        },
+        {
+          "q": "Hi ha una aplicació per a la meva cuina?",
+          "a": "Sí, la Kitchen Order App per a iPhone, iPad i Android. Les comandes noves sonen en el moment que arriben (fins i tot amb la pantalla apagada), s'imprimeixen directament en una impressora tèrmica de tiquets per WiFi i, si una comanda queda sense acceptar, l'aplicació et pot trucar perquè no en perdis cap."
+        },
+        {
+          "q": "Quines eines de màrqueting s'inclouen?",
+          "a": "De manera gratuïta obtens la teva base de dades de clients, promocions bàsiques i eines de xarxes socials. GrowthNet, el nostre paquet de màrqueting amb descompte, hi afegeix Smart Links, codis QR, campanyes de recuperació amb Autopilot, SMS als clients i el Marketing Studio, tot pensat per convertir els clients puntuals dels marketplaces en clients directes i recurrents que són teus."
+        },
+        {
+          "q": "Qui és el propietari de les dades dels meus clients?",
+          "a": "Tu, al 100%. Cada client, comanda i adreça de correu és teu i el pots exportar quan vulguis. A diferència de les grans aplicacions de lliurament, mai no ens posem entre tu i els teus clients ni et lloguem les seves dades."
+        },
+        {
+          "q": "Hi ha un límit de comandes que puc rebre?",
+          "a": "El pla gratuït inclou 100 comandes al mes. Afegir qualsevol complement de pagament puja aquest límit, i hi ha un complement dedicat de comandes il·limitades si és l'únic que necessites. En tots dos casos conserves el 100% de cada comanda sense cap comissió."
+        },
+        {
+          "q": "Puc afegir comandes a un lloc web que ja tinc?",
+          "a": "Sí. De sèrie obtens una pàgina de comandes completa amb la teva marca, i pots incrustar un botó o un giny de comandes al teu lloc actual. Prefereixes que ho allotgem tot nosaltres? Hi ha disponible un lloc web optimitzat per a vendes com a complement."
+        },
+        {
+          "q": "Puc gestionar més d'un local?",
+          "a": "Sí, la gestió de múltiples locals és un complement, així que pots dirigir diversos restaurants des d'un sol inici de sessió, cadascun amb els seus propis menús, horaris i informes."
+        },
+        {
+          "q": "Com puc obtenir ajuda si em quedo encallat?",
+          "a": "Suport canadenc 24/7, amb persones reals de dia i de nit. Truca al 1-888-618-8765 o utilitza el xat en directe de qualsevol pàgina; fins i tot t'ajudem a importar el menú i a posar-ho tot a punt."
+        },
+        {
+          "q": "Doneu suport a càtering i comandes programades?",
+          "a": "Sí. A més de recollida, lliurament i menjar al local, pots oferir càtering amb la seva pròpia configuració, i els clients poden programar comandes per avançat. La funció de reservar i després demanar fins i tot permet que un client reservi taula i encarregui el menjar en un sol pas."
         }
       ]
     },

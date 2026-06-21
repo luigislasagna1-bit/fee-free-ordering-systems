@@ -4799,6 +4799,42 @@
         {
           "q": "Posso cancellare quando voglio?",
           "a": "Sì. Nessun contratto, nessun impegno."
+        },
+        {
+          "q": "Posso importare il mio menù esistente?",
+          "a": "Sì – e puoi provarlo ancora prima di registrarti. Incolla il link del tuo menù GloriaFood nella nostra pagina di importazione e lo ricostruiamo su una pagina d'ordine dal vivo in pochi secondi: ogni categoria, prodotto, formato, gruppo di varianti e foto. Ti piace quello che vedi? Rivendicalo e diventa il tuo account, con il menù già caricato."
+        },
+        {
+          "q": "C'è un'app per la mia cucina?",
+          "a": "Sì – la Kitchen Order App per iPhone, iPad e Android. I nuovi ordini suonano nel momento esatto in cui arrivano (anche a schermo spento), si stampano direttamente su una stampante termica per scontrini WiFi e, se un ordine resta in attesa di accettazione, può chiamarti al telefono così non te ne sfugge nemmeno uno."
+        },
+        {
+          "q": "Quali strumenti di marketing sono inclusi?",
+          "a": "Gratis hai il tuo database clienti, le promozioni di base e gli strumenti per i social. GrowthNet – il nostro pacchetto marketing scontato – aggiunge Smart Links, codici QR, le campagne di recupero Autopilot, gli SMS ai clienti e il Marketing Studio, tutto pensato per trasformare i clienti occasionali dei marketplace in clienti diretti e abituali che sono tuoi."
+        },
+        {
+          "q": "A chi appartengono i dati dei miei clienti?",
+          "a": "A te – al 100%. Ogni cliente, ordine e indirizzo email appartiene a te e puoi esportarlo quando vuoi. A differenza delle grandi app di consegna, noi non ci mettiamo mai tra te e i tuoi clienti, né ti rivendiamo in affitto i loro dati."
+        },
+        {
+          "q": "C'è un limite al numero di ordini che posso ricevere?",
+          "a": "Il piano gratuito include 100 ordini al mese. Aggiungendo un qualsiasi componente aggiuntivo a pagamento questo limite sparisce, e c'è un componente dedicato agli ordini illimitati se è l'unica cosa che ti serve. In ogni caso tieni il 100% di ogni ordine, senza alcuna commissione."
+        },
+        {
+          "q": "Posso aggiungere gli ordini a un sito che ho già?",
+          "a": "Sì. Ottieni di base una pagina d'ordine completa e personalizzata col tuo brand, e puoi inserire un pulsante o un widget d'ordine sul tuo sito esistente. Preferisci che ospitiamo noi tutto? Un sito web ottimizzato per le vendite è disponibile come componente aggiuntivo."
+        },
+        {
+          "q": "Posso gestire più di una sede?",
+          "a": "Sì – la gestione multi-sede è un componente aggiuntivo, così puoi gestire più ristoranti da un unico accesso, ciascuno con i propri menù, orari e report."
+        },
+        {
+          "q": "Come ricevo assistenza se mi blocco?",
+          "a": "Assistenza canadese 24/7, con persone vere giorno e notte. Chiama l'1-888-618-8765 oppure usa la chat dal vivo su qualsiasi pagina – ti aiutiamo anche a importare il menù e a configurare tutto."
+        },
+        {
+          "q": "Supportate il catering e gli ordini programmati?",
+          "a": "Sì. Oltre ad asporto, consegna e servizio al tavolo, puoi offrire il catering con impostazioni dedicate, e i clienti possono programmare gli ordini in anticipo. La funzione prenota-e-ordina (reserve-then-order) permette persino a un ospite di prenotare un tavolo e ordinare il cibo in un unico passaggio."
         }
       ]
     },

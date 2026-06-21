@@ -4799,6 +4799,42 @@
         {
           "q": "Môžem zrušiť kedykoľvek?",
           "a": "Áno. Žiadne zmluvy, žiadne záväzky."
+        },
+        {
+          "q": "Môžem importovať svoje existujúce menu?",
+          "a": "Áno — a vyskúšať si ho môžete ešte predtým, než sa zaregistrujete. Vložte odkaz na svoje menu z GloriaFood na našej stránke importu a my ho za pár sekúnd znova vytvoríme na živej objednávkovej stránke: každú kategóriu, položku, veľkosť, skupinu doplnkov aj fotku. Páči sa vám, čo vidíte? Prevezmite si to a stane sa to vaším účtom s už načítaným menu."
+        },
+        {
+          "q": "Existuje aplikácia pre moju kuchyňu?",
+          "a": "Áno — Kitchen Order App pre iPhone, iPad a Android. Nové objednávky zazvonia hneď, ako prídu (aj keď je obrazovka vypnutá), vytlačia sa priamo na WiFi termálnu tlačiareň účteniek, a ak objednávka zostane neprijatá, môže vám zavolať, takže vám nikdy žiadna neunikne."
+        },
+        {
+          "q": "Aké marketingové nástroje sú súčasťou?",
+          "a": "Zdarma získate databázu zákazníkov, základné akcie a nástroje pre sociálne siete. GrowthNet — náš zvýhodnený marketingový balík — pridáva Smart Links, QR kódy, kampane Autopilot na získanie zákazníkov späť, SMS pre zákazníkov a Marketing Studio. Všetko je navrhnuté tak, aby z jednorazových zákazníkov z trhovísk urobilo priamych, vracajúcich sa zákazníkov, ktorí patria vám."
+        },
+        {
+          "q": "Komu patria údaje o mojich zákazníkoch?",
+          "a": "Vám — na 100%. Každý zákazník, objednávka aj e-mailová adresa patrí vám a kedykoľvek ich môžete exportovať. Na rozdiel od veľkých rozvozových aplikácií sa nikdy nestaviame medzi vás a vašich zákazníkov a neprenajímame vám ich údaje späť."
+        },
+        {
+          "q": "Existuje limit na počet objednávok, ktoré môžem prijať?",
+          "a": "Bezplatný plán zahŕňa 100 objednávok mesačne. Pridanie ľubovoľného plateného doplnku tento limit zruší a ak potrebujete len to, je k dispozícii samostatný doplnok pre neobmedzené objednávky. Tak či onak si ponecháte 100% z každej objednávky bez akejkoľvek provízie."
+        },
+        {
+          "q": "Môžem pridať objednávanie na web, ktorý už mám?",
+          "a": "Áno. Hneď od začiatku dostanete plne značkovú objednávkovú stránku a na svoj existujúci web môžete vložiť objednávacie tlačidlo alebo widget. Chcete, aby sme hostili všetko my? Ako doplnok je k dispozícii web optimalizovaný na predaj."
+        },
+        {
+          "q": "Môžem spravovať viac ako jednu prevádzku?",
+          "a": "Áno — správa viacerých prevádzok je doplnok, takže môžete riadiť niekoľko reštaurácií z jedného prihlásenia, každú s vlastným menu, otváracími hodinami a prehľadmi."
+        },
+        {
+          "q": "Ako získam pomoc, keď neviem ďalej?",
+          "a": "24/7 kanadská podpora so skutočnými ľuďmi vo dne aj v noci. Zavolajte na 1-888-618-8765 alebo využite živý chat na ktorejkoľvek stránke — pomôžeme vám dokonca aj naimportovať menu a všetko nastaviť."
+        },
+        {
+          "q": "Podporujete catering a naplánované objednávky?",
+          "a": "Áno. Popri vyzdvihnutí, rozvoze a konzumácii na mieste môžete ponúkať catering s vlastnými nastaveniami a zákazníci si môžu objednávky naplánovať vopred. Funkcia rezervácie s objednávkou navyše umožní hosťovi rezervovať si stôl a predobjednať jedlo v jednom kroku."
         }
       ]
     },

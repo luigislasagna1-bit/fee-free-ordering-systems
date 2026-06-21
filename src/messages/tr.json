@@ -4799,6 +4799,42 @@
         {
           "q": "İstediğim zaman iptal edebilir miyim?",
           "a": "Evet. Sözleşme yok, taahhüt yok."
+        },
+        {
+          "q": "Mevcut menümü içe aktarabilir miyim?",
+          "a": "Evet — üstelik kaydolmadan önce bile deneyebilirsiniz. İçe aktarma sayfamıza GloriaFood menü bağlantınızı yapıştırın, biz de onu saniyeler içinde canlı bir sipariş sayfasında yeniden oluşturalım: her kategori, ürün, boyut, ek seçenek grubu ve fotoğraf. Gördüğünüzü beğendiniz mi? Sahiplenin; menüsü yüklü hâliyle hesabınız oluversin."
+        },
+        {
+          "q": "Mutfağım için bir uygulama var mı?",
+          "a": "Evet — iPhone, iPad ve Android için Kitchen Order App. Yeni siparişler geldikleri anda (ekran kapalı olsa bile) çalar, doğrudan bir WiFi termal fiş yazıcısına yazdırılır ve bir sipariş kabul edilmeden beklerse sizi arayabilir; böylece hiçbirini kaçırmazsınız."
+        },
+        {
+          "q": "Hangi pazarlama araçları dahil?",
+          "a": "Ücretsiz olarak müşteri veritabanınızı, temel kampanyaları ve sosyal medya araçlarını elde edersiniz. İndirimli pazarlama paketimiz GrowthNet ise Smart Links, QR kodları, müşteri geri kazanma için Autopilot kampanyaları, müşteri SMS'i ve Marketing Studio ekler; hepsi pazar yerlerinden gelen tek seferlik müşterileri, size ait doğrudan ve düzenli müşterilere dönüştürmek için tasarlanmıştır."
+        },
+        {
+          "q": "Müşteri verilerimin sahibi kim?",
+          "a": "Siz — 100%. Her müşteri, sipariş ve e-posta adresi size aittir ve dilediğiniz zaman dışa aktarılır. Büyük teslimat uygulamalarının aksine, asla sizinle müşterilerinizin arasına girmez ya da onların verilerini size geri kiralamayız."
+        },
+        {
+          "q": "Alabileceğim sipariş sayısında bir sınır var mı?",
+          "a": "Ücretsiz plan ayda 100 sipariş içerir. Herhangi bir ücretli eklenti eklemek bu sınırı kaldırır ve yalnızca buna ihtiyacınız varsa sınırsız sipariş için özel bir eklenti de mevcuttur. Her iki durumda da hiçbir komisyon ödemeden her siparişin 100%'ünü elinizde tutarsınız."
+        },
+        {
+          "q": "Hâlihazırda sahip olduğum bir web sitesine sipariş özelliği ekleyebilir miyim?",
+          "a": "Evet. Hazır olarak tamamen markalı bir sipariş sayfası alırsınız ve mevcut sitenize bir sipariş düğmesi ya da widget'ı yerleştirebilirsiniz. Her şeyi bizim barındırmamızı mı tercih edersiniz? Satışa optimize edilmiş bir web sitesi eklenti olarak sunulur."
+        },
+        {
+          "q": "Birden fazla şubeyi yönetebilir miyim?",
+          "a": "Evet — çoklu şube yönetimi bir eklentidir; böylece tek bir girişten, her biri kendi menüsü, çalışma saatleri ve raporlarıyla birden fazla restoranı işletebilirsiniz."
+        },
+        {
+          "q": "Takılırsam nasıl yardım alırım?",
+          "a": "Gece gündüz gerçek insanlarla 24/7 Kanada destek hattı. 1-888-618-8765'i arayın ya da herhangi bir sayfadaki canlı sohbeti kullanın — menünüzü içe aktarmanıza ve kurulumu tamamlamanıza bile yardımcı oluruz."
+        },
+        {
+          "q": "Catering ve zamanlanmış siparişleri destekliyor musunuz?",
+          "a": "Evet. Gel-al, teslimat ve masada servisin yanı sıra kendi ayarlarıyla catering sunabilirsiniz ve müşteriler siparişlerini önceden zamanlayabilir. Rezerve-et-ve-sipariş-ver özelliği bir misafirin tek adımda masa ayırtıp yemeğini önceden sipariş etmesine bile olanak tanır."
         }
       ]
     },

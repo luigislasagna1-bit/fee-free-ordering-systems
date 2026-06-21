@@ -4799,6 +4799,42 @@
         {
           "q": "Kan jeg annullere når som helst?",
           "a": "Ja. Ingen kontrakter, ingen forpligtelser."
+        },
+        {
+          "q": "Kan jeg importere mit eksisterende menukort?",
+          "a": "Ja – og du kan prøve det, allerede inden du opretter dig. Indsæt linket til dit GloriaFood-menukort på vores importside, så genopbygger vi det på en live bestillingsside på få sekunder: hver kategori, vare, størrelse, tilvalgsgruppe og foto. Kan du lide det, du ser? Gør krav på det, og det bliver din konto – med menukortet allerede indlæst."
+        },
+        {
+          "q": "Findes der en app til mit køkken?",
+          "a": "Ja – Kitchen Order App til iPhone, iPad og Android. Nye ordrer ringer i samme øjeblik, de lander (selv med skærmen slukket), printes direkte til en WiFi-bonprinter, og hvis en ordre ikke bliver accepteret, kan appen ringe til dig, så du aldrig går glip af en."
+        },
+        {
+          "q": "Hvilke marketingværktøjer er inkluderet?",
+          "a": "Gratis får du din kundedatabase, grundlæggende kampagner og værktøjer til sociale medier. GrowthNet – vores marketingpakke til nedsat pris – tilføjer Smart Links, QR-koder, win-back-kampagner med Autopilot, SMS til kunder og Marketing Studio, alt sammen bygget til at gøre engangskunder fra platformene til direkte, faste kunder, der er dine egne."
+        },
+        {
+          "q": "Hvem ejer mine kundedata?",
+          "a": "Det gør du – 100%. Hver kunde, ordre og e-mailadresse tilhører dig og kan eksporteres når som helst. I modsætning til de store leveringsapps stiller vi os aldrig mellem dig og dine kunder eller lejer deres data ud til dig."
+        },
+        {
+          "q": "Er der en grænse for, hvor mange ordrer jeg kan modtage?",
+          "a": "Den gratis plan inkluderer 100 ordrer om måneden. Tilføjer du et hvilket som helst betalt tilvalg, hæves den grænse, og der findes et dedikeret tilvalg til ubegrænsede ordrer, hvis det er alt, du har brug for. Uanset hvad beholder du 100% af hver ordre uden nogen kommission."
+        },
+        {
+          "q": "Kan jeg tilføje bestilling til et website, jeg allerede har?",
+          "a": "Ja. Du får en komplet bestillingsside med dit eget brand fra start, og du kan indlejre en bestillingsknap eller widget på dit eksisterende website. Vil du hellere have, at vi hoster det hele? Et salgsoptimeret website fås som tilvalg."
+        },
+        {
+          "q": "Kan jeg administrere mere end ét sted?",
+          "a": "Ja – administration af flere lokationer er et tilvalg, så du kan drive flere restauranter fra ét login, hver med deres egne menukort, åbningstider og rapporter."
+        },
+        {
+          "q": "Hvordan får jeg hjælp, hvis jeg sidder fast?",
+          "a": "Canadisk support 24/7 med rigtige mennesker dag og nat. Ring på 1-888-618-8765 eller brug livechatten på en hvilken som helst side – vi hjælper dig endda med at importere dit menukort og komme i gang."
+        },
+        {
+          "q": "Understøtter I catering og planlagte ordrer?",
+          "a": "Ja. Ud over afhentning, levering og spisning på stedet kan du tilbyde catering med sine egne indstillinger, og kunderne kan planlægge ordrer i forvejen. Funktionen reservér-og-bestil lader endda en gæst booke et bord og forudbestille sin mad i ét trin."
         }
       ]
     },

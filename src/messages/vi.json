@@ -4799,6 +4799,42 @@
         {
           "q": "Tôi có thể hủy bất kỳ lúc nào không?",
           "a": "Có. Không hợp đồng, không ràng buộc."
+        },
+        {
+          "q": "Tôi có thể nhập thực đơn hiện có của mình không?",
+          "a": "Có — và bạn có thể dùng thử ngay cả trước khi đăng ký. Hãy dán liên kết thực đơn GloriaFood của bạn vào trang nhập của chúng tôi, chúng tôi sẽ dựng lại nó trên một trang đặt món trực tiếp chỉ trong vài giây: từng danh mục, món, kích cỡ, nhóm tùy chọn và hình ảnh. Bạn thích những gì mình thấy chứ? Hãy nhận lấy và nó sẽ trở thành tài khoản của bạn với thực đơn đã được tải sẵn."
+        },
+        {
+          "q": "Có ứng dụng nào cho nhà bếp của tôi không?",
+          "a": "Có — Kitchen Order App cho iPhone, iPad và Android. Đơn hàng mới sẽ reo lên ngay khi vừa tới (ngay cả khi màn hình đang tắt), in thẳng ra máy in hóa đơn nhiệt qua WiFi, và nếu một đơn hàng chưa được tiếp nhận, nó có thể gọi điện cho bạn để bạn không bao giờ bỏ lỡ đơn nào."
+        },
+        {
+          "q": "Có những công cụ tiếp thị nào đi kèm?",
+          "a": "Miễn phí, bạn nhận được cơ sở dữ liệu khách hàng, các chương trình khuyến mãi cơ bản và công cụ mạng xã hội. GrowthNet — gói tiếp thị giảm giá của chúng tôi — bổ sung Smart Links, mã QR, chiến dịch Autopilot để kéo khách quay lại, SMS gửi khách hàng và Marketing Studio, tất cả được tạo ra để biến những khách mua một lần từ các sàn thành khách hàng trực tiếp, thường xuyên thuộc về bạn."
+        },
+        {
+          "q": "Ai sở hữu dữ liệu khách hàng của tôi?",
+          "a": "Là bạn — 100%. Mọi khách hàng, đơn hàng và địa chỉ email đều thuộc về bạn và có thể xuất ra bất cứ lúc nào. Không như các ứng dụng giao hàng lớn, chúng tôi không bao giờ chen vào giữa bạn và khách hàng hay cho bạn thuê lại dữ liệu của họ."
+        },
+        {
+          "q": "Có giới hạn số đơn hàng tôi có thể nhận không?",
+          "a": "Gói miễn phí bao gồm 100 đơn hàng mỗi tháng. Thêm bất kỳ tiện ích trả phí nào sẽ gỡ bỏ giới hạn đó, và có một tiện ích đơn hàng không giới hạn riêng nếu đó là tất cả những gì bạn cần. Dù theo cách nào, bạn vẫn giữ 100% mỗi đơn hàng mà không mất chút hoa hồng nào."
+        },
+        {
+          "q": "Tôi có thể thêm tính năng đặt món vào trang web đã có của mình không?",
+          "a": "Có. Bạn nhận được một trang đặt món mang thương hiệu riêng đầy đủ ngay từ đầu, và bạn có thể nhúng nút hoặc tiện ích đặt món vào trang web hiện có của mình. Muốn chúng tôi lưu trữ toàn bộ? Một trang web được tối ưu cho bán hàng có sẵn dưới dạng tiện ích bổ sung."
+        },
+        {
+          "q": "Tôi có thể quản lý nhiều hơn một địa điểm không?",
+          "a": "Có — quản lý nhiều địa điểm là một tiện ích bổ sung, nên bạn có thể điều hành nhiều nhà hàng từ một lần đăng nhập, mỗi nơi có thực đơn, giờ mở cửa và báo cáo riêng."
+        },
+        {
+          "q": "Tôi nhận trợ giúp bằng cách nào nếu gặp khó khăn?",
+          "a": "Hỗ trợ kiểu Canada 24/7, với người thật cả ngày lẫn đêm. Gọi 1-888-618-8765 hoặc dùng trò chuyện trực tiếp trên bất kỳ trang nào — chúng tôi thậm chí sẽ giúp bạn nhập thực đơn và thiết lập mọi thứ."
+        },
+        {
+          "q": "Bạn có hỗ trợ tiệc (catering) và đơn hàng đặt theo lịch không?",
+          "a": "Có. Bên cạnh nhận tại quầy, giao hàng và phục vụ tại chỗ, bạn có thể cung cấp dịch vụ tiệc với cài đặt riêng, và khách hàng có thể đặt món trước theo lịch. Tính năng đặt bàn rồi đặt món thậm chí cho phép khách giữ bàn và đặt trước món ăn chỉ trong một bước."
         }
       ]
     },

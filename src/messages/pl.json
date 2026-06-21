@@ -4799,6 +4799,42 @@
         {
           "q": "Czy mogę anulować w dowolnym momencie?",
           "a": "Tak. Bez umów, bez zobowiązań."
+        },
+        {
+          "q": "Czy mogę zaimportować swoje istniejące menu?",
+          "a": "Tak – a do tego możesz je przetestować, zanim w ogóle się zarejestrujesz. Wklej link do swojego menu GloriaFood na naszej stronie importu, a my w kilka sekund odtworzymy je na działającej stronie zamówień: każdą kategorię, danie, rozmiar, grupę dodatków i zdjęcie. Podoba Ci się to, co widzisz? Przejmij je, a stanie się Twoim kontem z już wczytanym menu."
+        },
+        {
+          "q": "Czy jest aplikacja dla mojej kuchni?",
+          "a": "Tak – Kitchen Order App na iPhone, iPada i Androida. Nowe zamówienia dzwonią w chwili, gdy wpływają (nawet przy wyłączonym ekranie), drukują się od razu na termicznej drukarce paragonów przez WiFi, a jeśli zamówienie pozostaje bez akceptacji, aplikacja może do Ciebie zadzwonić, żebyś nigdy żadnego nie przeoczył."
+        },
+        {
+          "q": "Jakie narzędzia marketingowe są w zestawie?",
+          "a": "Za darmo otrzymujesz bazę klientów, podstawowe promocje i narzędzia do mediów społecznościowych. GrowthNet – nasz pakiet marketingowy w obniżonej cenie – dodaje Smart Links, kody QR, kampanie Autopilot odzyskujące klientów, SMS-y do klientów oraz Marketing Studio, a wszystko po to, by jednorazowych klientów z platform zamienić w stałych klientów zamawiających bezpośrednio u Ciebie."
+        },
+        {
+          "q": "Do kogo należą dane moich klientów?",
+          "a": "Do Ciebie – w 100%. Każdy klient, zamówienie i adres e-mail należą do Ciebie i możesz je wyeksportować w dowolnej chwili. W przeciwieństwie do dużych aplikacji dostawczych nigdy nie stajemy między Tobą a Twoimi klientami ani nie wynajmujemy Ci ich danych z powrotem."
+        },
+        {
+          "q": "Czy istnieje limit liczby zamówień, które mogę przyjąć?",
+          "a": "Plan darmowy obejmuje 100 zamówień miesięcznie. Dodanie dowolnego płatnego dodatku znosi ten limit, a jeśli potrzebujesz tylko tego, dostępny jest osobny dodatek z nielimitowanymi zamówieniami. Tak czy inaczej zachowujesz 100% z każdego zamówienia, bez prowizji."
+        },
+        {
+          "q": "Czy mogę dodać zamawianie do strony, którą już mam?",
+          "a": "Tak. Od razu otrzymujesz pełną, oznaczoną Twoją marką stronę zamówień, a na istniejącej witrynie możesz osadzić przycisk lub widżet zamawiania. Wolisz, żebyśmy hostowali całość? Strona zoptymalizowana pod sprzedaż jest dostępna jako dodatek."
+        },
+        {
+          "q": "Czy mogę zarządzać więcej niż jedną lokalizacją?",
+          "a": "Tak – zarządzanie wieloma lokalizacjami to dodatek, dzięki któremu z jednego logowania prowadzisz kilka restauracji, każdą z własnym menu, godzinami otwarcia i raportami."
+        },
+        {
+          "q": "Jak uzyskać pomoc, gdy utknę?",
+          "a": "Całodobowe kanadyjskie wsparcie 24/7, z prawdziwymi ludźmi o każdej porze dnia i nocy. Zadzwoń pod 1-888-618-8765 lub skorzystaj z czatu na żywo na dowolnej stronie – pomożemy Ci nawet zaimportować menu i wszystko skonfigurować."
+        },
+        {
+          "q": "Czy obsługujecie catering i zamówienia zaplanowane?",
+          "a": "Tak. Obok odbioru, dostawy i jedzenia na miejscu możesz oferować catering z własnymi ustawieniami, a klienci mogą planować zamówienia z wyprzedzeniem. Opcja rezerwacji z zamówieniem pozwala gościowi nawet zarezerwować stolik i zamówić jedzenie z góry w jednym kroku."
         }
       ]
     },

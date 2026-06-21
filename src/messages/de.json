@@ -4799,6 +4799,42 @@
         {
           "q": "Kann ich jederzeit kündigen?",
           "a": "Ja. Keine Verträge, keine Verpflichtungen."
+        },
+        {
+          "q": "Kann ich meine bestehende Speisekarte importieren?",
+          "a": "Ja – und Sie können sie sogar testen, bevor Sie sich überhaupt registrieren. Fügen Sie den Link zu Ihrer GloriaFood-Speisekarte auf unserer Importseite ein, und wir bauen sie in Sekunden auf einer Live-Bestellseite nach: jede Kategorie, jeden Artikel, jede Größe, jede Optionsgruppe und jedes Foto. Gefällt Ihnen, was Sie sehen? Übernehmen Sie sie, und sie wird zu Ihrem Konto – mit bereits geladener Speisekarte."
+        },
+        {
+          "q": "Gibt es eine App für meine Küche?",
+          "a": "Ja – die Kitchen Order App für iPhone, iPad und Android. Neue Bestellungen klingeln in dem Moment, in dem sie eingehen (auch bei ausgeschaltetem Bildschirm), drucken direkt auf einem WiFi-Bondrucker und falls eine Bestellung unbestätigt bleibt, kann die App Sie anrufen, damit Ihnen keine entgeht."
+        },
+        {
+          "q": "Welche Marketing-Tools sind enthalten?",
+          "a": "Kostenlos erhalten Sie Ihre Kundendatenbank, grundlegende Aktionen und Social-Media-Tools. GrowthNet – unser vergünstigtes Marketing-Paket – ergänzt Smart Links, QR-Codes, Win-back-Kampagnen mit Autopilot, Kunden-SMS und das Marketing Studio, alles dafür gemacht, einmalige Marktplatz-Kunden in direkte, wiederkehrende Stammkunden zu verwandeln, die Ihnen gehören."
+        },
+        {
+          "q": "Wem gehören meine Kundendaten?",
+          "a": "Ihnen – zu 100 %. Jeder Kunde, jede Bestellung und jede E-Mail-Adresse gehört Ihnen und lässt sich jederzeit exportieren. Anders als die großen Lieferdienst-Apps stellen wir uns nie zwischen Sie und Ihre Kunden und vermieten Ihnen deren Daten auch nicht zurück."
+        },
+        {
+          "q": "Gibt es eine Grenze, wie viele Bestellungen ich annehmen kann?",
+          "a": "Der kostenlose Plan umfasst 100 Bestellungen pro Monat. Jedes kostenpflichtige Add-on hebt diese Grenze an, und es gibt ein eigenes Add-on für unbegrenzte Bestellungen, falls Sie nur das brauchen. So oder so behalten Sie 100 % jeder Bestellung ohne jede Provision."
+        },
+        {
+          "q": "Kann ich Bestellungen zu einer Website hinzufügen, die ich bereits habe?",
+          "a": "Ja. Von Haus aus erhalten Sie eine vollständige Bestellseite in Ihrem Branding, und Sie können einen Bestell-Button oder ein Widget in Ihre bestehende Website einbinden. Sollen wir lieber alles hosten? Eine verkaufsoptimierte Website ist als Add-on verfügbar."
+        },
+        {
+          "q": "Kann ich mehr als einen Standort verwalten?",
+          "a": "Ja – die Verwaltung mehrerer Standorte ist ein Add-on, sodass Sie mehrere Restaurants über einen einzigen Login führen können, jedes mit eigenen Speisekarten, Öffnungszeiten und Berichten."
+        },
+        {
+          "q": "Wie bekomme ich Hilfe, wenn ich nicht weiterkomme?",
+          "a": "Kanadischer Support rund um die Uhr (24/7), mit echten Menschen, Tag und Nacht. Rufen Sie unter 1-888-618-8765 an oder nutzen Sie den Live-Chat auf jeder Seite – wir helfen Ihnen sogar beim Import Ihrer Speisekarte und der Einrichtung."
+        },
+        {
+          "q": "Unterstützen Sie Catering und geplante Bestellungen?",
+          "a": "Ja. Neben Abholung, Lieferung und Vor-Ort-Verzehr können Sie Catering mit eigenen Einstellungen anbieten, und Kunden können Bestellungen im Voraus planen. Mit „Reservieren und dann bestellen“ kann ein Gast sogar einen Tisch buchen und sein Essen in einem Schritt vorbestellen."
         }
       ]
     },

@@ -4799,6 +4799,42 @@
         {
           "q": "Bármikor lemondható?",
           "a": "Igen. Nincs szerződés, nincs kötelezettség."
+        },
+        {
+          "q": "Importálhatom a meglévő étlapomat?",
+          "a": "Igen – és még regisztráció előtt ki is próbálhatod. Illeszd be a GloriaFood étlapod linkjét az importáló oldalunkon, és pár másodperc alatt felépítjük egy élő rendelési oldalon: minden kategóriát, terméket, méretet, feltétcsoportot és fotót. Tetszik, amit látsz? Igényeld, és máris a saját fiókod lesz, a betöltött étlapoddal együtt."
+        },
+        {
+          "q": "Van alkalmazás a konyhámhoz?",
+          "a": "Igen – a Kitchen Order App iPhone-ra, iPad-re és Androidra. Az új rendelések abban a pillanatban csörögnek, amint megérkeznek (még kikapcsolt képernyő mellett is), egyenesen egy WiFi-s hőnyomtatóra nyomtatnak, és ha egy rendelés elfogadás nélkül marad, akár fel is hív, hogy soha ne maradj le egyről sem."
+        },
+        {
+          "q": "Milyen marketingeszközök vannak benne?",
+          "a": "Ingyen megkapod az ügyféladatbázisodat, az alap akciókat és a közösségimédia-eszközöket. A GrowthNet – a kedvezményes marketingcsomagunk – hozzáadja a Smart Links funkciót, a QR-kódokat, az Autopilot visszacsábító kampányokat, az ügyfél-SMS-eket és a Marketing Studio-t, mindezt azért, hogy az egyszer-rendelő piactéri vendégekből közvetlen, visszatérő, saját ügyfeleket csinálj."
+        },
+        {
+          "q": "Kié az ügyféladataim tulajdonjoga?",
+          "a": "A tiéd – 100%-ban. Minden ügyfél, rendelés és e-mail-cím hozzád tartozik, és bármikor exportálható. A nagy kiszállító appokkal ellentétben mi soha nem állunk közéd és a vendégeid közé, és nem adjuk vissza bérbe neked a saját adataidat."
+        },
+        {
+          "q": "Van korlát arra, hány rendelést fogadhatok?",
+          "a": "Az ingyenes csomag havi 100 rendelést tartalmaz. Bármelyik fizetős kiegészítő hozzáadása megszünteti ezt a korlátot, és van külön korlátlan-rendelés kiegészítő is, ha csak erre van szükséged. Bárhogy is döntesz, minden rendelés 100%-át megtartod, nulla jutalékkal."
+        },
+        {
+          "q": "Hozzáadhatok rendelést egy már meglévő weboldalhoz?",
+          "a": "Igen. Kapsz egy teljes, márkázott rendelési oldalt alapból, és beágyazhatsz egy rendelési gombot vagy widgetet a meglévő oldaladra is. Inkább ránk bíznád az egészet? Egy értékesítésre optimalizált weboldal is elérhető kiegészítőként."
+        },
+        {
+          "q": "Kezelhetek egynél több éttermet?",
+          "a": "Igen – a több helyszín kezelése kiegészítő, így egyetlen belépéssel több éttermet is működtethetsz, mindegyiket saját étlappal, nyitvatartással és kimutatásokkal."
+        },
+        {
+          "q": "Hogyan kapok segítséget, ha elakadok?",
+          "a": "24/7 kanadai ügyfélszolgálat, valódi emberekkel éjjel-nappal. Hívd az 1-888-618-8765 számot, vagy használd az élő csevegést bármelyik oldalon – még az étlapod importálásában és a beállításban is segítünk."
+        },
+        {
+          "q": "Támogatjátok a catering és az előre ütemezett rendeléseket?",
+          "a": "Igen. Az elvitel, kiszállítás és helyben fogyasztás mellett saját beállításokkal kínálhatsz cateringet, a vendégek pedig előre ütemezhetik a rendeléseiket. A foglalás-majd-rendelés (reserve-then-order) funkcióval a vendég akár egy lépésben lefoglalhat egy asztalt és előre megrendelheti az ételét."
         }
       ]
     },

@@ -4799,6 +4799,42 @@
         {
           "q": "Pot anula oricând?",
           "a": "Da. Fără contracte, fără angajamente."
+        },
+        {
+          "q": "Pot să import meniul meu existent?",
+          "a": "Da – și îl poți încerca chiar înainte să îți creezi cont. Lipește linkul meniului tău din GloriaFood pe pagina noastră de import și îl reconstruim pe o pagină de comenzi funcțională în câteva secunde: fiecare categorie, produs, mărime, grup de opțiuni și fotografie. Îți place ce vezi? Revendică-l și devine contul tău, cu meniul deja încărcat."
+        },
+        {
+          "q": "Există o aplicație pentru bucătăria mea?",
+          "a": "Da – Kitchen Order App pentru iPhone, iPad și Android. Comenzile noi sună în momentul în care sosesc (chiar și cu ecranul stins), se tipăresc direct la o imprimantă termică de bonuri prin WiFi, iar dacă o comandă rămâne neacceptată, aplicația te poate suna, ca să nu îți scape niciuna."
+        },
+        {
+          "q": "Ce instrumente de marketing sunt incluse?",
+          "a": "Gratuit, primești baza ta de date cu clienți, promoții de bază și instrumente pentru rețele sociale. GrowthNet – pachetul nostru de marketing cu reducere – adaugă Smart Links, coduri QR, campanii Autopilot de recâștigare a clienților, SMS-uri către clienți și Marketing Studio, toate create pentru a transforma clienții ocazionali de pe marketplace-uri în clienți fideli care comandă direct de la tine."
+        },
+        {
+          "q": "Cui îi aparțin datele clienților mei?",
+          "a": "Ție – 100%. Fiecare client, comandă și adresă de e-mail îți aparține și poate fi exportată oricând. Spre deosebire de aplicațiile mari de livrare, nu ne interpunem niciodată între tine și clienții tăi și nu îți închiriem datele lor înapoi."
+        },
+        {
+          "q": "Există o limită a numărului de comenzi pe care le pot primi?",
+          "a": "Planul gratuit include 100 de comenzi pe lună. Adăugarea oricărui supliment plătit ridică această limită și există un supliment dedicat pentru comenzi nelimitate, dacă doar de atât ai nevoie. Oricum, păstrezi 100% din fiecare comandă, fără comision."
+        },
+        {
+          "q": "Pot adăuga comenzi pe un site pe care îl am deja?",
+          "a": "Da. Primești din start o pagină de comenzi completă, personalizată cu marca ta, și poți încorpora un buton sau un widget de comandă pe site-ul tău existent. Preferi să găzduim noi totul? Un site optimizat pentru vânzări este disponibil ca supliment."
+        },
+        {
+          "q": "Pot gestiona mai mult de o locație?",
+          "a": "Da – gestionarea mai multor locații este un supliment, astfel încât poți conduce mai multe restaurante dintr-un singur cont, fiecare cu propriile meniuri, programe și rapoarte."
+        },
+        {
+          "q": "Cum primesc ajutor dacă mă blochez?",
+          "a": "Asistență canadiană 24/7, cu oameni reali zi și noapte. Sună la 1-888-618-8765 sau folosește chatul live de pe orice pagină – te ajutăm chiar și să îți imporți meniul și să configurezi totul."
+        },
+        {
+          "q": "Oferiți suport pentru catering și comenzi programate?",
+          "a": "Da. Pe lângă ridicare, livrare și servire la local, poți oferi catering cu setări proprii, iar clienții pot programa comenzi în avans. Rezervarea cu precomandă îi permite chiar unui client să rezerve o masă și să își comande mâncarea dintr-un singur pas."
         }
       ]
     },
