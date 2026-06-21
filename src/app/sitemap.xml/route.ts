@@ -24,6 +24,7 @@ import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
 import { buildSeoLinks } from "@/lib/hosted-site-seo";
 import { COMPETITORS } from "@/data/competitors";
+import { LANDING_PAGES } from "@/data/landing-pages";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -122,6 +123,15 @@ function buildPlatformSitemap(host: string): string {
   for (const c of COMPETITORS) {
     urls.push({ loc: `${base}/vs/${c.slug}`, changefreq: "monthly", priority: 0.6 });
   }
+  // Programmatic "online ordering for {cuisine}" SEO landing pages — high-intent
+  // organic targets that funnel into the import-to-try flow. Priority 0.7 (above
+  // the comparison pages — these target broader, higher-volume queries).
+  for (const p of LANDING_PAGES) {
+    urls.push({ loc: `${base}/online-ordering-for/${p.slug}`, changefreq: "monthly", priority: 0.7 });
+  }
+  // Also surface /demo + /import (the conversion entry points) so crawlers index them.
+  urls.push({ loc: `${base}/demo`, changefreq: "monthly", priority: 0.6 });
+  urls.push({ loc: `${base}/import`, changefreq: "monthly", priority: 0.6 });
   return urlsetXml(urls);
 }
 

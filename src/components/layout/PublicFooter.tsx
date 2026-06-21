@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChefHat, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL } from "@/lib/support";
+import { LANDING_PAGES } from "@/data/landing-pages";
 
 /**
  * Public footer.
@@ -66,6 +67,15 @@ export function PublicFooter() {
               <a href="mailto:support@feefreeordering.com" className="block hover:text-white transition">Contact</a>
             </div>
           </div>
+        </div>
+        <div className="border-t border-gray-800 pt-6 mb-6 text-sm text-gray-400">
+          <span className="font-semibold text-gray-300">Online ordering for: </span>
+          {LANDING_PAGES.slice(0, 4).map((p, i) => (
+            <span key={p.slug}>
+              <Link href={`/online-ordering-for/${p.slug}`} className="hover:text-white transition capitalize">{p.nounPlural}</Link>
+              {i < 3 ? <span className="text-gray-600"> · </span> : null}
+            </span>
+          ))}
         </div>
         <div className="border-t border-gray-700 pt-6 text-sm text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="text-center sm:text-left">
