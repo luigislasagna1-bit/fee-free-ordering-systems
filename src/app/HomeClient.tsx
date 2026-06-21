@@ -104,7 +104,7 @@ export function HomeClient({ locale }: { locale: string }) {
       {/* ── S1 · HERO (m6 design) ─────────────────────────────────────────── */}
       <section
         className="relative overflow-hidden bg-white"
-        style={{ background: "radial-gradient(95% 90% at 88% 5%, #ecfdf5 0%, rgba(236,253,245,0) 60%), #ffffff" }}
+        style={{ background: "radial-gradient(65% 75% at 14% 28%, #ecfdf5 0%, rgba(236,253,245,0) 58%), #ffffff" }}
       >
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20 grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           <div>
@@ -146,8 +146,9 @@ export function HomeClient({ locale }: { locale: string }) {
         </div>
       </section>
 
-      {/* ── S1b · SOFT LAUNCH (m2/m3) ─────────────────────────────────────── */}
-      <MarketingSection tone="emeraldTint">
+      {/* ── S1b · SOFT LAUNCH (m2/m3) — bg matched to the rocket art so its
+          near-white background blends seamlessly (no boxed edge). ─────────── */}
+      <MarketingSection tone="light" className="!bg-[#f2f6f7]">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 text-emerald-700 px-3 py-1 text-xs font-bold uppercase tracking-wide">
