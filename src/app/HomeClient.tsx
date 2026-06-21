@@ -149,10 +149,13 @@ export function HomeClient({ locale }: { locale: string }) {
 
           <div className="relative">
             <img
-              src="/marketing/hero-funnel.png"
+              src="/marketing/hero-funnel-v2.webp"
               alt={t("hero.frameAlt")}
-              width={884}
+              width={897}
               height={1024}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
               className="w-full h-auto max-w-sm mx-auto lg:max-w-none"
             />
           </div>
