@@ -1388,8 +1388,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       }
       const m = localStorage.getItem("kds-alert-muted");
       if (m === "1") setAlertMuted(true);
-      const s = localStorage.getItem("kds-alert-sound");
-      if (s === "synth" || s === "gloriafood" || s === "custom") setAlertSound(s);
+      // Alert sound is NOT a stored staff choice anymore — it's decided by
+      // whether the OWNER uploaded a custom sound (see the customSoundUrl effect
+      // below). Default is always the official GloriaFood ring. (Luigi 2026-06-20.)
     } catch {}
   }, []);
 
@@ -1402,6 +1403,28 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   useEffect(() => {
     try { localStorage.setItem("kds-alert-sound", alertSound); } catch {}
   }, [alertSound]);
+
+  // ONE default sound for everyone — the official GloriaFood 4-min ring. If the
+  // OWNER uploaded their own alert sound (/admin/profile → kitchenAlertSoundUrl),
+  // use THAT instead — but only for that restaurant. No "Classic Bell" synth and
+  // no staff-facing sound picker, so a wrong/doubled sound can't happen again.
+  // (Luigi 2026-06-20.)
+  useEffect(() => {
+    setAlertSound(customSoundUrl ? "custom" : "gloriafood");
+  }, [customSoundUrl]);
+
+  // Page visibility — the in-app ring must ONLY sound while the kitchen app is
+  // actually on screen. When the screen is off / the app is backgrounded, the
+  // NATIVE order alarm (OrderAlarmService) handles the ring; without this gate
+  // the WebView keeps ringing too on tablets that don't suspend it, so staff
+  // hear BOTH the native ring and the in-app ring (Fabrizio 2026-06-20).
+  const [pageVisible, setPageVisible] = useState(true);
+  useEffect(() => {
+    const sync = () => setPageVisible(typeof document === "undefined" || document.visibilityState === "visible");
+    sync();
+    document.addEventListener("visibilitychange", sync);
+    return () => document.removeEventListener("visibilitychange", sync);
+  }, []);
 
   // Browsers require a user gesture before AudioContext can play. We unlock
   // it on the first click/keypress anywhere on the page, then keep the same
@@ -1768,7 +1791,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     return 3000;
   };
   useEffect(() => {
-    if (!ringAudible || alertMuted || alertVolume <= 0) return;
+    // !pageVisible → screen off / backgrounded: the NATIVE alarm handles the
+    // ring, so the in-app cadence (custom sound) stays silent to avoid a double.
+    if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) return;
     // "gloriafood" rings via the full-length uploaded alert TRACK (the
     // dedicated long-alert effect below), NOT this short-ding cadence — Luigi
     // wants his exact full-length GloriaFood alert at max volume, not a trimmed
@@ -1799,20 +1824,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       cancelled = true;
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [ringAudible, alertMuted, alertVolume, ringBellOnce]);
-
-  // Page visibility — the in-app ring must ONLY sound while the kitchen app is
-  // actually on screen. When the screen is off / the app is backgrounded, the
-  // NATIVE order alarm (OrderAlarmService) handles the ring; without this gate
-  // the WebView keeps ringing too on tablets that don't suspend it, so staff
-  // hear BOTH the native ring and the in-app ring (Fabrizio 2026-06-20).
-  const [pageVisible, setPageVisible] = useState(true);
-  useEffect(() => {
-    const sync = () => setPageVisible(typeof document === "undefined" || document.visibilityState === "visible");
-    sync();
-    document.addEventListener("visibilitychange", sync);
-    return () => document.removeEventListener("visibilitychange", sync);
-  }, []);
+  }, [ringAudible, alertMuted, alertVolume, pageVisible, ringBellOnce]);
 
   // Full-length GloriaFood alert track — the owner's uploaded
   // /sounds/gloriafood-alert.mp3, played at MAX volume and LOOPED until the
@@ -1889,12 +1901,19 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   }, [ringAudible, alertMuted, alertVolume, alertSound, ringBellOnce, ensureLongAlertRouting]);
 
   const testAlertSound = useCallback(() => {
-    // ONE strike only — restaurants confused "I keep hearing it" with
-    // "the test sound is on a loop". One clean strike (~1.3s) decays
-    // and stops with no overlap, no ambiguity. The real alarm loop is
-    // separate (see the bell-loop effect above).
-    ringBellOnce(alertVolume || 1.0);
-  }, [ringBellOnce, alertVolume]);
+    // Preview the ONE official sound — a short snippet of the liked GloriaFood
+    // alert track (NOT the old short ding). A separate one-off Audio so it never
+    // touches the live ringing track; it stops itself after ~2.5s. (Luigi
+    // 2026-06-20: a single new-order sound for the whole system.)
+    const vol = alertVolume || 1.0;
+    if (vol <= 0) return;
+    try {
+      const preview = new Audio(customSoundUrl || "/sounds/gloriafood-alert.mp3");
+      preview.volume = vol;
+      preview.play().catch(() => {});
+      window.setTimeout(() => { try { preview.pause(); preview.currentTime = 0; } catch { /* noop */ } }, 2500);
+    } catch { /* Audio unavailable — preview is best-effort */ }
+  }, [alertVolume, customSoundUrl]);
 
   // Clear history sets (localStorage-persisted).
   // Start empty on both server and client so hydration matches, then load
@@ -3546,54 +3565,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               {tk("soundDesc")}
             </p>
 
-            {/* Sound picker. The 3rd "Custom Sound" option is only
-                rendered when the owner uploaded a file in /admin/profile
-                — otherwise the picker stays 2-wide (GloriaFood + Classic
-                Bell). Each option is exclusive — picking one means the
-                others never play, even on load failure. */}
-            <div className="mb-5">
-              <label className={`text-sm font-semibold ${t.text} block mb-2`}>
-                {tk("soundPickerLabel")}
-              </label>
-              <div className={`grid gap-2 ${customSoundUrl ? "grid-cols-3" : "grid-cols-2"}`}>
-                {([
-                  {
-                    id: "gloriafood",
-                    label: "GloriaFood Ding",
-                    sub: tk("soundGloriaSub"),
-                  },
-                  {
-                    id: "synth",
-                    label: tk("soundClassic"),
-                    sub: tk("soundClassicSub"),
-                  },
-                  ...(customSoundUrl ? [{
-                    id: "custom" as const,
-                    label: tk("soundCustom"),
-                    sub: tk("soundCustomSub"),
-                  }] : []),
-                ] as Array<{ id: AlertSoundChoice; label: string; sub: string }>).map((opt) => (
-                  <button
-                    key={opt.id}
-                    onClick={() => setAlertSound(opt.id)}
-                    className={`text-left py-2 px-3 rounded-xl border-2 transition ${
-                      alertSound === opt.id
-                        ? "border-emerald-500 bg-emerald-500/10"
-                        : `border-transparent ${t.btn}`
-                    }`}
-                  >
-                    <div className={`text-sm font-bold ${t.text}`}>{opt.label}</div>
-                    <div className={`text-[11px] ${t.muted} mt-0.5`}>{opt.sub}</div>
-                  </button>
-                ))}
-              </div>
-              <p className={`text-[11px] ${t.muted} mt-2`}>
-                {customSoundUrl
-                  ? tk("soundCustomReplaceHint")
-                  : tk("soundCustomUploadHint")}
-                {" "}{tk("soundPreviewHint")}
-              </p>
-            </div>
+            {/* Sound PICKER removed (Luigi 2026-06-20). The whole system uses
+                ONE new-order sound everywhere: the official GloriaFood ring.
+                No synth / custom / alternate sounds — so a wrong or doubled
+                sound can never happen again. Volume + mute below still apply. */}
 
             {/* Volume slider */}
             <div className="mb-5">
