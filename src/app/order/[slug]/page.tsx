@@ -20,12 +20,17 @@ export async function generateMetadata(
   const { slug } = await params;
   const r = await prisma.restaurant.findUnique({
     where: { slug, isActive: true },
-    select: { name: true, faviconUrl: true },
+    select: { name: true, faviconUrl: true, sandbox: { select: { id: true } } },
   });
   if (!r) return {};
   return {
     title: r.name,
     ...(r.faviconUrl ? { icons: { icon: r.faviconUrl } } : {}),
+    // Import-to-try sandbox storefronts are anonymous, throwaway trial menus —
+    // keep them OUT of Google so we don't index a stranger's unclaimed demo.
+    // Claiming deletes the SandboxRestaurant row, so the (now real) restaurant
+    // becomes indexable automatically. Luigi 2026-06-21.
+    ...(r.sandbox ? { robots: { index: false, follow: false } } : {}),
   };
 }
 import { VisitTracker } from "@/components/order/VisitTracker";
