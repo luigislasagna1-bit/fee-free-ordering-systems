@@ -403,17 +403,28 @@ function mapOption(o: GFOption): PreviewOption {
   };
 }
 
-function mapGroup(g: GFGroup): PreviewGroup {
+/** GloriaFood: `force_max = 0` means UNLIMITED ("pick as many as you like" —
+ *  the common case for pizza topping groups). The old `Math.max(1, …)` floored
+ *  that to 1, silently turning a multi-pick group into single-select. So: 0 →
+ *  cap at the option count (effectively no limit within the group); a positive
+ *  value is the real max; null/undefined defaults to 1. Used by BOTH the
+ *  item/variant group mapper and the category-level group mapper below so they
+ *  never drift. (Luigi 2026-06-21 — import-to-try correctness, pizza focus.) */
+export function groupMaxSelect(g: GFGroup): number {
+  if (g.force_max === 0) return Math.max(1, g.options?.length ?? 99);
+  return Math.max(1, g.force_max ?? 1);
+}
+
+export function mapGroup(g: GFGroup): PreviewGroup {
   return {
     sourceId: g.id,
     name: (g.name || "Options").slice(0, 100),
     required: !!g.required,
     minSelect: Math.max(0, g.force_min ?? 0),
-    // GloriaFood uses force_max=1 as the default; if allow_quantity
-    // is true the customer can pick the same option multiple times.
-    // FFOS represents that via maxPerOption rather than inflating
-    // maxSelect.
-    maxSelect: Math.max(1, g.force_max ?? 1),
+    // allow_quantity (pick the SAME option multiple times) → maxPerOption,
+    // not an inflated maxSelect. The group's max distinct picks comes from
+    // groupMaxSelect() (which handles force_max=0 = unlimited).
+    maxSelect: groupMaxSelect(g),
     maxPerOption: g.allow_quantity ? 99 : 1,
     sortOrder: g.sort ?? 0,
     options: (g.options ?? []).map(mapOption),
@@ -531,7 +542,7 @@ export function mapMenu(menu: GFMenu, pictures?: Map<string, string>): ImportPre
         name: (g.name || "Options").slice(0, 100),
         required: !!g.required,
         minSelect: Math.max(0, g.force_min ?? 0),
-        maxSelect: Math.max(1, g.force_max ?? 1),
+        maxSelect: groupMaxSelect(g),
         maxPerOption: g.allow_quantity ? 99 : 1,
         sortOrder: g.sort ?? 0,
         options: (g.options ?? []).map(mapOption),
