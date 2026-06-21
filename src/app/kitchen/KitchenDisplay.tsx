@@ -1420,10 +1420,26 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // hear BOTH the native ring and the in-app ring (Fabrizio 2026-06-20).
   const [pageVisible, setPageVisible] = useState(true);
   useEffect(() => {
-    const sync = () => setPageVisible(typeof document === "undefined" || document.visibilityState === "visible");
+    // On WAKE, defer the in-app audio by a short grace so the NATIVE alarm (which
+    // rang while the screen was off) finishes stopping FIRST — otherwise the in-app
+    // sound starts on top of it and they overlap for a beat on wake (Fabrizio
+    // 2026-06-21). pageVisible drives ONLY the three audio effects, so this delays
+    // nothing else (no polling/visual/auto-reject impact). Screen-OFF stays INSTANT
+    // so the native alarm keeps owning the ring with no in-app double.
+    const WAKE_AUDIO_GRACE_MS = 450;
+    let wakeTimer: ReturnType<typeof setTimeout> | null = null;
+    const sync = () => {
+      const visible = typeof document === "undefined" || document.visibilityState === "visible";
+      if (wakeTimer) { clearTimeout(wakeTimer); wakeTimer = null; }
+      if (visible) wakeTimer = setTimeout(() => setPageVisible(true), WAKE_AUDIO_GRACE_MS);
+      else setPageVisible(false);
+    };
     sync();
     document.addEventListener("visibilitychange", sync);
-    return () => document.removeEventListener("visibilitychange", sync);
+    return () => {
+      if (wakeTimer) clearTimeout(wakeTimer);
+      document.removeEventListener("visibilitychange", sync);
+    };
   }, []);
 
   // Browsers require a user gesture before AudioContext can play. We unlock
@@ -1911,7 +1927,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     const rearm = () => {
       if (typeof document !== "undefined" && document.visibilityState !== "visible") return;
       try { audioCtxRef.current?.resume?.().catch?.(() => {}); } catch {}
-      if (!ringAudible || alertMuted || alertVolume <= 0) return;
+      // Respect the wake-grace: while pageVisible is still false (the ~450ms after
+      // wake) let the NATIVE alarm finish — the pageVisible→true transition re-fires
+      // the cadence/long-alert effects to start the in-app sound cleanly. (The
+      // AudioContext resume above still runs immediately so it's ready by then.)
+      if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) return;
       // gloriafood resumes its full-length track; other sounds fire one ding
       // (the cadence effect keeps them going). Luigi 2026-06-09.
       if (alertSound === "gloriafood") {
@@ -1930,7 +1950,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       window.removeEventListener("focus", rearm);
       window.removeEventListener("pageshow", rearm);
     };
-  }, [ringAudible, alertMuted, alertVolume, alertSound, ringBellOnce, ensureLongAlertRouting]);
+  }, [ringAudible, alertMuted, alertVolume, alertSound, pageVisible, ringBellOnce, ensureLongAlertRouting]);
 
   const testAlertSound = useCallback(() => {
     // Preview the ONE official sound — a short snippet of the liked GloriaFood
