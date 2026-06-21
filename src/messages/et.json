@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Täna",
+    "openNow": "Avatud",
+    "opensShort": "Avab kell {time}",
     "generalHours": "Üldised lahtiolekuajad",
     "openingHours": "Lahtiolekuajad",
     "open": "Avatud",

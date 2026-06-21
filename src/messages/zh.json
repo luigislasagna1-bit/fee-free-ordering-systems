@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "今天",
+    "openNow": "营业中",
+    "opensShort": "{time} 开门",
     "generalHours": "常规营业时间",
     "openingHours": "营业时间",
     "open": "营业中",

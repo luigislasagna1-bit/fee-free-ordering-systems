@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Šodien",
+    "openNow": "Atvērts",
+    "opensShort": "Atveras {time}",
     "generalHours": "Vispārējais darba laiks",
     "openingHours": "Darba laiks",
     "open": "Atvērts",

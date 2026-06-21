@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Tänään",
+    "openNow": "Auki nyt",
+    "opensShort": "Avautuu klo {time}",
     "generalHours": "Yleiset aukioloajat",
     "openingHours": "Aukioloajat",
     "open": "Auki",

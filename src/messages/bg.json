@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Днес",
+    "openNow": "Отворено сега",
+    "opensShort": "Отваря в {time}",
     "generalHours": "Общо работно време",
     "openingHours": "Работно време",
     "open": "Отворено",

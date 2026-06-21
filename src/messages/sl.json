@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Danes",
+    "openNow": "Odprto",
+    "opensShort": "Odpre ob {time}",
     "generalHours": "Splošni delovni čas",
     "openingHours": "Delovni čas",
     "open": "Odprto",

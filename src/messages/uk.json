@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Сьогодні",
+    "openNow": "Відкрито",
+    "opensShort": "Відкриється о {time}",
     "generalHours": "Загальні години роботи",
     "openingHours": "Години роботи",
     "open": "Відкрито",

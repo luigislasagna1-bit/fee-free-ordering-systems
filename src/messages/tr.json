@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Bugün",
+    "openNow": "Şimdi açık",
+    "opensShort": "{time} açılıyor",
     "generalHours": "Genel saatler",
     "openingHours": "Çalışma Saatleri",
     "open": "Açık",

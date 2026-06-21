@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "اليوم",
+    "openNow": "مفتوح الآن",
+    "opensShort": "يفتح {time}",
     "generalHours": "ساعات العمل العامة",
     "openingHours": "ساعات العمل",
     "open": "مفتوح",

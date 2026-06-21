@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Hari ini",
+    "openNow": "Buka sekarang",
+    "opensShort": "Buka pukul {time}",
     "generalHours": "Jam umum",
     "openingHours": "Jam Buka",
     "open": "Buka",

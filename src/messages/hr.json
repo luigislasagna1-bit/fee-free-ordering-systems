@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Danas",
+    "openNow": "Otvoreno",
+    "opensShort": "Otvara u {time}",
     "generalHours": "Opće radno vrijeme",
     "openingHours": "Radno vrijeme",
     "open": "Otvoreno",

@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Hôm nay",
+    "openNow": "Đang mở",
+    "opensShort": "Mở lúc {time}",
     "generalHours": "Giờ mở cửa chung",
     "openingHours": "Giờ mở cửa",
     "open": "Mở cửa",

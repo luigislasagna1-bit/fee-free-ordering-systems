@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Idag",
+    "openNow": "Öppet nu",
+    "opensShort": "Öppnar {time}",
     "generalHours": "Allmänna öppettider",
     "openingHours": "Öppettider",
     "open": "Öppen",

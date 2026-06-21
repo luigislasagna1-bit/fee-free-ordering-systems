@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Šiandien",
+    "openNow": "Atidaryta",
+    "opensShort": "Atidaroma {time}",
     "generalHours": "Bendros darbo valandos",
     "openingHours": "Darbo laikas",
     "open": "Atidaryta",

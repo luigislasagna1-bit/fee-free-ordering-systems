@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Ma",
+    "openNow": "Most nyitva",
+    "opensShort": "Nyit: {time}",
     "generalHours": "Általános nyitvatartás",
     "openingHours": "Nyitvatartási idő",
     "open": "Nyitva",

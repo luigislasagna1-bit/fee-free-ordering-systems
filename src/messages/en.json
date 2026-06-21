@@ -312,6 +312,9 @@
   "info": {
     "openingHours": "Opening Hours",
     "generalHours": "General hours",
+    "today": "Today",
+    "openNow": "Open now",
+    "opensShort": "Opens {time}",
     "open": "Open",
     "closed": "Closed",
     "closedToday": "Closed today",

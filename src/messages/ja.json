@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "今日",
+    "openNow": "営業中",
+    "opensShort": "{time} に開店",
     "generalHours": "通常の営業時間",
     "openingHours": "営業時間",
     "open": "営業中",

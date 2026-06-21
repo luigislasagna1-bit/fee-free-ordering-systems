@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "วันนี้",
+    "openNow": "เปิดอยู่",
+    "opensShort": "เปิด {time}",
     "generalHours": "เวลาทำการทั่วไป",
     "openingHours": "เวลาทำการ",
     "open": "เปิด",

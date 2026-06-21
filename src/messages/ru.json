@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Сегодня",
+    "openNow": "Открыто",
+    "opensShort": "Открывается в {time}",
     "generalHours": "Общие часы работы",
     "openingHours": "Часы работы",
     "open": "Открыто",

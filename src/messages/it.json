@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Oggi",
+    "openNow": "Aperto ora",
+    "opensShort": "Apre alle {time}",
     "generalHours": "Orari generali",
     "openingHours": "Orari di apertura",
     "open": "Aperto",

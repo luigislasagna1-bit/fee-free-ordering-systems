@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Vandaag",
+    "openNow": "Nu open",
+    "opensShort": "Opent om {time}",
     "generalHours": "Algemene openingstijden",
     "openingHours": "Openingstijden",
     "open": "Open",

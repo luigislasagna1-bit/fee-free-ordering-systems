@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Azi",
+    "openNow": "Deschis acum",
+    "opensShort": "Se deschide la {time}",
     "generalHours": "Program general",
     "openingHours": "Program de funcționare",
     "open": "Deschis",

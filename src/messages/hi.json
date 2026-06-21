@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "आज",
+    "openNow": "अभी खुला",
+    "opensShort": "{time} बजे खुलता है",
     "generalHours": "सामान्य समय",
     "openingHours": "खुलने का समय",
     "open": "खुला",

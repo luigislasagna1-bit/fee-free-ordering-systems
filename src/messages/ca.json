@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Avui",
+    "openNow": "Obert ara",
+    "opensShort": "Obre a les {time}",
     "generalHours": "Horari general",
     "openingHours": "Horari d'obertura",
     "open": "Obert",

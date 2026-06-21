@@ -16,6 +16,7 @@ const DeliveryZonesMap = dynamic(() => import("../DeliveryZonesMap"), { ssr: fal
 import { formatTime as fmt, type HoursFormat } from "@/lib/format-time";
 import { localDowAndHHMM, liveOpenStatus } from "@/lib/restaurant-hours";
 import { groupHoursByService, type HoursGroup } from "@/lib/service-hours";
+import { serviceLabel } from "@/lib/service-labels";
 
 function formatTime(t: string, hoursFmt: HoursFormat = "24h") {
   return fmt(t, hoursFmt);
@@ -149,9 +150,9 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
   const groupLabel = (key: HoursGroup["key"]): string | null => {
     switch (key) {
       case "general": return tInfo("generalHours");
-      case "pickup": return svcSettings.pickup?.displayName || tOrdering("pickup");
-      case "delivery": return svcSettings.delivery?.displayName || tOrdering("delivery");
-      case "reservation": return svcSettings.reservations?.displayName || tOrdering("tableReservation");
+      case "pickup": return serviceLabel("pickup", svcSettings, tOrdering);
+      case "delivery": return serviceLabel("delivery", svcSettings, tOrdering);
+      case "reservation": return serviceLabel("reservations", svcSettings, tOrdering);
       default: return null; // "all" → single list, no heading
     }
   };
@@ -199,23 +200,23 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
           <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">{tInfo("ourServices")}</h2>
           <div className="grid grid-cols-2 gap-3">
             {restaurant.acceptsPickup && (
-              <ServiceBadge icon={ShoppingBag} label={svcSettings.pickup?.displayName || tOrdering("pickup")} detail={`~${pickupTime} ${tOrdering("minutes")}`} primaryColor={p} />
+              <ServiceBadge icon={ShoppingBag} label={serviceLabel("pickup", svcSettings, tOrdering)} detail={`~${pickupTime} ${tOrdering("minutes")}`} primaryColor={p} />
             )}
             {restaurant.acceptsDelivery && (
-              <ServiceBadge icon={Truck} label={svcSettings.delivery?.displayName || tOrdering("delivery")} detail={`~${deliveryTime} ${tOrdering("minutes")}`} primaryColor={p} />
+              <ServiceBadge icon={Truck} label={serviceLabel("delivery", svcSettings, tOrdering)} detail={`~${deliveryTime} ${tOrdering("minutes")}`} primaryColor={p} />
             )}
             {restaurant.acceptsDineIn && (
-              <ServiceBadge icon={UtensilsCrossed} label={svcSettings.dineIn?.displayName || tOrdering("dineIn")} primaryColor={p} />
+              <ServiceBadge icon={UtensilsCrossed} label={serviceLabel("dineIn", svcSettings, tOrdering)} primaryColor={p} />
             )}
             {restaurant.acceptsTakeOut && (
-              <ServiceBadge icon={Package} label={svcSettings.takeOut?.displayName || tOrdering("takeOut")} primaryColor={p} />
+              <ServiceBadge icon={Package} label={serviceLabel("takeOut", svcSettings, tOrdering)} primaryColor={p} />
             )}
             {restaurant.acceptsCatering && (
-              <ServiceBadge icon={PartyPopper} label={svcSettings.catering?.displayName || tOrdering("catering")} primaryColor={p} />
+              <ServiceBadge icon={PartyPopper} label={serviceLabel("catering", svcSettings, tOrdering)} primaryColor={p} />
             )}
             {restaurant.acceptsReservations && (
               <a href={`/order/${restaurant.slug}?reservation=1`} className="contents">
-                <ServiceBadge icon={CalendarDays} label={svcSettings.reservations?.displayName || tOrdering("tableReservation")} detail={tInfo("bookATable")} primaryColor={p} />
+                <ServiceBadge icon={CalendarDays} label={serviceLabel("reservations", svcSettings, tOrdering)} detail={tInfo("bookATable")} primaryColor={p} />
               </a>
             )}
           </div>
@@ -252,41 +253,111 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
           </div>
         )}
 
-        {/* Hours — grouped by service so per-service times are readable */}
+        {/* Hours — grouped by service, each panel led by a service icon + a live
+            "open now" chip; today's row carries a Today pill. Closed reads as a
+            calm gray pill (not alarming red) so the eye lands on OPEN hours. */}
         {restaurant.openingHours.length > 0 && hoursGroups.length > 0 && (
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-            <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3 flex items-center gap-2">
-              <Clock className="w-4 h-4" /> {tInfo("openingHours")}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4 flex items-center gap-2.5">
+              <span
+                className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: `${p}14` }}
+              >
+                <Clock className="w-4 h-4" style={{ color: p }} />
+              </span>
+              {tInfo("openingHours")}
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {hoursGroups.map((group) => {
                 const label = groupLabel(group.key);
+                // Service icon so each section is recognizable even when the
+                // owner's label is in another language (e.g. "Consegna").
+                const ServiceIcon =
+                  group.key === "pickup"
+                    ? ShoppingBag
+                    : group.key === "delivery"
+                      ? Truck
+                      : group.key === "reservation"
+                        ? CalendarDays
+                        : Clock;
+                // Per-service live "can I use this right now?" status — only on
+                // service-specific sections; the single "all" list already sits
+                // under the live callout above, so a chip there would duplicate it.
+                const status = label
+                  ? liveOpenStatus(group.rows as any, new Date(), hoursFmt, undefined, restaurant.timezone)
+                  : null;
+                const isOpenNow = status?.kind === "open";
                 return (
-                <div key={group.key}>
-                  {label && (
-                    <div className="text-xs font-bold uppercase tracking-wide mb-1.5" style={{ color: p }}>
-                      {label}
-                    </div>
-                  )}
-                  <div className="space-y-1.5">
-                    {group.rows.map((h) => (
-                      <div
-                        key={`${group.key}-${h.dayOfWeek}`}
-                        className={`flex justify-between items-center text-sm py-1 px-2 rounded-lg ${
-                          h.dayOfWeek === todayIndex ? "font-semibold" : "text-gray-600"
-                        }`}
-                        style={h.dayOfWeek === todayIndex ? { backgroundColor: `${p}15`, color: p } : {}}
-                      >
-                        <span>{tInfo(`days.${h.dayOfWeek}`)}</span>
-                        <span>
-                          {h.isOpen
-                            ? `${formatTime(h.openTime, hoursFmt)} – ${formatTime(h.closeTime, hoursFmt)}`
-                            : <span className="text-red-500">{tInfo("closed")}</span>}
+                  <div key={group.key} className="rounded-xl border border-gray-100 bg-gray-50/60 p-3">
+                    {label && (
+                      <div className="flex items-center gap-2.5 mb-2.5 px-1">
+                        <span
+                          className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                          style={{ backgroundColor: `${p}14` }}
+                        >
+                          <ServiceIcon className="w-4 h-4" style={{ color: p }} />
                         </span>
+                        <span className="text-sm font-bold tracking-tight flex-1 min-w-0 truncate" style={{ color: p }}>
+                          {label}
+                        </span>
+                        {isOpenNow ? (
+                          <span
+                            className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: `${p}14`, color: p }}
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: p }} aria-hidden="true" />
+                            {tInfo("openNow")}
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full flex-shrink-0 bg-gray-100 text-gray-500">
+                            <span className="w-1.5 h-1.5 rounded-full bg-gray-400" aria-hidden="true" />
+                            {status?.kind === "opens_at"
+                              ? tInfo("opensShort", { time: status.opensAt })
+                              : tInfo("closed")}
+                          </span>
+                        )}
                       </div>
-                    ))}
+                    )}
+                    <div className="space-y-0.5">
+                      {group.rows.map((h) => {
+                        const isToday = h.dayOfWeek === todayIndex;
+                        return (
+                          <div
+                            key={`${group.key}-${h.dayOfWeek}`}
+                            className={`flex justify-between items-center gap-3 text-sm py-2 px-2.5 rounded-lg transition ${
+                              isToday ? "font-semibold" : "text-gray-600"
+                            }`}
+                            style={isToday ? { backgroundColor: `${p}14`, color: p } : {}}
+                          >
+                            <span className="flex items-center gap-2 min-w-0">
+                              <span className="truncate">{tInfo(`days.${h.dayOfWeek}`)}</span>
+                              {isToday && (
+                                <span
+                                  className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-md leading-none flex-shrink-0 text-white"
+                                  style={{ backgroundColor: p }}
+                                >
+                                  {tInfo("today")}
+                                </span>
+                              )}
+                            </span>
+                            {h.isOpen ? (
+                              <span className="tabular-nums whitespace-nowrap text-right flex-shrink-0">
+                                {formatTime(h.openTime, hoursFmt)} – {formatTime(h.closeTime, hoursFmt)}
+                              </span>
+                            ) : (
+                              <span
+                                className={`text-[11px] font-medium uppercase tracking-[0.04em] px-2.5 py-1 rounded-full leading-none whitespace-nowrap flex-shrink-0 ${
+                                  isToday ? "" : "text-gray-400 bg-gray-100"
+                                }`}
+                              >
+                                {tInfo("closed")}
+                              </span>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
                 );
               })}
             </div>

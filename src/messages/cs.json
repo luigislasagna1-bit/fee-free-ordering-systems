@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Dnes",
+    "openNow": "Otevřeno",
+    "opensShort": "Otevírá v {time}",
     "generalHours": "Obecná otevírací doba",
     "openingHours": "Otevírací doba",
     "open": "Otevřeno",

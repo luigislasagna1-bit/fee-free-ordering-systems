@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Данас",
+    "openNow": "Отворено",
+    "opensShort": "Отвара у {time}",
     "generalHours": "Опште радно време",
     "openingHours": "Radno vreme",
     "open": "Otvoreno",

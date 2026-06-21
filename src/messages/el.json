@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "Σήμερα",
+    "openNow": "Ανοιχτά τώρα",
+    "opensShort": "Ανοίγει στις {time}",
     "generalHours": "Γενικό ωράριο",
     "openingHours": "Ωράριο λειτουργίας",
     "open": "Ανοιχτό",

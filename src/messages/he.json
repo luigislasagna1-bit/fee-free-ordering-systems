@@ -310,6 +310,9 @@
     }
   },
   "info": {
+    "today": "היום",
+    "openNow": "פתוח עכשיו",
+    "opensShort": "נפתח ב-{time}",
     "generalHours": "שעות פעילות כלליות",
     "openingHours": "שעות פתיחה",
     "open": "פתוח",
