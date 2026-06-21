@@ -96,70 +96,129 @@ const mapOpts = (opts: ReadonlyArray<{ name: string; priceAdjustment: number; is
  * CDN url for an instant demo (no Vercel Blob cost; re-hosting happens on claim).
  */
 export async function commitSandboxMenu(restaurantId: string, preview: ImportPreview): Promise<void> {
-  // PERF: a big real menu (Luigi's = 163 items / 485 groups / 12,349 options)
-  // blows the 90s transaction cap if we do everything the admin importer does.
-  // The sandbox is a throwaway DEMO, so we drop two costs the admin path pays
-  // that the storefront doesn't need:
-  //   1. the modifier-LIBRARY duplication (an admin-editor sidebar nicety — it's
-  //      backfilled when the visitor claims the restaurant, or on re-import), and
-  //   2. the separate per-group option insert — options are NESTED into each
-  //      group's create instead (one round-trip per group, not two).
-  // That roughly halves the writes and removes ~500 round-trips, bringing Luigi's
-  // menu comfortably under the cap.
-  const catIdBySource = new Map<number, string>();
-  await prisma.$transaction(
-    async (tx) => {
-      // Create the hierarchy (categories → items → variants → groups), buffering
-      // EVERY option with its resolved groupId, then flush all options in a few
-      // big createMany calls at the end. Nested `options:{create}` would emit one
-      // INSERT per option (12k round-trips); this is a handful of round-trips.
-      const optionBuf: Array<{ modifierGroupId: string } & Opt> = [];
-      const pushOpts = (groupId: string, opts: any[]) => { for (const o of mapOpts(opts)) optionBuf.push({ modifierGroupId: groupId, ...o }); };
-
-      let catSort = 0;
-      for (const cat of preview.categories) {
-        if (!cat.items?.length) continue;
-        const created = await tx.menuCategory.create({
-          data: { restaurantId, name: cat.name, description: cat.description, imageUrl: cat.sourceImageUrl ?? null, sortOrder: catSort++, isActive: cat.isActive, isHidden: cat.isHidden },
-          select: { id: true },
-        });
-        catIdBySource.set(cat.sourceId, created.id);
-
-        let itemSort = 0;
-        for (const item of cat.items) {
-          const ci = await tx.menuItem.create({
-            data: { restaurantId, categoryId: created.id, name: item.name, description: item.description, imageUrl: item.sourceImageUrl ?? null, price: item.basePrice, isAvailable: item.isAvailable, isHidden: item.isHidden, isSoldOut: item.isSoldOut, hasVariants: item.hasVariants, availableDays: item.availableDays, sortOrder: itemSort++ },
-            select: { id: true },
-          });
-
-          for (let vi = 0; vi < item.variants.length; vi++) {
-            const v = item.variants[vi];
-            const cv = await tx.itemVariant.create({ data: { menuItemId: ci.id, name: v.name, price: v.price, isDefault: v.isDefault, sortOrder: vi }, select: { id: true } });
-            for (const g of v.groups) {
-              const cg = await tx.modifierGroup.create({ data: { menuItemId: ci.id, variantId: cv.id, name: g.name, required: g.required, minSelect: g.minSelect, maxSelect: g.maxSelect, maxPerOption: g.maxPerOption, sortOrder: g.sortOrder }, select: { id: true } });
-              pushOpts(cg.id, g.options);
-            }
-          }
-          for (const g of item.itemGroups) {
-            const cg = await tx.modifierGroup.create({ data: { menuItemId: ci.id, name: g.name, required: g.required, minSelect: g.minSelect, maxSelect: g.maxSelect, maxPerOption: g.maxPerOption, sortOrder: g.sortOrder }, select: { id: true } });
-            pushOpts(cg.id, g.options);
-          }
+  // PERF: a big real menu (Luigi's = 163 items / 206 variants / 485 groups /
+  // 12,349 options) was ~867 INDIVIDUAL creates → ~89s, slow enough that the
+  // client sometimes errored-then-retried ("had to do it twice" → dup sandboxes
+  // the TTL cron later swept). We now batch each hierarchy LEVEL into ONE
+  // createManyAndReturn (a handful of round-trips for the whole tree, not ~867),
+  // then flush options in chunked createMany. Brings Luigi's menu to a few seconds.
+  //
+  // CORRELATION SAFETY (non-negotiable — this is a faithful import): on Postgres,
+  // createManyAndReturn returns rows in input order (INSERT … RETURNING), but
+  // Prisma doesn't formally guarantee it, so we never trust it blindly. Every
+  // level carries a unique-within-scope key (sortOrder scoped by its parent id),
+  // and assertOrder() verifies the returned row at index i is exactly the one we
+  // sent at index i. If the order ever fails to hold we THROW — the endpoint then
+  // deletes the half-built sandbox — rather than silently attach the wrong
+  // modifier groups/options to the wrong item.
+  const assertOrder = (rows: any[], data: any[], keys: string[], level: string) => {
+    if (rows.length !== data.length) throw new Error(`sandbox import: ${level} count mismatch (${rows.length}/${data.length})`);
+    for (let i = 0; i < rows.length; i++) {
+      for (const k of keys) {
+        if ((rows[i][k] ?? null) !== (data[i][k] ?? null)) {
+          throw new Error(`sandbox import: ${level} return order not preserved at row ${i} (${k})`);
         }
       }
+    }
+  };
+  // createManyAndReturn, chunked to stay under Postgres' 65535-parameter cap on
+  // very large menus. Chunks are sliced + concatenated in order, so the global
+  // index correlation (and assertOrder above) still holds.
+  const cmar = async (create: (rows: any[]) => Promise<any[]>, data: any[]): Promise<any[]> => {
+    if (!data.length) return [];
+    if (data.length <= 2000) return create(data);
+    const out: any[] = [];
+    for (let i = 0; i < data.length; i += 2000) out.push(...(await create(data.slice(i, i + 2000))));
+    return out;
+  };
 
+  await prisma.$transaction(
+    async (tx) => {
+      // ── 1. CATEGORIES (only those with items) — sortOrder is the unique key ──
+      const cats = preview.categories.filter((c) => c.items?.length);
+      const catData = cats.map((c, i) => ({
+        restaurantId, name: c.name, description: c.description, imageUrl: c.sourceImageUrl ?? null,
+        sortOrder: i, isActive: c.isActive, isHidden: c.isHidden,
+      }));
+      if (!catData.length) return; // empty menu — nothing to commit
+      const catRows = await cmar((d) => tx.menuCategory.createManyAndReturn({ data: d, select: { id: true, sortOrder: true } }), catData);
+      assertOrder(catRows, catData, ["sortOrder"], "category");
+      const catIdBySource = new Map<number, string>();
+      cats.forEach((c, i) => catIdBySource.set(c.sourceId, catRows[i].id));
+
+      // ── 2. ITEMS (flat; (categoryId, sortOrder) is the unique key) ──
+      const itemData: any[] = [];
+      const itemSrc: any[] = [];
+      cats.forEach((c, ci) => {
+        const categoryId = catRows[ci].id;
+        c.items.forEach((item: any, isort: number) => {
+          itemData.push({
+            restaurantId, categoryId, name: item.name, description: item.description,
+            imageUrl: item.sourceImageUrl ?? null, price: item.basePrice, isAvailable: item.isAvailable,
+            isHidden: item.isHidden, isSoldOut: item.isSoldOut, hasVariants: item.hasVariants,
+            availableDays: item.availableDays, sortOrder: isort,
+          });
+          itemSrc.push(item);
+        });
+      });
+      const itemRows = await cmar((d) => tx.menuItem.createManyAndReturn({ data: d, select: { id: true, categoryId: true, sortOrder: true } }), itemData);
+      assertOrder(itemRows, itemData, ["categoryId", "sortOrder"], "item");
+
+      // ── 3. VARIANTS (flat; (menuItemId, sortOrder) is the unique key) ──
+      const variantData: any[] = [];
+      const variantSrc: { itemId: string; variant: any }[] = [];
+      itemSrc.forEach((item, k) => {
+        const menuItemId = itemRows[k].id;
+        item.variants.forEach((v: any, vi: number) => {
+          variantData.push({ menuItemId, name: v.name, price: v.price, isDefault: v.isDefault, sortOrder: vi });
+          variantSrc.push({ itemId: menuItemId, variant: v });
+        });
+      });
+      const variantRows = await cmar((d) => tx.itemVariant.createManyAndReturn({ data: d, select: { id: true, menuItemId: true, sortOrder: true } }), variantData);
+      assertOrder(variantRows, variantData, ["menuItemId", "sortOrder"], "variant");
+
+      // ── 4. GROUPS (variant- / item- / category-scoped). We assign a fresh
+      //     sequential sortOrder PER SCOPE (preserving source order) so the tuple
+      //     (menuItemId, variantId, categoryId, sortOrder) is unique per row. ──
+      const groupData: any[] = [];
+      const groupSrc: any[][] = []; // parallel: each group's source options
+      variantSrc.forEach((vs, j) => {
+        const variantId = variantRows[j].id;
+        vs.variant.groups.forEach((g: any, gi: number) => {
+          groupData.push({ menuItemId: vs.itemId, variantId, categoryId: null, name: g.name, required: g.required, minSelect: g.minSelect, maxSelect: g.maxSelect, maxPerOption: g.maxPerOption, sortOrder: gi });
+          groupSrc.push(g.options);
+        });
+      });
+      itemSrc.forEach((item, k) => {
+        const menuItemId = itemRows[k].id;
+        item.itemGroups.forEach((g: any, gi: number) => {
+          groupData.push({ menuItemId, variantId: null, categoryId: null, name: g.name, required: g.required, minSelect: g.minSelect, maxSelect: g.maxSelect, maxPerOption: g.maxPerOption, sortOrder: gi });
+          groupSrc.push(g.options);
+        });
+      });
+      const catGroupSort = new Map<string, number>();
       for (const g of preview.categoryGroups) {
-        const cid = catIdBySource.get(g.sourceCategoryId);
-        if (!cid) continue;
-        const cg = await tx.modifierGroup.create({ data: { categoryId: cid, name: g.name, required: g.required, minSelect: g.minSelect, maxSelect: g.maxSelect, maxPerOption: g.maxPerOption, sortOrder: g.sortOrder }, select: { id: true } });
-        pushOpts(cg.id, g.options);
+        const categoryId = catIdBySource.get(g.sourceCategoryId);
+        if (!categoryId) continue;
+        const seq = catGroupSort.get(categoryId) ?? 0;
+        catGroupSort.set(categoryId, seq + 1);
+        groupData.push({ menuItemId: null, variantId: null, categoryId, name: g.name, required: g.required, minSelect: g.minSelect, maxSelect: g.maxSelect, maxPerOption: g.maxPerOption, sortOrder: seq });
+        groupSrc.push(g.options);
       }
+      const groupRows = await cmar((d) => tx.modifierGroup.createManyAndReturn({ data: d, select: { id: true, menuItemId: true, variantId: true, categoryId: true, sortOrder: true } }), groupData);
+      assertOrder(groupRows, groupData, ["menuItemId", "variantId", "categoryId", "sortOrder"], "group");
 
-      // Flush all options in chunks (well under Postgres' 65535-parameter cap).
+      // ── 5. OPTIONS — resolve each group's id, then flush in chunks ──
+      const optionBuf: Array<{ modifierGroupId: string } & Opt> = [];
+      groupSrc.forEach((opts, g) => {
+        const modifierGroupId = groupRows[g].id;
+        for (const o of mapOpts(opts)) optionBuf.push({ modifierGroupId, ...o });
+      });
       for (let i = 0; i < optionBuf.length; i += 4000) {
         await tx.modifierOption.createMany({ data: optionBuf.slice(i, i + 4000) });
       }
     },
-    { maxWait: 15_000, timeout: 165_000 },
+    { maxWait: 15_000, timeout: 120_000 },
   );
 }
 
