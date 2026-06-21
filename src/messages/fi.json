@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Yleiset aukioloajat",
     "openingHours": "Aukioloajat",
     "open": "Auki",
     "closed": "Suljettu",

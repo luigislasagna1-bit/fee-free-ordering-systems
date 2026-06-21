@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "通常の営業時間",
     "openingHours": "営業時間",
     "open": "営業中",
     "closed": "閉店",

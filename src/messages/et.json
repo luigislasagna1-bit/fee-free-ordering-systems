@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Üldised lahtiolekuajad",
     "openingHours": "Lahtiolekuajad",
     "open": "Avatud",
     "closed": "Suletud",

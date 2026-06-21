@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Orari generali",
     "openingHours": "Orari di apertura",
     "open": "Aperto",
     "closed": "Chiuso",

@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "เวลาทำการทั่วไป",
     "openingHours": "เวลาทำการ",
     "open": "เปิด",
     "closed": "ปิด",

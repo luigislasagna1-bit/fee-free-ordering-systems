@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Giờ mở cửa chung",
     "openingHours": "Giờ mở cửa",
     "open": "Mở cửa",
     "closed": "Đóng cửa",

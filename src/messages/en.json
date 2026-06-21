@@ -311,6 +311,7 @@
   },
   "info": {
     "openingHours": "Opening Hours",
+    "generalHours": "General hours",
     "open": "Open",
     "closed": "Closed",
     "closedToday": "Closed today",

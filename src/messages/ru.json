@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Общие часы работы",
     "openingHours": "Часы работы",
     "open": "Открыто",
     "closed": "Закрыто",

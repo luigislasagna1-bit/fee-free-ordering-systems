@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { resolveServiceHours } from "./service-hours";
+import { resolveServiceHours, groupHoursByService } from "./service-hours";
 import { liveOpenStatus, nextOpenAt } from "./restaurant-hours";
 
 /**
@@ -58,5 +58,54 @@ describe("per-service hours gate ordering (Fabrizio report)", () => {
     ];
     const delivery = resolveServiceHours(mixed as any, "delivery");
     expect(liveOpenStatus(delivery as any, SUN_1150, "24h", undefined, "UTC").kind).toBe("open");
+  });
+});
+
+/**
+ * Fabrizio follow-up (2026-06-21): the storefront "information" tab dumped every
+ * opening-hours row in one flat list (Sunday ×3, Monday ×3…) with no labels —
+ * impossible to read once per-service hours were set. groupHoursByService now
+ * divides them by service for display.
+ */
+describe("groupHoursByService — storefront info display", () => {
+  it("splits default + per-service rows into labelled groups (no more flat list)", () => {
+    const rows = [
+      { dayOfWeek: 0, openTime: "00:00", closeTime: "00:00", isOpen: false, service: null },   // general Sun closed
+      { dayOfWeek: 1, openTime: "09:00", closeTime: "23:00", isOpen: true, service: null },     // general Mon
+      { dayOfWeek: 0, openTime: "14:00", closeTime: "21:00", isOpen: true, service: "pickup" },
+      { dayOfWeek: 1, openTime: "15:00", closeTime: "21:00", isOpen: true, service: "pickup" },
+      { dayOfWeek: 0, openTime: "11:35", closeTime: "23:00", isOpen: true, service: "delivery" },
+      { dayOfWeek: 1, openTime: "14:00", closeTime: "21:00", isOpen: true, service: "delivery" },
+    ];
+    const groups = groupHoursByService(rows as any);
+    expect(groups.map((g) => g.key)).toEqual(["general", "pickup", "delivery"]);
+
+    // Sunday reads differently in each group — exactly the separation Fabrizio asked for.
+    const sun = (k: string) => groups.find((g) => g.key === k)!.rows.find((r) => r.dayOfWeek === 0)!;
+    expect(sun("general").isOpen).toBe(false);
+    expect([sun("pickup").openTime, sun("pickup").closeTime]).toEqual(["14:00", "21:00"]);
+    expect([sun("delivery").openTime, sun("delivery").closeTime]).toEqual(["11:35", "23:00"]);
+  });
+
+  it("no per-service rows → a single plain list (no regression)", () => {
+    const rows = [
+      { dayOfWeek: 1, openTime: "09:00", closeTime: "17:00", isOpen: true, service: null },
+      { dayOfWeek: 2, openTime: "09:00", closeTime: "17:00", isOpen: true, service: null },
+    ];
+    const groups = groupHoursByService(rows as any);
+    expect(groups).toHaveLength(1);
+    expect(groups[0].key).toBe("all");
+    expect(groups[0].rows.map((r) => r.dayOfWeek)).toEqual([1, 2]);
+  });
+
+  it("dedupes duplicate default rows for the same day (kills the old React key collision)", () => {
+    const rows = [
+      { dayOfWeek: 1, openTime: "09:00", closeTime: "17:00", isOpen: true, service: null },
+      { dayOfWeek: 1, openTime: "10:00", closeTime: "18:00", isOpen: true, service: null }, // dup day
+    ];
+    const groups = groupHoursByService(rows as any);
+    expect(groups).toHaveLength(1);
+    expect(groups[0].rows).toHaveLength(1);           // one row per day
+    expect(groups[0].rows[0].openTime).toBe("09:00"); // first wins
   });
 });

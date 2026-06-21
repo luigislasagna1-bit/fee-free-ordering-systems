@@ -103,3 +103,45 @@ export function resolveServiceHours(
   }
   return out;
 }
+
+/** A display group of opening-hours rows for the storefront info page —
+ *  one row per day, ready to render under an optional service heading. */
+export type HoursGroup = { key: "all" | "general" | ServiceKind; rows: HoursRow[] };
+
+/** First row per day-of-week, sorted Sun→Sat. Guards against duplicate rows
+ *  (e.g. two default rows for one day) that would otherwise collide as React
+ *  keys and render the day twice. */
+function dedupSortByDay(rows: HoursRow[]): HoursRow[] {
+  const byDay = new Map<number, HoursRow>();
+  for (const r of rows) if (!byDay.has(r.dayOfWeek)) byDay.set(r.dayOfWeek, r);
+  return [...byDay.values()].sort((a, b) => a.dayOfWeek - b.dayOfWeek);
+}
+
+/**
+ * Group raw opening-hours rows for human-readable display, divided by service.
+ *
+ * Rows with service=null are the default ("General") hours — they drive the
+ * open/closed sign and cover any service without its own hours (dine-in,
+ * takeout, catering). pickup / delivery / reservation may each carry their own.
+ *
+ *   - No service-specific rows  → a single { key:"all" } group (one plain list,
+ *     unchanged from the pre-per-service behaviour — no regression).
+ *   - Otherwise → a { key:"general" } group (the default rows) followed by one
+ *     group per service that has its OWN rows, each RESOLVED (service rows where
+ *     set, default otherwise) so it shows that service's true weekly schedule.
+ *
+ * Reseller request (Fabrizio 2026-06-21): the old flat list interleaved every
+ * service's rows with no labels (Sunday ×3, Monday ×3…) — impossible to read.
+ */
+export function groupHoursByService(rows: HoursRow[]): HoursGroup[] {
+  const customKinds = (["pickup", "delivery", "reservation"] as ServiceKind[])
+    .filter((svc) => rows.some((r) => r.service === svc));
+  const defaults = dedupSortByDay(rows.filter((r) => r.service == null || r.service === ""));
+  if (customKinds.length === 0) {
+    return [{ key: "all", rows: defaults.length ? defaults : dedupSortByDay(rows) }];
+  }
+  const groups: HoursGroup[] = [];
+  if (defaults.length > 0) groups.push({ key: "general", rows: defaults });
+  for (const svc of customKinds) groups.push({ key: svc, rows: resolveServiceHours(rows, svc) });
+  return groups;
+}

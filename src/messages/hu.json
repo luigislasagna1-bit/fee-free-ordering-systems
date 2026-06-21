@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Általános nyitvatartás",
     "openingHours": "Nyitvatartási idő",
     "open": "Nyitva",
     "closed": "Zárva",

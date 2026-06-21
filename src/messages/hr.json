@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Opće radno vrijeme",
     "openingHours": "Radno vrijeme",
     "open": "Otvoreno",
     "closed": "Zatvoreno",

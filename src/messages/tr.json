@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Genel saatler",
     "openingHours": "Çalışma Saatleri",
     "open": "Açık",
     "closed": "Kapalı",

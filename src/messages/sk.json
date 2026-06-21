@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Všeobecné otváracie hodiny",
     "openingHours": "Otváracie hodiny",
     "open": "Otvorené",
     "closed": "Zatvorené",

@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "सामान्य समय",
     "openingHours": "खुलने का समय",
     "open": "खुला",
     "closed": "बंद",

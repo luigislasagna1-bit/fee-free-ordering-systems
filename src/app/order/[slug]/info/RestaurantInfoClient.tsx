@@ -15,6 +15,7 @@ const DeliveryZonesMap = dynamic(() => import("../DeliveryZonesMap"), { ssr: fal
 
 import { formatTime as fmt, type HoursFormat } from "@/lib/format-time";
 import { localDowAndHHMM, liveOpenStatus } from "@/lib/restaurant-hours";
+import { groupHoursByService, type HoursGroup } from "@/lib/service-hours";
 
 function formatTime(t: string, hoursFmt: HoursFormat = "24h") {
   return fmt(t, hoursFmt);
@@ -25,6 +26,10 @@ interface OpeningHour {
   isOpen: boolean;
   openTime: string;
   closeTime: string;
+  /** null/"" = the default ("General") hours; otherwise "pickup" |
+   *  "delivery" | "reservation". */
+  service?: string | null;
+  closesNextDay?: boolean;
 }
 
 interface DeliveryZone {
@@ -113,7 +118,12 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
   // when the customer is in a far-off timezone or it's near midnight at
   // the restaurant. Luigi 2026-05-30: "consistent EVERYWHERE."
   const { dow: todayIndex } = localDowAndHHMM(new Date(), restaurant.timezone);
-  const todayHours = restaurant.openingHours.find((h) => h.dayOfWeek === todayIndex);
+  // Prefer the default (service=null) row for today so this callout matches the
+  // general open/closed sign (driven by liveOpenStatus below) rather than a
+  // per-service row that happened to come first in the array.
+  const todayHours =
+    restaurant.openingHours.find((h) => h.dayOfWeek === todayIndex && (h.service == null || h.service === "")) ??
+    restaurant.openingHours.find((h) => h.dayOfWeek === todayIndex);
   // Live "open right now" status (not just "is today an open day") so the
   // callout reflects reality: at 10 AM with a noon opening it reads
   // "Closed · Opens 12:00", not a misleading green "Open". The info page
@@ -130,6 +140,21 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
 
   const pickupTime = svcSettings.pickup?.estimatedTime ?? restaurant.estimatedPickup;
   const deliveryTime = svcSettings.delivery?.estimatedTime ?? restaurant.estimatedDelivery;
+
+  // Opening hours, grouped by service so per-service times are readable —
+  // a General section + one per service with its own hours, or a single plain
+  // list when there's no per-service customisation (logic in groupHoursByService).
+  // Reseller request, Fabrizio 2026-06-21.
+  const hoursGroups = groupHoursByService(restaurant.openingHours as any);
+  const groupLabel = (key: HoursGroup["key"]): string | null => {
+    switch (key) {
+      case "general": return tInfo("generalHours");
+      case "pickup": return svcSettings.pickup?.displayName || tOrdering("pickup");
+      case "delivery": return svcSettings.delivery?.displayName || tOrdering("delivery");
+      case "reservation": return svcSettings.reservations?.displayName || tOrdering("tableReservation");
+      default: return null; // "all" → single list, no heading
+    }
+  };
 
   const p = theme.primaryColor;
   const focusRingStyle = { outlineColor: p };
@@ -227,29 +252,43 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
           </div>
         )}
 
-        {/* Hours */}
-        {restaurant.openingHours.length > 0 && (
+        {/* Hours — grouped by service so per-service times are readable */}
+        {restaurant.openingHours.length > 0 && hoursGroups.length > 0 && (
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
             <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3 flex items-center gap-2">
               <Clock className="w-4 h-4" /> {tInfo("openingHours")}
             </h2>
-            <div className="space-y-1.5">
-              {restaurant.openingHours.map((h) => (
-                <div
-                  key={h.dayOfWeek}
-                  className={`flex justify-between items-center text-sm py-1 px-2 rounded-lg ${
-                    h.dayOfWeek === todayIndex ? "font-semibold" : "text-gray-600"
-                  }`}
-                  style={h.dayOfWeek === todayIndex ? { backgroundColor: `${p}15`, color: p } : {}}
-                >
-                  <span>{tInfo(`days.${h.dayOfWeek}`)}</span>
-                  <span>
-                    {h.isOpen
-                      ? `${formatTime(h.openTime, hoursFmt)} – ${formatTime(h.closeTime, hoursFmt)}`
-                      : <span className="text-red-500">{tInfo("closed")}</span>}
-                  </span>
+            <div className="space-y-4">
+              {hoursGroups.map((group) => {
+                const label = groupLabel(group.key);
+                return (
+                <div key={group.key}>
+                  {label && (
+                    <div className="text-xs font-bold uppercase tracking-wide mb-1.5" style={{ color: p }}>
+                      {label}
+                    </div>
+                  )}
+                  <div className="space-y-1.5">
+                    {group.rows.map((h) => (
+                      <div
+                        key={`${group.key}-${h.dayOfWeek}`}
+                        className={`flex justify-between items-center text-sm py-1 px-2 rounded-lg ${
+                          h.dayOfWeek === todayIndex ? "font-semibold" : "text-gray-600"
+                        }`}
+                        style={h.dayOfWeek === todayIndex ? { backgroundColor: `${p}15`, color: p } : {}}
+                      >
+                        <span>{tInfo(`days.${h.dayOfWeek}`)}</span>
+                        <span>
+                          {h.isOpen
+                            ? `${formatTime(h.openTime, hoursFmt)} – ${formatTime(h.closeTime, hoursFmt)}`
+                            : <span className="text-red-500">{tInfo("closed")}</span>}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}

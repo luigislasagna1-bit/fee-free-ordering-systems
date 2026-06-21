@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Algemene openingstijden",
     "openingHours": "Openingstijden",
     "open": "Open",
     "closed": "Gesloten",

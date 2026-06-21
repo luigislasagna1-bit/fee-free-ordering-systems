@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Vispārējais darba laiks",
     "openingHours": "Darba laiks",
     "open": "Atvērts",
     "closed": "Slēgts",

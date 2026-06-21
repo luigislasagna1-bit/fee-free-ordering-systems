@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Bendros darbo valandos",
     "openingHours": "Darbo laikas",
     "open": "Atidaryta",
     "closed": "Uždaryta",

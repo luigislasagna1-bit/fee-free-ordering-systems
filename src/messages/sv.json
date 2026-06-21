@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Allmänna öppettider",
     "openingHours": "Öppettider",
     "open": "Öppen",
     "closed": "Stängd",

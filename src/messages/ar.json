@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "ساعات العمل العامة",
     "openingHours": "ساعات العمل",
     "open": "مفتوح",
     "closed": "مغلق",

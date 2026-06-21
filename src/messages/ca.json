@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Horari general",
     "openingHours": "Horari d'obertura",
     "open": "Obert",
     "closed": "Tancat",

@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "שעות פעילות כלליות",
     "openingHours": "שעות פתיחה",
     "open": "פתוח",
     "closed": "סגור",

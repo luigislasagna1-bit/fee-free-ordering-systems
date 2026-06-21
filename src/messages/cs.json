@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Obecná otevírací doba",
     "openingHours": "Otevírací doba",
     "open": "Otevřeno",
     "closed": "Zavřeno",

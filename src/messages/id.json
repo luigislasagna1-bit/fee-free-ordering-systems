@@ -310,6 +310,7 @@
     }
   },
   "info": {
+    "generalHours": "Jam umum",
     "openingHours": "Jam Buka",
     "open": "Buka",
     "closed": "Tutup",
