@@ -70,6 +70,15 @@ const MENU: Array<{ category: string; items: Array<[string, number, string]> }> 
   ]},
 ];
 
+// Appetizing photos so the demo storefront looks real for app reviewers (no blank
+// cards / plain banner). Served from public/marketing/demo/* on the platform host.
+const BANNER_URL = "/marketing/demo/banner.jpg";
+const ITEM_IMAGES: Record<string, string> = {
+  "Margherita Pizza": "margherita", "Pepperoni Pizza": "pepperoni", "Quattro Formaggi": "quattro",
+  "Spaghetti Bolognese": "spaghetti", "Penne Arrabbiata": "penne", "Coca-Cola": "cola", "Sparkling Water": "water",
+};
+const itemImg = (name: string): string | null => (ITEM_IMAGES[name] ? `/marketing/demo/${ITEM_IMAGES[name]}.jpg` : null);
+
 async function main() {
   const isNeon = /\.neon\.tech([:/?]|$)/i.test(url!);
   const adapter = isNeon ? new PrismaNeon({ connectionString: url! }) : new PrismaPg({ connectionString: url! });
@@ -101,7 +110,7 @@ async function main() {
       phone: "+1 555 010 0001", email: EMAIL,
       address: "100 Demo Street", city: "Toronto", state: "ON", zip: "M5V 2T6", country: COUNTRY,
       timezone: TIMEZONE, currency: CURRENCY, defaultLanguage: LANGUAGE,
-      cuisineType: "Italian", slogan: "A demo restaurant for app review",
+      cuisineType: "Italian", slogan: "Wood-fired pizza & fresh pasta — order direct, zero fees.", bannerUrl: BANNER_URL,
       // LIVE out of the box (unlike real signup, which forces owner setup):
       acceptsPickup: true, acceptsDelivery: false, acceptsDineIn: false, acceptsReservations: false,
       paymentMethods: JSON.stringify(["cash"]),
@@ -140,7 +149,7 @@ async function main() {
         data: {
           restaurantId: restaurant.id, categoryId: cat.id, name: iname, description: desc,
           price, isAvailable: true, isFeatured: itemSort === 0, forPickup: true, forDelivery: false,
-          sortOrder: itemSort++,
+          imageUrl: itemImg(iname), sortOrder: itemSort++,
         },
       });
     }
