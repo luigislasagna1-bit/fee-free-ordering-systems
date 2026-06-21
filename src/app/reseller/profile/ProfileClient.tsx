@@ -25,6 +25,7 @@ export function ProfileClient({ initial }: { initial: Initial }) {
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [embedCopied, setEmbedCopied] = useState(false);
 
   async function save() {
     setSaving(true);
@@ -66,6 +67,15 @@ export function ProfileClient({ initial }: { initial: Initial }) {
     setTimeout(() => setCopied(false), 2000);
   }
 
+  // A self-contained, inline-styled signup button the reseller can paste onto
+  // any website/blog — links to their ref-attributed signup (no external CSS).
+  const embedHtml = `<a href="${initial.referralUrl}" style="display:inline-block;background:#10b981;color:#ffffff;font-weight:700;padding:12px 22px;border-radius:10px;text-decoration:none;font-family:system-ui,-apple-system,sans-serif;font-size:15px;">Start free — 0% commission</a>`;
+  function copyEmbed() {
+    navigator.clipboard.writeText(embedHtml).catch(() => {});
+    setEmbedCopied(true);
+    setTimeout(() => setEmbedCopied(false), 2000);
+  }
+
   return (
     <div className="max-w-2xl space-y-6">
       <div>
@@ -94,6 +104,37 @@ export function ProfileClient({ initial }: { initial: Initial }) {
         </div>
         <div className="mt-2 text-xs text-gray-400">
           Referral code: <code>{initial.referralCode}</code>
+        </div>
+      </div>
+
+      {/* Embeddable signup button */}
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+        <h2 className="text-sm font-bold text-gray-900 mb-2">Embed a signup button</h2>
+        <p className="text-xs text-gray-500 mb-3">
+          Have a website, blog, or link-in-bio? Paste this button anywhere — it points at your
+          ref-attributed signup, so every restaurant that signs up through it counts toward your commission.
+        </p>
+        <div className="mb-3 flex items-center justify-center bg-gray-50 rounded-lg py-5 border border-dashed border-gray-200">
+          <a
+            href={initial.referralUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: "inline-block", background: "#10b981", color: "#fff", fontWeight: 700, padding: "12px 22px", borderRadius: 10, textDecoration: "none", fontSize: 15 }}
+          >
+            Start free — 0% commission
+          </a>
+        </div>
+        <div className="flex gap-2 items-start">
+          <code className="flex-1 bg-gray-50 rounded-lg px-3 py-2.5 text-[11px] text-gray-700 break-all font-mono max-h-24 overflow-auto">
+            {embedHtml}
+          </code>
+          <button
+            onClick={copyEmbed}
+            className="inline-flex items-center gap-1.5 bg-gray-900 hover:bg-gray-800 text-white px-3 py-2 rounded-lg text-xs font-semibold flex-shrink-0"
+          >
+            {embedCopied ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+            {embedCopied ? "Copied" : "Copy HTML"}
+          </button>
         </div>
       </div>
 
