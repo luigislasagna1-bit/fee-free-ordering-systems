@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { generateOrderNumber, formatCurrency } from "@/lib/utils";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
 import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, localDowAndHHMM, dateKeyInTimezone } from "@/lib/restaurant-hours";
+import { resolveServiceHours, type ServiceKind } from "@/lib/service-hours";
 import { holidayEffectForDay, holidayEffectToday, canonicalHolidayService, hhmmInsideIntervals } from "@/lib/holiday-rules";
 import { hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
@@ -1686,9 +1687,18 @@ export async function POST(req: NextRequest) {
     // restaurant's next opening moment. Kitchen display: orders with
     // alertAt > now appear silently in the pending tab but DON'T trigger
     // the ring/countdown until alertAt fires.
-    const openingHoursForCheck = (restaurant as any).openingHours
+    // Per-service hours gate the ASAP / placed-while-closed decision (Fabrizio
+    // report): a pickup order at 11:50 with Pickup hours 14:00–21:00 must defer
+    // to pickup's next opening (14:00) — NOT ring immediately just because the
+    // kitchen's GENERAL hours are open. resolveServiceHours() picks the service-
+    // specific rows (→ default fallback → closed), matching the client's ASAP
+    // gate + CheckoutModal so all three agree. General-only restaurants resolve
+    // to their default hours (no behaviour change). Luigi 2026-06-21.
+    const rawHoursForCheck = (restaurant as any).openingHours
       ?? (restaurant as any).hours
       ?? [];
+    const svcKindForCheck: ServiceKind = type === "delivery" ? "delivery" : "pickup";
+    const openingHoursForCheck = resolveServiceHours(rawHoursForCheck as any, svcKindForCheck);
     const restaurantTz = (restaurant as any).timezone ?? undefined;
     // General (all-services) holiday effect for today — closed → liveStatus
     // "holiday"; custom hours → the intervals replace the weekly schedule.

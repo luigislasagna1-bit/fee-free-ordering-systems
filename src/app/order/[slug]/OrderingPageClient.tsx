@@ -12,6 +12,7 @@ import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
 import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib/format-time";
 import { methodsForOrderType, paymentValueToSlug } from "@/lib/payment-methods";
 import { localDowAndHHMM, liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
+import { resolveServiceHours, type ServiceKind } from "@/lib/service-hours";
 import { isVisibleNow } from "@/lib/menu-visibility";
 import { hasFulfilWindow, isFulfilableAt, fulfilWindowLabel, combinedFulfilConstraint } from "@/lib/menu-fulfilment";
 
@@ -2169,31 +2170,43 @@ export function OrderingPageClient({
   // slot or later. (Catering items have a stricter min already; the
   // two rules combine — we use whichever pushes the picker further
   // into the future.)
-  const liveStatusForClient = liveOpenStatus(
-    (restaurant.openingHours ?? []) as any,
-    new Date(),
-    hoursFmt,
-    // Keyed on the explicit closed flag — NOT on the name. Name and
-    // message are optional, so a blank-name full closure must still
-    // reach the open/closed logic (live-test bug, 2026-06-12).
+  // Keyed on the explicit closed flag — NOT on the name. Name and message are
+  // optional, so a blank-name full closure must still reach the logic (2026-06-12).
+  const holidayForStatus =
     todayHolidayClosed || (todayHolidayIntervals?.length ?? 0) > 0
       ? { name: todayHolidayName ?? undefined, intervals: todayHolidayIntervals ?? undefined }
-      : undefined,
-    restaurantTz,
+      : undefined;
+  // GENERAL status — drives the header open/closed chip + the sound trigger
+  // ("is the kitchen open at all?"). Reads the default (service=null) hours.
+  const liveStatusForClient = liveOpenStatus(
+    (restaurant.openingHours ?? []) as any, new Date(), hoursFmt, holidayForStatus, restaurantTz,
   );
-  const restaurantIsClosedNow = liveStatusForClient.kind !== "open";
-  // Header open/closed chip — drive off the LIVE status (open RIGHT NOW), not
-  // just "has hours today". At 3 AM with 10 AM–2 AM hours the shop is CLOSED, so
-  // the chip must NOT read green "Open" (Luigi live-test 2026-06-13). When we know
-  // the next opening, show it ("Closed · Opens 10:00 AM") instead of a flat label.
-  const headerIsOpenNow = !restaurantIsClosedNow && !todayHolidayClosed;
+  const generalIsClosedNow = liveStatusForClient.kind !== "open";
+  // SERVICE status — the ORDERING GATE (Fabrizio report): per-service hours decide
+  // whether ASAP is allowed for the CHOSEN method. e.g. Pickup 14:00–21:00 must
+  // block an ASAP pickup at 11:50 even when the kitchen's general hours are open.
+  // resolveServiceHours() returns the per-service-resolved 7-day rows (service row →
+  // default fallback → closed), matching CheckoutModal's serviceKind map so the ASAP
+  // check and the schedule picker agree on the same hours.
+  const orderServiceKind: ServiceKind = orderType === "delivery" ? "delivery" : "pickup";
+  const serviceHoursForClient = resolveServiceHours((restaurant.openingHours ?? []) as any, orderServiceKind);
+  const serviceStatusForClient = liveOpenStatus(
+    serviceHoursForClient as any, new Date(), hoursFmt, holidayForStatus, restaurantTz,
+  );
+  const restaurantIsClosedNow = serviceStatusForClient.kind !== "open";
+  // Header open/closed chip — drive off the GENERAL status (general hours are the
+  // display + sound; per-service hours gate ordering only). When we know the next
+  // opening, show it ("Closed · Opens 10:00 AM") instead of a flat label.
+  const headerIsOpenNow = !generalIsClosedNow && !todayHolidayClosed;
   const headerClosedText =
     liveStatusForClient.kind === "opens_at"
       ? `${t("closed")} · ${t("opensAtLabel", { time: liveStatusForClient.opensAt })}`
       : t("closedToday");
+  // Next opening for the CHOSEN service → the earliest schedulable slot when that
+  // service is closed now (e.g. pickup's 14:00, not the kitchen's 9:00).
   const nextOpenDate = restaurantIsClosedNow
     ? nextOpenAt(
-        (restaurant.openingHours ?? []) as any,
+        serviceHoursForClient as any,
         new Date(),
         restaurantTz,
         // Skip holiday-closed days so the "order for later" minimum never
