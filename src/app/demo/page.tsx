@@ -28,14 +28,18 @@ async function getDemoSlug(): Promise<string | null> {
       select: { restaurantId: true },
     });
     if (owner?.restaurantId) {
-      const r = await prisma.restaurant.findUnique({
-        where: { id: owner.restaurantId },
+      const r = await prisma.restaurant.findFirst({
+        // isActive guard: the storefront route (/order/[slug]) only renders
+        // ACTIVE restaurants, so without this an inactive/paused demo resolves to
+        // a slug whose storefront 404s — the leftmost demo card then dead-ends on
+        // a 404 instead of falling back to /marketplace (Fabrizio 2026-06-21).
+        where: { id: owner.restaurantId, isActive: true },
         select: { slug: true },
       });
       if (r?.slug) return r.slug;
     }
     const fallback = await prisma.restaurant.findFirst({
-      where: { slug: { startsWith: "demo" } },
+      where: { slug: { startsWith: "demo" }, isActive: true },
       select: { slug: true },
       orderBy: { createdAt: "asc" },
     });
