@@ -4,6 +4,7 @@ import { cookies, headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import prisma from "@/lib/db";
 import { OrderingPageClient } from "./OrderingPageClient";
+import { SandboxClaimBanner } from "./SandboxClaimBanner";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 import { resolveInheritedHours, resolveInheritedZones } from "@/lib/inherited-data";
 
@@ -418,8 +419,21 @@ export default async function OrderingPage({
     customerIsReturning = priorFulfilled > 0;
   }
 
+  // Import-to-try: if this is an UNCLAIMED sandbox storefront (slug "try-*"),
+  // surface the "claim it free" banner for the owner who just imported. Gated on
+  // the slug prefix so normal storefronts never pay for the extra query.
+  let sandboxClaimToken: string | null = null;
+  if (restaurant.slug.startsWith("try-")) {
+    const sb = await prisma.sandboxRestaurant.findUnique({
+      where: { restaurantId: restaurant.id },
+      select: { claimToken: true, claimedAt: true },
+    });
+    if (sb && !sb.claimedAt) sandboxClaimToken = sb.claimToken;
+  }
+
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
+      {sandboxClaimToken && <SandboxClaimBanner claimToken={sandboxClaimToken} />}
       {/* Analytics beacon — fires /api/track/visit once on mount so
           Website Visits + Website Funnel reports have data to render.
           Renders null; safe to mount alongside the order client. */}

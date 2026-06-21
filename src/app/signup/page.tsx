@@ -13,11 +13,14 @@ import prisma from "@/lib/db";
 export default async function SignupPage({
   searchParams,
 }: {
-  searchParams: Promise<{ invite?: string; ref?: string }>;
+  searchParams: Promise<{ invite?: string; ref?: string; claim?: string }>;
 }) {
   const locale = await resolveLocale();
   const params = await searchParams;
   const inviteToken = params.invite?.trim() || null;
+  // Import-to-try claim token (?claim=<token>) — the visitor is claiming a sandbox
+  // restaurant they built on /import; pre-fill its name so signup attaches it.
+  const claimToken = params.claim?.trim() || null;
 
   // Reseller referral code (?ref=<code>). The reseller's share link is
   // /signup?ref=<code>; we capture it here and hand it to the form so it can
@@ -53,5 +56,27 @@ export default async function SignupPage({
     }
   }
 
-  return <SignupForm locale={locale} inviteContext={inviteContext} refCode={refCode} />;
+  let claimContext: {
+    token: string;
+    suggestedName: string | null;
+    expired: boolean;
+    used: boolean;
+  } | null = null;
+
+  if (claimToken) {
+    const sb = await prisma.sandboxRestaurant.findUnique({
+      where: { claimToken },
+      include: { restaurant: { select: { name: true } } },
+    });
+    if (sb) {
+      claimContext = {
+        token: claimToken,
+        suggestedName: sb.restaurant?.name ?? null,
+        expired: sb.expiresAt < new Date(),
+        used: !!sb.claimedAt,
+      };
+    }
+  }
+
+  return <SignupForm locale={locale} inviteContext={inviteContext} refCode={refCode} claimContext={claimContext} />;
 }

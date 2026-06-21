@@ -52,6 +52,10 @@
     {
       "path": "/api/cron/import-menu-images",
       "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/cleanup-sandboxes",
+      "schedule": "30 4 * * *"
     }
   ]
 }

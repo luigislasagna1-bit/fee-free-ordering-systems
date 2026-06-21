@@ -8,9 +8,20 @@ import { PrismaPg } from "@prisma/adapter-pg";
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) } as any);
 
 async function deleteSandbox(rid: string) {
-  await prisma.modifierOption.deleteMany({ where: { modifierGroup: { restaurantId: rid } } });
-  await prisma.modifierGroup.deleteMany({ where: { restaurantId: rid } });
-  await prisma.itemVariant.deleteMany({ where: { menuItem: { restaurantId: rid } } });
+  const [items, cats] = await Promise.all([
+    prisma.menuItem.findMany({ where: { restaurantId: rid }, select: { id: true } }),
+    prisma.menuCategory.findMany({ where: { restaurantId: rid }, select: { id: true } }),
+  ]);
+  const itemIds = items.map((i: { id: string }) => i.id);
+  const catIds = cats.map((c: { id: string }) => c.id);
+  const groups = await prisma.modifierGroup.findMany({
+    where: { OR: [{ menuItemId: { in: itemIds } }, { categoryId: { in: catIds } }, { restaurantId: rid }] },
+    select: { id: true },
+  });
+  const groupIds = groups.map((g: { id: string }) => g.id);
+  await prisma.modifierOption.deleteMany({ where: { modifierGroupId: { in: groupIds } } });
+  await prisma.modifierGroup.deleteMany({ where: { id: { in: groupIds } } });
+  await prisma.itemVariant.deleteMany({ where: { menuItemId: { in: itemIds } } });
   await prisma.menuItem.deleteMany({ where: { restaurantId: rid } });
   await prisma.menuCategory.deleteMany({ where: { restaurantId: rid } });
   await prisma.openingHours.deleteMany({ where: { restaurantId: rid } });

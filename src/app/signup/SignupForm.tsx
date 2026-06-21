@@ -26,15 +26,33 @@ function readRefCookie(): string | null {
   return m ? decodeURIComponent(m[1]) : null;
 }
 
+/** Read the import-to-try claim token persisted on a prior /signup?claim= visit
+ *  (mirrors feefree_ref) so claiming survives navigating away and back. */
+function readClaimCookie(): string | null {
+  if (typeof document === "undefined") return null;
+  const m = document.cookie.match(/(?:^|;\s*)feefree_claim=([^;]+)/);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+export interface ClaimContext {
+  token: string;
+  suggestedName: string | null;
+  expired: boolean;
+  used: boolean;
+}
+
 export function SignupForm({
   locale,
   inviteContext,
   refCode,
+  claimContext,
 }: {
   locale: string;
   inviteContext: InviteContext | null;
   /** Reseller referral code from ?ref= on the signup URL (if any). */
   refCode?: string | null;
+  /** Import-to-try claim context from ?claim= on the signup URL (if any). */
+  claimContext?: ClaimContext | null;
 }) {
   const t = useTranslations("marketing.signup");
   const router = useRouter();
@@ -51,6 +69,15 @@ export function SignupForm({
     }
   }, [refCode]);
 
+  // Same idea for the import-to-try claim token — persist it so claiming survives
+  // a wander-off-and-back, and /api/auth/register reads it from the body below
+  // (with this cookie as a fallback). 24h, matching the sandbox lifetime.
+  useEffect(() => {
+    if (claimContext?.token && typeof document !== "undefined") {
+      document.cookie = `feefree_claim=${encodeURIComponent(claimContext.token)}; path=/; max-age=${60 * 60 * 24}; samesite=lax`;
+    }
+  }, [claimContext?.token]);
+
   // Pre-fill restaurant name + email from the invite (if any). The brand
   // owner suggested these when generating the invite; the recipient can edit.
   // Address + cuisine fields are new (Phase: better-onboarding-signup) so the
@@ -59,7 +86,7 @@ export function SignupForm({
   // loaded into the signup form so it gets done before the wizard guilt-
   // trips them on every page.
   const [form, setForm] = useState({
-    restaurantName: inviteContext?.suggestedName ?? "",
+    restaurantName: inviteContext?.suggestedName ?? claimContext?.suggestedName ?? "",
     ownerName: "",
     email: inviteContext?.suggestedEmail ?? "",
     password: "",
@@ -73,6 +100,7 @@ export function SignupForm({
   });
 
   const inviteBlocked = inviteContext && (inviteContext.expired || inviteContext.used);
+  const claimBlocked = claimContext && (claimContext.expired || claimContext.used);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,6 +121,9 @@ export function SignupForm({
           // Forward the reseller referral code (from the URL, falling back to
           // the cookie) so the new restaurant is attributed to the reseller.
           ref: refCode || readRefCookie(),
+          // Import-to-try: claim token attaches the pre-imported sandbox restaurant
+          // to this new account (URL value, cookie fallback). Register reuses it.
+          claim: claimContext?.token || readClaimCookie(),
         }),
       });
       const data = await res.json();
@@ -137,10 +168,36 @@ export function SignupForm({
               </div>
             </div>
           )}
+          {claimContext && !claimBlocked && (
+            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 mb-4 text-left">
+              <div className="flex items-start gap-2">
+                <Building2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                <div className="text-xs text-emerald-900 leading-snug">
+                  You&apos;re claiming your imported menu
+                  {claimContext.suggestedName ? <> — <strong>{claimContext.suggestedName}</strong></> : null}. Create your free
+                  account and it goes live as your own restaurant — no re-import.
+                </div>
+              </div>
+            </div>
+          )}
+          {claimBlocked && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-3 mb-4 text-left">
+              <div className="flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
+                <div className="text-xs text-red-900 leading-snug">
+                  {claimContext!.used
+                    ? "This preview was already claimed. Sign up to create a fresh restaurant, or import your menu again."
+                    : "This preview expired. Import your GloriaFood menu again to start a fresh preview."}
+                </div>
+              </div>
+            </div>
+          )}
           <h1 className="text-2xl font-bold text-gray-900">
             {inviteContext && !inviteBlocked
               ? `Set up ${inviteContext.suggestedName ?? "your location"}`
-              : t("title")}
+              : claimContext && !claimBlocked
+                ? "Claim your restaurant"
+                : t("title")}
           </h1>
           <p className="text-gray-500 mt-1 text-sm">{t("subtitle")}</p>
         </div>

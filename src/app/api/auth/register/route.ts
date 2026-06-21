@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
       // the new Restaurant row so the Setup Wizard at /admin starts
       // partway done — not from zero.
       address, city, state, zip, country, cuisineType,
-      ref, invite,
+      ref, invite, claim,
     } = await req.json();
 
     if (!restaurantName || !email || !password) {
@@ -55,6 +55,22 @@ export async function POST(req: NextRequest) {
       }
       parentRestaurantId = inv.brandId;
       inviteRecord = { id: inv.id };
+    }
+
+    // Import-to-try claim: ?claim=<token> means the visitor is claiming a sandbox
+    // restaurant they built on /import. Validate the token (single-use, unexpired)
+    // BEFORE creating rows; the attach (below) reuses that restaurant + its menu
+    // instead of creating a fresh one. (Luigi 2026-06-21.)
+    let claimSandbox: { id: string; restaurantId: string } | null = null;
+    if (typeof claim === "string" && claim.trim()) {
+      const sb = await prisma.sandboxRestaurant.findUnique({
+        where: { claimToken: claim.trim() },
+        select: { id: true, restaurantId: true, claimedAt: true, expiresAt: true },
+      });
+      if (!sb) return NextResponse.json({ error: "That preview link is invalid." }, { status: 400 });
+      if (sb.claimedAt) return NextResponse.json({ error: "That preview has already been claimed." }, { status: 400 });
+      if (sb.expiresAt < new Date()) return NextResponse.json({ error: "That preview has expired — import your menu again to start fresh." }, { status: 400 });
+      claimSandbox = { id: sb.id, restaurantId: sb.restaurantId };
     }
 
     // Reseller attribution: ?ref=<referralCode> on the signup form OR a
@@ -151,7 +167,36 @@ export async function POST(req: NextRequest) {
     const regionDefaults = defaultsForCountry(countryClean);
     const derivedLanguage = isSupportedLocale(regionDefaults.language) ? regionDefaults.language : "en";
 
-    const restaurant = await prisma.restaurant.create({
+    let restaurant;
+    if (claimSandbox) {
+      // CLAIM: reuse the pre-imported sandbox restaurant — keep its imported menu
+      // AND its live state (published, pickup, cash, open 24/7) so the owner goes
+      // live the same session. Just stamp the owner's details + stop it being a
+      // sandbox (the SandboxRestaurant row is deleted, which also makes it show
+      // in superadmin again).
+      restaurant = await prisma.restaurant.update({
+        where: { id: claimSandbox.restaurantId },
+        data: {
+          name: restaurantNameClean,
+          slug,
+          subdomain: slug,
+          phone: phone ? String(phone).trim().slice(0, 30) : null,
+          address: addressClean,
+          city: cityClean,
+          state: stateClean,
+          zip: zipClean,
+          country: countryClean,
+          timezone: regionDefaults.timezone,
+          currency: regionDefaults.currency,
+          defaultLanguage: derivedLanguage,
+          cuisineType: cuisineTypeClean,
+          email: emailClean,
+          resellerProfileId,
+        },
+      });
+      await prisma.sandboxRestaurant.delete({ where: { id: claimSandbox.id } });
+    } else {
+      restaurant = await prisma.restaurant.create({
       data: {
         name: restaurantNameClean,
         slug,
@@ -198,7 +243,8 @@ export async function POST(req: NextRequest) {
         // parent is purely a brand-grouping relation.
         parentRestaurantId,
       },
-    });
+      });
+    }
 
     // Mark the invite as accepted so it can't be reused.
     if (inviteRecord) {
@@ -217,10 +263,14 @@ export async function POST(req: NextRequest) {
     // bogus 9-9 every day. (Luigi caught this during UAT — "I didn't
     // think the new store made me set hours, but it marked them
     // complete?".)
-    for (let i = 0; i < 7; i++) {
-      await prisma.openingHours.create({
-        data: { restaurantId: restaurant.id, dayOfWeek: i, isOpen: false, openTime: "09:00", closeTime: "21:00" },
-      });
+    // A claimed sandbox already has open-24/7 hours — only fresh signups need the
+    // closed-default grid that forces the owner to pick their open days.
+    if (!claimSandbox) {
+      for (let i = 0; i < 7; i++) {
+        await prisma.openingHours.create({
+          data: { restaurantId: restaurant.id, dayOfWeek: i, isOpen: false, openTime: "09:00", closeTime: "21:00" },
+        });
+      }
     }
 
     const passwordHash = await bcrypt.hash(password, 12);

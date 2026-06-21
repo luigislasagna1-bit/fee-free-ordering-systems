@@ -170,9 +170,23 @@ export async function commitSandboxMenu(restaurantId: string, preview: ImportPre
  * failed/expired sandbox never lingers as an orphan live restaurant.
  */
 export async function deleteSandbox(restaurantId: string): Promise<void> {
-  await prisma.modifierOption.deleteMany({ where: { modifierGroup: { restaurantId } } });
-  await prisma.modifierGroup.deleteMany({ where: { restaurantId } });
-  await prisma.itemVariant.deleteMany({ where: { menuItem: { restaurantId } } });
+  // Modifier groups/options are scoped via menuItem / variant / category — NOT
+  // restaurantId (that's only set on library groups) — so resolve them through
+  // the restaurant's items + categories, else deleting menuItems FK-fails.
+  const [items, cats] = await Promise.all([
+    prisma.menuItem.findMany({ where: { restaurantId }, select: { id: true } }),
+    prisma.menuCategory.findMany({ where: { restaurantId }, select: { id: true } }),
+  ]);
+  const itemIds = items.map((i) => i.id);
+  const catIds = cats.map((c) => c.id);
+  const groups = await prisma.modifierGroup.findMany({
+    where: { OR: [{ menuItemId: { in: itemIds } }, { categoryId: { in: catIds } }, { restaurantId }] },
+    select: { id: true },
+  });
+  const groupIds = groups.map((g) => g.id);
+  await prisma.modifierOption.deleteMany({ where: { modifierGroupId: { in: groupIds } } });
+  await prisma.modifierGroup.deleteMany({ where: { id: { in: groupIds } } });
+  await prisma.itemVariant.deleteMany({ where: { menuItemId: { in: itemIds } } });
   await prisma.menuItem.deleteMany({ where: { restaurantId } });
   await prisma.menuCategory.deleteMany({ where: { restaurantId } });
   await prisma.openingHours.deleteMany({ where: { restaurantId } });
