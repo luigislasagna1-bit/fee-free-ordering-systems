@@ -67,7 +67,30 @@ export function FeaturesClient({ locale }: { locale: string }) {
             title={h("ordering.title")}
             body={h("ordering.body")}
             bullets={[h("ordering.bullet1"), h("ordering.bullet2"), h("ordering.bullet3")]}
-            image={<ScreenshotFrame variant="phone" alt={h("ordering.frameAlt")} src="/marketing/screenshots/luigis-menu-mobile.png" />}
+            image={<ScreenshotFrame variant="phone" alt={h("ordering.frameAlt")} src="/marketing/screenshots/luigis-menu-mobile.webp" />}
+          />
+        </MarketingSection>
+
+        {/* Checkout & payments */}
+        <MarketingSection tone="emeraldTint">
+          <AltFeatureRow
+            eyebrow={h("checkout.eyebrow")}
+            title={h("checkout.title")}
+            body={h("checkout.body")}
+            bullets={[h("checkout.bullet1"), h("checkout.bullet2"), h("checkout.bullet3")]}
+            image={<ScreenshotFrame variant="phone" alt={h("checkout.frameAlt")} src="/marketing/screenshots/luigis-order-mobile.webp" />}
+          />
+        </MarketingSection>
+
+        {/* Import your menu (GloriaFood) */}
+        <MarketingSection tone="light">
+          <AltFeatureRow
+            reverse
+            eyebrow={h("migrate.eyebrow")}
+            title={h("migrate.title")}
+            body={h("migrate.body")}
+            bullets={[h("migrate.bullet1"), h("migrate.bullet2"), h("migrate.bullet3")]}
+            image={<ScreenshotFrame variant="browser" url="feefreeordering.com/import" alt={h("migrate.frameAlt")} src="/marketing/screenshots/app-import.png" />}
           />
         </MarketingSection>
 
