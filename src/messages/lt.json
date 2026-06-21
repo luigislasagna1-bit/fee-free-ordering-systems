@@ -4368,7 +4368,9 @@
           "feat1": "0 % komisinių už tiesioginius užsakymus",
           "feat2": "Pasilikite 100 % kiekvieno užsakymo",
           "feat3": "38 kalbos jau įdiegtos",
-          "feat4": "Su pasididžiavimu sukurta Kanadoje"
+          "feat4": "Su pasididžiavimu sukurta Kanadoje",
+          "importTitle": "Pradėkite importuodami savo GloriaFood meniu",
+          "importSub": "Stebėkite, kaip jis per kelias sekundes pradeda veikti su jūsų tikru meniu — registracijos nereikia."
         },
         "funnel": {
           "eyebrow": "Augimo perspektyva",

@@ -4368,7 +4368,9 @@
           "feat1": "0 % komissiota suorista tilauksista",
           "feat2": "Pidä 100 % jokaisesta tilauksesta",
           "feat3": "38 kieltä valmiina",
-          "feat4": "Ylpeästi valmistettu Kanadassa"
+          "feat4": "Ylpeästi valmistettu Kanadassa",
+          "importTitle": "Aloita tuomalla GloriaFood-ruokalistasi",
+          "importSub": "Katso, kuinka se herää eloon oikealla ruokalistallasi sekunneissa — ilman rekisteröitymistä."
         },
         "funnel": {
           "eyebrow": "Kasvun näkökulma",

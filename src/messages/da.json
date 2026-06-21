@@ -4368,7 +4368,9 @@
           "feat1": "0 % kommission på direkte bestillinger",
           "feat2": "Behold 100 % af hver bestilling",
           "feat3": "38 sprog indbygget",
-          "feat4": "Stolt bygget i Canada"
+          "feat4": "Stolt bygget i Canada",
+          "importTitle": "Kom i gang ved at importere dit GloriaFood-menukort",
+          "importSub": "Se den gå live med dit rigtige menukort på få sekunder — ingen tilmelding nødvendig."
         },
         "funnel": {
           "eyebrow": "Vækstvinklen",

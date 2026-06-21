@@ -4368,7 +4368,9 @@
           "feat1": "0% provision på direktbeställningar",
           "feat2": "Behåll 100% av varje beställning",
           "feat3": "38 språk inbyggda",
-          "feat4": "Stolt byggd i Kanada"
+          "feat4": "Stolt byggd i Kanada",
+          "importTitle": "Kom igång genom att importera din GloriaFood-meny",
+          "importSub": "Se den gå live med din riktiga meny på några sekunder — ingen registrering krävs."
         },
         "funnel": {
           "eyebrow": "Tillväxtvinkeln",

@@ -128,6 +128,19 @@ export function HomeClient({ locale }: { locale: string }) {
               <PrimaryButton href="/signup">{t("hero.ctaStart")}<ArrowRight className="w-4 h-4" /></PrimaryButton>
               <SecondaryButton href="/demo">{t("hero.ctaDemo")}</SecondaryButton>
             </div>
+            <Link
+              href="/import"
+              className="group mt-5 flex items-center gap-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-3 max-w-xl hover:border-emerald-400 hover:bg-emerald-100/70 transition"
+            >
+              <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-600 text-white flex-shrink-0">
+                <Upload className="w-5 h-5" />
+              </span>
+              <span className="flex-1 min-w-0">
+                <span className="block text-sm font-bold text-emerald-900">{t("hero.importTitle")}</span>
+                <span className="block text-xs text-emerald-700 leading-snug">{t("hero.importSub")}</span>
+              </span>
+              <ArrowRight className="w-5 h-5 text-emerald-600 flex-shrink-0 group-hover:translate-x-0.5 transition" />
+            </Link>
             <StatTrustStrip
               className="mt-7"
               items={[t("hero.trust1"), t("hero.trust2"), t("hero.trust3"), t("hero.trust4")]}

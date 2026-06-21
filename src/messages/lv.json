@@ -4368,7 +4368,9 @@
           "feat1": "0% komisijas par tiešajiem pasūtījumiem",
           "feat2": "Paturiet 100% no katra pasūtījuma",
           "feat3": "38 valodas iebūvētas",
-          "feat4": "Ar lepnumu radīts Kanādā"
+          "feat4": "Ar lepnumu radīts Kanādā",
+          "importTitle": "Sāciet, importējot savu GloriaFood ēdienkarti",
+          "importSub": "Vēro, kā tā dažu sekunžu laikā sāk darboties ar tavu īsto ēdienkarti — bez reģistrācijas."
         },
         "funnel": {
           "eyebrow": "Izaugsmes leņķis",
