@@ -895,7 +895,6 @@ export function AdminSidebar({
             const GroupIcon = group.icon;
             const isOpen = openGroup === group.key;
             const items = collectItems(group);
-            const activeInGroup = items.some((it) => isActiveItem(it, pathname));
             // Roll up setup counts from any sub-groups that track them.
             const rolled = rollupCounts(group, groupCounts);
 
@@ -908,11 +907,13 @@ export function AdminSidebar({
                     // five categories share this exact style so they read
                     // as one tier of navigation.
                     "w-full flex items-center justify-between px-4 py-2.5 text-[11px] font-bold uppercase tracking-wider transition",
-                    activeInGroup
+                    // The OPEN category is highlighted green — the section you
+                    // click is the one that lights up, regardless of which page
+                    // you're currently on (Luigi 2026-06-20). Single-open
+                    // accordion, so exactly one category is green at a time.
+                    isOpen
                       ? "text-emerald-700 bg-emerald-50"
-                      : isOpen
-                        ? "text-gray-900 bg-gray-50"
-                        : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                      : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
                   )}
                 >
                   <span className="flex items-center gap-2.5">
@@ -922,7 +923,7 @@ export function AdminSidebar({
                       <span
                         className={cn(
                           "inline-flex items-center gap-1 text-[9px] font-bold px-1.5 py-0.5 rounded-full normal-case tracking-normal",
-                          activeInGroup ? "bg-emerald-500/20 text-emerald-700" : "bg-amber-100 text-amber-700"
+                          isOpen ? "bg-emerald-500/20 text-emerald-700" : "bg-amber-100 text-amber-700"
                         )}
                       >
                         <Lock className="w-2.5 h-2.5" />
