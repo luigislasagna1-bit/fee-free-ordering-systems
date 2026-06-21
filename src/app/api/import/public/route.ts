@@ -8,11 +8,11 @@ import {
   fetchGloriaFoodPictures,
   mapMenu,
 } from "@/lib/menu-import/gloriafood";
-import { provisionSandbox, commitSandboxMenu } from "@/lib/menu-import/sandbox";
+import { provisionSandbox, commitSandboxMenu, deleteSandbox } from "@/lib/menu-import/sandbox";
 
-// Most menus import in seconds; a very large one can take ~a minute. Public, so
-// keep headroom but well under the admin importer's 300s.
-export const maxDuration = 120;
+// Most menus import in seconds; an unusually huge one (Luigi's = 12k options)
+// can take ~90s. Headroom for that, still under the admin importer's 300s.
+export const maxDuration = 180;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -81,6 +81,10 @@ export async function POST(req: NextRequest) {
     await commitSandboxMenu(sandbox.restaurantId, preview);
   } catch (e) {
     console.error("[import-public] provision/commit failed:", e instanceof Error ? e.message : String(e));
+    // Don't leave an orphan live restaurant behind if the menu commit failed.
+    if (sandbox?.restaurantId) {
+      try { await deleteSandbox(sandbox.restaurantId); } catch (ce) { console.error("[import-public] orphan cleanup failed:", ce instanceof Error ? ce.message : String(ce)); }
+    }
     return NextResponse.json({ error: "Something went wrong building your preview. Please try again." }, { status: 500 });
   }
 

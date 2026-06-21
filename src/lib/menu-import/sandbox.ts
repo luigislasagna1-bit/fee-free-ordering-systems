@@ -96,37 +96,26 @@ const mapOpts = (opts: ReadonlyArray<{ name: string; priceAdjustment: number; is
  * CDN url for an instant demo (no Vercel Blob cost; re-hosting happens on claim).
  */
 export async function commitSandboxMenu(restaurantId: string, preview: ImportPreview): Promise<void> {
-  type LibPlan = { name: string; required: boolean; minSelect: number; maxSelect: number; maxPerOption: number; sortOrder: number; options: Opt[] };
-  const libByKey = new Map<string, LibPlan>();
-  const collect = (g: { name: string; required: boolean; minSelect: number; maxSelect: number; maxPerOption: number; sortOrder: number; options: any[] }) => {
-    const key = g.name.trim().toLowerCase();
-    if (libByKey.has(key)) return;
-    libByKey.set(key, { name: g.name, required: g.required, minSelect: g.minSelect, maxSelect: g.maxSelect, maxPerOption: g.maxPerOption, sortOrder: g.sortOrder, options: mapOpts(g.options) });
-  };
-  for (const cat of preview.categories) {
-    for (const it of cat.items) {
-      for (const g of it.itemGroups) collect(g);
-      for (const v of it.variants) for (const g of v.groups) collect(g);
-    }
-  }
-  for (const g of preview.categoryGroups) collect(g);
-
+  // PERF: a big real menu (Luigi's = 163 items / 485 groups / 12,349 options)
+  // blows the 90s transaction cap if we do everything the admin importer does.
+  // The sandbox is a throwaway DEMO, so we drop two costs the admin path pays
+  // that the storefront doesn't need:
+  //   1. the modifier-LIBRARY duplication (an admin-editor sidebar nicety — it's
+  //      backfilled when the visitor claims the restaurant, or on re-import), and
+  //   2. the separate per-group option insert — options are NESTED into each
+  //      group's create instead (one round-trip per group, not two).
+  // That roughly halves the writes and removes ~500 round-trips, bringing Luigi's
+  // menu comfortably under the cap.
+  const catIdBySource = new Map<number, string>();
   await prisma.$transaction(
     async (tx) => {
-      // Library groups (one per distinct name) — fresh restaurant, so all new.
-      const libId = new Map<string, string>();
-      let libSort = 0;
-      for (const [key, plan] of libByKey) {
-        const lib = await tx.modifierGroup.create({
-          data: { restaurantId, name: plan.name, required: plan.required, minSelect: plan.minSelect, maxSelect: plan.maxSelect, maxPerOption: plan.maxPerOption, sortOrder: libSort++ },
-          select: { id: true },
-        });
-        libId.set(key, lib.id);
-        if (plan.options.length) await tx.modifierOption.createMany({ data: plan.options.map((o) => ({ modifierGroupId: lib.id, ...o })) });
-      }
-      const libFor = (name: string) => libId.get(name.trim().toLowerCase()) ?? null;
+      // Create the hierarchy (categories → items → variants → groups), buffering
+      // EVERY option with its resolved groupId, then flush all options in a few
+      // big createMany calls at the end. Nested `options:{create}` would emit one
+      // INSERT per option (12k round-trips); this is a handful of round-trips.
+      const optionBuf: Array<{ modifierGroupId: string } & Opt> = [];
+      const pushOpts = (groupId: string, opts: any[]) => { for (const o of mapOpts(opts)) optionBuf.push({ modifierGroupId: groupId, ...o }); };
 
-      const catIdBySource = new Map<number, string>();
       let catSort = 0;
       for (const cat of preview.categories) {
         if (!cat.items?.length) continue;
@@ -147,13 +136,13 @@ export async function commitSandboxMenu(restaurantId: string, preview: ImportPre
             const v = item.variants[vi];
             const cv = await tx.itemVariant.create({ data: { menuItemId: ci.id, name: v.name, price: v.price, isDefault: v.isDefault, sortOrder: vi }, select: { id: true } });
             for (const g of v.groups) {
-              const cg = await tx.modifierGroup.create({ data: { menuItemId: ci.id, variantId: cv.id, name: g.name, required: g.required, minSelect: g.minSelect, maxSelect: g.maxSelect, maxPerOption: g.maxPerOption, sortOrder: g.sortOrder, libraryGroupId: libFor(g.name) }, select: { id: true } });
-              if (g.options.length) await tx.modifierOption.createMany({ data: mapOpts(g.options).map((o) => ({ modifierGroupId: cg.id, ...o })) });
+              const cg = await tx.modifierGroup.create({ data: { menuItemId: ci.id, variantId: cv.id, name: g.name, required: g.required, minSelect: g.minSelect, maxSelect: g.maxSelect, maxPerOption: g.maxPerOption, sortOrder: g.sortOrder }, select: { id: true } });
+              pushOpts(cg.id, g.options);
             }
           }
           for (const g of item.itemGroups) {
-            const cg = await tx.modifierGroup.create({ data: { menuItemId: ci.id, name: g.name, required: g.required, minSelect: g.minSelect, maxSelect: g.maxSelect, maxPerOption: g.maxPerOption, sortOrder: g.sortOrder, libraryGroupId: libFor(g.name) }, select: { id: true } });
-            if (g.options.length) await tx.modifierOption.createMany({ data: mapOpts(g.options).map((o) => ({ modifierGroupId: cg.id, ...o })) });
+            const cg = await tx.modifierGroup.create({ data: { menuItemId: ci.id, name: g.name, required: g.required, minSelect: g.minSelect, maxSelect: g.maxSelect, maxPerOption: g.maxPerOption, sortOrder: g.sortOrder }, select: { id: true } });
+            pushOpts(cg.id, g.options);
           }
         }
       }
@@ -161,10 +150,32 @@ export async function commitSandboxMenu(restaurantId: string, preview: ImportPre
       for (const g of preview.categoryGroups) {
         const cid = catIdBySource.get(g.sourceCategoryId);
         if (!cid) continue;
-        const cg = await tx.modifierGroup.create({ data: { categoryId: cid, name: g.name, required: g.required, minSelect: g.minSelect, maxSelect: g.maxSelect, maxPerOption: g.maxPerOption, sortOrder: g.sortOrder, libraryGroupId: libFor(g.name) }, select: { id: true } });
-        if (g.options.length) await tx.modifierOption.createMany({ data: mapOpts(g.options).map((o) => ({ modifierGroupId: cg.id, ...o })) });
+        const cg = await tx.modifierGroup.create({ data: { categoryId: cid, name: g.name, required: g.required, minSelect: g.minSelect, maxSelect: g.maxSelect, maxPerOption: g.maxPerOption, sortOrder: g.sortOrder }, select: { id: true } });
+        pushOpts(cg.id, g.options);
+      }
+
+      // Flush all options in chunks (well under Postgres' 65535-parameter cap).
+      for (let i = 0; i < optionBuf.length; i += 4000) {
+        await tx.modifierOption.createMany({ data: optionBuf.slice(i, i + 4000) });
       }
     },
-    { maxWait: 10_000, timeout: 90_000 },
+    { maxWait: 15_000, timeout: 165_000 },
   );
+}
+
+/**
+ * Fully delete a sandbox restaurant and everything under it (options → groups →
+ * variants → items → categories → hours → the sandbox row → the restaurant).
+ * Used by the public endpoint's failure cleanup and the TTL-cleanup cron so a
+ * failed/expired sandbox never lingers as an orphan live restaurant.
+ */
+export async function deleteSandbox(restaurantId: string): Promise<void> {
+  await prisma.modifierOption.deleteMany({ where: { modifierGroup: { restaurantId } } });
+  await prisma.modifierGroup.deleteMany({ where: { restaurantId } });
+  await prisma.itemVariant.deleteMany({ where: { menuItem: { restaurantId } } });
+  await prisma.menuItem.deleteMany({ where: { restaurantId } });
+  await prisma.menuCategory.deleteMany({ where: { restaurantId } });
+  await prisma.openingHours.deleteMany({ where: { restaurantId } });
+  await prisma.sandboxRestaurant.deleteMany({ where: { restaurantId } });
+  await prisma.restaurant.delete({ where: { id: restaurantId } });
 }
