@@ -1533,6 +1533,11 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // Inner playback core — takes any decoded buffer and applies the
   // same filter chain. Used by both the bundled GloriaFood sample and
   // the owner's custom upload.
+  // In-flight ring buffer sources (custom upload + GloriaFood ding). Tracked so
+  // we can stop them the instant the alarm should go quiet (see the silence
+  // effect below) — fire-and-forget sources otherwise finish their clip, so the
+  // sound "kept playing" after an order screen opened (Fabrizio 2026-06-21).
+  const activeRingSourcesRef = useRef<AudioBufferSourceNode[]>([]);
   const playBufferOnce = useCallback((buf: AudioBuffer | null, vol: number): boolean => {
     const ctx = audioCtxRef.current;
     if (!ctx || !buf) return false;
@@ -1579,6 +1584,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       // trims energy and otherwise leaves the ding quieter than the alarm track.
       gain.gain.value = RING_BOOST * vol;
       src.connect(highpass).connect(lowpass).connect(presence).connect(gain).connect(ctx.destination);
+      // Register so the alarm can be cut mid-clip; self-prune when it ends.
+      activeRingSourcesRef.current.push(src);
+      src.onended = () => {
+        const i = activeRingSourcesRef.current.indexOf(src);
+        if (i >= 0) activeRingSourcesRef.current.splice(i, 1);
+      };
       src.start();
       return true;
     } catch (e) {
@@ -1595,6 +1606,15 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     (vol: number) => playBufferOnce(customSampleBufferRef.current, vol),
     [playBufferOnce],
   );
+  // Hard-stop every in-flight ring clip right now (used when the alarm should
+  // fall silent mid-cadence). Clear onended first so the stop() doesn't splice
+  // the array we're about to reset. Best-effort — stop() on an ended node throws.
+  const stopActiveRingSources = useCallback(() => {
+    for (const s of activeRingSourcesRef.current) {
+      try { s.onended = null; s.stop(); } catch { /* already ended */ }
+    }
+    activeRingSourcesRef.current = [];
+  }, []);
 
   /**
    * Ring one strike using the user's chosen alert sound.
@@ -1825,6 +1845,18 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       if (timeoutId) clearTimeout(timeoutId);
     };
   }, [ringAudible, alertMuted, alertVolume, pageVisible, ringBellOnce]);
+
+  // Cut any in-flight custom/ding clip the moment the alarm should be silent —
+  // the open order was the last pending one, the room was acknowledged, or the
+  // screen turned off (the native alarm owns screen-off). The cadence above only
+  // stops SCHEDULING new strikes; a clip already playing finishes on its own,
+  // which is why the custom ringtone "kept playing" after an order was opened
+  // (Fabrizio 2026-06-21). Mirrors the long-alert track's pause() on the same
+  // condition. gloriafood is unaffected — it rings via the HTMLAudio track, not
+  // these buffer sources.
+  useEffect(() => {
+    if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) stopActiveRingSources();
+  }, [ringAudible, alertMuted, alertVolume, pageVisible, stopActiveRingSources]);
 
   // Full-length GloriaFood alert track — the owner's uploaded
   // /sounds/gloriafood-alert.mp3, played at MAX volume and LOOPED until the
