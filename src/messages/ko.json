@@ -4330,7 +4330,8 @@
       "support": "지원",
       "account": "계정",
       "copyright": "© {year} Fee Free Ordering. All rights reserved.",
-      "tagline": "독립 레스토랑을 위한 수수료 없는 주문 플랫폼."
+      "tagline": "독립 레스토랑을 위한 수수료 없는 주문 플랫폼.",
+      "support24_7": "24/7 캐나다 지원"
     },
     "home": {
       "heroBadge": "주문 수수료 0%",

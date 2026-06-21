@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, ShoppingBag, UtensilsCrossed, Users, BarChart3,
-  Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu, Plug,
+  Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu, Plug, Phone,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
   Check, Circle, Sparkles, Rocket, QrCode, Lock, Network, MessageSquare, Bot, MonitorCheck, Smartphone, Calculator,
@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
+import { SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL } from "@/lib/support";
 import { useEffect, useState } from "react";
 import type { Session } from "next-auth";
 import { useTranslations } from "next-intl";
@@ -1075,6 +1076,15 @@ export function AdminSidebar({
           >
             <Store className="w-4 h-4" /> {tr("viewOrderingPage", "View ordering page")}
           </Link>
+        )}
+        {!collapsed && (
+          <a
+            href={`tel:${SUPPORT_PHONE_TEL}`}
+            title={tr("support24_7", "24/7 support")}
+            className="flex items-center gap-2 text-xs text-emerald-600 hover:text-emerald-700 font-semibold transition"
+          >
+            <Phone className="w-4 h-4" /> {SUPPORT_PHONE_DISPLAY}
+          </a>
         )}
         {!collapsed && (
           <div className="text-xs text-gray-500 truncate">

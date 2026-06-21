@@ -4330,7 +4330,8 @@
       "support": "Soporte",
       "account": "Cuenta",
       "copyright": "© {year} Fee Free Ordering. Todos los derechos reservados.",
-      "tagline": "La plataforma de pedidos sin comisión para restaurantes independientes."
+      "tagline": "La plataforma de pedidos sin comisión para restaurantes independientes.",
+      "support24_7": "Soporte canadiense 24/7"
     },
     "home": {
       "heroBadge": "0 % de comisión en los pedidos",

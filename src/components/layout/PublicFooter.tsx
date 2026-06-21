@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
-import { ChefHat } from "lucide-react";
+import { ChefHat, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL } from "@/lib/support";
 
 /**
  * Public footer.
@@ -28,6 +29,10 @@ export function PublicFooter() {
               Fee Free Ordering
             </Link>
             <p className="text-sm text-gray-400">{tF("tagline")}</p>
+            <a href={`tel:${SUPPORT_PHONE_TEL}`} className="mt-4 inline-flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 font-bold">
+              <Phone className="w-4 h-4" /> {SUPPORT_PHONE_DISPLAY}
+            </a>
+            <p className="text-xs text-gray-500 mt-0.5">{tF("support24_7")}</p>
           </div>
           <div>
             <div className="font-semibold text-white mb-3">{tF("product")}</div>

@@ -4330,7 +4330,8 @@
       "support": "サポート",
       "account": "アカウント",
       "copyright": "© {year} Fee Free Ordering. All rights reserved.",
-      "tagline": "独立系レストランのための手数料無料注文プラットフォーム。"
+      "tagline": "独立系レストランのための手数料無料注文プラットフォーム。",
+      "support24_7": "24/7 カナダのサポート"
     },
     "home": {
       "heroBadge": "注文手数料 0%",

@@ -4330,7 +4330,8 @@
       "support": "支持",
       "account": "账户",
       "copyright": "© {year} Fee Free Ordering。保留所有权利。",
-      "tagline": "专为独立餐厅打造的零佣金点餐平台。"
+      "tagline": "专为独立餐厅打造的零佣金点餐平台。",
+      "support24_7": "24/7 加拿大支持"
     },
     "home": {
       "heroBadge": "订单零佣金",

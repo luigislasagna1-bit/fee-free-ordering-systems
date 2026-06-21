@@ -4330,7 +4330,8 @@
       "support": "Support",
       "account": "Account",
       "copyright": "© {year} Fee Free Ordering. All rights reserved.",
-      "tagline": "The fee-free ordering platform for independent restaurants."
+      "tagline": "The fee-free ordering platform for independent restaurants.",
+      "support24_7": "24/7 Canadian support"
     },
     "home": {
       "heroBadge": "0% commission on orders",

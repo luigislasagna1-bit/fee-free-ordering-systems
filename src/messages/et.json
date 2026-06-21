@@ -4330,7 +4330,8 @@
       "support": "Tugi",
       "account": "Konto",
       "copyright": "© {year} Fee Free Ordering. Kõik õigused kaitstud.",
-      "tagline": "Komisjonitasuvaba tellimisplatvorm sõltumatutele restoranidele."
+      "tagline": "Komisjonitasuvaba tellimisplatvorm sõltumatutele restoranidele.",
+      "support24_7": "Kanada tugi 24/7"
     },
     "home": {
       "heroBadge": "0% komisjonitasu tellimustelt",

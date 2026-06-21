@@ -4330,7 +4330,8 @@
       "support": "Tuki",
       "account": "Tili",
       "copyright": "© {year} Fee Free Ordering. Kaikki oikeudet pidätetään.",
-      "tagline": "Maksuton tilausalusta itsenäisille ravintoloille."
+      "tagline": "Maksuton tilausalusta itsenäisille ravintoloille.",
+      "support24_7": "Kanadalainen tuki 24/7"
     },
     "home": {
       "heroBadge": "0 % provisio tilauksista",

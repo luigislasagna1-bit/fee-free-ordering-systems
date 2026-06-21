@@ -4330,7 +4330,8 @@
       "support": "Pagalba",
       "account": "Paskyra",
       "copyright": "© {year} Fee Free Ordering. Visos teisės saugomos.",
-      "tagline": "Mokesčio neimanti užsakymų platforma nepriklausomiems restoranams."
+      "tagline": "Mokesčio neimanti užsakymų platforma nepriklausomiems restoranams.",
+      "support24_7": "Kanadietiškas palaikymas 24/7"
     },
     "home": {
       "heroBadge": "0% komisinių nuo užsakymų",

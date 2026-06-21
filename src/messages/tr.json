@@ -4330,7 +4330,8 @@
       "support": "Destek",
       "account": "Hesap",
       "copyright": "© {year} Fee Free Ordering. Tüm hakları saklıdır.",
-      "tagline": "Bağımsız restoranlar için komisyonsuz sipariş platformu."
+      "tagline": "Bağımsız restoranlar için komisyonsuz sipariş platformu.",
+      "support24_7": "7/24 Kanada desteği"
     },
     "home": {
       "heroBadge": "%0 komisyon",
