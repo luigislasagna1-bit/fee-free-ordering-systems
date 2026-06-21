@@ -1801,6 +1801,19 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     };
   }, [ringAudible, alertMuted, alertVolume, ringBellOnce]);
 
+  // Page visibility — the in-app ring must ONLY sound while the kitchen app is
+  // actually on screen. When the screen is off / the app is backgrounded, the
+  // NATIVE order alarm (OrderAlarmService) handles the ring; without this gate
+  // the WebView keeps ringing too on tablets that don't suspend it, so staff
+  // hear BOTH the native ring and the in-app ring (Fabrizio 2026-06-20).
+  const [pageVisible, setPageVisible] = useState(true);
+  useEffect(() => {
+    const sync = () => setPageVisible(typeof document === "undefined" || document.visibilityState === "visible");
+    sync();
+    document.addEventListener("visibilitychange", sync);
+    return () => document.removeEventListener("visibilitychange", sync);
+  }, []);
+
   // Full-length GloriaFood alert track — the owner's uploaded
   // /sounds/gloriafood-alert.mp3, played at MAX volume and LOOPED until the
   // kitchen accepts/rejects (alerting → false) or the auto-reject cron kills
@@ -1810,7 +1823,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   useEffect(() => {
     const a = getLongAlert();
     if (!a) return;
-    const shouldPlay = ringAudible && alertSound === "gloriafood" && !alertMuted && alertVolume > 0;
+    const shouldPlay = ringAudible && alertSound === "gloriafood" && !alertMuted && alertVolume > 0 && pageVisible;
     if (shouldPlay) {
       // Route through the gain+limiter chain so the track plays WAY louder than
       // the file's own level (without clipping). volume = 1 feeds the chain at
@@ -1835,7 +1848,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       if (!a.paused) a.pause();
       try { a.currentTime = 0; } catch {}
     }
-  }, [ringAudible, longRing, alertSound, alertMuted, alertVolume, getLongAlert, ensureLongAlertRouting]);
+  }, [ringAudible, longRing, alertSound, alertMuted, alertVolume, pageVisible, getLongAlert, ensureLongAlertRouting]);
 
   // ── Re-arm audio when the app returns to the foreground (Luigi 2026-06-07) ──
   // Android (and backgrounded browser tabs) SUSPEND the AudioContext and pause

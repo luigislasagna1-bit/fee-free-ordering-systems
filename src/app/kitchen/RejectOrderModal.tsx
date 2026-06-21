@@ -87,7 +87,7 @@ export function RejectOrderModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-[60] flex items-end sm:items-center justify-center p-4">
+    <div className="fixed inset-0 bg-black/60 z-[60] flex items-end sm:items-center justify-center px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:pb-4">
       <div className={`${t.modal} rounded-2xl w-full max-w-md p-6 shadow-2xl`}>
         <div className="flex items-start justify-between gap-3 mb-1">
           <h3 className={`text-lg font-bold ${t.text}`}>{tk("reject")}</h3>

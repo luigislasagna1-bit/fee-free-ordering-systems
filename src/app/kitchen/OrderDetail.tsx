@@ -316,7 +316,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           report, Luigi 2026-06-15). */}
       <div
         className={`flex items-center gap-3 px-5 py-4 border-b ${t.border} flex-shrink-0`}
-        style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}
+        style={{ paddingTop: "max(1.75rem, env(safe-area-inset-top))" }}
       >
         {/* Back to the order list (full-screen detail). Always visible now that
             the detail opens over the whole screen. Luigi 2026-06-08. */}
@@ -1094,7 +1094,7 @@ function PrintBtn({ label, icon, onClick, loading, t }: { label: string; icon: R
 
 function Modal({ title, children, t, onClose }: { title: string; children: React.ReactNode; t: T; onClose: () => void }) {
   return (
-    <div className="absolute inset-0 bg-black/60 flex items-end md:items-center justify-center z-10 p-4">
+    <div className="absolute inset-0 bg-black/60 flex items-end md:items-center justify-center z-10 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:pb-4">
       <div className={`${t.modal} rounded-2xl w-full max-w-sm p-5`}>
         <div className={`flex items-center justify-between mb-4`}>
           <h4 className={`font-bold text-base ${t.text}`}>{title}</h4>
