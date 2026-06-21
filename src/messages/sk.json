@@ -72,7 +72,8 @@
     "custom": "Vlastné",
     "free": "Zadarmo",
     "menu": "Menu",
-    "loadingDots": "Načítavam…"
+    "loadingDots": "Načítavam…",
+    "previous": "Späť"
   },
   "auth": {
     "signIn": "Prihlásiť sa",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Sledujte prichádzajúce objednávky na kuchynskom displeji v reálnom čase.",
         "admin": "Admin panel",
-        "adminDesc": "Spravujte menu, hodiny, objednávky a nastavenia ako majiteľ reštaurácie."
+        "adminDesc": "Spravujte menu, hodiny, objednávky a nastavenia ako majiteľ reštaurácie.",
+        "kitchenCta": "Pozrite si aplikáciu Kuchyňa",
+        "adminCta": "Pozrite si panel Administrátora"
       },
-      "tryIt": "Vyskúšať"
+      "tryIt": "Vyskúšať",
+      "import": {
+        "eyebrow": "Bez registrácie",
+        "title": "Vyskúšajte to s VAŠÍM menu",
+        "body": "Vložte svoj odkaz z GloriaFood a my za približne 30 sekúnd vytvoríme živú objednávkovú stránku s vaším skutočným menu — vrátane fotiek, veľkostí a príloh.",
+        "cta": "Importovať moje menu z GloriaFood"
+      }
     },
     "signup": {
       "title": "Začnite za 5 minút",

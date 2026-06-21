@@ -72,7 +72,8 @@
     "custom": "Prilagođeno",
     "free": "Besplatno",
     "menu": "Meni",
-    "loadingDots": "Učitavanje…"
+    "loadingDots": "Učitavanje…",
+    "previous": "Nazad"
   },
   "auth": {
     "signIn": "Prijavite se",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Vidite dolazne porudžbine na ekranu kuhinje u realnom vremenu.",
         "admin": "Admin panel",
-        "adminDesc": "Upravljajte menijem, radnim vremenom, porudžbinama i podešavanjima kao vlasnik restorana."
+        "adminDesc": "Upravljajte menijem, radnim vremenom, porudžbinama i podešavanjima kao vlasnik restorana.",
+        "kitchenCta": "Pogledajte aplikaciju Kuhinja",
+        "adminCta": "Pogledajte Admin panel"
       },
-      "tryIt": "Isprobaj"
+      "tryIt": "Isprobaj",
+      "import": {
+        "eyebrow": "Bez naloga",
+        "title": "Isprobajte sa SVOJIM menijem",
+        "body": "Nalepite svoj GloriaFood link i za oko 30 sekundi napravićemo vam aktivnu stranicu za poručivanje sa vašim pravim menijem — uključujući fotografije, veličine i dodatke.",
+        "cta": "Uvezi moj GloriaFood meni"
+      }
     },
     "signup": {
       "title": "Počnite za 5 minuta",

@@ -72,7 +72,8 @@
     "custom": "自定义",
     "free": "免费",
     "menu": "菜单",
-    "loadingDots": "加载中…"
+    "loadingDots": "加载中…",
+    "previous": "上一个"
   },
   "auth": {
     "signIn": "登录",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "实时查看厨房屏幕上的传入订单。",
         "admin": "管理后台",
-        "adminDesc": "以餐厅老板身份管理菜单、营业时间、订单和设置。"
+        "adminDesc": "以餐厅老板身份管理菜单、营业时间、订单和设置。",
+        "kitchenCta": "查看厨房应用",
+        "adminCta": "查看管理后台"
       },
-      "tryIt": "立即体验"
+      "tryIt": "立即体验",
+      "import": {
+        "eyebrow": "无需注册账户",
+        "title": "用您自己的菜单试一试",
+        "body": "粘贴您的 GloriaFood 链接，我们将在约 30 秒内，用您真实的菜单生成一个可下单的在线页面——图片、规格和配料一应俱全。",
+        "cta": "导入我的 GloriaFood 菜单"
+      }
     },
     "signup": {
       "title": "5 分钟快速上手",

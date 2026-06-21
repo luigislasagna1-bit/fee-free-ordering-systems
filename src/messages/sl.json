@@ -72,7 +72,8 @@
     "custom": "Po meri",
     "free": "Brezplačno",
     "menu": "Meni",
-    "loadingDots": "Nalaganje…"
+    "loadingDots": "Nalaganje…",
+    "previous": "Nazaj"
   },
   "auth": {
     "signIn": "Prijava",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Oglejte si dohodna naročila na kuhinjskem zaslonu v realnem času.",
         "admin": "Admin plošča",
-        "adminDesc": "Upravljajte meni, ure, naročila in nastavitve kot lastnik restavracije."
+        "adminDesc": "Upravljajte meni, ure, naročila in nastavitve kot lastnik restavracije.",
+        "kitchenCta": "Oglejte si aplikacijo Kuhinja",
+        "adminCta": "Oglejte si skrbniško ploščo"
       },
-      "tryIt": "Preizkusite"
+      "tryIt": "Preizkusite",
+      "import": {
+        "eyebrow": "Brez računa",
+        "title": "Preizkusite s SVOJIM jedilnikom",
+        "body": "Prilepite svojo povezavo GloriaFood in v približno 30 sekundah vam ustvarimo živo stran za naročanje z vašim pravim jedilnikom — vključno s fotografijami, velikostmi in dodatki.",
+        "cta": "Uvozi moj jedilnik iz GloriaFood"
+      }
     },
     "signup": {
       "title": "Začnite v 5 minutah",

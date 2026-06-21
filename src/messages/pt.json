@@ -72,7 +72,8 @@
     "custom": "Personalizado",
     "free": "Grátis",
     "menu": "Menu",
-    "loadingDots": "Carregando…"
+    "loadingDots": "Carregando…",
+    "previous": "Anterior"
   },
   "auth": {
     "signIn": "Entrar",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Veja pedidos chegando na tela de cozinha em tempo real.",
         "admin": "Painel admin",
-        "adminDesc": "Gerencie menu, horários, pedidos e configurações como dono."
+        "adminDesc": "Gerencie menu, horários, pedidos e configurações como dono.",
+        "kitchenCta": "Ver a app da Cozinha",
+        "adminCta": "Ver o painel de Administração"
       },
-      "tryIt": "Experimentar"
+      "tryIt": "Experimentar",
+      "import": {
+        "eyebrow": "Sem necessidade de conta",
+        "title": "Experimente com o SEU menu",
+        "body": "Cole a ligação do seu GloriaFood e criamos uma página de encomendas ao vivo com o seu menu real — fotos, tamanhos e ingredientes incluídos — em cerca de 30 segundos.",
+        "cta": "Importar o meu menu do GloriaFood"
+      }
     },
     "signup": {
       "title": "Comece em 5 minutos",

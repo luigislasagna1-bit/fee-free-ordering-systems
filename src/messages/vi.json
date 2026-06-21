@@ -72,7 +72,8 @@
     "custom": "Tùy chỉnh",
     "free": "Miễn phí",
     "menu": "Thực đơn",
-    "loadingDots": "Đang tải…"
+    "loadingDots": "Đang tải…",
+    "previous": "Trước"
   },
   "auth": {
     "signIn": "Đăng nhập",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Xem đơn mới trực tiếp trên màn hình bếp.",
         "admin": "Bảng quản trị",
-        "adminDesc": "Quản lý thực đơn, giờ, đơn hàng và cài đặt với vai trò chủ nhà hàng."
+        "adminDesc": "Quản lý thực đơn, giờ, đơn hàng và cài đặt với vai trò chủ nhà hàng.",
+        "kitchenCta": "Xem ứng dụng Bếp",
+        "adminCta": "Xem bảng quản trị"
       },
-      "tryIt": "Thử ngay"
+      "tryIt": "Thử ngay",
+      "import": {
+        "eyebrow": "Không cần tài khoản",
+        "title": "Thử ngay với thực đơn CỦA BẠN",
+        "body": "Dán liên kết GloriaFood của bạn và chúng tôi sẽ tạo một trang đặt hàng trực tiếp từ thực đơn thật của bạn — kèm hình ảnh, kích cỡ và topping — chỉ trong khoảng 30 giây.",
+        "cta": "Nhập thực đơn GloriaFood của tôi"
+      }
     },
     "signup": {
       "title": "Bắt đầu trong 5 phút",

@@ -72,7 +72,8 @@
     "custom": "Personalizat",
     "free": "Gratuit",
     "menu": "Meniu",
-    "loadingDots": "Se încarcă…"
+    "loadingDots": "Se încarcă…",
+    "previous": "Înapoi"
   },
   "auth": {
     "signIn": "Conectare",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Vezi comenzile primite pe ecranul bucătăriei în timp real.",
         "admin": "Panou de administrare",
-        "adminDesc": "Gestionează meniu, program, comenzi și setări ca proprietar de restaurant."
+        "adminDesc": "Gestionează meniu, program, comenzi și setări ca proprietar de restaurant.",
+        "kitchenCta": "Vezi aplicația de Bucătărie",
+        "adminCta": "Vezi panoul de Administrare"
       },
-      "tryIt": "Încearcă"
+      "tryIt": "Încearcă",
+      "import": {
+        "eyebrow": "Fără cont",
+        "title": "Încearcă cu meniul TĂU",
+        "body": "Lipește linkul tău GloriaFood și îți construim o pagină de comenzi live cu meniul tău real — fotografii, mărimi și toppinguri incluse — în aproximativ 30 de secunde.",
+        "cta": "Importă meniul meu GloriaFood"
+      }
     },
     "signup": {
       "title": "Începe în 5 minute",

@@ -72,7 +72,8 @@
     "custom": "Tilpasset",
     "free": "Gratis",
     "menu": "Menu",
-    "loadingDots": "Indlæser…"
+    "loadingDots": "Indlæser…",
+    "previous": "Forrige"
   },
   "auth": {
     "signIn": "Log ind",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Se indgående ordrer på køkkenskærmen i realtid.",
         "admin": "Adminpanel",
-        "adminDesc": "Administrer menu, åbningstider, ordrer og indstillinger som restaurantejer."
+        "adminDesc": "Administrer menu, åbningstider, ordrer og indstillinger som restaurantejer.",
+        "kitchenCta": "Se køkken-appen",
+        "adminCta": "Se admin-panelet"
       },
-      "tryIt": "Prøv det"
+      "tryIt": "Prøv det",
+      "import": {
+        "eyebrow": "Ingen konto nødvendig",
+        "title": "Prøv det med DIT menukort",
+        "body": "Indsæt dit GloriaFood-link, så bygger vi en live bestillingsside ud fra dit rigtige menukort — med billeder, størrelser og tilbehør — på cirka 30 sekunder.",
+        "cta": "Importér mit GloriaFood-menukort"
+      }
     },
     "signup": {
       "title": "Kom i gang på 5 minutter",

@@ -72,7 +72,8 @@
     "custom": "Özel",
     "free": "Ücretsiz",
     "menu": "Menü",
-    "loadingDots": "Yükleniyor…"
+    "loadingDots": "Yükleniyor…",
+    "previous": "Önceki"
   },
   "auth": {
     "signIn": "Giriş Yap",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Gelen siparişleri mutfak ekranında gerçek zamanlı görün.",
         "admin": "Yönetici Paneli",
-        "adminDesc": "Menüyü, saatleri, siparişleri ve ayarları restoran sahibi olarak yönetin."
+        "adminDesc": "Menüyü, saatleri, siparişleri ve ayarları restoran sahibi olarak yönetin.",
+        "kitchenCta": "Mutfak uygulamasını gör",
+        "adminCta": "Yönetim panelini gör"
       },
-      "tryIt": "Deneyin"
+      "tryIt": "Deneyin",
+      "import": {
+        "eyebrow": "Hesap gerekmez",
+        "title": "SİZİN menünüzle deneyin",
+        "body": "GloriaFood bağlantınızı yapıştırın, gerçek menünüzle çalışan canlı bir sipariş sayfasını fotoğraflar, boyutlar ve malzemeler dahil yaklaşık 30 saniyede oluşturalım.",
+        "cta": "GloriaFood menümü içe aktar"
+      }
     },
     "signup": {
       "title": "5 dakikada başlayın",

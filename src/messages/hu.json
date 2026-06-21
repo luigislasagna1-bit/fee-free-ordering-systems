@@ -72,7 +72,8 @@
     "custom": "Egyéni",
     "free": "Ingyenes",
     "menu": "Étlap",
-    "loadingDots": "Betöltés…"
+    "loadingDots": "Betöltés…",
+    "previous": "Előző"
   },
   "auth": {
     "signIn": "Bejelentkezés",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Tekintse meg a beérkező rendeléseket a konyhai képernyőn valós időben.",
         "admin": "Admin panel",
-        "adminDesc": "Kezelje az étlapot, nyitvatartást, rendeléseket és beállításokat étteremtulajdonosként."
+        "adminDesc": "Kezelje az étlapot, nyitvatartást, rendeléseket és beállításokat étteremtulajdonosként.",
+        "kitchenCta": "Konyhai alkalmazás megtekintése",
+        "adminCta": "Adminisztrációs felület megtekintése"
       },
-      "tryIt": "Kipróbálás"
+      "tryIt": "Kipróbálás",
+      "import": {
+        "eyebrow": "Nincs szükség fiókra",
+        "title": "Próbáld ki a SAJÁT étlapoddal",
+        "body": "Illeszd be a GloriaFood-linkedet, és körülbelül 30 másodperc alatt élő rendelési oldalt építünk a valódi étlapodból – fotókkal, méretekkel és feltétekkel együtt.",
+        "cta": "GloriaFood-étlapom importálása"
+      }
     },
     "signup": {
       "title": "Kezdjen el 5 perc alatt",

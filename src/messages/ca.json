@@ -72,7 +72,8 @@
     "custom": "Personalitzat",
     "free": "Gratis",
     "menu": "Carta",
-    "loadingDots": "Carregant…"
+    "loadingDots": "Carregant…",
+    "previous": "Anterior"
   },
   "auth": {
     "signIn": "Inicia sessió",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Veieu les comandes entrants a la pantalla de cuina en temps real.",
         "admin": "Panell d'administració",
-        "adminDesc": "Gestioneu la carta, els horaris, les comandes i la configuració com a propietari del restaurant."
+        "adminDesc": "Gestioneu la carta, els horaris, les comandes i la configuració com a propietari del restaurant.",
+        "kitchenCta": "Mira l'app de cuina",
+        "adminCta": "Mira el tauler d'administració"
       },
-      "tryIt": "Prova-ho"
+      "tryIt": "Prova-ho",
+      "import": {
+        "eyebrow": "Sense compte",
+        "title": "Prova-ho amb el TEU menú",
+        "body": "Enganxa el teu enllaç de GloriaFood i, en uns 30 segons, crearem una pàgina de comandes real amb el teu menú de debò: fotos, mides i ingredients inclosos.",
+        "cta": "Importa el meu menú de GloriaFood"
+      }
     },
     "signup": {
       "title": "Comenceu en 5 minuts",

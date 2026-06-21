@@ -72,7 +72,8 @@
     "custom": "Kohandatud",
     "free": "Tasuta",
     "menu": "Menüü",
-    "loadingDots": "Laadimine…"
+    "loadingDots": "Laadimine…",
+    "previous": "Eelmine"
   },
   "auth": {
     "signIn": "Logi sisse",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Vaata saabuvaid tellimusi köögi ekraanil reaalajas.",
         "admin": "Administraatori paneel",
-        "adminDesc": "Halda menüüd, lahtiolekuaegu, tellimusi ja seadeid restoranipidajana."
+        "adminDesc": "Halda menüüd, lahtiolekuaegu, tellimusi ja seadeid restoranipidajana.",
+        "kitchenCta": "Vaata köögirakendust",
+        "adminCta": "Vaata halduspaneeli"
       },
-      "tryIt": "Proovi"
+      "tryIt": "Proovi",
+      "import": {
+        "eyebrow": "Kontot pole vaja",
+        "title": "Proovi SINU menüüga",
+        "body": "Kleebi oma GloriaFoodi link ja me ehitame umbes 30 sekundiga sinu päris menüü põhjal toimiva tellimislehe – koos fotode, suuruste ja lisanditega.",
+        "cta": "Impordi minu GloriaFoodi menüü"
+      }
     },
     "signup": {
       "title": "Alusta 5 minutiga",

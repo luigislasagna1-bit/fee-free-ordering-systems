@@ -72,7 +72,8 @@
     "custom": "Anpassad",
     "free": "Gratis",
     "menu": "Meny",
-    "loadingDots": "Laddar…"
+    "loadingDots": "Laddar…",
+    "previous": "Föregående"
   },
   "auth": {
     "signIn": "Logga in",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Se inkommande beställningar på köksskärmen i realtid.",
         "admin": "Adminpanel",
-        "adminDesc": "Hantera meny, öppettider, beställningar och inställningar som restaurangägare."
+        "adminDesc": "Hantera meny, öppettider, beställningar och inställningar som restaurangägare.",
+        "kitchenCta": "Se köks-appen",
+        "adminCta": "Se admin-panelen"
       },
-      "tryIt": "Prova"
+      "tryIt": "Prova",
+      "import": {
+        "eyebrow": "Inget konto behövs",
+        "title": "Testa med DIN meny",
+        "body": "Klistra in din GloriaFood-länk så bygger vi en live beställningssida med din riktiga meny – bilder, storlekar och tillbehör inkluderade – på ungefär 30 sekunder.",
+        "cta": "Importera min GloriaFood-meny"
+      }
     },
     "signup": {
       "title": "Kom igång på 5 minuter",

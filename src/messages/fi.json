@@ -72,7 +72,8 @@
     "custom": "Mukautettu",
     "free": "Ilmainen",
     "menu": "Menu",
-    "loadingDots": "Ladataan…"
+    "loadingDots": "Ladataan…",
+    "previous": "Edellinen"
   },
   "auth": {
     "signIn": "Kirjaudu sisään",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Katso saapuvat tilaukset keittiönäytöllä reaaliajassa.",
         "admin": "Hallintapaneeli",
-        "adminDesc": "Hallinnoi menua, aukioloaikoja, tilauksia ja asetuksia ravintolan omistajana."
+        "adminDesc": "Hallinnoi menua, aukioloaikoja, tilauksia ja asetuksia ravintolan omistajana.",
+        "kitchenCta": "Katso keittiösovellus",
+        "adminCta": "Katso hallintapaneeli"
       },
-      "tryIt": "Kokeile"
+      "tryIt": "Kokeile",
+      "import": {
+        "eyebrow": "Tiliä ei tarvita",
+        "title": "Kokeile OMALLA menullasi",
+        "body": "Liitä GloriaFood-linkkisi, niin rakennamme noin 30 sekunnissa toimivan tilaussivun oikealle menullesi – kuvineen, kokoineen ja lisukkeineen.",
+        "cta": "Tuo GloriaFood-menuni"
+      }
     },
     "signup": {
       "title": "Aloita 5 minuutissa",

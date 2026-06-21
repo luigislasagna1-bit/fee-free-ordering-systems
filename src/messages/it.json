@@ -72,7 +72,8 @@
     "custom": "Personalizzato",
     "free": "Gratis",
     "menu": "Menù",
-    "loadingDots": "Caricamento…"
+    "loadingDots": "Caricamento…",
+    "previous": "Precedente"
   },
   "auth": {
     "signIn": "Accedi",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Vedi gli ordini in arrivo sul display cucina in tempo reale.",
         "admin": "Pannello admin",
-        "adminDesc": "Gestisci menù, orari, ordini e impostazioni come proprietario."
+        "adminDesc": "Gestisci menù, orari, ordini e impostazioni come proprietario.",
+        "kitchenCta": "Scopri l'app Cucina",
+        "adminCta": "Scopri il pannello Admin"
       },
-      "tryIt": "Prova"
+      "tryIt": "Prova",
+      "import": {
+        "eyebrow": "Nessun account richiesto",
+        "title": "Provalo con il TUO menù",
+        "body": "Incolla il tuo link GloriaFood e in circa 30 secondi creiamo una pagina di ordinazione live sul tuo menù reale — foto, formati e aggiunte inclusi.",
+        "cta": "Importa il mio menù GloriaFood"
+      }
     },
     "signup": {
       "title": "Inizia in 5 minuti",

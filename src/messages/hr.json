@@ -72,7 +72,8 @@
     "custom": "Prilagođeno",
     "free": "Besplatno",
     "menu": "Jelovnik",
-    "loadingDots": "Učitavanje…"
+    "loadingDots": "Učitavanje…",
+    "previous": "Prethodno"
   },
   "auth": {
     "signIn": "Prijava",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Pogledajte dolazne narudžbe na kuhinjskom zaslonu u stvarnom vremenu.",
         "admin": "Administratorska ploča",
-        "adminDesc": "Upravljajte jelovnikom, radnim vremenom, narudžbama i postavkama kao vlasnik restorana."
+        "adminDesc": "Upravljajte jelovnikom, radnim vremenom, narudžbama i postavkama kao vlasnik restorana.",
+        "kitchenCta": "Pogledajte aplikaciju za kuhinju",
+        "adminCta": "Pogledajte administratorsku ploču"
       },
-      "tryIt": "Isprobajte"
+      "tryIt": "Isprobajte",
+      "import": {
+        "eyebrow": "Račun nije potreban",
+        "title": "Isprobajte s VAŠIM jelovnikom",
+        "body": "Zalijepite svoju GloriaFood poveznicu i za otprilike 30 sekundi izradit ćemo aktivnu stranicu za narudžbe na temelju vašeg pravog jelovnika – uključujući fotografije, veličine i dodatke.",
+        "cta": "Uvezi moj GloriaFood jelovnik"
+      }
     },
     "signup": {
       "title": "Počnite za 5 minuta",

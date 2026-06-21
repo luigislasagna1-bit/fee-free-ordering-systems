@@ -72,7 +72,8 @@
     "custom": "Kustom",
     "free": "Gratis",
     "menu": "Menu",
-    "loadingDots": "Memuat…"
+    "loadingDots": "Memuat…",
+    "previous": "Sebelumnya"
   },
   "auth": {
     "signIn": "Masuk",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Lihat pesanan masuk di layar dapur secara real time.",
         "admin": "Panel Admin",
-        "adminDesc": "Kelola menu, jam, pesanan, dan pengaturan sebagai pemilik restoran."
+        "adminDesc": "Kelola menu, jam, pesanan, dan pengaturan sebagai pemilik restoran.",
+        "kitchenCta": "Lihat aplikasi Dapur",
+        "adminCta": "Lihat panel Admin"
       },
-      "tryIt": "Coba"
+      "tryIt": "Coba",
+      "import": {
+        "eyebrow": "Tanpa perlu akun",
+        "title": "Coba dengan menu ANDA",
+        "body": "Tempel tautan GloriaFood Anda dan kami akan membuat halaman pemesanan aktif dari menu asli Anda – lengkap dengan foto, ukuran, dan topping – dalam waktu sekitar 30 detik.",
+        "cta": "Impor menu GloriaFood saya"
+      }
     },
     "signup": {
       "title": "Mulai dalam 5 menit",

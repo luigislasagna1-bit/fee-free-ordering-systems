@@ -72,7 +72,8 @@
     "custom": "Custom",
     "free": "Free",
     "menu": "Menu",
-    "loadingDots": "Loading…"
+    "loadingDots": "Loading…",
+    "previous": "Previous"
   },
   "auth": {
     "signIn": "Sign in",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "See incoming orders on the kitchen screen in real time.",
         "admin": "Admin Panel",
-        "adminDesc": "Manage menu, hours, orders, and settings as a restaurant owner."
+        "adminDesc": "Manage menu, hours, orders, and settings as a restaurant owner.",
+        "kitchenCta": "See the Kitchen app",
+        "adminCta": "See the Admin panel"
       },
-      "tryIt": "Try it"
+      "tryIt": "Try it",
+      "import": {
+        "eyebrow": "No account needed",
+        "title": "Try it with YOUR menu",
+        "body": "Paste your GloriaFood link and we'll build a live ordering page on your real menu — photos, sizes and toppings included — in about 30 seconds.",
+        "cta": "Import my GloriaFood menu"
+      }
     },
     "signup": {
       "title": "Get started in 5 minutes",

@@ -72,7 +72,8 @@
     "custom": "Pasirinktinis",
     "free": "Nemokama",
     "menu": "Meniu",
-    "loadingDots": "Kraunama…"
+    "loadingDots": "Kraunama…",
+    "previous": "Atgal"
   },
   "auth": {
     "signIn": "Prisijungti",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Žiūrėkite gaunamus užsakymus virtuvės ekrane realiuoju laiku.",
         "admin": "Administravimo skydelis",
-        "adminDesc": "Valdykite meniu, darbo laiką, užsakymus ir nustatymus kaip restorano savininkas."
+        "adminDesc": "Valdykite meniu, darbo laiką, užsakymus ir nustatymus kaip restorano savininkas.",
+        "kitchenCta": "Peržiūrėti virtuvės programėlę",
+        "adminCta": "Peržiūrėti administravimo skydelį"
       },
-      "tryIt": "Išbandyti"
+      "tryIt": "Išbandyti",
+      "import": {
+        "eyebrow": "Paskyros nereikia",
+        "title": "Išbandykite su SAVO meniu",
+        "body": "Įklijuokite savo GloriaFood nuorodą ir maždaug per 30 sekundžių sukursime tiesioginę užsakymų svetainę pagal jūsų tikrąjį meniu — su nuotraukomis, dydžiais ir priedais.",
+        "cta": "Importuoti mano GloriaFood meniu"
+      }
     },
     "signup": {
       "title": "Pradėkite per 5 minutes",

@@ -72,7 +72,8 @@
     "custom": "Personalizado",
     "free": "Grátis",
     "menu": "Cardápio",
-    "loadingDots": "Carregando…"
+    "loadingDots": "Carregando…",
+    "previous": "Anterior"
   },
   "auth": {
     "signIn": "Entrar",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Veja os pedidos recebidos na tela da cozinha em tempo real.",
         "admin": "Painel Administrativo",
-        "adminDesc": "Gerencie cardápio, horários, pedidos e configurações como dono do restaurante."
+        "adminDesc": "Gerencie cardápio, horários, pedidos e configurações como dono do restaurante.",
+        "kitchenCta": "Ver o app da Cozinha",
+        "adminCta": "Ver o painel Admin"
       },
-      "tryIt": "Experimentar"
+      "tryIt": "Experimentar",
+      "import": {
+        "eyebrow": "Sem cadastro",
+        "title": "Experimente com o SEU cardápio",
+        "body": "Cole o link do seu GloriaFood e criamos uma página de pedidos ao vivo com o seu cardápio real — fotos, tamanhos e adicionais incluídos — em cerca de 30 segundos.",
+        "cta": "Importar meu cardápio do GloriaFood"
+      }
     },
     "signup": {
       "title": "Comece em 5 minutos",

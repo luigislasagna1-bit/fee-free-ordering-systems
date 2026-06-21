@@ -72,7 +72,8 @@
     "custom": "カスタム",
     "free": "無料",
     "menu": "メニュー",
-    "loadingDots": "読み込み中…"
+    "loadingDots": "読み込み中…",
+    "previous": "前へ"
   },
   "auth": {
     "signIn": "サインイン",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "リアルタイムでキッチン画面に注文が届く様子を確認。",
         "admin": "管理パネル",
-        "adminDesc": "レストランオーナーとしてメニュー、営業時間、注文、設定を管理。"
+        "adminDesc": "レストランオーナーとしてメニュー、営業時間、注文、設定を管理。",
+        "kitchenCta": "キッチンアプリを見る",
+        "adminCta": "管理パネルを見る"
       },
-      "tryIt": "試してみる"
+      "tryIt": "試してみる",
+      "import": {
+        "eyebrow": "アカウント登録は不要",
+        "title": "あなたのメニューで試す",
+        "body": "GloriaFoodのリンクを貼り付けるだけで、約30秒であなたの実際のメニューを使ったライブ注文ページが完成します。写真・サイズ・トッピングもそのまま反映されます。",
+        "cta": "GloriaFoodのメニューをインポート"
+      }
     },
     "signup": {
       "title": "5分で始めよう",

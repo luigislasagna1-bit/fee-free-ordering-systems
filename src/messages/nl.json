@@ -72,7 +72,8 @@
     "custom": "Aangepast",
     "free": "Gratis",
     "menu": "Menu",
-    "loadingDots": "Laden…"
+    "loadingDots": "Laden…",
+    "previous": "Vorige"
   },
   "auth": {
     "signIn": "Inloggen",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Bekijk inkomende bestellingen op het keukenscherm in realtime.",
         "admin": "Beheerpaneel",
-        "adminDesc": "Beheer menu, openingstijden, bestellingen en instellingen als restauranteigenaar."
+        "adminDesc": "Beheer menu, openingstijden, bestellingen en instellingen als restauranteigenaar.",
+        "kitchenCta": "Bekijk de keuken-app",
+        "adminCta": "Bekijk het adminpaneel"
       },
-      "tryIt": "Probeer het"
+      "tryIt": "Probeer het",
+      "import": {
+        "eyebrow": "Geen account nodig",
+        "title": "Probeer het met JOUW menu",
+        "body": "Plak je GloriaFood-link en wij bouwen in ongeveer 30 seconden een live bestelpagina op basis van je echte menu — inclusief foto's, maten en toppings.",
+        "cta": "Importeer mijn GloriaFood-menu"
+      }
     },
     "signup": {
       "title": "Begin in 5 minuten",

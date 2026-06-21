@@ -72,7 +72,8 @@
     "custom": "Pielāgots",
     "free": "Bezmaksas",
     "menu": "Izvēlne",
-    "loadingDots": "Ielādē…"
+    "loadingDots": "Ielādē…",
+    "previous": "Atpakaļ"
   },
   "auth": {
     "signIn": "Pierakstīties",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Skatiet ienākošos pasūtījumus virtuves ekrānā reāllaikā.",
         "admin": "Administratora panelis",
-        "adminDesc": "Pārvaldiet ēdienkarti, darba laikus, pasūtījumus un iestatījumus kā restorāna īpašnieks."
+        "adminDesc": "Pārvaldiet ēdienkarti, darba laikus, pasūtījumus un iestatījumus kā restorāna īpašnieks.",
+        "kitchenCta": "Apskatīt virtuves lietotni",
+        "adminCta": "Apskatīt administratora paneli"
       },
-      "tryIt": "Izmēģināt"
+      "tryIt": "Izmēģināt",
+      "import": {
+        "eyebrow": "Konts nav nepieciešams",
+        "title": "Izmēģiniet ar SAVU ēdienkarti",
+        "body": "Ielīmējiet savu GloriaFood saiti, un aptuveni 30 sekundēs mēs izveidosim tiešsaistes pasūtīšanas lapu pēc jūsu īstās ēdienkartes — ar fotoattēliem, izmēriem un piedevām.",
+        "cta": "Importēt manu GloriaFood ēdienkarti"
+      }
     },
     "signup": {
       "title": "Sāciet 5 minūtēs",

@@ -72,7 +72,8 @@
     "custom": "Benutzerdefiniert",
     "free": "Kostenlos",
     "menu": "Speisekarte",
-    "loadingDots": "Laden…"
+    "loadingDots": "Laden…",
+    "previous": "Zurück"
   },
   "auth": {
     "signIn": "Anmelden",
@@ -4809,9 +4810,17 @@
         "kitchen": "Kitchen Order App",
         "kitchenDesc": "Eingehende Bestellungen in Echtzeit auf dem Küchenbildschirm sehen.",
         "admin": "Admin-Panel",
-        "adminDesc": "Speisekarte, Öffnungszeiten, Bestellungen und Einstellungen als Restaurantbesitzer verwalten."
+        "adminDesc": "Speisekarte, Öffnungszeiten, Bestellungen und Einstellungen als Restaurantbesitzer verwalten.",
+        "kitchenCta": "Küchen-App ansehen",
+        "adminCta": "Admin-Bereich ansehen"
       },
-      "tryIt": "Ausprobieren"
+      "tryIt": "Ausprobieren",
+      "import": {
+        "eyebrow": "Kein Konto nötig",
+        "title": "Teste es mit DEINER Speisekarte",
+        "body": "Füge deinen GloriaFood-Link ein und wir erstellen in etwa 30 Sekunden eine echte Bestellseite mit deiner Speisekarte — inklusive Fotos, Größen und Extras.",
+        "cta": "Meine GloriaFood-Speisekarte importieren"
+      }
     },
     "signup": {
       "title": "In 5 Minuten loslegen",
