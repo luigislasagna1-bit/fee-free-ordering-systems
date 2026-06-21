@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Konta klientów",
             "body": "Zapisane adresy, historia zamówień i osobiste kupony sprawiają, że goście wracają."
-          }
+          },
+          "crmFrameAlt": "Baza klientów — każdy gość, jego zamówienia, łączne wydatki i zgoda marketingowa",
+          "promosFrameAlt": "Silnik promocji — rabaty, kupony i zestawy, które przyciągają klientów z powrotem"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — pakiet wzrostu",
@@ -4489,7 +4491,8 @@
           "smsBody": "Wysyłaj klientom SMS-y w miarę jak ich zamówienie przechodzi przez kuchnię — potwierdzone, gotowe, zrealizowane.",
           "contentpilotBody": "Twój menedżer social mediów oparty na AI — tworzy i planuje posty na Instagram, Facebook, X i TikTok.",
           "saveTitle": "Pakiet i oszczędność",
-          "saveBody": "Zdobądź cały pakiet taniej niż przy kupowaniu każdego narzędzia osobno. <link>Zobacz wyliczenia →</link>"
+          "saveBody": "Zdobądź cały pakiet taniej niż przy kupowaniu każdego narzędzia osobno. <link>Zobacz wyliczenia →</link>",
+          "ownMessage": "GrowthNet i nasze ekskluzywne narzędzia marketingowe zamieniają klientów, którzy trafiają z marketplace po raz pierwszy, w <em>bezpośrednich, lojalnych i powracających klientów, którzy należą do Ciebie.</em>"
         },
         "addons": {
           "eyebrow": "Dodatki — bez planów taryfowych",

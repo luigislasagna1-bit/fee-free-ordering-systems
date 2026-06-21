@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Kundekontoer",
             "body": "Lagrede adresser, ordrehistorikk og personlige kuponger får gjestene til å komme tilbake."
-          }
+          },
+          "crmFrameAlt": "Kundedatabase — hver gjest, deres bestillinger, totalt forbruk og markedsføringssamtykke",
+          "promosFrameAlt": "Kampanjemotor — rabatter, kuponger og pakker som får kundene tilbake"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — vekstpakken",
@@ -4489,7 +4491,8 @@
           "smsBody": "Send tekstmeldinger til kundene mens bestillingen beveger seg gjennom kjøkkenet — bekreftet, klar, fullført.",
           "contentpilotBody": "Din AI-ansvarlige for sosiale medier — skriver utkast og planlegger innlegg til Instagram, Facebook, X og TikTok.",
           "saveTitle": "Samle og spar",
-          "saveBody": "Få hele pakken for mindre enn å kjøpe hvert verktøy hver for seg. <link>Se regnestykket →</link>"
+          "saveBody": "Få hele pakken for mindre enn å kjøpe hvert verktøy hver for seg. <link>Se regnestykket →</link>",
+          "ownMessage": "GrowthNet og våre eksklusive markedsføringsverktøy gjør førstegangskunder fra markedsplassen til <em>direkte, lojale og gjentakende kunder som du eier selv.</em>"
         },
         "addons": {
           "eyebrow": "Tillegg — ingen nivåer",

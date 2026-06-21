@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Kundkonton",
             "body": "Sparade adresser, orderhistorik och personliga rabattkoder håller gästerna återkommande."
-          }
+          },
+          "crmFrameAlt": "Kunddatabas – varje gäst, deras beställningar, totala utgifter och marknadsföringssamtycke",
+          "promosFrameAlt": "Kampanjmotor – rabatter, kuponger och paket som får kunderna att återkomma"
         },
         "growthnet": {
           "eyebrow": "GrowthNet – tillväxtpaketet",
@@ -4489,7 +4491,8 @@
           "smsBody": "Sms:a kunderna allteftersom deras beställning rör sig genom köket – bekräftad, klar, färdig.",
           "contentpilotBody": "Din AI-baserade social media-ansvarige – skapar utkast och schemalägger inlägg till Instagram, Facebook, X och TikTok.",
           "saveTitle": "Paketera och spara",
-          "saveBody": "Få hela paketet för mindre än att köpa varje verktyg separat. <link>Se uträkningen →</link>"
+          "saveBody": "Få hela paketet för mindre än att köpa varje verktyg separat. <link>Se uträkningen →</link>",
+          "ownMessage": "GrowthNet och våra exklusiva marknadsföringsverktyg förvandlar förstagångskunder från marknadsplatsen till <em>direkta, lojala återkommande kunder som du äger.</em>"
         },
         "addons": {
           "eyebrow": "Tillägg – inga nivåer",

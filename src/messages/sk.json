@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Zákaznícke účty",
             "body": "Uložené adresy, história objednávok a osobné kupóny udržujú hostí, aby sa vracali."
-          }
+          },
+          "crmFrameAlt": "Databáza zákazníkov — každý hosť, jeho objednávky, celková útrata a súhlas s marketingom",
+          "promosFrameAlt": "Engine na propagačné akcie — zľavy, kupóny a balíčky, ktoré privedú zákazníkov späť"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — balík pre rast",
@@ -4489,7 +4491,8 @@
           "smsBody": "Posielajte zákazníkom správy, ako ich objednávka prechádza kuchyňou — potvrdená, hotová, vybavená.",
           "contentpilotBody": "Váš AI manažér sociálnych sietí — pripravuje a plánuje príspevky na Instagram, Facebook, X a TikTok.",
           "saveTitle": "Balík a úspora",
-          "saveBody": "Získajte celý balík lacnejšie, ako keby ste kupovali každý nástroj zvlášť. <link>Pozrite si výpočet →</link>"
+          "saveBody": "Získajte celý balík lacnejšie, ako keby ste kupovali každý nástroj zvlášť. <link>Pozrite si výpočet →</link>",
+          "ownMessage": "GrowthNet a naše exkluzívne marketingové nástroje premieňajú zákazníkov, ktorí prišli z trhoviska prvýkrát, na <em>priamych, verných a vracajúcich sa zákazníkov, ktorí patria vám.</em>"
         },
         "addons": {
           "eyebrow": "Doplnky — žiadne úrovne",

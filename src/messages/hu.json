@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Vendégfiókok",
             "body": "Mentett címek, rendelési előzmények és személyre szabott kuponok hozzák vissza a vendégeket."
-          }
+          },
+          "crmFrameAlt": "Ügyféladatbázis — minden vendég, rendelései, teljes költése és marketing-hozzájárulása",
+          "promosFrameAlt": "Promóciós motor — kedvezmények, kuponok és csomagok, amelyek visszahozzák a vendégeket"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — a növekedési csomag",
@@ -4489,7 +4491,8 @@
           "smsBody": "Üzenj a vendégeknek, ahogy a rendelésük halad a konyhán — visszaigazolva, kész, befejezve.",
           "contentpilotBody": "Az AI közösségi médiamenedzsered — bejegyzéseket fogalmaz és ütemez az Instagram, Facebook, X és TikTok platformokra.",
           "saveTitle": "Csomagolj és spórolj",
-          "saveBody": "Vedd meg az egész csomagot olcsóbban, mint külön-külön minden eszközt. <link>Nézd meg a számítást →</link>"
+          "saveBody": "Vedd meg az egész csomagot olcsóbban, mint külön-külön minden eszközt. <link>Nézd meg a számítást →</link>",
+          "ownMessage": "A GrowthNet és exkluzív marketingeszközeink az először a piactérről érkező vásárlókat <em>közvetlen, hűséges és visszatérő vásárlókká teszik, akik a tieid.</em>"
         },
         "addons": {
           "eyebrow": "Kiegészítők — csomagok nélkül",

@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Kliendikontod",
             "body": "Salvestatud aadressid, tellimuste ajalugu ja isiklikud kupongid toovad külalised ikka tagasi."
-          }
+          },
+          "crmFrameAlt": "Klientide andmebaas — iga külaline, tema tellimused, kogukulu ja turundusnõusolek",
+          "promosFrameAlt": "Kampaaniate mootor — soodustused, kupongid ja paketid, mis toovad kliendid tagasi"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — kasvukomplekt",
@@ -4489,7 +4491,8 @@
           "smsBody": "Saada klientidele sõnumeid, kui nende tellimus köögis edeneb — kinnitatud, valmis, lõpetatud.",
           "contentpilotBody": "Sinu AI sotsiaalmeedia haldur — koostab ja ajastab postitusi Instagrami, Facebooki, X-i ja TikTokisse.",
           "saveTitle": "Komplekt ja sääst",
-          "saveBody": "Saa kogu komplekt odavamalt, kui iga tööriista eraldi ostes. <link>Vaata arvutust →</link>"
+          "saveBody": "Saa kogu komplekt odavamalt, kui iga tööriista eraldi ostes. <link>Vaata arvutust →</link>",
+          "ownMessage": "GrowthNet ja meie eksklusiivsed turundustööriistad muudavad esmakordsed turuplatsi kliendid <em>otseseks, lojaalseks ja korduvaks kliendiks, kes kuulub sulle.</em>"
         },
         "addons": {
           "eyebrow": "Lisad — ilma tasemeteta",

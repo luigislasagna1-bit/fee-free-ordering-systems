@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Klantaccounts",
             "body": "Opgeslagen adressen, bestelgeschiedenis en persoonlijke kortingsbonnen houden gasten terugkomend."
-          }
+          },
+          "crmFrameAlt": "Klantendatabase — elke gast, hun bestellingen, totale uitgaven en marketingtoestemming",
+          "promosFrameAlt": "Promotie-engine — kortingen, kortingsbonnen en bundels die klanten terugbrengen"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — de groeibundel",
@@ -4489,7 +4491,8 @@
           "smsBody": "Stuur klanten een sms terwijl hun bestelling door de keuken gaat — bevestigd, klaar, voltooid.",
           "contentpilotBody": "Je AI-socialmanager — schrijft en plant berichten voor Instagram, Facebook, X & TikTok.",
           "saveTitle": "Bundel & bespaar",
-          "saveBody": "Krijg de hele bundel voor minder dan elke tool apart te kopen. <link>Bekijk de rekensom →</link>"
+          "saveBody": "Krijg de hele bundel voor minder dan elke tool apart te kopen. <link>Bekijk de rekensom →</link>",
+          "ownMessage": "GrowthNet en onze exclusieve marketingtools veranderen eenmalige marktplaatsklanten in <em>directe, loyale en terugkerende klanten die van jou zijn.</em>"
         },
         "addons": {
           "eyebrow": "Add-ons — geen abonnementsniveaus",

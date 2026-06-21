@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Klientu konti",
             "body": "Saglabātas adreses, pasūtījumu vēsture un personīgie kuponi mudina viesus atgriezties."
-          }
+          },
+          "crmFrameAlt": "Klientu datubāze — katrs viesis, viņa pasūtījumi, kopējie tēriņi un mārketinga piekrišana",
+          "promosFrameAlt": "Akciju dzinējs — atlaides, kuponi un komplekti, kas atgriež klientus"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — izaugsmes komplekts",
@@ -4489,7 +4491,8 @@
           "smsBody": "Sūti klientiem īsziņas, kamēr viņu pasūtījums virzās caur virtuvi — apstiprināts, gatavs, pabeigts.",
           "contentpilotBody": "Tavs AI sociālo tīklu pārvaldnieks — sagatavo un ieplāno ierakstus Instagram, Facebook, X un TikTok.",
           "saveTitle": "Apvieno un ietaupi",
-          "saveBody": "Iegūsti visu komplektu par mazāku cenu, nekā pērkot katru rīku atsevišķi. <link>Apskati aprēķinus →</link>"
+          "saveBody": "Iegūsti visu komplektu par mazāku cenu, nekā pērkot katru rīku atsevišķi. <link>Apskati aprēķinus →</link>",
+          "ownMessage": "GrowthNet un mūsu ekskluzīvie mārketinga rīki pārvērš tirdzniecības vietā pirmoreiz nonākušos klientus par <em>tiešiem, lojāliem un pastāvīgiem klientiem, kas pieder jums.</em>"
         },
         "addons": {
           "eyebrow": "Papildinājumi — bez līmeņiem",

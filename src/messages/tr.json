@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Müşteri hesapları",
             "body": "Kayıtlı adresler, sipariş geçmişi ve kişiye özel kuponlar müşterileri geri getirir."
-          }
+          },
+          "crmFrameAlt": "Müşteri veritabanı — her misafir, siparişleri, toplam harcaması ve pazarlama izni",
+          "promosFrameAlt": "Promosyon motoru — müşterileri geri getiren indirimler, kuponlar ve paketler"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — büyüme paketi",
@@ -4489,7 +4491,8 @@
           "smsBody": "Siparişi mutfakta ilerledikçe müşterilere mesaj atın — onaylandı, hazır, tamamlandı.",
           "contentpilotBody": "Yapay zekâ sosyal medya yöneticiniz — Instagram, Facebook, X ve TikTok için gönderileri hazırlar ve zamanlar.",
           "saveTitle": "Paketle ve tasarruf et",
-          "saveBody": "Tüm paketi her aracı ayrı ayrı almaktan daha ucuza alın. <link>Hesabı görün →</link>"
+          "saveBody": "Tüm paketi her aracı ayrı ayrı almaktan daha ucuza alın. <link>Hesabı görün →</link>",
+          "ownMessage": "GrowthNet ve özel pazarlama araçlarımız, pazar yerinden gelen ilk kez gelen müşterileri <em>size ait doğrudan, sadık ve tekrar gelen müşterilere</em> dönüştürür."
         },
         "addons": {
           "eyebrow": "Eklentiler — kademe yok",

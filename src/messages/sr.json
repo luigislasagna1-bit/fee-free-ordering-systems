@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Nalozi gostiju",
             "body": "Sačuvane adrese, istorija porudžbina i lični kuponi vraćaju goste iznova."
-          }
+          },
+          "crmFrameAlt": "База података о клијентима — сваки гост, његове поруџбине, укупна потрошња и сагласност за маркетинг",
+          "promosFrameAlt": "Мотор за промоције — попусти, купони и пакети који враћају клијенте"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — paket za rast",
@@ -4489,7 +4491,8 @@
           "smsBody": "Šaljite poruke gostima dok njihova porudžbina prolazi kroz kuhinju — potvrđena, spremna, završena.",
           "contentpilotBody": "Vaš AI menadžer za društvene mreže — piše i zakazuje objave na Instagram, Facebook, X i TikTok.",
           "saveTitle": "Uzmite paket i uštedite",
-          "saveBody": "Nabavite ceo paket jeftinije nego kad svaki alat kupujete posebno. <link>Pogledajte računicu →</link>"
+          "saveBody": "Nabavite ceo paket jeftinije nego kad svaki alat kupujete posebno. <link>Pogledajte računicu →</link>",
+          "ownMessage": "GrowthNet и наши ексклузивни маркетиншки алати претварају клијенте који први пут долазе са маркетплејса у <em>директне, лојалне и сталне клијенте који припадају вама.</em>"
         },
         "addons": {
           "eyebrow": "Dodaci — bez paketa nivoa",

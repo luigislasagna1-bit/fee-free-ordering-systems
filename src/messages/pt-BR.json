@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Contas de cliente",
             "body": "Endereços salvos, histórico de pedidos e cupons personalizados fazem o cliente voltar."
-          }
+          },
+          "crmFrameAlt": "Banco de dados de clientes — cada cliente, seus pedidos, gasto total e consentimento de marketing",
+          "promosFrameAlt": "Motor de promoções — descontos, cupons e combos que trazem os clientes de volta"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — o pacote de crescimento",
@@ -4489,7 +4491,8 @@
           "smsBody": "Envie mensagens ao cliente conforme o pedido avança na cozinha — confirmado, pronto, concluído.",
           "contentpilotBody": "Seu gerente de redes sociais com IA — cria e agenda posts no Instagram, Facebook, X e TikTok.",
           "saveTitle": "Junte e economize",
-          "saveBody": "Leve o pacote completo por menos do que comprar cada ferramenta separada. <link>Veja a conta →</link>"
+          "saveBody": "Leve o pacote completo por menos do que comprar cada ferramenta separada. <link>Veja a conta →</link>",
+          "ownMessage": "O GrowthNet e nossas ferramentas exclusivas de marketing transformam clientes de marketplace de primeira viagem em <em>clientes diretos, fiéis e recorrentes que são seus.</em>"
         },
         "addons": {
           "eyebrow": "Add-ons — sem planos por nível",

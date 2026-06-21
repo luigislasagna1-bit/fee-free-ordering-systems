@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Asiakastilit",
             "body": "Tallennetut osoitteet, tilaushistoria ja henkilökohtaiset kupongit pitävät asiakkaat palaamassa."
-          }
+          },
+          "crmFrameAlt": "Asiakastietokanta — jokainen vieras, hänen tilauksensa, kokonaiskulutus ja markkinointilupa",
+          "promosFrameAlt": "Kampanjamoottori — alennukset, kupongit ja paketit, jotka tuovat asiakkaat takaisin"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — kasvupaketti",
@@ -4489,7 +4491,8 @@
           "smsBody": "Lähetä asiakkaille tekstiviestejä tilauksen edetessä keittiössä — vahvistettu, valmis, valmistunut.",
           "contentpilotBody": "AI-somemanagerisi — luonnostelee ja ajastaa julkaisuja Instagramiin, Facebookiin, X:ään ja TikTokiin.",
           "saveTitle": "Niputa ja säästä",
-          "saveBody": "Saat koko paketin halvemmalla kuin ostamalla jokaisen työkalun erikseen. <link>Katso laskelma →</link>"
+          "saveBody": "Saat koko paketin halvemmalla kuin ostamalla jokaisen työkalun erikseen. <link>Katso laskelma →</link>",
+          "ownMessage": "GrowthNet ja ainutlaatuiset markkinointityökalumme muuttavat ensikertalaiset markkinapaikan asiakkaat <em>suoriksi, uskollisiksi ja palaaviksi asiakkaiksi, jotka ovat sinun omiasi.</em>"
         },
         "addons": {
           "eyebrow": "Lisäosat — ei tasoja",

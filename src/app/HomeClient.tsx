@@ -330,21 +330,29 @@ export function HomeClient({ locale }: { locale: string }) {
             subtitle={t("run.subtitle")}
           />
         </div>
-        <div className="mb-12 max-w-4xl mx-auto">
+        <div className="mb-8 max-w-4xl mx-auto">
           <ScreenshotFrame variant="browser" url="app.feefreeordering.com/reports" alt={t("run.frameAlt")} src="/marketing/screenshots/app-reports.png" />
+        </div>
+        <div className="mb-12 grid md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
+          <ScreenshotFrame variant="browser" url="app.feefreeordering.com/customers" alt={t("run.crmFrameAlt")} src="/marketing/screenshots/app-customers.png" />
+          <ScreenshotFrame variant="browser" url="app.feefreeordering.com/promotions" alt={t("run.promosFrameAlt")} src="/marketing/screenshots/app-promotions.png" />
         </div>
         <IconFeatureGrid items={runBusiness} soonLabel={soon} />
       </MarketingSection>
 
       {/* ── S8 · GROWTHNET BUNDLE ─────────────────────────────────────────── */}
       <MarketingSection tone="emeraldTint">
-        <div className="mb-12">
+        <div className="mb-8">
           <SectionHeading
             center
             eyebrow={t("growthnet.eyebrow")}
             title={t("growthnet.title")}
-            subtitle={t("growthnet.subtitle")}
           />
+        </div>
+        <div className="max-w-3xl mx-auto mb-12 text-center">
+          <p className="text-xl md:text-2xl lg:text-[1.7rem] font-extrabold text-gray-900 leading-snug tracking-tight">
+            {t.rich("growthnet.ownMessage", { em: (c) => <span className="text-emerald-600">{c}</span> })}
+          </p>
         </div>
         <GrowthNetShowcase analyticsSrc="/marketing/screenshots/app-growthnet.png" />
       </MarketingSection>

@@ -4450,6 +4450,8 @@
           "title": "Know your numbers. Own your customers.",
           "subtitle": "A full analytics, customer and promotions suite is built in — free. The relationship with your diners is yours, not locked inside an aggregator.",
           "frameAlt": "Reports dashboard — revenue, orders & customer trends",
+          "crmFrameAlt": "Customer database — every guest, their orders, total spend and marketing consent",
+          "promosFrameAlt": "Promotions engine — discounts, coupons and bundles that bring customers back",
           "reports": {
             "title": "Reports dashboard",
             "body": "Revenue, orders, average ticket and customers — with day-over-day trends."
@@ -4479,6 +4481,7 @@
           "eyebrow": "GrowthNet — the growth bundle",
           "title": "Turn first orders into regulars.",
           "subtitle": "Marketing, retention and customer-acquisition tools that bring people back — bundled at one discounted price, or added one at a time.",
+          "ownMessage": "GrowthNet and our exclusive marketing tools turn first-time marketplace customers into <em>Direct, Loyal & Repeat customers you own.</em>",
           "frameAlt": "Smart Link analytics — scans turning into real orders & revenue",
           "badge": "One bundle · five tools",
           "blurb": "Every marketing, retention and acquisition tool at one discounted price — or add any single one on its own.",

@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Klientų paskyros",
             "body": "Išsaugoti adresai, užsakymų istorija ir asmeniniai kuponai skatina lankytojus grįžti."
-          }
+          },
+          "crmFrameAlt": "Klientų duomenų bazė — kiekvienas svečias, jo užsakymai, bendros išlaidos ir sutikimas gauti rinkodaros pranešimus",
+          "promosFrameAlt": "Akcijų sistema — nuolaidos, kuponai ir rinkiniai, grąžinantys klientus"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — augimo rinkinys",
@@ -4489,7 +4491,8 @@
           "smsBody": "Rašykite klientams žinutes, kai jų užsakymas keliauja per virtuvę — patvirtinta, paruošta, įvykdyta.",
           "contentpilotBody": "Jūsų AI socialinių tinklų vadybininkas — rengia ir suplanuoja įrašus Instagram, Facebook, X ir TikTok.",
           "saveTitle": "Rinkinys ir taupymas",
-          "saveBody": "Gaukite visą rinkinį pigiau nei perkant kiekvieną įrankį atskirai. <link>Pažiūrėkite skaičiavimus →</link>"
+          "saveBody": "Gaukite visą rinkinį pigiau nei perkant kiekvieną įrankį atskirai. <link>Pažiūrėkite skaičiavimus →</link>",
+          "ownMessage": "GrowthNet ir mūsų išskirtiniai rinkodaros įrankiai pirmą kartą prekyvietėje apsilankiusius klientus paverčia <em>tiesioginiais, lojaliais ir nuolatiniais klientais, kurie priklauso jums.</em>"
         },
         "addons": {
           "eyebrow": "Papildiniai — jokių pakopų",

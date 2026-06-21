@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Akun pelanggan",
             "body": "Alamat tersimpan, riwayat pesanan, dan kupon pribadi membuat pelanggan terus kembali."
-          }
+          },
+          "crmFrameAlt": "Basis data pelanggan — setiap tamu, pesanan mereka, total pengeluaran, dan persetujuan pemasaran",
+          "promosFrameAlt": "Mesin promosi — diskon, kupon, dan paket yang membuat pelanggan kembali"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — paket pertumbuhan",
@@ -4489,7 +4491,8 @@
           "smsBody": "Kirim SMS ke pelanggan saat pesanan mereka melewati setiap tahap di dapur — dikonfirmasi, siap, selesai.",
           "contentpilotBody": "Manajer media sosial AI Anda — menyusun draf dan menjadwalkan unggahan ke Instagram, Facebook, X & TikTok.",
           "saveTitle": "Paketkan & hemat",
-          "saveBody": "Dapatkan seluruh paket dengan harga lebih murah daripada membeli setiap alat secara terpisah. <link>Lihat hitungannya →</link>"
+          "saveBody": "Dapatkan seluruh paket dengan harga lebih murah daripada membeli setiap alat secara terpisah. <link>Lihat hitungannya →</link>",
+          "ownMessage": "GrowthNet dan alat pemasaran eksklusif kami mengubah pelanggan marketplace yang baru pertama kali menjadi <em>pelanggan langsung, setia, dan berulang yang menjadi milik Anda.</em>"
         },
         "addons": {
           "eyebrow": "Add-on — tanpa tingkatan",

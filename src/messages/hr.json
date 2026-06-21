@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Korisnički računi",
             "body": "Spremljene adrese, povijest narudžbi i osobni kuponi vraćaju goste iznova."
-          }
+          },
+          "crmFrameAlt": "Baza podataka kupaca — svaki gost, njegove narudžbe, ukupna potrošnja i pristanak na marketing",
+          "promosFrameAlt": "Mehanizam promocija — popusti, kuponi i paketi koji vraćaju kupce"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — paket za rast",
@@ -4489,7 +4491,8 @@
           "smsBody": "Šaljite poruke gostima dok njihova narudžba prolazi kroz kuhinju — potvrđeno, spremno, dovršeno.",
           "contentpilotBody": "Vaš AI menadžer društvenih mreža — sastavlja i zakazuje objave na Instagram, Facebook, X i TikTok.",
           "saveTitle": "Objedinite i uštedite",
-          "saveBody": "Nabavite cijeli paket za manje nego kupnja svakog alata zasebno. <link>Pogledajte izračun →</link>"
+          "saveBody": "Nabavite cijeli paket za manje nego kupnja svakog alata zasebno. <link>Pogledajte izračun →</link>",
+          "ownMessage": "GrowthNet i naši ekskluzivni marketinški alati pretvaraju nove kupce s tržnice u <em>izravne, lojalne i stalne kupce koji pripadaju vama.</em>"
         },
         "addons": {
           "eyebrow": "Dodaci — bez razina",

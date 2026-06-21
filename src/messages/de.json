@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Kundenkonten",
             "body": "Gespeicherte Adressen, Bestellhistorie und persönliche Gutscheine sorgen dafür, dass Gäste wiederkommen."
-          }
+          },
+          "crmFrameAlt": "Kundendatenbank — jeder Gast, seine Bestellungen, der Gesamtumsatz und die Marketing-Einwilligung",
+          "promosFrameAlt": "Aktions-Engine — Rabatte, Gutscheine und Bundles, die Kunden zurückbringen"
         },
         "growthnet": {
           "eyebrow": "GrowthNet – das Wachstumspaket",
@@ -4489,7 +4491,8 @@
           "smsBody": "Schreiben Sie Kunden, während ihre Bestellung die Küche durchläuft – bestätigt, fertig, abgeschlossen.",
           "contentpilotBody": "Ihr KI-Social-Manager – entwirft und plant Beiträge für Instagram, Facebook, X & TikTok.",
           "saveTitle": "Bündeln & sparen",
-          "saveBody": "Holen Sie sich das ganze Paket für weniger, als jedes Tool einzeln zu kaufen. <link>Sehen Sie die Rechnung →</link>"
+          "saveBody": "Holen Sie sich das ganze Paket für weniger, als jedes Tool einzeln zu kaufen. <link>Sehen Sie die Rechnung →</link>",
+          "ownMessage": "GrowthNet und unsere exklusiven Marketing-Tools machen aus einmaligen Marketplace-Kunden <em>direkte, treue und wiederkehrende Kunden, die Ihnen gehören.</em>"
         },
         "addons": {
           "eyebrow": "Add-ons – keine Tarifstufen",

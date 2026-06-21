@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Tài khoản khách hàng",
             "body": "Địa chỉ đã lưu, lịch sử đơn hàng và mã giảm giá cá nhân giữ chân thực khách quay lại."
-          }
+          },
+          "crmFrameAlt": "Cơ sở dữ liệu khách hàng — mọi thực khách, đơn hàng, tổng chi tiêu và sự đồng ý nhận tiếp thị",
+          "promosFrameAlt": "Công cụ khuyến mãi — giảm giá, phiếu mua hàng và combo đưa khách quay lại"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — gói tăng trưởng",
@@ -4489,7 +4491,8 @@
           "smsBody": "Nhắn tin cho khách khi đơn của họ di chuyển qua bếp — đã xác nhận, sẵn sàng, hoàn tất.",
           "contentpilotBody": "Trợ lý mạng xã hội AI của bạn — soạn và lên lịch bài đăng lên Instagram, Facebook, X & TikTok.",
           "saveTitle": "Mua gói & tiết kiệm",
-          "saveBody": "Nhận trọn gói với giá rẻ hơn mua từng công cụ riêng lẻ. <link>Xem cách tính →</link>"
+          "saveBody": "Nhận trọn gói với giá rẻ hơn mua từng công cụ riêng lẻ. <link>Xem cách tính →</link>",
+          "ownMessage": "GrowthNet và các công cụ tiếp thị độc quyền của chúng tôi biến khách lần đầu từ sàn thương mại thành <em>khách hàng trực tiếp, trung thành và quay lại thuộc về riêng bạn.</em>"
         },
         "addons": {
           "eyebrow": "Tiện ích bổ sung — không phân hạng",

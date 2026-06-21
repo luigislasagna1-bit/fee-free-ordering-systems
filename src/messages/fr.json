@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Comptes clients",
             "body": "Adresses enregistrées, historique des commandes et coupons personnels incitent les clients à revenir."
-          }
+          },
+          "crmFrameAlt": "Base de données clients — chaque convive, ses commandes, ses dépenses totales et son consentement marketing",
+          "promosFrameAlt": "Moteur de promotions — remises, coupons et offres groupées qui font revenir vos clients"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — le forfait de croissance",
@@ -4489,7 +4491,8 @@
           "smsBody": "Envoyez des textos à vos clients au fil de leur commande en cuisine — confirmée, prête, terminée.",
           "contentpilotBody": "Votre gestionnaire de réseaux sociaux par IA — rédige et planifie vos publications sur Instagram, Facebook, X et TikTok.",
           "saveTitle": "Le forfait, plus économique",
-          "saveBody": "Obtenez le forfait complet pour moins cher que l'achat de chaque outil séparément. <link>Voir le calcul →</link>"
+          "saveBody": "Obtenez le forfait complet pour moins cher que l'achat de chaque outil séparément. <link>Voir le calcul →</link>",
+          "ownMessage": "GrowthNet et nos outils marketing exclusifs transforment les nouveaux clients de la marketplace en <em>clients directs, fidèles et récurrents qui vous appartiennent.</em>"
         },
         "addons": {
           "eyebrow": "Modules — sans paliers",

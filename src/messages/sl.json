@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Računi strank",
             "body": "Shranjeni naslovi, zgodovina naročil in osebni kuponi poskrbijo, da se gostje vračajo."
-          }
+          },
+          "crmFrameAlt": "Zbirka podatkov o strankah — vsak gost, njegova naročila, skupna poraba in soglasje za trženje",
+          "promosFrameAlt": "Pogon za promocije — popusti, kuponi in paketi, ki stranke pripeljejo nazaj"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — paket za rast",
@@ -4489,7 +4491,8 @@
           "smsBody": "Pošiljajte sporočila strankam, ko se njihovo naročilo premika skozi kuhinjo — potrjeno, pripravljeno, dokončano.",
           "contentpilotBody": "Vaš upravitelj družbenih omrežij z AI — pripravlja in razporeja objave na Instagram, Facebook, X in TikTok.",
           "saveTitle": "Paket in prihranek",
-          "saveBody": "Dobite celoten paket za manj, kot če bi vsako orodje kupili posebej. <link>Poglejte izračun →</link>"
+          "saveBody": "Dobite celoten paket za manj, kot če bi vsako orodje kupili posebej. <link>Poglejte izračun →</link>",
+          "ownMessage": "GrowthNet in naša ekskluzivna tržna orodja spremenijo stranke, ki prvič pridejo s tržnice, v <em>neposredne, zveste in stalne stranke, ki so vaše.</em>"
         },
         "addons": {
           "eyebrow": "Dodatki — brez stopenj",

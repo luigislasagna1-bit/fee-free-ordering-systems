@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Comptes de client",
             "body": "Adreces desades, historial de comandes i cupons personals fan que els comensals tornin."
-          }
+          },
+          "crmFrameAlt": "Base de dades de clients — cada client, les seves comandes, la despesa total i el consentiment de màrqueting",
+          "promosFrameAlt": "Motor de promocions — descomptes, cupons i paquets que fan tornar els clients"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — el paquet de creixement",
@@ -4489,7 +4491,8 @@
           "smsBody": "Envia missatges de text als clients a mesura que la seva comanda avança per la cuina — confirmada, llesta, completada.",
           "contentpilotBody": "El teu gestor de xarxes amb AI — redacta i programa publicacions a Instagram, Facebook, X i TikTok.",
           "saveTitle": "Empaqueta i estalvia",
-          "saveBody": "Aconsegueix tot el paquet per menys que comprant cada eina per separat. <link>Mira els números →</link>"
+          "saveBody": "Aconsegueix tot el paquet per menys que comprant cada eina per separat. <link>Mira els números →</link>",
+          "ownMessage": "GrowthNet i les nostres eines de màrqueting exclusives converteixen els clients que arriben per primera vegada del marketplace en <em>clients directes, fidels i recurrents que són teus.</em>"
         },
         "addons": {
           "eyebrow": "Complements — sense nivells",

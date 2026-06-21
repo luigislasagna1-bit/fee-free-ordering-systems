@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "Conturi de client",
             "body": "Adresele salvate, istoricul comenzilor și cupoanele personale îi aduc pe clienți înapoi."
-          }
+          },
+          "crmFrameAlt": "Bază de date a clienților — fiecare client, comenzile sale, suma totală cheltuită și consimțământul de marketing",
+          "promosFrameAlt": "Motor de promoții — reduceri, cupoane și pachete care aduc clienții înapoi"
         },
         "growthnet": {
           "eyebrow": "GrowthNet — pachetul de creștere",
@@ -4489,7 +4491,8 @@
           "smsBody": "Trimite SMS clienților pe măsură ce comanda lor avansează în bucătărie — confirmată, gata, finalizată.",
           "contentpilotBody": "Managerul tău AI de social media — redactează și programează postări pe Instagram, Facebook, X și TikTok.",
           "saveTitle": "Grupează și economisește",
-          "saveBody": "Ia întregul pachet pentru mai puțin decât dacă ai cumpăra fiecare instrument separat. <link>Vezi calculul →</link>"
+          "saveBody": "Ia întregul pachet pentru mai puțin decât dacă ai cumpăra fiecare instrument separat. <link>Vezi calculul →</link>",
+          "ownMessage": "GrowthNet și instrumentele noastre exclusive de marketing transformă clienții care vin prima dată din marketplace în <em>clienți direcți, fideli și constanți, care îți aparțin.</em>"
         },
         "addons": {
           "eyebrow": "Suplimente — fără niveluri",

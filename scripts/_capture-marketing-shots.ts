@@ -100,7 +100,8 @@ async function main() {
   await shot(admin, "/admin/menu/import-gloriafood", "app-import.png");
   // Hide the localhost smart-link URLs (font-mono copy buttons) so the shot reads as production.
   await shot(admin, "/admin/marketing-studio", "app-growthnet.png", { css: '[class*="font-mono"]{display:none !important}' });
-  await shot(admin, "/admin/promotions", "app-promotions.png");
+  await shot(admin, "/admin/promotions", "app-promotions.png", { wait: 5500 });
+  await shot(admin, "/admin/customers", "app-customers.png", { wait: 5500 });
   await admin.close();
 
   // --- Kitchen (phone) ---

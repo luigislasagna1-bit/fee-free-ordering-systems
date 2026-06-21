@@ -4473,7 +4473,9 @@
           "accounts": {
             "title": "客户账户",
             "body": "保存的地址、订单历史和专属优惠券，让食客不断回头。"
-          }
+          },
+          "crmFrameAlt": "客户数据库——每位顾客、他们的订单、总消费额及营销许可",
+          "promosFrameAlt": "促销引擎——折扣、优惠券和套餐，让顾客一再回头"
         },
         "growthnet": {
           "eyebrow": "GrowthNet——增长套装",
@@ -4489,7 +4491,8 @@
           "smsBody": "随着订单在厨房中流转，向顾客发送短信——已确认、已备好、已完成。",
           "contentpilotBody": "你的 AI 社媒经理——为 Instagram、Facebook、X 和 TikTok 撰写并定时发布内容。",
           "saveTitle": "打包更省",
-          "saveBody": "整套打包购买，比逐项单买更划算。<link>算笔账给你看 →</link>"
+          "saveBody": "整套打包购买，比逐项单买更划算。<link>算笔账给你看 →</link>",
+          "ownMessage": "GrowthNet 和我们独家的营销工具，将首次光顾的平台顾客转化为<em>真正属于你的直接、忠诚、回头的客户。</em>"
         },
         "addons": {
           "eyebrow": "增值功能——不分套餐层级",
