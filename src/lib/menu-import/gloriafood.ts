@@ -399,14 +399,21 @@ async function fetchGF<T>(src: ParsedSource, path: string, label: string): Promi
 // ────────────────────────────────────────────────────────────────────
 
 /**
- * Convert GloriaFood's `active_days` bitmask to FFOS's JSON-array
- * weekday format. GloriaFood numbers Monday as bit 0 (… empirically
- * — 127 always means "all 7 days" so the ordering doesn't matter for
- * the all-days case which is by far the most common). FFOS expects
- * weekday indices [0..6] where 0 = Monday too. Returns null when all
- * 7 bits are set (= available every day, no need to store).
+ * Convert GloriaFood's `active_days` bitmask to FFOS's JSON-array weekday format.
+ *
+ * VERIFIED EMPIRICALLY against Luigi's real menu (2026-06-21): GloriaFood is
+ * SUNDAY-first — bit 0 = Sun, bit 1 = Mon, … bit 6 = Sat. Calibrated from his
+ * named day-specials: "Monday Pizza Special" = 2 (bit 1), "Tuesday" = 4 (bit 2),
+ * "WING WEDNESDAYS" = 8 (bit 3), "THURSDAY Special" = 16 (bit 4), "FRIDAY" = 32
+ * (bit 5). FFOS `availableDays` uses the SAME Sunday-first indices [0..6]
+ * everywhere — customer display (`Date.UTC(2021,7,1+d)`; 2021-08-01 is a Sunday)
+ * AND the admin picker (`DAY_NAMES = ["Sun".."Sat"]`). So the bit i → day i map
+ * below is correct end-to-end (NOT the off-by-one the old comment implied).
+ *
+ * Returns null for 127 (every day) or 0 (unset → no restriction = every day; the
+ * common case — most of a menu carries 0). Exported for the regression test.
  */
-function bitmaskToDaysJson(mask: number): string | null {
+export function bitmaskToDaysJson(mask: number): string | null {
   if (mask === 127 || mask === 0) return null;
   const days: number[] = [];
   for (let i = 0; i < 7; i++) {
