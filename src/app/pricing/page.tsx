@@ -2,6 +2,13 @@ import { resolveLocale } from "@/lib/i18n-server";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/db";
 import { PricingClient, type PricingAddOn } from "./PricingClient";
+import { marketingMetadata } from "@/lib/seo";
+
+export const metadata = marketingMetadata({
+  title: "Pricing — Fee Free Ordering",
+  description: "Free for your first 100 orders every month with 0% commission. Add only the à-la-carte add-ons you need — no contracts, cancel anytime.",
+  path: "/pricing",
+});
 
 /**
  * Public pricing page. Pulls REAL add-on prices from the catalog (superadmin

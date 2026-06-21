@@ -7,6 +7,13 @@ import {
   Calculator, DollarSign, Sparkles, Globe, ShieldCheck,
   Rocket, Package, Hammer,
 } from "lucide-react";
+import { marketingMetadata } from "@/lib/seo";
+
+export const metadata = marketingMetadata({
+  title: "Partner & Reseller Program — Fee Free Ordering",
+  description: "Earn up to 15% recurring commission reselling 0% commission online ordering to restaurants. Live partner dashboard, your own referral link, and white-label options.",
+  path: "/partners",
+});
 
 /**
  * /partners — public marketing landing page for the Reseller Partner Program.

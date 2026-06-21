@@ -10,6 +10,9 @@ import { SupportChat } from "@/components/SupportChat";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  // Absolute base for all canonical + Open Graph URLs (so /og-image, canonicals,
+  // and per-page OG resolve to https://feefreeordering.com/... not relative).
+  metadataBase: new URL("https://feefreeordering.com"),
   title: "Fee Free Ordering Systems",
   description: "Online ordering for restaurants — no per-order fees, ever.",
   // Platform default favicon (served from /public/favicon.ico). It lives here

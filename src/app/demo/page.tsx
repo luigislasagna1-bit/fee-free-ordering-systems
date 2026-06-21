@@ -1,6 +1,13 @@
 import prisma from "@/lib/db";
 import { resolveLocale } from "@/lib/i18n-server";
+import { marketingMetadata } from "@/lib/seo";
 import { DemoClient } from "./DemoClient";
+
+export const metadata = marketingMetadata({
+  title: "Live Demo — Fee Free Ordering",
+  description: "See a real branded ordering page, the kitchen order app, and the admin dashboard — or import your own GloriaFood menu and try it live, no signup required.",
+  path: "/demo",
+});
 
 // The demo slug changes rarely; cache it so /demo doesn't hit the DB on every
 // visit (this is a public marketing page that can get traffic).
