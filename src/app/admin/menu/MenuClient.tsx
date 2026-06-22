@@ -782,7 +782,7 @@ function ItemModal({
                     <label className="block text-sm font-medium text-gray-700 mb-1">{t("basePriceLabel")}</label>
                     <div className="relative">
                       <span className="absolute left-3 top-2.5 text-gray-400 text-sm">{curSym}</span>
-                      <input type="number" step="0.01" min="0" className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                      <input type="number" step="0.01" min="0" style={{ paddingLeft: `calc(0.75rem + ${curSym.length}ch + 0.35rem)` }} className="w-full border border-gray-300 rounded-lg pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                         value={form.price} onChange={e => setForm(f => ({ ...f, price: e.target.value }))} placeholder="0.00" />
                     </div>
                   </div>
@@ -926,7 +926,7 @@ function ItemModal({
                   </div>
                   <div className="w-28 relative">
                     <span className="absolute left-2 top-2 text-gray-400 text-sm">{curSym}</span>
-                    <input type="number" step="0.01" min="0" className="w-full border border-gray-300 rounded pl-6 pr-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                    <input type="number" step="0.01" min="0" style={{ paddingLeft: `calc(0.5rem + ${curSym.length}ch + 0.35rem)` }} className="w-full border border-gray-300 rounded pr-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                       placeholder="0.00"
                       value={v.price || ""} onChange={e => setVariants(vs => vs.map((x, j) => j === i ? { ...x, price: parseFloat(e.target.value) || 0 } : x))} />
                   </div>
@@ -1080,7 +1080,8 @@ function ItemModal({
                                   <div className="relative flex-1">
                                     <span className="absolute left-3 top-2.5 text-gray-400 text-sm">{curSym}</span>
                                     <input type="number" step="0.01" min="0" placeholder="0.00"
-                                      className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                                      style={{ paddingLeft: `calc(0.75rem + ${curSym.length}ch + 0.35rem)` }}
+                                      className="w-full border border-gray-300 rounded-lg pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                                       value={pizza.variantToppingPrices[v.name.trim()] ?? ""}
                                       onChange={e => setPizza(p => ({
                                         ...p,
@@ -1099,7 +1100,8 @@ function ItemModal({
                           <div className="relative">
                             <span className="absolute left-3 top-2.5 text-gray-400 text-sm">{curSym}</span>
                             <input type="number" step="0.01" min="0" placeholder="0.00"
-                              className="w-full border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                              style={{ paddingLeft: `calc(0.75rem + ${curSym.length}ch + 0.35rem)` }}
+                              className="w-full border border-gray-300 rounded-lg pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                               value={pizza.extraToppingPrice}
                               onChange={e => setPizza(p => ({ ...p, extraToppingPrice: e.target.value }))} />
                           </div>
@@ -1359,7 +1361,7 @@ function ModifierModal({
                     onChange={e => setOptions(os => os.map((o, j) => j === i ? { ...o, name: e.target.value } : o))} />
                   <div className="relative w-24">
                     <span className="absolute left-2 top-1.5 text-gray-400 text-xs">+{curSym}</span>
-                    <input type="number" step="0.01" min="0" className="w-full border border-gray-200 rounded pl-7 pr-2 py-1.5 text-sm focus:ring-1 focus:ring-emerald-400 focus:outline-none bg-white"
+                    <input type="number" step="0.01" min="0" style={{ paddingLeft: `calc(0.5rem + ${curSym.length + 1}ch + 0.35rem)` }} className="w-full border border-gray-200 rounded pr-2 py-1.5 text-sm focus:ring-1 focus:ring-emerald-400 focus:outline-none bg-white"
                       placeholder="0.00" value={opt.priceAdjustment || ""}
                       onChange={e => setOptions(os => os.map((o, j) => j === i ? { ...o, priceAdjustment: parseFloat(e.target.value) || 0 } : o))} />
                   </div>
