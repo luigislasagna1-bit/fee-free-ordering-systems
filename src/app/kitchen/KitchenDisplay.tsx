@@ -224,7 +224,7 @@ function ReservationDetail({
     <div className={`flex flex-col h-full ${t.detail}`}>
       <div
         className={`flex items-center gap-2 p-4 border-b ${t.border} flex-shrink-0`}
-        style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}
+        style={{ paddingTop: "max(2.5rem, env(safe-area-inset-top))" }}
       >
         <button onClick={onClose} className={`p-1.5 rounded-lg ${t.btn} flex-shrink-0`} aria-label="Back">
           <ArrowLeft className="w-5 h-5" />
@@ -2010,7 +2010,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // confirmed reservation without retearing-down the 4s interval
   // every time settings load. Luigi 2026-06-01.
   const printerSettingsRef = useRef<PrinterSettings | null>(null);
-  const autoPrintedRef = useRef<Set<string>>(new Set());
+  // Orders already auto-printed, PERSISTED to localStorage so a cold reload
+  // (Android killing the backgrounded WebView) or an order that arrived while the
+  // tablet was locked still prints exactly once and never re-prints. Map of
+  // orderId -> printed-at ms (pruned to 24h on load). Luigi 2026-06-21 test.
+  const printedRef = useRef<Record<string, number>>({});
+  const printedLoadedRef = useRef(false);
   // Tracks orders we've already kicked an auto-reject request for, so the
   // 1-second `now` tick doesn't re-fire the PATCH while the previous one
   // is still in flight (or after it succeeded but before fetchOrders has
@@ -2130,6 +2135,36 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     } catch { /* SSR / private mode — fine to ignore */ }
   }, []);
 
+  // Load the persistent auto-printed set (prune entries >24h). On the FIRST load
+  // on this device (key absent) seed it with the accepted orders that already
+  // exist, so a fresh install / cache-clear never prints a backlog — genuinely
+  // new orders that arrive afterwards aren't seeded, so they print normally. This
+  // is what makes auto-print survive a lock/background + cold reload: the order
+  // that came in isn't in the persisted set, so the catch-up pass in fetchOrders
+  // prints it exactly once. printedLoadedRef gates that pass so a not-yet-loaded
+  // ref can't print a backlog. Luigi 2026-06-21.
+  useEffect(() => {
+    try {
+      const KEY = "ffo:kitchen-autoprinted";
+      const raw = localStorage.getItem(KEY);
+      const nowTs = Date.now();
+      const map: Record<string, number> = {};
+      if (raw) {
+        const obj = JSON.parse(raw);
+        if (obj && typeof obj === "object") {
+          for (const [id, ts] of Object.entries(obj)) {
+            if (typeof ts === "number" && nowTs - ts < 86_400_000) map[id] = ts;
+          }
+        }
+      } else {
+        for (const o of initialOrders) if (o.status === "accepted") map[o.id] = nowTs;
+      }
+      localStorage.setItem(KEY, JSON.stringify(map));
+      printedRef.current = map;
+      printedLoadedRef.current = true;
+    } catch { /* SSR / private mode — catch-up stays off, foreground path still rings+prints */ }
+  }, []);
+
   useEffect(() => {
     fetch("/api/kitchen/printnode/settings")
       .then(async (r) => {
@@ -2213,6 +2248,27 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           );
         }
         newAutoAccepted.forEach(o => seenIdsRef.current.add(o.id));
+      }
+
+      // Catch-up auto-print: print any recently-accepted order we haven't printed
+      // yet. Covers orders that arrived while the tablet was locked/backgrounded
+      // (the 4s poll is suspended then) OR that a cold reload pre-seeded into
+      // seenIds so the "new order" detection above skipped them. printedRef is
+      // persisted, so this prints exactly once and a reload never re-prints.
+      // Bounded to the last 6h so a stale tab can't reprint an old backlog, and
+      // gated on printedLoadedRef so it never fires before the set has loaded.
+      // Luigi 2026-06-21 hardware test (auto-accept order rang but didn't print).
+      if (printedLoadedRef.current) {
+        const nowMs = Date.now();
+        for (const o of fresh) {
+          if (o.status !== "accepted") continue;
+          if (printedRef.current[o.id]) continue;
+          const ts = o.notifiedAt || o.createdAt;
+          const created = ts ? new Date(ts).getTime() : 0;
+          if (!created || nowMs - created > 21_600_000) continue;
+          autoPrintRef.current?.(o.id, { force: true }).catch((err) =>
+            console.warn("[kds catch-up auto-print]", err));
+        }
       }
 
       setOrders(fresh);
@@ -2358,8 +2414,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // bell-loop effect (they have to be in scope before that effect runs).
 
   const autoPrint = useCallback(async (orderId: string, opts?: { force?: boolean }) => {
-    if (autoPrintedRef.current.has(orderId)) return;
-    autoPrintedRef.current.add(orderId);
+    if (printedRef.current[orderId]) return;
+    printedRef.current[orderId] = Date.now();
+    try { localStorage.setItem("ffo:kitchen-autoprinted", JSON.stringify(printedRef.current)); } catch { /* ignore */ }
     // Preference order:
     //   1. Direct LAN printer (native app) — fastest, no third-party
     //      dependency, no monthly fee. The "main" path going forward.
@@ -2950,7 +3007,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         className={`${t.header} px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between flex-shrink-0 gap-2`}
         // Clear the Android status bar / notch so the title + menu never clip
         // the "safe area" (Fabrizio feedback 2026-06-15).
-        style={{ paddingTop: "max(0.625rem, env(safe-area-inset-top))" }}
+        style={{ paddingTop: "max(2.5rem, env(safe-area-inset-top))" }}
       >
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <ChefHat className="w-6 h-6 text-emerald-500 flex-shrink-0" />

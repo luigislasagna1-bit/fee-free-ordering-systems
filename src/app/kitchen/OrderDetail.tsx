@@ -316,7 +316,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           report, Luigi 2026-06-15). */}
       <div
         className={`flex items-center gap-3 px-5 py-4 border-b ${t.border} flex-shrink-0`}
-        style={{ paddingTop: "max(1.75rem, env(safe-area-inset-top))" }}
+        style={{ paddingTop: "max(2.5rem, env(safe-area-inset-top))" }}
       >
         {/* Back to the order list (full-screen detail). Always visible now that
             the detail opens over the whole screen. Luigi 2026-06-08. */}

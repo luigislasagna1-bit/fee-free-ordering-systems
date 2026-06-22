@@ -42,7 +42,7 @@ function KitchenLoginFormInner({ locale }: { locale: string }) {
     <div
       className="min-h-screen [min-height:100dvh] bg-gray-900 flex items-center justify-center px-4 relative overflow-y-auto"
       style={{
-        paddingTop: "max(0.75rem, env(safe-area-inset-top))",
+        paddingTop: "max(2.5rem, env(safe-area-inset-top))",
         paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))",
       }}
     >
