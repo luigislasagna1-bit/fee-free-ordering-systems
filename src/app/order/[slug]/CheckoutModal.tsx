@@ -640,8 +640,11 @@ export function CheckoutModal({
           </div>
         )}
 
-        {/* Body */}
-        <div className="flex-1 overflow-y-auto">
+        {/* Body. overflow-x-hidden + min-w-0 on form fields stops the mobile
+            horizontal-scroll: bare inputs/selects in the grid-cols-2 rows otherwise
+            can't shrink below their intrinsic min-width and push the modal sideways
+            on a narrow phone (Luigi 2026-06-22). */}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden [&_input]:min-w-0 [&_select]:min-w-0 [&_textarea]:min-w-0">
           <div className="grid md:grid-cols-2 gap-0">
             {/* ── Left column: settings cards ── */}
             <div className="p-5 space-y-3 md:border-r md:border-gray-100">
@@ -1540,7 +1543,7 @@ export function CheckoutModal({
                   {cart.map((ci, i) => (
                     <div key={i} className="grid grid-cols-[40px_1fr_70px] gap-3 py-2.5 text-sm items-start">
                       <span className="font-semibold text-gray-700">{ci.isBundle ? "1×" : `${ci.quantity}×`}</span>
-                      <span className="text-gray-700">
+                      <span className="text-gray-700 min-w-0 break-words">
                         <span className="font-semibold">
                           {ci.isBundle ? (ci.bundlePromoName ?? ci.menuItem.name) : ci.menuItem.name}
                         </span>
