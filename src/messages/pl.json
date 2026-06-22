@@ -472,7 +472,8 @@
     "pickADateFirst": "Najpierw wybierz datę",
     "closedThisDay": "Zamknięte tego dnia",
     "fulfilSchedulePrompt": "📅 Co najmniej jedną pozycję w koszyku można zamówić tylko na określone dni lub godziny. Ustawiliśmy poniżej najbliższy dostępny termin — w razie potrzeby możesz go zmienić.",
-    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> można zamówić tylko w określone dni lub godziny. Dostępne godziny zamówień zostały odpowiednio ograniczone."
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> można zamówić tylko w określone dni lub godziny. Dostępne godziny zamówień zostały odpowiednio ograniczone.",
+    "serviceStartsPrompt": "🕒 {service} nie jest jeszcze dostępne — wybierz godzinę, o której się zaczyna. Najwcześniejsza jest pokazana poniżej."
   },
   "reservation": {
     "title": "Zarezerwuj stolik",

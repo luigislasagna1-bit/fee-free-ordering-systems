@@ -472,7 +472,8 @@
     "pickADateFirst": "Vali esmalt kuupäev",
     "closedThisDay": "Sel päeval suletud",
     "fulfilSchedulePrompt": "📅 Üht või mitut ostukorvis olevat toodet saab tellida ainult kindlatel päevadel või kellaaegadel. Oleme allpool valinud varaseima vaba aja – muutke seda soovi korral.",
-    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> saab tellida ainult teatud päevadel või kellaaegadel. Saadaolevad tellimisajad on vastavalt piiratud."
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> saab tellida ainult teatud päevadel või kellaaegadel. Saadaolevad tellimisajad on vastavalt piiratud.",
+    "serviceStartsPrompt": "🕒 {service} pole veel avatud — vali aeg, mil see avaneb. Varaseim aeg on näha allpool."
   },
   "reservation": {
     "title": "Broneeri laud",

@@ -248,7 +248,10 @@ interface Props {
    *  inside the time-choice section so the customer understands
    *  whether it's a catering rule, a "we're closed right now" rule,
    *  a min-advance rule, or several at once. */
-  scheduleReason?: "catering" | "closed" | "both" | "lead" | "fulfil" | null;
+  scheduleReason?: "catering" | "closed" | "service_later" | "both" | "lead" | "fulfil" | null;
+  /** Localized name of the chosen service (Pickup/Delivery) — used by the
+   *  "service_later" prompt ("Pickup starts at 2:00 PM"). Luigi 2026-06-22. */
+  serviceLabel?: string;
   /** The restaurant's next opening moment in datetime-local format
    *  (used by the "we're closed" branch of the banner copy). */
   closedNextOpenLocal?: string;
@@ -315,6 +318,7 @@ export function CheckoutModal({
   hoursFormat = "24h",
   cateringNoticeHours,
   scheduleReason = null,
+  serviceLabel,
   closedNextOpenLocal,
   paypalEnabled,
   couponCode, setCouponCode, couponId, couponDiscount, couponLoading, applyCoupon,
@@ -1039,6 +1043,20 @@ export function CheckoutModal({
                           {scheduleReason === "closed" ? (
                             <>
                               {tc("closedSchedulePrompt")}
+                              {closedNextOpenLocal && (
+                                <span className="block mt-1 text-amber-900 font-semibold">
+                                  {tc("nextOpening", {
+                                    date: new Date(closedNextOpenLocal).toLocaleString(undefined, {
+                                      weekday: "short", month: "short", day: "numeric",
+                                      hour: "numeric", minute: "2-digit",
+                                    }),
+                                  })}
+                                </span>
+                              )}
+                            </>
+                          ) : scheduleReason === "service_later" ? (
+                            <>
+                              {tc("serviceStartsPrompt", { service: serviceLabel ?? "" })}
                               {closedNextOpenLocal && (
                                 <span className="block mt-1 text-amber-900 font-semibold">
                                   {tc("nextOpening", {

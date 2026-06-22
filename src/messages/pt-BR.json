@@ -472,7 +472,8 @@
     "pickADateFirst": "Escolha primeiro uma data",
     "closedThisDay": "Fechado neste dia",
     "fulfilSchedulePrompt": "📅 Um ou mais itens no seu carrinho só podem ser pedidos para determinados dias ou horários. Selecionamos abaixo o horário disponível mais próximo — ajuste-o se quiser.",
-    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> só pode ser pedido em determinados dias ou horários. Os horários de pedido disponíveis foram limitados de acordo."
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> só pode ser pedido em determinados dias ou horários. Os horários de pedido disponíveis foram limitados de acordo.",
+    "serviceStartsPrompt": "🕒 {service} ainda não está disponível — escolha um horário a partir da abertura. O mais cedo aparece abaixo."
   },
   "reservation": {
     "title": "Reservar mesa",

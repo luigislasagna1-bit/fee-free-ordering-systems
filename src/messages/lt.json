@@ -472,7 +472,8 @@
     "pickADateFirst": "Pirma pasirinkite datą",
     "closedThisDay": "Šią dieną uždaryta",
     "fulfilSchedulePrompt": "📅 Vieną ar kelias jūsų krepšelyje esančias prekes galima užsisakyti tik tam tikromis dienomis ar valandomis. Žemiau parinkome anksčiausią galimą laiką – pakeiskite jį, jei norite.",
-    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> galima užsisakyti tik tam tikromis dienomis ar valandomis. Galimi užsakymo laikai atitinkamai apriboti."
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> galima užsisakyti tik tam tikromis dienomis ar valandomis. Galimi užsakymo laikai atitinkamai apriboti.",
+    "serviceStartsPrompt": "🕒 {service} dar neveikia — pasirinkite laiką, kai ji bus atidaryta. Anksčiausias laikas nurodytas žemiau."
   },
   "reservation": {
     "title": "Rezervuoti stalą",

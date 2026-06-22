@@ -472,7 +472,8 @@
     "pickADateFirst": "Nejprve vyberte datum",
     "closedThisDay": "Tento den zavřeno",
     "fulfilSchedulePrompt": "📅 Jednu nebo více položek ve vašem košíku lze objednat pouze na určité dny nebo časy. Níže jsme nastavili nejbližší dostupný termín — v případě potřeby jej upravte.",
-    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> lze objednat pouze v určité dny nebo časy. Dostupné časy objednávek byly odpovídajícím způsobem omezeny."
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> lze objednat pouze v určité dny nebo časy. Dostupné časy objednávek byly odpovídajícím způsobem omezeny.",
+    "serviceStartsPrompt": "🕒 {service} ještě není v provozu — vyberte čas, kdy začíná. Nejbližší možný je uvedený níže."
   },
   "reservation": {
     "title": "Rezervovat stůl",

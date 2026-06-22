@@ -472,7 +472,8 @@
     "pickADateFirst": "Kies eerst een datum",
     "closedThisDay": "Deze dag gesloten",
     "fulfilSchedulePrompt": "📅 Een of meer artikelen in je winkelwagen kunnen alleen voor bepaalde dagen of tijden worden besteld. We hebben hieronder het eerstvolgende beschikbare tijdslot ingesteld — pas het aan als je wilt.",
-    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> kan alleen op bepaalde dagen of tijden worden besteld. De beschikbare besteltijden zijn dienovereenkomstig beperkt."
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> kan alleen op bepaalde dagen of tijden worden besteld. De beschikbare besteltijden zijn dienovereenkomstig beperkt.",
+    "serviceStartsPrompt": "🕒 {service} is nog niet open — kies een tijd waarop dat wel zo is. De vroegste mogelijkheid staat hieronder."
   },
   "reservation": {
     "title": "Tafel reserveren",

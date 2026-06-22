@@ -472,7 +472,8 @@
     "pickADateFirst": "Valitse ensin päivä",
     "closedThisDay": "Suljettu tänä päivänä",
     "fulfilSchedulePrompt": "📅 Yhtä tai useampaa ostoskorisi tuotetta voi tilata vain tiettyinä päivinä tai kellonaikoina. Olemme valinneet alle aikaisimman vapaan ajan – muuta sitä halutessasi.",
-    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> voidaan tilata vain tiettyinä päivinä tai kellonaikoina. Käytettävissä olevia tilausaikoja on rajoitettu vastaavasti."
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> voidaan tilata vain tiettyinä päivinä tai kellonaikoina. Käytettävissä olevia tilausaikoja on rajoitettu vastaavasti.",
+    "serviceStartsPrompt": "🕒 {service} ei ole vielä avoinna — valitse aika, jolloin se avautuu. Aikaisin mahdollinen näkyy alla."
   },
   "reservation": {
     "title": "Varaa pöytä",

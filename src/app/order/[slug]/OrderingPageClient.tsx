@@ -1665,7 +1665,13 @@ export function OrderingPageClient({
   // Luigi 2026-05-30: "restaurant hours should be consistent EVERYWHERE."
   const restaurantTz = restaurant.timezone ?? undefined;
   const { dow: today } = localDowAndHHMM(new Date(), restaurantTz);
-  const todayHours = restaurant.openingHours?.find((h: any) => h.dayOfWeek === today);
+  // GENERAL (service=null) row drives the header hours — NOT the first matching
+  // row, which could be a per-service override (e.g. Pickup 14:00) and made the
+  // header show the wrong opening time (Fabrizio 2026-06-22). Fall back to any row
+  // for the day only if no general row exists.
+  const todayHours =
+    restaurant.openingHours?.find((h: any) => h.dayOfWeek === today && !h.service)
+    ?? restaurant.openingHours?.find((h: any) => h.dayOfWeek === today);
 
   // Visible categories and items, merging category-level modifier groups into each item.
   // Visibility (show/hide, scheduled) is the GloriaFood-style isVisibleNow model;
@@ -2337,11 +2343,16 @@ export function OrderingPageClient({
   // Fulfilment is the most specific date constraint ("only Tuesdays"), so it
   // names the schedule prompt when present — the picker minimum still honours
   // every other constraint via effectiveMinScheduledLocal above.
-  const scheduleReason: "catering" | "closed" | "both" | "lead" | "fulfil" | null =
+  // "closed" = restaurant shut by GENERAL hours. "service_later" = the restaurant is
+  // OPEN (general hours) but the CHOSEN service starts later today (e.g. Pickup 14:00)
+  // — show a service-specific "starts at" note, NOT "we're closed" (Fabrizio
+  // 2026-06-22). Both still force scheduling to the service's next opening.
+  const scheduleReason: "catering" | "closed" | "service_later" | "both" | "lead" | "fulfil" | null =
     fulfilForcesSchedule ? "fulfil"
     : cartHasCatering && restaurantIsClosedNow ? "both"
     : cartHasCatering ? "catering"
-    : restaurantIsClosedNow ? "closed"
+    : generalIsClosedNow ? "closed"
+    : restaurantIsClosedNow ? "service_later"
     : (orderMinLeadMinutes > 0 || hideAsap) ? "lead"
     : null;
 
@@ -5051,6 +5062,7 @@ export function OrderingPageClient({
           fulfilItemNames={fulfilItemNames}
           schedulingEnabled={schedulingEnabled}
           scheduleReason={scheduleReason}
+          serviceLabel={orderServiceKind === "delivery" ? t("delivery") : t("pickup")}
           closedNextOpenLocal={closedMinScheduledLocal}
           schedulingInterval={perServiceSlotInterval}
           schedulingMode={perServiceSlotMode}

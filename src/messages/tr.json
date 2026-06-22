@@ -472,7 +472,8 @@
     "pickADateFirst": "Önce bir tarih seçin",
     "closedThisDay": "Bu gün kapalı",
     "fulfilSchedulePrompt": "📅 Sepetinizdeki bir veya daha fazla ürün yalnızca belirli gün ya da saatlerde sipariş edilebilir. Mevcut en erken zaman dilimini aşağıda seçtik; isterseniz değiştirebilirsiniz.",
-    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> yalnızca belirli günlerde veya saatlerde sipariş edilebilir. Mevcut sipariş saatleri buna göre sınırlandırıldı."
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> yalnızca belirli günlerde veya saatlerde sipariş edilebilir. Mevcut sipariş saatleri buna göre sınırlandırıldı.",
+    "serviceStartsPrompt": "🕒 {service} henüz açık değil — açılacağı bir saat seçin. En erken saat aşağıda gösteriliyor."
   },
   "reservation": {
     "title": "Masa Rezervasyonu",

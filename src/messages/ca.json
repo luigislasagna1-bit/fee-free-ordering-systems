@@ -472,7 +472,8 @@
     "pickADateFirst": "Tria primer una data",
     "closedThisDay": "Tancat aquest dia",
     "fulfilSchedulePrompt": "📅 Un o més articles del teu cistell només es poden demanar per a determinats dies o hores. Hem seleccionat a sota la franja disponible més propera — ajusta-la si vols.",
-    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> només es pot demanar determinats dies o hores. Els horaris de comanda disponibles s'han limitat en conseqüència."
+    "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> només es pot demanar determinats dies o hores. Els horaris de comanda disponibles s'han limitat en conseqüència.",
+    "serviceStartsPrompt": "🕒 {service} encara no està obert — tria una hora a partir de quan obri. A continuació es mostra la més propera."
   },
   "reservation": {
     "title": "Reservar taula",
