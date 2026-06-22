@@ -337,7 +337,7 @@ export async function PUT(req: NextRequest) {
               isHidden: item.isHidden,
               isSoldOut: item.isSoldOut,
               hasVariants: item.hasVariants,
-              availableDays: item.availableDays,
+              fulfilDays: item.fulfilDays,
               sortOrder: nextItemSort++,
             },
             select: { id: true },

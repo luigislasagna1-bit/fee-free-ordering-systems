@@ -780,9 +780,9 @@ function ItemModal({
                 ) : (
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">{t("basePriceLabel")}</label>
-                    <div className="relative">
-                      <span className="absolute left-3 top-2.5 text-gray-400 text-sm">{curSym}</span>
-                      <input type="number" step="0.01" min="0" style={{ paddingLeft: `calc(0.75rem + ${curSym.length}ch + 0.35rem)` }} className="w-full border border-gray-300 rounded-lg pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                    <div className="flex items-center w-full border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-emerald-500">
+                      <span className="pl-3 pr-1 text-gray-400 text-sm flex-shrink-0">{curSym}</span>
+                      <input type="number" step="0.01" min="0" className="flex-1 min-w-0 border-none bg-transparent pr-3 py-2 text-sm focus:outline-none focus:ring-0"
                         value={form.price} onChange={e => setForm(f => ({ ...f, price: e.target.value }))} placeholder="0.00" />
                     </div>
                   </div>
@@ -924,9 +924,9 @@ function ItemModal({
                       placeholder={t("variantSizeNamePlaceholder")}
                       value={v.name} onChange={e => setVariants(vs => vs.map((x, j) => j === i ? { ...x, name: e.target.value } : x))} />
                   </div>
-                  <div className="w-28 relative">
-                    <span className="absolute left-2 top-2 text-gray-400 text-sm">{curSym}</span>
-                    <input type="number" step="0.01" min="0" style={{ paddingLeft: `calc(0.5rem + ${curSym.length}ch + 0.35rem)` }} className="w-full border border-gray-300 rounded pr-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  <div className="w-28 flex items-center border border-gray-300 rounded focus-within:ring-2 focus-within:ring-emerald-500">
+                    <span className="pl-2 pr-0.5 text-gray-400 text-sm flex-shrink-0">{curSym}</span>
+                    <input type="number" step="0.01" min="0" className="flex-1 min-w-0 border-none bg-transparent pr-2 py-1.5 text-sm focus:outline-none focus:ring-0"
                       placeholder="0.00"
                       value={v.price || ""} onChange={e => setVariants(vs => vs.map((x, j) => j === i ? { ...x, price: parseFloat(e.target.value) || 0 } : x))} />
                   </div>
@@ -1097,11 +1097,10 @@ function ItemModal({
                               {variants.filter(v => v.name.trim()).map(v => (
                                 <div key={v.name} className="flex items-center gap-3">
                                   <span className="text-sm text-gray-700 w-24 flex-shrink-0 truncate">{v.name}</span>
-                                  <div className="relative flex-1">
-                                    <span className="absolute left-3 top-2.5 text-gray-400 text-sm">{curSym}</span>
+                                  <div className="flex-1 flex items-center border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-emerald-500">
+                                    <span className="pl-3 pr-1 text-gray-400 text-sm flex-shrink-0">{curSym}</span>
                                     <input type="number" step="0.01" min="0" placeholder="0.00"
-                                      style={{ paddingLeft: `calc(0.75rem + ${curSym.length}ch + 0.35rem)` }}
-                                      className="w-full border border-gray-300 rounded-lg pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                                      className="flex-1 min-w-0 border-none bg-transparent pr-3 py-2 text-sm focus:outline-none focus:ring-0"
                                       value={pizza.variantToppingPrices[v.name.trim()] ?? ""}
                                       onChange={e => setPizza(p => ({
                                         ...p,
@@ -1117,11 +1116,10 @@ function ItemModal({
                       ) : (
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">{t("pricePerExtraTopping")}</label>
-                          <div className="relative">
-                            <span className="absolute left-3 top-2.5 text-gray-400 text-sm">{curSym}</span>
+                          <div className="flex items-center border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-emerald-500">
+                            <span className="pl-3 pr-1 text-gray-400 text-sm flex-shrink-0">{curSym}</span>
                             <input type="number" step="0.01" min="0" placeholder="0.00"
-                              style={{ paddingLeft: `calc(0.75rem + ${curSym.length}ch + 0.35rem)` }}
-                              className="w-full border border-gray-300 rounded-lg pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                              className="flex-1 min-w-0 border-none bg-transparent pr-3 py-2 text-sm focus:outline-none focus:ring-0"
                               value={pizza.extraToppingPrice}
                               onChange={e => setPizza(p => ({ ...p, extraToppingPrice: e.target.value }))} />
                           </div>
@@ -1379,9 +1377,9 @@ function ModifierModal({
                   <input className="flex-1 border border-gray-200 rounded px-2 py-1.5 text-sm focus:ring-1 focus:ring-emerald-400 focus:outline-none bg-white"
                     placeholder={t("optionNamePlaceholder")} value={opt.name}
                     onChange={e => setOptions(os => os.map((o, j) => j === i ? { ...o, name: e.target.value } : o))} />
-                  <div className="relative w-24">
-                    <span className="absolute left-2 top-1.5 text-gray-400 text-xs">+{curSym}</span>
-                    <input type="number" step="0.01" min="0" style={{ paddingLeft: `calc(0.5rem + ${curSym.length + 1}ch + 0.35rem)` }} className="w-full border border-gray-200 rounded pr-2 py-1.5 text-sm focus:ring-1 focus:ring-emerald-400 focus:outline-none bg-white"
+                  <div className="w-24 flex items-center border border-gray-200 rounded bg-white focus-within:ring-1 focus-within:ring-emerald-400">
+                    <span className="pl-2 pr-0.5 text-gray-400 text-xs flex-shrink-0">+{curSym}</span>
+                    <input type="number" step="0.01" min="0" className="flex-1 min-w-0 border-none bg-transparent pr-2 py-1.5 text-sm focus:outline-none focus:ring-0"
                       placeholder="0.00" value={opt.priceAdjustment || ""}
                       onChange={e => setOptions(os => os.map((o, j) => j === i ? { ...o, priceAdjustment: parseFloat(e.target.value) || 0 } : o))} />
                   </div>
@@ -1915,10 +1913,19 @@ function ModifierLibraryPanel({
           ) : (
             <>
               <button
-                onClick={() => onSetSelectedIds(selectedIds.size === groups.length ? new Set() : new Set(groups.map(g => g.id)))}
+                onClick={() => {
+                  // Operate on the CURRENTLY FILTERED results, not the whole library, so
+                  // "Select all" after a search selects only the matches (Fabrizio
+                  // 2026-06-21). Additive toggle preserves any selection outside the filter.
+                  const ids = filteredGroups.map(g => g.id);
+                  const allSel = ids.length > 0 && ids.every(id => selectedIds.has(id));
+                  const next = new Set(selectedIds);
+                  ids.forEach(id => { if (allSel) next.delete(id); else next.add(id); });
+                  onSetSelectedIds(next);
+                }}
                 className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 underline"
               >
-                {selectedIds.size === groups.length ? t("deselectAll") : t("selectAll")}
+                {filteredGroups.length > 0 && filteredGroups.every(g => selectedIds.has(g.id)) ? t("deselectAll") : t("selectAll")}
               </button>
               <div className="flex items-center gap-1.5">
                 <button

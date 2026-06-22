@@ -156,7 +156,7 @@ export async function commitSandboxMenu(restaurantId: string, preview: ImportPre
             restaurantId, categoryId, name: item.name, description: item.description,
             imageUrl: item.sourceImageUrl ?? null, price: item.basePrice, isAvailable: item.isAvailable,
             isHidden: item.isHidden, isSoldOut: item.isSoldOut, hasVariants: item.hasVariants,
-            availableDays: item.availableDays, sortOrder: isort,
+            fulfilDays: item.fulfilDays, sortOrder: isort,
           });
           itemSrc.push(item);
         });

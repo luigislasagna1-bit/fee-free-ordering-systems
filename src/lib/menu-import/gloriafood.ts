@@ -181,10 +181,12 @@ export interface PreviewItem {
   isSoldOut: boolean;
   hasVariants: boolean;
   sortOrder: number;
-  /** JSON-string-encoded array of weekday indices (Mon=0…Sun=6) the
-   *  item is available, or null when available all week. Matches
-   *  the format FFOS MenuItem.availableDays already expects. */
-  availableDays: string | null;
+  /** JSON-string-encoded array of weekday indices (Sun=0…Sat=6) the item is
+   *  orderable, or null when orderable all week. Lands in MenuItem.fulfilDays —
+   *  the per-item "Availability" (Fulfilment Time) the admin modal actually
+   *  manages — so an imported day-special is editable + enforced exactly like a
+   *  hand-set one (the legacy `availableDays` has no editor; Fabrizio 2026-06-21). */
+  fulfilDays: string | null;
   variants: PreviewVariant[];
   /** Item-level modifier groups (apply when no variant is selected
    *  or to all variants — UI shows these as "applies to whole item"). */
@@ -405,7 +407,7 @@ async function fetchGF<T>(src: ParsedSource, path: string, label: string): Promi
  * SUNDAY-first — bit 0 = Sun, bit 1 = Mon, … bit 6 = Sat. Calibrated from his
  * named day-specials: "Monday Pizza Special" = 2 (bit 1), "Tuesday" = 4 (bit 2),
  * "WING WEDNESDAYS" = 8 (bit 3), "THURSDAY Special" = 16 (bit 4), "FRIDAY" = 32
- * (bit 5). FFOS `availableDays` uses the SAME Sunday-first indices [0..6]
+ * (bit 5). FFOS's weekday JSON (`fulfilDays`, legacy `availableDays`) uses the SAME Sunday-first indices [0..6]
  * everywhere — customer display (`Date.UTC(2021,7,1+d)`; 2021-08-01 is a Sunday)
  * AND the admin picker (`DAY_NAMES = ["Sun".."Sat"]`). So the bit i → day i map
  * below is correct end-to-end (NOT the off-by-one the old comment implied).
@@ -558,7 +560,7 @@ export function mapMenu(menu: GFMenu, pictures?: Map<string, string>): ImportPre
         isSoldOut: !!item.is_out_of_stock,
         hasVariants,
         sortOrder: item.sort ?? 0,
-        availableDays: bitmaskToDaysJson(item.active_days ?? 127),
+        fulfilDays: bitmaskToDaysJson(item.active_days ?? 127),
         variants,
         itemGroups,
       });

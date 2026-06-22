@@ -36,10 +36,10 @@ describe("gloriafood import — force_max", () => {
 });
 
 /**
- * Locks in the GloriaFood `active_days` → FFOS `availableDays` bit-order, which
+ * Locks in the GloriaFood `active_days` → FFOS `fulfilDays` bit-order, which
  * was a flagged "unverified" regression risk. Calibrated against Luigi's REAL
  * menu (2026-06-21): GloriaFood is Sunday-first (bit0=Sun…bit6=Sat), matching
- * FFOS's Sunday-first availableDays, so the mapping is 1:1. If anyone "fixes" the
+ * FFOS's Sunday-first weekday indices, so the mapping is 1:1. If anyone "fixes" the
  * bit order on a hunch, these break first.
  */
 describe("gloriafood import — active_days bit-order (Sunday-first)", () => {
