@@ -484,22 +484,6 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                   </span>
                 </div>
               )}
-
-              {/* Add Prep Time / Delay button — only relevant while the
-                  order is still in-progress. Once it's completed or
-                  rejected, delaying makes no sense. Per-restaurant
-                  setting could gate this later; for now it's on for all. */}
-              {order.status === "accepted" && (
-                <div className="mt-3">
-                  <button
-                    type="button"
-                    onClick={() => setShowDelay(true)}
-                    className={`w-full inline-flex items-center justify-center gap-2 py-2 rounded-lg border border-dashed text-sm font-semibold transition ${t.btn}`}
-                  >
-                    <Plus className="w-4 h-4" /> Add prep time / delay
-                  </button>
-                </div>
-              )}
             </Section>
           )}
 
@@ -808,6 +792,18 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           </button>
           {showActions && (
             <div className="mt-2 space-y-2">
+              {/* Add prep time / delay — moved here from the countdown area
+                  (Luigi 2026-06-22). Only while the order is in-progress
+                  (accepted); a completed/rejected order can't be delayed. */}
+              {order.status === "accepted" && (
+                <button
+                  type="button"
+                  onClick={() => setShowDelay(true)}
+                  className={`w-full inline-flex items-center justify-center gap-2 py-2 rounded-lg border border-dashed text-sm font-semibold transition ${t.btn}`}
+                >
+                  <Plus className="w-4 h-4" /> Add prep time / delay
+                </button>
+              )}
               {/* Reprint — Kitchen / Customer / Both receipts, each with a
                   printer icon. Auto-print already fires on accept; this is the
                   manual re-run. Luigi 2026-06-15. */}
