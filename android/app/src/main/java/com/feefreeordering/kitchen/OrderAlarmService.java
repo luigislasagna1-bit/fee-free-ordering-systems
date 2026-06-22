@@ -46,6 +46,7 @@ public class OrderAlarmService extends Service {
 
     private MediaPlayer player;
     private Vibrator vibrator;
+    private android.media.AudioManager audioManager;
     /** Per-restaurant: vibrate alongside the ring? Set from the start intent's
      *  "vibrate" extra (default true). Ring-only when false. Luigi 2026-06-16. */
     private boolean vibrateEnabled = true;
@@ -97,8 +98,13 @@ public class OrderAlarmService extends Service {
 
         isRunning = true;
         startAlarm();
+        // Play the FULL official GloriaFood ring (it intensifies in its final ~40s).
+        // The keep-alive poll stops it the INSTANT the order is accepted (leaves
+        // "pending") or its accept window expires; an auto-accepted order rings only
+        // for its short ~8s ring window. This MAX_RING_MS cap is just a safety net in
+        // case the poll ever dies, so it never rings forever. Luigi 2026-06-22.
         autoStop = this::stopSelf;
-        handler.postDelayed(autoStop, 5_000L); // ring ~5s then stop — 4-5s snippet, not a continuous loop (Luigi 2026-06-21)
+        handler.postDelayed(autoStop, MAX_RING_MS);
         return START_STICKY;
     }
 
@@ -145,6 +151,17 @@ public class OrderAlarmService extends Service {
             wakeLock.acquire(MAX_RING_MS + 5_000L);
         } catch (Exception ignored) {}
 
+        // Force the ALARM stream to MAX so the ring is LOUD regardless of the
+        // device's alarm-volume slider (kitchen tablets are plugged in + must be
+        // heard across the kitchen). Luigi 2026-06-22.
+        try {
+            audioManager = (android.media.AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            if (audioManager != null) {
+                int max = audioManager.getStreamMaxVolume(android.media.AudioManager.STREAM_ALARM);
+                audioManager.setStreamVolume(android.media.AudioManager.STREAM_ALARM, max, 0);
+            }
+        } catch (Exception ignored) {}
+
         try {
             player = new MediaPlayer();
             player.setAudioAttributes(new AudioAttributes.Builder()
@@ -154,7 +171,11 @@ public class OrderAlarmService extends Service {
             AssetFileDescriptor afd = getResources().openRawResourceFd(R.raw.order_alarm);
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             afd.close();
-            player.setLooping(false); // 4-5s snippet, not a continuous loop (Luigi 2026-06-21)
+            // Play the FULL ring once (it intensifies at the end). If it finishes
+            // while the order is still pending, end the service so the keep-alive
+            // poll restarts it on its next ~4s tick. Luigi 2026-06-22.
+            player.setLooping(false);
+            player.setOnCompletionListener(mp -> stopSelf());
             player.prepare();
             player.start();
         } catch (Exception ignored) {}

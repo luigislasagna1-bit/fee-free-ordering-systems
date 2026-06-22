@@ -33,11 +33,11 @@ public class KitchenMessagingService extends MessagingService {
         if (data == null) return;
         if (!"new_order".equals(data.get("type"))) return;
 
-        // Ring in EVERY state — foreground, background, locked. The OS-level
-        // OrderAlarmService is the single sound source (the web chime is
-        // suppressed in the app), so there's never a double-ring and never a
-        // dependency on a Web Audio unlock gesture. OrderAlarmService.isRunning
-        // dedupes if the keep-alive poll fires it too. Luigi 2026-06-22.
+        // Native alarm = screen-off / backgrounded ONLY. When the app is foreground
+        // the in-app web ring (the loud official GloriaFood track, which stops the
+        // instant an order is opened) handles it — firing the native alarm too is the
+        // double-ring. Luigi 2026-06-22.
+        if (MainActivity.isForeground) return;
 
         Intent i = new Intent(this, OrderAlarmService.class);
         i.putExtra("title", data.get("title") != null ? data.get("title") : "New order");

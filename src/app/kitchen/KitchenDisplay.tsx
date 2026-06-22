@@ -1670,12 +1670,6 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
    */
   const loggedRingPathRef = useRef(false);
   const ringBellOnce = useCallback((volumeOverride?: number) => {
-    // In the NATIVE app the OS-level alarm (OrderAlarmService, fired by the
-    // keep-alive service + FCM in EVERY state — open, closed, locked) is the
-    // single sound source and needs NO Web Audio unlock gesture. Suppress the web
-    // chime here so the app never double-rings AND never depends on a screen tap.
-    // In a plain browser this stays the only ring. Luigi 2026-06-22.
-    if (typeof window !== "undefined" && (window as any).Capacitor?.isNativePlatform?.()) return;
     const vol = Math.max(0, Math.min(1, volumeOverride ?? alertVolume));
     if (vol <= 0) return;
 
@@ -1856,15 +1850,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     if (remainingMs <= 7 * 60_000) return 2500;
     return 3000;
   };
-  // In the NATIVE app the OS-level OrderAlarmService is the SINGLE ring source — it
-  // fires in EVERY state with no tap. Suppress ALL in-app web audio (not just the
-  // ringBellOnce chime) so a pending order doesn't ring TWICE while the app is open:
-  // the loud native alarm + the quiet looping web "long-alert" track. Luigi 2026-06-22.
-  const nativeApp = typeof window !== "undefined" && !!(window as any).Capacitor?.isNativePlatform?.();
   useEffect(() => {
     // !pageVisible → screen off / backgrounded: the NATIVE alarm handles the
     // ring, so the in-app cadence (custom sound) stays silent to avoid a double.
-    if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible || nativeApp) return;
+    if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) return;
     // "gloriafood" rings via the full-length uploaded alert TRACK (the
     // dedicated long-alert effect below), NOT this short-ding cadence — Luigi
     // wants his exact full-length GloriaFood alert at max volume, not a trimmed
@@ -1895,7 +1884,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       cancelled = true;
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [ringAudible, alertMuted, alertVolume, pageVisible, nativeApp, ringBellOnce]);
+  }, [ringAudible, alertMuted, alertVolume, pageVisible, ringBellOnce]);
 
   // Cut any in-flight custom/ding clip the moment the alarm should be silent —
   // the open order was the last pending one, the room was acknowledged, or the
@@ -1906,8 +1895,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // condition. gloriafood is unaffected — it rings via the HTMLAudio track, not
   // these buffer sources.
   useEffect(() => {
-    if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible || nativeApp) stopActiveRingSources();
-  }, [ringAudible, alertMuted, alertVolume, pageVisible, nativeApp, stopActiveRingSources]);
+    if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) stopActiveRingSources();
+  }, [ringAudible, alertMuted, alertVolume, pageVisible, stopActiveRingSources]);
 
   // Full-length GloriaFood alert track — the owner's uploaded
   // /sounds/gloriafood-alert.mp3, played at MAX volume and LOOPED until the
@@ -1918,7 +1907,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   useEffect(() => {
     const a = getLongAlert();
     if (!a) return;
-    const shouldPlay = ringAudible && alertSound === "gloriafood" && !alertMuted && alertVolume > 0 && pageVisible && !nativeApp;
+    const shouldPlay = ringAudible && alertSound === "gloriafood" && !alertMuted && alertVolume > 0 && pageVisible;
     if (shouldPlay) {
       // Route through the gain+limiter chain so the track plays WAY louder than
       // the file's own level (without clipping). volume = 1 feeds the chain at
@@ -1943,7 +1932,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       if (!a.paused) a.pause();
       try { a.currentTime = 0; } catch {}
     }
-  }, [ringAudible, longRing, alertSound, alertMuted, alertVolume, pageVisible, nativeApp, getLongAlert, ensureLongAlertRouting]);
+  }, [ringAudible, longRing, alertSound, alertMuted, alertVolume, pageVisible, getLongAlert, ensureLongAlertRouting]);
 
   // ── Re-arm audio when the app returns to the foreground (Luigi 2026-06-07) ──
   // Android (and backgrounded browser tabs) SUSPEND the AudioContext and pause
@@ -1966,7 +1955,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       // wake) let the NATIVE alarm finish — the pageVisible→true transition re-fires
       // the cadence/long-alert effects to start the in-app sound cleanly. (The
       // AudioContext resume above still runs immediately so it's ready by then.)
-      if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible || nativeApp) return;
+      if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) return;
       // gloriafood resumes its full-length track; other sounds fire one ding
       // (the cadence effect keeps them going). Luigi 2026-06-09.
       if (alertSound === "gloriafood") {
@@ -1985,7 +1974,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       window.removeEventListener("focus", rearm);
       window.removeEventListener("pageshow", rearm);
     };
-  }, [ringAudible, alertMuted, alertVolume, alertSound, pageVisible, nativeApp, ringBellOnce, ensureLongAlertRouting]);
+  }, [ringAudible, alertMuted, alertVolume, alertSound, pageVisible, ringBellOnce, ensureLongAlertRouting]);
 
   const testAlertSound = useCallback(() => {
     // Preview the ONE official sound — a short snippet of the liked GloriaFood

@@ -94,8 +94,12 @@ public class KitchenKeepAliveService extends Service {
             String token = null;
             while (polling && token == null) {
                 try {
+                    // Bound the token wait so a slow/hung Firebase init can't block the
+                    // poll loop for minutes — a screen-off order wouldn't ring until the
+                    // token resolved. Retry every 5s. Luigi 2026-06-22.
                     token = com.google.android.gms.tasks.Tasks.await(
-                            com.google.firebase.messaging.FirebaseMessaging.getInstance().getToken());
+                            com.google.firebase.messaging.FirebaseMessaging.getInstance().getToken(),
+                            8, java.util.concurrent.TimeUnit.SECONDS);
                 } catch (Exception e) {
                     token = null;
                 }
@@ -111,10 +115,12 @@ public class KitchenKeepAliveService extends Service {
                         lastVibrate = !resp.contains("\"vibrate\":false");
                         ringing = resp.contains("\"ringing\":true");
                     }
-                    // Ring in EVERY state (open, closed, locked) — the web chime
-                    // is suppressed in the app, so this OS-level alarm is the
-                    // single, tap-free sound source. Luigi 2026-06-22.
-                    if (ringing) {
+                    // Native alarm = screen-off / backgrounded ONLY. Foreground, the
+                    // in-app web ring (loud official GloriaFood track, stop-on-open)
+                    // handles it — firing the native alarm too is the double-ring. When
+                    // the app comes foreground, the else-branch STOPS a running alarm so
+                    // the web takes over cleanly. Luigi 2026-06-22.
+                    if (ringing && !MainActivity.isForeground) {
                         if (!OrderAlarmService.isRunning) {
                             Intent i = new Intent(this, OrderAlarmService.class);
                             i.putExtra("vibrate", lastVibrate);

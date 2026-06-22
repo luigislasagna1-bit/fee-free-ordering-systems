@@ -37,6 +37,12 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(DirectPrinterPlugin.class);
         super.onCreate(savedInstanceState);
+        // Allow the in-app web ring (the loud official GloriaFood track) to autoplay
+        // with NO screen tap — the kitchen must never have to tap to make sound. The
+        // WebView blocks audio until a user gesture by default. Luigi 2026-06-22.
+        try {
+            getBridge().getWebView().getSettings().setMediaPlaybackRequiresUserGesture(false);
+        } catch (Exception ignored) {}
         requestBatteryExemption();
         startKeepAlive();
         createLoudOrderChannel();
