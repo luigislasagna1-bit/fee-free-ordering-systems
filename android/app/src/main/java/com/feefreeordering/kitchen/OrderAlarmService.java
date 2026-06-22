@@ -98,7 +98,7 @@ public class OrderAlarmService extends Service {
         isRunning = true;
         startAlarm();
         autoStop = this::stopSelf;
-        handler.postDelayed(autoStop, MAX_RING_MS);
+        handler.postDelayed(autoStop, 5_000L); // ring ~5s then stop — 4-5s snippet, not a continuous loop (Luigi 2026-06-21)
         return START_STICKY;
     }
 
@@ -154,7 +154,7 @@ public class OrderAlarmService extends Service {
             AssetFileDescriptor afd = getResources().openRawResourceFd(R.raw.order_alarm);
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             afd.close();
-            player.setLooping(true);
+            player.setLooping(false); // 4-5s snippet, not a continuous loop (Luigi 2026-06-21)
             player.prepare();
             player.start();
         } catch (Exception ignored) {}
