@@ -1668,6 +1668,16 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
    *
    * Logs the path taken on the first ring of the session for debugging.
    */
+  // Brief (~5s) LOUD official ring for an AUTO-ACCEPTED order. gloriafood drives
+  // the same foreground long-alert HTMLAudio path that pending uses (loud through
+  // the gain+limiter, reliable through the WebView) — the old AudioContext "ding"
+  // was inaudible when the context was suspended, so auto-accept "did not ring at
+  // all" (Luigi 2026-06-22). Native covers screen-off via /api/kitchen/alarm-state.
+  const [autoAcceptRinging, setAutoAcceptRinging] = useState(false);
+  const autoAcceptTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const alertSoundRef = useRef(alertSound);
+  useEffect(() => () => { if (autoAcceptTimerRef.current) clearTimeout(autoAcceptTimerRef.current); }, []);
+
   const loggedRingPathRef = useRef(false);
   const ringBellOnce = useCallback((volumeOverride?: number) => {
     const vol = Math.max(0, Math.min(1, volumeOverride ?? alertVolume));
@@ -1730,7 +1740,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // alertSound / underlying playback fns change.
   useEffect(() => {
     ringBellOnceRef.current = ringBellOnce;
-  }, [ringBellOnce]);
+    alertSoundRef.current = alertSound;
+  }, [ringBellOnce, alertSound]);
 
   // Derived. `alerting` is true only while there's at least one pending
   // order AND the user hasn't silenced the current alarm. Computed each
@@ -1907,7 +1918,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   useEffect(() => {
     const a = getLongAlert();
     if (!a) return;
-    const shouldPlay = ringAudible && alertSound === "gloriafood" && !alertMuted && alertVolume > 0 && pageVisible;
+    const shouldPlay = (ringAudible || autoAcceptRinging) && alertSound === "gloriafood" && !alertMuted && alertVolume > 0 && pageVisible;
     if (shouldPlay) {
       // Route through the gain+limiter chain so the track plays WAY louder than
       // the file's own level (without clipping). volume = 1 feeds the chain at
@@ -1932,7 +1943,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       if (!a.paused) a.pause();
       try { a.currentTime = 0; } catch {}
     }
-  }, [ringAudible, longRing, alertSound, alertMuted, alertVolume, pageVisible, getLongAlert, ensureLongAlertRouting]);
+  }, [ringAudible, autoAcceptRinging, longRing, alertSound, alertMuted, alertVolume, pageVisible, getLongAlert, ensureLongAlertRouting]);
 
   // ── Re-arm audio when the app returns to the foreground (Luigi 2026-06-07) ──
   // Android (and backgrounded browser tabs) SUSPEND the AudioContext and pause
@@ -2239,12 +2250,26 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         o => o.status === "accepted" && !seenIdsRef.current.has(o.id),
       );
       if (newAutoAccepted.length > 0) {
-        // Single chime via the shared sound primitive. Reads through
-        // the ref so this fetchOrders callback (deps=[]) stays
-        // stable across polls — without the ref, adding ringBellOnce
-        // to fetchOrders' deps would tear the 4s interval down on
-        // every volume/sound-choice change.
-        try { ringBellOnceRef.current?.(); } catch { /* noop */ }
+        // Brief (~5s) LOUD official ring. gloriafood (the default + Luigi's
+        // choice) rings via the SAME foreground long-alert HTMLAudio path that
+        // pending uses — loud (gain+limiter) and reliable through the WebView. The
+        // old AudioContext "ding" (playSampleOnce) was inaudible when the context
+        // was suspended → auto-accept "did not ring at all" (Luigi 2026-06-22).
+        // Other chosen sounds fall back to a single buffer strike (resume the
+        // context first so a suspended one doesn't swallow it). Reads alertSound +
+        // ringBellOnce via refs so this deps=[] fetchOrders callback stays stable
+        // across polls. Screen-off auto-accept rings via the native alarm
+        // (/api/kitchen/alarm-state). Luigi 2026-06-22.
+        try {
+          if (alertSoundRef.current === "gloriafood") {
+            setAutoAcceptRinging(true);
+            if (autoAcceptTimerRef.current) clearTimeout(autoAcceptTimerRef.current);
+            autoAcceptTimerRef.current = setTimeout(() => setAutoAcceptRinging(false), 5000);
+          } else {
+            try { audioCtxRef.current?.resume?.(); } catch { /* noop */ }
+            ringBellOnceRef.current?.();
+          }
+        } catch { /* noop */ }
         toast(
           `✅ ${newAutoAccepted.length} new order${newAutoAccepted.length > 1 ? "s" : ""} auto-accepted`,
           { icon: "🍕", duration: 5000 },
