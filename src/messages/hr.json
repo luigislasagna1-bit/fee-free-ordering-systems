@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Omogući napredno sučelje za prilagodbu pizze za ovu stavku",
       "modifierGroupAssignments": "Dodjele grupa modifikatora",
+      "attachedToThisItem": "Povezano s ovom stavkom",
+      "allGroups": "Sve grupe",
       "noModifierGroupsYet": "U biblioteci još nema grupa modifikatora. Najprije ih kreirajte u ploči Opcije i Dodaci.",
       "crustGroupLabel": "Grupa tijesta",
       "crustGroupDesc": "Kupac odabire jednu vrstu tijesta",

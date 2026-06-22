@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Erweiterte Pizza-Anpassungsoberfläche für diesen Artikel aktivieren",
       "modifierGroupAssignments": "Modifikatorgruppen-Zuweisungen",
+      "attachedToThisItem": "Diesem Artikel zugewiesen",
+      "allGroups": "Alle Gruppen",
       "noModifierGroupsYet": "Noch keine Modifikatorgruppen in der Bibliothek. Erstellen Sie zuerst welche im Bereich „Optionen & Extras“.",
       "crustGroupLabel": "Teiggruppe",
       "crustGroupDesc": "Kunde wählt einen Teigtyp",

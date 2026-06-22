@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Activa la interfaz avanzada de personalización de pizza para este artículo",
       "modifierGroupAssignments": "Asignación de grupos de modificadores",
+      "attachedToThisItem": "Adjuntados a este artículo",
+      "allGroups": "Todos los grupos",
       "noModifierGroupsYet": "Aún no hay grupos de modificadores en la biblioteca. Créalos primero en el panel Opciones y Complementos.",
       "crustGroupLabel": "Grupo de masas",
       "crustGroupDesc": "El cliente selecciona un tipo de masa",

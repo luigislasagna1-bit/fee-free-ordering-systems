@@ -2125,6 +2125,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Enable the advanced pizza customisation interface for this item",
       "modifierGroupAssignments": "Modifier Group Assignments",
+      "attachedToThisItem": "Attached to this item",
+      "allGroups": "All groups",
       "noModifierGroupsYet": "No modifier groups in the library yet. Create some in the Choices & Add-ons panel first.",
       "crustGroupLabel": "Crust Group",
       "crustGroupDesc": "Customer selects one crust type",

@@ -1642,6 +1642,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Engedélyezze a haladó pizza-testreszabási felületet ehhez a tételhez",
       "modifierGroupAssignments": "Módosítócsoport-hozzárendelések",
+      "attachedToThisItem": "Ehhez a tételhez csatolva",
+      "allGroups": "Összes csoport",
       "noModifierGroupsYet": "Még nincsenek módosítócsoportok a könyvtárban. Hozzon létre néhányat a Lehetőségek & Extrák panelen.",
       "crustGroupLabel": "Tésztacsoport",
       "crustGroupDesc": "Az ügyfél egy tésztafajtát választ",

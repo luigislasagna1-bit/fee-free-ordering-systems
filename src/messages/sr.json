@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Omogući napredni interfejs za prilagođavanje pice za ovu stavku",
       "modifierGroupAssignments": "Dodela grupa modifikatora",
+      "attachedToThisItem": "Повезано са овом ставком",
+      "allGroups": "Све групе",
       "noModifierGroupsYet": "Još nema grupa modifikatora u biblioteci. Napravite ih prvo u panelu Choices & Add-ons.",
       "crustGroupLabel": "Grupa kora",
       "crustGroupDesc": "Kupac bira jednu vrstu kore",

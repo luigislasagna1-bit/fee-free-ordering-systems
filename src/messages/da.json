@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizzabygger",
       "pizzaBuilderHint": "Aktivér den avancerede pizzatilpasningsgrænseflade for denne vare",
       "modifierGroupAssignments": "Tildelinger af tilvalgsgrupper",
+      "attachedToThisItem": "Tilknyttet denne vare",
+      "allGroups": "Alle grupper",
       "noModifierGroupsYet": "Ingen tilvalgsgrupper i biblioteket endnu. Opret dem først under panelet Tilvalg og Tilføjelser.",
       "crustGroupLabel": "Bundgruppe",
       "crustGroupDesc": "Kunden vælger én bundtype",

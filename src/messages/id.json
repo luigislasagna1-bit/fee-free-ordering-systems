@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Aktifkan antarmuka kustomisasi pizza lanjutan untuk item ini",
       "modifierGroupAssignments": "Penugasan Grup Modifier",
+      "attachedToThisItem": "Terlampir pada item ini",
+      "allGroups": "Semua grup",
       "noModifierGroupsYet": "Belum ada grup modifier di pustaka. Buat terlebih dahulu di panel Pilihan & Add-on.",
       "crustGroupLabel": "Grup Crust",
       "crustGroupDesc": "Pelanggan memilih satu jenis crust",

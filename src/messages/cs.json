@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Zapnout rozšířené rozhraní pro přizpůsobení pizzy pro tuto položku",
       "modifierGroupAssignments": "Přiřazení skupin modifikátorů",
+      "attachedToThisItem": "Připojené k této položce",
+      "allGroups": "Všechny skupiny",
       "noModifierGroupsYet": "V knihovně zatím nejsou žádné skupiny modifikátorů. Nejprve je vytvořte v panelu Možnosti a doplňky.",
       "crustGroupLabel": "Skupina okrajů",
       "crustGroupDesc": "Zákazník vybere jeden typ okraje",

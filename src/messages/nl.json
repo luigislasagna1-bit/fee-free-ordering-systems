@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Geavanceerde pizza-aanpassingsinterface voor dit artikel inschakelen",
       "modifierGroupAssignments": "Wijzigingsgroeptoewijzingen",
+      "attachedToThisItem": "Gekoppeld aan dit item",
+      "allGroups": "Alle groepen",
       "noModifierGroupsYet": "Nog geen wijzigingsgroepen in de bibliotheek. Maak er eerst aan in het paneel Keuzes & Extra's.",
       "crustGroupLabel": "Bodemgroep",
       "crustGroupDesc": "Klant kiest één bodemtype",

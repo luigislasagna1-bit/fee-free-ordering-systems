@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Включи разширения интерфейс за персонализиране на пица за този артикул",
       "modifierGroupAssignments": "Присвояване на групи модификатори",
+      "attachedToThisItem": "Прикачени към този артикул",
+      "allGroups": "Всички групи",
       "noModifierGroupsYet": "Все още няма групи модификатори в библиотеката. Създай такива в панела Choices & Add-ons.",
       "crustGroupLabel": "Група за коричка",
       "crustGroupDesc": "Клиентът избира един вид коричка",

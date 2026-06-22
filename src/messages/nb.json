@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Aktiver det avanserte pizzatilpasningsgrensesnittet for denne varen",
       "modifierGroupAssignments": "Tilordning av tilleggsgrupper",
+      "attachedToThisItem": "Knyttet til denne varen",
+      "allGroups": "Alle grupper",
       "noModifierGroupsYet": "Ingen tilleggsgrupper i biblioteket ennå. Opprett noen i Valg og tillegg-panelet først.",
       "crustGroupLabel": "Bunnsgruppe",
       "crustGroupDesc": "Kunden velger én bunntype",

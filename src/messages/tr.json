@@ -1642,6 +1642,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Bu ürün için gelişmiş pizza özelleştirme arayüzünü etkinleştir",
       "modifierGroupAssignments": "Modifiye Grubu Atamaları",
+      "attachedToThisItem": "Bu öğeye ekli",
+      "allGroups": "Tüm gruplar",
       "noModifierGroupsYet": "Kütüphanede henüz modifiye grubu yok. Önce Seçenekler & Eklentiler panelinde oluşturun.",
       "crustGroupLabel": "Hamur Grubu",
       "crustGroupDesc": "Müşteri bir hamur türü seçer",

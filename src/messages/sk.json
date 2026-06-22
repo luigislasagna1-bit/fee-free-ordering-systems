@@ -2376,6 +2376,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Povoliť pre túto položku pokročilé rozhranie prispôsobenia pizze",
       "modifierGroupAssignments": "Priradenia skupín modifikátorov",
+      "attachedToThisItem": "Priradené k tejto položke",
+      "allGroups": "Všetky skupiny",
       "noModifierGroupsYet": "V knižnici zatiaľ nie sú žiadne skupiny modifikátorov. Najprv ich vytvorte v paneli Voľby a doplnky.",
       "crustGroupLabel": "Skupina ciest",
       "crustGroupDesc": "Zákazník vyberie jeden druh cesta",

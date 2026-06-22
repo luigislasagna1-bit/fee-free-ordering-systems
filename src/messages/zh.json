@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "为此商品启用高级披萨自定义界面",
       "modifierGroupAssignments": "修改组分配",
+      "attachedToThisItem": "已附加到此商品",
+      "allGroups": "所有分组",
       "noModifierGroupsYet": "库中暂无修改组。请先在「选项与加购」面板中创建。",
       "crustGroupLabel": "饼底组",
       "crustGroupDesc": "顾客选择一种饼底",

@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "เปิดใช้งานอินเทอร์เฟซปรับแต่งพิซซ่าขั้นสูงสำหรับรายการนี้",
       "modifierGroupAssignments": "การกำหนดกลุ่มโมดิไฟเออร์",
+      "attachedToThisItem": "แนบกับรายการนี้",
+      "allGroups": "ทุกกลุ่ม",
       "noModifierGroupsYet": "ยังไม่มีกลุ่มโมดิไฟเออร์ในไลบรารี สร้างในแผง Choices & Add-ons ก่อน",
       "crustGroupLabel": "กลุ่ม Crust",
       "crustGroupDesc": "ลูกค้าเลือกประเภทขอบพิซซ่าหนึ่งอย่าง",

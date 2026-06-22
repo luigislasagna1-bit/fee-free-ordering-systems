@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Omogoči napredni vmesnik za prilagoditev pice za ta artikel",
       "modifierGroupAssignments": "Dodelitve skupin modifikatorjev",
+      "attachedToThisItem": "Povezano s tem artiklom",
+      "allGroups": "Vse skupine",
       "noModifierGroupsYet": "V knjižnici še ni skupin modifikatorjev. Najprej jih ustvarite v panelu Možnosti in dodatki.",
       "crustGroupLabel": "Skupina testa",
       "crustGroupDesc": "Stranka izbere eno vrsto testa",

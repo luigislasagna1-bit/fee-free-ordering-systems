@@ -2376,6 +2376,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Įjungti išplėstinę picos pritaikymo sąsają šiai prekei",
       "modifierGroupAssignments": "Modifikatorių grupių priskyrimai",
+      "attachedToThisItem": "Susieta su šiuo elementu",
+      "allGroups": "Visos grupės",
       "noModifierGroupsYet": "Bibliotekoje dar nėra modifikatorių grupių. Pirma sukurkite jas skiltyje Pasirinkimai ir priedai.",
       "crustGroupLabel": "Pagrindo grupė",
       "crustGroupDesc": "Klientas pasirenka vieną pagrindo tipą",

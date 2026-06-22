@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "בונה פיצה",
       "pizzaBuilderHint": "הפעל ממשק התאמת פיצה מתקדם לפריט זה",
       "modifierGroupAssignments": "הקצאות קבוצות תוספות",
+      "attachedToThisItem": "מצורפים לפריט זה",
+      "allGroups": "כל הקבוצות",
       "noModifierGroupsYet": "אין קבוצות תוספות בספרייה עדיין. צור כמה בלוח הבחירות והתוספות תחילה.",
       "crustGroupLabel": "קבוצת בצק",
       "crustGroupDesc": "הלקוח בוחר סוג בצק אחד",

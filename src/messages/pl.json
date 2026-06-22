@@ -1642,6 +1642,8 @@
       "pizzaBuilder": "Kreator Pizzy",
       "pizzaBuilderHint": "Włącz zaawansowany interfejs dostosowywania pizzy dla tej pozycji",
       "modifierGroupAssignments": "Przypisania grup modyfikatorów",
+      "attachedToThisItem": "Przypisane do tej pozycji",
+      "allGroups": "Wszystkie grupy",
       "noModifierGroupsYet": "Brak grup modyfikatorów w bibliotece. Utwórz je najpierw w panelu Opcje i Dodatki.",
       "crustGroupLabel": "Grupa ciasta",
       "crustGroupDesc": "Klient wybiera jeden rodzaj ciasta",

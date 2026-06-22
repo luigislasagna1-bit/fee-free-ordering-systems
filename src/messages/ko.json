@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "이 메뉴에 고급 피자 커스터마이즈 인터페이스 활성화",
       "modifierGroupAssignments": "옵션 그룹 할당",
+      "attachedToThisItem": "이 항목에 연결됨",
+      "allGroups": "모든 그룹",
       "noModifierGroupsYet": "라이브러리에 아직 옵션 그룹이 없습니다. Choices & Add-ons 패널에서 먼저 그룹을 만드세요.",
       "crustGroupLabel": "도우 그룹",
       "crustGroupDesc": "고객이 도우 유형을 하나 선택",

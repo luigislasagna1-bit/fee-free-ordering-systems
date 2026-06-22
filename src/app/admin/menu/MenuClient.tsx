@@ -985,7 +985,21 @@ function ItemModal({
                         ["sauceGroupId", t("sauceGroupLabel"), t("sauceGroupDesc")],
                         ["cheeseGroupId", t("cheeseGroupLabel"), t("cheeseGroupDesc")],
                       ] as [keyof PizzaFormState, string, string][]
-                    ).map(([key, label, desc]) => (
+                    ).map(([key, label, desc]) => {
+                      // Surface the groups already attached to THIS item first — the
+                      // crust/sauce/cheese the owner wants is almost always one of
+                      // them (Fabrizio 2026-06-21). The rest follow under "All groups";
+                      // when nothing's attached yet, just list every group.
+                      const attachedIds = new Set(
+                        [pizza.crustGroupId, pizza.sauceGroupId, pizza.cheeseGroupId,
+                          ...pizza.toppingGroupIds, ...pizza.sectionOrder].filter(Boolean),
+                      );
+                      const attached = libraryGroups.filter(g => attachedIds.has(g.id));
+                      const others = libraryGroups.filter(g => !attachedIds.has(g.id));
+                      const opt = (g: typeof libraryGroups[number]) => (
+                        <option key={g.id} value={g.id}>{g.name} ({g.options.length} options)</option>
+                      );
+                      return (
                       <div key={key as string}>
                         <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
                         <select
@@ -994,13 +1008,19 @@ function ItemModal({
                           onChange={e => setPizza(p => ({ ...p, [key]: e.target.value }))}
                         >
                           <option value="">{t("noneOption")}</option>
-                          {libraryGroups.map(g => (
-                            <option key={g.id} value={g.id}>{g.name} ({g.options.length} options)</option>
-                          ))}
+                          {attached.length > 0 ? (
+                            <>
+                              <optgroup label={t("attachedToThisItem")}>{attached.map(opt)}</optgroup>
+                              <optgroup label={t("allGroups")}>{others.map(opt)}</optgroup>
+                            </>
+                          ) : (
+                            libraryGroups.map(opt)
+                          )}
                         </select>
                         <p className="text-xs text-gray-400 mt-0.5">{desc}</p>
                       </div>
-                    ))}
+                      );
+                    })}
 
                     {/* Topping groups multi-select */}
                     <div>

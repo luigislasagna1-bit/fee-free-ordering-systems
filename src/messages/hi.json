@@ -2052,6 +2052,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "इस आइटम के लिए उन्नत pizza कस्टमाइज़ेशन इंटरफ़ेस सक्षम करें",
       "modifierGroupAssignments": "मॉडिफायर समूह असाइनमेंट",
+      "attachedToThisItem": "इस आइटम से जुड़े",
+      "allGroups": "सभी समूह",
       "noModifierGroupsYet": "लाइब्रेरी में अभी तक कोई मॉडिफायर समूह नहीं है। पहले Choices & Add-ons पैनल में बनाएँ।",
       "crustGroupLabel": "Crust समूह",
       "crustGroupDesc": "ग्राहक एक crust प्रकार चुनता है",

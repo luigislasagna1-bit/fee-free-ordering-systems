@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Activează interfața avansată de personalizare pizza pentru acest produs",
       "modifierGroupAssignments": "Atribuiri grupuri de modificatori",
+      "attachedToThisItem": "Atașate acestui articol",
+      "allGroups": "Toate grupurile",
       "noModifierGroupsYet": "Niciun grup de modificatori în bibliotecă. Creează mai întâi în panoul Opțiuni & Suplimente.",
       "crustGroupLabel": "Grup Blat",
       "crustGroupDesc": "Clientul selectează un tip de blat",

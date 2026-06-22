@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Увімкнути розширений інтерфейс налаштування піци для цієї позиції",
       "modifierGroupAssignments": "Призначення груп модифікаторів",
+      "attachedToThisItem": "Прив'язані до цієї позиції",
+      "allGroups": "Усі групи",
       "noModifierGroupsYet": "У бібліотеці ще немає груп модифікаторів. Спочатку створіть їх у панелі «Вибори та доповнення».",
       "crustGroupLabel": "Група тіста",
       "crustGroupDesc": "Клієнт обирає один вид тіста",

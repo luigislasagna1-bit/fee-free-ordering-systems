@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Activer l'interface avancée de personnalisation de pizza pour cet article",
       "modifierGroupAssignments": "Affectations de groupes de modificateurs",
+      "attachedToThisItem": "Associés à cet article",
+      "allGroups": "Tous les groupes",
       "noModifierGroupsYet": "Aucun groupe de modificateurs dans la bibliothèque. Créez-en d'abord dans le panneau Choix & Suppléments.",
       "crustGroupLabel": "Groupe Pâte",
       "crustGroupDesc": "Le client sélectionne un type de pâte",

@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Aktivera det avancerade pizzaanpassningsgränssnittet för den här artikeln",
       "modifierGroupAssignments": "Tilldelning av tillvalsgrupper",
+      "attachedToThisItem": "Kopplade till denna artikel",
+      "allGroups": "Alla grupper",
       "noModifierGroupsYet": "Inga tillvalsgrupper i biblioteket ännu. Skapa dem i panelen Tillval och tillägg först.",
       "crustGroupLabel": "Deggrupp",
       "crustGroupDesc": "Kunden väljer en degtyp",

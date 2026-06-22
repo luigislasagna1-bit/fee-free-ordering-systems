@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "منشئ البيتزا",
       "pizzaBuilderHint": "تفعيل واجهة تخصيص البيتزا المتقدمة لهذا الصنف",
       "modifierGroupAssignments": "تعيينات مجموعات الإضافات",
+      "attachedToThisItem": "مرفقة بهذا العنصر",
+      "allGroups": "كل المجموعات",
       "noModifierGroupsYet": "لا توجد مجموعات إضافات في المكتبة بعد. أنشئ بعضها في لوحة الخيارات والإضافات أولاً.",
       "crustGroupLabel": "مجموعة العجينة",
       "crustGroupDesc": "يختار العميل نوع عجينة واحدة",

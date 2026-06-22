@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "この商品の高度なピザカスタマイズインターフェースを有効にする",
       "modifierGroupAssignments": "モディファイアグループの割り当て",
+      "attachedToThisItem": "この商品に割り当て済み",
+      "allGroups": "すべてのグループ",
       "noModifierGroupsYet": "ライブラリにまだモディファイアグループがありません。先に選択肢＆追加オプションパネルで作成してください。",
       "crustGroupLabel": "クラストグループ",
       "crustGroupDesc": "顧客がクラストの種類を1つ選択",

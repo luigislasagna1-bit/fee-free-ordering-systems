@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Ieslēgt papildu picas pielāgošanas saskarni šai precei",
       "modifierGroupAssignments": "Modifikatoru grupu piešķiršana",
+      "attachedToThisItem": "Piesaistīts šim vienumam",
+      "allGroups": "Visas grupas",
       "noModifierGroupsYet": "Bibliotēkā vēl nav modifikatoru grupu. Vispirms izveidojiet tās panelī Choices & Add-ons.",
       "crustGroupLabel": "Garozas grupa",
       "crustGroupDesc": "Klients izvēlas vienu garozas veidu",

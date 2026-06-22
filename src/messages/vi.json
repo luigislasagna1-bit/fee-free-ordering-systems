@@ -1642,6 +1642,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Bật giao diện tùy chỉnh pizza nâng cao cho món này",
       "modifierGroupAssignments": "Gán Nhóm Tùy Chọn",
+      "attachedToThisItem": "Đã gắn với mục này",
+      "allGroups": "Tất cả nhóm",
       "noModifierGroupsYet": "Chưa có nhóm tùy chọn trong thư viện. Hãy tạo trong bảng Tùy chọn & Thêm món trước.",
       "crustGroupLabel": "Nhóm Đế Bánh",
       "crustGroupDesc": "Khách chọn một loại đế bánh",

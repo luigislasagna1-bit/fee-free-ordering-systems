@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Luba selle toote jaoks täiustatud pizza kohandamise liides",
       "modifierGroupAssignments": "Lisandite grupi määrangud",
+      "attachedToThisItem": "Selle tootega seotud",
+      "allGroups": "Kõik rühmad",
       "noModifierGroupsYet": "Raamatukogus pole veel lisandite gruppe. Loo need esmalt paneelil Valikud ja lisandid.",
       "crustGroupLabel": "Kooriku grupp",
       "crustGroupDesc": "Klient valib ühe kooriku tüübi",

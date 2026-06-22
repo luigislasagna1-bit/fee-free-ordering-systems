@@ -1698,6 +1698,8 @@
       "pizzaBuilder": "Pizza Builder",
       "pizzaBuilderHint": "Ota käyttöön edistynyt pizzan mukauttamisliittymä tälle tuotteelle",
       "modifierGroupAssignments": "Lisäosaryhmien määritykset",
+      "attachedToThisItem": "Liitetty tähän tuotteeseen",
+      "allGroups": "Kaikki ryhmät",
       "noModifierGroupsYet": "Kirjastossa ei ole vielä lisäosaryhmiä. Luo ne ensin Valinnat & Lisäosat -paneelissa.",
       "crustGroupLabel": "Pohjaryhmä",
       "crustGroupDesc": "Asiakas valitsee yhden pohjakoon",
