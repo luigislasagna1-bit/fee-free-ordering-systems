@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Ko je vklopljeno, vaša kuhinjska naprava ob novem naročilu poleg zvonjenja tudi vibrira. Izklopite, če želite obdržati le zvok. Velja za aplikacijo Kitchen Order.",
       "vibrateToggleAriaLabel": "Preklopi vibriranje ob novih naročilih",
       "vibrateEnabledToast": "Vibriranje vklopljeno — zvonjenje + vibriranje.",
-      "vibrateDisabledToast": "Vibriranje izklopljeno — samo zvonjenje."
+      "vibrateDisabledToast": "Vibriranje izklopljeno — samo zvonjenje.",
+      "deliveryBothLabel": "Prikaži tudi ulični naslov"
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaša restavracija",

@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Kui sees, vibreerib teie köögiseade uue tellimuse korral koos heliga. Lülitage välja, et jätta ainult heli. Puudutab Kitchen Orderi rakendust.",
       "vibrateToggleAriaLabel": "Lülita uute tellimuste värin sisse/välja",
       "vibrateEnabledToast": "Värin sees — heli + värin.",
-      "vibrateDisabledToast": "Värin väljas — ainult heli."
+      "vibrateDisabledToast": "Värin väljas — ainult heli.",
+      "deliveryBothLabel": "Näita ka tänava aadressi"
     },
     "receiptRenderer": {
       "yourRestaurant": "Sinu restoran",

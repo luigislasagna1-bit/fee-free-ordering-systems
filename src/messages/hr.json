@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Kad je uključeno, vaš kuhinjski uređaj vibrira uz zvuk pri novoj narudžbi. Isključite ga da zadržite samo zvuk. Odnosi se na aplikaciju Kitchen Order.",
       "vibrateToggleAriaLabel": "Uključi/isključi vibraciju za nove narudžbe",
       "vibrateEnabledToast": "Vibracija uključena — zvuk + vibracija.",
-      "vibrateDisabledToast": "Vibracija isključena — samo zvuk."
+      "vibrateDisabledToast": "Vibracija isključena — samo zvuk.",
+      "deliveryBothLabel": "Prikaži i adresu ulice"
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaš restoran",

@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Gdy włączone, urządzenie w kuchni wibruje oprócz dźwięku przy nowym zamówieniu. Wyłącz, aby zostawić tylko dźwięk. Dotyczy aplikacji Kitchen Order.",
       "vibrateToggleAriaLabel": "Przełącz wibrację przy nowych zamówieniach",
       "vibrateEnabledToast": "Wibracja włączona — dźwięk + wibracja.",
-      "vibrateDisabledToast": "Wibracja wyłączona — tylko dźwięk."
+      "vibrateDisabledToast": "Wibracja wyłączona — tylko dźwięk.",
+      "deliveryBothLabel": "Pokaż także adres"
     },
     "receiptRenderer": {
       "yourRestaurant": "Twoja restauracja",

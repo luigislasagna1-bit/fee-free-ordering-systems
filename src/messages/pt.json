@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Quando ativada, o seu dispositivo de cozinha vibra além do toque ao receber um novo pedido. Desative-a para manter apenas o som. Afeta a app Kitchen Order.",
       "vibrateToggleAriaLabel": "Ativar/desativar a vibração de novos pedidos",
       "vibrateEnabledToast": "Vibração ativada — toque + vibração.",
-      "vibrateDisabledToast": "Vibração desativada — apenas toque."
+      "vibrateDisabledToast": "Vibração desativada — apenas toque.",
+      "deliveryBothLabel": "Mostrar também a morada"
     },
     "receiptRenderer": {
       "yourRestaurant": "O Seu Restaurante",

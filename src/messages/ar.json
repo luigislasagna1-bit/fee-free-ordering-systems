@@ -3223,7 +3223,8 @@
       "vibrateHelp": "عند التفعيل، يهتز جهاز مطبخك مع الرنين عند وصول طلب جديد. أوقفه للإبقاء على الصوت فقط. يؤثر على تطبيق Kitchen Order.",
       "vibrateToggleAriaLabel": "تبديل اهتزاز الطلبات الجديدة",
       "vibrateEnabledToast": "تم تفعيل الاهتزاز — رنين + اهتزاز.",
-      "vibrateDisabledToast": "تم إيقاف الاهتزاز — رنين فقط."
+      "vibrateDisabledToast": "تم إيقاف الاهتزاز — رنين فقط.",
+      "deliveryBothLabel": "عرض عنوان الشارع أيضاً"
     },
     "receiptRenderer": {
       "yourRestaurant": "مطعمك",

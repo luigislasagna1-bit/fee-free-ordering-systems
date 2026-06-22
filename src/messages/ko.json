@@ -3223,7 +3223,8 @@
       "vibrateHelp": "켜면 새 주문 시 주방 기기가 벨소리와 함께 진동합니다. 끄면 소리만 유지됩니다. Kitchen Order 앱에 적용됩니다.",
       "vibrateToggleAriaLabel": "새 주문 진동 전환",
       "vibrateEnabledToast": "진동 켜짐 — 벨소리 + 진동.",
-      "vibrateDisabledToast": "진동 꺼짐 — 벨소리만."
+      "vibrateDisabledToast": "진동 꺼짐 — 벨소리만.",
+      "deliveryBothLabel": "주소도 함께 표시"
     },
     "receiptRenderer": {
       "yourRestaurant": "내 레스토랑",

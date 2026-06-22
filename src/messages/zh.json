@@ -3223,7 +3223,8 @@
       "vibrateHelp": "开启后，有新订单时您的厨房设备会在响铃的同时振动。关闭则只保留声音。适用于 Kitchen Order 应用。",
       "vibrateToggleAriaLabel": "切换新订单振动",
       "vibrateEnabledToast": "已开启振动 — 响铃 + 振动。",
-      "vibrateDisabledToast": "已关闭振动 — 仅响铃。"
+      "vibrateDisabledToast": "已关闭振动 — 仅响铃。",
+      "deliveryBothLabel": "同时显示街道地址"
     },
     "receiptRenderer": {
       "yourRestaurant": "您的餐厅",

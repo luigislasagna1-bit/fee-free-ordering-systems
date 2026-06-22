@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Când este activată, dispozitivul din bucătărie vibrează pe lângă sonerie la o comandă nouă. Dezactiveaz-o ca să păstrezi doar sunetul. Afectează aplicația Kitchen Order.",
       "vibrateToggleAriaLabel": "Comută vibrația la comenzi noi",
       "vibrateEnabledToast": "Vibrație activată — sonerie + vibrație.",
-      "vibrateDisabledToast": "Vibrație dezactivată — doar sonerie."
+      "vibrateDisabledToast": "Vibrație dezactivată — doar sonerie.",
+      "deliveryBothLabel": "Afișează și adresa"
     },
     "receiptRenderer": {
       "yourRestaurant": "Restaurantul tău",

@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Коли увімкнено, ваш кухонний пристрій під час нового замовлення вібрує разом зі звуком. Вимкніть, щоб залишився лише звук. Стосується додатка Kitchen Order.",
       "vibrateToggleAriaLabel": "Перемкнути вібрацію для нових замовлень",
       "vibrateEnabledToast": "Вібрацію увімкнено — звук + вібрація.",
-      "vibrateDisabledToast": "Вібрацію вимкнено — лише звук."
+      "vibrateDisabledToast": "Вібрацію вимкнено — лише звук.",
+      "deliveryBothLabel": "Також показувати адресу"
     },
     "receiptRenderer": {
       "yourRestaurant": "Ваш ресторан",

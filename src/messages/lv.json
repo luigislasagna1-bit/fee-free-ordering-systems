@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Kad ieslēgts, jūsu virtuves ierīce jauna pasūtījuma gadījumā vibrē līdzās skaņai. Izslēdziet to, lai paliktu tikai skaņa. Attiecas uz Kitchen Order lietotni.",
       "vibrateToggleAriaLabel": "Pārslēgt vibrāciju jauniem pasūtījumiem",
       "vibrateEnabledToast": "Vibrācija ieslēgta — skaņa + vibrācija.",
-      "vibrateDisabledToast": "Vibrācija izslēgta — tikai skaņa."
+      "vibrateDisabledToast": "Vibrācija izslēgta — tikai skaņa.",
+      "deliveryBothLabel": "Rādīt arī ielas adresi"
     },
     "receiptRenderer": {
       "yourRestaurant": "Jūsu restorāns",

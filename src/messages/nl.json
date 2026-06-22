@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Indien aan, trilt je keukenapparaat samen met het geluid bij een nieuwe bestelling. Zet het uit om alleen het geluid te houden. Geldt voor de Kitchen Order App.",
       "vibrateToggleAriaLabel": "Trillen bij nieuwe bestellingen aan/uit",
       "vibrateEnabledToast": "Trillen aan — geluid + trillen.",
-      "vibrateDisabledToast": "Trillen uit — alleen geluid."
+      "vibrateDisabledToast": "Trillen uit — alleen geluid.",
+      "deliveryBothLabel": "Toon ook het straatadres"
     },
     "receiptRenderer": {
       "yourRestaurant": "Uw restaurant",

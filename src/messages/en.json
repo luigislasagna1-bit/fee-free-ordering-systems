@@ -1441,7 +1441,8 @@
       "vibrateHelp": "When on, your kitchen device vibrates along with the ring for a new order. Turn it off to keep just the sound. Affects the Kitchen Order App.",
       "vibrateToggleAriaLabel": "Toggle new-order vibration",
       "vibrateEnabledToast": "Vibration on — ring + vibrate.",
-      "vibrateDisabledToast": "Vibration off — ring only."
+      "vibrateDisabledToast": "Vibration off — ring only.",
+      "deliveryBothLabel": "Also show the street address"
     },
     "customers": {
       "title": "Customers",

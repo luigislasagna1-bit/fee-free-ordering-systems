@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Když je zapnuto, vaše kuchyňské zařízení vibruje spolu se zvoněním u nové objednávky. Vypněte, chcete-li ponechat jen zvuk. Týká se aplikace Kitchen Order.",
       "vibrateToggleAriaLabel": "Přepnout vibrace u nových objednávek",
       "vibrateEnabledToast": "Vibrace zapnuté — zvonění + vibrace.",
-      "vibrateDisabledToast": "Vibrace vypnuté — pouze zvonění."
+      "vibrateDisabledToast": "Vibrace vypnuté — pouze zvonění.",
+      "deliveryBothLabel": "Zobrazit také adresu ulice"
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaše restaurace",

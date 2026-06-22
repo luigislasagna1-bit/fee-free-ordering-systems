@@ -60,6 +60,7 @@ export async function PUT(req: NextRequest) {
     autoCallOnNewOrder,
     kitchenVibrate,
     kitchenDeliveryShowName,
+    kitchenDeliveryShowBoth,
     kitchenShowItemCategory,
     alertPhone,
     scheduledOrderInterval,
@@ -202,6 +203,7 @@ export async function PUT(req: NextRequest) {
   if (autoCallOnNewOrder !== undefined) updateData.autoCallOnNewOrder = !!autoCallOnNewOrder;
   if (kitchenVibrate !== undefined) updateData.kitchenVibrate = !!kitchenVibrate;
   if (kitchenDeliveryShowName !== undefined) updateData.kitchenDeliveryShowName = !!kitchenDeliveryShowName;
+  if (kitchenDeliveryShowBoth !== undefined) updateData.kitchenDeliveryShowBoth = !!kitchenDeliveryShowBoth;
   if (kitchenShowItemCategory !== undefined) updateData.kitchenShowItemCategory = !!kitchenShowItemCategory;
   // Optional alternate alert number; trim, cap length, and store null when blank
   // so the cron falls back to the public phone.

@@ -84,6 +84,7 @@ export function SettingsClient({
               initialAutoCall={!!restaurant.autoCallOnNewOrder}
               initialKitchenVibrate={restaurant.kitchenVibrate !== false}
               initialDeliveryShowName={!!restaurant.kitchenDeliveryShowName}
+              initialDeliveryShowBoth={!!restaurant.kitchenDeliveryShowBoth}
               initialShowItemCategory={!!restaurant.kitchenShowItemCategory}
               storePhone={restaurant.phone ?? null}
               initialAlertPhone={restaurant.alertPhone ?? null}

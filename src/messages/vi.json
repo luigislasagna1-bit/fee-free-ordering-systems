@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Khi bật, thiết bị bếp của bạn sẽ rung cùng với chuông khi có đơn mới. Tắt đi để chỉ giữ âm thanh. Áp dụng cho ứng dụng Kitchen Order.",
       "vibrateToggleAriaLabel": "Bật/tắt rung khi có đơn mới",
       "vibrateEnabledToast": "Đã bật rung — chuông + rung.",
-      "vibrateDisabledToast": "Đã tắt rung — chỉ chuông."
+      "vibrateDisabledToast": "Đã tắt rung — chỉ chuông.",
+      "deliveryBothLabel": "Cũng hiển thị địa chỉ đường phố"
     },
     "receiptRenderer": {
       "yourRestaurant": "Nhà hàng của bạn",

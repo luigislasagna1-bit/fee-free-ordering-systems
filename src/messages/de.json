@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Wenn aktiviert, vibriert Ihr Küchengerät zusätzlich zum Klingeln bei einer neuen Bestellung. Deaktivieren Sie sie, um nur den Ton zu behalten. Betrifft die Kitchen Order App.",
       "vibrateToggleAriaLabel": "Vibration bei neuen Bestellungen umschalten",
       "vibrateEnabledToast": "Vibration an — Klingeln + Vibration.",
-      "vibrateDisabledToast": "Vibration aus — nur Klingeln."
+      "vibrateDisabledToast": "Vibration aus — nur Klingeln.",
+      "deliveryBothLabel": "Auch die Straßenadresse anzeigen"
     },
     "receiptRenderer": {
       "yourRestaurant": "Ihr Restaurant",

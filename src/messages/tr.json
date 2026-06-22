@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Açıkken, mutfak cihazınız yeni bir siparişte zille birlikte titreşir. Yalnızca sesi tutmak için kapatın. Kitchen Order uygulamasını etkiler.",
       "vibrateToggleAriaLabel": "Yeni sipariş titreşimini aç/kapat",
       "vibrateEnabledToast": "Titreşim açık — zil + titreşim.",
-      "vibrateDisabledToast": "Titreşim kapalı — yalnızca zil."
+      "vibrateDisabledToast": "Titreşim kapalı — yalnızca zil.",
+      "deliveryBothLabel": "Açık adresi de göster"
     },
     "receiptRenderer": {
       "yourRestaurant": "Restoranınız",

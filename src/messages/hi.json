@@ -1397,7 +1397,8 @@
       "vibrateHelp": "चालू होने पर, नए ऑर्डर पर आपका किचन डिवाइस रिंग के साथ कंपन भी करता है। केवल ध्वनि रखने के लिए इसे बंद करें। यह Kitchen Order ऐप पर लागू होता है।",
       "vibrateToggleAriaLabel": "नए ऑर्डर का कंपन टॉगल करें",
       "vibrateEnabledToast": "कंपन चालू — रिंग + कंपन।",
-      "vibrateDisabledToast": "कंपन बंद — केवल रिंग।"
+      "vibrateDisabledToast": "कंपन बंद — केवल रिंग।",
+      "deliveryBothLabel": "गली का पता भी दिखाएँ"
     },
     "customers": {
       "title": "ग्राहक",

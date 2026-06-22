@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Kun käytössä, keittiölaitteesi värisee äänen lisäksi uudesta tilauksesta. Poista se käytöstä säilyttääksesi vain äänen. Koskee Kitchen Order -sovellusta.",
       "vibrateToggleAriaLabel": "Vaihda uusien tilausten värinä",
       "vibrateEnabledToast": "Värinä päällä — ääni + värinä.",
-      "vibrateDisabledToast": "Värinä pois — vain ääni."
+      "vibrateDisabledToast": "Värinä pois — vain ääni.",
+      "deliveryBothLabel": "Näytä myös katuosoite"
     },
     "receiptRenderer": {
       "yourRestaurant": "Ravintolasi",

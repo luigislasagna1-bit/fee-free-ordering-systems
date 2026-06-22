@@ -377,8 +377,8 @@ function Countdown({
 
 
 // ── Order row ─────────────────────────────────────────────────────────────────
-function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown, currency, deliveryShowName }: {
-  order: Order; selected: boolean; onClick: () => void; t: T; now: number; currency: string; deliveryShowName?: boolean;
+function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown, currency, deliveryShowName, deliveryShowBoth }: {
+  order: Order; selected: boolean; onClick: () => void; t: T; now: number; currency: string; deliveryShowName?: boolean; deliveryShowBoth?: boolean;
   /** Optional day-of-week pill (MON/TUE/…) rendered alongside the
    *  order number. Used by the In Progress LATER section so the
    *  kitchen can spot which day each scheduled order is for. */
@@ -453,8 +453,12 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   // Some legacy orders were saved with a stray deliveryAddress on a pickup/
   // dine-in (write-path bug fixed 2026-06-13); gating on type here keeps those
   // tiles correct — a pickup always leads with the NAME, never an address.
-  const showAddress =
-    (order.type === "delivery" || order.type === "catering") && !!order.deliveryAddress && !deliveryShowName;
+  const isDeliveryWithAddr =
+    (order.type === "delivery" || order.type === "catering") && !!order.deliveryAddress;
+  // Lead line: address (default) / name / BOTH (name + address). "Both" only
+  // applies when the name lead is on. Luigi 2026-06-22.
+  const showBoth = isDeliveryWithAddr && !!deliveryShowName && !!deliveryShowBoth;
+  const showAddress = isDeliveryWithAddr && !deliveryShowName;
 
   return (
     <div onClick={onClick} className={`px-4 py-3 min-h-[80px] flex items-center transition-colors ${rowClass}`}>
@@ -508,12 +512,24 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
         </div>
         <div className="flex-1 min-w-0">
           {/* Lead line = WHO / WHERE — the only black text on the tile.
-              Delivery / catering show the ADDRESS; everything else the NAME. */}
-          <div className={`font-bold text-[1.15rem] leading-tight ${t.text} truncate`}>
-            {showAddress
-              ? order.deliveryAddress
-              : order.customerName.replace("[TEST] ", "")}
-          </div>
+              Delivery / catering show the ADDRESS, the NAME, or BOTH (name on
+              top + address below) per the kitchen setting. Luigi 2026-06-22. */}
+          {showBoth ? (
+            <>
+              <div className={`font-bold text-[1.15rem] leading-tight ${t.text} truncate`}>
+                {order.customerName.replace("[TEST] ", "")}
+              </div>
+              <div className={`text-sm leading-tight ${t.muted} truncate`}>
+                {order.deliveryAddress}
+              </div>
+            </>
+          ) : (
+            <div className={`font-bold text-[1.15rem] leading-tight ${t.text} truncate`}>
+              {showAddress
+                ? order.deliveryAddress
+                : order.customerName.replace("[TEST] ", "")}
+            </div>
+          )}
           {/* Status chip on its own line directly below (GloriaFood-clean,
               Luigi 2026-06-15). Everything else — order #, item count,
               marketplace / first-order / reservation flags — now lives in the
@@ -751,6 +767,9 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // 2026-06-21). Initial from the SSR prop; the poll below keeps it live.
   const [deliveryShowName, setDeliveryShowName] = useState<boolean>(
     !!restaurant?.kitchenDeliveryShowName,
+  );
+  const [deliveryShowBoth, setDeliveryShowBoth] = useState<boolean>(
+    !!restaurant?.kitchenDeliveryShowBoth,
   );
 
   // Track which reservation IDs the kitchen has already seen — same
@@ -2286,6 +2305,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       setWorkflowMode(mode);
       setPrintNodeEnabled(pnEnabled);
       setDeliveryShowName(Array.isArray(body) ? false : !!body?.kitchenDeliveryShowName);
+      setDeliveryShowBoth(Array.isArray(body) ? false : !!body?.kitchenDeliveryShowBoth);
     } catch {}
   }, []);
 
@@ -3464,6 +3484,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
                     key={`o-${it.order.id}`}
                     order={it.order}
                     deliveryShowName={deliveryShowName}
+                    deliveryShowBoth={deliveryShowBoth}
                     selected={selectedId === it.order.id}
                     onClick={() => {
                       // Clicking any order — including a new/ringing pending one

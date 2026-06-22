@@ -3223,7 +3223,8 @@
       "vibrateHelp": "เมื่อเปิด อุปกรณ์ในครัวของคุณจะสั่นพร้อมกับเสียงเมื่อมีออเดอร์ใหม่ ปิดเพื่อเก็บไว้เฉพาะเสียง มีผลกับแอป Kitchen Order",
       "vibrateToggleAriaLabel": "สลับการสั่นเมื่อมีออเดอร์ใหม่",
       "vibrateEnabledToast": "เปิดการสั่นแล้ว — เสียง + การสั่น",
-      "vibrateDisabledToast": "ปิดการสั่นแล้ว — เสียงอย่างเดียว"
+      "vibrateDisabledToast": "ปิดการสั่นแล้ว — เสียงอย่างเดียว",
+      "deliveryBothLabel": "แสดงที่อยู่ด้วย"
     },
     "receiptRenderer": {
       "yourRestaurant": "ร้านอาหารของคุณ",

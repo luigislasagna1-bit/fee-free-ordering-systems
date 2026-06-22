@@ -3223,7 +3223,8 @@
       "vibrateHelp": "オンにすると、新規注文時にキッチン端末が着信音とともに振動します。オフにすると音だけになります。Kitchen Order アプリが対象です。",
       "vibrateToggleAriaLabel": "新規注文のバイブを切り替え",
       "vibrateEnabledToast": "バイブ オン — 着信音＋バイブ。",
-      "vibrateDisabledToast": "バイブ オフ — 着信音のみ。"
+      "vibrateDisabledToast": "バイブ オフ — 着信音のみ。",
+      "deliveryBothLabel": "住所も表示する"
     },
     "receiptRenderer": {
       "yourRestaurant": "レストラン名",

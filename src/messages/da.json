@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Når den er slået til, vibrerer din køkkenenhed sammen med lyden ved en ny bestilling. Slå den fra for kun at beholde lyden. Gælder Kitchen Order-appen.",
       "vibrateToggleAriaLabel": "Slå vibration ved nye bestillinger til/fra",
       "vibrateEnabledToast": "Vibration til — lyd + vibration.",
-      "vibrateDisabledToast": "Vibration fra — kun lyd."
+      "vibrateDisabledToast": "Vibration fra — kun lyd.",
+      "deliveryBothLabel": "Vis også gadeadressen"
     },
     "receiptRenderer": {
       "yourRestaurant": "Din restaurant",

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Zap, Activity, ChevronDown, ChevronUp, Info, Printer, ServerCrash, PhoneCall, Vibrate, User, Tag } from "lucide-react";
+import { Zap, Activity, ChevronDown, ChevronUp, Info, Printer, ServerCrash, PhoneCall, Vibrate, User, Tag, MapPin } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { HelpTip } from "@/components/HelpTip";
 
@@ -33,6 +33,7 @@ export function KitchenWorkflowToggle({
   initialAutoCall = false,
   initialKitchenVibrate = true,
   initialDeliveryShowName = false,
+  initialDeliveryShowBoth = false,
   initialShowItemCategory = false,
   storePhone = null,
   initialAlertPhone = null,
@@ -45,6 +46,8 @@ export function KitchenWorkflowToggle({
   initialKitchenVibrate?: boolean;
   /** Delivery tile leads with the customer name vs the street address (default false). */
   initialDeliveryShowName?: boolean;
+  /** Also show the street address under the name on delivery tiles (default false). */
+  initialDeliveryShowBoth?: boolean;
   /** Show each dish's menu category on incoming orders (default false). */
   initialShowItemCategory?: boolean;
   /** The restaurant's public phone — the default alert target. */
@@ -68,6 +71,8 @@ export function KitchenWorkflowToggle({
   const [savingVibrate, setSavingVibrate] = useState(false);
   const [deliveryShowName, setDeliveryShowName] = useState<boolean>(initialDeliveryShowName);
   const [savingDeliveryName, setSavingDeliveryName] = useState(false);
+  const [deliveryShowBoth, setDeliveryShowBoth] = useState<boolean>(initialDeliveryShowBoth);
+  const [savingDeliveryBoth, setSavingDeliveryBoth] = useState(false);
   const [showItemCategory, setShowItemCategory] = useState<boolean>(initialShowItemCategory);
   const [savingItemCategory, setSavingItemCategory] = useState(false);
   // The number the system will actually ring: dedicated alert number else store phone.
@@ -196,6 +201,25 @@ export function KitchenWorkflowToggle({
       toast.error(t("saveErrorToast"));
     } finally {
       setSavingDeliveryName(false);
+    }
+  }
+
+  async function toggleDeliveryBoth(enabled: boolean) {
+    setSavingDeliveryBoth(true);
+    setDeliveryShowBoth(enabled); // optimistic
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kitchenDeliveryShowBoth: enabled }),
+      });
+      if (!res.ok) throw new Error("Failed to save");
+      toast.success(t("displaySavedToast"));
+    } catch {
+      setDeliveryShowBoth(!enabled);
+      toast.error(t("saveErrorToast"));
+    } finally {
+      setSavingDeliveryBoth(false);
     }
   }
 
@@ -563,6 +587,36 @@ export function KitchenWorkflowToggle({
             }`} />
           </button>
         </div>
+        {/* Sub-toggle: ALSO show the street address under the name → "Name —
+            then Address". Only relevant (and shown) while the name lead is on.
+            Luigi 2026-06-22. */}
+        {deliveryShowName && (
+          <div className="px-5 py-3 flex items-center gap-3 border-t border-gray-100 bg-gray-50/40">
+            <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
+              deliveryShowBoth ? "bg-teal-100 text-teal-700" : "bg-gray-100 text-gray-400"
+            }`}>
+              <MapPin className="w-5 h-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-sm font-medium text-gray-900 leading-snug">
+                {t("deliveryBothLabel")}
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => toggleDeliveryBoth(!deliveryShowBoth)}
+              disabled={savingDeliveryBoth}
+              aria-label={t("deliveryBothLabel")}
+              className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${
+                deliveryShowBoth ? "bg-teal-500" : "bg-gray-300"
+              } ${savingDeliveryBoth ? "opacity-50" : ""}`}
+            >
+              <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${
+                deliveryShowBoth ? "translate-x-6" : "translate-x-0"
+              }`} />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* ── Show each dish's menu category on incoming orders ──────────────

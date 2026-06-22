@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Saat aktif, perangkat dapur Anda bergetar bersama dering untuk pesanan baru. Matikan untuk hanya menyisakan suara. Berlaku untuk aplikasi Kitchen Order.",
       "vibrateToggleAriaLabel": "Alihkan getaran pesanan baru",
       "vibrateEnabledToast": "Getaran aktif — dering + getaran.",
-      "vibrateDisabledToast": "Getaran nonaktif — hanya dering."
+      "vibrateDisabledToast": "Getaran nonaktif — hanya dering.",
+      "deliveryBothLabel": "Tampilkan juga alamat jalan"
     },
     "receiptRenderer": {
       "yourRestaurant": "Restoran Anda",

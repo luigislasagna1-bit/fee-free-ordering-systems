@@ -3223,7 +3223,8 @@
       "vibrateHelp": "Quando è attiva, il dispositivo della cucina vibra insieme alla suoneria per un nuovo ordine. Disattivala per mantenere solo il suono. Riguarda l'app Kitchen Order.",
       "vibrateToggleAriaLabel": "Attiva/disattiva la vibrazione dei nuovi ordini",
       "vibrateEnabledToast": "Vibrazione attivata — suoneria + vibrazione.",
-      "vibrateDisabledToast": "Vibrazione disattivata — solo suoneria."
+      "vibrateDisabledToast": "Vibrazione disattivata — solo suoneria.",
+      "deliveryBothLabel": "Mostra anche l'indirizzo"
     },
     "receiptRenderer": {
       "yourRestaurant": "Il tuo ristorante",
