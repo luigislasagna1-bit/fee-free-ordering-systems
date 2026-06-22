@@ -2200,6 +2200,20 @@ export function OrderingPageClient({
     serviceHoursForClient as any, new Date(), hoursFmt, holidayForStatus, restaurantTz,
   );
   const restaurantIsClosedNow = serviceStatusForClient.kind !== "open";
+  // Per-service "opens at" for the tab hints — when a service starts later than now
+  // (the restaurant is general-open), its tab shows "(opens 3:00 PM)" so the customer
+  // sees it while choosing. Reuses the same resolveServiceHours + liveOpenStatus as the
+  // gate above; opensAt is already in the restaurant's 12h/24h format. dine-in/take-out
+  // have no service rows (they follow general), so they get no hint. Luigi 2026-06-22.
+  const serviceOpensAtLabel = (kind: ServiceKind): string | null => {
+    const st = liveOpenStatus(
+      resolveServiceHours((restaurant.openingHours ?? []) as any, kind) as any,
+      new Date(), hoursFmt, holidayForStatus, restaurantTz,
+    );
+    return st.kind === "opens_at" ? st.opensAt : null;
+  };
+  const pickupOpensAt = serviceOpensAtLabel("pickup");
+  const deliveryOpensAt = serviceOpensAtLabel("delivery");
   // Header open/closed chip — drive off the GENERAL status (general hours are the
   // display + sound; per-service hours gate ordering only). When we know the next
   // opening, show it ("Closed · Opens 10:00 AM") instead of a flat label.
@@ -3772,6 +3786,7 @@ export function OrderingPageClient({
               >
                 <ShoppingBag className="w-4 h-4" /> {t("pickup")} · {restaurant.estimatedPickup} {t("minutes")}
                 {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
+                {!paused && pickupOpensAt && <span className="text-xs font-normal opacity-80">({t("opensAtLabel", { time: pickupOpensAt })})</span>}
               </button>
             );
           })()}
@@ -3792,6 +3807,7 @@ export function OrderingPageClient({
                 <Truck className="w-4 h-4" /> {t("delivery")} · {estimatedDeliveryMinutes} {t("minutes")}
                 {baseDeliveryFee > 0 && <span className="text-xs font-normal">(+{fmt(baseDeliveryFee)})</span>}
                 {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
+                {!paused && deliveryOpensAt && <span className="text-xs font-normal opacity-80">({t("opensAtLabel", { time: deliveryOpensAt })})</span>}
               </button>
             );
           })()}

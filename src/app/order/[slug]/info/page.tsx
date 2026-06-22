@@ -20,6 +20,11 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
       acceptsPickup: true, acceptsDelivery: true, acceptsDineIn: true,
       acceptsCatering: true, acceptsTakeOut: true, acceptsReservations: true,
       estimatedPickup: true, estimatedDelivery: true,
+      // hoursFormat → render the live-status banner + per-service "Opens…" badges
+      // + weekday rows in the restaurant's 12h/24h format (was defaulting to 24h
+      // because it wasn't loaded). timezone → correct open/closed for the tz.
+      // Luigi 2026-06-22.
+      hoursFormat: true, timezone: true,
       reviewLink: true, infoContent: true,
       themeSettings: true, serviceSettings: true, defaultLanguage: true,
       openingHours: { orderBy: { dayOfWeek: "asc" } },
