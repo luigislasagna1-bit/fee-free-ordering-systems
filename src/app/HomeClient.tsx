@@ -111,7 +111,7 @@ export function HomeClient({ locale }: { locale: string }) {
             <h1 className="text-4xl md:text-5xl lg:text-[3.4rem] font-extrabold text-gray-900 leading-[1.05] tracking-tight">
               {t.rich("hero.title", { accent: (c) => <span className="text-emerald-600">{c}</span> })}
             </h1>
-            <p className="mt-5 text-lg font-bold uppercase tracking-wide text-gray-700 leading-relaxed max-w-xl">
+            <p className="mt-5 text-lg text-gray-700 leading-relaxed max-w-xl">
               {t("hero.subtitle")}
             </p>
             <div className="mt-7 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl">
