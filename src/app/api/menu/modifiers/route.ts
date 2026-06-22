@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
   const { name, description, required, minSelect, maxSelect, maxPerOption, isHidden,
-          supportsHalfHalf, menuItemId, variantId, categoryId, options } = body;
+          supportsHalfHalf, pizzaRole, menuItemId, variantId, categoryId, options } = body;
   if (!name?.trim()) return NextResponse.json({ error: "Name required" }, { status: 400 });
 
   const count = await prisma.modifierGroup.count({ where: { restaurantId } });
@@ -49,6 +49,7 @@ export async function POST(req: NextRequest) {
       maxPerOption: maxPerOption ?? 1,
       isHidden: isHidden ?? false,
       supportsHalfHalf: supportsHalfHalf ?? false,
+      pizzaRole: pizzaRole || null,
       sortOrder: count,
     },
     include: { options: true },

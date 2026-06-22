@@ -31,6 +31,7 @@ type ModifierGroup = {
   isHidden: boolean; sortOrder: number; menuItemId?: string;
   categoryId?: string; restaurantId?: string; libraryGroupId?: string;
   supportsHalfHalf?: boolean;
+  pizzaRole?: string | null;
   options: ModifierOption[];
 };
 type ItemVariant = { id?: string; name: string; price: number; sortOrder: number; isDefault: boolean };
@@ -981,21 +982,29 @@ function ItemModal({
                     )}
                     {(
                       [
-                        ["crustGroupId", t("crustGroupLabel"), t("crustGroupDesc")],
-                        ["sauceGroupId", t("sauceGroupLabel"), t("sauceGroupDesc")],
-                        ["cheeseGroupId", t("cheeseGroupLabel"), t("cheeseGroupDesc")],
-                      ] as [keyof PizzaFormState, string, string][]
-                    ).map(([key, label, desc]) => {
+                        ["crustGroupId", t("crustGroupLabel"), t("crustGroupDesc"), "crust"],
+                        ["sauceGroupId", t("sauceGroupLabel"), t("sauceGroupDesc"), "sauce"],
+                        ["cheeseGroupId", t("cheeseGroupLabel"), t("cheeseGroupDesc"), "cheese"],
+                      ] as [keyof PizzaFormState, string, string, string][]
+                    ).map(([key, label, desc, role]) => {
+                      // Once the owner has tagged ANY group with this role, the picker
+                      // shows ONLY those (plus whatever's already selected, so the value
+                      // stays valid) — "don't show ALL modifiers here" (Fabrizio
+                      // 2026-06-21). Until a role is tagged, fall back to the whole
+                      // library so restaurants that never tag see no change.
+                      const currentVal = pizza[key] as string;
+                      const roleTagged = libraryGroups.filter(g => g.pizzaRole === role);
+                      const pool = roleTagged.length > 0
+                        ? libraryGroups.filter(g => g.pizzaRole === role || g.id === currentVal)
+                        : libraryGroups;
                       // Surface the groups already attached to THIS item first — the
-                      // crust/sauce/cheese the owner wants is almost always one of
-                      // them (Fabrizio 2026-06-21). The rest follow under "All groups";
-                      // when nothing's attached yet, just list every group.
+                      // crust/sauce/cheese the owner wants is almost always one of them.
                       const attachedIds = new Set(
                         [pizza.crustGroupId, pizza.sauceGroupId, pizza.cheeseGroupId,
                           ...pizza.toppingGroupIds, ...pizza.sectionOrder].filter(Boolean),
                       );
-                      const attached = libraryGroups.filter(g => attachedIds.has(g.id));
-                      const others = libraryGroups.filter(g => !attachedIds.has(g.id));
+                      const attached = pool.filter(g => attachedIds.has(g.id));
+                      const others = pool.filter(g => !attachedIds.has(g.id));
                       const opt = (g: typeof libraryGroups[number]) => (
                         <option key={g.id} value={g.id}>{g.name} ({g.options.length} options)</option>
                       );
@@ -1014,7 +1023,7 @@ function ItemModal({
                               <optgroup label={t("allGroups")}>{others.map(opt)}</optgroup>
                             </>
                           ) : (
-                            libraryGroups.map(opt)
+                            pool.map(opt)
                           )}
                         </select>
                         <p className="text-xs text-gray-400 mt-0.5">{desc}</p>
@@ -1027,25 +1036,34 @@ function ItemModal({
                       <label className="block text-sm font-medium text-gray-700 mb-1">{t("toppingGroupsLabel")}</label>
                       <p className="text-xs text-gray-400 mb-2">{t("toppingGroupsHint")}</p>
                       <div className="space-y-1.5 border border-gray-200 rounded-lg p-3 max-h-44 overflow-y-auto bg-gray-50">
-                        {libraryGroups.length === 0 ? (
-                          <p className="text-xs text-gray-400">{t("noGroupsAvailable")}</p>
-                        ) : libraryGroups.map(g => (
-                          <label key={g.id} className="flex items-center gap-2.5 cursor-pointer hover:bg-white rounded p-1 transition">
-                            <input
-                              type="checkbox"
-                              className="w-4 h-4 accent-emerald-500 flex-shrink-0"
-                              checked={pizza.toppingGroupIds.includes(g.id)}
-                              onChange={e => setPizza(p => ({
-                                ...p,
-                                toppingGroupIds: e.target.checked
-                                  ? [...p.toppingGroupIds, g.id]
-                                  : p.toppingGroupIds.filter(id => id !== g.id),
-                              }))}
-                            />
-                            <span className="text-sm text-gray-700">{g.name}</span>
-                            <span className="text-xs text-gray-400 ml-auto">{g.options.length} options</span>
-                          </label>
-                        ))}
+                        {(() => {
+                          // Same rule as the crust/sauce/cheese pickers: once any group is
+                          // tagged "topping", list only those (+ already-selected) instead
+                          // of every modifier in the library (Fabrizio 2026-06-21).
+                          const roleTagged = libraryGroups.filter(g => g.pizzaRole === "topping");
+                          const pool = roleTagged.length > 0
+                            ? libraryGroups.filter(g => g.pizzaRole === "topping" || pizza.toppingGroupIds.includes(g.id))
+                            : libraryGroups;
+                          return pool.length === 0 ? (
+                            <p className="text-xs text-gray-400">{t("noGroupsAvailable")}</p>
+                          ) : pool.map(g => (
+                            <label key={g.id} className="flex items-center gap-2.5 cursor-pointer hover:bg-white rounded p-1 transition">
+                              <input
+                                type="checkbox"
+                                className="w-4 h-4 accent-emerald-500 flex-shrink-0"
+                                checked={pizza.toppingGroupIds.includes(g.id)}
+                                onChange={e => setPizza(p => ({
+                                  ...p,
+                                  toppingGroupIds: e.target.checked
+                                    ? [...p.toppingGroupIds, g.id]
+                                    : p.toppingGroupIds.filter(id => id !== g.id),
+                                }))}
+                              />
+                              <span className="text-sm text-gray-700">{g.name}</span>
+                              <span className="text-xs text-gray-400 ml-auto">{g.options.length} options</span>
+                            </label>
+                          ));
+                        })()}
                       </div>
                     </div>
                   </div>
@@ -1287,6 +1305,7 @@ function ModifierModal({
     maxPerOption: group?.maxPerOption ?? 1,
     isHidden: group?.isHidden ?? false,
     supportsHalfHalf: group?.supportsHalfHalf ?? false,
+    pizzaRole: group?.pizzaRole ?? null,
   });
   const [options, setOptions] = useState<ModifierOption[]>(
     group?.options?.length
@@ -1361,6 +1380,22 @@ function ModifierModal({
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.supportsHalfHalf ? "border-blue-500 bg-blue-50 text-blue-700" : "border-gray-200 text-gray-600"}`}>
               {t("canBeHalfHalf")} {form.supportsHalfHalf && "✓"}
             </button>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t("pizzaRoleLabel")}</label>
+            <select
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              value={form.pizzaRole ?? ""}
+              onChange={e => setForm(f => ({ ...f, pizzaRole: e.target.value || null }))}
+            >
+              <option value="">{t("pizzaRoleNone")}</option>
+              <option value="crust">{t("pizzaRoleCrust")}</option>
+              <option value="sauce">{t("pizzaRoleSauce")}</option>
+              <option value="cheese">{t("pizzaRoleCheese")}</option>
+              <option value="topping">{t("pizzaRoleTopping")}</option>
+            </select>
+            <p className="text-xs text-gray-400 mt-1">{t("pizzaRoleHint")}</p>
           </div>
 
           <div className="border-t pt-4">

@@ -983,6 +983,13 @@ model ModifierGroup {
   /// Default false — owner explicitly enables via the modifier group
   /// library editor.
   supportsHalfHalf Boolean @default(false)
+  /// Pizza role tag: "crust" | "sauce" | "cheese" | "topping" | null. When a
+  /// role has ANY tagged group, the matching pizza picker (Crust/Sauce/Cheese
+  /// dropdown or the Topping multi-select) lists ONLY tagged groups instead of
+  /// every modifier in the library (Fabrizio 2026-06-21). null = untagged →
+  /// shows everywhere (legacy behaviour). Owners set it in the modifier group
+  /// editor. Authoring-only; not read on the customer side.
+  pizzaRole      String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
