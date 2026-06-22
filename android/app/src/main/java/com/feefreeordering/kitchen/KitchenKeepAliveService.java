@@ -111,7 +111,10 @@ public class KitchenKeepAliveService extends Service {
                         lastVibrate = !resp.contains("\"vibrate\":false");
                         ringing = resp.contains("\"ringing\":true");
                     }
-                    if (ringing && !MainActivity.isForeground) {
+                    // Ring in EVERY state (open, closed, locked) — the web chime
+                    // is suppressed in the app, so this OS-level alarm is the
+                    // single, tap-free sound source. Luigi 2026-06-22.
+                    if (ringing) {
                         if (!OrderAlarmService.isRunning) {
                             Intent i = new Intent(this, OrderAlarmService.class);
                             i.putExtra("vibrate", lastVibrate);

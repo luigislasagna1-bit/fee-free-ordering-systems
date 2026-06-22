@@ -1651,6 +1651,12 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
    */
   const loggedRingPathRef = useRef(false);
   const ringBellOnce = useCallback((volumeOverride?: number) => {
+    // In the NATIVE app the OS-level alarm (OrderAlarmService, fired by the
+    // keep-alive service + FCM in EVERY state — open, closed, locked) is the
+    // single sound source and needs NO Web Audio unlock gesture. Suppress the web
+    // chime here so the app never double-rings AND never depends on a screen tap.
+    // In a plain browser this stays the only ring. Luigi 2026-06-22.
+    if (typeof window !== "undefined" && (window as any).Capacitor?.isNativePlatform?.()) return;
     const vol = Math.max(0, Math.min(1, volumeOverride ?? alertVolume));
     if (vol <= 0) return;
 

@@ -65,3 +65,16 @@ Built (server = web deploy; native = app v1.9 rebuild, versionCode 10):
 - Shared `buildOrderReceiptPayload` so a background ticket is byte-identical to an app-printed one.
 
 To test: install v1.9 → re-open Printer Setup once (so saveConfig writes native storage) → fully CLOSE the app → place an auto-accept order → it should **ring (~5s) AND print within a few seconds, app closed**. Repeat 3-4×. Also confirm a manually-accepted order prints and that nothing double-prints.
+
+### Test 3 (v1.9): background print WORKS ✅, but no ring → ring must be tap-free in ALL states (FIXED v2.0)
+- ✅🔒 **Background print VERIFIED** — order auto-accepted + **printed** (printer IP confirmed mirrored to native SharedPreferences = `192.168.2.43`). The core "print while closed" requirement works.
+- ❌ **No ring** (app was likely open at the time). Luigi: *"there should never be a need for a screen tap for sound — as soon as the order comes it should ring whether the screen is open, closed, etc."*
+
+**Root cause:** the OS-level native alarm was SUPPRESSED when the app was foreground (it deferred to the web chime, which needs a Web Audio unlock gesture / screen tap). So app-open orders were silent unless the screen had been tapped.
+
+**Fix (app v2.0, versionCode 11):**
+- Native alarm now fires in EVERY state — removed the `if (MainActivity.isForeground) return` gate in `KitchenMessagingService` (FCM push) AND the `!isForeground` gate on the `KitchenKeepAliveService` ring. `OrderAlarmService.isRunning` dedupes the two paths.
+- Web chime (`ringBellOnce`) suppressed in the native app (`Capacitor.isNativePlatform()`) so the OS alarm is the single sound source — no double-ring, no tap ever.
+
+### OPEN — mobile checkout not responsive
+Customer checkout page (enter-details step) scrolls horizontally + doesn't fit on mobile. Needs a responsive CSS pass on the customer ordering/checkout page. (web)
