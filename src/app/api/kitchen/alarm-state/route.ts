@@ -22,6 +22,11 @@ import { withDbRetry, isTransient } from "@/lib/db-retry";
 
 const ORDER_WINDOW_MS = 4 * 60 * 1000; // matches the kitchen accept countdown
 const CLOSED_WINDOW_MS = 15 * 60 * 1000; // placed-while-closed gets the longer window
+// Auto-accepted orders skip the "pending" state, so the pending query below never
+// rings them — they relied solely on the (flaky) FCM push. We ring them via this
+// reliable keep-alive poll for one short window: ~4s poll + 5s alarm + the alarm's
+// isRunning guard ⇒ exactly one ~5s ring. Luigi 2026-06-21.
+const AUTO_ACCEPT_RING_MS = 8 * 1000;
 
 export async function GET(req: NextRequest) {
   const token = new URL(req.url).searchParams.get("token")?.trim();
@@ -56,6 +61,41 @@ export async function GET(req: NextRequest) {
       const window = o.placedWhileClosed ? CLOSED_WINDOW_MS : ORDER_WINDOW_MS;
       if (now - anchor < window) ringing = true;
       else hasExpired = true;
+    }
+
+    // Auto-accepted orders ring ONCE on arrival too. They're created status:
+    // "accepted" (they skip "pending"), so the query above misses them — leaving
+    // only the flaky FCM push (rang in Test 1, silent in Test 2). Count a JUST-
+    // released auto-accepted order as ringing for one short window; the device's
+    // ~4s keep-alive poll + the 5s native alarm + its isRunning guard turn that
+    // into exactly one ~5s ring, independent of FCM. A LATER manual accept
+    // (acceptedAt well after notifiedAt) is excluded so accepting never re-rings.
+    // Anchor on alertAt ?? notifiedAt per the scheduled-order ring-timing rule.
+    if (!ringing) {
+      const since = new Date(now - AUTO_ACCEPT_RING_MS);
+      const autoAccepted = await withDbRetry(() =>
+        prisma.order.findMany({
+          where: {
+            restaurantId,
+            status: "accepted",
+            OR: [
+              { notifiedAt: { gte: since } },
+              { alertAt: { gte: since, lte: new Date(now) } },
+            ],
+          },
+          select: { notifiedAt: true, acceptedAt: true, alertAt: true },
+          take: 30,
+        }),
+      );
+      for (const o of autoAccepted) {
+        if (!o.notifiedAt) continue;
+        const notified = o.notifiedAt.getTime();
+        const accepted = o.acceptedAt ? o.acceptedAt.getTime() : 0;
+        if (!accepted || accepted - notified > 3000) continue; // later manual accept → skip
+        const anchor = o.alertAt ? o.alertAt.getTime() : notified;
+        if (anchor > now) continue; // parked / not started ringing yet
+        if (now - anchor < AUTO_ACCEPT_RING_MS) { ringing = true; break; }
+      }
     }
 
     // Reservations: pending, no deposit owed.

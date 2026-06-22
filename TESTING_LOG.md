@@ -38,3 +38,18 @@ Steps: logged into kitchen, reconnected Star printer (Find my printers), minimiz
 - 🔒 Single chime + auto-accept for auto-accept-mode orders.
 - 🔒 Manual "Print both" prints kitchen + customer on the Direct LAN Star.
 - 🔒 Order appears in kitchen with a correct live countdown.
+
+## Session 2026-06-22 — Retest after deploy (Android tablet, app v1.8)
+
+### Test 2 — header + locked-screen auto-accept order
+| Aspect | Result | Status |
+|---|---|---|
+| Header top cut-off (Android) | header sits lower, "looks MUCH better" | ✅ 🔒 spacing fix VERIFIED on Android |
+| iOS login (TestFlight build 20) | tapping email field makes the page scroll + text sits in unsafe top area | ❌ OPEN (iOS keyboard + safe-area; iOS pass) |
+| New-order ring (locked, auto-accept) | NO ring at all; order already accepted on open | ❌ was OPEN → **fix shipped** |
+
+**Root cause (confirmed in code):** the reliable keep-alive backstop (`GET /api/kitchen/alarm-state`, polled every ~4s — confirmed in tablet logcat) only counts `status:"pending"` orders as ringing. Auto-accepted orders are `status:"accepted"`, so the backstop never rang them — leaving only the flaky FCM push (fired in Test 1, dropped in Test 2). Same "auto-accept skips the pending state" gap as the web ring + auto-print.
+
+**Fix shipped (web, no app rebuild):** `alarm-state` now also counts a just-released auto-accepted order (`status:"accepted"`, `notifiedAt`/`alertAt` within 8s, `acceptedAt ≈ notifiedAt` to exclude a later manual accept) as ringing → the keep-alive rings it **exactly once (~5s) within ~4s of arrival, independent of FCM**. Commit `<pending>`.
+
+**Pending re-test:** locked-screen auto-accept cash order → expect a single ~5s ring within a few seconds (repeat 3-4× to confirm reliability); on wake the order is present + auto-prints.
