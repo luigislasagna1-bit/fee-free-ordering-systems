@@ -1228,6 +1228,11 @@ model Order {
   // still has to filter status afterward; this composite makes the
   // dashboard "completed orders last 7 days" query a true index-only.
   @@index([restaurantId, status, createdAt])
+  // Kitchen alarm-state poll (every ~4s per device): the auto-accept ring query
+  // and the background-print "toPrint" query both seek (restaurantId, "accepted")
+  // and filter/sort by notifiedAt. Without notifiedAt in the index Postgres scans
+  // the whole per-restaurant accepted set every poll. Luigi 2026-06-22.
+  @@index([restaurantId, status, notifiedAt])
 }
 
 /// Customer-submitted rating for a completed order. One row per order

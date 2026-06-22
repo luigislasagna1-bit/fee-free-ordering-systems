@@ -1837,10 +1837,15 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     if (remainingMs <= 7 * 60_000) return 2500;
     return 3000;
   };
+  // In the NATIVE app the OS-level OrderAlarmService is the SINGLE ring source — it
+  // fires in EVERY state with no tap. Suppress ALL in-app web audio (not just the
+  // ringBellOnce chime) so a pending order doesn't ring TWICE while the app is open:
+  // the loud native alarm + the quiet looping web "long-alert" track. Luigi 2026-06-22.
+  const nativeApp = typeof window !== "undefined" && !!(window as any).Capacitor?.isNativePlatform?.();
   useEffect(() => {
     // !pageVisible → screen off / backgrounded: the NATIVE alarm handles the
     // ring, so the in-app cadence (custom sound) stays silent to avoid a double.
-    if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) return;
+    if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible || nativeApp) return;
     // "gloriafood" rings via the full-length uploaded alert TRACK (the
     // dedicated long-alert effect below), NOT this short-ding cadence — Luigi
     // wants his exact full-length GloriaFood alert at max volume, not a trimmed
@@ -1871,7 +1876,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       cancelled = true;
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [ringAudible, alertMuted, alertVolume, pageVisible, ringBellOnce]);
+  }, [ringAudible, alertMuted, alertVolume, pageVisible, nativeApp, ringBellOnce]);
 
   // Cut any in-flight custom/ding clip the moment the alarm should be silent —
   // the open order was the last pending one, the room was acknowledged, or the
@@ -1882,8 +1887,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // condition. gloriafood is unaffected — it rings via the HTMLAudio track, not
   // these buffer sources.
   useEffect(() => {
-    if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) stopActiveRingSources();
-  }, [ringAudible, alertMuted, alertVolume, pageVisible, stopActiveRingSources]);
+    if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible || nativeApp) stopActiveRingSources();
+  }, [ringAudible, alertMuted, alertVolume, pageVisible, nativeApp, stopActiveRingSources]);
 
   // Full-length GloriaFood alert track — the owner's uploaded
   // /sounds/gloriafood-alert.mp3, played at MAX volume and LOOPED until the
@@ -1894,7 +1899,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   useEffect(() => {
     const a = getLongAlert();
     if (!a) return;
-    const shouldPlay = ringAudible && alertSound === "gloriafood" && !alertMuted && alertVolume > 0 && pageVisible;
+    const shouldPlay = ringAudible && alertSound === "gloriafood" && !alertMuted && alertVolume > 0 && pageVisible && !nativeApp;
     if (shouldPlay) {
       // Route through the gain+limiter chain so the track plays WAY louder than
       // the file's own level (without clipping). volume = 1 feeds the chain at
@@ -1919,7 +1924,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       if (!a.paused) a.pause();
       try { a.currentTime = 0; } catch {}
     }
-  }, [ringAudible, longRing, alertSound, alertMuted, alertVolume, pageVisible, getLongAlert, ensureLongAlertRouting]);
+  }, [ringAudible, longRing, alertSound, alertMuted, alertVolume, pageVisible, nativeApp, getLongAlert, ensureLongAlertRouting]);
 
   // ── Re-arm audio when the app returns to the foreground (Luigi 2026-06-07) ──
   // Android (and backgrounded browser tabs) SUSPEND the AudioContext and pause
@@ -1942,7 +1947,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       // wake) let the NATIVE alarm finish — the pageVisible→true transition re-fires
       // the cadence/long-alert effects to start the in-app sound cleanly. (The
       // AudioContext resume above still runs immediately so it's ready by then.)
-      if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) return;
+      if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible || nativeApp) return;
       // gloriafood resumes its full-length track; other sounds fire one ding
       // (the cadence effect keeps them going). Luigi 2026-06-09.
       if (alertSound === "gloriafood") {
@@ -1961,7 +1966,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       window.removeEventListener("focus", rearm);
       window.removeEventListener("pageshow", rearm);
     };
-  }, [ringAudible, alertMuted, alertVolume, alertSound, pageVisible, ringBellOnce, ensureLongAlertRouting]);
+  }, [ringAudible, alertMuted, alertVolume, alertSound, pageVisible, nativeApp, ringBellOnce, ensureLongAlertRouting]);
 
   const testAlertSound = useCallback(() => {
     // Preview the ONE official sound — a short snippet of the liked GloriaFood
@@ -2419,10 +2424,33 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   // pendingCount/alerting/silenceAlert are declared above next to the
   // bell-loop effect (they have to be in scope before that effect runs).
 
+  // Last time we showed a printer-error toast — throttles the alert when a down
+  // printer is being retried every ~4s by the catch-up pass. Luigi 2026-06-22.
+  const lastPrintErrToastRef = useRef(0);
+
   const autoPrint = useCallback(async (orderId: string, opts?: { force?: boolean }) => {
     if (printedRef.current[orderId]) return;
     printedRef.current[orderId] = Date.now();
     try { localStorage.setItem("ffo:kitchen-autoprinted", JSON.stringify(printedRef.current)); } catch { /* ignore */ }
+
+    // Roll back the optimistic dedupe marker + RELEASE the server print claim when
+    // an INTENDED print ultimately fails (printer asleep / LAN blip). Without this,
+    // the marker (persisted to localStorage) would block the device catch-up pass
+    // AND the released-claim would stay set, so the native background printer is
+    // also locked out → the kitchen ticket is lost forever with no retry. Mirrors
+    // the native print-job-token ?release=1 path. Luigi 2026-06-22.
+    const releaseForRetry = async () => {
+      delete printedRef.current[orderId];
+      try { localStorage.setItem("ffo:kitchen-autoprinted", JSON.stringify(printedRef.current)); } catch { /* ignore */ }
+      try {
+        await fetch("/api/kitchen/claim-print", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ orderId, release: true }),
+        });
+      } catch { /* the cleared marker alone lets the next 4s poll retry */ }
+    };
+
     // Preference order:
     //   1. Direct LAN printer (native app) — fastest, no third-party
     //      dependency, no monthly fee. The "main" path going forward.
@@ -2453,8 +2481,15 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       : wantCustomer ? "customer"
       : "kitchen"; // chef always wants the ticket
 
+    // Throttle the printer-error toast so a printer that's down (we now RETRY every
+    // ~4s via the catch-up pass) shows the alert at most once per 30s instead of
+    // spamming. The recovery "printed ✓" still always shows. Luigi 2026-06-22.
+    const now0 = Date.now();
+    const silentError = now0 - lastPrintErrToastRef.current < 30_000;
+
     const direct = getDirectPrinterConfig();
-    if (direct && (opts?.force || direct.autoprint)) {
+    const directWanted = !!(direct && (opts?.force || direct.autoprint));
+    if (directWanted) {
       // Atomic server claim so the native background-print service (which prints
       // this same order while the app is CLOSED) can't double-print it. If another
       // path already claimed+printed it, skip. A network hiccup falls through and
@@ -2466,19 +2501,39 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
           body: JSON.stringify({ orderId }),
         });
         const cd = await cr.json().catch(() => ({}));
-        if (cr.ok && cd.claimed === false) return;
+        if (cr.ok && cd.claimed === false) return; // printed by another path → keep marker
       } catch { /* fall through and print */ }
       try {
-        await doPrintDirect(orderId, printType);
-        return;
+        await doPrintDirect(orderId, printType, { silentError });
+        return; // printed ✓
       } catch (err) {
+        if (!silentError) lastPrintErrToastRef.current = now0;
         console.warn("[kitchen/autoPrint] direct printer failed, trying PrintNode", err);
       }
     }
-    // PrintNode path (legacy / backup)
-    if (!printerSettings?.printNodeConnected || !printerSettings.selectedPrinterId) return;
-    if (!opts?.force && !printerSettings.autoPrint) return;
-    await doPrint(orderId, printType);
+
+    // PrintNode path (legacy / backup).
+    const printNodeWanted = !!(
+      printerSettings?.printNodeConnected &&
+      printerSettings.selectedPrinterId &&
+      (opts?.force || printerSettings.autoPrint)
+    );
+    if (printNodeWanted) {
+      try {
+        await doPrint(orderId, printType);
+        return; // printed ✓
+      } catch (err) {
+        console.warn("[kitchen/autoPrint] PrintNode failed", err);
+      }
+    }
+
+    // We INTENDED to print (direct and/or PrintNode) but nothing succeeded → release
+    // the claim + clear the marker so a later poll retries. If neither path was
+    // enabled (auto-print simply off), keep the marker — that's a deliberate no-op,
+    // not a failure, so we don't churn the poll. Luigi 2026-06-22.
+    if (directWanted || printNodeWanted) {
+      await releaseForRetry();
+    }
   }, [printerSettings]);
 
   // Keep autoPrintRef pointed at the latest autoPrint so fetchOrders
@@ -2557,7 +2612,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
    *  back-to-back buffer drop Luigi hit 2026-06-16). Copies default to 1 when
    *  settings haven't loaded (so the customer copy is never silently dropped);
    *  0 skips that type. */
-  const doPrintDirect = async (orderId: string, type: "kitchen" | "customer" | "both" = "kitchen", opts?: { single?: boolean }) => {
+  const doPrintDirect = async (orderId: string, type: "kitchen" | "customer" | "both" = "kitchen", opts?: { single?: boolean; silentError?: boolean }) => {
     // opts.single → exactly ONE of each requested type. Manual reprints are
     // "extras" so they print a single copy; only the acceptance auto-print uses
     // the configured per-restaurant copy counts. Luigi 2026-06-16.
@@ -2576,9 +2631,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       }
       toast.success("Receipt printed ✓");
     } catch (err: any) {
-      const reason = (err?.code || err?.message || "") as string;
-      const copy = nativePrinterErrorCopy(reason);
-      toast.error(copy);
+      if (!opts?.silentError) {
+        const reason = (err?.code || err?.message || "") as string;
+        toast.error(nativePrinterErrorCopy(reason));
+      }
       throw err;
     }
   };

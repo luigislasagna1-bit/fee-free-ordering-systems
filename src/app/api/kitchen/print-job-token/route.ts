@@ -38,10 +38,19 @@ export async function GET(req: NextRequest) {
   // The background service calls ?release=1 when a print FAILED (printer off /
   // unreachable) so the order is un-claimed and a later poll re-attempts. Bounded
   // by the 15-min print-list window, so a persistently-off printer eventually
-  // stops retrying. Luigi 2026-06-22.
+  // stops retrying. Guarded to a JUST-claimed order (kitchenPrintedAt set in the
+  // last 5 min) so a buggy/hostile device can't loop-reprint older in-window
+  // tickets — the legitimate retry releases a claim made seconds ago. Luigi 2026-06-22.
   if (url.searchParams.get("release") === "1") {
     await withDbRetry(() =>
-      prisma.order.updateMany({ where: { id: orderId, restaurantId }, data: { kitchenPrintedAt: null } }),
+      prisma.order.updateMany({
+        where: {
+          id: orderId,
+          restaurantId,
+          kitchenPrintedAt: { not: null, gte: new Date(Date.now() - 5 * 60 * 1000) },
+        },
+        data: { kitchenPrintedAt: null },
+      }),
     );
     return NextResponse.json({ ok: true, released: true });
   }

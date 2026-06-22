@@ -88,3 +88,20 @@ Luigi on hardware (app v2.0):
 - ⚠️ **Missed-order call clipped the first words.** **FIXED:** 2s leading `<Pause>` in `voice-call.ts` before the spoken message (the call audio path isn't open the instant it connects). Web-only.
 
 Both fixes deploy via web — the tablet's keep-alive + the call endpoint pick them up live, **no reinstall.**
+
+### Hot-path regression review (2026-06-22) — 12 findings verified, fixed/triaged
+Ran an adversarial no-regression review of the new ring/print/call surface (5 dimensions, every finding independently verified before acting). Outcome:
+
+**FIXED — web (deploys live, no reinstall):**
+- 🔴 **Lost ticket on a print blip (HIGH).** The app-open auto-print set the `printedRef` dedupe marker AND claimed `kitchenPrintedAt` BEFORE printing, and on a print failure (printer asleep / LAN blip) released NEITHER → the ticket was lost forever, blocked from the device catch-up AND the native background retry. Now: on a genuine print failure, `autoPrint` clears the marker + releases the server claim (new `claim-print` release branch) so the next 4s poll retries; the error toast is throttled to 1/30s so a down printer doesn't spam. (`KitchenDisplay.tsx`, `api/kitchen/claim-print/route.ts`)
+- **Unguarded token release (LOW).** `print-job-token?release=1` could un-claim any in-window order repeatedly (insider/buggy-device). Now guarded to a just-claimed order (`kitchenPrintedAt` ≤5 min old). (`print-job-token/route.ts`)
+- **Missing index (MED/LOW — scale rule).** The auto-accept-ring + `toPrint` queries run every ~4s with no `notifiedAt` index → full per-restaurant accepted scan. Added `@@index([restaurantId, status, notifiedAt])`, pushed to both Neon branches.
+
+**FIXED — native (app v2.1, versionCode 12):**
+- **Partial-copy reprint storm (MED).** Background print released + reprinted the WHOLE order if one of 2 copies failed → duplicate tickets stacking on a flaky printer. Now: once ≥1 copy has printed, mark done (lose at most one duplicate copy, never a storm). (`KitchenKeepAliveService.java`)
+- **Stuck claim on a slow receipt build (LOW).** A claim+build GET timeout (delivery + slow Maps ETA) left `kitchenPrintedAt` stuck → ticket hidden from retry. Now self-heals: release on the timeout so the next poll retries.
+
+**DEFERRED — flagged, NOT go-live-blocking:**
+- **Device-token TTL / revocation (MED — physical/insider only).** A retired/stolen tablet's FCM token keeps polling + printing order PII; no logout revoke, no TTL prune. A naive `lastSeenAt` freshness check would break tablets that run for days without relaunch, so it needs a careful pass (periodic `lastSeenAt` bump + generous window + logout DELETE + prune cron). Spun off as its own task.
+
+**CONFIRMED CLEAN:** the 24/7 support line is fully separate from `voice-call.ts` and unaffected by the `<Pause>` change.

@@ -207,7 +207,15 @@ public class KitchenKeepAliveService extends Service {
                 + "&orderId=" + java.net.URLEncoder.encode(orderId, "UTF-8");
             // Claim + fetch the receipt jobs (atomic kitchenPrintedAt claim server-side).
             String jobResp = httpGet(base, 15000);
-            if (jobResp == null) return; // network — retry next poll
+            if (jobResp == null) {
+                // The claim+build GET timed out — the server may have claimed
+                // kitchenPrintedAt before the slow receipt build finished. Release so
+                // the next poll re-offers + retries, instead of a stuck claim
+                // permanently hiding the ticket. Idempotent if no claim was made.
+                // Luigi 2026-06-22.
+                httpGet(base + "&release=1", 8000);
+                return;
+            }
             org.json.JSONObject root = new org.json.JSONObject(jobResp);
             if (!root.optBoolean("ok", false)) {
                 // alreadyPrinted (web / another device won the claim) → done.
@@ -218,6 +226,7 @@ public class KitchenKeepAliveService extends Service {
             int widthDots = (w == 58) ? 384 : 576;
             org.json.JSONArray jobs = root.optJSONArray("jobs");
             boolean anyFailed = false;
+            boolean anyPrinted = false;
             if (jobs != null) {
                 for (int j = 0; j < jobs.length(); j++) {
                     org.json.JSONObject job = jobs.getJSONObject(j);
@@ -231,17 +240,28 @@ public class KitchenKeepAliveService extends Service {
                         if (!"ok".equals(result)) {
                             anyFailed = true;
                             android.util.Log.w("KitchenKeepAlive", "bg print failed for " + orderId + ": " + result);
+                        } else {
+                            anyPrinted = true;
                         }
                     }
                 }
             }
-            if (anyFailed) {
-                // Release the claim so a later poll retries (printer off/unreachable).
-                // Bounded by the server's 15-min print window. Don't mark printed.
+            if (anyFailed && !anyPrinted) {
+                // NOTHING physically printed → release the claim so a later poll retries
+                // cleanly (printer off/unreachable). Bounded by the server's 15-min
+                // print window. Don't mark printed.
                 httpGet(base + "&release=1", 8000);
             } else {
+                // Fully printed, OR partially printed (≥1 copy already came out of the
+                // cutter). Mark done so we DON'T reprint the successful copies on the
+                // next poll — a partial failure loses at most one duplicate copy rather
+                // than restarting the whole order in a reprint storm. Luigi 2026-06-22.
                 printedThisSession.add(orderId);
-                android.util.Log.i("KitchenKeepAlive", "bg printed order " + orderId);
+                if (anyFailed) {
+                    android.util.Log.w("KitchenKeepAlive", "bg partial print for " + orderId + " — kept to avoid reprint storm");
+                } else {
+                    android.util.Log.i("KitchenKeepAlive", "bg printed order " + orderId);
+                }
             }
         } catch (Exception e) {
             android.util.Log.w("KitchenKeepAlive", "printOrder error for " + orderId, e);
