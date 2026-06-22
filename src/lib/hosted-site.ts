@@ -39,6 +39,10 @@ export interface HostedSiteData {
     openTime: string | null;
     closeTime: string | null;
     closesNextDay?: boolean;
+    /** null/undefined = GENERAL (all-services) row; "pickup"/"delivery"/… = a
+     *  per-service override. Needed so the hosted site's open-status + hours
+     *  table use the GENERAL row, not an arbitrary service row. Luigi 2026-06-22. */
+    service?: string | null;
   }>;
   /** Display format for hours — affects both the hero "Open now" badge
    *  and the weekly hours table render. Stored as 24h regardless; this
@@ -168,7 +172,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
     prisma.openingHours.findMany({
       where: { restaurantId: restaurant.id },
       orderBy: { dayOfWeek: "asc" },
-      select: { dayOfWeek: true, isOpen: true, openTime: true, closeTime: true, closesNextDay: true },
+      select: { dayOfWeek: true, isOpen: true, openTime: true, closeTime: true, closesNextDay: true, service: true },
     }),
     prisma.menuItem.findMany({
       where: { restaurantId: restaurant.id, isAvailable: true, isFeatured: true },

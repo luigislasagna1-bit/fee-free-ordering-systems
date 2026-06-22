@@ -142,6 +142,13 @@ export default async function HostedSitePage({
   }
 
   const r = result.data;
+  // GENERAL (service=null) rows drive the public open/closed status + the hours
+  // table — NOT the per-service rows (e.g. Pickup 15:00 / Delivery 16:00), which
+  // otherwise made the page say "Opens at 4 PM" while the restaurant is open by its
+  // GENERAL hours (Fabrizio 2026-06-22). Fall back to all rows for a restaurant that
+  // only configured per-service hours.
+  const generalHours = r.hours.filter((h) => h.service == null);
+  const displayHours = generalHours.length > 0 ? generalHours : r.hours;
   // Default theme color: emerald (matches the platform brand). Was red
   // (#ef4444) which clashed with the rest of the Fee Free identity for
   // restaurants who hadn't set their own theme color yet.
@@ -162,7 +169,7 @@ export default async function HostedSitePage({
   // intervals replace the weekly schedule for today's open status.
   const todayHoliday = holidayEffectForDay(r.holidays, todayKey, null);
   const openStatus: LiveOpenStatus = liveOpenStatus(
-    r.hours,
+    displayHours,
     now,
     r.hoursFormat,
     todayHoliday
@@ -264,7 +271,7 @@ export default async function HostedSitePage({
             addressCountry: r.country || undefined,
           }
         : undefined,
-    openingHoursSpecification: r.hours
+    openingHoursSpecification: displayHours
       .filter((h) => h.isOpen && h.openTime && h.closeTime)
       .map((h) => ({
         "@type": "OpeningHoursSpecification",
@@ -879,7 +886,7 @@ export default async function HostedSitePage({
                 pill so visitors can instantly see when this restaurant
                 is open relative to now. */}
             <ul className="mt-4 divide-y divide-gray-100 border-t border-b border-gray-100">
-              {r.hours.map((h) => {
+              {displayHours.map((h) => {
                 const isToday = h.dayOfWeek === todayDow;
                 return (
                   <li
