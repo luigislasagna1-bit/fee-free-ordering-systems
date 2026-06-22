@@ -72,8 +72,9 @@ export async function GET(req: NextRequest) {
     // only the flaky FCM push (rang in Test 1, silent in Test 2). Count a JUST-
     // released auto-accepted order as ringing for one short window; the device's
     // ~4s keep-alive poll + the 5s native alarm + its isRunning guard turn that
-    // into exactly one ~5s ring, independent of FCM. A LATER manual accept
-    // (acceptedAt well after notifiedAt) is excluded so accepting never re-rings.
+    // into exactly one ~5s ring, independent of FCM. A NORMAL manual accept lands
+    // minutes after placement, so its anchor is far older than 8s and never
+    // re-rings here — no fragile acceptedAt≈notifiedAt timestamp race needed.
     // Anchor on alertAt ?? notifiedAt per the scheduled-order ring-timing rule.
     if (!ringing) {
       const since = new Date(now - AUTO_ACCEPT_RING_MS);
@@ -87,17 +88,20 @@ export async function GET(req: NextRequest) {
               { alertAt: { gte: since, lte: new Date(now) } },
             ],
           },
-          select: { notifiedAt: true, acceptedAt: true, alertAt: true },
+          select: { notifiedAt: true, alertAt: true },
           take: 30,
         }),
       );
       for (const o of autoAccepted) {
         if (!o.notifiedAt) continue;
         const notified = o.notifiedAt.getTime();
-        const accepted = o.acceptedAt ? o.acceptedAt.getTime() : 0;
-        if (!accepted || accepted - notified > 3000) continue; // later manual accept → skip
         const anchor = o.alertAt ? o.alertAt.getTime() : notified;
         if (anchor > now) continue; // parked / not started ringing yet
+        // Ring any order whose release anchor is within the last 8s — a freshly
+        // arrived auto-accept (or a manual accept of an order placed <8s ago). A
+        // normal manual accept happens minutes after placement → anchor far past
+        // 8s → never re-rings. Replaces the brittle acceptedAt timestamp gate that
+        // silently dropped the ring when acceptedAt fell a hair before notifiedAt.
         if (now - anchor < AUTO_ACCEPT_RING_MS) { ringing = true; break; }
       }
     }

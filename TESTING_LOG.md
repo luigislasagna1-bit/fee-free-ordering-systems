@@ -78,3 +78,13 @@ To test: install v1.9 → re-open Printer Setup once (so saveConfig writes nativ
 
 ### OPEN — mobile checkout not responsive
 Customer checkout page (enter-details step) scrolls horizontally + doesn't fit on mobile. Needs a responsive CSS pass on the customer ordering/checkout page. (web)
+
+### Test 4 (v2.0) — ring works in ALL states ✅✅, two polish items
+Luigi on hardware (app v2.0):
+- ✅🔒 **Auto-accept: rings + prints, app OPEN and CLOSED, no screen tap.**
+- ✅🔒 **Pending (auto-accept OFF): correct GloriaFood alert tone, rings until accepted, prints on accept — Luigi: "saved and locked in and never damaged."** Git tag `kitchen-print-ring-verified-2026-06-22` (commit `7a45cf51`).
+- ✅🔒 **Missed-order auto-call works.**
+- ⚠️ **Auto-accept ring was QUIETER than the pending ring** → the loud native alarm wasn't reliably firing for auto-accept, so the quiet web chime covered it. **FIXED:** removed the brittle `acceptedAt≈notifiedAt` gate in `alarm-state` (auto-accept sets `acceptedAt` a hair before `notifiedAt`; the 3s race could drop the ring) → auto-accept now rings via the loud native alarm on the keep-alive, exactly like pending. Web-only.
+- ⚠️ **Missed-order call clipped the first words.** **FIXED:** 2s leading `<Pause>` in `voice-call.ts` before the spoken message (the call audio path isn't open the instant it connects). Web-only.
+
+Both fixes deploy via web — the tablet's keep-alive + the call endpoint pick them up live, **no reinstall.**

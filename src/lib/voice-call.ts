@@ -94,10 +94,13 @@ export async function placeVoiceCall(args: {
   const lang = args.language || "en-US";
   const spoken = escapeXml(args.message.slice(0, 400));
 
-  // Repeat the message twice with a short pause so a half-asleep owner who
-  // picks up mid-sentence still hears the whole thing.
+  // Lead with a 2s pause so the FIRST words aren't clipped while the callee is
+  // still raising the phone to their ear — the call audio path isn't fully open
+  // the instant it connects (Luigi 2026-06-22: the start was cut off almost every
+  // time). Then repeat the message twice with a short pause so a half-asleep owner
+  // who picks up mid-sentence still hears the whole thing.
   const sayAlice = `<Say voice="alice" language="${lang}">${spoken}</Say>`;
-  const aliceTwiml = `<?xml version="1.0" encoding="UTF-8"?><Response>${sayAlice}<Pause length="1"/>${sayAlice}</Response>`;
+  const aliceTwiml = `<?xml version="1.0" encoding="UTF-8"?><Response><Pause length="2"/>${sayAlice}<Pause length="1"/>${sayAlice}</Response>`;
 
   const usePolly = !!args.voice && args.voice.startsWith("Polly.");
   let primaryTwiml = aliceTwiml;
@@ -105,7 +108,7 @@ export async function placeVoiceCall(args: {
     // Polly supports SSML in Twilio <Say> — boost the volume (Luigi: louder +
     // less robotic). The voice value comes from our own map, not user input.
     const sayPolly = `<Say voice="${args.voice}"><prosody volume="x-loud">${spoken}</prosody></Say>`;
-    primaryTwiml = `<?xml version="1.0" encoding="UTF-8"?><Response>${sayPolly}<Pause length="1"/>${sayPolly}</Response>`;
+    primaryTwiml = `<?xml version="1.0" encoding="UTF-8"?><Response><Pause length="2"/>${sayPolly}<Pause length="1"/>${sayPolly}</Response>`;
   }
 
   const url = `${TWILIO_API}/${encodeURIComponent(sid)}/Calls.json`;
