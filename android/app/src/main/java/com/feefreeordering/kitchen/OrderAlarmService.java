@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
+import android.media.audiofx.LoudnessEnhancer;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -47,6 +48,7 @@ public class OrderAlarmService extends Service {
     private MediaPlayer player;
     private Vibrator vibrator;
     private android.media.AudioManager audioManager;
+    private LoudnessEnhancer loudnessEnhancer;
     /** Per-restaurant: vibrate alongside the ring? Set from the start intent's
      *  "vibrate" extra (default true). Ring-only when false. Luigi 2026-06-16. */
     private boolean vibrateEnabled = true;
@@ -177,6 +179,18 @@ public class OrderAlarmService extends Service {
             player.setLooping(false);
             player.setOnCompletionListener(mp -> stopSelf());
             player.prepare();
+            // Boost loudness ~+17 dB to MATCH the in-app (web) ring, which runs this
+            // SAME file through a 6x gain + limiter. The file is mastered quiet, so raw
+            // max-volume playback sounds softer than the foreground ring and its final-
+            // 40s crescendo barely registers (Luigi 2026-06-22: background ring
+            // "quieter... doesn't intensify"). LoudnessEnhancer is a compressor +
+            // amplifier (lifts level without hard clipping), so the screen-off ring is
+            // as loud + as intense as the in-app one. Gain tunable. Luigi 2026-06-22.
+            try {
+                loudnessEnhancer = new LoudnessEnhancer(player.getAudioSessionId());
+                loudnessEnhancer.setTargetGain(1700);
+                loudnessEnhancer.setEnabled(true);
+            } catch (Exception ignored) {}
             player.start();
         } catch (Exception ignored) {}
 
@@ -200,6 +214,7 @@ public class OrderAlarmService extends Service {
     public void onDestroy() {
         isRunning = false;
         if (autoStop != null) handler.removeCallbacks(autoStop);
+        try { if (loudnessEnhancer != null) { loudnessEnhancer.release(); loudnessEnhancer = null; } } catch (Exception ignored) {}
         try { if (player != null) { player.stop(); player.release(); player = null; } } catch (Exception ignored) {}
         try { if (vibrator != null) vibrator.cancel(); } catch (Exception ignored) {}
         try { if (wakeLock != null && wakeLock.isHeld()) wakeLock.release(); } catch (Exception ignored) {}
