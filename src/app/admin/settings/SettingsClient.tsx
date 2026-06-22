@@ -79,6 +79,7 @@ export function SettingsClient({
               {t("kitchenAlertsSection")}
             </h2>
             <KitchenWorkflowToggle
+              show={{ workflow: false, autoCall: false }}
               initialMode={restaurant.kitchenWorkflowMode === "tracking" ? "tracking" : "simple"}
               initialPrintNodeEnabled={!!restaurant.printNodeEnabled}
               initialAutoCall={!!restaurant.autoCallOnNewOrder}

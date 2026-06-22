@@ -38,6 +38,7 @@ export function KitchenWorkflowToggle({
   storePhone = null,
   initialAlertPhone = null,
   twilioVoiceConfigured = true,
+  show,
 }: {
   initialMode: "simple" | "tracking";
   initialPrintNodeEnabled?: boolean;
@@ -56,8 +57,20 @@ export function KitchenWorkflowToggle({
   initialAlertPhone?: string | null;
   /** Whether platform Twilio VOICE creds exist; false ⇒ calls can't be placed. */
   twilioVoiceConfigured?: boolean;
+  /** Which cards to render (each defaults true). The Order Handling page (Taking
+   *  Orders) shows ONLY workflow + autoCall; the Settings page shows the rest.
+   *  Luigi 2026-06-22. */
+  show?: { workflow?: boolean; printNode?: boolean; autoCall?: boolean; vibrate?: boolean; delivery?: boolean; itemCategory?: boolean };
 }) {
   const t = useTranslations("admin.kitchenWorkflowToggle");
+  const sh = {
+    workflow: show?.workflow ?? true,
+    printNode: show?.printNode ?? true,
+    autoCall: show?.autoCall ?? true,
+    vibrate: show?.vibrate ?? true,
+    delivery: show?.delivery ?? true,
+    itemCategory: show?.itemCategory ?? true,
+  };
   const [mode, setMode] = useState<"simple" | "tracking">(initialMode);
   const [printNodeEnabled, setPrintNodeEnabled] = useState<boolean>(initialPrintNodeEnabled);
   const [savingPrintNode, setSavingPrintNode] = useState(false);
@@ -269,6 +282,7 @@ export function KitchenWorkflowToggle({
 
   return (
     <div className="space-y-3">
+      {sh.workflow && (
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
       <button
         type="button"
@@ -342,6 +356,7 @@ export function KitchenWorkflowToggle({
         </div>
       )}
       </div>
+      )}
 
       {/* ── PrintNode backup toggle ─────────────────────────────────
           Direct WiFi/LAN printing (via the native kitchen app) is the
@@ -350,6 +365,7 @@ export function KitchenWorkflowToggle({
           who already have it set up. Default OFF — restaurants enable
           here to make the PrintNode setup option visible in the
           kitchen settings. */}
+      {sh.printNode && (
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
         <div className="px-5 py-3.5 flex items-center gap-3">
           <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
@@ -399,12 +415,14 @@ export function KitchenWorkflowToggle({
           </p>
         </div>
       </div>
+      )}
 
       {/* ── Auto phone-call alert ───────────────────────────────────────
           When a new order isn't accepted within ~90s, ring the restaurant's
           phone with an automated message so an unattended tablet doesn't
           drop the order (GloriaFood-style). Default OFF. Requires the
           platform Twilio voice credentials + a restaurant phone number. */}
+      {sh.autoCall && (
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
         <div className="px-5 py-3.5 flex items-center gap-3">
           <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
@@ -516,12 +534,14 @@ export function KitchenWorkflowToggle({
           </p>
         </div>
       </div>
+      )}
 
       {/* ── New-order vibration ─────────────────────────────────────────
           Kitchen devices vibrate alongside the ring on a new order. Default
           ON; off = ring only (the sound stays). Stored per-restaurant, read by
           the FCM push + the alarm-state poll, and honored by the native Kitchen
           Order App alarm. Luigi 2026-06-16 (Fabrizio request). */}
+      {sh.vibrate && (
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
         <div className="px-5 py-3.5 flex items-center gap-3">
           <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
@@ -557,10 +577,12 @@ export function KitchenWorkflowToggle({
           </button>
         </div>
       </div>
+      )}
 
       {/* ── Delivery tile label: customer name vs street address ───────────
           Reseller request (Fabrizio 2026-06-21): so staff can identify a
           delivery order by name when the customer calls. */}
+      {sh.delivery && (
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
         <div className="px-5 py-3.5 flex items-center gap-3">
           <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
@@ -618,10 +640,12 @@ export function KitchenWorkflowToggle({
           </div>
         )}
       </div>
+      )}
 
       {/* ── Show each dish's menu category on incoming orders ──────────────
           Reseller request (Fabrizio 2026-06-21): disambiguates same-named
           dishes across categories (e.g. Japanese menus). */}
+      {sh.itemCategory && (
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
         <div className="px-5 py-3.5 flex items-center gap-3">
           <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
@@ -649,6 +673,7 @@ export function KitchenWorkflowToggle({
           </button>
         </div>
       </div>
+      )}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ToggleLeft, ToggleRight, Zap } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
+import { KitchenWorkflowToggle } from "../orders/KitchenWorkflowToggle";
 
 interface Initial {
   autoAcceptOrders: boolean;
@@ -10,6 +11,11 @@ interface Initial {
   requireScheduledOrders: boolean;
   pickupEta: number;
   deliveryEta: number;
+  // Relocated from /admin/settings (Luigi 2026-06-22).
+  workflowMode: "simple" | "tracking";
+  autoCallOnNewOrder: boolean;
+  alertPhone: string | null;
+  storePhone: string | null;
 }
 
 /**
@@ -19,7 +25,7 @@ interface Initial {
  * page; no "Save Changes" button. Persists via PATCH /api/admin/order-handling.
  * Luigi 2026-06-22.
  */
-export function OrderHandlingClient({ initial }: { initial: Initial }) {
+export function OrderHandlingClient({ initial, twilioVoiceConfigured }: { initial: Initial; twilioVoiceConfigured: boolean }) {
   const t = useTranslations("admin.orderHandling");
   const tToasts = useTranslations("admin.toasts");
   const [autoAcceptOrders, setAutoAcceptOrders] = useState(initial.autoAcceptOrders);
@@ -122,6 +128,15 @@ export function OrderHandlingClient({ initial }: { initial: Initial }) {
           </div>
         )}
       </div>
+
+      <KitchenWorkflowToggle
+        show={{ workflow: true, autoCall: true, printNode: false, vibrate: false, delivery: false, itemCategory: false }}
+        initialMode={initial.workflowMode}
+        initialAutoCall={initial.autoCallOnNewOrder}
+        initialAlertPhone={initial.alertPhone}
+        storePhone={initial.storePhone}
+        twilioVoiceConfigured={twilioVoiceConfigured}
+      />
     </div>
   );
 }

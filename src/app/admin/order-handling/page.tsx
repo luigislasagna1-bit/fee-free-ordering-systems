@@ -19,8 +19,21 @@ export default async function OrderHandlingPage() {
       // For the auto-accept help text ("…Pickup: {pickup} min, Delivery: {delivery} min").
       estimatedPickup: true,
       estimatedDelivery: true,
+      // Relocated here from /admin/settings: kitchen workflow mode + missed-order auto-call.
+      kitchenWorkflowMode: true,
+      autoCallOnNewOrder: true,
+      alertPhone: true,
+      phone: true,
     },
   });
+
+  // Platform Twilio VOICE creds present? Drives the auto-call "not configured" warning
+  // (one account for all restaurants) — mirrors /admin/settings.
+  const twilioVoiceConfigured = !!(
+    process.env.FFOS_TWILIO_ACCOUNT_SID &&
+    process.env.FFOS_TWILIO_AUTH_TOKEN &&
+    process.env.FFOS_TWILIO_FROM_NUMBER
+  );
 
   return (
     <OrderHandlingClient
@@ -30,7 +43,12 @@ export default async function OrderHandlingPage() {
         requireScheduledOrders: restaurant?.requireScheduledOrders ?? false,
         pickupEta: restaurant?.estimatedPickup ?? 20,
         deliveryEta: restaurant?.estimatedDelivery ?? 45,
+        workflowMode: restaurant?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple",
+        autoCallOnNewOrder: restaurant?.autoCallOnNewOrder ?? false,
+        alertPhone: restaurant?.alertPhone ?? null,
+        storePhone: restaurant?.phone ?? null,
       }}
+      twilioVoiceConfigured={twilioVoiceConfigured}
     />
   );
 }
