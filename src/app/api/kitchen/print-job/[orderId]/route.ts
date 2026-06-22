@@ -1,49 +1,17 @@
 /**
- * GET /api/kitchen/print-job/[orderId]
+ * GET /api/kitchen/print-job/[orderId]?type=kitchen|customer&width=58|80
  *
- * Returns the receipt for the given order in TWO formats so the native
- * Capacitor app can print on the broadest range of printers:
- *
- *   - `bytes`  base64-encoded ESC/POS — for raw TCP printing on
- *              Epson / Bixolon / Citizen and other non-Star printers
- *              that accept ESC/POS over port 9100.
- *   - `lines`  structured ReceiptLine[] — for Star printers via the
- *              StarXpand bitmap renderer on Android. Star's TSP-series
- *              firmware silently discards raw ESC/POS over #9100, so
- *              we render text to a bitmap and use the SDK's image-
- *              print path. See `StarXpandBridge.kt`.
- *
- * Both formats are built from the SAME per-restaurant ReceiptTemplate
- * (the same template the admin edits in /admin/receipts and the same
- * template the PrintNode-based browser print uses). So a receipt printed
- * from the kitchen tablet looks identical to one printed via PrintNode,
- * with full bold / size / alignment / highlight styling preserved.
- *
- * Auth: kitchen session. The order must belong to the kitchen's
- * restaurant — caller can't print receipts from other restaurants by
- * guessing IDs.
- *
- * Query params:
- *   width — "58" or "80" (paper width in mm). Default 80.
+ * Returns the receipt for one order in BOTH formats (`bytes` ESC/POS + `lines`
+ * for the StarXpand bitmap renderer). Kitchen SESSION auth — the app-open web
+ * auto-print and manual reprints use this. The native BACKGROUND print service
+ * (app closed, no session cookie) uses the token-authed sibling
+ * /api/kitchen/print-job-token. Both share buildOrderReceiptPayload so a ticket
+ * is byte-identical regardless of which path printed it.
  */
-
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { kitchenAuthOptions } from "@/lib/auth-kitchen";
-import prisma from "@/lib/db";
-import { parseReceiptConfig } from "@/lib/receipt-schema";
-import {
-  buildKitchenReceiptFromConfig,
-  buildCustomerReceiptFromConfig,
-  type ReceiptOrder,
-  type ReceiptRestaurant,
-} from "@/lib/receipt";
-import {
-  buildKitchenReceiptLines,
-  buildCustomerReceiptLines,
-} from "@/lib/receipt-lines";
-import { fetchDriveEstimate, resolveDistanceMatrixKey, cardinalDirection } from "@/lib/delivery-eta";
-import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
+import { buildOrderReceiptPayload } from "@/lib/kitchen-receipt-payload";
 
 export async function GET(
   req: NextRequest,
@@ -57,205 +25,20 @@ export async function GET(
 
   const { orderId } = await params;
   const paperWidth = req.nextUrl.searchParams.get("width") === "58" ? "58mm" : "80mm";
-  // type: "kitchen" (default) → big bold ticket for chef. "customer" →
-  // itemized receipt with prices + totals. Same vocabulary as the
-  // PrintNode flow uses.
-  const typeParam = req.nextUrl.searchParams.get("type");
-  const receiptType: "kitchen" | "customer" = typeParam === "customer" ? "customer" : "kitchen";
+  const receiptType: "kitchen" | "customer" =
+    req.nextUrl.searchParams.get("type") === "customer" ? "customer" : "kitchen";
 
-  // Pull order + items + restaurant — scoped to the caller's restaurant.
-  const order = await prisma.order.findFirst({
-    where: { id: orderId, restaurantId },
-    include: {
-      items: {
-        include: {
-          modifiers: { select: { name: true, priceAdjustment: true } },
-        },
-        orderBy: { id: "asc" },
-      },
-      restaurant: {
-        select: {
-          name: true, phone: true, email: true,
-          address: true, city: true, state: true, zip: true, currency: true,
-          timezone: true, hoursFormat: true, receiptLogoUrl: true,
-        },
-      },
-    },
-  });
-
-  if (!order) {
-    return NextResponse.json({ error: "Order not found" }, { status: 404 });
-  }
-
-  // Reserve-then-order: the linked table booking (if any) so the kitchen ticket
-  // prints the "TABLE RESERVATION + PRE-ORDER" flag. Null for normal orders.
-  const linkedReservation = await prisma.reservation.findFirst({
-    where: { orderId: order.id },
-    select: { partySize: true, date: true, time: true },
-  });
-
-  // ── Load the restaurant's template for the requested receipt type.
-  //    Falls back to the DEFAULT_*_CONFIG when no row exists yet, so a
-  //    brand-new restaurant still prints a sensible receipt without
-  //    configuring anything. Same logic the PrintNode path uses.
-  const tplRow = await prisma.receiptTemplate.findFirst({
-    where: { restaurantId, type: receiptType, isDefault: true },
-    select: { template: true },
-  });
-
-  // ── Map Prisma row → ReceiptOrder + ReceiptRestaurant shapes.
-  const restaurant: ReceiptRestaurant = {
-    name: order.restaurant.name,
-    address: order.restaurant.address,
-    city: order.restaurant.city,
-    state: order.restaurant.state,
-    zip: order.restaurant.zip,
-    phone: order.restaurant.phone,
-    email: order.restaurant.email,
-    currency: order.restaurant.currency,
-    timezone: order.restaurant.timezone,
-    hoursFormat: (order.restaurant as any).hoursFormat,
-    receiptLogoUrl: (order.restaurant as any).receiptLogoUrl ?? null,
-  };
-
-  // Live driving distance + traffic-aware time for the receipt (Luigi
-  // 2026-06-13). Best-effort, fully wrapped — never blocks/breaks the print.
-  let driveDistanceText: string | null = null;
-  let driveTimeText: string | null = null;
-  let driveDirection: string | null = null;
-  try {
-    if ((order as any).type === "delivery" && (order as any).deliveryAddress) {
-      const r = await prisma.restaurant.findUnique({
-        where: { id: restaurantId },
-        select: { lat: true, lng: true, address: true, city: true, state: true, zip: true, googleMapsApiKey: true },
-      });
-      if (r?.lat != null && r?.lng != null && (order as any).deliveryLat != null && (order as any).deliveryLng != null) {
-        driveDirection = cardinalDirection(r.lat, r.lng, (order as any).deliveryLat, (order as any).deliveryLng);
-      }
-      const key = r ? resolveDistanceMatrixKey(await resolveEffectiveMapsKey(r.googleMapsApiKey)) : null;
-      if (r && key) {
-        const origin =
-          r.lat != null && r.lng != null
-            ? { lat: r.lat, lng: r.lng }
-            : { address: [r.address, r.city, r.state, r.zip].filter(Boolean).join(", ") };
-        const destination = [(order as any).deliveryAddress, (order as any).deliveryCity].filter(Boolean).join(", ");
-        const est = await fetchDriveEstimate({ apiKey: key, origin, destination });
-        if (est.ok) {
-          driveDistanceText = est.distanceText ?? null;
-          driveTimeText = est.durationInTrafficText ?? est.durationText ?? null;
-        }
-      }
-    }
-  } catch { /* never block the print */ }
-
-  const receiptOrder: ReceiptOrder = {
-    orderNumber: String((order as any).orderNumber ?? order.id.slice(-6).toUpperCase()),
-    type: (order as any).type ?? "pickup",
-    status: order.status,
-    customerName: (order as any).customerName ?? "Guest",
-    customerPhone: (order as any).customerPhone,
-    customerEmail: (order as any).customerEmail,
-    deliveryAddress: (order as any).deliveryAddress,
-    deliveryCity: (order as any).deliveryCity,
-    deliveryZoneName: (order as any).deliveryZoneName ?? null,
-    deliveryEstimatedMinutes: (order as any).deliveryEstimatedMinutes ?? null,
-    driveDistanceText,
-    driveTimeText,
-    driveDirection,
-    notes: (order as any).notes,
-    subtotal: order.subtotal,
-    taxAmount: (order as any).taxAmount ?? 0,
-    deliveryFee: order.deliveryFee ?? 0,
-    tip: (order as any).tip ?? 0,
-    couponDiscount: (order as any).couponDiscount ?? 0,
-    promoDiscount: (order as any).promoDiscount ?? 0,
-    appliedServiceFees: (order as any).appliedServiceFees ?? null,
-    appliedPromos: (order as any).appliedPromos ?? null,
-    total: order.total,
-    paymentMethod: (order as any).paymentMethod ?? "",
-    paymentStatus: (order as any).paymentStatus ?? "pending",
-    createdAt: order.createdAt,
-    scheduledFor: (order as any).scheduledFor ?? null,
-    estimatedReady: (order as any).estimatedReady ?? null,
-    preparationTime: (order as any).preparationTime ?? null,
-    reservation: linkedReservation
-      ? { partySize: linkedReservation.partySize, date: linkedReservation.date, time: linkedReservation.time }
-      : null,
-    items: order.items.map((it: any) => ({
-      name: it.name,
-      quantity: it.quantity ?? 1,
-      price: it.price,
-      subtotal: it.subtotal ?? (it.price * (it.quantity ?? 1)),
-      notes: it.notes,
-      modifiers: (it.modifiers ?? []).map((m: any) => ({
-        name: m.name,
-        priceAdjustment: m.priceAdjustment ?? 0,
-      })),
-      // Bundle children (Promo Type 8 / 13) — passed through to the
-      // receipt renderer so kitchen + customer copies print parent + indented children.
-      bundleItems: Array.isArray(it.bundleItems) ? it.bundleItems : null,
-    })),
-  };
-
-  // ── Build BOTH outputs from the same template ──
-  //   ESC/POS bytes  — raw TCP fallback for non-Star printers.
-  //   Structured lines — StarXpand bitmap renderer on Android.
-  // The "starprnt" language default works for Star + most Star-emulating
-  // thermal printers restaurants buy today.
-  let bytesBuf: Buffer;
-  let lines;
-  if (receiptType === "customer") {
-    const cfg = parseReceiptConfig(tplRow?.template ?? null, "customer");
-    bytesBuf = await buildCustomerReceiptFromConfig(
-      receiptOrder, restaurant, cfg, paperWidth, "starprnt", "en",
-    );
-    lines = await buildCustomerReceiptLines(
-      receiptOrder, restaurant, cfg, paperWidth, "en",
-    );
-  } else {
-    const cfg = parseReceiptConfig(tplRow?.template ?? null, "kitchen");
-    bytesBuf = await buildKitchenReceiptFromConfig(
-      receiptOrder, restaurant, cfg, paperWidth, "starprnt", "en",
-    );
-    lines = await buildKitchenReceiptLines(
-      receiptOrder, restaurant, cfg, paperWidth, "en",
-    );
-  }
-
-  // ── Resolve logo image lines: url → base64 ──
-  // The Android renderer must not fetch arbitrary URLs mid-print (latency +
-  // failure modes on the tablet network), so the server inlines the bytes.
-  // Best-effort: any failure (unreachable blob, oversize, non-image) drops
-  // the logo line and the receipt prints exactly as before — printing is
-  // never blocked by the logo. Old app builds skip the line anyway.
-  if (Array.isArray(lines) && lines.some((l: any) => l?.kind === "image" && l.url)) {
-    lines = (
-      await Promise.all(
-        lines.map(async (l: any) => {
-          if (l?.kind !== "image" || !l.url) return l;
-          try {
-            const res = await fetch(l.url, { signal: AbortSignal.timeout(5000) });
-            if (!res.ok) return null;
-            const contentType = res.headers.get("content-type") ?? "";
-            if (!/^image\/(png|jpe?g|webp)/i.test(contentType)) return null;
-            const buf = Buffer.from(await res.arrayBuffer());
-            if (buf.length > 1_500_000) return null; // 1.5MB cap — receipts don't need more
-            const { url: _drop, ...rest } = l;
-            return { ...rest, dataBase64: buf.toString("base64") };
-          } catch {
-            return null;
-          }
-        }),
-      )
-    ).filter(Boolean);
+  const result = await buildOrderReceiptPayload({ orderId, restaurantId, type: receiptType, paperWidth });
+  if (!result.ok) {
+    return NextResponse.json({ error: result.error }, { status: result.status });
   }
 
   return NextResponse.json({
     ok: true,
-    orderId: order.id,
-    width: paperWidth === "58mm" ? 58 : 80,
+    orderId,
+    width: result.width,
     type: receiptType,
-    bytes: bytesBuf.toString("base64"),
-    lines,
+    bytes: result.bytes,
+    lines: result.lines,
   });
 }

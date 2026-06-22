@@ -53,3 +53,15 @@ Steps: logged into kitchen, reconnected Star printer (Find my printers), minimiz
 **Fix shipped (web, no app rebuild):** `alarm-state` now also counts a just-released auto-accepted order (`status:"accepted"`, `notifiedAt`/`alertAt` within 8s, `acceptedAt ≈ notifiedAt` to exclude a later manual accept) as ringing → the keep-alive rings it **exactly once (~5s) within ~4s of arrival, independent of FCM**. Commit `<pending>`.
 
 **Pending re-test:** locked-screen auto-accept cash order → expect a single ~5s ring within a few seconds (repeat 3-4× to confirm reliability); on wake the order is present + auto-prints.
+
+### Native background printing (print while the app is CLOSED) — BUILT (app v1.9), pending test
+Luigi's requirement: a ticket must print the instant an order is accepted (auto OR manual) **even if the app is closed**. Previously printing was web-driven (the WebView's JS), which Android suspends when the app is backgrounded — so it only printed on wake.
+
+Built (server = web deploy; native = app v1.9 rebuild, versionCode 10):
+- `Order.kitchenPrintedAt` atomic claim → a ticket prints **exactly once** across the app-open web print + the app-closed native print + restarts + multiple devices (never double-prints).
+- `/api/kitchen/alarm-state` now also returns `print:[orderIds]` (accepted, released, unprinted, ≤15 min). `/api/kitchen/print-job-token` (token-auth) claims + returns the kitchen/customer receipt `lines`; `/api/kitchen/claim-print` (session) lets the web claim before it prints.
+- `KitchenKeepAliveService` (always-on, polls every 4s while closed) now **fetches + prints straight to the Star** via `StarXpandBridge.printLines`, with release-on-failure retry bounded to the 15-min window.
+- `DirectPrinter.saveConfig` mirrors the printer IP/port/width/enabled/autoprint into native SharedPreferences (the background service can't read WebView localStorage); the printer-setup persist effect writes it on every change.
+- Shared `buildOrderReceiptPayload` so a background ticket is byte-identical to an app-printed one.
+
+To test: install v1.9 → re-open Printer Setup once (so saveConfig writes native storage) → fully CLOSE the app → place an auto-accept order → it should **ring (~5s) AND print within a few seconds, app closed**. Repeat 3-4×. Also confirm a manually-accepted order prints and that nothing double-prints.

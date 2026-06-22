@@ -311,6 +311,32 @@ public class DirectPrinterPlugin extends Plugin {
     }
 
     /**
+     * Mirror the kitchen printer config into native SharedPreferences so the
+     * always-on KitchenKeepAliveService can print while the app is CLOSED — it
+     * can't read the WebView's localStorage. The kitchen printer-setup UI calls
+     * this on every config change. Luigi 2026-06-22.
+     */
+    @PluginMethod
+    public void saveConfig(PluginCall call) {
+        try {
+            android.content.SharedPreferences prefs =
+                getContext().getSharedPreferences("ffo_printer", Context.MODE_PRIVATE);
+            prefs.edit()
+                .putString("ip", call.getString("ip", ""))
+                .putInt("port", call.getInt("port", DEFAULT_PORT))
+                .putInt("width", call.getInt("width", 80))
+                .putBoolean("enabled", Boolean.TRUE.equals(call.getBoolean("enabled", false)))
+                .putBoolean("autoprint", Boolean.TRUE.equals(call.getBoolean("autoprint", false)))
+                .apply();
+            JSObject ret = new JSObject();
+            ret.put("ok", true);
+            call.resolve(ret);
+        } catch (Exception e) {
+            call.reject("saveConfig failed: " + (e.getMessage() != null ? e.getMessage() : "unknown"));
+        }
+    }
+
+    /**
      * Try printing via Star's StarIO library. Returns true if the
      * print succeeded (in which case we've already resolved the
      * PluginCall and the caller should bail). Returns false if the

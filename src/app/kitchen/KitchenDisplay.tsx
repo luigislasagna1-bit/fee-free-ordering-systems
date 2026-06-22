@@ -2449,6 +2449,19 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
 
     const direct = getDirectPrinterConfig();
     if (direct && (opts?.force || direct.autoprint)) {
+      // Atomic server claim so the native background-print service (which prints
+      // this same order while the app is CLOSED) can't double-print it. If another
+      // path already claimed+printed it, skip. A network hiccup falls through and
+      // prints — a rare dup beats a missed ticket. Luigi 2026-06-22.
+      try {
+        const cr = await fetch("/api/kitchen/claim-print", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ orderId }),
+        });
+        const cd = await cr.json().catch(() => ({}));
+        if (cr.ok && cd.claimed === false) return;
+      } catch { /* fall through and print */ }
       try {
         await doPrintDirect(orderId, printType);
         return;

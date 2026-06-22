@@ -1128,6 +1128,13 @@ model Order {
   scheduledFor              DateTime?
   estimatedReady            DateTime?
   acceptedAt                DateTime?
+  /// Set the first time this order's ticket is printed — by the web auto-print,
+  /// the native background-print service, or a manual print. Atomic claim
+  /// (updateMany where kitchenPrintedAt:null) makes printing EXACTLY-ONCE across
+  /// the web app, the native background service, app restarts, and multiple
+  /// devices, so the app-closed background print and the app-open web print can
+  /// never double-print the same ticket. Luigi 2026-06-22.
+  kitchenPrintedAt          DateTime?
   rejectedAt                DateTime?
   rejectionReason           String?
   completedAt               DateTime?

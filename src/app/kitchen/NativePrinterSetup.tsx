@@ -33,6 +33,7 @@ import {
   nativePing,
   nativePrint,
   nativeDiscover,
+  nativeSavePrinterConfig,
   nativePrinterErrorCopy,
   type NativePrinterReason,
   type DiscoveredPrinter,
@@ -245,6 +246,17 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
       localStorage.setItem(LS_KEYS.paperWidth, paperWidth);
       localStorage.setItem(LS_KEYS.autoprint, autoprint ? "1" : "0");
     } catch { /* ignore */ }
+    // Mirror to native SharedPreferences so the always-on KitchenKeepAliveService
+    // can print to this printer while the app is CLOSED (it can't read WebView
+    // localStorage). Best-effort; no-op in a browser or on an app build without
+    // the saveConfig bridge. Luigi 2026-06-22.
+    void nativeSavePrinterConfig({
+      ip,
+      port: parseInt(port, 10) || 9100,
+      width: paperWidth === "58" ? 58 : 80,
+      enabled,
+      autoprint,
+    });
   }, [enabled, ip, port, paperWidth, autoprint]);
 
   async function testPrint() {

@@ -32,6 +32,7 @@ type CapacitorGlobal = {
       print: (opts: NativePrintOpts) => Promise<NativePrintResult>;
       ping: (opts: NativePingOpts) => Promise<NativePingResult>;
       discover?: (opts: NativeDiscoverOpts) => Promise<NativeDiscoverResult>;
+      saveConfig?: (opts: NativeSaveConfigOpts) => Promise<{ ok: boolean }>;
     };
   };
 };
@@ -231,4 +232,29 @@ export async function nativeDiscover(opts: NativeDiscoverOpts = {}): Promise<Nat
     return { ok: true, printers: [] };
   }
   return plugin.discover(opts);
+}
+
+export interface NativeSaveConfigOpts {
+  ip: string;
+  port?: number;
+  /** Paper width in mm: 58 or 80. */
+  width?: number;
+  /** Direct-LAN printing turned on for this device. */
+  enabled?: boolean;
+  /** Auto-print on accept turned on. */
+  autoprint?: boolean;
+}
+
+/**
+ * Mirror the kitchen printer config (IP/port/width/enabled/autoprint) into the
+ * app's NATIVE SharedPreferences via the DirectPrinter plugin, so the always-on
+ * KitchenKeepAliveService can print while the app is CLOSED (it can't read the
+ * WebView's localStorage). Best-effort + idempotent: a no-op in a plain browser,
+ * or on an older app build whose plugin lacks saveConfig. Luigi 2026-06-22.
+ */
+export async function nativeSavePrinterConfig(opts: NativeSaveConfigOpts): Promise<void> {
+  if (!isNativePrinterAvailable()) return;
+  const plugin = window.Capacitor!.Plugins.DirectPrinter!;
+  if (typeof plugin.saveConfig !== "function") return; // app built before the bridge
+  try { await plugin.saveConfig(opts); } catch { /* best-effort — app-open printing still works */ }
 }

@@ -27,6 +27,10 @@ const CLOSED_WINDOW_MS = 15 * 60 * 1000; // placed-while-closed gets the longer 
 // reliable keep-alive poll for one short window: ~4s poll + 5s alarm + the alarm's
 // isRunning guard ⇒ exactly one ~5s ring. Luigi 2026-06-21.
 const AUTO_ACCEPT_RING_MS = 8 * 1000;
+// Native background-print discovery window — only orders RELEASED in this window
+// are offered for background printing, so a fresh deploy (kitchenPrintedAt is null
+// on all history) never reprints old tickets. Luigi 2026-06-22.
+const PRINT_LOOKBACK_MS = 15 * 60 * 1000;
 
 export async function GET(req: NextRequest) {
   const token = new URL(req.url).searchParams.get("token")?.trim();
@@ -142,7 +146,27 @@ export async function GET(req: NextRequest) {
       vibrate = r?.kitchenVibrate !== false;
     }
 
-    return NextResponse.json({ ringing, vibrate });
+    // Orders the native BACKGROUND-print service (KitchenKeepAliveService, runs
+    // while the app is closed) should print: accepted + released + not yet
+    // printed, recent enough that a fresh deploy can't reprint history. The
+    // service claims each via /api/kitchen/print-job-token (atomic), so this is
+    // just a discovery hint — duplicate ids across polls are harmless. Luigi
+    // 2026-06-22.
+    const toPrint = await withDbRetry(() =>
+      prisma.order.findMany({
+        where: {
+          restaurantId,
+          status: "accepted",
+          kitchenPrintedAt: null,
+          notifiedAt: { gte: new Date(now - PRINT_LOOKBACK_MS) },
+        },
+        select: { id: true },
+        orderBy: { notifiedAt: "asc" },
+        take: 10,
+      }),
+    );
+
+    return NextResponse.json({ ringing, vibrate, print: toPrint.map((o) => o.id) });
   } catch (err) {
     // A transient DB connection drop (Neon recycles pooled connections, so the
     // ~4s poll occasionally hits a just-closed one) must NOT 500 the kitchen poll

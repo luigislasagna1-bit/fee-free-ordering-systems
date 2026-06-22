@@ -42,6 +42,11 @@ public class KitchenKeepAliveService extends Service {
     // (default true). Passed to OrderAlarmService when the alarm starts. 2026-06-16.
     private volatile boolean lastVibrate = true;
     private Thread pollThread;
+    // Orders this session has already background-printed, so we don't re-fetch a
+    // print job every 4s for one that's done. The server's atomic kitchenPrintedAt
+    // claim is the real cross-device/web dedup; this is just a local optimization.
+    private final java.util.Set<String> printedThisSession =
+        java.util.Collections.synchronizedSet(new java.util.HashSet<String>());
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -100,7 +105,12 @@ public class KitchenKeepAliveService extends Service {
             }
             while (polling) {
                 try {
-                    boolean ringing = token != null && checkRinging(token);
+                    String resp = token != null ? fetchAlarmState(token) : null;
+                    boolean ringing = false;
+                    if (resp != null) {
+                        lastVibrate = !resp.contains("\"vibrate\":false");
+                        ringing = resp.contains("\"ringing\":true");
+                    }
                     if (ringing && !MainActivity.isForeground) {
                         if (!OrderAlarmService.isRunning) {
                             Intent i = new Intent(this, OrderAlarmService.class);
@@ -114,6 +124,12 @@ public class KitchenKeepAliveService extends Service {
                     } else if (OrderAlarmService.isRunning) {
                         OrderAlarmService.stop(this);
                     }
+                    // Background AUTO-PRINT — while the app is CLOSED (foreground
+                    // printing is the WebView's job), print any order the server
+                    // flagged for printing, straight to the Star. Luigi 2026-06-22.
+                    if (resp != null && token != null && !MainActivity.isForeground) {
+                        handleBackgroundPrint(token, resp);
+                    }
                 } catch (Exception ignored) {
                 }
                 try { Thread.sleep(4000); } catch (InterruptedException e) { break; }
@@ -123,29 +139,109 @@ public class KitchenKeepAliveService extends Service {
         pollThread.start();
     }
 
-    private boolean checkRinging(String token) {
+    /** GET the alarm-state poll (ringing + vibrate + the background-print order
+     *  list) as a raw JSON string, or null on any failure. */
+    private String fetchAlarmState(String token) {
+        try {
+            return httpGet(POLL_URL + java.net.URLEncoder.encode(token, "UTF-8"), 8000);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /** Simple background HTTP GET → response body string, or null. */
+    private String httpGet(String urlStr, int readTimeoutMs) {
         HttpURLConnection conn = null;
         try {
-            URL url = new URL(POLL_URL + java.net.URLEncoder.encode(token, "UTF-8"));
+            URL url = new URL(urlStr);
             conn = (HttpURLConnection) url.openConnection();
             conn.setConnectTimeout(8000);
-            conn.setReadTimeout(8000);
+            conn.setReadTimeout(readTimeoutMs);
             conn.setRequestMethod("GET");
-            if (conn.getResponseCode() != 200) return false;
+            if (conn.getResponseCode() != 200) return null;
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder sb = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) sb.append(line);
             br.close();
-            String resp = sb.toString();
-            // Vibration preference rides along on the same poll (default true unless
-            // the response explicitly says "vibrate":false). Luigi 2026-06-16.
-            lastVibrate = !resp.contains("\"vibrate\":false");
-            return resp.contains("\"ringing\":true");
+            return sb.toString();
         } catch (Exception e) {
-            return false;
+            return null;
         } finally {
             if (conn != null) conn.disconnect();
+        }
+    }
+
+    /** Print any order the server flagged for background printing (the "print"
+     *  array on the alarm-state response), using the printer config the WebView
+     *  mirrored into SharedPreferences. Each order is claimed atomically server-
+     *  side (print-job-token) so the app-open web print and this can never
+     *  double-print. Luigi 2026-06-22. */
+    private void handleBackgroundPrint(String token, String resp) {
+        try {
+            android.content.SharedPreferences prefs = getSharedPreferences("ffo_printer", MODE_PRIVATE);
+            boolean enabled = prefs.getBoolean("enabled", false);
+            boolean autoprint = prefs.getBoolean("autoprint", false);
+            String ip = prefs.getString("ip", "");
+            int width = prefs.getInt("width", 80);
+            if (!enabled || !autoprint || ip == null || ip.isEmpty()) return;
+
+            org.json.JSONArray ids = new org.json.JSONObject(resp).optJSONArray("print");
+            if (ids == null || ids.length() == 0) return;
+            for (int i = 0; i < ids.length(); i++) {
+                String orderId = ids.optString(i, "");
+                if (orderId.isEmpty() || printedThisSession.contains(orderId)) continue;
+                printOrder(token, orderId, ip, width);
+            }
+        } catch (Exception ignored) {
+        }
+    }
+
+    private void printOrder(String token, String orderId, String ip, int width) {
+        try {
+            String base = "https://feefreeordering.com/api/kitchen/print-job-token?token="
+                + java.net.URLEncoder.encode(token, "UTF-8")
+                + "&orderId=" + java.net.URLEncoder.encode(orderId, "UTF-8");
+            // Claim + fetch the receipt jobs (atomic kitchenPrintedAt claim server-side).
+            String jobResp = httpGet(base, 15000);
+            if (jobResp == null) return; // network — retry next poll
+            org.json.JSONObject root = new org.json.JSONObject(jobResp);
+            if (!root.optBoolean("ok", false)) {
+                // alreadyPrinted (web / another device won the claim) → done.
+                printedThisSession.add(orderId);
+                return;
+            }
+            int w = root.optInt("width", width);
+            int widthDots = (w == 58) ? 384 : 576;
+            org.json.JSONArray jobs = root.optJSONArray("jobs");
+            boolean anyFailed = false;
+            if (jobs != null) {
+                for (int j = 0; j < jobs.length(); j++) {
+                    org.json.JSONObject job = jobs.getJSONObject(j);
+                    int copies = Math.max(1, Math.min(5, job.optInt("copies", 1)));
+                    org.json.JSONArray lines = job.optJSONArray("lines");
+                    if (lines == null) continue;
+                    String linesJson = lines.toString();
+                    for (int c = 0; c < copies; c++) {
+                        String result = com.feefreeordering.directprinter.StarXpandBridge.printLines(
+                            this, ip, linesJson, widthDots, 12000L);
+                        if (!"ok".equals(result)) {
+                            anyFailed = true;
+                            android.util.Log.w("KitchenKeepAlive", "bg print failed for " + orderId + ": " + result);
+                        }
+                    }
+                }
+            }
+            if (anyFailed) {
+                // Release the claim so a later poll retries (printer off/unreachable).
+                // Bounded by the server's 15-min print window. Don't mark printed.
+                httpGet(base + "&release=1", 8000);
+            } else {
+                printedThisSession.add(orderId);
+                android.util.Log.i("KitchenKeepAlive", "bg printed order " + orderId);
+            }
+        } catch (Exception e) {
+            android.util.Log.w("KitchenKeepAlive", "printOrder error for " + orderId, e);
         }
     }
 
