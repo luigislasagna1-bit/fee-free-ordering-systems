@@ -25,7 +25,7 @@ export function LanguageSwitcher({ currentLocale }: Props) {
         aria-label="Language"
         value={currentLocale}
         onChange={(e) => onChange(e.target.value)}
-        className="appearance-none max-w-[42vw] sm:max-w-none truncate pl-7 pr-3 py-1.5 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        className="appearance-none min-w-0 w-auto max-w-[136px] sm:max-w-[12rem] truncate pl-7 pr-3 py-1.5 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
       >
         {LOCALE_OPTIONS.map((o) => (
           <option key={o.code} value={o.code}>{o.label}</option>
