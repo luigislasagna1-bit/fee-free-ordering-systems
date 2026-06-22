@@ -751,7 +751,8 @@
       "mobileApp": "App mòbil",
       "pointOfSale": "Punt de venda",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integracions"
+      "integrations": "Integracions",
+      "orderHandling": "Gestió de comandes"
     },
     "dashboard": {
       "title": "Tauler de control",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Seguiment desat — ara és actiu a la vostra pàgina de comandes.",
       "trackingCleared": "Seguiment eliminat.",
       "trackingConsentNote": "Sou responsable de divulgar aquest seguiment a l'avís de privacitat/galetes del vostre lloc."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Acceptació automàtica de comandes",
+      "autoAcceptHelp": "Quan està ACTIVAT, les comandes dels clients es confirmen instantàniament amb el temps de preparació predeterminat del restaurant (Recollida: {pickup} min, Lliurament: {delivery} min). Quan està DESACTIVAT, les comandes noves queden com a \"pendents\" a /admin/orders fins que les accepteu manualment.",
+      "autoAcceptOn": "Activat",
+      "scheduledOrdersTitle": "Comandes programades",
+      "allowSchedulingHint": "Permet als clients triar una hora concreta de recollida o lliurament en lloc de demanar al més aviat possible.",
+      "hideAsapTitle": "Amaga \"al més aviat possible\"",
+      "hideAsapHint": "Els clients han de triar una hora futura: cap opció immediata.",
+      "enable": "Activa",
+      "disable": "Desactiva",
+      "title": "Gestió de comandes",
+      "subtitle": "Trieu com s'accepten i es programen les comandes noves."
     }
   },
   "impersonation": {

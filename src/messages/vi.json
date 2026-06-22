@@ -751,7 +751,8 @@
       "mobileApp": "Ứng dụng di động",
       "pointOfSale": "Điểm bán hàng",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Tích hợp"
+      "integrations": "Tích hợp",
+      "orderHandling": "Xử lý đơn hàng"
     },
     "dashboard": {
       "title": "Bảng điều khiển",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Đã lưu theo dõi — hiện đang hoạt động trên trang đặt hàng của bạn.",
       "trackingCleared": "Đã xóa theo dõi.",
       "trackingConsentNote": "Bạn có trách nhiệm tiết lộ việc theo dõi này trong thông báo quyền riêng tư/cookie của trang web."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Tự động chấp nhận đơn mới",
+      "autoAcceptHelp": "Khi BẬT, đơn của khách được xác nhận ngay với thời gian chuẩn bị mặc định (Lấy: {pickup} phút, Giao: {delivery} phút). Khi TẮT, đơn mới sẽ ở trạng thái \"chờ\" trong /admin/orders cho đến khi bạn chấp nhận thủ công.",
+      "autoAcceptOn": "Bật",
+      "scheduledOrdersTitle": "Đơn hàng đặt theo lịch",
+      "allowSchedulingHint": "Cho phép khách hàng chọn thời gian nhận/giao hàng cụ thể thay vì đặt để nhận sớm nhất có thể.",
+      "hideAsapTitle": "Ẩn tùy chọn \"sớm nhất có thể\"",
+      "hideAsapHint": "Khách hàng phải chọn một thời điểm trong tương lai — không có tùy chọn nhận sớm nhất có thể.",
+      "enable": "Bật",
+      "disable": "Tắt",
+      "title": "Xử lý đơn hàng",
+      "subtitle": "Chọn cách đơn hàng mới được chấp nhận và lên lịch."
     }
   },
   "impersonation": {

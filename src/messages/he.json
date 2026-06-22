@@ -751,7 +751,8 @@
       "mobileApp": "אפליקציה לנייד",
       "pointOfSale": "נקודת מכירה",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "אינטגרציות"
+      "integrations": "אינטגרציות",
+      "orderHandling": "טיפול בהזמנות"
     },
     "dashboard": {
       "title": "לוח בקרה",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "המעקב נשמר — הוא פעיל כעת בדף ההזמנות שלך.",
       "trackingCleared": "המעקב הוסר.",
       "trackingConsentNote": "אתה אחראי לגלות מעקב זה בהודעת הפרטיות/עוגיות של האתר שלך."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "קבל הזמנות נכנסות אוטומטית",
+      "autoAcceptHelp": "כשמופעל, הזמנות לקוחות מאושרות מיידית עם זמן ההכנה הברירת מחדל (איסוף: {pickup} דק', משלוח: {delivery} דק'). כשמושבת, הזמנות חדשות נשארות 'ממתינות' ב-/admin/orders עד שתאשר אותן ידנית.",
+      "autoAcceptOn": "פועל",
+      "scheduledOrdersTitle": "הזמנות מתוזמנות",
+      "allowSchedulingHint": "אפשרו ללקוחות לבחור שעת איסוף/משלוח מסוימת במקום להזמין למועד המוקדם ביותר האפשרי.",
+      "hideAsapTitle": "הסתרת \"המועד המוקדם ביותר האפשרי\"",
+      "hideAsapHint": "הלקוחות חייבים לבחור שעה עתידית — ללא אפשרות הזמנה מיידית.",
+      "enable": "הפעל",
+      "disable": "השבת",
+      "title": "טיפול בהזמנות",
+      "subtitle": "בחר כיצד הזמנות חדשות מתקבלות ומתוזמנות."
     }
   },
   "impersonation": {

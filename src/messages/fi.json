@@ -751,7 +751,8 @@
       "mobileApp": "Mobiilisovellus",
       "pointOfSale": "Myyntipiste",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integraatiot"
+      "integrations": "Integraatiot",
+      "orderHandling": "Tilausten käsittely"
     },
     "dashboard": {
       "title": "Kojelauta",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Seuranta tallennettu — se on nyt aktiivinen tilaussivullasi.",
       "trackingCleared": "Seuranta poistettu.",
       "trackingConsentNote": "Olet vastuussa tämän seurannan ilmoittamisesta sivustosi tietosuoja-/evästeilmoituksessa."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Hyväksy saapuvat tilaukset automaattisesti",
+      "autoAcceptHelp": "Kun PÄÄLLÄ, asiakkaiden tilaukset vahvistetaan heti ravintolasi oletusvalmisteluajalla (Nouto: {pickup} min, Toimitus: {delivery} min). Kun POIS, uudet tilaukset odottavat /admin/orders-sivulla kunnes hyväksyt ne manuaalisesti.",
+      "autoAcceptOn": "Päällä",
+      "scheduledOrdersTitle": "Ajastetut tilaukset",
+      "allowSchedulingHint": "Anna asiakkaiden valita tietty nouto-/toimitusaika sen sijaan, että tilaus tehdään mahdollisimman pian toimitettavaksi.",
+      "hideAsapTitle": "Piilota \"mahdollisimman pian\"",
+      "hideAsapHint": "Asiakkaiden on valittava tuleva ajankohta — ei mahdollisimman pian -vaihtoehtoa.",
+      "enable": "Ota käyttöön",
+      "disable": "Poista käytöstä",
+      "title": "Tilausten käsittely",
+      "subtitle": "Valitse, miten uudet tilaukset hyväksytään ja ajoitetaan."
     }
   },
   "impersonation": {

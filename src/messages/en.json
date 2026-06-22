@@ -774,7 +774,8 @@
       "mobileApp": "Mobile App",
       "pointOfSale": "Point of Sale",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integrations"
+      "integrations": "Integrations",
+      "orderHandling": "Order Handling"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Tracking saved — it's now active on your ordering page.",
       "trackingCleared": "Tracking removed.",
       "trackingConsentNote": "You're responsible for disclosing this tracking in your site's privacy/cookie notice."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Auto-accept incoming orders",
+      "autoAcceptHelp": "When ON, customer orders confirm instantly with your restaurant's default prep time (Pickup: {pickup} min, Delivery: {delivery} min). When OFF, new orders sit as \"pending\" in /admin/orders until you accept them manually.",
+      "autoAcceptOn": "On",
+      "scheduledOrdersTitle": "Scheduled orders",
+      "allowSchedulingHint": "Let customers choose a specific pickup/delivery time instead of ordering for as soon as possible.",
+      "hideAsapTitle": "Hide \"as soon as possible\"",
+      "hideAsapHint": "Customers must pick a future time — no ASAP option.",
+      "enable": "Enable",
+      "disable": "Disable",
+      "title": "Order Handling",
+      "subtitle": "Choose how new orders are accepted and scheduled."
     }
   },
   "impersonation": {

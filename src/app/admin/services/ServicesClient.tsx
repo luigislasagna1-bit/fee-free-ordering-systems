@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import {
   ShoppingBag, Truck, UtensilsCrossed, PartyPopper,
-  Package, CalendarDays, Save, Loader2, ToggleLeft, ToggleRight, Zap,
+  Package, CalendarDays, Save, Loader2, ToggleLeft, ToggleRight,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
@@ -56,7 +56,6 @@ export function ServicesClient() {
   const [enabled, setEnabled] = useState<Record<ServiceKey, boolean>>({
     pickup: true, delivery: false, dineIn: false, catering: false, takeOut: false, reservations: false,
   });
-  const [autoAcceptOrders, setAutoAcceptOrders] = useState(false);
   // Catering notice — minimum advance hours customers must schedule a
   // catering-tagged order. 24h default matches industry convention.
   // The catering card exposes presets (24 / 48 / 72) + a custom input
@@ -84,7 +83,6 @@ export function ServicesClient() {
     fetch("/api/admin/services").then(r => r.json()).then(d => {
       if (d.enabled) setEnabled(e => ({ ...e, ...d.enabled }));
       if (d.settings) setSettings(s => ({ ...s, ...d.settings }));
-      if (typeof d.autoAcceptOrders === "boolean") setAutoAcceptOrders(d.autoAcceptOrders);
       if (typeof d.cateringNoticeHours === "number" && d.cateringNoticeHours > 0) {
         setCateringNoticeHours(d.cateringNoticeHours);
       }
@@ -95,10 +93,18 @@ export function ServicesClient() {
   const save = async () => {
     setSaving(true);
     try {
+      // autoAcceptOrders + the scheduled-orders master toggles now live on
+      // /admin/order-handling (Taking Orders). The Services page no longer edits or
+      // saves them — send only the per-service pre-order lead times so a service save
+      // can never clobber the Order Handling settings. Luigi 2026-06-22.
+      const { pickupMinLeadMinutes, pickupMaxAdvanceDays, deliveryMinLeadMinutes, deliveryMaxAdvanceDays, dineInMinLeadMinutes, dineInMaxAdvanceDays } = preorder;
       const res = await fetch("/api/admin/services", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ enabled, settings, autoAcceptOrders, cateringNoticeHours, preorder }),
+        body: JSON.stringify({
+          enabled, settings, cateringNoticeHours,
+          preorder: { pickupMinLeadMinutes, pickupMaxAdvanceDays, deliveryMinLeadMinutes, deliveryMaxAdvanceDays, dineInMinLeadMinutes, dineInMaxAdvanceDays },
+        }),
       });
       if (!res.ok) throw new Error("Save failed");
       toast.success(tToasts("saved"));
@@ -135,65 +141,6 @@ export function ServicesClient() {
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           {tCommon("saveChanges")}
         </button>
-      </div>
-
-      <div className={`bg-white rounded-2xl border shadow-sm p-5 ${autoAcceptOrders ? "border-emerald-200" : "border-gray-100"}`}>
-        <div className="flex items-start gap-4">
-          <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${autoAcceptOrders ? "bg-emerald-50" : "bg-gray-50"}`}>
-            <Zap className={`w-5 h-5 ${autoAcceptOrders ? "text-emerald-500" : "text-gray-400"}`} />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-gray-900">{t("autoAcceptTitle")}</h3>
-              {autoAcceptOrders && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">{t("autoAcceptOn")}</span>}
-            </div>
-            <p className="text-xs text-gray-500 mt-1 max-w-lg">
-              {t("autoAcceptHelp", { pickup: settings.pickup.estimatedTime, delivery: settings.delivery.estimatedTime })}
-            </p>
-          </div>
-          <button
-            onClick={() => setAutoAcceptOrders(v => !v)}
-            className="flex-shrink-0 text-gray-400 hover:text-emerald-500 transition"
-            title={autoAcceptOrders ? t("disable") : t("enable")}
-          >
-            {autoAcceptOrders
-              ? <ToggleRight className="w-8 h-8 text-emerald-500" />
-              : <ToggleLeft className="w-8 h-8" />
-            }
-          </button>
-        </div>
-      </div>
-
-      {/* Scheduled-orders master controls (GloriaFood parity). */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h3 className="font-semibold text-gray-900">{t("scheduledOrdersTitle")}</h3>
-            <p className="text-xs text-gray-500 mt-0.5">{t("allowSchedulingHint")}</p>
-          </div>
-          <button
-            onClick={() => setPreorder(p => ({ ...p, allowScheduledOrders: !p.allowScheduledOrders }))}
-            className="flex-shrink-0 text-gray-400 hover:text-emerald-500 transition"
-            title={preorder.allowScheduledOrders ? t("disable") : t("enable")}
-          >
-            {preorder.allowScheduledOrders ? <ToggleRight className="w-8 h-8 text-emerald-500" /> : <ToggleLeft className="w-8 h-8" />}
-          </button>
-        </div>
-        {preorder.allowScheduledOrders && (
-          <div className="flex items-start justify-between gap-4 pt-3 border-t border-gray-100">
-            <div>
-              <div className="text-sm font-medium text-gray-700">{t("hideAsapTitle")}</div>
-              <p className="text-xs text-gray-500 mt-0.5">{t("hideAsapHint")}</p>
-            </div>
-            <button
-              onClick={() => setPreorder(p => ({ ...p, requireScheduledOrders: !p.requireScheduledOrders }))}
-              className="flex-shrink-0 text-gray-400 hover:text-emerald-500 transition"
-              title={preorder.requireScheduledOrders ? t("disable") : t("enable")}
-            >
-              {preorder.requireScheduledOrders ? <ToggleRight className="w-8 h-8 text-emerald-500" /> : <ToggleLeft className="w-8 h-8" />}
-            </button>
-          </div>
-        )}
       </div>
 
       <div className="space-y-4">

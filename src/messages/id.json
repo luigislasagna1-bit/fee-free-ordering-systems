@@ -751,7 +751,8 @@
       "mobileApp": "Aplikasi seluler",
       "pointOfSale": "Titik penjualan",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integrasi"
+      "integrations": "Integrasi",
+      "orderHandling": "Penanganan Pesanan"
     },
     "dashboard": {
       "title": "Dasbor",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Pelacakan disimpan — sekarang aktif di halaman pemesanan Anda.",
       "trackingCleared": "Pelacakan dihapus.",
       "trackingConsentNote": "Anda bertanggung jawab untuk mengungkapkan pelacakan ini dalam pemberitahuan privasi/cookie situs Anda."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Terima otomatis pesanan masuk",
+      "autoAcceptHelp": "Saat AKTIF, pesanan pelanggan dikonfirmasi seketika dengan waktu persiapan default restoran Anda (Pengambilan: {pickup} mnt, Pengiriman: {delivery} mnt). Saat MATI, pesanan baru akan berstatus \"menunggu\" di /admin/orders hingga Anda menerimanya secara manual.",
+      "autoAcceptOn": "Aktif",
+      "scheduledOrdersTitle": "Pesanan terjadwal",
+      "allowSchedulingHint": "Biarkan pelanggan memilih waktu pengambilan/pengiriman tertentu daripada memesan untuk secepat mungkin.",
+      "hideAsapTitle": "Sembunyikan \"secepat mungkin\"",
+      "hideAsapHint": "Pelanggan harus memilih waktu di masa mendatang — tanpa opsi secepat mungkin.",
+      "enable": "Aktifkan",
+      "disable": "Nonaktifkan",
+      "title": "Penanganan Pesanan",
+      "subtitle": "Pilih bagaimana pesanan baru diterima dan dijadwalkan."
     }
   },
   "impersonation": {

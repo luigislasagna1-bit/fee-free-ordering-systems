@@ -751,7 +751,8 @@
       "mobileApp": "Mobilná aplikácia",
       "pointOfSale": "Pokladničný systém",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integrácie"
+      "integrations": "Integrácie",
+      "orderHandling": "Spracovanie objednávok"
     },
     "dashboard": {
       "title": "Prehľad",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Sledovanie uložené — je teraz aktívne na vašej objednávkovej stránke.",
       "trackingCleared": "Sledovanie odstránené.",
       "trackingConsentNote": "Ste zodpovedný za zverejnenie tohto sledovania v oznámení o ochrane súkromia/cookies vašej stránky."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Automaticky prijímať prichádzajúce objednávky",
+      "autoAcceptHelp": "Keď je ZAPNUTÉ, objednávky zákazníkov sa potvrdia okamžite s predvoleným časom prípravy reštaurácie (Vyzdvihnutie: {pickup} min, Doručenie: {delivery} min). Keď je VYPNUTÉ, nové objednávky zostávajú ako 'čakajúce' v /admin/orders, kým ich manuálne neprijmete.",
+      "autoAcceptOn": "Zap.",
+      "scheduledOrdersTitle": "Naplánované objednávky",
+      "allowSchedulingHint": "Umožnite zákazníkom vybrať si konkrétny čas vyzdvihnutia/doručenia namiesto objednávky čo najskôr.",
+      "hideAsapTitle": "Skryť „čo najskôr\"",
+      "hideAsapHint": "Zákazníci musia zvoliť budúci čas — žiadna možnosť „čo najskôr\".",
+      "enable": "Zapnúť",
+      "disable": "Vypnúť",
+      "title": "Spracovanie objednávok",
+      "subtitle": "Vyberte, ako sa nové objednávky prijímajú a plánujú."
     }
   },
   "impersonation": {

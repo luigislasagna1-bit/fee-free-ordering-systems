@@ -751,7 +751,8 @@
       "mobileApp": "Mobilna aplikacija",
       "pointOfSale": "Prodajno mjesto",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integracije"
+      "integrations": "Integracije",
+      "orderHandling": "Upravljanje narudžbama"
     },
     "dashboard": {
       "title": "Upravljačka ploča",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Praćenje spremljeno — sada je aktivno na vašoj stranici za naručivanje.",
       "trackingCleared": "Praćenje uklonjeno.",
       "trackingConsentNote": "Vi ste odgovorni za objavljivanje ovog praćenja u obavijesti o privatnosti/kolačićima vašeg web-mjesta."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Automatsko prihvaćanje dolaznih narudžbi",
+      "autoAcceptHelp": "Kada je UKLJUČENO, narudžbe kupaca se odmah potvrđuju s uobičajenim vremenom pripreme vašeg restorana (Preuzimanje: {pickup} min, Dostava: {delivery} min). Kada je ISKLJUČENO, nove narudžbe čekaju kao \"na čekanju\" u /admin/narudžbe dok ih ručno ne prihvatite.",
+      "autoAcceptOn": "Uključeno",
+      "scheduledOrdersTitle": "Zakazane narudžbe",
+      "allowSchedulingHint": "Dopustite kupcima da odaberu točno vrijeme preuzimanja/dostave umjesto naručivanja za što je prije moguće.",
+      "hideAsapTitle": "Sakrij \"što je prije moguće\"",
+      "hideAsapHint": "Kupci moraju odabrati buduće vrijeme — nema opcije naručivanja odmah.",
+      "enable": "Omogući",
+      "disable": "Onemogući",
+      "title": "Upravljanje narudžbama",
+      "subtitle": "Odaberite kako se nove narudžbe prihvaćaju i zakazuju."
     }
   },
   "impersonation": {

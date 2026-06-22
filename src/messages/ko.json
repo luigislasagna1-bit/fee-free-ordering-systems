@@ -751,7 +751,8 @@
       "mobileApp": "모바일 앱",
       "pointOfSale": "판매 시점 관리",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "통합"
+      "integrations": "통합",
+      "orderHandling": "주문 처리"
     },
     "dashboard": {
       "title": "대시보드",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "추적이 저장되었습니다 — 주문 페이지에서 이제 활성화되었습니다.",
       "trackingCleared": "추적이 제거되었습니다.",
       "trackingConsentNote": "귀하의 사이트 개인정보 보호/쿠키 공지에 이 추적을 공개할 책임이 있습니다."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "신규 주문 자동 수락",
+      "autoAcceptHelp": "켜기 시 고객 주문이 레스토랑 기본 준비 시간으로 즉시 확정됩니다 (픽업: {pickup}분, 배달: {delivery}분). 끄기 시 신규 주문이 /admin/orders에서 \"대기 중\"으로 표시되어 수동 수락이 필요합니다.",
+      "autoAcceptOn": "켜기",
+      "scheduledOrdersTitle": "예약 주문",
+      "allowSchedulingHint": "고객이 가능한 한 빨리 주문하는 대신 원하는 픽업/배달 시간을 직접 선택할 수 있도록 합니다.",
+      "hideAsapTitle": "\"가능한 한 빨리\" 숨기기",
+      "hideAsapHint": "고객은 미래 시간을 선택해야 합니다 — ASAP 옵션 없음.",
+      "enable": "활성화",
+      "disable": "비활성화",
+      "title": "주문 처리",
+      "subtitle": "새 주문을 수락하고 예약하는 방식을 선택하세요."
     }
   },
   "impersonation": {

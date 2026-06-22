@@ -751,7 +751,8 @@
       "mobileApp": "Mobil uygulama",
       "pointOfSale": "Satış noktası",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Entegrasyonlar"
+      "integrations": "Entegrasyonlar",
+      "orderHandling": "Sipariş Yönetimi"
     },
     "dashboard": {
       "title": "Panel",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Takip kaydedildi — sipariş sayfanızda artık aktif.",
       "trackingCleared": "Takip kaldırıldı.",
       "trackingConsentNote": "Bu takibi sitenizin gizlilik/çerez bildiriminde açıklamaktan siz sorumlusunuz."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Gelen siparişleri otomatik kabul et",
+      "autoAcceptHelp": "AÇIK olduğunda, müşteri siparişleri restoranınızın varsayılan hazırlama süresiyle anında onaylanır (Gel Al: {pickup} dk, Teslimat: {delivery} dk). KAPALI olduğunda, yeni siparişler siz manuel kabul edene kadar /admin/orders bölümünde \"bekliyor\" olarak durur.",
+      "autoAcceptOn": "Açık",
+      "scheduledOrdersTitle": "Zamanlanmış siparişler",
+      "allowSchedulingHint": "Müşterilerin en kısa sürede sipariş vermek yerine belirli bir teslim alma/teslimat saati seçmesine izin verin.",
+      "hideAsapTitle": "\"en kısa sürede\" seçeneğini gizle",
+      "hideAsapHint": "Müşteriler ileri bir saat seçmek zorundadır — ASAP seçeneği yok.",
+      "enable": "Etkinleştir",
+      "disable": "Devre dışı bırak",
+      "title": "Sipariş Yönetimi",
+      "subtitle": "Yeni siparişlerin nasıl kabul edileceğini ve planlanacağını seçin."
     }
   },
   "impersonation": {

@@ -751,7 +751,8 @@
       "mobileApp": "Mobile App",
       "pointOfSale": "Kassensystem",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integrationen"
+      "integrations": "Integrationen",
+      "orderHandling": "Bestellabwicklung"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Tracking gespeichert — es ist jetzt auf Ihrer Bestellseite aktiv.",
       "trackingCleared": "Tracking entfernt.",
       "trackingConsentNote": "Sie sind dafür verantwortlich, dieses Tracking in den Datenschutz-/Cookie-Hinweisen Ihrer Website offenzulegen."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Eingehende Bestellungen automatisch annehmen",
+      "autoAcceptHelp": "Wenn EIN, werden Kundenbestellungen sofort mit der Standard-Zubereitungszeit Ihres Restaurants bestätigt (Abholung: {pickup} Min., Lieferung: {delivery} Min.). Wenn AUS, erscheinen neue Bestellungen als 'Ausstehend' unter /admin/orders, bis Sie sie manuell annehmen.",
+      "autoAcceptOn": "An",
+      "scheduledOrdersTitle": "Geplante Bestellungen",
+      "allowSchedulingHint": "Kunden können eine bestimmte Abhol-/Lieferzeit wählen, anstatt schnellstmöglich zu bestellen.",
+      "hideAsapTitle": "\"Schnellstmöglich\" ausblenden",
+      "hideAsapHint": "Kunden müssen eine spätere Zeit wählen – keine Sofort-Option.",
+      "enable": "Aktivieren",
+      "disable": "Deaktivieren",
+      "title": "Bestellabwicklung",
+      "subtitle": "Legen Sie fest, wie neue Bestellungen angenommen und geplant werden."
     }
   },
   "impersonation": {

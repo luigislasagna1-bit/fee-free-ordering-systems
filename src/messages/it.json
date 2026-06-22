@@ -751,7 +751,8 @@
       "mobileApp": "App mobile",
       "pointOfSale": "Punto vendita",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integrazioni"
+      "integrations": "Integrazioni",
+      "orderHandling": "Gestione ordini"
     },
     "dashboard": {
       "title": "Pannello",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Tracciamento salvato — è ora attivo sulla tua pagina degli ordini.",
       "trackingCleared": "Tracciamento rimosso.",
       "trackingConsentNote": "Sei responsabile della divulgazione di questo tracciamento nell'informativa sulla privacy/cookie del tuo sito."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Accetta automaticamente gli ordini",
+      "autoAcceptHelp": "Se attivo, gli ordini dei clienti sono confermati istantaneamente con i tempi di preparazione predefiniti (Ritiro: {pickup} min, Consegna: {delivery} min). Se disattivato, i nuovi ordini restano «in attesa» finché non vengono accettati manualmente.",
+      "autoAcceptOn": "Attivo",
+      "scheduledOrdersTitle": "Ordini programmati",
+      "allowSchedulingHint": "Consenti ai clienti di scegliere un orario specifico di ritiro/consegna anziché ordinare per il prima possibile.",
+      "hideAsapTitle": "Nascondi \"il prima possibile\"",
+      "hideAsapHint": "I clienti devono scegliere un orario futuro, senza opzione immediata.",
+      "enable": "Attiva",
+      "disable": "Disattiva",
+      "title": "Gestione ordini",
+      "subtitle": "Scegli come vengono accettati e programmati i nuovi ordini."
     }
   },
   "impersonation": {

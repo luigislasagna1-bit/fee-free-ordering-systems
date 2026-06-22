@@ -751,7 +751,8 @@
       "mobileApp": "モバイルアプリ",
       "pointOfSale": "POSレジ",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "インテグレーション"
+      "integrations": "インテグレーション",
+      "orderHandling": "注文の処理"
     },
     "dashboard": {
       "title": "ダッシュボード",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "トラッキングが保存されました — 注文ページで有効になりました。",
       "trackingCleared": "トラッキングが削除されました。",
       "trackingConsentNote": "このトラッキングについて、サイトのプライバシー/Cookieポリシーで開示する責任があります。"
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "注文を自動受付する",
+      "autoAcceptHelp": "オンにすると、顧客の注文はデフォルトの調理時間（テイクアウト: {pickup}分、デリバリー: {delivery}分）で即座に確定します。オフにすると、新しい注文は /admin/orders で「保留中」となり、手動で受け付けます。",
+      "autoAcceptOn": "オン",
+      "scheduledOrdersTitle": "予約注文",
+      "allowSchedulingHint": "「できるだけ早く」で注文する代わりに、お客様が特定の受け取り/配達時間を選べるようにします。",
+      "hideAsapTitle": "「できるだけ早く」を非表示にする",
+      "hideAsapHint": "お客様は将来の時間を選択する必要があります。ASAP（できるだけ早く）の選択肢はありません。",
+      "enable": "有効にする",
+      "disable": "無効にする",
+      "title": "注文の処理",
+      "subtitle": "新しい注文の受け付け方法とスケジュールを選択します。"
     }
   },
   "impersonation": {

@@ -751,7 +751,8 @@
       "mobileApp": "Mobilapp",
       "pointOfSale": "Kassasystem",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integrationer"
+      "integrations": "Integrationer",
+      "orderHandling": "Orderhantering"
     },
     "dashboard": {
       "title": "Instrumentpanel",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Spårning sparad — den är nu aktiv på din beställningssida.",
       "trackingCleared": "Spårning borttagen.",
       "trackingConsentNote": "Du ansvarar för att informera om denna spårning i din webbplats integritets-/cookiemeddelande."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Acceptera inkommande beställningar automatiskt",
+      "autoAcceptHelp": "När PÅ bekräftas kundbeställningar direkt med din restaurangs standardförberedelsetid (Avhämtning: {pickup} min, Leverans: {delivery} min). När AV läggs nya beställningar som \"väntande\" i /admin/orders tills du accepterar dem manuellt.",
+      "autoAcceptOn": "På",
+      "scheduledOrdersTitle": "Schemalagda beställningar",
+      "allowSchedulingHint": "Låt kunderna välja en specifik tid för upphämtning/leverans i stället för att beställa så snart som möjligt.",
+      "hideAsapTitle": "Dölj \"så snart som möjligt\"",
+      "hideAsapHint": "Kunderna måste välja en framtida tid – inget alternativ för omedelbar beställning.",
+      "enable": "Aktivera",
+      "disable": "Inaktivera",
+      "title": "Orderhantering",
+      "subtitle": "Välj hur nya beställningar accepteras och schemaläggs."
     }
   },
   "impersonation": {

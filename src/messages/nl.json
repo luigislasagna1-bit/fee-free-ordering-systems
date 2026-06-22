@@ -751,7 +751,8 @@
       "mobileApp": "Mobiele app",
       "pointOfSale": "Kassasysteem",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integraties"
+      "integrations": "Integraties",
+      "orderHandling": "Orderafhandeling"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Tracking opgeslagen — het is nu actief op uw bestelpagina.",
       "trackingCleared": "Tracking verwijderd.",
       "trackingConsentNote": "U bent verantwoordelijk voor het bekendmaken van deze tracking in de privacy-/cookieverklaring van uw site."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Inkomende bestellingen automatisch accepteren",
+      "autoAcceptHelp": "Wanneer AAN, worden klantbestellingen direct bevestigd met de standaardbereidingstijd van uw restaurant (Afhalen: {pickup} min, Bezorging: {delivery} min). Wanneer UIT, staan nieuwe bestellingen als \"in afwachting\" in /admin/orders totdat u ze handmatig accepteert.",
+      "autoAcceptOn": "Aan",
+      "scheduledOrdersTitle": "Geplande bestellingen",
+      "allowSchedulingHint": "Laat klanten een specifiek afhaal-/bezorgtijdstip kiezen in plaats van te bestellen voor zo snel mogelijk.",
+      "hideAsapTitle": "\"Zo snel mogelijk\" verbergen",
+      "hideAsapHint": "Klanten moeten een toekomstig tijdstip kiezen — geen optie voor zo snel mogelijk.",
+      "enable": "Inschakelen",
+      "disable": "Uitschakelen",
+      "title": "Orderafhandeling",
+      "subtitle": "Bepaal hoe nieuwe bestellingen worden geaccepteerd en gepland."
     }
   },
   "impersonation": {

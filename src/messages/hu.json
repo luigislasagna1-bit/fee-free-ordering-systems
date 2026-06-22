@@ -751,7 +751,8 @@
       "mobileApp": "Mobilalkalmazás",
       "pointOfSale": "Értékesítési pont",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integrációk"
+      "integrations": "Integrációk",
+      "orderHandling": "Rendeléskezelés"
     },
     "dashboard": {
       "title": "Irányítópult",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Követés mentve — most már aktív a rendelési oldalán.",
       "trackingCleared": "Követés eltávolítva.",
       "trackingConsentNote": "Ön felelős azért, hogy ezt a követést közzétegye webhelye adatvédelmi/cookie-értesítőjében."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Beérkező rendelések automatikus elfogadása",
+      "autoAcceptHelp": "BE állás esetén az ügyfél rendelései azonnal visszaigazolásra kerülnek az étterem alapértelmezett elkészítési idejével (Elvitel: {pickup} perc, Szállítás: {delivery} perc). KI állás esetén az új rendelések \"függőben\" állapotban jelennek meg a /admin/orders oldalon, amíg manuálisan el nem fogadja azokat.",
+      "autoAcceptOn": "Be",
+      "scheduledOrdersTitle": "Ütemezett rendelések",
+      "allowSchedulingHint": "Engedje meg a vásárlóknak, hogy a lehető leghamarabbi rendelés helyett konkrét átvételi/kiszállítási időpontot válasszanak.",
+      "hideAsapTitle": "A „lehető leghamarabb\" elrejtése",
+      "hideAsapHint": "A vásárlóknak jövőbeli időpontot kell választaniuk – nincs azonnali rendelési lehetőség.",
+      "enable": "Engedélyezés",
+      "disable": "Letiltás",
+      "title": "Rendeléskezelés",
+      "subtitle": "Állítsa be, hogyan fogadják el és ütemezik az új rendeléseket."
     }
   },
   "impersonation": {

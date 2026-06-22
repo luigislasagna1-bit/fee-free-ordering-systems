@@ -751,7 +751,8 @@
       "mobileApp": "Mobilioji programėlė",
       "pointOfSale": "Pardavimo vieta",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integracijos"
+      "integrations": "Integracijos",
+      "orderHandling": "Užsakymų tvarkymas"
     },
     "dashboard": {
       "title": "Skydelis",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Stebėjimas išsaugotas — dabar jis aktyvus jūsų užsakymų puslapyje.",
       "trackingCleared": "Stebėjimas pašalintas.",
       "trackingConsentNote": "Jūs esate atsakingas už šio stebėjimo atskleidimą savo svetainės privatumo/slapukų pranešime."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Automatiškai priimti gaunamų užsakymų",
+      "autoAcceptHelp": "Kai ĮJUNGTA, kliento užsakymai patvirtinami iš karto su numatytuoju jūsų restorano paruošimo laiku (Atsiėmimas: {pickup} min., Pristatymas: {delivery} min.). Kai IŠJUNGTA, nauji užsakymai liks „laukiami” /admin/orders, kol juos rankiniu būdu priimsite.",
+      "autoAcceptOn": "Įjungta",
+      "scheduledOrdersTitle": "Suplanuoti užsakymai",
+      "allowSchedulingHint": "Leiskite klientams pasirinkti konkretų atsiėmimo / pristatymo laiką, o ne užsakyti kuo greičiau.",
+      "hideAsapTitle": "Slėpti „kuo greičiau“",
+      "hideAsapHint": "Klientai turi pasirinkti būsimą laiką – jokio „kuo greičiau“ varianto.",
+      "enable": "Įjungti",
+      "disable": "Išjungti",
+      "title": "Užsakymų tvarkymas",
+      "subtitle": "Pasirinkite, kaip nauji užsakymai priimami ir suplanuojami."
     }
   },
   "impersonation": {

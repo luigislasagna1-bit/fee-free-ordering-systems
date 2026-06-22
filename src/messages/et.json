@@ -751,7 +751,8 @@
       "mobileApp": "Mobiilirakendus",
       "pointOfSale": "Müügipunkt",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integratsioonid"
+      "integrations": "Integratsioonid",
+      "orderHandling": "Tellimuste haldus"
     },
     "dashboard": {
       "title": "Juhtpaneel",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Jälgimine salvestatud — see on nüüd aktiivne teie tellimislehel.",
       "trackingCleared": "Jälgimine eemaldatud.",
       "trackingConsentNote": "Olete vastutav selle jälgimise avalikustamise eest oma saidi privaatsus-/küpsiseteates."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Sissetulevate tellimuste automaatne vastuvõtt",
+      "autoAcceptHelp": "Kui sees, kinnituvad klientide tellimused kohe restorani vaikimisi ettevalmistusajaga (Järeltulek: {pickup} min, Kojuvedu: {delivery} min). Kui väljas, jäävad uued tellimused /admin/orders lehel «ootel» olekusse, kuni need käsitsi vastu võetakse.",
+      "autoAcceptOn": "Sees",
+      "scheduledOrdersTitle": "Ajastatud tellimused",
+      "allowSchedulingHint": "Lubage klientidel valida kindel järeletuleku-/kättetoimetamisaeg, selle asemel et tellida võimalikult kiiresti.",
+      "hideAsapTitle": "Peida „võimalikult kiiresti\"",
+      "hideAsapHint": "Kliendid peavad valima tulevikuaja – „võimalikult kiiresti\" valikut pole.",
+      "enable": "Luba",
+      "disable": "Keela",
+      "title": "Tellimuste haldus",
+      "subtitle": "Valige, kuidas uusi tellimusi vastu võetakse ja ajastatakse."
     }
   },
   "impersonation": {

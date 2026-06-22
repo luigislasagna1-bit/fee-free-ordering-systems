@@ -751,7 +751,8 @@
       "mobileApp": "Mobilapp",
       "pointOfSale": "Kassesystem",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integrationer"
+      "integrations": "Integrationer",
+      "orderHandling": "Ordrehåndtering"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Sporing gemt — den er nu aktiv på din bestillingsside.",
       "trackingCleared": "Sporing fjernet.",
       "trackingConsentNote": "Du er ansvarlig for at oplyse om denne sporing i dit websteds privatlivs-/cookiemeddelelse."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Autoacceptér indgående ordrer",
+      "autoAcceptHelp": "Når TIL, bekræftes kundeordrer øjeblikkeligt med din restaurants standard forberedelsestid (Afhentning: {pickup} min, Levering: {delivery} min). Når FRA, vises nye ordrer som \"afventer\" i /admin/orders, indtil du accepterer dem manuelt.",
+      "autoAcceptOn": "Til",
+      "scheduledOrdersTitle": "Planlagte ordrer",
+      "allowSchedulingHint": "Lad kunder vælge et bestemt afhentnings-/leveringstidspunkt i stedet for at bestille til hurtigst muligt.",
+      "hideAsapTitle": "Skjul \"hurtigst muligt\"",
+      "hideAsapHint": "Kunder skal vælge et fremtidigt tidspunkt — ingen hurtigst muligt-mulighed.",
+      "enable": "Aktiver",
+      "disable": "Deaktiver",
+      "title": "Ordrehåndtering",
+      "subtitle": "Vælg, hvordan nye ordrer accepteres og planlægges."
     }
   },
   "impersonation": {

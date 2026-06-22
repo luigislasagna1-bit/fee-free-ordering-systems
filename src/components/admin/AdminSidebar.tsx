@@ -159,6 +159,7 @@ const navGroups: NavGroup[] = [
         setupSectionId: "orders",
         items: [
           { href: "/admin/notifications", labelKey: "notifications", label: "Notifications", icon: Bell, step: "orders.notificationRecipient" },
+          { href: "/admin/order-handling", labelKey: "orderHandling", label: "Order Handling", icon: Zap },
           // NOTE: Phone Ordering used to live here. Moved to ONLINE
           // ORDERING (operational order channels, not setup steps) — it
           // was confusing owners about the X/Y completion count of this

@@ -751,7 +751,8 @@
       "mobileApp": "Aplikacja mobilna",
       "pointOfSale": "Punkt sprzedaży",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integracje"
+      "integrations": "Integracje",
+      "orderHandling": "Obsługa zamówień"
     },
     "dashboard": {
       "title": "Panel główny",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Śledzenie zapisane — jest teraz aktywne na Twojej stronie zamówień.",
       "trackingCleared": "Śledzenie usunięte.",
       "trackingConsentNote": "Jesteś odpowiedzialny za ujawnienie tego śledzenia w polityce prywatności/cookies swojej witryny."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Automatyczne przyjmowanie zamówień",
+      "autoAcceptHelp": "Gdy WŁĄCZONE, zamówienia klientów są natychmiast potwierdzane z domyślnym czasem przygotowania (Odbiór: {pickup} min, Dostawa: {delivery} min). Gdy WYŁĄCZONE, nowe zamówienia czekają jako \"oczekujące\" w /admin/orders do ręcznej akceptacji.",
+      "autoAcceptOn": "Wł.",
+      "scheduledOrdersTitle": "Zamówienia zaplanowane",
+      "allowSchedulingHint": "Pozwól klientom wybrać konkretną godzinę odbioru/dostawy zamiast zamawiania na „tak szybko, jak to możliwe”.",
+      "hideAsapTitle": "Ukryj opcję „tak szybko, jak to możliwe”",
+      "hideAsapHint": "Klienci muszą wybrać przyszłą godzinę — brak opcji ASAP.",
+      "enable": "Włącz",
+      "disable": "Wyłącz",
+      "title": "Obsługa zamówień",
+      "subtitle": "Wybierz, jak nowe zamówienia są akceptowane i planowane."
     }
   },
   "impersonation": {

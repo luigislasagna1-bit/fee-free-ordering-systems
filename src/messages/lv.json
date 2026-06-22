@@ -751,7 +751,8 @@
       "mobileApp": "Mobilā lietotne",
       "pointOfSale": "Pārdošanas punkts",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integrācijas"
+      "integrations": "Integrācijas",
+      "orderHandling": "Pasūtījumu apstrāde"
     },
     "dashboard": {
       "title": "Panelis",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Izsekošana saglabāta — tā tagad ir aktīva jūsu pasūtījumu lapā.",
       "trackingCleared": "Izsekošana noņemta.",
       "trackingConsentNote": "Jūs esat atbildīgs par šīs izsekošanas atklāšanu savas vietnes privātuma/sīkfailu paziņojumā."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Automātiski pieņemt ienākošos pasūtījumus",
+      "autoAcceptHelp": "Kad IESLĒGTS, klientu pasūtījumi tiek apstiprināti uzreiz ar jūsu restorāna noklusēto sagatavošanas laiku (Paņemšana: {pickup} min, Piegāde: {delivery} min). Kad IZSLĒGTS, jauni pasūtījumi gaida kā \"gaida\" /admin/orders, līdz tos manuāli pieņemat.",
+      "autoAcceptOn": "Ieslēgts",
+      "scheduledOrdersTitle": "Plānotie pasūtījumi",
+      "allowSchedulingHint": "Ļaujiet klientiem izvēlēties konkrētu izņemšanas/piegādes laiku, nevis pasūtīt uz pēc iespējas ātrāku laiku.",
+      "hideAsapTitle": "Paslēpt \"pēc iespējas ātrāk\"",
+      "hideAsapHint": "Klientiem jāizvēlas laiks nākotnē — nav opcijas pasūtīt nekavējoties.",
+      "enable": "Iespējot",
+      "disable": "Atspējot",
+      "title": "Pasūtījumu apstrāde",
+      "subtitle": "Izvēlieties, kā jaunie pasūtījumi tiek pieņemti un plānoti."
     }
   },
   "impersonation": {

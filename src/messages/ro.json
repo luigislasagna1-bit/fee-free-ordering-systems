@@ -751,7 +751,8 @@
       "mobileApp": "Aplicație mobilă",
       "pointOfSale": "Punct de vânzare",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "Integrări"
+      "integrations": "Integrări",
+      "orderHandling": "Gestionarea comenzilor"
     },
     "dashboard": {
       "title": "Panou de control",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "Urmărire salvată — este acum activă pe pagina dvs. de comandă.",
       "trackingCleared": "Urmărire eliminată.",
       "trackingConsentNote": "Ești responsabil pentru dezvăluirea acestei urmăriri în notificarea de confidențialitate/cookie-uri a site-ului tău."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "Acceptare automată comenzi primite",
+      "autoAcceptHelp": "Când este ACTIVAT, comenzile clienților sunt confirmate instant cu timpul implicit de preparare al restaurantului tău (Ridicare: {pickup} min, Livrare: {delivery} min). Când este DEZACTIVAT, comenzile noi rămân ca \"în așteptare\" în /admin/orders până le accepți manual.",
+      "autoAcceptOn": "Activat",
+      "scheduledOrdersTitle": "Comenzi programate",
+      "allowSchedulingHint": "Permite clienților să aleagă o oră specifică de ridicare/livrare în loc să comande pentru cât mai curând posibil.",
+      "hideAsapTitle": "Ascunde „cât mai curând posibil”",
+      "hideAsapHint": "Clienții trebuie să aleagă o oră viitoare — fără opțiunea ASAP.",
+      "enable": "Activează",
+      "disable": "Dezactivează",
+      "title": "Gestionarea comenzilor",
+      "subtitle": "Alege cum sunt acceptate și programate comenzile noi."
     }
   },
   "impersonation": {

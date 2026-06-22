@@ -751,7 +751,8 @@
       "mobileApp": "تطبيق الجوال",
       "pointOfSale": "نقطة البيع",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "التكاملات"
+      "integrations": "التكاملات",
+      "orderHandling": "معالجة الطلبات"
     },
     "dashboard": {
       "title": "لوحة التحكم",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "تم حفظ التتبع — إنه الآن نشط على صفحة الطلب الخاصة بك.",
       "trackingCleared": "تم إزالة التتبع.",
       "trackingConsentNote": "أنت مسؤول عن الإفصاح عن هذا التتبع في إشعار الخصوصية/ملفات تعريف الارتباط الخاص بموقعك."
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "قبول الطلبات تلقائياً",
+      "autoAcceptHelp": "عند التشغيل، تتأكد طلبات العملاء فوراً بوقت التحضير الافتراضي للمطعم (الاستلام: {pickup} د، التوصيل: {delivery} د). عند الإيقاف، تبقى الطلبات الجديدة \"معلقة\" في /admin/orders حتى تقبلها يدوياً.",
+      "autoAcceptOn": "تشغيل",
+      "scheduledOrdersTitle": "الطلبات المجدولة",
+      "allowSchedulingHint": "اسمح للعملاء باختيار وقت محدد للاستلام/التوصيل بدلاً من الطلب في أقرب وقت ممكن.",
+      "hideAsapTitle": "إخفاء \"في أقرب وقت ممكن\"",
+      "hideAsapHint": "يجب على العملاء اختيار وقت مستقبلي — لا يوجد خيار الطلب الفوري.",
+      "enable": "تفعيل",
+      "disable": "تعطيل",
+      "title": "معالجة الطلبات",
+      "subtitle": "اختر كيفية قبول الطلبات الجديدة وجدولتها."
     }
   },
   "impersonation": {

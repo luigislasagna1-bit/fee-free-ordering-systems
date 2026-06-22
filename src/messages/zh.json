@@ -751,7 +751,8 @@
       "mobileApp": "移动应用",
       "pointOfSale": "销售点",
       "kitchenOrderApp": "Kitchen Order App",
-      "integrations": "集成"
+      "integrations": "集成",
+      "orderHandling": "订单处理"
     },
     "dashboard": {
       "title": "仪表盘",
@@ -3988,6 +3989,19 @@
       "trackingSaved": "跟踪已保存 — 现已在您的订购页面上生效。",
       "trackingCleared": "跟踪已移除。",
       "trackingConsentNote": "您有责任在您网站的隐私/Cookie声明中披露此跟踪。"
+    },
+    "orderHandling": {
+      "autoAcceptTitle": "自动接受传入订单",
+      "autoAcceptHelp": "开启后，顾客订单将立即确认，并以餐厅默认备餐时间处理（自取：{pickup} 分钟，配送：{delivery} 分钟）。关闭后，新订单将在 /admin/orders 中以\"待处理\"状态等待手动接受。",
+      "autoAcceptOn": "开启",
+      "scheduledOrdersTitle": "预约订单",
+      "allowSchedulingHint": "允许顾客选择具体的取餐/送餐时间，而不是下单后尽快处理。",
+      "hideAsapTitle": "隐藏“尽快”选项",
+      "hideAsapHint": "顾客必须选择一个未来的时间，没有“尽快”选项。",
+      "enable": "启用",
+      "disable": "停用",
+      "title": "订单处理",
+      "subtitle": "选择如何接受和安排新订单。"
     }
   },
   "impersonation": {
