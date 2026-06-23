@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Parola a fost resetată cu succes. Te poți autentifica acum.",
     "invalidOrExpiredToken": "Acest link de resetare este invalid sau a expirat.",
     "signingIn": "Se autentifică…",
-    "creating": "Se creează…"
+    "creating": "Se creează…",
+    "resellerScopeError": "Această autentificare este doar pentru clienții {brandName}.",
+    "thisPartner": "acest partener",
+    "signingUpUnder": "Vă înregistrați prin {brand}"
   },
   "ordering": {
     "viewCart": "Vezi coșul",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Susținut de <brand>Fee Free Ordering</brand>",
     "today": "Azi",
     "openNow": "Deschis acum",
     "opensShort": "Se deschide la {time}",

@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Passwort erfolgreich zurückgesetzt. Sie können sich jetzt anmelden.",
     "invalidOrExpiredToken": "Dieser Reset-Link ist ungültig oder abgelaufen.",
     "signingIn": "Anmelden…",
-    "creating": "Erstellen…"
+    "creating": "Erstellen…",
+    "resellerScopeError": "Diese Anmeldung ist nur für Kunden von {brandName}.",
+    "thisPartner": "diesem Partner",
+    "signingUpUnder": "Sie registrieren sich über {brand}"
   },
   "ordering": {
     "viewCart": "Warenkorb anzeigen",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Bereitgestellt von <brand>Fee Free Ordering</brand>",
     "today": "Heute",
     "openNow": "Jetzt geöffnet",
     "opensShort": "Öffnet um {time}",

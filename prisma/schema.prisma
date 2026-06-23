@@ -2339,6 +2339,18 @@ model ResellerProfile {
   brandLogoUrl    String? // optional uploaded logo (S3 URL)
   brandLoginTitle String? // custom title shown on the reseller-branded login page (Phase 2)
 
+  /// Brand colors for the reseller-branded LOGIN + SIGNUP pages (and any future
+  /// reseller-skinned surface). Hex strings like "#10b981". When set AND white-label
+  /// is active, they replace the platform emerald on the branded auth pages; null
+  /// falls back to the platform default. Sparse + low-cardinality (one row per
+  /// reseller) so nullable columns here are cheap. Luigi 2026-06-23.
+  brandPrimaryColor String? // primary brand color — buttons, links, accents
+  brandAccentColor  String? // optional secondary / accent color
+  /// Reseller's custom LOGIN/SIGNUP background image (Vercel Blob URL). When set + white-label
+  /// active, replaces the default FeeFree food-hero background on their branded auth pages.
+  /// Luigi 2026-06-23.
+  brandLoginBgUrl   String?
+
   /// Stripe Customer for this reseller. Created lazily the first time
   /// the reseller starts a white-label Checkout. Reused across renewals
   /// + future add-on subscriptions so the reseller has one cohesive

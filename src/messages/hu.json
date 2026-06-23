@@ -105,7 +105,10 @@
     "passwordResetSuccess": "A jelszó sikeresen visszaállítva. Most már bejelentkezhet.",
     "invalidOrExpiredToken": "Ez a visszaállítási link érvénytelen vagy lejárt.",
     "signingIn": "Bejelentkezés…",
-    "creating": "Létrehozás…"
+    "creating": "Létrehozás…",
+    "resellerScopeError": "Ez a bejelentkezés csak a {brandName} ügyfelei számára van.",
+    "thisPartner": "ez a partner",
+    "signingUpUnder": "A(z) {brand} partneren keresztül regisztrál"
   },
   "ordering": {
     "viewCart": "Kosár megtekintése",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Üzemelteti: <brand>Fee Free Ordering</brand>",
     "today": "Ma",
     "openNow": "Most nyitva",
     "opensShort": "Nyit: {time}",

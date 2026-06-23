@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Wachtwoord succesvol opnieuw ingesteld. U kunt nu inloggen.",
     "invalidOrExpiredToken": "Deze resetlink is ongeldig of verlopen.",
     "signingIn": "Inloggen…",
-    "creating": "Aanmaken…"
+    "creating": "Aanmaken…",
+    "resellerScopeError": "Deze aanmelding is alleen voor klanten van {brandName}.",
+    "thisPartner": "deze partner",
+    "signingUpUnder": "U registreert zich via {brand}"
   },
   "ordering": {
     "viewCart": "Winkelwagen bekijken",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Mogelijk gemaakt door <brand>Fee Free Ordering</brand>",
     "today": "Vandaag",
     "openNow": "Nu open",
     "opensShort": "Opent om {time}",

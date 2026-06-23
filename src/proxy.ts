@@ -288,7 +288,18 @@ export async function proxy(req: NextRequest) {
       return NextResponse.next({ request: { headers: requestHeaders } });
     }
 
-    const targetUrl = new URL(`/login`, req.url);
+    // Carve-out: branded SIGNUP + account-recovery pages stay on their own
+    // route so a reseller's host can host a full account-lifecycle flow, not
+    // just login. Everything else still funnels to the branded login below.
+    // /forgot-password, /reset-password and /verify-email are part of the
+    // signup/recovery surface, so they all rewrite to the branded /signup
+    // (the page itself routes between sign-up and recovery sub-views).
+    const isSignupSurface =
+      pathname === "/signup" ||
+      pathname === "/forgot-password" ||
+      pathname === "/reset-password" ||
+      pathname === "/verify-email";
+    const targetUrl = new URL(isSignupSurface ? `/signup` : `/login`, req.url);
     targetUrl.searchParams.set("reseller", resellerProfileId);
     // Preserve any callbackUrl the caller wanted (so a deep-link works).
     const original = req.nextUrl.searchParams.get("callbackUrl");

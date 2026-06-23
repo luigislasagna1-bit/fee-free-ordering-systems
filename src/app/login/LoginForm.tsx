@@ -7,22 +7,18 @@ import { LayoutDashboard, Loader2, ChefHat } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
+import type { ResellerBranding } from "@/lib/reseller-branding";
 
 // Sentinel that mirrors RESELLER_SCOPE_ERROR from src/lib/auth.ts. Kept
 // here as a string literal so the client doesn't import server-only
 // modules. If you change one, change both.
 const RESELLER_SCOPE_ERROR = "reseller-scope-mismatch";
 
-export interface ResellerBranding {
-  logoUrl: string | null;
-  title: string | null;
-  companyName: string | null;
-}
-
 function LoginFormInner({
   locale,
   branding,
   resellerScopeId,
+  referralCode,
 }: {
   locale: string;
   branding: ResellerBranding | null;
@@ -33,6 +29,11 @@ function LoginFormInner({
   // scope (their own admin / their restaurants / their staff) can
   // authenticate here.
   resellerScopeId: string | null;
+  // ResellerProfile.referralCode for this branded host (resolved server-side).
+  // Currently unused directly — the reseller-aware "Sign up" link routes by
+  // resellerScopeId (the branded /signup re-resolves + attributes by id).
+  // Kept on the prop contract so the branded signup wiring has it available.
+  referralCode?: string | null;
 }) {
   const tAuth = useTranslations("auth");
   const tToasts = useTranslations("admin.toasts");
@@ -40,6 +41,19 @@ function LoginFormInner({
   const params = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
+
+  // Brand color theming: when the reseller set a primary color, apply it inline
+  // to the most visible elements (primary sign-in button + key accent links),
+  // falling back to the platform emerald (handled by the existing Tailwind
+  // classes) when null. We only override the most prominent surfaces — the
+  // remaining emerald utility classes stay as a sensible neutral fallback.
+  const brandPrimary = branding?.primaryColor ?? null;
+  // Reseller-aware "Sign up" link: on a branded host, route to the branded
+  // signup carrying the reseller id so the proxy + branded /signup skin it and
+  // attribute the new restaurant to this reseller. Bare /signup otherwise.
+  const signupHref = resellerScopeId
+    ? `/signup?reseller=${encodeURIComponent(resellerScopeId)}`
+    : "/signup";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,11 +88,9 @@ function LoginFormInner({
         // "this is X's sign-in" is far less confusing than "wrong
         // password" when the issue is actually wrong portal.
         if (result?.error === RESELLER_SCOPE_ERROR) {
-          const brandName = branding?.companyName ?? branding?.title ?? "this partner";
-          throw new Error(
-            `This sign-in is for ${brandName} customers only. ` +
-            `If you're a direct Fee Free Ordering restaurant, sign in at feefreeordering.com.`,
-          );
+          const brandName =
+            branding?.companyName ?? branding?.title ?? tAuth("thisPartner");
+          throw new Error(tAuth("resellerScopeError", { brandName }));
         }
         throw new Error(tAuth("invalidCredentials"));
       }
@@ -103,7 +115,19 @@ function LoginFormInner({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-amber-50 flex items-center justify-center p-4 relative">
+    <div className="relative isolate min-h-screen flex items-center justify-center p-4 overflow-hidden">
+      {/* Food-hero background: the reseller's uploaded image when branded, else the default
+          FeeFree photo (wide for desktop + a portrait crop for phones). `isolate` + -z-10 keep
+          it behind the card/switcher without touching their stacking. */}
+      {branding?.backgroundUrl ? (
+        <img src={branding.backgroundUrl} alt="" aria-hidden="true" className="absolute inset-0 -z-10 h-full w-full object-cover" />
+      ) : (
+        <>
+          <img src="/marketing/login-bg.jpg" alt="" aria-hidden="true" className="absolute inset-0 -z-10 hidden h-full w-full object-cover sm:block" />
+          <img src="/marketing/login-bg-mobile.jpg" alt="" aria-hidden="true" className="absolute inset-0 -z-10 h-full w-full object-cover sm:hidden" />
+        </>
+      )}
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/25" />
       <AuthLanguageSwitcher currentLocale={locale} />
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
         <div className="text-center mb-8">
@@ -158,7 +182,11 @@ function LoginFormInner({
           <div>
             <div className="flex items-center justify-between mb-1">
               <label className="block text-sm font-medium text-gray-700">{tAuth("password")}</label>
-              <a href="/forgot-password" className="text-xs text-emerald-600 hover:text-emerald-700">
+              <a
+                href="/forgot-password"
+                className="text-xs text-emerald-600 hover:text-emerald-700"
+                style={brandPrimary ? { color: brandPrimary } : undefined}
+              >
                 {tAuth("forgotPassword")}
               </a>
             </div>
@@ -176,6 +204,7 @@ function LoginFormInner({
             type="submit"
             disabled={loading}
             className="w-full bg-emerald-500 text-white font-bold py-3 rounded-xl hover:bg-emerald-600 transition flex items-center justify-center gap-2 disabled:opacity-50 mt-2"
+            style={brandPrimary ? { backgroundColor: brandPrimary } : undefined}
           >
             {loading && <Loader2 className="w-5 h-5 animate-spin" />}
             {loading ? tAuth("signingIn") : tAuth("signIn")}
@@ -185,7 +214,13 @@ function LoginFormInner({
         <div className="mt-5 border-t border-gray-100 pt-5 text-center space-y-3">
           <p className="text-gray-500 text-sm">
             {tAuth("dontHaveAccount")}{" "}
-            <Link href="/signup" className="text-emerald-500 font-medium hover:underline">{tAuth("signUp")}</Link>
+            <Link
+              href={signupHref}
+              className="text-emerald-500 font-medium hover:underline"
+              style={brandPrimary ? { color: brandPrimary } : undefined}
+            >
+              {tAuth("signUp")}
+            </Link>
           </p>
           <div className="flex items-center justify-center gap-1.5 text-sm text-gray-400">
             <Link
@@ -205,14 +240,16 @@ export function LoginForm({
   locale,
   branding = null,
   resellerScopeId = null,
+  referralCode = null,
 }: {
   locale: string;
   branding?: ResellerBranding | null;
   resellerScopeId?: string | null;
+  referralCode?: string | null;
 }) {
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-emerald-500" /></div>}>
-      <LoginFormInner locale={locale} branding={branding} resellerScopeId={resellerScopeId} />
+      <LoginFormInner locale={locale} branding={branding} resellerScopeId={resellerScopeId} referralCode={referralCode} />
     </Suspense>
   );
 }

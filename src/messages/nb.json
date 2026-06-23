@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Passordet ble tilbakestilt. Du kan nå logge inn.",
     "invalidOrExpiredToken": "Denne tilbakestillingslenken er ugyldig eller har utløpt.",
     "signingIn": "Logger inn…",
-    "creating": "Oppretter…"
+    "creating": "Oppretter…",
+    "resellerScopeError": "Denne innloggingen er kun for kunder hos {brandName}.",
+    "thisPartner": "denne partneren",
+    "signingUpUnder": "Du registrerer deg via {brand}"
   },
   "ordering": {
     "viewCart": "Vis handlekurv",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Drevet av <brand>Fee Free Ordering</brand>",
     "today": "I dag",
     "openNow": "Åpent nå",
     "opensShort": "Åpner {time}",

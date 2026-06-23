@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Password reset successfully. You can now sign in.",
     "invalidOrExpiredToken": "This reset link is invalid or has expired.",
     "signingIn": "Signing in…",
-    "creating": "Creating…"
+    "creating": "Creating…",
+    "resellerScopeError": "This sign-in is for {brandName} customers only.",
+    "thisPartner": "this partner",
+    "signingUpUnder": "You're signing up under {brand}"
   },
   "ordering": {
     "viewCart": "View Cart",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Powered by <brand>Fee Free Ordering</brand>",
     "openingHours": "Opening Hours",
     "generalHours": "General hours",
     "today": "Today",

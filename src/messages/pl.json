@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Hasło zostało zresetowane. Możesz się teraz zalogować.",
     "invalidOrExpiredToken": "Ten link resetujący jest nieprawidłowy lub wygasł.",
     "signingIn": "Logowanie…",
-    "creating": "Tworzenie…"
+    "creating": "Tworzenie…",
+    "resellerScopeError": "To logowanie jest przeznaczone wyłącznie dla klientów {brandName}.",
+    "thisPartner": "ten partner",
+    "signingUpUnder": "Rejestrujesz się przez {brand}"
   },
   "ordering": {
     "viewCart": "Zobacz koszyk",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Obsługiwane przez <brand>Fee Free Ordering</brand>",
     "today": "Dziś",
     "openNow": "Otwarte",
     "opensShort": "Otwiera o {time}",

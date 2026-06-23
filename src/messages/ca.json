@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Contrasenya restablerta. Ja podeu iniciar sessió.",
     "invalidOrExpiredToken": "Aquest enllaç de restabliment no és vàlid o ha caducat.",
     "signingIn": "Iniciant sessió…",
-    "creating": "Creant…"
+    "creating": "Creant…",
+    "resellerScopeError": "Aquest inici de sessió és només per a clients de {brandName}.",
+    "thisPartner": "aquest soci",
+    "signingUpUnder": "T'estàs registrant amb {brand}"
   },
   "ordering": {
     "viewCart": "Veure la cistella",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Amb tecnologia de <brand>Fee Free Ordering</brand>",
     "today": "Avui",
     "openNow": "Obert ara",
     "opensShort": "Obre a les {time}",

@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Salasana palautettu onnistuneesti. Voit nyt kirjautua sisään.",
     "invalidOrExpiredToken": "Tämä palautuslinkki on virheellinen tai vanhentunut.",
     "signingIn": "Kirjaudutaan…",
-    "creating": "Luodaan…"
+    "creating": "Luodaan…",
+    "resellerScopeError": "Tämä kirjautuminen on tarkoitettu vain {brandName}-asiakkaille.",
+    "thisPartner": "tämä kumppani",
+    "signingUpUnder": "Rekisteröidyt {brand}-kumppanin kautta"
   },
   "ordering": {
     "viewCart": "Näytä ostoskori",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Palvelun tarjoaa <brand>Fee Free Ordering</brand>",
     "today": "Tänään",
     "openNow": "Auki nyt",
     "opensShort": "Avautuu klo {time}",

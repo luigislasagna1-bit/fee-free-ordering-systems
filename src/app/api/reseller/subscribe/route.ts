@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser, isResellerView } from "@/lib/session";
 import { getStripe, stripeReady } from "@/lib/stripe";
+import { ensureResellerGenericSubdomain } from "@/lib/reseller-subdomain";
 
 /**
  * Start a Stripe Checkout session for the reseller's white-label
@@ -95,6 +96,11 @@ export async function POST(req: NextRequest) {
       // Webhook (customer.subscription.updated) will set
       // whiteLabelTier=new tier on the profile via the existing
       // handleResellerWhiteLabelEvent path.
+      // Backfill a generic subdomain for already-active resellers who never
+      // got one (e.g. activated before auto-provisioning shipped). Idempotent
+      // + best-effort — never blocks the tier swap. New activations get theirs
+      // from the webhook's activation hook.
+      await ensureResellerGenericSubdomain(profile.id).catch(() => {});
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL || req.nextUrl.origin;
       return NextResponse.json({
         url: `${baseUrl}/reseller/branding?upgraded=1`,

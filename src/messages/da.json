@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Adgangskode nulstillet. Du kan nu logge ind.",
     "invalidOrExpiredToken": "Dette nulstillingslink er ugyldigt eller udløbet.",
     "signingIn": "Logger ind…",
-    "creating": "Opretter…"
+    "creating": "Opretter…",
+    "resellerScopeError": "Dette login er kun for kunder hos {brandName}.",
+    "thisPartner": "denne partner",
+    "signingUpUnder": "Du tilmelder dig via {brand}"
   },
   "ordering": {
     "viewCart": "Se kurv",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Drevet af <brand>Fee Free Ordering</brand>",
     "today": "I dag",
     "openNow": "Åbent nu",
     "opensShort": "Åbner {time}",

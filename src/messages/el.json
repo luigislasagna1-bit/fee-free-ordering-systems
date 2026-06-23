@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Ο κωδικός επαναφέρθηκε. Μπορείτε τώρα να συνδεθείτε.",
     "invalidOrExpiredToken": "Αυτός ο σύνδεσμος επαναφοράς είναι άκυρος ή έχει λήξει.",
     "signingIn": "Σύνδεση…",
-    "creating": "Δημιουργία…"
+    "creating": "Δημιουργία…",
+    "resellerScopeError": "Αυτή η σύνδεση προορίζεται μόνο για πελάτες της {brandName}.",
+    "thisPartner": "αυτόν τον συνεργάτη",
+    "signingUpUnder": "Εγγράφεστε μέσω {brand}"
   },
   "ordering": {
     "viewCart": "Προβολή καλαθιού",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Με την τεχνολογία της <brand>Fee Free Ordering</brand>",
     "today": "Σήμερα",
     "openNow": "Ανοιχτά τώρα",
     "opensShort": "Ανοίγει στις {time}",

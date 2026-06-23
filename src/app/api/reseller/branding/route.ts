@@ -7,7 +7,8 @@ import { getSessionUser, isResellerView } from "@/lib/session";
  * Returns the calling reseller's current white-label values.
  *
  * PATCH /api/reseller/branding
- * Updates one or more of: imprint, brandLogoUrl, brandLoginTitle.
+ * Updates one or more of: imprint, brandLogoUrl, brandLoginTitle,
+ * brandPrimaryColor, brandAccentColor, brandLoginBgUrl.
  * Only fields present in the body are touched — partial updates are
  * the norm (each branding sub-page edits its own field).
  *
@@ -20,7 +21,15 @@ export async function GET() {
   }
   const profile = await prisma.resellerProfile.findUnique({
     where: { id: user.resellerProfileId },
-    select: { status: true, imprint: true, brandLogoUrl: true, brandLoginTitle: true },
+    select: {
+      status: true,
+      imprint: true,
+      brandLogoUrl: true,
+      brandLoginTitle: true,
+      brandPrimaryColor: true,
+      brandAccentColor: true,
+      brandLoginBgUrl: true,
+    },
   });
   if (profile?.status !== "approved") {
     return NextResponse.json({ error: "Not approved" }, { status: 403 });
@@ -29,8 +38,16 @@ export async function GET() {
     imprint: profile.imprint ?? "",
     brandLogoUrl: profile.brandLogoUrl ?? "",
     brandLoginTitle: profile.brandLoginTitle ?? "",
+    brandPrimaryColor: profile.brandPrimaryColor ?? "",
+    brandAccentColor: profile.brandAccentColor ?? "",
+    brandLoginBgUrl: profile.brandLoginBgUrl ?? "",
   });
 }
+
+// Accepts a 6-digit hex like "#10b981". Validated before persisting so the
+// branded auth pages can drop the value straight into inline styles without
+// re-sanitizing. Empty / null clears the field (falls back to platform emerald).
+const HEX_COLOR_RE = /^#[0-9a-fA-F]{6}$/;
 
 export async function PATCH(req: NextRequest) {
   const user = await getSessionUser();
@@ -51,7 +68,14 @@ export async function PATCH(req: NextRequest) {
   // Only update the fields that are explicitly present. `undefined` means
   // "don't touch this field" — different from passing an empty string
   // which means "clear it".
-  const data: { imprint?: string | null; brandLogoUrl?: string | null; brandLoginTitle?: string | null } = {};
+  const data: {
+    imprint?: string | null;
+    brandLogoUrl?: string | null;
+    brandLoginTitle?: string | null;
+    brandPrimaryColor?: string | null;
+    brandAccentColor?: string | null;
+    brandLoginBgUrl?: string | null;
+  } = {};
 
   if ("imprint" in body) {
     const raw = body.imprint == null ? null : String(body.imprint).trim();
@@ -67,12 +91,39 @@ export async function PATCH(req: NextRequest) {
     }
     data.brandLogoUrl = raw && raw.length > 0 ? raw : null;
   }
+  // Login/signup background image URL — replaces the default FeeFree hero
+  // background on the reseller's branded auth pages. Validated like
+  // brandLogoUrl: a URL string up to 500 chars, or empty → null (default bg).
+  if ("brandLoginBgUrl" in body) {
+    const raw = body.brandLoginBgUrl == null ? null : String(body.brandLoginBgUrl).trim();
+    if (raw && raw.length > 500) {
+      return NextResponse.json({ error: "Background image URL too long" }, { status: 400 });
+    }
+    data.brandLoginBgUrl = raw && raw.length > 0 ? raw : null;
+  }
   if ("brandLoginTitle" in body) {
     const raw = body.brandLoginTitle == null ? null : String(body.brandLoginTitle).trim();
     if (raw && raw.length > 100) {
       return NextResponse.json({ error: "Title too long" }, { status: 400 });
     }
     data.brandLoginTitle = raw && raw.length > 0 ? raw : null;
+  }
+  // Brand colors: a valid 6-digit hex, or empty → null (platform default).
+  // Anything else is rejected so an invalid value never reaches the branded
+  // auth pages' inline styles.
+  if ("brandPrimaryColor" in body) {
+    const raw = body.brandPrimaryColor == null ? "" : String(body.brandPrimaryColor).trim();
+    if (raw && !HEX_COLOR_RE.test(raw)) {
+      return NextResponse.json({ error: "Primary color must be a hex value like #10b981" }, { status: 400 });
+    }
+    data.brandPrimaryColor = raw ? raw : null;
+  }
+  if ("brandAccentColor" in body) {
+    const raw = body.brandAccentColor == null ? "" : String(body.brandAccentColor).trim();
+    if (raw && !HEX_COLOR_RE.test(raw)) {
+      return NextResponse.json({ error: "Accent color must be a hex value like #34d399" }, { status: 400 });
+    }
+    data.brandAccentColor = raw ? raw : null;
   }
 
   if (Object.keys(data).length === 0) {

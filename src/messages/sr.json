@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Lozinka je uspešno resetovana. Možete se prijaviti.",
     "invalidOrExpiredToken": "Ovaj link za resetovanje je nevažeći ili je istekao.",
     "signingIn": "Prijavljivanje…",
-    "creating": "Kreiranje…"
+    "creating": "Kreiranje…",
+    "resellerScopeError": "Ova prijava je namenjena samo klijentima usluge {brandName}.",
+    "thisPartner": "ovaj partner",
+    "signingUpUnder": "Registrujete se putem {brand}"
   },
   "ordering": {
     "viewCart": "Pogledaj korpu",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Покреће <brand>Fee Free Ordering</brand>",
     "today": "Данас",
     "openNow": "Отворено",
     "opensShort": "Отвара у {time}",

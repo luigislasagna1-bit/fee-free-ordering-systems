@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Slaptažodis sėkmingai atstatytas. Dabar galite prisijungti.",
     "invalidOrExpiredToken": "Ši atkūrimo nuoroda negalioja arba pasibaigė jos galiojimo laikas.",
     "signingIn": "Jungiamasi…",
-    "creating": "Kuriama…"
+    "creating": "Kuriama…",
+    "resellerScopeError": "Šis prisijungimas skirtas tik {brandName} klientams.",
+    "thisPartner": "šis partneris",
+    "signingUpUnder": "Registruojatės per {brand}"
   },
   "ordering": {
     "viewCart": "Peržiūrėti krepšelį",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Palaiko <brand>Fee Free Ordering</brand>",
     "today": "Šiandien",
     "openNow": "Atidaryta",
     "opensShort": "Atidaroma {time}",

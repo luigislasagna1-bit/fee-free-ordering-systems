@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import prisma from "@/lib/db";
 import { getSessionUser, isResellerView } from "@/lib/session";
-import { Tag, Image as ImageIcon, Link2, Globe, CheckCircle2, Sparkles, Info } from "lucide-react";
+import { Tag, Image as ImageIcon, Link2, Globe, CheckCircle2, Sparkles, Info, Palette } from "lucide-react";
 import { SubscribeButton } from "./SubscribeButton";
 import { ManageBillingButton } from "./ManageBillingButton";
 import { WHITE_LABEL_BILLING_POLICY } from "@/lib/reseller-billing-policy";
@@ -42,6 +42,8 @@ export default async function ResellerBrandingPage({
       whiteLabelCancelAtPeriodEnd: true,
       imprint: true,
       brandLogoUrl: true,
+      brandLoginTitle: true,
+      brandPrimaryColor: true,
       genericSubdomain: true,
       customDomain: true,
       customDomainStatus: true,
@@ -75,6 +77,8 @@ export default async function ResellerBrandingPage({
               <Link href="/reseller/branding/imprint" className="font-bold underline">Imprint</Link>
               {" · "}
               <Link href="/reseller/branding/logo" className="font-bold underline">Logo</Link>
+              {" · "}
+              <Link href="/reseller/branding/colors" className="font-bold underline">Login page</Link>
               {" · "}
               <Link href="/reseller/branding/generic-domain" className="font-bold underline">Generic subdomain</Link>
               {tier === "full" && (
@@ -142,6 +146,12 @@ export default async function ResellerBrandingPage({
               title="Logo"
               status={profile.brandLogoUrl ? "configured" : "not-configured"}
               href="/reseller/branding/logo"
+            />
+            <FeatureLink
+              icon={<Palette className="w-4 h-4" />}
+              title="Login page"
+              status={profile.brandLoginTitle || profile.brandPrimaryColor ? "configured" : "not-configured"}
+              href="/reseller/branding/colors"
             />
             <FeatureLink
               icon={<Globe className="w-4 h-4" />}

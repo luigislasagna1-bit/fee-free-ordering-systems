@@ -95,6 +95,7 @@ const groups: Group[] = [
       { href: "/reseller/branding", label: "Overview" },
       { href: "/reseller/branding/imprint", label: "Imprint" },
       { href: "/reseller/branding/logo", label: "Logo" },
+      { href: "/reseller/branding/colors", label: "Login page" },
       { href: "/reseller/branding/generic-domain", label: "Generic domain" },
       { href: "/reseller/branding/custom-domain", label: "Custom domain" },
     ],

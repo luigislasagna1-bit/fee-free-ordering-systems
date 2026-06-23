@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Şifre başarıyla sıfırlandı. Artık giriş yapabilirsiniz.",
     "invalidOrExpiredToken": "Bu sıfırlama bağlantısı geçersiz veya süresi dolmuş.",
     "signingIn": "Giriş yapılıyor…",
-    "creating": "Oluşturuluyor…"
+    "creating": "Oluşturuluyor…",
+    "resellerScopeError": "Bu giriş yalnızca {brandName} müşterileri içindir.",
+    "thisPartner": "bu iş ortağı",
+    "signingUpUnder": "{brand} üzerinden kayıt oluyorsunuz"
   },
   "ordering": {
     "viewCart": "Sepeti Gör",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "<brand>Fee Free Ordering</brand> tarafından desteklenmektedir",
     "today": "Bugün",
     "openNow": "Şimdi açık",
     "opensShort": "{time} açılıyor",

@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Пароль успішно скинуто. Тепер ви можете увійти.",
     "invalidOrExpiredToken": "Це посилання для скидання недійсне або застаріло.",
     "signingIn": "Вхід…",
-    "creating": "Створення…"
+    "creating": "Створення…",
+    "resellerScopeError": "Цей вхід призначений лише для клієнтів {brandName}.",
+    "thisPartner": "цей партнер",
+    "signingUpUnder": "Ви реєструєтеся через {brand}"
   },
   "ordering": {
     "viewCart": "Переглянути кошик",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Працює на платформі <brand>Fee Free Ordering</brand>",
     "today": "Сьогодні",
     "openNow": "Відкрито",
     "opensShort": "Відкриється о {time}",

@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Heslo úspešne obnovené. Teraz sa môžete prihlásiť.",
     "invalidOrExpiredToken": "Tento odkaz na obnovenie je neplatný alebo vypršal.",
     "signingIn": "Prihlasujem…",
-    "creating": "Vytváram…"
+    "creating": "Vytváram…",
+    "resellerScopeError": "Toto prihlásenie je určené len pre zákazníkov {brandName}.",
+    "thisPartner": "tento partner",
+    "signingUpUnder": "Registrujete sa prostredníctvom {brand}"
   },
   "ordering": {
     "viewCart": "Zobraziť košík",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Poháňané službou <brand>Fee Free Ordering</brand>",
     "today": "Dnes",
     "openNow": "Otvorené",
     "opensShort": "Otvára o {time}",

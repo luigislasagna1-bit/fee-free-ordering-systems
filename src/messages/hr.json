@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Lozinka je uspješno poništena. Sada se možete prijaviti.",
     "invalidOrExpiredToken": "Ova poveznica za poništavanje je nevažeća ili je istekla.",
     "signingIn": "Prijava u tijeku…",
-    "creating": "Kreiranje u tijeku…"
+    "creating": "Kreiranje u tijeku…",
+    "resellerScopeError": "Ova prijava namijenjena je samo klijentima usluge {brandName}.",
+    "thisPartner": "ovaj partner",
+    "signingUpUnder": "Registrirate se putem {brand}"
   },
   "ordering": {
     "viewCart": "Pregledaj košaricu",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Pokreće <brand>Fee Free Ordering</brand>",
     "today": "Danas",
     "openNow": "Otvoreno",
     "opensShort": "Otvara u {time}",

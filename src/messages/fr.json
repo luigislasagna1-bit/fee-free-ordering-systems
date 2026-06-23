@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Mot de passe réinitialisé avec succès. Vous pouvez maintenant vous connecter.",
     "invalidOrExpiredToken": "Ce lien de réinitialisation est invalide ou expiré.",
     "signingIn": "Connexion…",
-    "creating": "Création…"
+    "creating": "Création…",
+    "resellerScopeError": "Cette connexion est réservée aux clients de {brandName}.",
+    "thisPartner": "ce partenaire",
+    "signingUpUnder": "Vous vous inscrivez via {brand}"
   },
   "ordering": {
     "viewCart": "Voir le panier",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Propulsé par <brand>Fee Free Ordering</brand>",
     "today": "Aujourd'hui",
     "openNow": "Ouvert",
     "opensShort": "Ouvre à {time}",

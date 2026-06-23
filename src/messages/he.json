@@ -105,7 +105,10 @@
     "passwordResetSuccess": "הסיסמה אופסה בהצלחה. כעת תוכל להתחבר.",
     "invalidOrExpiredToken": "קישור האיפוס אינו תקין או שפג תוקפו.",
     "signingIn": "מתחבר…",
-    "creating": "יוצר…"
+    "creating": "יוצר…",
+    "resellerScopeError": "כניסה זו מיועדת ללקוחות {brandName} בלבד.",
+    "thisPartner": "שותף זה",
+    "signingUpUnder": "אתה נרשם דרך {brand}"
   },
   "ordering": {
     "viewCart": "צפה בסל",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "מופעל על ידי <brand>Fee Free Ordering</brand>",
     "today": "היום",
     "openNow": "פתוח עכשיו",
     "opensShort": "נפתח ב-{time}",

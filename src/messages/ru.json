@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Пароль успешно сброшен. Теперь вы можете войти.",
     "invalidOrExpiredToken": "Эта ссылка для сброса недействительна или истекла.",
     "signingIn": "Выполняется вход…",
-    "creating": "Создание…"
+    "creating": "Создание…",
+    "resellerScopeError": "Этот вход предназначен только для клиентов {brandName}.",
+    "thisPartner": "этот партнёр",
+    "signingUpUnder": "Вы регистрируетесь через {brand}"
   },
   "ordering": {
     "viewCart": "Корзина",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Работает на платформе <brand>Fee Free Ordering</brand>",
     "today": "Сегодня",
     "openNow": "Открыто",
     "opensShort": "Открывается в {time}",

@@ -105,7 +105,10 @@
     "passwordResetSuccess": "पासवर्ड सफलतापूर्वक रीसेट हो गया। अब आप साइन इन कर सकते हैं।",
     "invalidOrExpiredToken": "यह रीसेट लिंक अमान्य है या समय-सीमा समाप्त हो गई है।",
     "signingIn": "साइन इन हो रहा है…",
-    "creating": "बनाया जा रहा है…"
+    "creating": "बनाया जा रहा है…",
+    "resellerScopeError": "यह साइन-इन केवल {brandName} के ग्राहकों के लिए है।",
+    "thisPartner": "यह पार्टनर",
+    "signingUpUnder": "आप {brand} के माध्यम से साइन अप कर रहे हैं"
   },
   "ordering": {
     "viewCart": "कार्ट देखें",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "<brand>Fee Free Ordering</brand> द्वारा संचालित",
     "today": "आज",
     "openNow": "अभी खुला",
     "opensShort": "{time} बजे खुलता है",

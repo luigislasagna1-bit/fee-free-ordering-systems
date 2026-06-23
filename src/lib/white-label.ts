@@ -9,6 +9,11 @@
  * (free marketing + SEO backlink to www.feefreeordering.com). Luigi 2026-06-22:
  * "Powered by Fee Free Ordering should NOT be hidden unless the restaurant is signed up under
  * a reseller with a custom branded reseller account."
+ *
+ * PURE + client-safe — NO prisma / server-only imports. This module is imported by CLIENT
+ * components (order status / menu / info pages), so it must never pull prisma (→ node:module)
+ * into the client bundle. The server-only auto-subdomain helpers live in
+ * src/lib/reseller-subdomain.ts.
  */
 export interface ResellerWhiteLabelProfile {
   status?: string | null;

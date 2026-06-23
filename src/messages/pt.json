@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Senha redefinida. Você já pode entrar.",
     "invalidOrExpiredToken": "Este link é inválido ou expirou.",
     "signingIn": "Entrando…",
-    "creating": "Criando…"
+    "creating": "Criando…",
+    "resellerScopeError": "Este login é apenas para clientes da {brandName}.",
+    "thisPartner": "este parceiro",
+    "signingUpUnder": "Você está se cadastrando por meio de {brand}"
   },
   "ordering": {
     "viewCart": "Ver carrinho",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Com tecnologia de <brand>Fee Free Ordering</brand>",
     "today": "Hoje",
     "openNow": "Aberto agora",
     "opensShort": "Abre às {time}",

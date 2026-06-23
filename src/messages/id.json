@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Kata sandi berhasil direset. Anda sekarang dapat masuk.",
     "invalidOrExpiredToken": "Tautan reset ini tidak valid atau sudah kadaluarsa.",
     "signingIn": "Sedang masuk…",
-    "creating": "Sedang membuat…"
+    "creating": "Sedang membuat…",
+    "resellerScopeError": "Login ini hanya untuk pelanggan {brandName}.",
+    "thisPartner": "mitra ini",
+    "signingUpUnder": "Anda mendaftar melalui {brand}"
   },
   "ordering": {
     "viewCart": "Lihat Keranjang",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Didukung oleh <brand>Fee Free Ordering</brand>",
     "today": "Hari ini",
     "openNow": "Buka sekarang",
     "opensShort": "Buka pukul {time}",

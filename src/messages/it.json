@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Password ripristinata. Ora puoi accedere.",
     "invalidOrExpiredToken": "Questo link è scaduto o non valido.",
     "signingIn": "Accesso in corso…",
-    "creating": "Creazione…"
+    "creating": "Creazione…",
+    "resellerScopeError": "Questo accesso è riservato ai clienti di {brandName}.",
+    "thisPartner": "questo partner",
+    "signingUpUnder": "Ti stai registrando tramite {brand}"
   },
   "ordering": {
     "viewCart": "Vedi carrello",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Con tecnologia di <brand>Fee Free Ordering</brand>",
     "today": "Oggi",
     "openNow": "Aperto ora",
     "opensShort": "Apre alle {time}",

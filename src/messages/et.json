@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Parool edukalt lähtestatud. Nüüd saad sisse logida.",
     "invalidOrExpiredToken": "See lähtestamislink on kehtetu või aegunud.",
     "signingIn": "Sisselogimine…",
-    "creating": "Loomine…"
+    "creating": "Loomine…",
+    "resellerScopeError": "See sisselogimine on mõeldud ainult {brandName} klientidele.",
+    "thisPartner": "see partner",
+    "signingUpUnder": "Registreerute partneri {brand} kaudu"
   },
   "ordering": {
     "viewCart": "Vaata ostukorvi",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Teenuse pakub <brand>Fee Free Ordering</brand>",
     "today": "Täna",
     "openNow": "Avatud",
     "opensShort": "Avab kell {time}",

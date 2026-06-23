@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from "next-intl";
 import type { Metadata } from "next";
 import { resolveLocale, loadMessages } from "@/lib/i18n-server";
-import prisma from "@/lib/db";
+import { resolveResellerBranding, type ResellerBranding } from "@/lib/reseller-branding";
 import { LoginForm } from "./LoginForm";
 
 /**
@@ -56,37 +56,17 @@ export default async function LoginPage({
   const locale = await resolveLocale();
   const messages = await loadMessages(locale);
 
-  let branding: { logoUrl: string | null; title: string | null; companyName: string | null } | null = null;
-  let resellerScopeId: string | null = null;
-  if (sp.reseller && /^[a-z0-9-]{20,40}$/i.test(sp.reseller)) {
-    // Branding shows for ANY active white-label tier — both Basic and
-    // Full unlock the imprint/logo. (Custom domains require Full at
-    // the proxy level; Generic subdomains work on either tier. So a
-    // Basic-tier reseller's generic subdomain MUST still resolve to
-    // branding here — previously we filtered on whiteLabelTier: "full"
-    // which silently broke Basic-tier branding.)
-    const r = await prisma.resellerProfile.findFirst({
-      where: {
-        id: sp.reseller,
-        whiteLabelStatus: "active",
-        status: "approved",
-      },
-      select: { id: true, brandLogoUrl: true, brandLoginTitle: true, companyName: true },
-    });
-    if (r) {
-      branding = {
-        logoUrl: r.brandLogoUrl,
-        title: r.brandLoginTitle,
-        companyName: r.companyName,
-      };
-      // We pass the resellerProfileId to the form so it can include it
-      // as a credential on sign-in. The NextAuth authorize() hook uses
-      // it to enforce scope: only users belonging to this reseller
-      // (their own admin, their restaurants, staff under them) can
-      // authenticate here.
-      resellerScopeId = r.id;
-    }
-  }
+  // Resolve reseller-branded chrome (logo + title + company name + brand
+  // colors) via the shared resolver. Gated on an ACTIVE white-label sub for an
+  // APPROVED reseller (both Basic + Full unlock the imprint/logo; custom domains
+  // are Full-gated upstream at the proxy). resellerScopeId is passed to the form
+  // so NextAuth's authorize() hook can enforce scope (only users belonging to
+  // this reseller can sign in here); referralCode powers the reseller-aware
+  // "Sign up" link → /signup?reseller=<scopeId>.
+  const resolved = await resolveResellerBranding(sp.reseller);
+  const branding: ResellerBranding | null = resolved?.branding ?? null;
+  const resellerScopeId: string | null = resolved?.resellerScopeId ?? null;
+  const referralCode: string | null = resolved?.referralCode ?? null;
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
@@ -94,6 +74,7 @@ export default async function LoginPage({
         locale={locale}
         branding={branding}
         resellerScopeId={resellerScopeId}
+        referralCode={referralCode}
       />
     </NextIntlClientProvider>
   );

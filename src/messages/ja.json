@@ -105,7 +105,10 @@
     "passwordResetSuccess": "パスワードがリセットされました。サインインできます。",
     "invalidOrExpiredToken": "このリセットリンクは無効または期限切れです。",
     "signingIn": "サインイン中…",
-    "creating": "作成中…"
+    "creating": "作成中…",
+    "resellerScopeError": "このサインインは {brandName} のお客様専用です。",
+    "thisPartner": "このパートナー",
+    "signingUpUnder": "{brand} を通じて登録しています"
   },
   "ordering": {
     "viewCart": "カートを見る",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "<brand>Fee Free Ordering</brand> による提供",
     "today": "今日",
     "openNow": "営業中",
     "opensShort": "{time} に開店",

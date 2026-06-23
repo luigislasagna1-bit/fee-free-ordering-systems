@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Heslo bylo úspěšně resetováno. Nyní se můžete přihlásit.",
     "invalidOrExpiredToken": "Tento odkaz pro reset je neplatný nebo vypršel.",
     "signingIn": "Přihlašování…",
-    "creating": "Vytváření…"
+    "creating": "Vytváření…",
+    "resellerScopeError": "Toto přihlášení je určeno pouze pro zákazníky {brandName}.",
+    "thisPartner": "tento partner",
+    "signingUpUnder": "Registrujete se prostřednictvím {brand}"
   },
   "ordering": {
     "viewCart": "Zobrazit košík",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Poháněno službou <brand>Fee Free Ordering</brand>",
     "today": "Dnes",
     "openNow": "Otevřeno",
     "opensShort": "Otevírá v {time}",

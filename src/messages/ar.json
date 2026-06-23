@@ -105,7 +105,10 @@
     "passwordResetSuccess": "تمت إعادة تعيين كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول.",
     "invalidOrExpiredToken": "رابط إعادة التعيين غير صالح أو منتهي الصلاحية.",
     "signingIn": "جارٍ تسجيل الدخول…",
-    "creating": "جارٍ الإنشاء…"
+    "creating": "جارٍ الإنشاء…",
+    "resellerScopeError": "تسجيل الدخول هذا مخصص لعملاء {brandName} فقط.",
+    "thisPartner": "هذا الشريك",
+    "signingUpUnder": "أنت تسجّل عبر {brand}"
   },
   "ordering": {
     "viewCart": "عرض السلة",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "مشغّل بواسطة <brand>Fee Free Ordering</brand>",
     "today": "اليوم",
     "openNow": "مفتوح الآن",
     "opensShort": "يفتح {time}",

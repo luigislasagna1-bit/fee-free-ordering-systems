@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Parole veiksmīgi atiestatīta. Tagad varat pierakstīties.",
     "invalidOrExpiredToken": "Šī atiestatīšanas saite ir nederīga vai ir beigusies.",
     "signingIn": "Pierakstās…",
-    "creating": "Izveido…"
+    "creating": "Izveido…",
+    "resellerScopeError": "Šī pieteikšanās ir paredzēta tikai {brandName} klientiem.",
+    "thisPartner": "šis partneris",
+    "signingUpUnder": "Jūs reģistrējaties caur {brand}"
   },
   "ordering": {
     "viewCart": "Skatīt grozu",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Nodrošina <brand>Fee Free Ordering</brand>",
     "today": "Šodien",
     "openNow": "Atvērts",
     "opensShort": "Atveras {time}",

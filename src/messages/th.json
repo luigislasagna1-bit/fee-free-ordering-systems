@@ -105,7 +105,10 @@
     "passwordResetSuccess": "รีเซ็ตรหัสผ่านสำเร็จ คุณสามารถเข้าสู่ระบบได้แล้ว",
     "invalidOrExpiredToken": "ลิงก์รีเซ็ตนี้ไม่ถูกต้องหรือหมดอายุแล้ว",
     "signingIn": "กำลังเข้าสู่ระบบ…",
-    "creating": "กำลังสร้าง…"
+    "creating": "กำลังสร้าง…",
+    "resellerScopeError": "การลงชื่อเข้าใช้นี้สำหรับลูกค้าของ {brandName} เท่านั้น",
+    "thisPartner": "พาร์ทเนอร์รายนี้",
+    "signingUpUnder": "คุณกำลังสมัครผ่าน {brand}"
   },
   "ordering": {
     "viewCart": "ดูตะกร้า",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "ขับเคลื่อนโดย <brand>Fee Free Ordering</brand>",
     "today": "วันนี้",
     "openNow": "เปิดอยู่",
     "opensShort": "เปิด {time}",

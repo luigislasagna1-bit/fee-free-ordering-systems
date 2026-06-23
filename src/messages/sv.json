@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Lösenordet har återställts. Du kan nu logga in.",
     "invalidOrExpiredToken": "Den här återställningslänken är ogiltig eller har gått ut.",
     "signingIn": "Loggar in…",
-    "creating": "Skapar…"
+    "creating": "Skapar…",
+    "resellerScopeError": "Den här inloggningen är endast för kunder hos {brandName}.",
+    "thisPartner": "den här partnern",
+    "signingUpUnder": "Du registrerar dig via {brand}"
   },
   "ordering": {
     "viewCart": "Visa varukorg",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Drivs av <brand>Fee Free Ordering</brand>",
     "today": "Idag",
     "openNow": "Öppet nu",
     "opensShort": "Öppnar {time}",

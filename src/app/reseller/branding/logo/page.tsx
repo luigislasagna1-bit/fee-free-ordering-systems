@@ -28,6 +28,7 @@ export default async function ResellerLogoPage() {
     select: {
       status: true,
       brandLogoUrl: true,
+      brandLoginBgUrl: true,
       whiteLabelStatus: true,
       whiteLabelTier: true,
     },
@@ -39,5 +40,10 @@ export default async function ResellerLogoPage() {
     (profile.whiteLabelTier === "basic" || profile.whiteLabelTier === "full");
   if (!wlActive) redirect("/reseller/branding");
 
-  return <LogoClient initialLogoUrl={profile.brandLogoUrl ?? null} />;
+  return (
+    <LogoClient
+      initialLogoUrl={profile.brandLogoUrl ?? null}
+      initialLoginBgUrl={profile.brandLoginBgUrl ?? null}
+    />
+  );
 }

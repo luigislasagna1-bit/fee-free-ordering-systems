@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { ensureMarketplaceListing } from "@/lib/marketplace";
 import { notifyAddOnChange } from "@/lib/platform-notifications";
 import { graceDeadline, startRestaurantGrace } from "@/lib/dunning";
+import { ensureResellerGenericSubdomain } from "@/lib/reseller-subdomain";
 
 /**
  * Handle customer.subscription.* events.
@@ -343,6 +344,15 @@ async function handleResellerWhiteLabelEvent(
       whiteLabelCancelAtPeriodEnd: (sub as any).cancel_at_period_end ?? false,
     },
   });
+
+  // On activation, auto-provision a generic subdomain so a branded
+  // login/signup URL exists out of the box. Idempotent (no-ops when one is
+  // already set) + best-effort (never throws), so Stripe retries are safe and
+  // a vanity-URL hiccup can't fail the webhook. ensureResellerGenericSubdomain
+  // re-checks whiteLabelStatus === "active" internally.
+  if (status === "active") {
+    await ensureResellerGenericSubdomain(resellerProfileId);
+  }
 }
 
 /** Map Stripe's subscription.status enum onto our local string set.

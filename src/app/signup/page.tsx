@@ -1,6 +1,7 @@
 import { resolveLocale } from "@/lib/i18n-server";
 import { SignupForm } from "./SignupForm";
 import prisma from "@/lib/db";
+import { resolveResellerBranding } from "@/lib/reseller-branding";
 
 /**
  * Signup page. Accepts an optional `?invite=<token>` query param which
@@ -9,11 +10,20 @@ import prisma from "@/lib/db";
  * the suggested location name if the inviter provided one. The token is
  * passed through to /api/auth/register, which stamps parentRestaurantId
  * on the new Restaurant.
+ *
+ * Also accepts `?reseller=<resellerProfileId>` — set by the proxy when a
+ * reseller's branded host serves /signup (mirrors the branded /login path).
+ * We resolve the reseller's chrome (logo + title + brand colors) and its
+ * referralCode server-side. The form skins to the partner's brand AND
+ * forwards the referralCode for attribution, so a host-derived branded
+ * signup attributes identically to a ?ref= referral. The proxy matcher
+ * excludes /api/*, so the x-reseller-profile-id header never reaches the
+ * register API — the form must forward the code in the POST body + cookie.
  */
 export default async function SignupPage({
   searchParams,
 }: {
-  searchParams: Promise<{ invite?: string; ref?: string; claim?: string }>;
+  searchParams: Promise<{ invite?: string; ref?: string; claim?: string; reseller?: string }>;
 }) {
   const locale = await resolveLocale();
   const params = await searchParams;
@@ -29,6 +39,15 @@ export default async function SignupPage({
   // the ref, and nothing set the feefree_ref cookie, so every reseller signup
   // was silently recorded as a direct (unattributed) signup. Fabrizio 2026-06-16.
   const refCode = params.ref?.trim() || null;
+
+  // Reseller-branded signup: the proxy rewrites a reseller's branded host to
+  // /signup?reseller=<resellerProfileId>. Resolve the partner's chrome + their
+  // referralCode (gated on an active white-label + approved reseller). When a
+  // reseller resolves we PREFER its referralCode for attribution over any
+  // ?ref= on the URL, so a host-derived branded signup is attributed to the
+  // host's owner regardless of a stray query param.
+  const resolvedReseller = await resolveResellerBranding(params.reseller?.trim() || null);
+  const brandedReferralCode = resolvedReseller?.referralCode ?? null;
 
   let inviteContext: {
     token: string;
@@ -78,5 +97,14 @@ export default async function SignupPage({
     }
   }
 
-  return <SignupForm locale={locale} inviteContext={inviteContext} refCode={refCode} claimContext={claimContext} />;
+  return (
+    <SignupForm
+      locale={locale}
+      inviteContext={inviteContext}
+      refCode={refCode}
+      claimContext={claimContext}
+      branding={resolvedReseller?.branding ?? null}
+      brandedReferralCode={brandedReferralCode}
+    />
+  );
 }

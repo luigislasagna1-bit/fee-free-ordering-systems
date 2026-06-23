@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Geslo je bilo uspešno ponastavljeno. Zdaj se lahko prijavite.",
     "invalidOrExpiredToken": "Ta povezava za ponastavitev je neveljavna ali je potekla.",
     "signingIn": "Prijavljanje…",
-    "creating": "Ustvarjanje…"
+    "creating": "Ustvarjanje…",
+    "resellerScopeError": "Ta prijava je namenjena samo strankam {brandName}.",
+    "thisPartner": "ta partner",
+    "signingUpUnder": "Registrirate se prek {brand}"
   },
   "ordering": {
     "viewCart": "Ogled košarice",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Poganja <brand>Fee Free Ordering</brand>",
     "today": "Danes",
     "openNow": "Odprto",
     "opensShort": "Odpre ob {time}",

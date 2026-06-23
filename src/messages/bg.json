@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Паролата е нулирана успешно. Можеш да влезеш.",
     "invalidOrExpiredToken": "Този линк е невалиден или е изтекъл.",
     "signingIn": "Влизане…",
-    "creating": "Създаване…"
+    "creating": "Създаване…",
+    "resellerScopeError": "Това вписване е само за клиенти на {brandName}.",
+    "thisPartner": "този партньор",
+    "signingUpUnder": "Регистрирате се чрез {brand}"
   },
   "ordering": {
     "viewCart": "Виж количката",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Задвижвано от <brand>Fee Free Ordering</brand>",
     "today": "Днес",
     "openNow": "Отворено сега",
     "opensShort": "Отваря в {time}",

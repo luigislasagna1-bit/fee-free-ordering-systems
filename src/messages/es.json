@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Contraseña restablecida. Ahora puedes iniciar sesión.",
     "invalidOrExpiredToken": "Este enlace es inválido o ha expirado.",
     "signingIn": "Iniciando sesión…",
-    "creating": "Creando…"
+    "creating": "Creando…",
+    "resellerScopeError": "Este inicio de sesión es solo para clientes de {brandName}.",
+    "thisPartner": "este socio",
+    "signingUpUnder": "Te estás registrando con {brand}"
   },
   "ordering": {
     "viewCart": "Ver carrito",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Con tecnología de <brand>Fee Free Ordering</brand>",
     "today": "Hoy",
     "openNow": "Abierto ahora",
     "opensShort": "Abre a las {time}",

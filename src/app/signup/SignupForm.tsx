@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
 import { COUNTRIES } from "@/lib/regions";
+// Type-only — keeps prisma (pulled in by the resolver) out of the client bundle.
+import type { ResellerBranding } from "@/lib/reseller-branding";
 
 export interface InviteContext {
   token: string;
@@ -46,6 +48,8 @@ export function SignupForm({
   inviteContext,
   refCode,
   claimContext,
+  branding = null,
+  brandedReferralCode = null,
 }: {
   locale: string;
   inviteContext: InviteContext | null;
@@ -53,21 +57,43 @@ export function SignupForm({
   refCode?: string | null;
   /** Import-to-try claim context from ?claim= on the signup URL (if any). */
   claimContext?: ClaimContext | null;
+  /** Reseller-branded chrome (logo + title + brand colors), resolved server-side
+   *  from the ?reseller= the proxy sets on a branded host. Null on the canonical
+   *  platform domain — falls back to the default Fee Free Ordering chrome. */
+  branding?: ResellerBranding | null;
+  /** The reseller's referralCode (server-resolved) when signing up on a branded
+   *  host. We persist it to the feefree_ref cookie AND send it in the register
+   *  POST body so a host-derived signup attributes identically to a ?ref= link. */
+  brandedReferralCode?: string | null;
 }) {
   const t = useTranslations("marketing.signup");
+  const tAuth = useTranslations("auth");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
+  // The brand's primary color skins the primary button + key accents. Emerald
+  // (#10b981) is the platform fallback when no reseller / no color is set.
+  const EMERALD = "#10b981";
+  const brandColor = branding?.primaryColor || EMERALD;
+  // The display name for the "signing up under X" banner + logo alt text.
+  const brandName = branding?.title || branding?.companyName || null;
+  // Attribution code: prefer the host-derived reseller code, else the ?ref= URL
+  // value. Used for BOTH the cookie write and the register POST body below.
+  const effectiveRef = brandedReferralCode || refCode || null;
+
   // Persist the referral code to a 30-day cookie the moment the owner lands on
-  // /signup?ref=<code>. Two reasons: (1) attribution survives if they wander
-  // off and come back to a bare /signup, and (2) /api/auth/register reads the
-  // same feefree_ref cookie as a fallback. The submit below ALSO sends it in
-  // the body, so attribution works even with cookies disabled. Fabrizio 2026-06-16.
+  // /signup?ref=<code> OR on a reseller's branded host (?reseller= → resolved
+  // referralCode). Two reasons: (1) attribution survives if they wander off and
+  // come back to a bare /signup, and (2) /api/auth/register reads the same
+  // feefree_ref cookie as a fallback. The submit below ALSO sends it in the
+  // body, so attribution works even with cookies disabled. The branded-host
+  // code takes precedence over a stray ?ref= so the host's owner is credited.
+  // Fabrizio 2026-06-16; branded-host attribution Luigi 2026-06-23.
   useEffect(() => {
-    if (refCode && typeof document !== "undefined") {
-      document.cookie = `feefree_ref=${encodeURIComponent(refCode)}; path=/; max-age=${60 * 60 * 24 * 30}; samesite=lax`;
+    if (effectiveRef && typeof document !== "undefined") {
+      document.cookie = `feefree_ref=${encodeURIComponent(effectiveRef)}; path=/; max-age=${60 * 60 * 24 * 30}; samesite=lax`;
     }
-  }, [refCode]);
+  }, [effectiveRef]);
 
   // Same idea for the import-to-try claim token — persist it so claiming survives
   // a wander-off-and-back, and /api/auth/register reads it from the body below
@@ -118,9 +144,12 @@ export function SignupForm({
           // Pass the invite token through so the register route can link the
           // new Restaurant to the inviting brand via parentRestaurantId.
           invite: inviteContext?.token,
-          // Forward the reseller referral code (from the URL, falling back to
-          // the cookie) so the new restaurant is attributed to the reseller.
-          ref: refCode || readRefCookie(),
+          // Forward the reseller referral code so the new restaurant is
+          // attributed to the reseller. Priority: host-derived branded code →
+          // ?ref= URL value → feefree_ref cookie. A branded-host signup thus
+          // attributes identically to a ?ref= referral (the register route
+          // maps referralCode → resellerProfileId, approved resellers only).
+          ref: effectiveRef || readRefCookie(),
           // Import-to-try: claim token attaches the pre-imported sandbox restaurant
           // to this new account (URL value, cookie fallback). Register reuses it.
           claim: claimContext?.token || readClaimCookie(),
@@ -137,13 +166,60 @@ export function SignupForm({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-white flex items-center justify-center p-4 relative">
+    <div className="relative isolate min-h-screen flex items-center justify-center p-4 overflow-hidden">
+      {/* Food-hero background — matches the login page. Reseller's image when branded, else the
+          default FeeFree photo (wide for desktop + portrait for phones). */}
+      {branding?.backgroundUrl ? (
+        <img src={branding.backgroundUrl} alt="" aria-hidden="true" className="absolute inset-0 -z-10 h-full w-full object-cover" />
+      ) : (
+        <>
+          <img src="/marketing/login-bg.jpg" alt="" aria-hidden="true" className="absolute inset-0 -z-10 hidden h-full w-full object-cover sm:block" />
+          <img src="/marketing/login-bg-mobile.jpg" alt="" aria-hidden="true" className="absolute inset-0 -z-10 h-full w-full object-cover sm:hidden" />
+        </>
+      )}
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/25" />
       <AuthLanguageSwitcher currentLocale={locale} />
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg p-8 my-8">
         <div className="text-center mb-6">
-          <Link href="/" className="inline-flex items-center gap-2 text-emerald-500 font-bold text-xl mb-4">
-            <ChefHat className="w-8 h-8" /> Fee Free Ordering
-          </Link>
+          {/* Header: reseller-branded (logo + title/companyName) when /signup is
+              served on a reseller's branded host (?reseller= → server-resolved
+              branding), otherwise the default Fee Free Ordering chrome. Mirrors
+              LoginForm's skin block so login + signup look identical. */}
+          {branding ? (
+            <div className="inline-flex flex-col items-center gap-2 mb-4">
+              {branding.logoUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={branding.logoUrl}
+                  alt={brandName ?? "Partner logo"}
+                  className="max-h-12 max-w-[200px] object-contain"
+                />
+              )}
+              {brandName && (
+                <span className="text-gray-700 font-bold text-xl text-center">{brandName}</span>
+              )}
+            </div>
+          ) : (
+            <Link href="/" className="inline-flex items-center gap-2 text-emerald-500 font-bold text-xl mb-4">
+              <ChefHat className="w-8 h-8" /> Fee Free Ordering
+            </Link>
+          )}
+          {/* "You're signing up under {brand}" context banner — only on a
+              branded host, so the owner knows which partner they're joining.
+              Themed with the brand's primary color (light tint + accent). */}
+          {branding && brandName && (
+            <div
+              className="rounded-xl p-3 mb-4 text-left"
+              style={{ backgroundColor: `${brandColor}14`, border: `1px solid ${brandColor}33` }}
+            >
+              <div className="flex items-start gap-2">
+                <Building2 className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: brandColor }} />
+                <div className="text-xs leading-snug" style={{ color: brandColor }}>
+                  {tAuth("signingUpUnder", { brand: brandName })}
+                </div>
+              </div>
+            </div>
+          )}
           {inviteContext && !inviteBlocked && (
             <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 mb-4 text-left">
               <div className="flex items-start gap-2">
@@ -396,7 +472,13 @@ export function SignupForm({
           <button
             type="submit"
             disabled={loading || !!inviteBlocked}
-            className="w-full bg-emerald-500 text-white font-bold py-3 rounded-xl hover:bg-emerald-600 transition flex items-center justify-center gap-2 disabled:opacity-50 mt-2"
+            // Brand-colored on a reseller host (inline style so any hex works);
+            // the emerald Tailwind classes are the platform fallback when no
+            // branding color is set (branding null → brandColor === EMERALD).
+            className={`w-full text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-50 mt-2 ${
+              branding?.primaryColor ? "" : "bg-emerald-500 hover:bg-emerald-600"
+            }`}
+            style={branding?.primaryColor ? { backgroundColor: brandColor } : undefined}
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : null}
             {loading ? t("creating") : t("createAccount")}
@@ -409,7 +491,14 @@ export function SignupForm({
 
         <p className="text-center text-gray-500 text-sm mt-6">
           {t("hasAccount")}{" "}
-          <Link href="/login" className="text-emerald-500 font-medium hover:underline">
+          <Link
+            href="/login"
+            // On a branded host the sign-in link adopts the partner's primary
+            // color (inline) so the login↔signup pair stays on-brand; emerald
+            // fallback otherwise.
+            className={`font-medium hover:underline ${branding?.primaryColor ? "" : "text-emerald-500"}`}
+            style={branding?.primaryColor ? { color: brandColor } : undefined}
+          >
             {t("signIn")}
           </Link>
         </p>

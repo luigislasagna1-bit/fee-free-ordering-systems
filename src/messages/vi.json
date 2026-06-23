@@ -105,7 +105,10 @@
     "passwordResetSuccess": "Đặt lại mật khẩu thành công. Bạn có thể đăng nhập ngay.",
     "invalidOrExpiredToken": "Link đặt lại này không hợp lệ hoặc đã hết hạn.",
     "signingIn": "Đang đăng nhập…",
-    "creating": "Đang tạo…"
+    "creating": "Đang tạo…",
+    "resellerScopeError": "Đăng nhập này chỉ dành cho khách hàng của {brandName}.",
+    "thisPartner": "đối tác này",
+    "signingUpUnder": "Bạn đang đăng ký qua {brand}"
   },
   "ordering": {
     "viewCart": "Xem giỏ hàng",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "Được cung cấp bởi <brand>Fee Free Ordering</brand>",
     "today": "Hôm nay",
     "openNow": "Đang mở",
     "opensShort": "Mở lúc {time}",

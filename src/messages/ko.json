@@ -105,7 +105,10 @@
     "passwordResetSuccess": "비밀번호가 재설정되었습니다. 이제 로그인하실 수 있습니다.",
     "invalidOrExpiredToken": "이 재설정 링크는 유효하지 않거나 만료되었습니다.",
     "signingIn": "로그인 중…",
-    "creating": "생성 중…"
+    "creating": "생성 중…",
+    "resellerScopeError": "이 로그인은 {brandName} 고객 전용입니다.",
+    "thisPartner": "이 파트너",
+    "signingUpUnder": "{brand}을(를) 통해 가입하고 있습니다"
   },
   "ordering": {
     "viewCart": "장바구니 보기",
@@ -310,6 +313,7 @@
     }
   },
   "info": {
+    "poweredBy": "<brand>Fee Free Ordering</brand> 제공",
     "today": "오늘",
     "openNow": "영업 중",
     "opensShort": "{time}에 영업 시작",
