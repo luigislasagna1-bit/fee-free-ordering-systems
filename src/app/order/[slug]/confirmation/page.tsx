@@ -4,6 +4,8 @@ import { formatCurrency as fmtCurrency, formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { CheckCircle, Clock, MapPin, ArrowRight } from "lucide-react";
 import { OrderPlacedTracker } from "@/components/order/OrderPlacedTracker";
+import { PoweredByFeeFree } from "@/components/PoweredByFeeFree";
+import { isResellerWhiteLabel, RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 import { getTranslations } from "next-intl/server";
 import { verifyAndReleaseOrderPayment } from "@/lib/stripe/verify-order-payment";
 
@@ -33,19 +35,26 @@ export default async function ConfirmationPage({
   const order = await prisma.order.findUnique({
     where: { id: orderId },
     include: {
-      restaurant: true,
+      // Pull the reseller white-label fields alongside the restaurant so we
+      // can gate the "Powered by Fee Free Ordering" credit: shown for every
+      // restaurant EXCEPT reseller white-label accounts (Luigi 2026-06-22).
+      restaurant: { include: { resellerProfile: { select: RESELLER_WHITE_LABEL_SELECT } } },
       items: { include: { modifiers: true } },
     },
   });
 
   if (!order || order.restaurant.slug !== slug) notFound();
 
+  // Show the platform credit unless this restaurant is sold under a reseller's
+  // own branded (white-label) account.
+  const showPoweredBy = !isResellerWhiteLabel(order.restaurant.resellerProfile);
+
   // Render every money value in the restaurant's chosen currency (ISO 4217),
   // not the USD default — a EUR restaurant must show € on its confirmation.
   const formatCurrency = (amount: number) => fmtCurrency(amount, order.restaurant.currency);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
       {/* Funnel-terminal beacon. Fires "order_placed" so /admin/reports/
           online-ordering/funnel can compute a real session→order
           conversion rate. The order page already fires "visit"; this
@@ -248,6 +257,12 @@ export default async function ConfirmationPage({
           )}
         </div>
       </div>
+      {/* Free-marketing platform credit + SEO backlink. Hidden only for
+          reseller white-label accounts. Lives inside the /order client tree's
+          next-intl provider, so we render the translated i18n component. */}
+      {showPoweredBy && (
+        <PoweredByFeeFree className="block text-center text-xs text-gray-400 hover:text-gray-600 transition-colors py-6" />
+      )}
     </div>
   );
 }

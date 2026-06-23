@@ -1,10 +1,9 @@
 import { notFound } from "next/navigation";
-import { headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import prisma from "@/lib/db";
 import { resolveLocale, loadMessages } from "@/lib/i18n-server";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
-import { isOwnCustomDomainHost } from "@/lib/restaurant-url";
+import { isResellerWhiteLabel } from "@/lib/white-label";
 import { RestaurantInfoClient } from "./RestaurantInfoClient";
 
 export default async function RestaurantInfoPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -15,10 +14,10 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
     select: {
       id: true,
       slug: true, name: true, slogan: true, description: true,
-      // Custom-domain fields → hide the "Powered by Fee Free Ordering" footer when
-      // the customer is on the restaurant's OWN verified domain (white-label). On a
-      // platform subdomain / apex the branding still shows. Luigi 2026-06-22.
-      customDomain: true, customDomainStatus: true,
+      // Reseller white-label gate for the "Powered by Fee Free Ordering" credit:
+      // we SHOW the credit on every restaurant (free marketing + SEO backlink) and
+      // hide it ONLY for reseller white-label accounts. Luigi 2026-06-22.
+      resellerProfile: { select: { status: true, whiteLabelStatus: true, whiteLabelTier: true } },
       phone: true, email: true, address: true, city: true, state: true, zip: true,
       lat: true, lng: true,
       mapProvider: true, googleMapsApiKey: true,
@@ -51,14 +50,15 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
   const locale = await resolveLocale({ restaurantId: restaurant.id });
   const messages = await loadMessages(locale);
 
-  // White-label: suppress the platform "Powered by" footer when the customer is
-  // served on the restaurant's own verified custom domain (zero platform branding).
-  const host = (await headers()).get("host");
-  const hideBranding = isOwnCustomDomainHost(restaurant, host);
+  // SHOW the clickable "Powered by Fee Free Ordering" credit on every restaurant
+  // (free marketing + SEO backlink), suppressing it ONLY for reseller white-label
+  // accounts (they pay for their own branding). A plain restaurant on its own
+  // verified custom domain STILL shows the credit. Luigi 2026-06-22.
+  const showPoweredBy = !isResellerWhiteLabel(restaurant.resellerProfile);
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <RestaurantInfoClient restaurant={restaurant as any} hideBranding={hideBranding} />
+      <RestaurantInfoClient restaurant={restaurant as any} showPoweredBy={showPoweredBy} />
     </NextIntlClientProvider>
   );
 }

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { MapPin, Phone, ArrowRight } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
 import { buildSeoLinks, parseSeoSlug } from "@/lib/hosted-site-seo";
+import { isResellerWhiteLabel } from "@/lib/white-label";
 import { VisitTracker } from "@/components/order/VisitTracker";
 
 /**
@@ -298,9 +299,15 @@ export default async function SeoLandingPage({
       <footer className="bg-gray-900 text-gray-300 py-8">
         <div className="max-w-5xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
           <p>&copy; {new Date().getFullYear()} {r.name}</p>
-          {r.customDomainStatus !== "verified" && (
+          {!isResellerWhiteLabel(r.resellerProfile) && (
             <p className="text-xs text-gray-500">
-              Powered by Fee Free Ordering
+              <a
+                href="https://www.feefreeordering.com"
+                target="_blank"
+                rel="noopener"
+              >
+                Powered by Fee Free Ordering
+              </a>
             </p>
           )}
         </div>

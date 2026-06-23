@@ -19,6 +19,7 @@ import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { dispatchOrderToShipday, cancelShipdayOrder, shouldDispatchToShipday } from "@/lib/shipday";
 import { verifyOrderToken } from "@/lib/order-status-token";
 import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledger";
+import { RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 
 const ALLOWED_STATUSES = ["pending", "accepted", "preparing", "ready", "completed", "rejected", "cancelled"] as const;
 
@@ -74,6 +75,10 @@ const PUBLIC_ORDER_SELECT = {
       // this, a European customer who paid €20 would see "$20.00" on
       // the receipt — confusing and wrong.
       currency: true,
+      // Reseller white-label fields — let the status page gate the
+      // "Powered by Fee Free Ordering" credit (shown for every restaurant
+      // EXCEPT reseller white-label accounts). Luigi 2026-06-22.
+      resellerProfile: { select: RESELLER_WHITE_LABEL_SELECT },
     },
   },
   items: {

@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { use } from "react";
+import { PoweredByFeeFree } from "@/components/PoweredByFeeFree";
+import { isResellerWhiteLabel } from "@/lib/white-label";
 
 // Two step sets based on the restaurant's kitchen workflow mode. The
 // "simple" mode (GloriaFood-style) just has accept/reject in the kitchen —
@@ -260,6 +262,12 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   const cameFromMarketplace = !!order.viaMarketplace;
   const backHref = cameFromMarketplace ? "/" : `/order/${slug}`;
   const backLabel = cameFromMarketplace ? t("browseOtherRestaurantsBack") : t("backToMenu");
+
+  // Show the free-marketing platform credit unless this restaurant is sold
+  // under a reseller's own branded (white-label) account. The reseller
+  // white-label fields ride along on order.restaurant from the public
+  // /api/orders/[id] select. Luigi 2026-06-22.
+  const showPoweredBy = !isResellerWhiteLabel(order.restaurant?.resellerProfile);
 
   // ── Promo snapshot parse ─────────────────────────────────────────
   // Same shape used by the confirmation page + receipt template.
@@ -784,6 +792,12 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
               </Link>
             )}
           </div>
+
+          {/* Free-marketing platform credit + SEO backlink. Hidden only for
+              reseller white-label accounts; suppressed in print. */}
+          {showPoweredBy && (
+            <PoweredByFeeFree className="no-print block text-center text-xs text-gray-400 hover:text-gray-600 transition-colors py-6" />
+          )}
         </div>
       </div>
 

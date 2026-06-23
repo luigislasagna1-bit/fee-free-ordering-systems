@@ -10,6 +10,7 @@ import {
 import toast from "react-hot-toast";
 import { parseTheme } from "@/lib/theme";
 import { useTranslations } from "next-intl";
+import { PoweredByFeeFree } from "@/components/PoweredByFeeFree";
 
 const DeliveryZonesMap = dynamic(() => import("../DeliveryZonesMap"), { ssr: false });
 
@@ -83,12 +84,12 @@ interface Restaurant {
 
 export function RestaurantInfoClient({
   restaurant,
-  hideBranding = false,
+  showPoweredBy = true,
 }: {
   restaurant: Restaurant;
-  /** True when served on the restaurant's own verified custom domain — suppress
-   *  the "Powered by Fee Free Ordering" footer so the white-label is complete. */
-  hideBranding?: boolean;
+  /** Show the clickable "Powered by Fee Free Ordering" credit (free marketing +
+   *  SEO backlink). False only for reseller white-label accounts. Luigi 2026-06-22. */
+  showPoweredBy?: boolean;
 }) {
   const tInfo = useTranslations("info");
   const tOrdering = useTranslations("ordering");
@@ -550,14 +551,8 @@ export function RestaurantInfoClient({
           </div>
         )}
 
-        {!hideBranding && (
-          <div className="text-center text-xs text-gray-400 pb-4">
-            {tInfo.rich("poweredBy", {
-              brand: (chunks) => (
-                <span className="font-semibold" style={{ color: p }}>{chunks}</span>
-              ),
-            })}
-          </div>
+        {showPoweredBy && (
+          <PoweredByFeeFree color={p} className="text-center text-xs text-gray-400 pb-4" />
         )}
       </div>
     </div>

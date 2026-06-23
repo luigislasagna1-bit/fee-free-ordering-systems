@@ -16,6 +16,7 @@ import { resolveTodayHolidayClosure } from "@/lib/holiday-rules";
 import { isOnMarketplace } from "@/lib/marketplace";
 import { getCurrentCustomer } from "@/lib/customer-session";
 import { getSessionUser } from "@/lib/session";
+import { isResellerWhiteLabel, RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 
 export default async function OrderingPage({
   params,
@@ -97,6 +98,10 @@ export default async function OrderingPage({
         where: { isActive: true },
         orderBy: { sortOrder: "asc" },
       },
+      // Reseller white-label gate for the "Powered by Fee Free Ordering" credit.
+      // The credit SHOWS for every restaurant EXCEPT a reseller white-label account
+      // (sold under a reseller paying for their own branding). Luigi 2026-06-22.
+      resellerProfile: { select: RESELLER_WHITE_LABEL_SELECT },
     },
   });
 
@@ -409,6 +414,11 @@ export default async function OrderingPage({
     if (sb && !sb.claimedAt) sandboxClaimToken = sb.claimToken;
   }
 
+  // "Powered by Fee Free Ordering" credit: shown on the customer ordering page
+  // (free marketing + SEO backlink) for EVERY restaurant EXCEPT a reseller
+  // white-label account. NOT gated on custom domain. Luigi 2026-06-22.
+  const showPoweredBy = !isResellerWhiteLabel((restaurantBase as any).resellerProfile);
+
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       {sandboxClaimToken && <SandboxClaimBanner claimToken={sandboxClaimToken} />}
@@ -438,6 +448,7 @@ export default async function OrderingPage({
         marketplaceAccount={marketplaceAccount}
         customerIsReturning={customerIsReturning}
         isTestPreview={isTestPreview}
+        showPoweredBy={showPoweredBy}
         {...resolveTodayHolidayClosure((restaurant as any).holidays, (restaurant as any).timezone)}
         currentCustomer={currentCustomer
           ? {

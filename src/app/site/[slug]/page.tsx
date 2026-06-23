@@ -5,6 +5,7 @@ import Image from "next/image";
 import { MapPin, Phone, Mail, Globe, Clock, ShoppingBag } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
 import { buildSeoLinks } from "@/lib/hosted-site-seo";
+import { isResellerWhiteLabel } from "@/lib/white-label";
 import { VisitTracker } from "@/components/order/VisitTracker";
 
 /**
@@ -119,9 +120,15 @@ export default async function HostedSitePage({
           <p className="text-gray-600 mt-3 leading-relaxed">
             This restaurant is putting the finishing touches on their site. Check back shortly — they&apos;ll be ready to take your order soon.
           </p>
-          {result.customDomainStatus !== "verified" && (
+          {!isResellerWhiteLabel(result.resellerProfile) && (
             <div className="mt-8 text-[11px] text-gray-400 uppercase tracking-wider">
-              Powered by Fee Free Ordering
+              <a
+                href="https://www.feefreeordering.com"
+                target="_blank"
+                rel="noopener"
+              >
+                Powered by Fee Free Ordering
+              </a>
             </div>
           )}
         </div>
@@ -993,9 +1000,15 @@ export default async function HostedSitePage({
       <footer className="bg-gray-900 text-gray-300 py-8 pb-24 md:pb-8">
         <div className="max-w-5xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
           <p>&copy; {new Date().getFullYear()} {r.name}</p>
-          {r.customDomainStatus !== "verified" && (
+          {!isResellerWhiteLabel(r.resellerProfile) && (
             <p className="text-xs text-gray-500">
-              Powered by Fee Free Ordering
+              <a
+                href="https://www.feefreeordering.com"
+                target="_blank"
+                rel="noopener"
+              >
+                Powered by Fee Free Ordering
+              </a>
             </p>
           )}
         </div>

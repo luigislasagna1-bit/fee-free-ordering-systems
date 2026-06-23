@@ -10,6 +10,10 @@ import prisma from "@/lib/db";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 import { hasFeature } from "@/lib/entitlements";
 import {
+  RESELLER_WHITE_LABEL_SELECT,
+  type ResellerWhiteLabelProfile,
+} from "@/lib/white-label";
+import {
   parseHostedSiteSettings,
   type HostedSiteSettings,
 } from "@/lib/hosted-site-settings";
@@ -38,6 +42,12 @@ export interface HostedSiteData {
    *  attribution still shows. */
   customDomain: string | null;
   customDomainStatus: string;
+  /** Reseller white-label profile (status + white-label sub state). Drives
+   *  the "Powered by Fee Free Ordering" credit: shown UNLESS this restaurant
+   *  is a reseller white-label account (isResellerWhiteLabel() === true). A
+   *  plain restaurant on its OWN custom domain STILL shows the credit. Luigi
+   *  2026-06-22 — the credit is free marketing + an SEO backlink. */
+  resellerProfile: ResellerWhiteLabelProfile | null;
   socialLinks: Record<string, string> | null;
   themeSettings: Record<string, unknown> | null;
   hours: Array<{
@@ -128,10 +138,11 @@ export interface HostedSiteData {
 export type HostedSiteResult =
   | { kind: "ok"; data: HostedSiteData }
   | { kind: "not_found" }
-  // customDomainStatus so the "Coming soon" placeholder can hide the
-  // platform attribution when the restaurant is already on a verified
-  // custom domain.
-  | { kind: "not_published"; customDomainStatus: string }
+  // resellerProfile so the "Coming soon" placeholder can SHOW the platform
+  // attribution unless the restaurant is a reseller white-label account.
+  // Luigi 2026-06-22 — the credit is hidden ONLY for reseller white-label,
+  // never for a plain restaurant (even on its own custom domain).
+  | { kind: "not_published"; resellerProfile: ResellerWhiteLabelProfile | null }
   | { kind: "upgrade_required"; restaurantName: string };
 
 /**
@@ -150,9 +161,12 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       // even after the owner set one). Luigi 2026-06-05.
       faviconUrl: true,
       bannerUrl: true, socialLinks: true, themeSettings: true,
-      // Custom-domain routing state — drives whether customer-facing
-      // surfaces drop the platform "Powered by" attribution.
+      // Custom-domain routing state — kept for OG/title logic. (NOT used to
+      // gate the "Powered by" credit anymore; that's resellerProfile below.)
       customDomain: true, customDomainStatus: true,
+      // Reseller white-label state — gates the "Powered by Fee Free Ordering"
+      // credit. Credit shows UNLESS isResellerWhiteLabel() is true.
+      resellerProfile: { select: RESELLER_WHITE_LABEL_SELECT },
       hostedSiteSettings: true,
       lat: true, lng: true, mapProvider: true, googleMapsApiKey: true,
       isActive: true, publishedAt: true,
@@ -166,7 +180,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
   });
   if (!restaurant || !restaurant.isActive) return { kind: "not_found" };
   if (!restaurant.publishedAt) {
-    return { kind: "not_published", customDomainStatus: restaurant.customDomainStatus };
+    return { kind: "not_published", resellerProfile: restaurant.resellerProfile };
   }
 
   const entitled = await hasFeature(restaurant.id, "hosted_marketing_page");
@@ -322,6 +336,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       bannerUrl: restaurant.bannerUrl,
       customDomain: restaurant.customDomain,
       customDomainStatus: restaurant.customDomainStatus,
+      resellerProfile: restaurant.resellerProfile,
       socialLinks: safeJson(restaurant.socialLinks),
       themeSettings: safeJson(restaurant.themeSettings),
       hours,
