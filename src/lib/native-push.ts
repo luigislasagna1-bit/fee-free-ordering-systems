@@ -40,7 +40,16 @@ function getPlatform(): string {
   }
 }
 
+// Remember the live FCM token so logout can unregister exactly THIS device
+// (the DELETE is token-scoped → other kitchen devices keep ringing). Luigi 2026-06-23 (L1).
+const KITCHEN_PUSH_TOKEN_KEY = "ffo_kitchen_push_token";
+
 async function postToken(token: string): Promise<void> {
+  try {
+    localStorage.setItem(KITCHEN_PUSH_TOKEN_KEY, token);
+  } catch {
+    /* private mode / storage disabled — unregister-on-logout falls back to a no-op */
+  }
   try {
     await fetch("/api/kitchen/register-device", {
       method: "POST",
@@ -110,4 +119,40 @@ export async function registerKitchenPush(): Promise<void> {
     console.error("[native-push] registerKitchenPush failed", e);
     started = false;
   }
+}
+
+/**
+ * Unregister THIS device's push token on logout so the server stops ringing it.
+ *
+ * Without this, a logged-out phone's always-on keep-alive poll keeps its still-registered
+ * token and rings on every new order (Fabrizio L1, 2026-06-23). We delete the remembered
+ * token server-side (DELETE is token-scoped → other kitchen devices are unaffected) and
+ * clear it locally. Best-effort + no-op off-app / when no token was stored (a plain
+ * browser never registers one). Resets the once-guard so a re-login in the same app run
+ * re-registers this device.
+ */
+export async function unregisterKitchenPush(): Promise<void> {
+  let token = "";
+  try {
+    token = localStorage.getItem(KITCHEN_PUSH_TOKEN_KEY) ?? "";
+  } catch {
+    /* storage disabled */
+  }
+  if (token) {
+    try {
+      await fetch("/api/kitchen/register-device", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+    } catch (e) {
+      console.error("[native-push] unregister DELETE failed", e);
+    }
+  }
+  try {
+    localStorage.removeItem(KITCHEN_PUSH_TOKEN_KEY);
+  } catch {
+    /* storage disabled */
+  }
+  started = false; // let a re-login on the same app run re-register this device
 }

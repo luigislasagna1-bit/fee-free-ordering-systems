@@ -23,8 +23,8 @@ import {
   nativePrint,
   nativePrinterErrorCopy,
 } from "@/lib/native-printer";
-import { registerKitchenPush } from "@/lib/native-push";
-import { isNativeAlarmAvailable, nativeHushAlarm, nativeRearmAlarm } from "@/lib/native-order-alarm";
+import { registerKitchenPush, unregisterKitchenPush } from "@/lib/native-push";
+import { isNativeAlarmAvailable, nativeHushAlarm, nativeRearmAlarm, nativeStopAlarm } from "@/lib/native-order-alarm";
 import { NativePrinterSetup, getDirectPrinterConfig } from "./NativePrinterSetup";
 import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
 import { useTranslations, useLocale } from "next-intl";
@@ -2478,6 +2478,10 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
               );
             } catch { /* SSR guard */ }
             try {
+              // L1: stop the ring + unregister this device's push token BEFORE the
+              // forced sign-out, so its keep-alive poll has no token → stops ringing.
+              try { await nativeStopAlarm(); } catch { /* best-effort */ }
+              try { await unregisterKitchenPush(); } catch { /* best-effort */ }
               const { signOut } = await import("next-auth/react");
               await signOut({ redirect: true, callbackUrl: "/kitchen/login" });
             } catch {
@@ -3244,7 +3248,15 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                   <div className={`my-1 border-t ${t.border}`} />
                   <button
                     type="button"
-                    onClick={() => { setShowQuickMenu(false); signOut({ callbackUrl: "/kitchen/login" }); }}
+                    onClick={async () => {
+                      setShowQuickMenu(false);
+                      // L1: stop the ring + unregister THIS device's push token before
+                      // signing out, so a logged-out phone stops ringing (its keep-alive
+                      // poll's token is gone → ringing:false). Best-effort. Luigi 2026-06-23.
+                      try { await nativeStopAlarm(); } catch { /* best-effort */ }
+                      try { await unregisterKitchenPush(); } catch { /* best-effort */ }
+                      signOut({ callbackUrl: "/kitchen/login" });
+                    }}
                     className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium ${t.text} hover:bg-gray-500/10 transition text-left`}
                   >
                     <LogOut className="w-4 h-4 flex-shrink-0" />
