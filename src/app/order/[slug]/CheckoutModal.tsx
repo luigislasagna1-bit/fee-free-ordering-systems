@@ -494,6 +494,31 @@ export function CheckoutModal({
       ? tc("timeCateringNotice", { hours: cateringNoticeHours ?? 24 })
       : `${tc("asap")} · ~${orderType === "delivery" ? estimatedDeliveryMinutes : estimatedPickupMinutes} min`;
 
+  // Guard (O1, Luigi 2026-06-23): a scheduled time BEFORE "now + standard prep" in the RESTAURANT's
+  // wall clock must never reach the server (it 400s with scheduled_in_past). The slot dropdown already
+  // filters these out, but the exact-time <input type="time"> min is only a soft hint (the native
+  // spinner still lets you pick earlier), so we HARD-block here: disable Place Order + show the inline
+  // notice. Mirrors the picker's own minDate/minTimeForDate math via toWallClock, so it can never
+  // false-block a slot the picker would legitimately offer (incl. catering — its picks are future).
+  const scheduledTooEarly = (() => {
+    const sf = customerInfo.scheduledFor;
+    if (!sf) return false;
+    const [dPart, tFull] = sf.split("T");
+    const tPart = (tFull || "").slice(0, 5);
+    if (!dPart || !tPart) return false;
+    const wc = (ms: number): string => {
+      if (toWallClock) return toWallClock(ms);
+      const d = new Date(ms);
+      const p = (n: number) => String(n).padStart(2, "0");
+      return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+    };
+    const prep = Math.max(0, orderType === "delivery" ? estimatedDeliveryMinutes : estimatedPickupMinutes);
+    const [minDate, minTime] = wc(Date.now() + prep * 60_000).split("T");
+    if (dPart < minDate) return true;
+    if (dPart === minDate && tPart < (minTime || "").slice(0, 5)) return true;
+    return false;
+  })();
+
   // Human-readable summary for the collapsed payment-method card.
   // Stays consistent with the picker labels below; "card" remains the
   // legacy slug used by the Stripe online-payment branch elsewhere in
@@ -1655,6 +1680,11 @@ export function CheckoutModal({
           </div>
         </div>
 
+        {scheduledTooEarly && (
+          <div className="border-t border-red-100 px-5 py-2.5 bg-red-50 text-xs text-red-700 font-medium flex-shrink-0">
+            {tc("toasts.scheduledInPast")}
+          </div>
+        )}
         {/* Footer */}
         <div className="border-t border-gray-100 px-5 py-4 bg-white flex-shrink-0 flex items-center gap-3">
           <div className="flex-1">
@@ -1663,7 +1693,7 @@ export function CheckoutModal({
           </div>
           <button
             onClick={placeOrder}
-            disabled={orderLoading || cart.length === 0}
+            disabled={orderLoading || cart.length === 0 || scheduledTooEarly}
             className="flex-1 sm:flex-none text-white font-bold py-3 px-6 rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-50 text-base"
             style={{ backgroundColor: theme.primaryColor }}
           >
