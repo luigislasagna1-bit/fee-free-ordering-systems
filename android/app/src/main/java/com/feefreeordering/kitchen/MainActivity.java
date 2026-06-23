@@ -36,6 +36,7 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(DirectPrinterPlugin.class);
+        registerPlugin(OrderAlarmPlugin.class);
         super.onCreate(savedInstanceState);
         // Allow the in-app web ring (the loud official GloriaFood track) to autoplay
         // with NO screen tap — the kitchen must never have to tap to make sound. The
@@ -46,6 +47,9 @@ public class MainActivity extends BridgeActivity {
         requestBatteryExemption();
         startKeepAlive();
         createLoudOrderChannel();
+        // Doze-proof heartbeat: re-asserts the keep-alive poll even after aggressive OEMs
+        // (Samsung One UI) kill it in deep sleep — the reliable screen-off ring path (K1).
+        HeartbeatReceiver.schedule(this);
     }
 
     /** Create the loud "orders_loud2" notification channel (Android 8+) whose
@@ -116,14 +120,21 @@ public class MainActivity extends BridgeActivity {
     public void onResume() {
         super.onResume();
         isForeground = true;
-        // Opening the app silences the loud order alarm; the in-app kitchen ring
-        // + accept countdown take over from here.
-        OrderAlarmService.stop(this);
+        // v2.6 single-engine (continuity): do NOT stop the native alarm on open — it keeps
+        // playing seamlessly so the ring never restarts from the top when staff open the
+        // app. The WebView hushes it (per-order) when an order DETAIL is opened, and the
+        // poll stops it on accept/expiry. (v2.5 + browser still use the web ring; this
+        // native engine only owns the ring when the OrderAlarm plugin is present, which the
+        // WebView detects.) Luigi 2026-06-23.
     }
 
     @Override
     public void onPause() {
         isForeground = false;
+        // Backgrounding / screen-off clears any "viewing the order detail" hush so a
+        // still-pending order rings screen-off again (the WebView also does this via its
+        // visibility handler — this is the native safety net). No-op if nothing's ringing.
+        OrderAlarmService.rearm(this);
         super.onPause();
     }
 }

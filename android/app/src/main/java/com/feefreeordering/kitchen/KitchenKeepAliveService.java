@@ -115,12 +115,12 @@ public class KitchenKeepAliveService extends Service {
                         lastVibrate = !resp.contains("\"vibrate\":false");
                         ringing = resp.contains("\"ringing\":true");
                     }
-                    // Native alarm = screen-off / backgrounded ONLY. Foreground, the
-                    // in-app web ring (loud official GloriaFood track, stop-on-open)
-                    // handles it — firing the native alarm too is the double-ring. When
-                    // the app comes foreground, the else-branch STOPS a running alarm so
-                    // the web takes over cleanly. Luigi 2026-06-22.
-                    if (ringing && !MainActivity.isForeground) {
+                    // v2.6 single-engine: the native alarm owns the ring in ALL states (the
+                    // v2.6 WebView suppresses its own ring when the OrderAlarm plugin is
+                    // present). Start regardless of foreground — idempotent via isRunning,
+                    // and a hush from an opened detail is preserved by that same guard.
+                    // Stop ONLY when the server says nothing is ringing (accepted/expired).
+                    if (ringing) {
                         if (!OrderAlarmService.isRunning) {
                             Intent i = new Intent(this, OrderAlarmService.class);
                             i.putExtra("vibrate", lastVibrate);

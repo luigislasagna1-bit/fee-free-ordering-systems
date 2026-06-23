@@ -67,6 +67,24 @@
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
                 android:value="Keeps the kitchen order app connected so new-order alerts ring in real time, even with the screen off." />
         </service>
+
+        <!-- Doze-proof heartbeat (K1): an exact-while-idle AlarmManager beat re-asserts the
+             keep-alive poll even after aggressive OEMs kill it in deep sleep. Triggered by
+             an explicit PendingIntent, so no intent-filter is needed. Luigi 2026-06-23. -->
+        <receiver
+            android:name=".HeartbeatReceiver"
+            android:exported="false" />
+
+        <!-- Re-arm the keep-alive + heartbeat after a reboot (kitchen tablets reboot on
+             power blips) so orders ring without someone opening the app first. -->
+        <receiver
+            android:name=".BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
     </application>
 
     <!-- Permissions -->
@@ -92,4 +110,11 @@
          optimization, so Android doesn't sleep it and drop the new-order alarm
          push when the screen is off. Luigi 2026-06-16. -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <!-- Boot receiver: re-arm the keep-alive + heartbeat after a reboot. Luigi 2026-06-23. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- NOTE: we deliberately declare NO exact-alarm permission (USE_EXACT_ALARM /
+         SCHEDULE_EXACT_ALARM). Google Play restricts those to alarm-clock-class apps and could
+         flag/reject this restaurant app at review. The heartbeat uses an EXACT while-idle alarm
+         only on pre-API-31 (e.g. the Samsung A10 target, where it needs no permission) and falls
+         back to an INEXACT while-idle alarm on API 31+ (also no permission). See HeartbeatReceiver. -->
 </manifest>

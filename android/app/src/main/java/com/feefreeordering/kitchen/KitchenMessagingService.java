@@ -33,12 +33,11 @@ public class KitchenMessagingService extends MessagingService {
         if (data == null) return;
         if (!"new_order".equals(data.get("type"))) return;
 
-        // Native alarm = screen-off / backgrounded ONLY. When the app is foreground
-        // the in-app web ring (the loud official GloriaFood track, which stops the
-        // instant an order is opened) handles it — firing the native alarm too is the
-        // double-ring. Luigi 2026-06-22.
-        if (MainActivity.isForeground) return;
-
+        // v2.6 single-engine: the native alarm owns the ring in ALL states (the v2.6
+        // WebView suppresses its own ring when the OrderAlarm plugin is present), so fire
+        // the (idempotent) alarm regardless of foreground — no double-ring, and a foreground
+        // push rings instantly. The hush latch + idempotent guard keep a currently-open
+        // order paused. Luigi 2026-06-23.
         Intent i = new Intent(this, OrderAlarmService.class);
         i.putExtra("title", data.get("title") != null ? data.get("title") : "New order");
         i.putExtra("body", data.get("body") != null ? data.get("body") : "");

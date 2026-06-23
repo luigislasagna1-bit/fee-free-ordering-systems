@@ -24,6 +24,7 @@ import {
   nativePrinterErrorCopy,
 } from "@/lib/native-printer";
 import { registerKitchenPush } from "@/lib/native-push";
+import { isNativeAlarmAvailable, nativeHushAlarm, nativeRearmAlarm } from "@/lib/native-order-alarm";
 import { NativePrinterSetup, getDirectPrinterConfig } from "./NativePrinterSetup";
 import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
 import { useTranslations, useLocale } from "next-intl";
@@ -731,7 +732,7 @@ const LONG_ALERT_BOOST = 6;
 // closed keep the longer 15-min buffer.)
 const ACCEPT_WINDOW_MS = 245 * 1000;
 
-export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any; initialOrders: Order[] }) {
+export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = null }: { restaurant: any; initialOrders: Order[]; resellerLogoUrl?: string | null }) {
   const tk = useTranslations("kitchen");
   const locale = useLocale();
   const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
@@ -853,6 +854,10 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
               // cadence. Mirrors the order-side auto-accept
               // chime so both surfaces sound identical for the
               // "new thing arrived, already accepted" event.
+              // DELIBERATELY NOT gated on isNativeAlarmAvailable(): the v2.6 native engine only
+              // rings PENDING reservations (alarm-state route), never auto-CONFIRMED ones, so this
+              // brief web chime is what keeps a confirmed booking audible on v2.6 — gating it would
+              // silence it. Safe: no double-ring, since native never rings confirmed bookings.
               try { ringBellOnceRef.current?.(); } catch { /* noop */ }
               toast(
                 `📅 ${newConfirmed.length} new reservation${newConfirmed.length > 1 ? "s" : ""} confirmed`,
@@ -1466,6 +1471,15 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
     };
   }, []);
 
+  // v2.6 single NATIVE engine detection (Luigi 2026-06-23). When the OrderAlarm Capacitor
+  // plugin is present (v2.6+ Kitchen Order App ONLY), the native OrderAlarmService owns the
+  // ring in ALL states, so we SUPPRESS every in-app web-ring effect below — no double-ring,
+  // and one continuous stream (the native ring never restarts on app-open). In a plain
+  // browser, or on a v2.5 app (no plugin), nativeAlarm stays false → the web ring works
+  // EXACTLY as before. Detected after mount (window-only) to avoid an SSR hydration mismatch.
+  const [nativeAlarm, setNativeAlarm] = useState(false);
+  useEffect(() => { setNativeAlarm(isNativeAlarmAvailable()); }, []);
+
   // Browsers require a user gesture before AudioContext can play. We unlock
   // it on the first click/keypress anywhere on the page, then keep the same
   // AudioContext alive for the lifetime of the session.
@@ -1864,7 +1878,8 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   useEffect(() => {
     // !pageVisible → screen off / backgrounded: the NATIVE alarm handles the
     // ring, so the in-app cadence (custom sound) stays silent to avoid a double.
-    if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) return;
+    // nativeAlarm (v2.6 app) → the native engine owns the ring in ALL states.
+    if (nativeAlarm || !ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) return;
     // "gloriafood" rings via the full-length uploaded alert TRACK (the
     // dedicated long-alert effect below), NOT this short-ding cadence — Luigi
     // wants his exact full-length GloriaFood alert at max volume, not a trimmed
@@ -1895,7 +1910,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       cancelled = true;
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [ringAudible, alertMuted, alertVolume, pageVisible, ringBellOnce]);
+  }, [nativeAlarm, ringAudible, alertMuted, alertVolume, pageVisible, ringBellOnce]);
 
   // Cut any in-flight custom/ding clip the moment the alarm should be silent —
   // the open order was the last pending one, the room was acknowledged, or the
@@ -1918,7 +1933,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
   useEffect(() => {
     const a = getLongAlert();
     if (!a) return;
-    const shouldPlay = (ringAudible || autoAcceptRinging) && alertSound === "gloriafood" && !alertMuted && alertVolume > 0 && pageVisible;
+    const shouldPlay = !nativeAlarm && (ringAudible || autoAcceptRinging) && alertSound === "gloriafood" && !alertMuted && alertVolume > 0 && pageVisible;
     if (shouldPlay) {
       // Route through the gain+limiter chain so the track plays WAY louder than
       // the file's own level (without clipping). volume = 1 feeds the chain at
@@ -1943,7 +1958,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       if (!a.paused) a.pause();
       try { a.currentTime = 0; } catch {}
     }
-  }, [ringAudible, autoAcceptRinging, longRing, alertSound, alertMuted, alertVolume, pageVisible, getLongAlert, ensureLongAlertRouting]);
+  }, [nativeAlarm, ringAudible, autoAcceptRinging, longRing, alertSound, alertMuted, alertVolume, pageVisible, getLongAlert, ensureLongAlertRouting]);
 
   // ── Re-arm audio when the app returns to the foreground (Luigi 2026-06-07) ──
   // Android (and backgrounded browser tabs) SUSPEND the AudioContext and pause
@@ -1966,7 +1981,7 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       // wake) let the NATIVE alarm finish — the pageVisible→true transition re-fires
       // the cadence/long-alert effects to start the in-app sound cleanly. (The
       // AudioContext resume above still runs immediately so it's ready by then.)
-      if (!ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) return;
+      if (nativeAlarm || !ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) return;
       // gloriafood resumes its full-length track; other sounds fire one ding
       // (the cadence effect keeps them going). Luigi 2026-06-09.
       if (alertSound === "gloriafood") {
@@ -1985,7 +2000,24 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
       window.removeEventListener("focus", rearm);
       window.removeEventListener("pageshow", rearm);
     };
-  }, [ringAudible, alertMuted, alertVolume, alertSound, pageVisible, ringBellOnce, ensureLongAlertRouting]);
+  }, [nativeAlarm, ringAudible, alertMuted, alertVolume, alertSound, pageVisible, ringBellOnce, ensureLongAlertRouting]);
+
+  // v2.6 single-engine HUSH driver (Luigi 2026-06-23): when the native engine owns the ring,
+  // replicate the verified v2.4 hush behaviours. PAUSE the native ring when foreground AND
+  // either: the room pressed SILENCE (acknowledged — same as v2.4, where Silence stopped the
+  // foreground ring; a NEW order clears acknowledged via fetchOrders and re-rings), OR staff
+  // opened the SOLE pending order's detail (ringAudible already EXCLUDES the open order, so
+  // !ringAudible means nothing else needs ringing). RESUME otherwise — including when
+  // backgrounded (pageVisible false), so a still-pending order rings screen-off again (the
+  // native onPause re-arms too). hush/rearm are best-effort + idempotent on the native side.
+  useEffect(() => {
+    if (!nativeAlarm) return;
+    const shouldHush =
+      pageVisible &&
+      (acknowledged || (!ringAudible && (openOrderIsPending || openReservationIsPending)));
+    if (shouldHush) nativeHushAlarm();
+    else nativeRearmAlarm();
+  }, [nativeAlarm, pageVisible, acknowledged, ringAudible, openOrderIsPending, openReservationIsPending]);
 
   const testAlertSound = useCallback(() => {
     // Preview the ONE official sound — a short snippet of the liked GloriaFood
@@ -2260,16 +2292,21 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         // ringBellOnce via refs so this deps=[] fetchOrders callback stays stable
         // across polls. Screen-off auto-accept rings via the native alarm
         // (/api/kitchen/alarm-state). Luigi 2026-06-22.
-        try {
-          if (alertSoundRef.current === "gloriafood") {
-            setAutoAcceptRinging(true);
-            if (autoAcceptTimerRef.current) clearTimeout(autoAcceptTimerRef.current);
-            autoAcceptTimerRef.current = setTimeout(() => setAutoAcceptRinging(false), 5000);
-          } else {
-            try { audioCtxRef.current?.resume?.(); } catch { /* noop */ }
-            ringBellOnceRef.current?.();
-          }
-        } catch { /* noop */ }
+        // Auto-accept ring: in a browser / v2.5 app the WebView plays the ~5s ring. In the
+        // v2.6 app the NATIVE engine rings the ~8s auto-accept window (server alarm-state),
+        // so skip the web ring to avoid a double. (Auto-PRINT below still fires in both.)
+        if (!isNativeAlarmAvailable()) {
+          try {
+            if (alertSoundRef.current === "gloriafood") {
+              setAutoAcceptRinging(true);
+              if (autoAcceptTimerRef.current) clearTimeout(autoAcceptTimerRef.current);
+              autoAcceptTimerRef.current = setTimeout(() => setAutoAcceptRinging(false), 5000);
+            } else {
+              try { audioCtxRef.current?.resume?.(); } catch { /* noop */ }
+              ringBellOnceRef.current?.();
+            }
+          } catch { /* noop */ }
+        }
         toast(
           `✅ ${newAutoAccepted.length} new order${newAutoAccepted.length > 1 ? "s" : ""} auto-accepted`,
           { icon: "🍕", duration: 5000 },
@@ -3119,12 +3156,20 @@ export function KitchenDisplay({ restaurant, initialOrders }: { restaurant: any;
         style={{ paddingTop: "max(2.5rem, env(safe-area-inset-top))" }}
       >
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          <ChefHat className="w-6 h-6 text-emerald-500 flex-shrink-0" />
+          {resellerLogoUrl ? (
+            <img src={resellerLogoUrl} alt="" className="w-6 h-6 object-contain flex-shrink-0" />
+          ) : (
+            <ChefHat className="w-6 h-6 text-emerald-500 flex-shrink-0" />
+          )}
           <div className="min-w-0">
             <div className={`font-bold text-sm sm:text-base ${t.text} leading-tight truncate`}>{restaurant?.name ?? "Kitchen"}</div>
             {/* Subtitle hidden on phones — they're already on the kitchen page, the chef-hat
-                + restaurant name is enough orientation. Frees ~14px vertical for the tabs. */}
-            <div className={`text-xs ${t.muted} hidden sm:block`}>Kitchen Order App</div>
+                + restaurant name is enough orientation. Frees ~14px vertical for the tabs.
+                Hidden entirely when the reseller's logo is shown so the de-branded surface
+                carries ZERO "Kitchen Order App" platform text. */}
+            {!resellerLogoUrl && (
+              <div className={`text-xs ${t.muted} hidden sm:block`}>Kitchen Order App</div>
+            )}
           </div>
         </div>
 

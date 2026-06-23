@@ -21,28 +21,43 @@ import android.os.Vibrator;
 import androidx.core.app.NotificationCompat;
 
 /**
- * Foreground service that plays the "GloriaFood ring" — the kitchen order sound,
- * LOOPING on the ALARM stream (loud, ignores ring/notification volume), plus a
- * full-screen-intent notification that wakes the screen / shows over the lock
- * screen like an incoming call. Started by KitchenMessagingService on a new
- * order when the app is backgrounded / screen off / closed.
+ * Foreground service that plays the "GloriaFood ring" — the kitchen order sound on the
+ * ALARM stream (loud, ignores ring/notification volume), plus a full-screen-intent
+ * notification that wakes the screen / shows over the lock screen like an incoming call.
  *
- * Stops when: staff open the app (MainActivity.onResume calls stop()), they tap
- * "Silence", or a 2-minute safety cap elapses (so it never rings forever).
- * Luigi 2026-06-15.
+ * v2.6 SINGLE ENGINE (Luigi 2026-06-23): this owns the ring in ALL states (foreground +
+ * screen-off) inside the v2.6 app — the WebView suppresses its own ring when the
+ * OrderAlarm plugin is present. Started by KitchenMessagingService (FCM) and the
+ * KitchenKeepAliveService poll, regardless of foreground. Opening the app does NOT stop
+ * it (continuity — the ring never restarts from the top); the WebView HUSHES it per-order
+ * when an order DETAIL is opened.
+ *
+ * Stops when: the poll sees the order leave "pending" (accepted / window expired →
+ * ringing:false → stop()), staff tap "Silence", or the MAX_RING_MS safety cap elapses.
  */
 public class OrderAlarmService extends Service {
 
     static final String CHANNEL_ID = "orders_alarm";
     static final int NOTIF_ID = 4711;
     static final String ACTION_STOP = "com.feefreeordering.kitchen.STOP_ALARM";
-    // 5-min safety cap. Normally the keep-alive poll stops the alarm MUCH sooner
-    // — the instant the order is accepted (leaves "pending") or its accept window
-    // expires. This cap only matters if the poll dies. Luigi 2026-06-16.
-    static final long MAX_RING_MS = 300_000L;
+    static final String ACTION_HUSH = "com.feefreeordering.kitchen.HUSH_ALARM";
+    static final String ACTION_REARM = "com.feefreeordering.kitchen.REARM_ALARM";
+    // 16-min safety cap (> the longest 15-min closed-when-placed accept window, so a legit long
+    // ring is never cut short). Normally the keep-alive poll stops the alarm MUCH sooner — the
+    // instant the order is accepted (leaves "pending") or its window expires. This cap only
+    // matters if the poll dies. Cleared while hushed + re-armed on rearm so a hush can't let it
+    // kill a still-pending order. Luigi 2026-06-23.
+    static final long MAX_RING_MS = 16 * 60 * 1000L;
     /** True while the alarm is ringing — the keep-alive poll + FCM both read this
      *  so a re-trigger never restarts the sound, and the poll knows when to stop. */
     static volatile boolean isRunning = false;
+    /** Set when the WebView HUSHES the ring because staff OPENED the order detail (v2.6
+     *  single-engine, replicating the verified v2.4 stop-on-open). The alarm PAUSES but
+     *  the service stays alive (isRunning stays true), so the keep-alive poll's idempotent
+     *  guard won't resume it while the order is still pending — only a real stop
+     *  (accepted / window expired → ringing:false) or rearm() (staff backed out, or the
+     *  app backgrounded) resumes it. Reset on each fresh start + on destroy. Luigi 2026-06-23. */
+    static volatile boolean hushedByUser = false;
 
     private MediaPlayer player;
     private Vibrator vibrator;
@@ -54,10 +69,26 @@ public class OrderAlarmService extends Service {
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable autoStop;
 
-    /** Stop any running alarm — called from MainActivity when the app opens. */
+    /** Stop any running alarm (order accepted / window expired / force-stop). */
     static void stop(Context ctx) {
         try {
             ctx.startService(new Intent(ctx, OrderAlarmService.class).setAction(ACTION_STOP));
+        } catch (Exception ignored) {}
+    }
+
+    /** PAUSE the ring (staff opened the order detail) WITHOUT ending the service, so the
+     *  poll's idempotent guard keeps it paused. Resumes via rearm(). No-op if not ringing. */
+    static void hush(Context ctx) {
+        try {
+            ctx.startService(new Intent(ctx, OrderAlarmService.class).setAction(ACTION_HUSH));
+        } catch (Exception ignored) {}
+    }
+
+    /** Resume a hushed ring (staff backed out, or the app backgrounded with the order
+     *  still pending so it must ring screen-off again). No-op if nothing is ringing. */
+    static void rearm(Context ctx) {
+        try {
+            ctx.startService(new Intent(ctx, OrderAlarmService.class).setAction(ACTION_REARM));
         } catch (Exception ignored) {}
     }
 
@@ -71,6 +102,29 @@ public class OrderAlarmService extends Service {
         if (intent != null && ACTION_STOP.equals(intent.getAction())) {
             stopSelf();
             return START_NOT_STICKY;
+        }
+        // HUSH = pause but KEEP the service alive (staff opened the order detail OR pressed
+        // Silence). The idempotent guard below sees isRunning==true so a poll/FCM re-trigger
+        // won't resume it; only rearm() or a real stop does. Guard against a zombie: if nothing
+        // is ringing (or the player is gone after a cap/kill), just stop.
+        if (intent != null && ACTION_HUSH.equals(intent.getAction())) {
+            if (!isRunning || player == null) { stopSelf(); return START_NOT_STICKY; }
+            hushedByUser = true;
+            // Pause the MAX_RING_MS safety timer while hushed, else a long look at the order
+            // detail could let the cap stopSelf() the paused service out from under a later
+            // rearm (→ silent). Re-armed in REARM.
+            if (autoStop != null) handler.removeCallbacks(autoStop);
+            try { if (player.isPlaying()) player.pause(); } catch (Exception ignored) {}
+            return START_STICKY;
+        }
+        // REARM = resume a hushed ring (back-out / new order / app backgrounded while pending).
+        if (intent != null && ACTION_REARM.equals(intent.getAction())) {
+            if (!isRunning || player == null) { stopSelf(); return START_NOT_STICKY; }
+            hushedByUser = false;
+            try { if (!player.isPlaying()) player.start(); } catch (Exception ignored) {}
+            // Re-arm the safety cap from now (it was cleared on hush).
+            if (autoStop != null) { handler.removeCallbacks(autoStop); handler.postDelayed(autoStop, MAX_RING_MS); }
+            return START_STICKY;
         }
         // Idempotent: a second start while already ringing (the poll AND an FCM
         // push can both ask) must NOT restart the sound — just keep ringing.
@@ -97,6 +151,7 @@ public class OrderAlarmService extends Service {
         }
 
         isRunning = true;
+        hushedByUser = false;
         startAlarm();
         // Play the FULL official GloriaFood ring (it intensifies in its final ~40s).
         // The keep-alive poll stops it the INSTANT the order is accepted (leaves
@@ -184,7 +239,18 @@ public class OrderAlarmService extends Service {
             // background "doesn't intensify"). The baked file keeps the full dynamic
             // range, so the screen-off ring is identical to the in-app one. Luigi 2026-06-22.
             player.setLooping(false);
-            player.setOnCompletionListener(mp -> stopSelf());
+            // Continuity (v2.6): if the full track finishes while the order is STILL
+            // pending and not hushed, replay it seamlessly (no stopSelf → poll-restart
+            // gap) so the ring is one continuous stream first→last. A real stop
+            // (accept/expire) comes through the poll's stop(); a hush pauses (so the track
+            // never completes while hushed). Each replay is the full baked-loud file, so
+            // every pass still intensifies in its final ~40s. Luigi 2026-06-23.
+            player.setOnCompletionListener(mp -> {
+                try {
+                    if (isRunning && !hushedByUser) { mp.seekTo(0); mp.start(); }
+                    else stopSelf();
+                } catch (Exception ignored) { stopSelf(); }
+            });
             player.prepare();
             player.start();
         } catch (Exception ignored) {}
@@ -208,6 +274,7 @@ public class OrderAlarmService extends Service {
     @Override
     public void onDestroy() {
         isRunning = false;
+        hushedByUser = false;
         if (autoStop != null) handler.removeCallbacks(autoStop);
         try { if (player != null) { player.stop(); player.release(); player = null; } } catch (Exception ignored) {}
         try { if (vibrator != null) vibrator.cancel(); } catch (Exception ignored) {}
