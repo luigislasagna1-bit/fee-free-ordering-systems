@@ -48,6 +48,9 @@ function LoginFormInner({
   // classes) when null. We only override the most prominent surfaces — the
   // remaining emerald utility classes stay as a sensible neutral fallback.
   const brandPrimary = branding?.primaryColor ?? null;
+  // Accent = the secondary brand tone for the secondary links (forgot password, sign-up).
+  // Falls back to the primary color, then to the default emerald, so it's always sensible.
+  const brandAccent = branding?.accentColor ?? brandPrimary;
   // Reseller-aware "Sign up" link: on a branded host, route to the branded
   // signup carrying the reseller id so the proxy + branded /signup skin it and
   // attribute the new restaurant to this reseller. Bare /signup otherwise.
@@ -185,7 +188,7 @@ function LoginFormInner({
               <a
                 href="/forgot-password"
                 className="text-xs text-emerald-600 hover:text-emerald-700"
-                style={brandPrimary ? { color: brandPrimary } : undefined}
+                style={brandAccent ? { color: brandAccent } : undefined}
               >
                 {tAuth("forgotPassword")}
               </a>

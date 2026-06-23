@@ -67,3 +67,43 @@ export async function resolveResellerBranding(
     referralCode: r.referralCode,
   };
 }
+
+/**
+ * Resolve a reseller's branded-auth chrome by their REFERRAL CODE (the `?ref=<code>` on their
+ * share link), gated identically (active white-label + approved). So a restaurant that lands on
+ * `/signup?ref=<code>` from a white-label reseller's share link gets the SAME branded signup
+ * (logo/colors/background) as the reseller's own branded host — not the generic FeeFree chrome.
+ * Luigi 2026-06-23.
+ */
+export async function resolveResellerBrandingByRef(
+  referralCode: string | undefined | null,
+): Promise<ResolvedReseller | null> {
+  const code = referralCode?.trim();
+  if (!code) return null;
+  const r = await prisma.resellerProfile.findFirst({
+    where: { referralCode: code, whiteLabelStatus: "active", status: "approved" },
+    select: {
+      id: true,
+      brandLogoUrl: true,
+      brandLoginTitle: true,
+      companyName: true,
+      brandPrimaryColor: true,
+      brandAccentColor: true,
+      brandLoginBgUrl: true,
+      referralCode: true,
+    },
+  });
+  if (!r) return null;
+  return {
+    branding: {
+      logoUrl: r.brandLogoUrl,
+      title: r.brandLoginTitle,
+      companyName: r.companyName,
+      primaryColor: r.brandPrimaryColor,
+      accentColor: r.brandAccentColor,
+      backgroundUrl: r.brandLoginBgUrl,
+    },
+    resellerScopeId: r.id,
+    referralCode: r.referralCode,
+  };
+}

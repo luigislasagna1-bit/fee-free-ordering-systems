@@ -75,6 +75,9 @@ export function SignupForm({
   // (#10b981) is the platform fallback when no reseller / no color is set.
   const EMERALD = "#10b981";
   const brandColor = branding?.primaryColor || EMERALD;
+  // Accent (secondary brand tone) — the "signing up under" banner + the sign-in link.
+  // Falls back to the primary color, then to the default emerald.
+  const brandAccent = branding?.accentColor || brandColor;
   // The display name for the "signing up under X" banner + logo alt text.
   const brandName = branding?.title || branding?.companyName || null;
   // Attribution code: prefer the host-derived reseller code, else the ?ref= URL
@@ -210,11 +213,11 @@ export function SignupForm({
           {branding && brandName && (
             <div
               className="rounded-xl p-3 mb-4 text-left"
-              style={{ backgroundColor: `${brandColor}14`, border: `1px solid ${brandColor}33` }}
+              style={{ backgroundColor: `${brandAccent}14`, border: `1px solid ${brandAccent}33` }}
             >
               <div className="flex items-start gap-2">
-                <Building2 className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: brandColor }} />
-                <div className="text-xs leading-snug" style={{ color: brandColor }}>
+                <Building2 className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: brandAccent }} />
+                <div className="text-xs leading-snug" style={{ color: brandAccent }}>
                   {tAuth("signingUpUnder", { brand: brandName })}
                 </div>
               </div>
@@ -496,8 +499,8 @@ export function SignupForm({
             // On a branded host the sign-in link adopts the partner's primary
             // color (inline) so the login↔signup pair stays on-brand; emerald
             // fallback otherwise.
-            className={`font-medium hover:underline ${branding?.primaryColor ? "" : "text-emerald-500"}`}
-            style={branding?.primaryColor ? { color: brandColor } : undefined}
+            className={`font-medium hover:underline ${branding?.primaryColor || branding?.accentColor ? "" : "text-emerald-500"}`}
+            style={branding?.primaryColor || branding?.accentColor ? { color: brandAccent } : undefined}
           >
             {t("signIn")}
           </Link>

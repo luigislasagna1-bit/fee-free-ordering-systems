@@ -51,6 +51,9 @@ export function ColorsClient({
 
   // Preview uses the chosen primary (or the platform default when unset/invalid).
   const previewColor = HEX_RE.test(primary) ? primary : DEFAULT_PRIMARY;
+  // Accent drives the secondary link in the preview, mirroring the live login/signup pages
+  // (button = primary, secondary links = accent). Falls back to the primary preview color.
+  const previewAccent = HEX_RE.test(accent) ? accent : previewColor;
   const previewTitle = title.trim() || companyName || "Restaurant Login";
 
   async function save() {
@@ -210,7 +213,7 @@ export function ColorsClient({
             >
               Sign in
             </button>
-            <div className="text-[11px] text-center mt-3" style={{ color: previewColor }}>
+            <div className="text-[11px] text-center mt-3" style={{ color: previewAccent }}>
               Create an account
             </div>
           </div>

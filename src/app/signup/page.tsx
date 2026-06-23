@@ -1,7 +1,7 @@
 import { resolveLocale } from "@/lib/i18n-server";
 import { SignupForm } from "./SignupForm";
 import prisma from "@/lib/db";
-import { resolveResellerBranding } from "@/lib/reseller-branding";
+import { resolveResellerBranding, resolveResellerBrandingByRef } from "@/lib/reseller-branding";
 
 /**
  * Signup page. Accepts an optional `?invite=<token>` query param which
@@ -46,7 +46,12 @@ export default async function SignupPage({
   // reseller resolves we PREFER its referralCode for attribution over any
   // ?ref= on the URL, so a host-derived branded signup is attributed to the
   // host's owner regardless of a stray query param.
-  const resolvedReseller = await resolveResellerBranding(params.reseller?.trim() || null);
+  // Prefer the host-derived ?reseller=<id> (branded host); otherwise skin from the reseller's
+  // ?ref=<referralCode> share link too, so a white-label reseller's signup is branded no matter
+  // how the restaurant arrives (branded host OR the shared /signup?ref= link). Luigi 2026-06-23.
+  const resolvedReseller =
+    (await resolveResellerBranding(params.reseller?.trim() || null)) ??
+    (refCode ? await resolveResellerBrandingByRef(refCode) : null);
   const brandedReferralCode = resolvedReseller?.referralCode ?? null;
 
   let inviteContext: {
