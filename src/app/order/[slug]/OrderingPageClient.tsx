@@ -3565,7 +3565,7 @@ export function OrderingPageClient({
                 if anything still doesn't fit, so even with translated
                 labels (Italian "Prenotazione tavolo" is much longer
                 than "Reservation") nothing gets cut off. */}
-            <div className="w-full sm:w-auto sm:ml-auto flex flex-wrap items-center gap-1.5 sm:gap-2">
+            <div className="w-full sm:w-auto sm:ml-auto flex flex-wrap items-center gap-1 sm:gap-2">
               <LanguageSwitcher currentLocale={locale} />
               {fromMarketplace ? (
                 // Marketplace-wide account (CustomerAccount) — one identity
@@ -3619,7 +3619,7 @@ export function OrderingPageClient({
                 // report cmpxeacks — not an overlay modal on the order page.
                 <a
                   href={`/order/${restaurant.slug}/reservation`}
-                  className="flex items-center gap-1.5 sm:gap-2 text-sm sm:text-sm font-bold px-4 sm:px-4 py-2.5 sm:py-2.5 rounded-full text-white transition hover:opacity-90 shadow-md ring-1 ring-white/10"
+                  className="flex items-center gap-1.5 sm:gap-2 text-sm sm:text-sm font-bold px-3 sm:px-4 py-2.5 sm:py-2.5 rounded-full text-white transition hover:opacity-90 shadow-md ring-1 ring-white/10"
                   style={{ backgroundColor: theme.primaryColor }}
                   title={t("tableReservation")}
                 >
@@ -3694,8 +3694,8 @@ export function OrderingPageClient({
         (liveStatusForClient.kind === "opens_at" || liveStatusForClient.kind === "closed_today") && (
         <div className="w-full bg-amber-400 border-b border-amber-500 px-4 sm:px-6 py-3">
           <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3">
-            <div className="flex items-start gap-2 text-amber-950 font-semibold text-sm min-w-0">
-              <Clock className="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <div className="flex items-center gap-2 text-amber-950 font-semibold text-xs sm:text-sm min-w-0">
+              <Clock className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
               <span>{t("closedNowBanner")}</span>
             </div>
             <button
