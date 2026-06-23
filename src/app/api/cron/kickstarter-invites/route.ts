@@ -63,6 +63,9 @@ async function handle(req: NextRequest) {
           slug: true,
           email: true,
           phone: true,
+          subdomain: true,
+          customDomain: true,
+          customDomainStatus: true,
           resellerProfile: { select: { status: true, companyName: true } },
         },
       },
@@ -129,6 +132,9 @@ async function handle(req: NextRequest) {
             slug: restaurant.slug,
             email: restaurant.email,
             phone: restaurant.phone,
+            subdomain: restaurant.subdomain,
+            customDomain: restaurant.customDomain,
+            customDomainStatus: restaurant.customDomainStatus,
             imprint,
           });
           // Mark sent regardless of result.success — Resend errors on a

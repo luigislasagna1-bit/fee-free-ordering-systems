@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import { ensureWidgetPublicId, getPublishState } from "@/lib/publishing";
+import { restaurantOrderUrl } from "@/lib/restaurant-url";
 import prisma from "@/lib/db";
 import { LegacyWidgetClient } from "./LegacyWidgetClient";
 
@@ -19,15 +20,30 @@ export default async function LegacyWebsitePage() {
   const [widgetPublicId, state, restaurant] = await Promise.all([
     ensureWidgetPublicId(user.restaurantId),
     getPublishState(user.restaurantId),
-    // slug needed by the button_link snippet (which links to /order/<slug>,
-    // not /embed/widget/<widgetPublicId> — we want a real shareable URL).
+    // slug + branded-domain fields feed restaurantOrderUrl() below so the
+    // owner's pasted button/Facebook/reservation links land on the
+    // restaurant's most-branded domain (verified custom domain > subdomain >
+    // apex) — not /embed/widget/<widgetPublicId> and not the platform apex.
     prisma.restaurant.findUnique({
       where: { id: user.restaurantId },
-      select: { slug: true, acceptsReservations: true },
+      select: {
+        slug: true,
+        subdomain: true,
+        customDomain: true,
+        customDomainStatus: true,
+        acceptsReservations: true,
+      },
     }),
   ]);
 
+  // Platform base — used ONLY for the /embed/* token URLs (widget.js script +
+  // iframe), which must stay on the apex.
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
+
+  // Customer-facing order links must land on the restaurant's MOST-BRANDED
+  // domain (verified custom domain > subdomain > apex), not the platform apex.
+  const orderUrl = restaurant ? restaurantOrderUrl(restaurant, "") : "";
+  const reservationUrl = restaurant ? restaurantOrderUrl(restaurant, "/reservation") : "";
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
@@ -48,8 +64,9 @@ export default async function LegacyWebsitePage() {
 
       <LegacyWidgetClient
         publicId={widgetPublicId}
-        orderSlug={restaurant?.slug ?? ""}
         baseUrl={baseUrl}
+        orderUrl={orderUrl}
+        reservationUrl={reservationUrl}
         isPublished={!!state.publishedAt}
         acceptsReservations={!!restaurant?.acceptsReservations}
       />

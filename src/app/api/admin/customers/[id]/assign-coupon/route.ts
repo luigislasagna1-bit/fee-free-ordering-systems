@@ -32,6 +32,7 @@ import crypto from "crypto";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { sendCouponAssignedEmail } from "@/lib/email";
+import { restaurantOrderUrl } from "@/lib/restaurant-url";
 
 function makePrefix(name: string): string {
   const initials = name
@@ -148,11 +149,11 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
           select: {
             name: true, slug: true, currency: true, defaultLanguage: true,
             email: true, phone: true,
+            subdomain: true, customDomain: true, customDomainStatus: true,
           },
         });
         if (!restaurant) return;
-        const baseUrl = (process.env.NEXT_PUBLIC_APP_URL || "").replace(/\/$/, "");
-        const orderUrl = baseUrl ? `${baseUrl}/order/${restaurant.slug}` : "#";
+        const orderUrl = restaurantOrderUrl(restaurant, "");
         await sendCouponAssignedEmail({
           to: customer.email!,
           customerName: customer.name,
@@ -166,7 +167,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
           expiresAt,
           description: body.description?.toString().slice(0, 200) || null,
           orderUrl,
-          restaurantUrl: orderUrl !== "#" ? orderUrl : undefined,
+          restaurantUrl: orderUrl,
           restaurantEmail: restaurant.email,
           restaurantPhone: restaurant.phone,
           locale: restaurant.defaultLanguage,

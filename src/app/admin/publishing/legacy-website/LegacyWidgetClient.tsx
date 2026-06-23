@@ -61,18 +61,23 @@ const DEFAULT_IFRAME_HEIGHT = 700;
 
 export function LegacyWidgetClient({
   publicId,
-  orderSlug,
   baseUrl,
+  orderUrl,
+  reservationUrl,
   isPublished,
   acceptsReservations = false,
 }: {
   publicId: string;
-  /** Public restaurant slug used in /order/<slug> URLs — passed alongside
-   *  publicId because the button_link snippet links to the real order
-   *  page (slug-based, shareable) while popup_js + iframe use the
-   *  widget-token URLs. */
-  orderSlug: string;
+  /** Platform apex base (NEXT_PUBLIC_APP_URL). Used ONLY for the /embed/*
+   *  token URLs (widget.js script + iframe), which must stay on the apex. */
   baseUrl: string;
+  /** Customer-facing storefront URL on the restaurant's MOST-BRANDED domain
+   *  (verified custom domain > subdomain > apex). Precomputed server-side via
+   *  restaurantOrderUrl so the owner's pasted button/Facebook link lands on
+   *  their own domain, not feefreeordering.com. */
+  orderUrl: string;
+  /** Customer-facing reservation URL on the most-branded domain. */
+  reservationUrl: string;
   isPublished: boolean;
   /** When true, emit a SECOND "Book a Table" widget snippet below the
    *  main ordering snippet. Mirrors GloriaFood's pattern where the same
@@ -119,10 +124,10 @@ export function LegacyWidgetClient({
       // visual treatment so the brand stays consistent across patterns.
       const safeColor = color || DEFAULT_COLOR;
       const safeLabel = escapeHtml(label || DEFAULT_LABEL);
-      // We embed the slug-based public order URL. publicId is the wgt_
-      // token used by the JS widget; for the public-facing order page
-      // we use the restaurant's slug, passed in as a prop.
-      const orderUrl = `${baseUrl}/order/${orderSlug}`;
+      // We embed the public-facing order URL on the restaurant's most-branded
+      // domain (verified custom domain > subdomain > apex), precomputed
+      // server-side. publicId is the wgt_ token used by the JS widget; the
+      // shareable order page uses the branded order URL passed in as a prop.
       return [
         `<!-- Fee Free Ordering — button link (opens menu in new tab) -->`,
         `<a href="${orderUrl}"`,
@@ -148,7 +153,7 @@ export function LegacyWidgetClient({
     }
     lines.push(`        async defer></script>`);
     return lines.join("\n");
-  }, [snippetType, baseUrl, publicId, label, color, position, customSelector, iframeHeight, orderSlug]);
+  }, [snippetType, baseUrl, publicId, label, color, position, customSelector, iframeHeight, orderUrl]);
 
   async function copy() {
     try {
@@ -548,8 +553,8 @@ export function LegacyWidgetClient({
       {acceptsReservations && (
         <ReservationSnippet
           publicId={publicId}
-          orderSlug={orderSlug}
           baseUrl={baseUrl}
+          reservationUrl={reservationUrl}
           snippetType={snippetType}
           color={color}
         />
@@ -563,7 +568,7 @@ export function LegacyWidgetClient({
           there's no code to embed; just copy and paste. This block
           surfaces the link with one-click copy + the same 3-step
           instructions GloriaFood ships. */}
-      <FacebookInstall orderUrl={`${baseUrl}/order/${orderSlug}`} />
+      <FacebookInstall orderUrl={orderUrl} />
 
       {/* ── Platform install guide ───────────────────────────────────── */}
       <div className="rounded-xl border border-blue-200 bg-blue-50 p-5 space-y-4">
@@ -920,14 +925,18 @@ function escapeHtml(s: string): string {
  */
 function ReservationSnippet({
   publicId,
-  orderSlug,
   baseUrl,
+  reservationUrl,
   snippetType,
   color,
 }: {
   publicId: string;
-  orderSlug: string;
+  /** Platform apex base — used ONLY for the /embed/* token URLs (iframe +
+   *  widget.js script), which must stay on the apex. */
   baseUrl: string;
+  /** Customer-facing reservation URL on the most-branded domain (used by the
+   *  plain HTML button_link the owner pastes on their own site). */
+  reservationUrl: string;
   snippetType: "popup_js" | "button_link" | "iframe";
   color: string;
 }) {
@@ -955,7 +964,7 @@ function ReservationSnippet({
       // the form. Same visual treatment as the main menu button.
       return [
         `<!-- Fee Free Ordering — Book a Table (HTML button) -->`,
-        `<a href="${baseUrl}/order/${orderSlug}/reservation"`,
+        `<a href="${reservationUrl}"`,
         `   target="_blank"`,
         `   rel="noopener noreferrer"`,
         `   style="display:inline-block;background:${color};color:#fff;padding:18px 36px;font-family:system-ui,-apple-system,sans-serif;font-size:18px;font-weight:700;text-decoration:none;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.2);letter-spacing:0.02em;white-space:nowrap;">Book a Table</a>`,
@@ -970,7 +979,7 @@ function ReservationSnippet({
       `        data-label="Book a Table"`,
       `        async defer></script>`,
     ].join("\n");
-  }, [publicId, orderSlug, baseUrl, snippetType, color]);
+  }, [publicId, baseUrl, reservationUrl, snippetType, color]);
 
   return (
     <div className="rounded-xl border border-gray-200 bg-gray-900 overflow-hidden">

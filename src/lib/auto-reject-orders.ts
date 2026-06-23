@@ -16,6 +16,7 @@ import { refundDirectPayment, voidPayment } from "@/lib/stripe";
 import { releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
+import { restaurantOrderUrl } from "@/lib/restaurant-url";
 
 /** Minutes a regular pending order can sit before we auto-reject.
  *  Matches the kitchen-display visual countdown (4 min) so the bell —
@@ -98,7 +99,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       smartLinkCounterApplied: true,
       placedWhileClosed: true,
       restaurant: {
-        select: { id: true, name: true, slug: true, defaultLanguage: true, stripeAccountId: true },
+        select: { id: true, name: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true, defaultLanguage: true, stripeAccountId: true },
       },
     },
   });
@@ -332,7 +333,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
             order.paymentMethod === "card" || order.paymentMethod === "paypal"
               ? ["authorized", "paid", "refunded"].includes(order.paymentStatus ?? "")
               : false,
-          trackingUrl: `${baseUrl}/order/${order.restaurant.slug}/status/${order.id}`,
+          trackingUrl: restaurantOrderUrl(order.restaurant, `/status/${order.id}`),
         },
       }).catch((e: unknown) => console.error("[auto-reject notifyCustomer]", e));
 

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { notifyCustomer, notifyStaff } from "@/lib/notifications";
+import { restaurantOrderUrl } from "@/lib/restaurant-url";
 
 /**
  * Test-order endpoint — kitchen "Test Order" button.
@@ -45,6 +46,11 @@ export async function POST() {
       select: {
         id: true,
         slug: true,
+        // Domain fields so restaurantOrderUrl() builds the customer
+        // confirmation link on the restaurant's most-branded host.
+        subdomain: true,
+        customDomain: true,
+        customDomainStatus: true,
         name: true,
         phone: true,
         address: true,
@@ -193,7 +199,7 @@ export async function POST() {
         estimatedTime: orderType === "pickup"
           ? restaurant.estimatedPickup
           : restaurant.estimatedDelivery,
-        trackingUrl: `${baseUrl}/order/${restaurant.slug}/status/${order.id}`,
+        trackingUrl: restaurantOrderUrl(restaurant, `/status/${order.id}`),
       },
     }).catch((e) => console.error("[test-order notifyCustomer]", e));
 

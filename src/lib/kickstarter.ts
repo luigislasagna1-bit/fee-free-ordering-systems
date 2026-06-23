@@ -27,6 +27,7 @@
 
 import prisma from "@/lib/db";
 import { sendAutopilotEmail, setEmailImprint } from "@/lib/email";
+import { restaurantOrderUrl } from "@/lib/restaurant-url";
 import type { Prospect, Restaurant } from "@/generated/prisma/client";
 
 /**
@@ -251,18 +252,15 @@ export async function sendInviteEmail(
   prospect: Pick<Prospect, "id" | "name" | "email">,
   restaurant: Pick<
     Restaurant,
-    "id" | "name" | "slug" | "email" | "phone"
+    "id" | "name" | "slug" | "email" | "phone" | "subdomain" | "customDomain" | "customDomainStatus"
   > & { imprint?: string | null },
 ) {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
   // The ?ref=kickstarter query param is what we'll attribute the
   // conversion to later (cross-checked against ProspectImport when an
   // order arrives from this prospect's email). The auto-apply happens
   // independently — the new-customer promo fires at checkout regardless
   // of the link they used. Keeping ref purely for attribution.
-  const ctaUrl = baseUrl
-    ? `${baseUrl}/order/${restaurant.slug}?ref=kickstarter`
-    : `/order/${restaurant.slug}?ref=kickstarter`;
+  const ctaUrl = restaurantOrderUrl(restaurant, "") + "?ref=kickstarter";
 
   const subject = `Try ${restaurant.name} — 10% off your first order`;
 
@@ -288,7 +286,7 @@ export async function sendInviteEmail(
       couponLabel: "10% off your first order",
       ctaUrl,
       ctaLabel: "Start your order",
-      restaurantUrl: baseUrl ? `${baseUrl}/order/${restaurant.slug}` : undefined,
+      restaurantUrl: restaurantOrderUrl(restaurant, ""),
       restaurantEmail: restaurant.email ?? undefined,
       restaurantPhone: restaurant.phone ?? undefined,
       // unsubscribeUrl: the prospect can unsubscribe by clicking the
@@ -296,9 +294,9 @@ export async function sendInviteEmail(
       // posts to the restaurant's ordering page with ?unsubscribe=1.
       // Server-side handler flips Prospect.unsubscribedAt so the cron
       // skips them next time.
-      unsubscribeUrl: baseUrl
-        ? `${baseUrl}/order/${restaurant.slug}?unsubscribe=1&prospect=${prospect.id}`
-        : undefined,
+      unsubscribeUrl:
+        restaurantOrderUrl(restaurant, "") +
+        `?unsubscribe=1&prospect=${prospect.id}`,
     });
   } finally {
     if (restaurant.imprint) setEmailImprint(null);

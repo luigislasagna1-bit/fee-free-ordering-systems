@@ -37,6 +37,7 @@ import {
 } from "@/lib/email";
 import { sendSms } from "@/lib/sms";
 import { hasFeature } from "@/lib/entitlements";
+import { restaurantOrderUrl } from "@/lib/restaurant-url";
 
 /**
  * Build a short SMS body for a customer order event. Cap-160 friendly
@@ -458,6 +459,13 @@ export async function notifyCustomer(args: {
     select: {
       name: true,
       slug: true,
+      // Domain fields — let restaurantOrderUrl() build customer-facing
+      // links on the most-branded host (verified custom domain >
+      // platform subdomain > apex) so status/delay email links stay on
+      // the restaurant's own domain.
+      subdomain: true,
+      customDomain: true,
+      customDomainStatus: true,
       // Phone + email surfaced as contact info in the status / delay
       // email footers so customers can call/email the restaurant
       // directly from any update message (GloriaFood parity).
@@ -578,7 +586,6 @@ export async function notifyCustomer(args: {
         toggle = restaurant.customerEmailOrderRejected;
       }
       if (!toggle) return { sent: false, reason: "toggle off" };
-      const baseUrlForStatus = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
       await withImprint(restaurantId, async () => {
         await sendOrderStatusUpdateEmail({
           to: customerEmail,
@@ -596,7 +603,7 @@ export async function notifyCustomer(args: {
           paymentMethod: payload.paymentMethod,
           restaurantPhone: restaurant.phone,
           restaurantEmail: restaurant.email,
-          restaurantUrl: `${baseUrlForStatus}/order/${restaurant.slug}`,
+          restaurantUrl: restaurantOrderUrl(restaurant, ""),
           locale,
           timezone: (restaurant as any).timezone || undefined,
           hoursFormat: restaurant.hoursFormat === "12h" ? "12h" : "24h",
@@ -610,7 +617,6 @@ export async function notifyCustomer(args: {
       // customer always hears about it. They paid; they deserve the
       // update. Imprint set so reseller-branded restaurants stay on
       // their own letterhead.
-      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
       await withImprint(restaurantId, async () => {
         await sendOrderDelayedEmail({
           to: customerEmail,
@@ -622,7 +628,7 @@ export async function notifyCustomer(args: {
           reason: payload.reason,
           restaurantPhone: restaurant.phone,
           restaurantEmail: restaurant.email,
-          restaurantUrl: `${baseUrl}/order/${restaurant.slug}`,
+          restaurantUrl: restaurantOrderUrl(restaurant, ""),
           locale,
         });
       });

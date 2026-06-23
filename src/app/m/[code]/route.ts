@@ -10,6 +10,7 @@
 import { NextRequest, NextResponse, after } from "next/server";
 import prisma from "@/lib/db";
 import { platformBaseUrl } from "@/lib/marketing-studio";
+import { restaurantOrigin } from "@/lib/restaurant-url";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -33,7 +34,18 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ cod
   const link = clean
     ? await prisma.smartLink.findUnique({
         where: { code: clean },
-        select: { id: true, targetPath: true, isActive: true, utmSource: true, utmMedium: true, utmCampaign: true, channelHint: true },
+        select: {
+          id: true,
+          targetPath: true,
+          isActive: true,
+          utmSource: true,
+          utmMedium: true,
+          utmCampaign: true,
+          channelHint: true,
+          restaurant: {
+            select: { slug: true, subdomain: true, customDomain: true, customDomainStatus: true },
+          },
+        },
       })
     : null;
 
@@ -43,7 +55,28 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ cod
   }
 
   const path = link.targetPath.startsWith("/") ? link.targetPath : `/${link.targetPath}`;
-  const target = new URL(`${base}${path}`);
+
+  // Re-home order-flow targets onto the restaurant's MOST-BRANDED domain so a QR
+  // scan for a verified-custom-domain (or subdomain) store lands on its own host,
+  // not the platform apex. The default targetPath is "/order/<slug>" (smart-links
+  // create route), so detect that prefix and, when the restaurant has a branded
+  // (rooted) origin, drop the /order/<slug> prefix the proxy re-adds and serve the
+  // remaining sub-path ROOT-relative on the branded origin. Arbitrary owner-supplied
+  // non-order paths stay on the apex — the proxy can't serve those on a branded host.
+  let destination = `${base}${path}`;
+  const slug = link.restaurant?.slug;
+  if (slug) {
+    const orderPrefix = `/order/${slug}`;
+    if (path === orderPrefix || path.startsWith(`${orderPrefix}/`)) {
+      const { origin, rooted } = restaurantOrigin(link.restaurant!);
+      if (rooted) {
+        const remaining = path.slice(orderPrefix.length); // "" or "/sub/path"
+        destination = `${origin}${remaining}`;
+      }
+    }
+  }
+
+  const target = new URL(destination);
   target.searchParams.set("ref", clean);
   target.searchParams.set("utm_source", link.utmSource || link.channelHint || "smartlink");
   if (link.utmMedium) target.searchParams.set("utm_medium", link.utmMedium);

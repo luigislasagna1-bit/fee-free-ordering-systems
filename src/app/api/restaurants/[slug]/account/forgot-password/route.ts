@@ -24,6 +24,7 @@ import crypto from "crypto";
 import prisma from "@/lib/db";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { sendPasswordResetEmail } from "@/lib/email";
+import { restaurantOrderUrl } from "@/lib/restaurant-url";
 
 export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: string }> }) {
   const { slug } = await ctx.params;
@@ -34,7 +35,16 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { slug },
-    select: { id: true, isActive: true, name: true, defaultLanguage: true },
+    select: {
+      id: true,
+      isActive: true,
+      name: true,
+      defaultLanguage: true,
+      slug: true,
+      subdomain: true,
+      customDomain: true,
+      customDomainStatus: true,
+    },
   });
   if (!restaurant || !restaurant.isActive) {
     return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
@@ -97,8 +107,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
       },
     });
 
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
-    const resetUrl = `${baseUrl}/order/${slug}/account/reset-password?token=${token}`;
+    const resetUrl = restaurantOrderUrl(restaurant, `/account/reset-password?token=${token}`);
     await sendPasswordResetEmail({
       to: customer.email,
       name: customer.name,

@@ -41,6 +41,7 @@ import {
   type AutopilotCampaignKind,
 } from "@/lib/autopilot-state";
 import { getStepPromos } from "@/lib/autopilot-promos";
+import { restaurantOrderUrl } from "@/lib/restaurant-url";
 
 export type AutopilotRunSummary = {
   restaurantId: string;
@@ -81,6 +82,7 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
     where: { id: restaurantId },
     select: {
       id: true, name: true, slug: true, email: true, phone: true,
+      subdomain: true, customDomain: true, customDomainStatus: true,
       resellerProfile: { select: { status: true, companyName: true } },
     },
   });
@@ -104,9 +106,9 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
     where: { restaurantId, isEnabled: true },
   });
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
-  const restaurantOrderUrl = `${baseUrl}/order/${restaurant.slug}`;
-  const unsubscribeUrl = `${baseUrl}/order/${restaurant.slug}?unsubscribe=1`;
+  // Most-branded customer order root (verified custom domain > subdomain > apex).
+  const orderRootUrl = restaurantOrderUrl(restaurant, "");
+  const unsubscribeUrl = restaurantOrderUrl(restaurant, "?unsubscribe=1");
   const imprint =
     restaurant.resellerProfile?.status === "approved" && restaurant.resellerProfile.companyName
       ? restaurant.resellerProfile.companyName
@@ -145,12 +147,10 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
         campaignType: campaign.campaignType,
         restaurantId,
         restaurantName: restaurant.name,
-        restaurantOrderUrl,
+        orderRootUrl,
         unsubscribeUrl,
         restaurantEmail: restaurant.email,
         restaurantPhone: restaurant.phone,
-        baseUrl,
-        slug: restaurant.slug,
         imprint,
         steps,
       });
@@ -167,12 +167,10 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
         campaignType: campaign.campaignType,
         restaurantId,
         restaurantName: restaurant.name,
-        restaurantOrderUrl,
+        orderRootUrl,
         unsubscribeUrl,
         restaurantEmail: restaurant.email,
         restaurantPhone: restaurant.phone,
-        baseUrl,
-        slug: restaurant.slug,
         imprint,
         delayHours: campaign.delayHours,
         couponId: campaign.couponId,
@@ -194,13 +192,11 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
   if (await isCampaignEnabled(restaurantId, "cart_abandonment")) {
     const result = await runCartAbandonmentForRestaurant(restaurantId, {
       restaurantName: restaurant.name,
-      restaurantOrderUrl,
+      orderRootUrl,
       unsubscribeUrl,
       restaurantEmail: restaurant.email,
       restaurantPhone: restaurant.phone,
       imprint,
-      baseUrl,
-      slug: restaurant.slug,
     });
     summary.results.push({
       campaignType: "cart_abandonment",
@@ -259,12 +255,10 @@ async function runStandardCampaign(opts: {
   campaignType: string;
   restaurantId: string;
   restaurantName: string;
-  restaurantOrderUrl: string;
+  orderRootUrl: string;
   unsubscribeUrl: string;
   restaurantEmail: string | null;
   restaurantPhone: string | null;
-  baseUrl: string;
-  slug: string;
   imprint: string | null;
   delayHours: number;
   couponId: string | null;
@@ -274,8 +268,8 @@ async function runStandardCampaign(opts: {
   const resolved = await resolveCampaignCoupon(opts.restaurantId, opts.couponId);
   const couponLabel = resolved?.label ?? null;
   const ctaUrl = resolved
-    ? `${opts.restaurantOrderUrl}?coupon=${encodeURIComponent(resolved.code)}`
-    : opts.restaurantOrderUrl;
+    ? `${opts.orderRootUrl}?coupon=${encodeURIComponent(resolved.code)}`
+    : opts.orderRootUrl;
 
   const candidates = await pickCandidates(opts.restaurantId, opts.campaignType, opts.delayHours);
 
@@ -306,7 +300,7 @@ async function runStandardCampaign(opts: {
         couponLabel,
         ctaUrl,
         ctaLabel: resolved ? "Order with coupon" : "Order now",
-        restaurantUrl: opts.baseUrl ? `${opts.baseUrl}/order/${opts.slug}` : undefined,
+        restaurantUrl: opts.orderRootUrl,
         restaurantEmail: opts.restaurantEmail ?? undefined,
         restaurantPhone: opts.restaurantPhone ?? undefined,
         unsubscribeUrl: opts.unsubscribeUrl,
@@ -359,12 +353,10 @@ async function runSteppedCampaign(opts: {
   campaignType: string;
   restaurantId: string;
   restaurantName: string;
-  restaurantOrderUrl: string;
+  orderRootUrl: string;
   unsubscribeUrl: string;
   restaurantEmail: string | null;
   restaurantPhone: string | null;
-  baseUrl: string;
-  slug: string;
   imprint: string | null;
   steps: { stepNumber: number; delayHours: number; discountPercent: number; subject: string; emailBody: string }[];
 }): Promise<{ eligible: number; sent: number; errors: number }> {
@@ -416,8 +408,8 @@ async function runSteppedCampaign(opts: {
     const pct = promo?.discountPercent ?? target.discountPercent;
     const couponLabel = couponCode ? `${pct}% off your next order` : null;
     const ctaUrl = couponCode
-      ? `${opts.restaurantOrderUrl}?coupon=${encodeURIComponent(couponCode)}`
-      : opts.restaurantOrderUrl;
+      ? `${opts.orderRootUrl}?coupon=${encodeURIComponent(couponCode)}`
+      : opts.orderRootUrl;
 
     setEmailImprint(opts.imprint);
     try {
@@ -431,7 +423,7 @@ async function runSteppedCampaign(opts: {
         couponLabel,
         ctaUrl,
         ctaLabel: couponCode ? "Order with coupon" : "Order now",
-        restaurantUrl: opts.baseUrl ? `${opts.baseUrl}/order/${opts.slug}` : undefined,
+        restaurantUrl: opts.orderRootUrl,
         restaurantEmail: opts.restaurantEmail ?? undefined,
         restaurantPhone: opts.restaurantPhone ?? undefined,
         unsubscribeUrl: opts.unsubscribeUrl,
@@ -573,13 +565,11 @@ export async function runCartAbandonmentForRestaurant(
   restaurantId: string,
   ctx: {
     restaurantName: string;
-    restaurantOrderUrl: string;
+    orderRootUrl: string;
     unsubscribeUrl: string;
     restaurantEmail: string | null;
     restaurantPhone: string | null;
     imprint: string | null;
-    baseUrl: string;
-    slug: string;
   },
 ): Promise<{ eligible: number; sent: number; errors: number }> {
   // Pull the cart_abandonment campaign config (if any). Subject/body/
@@ -600,8 +590,8 @@ export async function runCartAbandonmentForRestaurant(
   const resolved = await resolveCampaignCoupon(restaurantId, campaign?.couponId ?? null);
   const couponLabel = resolved?.label ?? null;
   const ctaUrl = resolved
-    ? `${ctx.restaurantOrderUrl}?coupon=${encodeURIComponent(resolved.code)}`
-    : ctx.restaurantOrderUrl;
+    ? `${ctx.orderRootUrl}?coupon=${encodeURIComponent(resolved.code)}`
+    : ctx.orderRootUrl;
 
   const staleCutoff = new Date(Date.now() - CART_STALE_MS);
   const suppressionCutoff = new Date(Date.now() - CART_SUPPRESSION_MS);
@@ -675,7 +665,7 @@ export async function runCartAbandonmentForRestaurant(
         couponLabel,
         ctaUrl,
         ctaLabel: "Complete your order",
-        restaurantUrl: ctx.baseUrl ? `${ctx.baseUrl}/order/${ctx.slug}` : undefined,
+        restaurantUrl: ctx.orderRootUrl,
         restaurantEmail: ctx.restaurantEmail ?? undefined,
         restaurantPhone: ctx.restaurantPhone ?? undefined,
         unsubscribeUrl: ctx.unsubscribeUrl,
