@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChefHat, Loader2, Building2, AlertCircle } from "lucide-react";
 import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
 import { COUNTRIES } from "@/lib/regions";
@@ -160,7 +161,21 @@ export function SignupForm({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || t("errorGeneric"));
-      setTimeout(() => router.push("/login?registered=1"), 1500);
+      // Auto-sign-in so the owner lands straight in their setup wizard instead of being
+      // bounced to /login to retype the same credentials they just chose. Login doesn't
+      // require email verification (that only gates PUBLISHING), so this is safe. If
+      // sign-in ever hiccups, fall back to the login page with the success flag so they
+      // can still get in. Luigi 2026-06-23.
+      const signInRes = await signIn("credentials", {
+        email: form.email,
+        password: form.password,
+        redirect: false,
+      });
+      if (signInRes?.ok && !signInRes.error) {
+        router.push("/admin");
+      } else {
+        router.push("/login?registered=1");
+      }
     } catch (err: any) {
       toast.error(err.message);
     } finally {
