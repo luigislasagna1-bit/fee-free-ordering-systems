@@ -31,6 +31,13 @@ export interface HostedSiteData {
   logoUrl: string | null;
   faviconUrl: string | null;
   bannerUrl: string | null;
+  /** Custom-domain routing state. When customDomainStatus === "verified"
+   *  (and customDomain is set) the restaurant is on its OWN branded domain,
+   *  so customer-facing surfaces must drop ALL platform branding (no
+   *  "Powered by Fee Free Ordering" attribution). On platform subdomains the
+   *  attribution still shows. */
+  customDomain: string | null;
+  customDomainStatus: string;
   socialLinks: Record<string, string> | null;
   themeSettings: Record<string, unknown> | null;
   hours: Array<{
@@ -121,7 +128,10 @@ export interface HostedSiteData {
 export type HostedSiteResult =
   | { kind: "ok"; data: HostedSiteData }
   | { kind: "not_found" }
-  | { kind: "not_published" }
+  // customDomainStatus so the "Coming soon" placeholder can hide the
+  // platform attribution when the restaurant is already on a verified
+  // custom domain.
+  | { kind: "not_published"; customDomainStatus: string }
   | { kind: "upgrade_required"; restaurantName: string };
 
 /**
@@ -140,6 +150,9 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       // even after the owner set one). Luigi 2026-06-05.
       faviconUrl: true,
       bannerUrl: true, socialLinks: true, themeSettings: true,
+      // Custom-domain routing state — drives whether customer-facing
+      // surfaces drop the platform "Powered by" attribution.
+      customDomain: true, customDomainStatus: true,
       hostedSiteSettings: true,
       lat: true, lng: true, mapProvider: true, googleMapsApiKey: true,
       isActive: true, publishedAt: true,
@@ -152,7 +165,9 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
     },
   });
   if (!restaurant || !restaurant.isActive) return { kind: "not_found" };
-  if (!restaurant.publishedAt) return { kind: "not_published" };
+  if (!restaurant.publishedAt) {
+    return { kind: "not_published", customDomainStatus: restaurant.customDomainStatus };
+  }
 
   const entitled = await hasFeature(restaurant.id, "hosted_marketing_page");
   if (!entitled) {
@@ -305,6 +320,8 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       logoUrl: restaurant.logoUrl,
       faviconUrl: restaurant.faviconUrl,
       bannerUrl: restaurant.bannerUrl,
+      customDomain: restaurant.customDomain,
+      customDomainStatus: restaurant.customDomainStatus,
       socialLinks: safeJson(restaurant.socialLinks),
       themeSettings: safeJson(restaurant.themeSettings),
       hours,

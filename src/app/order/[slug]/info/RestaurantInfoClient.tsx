@@ -81,7 +81,15 @@ interface Restaurant {
   deliveryZones?: DeliveryZone[];
 }
 
-export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant }) {
+export function RestaurantInfoClient({
+  restaurant,
+  hideBranding = false,
+}: {
+  restaurant: Restaurant;
+  /** True when served on the restaurant's own verified custom domain — suppress
+   *  the "Powered by Fee Free Ordering" footer so the white-label is complete. */
+  hideBranding?: boolean;
+}) {
   const tInfo = useTranslations("info");
   const tOrdering = useTranslations("ordering");
   const [inquiry, setInquiry] = useState({ name: "", email: "", phone: "", message: "" });
@@ -542,9 +550,15 @@ export function RestaurantInfoClient({ restaurant }: { restaurant: Restaurant })
           </div>
         )}
 
-        <div className="text-center text-xs text-gray-400 pb-4">
-          Powered by <span className="font-semibold" style={{ color: p }}>Fee Free Ordering</span>
-        </div>
+        {!hideBranding && (
+          <div className="text-center text-xs text-gray-400 pb-4">
+            {tInfo.rich("poweredBy", {
+              brand: (chunks) => (
+                <span className="font-semibold" style={{ color: p }}>{chunks}</span>
+              ),
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

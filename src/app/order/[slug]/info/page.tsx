@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import prisma from "@/lib/db";
 import { resolveLocale, loadMessages } from "@/lib/i18n-server";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
+import { isOwnCustomDomainHost } from "@/lib/restaurant-url";
 import { RestaurantInfoClient } from "./RestaurantInfoClient";
 
 export default async function RestaurantInfoPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -13,6 +15,10 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
     select: {
       id: true,
       slug: true, name: true, slogan: true, description: true,
+      // Custom-domain fields → hide the "Powered by Fee Free Ordering" footer when
+      // the customer is on the restaurant's OWN verified domain (white-label). On a
+      // platform subdomain / apex the branding still shows. Luigi 2026-06-22.
+      customDomain: true, customDomainStatus: true,
       phone: true, email: true, address: true, city: true, state: true, zip: true,
       lat: true, lng: true,
       mapProvider: true, googleMapsApiKey: true,
@@ -45,9 +51,14 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
   const locale = await resolveLocale({ restaurantId: restaurant.id });
   const messages = await loadMessages(locale);
 
+  // White-label: suppress the platform "Powered by" footer when the customer is
+  // served on the restaurant's own verified custom domain (zero platform branding).
+  const host = (await headers()).get("host");
+  const hideBranding = isOwnCustomDomainHost(restaurant, host);
+
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <RestaurantInfoClient restaurant={restaurant as any} />
+      <RestaurantInfoClient restaurant={restaurant as any} hideBranding={hideBranding} />
     </NextIntlClientProvider>
   );
 }

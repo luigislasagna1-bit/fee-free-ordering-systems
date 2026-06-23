@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cookies, headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
@@ -7,32 +6,6 @@ import { OrderingPageClient } from "./OrderingPageClient";
 import { SandboxClaimBanner } from "./SandboxClaimBanner";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 import { resolveInheritedHours, resolveInheritedZones } from "@/lib/inherited-data";
-
-/**
- * Per-restaurant browser-tab branding: the <title> is the restaurant's name
- * and the favicon is their uploaded icon (when set), instead of the generic
- * platform default. Lightweight standalone query — metadata runs separately
- * from the page render. Luigi 2026-06-04.
- */
-export async function generateMetadata(
-  { params }: { params: Promise<{ slug: string }> },
-): Promise<Metadata> {
-  const { slug } = await params;
-  const r = await prisma.restaurant.findUnique({
-    where: { slug, isActive: true },
-    select: { name: true, faviconUrl: true, sandbox: { select: { id: true } } },
-  });
-  if (!r) return {};
-  return {
-    title: r.name,
-    ...(r.faviconUrl ? { icons: { icon: r.faviconUrl } } : {}),
-    // Import-to-try sandbox storefronts are anonymous, throwaway trial menus —
-    // keep them OUT of Google so we don't index a stranger's unclaimed demo.
-    // Claiming deletes the SandboxRestaurant row, so the (now real) restaurant
-    // becomes indexable automatically. Luigi 2026-06-21.
-    ...(r.sandbox ? { robots: { index: false, follow: false } } : {}),
-  };
-}
 import { VisitTracker } from "@/components/order/VisitTracker";
 import { TrackingScripts } from "@/components/order/TrackingScripts";
 import { isSupportedLocale, type Locale } from "@/i18n/request";

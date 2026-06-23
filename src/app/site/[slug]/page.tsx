@@ -57,7 +57,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const result = await loadHostedSite(slug);
   if (result.kind !== "ok") {
-    return { title: "Fee Free Ordering" };
+    // Neutral fallback — NEVER leak the platform brand on a custom domain.
+    // Prefer a slug-derived name; otherwise a generic neutral title.
+    const fromSlug = slug
+      ? slug.replace(/[-_]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()).trim()
+      : "";
+    return { title: fromSlug || "Restaurant" };
   }
   const r = result.data;
   const titleParts = [r.name];
@@ -69,12 +74,14 @@ export async function generateMetadata({
     r.description?.slice(0, 160) ||
     `${r.name}${r.cuisineType ? ` · ${r.cuisineType}` : ""}${r.city ? ` · ${r.city}` : ""}. Order online directly — no delivery-app fees.`;
   const ogImage = r.bannerUrl || r.logoUrl || undefined;
+  // Browser tab icon: owner favicon, else fall back to the web logo so a
+  // custom-domain site never shows the platform default. Only when neither
+  // exists does the platform default remain (last resort). Luigi 2026-06-05.
+  const icon = r.faviconUrl ?? r.logoUrl ?? undefined;
   return {
     title,
     description,
-    // Owner-uploaded favicon as the browser tab icon (falls back to the
-    // platform default when unset). Luigi 2026-06-05.
-    ...(r.faviconUrl ? { icons: { icon: r.faviconUrl } } : {}),
+    ...(icon ? { icons: { icon } } : {}),
     openGraph: {
       title,
       description,
@@ -112,9 +119,11 @@ export default async function HostedSitePage({
           <p className="text-gray-600 mt-3 leading-relaxed">
             This restaurant is putting the finishing touches on their site. Check back shortly — they&apos;ll be ready to take your order soon.
           </p>
-          <div className="mt-8 text-[11px] text-gray-400 uppercase tracking-wider">
-            Powered by Fee Free Ordering
-          </div>
+          {result.customDomainStatus !== "verified" && (
+            <div className="mt-8 text-[11px] text-gray-400 uppercase tracking-wider">
+              Powered by Fee Free Ordering
+            </div>
+          )}
         </div>
       </main>
     );
@@ -984,9 +993,11 @@ export default async function HostedSitePage({
       <footer className="bg-gray-900 text-gray-300 py-8 pb-24 md:pb-8">
         <div className="max-w-5xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
           <p>&copy; {new Date().getFullYear()} {r.name}</p>
-          <p className="text-xs text-gray-500">
-            Powered by Fee Free Ordering
-          </p>
+          {r.customDomainStatus !== "verified" && (
+            <p className="text-xs text-gray-500">
+              Powered by Fee Free Ordering
+            </p>
+          )}
         </div>
       </footer>
 

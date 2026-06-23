@@ -49,6 +49,28 @@ export function restaurantOrigin(r: RestaurantUrlInfo): { origin: string; rooted
 }
 
 /**
+ * True when `host` (a request `Host` header value, may include a port) is this
+ * restaurant's OWN verified custom domain — i.e. the fully white-labeled surface
+ * where the customer must see ZERO platform branding (no "Powered by Fee Free
+ * Ordering"). A platform subdomain (`<sub>.<platform>`) is branded too, but still
+ * carries the platform name in the URL, so it is intentionally NOT treated as a
+ * custom domain here — only a bring-your-own domain hides the platform brand.
+ *
+ * Mirrors the www/apex normalization the host resolver applies
+ * (src/app/api/internal/resolve-host/route.ts) so luigis.com and www.luigis.com
+ * both match the single canonical value stored in Restaurant.customDomain.
+ */
+export function isOwnCustomDomainHost(
+  r: Pick<RestaurantUrlInfo, "customDomain" | "customDomainStatus">,
+  host: string | null | undefined,
+): boolean {
+  if (!host || !r.customDomain || r.customDomainStatus !== "verified") return false;
+  const h = host.toLowerCase().split(":")[0].trim(); // strip any :port
+  const bare = r.customDomain.toLowerCase().trim().replace(/^www\./, "");
+  return !!bare && (h === bare || h === `www.${bare}`);
+}
+
+/**
  * Absolute URL to a path under a restaurant's order flow, on its most-branded domain.
  * `subpath` is relative to the order root, e.g. "/status/<id>",
  * "/paypal/return?orderId=x", or "" for the storefront.

@@ -60,10 +60,14 @@ export async function generateMetadata({
     parsed.city ? ` to ${parsed.city}` : ""
   }. Direct ordering — no third-party fees, no surge pricing. Fresh, fast, local.`;
   const ogImage = r.bannerUrl || r.logoUrl || undefined;
+  // Browser tab icon: owner favicon, else the web logo so a custom-domain
+  // landing page never shows the platform default. Platform default remains
+  // only when neither exists (last resort).
+  const icon = r.faviconUrl ?? r.logoUrl ?? undefined;
   return {
     title,
     description,
-    ...((r as any).faviconUrl ? { icons: { icon: (r as any).faviconUrl } } : {}),
+    ...(icon ? { icons: { icon } } : {}),
     openGraph: {
       title,
       description,
@@ -294,9 +298,11 @@ export default async function SeoLandingPage({
       <footer className="bg-gray-900 text-gray-300 py-8">
         <div className="max-w-5xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
           <p>&copy; {new Date().getFullYear()} {r.name}</p>
-          <p className="text-xs text-gray-500">
-            Powered by Fee Free Ordering
-          </p>
+          {r.customDomainStatus !== "verified" && (
+            <p className="text-xs text-gray-500">
+              Powered by Fee Free Ordering
+            </p>
+          )}
         </div>
       </footer>
     </main>
