@@ -1815,6 +1815,9 @@ export function OrderingPageClient({
   const collapsibleActive =
     !!(theme as any).mobileCollapsibleCategories && isMobile && !menuSearchQuery.trim();
   const [collapsedCats, setCollapsedCats] = useState<Set<string>>(new Set());
+  // Customer can collapse the promo strip so the specials don't eat the whole page
+  // (mobile + desktop). Mirrors the collapsible-category chevron. Luigi 2026-06-22.
+  const [promosCollapsed, setPromosCollapsed] = useState(false);
   // Seed "all collapsed" the first time the accordion becomes active (so it
   // doesn't fight the customer if they later expand things). When a search
   // filters the menu we leave their open/closed choices intact.
@@ -3993,7 +3996,21 @@ export function OrderingPageClient({
             </div>
           );
         })()}
+        {/* Collapsible "Promo" header — the customer can hide the specials strip so it
+            doesn't take up the whole page (mobile + desktop). Same chevron affordance as
+            the collapsible categories. Luigi 2026-06-22. */}
         {promoBanners.filter((p) => p.campaignRef !== "kickstarter_first_buy").length > 0 && (
+          <button
+            type="button"
+            onClick={() => setPromosCollapsed((c) => !c)}
+            aria-expanded={!promosCollapsed}
+            className="flex items-center gap-2 mb-2 cursor-pointer select-none"
+          >
+            <span className="text-lg font-bold" style={{ color: theme.textColor }}>{t("promoLabel")}</span>
+            <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${promosCollapsed ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
+          </button>
+        )}
+        {!promosCollapsed && promoBanners.filter((p) => p.campaignRef !== "kickstarter_first_buy").length > 0 && (
           <div className="mb-6 flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
             {promoBanners.filter((p) => p.campaignRef !== "kickstarter_first_buy").map((promo) => {
               const headline = promo.bannerHeadline?.trim() || promo.name;
