@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { after } from "next/server";
 import prisma from "@/lib/db";
+import { restaurantOrderUrl } from "@/lib/restaurant-url";
 import { getSessionUser } from "@/lib/session";
 import { notifyStaff, notifyCustomer, staffAcceptEventForOrderType } from "@/lib/notifications";
 import {
@@ -354,7 +355,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const order = await prisma.order.update({
     where: { id },
     data: updates,
-    include: { restaurant: { select: { id: true, name: true, slug: true, defaultLanguage: true } } },
+    include: { restaurant: { select: { id: true, name: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true, defaultLanguage: true } } },
   });
 
   // ── Reserve-then-order: keep the linked table booking in lockstep ─────────
@@ -662,7 +663,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
             // Without this the email template defaults the button to
             // href="#" and the "View order status" button does nothing
             // (Luigi bug 2026-05-31).
-            trackingUrl: `${baseUrl}/order/${order.restaurant.slug}/status/${order.id}`,
+            trackingUrl: restaurantOrderUrl(order.restaurant, `/status/${order.id}`),
             // Payment context — drives the rejected/cancelled refund
             // disclosure ("nothing to refund" / "5-10 business days" /
             // "back to your PayPal balance"). paidOnline derived from

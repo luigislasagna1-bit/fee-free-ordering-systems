@@ -17,6 +17,7 @@
  */
 
 import prisma from "@/lib/db";
+import { restaurantOrderUrl } from "@/lib/restaurant-url";
 import { notifyStaff, notifyCustomer } from "@/lib/notifications";
 import { recordAppliedCoupons } from "@/lib/coupon-ledger";
 import { sendKitchenPush } from "@/lib/push";
@@ -43,6 +44,9 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
           id: true,
           name: true,
           slug: true,
+          subdomain: true,
+          customDomain: true,
+          customDomainStatus: true,
           estimatedPickup: true,
           estimatedDelivery: true,
           defaultLanguage: true,
@@ -165,7 +169,7 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       reservation: linkedReservation
         ? { partySize: linkedReservation.partySize, date: linkedReservation.date, time: linkedReservation.time }
         : undefined,
-      trackingUrl: `${baseUrl}/order/${order.restaurant.slug}/status/${order.id}`,
+      trackingUrl: restaurantOrderUrl(order.restaurant, `/status/${order.id}`),
       appliedPromos: appliedPromosForEmail,
     },
   }).catch((e) => console.error("[fireOrderNotifications] notifyCustomer:", e));

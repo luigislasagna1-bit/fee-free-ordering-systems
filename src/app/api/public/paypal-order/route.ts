@@ -16,6 +16,7 @@ import prisma from "@/lib/db";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { createPaypalOrder } from "@/lib/paypal";
 import { hasFeature } from "@/lib/entitlements";
+import { restaurantOrderUrl } from "@/lib/restaurant-url";
 
 // Mirrors SUPPORTED_CURRENCIES in src/lib/utils.ts. PayPal supports
 // all of these for direct payouts as of 2026.
@@ -49,6 +50,9 @@ export async function POST(req: NextRequest) {
       id: true,
       name: true,
       slug: true,
+      subdomain: true,
+      customDomain: true,
+      customDomainStatus: true,
       paypalAccountStatus: true,
       // Source of truth for currency — overrides the client value
       // below so customers can't trigger a USD charge against a
@@ -106,9 +110,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Amount mismatch" }, { status: 400 });
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
-  const returnUrl = `${baseUrl}/order/${restaurant.slug}/paypal/return?orderId=${encodeURIComponent(orderId)}`;
-  const cancelUrl = `${baseUrl}/order/${restaurant.slug}/paypal/cancel?orderId=${encodeURIComponent(orderId)}`;
+  // Keep the customer on the restaurant's OWN domain (verified custom domain or its
+  // <subdomain>.<platform> link) through the PayPal round-trip, not the platform apex.
+  // The proxy serves /paypal/return + /paypal/cancel on branded hosts. Luigi 2026-06-22.
+  const returnUrl = restaurantOrderUrl(restaurant, `/paypal/return?orderId=${encodeURIComponent(orderId)}`);
+  const cancelUrl = restaurantOrderUrl(restaurant, `/paypal/cancel?orderId=${encodeURIComponent(orderId)}`);
 
   try {
     // Restaurant-configured currency wins. PayPal's `currency_code`
