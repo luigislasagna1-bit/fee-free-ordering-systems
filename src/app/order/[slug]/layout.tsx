@@ -40,7 +40,10 @@ export async function generateMetadata(
     // sub-page prepend its own label (e.g. "Order Confirmed · Luigi's Lasagna").
     title: { default: name, template: `%s · ${name}` },
     ...(icon ? { icons: { icon, apple: icon } } : {}),
-    manifest: "/manifest-order.webmanifest",
+    // Per-restaurant PWA manifest (src/app/order/[slug]/manifest.webmanifest/route.ts) so
+    // "Add to Home Screen" installs the restaurant's own name/icon/theme, not the platform
+    // default. Under /order/<slug> so the proxy serves it on branded hosts too.
+    manifest: `/order/${slug}/manifest.webmanifest`,
     appleWebApp: { capable: true, title: name, statusBarStyle: "default" },
     // Per-restaurant link preview so a shared order URL unfurls with the storefront's
     // own name/banner — never the platform brand. `description` reuses the restaurant
