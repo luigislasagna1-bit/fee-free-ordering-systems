@@ -3869,6 +3869,18 @@ export function OrderingPageClient({
           })()}
         </div>
 
+        {/* Selected service's short description — set by the restaurant in
+            admin → Services and saved per service in serviceSettings, but never
+            shown to customers until now (Fabrizio report). Renders the active
+            order type's line under the order-type row; hidden when empty. */}
+        {(() => {
+          const key = orderType === "dine_in" ? "dineIn" : orderType === "take_out" ? "takeOut" : orderType;
+          let desc = "";
+          try { desc = JSON.parse((restaurant as any).serviceSettings || "null")?.[key]?.description || ""; } catch {}
+          desc = desc.trim();
+          return desc ? <p className="text-sm text-gray-500 mb-5 -mt-2">{desc}</p> : null;
+        })()}
+
         {/* "Our delivery areas" panel was moved to the Restaurant Info page so
            the main ordering grid stays focused on the menu. The "Restaurant Info"
            pill (top right of this header) opens it. */}
