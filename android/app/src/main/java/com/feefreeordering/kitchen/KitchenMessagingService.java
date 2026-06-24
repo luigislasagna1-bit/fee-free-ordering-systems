@@ -38,12 +38,20 @@ public class KitchenMessagingService extends MessagingService {
         // the (idempotent) alarm regardless of foreground — no double-ring, and a foreground
         // push rings instantly. The hush latch + idempotent guard keep a currently-open
         // order paused. Luigi 2026-06-23.
+        // K3: an auto-accepted order is a brief FYI — ring it ONCE for ~3s (the native
+        // OrderAlarmService honours the autoAccept extra), deduped across this FCM push +
+        // the keep-alive poll so it never double-rings. A pending order has autoAccept=false
+        // → the full urgent alarm rings until staff act. Luigi 2026-06-23.
+        boolean autoAccept = "true".equals(data.get("autoAccept"));
+        if (autoAccept && !OrderAlarmService.claimAutoRing(data.get("orderId"))) return; // already rang this one
+
         Intent i = new Intent(this, OrderAlarmService.class);
         i.putExtra("title", data.get("title") != null ? data.get("title") : "New order");
         i.putExtra("body", data.get("body") != null ? data.get("body") : "");
         // Restaurant ring+vibrate vs ring-only preference (default true unless the
         // push data explicitly carries "false"). Luigi 2026-06-16.
         i.putExtra("vibrate", !"false".equals(data.get("vibrate")));
+        i.putExtra("autoAccept", autoAccept);
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(i);

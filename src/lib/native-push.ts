@@ -139,14 +139,23 @@ export async function unregisterKitchenPush(): Promise<void> {
     /* storage disabled */
   }
   if (token) {
+    // Time-bound the DELETE so a dead kitchen network can't hang logout (the device would
+    // stay signed in, keep its registered token, and keep ringing — the exact L1 symptom).
+    // localStorage removal below is unconditional + a server lastSeenAt sweep is the
+    // backstop, so a missed DELETE self-heals. Luigi 2026-06-23 (K3 review).
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 2500);
     try {
       await fetch("/api/kitchen/register-device", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token }),
+        signal: ctrl.signal,
       });
     } catch (e) {
       console.error("[native-push] unregister DELETE failed", e);
+    } finally {
+      clearTimeout(timer);
     }
   }
   try {

@@ -1,5 +1,8 @@
 package com.feefreeordering.kitchen;
 
+import android.content.pm.PackageInfo;
+
+import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
@@ -46,5 +49,21 @@ public class OrderAlarmPlugin extends Plugin {
     @PluginMethod
     public void ping(PluginCall call) {
         call.resolve();
+    }
+
+    /** App version (name + code) so the WebView can show it in the 3-dot menu + login (A1).
+     *  Read from PackageManager so it works without the BuildConfig feature. Luigi 2026-06-23. */
+    @PluginMethod
+    public void getInfo(PluginCall call) {
+        JSObject ret = new JSObject();
+        try {
+            PackageInfo pi = getContext().getPackageManager()
+                    .getPackageInfo(getContext().getPackageName(), 0);
+            ret.put("version", pi.versionName);
+            ret.put("build", pi.versionCode);
+        } catch (Exception e) {
+            ret.put("version", "");
+        }
+        call.resolve(ret);
     }
 }

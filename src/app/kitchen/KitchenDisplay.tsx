@@ -25,6 +25,7 @@ import {
 } from "@/lib/native-printer";
 import { registerKitchenPush, unregisterKitchenPush } from "@/lib/native-push";
 import { isNativeAlarmAvailable, nativeHushAlarm, nativeRearmAlarm, nativeStopAlarm } from "@/lib/native-order-alarm";
+import { getNativeAppVersion } from "@/lib/native-app-version";
 import { NativePrinterSetup, getDirectPrinterConfig } from "./NativePrinterSetup";
 import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
 import { useTranslations, useLocale } from "next-intl";
@@ -802,8 +803,12 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   // Native push: register this device's FCM/APNs token on launch so a new
   // order rings even with the screen off / app backgrounded. No-op on the web
   // (only acts inside the Capacitor app shell). Luigi 2026-06-15.
+  const [appVersion, setAppVersion] = useState<string | null>(null);
   useEffect(() => {
     registerKitchenPush();
+    // App version (e.g. "2.7") for the 3-dot menu footer — so we always know which
+    // build a device is on. null in a browser / on a pre-v2.7 app → shows nothing. A1.
+    getNativeAppVersion().then(setAppVersion);
   }, []);
 
   useEffect(() => {
@@ -3262,6 +3267,12 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                     <LogOut className="w-4 h-4 flex-shrink-0" />
                     <span>{tk("logOut")}</span>
                   </button>
+                  {appVersion && (
+                    <>
+                      <div className={`my-1 border-t ${t.border}`} />
+                      <div className="px-4 py-1.5 text-[11px] text-center text-gray-400">v{appVersion}</div>
+                    </>
+                  )}
                 </div>
               </>
             )}

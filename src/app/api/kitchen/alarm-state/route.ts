@@ -22,10 +22,12 @@ import { withDbRetry, isTransient } from "@/lib/db-retry";
 
 const ORDER_WINDOW_MS = 4 * 60 * 1000; // matches the kitchen accept countdown
 const CLOSED_WINDOW_MS = 15 * 60 * 1000; // placed-while-closed gets the longer window
-// Auto-accepted orders skip the "pending" state, so the pending query below never
-// rings them — they relied solely on the (flaky) FCM push. We ring them via this
-// reliable keep-alive poll for one short window: ~4s poll + 5s alarm + the alarm's
-// isRunning guard ⇒ exactly one ~5s ring. Luigi 2026-06-21.
+// Window for treating a just-released auto-accepted order as "newly arrived": its id is
+// returned in `autoRing` for this long after release so the native app plays ONE short
+// FYI ring (the app dedups so it rings once, not every poll). 8s comfortably spans a ~4s
+// poll gap. Auto-accepts deliberately DON'T set the pending `ringing` flag anymore — that
+// blasted the full urgent alarm for ~30s on an already-handled order (K3). See below.
+// Luigi 2026-06-23.
 const AUTO_ACCEPT_RING_MS = 8 * 1000;
 // Native background-print discovery window — only orders RELEASED in this window
 // are offered for background printing, so a fresh deploy (kitchenPrintedAt is null
@@ -67,15 +69,21 @@ export async function GET(req: NextRequest) {
       else hasExpired = true;
     }
 
-    // Auto-accepted orders ring ONCE on arrival too. They're created status:
-    // "accepted" (they skip "pending"), so the query above misses them — leaving
-    // only the flaky FCM push (rang in Test 1, silent in Test 2). Count a JUST-
-    // released auto-accepted order as ringing for one short window; the device's
-    // ~4s keep-alive poll + the 5s native alarm + its isRunning guard turn that
-    // into exactly one ~5s ring, independent of FCM. A NORMAL manual accept lands
-    // minutes after placement, so its anchor is far older than 8s and never
-    // re-rings here — no fragile acceptedAt≈notifiedAt timestamp race needed.
-    // Anchor on alertAt ?? notifiedAt per the scheduled-order ring-timing rule.
+    // Auto-accepted orders are created status "accepted" (they skip "pending"), so the
+    // pending query above misses them. We DON'T fold them into `ringing` anymore — that
+    // played the full urgent alarm for ~30s on an order that's already handled (K3,
+    // Luigi 2026-06-23). Instead we return their ids in `autoRing` so the v2.7 native
+    // engine plays ONE short ~3s FYI ring per order (deduped client-side, so it rings
+    // once — not every poll). A JUST-released auto-accept is one whose release anchor
+    // (alertAt ?? notifiedAt, per the scheduled-order ring-timing rule) is within the
+    // last 8s; a NORMAL manual accept lands minutes after placement, so its anchor is far
+    // past 8s and never appears here. Gated on no pending ring: when the full alarm is
+    // already going, an auto FYI is redundant. (A v2.6 app ignores `autoRing`: its
+    // FCM-started alarm is stopped by the next ~4s poll since `ringing` is false → ~4s
+    // instead of 30s WHEN the FCM delivers. If the FCM is dropped on a backgrounded v2.6
+    // device it no longer rings the auto-accept at all — acceptable, the order is already
+    // accepted + printed; v2.7 restores a reliable poll-driven FYI via autoRing.)
+    const autoRing: string[] = [];
     if (!ringing) {
       const since = new Date(now - AUTO_ACCEPT_RING_MS);
       const autoAccepted = await withDbRetry(() =>
@@ -88,7 +96,7 @@ export async function GET(req: NextRequest) {
               { alertAt: { gte: since, lte: new Date(now) } },
             ],
           },
-          select: { notifiedAt: true, alertAt: true },
+          select: { id: true, notifiedAt: true, alertAt: true },
           take: 30,
         }),
       );
@@ -97,12 +105,7 @@ export async function GET(req: NextRequest) {
         const notified = o.notifiedAt.getTime();
         const anchor = o.alertAt ? o.alertAt.getTime() : notified;
         if (anchor > now) continue; // parked / not started ringing yet
-        // Ring any order whose release anchor is within the last 8s — a freshly
-        // arrived auto-accept (or a manual accept of an order placed <8s ago). A
-        // normal manual accept happens minutes after placement → anchor far past
-        // 8s → never re-rings. Replaces the brittle acceptedAt timestamp gate that
-        // silently dropped the ring when acceptedAt fell a hair before notifiedAt.
-        if (now - anchor < AUTO_ACCEPT_RING_MS) { ringing = true; break; }
+        if (now - anchor < AUTO_ACCEPT_RING_MS) autoRing.push(o.id);
       }
     }
 
@@ -140,7 +143,7 @@ export async function GET(req: NextRequest) {
     // single-purpose ringing check with no extra query. The native keep-alive poll
     // reads `vibrate` and passes it to OrderAlarmService. Luigi 2026-06-16.
     let vibrate = true;
-    if (ringing) {
+    if (ringing || autoRing.length > 0) {
       const r = await withDbRetry(() =>
         prisma.restaurant.findUnique({
           where: { id: restaurantId },
@@ -170,7 +173,7 @@ export async function GET(req: NextRequest) {
       }),
     );
 
-    return NextResponse.json({ ringing, vibrate, print: toPrint.map((o) => o.id) });
+    return NextResponse.json({ ringing, vibrate, print: toPrint.map((o) => o.id), autoRing });
   } catch (err) {
     // A transient DB connection drop (Neon recycles pooled connections, so the
     // ~4s poll occasionally hits a just-closed one) must NOT 500 the kitchen poll

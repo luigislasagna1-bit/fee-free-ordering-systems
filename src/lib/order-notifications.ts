@@ -204,7 +204,11 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
     sendKitchenPush(order.restaurant.id, {
       title: order.restaurant.name || "New order",
       body: `#${order.orderNumber} · ${order.customerName} · ${formatCurrency(order.total, order.restaurant.currency)}`,
-      data: { type: "new_order", orderId: order.id },
+      // autoAccept flag → the native app plays a short ~3s FYI ring for an auto-accepted
+      // order (its status is already "accepted" at release) instead of the full urgent
+      // alarm (K3). A manual order is still "pending" here, so it gets the full alarm.
+      // Luigi 2026-06-23.
+      data: { type: "new_order", orderId: order.id, autoAccept: order.status === "accepted" ? "true" : "false" },
     }).catch((e) => console.error("[fireOrderNotifications] sendKitchenPush:", e));
   }
 

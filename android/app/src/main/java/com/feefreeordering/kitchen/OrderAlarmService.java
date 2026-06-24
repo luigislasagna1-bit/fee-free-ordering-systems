@@ -48,9 +48,28 @@ public class OrderAlarmService extends Service {
     // matters if the poll dies. Cleared while hushed + re-armed on rearm so a hush can't let it
     // kill a still-pending order. Luigi 2026-06-23.
     static final long MAX_RING_MS = 16 * 60 * 1000L;
+    /** Auto-accepted "FYI" ring length — short (the order is already accepted + printed),
+     *  NOT the full urgent alarm that rings until staff act. Luigi 2026-06-23 (K3). Tune here. */
+    static final long AUTO_RING_MS = 3000L;
     /** True while the alarm is ringing — the keep-alive poll + FCM both read this
      *  so a re-trigger never restarts the sound, and the poll knows when to stop. */
     static volatile boolean isRunning = false;
+    /** True while the CURRENT ring is a short auto-accept FYI (vs the full urgent alarm).
+     *  The keep-alive poll reads this so its ringing:false stop never cuts a self-limiting
+     *  auto ring short — only the AUTO_RING_MS timer ends it. Reset on destroy. Luigi 2026-06-23. */
+    static volatile boolean autoMode = false;
+    /** Order ids already given their one auto-accept FYI ring this app run, so the FCM push
+     *  AND the keep-alive poll (both can see the same auto order) ring it exactly once.
+     *  Mirrors KitchenKeepAliveService.printedThisSession. Luigi 2026-06-23 (K3). */
+    static final java.util.Set<String> autoRangThisSession =
+        java.util.Collections.synchronizedSet(new java.util.HashSet<String>());
+
+    /** Claim the one-time auto ring for this order id. Returns true the FIRST time (→ ring),
+     *  false thereafter (→ skip). A null/empty id is never deduped (always rings). */
+    static boolean claimAutoRing(String orderId) {
+        if (orderId == null || orderId.isEmpty()) return true;
+        return autoRangThisSession.add(orderId);
+    }
     /** Set when the WebView HUSHES the ring because staff OPENED the order detail (v2.6
      *  single-engine, replicating the verified v2.4 stop-on-open). The alarm PAUSES but
      *  the service stays alive (isRunning stays true), so the keep-alive poll's idempotent
@@ -126,9 +145,20 @@ public class OrderAlarmService extends Service {
             if (autoStop != null) { handler.removeCallbacks(autoStop); handler.postDelayed(autoStop, MAX_RING_MS); }
             return START_STICKY;
         }
-        // Idempotent: a second start while already ringing (the poll AND an FCM
-        // push can both ask) must NOT restart the sound — just keep ringing.
+        // Auto-accepted order → a SHORT ~3s FYI ring (it's already accepted + printed),
+        // NOT the full urgent alarm. The FCM + poll dedup via claimAutoRing so it rings
+        // exactly once, and the poll leaves autoMode rings alone. Luigi 2026-06-23 (K3).
+        boolean autoAccept = intent != null && intent.getBooleanExtra("autoAccept", false);
+        // Idempotent: a second start while already ringing (the poll AND an FCM push can
+        // both ask) must NOT restart the sound — just keep ringing. EXCEPTION: if a short
+        // auto-FYI is currently ringing and a real PENDING start arrives, UPGRADE it in
+        // place to the full alarm (clear autoMode + re-arm the long safety cap) so an urgent
+        // order is never cut short at ~3s — no sound restart, no double-ring. Luigi 2026-06-23.
         if (isRunning && player != null) {
+            if (autoMode && !autoAccept) {
+                autoMode = false;
+                if (autoStop != null) { handler.removeCallbacks(autoStop); handler.postDelayed(autoStop, MAX_RING_MS); }
+            }
             return START_STICKY;
         }
         String title = intent != null && intent.getStringExtra("title") != null ? intent.getStringExtra("title") : "New order";
@@ -137,6 +167,7 @@ public class OrderAlarmService extends Service {
         // ring + vibrate (default) vs ring only. Read on the FIRST start — a
         // re-trigger while already ringing returns early above. Luigi 2026-06-16.
         vibrateEnabled = intent == null || intent.getBooleanExtra("vibrate", true);
+        autoMode = autoAccept;
 
         Notification n = buildNotification(title, body);
         try {
@@ -153,13 +184,14 @@ public class OrderAlarmService extends Service {
         isRunning = true;
         hushedByUser = false;
         startAlarm();
-        // Play the FULL official GloriaFood ring (it intensifies in its final ~40s).
-        // The keep-alive poll stops it the INSTANT the order is accepted (leaves
-        // "pending") or its accept window expires; an auto-accepted order rings only
-        // for its short ~8s ring window. This MAX_RING_MS cap is just a safety net in
-        // case the poll ever dies, so it never rings forever. Luigi 2026-06-22.
+        // Pending order: play the FULL ring (it intensifies in its final ~40s); the
+        // keep-alive poll stops it the INSTANT the order is accepted (leaves "pending") or
+        // its window expires, and MAX_RING_MS is a safety net if the poll ever dies.
+        // Auto-accepted order: a short fixed ~3s FYI — the poll deliberately leaves autoMode
+        // rings alone, so THIS timer is its only stop (a reliable ~3s regardless of poll
+        // timing). Luigi 2026-06-23.
         autoStop = this::stopSelf;
-        handler.postDelayed(autoStop, MAX_RING_MS);
+        handler.postDelayed(autoStop, autoAccept ? AUTO_RING_MS : MAX_RING_MS);
         return START_STICKY;
     }
 
@@ -247,7 +279,10 @@ public class OrderAlarmService extends Service {
             // every pass still intensifies in its final ~40s. Luigi 2026-06-23.
             player.setOnCompletionListener(mp -> {
                 try {
-                    if (isRunning && !hushedByUser) { mp.seekTo(0); mp.start(); }
+                    // !autoMode: a short auto-FYI must never self-replay past one track length
+                    // even if its 3s Handler callback is ever starved (normally it's stopped by
+                    // the AUTO_RING_MS timer long before the 4-5min track completes). Luigi 2026-06-23.
+                    if (isRunning && !hushedByUser && !autoMode) { mp.seekTo(0); mp.start(); }
                     else stopSelf();
                 } catch (Exception ignored) { stopSelf(); }
             });
@@ -274,6 +309,7 @@ public class OrderAlarmService extends Service {
     @Override
     public void onDestroy() {
         isRunning = false;
+        autoMode = false;
         hushedByUser = false;
         if (autoStop != null) handler.removeCallbacks(autoStop);
         try { if (player != null) { player.stop(); player.release(); player = null; } } catch (Exception ignored) {}

@@ -1,5 +1,5 @@
 "use client";
-import { useState, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -7,12 +7,16 @@ import { ChefHat, Loader2, Monitor, LayoutDashboard } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
+import { getNativeAppVersion } from "@/lib/native-app-version";
 
 function KitchenLoginFormInner({ locale }: { locale: string }) {
   const tAuth = useTranslations("auth");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
+  // App version (e.g. "2.7") shown at the bottom — null in a browser / on a pre-v2.7 app. A1.
+  const [appVersion, setAppVersion] = useState<string | null>(null);
+  useEffect(() => { getNativeAppVersion().then(setAppVersion); }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -109,6 +113,10 @@ function KitchenLoginFormInner({ locale }: { locale: string }) {
             {tAuth("adminLogin")}
           </Link>
         </div>
+
+        {appVersion && (
+          <p className="mt-4 text-center text-[11px] text-gray-600">v{appVersion}</p>
+        )}
       </div>
     </div>
   );

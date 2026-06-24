@@ -119,20 +119,21 @@ public class KitchenKeepAliveService extends Service {
                     // v2.6 WebView suppresses its own ring when the OrderAlarm plugin is
                     // present). Start regardless of foreground — idempotent via isRunning,
                     // and a hush from an opened detail is preserved by that same guard.
-                    // Stop ONLY when the server says nothing is ringing (accepted/expired).
+                    // Stop ONLY when the server says nothing PENDING is ringing
+                    // (accepted/expired) AND it's not a short auto FYI (autoMode self-limits).
                     if (ringing) {
                         if (!OrderAlarmService.isRunning) {
                             Intent i = new Intent(this, OrderAlarmService.class);
                             i.putExtra("vibrate", lastVibrate);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                startForegroundService(i);
-                            } else {
-                                startService(i);
-                            }
+                            startAlarmService(i);
                         }
-                    } else if (OrderAlarmService.isRunning) {
+                    } else if (OrderAlarmService.isRunning && !OrderAlarmService.autoMode) {
                         OrderAlarmService.stop(this);
                     }
+                    // K3: auto-accepted orders ring ONCE for ~3s as a brief FYI (not the full
+                    // alarm). The server lists their ids in `autoRing`; ring each new one,
+                    // deduped across this poll + the FCM push via claimAutoRing. Luigi 2026-06-23.
+                    if (resp != null) handleAutoRing(resp);
                     // Background AUTO-PRINT — while the app is CLOSED (foreground
                     // printing is the WebView's job), print any order the server
                     // flagged for printing, straight to the Star. Luigi 2026-06-22.
@@ -271,6 +272,40 @@ public class KitchenKeepAliveService extends Service {
             }
         } catch (Exception e) {
             android.util.Log.w("KitchenKeepAlive", "printOrder error for " + orderId, e);
+        }
+    }
+
+    /** Start (or re-assert) the OrderAlarmService, tolerating an OEM FGS-start refusal under
+     *  heavy battery restriction (the order still shows in-app). Used for both the full
+     *  pending alarm and the short auto-accept FYI. */
+    private void startAlarmService(Intent i) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(i);
+            } else {
+                startService(i);
+            }
+        } catch (Exception ignored) {
+        }
+    }
+
+    /** Ring a brief ~3s FYI for each auto-accepted order the server flagged in `autoRing`,
+     *  exactly once — deduped across this poll + the FCM push via OrderAlarmService.claimAutoRing.
+     *  If the full alarm (or an earlier auto FYI) is already ringing, OrderAlarmService's
+     *  idempotent guard merges it, so there's no double-ring. Luigi 2026-06-23 (K3). */
+    private void handleAutoRing(String resp) {
+        try {
+            org.json.JSONArray ids = new org.json.JSONObject(resp).optJSONArray("autoRing");
+            if (ids == null || ids.length() == 0) return;
+            for (int i = 0; i < ids.length(); i++) {
+                String orderId = ids.optString(i, "");
+                if (orderId.isEmpty() || !OrderAlarmService.claimAutoRing(orderId)) continue;
+                Intent svc = new Intent(this, OrderAlarmService.class);
+                svc.putExtra("vibrate", lastVibrate);
+                svc.putExtra("autoAccept", true);
+                startAlarmService(svc);
+            }
+        } catch (Exception ignored) {
         }
     }
 
