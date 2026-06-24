@@ -28,6 +28,10 @@ export interface ResellerWhiteLabelProfile {
   whiteLabelTier?: string | null;
   imprint?: string | null;
   brandLogoUrl?: string | null;
+  // For the customer-page "Powered by {companyName}" credit (resolvePoweredByCredit).
+  companyName?: string | null;
+  website?: string | null;
+  showCustomerPageCredit?: boolean | null;
 }
 
 /** FREE de-brand tier — approved reseller who configured an imprint or logo. */
@@ -48,6 +52,33 @@ export function isResellerWhiteLabel(p?: ResellerWhiteLabelProfile | null): bool
   return isResellerBranded(p);
 }
 
+/** Which "Powered by" credit a restaurant's customer-facing pages should show. */
+export type PoweredByCredit =
+  | { kind: "feefree" }
+  | { kind: "reseller"; name: string; url: string | null }
+  | { kind: "none" };
+
+/**
+ * Resolve the customer-page credit for a restaurant from its reseller profile:
+ *  - DIRECT (non-reseller, or an unconfigured reseller) -> { feefree }: the platform
+ *    "Powered by Fee Free Ordering" credit (free marketing + SEO backlink).
+ *  - DE-BRANDED reseller with the credit ON (the default) + a companyName ->
+ *    { reseller }: "Powered by {companyName}", linking to their website when set.
+ *  - DE-BRANDED reseller who turned the credit OFF, or has no companyName -> { none }:
+ *    a fully clean storefront. So a reseller storefront shows THEIR brand in place of
+ *    ours, and is only left blank when the partner explicitly opted out.
+ */
+export function resolvePoweredByCredit(p?: ResellerWhiteLabelProfile | null): PoweredByCredit {
+  if (!isResellerDebranded(p)) return { kind: "feefree" };
+  const name = p?.companyName?.trim();
+  if (p?.showCustomerPageCredit !== false && name) {
+    let url: string | null = p?.website?.trim() || null;
+    if (url && !/^https?:\/\//i.test(url)) url = `https://${url}`;
+    return { kind: "reseller", name, url };
+  }
+  return { kind: "none" };
+}
+
 /** Prisma select fragment for the fields the gates need — spread into a restaurant query's
  *  `resellerProfile: { select: RESELLER_WHITE_LABEL_SELECT }`. Includes imprint + brandLogoUrl so
  *  isResellerDebranded can tell whether branding was actually configured. */
@@ -57,4 +88,7 @@ export const RESELLER_WHITE_LABEL_SELECT = {
   whiteLabelTier: true,
   imprint: true,
   brandLogoUrl: true,
+  companyName: true,
+  website: true,
+  showCustomerPageCredit: true,
 } as const;

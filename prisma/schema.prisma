@@ -2351,6 +2351,14 @@ model ResellerProfile {
   /// Luigi 2026-06-23.
   brandLoginBgUrl   String?
 
+  /// When this reseller is de-branded (approved + imprint/logo) the platform
+  /// "Powered by Fee Free Ordering" credit is hidden on their restaurants' customer
+  /// pages. This flag controls what shows IN ITS PLACE: true (default) shows
+  /// "Powered by {companyName}" (the reseller's own credit -> consistent branding);
+  /// false shows nothing (a fully clean storefront). Direct (non-reseller) restaurants
+  /// always show the Fee Free credit regardless. Luigi 2026-06-24.
+  showCustomerPageCredit Boolean @default(true)
+
   /// Stripe Customer for this reseller. Created lazily the first time
   /// the reseller starts a white-label Checkout. Reused across renewals
   /// + future add-on subscriptions so the reseller has one cohesive

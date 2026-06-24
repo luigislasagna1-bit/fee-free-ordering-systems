@@ -3,7 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import prisma from "@/lib/db";
 import { resolveLocale, loadMessages } from "@/lib/i18n-server";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
-import { isResellerDebranded, RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
+import { resolvePoweredByCredit, RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 import { RestaurantInfoClient } from "./RestaurantInfoClient";
 
 export default async function RestaurantInfoPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -55,11 +55,11 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
   // (free marketing + SEO backlink), suppressing it ONLY for reseller white-label
   // accounts (they pay for their own branding). A plain restaurant on its own
   // verified custom domain STILL shows the credit. Luigi 2026-06-22.
-  const showPoweredBy = !isResellerDebranded(restaurant.resellerProfile);
+  const poweredByCredit = resolvePoweredByCredit(restaurant.resellerProfile);
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <RestaurantInfoClient restaurant={restaurant as any} showPoweredBy={showPoweredBy} />
+      <RestaurantInfoClient restaurant={restaurant as any} poweredByCredit={poweredByCredit} />
     </NextIntlClientProvider>
   );
 }

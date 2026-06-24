@@ -51,7 +51,8 @@ import { evaluateApplicableFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { SocialFooter } from "./SocialFooter";
-import { PoweredByFeeFree } from "@/components/PoweredByFeeFree";
+import { PoweredByCredit } from "@/components/PoweredByFeeFree";
+import type { PoweredByCredit as PoweredByCreditValue } from "@/lib/white-label";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -773,15 +774,16 @@ export function OrderingPageClient({
   todayHolidayClosed = false,
   holidayClosedServices = [],
   isTestPreview = false,
-  showPoweredBy = true,
+  poweredByCredit = { kind: "feefree" },
 }: {
   restaurant: any;
   cardPaymentEnabled?: boolean;
-  /** Show the clickable "Powered by Fee Free Ordering" credit at the bottom of
-   *  the ordering page (free marketing + SEO backlink). True for every
-   *  restaurant EXCEPT a de-branded reseller account. Computed server-side via
-   *  !isResellerDebranded(restaurant.resellerProfile). Luigi 2026-06-22. */
-  showPoweredBy?: boolean;
+  /** Clickable platform credit at the bottom of the ordering page (free
+   *  marketing + SEO backlink). Resolved server-side via
+   *  resolvePoweredByCredit(restaurant.resellerProfile) — renders the Fee Free
+   *  credit, a reseller's own credit, or nothing for a de-branded account.
+   *  Luigi 2026-06-22. */
+  poweredByCredit?: PoweredByCreditValue;
   /** Name of today's one-off holiday closure (restaurant tz), or null. When
    *  set, the live open/closed status is forced to "closed today" so the
    *  customer sees the closed banner + must schedule for the next open day. */
@@ -4392,9 +4394,7 @@ export function OrderingPageClient({
             restaurant EXCEPT de-branded reseller accounts (gated server-side
             via !isResellerDebranded). Lives inside the next-intl provider so
             the i18n component works. Luigi 2026-06-22. */}
-        {showPoweredBy && (
-          <PoweredByFeeFree className="block text-center text-xs text-gray-400 py-6" />
-        )}
+        <PoweredByCredit credit={poweredByCredit} className="block text-center text-xs text-gray-400 py-6" />
       </div>
 
       {/* ── Floating cart ─────────────────────────────────────────────── */}

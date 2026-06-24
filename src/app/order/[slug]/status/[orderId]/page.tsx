@@ -10,8 +10,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { use } from "react";
-import { PoweredByFeeFree } from "@/components/PoweredByFeeFree";
-import { isResellerDebranded } from "@/lib/white-label";
+import { PoweredByCredit } from "@/components/PoweredByFeeFree";
+import { resolvePoweredByCredit } from "@/lib/white-label";
 
 // Two step sets based on the restaurant's kitchen workflow mode. The
 // "simple" mode (GloriaFood-style) just has accept/reject in the kitchen —
@@ -267,7 +267,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   // under a reseller's own branded (white-label) account. The reseller
   // white-label fields ride along on order.restaurant from the public
   // /api/orders/[id] select. Luigi 2026-06-22.
-  const showPoweredBy = !isResellerDebranded(order.restaurant?.resellerProfile);
+  const poweredByCredit = resolvePoweredByCredit(order.restaurant?.resellerProfile);
 
   // ── Promo snapshot parse ─────────────────────────────────────────
   // Same shape used by the confirmation page + receipt template.
@@ -795,9 +795,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
 
           {/* Free-marketing platform credit + SEO backlink. Hidden only for
               reseller white-label accounts; suppressed in print. */}
-          {showPoweredBy && (
-            <PoweredByFeeFree className="no-print block text-center text-xs text-gray-400 hover:text-gray-600 transition-colors py-6" />
-          )}
+          <PoweredByCredit credit={poweredByCredit} className="no-print block text-center text-xs text-gray-400 hover:text-gray-600 transition-colors py-6" />
         </div>
       </div>
 

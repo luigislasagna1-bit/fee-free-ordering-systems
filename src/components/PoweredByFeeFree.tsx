@@ -1,3 +1,5 @@
+import type { PoweredByCredit as Credit } from "@/lib/white-label";
+
 /**
  * Clickable "Powered by Fee Free Ordering" credit linking to www.feefreeordering.com.
  * Free marketing + an SEO backlink from every restaurant storefront. Render it on customer
@@ -24,5 +26,46 @@ export function PoweredByFeeFree({ className, color }: { className?: string; col
         Fee Free Ordering
       </span>
     </a>
+  );
+}
+
+/**
+ * Customer-page credit resolved per restaurant (resolvePoweredByCredit in src/lib/white-label.ts):
+ *  - feefree  → "Powered by Fee Free Ordering" (direct restaurants — SEO backlink)
+ *  - reseller → "Powered by {name}" (de-branded reseller, credit ON), linking to their site when set
+ *  - none     → nothing (de-branded reseller who opted out)
+ * Plain text on purpose — same reasoning as PoweredByFeeFree above.
+ */
+export function PoweredByCredit({
+  credit,
+  className,
+  color,
+}: {
+  credit: Credit;
+  className?: string;
+  color?: string;
+}) {
+  if (credit.kind === "feefree") return <PoweredByFeeFree className={className} color={color} />;
+  if (credit.kind === "none") return null;
+  const cls = className ?? "block text-center text-xs text-gray-400";
+  const inner = (
+    <>
+      Powered by{" "}
+      <span className="font-semibold" style={color ? { color } : undefined}>
+        {credit.name}
+      </span>
+    </>
+  );
+  return credit.url ? (
+    <a
+      href={credit.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${cls} hover:text-gray-600 transition-colors`}
+    >
+      {inner}
+    </a>
+  ) : (
+    <div className={cls}>{inner}</div>
   );
 }

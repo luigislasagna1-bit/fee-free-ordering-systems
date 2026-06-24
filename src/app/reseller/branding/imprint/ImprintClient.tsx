@@ -12,14 +12,42 @@ import { Loader2, CheckCircle2, Tag } from "lucide-react";
 export function ImprintClient({
   initialImprint,
   companyName,
+  initialShowCredit,
 }: {
   initialImprint: string;
   companyName: string | null;
+  initialShowCredit: boolean;
 }) {
   const [imprint, setImprint] = useState(initialImprint);
   const [busy, setBusy] = useState(false);
   const [savedAt, setSavedAt] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showCredit, setShowCredit] = useState(initialShowCredit);
+  const [creditBusy, setCreditBusy] = useState(false);
+  const [creditSavedAt, setCreditSavedAt] = useState<number | null>(null);
+
+  // The customer-page credit toggle saves immediately on change (optimistic;
+  // reverts if the PATCH fails). Separate from the imprint "Save" button.
+  async function saveCredit(next: boolean) {
+    setShowCredit(next);
+    setCreditBusy(true);
+    try {
+      const res = await fetch("/api/reseller/branding", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ showCustomerPageCredit: next }),
+      });
+      if (!res.ok) {
+        setShowCredit(!next); // revert on failure
+      } else {
+        setCreditSavedAt(Date.now());
+      }
+    } catch {
+      setShowCredit(!next);
+    } finally {
+      setCreditBusy(false);
+    }
+  }
 
   async function save() {
     setBusy(true);
@@ -147,6 +175,47 @@ export function ImprintClient({
         attributed to you — order confirmations, password resets, reservation confirmations,
         etc. Per-restaurant overrides aren&apos;t supported yet, so keep this line generic to
         your brand.
+      </div>
+
+      {/* Customer ordering-page credit — distinct from the email imprint above. Controls
+          whether your restaurants' customer ordering pages show "Powered by {companyName}"
+          in place of the (hidden) Fee Free credit. Saved via the same branding PATCH. */}
+      <div className="mt-6 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <h2 className="text-lg font-bold text-gray-900 mb-1">Customer ordering page credit</h2>
+        <p className="text-sm text-gray-500 mb-4">
+          Restaurants you bring on never show &ldquo;Powered by Fee Free Ordering&rdquo; on their
+          ordering pages. You can show <strong>your own</strong> credit there instead.
+        </p>
+        <label className="flex items-start gap-3 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={showCredit}
+            disabled={creditBusy}
+            onChange={(e) => saveCredit(e.target.checked)}
+            className="mt-0.5 h-5 w-5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+          />
+          <span className="text-sm text-gray-700">
+            Show <strong>&ldquo;Powered by {companyName || "your company"}&rdquo;</strong> on your
+            restaurants&apos; customer ordering pages.
+            {!companyName && (
+              <span className="block text-xs text-amber-700 mt-1">
+                Set your company name on your profile first — without it there&apos;s no name to show.
+              </span>
+            )}
+          </span>
+        </label>
+        <div className="flex items-center gap-2 mt-3 h-4">
+          {creditBusy && <Loader2 className="w-3.5 h-3.5 animate-spin text-gray-400" />}
+          {!creditBusy && creditSavedAt && (
+            <span className="inline-flex items-center gap-1 text-xs text-emerald-700">
+              <CheckCircle2 className="w-3.5 h-3.5" /> Saved
+            </span>
+          )}
+        </div>
+        <p className="text-[11px] text-gray-400 mt-2 leading-relaxed">
+          Off = a fully clean ordering page (no credit at all). This only takes effect once
+          you&apos;ve set an imprint or logo (which is what de-brands your restaurants).
+        </p>
       </div>
     </div>
   );

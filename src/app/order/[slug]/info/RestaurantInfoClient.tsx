@@ -10,7 +10,8 @@ import {
 import toast from "react-hot-toast";
 import { parseTheme } from "@/lib/theme";
 import { useTranslations } from "next-intl";
-import { PoweredByFeeFree } from "@/components/PoweredByFeeFree";
+import { PoweredByCredit } from "@/components/PoweredByFeeFree";
+import type { PoweredByCredit as PoweredByCreditValue } from "@/lib/white-label";
 
 const DeliveryZonesMap = dynamic(() => import("../DeliveryZonesMap"), { ssr: false });
 
@@ -84,12 +85,13 @@ interface Restaurant {
 
 export function RestaurantInfoClient({
   restaurant,
-  showPoweredBy = true,
+  poweredByCredit = { kind: "feefree" },
 }: {
   restaurant: Restaurant;
-  /** Show the clickable "Powered by Fee Free Ordering" credit (free marketing +
-   *  SEO backlink). False only for reseller white-label accounts. Luigi 2026-06-22. */
-  showPoweredBy?: boolean;
+  /** Customer-page credit: "Powered by Fee Free Ordering" (direct restaurants,
+   *  SEO backlink), "Powered by {reseller}", or nothing (de-branded reseller who
+   *  opted out). Resolved per restaurant via resolvePoweredByCredit. Luigi 2026-06-22. */
+  poweredByCredit?: PoweredByCreditValue;
 }) {
   const tInfo = useTranslations("info");
   const tOrdering = useTranslations("ordering");
@@ -551,9 +553,7 @@ export function RestaurantInfoClient({
           </div>
         )}
 
-        {showPoweredBy && (
-          <PoweredByFeeFree color={p} className="text-center text-xs text-gray-400 pb-4" />
-        )}
+        <PoweredByCredit credit={poweredByCredit} color={p} className="text-center text-xs text-gray-400 pb-4" />
       </div>
     </div>
   );

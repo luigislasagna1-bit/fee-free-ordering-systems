@@ -28,6 +28,7 @@ export default async function ResellerImprintPage() {
       status: true,
       imprint: true,
       companyName: true,
+      showCustomerPageCredit: true,
     },
   });
   // Imprint editor is FREE for any APPROVED reseller — no white-label
@@ -38,6 +39,7 @@ export default async function ResellerImprintPage() {
     <ImprintClient
       initialImprint={profile.imprint ?? ""}
       companyName={profile.companyName ?? null}
+      initialShowCredit={profile.showCustomerPageCredit}
     />
   );
 }

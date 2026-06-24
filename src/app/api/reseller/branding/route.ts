@@ -29,6 +29,7 @@ export async function GET() {
       brandPrimaryColor: true,
       brandAccentColor: true,
       brandLoginBgUrl: true,
+      showCustomerPageCredit: true,
     },
   });
   if (profile?.status !== "approved") {
@@ -41,6 +42,7 @@ export async function GET() {
     brandPrimaryColor: profile.brandPrimaryColor ?? "",
     brandAccentColor: profile.brandAccentColor ?? "",
     brandLoginBgUrl: profile.brandLoginBgUrl ?? "",
+    showCustomerPageCredit: profile.showCustomerPageCredit,
   });
 }
 
@@ -75,6 +77,7 @@ export async function PATCH(req: NextRequest) {
     brandPrimaryColor?: string | null;
     brandAccentColor?: string | null;
     brandLoginBgUrl?: string | null;
+    showCustomerPageCredit?: boolean;
   } = {};
 
   if ("imprint" in body) {
@@ -124,6 +127,11 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: "Accent color must be a hex value like #34d399" }, { status: 400 });
     }
     data.brandAccentColor = raw ? raw : null;
+  }
+  // Customer-page "Powered by {companyName}" credit toggle (boolean). Coerced to a
+  // strict boolean so a missing/odd value can't write null into a non-null column.
+  if ("showCustomerPageCredit" in body) {
+    data.showCustomerPageCredit = body.showCustomerPageCredit === true;
   }
 
   if (Object.keys(data).length === 0) {
