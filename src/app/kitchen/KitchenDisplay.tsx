@@ -2232,15 +2232,25 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     } catch { /* SSR / private mode — catch-up stays off, foreground path still rings+prints */ }
   }, []);
 
-  useEffect(() => {
-    fetch("/api/kitchen/printnode/settings")
-      .then(async (r) => {
-        if (!r.ok) return;
-        const data = await r.json().catch(() => null);
-        if (data?.settings) setPrinterSettings(data.settings);
-      })
-      .catch(() => {});
+  // Printer settings (receipt copy counts + which receipts to print). Loaded on mount AND
+  // refreshed when the app regains focus — previously fetched once at mount, so an admin
+  // change to the receipt template went stale until a full reload (P1/P3). Luigi 2026-06-23.
+  const refreshPrinterSettings = useCallback(async () => {
+    try {
+      const r = await fetch("/api/kitchen/printnode/settings");
+      if (!r.ok) return;
+      const data = await r.json().catch(() => null);
+      if (data?.settings) setPrinterSettings(data.settings);
+    } catch { /* keep the cached settings */ }
   }, []);
+  useEffect(() => {
+    refreshPrinterSettings();
+    const onVis = () => {
+      if (typeof document !== "undefined" && document.visibilityState === "visible") refreshPrinterSettings();
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, [refreshPrinterSettings]);
 
   const fetchOrders = useCallback(async () => {
     try {
@@ -2698,8 +2708,27 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     // the configured per-restaurant copy counts. Luigi 2026-06-16.
     const clampCopies = (n: number | null | undefined) =>
       opts?.single ? 1 : Math.min(Math.max(0, Math.round(Number(n ?? 1))), 5);
-    const kN = type === "both" || type === "kitchen" ? clampCopies(printerSettings?.kitchenCopies) : 0;
-    const cN = type === "both" || type === "customer" ? clampCopies(printerSettings?.customerCopies) : 0;
+    // P1: the copy counts can change in admin AFTER the app cached printerSettings at mount.
+    // The native auto-accept print reads fresh from the DB, so a stale web cache made the
+    // manual-accept print use the OLD count. For the acceptance auto-print (where the
+    // configured copies matter — manual reprints pass opts.single → always 1) re-fetch fresh,
+    // with a short timeout + cache fallback so a network blip never blocks printing. The Star
+    // print path (doPrintDirectOne) below is untouched. Luigi 2026-06-23.
+    let liveSettings = printerSettings;
+    if (!opts?.single) {
+      try {
+        const ctrl = new AbortController();
+        const to = setTimeout(() => ctrl.abort(), 2000);
+        const r = await fetch("/api/kitchen/printnode/settings", { signal: ctrl.signal });
+        clearTimeout(to);
+        if (r.ok) {
+          const d = await r.json().catch(() => null);
+          if (d?.settings) { liveSettings = d.settings; setPrinterSettings(d.settings); }
+        }
+      } catch { /* keep the cached settings */ }
+    }
+    const kN = type === "both" || type === "kitchen" ? clampCopies(liveSettings?.kitchenCopies) : 0;
+    const cN = type === "both" || type === "customer" ? clampCopies(liveSettings?.customerCopies) : 0;
     const jobs: Array<"kitchen" | "customer"> = [];
     for (let i = 0; i < kN; i++) jobs.push("kitchen");
     for (let i = 0; i < cN; i++) jobs.push("customer");

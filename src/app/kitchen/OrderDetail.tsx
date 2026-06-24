@@ -12,6 +12,7 @@ import type { T, Order } from "./kitchen-types";
 import { paymentStatusLabel } from "./kitchen-types";
 import { useTranslations, useLocale } from "next-intl";
 import { RejectOrderModal } from "./RejectOrderModal";
+import { Countdown } from "./Countdown";
 
 interface Props {
   order: Order;
@@ -191,7 +192,10 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
   // poll picks up the status flip.
   const [nowTick, setNowTick] = useState(() => Date.now());
   useEffect(() => {
-    if (order.status !== "accepted") return;
+    // Tick while accepted (count down to ready) OR pending (the accept-window countdown
+    // shown in the header, P2) so staff see the time remaining without backing out to the
+    // list. Luigi 2026-06-23.
+    if (order.status !== "accepted" && order.status !== "pending") return;
     const id = setInterval(() => setNowTick(Date.now()), 1000);
     return () => clearInterval(id);
   }, [order.status]);
@@ -328,6 +332,17 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           <div className={`text-xs ${t.muted}`}>{fmtTime(order.createdAt, hoursFormat, locale)}</div>
         </div>
         <StatusBadge />
+        {/* P2: accept-window countdown beside the status pill, so staff see the time
+            remaining without backing out to the list. Pending orders only. Luigi 2026-06-23. */}
+        {order.status === "pending" && (
+          <Countdown
+            notifiedAt={order.notifiedAt}
+            createdAt={order.createdAt}
+            alertAt={order.alertAt}
+            placedWhileClosed={order.placedWhileClosed}
+            now={nowTick}
+          />
+        )}
         {order.viaMarketplace && (
           <span className="text-[10px] font-bold px-2 py-1 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-300">
             MARKETPLACE
