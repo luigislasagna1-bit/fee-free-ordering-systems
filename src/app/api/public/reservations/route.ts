@@ -8,7 +8,7 @@ import { hasFeature } from "@/lib/entitlements";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
 import { notifyCapWarning80, notifyCapReached100 } from "@/lib/cap-notify";
 import { liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
-import { holidayEffectToday } from "@/lib/holiday-rules";
+import { holidayEffectToday, holidayEffectForDay, hhmmInsideIntervals } from "@/lib/holiday-rules";
 
 function sanitize(s: unknown, max = 500): string {
   return String(s ?? "").trim().slice(0, max);
@@ -135,6 +135,28 @@ export async function POST(req: NextRequest) {
       const dayLabel = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][probeDow];
       return NextResponse.json(
         { error: `We're closed on ${dayLabel} — please pick a different date.` },
+        { status: 400 },
+      );
+    }
+
+    // Extraordinary / special-day closure (the "Extraordinary closing hours"
+    // screen — one-off RestaurantHoliday rows). The recurring weekly guard above
+    // does NOT cover these, so a reservation could still be booked on a day the
+    // owner explicitly closed for reservations. Mirror the order route's holiday
+    // check (api/orders/route.ts ~1575) for the "reservation" service.
+    // (Fabrizio: "I set reservations closed for today and it still let me book.")
+    // `date` is already the customer's chosen calendar day ("YYYY-MM-DD"), the
+    // same key RestaurantHoliday rows use — no tz conversion needed.
+    const holEffect = holidayEffectForDay(restaurant.holidays as any, date, "reservation");
+    if (holEffect?.kind === "closed") {
+      return NextResponse.json(
+        { error: holEffect.message || "We're closed for reservations on this date — please pick a different date." },
+        { status: 400 },
+      );
+    }
+    if (holEffect?.kind === "custom_hours" && !hhmmInsideIntervals(time, holEffect.intervals)) {
+      return NextResponse.json(
+        { error: "On this date we only take reservations during special hours — please choose a time within them." },
         { status: 400 },
       );
     }
