@@ -14,7 +14,7 @@ import { CustomDomainClient } from "./CustomDomainClient";
  * else redirects back to the holding page (consistent with the rest
  * of /reseller/**).
  *
- * Tier gate: the UI itself handles the "Basic — upgrade for $29"
+ * Tier gate: the UI itself handles the "upgrade to Branded ($19.99/mo)"
  * affordance when whiteLabelTier !== "full". We don't redirect — the
  * page renders + shows an in-context upgrade CTA so the reseller
  * understands what they're paying for.
