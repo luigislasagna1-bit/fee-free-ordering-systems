@@ -181,6 +181,23 @@ export async function proxy(req: NextRequest) {
   // (isNeutralResellerHost); x-neutral-reseller is set as an auxiliary signal
   // for any future consumer. No redirect → no Cache-Control headers needed.
   if (decision.kind === "neutral-reseller") {
+    // The neutral host is ONLY the de-branded login experience for free partners' restaurants —
+    // NOT the Fee Free marketing site. Redirect the homepage + any non-auth/console path to
+    // /login so restaurantownerlogin.com never shows Fee Free marketing chrome. The auth +
+    // console paths (login/signup/admin/kitchen/password/verify) pass through, de-branded.
+    // Scoped to this host only — other hosts are untouched. Luigi 2026-06-24.
+    const NEUTRAL_ALLOW = ["/login", "/signup", "/admin", "/kitchen", "/forgot-password", "/reset-password", "/verify-email"];
+    const onAllowed = NEUTRAL_ALLOW.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+    if (!onAllowed) {
+      const url = req.nextUrl.clone();
+      url.pathname = "/login";
+      url.search = "";
+      const res = NextResponse.redirect(url);
+      res.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+      res.headers.set("Pragma", "no-cache");
+      res.headers.set("Expires", "0");
+      return res;
+    }
     const requestHeaders = new Headers(req.headers);
     requestHeaders.set("x-neutral-reseller", "true");
     return NextResponse.next({ request: { headers: requestHeaders } });
