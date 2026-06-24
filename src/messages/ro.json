@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "Profil → Activ",
       "youAreLiveOfflineSuffix": "pe dezactivat — te ascunde de clienți fără a pierde datele de configurare.",
       "sectionStepCount": "{completed} din {total} {count, plural, one {pas} other {pași}}",
+      "recommendedBadge": "Recomandat",
       "requiredToPublish": "Obligatoriu pentru publicare",
       "publishSuccessToast": "Ești online! Clienții pot plasa comenzi acum.",
       "publishFailedGeneric": "Nu am putut publica restaurantul. Încearcă din nou."

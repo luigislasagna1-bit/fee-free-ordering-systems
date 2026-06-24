@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "プロフィール → 有効",
       "youAreLiveOfflineSuffix": "をオフにすると、設定データを失わずにお客様から非表示になります。",
       "sectionStepCount": "{total} {count, plural, one {ステップ} other {ステップ}}中 {completed} 完了",
+      "recommendedBadge": "推奨",
       "requiredToPublish": "公開に必須",
       "publishSuccessToast": "公開されました！お客様が注文できるようになりました。",
       "publishFailedGeneric": "レストランを公開できませんでした。もう一度お試しください。"

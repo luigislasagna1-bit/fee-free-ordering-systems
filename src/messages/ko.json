@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "프로필 → 활성",
       "youAreLiveOfflineSuffix": "을 끄세요 — 설정 데이터는 유지하면서 고객에게 숨겨집니다.",
       "sectionStepCount": "{total}{count, plural, one {단계} other {단계}} 중 {completed}단계",
+      "recommendedBadge": "권장",
       "requiredToPublish": "게시에 필수",
       "publishSuccessToast": "운영을 시작했습니다! 이제 고객이 주문할 수 있습니다.",
       "publishFailedGeneric": "레스토랑을 게시하지 못했습니다. 다시 시도해 주세요."

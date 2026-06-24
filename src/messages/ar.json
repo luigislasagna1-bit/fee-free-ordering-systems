@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "الملف الشخصي ← نشط",
       "youAreLiveOfflineSuffix": "— يخفيك عن العملاء دون فقدان بيانات الإعداد.",
       "sectionStepCount": "{completed} من {total} {count, plural, one {خطوة} other {خطوات}}",
+      "recommendedBadge": "موصى به",
       "requiredToPublish": "مطلوب للنشر",
       "publishSuccessToast": "أصبحت متاحًا الآن! يمكن للعملاء الآن تقديم الطلبات.",
       "publishFailedGeneric": "تعذّر نشر مطعمك. يرجى المحاولة مرة أخرى."

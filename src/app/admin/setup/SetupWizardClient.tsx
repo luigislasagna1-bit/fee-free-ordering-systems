@@ -389,6 +389,11 @@ function StepRow({ step }: { step: SetupStep }) {
             {t("requiredToPublish")}
           </div>
         )}
+        {step.recommended && !step.complete && (
+          <div className="text-[10px] text-emerald-600 font-semibold uppercase tracking-wider mt-0.5">
+            {t("recommendedBadge")}
+          </div>
+        )}
       </div>
       <ExternalLink className="w-3.5 h-3.5 text-gray-300 group-hover:text-gray-500 transition flex-shrink-0" />
     </Link>

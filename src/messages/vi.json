@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "Hồ sơ → Đang hoạt động",
       "youAreLiveOfflineSuffix": "tắt — điều này ẩn bạn khỏi khách hàng mà không mất dữ liệu thiết lập.",
       "sectionStepCount": "{completed} trong {total} {count, plural, one {bước} other {bước}}",
+      "recommendedBadge": "Khuyến nghị",
       "requiredToPublish": "Bắt buộc để xuất bản",
       "publishSuccessToast": "Bạn đã hoạt động! Khách hàng giờ có thể đặt hàng.",
       "publishFailedGeneric": "Không thể đăng nhà hàng của bạn. Vui lòng thử lại."

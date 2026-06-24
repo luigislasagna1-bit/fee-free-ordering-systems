@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "โปรไฟล์ → ใช้งาน",
       "youAreLiveOfflineSuffix": "ปิด — จะซ่อนคุณจากลูกค้าโดยไม่สูญเสียข้อมูลการตั้งค่า",
       "sectionStepCount": "{completed} จาก {total} {count, plural, one {ขั้นตอน} other {ขั้นตอน}}",
+      "recommendedBadge": "แนะนำ",
       "requiredToPublish": "บังคับสำหรับการเผยแพร่",
       "publishSuccessToast": "ร้านของคุณเปิดให้บริการแล้ว! ลูกค้าสามารถสั่งซื้อได้แล้ว",
       "publishFailedGeneric": "ไม่สามารถเผยแพร่ร้านอาหารของคุณได้ โปรดลองอีกครั้ง"

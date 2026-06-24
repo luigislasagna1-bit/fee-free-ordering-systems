@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "资料 → 激活",
       "youAreLiveOfflineSuffix": "关闭——这会让顾客看不到您，但不会丢失设置数据。",
       "sectionStepCount": "{completed} / {total} {count, plural, one {步} other {步}}",
+      "recommendedBadge": "推荐",
       "requiredToPublish": "发布必填",
       "publishSuccessToast": "您已上线！顾客现在可以下单了。",
       "publishFailedGeneric": "无法发布您的餐厅。请重试。"

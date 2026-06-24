@@ -1503,6 +1503,7 @@
       "youAreLiveProfileLink": "Profils → Aktīvs",
       "youAreLiveOfflineSuffix": "— tas paslēpj jūs no klientiem, nezaudējot iestatīšanas datus.",
       "sectionStepCount": "{completed} no {total} {count, plural, one {soļa} other {soļiem}}",
+      "recommendedBadge": "Ieteicams",
       "requiredToPublish": "Nepieciešams publicēšanai",
       "publishSuccessToast": "Esat tiešsaistē! Klienti tagad var veikt pasūtījumus.",
       "publishFailedGeneric": "Neizdevās publicēt jūsu restorānu. Mēģiniet vēlreiz."

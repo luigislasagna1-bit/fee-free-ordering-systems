@@ -61,6 +61,10 @@ export interface SetupStep {
    *  surface live state, e.g. "iPhone 13 · 12s ago" for the kitchen
    *  device step. Optional — most steps don't need this. */
   detail?: string;
+  /** When true, the step shows a prominent "Recommended" badge even though it
+   *  does NOT block publishing. For steps we strongly nudge (e.g. connecting the
+   *  Kitchen Order App) but won't trap an owner on. */
+  recommended?: boolean;
 }
 
 export interface SetupSection {
@@ -129,11 +133,11 @@ export interface ChecklistInput {
    *  shipday/both deliverySource to count as "set up". */
   hasDriverPoolEntitlement: boolean;
   /** True iff the restaurant has the Sales Optimized Website add-on
-   *  (`hosted_marketing_page` entitlement). When true, customers have
-   *  a place to order from (the hosted SOW page); they don't need to
-   *  install the widget on their own website. When false, the widget
-   *  install becomes the only way customers can reach the order page,
-   *  so it's required-to-publish. */
+   *  (`hosted_marketing_page` entitlement). When true, the hosted SOW page IS
+   *  the ordering page, so the optional website-widget step auto-completes.
+   *  (Neither the widget nor a connected device blocks publishing any more —
+   *  every published restaurant also gets an order-page URL + QR + share link,
+   *  and the required notification recipient guarantees orders are received.) */
   hasSalesOptimizedWebsite: boolean;
 }
 
@@ -299,15 +303,20 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
       id: "orders.appConnected",
       section: "orders",
       label: "Order-taking app connected",
-      // KitchenDevice heartbeats — required for publishing. Detail shows
-      // device name + how long since the last heartbeat so the owner can
-      // tell at a glance whether the app is currently online or stale.
-      required: true,
+      // STRONGLY RECOMMENDED, not required (Luigi, 2026-06-24). The real
+      // guarantee against a silently-dropped order is the notification recipient
+      // below (email/SMS), which stays required. Forcing a physical tablet/app
+      // install on TOP of that trapped owners evaluating the product or running
+      // the kitchen view in a browser. We surface a prominent "Recommended"
+      // badge + a nudge so it isn't skipped by accident, but it never blocks
+      // go-live. Detail shows the device name + last-heartbeat age.
+      required: false,
+      recommended: true,
       href: "/admin/publishing",
       complete: hasKitchenDevice,
       detail: kitchenDeviceDetail
         ? `${kitchenDeviceDetail.label} · ${formatRelativeAgo(kitchenDeviceDetail.lastSeenAt)}`
-        : "No device has connected yet",
+        : "Connect the Kitchen Order App so new orders ring instantly. Until then you'll still get email/SMS alerts.",
     },
     {
       id: "orders.notificationRecipient",
@@ -349,25 +358,21 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
     {
       id: "publish.widgetReady",
       section: "publishing",
-      label: "Install the widget on your website",
-      // REQUIRED when the restaurant doesn't have a Sales Optimized
-      // Website (our hosted ordering page). One of the two MUST be
-      // present before publish, otherwise customers have nowhere to
-      // actually place orders from:
-      //
-      //   - SOW active                  → hosted page exists; widget is optional
-      //   - Widget installed on a site  → embed exists; SOW is optional
-      //   - Neither                     → no ordering surface, can't publish
-      //
-      // Tracked via Restaurant.widgetInstalledAt, which gets stamped
-      // when the embed widget.js script fires its install heartbeat
-      // from any third-party host page (see /api/widget/heartbeat).
-      required: !hasSalesOptimizedWebsite,
+      label: "Add an order button to your website",
+      // OPTIONAL (Luigi, 2026-06-24). Publishing already gives every restaurant
+      // a shareable order-page URL + QR code + share link (and an optional
+      // marketplace listing), so the website embed is just ONE distribution
+      // channel — not the only way to reach the order page. Forcing a widget
+      // install on a restaurant with no website was a dead end, so it no longer
+      // blocks publishing. Still tracked via Restaurant.widgetInstalledAt (the
+      // embed widget.js install heartbeat, see /api/widget/heartbeat) so the
+      // step ticks green once they add it.
+      required: false,
       href: "/admin/publishing/legacy-website",
       complete: !!restaurant.widgetInstalledAt || hasSalesOptimizedWebsite,
       detail: hasSalesOptimizedWebsite
-        ? "Your Sales Optimized Website is your ordering page — widget is optional."
-        : "Customers need somewhere to order. Either install the widget here, or subscribe to the Sales Optimized Website add-on.",
+        ? "Your Sales Optimized Website is your ordering page — the widget is optional."
+        : "Optional — add an order button to your existing website. Customers can also order from your QR code, share link, or marketplace listing.",
     },
   ];
 

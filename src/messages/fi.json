@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "Profiili → Aktiivinen",
       "youAreLiveOfflineSuffix": "pois päältä — se piilottaa sinut asiakkailta menettämättä asetustietojasi.",
       "sectionStepCount": "{completed} / {total} {count, plural, one {vaihe} other {vaihetta}}",
+      "recommendedBadge": "Suositeltu",
       "requiredToPublish": "Vaaditaan julkaisemiseen",
       "publishSuccessToast": "Olet julkaistu! Asiakkaat voivat nyt tehdä tilauksia.",
       "publishFailedGeneric": "Ravintolasi julkaiseminen epäonnistui. Yritä uudelleen."

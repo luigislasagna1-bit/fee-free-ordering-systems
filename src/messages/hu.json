@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "Profil → Aktív",
       "youAreLiveOfflineSuffix": " kapcsolót — ezzel elrejti az ügyfelek elől, de a beállítási adatai megmaradnak.",
       "sectionStepCount": "{completed} / {total} {count, plural, one {lépés} other {lépés}}",
+      "recommendedBadge": "Ajánlott",
       "requiredToPublish": "Közzétételhez szükséges",
       "publishSuccessToast": "Élesben vagy! A vásárlók már rendelhetnek.",
       "publishFailedGeneric": "Nem sikerült közzétenni az éttermedet. Próbáld újra."

@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "פרופיל → פעיל",
       "youAreLiveOfflineSuffix": "כבוי — הסתרה מלקוחות ללא אובדן נתוני ההגדרה.",
       "sectionStepCount": "{completed} מתוך {total} {count, plural, one {שלב} other {שלבים}}",
+      "recommendedBadge": "מומלץ",
       "requiredToPublish": "נדרש לפרסום",
       "publishSuccessToast": "אתם באוויר! לקוחות יכולים כעת לבצע הזמנות.",
       "publishFailedGeneric": "לא ניתן היה לפרסם את המסעדה שלך. נסה שוב."

@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "Προφίλ → Ενεργό",
       "youAreLiveOfflineSuffix": "— αυτό σας αποκρύπτει από τους πελάτες χωρίς να χάσετε τα δεδομένα ρύθμισής σας.",
       "sectionStepCount": "{completed} από {total} {count, plural, one {βήμα} other {βήματα}}",
+      "recommendedBadge": "Συνιστάται",
       "requiredToPublish": "Υποχρεωτικό για δημοσίευση",
       "publishSuccessToast": "Είστε σε λειτουργία! Οι πελάτες μπορούν τώρα να παραγγείλουν.",
       "publishFailedGeneric": "Δεν ήταν δυνατή η δημοσίευση του εστιατορίου σας. Δοκιμάστε ξανά."

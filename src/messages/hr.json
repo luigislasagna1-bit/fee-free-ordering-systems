@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "Profil → Aktivno",
       "youAreLiveOfflineSuffix": "na isključeno — to vas sakriva od kupaca bez gubitka podataka postavljanja.",
       "sectionStepCount": "{completed} od {total} {count, plural, one {korak} other {koraka}}",
+      "recommendedBadge": "Preporučeno",
       "requiredToPublish": "Obavezno za objavu",
       "publishSuccessToast": "Uživo ste! Kupci sada mogu naručivati.",
       "publishFailedGeneric": "Nije moguće objaviti vaš restoran. Pokušajte ponovno."

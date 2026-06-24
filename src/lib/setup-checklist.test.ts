@@ -63,6 +63,29 @@ describe("computeSetupProgress — publish readiness", () => {
     expect(r.requiredStepsRemaining.map((s) => s.id)).toContain("basics.accountConfirmation");
   });
 
+  // Gating relaxation (Luigi, 2026-06-24): a connected kitchen device + a
+  // website widget are NO LONGER required to publish — they trapped owners with
+  // no hardware / no website. The order-reception floor stays: at least one
+  // notification recipient (email/SMS) is still required so orders are never
+  // silently dropped.
+  it("a restaurant with no kitchen device is still publish-ready — the device is recommended, not required", () => {
+    expect(computeSetupProgress(makeInput({ hasKitchenDevice: false })).publishReady).toBe(true);
+  });
+
+  it("a restaurant with no website widget is still publish-ready — the widget is optional", () => {
+    expect(
+      computeSetupProgress(makeInput({ restaurant: { widgetInstalledAt: null } })).publishReady,
+    ).toBe(true);
+  });
+
+  it("still requires a notification recipient so orders are never silently missed", () => {
+    const r = computeSetupProgress(
+      makeInput({ hasKitchenDevice: false, notificationRecipientCount: 0 }),
+    );
+    expect(r.publishReady).toBe(false);
+    expect(r.requiredStepsRemaining.map((s) => s.id)).toContain("orders.notificationRecipient");
+  });
+
   it("requires at least one payment method, and any non-empty list clears it", () => {
     expect(requiredOpen(makeInput({ paymentMethods: [] }))).toContain("payments.methodsSelected");
     // A per-type config flattened to a non-empty list clears the step.

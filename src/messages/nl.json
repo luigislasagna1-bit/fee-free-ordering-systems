@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "Profiel → Actief",
       "youAreLiveOfflineSuffix": "uit — zo wordt u verborgen voor klanten zonder uw installatiegegevens te verliezen.",
       "sectionStepCount": "{completed} van {total} {count, plural, one {stap} other {stappen}}",
+      "recommendedBadge": "Aanbevolen",
       "requiredToPublish": "Vereist om te publiceren",
       "publishSuccessToast": "Je bent live! Klanten kunnen nu bestellen.",
       "publishFailedGeneric": "Kan je restaurant niet publiceren. Probeer het opnieuw."

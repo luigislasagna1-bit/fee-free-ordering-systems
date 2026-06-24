@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "Perfil → Activo",
       "youAreLiveOfflineSuffix": "— esto te oculta a los clientes sin perder tus datos de configuración.",
       "sectionStepCount": "{completed} de {total} {count, plural, one {paso} other {pasos}}",
+      "recommendedBadge": "Recomendado",
       "requiredToPublish": "Obligatorio para publicar",
       "publishSuccessToast": "¡Ya estás en línea! Los clientes ya pueden hacer pedidos.",
       "publishFailedGeneric": "No se pudo publicar tu restaurante. Inténtalo de nuevo."

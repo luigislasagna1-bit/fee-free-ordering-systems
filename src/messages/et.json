@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "Profiil → Aktiivne",
       "youAreLiveOfflineSuffix": "välja — see peidab sind klientide eest, kaotamata seadistusandmeid.",
       "sectionStepCount": "{completed} / {total} {count, plural, one {samm} other {sammu}}",
+      "recommendedBadge": "Soovitatav",
       "requiredToPublish": "Avaldamiseks nõutav",
       "publishSuccessToast": "Oled eetris! Kliendid saavad nüüd tellimusi esitada.",
       "publishFailedGeneric": "Teie restorani ei õnnestunud avaldada. Proovige uuesti."

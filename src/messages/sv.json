@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "Profil → Aktiv",
       "youAreLiveOfflineSuffix": "— det döljer dig från kunder utan att du förlorar dina konfigurationsdata.",
       "sectionStepCount": "{completed} av {total} {count, plural, one {steg} other {steg}}",
+      "recommendedBadge": "Rekommenderas",
       "requiredToPublish": "Obligatorisk för publicering",
       "publishSuccessToast": "Du är live! Kunder kan nu lägga beställningar.",
       "publishFailedGeneric": "Det gick inte att publicera din restaurang. Försök igen."

@@ -1936,6 +1936,7 @@
       "youAreLiveProfileLink": "प्रोफ़ाइल → सक्रिय",
       "youAreLiveOfflineSuffix": "बंद — इससे आप ग्राहकों से छुप जाते हैं और आपका सेटअप डेटा सुरक्षित रहता है।",
       "sectionStepCount": "{total} में से {completed} {count, plural, one {चरण} other {चरण}}",
+      "recommendedBadge": "अनुशंसित",
       "requiredToPublish": "प्रकाशित करने के लिए ज़रूरी",
       "publishSuccessToast": "आप लाइव हैं! ग्राहक अब ऑर्डर कर सकते हैं।",
       "publishFailedGeneric": "आपका रेस्तरां प्रकाशित नहीं हो सका। कृपया पुनः प्रयास करें।"

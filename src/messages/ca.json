@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "Perfil → Actiu",
       "youAreLiveOfflineSuffix": "— això us amaga als clients sense perdre les dades de configuració.",
       "sectionStepCount": "{completed} de {total} {count, plural, one {pas} other {passos}}",
+      "recommendedBadge": "Recomanat",
       "requiredToPublish": "Obligatori per publicar",
       "publishSuccessToast": "Ja estàs en línia! Els clients ja poden fer comandes.",
       "publishFailedGeneric": "No s'ha pogut publicar el teu restaurant. Torna-ho a provar."

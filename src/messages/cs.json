@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "Profil → Aktivní",
       "youAreLiveOfflineSuffix": "na vypnuto — to vás skryje před zákazníky, aniž byste ztratili data nastavení.",
       "sectionStepCount": "{completed} z {total} {count, plural, one {krok} other {kroků}}",
+      "recommendedBadge": "Doporučeno",
       "requiredToPublish": "Povinné pro publikování",
       "publishSuccessToast": "Jste online! Zákazníci teď mohou zadávat objednávky.",
       "publishFailedGeneric": "Vaši restauraci se nepodařilo publikovat. Zkuste to znovu."

@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "Профиль → Активен",
       "youAreLiveOfflineSuffix": "выключите — это скроет вас от клиентов без потери данных настройки.",
       "sectionStepCount": "{completed} из {total} {count, plural, one {шага} other {шагов}}",
+      "recommendedBadge": "Рекомендуется",
       "requiredToPublish": "Обязательно для публикации",
       "publishSuccessToast": "Вы в эфире! Клиенты теперь могут оформлять заказы.",
       "publishFailedGeneric": "Не удалось опубликовать ваш ресторан. Попробуйте ещё раз."

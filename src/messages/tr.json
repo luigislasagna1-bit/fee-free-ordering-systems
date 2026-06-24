@@ -1581,6 +1581,7 @@
       "youAreLiveProfileLink": "Profil → Aktif",
       "youAreLiveOfflineSuffix": "— bu, kurulum verilerinizi kaybetmeden müşterilere görünmemenizi sağlar.",
       "sectionStepCount": "{total} {count, plural, one {adımın} other {adımın}} {completed} tanesi",
+      "recommendedBadge": "Önerilen",
       "requiredToPublish": "Yayınlamak için zorunlu",
       "publishSuccessToast": "Yayındasınız! Müşteriler artık sipariş verebilir.",
       "publishFailedGeneric": "Restoranınız yayınlanamadı. Lütfen tekrar deneyin."

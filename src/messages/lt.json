@@ -1503,6 +1503,7 @@
       "youAreLiveProfileLink": "Profilis → Aktyvus",
       "youAreLiveOfflineSuffix": "— tai paslėps jus nuo klientų neprarandant sąrankos duomenų.",
       "sectionStepCount": "{completed} iš {total} {count, plural, one {žingsnis} other {žingsniai}}",
+      "recommendedBadge": "Rekomenduojama",
       "requiredToPublish": "Privaloma skelbti",
       "publishSuccessToast": "Esate aktyvūs! Klientai jau gali pateikti užsakymus.",
       "publishFailedGeneric": "Nepavyko paskelbti jūsų restorano. Bandykite dar kartą."

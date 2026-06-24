@@ -1980,6 +1980,7 @@
       "youAreLiveProfileLink": "Profile → Active",
       "youAreLiveOfflineSuffix": "off — that hides you from customers without losing your setup data.",
       "sectionStepCount": "{completed} of {total} {count, plural, one {step} other {steps}}",
+      "recommendedBadge": "Recommended",
       "requiredToPublish": "Required to publish",
       "publishSuccessToast": "You're live! Customers can now place orders.",
       "publishFailedGeneric": "Couldn't publish your restaurant. Please try again."
