@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
 
+import androidx.webkit.WebSettingsCompat;
+import androidx.webkit.WebViewFeature;
+
 import com.getcapacitor.BridgeActivity;
 import com.feefreeordering.directprinter.DirectPrinterPlugin;
 
@@ -42,7 +45,17 @@ public class MainActivity extends BridgeActivity {
         // with NO screen tap — the kitchen must never have to tap to make sound. The
         // WebView blocks audio until a user gesture by default. Luigi 2026-06-22.
         try {
-            getBridge().getWebView().getSettings().setMediaPlaybackRequiresUserGesture(false);
+            android.webkit.WebSettings ws = getBridge().getWebView().getSettings();
+            ws.setMediaPlaybackRequiresUserGesture(false);
+            // Stop the OS Dark theme from auto-inverting our light-only web app — the WebView is the
+            // surface Android force-darks (images vanish, colors invert; Fabrizio 2026-06-24). Version-
+            // aware: algorithmic-darkening OFF on API 33+, legacy force-dark OFF on 29-32; no-op on older
+            // (force-dark didn't exist). Pairs with the web <meta color-scheme:light> + theme flag.
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+                WebSettingsCompat.setAlgorithmicDarkeningAllowed(ws, false);
+            } else if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+                WebSettingsCompat.setForceDark(ws, WebSettingsCompat.FORCE_DARK_OFF);
+            }
         } catch (Exception ignored) {}
         requestBatteryExemption();
         startKeepAlive();

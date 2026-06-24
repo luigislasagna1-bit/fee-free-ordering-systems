@@ -41,6 +41,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={locale} dir={isRtlLocale(locale) ? "rtl" : "ltr"} className="h-full notranslate" translate="no">
       <head>
         <meta name="google" content="notranslate" />
+        {/* Declare the app light-only so Android's WebView (and the OS Dark theme) does NOT
+            auto-invert our colors — the app is designed light; the kitchen has its own in-app
+            dark toggle. Fixes the system-Dark-mode breakage (images vanish + colors invert)
+            Fabrizio reported 2026-06-24. */}
+        <meta name="color-scheme" content="light" />
       </head>
       <body className={`${inter.className} h-full antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>

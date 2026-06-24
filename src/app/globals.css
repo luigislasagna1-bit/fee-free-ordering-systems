@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
 :root {
+  /* Light-only app: tell the browser/WebView we don't support OS dark mode, so Android never
+     auto-inverts our colors. Pairs with <meta name="color-scheme" content="light"> in layout.tsx.
+     Fabrizio system-Dark-mode breakage fix, 2026-06-24. */
+  color-scheme: light;
   --background: #ffffff;
   --foreground: #171717;
 }
