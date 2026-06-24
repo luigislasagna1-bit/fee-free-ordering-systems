@@ -92,7 +92,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         q: "Does delivery work?",
-        a: "Yes — offer pickup, delivery, dine-in, and catering, each with its own fees, ETAs, and minimums. You can use your own drivers or our driver-pool add-on. You keep 100% of the food total on direct orders either way.",
+        a: "Yes — offer pickup, delivery, dine-in, and catering, each with its own fees, ETAs, and minimums. Run delivery with your own drivers and you keep 100% of the food total on direct orders.",
       },
     ],
   },
@@ -190,7 +190,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         q: "Pickup and delivery both?",
-        a: "Yes — pickup, delivery, and dine-in, each configured independently, with your own drivers or our driver-pool add-on.",
+        a: "Yes — pickup, delivery, and dine-in, each configured independently, with your own delivery drivers.",
       },
     ],
   },
@@ -266,7 +266,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         title: "Delivery that doesn't cost you a third",
-        body: "Run delivery your way — your own drivers or our driver-pool add-on — and keep 100% of the food total on direct orders. Orders ring instantly on the Kitchen Order App and print to your thermal printer.",
+        body: "Run delivery your way with your own drivers — and keep 100% of the food total on direct orders. Orders ring instantly on the Kitchen Order App and print to your thermal printer.",
       },
       {
         title: "Your customers, your list",
@@ -288,7 +288,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         q: "Can I keep using my own delivery drivers?",
-        a: "Yes — use your own drivers, or add our driver pool. Either way you keep 100% of the food total on direct orders.",
+        a: "Yes — run delivery with your own drivers, and you keep 100% of the food total on direct orders.",
       },
     ],
   },

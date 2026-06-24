@@ -73,7 +73,7 @@ export default async function LandingPage({ params }: { params: Promise<{ slug: 
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web, iOS, Android",
     url: baseUrl,
-    offers: { "@type": "Offer", price: "0", priceCurrency: "USD", description: "Free for your first 100 orders every month. Optional add-ons from $9.99/mo." },
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD", description: "Free for your first 100 orders every month. Optional à-la-carte add-ons — pay only for what you use." },
   };
   const faqPage = {
     "@context": "https://schema.org",

@@ -733,49 +733,49 @@ export const SOLUTION_PAGES: SolutionPage[] = [
   {
     "slug": "wordpress-restaurant-reservation-system",
     "category": "platform",
-    "metaTitle": "WordPress Restaurant Reservations | Fee Free Ordering",
-    "metaDescription": "Add a free table reservation system to your WordPress restaurant site with an embeddable widget. Take reserve-then-order pre-orders, 0% commission, menu in seconds.",
-    "h1": "Add a reservation system to your WordPress restaurant site",
-    "eyebrow": "WORDPRESS RESERVATIONS",
-    "intro": "Your WordPress site looks great, but a clunky reservation plugin shouldn't be the thing customers remember. Add a free, branded Fee Free booking experience with our embeddable widget, a popup \"Book a Table\" button, an inline embed, or a button-link, using the WordPress install guide. Guests can even reserve a table and pre-order their food in one go, so the kitchen knows what's coming.",
+    "metaTitle": "WordPress Reservation System | Fee Free Ordering",
+    "metaDescription": "Add a reservation system to your WordPress restaurant site with no plugin to install, conflict, or patch. Reservations plus reserve-then-order, embed in minutes.",
+    "h1": "A WordPress Restaurant Reservation System With No Plugin to Maintain",
+    "eyebrow": "Works with any WordPress theme",
+    "intro": "WordPress runs more restaurant websites than any other CMS, which is exactly why bolt-on reservation plugins are such a headache. Every plugin you add is another moving part that can clash with your page builder, break when WordPress core or your theme updates, and demand its own security patches. Fee Free Ordering takes a different route: your reservation page is hosted and maintained by us, and you simply embed it on your WordPress site. There is nothing to install in wp-admin, nothing to update, and nothing that can conflict with the rest of your stack. Drop in a popup launcher, an inline iframe, or a button-link, and guests can book a table, or book and pre-order in one flow, while your kitchen gets the booking instantly.",
     "painPoint": {
-      "title": "Booking plugins clog WordPress and miss the upsell",
-      "body": "A typical WordPress reservation plugin adds database tables, a heavy form builder, and yet another dashboard to babysit, then still treats the booking and the food order as two separate worlds. Guests reserve, then arrive and order from scratch while the kitchen scrambles. Fee Free keeps your WordPress site light, you paste one small Book-a-Table widget snippet, and gives you a hosted booking flow where a guest can reserve a table and pre-order their meal in a single submission, captured the same way a normal order is, so your team is ready before they sit down."
+      "title": "Reservation plugins are the first thing to break on update day",
+      "body": "If you have ever hit the WordPress update button and watched your booking form vanish, you know the pattern. Reservation plugins hook deep into your theme and other plugins, so a core update, a theme change, or even an unrelated plugin can take your table bookings offline without warning. Then it is on you (or your developer) to diagnose the conflict, roll things back, and apply the next security patch before someone exploits the old one. That is maintenance work no restaurant owner signed up for, and every hour the form is down is a table that doesn't get booked."
     },
     "benefits": [
       {
-        "title": "Reservations and pre-orders in one booking",
-        "body": "With reserve-then-order, a guest books a table and adds their food in the same flow. The order rides the reservation's release to the kitchen, so the line cooks see the ticket at the right time instead of waiting for guests to order on arrival, fewer empty tables, faster turns. Both reservations and reserve-then-order are live today."
+        "title": "Nothing to install, conflict, or patch",
+        "body": "Because your reservation page is hosted on Fee Free Ordering, there is no plugin sitting inside WordPress waiting to break. Core updates, theme switches, and other plugins can't take your bookings down, and the security patching is our job, not yours. You paste one embed snippet and it keeps working."
       },
       {
-        "title": "Embed the Book-a-Table button anywhere on WordPress",
-        "body": "Paste the popup launcher, inline embed, or button-link into a Custom HTML block using our WordPress guide. The booking form is hosted by Fee Free, so a theme or core update can't knock it offline, and there's no plugin to keep patched."
+        "title": "Reservations and reserve-then-order in one flow",
+        "body": "Guests can book a table on its own, or book a table and pre-order their food in a single checkout, so the kitchen knows what to prep before they walk in. The Kitchen Order App rings the moment a new booking lands, so nothing sits unnoticed. Taking a deposit at booking is coming soon."
       },
       {
-        "title": "Bookings hit the same kitchen tablet as orders",
-        "body": "Reservations and any attached pre-orders ring on the native Kitchen Order App, even screen-off, with a missed-booking phone call to the owner as a backstop. One device, one source of truth, no separate reservation inbox to forget to check."
+        "title": "Free to start, 0% commission on direct orders",
+        "body": "Your first 100 orders each month are free, and you never pay commission on direct orders the way the big marketplaces charge. Add only the à-la-carte extras you actually want. Built in Canada, with the booking flow available in 38 languages for your guests."
       }
     ],
     "faqs": [
       {
-        "q": "Do I need a WordPress reservation plugin?",
-        "a": "No heavyweight plugin required. You paste a small, free Book-a-Table widget, a popup button, an inline embed, or a button-link, using our WordPress guide. Because nothing runs as a WordPress plugin, a theme or core update can't break your booking form."
+        "q": "Do I need to install a WordPress plugin?",
+        "a": "No. Fee Free Ordering is a hosted reservation page you embed on your existing WordPress site. There is no plugin to add in wp-admin, so there is nothing to keep updated, nothing that can conflict with your theme or other plugins, and nothing for you to security-patch."
       },
       {
-        "q": "Can guests reserve a table and order food at the same time?",
-        "a": "Yes, that's the reserve-then-order feature, and it's live today. A guest picks a table time and adds their meal in one checkout. The pre-order is sent to the kitchen with the reservation so your team is prepped before the party arrives."
+        "q": "Will a WordPress core or theme update break my reservations?",
+        "a": "It won't. Your booking page lives on Fee Free Ordering's servers, not inside your WordPress install, so updating WordPress core, switching themes, or adding other plugins can't take your reservation form offline."
       },
       {
-        "q": "Can I take a deposit to reduce no-shows?",
-        "a": "Charging a deposit at booking is coming soon. For now, reservations and reserve-then-order are your live no-show defense: capturing a pre-order at booking gives guests real skin in the game and signals serious intent, all at 0% commission."
+        "q": "How do I add it to my WordPress site?",
+        "a": "Paste a single embed snippet wherever you want bookings to appear. You can use a popup Order/Book launcher, an inline iframe embedded in a page, or a simple button-link. It works with the block editor, classic editor, and popular page builders."
       },
       {
-        "q": "How do I add the booking widget to my WordPress site?",
-        "a": "Copy the Book-a-Table snippet from your dashboard and paste it into a Custom HTML block or your site-wide code area per the WordPress guide. You can also just point an existing Reserve link at your Fee Free booking page."
+        "q": "Can guests book a table and pre-order food at the same time?",
+        "a": "Yes. Reserve-then-order lets a guest book a table and pre-order their meal in one submission, so your kitchen can prep ahead. The Kitchen Order App rings instantly when the booking comes in."
       },
       {
-        "q": "Does it cost a commission per reservation?",
-        "a": "No. Direct bookings and orders are 0% commission, with your first 100 orders a month free. You only pay for optional a-la-carte add-ons if you choose to use them."
+        "q": "Can I charge a deposit when someone books?",
+        "a": "Deposits at booking are coming soon. Today you can take reservations and reserve-then-order bookings; deposit collection will be added as an option, and we'll announce it when it ships."
       }
     ]
   },
@@ -929,98 +929,98 @@ export const SOLUTION_PAGES: SolutionPage[] = [
   {
     "slug": "drupal-restaurant-reservation-system",
     "category": "platform",
-    "metaTitle": "Drupal Restaurant Reservation System | Fee Free Ordering",
-    "metaDescription": "Add reservations to your Drupal restaurant site with a free embeddable widget. Paste it into any HTML block, take reserve-then-order pre-orders, 0% commission.",
-    "h1": "Add a reservation system to your Drupal restaurant site",
-    "eyebrow": "DRUPAL RESTAURANTS",
-    "intro": "Drupal gives your restaurant a powerful, flexible site, but building and maintaining a booking module is real developer work you'd rather avoid. Add Fee Free's free embeddable widget instead, the embed snippet pastes into any HTML block, so guests can reserve a table and even pre-order their meal with nothing custom to build or patch.",
+    "metaTitle": "Drupal Reservation System | Fee Free Ordering",
+    "metaDescription": "Add restaurant reservations to your Drupal site with no contributed module to security-patch or version-match. Paste one embed snippet into any block or region.",
+    "h1": "A Drupal Restaurant Reservation System With Nothing to Patch",
+    "eyebrow": "Drops into any block or region",
+    "intro": "Drupal restaurant sites are usually built by an agency or developer, often as part of a multisite setup, and that is precisely why a contributed reservation module is a liability. Every contrib module you add becomes one more thing your team has to keep on Drupal's security release cadence and re-test for compatibility every time you move between Drupal versions. Fee Free Ordering avoids all of it. The reservation page is hosted and maintained by us, so you paste one embed snippet into any block or region and you are done. No module to enable, no composer dependency to track, no version matrix to babysit, no security advisories to chase, across one site or a whole multisite fleet.",
     "painPoint": {
-      "title": "A custom Drupal booking module is a project that never ends",
-      "body": "Standing up reservations in Drupal means wrangling contributed modules, fields, views, and a webform, then maintaining it through every Drupal core security update, and never quite connecting it to the kitchen. It's developer time you'd rather spend elsewhere. Fee Free removes the build entirely: paste our embeddable widget into a Full HTML text block or a Custom Block, and link to a hosted booking flow where guests reserve a table and can pre-order food in one submission, with the booking ringing straight through to your kitchen tablet."
+      "title": "Contrib modules turn every Drupal upgrade into a compatibility audit",
+      "body": "Anyone who has shepherded a Drupal site through a major version knows the drill: before you can upgrade, you have to confirm every contributed module is ready, find a replacement for the ones that aren't, and patch anything flagged in a security advisory in the meantime. A reservation module pulls your booking flow straight into that cycle. Multiply that across a multisite, and a single lagging module can block an entire upgrade or leave a known vulnerability exposed while your developer scrambles. For a restaurant, that is risk and billable hours with no payoff."
     },
     "benefits": [
       {
-        "title": "Embed snippet pastes into any HTML block",
-        "body": "Because the inline embed and button-link are plain HTML, they paste into a Drupal Full HTML body field or a reusable Custom Block, no contributed module to develop, configure, or keep secure. The booking form is hosted by Fee Free, so Drupal core updates can't break your reservations."
+        "title": "No module to version-match or security-patch",
+        "body": "Your reservation page is hosted by Fee Free Ordering, so there is no contrib module in your codebase to keep compatible across Drupal versions and no security advisories to monitor. Major-version upgrades stop being blocked by your booking flow, because it lives entirely outside Drupal."
       },
       {
-        "title": "Reserve-then-order in a single flow",
-        "body": "Guests book a table and add their food in the same checkout. The pre-order rides the reservation's release to the kitchen, so your team prepares the right dishes at the right time instead of starting from zero when the party sits down. Reservations and reserve-then-order are both live today."
+        "title": "One snippet, any block, any site in your multisite",
+        "body": "Paste the embed snippet into a block, a region, or a page template and reuse the exact same snippet across every site in a multisite. Offer it as a popup launcher, an inline iframe, or a button-link, with no composer changes and no per-site module configuration."
       },
       {
-        "title": "Bookings ring on the kitchen tablet",
-        "body": "Reservations and attached pre-orders appear in the native Kitchen Order App and ring even with the screen off, backed by a missed-booking phone call to the owner. One device handles both orders and bookings."
+        "title": "Reservations and reserve-then-order, ringing the kitchen live",
+        "body": "Guests can book a table, or book and pre-order food together in one flow, and the Kitchen Order App rings the instant a booking arrives. It is free for your first 100 orders a month with 0% commission on direct orders, built in Canada, and available in 38 languages. Deposits at booking are coming soon."
       }
     ],
     "faqs": [
       {
-        "q": "Is there a Fee Free Ordering Drupal module?",
-        "a": "You don't need one. Fee Free's embed snippets are plain HTML, so they paste into any Drupal Full HTML block or Custom Block, no module to install, configure, or maintain. That means Drupal core and module updates never touch your reservations."
+        "q": "Do I need to install a Drupal contrib module?",
+        "a": "No. Fee Free Ordering is a hosted reservation page you embed via a snippet. There is no contributed module to enable, no composer dependency to manage, and nothing in your Drupal codebase to keep on the security release cycle."
       },
       {
-        "q": "Can guests pre-order food when they book a table?",
-        "a": "Yes, with reserve-then-order, which is live today. A guest reserves a table time and adds their meal in one checkout, and the pre-order is delivered to the kitchen alongside the reservation so the team is prepped before arrival."
+        "q": "Will it survive a Drupal major-version upgrade?",
+        "a": "Yes. Because the booking flow is hosted outside Drupal, it can't block or be broken by a major-version upgrade the way a contrib module can. You upgrade Drupal on your own schedule and the embed keeps working."
       },
       {
-        "q": "Where do I paste the booking widget in Drupal?",
-        "a": "Add the Book-a-Table snippet to a page or block body using the Full HTML text format, or wrap it in a reusable Custom Block. You can also simply point an existing Reserve link at your Fee Free booking page."
+        "q": "Can I use the same embed across a multisite?",
+        "a": "Yes. The same embed snippet drops into a block or region on any site in your multisite. There is no per-site module to install or configure, so rolling it out across many sites is just pasting the snippet."
       },
       {
-        "q": "Can I require a deposit on reservations?",
-        "a": "Charging a deposit at booking is coming soon. Today your live no-show defense is reservations plus reserve-then-order, capturing a pre-order at booking gives guests real commitment to showing up, all at 0% commission."
+        "q": "Where exactly does the snippet go?",
+        "a": "Anywhere you can add markup: a custom block, a region in your theme, a page template, or a body field. You can present it as a popup Order/Book launcher, an inline iframe, or a button-link."
       },
       {
-        "q": "Is there a per-reservation fee?",
-        "a": "No. Direct bookings and orders are 0% commission, and your first 100 orders each month are free. You only pay for optional a-la-carte add-ons if you choose to use them."
+        "q": "Can guests pre-order with their reservation, and can I take a deposit?",
+        "a": "Reserve-then-order lets a guest book a table and pre-order food in one submission, and the kitchen is alerted instantly. Charging a deposit at booking is coming soon, so today the flow covers reservations and reserve-then-order."
       }
     ]
   },
   {
     "slug": "joomla-restaurant-reservation-system",
     "category": "platform",
-    "metaTitle": "Joomla Restaurant Reservation System | Fee Free Ordering",
-    "metaDescription": "Add reservations to your Joomla restaurant site with a free embeddable widget. Paste it into any HTML block, take reserve-then-order pre-orders, 0% commission.",
-    "h1": "Add a reservation system to your Joomla restaurant site",
-    "eyebrow": "JOOMLA RESTAURANTS",
-    "intro": "Joomla powers your restaurant's site nicely, but bolting on a booking extension means another component to update, secure, and troubleshoot. Add Fee Free's free embeddable widget instead, the embed snippet pastes into any HTML block, so guests reserve a table and can pre-order their food, with no extension to install or babysit.",
+    "metaTitle": "Joomla Reservation System | Fee Free Ordering",
+    "metaDescription": "Add restaurant reservations to your Joomla site without juggling a component, module, and plugin. One hosted booking page, one embed snippet, zero extensions to update.",
+    "h1": "A Joomla Restaurant Reservation System With Zero Extensions to Update",
+    "eyebrow": "One snippet, no extension stack",
+    "intro": "On Joomla, a reservation feature rarely arrives as one tidy thing. It usually means installing a component for the back-end, a module to surface it on your pages, and a plugin to tie it into the rest of the site, each on its own update cycle. That is three sources of update fatigue for a single booking form, and any one of them can fall behind, conflict, or need a security release at the worst possible moment. Fee Free Ordering replaces the whole stack with one hosted booking page and one embed snippet. There is no component to install, no module to publish, and no plugin to enable, so there is nothing in your Joomla extensions list to update or worry about.",
     "painPoint": {
-      "title": "Booking extensions add fragile moving parts to Joomla",
-      "body": "Most Joomla reservation extensions bolt on a component, a module, and a plugin, each needing its own updates and each a potential conflict with your template or the next Joomla release. And they almost never connect the booking to the kitchen. Fee Free takes that fragility off your plate: paste our embeddable widget into an article via the Code editor or a Custom HTML module, and link to a hosted booking flow where guests reserve and pre-order in one submission, with the reservation ringing directly to your kitchen tablet."
+      "title": "A reservation extension is really three things to keep updated",
+      "body": "Joomla's component-plus-module-plus-plugin pattern means your booking feature spreads across three extension types, and each ships updates on its own timeline. Miss one and you risk a layout that suddenly stops rendering, a back-end that no longer matches the front-end, or a security hole left open until the next release lands. Add the major-version jumps Joomla itself goes through, and keeping all three pieces compatible turns a simple table-booking form into a recurring maintenance chore. Most restaurant owners just want bookings to work, not to manage an extension stack."
     },
     "benefits": [
       {
-        "title": "Embed snippet pastes into any HTML block",
-        "body": "Because the inline embed and button-link are plain HTML, they paste into a Joomla article (switch the editor to code view) or a Custom HTML module, no component, module, or plugin to add, update, or secure. The booking form is hosted by Fee Free, so Joomla updates can't knock your reservations offline."
+        "title": "One booking page instead of a component-module-plugin stack",
+        "body": "Fee Free Ordering hosts your entire reservation flow as a single page, so you skip the Joomla component, module, and plugin altogether. There are no separate extensions to install, publish, or enable, and therefore no tangle of update cycles to keep aligned."
       },
       {
-        "title": "Table booking plus pre-order, together",
-        "body": "Reserve-then-order lets a guest book a table and add their meal in the same flow. The pre-order is sent to the kitchen with the reservation, so cooks see the ticket at the right moment and parties get served faster on arrival. Reservations and reserve-then-order are both live today."
+        "title": "Zero extensions to update, ever",
+        "body": "Since nothing is installed in your Joomla extensions list, there is nothing there to update or security-patch for bookings. Joomla core and major-version upgrades can't break a form that lives outside your install. You paste one snippet and it keeps running."
       },
       {
-        "title": "A kitchen tablet that rings",
-        "body": "Reservations land in the native Kitchen Order App and ring even screen-off, with a missed-booking call to the owner as backup. One device handles both bookings and orders, with no separate reservation inbox to forget."
+        "title": "Reservations and reserve-then-order, free to start",
+        "body": "Guests can book a table, or book and pre-order in one flow, with the Kitchen Order App ringing the moment a booking lands. It is free for your first 100 orders a month, 0% commission on direct orders, built in Canada, and available in 38 languages. Deposits at booking are coming soon."
       }
     ],
     "faqs": [
       {
-        "q": "Is there a Fee Free Ordering Joomla extension?",
-        "a": "You don't need one. Fee Free's embed snippets are plain HTML, so they paste into a Joomla article's code view or a Custom HTML module, no extension to install or maintain. Joomla and template updates never affect your reservations."
+        "q": "Do I need a Joomla component, module, and plugin for this?",
+        "a": "No. Fee Free Ordering is a single hosted booking page you embed with one snippet. You don't install a component, module, or plugin, so there is no multi-part extension stack to set up or keep in sync."
       },
       {
-        "q": "Can a guest reserve a table and order food at once?",
-        "a": "Yes, that's reserve-then-order, and it's live today. The guest picks a table time and adds their meal in one checkout, and the pre-order reaches the kitchen with the booking so your team is ready before they arrive."
+        "q": "How many extension update cycles am I taking on?",
+        "a": "Zero. Because nothing is installed in your Joomla extensions list for bookings, there is nothing to update or security-patch. The reservation page is maintained on our servers, not inside your Joomla site."
       },
       {
-        "q": "Where do I paste the booking widget in Joomla?",
-        "a": "Open the article editor, switch to the code/HTML view, and paste the Book-a-Table snippet, or place it in a Custom HTML module and assign it to a page position. You can also just point an existing Reserve link at your Fee Free booking page."
+        "q": "How do I add the booking page to a Joomla site?",
+        "a": "Paste the embed snippet into an article, a custom HTML module, or your template. You can offer it as a popup Order/Book launcher, an inline iframe, or a button-link, with no extension installs."
       },
       {
-        "q": "Can I collect deposits to stop no-shows?",
-        "a": "Charging a deposit at booking is coming soon. For now, reservations and reserve-then-order are your live no-show defense, taking a pre-order at booking gives guests a real reason to show up, all at 0% commission."
+        "q": "Will a Joomla update break my reservations?",
+        "a": "It won't. The booking flow is hosted outside Joomla, so updating Joomla core or moving to a new major version can't take your reservation page down the way an out-of-date extension can."
       },
       {
-        "q": "Does it charge a commission on bookings?",
-        "a": "No. Direct bookings and orders are 0% commission, with your first 100 orders each month free. You only pay for optional a-la-carte add-ons if you turn them on."
+        "q": "Can guests pre-order when they book, and can I collect a deposit?",
+        "a": "Reserve-then-order lets a guest book a table and pre-order food in a single submission, and the kitchen is alerted instantly. Charging a deposit at booking is coming soon; today the flow supports reservations and reserve-then-order."
       }
     ]
   },
