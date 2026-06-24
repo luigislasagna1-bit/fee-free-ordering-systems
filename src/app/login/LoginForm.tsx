@@ -37,8 +37,9 @@ function LoginFormInner({
   referralCode?: string | null;
   // True when rendered on the SHARED neutral reseller login host
   // (restaurantownerlogin.com) for FREE reseller partners. Renders DE-BRANDED
-  // chrome — no Fee Free Ordering name/ChefHat, no per-reseller logo, plain
-  // background — using a generic "Restaurant Login" heading. Distinct from
+  // chrome — no Fee Free Ordering name/ChefHat, no per-reseller logo — using a
+  // generic "Restaurant Login" heading. It DOES share the official food-hero
+  // background (the photo carries no Fee Free branding). Distinct from
   // `branding` (a specific paid partner's custom-domain chrome).
   isNeutral?: boolean;
 }) {
@@ -127,21 +128,20 @@ function LoginFormInner({
   return (
     <div className="relative isolate min-h-screen flex items-center justify-center p-4 overflow-hidden">
       {/* Food-hero background: the reseller's uploaded image when branded, else the default
-          FeeFree photo (wide for desktop + a portrait crop for phones). On the NEUTRAL host
-          we show NO FeeFree hero (it's a Fee Free asset) — a plain background instead.
+          food-hero photo (wide for desktop + a portrait crop for phones). Used on the NEUTRAL
+          host too (Luigi 2026-06-24: the de-branded login shares the official green background;
+          the photo carries no Fee Free logo/name, so the card content stays de-branded).
           `isolate` + -z-10 keep it behind the card/switcher without touching their stacking. */}
       {branding?.backgroundUrl ? (
         <img src={branding.backgroundUrl} alt="" aria-hidden="true" className="absolute inset-0 -z-10 h-full w-full object-cover" />
-      ) : isNeutral ? (
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gray-100" />
       ) : (
         <>
           <img src="/marketing/login-bg.jpg" alt="" aria-hidden="true" className="absolute inset-0 -z-10 hidden h-full w-full object-cover sm:block" />
           <img src="/marketing/login-bg-mobile.jpg" alt="" aria-hidden="true" className="absolute inset-0 -z-10 h-full w-full object-cover sm:hidden" />
         </>
       )}
-      {/* Dark scrim over the food hero for card contrast — skip on the neutral plain bg. */}
-      {!isNeutral && <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/25" />}
+      {/* Dark scrim over the food hero for card contrast (desktop + mobile, neutral + official). */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/25" />
       <AuthLanguageSwitcher currentLocale={locale} />
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
         <div className="text-center mb-8">
