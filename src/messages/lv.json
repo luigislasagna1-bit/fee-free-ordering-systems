@@ -946,6 +946,8 @@
       "svcReservation": "Rezervācijas",
       "modeClosed": "Slēgts",
       "modeOpen": "Atvērts — īpašs laiks",
+      "modeClosedHours": "Slēgtās stundas",
+      "modeClosedHoursHint": "Šīs stundas ir SLĒGTAS — pārējo dienas daļu paliekat atvērti.",
       "addHours": "Pievienot stundas",
       "addRule": "Pievienot vēl vienu noteikumu",
       "addSpecialDay": "Pievienot",

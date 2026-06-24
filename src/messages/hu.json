@@ -946,6 +946,8 @@
       "svcReservation": "Foglalások",
       "modeClosed": "Zárva",
       "modeOpen": "Nyitva — rendkívüli nyitvatartás",
+      "modeClosedHours": "Zárva órák",
+      "modeClosedHoursHint": "Ezek az órák ZÁRVA — a nap hátralévő részében nyitva marad.",
       "addHours": "Időpont hozzáadása",
       "addRule": "Másik szabály hozzáadása",
       "addSpecialDay": "Hozzáadás",

@@ -946,6 +946,8 @@
       "svcReservation": "예약",
       "modeClosed": "휴무",
       "modeOpen": "영업 — 특별 시간",
+      "modeClosedHours": "휴무 시간",
+      "modeClosedHoursHint": "이 시간은 휴무입니다 — 나머지 시간은 영업합니다.",
       "addHours": "시간 추가",
       "addRule": "규칙 추가",
       "addSpecialDay": "추가",

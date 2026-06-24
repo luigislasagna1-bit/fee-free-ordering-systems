@@ -946,6 +946,8 @@
       "svcReservation": "Đặt bàn",
       "modeClosed": "Đóng cửa",
       "modeOpen": "Mở — giờ đặc biệt",
+      "modeClosedHours": "Giờ đóng cửa",
+      "modeClosedHoursHint": "Những giờ này ĐÓNG CỬA — bạn vẫn mở cửa thời gian còn lại trong ngày.",
       "addHours": "Thêm giờ",
       "addRule": "Thêm quy tắc khác",
       "addSpecialDay": "Thêm",

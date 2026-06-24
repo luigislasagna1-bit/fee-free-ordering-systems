@@ -946,6 +946,8 @@
       "svcReservation": "الحجوزات",
       "modeClosed": "مغلق",
       "modeOpen": "مفتوح — ساعات خاصة",
+      "modeClosedHours": "ساعات الإغلاق",
+      "modeClosedHoursHint": "هذه الساعات مُغلَقة — تبقى مفتوحًا بقية اليوم.",
       "addHours": "إضافة ساعات",
       "addRule": "إضافة قاعدة أخرى",
       "addSpecialDay": "إضافة",

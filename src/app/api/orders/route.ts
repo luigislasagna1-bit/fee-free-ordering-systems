@@ -1619,6 +1619,23 @@ export async function POST(req: NextRequest) {
           );
         }
       }
+      // Partial-day closure ("close a time range"): the service follows its
+      // normal hours EXCEPT during these windows. Reject an order whose time
+      // lands inside a closed window; outside them normal hours apply as usual.
+      // (Fabrizio #1b: "closed pickup 4–8 PM still let a 5 PM order through.")
+      if (holidayEffect?.kind === "closed_windows") {
+        const { hhmm } = localDowAndHHMM(holidayTargetDate, holidayTzKey);
+        if (hhmmInsideIntervals(hhmm, holidayEffect.intervals)) {
+          const windows = holidayEffect.intervals.map((iv) => `${iv.open}–${iv.close}`).join(", ");
+          return NextResponse.json(
+            {
+              error: `${serviceDisplayLabel(type)} is closed ${windows} on this date. Please pick a time outside those hours.`,
+              code: "holiday_closed_windows",
+            },
+            { status: 400 },
+          );
+        }
+      }
     }
 
     // ── Per-item Fulfilment Time enforcement (Luigi 2026-06-12, Phase 2) ──────

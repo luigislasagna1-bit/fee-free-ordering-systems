@@ -26,8 +26,11 @@ export type HolidayRule = {
   /** null/empty = all services. Canonical keys: pickup, delivery, dine_in,
    *  take_out, catering, reservation. */
   services: string[] | null;
-  mode: "closed" | "open";
-  /** Only meaningful when mode === "open". */
+  /** closed = closed all day; open = open ONLY during `intervals` (custom hours);
+   *  closed_windows = open on the normal schedule EXCEPT closed during `intervals`
+   *  (a partial-day closure — e.g. "close pickup 16:00–20:00, open otherwise"). */
+  mode: "closed" | "open" | "closed_windows";
+  /** Meaningful when mode === "open" (the OPEN windows) or "closed_windows" (the CLOSED windows). */
   intervals?: HolidayInterval[];
 };
 
@@ -43,6 +46,7 @@ export type HolidayRow = {
 export type HolidayEffect =
   | { kind: "closed"; name: string | null; message: string | null }
   | { kind: "custom_hours"; name: string | null; message: string | null; intervals: HolidayInterval[] }
+  | { kind: "closed_windows"; name: string | null; message: string | null; intervals: HolidayInterval[] }
   | null;
 
 const CANONICAL_SERVICES = new Set([
@@ -75,7 +79,8 @@ export function parseHolidayRules(raw: string | null | undefined): HolidayRule[]
     const out: HolidayRule[] = [];
     for (const r of arr) {
       if (!r || typeof r !== "object") continue;
-      const mode = r.mode === "open" ? "open" : "closed";
+      const mode: "closed" | "open" | "closed_windows" =
+        r.mode === "open" ? "open" : r.mode === "closed_windows" ? "closed_windows" : "closed";
       let services: string[] | null = null;
       if (Array.isArray(r.services)) {
         const cleaned = r.services
@@ -84,7 +89,7 @@ export function parseHolidayRules(raw: string | null | undefined): HolidayRule[]
         services = cleaned.length > 0 ? Array.from(new Set(cleaned)) : null;
       }
       let intervals: HolidayInterval[] | undefined;
-      if (mode === "open" && Array.isArray(r.intervals)) {
+      if ((mode === "open" || mode === "closed_windows") && Array.isArray(r.intervals)) {
         intervals = r.intervals
           .filter(
             (iv: any) =>
@@ -97,6 +102,10 @@ export function parseHolidayRules(raw: string | null | undefined): HolidayRule[]
       // closed so a half-filled admin form fails safe (closed), not open.
       if (mode === "open" && (!intervals || intervals.length === 0)) {
         out.push({ services, mode: "closed" });
+      } else if (mode === "closed_windows" && (!intervals || intervals.length === 0)) {
+        // "Close a time range" with no windows = nothing is closed → drop it.
+        // Fail OPEN: never close the whole day from an empty range.
+        continue;
       } else {
         out.push({ services, mode, intervals });
       }
@@ -155,13 +164,17 @@ export function holidayEffectForDay(
         continue;
       }
       const specificity = isAll ? 0 : 2;
+      // Full "closed" outranks a partial override (open custom-hours OR
+      // closed-windows) at equal specificity → a same-day full closure wins.
       const closedBonus = rule.mode === "closed" ? 2 : 1;
       const score = specificity + closedBonus;
       if (best && score <= best.score) continue;
       best =
         rule.mode === "closed"
           ? { score, effect: { kind: "closed", name, message } }
-          : { score, effect: { kind: "custom_hours", name, message, intervals: rule.intervals! } };
+          : rule.mode === "closed_windows"
+            ? { score, effect: { kind: "closed_windows", name, message, intervals: rule.intervals! } }
+            : { score, effect: { kind: "custom_hours", name, message, intervals: rule.intervals! } };
     }
   }
 
@@ -206,14 +219,22 @@ export function resolveTodayHolidayClosure(
   todayHolidayIntervals: HolidayInterval[] | null;
   todayHolidayClosed: boolean;
   holidayClosedServices: string[];
+  /** Services open today but CLOSED during specific windows (the "close a time
+   *  range" rule), with those windows — drives the partial-closure banner. */
+  holidayClosedWindows: Array<{ service: string; intervals: HolidayInterval[] }>;
 } {
   const general = holidayEffectToday(holidays, timezone, null, now);
   const generalClosed = general?.kind === "closed";
+  const ALL_SVCS = ["pickup", "delivery", "dine_in", "take_out", "catering", "reservation"];
   const holidayClosedServices = generalClosed
     ? []
-    : ["pickup", "delivery", "dine_in", "take_out", "catering", "reservation"].filter(
-        (s) => holidayEffectToday(holidays, timezone, s, now)?.kind === "closed",
-      );
+    : ALL_SVCS.filter((s) => holidayEffectToday(holidays, timezone, s, now)?.kind === "closed");
+  const holidayClosedWindows = generalClosed
+    ? []
+    : ALL_SVCS.flatMap((s) => {
+        const e = holidayEffectToday(holidays, timezone, s, now);
+        return e?.kind === "closed_windows" ? [{ service: s, intervals: e.intervals }] : [];
+      });
   // Prefer the general entry's message; else surface the first service-specific
   // closed entry's message so it isn't lost.
   const serviceMessage =
@@ -226,5 +247,6 @@ export function resolveTodayHolidayClosure(
     todayHolidayIntervals: general?.kind === "custom_hours" ? general.intervals : null,
     todayHolidayClosed: generalClosed,
     holidayClosedServices,
+    holidayClosedWindows,
   };
 }

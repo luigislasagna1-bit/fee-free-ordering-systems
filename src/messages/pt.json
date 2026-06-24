@@ -946,6 +946,8 @@
       "svcReservation": "Reservas",
       "modeClosed": "Fechado",
       "modeOpen": "Aberto — horário especial",
+      "modeClosedHours": "Horas fechadas",
+      "modeClosedHoursHint": "Estas horas estão FECHADAS — fica aberto o resto do dia.",
       "addHours": "Adicionar horário",
       "addRule": "Adicionar outra regra",
       "addSpecialDay": "Adicionar",

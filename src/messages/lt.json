@@ -946,6 +946,8 @@
       "svcReservation": "Rezervacijos",
       "modeClosed": "Uždaryta",
       "modeOpen": "Atidaryta — ypatingos valandos",
+      "modeClosedHours": "Uždarytos valandos",
+      "modeClosedHoursHint": "Šios valandos UŽDARYTA — likusią dienos dalį dirbate.",
       "addHours": "Pridėti valandas",
       "addRule": "Pridėti dar vieną taisyklę",
       "addSpecialDay": "Pridėti",

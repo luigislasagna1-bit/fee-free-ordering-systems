@@ -946,6 +946,8 @@
       "svcReservation": "Varaukset",
       "modeClosed": "Suljettu",
       "modeOpen": "Auki — erikoisajat",
+      "modeClosedHours": "Suljetut tunnit",
+      "modeClosedHoursHint": "Nämä tunnit ovat SULJETTU — pysyt avoinna loppupäivän.",
       "addHours": "Lisää ajat",
       "addRule": "Lisää toinen sääntö",
       "addSpecialDay": "Lisää",

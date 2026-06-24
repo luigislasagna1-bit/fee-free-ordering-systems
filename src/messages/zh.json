@@ -946,6 +946,8 @@
       "svcReservation": "订座",
       "modeClosed": "停业",
       "modeOpen": "营业——特殊时间",
+      "modeClosedHours": "停业时段",
+      "modeClosedHoursHint": "这些时段为停业 — 当天其余时间正常营业。",
       "addHours": "添加时段",
       "addRule": "再添加一条规则",
       "addSpecialDay": "添加",

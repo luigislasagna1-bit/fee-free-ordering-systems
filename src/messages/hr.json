@@ -946,6 +946,8 @@
       "svcReservation": "Rezervacije",
       "modeClosed": "Zatvoreno",
       "modeOpen": "Otvoreno — posebno vrijeme",
+      "modeClosedHours": "Zatvoreni sati",
+      "modeClosedHoursHint": "Ovi sati su ZATVORENI — ostatak dana ostajete otvoreni.",
       "addHours": "Dodaj sate",
       "addRule": "Dodaj još jedno pravilo",
       "addSpecialDay": "Dodaj",

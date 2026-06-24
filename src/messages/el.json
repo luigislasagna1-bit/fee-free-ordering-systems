@@ -946,6 +946,8 @@
       "svcReservation": "Κρατήσεις",
       "modeClosed": "Κλειστά",
       "modeOpen": "Ανοιχτά — ειδικό ωράριο",
+      "modeClosedHours": "Ώρες κλειστά",
+      "modeClosedHoursHint": "Αυτές οι ώρες είναι ΚΛΕΙΣΤΑ — παραμένετε ανοιχτά την υπόλοιπη μέρα.",
       "addHours": "Προσθήκη ωρών",
       "addRule": "Προσθήκη άλλου κανόνα",
       "addSpecialDay": "Προσθήκη",

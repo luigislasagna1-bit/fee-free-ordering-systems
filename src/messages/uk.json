@@ -946,6 +946,8 @@
       "svcReservation": "Бронювання",
       "modeClosed": "Зачинено",
       "modeOpen": "Відчинено — особливий графік",
+      "modeClosedHours": "Години закриття",
+      "modeClosedHoursHint": "Ці години ЗАКРИТО — решту дня ви відкриті.",
       "addHours": "Додати години",
       "addRule": "Додати ще одне правило",
       "addSpecialDay": "Додати",

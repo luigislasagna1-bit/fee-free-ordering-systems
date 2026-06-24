@@ -1013,6 +1013,8 @@
       "svcReservation": "Reservations",
       "modeClosed": "Closed",
       "modeOpen": "Open — custom hours",
+      "modeClosedHours": "Closed hours",
+      "modeClosedHoursHint": "These hours are CLOSED — you stay open the rest of the day.",
       "addHours": "Add hours",
       "addRule": "Add another rule",
       "addSpecialDay": "Add",

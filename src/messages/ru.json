@@ -946,6 +946,8 @@
       "svcReservation": "Бронирования",
       "modeClosed": "Закрыто",
       "modeOpen": "Открыто — особый график",
+      "modeClosedHours": "Часы закрытия",
+      "modeClosedHoursHint": "Эти часы ЗАКРЫТО — остальную часть дня вы открыты.",
       "addHours": "Добавить часы",
       "addRule": "Добавить ещё правило",
       "addSpecialDay": "Добавить",

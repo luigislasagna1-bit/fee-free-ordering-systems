@@ -969,6 +969,8 @@
       "svcReservation": "आरक्षण",
       "modeClosed": "बंद",
       "modeOpen": "खुला — विशेष समय",
+      "modeClosedHours": "बंद घंटे",
+      "modeClosedHoursHint": "ये घंटे बंद हैं — आप बाकी दिन खुले रहते हैं।",
       "addHours": "समय जोड़ें",
       "addRule": "एक और नियम जोड़ें",
       "addSpecialDay": "जोड़ें",

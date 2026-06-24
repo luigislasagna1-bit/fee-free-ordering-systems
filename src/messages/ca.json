@@ -946,6 +946,8 @@
       "svcReservation": "Reserves",
       "modeClosed": "Tancat",
       "modeOpen": "Obert — horari especial",
+      "modeClosedHours": "Hores tancades",
+      "modeClosedHoursHint": "Aquestes hores estan TANCADES — continues obert la resta del dia.",
       "addHours": "Afegeix horari",
       "addRule": "Afegeix una altra regla",
       "addSpecialDay": "Afegeix",

@@ -946,6 +946,8 @@
       "svcReservation": "Rezervasyonlar",
       "modeClosed": "Kapalı",
       "modeOpen": "Açık — özel saatler",
+      "modeClosedHours": "Kapalı saatler",
+      "modeClosedHoursHint": "Bu saatler KAPALI — günün geri kalanında açık kalırsınız.",
       "addHours": "Saat ekle",
       "addRule": "Başka kural ekle",
       "addSpecialDay": "Ekle",

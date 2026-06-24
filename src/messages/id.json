@@ -946,6 +946,8 @@
       "svcReservation": "Reservasi",
       "modeClosed": "Tutup",
       "modeOpen": "Buka — jam khusus",
+      "modeClosedHours": "Jam tutup",
+      "modeClosedHoursHint": "Jam ini TUTUP — Anda tetap buka selama sisa hari.",
       "addHours": "Tambah jam",
       "addRule": "Tambah aturan lain",
       "addSpecialDay": "Tambah",

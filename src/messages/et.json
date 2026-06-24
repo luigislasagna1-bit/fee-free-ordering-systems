@@ -946,6 +946,8 @@
       "svcReservation": "Broneeringud",
       "modeClosed": "Suletud",
       "modeOpen": "Avatud — eriline aeg",
+      "modeClosedHours": "Suletud tunnid",
+      "modeClosedHoursHint": "Need tunnid on SULETUD — ülejäänud päeva olete avatud.",
       "addHours": "Lisa kellaajad",
       "addRule": "Lisa veel üks reegel",
       "addSpecialDay": "Lisa",

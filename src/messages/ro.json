@@ -946,6 +946,8 @@
       "svcReservation": "Rezervări",
       "modeClosed": "Închis",
       "modeOpen": "Deschis — program special",
+      "modeClosedHours": "Ore închise",
+      "modeClosedHoursHint": "Aceste ore sunt ÎNCHISE — rămâi deschis restul zilei.",
       "addHours": "Adaugă ore",
       "addRule": "Adaugă altă regulă",
       "addSpecialDay": "Adaugă",

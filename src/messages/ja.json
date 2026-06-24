@@ -946,6 +946,8 @@
       "svcReservation": "予約",
       "modeClosed": "休業",
       "modeOpen": "営業 — 特別時間",
+      "modeClosedHours": "休業時間",
+      "modeClosedHoursHint": "この時間は休業です — 残りの時間は営業を続けます。",
       "addHours": "時間帯を追加",
       "addRule": "ルールを追加",
       "addSpecialDay": "追加",

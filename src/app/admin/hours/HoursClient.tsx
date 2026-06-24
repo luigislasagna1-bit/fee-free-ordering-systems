@@ -155,7 +155,7 @@ type Holiday = {
 /** Editor-side shape of one per-service rule. services [] = all services. */
 type HolidayRuleUI = {
   services: string[];
-  mode: "closed" | "open";
+  mode: "closed" | "open" | "closed_windows";
   intervals: { open: string; close: string }[];
 };
 
@@ -340,7 +340,7 @@ export function HoursClient({
       const rules = newHolidayRules.map((r) => ({
         services: r.services.length > 0 ? r.services : null,
         mode: r.mode,
-        intervals: r.mode === "open" ? r.intervals : undefined,
+        intervals: (r.mode === "open" || r.mode === "closed_windows") ? r.intervals : undefined,
       }));
       const res = await fetch("/api/restaurants/holidays", {
         method: "POST",
@@ -412,9 +412,13 @@ export function HoursClient({
       return rules
         .map((r) => {
           const scope = r.services && r.services.length > 0 ? r.services.map(svcLabel).join(", ") : tHours("allServices");
-          const what = r.mode === "open" && r.intervals?.length
-            ? r.intervals.map((iv) => `${iv.open}–${iv.close}`).join(", ")
-            : tHours("modeClosed");
+          const windows = r.intervals?.length ? r.intervals.map((iv) => `${iv.open}–${iv.close}`).join(", ") : "";
+          const what =
+            r.mode === "open" && windows
+              ? windows
+              : r.mode === "closed_windows" && windows
+                ? `${tHours("modeClosedHours")} ${windows}`
+                : tHours("modeClosed");
           return `${what} — ${scope}`;
         })
         .join(" · ");
@@ -758,6 +762,18 @@ export function HoursClient({
                     >
                       {tHours("modeOpen")}
                     </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        updateRule(idx, {
+                          mode: "closed_windows",
+                          intervals: rule.intervals.length > 0 ? rule.intervals : [{ open: "16:00", close: "20:00" }],
+                        })
+                      }
+                      className={`px-3 py-1.5 transition ${rule.mode === "closed_windows" ? "bg-amber-500 text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
+                    >
+                      {tHours("modeClosedHours")}
+                    </button>
                   </div>
                   {newHolidayRules.length > 1 && (
                     <button
@@ -771,8 +787,11 @@ export function HoursClient({
                   )}
                 </div>
 
-                {rule.mode === "open" && (
+                {(rule.mode === "open" || rule.mode === "closed_windows") && (
                   <div className="space-y-2">
+                    {rule.mode === "closed_windows" && (
+                      <p className="text-[11px] text-amber-700">{tHours("modeClosedHoursHint")}</p>
+                    )}
                     {rule.intervals.map((iv, ivIdx) => (
                       <div key={ivIdx} className="flex items-center gap-2 text-sm">
                         <span className="text-xs text-gray-500">{tHours("between")}:</span>

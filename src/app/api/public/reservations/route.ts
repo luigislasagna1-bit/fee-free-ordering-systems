@@ -160,6 +160,14 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       );
     }
+    // Partial-day closure ("close a time range") for the reservation service.
+    if (holEffect?.kind === "closed_windows" && hhmmInsideIntervals(time, holEffect.intervals)) {
+      const windows = holEffect.intervals.map((iv) => `${iv.open}–${iv.close}`).join(", ");
+      return NextResponse.json(
+        { error: `Reservations are closed ${windows} on this date — please choose a time outside those hours.` },
+        { status: 400 },
+      );
+    }
 
     // Capacity
     const cap = await checkReservationCapacity(restaurant.id, settings as ReservationSettingsLike, date, time, parseInt(String(partySize)));

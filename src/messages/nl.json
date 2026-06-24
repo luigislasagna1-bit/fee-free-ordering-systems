@@ -946,6 +946,8 @@
       "svcReservation": "Reserveringen",
       "modeClosed": "Gesloten",
       "modeOpen": "Open — aangepaste tijden",
+      "modeClosedHours": "Gesloten uren",
+      "modeClosedHoursHint": "Deze uren zijn GESLOTEN — de rest van de dag blijft u open.",
       "addHours": "Tijden toevoegen",
       "addRule": "Nog een regel toevoegen",
       "addSpecialDay": "Toevoegen",

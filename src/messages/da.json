@@ -946,6 +946,8 @@
       "svcReservation": "Reservationer",
       "modeClosed": "Lukket",
       "modeOpen": "Åbent — særlige tider",
+      "modeClosedHours": "Lukkede timer",
+      "modeClosedHoursHint": "Disse timer er LUKKET — du holder åbent resten af dagen.",
       "addHours": "Tilføj tider",
       "addRule": "Tilføj endnu en regel",
       "addSpecialDay": "Tilføj",
