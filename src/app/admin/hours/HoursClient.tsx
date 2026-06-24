@@ -2,7 +2,7 @@
 import { useState, useMemo, useEffect } from "react";
 import toast from "react-hot-toast";
 import { Save, Clock, Copy, Calendar, Plus, Trash2, Moon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { formatHour } from "@/lib/restaurant-hours";
 
 /**
@@ -186,6 +186,7 @@ export function HoursClient({
   const tInfo = useTranslations("info");
   const tCommon = useTranslations("common");
   const tToasts = useTranslations("admin.toasts");
+  const locale = useLocale();
 
   const [format, setFormat] = useState<Format>(initialFormat);
   // Service-tabbed hours state. "default" = the legacy null-service
@@ -861,8 +862,8 @@ export function HoursClient({
               <li key={h.id} className="px-4 sm:px-5 py-3 flex items-center justify-between gap-3 hover:bg-gray-50">
                 <div className="min-w-0">
                   <div className="font-medium text-gray-900">
-                    {formatHolidayDate(h.date)}
-                    {h.endDate && h.endDate !== h.date && <> – {formatHolidayDate(h.endDate)}</>}
+                    {formatHolidayDate(h.date, locale)}
+                    {h.endDate && h.endDate !== h.date && <> – {formatHolidayDate(h.endDate, locale)}</>}
                   </div>
                   <div className="text-xs text-gray-500 mt-0.5">
                     {h.name && <span className="font-medium">{h.name} · </span>}
@@ -888,8 +889,11 @@ export function HoursClient({
   );
 }
 
-/** "2026-12-25" → "Friday, December 25, 2026" */
-function formatHolidayDate(yyyymmdd: string): string {
+/** "2026-12-25" → "Friday, December 25, 2026" — formatted in the admin's
+ *  selected UI language (`locale`), NOT the browser's OS locale. Passing
+ *  `undefined` here used to make a phone set to Italian render "lunedì" even
+ *  when the backend language was English (Fabrizio report). */
+function formatHolidayDate(yyyymmdd: string, locale: string): string {
   try {
     // Parse as local-midnight (NOT UTC) so the date doesn't shift when
     // toLocaleDateString applies the user's zone. The date the user
@@ -897,7 +901,7 @@ function formatHolidayDate(yyyymmdd: string): string {
     // instant.
     const [y, m, d] = yyyymmdd.split("-").map(Number);
     const date = new Date(y, (m || 1) - 1, d || 1);
-    return date.toLocaleDateString(undefined, {
+    return date.toLocaleDateString(locale, {
       weekday: "long",
       year: "numeric",
       month: "long",
