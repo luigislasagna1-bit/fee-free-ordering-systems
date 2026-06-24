@@ -236,6 +236,19 @@ export async function POST(req: NextRequest) {
           { status: 400 },
         );
       }
+      // Reservations paused (admin Services page / kitchen app) → block the
+      // reserve-then-order booking too, mirroring the standalone reservations
+      // guard + the customer paused banner. Without this, pausing reservations
+      // would stop standalone bookings but still let a combined-checkout booking
+      // through. Auto-resumes when reservationsPausedUntil is in the past.
+      const rPaused = (restaurant as any).reservationsPausedUntil;
+      if (rPaused && new Date(rPaused).getTime() > Date.now()) {
+        const resumesAt = new Date(rPaused).toLocaleString();
+        return NextResponse.json(
+          { error: `Reservations are temporarily paused by the restaurant. Estimated to resume around ${resumesAt}.`, code: "service_paused" },
+          { status: 423 },
+        );
+      }
       const rDate = sanitize((bodyReservation as any).date, 10);
       const rTime = sanitize((bodyReservation as any).time, 5);
       const rPartySize = parseInt(String((bodyReservation as any).partySize), 10);
