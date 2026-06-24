@@ -222,6 +222,9 @@ export function resolveTodayHolidayClosure(
   /** Services open today but CLOSED during specific windows (the "close a time
    *  range" rule), with those windows — drives the partial-closure banner. */
   holidayClosedWindows: Array<{ service: string; intervals: HolidayInterval[] }>;
+  /** Services with per-service CUSTOM open-hours today (a service-specific
+   *  "open with these hours" rule) — drives the per-service special-hours banner. */
+  holidayCustomHoursServices: Array<{ service: string; intervals: HolidayInterval[] }>;
 } {
   const general = holidayEffectToday(holidays, timezone, null, now);
   const generalClosed = general?.kind === "closed";
@@ -234,6 +237,15 @@ export function resolveTodayHolidayClosure(
     : ALL_SVCS.flatMap((s) => {
         const e = holidayEffectToday(holidays, timezone, s, now);
         return e?.kind === "closed_windows" ? [{ service: s, intervals: e.intervals }] : [];
+      });
+  // Per-service CUSTOM open-hours (a service-specific "open with these hours"
+  // rule). Skipped when fully closed or when a GENERAL custom-hours rule already
+  // shows via todayHolidayIntervals — so the same hours are never double-reported.
+  const holidayCustomHoursServices = generalClosed || general?.kind === "custom_hours"
+    ? []
+    : ALL_SVCS.flatMap((s) => {
+        const e = holidayEffectToday(holidays, timezone, s, now);
+        return e?.kind === "custom_hours" ? [{ service: s, intervals: e.intervals }] : [];
       });
   // Prefer the general entry's message; else surface the first service-specific
   // closed entry's message so it isn't lost.
@@ -248,5 +260,6 @@ export function resolveTodayHolidayClosure(
     todayHolidayClosed: generalClosed,
     holidayClosedServices,
     holidayClosedWindows,
+    holidayCustomHoursServices,
   };
 }

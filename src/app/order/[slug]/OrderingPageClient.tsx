@@ -773,6 +773,8 @@ export function OrderingPageClient({
   todayHolidayIntervals = null,
   todayHolidayClosed = false,
   holidayClosedServices = [],
+  holidayClosedWindows = [],
+  holidayCustomHoursServices = [],
   isTestPreview = false,
   poweredByCredit = { kind: "feefree" },
 }: {
@@ -801,6 +803,11 @@ export function OrderingPageClient({
    *  holiday-CLOSED today by a service-specific rule while the restaurant is
    *  otherwise open. Disables those service buttons + shows a banner. */
   holidayClosedServices?: string[];
+  /** Services open today but CLOSED during specific time windows (the "Closed
+   *  hours" rule) — shows a partial-closure banner line. */
+  holidayClosedWindows?: Array<{ service: string; intervals: { open: string; close: string }[] }>;
+  /** Services with per-service custom OPEN hours today — special-hours banner line. */
+  holidayCustomHoursServices?: Array<{ service: string; intervals: { open: string; close: string }[] }>;
   /** Owner "Preview & test ordering" mode (reseller report cmq3red6b): true
    *  only when ?testing=1 AND the viewer has an admin session for THIS
    *  restaurant (verified server-side). Orders placed are marked TEST- and
@@ -3696,7 +3703,7 @@ export function OrderingPageClient({
           is keyed on the explicit todayHolidayClosed flag — deriving it
           from name/message presence rendered the wrong shape when the
           owner left the optional name blank. */}
-      {(todayHolidayClosed || todayHolidayName || todayHolidayMessage || (todayHolidayIntervals?.length ?? 0) > 0 || holidayClosedServices.length > 0) && (() => {
+      {(todayHolidayClosed || todayHolidayName || todayHolidayMessage || (todayHolidayIntervals?.length ?? 0) > 0 || holidayClosedServices.length > 0 || holidayClosedWindows.length > 0 || holidayCustomHoursServices.length > 0) && (() => {
         const hasCustomHours = (todayHolidayIntervals?.length ?? 0) > 0;
         const serviceLabel = (s: string) =>
           s === "pickup" ? t("pickup")
@@ -3705,16 +3712,33 @@ export function OrderingPageClient({
           : s === "take_out" ? t("takeOut")
           : s === "reservation" ? t("tableReservation")
           : s.charAt(0).toUpperCase() + s.slice(1);
+        const fmtWins = (ivs: Array<{ open: string; close: string }>) =>
+          ivs.map((iv) => `${formatHHMM(iv.open, hoursFmt)} – ${formatHHMM(iv.close, hoursFmt)}`).join(", ");
+        const nameSuffix = todayHolidayName ? ` — ${todayHolidayName}` : "";
         return (
           <div className="w-full bg-amber-500 border-b border-amber-600 px-4 sm:px-6 py-3 text-sm">
-            <div className="max-w-5xl mx-auto">
-              <div className="font-bold text-amber-950 mb-0.5">
-                {todayHolidayClosed
-                  ? <>⛔ {t("holidayClosedToday")}{todayHolidayName ? ` — ${todayHolidayName}` : ""}</>
-                  : hasCustomHours
-                    ? <>🕒 {t("holidaySpecialHours")}{todayHolidayName ? ` — ${todayHolidayName}` : ""}: {todayHolidayIntervals!.map((iv) => `${formatHHMM(iv.open, hoursFmt)} – ${formatHHMM(iv.close, hoursFmt)}`).join(", ")}</>
-                    : <>⛔ {t("holidayNotAvailableToday", { services: holidayClosedServices.map(serviceLabel).join(", ") })}{todayHolidayName ? ` — ${todayHolidayName}` : ""}</>}
-              </div>
+            <div className="max-w-5xl mx-auto space-y-0.5">
+              {(todayHolidayClosed || hasCustomHours || holidayClosedServices.length > 0) && (
+                <div className="font-bold text-amber-950">
+                  {todayHolidayClosed
+                    ? <>⛔ {t("holidayClosedToday")}{nameSuffix}</>
+                    : hasCustomHours
+                      ? <>🕒 {t("holidaySpecialHours")}{nameSuffix}: {fmtWins(todayHolidayIntervals!)}</>
+                      : <>⛔ {t("holidayNotAvailableToday", { services: holidayClosedServices.map(serviceLabel).join(", ") })}{nameSuffix}</>}
+                </div>
+              )}
+              {/* Partial / per-service closures (Fabrizio): "Closed hours" ranges
+                  and per-service custom open-hours each get their own banner line. */}
+              {!todayHolidayClosed && holidayClosedWindows.map((g, i) => (
+                <div key={`cw-${i}`} className="font-bold text-amber-950">
+                  ⏸ {t("holidayServiceClosedWindows", { service: serviceLabel(g.service), windows: fmtWins(g.intervals) })}
+                </div>
+              ))}
+              {!todayHolidayClosed && holidayCustomHoursServices.map((g, i) => (
+                <div key={`ch-${i}`} className="font-bold text-amber-950">
+                  🕒 {t("holidayServiceSpecialHours", { service: serviceLabel(g.service), windows: fmtWins(g.intervals) })}
+                </div>
+              ))}
               {todayHolidayMessage && (
                 <div className="text-xs text-amber-900">{todayHolidayMessage}</div>
               )}
@@ -3736,7 +3760,7 @@ export function OrderingPageClient({
           showing, so the two never stack. liveStatusForClient already folds
           in holidays + timezone, so a custom-hours holiday between intervals
           shows the holiday banner (its gate is true) and suppresses this one. */}
-      {!(todayHolidayClosed || todayHolidayName || todayHolidayMessage || (todayHolidayIntervals?.length ?? 0) > 0 || holidayClosedServices.length > 0) &&
+      {!(todayHolidayClosed || todayHolidayName || todayHolidayMessage || (todayHolidayIntervals?.length ?? 0) > 0 || holidayClosedServices.length > 0 || holidayClosedWindows.length > 0 || holidayCustomHoursServices.length > 0) &&
         (liveStatusForClient.kind === "opens_at" || liveStatusForClient.kind === "closed_today") && (
         <div className="w-full bg-amber-400 border-b border-amber-500 px-4 sm:px-6 py-3">
           <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3">
@@ -3774,41 +3798,44 @@ export function OrderingPageClient({
         {(() => {
           const r = restaurant as any;
           const nowMs = Date.now();
+          // Translated service names (Fabrizio: the pause banner was English-only).
+          const svcLabel = (s: string) =>
+            s === "pickup" ? t("pickup")
+            : s === "delivery" ? t("delivery")
+            : s === "dine_in" ? t("dineIn")
+            : s === "take_out" ? t("takeOut")
+            : s === "reservation" ? t("tableReservation")
+            : s.charAt(0).toUpperCase() + s.slice(1);
+          const entries: Array<[string, unknown]> = [
+            ["pickup", r.pickupPausedUntil],
+            ["delivery", r.deliveryPausedUntil],
+            ["dine_in", r.dineInPausedUntil],
+            ["catering", r.cateringPausedUntil],
+            ["take_out", r.takeOutPausedUntil],
+            ["reservation", r.reservationsPausedUntil],
+          ];
           const pausedNames: string[] = [];
-          const earliestResume: { ms: number; label: string } | null = (() => {
-            const entries = [
-              ["Pickup", r.pickupPausedUntil],
-              ["Delivery", r.deliveryPausedUntil],
-              ["Dine-in", r.dineInPausedUntil],
-              ["Catering", r.cateringPausedUntil],
-              ["Take & Bake", r.takeOutPausedUntil],
-              ["Reservations", r.reservationsPausedUntil],
-            ] as const;
-            let best: { ms: number; label: string } | null = null;
-            for (const [name, val] of entries) {
-              if (!val) continue;
-              const ms = new Date(val).getTime();
-              if (ms > nowMs) {
-                pausedNames.push(name);
-                if (!best || ms < best.ms) best = { ms, label: name };
-              }
+          let bestMs: number | null = null;
+          for (const [key, val] of entries) {
+            if (!val) continue;
+            const ms = new Date(val as string).getTime();
+            if (ms > nowMs) {
+              pausedNames.push(svcLabel(key));
+              if (bestMs === null || ms < bestMs) bestMs = ms;
             }
-            return best;
-          })();
+          }
           if (pausedNames.length === 0) return null;
+          const resumeTime = bestMs !== null
+            ? new Date(bestMs).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hourCycle: hoursFmt === "24h" ? "h23" : "h12" })
+            : null;
           return (
             <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm">
               <div className="font-semibold text-amber-900 mb-0.5">
-                ⏸ {pausedNames.join(", ")} {pausedNames.length === 1 ? "is" : "are"} temporarily paused
+                ⏸ {t("pauseBannerTitle", { services: pausedNames.join(", ") })}
               </div>
               <div className="text-xs text-amber-800">
-                The kitchen is briefly stopped from taking new {pausedNames.join(" / ").toLowerCase()} orders.
-                {earliestResume && (
-                  <> Estimated to resume around{" "}
-                    {new Date(earliestResume.ms).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hourCycle: hoursFmt === "24h" ? "h23" : "h12" })}
-                    .
-                  </>
-                )}
+                {t("pauseBannerDescription")}
+                {resumeTime && <> {t("pauseBannerResume", { time: resumeTime })}</>}
               </div>
             </div>
           );
