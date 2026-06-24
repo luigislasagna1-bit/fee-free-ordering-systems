@@ -75,19 +75,19 @@ export function PublicFooter() {
             Small + muted; each row only renders once it has links. */}
         <div className="border-t border-gray-800 pt-6 mb-6 space-y-2.5 text-xs text-gray-500">
           {LANDING_PAGES.length > 0 && (
-            <SeoLinkRow label="Online ordering for" items={LANDING_PAGES.map((p) => ({ href: `/online-ordering-for/${p.slug}`, text: p.nounPlural }))} />
+            <SeoLinkRow label="Online ordering for" moreHref="/sitemap#cuisines" items={LANDING_PAGES.map((p) => ({ href: `/online-ordering-for/${p.slug}`, text: p.nounPlural }))} />
           )}
           {SOLUTION_PAGES.some((p) => p.category === "feature") && (
-            <SeoLinkRow label="Solutions" items={SOLUTION_PAGES.filter((p) => p.category === "feature").map((p) => ({ href: `/${p.slug}`, text: p.h1 }))} />
+            <SeoLinkRow label="Solutions" moreHref="/sitemap#solutions" items={SOLUTION_PAGES.filter((p) => p.category === "feature").map((p) => ({ href: `/${p.slug}`, text: p.h1 }))} />
           )}
           {SOLUTION_PAGES.some((p) => p.category === "platform") && (
-            <SeoLinkRow label="Your website" items={SOLUTION_PAGES.filter((p) => p.category === "platform").map((p) => ({ href: `/${p.slug}`, text: p.h1 }))} />
+            <SeoLinkRow label="Your website" moreHref="/sitemap#platforms" items={SOLUTION_PAGES.filter((p) => p.category === "platform").map((p) => ({ href: `/${p.slug}`, text: p.h1 }))} />
           )}
           {SOLUTION_PAGES.some((p) => p.category === "city") && (
-            <SeoLinkRow label="Cities" items={SOLUTION_PAGES.filter((p) => p.category === "city").map((p) => ({ href: `/${p.slug}`, text: p.h1 }))} />
+            <SeoLinkRow label="Cities" moreHref="/sitemap#cities" items={SOLUTION_PAGES.filter((p) => p.category === "city").map((p) => ({ href: `/${p.slug}`, text: p.h1 }))} />
           )}
           {COMPETITORS.length > 0 && (
-            <SeoLinkRow label="Compare" items={COMPETITORS.map((c) => ({ href: `/vs/${c.slug}`, text: `${c.name} alternative` }))} />
+            <SeoLinkRow label="Compare" moreHref="/sitemap#compare" items={COMPETITORS.map((c) => ({ href: `/vs/${c.slug}`, text: `${c.name} alternative` }))} />
           )}
         </div>
         <div className="border-t border-gray-700 pt-6 text-sm text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-3">
@@ -95,6 +95,7 @@ export function PublicFooter() {
             {tF("copyright", { year: new Date().getFullYear() })}
           </div>
           <div className="flex items-center gap-4 text-xs">
+            <Link href="/sitemap" className="hover:text-white transition">Sitemap</Link>
             <Link href="/privacy" className="hover:text-white transition">Privacy</Link>
             <Link href="/terms" className="hover:text-white transition">Terms</Link>
             <Link href="/refund" className="hover:text-white transition">Refunds</Link>
@@ -105,17 +106,32 @@ export function PublicFooter() {
   );
 }
 
-/** One muted, dot-separated row of SEO landing-page links (the GloriaFood-style footer block). */
-function SeoLinkRow({ label, items }: { label: string; items: { href: string; text: string }[] }) {
+/**
+ * One muted, dot-separated row of SEO landing-page links (the GloriaFood-style footer block).
+ * Shows only the first `VISIBLE` links to keep the footer uncluttered; the rest live on the
+ * crawlable /sitemap page (reached via the "+N more" link), so search engines still get every
+ * page with descriptive anchor text — without a wall of links in the visible footer. (Never
+ * CSS-hide the overflow links: hidden-for-crawlers links are a Google spam signal.)
+ */
+function SeoLinkRow({ label, items, moreHref }: { label: string; items: { href: string; text: string }[]; moreHref: string }) {
+  const VISIBLE = 3;
+  const shown = items.slice(0, VISIBLE);
+  const moreCount = items.length - shown.length;
   return (
     <div className="leading-relaxed">
       <span className="font-semibold text-gray-400">{label}: </span>
-      {items.map((it, i) => (
+      {shown.map((it, i) => (
         <span key={it.href}>
           <Link href={it.href} className="hover:text-white transition capitalize">{it.text}</Link>
-          {i < items.length - 1 ? <span className="text-gray-700"> · </span> : null}
+          {i < shown.length - 1 ? <span className="text-gray-700"> · </span> : null}
         </span>
       ))}
+      {moreCount > 0 && (
+        <>
+          <span className="text-gray-700"> · </span>
+          <Link href={moreHref} className="text-gray-400 hover:text-emerald-300 transition whitespace-nowrap">+{moreCount} more →</Link>
+        </>
+      )}
     </div>
   );
 }

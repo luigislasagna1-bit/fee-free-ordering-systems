@@ -138,6 +138,9 @@ function buildPlatformSitemap(host: string): string {
   // Also surface /demo + /import (the conversion entry points) so crawlers index them.
   urls.push({ loc: `${base}/demo`, changefreq: "monthly", priority: 0.6 });
   urls.push({ loc: `${base}/import`, changefreq: "monthly", priority: 0.6 });
+  // HTML sitemap / link hub — the footer links the full landing-page list here,
+  // so crawlers reaching it follow descriptive anchors to every SEO page.
+  urls.push({ loc: `${base}/sitemap`, changefreq: "monthly", priority: 0.3 });
   return urlsetXml(urls);
 }
 
