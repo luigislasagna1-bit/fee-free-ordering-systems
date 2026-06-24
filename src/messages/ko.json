@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "예약에는 제공되지 않습니다 — {window}에만 제공",
     "reservationCartConflictTitle": "예약에는 제공되지 않습니다",
     "reservationCartConflictBody": "이 항목은 예약하신 날에는 제공되지 않습니다. 계속하려면 삭제하시거나 제공되는 날로 예약을 변경해 주세요:",
-    "reservationCartChangeDay": "예약 날짜 변경"
+    "reservationCartChangeDay": "예약 날짜 변경",
+    "holidayClosedHoursToday": "오늘 {windows} 휴무",
+    "servicePausedBadge": "일시중지"
   },
   "pizza": {
     "chooseSize": "크기 선택",

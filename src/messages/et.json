@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "Teie broneeringu jaoks pole saadaval — ainult {window}",
     "reservationCartConflictTitle": "Teie broneeringu jaoks pole saadaval",
     "reservationCartConflictBody": "Neid tooteid teie broneeringu päeval ei pakuta. Eemaldage need jätkamiseks või muutke broneering päevaks, mil need on saadaval:",
-    "reservationCartChangeDay": "Muuda broneeringu päeva"
+    "reservationCartChangeDay": "Muuda broneeringu päeva",
+    "holidayClosedHoursToday": "Täna suletud {windows}",
+    "servicePausedBadge": "peatatud"
   },
   "pizza": {
     "chooseSize": "Vali suurus",

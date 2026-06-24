@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "Недоступно для вашого бронювання — лише {window}",
     "reservationCartConflictTitle": "Недоступно для вашого бронювання",
     "reservationCartConflictBody": "Ці позиції не пропонуються в день вашого бронювання. Видаліть їх, щоб продовжити, або змініть бронювання на день, коли вони доступні:",
-    "reservationCartChangeDay": "Змінити день бронювання"
+    "reservationCartChangeDay": "Змінити день бронювання",
+    "holidayClosedHoursToday": "Сьогодні зачинено {windows}",
+    "servicePausedBadge": "призупинено"
   },
   "pizza": {
     "chooseSize": "Оберіть розмір",

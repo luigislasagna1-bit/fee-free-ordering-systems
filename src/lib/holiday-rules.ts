@@ -225,6 +225,10 @@ export function resolveTodayHolidayClosure(
   /** Services with per-service CUSTOM open-hours today (a service-specific
    *  "open with these hours" rule) — drives the per-service special-hours banner. */
   holidayCustomHoursServices: Array<{ service: string; intervals: HolidayInterval[] }>;
+  /** A GENERAL (all-services) "Closed hours" rule's windows for today, or null.
+   *  Surfaced as ONE banner line rather than one per service (avoids exploding a
+   *  single all-services rule into 6 duplicate lines). */
+  holidayClosedWindowsGeneral: HolidayInterval[] | null;
 } {
   const general = holidayEffectToday(holidays, timezone, null, now);
   const generalClosed = general?.kind === "closed";
@@ -232,7 +236,12 @@ export function resolveTodayHolidayClosure(
   const holidayClosedServices = generalClosed
     ? []
     : ALL_SVCS.filter((s) => holidayEffectToday(holidays, timezone, s, now)?.kind === "closed");
-  const holidayClosedWindows = generalClosed
+  // A GENERAL (all-services) closed-windows rule surfaces as ONE line via
+  // holidayClosedWindowsGeneral; the per-service list below SKIPS it (else a
+  // single all-services rule matches all 6 service queries → 6 duplicate lines).
+  const holidayClosedWindowsGeneral =
+    general?.kind === "closed_windows" ? general.intervals : null;
+  const holidayClosedWindows = generalClosed || general?.kind === "closed_windows"
     ? []
     : ALL_SVCS.flatMap((s) => {
         const e = holidayEffectToday(holidays, timezone, s, now);
@@ -261,5 +270,6 @@ export function resolveTodayHolidayClosure(
     holidayClosedServices,
     holidayClosedWindows,
     holidayCustomHoursServices,
+    holidayClosedWindowsGeneral,
   };
 }

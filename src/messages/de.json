@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "Für Ihre Reservierung nicht verfügbar — nur {window}",
     "reservationCartConflictTitle": "Für Ihre Reservierung nicht verfügbar",
     "reservationCartConflictBody": "Diese Artikel werden am Tag Ihrer Reservierung nicht angeboten. Entfernen Sie sie, um fortzufahren, oder ändern Sie Ihre Reservierung auf einen Tag, an dem sie verfügbar sind:",
-    "reservationCartChangeDay": "Reservierungstag ändern"
+    "reservationCartChangeDay": "Reservierungstag ändern",
+    "holidayClosedHoursToday": "Heute {windows} geschlossen",
+    "servicePausedBadge": "pausiert"
   },
   "pizza": {
     "chooseSize": "Größe wählen",

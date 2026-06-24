@@ -775,6 +775,7 @@ export function OrderingPageClient({
   holidayClosedServices = [],
   holidayClosedWindows = [],
   holidayCustomHoursServices = [],
+  holidayClosedWindowsGeneral = null,
   isTestPreview = false,
   poweredByCredit = { kind: "feefree" },
 }: {
@@ -808,6 +809,8 @@ export function OrderingPageClient({
   holidayClosedWindows?: Array<{ service: string; intervals: { open: string; close: string }[] }>;
   /** Services with per-service custom OPEN hours today — special-hours banner line. */
   holidayCustomHoursServices?: Array<{ service: string; intervals: { open: string; close: string }[] }>;
+  /** A general all-services "Closed hours" rule's windows for today — one line. */
+  holidayClosedWindowsGeneral?: { open: string; close: string }[] | null;
   /** Owner "Preview & test ordering" mode (reseller report cmq3red6b): true
    *  only when ?testing=1 AND the viewer has an admin session for THIS
    *  restaurant (verified server-side). Orders placed are marked TEST- and
@@ -3703,7 +3706,7 @@ export function OrderingPageClient({
           is keyed on the explicit todayHolidayClosed flag — deriving it
           from name/message presence rendered the wrong shape when the
           owner left the optional name blank. */}
-      {(todayHolidayClosed || todayHolidayName || todayHolidayMessage || (todayHolidayIntervals?.length ?? 0) > 0 || holidayClosedServices.length > 0 || holidayClosedWindows.length > 0 || holidayCustomHoursServices.length > 0) && (() => {
+      {(todayHolidayClosed || todayHolidayName || todayHolidayMessage || (todayHolidayIntervals?.length ?? 0) > 0 || holidayClosedServices.length > 0 || holidayClosedWindows.length > 0 || holidayCustomHoursServices.length > 0 || (holidayClosedWindowsGeneral?.length ?? 0) > 0) && (() => {
         const hasCustomHours = (todayHolidayIntervals?.length ?? 0) > 0;
         const serviceLabel = (s: string) =>
           s === "pickup" ? t("pickup")
@@ -3711,6 +3714,7 @@ export function OrderingPageClient({
           : s === "dine_in" ? t("dineIn")
           : s === "take_out" ? t("takeOut")
           : s === "reservation" ? t("tableReservation")
+          : s === "catering" ? t("catering")
           : s.charAt(0).toUpperCase() + s.slice(1);
         const fmtWins = (ivs: Array<{ open: string; close: string }>) =>
           ivs.map((iv) => `${formatHHMM(iv.open, hoursFmt)} – ${formatHHMM(iv.close, hoursFmt)}`).join(", ");
@@ -3725,6 +3729,12 @@ export function OrderingPageClient({
                     : hasCustomHours
                       ? <>🕒 {t("holidaySpecialHours")}{nameSuffix}: {fmtWins(todayHolidayIntervals!)}</>
                       : <>⛔ {t("holidayNotAvailableToday", { services: holidayClosedServices.map(serviceLabel).join(", ") })}{nameSuffix}</>}
+                </div>
+              )}
+              {/* A general all-services "Closed hours" rule → ONE line (not six). */}
+              {!todayHolidayClosed && (holidayClosedWindowsGeneral?.length ?? 0) > 0 && (
+                <div className="font-bold text-amber-950">
+                  ⏸ {t("holidayClosedHoursToday", { windows: fmtWins(holidayClosedWindowsGeneral!) })}
                 </div>
               )}
               {/* Partial / per-service closures (Fabrizio): "Closed hours" ranges
@@ -3760,7 +3770,7 @@ export function OrderingPageClient({
           showing, so the two never stack. liveStatusForClient already folds
           in holidays + timezone, so a custom-hours holiday between intervals
           shows the holiday banner (its gate is true) and suppresses this one. */}
-      {!(todayHolidayClosed || todayHolidayName || todayHolidayMessage || (todayHolidayIntervals?.length ?? 0) > 0 || holidayClosedServices.length > 0 || holidayClosedWindows.length > 0 || holidayCustomHoursServices.length > 0) &&
+      {!(todayHolidayClosed || todayHolidayName || todayHolidayMessage || (todayHolidayIntervals?.length ?? 0) > 0 || holidayClosedServices.length > 0 || holidayClosedWindows.length > 0 || holidayCustomHoursServices.length > 0 || (holidayClosedWindowsGeneral?.length ?? 0) > 0) &&
         (liveStatusForClient.kind === "opens_at" || liveStatusForClient.kind === "closed_today") && (
         <div className="w-full bg-amber-400 border-b border-amber-500 px-4 sm:px-6 py-3">
           <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3">
@@ -3805,6 +3815,7 @@ export function OrderingPageClient({
             : s === "dine_in" ? t("dineIn")
             : s === "take_out" ? t("takeOut")
             : s === "reservation" ? t("tableReservation")
+            : s === "catering" ? t("catering")
             : s.charAt(0).toUpperCase() + s.slice(1);
           const entries: Array<[string, unknown]> = [
             ["pickup", r.pickupPausedUntil],
@@ -3861,7 +3872,7 @@ export function OrderingPageClient({
               >
                 <span className="flex items-center gap-2 flex-wrap justify-center">
                   <ShoppingBag className="w-4 h-4" /> {t("pickup")} · {restaurant.estimatedPickup} {t("minutes")}
-                  {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
+                  {paused && <span className="text-xs">({holClosed ? t("closedToday") : t("servicePausedBadge")})</span>}
                   {!paused && pickupOpensAt && <span className="text-xs font-normal opacity-80">({t("opensAtLabel", { time: pickupOpensAt })})</span>}
                 </span>
                 {desc && <span className="text-xs font-normal opacity-70 leading-tight line-clamp-2 text-center">{desc}</span>}
@@ -3887,7 +3898,7 @@ export function OrderingPageClient({
                 <span className="flex items-center gap-2 flex-wrap justify-center">
                   <Truck className="w-4 h-4" /> {t("delivery")} · {estimatedDeliveryMinutes} {t("minutes")}
                   {baseDeliveryFee > 0 && <span className="text-xs font-normal">(+{fmt(baseDeliveryFee)})</span>}
-                  {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
+                  {paused && <span className="text-xs">({holClosed ? t("closedToday") : t("servicePausedBadge")})</span>}
                   {!paused && deliveryOpensAt && <span className="text-xs font-normal opacity-80">({t("opensAtLabel", { time: deliveryOpensAt })})</span>}
                 </span>
                 {desc && <span className="text-xs font-normal opacity-70 leading-tight line-clamp-2 text-center">{desc}</span>}
@@ -3915,7 +3926,7 @@ export function OrderingPageClient({
               >
                 <span className="flex items-center gap-2 flex-wrap justify-center">
                   <Utensils className="w-4 h-4" /> {t("dineIn")} · {est} {t("minutes")}
-                  {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
+                  {paused && <span className="text-xs">({holClosed ? t("closedToday") : t("servicePausedBadge")})</span>}
                 </span>
                 {desc && <span className="text-xs font-normal opacity-70 leading-tight line-clamp-2 text-center">{desc}</span>}
               </button>
@@ -3940,7 +3951,7 @@ export function OrderingPageClient({
               >
                 <span className="flex items-center gap-2 flex-wrap justify-center">
                   <Package className="w-4 h-4" /> {t("takeOut")} · {est} {t("minutes")}
-                  {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
+                  {paused && <span className="text-xs">({holClosed ? t("closedToday") : t("servicePausedBadge")})</span>}
                 </span>
                 {desc && <span className="text-xs font-normal opacity-70 leading-tight line-clamp-2 text-center">{desc}</span>}
               </button>

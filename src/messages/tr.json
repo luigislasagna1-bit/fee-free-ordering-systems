@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "Rezervasyonunuz için uygun değil — yalnızca {window}",
     "reservationCartConflictTitle": "Rezervasyonunuz için uygun değil",
     "reservationCartConflictBody": "Bu ürünler rezervasyon gününüzde sunulmuyor. Devam etmek için kaldırın ya da rezervasyonunuzu sunuldukları bir güne değiştirin:",
-    "reservationCartChangeDay": "Rezervasyon gününü değiştir"
+    "reservationCartChangeDay": "Rezervasyon gününü değiştir",
+    "holidayClosedHoursToday": "Bugün {windows} kapalı",
+    "servicePausedBadge": "duraklatıldı"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",

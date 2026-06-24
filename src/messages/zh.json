@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "您的预订无法选择 — 仅限 {window}",
     "reservationCartConflictTitle": "您的预订无法选择",
     "reservationCartConflictBody": "这些商品在您预订的当天不供应。请将其移除以继续，或将预订改到供应的日子：",
-    "reservationCartChangeDay": "更改预订日期"
+    "reservationCartChangeDay": "更改预订日期",
+    "holidayClosedHoursToday": "今天 {windows} 暂停营业",
+    "servicePausedBadge": "已暂停"
   },
   "pizza": {
     "chooseSize": "选择大小",

@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "Tidak tersedia untuk reservasi Anda — hanya {window}",
     "reservationCartConflictTitle": "Tidak tersedia untuk reservasi Anda",
     "reservationCartConflictBody": "Item ini tidak tersedia pada hari reservasi Anda. Hapus untuk melanjutkan, atau ubah reservasi Anda ke hari saat tersedia:",
-    "reservationCartChangeDay": "Ubah hari reservasi"
+    "reservationCartChangeDay": "Ubah hari reservasi",
+    "holidayClosedHoursToday": "Tutup {windows} hari ini",
+    "servicePausedBadge": "dijeda"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",

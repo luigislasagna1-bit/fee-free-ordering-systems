@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "Không có sẵn cho lượt đặt bàn của bạn — chỉ {window}",
     "reservationCartConflictTitle": "Không có sẵn cho lượt đặt bàn của bạn",
     "reservationCartConflictBody": "Những món này không được phục vụ vào ngày đặt bàn của bạn. Hãy xóa để tiếp tục, hoặc đổi lượt đặt bàn sang ngày có phục vụ:",
-    "reservationCartChangeDay": "Đổi ngày đặt bàn"
+    "reservationCartChangeDay": "Đổi ngày đặt bàn",
+    "holidayClosedHoursToday": "Đóng cửa {windows} hôm nay",
+    "servicePausedBadge": "tạm dừng"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",

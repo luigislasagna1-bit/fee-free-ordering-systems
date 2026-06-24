@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "ご予約ではご利用いただけません — {window} のみ",
     "reservationCartConflictTitle": "ご予約ではご利用いただけません",
     "reservationCartConflictBody": "これらの商品はご予約日には提供されません。続けるには削除するか、提供日にご予約を変更してください：",
-    "reservationCartChangeDay": "予約日を変更"
+    "reservationCartChangeDay": "予約日を変更",
+    "holidayClosedHoursToday": "本日 {windows} は休業",
+    "servicePausedBadge": "一時停止中"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",

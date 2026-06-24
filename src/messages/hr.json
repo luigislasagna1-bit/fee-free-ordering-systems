@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "Nije dostupno za vašu rezervaciju — samo {window}",
     "reservationCartConflictTitle": "Nije dostupno za vašu rezervaciju",
     "reservationCartConflictBody": "Ovi artikli nisu u ponudi na dan vaše rezervacije. Uklonite ih za nastavak ili promijenite rezervaciju na dan kada su dostupni:",
-    "reservationCartChangeDay": "Promijeni dan rezervacije"
+    "reservationCartChangeDay": "Promijeni dan rezervacije",
+    "holidayClosedHoursToday": "Danas zatvoreno {windows}",
+    "servicePausedBadge": "pauzirano"
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",

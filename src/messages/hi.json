@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "आपके आरक्षण के लिए उपलब्ध नहीं — केवल {window}",
     "reservationCartConflictTitle": "आपके आरक्षण के लिए उपलब्ध नहीं",
     "reservationCartConflictBody": "ये आइटम आपके आरक्षण के दिन उपलब्ध नहीं हैं। जारी रखने के लिए इन्हें हटाएँ, या अपनी बुकिंग को उस दिन बदलें जब ये उपलब्ध हों:",
-    "reservationCartChangeDay": "आरक्षण का दिन बदलें"
+    "reservationCartChangeDay": "आरक्षण का दिन बदलें",
+    "holidayClosedHoursToday": "आज {windows} बंद",
+    "servicePausedBadge": "रुका हुआ"
   },
   "pizza": {
     "chooseSize": "आकार चुनें",

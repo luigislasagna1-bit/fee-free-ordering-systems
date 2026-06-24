@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "לא זמין להזמנה שלך — רק {window}",
     "reservationCartConflictTitle": "לא זמין להזמנה שלך",
     "reservationCartConflictBody": "פריטים אלה אינם מוצעים ביום ההזמנה שלך. הסר אותם כדי להמשיך, או שנה את ההזמנה ליום שבו הם זמינים:",
-    "reservationCartChangeDay": "שנה את יום ההזמנה"
+    "reservationCartChangeDay": "שנה את יום ההזמנה",
+    "holidayClosedHoursToday": "סגור {windows} היום",
+    "servicePausedBadge": "מושהה"
   },
   "pizza": {
     "chooseSize": "בחר גודל",

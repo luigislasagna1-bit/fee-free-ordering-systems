@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "Недоступно для вашей брони — только {window}",
     "reservationCartConflictTitle": "Недоступно для вашей брони",
     "reservationCartConflictBody": "Эти позиции не предлагаются в день вашей брони. Удалите их, чтобы продолжить, или измените бронь на день, когда они доступны:",
-    "reservationCartChangeDay": "Изменить день брони"
+    "reservationCartChangeDay": "Изменить день брони",
+    "holidayClosedHoursToday": "Сегодня закрыто {windows}",
+    "servicePausedBadge": "приостановлено"
   },
   "pizza": {
     "chooseSize": "Выберите размер",

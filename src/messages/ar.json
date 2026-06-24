@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "غير متاح لحجزك — فقط {window}",
     "reservationCartConflictTitle": "غير متاح لحجزك",
     "reservationCartConflictBody": "هذه العناصر غير متوفرة في يوم حجزك. أزِلها للمتابعة، أو غيّر حجزك إلى يوم تتوفر فيه:",
-    "reservationCartChangeDay": "تغيير يوم الحجز"
+    "reservationCartChangeDay": "تغيير يوم الحجز",
+    "holidayClosedHoursToday": "مغلق {windows} اليوم",
+    "servicePausedBadge": "متوقّف مؤقتًا"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",

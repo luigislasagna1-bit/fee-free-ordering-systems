@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "Niet beschikbaar voor uw reservering — alleen {window}",
     "reservationCartConflictTitle": "Niet beschikbaar voor uw reservering",
     "reservationCartConflictBody": "Deze items worden niet aangeboden op de dag van uw reservering. Verwijder ze om door te gaan, of wijzig uw reservering naar een dag waarop ze beschikbaar zijn:",
-    "reservationCartChangeDay": "Reserveringsdag wijzigen"
+    "reservationCartChangeDay": "Reserveringsdag wijzigen",
+    "holidayClosedHoursToday": "Vandaag {windows} gesloten",
+    "servicePausedBadge": "gepauzeerd"
   },
   "pizza": {
     "chooseSize": "Kies maat",

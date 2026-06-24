@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "ไม่พร้อมสำหรับการจองของคุณ — เฉพาะ {window}",
     "reservationCartConflictTitle": "ไม่พร้อมสำหรับการจองของคุณ",
     "reservationCartConflictBody": "รายการเหล่านี้ไม่มีจำหน่ายในวันจองของคุณ โปรดนำออกเพื่อสั่งต่อ หรือเปลี่ยนการจองเป็นวันที่มีจำหน่าย:",
-    "reservationCartChangeDay": "เปลี่ยนวันจอง"
+    "reservationCartChangeDay": "เปลี่ยนวันจอง",
+    "holidayClosedHoursToday": "ปิด {windows} วันนี้",
+    "servicePausedBadge": "หยุดชั่วคราว"
   },
   "pizza": {
     "chooseSize": "เลือกขนาด",

@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "Nav pieejams jūsu rezervācijai — tikai {window}",
     "reservationCartConflictTitle": "Nav pieejams jūsu rezervācijai",
     "reservationCartConflictBody": "Šīs preces jūsu rezervācijas dienā netiek piedāvātas. Noņemiet tās, lai turpinātu, vai mainiet rezervāciju uz dienu, kad tās ir pieejamas:",
-    "reservationCartChangeDay": "Mainīt rezervācijas dienu"
+    "reservationCartChangeDay": "Mainīt rezervācijas dienu",
+    "holidayClosedHoursToday": "Šodien slēgts {windows}",
+    "servicePausedBadge": "pauzēts"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",

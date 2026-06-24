@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "Не е налично за вашата резервация — само {window}",
     "reservationCartConflictTitle": "Не е налично за вашата резервация",
     "reservationCartConflictBody": "Тези артикули не се предлагат в деня на вашата резервация. Премахнете ги, за да продължите, или променете резервацията си за ден, в който са налични:",
-    "reservationCartChangeDay": "Промени деня на резервацията"
+    "reservationCartChangeDay": "Промени деня на резервацията",
+    "holidayClosedHoursToday": "Затворено {windows} днес",
+    "servicePausedBadge": "на пауза"
   },
   "pizza": {
     "chooseSize": "Избери размер",

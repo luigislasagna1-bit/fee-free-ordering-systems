@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "Ikke tilgjengelig for reservasjonen din — kun {window}",
     "reservationCartConflictTitle": "Ikke tilgjengelig for reservasjonen din",
     "reservationCartConflictBody": "Disse varene tilbys ikke på reservasjonsdagen din. Fjern dem for å fortsette, eller endre reservasjonen til en dag de er tilgjengelige:",
-    "reservationCartChangeDay": "Endre reservasjonsdag"
+    "reservationCartChangeDay": "Endre reservasjonsdag",
+    "holidayClosedHoursToday": "Stengt {windows} i dag",
+    "servicePausedBadge": "satt på pause"
   },
   "pizza": {
     "chooseSize": "Velg størrelse",

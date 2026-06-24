@@ -97,20 +97,37 @@ export function ReservationPageClient({ restaurant, closure }: { restaurant: any
     : s === "dine_in" ? tOrd("dineIn")
     : s === "take_out" ? tOrd("takeOut")
     : s === "reservation" ? tOrd("tableReservation")
+    : s === "catering" ? tOrd("catering")
     : s.charAt(0).toUpperCase() + s.slice(1);
+  const fmtWins = (ivs: any[]) =>
+    (ivs ?? []).map((iv: any) => `${formatTime(iv.open, fmt)} – ${formatTime(iv.close, fmt)}`).join(", ");
   const holidayActive =
     c.todayHolidayClosed || !!c.todayHolidayName || !!c.todayHolidayMessage ||
-    (c.todayHolidayIntervals?.length ?? 0) > 0 || (c.holidayClosedServices?.length ?? 0) > 0;
+    (c.todayHolidayIntervals?.length ?? 0) > 0 || (c.holidayClosedServices?.length ?? 0) > 0 ||
+    (c.holidayClosedWindows?.length ?? 0) > 0 || (c.holidayCustomHoursServices?.length ?? 0) > 0 ||
+    (c.holidayClosedWindowsGeneral?.length ?? 0) > 0;
   const closureBanner = holidayActive ? (
     <div className="w-full bg-amber-500 border-b border-amber-600 px-4 sm:px-6 py-3 text-sm">
-      <div className="max-w-2xl mx-auto">
-        <div className="font-bold text-amber-950">
-          {c.todayHolidayClosed
-            ? <>⛔ {tOrd("holidayClosedToday")}{c.todayHolidayName ? ` — ${c.todayHolidayName}` : ""}</>
-            : (c.todayHolidayIntervals?.length ?? 0) > 0
-              ? <>🕒 {tOrd("holidaySpecialHours")}{c.todayHolidayName ? ` — ${c.todayHolidayName}` : ""}: {c.todayHolidayIntervals.map((iv: any) => `${formatTime(iv.open, fmt)} – ${formatTime(iv.close, fmt)}`).join(", ")}</>
-              : <>⛔ {tOrd("holidayNotAvailableToday", { services: (c.holidayClosedServices ?? []).map(serviceLabel).join(", ") })}{c.todayHolidayName ? ` — ${c.todayHolidayName}` : ""}</>}
-        </div>
+      <div className="max-w-2xl mx-auto space-y-0.5">
+        {(c.todayHolidayClosed || (c.todayHolidayIntervals?.length ?? 0) > 0 || (c.holidayClosedServices?.length ?? 0) > 0) && (
+          <div className="font-bold text-amber-950">
+            {c.todayHolidayClosed
+              ? <>⛔ {tOrd("holidayClosedToday")}{c.todayHolidayName ? ` — ${c.todayHolidayName}` : ""}</>
+              : (c.todayHolidayIntervals?.length ?? 0) > 0
+                ? <>🕒 {tOrd("holidaySpecialHours")}{c.todayHolidayName ? ` — ${c.todayHolidayName}` : ""}: {c.todayHolidayIntervals.map((iv: any) => `${formatTime(iv.open, fmt)} – ${formatTime(iv.close, fmt)}`).join(", ")}</>
+                : <>⛔ {tOrd("holidayNotAvailableToday", { services: (c.holidayClosedServices ?? []).map(serviceLabel).join(", ") })}{c.todayHolidayName ? ` — ${c.todayHolidayName}` : ""}</>}
+          </div>
+        )}
+        {/* Partial / per-service closures — parity with the ordering page. */}
+        {!c.todayHolidayClosed && (c.holidayClosedWindowsGeneral?.length ?? 0) > 0 && (
+          <div className="font-bold text-amber-950">⏸ {tOrd("holidayClosedHoursToday", { windows: fmtWins(c.holidayClosedWindowsGeneral) })}</div>
+        )}
+        {!c.todayHolidayClosed && (c.holidayClosedWindows ?? []).map((g: any, i: number) => (
+          <div key={`cw-${i}`} className="font-bold text-amber-950">⏸ {tOrd("holidayServiceClosedWindows", { service: serviceLabel(g.service), windows: fmtWins(g.intervals) })}</div>
+        ))}
+        {!c.todayHolidayClosed && (c.holidayCustomHoursServices ?? []).map((g: any, i: number) => (
+          <div key={`ch-${i}`} className="font-bold text-amber-950">🕒 {tOrd("holidayServiceSpecialHours", { service: serviceLabel(g.service), windows: fmtWins(g.intervals) })}</div>
+        ))}
         {c.todayHolidayMessage && <div className="text-xs text-amber-900 mt-0.5">{c.todayHolidayMessage}</div>}
       </div>
     </div>

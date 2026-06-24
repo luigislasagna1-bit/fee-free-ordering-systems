@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "A foglalásához nem érhető el — csak {window}",
     "reservationCartConflictTitle": "A foglalásához nem érhető el",
     "reservationCartConflictBody": "Ezeket a tételeket nem kínáljuk a foglalása napján. Távolítsa el őket a folytatáshoz, vagy módosítsa a foglalást egy olyan napra, amikor elérhetők:",
-    "reservationCartChangeDay": "Foglalás napjának módosítása"
+    "reservationCartChangeDay": "Foglalás napjának módosítása",
+    "holidayClosedHoursToday": "Ma {windows} zárva",
+    "servicePausedBadge": "szüneteltetve"
   },
   "pizza": {
     "chooseSize": "Méret választása",

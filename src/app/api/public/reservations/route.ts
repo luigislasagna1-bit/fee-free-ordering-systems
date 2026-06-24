@@ -49,6 +49,7 @@ export async function POST(req: NextRequest) {
       where: { slug: restaurantSlug, isActive: true },
       select: {
         id: true, name: true, email: true, slug: true, acceptsReservations: true,
+        reservationsPausedUntil: true,
         reservationSettings: true, defaultLanguage: true, timezone: true, hoursFormat: true,
         // openingHours powers BOTH the closed-day server-side guard (refuse a
         // booking on a day the owner marked off) AND the closed-when-placed alert
@@ -63,6 +64,20 @@ export async function POST(req: NextRequest) {
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
     if (!restaurant.acceptsReservations) {
       return NextResponse.json({ error: "This restaurant is not accepting reservations." }, { status: 400 });
+    }
+
+    // Service-pause guard — mirror /api/orders (the per-service pausedUntil
+    // check). When reservations are paused from the admin Services page or the
+    // kitchen app, refuse new bookings until the timer passes, matching the
+    // customer-facing "paused" banner. Auto-resumes when reservationsPausedUntil
+    // is in the past. (Without this the banner says paused but bookings still go
+    // through — the pause control would be cosmetic for reservations.)
+    if (restaurant.reservationsPausedUntil && new Date(restaurant.reservationsPausedUntil).getTime() > Date.now()) {
+      const resumesAt = new Date(restaurant.reservationsPausedUntil).toLocaleString();
+      return NextResponse.json(
+        { error: `Reservations are temporarily paused by the restaurant. Estimated to resume around ${resumesAt}.`, code: "service_paused" },
+        { status: 423 },
+      );
     }
 
     // FREE-plan monthly cap: a table reservation counts toward the SAME

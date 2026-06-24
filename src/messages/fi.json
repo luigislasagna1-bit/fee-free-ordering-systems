@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "Ei saatavilla varauksellesi — vain {window}",
     "reservationCartConflictTitle": "Ei saatavilla varaukseesi",
     "reservationCartConflictBody": "Näitä tuotteita ei tarjota varauspäivänäsi. Poista ne jatkaaksesi tai vaihda varauksesi päivälle, jolloin ne ovat saatavilla:",
-    "reservationCartChangeDay": "Vaihda varauspäivää"
+    "reservationCartChangeDay": "Vaihda varauspäivää",
+    "holidayClosedHoursToday": "Suljettu {windows} tänään",
+    "servicePausedBadge": "tauolla"
   },
   "pizza": {
     "chooseSize": "Valitse koko",

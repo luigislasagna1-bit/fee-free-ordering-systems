@@ -282,7 +282,9 @@
     "fulfilNotForReservationLabel": "Nedostupné pre vašu rezerváciu — iba {window}",
     "reservationCartConflictTitle": "Nedostupné pre vašu rezerváciu",
     "reservationCartConflictBody": "Tieto položky sa v deň vašej rezervácie neponúkajú. Odstráňte ich a pokračujte, alebo zmeňte rezerváciu na deň, keď sú dostupné:",
-    "reservationCartChangeDay": "Zmeniť deň rezervácie"
+    "reservationCartChangeDay": "Zmeniť deň rezervácie",
+    "holidayClosedHoursToday": "Dnes zatvorené {windows}",
+    "servicePausedBadge": "pozastavené"
   },
   "pizza": {
     "chooseSize": "Vybrať veľkosť",
