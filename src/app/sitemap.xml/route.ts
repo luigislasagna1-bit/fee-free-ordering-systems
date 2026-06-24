@@ -25,6 +25,7 @@ import { hasFeature } from "@/lib/entitlements";
 import { buildSeoLinks } from "@/lib/hosted-site-seo";
 import { COMPETITORS } from "@/data/competitors";
 import { LANDING_PAGES } from "@/data/landing-pages";
+import { SOLUTION_PAGES } from "@/data/solution-pages";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -128,6 +129,11 @@ function buildPlatformSitemap(host: string): string {
   // the comparison pages — these target broader, higher-volume queries).
   for (const p of LANDING_PAGES) {
     urls.push({ loc: `${base}/online-ordering-for/${p.slug}`, changefreq: "monthly", priority: 0.7 });
+  }
+  // Root-level programmatic "solution" SEO pages (use-case/feature, CMS/platform, city) —
+  // e.g. /online-ordering-system, /wordpress-restaurant-ordering-plugin. Same SSG + JSON-LD engine.
+  for (const p of SOLUTION_PAGES) {
+    urls.push({ loc: `${base}/${p.slug}`, changefreq: "monthly", priority: 0.6 });
   }
   // Also surface /demo + /import (the conversion entry points) so crawlers index them.
   urls.push({ loc: `${base}/demo`, changefreq: "monthly", priority: 0.6 });

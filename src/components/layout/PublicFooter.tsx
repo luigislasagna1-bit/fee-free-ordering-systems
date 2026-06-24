@@ -4,6 +4,8 @@ import { ChefHat, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL } from "@/lib/support";
 import { LANDING_PAGES } from "@/data/landing-pages";
+import { SOLUTION_PAGES } from "@/data/solution-pages";
+import { COMPETITORS } from "@/data/competitors";
 
 /**
  * Public footer.
@@ -68,14 +70,25 @@ export function PublicFooter() {
             </div>
           </div>
         </div>
-        <div className="border-t border-gray-800 pt-6 mb-6 text-sm text-gray-400">
-          <span className="font-semibold text-gray-300">Online ordering for: </span>
-          {LANDING_PAGES.slice(0, 4).map((p, i) => (
-            <span key={p.slug}>
-              <Link href={`/online-ordering-for/${p.slug}`} className="hover:text-white transition capitalize">{p.nounPlural}</Link>
-              {i < 3 ? <span className="text-gray-600"> · </span> : null}
-            </span>
-          ))}
+        {/* Programmatic SEO link block — GloriaFood-style "discoverable, not primary-nav" rows so search
+            engines + AI crawlers reach every landing page (cuisine / solution / platform / city / compare).
+            Small + muted; each row only renders once it has links. */}
+        <div className="border-t border-gray-800 pt-6 mb-6 space-y-2.5 text-xs text-gray-500">
+          {LANDING_PAGES.length > 0 && (
+            <SeoLinkRow label="Online ordering for" items={LANDING_PAGES.map((p) => ({ href: `/online-ordering-for/${p.slug}`, text: p.nounPlural }))} />
+          )}
+          {SOLUTION_PAGES.some((p) => p.category === "feature") && (
+            <SeoLinkRow label="Solutions" items={SOLUTION_PAGES.filter((p) => p.category === "feature").map((p) => ({ href: `/${p.slug}`, text: p.h1 }))} />
+          )}
+          {SOLUTION_PAGES.some((p) => p.category === "platform") && (
+            <SeoLinkRow label="Your website" items={SOLUTION_PAGES.filter((p) => p.category === "platform").map((p) => ({ href: `/${p.slug}`, text: p.h1 }))} />
+          )}
+          {SOLUTION_PAGES.some((p) => p.category === "city") && (
+            <SeoLinkRow label="Cities" items={SOLUTION_PAGES.filter((p) => p.category === "city").map((p) => ({ href: `/${p.slug}`, text: p.h1 }))} />
+          )}
+          {COMPETITORS.length > 0 && (
+            <SeoLinkRow label="Compare" items={COMPETITORS.map((c) => ({ href: `/vs/${c.slug}`, text: `${c.name} alternative` }))} />
+          )}
         </div>
         <div className="border-t border-gray-700 pt-6 text-sm text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="text-center sm:text-left">
@@ -89,5 +102,20 @@ export function PublicFooter() {
         </div>
       </div>
     </footer>
+  );
+}
+
+/** One muted, dot-separated row of SEO landing-page links (the GloriaFood-style footer block). */
+function SeoLinkRow({ label, items }: { label: string; items: { href: string; text: string }[] }) {
+  return (
+    <div className="leading-relaxed">
+      <span className="font-semibold text-gray-400">{label}: </span>
+      {items.map((it, i) => (
+        <span key={it.href}>
+          <Link href={it.href} className="hover:text-white transition capitalize">{it.text}</Link>
+          {i < items.length - 1 ? <span className="text-gray-700"> · </span> : null}
+        </span>
+      ))}
+    </div>
   );
 }

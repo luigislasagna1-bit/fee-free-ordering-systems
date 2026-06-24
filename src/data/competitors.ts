@@ -59,6 +59,530 @@ export type Competitor = {
 const FEEFREE_CORE = "Free forever for direct orders. No per-order commission. Paid add-ons (Online Payments $29.99/mo, Hosted Website $19.99/mo, etc.) are optional, only when you need them.";
 
 export const COMPETITORS: Competitor[] = [
+  {
+  "slug": "grubhub",
+  "name": "GrubHub",
+  "category": "delivery_aggregator",
+  "tagline": "GrubHub alternative for restaurants",
+  "costSummary": "As of 2026, GrubHub typically charges a per-order commission on a tiered marketing-plus-delivery model (Basic, Plus, Premium), per their published pricing — commonly in the mid-teens to roughly 30% of each order depending on tier and whether you self-deliver. There is generally no fixed monthly software fee, but the percentage applies to every order the marketplace sends you, so the cost compounds on repeat customers.",
+  "whatTheyAre": "GrubHub is a US consumer-facing food-delivery marketplace. Restaurants list inside the GrubHub app and pay a per-order commission for the orders the platform routes to them, with the option to use GrubHub couriers or self-deliver at a lower rate.",
+  "whyFeeFree": [
+    {
+      "title": "0% commission on direct orders, forever",
+      "body": "On your own Fee Free Ordering page you keep the full menu price — no per-order percentage. Your first 100 orders every month are free, and beyond that you only ever add optional à-la-carte tools you choose. A regular who already loves you should not cost you a commission every time they reorder."
+    },
+    {
+      "title": "The diner becomes your customer, not the marketplace's",
+      "body": "Every Fee Free order drops the customer's name, contact and order history into your own built-in CRM, so you can run GrowthNet Autopilot win-back emails, SMS, coupons and Smart Links. On an aggregator the diner relationship and the data sit behind the platform's marketing wall."
+    },
+    {
+      "title": "Run both — GrubHub for reach, Fee Free for repeat orders",
+      "body": "These are not mutually exclusive. Keep your GrubHub listing for first-time discovery, then put a QR code on receipts and in delivery bags pointing to your Fee Free page. Regulars reorder direct at 0% and your commission bill shrinks as your direct share grows."
+    },
+    {
+      "title": "Try it before you commit anything",
+      "body": "Paste your existing menu link and Fee Free rebuilds the whole menu — sizes, modifier groups, photos — onto a live ordering page in seconds, with no signup required. You can see your own restaurant ordering before you decide to move a single order off GrubHub."
+    }
+  ],
+  "comparison": [
+    {
+      "feature": "Commission on direct orders",
+      "feefree": "0% (you keep the full menu price)",
+      "competitor": "N/A — GrubHub is itself the order channel"
+    },
+    {
+      "feature": "Free monthly orders",
+      "feefree": "First 100 orders every month free",
+      "competitor": "Per-order commission on every order (as of 2026)"
+    },
+    {
+      "feature": "Customer data + contact info",
+      "feefree": "Yours, in a built-in CRM",
+      "competitor": "Typically held by the marketplace"
+    },
+    {
+      "feature": "Win-back marketing to past diners",
+      "feefree": "Built-in GrowthNet (Autopilot email + SMS, coupons)",
+      "competitor": "Restricted to the platform's own promo tools"
+    },
+    {
+      "feature": "Branded ordering page",
+      "feefree": "Your name, colors and logo on pickup, delivery, dine-in, catering",
+      "competitor": "A listing inside the GrubHub app"
+    },
+    {
+      "feature": "Pricing model",
+      "feefree": "Free core + optional à-la-carte add-ons",
+      "competitor": "Tiered per-order commission (typically, as of 2026)"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Is there a GrubHub alternative with no commission?",
+      "a": "Yes. Fee Free Ordering charges 0% commission on direct orders placed through your own branded page, and your first 100 orders every month are free. You keep the full menu price instead of handing over a per-order percentage."
+    },
+    {
+      "q": "How do restaurants lower their GrubHub fees?",
+      "a": "The proven move is to stop paying a percentage where you don't have to. Stand up a free Fee Free ordering page, put a QR code on receipts and in delivery bags, and let regulars reorder direct at 0%. Keep GrubHub for first-time discovery while your commission-free direct share climbs."
+    },
+    {
+      "q": "Can I keep my GrubHub listing and use Fee Free Ordering too?",
+      "a": "Absolutely — most owners run both. GrubHub stays useful for reaching new diners, while Fee Free captures the repeat orders at zero commission and keeps each customer in your own database for future marketing."
+    },
+    {
+      "q": "Does Fee Free Ordering run its own delivery drivers like GrubHub?",
+      "a": "Fee Free gives you a delivery order type with your own zones, fees, ETAs and minimums, fulfilled by your own staff or driver. It does not operate a courier pool the way GrubHub does (a managed driver pool is coming soon) — in exchange you keep 100% of the order value today."
+    }
+  ]
+},
+  {
+  "slug": "seamless",
+  "name": "Seamless",
+  "category": "delivery_aggregator",
+  "tagline": "Seamless alternative for restaurants",
+  "costSummary": "As of 2026, Seamless operates on the same marketplace-commission model as its sibling brand GrubHub, per their published pricing — a tiered per-order percentage rather than a flat software subscription. There is typically no standalone monthly fee, but every order the app sends you carries the percentage cut, which is felt most by busy New York spots with lots of repeat diners.",
+  "whatTheyAre": "Seamless is a US food-ordering marketplace, especially well known in New York City, that operates as a GrubHub brand. For a restaurant it behaves like GrubHub: list inside the app and pay a per-order commission on the orders it brings you.",
+  "whyFeeFree": [
+    {
+      "title": "Keep the whole ticket on direct orders",
+      "body": "When a diner orders from your own Fee Free page you keep the full amount — there's no marketplace percentage skimmed off the top, and your first 100 orders each month are free. On a high-volume NYC menu that difference adds up fast."
+    },
+    {
+      "title": "Own the regular instead of renting them",
+      "body": "Seamless customers belong to the marketplace. With Fee Free, every order builds your own customer list with contact details and order history, so GrowthNet can market repeat business directly with Autopilot emails, SMS and coupons rather than you paying to reach the same person again."
+    },
+    {
+      "title": "Layer Fee Free on top — don't rip Seamless out",
+      "body": "Plenty of New York spots keep Seamless for the foot traffic it brings and add a Fee Free page for regulars. A QR code on the receipt nudges repeat orders to the 0% channel without you giving up the listing."
+    },
+    {
+      "title": "A branded page that is unmistakably yours",
+      "body": "Your Fee Free ordering page carries your own name, colors and logo across pickup, delivery, dine-in and catering, in any of 38 languages. On Seamless the order feels like a Seamless order; on Fee Free it feels like your restaurant."
+    }
+  ],
+  "comparison": [
+    {
+      "feature": "Commission on direct orders",
+      "feefree": "0% (full ticket is yours)",
+      "competitor": "N/A — Seamless is itself the order channel"
+    },
+    {
+      "feature": "Free monthly orders",
+      "feefree": "First 100 orders every month free",
+      "competitor": "Per-order commission applies (typically, as of 2026)"
+    },
+    {
+      "feature": "Customer relationship",
+      "feefree": "Yours — full CRM + order history",
+      "competitor": "Typically held by Seamless / GrubHub"
+    },
+    {
+      "feature": "Repeat-order marketing",
+      "feefree": "Built-in GrowthNet (Autopilot email + SMS, coupons)",
+      "competitor": "Marketplace promo tools only"
+    },
+    {
+      "feature": "Branded ordering page",
+      "feefree": "Your name, colors and logo; 38 languages",
+      "competitor": "A listing inside the Seamless app"
+    },
+    {
+      "feature": "Pricing model",
+      "feefree": "Free core + optional à-la-carte add-ons",
+      "competitor": "Tiered per-order commission (per published pricing)"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "What's the difference between Seamless and GrubHub for restaurants?",
+      "a": "For a restaurant they are effectively the same system — Seamless is a GrubHub brand and, as of 2026, shares its tiered commission model. If you want to reduce that cut on repeat customers, a 0%-commission direct channel like Fee Free Ordering is the lever."
+    },
+    {
+      "q": "Is there a Seamless alternative that doesn't take a percentage?",
+      "a": "Yes. Fee Free Ordering charges 0% on direct orders through your own branded page, and your first 100 orders every month are free, so you keep the full menu price instead of a per-order percentage."
+    },
+    {
+      "q": "Can I use Fee Free Ordering alongside my Seamless listing?",
+      "a": "Yes — they coexist. Keep Seamless for reaching new diners and run a Fee Free page for regulars who reorder direct at zero commission. Many owners watch their direct-order share rise once they put a QR code on receipts."
+    },
+    {
+      "q": "Will moving some orders to Fee Free hurt my Seamless presence?",
+      "a": "Orders placed on your own Fee Free page are entirely separate from Seamless and don't touch your listing there. You simply move repeat business to a 0%-commission channel while Seamless keeps doing its discovery job."
+    }
+  ]
+},
+  {
+  "slug": "just-eat",
+  "name": "Just Eat",
+  "category": "delivery_aggregator",
+  "tagline": "Just Eat alternative for restaurants",
+  "costSummary": "As of 2026, Just Eat typically charges a per-order commission that varies by country and by whether you self-deliver or use their courier network, per their published pricing, and historically there has often been a one-time joining fee. There is generally no fixed software subscription, but the commission applies to every order the marketplace sends you.",
+  "whatTheyAre": "Just Eat is a food-ordering and delivery marketplace operating across the UK, Europe and other markets. Restaurants list inside the app and pay a per-order commission, with the option to self-deliver or use Just Eat's courier network at different rates.",
+  "whyFeeFree": [
+    {
+      "title": "0% commission on orders you already earned",
+      "body": "A customer who reorders their usual Friday curry shouldn't cost you a commission every single week. On your own Fee Free page that repeat order is 0%, and your first 100 orders every month are free — you keep the full menu price."
+    },
+    {
+      "title": "Settles to your own account, in your own currency",
+      "body": "Fee Free runs on Stripe, so payouts land in your own account in your local currency. Whether you're in the UK or elsewhere in Europe, your direct orders settle to you rather than via a marketplace batch."
+    },
+    {
+      "title": "Your menu, your language, your brand",
+      "body": "Your Fee Free ordering page carries your name and colors and renders automatically in 38 languages, including French. On Just Eat the order feels like a Just Eat order; on Fee Free it's unmistakably yours."
+    },
+    {
+      "title": "Keep Just Eat for discovery, Fee Free for the margin",
+      "body": "The two run side by side. Keep your Just Eat listing for first-time diners and add a Fee Free page with a QR code on bags and receipts, so regulars reorder direct at zero commission while your marketplace dependency naturally shrinks."
+    }
+  ],
+  "comparison": [
+    {
+      "feature": "Commission on direct orders",
+      "feefree": "0% (full ticket is yours)",
+      "competitor": "N/A — Just Eat is itself the order channel"
+    },
+    {
+      "feature": "Free monthly orders",
+      "feefree": "First 100 orders every month free",
+      "competitor": "Per-order commission applies (typically, as of 2026)"
+    },
+    {
+      "feature": "Joining / activation fee",
+      "feefree": "None",
+      "competitor": "Often a one-time joining fee (per published terms)"
+    },
+    {
+      "feature": "Customer data ownership",
+      "feefree": "Yours — built-in CRM",
+      "competitor": "Typically held by Just Eat"
+    },
+    {
+      "feature": "Payout",
+      "feefree": "Direct to your own account, in local currency",
+      "competitor": "Marketplace batch payout"
+    },
+    {
+      "feature": "Languages on the ordering page",
+      "feefree": "38 languages, automatic (incl. French)",
+      "competitor": "Per-market localisation"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Is there a Just Eat alternative with lower fees for restaurants?",
+      "a": "Yes. Fee Free Ordering charges 0% commission on direct orders through your own branded page, and your first 100 orders every month are free, so you keep the full menu price instead of a per-order percentage."
+    },
+    {
+      "q": "How can I reduce my Just Eat commission?",
+      "a": "Move repeat customers to a direct channel. Set up a free Fee Free ordering page, add a QR code to bags and receipts, and let regulars reorder at 0%. Keep Just Eat for new-customer discovery while your commission-free direct orders grow."
+    },
+    {
+      "q": "Does Fee Free Ordering arrange delivery drivers like Just Eat?",
+      "a": "Fee Free gives you a delivery order type with your own zones, fees, ETAs and minimums, fulfilled by your own staff or driver. It does not provide a courier network like Just Eat's today (managed dispatch is coming soon) — in exchange you keep the full order value."
+    },
+    {
+      "q": "Can I keep my Just Eat listing and add Fee Free?",
+      "a": "Yes — the two run side by side. Just Eat keeps bringing new diners while Fee Free handles repeat orders at zero commission and stores those customers in your own database for future marketing."
+    }
+  ]
+},
+  {
+  "slug": "menufy",
+  "name": "Menufy",
+  "category": "ordering_platform",
+  "tagline": "Menufy alternative",
+  "costSummary": "As of 2026, Menufy markets itself as free to the restaurant with no monthly fee and is typically monetized through a customer-paid convenience or service fee added at checkout, plus standard card processing, per their published model. Terms can vary, so confirm current details with Menufy directly.",
+  "whatTheyAre": "Menufy is a US online-ordering platform for independent restaurants that builds you an ordering site and menu. It is generally free for the restaurant, with revenue coming largely from a service or convenience fee charged to the customer at checkout.",
+  "whyFeeFree": [
+    {
+      "title": "No customer-side fee on your direct page",
+      "body": "Where Menufy commonly recovers its cost through a convenience fee added to the diner's total, Fee Free adds nothing on top of your menu prices on a direct order. A cleaner checkout total means fewer abandoned carts — and your first 100 orders every month are free."
+    },
+    {
+      "title": "A real native kitchen app, not just an order feed",
+      "body": "Fee Free's Kitchen Order App is native iOS and Android: new orders ring instantly even with the screen off, a missed order can phone-call the owner, and there's auto-accept with an accept countdown. Tickets print over WiFi to Star, Epson, Bixolon and Citizen receipt printers straight from the tablet."
+    },
+    {
+      "title": "Built-in marketing and CRM, not just ordering",
+      "body": "GrowthNet gives you Smart Links, QR codes, Autopilot win-back emails, SMS, a customer database and promotions/coupons in the same login as your ordering page — so you can actually bring diners back, not just take a single order."
+    }
+  ],
+  "comparison": [
+    {
+      "feature": "Cost to the restaurant",
+      "feefree": "Free core; first 100 orders/month free",
+      "competitor": "Free to the restaurant (typically, as of 2026)"
+    },
+    {
+      "feature": "Fee charged to the customer",
+      "feefree": "None on direct orders",
+      "competitor": "Often a customer convenience fee (per published model)"
+    },
+    {
+      "feature": "Native kitchen app (rings screen-off)",
+      "feefree": "Yes — iOS + Android, missed-order phone call",
+      "competitor": "Order notifications"
+    },
+    {
+      "feature": "WiFi thermal printing",
+      "feefree": "Star, Epson, Bixolon, Citizen from the tablet",
+      "competitor": "Varies"
+    },
+    {
+      "feature": "Built-in marketing (email/SMS/CRM)",
+      "feefree": "GrowthNet: Autopilot, Smart Links, coupons",
+      "competitor": "Limited"
+    },
+    {
+      "feature": "Menu import to try",
+      "feefree": "Paste a link, live page in seconds, no signup",
+      "competitor": "Setup via Menufy"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Is Menufy really free for restaurants?",
+      "a": "As of 2026 Menufy is generally free to the restaurant, but it commonly recovers its cost through a convenience fee charged to the customer at checkout. Fee Free Ordering is also free for the core platform, your first 100 orders each month are free, and there's no fee added to the customer's total on direct orders."
+    },
+    {
+      "q": "What's a good Menufy alternative with no customer fees?",
+      "a": "Fee Free Ordering. The core platform is free, direct orders add nothing on top of your menu prices, and you also get a native kitchen app, WiFi thermal printing and built-in marketing in the same place."
+    },
+    {
+      "q": "Can I import my existing menu into Fee Free Ordering?",
+      "a": "Yes. Paste your menu link and Fee Free rebuilds the full menu — sizes, crusts, modifier groups and photos — onto a live ordering page in seconds, with no signup required to try it first."
+    },
+    {
+      "q": "Does Fee Free Ordering handle the kitchen side like a real system?",
+      "a": "Yes. The native Kitchen Order App rings new orders instantly even with the screen off, can phone-call the owner on a missed order, supports auto-accept with a countdown, and prints tickets over WiFi to Star, Epson, Bixolon and Citizen printers."
+    }
+  ]
+},
+  {
+  "slug": "flipdish",
+  "name": "Flipdish",
+  "category": "ordering_platform",
+  "tagline": "Flipdish alternative",
+  "costSummary": "As of 2026, Flipdish is typically sold through a sales-led, quote-based process and generally pairs a monthly subscription with a per-order or commission-style fee for branded website, app and kiosk packages, per their published model. Pricing is usually custom, so confirm current terms with Flipdish directly.",
+  "whatTheyAre": "Flipdish is an online-ordering company that builds branded websites, apps and kiosks for restaurants and chains. It typically bundles ordering with a subscription and a per-order fee, and is often sold through a sales-led, quote-based process.",
+  "whyFeeFree": [
+    {
+      "title": "Free core platform vs a quote-based subscription",
+      "body": "Fee Free's core — admin, branded ordering page, native kitchen app and customer database — is free, and your first 100 orders each month are free. Flipdish, per its published model, typically pairs a monthly subscription with a per-order fee negotiated through sales."
+    },
+    {
+      "title": "Self-serve in minutes, no sales call",
+      "body": "Sign up, paste your menu link, and you have a live ordering page in seconds — with sizes, crusts, modifier groups and photos. There's no demo-then-quote cycle; you can try the import without even creating an account."
+    },
+    {
+      "title": "Pay only for the add-ons you actually use",
+      "body": "Instead of a bundled package, Fee Free lets you assemble exactly the stack you need from optional à-la-carte add-ons — you pay only for what you turn on. Custom domains and reservation deposits are on the roadmap (coming soon), while reservations and reserve-then-order are already live."
+    }
+  ],
+  "comparison": [
+    {
+      "feature": "Base pricing model",
+      "feefree": "Free core + optional à-la-carte add-ons",
+      "competitor": "Subscription + per-order fee (custom quote, as of 2026)"
+    },
+    {
+      "feature": "Free monthly orders",
+      "feefree": "First 100 orders/month free",
+      "competitor": "Per-order fee typically applies"
+    },
+    {
+      "feature": "Onboarding",
+      "feefree": "Self-serve; menu import in seconds, no signup to try",
+      "competitor": "Typically sales-led, custom quote"
+    },
+    {
+      "feature": "Native kitchen app (rings screen-off)",
+      "feefree": "Yes — iOS + Android, missed-order call, auto-accept",
+      "competitor": "App / terminal"
+    },
+    {
+      "feature": "Built-in marketing + CRM",
+      "feefree": "GrowthNet included (Autopilot, Smart Links, coupons)",
+      "competitor": "Available, often packaged"
+    },
+    {
+      "feature": "Try before you buy",
+      "feefree": "Live ordering page from a pasted menu link, no account",
+      "competitor": "Demo / sales process"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How much does Flipdish cost compared to Fee Free Ordering?",
+      "a": "As of 2026, Flipdish pricing is generally custom — typically a monthly subscription plus a per-order fee quoted by their sales team. Fee Free Ordering's core platform is free, your first 100 orders each month are free, and you only pay for the optional à-la-carte add-ons you choose."
+    },
+    {
+      "q": "Is there a Flipdish alternative I can set up without a sales call?",
+      "a": "Yes — Fee Free Ordering is fully self-serve. Paste your menu link and a live ordering page rebuilds in seconds, with sizes, crusts, modifier groups and photos, before you even create an account."
+    },
+    {
+      "q": "Does Fee Free Ordering give me a branded ordering page like Flipdish?",
+      "a": "Yes. Your ordering page carries your name, colors and logo, and supports pickup, delivery, dine-in and catering, each with their own fees and ETAs. Custom domains are coming soon; in the meantime you can keep your existing website and link your Fee Free page from its Order button."
+    },
+    {
+      "q": "Can Fee Free Ordering handle multiple locations?",
+      "a": "Yes — multi-location management is part of the platform, available as an optional add-on so a small group can run several sites while still starting from a free core platform."
+    }
+  ]
+},
+  {
+  "slug": "owner-com",
+  "name": "Owner.com",
+  "category": "ordering_platform",
+  "tagline": "Owner.com alternative",
+  "costSummary": "As of 2026, Owner.com is generally sold as a flat monthly subscription covering a branded website, online ordering, a mobile app and automated marketing, with no per-order commission, per their published model. Pricing is typically sales-led, so confirm current terms with Owner.com directly.",
+  "whatTheyAre": "Owner.com is a platform that gives independent restaurants a branded website, online ordering, a mobile app and automated marketing under a flat monthly subscription with no per-order commission. It is typically sold through a sales/demo process.",
+  "whyFeeFree": [
+    {
+      "title": "Free core platform vs a flat monthly subscription",
+      "body": "Owner.com, per its published model, bundles its website, ordering and marketing into a flat monthly fee. Fee Free's core platform is free, your first 100 orders a month are free, and the same essentials — ordering, native kitchen app and CRM — cost nothing to start."
+    },
+    {
+      "title": "À-la-carte, so you don't pay for the whole bundle",
+      "body": "Want online card payments but not a hosted website? Turn on just what you need. Each piece is a separate optional add-on, so a single-location independent isn't paying for an enterprise bundle — you pay only for what you use."
+    },
+    {
+      "title": "Try it before you ever talk to anyone",
+      "body": "Paste your menu link and a live ordering page builds in seconds with no account and no demo call. Owner.com's onboarding is typically sales-led; Fee Free's is self-serve from the first click."
+    },
+    {
+      "title": "Both are commission-free — Fee Free adds the operations depth",
+      "body": "Like Owner.com, Fee Free takes 0% commission on direct orders. On top of that you get a native Kitchen Order App that rings even screen-off, can phone-call the owner on a missed order, and prints over WiFi to Star, Epson, Bixolon and Citizen printers."
+    }
+  ],
+  "comparison": [
+    {
+      "feature": "Pricing model",
+      "feefree": "Free core + optional à-la-carte add-ons",
+      "competitor": "Flat monthly subscription (custom quote, as of 2026)"
+    },
+    {
+      "feature": "Commission on direct orders",
+      "feefree": "0%",
+      "competitor": "0% (per published model)"
+    },
+    {
+      "feature": "Free monthly orders",
+      "feefree": "First 100 orders/month free",
+      "competitor": "Included within the subscription"
+    },
+    {
+      "feature": "Native kitchen app (rings screen-off)",
+      "feefree": "Yes — iOS + Android, missed-order call, auto-accept",
+      "competitor": "Order notifications"
+    },
+    {
+      "feature": "Onboarding",
+      "feefree": "Self-serve; instant menu import, no signup to try",
+      "competitor": "Typically sales-led demo"
+    },
+    {
+      "feature": "Built-in marketing + CRM",
+      "feefree": "GrowthNet included (Autopilot, Smart Links, coupons)",
+      "competitor": "Included in subscription"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How does Owner.com pricing compare to Fee Free Ordering?",
+      "a": "As of 2026, Owner.com is typically a flat monthly subscription covering a website, ordering, app and marketing. Fee Free Ordering's core is free with your first 100 orders/month free, and you add only the optional pieces you need — so a single-location restaurant usually pays less to start."
+    },
+    {
+      "q": "Is Owner.com commission-free, and is Fee Free the same?",
+      "a": "Both charge 0% commission on direct orders. The difference is the base cost: Owner.com bundles everything into a monthly subscription, while Fee Free's core platform is free and add-ons are optional and à-la-carte."
+    },
+    {
+      "q": "Can I get a branded restaurant website with Fee Free like Owner.com offers?",
+      "a": "Yes — a hosted branded ordering page is part of the platform, with optional add-ons available. You can also keep your existing website and simply link your free Fee Free ordering page from its menu or Order button. Custom domains are coming soon."
+    },
+    {
+      "q": "Does Fee Free Ordering include marketing automation like Owner.com?",
+      "a": "Yes. GrowthNet includes Autopilot win-back emails, SMS, Smart Links, QR codes, a customer database and promotions/coupons, all in the same login as your ordering page."
+    }
+  ]
+},
+  {
+  "slug": "popmenu",
+  "name": "Popmenu",
+  "category": "ordering_platform",
+  "tagline": "Popmenu alternative",
+  "costSummary": "As of 2026, Popmenu is typically sold as a tiered monthly subscription for an interactive website, online ordering and marketing tools, with no per-order commission, per their published model. Pricing is generally sales-led, so confirm current terms with Popmenu directly.",
+  "whatTheyAre": "Popmenu is a restaurant marketing and online-ordering platform known for interactive, dynamic menus, a branded website and automated marketing. It is generally sold as a tiered monthly subscription with no per-order commission, through a sales/demo process.",
+  "whyFeeFree": [
+    {
+      "title": "Free core platform vs a tiered subscription",
+      "body": "Popmenu's interactive website and marketing come, per its published model, as a tiered monthly subscription. Fee Free's core — branded ordering page, native kitchen app and customer database — is free, with your first 100 orders each month free."
+    },
+    {
+      "title": "Operations depth, not just a polished menu",
+      "body": "Beyond an attractive ordering page, Fee Free ships a native Kitchen Order App that rings new orders even screen-off, can phone-call the owner on a missed order, and prints tickets over WiFi to Star, Epson, Bixolon and Citizen printers — the back-of-house side a marketing-first tool can leave thin."
+    },
+    {
+      "title": "Marketing included without the bundle price",
+      "body": "GrowthNet gives you Smart Links, QR codes, Autopilot win-back emails, SMS, a CRM and promotions/coupons inside the free core, so you get automated marketing without committing to a tiered subscription up front."
+    },
+    {
+      "title": "Try the menu import with no demo",
+      "body": "Paste your menu link and a live, photo-rich ordering page builds in seconds — no account, no sales call. You can see your own menu working before deciding anything."
+    }
+  ],
+  "comparison": [
+    {
+      "feature": "Pricing model",
+      "feefree": "Free core + optional à-la-carte add-ons",
+      "competitor": "Tiered monthly subscription (custom quote, as of 2026)"
+    },
+    {
+      "feature": "Commission on direct orders",
+      "feefree": "0%",
+      "competitor": "0% (per published model)"
+    },
+    {
+      "feature": "Free monthly orders",
+      "feefree": "First 100 orders/month free",
+      "competitor": "Included within the subscription"
+    },
+    {
+      "feature": "Native kitchen app (rings screen-off)",
+      "feefree": "Yes — iOS + Android, missed-order call, auto-accept",
+      "competitor": "Order notifications"
+    },
+    {
+      "feature": "Built-in marketing + CRM",
+      "feefree": "GrowthNet included in the free core",
+      "competitor": "Core to the subscription"
+    },
+    {
+      "feature": "Onboarding",
+      "feefree": "Self-serve; instant menu import, no signup to try",
+      "competitor": "Typically sales-led demo"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How much does Popmenu cost versus Fee Free Ordering?",
+      "a": "As of 2026, Popmenu is typically a tiered monthly subscription quoted by sales. Fee Free Ordering's core platform is free, your first 100 orders each month are free, and marketing tools come built in — so most independents pay less to start."
+    },
+    {
+      "q": "Is there a Popmenu alternative with strong kitchen and ordering tools?",
+      "a": "Yes — Fee Free Ordering. Alongside a branded ordering page it includes a native Kitchen Order App that rings new orders even with the screen off, can phone-call the owner on a missed order, and prints over WiFi to Star, Epson, Bixolon and Citizen printers."
+    },
+    {
+      "q": "Does Fee Free Ordering include marketing automation like Popmenu?",
+      "a": "Yes. GrowthNet bundles Autopilot win-back emails, SMS, Smart Links, QR codes, a customer database and promotions/coupons into the free core platform, so automated marketing doesn't require a separate subscription."
+    },
+    {
+      "q": "Can I keep my current website and still use Fee Free Ordering?",
+      "a": "Yes. Keep your existing site and add a free Fee Free branded ordering page, then link it from your site's menu or Order button — or embed the free ordering widget directly. There's nothing to install in your CMS and 0% commission on direct orders."
+    }
+  ]
+},
   // ─── Peer ordering platforms ──────────────────────────────────────
   {
     slug: "gloriafood",
