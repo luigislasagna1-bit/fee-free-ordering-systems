@@ -13,6 +13,12 @@ date + commit hash. This file is committed so the backlog never gets lost.
   (`/order/[slug]`), on **desktop**, give customers the option to expand/collapse the menu categories
   (collapsible category sections), so a long menu isn't one giant scroll. _(Luigi note, 2026-06-24.)_
 
+- [ ] **VIP member groups.** Owners assign specific customers into VIP groups that unlock features/rewards
+  per group (auto-rewards, special promos, etc.; multiple groups supported). The customer-accounts system +
+  the Coupon / Promotion / CustomerCoupon engine already provide the building blocks — this adds the
+  tier/group concept, the admin UI to manage groups + membership, and the per-group feature hooks.
+  _(Luigi vision, 2026-06-24; surfaced while wiring saved delivery addresses.)_
+
 ## Done
 
 <!-- Move items here when shipped, e.g.:
