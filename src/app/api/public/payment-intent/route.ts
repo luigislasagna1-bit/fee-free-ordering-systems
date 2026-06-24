@@ -82,6 +82,30 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // ── Reconcile the charge amount against OUR order (security: P0) ──────────
+  // The client-supplied `amount` is NEVER trusted as the charge total. We
+  // re-fetch the order we priced server-side and refuse unless it exists, is
+  // this restaurant's, is a fresh card order, and the amount matches the order
+  // total within a cent. Without this, a customer could place a $50 order and
+  // authorize $0.50 — the kitchen fires and the order shows "paid". This mirrors
+  // the guard already in /api/public/paypal-order (lines 91-111).
+  const dbOrder = await prisma.order.findUnique({
+    where: { id: orderId },
+    select: { id: true, restaurantId: true, paymentMethod: true, paymentStatus: true, total: true },
+  });
+  if (!dbOrder || dbOrder.restaurantId !== restaurant.id) {
+    return NextResponse.json({ error: "Order not found" }, { status: 404 });
+  }
+  if (dbOrder.paymentMethod !== "card") {
+    return NextResponse.json({ error: "Order is not paying by card" }, { status: 400 });
+  }
+  if (dbOrder.paymentStatus !== "pending") {
+    return NextResponse.json({ error: "Order payment is already in progress" }, { status: 400 });
+  }
+  if (Math.abs(dbOrder.total - amount) > 0.01) {
+    return NextResponse.json({ error: "Amount mismatch" }, { status: 400 });
+  }
+
   try {
     // Always charge in the restaurant's configured currency — the
     // client value is advisory only.

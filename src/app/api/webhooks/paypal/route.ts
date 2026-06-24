@@ -40,7 +40,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { verifyPaypalWebhookSignature } from "@/lib/paypal";
+import { verifyPaypalWebhookSignature, getPaypalOrder } from "@/lib/paypal";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 
 type PaypalEvent = {
@@ -159,7 +159,31 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    await dispatchPaypalEvent(evt, order);
+    // ── Reconcile against PayPal before ANY side-effect (security: P0) ──────
+    // The event body is attacker-controllable — the orderId (custom_id) is
+    // visible in the customer's own order URL — and signature verification is
+    // not yet wired (paypalWebhookId is never set, so the block above is a
+    // no-op today). So we NEVER trust the event: we re-fetch the REAL order
+    // from PayPal using OUR stored paypalOrderId + the restaurant's own
+    // credentials, and act only on statuses PayPal itself confirms. The
+    // synchronous customer authorize + capture-on-accept paths remain the
+    // authoritative sources, so a strict/failed reconcile loses no function —
+    // it only refuses to act on forged or unverifiable events.
+    if (!order.paypalOrderId) {
+      await markEvent(evt.id, "ignored", "No paypalOrderId on our order — unverifiable event");
+      return NextResponse.json({ received: true, reconciled: false });
+    }
+    let live: PaypalLiveStatus;
+    try {
+      live = await readPaypalLiveStatus(order.restaurantId, order.paypalOrderId);
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      await markEvent(evt.id, "failed", `Reconcile fetch failed: ${msg}`).catch(() => {});
+      // 500 → PayPal retries; we'd rather retry than act on an unverified event.
+      return NextResponse.json({ error: "Reconcile failed" }, { status: 500 });
+    }
+
+    await dispatchPaypalEvent(evt, order, live);
     await markEvent(evt.id, "processed");
     return NextResponse.json({ received: true });
   } catch (e: unknown) {
@@ -190,24 +214,57 @@ async function markEvent(eventId: string, status: string, errorMessage?: string)
   });
 }
 
+type PaypalLiveStatus = {
+  authStatus: string | null;
+  captureStatus: string | null;
+  authId: string | null;
+  captureId: string | null;
+};
+
+/** Re-fetch the REAL order from PayPal (via the restaurant's own credentials)
+ *  and extract the authoritative authorization + capture statuses. This is how
+ *  we reconcile webhook events we cannot cryptographically trust yet — we read
+ *  the truth straight from PayPal using OUR stored paypalOrderId, never the
+ *  (attacker-controllable) event body. PayPal v2 order shape:
+ *  purchase_units[].payments.{authorizations,captures}[].status */
+async function readPaypalLiveStatus(restaurantId: string, paypalOrderId: string): Promise<PaypalLiveStatus> {
+  const o = (await getPaypalOrder({ restaurantId, paypalOrderId })) as {
+    purchase_units?: Array<{
+      payments?: {
+        authorizations?: Array<{ id?: string; status?: string }>;
+        captures?: Array<{ id?: string; status?: string }>;
+      };
+    }>;
+  };
+  const pay = o?.purchase_units?.[0]?.payments;
+  const auth = pay?.authorizations?.[0];
+  const cap = pay?.captures?.[0];
+  return {
+    authStatus: auth?.status ?? null,
+    captureStatus: cap?.status ?? null,
+    authId: auth?.id ?? null,
+    captureId: cap?.id ?? null,
+  };
+}
+
 async function dispatchPaypalEvent(
   evt: PaypalEvent,
   order: { id: string; paymentStatus: string; notifiedAt: Date | null; paypalAuthorizationId: string | null; paypalCaptureId: string | null },
+  live: PaypalLiveStatus,
 ): Promise<void> {
   switch (evt.event_type) {
     case "PAYMENT.AUTHORIZATION.CREATED": {
-      // The customer approved and we authorized — same state the synchronous
-      // /authorize endpoint produces. Idempotent if already authorized.
+      // Only release to the kitchen / mark authorized if PayPal CONFIRMS a real
+      // authorization. CREATED = funds locked & capturable; CAPTURED = already
+      // charged (also proves the auth happened). Anything else (none / DENIED /
+      // EXPIRED / VOIDED) means a forged or stale event — ignore it.
+      if (live.authStatus !== "CREATED" && live.authStatus !== "CAPTURED") return;
       if (order.paymentStatus === "pending") {
-        const authId =
-          evt.resource?.id ??
-          evt.resource?.purchase_units?.[0]?.payments?.authorizations?.[0]?.id ??
-          null;
         await prisma.order.update({
           where: { id: order.id },
           data: {
             paymentStatus: "authorized",
-            paypalAuthorizationId: authId ?? order.paypalAuthorizationId,
+            paypalAuthorizationId: live.authId ?? order.paypalAuthorizationId,
           },
         });
       }
@@ -219,22 +276,22 @@ async function dispatchPaypalEvent(
       return;
     }
     case "PAYMENT.CAPTURE.COMPLETED": {
+      // Only mark paid if PayPal confirms a COMPLETED capture.
+      if (live.captureStatus !== "COMPLETED") return;
       if (order.paymentStatus !== "paid") {
-        const captureId =
-          evt.resource?.id ??
-          evt.resource?.supplementary_data?.related_ids?.capture_id ??
-          null;
         await prisma.order.update({
           where: { id: order.id },
           data: {
             paymentStatus: "paid",
-            paypalCaptureId: captureId ?? order.paypalCaptureId,
+            paypalCaptureId: live.captureId ?? order.paypalCaptureId,
           },
         });
       }
       return;
     }
     case "PAYMENT.AUTHORIZATION.VOIDED": {
+      // Only void if PayPal confirms the authorization is actually VOIDED.
+      if (live.authStatus !== "VOIDED") return;
       if (order.paymentStatus !== "voided" && order.paymentStatus !== "refunded") {
         await prisma.order.update({
           where: { id: order.id },
@@ -245,6 +302,12 @@ async function dispatchPaypalEvent(
     }
     case "PAYMENT.CAPTURE.REFUNDED":
     case "PAYMENT.CAPTURE.REVERSED": {
+      // Only mark refunded if PayPal confirms the capture was refunded/reversed.
+      if (
+        live.captureStatus !== "REFUNDED" &&
+        live.captureStatus !== "PARTIALLY_REFUNDED" &&
+        live.captureStatus !== "REVERSED"
+      ) return;
       if (order.paymentStatus !== "refunded") {
         await prisma.order.update({
           where: { id: order.id },
@@ -254,7 +317,7 @@ async function dispatchPaypalEvent(
       return;
     }
     default:
-      // Unhandled event type — mark ignored upstream by returning normally.
+      // Unhandled event type — no-op.
       return;
   }
 }
