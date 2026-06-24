@@ -3786,19 +3786,24 @@ export function OrderingPageClient({
             const until = (restaurant as any).pickupPausedUntil;
             const holClosed = holidayClosedServices.includes("pickup");
             const paused = (!!until && new Date(until).getTime() > Date.now()) || holClosed;
+            let desc = "";
+            try { desc = (JSON.parse((restaurant as any).serviceSettings || "null")?.pickup?.description || "").trim(); } catch {}
             return (
               <button
                 onClick={() => !paused && setOrderType("pickup")}
                 disabled={paused}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
+                className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 px-2 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
                 style={orderType === "pickup"
                   ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
                   : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
                 }
               >
-                <ShoppingBag className="w-4 h-4" /> {t("pickup")} · {restaurant.estimatedPickup} {t("minutes")}
-                {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
-                {!paused && pickupOpensAt && <span className="text-xs font-normal opacity-80">({t("opensAtLabel", { time: pickupOpensAt })})</span>}
+                <span className="flex items-center gap-2 flex-wrap justify-center">
+                  <ShoppingBag className="w-4 h-4" /> {t("pickup")} · {restaurant.estimatedPickup} {t("minutes")}
+                  {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
+                  {!paused && pickupOpensAt && <span className="text-xs font-normal opacity-80">({t("opensAtLabel", { time: pickupOpensAt })})</span>}
+                </span>
+                {desc && <span className="text-xs font-normal opacity-70 leading-tight line-clamp-2 text-center">{desc}</span>}
               </button>
             );
           })()}
@@ -3806,20 +3811,25 @@ export function OrderingPageClient({
             const until = (restaurant as any).deliveryPausedUntil;
             const holClosed = holidayClosedServices.includes("delivery");
             const paused = (!!until && new Date(until).getTime() > Date.now()) || holClosed;
+            let desc = "";
+            try { desc = (JSON.parse((restaurant as any).serviceSettings || "null")?.delivery?.description || "").trim(); } catch {}
             return (
               <button
                 onClick={() => !paused && setOrderType("delivery")}
                 disabled={paused}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
+                className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 px-2 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
                 style={orderType === "delivery"
                   ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
                   : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
                 }
               >
-                <Truck className="w-4 h-4" /> {t("delivery")} · {estimatedDeliveryMinutes} {t("minutes")}
-                {baseDeliveryFee > 0 && <span className="text-xs font-normal">(+{fmt(baseDeliveryFee)})</span>}
-                {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
-                {!paused && deliveryOpensAt && <span className="text-xs font-normal opacity-80">({t("opensAtLabel", { time: deliveryOpensAt })})</span>}
+                <span className="flex items-center gap-2 flex-wrap justify-center">
+                  <Truck className="w-4 h-4" /> {t("delivery")} · {estimatedDeliveryMinutes} {t("minutes")}
+                  {baseDeliveryFee > 0 && <span className="text-xs font-normal">(+{fmt(baseDeliveryFee)})</span>}
+                  {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
+                  {!paused && deliveryOpensAt && <span className="text-xs font-normal opacity-80">({t("opensAtLabel", { time: deliveryOpensAt })})</span>}
+                </span>
+                {desc && <span className="text-xs font-normal opacity-70 leading-tight line-clamp-2 text-center">{desc}</span>}
               </button>
             );
           })()}
@@ -3830,19 +3840,23 @@ export function OrderingPageClient({
             const holClosed = holidayClosedServices.includes("dine_in");
             const paused = (!!until && new Date(until).getTime() > Date.now()) || holClosed;
             let est = restaurant.estimatedPickup;
-            try { const v = JSON.parse((restaurant as any).serviceSettings || "null")?.dineIn?.estimatedTime; if (typeof v === "number" && v > 0) est = v; } catch {}
+            let desc = "";
+            try { const ss = JSON.parse((restaurant as any).serviceSettings || "null"); const v = ss?.dineIn?.estimatedTime; if (typeof v === "number" && v > 0) est = v; desc = (ss?.dineIn?.description || "").trim(); } catch {}
             return (
               <button
                 onClick={() => !paused && setOrderType("dine_in")}
                 disabled={paused}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
+                className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 px-2 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
                 style={orderType === "dine_in"
                   ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
                   : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
                 }
               >
-                <Utensils className="w-4 h-4" /> {t("dineIn")} · {est} {t("minutes")}
-                {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
+                <span className="flex items-center gap-2 flex-wrap justify-center">
+                  <Utensils className="w-4 h-4" /> {t("dineIn")} · {est} {t("minutes")}
+                  {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
+                </span>
+                {desc && <span className="text-xs font-normal opacity-70 leading-tight line-clamp-2 text-center">{desc}</span>}
               </button>
             );
           })()}
@@ -3851,35 +3865,27 @@ export function OrderingPageClient({
             const holClosed = holidayClosedServices.includes("take_out");
             const paused = (!!until && new Date(until).getTime() > Date.now()) || holClosed;
             let est = restaurant.estimatedPickup;
-            try { const v = JSON.parse((restaurant as any).serviceSettings || "null")?.takeOut?.estimatedTime; if (typeof v === "number" && v > 0) est = v; } catch {}
+            let desc = "";
+            try { const ss = JSON.parse((restaurant as any).serviceSettings || "null"); const v = ss?.takeOut?.estimatedTime; if (typeof v === "number" && v > 0) est = v; desc = (ss?.takeOut?.description || "").trim(); } catch {}
             return (
               <button
                 onClick={() => !paused && setOrderType("take_out")}
                 disabled={paused}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
+                className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 px-2 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
                 style={orderType === "take_out"
                   ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
                   : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
                 }
               >
-                <Package className="w-4 h-4" /> {t("takeOut")} · {est} {t("minutes")}
-                {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
+                <span className="flex items-center gap-2 flex-wrap justify-center">
+                  <Package className="w-4 h-4" /> {t("takeOut")} · {est} {t("minutes")}
+                  {paused && <span className="text-xs">({holClosed ? t("closedToday") : "paused"})</span>}
+                </span>
+                {desc && <span className="text-xs font-normal opacity-70 leading-tight line-clamp-2 text-center">{desc}</span>}
               </button>
             );
           })()}
         </div>
-
-        {/* Selected service's short description — set by the restaurant in
-            admin → Services and saved per service in serviceSettings, but never
-            shown to customers until now (Fabrizio report). Renders the active
-            order type's line under the order-type row; hidden when empty. */}
-        {(() => {
-          const key = orderType === "dine_in" ? "dineIn" : orderType === "take_out" ? "takeOut" : orderType;
-          let desc = "";
-          try { desc = JSON.parse((restaurant as any).serviceSettings || "null")?.[key]?.description || ""; } catch {}
-          desc = desc.trim();
-          return desc ? <p className="text-sm text-gray-500 mb-5 -mt-2">{desc}</p> : null;
-        })()}
 
         {/* "Our delivery areas" panel was moved to the Restaurant Info page so
            the main ordering grid stays focused on the menu. The "Restaurant Info"
