@@ -108,7 +108,8 @@
     "creating": "Création…",
     "resellerScopeError": "Cette connexion est réservée aux clients de {brandName}.",
     "thisPartner": "ce partenaire",
-    "signingUpUnder": "Vous vous inscrivez via {brand}"
+    "signingUpUnder": "Vous vous inscrivez via {brand}",
+    "restaurantLogin": "Connexion restaurant"
   },
   "ordering": {
     "viewCart": "Voir le panier",

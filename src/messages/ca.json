@@ -108,7 +108,8 @@
     "creating": "Creant…",
     "resellerScopeError": "Aquest inici de sessió és només per a clients de {brandName}.",
     "thisPartner": "aquest soci",
-    "signingUpUnder": "T'estàs registrant amb {brand}"
+    "signingUpUnder": "T'estàs registrant amb {brand}",
+    "restaurantLogin": "Accés del restaurant"
   },
   "ordering": {
     "viewCart": "Veure la cistella",

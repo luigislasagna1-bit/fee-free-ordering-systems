@@ -182,8 +182,8 @@ export function GenericDomainClient({ initial }: { initial: InitialState }) {
       {/* Upsell when not subscribed */}
       {!initial.active && (
         <div className="mb-4 p-3 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900">
-          <strong>Need an active White-Label subscription.</strong> The generic subdomain is
-          included with both Basic ($9.99/mo) and Full ($29/mo). Subscribe at{" "}
+          <strong>Need the Branded plan ($19.99/mo).</strong> The generic subdomain is part of
+          the Branded plan. Subscribe at{" "}
           <a href="/reseller/branding" className="font-bold underline">/reseller/branding</a> to claim a slug.
         </div>
       )}

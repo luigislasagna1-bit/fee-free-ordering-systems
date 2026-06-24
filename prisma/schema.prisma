@@ -2357,12 +2357,12 @@ model ResellerProfile {
   /// billing identity in Stripe.
   stripeCustomerId String? @unique
 
-  /// White-label add-on subscription state. Two tiers:
-  ///   "basic" — imprint + logo on emails. Currently $9.99/mo.
-  ///   "full"  — basic + custom domain. Currently $29/mo.
-  /// Set when the reseller completes Stripe Checkout. Reset to null
-  /// when subscription cancels/expires. Restaurant.imprint + brandLogo
-  /// only flow into emails when whiteLabelStatus === "active".
+  /// White-label subscription state. Post-restructure (Luigi 2026-06-23) there is ONE paid tier:
+  ///   "full"  — "Branded" $19.99/mo: branded login page + custom domain.
+  ///   "basic" — LEGACY only (the retired $9.99 email-only tier); no new subscription uses it.
+  /// FREE de-brand (imprint + logo on emails, no subscription) is gated separately on an approved
+  /// reseller who configured branding — see isResellerDebranded() in src/lib/white-label.ts.
+  /// Set when the reseller completes Stripe Checkout; reset to null on cancel/expire.
   whiteLabelTier                 String? // "basic" | "full" | null
   whiteLabelStatus               String? // "active" | "past_due" | "cancelled" | null
   whiteLabelStripeSubscriptionId String?   @unique
@@ -2370,8 +2370,8 @@ model ResellerProfile {
   whiteLabelCancelAtPeriodEnd    Boolean   @default(false)
 
   /// Custom domain for the reseller's white-label landing + login.
-  /// Only meaningful when whiteLabelTier === "full" (the $29 tier promises
-  /// custom-domain branding; Basic doesn't). Parallel to Restaurant's
+  /// Only meaningful on the paid "Branded" tier (whiteLabelTier === "full"),
+  /// which includes custom-domain branding. Parallel to Restaurant's
   /// customDomain fields but scoped to the reseller, so a partner can use
   /// their own apex like `mypartner.com` for the login screen / future
   /// reseller marketing landing while their restaurants stay on their own

@@ -108,7 +108,8 @@
     "creating": "बनाया जा रहा है…",
     "resellerScopeError": "यह साइन-इन केवल {brandName} के ग्राहकों के लिए है।",
     "thisPartner": "यह पार्टनर",
-    "signingUpUnder": "आप {brand} के माध्यम से साइन अप कर रहे हैं"
+    "signingUpUnder": "आप {brand} के माध्यम से साइन अप कर रहे हैं",
+    "restaurantLogin": "रेस्तरां लॉगिन"
   },
   "ordering": {
     "viewCart": "कार्ट देखें",

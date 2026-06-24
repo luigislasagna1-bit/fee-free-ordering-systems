@@ -42,11 +42,12 @@ export interface HostedSiteData {
    *  attribution still shows. */
   customDomain: string | null;
   customDomainStatus: string;
-  /** Reseller white-label profile (status + white-label sub state). Drives
-   *  the "Powered by Fee Free Ordering" credit: shown UNLESS this restaurant
-   *  is a reseller white-label account (isResellerWhiteLabel() === true). A
-   *  plain restaurant on its OWN custom domain STILL shows the credit. Luigi
-   *  2026-06-22 — the credit is free marketing + an SEO backlink. */
+  /** Reseller white-label profile (status + white-label sub state + imprint +
+   *  brand logo). Drives the "Powered by Fee Free Ordering" credit: shown UNLESS
+   *  this restaurant is a de-branded reseller account (isResellerDebranded() ===
+   *  true — the FREE de-brand tier: an approved reseller who configured an imprint
+   *  or logo). A plain restaurant on its OWN custom domain STILL shows the credit.
+   *  Luigi 2026-06-23 — the credit is free marketing + an SEO backlink. */
   resellerProfile: ResellerWhiteLabelProfile | null;
   socialLinks: Record<string, string> | null;
   themeSettings: Record<string, unknown> | null;
@@ -139,9 +140,10 @@ export type HostedSiteResult =
   | { kind: "ok"; data: HostedSiteData }
   | { kind: "not_found" }
   // resellerProfile so the "Coming soon" placeholder can SHOW the platform
-  // attribution unless the restaurant is a reseller white-label account.
-  // Luigi 2026-06-22 — the credit is hidden ONLY for reseller white-label,
-  // never for a plain restaurant (even on its own custom domain).
+  // attribution unless the restaurant is a de-branded reseller account.
+  // Luigi 2026-06-23 — the credit is hidden for the FREE de-brand tier
+  // (isResellerDebranded), never for a plain restaurant (even on its own
+  // custom domain).
   | { kind: "not_published"; resellerProfile: ResellerWhiteLabelProfile | null }
   | { kind: "upgrade_required"; restaurantName: string };
 
@@ -165,7 +167,9 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       // gate the "Powered by" credit anymore; that's resellerProfile below.)
       customDomain: true, customDomainStatus: true,
       // Reseller white-label state — gates the "Powered by Fee Free Ordering"
-      // credit. Credit shows UNLESS isResellerWhiteLabel() is true.
+      // credit. Credit shows UNLESS isResellerDebranded() is true (free de-brand
+      // tier — approved reseller who set an imprint or logo). RESELLER_WHITE_LABEL_SELECT
+      // includes imprint + brandLogoUrl so the gate has its inputs.
       resellerProfile: { select: RESELLER_WHITE_LABEL_SELECT },
       hostedSiteSettings: true,
       lat: true, lng: true, mapProvider: true, googleMapsApiKey: true,

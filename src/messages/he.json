@@ -108,7 +108,8 @@
     "creating": "יוצר…",
     "resellerScopeError": "כניסה זו מיועדת ללקוחות {brandName} בלבד.",
     "thisPartner": "שותף זה",
-    "signingUpUnder": "אתה נרשם דרך {brand}"
+    "signingUpUnder": "אתה נרשם דרך {brand}",
+    "restaurantLogin": "כניסת מסעדה"
   },
   "ordering": {
     "viewCart": "צפה בסל",

@@ -62,8 +62,9 @@ export default async function ResellerBrandingPage({
         </div>
         <h1 className="text-2xl font-bold text-gray-900 mb-1">Branding</h1>
         <p className="text-sm text-gray-500">
-          Put your brand on the platform: your imprint on every customer email, your logo above
-          it, and (with Full) your own domain.
+          Put your brand on the platform: your imprint on every customer email and your logo above
+          it are <strong>free</strong>. Upgrade to <strong>Branded</strong> for your own branded
+          login page + custom domain.
         </p>
       </div>
 
@@ -116,7 +117,7 @@ export default async function ResellerBrandingPage({
                 <CheckCircle2 className="w-3 h-3" /> Active
               </div>
               <h2 className="text-lg font-bold text-gray-900">
-                White-Label {tier === "full" ? "Full" : "Basic"} — ${tier === "full" ? "29" : "9.99"}/mo
+                Branded — $19.99/mo
               </h2>
               {profile.whiteLabelCurrentPeriodEnd && (
                 <p className="text-xs text-gray-500 mt-1">
@@ -128,7 +129,7 @@ export default async function ResellerBrandingPage({
             </div>
             <div className="flex items-center gap-2 flex-wrap">
               {tier === "basic" && (
-                <SubscribeButton tier="full" label="Upgrade to Full ($29/mo)" />
+                <SubscribeButton tier="full" label="Upgrade to Branded ($19.99/mo)" />
               )}
               <ManageBillingButton />
             </div>
@@ -170,37 +171,58 @@ export default async function ResellerBrandingPage({
                     : "not-configured"
               }
               href="/reseller/branding/custom-domain"
-              lockedHint={tier !== "full" ? "Requires Full tier" : undefined}
+              lockedHint={tier !== "full" ? "Requires Branded" : undefined}
             />
           </div>
         </div>
       )}
 
-      {/* Inactive — tier comparison */}
+      {/* Inactive — free tier explainer + the single paid "Branded" upgrade */}
       {!isActive && (
         <>
-          <div className="grid md:grid-cols-2 gap-4 mb-4">
-            <TierCard
-              tier="basic"
-              price="$9.99"
-              tagline="Email-only branding"
-              features={[
-                { label: "Custom imprint on customer emails", included: true },
-                { label: "Your logo above the imprint", included: true },
-                { label: "Custom domain (your-brand.com)", included: false },
-                { label: "Branded login page", included: false },
-              ]}
-            />
+          <div className="grid md:grid-cols-2 gap-4 mb-4 items-start">
+            {/* FREE tier — included for every approved reseller */}
+            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6">
+              <div className="inline-flex items-center gap-1.5 bg-emerald-500 text-white rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider mb-2">
+                <CheckCircle2 className="w-3 h-3" /> Included free
+              </div>
+              <h2 className="text-lg font-bold text-gray-900 mb-1">
+                You&apos;re on the Free Reseller plan
+              </h2>
+              <p className="text-xs text-gray-600 mb-4">
+                Your <strong>Imprint</strong> + <strong>Logo</strong> are included at no cost —
+                set them up and your brand replaces our credit on customer emails.
+              </p>
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                <FeatureLink
+                  icon={<Tag className="w-4 h-4" />}
+                  title="Imprint"
+                  status={profile.imprint ? "configured" : "not-configured"}
+                  href="/reseller/branding/imprint"
+                />
+                <FeatureLink
+                  icon={<ImageIcon className="w-4 h-4" />}
+                  title="Logo"
+                  status={profile.brandLogoUrl ? "configured" : "not-configured"}
+                  href="/reseller/branding/logo"
+                />
+              </div>
+              <p className="text-[11px] text-emerald-800">
+                No card required. Configure them any time from the sidebar.
+              </p>
+            </div>
+
+            {/* PAID "Branded" tier — the single upgrade */}
             <TierCard
               tier="full"
-              price="$29"
-              tagline="Full white-label"
+              price="$19.99"
+              tagline="Everything in Free, plus your own login + domain"
               highlight
               features={[
                 { label: "Custom imprint on customer emails", included: true },
                 { label: "Your logo above the imprint", included: true },
-                { label: "Custom domain (your-brand.com)", included: true },
                 { label: "Branded login page", included: true },
+                { label: "Custom domain (your-brand.com)", included: true },
               ]}
             />
           </div>
@@ -248,25 +270,6 @@ function BillingPolicyPanel() {
         <li className="flex gap-2">
           <span className="text-gray-400">•</span>
           <span>
-            <strong>Upgrades are immediate + prorated.</strong> If you upgrade Basic →
-            Full mid-period, you&apos;re only charged the prorated difference for the days
-            remaining. Your next renewal is at the new tier&apos;s full price.
-          </span>
-        </li>
-        {!p.allowSelfServeDowngrade && (
-          <li className="flex gap-2">
-            <span className="text-gray-400">•</span>
-            <span>
-              <strong>Switching down a tier?</strong> Cancel your current subscription
-              (you&apos;ll keep it through the period you paid for), then subscribe to the
-              lower tier on the next billing cycle. This keeps the no-refund rule
-              consistent — no partial billing or credit games.
-            </span>
-          </li>
-        )}
-        <li className="flex gap-2">
-          <span className="text-gray-400">•</span>
-          <span>
             <strong>Update payment, view invoices, or cancel</strong> any time via the
             &ldquo;Manage billing&rdquo; button when you&apos;re subscribed — opens Stripe&apos;s secure
             customer portal.
@@ -296,11 +299,11 @@ function TierCard({
     >
       {highlight && (
         <div className="absolute -top-3 right-4 bg-emerald-500 text-white text-[10px] uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full">
-          Recommended
+          Upgrade
         </div>
       )}
       <div className="text-xs uppercase tracking-wider font-bold text-gray-500 mb-1">
-        White-Label {tier === "full" ? "Full" : "Basic"}
+        Branded
       </div>
       <div className="flex items-baseline gap-1 mb-1">
         <span className="text-3xl font-extrabold text-gray-900">{price}</span>

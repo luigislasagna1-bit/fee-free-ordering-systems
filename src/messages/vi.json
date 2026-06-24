@@ -108,7 +108,8 @@
     "creating": "Đang tạo…",
     "resellerScopeError": "Đăng nhập này chỉ dành cho khách hàng của {brandName}.",
     "thisPartner": "đối tác này",
-    "signingUpUnder": "Bạn đang đăng ký qua {brand}"
+    "signingUpUnder": "Bạn đang đăng ký qua {brand}",
+    "restaurantLogin": "Đăng nhập nhà hàng"
   },
   "ordering": {
     "viewCart": "Xem giỏ hàng",

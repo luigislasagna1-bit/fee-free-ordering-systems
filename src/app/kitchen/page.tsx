@@ -3,6 +3,7 @@ import { kitchenAuthOptions } from "@/lib/auth-kitchen";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import { KitchenDisplay } from "./KitchenDisplay";
+import { isResellerDebranded, RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 
 export default async function KitchenPage() {
   const session = await getServerSession(kitchenAuthOptions);
@@ -25,7 +26,13 @@ export default async function KitchenPage() {
     // there's a 4-second flicker between the SSR render and the first
     // poll where the wrong buttons show.
     [restaurant, orders] = await Promise.all([
-      prisma.restaurant.findUnique({ where: { id: restaurantId } }),
+      prisma.restaurant.findUnique({
+        where: { id: restaurantId },
+        // Pull the full row (kitchen needs the workflow mode etc. on first
+        // paint) PLUS the reseller white-label fields so we can show the
+        // reseller's logo when the reseller passes the FREE de-brand gate.
+        include: { resellerProfile: { select: RESELLER_WHITE_LABEL_SELECT } },
+      }),
       prisma.order.findMany({
         where: {
           restaurantId,
@@ -58,5 +65,13 @@ export default async function KitchenPage() {
     console.error("[KitchenPage] DB error:", err);
   }
 
-  return <KitchenDisplay restaurant={restaurant} initialOrders={orders} />;
+  // Reseller's logo for the kitchen header — only when the restaurant's reseller
+  // passes the FREE de-brand gate (isResellerDebranded). null = default ChefHat.
+  const resellerLogoUrl = isResellerDebranded((restaurant as any)?.resellerProfile)
+    ? ((restaurant as any)?.resellerProfile?.brandLogoUrl ?? null)
+    : null;
+
+  return (
+    <KitchenDisplay restaurant={restaurant} initialOrders={orders} resellerLogoUrl={resellerLogoUrl} />
+  );
 }

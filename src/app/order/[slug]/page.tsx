@@ -16,7 +16,7 @@ import { resolveTodayHolidayClosure } from "@/lib/holiday-rules";
 import { isOnMarketplace } from "@/lib/marketplace";
 import { getCurrentCustomer } from "@/lib/customer-session";
 import { getSessionUser } from "@/lib/session";
-import { isResellerWhiteLabel, RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
+import { isResellerDebranded, RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 
 export default async function OrderingPage({
   params,
@@ -417,7 +417,7 @@ export default async function OrderingPage({
   // "Powered by Fee Free Ordering" credit: shown on the customer ordering page
   // (free marketing + SEO backlink) for EVERY restaurant EXCEPT a reseller
   // white-label account. NOT gated on custom domain. Luigi 2026-06-22.
-  const showPoweredBy = !isResellerWhiteLabel((restaurantBase as any).resellerProfile);
+  const showPoweredBy = !isResellerDebranded((restaurantBase as any).resellerProfile);
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>

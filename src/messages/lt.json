@@ -108,7 +108,8 @@
     "creating": "Kuriama…",
     "resellerScopeError": "Šis prisijungimas skirtas tik {brandName} klientams.",
     "thisPartner": "šis partneris",
-    "signingUpUnder": "Registruojatės per {brand}"
+    "signingUpUnder": "Registruojatės per {brand}",
+    "restaurantLogin": "Restorano prisijungimas"
   },
   "ordering": {
     "viewCart": "Peržiūrėti krepšelį",

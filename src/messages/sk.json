@@ -108,7 +108,8 @@
     "creating": "Vytváram…",
     "resellerScopeError": "Toto prihlásenie je určené len pre zákazníkov {brandName}.",
     "thisPartner": "tento partner",
-    "signingUpUnder": "Registrujete sa prostredníctvom {brand}"
+    "signingUpUnder": "Registrujete sa prostredníctvom {brand}",
+    "restaurantLogin": "Prihlásenie reštaurácie"
   },
   "ordering": {
     "viewCart": "Zobraziť košík",

@@ -108,7 +108,8 @@
     "creating": "Oluşturuluyor…",
     "resellerScopeError": "Bu giriş yalnızca {brandName} müşterileri içindir.",
     "thisPartner": "bu iş ortağı",
-    "signingUpUnder": "{brand} üzerinden kayıt oluyorsunuz"
+    "signingUpUnder": "{brand} üzerinden kayıt oluyorsunuz",
+    "restaurantLogin": "Restoran girişi"
   },
   "ordering": {
     "viewCart": "Sepeti Gör",

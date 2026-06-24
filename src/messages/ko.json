@@ -108,7 +108,8 @@
     "creating": "생성 중…",
     "resellerScopeError": "이 로그인은 {brandName} 고객 전용입니다.",
     "thisPartner": "이 파트너",
-    "signingUpUnder": "{brand}을(를) 통해 가입하고 있습니다"
+    "signingUpUnder": "{brand}을(를) 통해 가입하고 있습니다",
+    "restaurantLogin": "레스토랑 로그인"
   },
   "ordering": {
     "viewCart": "장바구니 보기",

@@ -108,7 +108,8 @@
     "creating": "Creando…",
     "resellerScopeError": "Este inicio de sesión es solo para clientes de {brandName}.",
     "thisPartner": "este socio",
-    "signingUpUnder": "Te estás registrando con {brand}"
+    "signingUpUnder": "Te estás registrando con {brand}",
+    "restaurantLogin": "Acceso del restaurante"
   },
   "ordering": {
     "viewCart": "Ver carrito",

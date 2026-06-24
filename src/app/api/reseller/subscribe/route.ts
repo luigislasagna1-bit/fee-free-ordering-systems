@@ -7,16 +7,17 @@ import { ensureResellerGenericSubdomain } from "@/lib/reseller-subdomain";
 /**
  * Start a Stripe Checkout session for the reseller's white-label
  * subscription. Mirrors /api/admin/billing/checkout's pattern but
- * scoped to ResellerProfile + the two white-label tiers.
+ * scoped to ResellerProfile + the single white-label tier.
  *
- * Body: { tier: "basic" | "full" }
+ * There is ONE paid tier — "Branded" ($19.99/mo). The legacy Basic
+ * tier is gone. The body may carry a `tier` field for backwards
+ * compatibility but it's ignored; every checkout uses the Branded price.
  *
  * Env vars required (set in Vercel for prod, .env.local for dev):
- *   STRIPE_WHITE_LABEL_BASIC_PRICE_ID  — price_xxx (recurring $9.99/mo)
- *   STRIPE_WHITE_LABEL_FULL_PRICE_ID   — price_xxx (recurring $29/mo)
+ *   STRIPE_WHITE_LABEL_FULL_PRICE_ID   — price_xxx (recurring $19.99/mo, "Branded")
  *
- * Superadmin creates the matching Products + Prices in Stripe Dashboard
- * and pastes their IDs into env vars. We don't auto-create products
+ * Superadmin creates the matching Product + Price in Stripe Dashboard
+ * and pastes its ID into the env var. We don't auto-create products
  * from code — keeps the production billing setup auditable + manual.
  */
 export async function POST(req: NextRequest) {
@@ -28,16 +29,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Billing is not configured" }, { status: 503 });
   }
 
-  const body = await req.json().catch(() => ({}));
-  const tier: string = String(body?.tier ?? "");
-  if (tier !== "basic" && tier !== "full") {
-    return NextResponse.json({ error: "Invalid tier" }, { status: 400 });
-  }
+  // Single paid tier. We still parse the body for backwards compatibility
+  // but ignore whatever `tier` it carries — there is only "Branded" now,
+  // tracked internally as "full".
+  await req.json().catch(() => ({}));
+  const tier = "full";
 
-  const priceId =
-    tier === "basic"
-      ? process.env.STRIPE_WHITE_LABEL_BASIC_PRICE_ID
-      : process.env.STRIPE_WHITE_LABEL_FULL_PRICE_ID;
+  const priceId = process.env.STRIPE_WHITE_LABEL_FULL_PRICE_ID;
   if (!priceId) {
     return NextResponse.json(
       {
@@ -146,6 +144,7 @@ export async function POST(req: NextRequest) {
     line_items: [{ price: priceId, quantity: 1 }],
     // Metadata flows through to subscription.created / updated events
     // so the webhook handler knows which ResellerProfile to update.
+    // No trial — Branded bills immediately on day 1.
     subscription_data: {
       metadata: {
         resellerProfileId: profile.id,

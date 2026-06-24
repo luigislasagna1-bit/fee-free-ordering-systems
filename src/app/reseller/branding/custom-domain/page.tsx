@@ -43,7 +43,7 @@ export default async function ResellerCustomDomainPage() {
     <div className="max-w-3xl">
       <div className="mb-6">
         <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 rounded-full px-3 py-1 text-xs font-semibold mb-2">
-          <Link2 className="w-3.5 h-3.5" /> Branding · Full tier
+          <Link2 className="w-3.5 h-3.5" /> Branding
         </div>
         <h1 className="text-2xl font-bold text-gray-900 mb-1">Custom domain</h1>
         <p className="text-sm text-gray-500">

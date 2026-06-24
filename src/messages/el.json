@@ -108,7 +108,8 @@
     "creating": "Δημιουργία…",
     "resellerScopeError": "Αυτή η σύνδεση προορίζεται μόνο για πελάτες της {brandName}.",
     "thisPartner": "αυτόν τον συνεργάτη",
-    "signingUpUnder": "Εγγράφεστε μέσω {brand}"
+    "signingUpUnder": "Εγγράφεστε μέσω {brand}",
+    "restaurantLogin": "Σύνδεση εστιατορίου"
   },
   "ordering": {
     "viewCart": "Προβολή καλαθιού",

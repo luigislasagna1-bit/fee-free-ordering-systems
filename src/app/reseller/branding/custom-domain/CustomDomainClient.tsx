@@ -115,9 +115,9 @@ export function CustomDomainClient({ initial }: { initial: InitialState }) {
             <Link2 className="w-5 h-5" />
           </div>
           <div className="flex-1">
-            <h2 className="text-sm font-bold text-amber-900 mb-1">Requires White-Label Full</h2>
+            <h2 className="text-sm font-bold text-amber-900 mb-1">Requires the Branded plan</h2>
             <p className="text-xs text-amber-900 leading-relaxed mb-3">
-              Custom domain is part of the White-Label Full tier ($29/mo). With Full you can
+              Custom domain is part of the Branded plan ($19.99/mo). With Branded you can
               point your own domain (like <code className="bg-amber-100 px-1 rounded">login.yourbrand.com</code>)
               at our platform — your restaurants log in at a URL with YOUR brand on it, not ours.
             </p>
@@ -125,7 +125,7 @@ export function CustomDomainClient({ initial }: { initial: InitialState }) {
               href="/reseller/branding"
               className="inline-flex items-center px-3 py-1.5 bg-emerald-500 text-white text-xs font-semibold rounded hover:bg-emerald-600 transition"
             >
-              {state.tier === "basic" ? "Upgrade to Full" : "Subscribe to Full"}
+              {state.tier === "basic" ? "Upgrade to Branded" : "Subscribe to Branded"}
             </a>
           </div>
         </div>

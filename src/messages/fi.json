@@ -108,7 +108,8 @@
     "creating": "Luodaan…",
     "resellerScopeError": "Tämä kirjautuminen on tarkoitettu vain {brandName}-asiakkaille.",
     "thisPartner": "tämä kumppani",
-    "signingUpUnder": "Rekisteröidyt {brand}-kumppanin kautta"
+    "signingUpUnder": "Rekisteröidyt {brand}-kumppanin kautta",
+    "restaurantLogin": "Ravintolan kirjautuminen"
   },
   "ordering": {
     "viewCart": "Näytä ostoskori",

@@ -19,6 +19,7 @@ function LoginFormInner({
   branding,
   resellerScopeId,
   referralCode,
+  isNeutral = false,
 }: {
   locale: string;
   branding: ResellerBranding | null;
@@ -34,6 +35,12 @@ function LoginFormInner({
   // resellerScopeId (the branded /signup re-resolves + attributes by id).
   // Kept on the prop contract so the branded signup wiring has it available.
   referralCode?: string | null;
+  // True when rendered on the SHARED neutral reseller login host
+  // (restaurantownerlogin.com) for FREE reseller partners. Renders DE-BRANDED
+  // chrome — no Fee Free Ordering name/ChefHat, no per-reseller logo, plain
+  // background — using a generic "Restaurant Login" heading. Distinct from
+  // `branding` (a specific paid partner's custom-domain chrome).
+  isNeutral?: boolean;
 }) {
   const tAuth = useTranslations("auth");
   const tToasts = useTranslations("admin.toasts");
@@ -120,24 +127,32 @@ function LoginFormInner({
   return (
     <div className="relative isolate min-h-screen flex items-center justify-center p-4 overflow-hidden">
       {/* Food-hero background: the reseller's uploaded image when branded, else the default
-          FeeFree photo (wide for desktop + a portrait crop for phones). `isolate` + -z-10 keep
-          it behind the card/switcher without touching their stacking. */}
+          FeeFree photo (wide for desktop + a portrait crop for phones). On the NEUTRAL host
+          we show NO FeeFree hero (it's a Fee Free asset) — a plain background instead.
+          `isolate` + -z-10 keep it behind the card/switcher without touching their stacking. */}
       {branding?.backgroundUrl ? (
         <img src={branding.backgroundUrl} alt="" aria-hidden="true" className="absolute inset-0 -z-10 h-full w-full object-cover" />
+      ) : isNeutral ? (
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gray-100" />
       ) : (
         <>
           <img src="/marketing/login-bg.jpg" alt="" aria-hidden="true" className="absolute inset-0 -z-10 hidden h-full w-full object-cover sm:block" />
           <img src="/marketing/login-bg-mobile.jpg" alt="" aria-hidden="true" className="absolute inset-0 -z-10 h-full w-full object-cover sm:hidden" />
         </>
       )}
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/25" />
+      {/* Dark scrim over the food hero for card contrast — skip on the neutral plain bg. */}
+      {!isNeutral && <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/25" />}
       <AuthLanguageSwitcher currentLocale={locale} />
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
         <div className="text-center mb-8">
-          {/* Header: reseller-branded when accessed via a verified Full-tier
-              custom domain, default platform branding otherwise. The reseller's
-              logo + title come from ResellerProfile (server-resolved via the
-              ?reseller= query param the proxy sets on its custom-domain rewrite). */}
+          {/* Header — 3-way:
+              1. branding  → reseller-branded chrome (verified Full-tier custom
+                 domain; logo + title from ResellerProfile via the ?reseller=
+                 query param the proxy sets on its custom-domain rewrite).
+              2. isNeutral → SHARED neutral host (restaurantownerlogin.com) for
+                 FREE reseller partners: NO ChefHat, NO "Fee Free Ordering",
+                 NO partner logo — a generic gray "Restaurant Login" heading.
+              3. default   → platform Fee Free Ordering chrome. */}
           {branding ? (
             <div className="inline-flex flex-col items-center gap-2 mb-5">
               {branding.logoUrl && (
@@ -152,12 +167,22 @@ function LoginFormInner({
                 {branding.title ?? branding.companyName ?? ""}
               </span>
             </div>
+          ) : isNeutral ? (
+            <div className="inline-flex items-center gap-2 text-gray-700 font-bold text-xl mb-5">
+              {tAuth("restaurantLogin")}
+            </div>
           ) : (
             <Link href="/" className="inline-flex items-center gap-2 text-emerald-500 font-bold text-xl mb-5">
               <ChefHat className="w-7 h-7" /> Fee Free Ordering
             </Link>
           )}
-          <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 font-semibold px-4 py-1.5 rounded-full text-sm mb-4">
+          <div
+            className={
+              isNeutral
+                ? "inline-flex items-center gap-2 bg-gray-100 text-gray-700 font-semibold px-4 py-1.5 rounded-full text-sm mb-4"
+                : "inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 font-semibold px-4 py-1.5 rounded-full text-sm mb-4"
+            }
+          >
             <LayoutDashboard className="w-4 h-4" /> {tAuth("adminLogin")}
           </div>
           <h1 className="text-2xl font-bold text-gray-900">{tAuth("signIn")}</h1>
@@ -206,7 +231,11 @@ function LoginFormInner({
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-emerald-500 text-white font-bold py-3 rounded-xl hover:bg-emerald-600 transition flex items-center justify-center gap-2 disabled:opacity-50 mt-2"
+            className={
+              isNeutral
+                ? "w-full bg-gray-800 text-white font-bold py-3 rounded-xl hover:bg-gray-900 transition flex items-center justify-center gap-2 disabled:opacity-50 mt-2"
+                : "w-full bg-emerald-500 text-white font-bold py-3 rounded-xl hover:bg-emerald-600 transition flex items-center justify-center gap-2 disabled:opacity-50 mt-2"
+            }
             style={brandPrimary ? { backgroundColor: brandPrimary } : undefined}
           >
             {loading && <Loader2 className="w-5 h-5 animate-spin" />}
@@ -244,15 +273,17 @@ export function LoginForm({
   branding = null,
   resellerScopeId = null,
   referralCode = null,
+  isNeutral = false,
 }: {
   locale: string;
   branding?: ResellerBranding | null;
   resellerScopeId?: string | null;
   referralCode?: string | null;
+  isNeutral?: boolean;
 }) {
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-emerald-500" /></div>}>
-      <LoginFormInner locale={locale} branding={branding} resellerScopeId={resellerScopeId} referralCode={referralCode} />
+      <LoginFormInner locale={locale} branding={branding} resellerScopeId={resellerScopeId} referralCode={referralCode} isNeutral={isNeutral} />
     </Suspense>
   );
 }

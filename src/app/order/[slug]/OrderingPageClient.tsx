@@ -773,14 +773,14 @@ export function OrderingPageClient({
   todayHolidayClosed = false,
   holidayClosedServices = [],
   isTestPreview = false,
-  showPoweredBy = false,
+  showPoweredBy = true,
 }: {
   restaurant: any;
   cardPaymentEnabled?: boolean;
   /** Show the clickable "Powered by Fee Free Ordering" credit at the bottom of
    *  the ordering page (free marketing + SEO backlink). True for every
-   *  restaurant EXCEPT a reseller white-label account. Computed server-side via
-   *  !isResellerWhiteLabel(restaurant.resellerProfile). Luigi 2026-06-22. */
+   *  restaurant EXCEPT a de-branded reseller account. Computed server-side via
+   *  !isResellerDebranded(restaurant.resellerProfile). Luigi 2026-06-22. */
   showPoweredBy?: boolean;
   /** Name of today's one-off holiday closure (restaurant tz), or null. When
    *  set, the live open/closed status is forced to "closed today" so the
@@ -4389,8 +4389,8 @@ export function OrderingPageClient({
 
         {/* ── Platform credit (free marketing + SEO backlink) ──────────────
             Clickable "Powered by Fee Free Ordering" — shown for every
-            restaurant EXCEPT reseller white-label accounts (gated server-side
-            via !isResellerWhiteLabel). Lives inside the next-intl provider so
+            restaurant EXCEPT de-branded reseller accounts (gated server-side
+            via !isResellerDebranded). Lives inside the next-intl provider so
             the i18n component works. Luigi 2026-06-22. */}
         {showPoweredBy && (
           <PoweredByFeeFree className="block text-center text-xs text-gray-400 py-6" />

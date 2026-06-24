@@ -133,12 +133,11 @@ async function resolveImprint(
   const p = restaurant?.resellerProfile;
   if (!p || p.status !== "approved") return { text: null, logoUrl: null };
 
-  // White-label flowing into emails is GATED on an active subscription.
-  // Reseller must have whiteLabelStatus="active" with a tier set
-  // (basic = imprint+logo, full = imprint+logo+custom domain). Without
-  // a sub, the imprint + logo they've configured don't render.
-  const wlActive = p.whiteLabelStatus === "active" && (p.whiteLabelTier === "basic" || p.whiteLabelTier === "full");
-  if (!wlActive) return { text: null, logoUrl: null };
+  // De-brand gate (Luigi 2026-06-23): a FREE reseller's imprint + logo flow into emails as soon
+  // as they've configured branding (a non-empty imprint OR an uploaded logo) — NO paid subscription
+  // required. A partner who set neither leaves emails on the platform default. Mirrors
+  // isResellerDebranded() in src/lib/white-label.ts.
+  if (!(p.imprint?.trim() || p.brandLogoUrl)) return { text: null, logoUrl: null };
 
   // Explicit imprint text from /reseller/branding/imprint wins. This is
   // the full one-liner the reseller wrote ("Supported by X | email | phone").

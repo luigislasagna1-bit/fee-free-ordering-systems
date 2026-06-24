@@ -108,7 +108,8 @@
     "creating": "Creating…",
     "resellerScopeError": "This sign-in is for {brandName} customers only.",
     "thisPartner": "this partner",
-    "signingUpUnder": "You're signing up under {brand}"
+    "signingUpUnder": "You're signing up under {brand}",
+    "restaurantLogin": "Restaurant Login"
   },
   "ordering": {
     "viewCart": "View Cart",

@@ -108,7 +108,8 @@
     "creating": "Създаване…",
     "resellerScopeError": "Това вписване е само за клиенти на {brandName}.",
     "thisPartner": "този партньор",
-    "signingUpUnder": "Регистрирате се чрез {brand}"
+    "signingUpUnder": "Регистрирате се чрез {brand}",
+    "restaurantLogin": "Вход за ресторант"
   },
   "ordering": {
     "viewCart": "Виж количката",

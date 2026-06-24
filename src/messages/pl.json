@@ -108,7 +108,8 @@
     "creating": "Tworzenie…",
     "resellerScopeError": "To logowanie jest przeznaczone wyłącznie dla klientów {brandName}.",
     "thisPartner": "ten partner",
-    "signingUpUnder": "Rejestrujesz się przez {brand}"
+    "signingUpUnder": "Rejestrujesz się przez {brand}",
+    "restaurantLogin": "Logowanie restauracji"
   },
   "ordering": {
     "viewCart": "Zobacz koszyk",

@@ -108,7 +108,8 @@
     "creating": "กำลังสร้าง…",
     "resellerScopeError": "การลงชื่อเข้าใช้นี้สำหรับลูกค้าของ {brandName} เท่านั้น",
     "thisPartner": "พาร์ทเนอร์รายนี้",
-    "signingUpUnder": "คุณกำลังสมัครผ่าน {brand}"
+    "signingUpUnder": "คุณกำลังสมัครผ่าน {brand}",
+    "restaurantLogin": "เข้าสู่ระบบร้านอาหาร"
   },
   "ordering": {
     "viewCart": "ดูตะกร้า",

@@ -35,7 +35,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
       email: true, phone: true,
       billingProfile: true,
       resellerProfile: {
-        select: { companyName: true, imprint: true, brandLogoUrl: true, whiteLabelStatus: true },
+        select: { status: true, companyName: true, imprint: true, brandLogoUrl: true, whiteLabelStatus: true },
       },
     },
   });
@@ -43,7 +43,15 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
 
   // ── Biller: reseller (with active white-label) else FeeFreeOrdering ──
   const reseller = restaurant.resellerProfile;
-  const useReseller = !!(reseller?.whiteLabelStatus === "active" && reseller.companyName);
+  // Free de-brand tier (Luigi 2026-06-23): an APPROVED reseller who configured branding (imprint
+  // OR logo) bills under THEIR identity here — no paid subscription required — so the invoice never
+  // leaks "Fee Free Ordering" on a de-branded restaurant. Mirrors isResellerDebranded(); we still
+  // require companyName since it's the biller name. (A reseller who set neither stays on platform.)
+  const useReseller = !!(
+    reseller?.status === "approved" &&
+    (reseller.imprint?.trim() || reseller.brandLogoUrl) &&
+    reseller.companyName
+  );
   const biller = useReseller
     ? { name: reseller!.companyName as string, line: reseller!.imprint ?? "", logo: reseller!.brandLogoUrl ?? null }
     : { name: "Fee Free Ordering", line: "support@feefreeordering.com", logo: null as string | null };

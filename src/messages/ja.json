@@ -108,7 +108,8 @@
     "creating": "作成中…",
     "resellerScopeError": "このサインインは {brandName} のお客様専用です。",
     "thisPartner": "このパートナー",
-    "signingUpUnder": "{brand} を通じて登録しています"
+    "signingUpUnder": "{brand} を通じて登録しています",
+    "restaurantLogin": "レストランログイン"
   },
   "ordering": {
     "viewCart": "カートを見る",

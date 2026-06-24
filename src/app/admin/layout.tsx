@@ -21,6 +21,21 @@ import { FreePlanCapBanner } from "@/components/admin/FreePlanCapBanner";
 import { DunningBanner } from "@/components/admin/DunningBanner";
 import { daysLeft as graceDaysLeft } from "@/lib/dunning";
 import { CurrencyProvider } from "@/lib/currency-context";
+import { isResellerDebranded, RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
+import { isNeutralResellerHost } from "@/lib/restaurant-url";
+
+// Tab title: on the shared NEUTRAL reseller host the admin panel must carry ZERO
+// "Fee Free Ordering" branding, so we override the platform title (set in the root
+// layout) with a neutral "Restaurant Admin". Everywhere else we still neutralize to
+// "Restaurant Admin" (the admin panel isn't a marketing surface), but the key intent
+// is de-branding on the neutral host. Next.js 16: generateMetadata reads the request
+// host via next/headers. Luigi 2026-06-23.
+export async function generateMetadata() {
+  const host = (await headers()).get("host");
+  return {
+    title: isNeutralResellerHost(host) ? "Restaurant Admin" : "Admin · Fee Free Ordering",
+  };
+}
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
@@ -75,6 +90,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   /** Days left in the failed-payment grace window → drives the dunning banner.
    *  null = not in dunning (banner hidden). */
   let dunningDaysLeft: number | null = null;
+  /** Reseller's brand logo for the sidebar header — only when the restaurant's
+   *  reseller passes the FREE de-brand gate (isResellerDebranded). null = show
+   *  the default ChefHat. */
+  let resellerLogoUrl: string | null = null;
   if (restaurantId) {
     // "New orders" notification = pending orders that arrived since the owner
     // last opened the Orders page. The /admin/orders page stamps a per-restaurant
@@ -116,6 +135,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           // when this is set, the chip hides because the restaurant
           // is already live, no nudge needed.
           publishedAt: true,
+          // Reseller white-label: lets us show the reseller's logo in the
+          // admin sidebar when the reseller passes the FREE de-brand gate
+          // (isResellerDebranded). Select fragment is the shared, gate-aware one.
+          resellerProfile: { select: RESELLER_WHITE_LABEL_SELECT },
         },
       }),
     ]);
@@ -125,6 +148,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     restaurantCurrency = restaurant?.currency || "usd";
     isPublished = !!restaurant?.publishedAt;
     isChildAdmin = !!restaurant?.parentRestaurantId;
+    resellerLogoUrl = isResellerDebranded(restaurant?.resellerProfile)
+      ? (restaurant?.resellerProfile?.brandLogoUrl ?? null)
+      : null;
 
     // Dunning grace (Luigi 2026-06-15): when a failed-payment grace clock is
     // live, surface the countdown banner AND keep the admin unlocked (see the
@@ -335,6 +361,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               comingSoonFeatures={comingSoonFeatures}
               isChildAdmin={isChildAdmin}
               isPublished={isPublished}
+              resellerLogoUrl={resellerLogoUrl}
             />
             <div className="flex-1 flex flex-col overflow-hidden">
               <AdminHeader

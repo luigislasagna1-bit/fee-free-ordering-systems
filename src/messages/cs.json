@@ -108,7 +108,8 @@
     "creating": "Vytváření…",
     "resellerScopeError": "Toto přihlášení je určeno pouze pro zákazníky {brandName}.",
     "thisPartner": "tento partner",
-    "signingUpUnder": "Registrujete se prostřednictvím {brand}"
+    "signingUpUnder": "Registrujete se prostřednictvím {brand}",
+    "restaurantLogin": "Přihlášení restaurace"
   },
   "ordering": {
     "viewCart": "Zobrazit košík",

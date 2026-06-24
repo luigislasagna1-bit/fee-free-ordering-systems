@@ -108,7 +108,8 @@
     "creating": "Sedang membuat…",
     "resellerScopeError": "Login ini hanya untuk pelanggan {brandName}.",
     "thisPartner": "mitra ini",
-    "signingUpUnder": "Anda mendaftar melalui {brand}"
+    "signingUpUnder": "Anda mendaftar melalui {brand}",
+    "restaurantLogin": "Masuk Restoran"
   },
   "ordering": {
     "viewCart": "Lihat Keranjang",

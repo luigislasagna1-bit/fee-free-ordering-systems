@@ -71,6 +71,27 @@ export function isOwnCustomDomainHost(
 }
 
 /**
+ * True when `host` is the shared NEUTRAL reseller login domain — the GloriaFood
+ * "restaurantlogin.com" equivalent: a de-branded login / admin / kitchen surface carrying ZERO
+ * "Fee Free Ordering" branding, given to FREE reseller partners' restaurants to log in through.
+ * Paid Branded partners replace it with their OWN custom domain. Defaults to
+ * restaurantownerlogin.com; override with NEUTRAL_RESELLER_HOST. Luigi 2026-06-23.
+ *
+ * Client-safe: NEUTRAL_RESELLER_HOST isn't a NEXT_PUBLIC var, so on the client the literal
+ * default is used — fine, since the neutral host is only acted on server-side (proxy + layouts).
+ */
+export function isNeutralResellerHost(host: string | null | undefined): boolean {
+  if (!host) return false;
+  const neutral = (process.env.NEUTRAL_RESELLER_HOST || "restaurantownerlogin.com")
+    .toLowerCase()
+    .trim()
+    .replace(/^www\./, "");
+  if (!neutral) return false;
+  const h = host.toLowerCase().split(":")[0].trim();
+  return h === neutral || h === `www.${neutral}`;
+}
+
+/**
  * Absolute URL to a path under a restaurant's order flow, on its most-branded domain.
  * `subpath` is relative to the order root, e.g. "/status/<id>",
  * "/paypal/return?orderId=x", or "" for the storefront.

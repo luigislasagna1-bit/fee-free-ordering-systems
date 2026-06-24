@@ -29,16 +29,12 @@ export default async function ResellerLogoPage() {
       status: true,
       brandLogoUrl: true,
       brandLoginBgUrl: true,
-      whiteLabelStatus: true,
-      whiteLabelTier: true,
     },
   });
+  // Logo editor is FREE for any APPROVED reseller — no white-label
+  // subscription gate (Luigi 2026-06-23 restructure: imprint + logo are
+  // the free de-brand tier). Unapproved resellers go back to holding.
   if (profile?.status !== "approved") redirect("/reseller/holding");
-
-  // Paywall — needs an active White-Label subscription (basic or full).
-  const wlActive = profile.whiteLabelStatus === "active" &&
-    (profile.whiteLabelTier === "basic" || profile.whiteLabelTier === "full");
-  if (!wlActive) redirect("/reseller/branding");
 
   return (
     <LogoClient

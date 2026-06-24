@@ -10,6 +10,7 @@ export type RewriteDecision =
   | { kind: "passthrough"; reason: string }
   | { kind: "marketing"; reason: string }
   | { kind: "marketplace"; reason: string }
+  | { kind: "neutral-reseller"; reason: string }
   | { kind: "needs-lookup"; lookupBy: "subdomain" | "customDomain"; value: string };
 
 export interface ResolveContext {
@@ -33,6 +34,24 @@ export interface ResolveContext {
 export function decideHost({ host, platformDomain, extraPlatformDomains = [], marketplaceDomain }: ResolveContext): RewriteDecision {
   const normalizedHost = host.toLowerCase().split(":")[0].trim();
   if (!normalizedHost) return { kind: "passthrough", reason: "empty-host" };
+
+  // Neutral reseller login host (apex or www) — the shared GloriaFood-style
+  // "restaurantownerlogin.com" given to FREE reseller partners. It serves
+  // /login + /admin + /kitchen DE-BRANDED (no Fee Free Ordering chrome) and
+  // is NEVER a tenant. Checked FIRST (before marketplace / platform / custom-
+  // domain fallthrough) so it can't be mis-classified as a custom-domain
+  // lookup. Mirrors the env/default used by isNeutralResellerHost() in
+  // src/lib/restaurant-url.ts, with the same www normalization.
+  const neutralResellerHost = (process.env.NEUTRAL_RESELLER_HOST || "restaurantownerlogin.com")
+    .toLowerCase()
+    .trim()
+    .replace(/^www\./, "");
+  if (
+    neutralResellerHost &&
+    (normalizedHost === neutralResellerHost || normalizedHost === `www.${neutralResellerHost}`)
+  ) {
+    return { kind: "neutral-reseller", reason: "neutral-reseller-host" };
+  }
 
   // Marketplace domain (apex or www) — proxy then handles path-level routing.
   // Checked BEFORE platform-domain matching so feefreefood.com never gets

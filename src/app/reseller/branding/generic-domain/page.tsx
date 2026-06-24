@@ -41,7 +41,7 @@ export default async function ResellerGenericDomainPage() {
     <div className="max-w-3xl">
       <div className="mb-6">
         <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 rounded-full px-3 py-1 text-xs font-semibold mb-2">
-          <Globe className="w-3.5 h-3.5" /> Branding · Basic + Full
+          <Globe className="w-3.5 h-3.5" /> Branding
         </div>
         <h1 className="text-2xl font-bold text-gray-900 mb-1">Generic subdomain</h1>
         <p className="text-sm text-gray-500">
@@ -88,7 +88,7 @@ export default async function ResellerGenericDomainPage() {
               <li>
                 Want your own domain instead (e.g.{" "}
                 <code className="bg-gray-100 px-1 rounded">login.yourbrand.com</code>)?
-                Upgrade to White-Label Full and use{" "}
+                Upgrade to the Branded plan and use{" "}
                 <a href="/reseller/branding/custom-domain" className="text-emerald-600 font-semibold underline">
                   Custom domain
                 </a>{" "}

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { MapPin, Phone, Mail, Globe, Clock, ShoppingBag } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
 import { buildSeoLinks } from "@/lib/hosted-site-seo";
-import { isResellerWhiteLabel } from "@/lib/white-label";
+import { isResellerDebranded } from "@/lib/white-label";
 import { VisitTracker } from "@/components/order/VisitTracker";
 
 /**
@@ -120,7 +120,7 @@ export default async function HostedSitePage({
           <p className="text-gray-600 mt-3 leading-relaxed">
             This restaurant is putting the finishing touches on their site. Check back shortly — they&apos;ll be ready to take your order soon.
           </p>
-          {!isResellerWhiteLabel(result.resellerProfile) && (
+          {!isResellerDebranded(result.resellerProfile) && (
             <div className="mt-8 text-[11px] text-gray-400 uppercase tracking-wider">
               <a
                 href="https://www.feefreeordering.com"
@@ -1000,7 +1000,7 @@ export default async function HostedSitePage({
       <footer className="bg-gray-900 text-gray-300 py-8 pb-24 md:pb-8">
         <div className="max-w-5xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
           <p>&copy; {new Date().getFullYear()} {r.name}</p>
-          {!isResellerWhiteLabel(r.resellerProfile) && (
+          {!isResellerDebranded(r.resellerProfile) && (
             <p className="text-xs text-gray-500">
               <a
                 href="https://www.feefreeordering.com"

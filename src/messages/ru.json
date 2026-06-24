@@ -108,7 +108,8 @@
     "creating": "Создание…",
     "resellerScopeError": "Этот вход предназначен только для клиентов {brandName}.",
     "thisPartner": "этот партнёр",
-    "signingUpUnder": "Вы регистрируетесь через {brand}"
+    "signingUpUnder": "Вы регистрируетесь через {brand}",
+    "restaurantLogin": "Вход для ресторана"
   },
   "ordering": {
     "viewCart": "Корзина",

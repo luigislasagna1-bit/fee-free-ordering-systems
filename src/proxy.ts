@@ -44,6 +44,15 @@ const ADMIN_TO_SUPERADMIN: Array<{ match: RegExp; to: string }> = [
 
 const PLATFORM_DOMAIN = process.env.PLATFORM_DOMAIN || "localtest.me";
 const MARKETPLACE_DOMAIN = process.env.MARKETPLACE_DOMAIN || "";
+// Shared neutral reseller login host (GloriaFood-style "restaurantownerlogin.com"
+// for FREE reseller partners). Mirrors the env/default + www-normalization that
+// decideHost() and isNeutralResellerHost() (src/lib/restaurant-url.ts) use. Kept
+// here as a module constant so the /admin early-return (which runs before
+// decideHost) can tag it de-branded too.
+const NEUTRAL_RESELLER_HOST = (process.env.NEUTRAL_RESELLER_HOST || "restaurantownerlogin.com")
+  .toLowerCase()
+  .trim()
+  .replace(/^www\./, "");
 
 /**
  * Paths that ONLY make sense on the primary platform (admin/kitchen/auth/etc).
@@ -143,6 +152,18 @@ export async function proxy(req: NextRequest) {
     }
     const headers = new Headers(req.headers);
     headers.set("x-pathname", pathname);
+    // On the neutral reseller login host (restaurantownerlogin.com) the admin
+    // tree must render DE-BRANDED too. The /admin early-return runs before
+    // decideHost(); we set x-neutral-reseller here as an auxiliary signal, but
+    // the admin/kitchen layouts actually de-brand by reading the host directly
+    // (isNeutralResellerHost) in generateMetadata — same as the branch below.
+    const adminHost = host.toLowerCase().split(":")[0].trim();
+    if (
+      NEUTRAL_RESELLER_HOST &&
+      (adminHost === NEUTRAL_RESELLER_HOST || adminHost === `www.${NEUTRAL_RESELLER_HOST}`)
+    ) {
+      headers.set("x-neutral-reseller", "true");
+    }
     return NextResponse.next({ request: { headers } });
   }
 
@@ -151,6 +172,19 @@ export async function proxy(req: NextRequest) {
     platformDomain: PLATFORM_DOMAIN,
     marketplaceDomain: MARKETPLACE_DOMAIN || undefined,
   });
+
+  // ── Neutral reseller login host ────────────────────────────────────
+  // restaurantownerlogin.com (the GloriaFood-style shared login for FREE
+  // reseller partners). PASS THROUGH every path — do NOT rewrite to /order —
+  // so /login + /admin + /kitchen render normally, just DE-BRANDED. The
+  // /login + /admin + /kitchen layouts de-brand by reading the host directly
+  // (isNeutralResellerHost); x-neutral-reseller is set as an auxiliary signal
+  // for any future consumer. No redirect → no Cache-Control headers needed.
+  if (decision.kind === "neutral-reseller") {
+    const requestHeaders = new Headers(req.headers);
+    requestHeaders.set("x-neutral-reseller", "true");
+    return NextResponse.next({ request: { headers: requestHeaders } });
+  }
 
   // Marketing & passthrough — but first, on the primary platform domain we
   // 301 any /marketplace[/...] hit over to MARKETPLACE_DOMAIN so there's one

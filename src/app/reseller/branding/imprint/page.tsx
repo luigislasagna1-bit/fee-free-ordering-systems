@@ -12,9 +12,9 @@ import { ImprintClient } from "./ImprintClient";
  * "Supported by Partner Name LLC | contact@partner.com | +1234567890"
  * in receipt footers.
  *
- * Phase 1 ships persistence + email/receipt rendering; Phase 2 gates the
- * feature behind a paid white-label subscription. For now anyone with
- * an approved ResellerProfile can set it.
+ * FREE for any approved reseller (Luigi 2026-06-23 restructure). The imprint +
+ * logo are the free "de-brand" tier — no paid subscription required. Only the
+ * paid "Branded" tier ($19.99/mo) gates the login page + custom domain.
  */
 export default async function ResellerImprintPage() {
   const user = await getSessionUser();
@@ -28,18 +28,11 @@ export default async function ResellerImprintPage() {
       status: true,
       imprint: true,
       companyName: true,
-      whiteLabelStatus: true,
-      whiteLabelTier: true,
     },
   });
+  // Imprint editor is FREE for any APPROVED reseller — no white-label
+  // subscription gate. Unapproved resellers go back to holding.
   if (profile?.status !== "approved") redirect("/reseller/holding");
-
-  // Paywall — the editor requires an active White-Label subscription
-  // (basic or full). Send unpaid resellers to the overview page where
-  // they can subscribe.
-  const wlActive = profile.whiteLabelStatus === "active" &&
-    (profile.whiteLabelTier === "basic" || profile.whiteLabelTier === "full");
-  if (!wlActive) redirect("/reseller/branding");
 
   return (
     <ImprintClient

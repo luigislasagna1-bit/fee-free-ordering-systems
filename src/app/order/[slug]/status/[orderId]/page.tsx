@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import { use } from "react";
 import { PoweredByFeeFree } from "@/components/PoweredByFeeFree";
-import { isResellerWhiteLabel } from "@/lib/white-label";
+import { isResellerDebranded } from "@/lib/white-label";
 
 // Two step sets based on the restaurant's kitchen workflow mode. The
 // "simple" mode (GloriaFood-style) just has accept/reject in the kitchen —
@@ -267,7 +267,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   // under a reseller's own branded (white-label) account. The reseller
   // white-label fields ride along on order.restaurant from the public
   // /api/orders/[id] select. Luigi 2026-06-22.
-  const showPoweredBy = !isResellerWhiteLabel(order.restaurant?.resellerProfile);
+  const showPoweredBy = !isResellerDebranded(order.restaurant?.resellerProfile);
 
   // ── Promo snapshot parse ─────────────────────────────────────────
   // Same shape used by the confirmation page + receipt template.

@@ -108,7 +108,8 @@
     "creating": "Ustvarjanje…",
     "resellerScopeError": "Ta prijava je namenjena samo strankam {brandName}.",
     "thisPartner": "ta partner",
-    "signingUpUnder": "Registrirate se prek {brand}"
+    "signingUpUnder": "Registrirate se prek {brand}",
+    "restaurantLogin": "Prijava restavracije"
   },
   "ordering": {
     "viewCart": "Ogled košarice",

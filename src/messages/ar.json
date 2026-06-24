@@ -108,7 +108,8 @@
     "creating": "جارٍ الإنشاء…",
     "resellerScopeError": "تسجيل الدخول هذا مخصص لعملاء {brandName} فقط.",
     "thisPartner": "هذا الشريك",
-    "signingUpUnder": "أنت تسجّل عبر {brand}"
+    "signingUpUnder": "أنت تسجّل عبر {brand}",
+    "restaurantLogin": "تسجيل دخول المطعم"
   },
   "ordering": {
     "viewCart": "عرض السلة",

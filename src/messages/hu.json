@@ -108,7 +108,8 @@
     "creating": "Létrehozás…",
     "resellerScopeError": "Ez a bejelentkezés csak a {brandName} ügyfelei számára van.",
     "thisPartner": "ez a partner",
-    "signingUpUnder": "A(z) {brand} partneren keresztül regisztrál"
+    "signingUpUnder": "A(z) {brand} partneren keresztül regisztrál",
+    "restaurantLogin": "Étterem bejelentkezés"
   },
   "ordering": {
     "viewCart": "Kosár megtekintése",

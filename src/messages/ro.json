@@ -108,7 +108,8 @@
     "creating": "Se creează…",
     "resellerScopeError": "Această autentificare este doar pentru clienții {brandName}.",
     "thisPartner": "acest partener",
-    "signingUpUnder": "Vă înregistrați prin {brand}"
+    "signingUpUnder": "Vă înregistrați prin {brand}",
+    "restaurantLogin": "Autentificare restaurant"
   },
   "ordering": {
     "viewCart": "Vezi coșul",

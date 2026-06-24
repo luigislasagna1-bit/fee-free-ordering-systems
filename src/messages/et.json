@@ -108,7 +108,8 @@
     "creating": "Loomine…",
     "resellerScopeError": "See sisselogimine on mõeldud ainult {brandName} klientidele.",
     "thisPartner": "see partner",
-    "signingUpUnder": "Registreerute partneri {brand} kaudu"
+    "signingUpUnder": "Registreerute partneri {brand} kaudu",
+    "restaurantLogin": "Restorani sisselogimine"
   },
   "ordering": {
     "viewCart": "Vaata ostukorvi",

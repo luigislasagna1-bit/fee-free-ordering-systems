@@ -108,7 +108,8 @@
     "creating": "Opretter…",
     "resellerScopeError": "Dette login er kun for kunder hos {brandName}.",
     "thisPartner": "denne partner",
-    "signingUpUnder": "Du tilmelder dig via {brand}"
+    "signingUpUnder": "Du tilmelder dig via {brand}",
+    "restaurantLogin": "Restaurant-login"
   },
   "ordering": {
     "viewCart": "Se kurv",

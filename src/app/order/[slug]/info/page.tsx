@@ -3,7 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import prisma from "@/lib/db";
 import { resolveLocale, loadMessages } from "@/lib/i18n-server";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
-import { isResellerWhiteLabel } from "@/lib/white-label";
+import { isResellerDebranded, RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 import { RestaurantInfoClient } from "./RestaurantInfoClient";
 
 export default async function RestaurantInfoPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -16,8 +16,9 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
       slug: true, name: true, slogan: true, description: true,
       // Reseller white-label gate for the "Powered by Fee Free Ordering" credit:
       // we SHOW the credit on every restaurant (free marketing + SEO backlink) and
-      // hide it ONLY for reseller white-label accounts. Luigi 2026-06-22.
-      resellerProfile: { select: { status: true, whiteLabelStatus: true, whiteLabelTier: true } },
+      // hide it for de-branded resellers (free de-brand tier — approved reseller who
+      // configured an imprint or logo). Luigi 2026-06-23.
+      resellerProfile: { select: RESELLER_WHITE_LABEL_SELECT },
       phone: true, email: true, address: true, city: true, state: true, zip: true,
       lat: true, lng: true,
       mapProvider: true, googleMapsApiKey: true,
@@ -54,7 +55,7 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
   // (free marketing + SEO backlink), suppressing it ONLY for reseller white-label
   // accounts (they pay for their own branding). A plain restaurant on its own
   // verified custom domain STILL shows the credit. Luigi 2026-06-22.
-  const showPoweredBy = !isResellerWhiteLabel(restaurant.resellerProfile);
+  const showPoweredBy = !isResellerDebranded(restaurant.resellerProfile);
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>

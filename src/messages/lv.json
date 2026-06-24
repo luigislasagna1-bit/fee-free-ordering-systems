@@ -108,7 +108,8 @@
     "creating": "Izveido…",
     "resellerScopeError": "Šī pieteikšanās ir paredzēta tikai {brandName} klientiem.",
     "thisPartner": "šis partneris",
-    "signingUpUnder": "Jūs reģistrējaties caur {brand}"
+    "signingUpUnder": "Jūs reģistrējaties caur {brand}",
+    "restaurantLogin": "Restorāna pieteikšanās"
   },
   "ordering": {
     "viewCart": "Skatīt grozu",

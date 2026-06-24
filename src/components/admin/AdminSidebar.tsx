@@ -485,6 +485,7 @@ export function AdminSidebar({
   comingSoonFeatures = [],
   isChildAdmin = false,
   isPublished = false,
+  resellerLogoUrl = null,
 }: {
   session: Session;
   pendingOrders?: number;
@@ -505,6 +506,11 @@ export function AdminSidebar({
   /** True iff Restaurant.publishedAt is set. Hides the "Ready to publish"
    *  chip once the restaurant is already live — no nudge needed. */
   isPublished?: boolean;
+  /** Reseller's brand logo URL, shown in the sidebar header IN PLACE of the
+   *  ChefHat when the restaurant's reseller passes the FREE de-brand gate
+   *  (isResellerDebranded). null = show the default ChefHat. Computed in the
+   *  admin layout so this component stays client-safe (no prisma import). */
+  resellerLogoUrl?: string | null;
 }) {
   // Set for O(1) lookups when deciding whether a paid item is locked.
   const entitled = new Set(entitlements);
@@ -776,7 +782,11 @@ export function AdminSidebar({
       <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
         {!collapsed && (
           <Link href="/admin" className="flex items-center gap-2 text-emerald-600 font-bold text-lg truncate">
-            <ChefHat className="w-6 h-6 flex-shrink-0" />
+            {resellerLogoUrl ? (
+              <img src={resellerLogoUrl} alt="" className="w-6 h-6 object-contain flex-shrink-0" />
+            ) : (
+              <ChefHat className="w-6 h-6 flex-shrink-0" />
+            )}
             <span className="truncate">{tr("dashboard", "Dashboard")}</span>
           </Link>
         )}

@@ -46,7 +46,7 @@ export default async function ResellerDetailPage({ params }: { params: Promise<{
       <div className="mt-8 bg-white rounded-xl border border-gray-100 shadow-sm p-5">
         <h2 className="text-sm font-bold text-gray-900 mb-3">White-Label</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
-          <Kv label="Tier" value={profile.whiteLabelTier ? profile.whiteLabelTier === "full" ? "Full ($29)" : "Basic ($9.99)" : "—"} />
+          <Kv label="Tier" value={profile.whiteLabelTier === "full" ? "Branded ($19.99)" : profile.whiteLabelTier === "basic" ? "Basic (legacy)" : "Free"} />
           <Kv label="Subscription" value={profile.whiteLabelStatus ?? "—"} highlight={profile.whiteLabelStatus === "past_due" ? "danger" : profile.whiteLabelStatus === "active" ? "good" : null} />
           <Kv label="Renews / ends" value={profile.whiteLabelCurrentPeriodEnd ? `${profile.whiteLabelCancelAtPeriodEnd ? "Ends" : "Renews"} ${new Date(profile.whiteLabelCurrentPeriodEnd).toLocaleDateString()}` : "—"} />
           <Kv label="Stripe sub ID" mono value={profile.whiteLabelStripeSubscriptionId ?? "—"} />

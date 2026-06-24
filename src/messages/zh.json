@@ -108,7 +108,8 @@
     "creating": "创建中…",
     "resellerScopeError": "此登录仅供 {brandName} 的客户使用。",
     "thisPartner": "此合作伙伴",
-    "signingUpUnder": "您正在通过 {brand} 注册"
+    "signingUpUnder": "您正在通过 {brand} 注册",
+    "restaurantLogin": "餐厅登录"
   },
   "ordering": {
     "viewCart": "查看购物车",

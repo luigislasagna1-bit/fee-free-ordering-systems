@@ -108,7 +108,8 @@
     "creating": "Aanmaken…",
     "resellerScopeError": "Deze aanmelding is alleen voor klanten van {brandName}.",
     "thisPartner": "deze partner",
-    "signingUpUnder": "U registreert zich via {brand}"
+    "signingUpUnder": "U registreert zich via {brand}",
+    "restaurantLogin": "Restaurant-login"
   },
   "ordering": {
     "viewCart": "Winkelwagen bekijken",

@@ -108,7 +108,8 @@
     "creating": "Erstellen…",
     "resellerScopeError": "Diese Anmeldung ist nur für Kunden von {brandName}.",
     "thisPartner": "diesem Partner",
-    "signingUpUnder": "Sie registrieren sich über {brand}"
+    "signingUpUnder": "Sie registrieren sich über {brand}",
+    "restaurantLogin": "Restaurant-Anmeldung"
   },
   "ordering": {
     "viewCart": "Warenkorb anzeigen",
