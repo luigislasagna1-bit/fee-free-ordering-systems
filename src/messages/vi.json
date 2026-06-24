@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 giờ (1 ngày)",
       "cateringNotice48h": "48 giờ (2 ngày)",
       "cateringNotice72h": "72 giờ (3 ngày)",
-      "cateringNoticeHelp": "Các món được đánh dấu là tiệc — hoặc các món trong một danh mục được đánh dấu là tiệc — không thể đặt theo kiểu giao ngay. Khách hàng phải đặt lịch đơn hàng trước ít nhất {hours} giờ. Quản lý món nào là tiệc tại <link>trang thực đơn</link>."
+      "cateringNoticeHelp": "Các món được đánh dấu là tiệc — hoặc các món trong một danh mục được đánh dấu là tiệc — không thể đặt theo kiểu giao ngay. Khách hàng phải đặt lịch đơn hàng trước ít nhất {hours} giờ. Quản lý món nào là tiệc tại <link>trang thực đơn</link>.",
+      "pause": {
+        "title": "Tạm dừng dịch vụ",
+        "description": "Tạm thời ngừng nhận đơn hàng mới cho một dịch vụ khi bếp đang quá tải — dịch vụ tự động tiếp tục khi hết thời gian, hoặc nhấn Tiếp tục.",
+        "pickServices": "Chọn dịch vụ",
+        "noServices": "Chưa có dịch vụ nào được bật.",
+        "duration30": "30 phút",
+        "duration1h": "1 giờ",
+        "duration2h": "2 giờ",
+        "restOfDay": "Hết ngày hôm nay",
+        "pauseFor": "Tạm dừng {duration}",
+        "resumeNow": "Tiếp tục ngay",
+        "pausedUntil": "tạm dừng đến {time}",
+        "pickFirst": "Vui lòng chọn ít nhất một dịch vụ trước.",
+        "pausedToast": "Đã tạm dừng dịch vụ",
+        "resumedToast": "Đã tiếp tục dịch vụ",
+        "saving": "Đang lưu…"
+      }
     },
     "delivery": {
       "title": "Khu vực giao hàng",

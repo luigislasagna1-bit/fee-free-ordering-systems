@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 tim (1 dag)",
       "cateringNotice48h": "48 tim (2 dagar)",
       "cateringNotice72h": "72 tim (3 dagar)",
-      "cateringNoticeHelp": "Artiklar som markerats som catering — eller artiklar i en kategori som markerats som catering — kan inte beställas för omedelbar leverans. Kunden måste schemalägga beställningen minst {hours} tim i förväg. Hantera vilka artiklar som är catering på <link>menysidan</link>."
+      "cateringNoticeHelp": "Artiklar som markerats som catering — eller artiklar i en kategori som markerats som catering — kan inte beställas för omedelbar leverans. Kunden måste schemalägga beställningen minst {hours} tim i förväg. Hantera vilka artiklar som är catering på <link>menysidan</link>.",
+      "pause": {
+        "title": "Pausa tjänster",
+        "description": "Sluta tillfälligt ta emot nya beställningar för en tjänst när köket är överbelastat — den återupptas automatiskt när tiden är slut, eller tryck på Återuppta.",
+        "pickServices": "Välj tjänster",
+        "noServices": "Inga tjänster har aktiverats än.",
+        "duration30": "30 min",
+        "duration1h": "1 timme",
+        "duration2h": "2 timmar",
+        "restOfDay": "Resten av dagen",
+        "pauseFor": "Pausa {duration}",
+        "resumeNow": "Återuppta nu",
+        "pausedUntil": "pausad till {time}",
+        "pickFirst": "Välj minst en tjänst först.",
+        "pausedToast": "Tjänster pausade",
+        "resumedToast": "Tjänster återupptagna",
+        "saving": "Sparar…"
+      }
     },
     "delivery": {
       "title": "Leveranszoner",

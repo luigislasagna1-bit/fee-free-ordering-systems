@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24s (1 gün)",
       "cateringNotice48h": "48s (2 gün)",
       "cateringNotice72h": "72s (3 gün)",
-      "cateringNoticeHelp": "Catering olarak işaretlenen ürünler — veya catering olarak işaretlenmiş bir kategorideki ürünler — ASAP (en kısa sürede) için sipariş edilemez. Müşteri, siparişi en az {hours}s önceden zamanlamalıdır. Hangi ürünlerin catering olduğunu <link>menü sayfası</link> bölümünden yönetin."
+      "cateringNoticeHelp": "Catering olarak işaretlenen ürünler — veya catering olarak işaretlenmiş bir kategorideki ürünler — ASAP (en kısa sürede) için sipariş edilemez. Müşteri, siparişi en az {hours}s önceden zamanlamalıdır. Hangi ürünlerin catering olduğunu <link>menü sayfası</link> bölümünden yönetin.",
+      "pause": {
+        "title": "Hizmetleri duraklat",
+        "description": "Mutfak yoğun olduğunda bir hizmet için yeni sipariş almayı geçici olarak durdurun — süre dolduğunda otomatik olarak devam eder veya Devam Et'e dokunun.",
+        "pickServices": "Hizmetleri seç",
+        "noServices": "Henüz etkinleştirilmiş hizmet yok.",
+        "duration30": "30 dk",
+        "duration1h": "1 saat",
+        "duration2h": "2 saat",
+        "restOfDay": "Günün geri kalanı",
+        "pauseFor": "{duration} duraklat",
+        "resumeNow": "Şimdi devam et",
+        "pausedUntil": "{time} saatine kadar duraklatıldı",
+        "pickFirst": "Önce en az bir hizmet seçin.",
+        "pausedToast": "Hizmetler duraklatıldı",
+        "resumedToast": "Hizmetler devam ettirildi",
+        "saving": "Kaydediliyor…"
+      }
     },
     "delivery": {
       "title": "Teslimat Bölgeleri",

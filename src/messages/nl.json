@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 uur (1 dag)",
       "cateringNotice48h": "48 uur (2 dagen)",
       "cateringNotice72h": "72 uur (3 dagen)",
-      "cateringNoticeHelp": "Items die als catering zijn gemarkeerd — of items binnen een categorie die als catering is gemarkeerd — kunnen niet voor ASAP worden besteld. De klant moet de bestelling minstens {hours} uur van tevoren inplannen. Beheer welke items catering zijn op <link>de menupagina</link>."
+      "cateringNoticeHelp": "Items die als catering zijn gemarkeerd — of items binnen een categorie die als catering is gemarkeerd — kunnen niet voor ASAP worden besteld. De klant moet de bestelling minstens {hours} uur van tevoren inplannen. Beheer welke items catering zijn op <link>de menupagina</link>.",
+      "pause": {
+        "title": "Services pauzeren",
+        "description": "Stop tijdelijk met het aannemen van nieuwe bestellingen voor een service wanneer de keuken het druk heeft — deze wordt automatisch hervat als de tijd om is, of tik op Hervatten.",
+        "pickServices": "Services kiezen",
+        "noServices": "Er zijn nog geen services ingeschakeld.",
+        "duration30": "30 min",
+        "duration1h": "1 uur",
+        "duration2h": "2 uur",
+        "restOfDay": "Rest van de dag",
+        "pauseFor": "Pauzeren {duration}",
+        "resumeNow": "Nu hervatten",
+        "pausedUntil": "gepauzeerd tot {time}",
+        "pickFirst": "Kies eerst minstens één service.",
+        "pausedToast": "Services gepauzeerd",
+        "resumedToast": "Services hervat",
+        "saving": "Opslaan…"
+      }
     },
     "delivery": {
       "title": "Bezorgzones",

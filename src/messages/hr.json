@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 h (1 dan)",
       "cateringNotice48h": "48 h (2 dana)",
       "cateringNotice72h": "72 h (3 dana)",
-      "cateringNoticeHelp": "Stavke označene kao catering — ili stavke unutar kategorije označene za catering — ne mogu se naručiti za odmah. Kupac mora zakazati narudžbu najmanje {hours} h unaprijed. Upravljajte time koje su stavke catering na <link>stranici jelovnika</link>."
+      "cateringNoticeHelp": "Stavke označene kao catering — ili stavke unutar kategorije označene za catering — ne mogu se naručiti za odmah. Kupac mora zakazati narudžbu najmanje {hours} h unaprijed. Upravljajte time koje su stavke catering na <link>stranici jelovnika</link>.",
+      "pause": {
+        "title": "Pauziraj usluge",
+        "description": "Privremeno zaustavite primanje novih narudžbi za uslugu kada je kuhinja preopterećena — automatski se nastavlja kad vrijeme istekne ili dodirnite Nastavi.",
+        "pickServices": "Odaberi usluge",
+        "noServices": "Još nije omogućena nijedna usluga.",
+        "duration30": "30 min",
+        "duration1h": "1 sat",
+        "duration2h": "2 sata",
+        "restOfDay": "Ostatak dana",
+        "pauseFor": "Pauziraj {duration}",
+        "resumeNow": "Nastavi sada",
+        "pausedUntil": "pauzirano do {time}",
+        "pickFirst": "Prvo odaberite barem jednu uslugu.",
+        "pausedToast": "Usluge pauzirane",
+        "resumedToast": "Usluge nastavljene",
+        "saving": "Spremanje…"
+      }
     },
     "delivery": {
       "title": "Zone dostave",

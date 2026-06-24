@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 jam (1 hari)",
       "cateringNotice48h": "48 jam (2 hari)",
       "cateringNotice72h": "72 jam (3 hari)",
-      "cateringNoticeHelp": "Item yang ditandai sebagai katering — atau item dalam kategori yang ditandai katering — tidak dapat dipesan untuk SECEPATNYA. Pelanggan harus menjadwalkan pesanan setidaknya {hours} jam sebelumnya. Kelola item mana yang termasuk katering di <link>halaman menu</link>."
+      "cateringNoticeHelp": "Item yang ditandai sebagai katering — atau item dalam kategori yang ditandai katering — tidak dapat dipesan untuk SECEPATNYA. Pelanggan harus menjadwalkan pesanan setidaknya {hours} jam sebelumnya. Kelola item mana yang termasuk katering di <link>halaman menu</link>.",
+      "pause": {
+        "title": "Jeda layanan",
+        "description": "Hentikan sementara penerimaan pesanan baru untuk suatu layanan saat dapur sedang sibuk — otomatis dilanjutkan saat waktunya habis, atau ketuk Lanjutkan.",
+        "pickServices": "Pilih layanan",
+        "noServices": "Belum ada layanan yang diaktifkan.",
+        "duration30": "30 mnt",
+        "duration1h": "1 jam",
+        "duration2h": "2 jam",
+        "restOfDay": "Sisa hari ini",
+        "pauseFor": "Jeda {duration}",
+        "resumeNow": "Lanjutkan sekarang",
+        "pausedUntil": "dijeda hingga {time}",
+        "pickFirst": "Pilih setidaknya satu layanan terlebih dahulu.",
+        "pausedToast": "Layanan dijeda",
+        "resumedToast": "Layanan dilanjutkan",
+        "saving": "Menyimpan…"
+      }
     },
     "delivery": {
       "title": "Zona Pengiriman",

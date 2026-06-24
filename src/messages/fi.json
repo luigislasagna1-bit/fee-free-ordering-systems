@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 h (1 päivä)",
       "cateringNotice48h": "48 h (2 päivää)",
       "cateringNotice72h": "72 h (3 päivää)",
-      "cateringNoticeHelp": "Pitopalveluksi merkittyjä tuotteita — tai pitopalveluksi merkityn kategorian sisällä olevia tuotteita — ei voi tilata heti toimitettavaksi. Asiakkaan on ajoitettava tilaus vähintään {hours} h etukäteen. Hallitse, mitkä tuotteet ovat pitopalvelua, kohdassa <link>menusivu</link>."
+      "cateringNoticeHelp": "Pitopalveluksi merkittyjä tuotteita — tai pitopalveluksi merkityn kategorian sisällä olevia tuotteita — ei voi tilata heti toimitettavaksi. Asiakkaan on ajoitettava tilaus vähintään {hours} h etukäteen. Hallitse, mitkä tuotteet ovat pitopalvelua, kohdassa <link>menusivu</link>.",
+      "pause": {
+        "title": "Keskeytä palvelut",
+        "description": "Lopeta tilapäisesti uusien tilausten vastaanottaminen palvelulle, kun keittiö on ruuhkautunut — se jatkuu automaattisesti, kun aika on kulunut, tai napauta Jatka.",
+        "pickServices": "Valitse palvelut",
+        "noServices": "Yhtään palvelua ei ole vielä otettu käyttöön.",
+        "duration30": "30 min",
+        "duration1h": "1 tunti",
+        "duration2h": "2 tuntia",
+        "restOfDay": "Loppupäivä",
+        "pauseFor": "Keskeytä {duration}",
+        "resumeNow": "Jatka nyt",
+        "pausedUntil": "keskeytetty klo {time} asti",
+        "pickFirst": "Valitse ensin vähintään yksi palvelu.",
+        "pausedToast": "Palvelut keskeytetty",
+        "resumedToast": "Palvelut jatkettu",
+        "saving": "Tallennetaan…"
+      }
     },
     "delivery": {
       "title": "Toimitusalueet",

@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 Std. (1 Tag)",
       "cateringNotice48h": "48 Std. (2 Tage)",
       "cateringNotice72h": "72 Std. (3 Tage)",
-      "cateringNoticeHelp": "Als Catering markierte Artikel — oder Artikel in einer als Catering markierten Kategorie — können nicht für die sofortige Lieferung bestellt werden. Der Kunde muss die Bestellung mindestens {hours} Std. im Voraus planen. Verwalten Sie auf <link>der Speisekarte</link>, welche Artikel zum Catering gehören."
+      "cateringNoticeHelp": "Als Catering markierte Artikel — oder Artikel in einer als Catering markierten Kategorie — können nicht für die sofortige Lieferung bestellt werden. Der Kunde muss die Bestellung mindestens {hours} Std. im Voraus planen. Verwalten Sie auf <link>der Speisekarte</link>, welche Artikel zum Catering gehören.",
+      "pause": {
+        "title": "Services pausieren",
+        "description": "Stoppen Sie vorübergehend die Annahme neuer Bestellungen für einen Service, wenn die Küche überlastet ist — er wird automatisch fortgesetzt, sobald die Zeit abgelaufen ist, oder tippen Sie auf Fortsetzen.",
+        "pickServices": "Services auswählen",
+        "noServices": "Es sind noch keine Services aktiviert.",
+        "duration30": "30 Min.",
+        "duration1h": "1 Stunde",
+        "duration2h": "2 Stunden",
+        "restOfDay": "Rest des Tages",
+        "pauseFor": "Pausieren {duration}",
+        "resumeNow": "Jetzt fortsetzen",
+        "pausedUntil": "pausiert bis {time}",
+        "pickFirst": "Wählen Sie zuerst mindestens einen Service aus.",
+        "pausedToast": "Services pausiert",
+        "resumedToast": "Services fortgesetzt",
+        "saving": "Wird gespeichert…"
+      }
     },
     "delivery": {
       "title": "Lieferzonen",

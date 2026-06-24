@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24h (1 dan)",
       "cateringNotice48h": "48h (2 dana)",
       "cateringNotice72h": "72h (3 dana)",
-      "cateringNoticeHelp": "Stavke označene kao ketering — ili stavke u kategoriji označenoj kao ketering — ne mogu se naručiti za odmah (ASAP). Kupac mora da zakaže porudžbinu najmanje {hours}h unapred. Upravljajte time koje su stavke ketering na <link>stranici menija</link>."
+      "cateringNoticeHelp": "Stavke označene kao ketering — ili stavke u kategoriji označenoj kao ketering — ne mogu se naručiti za odmah (ASAP). Kupac mora da zakaže porudžbinu najmanje {hours}h unapred. Upravljajte time koje su stavke ketering na <link>stranici menija</link>.",
+      "pause": {
+        "title": "Паузирај услуге",
+        "description": "Привремено зауставите примање нових поруџбина за услугу када је кухиња преоптерећена — аутоматски се наставља када истекне време или додирните Настави.",
+        "pickServices": "Изабери услуге",
+        "noServices": "Још увек није омогућена ниједна услуга.",
+        "duration30": "30 мин",
+        "duration1h": "1 сат",
+        "duration2h": "2 сата",
+        "restOfDay": "До краја дана",
+        "pauseFor": "Паузирај {duration}",
+        "resumeNow": "Настави сада",
+        "pausedUntil": "паузирано до {time}",
+        "pickFirst": "Прво изаберите бар једну услугу.",
+        "pausedToast": "Услуге паузиране",
+        "resumedToast": "Услуге настављене",
+        "saving": "Чување…"
+      }
     },
     "delivery": {
       "title": "Zone dostave",

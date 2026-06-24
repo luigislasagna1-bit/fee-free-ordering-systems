@@ -1075,7 +1075,24 @@
       "cateringNotice24h": "24h (1 day)",
       "cateringNotice48h": "48h (2 days)",
       "cateringNotice72h": "72h (3 days)",
-      "cateringNoticeHelp": "Items marked as catering — or items inside a category marked catering — can't be ordered for ASAP. The customer must schedule the order at least {hours}h in advance. Manage which items are catering on <link>the menu page</link>."
+      "cateringNoticeHelp": "Items marked as catering — or items inside a category marked catering — can't be ordered for ASAP. The customer must schedule the order at least {hours}h in advance. Manage which items are catering on <link>the menu page</link>.",
+      "pause": {
+        "title": "Pause services",
+        "description": "Temporarily stop taking new orders for a service when the kitchen is slammed — it auto-resumes when the time is up, or tap Resume.",
+        "pickServices": "Pick services",
+        "noServices": "No services are enabled yet.",
+        "duration30": "30 min",
+        "duration1h": "1 hour",
+        "duration2h": "2 hours",
+        "restOfDay": "Rest of day",
+        "pauseFor": "Pause {duration}",
+        "resumeNow": "Resume now",
+        "pausedUntil": "paused until {time}",
+        "pickFirst": "Pick at least one service first.",
+        "pausedToast": "Services paused",
+        "resumedToast": "Services resumed",
+        "saving": "Saving…"
+      }
     },
     "delivery": {
       "title": "Delivery Zones",

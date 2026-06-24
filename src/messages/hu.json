@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 óra (1 nap)",
       "cateringNotice48h": "48 óra (2 nap)",
       "cateringNotice72h": "72 óra (3 nap)",
-      "cateringNoticeHelp": "A cateringként megjelölt tételek — vagy a cateringként megjelölt kategóriában lévő tételek — nem rendelhetők azonnali kiszállításra. A vendégnek legalább {hours} órával előre le kell adnia a rendelést. Az étlap oldalon kezelheted, mely tételek tartoznak a cateringhez: <link>az étlap oldalon</link>."
+      "cateringNoticeHelp": "A cateringként megjelölt tételek — vagy a cateringként megjelölt kategóriában lévő tételek — nem rendelhetők azonnali kiszállításra. A vendégnek legalább {hours} órával előre le kell adnia a rendelést. Az étlap oldalon kezelheted, mely tételek tartoznak a cateringhez: <link>az étlap oldalon</link>.",
+      "pause": {
+        "title": "Szolgáltatások szüneteltetése",
+        "description": "Ideiglenesen állítsa le az új rendelések fogadását egy szolgáltatáshoz, amikor a konyha túlterhelt — az idő leteltével automatikusan folytatódik, vagy koppintson a Folytatás gombra.",
+        "pickServices": "Szolgáltatások kiválasztása",
+        "noServices": "Még nincs engedélyezve egyetlen szolgáltatás sem.",
+        "duration30": "30 perc",
+        "duration1h": "1 óra",
+        "duration2h": "2 óra",
+        "restOfDay": "A nap hátralévő része",
+        "pauseFor": "Szünet {duration}",
+        "resumeNow": "Folytatás most",
+        "pausedUntil": "szüneteltetve eddig: {time}",
+        "pickFirst": "Először válasszon ki legalább egy szolgáltatást.",
+        "pausedToast": "Szolgáltatások szüneteltetve",
+        "resumedToast": "Szolgáltatások folytatva",
+        "saving": "Mentés…"
+      }
     },
     "delivery": {
       "title": "Szállítási zónák",

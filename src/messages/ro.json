@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24h (1 zi)",
       "cateringNotice48h": "48h (2 zile)",
       "cateringNotice72h": "72h (3 zile)",
-      "cateringNoticeHelp": "Produsele marcate ca catering — sau produsele dintr-o categorie marcată ca catering — nu pot fi comandate pentru livrare imediată (ASAP). Clientul trebuie să programeze comanda cu cel puțin {hours}h în avans. Gestionează care produse sunt pentru catering pe <link>pagina meniului</link>."
+      "cateringNoticeHelp": "Produsele marcate ca catering — sau produsele dintr-o categorie marcată ca catering — nu pot fi comandate pentru livrare imediată (ASAP). Clientul trebuie să programeze comanda cu cel puțin {hours}h în avans. Gestionează care produse sunt pentru catering pe <link>pagina meniului</link>.",
+      "pause": {
+        "title": "Întrerupe serviciile",
+        "description": "Oprește temporar preluarea comenzilor noi pentru un serviciu când bucătăria este aglomerată — se reia automat când expiră timpul sau atinge Reia.",
+        "pickServices": "Alege serviciile",
+        "noServices": "Niciun serviciu nu este activat încă.",
+        "duration30": "30 min",
+        "duration1h": "1 oră",
+        "duration2h": "2 ore",
+        "restOfDay": "Restul zilei",
+        "pauseFor": "Întrerupe {duration}",
+        "resumeNow": "Reia acum",
+        "pausedUntil": "întrerupt până la {time}",
+        "pickFirst": "Alege mai întâi cel puțin un serviciu.",
+        "pausedToast": "Servicii întrerupte",
+        "resumedToast": "Servicii reluate",
+        "saving": "Se salvează…"
+      }
     },
     "delivery": {
       "title": "Zone de livrare",

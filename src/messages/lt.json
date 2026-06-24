@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 val. (1 diena)",
       "cateringNotice48h": "48 val. (2 dienos)",
       "cateringNotice72h": "72 val. (3 dienos)",
-      "cateringNoticeHelp": "Maitinimo paslaugomis pažymėtų prekių — arba prekių, esančių kategorijoje, pažymėtoje kaip maitinimo paslauga — negalima užsisakyti iškart (ASAP). Klientas turi suplanuoti užsakymą bent prieš {hours} val. Tvarkykite, kurios prekės yra maitinimo paslaugos, <link>meniu puslapyje</link>."
+      "cateringNoticeHelp": "Maitinimo paslaugomis pažymėtų prekių — arba prekių, esančių kategorijoje, pažymėtoje kaip maitinimo paslauga — negalima užsisakyti iškart (ASAP). Klientas turi suplanuoti užsakymą bent prieš {hours} val. Tvarkykite, kurios prekės yra maitinimo paslaugos, <link>meniu puslapyje</link>.",
+      "pause": {
+        "title": "Pristabdyti paslaugas",
+        "description": "Laikinai sustabdykite naujų užsakymų priėmimą paslaugai, kai virtuvė perpildyta — pasibaigus laikui ji automatiškai atnaujinama arba bakstelėkite Tęsti.",
+        "pickServices": "Pasirinkti paslaugas",
+        "noServices": "Dar neįjungta nė viena paslauga.",
+        "duration30": "30 min.",
+        "duration1h": "1 val.",
+        "duration2h": "2 val.",
+        "restOfDay": "Iki dienos pabaigos",
+        "pauseFor": "Pristabdyti {duration}",
+        "resumeNow": "Tęsti dabar",
+        "pausedUntil": "pristabdyta iki {time}",
+        "pickFirst": "Pirmiausia pasirinkite bent vieną paslaugą.",
+        "pausedToast": "Paslaugos pristabdytos",
+        "resumedToast": "Paslaugos atnaujintos",
+        "saving": "Įrašoma…"
+      }
     },
     "delivery": {
       "title": "Pristatymo zonos",

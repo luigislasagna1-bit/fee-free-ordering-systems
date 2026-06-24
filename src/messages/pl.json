@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24h (1 dzień)",
       "cateringNotice48h": "48h (2 dni)",
       "cateringNotice72h": "72h (3 dni)",
-      "cateringNoticeHelp": "Pozycje oznaczone jako catering — lub pozycje w kategorii oznaczonej jako catering — nie mogą być zamawiane „na teraz”. Klient musi zaplanować zamówienie z co najmniej {hours}h wyprzedzeniem. Zarządzaj tym, które pozycje są cateringiem, na <link>stronie menu</link>."
+      "cateringNoticeHelp": "Pozycje oznaczone jako catering — lub pozycje w kategorii oznaczonej jako catering — nie mogą być zamawiane „na teraz”. Klient musi zaplanować zamówienie z co najmniej {hours}h wyprzedzeniem. Zarządzaj tym, które pozycje są cateringiem, na <link>stronie menu</link>.",
+      "pause": {
+        "title": "Wstrzymaj usługi",
+        "description": "Tymczasowo zatrzymaj przyjmowanie nowych zamówień dla usługi, gdy kuchnia jest przeciążona — zostanie automatycznie wznowiona po upływie czasu lub dotknij Wznów.",
+        "pickServices": "Wybierz usługi",
+        "noServices": "Nie włączono jeszcze żadnej usługi.",
+        "duration30": "30 min",
+        "duration1h": "1 godzina",
+        "duration2h": "2 godziny",
+        "restOfDay": "Do końca dnia",
+        "pauseFor": "Wstrzymaj {duration}",
+        "resumeNow": "Wznów teraz",
+        "pausedUntil": "wstrzymano do {time}",
+        "pickFirst": "Najpierw wybierz co najmniej jedną usługę.",
+        "pausedToast": "Usługi wstrzymane",
+        "resumedToast": "Usługi wznowione",
+        "saving": "Zapisywanie…"
+      }
     },
     "delivery": {
       "title": "Strefy dostawy",

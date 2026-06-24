@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 h (1 día)",
       "cateringNotice48h": "48 h (2 días)",
       "cateringNotice72h": "72 h (3 días)",
-      "cateringNoticeHelp": "Los artículos marcados como catering — o los artículos dentro de una categoría marcada como catering — no se pueden pedir para entrega inmediata. El cliente debe programar el pedido con al menos {hours} h de antelación. Gestiona qué artículos son de catering en <link>la página del menú</link>."
+      "cateringNoticeHelp": "Los artículos marcados como catering — o los artículos dentro de una categoría marcada como catering — no se pueden pedir para entrega inmediata. El cliente debe programar el pedido con al menos {hours} h de antelación. Gestiona qué artículos son de catering en <link>la página del menú</link>.",
+      "pause": {
+        "title": "Pausar servicios",
+        "description": "Deja de aceptar temporalmente nuevos pedidos de un servicio cuando la cocina está saturada: se reanuda automáticamente cuando se acaba el tiempo, o toca Reanudar.",
+        "pickServices": "Elegir servicios",
+        "noServices": "Aún no hay servicios activados.",
+        "duration30": "30 min",
+        "duration1h": "1 hora",
+        "duration2h": "2 horas",
+        "restOfDay": "Resto del día",
+        "pauseFor": "Pausar {duration}",
+        "resumeNow": "Reanudar ahora",
+        "pausedUntil": "en pausa hasta las {time}",
+        "pickFirst": "Primero elige al menos un servicio.",
+        "pausedToast": "Servicios en pausa",
+        "resumedToast": "Servicios reanudados",
+        "saving": "Guardando…"
+      }
     },
     "delivery": {
       "title": "Zonas de entrega",

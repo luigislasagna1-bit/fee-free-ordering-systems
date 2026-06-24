@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 h (1 päev)",
       "cateringNotice48h": "48 h (2 päeva)",
       "cateringNotice72h": "72 h (3 päeva)",
-      "cateringNoticeHelp": "Toitlustusena märgitud tooteid — või tooteid kategoorias, mis on märgitud toitlustuseks — ei saa tellida kohe (ASAP). Klient peab tellimuse planeerima vähemalt {hours} h ette. Halda, millised tooted on toitlustus, jaotises <link>menüü lehel</link>."
+      "cateringNoticeHelp": "Toitlustusena märgitud tooteid — või tooteid kategoorias, mis on märgitud toitlustuseks — ei saa tellida kohe (ASAP). Klient peab tellimuse planeerima vähemalt {hours} h ette. Halda, millised tooted on toitlustus, jaotises <link>menüü lehel</link>.",
+      "pause": {
+        "title": "Peata teenused",
+        "description": "Peata ajutiselt teenuse uute tellimuste vastuvõtmine, kui köök on ülekoormatud — see jätkub automaatselt, kui aeg läbi saab, või puuduta Jätka.",
+        "pickServices": "Vali teenused",
+        "noServices": "Ühtegi teenust pole veel lubatud.",
+        "duration30": "30 min",
+        "duration1h": "1 tund",
+        "duration2h": "2 tundi",
+        "restOfDay": "Päeva lõpuni",
+        "pauseFor": "Peata {duration}",
+        "resumeNow": "Jätka kohe",
+        "pausedUntil": "peatatud kuni {time}",
+        "pickFirst": "Vali esmalt vähemalt üks teenus.",
+        "pausedToast": "Teenused peatatud",
+        "resumedToast": "Teenused jätkatud",
+        "saving": "Salvestamine…"
+      }
     },
     "delivery": {
       "title": "Tarnepiirkonnad",

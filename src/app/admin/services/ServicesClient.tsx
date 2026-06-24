@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
+import { PauseServicesControl } from "@/components/admin/PauseServicesControl";
 
 const SERVICE_DEFS = [
   { key: "pickup",       labelKey: "pickup",       icon: ShoppingBag,     color: "text-blue-600"   },
@@ -142,6 +143,11 @@ export function ServicesClient() {
           {tCommon("saveChanges")}
         </button>
       </div>
+
+      {/* Pause services — owner-side twin of the kitchen-app pause panel
+          (Fabrizio: pause should be in the backend too). Self-fetches; hides
+          itself when no services are enabled. */}
+      <PauseServicesControl />
 
       <div className="space-y-4">
         {SERVICE_DEFS.map(({ key, labelKey, icon: Icon, color }) => {

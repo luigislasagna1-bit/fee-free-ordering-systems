@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24時間（1日）",
       "cateringNotice48h": "48時間（2日）",
       "cateringNotice72h": "72時間（3日）",
-      "cateringNoticeHelp": "ケータリングとして設定された商品 — またはケータリングに設定されたカテゴリ内の商品 — は、すぐの注文（ASAP）ではご注文いただけません。お客様は少なくとも{hours}時間前に注文を予約する必要があります。どの商品をケータリングにするかは<link>メニューページ</link>で管理できます。"
+      "cateringNoticeHelp": "ケータリングとして設定された商品 — またはケータリングに設定されたカテゴリ内の商品 — は、すぐの注文（ASAP）ではご注文いただけません。お客様は少なくとも{hours}時間前に注文を予約する必要があります。どの商品をケータリングにするかは<link>メニューページ</link>で管理できます。",
+      "pause": {
+        "title": "サービスを一時停止",
+        "description": "キッチンが混み合っているときに、サービスの新規注文の受付を一時的に停止します。時間が経つと自動的に再開され、または「再開」をタップしてください。",
+        "pickServices": "サービスを選択",
+        "noServices": "まだ有効なサービスがありません。",
+        "duration30": "30分",
+        "duration1h": "1時間",
+        "duration2h": "2時間",
+        "restOfDay": "本日いっぱい",
+        "pauseFor": "{duration}停止",
+        "resumeNow": "今すぐ再開",
+        "pausedUntil": "{time}まで停止中",
+        "pickFirst": "まずサービスを1つ以上選択してください。",
+        "pausedToast": "サービスを一時停止しました",
+        "resumedToast": "サービスを再開しました",
+        "saving": "保存中…"
+      }
     },
     "delivery": {
       "title": "デリバリーエリア",

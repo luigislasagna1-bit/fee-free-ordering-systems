@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 h (1 jour)",
       "cateringNotice48h": "48 h (2 jours)",
       "cateringNotice72h": "72 h (3 jours)",
-      "cateringNoticeHelp": "Les articles marqués comme traiteur — ou les articles d'une catégorie marquée traiteur — ne peuvent pas être commandés en mode immédiat. Le client doit planifier la commande au moins {hours} h à l'avance. Gérez quels articles relèvent du traiteur sur <link>la page du menu</link>."
+      "cateringNoticeHelp": "Les articles marqués comme traiteur — ou les articles d'une catégorie marquée traiteur — ne peuvent pas être commandés en mode immédiat. Le client doit planifier la commande au moins {hours} h à l'avance. Gérez quels articles relèvent du traiteur sur <link>la page du menu</link>.",
+      "pause": {
+        "title": "Mettre les services en pause",
+        "description": "Arrêtez temporairement de prendre de nouvelles commandes pour un service lorsque la cuisine est débordée — la reprise est automatique à la fin du délai, ou appuyez sur Reprendre.",
+        "pickServices": "Choisir des services",
+        "noServices": "Aucun service n'est encore activé.",
+        "duration30": "30 min",
+        "duration1h": "1 heure",
+        "duration2h": "2 heures",
+        "restOfDay": "Reste de la journée",
+        "pauseFor": "Mettre en pause {duration}",
+        "resumeNow": "Reprendre maintenant",
+        "pausedUntil": "en pause jusqu'à {time}",
+        "pickFirst": "Choisissez d'abord au moins un service.",
+        "pausedToast": "Services en pause",
+        "resumedToast": "Services repris",
+        "saving": "Enregistrement…"
+      }
     },
     "delivery": {
       "title": "Zones de livraison",

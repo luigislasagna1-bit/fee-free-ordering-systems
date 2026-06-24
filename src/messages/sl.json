@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 ur (1 dan)",
       "cateringNotice48h": "48 ur (2 dni)",
       "cateringNotice72h": "72 ur (3 dni)",
-      "cateringNoticeHelp": "Izdelkov, označenih kot catering — ali izdelkov v kategoriji, označeni kot catering — ni mogoče naročiti za takojšnjo izvedbo. Stranka mora naročilo načrtovati vsaj {hours} ur vnaprej. Upravljajte, kateri izdelki so catering, na <link>strani menija</link>."
+      "cateringNoticeHelp": "Izdelkov, označenih kot catering — ali izdelkov v kategoriji, označeni kot catering — ni mogoče naročiti za takojšnjo izvedbo. Stranka mora naročilo načrtovati vsaj {hours} ur vnaprej. Upravljajte, kateri izdelki so catering, na <link>strani menija</link>.",
+      "pause": {
+        "title": "Začasno ustavi storitve",
+        "description": "Začasno prenehajte sprejemati nova naročila za storitev, ko je kuhinja preobremenjena — samodejno se nadaljuje, ko se čas izteče, ali pa pritisnite Nadaljuj.",
+        "pickServices": "Izberite storitve",
+        "noServices": "Nobena storitev še ni omogočena.",
+        "duration30": "30 min",
+        "duration1h": "1 ura",
+        "duration2h": "2 uri",
+        "restOfDay": "Do konca dneva",
+        "pauseFor": "Ustavi {duration}",
+        "resumeNow": "Nadaljuj zdaj",
+        "pausedUntil": "ustavljeno do {time}",
+        "pickFirst": "Najprej izberite vsaj eno storitev.",
+        "pausedToast": "Storitve ustavljene",
+        "resumedToast": "Storitve nadaljevane",
+        "saving": "Shranjevanje…"
+      }
     },
     "delivery": {
       "title": "Območja dostave",

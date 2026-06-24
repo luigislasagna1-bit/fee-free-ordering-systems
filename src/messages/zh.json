@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 小时（1 天）",
       "cateringNotice48h": "48 小时（2 天）",
       "cateringNotice72h": "72 小时（3 天）",
-      "cateringNoticeHelp": "标记为餐饮服务的商品——或位于标记为餐饮服务的分类中的商品——无法用于“尽快”下单。顾客必须至少提前 {hours} 小时安排订单。请在 <link>菜单页面</link> 上管理哪些商品属于餐饮服务。"
+      "cateringNoticeHelp": "标记为餐饮服务的商品——或位于标记为餐饮服务的分类中的商品——无法用于“尽快”下单。顾客必须至少提前 {hours} 小时安排订单。请在 <link>菜单页面</link> 上管理哪些商品属于餐饮服务。",
+      "pause": {
+        "title": "暂停服务",
+        "description": "当厨房繁忙时，暂时停止接收某项服务的新订单——时间到后会自动恢复，或点按“恢复”。",
+        "pickServices": "选择服务",
+        "noServices": "尚未启用任何服务。",
+        "duration30": "30 分钟",
+        "duration1h": "1 小时",
+        "duration2h": "2 小时",
+        "restOfDay": "本日剩余时间",
+        "pauseFor": "暂停 {duration}",
+        "resumeNow": "立即恢复",
+        "pausedUntil": "已暂停至 {time}",
+        "pickFirst": "请先至少选择一项服务。",
+        "pausedToast": "服务已暂停",
+        "resumedToast": "服务已恢复",
+        "saving": "正在保存…"
+      }
     },
     "delivery": {
       "title": "配送区域",

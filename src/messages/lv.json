@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 h (1 diena)",
       "cateringNotice48h": "48 h (2 dienas)",
       "cateringNotice72h": "72 h (3 dienas)",
-      "cateringNoticeHelp": "Vienumus, kas atzīmēti kā ēdināšana, — vai vienumus kategorijā, kas atzīmēta kā ēdināšana, — nevar pasūtīt tūlītējai izpildei. Klientam pasūtījums jāplāno vismaz {hours} h iepriekš. Pārvaldiet, kuri vienumi ir ēdināšana, <link>ēdienkartes lapā</link>."
+      "cateringNoticeHelp": "Vienumus, kas atzīmēti kā ēdināšana, — vai vienumus kategorijā, kas atzīmēta kā ēdināšana, — nevar pasūtīt tūlītējai izpildei. Klientam pasūtījums jāplāno vismaz {hours} h iepriekš. Pārvaldiet, kuri vienumi ir ēdināšana, <link>ēdienkartes lapā</link>.",
+      "pause": {
+        "title": "Apturēt pakalpojumus",
+        "description": "Uz laiku pārtrauciet pieņemt jaunus pasūtījumus kādam pakalpojumam, kad virtuve ir pārslogota — tas automātiski atsākas, kad laiks beidzas, vai pieskarieties Atsākt.",
+        "pickServices": "Izvēlēties pakalpojumus",
+        "noServices": "Vēl nav iespējots neviens pakalpojums.",
+        "duration30": "30 min",
+        "duration1h": "1 stunda",
+        "duration2h": "2 stundas",
+        "restOfDay": "Atlikušā dienas daļa",
+        "pauseFor": "Apturēt {duration}",
+        "resumeNow": "Atsākt tagad",
+        "pausedUntil": "apturēts līdz {time}",
+        "pickFirst": "Vispirms izvēlieties vismaz vienu pakalpojumu.",
+        "pausedToast": "Pakalpojumi apturēti",
+        "resumedToast": "Pakalpojumi atsākti",
+        "saving": "Saglabā…"
+      }
     },
     "delivery": {
       "title": "Piegādes zonas",

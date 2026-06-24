@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 t (1 dag)",
       "cateringNotice48h": "48 t (2 dage)",
       "cateringNotice72h": "72 t (3 dage)",
-      "cateringNoticeHelp": "Varer markeret som catering — eller varer i en kategori markeret som catering — kan ikke bestilles til hurtigst muligt. Kunden skal planlægge ordren mindst {hours} t i forvejen. Administrer hvilke varer der er catering på <link>menusiden</link>."
+      "cateringNoticeHelp": "Varer markeret som catering — eller varer i en kategori markeret som catering — kan ikke bestilles til hurtigst muligt. Kunden skal planlægge ordren mindst {hours} t i forvejen. Administrer hvilke varer der er catering på <link>menusiden</link>.",
+      "pause": {
+        "title": "Sæt tjenester på pause",
+        "description": "Stop midlertidigt med at modtage nye ordrer for en tjeneste, når køkkenet er overbelastet — den genoptages automatisk, når tiden er gået, eller tryk på Genoptag.",
+        "pickServices": "Vælg tjenester",
+        "noServices": "Der er endnu ikke aktiveret nogen tjenester.",
+        "duration30": "30 min.",
+        "duration1h": "1 time",
+        "duration2h": "2 timer",
+        "restOfDay": "Resten af dagen",
+        "pauseFor": "Pause {duration}",
+        "resumeNow": "Genoptag nu",
+        "pausedUntil": "på pause indtil {time}",
+        "pickFirst": "Vælg mindst én tjeneste først.",
+        "pausedToast": "Tjenester sat på pause",
+        "resumedToast": "Tjenester genoptaget",
+        "saving": "Gemmer…"
+      }
     },
     "delivery": {
       "title": "Leveringszoner",

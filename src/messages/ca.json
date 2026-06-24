@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 h (1 dia)",
       "cateringNotice48h": "48 h (2 dies)",
       "cateringNotice72h": "72 h (3 dies)",
-      "cateringNoticeHelp": "Els articles marcats com a càtering — o els articles dins d'una categoria marcada com a càtering — no es poden demanar per a lliurament immediat. El client ha de programar la comanda com a mínim {hours} h per endavant. Gestiona quins articles són de càtering a <link>la pàgina de la carta</link>."
+      "cateringNoticeHelp": "Els articles marcats com a càtering — o els articles dins d'una categoria marcada com a càtering — no es poden demanar per a lliurament immediat. El client ha de programar la comanda com a mínim {hours} h per endavant. Gestiona quins articles són de càtering a <link>la pàgina de la carta</link>.",
+      "pause": {
+        "title": "Pausa els serveis",
+        "description": "Atura temporalment l'acceptació de comandes noves per a un servei quan la cuina està desbordada: es reprèn automàticament quan s'acaba el temps, o toca Reprèn.",
+        "pickServices": "Tria serveis",
+        "noServices": "Encara no hi ha cap servei activat.",
+        "duration30": "30 min",
+        "duration1h": "1 hora",
+        "duration2h": "2 hores",
+        "restOfDay": "Resta del dia",
+        "pauseFor": "Pausa {duration}",
+        "resumeNow": "Reprèn ara",
+        "pausedUntil": "en pausa fins a les {time}",
+        "pickFirst": "Primer tria almenys un servei.",
+        "pausedToast": "Serveis en pausa",
+        "resumedToast": "Serveis represos",
+        "saving": "S'està desant…"
+      }
     },
     "delivery": {
       "title": "Zones de lliurament",

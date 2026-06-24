@@ -1008,7 +1008,24 @@
       "cateringNotice24h": "24 h (1 den)",
       "cateringNotice48h": "48 h (2 dny)",
       "cateringNotice72h": "72 h (3 dny)",
-      "cateringNoticeHelp": "Položky označené jako catering — nebo položky v kategorii označené jako catering — nelze objednat na CO NEJDŘÍVE. Zákazník musí objednávku naplánovat alespoň {hours} h předem. Spravujte, které položky jsou catering, na <link>stránce menu</link>."
+      "cateringNoticeHelp": "Položky označené jako catering — nebo položky v kategorii označené jako catering — nelze objednat na CO NEJDŘÍVE. Zákazník musí objednávku naplánovat alespoň {hours} h předem. Spravujte, které položky jsou catering, na <link>stránce menu</link>.",
+      "pause": {
+        "title": "Pozastavit služby",
+        "description": "Dočasně zastavte přijímání nových objednávek pro službu, když je kuchyně přetížená — automaticky se obnoví po vypršení času nebo klepněte na Obnovit.",
+        "pickServices": "Vyberte služby",
+        "noServices": "Zatím nejsou povoleny žádné služby.",
+        "duration30": "30 min",
+        "duration1h": "1 hodina",
+        "duration2h": "2 hodiny",
+        "restOfDay": "Zbytek dne",
+        "pauseFor": "Pozastavit {duration}",
+        "resumeNow": "Obnovit nyní",
+        "pausedUntil": "pozastaveno do {time}",
+        "pickFirst": "Nejprve vyberte alespoň jednu službu.",
+        "pausedToast": "Služby pozastaveny",
+        "resumedToast": "Služby obnoveny",
+        "saving": "Ukládání…"
+      }
     },
     "delivery": {
       "title": "Oblasti doručení",
