@@ -1146,6 +1146,9 @@ export function OrderingPageClient({
     lng: null as number | null,
   });
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
+  // Signed-in customer's saved delivery addresses (RestaurantCustomerAddress) —
+  // powers the checkout saved-address picker + the default auto-fill below.
+  const [savedAddresses, setSavedAddresses] = useState<Array<{ id: string; label: string | null; street: string; city: string; state: string | null; zip: string | null; isDefault: boolean }>>([]);
   // Debounce the entered email/phone so the promo preview re-evaluates ~500ms
   // after the customer stops typing (not on every keystroke). Luigi 2026-06-09.
   useEffect(() => {
@@ -1193,6 +1196,37 @@ export function OrderingPageClient({
       }));
       setHasSavedGuestInfo(true);
     } catch {}
+    // currentCustomer is a stable server prop; run once on mount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Signed-in customer → fetch their saved delivery addresses and auto-fill the
+  // DEFAULT one. A signed-in account overrides the guest "remember me" effect
+  // above, so WITHOUT this a logged-in customer got an EMPTY address box — the
+  // exact gap Fabrizio reported (#4). Filling customerInfo.address triggers the
+  // debounced geocode below, which resolves the zone + fee. Picking a different
+  // saved address (or typing new) flows through the same path. Runs once on
+  // mount when logged in; best-effort.
+  useEffect(() => {
+    if (!currentCustomer) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/public/restaurant-customer/addresses");
+        if (!res.ok) return;
+        const data = await res.json();
+        const list = Array.isArray(data?.addresses) ? data.addresses : [];
+        if (cancelled) return;
+        setSavedAddresses(list);
+        const def = list.find((a: { isDefault?: boolean }) => a.isDefault) ?? list[0];
+        if (def) {
+          setCustomerInfo((ci) =>
+            ci.address ? ci : { ...ci, address: def.street ?? "", city: def.city ?? "", zip: def.zip ?? "", lat: null, lng: null },
+          );
+        }
+      } catch {}
+    })();
+    return () => { cancelled = true; };
     // currentCustomer is a stable server prop; run once on mount.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -5067,6 +5101,7 @@ export function OrderingPageClient({
           acceptsTakeOut={!!(restaurant as any).acceptsTakeOut}
           restaurantSlug={restaurant.slug}
           isSignedIn={!!currentCustomer}
+          savedAddresses={savedAddresses}
           fromMarketplace={fromMarketplace}
           cart={cart}
           subtotal={subtotal}

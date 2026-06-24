@@ -421,6 +421,9 @@
       "parking": "Where to park"
     },
     "startTypingAddress": "Start typing your address…",
+    "savedAddressesLabel": "Saved addresses",
+    "savedAddressDefault": "Default",
+    "enterNewAddress": "Enter a new address",
     "streetAddressPlaceholder": "Street address *",
     "cityPlaceholder": "City",
     "zipPlaceholder": "Zip",

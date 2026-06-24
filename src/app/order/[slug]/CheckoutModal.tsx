@@ -285,6 +285,9 @@ interface Props {
   /** Resolved customizable delivery-address form config (which of the 9
    *  fields show + are required). Always a complete config. */
   deliveryFormConfig: DeliveryAddressConfig;
+  /** Signed-in customer's saved delivery addresses — a quick-pick above the
+   *  street input so they don't retype. Empty for guests / non-delivery. */
+  savedAddresses?: Array<{ id: string; label: string | null; street: string; city: string; state: string | null; zip: string | null; isDefault: boolean }>;
 }
 
 export function CheckoutModal({
@@ -296,6 +299,7 @@ export function CheckoutModal({
   deliveryFee, appliedServiceFees, taxAmount,
   tipAmount, tipPercent, setTipPercent, tipsEnabled = true, total, taxRate,
   customerInfo, setCustomerInfo, onMarketingToggle, savedGuestInfo, onClearSavedInfo,
+  savedAddresses = [],
   editingSection, setEditingSection,
   orderLoading, placeOrder,
   cardPaymentEnabled,
@@ -882,6 +886,39 @@ export function CheckoutModal({
                 })()}
                 {orderType === "delivery" && (
                   <div className="pt-3 space-y-2">
+                    {/* Saved-address quick-pick (signed-in customers). Tap one to
+                        fill the form; the default is auto-filled by the parent on
+                        load. "Enter a new address" clears for a one-off. Picked or
+                        typed both re-trigger the debounced geocode + zone. (#4) */}
+                    {isSignedIn && savedAddresses.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 pb-1">
+                        <span className="w-full text-[11px] font-semibold text-gray-500 uppercase tracking-wide">{tc("savedAddressesLabel")}</span>
+                        {savedAddresses.map((a) => {
+                          const active = !!customerInfo.address && customerInfo.address.trim() === a.street.trim();
+                          return (
+                            <button
+                              key={a.id}
+                              type="button"
+                              onClick={() => setCustomerInfo({ ...customerInfo, address: a.street, city: a.city, zip: a.zip ?? "", lat: null, lng: null })}
+                              className="px-2.5 py-1 rounded-full text-xs font-medium border transition"
+                              style={active
+                                ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
+                                : { borderColor: "#e5e7eb", color: "#6b7280" }}
+                            >
+                              {a.label || a.street}
+                              {a.isDefault && <span className="ml-1 opacity-70">· {tc("savedAddressDefault")}</span>}
+                            </button>
+                          );
+                        })}
+                        <button
+                          type="button"
+                          onClick={() => setCustomerInfo({ ...customerInfo, address: "", city: "", zip: "", unit: "", buzzer: "", lat: null, lng: null })}
+                          className="px-2.5 py-1 rounded-full text-xs font-medium border border-dashed border-gray-300 text-gray-500 hover:border-gray-400 transition"
+                        >
+                          + {tc("enterNewAddress")}
+                        </button>
+                      </div>
+                    )}
                     {/* Street address — primary field; drives autocomplete +
                         map pin + zone resolution. Rendered only when the
                         restaurant's form config shows it. */}
