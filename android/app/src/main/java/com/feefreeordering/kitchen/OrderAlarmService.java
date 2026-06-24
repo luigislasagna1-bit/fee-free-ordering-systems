@@ -128,6 +128,12 @@ public class OrderAlarmService extends Service {
         // is ringing (or the player is gone after a cap/kill), just stop.
         if (intent != null && ACTION_HUSH.equals(intent.getAction())) {
             if (!isRunning || player == null) { stopSelf(); return START_NOT_STICKY; }
+            // A short auto-accept FYI (autoMode) IGNORES hush — hush/rearm exist ONLY for the
+            // full pending alarm's stop-on-open-detail UX. The WebView's shouldHush effect fires
+            // rearm-in-its-else for any non-pending state (i.e. ALWAYS, for an already-accepted
+            // order), which would otherwise cancel the 3s autoStop and let the full 245s track
+            // play. Let the auto ring keep its own 3s timer. Luigi 2026-06-23 (K3 fix → v2.8).
+            if (autoMode) return START_STICKY;
             hushedByUser = true;
             // Pause the MAX_RING_MS safety timer while hushed, else a long look at the order
             // detail could let the cap stopSelf() the paused service out from under a later
@@ -139,6 +145,11 @@ public class OrderAlarmService extends Service {
         // REARM = resume a hushed ring (back-out / new order / app backgrounded while pending).
         if (intent != null && ACTION_REARM.equals(intent.getAction())) {
             if (!isRunning || player == null) { stopSelf(); return START_NOT_STICKY; }
+            // A short auto-accept FYI (autoMode) IGNORES rearm — its original 3s autoStop MUST
+            // stand. Without this, the WebView's nativeRearmAlarm() (fired for any non-pending
+            // state, so always for an auto order) re-posts autoStop at MAX_RING_MS and the full
+            // 245s track plays out (~4 min) — the exact K3 bug. Luigi 2026-06-23 (K3 fix → v2.8).
+            if (autoMode) return START_STICKY;
             hushedByUser = false;
             try { if (!player.isPlaying()) player.start(); } catch (Exception ignored) {}
             // Re-arm the safety cap from now (it was cleared on hush).
