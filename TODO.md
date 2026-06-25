@@ -9,23 +9,17 @@ date + commit hash. This file is committed so the backlog never gets lost.
 
 ## Open
 
-- [ ] **Split hours — v2 follow-ups.** v1 shipped general + per-service split hours (multiple windows/day, e.g.
-  lunch + dinner). Remaining: (a) **server-side weekly-hours enforcement** — `/api/orders` still defers slot
-  validation to the client (pre-existing; a tampered client could place an order during the lunch/dinner gap);
-  add a `hhmmInsideIntervals`-style check against the day's `rowIntervals` (mirror the holiday check at
-  orders/route.ts:1622). (b) **Reservations split hours** — reservations still use a single window
-  (`ReservationSettings.reservationHours`); fold them into the unified `OpeningHours.intervals` model. (c)
-  **menu-schedule coverage gaps** — feed real intervals into `findCoverageGaps`. (d) **Exact-time picker** in
-  CheckoutModal bounds to the day's envelope, so a customer in "exact time" mode could type a gap time (the slot
-  DROPDOWN correctly skips gaps). _(v1 shipped 2026-06-24.)_
-
-- [ ] **Reserve-then-order: apply the holiday closed-windows / per-service custom-hours gate to combined-checkout
-  bookings.** A booking attached to a food order (reserve-then-order) is validated only by `validateBooking`
-  (notice / advance / capacity) — `src/lib/reservation-validation.ts` has NO holiday check, and the order route's
-  holiday block keys on the FOOD service (pickup/delivery/…), never `reservation`. So a combined-checkout booking
-  whose time falls in a `reservation` closed-window / outside reservation custom-hours is NOT rejected, unlike a
-  standalone `/api/public/reservations` booking (which now is). Add the same holiday gate to the reserve-then-order
-  path. _(Pre-existing; surfaced by the Fabrizio-#1 verification, 2026-06-24.)_
+- [ ] **Split hours — only "Reservations" left.** v1 shipped general + per-service split hours; since then the
+  deferreds A/B/C also shipped (2026-06-24): (a) server-side weekly-hours enforcement for scheduled orders
+  (orders/route.ts fail-open backstop), (b) reserve-then-order holiday gate, (c) menu-schedule coverage gaps use
+  real intervals. **Remaining = Reservations split hours** — reservations still resolve a single window via
+  `ReservationSettings.reservationHours`; the reservation `OpeningHours` rows ALREADY store intervals from the
+  admin editor, so the work is the READ path: `resolveDayHours` / `validateBooking` (`reservation-validation.ts`)
+  + the `ReservationModal` slot-gen need to use `rowIntervals` instead of a single open/close, and decide the
+  precedence vs the legacy `reservationHours` field. _(Owner scoped reservations out of v1; pending a go-ahead.)_
+  Minor nicety: the CheckoutModal **exact-time** picker bounds to the day's envelope, so a customer could TYPE a
+  gap time — the server now rejects it (A) and the slot DROPDOWN already skips gaps; only client pre-validation
+  is missing.
 
 - [ ] **Ordering page — collapsible menu categories on desktop.** On the customer ordering page
   (`/order/[slug]`), on **desktop**, give customers the option to expand/collapse the menu categories

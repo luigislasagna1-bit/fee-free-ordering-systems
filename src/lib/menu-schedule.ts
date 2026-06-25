@@ -18,7 +18,7 @@
  * pure helpers here work in "restaurant local" dow + minutes.
  */
 import prisma from "@/lib/db";
-import { localDowAndHHMM } from "@/lib/restaurant-hours";
+import { localDowAndHHMM, rowIntervals } from "@/lib/restaurant-hours";
 
 export type MenuWindow = {
   id: string;
@@ -120,14 +120,19 @@ export function openIntervalsFromHours(
   const out: OpenInterval[] = [];
   for (const r of hours) {
     if (r.service != null) continue; // only the general kitchen hours drive menu coverage
-    if (!r.isOpen || !r.openTime || !r.closeTime) continue;
-    const from = toMinutes(r.openTime);
-    const to = toMinutes(r.closeTime);
-    if (r.closesNextDay || to <= from) {
-      out.push({ dow: r.dayOfWeek, start: from, end: 1440 });
-      if (to > 0) out.push({ dow: (r.dayOfWeek + 1) % 7, start: 0, end: to });
-    } else {
-      out.push({ dow: r.dayOfWeek, start: from, end: to });
+    if (!r.isOpen) continue;
+    // SPLIT HOURS: a day can have multiple open windows (lunch + dinner). Expand
+    // each via rowIntervals (legacy single-window rows yield one element); an
+    // overnight window spills onto the next day, as before.
+    for (const iv of rowIntervals(r as any)) {
+      const from = toMinutes(iv.open);
+      const to = toMinutes(iv.close);
+      if (iv.closesNextDay || to <= from) {
+        out.push({ dow: r.dayOfWeek, start: from, end: 1440 });
+        if (to > 0) out.push({ dow: (r.dayOfWeek + 1) % 7, start: 0, end: to });
+      } else {
+        out.push({ dow: r.dayOfWeek, start: from, end: to });
+      }
     }
   }
   return out;

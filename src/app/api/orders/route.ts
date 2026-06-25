@@ -5,6 +5,7 @@ import { generateOrderNumber, formatCurrency } from "@/lib/utils";
 import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
 import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, localDowAndHHMM, dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { holidayEffectForDay, holidayEffectToday, canonicalHolidayService, hhmmInsideIntervals } from "@/lib/holiday-rules";
+import { resolveServiceHours } from "@/lib/service-hours";
 import { hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import {
@@ -265,6 +266,34 @@ export async function POST(req: NextRequest) {
         resolveDayHours(rs.reservationHours, (restaurant as any).openingHours ?? [], rDate),
       );
       if (!v.ok) return NextResponse.json({ error: v.reason, code: "reservation_rejected" }, { status: 400 });
+      // Holiday/closure gate for the BOOKING — mirror the standalone
+      // /api/public/reservations check. A reserve-then-order booking must respect
+      // the restaurant's closures for the RESERVATION service on the booking date,
+      // exactly like a standalone table booking. (Previously this combined path
+      // had no holiday gate — flagged by the Fabrizio-#1 verification.)
+      {
+        const rHolEff = holidayEffectForDay((restaurant as any).holidays ?? [], rDate, "reservation");
+        if (rHolEff?.kind === "closed") {
+          return NextResponse.json(
+            { error: "We're closed for reservations on that date. Please choose another day.", code: "reservation_holiday_closed" },
+            { status: 400 },
+          );
+        }
+        if (rHolEff?.kind === "custom_hours" && !hhmmInsideIntervals(rTime, rHolEff.intervals)) {
+          const windows = rHolEff.intervals.map((iv) => `${iv.open}–${iv.close}`).join(", ");
+          return NextResponse.json(
+            { error: `On that date reservations are only available ${windows}. Please pick a time within those hours.`, code: "reservation_holiday_custom_hours" },
+            { status: 400 },
+          );
+        }
+        if (rHolEff?.kind === "closed_windows" && hhmmInsideIntervals(rTime, rHolEff.intervals)) {
+          const windows = rHolEff.intervals.map((iv) => `${iv.open}–${iv.close}`).join(", ");
+          return NextResponse.json(
+            { error: `Reservations are closed ${windows} on that date. Please pick a time outside those hours.`, code: "reservation_holiday_closed_windows" },
+            { status: 400 },
+          );
+        }
+      }
       const cap = await checkReservationCapacity(
         restaurant.id,
         rs as unknown as ReservationSettingsLike,
@@ -1647,6 +1676,43 @@ export async function POST(req: NextRequest) {
             },
             { status: 400 },
           );
+        }
+      }
+
+      // ── Weekly-hours backstop for SCHEDULED orders (SPLIT HOURS) ────────────
+      // The client slot picker already blocks times outside the service's open
+      // windows — including the lunch/dinner GAP. This is the server backstop
+      // against a tampered/stale client (the gap the pre-existing code left open).
+      // Runs ONLY for a FUTURE scheduled slot on a NORMAL day — a holiday rule, if
+      // present, already governed the time above (holidayEffect would be non-null).
+      // ASAP orders are intentionally accepted when closed (they defer the kitchen
+      // alert), so they're NOT gated here. FAIL OPEN: a shop with no hours
+      // configured is never blocked. Reuses the same resolveServiceHours +
+      // liveOpenStatus the customer page uses for its per-service gate.
+      if (hasFutureSchedule && !holidayEffect) {
+        const allHours = (restaurant as any).openingHours ?? [];
+        if (allHours.some((h: any) => h.isOpen)) {
+          // MUST mirror the client slot picker (CheckoutModal.tsx) exactly:
+          // non-delivery types ALL use the PICKUP window (pickHoursForService
+          // falls back to the general row when there's no pickup row). Using
+          // `null` here would resolve GENERAL hours and wrongly reject valid
+          // dine-in / take-out / CATERING slots the client offered from the
+          // pickup window (catering always schedules → highest impact).
+          const svcKind = type === "delivery" ? "delivery" : "pickup";
+          const fmt = restaurant.hoursFormat === "12h" ? "12h" : "24h";
+          const slotStatus = liveOpenStatus(
+            resolveServiceHours(allHours, svcKind as any) as any,
+            scheduledForDate!, fmt, undefined, holidayTzKey,
+          );
+          if (slotStatus.kind !== "open") {
+            return NextResponse.json(
+              {
+                error: "We're not open at the time you selected. Please pick a time within our opening hours.",
+                code: "outside_opening_hours",
+              },
+              { status: 400 },
+            );
+          }
         }
       }
     }
