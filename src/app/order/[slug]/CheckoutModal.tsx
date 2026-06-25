@@ -358,6 +358,10 @@ export function CheckoutModal({
   // When the service's time mode is "both", the customer toggles between a
   // slot dropdown (false) and a free exact-time field (true). Fabrizio cmpxdtl9m.
   const [scheduleExactPref, setScheduleExactPref] = useState(false);
+  // ASAP vs "Schedule for later" — a clear two-option choice (Fabrizio: the way back to
+  // ASAP used to be a buried link). The date/time picker shows when "later" is chosen or a
+  // time is already set. Luigi 2026-06-25.
+  const [scheduleOpen, setScheduleOpen] = useState(false);
   // Google map + Places autocomplete use the restaurant's own key if they set
   // one, otherwise the PLATFORM key — so every account gets the full Google
   // experience with zero per-restaurant setup (Luigi 2026-06-13). Empty key ⇒
@@ -1158,7 +1162,38 @@ export function CheckoutModal({
                   {!schedulingEnabled ? (
                     <div className="pt-1 text-xs text-gray-500">{tc("asapOnly")}</div>
                   ) : (<>
-                  <label className="block text-xs text-gray-500">{tc("scheduleForLaterOptional")}</label>
+                  {/* ASAP vs Schedule — two clear options (Fabrizio: the way back to ASAP
+                      was a buried underlined link). Shown only when ASAP is actually allowed;
+                      when scheduling is FORCED (closed / catering / lead / fulfilment) there is
+                      no ASAP, so we skip straight to the picker below. Luigi 2026-06-25. */}
+                  {!cateringMode && (
+                    <div className="grid grid-cols-2 gap-2">
+                      {([["asap", tc("asap")], ["later", tc("scheduleForLater")]] as const).map(([key, label]) => {
+                        const selected = key === "asap"
+                          ? !scheduleOpen && !customerInfo.scheduledFor
+                          : scheduleOpen || !!customerInfo.scheduledFor;
+                        return (
+                          <button
+                            key={key}
+                            type="button"
+                            onClick={() => {
+                              if (key === "asap") {
+                                setScheduleOpen(false);
+                                if (customerInfo.scheduledFor) setCustomerInfo({ ...customerInfo, scheduledFor: "" });
+                              } else setScheduleOpen(true);
+                            }}
+                            className="py-2 px-3 rounded-lg border-2 text-xs font-semibold transition"
+                            style={selected
+                              ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}12`, color: theme.primaryColor }
+                              : { borderColor: "#e5e7eb", color: "#4b5563" }}
+                          >
+                            {label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                  {(cateringMode || scheduleOpen || !!customerInfo.scheduledFor) && (<>
                   {/* Date + time-slot picker. Replaces the free-form
                       datetime-local input so customers can no longer
                       schedule 3:02 PM — they pick from the restaurant's
@@ -1380,17 +1415,7 @@ export function CheckoutModal({
                       </>
                     );
                   })()}
-                  {/* "Switch to ASAP" is hidden in catering mode — ASAP
-                      is exactly what the rule blocks. Customer must
-                      pick a real future time. */}
-                  {customerInfo.scheduledFor && !cateringMode && (
-                    <button
-                      onClick={() => setCustomerInfo({ ...customerInfo, scheduledFor: "" })}
-                      className="text-xs text-gray-500 hover:text-gray-700 underline"
-                    >
-                      {tc("switchToASAP")}
-                    </button>
-                  )}
+                  </>)}
                   </>)}
                 </div>
               </SectionCard>
