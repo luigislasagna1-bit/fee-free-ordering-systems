@@ -9,6 +9,7 @@ interface Initial {
   autoAcceptOrders: boolean;
   allowScheduledOrders: boolean;
   requireScheduledOrders: boolean;
+  showServiceTimesOnOrderPage: boolean;
   pickupEta: number;
   deliveryEta: number;
   // Relocated from /admin/settings (Luigi 2026-06-22).
@@ -31,6 +32,7 @@ export function OrderHandlingClient({ initial, twilioVoiceConfigured }: { initia
   const [autoAcceptOrders, setAutoAcceptOrders] = useState(initial.autoAcceptOrders);
   const [allowScheduledOrders, setAllowScheduledOrders] = useState(initial.allowScheduledOrders);
   const [requireScheduledOrders, setRequireScheduledOrders] = useState(initial.requireScheduledOrders);
+  const [showServiceTimes, setShowServiceTimes] = useState(initial.showServiceTimesOnOrderPage);
 
   const patch = async (field: string, value: boolean, revert: () => void) => {
     try {
@@ -60,6 +62,11 @@ export function OrderHandlingClient({ initial, twilioVoiceConfigured }: { initia
     const next = !requireScheduledOrders;
     setRequireScheduledOrders(next);
     patch("requireScheduledOrders", next, () => setRequireScheduledOrders(!next));
+  };
+  const toggleServiceTimes = () => {
+    const next = !showServiceTimes;
+    setShowServiceTimes(next);
+    patch("showServiceTimesOnOrderPage", next, () => setShowServiceTimes(!next));
   };
 
   return (
@@ -127,6 +134,25 @@ export function OrderHandlingClient({ initial, twilioVoiceConfigured }: { initia
             </button>
           </div>
         )}
+      </div>
+
+      {/* Ordering-page display — show/hide the per-service estimated times ("· 20 min")
+          on the service buttons. Off → hidden on the order page, still shown at checkout.
+          Fabrizio 2026-06-25. */}
+      <div className={`bg-white rounded-2xl border shadow-sm p-5 ${showServiceTimes ? "border-emerald-200" : "border-gray-100"}`}>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h3 className="font-semibold text-gray-900">{t("showServiceTimesTitle")}</h3>
+            <p className="text-xs text-gray-500 mt-0.5">{t("showServiceTimesHint")}</p>
+          </div>
+          <button
+            onClick={toggleServiceTimes}
+            className="flex-shrink-0 text-gray-400 hover:text-emerald-500 transition"
+            title={showServiceTimes ? t("disable") : t("enable")}
+          >
+            {showServiceTimes ? <ToggleRight className="w-8 h-8 text-emerald-500" /> : <ToggleLeft className="w-8 h-8" />}
+          </button>
+        </div>
       </div>
 
       <KitchenWorkflowToggle

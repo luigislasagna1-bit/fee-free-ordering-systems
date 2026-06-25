@@ -4075,7 +4075,9 @@
       "enable": "Omogući",
       "disable": "Onemogući",
       "title": "Upravljanje porudžbinama",
-      "subtitle": "Izaberite kako se nove porudžbine prihvataju i zakazuju."
+      "subtitle": "Izaberite kako se nove porudžbine prihvataju i zakazuju.",
+      "showServiceTimesTitle": "Прикажи времена услуге на страници за поручивање",
+      "showServiceTimesHint": "Приказује процењено време сваке услуге (нпр. „20 мин“) на дугмадима странице за поручивање. Искључено их скрива овде; и даље се приказују при плаћању."
     }
   },
   "impersonation": {

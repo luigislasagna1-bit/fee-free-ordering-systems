@@ -4075,7 +4075,9 @@
       "enable": "Aktiver",
       "disable": "Deaktiver",
       "title": "Ordrehåndtering",
-      "subtitle": "Vælg, hvordan nye ordrer accepteres og planlægges."
+      "subtitle": "Vælg, hvordan nye ordrer accepteres og planlægges.",
+      "showServiceTimesTitle": "Vis servicetider på bestillingssiden",
+      "showServiceTimesHint": "Viser hver tjenestes anslåede tid (f.eks. \"20 min\") på knapperne på bestillingssiden. Fra skjuler dem her; de vises stadig ved kassen."
     }
   },
   "impersonation": {

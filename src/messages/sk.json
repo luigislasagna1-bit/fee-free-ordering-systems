@@ -4075,7 +4075,9 @@
       "enable": "Zapnúť",
       "disable": "Vypnúť",
       "title": "Spracovanie objednávok",
-      "subtitle": "Vyberte, ako sa nové objednávky prijímajú a plánujú."
+      "subtitle": "Vyberte, ako sa nové objednávky prijímajú a plánujú.",
+      "showServiceTimesTitle": "Zobraziť časy služieb na objednávacej stránke",
+      "showServiceTimesHint": "Zobrazí odhadovaný čas každej služby (napr. \"20 min\") na tlačidlách objednávacej stránky. Vypnuté ich tu skryje; pri pokladni sa stále zobrazujú."
     }
   },
   "impersonation": {

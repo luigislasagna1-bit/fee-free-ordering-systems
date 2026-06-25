@@ -10,6 +10,7 @@ const KEYS = [
   "autoAcceptOrders",
   "allowScheduledOrders",
   "requireScheduledOrders",
+  "showServiceTimesOnOrderPage",
 ] as const;
 
 export async function PATCH(req: NextRequest) {

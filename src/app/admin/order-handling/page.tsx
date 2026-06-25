@@ -16,6 +16,7 @@ export default async function OrderHandlingPage() {
       autoAcceptOrders: true,
       allowScheduledOrders: true,
       requireScheduledOrders: true,
+      showServiceTimesOnOrderPage: true,
       // For the auto-accept help text ("…Pickup: {pickup} min, Delivery: {delivery} min").
       estimatedPickup: true,
       estimatedDelivery: true,
@@ -41,6 +42,7 @@ export default async function OrderHandlingPage() {
         autoAcceptOrders: restaurant?.autoAcceptOrders ?? false,
         allowScheduledOrders: restaurant?.allowScheduledOrders ?? true,
         requireScheduledOrders: restaurant?.requireScheduledOrders ?? false,
+        showServiceTimesOnOrderPage: restaurant?.showServiceTimesOnOrderPage ?? true,
         pickupEta: restaurant?.estimatedPickup ?? 20,
         deliveryEta: restaurant?.estimatedDelivery ?? 45,
         workflowMode: restaurant?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple",

@@ -4075,7 +4075,9 @@
       "enable": "Iespējot",
       "disable": "Atspējot",
       "title": "Pasūtījumu apstrāde",
-      "subtitle": "Izvēlieties, kā jaunie pasūtījumi tiek pieņemti un plānoti."
+      "subtitle": "Izvēlieties, kā jaunie pasūtījumi tiek pieņemti un plānoti.",
+      "showServiceTimesTitle": "Rādīt pakalpojumu laikus pasūtīšanas lapā",
+      "showServiceTimesHint": "Rāda katra pakalpojuma aptuveno laiku (piem., \"20 min\") pasūtīšanas lapas pogās. Izslēgts tos šeit paslēpj; norēķinoties tie joprojām redzami."
     }
   },
   "impersonation": {

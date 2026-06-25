@@ -4075,7 +4075,9 @@
       "enable": "Enable",
       "disable": "Disable",
       "title": "Order Handling",
-      "subtitle": "Choose how new orders are accepted and scheduled."
+      "subtitle": "Choose how new orders are accepted and scheduled.",
+      "showServiceTimesTitle": "Show service times on the ordering page",
+      "showServiceTimesHint": "Show each service's estimated time (e.g. \"20 min\") on the ordering-page buttons. Off hides them there; they still appear at checkout."
     }
   },
   "impersonation": {

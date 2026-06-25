@@ -167,6 +167,15 @@ model Restaurant {
   /// for a future slot. Only effective when allowScheduledOrders is true.
   /// GloriaFood "Hide 'as soon as possible' (allow only scheduled orders)".
   requireScheduledOrders Boolean @default(false)
+  /// Show each service's estimated time (e.g. "Pickup · 20 min") on the ORDERING PAGE
+  /// service buttons. Default true (current behaviour). Off → those times are hidden on the
+  /// order page but still shown at checkout / in the zone estimate. Fabrizio 2026-06-25.
+  showServiceTimesOnOrderPage Boolean @default(true)
+  /// Show the house/civic number AFTER the street name (e.g. "Via Roma 12") instead of
+  /// before it ("12 Via Roma") when an address is picked from autocomplete. Default false
+  /// (number-first, North-American). Per-restaurant so it never flips an existing store's
+  /// format. Fabrizio 2026-06-25.
+  addressNumberAfterStreet Boolean @default(false)
   /// Whether the customer's email is mandatory on the checkout form.
   /// Default true so receipts can be sent; an owner who only wants
   /// SMS notification can flip this off and require phone instead.

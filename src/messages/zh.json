@@ -4075,7 +4075,9 @@
       "enable": "启用",
       "disable": "停用",
       "title": "订单处理",
-      "subtitle": "选择如何接受和安排新订单。"
+      "subtitle": "选择如何接受和安排新订单。",
+      "showServiceTimesTitle": "在点单页面显示服务时间",
+      "showServiceTimesHint": "在点单页面的按钮上显示每项服务的预计时间（如\"20分钟\"）。关闭后此处隐藏；结算时仍会显示。"
     }
   },
   "impersonation": {

@@ -4075,7 +4075,9 @@
       "enable": "Luba",
       "disable": "Keela",
       "title": "Tellimuste haldus",
-      "subtitle": "Valige, kuidas uusi tellimusi vastu võetakse ja ajastatakse."
+      "subtitle": "Valige, kuidas uusi tellimusi vastu võetakse ja ajastatakse.",
+      "showServiceTimesTitle": "Näita teenuste aegu tellimislehel",
+      "showServiceTimesHint": "Näitab iga teenuse hinnangulist aega (nt \"20 min\") tellimislehe nuppudel. Väljas peidab need siit; kassas kuvatakse endiselt."
     }
   },
   "impersonation": {

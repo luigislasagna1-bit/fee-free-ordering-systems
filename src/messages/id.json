@@ -4075,7 +4075,9 @@
       "enable": "Aktifkan",
       "disable": "Nonaktifkan",
       "title": "Penanganan Pesanan",
-      "subtitle": "Pilih bagaimana pesanan baru diterima dan dijadwalkan."
+      "subtitle": "Pilih bagaimana pesanan baru diterima dan dijadwalkan.",
+      "showServiceTimesTitle": "Tampilkan waktu layanan di halaman pemesanan",
+      "showServiceTimesHint": "Menampilkan perkiraan waktu setiap layanan (mis. \"20 mnt\") pada tombol halaman pemesanan. Mati menyembunyikannya di sini; tetap muncul saat checkout."
     }
   },
   "impersonation": {

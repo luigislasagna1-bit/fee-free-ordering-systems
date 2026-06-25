@@ -4075,7 +4075,9 @@
       "enable": "Activar",
       "disable": "Desactivar",
       "title": "Gestión de pedidos",
-      "subtitle": "Elige cómo se aceptan y programan los nuevos pedidos."
+      "subtitle": "Elige cómo se aceptan y programan los nuevos pedidos.",
+      "showServiceTimesTitle": "Mostrar los tiempos de servicio en la página de pedidos",
+      "showServiceTimesHint": "Muestra el tiempo estimado de cada servicio (p. ej. \"20 min\") en los botones de la página de pedidos. Desactivado se ocultan aquí; siguen apareciendo al finalizar la compra."
     }
   },
   "impersonation": {

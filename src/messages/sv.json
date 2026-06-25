@@ -4075,7 +4075,9 @@
       "enable": "Aktivera",
       "disable": "Inaktivera",
       "title": "Orderhantering",
-      "subtitle": "Välj hur nya beställningar accepteras och schemaläggs."
+      "subtitle": "Välj hur nya beställningar accepteras och schemaläggs.",
+      "showServiceTimesTitle": "Visa servicetider på beställningssidan",
+      "showServiceTimesHint": "Visar varje tjänsts uppskattade tid (t.ex. \"20 min\") på knapparna på beställningssidan. Av döljer dem här; de visas fortfarande i kassan."
     }
   },
   "impersonation": {

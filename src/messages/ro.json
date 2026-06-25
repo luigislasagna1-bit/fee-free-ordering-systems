@@ -4075,7 +4075,9 @@
       "enable": "Activează",
       "disable": "Dezactivează",
       "title": "Gestionarea comenzilor",
-      "subtitle": "Alege cum sunt acceptate și programate comenzile noi."
+      "subtitle": "Alege cum sunt acceptate și programate comenzile noi.",
+      "showServiceTimesTitle": "Afișează timpii de serviciu pe pagina de comandă",
+      "showServiceTimesHint": "Afișează timpul estimat al fiecărui serviciu (de ex. \"20 min\") pe butoanele paginii de comandă. Dezactivat le ascunde aici; apar în continuare la finalizare."
     }
   },
   "impersonation": {

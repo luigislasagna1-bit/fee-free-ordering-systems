@@ -4075,7 +4075,9 @@
       "enable": "Inschakelen",
       "disable": "Uitschakelen",
       "title": "Orderafhandeling",
-      "subtitle": "Bepaal hoe nieuwe bestellingen worden geaccepteerd en gepland."
+      "subtitle": "Bepaal hoe nieuwe bestellingen worden geaccepteerd en gepland.",
+      "showServiceTimesTitle": "Servicetijden tonen op de bestelpagina",
+      "showServiceTimesHint": "Toont de geschatte tijd van elke service (bijv. \"20 min\") op de knoppen van de bestelpagina. Uit verbergt ze hier; bij het afrekenen blijven ze zichtbaar."
     }
   },
   "impersonation": {

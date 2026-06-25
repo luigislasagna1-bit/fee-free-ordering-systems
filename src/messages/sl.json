@@ -4075,7 +4075,9 @@
       "enable": "Omogoči",
       "disable": "Onemogoči",
       "title": "Upravljanje naročil",
-      "subtitle": "Izberite, kako se nova naročila sprejemajo in načrtujejo."
+      "subtitle": "Izberite, kako se nova naročila sprejemajo in načrtujejo.",
+      "showServiceTimesTitle": "Prikaži čase storitev na strani za naročanje",
+      "showServiceTimesHint": "Prikaže predviden čas vsake storitve (npr. \"20 min\") na gumbih strani za naročanje. Izklopljeno jih tukaj skrije; pri blagajni so še vedno prikazani."
     }
   },
   "impersonation": {

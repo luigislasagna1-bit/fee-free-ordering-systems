@@ -4075,7 +4075,9 @@
       "enable": "Etkinleştir",
       "disable": "Devre dışı bırak",
       "title": "Sipariş Yönetimi",
-      "subtitle": "Yeni siparişlerin nasıl kabul edileceğini ve planlanacağını seçin."
+      "subtitle": "Yeni siparişlerin nasıl kabul edileceğini ve planlanacağını seçin.",
+      "showServiceTimesTitle": "Sipariş sayfasında servis sürelerini göster",
+      "showServiceTimesHint": "Her hizmetin tahmini süresini (ör. \"20 dk\") sipariş sayfası düğmelerinde gösterir. Kapalı burada gizler; ödeme sırasında yine görünür."
     }
   },
   "impersonation": {

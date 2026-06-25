@@ -4075,7 +4075,9 @@
       "enable": "Bật",
       "disable": "Tắt",
       "title": "Xử lý đơn hàng",
-      "subtitle": "Chọn cách đơn hàng mới được chấp nhận và lên lịch."
+      "subtitle": "Chọn cách đơn hàng mới được chấp nhận và lên lịch.",
+      "showServiceTimesTitle": "Hiển thị thời gian dịch vụ trên trang đặt hàng",
+      "showServiceTimesHint": "Hiển thị thời gian ước tính của mỗi dịch vụ (vd: \"20 phút\") trên các nút của trang đặt hàng. Tắt sẽ ẩn ở đây; vẫn hiển thị khi thanh toán."
     }
   },
   "impersonation": {

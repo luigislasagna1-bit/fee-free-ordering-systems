@@ -4075,7 +4075,9 @@
       "enable": "Aktivieren",
       "disable": "Deaktivieren",
       "title": "Bestellabwicklung",
-      "subtitle": "Legen Sie fest, wie neue Bestellungen angenommen und geplant werden."
+      "subtitle": "Legen Sie fest, wie neue Bestellungen angenommen und geplant werden.",
+      "showServiceTimesTitle": "Servicezeiten auf der Bestellseite anzeigen",
+      "showServiceTimesHint": "Zeigt die geschätzte Zeit jedes Service (z. B. \"20 Min.\") auf den Schaltflächen der Bestellseite. Aus blendet sie hier aus; an der Kasse werden sie weiterhin angezeigt."
     }
   },
   "impersonation": {

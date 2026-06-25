@@ -4075,7 +4075,9 @@
       "enable": "Włącz",
       "disable": "Wyłącz",
       "title": "Obsługa zamówień",
-      "subtitle": "Wybierz, jak nowe zamówienia są akceptowane i planowane."
+      "subtitle": "Wybierz, jak nowe zamówienia są akceptowane i planowane.",
+      "showServiceTimesTitle": "Pokaż czasy usług na stronie zamawiania",
+      "showServiceTimesHint": "Pokazuje szacowany czas każdej usługi (np. \"20 min\") na przyciskach strony zamawiania. Wyłączenie ukrywa je tutaj; nadal pojawiają się przy płatności."
     }
   },
   "impersonation": {

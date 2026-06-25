@@ -4075,7 +4075,9 @@
       "enable": "Activer",
       "disable": "Désactiver",
       "title": "Gestion des commandes",
-      "subtitle": "Choisissez comment les nouvelles commandes sont acceptées et planifiées."
+      "subtitle": "Choisissez comment les nouvelles commandes sont acceptées et planifiées.",
+      "showServiceTimesTitle": "Afficher les délais de service sur la page de commande",
+      "showServiceTimesHint": "Affiche le temps estimé de chaque service (par ex. \"20 min\") sur les boutons de la page de commande. Désactivé, ils sont masqués ici ; ils restent affichés au paiement."
     }
   },
   "impersonation": {

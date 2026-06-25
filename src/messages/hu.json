@@ -4075,7 +4075,9 @@
       "enable": "Engedélyezés",
       "disable": "Letiltás",
       "title": "Rendeléskezelés",
-      "subtitle": "Állítsa be, hogyan fogadják el és ütemezik az új rendeléseket."
+      "subtitle": "Állítsa be, hogyan fogadják el és ütemezik az új rendeléseket.",
+      "showServiceTimesTitle": "Szolgáltatási idők megjelenítése a rendelési oldalon",
+      "showServiceTimesHint": "Megjeleníti az egyes szolgáltatások becsült idejét (pl. \"20 perc\") a rendelési oldal gombjain. Kikapcsolva itt elrejti; a pénztárnál továbbra is látszik."
     }
   },
   "impersonation": {

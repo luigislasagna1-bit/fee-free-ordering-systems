@@ -4075,7 +4075,9 @@
       "enable": "Ota käyttöön",
       "disable": "Poista käytöstä",
       "title": "Tilausten käsittely",
-      "subtitle": "Valitse, miten uudet tilaukset hyväksytään ja ajoitetaan."
+      "subtitle": "Valitse, miten uudet tilaukset hyväksytään ja ajoitetaan.",
+      "showServiceTimesTitle": "Näytä palveluajat tilaussivulla",
+      "showServiceTimesHint": "Näyttää kunkin palvelun arvioidun ajan (esim. \"20 min\") tilaussivun painikkeissa. Pois päältä piilottaa ne täältä; ne näkyvät silti kassalla."
     }
   },
   "impersonation": {

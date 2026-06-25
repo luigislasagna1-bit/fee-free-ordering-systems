@@ -2501,6 +2501,10 @@ export function OrderingPageClient({
   const estimatedDeliveryMinutes = orderType === "delivery"
     ? (zoneMinutes !== undefined ? zoneMinutes : restaurant.estimatedDelivery)
     : restaurant.estimatedDelivery;
+  // Fabrizio 2026-06-25: hide the per-service estimated time ("· 20 min") on the order-page
+  // service buttons when the owner turns it off (it still shows at checkout). Default show —
+  // only an explicit false hides it, so existing stores are unaffected.
+  const showServiceTimes = (restaurant as any).showServiceTimesOnOrderPage !== false;
   const deliveryFee = hasFreeDelivery ? 0 : baseDeliveryFee;
   // When tipping is disabled at the restaurant level, force zero
   // regardless of any leftover client state. Belt-and-suspenders to
@@ -3898,7 +3902,7 @@ export function OrderingPageClient({
                 }
               >
                 <span className="flex items-center gap-2 flex-wrap justify-center">
-                  <ShoppingBag className="w-4 h-4" /> {t("pickup")} · {restaurant.estimatedPickup} {t("minutes")}
+                  <ShoppingBag className="w-4 h-4" /> {t("pickup")}{showServiceTimes && <> · {restaurant.estimatedPickup} {t("minutes")}</>}
                   {paused && <span className="text-xs">({holClosed ? t("closedToday") : t("servicePausedBadge")})</span>}
                   {!paused && pickupOpensAt && <span className="text-xs font-normal opacity-80">({t("opensAtLabel", { time: pickupOpensAt })})</span>}
                 </span>
@@ -3923,7 +3927,7 @@ export function OrderingPageClient({
                 }
               >
                 <span className="flex items-center gap-2 flex-wrap justify-center">
-                  <Truck className="w-4 h-4" /> {t("delivery")} · {estimatedDeliveryMinutes} {t("minutes")}
+                  <Truck className="w-4 h-4" /> {t("delivery")}{showServiceTimes && <> · {estimatedDeliveryMinutes} {t("minutes")}</>}
                   {baseDeliveryFee > 0 && <span className="text-xs font-normal">(+{fmt(baseDeliveryFee)})</span>}
                   {paused && <span className="text-xs">({holClosed ? t("closedToday") : t("servicePausedBadge")})</span>}
                   {!paused && deliveryOpensAt && <span className="text-xs font-normal opacity-80">({t("opensAtLabel", { time: deliveryOpensAt })})</span>}
@@ -3952,7 +3956,7 @@ export function OrderingPageClient({
                 }
               >
                 <span className="flex items-center gap-2 flex-wrap justify-center">
-                  <Utensils className="w-4 h-4" /> {t("dineIn")} · {est} {t("minutes")}
+                  <Utensils className="w-4 h-4" /> {t("dineIn")}{showServiceTimes && <> · {est} {t("minutes")}</>}
                   {paused && <span className="text-xs">({holClosed ? t("closedToday") : t("servicePausedBadge")})</span>}
                 </span>
                 {desc && <span className="text-xs font-normal opacity-70 leading-tight line-clamp-2 text-center">{desc}</span>}
@@ -3977,7 +3981,7 @@ export function OrderingPageClient({
                 }
               >
                 <span className="flex items-center gap-2 flex-wrap justify-center">
-                  <Package className="w-4 h-4" /> {t("takeOut")} · {est} {t("minutes")}
+                  <Package className="w-4 h-4" /> {t("takeOut")}{showServiceTimes && <> · {est} {t("minutes")}</>}
                   {paused && <span className="text-xs">({holClosed ? t("closedToday") : t("servicePausedBadge")})</span>}
                 </span>
                 {desc && <span className="text-xs font-normal opacity-70 leading-tight line-clamp-2 text-center">{desc}</span>}

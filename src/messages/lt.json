@@ -4075,7 +4075,9 @@
       "enable": "Įjungti",
       "disable": "Išjungti",
       "title": "Užsakymų tvarkymas",
-      "subtitle": "Pasirinkite, kaip nauji užsakymai priimami ir suplanuojami."
+      "subtitle": "Pasirinkite, kaip nauji užsakymai priimami ir suplanuojami.",
+      "showServiceTimesTitle": "Rodyti paslaugų laikus užsakymo puslapyje",
+      "showServiceTimesHint": "Rodo kiekvienos paslaugos numatomą laiką (pvz., \"20 min\") užsakymo puslapio mygtukuose. Išjungus jie čia paslepiami; atsiskaitant vis tiek rodomi."
     }
   },
   "impersonation": {

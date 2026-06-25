@@ -4075,7 +4075,9 @@
       "enable": "Omogući",
       "disable": "Onemogući",
       "title": "Upravljanje narudžbama",
-      "subtitle": "Odaberite kako se nove narudžbe prihvaćaju i zakazuju."
+      "subtitle": "Odaberite kako se nove narudžbe prihvaćaju i zakazuju.",
+      "showServiceTimesTitle": "Prikaži vremena usluge na stranici za narudžbe",
+      "showServiceTimesHint": "Prikazuje procijenjeno vrijeme svake usluge (npr. \"20 min\") na gumbima stranice za narudžbe. Isključeno ih skriva ovdje; i dalje se prikazuju pri naplati."
     }
   },
   "impersonation": {
