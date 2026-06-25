@@ -98,6 +98,9 @@ export default async function ReservationPage({
       isOpen: h.isOpen,
       closesNextDay: h.closesNextDay,
       service: h.service,
+      // Split reservation hours (lunch + dinner) live here — the slot picker +
+      // validator read them via rowIntervals when 2+ windows are configured.
+      intervals: (h as any).intervals ?? null,
     })),
     reservationSettings: restaurant.reservationSettings && {
       ...restaurant.reservationSettings,

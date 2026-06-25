@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { validateBooking, resolveDayHours } from "@/lib/reservation-validation";
+import { validateBooking, resolveDayHours, resolveReservationIntervals } from "@/lib/reservation-validation";
 
 // Day-of-week for a calendar date (noon-UTC, timezone-independent) so the test
 // configures reservation hours for the right weekday.
@@ -72,5 +72,58 @@ describe("resolveDayHours", () => {
   });
   it("returns null when nothing is configured", () => {
     expect(resolveDayHours("{}", [], date)).toBe(null);
+  });
+});
+
+describe("resolveReservationIntervals (split reservation hours)", () => {
+  const date = "2026-06-18";
+  const dow = dowOf(date);
+  it("returns 2+ windows from the reservation OpeningHours row", () => {
+    const oh = [{ dayOfWeek: dow, isOpen: true, openTime: "12:00", closeTime: "23:00", service: "reservation",
+      intervals: [{ open: "12:00", close: "15:00" }, { open: "18:00", close: "23:00" }] }];
+    expect(resolveReservationIntervals(oh, date)).toEqual([
+      { open: "12:00", close: "15:00", closesNextDay: false },
+      { open: "18:00", close: "23:00", closesNextDay: false },
+    ]);
+  });
+  it("returns [] for a single-window reservation row (legacy path handles it)", () => {
+    expect(resolveReservationIntervals([{ dayOfWeek: dow, isOpen: true, openTime: "10:00", closeTime: "22:00", service: "reservation" }], date)).toEqual([]);
+  });
+  it("does NOT use a general-row split — reservations need an explicit reservation row", () => {
+    const oh = [{ dayOfWeek: dow, isOpen: true, openTime: "12:00", closeTime: "23:00", service: null,
+      intervals: [{ open: "12:00", close: "15:00" }, { open: "18:00", close: "23:00" }] }];
+    expect(resolveReservationIntervals(oh, date)).toEqual([]);
+  });
+  it("a reservation-scoped single window overrides a general split (no split enforced)", () => {
+    const oh = [
+      { dayOfWeek: dow, isOpen: true, openTime: "12:00", closeTime: "23:00", service: null, intervals: [{ open: "12:00", close: "15:00" }, { open: "18:00", close: "23:00" }] },
+      { dayOfWeek: dow, isOpen: true, openTime: "17:00", closeTime: "23:00", service: "reservation" },
+    ];
+    expect(resolveReservationIntervals(oh, date)).toEqual([]);
+  });
+});
+
+describe("validateBooking — split reservation hours", () => {
+  const now = new Date("2026-06-16T12:00:00Z");
+  const date = "2026-06-18";
+  const dow = dowOf(date);
+  const split = [{ open: "12:00", close: "15:00" }, { open: "18:00", close: "23:00" }];
+  // settingsForDay sets legacy reservationHours = 10:00–22:00, which would accept
+  // 16:00 — proving split overrides the legacy window.
+  const s = settingsForDay(dow);
+  it("accepts a time inside the lunch window", () => {
+    expect(validateBooking(s, { date, time: "13:00", partySize: 4 }, now, "UTC", null, split).ok).toBe(true);
+  });
+  it("accepts a time inside the dinner window", () => {
+    expect(validateBooking(s, { date, time: "19:00", partySize: 4 }, now, "UTC", null, split).ok).toBe(true);
+  });
+  it("REJECTS a time in the lunch/dinner gap — even though legacy hours would allow it", () => {
+    expect(validateBooking(s, { date, time: "16:00", partySize: 4 }, now, "UTC", null, split).ok).toBe(false);
+  });
+  it("rejects a time before the first window", () => {
+    expect(validateBooking(s, { date, time: "11:00", partySize: 4 }, now, "UTC", null, split).ok).toBe(false);
+  });
+  it("single-window behaviour is unchanged when no split intervals are passed", () => {
+    expect(validateBooking(s, { date, time: "16:00", partySize: 4 }, now, "UTC").ok).toBe(true);
   });
 });

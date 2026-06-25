@@ -1,7 +1,7 @@
 // Shared reservation validator — runs identically on client (instant feedback)
 // and server (authoritative enforcement). Pure function, no DB access.
 
-import { parseLocalDateTimeInTz } from "./restaurant-hours";
+import { parseLocalDateTimeInTz, rowIntervals, type HoursInterval } from "./restaurant-hours";
 
 export interface ReservationSettingsLike {
   minNoticeHours: number;
@@ -71,6 +71,32 @@ export function resolveDayHours(
   return null;
 }
 
+/**
+ * SPLIT reservation hours (lunch + dinner) for a day, ONLY when the owner
+ * configured 2+ windows on the reservation OpeningHours row (the new admin
+ * editor). Returns [] for a single window / legacy data, so the caller keeps the
+ * unchanged single-window behaviour (resolveDayHours). Additive by design — no
+ * existing booking flow changes unless 2+ windows are explicitly set.
+ */
+export function resolveReservationIntervals(
+  openingHours: Array<{ dayOfWeek: number; isOpen?: boolean; openTime?: string | null; closeTime?: string | null; closesNextDay?: boolean | null; service?: string | null; intervals?: unknown }>,
+  date: string,
+): HoursInterval[] {
+  const dayOfWeek = new Date(`${date}T12:00:00Z`).getUTCDay();
+  // Split reservation hours require an EXPLICIT reservation-scoped row with 2+
+  // windows. We deliberately do NOT fall back to the general (service=null) row:
+  // a normal lunch+dinner GENERAL schedule is for ordering, not reservations —
+  // reservations only split when the owner sets it on the reservation tab. The
+  // CLIENT (ReservationModal) calls this SAME function, so the picker + validator
+  // agree exactly (no client/server source mismatch). Luigi 2026-06-24.
+  const resRow = openingHours.find((h) => h.dayOfWeek === dayOfWeek && h.service === "reservation");
+  if (resRow && resRow.isOpen !== false) {
+    const ivs = rowIntervals(resRow as any);
+    if (ivs.length > 1) return ivs;
+  }
+  return [];
+}
+
 export function validateBooking(
   s: ReservationSettingsLike,
   proposal: BookingProposal,
@@ -92,6 +118,11 @@ export function validateBooking(
    *  midnight (next-day) booking even with empty reservationHours. Pass null /
    *  omit when there's no fallback. Luigi 2026-06-08. */
   effectiveDayHours?: { open: string; close: string } | null,
+  /** SPLIT reservation hours (lunch + dinner) for the day — set only when the
+   *  owner configured 2+ windows on the reservation OpeningHours row. When
+   *  present + non-empty, the in-hours check (step 6) enforces THESE instead of
+   *  the single window. Empty / omitted = unchanged single-window behaviour. */
+  splitIntervals?: HoursInterval[],
 ): ValidationResult {
   const { date, time, partySize } = proposal;
 
@@ -190,16 +221,32 @@ export function validateBooking(
     return { ok: false, reason: "We're not accepting reservations on this date." };
   }
 
-  // 6. Within the day's reservation window (cross-midnight aware).
-  if (day && day.enabled === false) {
-    return { ok: false, reason: "We don't take reservations on this day." };
-  }
-  if (day && openMin !== null && closeMin !== null) {
-    const withinWindow = crossesMidnight
-      ? (reqMin >= openMin || reqMin <= closeMin)   // 11:00 → 04:00 wraps midnight
-      : (reqMin >= openMin && reqMin <= closeMin);  // same-day window
-    if (!withinWindow) {
-      return { ok: false, reason: `On this day we take reservations between ${day.open} and ${day.close}.` };
+  // 6. Within the day's reservation window(s).
+  if (splitIntervals && splitIntervals.length > 0) {
+    // SPLIT hours (lunch + dinner): the time must fall inside ONE of the windows.
+    // Inclusive close (matches the legacy single-window check) + overnight-aware.
+    const inAny = splitIntervals.some((iv) => {
+      const o = parseTimeToMinutes(iv.open);
+      const c = parseTimeToMinutes(iv.close);
+      return (iv.closesNextDay || c <= o) ? (reqMin >= o || reqMin <= c) : (reqMin >= o && reqMin <= c);
+    });
+    if (!inAny) {
+      const windows = splitIntervals.map((iv) => `${iv.open}–${iv.close}`).join(", ");
+      return { ok: false, reason: `On this day we take reservations during ${windows}.` };
+    }
+  } else {
+    // Single-window (unchanged): cross-midnight aware, gated on an explicit
+    // reservationHours row so it never adds a new out-of-hours rejection.
+    if (day && day.enabled === false) {
+      return { ok: false, reason: "We don't take reservations on this day." };
+    }
+    if (day && openMin !== null && closeMin !== null) {
+      const withinWindow = crossesMidnight
+        ? (reqMin >= openMin || reqMin <= closeMin)   // 11:00 → 04:00 wraps midnight
+        : (reqMin >= openMin && reqMin <= closeMin);  // same-day window
+      if (!withinWindow) {
+        return { ok: false, reason: `On this day we take reservations between ${day.open} and ${day.close}.` };
+      }
     }
   }
 

@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { X, Calendar, Clock, Users, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
-import { validateBooking, type ReservationSettingsLike } from "@/lib/reservation-validation";
+import { validateBooking, resolveReservationIntervals, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { parseTheme } from "@/lib/theme";
 import { useTranslations } from "next-intl";
 import { pickHoursForService } from "@/lib/service-hours";
@@ -316,6 +316,26 @@ export function ReservationModal({
   // legacy behaviour.
   const fallbackRow = pickHoursForService(fallbackOpeningHours as any, dayOfWeek, "reservation");
 
+  // SPLIT reservation hours (lunch + dinner): the reservation OpeningHours row
+  // can carry 2+ windows. When it does, they DRIVE the slot list + the in-hours
+  // validation (overriding the legacy single window). A single window → [] so the
+  // existing behaviour is byte-for-byte unchanged.
+  //
+  // Resolve split from the SAME source the server enforces — call
+  // resolveReservationIntervals() over the full openingHours array, NOT off
+  // `fallbackRow`. `fallbackRow` comes from pickHoursForService(..., "reservation"),
+  // which FALLS BACK to the default (service=null) row when no reservation-scoped
+  // row exists. Deriving split from that fallback made the picker gate on a split
+  // DEFAULT window (a normal lunch+dinner general schedule) that the server never
+  // enforces — the server treats a day as split ONLY when the explicit
+  // `service === "reservation"` row carries 2+ windows. Sharing the server
+  // function keeps client gating and server validation byte-for-byte in agreement.
+  // Luigi 2026-06-24.
+  const splitIntervals = useMemo(
+    () => resolveReservationIntervals(fallbackOpeningHours as any, date),
+    [fallbackOpeningHours, date],
+  );
+
   // The day's effective open/close — same fallback chain the slot list uses
   // (explicit reservationHours row, else the opening-hours row). Fed to the
   // validator so it recognises a cross-midnight close (e.g. 04:00) and stops
@@ -330,8 +350,8 @@ export function ReservationModal({
     return null;
   }, [dayHours, fallbackRow]);
   const validation = useMemo(
-    () => validateBooking(settings, { date, time, partySize }, new Date(), timezone, effectiveDayHours),
-    [settings, date, time, partySize, timezone, effectiveDayHours],
+    () => validateBooking(settings, { date, time, partySize }, new Date(), timezone, effectiveDayHours, splitIntervals.length ? splitIntervals : undefined),
+    [settings, date, time, partySize, timezone, effectiveDayHours, splitIntervals],
   );
 
   // Whether the day looks closed per the data we have. Used to render
@@ -387,7 +407,14 @@ export function ReservationModal({
     // 1. Generate the raw list from the day's hours.
     let raw: string[];
     let openHHMM = "10:00";
-    if (dayHours && dayHours.enabled !== false) {
+    if (splitIntervals.length > 0) {
+      // SPLIT hours: one slot list per window, in order (lunch then dinner). The
+      // gap between windows naturally has no slots. openHHMM = the first window's
+      // open so the today/past-slot filter below treats pre-open times correctly.
+      openHHMM = splitIntervals[0].open;
+      raw = splitIntervals.flatMap((iv) => generateTimeSlots(iv.open, iv.close, slotStep));
+      raw = raw.filter((s, i) => raw.indexOf(s) === i);
+    } else if (dayHours && dayHours.enabled !== false) {
       openHHMM = dayHours.open || "10:00";
       raw = generateTimeSlots(openHHMM, dayHours.close || "22:00", slotStep);
     } else if (fallbackRow && fallbackRow.isOpen) {
@@ -438,7 +465,7 @@ export function ReservationModal({
       });
     }
     return raw;
-  }, [dayHours, fallbackRow, dayStatus, slotStep, date, settings.minNoticeMinutes, settings.minNoticeHours]);
+  }, [dayHours, fallbackRow, dayStatus, slotStep, date, settings.minNoticeMinutes, settings.minNoticeHours, splitIntervals]);
 
   // When the slot list changes (date pick, hours change, interval
   // change) and the currently-selected time is no longer in the list,

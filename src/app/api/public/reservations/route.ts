@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse, after } from "next/server";
 import prisma from "@/lib/db";
-import { validateBooking, resolveDayHours, type ReservationSettingsLike } from "@/lib/reservation-validation";
+import { validateBooking, resolveDayHours, resolveReservationIntervals, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
 import { notifyStaff, notifyCustomer } from "@/lib/notifications";
 import { sendKitchenPush } from "@/lib/push";
@@ -120,6 +120,7 @@ export async function POST(req: NextRequest) {
       new Date(),
       restaurant.timezone,
       resolveDayHours(settings.reservationHours, restaurant.openingHours, date),
+      resolveReservationIntervals(restaurant.openingHours, date),
     );
     if (!v.ok) return NextResponse.json({ error: v.reason }, { status: 400 });
 
