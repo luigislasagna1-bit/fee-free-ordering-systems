@@ -167,6 +167,15 @@ export default async function ReportsDashboardPage({
     })
     .sort((a, b) => b.revenue - a.revenue);
 
+  // Per-currency range revenue (multi-currency chain only) — rendered as chips
+  // so a brand owner sees a real CA$ / US$ split instead of one meaningless
+  // mixed-currency headline number. Parent's currency first.
+  const revenueByCurrency: [string, number][] = scope.mixedCurrency
+    ? Array.from(
+        locationRows.reduce((m, l) => m.set(l.currency, (m.get(l.currency) ?? 0) + l.revenue), new Map<string, number>()).entries(),
+      ).sort((a, b) => (a[0] === scope.currency ? -1 : b[0] === scope.currency ? 1 : a[0].localeCompare(b[0])))
+    : [];
+
   // Detect "brand-new restaurant" state — zero orders in BOTH the
   // current AND the previous period. We render a welcoming first-order
   // state instead of a wall of zeros + awkward "—" deltas.
@@ -268,6 +277,16 @@ export default async function ReportsDashboardPage({
             <div className="mb-6 flex items-start gap-2.5 rounded-xl border border-amber-200 bg-amber-50 p-3">
               <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
               <p className="text-xs text-amber-900/90">{t("chainMixedCaveat", { currency: scope.currency.toUpperCase() })}</p>
+            </div>
+          )}
+          {revenueByCurrency.length > 0 && (
+            <div className="mb-6 flex flex-wrap items-center gap-2 text-sm">
+              <span className="text-gray-500 font-medium">{t("colRevenue")}:</span>
+              {revenueByCurrency.map(([cur, rev]) => (
+                <span key={cur} className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 border border-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-800">
+                  <span className="uppercase text-emerald-500">{cur}</span> {fmtCurrency(rev, cur)}
+                </span>
+              ))}
             </div>
           )}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-6">
