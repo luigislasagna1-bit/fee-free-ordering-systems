@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import { getSessionUser, isResellerView } from "@/lib/session";
 import { ColorsClient } from "./ColorsClient";
+import { LoginPageInfo } from "./LoginPageInfo";
 
 /**
  * /reseller/branding/colors
@@ -39,10 +40,21 @@ export default async function ResellerColorsPage() {
   });
   if (profile?.status !== "approved") redirect("/reseller/holding");
 
-  // Paywall — needs an active White-Label subscription (basic or full).
+  // Branded subscribers get the live colors editor; everyone else (Free) gets
+  // the login-page explainer (neutral unbranded login + upgrade path + app
+  // downloads) instead of being bounced to the overview with no info.
   const wlActive = profile.whiteLabelStatus === "active" &&
     (profile.whiteLabelTier === "basic" || profile.whiteLabelTier === "full");
-  if (!wlActive) redirect("/reseller/branding");
+  if (!wlActive) {
+    const neutralHost = (process.env.NEUTRAL_RESELLER_HOST || "restaurantownerlogin.com")
+      .replace(/^https?:\/\//, "").replace(/\/.*$/, "").toLowerCase();
+    return (
+      <LoginPageInfo
+        neutralHost={neutralHost}
+        appUrl={process.env.NEXT_PUBLIC_APP_URL || "https://feefreeordering.com"}
+      />
+    );
+  }
 
   return (
     <ColorsClient
