@@ -3789,7 +3789,11 @@
       "colShare": "สัดส่วน",
       "brandBadge": "แบรนด์",
       "locationDrillHint": "แตะที่สาขาเพื่อเปิดรายงานของสาขานั้น",
-      "subtotal": "ยอดรวมย่อย"
+      "subtotal": "ยอดรวมย่อย",
+      "chooserTitle": "เลือกสถานที่",
+      "chooserSubtitle": "รายงานนี้แยกตามสถานที่ — เลือกสถานที่เพื่อดู",
+      "viewingLocation": "กำลังดู",
+      "changeLocation": "เปลี่ยนสถานที่"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "ไม่มีบริบทร้านอาหาร",

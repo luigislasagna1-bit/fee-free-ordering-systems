@@ -3789,7 +3789,11 @@
       "colShare": "Andel",
       "brandBadge": "Brand",
       "locationDrillHint": "Tryk på en afdeling for at åbne dens egne rapporter.",
-      "subtotal": "Subtotal"
+      "subtotal": "Subtotal",
+      "chooserTitle": "Vælg en lokation",
+      "chooserSubtitle": "Denne rapport er pr. lokation — vælg en lokation for at se den.",
+      "viewingLocation": "Viser",
+      "changeLocation": "Skift lokation"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ingen restaurantkontekst.",

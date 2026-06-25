@@ -3789,7 +3789,11 @@
       "colShare": "נתח",
       "brandBadge": "מותג",
       "locationDrillHint": "הקש על סניף כדי לפתוח את הדוחות שלו.",
-      "subtotal": "סכום ביניים"
+      "subtotal": "סכום ביניים",
+      "chooserTitle": "בחר מיקום",
+      "chooserSubtitle": "דוח זה הוא לפי מיקום — בחר מיקום כדי לצפות בו.",
+      "viewingLocation": "מציג",
+      "changeLocation": "שנה מיקום"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "אין הקשר מסעדה.",

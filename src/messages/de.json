@@ -3789,7 +3789,11 @@
       "colShare": "Anteil",
       "brandBadge": "Marke",
       "locationDrillHint": "Tippen Sie auf einen Standort, um dessen eigene Berichte zu öffnen.",
-      "subtotal": "Zwischensumme"
+      "subtotal": "Zwischensumme",
+      "chooserTitle": "Standort auswählen",
+      "chooserSubtitle": "Dieser Bericht ist standortbezogen – wähle einen Standort, um ihn anzuzeigen.",
+      "viewingLocation": "Ansicht",
+      "changeLocation": "Standort wechseln"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Kein Restaurant-Kontext.",

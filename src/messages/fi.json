@@ -3789,7 +3789,11 @@
       "colShare": "Osuus",
       "brandBadge": "Brändi",
       "locationDrillHint": "Avaa toimipisteen omat raportit napauttamalla sitä.",
-      "subtotal": "Välisumma"
+      "subtotal": "Välisumma",
+      "chooserTitle": "Valitse toimipiste",
+      "chooserSubtitle": "Tämä raportti on toimipistekohtainen — valitse toimipiste nähdäksesi sen.",
+      "viewingLocation": "Tarkastellaan",
+      "changeLocation": "Vaihda toimipistettä"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ei ravintolaympäristöä.",

@@ -106,3 +106,22 @@ export const resolveReportScope = cache(async (restaurantId: string): Promise<Re
     mixedTimezone,
   };
 });
+
+/**
+ * Resolve which SINGLE location a per-location report (Heatmap / Google Rank /
+ * Connectivity / End-of-Day — metrics that can't meaningfully aggregate across a
+ * chain) should render for. Single restaurant → itself. Brand parent → the
+ * `?loc=<id>` choice when valid (∈ the chain), else null so the caller shows a
+ * location chooser. `?loc` is validated against the scope, so it can't read
+ * another brand's location.
+ */
+export function resolveActiveLocation(
+  scope: ReportScope,
+  sp: Record<string, string | string[] | undefined>,
+): ReportScopeLocation | null {
+  if (!scope.isChain) return scope.locations[0] ?? null;
+  const raw = sp.loc;
+  const loc = Array.isArray(raw) ? raw[0] : raw;
+  if (loc && scope.ids.includes(loc)) return scope.locations.find((l) => l.id === loc) ?? null;
+  return null;
+}

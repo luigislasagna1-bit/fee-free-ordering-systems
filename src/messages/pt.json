@@ -3789,7 +3789,11 @@
       "colShare": "Quota",
       "brandBadge": "Marca",
       "locationDrillHint": "Toque num estabelecimento para abrir os seus próprios relatórios.",
-      "subtotal": "Subtotal"
+      "subtotal": "Subtotal",
+      "chooserTitle": "Escolha uma localização",
+      "chooserSubtitle": "Este relatório é por localização — escolha uma localização para o ver.",
+      "viewingLocation": "A ver",
+      "changeLocation": "Alterar localização"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Sem contexto de restaurante.",

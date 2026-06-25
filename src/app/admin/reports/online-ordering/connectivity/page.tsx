@@ -5,6 +5,8 @@ import { eachDay, parseDateRange, formatRangeLabel } from "@/lib/reports/date-ra
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { FRESHNESS_MS } from "@/lib/kitchen-devices";
 import { getTranslations } from "next-intl/server";
+import { resolveReportScope, resolveActiveLocation } from "@/lib/reports/report-scope";
+import { LocationChooser, ActiveLocationChip } from "../../LocationChooser";
 
 /**
  * /admin/reports/online-ordering/connectivity
@@ -39,14 +41,43 @@ export default async function ConnectivityReportPage({
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
+  const scope = await resolveReportScope(restaurantId);
+  const active = resolveActiveLocation(scope, sp);
+
+  const rangeQuery = (() => {
+    const u = new URLSearchParams();
+    for (const k of ["preset", "from", "to"]) {
+      const v = Array.isArray(sp[k]) ? sp[k][0] : sp[k];
+      if (v) u.set(k, String(v));
+    }
+    return u.toString();
+  })();
+
+  if (!active) {
+    return (
+      <div>
+        <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
+            <p className="text-sm text-gray-500 mt-0.5">
+              {t("pageDescription")} · {formatRangeLabel(range)}
+            </p>
+          </div>
+          <DateRangePicker />
+        </header>
+        <LocationChooser locations={scope.locations} baseQuery={rangeQuery} />
+      </div>
+    );
+  }
+
   const [devices, events] = await Promise.all([
     prisma.kitchenDevice.findMany({
-      where: { restaurantId },
+      where: { restaurantId: active.id },
       orderBy: { lastSeenAt: "desc" },
     }),
     prisma.connectivityEvent.findMany({
       where: {
-        restaurantId,
+        restaurantId: active.id,
         // Pull one extra day BEFORE the range start so the first day's
         // online-state at midnight is computable (otherwise the day
         // starts as "unknown" when the device has been online since
@@ -164,6 +195,8 @@ export default async function ConnectivityReportPage({
         </div>
         <DateRangePicker />
       </header>
+
+      {scope.isChain && <ActiveLocationChip name={active.name} baseQuery={rangeQuery} />}
 
       {/* Headline score — GloriaFood-style "X% connectivity health" with a
           target of >95%. Goes green when above target, amber when below. */}

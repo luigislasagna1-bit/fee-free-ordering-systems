@@ -3789,7 +3789,11 @@
       "colShare": "Доля",
       "brandBadge": "Бренд",
       "locationDrillHint": "Нажмите на точку, чтобы открыть её собственные отчёты.",
-      "subtotal": "Подытог"
+      "subtotal": "Подытог",
+      "chooserTitle": "Выберите локацию",
+      "chooserSubtitle": "Этот отчёт формируется по локациям — выберите локацию для просмотра.",
+      "viewingLocation": "Просмотр",
+      "changeLocation": "Сменить локацию"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Нет контекста ресторана.",

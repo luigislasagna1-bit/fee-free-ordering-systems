@@ -3789,7 +3789,11 @@
       "colShare": "الحصة",
       "brandBadge": "العلامة",
       "locationDrillHint": "انقر على فرع لفتح تقاريره الخاصة.",
-      "subtotal": "المجموع الجزئي"
+      "subtotal": "المجموع الجزئي",
+      "chooserTitle": "اختر موقعًا",
+      "chooserSubtitle": "هذا التقرير خاص بكل موقع — اختر موقعًا لعرضه.",
+      "viewingLocation": "عرض",
+      "changeLocation": "تغيير الموقع"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "لا يوجد سياق مطعم.",

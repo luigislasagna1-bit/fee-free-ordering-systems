@@ -3789,7 +3789,11 @@
       "colShare": "Dalis",
       "brandBadge": "Prekės ženklas",
       "locationDrillHint": "Bakstelėkite vietą, kad atidarytumėte jos ataskaitas.",
-      "subtotal": "Tarpinė suma"
+      "subtotal": "Tarpinė suma",
+      "chooserTitle": "Pasirinkite vietą",
+      "chooserSubtitle": "Ši ataskaita yra pagal vietą — pasirinkite vietą jai peržiūrėti.",
+      "viewingLocation": "Peržiūrima",
+      "changeLocation": "Keisti vietą"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nėra restorano konteksto.",

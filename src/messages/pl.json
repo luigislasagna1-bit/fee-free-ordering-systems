@@ -3789,7 +3789,11 @@
       "colShare": "Udział",
       "brandBadge": "Marka",
       "locationDrillHint": "Dotknij lokalu, aby otworzyć jego własne raporty.",
-      "subtotal": "Suma częściowa"
+      "subtotal": "Suma częściowa",
+      "chooserTitle": "Wybierz lokalizację",
+      "chooserSubtitle": "Ten raport jest dla każdej lokalizacji osobno — wybierz lokalizację, aby go zobaczyć.",
+      "viewingLocation": "Wyświetlanie",
+      "changeLocation": "Zmień lokalizację"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Brak kontekstu restauracji.",

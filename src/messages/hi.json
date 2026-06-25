@@ -3846,7 +3846,11 @@
       "colShare": "हिस्सा",
       "brandBadge": "ब्रांड",
       "locationDrillHint": "किसी स्थान की अपनी रिपोर्ट खोलने के लिए उस पर टैप करें।",
-      "subtotal": "उप-कुल"
+      "subtotal": "उप-कुल",
+      "chooserTitle": "एक स्थान चुनें",
+      "chooserSubtitle": "यह रिपोर्ट प्रति-स्थान है — देखने के लिए कोई स्थान चुनें।",
+      "viewingLocation": "देख रहे हैं",
+      "changeLocation": "स्थान बदलें"
     },
     "invoice": {
       "title": "इनवॉइस",

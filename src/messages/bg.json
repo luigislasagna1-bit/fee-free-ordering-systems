@@ -3789,7 +3789,11 @@
       "colShare": "Дял",
       "brandBadge": "Марка",
       "locationDrillHint": "Докоснете обект, за да отворите неговите отчети.",
-      "subtotal": "Междинна сума"
+      "subtotal": "Междинна сума",
+      "chooserTitle": "Изберете локация",
+      "chooserSubtitle": "Този отчет е по локация — изберете локация, за да го видите.",
+      "viewingLocation": "Преглед на",
+      "changeLocation": "Смяна на локацията"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Няма контекст на ресторант.",

@@ -3789,7 +3789,11 @@
       "colShare": "Удео",
       "brandBadge": "Бренд",
       "locationDrillHint": "Додирните локацију да отворите њене извештаје.",
-      "subtotal": "Međuzbir"
+      "subtotal": "Međuzbir",
+      "chooserTitle": "Изаберите локацију",
+      "chooserSubtitle": "Овај извештај је по локацији — изаберите локацију да бисте га видели.",
+      "viewingLocation": "Приказ",
+      "changeLocation": "Промени локацију"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nema konteksta restorana.",

@@ -3789,7 +3789,11 @@
       "colShare": "Pay",
       "brandBadge": "Marka",
       "locationDrillHint": "Bir şubenin kendi raporlarını açmak için şubeye dokunun.",
-      "subtotal": "Ara Toplam"
+      "subtotal": "Ara Toplam",
+      "chooserTitle": "Bir konum seçin",
+      "chooserSubtitle": "Bu rapor konuma göredir — görüntülemek için bir konum seçin.",
+      "viewingLocation": "Görüntülenen",
+      "changeLocation": "Konumu değiştir"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Restoran bağlamı yok.",

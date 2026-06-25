@@ -3789,7 +3789,11 @@
       "colShare": "Tỷ trọng",
       "brandBadge": "Thương hiệu",
       "locationDrillHint": "Chạm vào một địa điểm để mở báo cáo riêng của nó.",
-      "subtotal": "Tạm tính"
+      "subtotal": "Tạm tính",
+      "chooserTitle": "Chọn một địa điểm",
+      "chooserSubtitle": "Báo cáo này theo từng địa điểm — chọn một địa điểm để xem.",
+      "viewingLocation": "Đang xem",
+      "changeLocation": "Đổi địa điểm"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Không có ngữ cảnh nhà hàng.",

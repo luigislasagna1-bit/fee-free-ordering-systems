@@ -4,6 +4,8 @@ import { hasFeature } from "@/lib/entitlements";
 import { runSeoHealthChecks, type SeoCheck } from "@/lib/seo/health-check";
 import { CheckCircle2, AlertTriangle, HelpCircle, ExternalLink, LineChart } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { resolveReportScope, resolveActiveLocation } from "@/lib/reports/report-scope";
+import { LocationChooser, ActiveLocationChip } from "../../LocationChooser";
 
 /**
  * /admin/reports/online-ordering/google-rank
@@ -27,22 +29,47 @@ import { getTranslations } from "next-intl/server";
  * is a future optimization; for now it's fine since this page isn't
  * on a customer hot path.
  */
-export default async function GoogleRankReportPage() {
+export default async function GoogleRankReportPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const t = await getTranslations("admin.reportGoogleRank");
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
+  const sp = await searchParams;
+  const scope = await resolveReportScope(restaurantId);
+  const active = resolveActiveLocation(scope, sp);
+  const rangeQuery = "";
+
+  // Brand parent without a picked location → show the chooser (these
+  // per-location SEO metrics can't aggregate across a chain).
+  if (!active) {
+    return (
+      <div>
+        <header className="mb-5">
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
+          <p className="text-sm text-gray-500 mt-0.5">
+            {t("pageSubtitle")}
+          </p>
+        </header>
+        <LocationChooser locations={scope.locations} baseQuery={rangeQuery} />
+      </div>
+    );
+  }
+
   const [restaurant, hasHostedSite] = await Promise.all([
     prisma.restaurant.findUnique({
-      where: { id: restaurantId },
+      where: { id: active.id },
       select: {
         id: true, slug: true, name: true, description: true, cuisineType: true,
         phone: true, address: true, city: true, state: true, zip: true,
         socialLinks: true, subdomain: true, customDomain: true, customDomainStatus: true,
       },
     }),
-    hasFeature(restaurantId, "hosted_marketing_page"),
+    hasFeature(active.id, "hosted_marketing_page"),
   ]);
   if (!restaurant) return <p className="text-sm text-gray-500">{t("restaurantNotFound")}</p>;
 
@@ -59,6 +86,8 @@ export default async function GoogleRankReportPage() {
           {t("pageSubtitle")}
         </p>
       </header>
+
+      {scope.isChain && <ActiveLocationChip name={active.name} baseQuery={rangeQuery} />}
 
       {/* Headline summary — "X of 7 OK · N problems to fix" so owners
           see the verdict before scanning the list. */}

@@ -3789,7 +3789,11 @@
       "colShare": "Participação",
       "brandBadge": "Marca",
       "locationDrillHint": "Toque em uma unidade para abrir os relatórios dela.",
-      "subtotal": "Subtotal"
+      "subtotal": "Subtotal",
+      "chooserTitle": "Escolha um local",
+      "chooserSubtitle": "Este relatório é por local — escolha um local para visualizá-lo.",
+      "viewingLocation": "Visualizando",
+      "changeLocation": "Mudar de local"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nenhum contexto de restaurante.",

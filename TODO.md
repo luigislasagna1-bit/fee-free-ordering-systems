@@ -9,6 +9,15 @@ date + commit hash. This file is committed so the backlog never gets lost.
 
 ## Open
 
+- [ ] **Google Ranking report — the "FIX" actions don't actually do anything.** On
+  `/admin/reports/online-ordering/google-rank` each SEO factor (Content optimization, Google Business listing,
+  Social media + local listings, etc.) shows a "FIX N PROBLEM" badge but it's not actionable — clicking it
+  doesn't take the owner anywhere to fix it. FIX: make each `SeoCheck` carry a `fixHref` (+ render the badge as
+  a Link) pointing at the relevant settings page — e.g. Content optimization → `/admin/profile` (description),
+  Google Business / Social → Profile → Social Links, etc. (`src/lib/seo/health-check.ts` builds the checks;
+  the page renders them.) Also: PageSpeed API returns 429 (rate-limited) → cache the result / back off so it
+  doesn't show "UNKNOWN" every load. _(Luigi flagged 2026-06-25.)_
+
 - [ ] **Kitchen app login banner overlaps the phone status bar (Android + iOS).** On the native kitchen app
   login screen the top floating switcher (`AuthLanguageSwitcher`, `absolute top-4 right-4`) sits in the unsafe
   area and overlaps wifi/battery. Root: `src/app/login/layout.tsx` has NO `viewport` export (so no

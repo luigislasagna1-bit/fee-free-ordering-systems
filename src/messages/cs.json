@@ -3789,7 +3789,11 @@
       "colShare": "Podíl",
       "brandBadge": "Značka",
       "locationDrillHint": "Klepnutím na pobočku otevřete její vlastní přehledy.",
-      "subtotal": "Mezisoučet"
+      "subtotal": "Mezisoučet",
+      "chooserTitle": "Vyberte lokalitu",
+      "chooserSubtitle": "Tento přehled je podle lokality — vyberte lokalitu pro zobrazení.",
+      "viewingLocation": "Zobrazuje se",
+      "changeLocation": "Změnit lokalitu"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Chybí kontext restaurace.",

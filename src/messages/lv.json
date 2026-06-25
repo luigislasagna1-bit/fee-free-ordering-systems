@@ -3789,7 +3789,11 @@
       "colShare": "Daļa",
       "brandBadge": "Zīmols",
       "locationDrillHint": "Pieskarieties vietai, lai atvērtu tās pārskatus.",
-      "subtotal": "Starpsumma"
+      "subtotal": "Starpsumma",
+      "chooserTitle": "Izvēlieties atrašanās vietu",
+      "chooserSubtitle": "Šis pārskats ir pa atrašanās vietām — izvēlieties atrašanās vietu, lai to skatītu.",
+      "viewingLocation": "Skata",
+      "changeLocation": "Mainīt atrašanās vietu"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nav restorāna konteksta.",

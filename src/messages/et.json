@@ -3789,7 +3789,11 @@
       "colShare": "Osakaal",
       "brandBadge": "Bränd",
       "locationDrillHint": "Puudutage asukohta, et avada selle enda aruanded.",
-      "subtotal": "Vahesumma"
+      "subtotal": "Vahesumma",
+      "chooserTitle": "Valige asukoht",
+      "chooserSubtitle": "See aruanne on asukohapõhine — valige selle vaatamiseks asukoht.",
+      "viewingLocation": "Vaatamisel",
+      "changeLocation": "Muuda asukohta"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Restorani kontekst puudub.",

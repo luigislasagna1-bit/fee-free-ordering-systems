@@ -3789,7 +3789,11 @@
       "colShare": "Andel",
       "brandBadge": "Varumärke",
       "locationDrillHint": "Tryck på en plats för att öppna dess egna rapporter.",
-      "subtotal": "Delsumma"
+      "subtotal": "Delsumma",
+      "chooserTitle": "Välj en plats",
+      "chooserSubtitle": "Den här rapporten är per plats — välj en plats för att visa den.",
+      "viewingLocation": "Visar",
+      "changeLocation": "Byt plats"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ingen restaurangkontext.",

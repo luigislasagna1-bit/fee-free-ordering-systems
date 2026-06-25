@@ -3789,7 +3789,11 @@
       "colShare": "占比",
       "brandBadge": "品牌",
       "locationDrillHint": "点按门店即可打开其自有报表。",
-      "subtotal": "小计"
+      "subtotal": "小计",
+      "chooserTitle": "选择门店",
+      "chooserSubtitle": "此报表按门店生成 — 请选择一个门店查看。",
+      "viewingLocation": "正在查看",
+      "changeLocation": "更换门店"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "无餐厅上下文。",

@@ -3789,7 +3789,11 @@
       "colShare": "Quota",
       "brandBadge": "Marca",
       "locationDrillHint": "Toca un local per obrir els seus propis informes.",
-      "subtotal": "Subtotal"
+      "subtotal": "Subtotal",
+      "chooserTitle": "Tria una ubicació",
+      "chooserSubtitle": "Aquest informe és per ubicació: tria una ubicació per veure'l.",
+      "viewingLocation": "Veient",
+      "changeLocation": "Canvia d'ubicació"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "No hi ha context de restaurant.",

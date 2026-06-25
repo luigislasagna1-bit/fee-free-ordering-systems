@@ -3789,7 +3789,11 @@
       "colShare": "Aandeel",
       "brandBadge": "Merk",
       "locationDrillHint": "Tik op een locatie om de eigen rapporten te openen.",
-      "subtotal": "Subtotaal"
+      "subtotal": "Subtotaal",
+      "chooserTitle": "Kies een locatie",
+      "chooserSubtitle": "Dit rapport is per locatie — kies een locatie om het te bekijken.",
+      "viewingLocation": "Bekijken",
+      "changeLocation": "Locatie wijzigen"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Geen restaurantcontext.",

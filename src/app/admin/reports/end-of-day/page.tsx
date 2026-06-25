@@ -17,8 +17,9 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { buildTodaySnapshot, buildDayReport, currentOperationalDayKey } from "@/lib/digests";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { getRestaurantCurrency } from "@/lib/restaurant-currency";
 import { getTranslations, getLocale } from "next-intl/server";
+import { resolveReportScope, resolveActiveLocation } from "@/lib/reports/report-scope";
+import { LocationChooser, ActiveLocationChip } from "../LocationChooser";
 
 export const dynamic = "force-dynamic";
 
@@ -61,28 +62,46 @@ function StatCard({
 export default async function EndOfDayReportPage({
   searchParams,
 }: {
-  searchParams: Promise<{ date?: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const user = await getSessionUser();
   if (!user) redirect("/login");
   if (!user.restaurantId) redirect("/superadmin");
-  const __currency = await getRestaurantCurrency(user.restaurantId);
-  const formatCurrency = (n: number) => fmtCurrency(n, __currency);
+
+  const sp = await searchParams;
+  const scope = await resolveReportScope(user.restaurantId);
+  const active = resolveActiveLocation(scope, sp);
+
+  // This page has no date-range picker (day stepper only) → no range to preserve.
+  const rangeQuery = "";
+
+  if (!active) {
+    return (
+      <div className="space-y-6">
+        <header>
+          <h1 className="text-2xl font-bold text-gray-900">{(await getTranslations("admin.endOfDayPage"))("heading")}</h1>
+        </header>
+        <LocationChooser locations={scope.locations} baseQuery={rangeQuery} />
+      </div>
+    );
+  }
+
+  const formatCurrency = (n: number) => fmtCurrency(n, active.currency);
 
   // Resolve the operational day + 7-day look-back window (clamp the URL date).
-  const todayKey = await currentOperationalDayKey(user.restaurantId);
+  const todayKey = await currentOperationalDayKey(active.id);
   if (!todayKey) redirect("/admin");
   const minDayKey = shiftKey(todayKey, -LOOKBACK_DAYS);
-  const sp = await searchParams;
   let dayKey = todayKey;
-  if (sp?.date && /^\d{4}-\d{2}-\d{2}$/.test(sp.date)) {
-    dayKey = sp.date < minDayKey ? minDayKey : sp.date > todayKey ? todayKey : sp.date;
+  const spDate = Array.isArray(sp.date) ? sp.date[0] : sp.date;
+  if (spDate && /^\d{4}-\d{2}-\d{2}$/.test(spDate)) {
+    dayKey = spDate < minDayKey ? minDayKey : spDate > todayKey ? todayKey : spDate;
   }
   const isToday = dayKey === todayKey;
 
   const snapshot = isToday
-    ? await buildTodaySnapshot(user.restaurantId)
-    : await buildDayReport(user.restaurantId, dayKey);
+    ? await buildTodaySnapshot(active.id)
+    : await buildDayReport(active.id, dayKey);
   if (!snapshot) redirect("/admin");
 
   const t = await getTranslations("admin.endOfDayPage");
@@ -102,6 +121,8 @@ export default async function EndOfDayReportPage({
   const canNext = dayKey < todayKey;
   const stepBtn = "inline-flex items-center justify-center w-9 h-9 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition";
   const stepBtnOff = "inline-flex items-center justify-center w-9 h-9 rounded-lg border border-gray-100 text-gray-300 cursor-not-allowed";
+  // Keep the chosen location pinned across the day stepper (empty for a single store).
+  const locQuery = scope.isChain ? `&loc=${active.id}` : "";
 
   return (
     <div className="space-y-6">
@@ -111,7 +132,7 @@ export default async function EndOfDayReportPage({
           {/* Date stepper — look back up to 7 operational days. */}
           <div className="flex items-center gap-2 mt-2">
             {canPrev ? (
-              <Link href={`?date=${shiftKey(dayKey, -1)}`} aria-label={t("prevDay")} className={stepBtn}>
+              <Link href={`?date=${shiftKey(dayKey, -1)}${locQuery}`} aria-label={t("prevDay")} className={stepBtn}>
                 <ChevronLeft className="w-4 h-4" />
               </Link>
             ) : (
@@ -126,7 +147,7 @@ export default async function EndOfDayReportPage({
               )}
             </span>
             {canNext ? (
-              <Link href={`?date=${shiftKey(dayKey, 1)}`} aria-label={t("nextDay")} className={stepBtn}>
+              <Link href={`?date=${shiftKey(dayKey, 1)}${locQuery}`} aria-label={t("nextDay")} className={stepBtn}>
                 <ChevronRight className="w-4 h-4" />
               </Link>
             ) : (
@@ -136,6 +157,8 @@ export default async function EndOfDayReportPage({
         </div>
         <div className="text-xs text-gray-400 self-end">{t("autoRefreshNote")}</div>
       </header>
+
+      {scope.isChain && <ActiveLocationChip name={active.name} baseQuery={rangeQuery} />}
 
       {/* ── Sales performance ─────────────────────────────────────── */}
       <section className="space-y-3">

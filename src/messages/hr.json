@@ -3789,7 +3789,11 @@
       "colShare": "Udio",
       "brandBadge": "Brend",
       "locationDrillHint": "Dodirnite lokaciju da otvorite njezina izvješća.",
-      "subtotal": "Međuzbir"
+      "subtotal": "Međuzbir",
+      "chooserTitle": "Odaberite lokaciju",
+      "chooserSubtitle": "Ovo je izvješće po lokaciji — odaberite lokaciju za prikaz.",
+      "viewingLocation": "Prikaz",
+      "changeLocation": "Promijeni lokaciju"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nema konteksta restorana.",

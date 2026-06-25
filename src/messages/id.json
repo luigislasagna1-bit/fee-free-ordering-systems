@@ -3789,7 +3789,11 @@
       "colShare": "Bagian",
       "brandBadge": "Merek",
       "locationDrillHint": "Ketuk lokasi untuk membuka laporannya sendiri.",
-      "subtotal": "Subtotal"
+      "subtotal": "Subtotal",
+      "chooserTitle": "Pilih lokasi",
+      "chooserSubtitle": "Laporan ini per lokasi — pilih lokasi untuk melihatnya.",
+      "viewingLocation": "Melihat",
+      "changeLocation": "Ubah lokasi"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Tidak ada konteks restoran.",

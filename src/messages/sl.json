@@ -3789,7 +3789,11 @@
       "colShare": "Delež",
       "brandBadge": "Znamka",
       "locationDrillHint": "Tapnite lokacijo, da odprete njena poročila.",
-      "subtotal": "Vmesna vsota"
+      "subtotal": "Vmesna vsota",
+      "chooserTitle": "Izberite lokacijo",
+      "chooserSubtitle": "To poročilo je po lokacijah — izberite lokacijo za ogled.",
+      "viewingLocation": "Ogled",
+      "changeLocation": "Spremeni lokacijo"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ni konteksta restavracije.",

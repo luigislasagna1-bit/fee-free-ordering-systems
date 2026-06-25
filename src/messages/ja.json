@@ -3789,7 +3789,11 @@
       "colShare": "構成比",
       "brandBadge": "ブランド",
       "locationDrillHint": "店舗をタップすると、その店舗のレポートが開きます。",
-      "subtotal": "小計"
+      "subtotal": "小計",
+      "chooserTitle": "店舗を選択",
+      "chooserSubtitle": "このレポートは店舗ごとです。表示する店舗を選択してください。",
+      "viewingLocation": "表示中",
+      "changeLocation": "店舗を変更"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "レストランのコンテキストがありません。",

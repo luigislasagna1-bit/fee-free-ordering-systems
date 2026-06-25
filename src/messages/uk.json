@@ -3789,7 +3789,11 @@
       "colShare": "Частка",
       "brandBadge": "Бренд",
       "locationDrillHint": "Торкніться закладу, щоб відкрити його власні звіти.",
-      "subtotal": "Підсумок"
+      "subtotal": "Підсумок",
+      "chooserTitle": "Виберіть локацію",
+      "chooserSubtitle": "Цей звіт формується за локаціями — виберіть локацію для перегляду.",
+      "viewingLocation": "Перегляд",
+      "changeLocation": "Змінити локацію"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Немає контексту ресторану.",

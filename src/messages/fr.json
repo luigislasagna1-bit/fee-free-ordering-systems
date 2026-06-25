@@ -3789,7 +3789,11 @@
       "colShare": "Part",
       "brandBadge": "Marque",
       "locationDrillHint": "Touchez un établissement pour ouvrir ses propres rapports.",
-      "subtotal": "Sous-total"
+      "subtotal": "Sous-total",
+      "chooserTitle": "Choisissez un établissement",
+      "chooserSubtitle": "Ce rapport est par établissement — choisissez-en un pour l'afficher.",
+      "viewingLocation": "Affichage",
+      "changeLocation": "Changer d'établissement"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Aucun contexte de restaurant.",

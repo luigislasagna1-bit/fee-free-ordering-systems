@@ -6,6 +6,8 @@ import { haversineKm } from "@/lib/geocode";
 import { ComingSoonPlaceholder } from "@/components/admin/reports/ComingSoonPlaceholder";
 import { HeatmapLoader } from "./HeatmapLoader";
 import { getTranslations } from "next-intl/server";
+import { resolveReportScope, resolveActiveLocation } from "@/lib/reports/report-scope";
+import { LocationChooser, ActiveLocationChip } from "../../LocationChooser";
 
 /**
  * /admin/reports/online-ordering/heatmap
@@ -48,9 +50,41 @@ export default async function HeatmapReportPage({
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
+  const scope = await resolveReportScope(restaurantId);
+  const active = resolveActiveLocation(scope, sp);
+
+  // Preserve the date range across chooser / back links.
+  const rangeQuery = (() => {
+    const u = new URLSearchParams();
+    for (const k of ["preset", "from", "to"]) {
+      const v = Array.isArray(sp[k]) ? sp[k][0] : sp[k];
+      if (v) u.set(k, String(v));
+    }
+    return u.toString();
+  })();
+
+  // Brand parent without a chosen location → show the location chooser
+  // (these geographic metrics can't aggregate across a chain).
+  if (!active) {
+    return (
+      <div>
+        <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
+            <p className="text-sm text-gray-500 mt-0.5">
+              {t("pointsPlotted", { count: (0).toLocaleString(), range: formatRangeLabel(range) })}
+            </p>
+          </div>
+          <DateRangePicker />
+        </header>
+        <LocationChooser locations={scope.locations} baseQuery={rangeQuery} />
+      </div>
+    );
+  }
+
   // Load restaurant + zones for the map center & overlays.
   const restaurant = await prisma.restaurant.findUnique({
-    where: { id: restaurantId },
+    where: { id: active.id },
     select: {
       id: true, name: true, lat: true, lng: true,
       deliveryZones: {
@@ -84,7 +118,7 @@ export default async function HeatmapReportPage({
   // (restaurantId, createdAt) index — fast even for big restaurants.
   const orders = await prisma.order.findMany({
     where: {
-      restaurantId,
+      restaurantId: active.id,
       type: "delivery",
       status: { not: "rejected" },
       deliveryLat: { not: null },
@@ -125,6 +159,8 @@ export default async function HeatmapReportPage({
         </div>
         <DateRangePicker />
       </header>
+
+      {scope.isChain && <ActiveLocationChip name={active.name} baseQuery={rangeQuery} />}
 
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 mb-4">
         <HeatmapLoader

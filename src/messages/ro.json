@@ -3789,7 +3789,11 @@
       "colShare": "Pondere",
       "brandBadge": "Brand",
       "locationDrillHint": "Atingeți o locație pentru a deschide rapoartele sale.",
-      "subtotal": "Subtotal"
+      "subtotal": "Subtotal",
+      "chooserTitle": "Alege o locație",
+      "chooserSubtitle": "Acest raport este per locație — alege o locație pentru a-l vizualiza.",
+      "viewingLocation": "Se vizualizează",
+      "changeLocation": "Schimbă locația"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Niciun context de restaurant.",

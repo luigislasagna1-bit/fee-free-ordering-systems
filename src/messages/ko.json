@@ -3789,7 +3789,11 @@
       "colShare": "비중",
       "brandBadge": "브랜드",
       "locationDrillHint": "매장을 탭하면 해당 매장의 리포트가 열립니다.",
-      "subtotal": "소계"
+      "subtotal": "소계",
+      "chooserTitle": "매장 선택",
+      "chooserSubtitle": "이 보고서는 매장별입니다. 보려면 매장을 선택하세요.",
+      "viewingLocation": "보는 중",
+      "changeLocation": "매장 변경"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "레스토랑 컨텍스트가 없습니다.",

@@ -3789,7 +3789,11 @@
       "colShare": "Μερίδιο",
       "brandBadge": "Μάρκα",
       "locationDrillHint": "Πατήστε ένα κατάστημα για να ανοίξετε τις δικές του αναφορές.",
-      "subtotal": "Υποσύνολο"
+      "subtotal": "Υποσύνολο",
+      "chooserTitle": "Επιλέξτε τοποθεσία",
+      "chooserSubtitle": "Αυτή η αναφορά είναι ανά τοποθεσία — επιλέξτε μια τοποθεσία για προβολή.",
+      "viewingLocation": "Προβολή",
+      "changeLocation": "Αλλαγή τοποθεσίας"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Δεν υπάρχει πλαίσιο εστιατορίου.",

@@ -3789,7 +3789,11 @@
       "colShare": "Andel",
       "brandBadge": "Merke",
       "locationDrillHint": "Trykk på et sted for å åpne stedets egne rapporter.",
-      "subtotal": "Delsum"
+      "subtotal": "Delsum",
+      "chooserTitle": "Velg et sted",
+      "chooserSubtitle": "Denne rapporten er per sted — velg et sted for å vise den.",
+      "viewingLocation": "Viser",
+      "changeLocation": "Bytt sted"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ingen restaurantkontekst.",

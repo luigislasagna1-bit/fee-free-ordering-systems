@@ -3789,7 +3789,11 @@
       "colShare": "Részesedés",
       "brandBadge": "Márka",
       "locationDrillHint": "Koppintson egy telephelyre a saját jelentéseinek megnyitásához.",
-      "subtotal": "Részösszeg"
+      "subtotal": "Részösszeg",
+      "chooserTitle": "Válassz egy helyszínt",
+      "chooserSubtitle": "Ez a jelentés helyszínenkénti — a megtekintéshez válassz egy helyszínt.",
+      "viewingLocation": "Megtekintés",
+      "changeLocation": "Helyszín módosítása"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nincs éttermi kontextus.",
