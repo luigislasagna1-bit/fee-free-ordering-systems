@@ -1,6 +1,6 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { parseDateRange, formatRangeLabel } from "@/lib/reports/date-range";
+import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { haversineKm } from "@/lib/geocode";
 import { ComingSoonPlaceholder } from "@/components/admin/reports/ComingSoonPlaceholder";
@@ -47,12 +47,15 @@ export default async function HeatmapReportPage({
   const t = await getTranslations("admin.reportHeatmapPage");
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  const range = parseDateRange(sp);
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
   const scope = await resolveReportScope(restaurantId);
   const active = resolveActiveLocation(scope, sp);
+  // Resolve the range in the active location's timezone (parent's tz on the
+  // chooser screen) so day boundaries + the label match the chosen location.
+  const tz = active?.timezone ?? scope.timezone ?? undefined;
+  const range = parseDateRangeInTz(sp, tz);
 
   // Preserve the date range across chooser / back links.
   const rangeQuery = (() => {
@@ -73,7 +76,7 @@ export default async function HeatmapReportPage({
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
             <p className="text-sm text-gray-500 mt-0.5">
-              {t("pointsPlotted", { count: (0).toLocaleString(), range: formatRangeLabel(range) })}
+              {t("pointsPlotted", { count: (0).toLocaleString(), range: formatRangeLabelInTz(range, tz)})}
             </p>
           </div>
           <DateRangePicker />
@@ -159,7 +162,7 @@ export default async function HeatmapReportPage({
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            {t("pointsPlotted", { count: points.length.toLocaleString(), range: formatRangeLabel(range) })}
+            {t("pointsPlotted", { count: points.length.toLocaleString(), range: formatRangeLabelInTz(range, tz)})}
           </p>
         </div>
         <DateRangePicker />

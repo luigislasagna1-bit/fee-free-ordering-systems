@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { parseDateRange, toISODate } from "@/lib/reports/date-range";
+import { toISODate } from "@/lib/reports/date-range";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
 import { haversineKm } from "@/lib/geocode";
 import { resolveReportScope, resolveActiveLocation } from "@/lib/reports/report-scope";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
@@ -16,8 +17,8 @@ import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
  *
  * PER-LOCATION report: geography can't aggregate across a chain, so we
  * scope to the single ?loc=<id> location (active.id) exactly like the
- * page. The page reads its range with the server-local parseDateRange,
- * so we match that here (NOT the tz variant) to keep the export's rows
+ * page. The page reads its range with the tz-aware parseDateRangeInTz in the
+ * active location's timezone, so we match that here to keep the export's rows
  * identical to the page's table for the same URL params.
  */
 export async function GET(req: NextRequest) {
@@ -34,7 +35,7 @@ export async function GET(req: NextRequest) {
   const active = resolveActiveLocation(scope, sp);
   if (!active) return NextResponse.json({ error: "Pick a location" }, { status: 400 });
 
-  const range = parseDateRange(sp);
+  const range = parseDateRangeInTz(sp, active.timezone ?? undefined);
 
   // Same restaurant + zones load the page uses for its breakdown.
   const restaurant = await prisma.restaurant.findUnique({

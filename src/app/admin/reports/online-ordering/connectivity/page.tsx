@@ -1,7 +1,8 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { Wifi, AlertCircle } from "lucide-react";
-import { eachDay, parseDateRange, formatRangeLabel } from "@/lib/reports/date-range";
+import { eachDay } from "@/lib/reports/date-range";
+import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { FRESHNESS_MS } from "@/lib/kitchen-devices";
 import { getTranslations } from "next-intl/server";
@@ -38,12 +39,15 @@ export default async function ConnectivityReportPage({
   const t = await getTranslations("admin.reportConnectivity");
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  const range = parseDateRange(sp);
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
   const scope = await resolveReportScope(restaurantId);
   const active = resolveActiveLocation(scope, sp);
+  // Resolve the range in the active location's timezone (parent's tz on the
+  // chooser screen) so day boundaries + the label match the chosen location.
+  const tz = active?.timezone ?? scope.timezone ?? undefined;
+  const range = parseDateRangeInTz(sp, tz);
 
   const rangeQuery = (() => {
     const u = new URLSearchParams();
@@ -61,7 +65,7 @@ export default async function ConnectivityReportPage({
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
             <p className="text-sm text-gray-500 mt-0.5">
-              {t("pageDescription")} · {formatRangeLabel(range)}
+              {t("pageDescription")} · {formatRangeLabelInTz(range, tz)}
             </p>
           </div>
           <DateRangePicker />
@@ -199,7 +203,7 @@ export default async function ConnectivityReportPage({
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            {t("pageDescription")} · {formatRangeLabel(range)}
+            {t("pageDescription")} · {formatRangeLabelInTz(range, tz)}
           </p>
         </div>
         <div className="flex items-center gap-2 flex-wrap">

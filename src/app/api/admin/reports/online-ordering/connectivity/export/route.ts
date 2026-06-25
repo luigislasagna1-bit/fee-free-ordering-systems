@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { toISODate, parseDateRange } from "@/lib/reports/date-range";
+import { toISODate } from "@/lib/reports/date-range";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
 import { resolveReportScope, resolveActiveLocation } from "@/lib/reports/report-scope";
 import { FRESHNESS_MS } from "@/lib/kitchen-devices";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
@@ -14,8 +15,8 @@ import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
  * scoped to the SINGLE active location (this is a per-location report; it
  * does NOT aggregate across a chain).
  *
- * Range parsing matches the page exactly: server-local `parseDateRange`
- * (NOT the tz-aware variant) so the export honors the same ?preset/?from/?to
+ * Range parsing matches the page exactly: tz-aware `parseDateRangeInTz` in the
+ * active location's timezone so the export honors the same ?preset/?from/?to
  * the page rendered. The page's table itself (the device roster) isn't
  * date-filtered — devices are listed by lastSeenAt regardless of range —
  * but we carry the range into the filename + metadata for a self-describing
@@ -34,13 +35,14 @@ export async function GET(req: NextRequest) {
   const format = pickFormat(url);
 
   const scope = await resolveReportScope(user.restaurantId);
-  const range = parseDateRange(sp);
 
   // PER-LOCATION report — resolve the single active location and scope every
   // query to active.id (NOT scope.ids). A brand parent with no ?loc has no
   // active location → nothing to export.
   const active = resolveActiveLocation(scope, sp);
   if (!active) return NextResponse.json({ error: "Pick a location" }, { status: 400 });
+  // Range in the active location's timezone — matches the page.
+  const range = parseDateRangeInTz(sp, active.timezone ?? undefined);
 
   // EXACT same query the page runs for its visible devices table.
   const devices = await prisma.kitchenDevice.findMany({
