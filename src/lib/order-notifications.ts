@@ -114,6 +114,19 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       customerId: (order as any).customerId ?? null,
       appliedPromoIds,
     });
+    // GLOBAL usage cap (Fabrizio 2026-06-25): a Promotion with a `usageLimit` was never having
+    // its `usedCount` incremented, so the engine's `usedCount >= usageLimit` check
+    // (promo-engine.ts) never tripped → a "max N uses" code/auto promo could be redeemed
+    // forever. Bump it here, for EVERY applied promo type. fireOrderNotifications is idempotent
+    // (the atomic notifiedAt claim above ⇒ exactly one bump per released order — never on an
+    // abandoned unpaid card order, and re-bumped if the order is later released again after a
+    // miss/cancel only via a fresh release), and Prisma `increment` compiles to an atomic SQL
+    // `usedCount = usedCount + 1`, so concurrent orders can't lose a count. The legacy Coupon
+    // model already self-increments atomically in the order route; this closes the same gap
+    // for the Promotion model.
+    await prisma.promotion
+      .updateMany({ where: { id: { in: appliedPromoIds } }, data: { usedCount: { increment: 1 } } })
+      .catch((e) => console.error("[fireOrderNotifications] promo usedCount bump:", e));
   }
 
   // Map order items for the email — include each item's own modifiers AND, for
