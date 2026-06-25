@@ -21,6 +21,8 @@ export type ReportScope = {
   /** Timezone to resolve ranges in (the parent's). null → server-local fallback. */
   timezone: string | null;
   brandName: string;
+  /** The parent restaurant's slug — used for export filenames. */
+  slug: string;
   /** The locations (parent first), for the per-location breakdown + pickers. */
   locations: ReportScopeLocation[];
   /** A child uses a different currency than the parent → totals are indicative. */
@@ -49,11 +51,12 @@ export type ReportScope = {
 export const resolveReportScope = cache(async (restaurantId: string): Promise<ReportScope> => {
   const parent = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
-    select: { id: true, name: true, city: true, currency: true, timezone: true },
+    select: { id: true, name: true, city: true, currency: true, timezone: true, slug: true },
   });
   const currency = (parent?.currency || "usd").toLowerCase();
   const timezone = parent?.timezone ?? null;
   const brandName = parent?.name ?? "";
+  const slug = parent?.slug ?? "";
 
   const children = await prisma.restaurant.findMany({
     where: { parentRestaurantId: restaurantId },
@@ -70,6 +73,7 @@ export const resolveReportScope = cache(async (restaurantId: string): Promise<Re
       currency,
       timezone,
       brandName,
+      slug,
       locations: parent
         ? [{ id: parent.id, name: parent.name, city: parent.city, isParent: true }]
         : [],
@@ -92,6 +96,7 @@ export const resolveReportScope = cache(async (restaurantId: string): Promise<Re
     currency,
     timezone,
     brandName,
+    slug,
     locations,
     mixedCurrency,
     mixedTimezone,

@@ -1,10 +1,10 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { getRestaurantCurrency, getRestaurantTimezone } from "@/lib/restaurant-currency";
 import { previousPeriod, eachDay, formatChartDate, formatRangeLabel } from "@/lib/reports/date-range";
 import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere } from "@/lib/reports/order-filter";
+import { resolveReportScope } from "@/lib/reports/report-scope";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ChartTableToggle } from "@/components/admin/reports/ChartTableToggle";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
@@ -40,18 +40,16 @@ export default async function SalesTrendPage({
   const t = await getTranslations("admin.reportSalesTrend");
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
-  const [__currency, __timezone] = await Promise.all([
-    getRestaurantCurrency(restaurantId),
-    getRestaurantTimezone(restaurantId),
-  ]);
+  const scope = await resolveReportScope(restaurantId);
+  const __currency = scope.currency;
   const formatCurrency = (n: number) => fmtCurrency(n, __currency);
-  const range = parseDateRangeInTz(sp, __timezone ?? undefined);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
 
   // Fetch the current-period daily orders via the shared canonical predicate
   // (excludes rejected/cancelled + TEST orders) so the trend total reconciles
   // with the Dashboard + Summary.
   const currentOrders = await prisma.order.findMany({
-    where: reportOrderWhere(restaurantId, range),
+    where: reportOrderWhere(scope.ids, range),
     select: { total: true, createdAt: true },
   });
 
@@ -60,7 +58,7 @@ export default async function SalesTrendPage({
   const prev = previousPeriod(range);
   const previousOrders = compare
     ? await prisma.order.findMany({
-        where: reportOrderWhere(restaurantId, prev),
+        where: reportOrderWhere(scope.ids, prev),
         select: { total: true, createdAt: true },
       })
     : [];

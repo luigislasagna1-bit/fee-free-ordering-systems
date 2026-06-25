@@ -1,7 +1,7 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { getRestaurantCurrency, getRestaurantTimezone } from "@/lib/restaurant-currency";
+import { resolveReportScope } from "@/lib/reports/report-scope";
 import { formatRangeLabel } from "@/lib/reports/date-range";
 import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere } from "@/lib/reports/order-filter";
@@ -43,19 +43,25 @@ export default async function ListOrdersPage({
   const q = (Array.isArray(sp.q) ? sp.q[0] : sp.q)?.trim() || "";
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
-  const [__currency, __timezone] = await Promise.all([
-    getRestaurantCurrency(restaurantId),
-    getRestaurantTimezone(restaurantId),
-  ]);
-  const formatCurrency = (n: number) => fmtCurrency(n, __currency);
-  const range = parseDateRangeInTz(sp, __timezone ?? undefined);
+  const scope = await resolveReportScope(restaurantId);
+  const formatCurrency = (n: number) => fmtCurrency(n, scope.currency);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
+
+  // Optional ?status= drill-down (e.g. the Dashboard's "Completed orders" KPI).
+  // Allowlist real, fulfilled-ish statuses ONLY — never rejected/cancelled —
+  // so the spread override below can't bring back excluded orders. Absent /
+  // unknown status → chain-wide, all real orders.
+  const statusParam = (Array.isArray(sp.status) ? sp.status[0] : sp.status)?.trim();
+  const allowedStatus = (["completed", "pending", "accepted"] as const).find((s) => s === statusParam);
 
   // Run count + page query in parallel. count is cheap (uses the composite
   // index). Same canonical predicate as the rest of Reports so the count
-  // matches the Dashboard (excludes rejected/cancelled + TEST orders). The
-  // optional search filters by customer name / email / phone, SERVER-side.
+  // matches the Dashboard (excludes rejected/cancelled + TEST orders), rolled
+  // up across every location in scope. The optional search filters by customer
+  // name / email / phone, SERVER-side.
   const where = {
-    ...reportOrderWhere(restaurantId, range),
+    ...reportOrderWhere(scope.ids, range),
+    ...(allowedStatus ? { status: allowedStatus } : {}),
     ...(q
       ? {
           OR: [

@@ -1,6 +1,8 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { parseDateRange, formatRangeLabel } from "@/lib/reports/date-range";
+import { formatRangeLabel } from "@/lib/reports/date-range";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { resolveReportScope } from "@/lib/reports/report-scope";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { Info } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -41,9 +43,11 @@ export default async function FunnelReportPage({
   const sp = await searchParams;
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  const range = parseDateRange(sp);
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
+
+  const scope = await resolveReportScope(restaurantId);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
 
   const FUNNEL_STEPS = [
     { id: "visit",         label: t("stepVisit"),        wired: true },
@@ -59,7 +63,7 @@ export default async function FunnelReportPage({
   // Count rows per step → number of distinct sessions at that step.
   const rows = await prisma.websiteFunnelEvent.groupBy({
     by: ["step", "sessionHash"],
-    where: { restaurantId, createdAt: { gte: range.from, lte: range.to } },
+    where: { restaurantId: { in: scope.ids }, createdAt: { gte: range.from, lte: range.to } },
   });
 
   const counts = new Map<string, number>();

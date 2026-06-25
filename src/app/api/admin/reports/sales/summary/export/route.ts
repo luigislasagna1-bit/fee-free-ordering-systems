@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { toISODate } from "@/lib/reports/date-range";
 import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { resolveReportScope } from "@/lib/reports/report-scope";
 import { buildSummaryRows, isSummaryDim, type SummaryDim } from "@/lib/reports/summary-rows";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
 
@@ -24,14 +24,10 @@ export async function GET(req: NextRequest) {
   const dim: SummaryDim = isSummaryDim(sp.by) ? sp.by : "day";
   const format = pickFormat(url);
 
-  const restaurant = await prisma.restaurant.findUnique({
-    where: { id: user.restaurantId },
-    select: { slug: true, timezone: true },
-  });
-  if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
-  const range = parseDateRangeInTz(sp, restaurant.timezone ?? undefined);
+  const scope = await resolveReportScope(user.restaurantId);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
 
-  const { rows, totals } = await buildSummaryRows(user.restaurantId, range, dim, restaurant.timezone ?? undefined);
+  const { rows, totals } = await buildSummaryRows(scope.ids, range, dim, scope.timezone ?? undefined);
 
   const dimHeader = dimHeaderLabel(dim);
   const out: (string | number)[][] = [
@@ -49,7 +45,7 @@ export async function GET(req: NextRequest) {
   ]);
 
   return buildExportResponse({
-    restaurantSlug: restaurant.slug,
+    restaurantSlug: scope.slug,
     reportSlug: `sales-summary-by-${dim}`,
     fromISO: toISODate(range.from),
     toISO: toISODate(range.to),

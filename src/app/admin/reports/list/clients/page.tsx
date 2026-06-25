@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { getRestaurantCurrency, getRestaurantTimezone } from "@/lib/restaurant-currency";
+import { resolveReportScope } from "@/lib/reports/report-scope";
 import { formatRangeLabel } from "@/lib/reports/date-range";
 import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
@@ -43,12 +43,9 @@ export default async function ListClientsPage({
   const q = (Array.isArray(sp.q) ? sp.q[0] : sp.q)?.trim() || "";
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
-  const [__currency, __timezone] = await Promise.all([
-    getRestaurantCurrency(restaurantId),
-    getRestaurantTimezone(restaurantId),
-  ]);
-  const formatCurrency = (n: number) => fmtCurrency(n, __currency);
-  const range = parseDateRangeInTz(sp, __timezone ?? undefined);
+  const scope = await resolveReportScope(restaurantId);
+  const formatCurrency = (n: number) => fmtCurrency(n, scope.currency);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
 
   // Optional search → resolve matching customers FIRST (name / email / phone),
   // then restrict the in-range groupBy to those ids. Keeps filtering server-side
@@ -57,7 +54,7 @@ export default async function ListClientsPage({
   if (q) {
     const matches = await prisma.customer.findMany({
       where: {
-        restaurantId,
+        restaurantId: { in: scope.ids },
         OR: [
           { name: { contains: q, mode: "insensitive" } },
           { email: { contains: q, mode: "insensitive" } },
@@ -79,7 +76,7 @@ export default async function ListClientsPage({
   const groupedAll = await prisma.order.groupBy({
     by: ["customerId"],
     where: {
-      ...reportOrderWhere(restaurantId, range),
+      ...reportOrderWhere(scope.ids, range),
       customerId: restrictIds ? { in: restrictIds } : { not: null },
     },
     _count: true,
@@ -108,7 +105,7 @@ export default async function ListClientsPage({
   const lifetimeRows = customerIds.length > 0
     ? await prisma.order.groupBy({
         by: ["customerId"],
-        where: { ...REPORT_ORDER_STATUS_WHERE, restaurantId, customerId: { in: customerIds } },
+        where: { ...REPORT_ORDER_STATUS_WHERE, restaurantId: { in: scope.ids }, customerId: { in: customerIds } },
         _count: true,
         _sum: { total: true },
         _max: { createdAt: true },

@@ -1,8 +1,10 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { getRestaurantCurrency } from "@/lib/restaurant-currency";
-import { parseDateRange, previousPeriod, formatRangeLabel } from "@/lib/reports/date-range";
+import { resolveReportScope } from "@/lib/reports/report-scope";
+import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { previousPeriod, formatRangeLabel } from "@/lib/reports/date-range";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { Users, UserPlus, Repeat, TrendingUp } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -26,12 +28,12 @@ export default async function ClientsDashboardPage({
   const sp = await searchParams;
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  const range = parseDateRange(sp);
   const t = await getTranslations("admin.reportOnlineClients");
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
-  const __currency = await getRestaurantCurrency(restaurantId);
-  const formatCurrency = (n: number) => fmtCurrency(n, __currency);
+  const scope = await resolveReportScope(restaurantId);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
+  const formatCurrency = (n: number) => fmtCurrency(n, scope.currency);
 
   // Three groupBy queries, all on the (restaurantId, createdAt) index.
   // The "new vs returning" split is computed in two passes:
@@ -41,13 +43,18 @@ export default async function ClientsDashboardPage({
   const [inRange, prior] = await Promise.all([
     prisma.order.groupBy({
       by: ["customerId"],
-      where: { restaurantId, customerId: { not: null }, createdAt: { gte: range.from, lte: range.to } },
+      where: { ...reportOrderWhere(scope.ids, range), customerId: { not: null } },
       _count: true,
       _sum: { total: true },
     }),
     prisma.order.groupBy({
       by: ["customerId"],
-      where: { restaurantId, customerId: { not: null }, createdAt: { lt: range.from } },
+      where: {
+        restaurantId: { in: scope.ids },
+        ...REPORT_ORDER_STATUS_WHERE,
+        customerId: { not: null },
+        createdAt: { lt: range.from },
+      },
     }),
   ]);
 

@@ -4,6 +4,7 @@ import { getSessionUser } from "@/lib/session";
 import { previousPeriod, eachDay, toISODate, formatChartDate } from "@/lib/reports/date-range";
 import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere } from "@/lib/reports/order-filter";
+import { resolveReportScope } from "@/lib/reports/report-scope";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
 
 /**
@@ -34,21 +35,17 @@ export async function GET(req: NextRequest) {
   const compare = sp.compare === "1";
   const format = pickFormat(url);
 
-  const restaurant = await prisma.restaurant.findUnique({
-    where: { id: user.restaurantId },
-    select: { slug: true, timezone: true },
-  });
-  if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
-  const range = parseDateRangeInTz(sp, restaurant.timezone ?? undefined);
+  const scope = await resolveReportScope(user.restaurantId);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
 
   const [current, previous] = await Promise.all([
     prisma.order.findMany({
-      where: reportOrderWhere(user.restaurantId, range),
+      where: reportOrderWhere(scope.ids, range),
       select: { total: true, createdAt: true },
     }),
     compare
       ? prisma.order.findMany({
-          where: reportOrderWhere(user.restaurantId, previousPeriod(range)),
+          where: reportOrderWhere(scope.ids, previousPeriod(range)),
           select: { total: true, createdAt: true },
         })
       : [],
@@ -71,7 +68,7 @@ export async function GET(req: NextRequest) {
   }
 
   return buildExportResponse({
-    restaurantSlug: restaurant.slug,
+    restaurantSlug: scope.slug,
     reportSlug: "sales-trend",
     fromISO: toISODate(range.from),
     toISO: toISODate(range.to),

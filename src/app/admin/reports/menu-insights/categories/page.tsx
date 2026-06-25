@@ -1,8 +1,10 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { getRestaurantCurrency } from "@/lib/restaurant-currency";
-import { parseDateRange, formatRangeLabel } from "@/lib/reports/date-range";
+import { resolveReportScope } from "@/lib/reports/report-scope";
+import { reportOrderWhere } from "@/lib/reports/order-filter";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { formatRangeLabel } from "@/lib/reports/date-range";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import { getTranslations } from "next-intl/server";
@@ -28,11 +30,11 @@ export default async function MenuInsightsCategoriesPage({
   const t = await getTranslations("admin.reportMenuCategories");
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  const range = parseDateRange(sp);
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
-  const __currency = await getRestaurantCurrency(restaurantId);
-  const formatCurrency = (n: number) => fmtCurrency(n, __currency);
+  const scope = await resolveReportScope(restaurantId);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
+  const formatCurrency = (n: number) => fmtCurrency(n, scope.currency);
 
   // We pull OrderItem rows with their MenuItem→MenuCategory chain.
   // For restaurants with high OrderItem volume this is the heaviest
@@ -40,11 +42,7 @@ export default async function MenuInsightsCategoriesPage({
   // table to cache category rollups, hook the read in here.
   const items = await prisma.orderItem.findMany({
     where: {
-      order: {
-        restaurantId,
-        status: "completed",
-        createdAt: { gte: range.from, lte: range.to },
-      },
+      order: reportOrderWhere(scope.ids, range),
     },
     select: {
       quantity: true,

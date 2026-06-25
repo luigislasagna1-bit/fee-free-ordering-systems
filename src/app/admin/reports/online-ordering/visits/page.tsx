@@ -1,6 +1,8 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { parseDateRange, eachDay, formatChartDate, formatRangeLabel } from "@/lib/reports/date-range";
+import { eachDay, formatChartDate, formatRangeLabel } from "@/lib/reports/date-range";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { resolveReportScope } from "@/lib/reports/report-scope";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ChartTableToggle } from "@/components/admin/reports/ChartTableToggle";
 import { CHANNELS, getChannel, type ChannelSlug } from "@/lib/reports/channels";
@@ -31,13 +33,15 @@ export default async function VisitsReportPage({
   const t = await getTranslations("admin.reportVisits");
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  const range = parseDateRange(sp);
   const view = sp.view === "table" ? "table" : "chart";
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
 
+  const scope = await resolveReportScope(restaurantId);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
+
   const visits = await prisma.websiteVisit.findMany({
-    where: { restaurantId, createdAt: { gte: range.from, lte: range.to } },
+    where: { restaurantId: { in: scope.ids }, createdAt: { gte: range.from, lte: range.to } },
     select: { channel: true, createdAt: true },
   });
 

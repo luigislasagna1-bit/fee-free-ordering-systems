@@ -76,13 +76,13 @@ function bucketKey(createdAt: Date, type: string | null, paymentMethod: string |
 }
 
 export async function buildSummaryRows(
-  restaurantId: string,
+  restaurant: string | string[],
   range: { from: Date; to: Date },
   dim: SummaryDim,
   tz?: string,
 ): Promise<{ rows: SummaryRow[]; totals: SummaryRow }> {
   const orders = await prisma.order.findMany({
-    where: reportOrderWhere(restaurantId, range),
+    where: reportOrderWhere(restaurant, range),
     select: {
       createdAt: true, type: true, paymentMethod: true,
       subtotal: true, taxAmount: true, deliveryFee: true, tip: true,

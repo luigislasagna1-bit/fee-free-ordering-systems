@@ -1,6 +1,8 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { parseDateRange, formatRangeLabel, toISODate } from "@/lib/reports/date-range";
+import { formatRangeLabel, toISODate } from "@/lib/reports/date-range";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { resolveReportScope } from "@/lib/reports/report-scope";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ComingSoonPlaceholder } from "@/components/admin/reports/ComingSoonPlaceholder";
 import Link from "next/link";
@@ -26,10 +28,12 @@ export default async function ReservationsReportPage({
   const sp = await searchParams;
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  const range = parseDateRange(sp);
   const t = await getTranslations("admin.reportReservations");
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
+
+  const scope = await resolveReportScope(restaurantId);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
 
   // groupBy.status — matches the GloriaFood report shape and is cheap.
   // _count and _sum are wrapped in an object form so Prisma's TS types
@@ -38,7 +42,7 @@ export default async function ReservationsReportPage({
   const rows = await prisma.reservation.groupBy({
     by: ["status"],
     where: {
-      restaurantId,
+      restaurantId: { in: scope.ids },
       date: { gte: toISODate(range.from), lte: toISODate(range.to) },
     },
     _count: { _all: true },

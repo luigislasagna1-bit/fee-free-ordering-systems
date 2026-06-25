@@ -1,8 +1,8 @@
 import { getSessionUser } from "@/lib/session";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { getRestaurantCurrency, getRestaurantTimezone } from "@/lib/restaurant-currency";
 import { formatRangeLabel } from "@/lib/reports/date-range";
 import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { resolveReportScope } from "@/lib/reports/report-scope";
 import { buildSummaryRows, isSummaryDim, type SummaryDim } from "@/lib/reports/summary-rows";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
@@ -37,14 +37,12 @@ export default async function SalesSummaryPage({
   const t = await getTranslations("admin.reportSalesSummary");
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
-  const [__currency, __timezone] = await Promise.all([
-    getRestaurantCurrency(restaurantId),
-    getRestaurantTimezone(restaurantId),
-  ]);
+  const scope = await resolveReportScope(restaurantId);
+  const __currency = scope.currency;
   const formatCurrency = (n: number) => fmtCurrency(n, __currency);
-  const range = parseDateRangeInTz(sp, __timezone ?? undefined);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
 
-  const { rows, totals } = await buildSummaryRows(restaurantId, range, dim, __timezone ?? undefined);
+  const { rows, totals } = await buildSummaryRows(scope.ids, range, dim, scope.timezone ?? undefined);
 
   return (
     <div>

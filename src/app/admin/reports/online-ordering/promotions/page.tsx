@@ -2,8 +2,10 @@ import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { getRestaurantCurrency } from "@/lib/restaurant-currency";
-import { parseDateRange, formatRangeLabel } from "@/lib/reports/date-range";
+import { resolveReportScope } from "@/lib/reports/report-scope";
+import { reportOrderWhere } from "@/lib/reports/order-filter";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { formatRangeLabel } from "@/lib/reports/date-range";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 
@@ -27,19 +29,17 @@ export default async function PromotionsReportPage({
   const sp = await searchParams;
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  const range = parseDateRange(sp);
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
-  const __currency = await getRestaurantCurrency(restaurantId);
-  const formatCurrency = (n: number) => fmtCurrency(n, __currency);
+  const scope = await resolveReportScope(restaurantId);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
+  const formatCurrency = (n: number) => fmtCurrency(n, scope.currency);
 
   const rows = await prisma.order.groupBy({
     by: ["couponId"],
     where: {
-      restaurantId,
-      status: "completed",
+      ...reportOrderWhere(scope.ids, range),
       couponId: { not: null },
-      createdAt: { gte: range.from, lte: range.to },
     },
     _count: true,
     _sum: { total: true, couponDiscount: true },

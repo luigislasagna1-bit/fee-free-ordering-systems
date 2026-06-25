@@ -4,6 +4,7 @@ import { getSessionUser } from "@/lib/session";
 import { toISODate } from "@/lib/reports/date-range";
 import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
+import { resolveReportScope } from "@/lib/reports/report-scope";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
 
 /**
@@ -23,16 +24,12 @@ export async function GET(req: NextRequest) {
   url.searchParams.forEach((v, k) => { sp[k] = v; });
   const format = pickFormat(url);
 
-  const restaurant = await prisma.restaurant.findUnique({
-    where: { id: user.restaurantId },
-    select: { slug: true, timezone: true },
-  });
-  if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
-  const range = parseDateRangeInTz(sp, restaurant.timezone ?? undefined);
+  const scope = await resolveReportScope(user.restaurantId);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
 
   const grouped = await prisma.order.groupBy({
     by: ["customerId"],
-    where: { ...reportOrderWhere(user.restaurantId, range), customerId: { not: null } },
+    where: { ...reportOrderWhere(scope.ids, range), customerId: { not: null } },
     _count: true,
     _sum: { total: true },
   });
@@ -53,7 +50,7 @@ export async function GET(req: NextRequest) {
   const lifetimeRows = customerIds.length > 0
     ? await prisma.order.groupBy({
         by: ["customerId"],
-        where: { ...REPORT_ORDER_STATUS_WHERE, restaurantId: user.restaurantId, customerId: { in: customerIds } },
+        where: { ...REPORT_ORDER_STATUS_WHERE, restaurantId: { in: scope.ids }, customerId: { in: customerIds } },
         _count: true,
         _sum: { total: true },
       })
@@ -84,7 +81,7 @@ export async function GET(req: NextRequest) {
   }
 
   return buildExportResponse({
-    restaurantSlug: restaurant.slug,
+    restaurantSlug: scope.slug,
     reportSlug: "clients",
     fromISO: toISODate(range.from),
     toISO: toISODate(range.to),

@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { parseDateRange, toISODate } from "@/lib/reports/date-range";
+import { toISODate } from "@/lib/reports/date-range";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { resolveReportScope } from "@/lib/reports/report-scope";
+import { reportOrderWhere } from "@/lib/reports/order-filter";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
 
 /**
@@ -19,7 +22,8 @@ export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const sp: Record<string, string> = {};
   url.searchParams.forEach((v, k) => { sp[k] = v; });
-  const range = parseDateRange(sp);
+  const scope = await resolveReportScope(user.restaurantId);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
   const format = pickFormat(url);
 
   const restaurant = await prisma.restaurant.findUnique({
@@ -31,11 +35,7 @@ export async function GET(req: NextRequest) {
   const rows = await prisma.orderItem.groupBy({
     by: ["name"],
     where: {
-      order: {
-        restaurantId: user.restaurantId,
-        status: "completed",
-        createdAt: { gte: range.from, lte: range.to },
-      },
+      order: reportOrderWhere(scope.ids, range),
     },
     _sum: { quantity: true, subtotal: true },
     _count: true,

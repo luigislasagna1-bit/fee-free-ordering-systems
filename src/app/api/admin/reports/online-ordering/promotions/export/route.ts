@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { parseDateRange, toISODate } from "@/lib/reports/date-range";
+import { toISODate } from "@/lib/reports/date-range";
+import { resolveReportScope } from "@/lib/reports/report-scope";
+import { reportOrderWhere } from "@/lib/reports/order-filter";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
 
 /**
@@ -18,22 +21,15 @@ export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const sp: Record<string, string> = {};
   url.searchParams.forEach((v, k) => { sp[k] = v; });
-  const range = parseDateRange(sp);
+  const scope = await resolveReportScope(user.restaurantId);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
   const format = pickFormat(url);
-
-  const restaurant = await prisma.restaurant.findUnique({
-    where: { id: user.restaurantId },
-    select: { slug: true },
-  });
-  if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
 
   const grouped = await prisma.order.groupBy({
     by: ["couponId"],
     where: {
-      restaurantId: user.restaurantId,
-      status: "completed",
+      ...reportOrderWhere(scope.ids, range),
       couponId: { not: null },
-      createdAt: { gte: range.from, lte: range.to },
     },
     _count: true,
     _sum: { total: true, couponDiscount: true },
@@ -64,7 +60,7 @@ export async function GET(req: NextRequest) {
   }
 
   return buildExportResponse({
-    restaurantSlug: restaurant.slug,
+    restaurantSlug: scope.slug,
     reportSlug: "promotions-stats",
     fromISO: toISODate(range.from),
     toISO: toISODate(range.to),
