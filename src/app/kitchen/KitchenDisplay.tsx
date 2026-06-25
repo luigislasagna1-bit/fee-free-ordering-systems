@@ -2718,7 +2718,10 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     if (!opts?.single) {
       try {
         const ctrl = new AbortController();
-        const to = setTimeout(() => ctrl.abort(), 2000);
+        // 4s (was 2s): give the fresh copy-count read enough headroom to win over a
+        // possibly-stale cache on a slow kitchen connection, so the printed copies always
+        // match the saved setting (the rare 3-customer/1-kitchen Luigi hit). Luigi 2026-06-25.
+        const to = setTimeout(() => ctrl.abort(), 4000);
         const r = await fetch("/api/kitchen/printnode/settings", { signal: ctrl.signal });
         clearTimeout(to);
         if (r.ok) {
