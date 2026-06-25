@@ -3582,7 +3582,10 @@
       "paginationLabel": "Σελίδα {current} από {total}",
       "paginationPrevious": "Προηγούμενη",
       "paginationNext": "Επόμενη",
-      "noRestaurantContext": "Δεν υπάρχει πλαίσιο εστιατορίου."
+      "noRestaurantContext": "Δεν υπάρχει πλαίσιο εστιατορίου.",
+      "searchPlaceholder": "Αναζήτηση ονόματος, email, τηλεφώνου…",
+      "perPage": "ανά σελίδα",
+      "colLastOrder": "Τελευταία παραγγελία"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Δεν υπάρχει πλαίσιο εστιατορίου.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Στο εστιατόριο",
       "paginationPage": "Σελίδα {current} από {total}",
       "paginationPrevious": "Προηγούμενη",
-      "paginationNext": "Επόμενη"
+      "paginationNext": "Επόμενη",
+      "searchPlaceholder": "Αναζήτηση ονόματος, email, τηλεφώνου…",
+      "perPage": "ανά σελίδα"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Δεν υπάρχει πλαίσιο εστιατορίου.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Ανοίξτε τη σελίδα δημοσίευσης για να αποκτήσετε κωδικούς QR + κιτ κοινωνικής κοινοποίησης.",
       "firstOrderPromoTitle": "Προσφορά πρώτης παραγγελίας",
       "firstOrderPromoDesc": "Ορίστε «$5 έκπτωση στην πρώτη παραγγελία» ή κουπόνι δωρεάν παράδοσης για να μετατρέψετε επισκέπτες.",
-      "welcomeFootnote": "Μόλις αρχίσουν να ρέουν οι παραγγελίες, αυτή η σελίδα γίνεται ο πίνακας ελέγχου τύπου GloriaFood με κάρτες KPI, γραφήματα τάσεων και πίνακα «Αναπτύξτε το εστιατόριό σας» με συνδέσμους σε βαθύτερες αναφορές."
+      "welcomeFootnote": "Μόλις αρχίσουν να ρέουν οι παραγγελίες, αυτή η σελίδα γίνεται ο πίνακας ελέγχου τύπου GloriaFood με κάρτες KPI, γραφήματα τάσεων και πίνακα «Αναπτύξτε το εστιατόριό σας» με συνδέσμους σε βαθύτερες αναφορές.",
+      "allTime": "Συνολικά"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Δεν υπάρχει πλαίσιο εστιατορίου.",

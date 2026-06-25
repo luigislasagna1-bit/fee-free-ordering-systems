@@ -1536,7 +1536,10 @@
       "paginationLabel": "पृष्ठ {current} / {total}",
       "paginationPrevious": "पिछला",
       "paginationNext": "अगला",
-      "noRestaurantContext": "कोई रेस्तरां संदर्भ नहीं।"
+      "noRestaurantContext": "कोई रेस्तरां संदर्भ नहीं।",
+      "searchPlaceholder": "नाम, ईमेल, फ़ोन खोजें…",
+      "perPage": "प्रति पृष्ठ",
+      "colLastOrder": "अंतिम ऑर्डर"
     },
     "reportOnlineClients": {
       "noRestaurantContext": "कोई रेस्तरां संदर्भ नहीं।",
@@ -3648,7 +3651,9 @@
       "typeDineIn": "डाइन-इन",
       "paginationPage": "पृष्ठ {current} / {total}",
       "paginationPrevious": "पिछला",
-      "paginationNext": "अगला"
+      "paginationNext": "अगला",
+      "searchPlaceholder": "नाम, ईमेल, फ़ोन खोजें…",
+      "perPage": "प्रति पृष्ठ"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "कोई रेस्तरां संदर्भ नहीं।",
@@ -3828,7 +3833,8 @@
       "shareOrderLinkDesc": "QR कोड और सोशल शेयर किट पाने के लिए पब्लिशिंग पेज खोलें।",
       "firstOrderPromoTitle": "पहले ऑर्डर पर प्रमोशन शुरू करें",
       "firstOrderPromoDesc": "विज़िटर को कन्वर्ट करने के लिए \"पहले ऑर्डर पर $5 की छूट\" या फ्री-डिलीवरी कूपन सेट करें।",
-      "welcomeFootnote": "ऑर्डर आने शुरू होते ही, यह पेज KPI कार्ड, ट्रेंड चार्ट और गहरी रिपोर्ट्स के लिंक के साथ GloriaFood-स्टाइल डैशबोर्ड बन जाएगा।"
+      "welcomeFootnote": "ऑर्डर आने शुरू होते ही, यह पेज KPI कार्ड, ट्रेंड चार्ट और गहरी रिपोर्ट्स के लिंक के साथ GloriaFood-स्टाइल डैशबोर्ड बन जाएगा।",
+      "allTime": "कुल अब तक"
     },
     "invoice": {
       "title": "इनवॉइस",

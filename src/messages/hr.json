@@ -3582,7 +3582,10 @@
       "paginationLabel": "Stranica {current} od {total}",
       "paginationPrevious": "Prethodna",
       "paginationNext": "Sljedeća",
-      "noRestaurantContext": "Nema konteksta restorana."
+      "noRestaurantContext": "Nema konteksta restorana.",
+      "searchPlaceholder": "Pretraži ime, e-poštu, telefon…",
+      "perPage": "po stranici",
+      "colLastOrder": "Zadnja narudžba"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Nema konteksta restorana.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Konzumacija u lokalu",
       "paginationPage": "Stranica {current} od {total}",
       "paginationPrevious": "Prethodna",
-      "paginationNext": "Sljedeća"
+      "paginationNext": "Sljedeća",
+      "searchPlaceholder": "Pretraži ime, e-poštu, telefon…",
+      "perPage": "po stranici"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Nema konteksta restorana.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Otvorite stranicu objavljivanja za preuzimanje QR kodova + komplet za dijeljenje na društvenim mrežama.",
       "firstOrderPromoTitle": "Pokrenite promociju za prvu narudžbu",
       "firstOrderPromoDesc": "Postavite \"$5 popusta na prvu narudžbu\" ili kupon za besplatnu dostavu kako biste pretvorili posjetitelje.",
-      "welcomeFootnote": "Kada narudžbe počnu stizati, ova stranica postaje GloriaFood-stil nadzorna ploča s KPI karticama, grafikonima trendova i pločom \"Razvijte vaš restoran\" s izvještajima dubokih veza."
+      "welcomeFootnote": "Kada narudžbe počnu stizati, ova stranica postaje GloriaFood-stil nadzorna ploča s KPI karticama, grafikonima trendova i pločom \"Razvijte vaš restoran\" s izvještajima dubokih veza.",
+      "allTime": "Ukupno"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nema konteksta restorana.",

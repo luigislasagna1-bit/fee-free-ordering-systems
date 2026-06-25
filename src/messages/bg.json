@@ -3582,7 +3582,10 @@
       "paginationLabel": "Страница {current} от {total}",
       "paginationPrevious": "Предишна",
       "paginationNext": "Следваща",
-      "noRestaurantContext": "Няма контекст на ресторант."
+      "noRestaurantContext": "Няма контекст на ресторант.",
+      "searchPlaceholder": "Търсене по име, имейл, телефон…",
+      "perPage": "на страница",
+      "colLastOrder": "Последна поръчка"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Няма контекст на ресторант.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "На място",
       "paginationPage": "Страница {current} от {total}",
       "paginationPrevious": "Предишна",
-      "paginationNext": "Следваща"
+      "paginationNext": "Следваща",
+      "searchPlaceholder": "Търсене по име, имейл, телефон…",
+      "perPage": "на страница"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Няма контекст на ресторант.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Отворете страницата за публикуване, за да вземете QR кодове + комплект за споделяне в социалните медии.",
       "firstOrderPromoTitle": "Стартирайте промоция за първа поръчка",
       "firstOrderPromoDesc": "Задайте „$5 отстъпка за първа поръчка\" или купон за безплатна доставка, за да конвертирате посетителите.",
-      "welcomeFootnote": "Когато поръчките започнат да текат, тази страница се превръща в GloriaFood-стил табло с KPI карти, графики на тенденциите и панел „Разрастете ресторанта си\" с дълбоки линкове към отчети."
+      "welcomeFootnote": "Когато поръчките започнат да текат, тази страница се превръща в GloriaFood-стил табло с KPI карти, графики на тенденциите и панел „Разрастете ресторанта си\" с дълбоки линкове към отчети.",
+      "allTime": "За цялото време"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Няма контекст на ресторант.",

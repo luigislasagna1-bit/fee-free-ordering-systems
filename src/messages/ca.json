@@ -3582,7 +3582,10 @@
       "paginationLabel": "Pàgina {current} de {total}",
       "paginationPrevious": "Anterior",
       "paginationNext": "Següent",
-      "noRestaurantContext": "No hi ha context de restaurant."
+      "noRestaurantContext": "No hi ha context de restaurant.",
+      "searchPlaceholder": "Cerca per nom, correu, telèfon…",
+      "perPage": "per pàgina",
+      "colLastOrder": "Última comanda"
     },
     "reportOrdersList": {
       "noRestaurantContext": "No hi ha context de restaurant.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Menjar al local",
       "paginationPage": "Pàgina {current} de {total}",
       "paginationPrevious": "Anterior",
-      "paginationNext": "Següent"
+      "paginationNext": "Següent",
+      "searchPlaceholder": "Cerca per nom, correu, telèfon…",
+      "perPage": "per pàgina"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "No hi ha context de restaurant.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Obre la pàgina de publicació per obtenir codis QR + un kit de compartició per xarxes socials.",
       "firstOrderPromoTitle": "Llança una promo per a la primera comanda",
       "firstOrderPromoDesc": "Configura «$5 de descompte en la primera comanda» o un cupó de lliurament gratuït per convertir els visitants.",
-      "welcomeFootnote": "Quan les comandes comencin a arribar, aquesta pàgina es convertirà en el tauler estil GloriaFood amb targetes KPI, gràfics de tendències i un panell de «Fes créixer el teu restaurant» amb informes d'accés directe."
+      "welcomeFootnote": "Quan les comandes comencin a arribar, aquesta pàgina es convertirà en el tauler estil GloriaFood amb targetes KPI, gràfics de tendències i un panell de «Fes créixer el teu restaurant» amb informes d'accés directe.",
+      "allTime": "Històric"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "No hi ha context de restaurant.",

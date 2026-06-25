@@ -3582,7 +3582,10 @@
       "paginationLabel": "Trang {current} / {total}",
       "paginationPrevious": "Trước",
       "paginationNext": "Tiếp",
-      "noRestaurantContext": "Không có ngữ cảnh nhà hàng."
+      "noRestaurantContext": "Không có ngữ cảnh nhà hàng.",
+      "searchPlaceholder": "Tìm tên, email, số điện thoại…",
+      "perPage": "mỗi trang",
+      "colLastOrder": "Đơn gần nhất"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Không có ngữ cảnh nhà hàng.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Ăn tại chỗ",
       "paginationPage": "Trang {current} / {total}",
       "paginationPrevious": "Trước",
-      "paginationNext": "Tiếp"
+      "paginationNext": "Tiếp",
+      "searchPlaceholder": "Tìm tên, email, số điện thoại…",
+      "perPage": "mỗi trang"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Không có ngữ cảnh nhà hàng.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Mở trang xuất bản để lấy mã QR + bộ chia sẻ mạng xã hội.",
       "firstOrderPromoTitle": "Tung khuyến mãi đơn đầu tiên",
       "firstOrderPromoDesc": "Cài đặt \"Giảm $5 cho đơn đầu\" hoặc coupon giao hàng miễn phí để chuyển đổi khách ghé thăm.",
-      "welcomeFootnote": "Khi đơn hàng bắt đầu chảy vào, trang này trở thành bảng điều khiển kiểu GloriaFood với thẻ KPI, biểu đồ xu hướng và bảng \"Phát triển nhà hàng\" với các báo cáo chi tiết."
+      "welcomeFootnote": "Khi đơn hàng bắt đầu chảy vào, trang này trở thành bảng điều khiển kiểu GloriaFood với thẻ KPI, biểu đồ xu hướng và bảng \"Phát triển nhà hàng\" với các báo cáo chi tiết.",
+      "allTime": "Tổng cộng"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Không có ngữ cảnh nhà hàng.",

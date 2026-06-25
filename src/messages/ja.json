@@ -3582,7 +3582,10 @@
       "paginationLabel": "{total} ページ中 {current} ページ",
       "paginationPrevious": "前へ",
       "paginationNext": "次へ",
-      "noRestaurantContext": "レストランのコンテキストがありません。"
+      "noRestaurantContext": "レストランのコンテキストがありません。",
+      "searchPlaceholder": "名前・メール・電話で検索…",
+      "perPage": "件/ページ",
+      "colLastOrder": "最終注文"
     },
     "reportOrdersList": {
       "noRestaurantContext": "レストランのコンテキストがありません。",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "店内飲食",
       "paginationPage": "{total} ページ中 {current} ページ",
       "paginationPrevious": "前へ",
-      "paginationNext": "次へ"
+      "paginationNext": "次へ",
+      "searchPlaceholder": "名前・メール・電話で検索…",
+      "perPage": "件/ページ"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "レストランのコンテキストがありません。",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "公開設定ページを開いて QR コードとソーシャル共有キットを取得。",
       "firstOrderPromoTitle": "初回注文プロモーションを実施",
       "firstOrderPromoDesc": "「初回注文 $5 オフ」や無料配達クーポンを設定して訪問者を転換。",
-      "welcomeFootnote": "注文が入り始めると、このページは KPI カード、トレンドチャート、詳細レポートへの「レストランを成長させる」パネルを備えた GloriaFood スタイルのダッシュボードになります。"
+      "welcomeFootnote": "注文が入り始めると、このページは KPI カード、トレンドチャート、詳細レポートへの「レストランを成長させる」パネルを備えた GloriaFood スタイルのダッシュボードになります。",
+      "allTime": "累計"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "レストランのコンテキストがありません。",

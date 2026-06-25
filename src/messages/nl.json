@@ -3582,7 +3582,10 @@
       "paginationLabel": "Pagina {current} van {total}",
       "paginationPrevious": "Vorige",
       "paginationNext": "Volgende",
-      "noRestaurantContext": "Geen restaurantcontext."
+      "noRestaurantContext": "Geen restaurantcontext.",
+      "searchPlaceholder": "Zoek naam, e-mail, telefoon…",
+      "perPage": "per pagina",
+      "colLastOrder": "Laatste bestelling"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Geen restaurantcontext.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Ter plaatse eten",
       "paginationPage": "Pagina {current} van {total}",
       "paginationPrevious": "Vorige",
-      "paginationNext": "Volgende"
+      "paginationNext": "Volgende",
+      "searchPlaceholder": "Zoek naam, e-mail, telefoon…",
+      "perPage": "per pagina"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Geen restaurantcontext.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Open de publicatiepagina om QR-codes + een sociaal deelpakket te pakken.",
       "firstOrderPromoTitle": "Lanceer een eerste-bestelling-promotie",
       "firstOrderPromoDesc": "Stel \"$5 korting op eerste bestelling\" of een gratis-bezorgcoupon in om bezoekers te converteren.",
-      "welcomeFootnote": "Zodra bestellingen binnenkomen, wordt deze pagina het GloriaFood-stijl dashboard met KPI-kaarten, trendgrafieken en een \"Laat je restaurant groeien\"-paneel met diepkoppelrapporten."
+      "welcomeFootnote": "Zodra bestellingen binnenkomen, wordt deze pagina het GloriaFood-stijl dashboard met KPI-kaarten, trendgrafieken en een \"Laat je restaurant groeien\"-paneel met diepkoppelrapporten.",
+      "allTime": "Totaal"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Geen restaurantcontext.",

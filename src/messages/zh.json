@@ -3582,7 +3582,10 @@
       "paginationLabel": "第 {current} 页，共 {total} 页",
       "paginationPrevious": "上一页",
       "paginationNext": "下一页",
-      "noRestaurantContext": "无餐厅上下文。"
+      "noRestaurantContext": "无餐厅上下文。",
+      "searchPlaceholder": "搜索姓名、邮箱、电话…",
+      "perPage": "条/页",
+      "colLastOrder": "最近下单"
     },
     "reportOrdersList": {
       "noRestaurantContext": "无餐厅上下文。",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "堂食",
       "paginationPage": "第 {current} 页，共 {total} 页",
       "paginationPrevious": "上一页",
-      "paginationNext": "下一页"
+      "paginationNext": "下一页",
+      "searchPlaceholder": "搜索姓名、邮箱、电话…",
+      "perPage": "条/页"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "无餐厅上下文。",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "打开发布页面获取二维码和社交分享套件。",
       "firstOrderPromoTitle": "推出首单促销",
       "firstOrderPromoDesc": "设置「首单减 $5」或免运费优惠券，将访客转化为顾客。",
-      "welcomeFootnote": "订单开始流入后，本页面将成为 GloriaFood 风格的仪表盘，包含 KPI 卡片、趋势图表，以及深度链接报告的「壮大您的餐厅」面板。"
+      "welcomeFootnote": "订单开始流入后，本页面将成为 GloriaFood 风格的仪表盘，包含 KPI 卡片、趋势图表，以及深度链接报告的「壮大您的餐厅」面板。",
+      "allTime": "累计"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "无餐厅上下文。",

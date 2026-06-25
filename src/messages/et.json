@@ -3582,7 +3582,10 @@
       "paginationLabel": "Lehekülg {current} / {total}",
       "paginationPrevious": "Eelmine",
       "paginationNext": "Järgmine",
-      "noRestaurantContext": "Restorani kontekst puudub."
+      "noRestaurantContext": "Restorani kontekst puudub.",
+      "searchPlaceholder": "Otsi nime, e-posti, telefoni…",
+      "perPage": "lehe kohta",
+      "colLastOrder": "Viimane tellimus"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Restorani kontekst puudub.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Söök kohapeal",
       "paginationPage": "Lehekülg {current} / {total}",
       "paginationPrevious": "Eelmine",
-      "paginationNext": "Järgmine"
+      "paginationNext": "Järgmine",
+      "searchPlaceholder": "Otsi nime, e-posti, telefoni…",
+      "perPage": "lehe kohta"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Restorani kontekst puudub.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Avage avaldamisleht, et hankida QR-koodid ja sotsiaalmeedia jagamiskomplekt.",
       "firstOrderPromoTitle": "Käivitage esimese tellimuse kampaania",
       "firstOrderPromoDesc": "Seadistage \"$5 esimeselt tellimuselt\" või tasuta kohaletoimetamise kupong külastajate konverteerimiseks.",
-      "welcomeFootnote": "Kui tellimused hakkavad laekuma, muutub see lehekülg GloriaFoodi stiilis armatuurlauaks KPI-kaartide, trendidiagrammide ja \"Kasvatage oma restorani\" sügavlinkide paneelaga."
+      "welcomeFootnote": "Kui tellimused hakkavad laekuma, muutub see lehekülg GloriaFoodi stiilis armatuurlauaks KPI-kaartide, trendidiagrammide ja \"Kasvatage oma restorani\" sügavlinkide paneelaga.",
+      "allTime": "Kogu aeg"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Restorani kontekst puudub.",

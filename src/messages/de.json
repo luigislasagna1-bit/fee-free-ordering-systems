@@ -3582,7 +3582,10 @@
       "paginationLabel": "Seite {current} von {total}",
       "paginationPrevious": "Zurück",
       "paginationNext": "Weiter",
-      "noRestaurantContext": "Kein Restaurant-Kontext."
+      "noRestaurantContext": "Kein Restaurant-Kontext.",
+      "searchPlaceholder": "Name, E-Mail, Telefon suchen…",
+      "perPage": "pro Seite",
+      "colLastOrder": "Letzte Bestellung"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Kein Restaurant-Kontext.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Vor Ort",
       "paginationPage": "Seite {current} von {total}",
       "paginationPrevious": "Zurück",
-      "paginationNext": "Weiter"
+      "paginationNext": "Weiter",
+      "searchPlaceholder": "Name, E-Mail, Telefon suchen…",
+      "perPage": "pro Seite"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Kein Restaurant-Kontext.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Öffnen Sie die Veröffentlichungsseite, um QR-Codes und ein Social-Share-Kit zu erhalten.",
       "firstOrderPromoTitle": "Erstbestellungs-Aktion starten",
       "firstOrderPromoDesc": "Richten Sie „$5 Rabatt auf die erste Bestellung“ oder einen Gratislieferungs-Gutschein ein, um Besucher zu konvertieren.",
-      "welcomeFootnote": "Sobald Bestellungen einfließen, wird diese Seite zum GloriaFood-artigen Dashboard mit KPI-Karten, Trenddiagrammen und einem „Ihr Restaurant ausbauen“-Bereich mit verlinkten Berichten."
+      "welcomeFootnote": "Sobald Bestellungen einfließen, wird diese Seite zum GloriaFood-artigen Dashboard mit KPI-Karten, Trenddiagrammen und einem „Ihr Restaurant ausbauen“-Bereich mit verlinkten Berichten.",
+      "allTime": "Gesamt"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Kein Restaurant-Kontext.",

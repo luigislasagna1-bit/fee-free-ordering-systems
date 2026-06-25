@@ -3582,7 +3582,10 @@
       "paginationLabel": "{total}페이지 중 {current}페이지",
       "paginationPrevious": "이전",
       "paginationNext": "다음",
-      "noRestaurantContext": "레스토랑 컨텍스트가 없습니다."
+      "noRestaurantContext": "레스토랑 컨텍스트가 없습니다.",
+      "searchPlaceholder": "이름, 이메일, 전화 검색…",
+      "perPage": "페이지당",
+      "colLastOrder": "마지막 주문"
     },
     "reportOrdersList": {
       "noRestaurantContext": "레스토랑 컨텍스트가 없습니다.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "매장식사",
       "paginationPage": "{total}페이지 중 {current}페이지",
       "paginationPrevious": "이전",
-      "paginationNext": "다음"
+      "paginationNext": "다음",
+      "searchPlaceholder": "이름, 이메일, 전화 검색…",
+      "perPage": "페이지당"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "레스토랑 컨텍스트가 없습니다.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "게시 페이지를 열어 QR 코드 + 소셜 공유 키트를 받으세요.",
       "firstOrderPromoTitle": "첫 주문 프로모션 시작",
       "firstOrderPromoDesc": "방문자를 전환하기 위해 \"첫 주문 $5 할인\" 또는 무료 배달 쿠폰을 설정하세요.",
-      "welcomeFootnote": "주문이 시작되면 이 페이지는 KPI 카드, 트렌드 차트, 딥링크 보고서의 \"레스토랑 성장\" 패널을 갖춘 GloriaFood 스타일 대시보드가 됩니다."
+      "welcomeFootnote": "주문이 시작되면 이 페이지는 KPI 카드, 트렌드 차트, 딥링크 보고서의 \"레스토랑 성장\" 패널을 갖춘 GloriaFood 스타일 대시보드가 됩니다.",
+      "allTime": "전체 기간"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "레스토랑 컨텍스트가 없습니다.",

@@ -3582,7 +3582,10 @@
       "paginationLabel": "Lapa {current} no {total}",
       "paginationPrevious": "Iepriekšējā",
       "paginationNext": "Nākamā",
-      "noRestaurantContext": "Nav restorāna konteksta."
+      "noRestaurantContext": "Nav restorāna konteksta.",
+      "searchPlaceholder": "Meklēt vārdu, e-pastu, tālruni…",
+      "perPage": "lapā",
+      "colLastOrder": "Pēdējais pasūtījums"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Nav restorāna konteksta.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Ēšana uz vietas",
       "paginationPage": "Lapa {current} no {total}",
       "paginationPrevious": "Iepriekšējā",
-      "paginationNext": "Nākamā"
+      "paginationNext": "Nākamā",
+      "searchPlaceholder": "Meklēt vārdu, e-pastu, tālruni…",
+      "perPage": "lapā"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Nav restorāna konteksta.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Atveriet publicēšanas lapu, lai iegūtu QR kodus un sociālo kopīgošanas komplektu.",
       "firstOrderPromoTitle": "Palaidiet pirmā pasūtījuma akciju",
       "firstOrderPromoDesc": "Iestatiet \"$5 atlaide pirmajam pasūtījumam\" vai bezmaksas piegādes kuponu, lai konvertētu apmeklētājus.",
-      "welcomeFootnote": "Kad sāks ienākt pasūtījumi, šī lapa kļūst par GloriaFood stila paneli ar KPI kartēm, tendenču grafikiem un \"Attīstiet savu restorānu\" padziļināto atskaišu paneli."
+      "welcomeFootnote": "Kad sāks ienākt pasūtījumi, šī lapa kļūst par GloriaFood stila paneli ar KPI kartēm, tendenču grafikiem un \"Attīstiet savu restorānu\" padziļināto atskaišu paneli.",
+      "allTime": "Kopā"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nav restorāna konteksta.",

@@ -3582,7 +3582,10 @@
       "paginationLabel": "Stran {current} od {total}",
       "paginationPrevious": "Prejšnja",
       "paginationNext": "Naslednja",
-      "noRestaurantContext": "Ni konteksta restavracije."
+      "noRestaurantContext": "Ni konteksta restavracije.",
+      "searchPlaceholder": "Iskanje imena, e-pošte, telefona…",
+      "perPage": "na stran",
+      "colLastOrder": "Zadnje naročilo"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Ni konteksta restavracije.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Jedilnica",
       "paginationPage": "Stran {current} od {total}",
       "paginationPrevious": "Prejšnja",
-      "paginationNext": "Naslednja"
+      "paginationNext": "Naslednja",
+      "searchPlaceholder": "Iskanje imena, e-pošte, telefona…",
+      "perPage": "na stran"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Ni konteksta restavracije.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Odprite stran za objavljanje in pridobite QR kode + komplet za deljenje na družbenih medijih.",
       "firstOrderPromoTitle": "Zaženite promocijo za prvo naročilo",
       "firstOrderPromoDesc": "Nastavite \"$5 popusta na prvo naročilo\" ali kupon za brezplačno dostavo za konverzijo obiskovalcev.",
-      "welcomeFootnote": "Ko začnejo pritekati naročila, ta stran postane GloriaFood-slogovna nadzorna plošča s KPI karticami, grafikoni trendov in ploščo \"Razvijte svojo restavracijo\" z globokimi poročili."
+      "welcomeFootnote": "Ko začnejo pritekati naročila, ta stran postane GloriaFood-slogovna nadzorna plošča s KPI karticami, grafikoni trendov in ploščo \"Razvijte svojo restavracijo\" z globokimi poročili.",
+      "allTime": "Skupno"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ni konteksta restavracije.",

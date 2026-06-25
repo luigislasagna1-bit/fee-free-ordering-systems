@@ -8,7 +8,7 @@ import { loadBrandReports } from "@/lib/brand-reports";
 import { BrandReports } from "./BrandReports";
 import { parseDateRange, previousPeriod, formatChartDate, formatRangeLabel, toISODate } from "@/lib/reports/date-range";
 import { parseDateRangeInTz, eachDayKeyInTz } from "@/lib/reports/date-range-tz";
-import { reportOrderWhere } from "@/lib/reports/order-filter";
+import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
 import { dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { TrendingUp, TrendingDown, DollarSign, ShoppingBag, Users, Receipt, ArrowRight, MousePointerClick, Sparkles, UserPlus } from "lucide-react";
@@ -94,6 +94,7 @@ export default async function ReportsDashboardPage({
     curRevenue, curOrders, curCustomers,
     prevRevenue, prevOrders, prevCustomers,
     topItems, typeBreakdown,
+    allTimeAgg, allTimeCustomers,
   ] = await Promise.all([
     sumRevenue(restaurantId, range),
     countReportOrders(restaurantId, range),
@@ -114,6 +115,11 @@ export default async function ReportsDashboardPage({
       where: reportOrderWhere(restaurantId, range),
       _count: true,
     }),
+    // All-time totals — the GloriaFood "/ 45,947" secondary figure beside the
+    // range value. Indexed on (restaurantId, status); runs once per load.
+    // SCALE SEAM: cache this nightly once a restaurant passes ~100k orders.
+    prisma.order.aggregate({ where: { restaurantId, ...REPORT_ORDER_STATUS_WHERE }, _sum: { total: true }, _count: true }),
+    prisma.customer.count({ where: { restaurantId } }),
   ]);
 
   // One consistent "what counts" rule (reportOrderWhere) → "Orders" and "Avg
@@ -121,6 +127,9 @@ export default async function ReportsDashboardPage({
   // status while Avg divided by completed-only, so they never reconciled.
   const avgOrder = curOrders > 0 ? curRevenue / curOrders : 0;
   const prevAvgOrder = prevOrders > 0 ? prevRevenue / prevOrders : 0;
+  const allTimeRevenue = allTimeAgg._sum.total ?? 0;
+  const allTimeOrders = allTimeAgg._count;
+  const allTimeAvg = allTimeOrders > 0 ? allTimeRevenue / allTimeOrders : 0;
 
   // Build the daily revenue chart. Re-query with a `groupBy(createdAt::date)`
   // would be cleanest but Prisma's groupBy doesn't accept raw date casts —
@@ -196,6 +205,8 @@ export default async function ReportsDashboardPage({
         <KpiCard
           label={t("kpiRevenue")}
           value={formatCurrency(curRevenue)}
+          allTime={formatCurrency(allTimeRevenue)}
+          allTimeLabel={t("allTime")}
           deltaPct={pctChange(curRevenue, prevRevenue)}
           icon={DollarSign}
           accent="emerald"
@@ -205,6 +216,8 @@ export default async function ReportsDashboardPage({
         <KpiCard
           label={t("kpiCompletedOrders")}
           value={curOrders.toLocaleString()}
+          allTime={allTimeOrders.toLocaleString()}
+          allTimeLabel={t("allTime")}
           deltaPct={pctChange(curOrders, prevOrders)}
           icon={ShoppingBag}
           accent="blue"
@@ -214,6 +227,8 @@ export default async function ReportsDashboardPage({
         <KpiCard
           label={t("kpiAverageOrder")}
           value={formatCurrency(avgOrder)}
+          allTime={formatCurrency(allTimeAvg)}
+          allTimeLabel={t("allTime")}
           deltaPct={pctChange(avgOrder, prevAvgOrder)}
           icon={Receipt}
           accent="amber"
@@ -223,6 +238,8 @@ export default async function ReportsDashboardPage({
         <KpiCard
           label={t("kpiCustomersServed")}
           value={curCustomers.toLocaleString()}
+          allTime={allTimeCustomers.toLocaleString()}
+          allTimeLabel={t("allTime")}
           deltaPct={pctChange(curCustomers, prevCustomers)}
           icon={Users}
           accent="purple"
@@ -362,7 +379,7 @@ function ReportHeader({ title, subtitle }: { title: string; subtitle?: string })
 
 /** Single KPI card with delta vs previous-period. */
 function KpiCard({
-  label, value, deltaPct, icon: Icon, accent, vsPrevLabel, vsPrevPctLabel,
+  label, value, deltaPct, icon: Icon, accent, vsPrevLabel, vsPrevPctLabel, allTime, allTimeLabel,
 }: {
   label: string;
   value: string;
@@ -371,6 +388,9 @@ function KpiCard({
   accent: "emerald" | "blue" | "amber" | "purple";
   vsPrevLabel: string;
   vsPrevPctLabel: (pct: string) => string;
+  /** All-time figure shown as a muted secondary line (GloriaFood "/ 45,947"). */
+  allTime?: string;
+  allTimeLabel?: string;
 }) {
   const ring = {
     emerald: "bg-emerald-50 text-emerald-600",
@@ -405,6 +425,11 @@ function KpiCard({
       </div>
       <div className="text-2xl font-bold text-gray-900 mb-0.5">{value}</div>
       {renderDelta()}
+      {allTime && (
+        <div className="text-[11px] text-gray-400 mt-1.5 pt-1.5 border-t border-gray-50">
+          {allTimeLabel} · {allTime}
+        </div>
+      )}
     </div>
   );
 }

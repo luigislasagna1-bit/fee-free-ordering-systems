@@ -1568,6 +1568,9 @@
     },
     "reportClientsList": {
       "pageTitle": "List View — Clients",
+      "searchPlaceholder": "Search name, email, phone…",
+      "perPage": "per page",
+      "colLastOrder": "Last order",
       "customersOrderedDescription": "{count, plural, one {# customer ordered} other {# customers ordered}} · {rangeLabel}",
       "colCustomer": "Customer",
       "colContact": "Contact",
@@ -3680,6 +3683,8 @@
     "reportOrdersList": {
       "noRestaurantContext": "No restaurant context.",
       "pageTitle": "List View — Orders",
+      "searchPlaceholder": "Search name, email, phone…",
+      "perPage": "per page",
       "orderCountLabel": "{count, plural, one {# order} other {# orders}} · {range}",
       "colNumber": "#",
       "colDate": "Date",
@@ -3838,6 +3843,7 @@
     },
     "reportsHome": {
       "dashboardTitle": "Dashboard",
+      "allTime": "All-time",
       "chainwideSubtitle": "Chain-wide overview across all your locations.",
       "noRestaurantContext": "No restaurant context — sign in as a restaurant admin.",
       "reportsReadySubtitle": "Reports light up as soon as your first orders come in.",

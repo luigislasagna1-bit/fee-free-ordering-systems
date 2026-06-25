@@ -3582,7 +3582,10 @@
       "paginationLabel": "หน้า {current} จาก {total}",
       "paginationPrevious": "ก่อนหน้า",
       "paginationNext": "ถัดไป",
-      "noRestaurantContext": "ไม่มีบริบทร้านอาหาร"
+      "noRestaurantContext": "ไม่มีบริบทร้านอาหาร",
+      "searchPlaceholder": "ค้นหาชื่อ อีเมล โทรศัพท์…",
+      "perPage": "ต่อหน้า",
+      "colLastOrder": "ออเดอร์ล่าสุด"
     },
     "reportOrdersList": {
       "noRestaurantContext": "ไม่มีบริบทร้านอาหาร",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "ทานที่ร้าน",
       "paginationPage": "หน้า {current} จาก {total}",
       "paginationPrevious": "ก่อนหน้า",
-      "paginationNext": "ถัดไป"
+      "paginationNext": "ถัดไป",
+      "searchPlaceholder": "ค้นหาชื่อ อีเมล โทรศัพท์…",
+      "perPage": "ต่อหน้า"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "ไม่มีบริบทร้านอาหาร",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "เปิดหน้าการเผยแพร่เพื่อรับ QR Code และชุด Social Share",
       "firstOrderPromoTitle": "เปิดตัวโปรโมชันออเดอร์แรก",
       "firstOrderPromoDesc": "ตั้ง \"ลด $5 สำหรับออเดอร์แรก\" หรือคูปองส่งฟรีเพื่อเปลี่ยนผู้เข้าชมให้เป็นลูกค้า",
-      "welcomeFootnote": "เมื่อออเดอร์เริ่มไหลเข้า หน้านี้จะกลายเป็นแดชบอร์ดแบบ GloriaFood พร้อม KPI Card กราฟแนวโน้ม และแผง \"ขยายธุรกิจร้านอาหาร\" ที่เชื่อมไปยังรายงานเชิงลึก"
+      "welcomeFootnote": "เมื่อออเดอร์เริ่มไหลเข้า หน้านี้จะกลายเป็นแดชบอร์ดแบบ GloriaFood พร้อม KPI Card กราฟแนวโน้ม และแผง \"ขยายธุรกิจร้านอาหาร\" ที่เชื่อมไปยังรายงานเชิงลึก",
+      "allTime": "ทั้งหมด"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "ไม่มีบริบทร้านอาหาร",

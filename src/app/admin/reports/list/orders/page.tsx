@@ -6,6 +6,7 @@ import { formatRangeLabel } from "@/lib/reports/date-range";
 import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere } from "@/lib/reports/order-filter";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
+import { TableControls } from "@/components/admin/reports/TableControls";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
@@ -21,7 +22,12 @@ import { getTranslations } from "next-intl/server";
  * today's pending/in-progress orders) — this is the historical /
  * reporting view that scans 4 years deep.
  */
-const PAGE_SIZE = 20;
+const PAGE_SIZES = [20, 50, 100];
+
+function pickSize(raw: string | string[] | undefined): number {
+  const n = Number(Array.isArray(raw) ? raw[0] : raw);
+  return PAGE_SIZES.includes(n) ? n : 20;
+}
 
 export default async function ListOrdersPage({
   searchParams,
@@ -33,6 +39,8 @@ export default async function ListOrdersPage({
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   const page = Math.max(1, Number(Array.isArray(sp.page) ? sp.page[0] : sp.page) || 1);
+  const size = pickSize(sp.size);
+  const q = (Array.isArray(sp.q) ? sp.q[0] : sp.q)?.trim() || "";
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
   const [__currency, __timezone] = await Promise.all([
@@ -44,8 +52,20 @@ export default async function ListOrdersPage({
 
   // Run count + page query in parallel. count is cheap (uses the composite
   // index). Same canonical predicate as the rest of Reports so the count
-  // matches the Dashboard (excludes rejected/cancelled + TEST orders).
-  const where = reportOrderWhere(restaurantId, range);
+  // matches the Dashboard (excludes rejected/cancelled + TEST orders). The
+  // optional search filters by customer name / email / phone, SERVER-side.
+  const where = {
+    ...reportOrderWhere(restaurantId, range),
+    ...(q
+      ? {
+          OR: [
+            { customerName: { contains: q, mode: "insensitive" as const } },
+            { customerEmail: { contains: q, mode: "insensitive" as const } },
+            { customerPhone: { contains: q } },
+          ],
+        }
+      : {}),
+  };
   const [total, orders] = await Promise.all([
     prisma.order.count({ where }),
     prisma.order.findMany({
@@ -61,12 +81,12 @@ export default async function ListOrdersPage({
         createdAt: true,
       },
       orderBy: { createdAt: "desc" },
-      take: PAGE_SIZE,
-      skip: (page - 1) * PAGE_SIZE,
+      take: size,
+      skip: (page - 1) * size,
     }),
   ]);
 
-  const pageCount = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const pageCount = Math.max(1, Math.ceil(total / size));
 
   return (
     <div>
@@ -75,7 +95,10 @@ export default async function ListOrdersPage({
           <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">{t("orderCountLabel", { count: total, range: formatRangeLabel(range) })}</p>
         </div>
-        <DateRangePicker />
+        <div className="flex items-center gap-2 flex-wrap">
+          <TableControls searchPlaceholder={t("searchPlaceholder")} perPageLabel={t("perPage")} />
+          <DateRangePicker />
+        </div>
       </header>
 
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden relative">

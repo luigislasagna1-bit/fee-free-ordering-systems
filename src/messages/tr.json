@@ -3582,7 +3582,10 @@
       "paginationLabel": "{total} sayfanın {current}. sayfası",
       "paginationPrevious": "Önceki",
       "paginationNext": "Sonraki",
-      "noRestaurantContext": "Restoran bağlamı yok."
+      "noRestaurantContext": "Restoran bağlamı yok.",
+      "searchPlaceholder": "İsim, e-posta, telefon ara…",
+      "perPage": "sayfa başına",
+      "colLastOrder": "Son Sipariş"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Restoran bağlamı yok.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Yerinde yeme",
       "paginationPage": "{total} sayfanın {current}. sayfası",
       "paginationPrevious": "Önceki",
-      "paginationNext": "Sonraki"
+      "paginationNext": "Sonraki",
+      "searchPlaceholder": "İsim, e-posta, telefon ara…",
+      "perPage": "sayfa başına"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Restoran bağlamı yok.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "QR kodları + sosyal paylaşım seti almak için yayınlama sayfasını açın.",
       "firstOrderPromoTitle": "İlk sipariş promosyonu başlatın",
       "firstOrderPromoDesc": "Ziyaretçileri dönüştürmek için \"İlk siparişte $5 indirim\" veya ücretsiz teslimat kuponu oluşturun.",
-      "welcomeFootnote": "Siparişler akmaya başladığında bu sayfa KPI kartları, trend grafikleri ve derin bağlantılı raporlardan oluşan \"Restoranınızı büyütün\" paneli ile GloriaFood tarzı bir gösterge paneline dönüşür."
+      "welcomeFootnote": "Siparişler akmaya başladığında bu sayfa KPI kartları, trend grafikleri ve derin bağlantılı raporlardan oluşan \"Restoranınızı büyütün\" paneli ile GloriaFood tarzı bir gösterge paneline dönüşür.",
+      "allTime": "Tüm zamanlar"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Restoran bağlamı yok.",

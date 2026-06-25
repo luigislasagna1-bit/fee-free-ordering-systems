@@ -3582,7 +3582,10 @@
       "paginationLabel": "Page {current} sur {total}",
       "paginationPrevious": "Précédent",
       "paginationNext": "Suivant",
-      "noRestaurantContext": "Aucun contexte de restaurant."
+      "noRestaurantContext": "Aucun contexte de restaurant.",
+      "searchPlaceholder": "Rechercher nom, e-mail, téléphone…",
+      "perPage": "par page",
+      "colLastOrder": "Dernière commande"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Aucun contexte de restaurant.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Sur place",
       "paginationPage": "Page {current} sur {total}",
       "paginationPrevious": "Précédent",
-      "paginationNext": "Suivant"
+      "paginationNext": "Suivant",
+      "searchPlaceholder": "Rechercher nom, e-mail, téléphone…",
+      "perPage": "par page"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Aucun contexte de restaurant.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Ouvrez la page de publication pour obtenir des QR codes + un kit de partage sur les réseaux sociaux.",
       "firstOrderPromoTitle": "Lancez une promo pour la première commande",
       "firstOrderPromoDesc": "Configurez « $5 de réduction sur la première commande » ou un coupon de livraison gratuite pour convertir les visiteurs.",
-      "welcomeFootnote": "Une fois les commandes en cours, cette page devient le tableau de bord de style GloriaFood avec des cartes KPI, des graphiques de tendances et un panneau « Faites croître votre restaurant » avec des rapports détaillés."
+      "welcomeFootnote": "Une fois les commandes en cours, cette page devient le tableau de bord de style GloriaFood avec des cartes KPI, des graphiques de tendances et un panneau « Faites croître votre restaurant » avec des rapports détaillés.",
+      "allTime": "Total"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Aucun contexte de restaurant.",

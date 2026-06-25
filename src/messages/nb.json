@@ -3582,7 +3582,10 @@
       "paginationLabel": "Side {current} av {total}",
       "paginationPrevious": "Forrige",
       "paginationNext": "Neste",
-      "noRestaurantContext": "Ingen restaurantkontekst."
+      "noRestaurantContext": "Ingen restaurantkontekst.",
+      "searchPlaceholder": "Søk navn, e-post, telefon…",
+      "perPage": "per side",
+      "colLastOrder": "Siste bestilling"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Ingen restaurantkontekst.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Spis inne",
       "paginationPage": "Side {current} av {total}",
       "paginationPrevious": "Forrige",
-      "paginationNext": "Neste"
+      "paginationNext": "Neste",
+      "searchPlaceholder": "Søk navn, e-post, telefon…",
+      "perPage": "per side"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Ingen restaurantkontekst.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Åpne publiseringssiden for å hente QR-koder + et delingsoppsett for sosiale medier.",
       "firstOrderPromoTitle": "Start en kampanje for første bestilling",
       "firstOrderPromoDesc": "Sett opp «$5 av første bestilling» eller en gratis leveringskupong for å konvertere besøkende.",
-      "welcomeFootnote": "Når bestillinger begynner å strømme inn, blir denne siden det GloriaFood-lignende dashbordet med KPI-kort, trenddiagrammer og et «Voks restauranten din»-panel med dybderapporter."
+      "welcomeFootnote": "Når bestillinger begynner å strømme inn, blir denne siden det GloriaFood-lignende dashbordet med KPI-kort, trenddiagrammer og et «Voks restauranten din»-panel med dybderapporter.",
+      "allTime": "Totalt"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ingen restaurantkontekst.",

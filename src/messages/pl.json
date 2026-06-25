@@ -3582,7 +3582,10 @@
       "paginationLabel": "Strona {current} z {total}",
       "paginationPrevious": "Poprzednia",
       "paginationNext": "Następna",
-      "noRestaurantContext": "Brak kontekstu restauracji."
+      "noRestaurantContext": "Brak kontekstu restauracji.",
+      "searchPlaceholder": "Szukaj nazwy, e-maila, telefonu…",
+      "perPage": "na stronę",
+      "colLastOrder": "Ostatnie zamówienie"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Brak kontekstu restauracji.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Na miejscu",
       "paginationPage": "Strona {current} z {total}",
       "paginationPrevious": "Poprzednia",
-      "paginationNext": "Następna"
+      "paginationNext": "Następna",
+      "searchPlaceholder": "Szukaj nazwy, e-maila, telefonu…",
+      "perPage": "na stronę"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Brak kontekstu restauracji.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Otwórz stronę publikowania, aby pobrać kody QR i zestaw do udostępniania w mediach społecznościowych.",
       "firstOrderPromoTitle": "Uruchom promocję na pierwsze zamówienie",
       "firstOrderPromoDesc": "Ustaw „$5 zniżki na pierwsze zamówienie” lub kupon na bezpłatną dostawę, aby konwertować odwiedzających.",
-      "welcomeFootnote": "Gdy zamówienia zaczną napływać, ta strona stanie się panelem w stylu GloriaFood z kartami KPI, wykresami trendów i panelem „Rozwijaj swoją restaurację” z raportami szczegółowymi."
+      "welcomeFootnote": "Gdy zamówienia zaczną napływać, ta strona stanie się panelem w stylu GloriaFood z kartami KPI, wykresami trendów i panelem „Rozwijaj swoją restaurację” z raportami szczegółowymi.",
+      "allTime": "Łącznie"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Brak kontekstu restauracji.",

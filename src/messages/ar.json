@@ -3582,7 +3582,10 @@
       "paginationLabel": "الصفحة {current} من {total}",
       "paginationPrevious": "السابق",
       "paginationNext": "التالي",
-      "noRestaurantContext": "لا يوجد سياق مطعم."
+      "noRestaurantContext": "لا يوجد سياق مطعم.",
+      "searchPlaceholder": "ابحث بالاسم أو البريد أو الهاتف…",
+      "perPage": "لكل صفحة",
+      "colLastOrder": "آخر طلب"
     },
     "reportOrdersList": {
       "noRestaurantContext": "لا يوجد سياق مطعم.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "تناول الطعام في المطعم",
       "paginationPage": "الصفحة {current} من {total}",
       "paginationPrevious": "السابق",
-      "paginationNext": "التالي"
+      "paginationNext": "التالي",
+      "searchPlaceholder": "ابحث بالاسم أو البريد أو الهاتف…",
+      "perPage": "لكل صفحة"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "لا يوجد سياق مطعم.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "افتح صفحة النشر للحصول على رموز QR + مجموعة مشاركة اجتماعية.",
       "firstOrderPromoTitle": "أطلق عرض أول طلب",
       "firstOrderPromoDesc": "أعدّ «خصم $5 على أول طلب» أو قسيمة توصيل مجاني لتحويل الزوار.",
-      "welcomeFootnote": "عند بدء تدفق الطلبات، تصبح هذه الصفحة لوحة تحكم بنمط GloriaFood مع بطاقات KPI، ورسوم بيانية للاتجاهات، ولوحة «نمّ مطعمك» من التقارير التفصيلية."
+      "welcomeFootnote": "عند بدء تدفق الطلبات، تصبح هذه الصفحة لوحة تحكم بنمط GloriaFood مع بطاقات KPI، ورسوم بيانية للاتجاهات، ولوحة «نمّ مطعمك» من التقارير التفصيلية.",
+      "allTime": "الإجمالي الكلي"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "لا يوجد سياق مطعم.",

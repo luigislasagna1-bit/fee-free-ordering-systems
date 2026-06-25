@@ -3582,7 +3582,10 @@
       "paginationLabel": "Stranica {current} od {total}",
       "paginationPrevious": "Prethodna",
       "paginationNext": "Sledeća",
-      "noRestaurantContext": "Nema konteksta restorana."
+      "noRestaurantContext": "Nema konteksta restorana.",
+      "searchPlaceholder": "Претражи име, имејл, телефон…",
+      "perPage": "по страници",
+      "colLastOrder": "Poslednja porudžbina"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Nema konteksta restorana.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Konzumacija u restoranu",
       "paginationPage": "Stranica {current} od {total}",
       "paginationPrevious": "Prethodna",
-      "paginationNext": "Sledeća"
+      "paginationNext": "Sledeća",
+      "searchPlaceholder": "Претражи име, имејл, телефон…",
+      "perPage": "по страници"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Nema konteksta restorana.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Otvorite stranicu za objavljivanje da preuzmete QR kodove + komplet za deljenje na društvenim mrežama.",
       "firstOrderPromoTitle": "Pokrenite promociju za prvu porudžbinu",
       "firstOrderPromoDesc": "Postavite \"$5 popusta na prvu porudžbinu\" ili kupon za besplatnu dostavu da konvertujete posetioce.",
-      "welcomeFootnote": "Kada porudžbine počnu da teku, ova stranica postaje GloriaFood-stil kontrolna tabla sa KPI karticama, trendovskim grafikonima i panelon dubokih izveštaja \"Razvijajte vaš restoran\"."
+      "welcomeFootnote": "Kada porudžbine počnu da teku, ova stranica postaje GloriaFood-stil kontrolna tabla sa KPI karticama, trendovskim grafikonima i panelon dubokih izveštaja \"Razvijajte vaš restoran\".",
+      "allTime": "Укупно"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nema konteksta restorana.",

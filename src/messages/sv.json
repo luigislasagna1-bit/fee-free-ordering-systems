@@ -3582,7 +3582,10 @@
       "paginationLabel": "Sida {current} av {total}",
       "paginationPrevious": "Föregående",
       "paginationNext": "Nästa",
-      "noRestaurantContext": "Ingen restaurangkontext."
+      "noRestaurantContext": "Ingen restaurangkontext.",
+      "searchPlaceholder": "Sök namn, e-post, telefon…",
+      "perPage": "per sida",
+      "colLastOrder": "Senaste beställning"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Ingen restaurangkontext.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Äta på plats",
       "paginationPage": "Sida {current} av {total}",
       "paginationPrevious": "Föregående",
-      "paginationNext": "Nästa"
+      "paginationNext": "Nästa",
+      "searchPlaceholder": "Sök namn, e-post, telefon…",
+      "perPage": "per sida"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Ingen restaurangkontext.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Öppna publiceringssidan för att hämta QR-koder + ett socialt delningskit.",
       "firstOrderPromoTitle": "Lansera en kampanj för första beställningen",
       "firstOrderPromoDesc": "Ställ in \"$5 rabatt på första beställning\" eller en gratis leveranskupong för att konvertera besökare.",
-      "welcomeFootnote": "När beställningar börjar flöda in blir den här sidan GloriaFood-stilens instrumentpanel med KPI-kort, trenddiagram och en \"Väx din restaurang\"-panel med djuplänkade rapporter."
+      "welcomeFootnote": "När beställningar börjar flöda in blir den här sidan GloriaFood-stilens instrumentpanel med KPI-kort, trenddiagram och en \"Väx din restaurang\"-panel med djuplänkade rapporter.",
+      "allTime": "Totalt"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ingen restaurangkontext.",

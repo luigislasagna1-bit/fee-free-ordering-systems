@@ -3582,7 +3582,10 @@
       "paginationLabel": "Side {current} af {total}",
       "paginationPrevious": "Forrige",
       "paginationNext": "Næste",
-      "noRestaurantContext": "Ingen restaurantkontekst."
+      "noRestaurantContext": "Ingen restaurantkontekst.",
+      "searchPlaceholder": "Søg navn, e-mail, telefon…",
+      "perPage": "pr. side",
+      "colLastOrder": "Seneste ordre"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Ingen restaurantkontekst.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Spis her",
       "paginationPage": "Side {current} af {total}",
       "paginationPrevious": "Forrige",
-      "paginationNext": "Næste"
+      "paginationNext": "Næste",
+      "searchPlaceholder": "Søg navn, e-mail, telefon…",
+      "perPage": "pr. side"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Ingen restaurantkontekst.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Åbn publiceringssiden for at hente QR-koder + et socialt delingskit.",
       "firstOrderPromoTitle": "Start en første-ordre-kampagne",
       "firstOrderPromoDesc": "Opsæt \"$5 rabat på første ordre\" eller en gratis-leverings-kupon for at konvertere besøgende.",
-      "welcomeFootnote": "Når ordrer begynder at strømme ind, bliver denne side til GloriaFood-stil-dashboardet med KPI-kort, trenddiagrammer og et \"Udvid din restaurant\"-panel med dybdegående rapporter."
+      "welcomeFootnote": "Når ordrer begynder at strømme ind, bliver denne side til GloriaFood-stil-dashboardet med KPI-kort, trenddiagrammer og et \"Udvid din restaurant\"-panel med dybdegående rapporter.",
+      "allTime": "Samlet"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ingen restaurantkontekst.",

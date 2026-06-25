@@ -3582,7 +3582,10 @@
       "paginationLabel": "Puslapis {current} iš {total}",
       "paginationPrevious": "Ankstesnis",
       "paginationNext": "Kitas",
-      "noRestaurantContext": "Nėra restorano konteksto."
+      "noRestaurantContext": "Nėra restorano konteksto.",
+      "searchPlaceholder": "Ieškoti vardo, el. pašto, telefono…",
+      "perPage": "puslapyje",
+      "colLastOrder": "Paskutinis užsakymas"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Nėra restorano konteksto.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Pietaujant vietoje",
       "paginationPage": "Puslapis {current} iš {total}",
       "paginationPrevious": "Ankstesnis",
-      "paginationNext": "Kitas"
+      "paginationNext": "Kitas",
+      "searchPlaceholder": "Ieškoti vardo, el. pašto, telefono…",
+      "perPage": "puslapyje"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Nėra restorano konteksto.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Atidarykite publikavimo puslapį, kad gautumėte QR kodus ir socialinių tinklų rinkinį.",
       "firstOrderPromoTitle": "Paleiskite pirmojo užsakymo akciją",
       "firstOrderPromoDesc": "Nustatykite $5 nuolaida pirmam užsakymui arba nemokamo pristatymo kuponą lankytojų konversijai.",
-      "welcomeFootnote": "Kai užsakymai pradės plaukti, šis puslapis taps GloriaFood stiliaus prietaisų skydeliu su KPI kortelėmis, tendencijų diagramomis ir Auginkite savo restoraną giluminių ataskaitų skydeliu."
+      "welcomeFootnote": "Kai užsakymai pradės plaukti, šis puslapis taps GloriaFood stiliaus prietaisų skydeliu su KPI kortelėmis, tendencijų diagramomis ir Auginkite savo restoraną giluminių ataskaitų skydeliu.",
+      "allTime": "Iš viso"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nėra restorano konteksto.",

@@ -3582,7 +3582,10 @@
       "paginationLabel": "Strana {current} z {total}",
       "paginationPrevious": "Predchádzajúca",
       "paginationNext": "Nasledujúca",
-      "noRestaurantContext": "Žiadny kontext reštaurácie."
+      "noRestaurantContext": "Žiadny kontext reštaurácie.",
+      "searchPlaceholder": "Hľadať meno, e-mail, telefón…",
+      "perPage": "na stranu",
+      "colLastOrder": "Posledná objednávka"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Žiadny kontext reštaurácie.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Jedenie na mieste",
       "paginationPage": "Strana {current} z {total}",
       "paginationPrevious": "Predchádzajúca",
-      "paginationNext": "Nasledujúca"
+      "paginationNext": "Nasledujúca",
+      "searchPlaceholder": "Hľadať meno, e-mail, telefón…",
+      "perPage": "na stranu"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Žiadny kontext reštaurácie.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Otvorte stránku publikovania a získajte QR kódy + súpravu na zdieľanie na sociálnych sieťach.",
       "firstOrderPromoTitle": "Spustite promo pre prvú objednávku",
       "firstOrderPromoDesc": "Nastavte '$5 zľava na prvú objednávku' alebo kupón na bezplatné doručenie na konverziu návštevníkov.",
-      "welcomeFootnote": "Keď začnú tiecť objednávky, táto stránka sa stane prehľadovým panelom v štýle GloriaFood s kartami KPI, trendovými grafmi a panelom 'Rozvíjajte svoju reštauráciu' s hlbokými odkazmi na správy."
+      "welcomeFootnote": "Keď začnú tiecť objednávky, táto stránka sa stane prehľadovým panelom v štýle GloriaFood s kartami KPI, trendovými grafmi a panelom 'Rozvíjajte svoju reštauráciu' s hlbokými odkazmi na správy.",
+      "allTime": "Celkovo"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Žiadny kontext reštaurácie.",

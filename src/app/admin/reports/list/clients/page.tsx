@@ -7,6 +7,7 @@ import { formatRangeLabel } from "@/lib/reports/date-range";
 import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
+import { TableControls } from "@/components/admin/reports/TableControls";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 
 /**
@@ -21,7 +22,12 @@ import { ExportMenu } from "@/components/admin/reports/ExportMenu";
  * editable list we already had. This page is read-only and
  * date-scoped.
  */
-const PAGE_SIZE = 20;
+const PAGE_SIZES = [20, 50, 100];
+
+function pickSize(raw: string | string[] | undefined): number {
+  const n = Number(Array.isArray(raw) ? raw[0] : raw);
+  return PAGE_SIZES.includes(n) ? n : 20;
+}
 
 export default async function ListClientsPage({
   searchParams,
@@ -33,6 +39,8 @@ export default async function ListClientsPage({
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   const page = Math.max(1, Number(Array.isArray(sp.page) ? sp.page[0] : sp.page) || 1);
+  const size = pickSize(sp.size);
+  const q = (Array.isArray(sp.q) ? sp.q[0] : sp.q)?.trim() || "";
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
   const [__currency, __timezone] = await Promise.all([
@@ -42,6 +50,26 @@ export default async function ListClientsPage({
   const formatCurrency = (n: number) => fmtCurrency(n, __currency);
   const range = parseDateRangeInTz(sp, __timezone ?? undefined);
 
+  // Optional search → resolve matching customers FIRST (name / email / phone),
+  // then restrict the in-range groupBy to those ids. Keeps filtering server-side
+  // + indexed instead of loading the whole roster into Node.
+  let restrictIds: string[] | null = null;
+  if (q) {
+    const matches = await prisma.customer.findMany({
+      where: {
+        restaurantId,
+        OR: [
+          { name: { contains: q, mode: "insensitive" } },
+          { email: { contains: q, mode: "insensitive" } },
+          { phone: { contains: q } },
+        ],
+      },
+      select: { id: true },
+      take: 5000,
+    });
+    restrictIds = matches.map((m) => m.id);
+  }
+
   // For "customers in range" we groupBy customerId on Order within
   // the date range, then resolve names in a second query. Two
   // round-trips but each one uses an index — preferable to a
@@ -50,7 +78,10 @@ export default async function ListClientsPage({
   // in-range). Same canonical predicate as the rest of Reports.
   const groupedAll = await prisma.order.groupBy({
     by: ["customerId"],
-    where: { ...reportOrderWhere(restaurantId, range), customerId: { not: null } },
+    where: {
+      ...reportOrderWhere(restaurantId, range),
+      customerId: restrictIds ? { in: restrictIds } : { not: null },
+    },
     _count: true,
     _sum: { total: true },
   });
@@ -58,7 +89,7 @@ export default async function ListClientsPage({
   // a few hundred to a few thousand distinct customers per range).
   const grouped = groupedAll
     .sort((a, b) => (b._sum.total ?? 0) - (a._sum.total ?? 0))
-    .slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+    .slice((page - 1) * size, page * size);
 
   const customerIds = grouped.map((g) => g.customerId!).filter(Boolean);
   const customers = customerIds.length > 0
@@ -80,14 +111,15 @@ export default async function ListClientsPage({
         where: { ...REPORT_ORDER_STATUS_WHERE, restaurantId, customerId: { in: customerIds } },
         _count: true,
         _sum: { total: true },
+        _max: { createdAt: true },
       })
     : [];
   const lifetimeById = new Map(
-    lifetimeRows.map((r) => [r.customerId!, { orders: r._count, spend: r._sum.total ?? 0 }]),
+    lifetimeRows.map((r) => [r.customerId!, { orders: r._count, spend: r._sum.total ?? 0, lastOrder: r._max.createdAt }]),
   );
 
   const totalCustomers = groupedAll.length;
-  const pageCount = Math.max(1, Math.ceil(totalCustomers / PAGE_SIZE));
+  const pageCount = Math.max(1, Math.ceil(totalCustomers / size));
 
   return (
     <div>
@@ -96,7 +128,10 @@ export default async function ListClientsPage({
           <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">{t("customersOrderedDescription", { count: totalCustomers, rangeLabel: formatRangeLabel(range) })}</p>
         </div>
-        <DateRangePicker />
+        <div className="flex items-center gap-2 flex-wrap">
+          <TableControls searchPlaceholder={t("searchPlaceholder")} perPageLabel={t("perPage")} />
+          <DateRangePicker />
+        </div>
       </header>
 
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden relative">
@@ -106,6 +141,7 @@ export default async function ListClientsPage({
             <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100 bg-gray-50">
               <th className="py-2.5 px-4 font-semibold">{t("colCustomer")}</th>
               <th className="py-2.5 px-4 font-semibold">{t("colContact")}</th>
+              <th className="py-2.5 px-4 font-semibold">{t("colLastOrder")}</th>
               <th className="py-2.5 px-4 font-semibold text-right">{t("colOrdersInRange")}</th>
               <th className="py-2.5 px-4 font-semibold text-right">{t("colSpendInRange")}</th>
               <th className="py-2.5 px-4 font-semibold text-right">{t("colLifetimeOrders")}</th>
@@ -114,7 +150,7 @@ export default async function ListClientsPage({
           </thead>
           <tbody>
             {grouped.length === 0 && (
-              <tr><td colSpan={6} className="py-6 px-4 text-center text-gray-400 italic">{t("emptyState")}</td></tr>
+              <tr><td colSpan={7} className="py-6 px-4 text-center text-gray-400 italic">{t("emptyState")}</td></tr>
             )}
             {grouped.map((g) => {
               const c = byId.get(g.customerId!);
@@ -138,6 +174,7 @@ export default async function ListClientsPage({
                     {c.email && <div>{c.email}</div>}
                     {c.phone && <div>{c.phone}</div>}
                   </td>
+                  <td className="py-2.5 px-4 text-gray-600 text-xs">{formatLastOrder(lifetimeById.get(c.id)?.lastOrder)}</td>
                   <td className="py-2.5 px-4 text-right text-gray-700">{g._count.toLocaleString()}</td>
                   <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(g._sum.total ?? 0)}</td>
                   <td className="py-2.5 px-4 text-right text-gray-500">{(lifetimeById.get(c.id)?.orders ?? c.totalOrders).toLocaleString()}</td>
@@ -157,6 +194,10 @@ export default async function ListClientsPage({
       {pageCount > 1 && <Pagination current={page} total={pageCount} sp={sp} t={t} />}
     </div>
   );
+}
+
+function formatLastOrder(d: Date | null | undefined): string {
+  return d ? new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—";
 }
 
 function Pagination({ current, total, sp, t }: { current: number; total: number; sp: Record<string, string | string[] | undefined>; t: Awaited<ReturnType<typeof getTranslations>> }) {

@@ -3582,7 +3582,10 @@
       "paginationLabel": "Сторінка {current} з {total}",
       "paginationPrevious": "Попередня",
       "paginationNext": "Наступна",
-      "noRestaurantContext": "Немає контексту ресторану."
+      "noRestaurantContext": "Немає контексту ресторану.",
+      "searchPlaceholder": "Пошук за іменем, e-mail, телефоном…",
+      "perPage": "на сторінці",
+      "colLastOrder": "Останнє замовлення"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Немає контексту ресторану.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "В залі",
       "paginationPage": "Сторінка {current} з {total}",
       "paginationPrevious": "Попередня",
-      "paginationNext": "Наступна"
+      "paginationNext": "Наступна",
+      "searchPlaceholder": "Пошук за іменем, e-mail, телефоном…",
+      "perPage": "на сторінці"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Немає контексту ресторану.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Відкрийте сторінку публікації, щоб отримати QR-коди та набір для поширення в соціальних мережах.",
       "firstOrderPromoTitle": "Запустіть акцію на перше замовлення",
       "firstOrderPromoDesc": "Налаштуйте «$5 знижки на перше замовлення» або купон на безкоштовну доставку для конвертації відвідувачів.",
-      "welcomeFootnote": "Щойно почнуть надходити замовлення, ця сторінка перетвориться на панель у стилі GloriaFood з KPI-картками, трендовими графіками та панеллю «Розвивайте свій ресторан» з посиланнями на глибокі звіти."
+      "welcomeFootnote": "Щойно почнуть надходити замовлення, ця сторінка перетвориться на панель у стилі GloriaFood з KPI-картками, трендовими графіками та панеллю «Розвивайте свій ресторан» з посиланнями на глибокі звіти.",
+      "allTime": "За весь час"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Немає контексту ресторану.",

@@ -3582,7 +3582,10 @@
       "paginationLabel": "Sivu {current} / {total}",
       "paginationPrevious": "Edellinen",
       "paginationNext": "Seuraava",
-      "noRestaurantContext": "Ei ravintolaympäristöä."
+      "noRestaurantContext": "Ei ravintolaympäristöä.",
+      "searchPlaceholder": "Hae nimi, sähköposti, puhelin…",
+      "perPage": "per sivu",
+      "colLastOrder": "Viimeisin tilaus"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Ei ravintolaympäristöä.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Paikan päällä",
       "paginationPage": "Sivu {current} / {total}",
       "paginationPrevious": "Edellinen",
-      "paginationNext": "Seuraava"
+      "paginationNext": "Seuraava",
+      "searchPlaceholder": "Hae nimi, sähköposti, puhelin…",
+      "perPage": "per sivu"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Ei ravintolaympäristöä.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Avaa julkaisusivu saadaksesi QR-koodit + sosiaalisen jakamisen paketin.",
       "firstOrderPromoTitle": "Käynnistä ensimmäisen tilauksen tarjous",
       "firstOrderPromoDesc": "Aseta \"$5 alennusta ensimmäisestä tilauksesta\" tai ilmainen toimitus -kuponki konvertoidaksesi kävijöitä.",
-      "welcomeFootnote": "Kun tilaukset alkavat virrata, tästä sivusta tulee GloriaFood-tyylinen kojelauta, jossa on KPI-kortit, trendikaaviot ja syvälinkkiraporttien \"Kasvata ravintolaasi\" -paneeli."
+      "welcomeFootnote": "Kun tilaukset alkavat virrata, tästä sivusta tulee GloriaFood-tyylinen kojelauta, jossa on KPI-kortit, trendikaaviot ja syvälinkkiraporttien \"Kasvata ravintolaasi\" -paneeli.",
+      "allTime": "Kaikkiaan"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ei ravintolaympäristöä.",

@@ -3582,7 +3582,10 @@
       "paginationLabel": "Strana {current} z {total}",
       "paginationPrevious": "Předchozí",
       "paginationNext": "Další",
-      "noRestaurantContext": "Chybí kontext restaurace."
+      "noRestaurantContext": "Chybí kontext restaurace.",
+      "searchPlaceholder": "Hledat podle jména, e-mailu, telefonu…",
+      "perPage": "na stránku",
+      "colLastOrder": "Poslední objednávka"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Chybí kontext restaurace.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Stravování na místě",
       "paginationPage": "Strana {current} z {total}",
       "paginationPrevious": "Předchozí",
-      "paginationNext": "Další"
+      "paginationNext": "Další",
+      "searchPlaceholder": "Hledat podle jména, e-mailu, telefonu…",
+      "perPage": "na stránku"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Chybí kontext restaurace.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Otevřete stránku publikování pro QR kódy + sadu pro sdílení na sociálních sítích.",
       "firstOrderPromoTitle": "Spusťte akci pro první objednávku",
       "firstOrderPromoDesc": "Nastavte „$5 sleva na první objednávku\" nebo kupón na dopravu zdarma pro konverzi návštěvníků.",
-      "welcomeFootnote": "Jakmile začnou proudit objednávky, tato stránka se stane přehledem ve stylu GloriaFood s kartami KPI, grafy trendů a panelem „Rozvíjejte svou restauraci\" s přímými přehledy."
+      "welcomeFootnote": "Jakmile začnou proudit objednávky, tato stránka se stane přehledem ve stylu GloriaFood s kartami KPI, grafy trendů a panelem „Rozvíjejte svou restauraci\" s přímými přehledy.",
+      "allTime": "Celkem"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Chybí kontext restaurace.",

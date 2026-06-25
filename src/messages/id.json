@@ -3582,7 +3582,10 @@
       "paginationLabel": "Halaman {current} dari {total}",
       "paginationPrevious": "Sebelumnya",
       "paginationNext": "Berikutnya",
-      "noRestaurantContext": "Tidak ada konteks restoran."
+      "noRestaurantContext": "Tidak ada konteks restoran.",
+      "searchPlaceholder": "Cari nama, email, telepon…",
+      "perPage": "per halaman",
+      "colLastOrder": "Pesanan terakhir"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Tidak ada konteks restoran.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Makan di tempat",
       "paginationPage": "Halaman {current} dari {total}",
       "paginationPrevious": "Sebelumnya",
-      "paginationNext": "Berikutnya"
+      "paginationNext": "Berikutnya",
+      "searchPlaceholder": "Cari nama, email, telepon…",
+      "perPage": "per halaman"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Tidak ada konteks restoran.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Buka halaman penerbitan untuk mengambil kode QR + kit berbagi sosial.",
       "firstOrderPromoTitle": "Luncurkan promo pesanan pertama",
       "firstOrderPromoDesc": "Atur \"Diskon $5 untuk pesanan pertama\" atau kupon pengiriman gratis untuk mengkonversi pengunjung.",
-      "welcomeFootnote": "Setelah pesanan mulai masuk, halaman ini menjadi dasbor bergaya GloriaFood dengan kartu KPI, grafik tren, dan panel laporan tautan mendalam \"Kembangkan restoran Anda\"."
+      "welcomeFootnote": "Setelah pesanan mulai masuk, halaman ini menjadi dasbor bergaya GloriaFood dengan kartu KPI, grafik tren, dan panel laporan tautan mendalam \"Kembangkan restoran Anda\".",
+      "allTime": "Sepanjang waktu"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Tidak ada konteks restoran.",

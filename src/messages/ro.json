@@ -3582,7 +3582,10 @@
       "paginationLabel": "Pagina {current} din {total}",
       "paginationPrevious": "Anterior",
       "paginationNext": "Următor",
-      "noRestaurantContext": "Niciun context de restaurant."
+      "noRestaurantContext": "Niciun context de restaurant.",
+      "searchPlaceholder": "Caută nume, e-mail, telefon…",
+      "perPage": "pe pagină",
+      "colLastOrder": "Ultima comandă"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Niciun context de restaurant.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "La masă",
       "paginationPage": "Pagina {current} din {total}",
       "paginationPrevious": "Anterior",
-      "paginationNext": "Următor"
+      "paginationNext": "Următor",
+      "searchPlaceholder": "Caută nume, e-mail, telefon…",
+      "perPage": "pe pagină"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Niciun context de restaurant.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Deschide pagina de publicare pentru a obține coduri QR + un kit de distribuire socială.",
       "firstOrderPromoTitle": "Lansează o promoție pentru prima comandă",
       "firstOrderPromoDesc": "Configurează „$5 reducere la prima comandă” sau un cupon de livrare gratuită pentru a converti vizitatorii.",
-      "welcomeFootnote": "Odată ce încep să curgă comenzile, această pagină devine tabloul de bord în stil GloriaFood cu carduri KPI, grafice de tendințe și un panou „Fă-ți restaurantul să crească” cu rapoarte detaliate."
+      "welcomeFootnote": "Odată ce încep să curgă comenzile, această pagină devine tabloul de bord în stil GloriaFood cu carduri KPI, grafice de tendințe și un panou „Fă-ți restaurantul să crească” cu rapoarte detaliate.",
+      "allTime": "Total"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Niciun context de restaurant.",

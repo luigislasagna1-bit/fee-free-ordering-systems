@@ -3582,7 +3582,10 @@
       "paginationLabel": "עמוד {current} מתוך {total}",
       "paginationPrevious": "הקודם",
       "paginationNext": "הבא",
-      "noRestaurantContext": "אין הקשר מסעדה."
+      "noRestaurantContext": "אין הקשר מסעדה.",
+      "searchPlaceholder": "חיפוש שם, אימייל, טלפון…",
+      "perPage": "לכל עמוד",
+      "colLastOrder": "הזמנה אחרונה"
     },
     "reportOrdersList": {
       "noRestaurantContext": "אין הקשר מסעדה.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "ישיבה במקום",
       "paginationPage": "עמוד {current} מתוך {total}",
       "paginationPrevious": "הקודם",
-      "paginationNext": "הבא"
+      "paginationNext": "הבא",
+      "searchPlaceholder": "חיפוש שם, אימייל, טלפון…",
+      "perPage": "לכל עמוד"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "אין הקשר מסעדה.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "פתח את דף הפרסום כדי לקבל קודי QR + ערכת שיתוף לרשתות חברתיות.",
       "firstOrderPromoTitle": "השק מבצע להזמנה ראשונה",
       "firstOrderPromoDesc": "הגדר \"$5 הנחה בהזמנה ראשונה\" או קופון משלוח חינם כדי להמיר מבקרים.",
-      "welcomeFootnote": "ברגע שהזמנות מתחילות לזרום, דף זה הופך ללוח מחוונים בסגנון GloriaFood עם כרטיסי KPI, גרפי מגמות, ולוח \"גדל עם המסעדה שלך\" של קישורי דוחות מעמיקים."
+      "welcomeFootnote": "ברגע שהזמנות מתחילות לזרום, דף זה הופך ללוח מחוונים בסגנון GloriaFood עם כרטיסי KPI, גרפי מגמות, ולוח \"גדל עם המסעדה שלך\" של קישורי דוחות מעמיקים.",
+      "allTime": "מאז ומתמיד"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "אין הקשר מסעדה.",

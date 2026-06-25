@@ -3582,7 +3582,10 @@
       "paginationLabel": "{current}. oldal / {total}",
       "paginationPrevious": "Előző",
       "paginationNext": "Következő",
-      "noRestaurantContext": "Nincs éttermi kontextus."
+      "noRestaurantContext": "Nincs éttermi kontextus.",
+      "searchPlaceholder": "Keresés név, e-mail, telefon…",
+      "perPage": "oldalanként",
+      "colLastOrder": "Utolsó rendelés"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Nincs éttermi kontextus.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "Helyi fogyasztás",
       "paginationPage": "{current}. oldal / {total}",
       "paginationPrevious": "Előző",
-      "paginationNext": "Következő"
+      "paginationNext": "Következő",
+      "searchPlaceholder": "Keresés név, e-mail, telefon…",
+      "perPage": "oldalanként"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Nincs éttermi kontextus.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Nyissa meg a közzétételi oldalt QR-kódok + közösségi megosztási készlet megszerzéséhez.",
       "firstOrderPromoTitle": "Indítson első rendelési promóciót",
       "firstOrderPromoDesc": "Állítson be „$5 kedvezmény az első rendelésre\" vagy ingyenes szállítási kupont a látogatók konvertálásához.",
-      "welcomeFootnote": "Amint a rendelések megindulnak, ez az oldal GloriaFood-stílusú irányítópulttá válik KPI kártyákkal, trendiagramokkal és egy „Fejlessze éttermét\" részletes-hivatkozásos jelentéspanellel."
+      "welcomeFootnote": "Amint a rendelések megindulnak, ez az oldal GloriaFood-stílusú irányítópulttá válik KPI kártyákkal, trendiagramokkal és egy „Fejlessze éttermét\" részletes-hivatkozásos jelentéspanellel.",
+      "allTime": "Összesen"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nincs éttermi kontextus.",

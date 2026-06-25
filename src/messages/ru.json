@@ -3582,7 +3582,10 @@
       "paginationLabel": "Страница {current} из {total}",
       "paginationPrevious": "Назад",
       "paginationNext": "Далее",
-      "noRestaurantContext": "Нет контекста ресторана."
+      "noRestaurantContext": "Нет контекста ресторана.",
+      "searchPlaceholder": "Поиск по имени, e-mail, телефону…",
+      "perPage": "на странице",
+      "colLastOrder": "Последний заказ"
     },
     "reportOrdersList": {
       "noRestaurantContext": "Нет контекста ресторана.",
@@ -3599,7 +3602,9 @@
       "typeDineIn": "В заведении",
       "paginationPage": "Страница {current} из {total}",
       "paginationPrevious": "Назад",
-      "paginationNext": "Далее"
+      "paginationNext": "Далее",
+      "searchPlaceholder": "Поиск по имени, e-mail, телефону…",
+      "perPage": "на странице"
     },
     "reportMenuCategories": {
       "noRestaurantContext": "Нет контекста ресторана.",
@@ -3771,7 +3776,8 @@
       "shareOrderLinkDesc": "Откройте страницу публикации, чтобы получить QR-коды и набор для публикации в соцсетях.",
       "firstOrderPromoTitle": "Запустите акцию для первого заказа",
       "firstOrderPromoDesc": "Создайте «Скидка $5 на первый заказ» или купон на бесплатную доставку для привлечения клиентов.",
-      "welcomeFootnote": "После появления первых заказов эта страница станет дашбордом в стиле GloriaFood с KPI-карточками, трендовыми графиками и панелью «Развивайте ресторан» со ссылками на подробные отчёты."
+      "welcomeFootnote": "После появления первых заказов эта страница станет дашбордом в стиле GloriaFood с KPI-карточками, трендовыми графиками и панелью «Развивайте ресторан» со ссылками на подробные отчёты.",
+      "allTime": "За всё время"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Нет контекста ресторана.",
