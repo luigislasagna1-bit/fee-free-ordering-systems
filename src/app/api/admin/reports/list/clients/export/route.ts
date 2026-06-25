@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { parseDateRange, toISODate } from "@/lib/reports/date-range";
+import { toISODate } from "@/lib/reports/date-range";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
 
 /**
@@ -19,22 +21,18 @@ export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const sp: Record<string, string> = {};
   url.searchParams.forEach((v, k) => { sp[k] = v; });
-  const range = parseDateRange(sp);
   const format = pickFormat(url);
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: user.restaurantId },
-    select: { slug: true },
+    select: { slug: true, timezone: true },
   });
   if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+  const range = parseDateRangeInTz(sp, restaurant.timezone ?? undefined);
 
   const grouped = await prisma.order.groupBy({
     by: ["customerId"],
-    where: {
-      restaurantId: user.restaurantId,
-      customerId: { not: null },
-      createdAt: { gte: range.from, lte: range.to },
-    },
+    where: { ...reportOrderWhere(user.restaurantId, range), customerId: { not: null } },
     _count: true,
     _sum: { total: true },
   });
@@ -48,6 +46,21 @@ export async function GET(req: NextRequest) {
       })
     : [];
   const byId = new Map(customers.map((c) => [c.id, c]));
+
+  // Lifetime totals recomputed from real orders (canonical predicate, no date
+  // filter) — same as the page, so the CSV's lifetime columns don't drift from
+  // the denormalized Customer.totalOrders/totalSpent.
+  const lifetimeRows = customerIds.length > 0
+    ? await prisma.order.groupBy({
+        by: ["customerId"],
+        where: { ...REPORT_ORDER_STATUS_WHERE, restaurantId: user.restaurantId, customerId: { in: customerIds } },
+        _count: true,
+        _sum: { total: true },
+      })
+    : [];
+  const lifetimeById = new Map(
+    lifetimeRows.map((r) => [r.customerId!, { orders: r._count, spend: r._sum.total ?? 0 }]),
+  );
 
   const rows: (string | number | Date)[][] = [[
     "Customer", "Email", "Phone",
@@ -64,8 +77,8 @@ export async function GET(req: NextRequest) {
       c.phone ?? "",
       g._count,
       round2(g._sum.total ?? 0),
-      c.totalOrders,
-      round2(c.totalSpent),
+      lifetimeById.get(c.id)?.orders ?? c.totalOrders,
+      round2(lifetimeById.get(c.id)?.spend ?? c.totalSpent),
       c.createdAt,
     ]);
   }

@@ -3182,7 +3182,9 @@
       "dayThu": "Tor",
       "dayFri": "Fre",
       "daySat": "Lør",
-      "daySun": "Søn"
+      "daySun": "Søn",
+      "today": "I dag",
+      "yesterday": "I går"
     },
     "assignCoupon": {
       "labelDiscountType": "Rabattype",

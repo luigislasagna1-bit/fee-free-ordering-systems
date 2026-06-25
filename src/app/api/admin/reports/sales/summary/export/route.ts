@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { parseDateRange, previousPeriod, toISODate } from "@/lib/reports/date-range";
+import { previousPeriod, toISODate } from "@/lib/reports/date-range";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { reportOrderWhere } from "@/lib/reports/order-filter";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
 
 /**
@@ -18,7 +20,6 @@ export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const sp: Record<string, string> = {};
   url.searchParams.forEach((v, k) => { sp[k] = v; });
-  const range = parseDateRange(sp);
   const by: "paymentMethod" | "type" | "status" =
     sp.by === "type" || sp.by === "status" ? sp.by : "paymentMethod";
   const compare = sp.compare === "1";
@@ -26,14 +27,15 @@ export async function GET(req: NextRequest) {
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: user.restaurantId },
-    select: { slug: true },
+    select: { slug: true, timezone: true },
   });
   if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+  const range = parseDateRangeInTz(sp, restaurant.timezone ?? undefined);
 
   const [cur, previous] = await Promise.all([
     prisma.order.groupBy({
       by: [by],
-      where: { restaurantId: user.restaurantId, status: "completed", createdAt: { gte: range.from, lte: range.to } },
+      where: reportOrderWhere(user.restaurantId, range),
       _count: true,
       _sum: { total: true },
       orderBy: { _sum: { total: "desc" } },
@@ -41,11 +43,7 @@ export async function GET(req: NextRequest) {
     compare
       ? prisma.order.groupBy({
           by: [by],
-          where: {
-            restaurantId: user.restaurantId,
-            status: "completed",
-            createdAt: { gte: previousPeriod(range).from, lte: previousPeriod(range).to },
-          },
+          where: reportOrderWhere(user.restaurantId, previousPeriod(range)),
           _count: true,
           _sum: { total: true },
         })

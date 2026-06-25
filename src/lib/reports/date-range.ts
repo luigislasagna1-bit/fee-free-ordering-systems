@@ -17,7 +17,7 @@
  * will pick it up.
  */
 
-export type Preset = "last_7" | "last_14" | "last_28" | "custom";
+export type Preset = "today" | "yesterday" | "last_7" | "last_14" | "last_28" | "custom";
 
 export interface DateRange {
   from: Date;
@@ -48,6 +48,8 @@ export function parseDateRange(searchParams: Record<string, string | string[] | 
     }
   }
 
+  if (presetParam === "today") return resolvePreset("today");
+  if (presetParam === "yesterday") return resolvePreset("yesterday");
   if (presetParam === "last_14") return resolvePreset("last_14");
   if (presetParam === "last_28") return resolvePreset("last_28");
   return resolvePreset("last_7");
@@ -57,9 +59,15 @@ export function parseDateRange(searchParams: Record<string, string | string[] | 
  *  means "today and the N-1 previous days inclusive" — matches the
  *  GloriaFood semantics (Last 7 = Mon-Sun including today). */
 export function resolvePreset(preset: Exclude<Preset, "custom">): DateRange {
+  const now = new Date();
+  if (preset === "today") return { from: startOfDay(now), to: endOfDay(now), preset };
+  if (preset === "yesterday") {
+    const y = addDays(now, -1);
+    return { from: startOfDay(y), to: endOfDay(y), preset };
+  }
   const days = preset === "last_14" ? 14 : preset === "last_28" ? 28 : 7;
-  const to = endOfDay(new Date());
-  const from = startOfDay(addDays(new Date(), -(days - 1)));
+  const to = endOfDay(now);
+  const from = startOfDay(addDays(now, -(days - 1)));
   return { from, to, preset };
 }
 

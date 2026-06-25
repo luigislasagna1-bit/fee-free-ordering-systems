@@ -89,9 +89,11 @@ export function DateRangePicker() {
       {open && !showCustom && (
         <div className="absolute right-0 top-full mt-1 z-30 bg-white border border-gray-200 rounded-lg shadow-lg w-56 overflow-hidden">
           {[
-            { key: "last_7",  label: t("last7Days") },
-            { key: "last_14", label: t("last14Days") },
-            { key: "last_28", label: t("last28Days") },
+            { key: "today",     label: t("today") },
+            { key: "yesterday", label: t("yesterday") },
+            { key: "last_7",    label: t("last7Days") },
+            { key: "last_14",   label: t("last14Days") },
+            { key: "last_28",   label: t("last28Days") },
           ].map((p) => (
             <button
               key={p.key}

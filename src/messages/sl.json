@@ -3182,7 +3182,9 @@
       "dayThu": "Čet",
       "dayFri": "Pet",
       "daySat": "Sob",
-      "daySun": "Ned"
+      "daySun": "Ned",
+      "today": "Danes",
+      "yesterday": "Včeraj"
     },
     "assignCoupon": {
       "labelDiscountType": "Vrsta popusta",

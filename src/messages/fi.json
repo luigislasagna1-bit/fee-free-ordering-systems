@@ -3182,7 +3182,9 @@
       "dayThu": "To",
       "dayFri": "Pe",
       "daySat": "La",
-      "daySun": "Su"
+      "daySun": "Su",
+      "today": "Tänään",
+      "yesterday": "Eilen"
     },
     "assignCoupon": {
       "labelDiscountType": "Alennustyyppi",

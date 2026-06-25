@@ -3182,7 +3182,9 @@
       "dayThu": "N",
       "dayFri": "R",
       "daySat": "L",
-      "daySun": "P"
+      "daySun": "P",
+      "today": "Täna",
+      "yesterday": "Eile"
     },
     "assignCoupon": {
       "labelDiscountType": "Allahindluse tüüp",

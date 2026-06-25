@@ -3182,7 +3182,9 @@
       "dayThu": "Per",
       "dayFri": "Cum",
       "daySat": "Cmt",
-      "daySun": "Paz"
+      "daySun": "Paz",
+      "today": "Bugün",
+      "yesterday": "Dün"
     },
     "assignCoupon": {
       "labelDiscountType": "İndirim türü",

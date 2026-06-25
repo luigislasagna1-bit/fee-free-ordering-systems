@@ -3182,7 +3182,9 @@
       "dayThu": "Joi",
       "dayFri": "Vin",
       "daySat": "Sâm",
-      "daySun": "Dum"
+      "daySun": "Dum",
+      "today": "Astăzi",
+      "yesterday": "Ieri"
     },
     "assignCoupon": {
       "labelDiscountType": "Tip de reducere",

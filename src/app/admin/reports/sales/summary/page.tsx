@@ -1,8 +1,10 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { getRestaurantCurrency } from "@/lib/restaurant-currency";
-import { parseDateRange, previousPeriod, formatRangeLabel } from "@/lib/reports/date-range";
+import { getRestaurantCurrency, getRestaurantTimezone } from "@/lib/restaurant-currency";
+import { previousPeriod, formatRangeLabel } from "@/lib/reports/date-range";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { reportOrderWhere } from "@/lib/reports/order-filter";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import { getTranslations } from "next-intl/server";
@@ -25,21 +27,25 @@ export default async function SalesSummaryPage({
   const sp = await searchParams;
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  const range = parseDateRange(sp);
   const by = pickBy(sp.by);
   const compare = sp.compare === "1";
 
   const t = await getTranslations("admin.reportSalesSummary");
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
-  const __currency = await getRestaurantCurrency(restaurantId);
+  const [__currency, __timezone] = await Promise.all([
+    getRestaurantCurrency(restaurantId),
+    getRestaurantTimezone(restaurantId),
+  ]);
   const formatCurrency = (n: number) => fmtCurrency(n, __currency);
+  const range = parseDateRangeInTz(sp, __timezone ?? undefined);
 
   // Group by the chosen dimension. `prisma.order.groupBy` does the work
-  // server-side — no row-level loop on Node.
+  // server-side — no row-level loop on Node. Uses the shared canonical
+  // predicate so totals reconcile with the Dashboard + End-of-Day report.
   const cur = await prisma.order.groupBy({
     by: [by],
-    where: { restaurantId, status: "completed", createdAt: { gte: range.from, lte: range.to } },
+    where: reportOrderWhere(restaurantId, range),
     _count: true,
     _sum: { total: true },
     orderBy: { _sum: { total: "desc" } },
@@ -49,7 +55,7 @@ export default async function SalesSummaryPage({
   const previous = compare
     ? await prisma.order.groupBy({
         by: [by],
-        where: { restaurantId, status: "completed", createdAt: { gte: prev.from, lte: prev.to } },
+        where: reportOrderWhere(restaurantId, prev),
         _count: true,
         _sum: { total: true },
       })

@@ -3182,7 +3182,9 @@
       "dayThu": "الخميس",
       "dayFri": "الجمعة",
       "daySat": "السبت",
-      "daySun": "الأحد"
+      "daySun": "الأحد",
+      "today": "اليوم",
+      "yesterday": "أمس"
     },
     "assignCoupon": {
       "labelDiscountType": "نوع الخصم",

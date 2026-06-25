@@ -3182,7 +3182,9 @@
       "dayThu": "חמישי",
       "dayFri": "שישי",
       "daySat": "שבת",
-      "daySun": "ראשון"
+      "daySun": "ראשון",
+      "today": "היום",
+      "yesterday": "אתמול"
     },
     "assignCoupon": {
       "labelDiscountType": "סוג הנחה",

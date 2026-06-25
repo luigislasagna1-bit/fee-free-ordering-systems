@@ -2,8 +2,10 @@ import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { getRestaurantCurrency } from "@/lib/restaurant-currency";
-import { parseDateRange, formatRangeLabel } from "@/lib/reports/date-range";
+import { getRestaurantCurrency, getRestaurantTimezone } from "@/lib/restaurant-currency";
+import { formatRangeLabel } from "@/lib/reports/date-range";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 
@@ -30,26 +32,25 @@ export default async function ListClientsPage({
   const sp = await searchParams;
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  const range = parseDateRange(sp);
   const page = Math.max(1, Number(Array.isArray(sp.page) ? sp.page[0] : sp.page) || 1);
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
-  const __currency = await getRestaurantCurrency(restaurantId);
+  const [__currency, __timezone] = await Promise.all([
+    getRestaurantCurrency(restaurantId),
+    getRestaurantTimezone(restaurantId),
+  ]);
   const formatCurrency = (n: number) => fmtCurrency(n, __currency);
+  const range = parseDateRangeInTz(sp, __timezone ?? undefined);
 
   // For "customers in range" we groupBy customerId on Order within
   // the date range, then resolve names in a second query. Two
   // round-trips but each one uses an index — preferable to a
   // findMany on Customer with a relation filter (which would scan
   // every Customer for the restaurant even if they didn't order
-  // in-range).
+  // in-range). Same canonical predicate as the rest of Reports.
   const groupedAll = await prisma.order.groupBy({
     by: ["customerId"],
-    where: {
-      restaurantId,
-      createdAt: { gte: range.from, lte: range.to },
-      customerId: { not: null },
-    },
+    where: { ...reportOrderWhere(restaurantId, range), customerId: { not: null } },
     _count: true,
     _sum: { total: true },
   });
@@ -67,6 +68,23 @@ export default async function ListClientsPage({
       })
     : [];
   const byId = new Map(customers.map((c) => [c.id, c]));
+
+  // LIFETIME totals — recompute from real orders (canonical predicate, no date
+  // filter) instead of trusting the denormalized Customer.totalOrders/totalSpent
+  // columns (nothing keeps them in sync → they drift). Bounded to this page's
+  // ≤20 customers, indexed on (restaurantId, customerId). Fixes the in-range vs
+  // lifetime mismatch owners would otherwise see.
+  const lifetimeRows = customerIds.length > 0
+    ? await prisma.order.groupBy({
+        by: ["customerId"],
+        where: { ...REPORT_ORDER_STATUS_WHERE, restaurantId, customerId: { in: customerIds } },
+        _count: true,
+        _sum: { total: true },
+      })
+    : [];
+  const lifetimeById = new Map(
+    lifetimeRows.map((r) => [r.customerId!, { orders: r._count, spend: r._sum.total ?? 0 }]),
+  );
 
   const totalCustomers = groupedAll.length;
   const pageCount = Math.max(1, Math.ceil(totalCustomers / PAGE_SIZE));
@@ -122,8 +140,8 @@ export default async function ListClientsPage({
                   </td>
                   <td className="py-2.5 px-4 text-right text-gray-700">{g._count.toLocaleString()}</td>
                   <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(g._sum.total ?? 0)}</td>
-                  <td className="py-2.5 px-4 text-right text-gray-500">{c.totalOrders.toLocaleString()}</td>
-                  <td className="py-2.5 px-4 text-right text-gray-700">{formatCurrency(c.totalSpent)}</td>
+                  <td className="py-2.5 px-4 text-right text-gray-500">{(lifetimeById.get(c.id)?.orders ?? c.totalOrders).toLocaleString()}</td>
+                  <td className="py-2.5 px-4 text-right text-gray-700">{formatCurrency(lifetimeById.get(c.id)?.spend ?? c.totalSpent)}</td>
                 </tr>
               );
             })}

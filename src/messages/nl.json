@@ -3182,7 +3182,9 @@
       "dayThu": "Do",
       "dayFri": "Vr",
       "daySat": "Za",
-      "daySun": "Zo"
+      "daySun": "Zo",
+      "today": "Vandaag",
+      "yesterday": "Gisteren"
     },
     "assignCoupon": {
       "labelDiscountType": "Kortingstype",

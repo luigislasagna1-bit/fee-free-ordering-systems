@@ -3182,7 +3182,9 @@
       "dayThu": "周四",
       "dayFri": "周五",
       "daySat": "周六",
-      "daySun": "周日"
+      "daySun": "周日",
+      "today": "今天",
+      "yesterday": "昨天"
     },
     "assignCoupon": {
       "labelDiscountType": "折扣类型",

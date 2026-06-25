@@ -3182,7 +3182,9 @@
       "dayThu": "Jeu",
       "dayFri": "Ven",
       "daySat": "Sam",
-      "daySun": "Dim"
+      "daySun": "Dim",
+      "today": "Aujourd'hui",
+      "yesterday": "Hier"
     },
     "assignCoupon": {
       "labelDiscountType": "Type de réduction",

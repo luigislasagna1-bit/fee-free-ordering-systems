@@ -3182,7 +3182,9 @@
       "dayThu": "Dj",
       "dayFri": "Dv",
       "daySat": "Ds",
-      "daySun": "Dg"
+      "daySun": "Dg",
+      "today": "Avui",
+      "yesterday": "Ahir"
     },
     "assignCoupon": {
       "labelDiscountType": "Tipus de descompte",

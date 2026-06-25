@@ -3572,7 +3572,9 @@
       "dayThu": "गुरु",
       "dayFri": "शुक्र",
       "daySat": "शनि",
-      "daySun": "रवि"
+      "daySun": "रवि",
+      "today": "आज",
+      "yesterday": "कल"
     },
     "assignCoupon": {
       "labelDiscountType": "छूट का प्रकार",

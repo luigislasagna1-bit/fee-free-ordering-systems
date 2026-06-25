@@ -3182,7 +3182,9 @@
       "dayThu": "Чт",
       "dayFri": "Пт",
       "daySat": "Сб",
-      "daySun": "Вс"
+      "daySun": "Вс",
+      "today": "Сегодня",
+      "yesterday": "Вчера"
     },
     "assignCoupon": {
       "labelDiscountType": "Тип скидки",

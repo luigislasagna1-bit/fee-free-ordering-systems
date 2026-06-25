@@ -3182,7 +3182,9 @@
       "dayThu": "พฤ.",
       "dayFri": "ศ.",
       "daySat": "ส.",
-      "daySun": "อา."
+      "daySun": "อา.",
+      "today": "วันนี้",
+      "yesterday": "เมื่อวาน"
     },
     "assignCoupon": {
       "labelDiscountType": "ประเภทส่วนลด",

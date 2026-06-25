@@ -3182,7 +3182,9 @@
       "dayThu": "Kt",
       "dayFri": "Pn",
       "daySat": "Šeš",
-      "daySun": "Sek"
+      "daySun": "Sek",
+      "today": "Šiandien",
+      "yesterday": "Vakar"
     },
     "assignCoupon": {
       "labelDiscountType": "Nuolaidos tipas",

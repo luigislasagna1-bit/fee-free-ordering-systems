@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { parseDateRange, previousPeriod, eachDay, toISODate, formatChartDate } from "@/lib/reports/date-range";
+import { previousPeriod, eachDay, toISODate, formatChartDate } from "@/lib/reports/date-range";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { reportOrderWhere } from "@/lib/reports/order-filter";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
 
 /**
@@ -28,29 +30,25 @@ export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const sp: Record<string, string> = {};
   url.searchParams.forEach((v, k) => { sp[k] = v; });
-  const range = parseDateRange(sp);
   const metric = sp.metric === "orders" || sp.metric === "avg" ? sp.metric : "revenue";
   const compare = sp.compare === "1";
   const format = pickFormat(url);
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: user.restaurantId },
-    select: { slug: true },
+    select: { slug: true, timezone: true },
   });
   if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+  const range = parseDateRangeInTz(sp, restaurant.timezone ?? undefined);
 
   const [current, previous] = await Promise.all([
     prisma.order.findMany({
-      where: { restaurantId: user.restaurantId, status: "completed", createdAt: { gte: range.from, lte: range.to } },
+      where: reportOrderWhere(user.restaurantId, range),
       select: { total: true, createdAt: true },
     }),
     compare
       ? prisma.order.findMany({
-          where: {
-            restaurantId: user.restaurantId,
-            status: "completed",
-            createdAt: { gte: previousPeriod(range).from, lte: previousPeriod(range).to },
-          },
+          where: reportOrderWhere(user.restaurantId, previousPeriod(range)),
           select: { total: true, createdAt: true },
         })
       : [],

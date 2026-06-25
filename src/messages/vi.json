@@ -3182,7 +3182,9 @@
       "dayThu": "T5",
       "dayFri": "T6",
       "daySat": "T7",
-      "daySun": "CN"
+      "daySun": "CN",
+      "today": "Hôm nay",
+      "yesterday": "Hôm qua"
     },
     "assignCoupon": {
       "labelDiscountType": "Loại giảm giá",

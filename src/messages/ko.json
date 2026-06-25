@@ -3182,7 +3182,9 @@
       "dayThu": "목",
       "dayFri": "금",
       "daySat": "토",
-      "daySun": "일"
+      "daySun": "일",
+      "today": "오늘",
+      "yesterday": "어제"
     },
     "assignCoupon": {
       "labelDiscountType": "할인 유형",

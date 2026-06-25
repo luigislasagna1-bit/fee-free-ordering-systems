@@ -3182,7 +3182,9 @@
       "dayThu": "Πέμ",
       "dayFri": "Παρ",
       "daySat": "Σάβ",
-      "daySun": "Κυρ"
+      "daySun": "Κυρ",
+      "today": "Σήμερα",
+      "yesterday": "Χθες"
     },
     "assignCoupon": {
       "labelDiscountType": "Τύπος έκπτωσης",

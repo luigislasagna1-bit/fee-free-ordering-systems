@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { parseDateRange, toISODate } from "@/lib/reports/date-range";
+import { toISODate } from "@/lib/reports/date-range";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { reportOrderWhere } from "@/lib/reports/order-filter";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
 
 /**
@@ -22,17 +24,17 @@ export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const sp: Record<string, string> = {};
   url.searchParams.forEach((v, k) => { sp[k] = v; });
-  const range = parseDateRange(sp);
   const format = pickFormat(url);
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: user.restaurantId },
-    select: { slug: true },
+    select: { slug: true, timezone: true },
   });
   if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+  const range = parseDateRangeInTz(sp, restaurant.timezone ?? undefined);
 
   const orders = await prisma.order.findMany({
-    where: { restaurantId: user.restaurantId, createdAt: { gte: range.from, lte: range.to } },
+    where: reportOrderWhere(user.restaurantId, range),
     select: {
       orderNumber: true,
       createdAt: true,

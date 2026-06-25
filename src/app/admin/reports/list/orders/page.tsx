@@ -1,8 +1,10 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { getRestaurantCurrency } from "@/lib/restaurant-currency";
-import { parseDateRange, formatRangeLabel } from "@/lib/reports/date-range";
+import { getRestaurantCurrency, getRestaurantTimezone } from "@/lib/restaurant-currency";
+import { formatRangeLabel } from "@/lib/reports/date-range";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { reportOrderWhere } from "@/lib/reports/order-filter";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import Link from "next/link";
@@ -30,16 +32,20 @@ export default async function ListOrdersPage({
   const t = await getTranslations("admin.reportOrdersList");
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  const range = parseDateRange(sp);
   const page = Math.max(1, Number(Array.isArray(sp.page) ? sp.page[0] : sp.page) || 1);
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
-  const __currency = await getRestaurantCurrency(restaurantId);
+  const [__currency, __timezone] = await Promise.all([
+    getRestaurantCurrency(restaurantId),
+    getRestaurantTimezone(restaurantId),
+  ]);
   const formatCurrency = (n: number) => fmtCurrency(n, __currency);
+  const range = parseDateRangeInTz(sp, __timezone ?? undefined);
 
-  // Run count + page query in parallel. count is cheap (uses the
-  // composite index) so we get the total in the same round-trip.
-  const where = { restaurantId, createdAt: { gte: range.from, lte: range.to } };
+  // Run count + page query in parallel. count is cheap (uses the composite
+  // index). Same canonical predicate as the rest of Reports so the count
+  // matches the Dashboard (excludes rejected/cancelled + TEST orders).
+  const where = reportOrderWhere(restaurantId, range);
   const [total, orders] = await Promise.all([
     prisma.order.count({ where }),
     prisma.order.findMany({

@@ -3182,7 +3182,9 @@
       "dayThu": "Cs",
       "dayFri": "P",
       "daySat": "Szo",
-      "daySun": "V"
+      "daySun": "V",
+      "today": "Ma",
+      "yesterday": "Tegnap"
     },
     "assignCoupon": {
       "labelDiscountType": "Kedvezmény típusa",

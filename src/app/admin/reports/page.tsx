@@ -2,11 +2,14 @@ import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { getRestaurantCurrency } from "@/lib/restaurant-currency";
+import { getRestaurantCurrency, getRestaurantTimezone } from "@/lib/restaurant-currency";
 import { isBrandParent } from "@/lib/brand";
 import { loadBrandReports } from "@/lib/brand-reports";
 import { BrandReports } from "./BrandReports";
-import { parseDateRange, previousPeriod, eachDay, formatChartDate, formatRangeLabel } from "@/lib/reports/date-range";
+import { parseDateRange, previousPeriod, formatChartDate, formatRangeLabel, toISODate } from "@/lib/reports/date-range";
+import { parseDateRangeInTz, eachDayKeyInTz } from "@/lib/reports/date-range-tz";
+import { reportOrderWhere } from "@/lib/reports/order-filter";
+import { dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { TrendingUp, TrendingDown, DollarSign, ShoppingBag, Users, Receipt, ArrowRight, MousePointerClick, Sparkles, UserPlus } from "lucide-react";
 import Link from "next/link";
@@ -47,13 +50,13 @@ export default async function ReportsDashboardPage({
   const sp = await searchParams;
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  const range = parseDateRange(sp);
 
   // Brand parents see the chain-wide aggregate (unchanged behavior).
   // We pass the resolved range so the brand-level report respects the
   // date picker too — previously hard-coded to 30 days.
   if (restaurantId && (await isBrandParent(restaurantId))) {
-    const days = Math.round((range.to.getTime() - range.from.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+    const brandRange = parseDateRange(sp);
+    const days = Math.round((brandRange.to.getTime() - brandRange.from.getTime()) / (1000 * 60 * 60 * 24)) + 1;
     const payload = await loadBrandReports(restaurantId, days);
     if (payload) {
       return (
@@ -73,36 +76,34 @@ export default async function ReportsDashboardPage({
       </div>
     );
   }
-  const __currency = await getRestaurantCurrency(restaurantId);
+  const [__currency, __timezone] = await Promise.all([
+    getRestaurantCurrency(restaurantId),
+    getRestaurantTimezone(restaurantId),
+  ]);
   const formatCurrency = (n: number) => fmtCurrency(n, __currency);
 
+  // Resolve the date range in the RESTAURANT's timezone so "today" / "Last 7
+  // days" matches the kitchen + the End-of-Day report (not the Vercel UTC day).
+  const range = parseDateRangeInTz(sp, __timezone ?? undefined);
   const prev = previousPeriod(range);
 
   // Run all 8 aggregate queries in parallel. They all hit the same two
   // composite indexes — Postgres serves them concurrently with no lock
   // contention. Worst-case latency is ~50ms even at 100k orders.
   const [
-    curRevenue, curOrders, curCompletedCount, curCustomers,
-    prevRevenue, prevOrders, prevCompletedCount, prevCustomers,
+    curRevenue, curOrders, curCustomers,
+    prevRevenue, prevOrders, prevCustomers,
     topItems, typeBreakdown,
   ] = await Promise.all([
-    sumRevenue(restaurantId, range.from, range.to),
-    countOrders(restaurantId, range.from, range.to),
-    countCompleted(restaurantId, range.from, range.to),
-    countDistinctCustomers(restaurantId, range.from, range.to),
-    sumRevenue(restaurantId, prev.from, prev.to),
-    countOrders(restaurantId, prev.from, prev.to),
-    countCompleted(restaurantId, prev.from, prev.to),
-    countDistinctCustomers(restaurantId, prev.from, prev.to),
+    sumRevenue(restaurantId, range),
+    countReportOrders(restaurantId, range),
+    countDistinctCustomers(restaurantId, range),
+    sumRevenue(restaurantId, prev),
+    countReportOrders(restaurantId, prev),
+    countDistinctCustomers(restaurantId, prev),
     prisma.orderItem.groupBy({
       by: ["name"],
-      where: {
-        order: {
-          restaurantId,
-          status: "completed",
-          createdAt: { gte: range.from, lte: range.to },
-        },
-      },
+      where: { order: reportOrderWhere(restaurantId, range) },
       _count: true,
       _sum: { subtotal: true },
       orderBy: { _count: { name: "desc" } },
@@ -110,17 +111,16 @@ export default async function ReportsDashboardPage({
     }),
     prisma.order.groupBy({
       by: ["type"],
-      where: {
-        restaurantId,
-        status: "completed",
-        createdAt: { gte: range.from, lte: range.to },
-      },
+      where: reportOrderWhere(restaurantId, range),
       _count: true,
     }),
   ]);
 
-  const avgOrder = curCompletedCount > 0 ? curRevenue / curCompletedCount : 0;
-  const prevAvgOrder = prevCompletedCount > 0 ? prevRevenue / prevCompletedCount : 0;
+  // One consistent "what counts" rule (reportOrderWhere) → "Orders" and "Avg
+  // order" now describe the SAME population. Before, Orders counted every
+  // status while Avg divided by completed-only, so they never reconciled.
+  const avgOrder = curOrders > 0 ? curRevenue / curOrders : 0;
+  const prevAvgOrder = prevOrders > 0 ? prevRevenue / prevOrders : 0;
 
   // Build the daily revenue chart. Re-query with a `groupBy(createdAt::date)`
   // would be cleanest but Prisma's groupBy doesn't accept raw date casts —
@@ -128,27 +128,25 @@ export default async function ReportsDashboardPage({
   // range and bucket in JS. Capped at the range length × max(1000/day) by
   // the date filter, so safe.
   const dailyOrders = await prisma.order.findMany({
-    where: {
-      restaurantId,
-      status: "completed",
-      createdAt: { gte: range.from, lte: range.to },
-    },
+    where: reportOrderWhere(restaurantId, range),
     select: { total: true, createdAt: true },
   });
+  // Bucket by the restaurant-LOCAL calendar day so the chart lines up with the
+  // tz-aware range (a 9pm-PST order counts on the PST day, not UTC tomorrow).
+  const dayKey = (d: Date) => (__timezone ? dateKeyInTimezone(d, __timezone) : toISODate(d));
   const buckets = new Map<string, { revenue: number; count: number }>();
-  for (const d of eachDay(range)) {
-    buckets.set(d.toDateString(), { revenue: 0, count: 0 });
+  for (const key of eachDayKeyInTz(range, __timezone ?? undefined)) {
+    buckets.set(key, { revenue: 0, count: 0 });
   }
   for (const o of dailyOrders) {
-    const key = new Date(o.createdAt).toDateString();
-    const b = buckets.get(key);
+    const b = buckets.get(dayKey(new Date(o.createdAt)));
     if (b) {
       b.revenue += o.total;
       b.count += 1;
     }
   }
   const days = Array.from(buckets.entries()).map(([key, b]) => ({
-    date: new Date(key),
+    date: new Date(`${key}T12:00:00`), // noon-local anchor → correct weekday label
     revenue: b.revenue,
     count: b.count,
   }));
@@ -206,8 +204,8 @@ export default async function ReportsDashboardPage({
         />
         <KpiCard
           label={t("kpiCompletedOrders")}
-          value={curCompletedCount.toLocaleString()}
-          deltaPct={pctChange(curCompletedCount, prevCompletedCount)}
+          value={curOrders.toLocaleString()}
+          deltaPct={pctChange(curOrders, prevOrders)}
           icon={ShoppingBag}
           accent="blue"
           vsPrevLabel={t("vsPrev")}
@@ -530,38 +528,26 @@ function FirstOrderWelcome({
 // All four hit the existing (restaurantId, status, createdAt) composite
 // index added in this change set.
 
-async function sumRevenue(restaurantId: string, from: Date, to: Date): Promise<number> {
+async function sumRevenue(restaurantId: string, range: { from: Date; to: Date }): Promise<number> {
   const r = await prisma.order.aggregate({
-    where: { restaurantId, status: "completed", createdAt: { gte: from, lte: to } },
+    where: reportOrderWhere(restaurantId, range),
     _sum: { total: true },
   });
   return r._sum.total ?? 0;
 }
 
-async function countOrders(restaurantId: string, from: Date, to: Date): Promise<number> {
-  return prisma.order.count({
-    where: { restaurantId, createdAt: { gte: from, lte: to } },
-  });
-}
-
-async function countCompleted(restaurantId: string, from: Date, to: Date): Promise<number> {
-  return prisma.order.count({
-    where: { restaurantId, status: "completed", createdAt: { gte: from, lte: to } },
-  });
+async function countReportOrders(restaurantId: string, range: { from: Date; to: Date }): Promise<number> {
+  return prisma.order.count({ where: reportOrderWhere(restaurantId, range) });
 }
 
 /** Distinct customer count for a window. Uses a raw groupBy on
  *  `customerId` (excluding null guest orders). We could include guests
  *  by hashing on email/phone but that adds noise — for the dashboard
  *  headline metric, "customers we know" is the more useful number. */
-async function countDistinctCustomers(restaurantId: string, from: Date, to: Date): Promise<number> {
+async function countDistinctCustomers(restaurantId: string, range: { from: Date; to: Date }): Promise<number> {
   const rows = await prisma.order.groupBy({
     by: ["customerId"],
-    where: {
-      restaurantId,
-      createdAt: { gte: from, lte: to },
-      customerId: { not: null },
-    },
+    where: { ...reportOrderWhere(restaurantId, range), customerId: { not: null } },
   });
   return rows.length;
 }

@@ -1,8 +1,10 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { getRestaurantCurrency } from "@/lib/restaurant-currency";
-import { parseDateRange, previousPeriod, eachDay, formatChartDate, formatRangeLabel } from "@/lib/reports/date-range";
+import { getRestaurantCurrency, getRestaurantTimezone } from "@/lib/restaurant-currency";
+import { previousPeriod, eachDay, formatChartDate, formatRangeLabel } from "@/lib/reports/date-range";
+import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { reportOrderWhere } from "@/lib/reports/order-filter";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ChartTableToggle } from "@/components/admin/reports/ChartTableToggle";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
@@ -31,7 +33,6 @@ export default async function SalesTrendPage({
   const sp = await searchParams;
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  const range = parseDateRange(sp);
   const view = sp.view === "table" ? "table" : "chart";
   const metric = pickMetric(sp.metric);
   const compare = sp.compare === "1";
@@ -39,17 +40,18 @@ export default async function SalesTrendPage({
   const t = await getTranslations("admin.reportSalesTrend");
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
-  const __currency = await getRestaurantCurrency(restaurantId);
+  const [__currency, __timezone] = await Promise.all([
+    getRestaurantCurrency(restaurantId),
+    getRestaurantTimezone(restaurantId),
+  ]);
   const formatCurrency = (n: number) => fmtCurrency(n, __currency);
+  const range = parseDateRangeInTz(sp, __timezone ?? undefined);
 
-  // Fetch the current-period daily orders. Same column-explicit select
-  // pattern as Dashboard (avoids pulling new schema columns pre-push).
+  // Fetch the current-period daily orders via the shared canonical predicate
+  // (excludes rejected/cancelled + TEST orders) so the trend total reconciles
+  // with the Dashboard + Summary.
   const currentOrders = await prisma.order.findMany({
-    where: {
-      restaurantId,
-      status: "completed",
-      createdAt: { gte: range.from, lte: range.to },
-    },
+    where: reportOrderWhere(restaurantId, range),
     select: { total: true, createdAt: true },
   });
 
@@ -58,11 +60,7 @@ export default async function SalesTrendPage({
   const prev = previousPeriod(range);
   const previousOrders = compare
     ? await prisma.order.findMany({
-        where: {
-          restaurantId,
-          status: "completed",
-          createdAt: { gte: prev.from, lte: prev.to },
-        },
+        where: reportOrderWhere(restaurantId, prev),
         select: { total: true, createdAt: true },
       })
     : [];

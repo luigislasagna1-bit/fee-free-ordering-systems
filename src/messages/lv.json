@@ -3182,7 +3182,9 @@
       "dayThu": "C",
       "dayFri": "Pk",
       "daySat": "S",
-      "daySun": "Sv"
+      "daySun": "Sv",
+      "today": "Šodien",
+      "yesterday": "Vakar"
     },
     "assignCoupon": {
       "labelDiscountType": "Atlaides veids",

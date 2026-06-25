@@ -3182,7 +3182,9 @@
       "dayThu": "Kam",
       "dayFri": "Jum",
       "daySat": "Sab",
-      "daySun": "Min"
+      "daySun": "Min",
+      "today": "Hari ini",
+      "yesterday": "Kemarin"
     },
     "assignCoupon": {
       "labelDiscountType": "Jenis diskon",
