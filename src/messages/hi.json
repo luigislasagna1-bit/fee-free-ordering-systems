@@ -4423,6 +4423,13 @@
       "usesMany": "अधिकतम {count} बार इस्तेमाल किया जा सकता है",
       "redeemHint": "चेकआउट पर कोड दर्ज करें, या इसे अपने खाता डैशबोर्ड में देखें — यह सिर्फ़ आपके खाते पर लागू होता है।",
       "cta": "अभी ऑर्डर करें"
+    },
+    "orderAccepted": {
+      "badge": "ऑर्डर की पुष्टि हो गई",
+      "subjectDelivery": "डिलीवरी ऑर्डर #{orderNumber} की पुष्टि हो गई — {restaurant}",
+      "subjectPickup": "पिकअप ऑर्डर #{orderNumber} की पुष्टि हो गई — {restaurant}",
+      "subjectDineIn": "डाइन-इन ऑर्डर #{orderNumber} की पुष्टि हो गई — {restaurant}",
+      "subjectScheduled": "शेड्यूल किए गए ऑर्डर #{orderNumber} की पुष्टि हो गई — {restaurant}"
     }
   },
   "marketing": {

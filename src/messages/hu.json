@@ -4423,6 +4423,13 @@
       "usesMany": "Legfeljebb {count} alkalommal használható fel",
       "redeemHint": "Adja meg a kódot a fizetésnél, vagy megtalálja a fiókja áttekintő oldalán — a kupon kizárólag az Ön fiókjára érvényes.",
       "cta": "Rendeljen most"
+    },
+    "orderAccepted": {
+      "badge": "Rendelés megerősítve",
+      "subjectDelivery": "Kiszállítási rendelés #{orderNumber} megerősítve — {restaurant}",
+      "subjectPickup": "Átvételi rendelés #{orderNumber} megerősítve — {restaurant}",
+      "subjectDineIn": "Helyben fogyasztási rendelés #{orderNumber} megerősítve — {restaurant}",
+      "subjectScheduled": "Időzített rendelés #{orderNumber} megerősítve — {restaurant}"
     }
   },
   "marketing": {

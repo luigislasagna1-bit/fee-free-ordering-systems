@@ -4423,6 +4423,13 @@
       "usesMany": "En fazla {count} kez kullanılabilir",
       "redeemHint": "Kodu ödeme sırasında girin veya hesap panelinizde bulun — yalnızca sizin hesabınız için geçerlidir.",
       "cta": "Şimdi sipariş ver"
+    },
+    "orderAccepted": {
+      "badge": "Sipariş onaylandı",
+      "subjectDelivery": "Teslimat siparişi #{orderNumber} onaylandı — {restaurant}",
+      "subjectPickup": "Gel-al siparişi #{orderNumber} onaylandı — {restaurant}",
+      "subjectDineIn": "Restoranda yeme siparişi #{orderNumber} onaylandı — {restaurant}",
+      "subjectScheduled": "Zamanlanmış sipariş #{orderNumber} onaylandı — {restaurant}"
     }
   },
   "marketing": {

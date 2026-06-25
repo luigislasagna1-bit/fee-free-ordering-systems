@@ -4423,6 +4423,13 @@
       "usesMany": "Μπορεί να χρησιμοποιηθεί έως {count} φορές",
       "redeemHint": "Εισαγάγετε τον κωδικό κατά την ολοκλήρωση της παραγγελίας ή βρείτε τον στον πίνακα του λογαριασμού σας — ισχύει μόνο για τον δικό σας λογαριασμό.",
       "cta": "Παραγγείλετε τώρα"
+    },
+    "orderAccepted": {
+      "badge": "Η παραγγελία επιβεβαιώθηκε",
+      "subjectDelivery": "Η παραγγελία παράδοσης #{orderNumber} επιβεβαιώθηκε — {restaurant}",
+      "subjectPickup": "Η παραγγελία παραλαβής #{orderNumber} επιβεβαιώθηκε — {restaurant}",
+      "subjectDineIn": "Η παραγγελία στο κατάστημα #{orderNumber} επιβεβαιώθηκε — {restaurant}",
+      "subjectScheduled": "Η προγραμματισμένη παραγγελία #{orderNumber} επιβεβαιώθηκε — {restaurant}"
     }
   },
   "marketing": {

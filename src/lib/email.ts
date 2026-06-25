@@ -496,6 +496,73 @@ export async function sendNewOrderNotificationEmail(params: {
   return send({ to: params.to, subject, html });
 }
 
+/**
+ * Staff email when an order is ACCEPTED/CONFIRMED by the restaurant — distinct
+ * from the new-order placement ping (sendNewOrderNotificationEmail). Each order
+ * type gets its own subject ("Pickup order #X confirmed") plus a localized
+ * "Order confirmed" headline, so staff can tell a confirmation apart from a
+ * brand-new order at a glance (the bug: all 5 order toggles used to send the
+ * identical "New order received" email). Minimal body (no itemization) — it's a
+ * confirmation receipt, not the kitchen ticket.
+ */
+export async function sendOrderAcceptedNotificationEmail(params: {
+  to: string;
+  restaurantName: string;
+  orderNumber: string;
+  customerName: string;
+  total: number;
+  dashboardUrl: string;
+  acceptedType: "delivery" | "pickup" | "dineIn" | "scheduled";
+  reservation?: { partySize: number; date: string; time: string } | null;
+  hoursFormat?: "12h" | "24h";
+  locale?: string;
+  currency?: string;
+}) {
+  const t = await getDict(params.locale);
+  const subjectKey = (
+    {
+      delivery: "email.orderAccepted.subjectDelivery",
+      pickup: "email.orderAccepted.subjectPickup",
+      dineIn: "email.orderAccepted.subjectDineIn",
+      scheduled: "email.orderAccepted.subjectScheduled",
+    } as const
+  )[params.acceptedType];
+  const subject = t(subjectKey, { orderNumber: params.orderNumber, restaurant: params.restaurantName });
+  // Map the accepted-event type to the template's order-type badge. Scheduled
+  // orders can be any underlying type, so they show no type badge (the subject
+  // already says "Scheduled").
+  const badgeType =
+    params.acceptedType === "dineIn" ? "dine_in"
+    : params.acceptedType === "scheduled" ? undefined
+    : params.acceptedType;
+  const resv = params.reservation ?? null;
+  const reservationLabel = resv
+    ? (() => {
+        const d = new Date(`${resv.date}T${resv.time}:00`);
+        const datePart = Number.isFinite(d.getTime())
+          ? d.toLocaleDateString(params.locale || undefined, { weekday: "long", month: "short", day: "numeric" })
+          : resv.date;
+        return `${datePart} ${formatTime(resv.time, params.hoursFormat ?? "24h")}`;
+      })()
+    : null;
+  const html = await renderEmail(
+    KitchenNotification({
+      restaurantName: params.restaurantName,
+      orderNumber: params.orderNumber,
+      customerName: params.customerName,
+      orderType: badgeType,
+      reservationPartySize: resv?.partySize ?? null,
+      reservationLabel,
+      total: params.total,
+      dashboardUrl: params.dashboardUrl,
+      imprint: currentImprint(),
+      currency: params.currency,
+      headline: t("email.orderAccepted.badge"),
+    })
+  );
+  return send({ to: params.to, subject, html });
+}
+
 export async function sendOrderStatusUpdateEmail(params: {
   to: string;
   customerName: string;

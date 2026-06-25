@@ -4423,6 +4423,13 @@
       "usesMany": "ใช้ได้สูงสุด {count} ครั้ง",
       "redeemHint": "กรอกโค้ดตอนชำระเงิน หรือดูได้ในหน้าบัญชีของคุณ — ใช้ได้กับบัญชีของคุณเท่านั้น",
       "cta": "สั่งเลย"
+    },
+    "orderAccepted": {
+      "badge": "ยืนยันคำสั่งซื้อแล้ว",
+      "subjectDelivery": "ยืนยันคำสั่งซื้อแบบจัดส่ง #{orderNumber} แล้ว — {restaurant}",
+      "subjectPickup": "ยืนยันคำสั่งซื้อแบบรับเอง #{orderNumber} แล้ว — {restaurant}",
+      "subjectDineIn": "ยืนยันคำสั่งซื้อแบบทานที่ร้าน #{orderNumber} แล้ว — {restaurant}",
+      "subjectScheduled": "ยืนยันคำสั่งซื้อที่กำหนดเวลาไว้ #{orderNumber} แล้ว — {restaurant}"
     }
   },
   "marketing": {

@@ -4423,6 +4423,13 @@
       "usesMany": "Може да се използва до {count} пъти",
       "redeemHint": "Въведете кода при плащане или го намерете в таблото на акаунта си — той важи само за вашия акаунт.",
       "cta": "Поръчайте сега"
+    },
+    "orderAccepted": {
+      "badge": "Поръчката е потвърдена",
+      "subjectDelivery": "Поръчка за доставка #{orderNumber} е потвърдена — {restaurant}",
+      "subjectPickup": "Поръчка за вземане #{orderNumber} е потвърдена — {restaurant}",
+      "subjectDineIn": "Поръчка на място #{orderNumber} е потвърдена — {restaurant}",
+      "subjectScheduled": "Планираната поръчка #{orderNumber} е потвърдена — {restaurant}"
     }
   },
   "marketing": {

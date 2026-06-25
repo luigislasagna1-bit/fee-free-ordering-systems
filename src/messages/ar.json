@@ -4423,6 +4423,13 @@
       "usesMany": "يمكن استخدامها حتى {count} مرات",
       "redeemHint": "أدخل الرمز عند إتمام الطلب، أو اعثر عليه في لوحة حسابك — وهو صالح لحسابك فقط.",
       "cta": "اطلب الآن"
+    },
+    "orderAccepted": {
+      "badge": "تم تأكيد الطلب",
+      "subjectDelivery": "تم تأكيد طلب التوصيل رقم #{orderNumber} — {restaurant}",
+      "subjectPickup": "تم تأكيد طلب الاستلام رقم #{orderNumber} — {restaurant}",
+      "subjectDineIn": "تم تأكيد طلب تناول الطعام في المطعم رقم #{orderNumber} — {restaurant}",
+      "subjectScheduled": "تم تأكيد الطلب المجدول رقم #{orderNumber} — {restaurant}"
     }
   },
   "marketing": {

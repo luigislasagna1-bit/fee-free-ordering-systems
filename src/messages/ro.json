@@ -4423,6 +4423,13 @@
       "usesMany": "Poate fi folosit de cel mult {count} ori",
       "redeemHint": "Introdu codul la finalizarea comenzii sau găsește-l în panoul contului tău — se aplică doar contului tău.",
       "cta": "Comandă acum"
+    },
+    "orderAccepted": {
+      "badge": "Comandă confirmată",
+      "subjectDelivery": "Comandă cu livrare #{orderNumber} confirmată — {restaurant}",
+      "subjectPickup": "Comandă pentru ridicare #{orderNumber} confirmată — {restaurant}",
+      "subjectDineIn": "Comandă pentru servire la local #{orderNumber} confirmată — {restaurant}",
+      "subjectScheduled": "Comandă programată #{orderNumber} confirmată — {restaurant}"
     }
   },
   "marketing": {

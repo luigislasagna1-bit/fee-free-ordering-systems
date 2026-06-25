@@ -49,6 +49,11 @@ export type KitchenNotificationProps = {
   dashboardUrl: string;
   imprint?: string;
   currency?: string;
+  /** Headline shown in the header subtitle + the lead badge. Defaults to
+   *  "New order" (the placement ping). The acceptance/confirmation email
+   *  passes a localized "Order confirmed" so staff can tell a confirmation
+   *  apart from a brand-new order at a glance. */
+  headline?: string;
 };
 
 const ORDER_TYPE_LABEL: Record<string, string> = {
@@ -64,8 +69,9 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
     restaurantName, orderNumber, customerName, customerPhone, customerEmail,
     orderType, estimatedMinutes, paidOnline, reservationPartySize, reservationLabel, items, subtotal, taxAmount,
     taxLabel, deliveryFee, tip, discount, total, deliveryAddress,
-    customerNotes, dashboardUrl, imprint, currency,
+    customerNotes, dashboardUrl, imprint, currency, headline,
   } = props;
+  const leadLabel = headline ?? "New order";
   const orderTypeLabel = orderType ? (ORDER_TYPE_LABEL[orderType] ?? orderType) : null;
   const hasItems = items && items.length > 0;
 
@@ -74,11 +80,11 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
       <EmailHeader
         variant="transactional"
         title={`${restaurantName} — Order #${orderNumber}`}
-        subtitle={`New order${orderTypeLabel ? ` · ${orderTypeLabel}` : ""}${estimatedMinutes ? ` · ${estimatedMinutes} min` : ""}`}
+        subtitle={`${leadLabel}${orderTypeLabel ? ` · ${orderTypeLabel}` : ""}${estimatedMinutes ? ` · ${estimatedMinutes} min` : ""}`}
       />
       <EmailBody>
         <div style={{ margin: "8px 0 16px" }}>
-          <Badge color="emerald">New order</Badge>{" "}
+          <Badge color="emerald">{leadLabel}</Badge>{" "}
           {orderTypeLabel && <><Badge color="slate">{orderTypeLabel}</Badge>{" "}</>}
           {typeof paidOnline === "boolean" && (
             <Badge color={paidOnline ? "sky" : "amber"}>

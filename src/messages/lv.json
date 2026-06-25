@@ -4423,6 +4423,13 @@
       "usesMany": "Var izmantot līdz {count} reizēm",
       "redeemHint": "Ievadiet kodu norēķinoties vai atrodiet to sava konta panelī — tas ir derīgs tikai jūsu kontam.",
       "cta": "Pasūtīt tūlīt"
+    },
+    "orderAccepted": {
+      "badge": "Pasūtījums apstiprināts",
+      "subjectDelivery": "Piegādes pasūtījums #{orderNumber} apstiprināts — {restaurant}",
+      "subjectPickup": "Saņemšanas pasūtījums #{orderNumber} apstiprināts — {restaurant}",
+      "subjectDineIn": "Ēšanas uz vietas pasūtījums #{orderNumber} apstiprināts — {restaurant}",
+      "subjectScheduled": "Plānotais pasūtījums #{orderNumber} apstiprināts — {restaurant}"
     }
   },
   "marketing": {

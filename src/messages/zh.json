@@ -4423,6 +4423,13 @@
       "usesMany": "最多可使用 {count} 次",
       "redeemHint": "结账时输入该优惠码，或在账户中心查看 — 仅限您的账户使用。",
       "cta": "立即下单"
+    },
+    "orderAccepted": {
+      "badge": "订单已确认",
+      "subjectDelivery": "外送订单 #{orderNumber} 已确认 — {restaurant}",
+      "subjectPickup": "自取订单 #{orderNumber} 已确认 — {restaurant}",
+      "subjectDineIn": "堂食订单 #{orderNumber} 已确认 — {restaurant}",
+      "subjectScheduled": "预约订单 #{orderNumber} 已确认 — {restaurant}"
     }
   },
   "marketing": {

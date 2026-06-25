@@ -4423,6 +4423,13 @@
       "usesMany": "Maximaal {count} keer te gebruiken",
       "redeemHint": "Voer de code in bij het afrekenen of vind hem terug in je accountoverzicht — de coupon geldt alleen voor jouw account.",
       "cta": "Bestel nu"
+    },
+    "orderAccepted": {
+      "badge": "Bestelling bevestigd",
+      "subjectDelivery": "Bezorgbestelling #{orderNumber} bevestigd — {restaurant}",
+      "subjectPickup": "Afhaalbestelling #{orderNumber} bevestigd — {restaurant}",
+      "subjectDineIn": "Bestelling voor in het restaurant #{orderNumber} bevestigd — {restaurant}",
+      "subjectScheduled": "Geplande bestelling #{orderNumber} bevestigd — {restaurant}"
     }
   },
   "marketing": {

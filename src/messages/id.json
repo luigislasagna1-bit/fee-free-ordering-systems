@@ -4423,6 +4423,13 @@
       "usesMany": "Dapat digunakan hingga {count} kali",
       "redeemHint": "Masukkan kode saat checkout, atau temukan di dasbor akun Anda — hanya berlaku untuk akun Anda.",
       "cta": "Pesan sekarang"
+    },
+    "orderAccepted": {
+      "badge": "Pesanan dikonfirmasi",
+      "subjectDelivery": "Pesanan pengiriman #{orderNumber} dikonfirmasi — {restaurant}",
+      "subjectPickup": "Pesanan ambil sendiri #{orderNumber} dikonfirmasi — {restaurant}",
+      "subjectDineIn": "Pesanan makan di tempat #{orderNumber} dikonfirmasi — {restaurant}",
+      "subjectScheduled": "Pesanan terjadwal #{orderNumber} dikonfirmasi — {restaurant}"
     }
   },
   "marketing": {

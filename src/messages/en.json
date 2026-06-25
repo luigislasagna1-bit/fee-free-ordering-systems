@@ -4196,6 +4196,13 @@
       "body": "{customer} just placed order #{orderNumber} for {total}.",
       "openAdmin": "Open admin"
     },
+    "orderAccepted": {
+      "badge": "Order confirmed",
+      "subjectDelivery": "Delivery order #{orderNumber} confirmed — {restaurant}",
+      "subjectPickup": "Pickup order #{orderNumber} confirmed — {restaurant}",
+      "subjectDineIn": "Dine-in order #{orderNumber} confirmed — {restaurant}",
+      "subjectScheduled": "Scheduled order #{orderNumber} confirmed — {restaurant}"
+    },
     "orderStatus": {
       "subject": "Update on order #{orderNumber}",
       "title": "Order update",

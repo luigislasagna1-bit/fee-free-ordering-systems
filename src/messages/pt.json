@@ -4423,6 +4423,13 @@
       "usesMany": "Pode ser utilizado até {count} vezes",
       "redeemHint": "Introduza o código ao finalizar a encomenda ou encontre-o no painel da sua conta — o cupão aplica-se apenas à sua conta.",
       "cta": "Encomendar agora"
+    },
+    "orderAccepted": {
+      "badge": "Pedido confirmado",
+      "subjectDelivery": "Pedido de entrega #{orderNumber} confirmado — {restaurant}",
+      "subjectPickup": "Pedido de levantamento #{orderNumber} confirmado — {restaurant}",
+      "subjectDineIn": "Pedido para comer no local #{orderNumber} confirmado — {restaurant}",
+      "subjectScheduled": "Pedido agendado #{orderNumber} confirmado — {restaurant}"
     }
   },
   "marketing": {

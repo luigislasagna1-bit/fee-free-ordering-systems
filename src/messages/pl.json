@@ -4423,6 +4423,13 @@
       "usesMany": "Można użyć maksymalnie {count} razy",
       "redeemHint": "Wpisz kod przy finalizacji zamówienia lub znajdź go w panelu swojego konta — kod działa wyłącznie na Twoim koncie.",
       "cta": "Zamów teraz"
+    },
+    "orderAccepted": {
+      "badge": "Zamówienie potwierdzone",
+      "subjectDelivery": "Zamówienie z dostawą #{orderNumber} potwierdzone — {restaurant}",
+      "subjectPickup": "Zamówienie do odbioru #{orderNumber} potwierdzone — {restaurant}",
+      "subjectDineIn": "Zamówienie na miejscu #{orderNumber} potwierdzone — {restaurant}",
+      "subjectScheduled": "Zaplanowane zamówienie #{orderNumber} potwierdzone — {restaurant}"
     }
   },
   "marketing": {

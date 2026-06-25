@@ -4423,6 +4423,13 @@
       "usesMany": "ניתן לשימוש עד {count} פעמים",
       "redeemHint": "הזן את הקוד בעת התשלום, או מצא אותו באזור האישי — הוא תקף לחשבון שלך בלבד.",
       "cta": "להזמנה עכשיו"
+    },
+    "orderAccepted": {
+      "badge": "ההזמנה אושרה",
+      "subjectDelivery": "הזמנת משלוח #{orderNumber} אושרה — {restaurant}",
+      "subjectPickup": "הזמנת איסוף עצמי #{orderNumber} אושרה — {restaurant}",
+      "subjectDineIn": "הזמנת ישיבה במקום #{orderNumber} אושרה — {restaurant}",
+      "subjectScheduled": "הזמנה מתוזמנת #{orderNumber} אושרה — {restaurant}"
     }
   },
   "marketing": {

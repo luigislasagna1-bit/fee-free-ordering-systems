@@ -4423,6 +4423,13 @@
       "usesMany": "Kan bruges op til {count} gange",
       "redeemHint": "Indtast koden, når du betaler, eller find den i din kontooversigt – den gælder kun for din konto.",
       "cta": "Bestil nu"
+    },
+    "orderAccepted": {
+      "badge": "Ordre bekræftet",
+      "subjectDelivery": "Leveringsordre #{orderNumber} bekræftet — {restaurant}",
+      "subjectPickup": "Afhentningsordre #{orderNumber} bekræftet — {restaurant}",
+      "subjectDineIn": "Spise-i-restauranten-ordre #{orderNumber} bekræftet — {restaurant}",
+      "subjectScheduled": "Planlagt ordre #{orderNumber} bekræftet — {restaurant}"
     }
   },
   "marketing": {

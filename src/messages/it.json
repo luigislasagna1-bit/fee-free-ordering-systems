@@ -4423,6 +4423,13 @@
       "usesMany": "Utilizzabile fino a {count} volte",
       "redeemHint": "Inserisci il codice al momento del pagamento, oppure trovalo nella tua area personale — è valido solo per il tuo account.",
       "cta": "Ordina ora"
+    },
+    "orderAccepted": {
+      "badge": "Ordine confermato",
+      "subjectDelivery": "Ordine con consegna #{orderNumber} confermato — {restaurant}",
+      "subjectPickup": "Ordine da ritirare #{orderNumber} confermato — {restaurant}",
+      "subjectDineIn": "Ordine al tavolo #{orderNumber} confermato — {restaurant}",
+      "subjectScheduled": "Ordine programmato #{orderNumber} confermato — {restaurant}"
     }
   },
   "marketing": {

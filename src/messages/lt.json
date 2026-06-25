@@ -4423,6 +4423,13 @@
       "usesMany": "Galima panaudoti iki {count} kartų",
       "redeemHint": "Įveskite kodą atsiskaitydami arba raskite jį savo paskyros skydelyje — jis galioja tik jūsų paskyrai.",
       "cta": "Užsakyti dabar"
+    },
+    "orderAccepted": {
+      "badge": "Užsakymas patvirtintas",
+      "subjectDelivery": "Pristatymo užsakymas #{orderNumber} patvirtintas — {restaurant}",
+      "subjectPickup": "Atsiėmimo užsakymas #{orderNumber} patvirtintas — {restaurant}",
+      "subjectDineIn": "Valgymo vietoje užsakymas #{orderNumber} patvirtintas — {restaurant}",
+      "subjectScheduled": "Suplanuotas užsakymas #{orderNumber} patvirtintas — {restaurant}"
     }
   },
   "marketing": {

@@ -4423,6 +4423,13 @@
       "usesMany": "Dùng được tối đa {count} lần",
       "redeemHint": "Nhập mã khi thanh toán, hoặc xem trong trang tài khoản của bạn — mã chỉ áp dụng cho tài khoản của bạn.",
       "cta": "Đặt món ngay"
+    },
+    "orderAccepted": {
+      "badge": "Đơn hàng đã được xác nhận",
+      "subjectDelivery": "Đơn hàng giao tận nơi #{orderNumber} đã được xác nhận — {restaurant}",
+      "subjectPickup": "Đơn hàng tự đến lấy #{orderNumber} đã được xác nhận — {restaurant}",
+      "subjectDineIn": "Đơn hàng ăn tại quán #{orderNumber} đã được xác nhận — {restaurant}",
+      "subjectScheduled": "Đơn hàng đặt theo lịch #{orderNumber} đã được xác nhận — {restaurant}"
     }
   },
   "marketing": {

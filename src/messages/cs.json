@@ -4423,6 +4423,13 @@
       "usesMany": "Lze uplatnit až {count}krát",
       "redeemHint": "Kód zadejte při placení, nebo ho najdete v přehledu svého účtu — platí pouze pro váš účet.",
       "cta": "Objednat nyní"
+    },
+    "orderAccepted": {
+      "badge": "Objednávka potvrzena",
+      "subjectDelivery": "Objednávka s doručením #{orderNumber} potvrzena — {restaurant}",
+      "subjectPickup": "Objednávka k vyzvednutí #{orderNumber} potvrzena — {restaurant}",
+      "subjectDineIn": "Objednávka ke konzumaci na místě #{orderNumber} potvrzena — {restaurant}",
+      "subjectScheduled": "Naplánovaná objednávka #{orderNumber} potvrzena — {restaurant}"
     }
   },
   "marketing": {

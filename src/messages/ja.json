@@ -4423,6 +4423,13 @@
       "usesMany": "最大{count}回まで利用可能",
       "redeemHint": "ご注文時にコードを入力するか、アカウントページでご確認ください — このクーポンはお客様のアカウントでのみ有効です。",
       "cta": "今すぐ注文"
+    },
+    "orderAccepted": {
+      "badge": "注文が確定しました",
+      "subjectDelivery": "配達注文 #{orderNumber} が確定しました — {restaurant}",
+      "subjectPickup": "テイクアウト注文 #{orderNumber} が確定しました — {restaurant}",
+      "subjectDineIn": "店内飲食の注文 #{orderNumber} が確定しました — {restaurant}",
+      "subjectScheduled": "予約注文 #{orderNumber} が確定しました — {restaurant}"
     }
   },
   "marketing": {

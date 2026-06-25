@@ -4423,6 +4423,13 @@
       "usesMany": "Kupon lahko uporabite do {count}-krat",
       "redeemHint": "Kodo vnesite ob zaključku naročila ali jo poiščite na nadzorni plošči svojega računa — velja samo za vaš račun.",
       "cta": "Naročite zdaj"
+    },
+    "orderAccepted": {
+      "badge": "Naročilo potrjeno",
+      "subjectDelivery": "Naročilo z dostavo #{orderNumber} potrjeno — {restaurant}",
+      "subjectPickup": "Naročilo za prevzem #{orderNumber} potrjeno — {restaurant}",
+      "subjectDineIn": "Naročilo za uživanje v restavraciji #{orderNumber} potrjeno — {restaurant}",
+      "subjectScheduled": "Načrtovano naročilo #{orderNumber} potrjeno — {restaurant}"
     }
   },
   "marketing": {

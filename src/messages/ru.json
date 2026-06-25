@@ -4423,6 +4423,13 @@
       "usesMany": "Можно использовать до {count} раз",
       "redeemHint": "Введите код при оформлении заказа или найдите его в личном кабинете — он действует только для вашего аккаунта.",
       "cta": "Заказать сейчас"
+    },
+    "orderAccepted": {
+      "badge": "Заказ подтверждён",
+      "subjectDelivery": "Заказ с доставкой #{orderNumber} подтверждён — {restaurant}",
+      "subjectPickup": "Заказ на самовывоз #{orderNumber} подтверждён — {restaurant}",
+      "subjectDineIn": "Заказ для зала #{orderNumber} подтверждён — {restaurant}",
+      "subjectScheduled": "Запланированный заказ #{orderNumber} подтверждён — {restaurant}"
     }
   },
   "marketing": {

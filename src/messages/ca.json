@@ -4423,6 +4423,13 @@
       "usesMany": "Es pot fer servir fins a {count} vegades",
       "redeemHint": "Introdueix el codi en finalitzar la comanda, o troba'l al tauler del teu compte — només és vàlid per al teu compte.",
       "cta": "Demana ara"
+    },
+    "orderAccepted": {
+      "badge": "Comanda confirmada",
+      "subjectDelivery": "Comanda de lliurament #{orderNumber} confirmada — {restaurant}",
+      "subjectPickup": "Comanda de recollida #{orderNumber} confirmada — {restaurant}",
+      "subjectDineIn": "Comanda per menjar al local #{orderNumber} confirmada — {restaurant}",
+      "subjectScheduled": "Comanda programada #{orderNumber} confirmada — {restaurant}"
     }
   },
   "marketing": {

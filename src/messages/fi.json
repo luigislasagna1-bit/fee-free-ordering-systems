@@ -4423,6 +4423,13 @@
       "usesMany": "Voidaan käyttää enintään {count} kertaa",
       "redeemHint": "Syötä koodi kassalla, tai löydät sen myös tilisi hallintasivulta — koodi toimii vain sinun tililläsi.",
       "cta": "Tilaa nyt"
+    },
+    "orderAccepted": {
+      "badge": "Tilaus vahvistettu",
+      "subjectDelivery": "Toimitustilaus #{orderNumber} vahvistettu — {restaurant}",
+      "subjectPickup": "Noutotilaus #{orderNumber} vahvistettu — {restaurant}",
+      "subjectDineIn": "Ravintolassa syömisen tilaus #{orderNumber} vahvistettu — {restaurant}",
+      "subjectScheduled": "Ajastettu tilaus #{orderNumber} vahvistettu — {restaurant}"
     }
   },
   "marketing": {

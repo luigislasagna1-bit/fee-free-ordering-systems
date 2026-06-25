@@ -4423,6 +4423,13 @@
       "usesMany": "Može se iskoristiti do {count} puta",
       "redeemHint": "Unesite kod prilikom plaćanja ili ga pronađite na nadzornoj ploči svog računa — vrijedi isključivo za vaš račun.",
       "cta": "Naručite odmah"
+    },
+    "orderAccepted": {
+      "badge": "Narudžba potvrđena",
+      "subjectDelivery": "Narudžba za dostavu #{orderNumber} potvrđena — {restaurant}",
+      "subjectPickup": "Narudžba za preuzimanje #{orderNumber} potvrđena — {restaurant}",
+      "subjectDineIn": "Narudžba za jelo u restoranu #{orderNumber} potvrđena — {restaurant}",
+      "subjectScheduled": "Zakazana narudžba #{orderNumber} potvrđena — {restaurant}"
     }
   },
   "marketing": {

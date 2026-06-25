@@ -25,6 +25,7 @@ import prisma from "@/lib/db";
 import { formatTime } from "@/lib/format-time";
 import {
   sendNewOrderNotificationEmail,
+  sendOrderAcceptedNotificationEmail,
   sendNewReservationNotification,
   sendOrderConfirmationEmail,
   sendOrderStatusUpdateEmail,
@@ -317,10 +318,8 @@ async function dispatchStaffEvent(
 ): Promise<void> {
   switch (payload.event) {
     case "orderPlaced":
-    case "orderAcceptedDelivery":
-    case "orderAcceptedPickup":
-    case "orderAcceptedDineIn":
-    case "orderAcceptedScheduled":
+      // The placement ping — "New order received". Kept on its own so the
+      // acceptance/confirmation emails below can be distinct + correctly labeled.
       await sendNewOrderNotificationEmail({
         to,
         restaurantName,
@@ -334,6 +333,34 @@ async function dispatchStaffEvent(
         currency,
       });
       return;
+    case "orderAcceptedDelivery":
+    case "orderAcceptedPickup":
+    case "orderAcceptedDineIn":
+    case "orderAcceptedScheduled": {
+      // Restaurant confirmed an order. Each type gets its OWN labeled email
+      // ("Pickup order #X confirmed") so it's distinguishable from the
+      // new-order ping and from the other types. The per-type toggle that
+      // gated this event already decided we should send it.
+      const acceptedType =
+        payload.event === "orderAcceptedDelivery" ? "delivery" as const
+        : payload.event === "orderAcceptedPickup" ? "pickup" as const
+        : payload.event === "orderAcceptedDineIn" ? "dineIn" as const
+        : "scheduled" as const;
+      await sendOrderAcceptedNotificationEmail({
+        to,
+        restaurantName,
+        orderNumber: payload.orderNumber,
+        customerName: payload.customerName,
+        total: payload.total,
+        dashboardUrl: payload.dashboardUrl,
+        acceptedType,
+        reservation: payload.reservation ?? null,
+        hoursFormat,
+        locale,
+        currency,
+      });
+      return;
+    }
     case "orderRejected":
       await sendOrderRejectedEmail({
         to,
