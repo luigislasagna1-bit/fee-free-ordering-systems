@@ -1,8 +1,8 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { previousPeriod, eachDay, formatChartDate, formatRangeLabel } from "@/lib/reports/date-range";
-import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { previousPeriod, eachDay, formatChartDate } from "@/lib/reports/date-range";
+import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere } from "@/lib/reports/order-filter";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
@@ -87,7 +87,7 @@ export default async function SalesTrendPage({
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            {labelForMetric(metric, t)} {t("overTime")} · {formatRangeLabel(range)}
+            {labelForMetric(metric, t)} {t("overTime")} · {formatRangeLabelInTz(range, scope.timezone ?? undefined)}
           </p>
         </div>
         <div className="flex items-center gap-2 flex-wrap">

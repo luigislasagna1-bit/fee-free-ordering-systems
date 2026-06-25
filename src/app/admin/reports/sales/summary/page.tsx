@@ -1,7 +1,6 @@
 import { getSessionUser } from "@/lib/session";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { formatRangeLabel } from "@/lib/reports/date-range";
-import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { buildSummaryRows, isSummaryDim, type SummaryDim } from "@/lib/reports/summary-rows";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
@@ -50,7 +49,7 @@ export default async function SalesSummaryPage({
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            {t("breakdownBy", { dim: labelByDim(dim, t), range: formatRangeLabel(range) })}
+            {t("breakdownBy", { dim: labelByDim(dim, t), range: formatRangeLabelInTz(range, scope.timezone ?? undefined) })}
           </p>
         </div>
         <div className="flex items-center gap-2 flex-wrap">

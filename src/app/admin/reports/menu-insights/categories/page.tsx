@@ -3,8 +3,7 @@ import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { reportOrderWhere } from "@/lib/reports/order-filter";
-import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
-import { formatRangeLabel } from "@/lib/reports/date-range";
+import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import { getTranslations } from "next-intl/server";
@@ -73,7 +72,7 @@ export default async function MenuInsightsCategoriesPage({
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
-          <p className="text-sm text-gray-500 mt-0.5">{t("pageSubtitle", { range: formatRangeLabel(range) })}</p>
+          <p className="text-sm text-gray-500 mt-0.5">{t("pageSubtitle", { range: formatRangeLabelInTz(range, scope.timezone ?? undefined) })}</p>
         </div>
         <DateRangePicker />
       </header>

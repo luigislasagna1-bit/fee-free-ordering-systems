@@ -1,7 +1,7 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { formatRangeLabel, toISODate } from "@/lib/reports/date-range";
-import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { toISODate } from "@/lib/reports/date-range";
+import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ComingSoonPlaceholder } from "@/components/admin/reports/ComingSoonPlaceholder";
@@ -53,7 +53,7 @@ export default async function ReservationsReportPage({
     return (
       <ComingSoonPlaceholder
         title={t("title")}
-        subtitle={t("emptySubtitle", { range: formatRangeLabel(range) })}
+        subtitle={t("emptySubtitle", { range: formatRangeLabelInTz(range, scope.timezone ?? undefined) })}
         what={t("what")}
         requires={[
           { label: t("requiresServiceEnabled"), status: "collecting" },
@@ -79,7 +79,7 @@ export default async function ReservationsReportPage({
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
-          <p className="text-sm text-gray-500 mt-0.5">{t("summary", { bookings: total.toLocaleString(), guests: totalGuests.toLocaleString(), range: formatRangeLabel(range) })}</p>
+          <p className="text-sm text-gray-500 mt-0.5">{t("summary", { bookings: total.toLocaleString(), guests: totalGuests.toLocaleString(), range: formatRangeLabelInTz(range, scope.timezone ?? undefined) })}</p>
         </div>
         <DateRangePicker />
       </header>

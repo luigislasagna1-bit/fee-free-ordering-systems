@@ -1,7 +1,7 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { eachDay, formatChartDate, formatRangeLabel } from "@/lib/reports/date-range";
-import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { eachDay, formatChartDate } from "@/lib/reports/date-range";
+import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ChartTableToggle } from "@/components/admin/reports/ChartTableToggle";
@@ -78,7 +78,7 @@ export default async function VisitsReportPage({
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            {t("visitsSummary", { count: totalVisits.toLocaleString(), rangeLabel: formatRangeLabel(range) })}
+            {t("visitsSummary", { count: totalVisits.toLocaleString(), rangeLabel: formatRangeLabelInTz(range, scope.timezone ?? undefined) })}
           </p>
         </div>
         <div className="flex items-center gap-2 flex-wrap">

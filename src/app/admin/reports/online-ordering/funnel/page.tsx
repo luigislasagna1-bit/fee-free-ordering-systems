@@ -1,7 +1,6 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { formatRangeLabel } from "@/lib/reports/date-range";
-import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { Info } from "lucide-react";
@@ -81,7 +80,7 @@ export default async function FunnelReportPage({
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{t("heading")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            {t("subheading", { range: formatRangeLabel(range) })}
+            {t("subheading", { range: formatRangeLabelInTz(range, scope.timezone ?? undefined) })}
           </p>
         </div>
         <DateRangePicker />

@@ -2,8 +2,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { resolveReportScope } from "@/lib/reports/report-scope";
-import { formatRangeLabel } from "@/lib/reports/date-range";
-import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
+import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere } from "@/lib/reports/order-filter";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { TableControls } from "@/components/admin/reports/TableControls";
@@ -99,7 +98,7 @@ export default async function ListOrdersPage({
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
-          <p className="text-sm text-gray-500 mt-0.5">{t("orderCountLabel", { count: total, range: formatRangeLabel(range) })}</p>
+          <p className="text-sm text-gray-500 mt-0.5">{t("orderCountLabel", { count: total, range: formatRangeLabelInTz(range, scope.timezone ?? undefined) })}</p>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
           <TableControls searchPlaceholder={t("searchPlaceholder")} perPageLabel={t("perPage")} />
