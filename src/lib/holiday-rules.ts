@@ -256,12 +256,13 @@ export function resolveTodayHolidayClosure(
         const e = holidayEffectToday(holidays, timezone, s, now);
         return e?.kind === "custom_hours" ? [{ service: s, intervals: e.intervals }] : [];
       });
-  // Prefer the general entry's message; else surface the first service-specific
-  // closed entry's message so it isn't lost.
-  const serviceMessage =
-    !general && holidayClosedServices.length > 0
-      ? holidayEffectToday(holidays, timezone, holidayClosedServices[0], now)?.message ?? null
-      : null;
+  // Prefer the general entry's message; else surface the FIRST per-service entry's message —
+  // full-closed, closed-windows OR custom-hours — so a per-service closure's custom note still
+  // shows on the banner. Previously only full-closed services were covered, so a message on a
+  // per-service "closed hours" / special-hours rule was dropped. Fabrizio 2026-06-25.
+  const serviceMessage = !general
+    ? (ALL_SVCS.map((s) => holidayEffectToday(holidays, timezone, s, now)?.message ?? null).find((m) => m) ?? null)
+    : null;
   return {
     todayHolidayName: general?.name ?? null,
     todayHolidayMessage: general?.message ?? serviceMessage,
