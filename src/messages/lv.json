@@ -488,7 +488,7 @@
     "closedThisDay": "Šajā dienā slēgts",
     "fulfilSchedulePrompt": "📅 Vienu vai vairākus jūsu grozā esošos produktus var pasūtīt tikai noteiktās dienās vai laikos. Zemāk esam izvēlējušies agrāko pieejamo laiku – mainiet to, ja vēlaties.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> var pasūtīt tikai noteiktās dienās vai laikos. Pieejamie pasūtīšanas laiki ir attiecīgi ierobežoti.",
-    "serviceStartsPrompt": "🕒 {service} vēl nav atvērts — izvēlieties laiku, kad tas atveras. Agrākais pieejamais laiks ir norādīts zemāk."
+    "serviceStartsPrompt": "🕒 {service} pakalpojums vēl nav sācies — tas sākas plkst. {time}."
   },
   "reservation": {
     "title": "Rezervēt galdu",

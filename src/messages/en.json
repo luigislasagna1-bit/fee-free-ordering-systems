@@ -488,7 +488,7 @@
     "pickADateFirst": "Pick a date first",
     "closedThisDay": "Closed this day",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> can only be ordered for certain days or times. The available order times have been limited accordingly.",
-    "serviceStartsPrompt": "🕒 {service} isn't open yet — pick a time when it opens. The earliest is shown below."
+    "serviceStartsPrompt": "🕒 {service} service hasn't started yet — it starts at {time}."
   },
   "reservation": {
     "title": "Book a table",

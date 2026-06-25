@@ -1121,19 +1121,12 @@ export function CheckoutModal({
                               )}
                             </>
                           ) : scheduleReason === "service_later" ? (
-                            <>
-                              {tc("serviceStartsPrompt", { service: serviceLabel ?? "" })}
-                              {closedNextOpenLocal && (
-                                <span className="block mt-1 text-amber-900 font-semibold">
-                                  {tc("nextOpening", {
-                                    date: new Date(closedNextOpenLocal).toLocaleString(undefined, {
-                                      weekday: "short", month: "short", day: "numeric",
-                                      hour: "numeric", minute: "2-digit",
-                                    }),
-                                  })}
-                                </span>
-                              )}
-                            </>
+                            tc("serviceStartsPrompt", {
+                              service: serviceLabel ?? "",
+                              time: closedNextOpenLocal
+                                ? new Date(closedNextOpenLocal).toLocaleString(undefined, { hour: "numeric", minute: "2-digit" })
+                                : "",
+                            })
                           ) : scheduleReason === "both" ? (
                             tc.rich("closedAndCatering", {
                               hours: cateringNoticeHours ?? 24,

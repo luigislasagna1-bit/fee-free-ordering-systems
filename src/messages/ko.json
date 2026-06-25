@@ -488,7 +488,7 @@
     "closedThisDay": "이 날은 휴무",
     "fulfilSchedulePrompt": "📅 장바구니에 담긴 항목 중 하나 이상은 특정 요일이나 시간에만 주문할 수 있습니다. 아래에 가장 이른 예약 가능 시간대를 설정해 두었습니다 — 원하시면 변경하세요.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong>은(는) 특정 요일이나 시간에만 주문할 수 있습니다. 이용 가능한 주문 시간이 그에 따라 제한되었습니다.",
-    "serviceStartsPrompt": "🕒 {service} 서비스가 아직 시작되지 않았어요 — 시작되는 시간으로 선택해 주세요. 가장 빠른 시간은 아래에 표시됩니다."
+    "serviceStartsPrompt": "🕒 {service} 서비스가 아직 시작되지 않았습니다 — {time}에 시작됩니다."
   },
   "reservation": {
     "title": "테이블 예약",

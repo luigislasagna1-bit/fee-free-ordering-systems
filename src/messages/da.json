@@ -488,7 +488,7 @@
     "closedThisDay": "Lukket denne dag",
     "fulfilSchedulePrompt": "📅 En eller flere varer i din kurv kan kun bestilles til bestemte dage eller tidspunkter. Vi har valgt det tidligst tilgængelige tidspunkt nedenfor – ret det, hvis du vil.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> kan kun bestilles på bestemte dage eller tidspunkter. De tilgængelige bestillingstidspunkter er begrænset i overensstemmelse hermed.",
-    "serviceStartsPrompt": "🕒 {service} har ikke åbnet endnu — vælg et tidspunkt, hvor det åbner. Det tidligste vises nedenfor."
+    "serviceStartsPrompt": "🕒 {service}-service er ikke startet endnu — den starter kl. {time}."
   },
   "reservation": {
     "title": "Book et bord",

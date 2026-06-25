@@ -1706,11 +1706,16 @@ export async function POST(req: NextRequest) {
             scheduledForDate!, fmt, undefined, holidayTzKey,
           );
           if (slotStatus.kind !== "open") {
+            // Service-specific message so the customer knows it's THIS service
+            // (not the restaurant) that isn't open yet, and when it starts.
+            const svcLabel = type === "delivery" ? "Delivery"
+              : type === "dine_in" ? "Dine-in"
+              : type === "take_out" ? "Take-out" : "Pickup";
+            const msg = slotStatus.kind === "opens_at"
+              ? `Not open for ${svcLabel} yet — ${svcLabel} starts at ${slotStatus.opensAt}.`
+              : `That time is outside ${svcLabel} hours. Please pick a time when ${svcLabel} is open.`;
             return NextResponse.json(
-              {
-                error: "We're not open at the time you selected. Please pick a time within our opening hours.",
-                code: "outside_opening_hours",
-              },
+              { error: msg, code: "outside_opening_hours" },
               { status: 400 },
             );
           }

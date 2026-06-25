@@ -2469,6 +2469,26 @@ export function OrderingPageClient({
     prevCateringRef.current = cartHasCatering;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheduleRequired, effectiveMinScheduledLocal, schedulingEnabled]);
+
+  // Switching the order TYPE re-defaults the scheduled slot to the NEW service's
+  // earliest valid slot — or clears to ASAP when the new service is open now.
+  // Without this, a slot picked for Pickup (e.g. 6 PM) carries over to Delivery
+  // (which opens 7 PM) and the order is rejected at checkout. Only fires on an
+  // ACTUAL type change (the ref guard), so it never clobbers a time the customer
+  // deliberately set for the service they're on. (Luigi 2026-06-25.)
+  const prevOrderTypeRef = useRef(orderType);
+  useEffect(() => {
+    if (prevOrderTypeRef.current === orderType) return;
+    prevOrderTypeRef.current = orderType;
+    setCustomerInfo((ci) => {
+      if (scheduleRequired && effectiveMinScheduledLocal) {
+        return { ...ci, scheduledFor: effectiveMinScheduledLocal };
+      }
+      // New service is open now → ASAP (drop any carried-over slot).
+      if (ci.scheduledFor) return { ...ci, scheduledFor: "" };
+      return ci;
+    });
+  }, [orderType, scheduleRequired, effectiveMinScheduledLocal]);
   const zoneFee = resolvedZone?.zone.deliveryFee;
   const zoneMin = resolvedZone?.zone.minimumOrder;
   const zoneMinutes = resolvedZone?.zone.estimatedMinutes;

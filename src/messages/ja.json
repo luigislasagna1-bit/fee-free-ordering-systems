@@ -488,7 +488,7 @@
     "closedThisDay": "この日は休業",
     "fulfilSchedulePrompt": "📅 カート内の1つ以上の商品は、特定の曜日または時間帯のみ注文できます。利用可能な最も早い時間枠を以下に設定しました。必要に応じて変更してください。",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> は特定の曜日や時間帯のみ注文できます。利用可能な注文時間はそれに応じて制限されています。",
-    "serviceStartsPrompt": "🕒 {service}はまだ受付時間外です。開始時間以降の時間をお選びください。最短の時間を以下に表示しています。"
+    "serviceStartsPrompt": "🕒 {service}サービスはまだ始まっていません — {time}に開始します。"
   },
   "reservation": {
     "title": "テーブルを予約",

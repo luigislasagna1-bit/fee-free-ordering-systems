@@ -488,7 +488,7 @@
     "closedThisDay": "Închis în această zi",
     "fulfilSchedulePrompt": "📅 Unul sau mai multe produse din coșul tău pot fi comandate doar pentru anumite zile sau ore. Am setat mai jos cel mai apropiat interval disponibil — ajustează-l dacă dorești.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> poate fi comandat doar în anumite zile sau ore. Orele de comandă disponibile au fost limitate în consecință.",
-    "serviceStartsPrompt": "🕒 {service} nu este încă disponibil — alege o oră după deschidere. Cea mai apropiată este afișată mai jos."
+    "serviceStartsPrompt": "🕒 Serviciul {service} nu a început încă — începe la {time}."
   },
   "reservation": {
     "title": "Rezervă o masă",

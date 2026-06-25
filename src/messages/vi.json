@@ -488,7 +488,7 @@
     "closedThisDay": "Đóng cửa ngày này",
     "fulfilSchedulePrompt": "📅 Một hoặc nhiều món trong giỏ hàng của bạn chỉ có thể đặt vào những ngày hoặc giờ nhất định. Chúng tôi đã chọn khung giờ sớm nhất hiện có bên dưới — bạn có thể điều chỉnh nếu muốn.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> chỉ có thể đặt vào những ngày hoặc giờ nhất định. Thời gian đặt hàng khả dụng đã được giới hạn tương ứng.",
-    "serviceStartsPrompt": "🕒 {service} chưa mở cửa — hãy chọn giờ sau khi mở. Giờ sớm nhất được hiển thị bên dưới."
+    "serviceStartsPrompt": "🕒 Dịch vụ {service} chưa bắt đầu — bắt đầu lúc {time}."
   },
   "reservation": {
     "title": "Đặt bàn",

@@ -488,7 +488,7 @@
     "closedThisDay": "Fechado neste dia",
     "fulfilSchedulePrompt": "📅 Um ou mais artigos no seu carrinho só podem ser encomendados para determinados dias ou horas. Selecionámos abaixo a vaga disponível mais próxima — ajuste-a se quiser.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> só pode ser encomendado em determinados dias ou horários. Os horários de encomenda disponíveis foram limitados em conformidade.",
-    "serviceStartsPrompt": "🕒 {service} ainda não está disponível — escolha uma hora a partir da abertura. A mais próxima é mostrada abaixo."
+    "serviceStartsPrompt": "🕒 O serviço de {service} ainda não começou — começa às {time}."
   },
   "reservation": {
     "title": "Reservar mesa",
