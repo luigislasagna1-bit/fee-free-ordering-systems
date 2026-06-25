@@ -3362,7 +3362,8 @@
       "checkStatusOk": "ดี",
       "checkStatusUnknown": "ไม่ทราบ",
       "checkStatusFix": "{count, plural, one {แก้ไข # ปัญหา} other {แก้ไข # ปัญหา}}",
-      "openGmbTitle": "เปิด Google Business Profile"
+      "openGmbTitle": "เปิด Google Business Profile",
+      "fixAction": "แก้ไข"
     },
     "phoneOrderingPage": {
       "backToAdmin": "กลับสู่แอดมิน",

@@ -3362,7 +3362,8 @@
       "checkStatusOk": "جيد",
       "checkStatusUnknown": "غير معروف",
       "checkStatusFix": "{count, plural, one {إصلاح # مشكلة} other {إصلاح # مشاكل}}",
-      "openGmbTitle": "فتح ملف Google للأعمال"
+      "openGmbTitle": "فتح ملف Google للأعمال",
+      "fixAction": "إصلاح"
     },
     "phoneOrderingPage": {
       "backToAdmin": "رجوع إلى لوحة الإدارة",

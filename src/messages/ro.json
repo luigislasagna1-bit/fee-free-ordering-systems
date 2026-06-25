@@ -3362,7 +3362,8 @@
       "checkStatusOk": "OK",
       "checkStatusUnknown": "Necunoscut",
       "checkStatusFix": "{count, plural, one {Rezolvă # problemă} other {Rezolvă # probleme}}",
-      "openGmbTitle": "Deschide profilul Google Business"
+      "openGmbTitle": "Deschide profilul Google Business",
+      "fixAction": "Remediază"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Înapoi la admin",

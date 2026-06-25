@@ -3362,7 +3362,8 @@
       "checkStatusOk": "OK",
       "checkStatusUnknown": "Teadmata",
       "checkStatusFix": "{count, plural, one {Paranda # probleem} other {Paranda # probleemi}}",
-      "openGmbTitle": "Ava Google'i ettevõtteprofiil"
+      "openGmbTitle": "Ava Google'i ettevõtteprofiil",
+      "fixAction": "Paranda"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Tagasi haldusesse",

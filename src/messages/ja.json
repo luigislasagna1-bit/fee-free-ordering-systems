@@ -3362,7 +3362,8 @@
       "checkStatusOk": "OK",
       "checkStatusUnknown": "不明",
       "checkStatusFix": "{count, plural, one {# 件の問題を修正} other {# 件の問題を修正}}",
-      "openGmbTitle": "Google ビジネスプロフィールを開く"
+      "openGmbTitle": "Google ビジネスプロフィールを開く",
+      "fixAction": "修正する"
     },
     "phoneOrderingPage": {
       "backToAdmin": "管理画面に戻る",

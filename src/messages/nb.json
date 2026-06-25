@@ -3362,7 +3362,8 @@
       "checkStatusOk": "OK",
       "checkStatusUnknown": "Ukjent",
       "checkStatusFix": "{count, plural, one {Fiks # problem} other {Fiks # problemer}}",
-      "openGmbTitle": "Åpne Google Business Profile"
+      "openGmbTitle": "Åpne Google Business Profile",
+      "fixAction": "Fiks"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Tilbake til admin",

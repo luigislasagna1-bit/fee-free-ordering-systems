@@ -3362,7 +3362,8 @@
       "checkStatusOk": "양호",
       "checkStatusUnknown": "알 수 없음",
       "checkStatusFix": "{count, plural, one {# 개 문제 수정} other {# 개 문제 수정}}",
-      "openGmbTitle": "구글 비즈니스 프로필 열기"
+      "openGmbTitle": "구글 비즈니스 프로필 열기",
+      "fixAction": "수정하기"
     },
     "phoneOrderingPage": {
       "backToAdmin": "관리자로 돌아가기",

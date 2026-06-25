@@ -3362,7 +3362,8 @@
       "checkStatusOk": "OK",
       "checkStatusUnknown": "Neznáme",
       "checkStatusFix": "{count, plural, one {Opraviť # problém} other {Opraviť # problémy}}",
-      "openGmbTitle": "Otvoriť profil firmy Google"
+      "openGmbTitle": "Otvoriť profil firmy Google",
+      "fixAction": "Opraviť"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Späť do administrácie",

@@ -3362,7 +3362,8 @@
       "checkStatusOk": "OK",
       "checkStatusUnknown": "Sconosciuto",
       "checkStatusFix": "{count, plural, one {Correggi # problema} other {Correggi # problemi}}",
-      "openGmbTitle": "Apri Profilo dell'attività su Google"
+      "openGmbTitle": "Apri Profilo dell'attività su Google",
+      "fixAction": "Correggi"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Torna all'admin",

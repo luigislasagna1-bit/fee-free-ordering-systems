@@ -3362,7 +3362,8 @@
       "checkStatusOk": "Rendben",
       "checkStatusUnknown": "Ismeretlen",
       "checkStatusFix": "{count, plural, one {# probléma javítása} other {# probléma javítása}}",
-      "openGmbTitle": "Google Üzleti Profil megnyitása"
+      "openGmbTitle": "Google Üzleti Profil megnyitása",
+      "fixAction": "Javítás"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Vissza az adminhoz",

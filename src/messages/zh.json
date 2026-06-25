@@ -3362,7 +3362,8 @@
       "checkStatusOk": "正常",
       "checkStatusUnknown": "未知",
       "checkStatusFix": "{count, plural, one {修复 # 个问题} other {修复 # 个问题}}",
-      "openGmbTitle": "打开 Google 商家资料"
+      "openGmbTitle": "打开 Google 商家资料",
+      "fixAction": "修复"
     },
     "phoneOrderingPage": {
       "backToAdmin": "返回管理后台",

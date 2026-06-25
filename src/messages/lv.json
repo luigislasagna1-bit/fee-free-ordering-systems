@@ -3362,7 +3362,8 @@
       "checkStatusOk": "Labi",
       "checkStatusUnknown": "Nezināms",
       "checkStatusFix": "{count, plural, one {Novērst # problēmu} other {Novērst # problēmas}}",
-      "openGmbTitle": "Atvērt Google biznesa profilu"
+      "openGmbTitle": "Atvērt Google biznesa profilu",
+      "fixAction": "Labot"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Atpakaļ uz administrāciju",

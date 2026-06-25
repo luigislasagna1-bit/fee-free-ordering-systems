@@ -3362,7 +3362,8 @@
       "checkStatusOk": "תקין",
       "checkStatusUnknown": "לא ידוע",
       "checkStatusFix": "{count, plural, one {תקן # בעיה} other {תקן # בעיות}}",
-      "openGmbTitle": "פתח פרופיל עסק Google"
+      "openGmbTitle": "פתח פרופיל עסק Google",
+      "fixAction": "תקן"
     },
     "phoneOrderingPage": {
       "backToAdmin": "חזרה לניהול",

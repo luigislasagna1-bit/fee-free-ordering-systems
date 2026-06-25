@@ -3362,7 +3362,8 @@
       "checkStatusOk": "OK",
       "checkStatusUnknown": "Tidak diketahui",
       "checkStatusFix": "{count, plural, one {Perbaiki # masalah} other {Perbaiki # masalah}}",
-      "openGmbTitle": "Buka Google Business Profile"
+      "openGmbTitle": "Buka Google Business Profile",
+      "fixAction": "Perbaiki"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Kembali ke admin",

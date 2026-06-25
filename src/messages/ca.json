@@ -3362,7 +3362,8 @@
       "checkStatusOk": "Correcte",
       "checkStatusUnknown": "Desconegut",
       "checkStatusFix": "{count, plural, one {Soluciona # problema} other {Soluciona # problemes}}",
-      "openGmbTitle": "Obrir el perfil de Google Business"
+      "openGmbTitle": "Obrir el perfil de Google Business",
+      "fixAction": "Soluciona-ho"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Tornar a l'administrador",

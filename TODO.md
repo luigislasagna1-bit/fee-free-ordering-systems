@@ -9,14 +9,15 @@ date + commit hash. This file is committed so the backlog never gets lost.
 
 ## Open
 
-- [ ] **Google Ranking report — the "FIX" actions don't actually do anything.** On
-  `/admin/reports/online-ordering/google-rank` each SEO factor (Content optimization, Google Business listing,
-  Social media + local listings, etc.) shows a "FIX N PROBLEM" badge but it's not actionable — clicking it
-  doesn't take the owner anywhere to fix it. FIX: make each `SeoCheck` carry a `fixHref` (+ render the badge as
-  a Link) pointing at the relevant settings page — e.g. Content optimization → `/admin/profile` (description),
-  Google Business / Social → Profile → Social Links, etc. (`src/lib/seo/health-check.ts` builds the checks;
-  the page renders them.) Also: PageSpeed API returns 429 (rate-limited) → cache the result / back off so it
-  doesn't show "UNKNOWN" every load. _(Luigi flagged 2026-06-25.)_
+- [x] **Google Ranking report — the "FIX" actions are now actionable.** DONE 2026-06-25: each `SeoCheck`
+  in `src/lib/seo/health-check.ts` now carries a `fixHref` → Content optimization → `/admin/profile`,
+  Google Business + Social → `/admin/social-media`, Domain + Security → `/admin/publishing`, Structured data →
+  `/admin/marketplace`; the report renders a translated "Fix this →" link on every failing factor (parity 4885).
+  Misleading "Profile → Social Links" hints corrected to "the Social Media page".
+  STILL PENDING: (a) PageSpeed Insights returns 429 (keyless API rate-limit) → cache the result per restaurant
+  (~6h) so it doesn't re-probe + show "UNKNOWN" every load; (b) the `SeoCheck.hint` strings are still
+  hardcoded English in `health-check.ts` (rendered English in all 38 locales) — move them to i18n keys
+  (hint→hintKey+params) while keeping an English `hint` fallback for the English CSV/PDF export.
 
 - [ ] **Kitchen app login banner overlaps the phone status bar (Android + iOS).** On the native kitchen app
   login screen the top floating switcher (`AuthLanguageSwitcher`, `absolute top-4 right-4`) sits in the unsafe

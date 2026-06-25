@@ -3362,7 +3362,8 @@
       "checkStatusOk": "Ок",
       "checkStatusUnknown": "Неизвестно",
       "checkStatusFix": "{count, plural, one {Исправить # проблему} other {Исправить # проблемы}}",
-      "openGmbTitle": "Открыть профиль Google Business"
+      "openGmbTitle": "Открыть профиль Google Business",
+      "fixAction": "Исправить"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Назад в панель управления",

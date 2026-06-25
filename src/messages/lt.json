@@ -3362,7 +3362,8 @@
       "checkStatusOk": "Gerai",
       "checkStatusUnknown": "Nežinoma",
       "checkStatusFix": "{count, plural, one {Taisyti # problemą} other {Taisyti # problemas}}",
-      "openGmbTitle": "Atidaryti Google verslo profilį"
+      "openGmbTitle": "Atidaryti Google verslo profilį",
+      "fixAction": "Pataisyti"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Atgal į administravimą",

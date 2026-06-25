@@ -3770,7 +3770,8 @@
       "checkStatusOk": "ठीक है",
       "checkStatusUnknown": "अज्ञात",
       "checkStatusFix": "{count, plural, one {# समस्या ठीक करें} other {# समस्याएँ ठीक करें}}",
-      "openGmbTitle": "Google Business Profile खोलें"
+      "openGmbTitle": "Google Business Profile खोलें",
+      "fixAction": "ठीक करें"
     },
     "reportReservations": {
       "noRestaurantContext": "कोई रेस्तरां संदर्भ नहीं।",

@@ -3362,7 +3362,8 @@
       "checkStatusOk": "Tamam",
       "checkStatusUnknown": "Bilinmiyor",
       "checkStatusFix": "{count, plural, one {# sorunu düzelt} other {# sorunu düzelt}}",
-      "openGmbTitle": "Google İşletme Profilini Aç"
+      "openGmbTitle": "Google İşletme Profilini Aç",
+      "fixAction": "Düzelt"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Yönetime geri dön",

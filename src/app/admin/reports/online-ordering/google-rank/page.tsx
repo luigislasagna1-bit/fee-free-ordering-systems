@@ -2,7 +2,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
 import { runSeoHealthChecks, type SeoCheck } from "@/lib/seo/health-check";
-import { CheckCircle2, AlertTriangle, HelpCircle, ExternalLink, LineChart } from "lucide-react";
+import { CheckCircle2, AlertTriangle, HelpCircle, ExternalLink, LineChart, ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { resolveReportScope, resolveActiveLocation } from "@/lib/reports/report-scope";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
@@ -190,6 +190,15 @@ async function CheckRow({ check, isLast }: { check: SeoCheck; isLast: boolean })
           <div className="text-sm font-semibold text-gray-900">{check.label}</div>
           {check.hint && (
             <div className="text-xs text-gray-500 mt-0.5">{check.hint}</div>
+          )}
+          {check.status === "fix" && check.fixHref && (
+            <a
+              href={check.fixHref}
+              className="inline-flex items-center gap-1 mt-1.5 text-xs font-semibold text-emerald-700 hover:text-emerald-800 hover:underline"
+            >
+              {t("fixAction")}
+              <ArrowRight className="w-3 h-3" />
+            </a>
           )}
         </div>
       </div>

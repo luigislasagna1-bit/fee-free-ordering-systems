@@ -3362,7 +3362,8 @@
       "checkStatusOk": "OK",
       "checkStatusUnknown": "Desconhecido",
       "checkStatusFix": "{count, plural, one {Corrigir # problema} other {Corrigir # problemas}}",
-      "openGmbTitle": "Abrir Perfil do Google Meu Negócio"
+      "openGmbTitle": "Abrir Perfil do Google Meu Negócio",
+      "fixAction": "Corrigir"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Voltar ao painel",

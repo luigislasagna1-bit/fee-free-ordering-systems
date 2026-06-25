@@ -3362,7 +3362,8 @@
       "checkStatusOk": "OK",
       "checkStatusUnknown": "Tuntematon",
       "checkStatusFix": "{count, plural, one {Korjaa # ongelma} other {Korjaa # ongelmaa}}",
-      "openGmbTitle": "Avaa Google Business Profile"
+      "openGmbTitle": "Avaa Google Business Profile",
+      "fixAction": "Korjaa"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Takaisin hallintaan",

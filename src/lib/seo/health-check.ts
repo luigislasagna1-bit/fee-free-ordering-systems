@@ -32,6 +32,10 @@ export interface SeoCheck {
   problemCount: number;
   /** One-liner explanation shown when status = "fix" or "unknown". */
   hint?: string;
+  /** Internal admin route where the owner actually fixes this problem.
+   *  Rendered as a clickable "Fix" action on the report when status = "fix".
+   *  Omitted for factors with no single settings page (e.g. PageSpeed). */
+  fixHref?: string;
 }
 
 /**
@@ -84,6 +88,7 @@ export async function runSeoHealthChecks(
     status: contentProblems.length > 0 ? "fix" : "ok",
     problemCount: contentProblems.length,
     hint: contentProblems[0],
+    fixHref: "/admin/profile",
   };
 
   // ─── 2. Google Business listing ───────────────────────────────────
@@ -98,7 +103,8 @@ export async function runSeoHealthChecks(
         label: "Google Business listing",
         status: "fix",
         problemCount: 1,
-        hint: "Claim your free Google Business Profile and paste the link in Profile → Social Links",
+        hint: "Claim your free Google Business Profile and paste the link on the Social Media page",
+        fixHref: "/admin/social-media",
       };
 
   // ─── 3. Google Page Speed Test ────────────────────────────────────
@@ -119,7 +125,8 @@ export async function runSeoHealthChecks(
             label: "Domain name",
             status: "fix",
             problemCount: 1,
-            hint: "Set a subdomain or connect your own domain on Setup → Publishing",
+            hint: "Set a subdomain or connect your own domain on the Publishing page",
+            fixHref: "/admin/publishing",
           };
 
   // ─── 5. Security ──────────────────────────────────────────────────
@@ -134,7 +141,8 @@ export async function runSeoHealthChecks(
           label: "Security (HTTPS / SSL)",
           status: "fix",
           problemCount: 1,
-          hint: "Custom domain SSL not provisioned yet — finish DNS verification on Setup → Publishing",
+          hint: "Custom domain SSL not provisioned yet — finish DNS verification on the Publishing page",
+          fixHref: "/admin/publishing",
         }
       : { id: "security", label: "Security (HTTPS / SSL)", status: "ok", problemCount: 0 };
 
@@ -151,6 +159,7 @@ export async function runSeoHealthChecks(
         status: "fix",
         problemCount: 1,
         hint: "Subscribe to the Sales Optimized Website add-on to enable JSON-LD on your hosted page",
+        fixHref: "/admin/marketplace",
       };
 
   // ─── 7. Social media + local listings ─────────────────────────────
@@ -166,7 +175,8 @@ export async function runSeoHealthChecks(
           label: "Social media + local listings",
           status: "fix",
           problemCount: Math.max(1, 2 - populatedSocials),
-          hint: "Add at least 2 of Instagram / Facebook / Yelp / TripAdvisor on Profile → Social Links",
+          hint: "Add at least 2 of Instagram / Facebook / Yelp / TripAdvisor on the Social Media page",
+          fixHref: "/admin/social-media",
         };
 
   return [contentCheck, gmbCheck, pageSpeedCheck, domainCheck, securityCheck, structuredCheck, socialCheck];

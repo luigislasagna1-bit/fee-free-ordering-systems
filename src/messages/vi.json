@@ -3362,7 +3362,8 @@
       "checkStatusOk": "Tốt",
       "checkStatusUnknown": "Không rõ",
       "checkStatusFix": "{count, plural, one {Sửa # vấn đề} other {Sửa # vấn đề}}",
-      "openGmbTitle": "Mở Google Business Profile"
+      "openGmbTitle": "Mở Google Business Profile",
+      "fixAction": "Khắc phục"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Quay lại trang quản trị",

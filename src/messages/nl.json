@@ -3362,7 +3362,8 @@
       "checkStatusOk": "OK",
       "checkStatusUnknown": "Onbekend",
       "checkStatusFix": "{count, plural, one {Los # probleem op} other {Los # problemen op}}",
-      "openGmbTitle": "Google Bedrijfsprofiel openen"
+      "openGmbTitle": "Google Bedrijfsprofiel openen",
+      "fixAction": "Herstellen"
     },
     "phoneOrderingPage": {
       "backToAdmin": "Terug naar beheer",

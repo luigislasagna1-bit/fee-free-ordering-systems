@@ -3814,7 +3814,8 @@
       "checkStatusOk": "OK",
       "checkStatusUnknown": "Unknown",
       "checkStatusFix": "{count, plural, one {Fix # problem} other {Fix # problems}}",
-      "openGmbTitle": "Open Google Business Profile"
+      "openGmbTitle": "Open Google Business Profile",
+      "fixAction": "Fix this"
     },
     "reportReservations": {
       "noRestaurantContext": "No restaurant context.",
