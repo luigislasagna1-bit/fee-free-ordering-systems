@@ -1,16 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { previousPeriod, toISODate } from "@/lib/reports/date-range";
+import { toISODate } from "@/lib/reports/date-range";
 import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
-import { reportOrderWhere } from "@/lib/reports/order-filter";
+import { buildSummaryRows, isSummaryDim, type SummaryDim } from "@/lib/reports/summary-rows";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
 
 /**
  * GET /api/admin/reports/sales/summary/export
  *
- * Same Order.groupBy pivot the Summary page renders, exported as CSV.
- * The pivot dimension is in `?by=` (paymentMethod / type / status).
+ * The Summary table as CSV/XLS — same rows the page renders (full money
+ * breakdown via buildSummaryRows) plus a bold TOTAL row. The grouping
+ * dimension is in `?by=` (day / week / month / paymentMethod / type).
  */
 export async function GET(req: NextRequest) {
   const user = await getSessionUser();
@@ -20,9 +21,7 @@ export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const sp: Record<string, string> = {};
   url.searchParams.forEach((v, k) => { sp[k] = v; });
-  const by: "paymentMethod" | "type" | "status" =
-    sp.by === "type" || sp.by === "status" ? sp.by : "paymentMethod";
-  const compare = sp.compare === "1";
+  const dim: SummaryDim = isSummaryDim(sp.by) ? sp.by : "day";
   const format = pickFormat(url);
 
   const restaurant = await prisma.restaurant.findUnique({
@@ -32,54 +31,58 @@ export async function GET(req: NextRequest) {
   if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
   const range = parseDateRangeInTz(sp, restaurant.timezone ?? undefined);
 
-  const [cur, previous] = await Promise.all([
-    prisma.order.groupBy({
-      by: [by],
-      where: reportOrderWhere(user.restaurantId, range),
-      _count: true,
-      _sum: { total: true },
-      orderBy: { _sum: { total: "desc" } },
-    }),
-    compare
-      ? prisma.order.groupBy({
-          by: [by],
-          where: reportOrderWhere(user.restaurantId, previousPeriod(range)),
-          _count: true,
-          _sum: { total: true },
-        })
-      : [],
-  ]);
-  const prevByKey = new Map(previous.map((r) => [String(r[by] ?? "—"), r]));
+  const { rows, totals } = await buildSummaryRows(user.restaurantId, range, dim, restaurant.timezone ?? undefined);
 
-  const headers: string[] = [by, "Orders", "Revenue", "Average order"];
-  if (compare) headers.push("Previous-period revenue");
-  const rows: (string | number)[][] = [headers];
-  for (const r of cur) {
-    const key = String(r[by] ?? "—");
-    const revenue = r._sum.total ?? 0;
-    const avg = r._count > 0 ? revenue / r._count : 0;
-    const row: (string | number)[] = [
-      key,
-      r._count,
-      round2(revenue),
-      round2(avg),
-    ];
-    if (compare) row.push(round2(prevByKey.get(key)?._sum.total ?? 0));
-    rows.push(row);
+  const dimHeader = dimHeaderLabel(dim);
+  const out: (string | number)[][] = [
+    [dimHeader, "Orders", "Subtotal", "Tax", "Delivery fee", "Tips", "Other fees", "Total"],
+  ];
+  for (const r of rows) {
+    out.push([
+      exportLabel(dim, r.key), r.orders,
+      round2(r.subtotal), round2(r.tax), round2(r.deliveryFee), round2(r.tips), round2(r.otherFees), round2(r.total),
+    ]);
   }
+  out.push([
+    "Total", totals.orders,
+    round2(totals.subtotal), round2(totals.tax), round2(totals.deliveryFee), round2(totals.tips), round2(totals.otherFees), round2(totals.total),
+  ]);
 
   return buildExportResponse({
     restaurantSlug: restaurant.slug,
-    reportSlug: `sales-summary-by-${by}`,
+    reportSlug: `sales-summary-by-${dim}`,
     fromISO: toISODate(range.from),
     toISO: toISODate(range.to),
     format,
-    rows,
+    rows: out,
     metadata: [
-      `Sales Summary — by ${by}`,
+      `Sales Summary — by ${dimHeader}`,
       `Range: ${toISODate(range.from)} to ${toISODate(range.to)}`,
     ],
   });
+}
+
+function dimHeaderLabel(d: SummaryDim): string {
+  return d === "day" ? "Day" : d === "week" ? "Week" : d === "month" ? "Month"
+    : d === "paymentMethod" ? "Payment method" : "Order type";
+}
+
+function prettify(raw: string): string {
+  return raw.split(/[_\s]+/).map((w) => (w ? w.charAt(0).toUpperCase() + w.slice(1) : w)).join(" ");
+}
+
+function exportLabel(d: SummaryDim, key: string): string {
+  if (key === "—" || !key) return "—";
+  if (d === "day") return new Date(`${key}T12:00:00`).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+  if (d === "month") return new Date(`${key}-01T12:00:00`).toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  if (d === "week") {
+    const start = new Date(`${key}T12:00:00`);
+    const end = new Date(start); end.setDate(end.getDate() + 6);
+    const f = (dt: Date, y: boolean) => dt.toLocaleDateString("en-US", { month: "short", day: "numeric", ...(y ? { year: "numeric" } : {}) });
+    return `${f(start, false)} – ${f(end, true)}`;
+  }
+  if (d === "type") return key === "dine_in" ? "Dine in" : prettify(key);
+  return prettify(key);
 }
 
 function round2(v: number): number { return Math.round(v * 100) / 100; }
