@@ -20,6 +20,14 @@ import android.os.Vibrator;
 
 import androidx.core.app.NotificationCompat;
 
+import android.content.SharedPreferences;
+import android.media.audiofx.LoudnessEnhancer;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 /**
  * Foreground service that plays the "GloriaFood ring" — the kitchen order sound on the
  * ALARM stream (loud, ignores ring/notification volume), plus a full-screen-intent
@@ -70,6 +78,64 @@ public class OrderAlarmService extends Service {
         if (orderId == null || orderId.isEmpty()) return true;
         return autoRangThisSession.add(orderId);
     }
+
+    // ── Custom alert sound (Luigi 2026-06-25) ──────────────────────────────────────
+    // The owner can upload a CUSTOM ring; when set, it REPLACES the built-in alarm on the
+    // app. The WebView (via OrderAlarmPlugin.setCustomSound) hands us the URL while the app
+    // is foreground; we download it to a LOCAL file so the screen-off ring plays it with the
+    // same reliability as the bundled R.raw alarm (no network at ring time). ANY failure
+    // falls back to the baked alarm, so a ring ALWAYS fires.
+    static final String PREFS = "ff_kitchen_alarm";
+    static final String KEY_CUSTOM_URL = "customSoundUrl";
+    static final String KEY_CUSTOM_PATH = "customSoundPath";
+    static final String CUSTOM_FILE = "custom_alarm_sound";
+    /** Loudness boost (millibels) applied to the CUSTOM sound ONLY — a raw upload isn't
+     *  pre-amplified like the baked alarm. Tune here if owners' sounds ring too quiet/loud. */
+    static final int CUSTOM_GAIN_MB = 800;
+
+    /** Receive the restaurant's custom alert-sound URL (or null/empty to clear). Caches the
+     *  file locally on a background thread; idempotent for an unchanged URL already cached. */
+    static void setCustomSoundUrl(final Context ctx, final String url) {
+        final SharedPreferences sp = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        if (url == null || url.trim().isEmpty()) {
+            sp.edit().remove(KEY_CUSTOM_URL).remove(KEY_CUSTOM_PATH).apply();
+            try { new File(ctx.getFilesDir(), CUSTOM_FILE).delete(); } catch (Exception ignored) {}
+            return;
+        }
+        final String current = sp.getString(KEY_CUSTOM_URL, null);
+        final String cachedPath = sp.getString(KEY_CUSTOM_PATH, null);
+        if (url.equals(current) && cachedPath != null && new File(cachedPath).exists()) return; // already cached
+        new Thread(() -> {
+            InputStream in = null; FileOutputStream out = null;
+            try {
+                HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+                conn.setConnectTimeout(15000);
+                conn.setReadTimeout(20000);
+                conn.connect();
+                if (conn.getResponseCode() != 200) return;
+                in = conn.getInputStream();
+                File f = new File(ctx.getFilesDir(), CUSTOM_FILE);
+                out = new FileOutputStream(f);
+                byte[] buf = new byte[8192]; int n; long total = 0;
+                while ((n = in.read(buf)) != -1) { out.write(buf, 0, n); total += n; if (total > 20_000_000L) break; }
+                out.flush();
+                if (total > 0) sp.edit().putString(KEY_CUSTOM_URL, url).putString(KEY_CUSTOM_PATH, f.getAbsolutePath()).apply();
+            } catch (Exception ignored) {
+            } finally {
+                try { if (in != null) in.close(); } catch (Exception ignored) {}
+                try { if (out != null) out.close(); } catch (Exception ignored) {}
+            }
+        }).start();
+    }
+
+    /** The cached custom-sound file path if one is ready, else null (→ play the baked alarm). */
+    static String cachedCustomSoundPath(Context ctx) {
+        try {
+            String path = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY_CUSTOM_PATH, null);
+            if (path != null) { File f = new File(path); if (f.exists() && f.length() > 0) return path; }
+        } catch (Exception ignored) {}
+        return null;
+    }
     /** Set when the WebView HUSHES the ring because staff OPENED the order detail (v2.6
      *  single-engine, replicating the verified v2.4 stop-on-open). The alarm PAUSES but
      *  the service stays alive (isRunning stays true), so the keep-alive poll's idempotent
@@ -79,6 +145,7 @@ public class OrderAlarmService extends Service {
     static volatile boolean hushedByUser = false;
 
     private MediaPlayer player;
+    private LoudnessEnhancer loudnessEnhancer;
     private Vibrator vibrator;
     private android.media.AudioManager audioManager;
     /** Per-restaurant: vibrate alongside the ring? Set from the start intent's
@@ -260,45 +327,70 @@ public class OrderAlarmService extends Service {
             }
         } catch (Exception ignored) {}
 
+        AudioAttributes attrs = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+        // Continuity (v2.6): if the track finishes while the order is STILL pending and not
+        // hushed, replay it seamlessly (no stopSelf → poll-restart gap) so the ring is one
+        // continuous stream first→last. A short auto-FYI (autoMode) never self-replays. A real
+        // stop (accept/expire) comes through the poll's stop(); a hush pauses. Luigi 2026-06-23.
+        final MediaPlayer.OnCompletionListener replay = mp -> {
+            try {
+                if (isRunning && !hushedByUser && !autoMode) { mp.seekTo(0); mp.start(); }
+                else stopSelf();
+            } catch (Exception ignored) { stopSelf(); }
+        };
         try {
             player = new MediaPlayer();
-            player.setAudioAttributes(new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build());
-            AssetFileDescriptor afd = getResources().openRawResourceFd(R.raw.order_alarm);
-            player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-            afd.close();
-            // Play the FULL ring once (it intensifies at the end). If it finishes
-            // while the order is still pending, end the service so the keep-alive
-            // poll restarts it on its next ~4s tick. Luigi 2026-06-22.
-            //
-            // LOUDNESS: order_alarm.mp3 is PRE-BAKED loud — the in-app ring's exact 6x
-            // gain + -1.5 dBFS brick-wall limiter rendered into the file (regenerate
-            // via scripts/bake-order-alarm.ps1). So it plays as loud as the foreground
-            // ring with NO runtime processing. We deliberately do NOT use a
-            // LoudnessEnhancer: it's a COMPRESSOR, which lifts the quiet intro up to the
-            // crescendo's level and flattens the final-40s swell (Luigi 2026-06-22:
-            // background "doesn't intensify"). The baked file keeps the full dynamic
-            // range, so the screen-off ring is identical to the in-app one. Luigi 2026-06-22.
+            player.setAudioAttributes(attrs);
             player.setLooping(false);
-            // Continuity (v2.6): if the full track finishes while the order is STILL
-            // pending and not hushed, replay it seamlessly (no stopSelf → poll-restart
-            // gap) so the ring is one continuous stream first→last. A real stop
-            // (accept/expire) comes through the poll's stop(); a hush pauses (so the track
-            // never completes while hushed). Each replay is the full baked-loud file, so
-            // every pass still intensifies in its final ~40s. Luigi 2026-06-23.
-            player.setOnCompletionListener(mp -> {
+            player.setOnCompletionListener(replay);
+
+            // CUSTOM SOUND (Luigi 2026-06-25): if the owner uploaded a custom alert sound and
+            // we cached it locally, play THAT — it REPLACES the built-in alarm on the app. The
+            // cache is a LOCAL file, so screen-off reliability is identical to R.raw. ANY failure
+            // (no cache / bad format / decode error) falls through to the baked alarm below, so a
+            // ring ALWAYS fires. ADDITIVE: no custom set → byte-identical to the baked-only path.
+            boolean usedCustom = false;
+            String customPath = cachedCustomSoundPath(this);
+            if (customPath != null) {
                 try {
-                    // !autoMode: a short auto-FYI must never self-replay past one track length
-                    // even if its 3s Handler callback is ever starved (normally it's stopped by
-                    // the AUTO_RING_MS timer long before the 4-5min track completes). Luigi 2026-06-23.
-                    if (isRunning && !hushedByUser && !autoMode) { mp.seekTo(0); mp.start(); }
-                    else stopSelf();
-                } catch (Exception ignored) { stopSelf(); }
-            });
-            player.prepare();
+                    player.setDataSource(customPath);
+                    player.prepare();
+                    usedCustom = true;
+                } catch (Exception customErr) {
+                    try {
+                        player.reset();
+                        player.setAudioAttributes(attrs);
+                        player.setLooping(false);
+                        player.setOnCompletionListener(replay);
+                    } catch (Exception ignored) {}
+                    usedCustom = false;
+                }
+            }
+            if (!usedCustom) {
+                // Baked alarm (UNCHANGED): order_alarm.mp3 is PRE-BAKED loud — the in-app ring's
+                // exact 6x gain + -1.5 dBFS brick-wall limiter rendered into the file (regenerate
+                // via scripts/bake-order-alarm.ps1). Plays as loud as the foreground ring with NO
+                // runtime processing; we deliberately do NOT LoudnessEnhance it — that's a
+                // compressor → it flattens the final-40s crescendo. Luigi 2026-06-22.
+                AssetFileDescriptor afd = getResources().openRawResourceFd(R.raw.order_alarm);
+                player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                afd.close();
+                player.prepare();
+            }
             player.start();
+
+            // A raw custom upload isn't pre-amplified like the baked file — lift it with a
+            // LoudnessEnhancer on the CUSTOM path ONLY (the baked crescendo stays untouched).
+            if (usedCustom) {
+                try {
+                    loudnessEnhancer = new LoudnessEnhancer(player.getAudioSessionId());
+                    loudnessEnhancer.setTargetGain(CUSTOM_GAIN_MB);
+                    loudnessEnhancer.setEnabled(true);
+                } catch (Exception ignored) {}
+            }
         } catch (Exception ignored) {}
 
         // Vibration is OPTIONAL per the restaurant's setting; the ring above always
@@ -323,6 +415,7 @@ public class OrderAlarmService extends Service {
         autoMode = false;
         hushedByUser = false;
         if (autoStop != null) handler.removeCallbacks(autoStop);
+        try { if (loudnessEnhancer != null) { loudnessEnhancer.release(); loudnessEnhancer = null; } } catch (Exception ignored) {}
         try { if (player != null) { player.stop(); player.release(); player = null; } } catch (Exception ignored) {}
         try { if (vibrator != null) vibrator.cancel(); } catch (Exception ignored) {}
         try { if (wakeLock != null && wakeLock.isHeld()) wakeLock.release(); } catch (Exception ignored) {}

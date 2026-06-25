@@ -24,7 +24,7 @@ import {
   nativePrinterErrorCopy,
 } from "@/lib/native-printer";
 import { registerKitchenPush, unregisterKitchenPush } from "@/lib/native-push";
-import { isNativeAlarmAvailable, nativeHushAlarm, nativeRearmAlarm, nativeStopAlarm } from "@/lib/native-order-alarm";
+import { isNativeAlarmAvailable, nativeHushAlarm, nativeRearmAlarm, nativeStopAlarm, nativeSetCustomSound } from "@/lib/native-order-alarm";
 import { getNativeAppVersion } from "@/lib/native-app-version";
 import { NativePrinterSetup, getDirectPrinterConfig } from "./NativePrinterSetup";
 import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
@@ -1484,6 +1484,16 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   // EXACTLY as before. Detected after mount (window-only) to avoid an SSR hydration mismatch.
   const [nativeAlarm, setNativeAlarm] = useState(false);
   useEffect(() => { setNativeAlarm(isNativeAlarmAvailable()); }, []);
+
+  // Push the owner's custom alert sound down to the NATIVE app so it caches the file and the
+  // screen-off ring plays it INSTEAD of the built-in alarm (the native side falls back to the
+  // built-in sound if the download/decode fails, so a ring always fires). Runs while the kitchen
+  // is open so the file is cached ahead of the next ring. No-op in a browser / on an older APK
+  // (which keeps playing the web ring / built-in alarm). Luigi 2026-06-25.
+  useEffect(() => {
+    if (!nativeAlarm) return;
+    nativeSetCustomSound(customSoundUrl);
+  }, [nativeAlarm, customSoundUrl]);
 
   // Browsers require a user gesture before AudioContext can play. We unlock
   // it on the first click/keypress anywhere on the page, then keep the same

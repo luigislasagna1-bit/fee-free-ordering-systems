@@ -45,6 +45,16 @@ public class OrderAlarmPlugin extends Plugin {
         call.resolve();
     }
 
+    /** Hand the native side the restaurant's custom alert-sound URL (or "" / null to clear) so
+     *  it downloads + caches the file locally for the screen-off ring. A cached custom sound
+     *  REPLACES the built-in alarm; if it's missing/undecodable the alarm falls back to the
+     *  baked sound, so a ring always fires. Called by the WebView while foreground. Luigi 2026-06-25. */
+    @PluginMethod
+    public void setCustomSound(PluginCall call) {
+        OrderAlarmService.setCustomSoundUrl(getContext(), call.getString("url", ""));
+        call.resolve();
+    }
+
     /** No-op the WebView can call to confirm the plugin exists (v2.6 detection). */
     @PluginMethod
     public void ping(PluginCall call) {

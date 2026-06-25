@@ -55,3 +55,13 @@ export async function nativeStopAlarm(): Promise<void> {
   if (!p || typeof p.stop !== "function") return;
   try { await p.stop(); } catch { /* best-effort */ }
 }
+
+/** Hand the native app the restaurant's custom alert-sound URL (or null to clear) so it
+ *  downloads + caches it for the screen-off ring. A cached custom sound REPLACES the built-in
+ *  alarm on the app; on any failure the native side falls back to the built-in sound, so a ring
+ *  always fires. No-op in a browser / on an older APK (no setCustomSound method). Luigi 2026-06-25. */
+export async function nativeSetCustomSound(url: string | null): Promise<void> {
+  const p = orderAlarmPlugin();
+  if (!p || typeof p.setCustomSound !== "function") return;
+  try { await p.setCustomSound({ url: url ?? "" }); } catch { /* best-effort */ }
+}
