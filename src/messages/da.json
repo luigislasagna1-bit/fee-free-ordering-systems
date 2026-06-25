@@ -3334,7 +3334,8 @@
       "exportTitle": "Eksporter",
       "exportLabel": "Eksporter",
       "exportXls": "Eksporter XLS",
-      "exportCsv": "Eksporter CSV"
+      "exportCsv": "Eksporter CSV",
+      "exportPdf": "Eksporter PDF"
     },
     "legalPageShell": {
       "backToHome": "Tilbage til Fee Free Ordering",

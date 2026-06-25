@@ -3334,7 +3334,8 @@
       "exportTitle": "Exportă",
       "exportLabel": "Exportă",
       "exportXls": "Exportă XLS",
-      "exportCsv": "Exportă CSV"
+      "exportCsv": "Exportă CSV",
+      "exportPdf": "Exportă PDF"
     },
     "legalPageShell": {
       "backToHome": "Înapoi la Fee Free Ordering",

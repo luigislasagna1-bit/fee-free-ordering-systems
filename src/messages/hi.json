@@ -3553,7 +3553,8 @@
       "exportTitle": "निर्यात करें",
       "exportLabel": "निर्यात करें",
       "exportXls": "XLS निर्यात करें",
-      "exportCsv": "CSV निर्यात करें"
+      "exportCsv": "CSV निर्यात करें",
+      "exportPdf": "PDF निर्यात करें"
     },
     "heatmapClient": {
       "yourRestaurant": "आपका रेस्तरां",

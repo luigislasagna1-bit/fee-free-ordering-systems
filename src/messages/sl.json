@@ -3334,7 +3334,8 @@
       "exportTitle": "Izvozi",
       "exportLabel": "Izvozi",
       "exportXls": "Izvozi XLS",
-      "exportCsv": "Izvozi CSV"
+      "exportCsv": "Izvozi CSV",
+      "exportPdf": "Izvozi PDF"
     },
     "legalPageShell": {
       "backToHome": "Nazaj na Fee Free Ordering",

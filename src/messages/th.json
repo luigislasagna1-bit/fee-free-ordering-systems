@@ -3334,7 +3334,8 @@
       "exportTitle": "ส่งออก",
       "exportLabel": "ส่งออก",
       "exportXls": "ส่งออก XLS",
-      "exportCsv": "ส่งออก CSV"
+      "exportCsv": "ส่งออก CSV",
+      "exportPdf": "ส่งออก PDF"
     },
     "legalPageShell": {
       "backToHome": "กลับสู่ Fee Free Ordering",

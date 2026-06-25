@@ -3334,7 +3334,8 @@
       "exportTitle": "Exportera",
       "exportLabel": "Exportera",
       "exportXls": "Exportera XLS",
-      "exportCsv": "Exportera CSV"
+      "exportCsv": "Exportera CSV",
+      "exportPdf": "Exportera PDF"
     },
     "legalPageShell": {
       "backToHome": "Tillbaka till Fee Free Ordering",

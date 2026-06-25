@@ -3334,7 +3334,8 @@
       "exportTitle": "ייצוא",
       "exportLabel": "ייצוא",
       "exportXls": "ייצוא XLS",
-      "exportCsv": "ייצוא CSV"
+      "exportCsv": "ייצוא CSV",
+      "exportPdf": "ייצוא PDF"
     },
     "legalPageShell": {
       "backToHome": "חזרה אל Fee Free Ordering",

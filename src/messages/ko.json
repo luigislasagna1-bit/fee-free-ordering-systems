@@ -3334,7 +3334,8 @@
       "exportTitle": "내보내기",
       "exportLabel": "내보내기",
       "exportXls": "XLS 내보내기",
-      "exportCsv": "CSV 내보내기"
+      "exportCsv": "CSV 내보내기",
+      "exportPdf": "PDF 내보내기"
     },
     "legalPageShell": {
       "backToHome": "Fee Free Ordering으로 돌아가기",

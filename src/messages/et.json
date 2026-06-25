@@ -3334,7 +3334,8 @@
       "exportTitle": "Ekspordi",
       "exportLabel": "Ekspordi",
       "exportXls": "Ekspordi XLS",
-      "exportCsv": "Ekspordi CSV"
+      "exportCsv": "Ekspordi CSV",
+      "exportPdf": "Ekspordi PDF"
     },
     "legalPageShell": {
       "backToHome": "Tagasi Fee Free Orderingi juurde",

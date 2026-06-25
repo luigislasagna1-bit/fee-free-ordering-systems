@@ -3334,7 +3334,8 @@
       "exportTitle": "Xuất",
       "exportLabel": "Xuất",
       "exportXls": "Xuất XLS",
-      "exportCsv": "Xuất CSV"
+      "exportCsv": "Xuất CSV",
+      "exportPdf": "Xuất PDF"
     },
     "legalPageShell": {
       "backToHome": "Quay lại Fee Free Ordering",

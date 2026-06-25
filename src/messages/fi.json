@@ -3334,7 +3334,8 @@
       "exportTitle": "Vie",
       "exportLabel": "Vie",
       "exportXls": "Vie XLS",
-      "exportCsv": "Vie CSV"
+      "exportCsv": "Vie CSV",
+      "exportPdf": "Vie PDF"
     },
     "legalPageShell": {
       "backToHome": "Takaisin Fee Free Ordering -palveluun",

@@ -3334,7 +3334,8 @@
       "exportTitle": "Ekspor",
       "exportLabel": "Ekspor",
       "exportXls": "Ekspor XLS",
-      "exportCsv": "Ekspor CSV"
+      "exportCsv": "Ekspor CSV",
+      "exportPdf": "Ekspor PDF"
     },
     "legalPageShell": {
       "backToHome": "Kembali ke Fee Free Ordering",

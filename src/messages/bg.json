@@ -3334,7 +3334,8 @@
       "exportTitle": "Експортиране",
       "exportLabel": "Експортиране",
       "exportXls": "Експортирай XLS",
-      "exportCsv": "Експортирай CSV"
+      "exportCsv": "Експортирай CSV",
+      "exportPdf": "Експортирай PDF"
     },
     "legalPageShell": {
       "backToHome": "Обратно към Fee Free Ordering",

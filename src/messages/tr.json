@@ -3334,7 +3334,8 @@
       "exportTitle": "Dışa Aktar",
       "exportLabel": "Dışa Aktar",
       "exportXls": "XLS olarak dışa aktar",
-      "exportCsv": "CSV olarak dışa aktar"
+      "exportCsv": "CSV olarak dışa aktar",
+      "exportPdf": "PDF olarak dışa aktar"
     },
     "legalPageShell": {
       "backToHome": "Fee Free Ordering'e Geri Dön",

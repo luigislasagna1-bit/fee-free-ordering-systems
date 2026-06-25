@@ -3334,7 +3334,8 @@
       "exportTitle": "Exportovat",
       "exportLabel": "Exportovat",
       "exportXls": "Exportovat XLS",
-      "exportCsv": "Exportovat CSV"
+      "exportCsv": "Exportovat CSV",
+      "exportPdf": "Exportovat PDF"
     },
     "legalPageShell": {
       "backToHome": "Zpět na Fee Free Ordering",

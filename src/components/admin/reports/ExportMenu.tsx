@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Download, FileSpreadsheet, FileText } from "lucide-react";
+import { Download, FileSpreadsheet, FileText, Printer } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 /**
@@ -52,7 +52,7 @@ export function ExportMenu({
   }, [open]);
 
   // Compose the export URL with the current filters + chosen format.
-  const buildHref = (format: "csv" | "xls") => {
+  const buildHref = (format: "csv" | "xls" | "pdf") => {
     const sp = new URLSearchParams(currentQuery);
     sp.set("format", format);
     return `${exportUrl}?${sp.toString()}`;
@@ -79,7 +79,17 @@ export function ExportMenu({
         // Pops UP and to the LEFT so it doesn't fall off the right edge
         // of the report card on small screens. Matches the GloriaFood
         // placement (their menu appears above the icon).
-        <div className="absolute right-0 bottom-full mb-1 z-20 bg-white border border-gray-200 rounded-lg shadow-lg w-36 overflow-hidden">
+        <div className="absolute right-0 bottom-full mb-1 z-20 bg-white border border-gray-200 rounded-lg shadow-lg w-40 overflow-hidden">
+          <a
+            href={buildHref("pdf")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition"
+            onClick={() => setOpen(false)}
+          >
+            <Printer className="w-4 h-4 text-red-500" />
+            {t("exportPdf")}
+          </a>
           <a
             href={buildHref("xls")}
             download
