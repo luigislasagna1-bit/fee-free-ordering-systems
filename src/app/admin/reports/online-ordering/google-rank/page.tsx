@@ -5,6 +5,7 @@ import { runSeoHealthChecks, type SeoCheck } from "@/lib/seo/health-check";
 import { CheckCircle2, AlertTriangle, HelpCircle, ExternalLink, LineChart } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { resolveReportScope, resolveActiveLocation } from "@/lib/reports/report-scope";
+import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import { LocationChooser, ActiveLocationChip } from "../../LocationChooser";
 
 /**
@@ -78,13 +79,24 @@ export default async function GoogleRankReportPage({
   const okCount = checks.filter((c) => c.status === "ok").length;
   const serpApiConfigured = !!process.env.SERPAPI_KEY;
 
+  // The export must honor the active location for a brand parent (single
+  // restaurants resolve to themselves and need no param). No date range
+  // on this report, so `loc` is the only filter to forward.
+  const currentQuery = scope.isChain ? `loc=${active.id}` : "";
+
   return (
     <div>
-      <header className="mb-5">
-        <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
-        <p className="text-sm text-gray-500 mt-0.5">
-          {t("pageSubtitle")}
-        </p>
+      <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
+          <p className="text-sm text-gray-500 mt-0.5">
+            {t("pageSubtitle")}
+          </p>
+        </div>
+        <ExportMenu
+          exportUrl="/api/admin/reports/online-ordering/google-rank/export"
+          currentQuery={currentQuery}
+        />
       </header>
 
       {scope.isChain && <ActiveLocationChip name={active.name} baseQuery={rangeQuery} />}

@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
+import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import { Info } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
@@ -83,7 +84,13 @@ export default async function FunnelReportPage({
             {t("subheading", { range: formatRangeLabelInTz(range, scope.timezone ?? undefined) })}
           </p>
         </div>
-        <DateRangePicker />
+        <div className="flex items-center gap-2 flex-wrap">
+          <DateRangePicker />
+          <ExportMenu
+            exportUrl="/api/admin/reports/online-ordering/funnel/export"
+            currentQuery={buildQuery(sp)}
+          />
+        </div>
       </header>
 
       {visitCount === 0 ? (
@@ -129,6 +136,19 @@ export default async function FunnelReportPage({
       )}
     </div>
   );
+}
+
+/** Re-stringify the searchParams object into a URLSearchParams-safe query
+ *  string so the export honors the active filters (preset/from/to + any
+ *  report-specific params like loc). Mirrors the sales/trend page. */
+function buildQuery(sp: Record<string, string | string[] | undefined>): string {
+  const u = new URLSearchParams();
+  for (const [k, v] of Object.entries(sp)) {
+    if (v === undefined) continue;
+    if (Array.isArray(v)) v.forEach((x) => u.append(k, x));
+    else u.set(k, v);
+  }
+  return u.toString();
 }
 
 function EmptyState({ emptyHeading, emptyBody }: { emptyHeading: string; emptyBody: string }) {

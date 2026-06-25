@@ -8,6 +8,7 @@ import { HeatmapLoader } from "./HeatmapLoader";
 import { getTranslations } from "next-intl/server";
 import { resolveReportScope, resolveActiveLocation } from "@/lib/reports/report-scope";
 import { LocationChooser, ActiveLocationChip } from "../../LocationChooser";
+import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 
 /**
  * /admin/reports/online-ordering/heatmap
@@ -148,6 +149,10 @@ export default async function HeatmapReportPage({
   }
   const outsideAllZones = points.length - zoneStats.reduce((s, z) => s + z.hits, 0);
 
+  // Export honors the active location + date range. `loc` is required
+  // so the per-location export scopes to active.id, matching this page.
+  const exportQuery = `${rangeQuery}${rangeQuery ? "&" : ""}loc=${active.id}`;
+
   return (
     <div>
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
@@ -177,7 +182,13 @@ export default async function HeatmapReportPage({
           number more than the visual heatmap itself. */}
       {restaurant.deliveryZones.length > 0 && points.length > 0 && (
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-          <h2 className="font-semibold text-gray-900 mb-3">{t("ordersByZone")}</h2>
+          <div className="flex items-start justify-between gap-3 mb-3">
+            <h2 className="font-semibold text-gray-900">{t("ordersByZone")}</h2>
+            <ExportMenu
+              exportUrl="/api/admin/reports/online-ordering/heatmap/export"
+              currentQuery={exportQuery}
+            />
+          </div>
           <div className="overflow-x-auto">
           <table className="w-full text-sm min-w-[520px]">
             <thead>

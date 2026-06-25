@@ -5,6 +5,7 @@ import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-ran
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ChartTableToggle } from "@/components/admin/reports/ChartTableToggle";
+import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import { CHANNELS, getChannel, type ChannelSlug } from "@/lib/reports/channels";
 import { getTranslations } from "next-intl/server";
 
@@ -84,6 +85,10 @@ export default async function VisitsReportPage({
         <div className="flex items-center gap-2 flex-wrap">
           <ChartTableToggle />
           <DateRangePicker />
+          <ExportMenu
+            exportUrl="/api/admin/reports/online-ordering/visits/export"
+            currentQuery={buildQuery(sp)}
+          />
         </div>
       </header>
 
@@ -252,4 +257,17 @@ function Legend({ channels, totals }: { channels: typeof CHANNELS; totals: Map<C
       ))}
     </div>
   );
+}
+
+/** Re-stringify the searchParams object into a URLSearchParams-safe query
+ *  string, so the export honors the active filters (preset/from/to/view/loc).
+ *  Mirrors the sales/trend report's buildQuery. */
+function buildQuery(sp: Record<string, string | string[] | undefined>): string {
+  const u = new URLSearchParams();
+  for (const [k, v] of Object.entries(sp)) {
+    if (v === undefined) continue;
+    if (Array.isArray(v)) v.forEach((x) => u.append(k, x));
+    else u.set(k, v);
+  }
+  return u.toString();
 }

@@ -4,6 +4,7 @@ import { toISODate } from "@/lib/reports/date-range";
 import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
+import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import { ComingSoonPlaceholder } from "@/components/admin/reports/ComingSoonPlaceholder";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
@@ -81,7 +82,13 @@ export default async function ReservationsReportPage({
           <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">{t("summary", { bookings: total.toLocaleString(), guests: totalGuests.toLocaleString(), range: formatRangeLabelInTz(range, scope.timezone ?? undefined) })}</p>
         </div>
-        <DateRangePicker />
+        <div className="flex items-center gap-2 flex-wrap">
+          <DateRangePicker />
+          <ExportMenu
+            exportUrl="/api/admin/reports/online-ordering/reservations/export"
+            currentQuery={buildQuery(sp)}
+          />
+        </div>
       </header>
 
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
@@ -113,4 +120,17 @@ export default async function ReservationsReportPage({
       </div>
     </div>
   );
+}
+
+/** Re-stringify the searchParams object into a URLSearchParams-safe query
+ *  string so the export honors the page's active filters (preset/from/to +
+ *  any report-specific params). Mirrors sales/trend's buildQuery. */
+function buildQuery(sp: Record<string, string | string[] | undefined>): string {
+  const u = new URLSearchParams();
+  for (const [k, v] of Object.entries(sp)) {
+    if (v === undefined) continue;
+    if (Array.isArray(v)) v.forEach((x) => u.append(k, x));
+    else u.set(k, v);
+  }
+  return u.toString();
 }

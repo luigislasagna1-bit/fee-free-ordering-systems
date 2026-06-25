@@ -6,6 +6,7 @@ import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { FRESHNESS_MS } from "@/lib/kitchen-devices";
 import { getTranslations } from "next-intl/server";
 import { resolveReportScope, resolveActiveLocation } from "@/lib/reports/report-scope";
+import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import { LocationChooser, ActiveLocationChip } from "../../LocationChooser";
 
 /**
@@ -184,6 +185,14 @@ export default async function ConnectivityReportPage({
     ? dayStats.reduce((s, d) => s + d.pct, 0) / dayStats.length
     : 0;
 
+  // Export carries the active filters: the date range (preset/from/to via
+  // rangeQuery) PLUS the active location so the file matches THIS view.
+  const currentQuery = (() => {
+    const u = new URLSearchParams(rangeQuery);
+    u.set("loc", active.id);
+    return u.toString();
+  })();
+
   return (
     <div>
       <header className="flex items-start justify-between gap-3 flex-wrap mb-5">
@@ -193,7 +202,13 @@ export default async function ConnectivityReportPage({
             {t("pageDescription")} · {formatRangeLabel(range)}
           </p>
         </div>
-        <DateRangePicker />
+        <div className="flex items-center gap-2 flex-wrap">
+          <DateRangePicker />
+          <ExportMenu
+            exportUrl="/api/admin/reports/online-ordering/connectivity/export"
+            currentQuery={currentQuery}
+          />
+        </div>
       </header>
 
       {scope.isChain && <ActiveLocationChip name={active.name} baseQuery={rangeQuery} />}

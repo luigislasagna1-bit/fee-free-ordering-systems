@@ -6,6 +6,7 @@ import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order
 import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { previousPeriod } from "@/lib/reports/date-range";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
+import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import { Users, UserPlus, Repeat, TrendingUp } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
@@ -72,7 +73,13 @@ export default async function ClientsDashboardPage({
           <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">{t("pageSubtitle", { range: formatRangeLabelInTz(range, scope.timezone ?? undefined) })}</p>
         </div>
-        <DateRangePicker />
+        <div className="flex items-center gap-2 flex-wrap">
+          <DateRangePicker />
+          <ExportMenu
+            exportUrl="/api/admin/reports/online-ordering/clients/export"
+            currentQuery={buildQuery(sp)}
+          />
+        </div>
       </header>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -110,6 +117,19 @@ export default async function ClientsDashboardPage({
       </p>
     </div>
   );
+}
+
+/** Re-stringify the searchParams object into a URLSearchParams-safe query
+ *  string, so the export honors the active filters (preset/from/to + any
+ *  report-specific params). Mirrors /admin/reports/sales/trend. */
+function buildQuery(sp: Record<string, string | string[] | undefined>): string {
+  const u = new URLSearchParams();
+  for (const [k, v] of Object.entries(sp)) {
+    if (v === undefined) continue;
+    if (Array.isArray(v)) v.forEach((x) => u.append(k, x));
+    else u.set(k, v);
+  }
+  return u.toString();
 }
 
 function Kpi({
