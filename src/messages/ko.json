@@ -964,7 +964,10 @@
       "noUpcoming": "예정된 특별일이 없습니다. 위에서 추가하세요.",
       "holidaySaved": "특별일이 저장되었습니다",
       "holidaySaveFailed": "저장하지 못했습니다",
-      "between": "시간"
+      "between": "시간",
+      "addSlot": "시간대 추가",
+      "removeSlot": "시간대 삭제",
+      "closesNextDay": "다음 날 마감 (예: 자정 넘어 영업)"
     },
     "services": {
       "title": "레스토랑 서비스",

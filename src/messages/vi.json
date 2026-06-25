@@ -964,7 +964,10 @@
       "noUpcoming": "Không có ngày đặc biệt sắp tới. Thêm ở trên.",
       "holidaySaved": "Đã lưu ngày đặc biệt",
       "holidaySaveFailed": "Lưu thất bại",
-      "between": "từ"
+      "between": "từ",
+      "addSlot": "Thêm khung giờ",
+      "removeSlot": "Xóa khung giờ",
+      "closesNextDay": "Đóng cửa vào ngày hôm sau (vd: mở quá nửa đêm)"
     },
     "services": {
       "title": "Dịch vụ nhà hàng",

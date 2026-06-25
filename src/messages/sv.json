@@ -964,7 +964,10 @@
       "noUpcoming": "Inga kommande specialdagar. Lägg till en ovan.",
       "holidaySaved": "Specialdag sparad",
       "holidaySaveFailed": "Det gick inte att spara",
-      "between": "mellan"
+      "between": "mellan",
+      "addSlot": "Lägg till en tidslucka",
+      "removeSlot": "Ta bort tidslucka",
+      "closesNextDay": "Stänger nästa dag (t.ex. öppet efter midnatt)"
     },
     "services": {
       "title": "Restaurangtjänster",

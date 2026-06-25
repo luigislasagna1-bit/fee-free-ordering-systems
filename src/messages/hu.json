@@ -964,7 +964,10 @@
       "noUpcoming": "Nincsenek közelgő különleges napok. Adj hozzá fentebb.",
       "holidaySaved": "Különleges nap mentve",
       "holidaySaveFailed": "A mentés nem sikerült",
-      "between": "ekkor"
+      "between": "ekkor",
+      "addSlot": "Idősáv hozzáadása",
+      "removeSlot": "Idősáv eltávolítása",
+      "closesNextDay": "Másnap zár (pl. éjfél után is nyitva)"
     },
     "services": {
       "title": "Éttermi szolgáltatások",

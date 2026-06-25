@@ -11,7 +11,7 @@ import { formatCurrency } from "@/lib/utils";
 import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
 import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib/format-time";
 import { methodsForOrderType, paymentValueToSlug } from "@/lib/payment-methods";
-import { localDowAndHHMM, liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
+import { localDowAndHHMM, liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, rowIntervals } from "@/lib/restaurant-hours";
 import { resolveServiceHours, type ServiceKind } from "@/lib/service-hours";
 import { isVisibleNow } from "@/lib/menu-visibility";
 import { hasFulfilWindow, isFulfilableAt, fulfilWindowLabel, combinedFulfilConstraint } from "@/lib/menu-fulfilment";
@@ -2244,6 +2244,13 @@ export function OrderingPageClient({
     (restaurant.openingHours ?? []) as any, new Date(), hoursFmt, holidayForStatus, restaurantTz,
   );
   const generalIsClosedNow = liveStatusForClient.kind !== "open";
+  // Today's hours label for the header — SPLIT HOURS aware: shows
+  // "12:00 – 15:00, 18:00 – 23:00" when the day has a break; a single-window day
+  // keeps the live closesAt behaviour (shows the current window's close).
+  const todayIvsForHeader = todayHours ? rowIntervals(todayHours as any) : [];
+  const todayHoursLabel = todayIvsForHeader.length > 1
+    ? todayIvsForHeader.map((iv) => `${formatHHMM(iv.open, hoursFmt)} – ${formatHHMM(iv.close, hoursFmt)}`).join(", ")
+    : `${formatHHMM(todayHours?.openTime ?? "", hoursFmt)} – ${liveStatusForClient.kind === "open" ? liveStatusForClient.closesAt : formatHHMM(todayHours?.closeTime ?? "", hoursFmt)}`;
   // SERVICE status — the ORDERING GATE (Fabrizio report): per-service hours decide
   // whether ASAP is allowed for the CHOSEN method. e.g. Pickup 14:00–21:00 must
   // block an ASAP pickup at 11:50 even when the kitchen's general hours are open.
@@ -3587,7 +3594,7 @@ export function OrderingPageClient({
               <span className={`flex items-center gap-1.5 ${headerIsOpenNow ? "text-green-600" : "text-red-600"}`}>
                 <Clock className="w-3.5 h-3.5" />
                 {headerIsOpenNow
-                  ? `${t("open")} · ${formatHHMM(todayHours.openTime, hoursFmt)} – ${liveStatusForClient.kind === "open" ? liveStatusForClient.closesAt : formatHHMM(todayHours.closeTime, hoursFmt)}`
+                  ? `${t("open")} · ${todayHoursLabel}`
                   : headerClosedText}
               </span>
             </div>
@@ -3608,7 +3615,7 @@ export function OrderingPageClient({
               <span className={`flex items-center gap-1.5 ${headerIsOpenNow ? "text-green-600" : "text-red-600"}`}>
                 <Clock className="w-4 h-4" />
                 {headerIsOpenNow
-                  ? `${t("open")}: ${formatHHMM(todayHours.openTime, hoursFmt)} – ${liveStatusForClient.kind === "open" ? liveStatusForClient.closesAt : formatHHMM(todayHours.closeTime, hoursFmt)}`
+                  ? `${t("open")}: ${todayHoursLabel}`
                   : headerClosedText}
               </span>
             )}

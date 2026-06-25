@@ -964,7 +964,10 @@
       "noUpcoming": "Ni prihajajočih posebnih dni. Dodajte enega zgoraj.",
       "holidaySaved": "Poseben dan shranjen",
       "holidaySaveFailed": "Shranjevanje ni uspelo",
-      "between": "med"
+      "between": "med",
+      "addSlot": "Dodaj časovni interval",
+      "removeSlot": "Odstrani časovni interval",
+      "closesNextDay": "Zapre naslednji dan (npr. odprto čez polnoč)"
     },
     "services": {
       "title": "Storitve restavracije",

@@ -1931,6 +1931,15 @@ model OpeningHours {
   /// pattern: prefer the row matching the active service, fall back to
   /// the null/default row when no override exists. Added 2026-05-31.
   service       String?
+  /// Split hours (2026-06-24): JSON array of open intervals for this
+  /// day/service — [{ "open":"12:00","close":"15:00" },
+  /// { "open":"18:00","close":"23:00","closesNextDay":false }]. When present
+  /// AND non-empty it REPLACES openTime/closeTime; those are kept dual-written
+  /// as a back-compat "envelope" (earliest open / latest close) so any legacy
+  /// reader still works. Null / [] = legacy single window (read openTime/
+  /// closeTime). Mirrors RestaurantHoliday.rules. Read via rowIntervals() in
+  /// src/lib/restaurant-hours.ts — never the raw column.
+  intervals     Json?
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
 

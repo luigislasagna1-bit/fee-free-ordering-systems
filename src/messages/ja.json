@@ -964,7 +964,10 @@
       "noUpcoming": "今後の特別日はありません。上で追加できます。",
       "holidaySaved": "特別日を保存しました",
       "holidaySaveFailed": "保存に失敗しました",
-      "between": "時間帯"
+      "between": "時間帯",
+      "addSlot": "時間帯を追加",
+      "removeSlot": "時間帯を削除",
+      "closesNextDay": "翌日に閉店（例：深夜0時を過ぎて営業）"
     },
     "services": {
       "title": "レストランサービス",

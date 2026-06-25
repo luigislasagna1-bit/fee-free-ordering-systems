@@ -964,7 +964,10 @@
       "noUpcoming": "Keine anstehenden besonderen Tage. Füge oben einen hinzu.",
       "holidaySaved": "Besonderer Tag gespeichert",
       "holidaySaveFailed": "Speichern fehlgeschlagen",
-      "between": "zwischen"
+      "between": "zwischen",
+      "addSlot": "Zeitfenster hinzufügen",
+      "removeSlot": "Zeitfenster entfernen",
+      "closesNextDay": "Schließt am nächsten Tag (z. B. über Mitternacht geöffnet)"
     },
     "services": {
       "title": "Restaurant-Dienste",

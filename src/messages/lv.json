@@ -964,7 +964,10 @@
       "noUpcoming": "Nav gaidāmu īpašo dienu. Pievienojiet augstāk.",
       "holidaySaved": "Īpašā diena saglabāta",
       "holidaySaveFailed": "Neizdevās saglabāt",
-      "between": "no līdz"
+      "between": "no līdz",
+      "addSlot": "Pievienot laika intervālu",
+      "removeSlot": "Noņemt laika intervālu",
+      "closesNextDay": "Aizveras nākamajā dienā (piem., atvērts pēc pusnakts)"
     },
     "services": {
       "title": "Restorāna pakalpojumi",

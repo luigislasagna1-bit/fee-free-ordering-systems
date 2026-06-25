@@ -964,7 +964,10 @@
       "noUpcoming": "Ingen kommende særlige dage. Tilføj en ovenfor.",
       "holidaySaved": "Særlig dag gemt",
       "holidaySaveFailed": "Kunne ikke gemme",
-      "between": "mellem"
+      "between": "mellem",
+      "addSlot": "Tilføj et tidsrum",
+      "removeSlot": "Fjern tidsrum",
+      "closesNextDay": "Lukker næste dag (f.eks. åbent efter midnat)"
     },
     "services": {
       "title": "Restaurantservices",

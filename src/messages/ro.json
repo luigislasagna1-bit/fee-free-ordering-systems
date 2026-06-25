@@ -964,7 +964,10 @@
       "noUpcoming": "Nicio zi specială viitoare. Adaugă una mai sus.",
       "holidaySaved": "Zi specială salvată",
       "holidaySaveFailed": "Salvarea a eșuat",
-      "between": "între"
+      "between": "între",
+      "addSlot": "Adaugă un interval orar",
+      "removeSlot": "Elimină intervalul orar",
+      "closesNextDay": "Se închide a doua zi (ex.: deschis după miezul nopții)"
     },
     "services": {
       "title": "Servicii restaurant",

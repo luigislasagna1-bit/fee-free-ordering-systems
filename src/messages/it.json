@@ -964,7 +964,10 @@
       "noUpcoming": "Nessun giorno speciale in programma. Aggiungine uno sopra.",
       "holidaySaved": "Giorno speciale salvato",
       "holidaySaveFailed": "Salvataggio non riuscito",
-      "between": "tra"
+      "between": "tra",
+      "addSlot": "Aggiungi una fascia oraria",
+      "removeSlot": "Rimuovi fascia oraria",
+      "closesNextDay": "Chiude il giorno dopo (es. aperto oltre la mezzanotte)"
     },
     "services": {
       "title": "Servizi del ristorante",

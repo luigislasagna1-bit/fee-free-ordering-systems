@@ -964,7 +964,10 @@
       "noUpcoming": "Ei tulevia erikoispäiviä. Lisää yksi yllä.",
       "holidaySaved": "Erikoispäivä tallennettu",
       "holidaySaveFailed": "Tallennus epäonnistui",
-      "between": "välillä"
+      "between": "välillä",
+      "addSlot": "Lisää aikaväli",
+      "removeSlot": "Poista aikaväli",
+      "closesNextDay": "Sulkeutuu seuraavana päivänä (esim. auki keskiyön yli)"
     },
     "services": {
       "title": "Ravintolan palvelut",

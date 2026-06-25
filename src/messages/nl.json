@@ -964,7 +964,10 @@
       "noUpcoming": "Geen aankomende speciale dagen. Voeg er hierboven een toe.",
       "holidaySaved": "Speciale dag opgeslagen",
       "holidaySaveFailed": "Opslaan mislukt",
-      "between": "tussen"
+      "between": "tussen",
+      "addSlot": "Tijdslot toevoegen",
+      "removeSlot": "Tijdslot verwijderen",
+      "closesNextDay": "Sluit de volgende dag (bijv. open na middernacht)"
     },
     "services": {
       "title": "Restaurantdiensten",

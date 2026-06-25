@@ -964,7 +964,10 @@
       "noUpcoming": "Ingen kommende spesielle dager. Legg til en ovenfor.",
       "holidaySaved": "Spesiell dag lagret",
       "holidaySaveFailed": "Kunne ikke lagre",
-      "between": "mellom"
+      "between": "mellom",
+      "addSlot": "Legg til et tidsrom",
+      "removeSlot": "Fjern tidsrom",
+      "closesNextDay": "Stenger neste dag (f.eks. åpent etter midnatt)"
     },
     "services": {
       "title": "Restauranttjenester",

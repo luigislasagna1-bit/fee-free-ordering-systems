@@ -964,7 +964,10 @@
       "noUpcoming": "Aucun jour spécial à venir. Ajoutez-en un ci-dessus.",
       "holidaySaved": "Jour spécial enregistré",
       "holidaySaveFailed": "Échec de l'enregistrement",
-      "between": "entre"
+      "between": "entre",
+      "addSlot": "Ajouter un créneau horaire",
+      "removeSlot": "Supprimer le créneau horaire",
+      "closesNextDay": "Ferme le lendemain (p. ex. ouvert après minuit)"
     },
     "services": {
       "title": "Services du restaurant",

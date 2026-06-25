@@ -29,6 +29,10 @@ export type HoursRow = {
   isOpen: boolean;
   closesNextDay?: boolean;
   service?: string | null;
+  /** Split hours (2026-06-24): JSON array of open windows for this day/service.
+   *  When present it REPLACES openTime/closeTime. Read via rowIntervals() from
+   *  src/lib/restaurant-hours.ts (this row shape is structurally compatible). */
+  intervals?: unknown;
 };
 
 export type ServiceKind = "pickup" | "delivery" | "reservation";
@@ -93,6 +97,7 @@ export function resolveServiceHours(
         isOpen: row.isOpen,
         closesNextDay: row.closesNextDay,
         service: row.service ?? null,
+        intervals: row.intervals,
       });
     } else {
       // No row at all → treat as closed (isOpen=false) so the slot

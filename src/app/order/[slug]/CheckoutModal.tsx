@@ -8,6 +8,7 @@ import {
 import { Autocomplete } from "@react-google-maps/api";
 import { useCurrencyFormat } from "@/lib/currency-context";
 import { pickHoursForService } from "@/lib/service-hours";
+import { rowIntervals } from "@/lib/restaurant-hours";
 import { parseTheme } from "@/lib/theme";
 import { formatTime } from "@/lib/format-time";
 import { useGoogleMaps } from "@/lib/use-google-maps";
@@ -271,7 +272,7 @@ interface Props {
    *  service-scoped rows (with non-null `service`) when the owner has
    *  set different hours for pickup vs delivery vs reservation — the
    *  CheckoutModal picks the matching row via pickHoursForService. */
-  openingHours?: Array<{ dayOfWeek: number; openTime: string; closeTime: string; isOpen: boolean; service?: string | null }>;
+  openingHours?: Array<{ dayOfWeek: number; openTime: string; closeTime: string; isOpen: boolean; service?: string | null; intervals?: unknown }>;
   /** Restaurant IANA timezone — used to format the slot labels in
    *  the owner's local time when the customer is in a different zone. */
   restaurantTimezone?: string;
@@ -1228,34 +1229,37 @@ export function CheckoutModal({
                       const dow = new Date(`${datePart}T12:00:00`).getDay();
                       const serviceKind = orderType === "delivery" ? "delivery" : "pickup";
                       const row = pickHoursForService(openingHours as any, dow, serviceKind);
-                      const effective = row && row.isOpen ? row : null;
-                      winOpen = effective?.openTime || "10:00";
-                      winClose = effective?.closeTime || "22:00";
-                      const [oh, om] = winOpen.split(":").map(Number);
-                      const [ch, cm] = winClose.split(":").map(Number);
-                      const start = (oh ?? 10) * 60 + (om ?? 0);
-                      let end = (ch ?? 22) * 60 + (cm ?? 0);
-                      // Midnight-wrap fix (Luigi 2026-06-01): when the
-                      // close time is at or before the open time, the
-                      // window crosses midnight (e.g. 11 AM → 12 AM =
-                      // 11:00 → 00:00, meaning "open until midnight at
-                      // end of day"). Without rolling `end` past
-                      // midnight the loop emits zero slots and the
-                      // dropdown reads "Closed this day". pickHoursForService
-                      // already stamps closesNextDay=true defensively
-                      // for the same shape; we trust either signal here.
-                      if (end <= start) end += 24 * 60;
+                      // SPLIT HOURS: a day may open more than once (lunch + dinner).
+                      // rowIntervals() returns every window (legacy single-window rows
+                      // become a one-element array), so we generate slots PER interval
+                      // and the lunch/dinner gap simply has no slots offered.
+                      const ivs = row && row.isOpen ? rowIntervals(row as any) : [];
+                      if (ivs.length > 0) {
+                        winOpen = ivs[0].open;                       // envelope (exact-mode bounds)
+                        winClose = ivs[ivs.length - 1].close;
+                      }
                       const step = Math.max(5, Math.min(120, schedulingInterval || 15));
                       const minMin = (() => {
                         const [mh, mm] = minTimeForDate.split(":").map(Number);
                         return (mh ?? 0) * 60 + (mm ?? 0);
                       })();
-                      for (let m = start; m <= end - step; m += step) {
-                        if (m < minMin) continue;
-                        const hh = Math.floor(m / 60) % 24;
-                        const mm = m % 60;
-                        slots.push(`${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`);
+                      for (const iv of ivs) {
+                        const [oh, om] = iv.open.split(":").map(Number);
+                        const [ch, cm] = iv.close.split(":").map(Number);
+                        const start = (oh ?? 10) * 60 + (om ?? 0);
+                        let end = (ch ?? 22) * 60 + (cm ?? 0);
+                        // Overnight window (close at/before open) wraps past midnight,
+                        // e.g. 22:00 → 02:00. Each interval handles its own wrap.
+                        if (end <= start) end += 24 * 60;
+                        for (let m = start; m <= end - step; m += step) {
+                          if (m < minMin) continue;
+                          const hh = Math.floor(m / 60) % 24;
+                          const mm = m % 60;
+                          slots.push(`${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`);
+                        }
                       }
+                      // Dedup preserving order (overlapping wraps are rare but harmless).
+                      slots = slots.filter((s, i) => slots.indexOf(s) === i);
                     }
                     // Phase 2 — restrict the time slots to the cart's fulfilment
                     // window (e.g. an 11:00–15:00 item shows only those slots).

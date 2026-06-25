@@ -964,7 +964,10 @@
       "noUpcoming": "Tidak ada hari khusus mendatang. Tambahkan di atas.",
       "holidaySaved": "Hari khusus disimpan",
       "holidaySaveFailed": "Gagal menyimpan",
-      "between": "antara"
+      "between": "antara",
+      "addSlot": "Tambah slot waktu",
+      "removeSlot": "Hapus slot waktu",
+      "closesNextDay": "Tutup keesokan hari (mis. buka melewati tengah malam)"
     },
     "services": {
       "title": "Layanan Restoran",

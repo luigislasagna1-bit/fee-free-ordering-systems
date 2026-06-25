@@ -964,7 +964,10 @@
       "noUpcoming": "没有即将到来的特殊日期。请在上方添加。",
       "holidaySaved": "特殊日期已保存",
       "holidaySaveFailed": "保存失败",
-      "between": "时间段"
+      "between": "时间段",
+      "addSlot": "添加时间段",
+      "removeSlot": "删除时间段",
+      "closesNextDay": "次日关闭（例如营业至午夜后）"
     },
     "services": {
       "title": "餐厅服务",

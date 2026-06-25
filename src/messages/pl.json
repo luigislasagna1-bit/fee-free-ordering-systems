@@ -964,7 +964,10 @@
       "noUpcoming": "Brak nadchodzących dni specjalnych. Dodaj powyżej.",
       "holidaySaved": "Dzień specjalny zapisany",
       "holidaySaveFailed": "Nie udało się zapisać",
-      "between": "między"
+      "between": "między",
+      "addSlot": "Dodaj przedział czasowy",
+      "removeSlot": "Usuń przedział czasowy",
+      "closesNextDay": "Zamyka się następnego dnia (np. otwarte po północy)"
     },
     "services": {
       "title": "Usługi restauracji",

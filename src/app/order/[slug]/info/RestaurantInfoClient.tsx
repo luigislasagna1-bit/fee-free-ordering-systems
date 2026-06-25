@@ -16,7 +16,7 @@ import type { PoweredByCredit as PoweredByCreditValue } from "@/lib/white-label"
 const DeliveryZonesMap = dynamic(() => import("../DeliveryZonesMap"), { ssr: false });
 
 import { formatTime as fmt, type HoursFormat } from "@/lib/format-time";
-import { localDowAndHHMM, liveOpenStatus } from "@/lib/restaurant-hours";
+import { localDowAndHHMM, liveOpenStatus, rowIntervals } from "@/lib/restaurant-hours";
 import { groupHoursByService, type HoursGroup } from "@/lib/service-hours";
 import { serviceLabel } from "@/lib/service-labels";
 
@@ -352,8 +352,11 @@ export function RestaurantInfoClient({
                               )}
                             </span>
                             {h.isOpen ? (
-                              <span className="tabular-nums whitespace-nowrap text-right flex-shrink-0">
-                                {formatTime(h.openTime, hoursFmt)} – {formatTime(h.closeTime, hoursFmt)}
+                              <span className="tabular-nums text-right flex-shrink-0">
+                                {/* Split hours: "12:00 – 15:00, 18:00 – 23:00" */}
+                                {rowIntervals(h as any)
+                                  .map((iv) => `${formatTime(iv.open, hoursFmt)} – ${formatTime(iv.close, hoursFmt)}`)
+                                  .join(", ")}
                               </span>
                             ) : (
                               <span

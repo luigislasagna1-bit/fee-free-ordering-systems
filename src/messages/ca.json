@@ -964,7 +964,10 @@
       "noUpcoming": "No hi ha dies especials propers. Afegeix-ne un a dalt.",
       "holidaySaved": "Dia especial desat",
       "holidaySaveFailed": "No s'ha pogut desar",
-      "between": "entre"
+      "between": "entre",
+      "addSlot": "Afegeix una franja horària",
+      "removeSlot": "Elimina la franja horària",
+      "closesNextDay": "Tanca l'endemà (p. ex. obert després de mitjanit)"
     },
     "services": {
       "title": "Serveis del restaurant",

@@ -964,7 +964,10 @@
       "noUpcoming": "Nėra artėjančių ypatingų dienų. Pridėkite aukščiau.",
       "holidaySaved": "Ypatinga diena išsaugota",
       "holidaySaveFailed": "Nepavyko išsaugoti",
-      "between": "tarp"
+      "between": "tarp",
+      "addSlot": "Pridėti laiko intervalą",
+      "removeSlot": "Pašalinti laiko intervalą",
+      "closesNextDay": "Užsidaro kitą dieną (pvz., dirba po vidurnakčio)"
     },
     "services": {
       "title": "Restorano paslaugos",

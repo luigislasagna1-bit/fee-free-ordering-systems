@@ -964,7 +964,10 @@
       "noUpcoming": "Žiadne nadchádzajúce špeciálne dni. Pridajte vyššie.",
       "holidaySaved": "Špeciálny deň uložený",
       "holidaySaveFailed": "Uloženie zlyhalo",
-      "between": "medzi"
+      "between": "medzi",
+      "addSlot": "Pridať časový úsek",
+      "removeSlot": "Odstrániť časový úsek",
+      "closesNextDay": "Zatvára nasledujúci deň (napr. otvorené po polnoci)"
     },
     "services": {
       "title": "Služby reštaurácie",

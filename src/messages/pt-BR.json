@@ -964,7 +964,10 @@
       "noUpcoming": "Sem dias especiais próximos. Adicione um acima.",
       "holidaySaved": "Dia especial salvo",
       "holidaySaveFailed": "Falha ao salvar",
-      "between": "entre"
+      "between": "entre",
+      "addSlot": "Adicionar um intervalo de horário",
+      "removeSlot": "Remover intervalo de horário",
+      "closesNextDay": "Fecha no dia seguinte (ex.: aberto depois da meia-noite)"
     },
     "services": {
       "title": "Serviços do Restaurante",

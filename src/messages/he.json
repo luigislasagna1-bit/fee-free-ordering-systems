@@ -964,7 +964,10 @@
       "noUpcoming": "אין ימים מיוחדים קרובים. הוסף אחד למעלה.",
       "holidaySaved": "היום המיוחד נשמר",
       "holidaySaveFailed": "השמירה נכשלה",
-      "between": "בין"
+      "between": "בין",
+      "addSlot": "הוספת חלון זמן",
+      "removeSlot": "הסרת חלון הזמן",
+      "closesNextDay": "נסגר ביום למחרת (למשל פתוח אחרי חצות)"
     },
     "services": {
       "title": "שירותי המסעדה",

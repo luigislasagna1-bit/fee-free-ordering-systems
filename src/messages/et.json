@@ -964,7 +964,10 @@
       "noUpcoming": "Tulevasi eripäevi pole. Lisa üks ülal.",
       "holidaySaved": "Eripäev salvestatud",
       "holidaySaveFailed": "Salvestamine ebaõnnestus",
-      "between": "vahemikus"
+      "between": "vahemikus",
+      "addSlot": "Lisa ajavahemik",
+      "removeSlot": "Eemalda ajavahemik",
+      "closesNextDay": "Sulgub järgmisel päeval (nt avatud üle kesköö)"
     },
     "services": {
       "title": "Restorani teenused",

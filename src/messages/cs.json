@@ -964,7 +964,10 @@
       "noUpcoming": "Žádné nadcházející zvláštní dny. Přidejte výše.",
       "holidaySaved": "Zvláštní den uložen",
       "holidaySaveFailed": "Uložení se nezdařilo",
-      "between": "mezi"
+      "between": "mezi",
+      "addSlot": "Přidat časový úsek",
+      "removeSlot": "Odebrat časový úsek",
+      "closesNextDay": "Zavírá následující den (např. otevřeno po půlnoci)"
     },
     "services": {
       "title": "Služby restaurace",

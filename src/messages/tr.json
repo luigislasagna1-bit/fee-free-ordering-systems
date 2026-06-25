@@ -964,7 +964,10 @@
       "noUpcoming": "Yaklaşan özel gün yok. Yukarıdan ekleyin.",
       "holidaySaved": "Özel gün kaydedildi",
       "holidaySaveFailed": "Kaydedilemedi",
-      "between": "arasında"
+      "between": "arasında",
+      "addSlot": "Saat aralığı ekle",
+      "removeSlot": "Saat aralığını kaldır",
+      "closesNextDay": "Ertesi gün kapanır (örn. gece yarısından sonra açık)"
     },
     "services": {
       "title": "Restoran Hizmetleri",

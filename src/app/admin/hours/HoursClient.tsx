@@ -134,13 +134,33 @@ function parseToHHMM(input: string): string | null {
  *     on those dates. Past dates auto-prune from view.
  */
 
+type HoursInterval = { open: string; close: string; closesNextDay?: boolean };
+
 type HoursRow = {
   dayOfWeek: number;
   isOpen: boolean;
   openTime: string;
   closeTime: string;
   closesNextDay?: boolean;
+  /** Split hours (2026-06-24): the day's open windows. >1 means the customer is
+   *  CLOSED during the gaps (e.g. lunch 12–15, dinner 18–23). The first open /
+   *  last close drive the openTime/closeTime envelope written on save. */
+  intervals?: HoursInterval[];
 };
+
+/** Build the editor's interval list for a loaded OpeningHours row: the saved
+ *  `intervals` JSON when present + valid, else the legacy single window. */
+function intervalsForEdit(row: { openTime?: string; closeTime?: string; closesNextDay?: boolean; intervals?: unknown }): HoursInterval[] {
+  let raw: unknown = row?.intervals;
+  if (typeof raw === "string") { try { raw = JSON.parse(raw); } catch { raw = null; } }
+  if (Array.isArray(raw)) {
+    const ivs = raw
+      .filter((it): it is HoursInterval => !!it && typeof (it as HoursInterval).open === "string" && typeof (it as HoursInterval).close === "string")
+      .map((it) => ({ open: it.open, close: it.close, closesNextDay: !!it.closesNextDay }));
+    if (ivs.length > 0) return ivs;
+  }
+  return [{ open: row?.openTime || "09:00", close: row?.closeTime || "21:00", closesNextDay: !!row?.closesNextDay }];
+}
 
 type Holiday = {
   id: string;
@@ -215,8 +235,9 @@ export function HoursClient({
               openTime: found.openTime,
               closeTime: found.closeTime,
               closesNextDay: !!found.closesNextDay,
+              intervals: intervalsForEdit(found),
             }
-          : { dayOfWeek: i, isOpen: false, openTime: "09:00", closeTime: "21:00", closesNextDay: false };
+          : { dayOfWeek: i, isOpen: false, openTime: "09:00", closeTime: "21:00", closesNextDay: false, intervals: [{ open: "09:00", close: "21:00" }] };
       });
     }
     return out;
@@ -258,6 +279,42 @@ export function HoursClient({
     }));
   }
 
+  // ── SPLIT HOURS helpers (operate on the active tab's day intervals) ──────
+  const dayIntervals = (h: HoursRow): HoursInterval[] =>
+    (h.intervals && h.intervals.length > 0)
+      ? h.intervals
+      : [{ open: h.openTime || "09:00", close: h.closeTime || "21:00", closesNextDay: !!h.closesNextDay }];
+
+  function commitIntervals(day: number, ivs: HoursInterval[]) {
+    const safe = ivs.length > 0 ? ivs : [{ open: "09:00", close: "21:00" }];
+    const last = safe[safe.length - 1];
+    // Keep openTime/closeTime/closesNextDay as the ENVELOPE so any reader (and
+    // the save payload) stays consistent; `intervals` is the source of truth.
+    setHoursByService((prev) => ({
+      ...prev,
+      [activeTab]: prev[activeTab].map((h) => (h.dayOfWeek === day
+        ? { ...h, intervals: safe, openTime: safe[0].open, closeTime: last.close, closesNextDay: !!last.closesNextDay }
+        : h)),
+    }));
+  }
+  function updateInterval(day: number, idx: number, field: "open" | "close" | "closesNextDay", value: string | boolean) {
+    const h = hoursByService[activeTab].find((x) => x.dayOfWeek === day);
+    if (!h) return;
+    commitIntervals(day, dayIntervals(h).map((iv, i) => (i === idx ? { ...iv, [field]: value } : iv)));
+  }
+  function addInterval(day: number) {
+    const h = hoursByService[activeTab].find((x) => x.dayOfWeek === day);
+    if (!h) return;
+    const ivs = dayIntervals(h);
+    if (ivs.length >= 4) return; // cap matches the save endpoint
+    commitIntervals(day, [...ivs, { open: "18:00", close: "23:00" }]);
+  }
+  function removeInterval(day: number, idx: number) {
+    const h = hoursByService[activeTab].find((x) => x.dayOfWeek === day);
+    if (!h) return;
+    commitIntervals(day, dayIntervals(h).filter((_, i) => i !== idx));
+  }
+
   /**
    * Copy one day's hours to every other day. If scopeClosed is true,
    * only overwrite days currently marked closed — useful for "I have
@@ -277,6 +334,7 @@ export function HoursClient({
           openTime: src.openTime,
           closeTime: src.closeTime,
           closesNextDay: !!src.closesNextDay,
+          intervals: src.intervals ? src.intervals.map((iv) => ({ ...iv })) : undefined,
         };
       }),
     }));
@@ -572,30 +630,40 @@ export function HoursClient({
                 />
               </button>
               {h.isOpen ? (
-                <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-                  {/* Custom-controlled text inputs instead of the native
-                      <input type="time">. The native picker's display
-                      format is hard-bound to the OS locale (Windows in
-                      en-US → AM/PM) and ignores the lang hint reliably,
-                      so we can't actually honor the "24h" toggle with
-                      the native widget. Text inputs give us full
-                      control: store HH:MM 24h internally, display in
-                      the chosen format, normalize on blur. */}
-                  <TimeTextInput
-                    value={h.openTime}
-                    format={format}
-                    onChange={(v) => update(h.dayOfWeek, "openTime", v)}
-                  />
-                  <span className="text-gray-400 text-sm">{tCommon("to")}</span>
-                  <TimeTextInput
-                    value={h.closeTime}
-                    format={format}
-                    onChange={(v) => update(h.dayOfWeek, "closeTime", v)}
-                  />
-                  {/* Format hint — show what they typed in the current display format */}
-                  <span className="text-[11px] text-gray-400 hidden sm:inline">
-                    ({formatHour(h.openTime, format)} – {formatHour(h.closeTime, format)})
-                  </span>
+                <div className="flex flex-col gap-1.5">
+                  {/* SPLIT HOURS: one row per open window (e.g. lunch then
+                      dinner). Custom text inputs (not native <input type=time>)
+                      so the 12h/24h toggle is honored regardless of OS locale —
+                      store HH:MM 24h internally, display in the chosen format. */}
+                  {dayIntervals(h).map((iv, idx) => (
+                    <div key={idx} className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                      <TimeTextInput
+                        value={iv.open}
+                        format={format}
+                        onChange={(v) => updateInterval(h.dayOfWeek, idx, "open", v)}
+                      />
+                      <span className="text-gray-400 text-sm">{tCommon("to")}</span>
+                      <TimeTextInput
+                        value={iv.close}
+                        format={format}
+                        onChange={(v) => updateInterval(h.dayOfWeek, idx, "close", v)}
+                      />
+                      <span className="text-[11px] text-gray-400 hidden sm:inline">
+                        ({formatHour(iv.open, format)} – {formatHour(iv.close, format)})
+                      </span>
+                      {dayIntervals(h).length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeInterval(h.dayOfWeek, idx)}
+                          className="text-gray-400 hover:text-red-600 p-1 rounded transition"
+                          title={tHours("removeSlot")}
+                          aria-label={tHours("removeSlot")}
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
+                  ))}
                 </div>
               ) : (
                 <span className="text-gray-400 text-sm">{tHours("closedDay")}</span>
@@ -632,22 +700,28 @@ export function HoursClient({
               </div>
             </div>
 
-            {/* Overnight-hours toggle — only shown when day is open */}
+            {/* Add-a-slot (split hours) + overnight toggle — only when open */}
             {h.isOpen && (
-              <div className="mt-2 ml-20 sm:ml-32 pl-4 border-l-2 border-gray-100">
+              <div className="mt-2 ml-20 sm:ml-32 pl-4 border-l-2 border-gray-100 flex flex-col gap-2">
+                {dayIntervals(h).length < 4 && (
+                  <button
+                    type="button"
+                    onClick={() => addInterval(h.dayOfWeek)}
+                    className="self-start inline-flex items-center gap-1 text-xs font-medium text-emerald-700 hover:text-emerald-800 transition"
+                  >
+                    <Plus className="w-3.5 h-3.5" /> {tHours("addSlot")}
+                  </button>
+                )}
                 <label className="inline-flex items-center gap-2 text-xs text-gray-600 cursor-pointer">
                   <input
                     type="checkbox"
-                    checked={!!h.closesNextDay}
-                    onChange={(e) => update(h.dayOfWeek, "closesNextDay", e.target.checked)}
+                    checked={!!dayIntervals(h)[dayIntervals(h).length - 1]?.closesNextDay}
+                    onChange={(e) => updateInterval(h.dayOfWeek, dayIntervals(h).length - 1, "closesNextDay", e.target.checked)}
                     className="rounded text-emerald-500 focus:ring-emerald-500 w-3.5 h-3.5"
                   />
                   <Moon className="w-3.5 h-3.5 text-indigo-500" />
                   <span>
-                    Closes <strong>next day</strong>
-                  </span>
-                  <span className="text-gray-400">
-                    (e.g. open until 2 AM the following morning)
+                    {tHours("closesNextDay")}
                   </span>
                 </label>
               </div>

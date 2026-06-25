@@ -964,7 +964,10 @@
       "noUpcoming": "Нема предстојећих посебних дана. Додајте један изнад.",
       "holidaySaved": "Посебан дан сачуван",
       "holidaySaveFailed": "Чување није успело",
-      "between": "између"
+      "between": "између",
+      "addSlot": "Dodaj termin",
+      "removeSlot": "Ukloni termin",
+      "closesNextDay": "Zatvara se sledećeg dana (npr. otvoreno posle ponoći)"
     },
     "services": {
       "title": "Usluge restorana",

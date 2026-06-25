@@ -20,6 +20,15 @@
 
 import { holidayEffectForDay } from "./holiday-rules";
 
+/** One open window. `closesNextDay` means `close` falls on the FOLLOWING
+ *  calendar day (overnight), e.g. { open:"22:00", close:"02:00", closesNextDay:true }.
+ *  This is the unit of SPLIT HOURS — a day is an ARRAY of these. */
+export interface HoursInterval {
+  open: string;
+  close: string;
+  closesNextDay?: boolean;
+}
+
 export interface OpeningHoursRow {
   dayOfWeek: number;
   isOpen: boolean;
@@ -36,6 +45,10 @@ export interface OpeningHoursRow {
    *  the slot pickers in the corresponding flows (pickup / delivery /
    *  reservation), not for the global "open now" badge. */
   service?: string | null;
+  /** Split hours (2026-06-24): when present + valid this REPLACES openTime/
+   *  closeTime. Prisma `Json?` — may arrive as a parsed array OR a string.
+   *  ALWAYS read it through rowIntervals(), never directly. */
+  intervals?: unknown;
 }
 
 /**
@@ -96,6 +109,53 @@ function normalizeRow(row: OpeningHoursRow): OpeningHoursRow {
     return { ...row, closesNextDay: true };
   }
   return row;
+}
+
+const HHMM_RE = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+
+/**
+ * Parse a raw `intervals` value (Prisma Json — array or stringified array) into
+ * validated, sorted HoursInterval[]. Read-time, fail-SAFE: garbage entries are
+ * dropped, never crash. A window with close <= open is treated as overnight
+ * (closesNextDay), matching the legacy normalizeRow auto-fix. Overlaps are NOT
+ * rejected here (the SAVE endpoint does that) — at read time an overlap just
+ * widens availability, which is the safe direction. Mirrors parseHolidayRules.
+ */
+export function parseIntervals(raw: unknown): HoursInterval[] {
+  let arr: unknown = raw;
+  if (typeof raw === "string") {
+    const t = raw.trim();
+    if (!t) return [];
+    try { arr = JSON.parse(t); } catch { return []; }
+  }
+  if (!Array.isArray(arr)) return [];
+  const out: HoursInterval[] = [];
+  for (const item of arr) {
+    if (!item || typeof item !== "object") continue;
+    const open = String((item as Record<string, unknown>).open ?? "");
+    const close = String((item as Record<string, unknown>).close ?? "");
+    if (!HHMM_RE.test(open) || !HHMM_RE.test(close) || open === close) continue;
+    const closesNextDay = Boolean((item as Record<string, unknown>).closesNextDay) || close < open;
+    out.push({ open, close, closesNextDay });
+  }
+  out.sort((a, b) => (a.open < b.open ? -1 : a.open > b.open ? 1 : 0));
+  return out;
+}
+
+/**
+ * The ONE seam that makes split hours back-compatible. Returns the day's open
+ * windows as an array: the new `intervals` JSON when present + valid, else the
+ * legacy single (openTime, closeTime) window synthesised into a one-element
+ * array (with the same overnight auto-fix). Returns [] when the row is closed
+ * or has no usable times. EVERY hours reader should go through this.
+ */
+export function rowIntervals(row: OpeningHoursRow | undefined | null): HoursInterval[] {
+  if (!row || !row.isOpen) return [];
+  const parsed = parseIntervals(row.intervals);
+  if (parsed.length > 0) return parsed;
+  if (!row.openTime || !row.closeTime) return [];
+  const closesNextDay = Boolean(row.closesNextDay) || row.closeTime < row.openTime;
+  return [{ open: row.openTime, close: row.closeTime, closesNextDay }];
 }
 
 export interface HoursStatus {
@@ -207,10 +267,14 @@ export function statusForToday(
   }
   const { dow } = localDowAndHHMM(now, timezone);
   const row = pickDayRow(hours, dow);
-  if (!row || !row.isOpen) return { isOpen: false, openRange: "" };
+  const ivs = rowIntervals(row);
+  if (ivs.length === 0) return { isOpen: false, openRange: "" };
+  // Split hours render as a comma list: "12:00 – 15:00, 18:00 – 23:00".
   return {
     isOpen: true,
-    openRange: `${formatHour(row.openTime, format)} – ${formatHour(row.closeTime, format)}${row.closesNextDay ? " (next day)" : ""}`,
+    openRange: ivs
+      .map((iv) => `${formatHour(iv.open, format)} – ${formatHour(iv.close, format)}${iv.closesNextDay ? " (next day)" : ""}`)
+      .join(", "),
   };
 }
 
@@ -230,6 +294,43 @@ export type LiveOpenStatus =
   | { kind: "opens_at"; opensAt: string }
   | { kind: "closed_today" }
   | { kind: "holiday"; name?: string };
+
+/**
+ * The shared open/closed decision over a day's intervals (SPLIT HOURS aware).
+ * Mirrors the single-window logic exactly when there's one interval, so legacy
+ * behaviour is bit-for-bit preserved. Check order matches the old code:
+ * yesterday's overnight window first, then today's intervals, then "opens later".
+ */
+function liveStatusFromIntervals(
+  todayIvs: HoursInterval[],
+  yestIvs: HoursInterval[],
+  nowHHMM: string,
+  format: "12h" | "24h",
+): LiveOpenStatus {
+  // (1) Still inside yesterday's overnight window? (e.g. 1:30am Sat, Fri 17:00→02:00)
+  for (const iv of yestIvs) {
+    if (iv.closesNextDay && nowHHMM < iv.close) {
+      return { kind: "open", closesAt: formatHour(iv.close, format), spansMidnight: true };
+    }
+  }
+  // (2) Inside one of today's windows? (intervals are pre-sorted by open)
+  for (const iv of todayIvs) {
+    if (iv.closesNextDay) {
+      // Overnight window: open once past its open time; the after-midnight
+      // portion is covered by branch (1) on the NEXT day.
+      if (nowHHMM >= iv.open) {
+        return { kind: "open", closesAt: formatHour(iv.close, format), spansMidnight: true };
+      }
+    } else if (nowHHMM >= iv.open && nowHHMM < iv.close) {
+      return { kind: "open", closesAt: formatHour(iv.close, format), spansMidnight: false };
+    }
+  }
+  // (3) Not open now — does a window open LATER today? (the next interval whose
+  //     open is still ahead — naturally skips the lunch/dinner gap.)
+  const upcoming = todayIvs.find((iv) => nowHHMM < iv.open);
+  if (upcoming) return { kind: "opens_at", opensAt: formatHour(upcoming.open, format) };
+  return { kind: "closed_today" };
+}
 
 export function liveOpenStatus(
   hours: OpeningHoursRow[] | undefined | null,
@@ -268,48 +369,11 @@ export function liveOpenStatus(
   const yesterdayDow = (dow + 6) % 7;
   const today = pickDayRow(hours, dow);
   const yesterday = pickDayRow(hours, yesterdayDow);
-
-  // (1) Are we still inside yesterday's overnight window? E.g. it's now
-  //     1:30am Saturday and Friday's row was open 5pm → 2am.
-  if (
-    yesterday &&
-    yesterday.isOpen &&
-    yesterday.closesNextDay &&
-    yesterday.closeTime &&
-    nowHHMM < yesterday.closeTime
-  ) {
-    return {
-      kind: "open",
-      closesAt: formatHour(yesterday.closeTime, format),
-      spansMidnight: true,
-    };
-  }
-  // (2) Normal in-day window. Open if now ∈ [openTime, closeTime). For
-  //     overnight rows where closeTime < openTime, treat as open from
-  //     openTime through midnight (the next-morning portion was handled
-  //     in branch 1 via yesterday's row).
-  if (today && today.isOpen && today.openTime && today.closeTime) {
-    if (today.closesNextDay) {
-      // Overnight row. Open if past openTime.
-      if (nowHHMM >= today.openTime) {
-        return {
-          kind: "open",
-          closesAt: formatHour(today.closeTime, format),
-          spansMidnight: true,
-        };
-      }
-      // Not yet at today's open time — restaurant opens LATER today.
-      return { kind: "opens_at", opensAt: formatHour(today.openTime, format) };
-    }
-    // Same-day row.
-    if (nowHHMM >= today.openTime && nowHHMM < today.closeTime) {
-      return { kind: "open", closesAt: formatHour(today.closeTime, format), spansMidnight: false };
-    }
-    if (nowHHMM < today.openTime) {
-      return { kind: "opens_at", opensAt: formatHour(today.openTime, format) };
-    }
-  }
-  return { kind: "closed_today" };
+  // SPLIT HOURS: a day is an ARRAY of intervals (one element for legacy
+  // single-window rows). rowIntervals() applies the overnight auto-fix and
+  // returns [] for closed days, so the shared decision covers every case —
+  // including a lunch/dinner gap reading "opens_at" the dinner window.
+  return liveStatusFromIntervals(rowIntervals(today), rowIntervals(yesterday), nowHHMM, format);
 }
 
 /**
@@ -376,9 +440,13 @@ export function nextOpenAt(
       // Prefer the default (service=null) row — service-scoped rows
       // (pickup / delivery / reservation) are for slot pickers, not for
       // "is the kitchen open at all". Same fix as liveOpenStatus above.
+      // SPLIT HOURS: a day may open more than once (lunch + dinner) — feed
+      // every interval's open time (sorted) into the candidate loop below, so
+      // "next open" can land on TODAY's dinner reopening, not just tomorrow.
       const row = pickDayRow(hours, targetDow);
-      if (!row || !row.isOpen || !row.openTime) continue;
-      openTimes = [row.openTime];
+      const ivs = rowIntervals(row);
+      if (ivs.length === 0) continue;
+      openTimes = ivs.map((iv) => iv.open);
     }
 
     for (const openTime of openTimes) {
