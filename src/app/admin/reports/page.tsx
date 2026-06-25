@@ -9,6 +9,7 @@ import { parseDateRangeInTz, eachDayKeyInTz, formatRangeLabelInTz } from "@/lib/
 import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
 import { dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
+import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import { TrendingUp, TrendingDown, DollarSign, ShoppingBag, Users, Receipt, ArrowRight, MousePointerClick, Sparkles, UserPlus, Building2, AlertTriangle } from "lucide-react";
 import Link from "next/link";
 
@@ -210,6 +211,7 @@ export default async function ReportsDashboardPage({
     <div>
       <ReportHeader
         title={scope.isChain ? t("chainTitle", { brand: scope.brandName }) : t("dashboardTitle")}
+        exportQuery={rangeQ}
         subtitle={
           scope.isChain
             ? t("chainSubtitle", { range: formatRangeLabelInTz(range, scope.timezone ?? undefined), count: scope.locations.length })
@@ -415,15 +417,22 @@ export default async function ReportsDashboardPage({
 // ── Helpers ───────────────────────────────────────────────────────────
 
 /** Reusable header for every report page — title + date picker on one
- *  line. Subtitle wraps below on small screens. */
-function ReportHeader({ title, subtitle }: { title: string; subtitle?: string }) {
+ *  line. Subtitle wraps below on small screens. When `exportQuery` is
+ *  provided, an Export menu (CSV/XLS/PDF) sits top-right beside the date
+ *  picker — always shown on the dashboard (chain + single store). */
+function ReportHeader({ title, subtitle, exportQuery }: { title: string; subtitle?: string; exportQuery?: string }) {
   return (
     <div className="flex items-start justify-between gap-3 flex-wrap mb-5">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
         {subtitle && <p className="text-sm text-gray-500 mt-0.5">{subtitle}</p>}
       </div>
-      <DateRangePicker />
+      <div className="flex items-center gap-2">
+        {exportQuery !== undefined && (
+          <ExportMenu exportUrl="/api/admin/reports/export" currentQuery={exportQuery} compact={false} />
+        )}
+        <DateRangePicker />
+      </div>
     </div>
   );
 }

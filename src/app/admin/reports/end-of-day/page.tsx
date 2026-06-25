@@ -20,6 +20,7 @@ import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { getTranslations, getLocale } from "next-intl/server";
 import { resolveReportScope, resolveActiveLocation } from "@/lib/reports/report-scope";
 import { LocationChooser, ActiveLocationChip } from "../LocationChooser";
+import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 
 export const dynamic = "force-dynamic";
 
@@ -155,7 +156,17 @@ export default async function EndOfDayReportPage({
             )}
           </div>
         </div>
-        <div className="text-xs text-gray-400 self-end">{t("autoRefreshNote")}</div>
+        <div className="flex items-center gap-3 self-end">
+          <span className="text-xs text-gray-400">{t("autoRefreshNote")}</span>
+          {/* Export the SAME day + location the page is showing. */}
+          <ExportMenu
+            exportUrl="/api/admin/reports/end-of-day/export"
+            currentQuery={new URLSearchParams({
+              date: dayKey,
+              ...(scope.isChain ? { loc: active.id } : {}),
+            }).toString()}
+          />
+        </div>
       </header>
 
       {scope.isChain && <ActiveLocationChip name={active.name} baseQuery={rangeQuery} />}
