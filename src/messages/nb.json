@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Gj.sn. bestilling",
       "colShare": "Andel",
       "brandBadge": "Merke",
-      "locationDrillHint": "Trykk på et sted for å åpne stedets egne rapporter."
+      "locationDrillHint": "Trykk på et sted for å åpne stedets egne rapporter.",
+      "subtotal": "Delsum"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ingen restaurantkontekst.",

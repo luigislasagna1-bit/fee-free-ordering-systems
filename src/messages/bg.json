@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Ср. поръчка",
       "colShare": "Дял",
       "brandBadge": "Марка",
-      "locationDrillHint": "Докоснете обект, за да отворите неговите отчети."
+      "locationDrillHint": "Докоснете обект, за да отворите неговите отчети.",
+      "subtotal": "Междинна сума"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Няма контекст на ресторант.",

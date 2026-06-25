@@ -3788,7 +3788,8 @@
       "colAvgOrder": "平均订单",
       "colShare": "占比",
       "brandBadge": "品牌",
-      "locationDrillHint": "点按门店即可打开其自有报表。"
+      "locationDrillHint": "点按门店即可打开其自有报表。",
+      "subtotal": "小计"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "无餐厅上下文。",

@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Đơn TB",
       "colShare": "Tỷ trọng",
       "brandBadge": "Thương hiệu",
-      "locationDrillHint": "Chạm vào một địa điểm để mở báo cáo riêng của nó."
+      "locationDrillHint": "Chạm vào một địa điểm để mở báo cáo riêng của nó.",
+      "subtotal": "Tạm tính"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Không có ngữ cảnh nhà hàng.",

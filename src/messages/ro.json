@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Comandă medie",
       "colShare": "Pondere",
       "brandBadge": "Brand",
-      "locationDrillHint": "Atingeți o locație pentru a deschide rapoartele sale."
+      "locationDrillHint": "Atingeți o locație pentru a deschide rapoartele sale.",
+      "subtotal": "Subtotal"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Niciun context de restaurant.",

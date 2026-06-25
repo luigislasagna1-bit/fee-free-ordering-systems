@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Povp. naročilo",
       "colShare": "Delež",
       "brandBadge": "Znamka",
-      "locationDrillHint": "Tapnite lokacijo, da odprete njena poročila."
+      "locationDrillHint": "Tapnite lokacijo, da odprete njena poročila.",
+      "subtotal": "Vmesna vsota"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ni konteksta restavracije.",

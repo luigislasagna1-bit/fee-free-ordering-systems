@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Vid. pasūtījums",
       "colShare": "Daļa",
       "brandBadge": "Zīmols",
-      "locationDrillHint": "Pieskarieties vietai, lai atvērtu tās pārskatus."
+      "locationDrillHint": "Pieskarieties vietai, lai atvērtu tās pārskatus.",
+      "subtotal": "Starpsumma"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nav restorāna konteksta.",

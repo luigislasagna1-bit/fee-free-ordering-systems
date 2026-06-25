@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Gem. bestelling",
       "colShare": "Aandeel",
       "brandBadge": "Merk",
-      "locationDrillHint": "Tik op een locatie om de eigen rapporten te openen."
+      "locationDrillHint": "Tik op een locatie om de eigen rapporten te openen.",
+      "subtotal": "Subtotaal"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Geen restaurantcontext.",

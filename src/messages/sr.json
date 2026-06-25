@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Прос. поруџбина",
       "colShare": "Удео",
       "brandBadge": "Бренд",
-      "locationDrillHint": "Додирните локацију да отворите њене извештаје."
+      "locationDrillHint": "Додирните локацију да отворите њене извештаје.",
+      "subtotal": "Međuzbir"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nema konteksta restorana.",

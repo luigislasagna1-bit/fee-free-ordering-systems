@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Сер. замовлення",
       "colShare": "Частка",
       "brandBadge": "Бренд",
-      "locationDrillHint": "Торкніться закладу, щоб відкрити його власні звіти."
+      "locationDrillHint": "Торкніться закладу, щоб відкрити його власні звіти.",
+      "subtotal": "Підсумок"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Немає контексту ресторану.",

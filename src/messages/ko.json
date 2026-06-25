@@ -3788,7 +3788,8 @@
       "colAvgOrder": "평균 주문액",
       "colShare": "비중",
       "brandBadge": "브랜드",
-      "locationDrillHint": "매장을 탭하면 해당 매장의 리포트가 열립니다."
+      "locationDrillHint": "매장을 탭하면 해당 매장의 리포트가 열립니다.",
+      "subtotal": "소계"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "레스토랑 컨텍스트가 없습니다.",

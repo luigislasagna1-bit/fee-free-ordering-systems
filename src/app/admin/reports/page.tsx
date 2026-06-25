@@ -4,8 +4,8 @@ import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { LocationDrillRow } from "./LocationDrillRow";
-import { previousPeriod, formatChartDate, formatRangeLabel, toISODate } from "@/lib/reports/date-range";
-import { parseDateRangeInTz, eachDayKeyInTz } from "@/lib/reports/date-range-tz";
+import { previousPeriod, formatChartDate, toISODate } from "@/lib/reports/date-range";
+import { parseDateRangeInTz, eachDayKeyInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
 import { dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
@@ -163,10 +163,9 @@ export default async function ReportsDashboardPage({
       const s = perLocById.get(l.id);
       const orders = s?.orders ?? 0;
       const revenue = s?.revenue ?? 0;
-      return { id: l.id, name: l.name, city: l.city, isParent: l.isParent, orders, revenue, avg: orders > 0 ? revenue / orders : 0 };
+      return { id: l.id, name: l.name, city: l.city, isParent: l.isParent, currency: l.currency, orders, revenue, avg: orders > 0 ? revenue / orders : 0 };
     })
     .sort((a, b) => b.revenue - a.revenue);
-  const maxLocRev = Math.max(...locationRows.map((l) => l.revenue), 1);
 
   // Detect "brand-new restaurant" state — zero orders in BOTH the
   // current AND the previous period. We render a welcoming first-order
@@ -204,8 +203,8 @@ export default async function ReportsDashboardPage({
         title={scope.isChain ? t("chainTitle", { brand: scope.brandName }) : t("dashboardTitle")}
         subtitle={
           scope.isChain
-            ? t("chainSubtitle", { range: formatRangeLabel(range), count: scope.locations.length })
-            : t("headlineMetricsSubtitle", { range: formatRangeLabel(range) })
+            ? t("chainSubtitle", { range: formatRangeLabelInTz(range, scope.timezone ?? undefined), count: scope.locations.length })
+            : t("headlineMetricsSubtitle", { range: formatRangeLabelInTz(range, scope.timezone ?? undefined) })
         }
       />
 
@@ -275,45 +274,7 @@ export default async function ReportsDashboardPage({
             <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <Building2 className="w-4 h-4 text-amber-500" /> {t("byLocation")}
             </h2>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100">
-                    <th className="py-2 pr-4 font-medium">{t("colLocation")}</th>
-                    <th className="py-2 pr-4 font-medium text-right">{t("colOrders")}</th>
-                    <th className="py-2 pr-4 font-medium text-right">{t("colRevenue")}</th>
-                    <th className="py-2 pr-4 font-medium text-right">{t("colAvgOrder")}</th>
-                    <th className="py-2 font-medium hidden md:table-cell">{t("colShare")}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {locationRows.map((loc) => (
-                    <LocationDrillRow key={loc.id} id={loc.id}>
-                      <td className="py-3 pr-4">
-                        <div className="font-medium text-gray-900 flex items-center gap-2">
-                          {loc.name}
-                          {loc.isParent && (
-                            <span className="text-[10px] font-bold uppercase tracking-wide text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded">{t("brandBadge")}</span>
-                          )}
-                        </div>
-                        {loc.city && <div className="text-xs text-gray-500">{loc.city}</div>}
-                      </td>
-                      <td className="py-3 pr-4 text-right text-gray-700">{loc.orders.toLocaleString()}</td>
-                      <td className="py-3 pr-4 text-right font-semibold text-gray-900">{formatCurrency(loc.revenue)}</td>
-                      <td className="py-3 pr-4 text-right text-gray-600">{formatCurrency(loc.avg)}</td>
-                      <td className="py-3 hidden md:table-cell">
-                        <div className="flex items-center gap-2">
-                          <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden min-w-[60px] max-w-[140px]">
-                            <div className="h-full bg-amber-500" style={{ width: `${(loc.revenue / maxLocRev) * 100}%` }} />
-                          </div>
-                          <span className="text-xs text-gray-500 w-10 text-right">{curRevenue > 0 ? ((loc.revenue / curRevenue) * 100).toFixed(0) : 0}%</span>
-                        </div>
-                      </td>
-                    </LocationDrillRow>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <LocationBreakdown rows={locationRows} scopeCurrency={scope.currency} mixed={scope.mixedCurrency} t={t} />
             <p className="text-xs text-gray-400 mt-3">{t("locationDrillHint")}</p>
           </div>
         </>
@@ -444,6 +405,99 @@ function ReportHeader({ title, subtitle }: { title: string; subtitle?: string })
         {subtitle && <p className="text-sm text-gray-500 mt-0.5">{subtitle}</p>}
       </div>
       <DateRangePicker />
+    </div>
+  );
+}
+
+type DashT = Awaited<ReturnType<typeof getTranslations>>;
+type LocRow = { id: string; name: string; city: string | null; isParent: boolean; currency: string; orders: number; revenue: number; avg: number };
+
+/**
+ * Per-location breakdown for a chain. A single-currency brand gets one flat
+ * table; a MULTI-currency brand gets a table PER currency (the parent's first),
+ * each with its own subtotal — so CAD and USD totals are never mixed.
+ */
+function LocationBreakdown({ rows, scopeCurrency, mixed, t }: { rows: LocRow[]; scopeCurrency: string; mixed: boolean; t: DashT }) {
+  if (!mixed) {
+    return <LocationTable rows={rows} currency={scopeCurrency} t={t} showSubtotal={false} />;
+  }
+  const byCur = new Map<string, LocRow[]>();
+  for (const r of rows) {
+    if (!byCur.has(r.currency)) byCur.set(r.currency, []);
+    byCur.get(r.currency)!.push(r);
+  }
+  const groups = Array.from(byCur.entries()).sort((a, b) =>
+    a[0] === scopeCurrency ? -1 : b[0] === scopeCurrency ? 1 : a[0].localeCompare(b[0]),
+  );
+  return (
+    <div className="space-y-6">
+      {groups.map(([cur, grows]) => (
+        <div key={cur}>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-xs font-bold uppercase tracking-wide text-gray-700 bg-gray-100 px-2 py-0.5 rounded">{cur.toUpperCase()}</span>
+            <span className="text-xs text-gray-400">· {grows.length}</span>
+          </div>
+          <LocationTable rows={grows} currency={cur} t={t} showSubtotal />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function LocationTable({ rows, currency, t, showSubtotal }: { rows: LocRow[]; currency: string; t: DashT; showSubtotal: boolean }) {
+  const groupTotal = rows.reduce((s, r) => s + r.revenue, 0);
+  const maxRev = Math.max(...rows.map((r) => r.revenue), 1);
+  const totalOrders = rows.reduce((s, r) => s + r.orders, 0);
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100">
+            <th className="py-2 pr-4 font-medium">{t("colLocation")}</th>
+            <th className="py-2 pr-4 font-medium text-right">{t("colOrders")}</th>
+            <th className="py-2 pr-4 font-medium text-right">{t("colRevenue")}</th>
+            <th className="py-2 pr-4 font-medium text-right">{t("colAvgOrder")}</th>
+            <th className="py-2 font-medium hidden md:table-cell">{t("colShare")}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((loc) => (
+            <LocationDrillRow key={loc.id} id={loc.id}>
+              <td className="py-3 pr-4">
+                <div className="font-medium text-gray-900 flex items-center gap-2">
+                  {loc.name}
+                  {loc.isParent && (
+                    <span className="text-[10px] font-bold uppercase tracking-wide text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded">{t("brandBadge")}</span>
+                  )}
+                </div>
+                {loc.city && <div className="text-xs text-gray-500">{loc.city}</div>}
+              </td>
+              <td className="py-3 pr-4 text-right text-gray-700">{loc.orders.toLocaleString()}</td>
+              <td className="py-3 pr-4 text-right font-semibold text-gray-900">{fmtCurrency(loc.revenue, currency)}</td>
+              <td className="py-3 pr-4 text-right text-gray-600">{fmtCurrency(loc.avg, currency)}</td>
+              <td className="py-3 hidden md:table-cell">
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden min-w-[60px] max-w-[140px]">
+                    <div className="h-full bg-amber-500" style={{ width: `${(loc.revenue / maxRev) * 100}%` }} />
+                  </div>
+                  <span className="text-xs text-gray-500 w-10 text-right">{groupTotal > 0 ? ((loc.revenue / groupTotal) * 100).toFixed(0) : 0}%</span>
+                </div>
+              </td>
+            </LocationDrillRow>
+          ))}
+        </tbody>
+        {showSubtotal && (
+          <tfoot>
+            <tr className="border-t-2 border-gray-200 font-bold text-gray-900">
+              <td className="py-2.5 pr-4">{t("subtotal")}</td>
+              <td className="py-2.5 pr-4 text-right">{totalOrders.toLocaleString()}</td>
+              <td className="py-2.5 pr-4 text-right">{fmtCurrency(groupTotal, currency)}</td>
+              <td className="py-2.5 pr-4" />
+              <td className="py-2.5 hidden md:table-cell" />
+            </tr>
+          </tfoot>
+        )}
+      </table>
     </div>
   );
 }

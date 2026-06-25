@@ -3788,7 +3788,8 @@
       "colAvgOrder": "متوسط الطلب",
       "colShare": "الحصة",
       "brandBadge": "العلامة",
-      "locationDrillHint": "انقر على فرع لفتح تقاريره الخاصة."
+      "locationDrillHint": "انقر على فرع لفتح تقاريره الخاصة.",
+      "subtotal": "المجموع الجزئي"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "لا يوجد سياق مطعم.",

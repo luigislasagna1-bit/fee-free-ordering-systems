@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Μέση παραγγελία",
       "colShare": "Μερίδιο",
       "brandBadge": "Μάρκα",
-      "locationDrillHint": "Πατήστε ένα κατάστημα για να ανοίξετε τις δικές του αναφορές."
+      "locationDrillHint": "Πατήστε ένα κατάστημα για να ανοίξετε τις δικές του αναφορές.",
+      "subtotal": "Υποσύνολο"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Δεν υπάρχει πλαίσιο εστιατορίου.",

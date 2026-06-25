@@ -3788,7 +3788,8 @@
       "colAvgOrder": "הזמנה ממוצעת",
       "colShare": "נתח",
       "brandBadge": "מותג",
-      "locationDrillHint": "הקש על סניף כדי לפתוח את הדוחות שלו."
+      "locationDrillHint": "הקש על סניף כדי לפתוח את הדוחות שלו.",
+      "subtotal": "סכום ביניים"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "אין הקשר מסעדה.",

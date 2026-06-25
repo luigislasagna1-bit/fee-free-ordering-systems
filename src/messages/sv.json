@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Snittbeställning",
       "colShare": "Andel",
       "brandBadge": "Varumärke",
-      "locationDrillHint": "Tryck på en plats för att öppna dess egna rapporter."
+      "locationDrillHint": "Tryck på en plats för att öppna dess egna rapporter.",
+      "subtotal": "Delsumma"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ingen restaurangkontext.",

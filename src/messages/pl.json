@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Śr. zamówienie",
       "colShare": "Udział",
       "brandBadge": "Marka",
-      "locationDrillHint": "Dotknij lokalu, aby otworzyć jego własne raporty."
+      "locationDrillHint": "Dotknij lokalu, aby otworzyć jego własne raporty.",
+      "subtotal": "Suma częściowa"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Brak kontekstu restauracji.",

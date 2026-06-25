@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Keskm. tellimus",
       "colShare": "Osakaal",
       "brandBadge": "Bränd",
-      "locationDrillHint": "Puudutage asukohta, et avada selle enda aruanded."
+      "locationDrillHint": "Puudutage asukohta, et avada selle enda aruanded.",
+      "subtotal": "Vahesumma"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Restorani kontekst puudub.",

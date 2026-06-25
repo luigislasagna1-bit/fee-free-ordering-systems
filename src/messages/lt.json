@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Vid. užsakymas",
       "colShare": "Dalis",
       "brandBadge": "Prekės ženklas",
-      "locationDrillHint": "Bakstelėkite vietą, kad atidarytumėte jos ataskaitas."
+      "locationDrillHint": "Bakstelėkite vietą, kad atidarytumėte jos ataskaitas.",
+      "subtotal": "Tarpinė suma"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nėra restorano konteksto.",

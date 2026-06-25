@@ -3788,7 +3788,8 @@
       "colAvgOrder": "平均注文額",
       "colShare": "構成比",
       "brandBadge": "ブランド",
-      "locationDrillHint": "店舗をタップすると、その店舗のレポートが開きます。"
+      "locationDrillHint": "店舗をタップすると、その店舗のレポートが開きます。",
+      "subtotal": "小計"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "レストランのコンテキストがありません。",

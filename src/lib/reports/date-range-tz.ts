@@ -124,3 +124,19 @@ export function eachDayKeyInTz(range: { from: Date; to: Date }, tz?: string): st
 function pickFirst(v: string | string[] | undefined): string | undefined {
   return Array.isArray(v) ? v[0] : v;
 }
+
+/**
+ * Render a range as a human label in the restaurant's TIMEZONE — e.g.
+ * "Jun 25, 2026" for a single day or "Jun 19, 2026 - Jun 25, 2026" for a span.
+ * The client-safe `formatRangeLabel` formats `range.to` (the local end-of-day
+ * instant) in SERVER-local time, which on a UTC server pushes an America/* end
+ * boundary into the NEXT calendar day ("Jun 25 - Jun 26"). This renders the
+ * actual local day keys instead, and collapses a single day to one date.
+ */
+export function formatRangeLabelInTz(range: { from: Date; to: Date }, tz?: string): string {
+  const fromKey = tz ? dateKeyInTimezone(range.from, tz) : toISODate(range.from);
+  const toKey = tz ? dateKeyInTimezone(range.to, tz) : toISODate(range.to);
+  const fmt = (key: string) =>
+    new Date(`${key}T12:00:00`).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  return fromKey === toKey ? fmt(fromKey) : `${fmt(fromKey)} - ${fmt(toKey)}`;
+}

@@ -3845,7 +3845,8 @@
       "colAvgOrder": "औसत ऑर्डर",
       "colShare": "हिस्सा",
       "brandBadge": "ब्रांड",
-      "locationDrillHint": "किसी स्थान की अपनी रिपोर्ट खोलने के लिए उस पर टैप करें।"
+      "locationDrillHint": "किसी स्थान की अपनी रिपोर्ट खोलने के लिए उस पर टैप करें।",
+      "subtotal": "उप-कुल"
     },
     "invoice": {
       "title": "इनवॉइस",

@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Ordine medio",
       "colShare": "Quota",
       "brandBadge": "Marchio",
-      "locationDrillHint": "Tocca una sede per aprire i suoi report."
+      "locationDrillHint": "Tocca una sede per aprire i suoi report.",
+      "subtotal": "Subtotale"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nessun contesto ristorante.",

@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Commande moy.",
       "colShare": "Part",
       "brandBadge": "Marque",
-      "locationDrillHint": "Touchez un établissement pour ouvrir ses propres rapports."
+      "locationDrillHint": "Touchez un établissement pour ouvrir ses propres rapports.",
+      "subtotal": "Sous-total"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Aucun contexte de restaurant.",

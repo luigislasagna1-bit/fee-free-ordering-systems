@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Átl. rendelés",
       "colShare": "Részesedés",
       "brandBadge": "Márka",
-      "locationDrillHint": "Koppintson egy telephelyre a saját jelentéseinek megnyitásához."
+      "locationDrillHint": "Koppintson egy telephelyre a saját jelentéseinek megnyitásához.",
+      "subtotal": "Részösszeg"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nincs éttermi kontextus.",

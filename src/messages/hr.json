@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Pros. narudžba",
       "colShare": "Udio",
       "brandBadge": "Brend",
-      "locationDrillHint": "Dodirnite lokaciju da otvorite njezina izvješća."
+      "locationDrillHint": "Dodirnite lokaciju da otvorite njezina izvješća.",
+      "subtotal": "Međuzbir"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nema konteksta restorana.",

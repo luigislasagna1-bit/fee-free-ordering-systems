@@ -7,6 +7,10 @@ export type ReportScopeLocation = {
   name: string;
   city: string | null;
   isParent: boolean;
+  /** This location's OWN currency (lowercased) + timezone — drives the
+   *  per-currency grouping of the chain breakdown for multi-currency brands. */
+  currency: string;
+  timezone: string | null;
 };
 
 export type ReportScope = {
@@ -75,7 +79,7 @@ export const resolveReportScope = cache(async (restaurantId: string): Promise<Re
       brandName,
       slug,
       locations: parent
-        ? [{ id: parent.id, name: parent.name, city: parent.city, isParent: true }]
+        ? [{ id: parent.id, name: parent.name, city: parent.city, isParent: true, currency, timezone }]
         : [],
       mixedCurrency: false,
       mixedTimezone: false,
@@ -83,8 +87,8 @@ export const resolveReportScope = cache(async (restaurantId: string): Promise<Re
   }
 
   const locations: ReportScopeLocation[] = [
-    { id: parent!.id, name: parent!.name, city: parent!.city, isParent: true },
-    ...children.map((c) => ({ id: c.id, name: c.name, city: c.city, isParent: false })),
+    { id: parent!.id, name: parent!.name, city: parent!.city, isParent: true, currency, timezone },
+    ...children.map((c) => ({ id: c.id, name: c.name, city: c.city, isParent: false, currency: (c.currency || "usd").toLowerCase(), timezone: c.timezone ?? null })),
   ];
   const mixedCurrency = children.some((c) => (c.currency || "usd").toLowerCase() !== currency);
   const mixedTimezone = children.some((c) => (c.timezone ?? null) !== timezone);

@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Gns. ordre",
       "colShare": "Andel",
       "brandBadge": "Brand",
-      "locationDrillHint": "Tryk på en afdeling for at åbne dens egne rapporter."
+      "locationDrillHint": "Tryk på en afdeling for at åbne dens egne rapporter.",
+      "subtotal": "Subtotal"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ingen restaurantkontekst.",

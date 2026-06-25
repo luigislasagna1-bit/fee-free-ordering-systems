@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Ø Bestellung",
       "colShare": "Anteil",
       "brandBadge": "Marke",
-      "locationDrillHint": "Tippen Sie auf einen Standort, um dessen eigene Berichte zu öffnen."
+      "locationDrillHint": "Tippen Sie auf einen Standort, um dessen eigene Berichte zu öffnen.",
+      "subtotal": "Zwischensumme"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Kein Restaurant-Kontext.",

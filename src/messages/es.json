@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Pedido medio",
       "colShare": "Cuota",
       "brandBadge": "Marca",
-      "locationDrillHint": "Toca un local para abrir sus propios informes."
+      "locationDrillHint": "Toca un local para abrir sus propios informes.",
+      "subtotal": "Subtotal"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Sin contexto de restaurante.",

@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Prim. objednávka",
       "colShare": "Podiel",
       "brandBadge": "Značka",
-      "locationDrillHint": "Klepnutím na prevádzku otvoríte jej vlastné prehľady."
+      "locationDrillHint": "Klepnutím na prevádzku otvoríte jej vlastné prehľady.",
+      "subtotal": "Medzisúčet"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Žiadny kontext reštaurácie.",

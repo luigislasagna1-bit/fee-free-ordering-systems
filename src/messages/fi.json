@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Keskim. tilaus",
       "colShare": "Osuus",
       "brandBadge": "Brändi",
-      "locationDrillHint": "Avaa toimipisteen omat raportit napauttamalla sitä."
+      "locationDrillHint": "Avaa toimipisteen omat raportit napauttamalla sitä.",
+      "subtotal": "Välisumma"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ei ravintolaympäristöä.",

@@ -3788,7 +3788,8 @@
       "colAvgOrder": "ออร์เดอร์เฉลี่ย",
       "colShare": "สัดส่วน",
       "brandBadge": "แบรนด์",
-      "locationDrillHint": "แตะที่สาขาเพื่อเปิดรายงานของสาขานั้น"
+      "locationDrillHint": "แตะที่สาขาเพื่อเปิดรายงานของสาขานั้น",
+      "subtotal": "ยอดรวมย่อย"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "ไม่มีบริบทร้านอาหาร",

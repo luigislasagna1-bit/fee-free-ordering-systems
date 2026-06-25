@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Pesanan rata-rata",
       "colShare": "Bagian",
       "brandBadge": "Merek",
-      "locationDrillHint": "Ketuk lokasi untuk membuka laporannya sendiri."
+      "locationDrillHint": "Ketuk lokasi untuk membuka laporannya sendiri.",
+      "subtotal": "Subtotal"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Tidak ada konteks restoran.",

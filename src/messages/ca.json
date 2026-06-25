@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Comanda mitjana",
       "colShare": "Quota",
       "brandBadge": "Marca",
-      "locationDrillHint": "Toca un local per obrir els seus propis informes."
+      "locationDrillHint": "Toca un local per obrir els seus propis informes.",
+      "subtotal": "Subtotal"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "No hi ha context de restaurant.",

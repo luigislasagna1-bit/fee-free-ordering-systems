@@ -3854,6 +3854,7 @@
       "colAvgOrder": "Avg order",
       "colShare": "Share",
       "brandBadge": "Brand",
+      "subtotal": "Subtotal",
       "locationDrillHint": "Tap a location to open its own reports.",
       "chainwideSubtitle": "Chain-wide overview across all your locations.",
       "noRestaurantContext": "No restaurant context — sign in as a restaurant admin.",

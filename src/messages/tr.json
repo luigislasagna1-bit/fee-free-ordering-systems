@@ -3788,7 +3788,8 @@
       "colAvgOrder": "Ort. sipariş",
       "colShare": "Pay",
       "brandBadge": "Marka",
-      "locationDrillHint": "Bir şubenin kendi raporlarını açmak için şubeye dokunun."
+      "locationDrillHint": "Bir şubenin kendi raporlarını açmak için şubeye dokunun.",
+      "subtotal": "Ara Toplam"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Restoran bağlamı yok.",
