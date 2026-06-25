@@ -4255,7 +4255,12 @@
       "deliveryFees": "Poplatky za doručenie",
       "tips": "Prepitné",
       "otherFees": "Iné poplatky",
-      "total": "Celkom"
+      "total": "Celkom",
+      "viewFullReport": "Zobraziť celý prehľad",
+      "noMissedOrder": "Nezmeškali ste žiadnu objednávku.",
+      "noCanceledOrder": "Nezrušili ste žiadnu objednávku.",
+      "sentDaily": "Odosielané denne",
+      "sentMonthly": "Odosielané mesačne"
     },
     "reservationConfirmed": {
       "subject": "Rezervácia potvrdená",

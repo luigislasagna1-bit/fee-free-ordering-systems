@@ -4255,7 +4255,12 @@
       "deliveryFees": "Piegādes maksas",
       "tips": "Dzeram nauda",
       "otherFees": "Citas maksas",
-      "total": "Kopā"
+      "total": "Kopā",
+      "viewFullReport": "Skatīt pilno pārskatu",
+      "noMissedOrder": "Jūs nepalaidāt garām nevienu pasūtījumu.",
+      "noCanceledOrder": "Jūs neatcēlāt nevienu pasūtījumu.",
+      "sentDaily": "Tiek sūtīts katru dienu",
+      "sentMonthly": "Tiek sūtīts katru mēnesi"
     },
     "reservationConfirmed": {
       "subject": "Rezervācija apstiprināta",

@@ -4255,7 +4255,12 @@
       "deliveryFees": "Gastos de envío",
       "tips": "Propinas",
       "otherFees": "Otros cargos",
-      "total": "Total"
+      "total": "Total",
+      "viewFullReport": "Ver informe completo",
+      "noMissedOrder": "No te perdiste ningún pedido.",
+      "noCanceledOrder": "No cancelaste ningún pedido.",
+      "sentDaily": "Se envía a diario",
+      "sentMonthly": "Se envía cada mes"
     },
     "reservationConfirmed": {
       "subject": "Reserva confirmada",

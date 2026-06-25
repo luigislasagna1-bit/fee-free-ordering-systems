@@ -4255,7 +4255,12 @@
       "deliveryFees": "Poplatky za doručení",
       "tips": "Spropitné",
       "otherFees": "Ostatní poplatky",
-      "total": "Celkem"
+      "total": "Celkem",
+      "viewFullReport": "Zobrazit celý přehled",
+      "noMissedOrder": "Nezmeškali jste žádnou objednávku.",
+      "noCanceledOrder": "Nezrušili jste žádnou objednávku.",
+      "sentDaily": "Odesíláno denně",
+      "sentMonthly": "Odesíláno měsíčně"
     },
     "reservationConfirmed": {
       "subject": "Rezervace potvrzena",

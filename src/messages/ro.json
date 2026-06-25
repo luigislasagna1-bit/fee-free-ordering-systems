@@ -4255,7 +4255,12 @@
       "deliveryFees": "Taxe livrare",
       "tips": "Bacșișuri",
       "otherFees": "Alte taxe",
-      "total": "Total"
+      "total": "Total",
+      "viewFullReport": "Vezi raportul complet",
+      "noMissedOrder": "Nu ai ratat nicio comandă.",
+      "noCanceledOrder": "Nu ai anulat nicio comandă.",
+      "sentDaily": "Trimis zilnic",
+      "sentMonthly": "Trimis lunar"
     },
     "reservationConfirmed": {
       "subject": "Rezervare confirmată",

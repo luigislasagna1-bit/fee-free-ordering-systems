@@ -4255,7 +4255,12 @@
       "deliveryFees": "Leveringsgebyrer",
       "tips": "Drikkepenge",
       "otherFees": "Andre gebyrer",
-      "total": "Total"
+      "total": "Total",
+      "viewFullReport": "Se hele rapporten",
+      "noMissedOrder": "Du gik ikke glip af nogen ordre.",
+      "noCanceledOrder": "Du annullerede ingen ordre.",
+      "sentDaily": "Sendes dagligt",
+      "sentMonthly": "Sendes månedligt"
     },
     "reservationConfirmed": {
       "subject": "Reservation bekræftet",

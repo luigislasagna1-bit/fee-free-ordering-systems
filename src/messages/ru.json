@@ -4255,7 +4255,12 @@
       "deliveryFees": "Стоимость доставки",
       "tips": "Чаевые",
       "otherFees": "Прочие сборы",
-      "total": "Итого"
+      "total": "Итого",
+      "viewFullReport": "Посмотреть полный отчёт",
+      "noMissedOrder": "Вы не пропустили ни одного заказа.",
+      "noCanceledOrder": "Вы не отменили ни одного заказа.",
+      "sentDaily": "Отправляется ежедневно",
+      "sentMonthly": "Отправляется ежемесячно"
     },
     "reservationConfirmed": {
       "subject": "Бронь подтверждена",

@@ -4255,7 +4255,12 @@
       "deliveryFees": "Spese di consegna",
       "tips": "Mance",
       "otherFees": "Altre spese",
-      "total": "Totale"
+      "total": "Totale",
+      "viewFullReport": "Visualizza il report completo",
+      "noMissedOrder": "Non hai perso nessun ordine.",
+      "noCanceledOrder": "Non hai annullato nessun ordine.",
+      "sentDaily": "Inviato ogni giorno",
+      "sentMonthly": "Inviato ogni mese"
     },
     "reservationConfirmed": {
       "subject": "Prenotazione confermata",

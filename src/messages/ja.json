@@ -4255,7 +4255,12 @@
       "deliveryFees": "配達料",
       "tips": "チップ",
       "otherFees": "その他の料金",
-      "total": "合計"
+      "total": "合計",
+      "viewFullReport": "レポート全体を表示",
+      "noMissedOrder": "見逃した注文はありません。",
+      "noCanceledOrder": "キャンセルした注文はありません。",
+      "sentDaily": "毎日送信",
+      "sentMonthly": "毎月送信"
     },
     "reservationConfirmed": {
       "subject": "予約が確定しました",

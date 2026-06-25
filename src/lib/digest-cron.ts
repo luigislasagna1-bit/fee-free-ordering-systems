@@ -100,6 +100,10 @@ export async function runDigestSweep(mode: DigestSweepMode, now: Date = new Date
       id: true,
       name: true,
       timezone: true,
+      // Render the report in the restaurant's currency + language (Fabrizio
+      // report: the email was hardcoded $ + English).
+      currency: true,
+      defaultLanguage: true,
       lastEodDigestDate: true,
       // Default (service-null) weekly rows drive the closing-time detection.
       openingHours: {
@@ -179,7 +183,9 @@ export async function runDigestSweep(mode: DigestSweepMode, now: Date = new Date
               stats: stats!,
               dashboardUrl,
               unsubscribeUrl,
-              locale: recipient.emailLanguage,
+              // Recipient's chosen language wins; else the restaurant's default.
+              locale: recipient.emailLanguage || r.defaultLanguage || undefined,
+              currency: r.currency,
             }).catch((err) => {
               console.error(`[digest-sweep] send to ${recipient.email} failed:`, err);
               errors++;
@@ -220,7 +226,8 @@ export async function runDigestSweep(mode: DigestSweepMode, now: Date = new Date
                   stats: mStats!,
                   dashboardUrl,
                   unsubscribeUrl,
-                  locale: recipient.emailLanguage,
+                  locale: recipient.emailLanguage || r.defaultLanguage || undefined,
+                  currency: r.currency,
                 }).catch((err) => {
                   console.error(`[digest-sweep] monthly send to ${recipient.email} failed:`, err);
                   errors++;

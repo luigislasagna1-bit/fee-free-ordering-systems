@@ -4255,7 +4255,12 @@
       "deliveryFees": "Такси за доставка",
       "tips": "Бакшиши",
       "otherFees": "Други такси",
-      "total": "Общо"
+      "total": "Общо",
+      "viewFullReport": "Виж пълния отчет",
+      "noMissedOrder": "Не сте пропуснали нито една поръчка.",
+      "noCanceledOrder": "Не сте отменили нито една поръчка.",
+      "sentDaily": "Изпраща се ежедневно",
+      "sentMonthly": "Изпраща се месечно"
     },
     "reservationConfirmed": {
       "subject": "Резервацията е потвърдена",

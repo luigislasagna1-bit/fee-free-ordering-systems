@@ -4255,7 +4255,12 @@
       "deliveryFees": "Frais de livraison",
       "tips": "Pourboires",
       "otherFees": "Autres frais",
-      "total": "Total"
+      "total": "Total",
+      "viewFullReport": "Voir le rapport complet",
+      "noMissedOrder": "Vous n'avez manqué aucune commande.",
+      "noCanceledOrder": "Vous n'avez annulé aucune commande.",
+      "sentDaily": "Envoyé chaque jour",
+      "sentMonthly": "Envoyé chaque mois"
     },
     "reservationConfirmed": {
       "subject": "Réservation confirmée",

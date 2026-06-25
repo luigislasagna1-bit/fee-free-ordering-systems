@@ -4255,7 +4255,12 @@
       "deliveryFees": "배달료",
       "tips": "팁",
       "otherFees": "기타 수수료",
-      "total": "합계"
+      "total": "합계",
+      "viewFullReport": "전체 보고서 보기",
+      "noMissedOrder": "놓친 주문이 없습니다.",
+      "noCanceledOrder": "취소한 주문이 없습니다.",
+      "sentDaily": "매일 발송",
+      "sentMonthly": "매월 발송"
     },
     "reservationConfirmed": {
       "subject": "예약 확정",

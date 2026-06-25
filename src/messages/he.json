@@ -4255,7 +4255,12 @@
       "deliveryFees": "דמי משלוח",
       "tips": "טיפים",
       "otherFees": "עמלות אחרות",
-      "total": "סה\"כ"
+      "total": "סה\"כ",
+      "viewFullReport": "הצגת הדוח המלא",
+      "noMissedOrder": "לא פספסת אף הזמנה.",
+      "noCanceledOrder": "לא ביטלת אף הזמנה.",
+      "sentDaily": "נשלח מדי יום",
+      "sentMonthly": "נשלח מדי חודש"
     },
     "reservationConfirmed": {
       "subject": "הזמנת שולחן אושרה",

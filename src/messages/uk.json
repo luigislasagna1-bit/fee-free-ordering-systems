@@ -4255,7 +4255,12 @@
       "deliveryFees": "Вартість доставки",
       "tips": "Чайові",
       "otherFees": "Інші збори",
-      "total": "Разом"
+      "total": "Разом",
+      "viewFullReport": "Переглянути повний звіт",
+      "noMissedOrder": "Ви не пропустили жодного замовлення.",
+      "noCanceledOrder": "Ви не скасували жодного замовлення.",
+      "sentDaily": "Надсилається щодня",
+      "sentMonthly": "Надсилається щомісяця"
     },
     "reservationConfirmed": {
       "subject": "Бронювання підтверджено",

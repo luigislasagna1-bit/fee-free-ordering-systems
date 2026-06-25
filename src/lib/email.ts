@@ -1097,10 +1097,6 @@ export interface DigestStats {
   total: number;
 }
 
-function fmtMoney(n: number): string {
-  return `$${(n ?? 0).toFixed(2)}`;
-}
-
 function deltaPair(n: number): { delta?: string; deltaDirection?: "up" | "down" | "flat" } {
   if (!Number.isFinite(n) || Math.abs(n) < 0.5) return { delta: undefined, deltaDirection: "flat" };
   const sign = n > 0 ? "+" : "−";
@@ -1116,23 +1112,34 @@ async function sendDigestEmail(
   kind: "daily" | "monthly",
   dashboardUrl: string,
   t: Translator,
+  currency: string,
   unsubscribeUrl?: string,
 ) {
+  // All money renders in the RESTAURANT's currency (Fabrizio report: was hardcoded $).
+  const money = (n: number) => formatCurrency(n ?? 0, currency);
   const html = await renderEmail(
     DigestEmail({
       period: kind,
       periodLabel: stats.periodLabel,
       comparisonLabel: stats.comparisonLabel,
       restaurantName: stats.restaurantName,
-      sales:         { value: fmtMoney(stats.sales),         ...deltaPair(stats.salesDelta) },
+      t,
+      currency,
+      sales:         { value: money(stats.sales),         ...deltaPair(stats.salesDelta) },
       orders:        { value: String(stats.orders),          ...deltaPair(stats.ordersDelta) },
-      avgOrderValue: { value: fmtMoney(stats.avgOrderValue), ...deltaPair(stats.avgOrderValueDelta) },
+      avgOrderValue: { value: money(stats.avgOrderValue), ...deltaPair(stats.avgOrderValueDelta) },
       reservations:  { value: String(stats.tableReservations), ...deltaPair(stats.reservationsDelta) },
-      pickup:    { count: stats.pickupOrders,   value: fmtMoney(stats.pickupSales) },
-      delivery:  { count: stats.deliveryOrders, value: fmtMoney(stats.deliverySales) },
-      onPremise: { count: stats.dineInOrders,   value: fmtMoney(stats.dineInSales) },
-      offlinePayments: { count: stats.offlinePayments, value: fmtMoney(stats.offlinePaymentsAmount) },
-      onlinePayments:  { count: stats.onlinePayments,  value: fmtMoney(stats.onlinePaymentsAmount) },
+      // Sales breakdown — raw amounts (rendered in the email's currency). Adds
+      // the delivery-fees line the in-app EOD report shows (Fabrizio report).
+      breakdown: {
+        subTotals: stats.subTotals, deliveryFees: stats.deliveryFees, tips: stats.tips,
+        otherFees: stats.otherFees, tax: stats.taxAmount, total: stats.total,
+      },
+      pickup:    { count: stats.pickupOrders,   value: money(stats.pickupSales) },
+      delivery:  { count: stats.deliveryOrders, value: money(stats.deliverySales) },
+      onPremise: { count: stats.dineInOrders,   value: money(stats.dineInSales) },
+      offlinePayments: { count: stats.offlinePayments, value: money(stats.offlinePaymentsAmount) },
+      onlinePayments:  { count: stats.onlinePayments,  value: money(stats.onlinePaymentsAmount) },
       noMissedOrders: true,   // tracked elsewhere; until we wire the real signal we say "you're good"
       noCanceledOrders: true,
       dashboardUrl,
@@ -1155,14 +1162,14 @@ async function sendDigestEmail(
   });
 }
 
-export async function sendDailyDigestEmail(params: { to: string; stats: DigestStats; dashboardUrl?: string; unsubscribeUrl?: string; locale?: string }) {
+export async function sendDailyDigestEmail(params: { to: string; stats: DigestStats; dashboardUrl?: string; unsubscribeUrl?: string; locale?: string; currency?: string }) {
   const t = await getDict(params.locale);
-  return sendDigestEmail(params.to, params.stats, "daily", params.dashboardUrl ?? "#", t, params.unsubscribeUrl);
+  return sendDigestEmail(params.to, params.stats, "daily", params.dashboardUrl ?? "#", t, params.currency ?? "usd", params.unsubscribeUrl);
 }
 
-export async function sendMonthlyDigestEmail(params: { to: string; stats: DigestStats; dashboardUrl?: string; unsubscribeUrl?: string; locale?: string }) {
+export async function sendMonthlyDigestEmail(params: { to: string; stats: DigestStats; dashboardUrl?: string; unsubscribeUrl?: string; locale?: string; currency?: string }) {
   const t = await getDict(params.locale);
-  return sendDigestEmail(params.to, params.stats, "monthly", params.dashboardUrl ?? "#", t, params.unsubscribeUrl);
+  return sendDigestEmail(params.to, params.stats, "monthly", params.dashboardUrl ?? "#", t, params.currency ?? "usd", params.unsubscribeUrl);
 }
 
 // ─── Scheduled-order friendly reminder (NEW) ─────────────────────────────────

@@ -4255,7 +4255,12 @@
       "deliveryFees": "ค่าจัดส่ง",
       "tips": "ทิป",
       "otherFees": "ค่าธรรมเนียมอื่น",
-      "total": "รวมทั้งหมด"
+      "total": "รวมทั้งหมด",
+      "viewFullReport": "ดูรายงานฉบับเต็ม",
+      "noMissedOrder": "คุณไม่ได้พลาดออร์เดอร์ใดเลย",
+      "noCanceledOrder": "คุณไม่ได้ยกเลิกออร์เดอร์ใดเลย",
+      "sentDaily": "ส่งทุกวัน",
+      "sentMonthly": "ส่งทุกเดือน"
     },
     "reservationConfirmed": {
       "subject": "ยืนยันการจองแล้ว",

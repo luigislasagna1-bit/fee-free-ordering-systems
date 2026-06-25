@@ -4255,7 +4255,12 @@
       "deliveryFees": "Κόστη παράδοσης",
       "tips": "Φιλοδωρήματα",
       "otherFees": "Άλλες χρεώσεις",
-      "total": "Σύνολο"
+      "total": "Σύνολο",
+      "viewFullReport": "Προβολή πλήρους αναφοράς",
+      "noMissedOrder": "Δεν χάσατε καμία παραγγελία.",
+      "noCanceledOrder": "Δεν ακυρώσατε καμία παραγγελία.",
+      "sentDaily": "Αποστέλλεται καθημερινά",
+      "sentMonthly": "Αποστέλλεται μηνιαία"
     },
     "reservationConfirmed": {
       "subject": "Κράτηση επιβεβαιώθηκε",

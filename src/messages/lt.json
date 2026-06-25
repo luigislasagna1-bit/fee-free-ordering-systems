@@ -4255,7 +4255,12 @@
       "deliveryFees": "Pristatymo mokesčiai",
       "tips": "Arbatpinigiai",
       "otherFees": "Kiti mokesčiai",
-      "total": "Iš viso"
+      "total": "Iš viso",
+      "viewFullReport": "Žiūrėti visą ataskaitą",
+      "noMissedOrder": "Nepraleidote nė vieno užsakymo.",
+      "noCanceledOrder": "Neatšaukėte nė vieno užsakymo.",
+      "sentDaily": "Siunčiama kasdien",
+      "sentMonthly": "Siunčiama kas mėnesį"
     },
     "reservationConfirmed": {
       "subject": "Rezervacija patvirtinta",

@@ -4255,7 +4255,12 @@
       "deliveryFees": "Kojuveo tasud",
       "tips": "Jootrahatid",
       "otherFees": "Muud tasud",
-      "total": "Kokku"
+      "total": "Kokku",
+      "viewFullReport": "Vaata täisaruannet",
+      "noMissedOrder": "Te ei jätnud ühtegi tellimust kahe silma vahele.",
+      "noCanceledOrder": "Te ei tühistanud ühtegi tellimust.",
+      "sentDaily": "Saadetakse iga päev",
+      "sentMonthly": "Saadetakse iga kuu"
     },
     "reservationConfirmed": {
       "subject": "Broneering kinnitatud",

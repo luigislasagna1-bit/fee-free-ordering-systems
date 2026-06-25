@@ -4255,7 +4255,12 @@
       "deliveryFees": "Opłaty za dostawę",
       "tips": "Napiwki",
       "otherFees": "Inne opłaty",
-      "total": "Razem"
+      "total": "Razem",
+      "viewFullReport": "Zobacz pełny raport",
+      "noMissedOrder": "Nie przegapiłeś żadnego zamówienia.",
+      "noCanceledOrder": "Nie anulowałeś żadnego zamówienia.",
+      "sentDaily": "Wysyłane codziennie",
+      "sentMonthly": "Wysyłane co miesiąc"
     },
     "reservationConfirmed": {
       "subject": "Rezerwacja potwierdzona",

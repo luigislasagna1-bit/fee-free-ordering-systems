@@ -4255,7 +4255,12 @@
       "deliveryFees": "Stroški dostave",
       "tips": "Napitnine",
       "otherFees": "Ostale takse",
-      "total": "Skupaj"
+      "total": "Skupaj",
+      "viewFullReport": "Prikaži celotno poročilo",
+      "noMissedOrder": "Niste zamudili nobenega naročila.",
+      "noCanceledOrder": "Niste preklicali nobenega naročila.",
+      "sentDaily": "Pošlje se dnevno",
+      "sentMonthly": "Pošlje se mesečno"
     },
     "reservationConfirmed": {
       "subject": "Rezervacija potrjena",

@@ -4255,7 +4255,12 @@
       "deliveryFees": "Toimitusmaksut",
       "tips": "Juomarahat",
       "otherFees": "Muut maksut",
-      "total": "Yhteensä"
+      "total": "Yhteensä",
+      "viewFullReport": "Näytä koko raportti",
+      "noMissedOrder": "Et missannut yhtään tilausta.",
+      "noCanceledOrder": "Et perunut yhtään tilausta.",
+      "sentDaily": "Lähetetään päivittäin",
+      "sentMonthly": "Lähetetään kuukausittain"
     },
     "reservationConfirmed": {
       "subject": "Varaus vahvistettu",

@@ -4255,7 +4255,12 @@
       "deliveryFees": "Liefergebühren",
       "tips": "Trinkgelder",
       "otherFees": "Sonstige Gebühren",
-      "total": "Gesamt"
+      "total": "Gesamt",
+      "viewFullReport": "Vollständigen Bericht ansehen",
+      "noMissedOrder": "Du hast keine Bestellung verpasst.",
+      "noCanceledOrder": "Du hast keine Bestellung storniert.",
+      "sentDaily": "Täglich gesendet",
+      "sentMonthly": "Monatlich gesendet"
     },
     "reservationConfirmed": {
       "subject": "Reservierung bestätigt",

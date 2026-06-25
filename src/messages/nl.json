@@ -4255,7 +4255,12 @@
       "deliveryFees": "Bezorgkosten",
       "tips": "Fooien",
       "otherFees": "Overige kosten",
-      "total": "Totaal"
+      "total": "Totaal",
+      "viewFullReport": "Volledig rapport bekijken",
+      "noMissedOrder": "Je hebt geen enkele bestelling gemist.",
+      "noCanceledOrder": "Je hebt geen enkele bestelling geannuleerd.",
+      "sentDaily": "Dagelijks verzonden",
+      "sentMonthly": "Maandelijks verzonden"
     },
     "reservationConfirmed": {
       "subject": "Reservering bevestigd",

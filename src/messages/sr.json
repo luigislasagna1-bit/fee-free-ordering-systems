@@ -4255,7 +4255,12 @@
       "deliveryFees": "Naknade za dostavu",
       "tips": "Napojnice",
       "otherFees": "Ostale naknade",
-      "total": "Ukupno"
+      "total": "Ukupno",
+      "viewFullReport": "Прикажи цео извештај",
+      "noMissedOrder": "Нисте пропустили ниједну поруџбину.",
+      "noCanceledOrder": "Нисте отказали ниједну поруџбину.",
+      "sentDaily": "Шаље се дневно",
+      "sentMonthly": "Шаље се месечно"
     },
     "reservationConfirmed": {
       "subject": "Rezervacija potvrđena",

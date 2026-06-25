@@ -4255,7 +4255,12 @@
       "deliveryFees": "Szállítási díjak",
       "tips": "Borravalók",
       "otherFees": "Egyéb díjak",
-      "total": "Összesen"
+      "total": "Összesen",
+      "viewFullReport": "Teljes jelentés megtekintése",
+      "noMissedOrder": "Egyetlen rendelést sem mulasztott el.",
+      "noCanceledOrder": "Egyetlen rendelést sem mondott le.",
+      "sentDaily": "Naponta küldve",
+      "sentMonthly": "Havonta küldve"
     },
     "reservationConfirmed": {
       "subject": "Foglalás megerősítve",

@@ -4255,7 +4255,12 @@
       "deliveryFees": "Taxas de entrega",
       "tips": "Gorjetas",
       "otherFees": "Outras taxas",
-      "total": "Total"
+      "total": "Total",
+      "viewFullReport": "Ver relatório completo",
+      "noMissedOrder": "Você não perdeu nenhum pedido.",
+      "noCanceledOrder": "Você não cancelou nenhum pedido.",
+      "sentDaily": "Enviado diariamente",
+      "sentMonthly": "Enviado mensalmente"
     },
     "reservationConfirmed": {
       "subject": "Reserva confirmada",

@@ -4255,7 +4255,12 @@
       "deliveryFees": "Leveringsgebyrer",
       "tips": "Tips",
       "otherFees": "Andre gebyrer",
-      "total": "Totalt"
+      "total": "Totalt",
+      "viewFullReport": "Se hele rapporten",
+      "noMissedOrder": "Du gikk ikke glipp av noen bestilling.",
+      "noCanceledOrder": "Du kansellerte ingen bestilling.",
+      "sentDaily": "Sendes daglig",
+      "sentMonthly": "Sendes månedlig"
     },
     "reservationConfirmed": {
       "subject": "Reservasjon bekreftet",

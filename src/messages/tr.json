@@ -4255,7 +4255,12 @@
       "deliveryFees": "Teslimat ücretleri",
       "tips": "Bahşişler",
       "otherFees": "Diğer ücretler",
-      "total": "Toplam"
+      "total": "Toplam",
+      "viewFullReport": "Tam raporu görüntüle",
+      "noMissedOrder": "Hiçbir siparişi kaçırmadınız.",
+      "noCanceledOrder": "Hiçbir siparişi iptal etmediniz.",
+      "sentDaily": "Günlük gönderilir",
+      "sentMonthly": "Aylık gönderilir"
     },
     "reservationConfirmed": {
       "subject": "Rezervasyon onaylandı",

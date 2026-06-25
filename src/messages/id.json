@@ -4255,7 +4255,12 @@
       "deliveryFees": "Biaya pengiriman",
       "tips": "Tips",
       "otherFees": "Biaya lainnya",
-      "total": "Total"
+      "total": "Total",
+      "viewFullReport": "Lihat laporan lengkap",
+      "noMissedOrder": "Anda tidak melewatkan satu pesanan pun.",
+      "noCanceledOrder": "Anda tidak membatalkan satu pesanan pun.",
+      "sentDaily": "Dikirim setiap hari",
+      "sentMonthly": "Dikirim setiap bulan"
     },
     "reservationConfirmed": {
       "subject": "Reservasi dikonfirmasi",

@@ -4255,7 +4255,12 @@
       "deliveryFees": "Phí giao hàng",
       "tips": "Tiền tip",
       "otherFees": "Phí khác",
-      "total": "Tổng cộng"
+      "total": "Tổng cộng",
+      "viewFullReport": "Xem báo cáo đầy đủ",
+      "noMissedOrder": "Bạn không bỏ lỡ đơn hàng nào.",
+      "noCanceledOrder": "Bạn không hủy đơn hàng nào.",
+      "sentDaily": "Gửi hằng ngày",
+      "sentMonthly": "Gửi hằng tháng"
     },
     "reservationConfirmed": {
       "subject": "Đặt bàn đã xác nhận",

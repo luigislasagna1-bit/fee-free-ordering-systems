@@ -4255,7 +4255,12 @@
       "deliveryFees": "Tarifes de lliurament",
       "tips": "Propines",
       "otherFees": "Altres taxes",
-      "total": "Total"
+      "total": "Total",
+      "viewFullReport": "Veure l'informe complet",
+      "noMissedOrder": "No has perdut cap comanda.",
+      "noCanceledOrder": "No has cancel·lat cap comanda.",
+      "sentDaily": "S'envia cada dia",
+      "sentMonthly": "S'envia cada mes"
     },
     "reservationConfirmed": {
       "subject": "Reserva confirmada",

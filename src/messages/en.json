@@ -4255,7 +4255,12 @@
       "deliveryFees": "Delivery fees",
       "tips": "Tips",
       "otherFees": "Other fees",
-      "total": "Total"
+      "total": "Total",
+      "viewFullReport": "View full report",
+      "noMissedOrder": "You didn't miss any order.",
+      "noCanceledOrder": "You didn't cancel any order.",
+      "sentDaily": "Sent daily",
+      "sentMonthly": "Sent monthly"
     },
     "reservationConfirmed": {
       "subject": "Reservation confirmed",

@@ -4255,7 +4255,12 @@
       "deliveryFees": "डिलीवरी शुल्क",
       "tips": "टिप्स",
       "otherFees": "अन्य शुल्क",
-      "total": "कुल"
+      "total": "कुल",
+      "viewFullReport": "पूरी रिपोर्ट देखें",
+      "noMissedOrder": "आपने कोई ऑर्डर नहीं चूका.",
+      "noCanceledOrder": "आपने कोई ऑर्डर रद्द नहीं किया.",
+      "sentDaily": "रोज़ाना भेजा जाता है",
+      "sentMonthly": "मासिक भेजा जाता है"
     },
     "reservationConfirmed": {
       "subject": "आरक्षण की पुष्टि हुई",

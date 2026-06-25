@@ -4255,7 +4255,12 @@
       "deliveryFees": "Leveransavgifter",
       "tips": "Dricks",
       "otherFees": "Övriga avgifter",
-      "total": "Totalt"
+      "total": "Totalt",
+      "viewFullReport": "Visa hela rapporten",
+      "noMissedOrder": "Du missade ingen beställning.",
+      "noCanceledOrder": "Du avbröt ingen beställning.",
+      "sentDaily": "Skickas dagligen",
+      "sentMonthly": "Skickas månadsvis"
     },
     "reservationConfirmed": {
       "subject": "Reservation bekräftad",

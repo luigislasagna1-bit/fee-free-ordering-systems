@@ -4255,7 +4255,12 @@
       "deliveryFees": "配送费",
       "tips": "小费",
       "otherFees": "其他费用",
-      "total": "合计"
+      "total": "合计",
+      "viewFullReport": "查看完整报告",
+      "noMissedOrder": "您没有错过任何订单。",
+      "noCanceledOrder": "您没有取消任何订单。",
+      "sentDaily": "每日发送",
+      "sentMonthly": "每月发送"
     },
     "reservationConfirmed": {
       "subject": "预订已确认",

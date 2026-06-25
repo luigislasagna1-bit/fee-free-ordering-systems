@@ -4255,7 +4255,12 @@
       "deliveryFees": "رسوم التوصيل",
       "tips": "الإكراميات",
       "otherFees": "رسوم أخرى",
-      "total": "الإجمالي"
+      "total": "الإجمالي",
+      "viewFullReport": "عرض التقرير الكامل",
+      "noMissedOrder": "لم تفوّت أي طلب.",
+      "noCanceledOrder": "لم تلغِ أي طلب.",
+      "sentDaily": "يُرسل يوميًا",
+      "sentMonthly": "يُرسل شهريًا"
     },
     "reservationConfirmed": {
       "subject": "تم تأكيد الحجز",

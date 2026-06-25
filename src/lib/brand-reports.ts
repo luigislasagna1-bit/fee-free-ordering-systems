@@ -137,21 +137,26 @@ export async function loadBrandReports(parentId: string, days = 30): Promise<Bra
     revenue: row._sum.subtotal ?? 0,
   }));
 
-  // Daily trend for the last 7 days of the range (always 7 buckets even if
-  // days > 7). Built in JS from the order list because Prisma doesn't have
-  // a clean date-bucket primitive cross-DB.
-  const trendStart = new Date();
-  trendStart.setDate(trendStart.getDate() - 6);
+  // Daily trend over the SAME window as the headline totals so the chart
+  // reconciles with the summary. Was hardcoded to "today − 6 days" with NO
+  // upper bound, which (a) ignored the selected range and (b) didn't match the
+  // summary's [rangeStart, rangeEnd], producing the "numbers don't add up" gap
+  // on the chain view (Fabrizio report). Bucketed in JS — Prisma has no clean
+  // cross-DB date-bucket primitive. One bucket per day, clamped so a long range
+  // can't render an unreadable strip.
+  const trendStart = new Date(rangeStart);
   trendStart.setHours(0, 0, 0, 0);
+  const trendEnd = new Date(rangeEnd);
   const trendOrders = await prisma.order.findMany({
     where: {
       restaurantId: { in: allRestaurantIds },
-      createdAt: { gte: trendStart },
+      createdAt: { gte: trendStart, lte: trendEnd },
       status: "completed",
     },
     select: { createdAt: true, total: true },
   });
-  const dailyBuckets = Array.from({ length: 7 }, (_, i) => {
+  const trendDayCount = Math.min(31, Math.max(1, Math.round((trendEnd.getTime() - trendStart.getTime()) / 86_400_000) + 1));
+  const dailyBuckets = Array.from({ length: trendDayCount }, (_, i) => {
     const d = new Date(trendStart);
     d.setDate(trendStart.getDate() + i);
     return d;
