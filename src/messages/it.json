@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Lancia una promo per il primo ordine",
       "firstOrderPromoDesc": "Configura \"$5 di sconto sul primo ordine\" o un coupon consegna gratuita per convertire i visitatori.",
       "welcomeFootnote": "Una volta che gli ordini iniziano ad arrivare, questa pagina diventa la dashboard in stile GloriaFood con schede KPI, grafici di tendenza e un pannello \"Fai crescere il tuo ristorante\" con report con link approfonditi.",
-      "allTime": "Totale"
+      "allTime": "Totale",
+      "chainTitle": "{brand} — Report catena",
+      "chainSubtitle": "Intera catena · {range} · {count, plural, one {# sede} other {# sedi}}",
+      "chainMixedCaveat": "Totali mostrati in {currency}. Alcune sedi usano una valuta o un fuso orario diverso, quindi i dati della catena sono indicativi.",
+      "byLocation": "Per sede",
+      "colLocation": "Sede",
+      "colOrders": "Ordini",
+      "colRevenue": "Ricavi",
+      "colAvgOrder": "Ordine medio",
+      "colShare": "Quota",
+      "brandBadge": "Marchio",
+      "locationDrillHint": "Tocca una sede per aprire i suoi report."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nessun contesto ristorante.",

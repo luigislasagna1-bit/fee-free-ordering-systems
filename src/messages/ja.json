@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "初回注文プロモーションを実施",
       "firstOrderPromoDesc": "「初回注文 $5 オフ」や無料配達クーポンを設定して訪問者を転換。",
       "welcomeFootnote": "注文が入り始めると、このページは KPI カード、トレンドチャート、詳細レポートへの「レストランを成長させる」パネルを備えた GloriaFood スタイルのダッシュボードになります。",
-      "allTime": "累計"
+      "allTime": "累計",
+      "chainTitle": "{brand} — チェーンレポート",
+      "chainSubtitle": "チェーン全体 · {range} · {count, plural, one {# 店舗} other {# 店舗}}",
+      "chainMixedCaveat": "合計は {currency} で表示されています。一部の店舗は異なる通貨またはタイムゾーンを使用しているため、チェーンの数値は参考値です。",
+      "byLocation": "店舗別",
+      "colLocation": "店舗",
+      "colOrders": "注文数",
+      "colRevenue": "売上",
+      "colAvgOrder": "平均注文額",
+      "colShare": "構成比",
+      "brandBadge": "ブランド",
+      "locationDrillHint": "店舗をタップすると、その店舗のレポートが開きます。"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "レストランのコンテキストがありません。",

@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Zaženite promocijo za prvo naročilo",
       "firstOrderPromoDesc": "Nastavite \"$5 popusta na prvo naročilo\" ali kupon za brezplačno dostavo za konverzijo obiskovalcev.",
       "welcomeFootnote": "Ko začnejo pritekati naročila, ta stran postane GloriaFood-slogovna nadzorna plošča s KPI karticami, grafikoni trendov in ploščo \"Razvijte svojo restavracijo\" z globokimi poročili.",
-      "allTime": "Skupno"
+      "allTime": "Skupno",
+      "chainTitle": "{brand} — Poročila verige",
+      "chainSubtitle": "Celotna veriga · {range} · {count, plural, one {# lokacija} other {# lokacij}}",
+      "chainMixedCaveat": "Skupne vrednosti so prikazane v {currency}. Nekatere lokacije uporabljajo drugo valuto ali časovni pas, zato so podatki verige okvirni.",
+      "byLocation": "Po lokaciji",
+      "colLocation": "Lokacija",
+      "colOrders": "Naročila",
+      "colRevenue": "Prihodek",
+      "colAvgOrder": "Povp. naročilo",
+      "colShare": "Delež",
+      "brandBadge": "Znamka",
+      "locationDrillHint": "Tapnite lokacijo, da odprete njena poročila."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ni konteksta restavracije.",

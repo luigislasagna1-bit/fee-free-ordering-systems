@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Start en kampanje for første bestilling",
       "firstOrderPromoDesc": "Sett opp «$5 av første bestilling» eller en gratis leveringskupong for å konvertere besøkende.",
       "welcomeFootnote": "Når bestillinger begynner å strømme inn, blir denne siden det GloriaFood-lignende dashbordet med KPI-kort, trenddiagrammer og et «Voks restauranten din»-panel med dybderapporter.",
-      "allTime": "Totalt"
+      "allTime": "Totalt",
+      "chainTitle": "{brand} — Kjederapporter",
+      "chainSubtitle": "Hele kjeden · {range} · {count, plural, one {# sted} other {# steder}}",
+      "chainMixedCaveat": "Totaler vist i {currency}. Noen steder bruker en annen valuta eller tidssone, så kjedetallene er veiledende.",
+      "byLocation": "Etter sted",
+      "colLocation": "Sted",
+      "colOrders": "Bestillinger",
+      "colRevenue": "Omsetning",
+      "colAvgOrder": "Gj.sn. bestilling",
+      "colShare": "Andel",
+      "brandBadge": "Merke",
+      "locationDrillHint": "Trykk på et sted for å åpne stedets egne rapporter."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ingen restaurantkontekst.",

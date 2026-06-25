@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Lansează o promoție pentru prima comandă",
       "firstOrderPromoDesc": "Configurează „$5 reducere la prima comandă” sau un cupon de livrare gratuită pentru a converti vizitatorii.",
       "welcomeFootnote": "Odată ce încep să curgă comenzile, această pagină devine tabloul de bord în stil GloriaFood cu carduri KPI, grafice de tendințe și un panou „Fă-ți restaurantul să crească” cu rapoarte detaliate.",
-      "allTime": "Total"
+      "allTime": "Total",
+      "chainTitle": "{brand} — Rapoarte lanț",
+      "chainSubtitle": "Întreg lanțul · {range} · {count, plural, one {# locație} other {# locații}}",
+      "chainMixedCaveat": "Totalurile sunt afișate în {currency}. Unele locații folosesc o altă monedă sau fus orar, așa că cifrele lanțului sunt orientative.",
+      "byLocation": "După locație",
+      "colLocation": "Locație",
+      "colOrders": "Comenzi",
+      "colRevenue": "Venituri",
+      "colAvgOrder": "Comandă medie",
+      "colShare": "Pondere",
+      "brandBadge": "Brand",
+      "locationDrillHint": "Atingeți o locație pentru a deschide rapoartele sale."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Niciun context de restaurant.",

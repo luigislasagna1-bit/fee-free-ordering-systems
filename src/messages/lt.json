@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Paleiskite pirmojo užsakymo akciją",
       "firstOrderPromoDesc": "Nustatykite $5 nuolaida pirmam užsakymui arba nemokamo pristatymo kuponą lankytojų konversijai.",
       "welcomeFootnote": "Kai užsakymai pradės plaukti, šis puslapis taps GloriaFood stiliaus prietaisų skydeliu su KPI kortelėmis, tendencijų diagramomis ir Auginkite savo restoraną giluminių ataskaitų skydeliu.",
-      "allTime": "Iš viso"
+      "allTime": "Iš viso",
+      "chainTitle": "{brand} — Tinklo ataskaitos",
+      "chainSubtitle": "Visas tinklas · {range} · {count, plural, one {# vieta} other {# vietos}}",
+      "chainMixedCaveat": "Sumos rodomos {currency}. Kai kurios vietos naudoja kitą valiutą ar laiko juostą, todėl tinklo skaičiai yra orientaciniai.",
+      "byLocation": "Pagal vietą",
+      "colLocation": "Vieta",
+      "colOrders": "Užsakymai",
+      "colRevenue": "Pajamos",
+      "colAvgOrder": "Vid. užsakymas",
+      "colShare": "Dalis",
+      "brandBadge": "Prekės ženklas",
+      "locationDrillHint": "Bakstelėkite vietą, kad atidarytumėte jos ataskaitas."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nėra restorano konteksto.",

@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "推出首单促销",
       "firstOrderPromoDesc": "设置「首单减 $5」或免运费优惠券，将访客转化为顾客。",
       "welcomeFootnote": "订单开始流入后，本页面将成为 GloriaFood 风格的仪表盘，包含 KPI 卡片、趋势图表，以及深度链接报告的「壮大您的餐厅」面板。",
-      "allTime": "累计"
+      "allTime": "累计",
+      "chainTitle": "{brand} — 连锁报表",
+      "chainSubtitle": "全连锁 · {range} · {count, plural, one {# 家门店} other {# 家门店}}",
+      "chainMixedCaveat": "合计以 {currency} 显示。部分门店使用不同的货币或时区，因此连锁数据仅供参考。",
+      "byLocation": "按门店",
+      "colLocation": "门店",
+      "colOrders": "订单",
+      "colRevenue": "营收",
+      "colAvgOrder": "平均订单",
+      "colShare": "占比",
+      "brandBadge": "品牌",
+      "locationDrillHint": "点按门店即可打开其自有报表。"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "无餐厅上下文。",

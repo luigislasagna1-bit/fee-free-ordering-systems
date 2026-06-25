@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Palaidiet pirmā pasūtījuma akciju",
       "firstOrderPromoDesc": "Iestatiet \"$5 atlaide pirmajam pasūtījumam\" vai bezmaksas piegādes kuponu, lai konvertētu apmeklētājus.",
       "welcomeFootnote": "Kad sāks ienākt pasūtījumi, šī lapa kļūst par GloriaFood stila paneli ar KPI kartēm, tendenču grafikiem un \"Attīstiet savu restorānu\" padziļināto atskaišu paneli.",
-      "allTime": "Kopā"
+      "allTime": "Kopā",
+      "chainTitle": "{brand} — Tīkla pārskati",
+      "chainSubtitle": "Visā tīklā · {range} · {count, plural, one {# vieta} other {# vietas}}",
+      "chainMixedCaveat": "Kopsummas rādītas {currency}. Dažas vietas izmanto citu valūtu vai laika joslu, tāpēc tīkla rādītāji ir orientējoši.",
+      "byLocation": "Pēc vietas",
+      "colLocation": "Vieta",
+      "colOrders": "Pasūtījumi",
+      "colRevenue": "Ieņēmumi",
+      "colAvgOrder": "Vid. pasūtījums",
+      "colShare": "Daļa",
+      "brandBadge": "Zīmols",
+      "locationDrillHint": "Pieskarieties vietai, lai atvērtu tās pārskatus."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nav restorāna konteksta.",

@@ -9,7 +9,39 @@ date + commit hash. This file is committed so the backlog never gets lost.
 
 ## Open
 
-- [ ] **Split hours — only "Reservations" left.** v1 shipped general + per-service split hours; since then the
+- [ ] **Kitchen app login banner overlaps the phone status bar (Android + iOS).** On the native kitchen app
+  login screen the top floating switcher (`AuthLanguageSwitcher`, `absolute top-4 right-4`) sits in the unsafe
+  area and overlaps wifi/battery. Root: `src/app/login/layout.tsx` has NO `viewport` export (so no
+  `viewportFit:"cover"` like the kitchen pages do), and the switcher's `top-4` ignores `env(safe-area-inset-top)`.
+  FIX (web-only, no native rebuild): add `export const viewport = { …, viewportFit:"cover" }` to
+  `login/layout.tsx` + `paddingTop: max(.., env(safe-area-inset-top))` on `AuthLanguageSwitcher`. Reuse the
+  kitchen pattern (`KitchenDisplay.tsx:3190`). _(Luigi note, 2026-06-25.)_
+
+- [ ] **Windows-PC kitchen display not ringing reliably ("for later").** Desktop browsers lock audio under the
+  autoplay policy until a user gesture; only iOS shows a "tap to enable sound" gate (`KitchenDisplay.tsx`
+  `soundGateOpen` ~1121-1128). FIX dir: show the enable-sound gate on desktop browsers too + a persistent
+  "sound is off" banner while pending orders exist. _(Luigi note, 2026-06-25.)_
+
+- [ ] **PrintNode → opt-in admin setting that appears in the kitchen display ("for later").** Mostly built:
+  `Restaurant.printNodeEnabled` + the admin toggle (`KitchenWorkflowToggle.tsx`) + KDS hydration + print-fallback
+  all exist. GAP: the `PrinterSetupModal` shows the PrintNode tab regardless of the toggle — gate it on
+  `printNodeEnabled` so PrintNode only shows when the owner enabled it (less-common path; most use native WiFi
+  printing). _(Luigi note, 2026-06-25.)_
+
+- [ ] **iOS Kitchen Order App — test completely + move toward launch.** On TestFlight via Codemagic; pending
+  native StarXpand thermal-print bridge + ring-when-locked, then full device test + App Store submission. See
+  [[project_ios_app_state]]. _(Luigi note, 2026-06-25.)_
+
+- [x] **Reseller "Login page" explainer — SHIPPED (cea12162, 2026-06-25).** Free partners now get an explainer
+  (neutral `restaurantownerlogin.com` login + `feefreeordering.com/login` fallback + upgrade-to-Branded +
+  Kitchen Order App badges) instead of an empty redirect. ⚠️ App badges are "coming soon" (non-linking) until
+  the apps hit the public stores — wire the real store links at App-store launch (#33). _(Luigi note, 2026-06-24.)_
+
+- [ ] **Reseller section + multi-restaurant (brand-parent) section — full UX reboot.** When there's time, do a
+  complete usability reboot of BOTH the reseller admin section AND the multi-location / multi-restaurant
+  sections to improve the experience. _(Luigi note, 2026-06-24.)_
+
+- [ ] **Split hours — DONE (reservations shipped 2026-06-24, commit 84662c6a).** v1 shipped general + per-service split hours; since then the
   deferreds A/B/C also shipped (2026-06-24): (a) server-side weekly-hours enforcement for scheduled orders
   (orders/route.ts fail-open backstop), (b) reserve-then-order holiday gate, (c) menu-schedule coverage gaps use
   real intervals. **Remaining = Reservations split hours** — reservations still resolve a single window via

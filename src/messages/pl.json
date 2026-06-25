@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Uruchom promocję na pierwsze zamówienie",
       "firstOrderPromoDesc": "Ustaw „$5 zniżki na pierwsze zamówienie” lub kupon na bezpłatną dostawę, aby konwertować odwiedzających.",
       "welcomeFootnote": "Gdy zamówienia zaczną napływać, ta strona stanie się panelem w stylu GloriaFood z kartami KPI, wykresami trendów i panelem „Rozwijaj swoją restaurację” z raportami szczegółowymi.",
-      "allTime": "Łącznie"
+      "allTime": "Łącznie",
+      "chainTitle": "{brand} — Raporty sieci",
+      "chainSubtitle": "Cała sieć · {range} · {count, plural, one {# lokal} other {# lokali}}",
+      "chainMixedCaveat": "Sumy pokazane w {currency}. Niektóre lokale używają innej waluty lub strefy czasowej, więc dane sieci są orientacyjne.",
+      "byLocation": "Według lokalu",
+      "colLocation": "Lokal",
+      "colOrders": "Zamówienia",
+      "colRevenue": "Przychód",
+      "colAvgOrder": "Śr. zamówienie",
+      "colShare": "Udział",
+      "brandBadge": "Marka",
+      "locationDrillHint": "Dotknij lokalu, aby otworzyć jego własne raporty."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Brak kontekstu restauracji.",

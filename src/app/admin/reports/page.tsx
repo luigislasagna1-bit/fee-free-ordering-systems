@@ -2,16 +2,14 @@ import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { getRestaurantCurrency, getRestaurantTimezone } from "@/lib/restaurant-currency";
-import { isBrandParent } from "@/lib/brand";
-import { loadBrandReports } from "@/lib/brand-reports";
-import { BrandReports } from "./BrandReports";
-import { parseDateRange, previousPeriod, formatChartDate, formatRangeLabel, toISODate } from "@/lib/reports/date-range";
+import { resolveReportScope } from "@/lib/reports/report-scope";
+import { LocationDrillRow } from "./LocationDrillRow";
+import { previousPeriod, formatChartDate, formatRangeLabel, toISODate } from "@/lib/reports/date-range";
 import { parseDateRangeInTz, eachDayKeyInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
 import { dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
-import { TrendingUp, TrendingDown, DollarSign, ShoppingBag, Users, Receipt, ArrowRight, MousePointerClick, Sparkles, UserPlus } from "lucide-react";
+import { TrendingUp, TrendingDown, DollarSign, ShoppingBag, Users, Receipt, ArrowRight, MousePointerClick, Sparkles, UserPlus, Building2, AlertTriangle } from "lucide-react";
 import Link from "next/link";
 
 /**
@@ -25,8 +23,9 @@ import Link from "next/link";
  *   - Below: a 4-up "Quick actions" panel — links to the Visits /
  *     Funnel / Clients / Promotions reports framed as growth nudges
  *     ("I want more visitors", "I want more orders", etc).
- *   - Bottom: existing brand-parent path stays intact (chain-wide
- *     aggregation rendered by the BrandReports component).
+ *   - Chain: a brand PARENT rolls the SAME dashboard up across all its
+ *     locations (resolveReportScope → restaurantId IN (...)) + a clickable
+ *     per-location breakdown table. No separate placeholder.
  *
  * Auth + restaurant resolution comes from the parent /admin layout —
  * by the time this component renders, `session.restaurantId` is valid.
@@ -51,23 +50,6 @@ export default async function ReportsDashboardPage({
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
 
-  // Brand parents see the chain-wide aggregate (unchanged behavior).
-  // We pass the resolved range so the brand-level report respects the
-  // date picker too — previously hard-coded to 30 days.
-  if (restaurantId && (await isBrandParent(restaurantId))) {
-    const brandRange = parseDateRange(sp);
-    const days = Math.round((brandRange.to.getTime() - brandRange.from.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-    const payload = await loadBrandReports(restaurantId, days);
-    if (payload) {
-      return (
-        <div>
-          <ReportHeader title={t("dashboardTitle")} subtitle={t("chainwideSubtitle")} />
-          <BrandReports payload={payload} />
-        </div>
-      );
-    }
-  }
-
   if (!restaurantId) {
     return (
       <div>
@@ -76,15 +58,18 @@ export default async function ReportsDashboardPage({
       </div>
     );
   }
-  const [__currency, __timezone] = await Promise.all([
-    getRestaurantCurrency(restaurantId),
-    getRestaurantTimezone(restaurantId),
-  ]);
-  const formatCurrency = (n: number) => fmtCurrency(n, __currency);
 
-  // Resolve the date range in the RESTAURANT's timezone so "today" / "Last 7
+  // Resolve the report SCOPE: a single store → just this id; a brand PARENT →
+  // the whole chain (all location ids), totalled in the parent's currency + tz.
+  // The same rich dashboard renders for both — a chain just queries
+  // `restaurantId IN (...)` and adds the per-location breakdown below.
+  const scope = await resolveReportScope(restaurantId);
+  const formatCurrency = (n: number) => fmtCurrency(n, scope.currency);
+  const rangeQ = buildRangeQuery(sp);
+
+  // Resolve the date range in the restaurant's timezone so "today" / "Last 7
   // days" matches the kitchen + the End-of-Day report (not the Vercel UTC day).
-  const range = parseDateRangeInTz(sp, __timezone ?? undefined);
+  const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
   const prev = previousPeriod(range);
 
   // Run all 8 aggregate queries in parallel. They all hit the same two
@@ -95,16 +80,17 @@ export default async function ReportsDashboardPage({
     prevRevenue, prevOrders, prevCustomers,
     topItems, typeBreakdown,
     allTimeAgg, allTimeCustomers,
+    perLocationRaw,
   ] = await Promise.all([
-    sumRevenue(restaurantId, range),
-    countReportOrders(restaurantId, range),
-    countDistinctCustomers(restaurantId, range),
-    sumRevenue(restaurantId, prev),
-    countReportOrders(restaurantId, prev),
-    countDistinctCustomers(restaurantId, prev),
+    sumRevenue(scope.ids, range),
+    countReportOrders(scope.ids, range),
+    countDistinctCustomers(scope.ids, range),
+    sumRevenue(scope.ids, prev),
+    countReportOrders(scope.ids, prev),
+    countDistinctCustomers(scope.ids, prev),
     prisma.orderItem.groupBy({
       by: ["name"],
-      where: { order: reportOrderWhere(restaurantId, range) },
+      where: { order: reportOrderWhere(scope.ids, range) },
       _count: true,
       _sum: { subtotal: true },
       orderBy: { _count: { name: "desc" } },
@@ -112,14 +98,19 @@ export default async function ReportsDashboardPage({
     }),
     prisma.order.groupBy({
       by: ["type"],
-      where: reportOrderWhere(restaurantId, range),
+      where: reportOrderWhere(scope.ids, range),
       _count: true,
     }),
     // All-time totals — the GloriaFood "/ 45,947" secondary figure beside the
     // range value. Indexed on (restaurantId, status); runs once per load.
     // SCALE SEAM: cache this nightly once a restaurant passes ~100k orders.
-    prisma.order.aggregate({ where: { restaurantId, ...REPORT_ORDER_STATUS_WHERE }, _sum: { total: true }, _count: true }),
-    prisma.customer.count({ where: { restaurantId } }),
+    prisma.order.aggregate({ where: { restaurantId: { in: scope.ids }, ...REPORT_ORDER_STATUS_WHERE }, _sum: { total: true }, _count: true }),
+    prisma.customer.count({ where: { restaurantId: { in: scope.ids } } }),
+    // Per-location breakdown (chain only) — ONE groupBy(restaurantId) instead of
+    // an N-location fan-out; the (restaurantId,status,createdAt) index serves it.
+    scope.isChain
+      ? prisma.order.groupBy({ by: ["restaurantId"], where: reportOrderWhere(scope.ids, range), _count: true, _sum: { total: true } })
+      : Promise.resolve([] as Array<{ restaurantId: string; _count: number; _sum: { total: number | null } }>),
   ]);
 
   // One consistent "what counts" rule (reportOrderWhere) → "Orders" and "Avg
@@ -137,14 +128,14 @@ export default async function ReportsDashboardPage({
   // range and bucket in JS. Capped at the range length × max(1000/day) by
   // the date filter, so safe.
   const dailyOrders = await prisma.order.findMany({
-    where: reportOrderWhere(restaurantId, range),
+    where: reportOrderWhere(scope.ids, range),
     select: { total: true, createdAt: true },
   });
   // Bucket by the restaurant-LOCAL calendar day so the chart lines up with the
   // tz-aware range (a 9pm-PST order counts on the PST day, not UTC tomorrow).
-  const dayKey = (d: Date) => (__timezone ? dateKeyInTimezone(d, __timezone) : toISODate(d));
+  const dayKey = (d: Date) => (scope.timezone ? dateKeyInTimezone(d, scope.timezone) : toISODate(d));
   const buckets = new Map<string, { revenue: number; count: number }>();
-  for (const key of eachDayKeyInTz(range, __timezone ?? undefined)) {
+  for (const key of eachDayKeyInTz(range, scope.timezone ?? undefined)) {
     buckets.set(key, { revenue: 0, count: 0 });
   }
   for (const o of dailyOrders) {
@@ -160,6 +151,22 @@ export default async function ReportsDashboardPage({
     count: b.count,
   }));
   const maxRevenue = Math.max(...days.map((d) => d.revenue), 1);
+
+  // Per-location rows (chain only) — join the groupBy to the scope's location
+  // list, sorted by revenue. A location with no orders in the range shows zero.
+  const perLocById = new Map(
+    (perLocationRaw as Array<{ restaurantId: string; _count: number; _sum: { total: number | null } }>)
+      .map((r) => [r.restaurantId, { orders: r._count, revenue: r._sum.total ?? 0 }]),
+  );
+  const locationRows = scope.locations
+    .map((l) => {
+      const s = perLocById.get(l.id);
+      const orders = s?.orders ?? 0;
+      const revenue = s?.revenue ?? 0;
+      return { id: l.id, name: l.name, city: l.city, isParent: l.isParent, orders, revenue, avg: orders > 0 ? revenue / orders : 0 };
+    })
+    .sort((a, b) => b.revenue - a.revenue);
+  const maxLocRev = Math.max(...locationRows.map((l) => l.revenue), 1);
 
   // Detect "brand-new restaurant" state — zero orders in BOTH the
   // current AND the previous period. We render a welcoming first-order
@@ -194,8 +201,12 @@ export default async function ReportsDashboardPage({
   return (
     <div>
       <ReportHeader
-        title={t("dashboardTitle")}
-        subtitle={t("headlineMetricsSubtitle", { range: formatRangeLabel(range) })}
+        title={scope.isChain ? t("chainTitle", { brand: scope.brandName }) : t("dashboardTitle")}
+        subtitle={
+          scope.isChain
+            ? t("chainSubtitle", { range: formatRangeLabel(range), count: scope.locations.length })
+            : t("headlineMetricsSubtitle", { range: formatRangeLabel(range) })
+        }
       />
 
       {/* KPI cards with vs-previous-period deltas. The arrow + percentage
@@ -212,6 +223,7 @@ export default async function ReportsDashboardPage({
           accent="emerald"
           vsPrevLabel={t("vsPrev")}
           vsPrevPctLabel={(pct) => t("vsPrevPct", { pct })}
+          href={`/admin/reports/list/orders?${rangeQ}`}
         />
         <KpiCard
           label={t("kpiCompletedOrders")}
@@ -223,6 +235,7 @@ export default async function ReportsDashboardPage({
           accent="blue"
           vsPrevLabel={t("vsPrev")}
           vsPrevPctLabel={(pct) => t("vsPrevPct", { pct })}
+          href={`/admin/reports/list/orders?${rangeQ}`}
         />
         <KpiCard
           label={t("kpiAverageOrder")}
@@ -234,6 +247,7 @@ export default async function ReportsDashboardPage({
           accent="amber"
           vsPrevLabel={t("vsPrev")}
           vsPrevPctLabel={(pct) => t("vsPrevPct", { pct })}
+          href={`/admin/reports/sales/summary?${rangeQ}`}
         />
         <KpiCard
           label={t("kpiCustomersServed")}
@@ -245,8 +259,65 @@ export default async function ReportsDashboardPage({
           accent="purple"
           vsPrevLabel={t("vsPrev")}
           vsPrevPctLabel={(pct) => t("vsPrevPct", { pct })}
+          href={`/admin/reports/list/clients?${rangeQ}`}
         />
       </div>
+
+      {scope.isChain && (
+        <>
+          {(scope.mixedCurrency || scope.mixedTimezone) && (
+            <div className="mb-6 flex items-start gap-2.5 rounded-xl border border-amber-200 bg-amber-50 p-3">
+              <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-amber-900/90">{t("chainMixedCaveat", { currency: scope.currency.toUpperCase() })}</p>
+            </div>
+          )}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-6">
+            <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <Building2 className="w-4 h-4 text-amber-500" /> {t("byLocation")}
+            </h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100">
+                    <th className="py-2 pr-4 font-medium">{t("colLocation")}</th>
+                    <th className="py-2 pr-4 font-medium text-right">{t("colOrders")}</th>
+                    <th className="py-2 pr-4 font-medium text-right">{t("colRevenue")}</th>
+                    <th className="py-2 pr-4 font-medium text-right">{t("colAvgOrder")}</th>
+                    <th className="py-2 font-medium hidden md:table-cell">{t("colShare")}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {locationRows.map((loc) => (
+                    <LocationDrillRow key={loc.id} id={loc.id}>
+                      <td className="py-3 pr-4">
+                        <div className="font-medium text-gray-900 flex items-center gap-2">
+                          {loc.name}
+                          {loc.isParent && (
+                            <span className="text-[10px] font-bold uppercase tracking-wide text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded">{t("brandBadge")}</span>
+                          )}
+                        </div>
+                        {loc.city && <div className="text-xs text-gray-500">{loc.city}</div>}
+                      </td>
+                      <td className="py-3 pr-4 text-right text-gray-700">{loc.orders.toLocaleString()}</td>
+                      <td className="py-3 pr-4 text-right font-semibold text-gray-900">{formatCurrency(loc.revenue)}</td>
+                      <td className="py-3 pr-4 text-right text-gray-600">{formatCurrency(loc.avg)}</td>
+                      <td className="py-3 hidden md:table-cell">
+                        <div className="flex items-center gap-2">
+                          <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden min-w-[60px] max-w-[140px]">
+                            <div className="h-full bg-amber-500" style={{ width: `${(loc.revenue / maxLocRev) * 100}%` }} />
+                          </div>
+                          <span className="text-xs text-gray-500 w-10 text-right">{curRevenue > 0 ? ((loc.revenue / curRevenue) * 100).toFixed(0) : 0}%</span>
+                        </div>
+                      </td>
+                    </LocationDrillRow>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-gray-400 mt-3">{t("locationDrillHint")}</p>
+          </div>
+        </>
+      )}
 
       {/* Daily revenue spark + top items + type split — same three panels
           as the legacy /admin/reports, kept because they answer the most
@@ -379,7 +450,7 @@ function ReportHeader({ title, subtitle }: { title: string; subtitle?: string })
 
 /** Single KPI card with delta vs previous-period. */
 function KpiCard({
-  label, value, deltaPct, icon: Icon, accent, vsPrevLabel, vsPrevPctLabel, allTime, allTimeLabel,
+  label, value, deltaPct, icon: Icon, accent, vsPrevLabel, vsPrevPctLabel, allTime, allTimeLabel, href,
 }: {
   label: string;
   value: string;
@@ -391,6 +462,8 @@ function KpiCard({
   /** All-time figure shown as a muted secondary line (GloriaFood "/ 45,947"). */
   allTime?: string;
   allTimeLabel?: string;
+  /** When set, the whole card becomes a drill-down link to a filtered report. */
+  href?: string;
 }) {
   const ring = {
     emerald: "bg-emerald-50 text-emerald-600",
@@ -415,8 +488,8 @@ function KpiCard({
     );
   };
 
-  return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+  const inner = (
+    <>
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs text-gray-500">{label}</span>
         <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${ring}`}>
@@ -430,8 +503,17 @@ function KpiCard({
           {allTimeLabel} · {allTime}
         </div>
       )}
-    </div>
+    </>
   );
+  const base = "bg-white rounded-xl border border-gray-100 shadow-sm p-4 block";
+  if (href) {
+    return (
+      <Link href={href} className={`${base} hover:border-emerald-300 hover:shadow-md transition`}>
+        {inner}
+      </Link>
+    );
+  }
+  return <div className={base}>{inner}</div>;
 }
 
 /** Quick-action card linking to a related report. */
@@ -553,26 +635,37 @@ function FirstOrderWelcome({
 // All four hit the existing (restaurantId, status, createdAt) composite
 // index added in this change set.
 
-async function sumRevenue(restaurantId: string, range: { from: Date; to: Date }): Promise<number> {
+async function sumRevenue(ids: string | string[], range: { from: Date; to: Date }): Promise<number> {
   const r = await prisma.order.aggregate({
-    where: reportOrderWhere(restaurantId, range),
+    where: reportOrderWhere(ids, range),
     _sum: { total: true },
   });
   return r._sum.total ?? 0;
 }
 
-async function countReportOrders(restaurantId: string, range: { from: Date; to: Date }): Promise<number> {
-  return prisma.order.count({ where: reportOrderWhere(restaurantId, range) });
+async function countReportOrders(ids: string | string[], range: { from: Date; to: Date }): Promise<number> {
+  return prisma.order.count({ where: reportOrderWhere(ids, range) });
 }
 
 /** Distinct customer count for a window. Uses a raw groupBy on
  *  `customerId` (excluding null guest orders). We could include guests
  *  by hashing on email/phone but that adds noise — for the dashboard
  *  headline metric, "customers we know" is the more useful number. */
-async function countDistinctCustomers(restaurantId: string, range: { from: Date; to: Date }): Promise<number> {
+async function countDistinctCustomers(ids: string | string[], range: { from: Date; to: Date }): Promise<number> {
   const rows = await prisma.order.groupBy({
     by: ["customerId"],
-    where: { ...reportOrderWhere(restaurantId, range), customerId: { not: null } },
+    where: { ...reportOrderWhere(ids, range), customerId: { not: null } },
   });
   return rows.length;
+}
+
+/** Carry the active date range (preset / from / to) onto a drill-down link. */
+function buildRangeQuery(sp: Record<string, string | string[] | undefined>): string {
+  const u = new URLSearchParams();
+  for (const k of ["preset", "from", "to"]) {
+    const v = sp[k];
+    const val = Array.isArray(v) ? v[0] : v;
+    if (val) u.set(k, val);
+  }
+  return u.toString();
 }

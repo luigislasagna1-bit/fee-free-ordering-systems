@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Spusťte akci pro první objednávku",
       "firstOrderPromoDesc": "Nastavte „$5 sleva na první objednávku\" nebo kupón na dopravu zdarma pro konverzi návštěvníků.",
       "welcomeFootnote": "Jakmile začnou proudit objednávky, tato stránka se stane přehledem ve stylu GloriaFood s kartami KPI, grafy trendů a panelem „Rozvíjejte svou restauraci\" s přímými přehledy.",
-      "allTime": "Celkem"
+      "allTime": "Celkem",
+      "chainTitle": "{brand} — Přehledy řetězce",
+      "chainSubtitle": "Celý řetězec · {range} · {count, plural, one {# pobočka} other {# poboček}}",
+      "chainMixedCaveat": "Souhrny jsou uvedeny v {currency}. Některé pobočky používají jinou měnu nebo časové pásmo, proto jsou údaje za řetězec orientační.",
+      "byLocation": "Podle pobočky",
+      "colLocation": "Pobočka",
+      "colOrders": "Objednávky",
+      "colRevenue": "Tržby",
+      "colAvgOrder": "Prům. objednávka",
+      "colShare": "Podíl",
+      "brandBadge": "Značka",
+      "locationDrillHint": "Klepnutím na pobočku otevřete její vlastní přehledy."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Chybí kontext restaurace.",

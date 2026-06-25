@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "เปิดตัวโปรโมชันออเดอร์แรก",
       "firstOrderPromoDesc": "ตั้ง \"ลด $5 สำหรับออเดอร์แรก\" หรือคูปองส่งฟรีเพื่อเปลี่ยนผู้เข้าชมให้เป็นลูกค้า",
       "welcomeFootnote": "เมื่อออเดอร์เริ่มไหลเข้า หน้านี้จะกลายเป็นแดชบอร์ดแบบ GloriaFood พร้อม KPI Card กราฟแนวโน้ม และแผง \"ขยายธุรกิจร้านอาหาร\" ที่เชื่อมไปยังรายงานเชิงลึก",
-      "allTime": "ทั้งหมด"
+      "allTime": "ทั้งหมด",
+      "chainTitle": "{brand} — รายงานเครือข่าย",
+      "chainSubtitle": "ทั้งเครือข่าย · {range} · {count, plural, one {# สาขา} other {# สาขา}}",
+      "chainMixedCaveat": "ยอดรวมแสดงเป็น {currency} บางสาขาใช้สกุลเงินหรือเขตเวลาที่ต่างกัน ตัวเลขของเครือข่ายจึงเป็นค่าโดยประมาณ",
+      "byLocation": "ตามสาขา",
+      "colLocation": "สาขา",
+      "colOrders": "ออร์เดอร์",
+      "colRevenue": "รายได้",
+      "colAvgOrder": "ออร์เดอร์เฉลี่ย",
+      "colShare": "สัดส่วน",
+      "brandBadge": "แบรนด์",
+      "locationDrillHint": "แตะที่สาขาเพื่อเปิดรายงานของสาขานั้น"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "ไม่มีบริบทร้านอาหาร",

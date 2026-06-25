@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "أطلق عرض أول طلب",
       "firstOrderPromoDesc": "أعدّ «خصم $5 على أول طلب» أو قسيمة توصيل مجاني لتحويل الزوار.",
       "welcomeFootnote": "عند بدء تدفق الطلبات، تصبح هذه الصفحة لوحة تحكم بنمط GloriaFood مع بطاقات KPI، ورسوم بيانية للاتجاهات، ولوحة «نمّ مطعمك» من التقارير التفصيلية.",
-      "allTime": "الإجمالي الكلي"
+      "allTime": "الإجمالي الكلي",
+      "chainTitle": "{brand} — تقارير السلسلة",
+      "chainSubtitle": "على مستوى السلسلة · {range} · {count, plural, one {# فرع} other {# فروع}}",
+      "chainMixedCaveat": "الإجماليات معروضة بـ {currency}. تستخدم بعض الفروع عملة أو منطقة زمنية مختلفة، لذا فإن أرقام السلسلة تقريبية.",
+      "byLocation": "حسب الفرع",
+      "colLocation": "الفرع",
+      "colOrders": "الطلبات",
+      "colRevenue": "الإيرادات",
+      "colAvgOrder": "متوسط الطلب",
+      "colShare": "الحصة",
+      "brandBadge": "العلامة",
+      "locationDrillHint": "انقر على فرع لفتح تقاريره الخاصة."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "لا يوجد سياق مطعم.",

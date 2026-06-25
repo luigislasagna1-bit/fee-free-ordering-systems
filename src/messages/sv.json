@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Lansera en kampanj för första beställningen",
       "firstOrderPromoDesc": "Ställ in \"$5 rabatt på första beställning\" eller en gratis leveranskupong för att konvertera besökare.",
       "welcomeFootnote": "När beställningar börjar flöda in blir den här sidan GloriaFood-stilens instrumentpanel med KPI-kort, trenddiagram och en \"Väx din restaurang\"-panel med djuplänkade rapporter.",
-      "allTime": "Totalt"
+      "allTime": "Totalt",
+      "chainTitle": "{brand} — Kedjerapporter",
+      "chainSubtitle": "Hela kedjan · {range} · {count, plural, one {# plats} other {# platser}}",
+      "chainMixedCaveat": "Summor visas i {currency}. Vissa platser använder en annan valuta eller tidszon, så kedjesiffrorna är vägledande.",
+      "byLocation": "Per plats",
+      "colLocation": "Plats",
+      "colOrders": "Beställningar",
+      "colRevenue": "Omsättning",
+      "colAvgOrder": "Snittbeställning",
+      "colShare": "Andel",
+      "brandBadge": "Varumärke",
+      "locationDrillHint": "Tryck på en plats för att öppna dess egna rapporter."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ingen restaurangkontext.",

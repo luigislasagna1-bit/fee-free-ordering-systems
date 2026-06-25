@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "İlk sipariş promosyonu başlatın",
       "firstOrderPromoDesc": "Ziyaretçileri dönüştürmek için \"İlk siparişte $5 indirim\" veya ücretsiz teslimat kuponu oluşturun.",
       "welcomeFootnote": "Siparişler akmaya başladığında bu sayfa KPI kartları, trend grafikleri ve derin bağlantılı raporlardan oluşan \"Restoranınızı büyütün\" paneli ile GloriaFood tarzı bir gösterge paneline dönüşür.",
-      "allTime": "Tüm zamanlar"
+      "allTime": "Tüm zamanlar",
+      "chainTitle": "{brand} — Zincir raporları",
+      "chainSubtitle": "Zincir geneli · {range} · {count, plural, one {# şube} other {# şube}}",
+      "chainMixedCaveat": "Toplamlar {currency} cinsinden gösterilir. Bazı şubeler farklı bir para birimi veya saat dilimi kullanır, bu nedenle zincir rakamları tahminîdir.",
+      "byLocation": "Şubeye göre",
+      "colLocation": "Şube",
+      "colOrders": "Siparişler",
+      "colRevenue": "Gelir",
+      "colAvgOrder": "Ort. sipariş",
+      "colShare": "Pay",
+      "brandBadge": "Marka",
+      "locationDrillHint": "Bir şubenin kendi raporlarını açmak için şubeye dokunun."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Restoran bağlamı yok.",

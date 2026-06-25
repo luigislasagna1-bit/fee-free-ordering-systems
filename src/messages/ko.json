@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "첫 주문 프로모션 시작",
       "firstOrderPromoDesc": "방문자를 전환하기 위해 \"첫 주문 $5 할인\" 또는 무료 배달 쿠폰을 설정하세요.",
       "welcomeFootnote": "주문이 시작되면 이 페이지는 KPI 카드, 트렌드 차트, 딥링크 보고서의 \"레스토랑 성장\" 패널을 갖춘 GloriaFood 스타일 대시보드가 됩니다.",
-      "allTime": "전체 기간"
+      "allTime": "전체 기간",
+      "chainTitle": "{brand} — 체인 리포트",
+      "chainSubtitle": "체인 전체 · {range} · {count, plural, one {매장 #곳} other {매장 #곳}}",
+      "chainMixedCaveat": "합계는 {currency}로 표시됩니다. 일부 매장은 다른 통화나 시간대를 사용하므로 체인 수치는 참고용입니다.",
+      "byLocation": "매장별",
+      "colLocation": "매장",
+      "colOrders": "주문",
+      "colRevenue": "매출",
+      "colAvgOrder": "평균 주문액",
+      "colShare": "비중",
+      "brandBadge": "브랜드",
+      "locationDrillHint": "매장을 탭하면 해당 매장의 리포트가 열립니다."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "레스토랑 컨텍스트가 없습니다.",

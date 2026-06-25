@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Llança una promo per a la primera comanda",
       "firstOrderPromoDesc": "Configura «$5 de descompte en la primera comanda» o un cupó de lliurament gratuït per convertir els visitants.",
       "welcomeFootnote": "Quan les comandes comencin a arribar, aquesta pàgina es convertirà en el tauler estil GloriaFood amb targetes KPI, gràfics de tendències i un panell de «Fes créixer el teu restaurant» amb informes d'accés directe.",
-      "allTime": "Històric"
+      "allTime": "Històric",
+      "chainTitle": "{brand} — Informes de la cadena",
+      "chainSubtitle": "Tota la cadena · {range} · {count, plural, one {# local} other {# locals}}",
+      "chainMixedCaveat": "Totals mostrats en {currency}. Alguns locals utilitzen una moneda o zona horària diferent, de manera que les xifres de la cadena són indicatives.",
+      "byLocation": "Per local",
+      "colLocation": "Local",
+      "colOrders": "Comandes",
+      "colRevenue": "Ingressos",
+      "colAvgOrder": "Comanda mitjana",
+      "colShare": "Quota",
+      "brandBadge": "Marca",
+      "locationDrillHint": "Toca un local per obrir els seus propis informes."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "No hi ha context de restaurant.",

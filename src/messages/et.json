@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Käivitage esimese tellimuse kampaania",
       "firstOrderPromoDesc": "Seadistage \"$5 esimeselt tellimuselt\" või tasuta kohaletoimetamise kupong külastajate konverteerimiseks.",
       "welcomeFootnote": "Kui tellimused hakkavad laekuma, muutub see lehekülg GloriaFoodi stiilis armatuurlauaks KPI-kaartide, trendidiagrammide ja \"Kasvatage oma restorani\" sügavlinkide paneelaga.",
-      "allTime": "Kogu aeg"
+      "allTime": "Kogu aeg",
+      "chainTitle": "{brand} — Keti aruanded",
+      "chainSubtitle": "Kogu kett · {range} · {count, plural, one {# asukoht} other {# asukohta}}",
+      "chainMixedCaveat": "Kogusummad on kuvatud valuutas {currency}. Mõni asukoht kasutab teist valuutat või ajavööndit, mistõttu keti näitajad on ligikaudsed.",
+      "byLocation": "Asukoha järgi",
+      "colLocation": "Asukoht",
+      "colOrders": "Tellimused",
+      "colRevenue": "Tulu",
+      "colAvgOrder": "Keskm. tellimus",
+      "colShare": "Osakaal",
+      "brandBadge": "Bränd",
+      "locationDrillHint": "Puudutage asukohta, et avada selle enda aruanded."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Restorani kontekst puudub.",

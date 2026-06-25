@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Start en første-ordre-kampagne",
       "firstOrderPromoDesc": "Opsæt \"$5 rabat på første ordre\" eller en gratis-leverings-kupon for at konvertere besøgende.",
       "welcomeFootnote": "Når ordrer begynder at strømme ind, bliver denne side til GloriaFood-stil-dashboardet med KPI-kort, trenddiagrammer og et \"Udvid din restaurant\"-panel med dybdegående rapporter.",
-      "allTime": "Samlet"
+      "allTime": "Samlet",
+      "chainTitle": "{brand} — Kæderapporter",
+      "chainSubtitle": "Hele kæden · {range} · {count, plural, one {# afdeling} other {# afdelinger}}",
+      "chainMixedCaveat": "Totaler vist i {currency}. Nogle afdelinger bruger en anden valuta eller tidszone, så kædetallene er vejledende.",
+      "byLocation": "Efter afdeling",
+      "colLocation": "Afdeling",
+      "colOrders": "Ordrer",
+      "colRevenue": "Omsætning",
+      "colAvgOrder": "Gns. ordre",
+      "colShare": "Andel",
+      "brandBadge": "Brand",
+      "locationDrillHint": "Tryk på en afdeling for at åbne dens egne rapporter."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ingen restaurantkontekst.",

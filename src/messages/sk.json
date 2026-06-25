@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Spustite promo pre prvú objednávku",
       "firstOrderPromoDesc": "Nastavte '$5 zľava na prvú objednávku' alebo kupón na bezplatné doručenie na konverziu návštevníkov.",
       "welcomeFootnote": "Keď začnú tiecť objednávky, táto stránka sa stane prehľadovým panelom v štýle GloriaFood s kartami KPI, trendovými grafmi a panelom 'Rozvíjajte svoju reštauráciu' s hlbokými odkazmi na správy.",
-      "allTime": "Celkovo"
+      "allTime": "Celkovo",
+      "chainTitle": "{brand} — Prehľady reťazca",
+      "chainSubtitle": "Celý reťazec · {range} · {count, plural, one {# prevádzka} other {# prevádzok}}",
+      "chainMixedCaveat": "Súčty sú zobrazené v {currency}. Niektoré prevádzky používajú inú menu alebo časové pásmo, preto sú údaje za reťazec orientačné.",
+      "byLocation": "Podľa prevádzky",
+      "colLocation": "Prevádzka",
+      "colOrders": "Objednávky",
+      "colRevenue": "Tržby",
+      "colAvgOrder": "Prim. objednávka",
+      "colShare": "Podiel",
+      "brandBadge": "Značka",
+      "locationDrillHint": "Klepnutím na prevádzku otvoríte jej vlastné prehľady."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Žiadny kontext reštaurácie.",

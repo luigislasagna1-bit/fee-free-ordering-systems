@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Lanceer een eerste-bestelling-promotie",
       "firstOrderPromoDesc": "Stel \"$5 korting op eerste bestelling\" of een gratis-bezorgcoupon in om bezoekers te converteren.",
       "welcomeFootnote": "Zodra bestellingen binnenkomen, wordt deze pagina het GloriaFood-stijl dashboard met KPI-kaarten, trendgrafieken en een \"Laat je restaurant groeien\"-paneel met diepkoppelrapporten.",
-      "allTime": "Totaal"
+      "allTime": "Totaal",
+      "chainTitle": "{brand} — Ketenrapporten",
+      "chainSubtitle": "Hele keten · {range} · {count, plural, one {# locatie} other {# locaties}}",
+      "chainMixedCaveat": "Totalen weergegeven in {currency}. Sommige locaties gebruiken een andere valuta of tijdzone, dus de ketencijfers zijn indicatief.",
+      "byLocation": "Per locatie",
+      "colLocation": "Locatie",
+      "colOrders": "Bestellingen",
+      "colRevenue": "Omzet",
+      "colAvgOrder": "Gem. bestelling",
+      "colShare": "Aandeel",
+      "brandBadge": "Merk",
+      "locationDrillHint": "Tik op een locatie om de eigen rapporten te openen."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Geen restaurantcontext.",

@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Luncurkan promo pesanan pertama",
       "firstOrderPromoDesc": "Atur \"Diskon $5 untuk pesanan pertama\" atau kupon pengiriman gratis untuk mengkonversi pengunjung.",
       "welcomeFootnote": "Setelah pesanan mulai masuk, halaman ini menjadi dasbor bergaya GloriaFood dengan kartu KPI, grafik tren, dan panel laporan tautan mendalam \"Kembangkan restoran Anda\".",
-      "allTime": "Sepanjang waktu"
+      "allTime": "Sepanjang waktu",
+      "chainTitle": "{brand} — Laporan rantai",
+      "chainSubtitle": "Seluruh rantai · {range} · {count, plural, one {# lokasi} other {# lokasi}}",
+      "chainMixedCaveat": "Total ditampilkan dalam {currency}. Beberapa lokasi menggunakan mata uang atau zona waktu berbeda, jadi angka rantai bersifat indikatif.",
+      "byLocation": "Menurut lokasi",
+      "colLocation": "Lokasi",
+      "colOrders": "Pesanan",
+      "colRevenue": "Pendapatan",
+      "colAvgOrder": "Pesanan rata-rata",
+      "colShare": "Bagian",
+      "brandBadge": "Merek",
+      "locationDrillHint": "Ketuk lokasi untuk membuka laporannya sendiri."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Tidak ada konteks restoran.",

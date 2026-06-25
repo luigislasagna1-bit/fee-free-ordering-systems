@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Indítson első rendelési promóciót",
       "firstOrderPromoDesc": "Állítson be „$5 kedvezmény az első rendelésre\" vagy ingyenes szállítási kupont a látogatók konvertálásához.",
       "welcomeFootnote": "Amint a rendelések megindulnak, ez az oldal GloriaFood-stílusú irányítópulttá válik KPI kártyákkal, trendiagramokkal és egy „Fejlessze éttermét\" részletes-hivatkozásos jelentéspanellel.",
-      "allTime": "Összesen"
+      "allTime": "Összesen",
+      "chainTitle": "{brand} — Lánc jelentések",
+      "chainSubtitle": "Lánc szintű · {range} · {count, plural, one {# telephely} other {# telephely}}",
+      "chainMixedCaveat": "Az összegek {currency} pénznemben jelennek meg. Egyes telephelyek eltérő pénznemet vagy időzónát használnak, ezért a lánc adatai tájékoztató jellegűek.",
+      "byLocation": "Telephely szerint",
+      "colLocation": "Telephely",
+      "colOrders": "Rendelések",
+      "colRevenue": "Bevétel",
+      "colAvgOrder": "Átl. rendelés",
+      "colShare": "Részesedés",
+      "brandBadge": "Márka",
+      "locationDrillHint": "Koppintson egy telephelyre a saját jelentéseinek megnyitásához."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nincs éttermi kontextus.",

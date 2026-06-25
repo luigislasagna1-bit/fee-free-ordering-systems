@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Käynnistä ensimmäisen tilauksen tarjous",
       "firstOrderPromoDesc": "Aseta \"$5 alennusta ensimmäisestä tilauksesta\" tai ilmainen toimitus -kuponki konvertoidaksesi kävijöitä.",
       "welcomeFootnote": "Kun tilaukset alkavat virrata, tästä sivusta tulee GloriaFood-tyylinen kojelauta, jossa on KPI-kortit, trendikaaviot ja syvälinkkiraporttien \"Kasvata ravintolaasi\" -paneeli.",
-      "allTime": "Kaikkiaan"
+      "allTime": "Kaikkiaan",
+      "chainTitle": "{brand} — Ketjuraportit",
+      "chainSubtitle": "Koko ketju · {range} · {count, plural, one {# toimipiste} other {# toimipistettä}}",
+      "chainMixedCaveat": "Summat näytetään valuutassa {currency}. Jotkin toimipisteet käyttävät eri valuuttaa tai aikavyöhykettä, joten ketjun luvut ovat suuntaa antavia.",
+      "byLocation": "Toimipisteittäin",
+      "colLocation": "Toimipiste",
+      "colOrders": "Tilaukset",
+      "colRevenue": "Liikevaihto",
+      "colAvgOrder": "Keskim. tilaus",
+      "colShare": "Osuus",
+      "brandBadge": "Brändi",
+      "locationDrillHint": "Avaa toimipisteen omat raportit napauttamalla sitä."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ei ravintolaympäristöä.",

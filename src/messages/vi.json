@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Tung khuyến mãi đơn đầu tiên",
       "firstOrderPromoDesc": "Cài đặt \"Giảm $5 cho đơn đầu\" hoặc coupon giao hàng miễn phí để chuyển đổi khách ghé thăm.",
       "welcomeFootnote": "Khi đơn hàng bắt đầu chảy vào, trang này trở thành bảng điều khiển kiểu GloriaFood với thẻ KPI, biểu đồ xu hướng và bảng \"Phát triển nhà hàng\" với các báo cáo chi tiết.",
-      "allTime": "Tổng cộng"
+      "allTime": "Tổng cộng",
+      "chainTitle": "{brand} — Báo cáo chuỗi",
+      "chainSubtitle": "Toàn chuỗi · {range} · {count, plural, one {# địa điểm} other {# địa điểm}}",
+      "chainMixedCaveat": "Tổng số được hiển thị bằng {currency}. Một số địa điểm sử dụng đơn vị tiền tệ hoặc múi giờ khác, nên các số liệu của chuỗi chỉ mang tính tham khảo.",
+      "byLocation": "Theo địa điểm",
+      "colLocation": "Địa điểm",
+      "colOrders": "Đơn hàng",
+      "colRevenue": "Doanh thu",
+      "colAvgOrder": "Đơn TB",
+      "colShare": "Tỷ trọng",
+      "brandBadge": "Thương hiệu",
+      "locationDrillHint": "Chạm vào một địa điểm để mở báo cáo riêng của nó."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Không có ngữ cảnh nhà hàng.",

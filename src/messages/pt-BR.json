@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Lance uma promoção de primeiro pedido",
       "firstOrderPromoDesc": "Configure \"$5 de desconto no primeiro pedido\" ou um cupom de entrega grátis para converter visitantes.",
       "welcomeFootnote": "Quando os pedidos começarem a chegar, esta página se tornará o dashboard no estilo GloriaFood com cards de KPI, gráficos de tendências e um painel de relatórios detalhados \"Faça seu restaurante crescer\".",
-      "allTime": "Total"
+      "allTime": "Total",
+      "chainTitle": "{brand} — Relatórios da rede",
+      "chainSubtitle": "Toda a rede · {range} · {count, plural, one {# unidade} other {# unidades}}",
+      "chainMixedCaveat": "Totais exibidos em {currency}. Algumas unidades usam uma moeda ou fuso horário diferente, então os números da rede são indicativos.",
+      "byLocation": "Por unidade",
+      "colLocation": "Unidade",
+      "colOrders": "Pedidos",
+      "colRevenue": "Receita",
+      "colAvgOrder": "Pedido médio",
+      "colShare": "Participação",
+      "brandBadge": "Marca",
+      "locationDrillHint": "Toque em uma unidade para abrir os relatórios dela."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nenhum contexto de restaurante.",

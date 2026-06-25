@@ -3834,7 +3834,18 @@
       "firstOrderPromoTitle": "पहले ऑर्डर पर प्रमोशन शुरू करें",
       "firstOrderPromoDesc": "विज़िटर को कन्वर्ट करने के लिए \"पहले ऑर्डर पर $5 की छूट\" या फ्री-डिलीवरी कूपन सेट करें।",
       "welcomeFootnote": "ऑर्डर आने शुरू होते ही, यह पेज KPI कार्ड, ट्रेंड चार्ट और गहरी रिपोर्ट्स के लिंक के साथ GloriaFood-स्टाइल डैशबोर्ड बन जाएगा।",
-      "allTime": "कुल अब तक"
+      "allTime": "कुल अब तक",
+      "chainTitle": "{brand} — चेन रिपोर्ट",
+      "chainSubtitle": "पूरी चेन · {range} · {count, plural, one {# स्थान} other {# स्थान}}",
+      "chainMixedCaveat": "योग {currency} में दिखाए गए हैं। कुछ स्थान भिन्न मुद्रा या समय क्षेत्र का उपयोग करते हैं, इसलिए चेन के आँकड़े संकेतात्मक हैं।",
+      "byLocation": "स्थान के अनुसार",
+      "colLocation": "स्थान",
+      "colOrders": "ऑर्डर",
+      "colRevenue": "राजस्व",
+      "colAvgOrder": "औसत ऑर्डर",
+      "colShare": "हिस्सा",
+      "brandBadge": "ब्रांड",
+      "locationDrillHint": "किसी स्थान की अपनी रिपोर्ट खोलने के लिए उस पर टैप करें।"
     },
     "invoice": {
       "title": "इनवॉइस",

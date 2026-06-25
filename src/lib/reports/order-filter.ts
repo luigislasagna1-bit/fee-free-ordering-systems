@@ -14,13 +14,19 @@ import type { Prisma } from "@/generated/prisma/client";
  * Dashboard "Orders" card counted EVERY status and EOD used `notIn`. Three
  * definitions → the headline never reconciled with the breakdown. Now there's
  * one. See the report bug Fabrizio raised (2026-06-24).
+ *
+ * Accepts a single restaurant id (single store) OR an array of ids (a brand
+ * parent rolling up across all its locations → `restaurantId IN (...)`). The
+ * single-string branch is byte-identical to before, so existing single-store
+ * reports are unchanged. The `(restaurantId, status, createdAt)` index serves
+ * both forms.
  */
 export function reportOrderWhere(
-  restaurantId: string,
+  restaurant: string | string[],
   range: { from: Date; to: Date },
 ): Prisma.OrderWhereInput {
   return {
-    restaurantId,
+    restaurantId: Array.isArray(restaurant) ? { in: restaurant } : restaurant,
     createdAt: { gte: range.from, lte: range.to },
     status: { notIn: ["rejected", "cancelled"] },
     orderNumber: { not: { startsWith: "TEST-" } },

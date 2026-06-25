@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "השק מבצע להזמנה ראשונה",
       "firstOrderPromoDesc": "הגדר \"$5 הנחה בהזמנה ראשונה\" או קופון משלוח חינם כדי להמיר מבקרים.",
       "welcomeFootnote": "ברגע שהזמנות מתחילות לזרום, דף זה הופך ללוח מחוונים בסגנון GloriaFood עם כרטיסי KPI, גרפי מגמות, ולוח \"גדל עם המסעדה שלך\" של קישורי דוחות מעמיקים.",
-      "allTime": "מאז ומתמיד"
+      "allTime": "מאז ומתמיד",
+      "chainTitle": "{brand} — דוחות רשת",
+      "chainSubtitle": "כלל הרשת · {range} · {count, plural, one {סניף #} other {# סניפים}}",
+      "chainMixedCaveat": "הסכומים מוצגים ב-{currency}. חלק מהסניפים משתמשים במטבע או באזור זמן שונה, ולכן נתוני הרשת הם הערכה בלבד.",
+      "byLocation": "לפי סניף",
+      "colLocation": "סניף",
+      "colOrders": "הזמנות",
+      "colRevenue": "הכנסות",
+      "colAvgOrder": "הזמנה ממוצעת",
+      "colShare": "נתח",
+      "brandBadge": "מותג",
+      "locationDrillHint": "הקש על סניף כדי לפתוח את הדוחות שלו."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "אין הקשר מסעדה.",

@@ -3777,7 +3777,18 @@
       "firstOrderPromoTitle": "Erstbestellungs-Aktion starten",
       "firstOrderPromoDesc": "Richten Sie „$5 Rabatt auf die erste Bestellung“ oder einen Gratislieferungs-Gutschein ein, um Besucher zu konvertieren.",
       "welcomeFootnote": "Sobald Bestellungen einfließen, wird diese Seite zum GloriaFood-artigen Dashboard mit KPI-Karten, Trenddiagrammen und einem „Ihr Restaurant ausbauen“-Bereich mit verlinkten Berichten.",
-      "allTime": "Gesamt"
+      "allTime": "Gesamt",
+      "chainTitle": "{brand} — Ketten­berichte",
+      "chainSubtitle": "Kettenweit · {range} · {count, plural, one {# Standort} other {# Standorte}}",
+      "chainMixedCaveat": "Summen in {currency} angezeigt. Einige Standorte verwenden eine andere Währung oder Zeitzone, daher sind die Kettenzahlen Richtwerte.",
+      "byLocation": "Nach Standort",
+      "colLocation": "Standort",
+      "colOrders": "Bestellungen",
+      "colRevenue": "Umsatz",
+      "colAvgOrder": "Ø Bestellung",
+      "colShare": "Anteil",
+      "brandBadge": "Marke",
+      "locationDrillHint": "Tippen Sie auf einen Standort, um dessen eigene Berichte zu öffnen."
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Kein Restaurant-Kontext.",
