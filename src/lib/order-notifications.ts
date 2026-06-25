@@ -187,6 +187,20 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       reservation: linkedReservation
         ? { partySize: linkedReservation.partySize, date: linkedReservation.date, time: linkedReservation.time }
         : undefined,
+      // Full order detail so the kitchen "new order" email is ITEMIZED (same data as
+      // the customer email), not the minimal "see breakdown in admin". Luigi 2026-06-25.
+      items: emailItems,
+      subtotal: order.subtotal,
+      taxAmount: order.taxAmount,
+      deliveryFee: order.deliveryFee,
+      tip: order.tip,
+      discount: (order.couponDiscount ?? 0) + (order.promoDiscount ?? 0),
+      orderType: order.type,
+      paidOnline: order.paymentMethod !== "cash",
+      customerPhone: order.customerPhone,
+      customerEmail: order.customerEmail,
+      deliveryAddress: order.deliveryAddress,
+      customerNotes: order.notes,
     },
   }).catch((e) => console.error("[fireOrderNotifications] notifyStaff:", e));
 

@@ -36,6 +36,7 @@ import {
   setEmailImprint,
   setEmailLogoUrl,
 } from "@/lib/email";
+import type { EmailOrderItem } from "@/emails/components/EmailParts";
 import { sendSms } from "@/lib/sms";
 import { hasFeature } from "@/lib/entitlements";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
@@ -237,7 +238,13 @@ type NotificationRecipientToggles = {
 export type StaffEventPayload =
   | { event: "orderPlaced" | "orderAcceptedDelivery" | "orderAcceptedPickup" | "orderAcceptedDineIn" | "orderAcceptedScheduled";
       orderNumber: string; customerName: string; total: number; dashboardUrl: string;
-      reservation?: { partySize: number; date: string; time: string } | null }
+      reservation?: { partySize: number; date: string; time: string } | null;
+      // Full order detail — passed for orderPlaced so the kitchen "new order" email is
+      // ITEMIZED (not the minimal "see breakdown in admin" fallback). Luigi 2026-06-25.
+      items?: EmailOrderItem[]; subtotal?: number; taxAmount?: number; deliveryFee?: number;
+      tip?: number; discount?: number; orderType?: string; paidOnline?: boolean;
+      customerPhone?: string | null; customerEmail?: string | null;
+      deliveryAddress?: string | null; customerNotes?: string | null }
   | { event: "orderRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string }
   | { event: "orderCanceled" | "orderMissed"; orderNumber: string; customerName: string; dashboardUrl: string }
   | { event: "reservationConfirmed"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "confirmed" | "pending"; dashboardUrl: string }
@@ -328,6 +335,18 @@ async function dispatchStaffEvent(
         total: payload.total,
         dashboardUrl: payload.dashboardUrl,
         reservation: payload.reservation ?? null,
+        items: payload.items,
+        subtotal: payload.subtotal,
+        taxAmount: payload.taxAmount,
+        deliveryFee: payload.deliveryFee,
+        tip: payload.tip,
+        discount: payload.discount,
+        orderType: payload.orderType,
+        paidOnline: payload.paidOnline,
+        customerPhone: payload.customerPhone,
+        customerEmail: payload.customerEmail,
+        deliveryAddress: payload.deliveryAddress,
+        customerNotes: payload.customerNotes,
         hoursFormat,
         locale,
         currency,
