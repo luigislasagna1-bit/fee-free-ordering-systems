@@ -1,5 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { validateBooking, resolveDayHours, resolveReservationIntervals } from "@/lib/reservation-validation";
+import { pickHoursForService } from "@/lib/service-hours";
+import { rowIntervals } from "@/lib/restaurant-hours";
 
 // Day-of-week for a calendar date (noon-UTC, timezone-independent) so the test
 // configures reservation hours for the right weekday.
@@ -100,6 +102,50 @@ describe("resolveReservationIntervals (split reservation hours)", () => {
       { dayOfWeek: dow, isOpen: true, openTime: "17:00", closeTime: "23:00", service: "reservation" },
     ];
     expect(resolveReservationIntervals(oh, date)).toEqual([]);
+  });
+});
+
+// Client/server parity: the customer slot picker (ReservationModal) and the
+// server validator must resolve the day's SPLIT windows from the SAME source, or
+// the picker offers/hides slots the server doesn't enforce. The fix makes the
+// picker call resolveReservationIntervals directly (the exact function the route
+// feeds to validateBooking). `legacyPickerSplit` reproduces the OLD picker
+// derivation — pickHoursForService(..., "reservation"), which FALLS BACK to the
+// default (service=null) row — to pin exactly where the two used to diverge.
+describe("split reservation hours — picker source agrees with the server validator", () => {
+  const date = "2026-06-18";
+  const dow = dowOf(date);
+  const legacyPickerSplit = (oh: Parameters<typeof resolveReservationIntervals>[0]) => {
+    const row = pickHoursForService(oh as never, dow, "reservation");
+    const ivs = rowIntervals(row as never);
+    return ivs.length > 1 ? ivs : [];
+  };
+
+  it("(1) reservation-row split: picker and server agree on both windows", () => {
+    const oh = [{ dayOfWeek: dow, isOpen: true, openTime: "12:00", closeTime: "23:00", service: "reservation",
+      intervals: [{ open: "12:00", close: "15:00" }, { open: "18:00", close: "23:00" }] }];
+    expect(resolveReservationIntervals(oh, date)).toHaveLength(2);
+    expect(legacyPickerSplit(oh)).toEqual(resolveReservationIntervals(oh, date));
+  });
+
+  it("(2) general-row split + NO reservation row: agree on [] — the divergence the fix removes", () => {
+    const oh = [{ dayOfWeek: dow, isOpen: true, openTime: "12:00", closeTime: "23:00", service: null,
+      intervals: [{ open: "12:00", close: "15:00" }, { open: "18:00", close: "23:00" }] }];
+    // Server — and the FIXED picker, which now calls it — enforce no split.
+    expect(resolveReservationIntervals(oh, date)).toEqual([]);
+    // OLD picker gated on the general lunch/dinner split the server never
+    // enforced: the exact client/server mismatch this change eliminates.
+    expect(legacyPickerSplit(oh)).toHaveLength(2);
+    expect(legacyPickerSplit(oh)).not.toEqual(resolveReservationIntervals(oh, date));
+  });
+
+  it("(3) reservation-row single + general split: both ignore the general split", () => {
+    const oh = [
+      { dayOfWeek: dow, isOpen: true, openTime: "12:00", closeTime: "23:00", service: null, intervals: [{ open: "12:00", close: "15:00" }, { open: "18:00", close: "23:00" }] },
+      { dayOfWeek: dow, isOpen: true, openTime: "17:00", closeTime: "23:00", service: "reservation" },
+    ];
+    expect(resolveReservationIntervals(oh, date)).toEqual([]);
+    expect(legacyPickerSplit(oh)).toEqual(resolveReservationIntervals(oh, date));
   });
 });
 
