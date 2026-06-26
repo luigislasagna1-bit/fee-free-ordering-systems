@@ -2,8 +2,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { ChefHat, Loader2, Monitor, LayoutDashboard } from "lucide-react";
+import { ChefHat, Loader2, Monitor } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
@@ -102,16 +101,6 @@ function KitchenLoginFormInner({ locale }: { locale: string }) {
               {loading ? tAuth("signingIn") : tAuth("signIn")}
             </button>
           </form>
-        </div>
-
-        <div className="mt-5 text-center">
-          <Link
-            href="/login"
-            className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-300 transition"
-          >
-            <LayoutDashboard className="w-3.5 h-3.5" />
-            {tAuth("adminLogin")}
-          </Link>
         </div>
 
         {appVersion && (
