@@ -19,7 +19,7 @@ import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/li
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 import { resolveInheritedHours } from "@/lib/inherited-data";
-import { usedPromoIds } from "@/lib/coupon-ledger";
+import { usedLifetimePromoIds } from "@/lib/coupon-ledger";
 import { hasFeature } from "@/lib/entitlements";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
@@ -1170,6 +1170,9 @@ export async function POST(req: NextRequest) {
     let isNewCustomerForPromo = true; // optimistic: no email → treat as new
     let isMemberForPromo = false;
     const hasUsedLifetimeForPromo: Record<string, boolean> = {};
+    // Captured so the precise per-promo lifetime check below can scope its
+    // order-history scan to this customer by id (not just email/phone).
+    let lifetimeCustomerId: string | null = null;
     if (promoCustomerEmail) {
       // Per-restaurant Customer — drives isNewCustomer (count of prior
       // orders) and feeds hasUsedLifetime lookup.
@@ -1205,30 +1208,17 @@ export async function POST(req: NextRequest) {
         });
         if (priorFulfilledCount > 0) {
           isNewCustomerForPromo = false;
-          // Same fulfillment rule for "have they already used this lifetime
-          // promo": count only prior FULFILLED orders that carried a discount,
-          // so a missed/cancelled order that had the promo applied doesn't burn
-          // it. Conservative approximation (any fulfilled order with a non-zero
-          // promoDiscount) — errs toward not re-applying. The ledger will track
-          // redemption per-coupon precisely.
-          const lifetimePromos = activePromos.filter((p) => p.onceLifetimePerClient);
-          if (lifetimePromos.length > 0) {
-            const priorOrderCount = await prisma.order.count({
-              where: {
-                restaurantId: restaurant.id,
-                customerId: existingCustomer.id,
-                status: { notIn: FAILED_ORDER_STATES },
-                promoDiscount: { gt: 0 },
-                // Same per-channel rule — a once-per-lifetime promo on the
-                // marketplace isn't "used" by a website redemption.
-                viaMarketplace: orderViaMarketplace,
-              },
-            });
-            if (priorOrderCount > 0) {
-              for (const p of lifetimePromos) hasUsedLifetimeForPromo[p.id] = true;
-            }
-          }
         }
+        // Capture the customerId so the precise per-promo lifetime check below
+        // (usedLifetimePromoIds) can scan THIS customer's own order history.
+        // NOTE (Luigi 2026-06-26): the old coarse heuristic that lived here —
+        // "any prior promo-discounted order ⇒ block ALL once-per-lifetime
+        // promos" — was REMOVED. It over-blocked returning customers from a
+        // brand-new lifetime promo they'd never used, and (because the cart
+        // preview didn't replicate it) made the previewed total disagree with
+        // the charge. Enforcement is now PER-PROMO via usedLifetimePromoIds,
+        // which both this route and the apply-promos preview share.
+        lifetimeCustomerId = existingCustomer.id;
       }
       // Marketplace-wide CustomerAccount — drives isMember (true iff a
       // CustomerAccount exists for this email, regardless of whether
@@ -1250,10 +1240,11 @@ export async function POST(req: NextRequest) {
     // only mark MORE lifetime promos used, never fewer. Luigi 2026-06-09.
     {
       const lifetimeIds = activePromos.filter((p) => p.onceLifetimePerClient).map((p) => p.id);
-      if (lifetimeIds.length > 0 && (promoCustomerEmail || customerPhone)) {
-        const usedIds = await usedPromoIds({
+      if (lifetimeIds.length > 0 && (promoCustomerEmail || customerPhone || lifetimeCustomerId)) {
+        const usedIds = await usedLifetimePromoIds({
           restaurantId: restaurant.id,
           promotionIds: lifetimeIds,
+          customerId: lifetimeCustomerId,
           email: promoCustomerEmail,
           phone: customerPhone,
         });

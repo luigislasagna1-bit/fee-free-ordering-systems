@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { resolvePromotions, totalPromoDiscount, type ApplyContext } from "@/lib/promo-engine";
 import { parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
+import { usedLifetimePromoIds } from "@/lib/coupon-ledger";
+import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -118,6 +120,42 @@ export async function POST(req: NextRequest) {
     return Number.isFinite(d.getTime()) ? d : undefined;
   })();
 
+  // ── Once-per-lifetime enforcement in the preview (Luigi 2026-06-26) ──────
+  // A promo flagged `onceLifetimePerClient` must STOP previewing as applied
+  // once the customer has already redeemed it — otherwise the cart shows a
+  // discount the order route then refuses, and the customer is charged MORE
+  // than the previewed total (found on ORD-697157388: previewed $10.53,
+  // charged $21.83). Mirror the order route exactly (orders/route.ts via
+  // `usedPromoIds`) so preview == charge. Identity comes from the checkout
+  // email/phone if present, else the logged-in restaurant-customer session
+  // (so a signed-in customer like the one above gets the right preview even
+  // before they re-type their details). Without an identity we can't know, so
+  // we stay optimistic — the order route is the authoritative backstop.
+  const hasUsedLifetime: Record<string, boolean> = {};
+  {
+    const lifetimeIds = activePromos.filter((p) => (p as any).onceLifetimePerClient).map((p) => p.id);
+    if (lifetimeIds.length > 0) {
+      let idEmail = previewEmail;
+      let idPhone = previewPhone;
+      if (!idEmail && !idPhone) {
+        try {
+          const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
+          if (me) { idEmail = me.email?.trim().toLowerCase() ?? null; idPhone = me.phone?.trim() ?? null; }
+        } catch { /* not logged in — stay optimistic */ }
+      }
+      if (idEmail || idPhone) {
+        // Same per-promo source of truth the order route uses, so preview == charge.
+        const used = await usedLifetimePromoIds({
+          restaurantId: restaurant.id,
+          promotionIds: lifetimeIds,
+          email: idEmail,
+          phone: idPhone,
+        });
+        for (const id of used) hasUsedLifetime[id] = true;
+      }
+    }
+  }
+
   const ctx: ApplyContext = {
     orderType: orderType ?? "pickup",
     now: promoEvalNow,
@@ -127,6 +165,7 @@ export async function POST(req: NextRequest) {
     items: ctxItems,
     couponCode,
     paymentMethod,
+    hasUsedLifetime,
     deliveryZoneId: typeof deliveryZoneId === "string" && deliveryZoneId ? deliveryZoneId : undefined,
     // Restaurant's IANA timezone — drives Happy Hour / day-of-week
     // evaluation in the owner's local time, not the Vercel UTC clock.

@@ -9,6 +9,31 @@ date + commit hash. This file is committed so the backlog never gets lost.
 
 ## Open
 
+- [x] **💰 FIXED (2026-06-26, local — pending deploy + on-device confirm): once-per-lifetime promo: preview ≠ charge AND returning customers wrongly blocked.** Found while testing report #1 (order ORD-697157388 / cmqufxkyf…): "Sameem" saw checkout **$10.53** ("$10 Coupon" `fixed_cart`, `onceLifetimePerClient`, −$10) but was charged **$21.83** (`promoDiscount: 0`). TWO root causes: (1) `apply-promos/route.ts` never computed `hasUsedLifetime` → preview always optimistic; (2) `orders/route.ts` used a COARSE heuristic ("any prior promo-discounted order ⇒ block ALL lifetime promos") that over-blocked returning customers from brand-new lifetime promos. FIX (Luigi chose per-promo-via-history): new shared `usedLifetimePromoIds()` in `coupon-ledger.ts` = precise ledger (email/phone) + a per-customer `appliedPromos` order-history scan (covers pre-ledger redemptions, scoped to one customer so it scales). BOTH the order route and the preview now call it → preview == charge; a genuine first use applies, a real second use is blocked. Coarse heuristic removed. Verified on prod data: Sameem (77 orders/12 promo'd, never used THIS promo) → correctly allowed; build green (preflight exit 0).
+
+- [ ] **⚠️ Test EVERY promotion type 1-by-1 WITH Luigi (some likely broken / not set up to work).** Luigi
+  (2026-06-25): we tested a few promo types together but NOT all — especially the more complex ones — and he's
+  confident several aren't working correctly, possibly not even configured to work. Go through every promotion
+  type together, test each end-to-end, fix what's broken. Do NOT mark promo behaviour verified without this
+  JOINT pass — it needs Luigi. (The coupon usage-LIMIT bug is separately fixed + shipped: 9c504b23 / e9a22828.)
+
+- [ ] **Promotion editor: label/group the categories by menu (multi-menu stores).** When choosing which
+  categories a promotion applies to, categories from ALL menus are merged into one flat list with no
+  indication of which menu each belongs to — impossible to tell apart for a multi-menu restaurant. Group or
+  label them by menu in the picker. _(Fabrizio, 2026-06-25, on the Coupon report.)_
+
+- [ ] **Cart: summarise which items a promotion discounted (GloriaFood-style).** When a promo discounts only
+  certain items (not the whole order), show a small summary in the cart of which products received the
+  discount, so the customer can see what's covered. _(Fabrizio, 2026-06-25, on the Coupon report.)_
+
+- [ ] **Move the Kitchen Alert Sound setting to the Order Handling page.** The custom kitchen-alert-sound
+  uploader (`kitchenAlertSoundUrl`, saved via `/api/restaurants/kitchen-sound`, currently on the Restaurant
+  Profile page) should live on `/admin/order-handling` (Taking Orders), alongside auto-accept + scheduled
+  orders. ⚠️ Honor the relocation GUARD — order-handling saves ONLY via `PATCH /api/admin/order-handling`;
+  don't fold the sound into another page's save payload. Worth a HelpTip noting the custom sound applies to the
+  BROWSER kitchen view — the native app intentionally plays the built-in alarm (suppresses custom to avoid the
+  two-engine overlap Fabrizio hit). _(Luigi note, 2026-06-25.)_
+
 - [x] **Google Ranking report — the "FIX" actions are now actionable.** DONE 2026-06-25: each `SeoCheck`
   in `src/lib/seo/health-check.ts` now carries a `fixHref` → Content optimization → `/admin/profile`,
   Google Business + Social → `/admin/social-media`, Domain + Security → `/admin/publishing`, Structured data →
@@ -78,3 +103,42 @@ date + commit hash. This file is committed so the backlog never gets lost.
 <!-- Move items here when shipped, e.g.:
 - [x] Short example — fixed in `abc1234` (2026-06-24).
 -->
+
+## Promo popup — relocate to Marketing + link to a promo/coupon (Luigi, 2026-06-25)
+- MOVE the Promo Popup OUT of Admin → Profile into its OWN heading under the MARKETING section
+  (not under Restaurant Basics / Profile).
+- BUILD OUT: the popup must be able to link DIRECTLY to a promotion or a special coupon from the
+  promo station (select/deep-link a promo or coupon), not just a free-form URL.
+- THEN update Fabrizio's reseller comment on the "Popup" report (cmqp8z9ko000304kykoin8wuw):
+  DELETE the old "Profile -> Promo popup" comment + post a corrected one reflecting the new
+  Marketing location + the promo/coupon linking.
+
+## Saved-address form should match the checkout delivery UX + country config (Luigi/Fabrizio, 2026-06-25)
+- The customer ACCOUNT page "Saved delivery addresses" form (AddressBook, /order/[slug]/account)
+  is a plain text form (Label / Street / City / Postal). It should work the SAME as the checkout
+  delivery-area entry: address AUTOCOMPLETE (type -> choose the exact match) + confirm with a PIN
+  ON A MAP, and reflect the restaurant's configured country/area address fields
+  (resolveDeliveryAddressConfig) — not a generic Label/Street/City/Postal set.
+- FIX: reuse the checkout's address-entry component (autocomplete + Leaflet/Google pin + per-country
+  fields) inside the account AddressBook add/edit form so the two are identical.
+- NOTE: Italy DOES use postal codes (CAP, 5 digits), so the postal field isn't wrong per se — the
+  real issue is the form ignores the restaurant's address-field config + lacks autocomplete/map.
+- This is feedback on the IN_TESTING "Saving multiple delivery addresses" report (cmqqt9zyl).
+
+## Kitchen Order App — remove the "Admin login" button (Luigi, 2026-06-25)
+- From the Kitchen Order App, clicking "ADMIN login" navigates the user OUT of the app (to the admin
+  login). That shouldn't be possible from the kitchen display.
+- REMOVE the "Admin login" button/link from the kitchen login screen / kitchen display. Web-only
+  change (the app loads the remote /kitchen URL — no APK rebuild needed).
+
+## Coupon codes vs promotions — redundancy / unify (Luigi, 2026-06-25)
+- Luigi: the standalone "New coupon code" (Coupon model) largely DUPLICATES a "% discount on cart"
+  or "Fixed discount on cart" promotion attached to a code. Consider REMOVING the separate
+  "New coupon code" flow + letting ANY promotion optionally require a coupon code (unify under promos).
+- NUANCE to preserve: the Coupon model ALSO powers PERSONALIZED coupons (assign a code to a specific
+  customer + email it — the "Coupon created -> email customer" feature, report cmqa6lls1). Must be kept
+  (fold into the promo flow or a lightweight personalized path) before retiring the standalone flow.
+- Foundation exists: promotions already support Promotion.couponCode (apply-coupon "source: promotion").
+- DECIDE + build in the PROMOTIONS 1-by-1 joint pass (reserved). Touches: promo wizard (a "require a
+  code" option on Restrictions & Display), the apply-coupon flow, personalized coupons, and the admin
+  Promotions/Coupons UI (remove "New coupon code" / "Coupon Codes" tab).

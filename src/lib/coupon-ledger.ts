@@ -213,6 +213,83 @@ export async function usedPromoIds(args: {
 }
 
 /**
+ * Which of the given once-per-lifetime promotions has this customer already used?
+ * THE single source of truth for once-per-lifetime enforcement — called by BOTH
+ * the order route (charge) and the cart-preview route (apply-promos) so the
+ * previewed total always matches the real charge (Luigi 2026-06-26).
+ *
+ * It is PER-PROMO precise (it asks "did they use THIS promo", never the old
+ * coarse "did they use ANY promo → block ALL"), and it covers two signals:
+ *
+ *   1. The CustomerCoupon ledger (cross-identity by email/phone) — every promo
+ *      redeemed since the ledger shipped (2026-06-09).
+ *   2. A scan of the customer's OWN prior fulfilled orders' `appliedPromos`
+ *      JSON — catches redemptions made BEFORE the ledger existed. Scoped to
+ *      this one customer (by id / email / phone) and pre-filtered to orders
+ *      that actually carried a discount, so it's bounded by a single
+ *      customer's history, never a full-table scan.
+ *
+ * Read-only; internally try/caught; never throws into the order/checkout path.
+ */
+export async function usedLifetimePromoIds(args: {
+  restaurantId: string;
+  promotionIds: string[];
+  customerId?: string | null;
+  email?: string | null;
+  phone?: string | null;
+}): Promise<Set<string>> {
+  const out = new Set<string>();
+  const ids = Array.from(new Set(args.promotionIds.filter(Boolean)));
+  if (ids.length === 0) return out;
+  try {
+    // 1. Precise cross-identity ledger.
+    const ledger = await usedPromoIds({
+      restaurantId: args.restaurantId,
+      promotionIds: ids,
+      email: args.email,
+      phone: args.phone,
+    });
+    for (const id of ledger) out.add(id);
+    // Short-circuit if everything's already known used.
+    if (ids.every((id) => out.has(id))) return out;
+
+    // 2. Order-history scan (covers pre-ledger redemptions). Match this
+    //    customer broadly — being permissive here is the SAFE direction
+    //    (catch a prior use → block re-use). Bounded by one customer's orders.
+    const email = normalizeEmail(args.email);
+    const phone = normalizePhone(args.phone);
+    const idOr: any[] = [];
+    if (args.customerId) idOr.push({ customerId: args.customerId });
+    if (email) idOr.push({ customerEmail: { equals: email, mode: "insensitive" } });
+    if (phone) idOr.push({ customerPhone: phone });
+    if (idOr.length === 0) return out;
+    const want = new Set(ids);
+    const rows = await prisma.order.findMany({
+      where: {
+        restaurantId: args.restaurantId,
+        status: { notIn: ["cancelled", "rejected"] }, // "missed" == auto-rejected
+        promoDiscount: { gt: 0 },
+        OR: idOr,
+      },
+      select: { appliedPromos: true },
+    });
+    for (const r of rows) {
+      const ap: unknown = (r as any).appliedPromos;
+      let arr: any[] = [];
+      if (Array.isArray(ap)) arr = ap;
+      else if (typeof ap === "string") { try { arr = JSON.parse(ap); } catch { arr = []; } }
+      for (const p of arr) {
+        const pid = p?.promoId;
+        if (typeof pid === "string" && want.has(pid)) out.add(pid);
+      }
+    }
+  } catch (e) {
+    console.error("[coupon-ledger usedLifetimePromoIds]", e);
+  }
+  return out;
+}
+
+/**
  * Proactively GRANT a coupon to a specific customer — used by targeted
  * campaigns (Autopilot win-back, Kickstarter invite, flyer QR) in later phases.
  * Idempotent per (restaurant, promotion, identity): if the customer already
