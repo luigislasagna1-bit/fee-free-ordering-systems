@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Código postal",
       "postalLabelPostalCode": "Código postal",
       "postalLabelPostcode": "CEP",
-      "postalLabelPinCode": "Código PIN"
+      "postalLabelPinCode": "Código PIN",
+      "popupSection": "Pop-up promocional",
+      "popupHint": "Mostre um pop-up único na sua página de pedidos para anunciar uma promoção ou aviso importante.",
+      "popupEnable": "Ativar pop-up",
+      "popupImage": "Imagem (opcional)",
+      "popupHeadingLabel": "Título",
+      "popupMessageLabel": "Mensagem",
+      "popupButtonLabel": "Texto do botão (opcional)",
+      "popupButtonUrl": "Link do botão (opcional)"
     },
     "menu": {
       "title": "Cardápio",

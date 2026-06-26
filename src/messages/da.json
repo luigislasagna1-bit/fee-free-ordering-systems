@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Postnummer",
       "postalLabelPostalCode": "Postnummer",
       "postalLabelPostcode": "Postnummer",
-      "postalLabelPinCode": "PIN-kode"
+      "postalLabelPinCode": "PIN-kode",
+      "popupSection": "Kampagne-pop-up",
+      "popupHint": "Vis en engangs-pop-up på din bestillingsside for at annoncere en kampagne eller vigtig besked.",
+      "popupEnable": "Aktivér pop-up",
+      "popupImage": "Billede (valgfrit)",
+      "popupHeadingLabel": "Titel",
+      "popupMessageLabel": "Besked",
+      "popupButtonLabel": "Knaptekst (valgfrit)",
+      "popupButtonUrl": "Knaplink (valgfrit)"
     },
     "menu": {
       "title": "Menu",

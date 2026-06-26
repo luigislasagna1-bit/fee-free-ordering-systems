@@ -867,7 +867,15 @@
       "postalLabelZipCode": "邮政编码（ZIP）",
       "postalLabelPostalCode": "邮政编码",
       "postalLabelPostcode": "邮编",
-      "postalLabelPinCode": "邮政编码（PIN）"
+      "postalLabelPinCode": "邮政编码（PIN）",
+      "popupSection": "促销弹窗",
+      "popupHint": "在点单页面显示一次性弹窗，用于公布促销或重要通知。",
+      "popupEnable": "启用弹窗",
+      "popupImage": "图片（可选）",
+      "popupHeadingLabel": "标题",
+      "popupMessageLabel": "消息",
+      "popupButtonLabel": "按钮文字（可选）",
+      "popupButtonUrl": "按钮链接（可选）"
     },
     "menu": {
       "title": "菜单",

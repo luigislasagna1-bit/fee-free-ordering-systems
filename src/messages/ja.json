@@ -867,7 +867,15 @@
       "postalLabelZipCode": "ZIPコード",
       "postalLabelPostalCode": "郵便番号",
       "postalLabelPostcode": "郵便番号",
-      "postalLabelPinCode": "PINコード"
+      "postalLabelPinCode": "PINコード",
+      "popupSection": "プロモーションポップアップ",
+      "popupHint": "注文ページに一度だけ表示されるポップアップで、プロモーションや重要なお知らせを告知します。",
+      "popupEnable": "ポップアップを有効にする",
+      "popupImage": "画像（任意）",
+      "popupHeadingLabel": "タイトル",
+      "popupMessageLabel": "メッセージ",
+      "popupButtonLabel": "ボタンのテキスト（任意）",
+      "popupButtonUrl": "ボタンのリンク（任意）"
     },
     "menu": {
       "title": "メニュー",

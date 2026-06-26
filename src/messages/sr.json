@@ -151,7 +151,7 @@
     "quantity": "Količina",
     "specialInstructions": "Posebne napomene",
     "addItem": "Dodaj stavku",
-    "close": "Zatvori",
+    "close": "Затвори",
     "cancel": "Otkaži",
     "save": "Sačuvaj",
     "back": "Nazad",
@@ -867,7 +867,15 @@
       "postalLabelZipCode": "ZIP kôd",
       "postalLabelPostalCode": "Poštanski broj",
       "postalLabelPostcode": "Poštanski broj",
-      "postalLabelPinCode": "PIN kôd"
+      "postalLabelPinCode": "PIN kôd",
+      "popupSection": "Промотивни искачући прозор",
+      "popupHint": "Прикажите једнократни искачући прозор на страници за поручивање за најаву промоције или важног обавештења.",
+      "popupEnable": "Омогући искачући прозор",
+      "popupImage": "Слика (опционо)",
+      "popupHeadingLabel": "Наслов",
+      "popupMessageLabel": "Порука",
+      "popupButtonLabel": "Текст дугмета (опционо)",
+      "popupButtonUrl": "Веза дугмета (опционо)"
     },
     "menu": {
       "title": "Meni",

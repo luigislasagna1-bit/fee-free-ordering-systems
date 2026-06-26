@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Code postal (ZIP)",
       "postalLabelPostalCode": "Code postal",
       "postalLabelPostcode": "Code postal",
-      "postalLabelPinCode": "Code PIN"
+      "postalLabelPinCode": "Code PIN",
+      "popupSection": "Fenêtre promotionnelle",
+      "popupHint": "Affichez une fenêtre unique sur votre page de commande pour annoncer une promotion ou un avis important.",
+      "popupEnable": "Activer la fenêtre",
+      "popupImage": "Image (facultatif)",
+      "popupHeadingLabel": "Titre",
+      "popupMessageLabel": "Message",
+      "popupButtonLabel": "Texte du bouton (facultatif)",
+      "popupButtonUrl": "Lien du bouton (facultatif)"
     },
     "menu": {
       "title": "Menu",

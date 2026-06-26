@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Pašto kodas",
       "postalLabelPostalCode": "Pašto kodas",
       "postalLabelPostcode": "Pašto kodas",
-      "postalLabelPinCode": "PIN kodas"
+      "postalLabelPinCode": "PIN kodas",
+      "popupSection": "Akcijos iškylantysis langas",
+      "popupHint": "Rodykite užsakymo puslapyje vienkartinį iškylantįjį langą akcijai ar svarbiam pranešimui paskelbti.",
+      "popupEnable": "Įjungti iškylantįjį langą",
+      "popupImage": "Paveikslėlis (nebūtina)",
+      "popupHeadingLabel": "Pavadinimas",
+      "popupMessageLabel": "Žinutė",
+      "popupButtonLabel": "Mygtuko tekstas (nebūtina)",
+      "popupButtonUrl": "Mygtuko nuoroda (nebūtina)"
     },
     "menu": {
       "title": "Meniu",

@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Поштовий індекс",
       "postalLabelPostalCode": "Поштовий код",
       "postalLabelPostcode": "Поштовий індекс",
-      "postalLabelPinCode": "PIN-код"
+      "postalLabelPinCode": "PIN-код",
+      "popupSection": "Промо-спливне вікно",
+      "popupHint": "Показуйте на сторінці замовлення одноразове спливне вікно для анонсу акції чи важливого повідомлення.",
+      "popupEnable": "Увімкнути спливне вікно",
+      "popupImage": "Зображення (необов’язково)",
+      "popupHeadingLabel": "Заголовок",
+      "popupMessageLabel": "Повідомлення",
+      "popupButtonLabel": "Текст кнопки (необов’язково)",
+      "popupButtonUrl": "Посилання кнопки (необов’язково)"
     },
     "menu": {
       "title": "Меню",

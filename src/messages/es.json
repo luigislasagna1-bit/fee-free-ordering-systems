@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Código postal",
       "postalLabelPostalCode": "Código postal",
       "postalLabelPostcode": "Código postal",
-      "postalLabelPinCode": "Código PIN"
+      "postalLabelPinCode": "Código PIN",
+      "popupSection": "Ventana emergente promocional",
+      "popupHint": "Muestra una ventana emergente única en tu página de pedidos para anunciar una promoción o aviso importante.",
+      "popupEnable": "Activar ventana emergente",
+      "popupImage": "Imagen (opcional)",
+      "popupHeadingLabel": "Título",
+      "popupMessageLabel": "Mensaje",
+      "popupButtonLabel": "Texto del botón (opcional)",
+      "popupButtonUrl": "Enlace del botón (opcional)"
     },
     "menu": {
       "title": "Menú",

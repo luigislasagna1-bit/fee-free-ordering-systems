@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Codi ZIP",
       "postalLabelPostalCode": "Codi postal",
       "postalLabelPostcode": "Codi postal",
-      "postalLabelPinCode": "Codi PIN"
+      "postalLabelPinCode": "Codi PIN",
+      "popupSection": "Finestra emergent de promoció",
+      "popupHint": "Mostra una finestra emergent única a la pàgina de comandes per anunciar una promoció o un avís important.",
+      "popupEnable": "Activa la finestra emergent",
+      "popupImage": "Imatge (opcional)",
+      "popupHeadingLabel": "Títol",
+      "popupMessageLabel": "Missatge",
+      "popupButtonLabel": "Text del botó (opcional)",
+      "popupButtonUrl": "Enllaç del botó (opcional)"
     },
     "menu": {
       "title": "Carta",

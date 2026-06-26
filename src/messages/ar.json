@@ -867,7 +867,15 @@
       "postalLabelZipCode": "الرمز البريدي",
       "postalLabelPostalCode": "الرمز البريدي",
       "postalLabelPostcode": "الرمز البريدي",
-      "postalLabelPinCode": "رمز PIN البريدي"
+      "postalLabelPinCode": "رمز PIN البريدي",
+      "popupSection": "نافذة عرض ترويجي",
+      "popupHint": "اعرض نافذة منبثقة لمرة واحدة على صفحة الطلب للإعلان عن عرض ترويجي أو إشعار مهم.",
+      "popupEnable": "تفعيل النافذة المنبثقة",
+      "popupImage": "صورة (اختياري)",
+      "popupHeadingLabel": "العنوان",
+      "popupMessageLabel": "الرسالة",
+      "popupButtonLabel": "نص الزر (اختياري)",
+      "popupButtonUrl": "رابط الزر (اختياري)"
     },
     "menu": {
       "title": "القائمة",

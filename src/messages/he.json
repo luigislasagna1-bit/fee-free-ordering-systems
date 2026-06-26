@@ -867,7 +867,15 @@
       "postalLabelZipCode": "מיקוד",
       "postalLabelPostalCode": "מיקוד",
       "postalLabelPostcode": "מיקוד",
-      "postalLabelPinCode": "קוד PIN"
+      "postalLabelPinCode": "קוד PIN",
+      "popupSection": "חלון קופץ לקידום מכירות",
+      "popupHint": "הצג חלון קופץ חד-פעמי בעמוד ההזמנה כדי להכריז על מבצע או הודעה חשובה.",
+      "popupEnable": "הפעל חלון קופץ",
+      "popupImage": "תמונה (אופציונלי)",
+      "popupHeadingLabel": "כותרת",
+      "popupMessageLabel": "הודעה",
+      "popupButtonLabel": "טקסט הכפתור (אופציונלי)",
+      "popupButtonUrl": "קישור הכפתור (אופציונלי)"
     },
     "menu": {
       "title": "תפריט",

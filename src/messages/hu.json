@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Irányítószám",
       "postalLabelPostalCode": "Irányítószám",
       "postalLabelPostcode": "Irányítószám",
-      "postalLabelPinCode": "PIN-kód"
+      "postalLabelPinCode": "PIN-kód",
+      "popupSection": "Promóciós felugró ablak",
+      "popupHint": "Jelenítsen meg egyszeri felugró ablakot a rendelési oldalon egy promóció vagy fontos közlemény bejelentésére.",
+      "popupEnable": "Felugró ablak engedélyezése",
+      "popupImage": "Kép (opcionális)",
+      "popupHeadingLabel": "Cím",
+      "popupMessageLabel": "Üzenet",
+      "popupButtonLabel": "Gomb szövege (opcionális)",
+      "popupButtonUrl": "Gomb hivatkozása (opcionális)"
     },
     "menu": {
       "title": "Étlap",

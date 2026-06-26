@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Postcode",
       "postalLabelPostalCode": "Postcode",
       "postalLabelPostcode": "Postcode",
-      "postalLabelPinCode": "Pincode"
+      "postalLabelPinCode": "Pincode",
+      "popupSection": "Promotie-pop-up",
+      "popupHint": "Toon een eenmalige pop-up op je bestelpagina om een promotie of belangrijke mededeling aan te kondigen.",
+      "popupEnable": "Pop-up inschakelen",
+      "popupImage": "Afbeelding (optioneel)",
+      "popupHeadingLabel": "Titel",
+      "popupMessageLabel": "Bericht",
+      "popupButtonLabel": "Knoptekst (optioneel)",
+      "popupButtonUrl": "Knoplink (optioneel)"
     },
     "menu": {
       "title": "Menu",

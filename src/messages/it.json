@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Codice ZIP",
       "postalLabelPostalCode": "Codice postale",
       "postalLabelPostcode": "CAP",
-      "postalLabelPinCode": "Codice PIN"
+      "postalLabelPinCode": "Codice PIN",
+      "popupSection": "Popup promozionale",
+      "popupHint": "Mostra un popup una tantum sulla pagina dell'ordine per annunciare una promozione o un avviso importante.",
+      "popupEnable": "Attiva popup",
+      "popupImage": "Immagine (facoltativa)",
+      "popupHeadingLabel": "Titolo",
+      "popupMessageLabel": "Messaggio",
+      "popupButtonLabel": "Testo del pulsante (facoltativo)",
+      "popupButtonUrl": "Link del pulsante (facoltativo)"
     },
     "menu": {
       "title": "Menù",

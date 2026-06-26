@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Sihtnumber",
       "postalLabelPostalCode": "Postiindeks",
       "postalLabelPostcode": "Postiindeks",
-      "postalLabelPinCode": "PIN-kood"
+      "postalLabelPinCode": "PIN-kood",
+      "popupSection": "Sooduspakkumise hüpikaken",
+      "popupHint": "Kuva tellimislehel ühekordne hüpikaken sooduspakkumise või olulise teate jaoks.",
+      "popupEnable": "Luba hüpikaken",
+      "popupImage": "Pilt (valikuline)",
+      "popupHeadingLabel": "Pealkiri",
+      "popupMessageLabel": "Sõnum",
+      "popupButtonLabel": "Nupu tekst (valikuline)",
+      "popupButtonUrl": "Nupu link (valikuline)"
     },
     "menu": {
       "title": "Menüü",

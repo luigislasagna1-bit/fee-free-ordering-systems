@@ -867,7 +867,15 @@
       "postalLabelZipCode": "우편번호",
       "postalLabelPostalCode": "우편번호",
       "postalLabelPostcode": "우편번호",
-      "postalLabelPinCode": "PIN 코드"
+      "postalLabelPinCode": "PIN 코드",
+      "popupSection": "프로모션 팝업",
+      "popupHint": "주문 페이지에 한 번만 표시되는 팝업으로 프로모션이나 중요한 공지를 알립니다.",
+      "popupEnable": "팝업 사용",
+      "popupImage": "이미지 (선택 사항)",
+      "popupHeadingLabel": "제목",
+      "popupMessageLabel": "메시지",
+      "popupButtonLabel": "버튼 텍스트 (선택 사항)",
+      "popupButtonUrl": "버튼 링크 (선택 사항)"
     },
     "menu": {
       "title": "메뉴",

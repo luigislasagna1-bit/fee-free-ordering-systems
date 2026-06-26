@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Почтовый индекс (ZIP)",
       "postalLabelPostalCode": "Почтовый индекс",
       "postalLabelPostcode": "Почтовый индекс",
-      "postalLabelPinCode": "PIN-код"
+      "postalLabelPinCode": "PIN-код",
+      "popupSection": "Промо-всплывающее окно",
+      "popupHint": "Показывайте на странице заказа одноразовое всплывающее окно для анонса акции или важного уведомления.",
+      "popupEnable": "Включить всплывающее окно",
+      "popupImage": "Изображение (необязательно)",
+      "popupHeadingLabel": "Заголовок",
+      "popupMessageLabel": "Сообщение",
+      "popupButtonLabel": "Текст кнопки (необязательно)",
+      "popupButtonUrl": "Ссылка кнопки (необязательно)"
     },
     "menu": {
       "title": "Меню",

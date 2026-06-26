@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Kod pocztowy",
       "postalLabelPostalCode": "Kod pocztowy",
       "postalLabelPostcode": "Kod pocztowy",
-      "postalLabelPinCode": "Kod PIN"
+      "postalLabelPinCode": "Kod PIN",
+      "popupSection": "Wyskakujące okno promocji",
+      "popupHint": "Pokaż jednorazowe wyskakujące okno na stronie zamawiania, aby ogłosić promocję lub ważną informację.",
+      "popupEnable": "Włącz wyskakujące okno",
+      "popupImage": "Obraz (opcjonalnie)",
+      "popupHeadingLabel": "Tytuł",
+      "popupMessageLabel": "Wiadomość",
+      "popupButtonLabel": "Tekst przycisku (opcjonalnie)",
+      "popupButtonUrl": "Link przycisku (opcjonalnie)"
     },
     "menu": {
       "title": "Menu",

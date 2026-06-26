@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Postleitzahl",
       "postalLabelPostalCode": "Postleitzahl",
       "postalLabelPostcode": "Postleitzahl",
-      "postalLabelPinCode": "PIN-Code"
+      "postalLabelPinCode": "PIN-Code",
+      "popupSection": "Aktions-Pop-up",
+      "popupHint": "Zeigen Sie auf Ihrer Bestellseite ein einmaliges Pop-up, um eine Aktion oder wichtige Mitteilung anzukündigen.",
+      "popupEnable": "Pop-up aktivieren",
+      "popupImage": "Bild (optional)",
+      "popupHeadingLabel": "Titel",
+      "popupMessageLabel": "Nachricht",
+      "popupButtonLabel": "Schaltflächentext (optional)",
+      "popupButtonUrl": "Schaltflächen-Link (optional)"
     },
     "menu": {
       "title": "Speisekarte",

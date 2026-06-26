@@ -40,6 +40,7 @@ import {
   type DeliveryAddressData,
 } from "@/lib/delivery-address-fields";
 import { CheckoutModal } from "./CheckoutModal";
+import { PromotionalPopup, type OrderingPopupConfig } from "./PromotionalPopup";
 import { ReservationModal } from "./ReservationModal";
 import { PROMO_STOCK_IMAGES } from "./promo-stock-data";
 import { PromoDetailModal } from "./PromoDetailModal";
@@ -913,6 +914,21 @@ export function OrderingPageClient({
   const tAddr = useTranslations("checkout.addressFields");
   const tCheckout = useTranslations("checkout");
   const tPromoDetail = useTranslations("customer.promoDetail");
+  // Promo popup (Fabrizio 2026-06-25): the owner's configured popup, shown ONCE per browser
+  // session on this device. Additive — no config / not enabled ⇒ nothing renders. Default
+  // closed (no SSR flash); the effect opens it after mount if eligible + not yet dismissed.
+  const orderingPopup = ((restaurant as any).orderingPopup ?? null) as OrderingPopupConfig | null;
+  const [popupClosed, setPopupClosed] = useState(true);
+  useEffect(() => {
+    if (!orderingPopup?.enabled) return;
+    try {
+      if (sessionStorage.getItem(`ff-popup-${restaurant.id}`) !== "1") setPopupClosed(false);
+    } catch { /* sessionStorage blocked ⇒ stay closed */ }
+  }, [orderingPopup?.enabled, restaurant.id]);
+  const dismissPopup = () => {
+    setPopupClosed(true);
+    try { sessionStorage.setItem(`ff-popup-${restaurant.id}`, "1"); } catch { /* ignore */ }
+  };
   const theme = parseTheme(themeSettings);
   // Owner's chosen clock display format ("12h" → AM/PM, "24h" → 14:30).
   // Applied wherever times are shown to customers: header hours, info
@@ -5329,6 +5345,14 @@ export function OrderingPageClient({
           principle, this is a DISCOVERY UX only — the engine handles
           the actual discount whether or not the customer used the
           walkthrough. */}
+      {!popupClosed && orderingPopup?.enabled && (
+        <PromotionalPopup
+          config={orderingPopup}
+          onClose={dismissPopup}
+          primaryColor={theme.primaryColor}
+          closeLabel={t("close")}
+        />
+      )}
       {activePromoModal && (
         <PromoDetailModal
           promo={activePromoModal as any}

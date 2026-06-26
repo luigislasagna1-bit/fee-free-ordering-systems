@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Kode ZIP",
       "postalLabelPostalCode": "Kode pos",
       "postalLabelPostcode": "Kode pos",
-      "postalLabelPinCode": "Kode PIN"
+      "postalLabelPinCode": "Kode PIN",
+      "popupSection": "Pop-up promo",
+      "popupHint": "Tampilkan pop-up sekali muncul di halaman pemesanan untuk mengumumkan promosi atau pemberitahuan penting.",
+      "popupEnable": "Aktifkan pop-up",
+      "popupImage": "Gambar (opsional)",
+      "popupHeadingLabel": "Judul",
+      "popupMessageLabel": "Pesan",
+      "popupButtonLabel": "Teks tombol (opsional)",
+      "popupButtonUrl": "Tautan tombol (opsional)"
     },
     "menu": {
       "title": "Menu",

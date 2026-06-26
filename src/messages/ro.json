@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Cod ZIP",
       "postalLabelPostalCode": "Cod poștal",
       "postalLabelPostcode": "Cod poștal",
-      "postalLabelPinCode": "Cod PIN"
+      "postalLabelPinCode": "Cod PIN",
+      "popupSection": "Fereastră pop-up promoțională",
+      "popupHint": "Afișează o fereastră pop-up unică pe pagina de comandă pentru a anunța o promoție sau o notificare importantă.",
+      "popupEnable": "Activează fereastra pop-up",
+      "popupImage": "Imagine (opțional)",
+      "popupHeadingLabel": "Titlu",
+      "popupMessageLabel": "Mesaj",
+      "popupButtonLabel": "Text buton (opțional)",
+      "popupButtonUrl": "Link buton (opțional)"
     },
     "menu": {
       "title": "Meniu",

@@ -890,7 +890,15 @@
       "postalLabelZipCode": "ज़िप कोड",
       "postalLabelPostalCode": "डाक कोड",
       "postalLabelPostcode": "पोस्टकोड",
-      "postalLabelPinCode": "पिन कोड"
+      "postalLabelPinCode": "पिन कोड",
+      "popupSection": "प्रोमो पॉपअप",
+      "popupHint": "प्रचार या महत्वपूर्ण सूचना की घोषणा के लिए अपने ऑर्डरिंग पेज पर एक बार दिखने वाला पॉपअप दिखाएँ।",
+      "popupEnable": "पॉपअप सक्षम करें",
+      "popupImage": "छवि (वैकल्पिक)",
+      "popupHeadingLabel": "शीर्षक",
+      "popupMessageLabel": "संदेश",
+      "popupButtonLabel": "बटन टेक्स्ट (वैकल्पिक)",
+      "popupButtonUrl": "बटन लिंक (वैकल्पिक)"
     },
     "menu": {
       "title": "मेनू",

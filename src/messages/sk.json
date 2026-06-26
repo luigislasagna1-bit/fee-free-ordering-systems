@@ -867,7 +867,15 @@
       "postalLabelZipCode": "PSČ",
       "postalLabelPostalCode": "Poštové smerovacie číslo",
       "postalLabelPostcode": "Poštové smerovacie číslo",
-      "postalLabelPinCode": "PIN kód"
+      "postalLabelPinCode": "PIN kód",
+      "popupSection": "Promo vyskakovacie okno",
+      "popupHint": "Zobrazte na objednávacej stránke jednorazové vyskakovacie okno na oznámenie akcie alebo dôležitej správy.",
+      "popupEnable": "Povoliť vyskakovacie okno",
+      "popupImage": "Obrázok (voliteľné)",
+      "popupHeadingLabel": "Názov",
+      "popupMessageLabel": "Správa",
+      "popupButtonLabel": "Text tlačidla (voliteľné)",
+      "popupButtonUrl": "Odkaz tlačidla (voliteľné)"
     },
     "menu": {
       "title": "Menu",

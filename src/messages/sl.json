@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Poštna številka",
       "postalLabelPostalCode": "Poštna številka",
       "postalLabelPostcode": "Poštna številka",
-      "postalLabelPinCode": "Številka PIN"
+      "postalLabelPinCode": "Številka PIN",
+      "popupSection": "Promocijsko pojavno okno",
+      "popupHint": "Na strani za naročanje prikažite enkratno pojavno okno za napoved promocije ali pomembnega obvestila.",
+      "popupEnable": "Omogoči pojavno okno",
+      "popupImage": "Slika (neobvezno)",
+      "popupHeadingLabel": "Naslov",
+      "popupMessageLabel": "Sporočilo",
+      "popupButtonLabel": "Besedilo gumba (neobvezno)",
+      "popupButtonUrl": "Povezava gumba (neobvezno)"
     },
     "menu": {
       "title": "Meni",

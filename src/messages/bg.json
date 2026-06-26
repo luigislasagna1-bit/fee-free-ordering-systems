@@ -867,7 +867,15 @@
       "postalLabelZipCode": "ZIP код",
       "postalLabelPostalCode": "Пощенски код",
       "postalLabelPostcode": "Пощенски код",
-      "postalLabelPinCode": "PIN код"
+      "postalLabelPinCode": "PIN код",
+      "popupSection": "Промо изскачащ прозорец",
+      "popupHint": "Показвайте еднократен изскачащ прозорец на страницата за поръчки, за да обявите промоция или важно съобщение.",
+      "popupEnable": "Активиране на изскачащ прозорец",
+      "popupImage": "Изображение (по избор)",
+      "popupHeadingLabel": "Заглавие",
+      "popupMessageLabel": "Съобщение",
+      "popupButtonLabel": "Текст на бутона (по избор)",
+      "popupButtonUrl": "Връзка на бутона (по избор)"
     },
     "menu": {
       "title": "Меню",

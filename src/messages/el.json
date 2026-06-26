@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Ταχυδρομικός κώδικας (ZIP)",
       "postalLabelPostalCode": "Ταχυδρομικός κώδικας",
       "postalLabelPostcode": "Ταχυδρομικός κώδικας",
-      "postalLabelPinCode": "Κωδικός PIN"
+      "postalLabelPinCode": "Κωδικός PIN",
+      "popupSection": "Αναδυόμενο παράθυρο προσφοράς",
+      "popupHint": "Εμφανίστε ένα εφάπαξ αναδυόμενο παράθυρο στη σελίδα παραγγελιών για μια προσφορά ή σημαντική ανακοίνωση.",
+      "popupEnable": "Ενεργοποίηση αναδυόμενου παραθύρου",
+      "popupImage": "Εικόνα (προαιρετικό)",
+      "popupHeadingLabel": "Τίτλος",
+      "popupMessageLabel": "Μήνυμα",
+      "popupButtonLabel": "Κείμενο κουμπιού (προαιρετικό)",
+      "popupButtonUrl": "Σύνδεσμος κουμπιού (προαιρετικό)"
     },
     "menu": {
       "title": "Μενού",

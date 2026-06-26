@@ -867,7 +867,15 @@
       "postalLabelZipCode": "ZIP kodu",
       "postalLabelPostalCode": "Posta kodu",
       "postalLabelPostcode": "Posta kodu",
-      "postalLabelPinCode": "PIN kodu"
+      "postalLabelPinCode": "PIN kodu",
+      "popupSection": "Promosyon açılır penceresi",
+      "popupHint": "Bir promosyonu veya önemli bir duyuruyu duyurmak için sipariş sayfanızda tek seferlik bir açılır pencere gösterin.",
+      "popupEnable": "Açılır pencereyi etkinleştir",
+      "popupImage": "Görsel (isteğe bağlı)",
+      "popupHeadingLabel": "Başlık",
+      "popupMessageLabel": "Mesaj",
+      "popupButtonLabel": "Düğme metni (isteğe bağlı)",
+      "popupButtonUrl": "Düğme bağlantısı (isteğe bağlı)"
     },
     "menu": {
       "title": "Menü",

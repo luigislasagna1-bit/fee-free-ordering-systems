@@ -176,6 +176,10 @@ model Restaurant {
   /// (number-first, North-American). Per-restaurant so it never flips an existing store's
   /// format. Fabrizio 2026-06-25.
   addressNumberAfterStreet Boolean @default(false)
+  /// Ordering-page promotional POPUP (shown once per browser session on /order/[slug]). JSON:
+  /// { enabled, imageUrl?, title?, body?, buttonLabel?, buttonUrl? }. Null = no popup. The owner
+  /// configures it in the admin Profile page. Additive + nullable. Fabrizio 2026-06-25.
+  orderingPopup Json?
   /// Whether the customer's email is mandatory on the checkout form.
   /// Default true so receipts can be sent; an owner who only wants
   /// SMS notification can flip this off and require phone instead.

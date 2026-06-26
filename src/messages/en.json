@@ -890,7 +890,15 @@
       "postalLabelZipCode": "ZIP code",
       "postalLabelPostalCode": "Postal code",
       "postalLabelPostcode": "Postcode",
-      "postalLabelPinCode": "PIN code"
+      "postalLabelPinCode": "PIN code",
+      "popupSection": "Promo popup",
+      "popupHint": "Show a one-time popup on your ordering page to announce a promotion or important notice.",
+      "popupEnable": "Enable popup",
+      "popupImage": "Image (optional)",
+      "popupHeadingLabel": "Title",
+      "popupMessageLabel": "Message",
+      "popupButtonLabel": "Button text (optional)",
+      "popupButtonUrl": "Button link (optional)"
     },
     "menus": {
       "live": "Live",

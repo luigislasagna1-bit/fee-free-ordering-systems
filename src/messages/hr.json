@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Poštanski broj",
       "postalLabelPostalCode": "Poštanski broj",
       "postalLabelPostcode": "Poštanski broj",
-      "postalLabelPinCode": "PIN kôd"
+      "postalLabelPinCode": "PIN kôd",
+      "popupSection": "Promotivni skočni prozor",
+      "popupHint": "Prikažite jednokratni skočni prozor na stranici za narudžbe za najavu promocije ili važne obavijesti.",
+      "popupEnable": "Omogući skočni prozor",
+      "popupImage": "Slika (neobavezno)",
+      "popupHeadingLabel": "Naslov",
+      "popupMessageLabel": "Poruka",
+      "popupButtonLabel": "Tekst gumba (neobavezno)",
+      "popupButtonUrl": "Poveznica gumba (neobavezno)"
     },
     "menu": {
       "title": "Jelovnik",

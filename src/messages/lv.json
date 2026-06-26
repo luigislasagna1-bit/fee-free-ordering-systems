@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Pasta indekss",
       "postalLabelPostalCode": "Pasta indekss",
       "postalLabelPostcode": "Pasta indekss",
-      "postalLabelPinCode": "PIN kods"
+      "postalLabelPinCode": "PIN kods",
+      "popupSection": "Akcijas uznirstošais logs",
+      "popupHint": "Rādiet pasūtīšanas lapā vienreizēju uznirstošo logu, lai paziņotu par akciju vai svarīgu paziņojumu.",
+      "popupEnable": "Iespējot uznirstošo logu",
+      "popupImage": "Attēls (neobligāts)",
+      "popupHeadingLabel": "Nosaukums",
+      "popupMessageLabel": "Ziņojums",
+      "popupButtonLabel": "Pogas teksts (neobligāts)",
+      "popupButtonUrl": "Pogas saite (neobligāta)"
     },
     "menu": {
       "title": "Ēdienkarte",

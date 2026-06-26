@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Mã ZIP",
       "postalLabelPostalCode": "Mã bưu chính",
       "postalLabelPostcode": "Mã bưu điện",
-      "postalLabelPinCode": "Mã PIN"
+      "postalLabelPinCode": "Mã PIN",
+      "popupSection": "Cửa sổ bật lên khuyến mãi",
+      "popupHint": "Hiển thị cửa sổ bật lên một lần trên trang đặt hàng để thông báo khuyến mãi hoặc thông báo quan trọng.",
+      "popupEnable": "Bật cửa sổ bật lên",
+      "popupImage": "Hình ảnh (tùy chọn)",
+      "popupHeadingLabel": "Tiêu đề",
+      "popupMessageLabel": "Tin nhắn",
+      "popupButtonLabel": "Văn bản nút (tùy chọn)",
+      "popupButtonUrl": "Liên kết nút (tùy chọn)"
     },
     "menu": {
       "title": "Thực đơn",

@@ -867,7 +867,15 @@
       "postalLabelZipCode": "รหัสไปรษณีย์ (ZIP)",
       "postalLabelPostalCode": "รหัสไปรษณีย์",
       "postalLabelPostcode": "รหัสไปรษณีย์",
-      "postalLabelPinCode": "รหัส PIN"
+      "postalLabelPinCode": "รหัส PIN",
+      "popupSection": "ป๊อปอัปโปรโมชัน",
+      "popupHint": "แสดงป๊อปอัปครั้งเดียวบนหน้าสั่งซื้อเพื่อประกาศโปรโมชันหรือประกาศสำคัญ",
+      "popupEnable": "เปิดใช้งานป๊อปอัป",
+      "popupImage": "รูปภาพ (ไม่บังคับ)",
+      "popupHeadingLabel": "หัวข้อ",
+      "popupMessageLabel": "ข้อความ",
+      "popupButtonLabel": "ข้อความปุ่ม (ไม่บังคับ)",
+      "popupButtonUrl": "ลิงก์ปุ่ม (ไม่บังคับ)"
     },
     "menu": {
       "title": "เมนู",

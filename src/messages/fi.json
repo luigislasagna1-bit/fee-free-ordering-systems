@@ -867,7 +867,15 @@
       "postalLabelZipCode": "Postinumero",
       "postalLabelPostalCode": "Postinumero",
       "postalLabelPostcode": "Postinumero",
-      "postalLabelPinCode": "PIN-koodi"
+      "postalLabelPinCode": "PIN-koodi",
+      "popupSection": "Tarjousponnahdusikkuna",
+      "popupHint": "Näytä tilaussivulla kertaluonteinen ponnahdusikkuna tarjouksen tai tärkeän ilmoituksen esittämiseksi.",
+      "popupEnable": "Ota ponnahdusikkuna käyttöön",
+      "popupImage": "Kuva (valinnainen)",
+      "popupHeadingLabel": "Otsikko",
+      "popupMessageLabel": "Viesti",
+      "popupButtonLabel": "Painikkeen teksti (valinnainen)",
+      "popupButtonUrl": "Painikkeen linkki (valinnainen)"
     },
     "menu": {
       "title": "Menu",

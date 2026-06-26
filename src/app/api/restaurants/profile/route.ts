@@ -69,6 +69,7 @@ export async function PUT(req: NextRequest) {
     showCustomerMenuSearch,
     acceptOutsideZoneOrders,
     deliveryAddressConfig,
+    orderingPopup,
   } = data;
 
   const ALLOWED_LOCALES: readonly string[] = SUPPORTED_LOCALES;
@@ -92,6 +93,24 @@ export async function PUT(req: NextRequest) {
     updateData.country = country.trim().slice(0, 10);
   }
   if (cuisineType !== undefined) updateData.cuisineType = cuisineType;
+  // Ordering-page promo popup — sanitize the client JSON to ONLY the known fields with capped
+  // lengths (never persist an arbitrary blob). null/"" clears it. Fabrizio 2026-06-25.
+  if (orderingPopup !== undefined) {
+    if (orderingPopup === null || orderingPopup === "") {
+      updateData.orderingPopup = null;
+    } else if (typeof orderingPopup === "object") {
+      const p = orderingPopup as Record<string, unknown>;
+      const str = (v: unknown, max: number) => (typeof v === "string" && v.trim() ? v.trim().slice(0, max) : null);
+      updateData.orderingPopup = {
+        enabled: !!p.enabled,
+        imageUrl: str(p.imageUrl, 2000),
+        title: str(p.title, 200),
+        body: str(p.body, 2000),
+        buttonLabel: str(p.buttonLabel, 100),
+        buttonUrl: str(p.buttonUrl, 2000),
+      };
+    }
+  }
   if (timezone !== undefined) {
     // Reject bogus IANA zones so promo windows / scheduling / hours never
     // silently evaluate against an invalid clock (worldwide launch).
