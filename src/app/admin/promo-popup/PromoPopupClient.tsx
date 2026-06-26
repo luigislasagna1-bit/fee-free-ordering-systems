@@ -6,16 +6,13 @@ import { ImageUpload } from "@/components/admin/ImageUpload";
 import type { OrderingPopupConfig } from "@/app/order/[slug]/PromotionalPopup";
 
 type PromoOption = { id: string; name: string };
-type CouponOption = { id: string; code: string; description: string | null };
 
 export function PromoPopupClient({
   initialConfig,
   promotions,
-  coupons,
 }: {
   initialConfig: OrderingPopupConfig;
   promotions: PromoOption[];
-  coupons: CouponOption[];
 }) {
   const t = useTranslations("admin.promoPopup");
   const tp = useTranslations("admin.profile"); // reuse the shared popup field labels
@@ -88,7 +85,6 @@ export function PromoPopupClient({
                 <select className={inputCls} value={action} onChange={(e) => set({ buttonAction: e.target.value as OrderingPopupConfig["buttonAction"] })}>
                   <option value="url">{t("actionUrl")}</option>
                   <option value="promo">{t("actionPromo")}</option>
-                  <option value="coupon">{t("actionCoupon")}</option>
                 </select>
               </div>
 
@@ -115,21 +111,6 @@ export function PromoPopupClient({
                 </div>
               )}
 
-              {action === "coupon" && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("chooseCoupon")}</label>
-                  {coupons.length === 0 ? (
-                    <p className="text-xs text-gray-400">{t("noCoupons")}</p>
-                  ) : (
-                    <select className={inputCls} value={popup.buttonCouponCode ?? ""} onChange={(e) => set({ buttonCouponCode: e.target.value })}>
-                      <option value="">{t("selectCoupon")}</option>
-                      {coupons.map((c) => (
-                        <option key={c.id} value={c.code}>{c.code}{c.description ? ` — ${c.description}` : ""}</option>
-                      ))}
-                    </select>
-                  )}
-                </div>
-              )}
             </div>
           </div>
         )}

@@ -751,15 +751,18 @@ export function PromoDetailModal({
           />
         </div>
 
-        {/* Footer — varies per type */}
-        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex justify-end gap-2">
+        {/* Footer — one prominent, centered, full-width CTA. The discount
+            auto-applies once the qualifying cart is built, so the CTA invites
+            the customer to start adding items (Luigi 2026-06-26). free_delivery
+            keeps its own "switch to delivery" action. */}
+        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex justify-center">
           {promo.promotionType === "free_delivery" && onSwitchOrderType ? (
             <button
               onClick={() => {
                 onSwitchOrderType("delivery");
                 onClose();
               }}
-              className="text-white font-semibold px-4 py-2.5 rounded-xl text-sm"
+              className="w-full text-white font-semibold px-4 py-3 rounded-xl text-sm"
               style={{ backgroundColor: primaryColor }}
             >
               {t("switchToDelivery")}
@@ -767,12 +770,10 @@ export function PromoDetailModal({
           ) : (
             <button
               onClick={onClose}
-              className="text-white font-semibold px-4 py-2.5 rounded-xl text-sm"
+              className="w-full text-white font-semibold px-4 py-3 rounded-xl text-sm"
               style={{ backgroundColor: primaryColor }}
             >
-              {promo.promotionType === "percentage_off" || promo.promotionType === "bogo"
-                ? t("startAddingItems")
-                : t("gotIt")}
+              {t("startAddingItems")}
             </button>
           )}
         </div>
