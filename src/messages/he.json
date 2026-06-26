@@ -976,7 +976,9 @@
       "between": "בין",
       "addSlot": "הוספת חלון זמן",
       "removeSlot": "הסרת חלון הזמן",
-      "closesNextDay": "נסגר ביום למחרת (למשל פתוח אחרי חצות)"
+      "closesNextDay": "נסגר ביום למחרת (למשל פתוח אחרי חצות)",
+      "holidayNeedsDate": "בחר תחילה תאריך התחלה.",
+      "holidayWindowOutsideService": "{window} מחוץ לשעות {service} ביום זה. שעות חריגות חייבות להיות בתוך שעות הפעילות הרגילות של השירות."
     },
     "services": {
       "title": "שירותי המסעדה",

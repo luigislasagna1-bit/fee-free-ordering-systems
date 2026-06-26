@@ -976,7 +976,9 @@
       "between": "tarp",
       "addSlot": "Pridėti laiko intervalą",
       "removeSlot": "Pašalinti laiko intervalą",
-      "closesNextDay": "Užsidaro kitą dieną (pvz., dirba po vidurnakčio)"
+      "closesNextDay": "Užsidaro kitą dieną (pvz., dirba po vidurnakčio)",
+      "holidayNeedsDate": "Pirmiausia pasirinkite pradžios datą.",
+      "holidayWindowOutsideService": "{window} yra už tos dienos {service} darbo laiko ribų. Išskirtinis laikas turi būti įprasto paslaugos darbo laiko ribose."
     },
     "services": {
       "title": "Restorano paslaugos",

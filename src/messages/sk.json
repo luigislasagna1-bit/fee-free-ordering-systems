@@ -976,7 +976,9 @@
       "between": "medzi",
       "addSlot": "Pridať časový úsek",
       "removeSlot": "Odstrániť časový úsek",
-      "closesNextDay": "Zatvára nasledujúci deň (napr. otvorené po polnoci)"
+      "closesNextDay": "Zatvára nasledujúci deň (napr. otvorené po polnoci)",
+      "holidayNeedsDate": "Najprv vyberte dátum začiatku.",
+      "holidayWindowOutsideService": "{window} je mimo hodín služby {service} v daný deň. Výnimočné hodiny musia byť v rámci bežných hodín služby."
     },
     "services": {
       "title": "Služby reštaurácie",

@@ -976,7 +976,9 @@
       "between": "entre",
       "addSlot": "Ajouter un créneau horaire",
       "removeSlot": "Supprimer le créneau horaire",
-      "closesNextDay": "Ferme le lendemain (p. ex. ouvert après minuit)"
+      "closesNextDay": "Ferme le lendemain (p. ex. ouvert après minuit)",
+      "holidayNeedsDate": "Choisissez d'abord une date de début.",
+      "holidayWindowOutsideService": "{window} est en dehors des horaires {service} ce jour-là. Les horaires exceptionnels doivent être compris dans les horaires normaux du service."
     },
     "services": {
       "title": "Services du restaurant",

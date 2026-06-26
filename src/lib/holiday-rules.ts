@@ -18,7 +18,8 @@
  *   - service=null asks for the GENERAL (page-level) status → only
  *     all-services rules (and legacy rows) apply
  */
-import { dateKeyInTimezone } from "@/lib/restaurant-hours";
+import { dateKeyInTimezone, rowIntervals } from "@/lib/restaurant-hours";
+import { pickHoursForService, type HoursRow, type ServiceKind } from "@/lib/service-hours";
 
 export type HolidayInterval = { open: string; close: string };
 
@@ -93,8 +94,15 @@ export function parseHolidayRules(raw: string | null | undefined): HolidayRule[]
         intervals = r.intervals
           .filter(
             (iv: any) =>
+              // Both endpoints valid HH:MM and NOT equal. open > close is allowed
+              // and means the window WRAPS past midnight (e.g. 22:00–02:00) — only
+              // legitimate when the governing service's own hours also cross
+              // midnight; that's enforced by the within-service-hours validator on
+              // save (holidayWindowsWithinService), not here. Previously this
+              // required open < close, which SILENTLY DROPPED any cross-midnight
+              // closure (Luigi 2026-06-26: "close pickup 10pm–2am" vanished).
               iv && HHMM_RE.test(String(iv.open ?? "")) && HHMM_RE.test(String(iv.close ?? "")) &&
-              String(iv.open) < String(iv.close),
+              String(iv.open) !== String(iv.close),
           )
           .map((iv: any) => ({ open: String(iv.open), close: String(iv.close) }));
       }
@@ -191,9 +199,107 @@ export function holidayEffectToday(
   return holidayEffectForDay(holidays, dateKeyInTimezone(now, timezone || "UTC"), service);
 }
 
-/** Is an HH:MM (restaurant-local) inside any of the custom intervals? */
+/** Is an HH:MM (restaurant-local) inside any of the custom intervals?
+ *  Handles cross-midnight intervals (open > close, e.g. 22:00–02:00): such a
+ *  window matches times AT/AFTER open OR BEFORE close. Same-day intervals use
+ *  the usual [open, close) half-open test. */
 export function hhmmInsideIntervals(hhmm: string, intervals: HolidayInterval[]): boolean {
-  return intervals.some((iv) => hhmm >= iv.open && hhmm < iv.close);
+  return intervals.some((iv) =>
+    iv.open <= iv.close
+      ? hhmm >= iv.open && hhmm < iv.close            // same-day window
+      : hhmm >= iv.open || hhmm < iv.close,            // wraps past midnight
+  );
+}
+
+/** HH:MM → minutes since midnight (0–1439). Invalid → 0. */
+function hhmmToMin(hhmm: string): number {
+  const m = /^(\d{2}):(\d{2})$/.exec(hhmm);
+  if (!m) return 0;
+  return parseInt(m[1], 10) * 60 + parseInt(m[2], 10);
+}
+
+/** A time window as a minute-range on a 0–2880 line (two days), so a window
+ *  that wraps past midnight (open > close) becomes a single contiguous range
+ *  [open, close+1440] instead of two pieces. Same-day → [open, close]. */
+function toMinRange(open: string, close: string): { start: number; end: number } {
+  const s = hhmmToMin(open);
+  let e = hhmmToMin(close);
+  if (e <= s) e += 1440; // wraps past midnight (or close===open guarded elsewhere)
+  return { start: s, end: e };
+}
+
+/**
+ * Does an exceptional (special-day) open/closed window fit ENTIRELY within the
+ * governing service's normal operating hours for that day? An owner must not be
+ * able to set a closure/override at a time the service isn't even offered (Luigi
+ * 2026-06-26: "we shouldn't be able to set closed pickup hours for a time pickup
+ * isn't usually offered"). `serviceIntervals` are the service's open windows for
+ * the rule's day (resolve via pickHoursForService + rowIntervals; for an
+ * all-services rule, pass the GENERAL hours). A cross-midnight exceptional window
+ * is therefore only valid when a service window also crosses midnight and
+ * contains it. Returns the FIRST offending window, or null when all fit.
+ * An empty serviceIntervals (service closed that day) ⇒ every window is invalid.
+ */
+export function holidayWindowOutsideService(
+  windows: HolidayInterval[] | undefined | null,
+  serviceIntervals: HolidayInterval[],
+): HolidayInterval | null {
+  if (!windows || windows.length === 0) return null;
+  const svc = serviceIntervals.map((iv) => toMinRange(iv.open, iv.close));
+  for (const w of windows) {
+    const wr = toMinRange(w.open, w.close);
+    // A window fits a service range if it's a subset of it. Try the window both
+    // at its natural position and shifted +1440, so an early-morning window
+    // (e.g. 01:00–02:00) is recognised inside an overnight service span
+    // (e.g. 10:00–03:00 → [600,1620]) where it lives in the post-midnight tail.
+    const fits = svc.some(
+      (s) =>
+        (wr.start >= s.start && wr.end <= s.end) ||
+        (wr.start + 1440 >= s.start && wr.end + 1440 <= s.end),
+    );
+    if (!fits) return w;
+  }
+  return null;
+}
+
+/** Map a holiday-service key to the hours "service" that governs it. Only
+ *  pickup / delivery / reservation can carry their OWN weekly hours; dine_in,
+ *  take_out, catering (and all-services rules) follow the GENERAL schedule. */
+function governingHoursService(holidayService: string | null): ServiceKind | null {
+  if (holidayService === "pickup" || holidayService === "delivery" || holidayService === "reservation") {
+    return holidayService;
+  }
+  return null; // dine_in / take_out / catering / all-services → general hours
+}
+
+/**
+ * Validate a set of special-day rules against the restaurant's NORMAL hours for
+ * the rule's day: every open/closed-window override must fit inside the governing
+ * service's operating hours (Luigi 2026-06-26 — can't close pickup at a time
+ * pickup isn't offered). `startDow` is the day-of-week (0=Sun) of the special
+ * day's start date. Returns the first offending {service, window} or null when
+ * every window fits. Shared by the admin save API (authoritative) and the admin
+ * form (instant feedback) so the two never disagree.
+ */
+export function validateHolidayRulesAgainstHours(
+  rules: HolidayRule[] | null | undefined,
+  openingHours: HoursRow[],
+  startDow: number,
+): { service: string | null; window: HolidayInterval } | null {
+  if (!rules) return null;
+  for (const rule of rules) {
+    if (rule.mode === "closed") continue; // full-day closure has no window to bound
+    if (!rule.intervals || rule.intervals.length === 0) continue;
+    const services: (string | null)[] =
+      rule.services && rule.services.length > 0 ? rule.services : [null];
+    for (const svc of services) {
+      const row = pickHoursForService(openingHours, startDow, governingHoursService(svc));
+      const svcIntervals = row ? rowIntervals(row as any) : [];
+      const bad = holidayWindowOutsideService(rule.intervals, svcIntervals);
+      if (bad) return { service: svc, window: bad };
+    }
+  }
+  return null;
 }
 
 /**

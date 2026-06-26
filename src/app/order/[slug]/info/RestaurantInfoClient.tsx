@@ -19,6 +19,7 @@ import { formatTime as fmt, type HoursFormat } from "@/lib/format-time";
 import { localDowAndHHMM, liveOpenStatus, rowIntervals } from "@/lib/restaurant-hours";
 import { groupHoursByService, type HoursGroup } from "@/lib/service-hours";
 import { serviceLabel } from "@/lib/service-labels";
+import { resolveTodayHolidayClosure } from "@/lib/holiday-rules";
 
 function formatTime(t: string, hoursFmt: HoursFormat = "24h") {
   return fmt(t, hoursFmt);
@@ -76,6 +77,9 @@ interface Restaurant {
   themeSettings?: string | null;
   serviceSettings?: string | null;
   openingHours: OpeningHour[];
+  /** Special-day closures (today + future) — drives the amber "special hours /
+   *  closed today" callout + the owner's custom note on the info page. */
+  holidays?: Array<{ date: string | Date; endDate?: string | Date | null; name?: string | null; rules?: string | null; message?: string | null }>;
   /** IANA timezone (e.g. "America/Toronto"). Required to compute the
    *  correct day-of-week at the restaurant — the customer's browser tz
    *  can differ. Stable across the Restaurant model lifetime. */
@@ -111,6 +115,16 @@ export function RestaurantInfoClient({
   try {
     if (restaurant.infoContent) cta = JSON.parse(restaurant.infoContent);
   } catch { /* ignore */ }
+
+  // Today's special-day closure (full closure / closed windows / custom hours)
+  // + the owner's custom note, so the info page surfaces them like the ordering
+  // page does. Reuses the shared resolver + the `ordering` namespace closure
+  // strings (already translated in all 38 locales). Luigi 2026-06-26.
+  const holidayClosure = resolveTodayHolidayClosure(restaurant.holidays ?? [], restaurant.timezone);
+  const fmtWins = (ivs: Array<{ open: string; close: string }>) =>
+    ivs.map((iv) => `${formatTime(iv.open, hoursFmt)}–${formatTime(iv.close, hoursFmt)}`).join(", ");
+  const holidaySvcLabel = (svc: string) =>
+    serviceLabel(svc === "dine_in" ? "dineIn" : svc === "take_out" ? "takeOut" : svc === "reservation" ? "reservations" : svc, svcSettings, tOrdering);
 
   const sendInquiry = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -267,6 +281,40 @@ export function RestaurantInfoClient({
         {/* Hours — grouped by service, each panel led by a service icon + a live
             "open now" chip; today's row carries a Today pill. Closed reads as a
             calm gray pill (not alarming red) so the eye lands on OPEN hours. */}
+        {/* Special-day closure callout (today) — full closure / closed windows /
+            custom hours + the owner's custom note. Mirrors the ordering page so
+            the same warning shows here. Luigi 2026-06-26. */}
+        {(() => {
+          const c = holidayClosure;
+          const has =
+            c.todayHolidayClosed || !!c.todayHolidayMessage || c.holidayClosedServices.length > 0 ||
+            c.holidayClosedWindows.length > 0 || c.holidayCustomHoursServices.length > 0 ||
+            (c.holidayClosedWindowsGeneral?.length ?? 0) > 0 || (c.todayHolidayIntervals?.length ?? 0) > 0;
+          if (!has) return null;
+          const nameSuffix = c.todayHolidayName ? ` — ${c.todayHolidayName}` : "";
+          return (
+            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-sm space-y-1">
+              {c.todayHolidayClosed ? (
+                <div className="font-bold text-amber-900">⛔ {tOrdering("holidayClosedToday")}{nameSuffix}</div>
+              ) : (c.todayHolidayIntervals?.length ?? 0) > 0 ? (
+                <div className="font-bold text-amber-900">🕒 {tOrdering("holidaySpecialHours")}{nameSuffix}: {fmtWins(c.todayHolidayIntervals!)}</div>
+              ) : c.holidayClosedServices.length > 0 ? (
+                <div className="font-bold text-amber-900">⛔ {tOrdering("holidayNotAvailableToday", { services: c.holidayClosedServices.map(holidaySvcLabel).join(", ") })}{nameSuffix}</div>
+              ) : null}
+              {!c.todayHolidayClosed && (c.holidayClosedWindowsGeneral?.length ?? 0) > 0 && (
+                <div className="font-semibold text-amber-900">⏸ {tOrdering("holidayClosedHoursToday", { windows: fmtWins(c.holidayClosedWindowsGeneral!) })}</div>
+              )}
+              {!c.todayHolidayClosed && c.holidayClosedWindows.map((g, i) => (
+                <div key={`cw-${i}`} className="font-semibold text-amber-900">⏸ {tOrdering("holidayServiceClosedWindows", { service: holidaySvcLabel(g.service), windows: fmtWins(g.intervals) })}</div>
+              ))}
+              {!c.todayHolidayClosed && c.holidayCustomHoursServices.map((g, i) => (
+                <div key={`ch-${i}`} className="font-semibold text-amber-900">🕒 {tOrdering("holidayServiceSpecialHours", { service: holidaySvcLabel(g.service), windows: fmtWins(g.intervals) })}</div>
+              ))}
+              {c.todayHolidayMessage && <div className="text-xs text-amber-800">{c.todayHolidayMessage}</div>}
+            </div>
+          );
+        })()}
+
         {restaurant.openingHours.length > 0 && hoursGroups.length > 0 && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
             <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4 flex items-center gap-2.5">

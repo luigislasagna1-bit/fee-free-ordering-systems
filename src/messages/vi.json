@@ -976,7 +976,9 @@
       "between": "từ",
       "addSlot": "Thêm khung giờ",
       "removeSlot": "Xóa khung giờ",
-      "closesNextDay": "Đóng cửa vào ngày hôm sau (vd: mở quá nửa đêm)"
+      "closesNextDay": "Đóng cửa vào ngày hôm sau (vd: mở quá nửa đêm)",
+      "holidayNeedsDate": "Trước tiên hãy chọn ngày bắt đầu.",
+      "holidayWindowOutsideService": "{window} nằm ngoài giờ {service} của ngày đó. Giờ ngoại lệ phải nằm trong giờ phục vụ thông thường."
     },
     "services": {
       "title": "Dịch vụ nhà hàng",

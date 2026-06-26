@@ -976,7 +976,9 @@
       "between": "arasında",
       "addSlot": "Saat aralığı ekle",
       "removeSlot": "Saat aralığını kaldır",
-      "closesNextDay": "Ertesi gün kapanır (örn. gece yarısından sonra açık)"
+      "closesNextDay": "Ertesi gün kapanır (örn. gece yarısından sonra açık)",
+      "holidayNeedsDate": "Önce bir başlangıç tarihi seçin.",
+      "holidayWindowOutsideService": "{window}, o gün için {service} saatlerinin dışında. İstisnai saatler hizmetin normal saatleri içinde olmalıdır."
     },
     "services": {
       "title": "Restoran Hizmetleri",

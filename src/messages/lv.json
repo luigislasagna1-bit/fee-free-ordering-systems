@@ -976,7 +976,9 @@
       "between": "no līdz",
       "addSlot": "Pievienot laika intervālu",
       "removeSlot": "Noņemt laika intervālu",
-      "closesNextDay": "Aizveras nākamajā dienā (piem., atvērts pēc pusnakts)"
+      "closesNextDay": "Aizveras nākamajā dienā (piem., atvērts pēc pusnakts)",
+      "holidayNeedsDate": "Vispirms izvēlieties sākuma datumu.",
+      "holidayWindowOutsideService": "{window} ir ārpus {service} darba laika tajā dienā. Ārkārtas laikiem jābūt pakalpojuma parastā darba laika ietvaros."
     },
     "services": {
       "title": "Restorāna pakalpojumi",

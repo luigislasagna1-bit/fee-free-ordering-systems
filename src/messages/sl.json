@@ -976,7 +976,9 @@
       "between": "med",
       "addSlot": "Dodaj časovni interval",
       "removeSlot": "Odstrani časovni interval",
-      "closesNextDay": "Zapre naslednji dan (npr. odprto čez polnoč)"
+      "closesNextDay": "Zapre naslednji dan (npr. odprto čez polnoč)",
+      "holidayNeedsDate": "Najprej izberite datum začetka.",
+      "holidayWindowOutsideService": "{window} je zunaj ur storitve {service} za tisti dan. Izjemne ure morajo biti znotraj običajnih ur storitve."
     },
     "services": {
       "title": "Storitve restavracije",

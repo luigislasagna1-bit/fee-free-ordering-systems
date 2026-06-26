@@ -976,7 +976,9 @@
       "between": "mellem",
       "addSlot": "Tilføj et tidsrum",
       "removeSlot": "Fjern tidsrum",
-      "closesNextDay": "Lukker næste dag (f.eks. åbent efter midnat)"
+      "closesNextDay": "Lukker næste dag (f.eks. åbent efter midnat)",
+      "holidayNeedsDate": "Vælg først en startdato.",
+      "holidayWindowOutsideService": "{window} er uden for {service}-tiderne den dag. Særlige tider skal være inden for tjenestens normale åbningstider."
     },
     "services": {
       "title": "Restaurantservices",

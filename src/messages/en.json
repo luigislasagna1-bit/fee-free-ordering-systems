@@ -1043,6 +1043,8 @@
       "noUpcoming": "No upcoming special days. Add one above.",
       "holidaySaved": "Special day saved",
       "holidaySaveFailed": "Failed to save",
+      "holidayNeedsDate": "Pick a start date first.",
+      "holidayWindowOutsideService": "{window} is outside the {service} hours for that day. Exceptional hours must be within the service's normal hours.",
       "between": "between"
     },
     "services": {

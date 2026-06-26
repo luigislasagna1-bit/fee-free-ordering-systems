@@ -976,7 +976,9 @@
       "between": "mellan",
       "addSlot": "Lägg till en tidslucka",
       "removeSlot": "Ta bort tidslucka",
-      "closesNextDay": "Stänger nästa dag (t.ex. öppet efter midnatt)"
+      "closesNextDay": "Stänger nästa dag (t.ex. öppet efter midnatt)",
+      "holidayNeedsDate": "Välj ett startdatum först.",
+      "holidayWindowOutsideService": "{window} ligger utanför {service}-tiderna den dagen. Undantagstider måste ligga inom tjänstens normala öppettider."
     },
     "services": {
       "title": "Restaurangtjänster",

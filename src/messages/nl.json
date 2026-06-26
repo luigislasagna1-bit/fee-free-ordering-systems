@@ -976,7 +976,9 @@
       "between": "tussen",
       "addSlot": "Tijdslot toevoegen",
       "removeSlot": "Tijdslot verwijderen",
-      "closesNextDay": "Sluit de volgende dag (bijv. open na middernacht)"
+      "closesNextDay": "Sluit de volgende dag (bijv. open na middernacht)",
+      "holidayNeedsDate": "Kies eerst een startdatum.",
+      "holidayWindowOutsideService": "{window} valt buiten de {service}-tijden voor die dag. Uitzonderlijke tijden moeten binnen de normale openingstijden van de service vallen."
     },
     "services": {
       "title": "Restaurantdiensten",

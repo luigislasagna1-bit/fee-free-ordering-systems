@@ -976,7 +976,9 @@
       "between": "tra",
       "addSlot": "Aggiungi una fascia oraria",
       "removeSlot": "Rimuovi fascia oraria",
-      "closesNextDay": "Chiude il giorno dopo (es. aperto oltre la mezzanotte)"
+      "closesNextDay": "Chiude il giorno dopo (es. aperto oltre la mezzanotte)",
+      "holidayNeedsDate": "Scegli prima una data di inizio.",
+      "holidayWindowOutsideService": "{window} è fuori dagli orari di {service} per quel giorno. Gli orari eccezionali devono rientrare nei normali orari del servizio."
     },
     "services": {
       "title": "Servizi del ristorante",

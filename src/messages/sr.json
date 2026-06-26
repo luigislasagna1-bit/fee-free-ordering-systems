@@ -976,7 +976,9 @@
       "between": "између",
       "addSlot": "Dodaj termin",
       "removeSlot": "Ukloni termin",
-      "closesNextDay": "Zatvara se sledećeg dana (npr. otvoreno posle ponoći)"
+      "closesNextDay": "Zatvara se sledećeg dana (npr. otvoreno posle ponoći)",
+      "holidayNeedsDate": "Прво изаберите датум почетка.",
+      "holidayWindowOutsideService": "{window} је изван радног времена услуге {service} за тај дан. Изузетно радно време мора бити унутар уобичајеног радног времена услуге."
     },
     "services": {
       "title": "Usluge restorana",

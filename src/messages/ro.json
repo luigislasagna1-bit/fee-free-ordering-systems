@@ -976,7 +976,9 @@
       "between": "între",
       "addSlot": "Adaugă un interval orar",
       "removeSlot": "Elimină intervalul orar",
-      "closesNextDay": "Se închide a doua zi (ex.: deschis după miezul nopții)"
+      "closesNextDay": "Se închide a doua zi (ex.: deschis după miezul nopții)",
+      "holidayNeedsDate": "Alege mai întâi o dată de început.",
+      "holidayWindowOutsideService": "{window} este în afara orelor de {service} pentru acea zi. Orele excepționale trebuie să fie în intervalul orelor normale ale serviciului."
     },
     "services": {
       "title": "Servicii restaurant",

@@ -389,7 +389,13 @@ export function HoursClient({
   }
 
   async function addHoliday() {
-    if (!newHolidayDate) return;
+    // A start date is REQUIRED — without it the row can't be saved. Tell the
+    // owner clearly instead of silently doing nothing (Luigi 2026-06-26: the
+    // form looked complete but "+ Add" quietly no-op'd with no date).
+    if (!newHolidayDate) {
+      toast.error(tHours("holidayNeedsDate"));
+      return;
+    }
     setLoading(true);
     try {
       // Serialise the rule rows for the API. An "open" rule needs at least one
@@ -411,7 +417,19 @@ export function HoursClient({
           rules,
         }),
       });
-      if (!res.ok) throw new Error("Failed");
+      if (!res.ok) {
+        // The server rejects an exceptional window that falls outside the
+        // service's normal hours (you can't close a service when it isn't
+        // open). Surface a clear, specific message. Luigi 2026-06-26.
+        const err = await res.json().catch(() => null);
+        if (err?.code === "window_outside_service_hours" && err.window) {
+          const svcLabel = holidayServiceLabel(err.service);
+          toast.error(tHours("holidayWindowOutsideService", { window: `${err.window.open}–${err.window.close}`, service: svcLabel }));
+          setLoading(false);
+          return;
+        }
+        throw new Error("Failed");
+      }
       const { holiday } = await res.json();
       setHolidays((prev) => {
         const filtered = prev.filter((h) => h.id !== holiday.id);
@@ -437,6 +455,20 @@ export function HoursClient({
       toast.error(tHours("holidaySaveFailed"));
     }
     setLoading(false);
+  }
+
+  // Localised label for a holiday service key (reuses the same keys the
+  // service chips render with). null/unknown = all services.
+  function holidayServiceLabel(svc: string | null | undefined): string {
+    switch (svc) {
+      case "pickup": return tHours("svcPickup");
+      case "delivery": return tHours("svcDelivery");
+      case "dine_in": return tHours("svcDineIn");
+      case "take_out": return tHours("svcTakeOut");
+      case "catering": return tHours("svcCatering");
+      case "reservation": return tHours("svcReservation");
+      default: return tHours("allServices");
+    }
   }
 
   function updateRule(idx: number, patch: Partial<HolidayRuleUI>) {

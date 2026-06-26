@@ -976,7 +976,9 @@
       "between": "时间段",
       "addSlot": "添加时间段",
       "removeSlot": "删除时间段",
-      "closesNextDay": "次日关闭（例如营业至午夜后）"
+      "closesNextDay": "次日关闭（例如营业至午夜后）",
+      "holidayNeedsDate": "请先选择开始日期。",
+      "holidayWindowOutsideService": "{window} 不在当天的{service}营业时间内。特殊时段必须在该服务的正常营业时间之内。"
     },
     "services": {
       "title": "餐厅服务",

@@ -976,7 +976,9 @@
       "between": "vahemikus",
       "addSlot": "Lisa ajavahemik",
       "removeSlot": "Eemalda ajavahemik",
-      "closesNextDay": "Sulgub järgmisel päeval (nt avatud üle kesköö)"
+      "closesNextDay": "Sulgub järgmisel päeval (nt avatud üle kesköö)",
+      "holidayNeedsDate": "Vali esmalt alguskuupäev.",
+      "holidayWindowOutsideService": "{window} jääb selle päeva {service} lahtiolekuaegadest välja. Erandlikud ajad peavad jääma teenuse tavapärase lahtiolekuaja sisse."
     },
     "services": {
       "title": "Restorani teenused",

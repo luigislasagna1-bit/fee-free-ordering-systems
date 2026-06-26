@@ -976,7 +976,9 @@
       "between": "entre",
       "addSlot": "Afegeix una franja horària",
       "removeSlot": "Elimina la franja horària",
-      "closesNextDay": "Tanca l'endemà (p. ex. obert després de mitjanit)"
+      "closesNextDay": "Tanca l'endemà (p. ex. obert després de mitjanit)",
+      "holidayNeedsDate": "Primer trieu una data d'inici.",
+      "holidayWindowOutsideService": "{window} està fora de l'horari de {service} per a aquell dia. Els horaris excepcionals han d'estar dins de l'horari normal del servei."
     },
     "services": {
       "title": "Serveis del restaurant",

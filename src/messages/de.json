@@ -976,7 +976,9 @@
       "between": "zwischen",
       "addSlot": "Zeitfenster hinzufügen",
       "removeSlot": "Zeitfenster entfernen",
-      "closesNextDay": "Schließt am nächsten Tag (z. B. über Mitternacht geöffnet)"
+      "closesNextDay": "Schließt am nächsten Tag (z. B. über Mitternacht geöffnet)",
+      "holidayNeedsDate": "Wählen Sie zuerst ein Startdatum.",
+      "holidayWindowOutsideService": "{window} liegt außerhalb der {service}-Zeiten an diesem Tag. Ausnahmezeiten müssen innerhalb der regulären Servicezeiten liegen."
     },
     "services": {
       "title": "Restaurant-Dienste",

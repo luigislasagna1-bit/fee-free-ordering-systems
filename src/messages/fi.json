@@ -976,7 +976,9 @@
       "between": "välillä",
       "addSlot": "Lisää aikaväli",
       "removeSlot": "Poista aikaväli",
-      "closesNextDay": "Sulkeutuu seuraavana päivänä (esim. auki keskiyön yli)"
+      "closesNextDay": "Sulkeutuu seuraavana päivänä (esim. auki keskiyön yli)",
+      "holidayNeedsDate": "Valitse ensin aloituspäivä.",
+      "holidayWindowOutsideService": "{window} on kyseisen päivän {service}-aikojen ulkopuolella. Poikkeusaikojen on oltava palvelun normaalien aukioloaikojen sisällä."
     },
     "services": {
       "title": "Ravintolan palvelut",

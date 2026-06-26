@@ -976,7 +976,9 @@
       "between": "entre",
       "addSlot": "Añadir un horario",
       "removeSlot": "Quitar horario",
-      "closesNextDay": "Cierra al día siguiente (p. ej. abierto después de medianoche)"
+      "closesNextDay": "Cierra al día siguiente (p. ej. abierto después de medianoche)",
+      "holidayNeedsDate": "Primero elige una fecha de inicio.",
+      "holidayWindowOutsideService": "{window} está fuera del horario de {service} para ese día. Los horarios excepcionales deben estar dentro del horario normal del servicio."
     },
     "services": {
       "title": "Servicios del restaurante",

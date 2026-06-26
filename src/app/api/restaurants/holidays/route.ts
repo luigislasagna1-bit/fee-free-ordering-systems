@@ -17,7 +17,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { parseHolidayRules } from "@/lib/holiday-rules";
+import { parseHolidayRules, validateHolidayRulesAgainstHours } from "@/lib/holiday-rules";
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -77,6 +77,31 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid date" }, { status: 400 });
   }
   const endDate = endDateStr ? new Date(`${endDateStr}T00:00:00.000Z`) : null;
+
+  // Exceptional open/closed windows must fit inside the governing service's
+  // NORMAL hours for that day — you can't close pickup at a time pickup isn't
+  // offered (Luigi 2026-06-26). Authoritative server-side gate; the admin form
+  // shows the same check inline. Uses the start date's day-of-week (single-day
+  // rules are the norm; a range is bounded by its start day's schedule).
+  if (rules) {
+    const openingHours = await prisma.openingHours.findMany({
+      where: { restaurantId },
+      select: { dayOfWeek: true, openTime: true, closeTime: true, isOpen: true, closesNextDay: true, service: true, intervals: true },
+    });
+    const startDow = date.getUTCDay();
+    const offending = validateHolidayRulesAgainstHours(rules, openingHours as any, startDow);
+    if (offending) {
+      return NextResponse.json(
+        {
+          error: `That window (${offending.window.open}–${offending.window.close}) is outside the ${offending.service ?? "general"} hours for that day. Exceptional hours must be within the service's normal hours.`,
+          code: "window_outside_service_hours",
+          service: offending.service,
+          window: offending.window,
+        },
+        { status: 400 },
+      );
+    }
+  }
 
   try {
     const data = {

@@ -34,6 +34,14 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
       reviewLink: true, infoContent: true,
       themeSettings: true, serviceSettings: true, defaultLanguage: true,
       openingHours: { orderBy: { dayOfWeek: "asc" } },
+      // Special-day closures (today + future) so the info page can surface an
+      // amber "special hours / closed today" callout + the owner's custom note —
+      // previously only the ordering page showed these. Luigi 2026-06-26.
+      holidays: {
+        where: { OR: [{ date: { gte: new Date(new Date().setHours(0, 0, 0, 0)) } }, { endDate: { gte: new Date(new Date().setHours(0, 0, 0, 0)) } }] },
+        orderBy: { date: "asc" },
+        select: { date: true, endDate: true, name: true, rules: true, message: true },
+      },
       deliveryZones: {
         where: { isActive: true },
         orderBy: [{ radiusKm: "asc" }, { sortOrder: "asc" }],

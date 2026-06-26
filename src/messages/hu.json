@@ -976,7 +976,9 @@
       "between": "ekkor",
       "addSlot": "Idősáv hozzáadása",
       "removeSlot": "Idősáv eltávolítása",
-      "closesNextDay": "Másnap zár (pl. éjfél után is nyitva)"
+      "closesNextDay": "Másnap zár (pl. éjfél után is nyitva)",
+      "holidayNeedsDate": "Először válasszon kezdő dátumot.",
+      "holidayWindowOutsideService": "{window} kívül esik a(z) {service} aznapi nyitvatartásán. A rendkívüli időpontoknak a szolgáltatás szokásos nyitvatartásán belül kell lenniük."
     },
     "services": {
       "title": "Éttermi szolgáltatások",

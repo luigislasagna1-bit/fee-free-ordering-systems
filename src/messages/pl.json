@@ -976,7 +976,9 @@
       "between": "między",
       "addSlot": "Dodaj przedział czasowy",
       "removeSlot": "Usuń przedział czasowy",
-      "closesNextDay": "Zamyka się następnego dnia (np. otwarte po północy)"
+      "closesNextDay": "Zamyka się następnego dnia (np. otwarte po północy)",
+      "holidayNeedsDate": "Najpierw wybierz datę rozpoczęcia.",
+      "holidayWindowOutsideService": "{window} wykracza poza godziny {service} w tym dniu. Wyjątkowe godziny muszą mieścić się w normalnych godzinach pracy usługi."
     },
     "services": {
       "title": "Usługi restauracji",

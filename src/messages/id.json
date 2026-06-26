@@ -976,7 +976,9 @@
       "between": "antara",
       "addSlot": "Tambah slot waktu",
       "removeSlot": "Hapus slot waktu",
-      "closesNextDay": "Tutup keesokan hari (mis. buka melewati tengah malam)"
+      "closesNextDay": "Tutup keesokan hari (mis. buka melewati tengah malam)",
+      "holidayNeedsDate": "Pilih tanggal mulai terlebih dahulu.",
+      "holidayWindowOutsideService": "{window} berada di luar jam {service} untuk hari itu. Jam pengecualian harus berada dalam jam layanan normal."
     },
     "services": {
       "title": "Layanan Restoran",

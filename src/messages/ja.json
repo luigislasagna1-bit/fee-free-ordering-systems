@@ -976,7 +976,9 @@
       "between": "時間帯",
       "addSlot": "時間帯を追加",
       "removeSlot": "時間帯を削除",
-      "closesNextDay": "翌日に閉店（例：深夜0時を過ぎて営業）"
+      "closesNextDay": "翌日に閉店（例：深夜0時を過ぎて営業）",
+      "holidayNeedsDate": "まず開始日を選択してください。",
+      "holidayWindowOutsideService": "{window} はその日の{service}の営業時間外です。例外的な時間はサービスの通常の営業時間内である必要があります。"
     },
     "services": {
       "title": "レストランサービス",
