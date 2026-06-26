@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} ei ole sel kuupäeval saadaval. Palun valige teine päev või teenus.",
       "fullNameRequired": "Sisestage oma ees- ja perekonnanimi.",
       "fulfilWindowOrderError": "\"{name}\" saab tellida ainult teatud päevadel/kellaaegadel. Planeerige tellimus ajaks, mil see on saadaval.",
-      "fulfilWindowReservationError": "\"{name}\" pole teie broneeringu päeval saadaval. Eemaldage see või broneerige laud päevaks, mil seda pakutakse."
+      "fulfilWindowReservationError": "\"{name}\" pole teie broneeringu päeval saadaval. Eemaldage see või broneerige laud päevaks, mil seda pakutakse.",
+      "promoEmailMismatch": "See kood on registreeritud teisele e-posti aadressile."
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",

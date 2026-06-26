@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} није доступна на овај датум. Изаберите други дан или услугу.",
       "fullNameRequired": "Унесите своје име и презиме.",
       "fulfilWindowOrderError": "\"{name}\" се може наручити само одређеним данима/сатима. Закажите поруџбину за време када је доступно.",
-      "fulfilWindowReservationError": "\"{name}\" није доступно на дан ваше резервације. Уклоните га или резервишите сто за дан када је у понуди."
+      "fulfilWindowReservationError": "\"{name}\" није доступно на дан ваше резервације. Уклоните га или резервишите сто за дан када је у понуди.",
+      "promoEmailMismatch": "Овај кôд је регистрован на другу имејл адресу."
     },
     "searchMenu": "Pretražite meni…",
     "signIn": "Prijavite se",

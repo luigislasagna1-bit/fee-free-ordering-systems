@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} אינו זמין בתאריך זה. אנא בחר יום אחר או שירות אחר.",
       "fullNameRequired": "יש להזין שם פרטי ושם משפחה.",
       "fulfilWindowOrderError": "ניתן להזמין את \"{name}\" רק בימים/שעות מסוימים. אנא תזמן את ההזמנה שלך למועד שבו הוא זמין.",
-      "fulfilWindowReservationError": "\"{name}\" אינו זמין ביום ההזמנה שלך. אנא הסר אותו, או הזמן שולחן ליום שבו הוא מוצע."
+      "fulfilWindowReservationError": "\"{name}\" אינו זמין ביום ההזמנה שלך. אנא הסר אותו, או הזמן שולחן ליום שבו הוא מוצע.",
+      "promoEmailMismatch": "קוד זה רשום לכתובת אימייל אחרת."
     },
     "searchMenu": "חפש בתפריט…",
     "signIn": "התחברות",

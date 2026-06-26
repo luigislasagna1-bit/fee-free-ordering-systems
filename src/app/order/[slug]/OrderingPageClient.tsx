@@ -3165,6 +3165,8 @@ export function OrderingPageClient({
               : tT("holidayServiceClosed", { service: svcLabel })) + note,
           );
         }
+        // Customer-assigned code entered with a non-matching email/phone.
+        if (orderData.code === "promo_email_mismatch") throw new Error(tT("promoEmailMismatch"));
         throw new Error(orderData.error || tT("orderFailed"));
       }
 

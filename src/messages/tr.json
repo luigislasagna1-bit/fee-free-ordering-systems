@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} bu tarihte mevcut değil. Lütfen başka bir gün veya hizmet seçin.",
       "fullNameRequired": "Lütfen adınızı ve soyadınızı girin.",
       "fulfilWindowOrderError": "\"{name}\" yalnızca belirli gün/saatlerde sipariş edilebilir. Lütfen siparişinizi uygun olduğu zamana planlayın.",
-      "fulfilWindowReservationError": "\"{name}\" rezervasyon gününüzde mevcut değil. Lütfen kaldırın ya da masanızı sunulduğu bir güne ayırtın."
+      "fulfilWindowReservationError": "\"{name}\" rezervasyon gününüzde mevcut değil. Lütfen kaldırın ya da masanızı sunulduğu bir güne ayırtın.",
+      "promoEmailMismatch": "Bu kod farklı bir e-posta adresine kayıtlı."
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",

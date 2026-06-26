@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} ist an diesem Datum nicht verfügbar. Bitte wählen Sie einen anderen Tag oder Service.",
       "fullNameRequired": "Bitte geben Sie Ihren Vor- und Nachnamen ein.",
       "fulfilWindowOrderError": "\"{name}\" kann nur an bestimmten Tagen/Zeiten bestellt werden. Bitte planen Sie Ihre Bestellung für einen verfügbaren Zeitpunkt.",
-      "fulfilWindowReservationError": "\"{name}\" ist am Tag Ihrer Reservierung nicht verfügbar. Bitte entfernen Sie es oder reservieren Sie Ihren Tisch an einem Tag, an dem es angeboten wird."
+      "fulfilWindowReservationError": "\"{name}\" ist am Tag Ihrer Reservierung nicht verfügbar. Bitte entfernen Sie es oder reservieren Sie Ihren Tisch an einem Tag, an dem es angeboten wird.",
+      "promoEmailMismatch": "Dieser Code ist für eine andere E-Mail-Adresse registriert."
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",

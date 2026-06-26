@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} šią dieną neprieinama. Pasirinkite kitą dieną arba paslaugą.",
       "fullNameRequired": "Įveskite savo vardą ir pavardę.",
       "fulfilWindowOrderError": "\"{name}\" galima užsisakyti tik tam tikromis dienomis ar valandomis. Suplanuokite užsakymą laikui, kai jis bus prieinamas.",
-      "fulfilWindowReservationError": "\"{name}\" nepasiekiamas jūsų rezervacijos dieną. Pašalinkite jį arba rezervuokite staliuką dienai, kurią jis siūlomas."
+      "fulfilWindowReservationError": "\"{name}\" nepasiekiamas jūsų rezervacijos dieną. Pašalinkite jį arba rezervuokite staliuką dienai, kurią jis siūlomas.",
+      "promoEmailMismatch": "Šis kodas registruotas kitam el. pašto adresui."
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",

@@ -238,7 +238,8 @@
       "holidayServiceClosed": "{service} isn't available on this date. Please choose a different day or service.",
       "fullNameRequired": "Please enter your first and last name.",
       "fulfilWindowOrderError": "\"{name}\" can only be ordered for certain days/times. Please schedule your order for when it's available.",
-      "fulfilWindowReservationError": "\"{name}\" isn't available on your reservation day. Please remove it, or book your table on a day it's offered."
+      "fulfilWindowReservationError": "\"{name}\" isn't available on your reservation day. Please remove it, or book your table on a day it's offered.",
+      "promoEmailMismatch": "This code is registered to a different email address."
     },
     "searchMenu": "Search the menu…",
     "expandAll": "Expand all",

@@ -233,7 +233,8 @@
       "holidayServiceClosed": "{service} non è disponibile in questa data. Scegli un altro giorno o servizio.",
       "fullNameRequired": "Inserisci il tuo nome e cognome.",
       "fulfilWindowOrderError": "\"{name}\" può essere ordinato solo in determinati giorni/orari. Programma il tuo ordine per quando è disponibile.",
-      "fulfilWindowReservationError": "\"{name}\" non è disponibile nel giorno della tua prenotazione. Rimuovilo oppure prenota il tavolo in un giorno in cui è disponibile."
+      "fulfilWindowReservationError": "\"{name}\" non è disponibile nel giorno della tua prenotazione. Rimuovilo oppure prenota il tavolo in un giorno in cui è disponibile.",
+      "promoEmailMismatch": "Questo codice è registrato a un altro indirizzo email."
     },
     "followUs": "Seguici",
     "searchMenu": "Cerca nel menu…",

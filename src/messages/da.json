@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} er ikke tilgængelig på denne dato. Vælg en anden dag eller service.",
       "fullNameRequired": "Indtast dit fornavn og efternavn.",
       "fulfilWindowOrderError": "\"{name}\" kan kun bestilles på bestemte dage/tidspunkter. Planlæg din bestilling til, når den er tilgængelig.",
-      "fulfilWindowReservationError": "\"{name}\" er ikke tilgængelig på din reservationsdag. Fjern den, eller reservér dit bord på en dag, hvor den tilbydes."
+      "fulfilWindowReservationError": "\"{name}\" er ikke tilgængelig på din reservationsdag. Fjern den, eller reservér dit bord på en dag, hvor den tilbydes.",
+      "promoEmailMismatch": "Denne kode er registreret til en anden e-mailadresse."
     },
     "searchMenu": "Søg i menuen…",
     "signIn": "Log ind",

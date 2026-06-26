@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} ei ole saatavilla tänä päivänä. Valitse toinen päivä tai palvelu.",
       "fullNameRequired": "Anna etu- ja sukunimesi.",
       "fulfilWindowOrderError": "\"{name}\" voidaan tilata vain tiettyinä päivinä/aikoina. Ajoita tilauksesi ajankohtaan, jolloin se on saatavilla.",
-      "fulfilWindowReservationError": "\"{name}\" ei ole saatavilla varauspäivänäsi. Poista se tai varaa pöytäsi päivälle, jolloin se on tarjolla."
+      "fulfilWindowReservationError": "\"{name}\" ei ole saatavilla varauspäivänäsi. Poista se tai varaa pöytäsi päivälle, jolloin se on tarjolla.",
+      "promoEmailMismatch": "Tämä koodi on rekisteröity toiseen sähköpostiosoitteeseen."
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",

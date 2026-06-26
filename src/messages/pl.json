@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} jest niedostępna w tym dniu. Wybierz inny dzień lub usługę.",
       "fullNameRequired": "Podaj imię i nazwisko.",
       "fulfilWindowOrderError": "\"{name}\" można zamówić tylko w określone dni/godziny. Zaplanuj zamówienie na czas, gdy będzie dostępne.",
-      "fulfilWindowReservationError": "\"{name}\" nie jest dostępne w dniu Twojej rezerwacji. Usuń je lub zarezerwuj stolik na dzień, w którym jest oferowane."
+      "fulfilWindowReservationError": "\"{name}\" nie jest dostępne w dniu Twojej rezerwacji. Usuń je lub zarezerwuj stolik na dzień, w którym jest oferowane.",
+      "promoEmailMismatch": "Ten kod jest przypisany do innego adresu e-mail."
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
