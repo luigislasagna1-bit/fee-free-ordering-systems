@@ -767,7 +767,8 @@
       "pointOfSale": "Kassasysteem",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integraties",
-      "orderHandling": "Orderafhandeling"
+      "orderHandling": "Orderafhandeling",
+      "promoPopup": "Promo-pop-up"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -4086,6 +4087,22 @@
       "subtitle": "Bepaal hoe nieuwe bestellingen worden geaccepteerd en gepland.",
       "showServiceTimesTitle": "Servicetijden tonen op de bestelpagina",
       "showServiceTimesHint": "Toont de geschatte tijd van elke service (bijv. \"20 min\") op de knoppen van de bestelpagina. Uit verbergt ze hier; bij het afrekenen blijven ze zichtbaar."
+    },
+    "promoPopup": {
+      "buttonAction": "Wanneer op de knop wordt getikt",
+      "actionUrl": "Een link openen (URL)",
+      "actionPromo": "Een promotie openen",
+      "actionCoupon": "Een coupon toepassen",
+      "choosePromo": "Promotie",
+      "selectPromo": "Kies een promotie…",
+      "noPromos": "Nog geen actieve promoties — maak er eerst een aan bij Promoties.",
+      "chooseCoupon": "Coupon",
+      "selectCoupon": "Kies een coupon…",
+      "noCoupons": "Nog geen actieve coupons — maak er eerst een aan bij Promoties.",
+      "save": "Pop-up opslaan",
+      "saving": "Opslaan…",
+      "saved": "Promo-pop-up opgeslagen",
+      "saveError": "Opslaan mislukt — probeer het opnieuw"
     }
   },
   "impersonation": {

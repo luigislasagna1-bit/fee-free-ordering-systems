@@ -767,7 +767,8 @@
       "pointOfSale": "نقطة البيع",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "التكاملات",
-      "orderHandling": "معالجة الطلبات"
+      "orderHandling": "معالجة الطلبات",
+      "promoPopup": "نافذة العروض"
     },
     "dashboard": {
       "title": "لوحة التحكم",
@@ -4086,6 +4087,22 @@
       "subtitle": "اختر كيفية قبول الطلبات الجديدة وجدولتها.",
       "showServiceTimesTitle": "إظهار أوقات الخدمة في صفحة الطلب",
       "showServiceTimesHint": "أظهر الوقت التقديري لكل خدمة (مثل \"20 دقيقة\") على أزرار صفحة الطلب. عند الإيقاف تُخفى هنا، وتظل تظهر عند الدفع."
+    },
+    "promoPopup": {
+      "buttonAction": "عند النقر على الزر",
+      "actionUrl": "فتح رابط (URL)",
+      "actionPromo": "فتح عرض ترويجي",
+      "actionCoupon": "تطبيق قسيمة",
+      "choosePromo": "العرض الترويجي",
+      "selectPromo": "اختر عرضًا ترويجيًا…",
+      "noPromos": "لا توجد عروض ترويجية نشطة بعد — أنشئ واحدًا في قسم العروض أولاً.",
+      "chooseCoupon": "القسيمة",
+      "selectCoupon": "اختر قسيمة…",
+      "noCoupons": "لا توجد قسائم نشطة بعد — أنشئ واحدة في قسم العروض أولاً.",
+      "save": "حفظ النافذة",
+      "saving": "جارٍ الحفظ…",
+      "saved": "تم حفظ نافذة العروض",
+      "saveError": "تعذّر الحفظ — يرجى المحاولة مرة أخرى"
     }
   },
   "impersonation": {

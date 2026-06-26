@@ -767,7 +767,8 @@
       "pointOfSale": "Kassasystem",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integrationer",
-      "orderHandling": "Orderhantering"
+      "orderHandling": "Orderhantering",
+      "promoPopup": "Reklam-popup"
     },
     "dashboard": {
       "title": "Instrumentpanel",
@@ -4086,6 +4087,22 @@
       "subtitle": "Välj hur nya beställningar accepteras och schemaläggs.",
       "showServiceTimesTitle": "Visa servicetider på beställningssidan",
       "showServiceTimesHint": "Visar varje tjänsts uppskattade tid (t.ex. \"20 min\") på knapparna på beställningssidan. Av döljer dem här; de visas fortfarande i kassan."
+    },
+    "promoPopup": {
+      "buttonAction": "När knappen trycks",
+      "actionUrl": "Öppna en länk (URL)",
+      "actionPromo": "Öppna en kampanj",
+      "actionCoupon": "Använd en kupong",
+      "choosePromo": "Kampanj",
+      "selectPromo": "Välj en kampanj…",
+      "noPromos": "Inga aktiva kampanjer ännu – skapa en under Kampanjer först.",
+      "chooseCoupon": "Kupong",
+      "selectCoupon": "Välj en kupong…",
+      "noCoupons": "Inga aktiva kuponger ännu – skapa en under Kampanjer först.",
+      "save": "Spara popup",
+      "saving": "Sparar…",
+      "saved": "Reklam-popup sparad",
+      "saveError": "Det gick inte att spara – försök igen"
     }
   },
   "impersonation": {

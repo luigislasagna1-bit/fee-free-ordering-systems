@@ -767,7 +767,8 @@
       "pointOfSale": "Myyntipiste",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integraatiot",
-      "orderHandling": "Tilausten käsittely"
+      "orderHandling": "Tilausten käsittely",
+      "promoPopup": "Promo-ponnahdusikkuna"
     },
     "dashboard": {
       "title": "Kojelauta",
@@ -4086,6 +4087,22 @@
       "subtitle": "Valitse, miten uudet tilaukset hyväksytään ja ajoitetaan.",
       "showServiceTimesTitle": "Näytä palveluajat tilaussivulla",
       "showServiceTimesHint": "Näyttää kunkin palvelun arvioidun ajan (esim. \"20 min\") tilaussivun painikkeissa. Pois päältä piilottaa ne täältä; ne näkyvät silti kassalla."
+    },
+    "promoPopup": {
+      "buttonAction": "Kun painiketta napautetaan",
+      "actionUrl": "Avaa linkki (URL)",
+      "actionPromo": "Avaa tarjous",
+      "actionCoupon": "Käytä kuponkia",
+      "choosePromo": "Tarjous",
+      "selectPromo": "Valitse tarjous…",
+      "noPromos": "Ei aktiivisia tarjouksia vielä — luo ensin yksi Tarjoukset-osiossa.",
+      "chooseCoupon": "Kuponki",
+      "selectCoupon": "Valitse kuponki…",
+      "noCoupons": "Ei aktiivisia kuponkeja vielä — luo ensin yksi Tarjoukset-osiossa.",
+      "save": "Tallenna ponnahdus",
+      "saving": "Tallennetaan…",
+      "saved": "Promo-ponnahdusikkuna tallennettu",
+      "saveError": "Tallennus epäonnistui — yritä uudelleen"
     }
   },
   "impersonation": {

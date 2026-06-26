@@ -767,7 +767,8 @@
       "pointOfSale": "Pardavimo vieta",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integracijos",
-      "orderHandling": "Užsakymų tvarkymas"
+      "orderHandling": "Užsakymų tvarkymas",
+      "promoPopup": "Akcijos langas"
     },
     "dashboard": {
       "title": "Skydelis",
@@ -4086,6 +4087,22 @@
       "subtitle": "Pasirinkite, kaip nauji užsakymai priimami ir suplanuojami.",
       "showServiceTimesTitle": "Rodyti paslaugų laikus užsakymo puslapyje",
       "showServiceTimesHint": "Rodo kiekvienos paslaugos numatomą laiką (pvz., \"20 min\") užsakymo puslapio mygtukuose. Išjungus jie čia paslepiami; atsiskaitant vis tiek rodomi."
+    },
+    "promoPopup": {
+      "buttonAction": "Paspaudus mygtuką",
+      "actionUrl": "Atidaryti nuorodą (URL)",
+      "actionPromo": "Atidaryti akciją",
+      "actionCoupon": "Pritaikyti kuponą",
+      "choosePromo": "Akcija",
+      "selectPromo": "Pasirinkite akciją…",
+      "noPromos": "Aktyvių akcijų dar nėra — pirmiausia sukurkite vieną skiltyje Akcijos.",
+      "chooseCoupon": "Kuponas",
+      "selectCoupon": "Pasirinkite kuponą…",
+      "noCoupons": "Aktyvių kuponų dar nėra — pirmiausia sukurkite vieną skiltyje Akcijos.",
+      "save": "Išsaugoti langą",
+      "saving": "Išsaugoma…",
+      "saved": "Akcijos langas išsaugotas",
+      "saveError": "Nepavyko išsaugoti — bandykite dar kartą"
     }
   },
   "impersonation": {

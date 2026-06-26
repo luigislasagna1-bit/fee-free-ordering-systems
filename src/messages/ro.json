@@ -767,7 +767,8 @@
       "pointOfSale": "Punct de vânzare",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integrări",
-      "orderHandling": "Gestionarea comenzilor"
+      "orderHandling": "Gestionarea comenzilor",
+      "promoPopup": "Fereastră promo"
     },
     "dashboard": {
       "title": "Panou de control",
@@ -4086,6 +4087,22 @@
       "subtitle": "Alege cum sunt acceptate și programate comenzile noi.",
       "showServiceTimesTitle": "Afișează timpii de serviciu pe pagina de comandă",
       "showServiceTimesHint": "Afișează timpul estimat al fiecărui serviciu (de ex. \"20 min\") pe butoanele paginii de comandă. Dezactivat le ascunde aici; apar în continuare la finalizare."
+    },
+    "promoPopup": {
+      "buttonAction": "Când butonul este apăsat",
+      "actionUrl": "Deschide un link (URL)",
+      "actionPromo": "Deschide o promoție",
+      "actionCoupon": "Aplică un cupon",
+      "choosePromo": "Promoție",
+      "selectPromo": "Alege o promoție…",
+      "noPromos": "Încă nu există promoții active — creează una în Promoții mai întâi.",
+      "chooseCoupon": "Cupon",
+      "selectCoupon": "Alege un cupon…",
+      "noCoupons": "Încă nu există cupoane active — creează unul în Promoții mai întâi.",
+      "save": "Salvează fereastra",
+      "saving": "Se salvează…",
+      "saved": "Fereastra promo a fost salvată",
+      "saveError": "Nu s-a putut salva — încearcă din nou"
     }
   },
   "impersonation": {

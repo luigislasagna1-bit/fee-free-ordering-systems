@@ -767,7 +767,8 @@
       "pointOfSale": "Pārdošanas punkts",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integrācijas",
-      "orderHandling": "Pasūtījumu apstrāde"
+      "orderHandling": "Pasūtījumu apstrāde",
+      "promoPopup": "Akcijas logs"
     },
     "dashboard": {
       "title": "Panelis",
@@ -4086,6 +4087,22 @@
       "subtitle": "Izvēlieties, kā jaunie pasūtījumi tiek pieņemti un plānoti.",
       "showServiceTimesTitle": "Rādīt pakalpojumu laikus pasūtīšanas lapā",
       "showServiceTimesHint": "Rāda katra pakalpojuma aptuveno laiku (piem., \"20 min\") pasūtīšanas lapas pogās. Izslēgts tos šeit paslēpj; norēķinoties tie joprojām redzami."
+    },
+    "promoPopup": {
+      "buttonAction": "Kad nospiež pogu",
+      "actionUrl": "Atvērt saiti (URL)",
+      "actionPromo": "Atvērt akciju",
+      "actionCoupon": "Lietot kuponu",
+      "choosePromo": "Akcija",
+      "selectPromo": "Izvēlieties akciju…",
+      "noPromos": "Vēl nav aktīvu akciju — vispirms izveidojiet to sadaļā Akcijas.",
+      "chooseCoupon": "Kupons",
+      "selectCoupon": "Izvēlieties kuponu…",
+      "noCoupons": "Vēl nav aktīvu kuponu — vispirms izveidojiet to sadaļā Akcijas.",
+      "save": "Saglabāt logu",
+      "saving": "Saglabā…",
+      "saved": "Akcijas logs saglabāts",
+      "saveError": "Neizdevās saglabāt — mēģiniet vēlreiz"
     }
   },
   "impersonation": {

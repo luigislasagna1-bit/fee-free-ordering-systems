@@ -767,7 +767,8 @@
       "pointOfSale": "Point de vente",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Intégrations",
-      "orderHandling": "Gestion des commandes"
+      "orderHandling": "Gestion des commandes",
+      "promoPopup": "Pop-up promo"
     },
     "dashboard": {
       "title": "Tableau de bord",
@@ -4086,6 +4087,22 @@
       "subtitle": "Choisissez comment les nouvelles commandes sont acceptées et planifiées.",
       "showServiceTimesTitle": "Afficher les délais de service sur la page de commande",
       "showServiceTimesHint": "Affiche le temps estimé de chaque service (par ex. \"20 min\") sur les boutons de la page de commande. Désactivé, ils sont masqués ici ; ils restent affichés au paiement."
+    },
+    "promoPopup": {
+      "buttonAction": "Au clic sur le bouton",
+      "actionUrl": "Ouvrir un lien (URL)",
+      "actionPromo": "Ouvrir une promotion",
+      "actionCoupon": "Appliquer un coupon",
+      "choosePromo": "Promotion",
+      "selectPromo": "Choisir une promotion…",
+      "noPromos": "Aucune promotion active pour l'instant — créez-en une dans Promotions.",
+      "chooseCoupon": "Coupon",
+      "selectCoupon": "Choisir un coupon…",
+      "noCoupons": "Aucun coupon actif pour l'instant — créez-en un dans Promotions.",
+      "save": "Enregistrer le pop-up",
+      "saving": "Enregistrement…",
+      "saved": "Pop-up promo enregistré",
+      "saveError": "Échec de l'enregistrement — réessayez"
     }
   },
   "impersonation": {

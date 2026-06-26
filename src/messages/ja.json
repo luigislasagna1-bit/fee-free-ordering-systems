@@ -767,7 +767,8 @@
       "pointOfSale": "POSレジ",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "インテグレーション",
-      "orderHandling": "注文の処理"
+      "orderHandling": "注文の処理",
+      "promoPopup": "プロモポップアップ"
     },
     "dashboard": {
       "title": "ダッシュボード",
@@ -4086,6 +4087,22 @@
       "subtitle": "新しい注文の受け付け方法とスケジュールを選択します。",
       "showServiceTimesTitle": "注文ページにサービス時間を表示",
       "showServiceTimesHint": "注文ページのボタンに各サービスの目安時間（例：「20分」）を表示します。オフにするとここでは非表示になりますが、会計時には引き続き表示されます。"
+    },
+    "promoPopup": {
+      "buttonAction": "ボタンがタップされたとき",
+      "actionUrl": "リンクを開く（URL）",
+      "actionPromo": "プロモーションを開く",
+      "actionCoupon": "クーポンを適用",
+      "choosePromo": "プロモーション",
+      "selectPromo": "プロモーションを選択…",
+      "noPromos": "有効なプロモーションがまだありません。まず「プロモーション」で作成してください。",
+      "chooseCoupon": "クーポン",
+      "selectCoupon": "クーポンを選択…",
+      "noCoupons": "有効なクーポンがまだありません。まず「プロモーション」で作成してください。",
+      "save": "ポップアップを保存",
+      "saving": "保存中…",
+      "saved": "プロモポップアップを保存しました",
+      "saveError": "保存できませんでした — もう一度お試しください"
     }
   },
   "impersonation": {

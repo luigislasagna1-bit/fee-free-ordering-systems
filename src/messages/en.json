@@ -790,7 +790,8 @@
       "pointOfSale": "Point of Sale",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integrations",
-      "orderHandling": "Order Handling"
+      "orderHandling": "Order Handling",
+      "promoPopup": "Promo Popup"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -4086,6 +4087,22 @@
       "subtitle": "Choose how new orders are accepted and scheduled.",
       "showServiceTimesTitle": "Show service times on the ordering page",
       "showServiceTimesHint": "Show each service's estimated time (e.g. \"20 min\") on the ordering-page buttons. Off hides them there; they still appear at checkout."
+    },
+    "promoPopup": {
+      "buttonAction": "When the button is tapped",
+      "actionUrl": "Open a link (URL)",
+      "actionPromo": "Open a promotion",
+      "actionCoupon": "Apply a coupon",
+      "choosePromo": "Promotion",
+      "selectPromo": "Choose a promotion…",
+      "noPromos": "No active promotions yet — create one under Promotions first.",
+      "chooseCoupon": "Coupon",
+      "selectCoupon": "Choose a coupon…",
+      "noCoupons": "No active coupons yet — create one under Promotions first.",
+      "save": "Save popup",
+      "saving": "Saving…",
+      "saved": "Promo popup saved",
+      "saveError": "Couldn't save — please try again"
     }
   },
   "impersonation": {

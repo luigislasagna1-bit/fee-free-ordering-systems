@@ -229,6 +229,7 @@ const navGroups: NavGroup[] = [
     items: [
       { href: "/admin/customers",    labelKey: "customers",    label: "Customers",    icon: Users },
       { href: "/admin/promotions",   labelKey: "promotions",   label: "Promotions",   icon: Tag },
+      { href: "/admin/promo-popup",  labelKey: "promoPopup",   label: "Promo Popup",  icon: MessageSquare },
       { href: "/admin/social-media", labelKey: "socialMedia",  label: "Social Media", icon: Share2 },
       { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace",  icon: Sparkles, requiresFeature: "marketplace_listing" },
     ],

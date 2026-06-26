@@ -767,7 +767,8 @@
       "pointOfSale": "Kassesystem",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integrationer",
-      "orderHandling": "Ordrehåndtering"
+      "orderHandling": "Ordrehåndtering",
+      "promoPopup": "Promo-pop-up"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -4086,6 +4087,22 @@
       "subtitle": "Vælg, hvordan nye ordrer accepteres og planlægges.",
       "showServiceTimesTitle": "Vis servicetider på bestillingssiden",
       "showServiceTimesHint": "Viser hver tjenestes anslåede tid (f.eks. \"20 min\") på knapperne på bestillingssiden. Fra skjuler dem her; de vises stadig ved kassen."
+    },
+    "promoPopup": {
+      "buttonAction": "Når der trykkes på knappen",
+      "actionUrl": "Åbn et link (URL)",
+      "actionPromo": "Åbn en kampagne",
+      "actionCoupon": "Anvend en kupon",
+      "choosePromo": "Kampagne",
+      "selectPromo": "Vælg en kampagne…",
+      "noPromos": "Ingen aktive kampagner endnu – opret en under Kampagner først.",
+      "chooseCoupon": "Kupon",
+      "selectCoupon": "Vælg en kupon…",
+      "noCoupons": "Ingen aktive kuponer endnu – opret en under Kampagner først.",
+      "save": "Gem pop-up",
+      "saving": "Gemmer…",
+      "saved": "Promo-pop-up gemt",
+      "saveError": "Kunne ikke gemme – prøv igen"
     }
   },
   "impersonation": {

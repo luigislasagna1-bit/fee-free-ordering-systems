@@ -767,7 +767,8 @@
       "pointOfSale": "נקודת מכירה",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "אינטגרציות",
-      "orderHandling": "טיפול בהזמנות"
+      "orderHandling": "טיפול בהזמנות",
+      "promoPopup": "חלון קופץ למבצע"
     },
     "dashboard": {
       "title": "לוח בקרה",
@@ -4086,6 +4087,22 @@
       "subtitle": "בחר כיצד הזמנות חדשות מתקבלות ומתוזמנות.",
       "showServiceTimesTitle": "הצג זמני שירות בעמוד ההזמנה",
       "showServiceTimesHint": "מציג את הזמן המשוער של כל שירות (למשל \"20 דק'\") על כפתורי עמוד ההזמנה. כיבוי מסתיר אותם כאן; הם עדיין מופיעים בתשלום."
+    },
+    "promoPopup": {
+      "buttonAction": "בלחיצה על הכפתור",
+      "actionUrl": "פתיחת קישור (URL)",
+      "actionPromo": "פתיחת מבצע",
+      "actionCoupon": "החלת קופון",
+      "choosePromo": "מבצע",
+      "selectPromo": "בחר מבצע…",
+      "noPromos": "אין עדיין מבצעים פעילים — צור אחד תחת מבצעים תחילה.",
+      "chooseCoupon": "קופון",
+      "selectCoupon": "בחר קופון…",
+      "noCoupons": "אין עדיין קופונים פעילים — צור אחד תחת מבצעים תחילה.",
+      "save": "שמירת חלון",
+      "saving": "שומר…",
+      "saved": "חלון המבצע נשמר",
+      "saveError": "השמירה נכשלה — נסה שוב"
     }
   },
   "impersonation": {

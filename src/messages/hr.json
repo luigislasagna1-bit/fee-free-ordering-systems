@@ -767,7 +767,8 @@
       "pointOfSale": "Prodajno mjesto",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integracije",
-      "orderHandling": "Upravljanje narudžbama"
+      "orderHandling": "Upravljanje narudžbama",
+      "promoPopup": "Promo skočni prozor"
     },
     "dashboard": {
       "title": "Upravljačka ploča",
@@ -4086,6 +4087,22 @@
       "subtitle": "Odaberite kako se nove narudžbe prihvaćaju i zakazuju.",
       "showServiceTimesTitle": "Prikaži vremena usluge na stranici za narudžbe",
       "showServiceTimesHint": "Prikazuje procijenjeno vrijeme svake usluge (npr. \"20 min\") na gumbima stranice za narudžbe. Isključeno ih skriva ovdje; i dalje se prikazuju pri naplati."
+    },
+    "promoPopup": {
+      "buttonAction": "Kada se dodirne gumb",
+      "actionUrl": "Otvori poveznicu (URL)",
+      "actionPromo": "Otvori promociju",
+      "actionCoupon": "Primijeni kupon",
+      "choosePromo": "Promocija",
+      "selectPromo": "Odaberite promociju…",
+      "noPromos": "Još nema aktivnih promocija — najprije izradite jednu u Promocijama.",
+      "chooseCoupon": "Kupon",
+      "selectCoupon": "Odaberite kupon…",
+      "noCoupons": "Još nema aktivnih kupona — najprije izradite jedan u Promocijama.",
+      "save": "Spremi skočni prozor",
+      "saving": "Spremanje…",
+      "saved": "Promo skočni prozor spremljen",
+      "saveError": "Spremanje nije uspjelo — pokušajte ponovno"
     }
   },
   "impersonation": {

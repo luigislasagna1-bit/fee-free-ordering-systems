@@ -767,7 +767,8 @@
       "pointOfSale": "Kassasystem",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integrasjoner",
-      "orderHandling": "Ordrehåndtering"
+      "orderHandling": "Ordrehåndtering",
+      "promoPopup": "Promo-popup"
     },
     "dashboard": {
       "title": "Dashbord",
@@ -4086,6 +4087,22 @@
       "subtitle": "Velg hvordan nye bestillinger godtas og planlegges.",
       "showServiceTimesTitle": "Vis servicetider på bestillingssiden",
       "showServiceTimesHint": "Viser estimert tid for hver tjeneste (f.eks. \"20 min\") på knappene på bestillingssiden. Av skjuler dem her; de vises fortsatt i kassen."
+    },
+    "promoPopup": {
+      "buttonAction": "Når knappen trykkes",
+      "actionUrl": "Åpne en lenke (URL)",
+      "actionPromo": "Åpne en kampanje",
+      "actionCoupon": "Bruk en kupong",
+      "choosePromo": "Kampanje",
+      "selectPromo": "Velg en kampanje…",
+      "noPromos": "Ingen aktive kampanjer ennå – opprett en under Kampanjer først.",
+      "chooseCoupon": "Kupong",
+      "selectCoupon": "Velg en kupong…",
+      "noCoupons": "Ingen aktive kuponger ennå – opprett en under Kampanjer først.",
+      "save": "Lagre popup",
+      "saving": "Lagrer…",
+      "saved": "Promo-popup lagret",
+      "saveError": "Kunne ikke lagre – prøv igjen"
     }
   },
   "impersonation": {

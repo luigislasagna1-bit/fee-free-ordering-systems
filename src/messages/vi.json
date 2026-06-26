@@ -767,7 +767,8 @@
       "pointOfSale": "Điểm bán hàng",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Tích hợp",
-      "orderHandling": "Xử lý đơn hàng"
+      "orderHandling": "Xử lý đơn hàng",
+      "promoPopup": "Cửa sổ khuyến mãi"
     },
     "dashboard": {
       "title": "Bảng điều khiển",
@@ -4086,6 +4087,22 @@
       "subtitle": "Chọn cách đơn hàng mới được chấp nhận và lên lịch.",
       "showServiceTimesTitle": "Hiển thị thời gian dịch vụ trên trang đặt hàng",
       "showServiceTimesHint": "Hiển thị thời gian ước tính của mỗi dịch vụ (vd: \"20 phút\") trên các nút của trang đặt hàng. Tắt sẽ ẩn ở đây; vẫn hiển thị khi thanh toán."
+    },
+    "promoPopup": {
+      "buttonAction": "Khi nhấn nút",
+      "actionUrl": "Mở một liên kết (URL)",
+      "actionPromo": "Mở một khuyến mãi",
+      "actionCoupon": "Áp dụng phiếu giảm giá",
+      "choosePromo": "Khuyến mãi",
+      "selectPromo": "Chọn một khuyến mãi…",
+      "noPromos": "Chưa có khuyến mãi đang hoạt động — hãy tạo một cái trong Khuyến mãi trước.",
+      "chooseCoupon": "Phiếu giảm giá",
+      "selectCoupon": "Chọn một phiếu giảm giá…",
+      "noCoupons": "Chưa có phiếu giảm giá đang hoạt động — hãy tạo một cái trong Khuyến mãi trước.",
+      "save": "Lưu cửa sổ",
+      "saving": "Đang lưu…",
+      "saved": "Đã lưu cửa sổ khuyến mãi",
+      "saveError": "Không thể lưu — vui lòng thử lại"
     }
   },
   "impersonation": {

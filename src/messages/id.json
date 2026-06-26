@@ -767,7 +767,8 @@
       "pointOfSale": "Titik penjualan",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integrasi",
-      "orderHandling": "Penanganan Pesanan"
+      "orderHandling": "Penanganan Pesanan",
+      "promoPopup": "Pop-up Promo"
     },
     "dashboard": {
       "title": "Dasbor",
@@ -4086,6 +4087,22 @@
       "subtitle": "Pilih bagaimana pesanan baru diterima dan dijadwalkan.",
       "showServiceTimesTitle": "Tampilkan waktu layanan di halaman pemesanan",
       "showServiceTimesHint": "Menampilkan perkiraan waktu setiap layanan (mis. \"20 mnt\") pada tombol halaman pemesanan. Mati menyembunyikannya di sini; tetap muncul saat checkout."
+    },
+    "promoPopup": {
+      "buttonAction": "Saat tombol ditekan",
+      "actionUrl": "Buka tautan (URL)",
+      "actionPromo": "Buka promosi",
+      "actionCoupon": "Terapkan kupon",
+      "choosePromo": "Promosi",
+      "selectPromo": "Pilih promosi…",
+      "noPromos": "Belum ada promosi aktif — buat satu di Promosi terlebih dahulu.",
+      "chooseCoupon": "Kupon",
+      "selectCoupon": "Pilih kupon…",
+      "noCoupons": "Belum ada kupon aktif — buat satu di Promosi terlebih dahulu.",
+      "save": "Simpan pop-up",
+      "saving": "Menyimpan…",
+      "saved": "Pop-up promo disimpan",
+      "saveError": "Gagal menyimpan — coba lagi"
     }
   },
   "impersonation": {

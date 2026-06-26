@@ -767,7 +767,8 @@
       "pointOfSale": "Punto de venta",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integraciones",
-      "orderHandling": "Gestión de pedidos"
+      "orderHandling": "Gestión de pedidos",
+      "promoPopup": "Ventana promocional"
     },
     "dashboard": {
       "title": "Panel principal",
@@ -4086,6 +4087,22 @@
       "subtitle": "Elige cómo se aceptan y programan los nuevos pedidos.",
       "showServiceTimesTitle": "Mostrar los tiempos de servicio en la página de pedidos",
       "showServiceTimesHint": "Muestra el tiempo estimado de cada servicio (p. ej. \"20 min\") en los botones de la página de pedidos. Desactivado se ocultan aquí; siguen apareciendo al finalizar la compra."
+    },
+    "promoPopup": {
+      "buttonAction": "Al tocar el botón",
+      "actionUrl": "Abrir un enlace (URL)",
+      "actionPromo": "Abrir una promoción",
+      "actionCoupon": "Aplicar un cupón",
+      "choosePromo": "Promoción",
+      "selectPromo": "Elige una promoción…",
+      "noPromos": "Aún no hay promociones activas: crea una en Promociones primero.",
+      "chooseCoupon": "Cupón",
+      "selectCoupon": "Elige un cupón…",
+      "noCoupons": "Aún no hay cupones activos: crea uno en Promociones primero.",
+      "save": "Guardar ventana",
+      "saving": "Guardando…",
+      "saved": "Ventana promocional guardada",
+      "saveError": "No se pudo guardar: inténtalo de nuevo"
     }
   },
   "impersonation": {

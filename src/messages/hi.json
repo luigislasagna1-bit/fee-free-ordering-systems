@@ -790,7 +790,8 @@
       "pointOfSale": "पॉइंट ऑफ सेल",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "इंटीग्रेशन",
-      "orderHandling": "ऑर्डर प्रबंधन"
+      "orderHandling": "ऑर्डर प्रबंधन",
+      "promoPopup": "प्रोमो पॉपअप"
     },
     "dashboard": {
       "title": "डैशबोर्ड",
@@ -4086,6 +4087,22 @@
       "subtitle": "चुनें कि नए ऑर्डर कैसे स्वीकार और शेड्यूल किए जाएं।",
       "showServiceTimesTitle": "ऑर्डरिंग पेज पर सेवा समय दिखाएँ",
       "showServiceTimesHint": "ऑर्डरिंग पेज के बटनों पर हर सेवा का अनुमानित समय (जैसे \"20 मिनट\") दिखाएँ। बंद करने पर ये यहाँ छिप जाते हैं; चेकआउट पर फिर भी दिखते हैं।"
+    },
+    "promoPopup": {
+      "buttonAction": "जब बटन टैप किया जाए",
+      "actionUrl": "एक लिंक खोलें (URL)",
+      "actionPromo": "एक प्रचार खोलें",
+      "actionCoupon": "एक कूपन लागू करें",
+      "choosePromo": "प्रचार",
+      "selectPromo": "एक प्रचार चुनें…",
+      "noPromos": "अभी तक कोई सक्रिय प्रचार नहीं — पहले प्रचार में एक बनाएं।",
+      "chooseCoupon": "कूपन",
+      "selectCoupon": "एक कूपन चुनें…",
+      "noCoupons": "अभी तक कोई सक्रिय कूपन नहीं — पहले प्रचार में एक बनाएं।",
+      "save": "पॉपअप सहेजें",
+      "saving": "सहेजा जा रहा है…",
+      "saved": "प्रोमो पॉपअप सहेजा गया",
+      "saveError": "सहेजा नहीं जा सका — कृपया पुनः प्रयास करें"
     }
   },
   "impersonation": {

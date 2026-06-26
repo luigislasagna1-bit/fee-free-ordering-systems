@@ -767,7 +767,8 @@
       "pointOfSale": "销售点",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "集成",
-      "orderHandling": "订单处理"
+      "orderHandling": "订单处理",
+      "promoPopup": "促销弹窗"
     },
     "dashboard": {
       "title": "仪表盘",
@@ -4086,6 +4087,22 @@
       "subtitle": "选择如何接受和安排新订单。",
       "showServiceTimesTitle": "在点单页面显示服务时间",
       "showServiceTimesHint": "在点单页面的按钮上显示每项服务的预计时间（如\"20分钟\"）。关闭后此处隐藏；结算时仍会显示。"
+    },
+    "promoPopup": {
+      "buttonAction": "点击按钮时",
+      "actionUrl": "打开链接 (URL)",
+      "actionPromo": "打开促销活动",
+      "actionCoupon": "应用优惠券",
+      "choosePromo": "促销活动",
+      "selectPromo": "选择促销活动…",
+      "noPromos": "暂无有效的促销活动 — 请先在“促销活动”中创建一个。",
+      "chooseCoupon": "优惠券",
+      "selectCoupon": "选择优惠券…",
+      "noCoupons": "暂无有效的优惠券 — 请先在“促销活动”中创建一个。",
+      "save": "保存弹窗",
+      "saving": "正在保存…",
+      "saved": "促销弹窗已保存",
+      "saveError": "无法保存 — 请重试"
     }
   },
   "impersonation": {

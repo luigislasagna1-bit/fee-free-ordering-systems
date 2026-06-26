@@ -767,7 +767,8 @@
       "pointOfSale": "Pokladní systém",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integrace",
-      "orderHandling": "Zpracování objednávek"
+      "orderHandling": "Zpracování objednávek",
+      "promoPopup": "Promo okno"
     },
     "dashboard": {
       "title": "Přehled",
@@ -4086,6 +4087,22 @@
       "subtitle": "Vyberte, jak se nové objednávky přijímají a plánují.",
       "showServiceTimesTitle": "Zobrazovat časy služeb na objednávkové stránce",
       "showServiceTimesHint": "Zobrazí u každé služby odhadovaný čas (např. \"20 min\") na tlačítkách objednávkové stránky. Vypnuto je zde skryje; u pokladny se stále zobrazují."
+    },
+    "promoPopup": {
+      "buttonAction": "Po klepnutí na tlačítko",
+      "actionUrl": "Otevřít odkaz (URL)",
+      "actionPromo": "Otevřít akci",
+      "actionCoupon": "Použít kupón",
+      "choosePromo": "Akce",
+      "selectPromo": "Vyberte akci…",
+      "noPromos": "Zatím žádné aktivní akce — nejprve nějakou vytvořte v sekci Akce.",
+      "chooseCoupon": "Kupón",
+      "selectCoupon": "Vyberte kupón…",
+      "noCoupons": "Zatím žádné aktivní kupóny — nejprve nějaký vytvořte v sekci Akce.",
+      "save": "Uložit okno",
+      "saving": "Ukládání…",
+      "saved": "Promo okno uloženo",
+      "saveError": "Nepodařilo se uložit — zkuste to znovu"
     }
   },
   "impersonation": {

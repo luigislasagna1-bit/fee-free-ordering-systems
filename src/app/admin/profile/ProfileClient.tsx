@@ -28,7 +28,6 @@ import {
   Save, Store, Image as ImageIcon, Link as LinkIcon, MapPin,
   Loader2, Search, X, CheckCircle2, AlertTriangle, Bell, Play, Trash2, Upload,
 } from "lucide-react";
-import type { OrderingPopupConfig } from "@/app/order/[slug]/PromotionalPopup";
 import NextLink from "next/link";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { ActiveToggle } from "./ActiveToggle";
@@ -593,10 +592,6 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
   // lat/lng are managed separately — they're not part of the main text form
   const [lat, setLat] = useState<number | null>(restaurant?.lat ?? null);
   const [lng, setLng] = useState<number | null>(restaurant?.lng ?? null);
-  // Promo popup config (Fabrizio 2026-06-25) — its own state (like lat/lng), saved as the
-  // orderingPopup JSON in the profile PUT below.
-  const [popup, setPopup] = useState<OrderingPopupConfig>(((restaurant as any)?.orderingPopup ?? {}) as OrderingPopupConfig);
-
   const [loading, setLoading] = useState(false);
 
   const handleCoordsChange = useCallback((newLat: number, newLng: number) => {
@@ -658,7 +653,6 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
           estimatedDelivery: parseInt(form.estimatedDelivery) || 45,
           lat: saveLat,
           lng: saveLng,
-          orderingPopup: popup,
         }),
       });
 
@@ -712,72 +706,6 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
               />
             </div>
           </div>
-        </div>
-
-        {/* ── Promo popup ─────────────────────────────────────────────── */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <div className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-2 flex items-center gap-2">
-            <ImageIcon className="w-4 h-4" /> {t("popupSection")}
-          </div>
-          <p className="text-xs text-gray-500 mb-4">{t("popupHint")}</p>
-          <label className="flex items-center gap-2 cursor-pointer text-sm font-medium text-gray-800 mb-4">
-            <input
-              type="checkbox"
-              checked={!!popup.enabled}
-              onChange={(e) => setPopup((p) => ({ ...p, enabled: e.target.checked }))}
-              className="h-4 w-4 rounded accent-emerald-500"
-            />
-            {t("popupEnable")}
-          </label>
-          {popup.enabled && (
-            <div className="space-y-4">
-              <ImageUpload
-                label={t("popupImage")}
-                value={popup.imageUrl ?? ""}
-                onChange={(url) => setPopup((p) => ({ ...p, imageUrl: url }))}
-                aspectRatio="wide"
-              />
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{t("popupHeadingLabel")}</label>
-                <input
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
-                  value={popup.title ?? ""}
-                  maxLength={200}
-                  onChange={(e) => setPopup((p) => ({ ...p, title: e.target.value }))}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{t("popupMessageLabel")}</label>
-                <textarea
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
-                  rows={3}
-                  value={popup.body ?? ""}
-                  maxLength={2000}
-                  onChange={(e) => setPopup((p) => ({ ...p, body: e.target.value }))}
-                />
-              </div>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("popupButtonLabel")}</label>
-                  <input
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
-                    value={popup.buttonLabel ?? ""}
-                    maxLength={100}
-                    onChange={(e) => setPopup((p) => ({ ...p, buttonLabel: e.target.value }))}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("popupButtonUrl")}</label>
-                  <input
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
-                    value={popup.buttonUrl ?? ""}
-                    placeholder="https://…"
-                    onChange={(e) => setPopup((p) => ({ ...p, buttonUrl: e.target.value }))}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* ── Branding ───────────────────────────────────────────────── */}

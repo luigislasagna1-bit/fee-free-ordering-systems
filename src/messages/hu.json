@@ -767,7 +767,8 @@
       "pointOfSale": "Értékesítési pont",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integrációk",
-      "orderHandling": "Rendeléskezelés"
+      "orderHandling": "Rendeléskezelés",
+      "promoPopup": "Promóciós felugró"
     },
     "dashboard": {
       "title": "Irányítópult",
@@ -4086,6 +4087,22 @@
       "subtitle": "Állítsa be, hogyan fogadják el és ütemezik az új rendeléseket.",
       "showServiceTimesTitle": "Szolgáltatási idők megjelenítése a rendelési oldalon",
       "showServiceTimesHint": "Megjeleníti az egyes szolgáltatások becsült idejét (pl. \"20 perc\") a rendelési oldal gombjain. Kikapcsolva itt elrejti; a pénztárnál továbbra is látszik."
+    },
+    "promoPopup": {
+      "buttonAction": "A gombra koppintáskor",
+      "actionUrl": "Hivatkozás megnyitása (URL)",
+      "actionPromo": "Promóció megnyitása",
+      "actionCoupon": "Kupon alkalmazása",
+      "choosePromo": "Promóció",
+      "selectPromo": "Válasszon promóciót…",
+      "noPromos": "Még nincs aktív promóció – először hozzon létre egyet a Promóciók alatt.",
+      "chooseCoupon": "Kupon",
+      "selectCoupon": "Válasszon kupont…",
+      "noCoupons": "Még nincs aktív kupon – először hozzon létre egyet a Promóciók alatt.",
+      "save": "Felugró mentése",
+      "saving": "Mentés…",
+      "saved": "Promóciós felugró mentve",
+      "saveError": "Nem sikerült menteni – próbálja újra"
     }
   },
   "impersonation": {

@@ -5358,6 +5358,14 @@ export function OrderingPageClient({
           onClose={dismissPopup}
           primaryColor={theme.primaryColor}
           closeLabel={t("close")}
+          onOpenPromo={(promoId) => {
+            const target = promoBanners.find((p: any) => p.id === promoId);
+            if (target) setActivePromoModal(target as any);
+          }}
+          onApplyCoupon={(code) => {
+            setCouponCode(code);
+            applyCoupon(code);
+          }}
         />
       )}
       {activePromoModal && (

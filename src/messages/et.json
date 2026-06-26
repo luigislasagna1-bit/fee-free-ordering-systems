@@ -767,7 +767,8 @@
       "pointOfSale": "Müügipunkt",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integratsioonid",
-      "orderHandling": "Tellimuste haldus"
+      "orderHandling": "Tellimuste haldus",
+      "promoPopup": "Promo hüpikaken"
     },
     "dashboard": {
       "title": "Juhtpaneel",
@@ -4086,6 +4087,22 @@
       "subtitle": "Valige, kuidas uusi tellimusi vastu võetakse ja ajastatakse.",
       "showServiceTimesTitle": "Näita teenuste aegu tellimislehel",
       "showServiceTimesHint": "Näitab iga teenuse hinnangulist aega (nt \"20 min\") tellimislehe nuppudel. Väljas peidab need siit; kassas kuvatakse endiselt."
+    },
+    "promoPopup": {
+      "buttonAction": "Kui nuppu vajutatakse",
+      "actionUrl": "Ava link (URL)",
+      "actionPromo": "Ava kampaania",
+      "actionCoupon": "Rakenda kupong",
+      "choosePromo": "Kampaania",
+      "selectPromo": "Vali kampaania…",
+      "noPromos": "Aktiivseid kampaaniaid veel pole — looge esmalt üks jaotises Kampaaniad.",
+      "chooseCoupon": "Kupong",
+      "selectCoupon": "Vali kupong…",
+      "noCoupons": "Aktiivseid kuponge veel pole — looge esmalt üks jaotises Kampaaniad.",
+      "save": "Salvesta hüpik",
+      "saving": "Salvestamine…",
+      "saved": "Promo hüpikaken salvestatud",
+      "saveError": "Salvestamine ebaõnnestus — proovige uuesti"
     }
   },
   "impersonation": {

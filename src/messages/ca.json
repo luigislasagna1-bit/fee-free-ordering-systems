@@ -767,7 +767,8 @@
       "pointOfSale": "Punt de venda",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integracions",
-      "orderHandling": "Gestió de comandes"
+      "orderHandling": "Gestió de comandes",
+      "promoPopup": "Finestra promocional"
     },
     "dashboard": {
       "title": "Tauler de control",
@@ -4086,6 +4087,22 @@
       "subtitle": "Trieu com s'accepten i es programen les comandes noves.",
       "showServiceTimesTitle": "Mostra els temps de servei a la pàgina de comandes",
       "showServiceTimesHint": "Mostra el temps estimat de cada servei (p. ex. \"20 min\") als botons de la pàgina de comandes. Desactivat, s'amaguen aquí; encara apareixen a la pàgina de pagament."
+    },
+    "promoPopup": {
+      "buttonAction": "En tocar el botó",
+      "actionUrl": "Obre un enllaç (URL)",
+      "actionPromo": "Obre una promoció",
+      "actionCoupon": "Aplica un cupó",
+      "choosePromo": "Promoció",
+      "selectPromo": "Tria una promoció…",
+      "noPromos": "Encara no hi ha promocions actives: crea'n una a Promocions primer.",
+      "chooseCoupon": "Cupó",
+      "selectCoupon": "Tria un cupó…",
+      "noCoupons": "Encara no hi ha cupons actius: crea'n un a Promocions primer.",
+      "save": "Desa la finestra",
+      "saving": "S'està desant…",
+      "saved": "Finestra promocional desada",
+      "saveError": "No s'ha pogut desar: torna-ho a provar"
     }
   },
   "impersonation": {

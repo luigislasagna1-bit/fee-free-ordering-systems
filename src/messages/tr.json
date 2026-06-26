@@ -767,7 +767,8 @@
       "pointOfSale": "Satış noktası",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Entegrasyonlar",
-      "orderHandling": "Sipariş Yönetimi"
+      "orderHandling": "Sipariş Yönetimi",
+      "promoPopup": "Promosyon Penceresi"
     },
     "dashboard": {
       "title": "Panel",
@@ -4086,6 +4087,22 @@
       "subtitle": "Yeni siparişlerin nasıl kabul edileceğini ve planlanacağını seçin.",
       "showServiceTimesTitle": "Sipariş sayfasında servis sürelerini göster",
       "showServiceTimesHint": "Her hizmetin tahmini süresini (ör. \"20 dk\") sipariş sayfası düğmelerinde gösterir. Kapalı burada gizler; ödeme sırasında yine görünür."
+    },
+    "promoPopup": {
+      "buttonAction": "Düğmeye dokunulduğunda",
+      "actionUrl": "Bir bağlantı aç (URL)",
+      "actionPromo": "Bir promosyon aç",
+      "actionCoupon": "Bir kupon uygula",
+      "choosePromo": "Promosyon",
+      "selectPromo": "Bir promosyon seçin…",
+      "noPromos": "Henüz etkin promosyon yok — önce Promosyonlar'da bir tane oluşturun.",
+      "chooseCoupon": "Kupon",
+      "selectCoupon": "Bir kupon seçin…",
+      "noCoupons": "Henüz etkin kupon yok — önce Promosyonlar'da bir tane oluşturun.",
+      "save": "Pencereyi kaydet",
+      "saving": "Kaydediliyor…",
+      "saved": "Promosyon penceresi kaydedildi",
+      "saveError": "Kaydedilemedi — lütfen tekrar deneyin"
     }
   },
   "impersonation": {

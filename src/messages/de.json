@@ -767,7 +767,8 @@
       "pointOfSale": "Kassensystem",
       "kitchenOrderApp": "Kitchen Order App",
       "integrations": "Integrationen",
-      "orderHandling": "Bestellabwicklung"
+      "orderHandling": "Bestellabwicklung",
+      "promoPopup": "Promo-Popup"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -4086,6 +4087,22 @@
       "subtitle": "Legen Sie fest, wie neue Bestellungen angenommen und geplant werden.",
       "showServiceTimesTitle": "Servicezeiten auf der Bestellseite anzeigen",
       "showServiceTimesHint": "Zeigt die geschätzte Zeit jedes Service (z. B. \"20 Min.\") auf den Schaltflächen der Bestellseite. Aus blendet sie hier aus; an der Kasse werden sie weiterhin angezeigt."
+    },
+    "promoPopup": {
+      "buttonAction": "Beim Tippen auf die Schaltfläche",
+      "actionUrl": "Einen Link öffnen (URL)",
+      "actionPromo": "Eine Aktion öffnen",
+      "actionCoupon": "Einen Gutschein anwenden",
+      "choosePromo": "Aktion",
+      "selectPromo": "Aktion auswählen…",
+      "noPromos": "Noch keine aktiven Aktionen – erstellen Sie zuerst eine unter Aktionen.",
+      "chooseCoupon": "Gutschein",
+      "selectCoupon": "Gutschein auswählen…",
+      "noCoupons": "Noch keine aktiven Gutscheine – erstellen Sie zuerst einen unter Aktionen.",
+      "save": "Popup speichern",
+      "saving": "Wird gespeichert…",
+      "saved": "Promo-Popup gespeichert",
+      "saveError": "Speichern fehlgeschlagen – bitte erneut versuchen"
     }
   },
   "impersonation": {
