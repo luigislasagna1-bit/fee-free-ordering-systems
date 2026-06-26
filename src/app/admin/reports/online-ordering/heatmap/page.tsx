@@ -190,6 +190,7 @@ export default async function HeatmapReportPage({
             <ExportMenu
               exportUrl="/api/admin/reports/online-ordering/heatmap/export"
               currentQuery={exportQuery}
+              compact={false}
             />
           </div>
           <div className="overflow-x-auto">

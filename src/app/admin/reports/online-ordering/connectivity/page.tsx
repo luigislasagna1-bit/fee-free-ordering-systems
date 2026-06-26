@@ -211,6 +211,7 @@ export default async function ConnectivityReportPage({
           <ExportMenu
             exportUrl="/api/admin/reports/online-ordering/connectivity/export"
             currentQuery={currentQuery}
+            compact={false}
           />
         </div>
       </header>

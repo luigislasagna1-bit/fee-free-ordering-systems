@@ -78,6 +78,7 @@ export default async function ClientsDashboardPage({
           <ExportMenu
             exportUrl="/api/admin/reports/online-ordering/clients/export"
             currentQuery={buildQuery(sp)}
+            compact={false}
           />
         </div>
       </header>

@@ -103,10 +103,11 @@ export default async function ListOrdersPage({
         <div className="flex items-center gap-2 flex-wrap">
           <TableControls searchPlaceholder={t("searchPlaceholder")} perPageLabel={t("perPage")} />
           <DateRangePicker />
+          <ExportMenu exportUrl="/api/admin/reports/list/orders/export" currentQuery={buildQuery(sp)} compact={false} />
         </div>
       </header>
 
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden relative">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
         <table className="w-full text-sm min-w-[720px]">
           <thead>
@@ -141,10 +142,6 @@ export default async function ListOrdersPage({
             ))}
           </tbody>
         </table>
-        </div>
-
-        <div className="absolute bottom-3 right-3">
-          <ExportMenu exportUrl="/api/admin/reports/list/orders/export" currentQuery={buildQuery(sp)} />
         </div>
       </div>
 

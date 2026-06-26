@@ -165,6 +165,7 @@ export default async function EndOfDayReportPage({
               date: dayKey,
               ...(scope.isChain ? { loc: active.id } : {}),
             }).toString()}
+            compact={false}
           />
         </div>
       </header>

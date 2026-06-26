@@ -59,10 +59,13 @@ export default async function MenuInsightsItemsPage({
           <h1 className="text-2xl font-bold text-gray-900">{t("pageTitle")}</h1>
           <p className="text-sm text-gray-500 mt-0.5">{t("pageSubtitle", { rangeLabel: formatRangeLabelInTz(range, scope.timezone ?? undefined) })}</p>
         </div>
-        <DateRangePicker />
+        <div className="flex items-center gap-2 flex-wrap">
+          <DateRangePicker />
+          <ExportMenu exportUrl="/api/admin/reports/menu-insights/items/export" currentQuery={buildQuery(sp)} compact={false} />
+        </div>
       </header>
 
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden relative">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
         <table className="w-full text-sm min-w-[640px]">
           <thead>
@@ -100,10 +103,6 @@ export default async function MenuInsightsItemsPage({
             })}
           </tbody>
         </table>
-        </div>
-
-        <div className="absolute bottom-3 right-3">
-          <ExportMenu exportUrl="/api/admin/reports/menu-insights/items/export" currentQuery={buildQuery(sp)} />
         </div>
       </div>
     </div>

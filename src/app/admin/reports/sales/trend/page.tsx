@@ -95,6 +95,7 @@ export default async function SalesTrendPage({
           <CompareToggle on={compare} sp={sp} t={t} />
           <ChartTableToggle />
           <DateRangePicker />
+          <ExportMenu exportUrl="/api/admin/reports/sales/trend/export" currentQuery={buildQuery(sp)} compact={false} />
         </div>
       </header>
 
@@ -104,15 +105,6 @@ export default async function SalesTrendPage({
         ) : (
           <TableView rows={rows} metric={metric} compare={compare} t={t} currency={__currency} />
         )}
-
-        {/* Export menu lives in the bottom-right of the card so it's
-            always reachable without crowding the header. */}
-        <div className="absolute bottom-3 right-3">
-          <ExportMenu
-            exportUrl="/api/admin/reports/sales/trend/export"
-            currentQuery={buildQuery(sp)}
-          />
-        </div>
       </div>
     </div>
   );

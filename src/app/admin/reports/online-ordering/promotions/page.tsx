@@ -67,10 +67,13 @@ export default async function PromotionsReportPage({
             {t("subtitle", { redemptions: totalRedemptions.toLocaleString(), discounts: formatCurrency(totalDiscount), range: formatRangeLabelInTz(range, scope.timezone ?? undefined) })}
           </p>
         </div>
-        <DateRangePicker />
+        <div className="flex items-center gap-2 flex-wrap">
+          <DateRangePicker />
+          <ExportMenu exportUrl="/api/admin/reports/online-ordering/promotions/export" currentQuery={buildQuery(sp)} compact={false} />
+        </div>
       </header>
 
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden relative">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
         <table className="w-full text-sm min-w-[760px]">
           <thead>
@@ -105,10 +108,6 @@ export default async function PromotionsReportPage({
             })}
           </tbody>
         </table>
-        </div>
-
-        <div className="absolute bottom-3 right-3">
-          <ExportMenu exportUrl="/api/admin/reports/online-ordering/promotions/export" currentQuery={buildQuery(sp)} />
         </div>
       </div>
 

@@ -96,6 +96,7 @@ export default async function GoogleRankReportPage({
         <ExportMenu
           exportUrl="/api/admin/reports/online-ordering/google-rank/export"
           currentQuery={currentQuery}
+          compact={false}
         />
       </header>
 

@@ -89,6 +89,7 @@ export default async function FunnelReportPage({
           <ExportMenu
             exportUrl="/api/admin/reports/online-ordering/funnel/export"
             currentQuery={buildQuery(sp)}
+            compact={false}
           />
         </div>
       </header>

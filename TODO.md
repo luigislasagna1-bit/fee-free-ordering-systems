@@ -9,6 +9,8 @@ date + commit hash. This file is committed so the backlog never gets lost.
 
 ## Open
 
+- [x] **Reports export — labeled top-right button on every report (DONE 2026-06-26, pending deploy).** The export was a tiny unlabeled download icon hidden at the bottom-right of each sub-report's table card (Luigi couldn't find it). Moved to a labeled "Export" button in the header (top-right, next to the date picker) across all 16 reports — Sales Trend/Summary, List orders/clients, Menu Insights items/categories, Promotions (relocated from bottom), + Visits/Reservations/Funnel/Clients/Google-Rank/Connectivity/Heatmap/EOD (labeled in place). Each still forwards `buildQuery(sp)` (full range + view dim + location/scope + status/search filters) so PDF/XLS/CSV downloads honor exactly what's selected. Preflight green.
+
 - [x] **Promo Popup report (cmqp8z9ko) test polish — DONE 2026-06-26 (pending deploy).** A (popup→promo) + C (popup→URL) confirmed working by Luigi. Two changes shipped: (1) the PromoDetailModal footer is now ONE full-width, centered CTA reading "Start Adding Items" for every build-your-cart promo (was a small bottom-right "Got it"; `fixed_cart` like the "$10 Coupon" now reads correctly) — free_delivery keeps its "switch to delivery". (2) Removed the **coupon** option from the Promo Popup button (admin) — only URL or Promotion now, since coupons are being folded into promotions (one step of the [[coupon↔promo unify]]). Reused existing i18n keys (startAddingItems/switchToDelivery), no new strings. Preflight green.
 
 - [x] **Closing-days fixes (cmqp8l948) — DONE 2026-06-26 (pending deploy + on-device).** Three issues + Luigi's rule "exceptional hours must stay within the service's normal hours; can't close a service when it isn't open":

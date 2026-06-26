@@ -55,11 +55,12 @@ export default async function SalesSummaryPage({
         <div className="flex items-center gap-2 flex-wrap">
           <ViewBySwitcher current={dim} sp={sp} t={t} />
           <DateRangePicker />
+          <ExportMenu exportUrl="/api/admin/reports/sales/summary/export" currentQuery={buildQuery(sp)} compact={false} />
         </div>
       </header>
 
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden relative">
-        <div className="overflow-x-auto pb-12">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm min-w-[860px]">
           <thead>
             <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100 bg-gray-50">
@@ -105,13 +106,6 @@ export default async function SalesSummaryPage({
             </tfoot>
           )}
         </table>
-        </div>
-
-        <div className="absolute bottom-3 right-3">
-          <ExportMenu
-            exportUrl="/api/admin/reports/sales/summary/export"
-            currentQuery={buildQuery(sp)}
-          />
         </div>
       </div>
     </div>

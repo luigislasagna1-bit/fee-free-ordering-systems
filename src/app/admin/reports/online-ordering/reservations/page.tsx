@@ -87,6 +87,7 @@ export default async function ReservationsReportPage({
           <ExportMenu
             exportUrl="/api/admin/reports/online-ordering/reservations/export"
             currentQuery={buildQuery(sp)}
+            compact={false}
           />
         </div>
       </header>
