@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Tilgængelig {window}",
       "notUsableNowBody": "Dette tilbud kan ikke indløses til en bestilling hurtigst muligt lige nu. Du kan stadig planlægge din bestilling til senere, inden for de tidspunkter hvor tilbuddet er tilgængeligt.",
       "maybeLater": "Måske senere",
-      "orderForLater": "Bestil til senere"
+      "orderForLater": "Bestil til senere",
+      "addOne": "Tilføj",
+      "customize": "Tilpas"
     },
     "resetForm": {
       "passwordTooShort": "Adgangskoden skal være mindst 8 tegn.",

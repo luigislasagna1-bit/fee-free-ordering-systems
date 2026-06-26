@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "ใช้ได้ {window}",
       "notUsableNowBody": "ดีลนี้ยังใช้กับออเดอร์แบบสั่งทันที (ASAP) ในตอนนี้ไม่ได้ แต่คุณยังสามารถตั้งเวลาสั่งล่วงหน้าได้ ภายในช่วงเวลาที่ดีลนี้ใช้งานได้",
       "maybeLater": "ไว้คราวหน้า",
-      "orderForLater": "สั่งล่วงหน้า"
+      "orderForLater": "สั่งล่วงหน้า",
+      "addOne": "เพิ่ม",
+      "customize": "ปรับแต่ง"
     },
     "resetForm": {
       "passwordTooShort": "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร",

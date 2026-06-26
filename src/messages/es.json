@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Disponible {window}",
       "notUsableNowBody": "Esta oferta no se puede canjear ahora mismo en un pedido para lo antes posible. Aún puedes programar tu pedido para más tarde, dentro del horario en que esta oferta está disponible.",
       "maybeLater": "Quizá más tarde",
-      "orderForLater": "Pedir para más tarde"
+      "orderForLater": "Pedir para más tarde",
+      "addOne": "Añadir",
+      "customize": "Personalizar"
     },
     "resetForm": {
       "passwordTooShort": "La contraseña debe tener al menos 8 caracteres.",

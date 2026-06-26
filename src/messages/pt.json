@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Disponível {window}",
       "notUsableNowBody": "Esta promoção não pode ser usada agora num pedido para o mais rápido possível. Mas pode agendar o seu pedido para mais tarde, dentro do horário em que esta promoção está disponível.",
       "maybeLater": "Talvez mais tarde",
-      "orderForLater": "Pedir para mais tarde"
+      "orderForLater": "Pedir para mais tarde",
+      "addOne": "Adicionar",
+      "customize": "Personalizar"
     },
     "resetForm": {
       "passwordTooShort": "A palavra-passe deve ter pelo menos 8 caracteres.",

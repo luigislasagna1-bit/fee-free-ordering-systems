@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Na voljo {window}",
       "notUsableNowBody": "Te ponudbe trenutno ni mogoče uveljaviti za naročilo z dostavo čim prej. Še vedno pa lahko naročilo načrtujete za pozneje, znotraj časov, ko je ta ponudba na voljo.",
       "maybeLater": "Morda kasneje",
-      "orderForLater": "Naročilo za pozneje"
+      "orderForLater": "Naročilo za pozneje",
+      "addOne": "Dodaj",
+      "customize": "Prilagodi"
     },
     "resetForm": {
       "passwordTooShort": "Geslo mora imeti vsaj 8 znakov.",

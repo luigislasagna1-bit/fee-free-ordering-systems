@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "متاح {window}",
       "notUsableNowBody": "لا يمكن استخدام هذا العرض لطلب فوري في الوقت الحالي. لا يزال بإمكانك جدولة طلبك لوقت لاحق، ضمن الأوقات التي يتوفر فيها هذا العرض.",
       "maybeLater": "ربما لاحقًا",
-      "orderForLater": "اطلب لوقت لاحق"
+      "orderForLater": "اطلب لوقت لاحق",
+      "addOne": "إضافة",
+      "customize": "تخصيص"
     },
     "resetForm": {
       "passwordTooShort": "يجب أن تكون كلمة المرور 8 أحرف على الأقل.",

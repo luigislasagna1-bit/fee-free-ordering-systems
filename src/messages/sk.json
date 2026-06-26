@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Dostupné {window}",
       "notUsableNowBody": "Túto ponuku momentálne nie je možné uplatniť pri objednávke „čo najskôr\". Objednávku si však môžete naplánovať na neskôr, v rámci časov, kedy je táto ponuka dostupná.",
       "maybeLater": "Možno neskôr",
-      "orderForLater": "Objednať na neskôr"
+      "orderForLater": "Objednať na neskôr",
+      "addOne": "Pridať",
+      "customize": "Prispôsobiť"
     },
     "resetForm": {
       "passwordTooShort": "Heslo musí mať aspoň 8 znakov.",

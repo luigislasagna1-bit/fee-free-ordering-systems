@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Disponibil {window}",
       "notUsableNowBody": "Acest deal nu poate fi folosit acum pentru o comandă ASAP. Poți totuși să programezi comanda pentru mai târziu, în intervalul în care acest deal este disponibil.",
       "maybeLater": "Poate mai târziu",
-      "orderForLater": "Comandă pentru mai târziu"
+      "orderForLater": "Comandă pentru mai târziu",
+      "addOne": "Adaugă",
+      "customize": "Personalizează"
     },
     "resetForm": {
       "passwordTooShort": "Parola trebuie să aibă cel puțin 8 caractere.",

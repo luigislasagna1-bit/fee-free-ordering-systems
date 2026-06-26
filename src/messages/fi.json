@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Saatavilla {window}",
       "notUsableNowBody": "Tätä tarjousta ei voi käyttää heti tehtävään tilaukseen juuri nyt. Voit silti ajoittaa tilauksesi myöhemmäksi, niille ajoille, jolloin tarjous on saatavilla.",
       "maybeLater": "Ehkä myöhemmin",
-      "orderForLater": "Tilaa myöhemmäksi"
+      "orderForLater": "Tilaa myöhemmäksi",
+      "addOne": "Lisää",
+      "customize": "Mukauta"
     },
     "resetForm": {
       "passwordTooShort": "Salasanan on oltava vähintään 8 merkkiä pitkä.",

@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "זמין {window}",
       "notUsableNowBody": "לא ניתן לממש את המבצע הזה בהזמנה מיידית כרגע. תמיד אפשר לתזמן את ההזמנה למועד מאוחר יותר, בתוך השעות שבהן המבצע זמין.",
       "maybeLater": "אולי מאוחר יותר",
-      "orderForLater": "הזמנה למועד מאוחר יותר"
+      "orderForLater": "הזמנה למועד מאוחר יותר",
+      "addOne": "הוסף",
+      "customize": "התאמה אישית"
     },
     "resetForm": {
       "passwordTooShort": "הסיסמה חייבת להכיל לפחות 8 תווים.",

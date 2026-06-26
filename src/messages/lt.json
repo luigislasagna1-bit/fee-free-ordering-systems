@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Galioja {window}",
       "notUsableNowBody": "Šio pasiūlymo dabar negalima pritaikyti užsakymui „kuo greičiau\". Vis tiek galite suplanuoti užsakymą vėlesniam laikui, kol galioja šis pasiūlymas.",
       "maybeLater": "Galbūt vėliau",
-      "orderForLater": "Užsakyti vėlesniam laikui"
+      "orderForLater": "Užsakyti vėlesniam laikui",
+      "addOne": "Pridėti",
+      "customize": "Tinkinti"
     },
     "resetForm": {
       "passwordTooShort": "Slaptažodis turi būti bent 8 simbolių.",

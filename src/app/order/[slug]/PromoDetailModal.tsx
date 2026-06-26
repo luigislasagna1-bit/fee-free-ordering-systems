@@ -94,6 +94,9 @@ type MenuItemLite = {
   imageUrl?: string;
   categoryId?: string;
   variants?: { id: string; name: string; price: number }[];
+  /** True when the item needs a choice before adding (has variants or modifier groups) — the
+   *  promo panel then shows "Customize" (open the picker) instead of a quick "+ Add". */
+  requiresChoice?: boolean;
 };
 
 type DeliveryZoneLite = {
@@ -142,6 +145,12 @@ interface Props {
    *  blindly without picking a size. Falls back to scroll-to-menu-item
    *  when not provided. */
   onOpenItem?: (menuItemId: string) => void;
+  /** id→name lookup so the eligible-items panel can GROUP items by their menu category
+   *  (Fabrizio: they used to be all mixed together). */
+  allVisibleCategories?: { id: string; name: string }[];
+  /** Quick-add a SIMPLE eligible item (no variants/modifiers) straight to the cart WITHOUT
+   *  leaving the promo screen. Items with options use onOpenItem (the customizer) instead. */
+  onAddItemDirect?: (menuItemId: string) => void;
   onClose: () => void;
 }
 
@@ -261,6 +270,56 @@ function ItemRow({
         </span>
       )}
     </button>
+  );
+}
+
+// Eligible-items row WITH a quick "+ Add" (simple items) or "Customize" (items with options →
+// opens the size/modifier picker). Used by the promo "Get it now" panel. Fabrizio 2026-06-25.
+function EligibleItemRow({
+  item,
+  primaryColor,
+  badge,
+  onOpen,
+  onAdd,
+  addLabel,
+  customizeLabel,
+}: {
+  item: MenuItemLite;
+  primaryColor: string;
+  badge?: string | null;
+  onOpen: () => void;
+  onAdd?: () => void;
+  addLabel: string;
+  customizeLabel: string;
+}) {
+  const formatCurrency = useCurrencyFormat();
+  return (
+    <div className="w-full flex items-center gap-2 p-2 rounded-xl border border-gray-100 hover:bg-gray-50 transition">
+      <button type="button" onClick={onOpen} className="flex-1 flex items-center gap-3 text-left min-w-0">
+        {item.imageUrl ? (
+          <img src={item.imageUrl} alt="" className="w-12 h-12 rounded-lg object-cover flex-shrink-0" />
+        ) : (
+          <div className="w-12 h-12 rounded-lg flex-shrink-0" style={{ background: `linear-gradient(135deg, ${primaryColor}22, #f3f4f6)` }} />
+        )}
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-semibold text-gray-900 truncate">{item.name}</div>
+          <div className="text-xs text-gray-500">{formatCurrency(item.price)}</div>
+        </div>
+      </button>
+      {badge ? (
+        <span className="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0" style={{ backgroundColor: `${primaryColor}22`, color: primaryColor }}>
+          {badge}
+        </span>
+      ) : null}
+      <button
+        type="button"
+        onClick={onAdd ?? onOpen}
+        className="flex-shrink-0 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-semibold transition hover:opacity-90"
+        style={onAdd ? { backgroundColor: primaryColor, color: "#fff" } : { backgroundColor: `${primaryColor}18`, color: primaryColor }}
+      >
+        {onAdd ? `+ ${addLabel}` : customizeLabel}
+      </button>
+    </div>
   );
 }
 
@@ -492,6 +551,8 @@ export function PromoDetailModal({
   onCompleteGuidedPromo,
   onSwitchOrderType,
   onOpenItem,
+  allVisibleCategories,
+  onAddItemDirect,
   onClose,
 }: Props) {
   const t = useTranslations("customer.promoDetail");
@@ -678,6 +739,8 @@ export function PromoDetailModal({
             allMenuItems={allMenuItems}
             deliveryZones={deliveryZones}
             primaryColor={primaryColor}
+            categoryNames={allVisibleCategories}
+            onAddItem={onAddItemDirect}
             onScrollToItem={(itemId) => {
               // Prefer onOpenItem (opens the item-config sheet — better UX
               // because customer immediately gets size/mods/qty picker)
@@ -726,6 +789,8 @@ function PromoBody({
   allMenuItems,
   deliveryZones,
   primaryColor,
+  categoryNames,
+  onAddItem,
   onScrollToItem,
 }: {
   promo: Promo;
@@ -733,6 +798,8 @@ function PromoBody({
   allMenuItems: MenuItemLite[];
   deliveryZones: DeliveryZoneLite[];
   primaryColor: string;
+  categoryNames?: { id: string; name: string }[];
+  onAddItem?: (menuItemId: string) => void;
   onScrollToItem: (itemId: string) => void;
 }) {
   const t = useTranslations("customer.promoDetail");
@@ -748,22 +815,46 @@ function PromoBody({
     </div>
   );
 
+  const catNameOf = (id?: string) => (id ? categoryNames?.find((c) => c.id === id)?.name ?? null : null);
   const renderGroupItems = (group: RuleConfigGroup, badge?: string | null) => {
     const items = collectGroupItems(group, allMenuItems);
     if (items.length === 0) {
       return <p className="text-xs text-gray-400 italic">{t("noEligibleItems")}</p>;
     }
+    // GROUP the eligible items by their menu category (Fabrizio: they used to be all mixed
+    // together). Headers only show when there's more than one named category.
+    const byCat = new Map<string, MenuItemLite[]>();
+    const order: string[] = [];
+    for (const it of items) {
+      const key = it.categoryId ?? "__none";
+      if (!byCat.has(key)) { byCat.set(key, []); order.push(key); }
+      byCat.get(key)!.push(it);
+    }
+    const showHeaders = order.length > 1 && order.some((k) => k !== "__none" && catNameOf(k));
     return (
-      <div className="space-y-2">
-        {items.map((item) => (
-          <ItemRow
-            key={item.id}
-            item={item}
-            primaryColor={primaryColor}
-            badge={badge ?? null}
-            onClick={() => onScrollToItem(item.id)}
-          />
-        ))}
+      <div className="space-y-3">
+        {order.map((key) => {
+          const label = key === "__none" ? null : catNameOf(key);
+          return (
+            <div key={key} className="space-y-2">
+              {showHeaders && label ? (
+                <div className="px-1 text-xs font-bold uppercase tracking-wide text-gray-500">{label}</div>
+              ) : null}
+              {byCat.get(key)!.map((item) => (
+                <EligibleItemRow
+                  key={item.id}
+                  item={item}
+                  primaryColor={primaryColor}
+                  badge={badge ?? null}
+                  onOpen={() => onScrollToItem(item.id)}
+                  onAdd={onAddItem && !item.requiresChoice ? () => onAddItem(item.id) : undefined}
+                  addLabel={t("addOne")}
+                  customizeLabel={t("customize")}
+                />
+              ))}
+            </div>
+          );
+        })}
       </div>
     );
   };

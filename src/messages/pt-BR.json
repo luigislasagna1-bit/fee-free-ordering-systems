@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Disponível {window}",
       "notUsableNowBody": "Esta oferta não pode ser resgatada em um pedido para o mais rápido possível agora. Você ainda pode agendar seu pedido para depois, dentro do horário em que esta oferta está disponível.",
       "maybeLater": "Talvez depois",
-      "orderForLater": "Pedido para depois"
+      "orderForLater": "Pedido para depois",
+      "addOne": "Adicionar",
+      "customize": "Personalizar"
     },
     "resetForm": {
       "passwordTooShort": "A senha deve ter pelo menos 8 caracteres.",

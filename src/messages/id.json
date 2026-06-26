@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Tersedia {window}",
       "notUsableNowBody": "Penawaran ini tidak bisa digunakan untuk pesanan ASAP saat ini. Anda tetap bisa menjadwalkan pesanan untuk nanti, dalam jam saat penawaran ini tersedia.",
       "maybeLater": "Mungkin nanti",
-      "orderForLater": "Pesan untuk nanti"
+      "orderForLater": "Pesan untuk nanti",
+      "addOne": "Tambah",
+      "customize": "Sesuaikan"
     },
     "resetForm": {
       "passwordTooShort": "Kata sandi harus minimal 8 karakter.",

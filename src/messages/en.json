@@ -5425,7 +5425,9 @@
       "itemLabel": "Item {n}",
       "freeDishMealInfo": "Order the matching combo — one of the items below comes free with the meal.",
       "comboInfo": "Add ONE item from each of the groups below to save {value}.",
-      "defaultPromoInfo": "Check the menu — eligible items will trigger this promo automatically."
+      "defaultPromoInfo": "Check the menu — eligible items will trigger this promo automatically.",
+      "addOne": "Add",
+      "customize": "Customize"
     },
     "resetForm": {
       "passwordTooShort": "Password must be at least 8 characters.",

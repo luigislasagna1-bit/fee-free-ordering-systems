@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Dostupné {window}",
       "notUsableNowBody": "Tuto nabídku teď nelze uplatnit u objednávky „co nejdříve“. Objednávku si ale můžete naplánovat na pozdější čas, kdy je tato nabídka dostupná.",
       "maybeLater": "Možná později",
-      "orderForLater": "Objednat na později"
+      "orderForLater": "Objednat na později",
+      "addOne": "Přidat",
+      "customize": "Přizpůsobit"
     },
     "resetForm": {
       "passwordTooShort": "Heslo musí mít alespoň 8 znaků.",

@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Beschikbaar {window}",
       "notUsableNowBody": "Deze aanbieding kan op dit moment niet worden gebruikt voor een bestelling die zo snel mogelijk wordt geleverd. Je kunt je bestelling nog wel voor later inplannen, binnen de tijden waarop deze aanbieding geldig is.",
       "maybeLater": "Misschien later",
-      "orderForLater": "Bestellen voor later"
+      "orderForLater": "Bestellen voor later",
+      "addOne": "Toevoegen",
+      "customize": "Aanpassen"
     },
     "resetForm": {
       "passwordTooShort": "Het wachtwoord moet minimaal 8 tekens bevatten.",

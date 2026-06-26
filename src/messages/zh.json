@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "{window} 可用",
       "notUsableNowBody": "此优惠暂时无法用于\"尽快送达\"的订单。不过您仍可将订单预约到稍后时间，只要落在此优惠的可用时间段内即可。",
       "maybeLater": "稍后再说",
-      "orderForLater": "预约稍后下单"
+      "orderForLater": "预约稍后下单",
+      "addOne": "添加",
+      "customize": "自定义"
     },
     "resetForm": {
       "passwordTooShort": "密码至少需要 8 个字符。",

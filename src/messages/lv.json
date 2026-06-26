@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Pieejams {window}",
       "notUsableNowBody": "Šo piedāvājumu pašlaik nevar izmantot pasūtījumam ar piegādi tūlīt. Tomēr varat ieplānot pasūtījumu vēlākam laikam — laikā, kad šis piedāvājums ir pieejams.",
       "maybeLater": "Varbūt vēlāk",
-      "orderForLater": "Pasūtīt vēlākam laikam"
+      "orderForLater": "Pasūtīt vēlākam laikam",
+      "addOne": "Pievienot",
+      "customize": "Pielāgot"
     },
     "resetForm": {
       "passwordTooShort": "Parolei jābūt vismaz 8 rakstzīmēm.",

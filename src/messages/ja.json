@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "{window}にご利用いただけます",
       "notUsableNowBody": "この特典は、今すぐのご注文（ASAP）には現在ご利用いただけません。この特典がご利用いただける時間帯であれば、後でのご注文として予約していただけます。",
       "maybeLater": "あとで",
-      "orderForLater": "後で受け取る注文にする"
+      "orderForLater": "後で受け取る注文にする",
+      "addOne": "追加",
+      "customize": "カスタマイズ"
     },
     "resetForm": {
       "passwordTooShort": "パスワードは8文字以上必要です。",

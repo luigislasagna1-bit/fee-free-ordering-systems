@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Disponible {window}",
       "notUsableNowBody": "Aquesta oferta ara mateix no es pot canjear per a una comanda «El més aviat possible». Tot i així, pots programar la comanda per a més tard, dins de l'horari en què aquesta oferta està disponible.",
       "maybeLater": "Potser més tard",
-      "orderForLater": "Programar per a més tard"
+      "orderForLater": "Programar per a més tard",
+      "addOne": "Afegeix",
+      "customize": "Personalitza"
     },
     "resetForm": {
       "passwordTooShort": "La contrasenya ha de tenir com a mínim 8 caràcters.",

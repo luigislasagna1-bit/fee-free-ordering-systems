@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Dostupno {window}",
       "notUsableNowBody": "Ova se ponuda trenutačno ne može iskoristiti za narudžbu „što prije\". Narudžbu i dalje možete zakazati za kasnije, unutar vremena kada je ova ponuda dostupna.",
       "maybeLater": "Možda kasnije",
-      "orderForLater": "Naruči za kasnije"
+      "orderForLater": "Naruči za kasnije",
+      "addOne": "Dodaj",
+      "customize": "Prilagodi"
     },
     "resetForm": {
       "passwordTooShort": "Lozinka mora imati najmanje 8 znakova.",

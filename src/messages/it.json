@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Disponibile {window}",
       "notUsableNowBody": "Questa offerta non può essere riscattata ora per un ordine immediato. Puoi comunque programmare il tuo ordine per più tardi, negli orari in cui questa offerta è disponibile.",
       "maybeLater": "Forse più tardi",
-      "orderForLater": "Ordina per dopo"
+      "orderForLater": "Ordina per dopo",
+      "addOne": "Aggiungi",
+      "customize": "Personalizza"
     },
     "resetForm": {
       "passwordTooShort": "La password deve contenere almeno 8 caratteri.",

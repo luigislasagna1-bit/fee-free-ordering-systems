@@ -1,0 +1,8 @@
+{
+  "customer.promoDetail.addOne": {
+    "en": "Add", "ar": "إضافة", "bg": "Добави", "ca": "Afegeix", "cs": "Přidat", "da": "Tilføj", "de": "Hinzufügen", "el": "Προσθήκη", "es": "Añadir", "et": "Lisa", "fi": "Lisää", "fr": "Ajouter", "he": "הוסף", "hi": "जोड़ें", "hr": "Dodaj", "hu": "Hozzáadás", "id": "Tambah", "it": "Aggiungi", "ja": "追加", "ko": "추가", "lt": "Pridėti", "lv": "Pievienot", "nb": "Legg til", "nl": "Toevoegen", "pl": "Dodaj", "pt-BR": "Adicionar", "pt": "Adicionar", "ro": "Adaugă", "ru": "Добавить", "sk": "Pridať", "sl": "Dodaj", "sr": "Додај", "sv": "Lägg till", "th": "เพิ่ม", "tr": "Ekle", "uk": "Додати", "vi": "Thêm", "zh": "添加"
+  },
+  "customer.promoDetail.customize": {
+    "en": "Customize", "ar": "تخصيص", "bg": "Персонализиране", "ca": "Personalitza", "cs": "Přizpůsobit", "da": "Tilpas", "de": "Anpassen", "el": "Προσαρμογή", "es": "Personalizar", "et": "Kohanda", "fi": "Mukauta", "fr": "Personnaliser", "he": "התאמה אישית", "hi": "अनुकूलित करें", "hr": "Prilagodi", "hu": "Testreszabás", "id": "Sesuaikan", "it": "Personalizza", "ja": "カスタマイズ", "ko": "맞춤 설정", "lt": "Tinkinti", "lv": "Pielāgot", "nb": "Tilpass", "nl": "Aanpassen", "pl": "Dostosuj", "pt-BR": "Personalizar", "pt": "Personalizar", "ro": "Personalizează", "ru": "Настроить", "sk": "Prispôsobiť", "sl": "Prilagodi", "sr": "Прилагоди", "sv": "Anpassa", "th": "ปรับแต่ง", "tr": "Özelleştir", "uk": "Налаштувати", "vi": "Tùy chỉnh", "zh": "自定义"
+  }
+}

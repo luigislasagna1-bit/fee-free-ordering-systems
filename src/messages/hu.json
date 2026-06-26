@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Elérhető: {window}",
       "notUsableNowBody": "Ez az ajánlat jelenleg nem váltható be azonnali rendeléshez. A rendelést azonban beütemezheted egy későbbi időpontra, amikor ez az ajánlat elérhető.",
       "maybeLater": "Talán később",
-      "orderForLater": "Rendelés későbbre"
+      "orderForLater": "Rendelés későbbre",
+      "addOne": "Hozzáadás",
+      "customize": "Testreszabás"
     },
     "resetForm": {
       "passwordTooShort": "A jelszónak legalább 8 karakterből kell állnia.",

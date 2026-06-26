@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Tillgängligt {window}",
       "notUsableNowBody": "Det här erbjudandet kan inte användas för en beställning så snart som möjligt just nu. Du kan fortfarande schemalägga din beställning för senare, inom de tider då erbjudandet är tillgängligt.",
       "maybeLater": "Kanske senare",
-      "orderForLater": "Beställ för senare"
+      "orderForLater": "Beställ för senare",
+      "addOne": "Lägg till",
+      "customize": "Anpassa"
     },
     "resetForm": {
       "passwordTooShort": "Lösenordet måste vara minst 8 tecken.",

@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "{window} saatleri arasında geçerli",
       "notUsableNowBody": "Bu fırsat şu anda hemen teslim (ASAP) siparişlerinde kullanılamıyor. Yine de siparişinizi, bu fırsatın geçerli olduğu saatler içinde olacak şekilde ileri bir zamana planlayabilirsiniz.",
       "maybeLater": "Belki daha sonra",
-      "orderForLater": "İleri bir zamana sipariş ver"
+      "orderForLater": "İleri bir zamana sipariş ver",
+      "addOne": "Ekle",
+      "customize": "Özelleştir"
     },
     "resetForm": {
       "passwordTooShort": "Şifre en az 8 karakter olmalıdır.",

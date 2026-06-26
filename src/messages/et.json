@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Saadaval {window}",
       "notUsableNowBody": "Seda pakkumist ei saa praegu kohese tellimuse jaoks lunastada. Saad oma tellimuse siiski hilisemaks ajaks ette planeerida, selle pakkumise kehtivusaja piires.",
       "maybeLater": "Võib-olla hiljem",
-      "orderForLater": "Telli hilisemaks"
+      "orderForLater": "Telli hilisemaks",
+      "addOne": "Lisa",
+      "customize": "Kohanda"
     },
     "resetForm": {
       "passwordTooShort": "Parool peab olema vähemalt 8 tähemärki.",

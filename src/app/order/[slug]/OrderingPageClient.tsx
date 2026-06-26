@@ -3297,6 +3297,9 @@ export function OrderingPageClient({
       imageUrl: mi.imageUrl,
       categoryId: mi.categoryId,
       variants: (mi.variants ?? []).map((v) => ({ id: v.id, name: v.name, price: v.price })),
+      // "+ Add" quick-add is only offered for truly-simple items (no size choice + no modifier
+      // groups at all); anything with options opens the customizer. Fabrizio 2026-06-25.
+      requiresChoice: !!(mi as any).hasVariants || (((mi as any).modifierGroups?.length) ?? 0) > 0,
     })),
   );
 
@@ -5395,6 +5398,18 @@ export function OrderingPageClient({
               setActivePromoModal(null);
               setTimeout(() => openItem(full), 0);
             }
+          }}
+          // Group the promo's eligible items by their menu category (Fabrizio 2026-06-25).
+          allVisibleCategories={visibleCategories.map((c) => ({ id: c.id, name: c.name }))}
+          // Quick-add a SIMPLE eligible item (no options) straight to the cart, staying on the
+          // promo screen so several can be added. Items with options use onOpenItem instead.
+          onAddItemDirect={(menuItemId) => {
+            const full = restaurant.menuCategories
+              ?.flatMap((c: any) => c.menuItems)
+              ?.find((m: any) => m?.id === menuItemId);
+            if (!full) return;
+            setCart((prev) => [...prev, { menuItem: full, variant: undefined, quantity: 1, selectedMods: {}, notes: "", lineTotal: full.price }]);
+            toast.success(tT("itemAddedNamed", { name: full.name }));
           }}
           onClose={() => setActivePromoModal(null)}
         />

@@ -5384,7 +5384,9 @@
       "notUsableNowTitleWindow": "Áp dụng trong khung giờ {window}",
       "notUsableNowBody": "Ưu đãi này hiện chưa thể áp dụng cho đơn hàng giao ngay (ASAP). Bạn vẫn có thể đặt đơn cho thời điểm sau, trong khung giờ mà ưu đãi này được áp dụng.",
       "maybeLater": "Để sau",
-      "orderForLater": "Đặt cho sau"
+      "orderForLater": "Đặt cho sau",
+      "addOne": "Thêm",
+      "customize": "Tùy chỉnh"
     },
     "resetForm": {
       "passwordTooShort": "Mật khẩu phải có ít nhất 8 ký tự.",
