@@ -2273,7 +2273,11 @@ export function OrderingPageClient({
   // resolveServiceHours() returns the per-service-resolved 7-day rows (service row →
   // default fallback → closed), matching CheckoutModal's serviceKind map so the ASAP
   // check and the schedule picker agree on the same hours.
-  const orderServiceKind: ServiceKind = orderType === "delivery" ? "delivery" : "pickup";
+  // dine_in / take_out have NO service-specific hours rows → resolve to null so
+  // pickHoursForService falls back to the GENERAL row (open now), not pickup's. They used to
+  // collapse to "pickup" and wrongly inherit pickup's later start + "Pickup" label. Luigi 2026-06-25.
+  const orderServiceKind: ServiceKind | null =
+    orderType === "delivery" ? "delivery" : orderType === "pickup" ? "pickup" : null;
   const serviceHoursForClient = resolveServiceHours((restaurant.openingHours ?? []) as any, orderServiceKind);
   const serviceStatusForClient = liveOpenStatus(
     serviceHoursForClient as any, new Date(), hoursFmt, holidayForStatus, restaurantTz,
@@ -5252,7 +5256,7 @@ export function OrderingPageClient({
           fulfilItemNames={fulfilItemNames}
           schedulingEnabled={schedulingEnabled}
           scheduleReason={scheduleReason}
-          serviceLabel={orderServiceKind === "delivery" ? t("delivery") : t("pickup")}
+          serviceLabel={orderType === "delivery" ? t("delivery") : orderType === "pickup" ? t("pickup") : orderType === "dine_in" ? t("dineIn") : t("takeOut")}
           closedNextOpenLocal={closedMinScheduledLocal}
           schedulingInterval={perServiceSlotInterval}
           schedulingMode={perServiceSlotMode}

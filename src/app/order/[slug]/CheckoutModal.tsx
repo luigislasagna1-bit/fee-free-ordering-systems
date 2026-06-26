@@ -1255,7 +1255,7 @@ export function CheckoutModal({
                     let winClose = "22:00";
                     if (datePart) {
                       const dow = new Date(`${datePart}T12:00:00`).getDay();
-                      const serviceKind = orderType === "delivery" ? "delivery" : "pickup";
+                      const serviceKind = orderType === "delivery" ? "delivery" : orderType === "pickup" ? "pickup" : null; // dine_in/take_out follow general hours
                       const row = pickHoursForService(openingHours as any, dow, serviceKind);
                       // SPLIT HOURS: a day may open more than once (lunch + dinner).
                       // rowIntervals() returns every window (legacy single-window rows
