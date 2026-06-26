@@ -3206,7 +3206,9 @@
       "successMessage": "Kupong <couponCode>{code}</couponCode> ({discount}) tilldelad till {customerName}.",
       "buttonCreate": "Skapa och tilldela kupong",
       "emailSent": "Kunden har fått koden och villkoren via e-post.",
-      "emailSkipped": "Inget e-postmeddelande skickades (kunden saknar e-postadress eller har tackat nej till marknadsföring) – dela koden med kunden själv."
+      "emailSkipped": "Inget e-postmeddelande skickades (kunden saknar e-postadress eller har tackat nej till marknadsföring) – dela koden med kunden själv.",
+      "labelOrderType": "Gäller för",
+      "labelStacking": "Kombinera med andra kampanjer"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Köksarbetsflöde",

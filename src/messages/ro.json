@@ -3206,7 +3206,9 @@
       "successMessage": "Cuponul <couponCode>{code}</couponCode> ({discount}) a fost atribuit lui {customerName}.",
       "buttonCreate": "Creează și atribuie cupon",
       "emailSent": "Clientul a primit prin e-mail codul și condițiile.",
-      "emailSkipped": "Nu s-a trimis niciun e-mail (clientul nu are o adresă de e-mail salvată sau a refuzat comunicările de marketing) — transmite-i chiar tu codul."
+      "emailSkipped": "Nu s-a trimis niciun e-mail (clientul nu are o adresă de e-mail salvată sau a refuzat comunicările de marketing) — transmite-i chiar tu codul.",
+      "labelOrderType": "Valabil pentru",
+      "labelStacking": "Combină cu alte promoții"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Flux de lucru bucătărie",

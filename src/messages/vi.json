@@ -3206,7 +3206,9 @@
       "successMessage": "Phiếu giảm giá <couponCode>{code}</couponCode> ({discount}) đã được gán cho {customerName}.",
       "buttonCreate": "Tạo & gán phiếu giảm giá",
       "emailSent": "Đã gửi email mã và điều kiện cho khách hàng.",
-      "emailSkipped": "Chưa gửi email (khách hàng không có email trong hồ sơ hoặc đã từ chối nhận thông tin tiếp thị) — hãy tự chia sẻ mã với họ."
+      "emailSkipped": "Chưa gửi email (khách hàng không có email trong hồ sơ hoặc đã từ chối nhận thông tin tiếp thị) — hãy tự chia sẻ mã với họ.",
+      "labelOrderType": "Áp dụng cho",
+      "labelStacking": "Kết hợp với khuyến mãi khác"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Quy trình bếp",

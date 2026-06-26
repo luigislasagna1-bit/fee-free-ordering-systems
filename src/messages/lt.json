@@ -3206,7 +3206,9 @@
       "successMessage": "Kuponas <couponCode>{code}</couponCode> ({discount}) priskirtas {customerName}.",
       "buttonCreate": "Sukurti ir priskirti kuponą",
       "emailSent": "Klientui el. paštu išsiųstas kodas ir sąlygos.",
-      "emailSkipped": "El. laiškas neišsiųstas (klientas neturi registruoto el. pašto arba atsisakė rinkodaros pranešimų) — perduokite kodą jam patys."
+      "emailSkipped": "El. laiškas neišsiųstas (klientas neturi registruoto el. pašto arba atsisakė rinkodaros pranešimų) — perduokite kodą jam patys.",
+      "labelOrderType": "Galioja",
+      "labelStacking": "Derinti su kitomis akcijomis"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Virtuvės darbo eiga",

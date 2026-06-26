@@ -3206,7 +3206,9 @@
       "successMessage": "Coupon <couponCode>{code}</couponCode> ({discount}) attribué à {customerName}.",
       "buttonCreate": "Créer et attribuer le coupon",
       "emailSent": "Le code et les conditions ont été envoyés par e-mail au client.",
-      "emailSkipped": "Aucun e-mail envoyé (le client n’a pas d’adresse e-mail enregistrée ou a refusé les communications marketing) — communiquez-lui le code vous-même."
+      "emailSkipped": "Aucun e-mail envoyé (le client n’a pas d’adresse e-mail enregistrée ou a refusé les communications marketing) — communiquez-lui le code vous-même.",
+      "labelOrderType": "Valable pour",
+      "labelStacking": "Cumuler avec d'autres promotions"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Flux de travail cuisine",

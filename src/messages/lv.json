@@ -3206,7 +3206,9 @@
       "successMessage": "Kupons <couponCode>{code}</couponCode> ({discount}) piešķirts {customerName}.",
       "buttonCreate": "Izveidot un piešķirt kuponu",
       "emailSent": "Klientam pa e-pastu nosūtīts kods un nosacījumi.",
-      "emailSkipped": "E-pasts netika nosūtīts (klientam nav reģistrēta e-pasta vai viņš atteicies no mārketinga paziņojumiem) — nododiet kodu viņam pats."
+      "emailSkipped": "E-pasts netika nosūtīts (klientam nav reģistrēta e-pasta vai viņš atteicies no mārketinga paziņojumiem) — nododiet kodu viņam pats.",
+      "labelOrderType": "Derīgs",
+      "labelStacking": "Apvienot ar citām akcijām"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Virtuves darbplūsma",

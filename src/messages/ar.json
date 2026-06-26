@@ -3206,7 +3206,9 @@
       "successMessage": "تم تعيين القسيمة <couponCode>{code}</couponCode> ({discount}) لـ {customerName}.",
       "buttonCreate": "إنشاء وتعيين القسيمة",
       "emailSent": "تم إرسال الرمز والشروط إلى العميل عبر البريد الإلكتروني.",
-      "emailSkipped": "لم يُرسل أي بريد إلكتروني (لا يوجد بريد إلكتروني مسجل للعميل أو أنه رفض الرسائل التسويقية) — شارك الرمز معه بنفسك."
+      "emailSkipped": "لم يُرسل أي بريد إلكتروني (لا يوجد بريد إلكتروني مسجل للعميل أو أنه رفض الرسائل التسويقية) — شارك الرمز معه بنفسك.",
+      "labelOrderType": "صالح لـ",
+      "labelStacking": "الدمج مع العروض الأخرى"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "سير عمل المطبخ",

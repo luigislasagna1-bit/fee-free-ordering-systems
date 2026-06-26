@@ -3206,7 +3206,9 @@
       "successMessage": "A <couponCode>{code}</couponCode> ({discount}) kupon hozzárendelve: {customerName}.",
       "buttonCreate": "Kupon létrehozása és hozzárendelése",
       "emailSent": "A vásárló e-mailben megkapta a kódot és a feltételeket.",
-      "emailSkipped": "Nem küldtünk e-mailt (a vásárlónak nincs megadott e-mail-címe, vagy nem kért marketingüzeneteket) — ossza meg vele a kódot saját maga."
+      "emailSkipped": "Nem küldtünk e-mailt (a vásárlónak nincs megadott e-mail-címe, vagy nem kért marketingüzeneteket) — ossza meg vele a kódot saját maga.",
+      "labelOrderType": "Érvényes",
+      "labelStacking": "Kombinálás más akciókkal"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Konyhai munkafolyamat",

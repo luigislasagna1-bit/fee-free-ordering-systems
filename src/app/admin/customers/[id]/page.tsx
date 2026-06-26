@@ -21,7 +21,7 @@ import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { formatDate, formatCurrency as fmtCurrency } from "@/lib/utils";
 import { getRestaurantCurrency } from "@/lib/restaurant-currency";
-import { AssignCouponForm } from "./AssignCouponForm";
+import { AssignPromotionForm } from "./AssignPromotionForm";
 import { CustomerActionsCard } from "./CustomerActionsCard";
 
 export const dynamic = "force-dynamic";
@@ -60,7 +60,7 @@ export default async function CustomerDetailPage({
   const hasAccount = !!customer.passwordHash;
   const now = new Date();
 
-  const [orders, coupons] = await Promise.all([
+  const [orders, grants] = await Promise.all([
     prisma.order.findMany({
       where: { customerId: customer.id },
       orderBy: { createdAt: "desc" },
@@ -70,13 +70,23 @@ export default async function CustomerDetailPage({
         createdAt: true, type: true,
       },
     }),
-    prisma.coupon.findMany({
-      where: { restaurantId, customerId: customer.id },
-      orderBy: { createdAt: "desc" },
+    // Promotions assigned to THIS customer (CustomerCoupon grants — the new
+    // model that replaced standalone personal coupons). Matched by customerId
+    // OR email so an email-keyed grant (created before they had an account)
+    // still shows. Luigi 2026-06-26.
+    prisma.customerCoupon.findMany({
+      where: {
+        restaurantId,
+        status: { in: ["granted", "applied", "redeemed"] },
+        OR: [
+          { customerId: customer.id },
+          ...(customer.email ? [{ email: { equals: customer.email.toLowerCase(), mode: "insensitive" as const } }] : []),
+        ],
+      },
+      orderBy: { grantedAt: "desc" },
       select: {
-        id: true, code: true, description: true, discountType: true,
-        discountValue: true, minimumOrder: true, maxUses: true,
-        usedCount: true, isActive: true, expiresAt: true, createdAt: true,
+        id: true, code: true, status: true,
+        promotion: { select: { name: true, promotionType: true, ruleConfig: true, minimumOrder: true, isActive: true, endsAt: true } },
       },
     }),
   ]);
@@ -176,40 +186,38 @@ export default async function CustomerDetailPage({
             ? " " + t("assignCouponHasAccount")
             : " " + t("assignCouponGuest")}
         </p>
-        <AssignCouponForm customerId={customer.id} customerName={customer.name} />
+        <AssignPromotionForm customerId={customer.id} customerName={customer.name} />
 
-        {/* Coupons assigned to this customer */}
-        {coupons.length > 0 && (
+        {/* Promotions assigned to this customer (CustomerCoupon grants) */}
+        {grants.length > 0 && (
           <div className="mt-6 pt-6 border-t border-gray-100">
             <h3 className="text-sm font-bold text-gray-900 mb-3">
-              {t("assignedCouponsHeading", { count: coupons.length })}
+              {t("assignedCouponsHeading", { count: grants.length })}
             </h3>
             <ul className="space-y-2">
-              {coupons.map((c) => {
-                const discount = c.discountType === "percentage"
-                  ? t("discountPercent", { value: c.discountValue })
-                  : t("discountFixed", { value: formatCurrency(c.discountValue) });
-                const isActiveStatus = c.isActive
-                  && !(c.expiresAt && new Date(c.expiresAt) < now)
-                  && !(c.maxUses !== null && c.usedCount >= c.maxUses);
-                const status = !c.isActive ? t("statusDisabled")
-                  : c.expiresAt && new Date(c.expiresAt) < now ? t("statusExpired")
-                  : c.maxUses !== null && c.usedCount >= c.maxUses ? t("statusUsedUp")
+              {grants.map((g) => {
+                const rc = (g.promotion?.ruleConfig ?? {}) as { discountPercent?: number; discountAmount?: number };
+                const discount = g.promotion?.promotionType === "percentage_off"
+                  ? t("discountPercent", { value: rc.discountPercent ?? 0 })
+                  : t("discountFixed", { value: formatCurrency(rc.discountAmount ?? 0) });
+                const expired = g.promotion?.endsAt && new Date(g.promotion.endsAt) < now;
+                const status = g.status === "redeemed" ? t("statusUsedUp")
+                  : g.promotion && !g.promotion.isActive ? t("statusDisabled")
+                  : expired ? t("statusExpired")
                   : t("statusActive");
-                const statusClass = isActiveStatus
+                const statusClass = status === t("statusActive")
                   ? "bg-emerald-100 text-emerald-700"
                   : "bg-gray-100 text-gray-600";
                 return (
-                  <li key={c.id} className="flex items-center justify-between gap-3 py-2 px-3 rounded-lg border border-gray-100 flex-wrap">
+                  <li key={g.id} className="flex items-center justify-between gap-3 py-2 px-3 rounded-lg border border-gray-100 flex-wrap">
                     <div className="min-w-0">
                       <div className="text-sm font-bold text-gray-900">
-                        <code className="font-mono">{c.code}</code> — {discount}
+                        <code className="font-mono">{g.code}</code> — {discount}
                       </div>
                       <div className="text-[11px] text-gray-500 mt-0.5">
-                        {c.description}
-                        {c.minimumOrder > 0 && <> · {t("couponMin", { amount: formatCurrency(c.minimumOrder) })}</>}
-                        {c.maxUses !== null && <> · {t("couponUsed", { used: c.usedCount, max: c.maxUses })}</>}
-                        {c.expiresAt && <> · {t("couponExpires", { date: new Date(c.expiresAt).toLocaleDateString() })}</>}
+                        {g.promotion?.name}
+                        {(g.promotion?.minimumOrder ?? 0) > 0 && <> · {t("couponMin", { amount: formatCurrency(g.promotion!.minimumOrder) })}</>}
+                        {expired && <> · {t("couponExpires", { date: new Date(g.promotion!.endsAt!).toLocaleDateString() })}</>}
                       </div>
                     </div>
                     <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${statusClass}`}>

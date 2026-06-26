@@ -3206,7 +3206,9 @@
       "successMessage": "クーポン <couponCode>{code}</couponCode>（{discount}）を {customerName} に付与しました。",
       "buttonCreate": "クーポンを作成して付与する",
       "emailSent": "コードと利用条件をお客様にメールで送信しました。",
-      "emailSkipped": "メールは送信されていません（お客様のメールアドレスが未登録か、マーケティング配信を拒否しています）— コードは直接お伝えください。"
+      "emailSkipped": "メールは送信されていません（お客様のメールアドレスが未登録か、マーケティング配信を拒否しています）— コードは直接お伝えください。",
+      "labelOrderType": "対象",
+      "labelStacking": "他のプロモーションと併用"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "キッチンワークフロー",

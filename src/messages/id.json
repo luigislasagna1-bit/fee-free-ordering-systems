@@ -3206,7 +3206,9 @@
       "successMessage": "Kupon <couponCode>{code}</couponCode> ({discount}) telah ditetapkan untuk {customerName}.",
       "buttonCreate": "Buat & tetapkan kupon",
       "emailSent": "Kode dan ketentuannya telah dikirim ke pelanggan melalui email.",
-      "emailSkipped": "Email tidak dikirim (pelanggan tidak punya email terdaftar atau menolak komunikasi pemasaran) — bagikan kodenya secara langsung."
+      "emailSkipped": "Email tidak dikirim (pelanggan tidak punya email terdaftar atau menolak komunikasi pemasaran) — bagikan kodenya secara langsung.",
+      "labelOrderType": "Berlaku untuk",
+      "labelStacking": "Gabungkan dengan promosi lain"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Alur kerja dapur",

@@ -3206,7 +3206,9 @@
       "successMessage": "Cupó <couponCode>{code}</couponCode> ({discount}) assignat a {customerName}.",
       "buttonCreate": "Crear i assignar cupó",
       "emailSent": "S'ha enviat al client un correu amb el codi i les condicions.",
-      "emailSkipped": "No s'ha enviat cap correu (el client no té correu registrat o ha rebutjat les comunicacions de màrqueting) — comparteix-li el codi directament."
+      "emailSkipped": "No s'ha enviat cap correu (el client no té correu registrat o ha rebutjat les comunicacions de màrqueting) — comparteix-li el codi directament.",
+      "labelOrderType": "Vàlid per a",
+      "labelStacking": "Combinar amb altres promocions"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Flux de treball de cuina",

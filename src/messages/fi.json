@@ -3206,7 +3206,9 @@
       "successMessage": "Kuponki <couponCode>{code}</couponCode> ({discount}) on myönnetty asiakkaalle {customerName}.",
       "buttonCreate": "Luo ja myönnä kuponki",
       "emailSent": "Asiakkaalle on lähetetty sähköpostitse koodi ja ehdot.",
-      "emailSkipped": "Sähköpostia ei lähetetty (asiakkaalla ei ole sähköpostiosoitetta tallennettuna tai hän on kieltäytynyt markkinoinnista) — jaa koodi hänelle itse."
+      "emailSkipped": "Sähköpostia ei lähetetty (asiakkaalla ei ole sähköpostiosoitetta tallennettuna tai hän on kieltäytynyt markkinoinnista) — jaa koodi hänelle itse.",
+      "labelOrderType": "Voimassa",
+      "labelStacking": "Yhdistä muihin tarjouksiin"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Keittiön työnkulku",

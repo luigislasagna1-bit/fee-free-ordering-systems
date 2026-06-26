@@ -3206,7 +3206,9 @@
       "successMessage": "Kupong <couponCode>{code}</couponCode> ({discount}) tildelt {customerName}.",
       "buttonCreate": "Opprett og tildel kupong",
       "emailSent": "Kunden har fått koden og vilkårene tilsendt på e-post.",
-      "emailSkipped": "Ingen e-post ble sendt (kunden mangler e-postadresse eller har reservert seg mot markedsføring) – du må dele koden med kunden selv."
+      "emailSkipped": "Ingen e-post ble sendt (kunden mangler e-postadresse eller har reservert seg mot markedsføring) – du må dele koden med kunden selv.",
+      "labelOrderType": "Gjelder for",
+      "labelStacking": "Kombiner med andre kampanjer"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Kjøkkenarbeidsflyt",

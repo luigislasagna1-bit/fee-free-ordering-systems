@@ -3206,7 +3206,9 @@
       "successMessage": "Kupon <couponCode>{code}</couponCode> ({discount}) dodijeljen korisniku {customerName}.",
       "buttonCreate": "Stvori i dodijeli kupon",
       "emailSent": "Kupcu su e-poštom poslani kod i uvjeti.",
-      "emailSkipped": "E-pošta nije poslana (kupac nema spremljenu e-adresu ili je odbio primanje marketinških poruka) — sami mu prenesite kod."
+      "emailSkipped": "E-pošta nije poslana (kupac nema spremljenu e-adresu ili je odbio primanje marketinških poruka) — sami mu prenesite kod.",
+      "labelOrderType": "Vrijedi za",
+      "labelStacking": "Kombiniraj s drugim promocijama"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Tijek rada kuhinje",

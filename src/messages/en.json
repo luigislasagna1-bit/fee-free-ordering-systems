@@ -3644,7 +3644,9 @@
       "successMessage": "Coupon <couponCode>{code}</couponCode> ({discount}) assigned to {customerName}.",
       "buttonCreate": "Create & assign coupon",
       "emailSent": "The customer has been emailed the code and conditions.",
-      "emailSkipped": "No email sent (customer has no email on file or opted out of marketing) — share the code with them yourself."
+      "emailSkipped": "No email sent (customer has no email on file or opted out of marketing) — share the code with them yourself.",
+      "labelOrderType": "Valid for",
+      "labelStacking": "Combine with other promotions"
     },
     "legalPageShell": {
       "backToHome": "Back to Fee Free Ordering",

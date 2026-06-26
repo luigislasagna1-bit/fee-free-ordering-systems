@@ -3206,7 +3206,9 @@
       "successMessage": "<couponCode>{code}</couponCode> kuponu ({discount}) {customerName} kişisine atandı.",
       "buttonCreate": "Kupon oluştur ve ata",
       "emailSent": "Kod ve koşullar müşteriye e-postayla gönderildi.",
-      "emailSkipped": "E-posta gönderilmedi (müşterinin kayıtlı e-postası yok veya pazarlama iletişimini reddetti) — kodu kendisiyle siz paylaşın."
+      "emailSkipped": "E-posta gönderilmedi (müşterinin kayıtlı e-postası yok veya pazarlama iletişimini reddetti) — kodu kendisiyle siz paylaşın.",
+      "labelOrderType": "Geçerli",
+      "labelStacking": "Diğer promosyonlarla birleştir"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Mutfak iş akışı",

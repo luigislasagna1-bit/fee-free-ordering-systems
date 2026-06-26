@@ -3206,7 +3206,9 @@
       "successMessage": "קופון <couponCode>{code}</couponCode> ({discount}) הוקצה ל-{customerName}.",
       "buttonCreate": "צור והקצה קופון",
       "emailSent": "הקוד והתנאים נשלחו ללקוח במייל.",
-      "emailSkipped": "לא נשלח מייל (ללקוח אין כתובת מייל רשומה או שהוא סירב לקבל דיוור שיווקי) — מסור לו את הקוד בעצמך."
+      "emailSkipped": "לא נשלח מייל (ללקוח אין כתובת מייל רשומה או שהוא סירב לקבל דיוור שיווקי) — מסור לו את הקוד בעצמך.",
+      "labelOrderType": "תקף עבור",
+      "labelStacking": "שילוב עם מבצעים אחרים"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "תהליך עבודה במטבח",

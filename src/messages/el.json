@@ -3206,7 +3206,9 @@
       "successMessage": "Το κουπόνι <couponCode>{code}</couponCode> ({discount}) αποδόθηκε στον {customerName}.",
       "buttonCreate": "Δημιουργία & ανάθεση κουπονιού",
       "emailSent": "Ο κωδικός και οι όροι έχουν σταλεί στον πελάτη με email.",
-      "emailSkipped": "Δεν στάλθηκε email (ο πελάτης δεν έχει καταχωρημένο email ή έχει εξαιρεθεί από το μάρκετινγκ) — μοιραστείτε εσείς τον κωδικό μαζί του."
+      "emailSkipped": "Δεν στάλθηκε email (ο πελάτης δεν έχει καταχωρημένο email ή έχει εξαιρεθεί από το μάρκετινγκ) — μοιραστείτε εσείς τον κωδικό μαζί του.",
+      "labelOrderType": "Ισχύει για",
+      "labelStacking": "Συνδυασμός με άλλες προσφορές"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Ροή εργασίας κουζίνας",

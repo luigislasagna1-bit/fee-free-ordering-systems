@@ -3206,7 +3206,9 @@
       "successMessage": "优惠券 <couponCode>{code}</couponCode>（{discount}）已分配给 {customerName}。",
       "buttonCreate": "创建并分配优惠券",
       "emailSent": "已通过电子邮件将优惠码和使用条件发送给客户。",
-      "emailSkipped": "未发送电子邮件（客户未登记邮箱或已拒绝接收营销信息）— 请自行将优惠码告知客户。"
+      "emailSkipped": "未发送电子邮件（客户未登记邮箱或已拒绝接收营销信息）— 请自行将优惠码告知客户。",
+      "labelOrderType": "适用于",
+      "labelStacking": "与其他促销叠加"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "厨房工作流程",

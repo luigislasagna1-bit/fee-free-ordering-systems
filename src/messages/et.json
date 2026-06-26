@@ -3206,7 +3206,9 @@
       "successMessage": "Kupong <couponCode>{code}</couponCode> ({discount}) on määratud kasutajale {customerName}.",
       "buttonCreate": "Loo ja määra kupong",
       "emailSent": "Kliendile saadeti e-kiri koodi ja tingimustega.",
-      "emailSkipped": "E-kirja ei saadetud (kliendil pole e-posti aadressi kirjas või ta on turundusteadetest loobunud) — jaga koodi temaga ise."
+      "emailSkipped": "E-kirja ei saadetud (kliendil pole e-posti aadressi kirjas või ta on turundusteadetest loobunud) — jaga koodi temaga ise.",
+      "labelOrderType": "Kehtib",
+      "labelStacking": "Kombineeri teiste pakkumistega"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Köögi töövoog",

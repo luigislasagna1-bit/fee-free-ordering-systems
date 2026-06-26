@@ -3206,7 +3206,9 @@
       "successMessage": "Kupón <couponCode>{code}</couponCode> ({discount}) přiřazen zákazníkovi {customerName}.",
       "buttonCreate": "Vytvořit a přiřadit kupón",
       "emailSent": "Zákazníkovi byl e-mailem odeslán kód a podmínky.",
-      "emailSkipped": "E-mail nebyl odeslán (zákazník nemá uvedený e-mail, nebo odmítl marketingová sdělení) — kód mu předejte sami."
+      "emailSkipped": "E-mail nebyl odeslán (zákazník nemá uvedený e-mail, nebo odmítl marketingová sdělení) — kód mu předejte sami.",
+      "labelOrderType": "Platí pro",
+      "labelStacking": "Kombinovat s jinými akcemi"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Kuchyňský pracovní postup",

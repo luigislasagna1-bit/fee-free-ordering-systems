@@ -3206,7 +3206,9 @@
       "successMessage": "Gutschein <couponCode>{code}</couponCode> ({discount}) wurde {customerName} zugewiesen.",
       "buttonCreate": "Gutschein erstellen & zuweisen",
       "emailSent": "Der Kunde hat den Code und die Bedingungen per E-Mail erhalten.",
-      "emailSkipped": "Keine E-Mail gesendet (keine E-Mail-Adresse hinterlegt oder Marketing abgelehnt) — teilen Sie dem Kunden den Code selbst mit."
+      "emailSkipped": "Keine E-Mail gesendet (keine E-Mail-Adresse hinterlegt oder Marketing abgelehnt) — teilen Sie dem Kunden den Code selbst mit.",
+      "labelOrderType": "Gültig für",
+      "labelStacking": "Mit anderen Aktionen kombinieren"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Küchenworkflow",
