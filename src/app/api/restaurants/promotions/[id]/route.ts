@@ -12,15 +12,14 @@ import {
   clampMin,
   normalizeBannerHeadline,
   normalizeCustomerType,
-  normalizeDisplayMode,
   normalizeImageUrl,
   normalizeJsonStringList,
-  normalizeLimitedShowtime,
   normalizeNonNegativeFloat,
   normalizeOrderType,
   normalizeRuleConfig,
   normalizeStackingRule,
   normalizeChannel,
+  resolveDisplayFields,
 } from "@/lib/promo-fields";
 
 async function getRestaurantId() {
@@ -40,7 +39,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     daysOfWeek, startsAt, endsAt, usageLimit, autoApply, couponCode,
     scope, channel,
     usableHourStart, usableHourEnd, showOnBanner, bannerHeadline,
-    paymentMethodSlugs, deliveryZoneIds, onceLifetimePerClient, limitedShowtimeSchedules,
+    paymentMethodSlugs, deliveryZoneIds, onceLifetimePerClient,
     imageUrl, displayMode, highlightThreshold,
   } = body;
 
@@ -97,6 +96,22 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     }
   }
 
+  // VISIBLE/HIDDEN invariant (Luigi 2026-06-26). The wizard sends the full form
+  // on save (so displayMode is present) — resolve all three display fields
+  // together. Partial toggles (e.g. just isActive from the list page) omit
+  // displayMode and keep the per-field behaviour below.
+  let displayUpdate: Record<string, unknown> = {};
+  if (displayMode !== undefined) {
+    const display = resolveDisplayFields({ displayMode, autoApply, showOnBanner, couponCode });
+    if (display.error === "code_required") {
+      return NextResponse.json({ error: "A code-required promotion needs a coupon code.", code: "code_required" }, { status: 400 });
+    }
+    displayUpdate = { displayMode: display.displayMode, autoApply: display.autoApply, showOnBanner: display.showOnBanner };
+  } else {
+    if (autoApply !== undefined) displayUpdate.autoApply = autoApply;
+    if (showOnBanner !== undefined) displayUpdate.showOnBanner = !!showOnBanner;
+  }
+
   const promo = await prisma.promotion.update({
     where: { id, restaurantId },
     data: {
@@ -120,21 +135,17 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       ...(startsAt !== undefined && { startsAt: startsAt ? new Date(startsAt) : null }),
       ...(endsAt !== undefined && { endsAt: endsAt ? new Date(endsAt) : null }),
       ...(usageLimit !== undefined && { usageLimit }),
-      ...(autoApply !== undefined && { autoApply }),
       ...(couponCode !== undefined && { couponCode: couponCode || null }),
       ...(usableHourStart !== undefined && { usableHourStart: clampMin(usableHourStart) }),
       ...(usableHourEnd !== undefined && { usableHourEnd: clampMin(usableHourEnd) }),
-      ...(showOnBanner !== undefined && { showOnBanner: !!showOnBanner }),
       ...(bannerHeadline !== undefined && { bannerHeadline: normalizeBannerHeadline(bannerHeadline) }),
       // Phase 2a restrictions + display fields
       ...(paymentMethodSlugs !== undefined && { paymentMethodSlugs: normalizeJsonStringList(paymentMethodSlugs, 8) }),
       ...(deliveryZoneIds !== undefined && { deliveryZoneIds: normalizeJsonStringList(deliveryZoneIds, 64) }),
       ...(onceLifetimePerClient !== undefined && { onceLifetimePerClient: !!onceLifetimePerClient }),
-      ...(limitedShowtimeSchedules !== undefined && {
-        limitedShowtimeSchedules: normalizeLimitedShowtime(limitedShowtimeSchedules) as object,
-      }),
       ...(imageUrl !== undefined && { imageUrl: normalizeImageUrl(imageUrl) }),
-      ...(displayMode !== undefined && { displayMode: normalizeDisplayMode(displayMode) }),
+      // displayMode + autoApply + showOnBanner resolved together (Visible/Hidden invariant).
+      ...displayUpdate,
       ...(channel !== undefined && { channel: normalizeChannel(channel) }),
       ...(highlightThreshold !== undefined && { highlightThreshold: normalizeNonNegativeFloat(highlightThreshold) }),
       ...(requiredAddOnSlugUpdate !== undefined && { requiredAddOnSlug: requiredAddOnSlugUpdate }),

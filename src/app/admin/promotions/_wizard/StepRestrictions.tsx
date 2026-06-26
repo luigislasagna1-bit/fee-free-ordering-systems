@@ -9,16 +9,10 @@
  * scroll.
  */
 
-import { Plus, Trash2, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { PROMO_DEFAULT_IMAGES } from "@/lib/promo-default-images";
-
-export type ShowtimeSchedule = {
-  dayOfWeek: number;
-  hourStart: number; // minutes since midnight
-  hourEnd: number;
-};
 
 export type Step3Form = {
   // Happy Hour
@@ -43,10 +37,8 @@ export type Step3Form = {
   stackingRule: string; // standard | exclusive | master
   // Acquisition channel — website | marketplace | both
   channel: string;
-  // Limited Showtime (display-time gate)
-  limitedShowtimeSchedules: ShowtimeSchedule[];
   // Display
-  displayMode: string; // menu_visible | hidden_coupon_only | popup
+  displayMode: string; // menu_visible (VISIBLE) | hidden_coupon_only (HIDDEN)
   highlightThreshold: string;
   imageUrl: string;
   // Coupon / activation
@@ -58,17 +50,6 @@ export type Step3Form = {
   // Active
   isActive: boolean;
 };
-
-function hhmmToMin(hhmm: string): number {
-  if (!hhmm) return 0;
-  const [h, m] = hhmm.split(":").map(Number);
-  return Math.max(0, Math.min(1440, (Number.isFinite(h) ? h : 0) * 60 + (Number.isFinite(m) ? m : 0)));
-}
-
-function minToHHMM(min: number): string {
-  const m = Math.max(0, Math.min(1440, Math.floor(min)));
-  return `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
-}
 
 export function StepRestrictions({
   form,
@@ -149,29 +130,6 @@ export function StepRestrictions({
       deliveryZoneIds: form.deliveryZoneIds.includes(id)
         ? form.deliveryZoneIds.filter((z) => z !== id)
         : [...form.deliveryZoneIds, id],
-    });
-  };
-
-  const addShowtime = () => {
-    setForm({
-      limitedShowtimeSchedules: [
-        ...form.limitedShowtimeSchedules,
-        { dayOfWeek: 1, hourStart: 720, hourEnd: 900 },
-      ],
-    });
-  };
-
-  const updateShowtime = (idx: number, patch: Partial<ShowtimeSchedule>) => {
-    setForm({
-      limitedShowtimeSchedules: form.limitedShowtimeSchedules.map((s, i) =>
-        i === idx ? { ...s, ...patch } : s,
-      ),
-    });
-  };
-
-  const removeShowtime = (idx: number) => {
-    setForm({
-      limitedShowtimeSchedules: form.limitedShowtimeSchedules.filter((_, i) => i !== idx),
     });
   };
 
@@ -465,111 +423,97 @@ export function StepRestrictions({
         </div>
       </Section>
 
-      {/* LIMITED SHOWTIME (visibility windows) */}
-      <Section
-        title={t("limitedShowtimeTitle")}
-        subtitle={t("limitedShowtimeSubtitle")}
-      >
-        <div className="space-y-2">
-          {form.limitedShowtimeSchedules.length === 0 && (
-            <p className="text-xs text-gray-400">
-              {t("limitedShowtimeEmpty")}
-            </p>
-          )}
-          {form.limitedShowtimeSchedules.map((s, i) => (
-            <div
-              key={i}
-              className="flex items-center gap-2 border border-gray-200 rounded-lg p-2 bg-white"
-            >
-              <select
-                value={s.dayOfWeek}
-                onChange={(e) =>
-                  updateShowtime(i, { dayOfWeek: parseInt(e.target.value, 10) })
-                }
-                className="border border-gray-200 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              >
-                {DAY_NAMES.map((d, idx) => (
-                  <option key={idx} value={idx}>
-                    {d}
-                  </option>
-                ))}
-              </select>
-              <input
-                type="time"
-                value={minToHHMM(s.hourStart)}
-                onChange={(e) =>
-                  updateShowtime(i, { hourStart: hhmmToMin(e.target.value) })
-                }
-                className="border border-gray-200 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              />
-              <span className="text-xs text-gray-400">{t("showtimeTo")}</span>
-              <input
-                type="time"
-                value={minToHHMM(s.hourEnd)}
-                onChange={(e) =>
-                  updateShowtime(i, { hourEnd: hhmmToMin(e.target.value) })
-                }
-                className="border border-gray-200 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              />
-              <button
-                onClick={() => removeShowtime(i)}
-                className="ml-auto p-1.5 text-gray-300 hover:text-red-500"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
-            </div>
-          ))}
-          <button
-            onClick={addShowtime}
-            className="flex items-center gap-1.5 text-sm text-emerald-600 hover:text-emerald-700 font-medium"
-          >
-            <Plus className="w-3.5 h-3.5" /> {t("addShowtime")}
-          </button>
-        </div>
-      </Section>
-
-      {/* DISPLAY MODE */}
+      {/* VISIBILITY & REDEMPTION — Visible vs Hidden + how it applies.
+          Consolidates the old Display Mode / Activation / Banner sections and
+          drops the dead Limited Showtime + "popup" mode (Luigi 2026-06-26). */}
       <Section title={t("displayModeTitle")} subtitle={t("displayModeSubtitle")}>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {[
-            {
-              value: "menu_visible",
-              label: t("displayModeMenuVisibleLabel"),
-              desc: t("displayModeMenuVisibleDesc"),
-            },
-            {
-              value: "hidden_coupon_only",
-              label: t("displayModeCouponOnlyLabel"),
-              desc: t("displayModeCouponOnlyDesc"),
-            },
-            {
-              value: "popup",
-              label: t("displayModePopupLabel"),
-              desc: t("displayModePopupDesc"),
-            },
+            { value: "menu_visible", label: t("displayModeMenuVisibleLabel"), desc: t("displayModeMenuVisibleDesc") },
+            { value: "hidden_coupon_only", label: t("displayModeCouponOnlyLabel"), desc: t("displayModeCouponOnlyDesc") },
           ].map((opt) => {
             const active = form.displayMode === opt.value;
             return (
               <button
                 key={opt.value}
-                onClick={() => setForm({ displayMode: opt.value })}
+                type="button"
+                onClick={() =>
+                  opt.value === "hidden_coupon_only"
+                    ? setForm({ displayMode: "hidden_coupon_only", autoApply: false, showOnBanner: false })
+                    : setForm({ displayMode: "menu_visible" })
+                }
                 className={`text-left p-3 rounded-xl border-2 transition ${
-                  active
-                    ? "border-emerald-500 bg-emerald-50"
-                    : "border-gray-200 hover:border-emerald-200"
+                  active ? "border-emerald-500 bg-emerald-50" : "border-gray-200 hover:border-emerald-200"
                 }`}
               >
-                <div
-                  className={`text-sm font-semibold ${
-                    active ? "text-emerald-700" : "text-gray-700"
-                  }`}
-                >
-                  {opt.label}
-                </div>
+                <div className={`text-sm font-semibold ${active ? "text-emerald-700" : "text-gray-700"}`}>{opt.label}</div>
                 <div className="text-xs text-gray-500 leading-snug">{opt.desc}</div>
               </button>
             );
           })}
+        </div>
+
+        {/* Visible-only: how it applies (auto vs code) + banner pinning. */}
+        {form.displayMode !== "hidden_coupon_only" && (
+          <div className="mt-4 space-y-3">
+            <Toggle
+              label={t("autoApplyLabel")}
+              sub={form.autoApply ? t("autoApplyOnSub") : t("autoApplyOffSub")}
+              checked={form.autoApply}
+              onChange={(v) => setForm({ autoApply: v })}
+            />
+            <Toggle
+              label={t("showOnBannerLabel")}
+              sub={t("showOnBannerSub")}
+              checked={form.showOnBanner}
+              onChange={(v) => setForm({ showOnBanner: v })}
+            />
+            {form.showOnBanner && (
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">
+                  {t("bannerHeadlineLabel")} <span className="text-gray-400">{t("bannerHeadlineOptional")}</span>
+                </label>
+                <input
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  value={form.bannerHeadline}
+                  onChange={(e) => setForm({ bannerHeadline: e.target.value })}
+                  placeholder={t("bannerHeadlinePlaceholder")}
+                  maxLength={80}
+                />
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Hidden: code-only explainer. */}
+        {form.displayMode === "hidden_coupon_only" && (
+          <p className="mt-3 text-xs text-gray-500">{t("hiddenCodeInfo")}</p>
+        )}
+
+        {/* Coupon code — optional when auto-applying, REQUIRED otherwise (hidden,
+            or visible-but-not-auto). The server enforces the same invariant. */}
+        <div className="mt-3">
+          <label className="block text-xs text-gray-500 mb-1">
+            {t("couponCodeLabel")}{" "}
+            {!form.autoApply ? (
+              <span className="text-red-500 font-semibold">{t("couponCodeRequired")}</span>
+            ) : (
+              <span className="text-gray-400 font-normal">{t("couponCodeOptional")}</span>
+            )}
+          </label>
+          <input
+            className={`w-full sm:w-72 border rounded-lg px-3 py-2 text-sm font-mono uppercase focus:ring-2 focus:outline-none ${
+              !form.autoApply && !form.couponCode.trim()
+                ? "border-red-300 focus:ring-red-500"
+                : "border-gray-300 focus:ring-emerald-500"
+            }`}
+            value={form.couponCode}
+            onChange={(e) => setForm({ couponCode: e.target.value.toUpperCase() })}
+            placeholder={t("couponCodePlaceholder")}
+          />
+          {!form.autoApply && !form.couponCode.trim() && (
+            <p className="text-xs text-red-500 mt-1">{t("couponCodeMissingError")}</p>
+          )}
         </div>
       </Section>
 
@@ -645,71 +589,6 @@ export function StepRestrictions({
             </p>
           </div>
         </div>
-      </Section>
-
-      {/* ACTIVATION */}
-      <Section title={t("activationTitle")} subtitle={t("activationSubtitle")}>
-        <Toggle
-          label={t("autoApplyLabel")}
-          sub={
-            form.autoApply
-              ? t("autoApplyOnSub")
-              : t("autoApplyOffSub")
-          }
-          checked={form.autoApply}
-          onChange={(v) => setForm({ autoApply: v })}
-        />
-        <div className="mt-3">
-          <label className="block text-xs text-gray-500 mb-1">
-            {t("couponCodeLabel")}{" "}
-            {!form.autoApply && (
-              <span className="text-red-500 font-semibold">{t("couponCodeRequired")}</span>
-            )}
-            {form.autoApply && (
-              <span className="text-gray-400 font-normal">{t("couponCodeOptional")}</span>
-            )}
-          </label>
-          <input
-            className={`w-full sm:w-72 border rounded-lg px-3 py-2 text-sm font-mono uppercase focus:ring-2 focus:outline-none ${
-              !form.autoApply && !form.couponCode.trim()
-                ? "border-red-300 focus:ring-red-500"
-                : "border-gray-300 focus:ring-emerald-500"
-            }`}
-            value={form.couponCode}
-            onChange={(e) => setForm({ couponCode: e.target.value.toUpperCase() })}
-            placeholder={t("couponCodePlaceholder")}
-          />
-          {!form.autoApply && !form.couponCode.trim() && (
-            <p className="text-xs text-red-500 mt-1">
-              {t("couponCodeMissingError")}
-            </p>
-          )}
-        </div>
-      </Section>
-
-      {/* BANNER */}
-      <Section title={t("bannerTitle")} subtitle={t("bannerSubtitle")}>
-        <Toggle
-          label={t("showOnBannerLabel")}
-          sub={t("showOnBannerSub")}
-          checked={form.showOnBanner}
-          onChange={(v) => setForm({ showOnBanner: v })}
-        />
-        {form.showOnBanner && (
-          <div className="mt-3">
-            <label className="block text-xs text-gray-500 mb-1">
-              {t("bannerHeadlineLabel")}{" "}
-              <span className="text-gray-400">{t("bannerHeadlineOptional")}</span>
-            </label>
-            <input
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              value={form.bannerHeadline}
-              onChange={(e) => setForm({ bannerHeadline: e.target.value })}
-              placeholder={t("bannerHeadlinePlaceholder")}
-              maxLength={80}
-            />
-          </div>
-        )}
       </Section>
 
       {/* ACTIVE */}

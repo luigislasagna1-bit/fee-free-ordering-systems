@@ -94,10 +94,39 @@ export function normalizeStackingRule(v: unknown): string {
   return "standard";
 }
 
+/** Two display modes only (Luigi 2026-06-26):
+ *   - "menu_visible"        = VISIBLE: shows on the menu (+ optional banner).
+ *   - "hidden_coupon_only"  = HIDDEN: shows nowhere; redeemable by code only.
+ *  The old "popup" value had no customer-side consumer and is retired → any
+ *  unknown value (incl. "popup") collapses to VISIBLE. */
 export function normalizeDisplayMode(v: unknown): string {
-  const allowed = ["menu_visible", "hidden_coupon_only", "popup"];
+  const allowed = ["menu_visible", "hidden_coupon_only"];
   if (typeof v === "string" && allowed.includes(v)) return v;
   return "menu_visible";
+}
+
+/**
+ * Cross-field invariant for the VISIBLE/HIDDEN model, applied once in BOTH the
+ * POST and PATCH promotion routes so they can never disagree (Luigi 2026-06-26):
+ *   - HIDDEN (`hidden_coupon_only`) ⇒ `autoApply=false` + `showOnBanner=false`
+ *     (a hidden promo can never auto-apply or appear on the banner).
+ *   - Whenever `autoApply` is false (hidden, OR visible-but-code-required) a
+ *     `couponCode` is REQUIRED — returns `error` so the route can 400.
+ * Returns the coerced display fields; `error` set ⇒ the caller must reject.
+ */
+export function resolveDisplayFields(input: {
+  displayMode?: unknown;
+  autoApply?: unknown;
+  showOnBanner?: unknown;
+  couponCode?: unknown;
+}): { displayMode: string; autoApply: boolean; showOnBanner: boolean; error?: string } {
+  const displayMode = normalizeDisplayMode(input.displayMode);
+  const hidden = displayMode === "hidden_coupon_only";
+  const autoApply = hidden ? false : input.autoApply === undefined ? true : !!input.autoApply;
+  const showOnBanner = hidden ? false : input.showOnBanner === undefined ? true : !!input.showOnBanner;
+  const code = typeof input.couponCode === "string" ? input.couponCode.trim() : "";
+  const error = !autoApply && !code ? "code_required" : undefined;
+  return { displayMode, autoApply, showOnBanner, error };
 }
 
 /** Acquisition channel a promo applies to: website (default) | marketplace |

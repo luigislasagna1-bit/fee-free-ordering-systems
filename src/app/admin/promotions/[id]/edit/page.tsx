@@ -91,7 +91,6 @@ export default async function EditPromotionPage({
     paymentMethodSlugs: promo.paymentMethodSlugs,
     deliveryZoneIds: promo.deliveryZoneIds,
     onceLifetimePerClient: promo.onceLifetimePerClient,
-    limitedShowtimeSchedules: promo.limitedShowtimeSchedules,
     imageUrl: promo.imageUrl,
     displayMode: promo.displayMode,
     highlightThreshold: promo.highlightThreshold,
