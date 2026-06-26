@@ -1741,6 +1741,9 @@ model CustomerCoupon {
   @@index([restaurantId, phone, status])
   @@index([restaurantId, promotionId, status])
   @@index([appliedOrderId])
+  // Code-redemption lookup (resolveAssignedPromoByCode): "is there a grant with
+  // this code at this restaurant?" before matching the checkout identity.
+  @@index([restaurantId, code])
 }
 
 // ─── Marketing Suite (GloriaFood parity, 2026-05-29) ───────────────────
