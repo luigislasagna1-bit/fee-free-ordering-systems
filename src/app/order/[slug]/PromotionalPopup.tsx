@@ -47,8 +47,10 @@ export function PromotionalPopup({
   // in-page anchor or relative path navigates in place.
   const external = urlBtn && /^https?:\/\//i.test(config.buttonUrl!.trim());
 
+  // One prominent, full-width, centered CTA — easier to tap + reads as the
+  // clear next action (Luigi 2026-06-26: "make the button more clickable").
   const btnClass =
-    "mt-2 inline-block rounded-lg px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90";
+    "mt-3 block w-full rounded-xl px-4 py-3 text-center text-sm font-bold text-white shadow-sm transition hover:opacity-90 active:scale-[0.99]";
   const btnStyle = { backgroundColor: primaryColor };
 
   return (
