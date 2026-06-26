@@ -744,7 +744,7 @@
       "mapSettings": "Configuració del mapa",
       "notifications": "Notificacions",
       "receipts": "Rebuts",
-      "promotions": "Promocions i cupons",
+      "promotions": "Promocions",
       "socialMedia": "Xarxes socials",
       "autopilot": "Autopilot",
       "websiteTheme": "Tema del lloc web",
@@ -1222,7 +1222,7 @@
       "logoHint": "Es mostra a la part superior del rebut del client — a la previsualització, al rebut imprès i al correu de la comanda. Les imatges d'alt contrast s'imprimeixen millor en paper tèrmic. Arrossega la secció Logotip per reubicar-la."
     },
     "promotions": {
-      "title": "Promocions i cupons",
+      "title": "Promocions",
       "subtitle": "Executeu promocions automàtiques o codis de cupó puntuals per als vostres clients.",
       "tabPromotions": "Promocions",
       "tabCoupons": "Cupons",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Nou codi de cupó",
       "stackingInfo": "<label>Acumulació: </label><master>Mestre</master> les ofertes s'apliquen juntament amb totes les altres. <exclusive>Exclusiu</exclusive> les ofertes bloquegen totes les altres excepte els Mestres. <standard>Estàndard</standard> les ofertes s'acumulen entre si. Els codis de cupó els introdueix el client i mai s'apliquen automàticament.",
       "emptyStateTitle": "Encara no hi ha ofertes",
-      "emptyStateBody": "Feu clic a <newPromo>\"+ Nova promo\"</newPromo> a la part superior per crear una promoció, o <newCoupon>\"+ Nou codi de cupó\"</newCoupon> a dalt per crear un cupó.",
+      "emptyStateBody": "Fes clic a <newPromo>«+ Nova promoció»</newPromo> a dalt per crear una promoció.",
       "tabSelfMade": "Pròpies",
       "tabPreMade": "Predefinides"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Aquesta ubicació utilitza el menú de la marca. Per importar un menú diferent, primer personalitza el menú d'aquesta ubicació des de la pàgina de Menú."
     },
     "promotionsPage": {
-      "title": "Promocions i cupons",
-      "description": "Ofertes automàtiques, paquets i codis de cupó per als teus clients",
+      "title": "Promocions",
+      "description": "Ofertes, paquets i codis promocionals automàtics per als teus clients",
       "newPromo": "Nova promo"
     },
     "legacyWebsitePage": {

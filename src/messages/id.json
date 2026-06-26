@@ -744,7 +744,7 @@
       "mapSettings": "Pengaturan Peta",
       "notifications": "Notifikasi",
       "receipts": "Kwitansi",
-      "promotions": "Promosi & Kupon",
+      "promotions": "Promosi",
       "socialMedia": "Media Sosial",
       "autopilot": "Autopilot",
       "websiteTheme": "Tema Website",
@@ -1222,7 +1222,7 @@
       "logoHint": "Ditampilkan di bagian atas struk pelanggan — di pratinjau, pada struk cetak, dan di email pesanan. Gambar kontras tinggi paling baik dicetak di kertas termal. Seret bagian Logo untuk memindahkannya."
     },
     "promotions": {
-      "title": "Promosi & Kupon",
+      "title": "Promosi",
       "subtitle": "Jalankan promosi otomatis atau kode kupon sekali pakai untuk pelanggan Anda.",
       "tabPromotions": "Promosi",
       "tabCoupons": "Kupon",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Kode kupon baru",
       "stackingInfo": "<label>Penggabungan: </label><master>Master</master> berlaku bersamaan dengan semua promo. <exclusive>Eksklusif</exclusive> memblokir semua kecuali Master. <standard>Standar</standard> dapat digabung satu sama lain. Kode kupon dimasukkan pelanggan dan tidak pernah diterapkan otomatis.",
       "emptyStateTitle": "Belum ada promo",
-      "emptyStateBody": "Klik <newPromo>\"+ Promo Baru\"</newPromo> di atas untuk membuat promosi, atau <newCoupon>\"+ Kode kupon baru\"</newCoupon> di atas untuk membuat kupon.",
+      "emptyStateBody": "Klik <newPromo>“+ Promo Baru”</newPromo> di atas untuk membuat promosi.",
       "tabSelfMade": "Buatan sendiri",
       "tabPreMade": "Siap pakai"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Lokasi ini menggunakan menu merek. Untuk mengimpor menu yang berbeda, sesuaikan terlebih dahulu menu untuk lokasi ini dari halaman Menu."
     },
     "promotionsPage": {
-      "title": "Promosi & Kupon",
-      "description": "Penawaran otomatis, bundel, dan kode kupon untuk pelanggan Anda",
+      "title": "Promosi",
+      "description": "Penawaran, paket, dan kode promo otomatis untuk pelanggan Anda",
       "newPromo": "Promo Baru"
     },
     "legacyWebsitePage": {

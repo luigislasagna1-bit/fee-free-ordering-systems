@@ -744,7 +744,7 @@
       "mapSettings": "Kaardi seaded",
       "notifications": "Teavitused",
       "receipts": "Kviitungid",
-      "promotions": "Kampaaniad ja kupongid",
+      "promotions": "Pakkumised",
       "socialMedia": "Sotsiaalmeedia",
       "autopilot": "Autopiloot",
       "websiteTheme": "Veebilehe kujundus",
@@ -1222,7 +1222,7 @@
       "logoHint": "Kuvatakse kliendi kviitungi ülaosas — eelvaates, prinditud kviitungil ja tellimuse e-kirjas. Kõrge kontrastsusega pildid prindivad termopaberile kõige paremini. Logo jaotise liigutamiseks lohistage seda."
     },
     "promotions": {
-      "title": "Kampaaniad ja kupongid",
+      "title": "Pakkumised",
       "subtitle": "Käivita automaatseid kampaaniaid või ühekordse kupongikoodid oma klientidele.",
       "tabPromotions": "Kampaaniad",
       "tabCoupons": "Kupongid",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Uus kuponi kood",
       "stackingInfo": "<label>Kokkupanemine: </label><master>Peamine</master> pakkumised kehtivad kõige kõrval. <exclusive>Eksklusiivne</exclusive> pakkumised blokeerivad kõik teised peale peamiste. <standard>Standardne</standard> pakkumised kombineeruvad omavahel. Kuponi koodid sisestab klient käsitsi ja neid ei rakendata automaatselt.",
       "emptyStateTitle": "Pakkumisi pole veel",
-      "emptyStateBody": "Klõpsa <newPromo>„+ Uus kampaania“</newPromo> üleval kampaania loomiseks või <newCoupon>„+ Uus kuponi kood“</newCoupon> üleval kupongi loomiseks.",
+      "emptyStateBody": "Klõpsake üleval <newPromo>„+ Uus pakkumine“</newPromo>, et luua pakkumine.",
       "tabSelfMade": "Omad",
       "tabPreMade": "Valmis"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "See asukoht kasutab brändi menüüd. Teise menüü importimiseks kohandage esmalt selle asukoha menüüd Menüü lehel."
     },
     "promotionsPage": {
-      "title": "Kampaaniad ja kupongid",
-      "description": "Automaatsed pakkumised, komplektid ja kupongikoodid teie klientidele",
+      "title": "Pakkumised",
+      "description": "Automaatsed pakkumised, komplektid ja sooduskoodid teie klientidele",
       "newPromo": "Uus kampaania"
     },
     "legacyWebsitePage": {

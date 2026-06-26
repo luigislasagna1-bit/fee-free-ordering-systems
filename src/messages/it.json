@@ -744,7 +744,7 @@
       "mapSettings": "Impostazioni mappa",
       "notifications": "Notifiche",
       "receipts": "Ricevute",
-      "promotions": "Promozioni e coupon",
+      "promotions": "Promozioni",
       "autopilot": "Pilota automatico",
       "websiteTheme": "Tema del sito",
       "dashboard": "Pannello",
@@ -1222,7 +1222,7 @@
       "logoHint": "Mostrato in cima allo scontrino del cliente — nell'anteprima, sullo scontrino stampato e nell'email dell'ordine. Le immagini ad alto contrasto si stampano meglio su carta termica. Trascina la sezione Logo per riposizionarla."
     },
     "promotions": {
-      "title": "Promozioni e coupon",
+      "title": "Promozioni",
       "subtitle": "Lancia promozioni automatiche o codici coupon per i tuoi clienti.",
       "tabPromotions": "Promozioni",
       "tabCoupons": "Coupon",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Nuovo codice coupon",
       "stackingInfo": "<label>Cumulo: </label><master>Master</master> si applica insieme a tutto. <exclusive>Esclusivo</exclusive> blocca tutti gli altri tranne i Master. <standard>Standard</standard> si cumula con altri standard. I codici coupon sono inseriti dal cliente e non vengono mai applicati automaticamente.",
       "emptyStateTitle": "Nessuna offerta",
-      "emptyStateBody": "Clicca <newPromo>\"+ Nuova promo\"</newPromo> in alto per creare una promozione, o <newCoupon>\"+ Nuovo codice coupon\"</newCoupon> sopra per creare un coupon.",
+      "emptyStateBody": "Clicca su <newPromo>«+ Nuova promo»</newPromo> in alto per creare una promozione.",
       "tabSelfMade": "Personalizzate",
       "tabPreMade": "Predefinite"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Questa sede utilizza il menu del brand. Per importare un menu diverso, personalizza prima il menu per questa sede dalla pagina Menu."
     },
     "promotionsPage": {
-      "title": "Promozioni e Coupon",
-      "description": "Offerte automatiche, bundle e codici coupon per i tuoi clienti",
+      "title": "Promozioni",
+      "description": "Offerte, bundle e codici promozionali automatici per i tuoi clienti",
       "newPromo": "Nuova Promo"
     },
     "legacyWebsitePage": {

@@ -744,7 +744,7 @@
       "mapSettings": "Ustawienia mapy",
       "notifications": "Powiadomienia",
       "receipts": "Paragony",
-      "promotions": "Promocje i kupony",
+      "promotions": "Promocje",
       "socialMedia": "Media społecznościowe",
       "autopilot": "Autopilot",
       "websiteTheme": "Motyw strony",
@@ -1222,7 +1222,7 @@
       "logoHint": "Wyświetlane u góry paragonu klienta — w podglądzie, na wydrukowanym paragonie i w e-mailu zamówienia. Obrazy o wysokim kontraście drukują się najlepiej na papierze termicznym. Przeciągnij sekcję Logo, aby zmienić jej położenie."
     },
     "promotions": {
-      "title": "Promocje i kupony",
+      "title": "Promocje",
       "subtitle": "Twórz automatyczne promocje lub jednorazowe kody kuponów dla klientów.",
       "tabPromotions": "Promocje",
       "tabCoupons": "Kupony",
@@ -1952,7 +1952,7 @@
       "buttonNewCouponCode": "+ Nowy kod kuponu",
       "stackingInfo": "<label>Łączenie: </label><master>Master</master> — stosowane zawsze obok wszystkich. <exclusive>Ekskluzywna</exclusive> — blokuje wszystkie inne oprócz Master. <standard>Standardowa</standard> — łączy się z innymi standardowymi. Kody kuponów są wpisywane przez klienta i nigdy nie są stosowane automatycznie.",
       "emptyStateTitle": "Brak ofert",
-      "emptyStateBody": "Kliknij <newPromo>\"+ Nowa promocja\"</newPromo> u góry, aby utworzyć promocję, lub <newCoupon>\"+ Nowy kod kuponu\"</newCoupon> powyżej, aby utworzyć kupon.",
+      "emptyStateBody": "Kliknij <newPromo>„+ Nowa promocja”</newPromo> u góry, aby utworzyć promocję.",
       "tabSelfMade": "Własne",
       "tabPreMade": "Gotowe"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Ta lokalizacja korzysta z menu marki. Aby zaimportować inne menu, najpierw dostosuj menu dla tej lokalizacji na stronie Menu."
     },
     "promotionsPage": {
-      "title": "Promocje i kupony",
-      "description": "Automatyczne oferty, zestawy i kody kuponów dla Twoich klientów",
+      "title": "Promocje",
+      "description": "Automatyczne oferty, pakiety i kody promocyjne dla Twoich klientów",
       "newPromo": "Nowa promocja"
     },
     "legacyWebsitePage": {

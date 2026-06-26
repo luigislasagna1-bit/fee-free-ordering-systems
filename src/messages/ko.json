@@ -744,7 +744,7 @@
       "mapSettings": "지도 설정",
       "notifications": "알림",
       "receipts": "영수증",
-      "promotions": "프로모션 및 쿠폰",
+      "promotions": "프로모션",
       "socialMedia": "소셜 미디어",
       "autopilot": "자동화",
       "websiteTheme": "웹사이트 테마",
@@ -1222,7 +1222,7 @@
       "logoHint": "고객 영수증 상단에 표시됩니다 — 미리보기, 인쇄된 영수증, 주문 이메일에 모두 반영됩니다. 고대비 이미지가 감열지에 가장 잘 인쇄됩니다. 로고 섹션을 드래그하여 위치를 옮길 수 있습니다."
     },
     "promotions": {
-      "title": "프로모션 및 쿠폰",
+      "title": "프로모션",
       "subtitle": "자동 프로모션 또는 일회용 쿠폰 코드를 운영하세요.",
       "tabPromotions": "프로모션",
       "tabCoupons": "쿠폰",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ 새 쿠폰 코드",
       "stackingInfo": "<label>중복 적용: </label><master>마스터</master> 딜은 모든 것과 함께 적용됩니다. <exclusive>단독</exclusive> 딜은 마스터를 제외한 모든 것을 차단합니다. <standard>표준</standard> 딜은 서로 중복 적용됩니다. 쿠폰 코드는 고객이 직접 입력하며 자동 적용되지 않습니다.",
       "emptyStateTitle": "아직 딜이 없습니다",
-      "emptyStateBody": "상단의 <newPromo>\"+ 새 프로모션\"</newPromo>을 클릭하여 프로모션을 만들거나, 위의 <newCoupon>\"+ 새 쿠폰 코드\"</newCoupon>를 클릭하여 쿠폰을 만드세요.",
+      "emptyStateBody": "프로모션을 만들려면 상단의 <newPromo>“+ 새 프로모션”</newPromo>을 클릭하세요.",
       "tabSelfMade": "직접 만든",
       "tabPreMade": "기본 제공"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "이 지점은 브랜드 메뉴를 사용합니다. 다른 메뉴를 가져오려면 먼저 메뉴 페이지에서 이 지점의 메뉴를 커스터마이즈하세요."
     },
     "promotionsPage": {
-      "title": "프로모션 & 쿠폰",
-      "description": "고객을 위한 자동 할인, 번들, 쿠폰 코드",
+      "title": "프로모션",
+      "description": "고객을 위한 자동 혜택, 묶음 상품, 프로모션 코드",
       "newPromo": "새 프로모션"
     },
     "legacyWebsitePage": {

@@ -744,7 +744,7 @@
       "mapSettings": "Karteneinstellungen",
       "notifications": "Benachrichtigungen",
       "receipts": "Belege",
-      "promotions": "Aktionen & Gutscheine",
+      "promotions": "Aktionen",
       "socialMedia": "Social Media",
       "autopilot": "Autopilot",
       "websiteTheme": "Website-Design",
@@ -1222,7 +1222,7 @@
       "logoHint": "Wird oben auf dem Kundenbeleg angezeigt — in der Vorschau, auf dem gedruckten Beleg und in der Bestell-E-Mail. Kontrastreiche Bilder drucken auf Thermopapier am besten. Ziehen Sie den Logo-Abschnitt, um ihn zu verschieben."
     },
     "promotions": {
-      "title": "Aktionen & Gutscheine",
+      "title": "Aktionen",
       "subtitle": "Führen Sie automatische Aktionen oder einmalige Gutscheincodes für Ihre Kunden aus.",
       "tabPromotions": "Aktionen",
       "tabCoupons": "Gutscheine",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Neuer Gutscheincode",
       "stackingInfo": "<label>Kombinierbarkeit: </label><master>Master</master>-Aktionen gelten neben allen anderen. <exclusive>Exklusive</exclusive> Aktionen blockieren alle anderen außer Master. <standard>Standard</standard>-Aktionen lassen sich untereinander kombinieren. Gutscheincodes werden vom Kunden eingegeben und nie automatisch angewendet.",
       "emptyStateTitle": "Noch keine Aktionen",
-      "emptyStateBody": "Klicken Sie oben auf <newPromo>„+ Neue Aktion“</newPromo>, um eine Aktion zu erstellen, oder auf <newCoupon>„+ Neuer Gutscheincode“</newCoupon>, um einen Gutschein zu erstellen.",
+      "emptyStateBody": "Klicken Sie oben auf <newPromo>„+ Neue Aktion“</newPromo>, um eine Aktion zu erstellen.",
       "tabSelfMade": "Eigene",
       "tabPreMade": "Vorgefertigt"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Dieser Standort verwendet das Marken-Menü. Um ein anderes Menü zu importieren, passen Sie zuerst das Menü für diesen Standort auf der Menüseite an."
     },
     "promotionsPage": {
-      "title": "Aktionen & Gutscheine",
-      "description": "Automatische Angebote, Bundles und Gutscheincodes für Ihre Kunden",
+      "title": "Aktionen",
+      "description": "Automatische Angebote, Bundles und Promo-Codes für Ihre Kunden",
       "newPromo": "Neue Aktion"
     },
     "legacyWebsitePage": {

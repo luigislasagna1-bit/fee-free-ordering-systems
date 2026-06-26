@@ -744,7 +744,7 @@
       "mapSettings": "Cài đặt bản đồ",
       "notifications": "Thông báo",
       "receipts": "Hóa đơn",
-      "promotions": "Khuyến mãi & Phiếu giảm giá",
+      "promotions": "Khuyến mãi",
       "socialMedia": "Mạng xã hội",
       "autopilot": "Autopilot",
       "websiteTheme": "Giao diện website",
@@ -1222,7 +1222,7 @@
       "logoHint": "Hiển thị ở đầu hóa đơn của khách — trong bản xem trước, trên hóa đơn in và trong email đơn hàng. Hình ảnh tương phản cao in đẹp nhất trên giấy nhiệt. Kéo phần Logo để thay đổi vị trí."
     },
     "promotions": {
-      "title": "Khuyến mãi & Phiếu giảm giá",
+      "title": "Khuyến mãi",
       "subtitle": "Chạy khuyến mãi tự động hoặc mã phiếu giảm giá cho khách hàng.",
       "tabPromotions": "Khuyến mãi",
       "tabCoupons": "Phiếu giảm giá",
@@ -1952,7 +1952,7 @@
       "buttonNewCouponCode": "+ Mã phiếu giảm giá mới",
       "stackingInfo": "<label>Kết hợp: </label><master>Master</master> áp dụng cùng mọi khuyến mãi khác. <exclusive>Độc quyền</exclusive> chặn tất cả trừ Master. <standard>Tiêu chuẩn</standard> kết hợp với nhau. Mã phiếu giảm giá do khách nhập và không bao giờ tự động áp dụng.",
       "emptyStateTitle": "Chưa có ưu đãi",
-      "emptyStateBody": "Nhấn <newPromo>\"+ Khuyến mãi mới\"</newPromo> ở trên để tạo khuyến mãi, hoặc <newCoupon>\"+ Mã phiếu giảm giá mới\"</newCoupon> ở trên để tạo phiếu giảm giá.",
+      "emptyStateBody": "Nhấp vào <newPromo>“+ Khuyến mãi mới”</newPromo> ở trên để tạo khuyến mãi.",
       "tabSelfMade": "Tự tạo",
       "tabPreMade": "Có sẵn"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Địa điểm này dùng menu thương hiệu chung. Để nhập menu khác, trước tiên hãy tùy chỉnh menu cho địa điểm này từ trang Menu."
     },
     "promotionsPage": {
-      "title": "Khuyến mãi & Mã giảm giá",
-      "description": "Ưu đãi tự động, combo và mã coupon cho khách hàng",
+      "title": "Khuyến mãi",
+      "description": "Ưu đãi, combo và mã khuyến mãi tự động cho khách hàng của bạn",
       "newPromo": "Tạo khuyến mãi"
     },
     "legacyWebsitePage": {

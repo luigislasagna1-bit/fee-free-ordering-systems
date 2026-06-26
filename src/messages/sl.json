@@ -744,7 +744,7 @@
       "mapSettings": "Nastavitve zemljevida",
       "notifications": "Obvestila",
       "receipts": "Računi",
-      "promotions": "Promocije in kuponi",
+      "promotions": "Promocije",
       "socialMedia": "Družbena omrežja",
       "autopilot": "Autopilot",
       "websiteTheme": "Tema spletne strani",
@@ -1222,7 +1222,7 @@
       "logoHint": "Prikazano na vrhu računa za stranko — v predogledu, na natisnjenem računu in v e-pošti naročila. Slike z visokim kontrastom se najbolje natisnejo na termo papir. Povlecite razdelek Logotip, da ga prestavite."
     },
     "promotions": {
-      "title": "Promocije in kuponi",
+      "title": "Promocije",
       "subtitle": "Zaženite samodejne promocije ali enkratne kode kuponov za stranke.",
       "tabPromotions": "Promocije",
       "tabCoupons": "Kuponi",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Nova koda kupona",
       "stackingInfo": "<label>Združevanje: </label><master>Master</master> ponudbe veljajo poleg vsega. <exclusive>Ekskluzivne</exclusive> ponudbe blokirajo vse druge razen Master. <standard>Standardne</standard> ponudbe se združujejo med seboj. Kode kuponov vnaša stranka in se nikoli ne uveljavijo samodejno.",
       "emptyStateTitle": "Še ni ponudb",
-      "emptyStateBody": "Kliknite <newPromo>»+ Nova promocija«</newPromo> zgoraj za ustvarjanje promocije ali <newCoupon>»+ Nova koda kupona«</newCoupon> zgoraj za ustvarjanje kupona.",
+      "emptyStateBody": "Kliknite <newPromo>„+ Nova promocija“</newPromo> zgoraj za ustvarjanje promocije.",
       "tabSelfMade": "Lastne",
       "tabPreMade": "Vnaprej pripravljene"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Ta lokacija uporablja meni blagovne znamke. Če želite uvoziti drugačen meni, najprej prilagodite meni za to lokacijo na strani Meni."
     },
     "promotionsPage": {
-      "title": "Promocije in kuponi",
-      "description": "Samodejne ugodnosti, paketi in kode kuponov za vaše kupce",
+      "title": "Promocije",
+      "description": "Samodejne ponudbe, paketi in promocijske kode za vaše stranke",
       "newPromo": "Nova promocija"
     },
     "legacyWebsitePage": {

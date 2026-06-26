@@ -744,7 +744,7 @@
       "mapSettings": "Harita Ayarları",
       "notifications": "Bildirimler",
       "receipts": "Makbuzlar",
-      "promotions": "Promosyonlar & Kuponlar",
+      "promotions": "Promosyonlar",
       "socialMedia": "Sosyal Medya",
       "autopilot": "Otomatik Pilot",
       "websiteTheme": "Web Sitesi Teması",
@@ -1222,7 +1222,7 @@
       "logoHint": "Müşteri fişinin üstünde gösterilir — önizlemede, yazdırılan fişte ve sipariş e-postasında. Yüksek kontrastlı görseller termal kağıtta en iyi şekilde yazdırılır. Logo bölümünü taşımak için sürükleyin."
     },
     "promotions": {
-      "title": "Promosyonlar & Kuponlar",
+      "title": "Promosyonlar",
       "subtitle": "Müşterileriniz için otomatik promosyonlar veya tek kullanımlık kupon kodları oluşturun.",
       "tabPromotions": "Promosyonlar",
       "tabCoupons": "Kuponlar",
@@ -1952,7 +1952,7 @@
       "buttonNewCouponCode": "+ Yeni kupon kodu",
       "stackingInfo": "<label>Birleştirme: </label><master>Ana</master> teklifler herkesle birlikte uygulanır. <exclusive>Özel</exclusive> teklifler Ana'lar dışında hepsini engeller. <standard>Standart</standard> teklifler birbirleriyle birleşir. Kupon kodları müşteri tarafından girilir ve hiçbir zaman otomatik uygulanmaz.",
       "emptyStateTitle": "Henüz teklif yok",
-      "emptyStateBody": "Promosyon oluşturmak için üstteki <newPromo>\"+ Yeni Promosyon\"</newPromo> düğmesine, kupon oluşturmak için yukarıdaki <newCoupon>\"+ Yeni kupon kodu\"</newCoupon> düğmesine tıklayın.",
+      "emptyStateBody": "Bir promosyon oluşturmak için üstteki <newPromo>“+ Yeni Promosyon”</newPromo> öğesine tıklayın.",
       "tabSelfMade": "Kendi",
       "tabPreMade": "Hazır"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Bu şube marka menüsünü kullanıyor. Farklı bir menü içe aktarmak için önce Menü sayfasından bu şubeye özel menüyü özelleştirin."
     },
     "promotionsPage": {
-      "title": "Promosyonlar ve Kuponlar",
-      "description": "Müşterileriniz için otomatik fırsatlar, paketler ve kupon kodları",
+      "title": "Promosyonlar",
+      "description": "Müşterileriniz için otomatik teklifler, paketler ve promosyon kodları",
       "newPromo": "Yeni Promosyon"
     },
     "legacyWebsitePage": {

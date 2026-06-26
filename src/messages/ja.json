@@ -744,7 +744,7 @@
       "mapSettings": "マップ設定",
       "notifications": "通知",
       "receipts": "レシート",
-      "promotions": "プロモーション＆クーポン",
+      "promotions": "プロモーション",
       "socialMedia": "ソーシャルメディア",
       "autopilot": "自動化",
       "websiteTheme": "ウェブサイトテーマ",
@@ -1222,7 +1222,7 @@
       "logoHint": "お客様用レシートの上部に表示されます — プレビュー、印刷レシート、注文メールに反映されます。感熱紙にはコントラストの高い画像が最適です。ロゴセクションをドラッグして位置を変更できます。"
     },
     "promotions": {
-      "title": "プロモーション＆クーポン",
+      "title": "プロモーション",
       "subtitle": "自動プロモーションまたは1回限りのクーポンコードを作成してください。",
       "tabPromotions": "プロモーション",
       "tabCoupons": "クーポン",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ 新しいクーポンコード",
       "stackingInfo": "<label>重複適用：</label><master>マスター</master>は他のすべてと同時に適用されます。<exclusive>排他的</exclusive>はマスター以外をすべてブロックします。<standard>標準</standard>は他の標準と重複適用されます。クーポンコードは顧客が入力するもので、自動適用されません。",
       "emptyStateTitle": "まだキャンペーンがありません",
-      "emptyStateBody": "上の <newPromo>「+ 新しいプロモ」</newPromo> をクリックしてプロモーションを作成するか、上の <newCoupon>「+ 新しいクーポンコード」</newCoupon> でクーポンを作成してください。",
+      "emptyStateBody": "プロモーションを作成するには、上部の<newPromo>「+ 新規プロモ」</newPromo>をクリックします。",
       "tabSelfMade": "自作",
       "tabPreMade": "既製"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "この店舗はブランドメニューを使用しています。別のメニューをインポートするには、まずメニューページからこの店舗のメニューをカスタマイズしてください。"
     },
     "promotionsPage": {
-      "title": "プロモーション＆クーポン",
-      "description": "顧客向けの自動割引、バンドル、クーポンコード",
+      "title": "プロモーション",
+      "description": "お客様向けの自動オファー、セット、プロモコード",
       "newPromo": "新規プロモーション"
     },
     "legacyWebsitePage": {

@@ -744,7 +744,7 @@
       "mapSettings": "Postavke karte",
       "notifications": "Obavijesti",
       "receipts": "Računi",
-      "promotions": "Promocije i kuponi",
+      "promotions": "Promocije",
       "socialMedia": "Društvene mreže",
       "autopilot": "Autopilot",
       "websiteTheme": "Tema web stranice",
@@ -1222,7 +1222,7 @@
       "logoHint": "Prikazuje se na vrhu računa za kupca — u pregledu, na ispisanom računu i u e-poruci narudžbe. Slike visokog kontrasta najbolje se ispisuju na termalnom papiru. Povucite odjeljak Logotip da biste ga premjestili."
     },
     "promotions": {
-      "title": "Promocije i kuponi",
+      "title": "Promocije",
       "subtitle": "Pokrenite automatske promocije ili jednokratne kodove kupona za vaše kupce.",
       "tabPromotions": "Promocije",
       "tabCoupons": "Kuponi",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Novi kod kupona",
       "stackingInfo": "<label>Gomilanje: </label><master>Master</master> ponude primjenjuju se uz sve ostale. <exclusive>Ekskluzivne</exclusive> ponude blokiraju sve ostale osim Mastera. <standard>Standardne</standard> ponude se gomilaju međusobno. Kodovi kupona unose kupci i nikada se ne primjenjuju automatski.",
       "emptyStateTitle": "Još nema ponuda",
-      "emptyStateBody": "Kliknite <newPromo>\"+ Nova promo\"</newPromo> na vrhu za kreiranje promocije, ili <newCoupon>\"+ Novi kod kupona\"</newCoupon> gore za kreiranje kupona.",
+      "emptyStateBody": "Kliknite <newPromo>„+ Nova promocija“</newPromo> na vrhu za izradu promocije.",
       "tabSelfMade": "Vlastite",
       "tabPreMade": "Unaprijed izrađene"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Ova lokacija koristi izbornik brenda. Za uvoz drugog izbornika, prvo prilagodite izbornik za ovu lokaciju na stranici Izbornik."
     },
     "promotionsPage": {
-      "title": "Promocije i kuponi",
-      "description": "Automatske ponude, paketi i kuponski kodovi za vaše kupce",
+      "title": "Promocije",
+      "description": "Automatske ponude, paketi i promo kodovi za vaše kupce",
       "newPromo": "Nova promocija"
     },
     "legacyWebsitePage": {

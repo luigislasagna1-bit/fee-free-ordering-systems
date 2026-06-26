@@ -744,7 +744,7 @@
       "mapSettings": "Kartes iestatījumi",
       "notifications": "Paziņojumi",
       "receipts": "Čeki",
-      "promotions": "Akcijas un kuponi",
+      "promotions": "Akcijas",
       "socialMedia": "Sociālie mediji",
       "autopilot": "Autopilots",
       "websiteTheme": "Tīmekļa vietnes dizains",
@@ -1222,7 +1222,7 @@
       "logoHint": "Tiek rādīts klienta čeka augšdaļā — priekšskatījumā, izdrukātajā čekā un pasūtījuma e-pastā. Augsta kontrasta attēli vislabāk drukājas uz termopapīra. Velciet sadaļu Logotips, lai to pārvietotu."
     },
     "promotions": {
-      "title": "Akcijas un kuponi",
+      "title": "Akcijas",
       "subtitle": "Izveidojiet automātiskas akcijas vai vienreizējus kuponu kodus saviem klientiem.",
       "tabPromotions": "Akcijas",
       "tabCoupons": "Kuponi",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Jauns kupona kods",
       "stackingInfo": "<label>Apvienošana: </label><master>Galvenais</master> darījumi tiek piemēroti kopā ar visiem pārējiem. <exclusive>Ekskluzīvie</exclusive> darījumi bloķē visus pārējos, izņemot Galvenos. <standard>Standarta</standard> darījumi apvienojas savā starpā. Kuponu kodus klienti ievada manuāli — tie nekad netiek piemēroti automātiski.",
       "emptyStateTitle": "Vēl nav darījumu",
-      "emptyStateBody": "Noklikšķiniet <newPromo>\"+Jauna akcija\"</newPromo> augšā, lai izveidotu akciju, vai <newCoupon>\"+Jauns kupona kods\"</newCoupon> augstāk, lai izveidotu kuponu.",
+      "emptyStateBody": "Noklikšķiniet uz <newPromo>„+ Jauna akcija“</newPromo> augšpusē, lai izveidotu akciju.",
       "tabSelfMade": "Pašu veidotās",
       "tabPreMade": "Iepriekš sagatavotās"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Šī atrašanās vieta izmanto zīmola izvēlni. Lai importētu citu izvēlni, vispirms pielāgojiet izvēlni šai atrašanās vietai no izvēlnes lapas."
     },
     "promotionsPage": {
-      "title": "Akcijas un kuponi",
-      "description": "Automātiski piedāvājumi, komplekti un kuponu kodi jūsu klientiem",
+      "title": "Akcijas",
+      "description": "Automātiski piedāvājumi, komplekti un akciju kodi jūsu klientiem",
       "newPromo": "Jauna akcija"
     },
     "legacyWebsitePage": {

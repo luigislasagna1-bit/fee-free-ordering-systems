@@ -744,7 +744,7 @@
       "mapSettings": "Podešavanja mape",
       "notifications": "Obaveštenja",
       "receipts": "Priznanice",
-      "promotions": "Promocije i kuponi",
+      "promotions": "Промоције",
       "socialMedia": "Društvene mreže",
       "autopilot": "Autopilot",
       "websiteTheme": "Tema veb-sajta",
@@ -1222,7 +1222,7 @@
       "logoHint": "Приказује се на врху рачуна за купца — у прегледу, на одштампаном рачуну и у имејлу поруџбине. Слике високог контраста најбоље се штампају на термо папиру. Превуците одељак Логотип да бисте га преместили."
     },
     "promotions": {
-      "title": "Promocije i kuponi",
+      "title": "Промоције",
       "subtitle": "Pokrenite automatske promocije ili jednokratne kupon kodove za vaše kupce.",
       "tabPromotions": "Promocije",
       "tabCoupons": "Kuponi",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Novi kupon kod",
       "stackingInfo": "<label>Kombinovanje: </label><master>Master</master> ponude se primenjuju zajedno sa svim ostalima. <exclusive>Ekskluzivne</exclusive> ponude blokiraju sve ostale osim Master-a. <standard>Standardne</standard> ponude se kombinuju međusobno. Kupon kodovi se unose od strane kupca i nikada se ne primenjuju automatski.",
       "emptyStateTitle": "Još nema ponuda",
-      "emptyStateBody": "Kliknite <newPromo>\"+ Nova promo\"</newPromo> na vrhu da kreirate promociju, ili <newCoupon>\"+ Novi kupon kod\"</newCoupon> iznad da kreirate kupon.",
+      "emptyStateBody": "Кликните на <newPromo>„+ Нова промоција“</newPromo> на врху да направите промоцију.",
       "tabSelfMade": "Сопствене",
       "tabPreMade": "Унапред направљене"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Ova lokacija koristi meni brenda. Da biste uvezli drugačiji meni, najpre prilagodite meni za ovu lokaciju na stranici Meni."
     },
     "promotionsPage": {
-      "title": "Promocije i kuponi",
-      "description": "Automatske pogodnosti, paketi i kodovi kupona za vaše kupce",
+      "title": "Промоције",
+      "description": "Аутоматске понуде, пакети и промо кодови за ваше купце",
       "newPromo": "Nova promocija"
     },
     "legacyWebsitePage": {

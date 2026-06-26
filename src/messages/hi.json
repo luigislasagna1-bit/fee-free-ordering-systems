@@ -767,7 +767,7 @@
       "mapSettings": "मैप सेटिंग्स",
       "notifications": "सूचनाएँ",
       "receipts": "रसीदें",
-      "promotions": "प्रमोशन और कूपन",
+      "promotions": "प्रोमोशन",
       "socialMedia": "सोशल मीडिया",
       "autopilot": "Autopilot",
       "websiteTheme": "वेबसाइट थीम",
@@ -1245,7 +1245,7 @@
       "logoHint": "ग्राहक रसीद के शीर्ष पर दिखाया जाता है — पूर्वावलोकन में, मुद्रित रसीद पर और ऑर्डर ईमेल में। उच्च कंट्रास्ट वाली छवियां थर्मल पेपर पर सबसे अच्छी छपती हैं। लोगो अनुभाग को खींचकर उसकी स्थिति बदलें।"
     },
     "promotions": {
-      "title": "प्रमोशन और कूपन",
+      "title": "प्रोमोशन",
       "subtitle": "अपने ग्राहकों के लिए स्वचालित प्रमोशन या एकमुश्त कूपन कोड चलाएं।",
       "tabPromotions": "प्रमोशन",
       "tabCoupons": "कूपन",
@@ -2366,7 +2366,7 @@
       "buttonNewCouponCode": "+ नया कूपन कोड",
       "stackingInfo": "<label>स्टैकिंग: </label><master>Master</master> डील सभी के साथ लागू होती है। <exclusive>Exclusive</exclusive> डील, Master को छोड़कर बाकी सभी को रोकती है। <standard>Standard</standard> डील एक-दूसरे के साथ लागू होती हैं। कूपन कोड ग्राहक द्वारा दर्ज किए जाते हैं और कभी स्वतः लागू नहीं होते।",
       "emptyStateTitle": "अभी तक कोई डील नहीं",
-      "emptyStateBody": "प्रमोशन बनाने के लिए ऊपर <newPromo>\"+New Promo\"</newPromo> पर क्लिक करें, या कूपन बनाने के लिए ऊपर <newCoupon>\"+New coupon code\"</newCoupon> पर क्लिक करें।",
+      "emptyStateBody": "प्रोमोशन बनाने के लिए ऊपर <newPromo>“+ नया प्रोमो”</newPromo> पर क्लिक करें।",
       "tabSelfMade": "स्वयं बनाई",
       "tabPreMade": "पूर्व-निर्मित"
     },
@@ -3610,8 +3610,8 @@
       "navRefunds": "धनवापसी"
     },
     "promotionsPage": {
-      "title": "प्रमोशन और कूपन",
-      "description": "आपके ग्राहकों के लिए स्वचालित डील, बंडल और कूपन कोड",
+      "title": "प्रोमोशन",
+      "description": "आपके ग्राहकों के लिए स्वचालित ऑफ़र, बंडल और प्रोमो कोड",
       "newPromo": "नया प्रमोशन"
     },
     "phoneOrderingPage": {

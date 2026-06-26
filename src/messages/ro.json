@@ -744,7 +744,7 @@
       "mapSettings": "Setări hartă",
       "notifications": "Notificări",
       "receipts": "Chitanțe",
-      "promotions": "Promoții & Cupoane",
+      "promotions": "Promoții",
       "socialMedia": "Social Media",
       "autopilot": "Autopilot",
       "websiteTheme": "Temă website",
@@ -1222,7 +1222,7 @@
       "logoHint": "Afișat în partea de sus a bonului clientului — în previzualizare, pe bonul tipărit și în e-mailul comenzii. Imaginile cu contrast ridicat se imprimă cel mai bine pe hârtie termică. Trage secțiunea Logo pentru a o repoziționa."
     },
     "promotions": {
-      "title": "Promoții & Cupoane",
+      "title": "Promoții",
       "subtitle": "Rulează promoții automate sau coduri de cupon unice pentru clienții tăi.",
       "tabPromotions": "Promoții",
       "tabCoupons": "Cupoane",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Cod cupon nou",
       "stackingInfo": "<label>Cumulare: </label><master>Master</master> se aplică alături de orice alt deal. <exclusive>Exclusiv</exclusive> blochează toate celelalte cu excepția Master. <standard>Standard</standard> se cumulează între ele. Codurile cupon sunt introduse de client și nu se aplică automat niciodată.",
       "emptyStateTitle": "Niciun deal încă",
-      "emptyStateBody": "Apasă <newPromo>\"+ Promoție nouă\"</newPromo> în partea de sus pentru a crea o promoție sau <newCoupon>\"+ Cod cupon nou\"</newCoupon> mai sus pentru a crea un cupon.",
+      "emptyStateBody": "Apasă pe <newPromo>„+ Promoție nouă”</newPromo> sus pentru a crea o promoție.",
       "tabSelfMade": "Proprii",
       "tabPreMade": "Predefinite"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Această locație folosește meniul brandului. Pentru a importa un alt meniu, personalizează mai întâi meniul pentru această locație din pagina Meniu."
     },
     "promotionsPage": {
-      "title": "Promoții & Cupoane",
-      "description": "Oferte automate, pachete și coduri cupon pentru clienții tăi",
+      "title": "Promoții",
+      "description": "Oferte, pachete și coduri promoționale automate pentru clienții tăi",
       "newPromo": "Promoție nouă"
     },
     "legacyWebsitePage": {

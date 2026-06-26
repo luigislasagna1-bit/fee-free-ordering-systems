@@ -744,7 +744,7 @@
       "mapSettings": "Kartinställningar",
       "notifications": "Aviseringar",
       "receipts": "Kvitton",
-      "promotions": "Kampanjer och kuponger",
+      "promotions": "Kampanjer",
       "socialMedia": "Sociala medier",
       "autopilot": "Autopilot",
       "websiteTheme": "Webbplatsens tema",
@@ -1222,7 +1222,7 @@
       "logoHint": "Visas högst upp på kundkvittot — i förhandsvisningen, på det utskrivna kvittot och i ordermejlet. Bilder med hög kontrast skrivs ut bäst på termopapper. Dra Logotyp-sektionen för att flytta den."
     },
     "promotions": {
-      "title": "Kampanjer och kuponger",
+      "title": "Kampanjer",
       "subtitle": "Kör automatiska kampanjer eller engångskupongkoder för dina kunder.",
       "tabPromotions": "Kampanjer",
       "tabCoupons": "Kuponger",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Ny kupongkod",
       "stackingInfo": "<label>Stapelregler: </label><master>Master</master>-erbjudanden gäller tillsammans med allt. <exclusive>Exklusiva</exclusive> erbjudanden blockerar alla andra utom Master. <standard>Standard</standard>-erbjudanden kombineras med varandra. Kupongkoder anges av kunden och tillämpas aldrig automatiskt.",
       "emptyStateTitle": "Inga erbjudanden ännu",
-      "emptyStateBody": "Klicka på <newPromo>\"+  Ny kampanj\"</newPromo> längst upp för att skapa en kampanj, eller på <newCoupon>\"+ Ny kupongkod\"</newCoupon> ovan för att skapa en kupong.",
+      "emptyStateBody": "Klicka på <newPromo>”+ Ny kampanj”</newPromo> högst upp för att skapa en kampanj.",
       "tabSelfMade": "Egna",
       "tabPreMade": "Färdiga"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Den här platsen använder varumärkesmenyn. För att importera en annan meny, anpassa menyn för den här platsen från menysidan först."
     },
     "promotionsPage": {
-      "title": "Kampanjer och kuponger",
-      "description": "Automatiska erbjudanden, paket och kupongkoder för dina kunder",
+      "title": "Kampanjer",
+      "description": "Automatiska erbjudanden, paket och kampanjkoder till dina kunder",
       "newPromo": "Ny kampanj"
     },
     "legacyWebsitePage": {

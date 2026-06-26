@@ -744,7 +744,7 @@
       "mapSettings": "Térkép beállítások",
       "notifications": "Értesítések",
       "receipts": "Nyugták",
-      "promotions": "Promóciók és kuponok",
+      "promotions": "Akciók",
       "socialMedia": "Közösségi média",
       "autopilot": "Autopilot",
       "websiteTheme": "Weboldal megjelenés",
@@ -1222,7 +1222,7 @@
       "logoHint": "A vásárlói nyugta tetején jelenik meg — az előnézetben, a nyomtatott nyugtán és a rendelési e-mailben. A nagy kontrasztú képek nyomtathatók legjobban hőpapírra. A Logó szakasz húzással áthelyezhető."
     },
     "promotions": {
-      "title": "Promóciók és kuponok",
+      "title": "Akciók",
       "subtitle": "Futtasson automatikus promóciókat vagy egyszeri kuponkódokat az ügyfelek számára.",
       "tabPromotions": "Promóciók",
       "tabCoupons": "Kuponok",
@@ -1952,7 +1952,7 @@
       "buttonNewCouponCode": "+ Új kuponkód",
       "stackingInfo": "<label>Összekapcsolás: </label><master>Master</master> ajánlatok minden máshoz hozzáadódnak. <exclusive>Kizárólagos</exclusive> ajánlatok blokkolják az összes többit, kivéve a Master ajánlatokat. <standard>Standard</standard> ajánlatok egymással összekapcsolhatók. A kuponkódokat az ügyfelek adják meg, és soha nem kerülnek automatikus alkalmazásra.",
       "emptyStateTitle": "Még nincsenek ajánlatok",
-      "emptyStateBody": "Kattintson a <newPromo>„+ Új promóció”</newPromo> gombra felül promóció létrehozásához, vagy a <newCoupon>„+ Új kuponkód”</newCoupon> gombra kupon létrehozásához.",
+      "emptyStateBody": "Kattintson a fenti <newPromo>„+ Új akció”</newPromo> gombra egy akció létrehozásához.",
       "tabSelfMade": "Saját",
       "tabPreMade": "Előre elkészített"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Ez a helyszín a márkamenüt használja. Más menü importálásához előbb szabja testre a helyszín menüjét a Menü oldalon."
     },
     "promotionsPage": {
-      "title": "Promóciók és kuponok",
-      "description": "Automatikus ajánlatok, csomagok és kuponkódok a vásárlók számára",
+      "title": "Akciók",
+      "description": "Automatikus ajánlatok, csomagok és promóciós kódok az ügyfeleinek",
       "newPromo": "Új promóció"
     },
     "legacyWebsitePage": {

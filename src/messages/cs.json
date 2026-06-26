@@ -744,7 +744,7 @@
       "mapSettings": "Nastavení mapy",
       "notifications": "Oznámení",
       "receipts": "Účtenky",
-      "promotions": "Akce a kupóny",
+      "promotions": "Akce",
       "socialMedia": "Sociální sítě",
       "autopilot": "Autopilot",
       "websiteTheme": "Vzhled webu",
@@ -1222,7 +1222,7 @@
       "logoHint": "Zobrazuje se v horní části zákaznické účtenky — v náhledu, na vytištěné účtence a v e-mailu objednávky. Obrázky s vysokým kontrastem se na termopapír tisknou nejlépe. Sekci Logo přesunete přetažením."
     },
     "promotions": {
-      "title": "Akce a kupóny",
+      "title": "Akce",
       "subtitle": "Spusťte automatické akce nebo jednorázové kódy kupónů pro vaše zákazníky.",
       "tabPromotions": "Akce",
       "tabCoupons": "Kupóny",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Nový kód kupónu",
       "stackingInfo": "<label>Kombinování: </label><master>Hlavní</master> akce platí společně se vším ostatním. <exclusive>Výhradní</exclusive> akce blokují všechny ostatní kromě Hlavních. <standard>Standardní</standard> akce se vzájemně kombinují. Kódy kupónů zadávají zákazníci sami a nikdy se neaplikují automaticky.",
       "emptyStateTitle": "Zatím žádné akce",
-      "emptyStateBody": "Klikněte na <newPromo>\"+ Nová akce\"</newPromo> nahoře pro vytvoření akce, nebo <newCoupon>\"+ Nový kód kupónu\"</newCoupon> výše pro vytvoření kupónu.",
+      "emptyStateBody": "Klikněte na <newPromo>„+ Nová akce“</newPromo> nahoře a vytvořte akci.",
       "tabSelfMade": "Vlastní",
       "tabPreMade": "Předpřipravené"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Tato pobočka používá menu značky. Chcete-li importovat jiné menu, nejprve upravte menu pro tuto pobočku na stránce Menu."
     },
     "promotionsPage": {
-      "title": "Akce a kupóny",
-      "description": "Automatické slevy, sety a slevové kódy pro vaše zákazníky",
+      "title": "Akce",
+      "description": "Automatické nabídky, balíčky a promo kódy pro vaše zákazníky",
       "newPromo": "Nová akce"
     },
     "legacyWebsitePage": {

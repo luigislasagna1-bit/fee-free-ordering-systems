@@ -744,7 +744,7 @@
       "mapSettings": "Kartinnstillinger",
       "notifications": "Varsler",
       "receipts": "Kvitteringer",
-      "promotions": "Kampanjer og kuponger",
+      "promotions": "Kampanjer",
       "socialMedia": "Sosiale medier",
       "autopilot": "Autopilot",
       "websiteTheme": "Nettsidetema",
@@ -1222,7 +1222,7 @@
       "logoHint": "Vises øverst på kundens kvittering — i forhåndsvisningen, på den utskrevne kvitteringen og i ordre-e-posten. Bilder med høy kontrast skrives best ut på termopapir. Dra Logo-seksjonen for å flytte den."
     },
     "promotions": {
-      "title": "Kampanjer og kuponger",
+      "title": "Kampanjer",
       "subtitle": "Kjør automatiske kampanjer eller engangskupongkoder for kundene dine.",
       "tabPromotions": "Kampanjer",
       "tabCoupons": "Kuponger",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Ny kupongkode",
       "stackingInfo": "<label>Stabling: </label><master>Master</master>-tilbud gjelder sammen med alt annet. <exclusive>Eksklusive</exclusive> tilbud blokkerer alle andre unntatt Masters. <standard>Standard</standard>-tilbud stables med hverandre. Kupongkoder er kundeinntastede og brukes aldri automatisk.",
       "emptyStateTitle": "Ingen tilbud ennå",
-      "emptyStateBody": "Klikk <newPromo>«+ Nytt tilbud»</newPromo> øverst for å opprette et tilbud, eller <newCoupon>«+ Ny kupongkode»</newCoupon> ovenfor for å opprette en kupong.",
+      "emptyStateBody": "Klikk på <newPromo>«+ Ny kampanje»</newPromo> øverst for å opprette en kampanje.",
       "tabSelfMade": "Egne",
       "tabPreMade": "Forhåndslagde"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Denne lokasjonen bruker merkemenyen. For å importere en annen meny, tilpass menyen for denne lokasjonen fra Meny-siden først."
     },
     "promotionsPage": {
-      "title": "Kampanjer og kuponger",
-      "description": "Automatiske tilbud, pakker og kupongkoder for kundene dine",
+      "title": "Kampanjer",
+      "description": "Automatiske tilbud, pakker og kampanjekoder til kundene dine",
       "newPromo": "Ny kampanje"
     },
     "legacyWebsitePage": {

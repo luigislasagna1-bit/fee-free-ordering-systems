@@ -744,7 +744,7 @@
       "mapSettings": "Nastavenia mapy",
       "notifications": "Oznámenia",
       "receipts": "Účtenky",
-      "promotions": "Akcie a kupóny",
+      "promotions": "Akcie",
       "socialMedia": "Sociálne médiá",
       "autopilot": "Autopilot",
       "websiteTheme": "Téma webu",
@@ -1222,7 +1222,7 @@
       "logoHint": "Zobrazuje sa v hornej časti zákazníckej účtenky — v náhľade, na vytlačenej účtenke a v e-maile objednávky. Obrázky s vysokým kontrastom sa na termopapier tlačia najlepšie. Sekciu Logo presuniete potiahnutím."
     },
     "promotions": {
-      "title": "Akcie a kupóny",
+      "title": "Akcie",
       "subtitle": "Spúšťajte automatické akcie alebo jednorazové kódy kupónov pre vašich zákazníkov.",
       "tabPromotions": "Akcie",
       "tabCoupons": "Kupóny",
@@ -2686,7 +2686,7 @@
       "buttonNewCouponCode": "+ Nový kód kupónu",
       "stackingInfo": "<label>Skladanie: </label><master>Hlavné</master> ponuky platia popri všetkom ostatnom. <exclusive>Exkluzívne</exclusive> ponuky blokujú všetky ostatné okrem hlavných. <standard>Štandardné</standard> ponuky sa skladajú navzájom. Kódy kupónov zadáva zákazník a nikdy sa neaplikujú automaticky.",
       "emptyStateTitle": "Zatiaľ žiadne ponuky",
-      "emptyStateBody": "Kliknite na <newPromo>„+ Nová promo akcia“</newPromo> hore a vytvorte promo akciu, alebo na <newCoupon>„+ Nový kód kupónu“</newCoupon> vyššie a vytvorte kupón.",
+      "emptyStateBody": "Kliknite na <newPromo>„+ Nová akcia“</newPromo> hore a vytvorte akciu.",
       "tabSelfMade": "Vlastné",
       "tabPreMade": "Predpripravené"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Táto pobočka používa menu značky. Ak chcete importovať iné menu, najprv prispôsobte menu tejto pobočky na stránke Menu."
     },
     "promotionsPage": {
-      "title": "Akcie a kupóny",
-      "description": "Automatické zľavy, balíčky a kupónové kódy pre vašich zákazníkov",
+      "title": "Akcie",
+      "description": "Automatické ponuky, balíčky a promo kódy pre vašich zákazníkov",
       "newPromo": "Nová akcia"
     },
     "legacyWebsitePage": {

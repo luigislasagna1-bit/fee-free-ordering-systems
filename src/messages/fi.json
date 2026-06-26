@@ -744,7 +744,7 @@
       "mapSettings": "Kartta-asetukset",
       "notifications": "Ilmoitukset",
       "receipts": "Kuitit",
-      "promotions": "Tarjoukset ja kupongit",
+      "promotions": "Tarjoukset",
       "socialMedia": "Sosiaalinen media",
       "autopilot": "Autopilotti",
       "websiteTheme": "Sivuston teema",
@@ -1222,7 +1222,7 @@
       "logoHint": "Näkyy asiakaskuitin yläosassa — esikatselussa, tulostetussa kuitissa ja tilaussähköpostissa. Korkean kontrastin kuvat tulostuvat parhaiten lämpöpaperille. Siirrä Logo-osiota vetämällä."
     },
     "promotions": {
-      "title": "Tarjoukset ja kupongit",
+      "title": "Tarjoukset",
       "subtitle": "Luo automaattisia tarjouksia tai yksittäisiä kuponkikoodeja asiakkaillesi.",
       "tabPromotions": "Tarjoukset",
       "tabCoupons": "Kupongit",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Uusi kuponkikoodi",
       "stackingInfo": "<label>Yhdistäminen: </label><master>Master</master>-tarjoukset toimivat kaikkien muiden rinnalla. <exclusive>Exclusive</exclusive>-tarjoukset estävät kaikki muut paitsi Master-tasoiset. <standard>Standard</standard>-tarjoukset yhdistyvät keskenään. Kuponkikoodit syötetään asiakkaan toimesta eikä niitä sovelleta automaattisesti.",
       "emptyStateTitle": "Ei tarjouksia vielä",
-      "emptyStateBody": "Luo tarjous klikkaamalla <newPromo>\"+Uusi tarjous\"</newPromo> yläosassa, tai kuponki klikkaamalla <newCoupon>\"+Uusi kuponkikoodi\"</newCoupon> yllä.",
+      "emptyStateBody": "Napsauta ylhäältä <newPromo>”+ Uusi tarjous”</newPromo> luodaksesi tarjouksen.",
       "tabSelfMade": "Omat",
       "tabPreMade": "Valmiit"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Tämä toimipiste käyttää brändin ruokalistaa. Tuodaksesi eri ruokalistan, muokkaa ensin tämän toimipisteen ruokalistaa Ruokalista-sivulta."
     },
     "promotionsPage": {
-      "title": "Tarjoukset ja kupongit",
-      "description": "Automaattiset tarjoukset, niput ja kuponkikoodit asiakkaillesi",
+      "title": "Tarjoukset",
+      "description": "Automaattiset tarjoukset, paketit ja tarjouskoodit asiakkaillesi",
       "newPromo": "Uusi tarjous"
     },
     "legacyWebsitePage": {

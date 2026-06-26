@@ -744,7 +744,7 @@
       "mapSettings": "Žemėlapio nustatymai",
       "notifications": "Pranešimai",
       "receipts": "Kvitai",
-      "promotions": "Akcijos ir kuponai",
+      "promotions": "Akcijos",
       "socialMedia": "Socialiniai tinklai",
       "autopilot": "Autopilotai",
       "websiteTheme": "Svetainės tema",
@@ -1222,7 +1222,7 @@
       "logoHint": "Rodomas kliento kvito viršuje — peržiūroje, atspausdintame kvite ir užsakymo el. laiške. Didelio kontrasto vaizdai geriausiai spausdinami ant terminio popieriaus. Vilkite logotipo skiltį, kad ją perkeltumėte."
     },
     "promotions": {
-      "title": "Akcijos ir kuponai",
+      "title": "Akcijos",
       "subtitle": "Vykdykite automatines akcijas arba vienkartinių kuponų kodus savo klientams.",
       "tabPromotions": "Akcijos",
       "tabCoupons": "Kuponai",
@@ -2686,7 +2686,7 @@
       "buttonNewCouponCode": "+ Naujas kupono kodas",
       "stackingInfo": "<label>Sujungimas: </label><master>Master</master> pasiūlymai galioja kartu su viskuo. <exclusive>Išskirtiniai</exclusive> pasiūlymai blokuoja visus kitus, išskyrus Master. <standard>Standartiniai</standard> pasiūlymai jungiasi tarpusavyje. Kupono kodus įveda klientai ir jie niekada netaikomi automatiškai.",
       "emptyStateTitle": "Dar nėra pasiūlymų",
-      "emptyStateBody": "Spustelėkite <newPromo>„+ Nauja akcija“</newPromo> viršuje, kad sukurtumėte akciją, arba <newCoupon>„+ Naujas kupono kodas“</newCoupon> aukščiau, kad sukurtumėte kuponą.",
+      "emptyStateBody": "Spustelėkite <newPromo>„+ Nauja akcija“</newPromo> viršuje, kad sukurtumėte akciją.",
       "tabSelfMade": "Savos",
       "tabPreMade": "Iš anksto paruoštos"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Ši vieta naudoja prekės ženklo meniu. Norėdami importuoti kitą meniu, pirmiausia pritaikykite šios vietos meniu Meniu puslapyje."
     },
     "promotionsPage": {
-      "title": "Akcijos ir kuponai",
-      "description": "Automatiniai pasiūlymai, rinkiniai ir kuponų kodai jūsų klientams",
+      "title": "Akcijos",
+      "description": "Automatiniai pasiūlymai, rinkiniai ir nuolaidų kodai jūsų klientams",
       "newPromo": "Nauja akcija"
     },
     "legacyWebsitePage": {

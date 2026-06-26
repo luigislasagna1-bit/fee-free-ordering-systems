@@ -744,7 +744,7 @@
       "mapSettings": "Configurações do mapa",
       "notifications": "Notificações",
       "receipts": "Recibos",
-      "promotions": "Promoções e cupons",
+      "promotions": "Promoções",
       "autopilot": "Piloto automático",
       "websiteTheme": "Tema do site",
       "dashboard": "Painel",
@@ -1222,7 +1222,7 @@
       "logoHint": "Apresentado no topo do recibo do cliente — na pré-visualização, no recibo impresso e no e-mail do pedido. Imagens de alto contraste imprimem melhor em papel térmico. Arraste a secção Logótipo para a reposicionar."
     },
     "promotions": {
-      "title": "Promoções e cupons",
+      "title": "Promoções",
       "subtitle": "Crie promoções automáticas ou códigos de cupom pontuais.",
       "tabPromotions": "Promoções",
       "tabCoupons": "Cupons",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ Novo código de cupom",
       "stackingInfo": "<label>Acumulação: </label><master>Master</master> se aplica junto a tudo. <exclusive>Exclusivo</exclusive> bloqueia todos os outros exceto Masters. <standard>Padrão</standard> acumula com outros padrões. Códigos de cupom são inseridos pelo cliente e nunca aplicados automaticamente.",
       "emptyStateTitle": "Nenhuma oferta ainda",
-      "emptyStateBody": "Clique em <newPromo>\"+ Nova Promoção\"</newPromo> no topo para criar uma promoção, ou <newCoupon>\"+ Novo código de cupom\"</newCoupon> acima para criar um cupom.",
+      "emptyStateBody": "Clique em <newPromo>“+ Nova promoção”</newPromo> no topo para criar uma promoção.",
       "tabSelfMade": "Próprias",
       "tabPreMade": "Predefinidas"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "Esta unidade usa o cardápio da marca. Para importar um cardápio diferente, primeiro personalize o cardápio desta unidade na página de Cardápio."
     },
     "promotionsPage": {
-      "title": "Promoções e Cupons",
-      "description": "Ofertas automáticas, combos e códigos de cupom para seus clientes",
+      "title": "Promoções",
+      "description": "Ofertas, pacotes e códigos promocionais automáticos para os seus clientes",
       "newPromo": "Nova Promoção"
     },
     "legacyWebsitePage": {

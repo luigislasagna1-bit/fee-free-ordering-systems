@@ -744,7 +744,7 @@
       "mapSettings": "地图设置",
       "notifications": "通知",
       "receipts": "收据",
-      "promotions": "促销与优惠券",
+      "promotions": "促销",
       "socialMedia": "社交媒体",
       "autopilot": "自动营销",
       "websiteTheme": "网站主题",
@@ -1222,7 +1222,7 @@
       "logoHint": "显示在顾客小票顶部——预览、打印小票和订单邮件中均会显示。高对比度图片在热敏纸上打印效果最佳。拖动「标志」区块可调整位置。"
     },
     "promotions": {
-      "title": "促销与优惠券",
+      "title": "促销",
       "subtitle": "为顾客设置自动促销活动或一次性优惠券码。",
       "tabPromotions": "促销",
       "tabCoupons": "优惠券",
@@ -2008,7 +2008,7 @@
       "buttonNewCouponCode": "+ 新建优惠券码",
       "stackingInfo": "<label>叠加规则：</label><master>主控</master>优惠与所有其他优惠并行生效。<exclusive>独占</exclusive>优惠屏蔽除主控外的所有其他优惠。<standard>标准</standard>优惠可相互叠加。优惠券码由顾客手动输入，不会自动生效。",
       "emptyStateTitle": "暂无优惠",
-      "emptyStateBody": "点击顶部的<newPromo>「+ 新建促销」</newPromo>创建促销活动，或点击上方的<newCoupon>「+ 新建优惠券码」</newCoupon>创建优惠券。",
+      "emptyStateBody": "点击顶部的<newPromo>“+ 新建促销”</newPromo>来创建促销。",
       "tabSelfMade": "自建",
       "tabPreMade": "预设"
     },
@@ -3493,8 +3493,8 @@
       "inheritingBody": "此门店使用品牌菜单。如需导入不同的菜单，请先从菜单页面为此门店自定义菜单。"
     },
     "promotionsPage": {
-      "title": "促销与优惠券",
-      "description": "为顾客提供自动优惠、套餐组合和优惠码",
+      "title": "促销",
+      "description": "为您的顾客提供的自动优惠、套餐和促销代码",
       "newPromo": "新建促销"
     },
     "legacyWebsitePage": {
