@@ -85,6 +85,22 @@ export const kitchenAuthOptions: NextAuthOptions = {
             where: { id: user.restaurantId },
             data: { kitchenSessionToken },
           });
+          // Retire every existing push token for this restaurant the moment a
+          // new device claims the active kitchen session. The push lifecycle
+          // MUST track the session lifecycle: this login just superseded
+          // whatever device was active, so that device must stop ringing on new
+          // orders — even though it won't learn its session is stale until it
+          // next heartbeats (it may be asleep). register-device only retired
+          // OTHER tokens when a NEW *native* device registered, so a login from
+          // a desktop browser (which registers no FCM token) left the old
+          // phone's token as the sole push target → it kept ringing while
+          // logged out. The newly-active device re-registers its own token on
+          // launch (register-device POST), reclaiming sole ownership. Guarded
+          // so push cleanup can never block a login. Luigi 2026-06-26 (S23 rang
+          // while showing "logged in on another device").
+          await prisma.kitchenPushToken
+            .deleteMany({ where: { restaurantId: user.restaurantId } })
+            .catch((e) => console.error("[auth-kitchen] push-token retire on login failed", e));
         }
 
         return {

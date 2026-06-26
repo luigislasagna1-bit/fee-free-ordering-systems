@@ -12,6 +12,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { kitchenAuthOptions } from "@/lib/auth-kitchen";
+import { checkKitchenSessionFresh } from "@/lib/session";
 import prisma from "@/lib/db";
 
 export async function POST(req: NextRequest) {
@@ -19,6 +20,17 @@ export async function POST(req: NextRequest) {
   const restaurantId = (session?.user as any)?.restaurantId as string | undefined;
   if (!restaurantId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  // A SUPERSEDED device (another device has since claimed the active kitchen
+  // session) must NOT be able to (re)register its push token — otherwise a
+  // stale phone that briefly wakes could reclaim sole ring ownership and bump
+  // the genuinely-active device off the push list. Only the fresh/active
+  // session may own the ring. Luigi 2026-06-26.
+  if ((await checkKitchenSessionFresh()) === "stale") {
+    return NextResponse.json(
+      { error: "session_superseded", code: "session_superseded" },
+      { status: 401 },
+    );
   }
 
   let body: { token?: string; platform?: string };

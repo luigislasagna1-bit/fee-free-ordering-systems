@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSessionUser } from "@/lib/session";
+import { getSessionUser, checkKitchenSessionFresh } from "@/lib/session";
 import prisma from "@/lib/db";
 import { parseLocalDateTimeInTz, dateKeyInTimezone } from "@/lib/restaurant-hours";
 
@@ -19,6 +19,25 @@ export async function GET() {
     }
     const restaurantId = user.restaurantId;
     if (!restaurantId) return NextResponse.json({ error: "No restaurant associated" }, { status: 400 });
+
+    // Single-active-session enforcement on the RING-DRIVING poll. The ~4s
+    // keep-alive poll is what actually makes the native app ring on a new
+    // order — FCM is only a nudge. If this device's kitchen session has been
+    // superseded (another device/browser logged in since this JWT was minted),
+    // it must STOP being fed orders immediately, or it keeps ringing while
+    // logged out (Luigi 2026-06-26: the S23 rang for an order while showing
+    // "logged in on another device" — the heartbeat bounces the UI, but the
+    // background ring poll never checked freshness). Mirrors the heartbeat's
+    // session_superseded contract so the client redirects to /kitchen/login.
+    // Cheap on this hot path: for an admin-session viewer (no kitchen cookie)
+    // checkKitchenSessionFresh short-circuits with NO DB read; only a real
+    // kitchen session pays one indexed single-column lookup.
+    if ((await checkKitchenSessionFresh()) === "stale") {
+      return NextResponse.json(
+        { error: "session_superseded", code: "session_superseded" },
+        { status: 401 },
+      );
+    }
 
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
