@@ -5214,7 +5214,11 @@
       "recentOrders": "Comandes recents ({count})",
       "noOrdersYet": "Encara no has fet cap comanda aquí.",
       "orderNow": "Comanda ara →",
-      "useOffer": "Fes servir aquesta oferta"
+      "useOffer": "Fes servir aquesta oferta",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Menú combinat amb especialitat",

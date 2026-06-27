@@ -5214,7 +5214,11 @@
       "recentOrders": "Viimeisimmät tilaukset ({count})",
       "noOrdersYet": "Et ole vielä tehnyt tilauksia täällä.",
       "orderNow": "Tilaa nyt →",
-      "useOffer": "Käytä tarjous"
+      "useOffer": "Käytä tarjous",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ateriapaketti erikoisuudella",

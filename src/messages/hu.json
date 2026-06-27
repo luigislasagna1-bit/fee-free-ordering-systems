@@ -5214,7 +5214,11 @@
       "recentOrders": "Korábbi rendelések ({count})",
       "noOrdersYet": "Még nem adtál le rendelést itt.",
       "orderNow": "Rendelés most →",
-      "useOffer": "Ajánlat felhasználása"
+      "useOffer": "Ajánlat felhasználása",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ételbundle különleges tétellel",

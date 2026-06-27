@@ -22,6 +22,8 @@ import { ProfileEditor } from "./ProfileEditor";
 import { OrderAgainButton } from "./OrderAgainButton";
 import { AddressBook } from "./AddressBook";
 import { getTranslations } from "next-intl/server";
+import { qualifyingMemberOnlyPromos } from "@/lib/vip-membership";
+import { usedLifetimePromoIds } from "@/lib/coupon-ledger";
 
 export const dynamic = "force-dynamic";
 
@@ -99,7 +101,72 @@ export default async function RestaurantAccountDashboard({
     },
   });
 
-  const usableOffers = offers;
+  // VIP specials this customer is entitled to (member-only promos attached to a
+  // group they're in OR to them as an individual). These AUTO-APPLY — no code —
+  // so we surface them here with their terms + used state. Luigi 2026-06-27.
+  const memberOnlyPromos = await prisma.promotion.findMany({
+    where: {
+      restaurantId: restaurant.id,
+      isActive: true,
+      OR: [{ endsAt: null }, { endsAt: { gt: now } }],
+      groupLinks: { some: {} },
+    },
+    select: {
+      id: true, name: true, promotionType: true, ruleConfig: true, minimumOrder: true, endsAt: true, onceLifetimePerClient: true,
+      groupLinks: { select: { groupId: true, customerId: true, email: true, phone: true } },
+    },
+  });
+  const myVip = await qualifyingMemberOnlyPromos(
+    restaurant.id,
+    { customerId: me.id, email: me.email, phone: me.phone },
+    memberOnlyPromos,
+  );
+  // Which once-per-customer specials have already been redeemed (so we can mark
+  // them "Used"). Reuses the same per-promo ledger the checkout enforces.
+  const onceIds = myVip.filter((p) => p.onceLifetimePerClient).map((p) => p.id);
+  const usedSet = new Set<string>(
+    onceIds.length
+      ? await usedLifetimePromoIds({ restaurantId: restaurant.id, promotionIds: onceIds, customerId: me.id, email: me.email, phone: me.phone })
+      : [],
+  );
+
+  function discountLabelFor(promotionType: string | undefined, rc: { discountPercent?: number; discountAmount?: number }, fallbackName: string): string {
+    if (promotionType === "percentage_off" || promotionType === "percentage_combo") return `${rc.discountPercent ?? 0}% off`;
+    if (promotionType === "fixed_cart" || promotionType === "fixed_combo") return `${formatCurrency(rc.discountAmount ?? 0)} off`;
+    return fallbackName;
+  }
+
+  type UiOffer = {
+    key: string; discountLabel: string; name: string; minOrder: number; endsAt: Date | null;
+    code: string | null; auto: boolean; once: boolean; used: boolean;
+  };
+  const vipOffers: UiOffer[] = myVip.map((p) => ({
+    key: `vip-${p.id}`,
+    discountLabel: discountLabelFor(p.promotionType, (p.ruleConfig ?? {}) as any, p.name),
+    name: p.name,
+    minOrder: p.minimumOrder ?? 0,
+    endsAt: p.endsAt ?? null,
+    code: null,
+    auto: true,
+    once: !!p.onceLifetimePerClient,
+    used: usedSet.has(p.id),
+  }));
+  const couponOffers: UiOffer[] = offers.map((g) => {
+    const rc = (g.promotion?.ruleConfig ?? {}) as { discountPercent?: number; discountAmount?: number };
+    return {
+      key: `coupon-${g.id}`,
+      discountLabel: discountLabelFor(g.promotion?.promotionType, rc, g.promotion?.name ?? t("personalCoupon")),
+      name: g.promotion?.name ?? t("personalCoupon"),
+      minOrder: g.promotion?.minimumOrder ?? 0,
+      endsAt: g.promotion?.endsAt ?? null,
+      code: g.code,
+      auto: false,
+      once: true,
+      used: false,
+    };
+  });
+  // Available offers first, used ones last.
+  const usableOffers = [...vipOffers, ...couponOffers].sort((a, b) => Number(a.used) - Number(b.used));
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -145,41 +212,51 @@ export default async function RestaurantAccountDashboard({
             </div>
           ) : (
             <ul className="space-y-2">
-              {usableOffers.map((g) => {
-                const rc = (g.promotion?.ruleConfig ?? {}) as { discountPercent?: number; discountAmount?: number };
-                const discount = g.promotion?.promotionType === "percentage_off"
-                  ? `${rc.discountPercent ?? 0}% off`
-                  : `${formatCurrency(rc.discountAmount ?? 0)} off`;
-                const min = g.promotion?.minimumOrder ?? 0;
-                const endsAt = g.promotion?.endsAt ?? null;
-                return (
-                  <li key={g.id} className="bg-white rounded-xl border border-emerald-200 p-4 flex items-center justify-between gap-3 flex-wrap">
-                    <div className="min-w-0">
-                      <div className="font-bold text-emerald-700">{discount}</div>
-                      <div className="text-xs text-gray-500 mt-0.5">
-                        {g.promotion?.name ?? t("personalCoupon")}
-                      </div>
-                      <div className="text-[11px] text-gray-400 mt-1">
-                        {min > 0 && <>{t("minOrder", { amount: formatCurrency(min) })}</>}
-                        {endsAt && <>{min > 0 ? " · " : ""}{t("expires", { date: new Date(endsAt).toLocaleDateString() })}</>}
-                      </div>
+              {usableOffers.map((o) => (
+                <li key={o.key} className={`bg-white rounded-xl border p-4 flex items-center justify-between gap-3 flex-wrap ${o.used ? "border-gray-200 opacity-60" : "border-emerald-200"}`}>
+                  <div className="min-w-0">
+                    <div className={`font-bold ${o.used ? "text-gray-500" : "text-emerald-700"}`}>{o.discountLabel}</div>
+                    <div className="text-xs text-gray-500 mt-0.5">{o.name}</div>
+                    <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                      {/* redeemability + used/expiry chips so the customer knows the terms */}
+                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-600">
+                        {o.once ? t("offerOnce") : t("offerReusable")}
+                      </span>
+                      {o.used && (
+                        <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-gray-200 text-gray-600">{t("offerUsed")}</span>
+                      )}
+                      {o.auto && !o.used && (
+                        <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-700">{t("offerAutoApplies")}</span>
+                      )}
+                      {o.minOrder > 0 && (
+                        <span className="text-[10px] text-gray-400">{t("minOrder", { amount: formatCurrency(o.minOrder) })}</span>
+                      )}
+                      {o.endsAt && (
+                        <span className="text-[10px] text-gray-400">{t("expires", { date: new Date(o.endsAt).toLocaleDateString() })}</span>
+                      )}
                     </div>
-                    <div className="flex-shrink-0 flex flex-col items-end gap-1.5">
-                      <code className="bg-emerald-50 text-emerald-800 font-mono font-bold text-sm px-3 py-1.5 rounded border border-emerald-200">
-                        {g.code}
-                      </code>
-                      {g.code && (
+                  </div>
+                  <div className="flex-shrink-0 flex flex-col items-end gap-1.5">
+                    {o.code ? (
+                      <>
+                        <code className="bg-emerald-50 text-emerald-800 font-mono font-bold text-sm px-3 py-1.5 rounded border border-emerald-200">
+                          {o.code}
+                        </code>
                         <Link
-                          href={`/order/${slug}?coupon=${encodeURIComponent(g.code)}`}
+                          href={`/order/${slug}?coupon=${encodeURIComponent(o.code)}`}
                           className="text-xs font-semibold text-emerald-600 hover:text-emerald-800"
                         >
                           {t("useOffer")} →
                         </Link>
-                      )}
-                    </div>
-                  </li>
-                );
-              })}
+                      </>
+                    ) : !o.used ? (
+                      <Link href={`/order/${slug}`} className="text-xs font-semibold text-emerald-600 hover:text-emerald-800">
+                        {t("useOffer")} →
+                      </Link>
+                    ) : null}
+                  </div>
+                </li>
+              ))}
             </ul>
           )}
         </div>

@@ -5214,7 +5214,11 @@
       "recentOrders": "Pesanan terbaru ({count})",
       "noOrdersYet": "Anda belum melakukan pesanan di sini.",
       "orderNow": "Pesan sekarang →",
-      "useOffer": "Gunakan penawaran ini"
+      "useOffer": "Gunakan penawaran ini",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Paket makan dengan menu spesial",

@@ -5214,7 +5214,11 @@
       "recentOrders": "Последние заказы ({count})",
       "noOrdersYet": "Вы ещё не делали заказов здесь.",
       "orderNow": "Заказать сейчас →",
-      "useOffer": "Использовать предложение"
+      "useOffer": "Использовать предложение",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Комбо с фирменными блюдами",

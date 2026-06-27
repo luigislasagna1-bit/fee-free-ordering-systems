@@ -5214,7 +5214,11 @@
       "recentOrders": "Hiljutised tellimused ({count})",
       "noOrdersYet": "Sa pole siit veel ühtegi tellimust esitanud.",
       "orderNow": "Telli kohe →",
-      "useOffer": "Kasuta pakkumist"
+      "useOffer": "Kasuta pakkumist",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Einepakk erivalikuga",

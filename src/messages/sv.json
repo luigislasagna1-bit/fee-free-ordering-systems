@@ -5214,7 +5214,11 @@
       "recentOrders": "Senaste beställningar ({count})",
       "noOrdersYet": "Du har inte gjort några beställningar här ännu.",
       "orderNow": "Beställ nu →",
-      "useOffer": "Använd erbjudandet"
+      "useOffer": "Använd erbjudandet",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Matkombination med specialitet",

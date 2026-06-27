@@ -5214,7 +5214,11 @@
       "recentOrders": "Nedávne objednávky ({count})",
       "noOrdersYet": "Zatiaľ ste tu nevykonali žiadnu objednávku.",
       "orderNow": "Objednať teraz →",
-      "useOffer": "Použiť túto ponuku"
+      "useOffer": "Použiť túto ponuku",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Jedlový balíček so špeciálnymi položkami",

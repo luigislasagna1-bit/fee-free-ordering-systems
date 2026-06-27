@@ -5214,7 +5214,11 @@
       "recentOrders": "Nedavne narudžbine ({count})",
       "noOrdersYet": "Još niste napravili nijednu narudžbinu ovde.",
       "orderNow": "Naruči odmah →",
-      "useOffer": "Искористи понуду"
+      "useOffer": "Искористи понуду",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Paket obroka sa specijalitetom",

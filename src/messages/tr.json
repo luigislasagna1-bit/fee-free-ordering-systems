@@ -5214,7 +5214,11 @@
       "recentOrders": "Son siparişler ({count})",
       "noOrdersYet": "Henüz buraya sipariş vermediniz.",
       "orderNow": "Şimdi sipariş ver →",
-      "useOffer": "Bu teklifi kullan"
+      "useOffer": "Bu teklifi kullan",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Özel ürünlü yemek paketi",

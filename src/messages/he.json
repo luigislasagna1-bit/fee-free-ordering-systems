@@ -5214,7 +5214,11 @@
       "recentOrders": "הזמנות אחרונות ({count})",
       "noOrdersYet": "עדיין לא ביצעת הזמנות כאן.",
       "orderNow": "הזמן עכשיו →",
-      "useOffer": "השתמש במבצע"
+      "useOffer": "השתמש במבצע",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "חבילת ארוחה עם פריט מיוחד",

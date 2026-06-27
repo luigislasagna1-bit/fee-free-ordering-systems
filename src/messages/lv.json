@@ -5214,7 +5214,11 @@
       "recentOrders": "Jaunākie pasūtījumi ({count})",
       "noOrdersYet": "Jūs vēl neesat veicis nevienu pasūtījumu šeit.",
       "orderNow": "Pasūtīt tagad →",
-      "useOffer": "Izmantot piedāvājumu"
+      "useOffer": "Izmantot piedāvājumu",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ēdienreizes komplekts ar īpašumu",

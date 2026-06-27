@@ -5214,7 +5214,11 @@
       "recentOrders": "最近の注文（{count}件）",
       "noOrdersYet": "まだこちらでご注文はありません。",
       "orderNow": "今すぐ注文する →",
-      "useOffer": "この特典を使う"
+      "useOffer": "この特典を使う",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "スペシャルティ付きミールバンドル",

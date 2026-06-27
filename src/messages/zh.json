@@ -5214,7 +5214,11 @@
       "recentOrders": "最近订单（{count}）",
       "noOrdersYet": "您在此处还没有下过任何订单。",
       "orderNow": "立即下单 →",
-      "useOffer": "使用此优惠"
+      "useOffer": "使用此优惠",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "含特色菜的套餐",

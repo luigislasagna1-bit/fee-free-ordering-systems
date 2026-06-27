@@ -5214,7 +5214,11 @@
       "recentOrders": "Скорошни поръчки ({count})",
       "noOrdersYet": "Все още нямаш поръчки тук.",
       "orderNow": "Поръчай сега →",
-      "useOffer": "Използвай тази оферта"
+      "useOffer": "Използвай тази оферта",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Пакетно меню със специалитет",

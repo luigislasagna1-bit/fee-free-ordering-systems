@@ -5214,7 +5214,11 @@
       "recentOrders": "Tidligere bestillinger ({count})",
       "noOrdersYet": "Du har ikke lagt inn noen bestillinger her ennå.",
       "orderNow": "Bestill nå →",
-      "useOffer": "Bruk dette tilbudet"
+      "useOffer": "Bruk dette tilbudet",
+      "offerOnce": "One-time use",
+      "offerReusable": "Reusable",
+      "offerUsed": "Used",
+      "offerAutoApplies": "Auto-applies — no code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Måltidspakke med spesialitet",
