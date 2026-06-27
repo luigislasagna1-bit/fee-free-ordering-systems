@@ -942,7 +942,7 @@ export async function sendVipSpecialEmail(params: {
   );
   return send({
     to: params.to,
-    subject: t("email.vipSpecial.subject", { restaurantName: params.restaurantName, discountLabel }),
+    subject: t("email.vipSpecial.subject", { memberLabel, restaurantName: params.restaurantName, discountLabel }),
     html,
     replyTo: params.restaurantEmail ?? undefined,
     fromName: params.restaurantName,

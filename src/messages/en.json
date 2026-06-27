@@ -4532,8 +4532,8 @@
       "cta": "Order now"
     },
     "vipSpecial": {
-      "subject": "Your VIP deal at {restaurantName} — {discountLabel}",
-      "intro": "As a {memberLabel} at {restaurantName}, you've unlocked a members-only deal: {discountLabel}. It applies automatically — no code needed.",
+      "subject": "Your {memberLabel} deal at {restaurantName} — {discountLabel}",
+      "intro": "You've unlocked your {memberLabel} deal at {restaurantName}: {discountLabel}. It applies automatically — no code needed.",
       "defaultMemberLabel": "VIP member",
       "howToLabel": "How to use it",
       "usageAccount": "Just sign in to your account and order — your {discountLabel} is applied automatically at checkout.",
