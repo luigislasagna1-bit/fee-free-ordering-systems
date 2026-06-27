@@ -557,11 +557,18 @@ function bogoResult(promo: PromoInput, ctx: ApplyContext): { total: number; line
   // belongs to buy_n_get_free.
   const pool = [...new Set<CartItem>([...paidItems, ...freeItems])];
 
+  // "Fixed discount percentage" strategy: the discounted unit gets the typed
+  // discountPercent, NOT a free (100%) item. Map it onto the cheapest-ordering
+  // path feeding discountPercent as the percent — otherwise the engine fell
+  // through to cheapestDiscount ?? 100 and silently gave the item away free
+  // (audit B1, Luigi 2026-06-26).
+  const strat = rules.discountStrategy ?? "cheapest";
+  const fixedPct = strat === "fixed_percent";
   return discountNUnitsDetailed(
     pool,
     pairs,
-    rules.discountStrategy ?? "cheapest",
-    rules.cheapestDiscount ?? 100,
+    fixedPct ? "cheapest" : strat,
+    fixedPct ? (rules.discountPercent ?? 0) : (rules.cheapestDiscount ?? 100),
     rules.mostExpensiveDiscount ?? 100,
   );
 }
@@ -597,11 +604,15 @@ function buyNGetFreeResult(promo: PromoInput, ctx: ApplyContext): { total: numbe
   if (rules.oncePerOrder) multiplier = Math.min(multiplier, 1);
   const freeItems = itemsMatchingGroup(freeGroup, ctx.items);
   if (!freeItems.length) return EMPTY;
+  // Honor the "Fixed discount percentage" strategy (see bogoResult) — otherwise
+  // discountPercent was discarded and the freebie went 100% off (audit B1).
+  const strat = rules.discountStrategy ?? "cheapest";
+  const fixedPct = strat === "fixed_percent";
   return discountNUnitsDetailed(
     freeItems,
     multiplier,
-    rules.discountStrategy ?? "cheapest",
-    rules.cheapestDiscount ?? 100,
+    fixedPct ? "cheapest" : strat,
+    fixedPct ? (rules.discountPercent ?? 0) : (rules.cheapestDiscount ?? 100),
     rules.mostExpensiveDiscount ?? 0,
   );
 }
@@ -680,11 +691,23 @@ function calcMealBundle(promo: PromoInput, ctx: ApplyContext): number {
     const min = group.minCount ?? 1;
     if (groupTotalQty(group, ctx.items) < min) return 0;
   }
-  // Discount = sum of all eligible items - bundlePrice
+  // Discount = (value of the items that FILL the bundle slots) - bundlePrice.
+  // Cap each group's contribution at its maxCount UNITS (most-expensive first)
+  // so extra qualifying items beyond the slot size are NOT folded into the flat
+  // bundle price — they stay at full price. Without the cap, a "2 pizzas for
+  // $20" bundle discounted ALL pizzas in the cart down to $20 (audit B7).
   let eligibleTotal = 0;
   for (const group of groups) {
     const matched = itemsMatchingGroup(group, ctx.items);
-    eligibleTotal += matched.reduce((s, i) => s + i.subtotal, 0);
+    const min = group.minCount ?? 1;
+    const cap = Math.max(min, group.maxCount ?? min);
+    const units: number[] = [];
+    for (const i of matched) {
+      const unit = i.quantity > 0 ? i.subtotal / i.quantity : i.subtotal;
+      for (let q = 0; q < i.quantity; q++) units.push(unit);
+    }
+    units.sort((a, b) => b - a);
+    eligibleTotal += units.slice(0, cap).reduce((s, u) => s + u, 0);
   }
   const bundlePrice = rules.bundlePrice ?? 0;
   return Math.max(0, parseFloat((eligibleTotal - bundlePrice).toFixed(2)));

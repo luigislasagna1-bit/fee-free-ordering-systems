@@ -496,6 +496,40 @@ export async function POST(req: NextRequest) {
     });
     const menuItemMap = new Map(menuItems.map((m) => [m.id, m]));
 
+    // Authoritative bundle pricing (audit B3/B6): bundle lines used to trust the
+    // client-supplied price, so a tampered request could underpay. Pre-load the
+    // referenced meal_bundle / meal_bundle_speciality promotions ONCE here, then
+    // recompute each bundle line's price from the saved ruleConfig in the loop
+    // below — never from the client. One batched query (bundles are rare).
+    const bundlePromoIdSet = new Set<string>();
+    for (const raw of items as any[]) {
+      const isB =
+        (typeof raw?.menuItemId === "string" && raw.menuItemId.startsWith("bundle:")) ||
+        (raw?.isBundle === true && Array.isArray(raw?.bundleItems) && raw.bundleItems.length > 0);
+      if (!isB) continue;
+      const pid =
+        typeof raw?.bundlePromoId === "string" && raw.bundlePromoId
+          ? raw.bundlePromoId
+          : typeof raw?.menuItemId === "string" && raw.menuItemId.startsWith("bundle:")
+            ? raw.menuItemId.slice("bundle:".length)
+            : "";
+      if (pid) bundlePromoIdSet.add(pid);
+    }
+    const bundlePromoMap = new Map<string, { id: string; name: string; promotionType: string; ruleConfig: unknown; rules: string | null }>();
+    if (bundlePromoIdSet.size > 0) {
+      const ownerIds = Array.from(new Set([restaurant.id, menuRestaurantId]));
+      const bps = await prisma.promotion.findMany({
+        where: {
+          id: { in: Array.from(bundlePromoIdSet) },
+          restaurantId: { in: ownerIds },
+          isActive: true,
+          promotionType: { in: ["meal_bundle", "meal_bundle_speciality"] },
+        },
+        select: { id: true, name: true, promotionType: true, ruleConfig: true, rules: true },
+      });
+      for (const bp of bps) bundlePromoMap.set(bp.id, bp as any);
+    }
+
     let serverSubtotal = 0;
     const validatedItems: Array<{
       menuItemId: string | null; variantId: string | null; variantName: string | null;
@@ -695,14 +729,14 @@ export async function POST(req: NextRequest) {
 
       // ── Bundle line item branch ────────────────────────────────────
       // Promo Type 8 / 13 bundles arrive with a synthetic menuItemId
-      // ("bundle:<promoId>") + a non-empty bundleItems array. We do NOT
-      // look these up in the menu (the parent isn't a real MenuItem);
-      // we trust the client-supplied bundle price (the promo engine
-      // enforces eligibility; recomputing the price here would clobber
-      // the owner's fixed bundlePrice). We DO validate every child
-      // menuItemId belongs to this restaurant — that's the only way a
-      // tampered client could sneak unauthorized items into a free
-      // bundle wrapper.
+      // ("bundle:<promoId>") + a non-empty bundleItems array. The parent
+      // isn't a real MenuItem, so we don't look it up in the menu — but we
+      // DO recompute the price server-side from the promotion's saved
+      // ruleConfig (audit B3/B6): fixed bundlePrice + per-slot speciality
+      // fees, NEVER the client-supplied subtotal/specialityFee. We validate
+      // every child belongs to this restaurant AND fills a real bundle slot
+      // (eligibility + min/max) so a tampered client can't underpay or stuff
+      // extra items into the flat bundle price.
       const isBundleLine =
         (typeof raw.menuItemId === "string" && raw.menuItemId.startsWith("bundle:")) ||
         (raw.isBundle === true && Array.isArray(raw.bundleItems) && raw.bundleItems.length > 0);
@@ -710,6 +744,30 @@ export async function POST(req: NextRequest) {
         if (!Array.isArray(raw.bundleItems) || raw.bundleItems.length === 0) {
           return NextResponse.json({ error: "Bundle item missing children" }, { status: 400 });
         }
+        const bundlePromoId =
+          typeof raw.bundlePromoId === "string" && raw.bundlePromoId
+            ? raw.bundlePromoId
+            : typeof raw.menuItemId === "string" && raw.menuItemId.startsWith("bundle:")
+              ? raw.menuItemId.slice("bundle:".length)
+              : "";
+        const bundlePromo = bundlePromoId ? bundlePromoMap.get(bundlePromoId) : undefined;
+        if (!bundlePromo) {
+          return NextResponse.json(
+            { error: "This bundle is no longer available.", code: "bundle_unavailable" },
+            { status: 400 },
+          );
+        }
+        const isSpeciality = bundlePromo.promotionType === "meal_bundle_speciality";
+        // Parse ruleConfig (JSON column) with a fallback to the legacy `rules`
+        // string, mirroring the engine's getRules.
+        let bRC: any = bundlePromo.ruleConfig;
+        if (typeof bRC === "string") { try { bRC = JSON.parse(bRC); } catch { bRC = null; } }
+        if (!bRC || typeof bRC !== "object") { try { bRC = JSON.parse(bundlePromo.rules ?? "{}"); } catch { bRC = {}; } }
+        const bundlePrice = Math.max(0, Number(bRC?.bundlePrice ?? 0));
+        const bundleGroups: any[] = Array.isArray(bRC?.groups) ? bRC.groups : [];
+
+        const slotFill = bundleGroups.map(() => 0);
+        let specialityUpcharge = 0;
         const sanitisedChildren: Array<{
           menuItemId: string; variantId?: string | null;
           name: string; variantName?: string | null;
@@ -729,6 +787,36 @@ export async function POST(req: NextRequest) {
               { status: 400 },
             );
           }
+          // Greedy slot assignment (mirrors the combo branch + the customer's
+          // composer): the child must be eligible for some slot (by id or
+          // category) that still has room (maxCount). The slot's CONFIGURED
+          // speciality fee — not the client's — is what we charge.
+          let assigned = -1;
+          for (let gi = 0; gi < bundleGroups.length; gi++) {
+            const g = bundleGroups[gi] ?? {};
+            const idSet: string[] = [
+              ...(Array.isArray(g.itemIds) ? g.itemIds : []),
+              ...(Array.isArray(g.menuItemIds) ? g.menuItemIds : []),
+            ];
+            const catSet: string[] = Array.isArray(g.categoryIds) ? g.categoryIds : [];
+            const eligible =
+              idSet.includes(cid) ||
+              (!!(childMenuItem as any).categoryId && catSet.includes((childMenuItem as any).categoryId));
+            const max = Math.max(1, Number(g.maxCount ?? g.minCount ?? 1));
+            if (eligible && slotFill[gi] < max) { assigned = gi; break; }
+          }
+          if (bundleGroups.length > 0 && assigned < 0) {
+            return NextResponse.json(
+              { error: `"${sanitize(child.name ?? childMenuItem.name, 200)}" isn't a valid choice for this bundle.` },
+              { status: 400 },
+            );
+          }
+          let slotFee = 0;
+          if (assigned >= 0) {
+            slotFill[assigned] += 1;
+            if (isSpeciality) slotFee = Math.max(0, Number(bundleGroups[assigned]?.extraFee ?? 0));
+            specialityUpcharge += slotFee;
+          }
           sanitisedChildren.push({
             menuItemId: cid,
             variantId: child.variantId ? String(child.variantId) : null,
@@ -742,29 +830,28 @@ export async function POST(req: NextRequest) {
                 }))
               : undefined,
             notes: child.notes ? sanitize(child.notes, 200) : null,
-            specialityFee:
-              typeof child.specialityFee === "number" && child.specialityFee >= 0
-                ? Math.round(child.specialityFee * 100) / 100
-                : undefined,
+            // Server-derived fee (clamped to config), never the client's value.
+            specialityFee: slotFee > 0 ? Math.round(slotFee * 100) / 100 : undefined,
           });
         }
+        // Every slot's minimum must be satisfied (server-enforced).
+        for (let gi = 0; gi < bundleGroups.length; gi++) {
+          const min = Math.max(0, Number(bundleGroups[gi]?.minCount ?? 1));
+          if (slotFill[gi] < min) {
+            return NextResponse.json({ error: "Please complete all bundle choices." }, { status: 400 });
+          }
+        }
         const bundleQty = Math.max(1, Math.min(99, parseInt(raw.quantity, 10) || 1));
-        // Bundle price = client's lineTotal divided by quantity (always 1
-        // in the current UX, but we tolerate >1 in case we change that).
-        const clientSubtotal =
-          typeof raw.subtotal === "number" ? raw.subtotal : Number(raw.price ?? 0) * bundleQty;
-        const bundleLineTotal = Math.max(0, Math.round(clientSubtotal * 100) / 100);
-        const bundleUnitPrice = Math.round((bundleLineTotal / bundleQty) * 100) / 100;
+        // Authoritative price: fixed bundlePrice + configured speciality fees.
+        const bundleUnitPrice = Math.max(0, Math.round((bundlePrice + specialityUpcharge) * 100) / 100);
+        const bundleLineTotal = Math.round(bundleUnitPrice * bundleQty * 100) / 100;
         serverSubtotal += bundleLineTotal;
 
         validatedItems.push({
           menuItemId: null, // synthetic bundle wrapper — not a real MenuItem
           variantId: null,
           variantName: null,
-          name: sanitize(
-            raw.bundlePromoName ?? raw.name ?? "Bundle",
-            200,
-          ),
+          name: sanitize(raw.bundlePromoName ?? raw.name ?? bundlePromo.name ?? "Bundle", 200),
           price: bundleUnitPrice,
           quantity: bundleQty,
           notes: raw.notes ? sanitize(raw.notes, 200) : null,

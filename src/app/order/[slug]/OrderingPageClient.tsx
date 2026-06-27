@@ -1961,9 +1961,17 @@ export function OrderingPageClient({
           menuItemId: ci.menuItem.id,
           categoryId: ci.menuItem.categoryId,
           variantId: ci.variant?.id ?? null,
-          // Effective per-unit price (variant-adjusted) so a size-specific
-          // freebie / % off nets against the price actually paid, not the base.
-          price: ci.unitPrice ?? ci.variant?.price ?? ci.menuItem.price,
+          // Effective per-unit price = lineTotal / qty, which is ALWAYS
+          // modifier-inclusive and consistent with subtotal. Using unitPrice/
+          // variant/base here omitted paid modifiers for standard modal items
+          // (which don't set unitPrice), so a per-unit promo (BOGO / free item /
+          // free dish / once-per-order %) previewed the discount off the base
+          // price while the charge route nets base+mods — preview != charge
+          // (audit confusing#8). The charge route stays authoritative; this only
+          // makes the PREVIEW match it. Luigi 2026-06-26.
+          price: ci.quantity > 0
+            ? Math.round((ci.lineTotal / ci.quantity) * 100) / 100
+            : (ci.unitPrice ?? ci.variant?.price ?? ci.menuItem.price),
           quantity: ci.quantity,
           subtotal: ci.lineTotal,
         })),

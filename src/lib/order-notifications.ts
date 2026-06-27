@@ -23,6 +23,38 @@ import { recordAppliedCoupons } from "@/lib/coupon-ledger";
 import { sendKitchenPush } from "@/lib/push";
 import { formatCurrency } from "@/lib/utils";
 
+/**
+ * Give back one global usage count per applied promotion when a RELEASED order
+ * later fails (auto-rejected / manually rejected / cancelled). Mirrors the
+ * increment in fireOrderNotifications exactly — same appliedPromos source, same
+ * id set — so a "max N uses" promo isn't permanently consumed by orders the
+ * restaurant never fulfilled (audit B11). Gated on notifiedAt: only released
+ * orders were ever incremented, so an abandoned/unpaid order (notifiedAt null)
+ * must NOT be decremented. The `usedCount: { gt: 0 }` guard floors at 0 so a
+ * double reject/cancel can't drive the counter negative. Luigi 2026-06-26.
+ */
+export async function releasePromotionUsage(order: {
+  notifiedAt: Date | null;
+  appliedPromos: string | null;
+}): Promise<void> {
+  if (!order.notifiedAt) return;
+  let ids: string[] = [];
+  if (order.appliedPromos) {
+    try {
+      const parsed = JSON.parse(order.appliedPromos);
+      if (Array.isArray(parsed)) {
+        ids = parsed
+          .map((p: any) => p?.promoId)
+          .filter((x: unknown): x is string => typeof x === "string" && !!x);
+      }
+    } catch { /* malformed snapshot → nothing to release */ }
+  }
+  if (!ids.length) return;
+  await prisma.promotion
+    .updateMany({ where: { id: { in: ids }, usedCount: { gt: 0 } }, data: { usedCount: { decrement: 1 } } })
+    .catch((e) => console.error("[releasePromotionUsage]", e));
+}
+
 export async function fireOrderNotifications(orderId: string): Promise<{ fired: boolean }> {
   // Atomic claim: only ONE caller wins the right to fire notifications.
   // Returns count = 1 if we won, 0 if someone else already did.

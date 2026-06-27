@@ -190,3 +190,67 @@ describe("resolvePromotions — guards", () => {
     expect(totalPromoDiscount(results, 20)).toBe(20);
   });
 });
+
+// ─── Discount-math fixes (audit Batch A) ────────────────────────────────────
+describe("engine math — Batch A correctness fixes", () => {
+  // B1: "Fixed discount percentage" strategy must apply the typed percent, not
+  // silently give the item away free (cheapestDiscount ?? 100).
+  it("bogo fixed_percent applies discountPercent (50% off the unit, not free)", () => {
+    const p = mkPromo({
+      promotionType: "bogo",
+      ruleConfig: {
+        discountStrategy: "fixed_percent",
+        discountPercent: 50,
+        groups: [
+          { id: "p", role: "paid", categoryIds: ["cat1"], itemIds: [] },
+          { id: "f", role: "free", categoryIds: ["cat1"], itemIds: [] },
+        ],
+      },
+    });
+    const ctx = mkCtx({
+      subtotal: 20,
+      items: [{ menuItemId: "i1", categoryId: "cat1", price: 10, quantity: 2, subtotal: 20 }],
+    });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(5); // 50% of one $10 unit, NOT $10 free
+  });
+
+  it("buy_n_get_free fixed_percent applies discountPercent to the freebie", () => {
+    const p = mkPromo({
+      promotionType: "buy_n_get_free",
+      ruleConfig: {
+        discountStrategy: "fixed_percent",
+        discountPercent: 50,
+        groups: [
+          { id: "p", role: "paid", minCount: 1, categoryIds: ["cat1"], itemIds: [] },
+          { id: "f", role: "free", categoryIds: ["cat2"], itemIds: [] },
+        ],
+      },
+    });
+    const ctx = mkCtx({
+      subtotal: 18,
+      items: [
+        { menuItemId: "i1", categoryId: "cat1", price: 10, quantity: 1, subtotal: 10 },
+        { menuItemId: "i2", categoryId: "cat2", price: 8, quantity: 1, subtotal: 8 },
+      ],
+    });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(4); // 50% of the $8 freebie
+  });
+
+  // B7: meal_bundle must cap each group at maxCount units — extra qualifying
+  // items beyond the slot size stay at full price, not folded into bundlePrice.
+  it("meal_bundle caps the bundle at group.maxCount units (4 pizzas, slot=2)", () => {
+    const p = mkPromo({
+      promotionType: "meal_bundle",
+      ruleConfig: {
+        bundlePrice: 20,
+        groups: [{ id: "g", role: "", minCount: 2, maxCount: 2, categoryIds: ["cat1"], itemIds: [] }],
+      },
+    });
+    const ctx = mkCtx({
+      subtotal: 48,
+      items: [{ menuItemId: "i1", categoryId: "cat1", price: 12, quantity: 4, subtotal: 48 }],
+    });
+    // Only the 2 slot units ($24) form the bundle → 24 - 20 = $4, NOT 48 - 20 = $28.
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(4);
+  });
+});

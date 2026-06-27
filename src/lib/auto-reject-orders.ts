@@ -14,6 +14,7 @@ import prisma from "@/lib/db";
 import { notifyCustomer, notifyStaff } from "@/lib/notifications";
 import { refundDirectPayment, voidPayment } from "@/lib/stripe";
 import { releaseCouponsForOrder } from "@/lib/coupon-ledger";
+import { releasePromotionUsage } from "@/lib/order-notifications";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
@@ -86,6 +87,9 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
     select: {
       id: true,
       orderNumber: true,
+      // Needed to give back promo global-usage counts on a missed order (B11).
+      notifiedAt: true,
+      appliedPromos: true,
       paymentMethod: true,
       paymentStatus: true,
       paymentIntentId: true,
@@ -212,6 +216,10 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       // Coupon ledger: a timed-out ("missed") order releases its coupon back to
       // the customer — never burned by an order the restaurant never accepted.
       await releaseCouponsForOrder(order.id);
+      // Same for the Promotion GLOBAL usage cap — give back the count this
+      // released-then-missed order consumed (B11). These candidates are all
+      // notifiedAt != null, so they were incremented at release.
+      await releasePromotionUsage(order);
 
       // Marketplace counter rollback (idempotent). Auto-rejected
       // marketplace orders shouldn't count toward the restaurant's
