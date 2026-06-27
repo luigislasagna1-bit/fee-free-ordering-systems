@@ -28,6 +28,14 @@ describe("promo-fields normalisers (trust-but-verify wizard input)", () => {
     expect(normalizeOrderType("garbage")).toBe("both");
   });
 
+  it("normalizeOrderType collapses ALL channels selected back to 'both' (unrestricted)", () => {
+    // Selecting every channel = no restriction → "both" (Luigi 2026-06-27).
+    expect(normalizeOrderType(["pickup", "delivery", "dine_in", "take_out", "catering"])).toBe("both");
+    expect(normalizeOrderType('["catering","delivery","dine_in","pickup","take_out"]')).toBe("both");
+    // A subset stays a real restriction.
+    expect(normalizeOrderType(["pickup", "dine_in", "take_out", "catering"])).not.toBe("both");
+  });
+
   it("enum normalisers fall back to their default on junk", () => {
     expect(normalizeCustomerType("returning")).toBe("returning");
     expect(normalizeCustomerType("nope")).toBe("any");

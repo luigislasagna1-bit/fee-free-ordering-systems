@@ -67,6 +67,14 @@ export function normalizeOrderType(v: unknown): string {
             typeof x === "string" && VALID_ORDER_TYPES.has(x)
           )));
           if (valid.length === 0) return "both";
+          // Selecting EVERY channel = no restriction → store "both" so the promo
+          // stays unrestricted (and a future 6th channel auto-applies too).
+          // Without this, "all checked" saved a fixed N-channel array that
+          // silently excluded any later-added channel. Luigi 2026-06-27.
+          const canon = (x: string) => (x === "takeout" ? "take_out" : x === "dinein" ? "dine_in" : x);
+          const canonSet = new Set(valid.map(canon));
+          const FULL = ["pickup", "delivery", "dine_in", "take_out", "catering"];
+          if (FULL.every((t) => canonSet.has(t))) return "both";
           if (valid.length === 1) return valid[0];
           // Sort to ensure equivalent multi-selects stringify identically
           // ("[\"delivery\",\"pickup\"]" never both forms in the DB).

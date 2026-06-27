@@ -96,11 +96,16 @@ function parseRules(raw: string | null | undefined): PromoRules {
   }
 }
 
+/** Canonical full set of order channels. "both"/empty = UNRESTRICTED, which the
+ *  engine treats as ALL channels — so the wizard must show them ALL checked, not
+ *  just pickup+delivery (Luigi 2026-06-27: a "both" promo showed only 2 boxes,
+ *  and re-saving silently narrowed it to pickup+delivery). */
+const ALL_ORDER_CHANNELS = ["pickup", "delivery", "dine_in", "take_out", "catering"];
+
 function normalizeOrderTypeFromDb(s: string | undefined): string[] {
-  if (!s) return [];
-  // Rows store "both" | a single value | a JSON array (multi-select) | CSV.
-  // Treat "both" as pickup+delivery; parse JSON arrays; split CSV otherwise.
-  if (s === "both") return ["pickup", "delivery"];
+  // No value (new promo) OR "both" = unrestricted → show every channel checked.
+  if (!s || s === "both") return [...ALL_ORDER_CHANNELS];
+  // Rows store a single value | a JSON array (multi-select) | CSV.
   let arr: string[];
   if (s.trim().startsWith("[")) {
     try {
