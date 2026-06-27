@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Sa pole siit veel ühtegi tellimust esitanud.",
       "orderNow": "Telli kohe →",
       "useOffer": "Kasuta pakkumist",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Ühekordne",
+      "offerReusable": "Korduvkasutatav",
+      "offerUsed": "Kasutatud",
+      "offerAutoApplies": "Rakendub automaatselt — koodi pole vaja"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Einepakk erivalikuga",

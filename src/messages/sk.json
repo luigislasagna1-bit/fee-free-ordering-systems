@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Zatiaľ ste tu nevykonali žiadnu objednávku.",
       "orderNow": "Objednať teraz →",
       "useOffer": "Použiť túto ponuku",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Jednorazové",
+      "offerReusable": "Opakovane",
+      "offerUsed": "Použité",
+      "offerAutoApplies": "Použije sa automaticky — bez kódu"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Jedlový balíček so špeciálnymi položkami",

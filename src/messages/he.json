@@ -5215,10 +5215,10 @@
       "noOrdersYet": "עדיין לא ביצעת הזמנות כאן.",
       "orderNow": "הזמן עכשיו →",
       "useOffer": "השתמש במבצע",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "חד-פעמי",
+      "offerReusable": "רב-פעמי",
+      "offerUsed": "נוצל",
+      "offerAutoApplies": "חל אוטומטית — ללא קוד"
     },
     "bundle": {
       "mealBundleWithSpeciality": "חבילת ארוחה עם פריט מיוחד",

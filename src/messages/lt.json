@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Jūs dar neįdėjote čia jokių užsakymų.",
       "orderNow": "Užsakyti dabar →",
       "useOffer": "Naudoti pasiūlymą",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Vienkartinis",
+      "offerReusable": "Daugkartinis",
+      "offerUsed": "Panaudota",
+      "offerAutoApplies": "Taikoma automatiškai — be kodo"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Maisto rinkinys su specialiu patiekalu",

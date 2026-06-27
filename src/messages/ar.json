@@ -5215,10 +5215,10 @@
       "noOrdersYet": "لم تقم بأي طلب هنا حتى الآن.",
       "orderNow": "اطلب الآن →",
       "useOffer": "استخدم هذا العرض",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "للاستخدام مرة واحدة",
+      "offerReusable": "قابل لإعادة الاستخدام",
+      "offerUsed": "مُستخدَم",
+      "offerAutoApplies": "يُطبَّق تلقائيًا — بدون رمز"
     },
     "bundle": {
       "mealBundleWithSpeciality": "وجبة مجمّعة مع مميزات خاصة",

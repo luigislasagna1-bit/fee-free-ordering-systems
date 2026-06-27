@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Все още нямаш поръчки тук.",
       "orderNow": "Поръчай сега →",
       "useOffer": "Използвай тази оферта",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Еднократно",
+      "offerReusable": "Многократно",
+      "offerUsed": "Използвано",
+      "offerAutoApplies": "Прилага се автоматично — без код"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Пакетно меню със специалитет",

@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Du har endnu ikke afgivet nogen bestillinger her.",
       "orderNow": "Bestil nu →",
       "useOffer": "Brug dette tilbud",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Engangsbrug",
+      "offerReusable": "Genbrugelig",
+      "offerUsed": "Brugt",
+      "offerAutoApplies": "Anvendes automatisk — ingen kode"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Måltidsbundle med specialitet",

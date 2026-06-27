@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Anda belum melakukan pesanan di sini.",
       "orderNow": "Pesan sekarang →",
       "useOffer": "Gunakan penawaran ini",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Sekali pakai",
+      "offerReusable": "Bisa dipakai ulang",
+      "offerUsed": "Terpakai",
+      "offerAutoApplies": "Otomatis berlaku — tanpa kode"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Paket makan dengan menu spesial",

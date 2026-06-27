@@ -5215,10 +5215,10 @@
       "noOrdersYet": "คุณยังไม่มีคำสั่งซื้อที่นี่",
       "orderNow": "สั่งเลย →",
       "useOffer": "ใช้ข้อเสนอนี้",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "ใช้ได้ครั้งเดียว",
+      "offerReusable": "ใช้ซ้ำได้",
+      "offerUsed": "ใช้แล้ว",
+      "offerAutoApplies": "ใช้อัตโนมัติ — ไม่ต้องใส่โค้ด"
     },
     "bundle": {
       "mealBundleWithSpeciality": "เซตอาหารพร้อมเมนูพิเศษ",

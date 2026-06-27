@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Jūs vēl neesat veicis nevienu pasūtījumu šeit.",
       "orderNow": "Pasūtīt tagad →",
       "useOffer": "Izmantot piedāvājumu",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Vienreizēja",
+      "offerReusable": "Atkārtoti lietojama",
+      "offerUsed": "Izmantota",
+      "offerAutoApplies": "Piemērojas automātiski — bez koda"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ēdienreizes komplekts ar īpašumu",

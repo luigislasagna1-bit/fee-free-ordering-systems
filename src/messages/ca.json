@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Encara no has fet cap comanda aquí.",
       "orderNow": "Comanda ara →",
       "useOffer": "Fes servir aquesta oferta",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Un sol ús",
+      "offerReusable": "Reutilitzable",
+      "offerUsed": "Utilitzat",
+      "offerAutoApplies": "S'aplica sol — sense codi"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Menú combinat amb especialitat",

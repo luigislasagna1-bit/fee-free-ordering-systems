@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Bạn chưa đặt đơn hàng nào tại đây.",
       "orderNow": "Đặt ngay →",
       "useOffer": "Dùng ưu đãi này",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Dùng một lần",
+      "offerReusable": "Dùng nhiều lần",
+      "offerUsed": "Đã dùng",
+      "offerAutoApplies": "Tự áp dụng — không cần mã"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Combo bữa ăn với món đặc biệt",

@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Du har inte gjort några beställningar här ännu.",
       "orderNow": "Beställ nu →",
       "useOffer": "Använd erbjudandet",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Engångsbruk",
+      "offerReusable": "Återanvändbar",
+      "offerUsed": "Använd",
+      "offerAutoApplies": "Läggs till automatiskt — ingen kod"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Matkombination med specialitet",

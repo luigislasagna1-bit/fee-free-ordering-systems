@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Ви ще не зробили жодного замовлення тут.",
       "orderNow": "Замовити зараз →",
       "useOffer": "Скористатися пропозицією",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Одноразовий",
+      "offerReusable": "Багаторазовий",
+      "offerUsed": "Використано",
+      "offerAutoApplies": "Застосовується автоматично — без коду"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Комплект з фірмовою стравою",

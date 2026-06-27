@@ -5215,10 +5215,10 @@
       "noOrdersYet": "आपने यहाँ अभी तक कोई ऑर्डर नहीं दिया है।",
       "orderNow": "अभी ऑर्डर करें →",
       "useOffer": "यह ऑफ़र उपयोग करें",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "एक बार उपयोग",
+      "offerReusable": "पुनः उपयोग योग्य",
+      "offerUsed": "उपयोग किया गया",
+      "offerAutoApplies": "स्वतः लागू — कोई कोड नहीं"
     },
     "bundle": {
       "mealBundleWithSpeciality": "स्पेशलिटी के साथ मील बंडल",

@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Je hebt hier nog geen bestellingen geplaatst.",
       "orderNow": "Nu bestellen →",
       "useOffer": "Gebruik deze aanbieding",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Eenmalig te gebruiken",
+      "offerReusable": "Herbruikbaar",
+      "offerUsed": "Gebruikt",
+      "offerAutoApplies": "Automatisch toegepast — geen code"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Maaltijdbundel met specialiteit",

@@ -5215,10 +5215,10 @@
       "noOrdersYet": "まだこちらでご注文はありません。",
       "orderNow": "今すぐ注文する →",
       "useOffer": "この特典を使う",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "1回限り",
+      "offerReusable": "繰り返し利用可",
+      "offerUsed": "使用済み",
+      "offerAutoApplies": "自動適用 — コード不要"
     },
     "bundle": {
       "mealBundleWithSpeciality": "スペシャルティ付きミールバンドル",

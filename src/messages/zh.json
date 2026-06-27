@@ -5215,10 +5215,10 @@
       "noOrdersYet": "您在此处还没有下过任何订单。",
       "orderNow": "立即下单 →",
       "useOffer": "使用此优惠",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "一次性使用",
+      "offerReusable": "可重复使用",
+      "offerUsed": "已使用",
+      "offerAutoApplies": "自动应用 — 无需代码"
     },
     "bundle": {
       "mealBundleWithSpeciality": "含特色菜的套餐",

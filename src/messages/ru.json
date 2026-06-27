@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Вы ещё не делали заказов здесь.",
       "orderNow": "Заказать сейчас →",
       "useOffer": "Использовать предложение",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Разовое использование",
+      "offerReusable": "Многоразовое",
+      "offerUsed": "Использовано",
+      "offerAutoApplies": "Применяется автоматически — без кода"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Комбо с фирменными блюдами",

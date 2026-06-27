@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Nie złożyłeś jeszcze żadnego zamówienia.",
       "orderNow": "Zamów teraz →",
       "useOffer": "Użyj tej oferty",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Jednorazowe",
+      "offerReusable": "Wielokrotne",
+      "offerUsed": "Wykorzystane",
+      "offerAutoApplies": "Automatycznie — bez kodu"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Zestaw posiłkowy ze specjalnością",

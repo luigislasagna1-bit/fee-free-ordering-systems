@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Non hai ancora effettuato ordini qui.",
       "orderNow": "Ordina ora →",
       "useOffer": "Usa questa offerta",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Uso singolo",
+      "offerReusable": "Riutilizzabile",
+      "offerUsed": "Usato",
+      "offerAutoApplies": "Applicato in automatico — niente codice"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Bundle pasto con specialità",

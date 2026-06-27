@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Henüz buraya sipariş vermediniz.",
       "orderNow": "Şimdi sipariş ver →",
       "useOffer": "Bu teklifi kullan",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Tek seferlik",
+      "offerReusable": "Yeniden kullanılabilir",
+      "offerUsed": "Kullanıldı",
+      "offerAutoApplies": "Otomatik uygulanır — kod yok"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Özel ürünlü yemek paketi",

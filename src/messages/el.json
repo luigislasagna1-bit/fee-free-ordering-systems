@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Δεν έχετε κάνει καμία παραγγελία εδώ ακόμα.",
       "orderNow": "Παραγγείλτε τώρα →",
       "useOffer": "Χρήση προσφοράς",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Μία χρήση",
+      "offerReusable": "Επαναχρησιμοποιήσιμο",
+      "offerUsed": "Χρησιμοποιήθηκε",
+      "offerAutoApplies": "Αυτόματη εφαρμογή — χωρίς κωδικό"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Πακέτο γεύματος με specialty",

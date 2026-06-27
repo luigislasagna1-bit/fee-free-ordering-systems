@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Et ole vielä tehnyt tilauksia täällä.",
       "orderNow": "Tilaa nyt →",
       "useOffer": "Käytä tarjous",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Kertakäyttöinen",
+      "offerReusable": "Uudelleenkäytettävä",
+      "offerUsed": "Käytetty",
+      "offerAutoApplies": "Aktivoituu itsestään — ei koodia"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ateriapaketti erikoisuudella",

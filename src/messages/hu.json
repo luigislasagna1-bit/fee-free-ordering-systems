@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Még nem adtál le rendelést itt.",
       "orderNow": "Rendelés most →",
       "useOffer": "Ajánlat felhasználása",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Egyszer használható",
+      "offerReusable": "Újrahasználható",
+      "offerUsed": "Felhasználva",
+      "offerAutoApplies": "Automatikus — nincs kód"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ételbundle különleges tétellel",

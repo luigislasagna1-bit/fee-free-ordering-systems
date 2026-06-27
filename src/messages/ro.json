@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Nu ai plasat încă nicio comandă aici.",
       "orderNow": "Comandă acum →",
       "useOffer": "Folosește oferta",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Single utilizare",
+      "offerReusable": "Reutilizabil",
+      "offerUsed": "Utilizat",
+      "offerAutoApplies": "Se aplică automat — fără cod"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Pachet de masă cu specialitate",

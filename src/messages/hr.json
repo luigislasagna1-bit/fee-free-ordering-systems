@@ -5215,10 +5215,10 @@
       "noOrdersYet": "Još niste naručili ništa ovdje.",
       "orderNow": "Naruči sada →",
       "useOffer": "Iskoristi ponudu",
-      "offerOnce": "One-time use",
-      "offerReusable": "Reusable",
-      "offerUsed": "Used",
-      "offerAutoApplies": "Auto-applies — no code"
+      "offerOnce": "Jednokratno",
+      "offerReusable": "Višekratno",
+      "offerUsed": "Iskorišteno",
+      "offerAutoApplies": "Automatski — bez koda"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Paket obroka sa specijalitetom",
