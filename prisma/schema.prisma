@@ -325,6 +325,22 @@ model Restaurant {
   // email ("As a {vipMemberLabel} at …"). Owner-chosen brand term (e.g. "VIP
   // member", "Teacher", "Club member"); null → localized default "VIP member".
   vipMemberLabel       String?
+  // ── Reward Dollars (store-credit wallet, Program 3). Per-restaurant opt-in +
+  //    fully configurable: each restaurant chooses to earn-by-auto, earn-by-grant,
+  //    both, or neither. Customer-facing NAME is renameable (default localized
+  //    "Reward Dollars"). Money is Float to match every other money column. ──────
+  rewardsEnabled         Boolean @default(false) // master on/off for the whole feature
+  rewardLabelSingular    String? // e.g. "Reward Dollar" — null → localized default
+  rewardLabelPlural      String? // e.g. "Reward Dollars"
+  rewardEarnEnabled      Boolean @default(false) // auto-earn on completed orders
+  rewardEarnMode         String  @default("percent") // "percent" | "per_dollar"
+  rewardEarnPercent      Float   @default(0) // % of (subtotal−discount) earned back
+  rewardEarnPerDollar    Float   @default(0) // $ earned per $1 of (subtotal−discount)
+  rewardRedeemEnabled    Boolean @default(false) // customers may spend at checkout
+  rewardMinRedeemBalance Float   @default(0) // min balance before any redemption
+  rewardMaxRedeemPercent Float   @default(100) // cap % of an order coverable by credit
+  rewardSignupBonus      Float   @default(0) // credit granted on account creation
+  rewardExpiryDays       Int     @default(0) // 0 = never (stored; not enforced v1)
   socialLinks          String? // JSON: { instagram, facebook, tiktok, x, youtube, linkedin, pinterest, snapchat, threads, whatsapp, yelp, googleBusiness, tripadvisor, website }
   marketingTier        String    @default("free") // "free" | "social_basic" | "social_pro" | "social_managed" — gates AI-post / scheduling features
   /// Marketing & tracking integrations the OWNER configures for their own
@@ -389,6 +405,7 @@ model Restaurant {
   prospectImports        ProspectImport[]
   customerCoupons        CustomerCoupon[]
   customerGroups         CustomerGroup[]
+  rewardAccounts         RewardAccount[]
 
   // Reseller Partner Program — set at restaurant creation when the signup
   // carried a ?ref=<referralCode> from an approved reseller. Nullable: most
@@ -1069,6 +1086,10 @@ model Order {
   deliveryFee           Float     @default(0)
   tip                   Float     @default(0)
   total                 Float
+  // Reward Dollars (store credit) applied as PARTIAL PAYMENT. `total` stays the
+  // full amount (tax/receipts/refunds intact); the online charge = total −
+  // creditApplied. Default 0 → existing orders unaffected. Luigi 2026-06-27.
+  creditApplied         Float     @default(0)
   paymentMethod         String    @default("cash")
   paymentStatus         String    @default("pending")
   paymentIntentId       String? // Stripe PaymentIntent id (when paymentMethod = "card")
@@ -1398,6 +1419,7 @@ model Customer {
   customerCoupons CustomerCoupon[]
   groupMemberships CustomerGroupMember[]
   vipSpecialTargets CustomerGroupPromotion[]
+  rewardAccounts   RewardAccount[]
 
   @@index([restaurantId])
   @@index([restaurantId, email])
@@ -1853,6 +1875,52 @@ model CustomerGroupMember {
   @@index([restaurantId, email])
   @@index([restaurantId, phone])
   @@index([restaurantId, customerId])
+}
+
+// ─── Reward Dollars wallet (store credit, Program 3, 2026-06-27) ────────
+// Per-restaurant store credit a customer spends as PARTIAL PAYMENT at checkout.
+// Mirrors the coupon-ledger philosophy: an append-only ledger is the source of
+// truth, the cached balance is mutated atomically, and money is consumed/earned
+// on FULFILLMENT (completed order), released on miss/reject. One canonical
+// balance row per (restaurant, customer) so the atomic decrement is safe.
+model RewardAccount {
+  id           String @id @default(cuid())
+  restaurantId String
+  customerId   String
+  balance         Float @default(0)
+  lifetimeEarned  Float @default(0)
+  lifetimeRedeemed Float @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  restaurant Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  customer   Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  ledger     RewardLedger[]
+
+  @@unique([restaurantId, customerId]) // one wallet per customer per restaurant
+  @@index([restaurantId])
+}
+
+// Append-only ledger. amount is SIGNED (+earn/grant/release, −spend); reason is
+// one of earn|grant|signup_bonus|spend|release|adjust|expire. The
+// @@unique([accountId, orderId, reason]) caps it at ≤1 spend AND ≤1 earn per
+// order per account — the idempotency backbone for the completion/cron hooks.
+model RewardLedger {
+  id          String   @id @default(cuid())
+  accountId   String
+  amount      Float
+  balanceAfter Float
+  reason      String
+  status      String? // for spend rows: "applied" → "redeemed" | "released"
+  orderId     String?
+  note        String?
+  createdAt   DateTime @default(now())
+
+  account RewardAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@unique([accountId, orderId, reason])
+  @@index([accountId, createdAt])
+  @@index([orderId])
 }
 
 // ─── Marketing Suite (GloriaFood parity, 2026-05-29) ───────────────────
