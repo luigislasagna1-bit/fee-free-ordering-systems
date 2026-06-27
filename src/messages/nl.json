@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Een VIP-special geven",
       "giveVipSpecialSubtitle": "Koppel een bestaande promotie aan {name} — die wordt automatisch voor hen toegepast bij het afrekenen, zonder code.",
       "thisCustomerSpecials": "VIP-specials voor deze klant",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Hoe noemt u uw leden?",
+      "memberLabelPlaceholder": "bijv. VIP-lid, Docent, Clublid",
+      "memberLabelSave": "Opslaan",
+      "memberLabelSaved": "Opgeslagen.",
+      "memberLabelFailed": "Opslaan mislukt.",
+      "memberLabelDefault": "VIP-lid",
+      "memberLabelHint": "In uw VIP-e-mail staat: “Als {label} bij uw restaurant…”"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "Jouw VIP-deal bij {restaurantName} — {discountLabel}",
-      "intro": "Als VIP-lid bij {restaurantName} heb je een exclusieve ledendeal ontgrendeld: {discountLabel}. Deze wordt automatisch toegepast — geen code nodig.",
+      "intro": "Als {memberLabel} bij {restaurantName} heeft u een aanbieding exclusief voor leden ontgrendeld: {discountLabel}. Deze wordt automatisch toegepast — geen code nodig.",
       "howToLabel": "Zo gebruik je hem",
       "usageAccount": "Log gewoon in op je account en bestel — je {discountLabel} wordt automatisch toegepast bij het afrekenen.",
       "usageGuest": "Voer bij het afrekenen dit e-mailadres in ({email}) en je {discountLabel} wordt automatisch toegepast — geen code om in te typen.",
       "accountTip": "Tip: maak een gratis account aan met dit e-mailadres om je gegevens op te slaan en al je VIP-aanbiedingen op één plek terug te vinden.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP-lid"
     }
   },
   "marketing": {

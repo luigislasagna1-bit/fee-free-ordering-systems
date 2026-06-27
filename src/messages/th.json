@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "มอบดีล VIP",
       "giveVipSpecialSubtitle": "แนบโปรโมชันที่มีอยู่ให้กับ {name} — ระบบใช้ส่วนลดให้อัตโนมัติตอนชำระเงิน ไม่ต้องใช้โค้ด",
       "thisCustomerSpecials": "ดีล VIP สำหรับลูกค้ารายนี้",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "คุณเรียกสมาชิกของคุณว่าอะไร?",
+      "memberLabelPlaceholder": "เช่น สมาชิก VIP, คุณครู, สมาชิกชมรม",
+      "memberLabelSave": "บันทึก",
+      "memberLabelSaved": "บันทึกแล้ว",
+      "memberLabelFailed": "บันทึกไม่สำเร็จ",
+      "memberLabelDefault": "สมาชิก VIP",
+      "memberLabelHint": "อีเมล VIP ของคุณจะระบุว่า: “ในฐานะ{label}ที่ร้านของคุณ…”"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "ดีลพิเศษสำหรับ VIP ของคุณที่ {restaurantName} — {discountLabel}",
-      "intro": "ในฐานะสมาชิก VIP ที่ {restaurantName} คุณได้ปลดล็อกดีลเฉพาะสมาชิก: {discountLabel} ส่วนลดนี้จะถูกใช้โดยอัตโนมัติ — ไม่ต้องใช้โค้ด",
+      "intro": "ในฐานะ{memberLabel}ที่ {restaurantName} คุณได้ปลดล็อกดีลพิเศษเฉพาะสมาชิก: {discountLabel} ดีลนี้จะใช้โดยอัตโนมัติ — ไม่ต้องใช้โค้ด",
       "howToLabel": "วิธีใช้งาน",
       "usageAccount": "เพียงลงชื่อเข้าใช้บัญชีของคุณแล้วสั่งอาหาร — ส่วนลด {discountLabel} ของคุณจะถูกใช้โดยอัตโนมัติเมื่อชำระเงิน",
       "usageGuest": "เมื่อชำระเงิน ให้กรอกอีเมลนี้ ({email}) แล้วส่วนลด {discountLabel} ของคุณจะถูกใช้โดยอัตโนมัติ — ไม่ต้องพิมพ์โค้ดใดๆ",
       "accountTip": "เคล็ดลับ: สร้างบัญชีฟรีด้วยอีเมลนี้เพื่อบันทึกข้อมูลของคุณและดูข้อเสนอ VIP ทั้งหมดของคุณได้ในที่เดียว",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "สมาชิก VIP"
     }
   },
   "marketing": {

@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Предоставить VIP-предложение",
       "giveVipSpecialSubtitle": "Привяжите существующую акцию к {name} — она применится для них автоматически при оформлении заказа, без кода.",
       "thisCustomerSpecials": "VIP-предложения для этого клиента",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Как вы называете своих участников?",
+      "memberLabelPlaceholder": "напр. VIP-участник, Учитель, Член клуба",
+      "memberLabelSave": "Сохранить",
+      "memberLabelSaved": "Сохранено.",
+      "memberLabelFailed": "Не удалось сохранить.",
+      "memberLabelDefault": "VIP-участник",
+      "memberLabelHint": "В вашем VIP-письме будет сказано: «Как {label} в вашем ресторане…»"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "Ваше VIP-предложение в {restaurantName} — {discountLabel}",
-      "intro": "Как VIP-участник в {restaurantName}, вы получили доступ к предложению только для участников: {discountLabel}. Оно применяется автоматически — код не нужен.",
+      "intro": "Как {memberLabel} в {restaurantName}, вы получили эксклюзивное предложение для участников: {discountLabel}. Оно применяется автоматически — код не нужен.",
       "howToLabel": "Как воспользоваться",
       "usageAccount": "Просто войдите в свой аккаунт и сделайте заказ — ваше предложение {discountLabel} применится автоматически при оформлении.",
       "usageGuest": "При оформлении укажите этот адрес эл. почты ({email}), и ваше предложение {discountLabel} применится автоматически — никакой код вводить не нужно.",
       "accountTip": "Совет: создайте бесплатный аккаунт с этим адресом эл. почты, чтобы сохранить свои данные и видеть все свои VIP-предложения в одном месте.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP-участник"
     }
   },
   "marketing": {

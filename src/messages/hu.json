@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "VIP-ajánlat adása",
       "giveVipSpecialSubtitle": "Csatolj egy meglévő promóciót a következőhöz: {name} – számára fizetéskor automatikusan érvényesül, kód nélkül.",
       "thisCustomerSpecials": "Ennek a vásárlónak szóló VIP-ajánlatok",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Hogyan nevezi a tagjait?",
+      "memberLabelPlaceholder": "pl. VIP tag, Tanár, Klubtag",
+      "memberLabelSave": "Mentés",
+      "memberLabelSaved": "Mentve.",
+      "memberLabelFailed": "Nem sikerült menteni.",
+      "memberLabelDefault": "VIP tag",
+      "memberLabelHint": "A VIP e-mailje így szól majd: „Mint {label} az éttermében…”"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "A VIP-ajánlatod itt: {restaurantName} — {discountLabel}",
-      "intro": "A(z) {restaurantName} VIP-tagjaként feloldottál egy csak tagoknak szóló ajánlatot: {discountLabel}. Automatikusan érvényesül — nincs szükség kódra.",
+      "intro": "Mint {memberLabel} a(z) {restaurantName} étteremben, feloldott egy kizárólag tagoknak szóló ajánlatot: {discountLabel}. Automatikusan érvényesül — nincs szükség kódra.",
       "howToLabel": "Hogyan használhatod",
       "usageAccount": "Csak jelentkezz be a fiókodba és rendelj — a(z) {discountLabel} automatikusan érvényesül a fizetésnél.",
       "usageGuest": "A fizetésnél add meg ezt az e-mail-címet ({email}), és a(z) {discountLabel} automatikusan érvényesül — nem kell kódot beírnod.",
       "accountTip": "Tipp: hozz létre egy ingyenes fiókot ezzel az e-mail-címmel, hogy elmentsd az adataidat, és egy helyen megtaláld az összes VIP-ajánlatodat.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP tag"
     }
   },
   "marketing": {

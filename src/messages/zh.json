@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "赠送 VIP 专享优惠",
       "giveVipSpecialSubtitle": "为 {name} 关联一项现有促销 — 结账时会自动为其应用，无需代码。",
       "thisCustomerSpecials": "该客户的 VIP 专享优惠",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "您如何称呼您的会员？",
+      "memberLabelPlaceholder": "例如：VIP 会员、教师、俱乐部成员",
+      "memberLabelSave": "保存",
+      "memberLabelSaved": "已保存。",
+      "memberLabelFailed": "无法保存。",
+      "memberLabelDefault": "VIP 会员",
+      "memberLabelHint": "您的 VIP 邮件中将显示：“作为本店的{label}……”"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "您在 {restaurantName} 的 VIP 专享优惠 — {discountLabel}",
-      "intro": "作为 {restaurantName} 的 VIP 会员，您已解锁会员专享优惠：{discountLabel}。优惠将自动生效——无需输入优惠码。",
+      "intro": "作为 {restaurantName} 的{memberLabel}，您已解锁会员专享优惠：{discountLabel}。此优惠将自动生效 — 无需任何代码。",
       "howToLabel": "如何使用",
       "usageAccount": "只需登录您的账户并下单——结账时您的 {discountLabel} 将自动生效。",
       "usageGuest": "结账时输入此邮箱地址（{email}），您的 {discountLabel} 即可自动生效——无需输入任何优惠码。",
       "accountTip": "小贴士：用此邮箱创建一个免费账户，即可保存您的信息，并在一处集中查看您所有的 VIP 优惠。",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP 会员"
     }
   },
   "marketing": {

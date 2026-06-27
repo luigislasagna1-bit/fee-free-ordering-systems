@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "VIP स्पेशल दें",
       "giveVipSpecialSubtitle": "{name} के साथ कोई मौजूदा प्रोमोशन जोड़ें — यह चेकआउट पर उनके लिए अपने-आप लागू हो जाती है, किसी कोड की ज़रूरत नहीं।",
       "thisCustomerSpecials": "इस ग्राहक के लिए VIP स्पेशल्स",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "आप अपने सदस्यों को क्या कहते हैं?",
+      "memberLabelPlaceholder": "जैसे VIP सदस्य, शिक्षक, क्लब सदस्य",
+      "memberLabelSave": "सहेजें",
+      "memberLabelSaved": "सहेजा गया।",
+      "memberLabelFailed": "सहेजा नहीं जा सका।",
+      "memberLabelDefault": "VIP सदस्य",
+      "memberLabelHint": "आपके VIP ईमेल में लिखा होगा: “आपके रेस्तरां में एक {label} के रूप में…”"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "{restaurantName} पर आपकी VIP डील — {discountLabel}",
-      "intro": "{restaurantName} के VIP सदस्य के रूप में, आपने सिर्फ़ सदस्यों के लिए एक खास डील अनलॉक की है: {discountLabel}. यह अपने-आप लागू हो जाती है — किसी कोड की ज़रूरत नहीं.",
+      "intro": "{restaurantName} में एक {memberLabel} के रूप में, आपने केवल सदस्यों के लिए एक डील अनलॉक की है: {discountLabel}. यह अपने-आप लागू होती है — किसी कोड की ज़रूरत नहीं।",
       "howToLabel": "इसका इस्तेमाल कैसे करें",
       "usageAccount": "बस अपने अकाउंट में साइन इन करें और ऑर्डर करें — आपका {discountLabel} चेकआउट पर अपने-आप लागू हो जाता है.",
       "usageGuest": "चेकआउट पर यह ईमेल पता ({email}) दर्ज करें और आपका {discountLabel} अपने-आप लागू हो जाता है — कोई कोड टाइप करने की ज़रूरत नहीं.",
       "accountTip": "टिप: इस ईमेल से एक मुफ़्त अकाउंट बनाएँ ताकि आप अपनी जानकारी सहेज सकें और अपने सभी VIP ऑफ़र एक ही जगह पा सकें.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP सदस्य"
     }
   },
   "marketing": {

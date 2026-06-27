@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "VIP ayrıcalığı ver",
       "giveVipSpecialSubtitle": "Mevcut bir promosyonu {name} kişisine ekleyin — ödeme sırasında onlar için otomatik uygulanır, kod gerekmez.",
       "thisCustomerSpecials": "Bu müşteri için VIP ayrıcalıkları",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Üyelerinize ne diyorsunuz?",
+      "memberLabelPlaceholder": "ör. VIP üye, Öğretmen, Kulüp üyesi",
+      "memberLabelSave": "Kaydet",
+      "memberLabelSaved": "Kaydedildi.",
+      "memberLabelFailed": "Kaydedilemedi.",
+      "memberLabelDefault": "VIP üye",
+      "memberLabelHint": "VIP e-postanızda şu yazacak: “Restoranınızda bir {label} olarak…”"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "{restaurantName} restoranındaki VIP fırsatınız — {discountLabel}",
-      "intro": "{restaurantName} restoranının bir VIP üyesi olarak, yalnızca üyelere özel bir fırsatın kilidini açtınız: {discountLabel}. Otomatik olarak uygulanır — koda gerek yok.",
+      "intro": "{restaurantName} restoranında bir {memberLabel} olarak, yalnızca üyelere özel bir fırsatın kilidini açtınız: {discountLabel}. Otomatik olarak uygulanır — herhangi bir koda gerek yok.",
       "howToLabel": "Nasıl kullanılır",
       "usageAccount": "Hesabınıza giriş yapıp sipariş verin yeterli — {discountLabel} indiriminiz ödeme sırasında otomatik olarak uygulanır.",
       "usageGuest": "Ödeme sırasında bu e-posta adresini ({email}) girin; {discountLabel} indiriminiz otomatik olarak uygulanır — yazılacak bir kod yok.",
       "accountTip": "İpucu: Bu e-postayla ücretsiz bir hesap oluşturarak bilgilerinizi kaydedin ve tüm VIP tekliflerinizi tek bir yerde bulun.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP üye"
     }
   },
   "marketing": {

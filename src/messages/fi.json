@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Anna VIP-etu",
       "giveVipSpecialSubtitle": "Liitä olemassa oleva kampanja henkilölle {name} — se lisätään hänelle automaattisesti kassalla, koodia ei tarvita.",
       "thisCustomerSpecials": "Tämän asiakkaan VIP-edut",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Miksi kutsut jäseniäsi?",
+      "memberLabelPlaceholder": "esim. VIP-jäsen, Opettaja, Klubin jäsen",
+      "memberLabelSave": "Tallenna",
+      "memberLabelSaved": "Tallennettu.",
+      "memberLabelFailed": "Tallennus epäonnistui.",
+      "memberLabelDefault": "VIP-jäsen",
+      "memberLabelHint": "VIP-sähköpostissasi lukee: “{label} ravintolassasi…”"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "VIP-tarjouksesi ravintolassa {restaurantName} — {discountLabel}",
-      "intro": "{restaurantName}-ravintolan VIP-jäsenenä olet avannut vain jäsenille tarkoitetun tarjouksen: {discountLabel}. Se otetaan käyttöön automaattisesti — koodia ei tarvita.",
+      "intro": "{memberLabel} ravintolassa {restaurantName} olet avannut vain jäsenille tarkoitetun edun: {discountLabel}. Se otetaan käyttöön automaattisesti — koodia ei tarvita.",
       "howToLabel": "Näin käytät sitä",
       "usageAccount": "Kirjaudu vain tilillesi ja tee tilaus — {discountLabel} otetaan käyttöön automaattisesti kassalla.",
       "usageGuest": "Syötä kassalla tämä sähköpostiosoite ({email}), niin {discountLabel} otetaan käyttöön automaattisesti — koodia ei tarvitse kirjoittaa.",
       "accountTip": "Vinkki: luo maksuton tili tällä sähköpostiosoitteella, niin voit tallentaa tietosi ja löytää kaikki VIP-tarjouksesi yhdestä paikasta.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP-jäsen"
     }
   },
   "marketing": {

@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Przyznaj ofertę VIP",
       "giveVipSpecialSubtitle": "Przypisz istniejącą promocję do {name} — stosuje się dla nich automatycznie przy płatności, bez potrzeby kodu.",
       "thisCustomerSpecials": "Oferty VIP dla tego klienta",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Jak nazywasz swoich członków?",
+      "memberLabelPlaceholder": "np. członek VIP, Nauczyciel, Członek klubu",
+      "memberLabelSave": "Zapisz",
+      "memberLabelSaved": "Zapisano.",
+      "memberLabelFailed": "Nie udało się zapisać.",
+      "memberLabelDefault": "członek VIP",
+      "memberLabelHint": "Twój e-mail VIP będzie brzmiał: „Jako {label} w naszej restauracji…”"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "Twoja oferta VIP w {restaurantName} — {discountLabel}",
-      "intro": "Jako członek VIP w {restaurantName} odblokowałeś ofertę tylko dla członków: {discountLabel}. Obowiązuje automatycznie — bez kodu.",
+      "intro": "Jako {memberLabel} w {restaurantName} odblokowałeś ofertę dostępną tylko dla członków: {discountLabel}. Jest naliczana automatycznie — bez potrzeby podawania kodu.",
       "howToLabel": "Jak z niej skorzystać",
       "usageAccount": "Po prostu zaloguj się na swoje konto i złóż zamówienie — Twoja oferta {discountLabel} zostanie zastosowana automatycznie przy płatności.",
       "usageGuest": "Przy płatności podaj ten adres e-mail ({email}), a Twoja oferta {discountLabel} zostanie zastosowana automatycznie — bez wpisywania kodu.",
       "accountTip": "Wskazówka: załóż darmowe konto z tym adresem e-mail, aby zapisać swoje dane i mieć wszystkie oferty VIP w jednym miejscu.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "członek VIP"
     }
   },
   "marketing": {

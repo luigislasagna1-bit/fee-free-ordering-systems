@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Dodijeli VIP ponudu",
       "giveVipSpecialSubtitle": "Pridružite postojeću promociju osobi {name} — automatski joj se primjenjuje na blagajni, bez koda.",
       "thisCustomerSpecials": "VIP ponude za ovog kupca",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Kako nazivate svoje članove?",
+      "memberLabelPlaceholder": "npr. VIP član, Profesor, Član kluba",
+      "memberLabelSave": "Spremi",
+      "memberLabelSaved": "Spremljeno.",
+      "memberLabelFailed": "Spremanje nije uspjelo.",
+      "memberLabelDefault": "VIP član",
+      "memberLabelHint": "Vaš VIP e-mail će glasiti: “Kao {label} u vašem restoranu…”"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "Vaša VIP ponuda u {restaurantName} — {discountLabel}",
-      "intro": "Kao VIP član u {restaurantName} otključali ste ponudu samo za članove: {discountLabel}. Primjenjuje se automatski — bez koda.",
+      "intro": "Kao {memberLabel} u {restaurantName} otključali ste ponudu namijenjenu samo članovima: {discountLabel}. Primjenjuje se automatski — nije potreban nikakav kod.",
       "howToLabel": "Kako je iskoristiti",
       "usageAccount": "Samo se prijavite na svoj račun i naručite — vaš {discountLabel} automatski se primjenjuje pri naplati.",
       "usageGuest": "Pri naplati unesite ovu adresu e-pošte ({email}) i vaš {discountLabel} automatski se primjenjuje — bez upisivanja koda.",
       "accountTip": "Savjet: izradite besplatan račun s ovom e-poštom kako biste spremili svoje podatke i pronašli sve svoje VIP ponude na jednom mjestu.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP član"
     }
   },
   "marketing": {

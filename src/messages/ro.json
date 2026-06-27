@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Acordă o ofertă VIP",
       "giveVipSpecialSubtitle": "Asociază o promoție existentă cu {name} — se aplică automat pentru ei la finalizarea comenzii, fără cod.",
       "thisCustomerSpecials": "Oferte VIP pentru acest client",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Cum vă numiți membrii?",
+      "memberLabelPlaceholder": "ex. membru VIP, Profesor, Membru de club",
+      "memberLabelSave": "Salvează",
+      "memberLabelSaved": "Salvat.",
+      "memberLabelFailed": "Salvarea nu a reușit.",
+      "memberLabelDefault": "membru VIP",
+      "memberLabelHint": "E-mailul dvs. VIP va spune: „În calitate de {label} la restaurantul dvs.…”"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "Oferta ta VIP la {restaurantName} — {discountLabel}",
-      "intro": "Ca membru VIP la {restaurantName}, ai deblocat o ofertă exclusivă pentru membri: {discountLabel}. Se aplică automat — fără cod.",
+      "intro": "În calitate de {memberLabel} la {restaurantName}, ați deblocat o ofertă exclusivă pentru membri: {discountLabel}. Se aplică automat — fără cod.",
       "howToLabel": "Cum o folosești",
       "usageAccount": "Doar autentifică-te în contul tău și comandă — {discountLabel} se aplică automat la finalizarea comenzii.",
       "usageGuest": "La finalizarea comenzii, introdu această adresă de email ({email}) și {discountLabel} se aplică automat — fără cod de tastat.",
       "accountTip": "Sfat: creează-ți un cont gratuit cu acest email pentru a-ți salva datele și a găsi toate ofertele tale VIP într-un singur loc.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "membru VIP"
     }
   },
   "marketing": {

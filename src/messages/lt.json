@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Suteikti VIP pasiūlymą",
       "giveVipSpecialSubtitle": "Priskirkite esamą akciją klientui {name} — ji jam pritaikoma automatiškai atsiskaitant, kodo nereikia.",
       "thisCustomerSpecials": "Šio kliento VIP pasiūlymai",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Kaip vadinate savo narius?",
+      "memberLabelPlaceholder": "pvz., VIP narys, Mokytojas, Klubo narys",
+      "memberLabelSave": "Išsaugoti",
+      "memberLabelSaved": "Išsaugota.",
+      "memberLabelFailed": "Nepavyko išsaugoti.",
+      "memberLabelDefault": "VIP narys",
+      "memberLabelHint": "Jūsų VIP el. laiške bus rašoma: „Kaip {label} jūsų restorane…“"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "Jūsų VIP pasiūlymas {restaurantName} — {discountLabel}",
-      "intro": "Kaip {restaurantName} VIP narys, atrakinote tik nariams skirtą pasiūlymą: {discountLabel}. Jis pritaikomas automatiškai — kodo nereikia.",
+      "intro": "Kaip {memberLabel} restorane {restaurantName}, atrakinote tik nariams skirtą pasiūlymą: {discountLabel}. Jis taikomas automatiškai — kodo nereikia.",
       "howToLabel": "Kaip pasinaudoti",
       "usageAccount": "Tiesiog prisijunkite prie paskyros ir užsisakykite — jūsų {discountLabel} bus pritaikytas automatiškai atsiskaitant.",
       "usageGuest": "Atsiskaitydami įveskite šį el. pašto adresą ({email}) ir jūsų {discountLabel} bus pritaikytas automatiškai — jokio kodo įvesti nereikia.",
       "accountTip": "Patarimas: susikurkite nemokamą paskyrą su šiuo el. paštu, kad išsaugotumėte savo duomenis ir rastumėte visus savo VIP pasiūlymus vienoje vietoje.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP narys"
     }
   },
   "marketing": {

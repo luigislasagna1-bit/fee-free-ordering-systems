@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Anna VIP-pakkumine",
       "giveVipSpecialSubtitle": "Seo olemasolev kampaania kliendiga {name} — see rakendub neile kassas automaatselt, koodi pole vaja.",
       "thisCustomerSpecials": "Selle kliendi VIP-pakkumised",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Kuidas oma liikmeid nimetate?",
+      "memberLabelPlaceholder": "nt VIP-liige, Õpetaja, Klubiliige",
+      "memberLabelSave": "Salvesta",
+      "memberLabelSaved": "Salvestatud.",
+      "memberLabelFailed": "Salvestamine ebaõnnestus.",
+      "memberLabelDefault": "VIP-liige",
+      "memberLabelHint": "Teie VIP-e-kiri ütleb: „Kuna olete teie restoranis {label}…”"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "Sinu VIP-pakkumine restoranis {restaurantName} — {discountLabel}",
-      "intro": "VIP-liikmena restoranis {restaurantName} avasid ainult liikmetele mõeldud pakkumise: {discountLabel}. See rakendub automaatselt — koodi pole vaja.",
+      "intro": "Kuna olete restoranis {restaurantName} {memberLabel}, olete avanud ainult liikmetele mõeldud pakkumise: {discountLabel}. See rakendub automaatselt — koodi pole vaja.",
       "howToLabel": "Kuidas seda kasutada",
       "usageAccount": "Logi lihtsalt oma kontole sisse ja telli — sinu {discountLabel} rakendub kassas automaatselt.",
       "usageGuest": "Sisesta kassas see e-posti aadress ({email}) ja sinu {discountLabel} rakendub automaatselt — koodi pole vaja sisestada.",
       "accountTip": "Nõuanne: loo selle e-posti aadressiga tasuta konto, et salvestada oma andmed ja leida kõik oma VIP-pakkumised ühest kohast.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP-liige"
     }
   },
   "marketing": {

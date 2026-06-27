@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Gi et VIP-tilbud",
       "giveVipSpecialSubtitle": "Knytt en eksisterende kampanje til {name} — den brukes automatisk for dem i kassen, ingen kode nødvendig.",
       "thisCustomerSpecials": "VIP-tilbud for denne kunden",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Hva kaller du medlemmene dine?",
+      "memberLabelPlaceholder": "f.eks. VIP-medlem, Lærer, Klubbmedlem",
+      "memberLabelSave": "Lagre",
+      "memberLabelSaved": "Lagret.",
+      "memberLabelFailed": "Kunne ikke lagre.",
+      "memberLabelDefault": "VIP-medlem",
+      "memberLabelHint": "VIP-e-posten din vil si: “Som {label} hos restauranten din …”"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "Ditt VIP-tilbud hos {restaurantName} — {discountLabel}",
-      "intro": "Som VIP-medlem hos {restaurantName} har du låst opp et tilbud kun for medlemmer: {discountLabel}. Det gjelder automatisk – ingen kode nødvendig.",
+      "intro": "Som {memberLabel} hos {restaurantName} har du låst opp et tilbud kun for medlemmer: {discountLabel}. Det gjelder automatisk — ingen kode nødvendig.",
       "howToLabel": "Slik bruker du det",
       "usageAccount": "Bare logg inn på kontoen din og bestill – din {discountLabel} legges til automatisk i kassen.",
       "usageGuest": "I kassen oppgir du denne e-postadressen ({email}), så legges din {discountLabel} til automatisk – ingen kode å skrive.",
       "accountTip": "Tips: opprett en gratis konto med denne e-postadressen for å lagre opplysningene dine og finne alle VIP-tilbudene dine på ett sted.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP-medlem"
     }
   },
   "marketing": {

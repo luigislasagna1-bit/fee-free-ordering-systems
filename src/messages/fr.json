@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Attribuer une offre VIP",
       "giveVipSpecialSubtitle": "Associez une promotion existante à {name} — elle s'applique automatiquement pour eux au paiement, sans code.",
       "thisCustomerSpecials": "Offres VIP pour ce client",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Comment appelez-vous vos membres ?",
+      "memberLabelPlaceholder": "ex. membre VIP, Enseignant, Membre du club",
+      "memberLabelSave": "Enregistrer",
+      "memberLabelSaved": "Enregistré.",
+      "memberLabelFailed": "Échec de l'enregistrement.",
+      "memberLabelDefault": "membre VIP",
+      "memberLabelHint": "Votre e-mail VIP indiquera : « En tant que {label} de votre restaurant… »"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "Votre offre VIP chez {restaurantName} — {discountLabel}",
-      "intro": "En tant que membre VIP chez {restaurantName}, vous avez débloqué une offre réservée aux membres : {discountLabel}. Elle s'applique automatiquement — aucun code nécessaire.",
+      "intro": "En tant que {memberLabel} chez {restaurantName}, vous avez débloqué une offre réservée aux membres : {discountLabel}. Elle s'applique automatiquement — aucun code nécessaire.",
       "howToLabel": "Comment en profiter",
       "usageAccount": "Connectez-vous simplement à votre compte et commandez — votre {discountLabel} est appliqué automatiquement au paiement.",
       "usageGuest": "Au moment du paiement, saisissez cette adresse e-mail ({email}) et votre {discountLabel} est appliqué automatiquement — aucun code à taper.",
       "accountTip": "Astuce : créez un compte gratuit avec cet e-mail pour enregistrer vos informations et retrouver toutes vos offres VIP au même endroit.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "membre VIP"
     }
   },
   "marketing": {

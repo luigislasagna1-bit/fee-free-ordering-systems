@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Ein VIP-Special geben",
       "giveVipSpecialSubtitle": "Verknüpfen Sie eine bestehende Aktion mit {name} — sie wird für sie an der Kasse automatisch angewendet, kein Code nötig.",
       "thisCustomerSpecials": "VIP-Specials für diesen Kunden",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Wie nennen Sie Ihre Mitglieder?",
+      "memberLabelPlaceholder": "z. B. VIP-Mitglied, Lehrer, Clubmitglied",
+      "memberLabelSave": "Speichern",
+      "memberLabelSaved": "Gespeichert.",
+      "memberLabelFailed": "Speichern fehlgeschlagen.",
+      "memberLabelDefault": "VIP-Mitglied",
+      "memberLabelHint": "In Ihrer VIP-E-Mail steht: „Als {label} in Ihrem Restaurant …“"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "Dein VIP-Angebot bei {restaurantName} — {discountLabel}",
-      "intro": "Als VIP-Mitglied bei {restaurantName} hast du ein exklusives Angebot nur für Mitglieder freigeschaltet: {discountLabel}. Es wird automatisch angewendet — kein Code nötig.",
+      "intro": "Als {memberLabel} bei {restaurantName} haben Sie ein exklusives Mitglieder-Angebot freigeschaltet: {discountLabel}. Es wird automatisch angewendet — kein Code erforderlich.",
       "howToLabel": "So nutzt du es",
       "usageAccount": "Melde dich einfach in deinem Konto an und bestelle — dein {discountLabel} wird automatisch an der Kasse angewendet.",
       "usageGuest": "Gib an der Kasse diese E-Mail-Adresse ({email}) ein und dein {discountLabel} wird automatisch angewendet — kein Code zum Eintippen.",
       "accountTip": "Tipp: Erstelle mit dieser E-Mail-Adresse ein kostenloses Konto, um deine Daten zu speichern und alle deine VIP-Angebote an einem Ort zu finden.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP-Mitglied"
     }
   },
   "marketing": {

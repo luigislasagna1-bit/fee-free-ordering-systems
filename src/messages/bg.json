@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Дай VIP специална оферта",
       "giveVipSpecialSubtitle": "Прикачете съществуваща промоция към {name} — прилага се автоматично за тях при плащане, без нужда от код.",
       "thisCustomerSpecials": "VIP специални оферти за този клиент",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Как наричате членовете си?",
+      "memberLabelPlaceholder": "напр. VIP член, Учител, Член на клуба",
+      "memberLabelSave": "Запази",
+      "memberLabelSaved": "Запазено.",
+      "memberLabelFailed": "Запазването не бе успешно.",
+      "memberLabelDefault": "VIP член",
+      "memberLabelHint": "Вашият VIP имейл ще гласи: „Като {label} в нашия ресторант…“"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "Вашата VIP оферта в {restaurantName} — {discountLabel}",
-      "intro": "Като VIP член в {restaurantName} отключихте оферта само за членове: {discountLabel}. Прилага се автоматично — без нужда от код.",
+      "intro": "Като {memberLabel} в {restaurantName}, отключихте оферта само за членове: {discountLabel}. Прилага се автоматично — без нужда от код.",
       "howToLabel": "Как да я използвате",
       "usageAccount": "Просто влезте в акаунта си и поръчайте — вашата отстъпка {discountLabel} се прилага автоматично при плащане.",
       "usageGuest": "При плащане въведете този имейл адрес ({email}) и вашата отстъпка {discountLabel} се прилага автоматично — без код за въвеждане.",
       "accountTip": "Съвет: създайте безплатен акаунт с този имейл, за да запазите данните си и да намерите всичките си VIP оферти на едно място.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP член"
     }
   },
   "marketing": {

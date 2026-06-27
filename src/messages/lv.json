@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Piešķirt VIP piedāvājumu",
       "giveVipSpecialSubtitle": "Piesaistiet esošu akciju klientam {name} — tā tiek piemērota viņiem automātiski izrakstoties, bez koda.",
       "thisCustomerSpecials": "Šī klienta VIP piedāvājumi",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Kā jūs sauucat savus dalībniekus?",
+      "memberLabelPlaceholder": "piem., VIP dalībnieks, Skolotājs, Kluba biedrs",
+      "memberLabelSave": "Saglabāt",
+      "memberLabelSaved": "Saglabāts.",
+      "memberLabelFailed": "Neizdevās saglabāt.",
+      "memberLabelDefault": "VIP dalībnieks",
+      "memberLabelHint": "Jūsu VIP e-pastā būs teikts: “Kā {label} jūsu restorānā…”"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "Jūsu VIP piedāvājums {restaurantName} — {discountLabel}",
-      "intro": "Kā VIP dalībnieks {restaurantName} esat atklājis tikai dalībniekiem pieejamu piedāvājumu: {discountLabel}. Tas tiek piemērots automātiski — kods nav nepieciešams.",
+      "intro": "Kā {memberLabel} restorānā {restaurantName} jūs esat atvēris piedāvājumu tikai dalībniekiem: {discountLabel}. Tas tiek piemērots automātiski — kods nav nepieciešams.",
       "howToLabel": "Kā to izmantot",
       "usageAccount": "Vienkārši pierakstieties savā kontā un veiciet pasūtījumu — jūsu {discountLabel} tiek piemērots automātiski, noformējot pasūtījumu.",
       "usageGuest": "Noformējot pasūtījumu, ievadiet šo e-pasta adresi ({email}), un jūsu {discountLabel} tiks piemērots automātiski — nekas nav jāievada.",
       "accountTip": "Padoms: izveidojiet bezmaksas kontu ar šo e-pastu, lai saglabātu savus datus un atrastu visus savus VIP piedāvājumus vienuviet.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP dalībnieks"
     }
   },
   "marketing": {

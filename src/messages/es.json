@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Dar una oferta VIP",
       "giveVipSpecialSubtitle": "Vincula una promoción existente a {name}: se le aplica sola al pagar, sin necesidad de código.",
       "thisCustomerSpecials": "Ofertas VIP de este cliente",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "¿Cómo llamas a tus miembros?",
+      "memberLabelPlaceholder": "p. ej. miembro VIP, Profesor, Socio del club",
+      "memberLabelSave": "Guardar",
+      "memberLabelSaved": "Guardado.",
+      "memberLabelFailed": "No se pudo guardar.",
+      "memberLabelDefault": "miembro VIP",
+      "memberLabelHint": "Tu correo VIP dirá: “Como {label} en tu restaurante…”"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "Tu oferta VIP en {restaurantName} — {discountLabel}",
-      "intro": "Como miembro VIP de {restaurantName}, has desbloqueado una oferta exclusiva para miembros: {discountLabel}. Se aplica automáticamente, sin necesidad de código.",
+      "intro": "Como {memberLabel} en {restaurantName}, has desbloqueado una oferta exclusiva para miembros: {discountLabel}. Se aplica automáticamente — sin necesidad de código.",
       "howToLabel": "Cómo usarla",
       "usageAccount": "Solo inicia sesión en tu cuenta y haz tu pedido: tu {discountLabel} se aplica automáticamente al finalizar la compra.",
       "usageGuest": "Al finalizar la compra, introduce esta dirección de email ({email}) y tu {discountLabel} se aplica automáticamente, sin escribir ningún código.",
       "accountTip": "Consejo: crea una cuenta gratuita con este email para guardar tus datos y encontrar todas tus ofertas VIP en un solo lugar.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "miembro VIP"
     }
   },
   "marketing": {

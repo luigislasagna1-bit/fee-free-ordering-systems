@@ -4202,13 +4202,13 @@
       "giveVipSpecialHeading": "Udělit VIP nabídku",
       "giveVipSpecialSubtitle": "Přiřaďte zákazníkovi {name} existující promo akci — uplatní se mu automaticky u pokladny, bez nutnosti kódu.",
       "thisCustomerSpecials": "VIP nabídky pro tohoto zákazníka",
-      "memberLabelLabel": "What do you call your members?",
-      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
-      "memberLabelSave": "Save",
-      "memberLabelSaved": "Saved.",
-      "memberLabelFailed": "Couldn't save.",
-      "memberLabelDefault": "VIP member",
-      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
+      "memberLabelLabel": "Jak říkáte svým členům?",
+      "memberLabelPlaceholder": "např. VIP člen, Učitel, Člen klubu",
+      "memberLabelSave": "Uložit",
+      "memberLabelSaved": "Uloženo.",
+      "memberLabelFailed": "Nepodařilo se uložit.",
+      "memberLabelDefault": "VIP člen",
+      "memberLabelHint": "Ve vašem VIP e-mailu bude: „Jako {label} v naší restauraci…“"
     }
   },
   "impersonation": {
@@ -4566,12 +4566,12 @@
     },
     "vipSpecial": {
       "subject": "Vaše VIP nabídka v {restaurantName} — {discountLabel}",
-      "intro": "Jako VIP člen v {restaurantName} jste odemkli nabídku jen pro členy: {discountLabel}. Uplatní se automaticky — žádný kód není potřeba.",
+      "intro": "Jako {memberLabel} v {restaurantName} jste získali nabídku jen pro členy: {discountLabel}. Uplatní se automaticky — žádný kód není potřeba.",
       "howToLabel": "Jak ji využít",
       "usageAccount": "Stačí se přihlásit k účtu a objednat — vaše sleva {discountLabel} se automaticky uplatní u pokladny.",
       "usageGuest": "U pokladny zadejte tuto e-mailovou adresu ({email}) a vaše sleva {discountLabel} se automaticky uplatní — žádný kód nemusíte psát.",
       "accountTip": "Tip: vytvořte si s tímto e-mailem bezplatný účet, uložte si své údaje a najdete všechny své VIP nabídky na jednom místě.",
-      "defaultMemberLabel": "VIP member"
+      "defaultMemberLabel": "VIP člen"
     }
   },
   "marketing": {
