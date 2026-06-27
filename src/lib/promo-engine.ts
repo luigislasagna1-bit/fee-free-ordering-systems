@@ -902,25 +902,27 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
   // Stacking resolution
   const masters    = triggered.filter(p => p.stackingRule === "master");
   const standards  = triggered.filter(p => p.stackingRule === "standard");
+  // A promo's REAL value for stacking decisions. free_delivery has no cart
+  // discount (calcDiscount = 0) but is worth the delivery fee on a delivery
+  // order — so it's scored at the fee (audit B10). On a non-delivery order or a
+  // $0-fee zone it's worth $0. Other types use calcDiscount.
+  const effectiveValue = (p: PromoInput): number =>
+    p.promotionType === "free_delivery" && canonicalOrderType(ctx.orderType) === "delivery"
+      ? Math.max(calcDiscount(p, ctx), ctx.deliveryFee ?? 0)
+      : calcDiscount(p, ctx);
+
   // Only exclusives that actually deliver a benefit can occupy the single
-  // exclusive slot. A $0 exclusive — e.g. "10% off ALL PIZZAS" when the cart
-  // has no pizzas — must NOT block a standard deal that would discount. Without
-  // this, an inert exclusive silently suppressed a real coupon promo.
-  // Luigi 2026-06-08.
+  // exclusive slot. A $0 exclusive — "10% off ALL PIZZAS" with no pizzas, OR a
+  // free_delivery on a $0-fee zone — must NOT block a standard deal that would
+  // discount (audit; an inert exclusive silently suppressed a real deal).
+  // Luigi 2026-06-08 / 2026-06-27.
   const exclusives = triggered.filter(
-    p => p.stackingRule === "exclusive" && (calcDiscount(p, ctx) > 0 || p.promotionType === "free_delivery"),
+    p => p.stackingRule === "exclusive" && effectiveValue(p) > 0,
   );
 
   let active: PromoInput[];
   const blockedPromos: BlockedPromo[] = [];
   if (exclusives.length > 0) {
-    // Score free_delivery at its real fee value (not its $0 cart discount) so a
-    // free_delivery exclusive can win the single exclusive slot against a small
-    // cart-discount exclusive (audit B10). Other types use calcDiscount.
-    const effectiveValue = (p: PromoInput): number =>
-      p.promotionType === "free_delivery" && canonicalOrderType(ctx.orderType) === "delivery"
-        ? Math.max(calcDiscount(p, ctx), ctx.deliveryFee ?? 0)
-        : calcDiscount(p, ctx);
     const best = exclusives.reduce((a, b) =>
       effectiveValue(a) >= effectiveValue(b) ? a : b
     );
@@ -931,9 +933,8 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
     // the cart can explain it and offer "remove this to use that instead".
     for (const p of triggered) {
       if (p.id === best.id || p.stackingRule === "master") continue;
-      const d = calcDiscount(p, ctx);
-      if (d > 0 || p.promotionType === "free_delivery") {
-        blockedPromos.push({ promoId: p.id, name: p.name, discount: d, winnerName: best.name, wasExclusive: p.stackingRule === "exclusive", couponCode: p.couponCode ?? undefined });
+      if (effectiveValue(p) > 0) {
+        blockedPromos.push({ promoId: p.id, name: p.name, discount: calcDiscount(p, ctx), winnerName: best.name, wasExclusive: p.stackingRule === "exclusive", couponCode: p.couponCode ?? undefined });
       }
     }
   } else {

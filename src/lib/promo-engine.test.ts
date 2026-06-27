@@ -92,10 +92,19 @@ describe("resolvePromotions — stacking matrix", () => {
   it("a free_delivery exclusive DOES occupy the slot (counts as a benefit)", () => {
     const fd = mkPromo({ stackingRule: "exclusive", promotionType: "free_delivery", ruleConfig: {} });
     const std = mkPromo({ stackingRule: "standard", ruleConfig: { discountAmount: 5 } });
-    // free_delivery is delivery-only (B4), so this must be a delivery order.
-    const { results, blockedPromos } = resolvePromotions([fd, std], mkCtx({ orderType: "delivery" }));
+    // free_delivery is delivery-only (B4) AND only occupies the exclusive slot
+    // when it has real value (a non-$0 delivery fee) — so set a fee here.
+    const { results, blockedPromos } = resolvePromotions([fd, std], mkCtx({ orderType: "delivery", deliveryFee: 5 }));
     expect(results.map((r) => r.type)).toContain("free_delivery");
     expect(blockedPromos.map((b) => b.promoId)).toContain(std.id);
+  });
+
+  it("a $0-fee free_delivery exclusive does NOT block a real standard discount", () => {
+    const fd = mkPromo({ stackingRule: "exclusive", promotionType: "free_delivery", ruleConfig: {} });
+    const std = mkPromo({ stackingRule: "standard", ruleConfig: { discountAmount: 5 } });
+    // Delivery order but $0 fee → free_delivery is worth nothing → std applies.
+    const { results } = resolvePromotions([fd, std], mkCtx({ orderType: "delivery", deliveryFee: 0 }));
+    expect(results.map((r) => r.promoId)).toEqual([std.id]);
   });
 });
 
