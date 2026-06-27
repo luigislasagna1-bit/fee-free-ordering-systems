@@ -76,6 +76,10 @@ export function StepRestrictions({
   // Bundles are composed from a visible card — coupon code + auto-apply are
   // inert for them, so those controls are hidden (Luigi 2026-06-27).
   const isBundle = ["meal_bundle", "meal_bundle_speciality"].includes(promotionType);
+  // free_item has its OWN spend threshold ("triggerAmount", set in step 2), so
+  // the general Cart Value (minimumOrder) here is a confusing second threshold —
+  // hide it for free_item (audit confusing#7). Luigi 2026-06-27.
+  const isFreeItem = promotionType === "free_item";
 
   const DAY_NAMES = [
     t("daySun"),
@@ -228,7 +232,8 @@ export function StepRestrictions({
         </p>
       </Section>
 
-      {/* CART VALUE */}
+      {/* CART VALUE — hidden for free_item (its triggerAmount is the threshold). */}
+      {!isFreeItem && (
       <Section title={t("cartValueTitle")} subtitle={t("cartValueSubtitle")}>
         <div className="relative w-48">
           <span className="absolute left-3 top-2 text-gray-400 text-sm">{currencySymbol}</span>
@@ -245,6 +250,7 @@ export function StepRestrictions({
           />
         </div>
       </Section>
+      )}
 
       {/* EXPIRATION */}
       <Section title={t("expirationTitle")} subtitle={t("expirationSubtitle")}>

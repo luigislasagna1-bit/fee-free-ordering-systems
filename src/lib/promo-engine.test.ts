@@ -399,3 +399,17 @@ describe("engine math — per-type debug fixes", () => {
     expect(applyPromotions([p], mkCtx({ subtotal: 20, items: [{ menuItemId: "i1", categoryId: "cat1", price: 20, quantity: 1, subtotal: 20 }] }))).toHaveLength(0);
   });
 });
+
+describe("engine math — buy_n_get_free most-expensive default", () => {
+  it("'most expensive' strategy defaults to 100% off (not $0)", () => {
+    const p = mkPromo({ promotionType: "buy_n_get_free", ruleConfig: { discountStrategy: "most_expensive", groups: [
+      { id: "p", role: "paid", minCount: 1, categoryIds: ["cat1"], itemIds: [] },
+      { id: "f", role: "free", categoryIds: ["cat2"], itemIds: [] },
+    ] } });
+    const ctx = mkCtx({ subtotal: 28, items: [
+      { menuItemId: "paid", categoryId: "cat1", price: 10, quantity: 1, subtotal: 10 },
+      { menuItemId: "free", categoryId: "cat2", price: 18, quantity: 1, subtotal: 18 },
+    ] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(18);
+  });
+});

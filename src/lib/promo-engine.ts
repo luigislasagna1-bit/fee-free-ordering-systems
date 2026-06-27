@@ -655,7 +655,9 @@ function buyNGetFreeResult(promo: PromoInput, ctx: ApplyContext): { total: numbe
     multiplier,
     fixedPct ? "cheapest" : strat,
     fixedPct ? (rules.discountPercent ?? 0) : (rules.cheapestDiscount ?? 100),
-    rules.mostExpensiveDiscount ?? 0,
+    // Default 100% (free) like BOGO — was 0%, so the "most expensive item free"
+    // strategy silently discounted nothing (audit dead#2). Luigi 2026-06-27.
+    rules.mostExpensiveDiscount ?? 100,
   );
 }
 
