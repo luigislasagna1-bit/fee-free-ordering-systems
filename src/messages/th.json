@@ -489,7 +489,8 @@
     "closedThisDay": "วันนี้ปิดทำการ",
     "fulfilSchedulePrompt": "📅 มีสินค้าอย่างน้อยหนึ่งรายการในตะกร้าของคุณที่สั่งได้เฉพาะบางวันหรือบางเวลาเท่านั้น เราได้เลือกช่วงเวลาที่ว่างเร็วที่สุดไว้ด้านล่างแล้ว — ปรับเปลี่ยนได้ตามต้องการ",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> สั่งได้เฉพาะบางวันหรือบางเวลาเท่านั้น เวลาสั่งซื้อที่ใช้ได้จึงถูกจำกัดตามนั้น",
-    "serviceStartsPrompt": "🕒 บริการ{service}ยังไม่เริ่ม — จะเริ่มเวลา {time}"
+    "serviceStartsPrompt": "🕒 บริการ{service}ยังไม่เริ่ม — จะเริ่มเวลา {time}",
+    "youSaved": "You saved {amount}"
   },
   "reservation": {
     "title": "จองโต๊ะ",

@@ -447,6 +447,7 @@
     "qty": "Qty",
     "item": "Item",
     "price": "Price",
+    "youSaved": "You saved {amount}",
     "cartEmpty": "Cart is empty",
     "couponCodePlaceholder": "Coupon code",
     "noNotes": "No notes",

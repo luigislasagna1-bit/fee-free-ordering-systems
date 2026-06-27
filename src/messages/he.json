@@ -489,7 +489,8 @@
     "closedThisDay": "סגור ביום זה",
     "fulfilSchedulePrompt": "📅 פריט אחד או יותר בעגלה שלך ניתן להזמנה רק בימים או בשעות מסוימות. בחרנו עבורך את המועד הזמין המוקדם ביותר למטה — אפשר לשנות אותו אם תרצה.",
     "fulfilSchedulePromptNamed": "📅 ניתן להזמין את <strong>{items}</strong> רק בימים או בשעות מסוימים. שעות ההזמנה הזמינות הוגבלו בהתאם.",
-    "serviceStartsPrompt": "🕒 שירות {service} עדיין לא התחיל — הוא מתחיל בשעה {time}."
+    "serviceStartsPrompt": "🕒 שירות {service} עדיין לא התחיל — הוא מתחיל בשעה {time}.",
+    "youSaved": "You saved {amount}"
   },
   "reservation": {
     "title": "הזמן שולחן",

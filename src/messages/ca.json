@@ -489,7 +489,8 @@
     "closedThisDay": "Tancat aquest dia",
     "fulfilSchedulePrompt": "📅 Un o més articles del teu cistell només es poden demanar per a determinats dies o hores. Hem seleccionat a sota la franja disponible més propera — ajusta-la si vols.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> només es pot demanar determinats dies o hores. Els horaris de comanda disponibles s'han limitat en conseqüència.",
-    "serviceStartsPrompt": "🕒 El servei de {service} encara no ha començat — comença a les {time}."
+    "serviceStartsPrompt": "🕒 El servei de {service} encara no ha començat — comença a les {time}.",
+    "youSaved": "You saved {amount}"
   },
   "reservation": {
     "title": "Reservar taula",

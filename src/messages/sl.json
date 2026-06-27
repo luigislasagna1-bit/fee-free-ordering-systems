@@ -489,7 +489,8 @@
     "closedThisDay": "Ta dan zaprto",
     "fulfilSchedulePrompt": "📅 Enega ali več izdelkov v vaši košarici je mogoče naročiti le za določene dni ali ure. Spodaj smo nastavili najzgodnejši razpoložljivi termin — po želji ga prilagodite.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> je mogoče naročiti le ob določenih dneh ali urah. Razpoložljivi časi naročanja so bili ustrezno omejeni.",
-    "serviceStartsPrompt": "🕒 Storitev {service} se še ni začela — začne se ob {time}."
+    "serviceStartsPrompt": "🕒 Storitev {service} se še ni začela — začne se ob {time}.",
+    "youSaved": "You saved {amount}"
   },
   "reservation": {
     "title": "Rezerviraj mizo",

@@ -489,7 +489,8 @@
     "closedThisDay": "Ezen a napon zárva",
     "fulfilSchedulePrompt": "📅 A kosarában lévő egy vagy több tétel csak bizonyos napokra vagy időpontokra rendelhető. Az alábbiakban beállítottuk a legkorábbi elérhető időpontot — szükség esetén módosíthatja.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> csak bizonyos napokon vagy időpontokban rendelhető. Az elérhető rendelési időpontok ennek megfelelően korlátozva lettek.",
-    "serviceStartsPrompt": "🕒 A(z) {service} szolgáltatás még nem kezdődött el — {time}-kor indul."
+    "serviceStartsPrompt": "🕒 A(z) {service} szolgáltatás még nem kezdődött el — {time}-kor indul.",
+    "youSaved": "You saved {amount}"
   },
   "reservation": {
     "title": "Asztal foglalása",

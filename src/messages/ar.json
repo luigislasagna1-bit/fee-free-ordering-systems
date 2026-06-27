@@ -489,7 +489,8 @@
     "closedThisDay": "مغلق في هذا اليوم",
     "fulfilSchedulePrompt": "📅 يمكن طلب عنصر واحد أو أكثر في سلتك في أيام أو أوقات معينة فقط. لقد حددنا أقرب موعد متاح أدناه — يمكنك تعديله إذا أردت.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> لا يمكن طلبه إلا في أيام أو أوقات معينة. تم تقييد أوقات الطلب المتاحة وفقًا لذلك.",
-    "serviceStartsPrompt": "🕒 لم تبدأ خدمة {service} بعد — تبدأ في الساعة {time}."
+    "serviceStartsPrompt": "🕒 لم تبدأ خدمة {service} بعد — تبدأ في الساعة {time}.",
+    "youSaved": "You saved {amount}"
   },
   "reservation": {
     "title": "احجز طاولة",

@@ -489,7 +489,8 @@
     "closedThisDay": "Zatvoreno na ovaj dan",
     "fulfilSchedulePrompt": "📅 Jednu ili više stavki u vašoj košarici moguće je naručiti samo za određene dane ili vremena. U nastavku smo postavili najraniji dostupni termin — po želji ga prilagodite.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> može se naručiti samo određenim danima ili u određeno vrijeme. Dostupna vremena naručivanja ograničena su u skladu s tim.",
-    "serviceStartsPrompt": "🕒 Usluga {service} još nije počela — počinje u {time}."
+    "serviceStartsPrompt": "🕒 Usluga {service} još nije počela — počinje u {time}.",
+    "youSaved": "You saved {amount}"
   },
   "reservation": {
     "title": "Rezervirajte stol",

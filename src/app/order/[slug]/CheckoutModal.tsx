@@ -549,6 +549,25 @@ export function CheckoutModal({
     ? customerInfo.notes.length > 60 ? customerInfo.notes.slice(0, 60) + "…" : customerInfo.notes
     : tc("noNotes");
 
+  // Per-item discount badges (GloriaFood-style). Sum each item-targeted promo's
+  // breakdown by menuItemId, then attach the saving to the FIRST matching cart
+  // line (dedup so a repeated menuItemId isn't double-counted visually). Whole-
+  // cart promos have no breakdown → they stay in the summary below. Luigi 2026-06-27.
+  const savedByItem = new Map<string, number>();
+  for (const p of appliedPromos) {
+    if (!p.breakdown) continue;
+    for (const b of p.breakdown) savedByItem.set(b.menuItemId, (savedByItem.get(b.menuItemId) ?? 0) + b.amount);
+  }
+  const shownSaved = new Set<string>();
+  const savedForLine = cart.map((ci) => {
+    const id = ci.menuItem?.id;
+    if (!id) return 0;
+    const amt = savedByItem.get(id);
+    if (!amt || shownSaved.has(id)) return 0;
+    shownSaved.add(id);
+    return amt;
+  });
+
   return (
     <div
       className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
@@ -603,32 +622,11 @@ export function CheckoutModal({
                   // the separate "Free Delivery" line below instead so the
                   // savings amount is accurate (it's the delivery fee).
                   .filter((p) => p.type !== "free_delivery" && p.discount > 0)
-                  .map((p) =>
-                    // Itemised deal → list each discounted dish with its own
-                    // amount, so the customer sees exactly WHICH items were
-                    // discounted instead of one mystery lump sum (incl. a single
-                    // targeted dish, e.g. "10% off your pizza"). Luigi 2026-06-26.
-                    p.breakdown && p.breakdown.length >= 1 ? (
-                      <div key={p.promoId} className="space-y-1">
-                        <div className="flex items-center gap-1.5 text-emerald-700 font-semibold text-xs">
-                          <span aria-hidden>✓</span>
-                          <span className="truncate">{p.name}</span>
-                          {p.couponCode && (
-                            <span className="font-mono bg-white border border-emerald-200 text-emerald-700 rounded px-1.5 py-0.5 ml-1">
-                              {p.couponCode}
-                            </span>
-                          )}
-                        </div>
-                        {p.breakdown.map((b, i) => (
-                          <div key={`${p.promoId}-${i}`} className="flex items-center justify-between text-xs pl-5">
-                            <span className="text-emerald-700 truncate">{b.name}</span>
-                            <span className="font-semibold text-emerald-800 whitespace-nowrap ml-2">
-                              − {formatCurrency(b.amount)}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
+                  // One line per promo (NAME + total). Item-targeted deals now
+                  // show WHICH dishes inline on each cart line above (the green
+                  // "You saved" badge), so the summary stays a clean per-promo
+                  // total — itemised detail isn't duplicated here. Luigi 2026-06-27.
+                  .map((p) => (
                       <div key={p.promoId} className="flex items-center justify-between text-xs">
                         <div className="flex items-center gap-1.5 text-emerald-700 font-medium truncate">
                           <span aria-hidden>✓</span>
@@ -1633,6 +1631,11 @@ export function CheckoutModal({
                           {ci.isBundle ? (ci.bundlePromoName ?? ci.menuItem.name) : ci.menuItem.name}
                         </span>
                         {ci.variant && <span className="block text-xs text-gray-400">{ci.variant.name}</span>}
+                        {savedForLine[i] > 0 && (
+                          <span className="inline-flex items-center gap-1 mt-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-2 py-0.5">
+                            <span aria-hidden>👍</span> {tc("youSaved", { amount: formatCurrency(savedForLine[i]) })}
+                          </span>
+                        )}
                         {ci.isBundle && ci.bundleItems && ci.bundleItems.length > 0 && (
                           <span className="block mt-1 pl-3 border-l-2 border-gray-100 text-xs text-gray-500 space-y-0.5">
                             {ci.bundleItems.map((child, ci2) => (

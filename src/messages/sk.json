@@ -489,7 +489,8 @@
     "closedThisDay": "Tento deň zatvorené",
     "fulfilSchedulePrompt": "📅 Jednu alebo viac položiek vo vašom košíku možno objednať len na určité dni alebo časy. Nižšie sme nastavili najbližší dostupný termín — v prípade potreby ho upravte.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> možno objednať len v určité dni alebo časy. Dostupné časy objednávok boli zodpovedajúcim spôsobom obmedzené.",
-    "serviceStartsPrompt": "🕒 Služba {service} sa ešte nezačala — začína o {time}."
+    "serviceStartsPrompt": "🕒 Služba {service} sa ešte nezačala — začína o {time}.",
+    "youSaved": "You saved {amount}"
   },
   "reservation": {
     "title": "Rezervovať stôl",

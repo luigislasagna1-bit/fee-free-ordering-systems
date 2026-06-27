@@ -489,7 +489,8 @@
     "closedThisDay": "У цей день зачинено",
     "fulfilSchedulePrompt": "📅 Один або кілька товарів у вашому кошику можна замовити лише на певні дні чи час. Ми обрали найближчий доступний слот нижче — змініть його, якщо бажаєте.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> можна замовити лише в певні дні або години. Доступний час замовлення було відповідно обмежено.",
-    "serviceStartsPrompt": "🕒 Послуга {service} ще не почалася — вона починається о {time}."
+    "serviceStartsPrompt": "🕒 Послуга {service} ще не почалася — вона починається о {time}.",
+    "youSaved": "You saved {amount}"
   },
   "reservation": {
     "title": "Забронювати столик",
