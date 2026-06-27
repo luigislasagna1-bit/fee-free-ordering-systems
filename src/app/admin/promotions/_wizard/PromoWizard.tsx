@@ -363,6 +363,10 @@ export function PromoWizard(props: WizardProps) {
               onRules={setRulesPartial}
               cats={cats}
               currencySymbol={currencySymbol}
+              // So the payment_reward method dropdown lists only the methods this
+              // restaurant actually accepts, not the hardcoded fallback (audit
+              // confusing#1/dead#5).
+              paymentMethods={paymentMethods}
             />
           )}
           {step === 3 && (
@@ -373,6 +377,7 @@ export function PromoWizard(props: WizardProps) {
               deliveryZones={deliveryZones}
               currencySymbol={currencySymbol}
               isOnMarketplace={isOnMarketplace}
+              promotionType={promotionType}
             />
           )}
         </div>

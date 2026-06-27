@@ -83,7 +83,9 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
       paymentMethodSlugs: source.paymentMethodSlugs,
       deliveryZoneIds: source.deliveryZoneIds,
       onceLifetimePerClient: source.onceLifetimePerClient,
-      limitedShowtimeSchedules: source.limitedShowtimeSchedules as object,
+      // Limited Showtime is retired — every other write path forces []; the
+      // duplicate route must too rather than copy a stale schedule (audit dead#4).
+      limitedShowtimeSchedules: [],
       imageUrl: source.imageUrl,
       displayMode: source.displayMode,
       highlightThreshold: source.highlightThreshold,

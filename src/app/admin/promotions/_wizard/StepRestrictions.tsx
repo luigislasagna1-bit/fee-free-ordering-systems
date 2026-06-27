@@ -58,6 +58,7 @@ export function StepRestrictions({
   deliveryZones,
   currencySymbol = "$",
   isOnMarketplace = false,
+  promotionType = "",
 }: {
   form: Step3Form;
   setForm: (patch: Partial<Step3Form>) => void;
@@ -67,6 +68,9 @@ export function StepRestrictions({
   /** Only restaurants actually listed on the marketplace see the channel
    *  picker — otherwise the choice is meaningless. Luigi 2026-06-09. */
   isOnMarketplace?: boolean;
+  /** Used to hide the "Hidden" option for bundle types that need a visible
+   *  composer to be orderable (audit dead#2). */
+  promotionType?: string;
 }) {
   const t = useTranslations("admin.promoStepRestrictions");
 
@@ -430,7 +434,12 @@ export function StepRestrictions({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {[
             { value: "menu_visible", label: t("displayModeMenuVisibleLabel"), desc: t("displayModeMenuVisibleDesc") },
-            { value: "hidden_coupon_only", label: t("displayModeCouponOnlyLabel"), desc: t("displayModeCouponOnlyDesc") },
+            // Bundles need a visible composer to be orderable — a Hidden
+            // (code-only) bundle is permanently inert, so don't offer it for
+            // bundle types (audit dead#2).
+            ...(["meal_bundle", "meal_bundle_speciality"].includes(promotionType)
+              ? []
+              : [{ value: "hidden_coupon_only", label: t("displayModeCouponOnlyLabel"), desc: t("displayModeCouponOnlyDesc") }]),
           ].map((opt) => {
             const active = form.displayMode === opt.value;
             return (

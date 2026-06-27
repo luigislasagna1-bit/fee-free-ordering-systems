@@ -98,11 +98,12 @@ export function StepConfig({
         />
       </div>
 
-      {/* "Only allowed once per order" — shown for EVERY promo type except free
-          delivery (Luigi 2026-06-07). For repeating deals (BOGO / buy-N) the
-          engine caps them to a single application; for deals that already apply
-          once it's an explicit guarantee. */}
-      {promotionType !== "free_delivery" && (
+      {/* "Only allowed once per order" — shown ONLY for the promo types whose
+          engine calculator actually reads rules.oncePerOrder: bogo,
+          buy_n_get_free, percentage_combo, and percentage_off (which caps the
+          repeat). The other 8 types apply exactly once regardless, so the
+          checkbox was a dead, confusing option there (audit dead#1). */}
+      {["bogo", "buy_n_get_free", "percentage_combo", "percentage_off"].includes(promotionType) && (
         <label className="flex items-start gap-2.5 cursor-pointer border border-gray-200 rounded-xl p-4">
           <input
             type="checkbox"
