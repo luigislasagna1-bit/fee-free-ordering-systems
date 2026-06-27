@@ -22,6 +22,7 @@ import { getSessionUser } from "@/lib/session";
 import { formatDate, formatCurrency as fmtCurrency } from "@/lib/utils";
 import { getRestaurantCurrency } from "@/lib/restaurant-currency";
 import { AssignPromotionForm } from "./AssignPromotionForm";
+import { GiveVipSpecial } from "./GiveVipSpecial";
 import { CustomerActionsCard } from "./CustomerActionsCard";
 
 export const dynamic = "force-dynamic";
@@ -236,6 +237,9 @@ export default async function CustomerDetailPage({
           </div>
         )}
       </div>
+
+      {/* Give a VIP special (member-only, no code, auto-applies) */}
+      <GiveVipSpecial customerId={customer.id} customerName={customer.name} />
 
       {/* Order history */}
       <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">

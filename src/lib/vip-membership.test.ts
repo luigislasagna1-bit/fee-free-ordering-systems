@@ -1,13 +1,15 @@
 import { describe, it, expect } from "vitest";
-import { partitionMemberOnly, promosForGroups } from "@/lib/vip-membership";
+import { partitionMemberOnly, promosForIdentity, type ResolvedIdentity } from "@/lib/vip-membership";
+
+const empty: ResolvedIdentity = { groupIds: new Set(), customerIds: new Set(), email: null, phone: null };
 
 describe("vip-membership — partitionMemberOnly", () => {
-  it("splits promos linked to a group from the public pool", () => {
+  it("splits promos linked to a target from the public pool", () => {
     const promos = [
       { id: "a", groupLinks: [] },
       { id: "b", groupLinks: [{ groupId: "g1" }] },
       { id: "c" }, // no groupLinks field → public
-      { id: "d", groupLinks: [{ groupId: "g1" }, { groupId: "g2" }] },
+      { id: "d", groupLinks: [{ customerId: "cust1" }] },
     ];
     const { general, memberOnly } = partitionMemberOnly(promos);
     expect(general.map((p) => p.id)).toEqual(["a", "c"]);
@@ -15,20 +17,36 @@ describe("vip-membership — partitionMemberOnly", () => {
   });
 });
 
-describe("vip-membership — promosForGroups", () => {
+describe("vip-membership — promosForIdentity (group + individual targets)", () => {
   const memberOnly = [
-    { id: "b", groupLinks: [{ groupId: "g1" }] },
-    { id: "d", groupLinks: [{ groupId: "g2" }, { groupId: "g3" }] },
+    { id: "grp", groupLinks: [{ groupId: "g1" }] },
+    { id: "acct", groupLinks: [{ customerId: "cust1", email: "a@x.com" }] },
+    { id: "mail", groupLinks: [{ email: "guest@x.com" }] },
+    { id: "phone", groupLinks: [{ phone: "+15551234" }] },
   ];
 
-  it("returns only specials whose group the identity belongs to", () => {
-    expect(promosForGroups(memberOnly, new Set(["g1"])).map((p) => p.id)).toEqual(["b"]);
-    expect(promosForGroups(memberOnly, new Set(["g3"])).map((p) => p.id)).toEqual(["d"]);
-    expect(promosForGroups(memberOnly, new Set(["g1", "g2"])).map((p) => p.id)).toEqual(["b", "d"]);
+  it("matches a group member", () => {
+    const r = { ...empty, groupIds: new Set(["g1"]) };
+    expect(promosForIdentity(memberOnly, r).map((p) => p.id)).toEqual(["grp"]);
   });
 
-  it("returns nothing when the identity is in no relevant group", () => {
-    expect(promosForGroups(memberOnly, new Set(["gX"]))).toEqual([]);
-    expect(promosForGroups(memberOnly, new Set())).toEqual([]);
+  it("matches an individual by account id", () => {
+    const r = { ...empty, customerIds: new Set(["cust1"]) };
+    expect(promosForIdentity(memberOnly, r).map((p) => p.id)).toEqual(["acct"]);
+  });
+
+  it("matches an individual by typed email (case-insensitive)", () => {
+    const r = { ...empty, email: "guest@x.com" };
+    expect(promosForIdentity(memberOnly, r).map((p) => p.id)).toEqual(["mail"]);
+  });
+
+  it("matches an individual by phone", () => {
+    const r = { ...empty, phone: "+15551234" };
+    expect(promosForIdentity(memberOnly, r).map((p) => p.id)).toEqual(["phone"]);
+  });
+
+  it("returns nothing for an unrelated identity", () => {
+    const r = { ...empty, groupIds: new Set(["gX"]), email: "nobody@x.com" };
+    expect(promosForIdentity(memberOnly, r)).toEqual([]);
   });
 });

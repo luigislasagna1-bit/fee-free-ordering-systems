@@ -1151,7 +1151,7 @@ export async function POST(req: NextRequest) {
           { restaurantId: { in: promoOwnerIds }, scope: "brand" },
         ],
       },
-      include: { groupLinks: { select: { groupId: true } } },
+      include: { groupLinks: { select: { groupId: true, customerId: true, email: true, phone: true } } },
       // Cap per the standing scaling rule (no unbounded findMany on a hot path).
       // No real restaurant has anywhere near this many ACTIVE promos, so this
       // never truncates a real result; it only bounds worst-case memory. No

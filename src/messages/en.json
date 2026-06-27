@@ -793,7 +793,7 @@
       "integrations": "Integrations",
       "orderHandling": "Order Handling",
       "promoPopup": "Promo Popup",
-      "customerGroups": "VIP Groups"
+      "customerGroups": "VIP Specials"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -4105,8 +4105,20 @@
       "saveError": "Couldn't save — please try again"
     },
     "customerGroups": {
-      "title": "VIP Customer Groups",
-      "description": "Group your customers (e.g. a sports team) and send a whole group the same deal at once.",
+      "title": "VIP Specials",
+      "description": "Send members-only deals to a whole group or to specific people — they auto-apply at checkout, no code.",
+      "groupsHeading": "Groups",
+      "individualsHeading": "Specials for specific people",
+      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
+      "giveSpecial": "Give special",
+      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
+      "noIndividualSpecials": "No individual specials yet — add one below.",
+      "removeTarget": "Remove",
+      "notifyPeople": "Email them about this special",
+      "peopleCount": "{count, plural, one {# person} other {# people}}",
+      "giveVipSpecialHeading": "Give a VIP special",
+      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
+      "thisCustomerSpecials": "VIP specials for this customer",
       "newGroup": "New group",
       "created": "Created “{name}”",
       "createFailed": "Couldn't create the group.",

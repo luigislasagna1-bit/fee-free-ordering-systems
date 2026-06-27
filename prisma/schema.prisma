@@ -1393,6 +1393,7 @@ model Customer {
   assignedCoupons Coupon[]         @relation("CouponAssignedCustomer")
   customerCoupons CustomerCoupon[]
   groupMemberships CustomerGroupMember[]
+  vipSpecialTargets CustomerGroupPromotion[]
 
   @@index([restaurantId])
   @@index([restaurantId, email])
@@ -1785,25 +1786,36 @@ model CustomerGroup {
   @@index([restaurantId])
 }
 
-// Many-to-many link between a VIP group and a promotion. A promotion can be
-// shared across several groups; a group can hold several member specials. The
+// Links a promotion to a VIP TARGET — either a whole group OR a specific
+// individual (an account by customerId, and/or a person by email/phone). The
 // presence of ANY link makes a promotion "member-only" (excluded from the public
-// pool/banner, auto-applied only for members). Per-link scheduling fields (for
-// recurring auto-send) get added in a later phase.
+// pool/banner, auto-applied only for the matching members/individuals). A
+// promotion can have many targets; a group can hold several specials. Per-link
+// scheduling fields (recurring auto-send) get added in a later phase.
 model CustomerGroupPromotion {
   id           String   @id @default(cuid())
-  groupId      String
   promotionId  String
   restaurantId String // denormalised for scoping without a join
+  // Target = exactly one shape: a group, OR an individual (customerId and/or
+  // email/phone). For an individual we store the email (lowercased) AND the
+  // customerId when it resolves to an account, so checkout matches a signed-in
+  // member by id and a guest by typed email.
+  groupId      String?
+  customerId   String?
+  email        String?
+  phone        String?
   createdAt    DateTime @default(now())
 
-  group     CustomerGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  promotion Promotion     @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  group     CustomerGroup? @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  customer  Customer?      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  promotion Promotion      @relation(fields: [promotionId], references: [id], onDelete: Cascade)
 
   @@unique([groupId, promotionId])
   @@index([groupId])
   @@index([promotionId])
   @@index([restaurantId])
+  @@index([restaurantId, email])
+  @@index([restaurantId, customerId])
 }
 
 model CustomerGroupMember {

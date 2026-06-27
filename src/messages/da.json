@@ -4189,7 +4189,19 @@
       "notifyOnAttach": "Send mail til medlemmer om dette tilbud",
       "notifyMembers": "Send mail til medlemmer",
       "notifySent": "{count, plural, =0 {Ingen medlemmer har en e-mail endnu} one {Sender mail til # medlem…} other {Sender mail til # medlemmer…}}",
-      "notifyFailed": "Kunne ikke sende mail til medlemmerne."
+      "notifyFailed": "Kunne ikke sende mail til medlemmerne.",
+      "groupsHeading": "Groups",
+      "individualsHeading": "Specials for specific people",
+      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
+      "giveSpecial": "Give special",
+      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
+      "noIndividualSpecials": "No individual specials yet — add one below.",
+      "removeTarget": "Remove",
+      "notifyPeople": "Email them about this special",
+      "peopleCount": "{count, plural, one {# person} other {# people}}",
+      "giveVipSpecialHeading": "Give a VIP special",
+      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
+      "thisCustomerSpecials": "VIP specials for this customer"
     }
   },
   "impersonation": {

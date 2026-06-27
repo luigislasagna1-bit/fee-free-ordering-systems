@@ -4189,7 +4189,19 @@
       "notifyOnAttach": "Informer les membres de cette offre par e-mail",
       "notifyMembers": "Envoyer un e-mail aux membres",
       "notifySent": "{count, plural, =0 {Aucun membre n'a encore d'e-mail} one {Envoi de l'e-mail à # membre…} other {Envoi de l'e-mail à # membres…}}",
-      "notifyFailed": "Impossible d'envoyer l'e-mail aux membres."
+      "notifyFailed": "Impossible d'envoyer l'e-mail aux membres.",
+      "groupsHeading": "Groups",
+      "individualsHeading": "Specials for specific people",
+      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
+      "giveSpecial": "Give special",
+      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
+      "noIndividualSpecials": "No individual specials yet — add one below.",
+      "removeTarget": "Remove",
+      "notifyPeople": "Email them about this special",
+      "peopleCount": "{count, plural, one {# person} other {# people}}",
+      "giveVipSpecialHeading": "Give a VIP special",
+      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
+      "thisCustomerSpecials": "VIP specials for this customer"
     }
   },
   "impersonation": {

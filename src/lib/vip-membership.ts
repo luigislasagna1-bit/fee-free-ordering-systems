@@ -1,18 +1,19 @@
 /**
- * VIP member-only promotions (Phase 1 of the VIP Groups expansion, 2026-06-27).
+ * VIP member-only promotions ("VIP Specials", Program 3 Phase 1).
  *
- * A promotion linked to ≥1 VIP group (via `CustomerGroupPromotion`) is
- * "member-only": it is EXCLUDED from the public promo pool / menu banner, and
- * auto-applied ONLY for that group's members — both signed-in members and guests
- * who type a group email at checkout (no code needed).
+ * A promotion linked to ≥1 VIP TARGET (via `CustomerGroupPromotion`) is
+ * "member-only": EXCLUDED from the public promo pool / menu banner, and
+ * auto-applied ONLY for whoever the target covers — a whole GROUP, or specific
+ * INDIVIDUALS (an account by customerId, and/or a person by email/phone). Works
+ * for signed-in members and for guests who type a matching email at checkout.
  *
- * The two checkout routes (apply-promos preview + orders charge) share this
- * resolver so preview == charge. The pure helpers (`partitionMemberOnly`,
- * `promosForGroups`) are unit-tested directly; the DB lookups are thin and gated
- * so non-VIP restaurants pay ~nothing on the hot order path.
+ * Both checkout routes (apply-promos preview + orders charge) share this resolver
+ * so preview == charge. The pure helpers (`partitionMemberOnly`,
+ * `promosForIdentity`) are unit-tested; the DB lookups are gated so non-VIP
+ * restaurants pay ~nothing on the hot order path.
  *
- * NOTE: prisma is imported lazily inside the DB helper so the pure functions
- * (partitionMemberOnly / promosForGroups) can be unit-tested without a database.
+ * NOTE: prisma is imported lazily inside the DB helper so the pure functions can
+ * be unit-tested without a database.
  */
 export type VipIdentity = {
   customerId?: string | null;
@@ -20,9 +21,25 @@ export type VipIdentity = {
   phone?: string | null;
 };
 
-type LinkedPromo = { id: string; groupLinks?: { groupId: string }[] };
+/** A single VIP target on a promotion: a group OR an individual. */
+export type VipTarget = {
+  groupId?: string | null;
+  customerId?: string | null;
+  email?: string | null;
+  phone?: string | null;
+};
 
-/** Split promotions into the PUBLIC pool vs MEMBER-ONLY (linked to ≥1 VIP group).
+type LinkedPromo = { id: string; groupLinks?: VipTarget[] };
+
+/** Everything about an identity needed to match targets. */
+export type ResolvedIdentity = {
+  groupIds: Set<string>;
+  customerIds: Set<string>;
+  email: string | null;
+  phone: string | null;
+};
+
+/** Split promotions into the PUBLIC pool vs MEMBER-ONLY (linked to ≥1 target).
  *  Pure. Member-only promos must never enter the general/banner pool. */
 export function partitionMemberOnly<T extends LinkedPromo>(promos: T[]): { general: T[]; memberOnly: T[] } {
   const general: T[] = [];
@@ -31,29 +48,31 @@ export function partitionMemberOnly<T extends LinkedPromo>(promos: T[]): { gener
   return { general, memberOnly };
 }
 
-/** Pure: which member-only promos apply given the groups an identity belongs to. */
-export function promosForGroups<T extends LinkedPromo>(memberOnly: T[], groupIds: Set<string>): T[] {
-  if (!groupIds.size) return [];
-  return memberOnly.filter((p) => (p.groupLinks ?? []).some((l) => groupIds.has(l.groupId)));
+/** Pure: which member-only promos apply to a resolved identity — matching ANY of
+ *  a promo's targets by group membership, account id, email, or phone. */
+export function promosForIdentity<T extends LinkedPromo>(memberOnly: T[], resolved: ResolvedIdentity): T[] {
+  const { groupIds, customerIds, email, phone } = resolved;
+  return memberOnly.filter((p) =>
+    (p.groupLinks ?? []).some((tgt) =>
+      (!!tgt.groupId && groupIds.has(tgt.groupId)) ||
+      (!!tgt.customerId && customerIds.has(tgt.customerId)) ||
+      (!!tgt.email && !!email && tgt.email.toLowerCase() === email) ||
+      (!!tgt.phone && !!phone && tgt.phone === phone),
+    ),
+  );
 }
 
-/** Resolve which VIP groups an identity belongs to. Matches:
- *   - a signed-in member by `customerId`,
- *   - a guest member by the email/phone typed at checkout,
- *   - an ACCOUNT member (row keyed by customerId, email null) by mapping the
- *     typed email/phone back to their Customer account.
- *  Restaurant-scoped + indexed; callers only invoke it when member-only promos
- *  exist, so it never runs for ordinary restaurants. Scale seam: this result is
- *  cacheable per (restaurant, identity) if VIP usage ever gets hot. */
-export async function resolveMemberGroupIds(restaurantId: string, identity: VipIdentity): Promise<Set<string>> {
+/** Resolve groups + account ids + contact for an identity. Maps a typed
+ *  email/phone back to a Customer so account targets/members still match when
+ *  checking out as a guest. Restaurant-scoped + indexed; only called when
+ *  member-only promos exist. Scale seam: cacheable per (restaurant, identity). */
+export async function resolveIdentityTargets(restaurantId: string, identity: VipIdentity): Promise<ResolvedIdentity> {
   const prisma = (await import("@/lib/db")).default;
   const email = identity.email?.trim().toLowerCase() || null;
   const phone = identity.phone?.trim() || null;
   const customerIds = new Set<string>();
   if (identity.customerId) customerIds.add(identity.customerId);
 
-  // Map a typed email/phone to a Customer so account members (stored by
-  // customerId, email null) still match when checking out as a guest.
   if (email || phone) {
     const custs = await prisma.customer.findMany({
       where: {
@@ -69,26 +88,28 @@ export async function resolveMemberGroupIds(restaurantId: string, identity: VipI
     for (const c of custs) customerIds.add(c.id);
   }
 
-  if (!customerIds.size && !email && !phone) return new Set();
+  let groupIds = new Set<string>();
+  if (customerIds.size || email || phone) {
+    const members = await prisma.customerGroupMember.findMany({
+      where: {
+        restaurantId,
+        OR: [
+          ...(customerIds.size ? [{ customerId: { in: [...customerIds] } }] : []),
+          ...(email ? [{ email }] : []), // guest member emails are stored lowercased
+          ...(phone ? [{ phone }] : []),
+        ],
+      },
+      select: { groupId: true },
+    });
+    groupIds = new Set(members.map((m) => m.groupId));
+  }
 
-  const members = await prisma.customerGroupMember.findMany({
-    where: {
-      restaurantId,
-      OR: [
-        ...(customerIds.size ? [{ customerId: { in: [...customerIds] } }] : []),
-        ...(email ? [{ email }] : []), // guest member emails are stored lowercased
-        ...(phone ? [{ phone }] : []),
-      ],
-    },
-    select: { groupId: true },
-  });
-  return new Set(members.map((m) => m.groupId));
+  return { groupIds, customerIds, email, phone };
 }
 
 /** Full resolution for a checkout route: the member-only promos this identity is
- *  entitled to (caller forces `autoApply:true` + applies channel/suppressed
- *  filters before handing them to the engine). Returns [] cheaply when there are
- *  no member-only promos or no identity. */
+ *  entitled to (caller forces `autoApply:true`). Returns [] cheaply when there
+ *  are no member-only promos or no identity. */
 export async function qualifyingMemberOnlyPromos<T extends LinkedPromo>(
   restaurantId: string,
   identity: VipIdentity,
@@ -96,6 +117,6 @@ export async function qualifyingMemberOnlyPromos<T extends LinkedPromo>(
 ): Promise<T[]> {
   if (!memberOnly.length) return [];
   if (!identity.customerId && !identity.email && !identity.phone) return [];
-  const groupIds = await resolveMemberGroupIds(restaurantId, identity);
-  return promosForGroups(memberOnly, groupIds);
+  const resolved = await resolveIdentityTargets(restaurantId, identity);
+  return promosForIdentity(memberOnly, resolved);
 }

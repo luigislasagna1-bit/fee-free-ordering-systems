@@ -4189,7 +4189,19 @@
       "notifyOnAttach": "Informovať členov o tejto ponuke e-mailom",
       "notifyMembers": "Poslať e-mail členom",
       "notifySent": "{count, plural, =0 {Žiadny člen zatiaľ nemá e-mail} one {Odosielanie e-mailu # členovi…} other {Odosielanie e-mailov # členom…}}",
-      "notifyFailed": "E-mail sa členom nepodarilo odoslať."
+      "notifyFailed": "E-mail sa členom nepodarilo odoslať.",
+      "groupsHeading": "Groups",
+      "individualsHeading": "Specials for specific people",
+      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
+      "giveSpecial": "Give special",
+      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
+      "noIndividualSpecials": "No individual specials yet — add one below.",
+      "removeTarget": "Remove",
+      "notifyPeople": "Email them about this special",
+      "peopleCount": "{count, plural, one {# person} other {# people}}",
+      "giveVipSpecialHeading": "Give a VIP special",
+      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
+      "thisCustomerSpecials": "VIP specials for this customer"
     }
   },
   "impersonation": {

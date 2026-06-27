@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
 
   const activePromosAll = await prisma.promotion.findMany({
     where: { restaurantId: restaurant.id, isActive: true },
-    include: { groupLinks: { select: { groupId: true } } },
+    include: { groupLinks: { select: { groupId: true, customerId: true, email: true, phone: true } } },
   });
   // Drop promos the customer chose to remove from the cart, so a different
   // (otherwise-blocked) deal can take over.
