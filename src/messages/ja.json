@@ -236,7 +236,7 @@
       "fulfilWindowOrderError": "「{name}」は特定の曜日・時間帯のみ注文できます。ご利用可能な時間に合わせてご注文を予約してください。",
       "fulfilWindowReservationError": "「{name}」はご予約日にはご利用いただけません。削除するか、提供日にテーブルをご予約ください。",
       "promoEmailMismatch": "このコードは別のメールアドレスに登録されています。",
-      "promoUnlocked": "You unlocked \"{name}\"!"
+      "promoUnlocked": "You unlocked {name}!"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",

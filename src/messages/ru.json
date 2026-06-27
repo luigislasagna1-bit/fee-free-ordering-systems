@@ -236,7 +236,7 @@
       "fulfilWindowOrderError": "\"{name}\" можно заказать только в определённые дни/часы. Запланируйте заказ на время, когда он доступен.",
       "fulfilWindowReservationError": "\"{name}\" недоступно в день вашей брони. Удалите его или забронируйте столик на день, когда оно доступно.",
       "promoEmailMismatch": "Этот код зарегистрирован на другой адрес электронной почты.",
-      "promoUnlocked": "You unlocked \"{name}\"!"
+      "promoUnlocked": "You unlocked {name}!"
     },
     "searchMenu": "Поиск по меню…",
     "signIn": "Войти",
