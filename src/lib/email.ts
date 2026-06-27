@@ -893,10 +893,14 @@ export async function sendVipSpecialEmail(params: {
   restaurantUrl?: string;
   restaurantEmail?: string | null;
   restaurantPhone?: string | null;
+  /** What the restaurant calls these recipients ("VIP member", "Teacher", …).
+   *  Null/empty → the localized default "VIP member". */
+  memberLabel?: string | null;
   /** Restaurant defaultLanguage. Defaults to "en". */
   locale?: string;
 }) {
   const t = await getDict(params.locale);
+  const memberLabel = params.memberLabel?.trim() || t("email.vipSpecial.defaultMemberLabel");
   const discountLabel =
     params.discountType === "percentage" && params.discountValue != null
       ? t("email.couponAssigned.discountPercent", { value: params.discountValue })
@@ -931,7 +935,7 @@ export async function sendVipSpecialEmail(params: {
       restaurantPhone: params.restaurantPhone ?? undefined,
       imprint: currentImprint(),
       memberSpecial: true,
-      introOverride: t("email.vipSpecial.intro", { restaurantName: params.restaurantName, discountLabel }),
+      introOverride: t("email.vipSpecial.intro", { memberLabel, restaurantName: params.restaurantName, discountLabel }),
       usageNote,
       accountTip,
     }),

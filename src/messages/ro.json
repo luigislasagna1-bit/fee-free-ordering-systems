@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# persoană} other {# persoane}}",
       "giveVipSpecialHeading": "Acordă o ofertă VIP",
       "giveVipSpecialSubtitle": "Asociază o promoție existentă cu {name} — se aplică automat pentru ei la finalizarea comenzii, fără cod.",
-      "thisCustomerSpecials": "Oferte VIP pentru acest client"
+      "thisCustomerSpecials": "Oferte VIP pentru acest client",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "Cum o folosești",
       "usageAccount": "Doar autentifică-te în contul tău și comandă — {discountLabel} se aplică automat la finalizarea comenzii.",
       "usageGuest": "La finalizarea comenzii, introdu această adresă de email ({email}) și {discountLabel} se aplică automat — fără cod de tastat.",
-      "accountTip": "Sfat: creează-ți un cont gratuit cu acest email pentru a-ți salva datele și a găsi toate ofertele tale VIP într-un singur loc."
+      "accountTip": "Sfat: creează-ți un cont gratuit cu acest email pentru a-ți salva datele și a găsi toate ofertele tale VIP într-un singur loc.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

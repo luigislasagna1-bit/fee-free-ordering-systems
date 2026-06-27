@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# személy} other {# személy}}",
       "giveVipSpecialHeading": "VIP-ajánlat adása",
       "giveVipSpecialSubtitle": "Csatolj egy meglévő promóciót a következőhöz: {name} – számára fizetéskor automatikusan érvényesül, kód nélkül.",
-      "thisCustomerSpecials": "Ennek a vásárlónak szóló VIP-ajánlatok"
+      "thisCustomerSpecials": "Ennek a vásárlónak szóló VIP-ajánlatok",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "Hogyan használhatod",
       "usageAccount": "Csak jelentkezz be a fiókodba és rendelj — a(z) {discountLabel} automatikusan érvényesül a fizetésnél.",
       "usageGuest": "A fizetésnél add meg ezt az e-mail-címet ({email}), és a(z) {discountLabel} automatikusan érvényesül — nem kell kódot beírnod.",
-      "accountTip": "Tipp: hozz létre egy ingyenes fiókot ezzel az e-mail-címmel, hogy elmentsd az adataidat, és egy helyen megtaláld az összes VIP-ajánlatodat."
+      "accountTip": "Tipp: hozz létre egy ingyenes fiókot ezzel az e-mail-címmel, hogy elmentsd az adataidat, és egy helyen megtaláld az összes VIP-ajánlatodat.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

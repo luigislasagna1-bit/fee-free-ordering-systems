@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {#人} other {#人}}",
       "giveVipSpecialHeading": "VIP特典を付与",
       "giveVipSpecialSubtitle": "既存のプロモーションを{name}に紐付け。コード不要で会計時に自動適用されます。",
-      "thisCustomerSpecials": "このお客様のVIP特典"
+      "thisCustomerSpecials": "このお客様のVIP特典",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "ご利用方法",
       "usageAccount": "アカウントにサインインしてご注文いただくだけで、お会計時に {discountLabel} が自動的に適用されます。",
       "usageGuest": "お会計時にこのメールアドレス（{email}）を入力すると、{discountLabel} が自動的に適用されます — コードの入力は不要です。",
-      "accountTip": "ヒント：このメールアドレスで無料アカウントを作成すると、お客様情報を保存でき、すべてのVIP特典を一か所でまとめて確認できます。"
+      "accountTip": "ヒント：このメールアドレスで無料アカウントを作成すると、お客様情報を保存でき、すべてのVIP特典を一か所でまとめて確認できます。",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

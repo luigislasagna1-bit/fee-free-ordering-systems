@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# orang} other {# orang}}",
       "giveVipSpecialHeading": "Beri penawaran VIP",
       "giveVipSpecialSubtitle": "Lampirkan promosi yang ada ke {name} — otomatis diterapkan untuk mereka saat checkout, tanpa perlu kode.",
-      "thisCustomerSpecials": "Penawaran VIP untuk pelanggan ini"
+      "thisCustomerSpecials": "Penawaran VIP untuk pelanggan ini",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "Cara menggunakannya",
       "usageAccount": "Cukup masuk ke akun Anda dan pesan — {discountLabel} Anda diterapkan otomatis saat checkout.",
       "usageGuest": "Saat checkout, masukkan alamat email ini ({email}) dan {discountLabel} Anda diterapkan otomatis — tanpa perlu mengetik kode.",
-      "accountTip": "Tips: buat akun gratis dengan email ini untuk menyimpan detail Anda dan menemukan semua penawaran VIP Anda di satu tempat."
+      "accountTip": "Tips: buat akun gratis dengan email ini untuk menyimpan detail Anda dan menemukan semua penawaran VIP Anda di satu tempat.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

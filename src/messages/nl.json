@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# persoon} other {# personen}}",
       "giveVipSpecialHeading": "Een VIP-special geven",
       "giveVipSpecialSubtitle": "Koppel een bestaande promotie aan {name} — die wordt automatisch voor hen toegepast bij het afrekenen, zonder code.",
-      "thisCustomerSpecials": "VIP-specials voor deze klant"
+      "thisCustomerSpecials": "VIP-specials voor deze klant",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "Zo gebruik je hem",
       "usageAccount": "Log gewoon in op je account en bestel — je {discountLabel} wordt automatisch toegepast bij het afrekenen.",
       "usageGuest": "Voer bij het afrekenen dit e-mailadres in ({email}) en je {discountLabel} wordt automatisch toegepast — geen code om in te typen.",
-      "accountTip": "Tip: maak een gratis account aan met dit e-mailadres om je gegevens op te slaan en al je VIP-aanbiedingen op één plek terug te vinden."
+      "accountTip": "Tip: maak een gratis account aan met dit e-mailadres om je gegevens op te slaan en al je VIP-aanbiedingen op één plek terug te vinden.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

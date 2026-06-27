@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# 位客户} other {# 位客户}}",
       "giveVipSpecialHeading": "赠送 VIP 专享优惠",
       "giveVipSpecialSubtitle": "为 {name} 关联一项现有促销 — 结账时会自动为其应用，无需代码。",
-      "thisCustomerSpecials": "该客户的 VIP 专享优惠"
+      "thisCustomerSpecials": "该客户的 VIP 专享优惠",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "如何使用",
       "usageAccount": "只需登录您的账户并下单——结账时您的 {discountLabel} 将自动生效。",
       "usageGuest": "结账时输入此邮箱地址（{email}），您的 {discountLabel} 即可自动生效——无需输入任何优惠码。",
-      "accountTip": "小贴士：用此邮箱创建一个免费账户，即可保存您的信息，并在一处集中查看您所有的 VIP 优惠。"
+      "accountTip": "小贴士：用此邮箱创建一个免费账户，即可保存您的信息，并在一处集中查看您所有的 VIP 优惠。",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

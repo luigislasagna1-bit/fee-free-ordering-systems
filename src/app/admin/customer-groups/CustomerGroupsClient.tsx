@@ -11,10 +11,25 @@ type Group = { id: string; name: string; description: string | null; memberCount
 type Promo = { id: string; name: string; isActive: boolean; promotionType: string; ruleConfig: any };
 type Target = { id: string; promotionId: string; promoName: string; promotionType: string; isActive: boolean; ruleConfig: any; name: string | null; email: string | null; hasAccount: boolean };
 
-export default function CustomerGroupsClient({ initialGroups }: { initialGroups: Group[] }) {
+export default function CustomerGroupsClient({ initialGroups, initialMemberLabel }: { initialGroups: Group[]; initialMemberLabel: string }) {
   const t = useTranslations("admin.customerGroups");
   const router = useRouter();
   const [groups, setGroups] = useState<Group[]>(initialGroups);
+
+  // What this restaurant calls its VIP recipients (used in the email).
+  const [memberLabel, setMemberLabel] = useState(initialMemberLabel);
+  const [savingLabel, setSavingLabel] = useState(false);
+  async function saveMemberLabel() {
+    setSavingLabel(true);
+    try {
+      const res = await fetch("/api/admin/vip-specials/settings", {
+        method: "PATCH", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ memberLabel }),
+      });
+      if (!res.ok) { toast.error(t("memberLabelFailed")); return; }
+      toast.success(t("memberLabelSaved"));
+    } finally { setSavingLabel(false); }
+  }
   const [creating, setCreating] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -126,7 +141,26 @@ export default function CustomerGroupsClient({ initialGroups }: { initialGroups:
           <Plus className="w-4 h-4" /> {t("newGroup")}
         </button>
       </div>
-      <p className="text-sm text-gray-500 mb-5">{t("description")}</p>
+      <p className="text-sm text-gray-500 mb-4">{t("description")}</p>
+
+      {/* What this restaurant calls its members (used in the VIP email). */}
+      <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm mb-5">
+        <label className="block text-xs font-medium text-gray-600 mb-1">{t("memberLabelLabel")}</label>
+        <div className="flex gap-2">
+          <input
+            className={inputCls + " flex-1"}
+            placeholder={t("memberLabelPlaceholder")}
+            value={memberLabel}
+            maxLength={40}
+            onChange={(e) => setMemberLabel(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") saveMemberLabel(); }}
+          />
+          <button onClick={saveMemberLabel} disabled={savingLabel} className="bg-gray-900 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-gray-800 transition disabled:opacity-50">
+            {savingLabel ? "…" : t("memberLabelSave")}
+          </button>
+        </div>
+        <p className="text-[11px] text-gray-400 mt-1.5">{t("memberLabelHint", { label: memberLabel.trim() || t("memberLabelDefault") })}</p>
+      </div>
 
       {creating && (
         <div className="bg-white border border-gray-200 rounded-2xl p-4 mb-5 shadow-sm space-y-3">

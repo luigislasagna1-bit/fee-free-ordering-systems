@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# asmuo} few {# asmenys} other {# asmenų}}",
       "giveVipSpecialHeading": "Suteikti VIP pasiūlymą",
       "giveVipSpecialSubtitle": "Priskirkite esamą akciją klientui {name} — ji jam pritaikoma automatiškai atsiskaitant, kodo nereikia.",
-      "thisCustomerSpecials": "Šio kliento VIP pasiūlymai"
+      "thisCustomerSpecials": "Šio kliento VIP pasiūlymai",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "Kaip pasinaudoti",
       "usageAccount": "Tiesiog prisijunkite prie paskyros ir užsisakykite — jūsų {discountLabel} bus pritaikytas automatiškai atsiskaitant.",
       "usageGuest": "Atsiskaitydami įveskite šį el. pašto adresą ({email}) ir jūsų {discountLabel} bus pritaikytas automatiškai — jokio kodo įvesti nereikia.",
-      "accountTip": "Patarimas: susikurkite nemokamą paskyrą su šiuo el. paštu, kad išsaugotumėte savo duomenis ir rastumėte visus savo VIP pasiūlymus vienoje vietoje."
+      "accountTip": "Patarimas: susikurkite nemokamą paskyrą su šiuo el. paštu, kad išsaugotumėte savo duomenis ir rastumėte visus savo VIP pasiūlymus vienoje vietoje.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# човек} other {# души}}",
       "giveVipSpecialHeading": "Дай VIP специална оферта",
       "giveVipSpecialSubtitle": "Прикачете съществуваща промоция към {name} — прилага се автоматично за тях при плащане, без нужда от код.",
-      "thisCustomerSpecials": "VIP специални оферти за този клиент"
+      "thisCustomerSpecials": "VIP специални оферти за този клиент",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "Как да я използвате",
       "usageAccount": "Просто влезте в акаунта си и поръчайте — вашата отстъпка {discountLabel} се прилага автоматично при плащане.",
       "usageGuest": "При плащане въведете този имейл адрес ({email}) и вашата отстъпка {discountLabel} се прилага автоматично — без код за въвеждане.",
-      "accountTip": "Съвет: създайте безплатен акаунт с този имейл, за да запазите данните си и да намерите всичките си VIP оферти на едно място."
+      "accountTip": "Съвет: създайте безплатен акаунт с този имейл, за да запазите данните си и да намерите всичките си VIP оферти на едно място.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

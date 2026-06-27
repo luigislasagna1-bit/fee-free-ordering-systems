@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# особа} few {# особи} many {# осіб} other {# особи}}",
       "giveVipSpecialHeading": "Надати VIP-пропозицію",
       "giveVipSpecialSubtitle": "Прикріпіть наявну акцію до {name} — вона застосовується для них автоматично під час оформлення, код не потрібен.",
-      "thisCustomerSpecials": "VIP-пропозиції для цього клієнта"
+      "thisCustomerSpecials": "VIP-пропозиції для цього клієнта",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "Як скористатися",
       "usageAccount": "Просто увійдіть у свій акаунт і зробіть замовлення — ваша знижка {discountLabel} застосується автоматично під час оформлення.",
       "usageGuest": "Під час оформлення вкажіть цю електронну адресу ({email}), і ваша знижка {discountLabel} застосується автоматично — без введення коду.",
-      "accountTip": "Порада: створіть безкоштовний акаунт із цією адресою, щоб зберегти свої дані та знайти всі VIP-пропозиції в одному місці."
+      "accountTip": "Порада: створіть безкоштовний акаунт із цією адресою, щоб зберегти свої дані та знайти всі VIP-пропозиції в одному місці.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

@@ -32,7 +32,7 @@ async function loadSpecialContext(promotionId: string, restaurantId: string) {
     }),
     prisma.restaurant.findUnique({
       where: { id: restaurantId },
-      select: { name: true, slug: true, currency: true, defaultLanguage: true, email: true, phone: true, subdomain: true, customDomain: true, customDomainStatus: true },
+      select: { name: true, slug: true, currency: true, defaultLanguage: true, email: true, phone: true, subdomain: true, customDomain: true, customDomainStatus: true, vipMemberLabel: true },
     }),
   ]);
   if (!promo || promo.restaurantId !== restaurantId || !restaurant) return null;
@@ -65,6 +65,7 @@ async function sendToRecipients(ctx: NonNullable<Awaited<ReturnType<typeof loadS
         restaurantUrl: orderUrl,
         restaurantEmail: restaurant.email,
         restaurantPhone: restaurant.phone,
+        memberLabel: restaurant.vipMemberLabel,
         locale: restaurant.defaultLanguage,
       }),
     ));

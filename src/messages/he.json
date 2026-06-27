@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# איש} other {# אנשים}}",
       "giveVipSpecialHeading": "העניקו מבצע VIP",
       "giveVipSpecialSubtitle": "צרפו מבצע קיים אל {name} — הוא חל אוטומטית עבורם בקופה, ללא צורך בקוד.",
-      "thisCustomerSpecials": "מבצעי VIP ללקוח זה"
+      "thisCustomerSpecials": "מבצעי VIP ללקוח זה",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "איך להשתמש בזה",
       "usageAccount": "פשוט היכנס לחשבון שלך והזמן — ה-{discountLabel} שלך מוחל אוטומטית בקופה.",
       "usageGuest": "בקופה, הזן את כתובת הדוא\"ל הזו ({email}) וה-{discountLabel} שלך מוחל אוטומטית — ללא צורך להקליד קוד.",
-      "accountTip": "טיפ: צור חשבון חינמי עם כתובת דוא\"ל זו כדי לשמור את הפרטים שלך ולמצוא את כל מבצעי ה-VIP שלך במקום אחד."
+      "accountTip": "טיפ: צור חשבון חינמי עם כתובת דוא\"ל זו כדי לשמור את הפרטים שלך ולמצוא את כל מבצעי ה-VIP שלך במקום אחד.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

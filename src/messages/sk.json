@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# osoba} few {# osoby} other {# osôb}}",
       "giveVipSpecialHeading": "Udeliť VIP špeciál",
       "giveVipSpecialSubtitle": "Priraďte existujúcu promo akciu k {name} — pri pokladni sa im použije automaticky, bez potreby kódu.",
-      "thisCustomerSpecials": "VIP špeciály pre tohto zákazníka"
+      "thisCustomerSpecials": "VIP špeciály pre tohto zákazníka",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "Ako ju využiť",
       "usageAccount": "Stačí sa prihlásiť do svojho účtu a objednať si — vaša ponuka {discountLabel} sa pri platbe uplatní automaticky.",
       "usageGuest": "Pri platbe zadajte túto e-mailovú adresu ({email}) a vaša ponuka {discountLabel} sa uplatní automaticky — žiadny kód nemusíte zadávať.",
-      "accountTip": "Tip: vytvorte si s týmto e-mailom bezplatný účet, aby ste si uložili svoje údaje a našli všetky svoje VIP ponuky na jednom mieste."
+      "accountTip": "Tip: vytvorte si s týmto e-mailom bezplatný účet, aby ste si uložili svoje údaje a našli všetky svoje VIP ponuky na jednom mieste.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

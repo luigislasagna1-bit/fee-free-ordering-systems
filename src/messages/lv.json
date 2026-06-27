@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# persona} other {# personas}}",
       "giveVipSpecialHeading": "Piešķirt VIP piedāvājumu",
       "giveVipSpecialSubtitle": "Piesaistiet esošu akciju klientam {name} — tā tiek piemērota viņiem automātiski izrakstoties, bez koda.",
-      "thisCustomerSpecials": "Šī klienta VIP piedāvājumi"
+      "thisCustomerSpecials": "Šī klienta VIP piedāvājumi",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "Kā to izmantot",
       "usageAccount": "Vienkārši pierakstieties savā kontā un veiciet pasūtījumu — jūsu {discountLabel} tiek piemērots automātiski, noformējot pasūtījumu.",
       "usageGuest": "Noformējot pasūtījumu, ievadiet šo e-pasta adresi ({email}), un jūsu {discountLabel} tiks piemērots automātiski — nekas nav jāievada.",
-      "accountTip": "Padoms: izveidojiet bezmaksas kontu ar šo e-pastu, lai saglabātu savus datus un atrastu visus savus VIP piedāvājumus vienuviet."
+      "accountTip": "Padoms: izveidojiet bezmaksas kontu ar šo e-pastu, lai saglabātu savus datus un atrastu visus savus VIP piedāvājumus vienuviet.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

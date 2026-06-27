@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# người} other {# người}}",
       "giveVipSpecialHeading": "Tặng ưu đãi VIP",
       "giveVipSpecialSubtitle": "Gắn một khuyến mãi hiện có cho {name} — tự động áp dụng cho họ khi thanh toán, không cần mã.",
-      "thisCustomerSpecials": "Ưu đãi VIP cho khách hàng này"
+      "thisCustomerSpecials": "Ưu đãi VIP cho khách hàng này",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "Cách sử dụng",
       "usageAccount": "Chỉ cần đăng nhập vào tài khoản và đặt hàng — {discountLabel} của bạn sẽ được áp dụng tự động khi thanh toán.",
       "usageGuest": "Khi thanh toán, hãy nhập địa chỉ email này ({email}) và {discountLabel} của bạn sẽ được áp dụng tự động — không cần nhập mã.",
-      "accountTip": "Mẹo: tạo một tài khoản miễn phí với email này để lưu thông tin của bạn và tìm tất cả ưu đãi VIP ở cùng một nơi."
+      "accountTip": "Mẹo: tạo một tài khoản miễn phí với email này để lưu thông tin của bạn và tìm tất cả ưu đãi VIP ở cùng một nơi.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

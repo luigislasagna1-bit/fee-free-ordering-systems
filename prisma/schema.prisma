@@ -321,6 +321,10 @@ model Restaurant {
   /// with sessions minted before this column existed.
   kitchenSessionToken  String?
   defaultLanguage      String    @default("en")
+  // What the restaurant calls its VIP-special recipients in the announcement
+  // email ("As a {vipMemberLabel} at …"). Owner-chosen brand term (e.g. "VIP
+  // member", "Teacher", "Club member"); null → localized default "VIP member".
+  vipMemberLabel       String?
   socialLinks          String? // JSON: { instagram, facebook, tiktok, x, youtube, linkedin, pinterest, snapchat, threads, whatsapp, yelp, googleBusiness, tripadvisor, website }
   marketingTier        String    @default("free") // "free" | "social_basic" | "social_pro" | "social_managed" — gates AI-post / scheduling features
   /// Marketing & tracking integrations the OWNER configures for their own

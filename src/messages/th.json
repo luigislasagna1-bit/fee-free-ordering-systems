@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# คน} other {# คน}}",
       "giveVipSpecialHeading": "มอบดีล VIP",
       "giveVipSpecialSubtitle": "แนบโปรโมชันที่มีอยู่ให้กับ {name} — ระบบใช้ส่วนลดให้อัตโนมัติตอนชำระเงิน ไม่ต้องใช้โค้ด",
-      "thisCustomerSpecials": "ดีล VIP สำหรับลูกค้ารายนี้"
+      "thisCustomerSpecials": "ดีล VIP สำหรับลูกค้ารายนี้",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "วิธีใช้งาน",
       "usageAccount": "เพียงลงชื่อเข้าใช้บัญชีของคุณแล้วสั่งอาหาร — ส่วนลด {discountLabel} ของคุณจะถูกใช้โดยอัตโนมัติเมื่อชำระเงิน",
       "usageGuest": "เมื่อชำระเงิน ให้กรอกอีเมลนี้ ({email}) แล้วส่วนลด {discountLabel} ของคุณจะถูกใช้โดยอัตโนมัติ — ไม่ต้องพิมพ์โค้ดใดๆ",
-      "accountTip": "เคล็ดลับ: สร้างบัญชีฟรีด้วยอีเมลนี้เพื่อบันทึกข้อมูลของคุณและดูข้อเสนอ VIP ทั้งหมดของคุณได้ในที่เดียว"
+      "accountTip": "เคล็ดลับ: สร้างบัญชีฟรีด้วยอีเมลนี้เพื่อบันทึกข้อมูลของคุณและดูข้อเสนอ VIP ทั้งหมดของคุณได้ในที่เดียว",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

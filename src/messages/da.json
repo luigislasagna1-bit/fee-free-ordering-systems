@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# person} other {# personer}}",
       "giveVipSpecialHeading": "Giv et VIP-tilbud",
       "giveVipSpecialSubtitle": "Tilknyt en eksisterende kampagne til {name} — det anvendes automatisk for dem ved kassen, ingen kode nødvendig.",
-      "thisCustomerSpecials": "VIP-tilbud for denne kunde"
+      "thisCustomerSpecials": "VIP-tilbud for denne kunde",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "Sådan bruger du det",
       "usageAccount": "Log blot ind på din konto og bestil — din {discountLabel} anvendes automatisk ved kassen.",
       "usageGuest": "Ved kassen skal du indtaste denne e-mailadresse ({email}), så anvendes din {discountLabel} automatisk — ingen kode at indtaste.",
-      "accountTip": "Tip: opret en gratis konto med denne e-mail for at gemme dine oplysninger og finde alle dine VIP-tilbud ét sted."
+      "accountTip": "Tip: opret en gratis konto med denne e-mail for at gemme dine oplysninger og finde alle dine VIP-tilbud ét sted.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

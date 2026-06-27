@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# व्यक्ति} other {# लोग}}",
       "giveVipSpecialHeading": "VIP स्पेशल दें",
       "giveVipSpecialSubtitle": "{name} के साथ कोई मौजूदा प्रोमोशन जोड़ें — यह चेकआउट पर उनके लिए अपने-आप लागू हो जाती है, किसी कोड की ज़रूरत नहीं।",
-      "thisCustomerSpecials": "इस ग्राहक के लिए VIP स्पेशल्स"
+      "thisCustomerSpecials": "इस ग्राहक के लिए VIP स्पेशल्स",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "इसका इस्तेमाल कैसे करें",
       "usageAccount": "बस अपने अकाउंट में साइन इन करें और ऑर्डर करें — आपका {discountLabel} चेकआउट पर अपने-आप लागू हो जाता है.",
       "usageGuest": "चेकआउट पर यह ईमेल पता ({email}) दर्ज करें और आपका {discountLabel} अपने-आप लागू हो जाता है — कोई कोड टाइप करने की ज़रूरत नहीं.",
-      "accountTip": "टिप: इस ईमेल से एक मुफ़्त अकाउंट बनाएँ ताकि आप अपनी जानकारी सहेज सकें और अपने सभी VIP ऑफ़र एक ही जगह पा सकें."
+      "accountTip": "टिप: इस ईमेल से एक मुफ़्त अकाउंट बनाएँ ताकि आप अपनी जानकारी सहेज सकें और अपने सभी VIP ऑफ़र एक ही जगह पा सकें.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

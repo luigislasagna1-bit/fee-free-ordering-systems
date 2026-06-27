@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# osoba} few {# osobe} other {# osoba}}",
       "giveVipSpecialHeading": "Dodijeli VIP ponudu",
       "giveVipSpecialSubtitle": "Pridružite postojeću promociju osobi {name} — automatski joj se primjenjuje na blagajni, bez koda.",
-      "thisCustomerSpecials": "VIP ponude za ovog kupca"
+      "thisCustomerSpecials": "VIP ponude za ovog kupca",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "Kako je iskoristiti",
       "usageAccount": "Samo se prijavite na svoj račun i naručite — vaš {discountLabel} automatski se primjenjuje pri naplati.",
       "usageGuest": "Pri naplati unesite ovu adresu e-pošte ({email}) i vaš {discountLabel} automatski se primjenjuje — bez upisivanja koda.",
-      "accountTip": "Savjet: izradite besplatan račun s ovom e-poštom kako biste spremili svoje podatke i pronašli sve svoje VIP ponude na jednom mjestu."
+      "accountTip": "Savjet: izradite besplatan račun s ovom e-poštom kako biste spremili svoje podatke i pronašli sve svoje VIP ponude na jednom mjestu.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

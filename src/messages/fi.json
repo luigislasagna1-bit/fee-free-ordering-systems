@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# henkilö} other {# henkilöä}}",
       "giveVipSpecialHeading": "Anna VIP-etu",
       "giveVipSpecialSubtitle": "Liitä olemassa oleva kampanja henkilölle {name} — se lisätään hänelle automaattisesti kassalla, koodia ei tarvita.",
-      "thisCustomerSpecials": "Tämän asiakkaan VIP-edut"
+      "thisCustomerSpecials": "Tämän asiakkaan VIP-edut",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "Näin käytät sitä",
       "usageAccount": "Kirjaudu vain tilillesi ja tee tilaus — {discountLabel} otetaan käyttöön automaattisesti kassalla.",
       "usageGuest": "Syötä kassalla tämä sähköpostiosoite ({email}), niin {discountLabel} otetaan käyttöön automaattisesti — koodia ei tarvitse kirjoittaa.",
-      "accountTip": "Vinkki: luo maksuton tili tällä sähköpostiosoitteella, niin voit tallentaa tietosi ja löytää kaikki VIP-tarjouksesi yhdestä paikasta."
+      "accountTip": "Vinkki: luo maksuton tili tällä sähköpostiosoitteella, niin voit tallentaa tietosi ja löytää kaikki VIP-tarjouksesi yhdestä paikasta.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {

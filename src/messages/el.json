@@ -4201,7 +4201,14 @@
       "peopleCount": "{count, plural, one {# άτομο} other {# άτομα}}",
       "giveVipSpecialHeading": "Δώστε μια προσφορά VIP",
       "giveVipSpecialSubtitle": "Συνδέστε μια υπάρχουσα προωθητική ενέργεια με τον/την {name} — εφαρμόζεται αυτόματα γι' αυτούς στο ταμείο, χωρίς ανάγκη κωδικού.",
-      "thisCustomerSpecials": "Προσφορές VIP για αυτόν τον πελάτη"
+      "thisCustomerSpecials": "Προσφορές VIP για αυτόν τον πελάτη",
+      "memberLabelLabel": "What do you call your members?",
+      "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",
+      "memberLabelSave": "Save",
+      "memberLabelSaved": "Saved.",
+      "memberLabelFailed": "Couldn't save.",
+      "memberLabelDefault": "VIP member",
+      "memberLabelHint": "Your VIP email will say: “As a {label} at your restaurant…”"
     }
   },
   "impersonation": {
@@ -4563,7 +4570,8 @@
       "howToLabel": "Πώς να το χρησιμοποιήσετε",
       "usageAccount": "Απλώς συνδεθείτε στον λογαριασμό σας και παραγγείλετε — το {discountLabel} εφαρμόζεται αυτόματα κατά την ολοκλήρωση της παραγγελίας.",
       "usageGuest": "Κατά την ολοκλήρωση της παραγγελίας, εισαγάγετε αυτή τη διεύθυνση email ({email}) και το {discountLabel} εφαρμόζεται αυτόματα — χωρίς να πληκτρολογήσετε κωδικό.",
-      "accountTip": "Συμβουλή: δημιουργήστε δωρεάν λογαριασμό με αυτό το email για να αποθηκεύσετε τα στοιχεία σας και να βρίσκετε όλες τις προσφορές VIP σας σε ένα μέρος."
+      "accountTip": "Συμβουλή: δημιουργήστε δωρεάν λογαριασμό με αυτό το email για να αποθηκεύσετε τα στοιχεία σας και να βρίσκετε όλες τις προσφορές VIP σας σε ένα μέρος.",
+      "defaultMemberLabel": "VIP member"
     }
   },
   "marketing": {
