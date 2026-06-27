@@ -274,8 +274,13 @@ export function PromoWizard(props: WizardProps) {
       startsAt: step3.startsAt || null,
       endsAt: step3.endsAt || null,
       usageLimit: step3.usageLimit ? parseInt(step3.usageLimit, 10) : null,
-      autoApply: step3.autoApply,
-      couponCode: step3.couponCode.trim() || null,
+      // Bundles are built from a visible card; auto-apply/code are inert for
+      // them, so force auto-apply on + drop any (ignored) code so the save
+      // invariant doesn't demand one (Luigi 2026-06-27).
+      autoApply: ["meal_bundle", "meal_bundle_speciality"].includes(promotionType) ? true : step3.autoApply,
+      couponCode: ["meal_bundle", "meal_bundle_speciality"].includes(promotionType)
+        ? null
+        : step3.couponCode.trim() || null,
       usableHourStart: step3.usableHourStart ? hhmmToMin(step3.usableHourStart) : null,
       usableHourEnd: step3.usableHourEnd ? hhmmToMin(step3.usableHourEnd) : null,
       showOnBanner: step3.showOnBanner,

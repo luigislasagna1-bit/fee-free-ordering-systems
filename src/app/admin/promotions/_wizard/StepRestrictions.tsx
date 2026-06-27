@@ -73,6 +73,9 @@ export function StepRestrictions({
   promotionType?: string;
 }) {
   const t = useTranslations("admin.promoStepRestrictions");
+  // Bundles are composed from a visible card — coupon code + auto-apply are
+  // inert for them, so those controls are hidden (Luigi 2026-06-27).
+  const isBundle = ["meal_bundle", "meal_bundle_speciality"].includes(promotionType);
 
   const DAY_NAMES = [
     t("daySun"),
@@ -465,12 +468,21 @@ export function StepRestrictions({
         {/* Visible-only: how it applies (auto vs code) + banner pinning. */}
         {form.displayMode !== "hidden_coupon_only" && (
           <div className="mt-4 space-y-3">
-            <Toggle
-              label={t("autoApplyLabel")}
-              sub={form.autoApply ? t("autoApplyOnSub") : t("autoApplyOffSub")}
-              checked={form.autoApply}
-              onChange={(v) => setForm({ autoApply: v })}
-            />
+            {/* Bundles are BUILT from a visible "Build your deal" card — a coupon
+                code can't open the composer and auto-apply doesn't apply, so
+                those controls are hidden for bundle types (Luigi 2026-06-27). */}
+            {isBundle ? (
+              <p className="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2 leading-snug">
+                💡 Customers build this bundle from a “Build your deal” card on your menu. Pin it to the banner below so it’s easy to find. (A bundle can’t be auto-applied or unlocked by a code.)
+              </p>
+            ) : (
+              <Toggle
+                label={t("autoApplyLabel")}
+                sub={form.autoApply ? t("autoApplyOnSub") : t("autoApplyOffSub")}
+                checked={form.autoApply}
+                onChange={(v) => setForm({ autoApply: v })}
+              />
+            )}
             <Toggle
               label={t("showOnBannerLabel")}
               sub={t("showOnBannerSub")}
@@ -500,7 +512,10 @@ export function StepRestrictions({
         )}
 
         {/* Coupon code — optional when auto-applying, REQUIRED otherwise (hidden,
-            or visible-but-not-auto). The server enforces the same invariant. */}
+            or visible-but-not-auto). The server enforces the same invariant.
+            Hidden for bundles: a code can't open the bundle composer, so it's
+            inert there (Luigi 2026-06-27). */}
+        {!isBundle && (
         <div className="mt-3">
           <label className="block text-xs text-gray-500 mb-1">
             {t("couponCodeLabel")}{" "}
@@ -524,6 +539,7 @@ export function StepRestrictions({
             <p className="text-xs text-red-500 mt-1">{t("couponCodeMissingError")}</p>
           )}
         </div>
+        )}
       </Section>
 
       {/* HIGHLIGHT THRESHOLD + IMAGE */}

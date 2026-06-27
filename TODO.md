@@ -9,6 +9,8 @@ date + commit hash. This file is committed so the backlog never gets lost.
 
 ## Open
 
+- [ ] **Code-unlocked "secret" bundles (Luigi 2026-06-27).** Today a Meal Bundle must be Visible (built from a "Build your deal" card); a coupon code can't open the composer, so Hidden + code is inert (we now hide those controls for bundle types). If Luigi wants a code-gated bundle (e.g. enter SANDWICH3 → reveal a "3 sandwiches for $30" composer), build it: entering the code surfaces/opens the bundle composer for an otherwise-hidden bundle. Until then bundles are visible-only. Also: the bundle highlight should use the item-based trigger from the nudge-rework note (eligible item added → highlight).
+
 - [ ] **Marketing website "Special Offers" tiles redesign (Luigi 2026-06-27).** The special-offer tiles on the hosted marketing site (`src/app/site/[slug]/page.tsx` ~718-760) look plain/bad — replace them with the same styled promo tiles used on the ordering page (image card + headline + CTA), or a close match that suits the website. UI/design task.
 
 - [ ] **Deal modal: true step-by-step walkthrough (Luigi 2026-06-27).** The BOGO / multi-item "Build your deal" modal should guide the customer ONE item at a time — "Select item 1" → pick → "Select item 2" → pick → "Deal applied" — like GloriaFood (screenshots), instead of showing all groups on one scrollable page. Applies to BOGO / buy-N-get-free / combo / bundle pickers. UX enhancement.
