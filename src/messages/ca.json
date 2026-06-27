@@ -2007,7 +2007,7 @@
       "tabInactive": "Inactiu",
       "tabExpired": "Caducat",
       "buttonNewCouponCode": "+ Nou codi de cupó",
-      "stackingInfo": "<label>Acumulació: </label><master>Mestre</master> les ofertes s'apliquen juntament amb totes les altres. <exclusive>Exclusiu</exclusive> les ofertes bloquegen totes les altres excepte els Mestres. <standard>Estàndard</standard> les ofertes s'acumulen entre si. Els codis de cupó els introdueix el client i mai s'apliquen automàticament.",
+      "stackingInfo": "<label>Acumulació: </label>Les ofertes <master>Master</master> s'apliquen amb tot. Les <exclusive>Exclusives</exclusive> bloquegen totes les altres excepte les Master. Les <standard>Estàndard</standard> s'acumulen entre elles.",
       "emptyStateTitle": "Encara no hi ha ofertes",
       "emptyStateBody": "Fes clic a <newPromo>«+ Nova promoció»</newPromo> a dalt per crear una promoció.",
       "tabSelfMade": "Pròpies",

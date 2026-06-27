@@ -2007,7 +2007,7 @@
       "tabInactive": "Inactive",
       "tabExpired": "Expirate",
       "buttonNewCouponCode": "+ Cod cupon nou",
-      "stackingInfo": "<label>Cumulare: </label><master>Master</master> se aplică alături de orice alt deal. <exclusive>Exclusiv</exclusive> blochează toate celelalte cu excepția Master. <standard>Standard</standard> se cumulează între ele. Codurile cupon sunt introduse de client și nu se aplică automat niciodată.",
+      "stackingInfo": "<label>Cumulare: </label>Promoțiile <master>Master</master> se aplică alături de orice. Cele <exclusive>Exclusive</exclusive> blochează toate celelalte în afară de Master. Cele <standard>Standard</standard> se cumulează între ele.",
       "emptyStateTitle": "Niciun deal încă",
       "emptyStateBody": "Apasă pe <newPromo>„+ Promoție nouă”</newPromo> sus pentru a crea o promoție.",
       "tabSelfMade": "Proprii",

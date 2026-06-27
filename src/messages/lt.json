@@ -2685,7 +2685,7 @@
       "tabInactive": "Neaktyvūs",
       "tabExpired": "Pasibaigę",
       "buttonNewCouponCode": "+ Naujas kupono kodas",
-      "stackingInfo": "<label>Sujungimas: </label><master>Master</master> pasiūlymai galioja kartu su viskuo. <exclusive>Išskirtiniai</exclusive> pasiūlymai blokuoja visus kitus, išskyrus Master. <standard>Standartiniai</standard> pasiūlymai jungiasi tarpusavyje. Kupono kodus įveda klientai ir jie niekada netaikomi automatiškai.",
+      "stackingInfo": "<label>Sumavimas: </label><master>Master</master> akcijos galioja kartu su viskuo. <exclusive>Išskirtinės</exclusive> blokuoja visas kitas, išskyrus Master. <standard>Standartinės</standard> sumuojasi tarpusavyje.",
       "emptyStateTitle": "Dar nėra pasiūlymų",
       "emptyStateBody": "Spustelėkite <newPromo>„+ Nauja akcija“</newPromo> viršuje, kad sukurtumėte akciją.",
       "tabSelfMade": "Savos",

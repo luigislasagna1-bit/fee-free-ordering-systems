@@ -2007,7 +2007,7 @@
       "tabInactive": "Neaktivno",
       "tabExpired": "Poteklo",
       "buttonNewCouponCode": "+ Nova koda kupona",
-      "stackingInfo": "<label>Združevanje: </label><master>Master</master> ponudbe veljajo poleg vsega. <exclusive>Ekskluzivne</exclusive> ponudbe blokirajo vse druge razen Master. <standard>Standardne</standard> ponudbe se združujejo med seboj. Kode kuponov vnaša stranka in se nikoli ne uveljavijo samodejno.",
+      "stackingInfo": "<label>Združevanje: </label>Ponudbe <master>Master</master> veljajo poleg vsega. <exclusive>Ekskluzivne</exclusive> blokirajo vse druge razen Master. <standard>Standardne</standard> se združujejo med seboj.",
       "emptyStateTitle": "Še ni ponudb",
       "emptyStateBody": "Kliknite <newPromo>„+ Nova promocija“</newPromo> zgoraj za ustvarjanje promocije.",
       "tabSelfMade": "Lastne",

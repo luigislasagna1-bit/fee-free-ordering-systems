@@ -2007,7 +2007,7 @@
       "tabInactive": "Неактивные",
       "tabExpired": "Истёкшие",
       "buttonNewCouponCode": "+ Новый код купона",
-      "stackingInfo": "<label>Совместное использование: </label><master>Мастер</master> применяется вместе со всеми. <exclusive>Исключительная</exclusive> блокирует все остальные, кроме Мастер. <standard>Стандартная</standard> совместима с другими стандартными. Купоны вводятся клиентом вручную и никогда не применяются автоматически.",
+      "stackingInfo": "<label>Совмещение: </label>Акции <master>Master</master> действуют вместе со всем. <exclusive>Эксклюзивные</exclusive> блокируют все остальные, кроме Master. <standard>Стандартные</standard> совмещаются друг с другом.",
       "emptyStateTitle": "Акций пока нет",
       "emptyStateBody": "Нажмите <newPromo>«+ Новая акция»</newPromo> вверху, чтобы создать акцию.",
       "tabSelfMade": "Свои",

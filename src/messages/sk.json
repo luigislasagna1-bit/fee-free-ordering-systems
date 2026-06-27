@@ -2685,7 +2685,7 @@
       "tabInactive": "Neaktívne",
       "tabExpired": "Vypršané",
       "buttonNewCouponCode": "+ Nový kód kupónu",
-      "stackingInfo": "<label>Skladanie: </label><master>Hlavné</master> ponuky platia popri všetkom ostatnom. <exclusive>Exkluzívne</exclusive> ponuky blokujú všetky ostatné okrem hlavných. <standard>Štandardné</standard> ponuky sa skladajú navzájom. Kódy kupónov zadáva zákazník a nikdy sa neaplikujú automaticky.",
+      "stackingInfo": "<label>Kombinovanie: </label>Akcie <master>Master</master> platia spolu so všetkým. <exclusive>Exkluzívne</exclusive> blokujú všetky ostatné okrem Master. <standard>Štandardné</standard> sa kombinujú navzájom.",
       "emptyStateTitle": "Zatiaľ žiadne ponuky",
       "emptyStateBody": "Kliknite na <newPromo>„+ Nová akcia“</newPromo> hore a vytvorte akciu.",
       "tabSelfMade": "Vlastné",

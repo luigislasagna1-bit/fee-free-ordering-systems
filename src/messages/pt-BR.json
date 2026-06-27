@@ -2007,7 +2007,7 @@
       "tabInactive": "Inativas",
       "tabExpired": "Expiradas",
       "buttonNewCouponCode": "+ Novo código de cupom",
-      "stackingInfo": "<label>Acumulação: </label><master>Master</master> se aplica junto com tudo. <exclusive>Exclusivo</exclusive> bloqueia todos os outros exceto Masters. <standard>Padrão</standard> se acumula com outros do mesmo tipo. Códigos de cupom são inseridos pelo cliente e nunca aplicados automaticamente.",
+      "stackingInfo": "<label>Acúmulo: </label>Promoções <master>Master</master> valem junto com tudo. As <exclusive>Exclusivas</exclusive> bloqueiam todas as outras, exceto as Master. As <standard>Padrão</standard> se acumulam entre si.",
       "emptyStateTitle": "Nenhuma oferta ainda",
       "emptyStateBody": "Clique em <newPromo>“+ Nova promoção”</newPromo> no topo para criar uma promoção.",
       "tabSelfMade": "Próprias",

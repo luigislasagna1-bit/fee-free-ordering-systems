@@ -2007,7 +2007,7 @@
       "tabInactive": "Mitteaktiivne",
       "tabExpired": "Aegunud",
       "buttonNewCouponCode": "+ Uus kuponi kood",
-      "stackingInfo": "<label>Kokkupanemine: </label><master>Peamine</master> pakkumised kehtivad kõige kõrval. <exclusive>Eksklusiivne</exclusive> pakkumised blokeerivad kõik teised peale peamiste. <standard>Standardne</standard> pakkumised kombineeruvad omavahel. Kuponi koodid sisestab klient käsitsi ja neid ei rakendata automaatselt.",
+      "stackingInfo": "<label>Kombineerimine: </label><master>Master</master>-pakkumised kehtivad kõige kõrval. <exclusive>Eksklusiivsed</exclusive> blokeerivad kõik muud peale Masteri. <standard>Tavalised</standard> kombineeruvad omavahel.",
       "emptyStateTitle": "Pakkumisi pole veel",
       "emptyStateBody": "Klõpsake üleval <newPromo>„+ Uus pakkumine“</newPromo>, et luua pakkumine.",
       "tabSelfMade": "Omad",

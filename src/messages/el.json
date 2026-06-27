@@ -2007,7 +2007,7 @@
       "tabInactive": "Ανενεργές",
       "tabExpired": "Ληγμένες",
       "buttonNewCouponCode": "+ Νέος κωδικός κουπονιού",
-      "stackingInfo": "<label>Συνδυασμός: </label><master>Master</master> προσφορές εφαρμόζονται παράλληλα με όλες. <exclusive>Αποκλειστικές</exclusive> προσφορές μπλοκάρουν όλες τις άλλες εκτός Master. <standard>Τυπικές</standard> προσφορές συνδυάζονται μεταξύ τους. Οι κωδικοί κουπονιών εισάγονται από τον πελάτη και δεν εφαρμόζονται ποτέ αυτόματα.",
+      "stackingInfo": "<label>Συνδυασμός: </label>Οι προσφορές <master>Master</master> ισχύουν μαζί με όλα. Οι <exclusive>Αποκλειστικές</exclusive> μπλοκάρουν όλες τις άλλες εκτός από τις Master. Οι <standard>Τυπικές</standard> συνδυάζονται μεταξύ τους.",
       "emptyStateTitle": "Δεν υπάρχουν προσφορές ακόμα",
       "emptyStateBody": "Κάντε κλικ στο <newPromo>«+ Νέα προσφορά»</newPromo> πάνω για να δημιουργήσετε μια προσφορά.",
       "tabSelfMade": "Δικά σας",

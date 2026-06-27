@@ -2007,7 +2007,7 @@
       "tabInactive": "無効",
       "tabExpired": "期限切れ",
       "buttonNewCouponCode": "+ 新しいクーポンコード",
-      "stackingInfo": "<label>重複適用：</label><master>マスター</master>は他のすべてと同時に適用されます。<exclusive>排他的</exclusive>はマスター以外をすべてブロックします。<standard>標準</standard>は他の標準と重複適用されます。クーポンコードは顧客が入力するもので、自動適用されません。",
+      "stackingInfo": "<label>併用: </label><master>マスター</master>特典はすべてと併用できます。<exclusive>限定</exclusive>はマスター以外をすべてブロックします。<standard>標準</standard>同士は併用できます。",
       "emptyStateTitle": "まだキャンペーンがありません",
       "emptyStateBody": "プロモーションを作成するには、上部の<newPromo>「+ 新規プロモ」</newPromo>をクリックします。",
       "tabSelfMade": "自作",

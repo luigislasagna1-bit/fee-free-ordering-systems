@@ -1951,7 +1951,7 @@
       "tabInactive": "Nieaktywne",
       "tabExpired": "Wygasłe",
       "buttonNewCouponCode": "+ Nowy kod kuponu",
-      "stackingInfo": "<label>Łączenie: </label><master>Master</master> — stosowane zawsze obok wszystkich. <exclusive>Ekskluzywna</exclusive> — blokuje wszystkie inne oprócz Master. <standard>Standardowa</standard> — łączy się z innymi standardowymi. Kody kuponów są wpisywane przez klienta i nigdy nie są stosowane automatycznie.",
+      "stackingInfo": "<label>Łączenie: </label>Promocje <master>Master</master> obowiązują obok wszystkiego. <exclusive>Wyłączne</exclusive> blokują wszystkie inne oprócz Master. <standard>Standardowe</standard> łączą się ze sobą.",
       "emptyStateTitle": "Brak ofert",
       "emptyStateBody": "Kliknij <newPromo>„+ Nowa promocja”</newPromo> u góry, aby utworzyć promocję.",
       "tabSelfMade": "Własne",

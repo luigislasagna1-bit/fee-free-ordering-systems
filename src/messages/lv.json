@@ -2007,7 +2007,7 @@
       "tabInactive": "Neaktīvie",
       "tabExpired": "Beigušies",
       "buttonNewCouponCode": "+ Jauns kupona kods",
-      "stackingInfo": "<label>Apvienošana: </label><master>Galvenais</master> darījumi tiek piemēroti kopā ar visiem pārējiem. <exclusive>Ekskluzīvie</exclusive> darījumi bloķē visus pārējos, izņemot Galvenos. <standard>Standarta</standard> darījumi apvienojas savā starpā. Kuponu kodus klienti ievada manuāli — tie nekad netiek piemēroti automātiski.",
+      "stackingInfo": "<label>Apvienošana: </label><master>Master</master> piedāvājumi darbojas līdzās visam. <exclusive>Ekskluzīvie</exclusive> bloķē visus pārējos, izņemot Master. <standard>Standarta</standard> apvienojas savā starpā.",
       "emptyStateTitle": "Vēl nav darījumu",
       "emptyStateBody": "Noklikšķiniet uz <newPromo>„+ Jauna akcija“</newPromo> augšpusē, lai izveidotu akciju.",
       "tabSelfMade": "Pašu veidotās",

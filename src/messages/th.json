@@ -2007,7 +2007,7 @@
       "tabInactive": "ไม่ใช้งาน",
       "tabExpired": "หมดอายุ",
       "buttonNewCouponCode": "+ รหัสคูปองใหม่",
-      "stackingInfo": "<label>การซ้อน: </label><master>Master</master> ใช้ร่วมกับทุกอย่าง <exclusive>Exclusive</exclusive> บล็อกทั้งหมดยกเว้น Master <standard>Standard</standard> ซ้อนกันได้ รหัสคูปองต้องลูกค้ากรอกเองและไม่ใช้งานอัตโนมัติ",
+      "stackingInfo": "<label>การใช้ร่วมกัน: </label>ดีล <master>Master</master> ใช้ร่วมกับทุกอย่างได้ <exclusive>เอ็กซ์คลูซีฟ</exclusive> บล็อกดีลอื่นทั้งหมดยกเว้น Master ส่วน <standard>มาตรฐาน</standard> ใช้ร่วมกันเองได้",
       "emptyStateTitle": "ยังไม่มีดีล",
       "emptyStateBody": "คลิก <newPromo>“+ โปรโมชันใหม่”</newPromo> ด้านบนเพื่อสร้างโปรโมชัน",
       "tabSelfMade": "สร้างเอง",

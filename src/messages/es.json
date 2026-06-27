@@ -2007,7 +2007,7 @@
       "tabInactive": "Inactivos",
       "tabExpired": "Caducados",
       "buttonNewCouponCode": "+ Nuevo código de cupón",
-      "stackingInfo": "<label>Acumulación: </label><master>Maestro</master> se aplica junto a todo. <exclusive>Exclusivo</exclusive> bloquea todos salvo los Maestros. <standard>Estándar</standard> se acumula entre sí. Los códigos de cupón los introduce el cliente y nunca se aplican automáticamente.",
+      "stackingInfo": "<label>Acumulación: </label>Las ofertas <master>Master</master> se aplican junto a todo. Las <exclusive>Exclusivas</exclusive> bloquean todas las demás excepto las Master. Las <standard>Estándar</standard> se acumulan entre sí.",
       "emptyStateTitle": "Aún no hay ofertas",
       "emptyStateBody": "Haz clic en <newPromo>«+ Nueva promoción»</newPromo> arriba para crear una promoción.",
       "tabSelfMade": "Propias",

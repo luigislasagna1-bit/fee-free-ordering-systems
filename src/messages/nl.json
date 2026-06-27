@@ -2007,7 +2007,7 @@
       "tabInactive": "Inactief",
       "tabExpired": "Verlopen",
       "buttonNewCouponCode": "+ Nieuwe couponcode",
-      "stackingInfo": "<label>Stapelen: </label><master>Master</master>-deals gelden naast alles. <exclusive>Exclusieve</exclusive> deals blokkeren alle andere, behalve Masters. <standard>Standaard</standard>-deals stapelen met elkaar. Couponcodes worden door de klant ingevoerd en nooit automatisch toegepast.",
+      "stackingInfo": "<label>Stapelen: </label><master>Master</master>-acties gelden naast alles. <exclusive>Exclusieve</exclusive> blokkeren alle andere behalve Master. <standard>Standaard</standard>-acties stapelen met elkaar.",
       "emptyStateTitle": "Nog geen deals",
       "emptyStateBody": "Klik bovenaan op <newPromo>“+ Nieuwe actie”</newPromo> om een actie te maken.",
       "tabSelfMade": "Eigen",

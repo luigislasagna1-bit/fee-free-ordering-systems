@@ -2007,7 +2007,7 @@
       "tabInactive": "Inaktiv",
       "tabExpired": "Abgelaufen",
       "buttonNewCouponCode": "+ Neuer Gutscheincode",
-      "stackingInfo": "<label>Kombinierbarkeit: </label><master>Master</master>-Aktionen gelten neben allen anderen. <exclusive>Exklusive</exclusive> Aktionen blockieren alle anderen außer Master. <standard>Standard</standard>-Aktionen lassen sich untereinander kombinieren. Gutscheincodes werden vom Kunden eingegeben und nie automatisch angewendet.",
+      "stackingInfo": "<label>Kombinierbarkeit: </label><master>Master</master>-Aktionen gelten zusätzlich zu allem. <exclusive>Exklusive</exclusive> blockieren alle anderen außer Master. <standard>Standard</standard>-Aktionen sind untereinander kombinierbar.",
       "emptyStateTitle": "Noch keine Aktionen",
       "emptyStateBody": "Klicken Sie oben auf <newPromo>„+ Neue Aktion“</newPromo>, um eine Aktion zu erstellen.",
       "tabSelfMade": "Eigene",

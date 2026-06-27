@@ -1951,7 +1951,7 @@
       "tabInactive": "Không hoạt động",
       "tabExpired": "Hết hạn",
       "buttonNewCouponCode": "+ Mã phiếu giảm giá mới",
-      "stackingInfo": "<label>Kết hợp: </label><master>Master</master> áp dụng cùng mọi khuyến mãi khác. <exclusive>Độc quyền</exclusive> chặn tất cả trừ Master. <standard>Tiêu chuẩn</standard> kết hợp với nhau. Mã phiếu giảm giá do khách nhập và không bao giờ tự động áp dụng.",
+      "stackingInfo": "<label>Cộng dồn: </label>Khuyến mãi <master>Master</master> áp dụng cùng mọi thứ. <exclusive>Độc quyền</exclusive> chặn tất cả khuyến mãi khác trừ Master. <standard>Tiêu chuẩn</standard> cộng dồn với nhau.",
       "emptyStateTitle": "Chưa có ưu đãi",
       "emptyStateBody": "Nhấp vào <newPromo>“+ Khuyến mãi mới”</newPromo> ở trên để tạo khuyến mãi.",
       "tabSelfMade": "Tự tạo",

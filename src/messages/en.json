@@ -2409,7 +2409,7 @@
       "tabInactive": "Inactive",
       "tabExpired": "Expired",
       "buttonNewCouponCode": "+ New coupon code",
-      "stackingInfo": "<label>Stacking: </label><master>Master</master> deals apply alongside everything. <exclusive>Exclusive</exclusive> deals block all others except Masters. <standard>Standard</standard> deals stack with each other. Coupon codes are customer-entered and never auto-applied.",
+      "stackingInfo": "<label>Stacking: </label><master>Master</master> deals apply alongside everything. <exclusive>Exclusive</exclusive> deals block all others except Masters. <standard>Standard</standard> deals stack with each other.",
       "emptyStateTitle": "No deals yet",
       "emptyStateBody": "Click <newPromo>“+ New Promo”</newPromo> at the top to create a promotion.",
       "tabSelfMade": "Self-made",

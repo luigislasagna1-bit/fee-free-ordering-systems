@@ -2007,7 +2007,7 @@
       "tabInactive": "غير نشط",
       "tabExpired": "منتهي الصلاحية",
       "buttonNewCouponCode": "+ رمز كوبون جديد",
-      "stackingInfo": "<label>التجميع: </label>تُطبَّق عروض <master>الرئيسي</master> جانباً لكل شيء. عروض <exclusive>الحصري</exclusive> تمنع جميع الآخرين إلا الرئيسيين. تتجمع عروض <standard>العادي</standard> مع بعضها. رموز الكوبون يدخلها العميل ولا تُطبَّق تلقائياً أبداً.",
+      "stackingInfo": "<label>التراكم: </label>تُطبَّق عروض <master>الماستر</master> مع كل شيء. تحجب عروض <exclusive>الحصري</exclusive> كل العروض الأخرى عدا الماستر. تتراكم عروض <standard>القياسي</standard> مع بعضها.",
       "emptyStateTitle": "لا توجد عروض بعد",
       "emptyStateBody": "انقر على <newPromo>«+ عرض جديد»</newPromo> في الأعلى لإنشاء عرض ترويجي.",
       "tabSelfMade": "خاصة بك",

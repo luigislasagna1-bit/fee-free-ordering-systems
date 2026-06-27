@@ -2007,7 +2007,7 @@
       "tabInactive": "Neaktivní",
       "tabExpired": "Vypršelé",
       "buttonNewCouponCode": "+ Nový kód kupónu",
-      "stackingInfo": "<label>Kombinování: </label><master>Hlavní</master> akce platí společně se vším ostatním. <exclusive>Výhradní</exclusive> akce blokují všechny ostatní kromě Hlavních. <standard>Standardní</standard> akce se vzájemně kombinují. Kódy kupónů zadávají zákazníci sami a nikdy se neaplikují automaticky.",
+      "stackingInfo": "<label>Slučování: </label>Akce <master>Master</master> platí společně se vším. <exclusive>Exkluzivní</exclusive> blokují všechny ostatní kromě Master. <standard>Standardní</standard> se slučují navzájem.",
       "emptyStateTitle": "Zatím žádné akce",
       "emptyStateBody": "Klikněte na <newPromo>„+ Nová akce“</newPromo> nahoře a vytvořte akci.",
       "tabSelfMade": "Vlastní",

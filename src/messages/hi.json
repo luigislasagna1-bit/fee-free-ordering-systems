@@ -2365,7 +2365,7 @@
       "tabInactive": "निष्क्रिय",
       "tabExpired": "समाप्त",
       "buttonNewCouponCode": "+ नया कूपन कोड",
-      "stackingInfo": "<label>स्टैकिंग: </label><master>Master</master> डील सभी के साथ लागू होती है। <exclusive>Exclusive</exclusive> डील, Master को छोड़कर बाकी सभी को रोकती है। <standard>Standard</standard> डील एक-दूसरे के साथ लागू होती हैं। कूपन कोड ग्राहक द्वारा दर्ज किए जाते हैं और कभी स्वतः लागू नहीं होते।",
+      "stackingInfo": "<label>स्टैकिंग: </label><master>मास्टर</master> ऑफ़र हर चीज़ के साथ लागू होते हैं। <exclusive>एक्सक्लूसिव</exclusive> मास्टर को छोड़कर बाकी सभी को रोकते हैं। <standard>स्टैंडर्ड</standard> आपस में जुड़ते हैं।",
       "emptyStateTitle": "अभी तक कोई डील नहीं",
       "emptyStateBody": "प्रोमोशन बनाने के लिए ऊपर <newPromo>“+ नया प्रोमो”</newPromo> पर क्लिक करें।",
       "tabSelfMade": "स्वयं बनाई",

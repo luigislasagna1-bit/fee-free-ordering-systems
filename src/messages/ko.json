@@ -2007,7 +2007,7 @@
       "tabInactive": "비활성",
       "tabExpired": "만료됨",
       "buttonNewCouponCode": "+ 새 쿠폰 코드",
-      "stackingInfo": "<label>중복 적용: </label><master>마스터</master> 딜은 모든 것과 함께 적용됩니다. <exclusive>단독</exclusive> 딜은 마스터를 제외한 모든 것을 차단합니다. <standard>표준</standard> 딜은 서로 중복 적용됩니다. 쿠폰 코드는 고객이 직접 입력하며 자동 적용되지 않습니다.",
+      "stackingInfo": "<label>중복 적용: </label><master>마스터</master> 혜택은 모든 것과 함께 적용됩니다. <exclusive>독점</exclusive>은 마스터를 제외한 나머지를 모두 차단합니다. <standard>표준</standard>은 서로 중복됩니다.",
       "emptyStateTitle": "아직 딜이 없습니다",
       "emptyStateBody": "프로모션을 만들려면 상단의 <newPromo>“+ 새 프로모션”</newPromo>을 클릭하세요.",
       "tabSelfMade": "직접 만든",

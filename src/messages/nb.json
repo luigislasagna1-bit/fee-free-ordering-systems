@@ -2007,7 +2007,7 @@
       "tabInactive": "Inaktive",
       "tabExpired": "Utløpte",
       "buttonNewCouponCode": "+ Ny kupongkode",
-      "stackingInfo": "<label>Stabling: </label><master>Master</master>-tilbud gjelder sammen med alt annet. <exclusive>Eksklusive</exclusive> tilbud blokkerer alle andre unntatt Masters. <standard>Standard</standard>-tilbud stables med hverandre. Kupongkoder er kundeinntastede og brukes aldri automatisk.",
+      "stackingInfo": "<label>Kombinering: </label><master>Master</master>-tilbud gjelder sammen med alt. <exclusive>Eksklusive</exclusive> blokkerer alle andre unntatt Master. <standard>Standard</standard> kombineres med hverandre.",
       "emptyStateTitle": "Ingen tilbud ennå",
       "emptyStateBody": "Klikk på <newPromo>«+ Ny kampanje»</newPromo> øverst for å opprette en kampanje.",
       "tabSelfMade": "Egne",

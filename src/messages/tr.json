@@ -1951,7 +1951,7 @@
       "tabInactive": "Pasif",
       "tabExpired": "Süresi Dolmuş",
       "buttonNewCouponCode": "+ Yeni kupon kodu",
-      "stackingInfo": "<label>Birleştirme: </label><master>Ana</master> teklifler herkesle birlikte uygulanır. <exclusive>Özel</exclusive> teklifler Ana'lar dışında hepsini engeller. <standard>Standart</standard> teklifler birbirleriyle birleşir. Kupon kodları müşteri tarafından girilir ve hiçbir zaman otomatik uygulanmaz.",
+      "stackingInfo": "<label>Birlikte kullanım: </label><master>Master</master> kampanyalar her şeyle birlikte geçerlidir. <exclusive>Özel</exclusive> olanlar Master dışındaki tümünü engeller. <standard>Standart</standard> olanlar birbiriyle birleşir.",
       "emptyStateTitle": "Henüz teklif yok",
       "emptyStateBody": "Bir promosyon oluşturmak için üstteki <newPromo>“+ Yeni Promosyon”</newPromo> öğesine tıklayın.",
       "tabSelfMade": "Kendi",

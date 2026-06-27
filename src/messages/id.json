@@ -2007,7 +2007,7 @@
       "tabInactive": "Tidak Aktif",
       "tabExpired": "Kadaluarsa",
       "buttonNewCouponCode": "+ Kode kupon baru",
-      "stackingInfo": "<label>Penggabungan: </label><master>Master</master> berlaku bersamaan dengan semua promo. <exclusive>Eksklusif</exclusive> memblokir semua kecuali Master. <standard>Standar</standard> dapat digabung satu sama lain. Kode kupon dimasukkan pelanggan dan tidak pernah diterapkan otomatis.",
+      "stackingInfo": "<label>Penggabungan: </label>Promo <master>Master</master> berlaku bersama semuanya. <exclusive>Eksklusif</exclusive> memblokir yang lain kecuali Master. <standard>Standar</standard> bisa digabung satu sama lain.",
       "emptyStateTitle": "Belum ada promo",
       "emptyStateBody": "Klik <newPromo>“+ Promo Baru”</newPromo> di atas untuk membuat promosi.",
       "tabSelfMade": "Buatan sendiri",

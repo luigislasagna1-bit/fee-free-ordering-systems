@@ -2007,7 +2007,7 @@
       "tabInactive": "Неактивни",
       "tabExpired": "Изтекли",
       "buttonNewCouponCode": "+ Нов код на купон",
-      "stackingInfo": "<label>Комбиниране: </label><master>Главна</master> сделка се прилага заедно с всичко. <exclusive>Ексклузивна</exclusive> сделка блокира всички останали освен Главните. <standard>Стандартна</standard> сделка се комбинира с другите стандартни. Кодовете на купони се въвеждат от клиента и никога не се прилагат автоматично.",
+      "stackingInfo": "<label>Наслагване: </label>Офертите <master>Master</master> важат заедно с всичко. <exclusive>Ексклузивните</exclusive> блокират всички други освен Master. <standard>Стандартните</standard> се наслагват една с друга.",
       "emptyStateTitle": "Все още няма сделки",
       "emptyStateBody": "Кликнете върху <newPromo>„+ Нова промоция“</newPromo> горе, за да създадете промоция.",
       "tabSelfMade": "Собствени",

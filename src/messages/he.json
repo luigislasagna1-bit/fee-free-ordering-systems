@@ -2007,7 +2007,7 @@
       "tabInactive": "לא פעיל",
       "tabExpired": "פג תוקף",
       "buttonNewCouponCode": "+ קוד קופון חדש",
-      "stackingInfo": "<label>שילוב: </label><master>מאסטר</master> עסקאות חלות לצד כל האחרות. <exclusive>בלעדי</exclusive> חוסם את כולן מלבד מאסטר. <standard>רגיל</standard> מצטבר עם עסקאות רגילות אחרות. קודי קופון מוזנים על ידי הלקוח ואינם מוחלים אוטומטית.",
+      "stackingInfo": "<label>שילוב: </label>מבצעי <master>מאסטר</master> חלים יחד עם הכול. מבצעים <exclusive>בלעדיים</exclusive> חוסמים את כל השאר חוץ ממאסטר. מבצעי <standard>סטנדרט</standard> משתלבים זה עם זה.",
       "emptyStateTitle": "אין עסקאות עדיין",
       "emptyStateBody": "לחץ על <newPromo>«+ מבצע חדש»</newPromo> למעלה כדי ליצור מבצע.",
       "tabSelfMade": "משלך",

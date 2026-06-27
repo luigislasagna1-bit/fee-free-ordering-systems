@@ -2007,7 +2007,7 @@
       "tabInactive": "Ei aktiiviset",
       "tabExpired": "Vanhentuneet",
       "buttonNewCouponCode": "+ Uusi kuponkikoodi",
-      "stackingInfo": "<label>Yhdistäminen: </label><master>Master</master>-tarjoukset toimivat kaikkien muiden rinnalla. <exclusive>Exclusive</exclusive>-tarjoukset estävät kaikki muut paitsi Master-tasoiset. <standard>Standard</standard>-tarjoukset yhdistyvät keskenään. Kuponkikoodit syötetään asiakkaan toimesta eikä niitä sovelleta automaattisesti.",
+      "stackingInfo": "<label>Yhdistely: </label><master>Master</master>-tarjoukset ovat voimassa kaiken muun ohella. <exclusive>Yksinoikeudella</exclusive> estävät kaikki muut paitsi Masterit. <standard>Vakio</standard>-tarjoukset yhdistyvät keskenään.",
       "emptyStateTitle": "Ei tarjouksia vielä",
       "emptyStateBody": "Napsauta ylhäältä <newPromo>”+ Uusi tarjous”</newPromo> luodaksesi tarjouksen.",
       "tabSelfMade": "Omat",
