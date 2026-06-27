@@ -5194,9 +5194,9 @@
       "offerReusable": "Herbruikbaar",
       "offerUsed": "Gebruikt",
       "offerAutoApplies": "Automatisch toegepast — geen code",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% korting",
+      "fixedOff": "{amount} korting",
+      "helpOffers": "Aanbiedingen opgeslagen op je account. Aanbiedingen met “Wordt automatisch toegepast — geen code” worden bij het afrekenen automatisch toegevoegd zodra je bestelling in aanmerking komt — je hoeft niets in te voeren. Coupons met een code worden toegepast zodra je de code invoert."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Maaltijdbundel met specialiteit",

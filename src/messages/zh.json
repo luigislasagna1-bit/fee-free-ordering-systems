@@ -5194,9 +5194,9 @@
       "offerReusable": "可重复使用",
       "offerUsed": "已使用",
       "offerAutoApplies": "自动应用 — 无需代码",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% 折扣",
+      "fixedOff": "减 {amount}",
+      "helpOffers": "优惠已保存到您的账户。标有\"自动应用 — 无需代码\"的优惠会在结账时订单符合条件时自动添加，无需输入任何内容。带代码的优惠券需在输入代码后才会生效。"
     },
     "bundle": {
       "mealBundleWithSpeciality": "含特色菜的套餐",

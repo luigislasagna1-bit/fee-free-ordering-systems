@@ -5194,9 +5194,9 @@
       "offerReusable": "재사용 가능",
       "offerUsed": "사용함",
       "offerAutoApplies": "자동 적용 — 코드 불필요",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% 할인",
+      "fixedOff": "{amount} 할인",
+      "helpOffers": "혜택이 계정에 저장되었습니다. “자동 적용 — 코드 불필요” 혜택은 주문이 조건을 충족하면 결제 시 자동으로 적용됩니다 — 입력할 것이 없습니다. 코드가 있는 쿠폰은 코드를 입력하면 적용됩니다."
     },
     "bundle": {
       "mealBundleWithSpeciality": "스페셜 밀 번들",

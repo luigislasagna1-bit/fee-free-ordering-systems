@@ -5194,9 +5194,9 @@
       "offerReusable": "Mehrfach nutzbar",
       "offerUsed": "Eingelöst",
       "offerAutoApplies": "Automatisch — kein Code",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% Rabatt",
+      "fixedOff": "{amount} Rabatt",
+      "helpOffers": "Angebote in Ihrem Konto gespeichert. Angebote mit „Automatisch — kein Code“ werden an der Kasse automatisch hinzugefügt, sobald Ihre Bestellung infrage kommt — Sie müssen nichts eingeben. Gutscheine mit Code gelten, sobald Sie den Code eingeben."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Menü-Bundle mit Spezialität",

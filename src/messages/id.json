@@ -5194,9 +5194,9 @@
       "offerReusable": "Bisa dipakai ulang",
       "offerUsed": "Terpakai",
       "offerAutoApplies": "Otomatis berlaku — tanpa kode",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "Diskon {value}%",
+      "fixedOff": "Diskon {amount}",
+      "helpOffers": "Penawaran tersimpan di akun Anda. Yang “Berlaku otomatis — tanpa kode” ditambahkan otomatis saat checkout jika pesanan Anda memenuhi syarat — tidak perlu memasukkan apa pun. Kupon dengan kode berlaku setelah Anda memasukkan kodenya."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Paket makan dengan menu spesial",

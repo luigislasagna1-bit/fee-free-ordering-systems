@@ -5194,9 +5194,9 @@
       "offerReusable": "Многоразовое",
       "offerUsed": "Использовано",
       "offerAutoApplies": "Применяется автоматически — без кода",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "Скидка {value}%",
+      "fixedOff": "Скидка {amount}",
+      "helpOffers": "Акции сохранены в вашем аккаунте. Те, что помечены «Применяется автоматически — без кода», добавляются автоматически при оформлении заказа, когда заказ подходит под условия — ничего вводить не нужно. Купоны с кодом применяются после ввода кода."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Комбо с фирменными блюдами",

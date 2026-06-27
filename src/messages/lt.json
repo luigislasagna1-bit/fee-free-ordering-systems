@@ -5194,9 +5194,9 @@
       "offerReusable": "Daugkartinis",
       "offerUsed": "Panaudota",
       "offerAutoApplies": "Taikoma automatiškai — be kodo",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value} % nuolaida",
+      "fixedOff": "{amount} nuolaida",
+      "helpOffers": "Pasiūlymai išsaugoti jūsų paskyroje. Tie, kurie „Pritaikomi automatiškai — be kodo“, atsiskaitant pridedami automatiškai, kai jūsų užsakymas atitinka sąlygas — nieko įvesti nereikia. Kuponai su kodu pritaikomi įvedus kodą."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Maisto rinkinys su specialiu patiekalu",

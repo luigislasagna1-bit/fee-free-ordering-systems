@@ -5194,9 +5194,9 @@
       "offerReusable": "ใช้ซ้ำได้",
       "offerUsed": "ใช้แล้ว",
       "offerAutoApplies": "ใช้อัตโนมัติ — ไม่ต้องใส่โค้ด",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "ลด {value}%",
+      "fixedOff": "ลด {amount}",
+      "helpOffers": "บันทึกดีลไว้ในบัญชีของคุณแล้ว ดีลที่ระบุว่า “ใช้อัตโนมัติ — ไม่ต้องใส่โค้ด” จะถูกใช้ให้อัตโนมัติตอนชำระเงินเมื่อคำสั่งซื้อของคุณเข้าเกณฑ์ — ไม่ต้องกรอกอะไร ส่วนคูปองที่มีโค้ดจะใช้ได้เมื่อคุณกรอกโค้ด"
     },
     "bundle": {
       "mealBundleWithSpeciality": "เซตอาหารพร้อมเมนูพิเศษ",

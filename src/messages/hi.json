@@ -5194,9 +5194,9 @@
       "offerReusable": "पुनः उपयोग योग्य",
       "offerUsed": "उपयोग किया गया",
       "offerAutoApplies": "स्वतः लागू — कोई कोड नहीं",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% की छूट",
+      "fixedOff": "{amount} की छूट",
+      "helpOffers": "डील आपके खाते में सहेजी गई हैं। “अपने-आप लागू — कोई कोड नहीं” वाली डील चेकआउट पर तब अपने-आप जुड़ जाती हैं जब आपका ऑर्डर पात्र हो — कुछ भी दर्ज करने की ज़रूरत नहीं। कोड वाले कूपन तब लागू होते हैं जब आप कोड दर्ज करते हैं।"
     },
     "bundle": {
       "mealBundleWithSpeciality": "स्पेशलिटी के साथ मील बंडल",

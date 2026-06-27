@@ -5194,9 +5194,9 @@
       "offerReusable": "Atkārtoti lietojama",
       "offerUsed": "Izmantota",
       "offerAutoApplies": "Piemērojas automātiski — bez koda",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% atlaide",
+      "fixedOff": "{amount} atlaide",
+      "helpOffers": "Piedāvājumi saglabāti jūsu kontā. “Tiek piemēroti automātiski — bez koda” piedāvājumi tiek pievienoti automātiski apmaksas brīdī, kad jūsu pasūtījums atbilst nosacījumiem — nekas nav jāievada. Kuponi ar kodu tiek piemēroti, tiklīdz ievadāt kodu."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ēdienreizes komplekts ar īpašumu",

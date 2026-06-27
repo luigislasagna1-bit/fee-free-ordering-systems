@@ -5194,9 +5194,9 @@
       "offerReusable": "Uudelleenkäytettävä",
       "offerUsed": "Käytetty",
       "offerAutoApplies": "Aktivoituu itsestään — ei koodia",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value} % alennus",
+      "fixedOff": "{amount} alennus",
+      "helpOffers": "Tarjoukset tallennettu tilillesi. ”Käytetään automaattisesti — ei koodia” -tarjoukset lisätään automaattisesti kassalla, kun tilauksesi täyttää ehdot — mitään ei tarvitse syöttää. Kupongit, joissa on koodi, otetaan käyttöön, kun syötät koodin."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ateriapaketti erikoisuudella",

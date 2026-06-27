@@ -5194,9 +5194,9 @@
       "offerReusable": "Многократно",
       "offerUsed": "Използвано",
       "offerAutoApplies": "Прилага се автоматично — без код",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% отстъпка",
+      "fixedOff": "{amount} отстъпка",
+      "helpOffers": "Офертите са запазени във вашия акаунт. Тези с „Прилага се автоматично — без код“ се добавят автоматично при плащане, когато поръчката ви отговаря на условията — няма нищо за въвеждане. Купоните с код се прилагат, след като въведете кода."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Пакетно меню със специалитет",

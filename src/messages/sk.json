@@ -5194,9 +5194,9 @@
       "offerReusable": "Opakovane",
       "offerUsed": "Použité",
       "offerAutoApplies": "Použije sa automaticky — bez kódu",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "Zľava {value} %",
+      "fixedOff": "Zľava {amount}",
+      "helpOffers": "Ponuky uložené vo vašom účte. Tie s označením „Použijú sa automaticky — bez kódu“ sa pri platbe pridajú automaticky, keď vaša objednávka spĺňa podmienky — nemusíte nič zadávať. Kupóny s kódom sa použijú po zadaní kódu."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Jedlový balíček so špeciálnymi položkami",

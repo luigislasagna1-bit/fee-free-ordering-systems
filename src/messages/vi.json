@@ -5194,9 +5194,9 @@
       "offerReusable": "Dùng nhiều lần",
       "offerUsed": "Đã dùng",
       "offerAutoApplies": "Tự áp dụng — không cần mã",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "Giảm {value}%",
+      "fixedOff": "Giảm {amount}",
+      "helpOffers": "Ưu đãi đã được lưu vào tài khoản của bạn. Những ưu đãi “Tự động áp dụng — không cần mã” sẽ được thêm tự động khi thanh toán nếu đơn hàng của bạn đủ điều kiện — bạn không cần nhập gì cả. Phiếu giảm giá có mã sẽ được áp dụng sau khi bạn nhập mã."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Combo bữa ăn với món đặc biệt",

@@ -5194,9 +5194,9 @@
       "offerReusable": "Korduvkasutatav",
       "offerUsed": "Kasutatud",
       "offerAutoApplies": "Rakendub automaatselt — koodi pole vaja",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% soodustust",
+      "fixedOff": "{amount} soodustust",
+      "helpOffers": "Pakkumised on salvestatud teie kontole. Need, mis „Rakenduvad automaatselt — koodi pole vaja”, lisatakse kassas automaatselt, kui teie tellimus vastab tingimustele — midagi pole vaja sisestada. Koodiga kupongid rakenduvad pärast koodi sisestamist."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Einepakk erivalikuga",

@@ -5194,9 +5194,9 @@
       "offerReusable": "Reutilizabil",
       "offerUsed": "Utilizat",
       "offerAutoApplies": "Se aplică automat — fără cod",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% reducere",
+      "fixedOff": "{amount} reducere",
+      "helpOffers": "Ofertele sunt salvate în contul tău. Cele „Se aplică automat — fără cod” se adaugă automat la finalizarea comenzii când comanda ta este eligibilă — nu trebuie să introduci nimic. Cupoanele cu cod se aplică după ce introduci codul."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Pachet de masă cu specialitate",

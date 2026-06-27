@@ -5194,9 +5194,9 @@
       "offerReusable": "רב-פעמי",
       "offerUsed": "נוצל",
       "offerAutoApplies": "חל אוטומטית — ללא קוד",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% הנחה",
+      "fixedOff": "{amount} הנחה",
+      "helpOffers": "המבצעים נשמרו בחשבונך. מבצעים מסוג “חל אוטומטית — ללא קוד” מתווספים אוטומטית בקופה כשההזמנה שלך עומדת בתנאים — אין צורך להזין דבר. קופונים עם קוד חלים לאחר שתזין את הקוד."
     },
     "bundle": {
       "mealBundleWithSpeciality": "חבילת ארוחה עם פריט מיוחד",

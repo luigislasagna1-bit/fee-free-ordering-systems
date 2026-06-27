@@ -5194,9 +5194,9 @@
       "offerReusable": "Återanvändbar",
       "offerUsed": "Använd",
       "offerAutoApplies": "Läggs till automatiskt — ingen kod",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value} % rabatt",
+      "fixedOff": "{amount} rabatt",
+      "helpOffers": "Erbjudanden sparade på ditt konto. De med ”Tillämpas automatiskt — ingen kod” läggs till automatiskt i kassan när din beställning uppfyller villkoren — inget att ange. Kuponger med en kod tillämpas när du anger koden."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Matkombination med specialitet",

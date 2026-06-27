@@ -5194,9 +5194,9 @@
       "offerReusable": "Επαναχρησιμοποιήσιμο",
       "offerUsed": "Χρησιμοποιήθηκε",
       "offerAutoApplies": "Αυτόματη εφαρμογή — χωρίς κωδικό",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% έκπτωση",
+      "fixedOff": "{amount} έκπτωση",
+      "helpOffers": "Οι προσφορές αποθηκεύτηκαν στον λογαριασμό σας. Οι προσφορές “Αυτόματη εφαρμογή — χωρίς κωδικό” προστίθενται αυτόματα κατά την ολοκλήρωση της παραγγελίας όταν η παραγγελία σας πληροί τις προϋποθέσεις — δεν χρειάζεται να καταχωρίσετε τίποτα. Τα κουπόνια με κωδικό εφαρμόζονται μόλις καταχωρίσετε τον κωδικό."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Πακέτο γεύματος με specialty",

@@ -5194,9 +5194,9 @@
       "offerReusable": "قابل لإعادة الاستخدام",
       "offerUsed": "مُستخدَم",
       "offerAutoApplies": "يُطبَّق تلقائيًا — بدون رمز",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "خصم {value}%",
+      "fixedOff": "خصم {amount}",
+      "helpOffers": "تم حفظ العروض في حسابك. تُضاف العروض ذات “التطبيق التلقائي — بدون رمز” تلقائيًا عند الدفع عندما يستوفي طلبك الشروط — دون الحاجة إلى إدخال أي شيء. أما القسائم التي تحمل رمزًا فتُطبَّق بمجرد إدخال الرمز."
     },
     "bundle": {
       "mealBundleWithSpeciality": "وجبة مجمّعة مع مميزات خاصة",

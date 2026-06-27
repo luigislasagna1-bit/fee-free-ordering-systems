@@ -5194,9 +5194,9 @@
       "offerReusable": "Reutilizável",
       "offerUsed": "Usado",
       "offerAutoApplies": "Aplica-se automaticamente — sem código",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% de desconto",
+      "fixedOff": "{amount} de desconto",
+      "helpOffers": "Ofertas guardadas na sua conta. As de “Aplicação automática — sem código” são adicionadas automaticamente no checkout quando o seu pedido se qualifica — não precisa de inserir nada. Os cupões com código aplicam-se assim que inserir o código."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Pack de refeição com especialidade",

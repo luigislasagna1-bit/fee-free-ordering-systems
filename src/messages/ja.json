@@ -5194,9 +5194,9 @@
       "offerReusable": "繰り返し利用可",
       "offerUsed": "使用済み",
       "offerAutoApplies": "自動適用 — コード不要",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% 引き",
+      "fixedOff": "{amount} 引き",
+      "helpOffers": "特典はアカウントに保存されています。「自動適用 — コード不要」の特典は、ご注文が条件を満たすと会計時に自動で適用され、入力は不要です。コード付きクーポンは、コードを入力すると適用されます。"
     },
     "bundle": {
       "mealBundleWithSpeciality": "スペシャルティ付きミールバンドル",

@@ -5194,9 +5194,9 @@
       "offerReusable": "Gjenbrukbar",
       "offerUsed": "Brukt",
       "offerAutoApplies": "Brukes automatisk — ingen kode",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value} % rabatt",
+      "fixedOff": "{amount} rabatt",
+      "helpOffers": "Tilbud er lagret på kontoen din. De som er merket “Brukes automatisk – ingen kode” legges automatisk til i kassen når bestillingen din kvalifiserer – ingenting å taste inn. Kuponger med kode gjelder når du taster inn koden."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Måltidspakke med spesialitet",

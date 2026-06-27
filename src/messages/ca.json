@@ -5194,9 +5194,9 @@
       "offerReusable": "Reutilitzable",
       "offerUsed": "Utilitzat",
       "offerAutoApplies": "S'aplica sol — sense codi",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% de descompte",
+      "fixedOff": "{amount} de descompte",
+      "helpOffers": "Ofertes desades al teu compte. Les marcades com a “S’aplica sola — sense codi” s’afegeixen automàticament en finalitzar la compra quan la teva comanda hi té dret — no cal introduir res. Els cupons amb codi s’apliquen quan introdueixes el codi."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Menú combinat amb especialitat",

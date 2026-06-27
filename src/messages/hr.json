@@ -5194,9 +5194,9 @@
       "offerReusable": "Višekratno",
       "offerUsed": "Iskorišteno",
       "offerAutoApplies": "Automatski — bez koda",
-      "percentOff": "{value}% off",
-      "fixedOff": "{amount} off",
-      "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Coupons with a code apply once you enter the code."
+      "percentOff": "{value}% popusta",
+      "fixedOff": "{amount} popusta",
+      "helpOffers": "Ponude su spremljene na vaš račun. One s oznakom „Automatski se primjenjuje — bez koda” dodaju se automatski pri naplati kada vaša narudžba ispunjava uvjete — ništa ne morate unositi. Kuponi s kodom primjenjuju se nakon što unesete kod."
     },
     "bundle": {
       "mealBundleWithSpeciality": "Paket obroka sa specijalitetom",
