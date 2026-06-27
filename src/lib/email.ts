@@ -870,6 +870,81 @@ export async function sendCouponAssignedEmail(params: {
   });
 }
 
+/**
+ * VIP member-special announcement (Program 3 Phase 1). Tells a group member they
+ * have a members-only deal that AUTO-APPLIES — no code. Usage copy is tailored:
+ * account holders just sign in; guests enter this email at checkout (+ a nudge to
+ * create an account). discountLabel is localized for %/$ deals, else the promo
+ * name. Sent only by the owner's explicit "Email members" action.
+ */
+export async function sendVipSpecialEmail(params: {
+  to: string;
+  customerName: string;
+  restaurantName: string;
+  discountType: "percentage" | "fixed" | "other";
+  discountValue?: number;
+  dealName: string;
+  currency: string;
+  minimumOrder?: number;
+  expiresAt?: Date | null;
+  description?: string | null;
+  hasAccount: boolean;
+  orderUrl: string;
+  restaurantUrl?: string;
+  restaurantEmail?: string | null;
+  restaurantPhone?: string | null;
+  /** Restaurant defaultLanguage. Defaults to "en". */
+  locale?: string;
+}) {
+  const t = await getDict(params.locale);
+  const discountLabel =
+    params.discountType === "percentage" && params.discountValue != null
+      ? t("email.couponAssigned.discountPercent", { value: params.discountValue })
+      : params.discountType === "fixed" && params.discountValue != null
+        ? t("email.couponAssigned.discountFixed", { amount: formatCurrency(params.discountValue, params.currency, params.locale) })
+        : params.dealName;
+  const termLines: string[] = [];
+  if (params.minimumOrder && params.minimumOrder > 0) {
+    termLines.push(t("email.couponAssigned.minOrder", { amount: formatCurrency(params.minimumOrder, params.currency, params.locale) }));
+  }
+  if (params.expiresAt) {
+    termLines.push(t("email.couponAssigned.validUntil", {
+      date: params.expiresAt.toLocaleDateString(params.locale || undefined, { year: "numeric", month: "long", day: "numeric" }),
+    }));
+  }
+  const usageNote = params.hasAccount
+    ? t("email.vipSpecial.usageAccount", { discountLabel })
+    : t("email.vipSpecial.usageGuest", { discountLabel, email: params.to });
+  const accountTip = params.hasAccount ? undefined : t("email.vipSpecial.accountTip");
+  const html = await renderEmail(
+    CouponAssigned({
+      t,
+      customerName: params.customerName,
+      restaurantName: params.restaurantName,
+      code: "",
+      discountLabel,
+      termLines,
+      description: params.description,
+      orderUrl: params.orderUrl,
+      restaurantUrl: params.restaurantUrl,
+      restaurantEmail: params.restaurantEmail ?? undefined,
+      restaurantPhone: params.restaurantPhone ?? undefined,
+      imprint: currentImprint(),
+      memberSpecial: true,
+      introOverride: t("email.vipSpecial.intro", { restaurantName: params.restaurantName, discountLabel }),
+      usageNote,
+      accountTip,
+    }),
+  );
+  return send({
+    to: params.to,
+    subject: t("email.vipSpecial.subject", { restaurantName: params.restaurantName, discountLabel }),
+    html,
+    replyTo: params.restaurantEmail ?? undefined,
+    fromName: params.restaurantName,
+  });
+}
+
 export async function sendReservationConfirmation(params: {
   to: string;
   customerName: string;

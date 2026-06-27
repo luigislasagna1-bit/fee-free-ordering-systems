@@ -8,9 +8,10 @@
  * or typing a group email). Detaching restores the promotion to its own normal
  * behaviour — no promo fields are mutated, so it's fully reversible.
  */
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
+import { notifyGroupOfSpecial, countEmailableMembers } from "@/lib/vip-notify";
 
 async function scope(id: string, restaurantId: string) {
   const g = await prisma.customerGroup.findUnique({ where: { id }, select: { id: true, restaurantId: true } });
@@ -38,7 +39,16 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       data: { groupId, promotionId, restaurantId },
       select: { id: true },
     });
-    return NextResponse.json({ ok: true, linkId: link.id });
+    // Optional: email the members about the new special (fire-and-forget).
+    let emailed = 0;
+    if (body.notify === true) {
+      emailed = await countEmailableMembers(groupId);
+      after(async () => {
+        try { await notifyGroupOfSpecial({ groupId, promotionId, restaurantId }); }
+        catch (e) { console.error("[customer-groups notify on attach]", e); }
+      });
+    }
+    return NextResponse.json({ ok: true, linkId: link.id, emailed });
   } catch (e: any) {
     if (e?.code === "P2002") return NextResponse.json({ ok: true, alreadyLinked: true });
     console.error("[customer-groups link promo]", e);

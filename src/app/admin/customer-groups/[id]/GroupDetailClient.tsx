@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { ChevronLeft, Users, Trash2, UserPlus, Gift, Plus, Tag, ExternalLink } from "lucide-react";
+import { ChevronLeft, Users, Trash2, UserPlus, Gift, Plus, Tag, ExternalLink, Mail } from "lucide-react";
 
 type Member = { id: string; name: string | null; email: string | null; phone: string | null; hasAccount: boolean };
 type Group = { id: string; name: string; description: string | null };
@@ -64,6 +64,8 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
   // hidden from the public menu, auto-applied for members at checkout.
   const [pick, setPick] = useState("");
   const [attaching, setAttaching] = useState(false);
+  const [notifyOnAttach, setNotifyOnAttach] = useState(true);
+  const [notifyingId, setNotifyingId] = useState<string | null>(null);
 
   async function reloadSpecials() {
     try {
@@ -79,15 +81,29 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
     try {
       const res = await fetch(`/api/admin/customer-groups/${group.id}/promotions`, {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ promotionId: pick }),
+        body: JSON.stringify({ promotionId: pick, notify: notifyOnAttach }),
       });
       const data = await res.json();
       if (!res.ok) { toast.error(data.error || t("attachFailed")); return; }
       toast.success(t("attached"));
+      if (notifyOnAttach && typeof data.emailed === "number") toast.success(t("notifySent", { count: data.emailed }));
       setPick("");
       await reloadSpecials();
       router.refresh();
     } finally { setAttaching(false); }
+  }
+
+  async function notifyMembers(promotionId: string) {
+    setNotifyingId(promotionId);
+    try {
+      const res = await fetch(`/api/admin/customer-groups/${group.id}/promotions/notify`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ promotionId }),
+      });
+      const data = await res.json();
+      if (!res.ok) { toast.error(data.error || t("notifyFailed")); return; }
+      toast.success(t("notifySent", { count: data.emailed }));
+    } finally { setNotifyingId(null); }
   }
 
   async function detachSpecial(promotionId: string) {
@@ -177,7 +193,12 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
                   {chip && <span className="text-[11px] px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-700 font-semibold">{chip}</span>}
                   {!s.isActive && <span className="text-[11px] px-1.5 py-0.5 rounded-full bg-gray-200 text-gray-500">{t("inactiveBadge")}</span>}
                 </div>
-                <button onClick={() => detachSpecial(s.id)} title={t("detach")} className="p-1 text-gray-400 hover:text-red-500 rounded flex-shrink-0"><Trash2 className="w-4 h-4" /></button>
+                <div className="flex items-center gap-1 flex-shrink-0">
+                  <button onClick={() => notifyMembers(s.id)} disabled={notifyingId === s.id} title={t("notifyMembers")} className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-50 hover:bg-emerald-100 font-semibold px-2.5 py-1 rounded-lg transition disabled:opacity-50">
+                    <Mail className="w-3.5 h-3.5" /> {notifyingId === s.id ? "…" : t("notifyMembers")}
+                  </button>
+                  <button onClick={() => detachSpecial(s.id)} title={t("detach")} className="p-1 text-gray-400 hover:text-red-500 rounded"><Trash2 className="w-4 h-4" /></button>
+                </div>
               </div>
             );
           })}
@@ -201,6 +222,12 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
               <Plus className="w-4 h-4" /> {attaching ? "…" : t("attach")}
             </button>
           </div>
+        )}
+        {pickable.length > 0 && (
+          <label className="flex items-center gap-2 text-xs text-gray-600 mt-2">
+            <input type="checkbox" checked={notifyOnAttach} onChange={(e) => setNotifyOnAttach(e.target.checked)} className="rounded border-gray-300 text-emerald-500 focus:ring-emerald-500" />
+            {t("notifyOnAttach")}
+          </label>
         )}
         <p className="text-[11px] text-gray-400 mt-2">{t("memberOnlyNote")}</p>
         <Link href="/admin/promotions/new" className="inline-flex items-center gap-1 text-xs text-emerald-600 font-semibold mt-2 hover:underline">

@@ -33,12 +33,22 @@ export type CouponAssignedProps = {
   restaurantEmail?: string;
   restaurantPhone?: string;
   imprint?: string;
+  /** VIP member-special mode: no code (it auto-applies), with usage instructions
+   *  tailored to whether the recipient has an account. Luigi 2026-06-27. */
+  memberSpecial?: boolean;
+  /** Overrides the default intro line (member-special context). */
+  introOverride?: string;
+  /** "How to use it" line — account vs guest (member-special only). */
+  usageNote?: string;
+  /** Optional "make an account" nudge for guests (member-special only). */
+  accountTip?: string;
 };
 
 export default function CouponAssigned(props: CouponAssignedProps) {
   const {
     t, customerName, restaurantName, code, discountLabel, termLines,
     description, orderUrl, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
+    memberSpecial, introOverride, usageNote, accountTip,
   } = props;
 
   return (
@@ -50,12 +60,15 @@ export default function CouponAssigned(props: CouponAssignedProps) {
       />
       <EmailBody>
         <P>{t("email.couponAssigned.greeting", { customerName })}</P>
-        <P>{t("email.couponAssigned.intro", { restaurantName, discountLabel })}</P>
-        <InfoCard label={t("email.couponAssigned.codeLabel")} accent="emerald">
-          <span style={{ fontFamily: "monospace", fontSize: 20, fontWeight: 700, letterSpacing: 2 }}>
-            {code}
-          </span>
-        </InfoCard>
+        <P>{introOverride ?? t("email.couponAssigned.intro", { restaurantName, discountLabel })}</P>
+        {/* Member specials auto-apply (by sign-in or email) — no code to show. */}
+        {!memberSpecial && (
+          <InfoCard label={t("email.couponAssigned.codeLabel")} accent="emerald">
+            <span style={{ fontFamily: "monospace", fontSize: 20, fontWeight: 700, letterSpacing: 2 }}>
+              {code}
+            </span>
+          </InfoCard>
+        )}
         {description && (
           <InfoCard label={t("email.couponAssigned.noteLabel")} accent="neutral">
             {description}
@@ -68,7 +81,12 @@ export default function CouponAssigned(props: CouponAssignedProps) {
             ))}
           </InfoCard>
         )}
-        <P>{t("email.couponAssigned.redeemHint")}</P>
+        {memberSpecial && usageNote ? (
+          <InfoCard label={t("email.vipSpecial.howToLabel")} accent="emerald">{usageNote}</InfoCard>
+        ) : (
+          <P>{t("email.couponAssigned.redeemHint")}</P>
+        )}
+        {memberSpecial && accountTip && <P>{accountTip}</P>}
         <EmailButton href={orderUrl}>{t("email.couponAssigned.cta")}</EmailButton>
       </EmailBody>
       <EmailFooter

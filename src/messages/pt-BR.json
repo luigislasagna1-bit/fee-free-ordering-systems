@@ -4185,7 +4185,11 @@
       "createNewPromo": "Criar uma nova promoção",
       "memberOnlyNote": "Ao vincular, a promoção passa a ser exclusiva para membros: ela é removida do seu cardápio público e se aplica somente aos membros deste grupo.",
       "noPickable": "Você ainda não criou nenhuma promoção — crie uma primeiro.",
-      "inactiveBadge": "Inativa"
+      "inactiveBadge": "Inativa",
+      "notifyOnAttach": "Email members about this special",
+      "notifyMembers": "Email members",
+      "notifySent": "{count, plural, =0 {No members have an email yet} one {Emailing # member…} other {Emailing # members…}}",
+      "notifyFailed": "Couldn't email the members."
     }
   },
   "impersonation": {
@@ -4540,6 +4544,14 @@
       "subjectPickup": "Pedido de retirada #{orderNumber} confirmado — {restaurant}",
       "subjectDineIn": "Pedido para comer no local #{orderNumber} confirmado — {restaurant}",
       "subjectScheduled": "Pedido agendado #{orderNumber} confirmado — {restaurant}"
+    },
+    "vipSpecial": {
+      "subject": "Your VIP deal at {restaurantName} — {discountLabel}",
+      "intro": "As a VIP member at {restaurantName}, you've unlocked a members-only deal: {discountLabel}. It applies automatically — no code needed.",
+      "howToLabel": "How to use it",
+      "usageAccount": "Just sign in to your account and order — your {discountLabel} is applied automatically at checkout.",
+      "usageGuest": "At checkout, enter this email address ({email}) and your {discountLabel} is applied automatically — no code to type.",
+      "accountTip": "Tip: create a free account with this email to save your details and find all your VIP offers in one place."
     }
   },
   "marketing": {
