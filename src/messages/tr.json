@@ -490,7 +490,7 @@
     "fulfilSchedulePrompt": "📅 Sepetinizdeki bir veya daha fazla ürün yalnızca belirli gün ya da saatlerde sipariş edilebilir. Mevcut en erken zaman dilimini aşağıda seçtik; isterseniz değiştirebilirsiniz.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> yalnızca belirli günlerde veya saatlerde sipariş edilebilir. Mevcut sipariş saatleri buna göre sınırlandırıldı.",
     "serviceStartsPrompt": "🕒 {service} hizmeti henüz başlamadı — saat {time}'de başlıyor.",
-    "youSaved": "You saved {amount}"
+    "youSaved": "{amount} tasarruf ettiniz"
   },
   "reservation": {
     "title": "Masa Rezervasyonu",

@@ -490,7 +490,7 @@
     "fulfilSchedulePrompt": "📅 Unul sau mai multe produse din coșul tău pot fi comandate doar pentru anumite zile sau ore. Am setat mai jos cel mai apropiat interval disponibil — ajustează-l dacă dorești.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> poate fi comandat doar în anumite zile sau ore. Orele de comandă disponibile au fost limitate în consecință.",
     "serviceStartsPrompt": "🕒 Serviciul {service} nu a început încă — începe la {time}.",
-    "youSaved": "You saved {amount}"
+    "youSaved": "Ai economisit {amount}"
   },
   "reservation": {
     "title": "Rezervă o masă",

@@ -490,7 +490,7 @@
     "fulfilSchedulePrompt": "📅 Jedna ili više stavki u vašoj korpi mogu se naručiti samo za određene dane ili termine. Postavili smo najraniji dostupan termin ispod — prilagodite ga ako želite.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> може се наручити само одређеним данима или у одређено време. Доступна времена за наручивање ограничена су у складу с тим.",
     "serviceStartsPrompt": "🕒 Usluga {service} još nije počela — počinje u {time}.",
-    "youSaved": "You saved {amount}"
+    "youSaved": "Uštedeli ste {amount}"
   },
   "reservation": {
     "title": "Rezerviši sto",

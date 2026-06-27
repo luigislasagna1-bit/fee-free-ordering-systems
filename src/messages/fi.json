@@ -490,7 +490,7 @@
     "fulfilSchedulePrompt": "📅 Yhtä tai useampaa ostoskorisi tuotetta voi tilata vain tiettyinä päivinä tai kellonaikoina. Olemme valinneet alle aikaisimman vapaan ajan – muuta sitä halutessasi.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> voidaan tilata vain tiettyinä päivinä tai kellonaikoina. Käytettävissä olevia tilausaikoja on rajoitettu vastaavasti.",
     "serviceStartsPrompt": "🕒 {service}-palvelu ei ole vielä alkanut — se alkaa klo {time}.",
-    "youSaved": "You saved {amount}"
+    "youSaved": "Säästit {amount}"
   },
   "reservation": {
     "title": "Varaa pöytä",
