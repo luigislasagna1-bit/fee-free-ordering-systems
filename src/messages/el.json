@@ -770,7 +770,7 @@
       "integrations": "Ενσωματώσεις",
       "orderHandling": "Διαχείριση παραγγελιών",
       "promoPopup": "Αναδυόμενο προσφοράς",
-      "customerGroups": "Ομάδες VIP"
+      "customerGroups": "VIP Specials"
     },
     "dashboard": {
       "title": "Πίνακας ελέγχου",
@@ -4105,8 +4105,8 @@
       "saveError": "Δεν ήταν δυνατή η αποθήκευση — δοκιμάστε ξανά"
     },
     "customerGroups": {
-      "title": "Ομάδες VIP πελατών",
-      "description": "Ομαδοποιήστε τους πελάτες σας (π.χ. μια αθλητική ομάδα) και στείλτε σε ολόκληρη την ομάδα την ίδια προσφορά με τη μία.",
+      "title": "VIP Specials",
+      "description": "Στείλτε προσφορές αποκλειστικά για μέλη σε μια ολόκληρη ομάδα ή σε συγκεκριμένα άτομα — εφαρμόζονται αυτόματα στο ταμείο, χωρίς κωδικό.",
       "newGroup": "Νέα ομάδα",
       "created": "Δημιουργήθηκε η «{name}»",
       "createFailed": "Δεν ήταν δυνατή η δημιουργία της ομάδας.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Email στα μέλη",
       "notifySent": "{count, plural, =0 {Κανένα μέλος δεν έχει email ακόμη} one {Αποστολή email σε # μέλος…} other {Αποστολή email σε # μέλη…}}",
       "notifyFailed": "Δεν ήταν δυνατή η αποστολή email στα μέλη.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Ομάδες",
+      "individualsHeading": "Προσφορές για συγκεκριμένα άτομα",
+      "individualsSubtitle": "Δώστε μια προσφορά αποκλειστικά για μέλη σε μεμονωμένους πελάτες μέσω email ή λογαριασμού — εφαρμόζεται αυτόματα γι' αυτούς, χωρίς ανάγκη κωδικού.",
+      "giveSpecial": "Δώστε προσφορά",
+      "given": "{count, plural, =0 {Δεν προστέθηκε κανένα νέο άτομο} one {Δόθηκε σε # άτομο} other {Δόθηκε σε # άτομα}}",
+      "noIndividualSpecials": "Δεν υπάρχουν ακόμη ατομικές προσφορές — προσθέστε μία παρακάτω.",
+      "removeTarget": "Αφαίρεση",
+      "notifyPeople": "Ενημερώστε τους με email για αυτή την προσφορά",
+      "peopleCount": "{count, plural, one {# άτομο} other {# άτομα}}",
+      "giveVipSpecialHeading": "Δώστε μια προσφορά VIP",
+      "giveVipSpecialSubtitle": "Συνδέστε μια υπάρχουσα προωθητική ενέργεια με τον/την {name} — εφαρμόζεται αυτόματα γι' αυτούς στο ταμείο, χωρίς ανάγκη κωδικού.",
+      "thisCustomerSpecials": "Προσφορές VIP για αυτόν τον πελάτη"
     }
   },
   "impersonation": {

@@ -770,7 +770,7 @@
       "integrations": "Integrációk",
       "orderHandling": "Rendeléskezelés",
       "promoPopup": "Promóciós felugró",
-      "customerGroups": "VIP csoportok"
+      "customerGroups": "VIP-ajánlatok"
     },
     "dashboard": {
       "title": "Irányítópult",
@@ -4105,8 +4105,8 @@
       "saveError": "Nem sikerült menteni – próbálja újra"
     },
     "customerGroups": {
-      "title": "VIP ügyfélcsoportok",
-      "description": "Csoportosítsa ügyfeleit (pl. egy sportcsapatot), és küldje el az egész csoportnak ugyanazt az ajánlatot egyszerre.",
+      "title": "VIP-ajánlatok",
+      "description": "Küldj kizárólag tagoknak szóló ajánlatokat egy egész csoportnak vagy konkrét személyeknek – fizetéskor automatikusan érvényesülnek, kód nélkül.",
       "newGroup": "Új csoport",
       "created": "„{name}” létrehozva",
       "createFailed": "A csoportot nem sikerült létrehozni.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Tagok értesítése e-mailben",
       "notifySent": "{count, plural, =0 {Egyetlen tagnak sincs még e-mail-címe} one {# tag értesítése e-mailben…} other {# tag értesítése e-mailben…}}",
       "notifyFailed": "Nem sikerült e-mailt küldeni a tagoknak.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Csoportok",
+      "individualsHeading": "Ajánlatok konkrét személyeknek",
+      "individualsSubtitle": "Adj kizárólag tagoknak szóló ajánlatot egyes vásárlóknak e-mail cím vagy fiók alapján – számukra automatikusan érvényesül, kód nélkül.",
+      "giveSpecial": "Ajánlat adása",
+      "given": "{count, plural, =0 {Senki új nem lett hozzáadva} one {# személynek adva} other {# személynek adva}}",
+      "noIndividualSpecials": "Még nincsenek egyéni ajánlatok – adj hozzá egyet lentebb.",
+      "removeTarget": "Eltávolítás",
+      "notifyPeople": "Értesítsd őket e-mailben erről az ajánlatról",
+      "peopleCount": "{count, plural, one {# személy} other {# személy}}",
+      "giveVipSpecialHeading": "VIP-ajánlat adása",
+      "giveVipSpecialSubtitle": "Csatolj egy meglévő promóciót a következőhöz: {name} – számára fizetéskor automatikusan érvényesül, kód nélkül.",
+      "thisCustomerSpecials": "Ennek a vásárlónak szóló VIP-ajánlatok"
     }
   },
   "impersonation": {

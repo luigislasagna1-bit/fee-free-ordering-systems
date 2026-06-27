@@ -770,7 +770,7 @@
       "integrations": "Integraatiot",
       "orderHandling": "Tilausten käsittely",
       "promoPopup": "Promo-ponnahdusikkuna",
-      "customerGroups": "VIP-ryhmät"
+      "customerGroups": "VIP-edut"
     },
     "dashboard": {
       "title": "Kojelauta",
@@ -4105,8 +4105,8 @@
       "saveError": "Tallennus epäonnistui — yritä uudelleen"
     },
     "customerGroups": {
-      "title": "VIP-asiakasryhmät",
-      "description": "Ryhmittele asiakkaasi (esim. urheilujoukkue) ja lähetä koko ryhmälle sama tarjous kerralla.",
+      "title": "VIP-edut",
+      "description": "Lähetä vain jäsenille tarkoitettuja tarjouksia koko ryhmälle tai tietyille henkilöille — ne lisätään automaattisesti kassalla, ilman koodia.",
       "newGroup": "Uusi ryhmä",
       "created": "Luotiin ”{name}”",
       "createFailed": "Ryhmän luominen epäonnistui.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Lähetä sähköposti jäsenille",
       "notifySent": "{count, plural, =0 {Yhdelläkään jäsenellä ei ole vielä sähköpostia} one {Lähetetään sähköpostia #:lle jäsenelle…} other {Lähetetään sähköpostia #:lle jäsenelle…}}",
       "notifyFailed": "Sähköpostia ei voitu lähettää jäsenille.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Ryhmät",
+      "individualsHeading": "Edut tietyille henkilöille",
+      "individualsSubtitle": "Anna vain jäsenille tarkoitettu etu yksittäisille asiakkaille sähköpostin tai tilin perusteella — se lisätään heille automaattisesti, koodia ei tarvita.",
+      "giveSpecial": "Anna etu",
+      "given": "{count, plural, =0 {Ketään uutta ei lisätty} one {Annettu # henkilölle} other {Annettu # henkilölle}}",
+      "noIndividualSpecials": "Ei vielä yksittäisiä etuja — lisää sellainen alta.",
+      "removeTarget": "Poista",
+      "notifyPeople": "Lähetä heille sähköposti tästä edusta",
+      "peopleCount": "{count, plural, one {# henkilö} other {# henkilöä}}",
+      "giveVipSpecialHeading": "Anna VIP-etu",
+      "giveVipSpecialSubtitle": "Liitä olemassa oleva kampanja henkilölle {name} — se lisätään hänelle automaattisesti kassalla, koodia ei tarvita.",
+      "thisCustomerSpecials": "Tämän asiakkaan VIP-edut"
     }
   },
   "impersonation": {

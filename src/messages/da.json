@@ -770,7 +770,7 @@
       "integrations": "Integrationer",
       "orderHandling": "Ordrehåndtering",
       "promoPopup": "Promo-pop-up",
-      "customerGroups": "VIP-grupper"
+      "customerGroups": "VIP Specials"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -4105,8 +4105,8 @@
       "saveError": "Kunne ikke gemme – prøv igen"
     },
     "customerGroups": {
-      "title": "VIP-kundegrupper",
-      "description": "Grupper dine kunder (f.eks. et sportshold), og send hele gruppen det samme tilbud på én gang.",
+      "title": "VIP Specials",
+      "description": "Send tilbud kun for medlemmer til en hel gruppe eller til bestemte personer — de anvendes automatisk ved kassen, ingen kode.",
       "newGroup": "Ny gruppe",
       "created": "Oprettede “{name}”",
       "createFailed": "Gruppen kunne ikke oprettes.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Send mail til medlemmer",
       "notifySent": "{count, plural, =0 {Ingen medlemmer har en e-mail endnu} one {Sender mail til # medlem…} other {Sender mail til # medlemmer…}}",
       "notifyFailed": "Kunne ikke sende mail til medlemmerne.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Grupper",
+      "individualsHeading": "Tilbud til bestemte personer",
+      "individualsSubtitle": "Giv et tilbud kun for medlemmer til enkelte kunder via e-mail eller konto — det anvendes automatisk for dem, ingen kode nødvendig.",
+      "giveSpecial": "Giv tilbud",
+      "given": "{count, plural, =0 {Ingen nye blev tilføjet} one {Givet til # person} other {Givet til # personer}}",
+      "noIndividualSpecials": "Ingen individuelle tilbud endnu — tilføj et nedenfor.",
+      "removeTarget": "Fjern",
+      "notifyPeople": "Send dem en e-mail om dette tilbud",
+      "peopleCount": "{count, plural, one {# person} other {# personer}}",
+      "giveVipSpecialHeading": "Giv et VIP-tilbud",
+      "giveVipSpecialSubtitle": "Tilknyt en eksisterende kampagne til {name} — det anvendes automatisk for dem ved kassen, ingen kode nødvendig.",
+      "thisCustomerSpecials": "VIP-tilbud for denne kunde"
     }
   },
   "impersonation": {

@@ -770,7 +770,7 @@
       "integrations": "Intégrations",
       "orderHandling": "Gestion des commandes",
       "promoPopup": "Pop-up promo",
-      "customerGroups": "Groupes VIP"
+      "customerGroups": "VIP Specials"
     },
     "dashboard": {
       "title": "Tableau de bord",
@@ -4105,8 +4105,8 @@
       "saveError": "Échec de l'enregistrement — réessayez"
     },
     "customerGroups": {
-      "title": "Groupes de clients VIP",
-      "description": "Regroupez vos clients (par ex. une équipe sportive) et envoyez la même offre à tout un groupe d'un coup.",
+      "title": "VIP Specials",
+      "description": "Envoyez des offres réservées aux membres à tout un groupe ou à des personnes précises — elles s'appliquent automatiquement au paiement, sans code.",
       "newGroup": "Nouveau groupe",
       "created": "« {name} » créé",
       "createFailed": "Impossible de créer le groupe.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Envoyer un e-mail aux membres",
       "notifySent": "{count, plural, =0 {Aucun membre n'a encore d'e-mail} one {Envoi de l'e-mail à # membre…} other {Envoi de l'e-mail à # membres…}}",
       "notifyFailed": "Impossible d'envoyer l'e-mail aux membres.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Groupes",
+      "individualsHeading": "Offres pour des personnes précises",
+      "individualsSubtitle": "Offrez un avantage réservé aux membres à des clients individuels par e-mail ou par compte — il s'applique automatiquement pour eux, sans code.",
+      "giveSpecial": "Attribuer l'offre",
+      "given": "{count, plural, =0 {Aucune nouvelle personne ajoutée} one {Attribué à # personne} other {Attribué à # personnes}}",
+      "noIndividualSpecials": "Aucune offre individuelle pour l'instant — ajoutez-en une ci-dessous.",
+      "removeTarget": "Retirer",
+      "notifyPeople": "Les informer de cette offre par e-mail",
+      "peopleCount": "{count, plural, one {# personne} other {# personnes}}",
+      "giveVipSpecialHeading": "Attribuer une offre VIP",
+      "giveVipSpecialSubtitle": "Associez une promotion existante à {name} — elle s'applique automatiquement pour eux au paiement, sans code.",
+      "thisCustomerSpecials": "Offres VIP pour ce client"
     }
   },
   "impersonation": {

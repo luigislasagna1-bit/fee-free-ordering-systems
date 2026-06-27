@@ -770,7 +770,7 @@
       "integrations": "Інтеграції",
       "orderHandling": "Обробка замовлень",
       "promoPopup": "Промо-вікно",
-      "customerGroups": "VIP-групи"
+      "customerGroups": "VIP Спеціальні пропозиції"
     },
     "dashboard": {
       "title": "Панель керування",
@@ -4105,8 +4105,8 @@
       "saveError": "Не вдалося зберегти — спробуйте ще раз"
     },
     "customerGroups": {
-      "title": "VIP-групи клієнтів",
-      "description": "Згрупуйте своїх клієнтів (наприклад, спортивну команду) і надішліть усій групі ту саму пропозицію одночасно.",
+      "title": "VIP Спеціальні пропозиції",
+      "description": "Надсилайте пропозиції лише для учасників цілій групі або конкретним людям — вони застосовуються автоматично під час оформлення, без коду.",
       "newGroup": "Нова група",
       "created": "Створено «{name}»",
       "createFailed": "Не вдалося створити групу.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Надіслати лист учасникам",
       "notifySent": "{count, plural, =0 {Жоден учасник ще не має email} one {Надсилаємо лист # учаснику…} other {Надсилаємо листи # учасникам…}}",
       "notifyFailed": "Не вдалося надіслати лист учасникам.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Групи",
+      "individualsHeading": "Пропозиції для конкретних людей",
+      "individualsSubtitle": "Надайте спеціальну пропозицію лише для учасників окремим клієнтам за email або обліковим записом — вона застосовується для них автоматично, код не потрібен.",
+      "giveSpecial": "Надати пропозицію",
+      "given": "{count, plural, =0 {Жодного нового не додано} one {Надано # особі} few {Надано # особам} many {Надано # особам} other {Надано # особам}}",
+      "noIndividualSpecials": "Поки що немає індивідуальних пропозицій — додайте одну нижче.",
+      "removeTarget": "Видалити",
+      "notifyPeople": "Надіслати їм email про цю пропозицію",
+      "peopleCount": "{count, plural, one {# особа} few {# особи} many {# осіб} other {# особи}}",
+      "giveVipSpecialHeading": "Надати VIP-пропозицію",
+      "giveVipSpecialSubtitle": "Прикріпіть наявну акцію до {name} — вона застосовується для них автоматично під час оформлення, код не потрібен.",
+      "thisCustomerSpecials": "VIP-пропозиції для цього клієнта"
     }
   },
   "impersonation": {

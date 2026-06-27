@@ -770,7 +770,7 @@
       "integrations": "Entegrasyonlar",
       "orderHandling": "Sipariş Yönetimi",
       "promoPopup": "Promosyon Penceresi",
-      "customerGroups": "VIP Grupları"
+      "customerGroups": "VIP Ayrıcalıkları"
     },
     "dashboard": {
       "title": "Panel",
@@ -4105,8 +4105,8 @@
       "saveError": "Kaydedilemedi — lütfen tekrar deneyin"
     },
     "customerGroups": {
-      "title": "VIP Müşteri Grupları",
-      "description": "Müşterilerinizi gruplandırın (ör. bir spor takımı) ve tüm gruba aynı teklifi tek seferde gönderin.",
+      "title": "VIP Ayrıcalıkları",
+      "description": "Yalnızca üyelere özel fırsatları tüm bir gruba veya belirli kişilere gönderin — ödeme sırasında otomatik uygulanır, kod gerekmez.",
       "newGroup": "Yeni grup",
       "created": "“{name}” oluşturuldu",
       "createFailed": "Grup oluşturulamadı.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Üyelere e-posta gönder",
       "notifySent": "{count, plural, =0 {Henüz e-postası olan üye yok} one {# üyeye e-posta gönderiliyor…} other {# üyeye e-posta gönderiliyor…}}",
       "notifyFailed": "Üyelere e-posta gönderilemedi.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Gruplar",
+      "individualsHeading": "Belirli kişilere özel ayrıcalıklar",
+      "individualsSubtitle": "E-posta veya hesapla tek tek müşterilere yalnızca üyelere özel bir ayrıcalık verin — onlar için otomatik uygulanır, kod gerekmez.",
+      "giveSpecial": "Ayrıcalık ver",
+      "given": "{count, plural, =0 {Yeni kimse eklenmedi} one {# kişiye verildi} other {# kişiye verildi}}",
+      "noIndividualSpecials": "Henüz bireysel ayrıcalık yok — aşağıdan bir tane ekleyin.",
+      "removeTarget": "Kaldır",
+      "notifyPeople": "Bu ayrıcalık hakkında onlara e-posta gönder",
+      "peopleCount": "{count, plural, one {# kişi} other {# kişi}}",
+      "giveVipSpecialHeading": "VIP ayrıcalığı ver",
+      "giveVipSpecialSubtitle": "Mevcut bir promosyonu {name} kişisine ekleyin — ödeme sırasında onlar için otomatik uygulanır, kod gerekmez.",
+      "thisCustomerSpecials": "Bu müşteri için VIP ayrıcalıkları"
     }
   },
   "impersonation": {

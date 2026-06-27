@@ -770,7 +770,7 @@
       "integrations": "Integrări",
       "orderHandling": "Gestionarea comenzilor",
       "promoPopup": "Fereastră promo",
-      "customerGroups": "Grupuri VIP"
+      "customerGroups": "Oferte VIP"
     },
     "dashboard": {
       "title": "Panou de control",
@@ -4105,8 +4105,8 @@
       "saveError": "Nu s-a putut salva — încearcă din nou"
     },
     "customerGroups": {
-      "title": "Grupuri de clienți VIP",
-      "description": "Grupați-vă clienții (de exemplu, o echipă sportivă) și trimiteți întregului grup aceeași ofertă deodată.",
+      "title": "Oferte VIP",
+      "description": "Trimite oferte exclusive pentru membri unui întreg grup sau unor persoane anume — se aplică automat la finalizarea comenzii, fără cod.",
       "newGroup": "Grup nou",
       "created": "„{name}” a fost creat",
       "createFailed": "Nu s-a putut crea grupul.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Trimite email membrilor",
       "notifySent": "{count, plural, =0 {Niciun membru nu are încă un email} one {Se trimite email către # membru…} other {Se trimite email către # membri…}}",
       "notifyFailed": "Nu am putut trimite email membrilor.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Grupuri",
+      "individualsHeading": "Oferte pentru persoane anume",
+      "individualsSubtitle": "Oferă o reducere exclusivă pentru membri unor clienți individuali, după e-mail sau cont — se aplică automat pentru ei, fără cod.",
+      "giveSpecial": "Acordă ofertă",
+      "given": "{count, plural, =0 {Nu a fost adăugat nimeni nou} one {Acordată pentru # persoană} other {Acordată pentru # persoane}}",
+      "noIndividualSpecials": "Încă nu există oferte individuale — adaugă una mai jos.",
+      "removeTarget": "Elimină",
+      "notifyPeople": "Trimite-le un e-mail despre această ofertă",
+      "peopleCount": "{count, plural, one {# persoană} other {# persoane}}",
+      "giveVipSpecialHeading": "Acordă o ofertă VIP",
+      "giveVipSpecialSubtitle": "Asociază o promoție existentă cu {name} — se aplică automat pentru ei la finalizarea comenzii, fără cod.",
+      "thisCustomerSpecials": "Oferte VIP pentru acest client"
     }
   },
   "impersonation": {

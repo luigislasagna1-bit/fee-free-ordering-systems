@@ -770,7 +770,7 @@
       "integrations": "Tích hợp",
       "orderHandling": "Xử lý đơn hàng",
       "promoPopup": "Cửa sổ khuyến mãi",
-      "customerGroups": "Nhóm VIP"
+      "customerGroups": "VIP Specials"
     },
     "dashboard": {
       "title": "Bảng điều khiển",
@@ -4105,8 +4105,8 @@
       "saveError": "Không thể lưu — vui lòng thử lại"
     },
     "customerGroups": {
-      "title": "Nhóm khách hàng VIP",
-      "description": "Nhóm các khách hàng của bạn (ví dụ một đội bóng) và gửi cùng một ưu đãi cho cả nhóm cùng lúc.",
+      "title": "VIP Specials",
+      "description": "Gửi ưu đãi riêng cho thành viên đến cả nhóm hoặc những người cụ thể — tự động áp dụng khi thanh toán, không cần mã.",
       "newGroup": "Nhóm mới",
       "created": "Đã tạo “{name}”",
       "createFailed": "Không thể tạo nhóm.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Gửi email cho thành viên",
       "notifySent": "{count, plural, =0 {Chưa có thành viên nào có email} one {Đang gửi email cho # thành viên…} other {Đang gửi email cho # thành viên…}}",
       "notifyFailed": "Không thể gửi email cho các thành viên.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Nhóm",
+      "individualsHeading": "Ưu đãi cho người cụ thể",
+      "individualsSubtitle": "Tặng ưu đãi riêng cho thành viên đến từng khách hàng theo email hoặc tài khoản — tự động áp dụng cho họ, không cần mã.",
+      "giveSpecial": "Tặng ưu đãi",
+      "given": "{count, plural, =0 {Không thêm ai mới} one {Đã tặng cho # người} other {Đã tặng cho # người}}",
+      "noIndividualSpecials": "Chưa có ưu đãi cá nhân nào — thêm một ưu đãi bên dưới.",
+      "removeTarget": "Xóa",
+      "notifyPeople": "Gửi email cho họ về ưu đãi này",
+      "peopleCount": "{count, plural, one {# người} other {# người}}",
+      "giveVipSpecialHeading": "Tặng ưu đãi VIP",
+      "giveVipSpecialSubtitle": "Gắn một khuyến mãi hiện có cho {name} — tự động áp dụng cho họ khi thanh toán, không cần mã.",
+      "thisCustomerSpecials": "Ưu đãi VIP cho khách hàng này"
     }
   },
   "impersonation": {

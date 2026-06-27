@@ -770,7 +770,7 @@
       "integrations": "Integracions",
       "orderHandling": "Gestió de comandes",
       "promoPopup": "Finestra promocional",
-      "customerGroups": "Grups VIP"
+      "customerGroups": "Ofertes VIP"
     },
     "dashboard": {
       "title": "Tauler de control",
@@ -4105,8 +4105,8 @@
       "saveError": "No s'ha pogut desar: torna-ho a provar"
     },
     "customerGroups": {
-      "title": "Grups de clients VIP",
-      "description": "Agrupa els teus clients (p. ex. un equip esportiu) i envia a tot un grup la mateixa oferta alhora.",
+      "title": "Ofertes VIP",
+      "description": "Envia ofertes exclusives per a membres a tot un grup o a persones concretes: s'apliquen automàticament en finalitzar la comanda, sense codi.",
       "newGroup": "Grup nou",
       "created": "S'ha creat “{name}”",
       "createFailed": "No s'ha pogut crear el grup.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Envia un correu als membres",
       "notifySent": "{count, plural, =0 {Cap membre no té encara un correu electrònic} one {Enviant el correu a # membre…} other {Enviant el correu a # membres…}}",
       "notifyFailed": "No s'ha pogut enviar el correu als membres.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Grups",
+      "individualsHeading": "Ofertes per a persones concretes",
+      "individualsSubtitle": "Dona una oferta exclusiva per a membres a clients individuals per correu electrònic o compte: s'aplica automàticament per a ells, sense cap codi.",
+      "giveSpecial": "Dona oferta",
+      "given": "{count, plural, =0 {No s'ha afegit ningú nou} one {Donada a # persona} other {Donada a # persones}}",
+      "noIndividualSpecials": "Encara no hi ha ofertes individuals: afegeix-ne una a sota.",
+      "removeTarget": "Elimina",
+      "notifyPeople": "Avisa'ls per correu sobre aquesta oferta",
+      "peopleCount": "{count, plural, one {# persona} other {# persones}}",
+      "giveVipSpecialHeading": "Dona una oferta VIP",
+      "giveVipSpecialSubtitle": "Adjunta una promoció existent a {name}: s'aplica automàticament per a ell en finalitzar la comanda, sense cap codi.",
+      "thisCustomerSpecials": "Ofertes VIP per a aquest client"
     }
   },
   "impersonation": {

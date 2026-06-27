@@ -770,7 +770,7 @@
       "integrations": "Integraties",
       "orderHandling": "Orderafhandeling",
       "promoPopup": "Promo-pop-up",
-      "customerGroups": "VIP-groepen"
+      "customerGroups": "VIP Specials"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -4105,8 +4105,8 @@
       "saveError": "Opslaan mislukt — probeer het opnieuw"
     },
     "customerGroups": {
-      "title": "VIP-klantgroepen",
-      "description": "Groepeer uw klanten (bijv. een sportteam) en stuur een hele groep in één keer dezelfde aanbieding.",
+      "title": "VIP Specials",
+      "description": "Stuur deals voor leden naar een hele groep of naar specifieke personen — ze worden automatisch toegepast bij het afrekenen, zonder code.",
       "newGroup": "Nieuwe groep",
       "created": "“{name}” aangemaakt",
       "createFailed": "Kan de groep niet aanmaken.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Leden e-mailen",
       "notifySent": "{count, plural, =0 {Nog geen enkel lid heeft een e-mailadres} one {# lid wordt ge-e-maild…} other {# leden worden ge-e-maild…}}",
       "notifyFailed": "Kon de leden niet e-mailen.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Groepen",
+      "individualsHeading": "Specials voor specifieke personen",
+      "individualsSubtitle": "Geef een individuele klant een special alleen voor leden via e-mail of account — die wordt automatisch voor hen toegepast, zonder code.",
+      "giveSpecial": "Special geven",
+      "given": "{count, plural, =0 {Niemand nieuw toegevoegd} one {Gegeven aan # persoon} other {Gegeven aan # personen}}",
+      "noIndividualSpecials": "Nog geen individuele specials — voeg er hieronder een toe.",
+      "removeTarget": "Verwijderen",
+      "notifyPeople": "E-mail hen over deze special",
+      "peopleCount": "{count, plural, one {# persoon} other {# personen}}",
+      "giveVipSpecialHeading": "Een VIP-special geven",
+      "giveVipSpecialSubtitle": "Koppel een bestaande promotie aan {name} — die wordt automatisch voor hen toegepast bij het afrekenen, zonder code.",
+      "thisCustomerSpecials": "VIP-specials voor deze klant"
     }
   },
   "impersonation": {

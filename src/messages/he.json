@@ -770,7 +770,7 @@
       "integrations": "אינטגרציות",
       "orderHandling": "טיפול בהזמנות",
       "promoPopup": "חלון קופץ למבצע",
-      "customerGroups": "קבוצות VIP"
+      "customerGroups": "VIP מבצעים"
     },
     "dashboard": {
       "title": "לוח בקרה",
@@ -4105,8 +4105,8 @@
       "saveError": "השמירה נכשלה — נסה שוב"
     },
     "customerGroups": {
-      "title": "קבוצות לקוחות VIP",
-      "description": "קבצו את הלקוחות שלכם (למשל קבוצת ספורט) ושלחו לכל הקבוצה את אותה הצעה בבת אחת.",
+      "title": "VIP מבצעים",
+      "description": "שלחו הטבות לחברים בלבד לקבוצה שלמה או לאנשים מסוימים — הן חלות אוטומטית בקופה, ללא קוד.",
       "newGroup": "קבוצה חדשה",
       "created": "נוצרה הקבוצה “{name}”",
       "createFailed": "לא ניתן ליצור את הקבוצה.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "שלחו דוא\"ל לחברים",
       "notifySent": "{count, plural, =0 {לאף חבר עדיין אין כתובת דוא\"ל} one {שולח דוא\"ל לחבר # …} other {שולח דוא\"ל ל-# חברים…}}",
       "notifyFailed": "לא הצלחנו לשלוח דוא\"ל לחברים.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "קבוצות",
+      "individualsHeading": "מבצעים לאנשים מסוימים",
+      "individualsSubtitle": "העניקו מבצע לחברים בלבד ללקוחות בודדים לפי אימייל או חשבון — הוא חל אוטומטית עבורם, ללא צורך בקוד.",
+      "giveSpecial": "העניקו מבצע",
+      "given": "{count, plural, =0 {לא נוסף אף אחד חדש} one {הוענק ל-# איש} other {הוענק ל-# אנשים}}",
+      "noIndividualSpecials": "אין עדיין מבצעים אישיים — הוסיפו אחד למטה.",
+      "removeTarget": "הסרה",
+      "notifyPeople": "שלחו להם אימייל על המבצע הזה",
+      "peopleCount": "{count, plural, one {# איש} other {# אנשים}}",
+      "giveVipSpecialHeading": "העניקו מבצע VIP",
+      "giveVipSpecialSubtitle": "צרפו מבצע קיים אל {name} — הוא חל אוטומטית עבורם בקופה, ללא צורך בקוד.",
+      "thisCustomerSpecials": "מבצעי VIP ללקוח זה"
     }
   },
   "impersonation": {

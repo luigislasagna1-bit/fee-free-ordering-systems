@@ -770,7 +770,7 @@
       "integrations": "Integracije",
       "orderHandling": "Upravljanje naročil",
       "promoPopup": "Promocijsko okno",
-      "customerGroups": "VIP skupine"
+      "customerGroups": "VIP ponudbe"
     },
     "dashboard": {
       "title": "Nadzorna plošča",
@@ -4105,8 +4105,8 @@
       "saveError": "Shranjevanje ni uspelo — poskusite znova"
     },
     "customerGroups": {
-      "title": "VIP skupine strank",
-      "description": "Združite svoje stranke (na primer športno ekipo) in celotni skupini naenkrat pošljite isto ponudbo.",
+      "title": "VIP ponudbe",
+      "description": "Pošljite ponudbe samo za člane celotni skupini ali določenim osebam — samodejno se uporabijo ob plačilu, brez kode.",
       "newGroup": "Nova skupina",
       "created": "Ustvarjeno »{name}«",
       "createFailed": "Skupine ni bilo mogoče ustvariti.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Pošlji e-pošto članom",
       "notifySent": "{count, plural, =0 {Noben član še nima e-pošte} one {Pošiljanje e-pošte # članu…} two {Pošiljanje e-pošte # članoma…} few {Pošiljanje e-pošte # članom…} other {Pošiljanje e-pošte # članom…}}",
       "notifyFailed": "E-pošte članom ni bilo mogoče poslati.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Skupine",
+      "individualsHeading": "Ponudbe za določene osebe",
+      "individualsSubtitle": "Posameznim strankam dodelite ponudbo samo za člane prek e-pošte ali računa — samodejno se uporabi zanje, brez potrebne kode.",
+      "giveSpecial": "Dodeli ponudbo",
+      "given": "{count, plural, =0 {Nihče nov ni bil dodan} one {Dodeljeno # osebi} two {Dodeljeno # osebama} few {Dodeljeno # osebam} other {Dodeljeno # osebam}}",
+      "noIndividualSpecials": "Še ni posameznih ponudb — dodajte jo spodaj.",
+      "removeTarget": "Odstrani",
+      "notifyPeople": "Pošlji jim e-pošto o tej ponudbi",
+      "peopleCount": "{count, plural, one {# oseba} two {# osebi} few {# osebe} other {# oseb}}",
+      "giveVipSpecialHeading": "Dodeli VIP ponudbo",
+      "giveVipSpecialSubtitle": "Pripnite obstoječo promocijo za {name} — samodejno se uporabi zanje ob plačilu, brez potrebne kode.",
+      "thisCustomerSpecials": "VIP ponudbe za to stranko"
     }
   },
   "impersonation": {

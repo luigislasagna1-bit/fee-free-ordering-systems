@@ -770,7 +770,7 @@
       "integrations": "Integracijos",
       "orderHandling": "Užsakymų tvarkymas",
       "promoPopup": "Akcijos langas",
-      "customerGroups": "VIP grupės"
+      "customerGroups": "VIP pasiūlymai"
     },
     "dashboard": {
       "title": "Skydelis",
@@ -4105,8 +4105,8 @@
       "saveError": "Nepavyko išsaugoti — bandykite dar kartą"
     },
     "customerGroups": {
-      "title": "VIP klientų grupės",
-      "description": "Suskirstykite klientus į grupes (pvz., sporto komandą) ir iš karto išsiųskite visai grupei tą patį pasiūlymą.",
+      "title": "VIP pasiūlymai",
+      "description": "Siųskite tik nariams skirtus pasiūlymus visai grupei arba konkretiems žmonėms — jie automatiškai pritaikomi atsiskaitant, be kodo.",
       "newGroup": "Nauja grupė",
       "created": "Sukurta „{name}“",
       "createFailed": "Nepavyko sukurti grupės.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Pranešti nariams el. paštu",
       "notifySent": "{count, plural, =0 {Nė vienas narys dar neturi el. pašto} one {Siunčiama # nariui…} other {Siunčiama # nariams…}}",
       "notifyFailed": "Nepavyko išsiųsti el. laiškų nariams.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Grupės",
+      "individualsHeading": "Pasiūlymai konkretiems žmonėms",
+      "individualsSubtitle": "Suteikite tik nariams skirtą pasiūlymą atskiriems klientams pagal el. paštą ar paskyrą — jis jiems pritaikomas automatiškai, kodo nereikia.",
+      "giveSpecial": "Suteikti pasiūlymą",
+      "given": "{count, plural, =0 {Nepridėtas nė vienas naujas žmogus} one {Suteikta # asmeniui} few {Suteikta # asmenims} other {Suteikta # asmenų}}",
+      "noIndividualSpecials": "Individualių pasiūlymų dar nėra — pridėkite vieną žemiau.",
+      "removeTarget": "Pašalinti",
+      "notifyPeople": "Pranešti jiems apie šį pasiūlymą el. paštu",
+      "peopleCount": "{count, plural, one {# asmuo} few {# asmenys} other {# asmenų}}",
+      "giveVipSpecialHeading": "Suteikti VIP pasiūlymą",
+      "giveVipSpecialSubtitle": "Priskirkite esamą akciją klientui {name} — ji jam pritaikoma automatiškai atsiskaitant, kodo nereikia.",
+      "thisCustomerSpecials": "Šio kliento VIP pasiūlymai"
     }
   },
   "impersonation": {

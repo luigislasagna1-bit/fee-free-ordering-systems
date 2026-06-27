@@ -770,7 +770,7 @@
       "integrations": "통합",
       "orderHandling": "주문 처리",
       "promoPopup": "프로모 팝업",
-      "customerGroups": "VIP 그룹"
+      "customerGroups": "VIP 스페셜"
     },
     "dashboard": {
       "title": "대시보드",
@@ -4105,8 +4105,8 @@
       "saveError": "저장하지 못했습니다 — 다시 시도하세요"
     },
     "customerGroups": {
-      "title": "VIP 고객 그룹",
-      "description": "고객을 그룹(예: 스포츠 팀)으로 묶어 그룹 전체에 동일한 혜택을 한 번에 보낼 수 있습니다.",
+      "title": "VIP 스페셜",
+      "description": "회원 전용 혜택을 그룹 전체 또는 특정 고객에게 보내세요 — 결제 시 코드 없이 자동 적용됩니다.",
       "newGroup": "새 그룹",
       "created": "“{name}” 생성됨",
       "createFailed": "그룹을 만들 수 없습니다.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "회원에게 이메일 보내기",
       "notifySent": "{count, plural, =0 {아직 이메일이 등록된 회원이 없습니다} one {회원 #명에게 이메일 발송 중…} other {회원 #명에게 이메일 발송 중…}}",
       "notifyFailed": "회원에게 이메일을 보내지 못했습니다.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "그룹",
+      "individualsHeading": "특정 고객 대상 스페셜",
+      "individualsSubtitle": "이메일 또는 계정으로 개별 고객에게 회원 전용 스페셜을 제공하세요 — 코드 없이 해당 고객에게 자동 적용됩니다.",
+      "giveSpecial": "스페셜 제공",
+      "given": "{count, plural, =0 {새로 추가된 사람이 없습니다} one {#명에게 제공됨} other {#명에게 제공됨}}",
+      "noIndividualSpecials": "아직 개별 스페셜이 없습니다 — 아래에서 추가하세요.",
+      "removeTarget": "삭제",
+      "notifyPeople": "이 스페셜에 대해 이메일로 알리기",
+      "peopleCount": "{count, plural, one {#명} other {#명}}",
+      "giveVipSpecialHeading": "VIP 스페셜 제공",
+      "giveVipSpecialSubtitle": "{name}님에게 기존 프로모션을 연결하세요 — 결제 시 코드 없이 자동 적용됩니다.",
+      "thisCustomerSpecials": "이 고객의 VIP 스페셜"
     }
   },
   "impersonation": {

@@ -770,7 +770,7 @@
       "integrations": "Интеграции",
       "orderHandling": "Обработка на поръчки",
       "promoPopup": "Промо прозорец",
-      "customerGroups": "VIP групи"
+      "customerGroups": "VIP Специални оферти"
     },
     "dashboard": {
       "title": "Табло",
@@ -4105,8 +4105,8 @@
       "saveError": "Неуспешно запазване — опитайте отново"
     },
     "customerGroups": {
-      "title": "VIP клиентски групи",
-      "description": "Групирайте клиентите си (напр. спортен отбор) и изпратете на цялата група една и съща оферта наведнъж.",
+      "title": "VIP Специални оферти",
+      "description": "Изпращайте оферти само за членове на цяла група или на конкретни хора — те се прилагат автоматично при плащане, без код.",
       "newGroup": "Нова група",
       "created": "Създадена е „{name}“",
       "createFailed": "Групата не можа да бъде създадена.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Изпрати имейл на членовете",
       "notifySent": "{count, plural, =0 {Все още никой член няма имейл} one {Изпращане на имейл до # член…} other {Изпращане на имейл до # члена…}}",
       "notifyFailed": "Изпращането на имейл до членовете не бе успешно.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Групи",
+      "individualsHeading": "Специални оферти за конкретни хора",
+      "individualsSubtitle": "Дайте специална оферта само за членове на отделни клиенти по имейл или акаунт — прилага се автоматично за тях, без нужда от код.",
+      "giveSpecial": "Дай специална оферта",
+      "given": "{count, plural, =0 {Не беше добавен никой нов} one {Дадена на # човек} other {Дадена на # души}}",
+      "noIndividualSpecials": "Все още няма индивидуални специални оферти — добавете една по-долу.",
+      "removeTarget": "Премахни",
+      "notifyPeople": "Изпрати им имейл за тази оферта",
+      "peopleCount": "{count, plural, one {# човек} other {# души}}",
+      "giveVipSpecialHeading": "Дай VIP специална оферта",
+      "giveVipSpecialSubtitle": "Прикачете съществуваща промоция към {name} — прилага се автоматично за тях при плащане, без нужда от код.",
+      "thisCustomerSpecials": "VIP специални оферти за този клиент"
     }
   },
   "impersonation": {

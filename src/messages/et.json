@@ -770,7 +770,7 @@
       "integrations": "Integratsioonid",
       "orderHandling": "Tellimuste haldus",
       "promoPopup": "Promo hüpikaken",
-      "customerGroups": "VIP-grupid"
+      "customerGroups": "VIP-pakkumised"
     },
     "dashboard": {
       "title": "Juhtpaneel",
@@ -4105,8 +4105,8 @@
       "saveError": "Salvestamine ebaõnnestus — proovige uuesti"
     },
     "customerGroups": {
-      "title": "VIP-kliendigrupid",
-      "description": "Koonda oma kliendid gruppi (nt spordimeeskond) ja saada kogu grupile korraga sama pakkumine.",
+      "title": "VIP-pakkumised",
+      "description": "Saada ainult liikmetele mõeldud pakkumisi tervele rühmale või konkreetsetele inimestele — need rakenduvad kassas automaatselt, koodi pole vaja.",
       "newGroup": "Uus grupp",
       "created": "Loodi „{name}“",
       "createFailed": "Gruppi ei õnnestunud luua.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Saada liikmetele e-kiri",
       "notifySent": "{count, plural, =0 {Ühelgi liikmel pole veel e-posti aadressi} one {Saadan e-kirja # liikmele…} other {Saadan e-kirja # liikmele…}}",
       "notifyFailed": "Liikmetele e-kirja saatmine ebaõnnestus.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Rühmad",
+      "individualsHeading": "Pakkumised konkreetsetele inimestele",
+      "individualsSubtitle": "Anna üksikutele klientidele ainult liikmetele mõeldud pakkumine e-posti või konto kaudu — see rakendub neile automaatselt, koodi pole vaja.",
+      "giveSpecial": "Anna pakkumine",
+      "given": "{count, plural, =0 {Ühtegi uut ei lisatud} one {Antud # inimesele} other {Antud # inimesele}}",
+      "noIndividualSpecials": "Üksikpakkumisi veel pole — lisa üks allpool.",
+      "removeTarget": "Eemalda",
+      "notifyPeople": "Saada neile selle pakkumise kohta e-kiri",
+      "peopleCount": "{count, plural, one {# inimene} other {# inimest}}",
+      "giveVipSpecialHeading": "Anna VIP-pakkumine",
+      "giveVipSpecialSubtitle": "Seo olemasolev kampaania kliendiga {name} — see rakendub neile kassas automaatselt, koodi pole vaja.",
+      "thisCustomerSpecials": "Selle kliendi VIP-pakkumised"
     }
   },
   "impersonation": {

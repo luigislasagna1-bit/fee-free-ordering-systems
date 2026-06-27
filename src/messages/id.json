@@ -770,7 +770,7 @@
       "integrations": "Integrasi",
       "orderHandling": "Penanganan Pesanan",
       "promoPopup": "Pop-up Promo",
-      "customerGroups": "Grup VIP"
+      "customerGroups": "VIP Specials"
     },
     "dashboard": {
       "title": "Dasbor",
@@ -4105,8 +4105,8 @@
       "saveError": "Gagal menyimpan — coba lagi"
     },
     "customerGroups": {
-      "title": "Grup Pelanggan VIP",
-      "description": "Kelompokkan pelanggan Anda (mis. tim olahraga) dan kirim penawaran yang sama ke seluruh grup sekaligus.",
+      "title": "VIP Specials",
+      "description": "Kirim penawaran khusus anggota ke seluruh grup atau ke orang tertentu — otomatis diterapkan saat checkout, tanpa kode.",
       "newGroup": "Grup baru",
       "created": "“{name}” dibuat",
       "createFailed": "Tidak dapat membuat grup.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Email anggota",
       "notifySent": "{count, plural, =0 {Belum ada anggota yang memiliki email} one {Mengirim email ke # anggota…} other {Mengirim email ke # anggota…}}",
       "notifyFailed": "Tidak dapat mengirim email ke anggota.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Grup",
+      "individualsHeading": "Penawaran khusus untuk orang tertentu",
+      "individualsSubtitle": "Berikan penawaran khusus anggota ke pelanggan tertentu lewat email atau akun — otomatis diterapkan untuk mereka, tanpa perlu kode.",
+      "giveSpecial": "Beri penawaran",
+      "given": "{count, plural, =0 {Tidak ada orang baru yang ditambahkan} one {Diberikan ke # orang} other {Diberikan ke # orang}}",
+      "noIndividualSpecials": "Belum ada penawaran individual — tambahkan satu di bawah.",
+      "removeTarget": "Hapus",
+      "notifyPeople": "Email mereka tentang penawaran ini",
+      "peopleCount": "{count, plural, one {# orang} other {# orang}}",
+      "giveVipSpecialHeading": "Beri penawaran VIP",
+      "giveVipSpecialSubtitle": "Lampirkan promosi yang ada ke {name} — otomatis diterapkan untuk mereka saat checkout, tanpa perlu kode.",
+      "thisCustomerSpecials": "Penawaran VIP untuk pelanggan ini"
     }
   },
   "impersonation": {

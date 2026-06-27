@@ -770,7 +770,7 @@
       "integrations": "Integrácie",
       "orderHandling": "Spracovanie objednávok",
       "promoPopup": "Promo okno",
-      "customerGroups": "VIP skupiny"
+      "customerGroups": "VIP špeciály"
     },
     "dashboard": {
       "title": "Prehľad",
@@ -4105,8 +4105,8 @@
       "saveError": "Nepodarilo sa uložiť — skúste to znova"
     },
     "customerGroups": {
-      "title": "VIP skupiny zákazníkov",
-      "description": "Zoskupte svojich zákazníkov (napríklad športový tím) a pošlite celej skupine rovnakú ponuku naraz.",
+      "title": "VIP špeciály",
+      "description": "Posielajte ponuky len pre členov celej skupine alebo konkrétnym ľuďom — pri pokladni sa použijú automaticky, bez kódu.",
       "newGroup": "Nová skupina",
       "created": "Vytvorené „{name}“",
       "createFailed": "Skupinu sa nepodarilo vytvoriť.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Poslať e-mail členom",
       "notifySent": "{count, plural, =0 {Žiadny člen zatiaľ nemá e-mail} one {Odosielanie e-mailu # členovi…} other {Odosielanie e-mailov # členom…}}",
       "notifyFailed": "E-mail sa členom nepodarilo odoslať.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Skupiny",
+      "individualsHeading": "Špeciály pre konkrétnych ľudí",
+      "individualsSubtitle": "Dajte špeciál len pre členov jednotlivým zákazníkom podľa e-mailu alebo účtu — použije sa im automaticky, bez potreby kódu.",
+      "giveSpecial": "Udeliť špeciál",
+      "given": "{count, plural, =0 {Nikto nový nebol pridaný} one {Udelené # osobe} few {Udelené # osobám} other {Udelené # osobám}}",
+      "noIndividualSpecials": "Zatiaľ žiadne individuálne špeciály — pridajte jeden nižšie.",
+      "removeTarget": "Odstrániť",
+      "notifyPeople": "Poslať im e-mail o tomto špeciáli",
+      "peopleCount": "{count, plural, one {# osoba} few {# osoby} other {# osôb}}",
+      "giveVipSpecialHeading": "Udeliť VIP špeciál",
+      "giveVipSpecialSubtitle": "Priraďte existujúcu promo akciu k {name} — pri pokladni sa im použije automaticky, bez potreby kódu.",
+      "thisCustomerSpecials": "VIP špeciály pre tohto zákazníka"
     }
   },
   "impersonation": {

@@ -770,7 +770,7 @@
       "integrations": "Integrācijas",
       "orderHandling": "Pasūtījumu apstrāde",
       "promoPopup": "Akcijas logs",
-      "customerGroups": "VIP grupas"
+      "customerGroups": "VIP piedāvājumi"
     },
     "dashboard": {
       "title": "Panelis",
@@ -4105,8 +4105,8 @@
       "saveError": "Neizdevās saglabāt — mēģiniet vēlreiz"
     },
     "customerGroups": {
-      "title": "VIP klientu grupas",
-      "description": "Grupējiet savus klientus (piem., sporta komandu) un nosūtiet visai grupai vienu un to pašu piedāvājumu uzreiz.",
+      "title": "VIP piedāvājumi",
+      "description": "Sūtiet tikai biedriem paredzētus piedāvājumus visai grupai vai konkrētiem cilvēkiem — tie tiek piemēroti automātiski izrakstoties, bez koda.",
       "newGroup": "Jauna grupa",
       "created": "Izveidota “{name}”",
       "createFailed": "Neizdevās izveidot grupu.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Sūtīt e-pastu dalībniekiem",
       "notifySent": "{count, plural, =0 {Vēl nevienam dalībniekam nav e-pasta} one {Sūta e-pastu # dalībniekam…} other {Sūta e-pastu # dalībniekiem…}}",
       "notifyFailed": "Neizdevās nosūtīt e-pastu dalībniekiem.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Grupas",
+      "individualsHeading": "Piedāvājumi konkrētiem cilvēkiem",
+      "individualsSubtitle": "Piešķiriet tikai biedriem paredzētu piedāvājumu atsevišķiem klientiem pēc e-pasta vai konta — tas tiek piemērots viņiem automātiski, bez koda.",
+      "giveSpecial": "Piešķirt piedāvājumu",
+      "given": "{count, plural, =0 {Neviens jauns netika pievienots} one {Piešķirts # personai} other {Piešķirts # personām}}",
+      "noIndividualSpecials": "Vēl nav individuālu piedāvājumu — pievienojiet kādu zemāk.",
+      "removeTarget": "Noņemt",
+      "notifyPeople": "Nosūtīt viņiem e-pastu par šo piedāvājumu",
+      "peopleCount": "{count, plural, one {# persona} other {# personas}}",
+      "giveVipSpecialHeading": "Piešķirt VIP piedāvājumu",
+      "giveVipSpecialSubtitle": "Piesaistiet esošu akciju klientam {name} — tā tiek piemērota viņiem automātiski izrakstoties, bez koda.",
+      "thisCustomerSpecials": "Šī klienta VIP piedāvājumi"
     }
   },
   "impersonation": {

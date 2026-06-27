@@ -770,7 +770,7 @@
       "integrations": "集成",
       "orderHandling": "订单处理",
       "promoPopup": "促销弹窗",
-      "customerGroups": "VIP 群组"
+      "customerGroups": "VIP 专享优惠"
     },
     "dashboard": {
       "title": "仪表盘",
@@ -4105,8 +4105,8 @@
       "saveError": "无法保存 — 请重试"
     },
     "customerGroups": {
-      "title": "VIP 客户群组",
-      "description": "将客户分组（例如一支运动队），并一次性向整个群组发送相同的优惠。",
+      "title": "VIP 专享优惠",
+      "description": "向整个分组或特定客户发送会员专享优惠 — 结账时自动应用，无需代码。",
       "newGroup": "新建群组",
       "created": "已创建“{name}”",
       "createFailed": "无法创建群组。",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "向会员发送邮件",
       "notifySent": "{count, plural, =0 {还没有会员留下邮箱} one {正在向 # 位会员发送邮件…} other {正在向 # 位会员发送邮件…}}",
       "notifyFailed": "无法向会员发送邮件。",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "分组",
+      "individualsHeading": "面向特定客户的专享优惠",
+      "individualsSubtitle": "通过邮箱或账户向单个客户赠送会员专享优惠 — 系统会自动为其应用，无需代码。",
+      "giveSpecial": "赠送专享优惠",
+      "given": "{count, plural, =0 {未新增任何人} one {已赠送给 # 位客户} other {已赠送给 # 位客户}}",
+      "noIndividualSpecials": "暂无单个专享优惠 — 在下方添加。",
+      "removeTarget": "移除",
+      "notifyPeople": "通过邮件通知他们此专享优惠",
+      "peopleCount": "{count, plural, one {# 位客户} other {# 位客户}}",
+      "giveVipSpecialHeading": "赠送 VIP 专享优惠",
+      "giveVipSpecialSubtitle": "为 {name} 关联一项现有促销 — 结账时会自动为其应用，无需代码。",
+      "thisCustomerSpecials": "该客户的 VIP 专享优惠"
     }
   },
   "impersonation": {

@@ -793,7 +793,7 @@
       "integrations": "इंटीग्रेशन",
       "orderHandling": "ऑर्डर प्रबंधन",
       "promoPopup": "प्रोमो पॉपअप",
-      "customerGroups": "VIP समूह"
+      "customerGroups": "VIP स्पेशल्स"
     },
     "dashboard": {
       "title": "डैशबोर्ड",
@@ -4105,8 +4105,8 @@
       "saveError": "सहेजा नहीं जा सका — कृपया पुनः प्रयास करें"
     },
     "customerGroups": {
-      "title": "VIP ग्राहक समूह",
-      "description": "अपने ग्राहकों को समूहबद्ध करें (जैसे कोई खेल टीम) और पूरे समूह को एक साथ एक ही ऑफ़र भेजें।",
+      "title": "VIP स्पेशल्स",
+      "description": "सिर्फ़ सदस्यों के लिए डील किसी पूरे समूह या ख़ास लोगों को भेजें — चेकआउट पर अपने-आप लागू हो जाती हैं, कोई कोड नहीं।",
       "newGroup": "नया समूह",
       "created": "“{name}” बनाया गया",
       "createFailed": "समूह नहीं बनाया जा सका।",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "सदस्यों को ईमेल करें",
       "notifySent": "{count, plural, =0 {अभी तक किसी भी सदस्य के पास ईमेल नहीं है} one {# सदस्य को ईमेल भेजा जा रहा है…} other {# सदस्यों को ईमेल भेजा जा रहा है…}}",
       "notifyFailed": "सदस्यों को ईमेल नहीं भेजा जा सका.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "समूह",
+      "individualsHeading": "ख़ास लोगों के लिए स्पेशल्स",
+      "individualsSubtitle": "किसी अलग ग्राहक को ईमेल या अकाउंट से सिर्फ़-सदस्य स्पेशल दें — यह उनके लिए अपने-आप लागू हो जाती है, किसी कोड की ज़रूरत नहीं।",
+      "giveSpecial": "स्पेशल दें",
+      "given": "{count, plural, =0 {कोई नया नहीं जोड़ा गया} one {# व्यक्ति को दी गई} other {# लोगों को दी गई}}",
+      "noIndividualSpecials": "अभी कोई व्यक्तिगत स्पेशल नहीं — नीचे एक जोड़ें।",
+      "removeTarget": "हटाएँ",
+      "notifyPeople": "इस स्पेशल के बारे में उन्हें ईमेल करें",
+      "peopleCount": "{count, plural, one {# व्यक्ति} other {# लोग}}",
+      "giveVipSpecialHeading": "VIP स्पेशल दें",
+      "giveVipSpecialSubtitle": "{name} के साथ कोई मौजूदा प्रोमोशन जोड़ें — यह चेकआउट पर उनके लिए अपने-आप लागू हो जाती है, किसी कोड की ज़रूरत नहीं।",
+      "thisCustomerSpecials": "इस ग्राहक के लिए VIP स्पेशल्स"
     }
   },
   "impersonation": {

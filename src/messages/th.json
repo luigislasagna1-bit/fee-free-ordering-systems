@@ -770,7 +770,7 @@
       "integrations": "การผสานรวม",
       "orderHandling": "การจัดการคำสั่งซื้อ",
       "promoPopup": "ป๊อปอัปโปรโมชัน",
-      "customerGroups": "กลุ่ม VIP"
+      "customerGroups": "VIP Specials"
     },
     "dashboard": {
       "title": "แดชบอร์ด",
@@ -4105,8 +4105,8 @@
       "saveError": "บันทึกไม่สำเร็จ — โปรดลองอีกครั้ง"
     },
     "customerGroups": {
-      "title": "กลุ่มลูกค้า VIP",
-      "description": "จัดกลุ่มลูกค้าของคุณ (เช่น ทีมกีฬา) และส่งดีลเดียวกันให้ทั้งกลุ่มในครั้งเดียว",
+      "title": "VIP Specials",
+      "description": "ส่งดีลเฉพาะสมาชิกให้ทั้งกลุ่มหรือบุคคลที่เจาะจง — ระบบใช้ส่วนลดให้อัตโนมัติตอนชำระเงิน ไม่ต้องใช้โค้ด",
       "newGroup": "กลุ่มใหม่",
       "created": "สร้าง “{name}” แล้ว",
       "createFailed": "ไม่สามารถสร้างกลุ่มได้",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "อีเมลถึงสมาชิก",
       "notifySent": "{count, plural, =0 {ยังไม่มีสมาชิกที่มีอีเมล} one {กำลังส่งอีเมลถึงสมาชิก # ราย…} other {กำลังส่งอีเมลถึงสมาชิก # ราย…}}",
       "notifyFailed": "ไม่สามารถส่งอีเมลถึงสมาชิกได้",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "กลุ่ม",
+      "individualsHeading": "ดีลสำหรับบุคคลที่เจาะจง",
+      "individualsSubtitle": "มอบดีลเฉพาะสมาชิกให้ลูกค้ารายบุคคลด้วยอีเมลหรือบัญชี — ระบบใช้ส่วนลดให้อัตโนมัติ ไม่ต้องใช้โค้ด",
+      "giveSpecial": "มอบดีล",
+      "given": "{count, plural, =0 {ไม่มีผู้ใดถูกเพิ่มใหม่} one {มอบให้ # คน} other {มอบให้ # คน}}",
+      "noIndividualSpecials": "ยังไม่มีดีลรายบุคคล — เพิ่มได้ด้านล่าง",
+      "removeTarget": "ลบ",
+      "notifyPeople": "ส่งอีเมลแจ้งพวกเขาเกี่ยวกับดีลนี้",
+      "peopleCount": "{count, plural, one {# คน} other {# คน}}",
+      "giveVipSpecialHeading": "มอบดีล VIP",
+      "giveVipSpecialSubtitle": "แนบโปรโมชันที่มีอยู่ให้กับ {name} — ระบบใช้ส่วนลดให้อัตโนมัติตอนชำระเงิน ไม่ต้องใช้โค้ด",
+      "thisCustomerSpecials": "ดีล VIP สำหรับลูกค้ารายนี้"
     }
   },
   "impersonation": {

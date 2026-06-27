@@ -770,7 +770,7 @@
       "integrations": "Интеграции",
       "orderHandling": "Обработка заказов",
       "promoPopup": "Промо-окно",
-      "customerGroups": "VIP-группы"
+      "customerGroups": "VIP-предложения"
     },
     "dashboard": {
       "title": "Панель управления",
@@ -4105,8 +4105,8 @@
       "saveError": "Не удалось сохранить — попробуйте ещё раз"
     },
     "customerGroups": {
-      "title": "VIP-группы клиентов",
-      "description": "Объединяйте клиентов в группы (например, спортивную команду) и отправляйте всей группе одно и то же предложение сразу.",
+      "title": "VIP-предложения",
+      "description": "Отправляйте эксклюзивные предложения для участников целой группе или отдельным людям — они применяются автоматически при оформлении заказа, без кода.",
       "newGroup": "Новая группа",
       "created": "Создано «{name}»",
       "createFailed": "Не удалось создать группу.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Отправить участникам письмо",
       "notifySent": "{count, plural, =0 {Пока ни у одного участника нет эл. почты} one {Отправляем письмо # участнику…} few {Отправляем письма # участникам…} many {Отправляем письма # участникам…} other {Отправляем письма # участникам…}}",
       "notifyFailed": "Не удалось отправить письмо участникам.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Группы",
+      "individualsHeading": "Предложения для конкретных людей",
+      "individualsSubtitle": "Предоставьте эксклюзивное предложение для участников отдельным клиентам по эл. почте или аккаунту — оно применится для них автоматически, без кода.",
+      "giveSpecial": "Предоставить предложение",
+      "given": "{count, plural, =0 {Никто новый не был добавлен} one {Предоставлено # человеку} few {Предоставлено # людям} many {Предоставлено # людям} other {Предоставлено # людям}}",
+      "noIndividualSpecials": "Пока нет индивидуальных предложений — добавьте одно ниже.",
+      "removeTarget": "Удалить",
+      "notifyPeople": "Сообщить им об этом предложении по эл. почте",
+      "peopleCount": "{count, plural, one {# человек} few {# человека} many {# человек} other {# человека}}",
+      "giveVipSpecialHeading": "Предоставить VIP-предложение",
+      "giveVipSpecialSubtitle": "Привяжите существующую акцию к {name} — она применится для них автоматически при оформлении заказа, без кода.",
+      "thisCustomerSpecials": "VIP-предложения для этого клиента"
     }
   },
   "impersonation": {

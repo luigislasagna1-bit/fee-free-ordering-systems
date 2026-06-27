@@ -770,7 +770,7 @@
       "integrations": "Integrationer",
       "orderHandling": "Orderhantering",
       "promoPopup": "Reklam-popup",
-      "customerGroups": "VIP-grupper"
+      "customerGroups": "VIP-special"
     },
     "dashboard": {
       "title": "Instrumentpanel",
@@ -4105,8 +4105,8 @@
       "saveError": "Det gick inte att spara – försök igen"
     },
     "customerGroups": {
-      "title": "VIP-kundgrupper",
-      "description": "Gruppera dina kunder (t.ex. ett sportlag) och skicka samma erbjudande till en hel grupp på en gång.",
+      "title": "VIP-special",
+      "description": "Skicka erbjudanden enbart för medlemmar till en hel grupp eller till specifika personer – de tillämpas automatiskt i kassan, ingen kod.",
       "newGroup": "Ny grupp",
       "created": "Skapade ”{name}”",
       "createFailed": "Det gick inte att skapa gruppen.",
@@ -4190,18 +4190,18 @@
       "notifyMembers": "Mejla medlemmar",
       "notifySent": "{count, plural, =0 {Inga medlemmar har en e-postadress ännu} one {Mejlar # medlem…} other {Mejlar # medlemmar…}}",
       "notifyFailed": "Det gick inte att mejla medlemmarna.",
-      "groupsHeading": "Groups",
-      "individualsHeading": "Specials for specific people",
-      "individualsSubtitle": "Give a member-only special to individual customers by email or account — it auto-applies for them, no code needed.",
-      "giveSpecial": "Give special",
-      "given": "{count, plural, =0 {No one new was added} one {Given to # person} other {Given to # people}}",
-      "noIndividualSpecials": "No individual specials yet — add one below.",
-      "removeTarget": "Remove",
-      "notifyPeople": "Email them about this special",
-      "peopleCount": "{count, plural, one {# person} other {# people}}",
-      "giveVipSpecialHeading": "Give a VIP special",
-      "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
-      "thisCustomerSpecials": "VIP specials for this customer"
+      "groupsHeading": "Grupper",
+      "individualsHeading": "Special för specifika personer",
+      "individualsSubtitle": "Ge en special enbart för medlemmar till enskilda kunder via e-post eller konto – den tillämpas automatiskt för dem, ingen kod behövs.",
+      "giveSpecial": "Ge special",
+      "given": "{count, plural, =0 {Ingen ny lades till} one {Gavs till # person} other {Gavs till # personer}}",
+      "noIndividualSpecials": "Inga individuella specials ännu – lägg till en nedan.",
+      "removeTarget": "Ta bort",
+      "notifyPeople": "Mejla dem om denna special",
+      "peopleCount": "{count, plural, one {# person} other {# personer}}",
+      "giveVipSpecialHeading": "Ge en VIP-special",
+      "giveVipSpecialSubtitle": "Koppla en befintlig kampanj till {name} – den tillämpas automatiskt för dem i kassan, ingen kod behövs.",
+      "thisCustomerSpecials": "VIP-special för denna kund"
     }
   },
   "impersonation": {
