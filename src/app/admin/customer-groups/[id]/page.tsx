@@ -39,7 +39,8 @@ export default async function GroupDetailPage({ params }: { params: Promise<{ id
       select: { id: true, promotion: { select: promoSelect } },
     }),
     prisma.promotion.findMany({
-      where: { restaurantId: user.restaurantId },
+      // Active only — an inactive promo can't auto-apply, so it isn't pickable.
+      where: { restaurantId: user.restaurantId, isActive: true },
       orderBy: { createdAt: "desc" },
       take: 200,
       select: { ...promoSelect, _count: { select: { groupLinks: true } } },

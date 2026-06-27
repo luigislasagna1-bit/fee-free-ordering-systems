@@ -13,7 +13,10 @@ export async function GET() {
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const promotions = await prisma.promotion.findMany({
-    where: { restaurantId },
+    // Only ACTIVE promos are pickable — an inactive one can never auto-apply at
+    // checkout, so attaching it as a VIP special would be a silent no-op. Owners
+    // activate it on the Promotions page first. Luigi 2026-06-27.
+    where: { restaurantId, isActive: true },
     orderBy: { createdAt: "desc" },
     take: 200,
     select: { id: true, name: true, isActive: true, promotionType: true, ruleConfig: true },

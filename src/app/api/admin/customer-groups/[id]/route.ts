@@ -60,7 +60,8 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   const linkedIds = new Set(specials.map((s) => s.id));
 
   const allPromos = await prisma.promotion.findMany({
-    where: { restaurantId },
+    // Active only — an inactive promo can't auto-apply, so it isn't pickable.
+    where: { restaurantId, isActive: true },
     orderBy: { createdAt: "desc" },
     take: 200,
     select: {
