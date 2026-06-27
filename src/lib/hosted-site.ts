@@ -279,6 +279,11 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
         restaurantId: restaurant.id,
         isActive: true,
         autoApply: true,
+        // HIDDEN (code-only) promos must never be advertised on the public
+        // marketing site. They're already auto-apply:false (the invariant), so
+        // the autoApply:true filter excludes them — this is the explicit
+        // defence-in-depth guard, mirroring the order-page banner. Luigi 2026-06-27.
+        displayMode: { not: "hidden_coupon_only" },
         OR: [{ startsAt: null }, { startsAt: { lte: new Date() } }],
         AND: [
           {
