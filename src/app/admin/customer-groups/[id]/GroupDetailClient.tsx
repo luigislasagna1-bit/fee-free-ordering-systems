@@ -31,8 +31,18 @@ export default function GroupDetailClient({ group, initialMembers, currency }: {
       if (!res.ok) { toast.error(data.error || t("addFailed")); return; }
       toast.success(t("membersAdded", { count: data.added }));
       setEmailsText("");
+      // Re-fetch the member list so the table updates immediately — useState is
+      // seeded once and router.refresh() alone doesn't re-sync it. Luigi 2026-06-27.
+      await reloadMembers();
       router.refresh();
     } finally { setAdding(false); }
+  }
+
+  async function reloadMembers() {
+    try {
+      const g = await fetch(`/api/admin/customer-groups/${group.id}`).then((r) => r.json());
+      if (Array.isArray(g.members)) setMembers(g.members);
+    } catch { /* keep current list */ }
   }
 
   async function removeMember(id: string) {
@@ -120,6 +130,7 @@ export default function GroupDetailClient({ group, initialMembers, currency }: {
           placeholder={t("addMembersPlaceholder")}
           value={emailsText}
           onChange={(e) => setEmailsText(e.target.value)}
+          onKeyDown={(e) => { if ((e.metaKey || e.ctrlKey) && e.key === "Enter") addMembers(); }}
         />
         <p className="text-[11px] text-gray-400 mt-1">{t("addMembersHint")}</p>
         <button onClick={addMembers} disabled={adding} className="mt-2 inline-flex items-center gap-1.5 bg-gray-900 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-gray-800 transition disabled:opacity-50">
