@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Comanda programada #{orderNumber} confirmada — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "La teva oferta VIP a {restaurantName} — {discountLabel}",
-      "intro": "Com a {memberLabel} a {restaurantName}, has desbloquejat una oferta exclusiva per a membres: {discountLabel}. S'aplica automàticament — no cal cap codi.",
+      "subject": "La teva oferta {memberLabel} a {restaurantName} — {discountLabel}",
+      "intro": "Has desbloquejat la teva oferta {memberLabel} a {restaurantName}: {discountLabel}. S'aplica automàticament, sense cap codi.",
       "howToLabel": "Com utilitzar-la",
       "usageAccount": "Només has d'iniciar sessió al teu compte i fer la comanda: el teu {discountLabel} s'aplica automàticament en finalitzar la compra.",
       "usageGuest": "En finalitzar la compra, introdueix aquesta adreça de correu electrònic ({email}) i el teu {discountLabel} s'aplica automàticament: no cal escriure cap codi.",

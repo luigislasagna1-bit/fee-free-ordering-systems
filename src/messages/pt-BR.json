@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Pedido agendado #{orderNumber} confirmado — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Sua oferta VIP em {restaurantName} — {discountLabel}",
-      "intro": "Como {memberLabel} no {restaurantName}, você desbloqueou uma oferta exclusiva para membros: {discountLabel}. Ela é aplicada automaticamente — sem precisar de código.",
+      "subject": "Sua oferta {memberLabel} em {restaurantName} — {discountLabel}",
+      "intro": "Você desbloqueou sua oferta {memberLabel} em {restaurantName}: {discountLabel}. Ela é aplicada automaticamente — sem precisar de código.",
       "howToLabel": "Como usar",
       "usageAccount": "Basta entrar na sua conta e fazer o pedido — seu {discountLabel} é aplicado automaticamente na finalização.",
       "usageGuest": "Na finalização, informe este endereço de e-mail ({email}) e seu {discountLabel} é aplicado automaticamente — sem código para digitar.",

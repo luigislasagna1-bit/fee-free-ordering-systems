@@ -4532,8 +4532,8 @@
       "subjectScheduled": "예약 주문 #{orderNumber}이(가) 확정되었습니다 — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "{restaurantName}의 VIP 혜택 — {discountLabel}",
-      "intro": "{restaurantName}의 {memberLabel}님으로서 회원 전용 혜택을 받으셨습니다: {discountLabel}. 코드 입력 없이 자동으로 적용됩니다.",
+      "subject": "{restaurantName}의 {memberLabel} 혜택 — {discountLabel}",
+      "intro": "{restaurantName}에서 {memberLabel} 혜택을 받으셨습니다: {discountLabel}. 코드 없이 자동으로 적용됩니다.",
       "howToLabel": "사용 방법",
       "usageAccount": "계정에 로그인하고 주문하기만 하면 결제 시 {discountLabel}이(가) 자동으로 적용됩니다.",
       "usageGuest": "결제 시 이 이메일 주소({email})를 입력하면 {discountLabel}이(가) 자동으로 적용됩니다 — 코드를 입력할 필요가 없습니다.",

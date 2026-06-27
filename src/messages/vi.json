@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Đơn hàng đặt theo lịch #{orderNumber} đã được xác nhận — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Ưu đãi VIP của bạn tại {restaurantName} — {discountLabel}",
-      "intro": "Với tư cách là một {memberLabel} tại {restaurantName}, bạn đã mở khóa ưu đãi dành riêng cho thành viên: {discountLabel}. Ưu đãi được áp dụng tự động — không cần mã.",
+      "subject": "Ưu đãi {memberLabel} của bạn tại {restaurantName} — {discountLabel}",
+      "intro": "Bạn đã mở khóa ưu đãi {memberLabel} của bạn tại {restaurantName}: {discountLabel}. Ưu đãi được áp dụng tự động — không cần mã.",
       "howToLabel": "Cách sử dụng",
       "usageAccount": "Chỉ cần đăng nhập vào tài khoản và đặt hàng — {discountLabel} của bạn sẽ được áp dụng tự động khi thanh toán.",
       "usageGuest": "Khi thanh toán, hãy nhập địa chỉ email này ({email}) và {discountLabel} của bạn sẽ được áp dụng tự động — không cần nhập mã.",

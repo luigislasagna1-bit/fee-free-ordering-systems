@@ -4532,8 +4532,8 @@
       "subjectScheduled": "予約注文 #{orderNumber} が確定しました — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "{restaurantName} のVIP特典 — {discountLabel}",
-      "intro": "{restaurantName}の{memberLabel}として、メンバー限定の特典が解放されました：{discountLabel}。コード不要で自動的に適用されます。",
+      "subject": "{restaurantName}での{memberLabel}特典 — {discountLabel}",
+      "intro": "{restaurantName}での{memberLabel}特典が利用できるようになりました：{discountLabel}。コード不要で自動的に適用されます。",
       "howToLabel": "ご利用方法",
       "usageAccount": "アカウントにサインインしてご注文いただくだけで、お会計時に {discountLabel} が自動的に適用されます。",
       "usageGuest": "お会計時にこのメールアドレス（{email}）を入力すると、{discountLabel} が自動的に適用されます — コードの入力は不要です。",

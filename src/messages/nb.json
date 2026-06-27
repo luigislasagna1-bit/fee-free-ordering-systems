@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Planlagt bestilling #{orderNumber} bekreftet — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Ditt VIP-tilbud hos {restaurantName} — {discountLabel}",
-      "intro": "Som {memberLabel} hos {restaurantName} har du låst opp et tilbud kun for medlemmer: {discountLabel}. Det gjelder automatisk — ingen kode nødvendig.",
+      "subject": "Din {memberLabel}-avtale hos {restaurantName} — {discountLabel}",
+      "intro": "Du har låst opp din {memberLabel}-avtale hos {restaurantName}: {discountLabel}. Den gjelder automatisk – ingen kode nødvendig.",
       "howToLabel": "Slik bruker du det",
       "usageAccount": "Bare logg inn på kontoen din og bestill – din {discountLabel} legges til automatisk i kassen.",
       "usageGuest": "I kassen oppgir du denne e-postadressen ({email}), så legges din {discountLabel} til automatisk – ingen kode å skrive.",

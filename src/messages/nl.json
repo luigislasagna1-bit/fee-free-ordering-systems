@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Geplande bestelling #{orderNumber} bevestigd — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Jouw VIP-deal bij {restaurantName} — {discountLabel}",
-      "intro": "Als {memberLabel} bij {restaurantName} heeft u een aanbieding exclusief voor leden ontgrendeld: {discountLabel}. Deze wordt automatisch toegepast — geen code nodig.",
+      "subject": "Jouw {memberLabel}-aanbieding bij {restaurantName} — {discountLabel}",
+      "intro": "Je hebt jouw {memberLabel}-aanbieding bij {restaurantName} ontgrendeld: {discountLabel}. Deze wordt automatisch toegepast — geen code nodig.",
       "howToLabel": "Zo gebruik je hem",
       "usageAccount": "Log gewoon in op je account en bestel — je {discountLabel} wordt automatisch toegepast bij het afrekenen.",
       "usageGuest": "Voer bij het afrekenen dit e-mailadres in ({email}) en je {discountLabel} wordt automatisch toegepast — geen code om in te typen.",

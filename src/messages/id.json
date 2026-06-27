@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Pesanan terjadwal #{orderNumber} dikonfirmasi — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Penawaran VIP Anda di {restaurantName} — {discountLabel}",
-      "intro": "Sebagai {memberLabel} di {restaurantName}, Anda telah membuka penawaran khusus member: {discountLabel}. Penawaran ini berlaku otomatis — tanpa perlu kode.",
+      "subject": "Penawaran {memberLabel} Anda di {restaurantName} — {discountLabel}",
+      "intro": "Anda telah membuka penawaran {memberLabel} Anda di {restaurantName}: {discountLabel}. Penawaran ini berlaku otomatis — tanpa perlu kode.",
       "howToLabel": "Cara menggunakannya",
       "usageAccount": "Cukup masuk ke akun Anda dan pesan — {discountLabel} Anda diterapkan otomatis saat checkout.",
       "usageGuest": "Saat checkout, masukkan alamat email ini ({email}) dan {discountLabel} Anda diterapkan otomatis — tanpa perlu mengetik kode.",

@@ -4532,8 +4532,8 @@
       "subjectScheduled": "ยืนยันคำสั่งซื้อที่กำหนดเวลาไว้ #{orderNumber} แล้ว — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "ดีลพิเศษสำหรับ VIP ของคุณที่ {restaurantName} — {discountLabel}",
-      "intro": "ในฐานะ{memberLabel}ที่ {restaurantName} คุณได้ปลดล็อกดีลพิเศษเฉพาะสมาชิก: {discountLabel} ดีลนี้จะใช้โดยอัตโนมัติ — ไม่ต้องใช้โค้ด",
+      "subject": "ดีล {memberLabel} ของคุณที่ {restaurantName} — {discountLabel}",
+      "intro": "คุณได้ปลดล็อกดีล {memberLabel} ของคุณที่ {restaurantName} แล้ว: {discountLabel} ส่วนลดนี้ใช้ได้โดยอัตโนมัติ — ไม่ต้องใช้โค้ดใดๆ",
       "howToLabel": "วิธีใช้งาน",
       "usageAccount": "เพียงลงชื่อเข้าใช้บัญชีของคุณแล้วสั่งอาหาร — ส่วนลด {discountLabel} ของคุณจะถูกใช้โดยอัตโนมัติเมื่อชำระเงิน",
       "usageGuest": "เมื่อชำระเงิน ให้กรอกอีเมลนี้ ({email}) แล้วส่วนลด {discountLabel} ของคุณจะถูกใช้โดยอัตโนมัติ — ไม่ต้องพิมพ์โค้ดใดๆ",

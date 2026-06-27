@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Планираната поръчка #{orderNumber} е потвърдена — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Вашата VIP оферта в {restaurantName} — {discountLabel}",
-      "intro": "Като {memberLabel} в {restaurantName}, отключихте оферта само за членове: {discountLabel}. Прилага се автоматично — без нужда от код.",
+      "subject": "Вашата оферта за {memberLabel} в {restaurantName} — {discountLabel}",
+      "intro": "Отключихте вашата оферта за {memberLabel} в {restaurantName}: {discountLabel}. Прилага се автоматично — не е нужен код.",
       "howToLabel": "Как да я използвате",
       "usageAccount": "Просто влезте в акаунта си и поръчайте — вашата отстъпка {discountLabel} се прилага автоматично при плащане.",
       "usageGuest": "При плащане въведете този имейл адрес ({email}) и вашата отстъпка {discountLabel} се прилага автоматично — без код за въвеждане.",

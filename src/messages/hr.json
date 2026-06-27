@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Zakazana narudžba #{orderNumber} potvrđena — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Vaša VIP ponuda u {restaurantName} — {discountLabel}",
-      "intro": "Kao {memberLabel} u {restaurantName} otključali ste ponudu namijenjenu samo članovima: {discountLabel}. Primjenjuje se automatski — nije potreban nikakav kod.",
+      "subject": "Vaša ponuda {memberLabel} u {restaurantName} — {discountLabel}",
+      "intro": "Otključali ste svoju ponudu {memberLabel} u {restaurantName}: {discountLabel}. Primjenjuje se automatski — nije potreban kod.",
       "howToLabel": "Kako je iskoristiti",
       "usageAccount": "Samo se prijavite na svoj račun i naručite — vaš {discountLabel} automatski se primjenjuje pri naplati.",
       "usageGuest": "Pri naplati unesite ovu adresu e-pošte ({email}) i vaš {discountLabel} automatski se primjenjuje — bez upisivanja koda.",

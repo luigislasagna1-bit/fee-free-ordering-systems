@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Naplánovaná objednávka #{orderNumber} potvrzena — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Vaše VIP nabídka v {restaurantName} — {discountLabel}",
-      "intro": "Jako {memberLabel} v {restaurantName} jste získali nabídku jen pro členy: {discountLabel}. Uplatní se automaticky — žádný kód není potřeba.",
+      "subject": "Vaše nabídka {memberLabel} v {restaurantName} — {discountLabel}",
+      "intro": "Odemkli jste si svou nabídku {memberLabel} v {restaurantName}: {discountLabel}. Uplatní se automaticky — žádný kód není potřeba.",
       "howToLabel": "Jak ji využít",
       "usageAccount": "Stačí se přihlásit k účtu a objednat — vaše sleva {discountLabel} se automaticky uplatní u pokladny.",
       "usageGuest": "U pokladny zadejte tuto e-mailovou adresu ({email}) a vaše sleva {discountLabel} se automaticky uplatní — žádný kód nemusíte psát.",

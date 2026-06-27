@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Ajastatud tellimus #{orderNumber} kinnitatud — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Sinu VIP-pakkumine restoranis {restaurantName} — {discountLabel}",
-      "intro": "Kuna olete restoranis {restaurantName} {memberLabel}, olete avanud ainult liikmetele mõeldud pakkumise: {discountLabel}. See rakendub automaatselt — koodi pole vaja.",
+      "subject": "Sinu {memberLabel} pakkumine restoranis {restaurantName} — {discountLabel}",
+      "intro": "Avasid oma {memberLabel} pakkumise restoranis {restaurantName}: {discountLabel}. See rakendub automaatselt — koodi pole vaja.",
       "howToLabel": "Kuidas seda kasutada",
       "usageAccount": "Logi lihtsalt oma kontole sisse ja telli — sinu {discountLabel} rakendub kassas automaatselt.",
       "usageGuest": "Sisesta kassas see e-posti aadress ({email}) ja sinu {discountLabel} rakendub automaatselt — koodi pole vaja sisestada.",

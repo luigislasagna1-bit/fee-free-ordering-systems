@@ -4532,8 +4532,8 @@
       "subjectScheduled": "הזמנה מתוזמנת #{orderNumber} אושרה — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "מבצע ה-VIP שלך ב-{restaurantName} — {discountLabel}",
-      "intro": "כ{memberLabel} ב{restaurantName}, פתחתם הטבה בלעדית לחברים: {discountLabel}. היא חלה אוטומטית — ללא צורך בקוד.",
+      "subject": "דיל {memberLabel} שלך ב{restaurantName} — {discountLabel}",
+      "intro": "פתחת את דיל {memberLabel} שלך ב{restaurantName}: {discountLabel}. ההטבה חלה אוטומטית — ללא צורך בקוד.",
       "howToLabel": "איך להשתמש בזה",
       "usageAccount": "פשוט היכנס לחשבון שלך והזמן — ה-{discountLabel} שלך מוחל אוטומטית בקופה.",
       "usageGuest": "בקופה, הזן את כתובת הדוא\"ל הזו ({email}) וה-{discountLabel} שלך מוחל אוטומטית — ללא צורך להקליד קוד.",

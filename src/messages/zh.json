@@ -4532,8 +4532,8 @@
       "subjectScheduled": "预约订单 #{orderNumber} 已确认 — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "您在 {restaurantName} 的 VIP 专享优惠 — {discountLabel}",
-      "intro": "作为 {restaurantName} 的{memberLabel}，您已解锁会员专享优惠：{discountLabel}。此优惠将自动生效 — 无需任何代码。",
+      "subject": "您在 {restaurantName} 的 {memberLabel} 专属优惠 — {discountLabel}",
+      "intro": "您已解锁您在 {restaurantName} 的 {memberLabel} 专属优惠：{discountLabel}。优惠将自动生效，无需任何优惠码。",
       "howToLabel": "如何使用",
       "usageAccount": "只需登录您的账户并下单——结账时您的 {discountLabel} 将自动生效。",
       "usageGuest": "结账时输入此邮箱地址（{email}），您的 {discountLabel} 即可自动生效——无需输入任何优惠码。",

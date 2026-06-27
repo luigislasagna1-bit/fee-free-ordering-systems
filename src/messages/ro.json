@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Comandă programată #{orderNumber} confirmată — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Oferta ta VIP la {restaurantName} — {discountLabel}",
-      "intro": "În calitate de {memberLabel} la {restaurantName}, ați deblocat o ofertă exclusivă pentru membri: {discountLabel}. Se aplică automat — fără cod.",
+      "subject": "Oferta ta {memberLabel} la {restaurantName} — {discountLabel}",
+      "intro": "Ai deblocat oferta ta {memberLabel} la {restaurantName}: {discountLabel}. Se aplică automat — fără cod.",
       "howToLabel": "Cum o folosești",
       "usageAccount": "Doar autentifică-te în contul tău și comandă — {discountLabel} se aplică automat la finalizarea comenzii.",
       "usageGuest": "La finalizarea comenzii, introdu această adresă de email ({email}) și {discountLabel} se aplică automat — fără cod de tastat.",

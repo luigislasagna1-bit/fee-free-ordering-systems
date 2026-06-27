@@ -4532,8 +4532,8 @@
       "subjectScheduled": "تم تأكيد الطلب المجدول رقم #{orderNumber} — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "عرض VIP الخاص بك في {restaurantName} — {discountLabel}",
-      "intro": "بصفتك {memberLabel} في {restaurantName}، فقد فتحت عرضًا حصريًا للأعضاء: {discountLabel}. يُطبَّق تلقائيًا — دون الحاجة إلى رمز.",
+      "subject": "عرض {memberLabel} الخاص بك في {restaurantName} — {discountLabel}",
+      "intro": "لقد فتحت عرض {memberLabel} الخاص بك في {restaurantName}: {discountLabel}. يُطبَّق تلقائيًا — دون الحاجة إلى أي رمز.",
       "howToLabel": "كيفية استخدامه",
       "usageAccount": "ما عليك سوى تسجيل الدخول إلى حسابك والطلب — ويُطبَّق {discountLabel} تلقائيًا عند الدفع.",
       "usageGuest": "عند الدفع، أدخل عنوان البريد الإلكتروني هذا ({email}) ويُطبَّق {discountLabel} تلقائيًا — دون الحاجة إلى كتابة أي رمز.",

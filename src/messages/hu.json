@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Időzített rendelés #{orderNumber} megerősítve — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "A VIP-ajánlatod itt: {restaurantName} — {discountLabel}",
-      "intro": "Mint {memberLabel} a(z) {restaurantName} étteremben, feloldott egy kizárólag tagoknak szóló ajánlatot: {discountLabel}. Automatikusan érvényesül — nincs szükség kódra.",
+      "subject": "Az Ön {memberLabel} ajánlata itt: {restaurantName} — {discountLabel}",
+      "intro": "Feloldotta a(z) {restaurantName} étteremnél elérhető {memberLabel} ajánlatát: {discountLabel}. Automatikusan érvényesül — nincs szükség kódra.",
       "howToLabel": "Hogyan használhatod",
       "usageAccount": "Csak jelentkezz be a fiókodba és rendelj — a(z) {discountLabel} automatikusan érvényesül a fizetésnél.",
       "usageGuest": "A fizetésnél add meg ezt az e-mail-címet ({email}), és a(z) {discountLabel} automatikusan érvényesül — nem kell kódot beírnod.",

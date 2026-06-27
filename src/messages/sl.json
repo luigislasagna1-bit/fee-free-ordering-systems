@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Načrtovano naročilo #{orderNumber} potrjeno — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Vaša VIP ponudba v {restaurantName} — {discountLabel}",
-      "intro": "Kot {memberLabel} v restavraciji {restaurantName} ste odklenili ponudbo samo za člane: {discountLabel}. Uporabi se samodejno — brez kode.",
+      "subject": "Vaša ponudba {memberLabel} v {restaurantName} — {discountLabel}",
+      "intro": "Odklenili ste svojo ponudbo {memberLabel} v {restaurantName}: {discountLabel}. Uporabi se samodejno – brez kode.",
       "howToLabel": "Kako jo uporabite",
       "usageAccount": "Samo prijavite se v svoj račun in naročite – vaš {discountLabel} se samodejno uporabi ob zaključku nakupa.",
       "usageGuest": "Ob zaključku nakupa vnesite ta e-poštni naslov ({email}) in vaš {discountLabel} se samodejno uporabi – brez vnosa kode.",

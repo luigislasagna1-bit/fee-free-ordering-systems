@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Zamanlanmış sipariş #{orderNumber} onaylandı — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "{restaurantName} restoranındaki VIP fırsatınız — {discountLabel}",
-      "intro": "{restaurantName} restoranında bir {memberLabel} olarak, yalnızca üyelere özel bir fırsatın kilidini açtınız: {discountLabel}. Otomatik olarak uygulanır — herhangi bir koda gerek yok.",
+      "subject": "{restaurantName} mekanında {memberLabel} fırsatınız — {discountLabel}",
+      "intro": "{restaurantName} mekanında {memberLabel} fırsatınızın kilidini açtınız: {discountLabel}. Otomatik olarak uygulanır — kod gerekmez.",
       "howToLabel": "Nasıl kullanılır",
       "usageAccount": "Hesabınıza giriş yapıp sipariş verin yeterli — {discountLabel} indiriminiz ödeme sırasında otomatik olarak uygulanır.",
       "usageGuest": "Ödeme sırasında bu e-posta adresini ({email}) girin; {discountLabel} indiriminiz otomatik olarak uygulanır — yazılacak bir kod yok.",

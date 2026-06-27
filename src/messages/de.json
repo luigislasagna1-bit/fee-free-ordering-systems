@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Geplante Bestellung #{orderNumber} bestätigt — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Dein VIP-Angebot bei {restaurantName} — {discountLabel}",
-      "intro": "Als {memberLabel} bei {restaurantName} haben Sie ein exklusives Mitglieder-Angebot freigeschaltet: {discountLabel}. Es wird automatisch angewendet — kein Code erforderlich.",
+      "subject": "Ihr {memberLabel}-Angebot bei {restaurantName} — {discountLabel}",
+      "intro": "Sie haben Ihr {memberLabel}-Angebot bei {restaurantName} freigeschaltet: {discountLabel}. Es wird automatisch angewendet – kein Code erforderlich.",
       "howToLabel": "So nutzt du es",
       "usageAccount": "Melde dich einfach in deinem Konto an und bestelle — dein {discountLabel} wird automatisch an der Kasse angewendet.",
       "usageGuest": "Gib an der Kasse diese E-Mail-Adresse ({email}) ein und dein {discountLabel} wird automatisch angewendet — kein Code zum Eintippen.",

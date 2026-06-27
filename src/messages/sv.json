@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Schemalagd beställning #{orderNumber} bekräftad — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Ditt VIP-erbjudande hos {restaurantName} — {discountLabel}",
-      "intro": "Som {memberLabel} på {restaurantName} har du låst upp ett erbjudande endast för medlemmar: {discountLabel}. Det tillämpas automatiskt — ingen kod behövs.",
+      "subject": "Ditt {memberLabel}-erbjudande hos {restaurantName} — {discountLabel}",
+      "intro": "Du har låst upp ditt {memberLabel}-erbjudande hos {restaurantName}: {discountLabel}. Det gäller automatiskt — ingen kod behövs.",
       "howToLabel": "Så här använder du det",
       "usageAccount": "Logga bara in på ditt konto och beställ – din {discountLabel} tillämpas automatiskt i kassan.",
       "usageGuest": "Ange den här e-postadressen ({email}) i kassan, så tillämpas din {discountLabel} automatiskt – ingen kod att skriva.",

@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Suplanuotas užsakymas #{orderNumber} patvirtintas — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Jūsų VIP pasiūlymas {restaurantName} — {discountLabel}",
-      "intro": "Kaip {memberLabel} restorane {restaurantName}, atrakinote tik nariams skirtą pasiūlymą: {discountLabel}. Jis taikomas automatiškai — kodo nereikia.",
+      "subject": "Jūsų {memberLabel} pasiūlymas restorane {restaurantName} — {discountLabel}",
+      "intro": "Atrakinote savo {memberLabel} pasiūlymą restorane {restaurantName}: {discountLabel}. Jis pritaikomas automatiškai – kodo nereikia.",
       "howToLabel": "Kaip pasinaudoti",
       "usageAccount": "Tiesiog prisijunkite prie paskyros ir užsisakykite — jūsų {discountLabel} bus pritaikytas automatiškai atsiskaitant.",
       "usageGuest": "Atsiskaitydami įveskite šį el. pašto adresą ({email}) ir jūsų {discountLabel} bus pritaikytas automatiškai — jokio kodo įvesti nereikia.",

@@ -4532,8 +4532,8 @@
       "subjectScheduled": "Plānotais pasūtījums #{orderNumber} apstiprināts — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Jūsu VIP piedāvājums {restaurantName} — {discountLabel}",
-      "intro": "Kā {memberLabel} restorānā {restaurantName} jūs esat atvēris piedāvājumu tikai dalībniekiem: {discountLabel}. Tas tiek piemērots automātiski — kods nav nepieciešams.",
+      "subject": "Jūsu {memberLabel} piedāvājums restorānā {restaurantName} — {discountLabel}",
+      "intro": "Jūs esat atvēris savu {memberLabel} piedāvājumu restorānā {restaurantName}: {discountLabel}. Tas tiek piemērots automātiski — kods nav vajadzīgs.",
       "howToLabel": "Kā to izmantot",
       "usageAccount": "Vienkārši pierakstieties savā kontā un veiciet pasūtījumu — jūsu {discountLabel} tiek piemērots automātiski, noformējot pasūtījumu.",
       "usageGuest": "Noformējot pasūtījumu, ievadiet šo e-pasta adresi ({email}), un jūsu {discountLabel} tiks piemērots automātiski — nekas nav jāievada.",
