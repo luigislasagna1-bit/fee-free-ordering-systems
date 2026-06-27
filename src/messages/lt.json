@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Išsaugota.",
       "memberLabelFailed": "Nepavyko išsaugoti.",
       "memberLabelDefault": "VIP narys",
-      "memberLabelHint": "Jūsų VIP el. laiške bus rašoma: „Kaip {label} jūsų restorane…“"
+      "memberLabelHint": "Jūsų VIP el. laiške bus rašoma: „Kaip {label} jūsų restorane…“",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

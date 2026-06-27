@@ -8,6 +8,7 @@ import { formatCurrency } from "@/lib/utils";
 
 type Promo = { id: string; name: string; isActive: boolean; promotionType: string; ruleConfig: any };
 type Special = { id: string; promotionId: string; promoName: string; promotionType: string; isActive: boolean; ruleConfig: any };
+type ViaGroup = { id: string; groupName: string; promoName: string; promotionType: string; isActive: boolean; ruleConfig: any };
 
 /** Give a member-only VIP special (an existing promotion) to ONE customer — it
  *  auto-applies for them at checkout, no code. Lives on the customer profile;
@@ -16,6 +17,7 @@ export function GiveVipSpecial({ customerId, customerName, currency }: { custome
   const t = useTranslations("admin.customerGroups");
   const [promos, setPromos] = useState<Promo[]>([]);
   const [specials, setSpecials] = useState<Special[]>([]);
+  const [viaGroups, setViaGroups] = useState<ViaGroup[]>([]);
   const [pick, setPick] = useState("");
   const [notify, setNotify] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -24,6 +26,7 @@ export function GiveVipSpecial({ customerId, customerName, currency }: { custome
     try {
       const r = await fetch(`/api/admin/vip-specials/individuals?customerId=${encodeURIComponent(customerId)}`).then((x) => x.json());
       if (Array.isArray(r.targets)) setSpecials(r.targets);
+      if (Array.isArray(r.viaGroups)) setViaGroups(r.viaGroups);
     } catch { /* ignore */ }
   }, [customerId]);
 
@@ -72,8 +75,29 @@ export function GiveVipSpecial({ customerId, customerName, currency }: { custome
       </h2>
       <p className="text-sm text-gray-500 mt-1">{t("giveVipSpecialSubtitle", { name: customerName })}</p>
 
-      {specials.length > 0 && (
+      {/* Specials they get via a VIP GROUP — read-only here (managed on the group). */}
+      {viaGroups.length > 0 && (
         <ul className="mt-4 space-y-1.5">
+          {viaGroups.map((v) => {
+            const c = chip(v);
+            return (
+              <li key={v.id} className="flex items-center justify-between gap-2 py-2 px-3 rounded-xl border border-gray-100 bg-gray-50/50">
+                <span className="min-w-0 flex items-center gap-2 flex-wrap">
+                  <Tag className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                  <span className="text-sm font-medium text-gray-800 truncate">{v.promoName}</span>
+                  {c && <span className="text-[11px] px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-700 font-semibold">{c}</span>}
+                  {!v.isActive && <span className="text-[11px] px-1.5 py-0.5 rounded-full bg-gray-200 text-gray-500">{t("inactiveBadge")}</span>}
+                  <span className="text-[11px] text-gray-400">{t("vipViaGroup", { group: v.groupName })}</span>
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      {/* Specials given to this person directly (removable). */}
+      {specials.length > 0 && (
+        <ul className="mt-2 space-y-1.5">
           {specials.map((s) => {
             const c = chip(s);
             return (

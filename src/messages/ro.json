@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Salvat.",
       "memberLabelFailed": "Salvarea nu a reușit.",
       "memberLabelDefault": "membru VIP",
-      "memberLabelHint": "E-mailul dvs. VIP va spune: „În calitate de {label} la restaurantul dvs.…”"
+      "memberLabelHint": "E-mailul dvs. VIP va spune: „În calitate de {label} la restaurantul dvs.…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

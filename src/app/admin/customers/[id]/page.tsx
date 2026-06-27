@@ -21,7 +21,6 @@ import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { formatDate, formatCurrency as fmtCurrency } from "@/lib/utils";
 import { getRestaurantCurrency } from "@/lib/restaurant-currency";
-import { AssignPromotionForm } from "./AssignPromotionForm";
 import { GiveVipSpecial } from "./GiveVipSpecial";
 import { CustomerActionsCard } from "./CustomerActionsCard";
 
@@ -175,26 +174,17 @@ export default async function CustomerDetailPage({
         initialNotes={customer.notes ?? ""}
       />
 
-      {/* Assign coupon */}
-      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-          <Tag className="w-5 h-5 text-emerald-500" />
-          {t("assignCouponHeading")}
-        </h2>
-        <p className="text-sm text-gray-500 mt-1">
-          {t.rich("assignCouponDescription", { name: customer.name, strong: (chunks) => <strong>{chunks}</strong> })}
-          {hasAccount
-            ? " " + t("assignCouponHasAccount")
-            : " " + t("assignCouponGuest")}
-        </p>
-        <AssignPromotionForm customerId={customer.id} customerName={customer.name} />
-
-        {/* Promotions assigned to this customer (CustomerCoupon grants) */}
-        {grants.length > 0 && (
-          <div className="mt-6 pt-6 border-t border-gray-100">
-            <h3 className="text-sm font-bold text-gray-900 mb-3">
-              {t("assignedCouponsHeading", { count: grants.length })}
-            </h3>
+      {/* Coupons this customer already has (code-based grants — historical +
+          migrated). The old "assign a personal coupon" CREATE form was removed
+          (Luigi 2026-06-27): give a customer a deal via "Give a VIP special"
+          below instead. This card only shows when there's something to show. */}
+      {grants.length > 0 && (
+        <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2 mb-3">
+            <Tag className="w-5 h-5 text-emerald-500" />
+            {t("assignedCouponsHeading", { count: grants.length })}
+          </h2>
+          <div>
             <ul className="space-y-2">
               {grants.map((g) => {
                 const rc = (g.promotion?.ruleConfig ?? {}) as { discountPercent?: number; discountAmount?: number };
@@ -235,10 +225,11 @@ export default async function CustomerDetailPage({
               })}
             </ul>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
-      {/* Give a VIP special (member-only, no code, auto-applies) */}
+      {/* Give a VIP special (member-only, no code, auto-applies) — also shows the
+          specials this customer already has, including via group membership. */}
       <GiveVipSpecial customerId={customer.id} customerName={customer.name} currency={__currency} />
 
       {/* Order history */}

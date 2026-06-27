@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "सहेजा गया।",
       "memberLabelFailed": "सहेजा नहीं जा सका।",
       "memberLabelDefault": "VIP सदस्य",
-      "memberLabelHint": "आपके VIP ईमेल में लिखा होगा: “आपके रेस्तरां में एक {label} के रूप में…”"
+      "memberLabelHint": "आपके VIP ईमेल में लिखा होगा: “आपके रेस्तरां में एक {label} के रूप में…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

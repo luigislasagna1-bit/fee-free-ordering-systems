@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Salvestatud.",
       "memberLabelFailed": "Salvestamine ebaõnnestus.",
       "memberLabelDefault": "VIP-liige",
-      "memberLabelHint": "Teie VIP-e-kiri ütleb: „Kuna olete teie restoranis {label}…”"
+      "memberLabelHint": "Teie VIP-e-kiri ütleb: „Kuna olete teie restoranis {label}…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

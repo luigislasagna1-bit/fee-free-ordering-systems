@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Lagret.",
       "memberLabelFailed": "Kunne ikke lagre.",
       "memberLabelDefault": "VIP-medlem",
-      "memberLabelHint": "VIP-e-posten din vil si: “Som {label} hos restauranten din …”"
+      "memberLabelHint": "VIP-e-posten din vil si: “Som {label} hos restauranten din …”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

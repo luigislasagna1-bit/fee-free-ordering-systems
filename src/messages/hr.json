@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Spremljeno.",
       "memberLabelFailed": "Spremanje nije uspjelo.",
       "memberLabelDefault": "VIP član",
-      "memberLabelHint": "Vaš VIP e-mail će glasiti: “Kao {label} u vašem restoranu…”"
+      "memberLabelHint": "Vaš VIP e-mail će glasiti: “Kao {label} u vašem restoranu…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

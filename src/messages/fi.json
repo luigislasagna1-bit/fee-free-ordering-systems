@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Tallennettu.",
       "memberLabelFailed": "Tallennus epäonnistui.",
       "memberLabelDefault": "VIP-jäsen",
-      "memberLabelHint": "VIP-sähköpostissasi lukee: “{label} ravintolassasi…”"
+      "memberLabelHint": "VIP-sähköpostissasi lukee: “{label} ravintolassasi…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

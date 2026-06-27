@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Gemt.",
       "memberLabelFailed": "Kunne ikke gemme.",
       "memberLabelDefault": "VIP-medlem",
-      "memberLabelHint": "Din VIP-e-mail vil sige: “Som {label} hos din restaurant …”"
+      "memberLabelHint": "Din VIP-e-mail vil sige: “Som {label} hos din restaurant …”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Đã lưu.",
       "memberLabelFailed": "Không thể lưu.",
       "memberLabelDefault": "Thành viên VIP",
-      "memberLabelHint": "Email VIP của bạn sẽ ghi: “Với tư cách là một {label} tại nhà hàng của bạn…”"
+      "memberLabelHint": "Email VIP của bạn sẽ ghi: “Với tư cách là một {label} tại nhà hàng của bạn…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

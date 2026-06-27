@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "บันทึกแล้ว",
       "memberLabelFailed": "บันทึกไม่สำเร็จ",
       "memberLabelDefault": "สมาชิก VIP",
-      "memberLabelHint": "อีเมล VIP ของคุณจะระบุว่า: “ในฐานะ{label}ที่ร้านของคุณ…”"
+      "memberLabelHint": "อีเมล VIP ของคุณจะระบุว่า: “ในฐานะ{label}ที่ร้านของคุณ…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

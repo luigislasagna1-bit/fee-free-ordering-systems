@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Salvo.",
       "memberLabelFailed": "Não foi possível salvar.",
       "memberLabelDefault": "membro VIP",
-      "memberLabelHint": "Seu e-mail VIP dirá: “Como {label} no seu restaurante…”"
+      "memberLabelHint": "Seu e-mail VIP dirá: “Como {label} no seu restaurante…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

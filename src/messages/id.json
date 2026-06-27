@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Tersimpan.",
       "memberLabelFailed": "Tidak dapat menyimpan.",
       "memberLabelDefault": "Member VIP",
-      "memberLabelHint": "Email VIP Anda akan berbunyi: “Sebagai {label} di restoran Anda…”"
+      "memberLabelHint": "Email VIP Anda akan berbunyi: “Sebagai {label} di restoran Anda…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Kaydedildi.",
       "memberLabelFailed": "Kaydedilemedi.",
       "memberLabelDefault": "VIP üye",
-      "memberLabelHint": "VIP e-postanızda şu yazacak: “Restoranınızda bir {label} olarak…”"
+      "memberLabelHint": "VIP e-postanızda şu yazacak: “Restoranınızda bir {label} olarak…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

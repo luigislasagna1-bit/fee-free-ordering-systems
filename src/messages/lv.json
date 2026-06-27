@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Saglabāts.",
       "memberLabelFailed": "Neizdevās saglabāt.",
       "memberLabelDefault": "VIP dalībnieks",
-      "memberLabelHint": "Jūsu VIP e-pastā būs teikts: “Kā {label} jūsu restorānā…”"
+      "memberLabelHint": "Jūsu VIP e-pastā būs teikts: “Kā {label} jūsu restorānā…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

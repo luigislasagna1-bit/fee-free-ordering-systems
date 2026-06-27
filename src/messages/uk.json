@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Збережено.",
       "memberLabelFailed": "Не вдалося зберегти.",
       "memberLabelDefault": "VIP-учасник",
-      "memberLabelHint": "У вашому VIP-листі буде написано: “Як {label} у вашому ресторані…”"
+      "memberLabelHint": "У вашому VIP-листі буде написано: “Як {label} у вашому ресторані…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

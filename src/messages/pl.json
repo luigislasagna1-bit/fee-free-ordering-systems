@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Zapisano.",
       "memberLabelFailed": "Nie udało się zapisać.",
       "memberLabelDefault": "członek VIP",
-      "memberLabelHint": "Twój e-mail VIP będzie brzmiał: „Jako {label} w naszej restauracji…”"
+      "memberLabelHint": "Twój e-mail VIP będzie brzmiał: „Jako {label} w naszej restauracji…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

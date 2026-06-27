@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Sparat.",
       "memberLabelFailed": "Kunde inte spara.",
       "memberLabelDefault": "VIP-medlem",
-      "memberLabelHint": "Ditt VIP-mejl kommer att säga: “Som {label} på din restaurang…”"
+      "memberLabelHint": "Ditt VIP-mejl kommer att säga: “Som {label} på din restaurang…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Αποθηκεύτηκε.",
       "memberLabelFailed": "Δεν ήταν δυνατή η αποθήκευση.",
       "memberLabelDefault": "μέλος VIP",
-      "memberLabelHint": "Το VIP email σας θα λέει: “Ως {label} στο εστιατόριό σας…”"
+      "memberLabelHint": "Το VIP email σας θα λέει: “Ως {label} στο εστιατόριό σας…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

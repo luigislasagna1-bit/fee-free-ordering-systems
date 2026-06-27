@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "已保存。",
       "memberLabelFailed": "无法保存。",
       "memberLabelDefault": "VIP 会员",
-      "memberLabelHint": "您的 VIP 邮件中将显示：“作为本店的{label}……”"
+      "memberLabelHint": "您的 VIP 邮件中将显示：“作为本店的{label}……”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

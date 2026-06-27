@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Enregistré.",
       "memberLabelFailed": "Échec de l'enregistrement.",
       "memberLabelDefault": "membre VIP",
-      "memberLabelHint": "Votre e-mail VIP indiquera : « En tant que {label} de votre restaurant… »"
+      "memberLabelHint": "Votre e-mail VIP indiquera : « En tant que {label} de votre restaurant… »",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

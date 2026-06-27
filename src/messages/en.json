@@ -4124,6 +4124,7 @@
       "removeTarget": "Remove",
       "notifyPeople": "Email them about this special",
       "peopleCount": "{count, plural, one {# person} other {# people}}",
+      "vipViaGroup": "via {group}",
       "giveVipSpecialHeading": "Give a VIP special",
       "giveVipSpecialSubtitle": "Attach an existing promotion to {name} — it auto-applies for them at checkout, no code needed.",
       "newGroup": "New group",

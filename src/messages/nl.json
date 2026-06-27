@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Opgeslagen.",
       "memberLabelFailed": "Opslaan mislukt.",
       "memberLabelDefault": "VIP-lid",
-      "memberLabelHint": "In uw VIP-e-mail staat: “Als {label} bij uw restaurant…”"
+      "memberLabelHint": "In uw VIP-e-mail staat: “Als {label} bij uw restaurant…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

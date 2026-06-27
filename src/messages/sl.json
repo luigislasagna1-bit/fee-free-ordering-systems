@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Shranjeno.",
       "memberLabelFailed": "Shranjevanje ni uspelo.",
       "memberLabelDefault": "VIP član",
-      "memberLabelHint": "Vaše VIP e-poštno sporočilo bo vsebovalo: “Kot {label} v vaši restavraciji …”"
+      "memberLabelHint": "Vaše VIP e-poštno sporočilo bo vsebovalo: “Kot {label} v vaši restavraciji …”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

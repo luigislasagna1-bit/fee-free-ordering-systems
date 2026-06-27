@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Desat.",
       "memberLabelFailed": "No s'ha pogut desar.",
       "memberLabelDefault": "membre VIP",
-      "memberLabelHint": "El vostre correu VIP dirà: “Com a {label} al vostre restaurant…”"
+      "memberLabelHint": "El vostre correu VIP dirà: “Com a {label} al vostre restaurant…”",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

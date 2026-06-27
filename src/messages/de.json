@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Gespeichert.",
       "memberLabelFailed": "Speichern fehlgeschlagen.",
       "memberLabelDefault": "VIP-Mitglied",
-      "memberLabelHint": "In Ihrer VIP-E-Mail steht: „Als {label} in Ihrem Restaurant …“"
+      "memberLabelHint": "In Ihrer VIP-E-Mail steht: „Als {label} in Ihrem Restaurant …“",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

@@ -4176,7 +4176,8 @@
       "memberLabelSaved": "Sačuvano.",
       "memberLabelFailed": "Nije moguće sačuvati.",
       "memberLabelDefault": "VIP član",
-      "memberLabelHint": "Vaš VIP imejl će glasiti: „Kao {label} u vašem restoranu…“"
+      "memberLabelHint": "Vaš VIP imejl će glasiti: „Kao {label} u vašem restoranu…“",
+      "vipViaGroup": "via {group}"
     }
   },
   "impersonation": {

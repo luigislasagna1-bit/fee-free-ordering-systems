@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { ChevronLeft, Users, Trash2, UserPlus, Gift, Plus, Tag, ExternalLink, Mail } from "lucide-react";
+import { ChevronLeft, Users, Trash2, UserPlus, Gift, Plus, Tag, ExternalLink, Mail, Pencil } from "lucide-react";
 import { HelpTip } from "@/components/HelpTip";
 
 type Member = { id: string; name: string | null; email: string | null; phone: string | null; hasAccount: boolean };
@@ -22,6 +22,30 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
   const [members, setMembers] = useState<Member[]>(initialMembers);
   const [specials, setSpecials] = useState<Special[]>(initialSpecials);
   const [pickable, setPickable] = useState<Pickable[]>(initialPickable);
+
+  // ── Edit the group's name + description (so a typed description like a brand
+  //    line can be changed/cleared after creation). Luigi 2026-06-27. ──────────
+  const [editing, setEditing] = useState(false);
+  const [editName, setEditName] = useState(group.name);
+  const [editDesc, setEditDesc] = useState(group.description ?? "");
+  const [info, setInfo] = useState({ name: group.name, description: group.description ?? "" });
+  const [savingInfo, setSavingInfo] = useState(false);
+  async function saveDetails() {
+    const name = editName.trim();
+    if (!name) { toast.error(t("renameFailed")); return; }
+    setSavingInfo(true);
+    try {
+      const res = await fetch(`/api/admin/customer-groups/${group.id}`, {
+        method: "PATCH", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, description: editDesc.trim() }),
+      });
+      const data = await res.json();
+      if (!res.ok) { toast.error(data.error || t("renameFailed")); return; }
+      setInfo({ name, description: editDesc.trim() });
+      setEditing(false);
+      router.refresh();
+    } finally { setSavingInfo(false); }
+  }
 
   // ── Add members (paste emails — auto-links to existing accounts) ──────────
   const [emailsText, setEmailsText] = useState("");
@@ -130,8 +154,28 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
       <Link href="/admin/customer-groups" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 mb-3">
         <ChevronLeft className="w-4 h-4" /> {t("backToGroups")}
       </Link>
-      <h1 className="text-2xl font-bold text-gray-900">{group.name}</h1>
-      {group.description && <p className="text-sm text-gray-500 mt-0.5">{group.description}</p>}
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0 flex-1">
+          {editing ? (
+            <div className="space-y-2 max-w-md">
+              <input className={inputCls} value={editName} maxLength={80} placeholder={t("groupNamePlaceholder")} onChange={(e) => setEditName(e.target.value)} />
+              <input className={inputCls} value={editDesc} maxLength={500} placeholder={t("groupDescPlaceholder")} onChange={(e) => setEditDesc(e.target.value)} />
+              <div className="flex gap-2">
+                <button onClick={saveDetails} disabled={savingInfo} className="bg-gray-900 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-gray-800 transition disabled:opacity-50">{savingInfo ? "…" : t("memberLabelSave")}</button>
+                <button onClick={() => { setEditing(false); setEditName(info.name); setEditDesc(info.description); }} className="px-4 py-2 rounded-xl text-sm text-gray-600 hover:bg-gray-100 transition">{t("cancel")}</button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <h1 className="text-2xl font-bold text-gray-900">{info.name}</h1>
+              {info.description && <p className="text-sm text-gray-500 mt-0.5">{info.description}</p>}
+            </>
+          )}
+        </div>
+        {!editing && (
+          <button onClick={() => setEditing(true)} title={t("rename")} className="p-1.5 text-gray-400 hover:text-blue-500 rounded flex-shrink-0"><Pencil className="w-4 h-4" /></button>
+        )}
+      </div>
 
       {/* ── Members ─────────────────────────────────────────────────────── */}
       <section className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm mt-5">

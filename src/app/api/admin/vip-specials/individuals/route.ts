@@ -43,7 +43,37 @@ export async function GET(req: Request) {
     email: t.email ?? t.customer?.email ?? null,
     hasAccount: !!t.customer?.passwordHash,
   }));
-  return NextResponse.json({ targets });
+
+  // For a specific customer, ALSO surface the specials they get via GROUP
+  // membership (read-only here — managed on the group), so the customer page
+  // shows everything they're entitled to, not just direct individual gifts.
+  let viaGroups: Array<{ id: string; groupName: string; promoName: string; promotionType: string; isActive: boolean; ruleConfig: unknown }> = [];
+  if (customerId) {
+    const cust = await prisma.customer.findFirst({ where: { id: customerId, restaurantId }, select: { email: true } });
+    const email = cust?.email?.trim().toLowerCase() || null;
+    const memberships = await prisma.customerGroupMember.findMany({
+      where: { restaurantId, OR: [{ customerId }, ...(email ? [{ email }] : [])] },
+      select: { groupId: true, group: { select: { name: true } } },
+    });
+    const groupName = new Map(memberships.map((m) => [m.groupId, m.group?.name ?? ""]));
+    const groupIds = [...groupName.keys()];
+    if (groupIds.length) {
+      const links = await prisma.customerGroupPromotion.findMany({
+        where: { restaurantId, groupId: { in: groupIds } },
+        select: { id: true, groupId: true, promotion: { select: { name: true, promotionType: true, isActive: true, ruleConfig: true } } },
+      });
+      viaGroups = links.map((l) => ({
+        id: l.id,
+        groupName: groupName.get(l.groupId!) ?? "",
+        promoName: l.promotion.name,
+        promotionType: l.promotion.promotionType,
+        isActive: l.promotion.isActive,
+        ruleConfig: l.promotion.ruleConfig,
+      }));
+    }
+  }
+
+  return NextResponse.json({ targets, viaGroups });
 }
 
 export async function POST(req: Request) {
