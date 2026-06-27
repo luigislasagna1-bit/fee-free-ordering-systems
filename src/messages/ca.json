@@ -236,7 +236,7 @@
       "fulfilWindowOrderError": "\"{name}\" només es pot demanar en certs dies/horaris. Programa la teva comanda per a quan estigui disponible.",
       "fulfilWindowReservationError": "\"{name}\" no està disponible el dia de la teva reserva. Elimina'l o reserva la taula un dia en què s'ofereixi.",
       "promoEmailMismatch": "Aquest codi està registrat amb una altra adreça de correu electrònic.",
-      "promoUnlocked": "You unlocked {name}!"
+      "promoUnlocked": "Has desbloquejat {name}!"
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",

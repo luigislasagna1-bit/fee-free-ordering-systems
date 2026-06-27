@@ -236,7 +236,7 @@
       "fulfilWindowOrderError": "\"{name}\" yalnızca belirli gün/saatlerde sipariş edilebilir. Lütfen siparişinizi uygun olduğu zamana planlayın.",
       "fulfilWindowReservationError": "\"{name}\" rezervasyon gününüzde mevcut değil. Lütfen kaldırın ya da masanızı sunulduğu bir güne ayırtın.",
       "promoEmailMismatch": "Bu kod farklı bir e-posta adresine kayıtlı.",
-      "promoUnlocked": "You unlocked {name}!"
+      "promoUnlocked": "{name} promosyonunu açtınız!"
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",

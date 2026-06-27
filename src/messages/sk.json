@@ -236,7 +236,7 @@
       "fulfilWindowOrderError": "\"{name}\" je možné objednať len v určité dni/časy. Naplánujte si objednávku na čas, keď je dostupné.",
       "fulfilWindowReservationError": "\"{name}\" nie je dostupné v deň vašej rezervácie. Odstráňte ho alebo si rezervujte stôl na deň, keď je v ponuke.",
       "promoEmailMismatch": "Tento kód je registrovaný na inú e-mailovú adresu.",
-      "promoUnlocked": "You unlocked {name}!"
+      "promoUnlocked": "Odomkli ste {name}!"
     },
     "searchMenu": "Hľadať v menu…",
     "signIn": "Prihlásiť sa",

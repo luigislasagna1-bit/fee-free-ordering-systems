@@ -236,7 +236,7 @@
       "fulfilWindowOrderError": "\"{name}\" kan endast beställas vissa dagar/tider. Schemalägg din beställning till när den är tillgänglig.",
       "fulfilWindowReservationError": "\"{name}\" är inte tillgänglig på din bokningsdag. Ta bort den eller boka ditt bord en dag då den erbjuds.",
       "promoEmailMismatch": "Den här koden är registrerad på en annan e-postadress.",
-      "promoUnlocked": "You unlocked {name}!"
+      "promoUnlocked": "Du har låst upp {name}!"
     },
     "searchMenu": "Sök i menyn…",
     "signIn": "Logga in",

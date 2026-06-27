@@ -236,7 +236,7 @@
       "fulfilWindowOrderError": "\"{name}\" poate fi comandat doar în anumite zile/ore. Programează-ți comanda pentru când este disponibil.",
       "fulfilWindowReservationError": "\"{name}\" nu este disponibil în ziua rezervării tale. Te rugăm să-l elimini sau să rezervi masa într-o zi în care este oferit.",
       "promoEmailMismatch": "Acest cod este înregistrat la o altă adresă de e-mail.",
-      "promoUnlocked": "You unlocked {name}!"
+      "promoUnlocked": "Ai deblocat {name}!"
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",

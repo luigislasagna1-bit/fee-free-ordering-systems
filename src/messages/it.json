@@ -235,7 +235,7 @@
       "fulfilWindowOrderError": "\"{name}\" può essere ordinato solo in determinati giorni/orari. Programma il tuo ordine per quando è disponibile.",
       "fulfilWindowReservationError": "\"{name}\" non è disponibile nel giorno della tua prenotazione. Rimuovilo oppure prenota il tavolo in un giorno in cui è disponibile.",
       "promoEmailMismatch": "Questo codice è registrato a un altro indirizzo email.",
-      "promoUnlocked": "You unlocked {name}!"
+      "promoUnlocked": "Hai sbloccato {name}!"
     },
     "followUs": "Seguici",
     "searchMenu": "Cerca nel menu…",

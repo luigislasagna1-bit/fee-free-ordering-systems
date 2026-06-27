@@ -236,7 +236,7 @@
       "fulfilWindowOrderError": "لا يمكن طلب \"{name}\" إلا في أيام/أوقات معينة. يُرجى جدولة طلبك في وقت يكون فيه متاحًا.",
       "fulfilWindowReservationError": "\"{name}\" غير متاح في يوم حجزك. يُرجى إزالته أو حجز طاولتك في يوم يكون فيه متاحًا.",
       "promoEmailMismatch": "هذا الرمز مسجَّل لعنوان بريد إلكتروني مختلف.",
-      "promoUnlocked": "You unlocked {name}!"
+      "promoUnlocked": "لقد فتحت {name}!"
     },
     "searchMenu": "ابحث في القائمة…",
     "signIn": "تسجيل الدخول",
