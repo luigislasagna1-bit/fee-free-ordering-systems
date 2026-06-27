@@ -188,6 +188,9 @@ export async function POST(req: NextRequest) {
     paymentMethod,
     hasUsedLifetime,
     deliveryZoneId: typeof deliveryZoneId === "string" && deliveryZoneId ? deliveryZoneId : undefined,
+    // So a free_delivery EXCLUSIVE competes at its real fee value, not $0
+    // (audit B10). Base fee is a fine estimate for the preview tie-break.
+    deliveryFee: (orderType ?? "pickup") === "delivery" ? Math.max(0, restaurant.deliveryFee ?? 0) : 0,
     // Restaurant's IANA timezone — drives Happy Hour / day-of-week
     // evaluation in the owner's local time, not the Vercel UTC clock.
     // Without this the Italian "15:00–18:00" window was being matched

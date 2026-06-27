@@ -6,6 +6,7 @@
 // client-safe ./promo-window module so the customer ordering page (banner
 // greying / claim gating / nudge) and this server engine never drift.
 import { localDateParts, isWithinUsableWindow } from "./promo-window";
+import { getPromoTypeMeta } from "./promo-types";
 //
 // UNIVERSAL AUTO-APPLY PRINCIPLE (Luigi 2026-05-29):
 //   "As long as the customer enters the coupon (if necessary), it shouldn't
@@ -176,6 +177,12 @@ export type ApplyContext = {
    *  that resolved to a known zone). Used for the Delivery Area
    *  restriction. */
   deliveryZoneId?: string;
+  /** The delivery fee this order would pay (delivery orders only; 0/undefined
+   *  otherwise). free_delivery promos have no cart discount but are WORTH this
+   *  fee — the engine scores them at it when picking the best EXCLUSIVE, so a
+   *  free_delivery exclusive can beat a small cart-discount exclusive (audit
+   *  B10). Optional: when absent, free_delivery scores 0 as before. */
+  deliveryFee?: number;
   /** Per-promo "has this customer used this promo before (lifetime)?"
    *  map. Keyed by promotion id. Caller pre-computes via Order rows
    *  filtered to this customer + this promotion. */
@@ -300,6 +307,19 @@ function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
   if (allowedOrderTypes) {
     const allowedCanon = new Set([...allowedOrderTypes].map(canonicalOrderType));
     if (!allowedCanon.has(canonicalOrderType(ctx.orderType))) return false;
+  }
+
+  // ── Type-level forced order channels ───────────────────────────────
+  // Some promo types are inherently channel-locked regardless of the stored
+  // orderType column (e.g. free_delivery only makes sense on delivery). Honor
+  // the type metadata so a free_delivery promo saved as "both" can't apply to —
+  // and silently occupy an exclusive slot on — a pickup/dine-in order, paying
+  // $0 while blocking a real discount (audit B4). Type-agnostic: covers any
+  // current/future type that declares forcedOrderTypes.
+  const forcedOrderTypes = getPromoTypeMeta(promo.promotionType)?.forcedOrderTypes;
+  if (forcedOrderTypes && forcedOrderTypes.length > 0) {
+    const forcedCanon = new Set(forcedOrderTypes.map(canonicalOrderType));
+    if (!forcedCanon.has(canonicalOrderType(ctx.orderType))) return false;
   }
 
   // ── Client Type restriction ────────────────────────────────────────
@@ -835,8 +855,15 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
   let active: PromoInput[];
   const blockedPromos: BlockedPromo[] = [];
   if (exclusives.length > 0) {
+    // Score free_delivery at its real fee value (not its $0 cart discount) so a
+    // free_delivery exclusive can win the single exclusive slot against a small
+    // cart-discount exclusive (audit B10). Other types use calcDiscount.
+    const effectiveValue = (p: PromoInput): number =>
+      p.promotionType === "free_delivery" && canonicalOrderType(ctx.orderType) === "delivery"
+        ? Math.max(calcDiscount(p, ctx), ctx.deliveryFee ?? 0)
+        : calcDiscount(p, ctx);
     const best = exclusives.reduce((a, b) =>
-      calcDiscount(a, ctx) >= calcDiscount(b, ctx) ? a : b
+      effectiveValue(a) >= effectiveValue(b) ? a : b
     );
     active = [best, ...masters];
     // Everything else that qualified — the other exclusives AND every standard

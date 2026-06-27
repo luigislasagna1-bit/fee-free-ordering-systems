@@ -92,7 +92,8 @@ describe("resolvePromotions — stacking matrix", () => {
   it("a free_delivery exclusive DOES occupy the slot (counts as a benefit)", () => {
     const fd = mkPromo({ stackingRule: "exclusive", promotionType: "free_delivery", ruleConfig: {} });
     const std = mkPromo({ stackingRule: "standard", ruleConfig: { discountAmount: 5 } });
-    const { results, blockedPromos } = resolvePromotions([fd, std], mkCtx());
+    // free_delivery is delivery-only (B4), so this must be a delivery order.
+    const { results, blockedPromos } = resolvePromotions([fd, std], mkCtx({ orderType: "delivery" }));
     expect(results.map((r) => r.type)).toContain("free_delivery");
     expect(blockedPromos.map((b) => b.promoId)).toContain(std.id);
   });
@@ -252,5 +253,29 @@ describe("engine math — Batch A correctness fixes", () => {
     });
     // Only the 2 slot units ($24) form the bundle → 24 - 20 = $4, NOT 48 - 20 = $28.
     expect(applyPromotions([p], ctx)[0]?.discount).toBe(4);
+  });
+
+  // B4: free_delivery is delivery-only (forcedOrderTypes) — must not apply to
+  // (or occupy an exclusive slot on) pickup/dine-in.
+  it("free_delivery never applies on a pickup order, applies on delivery", () => {
+    const fd = mkPromo({ promotionType: "free_delivery", ruleConfig: {} });
+    expect(applyPromotions([fd], mkCtx({ orderType: "pickup" }))).toHaveLength(0);
+    expect(applyPromotions([fd], mkCtx({ orderType: "delivery" })).map((r) => r.type)).toContain("free_delivery");
+  });
+
+  it("free_delivery exclusive on pickup does NOT block a real standard discount", () => {
+    const fd = mkPromo({ stackingRule: "exclusive", promotionType: "free_delivery", ruleConfig: {} });
+    const std = mkPromo({ stackingRule: "standard", ruleConfig: { discountAmount: 5 } });
+    const res = applyPromotions([fd, std], mkCtx({ orderType: "pickup" }));
+    expect(res.map((r) => r.promoId)).toEqual([std.id]); // fd ineligible on pickup → std applies
+  });
+
+  // B10: a free_delivery exclusive must win the slot at its real fee value, not $0.
+  it("free_delivery exclusive beats a smaller exclusive at the delivery fee", () => {
+    const fd = mkPromo({ stackingRule: "exclusive", promotionType: "free_delivery", ruleConfig: {} });
+    const small = mkPromo({ stackingRule: "exclusive", promotionType: "fixed_cart", ruleConfig: { discountAmount: 2 } });
+    const { results } = resolvePromotions([fd, small], mkCtx({ orderType: "delivery", deliveryFee: 7, subtotal: 30 }));
+    expect(results.map((r) => r.type)).toContain("free_delivery");
+    expect(results.map((r) => r.promoId)).not.toContain(small.id);
   });
 });

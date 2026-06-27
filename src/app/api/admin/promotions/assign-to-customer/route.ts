@@ -121,7 +121,10 @@ export async function POST(req: Request) {
         autoApply: false,
         couponCode: code,
         scope: "location",
-        channel: "website",
+        // A 1:1 assigned gift is channel-agnostic — "both" so the code still
+        // redeems on a marketplace-channel order instead of silently dropping
+        // to $0 (audit B9). It's code-required + hidden regardless of channel.
+        channel: "both",
         showOnBanner: false,
         displayMode: "hidden_coupon_only",
         onceLifetimePerClient: true,

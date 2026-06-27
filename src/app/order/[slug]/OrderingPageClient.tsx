@@ -834,6 +834,10 @@ export function OrderingPageClient({
     usableHourEnd: number | null;
     minimumOrder: number;
     highlightThreshold?: number | null;
+    /** Pin this promo as a STRIP CARD. The strip filters on this; the nudge +
+     *  free-item auto-prompt ignore it (they fire for any Visible auto-apply
+     *  promo). Luigi 2026-06-26. */
+    showOnBanner?: boolean;
     orderType: string;
     couponCode: string | null;
     /** Type-specific config (Phase 2a). Drives the PromoDetailModal's
@@ -1014,6 +1018,10 @@ export function OrderingPageClient({
     { date: string; time: string; partySize: number; notes: string } | null
   >(null);
   const [couponCode, setCouponCode] = useState("");
+  // Live-preview flag: the typed code matches an assigned promo registered to a
+  // DIFFERENT email than the one entered at checkout, so it can't apply. Shown
+  // as an inline cart note instead of silently dropping (audit confusing#13).
+  const [codeEmailMismatch, setCodeEmailMismatch] = useState(false);
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [couponId, setCouponId] = useState<string | null>(null);
   const [couponLoading, setCouponLoading] = useState(false);
@@ -2020,6 +2028,7 @@ export function OrderingPageClient({
         setHasFreeDelivery(data.hasFreeDelivery ?? false);
         setBlockedPromos(Array.isArray(data.blockedPromos) ? data.blockedPromos : []);
         setFirstBuyUnavailable(!!data.newCustomerOfferUnavailable);
+        setCodeEmailMismatch(!!data.promoCodeEmailMismatch);
         promosEvaluatedRef.current = true;
       })
       .catch(() => {});
@@ -4162,7 +4171,7 @@ export function OrderingPageClient({
         {/* Collapsible "Promo" header — the customer can hide the specials strip so it
             doesn't take up the whole page (mobile + desktop). Same chevron affordance as
             the collapsible categories. Luigi 2026-06-22. */}
-        {promoBanners.filter((p) => p.campaignRef !== "kickstarter_first_buy").length > 0 && (
+        {promoBanners.filter((p) => p.showOnBanner && p.campaignRef !== "kickstarter_first_buy").length > 0 && (
           <button
             type="button"
             onClick={() => setPromosCollapsed((c) => !c)}
@@ -4173,9 +4182,9 @@ export function OrderingPageClient({
             <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${promosCollapsed ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
           </button>
         )}
-        {!promosCollapsed && promoBanners.filter((p) => p.campaignRef !== "kickstarter_first_buy").length > 0 && (
+        {!promosCollapsed && promoBanners.filter((p) => p.showOnBanner && p.campaignRef !== "kickstarter_first_buy").length > 0 && (
           <div className="mb-6 flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
-            {promoBanners.filter((p) => p.campaignRef !== "kickstarter_first_buy").map((promo) => {
+            {promoBanners.filter((p) => p.showOnBanner && p.campaignRef !== "kickstarter_first_buy").map((promo) => {
               const headline = promo.bannerHeadline?.trim() || promo.name;
               const hasUsableWindow =
                 typeof promo.usableHourStart === "number" &&
@@ -4991,6 +5000,13 @@ export function OrderingPageClient({
                       </button>
                     </div>
                   )}
+                  {/* Assigned-code → wrong-email note: the code is valid but
+                      registered to a different email, so it can't apply. Shown
+                      live in the cart instead of only erroring at Place Order
+                      (audit confusing#13). */}
+                  {!couponId && codeEmailMismatch && couponCode.trim() && (
+                    <p className="mt-2 text-xs text-amber-600">{tT("promoEmailMismatch")}</p>
+                  )}
                 </div>
 
                 {/* Totals */}
@@ -5407,7 +5423,15 @@ export function OrderingPageClient({
           onAddFreebie={addFreebieToCart}
           onAddBundle={addBundleToCart}
           onCompleteGuidedPromo={addGuidedPromoToCart}
-          onSwitchOrderType={(next) => setOrderType(next)}
+          onSwitchOrderType={(next) => {
+            // Never strand the order on a channel the restaurant doesn't offer
+            // (e.g. a free_delivery promo's "Switch to delivery" on a pickup-only
+            // restaurant). Ignore the switch when that channel is disabled
+            // (audit confusing#11).
+            if (next === "delivery" && !restaurant.acceptsDelivery) return;
+            if (next === "pickup" && !restaurant.acceptsPickup) return;
+            setOrderType(next);
+          }}
           // Click an eligible item in the promo modal → close the promo
           // modal + open the item-config sheet so the customer can pick
           // size/modifiers/quantity before adding to cart. Looks up the

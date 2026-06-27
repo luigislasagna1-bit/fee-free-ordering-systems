@@ -1417,6 +1417,9 @@ export async function POST(req: NextRequest) {
       // for pickup/dine-in (the engine short-circuits zone-restricted
       // promos via the orderType check).
       deliveryZoneId: resolvedZoneId ?? undefined,
+      // Lets a free_delivery EXCLUSIVE win the slot at its real fee value
+      // instead of $0 (audit B10). 0 for non-delivery orders.
+      deliveryFee: type === "delivery" ? Math.max(0, zoneDeliveryFee) : 0,
       // Customer-typed coupon code — engine matches it against
       // Promotion.couponCode for autoApply=false promos.
       couponCode: normalizedCouponCode,

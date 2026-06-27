@@ -160,10 +160,13 @@ export default async function OrderingPage({
   const rawPromotions = await prisma.promotion.findMany({
     where: {
       isActive: true,
-      showOnBanner: true,
-      // HIDDEN promos (code-only) must never surface on the menu/banner, even if
-      // a stale row still has showOnBanner=true (the invariant now forces it
-      // false on save; this is the defence-in-depth read guard). Luigi 2026-06-26.
+      // VISIBLE promos only (displayMode != hidden). We deliberately do NOT
+      // filter on showOnBanner here — the banner toggle only controls the
+      // pinned STRIP CARD (filtered client-side). The customer-facing nudge
+      // ("Add $X more to unlock") + the free-item auto-prompt must consider a
+      // Visible auto-apply promo even when the owner left the banner card OFF,
+      // otherwise "Start nudging at" silently did nothing (audit B2/B8). HIDDEN
+      // (code-only) promos stay excluded so they never surface. Luigi 2026-06-26.
       displayMode: { not: "hidden_coupon_only" },
       channel: { in: channelFilter },
       OR: [
@@ -188,6 +191,9 @@ export default async function OrderingPage({
       // Drives the customer-facing "Add €X more to unlock!" nudge when the
       // cart is within highlightThreshold of an auto-promo's minimum.
       highlightThreshold: true,
+      // Whether to pin this promo as a STRIP CARD (client filters the strip on
+      // this; the nudge/free-item prompt ignore it). Luigi 2026-06-26.
+      showOnBanner: true,
       orderType: true,
       couponCode: true,
       // ruleConfig + rules feed the customer-facing PromoDetailModal so
@@ -214,7 +220,7 @@ export default async function OrderingPage({
       campaignRef: true,
     },
     orderBy: { createdAt: "desc" },
-    take: 10, // hard cap — UI is a horizontal scroller anyway
+    take: 25, // hard cap — strip is a horizontal scroller; nudge scans this set
   });
 
   // Day-of-week filter happens in app code (DB stores as JSON string
