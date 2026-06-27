@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
   // the guard already in /api/public/paypal-order (lines 91-111).
   const dbOrder = await prisma.order.findUnique({
     where: { id: orderId },
-    select: { id: true, restaurantId: true, paymentMethod: true, paymentStatus: true, total: true },
+    select: { id: true, restaurantId: true, paymentMethod: true, paymentStatus: true, total: true, creditApplied: true },
   });
   if (!dbOrder || dbOrder.restaurantId !== restaurant.id) {
     return NextResponse.json({ error: "Order not found" }, { status: 404 });
@@ -102,7 +102,10 @@ export async function POST(req: NextRequest) {
   if (dbOrder.paymentStatus !== "pending") {
     return NextResponse.json({ error: "Order payment is already in progress" }, { status: 400 });
   }
-  if (Math.abs(dbOrder.total - amount) > 0.01) {
+  // Charge total MINUS any Reward Dollars applied (store credit is a partial
+  // payment). The client must request exactly this amount. Luigi 2026-06-27.
+  const chargeable = Math.round((dbOrder.total - (dbOrder.creditApplied ?? 0)) * 100) / 100;
+  if (Math.abs(chargeable - amount) > 0.01) {
     return NextResponse.json({ error: "Amount mismatch" }, { status: 400 });
   }
 

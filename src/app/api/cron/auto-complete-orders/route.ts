@@ -30,6 +30,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { redeemCouponsForOrder } from "@/lib/coupon-ledger";
+import { redeemForOrder as redeemRewardForOrder, awardForOrder as awardRewardForOrder } from "@/lib/reward-ledger";
 
 // Buffers tightened 2026-05-31 (Luigi + Italian beta tester). The
 // previous 30/30/60 minute values combined with the hourly cron made
@@ -106,6 +108,17 @@ async function autoComplete() {
     where: { id: { in: dueIds } },
     data: { status: "completed", completedAt: now },
   });
+
+  // This Simple-mode sweep bypasses the [id] PATCH route, so it must run the
+  // SAME fulfillment-tied ledger hooks the PATCH does — otherwise coupon grants
+  // never finalize and Reward Dollars are never redeemed/earned for the majority
+  // of restaurants (Simple mode is the default). All idempotent + never-throw.
+  // Luigi 2026-06-27.
+  for (const id of dueIds) {
+    await redeemCouponsForOrder(id);
+    await redeemRewardForOrder(id);
+    await awardRewardForOrder({ orderId: id });
+  }
 
   return {
     ok: true,

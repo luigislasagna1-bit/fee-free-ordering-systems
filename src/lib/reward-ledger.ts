@@ -92,13 +92,15 @@ export async function grant(opts: {
   }
 }
 
-/** Atomically claim credit toward an order (spend). NEVER throws; refuses via a
- *  typed result so the caller proceeds at 0. The atomic `WHERE balance >= applied`
- *  guarantees no over-draw / negative balance under concurrency. */
-export async function claimForOrder(opts: {
+/** Atomically RESERVE (decrement) credit toward an order BEFORE the order row
+ *  exists — the spend ledger row is written post-create by `recordSpendForOrder`,
+ *  and `refundClaim` re-credits if order.create then fails. NEVER throws; refuses
+ *  via a typed result so the caller proceeds at 0. The atomic
+ *  `WHERE balance >= applied` guarantees no over-draw / negative balance under
+ *  concurrency (two orders draining the same wallet: loser gets 0 rows). */
+export async function reserveCredit(opts: {
   restaurantId: string;
   customerId: string;
-  orderId: string;
   requested: number;
   orderTotal: number;
   minRedeemBalance: number;
@@ -114,15 +116,6 @@ export async function claimForOrder(opts: {
     const calc = computeApplied({ ...opts, balance });
     if (!acct || calc.applied <= 0) return { ok: false, code: calc.code ?? "noop", available: balance };
     const applied = calc.applied;
-
-    // Idempotent retry: a spend row for this order already exists → return it.
-    const existing = await prisma.rewardLedger.findUnique({
-      where: { accountId_orderId_reason: { accountId: acct.id, orderId: opts.orderId, reason: "spend" } },
-      select: { amount: true },
-    });
-    if (existing) return { ok: true, applied: round2(Math.abs(existing.amount)) };
-
-    // Atomic conditional decrement — race-loser sees 0 rows affected.
     const rows = await prisma.$executeRaw`
       UPDATE "RewardAccount"
       SET "balance" = "balance" - ${applied},
@@ -131,28 +124,9 @@ export async function claimForOrder(opts: {
       WHERE id = ${acct.id} AND "balance" >= ${applied}
     `;
     if (rows === 0) return { ok: false, code: "insufficient", available: await getBalance(opts) };
-
-    const balanceAfter = await getBalance(opts);
-    try {
-      await prisma.rewardLedger.create({
-        data: { accountId: acct.id, amount: -applied, balanceAfter, reason: "spend", status: "applied", orderId: opts.orderId },
-      });
-    } catch (e: any) {
-      if (e?.code === "P2002") {
-        // A concurrent claim for the SAME order already recorded the spend; our
-        // decrement was a double — compensate it back and return the existing amount.
-        await prisma.$executeRaw`UPDATE "RewardAccount" SET "balance" = "balance" + ${applied}, "lifetimeRedeemed" = "lifetimeRedeemed" - ${applied} WHERE id = ${acct.id}`;
-        const ex = await prisma.rewardLedger.findUnique({
-          where: { accountId_orderId_reason: { accountId: acct.id, orderId: opts.orderId, reason: "spend" } },
-          select: { amount: true },
-        });
-        return { ok: true, applied: ex ? round2(Math.abs(ex.amount)) : 0 };
-      }
-      throw e;
-    }
     return { ok: true, applied };
   } catch (e) {
-    console.error("[reward claimForOrder]", e);
+    console.error("[reward reserveCredit]", e);
     return { ok: false, code: "noop", available: 0 };
   }
 }

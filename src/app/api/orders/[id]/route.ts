@@ -19,6 +19,7 @@ import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { dispatchOrderToShipday, cancelShipdayOrder, shouldDispatchToShipday } from "@/lib/shipday";
 import { verifyOrderToken } from "@/lib/order-status-token";
 import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledger";
+import { redeemForOrder as redeemRewardForOrder, releaseForOrder as releaseRewardForOrder, awardForOrder as awardRewardForOrder } from "@/lib/reward-ledger";
 import { releasePromotionUsage } from "@/lib/order-notifications";
 import { RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 
@@ -389,8 +390,14 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   // every campaign. Luigi 2026-06-09.
   if (newStatus === "completed") {
     await redeemCouponsForOrder(id);
+    // Reward Dollars: spent credit becomes permanent + auto-earn is awarded
+    // (both idempotent per order). Mirrors the coupon lifecycle. Luigi 2026-06-27.
+    await redeemRewardForOrder(id);
+    await awardRewardForOrder({ orderId: id });
   } else if (newStatus === "rejected" || newStatus === "cancelled") {
     await releaseCouponsForOrder(id);
+    // Reward Dollars: return any spent credit to the customer's wallet.
+    await releaseRewardForOrder(id);
     // Promotion GLOBAL usage cap: a released order (notifiedAt set → it was
     // counted) that's now rejected/cancelled gives its usage back, so a
     // "max N uses" promo isn't burned by an unfulfilled order (audit B11). Gate

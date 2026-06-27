@@ -48,6 +48,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       paymentStatus: true,
       paymentIntentId: true,
       total: true,
+      creditApplied: true,
       refundedAmount: true,
       orderNumber: true,
       customerName: true,
@@ -79,7 +80,11 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
   const body = await req.json().catch(() => ({}));
   const currency = order.restaurant.currency || "usd";
-  const total = order.total;
+  // The card was only charged total − Reward Dollars applied, so the refundable
+  // amount is the CHARGED amount, never the full total (else we'd refund money we
+  // never collected). The spent credit itself is returned to the wallet
+  // separately (TODO: refund-to-wallet). Luigi 2026-06-27.
+  const total = Math.round((order.total - (order.creditApplied ?? 0)) * 100) / 100;
   const already = order.refundedAmount ?? 0;
   const remaining = Math.max(0, total - already);
 

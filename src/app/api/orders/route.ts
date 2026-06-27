@@ -21,6 +21,8 @@ import { fireOrderNotifications } from "@/lib/order-notifications";
 import { resolveInheritedHours } from "@/lib/inherited-data";
 import { usedLifetimePromoIds, resolveAssignedPromoByCode, findActiveGrants } from "@/lib/coupon-ledger";
 import { partitionMemberOnly, qualifyingMemberOnlyPromos } from "@/lib/vip-membership";
+import { reserveCredit as reserveReward, recordSpendForOrder, refundClaim as refundRewardClaim } from "@/lib/reward-ledger";
+import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
 import { hasFeature } from "@/lib/entitlements";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
@@ -131,6 +133,10 @@ export async function POST(req: NextRequest) {
       // to trust a `channel` field in the body — we compute it from
       // the sessionHash). Optional; null sessionHash → null channel.
       sessionHash,
+      // Reward Dollars (store credit) the customer chose to spend on this order.
+      // NEVER trusted as final — the server re-validates the balance + caps and
+      // claims atomically below. Luigi 2026-06-27.
+      creditToApply: bodyCreditToApply,
     } = body;
 
     // ── Basic input validation ──────────────────────────────────────────────
@@ -2034,6 +2040,41 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // ── Reward Dollars (store credit) — RESERVE before order.create ──────────
+    // Spend requires a SIGNED-IN restaurant customer (never email-resolved) so
+    // nobody can drain another person's balance by typing their email. We
+    // decrement the wallet atomically NOW (so the order can't land without the
+    // matching decrement); the spend ledger row is written AFTER create (needs
+    // the order id), and the create-failure catch re-credits. The claim NEVER
+    // fails the order — on refusal we proceed at 0 (customer pays full).
+    // Credit is a PAYMENT, not a discount: serverTotal/tax are untouched; the
+    // online charge is total − creditApplied. Luigi 2026-06-27.
+    let creditApplied = 0;
+    let creditSpenderId: string | null = null;
+    {
+      const requested = Number(bodyCreditToApply);
+      if (restaurant.rewardsEnabled && restaurant.rewardRedeemEnabled && Number.isFinite(requested) && requested > 0) {
+        try {
+          const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
+          if (me?.id) {
+            const onlineCharge = (paymentMethod || "cash") === "card" || (paymentMethod || "cash") === "paypal";
+            const claim = await reserveReward({
+              restaurantId: restaurant.id,
+              customerId: me.id,
+              requested,
+              orderTotal: serverTotal,
+              minRedeemBalance: restaurant.rewardMinRedeemBalance ?? 0,
+              maxRedeemPercent: restaurant.rewardMaxRedeemPercent ?? 100,
+              minCharge: onlineCharge ? 0.5 : 0,
+            });
+            if (claim.ok && claim.applied > 0) { creditApplied = claim.applied; creditSpenderId = me.id; }
+          }
+        } catch (e) { console.error("[orders reward reserve]", e); }
+      }
+    }
+    // Reward Dollars cover the whole order → no online charge needed.
+    const fullyCovered = creditApplied > 0 && creditApplied >= serverTotal - 0.001;
+
     // ── Create order ────────────────────────────────────────────────────────
     let order;
     try {
@@ -2087,8 +2128,12 @@ export async function POST(req: NextRequest) {
         deliveryFee: serverDeliveryFee,
         tip: serverTip,
         total: serverTotal,
-        paymentMethod: paymentMethod || "cash",
-        paymentStatus: "pending",
+        creditApplied,
+        // Fully covered by Reward Dollars → nothing to charge online: settle as
+        // paid-by-credit so the kitchen releases like a cash order and the
+        // capture/refund (card-only) paths skip it. Luigi 2026-06-27.
+        paymentMethod: fullyCovered ? "reward_credit" : (paymentMethod || "cash"),
+        paymentStatus: fullyCovered ? "paid" : "pending",
         // scheduledForDate is parsed up-front in the restaurant's
         // local timezone — see the comment block where it's computed,
         // above the auto-accept handling. Same Date object reused for
@@ -2143,7 +2188,21 @@ export async function POST(req: NextRequest) {
           );
         });
       }
+      // Compensate the reserved Reward Dollars (no spend ledger row was written
+      // yet — just re-credit the balance) so the customer doesn't lose credit on
+      // a failed create. Luigi 2026-06-27.
+      if (creditApplied > 0 && creditSpenderId) {
+        await refundRewardClaim({ restaurantId: restaurant.id, customerId: creditSpenderId, amount: creditApplied })
+          .catch((e) => console.error("[orders POST] reward refundClaim after create failure:", e));
+      }
       throw createErr;
+    }
+
+    // Persist the spend ledger row now that the order id exists (the balance was
+    // already decremented by reserveReward). Fire-and-forget; idempotent.
+    if (creditApplied > 0 && creditSpenderId) {
+      await recordSpendForOrder({ restaurantId: restaurant.id, customerId: creditSpenderId, orderId: order.id, applied: creditApplied })
+        .catch((e) => console.error("[orders POST] reward recordSpend:", e));
     }
 
     // ── Reserve-then-order: create the linked table booking ──────────────────
@@ -2216,7 +2275,9 @@ export async function POST(req: NextRequest) {
     //   This prevents a customer from "placing" an online order, never paying,
     //   and the kitchen cooking food we'll never get paid for.
     const method = paymentMethod || "cash";
-    const deferKitchenRelease = method === "card" || method === "paypal";
+    // Fully credit-covered orders have no online charge to wait for → release
+    // like a cash order (don't defer). Luigi 2026-06-27.
+    const deferKitchenRelease = (method === "card" || method === "paypal") && !fullyCovered;
     if (!deferKitchenRelease) {
       // IMPORTANT: schedule via after() — Vercel kills bare unawaited
       // promises the moment we return the response below. We hit this
@@ -2277,9 +2338,12 @@ export async function POST(req: NextRequest) {
       id: order.id,
       orderNumber: order.orderNumber,
       total: serverTotal,
+      // Reward Dollars applied (server truth) — the client charges card/PayPal
+      // for total − creditApplied, never the full total. Luigi 2026-06-27.
+      creditApplied,
       // Client uses this to decide whether to redirect straight to the
-      // status page (cash / pay-in-person) or first take the customer
-      // through a payment surface (Stripe Elements or PayPal approval).
+      // status page (cash / pay-in-person / fully credit-covered) or first take
+      // the customer through a payment surface (Stripe Elements or PayPal).
       requiresPayment: deferKitchenRelease,
     }, { status: 201 });
   } catch (err) {

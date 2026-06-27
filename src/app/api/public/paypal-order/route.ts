@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
     where: { id: orderId },
     select: {
       id: true, restaurantId: true, paymentMethod: true, paymentStatus: true,
-      total: true, paypalOrderId: true,
+      total: true, creditApplied: true, paypalOrderId: true,
     },
   });
   if (!dbOrder || dbOrder.restaurantId !== restaurant.id) {
@@ -104,9 +104,10 @@ export async function POST(req: NextRequest) {
   if (dbOrder.paymentStatus !== "pending") {
     return NextResponse.json({ error: "Order payment is already in progress" }, { status: 400 });
   }
-  // Amount fudge tolerance — must match within a cent. Defends against
-  // client tampering with the total at this stage.
-  if (Math.abs(dbOrder.total - amount) > 0.01) {
+  // Charge total MINUS Reward Dollars applied (store credit = partial payment);
+  // must match within a cent. Defends against client tampering. Luigi 2026-06-27.
+  const chargeable = Math.round((dbOrder.total - (dbOrder.creditApplied ?? 0)) * 100) / 100;
+  if (Math.abs(chargeable - amount) > 0.01) {
     return NextResponse.json({ error: "Amount mismatch" }, { status: 400 });
   }
 
