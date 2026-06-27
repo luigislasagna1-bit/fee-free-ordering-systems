@@ -670,15 +670,21 @@ export function PromoDetailModal({
   if (GUIDED_PROMO_TYPES.has(promo.promotionType)) {
     const groups = (rules.groups ?? rules.itemGroups ?? []) as RuleConfigGroup[];
     if (groups.length > 0) {
-      // BOGO's free slot can be a partial discount; surface it as a badge.
-      // Other guided types are fully free (or combo-discounted as a whole).
+      // The freed slot can be a PARTIAL discount — surface the real % as a badge
+      // so it never says "FREE" when it's really 50% off (audit confusing#8).
+      // Covers bogo + buy_n_get_free (strategy-driven, incl. fixed_percent) AND
+      // free_dish_meal (discountPercent). Luigi 2026-06-27.
       let discountPct: number | undefined;
       const strategy = rules.discountStrategy ?? "cheapest";
-      if (promo.promotionType === "bogo") {
+      if (promo.promotionType === "bogo" || promo.promotionType === "buy_n_get_free") {
         discountPct =
-          strategy === "most_expensive"
-            ? Number(rules.mostExpensiveDiscount ?? 100)
-            : Number(rules.cheapestDiscount ?? 100);
+          strategy === "fixed_percent"
+            ? Number(rules.discountPercent ?? 0)
+            : strategy === "most_expensive"
+              ? Number(rules.mostExpensiveDiscount ?? 100)
+              : Number(rules.cheapestDiscount ?? 100);
+      } else if (promo.promotionType === "free_dish_meal") {
+        discountPct = Number(rules.discountPercent ?? 100);
       }
       return (
         <GuidedPromoModal
