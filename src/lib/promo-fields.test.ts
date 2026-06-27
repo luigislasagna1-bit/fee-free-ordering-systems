@@ -8,6 +8,7 @@ import {
   normalizeNonNegativeFloat,
   normalizeImageUrl,
   normalizeJsonStringList,
+  normalizeRuleConfig,
 } from "@/lib/promo-fields";
 
 describe("promo-fields normalisers (trust-but-verify wizard input)", () => {
@@ -26,6 +27,20 @@ describe("promo-fields normalisers (trust-but-verify wizard input)", () => {
     expect(normalizeOrderType('["delivery","pickup"]')).toBe('["delivery","pickup"]');
     expect(normalizeOrderType(["pickup", "delivery"])).toBe('["delivery","pickup"]');
     expect(normalizeOrderType("garbage")).toBe("both");
+  });
+
+  it("normalizeRuleConfig clamps percentages to 0–100 and amounts to ≥0", () => {
+    const out = normalizeRuleConfig({ discountPercent: 150, discountAmount: -5, bundlePrice: -2, groups: [{ extraFee: -1, minCount: -3, maxCount: 0 }] }) as any;
+    expect(out.discountPercent).toBe(100);
+    expect(out.discountAmount).toBe(0);
+    expect(out.bundlePrice).toBe(0);
+    expect(out.groups[0].extraFee).toBe(0);
+    expect(out.groups[0].minCount).toBe(0);
+    expect(out.groups[0].maxCount).toBe(1);
+    // A valid config is unchanged.
+    const ok = normalizeRuleConfig({ discountPercent: 25, discountAmount: 10 }) as any;
+    expect(ok.discountPercent).toBe(25);
+    expect(ok.discountAmount).toBe(10);
   });
 
   it("normalizeOrderType collapses ALL channels selected back to 'both' (unrestricted)", () => {

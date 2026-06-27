@@ -518,11 +518,21 @@ export async function POST(req: NextRequest) {
     const bundlePromoMap = new Map<string, { id: string; name: string; promotionType: string; ruleConfig: unknown; rules: string | null }>();
     if (bundlePromoIdSet.size > 0) {
       const ownerIds = Array.from(new Set([restaurant.id, menuRestaurantId]));
+      const nowTs = new Date();
       const bps = await prisma.promotion.findMany({
         where: {
           id: { in: Array.from(bundlePromoIdSet) },
           restaurantId: { in: ownerIds },
           isActive: true,
+          // Bundles bypass the promo engine (priced by composition), so the
+          // start/end window must be enforced HERE or an expired/not-yet-started
+          // bundle could still be composed + charged at its deal price (audit B2,
+          // partial). Fuller isEligible — min order / customer type / usage cap /
+          // time-of-day — is still TODO for bundles. Luigi 2026-06-27.
+          AND: [
+            { OR: [{ startsAt: null }, { startsAt: { lte: nowTs } }] },
+            { OR: [{ endsAt: null }, { endsAt: { gte: nowTs } }] },
+          ],
           promotionType: { in: ["meal_bundle", "meal_bundle_speciality"] },
         },
         select: { id: true, name: true, promotionType: true, ruleConfig: true, rules: true },
@@ -1411,6 +1421,9 @@ export async function POST(req: NextRequest) {
           price: i.price,
           quantity: i.quantity,
           subtotal: i.subtotal,
+          // Promo-freebie tag so free_item frees the CLAIMED item + the freed
+          // unit doesn't unlock its own trigger (audit). Luigi 2026-06-27.
+          isFreebie: typeof i.notes === "string" && i.notes.startsWith("Free with promo:"),
         })),
       paymentMethod,
       // Phase 2a: the Delivery Area restriction needs this. Undefined

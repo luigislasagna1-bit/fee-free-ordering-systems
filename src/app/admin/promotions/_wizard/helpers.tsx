@@ -94,7 +94,8 @@ export function initRulesForType(type: string): PromoRules {
       };
     case "buy_n_get_free":
       return {
-        groups: [newGroup("paid"), newGroup("free")],
+        // Seed the paid group's "buy N" count so it's explicit + editable.
+        groups: [{ ...newGroup("paid"), minCount: 1 }, newGroup("free")],
         discountStrategy: "cheapest",
         cheapestDiscount: 100,
       };

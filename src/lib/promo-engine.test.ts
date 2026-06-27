@@ -303,3 +303,99 @@ describe("resolvePromotions — cross-type stacking", () => {
     expect(resolvePromotions([big, small], ctx).results.map((r) => r.promoId)).toEqual([big.id]);
   });
 });
+
+// ─── Per-type debug fixes (group overlap, combos, bundles, free_item) ────────
+describe("engine math — per-type debug fixes", () => {
+  it("percentage_off: overlapping groups count each item ONCE (no double-discount)", () => {
+    const p = mkPromo({ promotionType: "percentage_off", ruleConfig: { discountPercent: 20, groups: [
+      { id: "a", categoryIds: ["cat1"], itemIds: [] },
+      { id: "b", categoryIds: ["cat1"], itemIds: [] },
+    ] } });
+    const ctx = mkCtx({ subtotal: 100, items: [{ menuItemId: "i1", categoryId: "cat1", price: 50, quantity: 2, subtotal: 100 }] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(20); // 20% of $100, NOT $200
+  });
+
+  it("percentage_combo: overlapping groups don't double-count the combo value", () => {
+    const p = mkPromo({ promotionType: "percentage_combo", ruleConfig: { discountPercent: 50, groups: [
+      { id: "a", categoryIds: ["cat1"], itemIds: [] },
+      { id: "b", categoryIds: ["cat1"], itemIds: [] },
+    ] } });
+    const ctx = mkCtx({ subtotal: 40, items: [{ menuItemId: "i1", categoryId: "cat1", price: 20, quantity: 2, subtotal: 40 }] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(20); // 50% of $40, NOT $80
+  });
+
+  it("fixed_combo / percentage_combo with NO groups never act as a whole-cart discount", () => {
+    expect(applyPromotions([mkPromo({ promotionType: "fixed_combo", ruleConfig: { discountAmount: 5, groups: [] } })], mkCtx())).toHaveLength(0);
+    expect(applyPromotions([mkPromo({ promotionType: "percentage_combo", ruleConfig: { discountPercent: 50, groups: [] } })], mkCtx())).toHaveLength(0);
+  });
+
+  it("meal_bundle: overlapping slots can't claim the same unit twice", () => {
+    const p = mkPromo({ promotionType: "meal_bundle", ruleConfig: { bundlePrice: 20, groups: [
+      { id: "a", minCount: 1, maxCount: 1, categoryIds: ["cat1"], itemIds: [] },
+      { id: "b", minCount: 1, maxCount: 1, categoryIds: ["cat1"], itemIds: [] },
+    ] } });
+    // 1 unit can't fill 2 distinct slots → no bundle.
+    expect(applyPromotions([p], mkCtx({ subtotal: 24, items: [{ menuItemId: "i1", categoryId: "cat1", price: 24, quantity: 1, subtotal: 24 }] }))).toHaveLength(0);
+    // 2 units → both slots fill → eligible $48 - $20 = $28.
+    expect(applyPromotions([p], mkCtx({ subtotal: 48, items: [{ menuItemId: "i1", categoryId: "cat1", price: 24, quantity: 2, subtotal: 48 }] }))[0]?.discount).toBe(28);
+  });
+
+  it("meal_bundle: minCount 0 is clamped to 1 (no auto-satisfy on an empty slot)", () => {
+    const p = mkPromo({ promotionType: "meal_bundle", ruleConfig: { bundlePrice: 5, groups: [
+      { id: "a", minCount: 0, maxCount: 1, categoryIds: ["cat1"], itemIds: [] },
+    ] } });
+    expect(applyPromotions([p], mkCtx({ subtotal: 10, items: [{ menuItemId: "x", categoryId: "catOTHER", price: 10, quantity: 1, subtotal: 10 }] }))).toHaveLength(0);
+  });
+
+  it("meal_bundle_speciality: per-slot extraFee reduces the savings", () => {
+    const p = mkPromo({ promotionType: "meal_bundle_speciality", ruleConfig: { bundlePrice: 20, groups: [
+      { id: "a", minCount: 1, maxCount: 1, extraFee: 5, categoryIds: ["cat1"], itemIds: [] },
+    ] } });
+    const ctx = mkCtx({ subtotal: 30, items: [{ menuItemId: "i1", categoryId: "cat1", price: 30, quantity: 1, subtotal: 30 }] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(5); // 30 - 20 - 5 fee
+  });
+
+  it("free_dish_meal: an overlapping trigger+free needs 2 units (a dish can't free itself)", () => {
+    const p = mkPromo({ promotionType: "free_dish_meal", ruleConfig: { discountPercent: 100, groups: [
+      { id: "t", role: "trigger", categoryIds: ["cat1"], itemIds: [] },
+      { id: "f", role: "free", categoryIds: ["cat1"], itemIds: [] },
+    ] } });
+    expect(applyPromotions([p], mkCtx({ subtotal: 20, items: [{ menuItemId: "i1", categoryId: "cat1", price: 20, quantity: 1, subtotal: 20 }] }))).toHaveLength(0);
+    expect(applyPromotions([p], mkCtx({ subtotal: 40, items: [{ menuItemId: "i1", categoryId: "cat1", price: 20, quantity: 2, subtotal: 40 }] }))[0]?.discount).toBe(20);
+  });
+
+  it("free_item: the freed unit can't unlock its own trigger (no $0 self-bootstrap)", () => {
+    const p = mkPromo({ promotionType: "free_item", ruleConfig: { triggerAmount: 20, groups: [
+      { id: "f", role: "free", categoryIds: ["cat1"], itemIds: [] },
+    ] } });
+    // Only the freebie in cart → 20 - 20 = 0 < 20 → not applied.
+    expect(applyPromotions([p], mkCtx({ subtotal: 20, items: [{ menuItemId: "i1", categoryId: "cat1", price: 20, quantity: 1, subtotal: 20 }] }))).toHaveLength(0);
+    // Plus a $25 non-eligible item → 45 - 20 = 25 ≥ 20 → free $20.
+    expect(applyPromotions([p], mkCtx({ subtotal: 45, items: [
+      { menuItemId: "i1", categoryId: "cat1", price: 20, quantity: 1, subtotal: 20 },
+      { menuItemId: "i2", categoryId: "catOTHER", price: 25, quantity: 1, subtotal: 25 },
+    ] }))[0]?.discount).toBe(20);
+  });
+
+  it("free_item: frees the CLAIMED freebie, not just the cheapest match", () => {
+    const p = mkPromo({ promotionType: "free_item", ruleConfig: { triggerAmount: 0, groups: [
+      { id: "f", role: "free", categoryIds: ["cat1"], itemIds: [] },
+    ] } });
+    const ctx = mkCtx({ subtotal: 28, items: [
+      { menuItemId: "cheap", categoryId: "cat1", price: 10, quantity: 1, subtotal: 10 },
+      { menuItemId: "claimed", categoryId: "cat1", price: 18, quantity: 1, subtotal: 18, isFreebie: true },
+    ] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(18); // the claimed $18, not the $10
+  });
+
+  it("buy_n_get_free: overlapping paid+free reserves a unit (not the whole qty free)", () => {
+    const p = mkPromo({ promotionType: "buy_n_get_free", ruleConfig: { groups: [
+      { id: "p", role: "paid", minCount: 1, categoryIds: ["cat1"], itemIds: [] },
+      { id: "f", role: "free", categoryIds: ["cat1"], itemIds: [] },
+    ] } });
+    // 2 pizzas, overlap → 1 set (1 paid + 1 free) → 1 free ($20), NOT both free.
+    expect(applyPromotions([p], mkCtx({ subtotal: 40, items: [{ menuItemId: "i1", categoryId: "cat1", price: 20, quantity: 2, subtotal: 40 }] }))[0]?.discount).toBe(20);
+    // 1 pizza → can't both buy and free it → nothing.
+    expect(applyPromotions([p], mkCtx({ subtotal: 20, items: [{ menuItemId: "i1", categoryId: "cat1", price: 20, quantity: 1, subtotal: 20 }] }))).toHaveLength(0);
+  });
+});

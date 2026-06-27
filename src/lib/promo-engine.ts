@@ -94,6 +94,10 @@ export type CartItem = {
   price: number;
   quantity: number;
   subtotal: number;
+  /** True when this line was added as a promo freebie ("Free with promo: …").
+   *  Lets free_item discount the CLAIMED freebie (not just the cheapest match)
+   *  and excludes the freed unit from its own trigger. Luigi 2026-06-27. */
+  isFreebie?: boolean;
 };
 
 export type PromoInput = {
@@ -370,24 +374,24 @@ function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
 
 // ── Item group matching ────────────────────────────────────────────────────────
 
-function itemsMatchingGroup(group: ItemGroup, items: CartItem[]): CartItem[] {
+/** Does a SINGLE cart item match a group? A group with NO targeting (no items,
+ *  categories, AND no variants) matches NOTHING — not the whole cart. CRITICAL
+ *  money-safety rule (Luigi 2026-06-11): whole-cart promos carry NO groups at
+ *  all, so a fully-empty *group* is always corruption / misconfiguration. The
+ *  old "empty → all items" behaviour turned a single lost categoryIds array into
+ *  catastrophic over-discounting. Shared by EVERY multi-group promo type. */
+function itemMatchesGroup(group: ItemGroup, i: CartItem): boolean {
   const { itemIds = [], categoryIds = [], variantIds = [] } = group;
-  // A group with NO targeting (no items, categories, AND no variants) matches
-  // NOTHING — not the whole cart. CRITICAL money-safety rule (Luigi 2026-06-11):
-  // whole-cart promos carry NO groups at all (handled by the no-groups branch
-  // in calcPercentageOff), so a fully-empty *group* is always corruption /
-  // misconfiguration. The old "empty → all items" behaviour turned a single
-  // lost categoryIds array into catastrophic over-discounting — a 2-group
-  // "Drink/Salad 50%" combo discounted 100% of a cart that had neither, because
-  // both empty groups matched everything and the value was double-counted. This
-  // is shared logic, so the guard protects EVERY multi-group promo type
-  // (combo / bogo / buy_n_get_free / meal_bundle / free_item / …) at once.
-  if (!itemIds.length && !categoryIds.length && !variantIds.length) return [];
-  return items.filter(i =>
+  if (!itemIds.length && !categoryIds.length && !variantIds.length) return false;
+  return (
     itemIds.includes(i.menuItemId) ||
     (i.categoryId != null && categoryIds.includes(i.categoryId)) ||
     (i.variantId != null && variantIds.includes(i.variantId))
   );
+}
+
+function itemsMatchingGroup(group: ItemGroup, items: CartItem[]): CartItem[] {
+  return items.filter((i) => itemMatchesGroup(group, i));
 }
 
 function groupTotalQty(group: ItemGroup, items: CartItem[]): number {
@@ -401,22 +405,34 @@ function groupTotalQty(group: ItemGroup, items: CartItem[]): number {
  *  one item per group (the customer's best single combo) instead of every
  *  qualifying item. Luigi 2026-06-07. */
 function oneComboValue(groups: ItemGroup[], items: CartItem[]): number {
+  // Each group contributes its single best item, but a given cart LINE can only
+  // be claimed by ONE group — otherwise two overlapping groups (e.g. both target
+  // "Pizzas") would both count the same pizza, double-charging the combo value
+  // (audit percentage_combo over-count). Greedily give each group its best still-
+  // unclaimed match. Luigi 2026-06-27.
   let total = 0;
+  const used = new Set<CartItem>();
   for (const group of groups) {
-    const matched = itemsMatchingGroup(group, items);
+    const matched = itemsMatchingGroup(group, items).filter((i) => !used.has(i));
     if (!matched.length) continue;
-    total += Math.max(...matched.map((i) => i.price));
+    const best = matched.reduce((a, b) => (a.price >= b.price ? a : b));
+    used.add(best);
+    total += best.price;
   }
   return total;
 }
 
-/** Sum of every qualifying item across all groups. */
+/** Sum of every qualifying item across all groups — each cart item counted ONCE
+ *  even if it matches multiple groups (dedup by identity), so overlapping groups
+ *  can't inflate the eligible base (audit percentage_off / percentage_combo
+ *  over-count). Luigi 2026-06-27. */
 function allGroupsValue(groups: ItemGroup[], items: CartItem[]): number {
-  let total = 0;
+  const matched = new Set<CartItem>();
   for (const group of groups) {
-    const matched = itemsMatchingGroup(group, items);
-    total += matched.reduce((s, i) => s + i.subtotal, 0);
+    for (const i of itemsMatchingGroup(group, items)) matched.add(i);
   }
+  let total = 0;
+  for (const i of matched) total += i.subtotal;
   return total;
 }
 
@@ -604,17 +620,25 @@ function buyNGetFreeResult(promo: PromoInput, ctx: ApplyContext): { total: numbe
   const paidGroups = groups.filter(g => g.role === "paid" || g.role === "required");
   const freeGroup = groups.find(g => g.role === "free");
   if (!freeGroup) return EMPTY;
+  const freeItems = itemsMatchingGroup(freeGroup, ctx.items);
+  if (!freeItems.length) return EMPTY;
+  const freeIds = new Set(freeItems.map((i) => i.menuItemId));
   // Each paid group has a minCount (defaults to 1). The promo unlocks
-  // floor(actualQty / minCount) "sets" per paid group; the customer
-  // gets ONE free item per FULL set across all paid groups (i.e. the
-  // bottleneck group caps the multiplier).
+  // floor(actualQty / need) "sets" per paid group; the bottleneck group caps the
+  // multiplier. When a paid group OVERLAPS the free group (the same items satisfy
+  // both, e.g. "buy 1 pizza get 1 pizza free"), each set must also spare a unit
+  // to be freed, so it needs need+1 units — otherwise the WHOLE qualifying
+  // quantity went free (audit overlap bug; mirrors BOGO's guard). Luigi 2026-06-27.
   let multiplier = Infinity;
   for (const pg of paidGroups) {
     const need = pg.minCount ?? 1;
     if (need < 1) continue;
-    const have = groupTotalQty(pg, ctx.items);
-    if (have < need) return EMPTY;
-    multiplier = Math.min(multiplier, Math.floor(have / need));
+    const pgItems = itemsMatchingGroup(pg, ctx.items);
+    const have = pgItems.reduce((s, i) => s + i.quantity, 0);
+    const overlaps = pgItems.some((i) => freeIds.has(i.menuItemId));
+    const per = overlaps ? need + 1 : need;
+    if (have < per) return EMPTY;
+    multiplier = Math.min(multiplier, Math.floor(have / per));
   }
   if (!Number.isFinite(multiplier) || multiplier < 1) {
     // No paid-group gating at all — fall back to single application.
@@ -622,8 +646,6 @@ function buyNGetFreeResult(promo: PromoInput, ctx: ApplyContext): { total: numbe
   }
   // "Only allowed once per order" caps the freebie to a single application.
   if (rules.oncePerOrder) multiplier = Math.min(multiplier, 1);
-  const freeItems = itemsMatchingGroup(freeGroup, ctx.items);
-  if (!freeItems.length) return EMPTY;
   // Honor the "Fixed discount percentage" strategy (see bogoResult) — otherwise
   // discountPercent was discarded and the freebie went 100% off (audit B1).
   const strat = rules.discountStrategy ?? "cheapest";
@@ -693,44 +715,65 @@ function calcPaymentReward(promo: PromoInput, ctx: ApplyContext): number {
 
 function calcFreeItem(promo: PromoInput, ctx: ApplyContext): number {
   const rules = getRules(promo);
-  if (rules.triggerAmount && ctx.subtotal < rules.triggerAmount) return 0;
   const freeGroup = rules.groups?.find(g => g.role === "free") ?? rules.groups?.[0];
   if (!freeGroup) return 0;
   const eligible = itemsMatchingGroup(freeGroup, ctx.items);
   if (!eligible.length) return 0;
-  const sorted = [...eligible].sort((a, b) => a.price - b.price);
-  return sorted[0].price;
+  // Free the CLAIMED freebie if the customer picked one (tagged isFreebie),
+  // otherwise the cheapest eligible unit. Before, it ALWAYS freed the cheapest
+  // category match, so a customer who claimed a pricier freebie overpaid (audit).
+  const claimed = eligible.find((i) => i.isFreebie);
+  const freedAmount = (claimed ?? [...eligible].sort((a, b) => a.price - b.price)[0]).price;
+  // The freed unit must NOT count toward unlocking its own trigger — otherwise a
+  // customer reached the threshold by adding only the free item and walked away
+  // with a $0 order (audit self-bootstrap). Compare the trigger against the cart
+  // MINUS the freed unit. Luigi 2026-06-27.
+  const trigger = rules.triggerAmount ?? 0;
+  if (trigger > 0 && ctx.subtotal - freedAmount < trigger) return 0;
+  return freedAmount;
 }
 
 function calcMealBundle(promo: PromoInput, ctx: ApplyContext): number {
   const rules = getRules(promo);
   const groups = rules.groups ?? [];
   if (!groups.length) return 0;
-  // Check each group satisfies its minCount
-  for (const group of groups) {
-    const min = group.minCount ?? 1;
-    if (groupTotalQty(group, ctx.items) < min) return 0;
+  const isSpeciality = promo.promotionType === "meal_bundle_speciality";
+
+  // Expand the cart to individual UNITS so each physical unit fills at most ONE
+  // slot — overlapping slots (e.g. two "Pizza" groups) must not both claim the
+  // same pizza, which double-counted the discount on loose/freeform carts
+  // (audit). Each unit carries its per-unit price + a reference to its cart item
+  // for group matching. Luigi 2026-06-27.
+  const units: { price: number; item: CartItem; used: boolean }[] = [];
+  for (const i of ctx.items) {
+    const unit = i.quantity > 0 ? i.subtotal / i.quantity : i.subtotal;
+    for (let q = 0; q < i.quantity; q++) units.push({ price: unit, item: i, used: false });
   }
-  // Discount = (value of the items that FILL the bundle slots) - bundlePrice.
-  // Cap each group's contribution at its maxCount UNITS (most-expensive first)
-  // so extra qualifying items beyond the slot size are NOT folded into the flat
-  // bundle price — they stay at full price. Without the cap, a "2 pizzas for
-  // $20" bundle discounted ALL pizzas in the cart down to $20 (audit B7).
+
   let eligibleTotal = 0;
+  let feeTotal = 0;
   for (const group of groups) {
-    const matched = itemsMatchingGroup(group, ctx.items);
-    const min = group.minCount ?? 1;
+    // minCount clamped to >=1 so a slot saved with min 0 can't auto-satisfy or
+    // auto-fold priciest units for free (audit). maxCount >= min.
+    const min = Math.max(1, group.minCount ?? 1);
     const cap = Math.max(min, group.maxCount ?? min);
-    const units: number[] = [];
-    for (const i of matched) {
-      const unit = i.quantity > 0 ? i.subtotal / i.quantity : i.subtotal;
-      for (let q = 0; q < i.quantity; q++) units.push(unit);
+    const avail = units
+      .filter((u) => !u.used && itemMatchesGroup(group, u.item))
+      .sort((a, b) => b.price - a.price);
+    // Each slot needs `min` DISTINCT units; if the cart can't supply them with
+    // units not already claimed by another slot, the bundle doesn't qualify.
+    if (avail.length < min) return 0;
+    const take = avail.slice(0, cap);
+    for (const u of take) {
+      u.used = true;
+      eligibleTotal += u.price;
     }
-    units.sort((a, b) => b - a);
-    eligibleTotal += units.slice(0, cap).reduce((s, u) => s + u, 0);
+    // Speciality bundles add a per-slot fee per claimed unit — it's NOT part of
+    // the discount, so it reduces the savings (customer pays bundlePrice + fees).
+    if (isSpeciality) feeTotal += Math.max(0, Number(group.extraFee ?? 0)) * take.length;
   }
   const bundlePrice = rules.bundlePrice ?? 0;
-  return Math.max(0, parseFloat((eligibleTotal - bundlePrice).toFixed(2)));
+  return Math.max(0, parseFloat((eligibleTotal - bundlePrice - feeTotal).toFixed(2)));
 }
 
 function calcFreeDishMeal(promo: PromoInput, ctx: ApplyContext): number {
@@ -739,12 +782,21 @@ function calcFreeDishMeal(promo: PromoInput, ctx: ApplyContext): number {
   const triggerGroups = groups.filter(g => g.role === "trigger");
   const freeGroup = groups.find(g => g.role === "free");
   if (!freeGroup) return 0;
-  // All trigger groups must be satisfied
-  for (const tg of triggerGroups) {
-    if (groupTotalQty(tg, ctx.items) < 1) return 0;
-  }
+  // A free dish needs an ACTUAL meal too — at least one trigger group must exist.
+  if (!triggerGroups.length) return 0;
   const freeItems = itemsMatchingGroup(freeGroup, ctx.items);
   if (!freeItems.length) return 0;
+  // All trigger groups satisfied. When a trigger group OVERLAPS the free group
+  // (the same dish can satisfy both), require 2 units — one to satisfy the meal,
+  // one to be freed — so a single dish can't free itself (mirrors BOGO's overlap
+  // guard). Luigi 2026-06-27.
+  const freeIds = new Set(freeItems.map((i) => i.menuItemId));
+  for (const tg of triggerGroups) {
+    const tgItems = itemsMatchingGroup(tg, ctx.items);
+    const overlaps = tgItems.some((i) => freeIds.has(i.menuItemId));
+    const need = overlaps ? 2 : 1;
+    if (tgItems.reduce((s, i) => s + i.quantity, 0) < need) return 0;
+  }
   const pct = rules.discountPercent ?? 100;
   const sorted = [...freeItems].sort((a, b) => a.price - b.price);
   return parseFloat((sorted[0].price * (pct / 100)).toFixed(2));
@@ -753,6 +805,9 @@ function calcFreeDishMeal(promo: PromoInput, ctx: ApplyContext): number {
 function calcFixedCombo(promo: PromoInput, ctx: ApplyContext): number {
   const rules = getRules(promo);
   const groups = rules.groups ?? [];
+  // A combo with NO groups is a misconfiguration — must NOT behave like an
+  // unconditional whole-cart discount (audit). Luigi 2026-06-27.
+  if (!groups.length) return 0;
   for (const group of groups) {
     if (groupTotalQty(group, ctx.items) < 1) return 0;
   }
@@ -762,6 +817,7 @@ function calcFixedCombo(promo: PromoInput, ctx: ApplyContext): number {
 function calcPercentageCombo(promo: PromoInput, ctx: ApplyContext): number {
   const rules = getRules(promo);
   const groups = rules.groups ?? [];
+  if (!groups.length) return 0; // no groups = misconfig, never whole-cart
   for (const group of groups) {
     if (groupTotalQty(group, ctx.items) < 1) return 0;
   }
@@ -776,7 +832,8 @@ function calcPercentageCombo(promo: PromoInput, ctx: ApplyContext): number {
 }
 
 function calcMealBundleSpeciality(promo: PromoInput, ctx: ApplyContext): number {
-  // Same as meal bundle - extra fee is added at UI level, discount = bundle savings
+  // calcMealBundle is speciality-aware (it reads promo.promotionType and
+  // subtracts per-slot extraFee from the savings). Luigi 2026-06-27.
   return calcMealBundle(promo, ctx);
 }
 

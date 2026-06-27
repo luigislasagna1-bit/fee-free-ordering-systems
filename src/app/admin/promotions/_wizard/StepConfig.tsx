@@ -306,6 +306,9 @@ function TypeSpecific({
             defaultRole="paid"
             addLabel={t("addPaidGroupLabel")}
             minGroups={1}
+            // Expose the "buy N" count — without it every Buy-N-Get-Free was
+            // stuck at Buy-1-Get-1 (minCount could never be set). Luigi 2026-06-27.
+            showSlotConfig
           />
           <SL label={t("bogoFreeGroupLabel")} sub={t("bogoFreeGroupSub")} />
           <ItemGroupRow

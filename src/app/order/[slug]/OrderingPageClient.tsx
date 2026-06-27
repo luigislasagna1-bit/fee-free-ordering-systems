@@ -1982,6 +1982,9 @@ export function OrderingPageClient({
             : (ci.unitPrice ?? ci.variant?.price ?? ci.menuItem.price),
           quantity: ci.quantity,
           subtotal: ci.lineTotal,
+          // Tag promo-freebie lines so free_item frees the CLAIMED item + the
+          // freed unit doesn't unlock its own trigger (audit). Luigi 2026-06-27.
+          isFreebie: typeof ci.notes === "string" && ci.notes.startsWith("Free with promo:"),
         })),
         // Phase 2a restriction inputs — forward the resolved delivery
         // zone (so Delivery Area-restricted promos like "Free delivery

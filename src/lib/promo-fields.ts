@@ -145,19 +145,39 @@ export function normalizeChannel(v: unknown): string {
   return "website";
 }
 
-/** Round-trip a Json-typed payload to a parsed object/array suitable for
- *  Prisma's Json column. Garbage in → {} out. */
+/** Round-trip a Json-typed payload to a parsed object suitable for Prisma's Json
+ *  column, AND clamp the numeric fields so a mistyped value can't misbehave at
+ *  apply time: percentages to 0–100, money/amount fields to ≥0, slot counts to
+ *  sane integers. Protects EVERY percent-bearing type at once (audit: a >100%
+ *  discount silently zeroed the cart). Garbage in → {} out. Luigi 2026-06-27. */
 export function normalizeRuleConfig(v: unknown): unknown {
+  let obj: any;
   if (v === null || v === undefined) return {};
   if (typeof v === "string") {
-    try {
-      return JSON.parse(v);
-    } catch {
-      return {};
+    try { obj = JSON.parse(v); } catch { return {}; }
+  } else if (typeof v === "object") {
+    obj = v;
+  } else {
+    return {};
+  }
+  if (!obj || typeof obj !== "object" || Array.isArray(obj)) return obj ?? {};
+  const clamp01 = (n: unknown) => { const x = Number(n); return Number.isFinite(x) ? Math.max(0, Math.min(100, x)) : n; };
+  const clampPos = (n: unknown) => { const x = Number(n); return Number.isFinite(x) ? Math.max(0, x) : n; };
+  for (const k of ["discountPercent", "cheapestDiscount", "mostExpensiveDiscount"]) {
+    if (obj[k] != null) obj[k] = clamp01(obj[k]);
+  }
+  for (const k of ["discountAmount", "bundlePrice", "triggerAmount"]) {
+    if (obj[k] != null) obj[k] = clampPos(obj[k]);
+  }
+  if (Array.isArray(obj.groups)) {
+    for (const g of obj.groups) {
+      if (!g || typeof g !== "object") continue;
+      if (g.extraFee != null) g.extraFee = clampPos(g.extraFee);
+      if (g.minCount != null) g.minCount = Math.max(0, Math.floor(Number(g.minCount) || 0));
+      if (g.maxCount != null) g.maxCount = Math.max(1, Math.floor(Number(g.maxCount) || 1));
     }
   }
-  if (typeof v === "object") return v;
-  return {};
+  return obj;
 }
 
 /** Sanitise Limited Showtime schedules. Each row = { dayOfWeek 0-6,
