@@ -696,6 +696,29 @@ function promoBreakdown(promo: PromoInput, ctx: ApplyContext): DiscountLine[] {
       }
       return lines;
     }
+    case "free_item": {
+      // One line for the freed dish (claimed freebie, else cheapest eligible) —
+      // matches calcFreeItem so the cart names the actual discounted item.
+      const rules = getRules(promo);
+      const freeGroup = rules.groups?.find((g) => g.role === "free") ?? rules.groups?.[0];
+      if (!freeGroup) return [];
+      const eligible = itemsMatchingGroup(freeGroup, ctx.items);
+      if (!eligible.length) return [];
+      const freebie = eligible.find((i) => i.isFreebie) ?? [...eligible].sort((a, b) => a.price - b.price)[0];
+      return [{ menuItemId: freebie.menuItemId, amount: parseFloat(freebie.price.toFixed(2)) }];
+    }
+    case "free_dish_meal": {
+      // One line for the freed dish (cheapest free-group item × discount%) so the
+      // cart shows WHICH dish — and at the real (possibly partial) amount.
+      const rules = getRules(promo);
+      const freeGroup = rules.groups?.find((g) => g.role === "free");
+      if (!freeGroup) return [];
+      const freeItems = itemsMatchingGroup(freeGroup, ctx.items);
+      if (!freeItems.length) return [];
+      const pct = rules.discountPercent ?? 100;
+      const cheapest = [...freeItems].sort((a, b) => a.price - b.price)[0];
+      return [{ menuItemId: cheapest.menuItemId, amount: parseFloat((cheapest.price * (pct / 100)).toFixed(2)) }];
+    }
     default:               return [];
   }
 }

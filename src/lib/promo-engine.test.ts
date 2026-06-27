@@ -422,3 +422,30 @@ describe("engine math — buy_n_get_free most-expensive default", () => {
     expect(applyPromotions([p], ctx)[0]?.discount).toBe(18);
   });
 });
+
+describe("engine breakdown — free_item / free_dish_meal name the dish", () => {
+  it("free_item breakdown names the freed (cheapest eligible) dish + amount", () => {
+    const p = mkPromo({ promotionType: "free_item", ruleConfig: { triggerAmount: 0, groups: [{ id: "f", role: "free", categoryIds: ["cat1"], itemIds: [] }] } });
+    const ctx = mkCtx({ subtotal: 30, items: [
+      { menuItemId: "cheap", categoryId: "cat1", price: 10, quantity: 1, subtotal: 10 },
+      { menuItemId: "other", categoryId: "catX", price: 20, quantity: 1, subtotal: 20 },
+    ] });
+    const r = applyPromotions([p], ctx)[0];
+    expect(r?.breakdown?.[0]?.menuItemId).toBe("cheap");
+    expect(r?.breakdown?.[0]?.amount).toBe(10);
+  });
+
+  it("free_dish_meal breakdown reflects a PARTIAL discount (50% of the dish)", () => {
+    const p = mkPromo({ promotionType: "free_dish_meal", ruleConfig: { discountPercent: 50, groups: [
+      { id: "t", role: "trigger", categoryIds: ["catT"], itemIds: [] },
+      { id: "f", role: "free", categoryIds: ["catF"], itemIds: [] },
+    ] } });
+    const ctx = mkCtx({ subtotal: 40, items: [
+      { menuItemId: "trig", categoryId: "catT", price: 20, quantity: 1, subtotal: 20 },
+      { menuItemId: "dish", categoryId: "catF", price: 20, quantity: 1, subtotal: 20 },
+    ] });
+    const r = applyPromotions([p], ctx)[0];
+    expect(r?.breakdown?.[0]?.menuItemId).toBe("dish");
+    expect(r?.breakdown?.[0]?.amount).toBe(10); // 50% of $20
+  });
+});

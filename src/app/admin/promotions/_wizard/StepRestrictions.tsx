@@ -320,7 +320,10 @@ export function StepRestrictions({
         </div>
       </Section>
 
-      {/* PAYMENT */}
+      {/* PAYMENT — hidden for payment_reward: its reward method is set in step 2
+          (rules.paymentMethod), so a second method restriction here is redundant
+          and could contradict it, making the promo unfireable (audit). */}
+      {promotionType !== "payment_reward" && (
       <Section
         title={t("paymentTitle")}
         subtitle={t("paymentSubtitle")}
@@ -350,6 +353,7 @@ export function StepRestrictions({
           </div>
         )}
       </Section>
+      )}
 
       {/* DELIVERY AREA (only when delivery is a chosen channel) */}
       {form.orderType.includes("delivery") && (
