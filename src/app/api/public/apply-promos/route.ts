@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { resolvePromotions, totalPromoDiscount, type ApplyContext } from "@/lib/promo-engine";
 import { parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
-import { usedLifetimePromoIds, resolveAssignedPromoByCode } from "@/lib/coupon-ledger";
+import { usedLifetimePromoIds, resolveAssignedPromoByCode, findActiveGrants } from "@/lib/coupon-ledger";
 import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
 
 export async function POST(req: NextRequest) {
@@ -131,28 +131,58 @@ export async function POST(req: NextRequest) {
   // (so a signed-in customer like the one above gets the right preview even
   // before they re-type their details). Without an identity we can't know, so
   // we stay optimistic — the order route is the authoritative backstop.
+  // Resolve the customer identity ONCE — checkout email/phone if present, else
+  // the logged-in restaurant-customer session — for both the auto-apply-grant
+  // inclusion and the lifetime check below. Luigi 2026-06-27.
+  let idEmail = previewEmail;
+  let idPhone = previewPhone;
+  if (!idEmail && !idPhone) {
+    try {
+      const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
+      if (me) { idEmail = me.email?.trim().toLowerCase() ?? null; idPhone = me.phone?.trim() ?? null; }
+    } catch { /* not logged in — stay optimistic */ }
+  }
+
+  // ── Auto-apply VIP-group / assigned grants (Program 3) ───────────────────
+  // A member who is signed in (or typed a matching email) gets their granted
+  // promo applied with NO code. The Promotion itself is autoApply:false (so it
+  // never leaks to non-members via the general pool); the GRANT carries
+  // autoApply:true. Surface only the grants for THIS identity, forcing
+  // autoApply=true on an in-memory copy so the engine applies it (still
+  // isEligible-gated). Code-only grants keep the existing code+email path.
+  if (idEmail || idPhone) {
+    try {
+      const grants = await findActiveGrants({ restaurantId: restaurant.id, email: idEmail, phone: idPhone });
+      const autoIds = new Set(grants.filter((g) => g.autoApply).map((g) => g.promotionId));
+      if (autoIds.size > 0) {
+        for (let i = 0; i < activePromos.length; i++) {
+          if (autoIds.has(activePromos[i].id)) {
+            activePromos[i] = { ...activePromos[i], autoApply: true } as any;
+            autoIds.delete(activePromos[i].id);
+          }
+        }
+        if (autoIds.size > 0) {
+          const extra = await prisma.promotion.findMany({
+            where: { id: { in: [...autoIds] }, restaurantId: restaurant.id, isActive: true },
+          });
+          for (const p of extra) if (!suppressed.has(p.id)) activePromos.push({ ...(p as any), autoApply: true });
+        }
+      }
+    } catch (e) { console.error("[apply-promos findActiveGrants]", e); }
+  }
+
   const hasUsedLifetime: Record<string, boolean> = {};
   {
     const lifetimeIds = activePromos.filter((p) => (p as any).onceLifetimePerClient).map((p) => p.id);
-    if (lifetimeIds.length > 0) {
-      let idEmail = previewEmail;
-      let idPhone = previewPhone;
-      if (!idEmail && !idPhone) {
-        try {
-          const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
-          if (me) { idEmail = me.email?.trim().toLowerCase() ?? null; idPhone = me.phone?.trim() ?? null; }
-        } catch { /* not logged in — stay optimistic */ }
-      }
-      if (idEmail || idPhone) {
-        // Same per-promo source of truth the order route uses, so preview == charge.
-        const used = await usedLifetimePromoIds({
-          restaurantId: restaurant.id,
-          promotionIds: lifetimeIds,
-          email: idEmail,
-          phone: idPhone,
-        });
-        for (const id of used) hasUsedLifetime[id] = true;
-      }
+    if (lifetimeIds.length > 0 && (idEmail || idPhone)) {
+      // Same per-promo source of truth the order route uses, so preview == charge.
+      const used = await usedLifetimePromoIds({
+        restaurantId: restaurant.id,
+        promotionIds: lifetimeIds,
+        email: idEmail,
+        phone: idPhone,
+      });
+      for (const id of used) hasUsedLifetime[id] = true;
     }
   }
 

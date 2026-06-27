@@ -135,7 +135,7 @@ function PromoCard({
                 promo has no usage limit. Luigi 2026-06-09. */}
             {promo.campaignRef && (
               <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 font-semibold">
-                {isAssignedRef(promo.campaignRef) ? t("labelAssigned") : campaignLabel(promo.campaignRef)}
+                {isGroupRef(promo.campaignRef) ? t("labelVip") : isAssignedRef(promo.campaignRef) ? t("labelAssigned") : campaignLabel(promo.campaignRef)}
               </span>
             )}
             {promo.campaignRef && !promo.usageLimit && (
@@ -202,10 +202,14 @@ type TabFilter = "all" | "promotions" | "active" | "inactive" | "expired" | "sel
 /** Friendly "created for" label for a pre-made (campaign-owned) promo. The
  *  campaign names are PRODUCT names (proper nouns), so they're the same in
  *  every language — no translation key needed. Luigi 2026-06-09. */
-/** A 1:1 promotion assigned to a specific customer (the assign-to-customer
- *  flow stamps campaignRef "assigned_manual"). */
+/** A promotion assigned to a specific customer (campaignRef "assigned_manual")
+ *  OR to a whole VIP group ("assigned_group:<id>") — both belong in the
+ *  Assigned tab, not Pre-made. */
+function isGroupRef(ref: string | null | undefined): boolean {
+  return !!ref && ref.startsWith("assigned_group");
+}
 function isAssignedRef(ref: string | null | undefined): boolean {
-  return !!ref && ref.startsWith("assigned_manual");
+  return !!ref && (ref.startsWith("assigned_manual") || ref.startsWith("assigned_group"));
 }
 
 function campaignLabel(ref: string | null | undefined): string | null {

@@ -384,6 +384,7 @@ model Restaurant {
   cartSessions           CartSession[]
   prospectImports        ProspectImport[]
   customerCoupons        CustomerCoupon[]
+  customerGroups         CustomerGroup[]
 
   // Reseller Partner Program — set at restaurant creation when the signup
   // carried a ?ref=<referralCode> from an approved reseller. Nullable: most
@@ -1391,6 +1392,7 @@ model Customer {
   addresses       RestaurantCustomerAddress[]
   assignedCoupons Coupon[]         @relation("CouponAssignedCustomer")
   customerCoupons CustomerCoupon[]
+  groupMemberships CustomerGroupMember[]
 
   @@index([restaurantId])
   @@index([restaurantId, email])
@@ -1612,6 +1614,12 @@ model Promotion {
   campaignRef      String?
   campaignSequence Int?
 
+  // VIP group this promo was assigned to (Program 3). Set when the owner
+  // assigns a promo to a whole CustomerGroup; lets the admin list badge it
+  // "VIP: <group>". NULL for everything else. campaignRef is also stamped
+  // "assigned_group:<id>" for symmetry with the 1:1 "assigned_manual".
+  customerGroupId  String?
+
   // ── Restrictions (embedded wizard knobs, NOT a separate modal) ───────
   //
   // Per Luigi's 2026-05-29 clarification: the 8 GloriaFood "restrictions"
@@ -1670,9 +1678,11 @@ model Promotion {
 
   restaurant      Restaurant       @relation(fields: [restaurantId], references: [id])
   customerCoupons CustomerCoupon[]
+  customerGroup   CustomerGroup?   @relation(fields: [customerGroupId], references: [id], onDelete: SetNull)
 
   @@index([restaurantId, isActive])
   @@index([campaignRef])
+  @@index([customerGroupId])
 }
 
 /// ── Coupon-grant ledger (Luigi 2026-06-09) ──────────────────────────────
@@ -1744,6 +1754,56 @@ model CustomerCoupon {
   // Code-redemption lookup (resolveAssignedPromoByCode): "is there a grant with
   // this code at this restaurant?" before matching the checkout identity.
   @@index([restaurantId, code])
+}
+
+// ─── VIP Customer Groups (Program 3, 2026-06-27) ───────────────────────
+//
+// Named groups of customers (e.g. "Milton Soccer") the owner can assign a
+// promotion to ALL AT ONCE. A group mixes registered restaurant-customers
+// (linked by customerId) AND guests / not-yet-customers (raw email/phone) —
+// same identity model as CustomerCoupon, so assigning a group promo just loops
+// grantCoupon() over the members. Restaurant-customer accounts only (the
+// marketplace CustomerAccount is separate). Free feature.
+model CustomerGroup {
+  id           String   @id @default(cuid())
+  restaurantId String
+  name         String
+  description  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  restaurant Restaurant            @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  members    CustomerGroupMember[]
+  promotions Promotion[]
+
+  @@unique([restaurantId, name])
+  @@index([restaurantId])
+}
+
+model CustomerGroupMember {
+  id      String @id @default(cuid())
+  groupId String
+  // Denormalised so member queries / scoping never need to join the group.
+  restaurantId String
+
+  // A member is EITHER a linked restaurant-customer (customerId set) OR a raw
+  // contact typed/pasted by the owner (email/phone/name) for someone who hasn't
+  // ordered yet. At least one identifier is set; customerId is filled in when a
+  // matching Customer row exists (or is later created).
+  customerId String?
+  email      String?
+  phone      String?
+  name       String?
+
+  addedAt DateTime @default(now())
+
+  group    CustomerGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  customer Customer?     @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
+  // A linked customer can only be in a group once.
+  @@unique([groupId, customerId])
+  @@index([groupId])
+  @@index([restaurantId, email])
 }
 
 // ─── Marketing Suite (GloriaFood parity, 2026-05-29) ───────────────────

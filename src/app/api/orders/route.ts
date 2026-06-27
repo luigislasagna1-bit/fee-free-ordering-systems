@@ -19,7 +19,7 @@ import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/li
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 import { resolveInheritedHours } from "@/lib/inherited-data";
-import { usedLifetimePromoIds, resolveAssignedPromoByCode } from "@/lib/coupon-ledger";
+import { usedLifetimePromoIds, resolveAssignedPromoByCode, findActiveGrants } from "@/lib/coupon-ledger";
 import { hasFeature } from "@/lib/entitlements";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
@@ -1325,6 +1325,42 @@ export async function POST(req: NextRequest) {
         select: { id: true },
       });
       if (account) isMemberForPromo = true;
+    }
+
+    // ── Auto-apply VIP-group / assigned grants (Program 3) ──────────────────
+    // Mirrors apply-promos so preview == charge. A member identified by email/
+    // phone gets their granted promo applied with NO code; the Promotion itself
+    // is autoApply:false so it never leaks to non-members. Force autoApply on the
+    // member's granted promos so the engine applies them (still isEligible- and
+    // lifetime-gated below). Inserted BEFORE the lifetime check so once-per-
+    // lifetime still bites. Luigi 2026-06-27.
+    if (promoCustomerEmail || customerPhone) {
+      try {
+        const grants = await findActiveGrants({
+          restaurantId: restaurant.id,
+          email: promoCustomerEmail,
+          phone: typeof customerPhone === "string" ? customerPhone : null,
+        });
+        const autoIds = new Set(grants.filter((g) => g.autoApply).map((g) => g.promotionId));
+        if (autoIds.size > 0) {
+          for (let i = 0; i < activePromos.length; i++) {
+            if (autoIds.has(activePromos[i].id)) {
+              activePromos[i] = { ...activePromos[i], autoApply: true } as any;
+              autoIds.delete(activePromos[i].id);
+            }
+          }
+          if (autoIds.size > 0) {
+            const extra = await prisma.promotion.findMany({
+              where: {
+                id: { in: [...autoIds] },
+                isActive: true,
+                OR: [{ restaurantId: restaurant.id }, { restaurantId: { in: promoOwnerIds }, scope: "brand" }],
+              },
+            });
+            for (const p of extra) if (!suppressedSet.has(p.id)) activePromos.push({ ...(p as any), autoApply: true });
+          }
+        }
+      } catch (e) { console.error("[orders findActiveGrants]", e); }
     }
 
     // ── Coupon ledger (precise, phone-aware) ────────────────────────────────
