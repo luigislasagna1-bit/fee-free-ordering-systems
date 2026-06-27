@@ -6,12 +6,13 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { Crown, Plus, Users, Trash2, Pencil, Tag, Gift } from "lucide-react";
+import { formatCurrency } from "@/lib/utils";
 
 type Group = { id: string; name: string; description: string | null; memberCount: number; updatedAt: string };
 type Promo = { id: string; name: string; isActive: boolean; promotionType: string; ruleConfig: any };
 type Target = { id: string; promotionId: string; promoName: string; promotionType: string; isActive: boolean; ruleConfig: any; name: string | null; email: string | null; hasAccount: boolean };
 
-export default function CustomerGroupsClient({ initialGroups, initialMemberLabel }: { initialGroups: Group[]; initialMemberLabel: string }) {
+export default function CustomerGroupsClient({ initialGroups, initialMemberLabel, currency }: { initialGroups: Group[]; initialMemberLabel: string; currency: string }) {
   const t = useTranslations("admin.customerGroups");
   const router = useRouter();
   const [groups, setGroups] = useState<Group[]>(initialGroups);
@@ -82,7 +83,7 @@ export default function CustomerGroupsClient({ initialGroups, initialMemberLabel
 
   function discChip(rc: any): string | null {
     if (typeof rc?.discountPercent === "number" && rc.discountPercent > 0) return `${rc.discountPercent}%`;
-    if (typeof rc?.discountAmount === "number" && rc.discountAmount > 0) return `${rc.discountAmount}`;
+    if (typeof rc?.discountAmount === "number" && rc.discountAmount > 0) return formatCurrency(rc.discountAmount, currency);
     return null;
   }
   const inputCls = "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none";

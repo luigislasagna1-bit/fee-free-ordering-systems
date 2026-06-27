@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { ChevronLeft, Users, Trash2, UserPlus, Gift, Plus, Tag, ExternalLink, Mail } from "lucide-react";
+import { HelpTip } from "@/components/HelpTip";
 
 type Member = { id: string; name: string | null; email: string | null; phone: string | null; hasAccount: boolean };
 type Group = { id: string; name: string; description: string | null };
@@ -163,10 +164,10 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
           placeholder={t("addMembersPlaceholder")}
           value={emailsText}
           onChange={(e) => setEmailsText(e.target.value)}
-          onKeyDown={(e) => { if ((e.metaKey || e.ctrlKey) && e.key === "Enter") addMembers(); }}
+          onKeyDown={(e) => { if ((e.metaKey || e.ctrlKey) && e.key === "Enter" && emailsText.trim()) addMembers(); }}
         />
         <p className="text-[11px] text-gray-400 mt-1">{t("addMembersHint")}</p>
-        <button onClick={addMembers} disabled={adding} className="mt-2 inline-flex items-center gap-1.5 bg-gray-900 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-gray-800 transition disabled:opacity-50">
+        <button onClick={addMembers} disabled={adding || !emailsText.trim()} className="mt-2 inline-flex items-center gap-1.5 bg-gray-900 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-gray-800 transition disabled:opacity-50">
           <UserPlus className="w-4 h-4" /> {adding ? "…" : t("addMembers")}
         </button>
       </section>
@@ -205,7 +206,9 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
         </div>
 
         {/* Attach a promotion */}
-        <label className="block text-xs font-medium text-gray-600 mb-1">{t("attachLabel")}</label>
+        <label className="block text-xs font-medium text-gray-600 mb-1">
+          {t("attachLabel")} <HelpTip text={t("memberOnlyNote")} />
+        </label>
         {pickable.length === 0 ? (
           <p className="text-sm text-gray-400">{t("noPickable")}</p>
         ) : (
@@ -229,7 +232,6 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
             {t("notifyOnAttach")}
           </label>
         )}
-        <p className="text-[11px] text-gray-400 mt-2">{t("memberOnlyNote")}</p>
         <Link href="/admin/promotions/new" className="inline-flex items-center gap-1 text-xs text-emerald-600 font-semibold mt-2 hover:underline">
           <ExternalLink className="w-3.5 h-3.5" /> {t("createNewPromo")}
         </Link>

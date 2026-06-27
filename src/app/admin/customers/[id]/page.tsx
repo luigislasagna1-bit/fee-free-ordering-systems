@@ -239,7 +239,7 @@ export default async function CustomerDetailPage({
       </div>
 
       {/* Give a VIP special (member-only, no code, auto-applies) */}
-      <GiveVipSpecial customerId={customer.id} customerName={customer.name} />
+      <GiveVipSpecial customerId={customer.id} customerName={customer.name} currency={__currency} />
 
       {/* Order history */}
       <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">

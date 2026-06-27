@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { Crown, Plus, Trash2, Tag } from "lucide-react";
+import { formatCurrency } from "@/lib/utils";
 
 type Promo = { id: string; name: string; isActive: boolean; promotionType: string; ruleConfig: any };
 type Special = { id: string; promotionId: string; promoName: string; promotionType: string; isActive: boolean; ruleConfig: any };
@@ -11,7 +12,7 @@ type Special = { id: string; promotionId: string; promoName: string; promotionTy
 /** Give a member-only VIP special (an existing promotion) to ONE customer — it
  *  auto-applies for them at checkout, no code. Lives on the customer profile;
  *  mirrors the VIP Specials page individual flow. Luigi 2026-06-27. */
-export function GiveVipSpecial({ customerId, customerName }: { customerId: string; customerName: string }) {
+export function GiveVipSpecial({ customerId, customerName, currency }: { customerId: string; customerName: string; currency: string }) {
   const t = useTranslations("admin.customerGroups");
   const [promos, setPromos] = useState<Promo[]>([]);
   const [specials, setSpecials] = useState<Special[]>([]);
@@ -57,7 +58,7 @@ export function GiveVipSpecial({ customerId, customerName }: { customerId: strin
   function chip(p: { ruleConfig: any }): string | null {
     const rc = p.ruleConfig || {};
     if (typeof rc.discountPercent === "number" && rc.discountPercent > 0) return `${rc.discountPercent}%`;
-    if (typeof rc.discountAmount === "number" && rc.discountAmount > 0) return `${rc.discountAmount}`;
+    if (typeof rc.discountAmount === "number" && rc.discountAmount > 0) return formatCurrency(rc.discountAmount, currency);
     return null;
   }
 

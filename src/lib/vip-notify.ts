@@ -28,14 +28,17 @@ async function loadSpecialContext(promotionId: string, restaurantId: string) {
   const [promo, restaurant] = await Promise.all([
     prisma.promotion.findUnique({
       where: { id: promotionId },
-      select: { id: true, restaurantId: true, name: true, description: true, promotionType: true, ruleConfig: true, minimumOrder: true, endsAt: true },
+      select: { id: true, restaurantId: true, isActive: true, name: true, description: true, promotionType: true, ruleConfig: true, minimumOrder: true, endsAt: true },
     }),
     prisma.restaurant.findUnique({
       where: { id: restaurantId },
       select: { name: true, slug: true, currency: true, defaultLanguage: true, email: true, phone: true, subdomain: true, customDomain: true, customDomainStatus: true, vipMemberLabel: true },
     }),
   ]);
-  if (!promo || promo.restaurantId !== restaurantId || !restaurant) return null;
+  // Fail safe: never email about an inactive promo — it would NEVER auto-apply at
+  // checkout (both checkout paths load isActive:true only), so the recipient would
+  // be promised a deal that does nothing. Skip all sends. Luigi 2026-06-27 (audit).
+  if (!promo || promo.restaurantId !== restaurantId || !promo.isActive || !restaurant) return null;
   return { promo, restaurant, disc: discountFromPromo(promo), orderUrl: restaurantOrderUrl(restaurant, "") };
 }
 

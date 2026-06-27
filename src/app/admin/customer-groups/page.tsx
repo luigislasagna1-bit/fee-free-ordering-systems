@@ -17,7 +17,7 @@ export default async function CustomerGroupsPage() {
       select: { id: true, name: true, description: true, updatedAt: true, _count: { select: { members: true } } },
       take: 500,
     }),
-    prisma.restaurant.findUnique({ where: { id: user.restaurantId }, select: { vipMemberLabel: true } }),
+    prisma.restaurant.findUnique({ where: { id: user.restaurantId }, select: { vipMemberLabel: true, currency: true } }),
   ]);
 
   return (
@@ -30,6 +30,7 @@ export default async function CustomerGroupsPage() {
         updatedAt: g.updatedAt.toISOString(),
       }))}
       initialMemberLabel={restaurant?.vipMemberLabel ?? ""}
+      currency={restaurant?.currency ?? "usd"}
     />
   );
 }

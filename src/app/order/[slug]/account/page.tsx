@@ -22,6 +22,7 @@ import { ProfileEditor } from "./ProfileEditor";
 import { OrderAgainButton } from "./OrderAgainButton";
 import { AddressBook } from "./AddressBook";
 import { getTranslations } from "next-intl/server";
+import { HelpTip } from "@/components/HelpTip";
 import { qualifyingMemberOnlyPromos } from "@/lib/vip-membership";
 import { usedLifetimePromoIds } from "@/lib/coupon-ledger";
 
@@ -131,8 +132,8 @@ export default async function RestaurantAccountDashboard({
   );
 
   function discountLabelFor(promotionType: string | undefined, rc: { discountPercent?: number; discountAmount?: number }, fallbackName: string): string {
-    if (promotionType === "percentage_off" || promotionType === "percentage_combo") return `${rc.discountPercent ?? 0}% off`;
-    if (promotionType === "fixed_cart" || promotionType === "fixed_combo") return `${formatCurrency(rc.discountAmount ?? 0)} off`;
+    if (promotionType === "percentage_off" || promotionType === "percentage_combo") return t("percentOff", { value: rc.discountPercent ?? 0 });
+    if (promotionType === "fixed_cart" || promotionType === "fixed_combo") return t("fixedOff", { amount: formatCurrency(rc.discountAmount ?? 0) });
     return fallbackName;
   }
 
@@ -205,6 +206,7 @@ export default async function RestaurantAccountDashboard({
           <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
             <Tag className="w-4 h-4 text-emerald-500" />
             {t("yourCoupons", { count: usableOffers.length })}
+            <HelpTip text={t("helpOffers")} />
           </h2>
           {usableOffers.length === 0 ? (
             <div className="bg-white rounded-xl border border-gray-200 p-6 text-center text-sm text-gray-500">

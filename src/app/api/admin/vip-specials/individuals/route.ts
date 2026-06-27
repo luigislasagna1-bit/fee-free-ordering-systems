@@ -68,7 +68,7 @@ export async function POST(req: Request) {
   const [passed, matched, existing] = await Promise.all([
     customerIds.length ? prisma.customer.findMany({ where: { id: { in: customerIds }, restaurantId }, select: { id: true, email: true, name: true, passwordHash: true } }) : Promise.resolve([]),
     emails.length ? prisma.customer.findMany({ where: { restaurantId, email: { in: emails, mode: "insensitive" } }, select: { id: true, email: true, name: true, passwordHash: true } }) : Promise.resolve([]),
-    prisma.customerGroupPromotion.findMany({ where: { promotionId, groupId: null }, select: { customerId: true, email: true } }),
+    prisma.customerGroupPromotion.findMany({ where: { promotionId, groupId: null, restaurantId }, select: { customerId: true, email: true } }),
   ]);
   const matchByEmail = new Map(matched.map((c) => [c.email!.toLowerCase(), c]));
   const haveCust = new Set(existing.map((e) => e.customerId).filter(Boolean) as string[]);
