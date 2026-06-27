@@ -143,6 +143,13 @@ interface Props {
    *  insulting. Owners flip this off in /admin/service-fees. */
   tipsEnabled?: boolean;
   total: number;
+  /** Reward Dollars (store credit) — a signed-in customer's spendable balance +
+   *  redeem settings, surfaced by apply-promos. null → no balance / feature off
+   *  → the spend control is hidden entirely. Luigi 2026-06-27. */
+  rewardInfo?: { balance: number; minRedeemBalance: number; maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null } | null;
+  /** How much credit the customer chose to apply on this order (default 0). */
+  creditToApply?: number;
+  setCreditToApply?: (n: number) => void;
   taxRate: number;
   customerInfo: CustomerInfo;
   setCustomerInfo: (ci: CustomerInfo) => void;
@@ -299,6 +306,7 @@ export function CheckoutModal({
   appliedPromos = [], bumpedExclusives = [], hasFreeDelivery = false, baseDeliveryFee = 0,
   deliveryFee, appliedServiceFees, taxAmount,
   tipAmount, tipPercent, setTipPercent, tipsEnabled = true, total, taxRate,
+  rewardInfo = null, creditToApply = 0, setCreditToApply,
   customerInfo, setCustomerInfo, onMarketingToggle, savedGuestInfo, onClearSavedInfo,
   savedAddresses = [],
   editingSection, setEditingSection,
@@ -527,6 +535,25 @@ export function CheckoutModal({
     if (dPart === minDate && tPart < (minTime || "").slice(0, 5)) return true;
     return false;
   })();
+
+  // ── Reward Dollars spend control ────────────────────────────────────────
+  // Ceiling the customer may apply = min(balance, total, max-% of total),
+  // gated on a minimum balance. The server re-validates + claims atomically;
+  // this is preview UX only. Luigi 2026-06-27.
+  const r2 = (n: number) => Math.round(n * 100) / 100;
+  const rewardLabelPlural = rewardInfo?.labelPlural?.trim() || tc("reward.defaultPlural");
+  const rewardEligible =
+    !!rewardInfo && rewardInfo.balance > 0 && rewardInfo.balance >= (rewardInfo.minRedeemBalance ?? 0) && total > 0;
+  const rewardMax = rewardEligible
+    ? r2(Math.min(
+        rewardInfo!.balance,
+        total,
+        (rewardInfo!.maxRedeemPercent > 0 ? total * (rewardInfo!.maxRedeemPercent / 100) : total),
+      ))
+    : 0;
+  const creditChosen = rewardEligible ? Math.min(Math.max(0, r2(creditToApply)), rewardMax) : 0;
+  const chargeToday = r2(total - creditChosen);
+  const setCredit = (n: number) => setCreditToApply?.(Math.min(Math.max(0, r2(n)), rewardMax));
 
   // Human-readable summary for the collapsed payment-method card.
   // Stays consistent with the picker labels below; "card" remains the
@@ -1738,7 +1765,64 @@ export function CheckoutModal({
                 <div className="flex justify-between font-bold text-gray-900 text-base pt-2 border-t border-gray-200 mt-1">
                   <span>{tc("total")}</span><span>{formatCurrency(total)}</span>
                 </div>
+                {creditChosen > 0 && (
+                  <>
+                    <div className="flex justify-between text-emerald-600 font-medium">
+                      <span>{rewardLabelPlural}</span><span>− {formatCurrency(creditChosen)}</span>
+                    </div>
+                    <div className="flex justify-between font-bold text-gray-900 text-base">
+                      <span>{tc("reward.chargeToday")}</span><span>{formatCurrency(chargeToday)}</span>
+                    </div>
+                  </>
+                )}
               </div>
+
+              {/* Reward Dollars spend control — only for a signed-in customer
+                  with a spendable balance. Default applies nothing (None). */}
+              {rewardEligible && (
+                <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50/60 p-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-sm font-semibold text-emerald-800">
+                      {tc("reward.useTitle", { label: rewardLabelPlural })}
+                    </span>
+                    <span className="text-xs text-emerald-700">
+                      {tc("reward.balance", { amount: formatCurrency(rewardInfo!.balance) })}
+                    </span>
+                  </div>
+                  <div className="mt-2 flex items-center gap-2">
+                    <input
+                      type="number"
+                      inputMode="decimal"
+                      min={0}
+                      max={rewardMax}
+                      step="0.01"
+                      value={creditChosen > 0 ? creditChosen : ""}
+                      placeholder="0.00"
+                      onChange={(e) => setCredit(parseFloat(e.target.value) || 0)}
+                      className="w-28 rounded-lg border border-emerald-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setCredit(rewardMax)}
+                      className="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white hover:bg-emerald-700"
+                    >
+                      {tc("reward.useAll")}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setCredit(0)}
+                      className="rounded-lg border border-emerald-300 bg-white px-3 py-1.5 text-xs font-bold text-emerald-700 hover:bg-emerald-100"
+                    >
+                      {tc("reward.useNone")}
+                    </button>
+                  </div>
+                  {rewardMax < rewardInfo!.balance && (
+                    <p className="mt-1.5 text-[11px] text-emerald-700/80">
+                      {tc("reward.capNote", { amount: formatCurrency(rewardMax) })}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -1751,8 +1835,8 @@ export function CheckoutModal({
         {/* Footer */}
         <div className="border-t border-gray-100 px-5 py-4 bg-white flex-shrink-0 flex items-center gap-3">
           <div className="flex-1">
-            <div className="text-xs text-gray-500 uppercase font-bold">{tc("total")}</div>
-            <div className="text-lg font-bold text-gray-900">{formatCurrency(total)}</div>
+            <div className="text-xs text-gray-500 uppercase font-bold">{creditChosen > 0 ? tc("reward.chargeToday") : tc("total")}</div>
+            <div className="text-lg font-bold text-gray-900">{formatCurrency(creditChosen > 0 ? chargeToday : total)}</div>
           </div>
           <button
             onClick={placeOrder}

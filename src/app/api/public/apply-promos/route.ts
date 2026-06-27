@@ -266,8 +266,34 @@ export async function POST(req: NextRequest) {
       : r,
   );
 
+  // ── Reward Dollars (store credit) — surface a SIGNED-IN customer's spendable
+  //    balance + the restaurant's redeem settings so the cart can offer the
+  //    "use my {label}" control. Preview only — nothing is decremented here; the
+  //    order route claims atomically. Strict: signed-in id only. Luigi 2026-06-27.
+  let reward: {
+    balance: number; redeemEnabled: boolean; minRedeemBalance: number;
+    maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null;
+  } | null = null;
+  try {
+    const r = restaurant as any;
+    if (r.rewardsEnabled && r.rewardRedeemEnabled && idCustomerId) {
+      const { getBalance } = await import("@/lib/reward-ledger");
+      const balance = await getBalance({ restaurantId: restaurant.id, customerId: idCustomerId });
+      if (balance > 0) {
+        reward = {
+          balance,
+          redeemEnabled: true,
+          minRedeemBalance: r.rewardMinRedeemBalance ?? 0,
+          maxRedeemPercent: r.rewardMaxRedeemPercent ?? 100,
+          labelSingular: r.rewardLabelSingular ?? null,
+          labelPlural: r.rewardLabelPlural ?? null,
+        };
+      }
+    }
+  } catch (e) { console.error("[apply-promos reward]", e); }
+
   // Surface promos that qualified but were blocked by the winning exclusive, so
   // the cart can explain "can't combine" and offer "remove this to use that
   // instead". Luigi 2026-06-07.
-  return NextResponse.json({ applied, totalDiscount, hasFreeDelivery, blockedPromos, newCustomerOfferUnavailable, promoCodeEmailMismatch });
+  return NextResponse.json({ applied, totalDiscount, hasFreeDelivery, blockedPromos, newCustomerOfferUnavailable, promoCodeEmailMismatch, reward });
 }

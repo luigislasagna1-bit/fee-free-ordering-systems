@@ -385,6 +385,15 @@
     "customTip": "Custom",
     "placeOrder": "Place order",
     "placingOrder": "Placing order…",
+    "reward": {
+      "defaultPlural": "Reward Dollars",
+      "useTitle": "Use your {label}",
+      "balance": "Balance: {amount}",
+      "useAll": "Use all",
+      "useNone": "None",
+      "chargeToday": "To pay today",
+      "capNote": "You can apply up to {amount} on this order."
+    },
     "estimatedReady": "Estimated ready",
     "subTotal": "Sub-Total",
     "discount": "Discount",

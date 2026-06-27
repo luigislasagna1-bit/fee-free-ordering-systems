@@ -1036,6 +1036,11 @@ export function OrderingPageClient({
   // exclusives + dropped standards). Drives the "can't combine / use this
   // instead" UX and the clearer freebie-removed message. Luigi 2026-06-07.
   const [blockedPromos, setBlockedPromos] = useState<Array<{ promoId: string; name: string; discount: number; winnerName: string; wasExclusive: boolean; couponCode?: string }>>([]);
+  // Reward Dollars (store credit) — a signed-in customer's spendable balance +
+  // redeem settings (from apply-promos), and how much they chose to apply on this
+  // order (default 0 = none; they can also let it accumulate). Luigi 2026-06-27.
+  const [rewardInfo, setRewardInfo] = useState<{ balance: number; minRedeemBalance: number; maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null } | null>(null);
+  const [creditToApply, setCreditToApply] = useState(0);
   // Cart preview: the first-buy discount was dropped because the email/phone the
   // customer entered turns out to be a returning customer. Drives the gentle
   // "new customers only" note — shown ONLY when the hero banner was visible to
@@ -2050,6 +2055,10 @@ export function OrderingPageClient({
         setBlockedPromos(Array.isArray(data.blockedPromos) ? data.blockedPromos : []);
         setFirstBuyUnavailable(!!data.newCustomerOfferUnavailable);
         setCodeEmailMismatch(!!data.promoCodeEmailMismatch);
+        setRewardInfo(data.reward ?? null);
+        // Keep the chosen credit within the new spendable ceiling as the cart /
+        // identity changes (e.g. balance only known after sign-in/email).
+        if (!data.reward) setCreditToApply(0);
         promosEvaluatedRef.current = true;
       })
       .catch(() => {});
@@ -3005,6 +3014,9 @@ export function OrderingPageClient({
         }
       : undefined,
     subtotal, taxAmount, deliveryFee, tip: tipAmount, total,
+    // Reward Dollars the customer chose to spend (server re-validates + claims
+    // atomically; never trusted as final). Luigi 2026-06-27.
+    creditToApply: rewardInfo && creditToApply > 0 ? creditToApply : undefined,
     items: cart.map(ci => {
       // Defensive: a variant-required item must carry a valid variant or the
       // server rejects it ("Invalid variant"). Normal items always have one
@@ -3244,7 +3256,14 @@ export function OrderingPageClient({
       setReservationDraft(null);
       try { sessionStorage.removeItem("ff_reservation_draft"); } catch {}
 
-      if (customerInfo.paymentMethod === "card" && cardPaymentEnabled) {
+      // Reward Dollars: the card/PayPal charge is the total MINUS the credit the
+      // server actually applied. When credit covers the whole order there's
+      // nothing to charge → skip the payment surface and go straight to
+      // confirmation (the order is already settled paid-by-credit). Luigi 2026-06-27.
+      const chargeAmount = Math.round((orderData.total - (orderData.creditApplied ?? 0)) * 100) / 100;
+      const needsOnline = chargeAmount > 0.005;
+
+      if (customerInfo.paymentMethod === "card" && cardPaymentEnabled && needsOnline) {
         // Reports funnel — fire payment_open just before we navigate
         // to the payment screen. Fires on card orders only; cash /
         // in-person orders skip straight to confirmation and never
@@ -3256,7 +3275,7 @@ export function OrderingPageClient({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             restaurantSlug: restaurant.slug,
-            amount: total,
+            amount: chargeAmount,
             // Send the restaurant's configured currency so Stripe charges
             // in the right denomination (server overrides anyway, but
             // sending the correct value avoids the "client said USD,
@@ -3277,7 +3296,7 @@ export function OrderingPageClient({
           stripeAccount: piData.stripeAccount ?? "",
         });
         router.push(`/order/${restaurant.slug}/payment?${params.toString()}`);
-      } else if (customerInfo.paymentMethod === "paypal" && paypalEnabled) {
+      } else if (customerInfo.paymentMethod === "paypal" && paypalEnabled && needsOnline) {
         // PayPal flow — create a PayPal Order, get the approve URL,
         // redirect customer there. Customer signs in + approves on
         // PayPal, then PayPal redirects them back to /order/<slug>/paypal/return
@@ -5260,6 +5279,10 @@ export function OrderingPageClient({
           setTipPercent={setTipPercent}
           tipsEnabled={tipsEnabled}
           total={total}
+          // Reward Dollars spend control (store credit). null → no balance / off.
+          rewardInfo={rewardInfo}
+          creditToApply={creditToApply}
+          setCreditToApply={setCreditToApply}
           taxRate={restaurant.taxRate}
           customerInfo={customerInfo}
           setCustomerInfo={setCustomerInfo}
