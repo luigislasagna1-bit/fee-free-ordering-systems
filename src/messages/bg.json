@@ -4177,7 +4177,7 @@
       "memberLabelFailed": "Запазването не бе успешно.",
       "memberLabelDefault": "VIP член",
       "memberLabelHint": "Вашият VIP имейл ще гласи: „Като {label} в нашия ресторант…“",
-      "vipViaGroup": "via {group}"
+      "vipViaGroup": "чрез {group}"
     }
   },
   "impersonation": {

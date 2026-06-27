@@ -4177,7 +4177,7 @@
       "memberLabelFailed": "บันทึกไม่สำเร็จ",
       "memberLabelDefault": "สมาชิก VIP",
       "memberLabelHint": "อีเมล VIP ของคุณจะระบุว่า: “ในฐานะ{label}ที่ร้านของคุณ…”",
-      "vipViaGroup": "via {group}"
+      "vipViaGroup": "ผ่าน {group}"
     }
   },
   "impersonation": {

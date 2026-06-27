@@ -4177,7 +4177,7 @@
       "memberLabelFailed": "Nepodařilo se uložit.",
       "memberLabelDefault": "VIP člen",
       "memberLabelHint": "Ve vašem VIP e-mailu bude: „Jako {label} v naší restauraci…“",
-      "vipViaGroup": "via {group}"
+      "vipViaGroup": "přes {group}"
     }
   },
   "impersonation": {

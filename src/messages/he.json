@@ -4177,7 +4177,7 @@
       "memberLabelFailed": "השמירה נכשלה.",
       "memberLabelDefault": "חבר VIP",
       "memberLabelHint": "האימייל ל-VIP יאמר: “כ{label} במסעדה שלכם…”",
-      "vipViaGroup": "via {group}"
+      "vipViaGroup": "דרך {group}"
     }
   },
   "impersonation": {

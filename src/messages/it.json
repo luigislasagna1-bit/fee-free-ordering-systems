@@ -4177,7 +4177,7 @@
       "memberLabelFailed": "Impossibile salvare.",
       "memberLabelDefault": "membro VIP",
       "memberLabelHint": "La tua email VIP dirà: “In quanto {label} del tuo ristorante…”",
-      "vipViaGroup": "via {group}"
+      "vipViaGroup": "tramite {group}"
     }
   },
   "impersonation": {

@@ -4177,7 +4177,7 @@
       "memberLabelFailed": "保存できませんでした。",
       "memberLabelDefault": "VIP会員",
       "memberLabelHint": "VIPメールには次のように表示されます：「あなたのレストランの{label}として…」",
-      "vipViaGroup": "via {group}"
+      "vipViaGroup": "{group}経由"
     }
   },
   "impersonation": {

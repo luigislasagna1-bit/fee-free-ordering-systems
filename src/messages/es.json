@@ -4177,7 +4177,7 @@
       "memberLabelFailed": "No se pudo guardar.",
       "memberLabelDefault": "miembro VIP",
       "memberLabelHint": "Tu correo VIP dirá: “Como {label} en tu restaurante…”",
-      "vipViaGroup": "via {group}"
+      "vipViaGroup": "vía {group}"
     }
   },
   "impersonation": {

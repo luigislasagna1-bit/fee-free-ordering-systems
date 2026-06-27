@@ -4177,7 +4177,7 @@
       "memberLabelFailed": "تعذّر الحفظ.",
       "memberLabelDefault": "عضو VIP",
       "memberLabelHint": "سيقول بريد VIP الخاص بك: “بصفتك {label} في مطعمك…”",
-      "vipViaGroup": "via {group}"
+      "vipViaGroup": "عبر {group}"
     }
   },
   "impersonation": {

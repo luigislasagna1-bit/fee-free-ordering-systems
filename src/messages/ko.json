@@ -4177,7 +4177,7 @@
       "memberLabelFailed": "저장하지 못했습니다.",
       "memberLabelDefault": "VIP 회원",
       "memberLabelHint": "VIP 이메일에는 이렇게 표시됩니다: “저희 레스토랑의 {label}님으로서…”",
-      "vipViaGroup": "via {group}"
+      "vipViaGroup": "{group}을 통해"
     }
   },
   "impersonation": {

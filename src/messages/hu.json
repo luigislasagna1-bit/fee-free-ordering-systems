@@ -4177,7 +4177,7 @@
       "memberLabelFailed": "Nem sikerült menteni.",
       "memberLabelDefault": "VIP tag",
       "memberLabelHint": "A VIP e-mailje így szól majd: „Mint {label} az éttermében…”",
-      "vipViaGroup": "via {group}"
+      "vipViaGroup": "{group} révén"
     }
   },
   "impersonation": {
