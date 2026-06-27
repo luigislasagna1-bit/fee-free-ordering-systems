@@ -235,7 +235,8 @@
       "fullNameRequired": "Zadejte své jméno a příjmení.",
       "fulfilWindowOrderError": "\"{name}\" lze objednat pouze v určité dny/časy. Naplánujte si objednávku na dobu, kdy je dostupné.",
       "fulfilWindowReservationError": "\"{name}\" není dostupné v den vaší rezervace. Odeberte ho nebo si rezervujte stůl na den, kdy je nabízeno.",
-      "promoEmailMismatch": "Tento kód je registrován na jinou e-mailovou adresu."
+      "promoEmailMismatch": "Tento kód je registrován na jinou e-mailovou adresu.",
+      "promoUnlocked": "You unlocked \"{name}\"!"
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",

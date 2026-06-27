@@ -983,6 +983,10 @@ export function OrderingPageClient({
   // True once the promo engine has evaluated the cart at least once — guards the
   // stale-freebie cleanup from firing during the initial (un-evaluated) render.
   const promosEvaluatedRef = useRef(false);
+  // Promo IDs applied as of the last evaluation — so we can toast the moment a
+  // NEW promo unlocks (e.g. adding the 2nd pizza fires BOGO). null = not yet
+  // evaluated (so a page load / restored cart doesn't toast). Luigi 2026-06-27.
+  const seenPromoIdsRef = useRef<Set<string> | null>(null);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [mods, setMods] = useState<Record<string, string[]>>({});
   const [selectedVariant, setSelectedVariant] = useState<ItemVariant | null>(null);
@@ -1954,7 +1958,7 @@ export function OrderingPageClient({
   // we know which zone the address is in, which happens after the
   // geocode lookup above).
   useEffect(() => {
-    if (cart.length === 0) { setPromoDiscount(0); setPromoResults([]); setHasFreeDelivery(false); promosEvaluatedRef.current = true; return; }
+    if (cart.length === 0) { setPromoDiscount(0); setPromoResults([]); setHasFreeDelivery(false); promosEvaluatedRef.current = true; seenPromoIdsRef.current = new Set(); return; }
     const sub = cart.reduce((s, i) => s + i.lineTotal, 0);
     fetch("/api/public/apply-promos", {
       method: "POST",
@@ -2026,7 +2030,21 @@ export function OrderingPageClient({
     })
       .then(r => r.json())
       .then(data => {
-        setPromoResults(data.applied ?? []);
+        const applied = (data.applied ?? []) as Array<{ promoId: string; name: string; discount: number }>;
+        // Toast the moment a NEW promo unlocks (e.g. adding the 2nd pizza fires
+        // BOGO) — instant "you got a deal!" feedback, GloriaFood-style. Only on a
+        // genuinely new promo (not on page load / restored cart, and not on every
+        // re-eval of the same deal). Luigi 2026-06-27.
+        const prevSeen = seenPromoIdsRef.current;
+        if (prevSeen) {
+          for (const p of applied) {
+            if (p.discount > 0 && !prevSeen.has(p.promoId)) {
+              toast.success(tT("promoUnlocked", { name: p.name }), { icon: "🎉", duration: 4000 });
+            }
+          }
+        }
+        seenPromoIdsRef.current = new Set(applied.map((p) => p.promoId));
+        setPromoResults(applied);
         setPromoDiscount(data.totalDiscount ?? 0);
         setHasFreeDelivery(data.hasFreeDelivery ?? false);
         setBlockedPromos(Array.isArray(data.blockedPromos) ? data.blockedPromos : []);

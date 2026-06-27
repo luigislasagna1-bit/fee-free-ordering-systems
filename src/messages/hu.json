@@ -235,7 +235,8 @@
       "fullNameRequired": "Adja meg a vezeték- és keresztnevét.",
       "fulfilWindowOrderError": "A(z) \"{name}\" csak bizonyos napokon/időpontokban rendelhető. Ütemezze a rendelését arra az időpontra, amikor elérhető.",
       "fulfilWindowReservationError": "A(z) \"{name}\" nem érhető el a foglalása napján. Távolítsa el, vagy foglaljon asztalt egy olyan napra, amikor elérhető.",
-      "promoEmailMismatch": "Ez a kód egy másik e-mail-címhez van regisztrálva."
+      "promoEmailMismatch": "Ez a kód egy másik e-mail-címhez van regisztrálva.",
+      "promoUnlocked": "You unlocked \"{name}\"!"
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",

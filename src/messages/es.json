@@ -234,7 +234,8 @@
       "fullNameRequired": "Introduce tu nombre y tus apellidos.",
       "fulfilWindowOrderError": "\"{name}\" solo se puede pedir en ciertos días/horarios. Programa tu pedido para cuando esté disponible.",
       "fulfilWindowReservationError": "\"{name}\" no está disponible el día de tu reserva. Quítalo o reserva tu mesa un día en que se ofrezca.",
-      "promoEmailMismatch": "Este código está registrado con otra dirección de correo electrónico."
+      "promoEmailMismatch": "Este código está registrado con otra dirección de correo electrónico.",
+      "promoUnlocked": "You unlocked \"{name}\"!"
     },
     "followUs": "Síguenos",
     "searchMenu": "Buscar en el menú…",

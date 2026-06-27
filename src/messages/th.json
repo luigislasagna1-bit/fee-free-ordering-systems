@@ -235,7 +235,8 @@
       "fullNameRequired": "กรุณากรอกชื่อและนามสกุลของคุณ",
       "fulfilWindowOrderError": "\"{name}\" สั่งได้เฉพาะบางวัน/เวลาเท่านั้น โปรดกำหนดเวลาสั่งซื้อเป็นช่วงที่พร้อมจำหน่าย",
       "fulfilWindowReservationError": "\"{name}\" ไม่พร้อมจำหน่ายในวันจองของคุณ โปรดนำออก หรือจองโต๊ะในวันที่มีจำหน่าย",
-      "promoEmailMismatch": "รหัสนี้ลงทะเบียนกับอีเมลอื่น"
+      "promoEmailMismatch": "รหัสนี้ลงทะเบียนกับอีเมลอื่น",
+      "promoUnlocked": "You unlocked \"{name}\"!"
     },
     "searchMenu": "ค้นหาเมนู…",
     "signIn": "เข้าสู่ระบบ",

@@ -235,7 +235,8 @@
       "fullNameRequired": "Unesite svoje ime i prezime.",
       "fulfilWindowOrderError": "\"{name}\" se može naručiti samo određenim danima/satima. Zakažite narudžbu za vrijeme kada je dostupno.",
       "fulfilWindowReservationError": "\"{name}\" nije dostupno na dan vaše rezervacije. Uklonite ga ili rezervirajte stol za dan kada je u ponudi.",
-      "promoEmailMismatch": "Ovaj kôd registriran je na drugu e-mail adresu."
+      "promoEmailMismatch": "Ovaj kôd registriran je na drugu e-mail adresu.",
+      "promoUnlocked": "You unlocked \"{name}\"!"
     },
     "searchMenu": "Pretraži jelovnik…",
     "signIn": "Prijava",

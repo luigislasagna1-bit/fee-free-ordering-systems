@@ -235,7 +235,8 @@
       "fullNameRequired": "Ievadiet savu vārdu un uzvārdu.",
       "fulfilWindowOrderError": "\"{name}\" var pasūtīt tikai noteiktās dienās/laikos. Ieplānojiet pasūtījumu laikam, kad tas ir pieejams.",
       "fulfilWindowReservationError": "\"{name}\" nav pieejams jūsu rezervācijas dienā. Lūdzu, noņemiet to vai rezervējiet galdiņu dienā, kad tas tiek piedāvāts.",
-      "promoEmailMismatch": "Šis kods ir reģistrēts citai e-pasta adresei."
+      "promoEmailMismatch": "Šis kods ir reģistrēts citai e-pasta adresei.",
+      "promoUnlocked": "You unlocked \"{name}\"!"
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",

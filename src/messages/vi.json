@@ -235,7 +235,8 @@
       "fullNameRequired": "Vui lòng nhập họ và tên của bạn.",
       "fulfilWindowOrderError": "\"{name}\" chỉ có thể đặt vào một số ngày/giờ nhất định. Vui lòng lên lịch đơn hàng vào thời điểm có sẵn.",
       "fulfilWindowReservationError": "\"{name}\" không có sẵn vào ngày đặt bàn của bạn. Vui lòng xóa hoặc đặt bàn vào ngày có món này.",
-      "promoEmailMismatch": "Mã này được đăng ký cho một địa chỉ email khác."
+      "promoEmailMismatch": "Mã này được đăng ký cho một địa chỉ email khác.",
+      "promoUnlocked": "You unlocked \"{name}\"!"
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",

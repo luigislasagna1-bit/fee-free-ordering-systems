@@ -235,7 +235,8 @@
       "fullNameRequired": "Voer je voor- en achternaam in.",
       "fulfilWindowOrderError": "\"{name}\" kan alleen op bepaalde dagen/tijden worden besteld. Plan je bestelling voor een moment waarop het beschikbaar is.",
       "fulfilWindowReservationError": "\"{name}\" is niet beschikbaar op de dag van uw reservering. Verwijder het of reserveer uw tafel op een dag waarop het wordt aangeboden.",
-      "promoEmailMismatch": "Deze code is geregistreerd op een ander e-mailadres."
+      "promoEmailMismatch": "Deze code is geregistreerd op een ander e-mailadres.",
+      "promoUnlocked": "You unlocked \"{name}\"!"
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",

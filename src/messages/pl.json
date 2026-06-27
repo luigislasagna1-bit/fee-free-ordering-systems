@@ -235,7 +235,8 @@
       "fullNameRequired": "Podaj imię i nazwisko.",
       "fulfilWindowOrderError": "\"{name}\" można zamówić tylko w określone dni/godziny. Zaplanuj zamówienie na czas, gdy będzie dostępne.",
       "fulfilWindowReservationError": "\"{name}\" nie jest dostępne w dniu Twojej rezerwacji. Usuń je lub zarezerwuj stolik na dzień, w którym jest oferowane.",
-      "promoEmailMismatch": "Ten kod jest przypisany do innego adresu e-mail."
+      "promoEmailMismatch": "Ten kod jest przypisany do innego adresu e-mail.",
+      "promoUnlocked": "You unlocked \"{name}\"!"
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
