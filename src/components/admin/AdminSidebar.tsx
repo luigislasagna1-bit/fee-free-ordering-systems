@@ -6,7 +6,7 @@ import {
   Settings, ChefHat, Tag, Zap, Truck, Clock, Receipt, Store, LogOut, ChevronLeft, Menu, Plug, Phone,
   CreditCard, Palette, CalendarDays, Layers, ChevronDown,
   Megaphone, MoreHorizontal, Map as MapIcon, Bell, Wallet, Share2, Globe,
-  Check, Circle, Sparkles, Rocket, QrCode, Lock, Network, MessageSquare, Bot, MonitorCheck, Smartphone, Calculator, Crown,
+  Check, Circle, Sparkles, Rocket, QrCode, Lock, Network, MessageSquare, Bot, MonitorCheck, Smartphone, Calculator, Crown, Gift,
   // Reports sub-section icons — match GloriaFood's iconography by purpose:
   // TrendingUp for Sales (line going up), PieChart for Menu Insights (mix
   // breakdown), Globe2 for Online Ordering family, ListChecks for List View.
@@ -230,6 +230,7 @@ const navGroups: NavGroup[] = [
       { href: "/admin/customers",    labelKey: "customers",    label: "Customers",    icon: Users },
       { href: "/admin/promotions",   labelKey: "promotions",   label: "Promotions",   icon: Tag },
       { href: "/admin/customer-groups", labelKey: "customerGroups", label: "VIP Groups", icon: Crown },
+      { href: "/admin/rewards", labelKey: "rewards", label: "Reward Dollars", icon: Gift },
       { href: "/admin/promo-popup",  labelKey: "promoPopup",   label: "Promo Popup",  icon: MessageSquare },
       { href: "/admin/social-media", labelKey: "socialMedia",  label: "Social Media", icon: Share2 },
       { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace",  icon: Sparkles, requiresFeature: "marketplace_listing" },

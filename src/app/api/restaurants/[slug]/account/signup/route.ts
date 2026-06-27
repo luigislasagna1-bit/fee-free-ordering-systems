@@ -41,7 +41,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { slug },
-    select: { id: true, name: true, parentRestaurantId: true, isActive: true },
+    select: { id: true, name: true, parentRestaurantId: true, isActive: true, rewardsEnabled: true, rewardSignupBonus: true },
   });
   if (!restaurant || !restaurant.isActive) {
     return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
@@ -189,6 +189,22 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
   const here = customers.find((c) => c.restaurantId === restaurant.id);
   if (!here) {
     return NextResponse.json({ error: "Signup failed" }, { status: 500 });
+  }
+
+  // Reward Dollars sign-up bonus — credit the new account once. Idempotent via
+  // the synthetic "signup:<customerId>" ledger key (so a retried signup never
+  // double-grants). Never blocks signup. Luigi 2026-06-27.
+  if (restaurant.rewardsEnabled && (restaurant.rewardSignupBonus ?? 0) > 0) {
+    try {
+      const { grant } = await import("@/lib/reward-ledger");
+      await grant({
+        restaurantId: restaurant.id,
+        customerId: here.id,
+        amount: restaurant.rewardSignupBonus,
+        reason: "signup_bonus",
+        orderId: `signup:${here.id}`,
+      });
+    } catch (e) { console.error("[signup reward bonus]", e); }
   }
 
   // Fire-and-forget verification email. Signup completes regardless of

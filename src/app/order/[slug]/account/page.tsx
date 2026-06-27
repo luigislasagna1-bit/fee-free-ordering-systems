@@ -14,7 +14,7 @@
 import prisma from "@/lib/db";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { ChevronLeft, Tag, ShoppingBag, LogOut, Repeat, MapPin } from "lucide-react";
+import { ChevronLeft, Tag, ShoppingBag, LogOut, Repeat, MapPin, Gift } from "lucide-react";
 import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { LogoutButton } from "./LogoutButton";
@@ -37,7 +37,10 @@ export default async function RestaurantAccountDashboard({
   const { slug } = await params;
   const restaurant = await prisma.restaurant.findUnique({
     where: { slug },
-    select: { id: true, name: true, slug: true, isActive: true, currency: true },
+    select: {
+      id: true, name: true, slug: true, isActive: true, currency: true,
+      rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true,
+    },
   });
   if (!restaurant || !restaurant.isActive) notFound();
 
@@ -46,6 +49,21 @@ export default async function RestaurantAccountDashboard({
 
   const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
   if (!me) redirect(`/order/${slug}/account/login`);
+
+  // Reward Dollars wallet (balance + last 20 ledger rows), only when the
+  // restaurant has the feature on. Best-effort. Luigi 2026-06-27.
+  const rewardLabelPlural = restaurant.rewardLabelPlural?.trim() || t("reward.defaultPlural");
+  let rewardWallet: { balance: number; ledger: Array<{ id: string; amount: number; reason: string; createdAt: Date }> } | null = null;
+  if (restaurant.rewardsEnabled) {
+    const acct = await prisma.rewardAccount.findUnique({
+      where: { restaurantId_customerId: { restaurantId: restaurant.id, customerId: me.id } },
+      select: {
+        balance: true,
+        ledger: { orderBy: { createdAt: "desc" }, take: 20, select: { id: true, amount: true, reason: true, createdAt: true } },
+      },
+    }).catch(() => null);
+    if (acct) rewardWallet = { balance: acct.balance, ledger: acct.ledger };
+  }
 
   const now = new Date();
   const [offers, orders] = await Promise.all([
@@ -200,6 +218,38 @@ export default async function RestaurantAccountDashboard({
             <LogoutButton slug={slug} />
           </div>
         </div>
+
+        {/* Reward Dollars wallet — balance + recent activity. Only when the
+            restaurant has the feature on. Luigi 2026-06-27. */}
+        {rewardWallet && (
+          <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div className="bg-emerald-50 px-6 py-5 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Gift className="w-5 h-5 text-emerald-600" />
+                <span className="font-semibold text-emerald-900">{rewardLabelPlural}</span>
+                <HelpTip text={t("reward.help", { label: rewardLabelPlural })} />
+              </div>
+              <span className="text-2xl font-extrabold text-emerald-700">{formatCurrency(rewardWallet.balance)}</span>
+            </div>
+            {rewardWallet.ledger.length > 0 && (
+              <ul className="divide-y divide-gray-100 px-6 py-2">
+                {rewardWallet.ledger.map((l) => (
+                  <li key={l.id} className="flex items-center justify-between py-2 text-sm">
+                    <span className="text-gray-600">
+                      {["earn", "grant", "spend", "release", "adjust", "signup_bonus", "expire"].includes(l.reason)
+                        ? t(`reward.reason.${l.reason}`)
+                        : l.reason}
+                      <span className="text-gray-400"> · {l.createdAt.toLocaleDateString()}</span>
+                    </span>
+                    <span className={l.amount >= 0 ? "text-emerald-600 font-medium" : "text-gray-700 font-medium"}>
+                      {l.amount >= 0 ? "+" : "−"} {formatCurrency(Math.abs(l.amount))}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
 
         {/* Coupons */}
         <div className="mt-6">

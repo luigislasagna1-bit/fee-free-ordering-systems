@@ -22,6 +22,7 @@ import { getSessionUser } from "@/lib/session";
 import { formatDate, formatCurrency as fmtCurrency } from "@/lib/utils";
 import { getRestaurantCurrency } from "@/lib/restaurant-currency";
 import { GiveVipSpecial } from "./GiveVipSpecial";
+import { GrantRewardCredit } from "./GrantRewardCredit";
 import { CustomerActionsCard } from "./CustomerActionsCard";
 
 export const dynamic = "force-dynamic";
@@ -51,14 +52,30 @@ export default async function CustomerDetailPage({
   });
   if (!customer || customer.restaurantId !== restaurantId) notFound();
 
-  // Restaurant name — needed for the mailto template subject.
+  // Restaurant name — needed for the mailto template subject. Plus the Reward
+  // Dollars config so the manual-grant card knows whether to show + what to call
+  // the wallet. Luigi 2026-06-27.
   const restaurantRow = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
-    select: { name: true },
+    select: { name: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true },
   });
 
   const hasAccount = !!customer.passwordHash;
   const now = new Date();
+
+  // Reward Dollars wallet for this customer (balance + recent ledger), only when
+  // the restaurant has the feature on. Best-effort — never blocks the page.
+  let rewardWallet: { balance: number; ledger: Array<{ id: string; amount: number; reason: string; note: string | null; createdAt: Date }> } | null = null;
+  if (restaurantRow?.rewardsEnabled) {
+    const acct = await prisma.rewardAccount.findUnique({
+      where: { restaurantId_customerId: { restaurantId, customerId: customer.id } },
+      select: {
+        balance: true,
+        ledger: { orderBy: { createdAt: "desc" }, take: 10, select: { id: true, amount: true, reason: true, note: true, createdAt: true } },
+      },
+    }).catch(() => null);
+    rewardWallet = { balance: acct?.balance ?? 0, ledger: acct?.ledger ?? [] };
+  }
 
   const [orders, grants] = await Promise.all([
     prisma.order.findMany({
@@ -231,6 +248,21 @@ export default async function CustomerDetailPage({
       {/* Give a VIP special (member-only, no code, auto-applies) — also shows the
           specials this customer already has, including via group membership. */}
       <GiveVipSpecial customerId={customer.id} customerName={customer.name} currency={__currency} />
+
+      {/* Reward Dollars wallet — balance + manual grant/adjust + recent ledger.
+          Only when the restaurant has the feature on. */}
+      {rewardWallet && (
+        <GrantRewardCredit
+          customerId={customer.id}
+          currency={__currency}
+          labelPlural={restaurantRow?.rewardLabelPlural ?? null}
+          initialBalance={rewardWallet.balance}
+          initialLedger={rewardWallet.ledger.map((l) => ({
+            id: l.id, amount: l.amount, reason: l.reason, note: l.note,
+            createdAt: l.createdAt.toISOString(),
+          }))}
+        />
+      )}
 
       {/* Order history */}
       <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
