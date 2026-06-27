@@ -4186,10 +4186,10 @@
       "memberOnlyNote": "Pridėjus akciją ji tampa prieinama tik nariams: ji pašalinama iš jūsų viešojo meniu ir taikoma tik šios grupės nariams.",
       "noPickable": "Dar nesukūrėte jokių akcijų – pirmiausia sukurkite vieną.",
       "inactiveBadge": "Neaktyvi",
-      "notifyOnAttach": "Email members about this special",
-      "notifyMembers": "Email members",
-      "notifySent": "{count, plural, =0 {No members have an email yet} one {Emailing # member…} other {Emailing # members…}}",
-      "notifyFailed": "Couldn't email the members."
+      "notifyOnAttach": "Pranešti nariams el. paštu apie šį pasiūlymą",
+      "notifyMembers": "Pranešti nariams el. paštu",
+      "notifySent": "{count, plural, =0 {Nė vienas narys dar neturi el. pašto} one {Siunčiama # nariui…} other {Siunčiama # nariams…}}",
+      "notifyFailed": "Nepavyko išsiųsti el. laiškų nariams."
     }
   },
   "impersonation": {
@@ -4546,12 +4546,12 @@
       "subjectScheduled": "Suplanuotas užsakymas #{orderNumber} patvirtintas — {restaurant}"
     },
     "vipSpecial": {
-      "subject": "Your VIP deal at {restaurantName} — {discountLabel}",
-      "intro": "As a VIP member at {restaurantName}, you've unlocked a members-only deal: {discountLabel}. It applies automatically — no code needed.",
-      "howToLabel": "How to use it",
-      "usageAccount": "Just sign in to your account and order — your {discountLabel} is applied automatically at checkout.",
-      "usageGuest": "At checkout, enter this email address ({email}) and your {discountLabel} is applied automatically — no code to type.",
-      "accountTip": "Tip: create a free account with this email to save your details and find all your VIP offers in one place."
+      "subject": "Jūsų VIP pasiūlymas {restaurantName} — {discountLabel}",
+      "intro": "Kaip {restaurantName} VIP narys, atrakinote tik nariams skirtą pasiūlymą: {discountLabel}. Jis pritaikomas automatiškai — kodo nereikia.",
+      "howToLabel": "Kaip pasinaudoti",
+      "usageAccount": "Tiesiog prisijunkite prie paskyros ir užsisakykite — jūsų {discountLabel} bus pritaikytas automatiškai atsiskaitant.",
+      "usageGuest": "Atsiskaitydami įveskite šį el. pašto adresą ({email}) ir jūsų {discountLabel} bus pritaikytas automatiškai — jokio kodo įvesti nereikia.",
+      "accountTip": "Patarimas: susikurkite nemokamą paskyrą su šiuo el. paštu, kad išsaugotumėte savo duomenis ir rastumėte visus savo VIP pasiūlymus vienoje vietoje."
     }
   },
   "marketing": {
