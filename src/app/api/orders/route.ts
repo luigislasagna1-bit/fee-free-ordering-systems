@@ -19,7 +19,7 @@ import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/li
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 import { resolveInheritedHours } from "@/lib/inherited-data";
-import { usedLifetimePromoIds } from "@/lib/coupon-ledger";
+import { usedLifetimePromoIds, resolveAssignedPromoByCode } from "@/lib/coupon-ledger";
 import { hasFeature } from "@/lib/entitlements";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
@@ -1262,6 +1262,28 @@ export async function POST(req: NextRequest) {
     const normalizedCouponCode = typeof bodyCouponCode === "string"
       ? bodyCouponCode.trim().toUpperCase().slice(0, 50) || undefined
       : undefined;
+
+    // Customer-ASSIGNED code redemption (Luigi 2026-06-26, Fabrizio F-92452C):
+    // a personal promo code applies by matching the EMAIL/PHONE entered at
+    // checkout — no login required. If a grant with this code exists but for a
+    // DIFFERENT identity, reject BEFORE creating the order / payment intent so
+    // the customer gets a clear message and the code can't leak to others. When
+    // no assigned grant carries the code ("none"), fall through silently — it's
+    // a normal open promo code (or a typo) handled by the engine below.
+    if (normalizedCouponCode) {
+      const assigned = await resolveAssignedPromoByCode({
+        restaurantId: restaurant.id,
+        code: normalizedCouponCode,
+        email: promoCustomerEmail,
+        phone: customerPhone,
+      });
+      if (assigned.kind === "mismatch") {
+        return NextResponse.json(
+          { error: "This code is registered to a different email address.", code: "promo_email_mismatch" },
+          { status: 400 },
+        );
+      }
+    }
     // Happy-Hour / day-of-week windows must be evaluated against WHEN THE ORDER
     // WILL BE FULFILLED, not when it's being placed. For a scheduled order
     // ("order for later"), that's the chosen slot — so a 20:15 pickup qualifies

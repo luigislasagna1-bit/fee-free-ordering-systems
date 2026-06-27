@@ -20,34 +20,11 @@ export async function GET(req: NextRequest) {
   const restaurant = await prisma.restaurant.findUnique({ where: { slug: restaurantSlug } });
   if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
 
-  // First try the legacy Coupon table (admin-assigned standalone codes
-  // managed via /admin/promotions's coupon list). Discount is a fixed
-  // amount or % computed here so the customer sees an immediate value.
-  const coupon = await prisma.coupon.findUnique({
-    where: { restaurantId_code: { restaurantId: restaurant.id, code } },
-  });
-
-  if (coupon) {
-    if (!coupon.isActive) return NextResponse.json({ error: "Invalid or expired coupon" }, { status: 400 });
-    if (coupon.expiresAt && new Date(coupon.expiresAt) < new Date()) return NextResponse.json({ error: "Coupon has expired" }, { status: 400 });
-    if (coupon.maxUses && coupon.usedCount >= coupon.maxUses) return NextResponse.json({ error: "Coupon has reached its usage limit" }, { status: 400 });
-    if (coupon.minimumOrder > 0 && subtotal < coupon.minimumOrder) {
-      return NextResponse.json({ error: `Minimum order of ${formatCurrency(coupon.minimumOrder, restaurant.currency)} required` }, { status: 400 });
-    }
-
-    const discount = coupon.discountType === "percentage"
-      ? Math.min(subtotal * (coupon.discountValue / 100), subtotal)
-      : Math.min(coupon.discountValue, subtotal);
-
-    return NextResponse.json({
-      id: coupon.id,
-      discount: Math.round(discount * 100) / 100,
-      source: "coupon",
-    });
-  }
-
-  // Promotion.couponCode fallback (Phase 2 marketing suite). When the
-  // customer types a code matching a Promotion's couponCode, accept it.
+  // Standalone coupons were retired (Luigi 2026-06-26) — codes now live on
+  // PROMOTIONS (a hidden promo carries the couponCode; personal/assigned codes
+  // are migrated promotions + a CustomerCoupon grant). So we resolve the typed
+  // code straight against Promotion.couponCode. When the customer types a code
+  // matching a Promotion's couponCode, accept it.
   // The actual discount math is dynamic (depends on cart contents +
   // promo type) so we don't return a fixed `discount` here — the next
   // call to /api/public/apply-promos picks up the entered code in the

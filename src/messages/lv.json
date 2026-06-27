@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} šajā datumā nav pieejama. Lūdzu, izvēlieties citu dienu vai pakalpojumu.",
       "fullNameRequired": "Ievadiet savu vārdu un uzvārdu.",
       "fulfilWindowOrderError": "\"{name}\" var pasūtīt tikai noteiktās dienās/laikos. Ieplānojiet pasūtījumu laikam, kad tas ir pieejams.",
-      "fulfilWindowReservationError": "\"{name}\" nav pieejams jūsu rezervācijas dienā. Lūdzu, noņemiet to vai rezervējiet galdiņu dienā, kad tas tiek piedāvāts."
+      "fulfilWindowReservationError": "\"{name}\" nav pieejams jūsu rezervācijas dienā. Lūdzu, noņemiet to vai rezervējiet galdiņu dienā, kad tas tiek piedāvāts.",
+      "promoEmailMismatch": "Šis kods ir reģistrēts citai e-pasta adresei."
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",
@@ -744,7 +745,7 @@
       "mapSettings": "Kartes iestatījumi",
       "notifications": "Paziņojumi",
       "receipts": "Čeki",
-      "promotions": "Akcijas un kuponi",
+      "promotions": "Akcijas",
       "socialMedia": "Sociālie mediji",
       "autopilot": "Autopilots",
       "websiteTheme": "Tīmekļa vietnes dizains",
@@ -1222,7 +1223,7 @@
       "logoHint": "Tiek rādīts klienta čeka augšdaļā — priekšskatījumā, izdrukātajā čekā un pasūtījuma e-pastā. Augsta kontrasta attēli vislabāk drukājas uz termopapīra. Velciet sadaļu Logotips, lai to pārvietotu."
     },
     "promotions": {
-      "title": "Akcijas un kuponi",
+      "title": "Akcijas",
       "subtitle": "Izveidojiet automātiskas akcijas vai vienreizējus kuponu kodus saviem klientiem.",
       "tabPromotions": "Akcijas",
       "tabCoupons": "Kuponi",
@@ -2008,7 +2009,7 @@
       "buttonNewCouponCode": "+ Jauns kupona kods",
       "stackingInfo": "<label>Apvienošana: </label><master>Galvenais</master> darījumi tiek piemēroti kopā ar visiem pārējiem. <exclusive>Ekskluzīvie</exclusive> darījumi bloķē visus pārējos, izņemot Galvenos. <standard>Standarta</standard> darījumi apvienojas savā starpā. Kuponu kodus klienti ievada manuāli — tie nekad netiek piemēroti automātiski.",
       "emptyStateTitle": "Vēl nav darījumu",
-      "emptyStateBody": "Noklikšķiniet <newPromo>\"+Jauna akcija\"</newPromo> augšā, lai izveidotu akciju, vai <newCoupon>\"+Jauns kupona kods\"</newCoupon> augstāk, lai izveidotu kuponu.",
+      "emptyStateBody": "Noklikšķiniet uz <newPromo>„+ Jauna akcija“</newPromo> augšpusē, lai izveidotu akciju.",
       "tabSelfMade": "Pašu veidotās",
       "tabPreMade": "Iepriekš sagatavotās"
     },
@@ -2154,27 +2155,18 @@
       "stackingExclusiveDesc": "Bloķē visas pārējās, izņemot Galvenās.",
       "stackingMasterLabel": "Galvenais",
       "stackingMasterDesc": "Tiek piemērots kopā ar jebkuru citu akciju.",
-      "limitedShowtimeTitle": "Ierobežots displeja laiks",
-      "limitedShowtimeSubtitle": "Akcija ir SLĒPTA ēdienkartē ārpus šiem laika logiem, bet joprojām var tikt aktivizēta ar kuponu.",
-      "limitedShowtimeEmpty": "Nav iestatītu laika logu. Akcija ir redzama atbilstoši vispārīgajiem displeja noteikumiem.",
-      "showtimeTo": "līdz",
-      "addShowtime": "Pievienot laika logu",
-      "displayModeTitle": "Displeja režīms",
-      "displayModeSubtitle": "Kā klienti atklāj šo akciju.",
-      "displayModeMenuVisibleLabel": "Redzams ēdienkartē",
-      "displayModeMenuVisibleDesc": "Karte tiek rādīta blakus ēdienkartes precēm.",
-      "displayModeCouponOnlyLabel": "Tikai kupons",
-      "displayModeCouponOnlyDesc": "Slēpts no ēdienkartes; tiek aktivizēts ar kupona kodu.",
-      "displayModePopupLabel": "Uznirstošais logs",
-      "displayModePopupDesc": "Modāls uznirst pasūtīšanas lapā.",
+      "displayModeTitle": "Redzamība un izmantošana",
+      "displayModeSubtitle": "Kā klienti atklāj un izmanto šo akciju.",
+      "displayModeMenuVisibleLabel": "Redzama",
+      "displayModeMenuVisibleDesc": "Rādās jūsu ēdienkartē. Tiek piemērota automātiski vai ar kodu.",
+      "displayModeCouponOnlyLabel": "Slēpta",
+      "displayModeCouponOnlyDesc": "Paslēpta no ēdienkartes — izmantojama tikai ar zemāk norādīto kodu.",
       "displayDetailsTitle": "Displeja detaļas",
       "highlightThresholdLabel": "Sākt pamudināt no",
       "highlightThresholdHint": "Ja iestatīts, pamudinājums \"Pievieno vēl, lai atbloķētu!\" parādās, kad grozs sasniedz šo summu, bet vēl nesasniedz minimālo pasūtījuma summu.",
       "promoCardImageLabel": "Akcijas kartes attēls",
       "orUploadOwn": "— vai augšupielādējiet savu —",
       "imageUploadHint": "Noklikšķiniet uz dizaina augstāk, lai to izmantotu, vai augšupielādējiet / ievadiet URL savam attēlam. Ja izlaidīsiet šo, pirmais dizains tiks izmantots kā noklusējums.",
-      "activationTitle": "Aktivizācija",
-      "activationSubtitle": "Kā klienti aktivizē šo akciju.",
       "autoApplyLabel": "Automātiski piemērot, kad grozs atbilst nosacījumiem",
       "autoApplyOnSub": "Akcija tiek aktivizēta automātiski, tiklīdz grozs atbilst noteikumiem. Kupona kods zemāk (ja norādīts) ir NEOBLIGĀTS alternatīvs veids pieredzējušiem lietotājiem.",
       "autoApplyOffSub": "Klientam OBLIGĀTI jāievada kupona kods zemāk — akcija NETIKS aktivizēta automātiski pat tad, kad grozs atbilst nosacījumiem. Izmantojiet šo lapiņu kodiem, tikai e-pasta darījumiem vai balvām, ko izdalāt personīgi.",
@@ -2183,8 +2175,6 @@
       "couponCodeOptional": "(neobligāts)",
       "couponCodePlaceholder": "piem. LUNCH20",
       "couponCodeMissingError": "Kupona kods ir obligāts, kad automātiskā piemērošana ir izslēgta — citādi klientiem nav veida, kā aktivizēt šo akciju.",
-      "bannerTitle": "Baners",
-      "bannerSubtitle": "Akcijas karte lapas augšā /order.",
       "showOnBannerLabel": "Rādīt klientu banerī",
       "showOnBannerSub": "Piespraust šo akciju pasūtīšanas lapas augšā.",
       "bannerHeadlineLabel": "Banera virsraksts",
@@ -2196,7 +2186,8 @@
       "channelSubtitle": "Marketplace klienti ir atsevišķa auditorija — izvēlieties, kur šis piedāvājums ir spēkā.",
       "channelWebsiteLabel": "Tikai jūsu vietne",
       "channelMarketplaceLabel": "Tikai Marketplace",
-      "channelBothLabel": "Abi"
+      "channelBothLabel": "Abi",
+      "hiddenCodeInfo": "Slēptās akcijas tiek piemērotas tikai tad, kad klients norēķinoties ievada šo kodu."
     },
     "customersList": {
       "heading": "Klienti",
@@ -3216,7 +3207,9 @@
       "successMessage": "Kupons <couponCode>{code}</couponCode> ({discount}) piešķirts {customerName}.",
       "buttonCreate": "Izveidot un piešķirt kuponu",
       "emailSent": "Klientam pa e-pastu nosūtīts kods un nosacījumi.",
-      "emailSkipped": "E-pasts netika nosūtīts (klientam nav reģistrēta e-pasta vai viņš atteicies no mārketinga paziņojumiem) — nododiet kodu viņam pats."
+      "emailSkipped": "E-pasts netika nosūtīts (klientam nav reģistrēta e-pasta vai viņš atteicies no mārketinga paziņojumiem) — nododiet kodu viņam pats.",
+      "labelOrderType": "Derīgs",
+      "labelStacking": "Apvienot ar citām akcijām"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Virtuves darbplūsma",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Šī atrašanās vieta izmanto zīmola izvēlni. Lai importētu citu izvēlni, vispirms pielāgojiet izvēlni šai atrašanās vietai no izvēlnes lapas."
     },
     "promotionsPage": {
-      "title": "Akcijas un kuponi",
-      "description": "Automātiski piedāvājumi, komplekti un kuponu kodi jūsu klientiem",
+      "title": "Akcijas",
+      "description": "Automātiski piedāvājumi, komplekti un akciju kodi jūsu klientiem",
       "newPromo": "Jauna akcija"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Pasūtīt",
       "recentOrders": "Jaunākie pasūtījumi ({count})",
       "noOrdersYet": "Jūs vēl neesat veicis nevienu pasūtījumu šeit.",
-      "orderNow": "Pasūtīt tagad →"
+      "orderNow": "Pasūtīt tagad →",
+      "useOffer": "Izmantot piedāvājumu"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ēdienreizes komplekts ar īpašumu",

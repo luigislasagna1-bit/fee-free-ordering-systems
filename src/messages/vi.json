@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} không khả dụng vào ngày này. Vui lòng chọn ngày hoặc dịch vụ khác.",
       "fullNameRequired": "Vui lòng nhập họ và tên của bạn.",
       "fulfilWindowOrderError": "\"{name}\" chỉ có thể đặt vào một số ngày/giờ nhất định. Vui lòng lên lịch đơn hàng vào thời điểm có sẵn.",
-      "fulfilWindowReservationError": "\"{name}\" không có sẵn vào ngày đặt bàn của bạn. Vui lòng xóa hoặc đặt bàn vào ngày có món này."
+      "fulfilWindowReservationError": "\"{name}\" không có sẵn vào ngày đặt bàn của bạn. Vui lòng xóa hoặc đặt bàn vào ngày có món này.",
+      "promoEmailMismatch": "Mã này được đăng ký cho một địa chỉ email khác."
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",
@@ -744,7 +745,7 @@
       "mapSettings": "Cài đặt bản đồ",
       "notifications": "Thông báo",
       "receipts": "Hóa đơn",
-      "promotions": "Khuyến mãi & Phiếu giảm giá",
+      "promotions": "Khuyến mãi",
       "socialMedia": "Mạng xã hội",
       "autopilot": "Autopilot",
       "websiteTheme": "Giao diện website",
@@ -1222,7 +1223,7 @@
       "logoHint": "Hiển thị ở đầu hóa đơn của khách — trong bản xem trước, trên hóa đơn in và trong email đơn hàng. Hình ảnh tương phản cao in đẹp nhất trên giấy nhiệt. Kéo phần Logo để thay đổi vị trí."
     },
     "promotions": {
-      "title": "Khuyến mãi & Phiếu giảm giá",
+      "title": "Khuyến mãi",
       "subtitle": "Chạy khuyến mãi tự động hoặc mã phiếu giảm giá cho khách hàng.",
       "tabPromotions": "Khuyến mãi",
       "tabCoupons": "Phiếu giảm giá",
@@ -1952,7 +1953,7 @@
       "buttonNewCouponCode": "+ Mã phiếu giảm giá mới",
       "stackingInfo": "<label>Kết hợp: </label><master>Master</master> áp dụng cùng mọi khuyến mãi khác. <exclusive>Độc quyền</exclusive> chặn tất cả trừ Master. <standard>Tiêu chuẩn</standard> kết hợp với nhau. Mã phiếu giảm giá do khách nhập và không bao giờ tự động áp dụng.",
       "emptyStateTitle": "Chưa có ưu đãi",
-      "emptyStateBody": "Nhấn <newPromo>\"+ Khuyến mãi mới\"</newPromo> ở trên để tạo khuyến mãi, hoặc <newCoupon>\"+ Mã phiếu giảm giá mới\"</newCoupon> ở trên để tạo phiếu giảm giá.",
+      "emptyStateBody": "Nhấp vào <newPromo>“+ Khuyến mãi mới”</newPromo> ở trên để tạo khuyến mãi.",
       "tabSelfMade": "Tự tạo",
       "tabPreMade": "Có sẵn"
     },
@@ -2098,27 +2099,18 @@
       "stackingExclusiveDesc": "Chặn tất cả trừ Master.",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "Áp dụng cùng bất kỳ khuyến mãi nào khác.",
-      "limitedShowtimeTitle": "Thời Gian Hiển Thị Có Giới Hạn",
-      "limitedShowtimeSubtitle": "Khuyến mãi bị ẨN khỏi thực đơn ngoài các cửa sổ này nhưng vẫn có thể áp dụng qua phiếu giảm giá.",
-      "limitedShowtimeEmpty": "Chưa đặt cửa sổ nào. Khuyến mãi hiển thị theo quy tắc hiển thị chung.",
-      "showtimeTo": "đến",
-      "addShowtime": "Thêm khung giờ",
-      "displayModeTitle": "Chế Độ Hiển Thị",
-      "displayModeSubtitle": "Cách khách khám phá khuyến mãi này.",
-      "displayModeMenuVisibleLabel": "Hiển thị trên thực đơn",
-      "displayModeMenuVisibleDesc": "Thẻ hiển thị cùng các món thực đơn.",
-      "displayModeCouponOnlyLabel": "Chỉ phiếu giảm giá",
-      "displayModeCouponOnlyDesc": "Ẩn khỏi thực đơn; kích hoạt bằng mã phiếu giảm giá.",
-      "displayModePopupLabel": "Popup",
-      "displayModePopupDesc": "Modal hiện lên trên trang đặt hàng.",
+      "displayModeTitle": "Hiển thị & sử dụng",
+      "displayModeSubtitle": "Cách khách hàng khám phá và sử dụng khuyến mãi này.",
+      "displayModeMenuVisibleLabel": "Hiển thị",
+      "displayModeMenuVisibleDesc": "Hiển thị trên thực đơn của bạn. Áp dụng tự động hoặc bằng mã.",
+      "displayModeCouponOnlyLabel": "Ẩn",
+      "displayModeCouponOnlyDesc": "Ẩn khỏi thực đơn — chỉ sử dụng bằng mã bên dưới.",
       "displayDetailsTitle": "Chi tiết hiển thị",
       "highlightThresholdLabel": "Bắt đầu nhắc khi đạt",
       "highlightThresholdHint": "Nếu được đặt, lời nhắc \"Thêm để mở khóa!\" sẽ xuất hiện khi giỏ hàng đạt mức này nhưng vẫn dưới mức đơn hàng tối thiểu.",
       "promoCardImageLabel": "Ảnh thẻ khuyến mãi",
       "orUploadOwn": "— hoặc tải lên ảnh của bạn —",
       "imageUploadHint": "Nhấn thiết kế ở trên để dùng, hoặc tải lên / dán URL ảnh của riêng bạn. Nếu bỏ qua, thiết kế đầu tiên được dùng làm mặc định.",
-      "activationTitle": "Kích Hoạt",
-      "activationSubtitle": "Cách khách kích hoạt khuyến mãi này.",
       "autoApplyLabel": "Tự động áp dụng khi giỏ hàng đủ điều kiện",
       "autoApplyOnSub": "Khuyến mãi kích hoạt tự động ngay khi giỏ hàng khớp với điều kiện. Mã phiếu bên dưới (nếu đặt) là bí danh TÙY CHỌN cho người dùng nâng cao.",
       "autoApplyOffSub": "Khách PHẢI nhập mã phiếu bên dưới — khuyến mãi sẽ KHÔNG kích hoạt tự động dù giỏ hàng đủ điều kiện. Dùng cho mã tờ rơi, ưu đãi chỉ qua email, hoặc phần thưởng bạn trao tay.",
@@ -2127,8 +2119,6 @@
       "couponCodeOptional": "(tùy chọn)",
       "couponCodePlaceholder": "ví dụ: LUNCH20",
       "couponCodeMissingError": "Mã phiếu giảm giá là bắt buộc khi tắt tự động áp dụng — nếu không khách không có cách nào kích hoạt khuyến mãi này.",
-      "bannerTitle": "Banner",
-      "bannerSubtitle": "Thẻ khuyến mãi đầu trang trên /order.",
       "showOnBannerLabel": "Hiển thị trên banner khách",
       "showOnBannerSub": "Ghim khuyến mãi này lên đầu trang đặt hàng.",
       "bannerHeadlineLabel": "Tiêu đề banner",
@@ -2140,7 +2130,8 @@
       "channelSubtitle": "Khách hàng Marketplace là nhóm đối tượng riêng — chọn nơi áp dụng ưu đãi này.",
       "channelWebsiteLabel": "Chỉ trang web của bạn",
       "channelMarketplaceLabel": "Chỉ Marketplace",
-      "channelBothLabel": "Cả hai"
+      "channelBothLabel": "Cả hai",
+      "hiddenCodeInfo": "Khuyến mãi ẩn chỉ áp dụng khi khách hàng nhập mã này lúc thanh toán."
     },
     "customersList": {
       "heading": "Khách Hàng",
@@ -3216,7 +3207,9 @@
       "successMessage": "Phiếu giảm giá <couponCode>{code}</couponCode> ({discount}) đã được gán cho {customerName}.",
       "buttonCreate": "Tạo & gán phiếu giảm giá",
       "emailSent": "Đã gửi email mã và điều kiện cho khách hàng.",
-      "emailSkipped": "Chưa gửi email (khách hàng không có email trong hồ sơ hoặc đã từ chối nhận thông tin tiếp thị) — hãy tự chia sẻ mã với họ."
+      "emailSkipped": "Chưa gửi email (khách hàng không có email trong hồ sơ hoặc đã từ chối nhận thông tin tiếp thị) — hãy tự chia sẻ mã với họ.",
+      "labelOrderType": "Áp dụng cho",
+      "labelStacking": "Kết hợp với khuyến mãi khác"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Quy trình bếp",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Địa điểm này dùng menu thương hiệu chung. Để nhập menu khác, trước tiên hãy tùy chỉnh menu cho địa điểm này từ trang Menu."
     },
     "promotionsPage": {
-      "title": "Khuyến mãi & Mã giảm giá",
-      "description": "Ưu đãi tự động, combo và mã coupon cho khách hàng",
+      "title": "Khuyến mãi",
+      "description": "Ưu đãi, combo và mã khuyến mãi tự động cho khách hàng của bạn",
       "newPromo": "Tạo khuyến mãi"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Đặt hàng",
       "recentOrders": "Đơn hàng gần đây ({count})",
       "noOrdersYet": "Bạn chưa đặt đơn hàng nào tại đây.",
-      "orderNow": "Đặt ngay →"
+      "orderNow": "Đặt ngay →",
+      "useOffer": "Dùng ưu đãi này"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Combo bữa ăn với món đặc biệt",

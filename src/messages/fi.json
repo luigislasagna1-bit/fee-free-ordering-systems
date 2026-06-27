@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} ei ole saatavilla tänä päivänä. Valitse toinen päivä tai palvelu.",
       "fullNameRequired": "Anna etu- ja sukunimesi.",
       "fulfilWindowOrderError": "\"{name}\" voidaan tilata vain tiettyinä päivinä/aikoina. Ajoita tilauksesi ajankohtaan, jolloin se on saatavilla.",
-      "fulfilWindowReservationError": "\"{name}\" ei ole saatavilla varauspäivänäsi. Poista se tai varaa pöytäsi päivälle, jolloin se on tarjolla."
+      "fulfilWindowReservationError": "\"{name}\" ei ole saatavilla varauspäivänäsi. Poista se tai varaa pöytäsi päivälle, jolloin se on tarjolla.",
+      "promoEmailMismatch": "Tämä koodi on rekisteröity toiseen sähköpostiosoitteeseen."
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",
@@ -744,7 +745,7 @@
       "mapSettings": "Kartta-asetukset",
       "notifications": "Ilmoitukset",
       "receipts": "Kuitit",
-      "promotions": "Tarjoukset ja kupongit",
+      "promotions": "Tarjoukset",
       "socialMedia": "Sosiaalinen media",
       "autopilot": "Autopilotti",
       "websiteTheme": "Sivuston teema",
@@ -1222,7 +1223,7 @@
       "logoHint": "Näkyy asiakaskuitin yläosassa — esikatselussa, tulostetussa kuitissa ja tilaussähköpostissa. Korkean kontrastin kuvat tulostuvat parhaiten lämpöpaperille. Siirrä Logo-osiota vetämällä."
     },
     "promotions": {
-      "title": "Tarjoukset ja kupongit",
+      "title": "Tarjoukset",
       "subtitle": "Luo automaattisia tarjouksia tai yksittäisiä kuponkikoodeja asiakkaillesi.",
       "tabPromotions": "Tarjoukset",
       "tabCoupons": "Kupongit",
@@ -2008,7 +2009,7 @@
       "buttonNewCouponCode": "+ Uusi kuponkikoodi",
       "stackingInfo": "<label>Yhdistäminen: </label><master>Master</master>-tarjoukset toimivat kaikkien muiden rinnalla. <exclusive>Exclusive</exclusive>-tarjoukset estävät kaikki muut paitsi Master-tasoiset. <standard>Standard</standard>-tarjoukset yhdistyvät keskenään. Kuponkikoodit syötetään asiakkaan toimesta eikä niitä sovelleta automaattisesti.",
       "emptyStateTitle": "Ei tarjouksia vielä",
-      "emptyStateBody": "Luo tarjous klikkaamalla <newPromo>\"+Uusi tarjous\"</newPromo> yläosassa, tai kuponki klikkaamalla <newCoupon>\"+Uusi kuponkikoodi\"</newCoupon> yllä.",
+      "emptyStateBody": "Napsauta ylhäältä <newPromo>”+ Uusi tarjous”</newPromo> luodaksesi tarjouksen.",
       "tabSelfMade": "Omat",
       "tabPreMade": "Valmiit"
     },
@@ -2154,27 +2155,18 @@
       "stackingExclusiveDesc": "Estää kaikki muut paitsi Master-tasoiset.",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "Toimii minkä tahansa muun tarjouksen rinnalla.",
-      "limitedShowtimeTitle": "Rajoitettu näkyvyysaika",
-      "limitedShowtimeSubtitle": "Tarjous on PIILOTETTU menusta näiden ikkunoiden ulkopuolella, mutta voidaan silti käyttää kupongilla.",
-      "limitedShowtimeEmpty": "Ei ikkunoita asetettu. Tarjous näkyy yleisten näyttösääntöjensä mukaan.",
-      "showtimeTo": "asti",
-      "addShowtime": "Lisää näkyvyysaika",
-      "displayModeTitle": "Näyttötila",
-      "displayModeSubtitle": "Miten asiakkaat löytävät tämän tarjouksen.",
-      "displayModeMenuVisibleLabel": "Näkyy menussa",
-      "displayModeMenuVisibleDesc": "Kortti näkyy menukohteiden rinnalla.",
-      "displayModeCouponOnlyLabel": "Vain kuponkikoodi",
-      "displayModeCouponOnlyDesc": "Piilotettu menusta; aktivoituu kuponkikoodilla.",
-      "displayModePopupLabel": "Ponnahdusikkuna",
-      "displayModePopupDesc": "Modaali-ikkuna avautuu tilaussivulla.",
+      "displayModeTitle": "Näkyvyys ja lunastus",
+      "displayModeSubtitle": "Miten asiakkaat löytävät ja lunastavat tämän tarjouksen.",
+      "displayModeMenuVisibleLabel": "Näkyvä",
+      "displayModeMenuVisibleDesc": "Näkyy menüssäsi. Käytetään automaattisesti tai koodilla.",
+      "displayModeCouponOnlyLabel": "Piilotettu",
+      "displayModeCouponOnlyDesc": "Piilotettu menüstä — lunastetaan vain alla olevalla koodilla.",
       "displayDetailsTitle": "Näyttötiedot",
       "highlightThresholdLabel": "Aloita kannustaminen kohdasta",
       "highlightThresholdHint": "Jos asetettu, \"Lisää enemmän avataksesi!\" -kannustus näkyy, kun ostoskori saavuttaa tämän summan ja on edelleen alle minimitilauksen.",
       "promoCardImageLabel": "Tarjouskortin kuva",
       "orUploadOwn": "— tai lataa oma —",
       "imageUploadHint": "Napsauta yllä olevaa mallia käyttääksesi sitä, tai lataa / liitä URL omalle kuvallesi. Jos ohitat tämän kokonaan, käytetään ensimmäistä mallia oletuksena.",
-      "activationTitle": "Aktivointi",
-      "activationSubtitle": "Miten asiakkaat käynnistävät tämän tarjouksen.",
       "autoApplyLabel": "Lisää automaattisesti kun ostoskori täyttää ehdot",
       "autoApplyOnSub": "Tarjous käynnistyy automaattisesti heti kun ostoskori täyttää säännöt. Alla oleva kuponkikoodi (jos asetettu) on VALINNAINEN alias tehokäyttäjille.",
       "autoApplyOffSub": "Asiakkaiden ON syötettävä alla oleva kuponkikoodi — tarjous EI käynnisty automaattisesti, vaikka ostoskori täyttäisi ehdot. Käytä tätä lentolehtisissä oleviin koodeihin, sähköpostivain-tarjouksiin tai henkilökohtaisesti jaettaviin palkintoihin.",
@@ -2183,8 +2175,6 @@
       "couponCodeOptional": "(valinnainen)",
       "couponCodePlaceholder": "esim. LUNCH20",
       "couponCodeMissingError": "Kuponkikoodi vaaditaan, kun automaattinen lisäys on pois päältä — muuten asiakkailla ei ole tapaa käynnistää tätä tarjousta.",
-      "bannerTitle": "Banneri",
-      "bannerSubtitle": "Sivun yläosan tarjouskortti /order-sivulla.",
       "showOnBannerLabel": "Näytä asiakkaan bannerissa",
       "showOnBannerSub": "Kiinnitä tämä tarjous tilaussivun yläosaan.",
       "bannerHeadlineLabel": "Bannerin otsikko",
@@ -2196,7 +2186,8 @@
       "channelSubtitle": "Marketplace-asiakkaat ovat eri yleisö — valitse, missä tämä tarjous on voimassa.",
       "channelWebsiteLabel": "Vain verkkosivustosi",
       "channelMarketplaceLabel": "Vain Marketplace",
-      "channelBothLabel": "Molemmat"
+      "channelBothLabel": "Molemmat",
+      "hiddenCodeInfo": "Piilotetut tarjoukset käytetään vain, kun asiakas syöttää tämän koodin kassalla."
     },
     "customersList": {
       "heading": "Asiakkaat",
@@ -3216,7 +3207,9 @@
       "successMessage": "Kuponki <couponCode>{code}</couponCode> ({discount}) on myönnetty asiakkaalle {customerName}.",
       "buttonCreate": "Luo ja myönnä kuponki",
       "emailSent": "Asiakkaalle on lähetetty sähköpostitse koodi ja ehdot.",
-      "emailSkipped": "Sähköpostia ei lähetetty (asiakkaalla ei ole sähköpostiosoitetta tallennettuna tai hän on kieltäytynyt markkinoinnista) — jaa koodi hänelle itse."
+      "emailSkipped": "Sähköpostia ei lähetetty (asiakkaalla ei ole sähköpostiosoitetta tallennettuna tai hän on kieltäytynyt markkinoinnista) — jaa koodi hänelle itse.",
+      "labelOrderType": "Voimassa",
+      "labelStacking": "Yhdistä muihin tarjouksiin"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Keittiön työnkulku",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Tämä toimipiste käyttää brändin ruokalistaa. Tuodaksesi eri ruokalistan, muokkaa ensin tämän toimipisteen ruokalistaa Ruokalista-sivulta."
     },
     "promotionsPage": {
-      "title": "Tarjoukset ja kupongit",
-      "description": "Automaattiset tarjoukset, niput ja kuponkikoodit asiakkaillesi",
+      "title": "Tarjoukset",
+      "description": "Automaattiset tarjoukset, paketit ja tarjouskoodit asiakkaillesi",
       "newPromo": "Uusi tarjous"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Tilaa",
       "recentOrders": "Viimeisimmät tilaukset ({count})",
       "noOrdersYet": "Et ole vielä tehnyt tilauksia täällä.",
-      "orderNow": "Tilaa nyt →"
+      "orderNow": "Tilaa nyt →",
+      "useOffer": "Käytä tarjous"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ateriapaketti erikoisuudella",

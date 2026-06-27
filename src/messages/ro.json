@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} nu este disponibil în această dată. Alege altă zi sau alt serviciu.",
       "fullNameRequired": "Introdu prenumele și numele de familie.",
       "fulfilWindowOrderError": "\"{name}\" poate fi comandat doar în anumite zile/ore. Programează-ți comanda pentru când este disponibil.",
-      "fulfilWindowReservationError": "\"{name}\" nu este disponibil în ziua rezervării tale. Te rugăm să-l elimini sau să rezervi masa într-o zi în care este oferit."
+      "fulfilWindowReservationError": "\"{name}\" nu este disponibil în ziua rezervării tale. Te rugăm să-l elimini sau să rezervi masa într-o zi în care este oferit.",
+      "promoEmailMismatch": "Acest cod este înregistrat la o altă adresă de e-mail."
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",
@@ -744,7 +745,7 @@
       "mapSettings": "Setări hartă",
       "notifications": "Notificări",
       "receipts": "Chitanțe",
-      "promotions": "Promoții & Cupoane",
+      "promotions": "Promoții",
       "socialMedia": "Social Media",
       "autopilot": "Autopilot",
       "websiteTheme": "Temă website",
@@ -1222,7 +1223,7 @@
       "logoHint": "Afișat în partea de sus a bonului clientului — în previzualizare, pe bonul tipărit și în e-mailul comenzii. Imaginile cu contrast ridicat se imprimă cel mai bine pe hârtie termică. Trage secțiunea Logo pentru a o repoziționa."
     },
     "promotions": {
-      "title": "Promoții & Cupoane",
+      "title": "Promoții",
       "subtitle": "Rulează promoții automate sau coduri de cupon unice pentru clienții tăi.",
       "tabPromotions": "Promoții",
       "tabCoupons": "Cupoane",
@@ -2008,7 +2009,7 @@
       "buttonNewCouponCode": "+ Cod cupon nou",
       "stackingInfo": "<label>Cumulare: </label><master>Master</master> se aplică alături de orice alt deal. <exclusive>Exclusiv</exclusive> blochează toate celelalte cu excepția Master. <standard>Standard</standard> se cumulează între ele. Codurile cupon sunt introduse de client și nu se aplică automat niciodată.",
       "emptyStateTitle": "Niciun deal încă",
-      "emptyStateBody": "Apasă <newPromo>\"+ Promoție nouă\"</newPromo> în partea de sus pentru a crea o promoție sau <newCoupon>\"+ Cod cupon nou\"</newCoupon> mai sus pentru a crea un cupon.",
+      "emptyStateBody": "Apasă pe <newPromo>„+ Promoție nouă”</newPromo> sus pentru a crea o promoție.",
       "tabSelfMade": "Proprii",
       "tabPreMade": "Predefinite"
     },
@@ -2154,27 +2155,18 @@
       "stackingExclusiveDesc": "Blochează toate celelalte cu excepția Master.",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "Se aplică alături de orice altă promoție.",
-      "limitedShowtimeTitle": "Showtime limitat",
-      "limitedShowtimeSubtitle": "Promoția este ASCUNSĂ din meniu în afara acestor ferestre, dar poate fi aplicată în continuare prin cupon.",
-      "limitedShowtimeEmpty": "Nicio fereastră setată. Promoția este vizibilă conform regulilor generale de afișare.",
-      "showtimeTo": "până la",
-      "addShowtime": "Adaugă showtime",
-      "displayModeTitle": "Mod de afișare",
-      "displayModeSubtitle": "Cum descoperă clienții această promoție.",
-      "displayModeMenuVisibleLabel": "Vizibil în meniu",
-      "displayModeMenuVisibleDesc": "Cardul apare alături de produsele din meniu.",
-      "displayModeCouponOnlyLabel": "Doar cupon",
-      "displayModeCouponOnlyDesc": "Ascuns din meniu; se activează cu cod cupon.",
-      "displayModePopupLabel": "Popup",
-      "displayModePopupDesc": "O fereastră modală apare pe pagina de comandă.",
+      "displayModeTitle": "Vizibilitate și utilizare",
+      "displayModeSubtitle": "Cum descoperă și utilizează clienții această promoție.",
+      "displayModeMenuVisibleLabel": "Vizibilă",
+      "displayModeMenuVisibleDesc": "Apare în meniul tău. Se aplică automat sau cu un cod.",
+      "displayModeCouponOnlyLabel": "Ascunsă",
+      "displayModeCouponOnlyDesc": "Ascunsă din meniu — utilizabilă doar cu codul de mai jos.",
       "displayDetailsTitle": "Detalii afișare",
       "highlightThresholdLabel": "Începe sugestiile de la",
       "highlightThresholdHint": "Dacă este setat, mesajul „Adaugă mai mult pentru a debloca!” apare când coșul atinge această sumă și este încă sub comanda minimă.",
       "promoCardImageLabel": "Imaginea cardului promoțional",
       "orUploadOwn": "— sau încarcă propria imagine —",
       "imageUploadHint": "Apasă un design de mai sus pentru a-l folosi sau încarcă/lipește un URL pentru imaginea ta. Dacă sari complet peste asta, primul design este folosit ca implicit.",
-      "activationTitle": "Activare",
-      "activationSubtitle": "Cum declanșează clienții această promoție.",
       "autoApplyLabel": "Aplică automat când coșul se califică",
       "autoApplyOnSub": "Promoția se declanșează automat în momentul în care coșul îndeplinește regulile. Codul cupon de mai jos (dacă este setat) este un ALIAS OPȚIONAL pentru utilizatorii avansați.",
       "autoApplyOffSub": "Clienții TREBUIE să introducă codul cupon de mai jos — promoția NU se declanșează automat chiar dacă coșul se califică. Folosește pentru coduri de flyer, oferte exclusiv prin email sau recompense distribuite personal.",
@@ -2183,8 +2175,6 @@
       "couponCodeOptional": "(opțional)",
       "couponCodePlaceholder": "ex. LUNCH20",
       "couponCodeMissingError": "Un cod cupon este obligatoriu când aplicarea automată este dezactivată — altfel clienții nu au nicio modalitate de a declanșa această promoție.",
-      "bannerTitle": "Banner",
-      "bannerSubtitle": "Card promoțional în partea de sus a paginii /order.",
       "showOnBannerLabel": "Afișează pe bannerul clientului",
       "showOnBannerSub": "Fixează această promoție în partea de sus a paginii de comandă.",
       "bannerHeadlineLabel": "Titlu banner",
@@ -2196,7 +2186,8 @@
       "channelSubtitle": "Clienții Marketplace sunt un public separat — alege unde se aplică această ofertă.",
       "channelWebsiteLabel": "Doar site-ul dvs.",
       "channelMarketplaceLabel": "Doar Marketplace",
-      "channelBothLabel": "Ambele"
+      "channelBothLabel": "Ambele",
+      "hiddenCodeInfo": "Promoțiile ascunse se aplică doar când clientul introduce acest cod la plată."
     },
     "customersList": {
       "heading": "Clienți",
@@ -3216,7 +3207,9 @@
       "successMessage": "Cuponul <couponCode>{code}</couponCode> ({discount}) a fost atribuit lui {customerName}.",
       "buttonCreate": "Creează și atribuie cupon",
       "emailSent": "Clientul a primit prin e-mail codul și condițiile.",
-      "emailSkipped": "Nu s-a trimis niciun e-mail (clientul nu are o adresă de e-mail salvată sau a refuzat comunicările de marketing) — transmite-i chiar tu codul."
+      "emailSkipped": "Nu s-a trimis niciun e-mail (clientul nu are o adresă de e-mail salvată sau a refuzat comunicările de marketing) — transmite-i chiar tu codul.",
+      "labelOrderType": "Valabil pentru",
+      "labelStacking": "Combină cu alte promoții"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Flux de lucru bucătărie",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Această locație folosește meniul brandului. Pentru a importa un alt meniu, personalizează mai întâi meniul pentru această locație din pagina Meniu."
     },
     "promotionsPage": {
-      "title": "Promoții & Cupoane",
-      "description": "Oferte automate, pachete și coduri cupon pentru clienții tăi",
+      "title": "Promoții",
+      "description": "Oferte, pachete și coduri promoționale automate pentru clienții tăi",
       "newPromo": "Promoție nouă"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Comandă",
       "recentOrders": "Comenzi recente ({count})",
       "noOrdersYet": "Nu ai plasat încă nicio comandă aici.",
-      "orderNow": "Comandă acum →"
+      "orderNow": "Comandă acum →",
+      "useOffer": "Folosește oferta"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Pachet de masă cu specialitate",

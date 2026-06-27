@@ -22,14 +22,14 @@ import { PROMO_TYPES, isLockedType } from "@/lib/promo-types";
 import { CatEntry, hhmmToMin, initRulesForType, minToHHMM, PromoRules } from "./helpers";
 import { StepType } from "./StepType";
 import { StepConfig } from "./StepConfig";
-import { StepRestrictions, Step3Form, ShowtimeSchedule } from "./StepRestrictions";
+import { StepRestrictions, Step3Form } from "./StepRestrictions";
 
 export type WizardMode = "new" | "edit";
 
 export type WizardProps = {
   mode: WizardMode;
   hasAdvanced: boolean;
-  categories: { id: string; name: string }[];
+  categories: { id: string; name: string; menuId?: string | null; menuName?: string | null }[];
   menuItems: { id: string; name: string; categoryId: string; price: number; variants?: { id: string; name: string; price: number }[] }[];
   paymentMethods: string[];
   deliveryZones: { id: string; name: string }[];
@@ -69,7 +69,6 @@ export type PromoRow = {
   paymentMethodSlugs: string | null;
   deliveryZoneIds: string | null;
   onceLifetimePerClient: boolean;
-  limitedShowtimeSchedules: unknown;
   imageUrl: string | null;
   displayMode: string;
   highlightThreshold: number | null;
@@ -95,30 +94,6 @@ function parseRules(raw: string | null | undefined): PromoRules {
   } catch {
     return {};
   }
-}
-
-function parseShowtimes(raw: unknown): ShowtimeSchedule[] {
-  let arr: unknown = raw;
-  if (typeof arr === "string") {
-    try {
-      arr = JSON.parse(arr);
-    } catch {
-      arr = [];
-    }
-  }
-  if (!Array.isArray(arr)) return [];
-  return arr
-    .map((r: unknown) => {
-      const o = (r ?? {}) as Record<string, unknown>;
-      const dow = Number(o.dayOfWeek);
-      const hs = Number(o.hourStart);
-      const he = Number(o.hourEnd);
-      if (!Number.isFinite(dow) || !Number.isFinite(hs) || !Number.isFinite(he)) {
-        return null;
-      }
-      return { dayOfWeek: dow, hourStart: hs, hourEnd: he };
-    })
-    .filter((x): x is ShowtimeSchedule => x !== null);
 }
 
 function normalizeOrderTypeFromDb(s: string | undefined): string[] {
@@ -168,7 +143,6 @@ function initialFormFromPromo(p: PromoRow | null | undefined): Step3Form {
     onceLifetimePerClient: !!p?.onceLifetimePerClient,
     stackingRule: p?.stackingRule ?? "standard",
     channel: p?.channel ?? "website",
-    limitedShowtimeSchedules: parseShowtimes(p?.limitedShowtimeSchedules),
     displayMode: p?.displayMode ?? "menu_visible",
     highlightThreshold: p?.highlightThreshold != null ? String(p.highlightThreshold) : "",
     imageUrl: p?.imageUrl ?? "",
@@ -218,6 +192,8 @@ export function PromoWizard(props: WizardProps) {
       categories.map((cat) => ({
         id: cat.id,
         name: cat.name,
+        menuId: cat.menuId ?? null,
+        menuName: cat.menuName ?? null,
         items: menuItems
           .filter((i) => i.categoryId === cat.id)
           .map((i) => ({ id: i.id, name: i.name, price: i.price, variants: i.variants ?? [] })),
@@ -302,7 +278,6 @@ export function PromoWizard(props: WizardProps) {
       paymentMethodSlugs: step3.paymentMethodSlugs,
       deliveryZoneIds: step3.deliveryZoneIds,
       onceLifetimePerClient: step3.onceLifetimePerClient,
-      limitedShowtimeSchedules: step3.limitedShowtimeSchedules,
       imageUrl: step3.imageUrl.trim() || null,
       displayMode: step3.displayMode,
       highlightThreshold:

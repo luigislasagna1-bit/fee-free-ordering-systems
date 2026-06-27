@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} nije dostupna na ovaj datum. Odaberite drugi dan ili uslugu.",
       "fullNameRequired": "Unesite svoje ime i prezime.",
       "fulfilWindowOrderError": "\"{name}\" se može naručiti samo određenim danima/satima. Zakažite narudžbu za vrijeme kada je dostupno.",
-      "fulfilWindowReservationError": "\"{name}\" nije dostupno na dan vaše rezervacije. Uklonite ga ili rezervirajte stol za dan kada je u ponudi."
+      "fulfilWindowReservationError": "\"{name}\" nije dostupno na dan vaše rezervacije. Uklonite ga ili rezervirajte stol za dan kada je u ponudi.",
+      "promoEmailMismatch": "Ovaj kôd registriran je na drugu e-mail adresu."
     },
     "searchMenu": "Pretraži jelovnik…",
     "signIn": "Prijava",
@@ -744,7 +745,7 @@
       "mapSettings": "Postavke karte",
       "notifications": "Obavijesti",
       "receipts": "Računi",
-      "promotions": "Promocije i kuponi",
+      "promotions": "Promocije",
       "socialMedia": "Društvene mreže",
       "autopilot": "Autopilot",
       "websiteTheme": "Tema web stranice",
@@ -1222,7 +1223,7 @@
       "logoHint": "Prikazuje se na vrhu računa za kupca — u pregledu, na ispisanom računu i u e-poruci narudžbe. Slike visokog kontrasta najbolje se ispisuju na termalnom papiru. Povucite odjeljak Logotip da biste ga premjestili."
     },
     "promotions": {
-      "title": "Promocije i kuponi",
+      "title": "Promocije",
       "subtitle": "Pokrenite automatske promocije ili jednokratne kodove kupona za vaše kupce.",
       "tabPromotions": "Promocije",
       "tabCoupons": "Kuponi",
@@ -2008,7 +2009,7 @@
       "buttonNewCouponCode": "+ Novi kod kupona",
       "stackingInfo": "<label>Gomilanje: </label><master>Master</master> ponude primjenjuju se uz sve ostale. <exclusive>Ekskluzivne</exclusive> ponude blokiraju sve ostale osim Mastera. <standard>Standardne</standard> ponude se gomilaju međusobno. Kodovi kupona unose kupci i nikada se ne primjenjuju automatski.",
       "emptyStateTitle": "Još nema ponuda",
-      "emptyStateBody": "Kliknite <newPromo>\"+ Nova promo\"</newPromo> na vrhu za kreiranje promocije, ili <newCoupon>\"+ Novi kod kupona\"</newCoupon> gore za kreiranje kupona.",
+      "emptyStateBody": "Kliknite <newPromo>„+ Nova promocija“</newPromo> na vrhu za izradu promocije.",
       "tabSelfMade": "Vlastite",
       "tabPreMade": "Unaprijed izrađene"
     },
@@ -2154,27 +2155,18 @@
       "stackingExclusiveDesc": "Blokira sve ostale osim Mastera.",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "Primjenjuje se uz bilo koji drugi promo.",
-      "limitedShowtimeTitle": "Ograničeni prikaz",
-      "limitedShowtimeSubtitle": "Promo je SKRIVEN iz jelovnika izvan ovih vremenskih prozora, ali se i dalje može primijeniti putem kupona.",
-      "limitedShowtimeEmpty": "Nema postavljenih prozora. Promo je vidljiv prema općim pravilima prikaza.",
-      "showtimeTo": "do",
-      "addShowtime": "Dodaj vremenski prozor",
-      "displayModeTitle": "Način prikaza",
-      "displayModeSubtitle": "Kako kupci otkrivaju ovaj promo.",
-      "displayModeMenuVisibleLabel": "Vidljivo u jelovniku",
-      "displayModeMenuVisibleDesc": "Kartica se prikazuje uz stavke jelovnika.",
-      "displayModeCouponOnlyLabel": "Samo kupon",
-      "displayModeCouponOnlyDesc": "Skriveno iz jelovnika; aktivira se kodom kupona.",
-      "displayModePopupLabel": "Skočni prozor",
-      "displayModePopupDesc": "Modalni prozor pojavljuje se na stranici narudžbi.",
+      "displayModeTitle": "Vidljivost i iskorištavanje",
+      "displayModeSubtitle": "Kako kupci otkrivaju i iskorištavaju ovu promociju.",
+      "displayModeMenuVisibleLabel": "Vidljiva",
+      "displayModeMenuVisibleDesc": "Prikazuje se u vašem jelovniku. Primjenjuje se automatski ili kodom.",
+      "displayModeCouponOnlyLabel": "Skrivena",
+      "displayModeCouponOnlyDesc": "Skrivena iz jelovnika — iskorištava se samo kodom u nastavku.",
       "displayDetailsTitle": "Detalji prikaza",
       "highlightThresholdLabel": "Počni poticati pri",
       "highlightThresholdHint": "Ako je postavljeno, poticaj „Dodaj još za otključavanje!\" pojavljuje se kada košarica dosegne ovaj iznos, a još je ispod minimuma za narudžbu.",
       "promoCardImageLabel": "Slika promo kartice",
       "orUploadOwn": "— ili prenesite vlastitu —",
       "imageUploadHint": "Kliknite dizajn gore za korištenje, ili prenesite / zalijepite URL za vlastitu sliku. Ako preskočite ovo u potpunosti, koristi se prvi dizajn kao zadani.",
-      "activationTitle": "Aktivacija",
-      "activationSubtitle": "Kako kupci aktiviraju ovaj promo.",
       "autoApplyLabel": "Automatski primijeni kada košarica ispunjava uvjete",
       "autoApplyOnSub": "Promo se automatski aktivira čim košarica zadovolji pravila. Kod kupona ispod (ako je postavljen) je NEOBAVEZNI alias za napredne korisnike.",
       "autoApplyOffSub": "Kupci MORAJU upisati kod kupona ispod — promo se NEĆE automatski aktivirati čak ni kada košarica ispunjava uvjete. Koristite za kodove s letaka, ekskluzivne e-mail ponude ili nagrade koje osobno dijelite.",
@@ -2183,8 +2175,6 @@
       "couponCodeOptional": "(neobavezno)",
       "couponCodePlaceholder": "npr. RUCAK20",
       "couponCodeMissingError": "Kod kupona je obavezan kada je automatska primjena isključena — inače kupci nemaju načina aktivirati ovaj promo.",
-      "bannerTitle": "Banner",
-      "bannerSubtitle": "Promo kartica na vrhu stranice /order.",
       "showOnBannerLabel": "Prikaži na banneru kupaca",
       "showOnBannerSub": "Zakači ovaj promo na vrh stranice narudžbi.",
       "bannerHeadlineLabel": "Naslov bannera",
@@ -2196,7 +2186,8 @@
       "channelSubtitle": "Kupci Marketplacea zasebna su publika — odaberite gdje se ova ponuda primjenjuje.",
       "channelWebsiteLabel": "Samo vaša web stranica",
       "channelMarketplaceLabel": "Samo Marketplace",
-      "channelBothLabel": "Oboje"
+      "channelBothLabel": "Oboje",
+      "hiddenCodeInfo": "Skrivene promocije primjenjuju se samo kad kupac unese ovaj kod pri plaćanju."
     },
     "customersList": {
       "heading": "Kupci",
@@ -3216,7 +3207,9 @@
       "successMessage": "Kupon <couponCode>{code}</couponCode> ({discount}) dodijeljen korisniku {customerName}.",
       "buttonCreate": "Stvori i dodijeli kupon",
       "emailSent": "Kupcu su e-poštom poslani kod i uvjeti.",
-      "emailSkipped": "E-pošta nije poslana (kupac nema spremljenu e-adresu ili je odbio primanje marketinških poruka) — sami mu prenesite kod."
+      "emailSkipped": "E-pošta nije poslana (kupac nema spremljenu e-adresu ili je odbio primanje marketinških poruka) — sami mu prenesite kod.",
+      "labelOrderType": "Vrijedi za",
+      "labelStacking": "Kombiniraj s drugim promocijama"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Tijek rada kuhinje",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Ova lokacija koristi izbornik brenda. Za uvoz drugog izbornika, prvo prilagodite izbornik za ovu lokaciju na stranici Izbornik."
     },
     "promotionsPage": {
-      "title": "Promocije i kuponi",
-      "description": "Automatske ponude, paketi i kuponski kodovi za vaše kupce",
+      "title": "Promocije",
+      "description": "Automatske ponude, paketi i promo kodovi za vaše kupce",
       "newPromo": "Nova promocija"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Naruči",
       "recentOrders": "Nedavne narudžbe ({count})",
       "noOrdersYet": "Još niste naručili ništa ovdje.",
-      "orderNow": "Naruči sada →"
+      "orderNow": "Naruči sada →",
+      "useOffer": "Iskoristi ponudu"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Paket obroka sa specijalitetom",

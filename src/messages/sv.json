@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} är inte tillgängligt detta datum. Välj en annan dag eller tjänst.",
       "fullNameRequired": "Ange ditt för- och efternamn.",
       "fulfilWindowOrderError": "\"{name}\" kan endast beställas vissa dagar/tider. Schemalägg din beställning till när den är tillgänglig.",
-      "fulfilWindowReservationError": "\"{name}\" är inte tillgänglig på din bokningsdag. Ta bort den eller boka ditt bord en dag då den erbjuds."
+      "fulfilWindowReservationError": "\"{name}\" är inte tillgänglig på din bokningsdag. Ta bort den eller boka ditt bord en dag då den erbjuds.",
+      "promoEmailMismatch": "Den här koden är registrerad på en annan e-postadress."
     },
     "searchMenu": "Sök i menyn…",
     "signIn": "Logga in",
@@ -744,7 +745,7 @@
       "mapSettings": "Kartinställningar",
       "notifications": "Aviseringar",
       "receipts": "Kvitton",
-      "promotions": "Kampanjer och kuponger",
+      "promotions": "Kampanjer",
       "socialMedia": "Sociala medier",
       "autopilot": "Autopilot",
       "websiteTheme": "Webbplatsens tema",
@@ -1222,7 +1223,7 @@
       "logoHint": "Visas högst upp på kundkvittot — i förhandsvisningen, på det utskrivna kvittot och i ordermejlet. Bilder med hög kontrast skrivs ut bäst på termopapper. Dra Logotyp-sektionen för att flytta den."
     },
     "promotions": {
-      "title": "Kampanjer och kuponger",
+      "title": "Kampanjer",
       "subtitle": "Kör automatiska kampanjer eller engångskupongkoder för dina kunder.",
       "tabPromotions": "Kampanjer",
       "tabCoupons": "Kuponger",
@@ -2008,7 +2009,7 @@
       "buttonNewCouponCode": "+ Ny kupongkod",
       "stackingInfo": "<label>Stapelregler: </label><master>Master</master>-erbjudanden gäller tillsammans med allt. <exclusive>Exklusiva</exclusive> erbjudanden blockerar alla andra utom Master. <standard>Standard</standard>-erbjudanden kombineras med varandra. Kupongkoder anges av kunden och tillämpas aldrig automatiskt.",
       "emptyStateTitle": "Inga erbjudanden ännu",
-      "emptyStateBody": "Klicka på <newPromo>\"+  Ny kampanj\"</newPromo> längst upp för att skapa en kampanj, eller på <newCoupon>\"+ Ny kupongkod\"</newCoupon> ovan för att skapa en kupong.",
+      "emptyStateBody": "Klicka på <newPromo>”+ Ny kampanj”</newPromo> högst upp för att skapa en kampanj.",
       "tabSelfMade": "Egna",
       "tabPreMade": "Färdiga"
     },
@@ -2154,27 +2155,18 @@
       "stackingExclusiveDesc": "Blockerar alla andra utom Master.",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "Gäller tillsammans med alla andra kampanjer.",
-      "limitedShowtimeTitle": "Begränsad visningstid",
-      "limitedShowtimeSubtitle": "Kampanjen är DOLD från menyn utanför dessa fönster men kan fortfarande tillämpas via kupong.",
-      "limitedShowtimeEmpty": "Inga fönster inställda. Kampanjen är synlig under sina allmänna visningsregler.",
-      "showtimeTo": "till",
-      "addShowtime": "Lägg till visningstid",
-      "displayModeTitle": "Visningsläge",
-      "displayModeSubtitle": "Hur kunder hittar den här kampanjen.",
-      "displayModeMenuVisibleLabel": "Synlig i meny",
-      "displayModeMenuVisibleDesc": "Kort visas bredvid menyartiklar.",
-      "displayModeCouponOnlyLabel": "Endast kupong",
-      "displayModeCouponOnlyDesc": "Dold från menyn; aktiveras med kupongkod.",
-      "displayModePopupLabel": "Popup",
-      "displayModePopupDesc": "Modal visas på beställningssidan.",
+      "displayModeTitle": "Synlighet och inlösen",
+      "displayModeSubtitle": "Hur kunder hittar och löser in detta erbjudande.",
+      "displayModeMenuVisibleLabel": "Synlig",
+      "displayModeMenuVisibleDesc": "Visas i din meny. Tillämpas automatiskt eller med en kod.",
+      "displayModeCouponOnlyLabel": "Dold",
+      "displayModeCouponOnlyDesc": "Dold från menyn — löses endast in med koden nedan.",
       "displayDetailsTitle": "Visningsdetaljer",
       "highlightThresholdLabel": "Börja knuffa vid",
       "highlightThresholdHint": "Om angett visas knuffen \"Lägg till mer för att låsa upp!\" när kundvagnen når det här beloppet och fortfarande är under minimibeloppet.",
       "promoCardImageLabel": "Kampanjkortsbild",
       "orUploadOwn": "— eller ladda upp din egen —",
       "imageUploadHint": "Klicka på en design ovan för att använda den, eller ladda upp / klistra in en URL för din egen bild. Om du hoppar över detta används den första designen som standard.",
-      "activationTitle": "Aktivering",
-      "activationSubtitle": "Hur kunder utlöser den här kampanjen.",
       "autoApplyLabel": "Tillämpa automatiskt när kundvagnen kvalificerar",
       "autoApplyOnSub": "Kampanjen utlöses automatiskt när kundvagnen matchar reglerna. Kupongkoden nedan (om angiven) är ett VALFRITT alias för avancerade användare.",
       "autoApplyOffSub": "Kunder MÅSTE skriva in kupongkoden nedan — kampanjen utlöses INTE automatiskt även när kundvagnen kvalificerar. Använd detta för reklamkoder, e-postkoder eller belöningar du delar ut personligen.",
@@ -2183,8 +2175,6 @@
       "couponCodeOptional": "(valfri)",
       "couponCodePlaceholder": "t.ex. LUNCH20",
       "couponCodeMissingError": "En kupongkod krävs när auto-tillämpa är av — annars har kunder inget sätt att utlösa den här kampanjen.",
-      "bannerTitle": "Banner",
-      "bannerSubtitle": "Kampanjkort högst upp på /order.",
       "showOnBannerLabel": "Visa i kundbanners",
       "showOnBannerSub": "Fäst den här kampanjen högst upp på beställningssidan.",
       "bannerHeadlineLabel": "Bannerrubrik",
@@ -2196,7 +2186,8 @@
       "channelSubtitle": "Marketplace-kunder är en egen målgrupp – välj var det här erbjudandet gäller.",
       "channelWebsiteLabel": "Endast din webbplats",
       "channelMarketplaceLabel": "Endast Marketplace",
-      "channelBothLabel": "Båda"
+      "channelBothLabel": "Båda",
+      "hiddenCodeInfo": "Dolda erbjudanden tillämpas bara när kunden anger den här koden i kassan."
     },
     "customersList": {
       "heading": "Kunder",
@@ -3216,7 +3207,9 @@
       "successMessage": "Kupong <couponCode>{code}</couponCode> ({discount}) tilldelad till {customerName}.",
       "buttonCreate": "Skapa och tilldela kupong",
       "emailSent": "Kunden har fått koden och villkoren via e-post.",
-      "emailSkipped": "Inget e-postmeddelande skickades (kunden saknar e-postadress eller har tackat nej till marknadsföring) – dela koden med kunden själv."
+      "emailSkipped": "Inget e-postmeddelande skickades (kunden saknar e-postadress eller har tackat nej till marknadsföring) – dela koden med kunden själv.",
+      "labelOrderType": "Gäller för",
+      "labelStacking": "Kombinera med andra kampanjer"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Köksarbetsflöde",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Den här platsen använder varumärkesmenyn. För att importera en annan meny, anpassa menyn för den här platsen från menysidan först."
     },
     "promotionsPage": {
-      "title": "Kampanjer och kuponger",
-      "description": "Automatiska erbjudanden, paket och kupongkoder för dina kunder",
+      "title": "Kampanjer",
+      "description": "Automatiska erbjudanden, paket och kampanjkoder till dina kunder",
       "newPromo": "Ny kampanj"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Beställ",
       "recentOrders": "Senaste beställningar ({count})",
       "noOrdersYet": "Du har inte gjort några beställningar här ännu.",
-      "orderNow": "Beställ nu →"
+      "orderNow": "Beställ nu →",
+      "useOffer": "Använd erbjudandet"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Matkombination med specialitet",

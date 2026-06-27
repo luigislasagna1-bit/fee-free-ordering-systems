@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} ไม่พร้อมให้บริการในวันนี้ กรุณาเลือกวันอื่นหรือบริการอื่น",
       "fullNameRequired": "กรุณากรอกชื่อและนามสกุลของคุณ",
       "fulfilWindowOrderError": "\"{name}\" สั่งได้เฉพาะบางวัน/เวลาเท่านั้น โปรดกำหนดเวลาสั่งซื้อเป็นช่วงที่พร้อมจำหน่าย",
-      "fulfilWindowReservationError": "\"{name}\" ไม่พร้อมจำหน่ายในวันจองของคุณ โปรดนำออก หรือจองโต๊ะในวันที่มีจำหน่าย"
+      "fulfilWindowReservationError": "\"{name}\" ไม่พร้อมจำหน่ายในวันจองของคุณ โปรดนำออก หรือจองโต๊ะในวันที่มีจำหน่าย",
+      "promoEmailMismatch": "รหัสนี้ลงทะเบียนกับอีเมลอื่น"
     },
     "searchMenu": "ค้นหาเมนู…",
     "signIn": "เข้าสู่ระบบ",
@@ -744,7 +745,7 @@
       "mapSettings": "การตั้งค่าแผนที่",
       "notifications": "การแจ้งเตือน",
       "receipts": "ใบเสร็จ",
-      "promotions": "โปรโมชั่น & คูปอง",
+      "promotions": "โปรโมชัน",
       "socialMedia": "โซเชียลมีเดีย",
       "autopilot": "ระบบอัตโนมัติ",
       "websiteTheme": "ธีมเว็บไซต์",
@@ -1222,7 +1223,7 @@
       "logoHint": "แสดงที่ด้านบนของใบเสร็จลูกค้า — ในตัวอย่าง บนใบเสร็จที่พิมพ์ และในอีเมลคำสั่งซื้อ ภาพคอนทราสต์สูงพิมพ์ได้ดีที่สุดบนกระดาษความร้อน ลากส่วนโลโก้เพื่อย้ายตำแหน่ง"
     },
     "promotions": {
-      "title": "โปรโมชั่น & คูปอง",
+      "title": "โปรโมชัน",
       "subtitle": "ใช้โปรโมชั่นอัตโนมัติหรือรหัสคูปองสำหรับลูกค้า",
       "tabPromotions": "โปรโมชั่น",
       "tabCoupons": "คูปอง",
@@ -2008,7 +2009,7 @@
       "buttonNewCouponCode": "+ รหัสคูปองใหม่",
       "stackingInfo": "<label>การซ้อน: </label><master>Master</master> ใช้ร่วมกับทุกอย่าง <exclusive>Exclusive</exclusive> บล็อกทั้งหมดยกเว้น Master <standard>Standard</standard> ซ้อนกันได้ รหัสคูปองต้องลูกค้ากรอกเองและไม่ใช้งานอัตโนมัติ",
       "emptyStateTitle": "ยังไม่มีดีล",
-      "emptyStateBody": "คลิก <newPromo>\"+ โปรโมชั่นใหม่\"</newPromo> ด้านบนเพื่อสร้างโปรโมชั่น หรือ <newCoupon>\"+ รหัสคูปองใหม่\"</newCoupon> ด้านบนเพื่อสร้างคูปอง",
+      "emptyStateBody": "คลิก <newPromo>“+ โปรโมชันใหม่”</newPromo> ด้านบนเพื่อสร้างโปรโมชัน",
       "tabSelfMade": "สร้างเอง",
       "tabPreMade": "สำเร็จรูป"
     },
@@ -2154,27 +2155,18 @@
       "stackingExclusiveDesc": "บล็อกทั้งหมดยกเว้น Master",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "ใช้ร่วมกับโปรโมชั่นอื่นได้ทุกอย่าง",
-      "limitedShowtimeTitle": "เวลาแสดงจำกัด",
-      "limitedShowtimeSubtitle": "โปรโมชั่นจะซ่อนจากเมนูนอกช่วงเวลาเหล่านี้ แต่ยังสามารถใช้ผ่านคูปองได้",
-      "limitedShowtimeEmpty": "ยังไม่มีช่วงเวลา โปรโมชั่นจะแสดงตามกฎการแสดงผลทั่วไป",
-      "showtimeTo": "ถึง",
-      "addShowtime": "เพิ่มช่วงเวลา",
-      "displayModeTitle": "โหมดการแสดงผล",
-      "displayModeSubtitle": "วิธีที่ลูกค้าค้นพบโปรโมชั่นนี้",
-      "displayModeMenuVisibleLabel": "แสดงในเมนู",
-      "displayModeMenuVisibleDesc": "การ์ดแสดงพร้อมกับรายการเมนู",
-      "displayModeCouponOnlyLabel": "เฉพาะคูปอง",
-      "displayModeCouponOnlyDesc": "ซ่อนจากเมนู; เปิดใช้งานด้วยรหัสคูปอง",
-      "displayModePopupLabel": "Popup",
-      "displayModePopupDesc": "Modal ปรากฏขึ้นในหน้าสั่งอาหาร",
+      "displayModeTitle": "การแสดงผลและการแลกรับ",
+      "displayModeSubtitle": "วิธีที่ลูกค้าค้นพบและแลกรับโปรโมชันนี้",
+      "displayModeMenuVisibleLabel": "แสดง",
+      "displayModeMenuVisibleDesc": "แสดงในเมนูของคุณ ใช้โดยอัตโนมัติหรือด้วยรหัส",
+      "displayModeCouponOnlyLabel": "ซ่อน",
+      "displayModeCouponOnlyDesc": "ซ่อนจากเมนู — แลกรับได้ด้วยรหัสด้านล่างเท่านั้น",
       "displayDetailsTitle": "รายละเอียดการแสดงผล",
       "highlightThresholdLabel": "เริ่มกระตุ้นเมื่อถึง",
       "highlightThresholdHint": "หากตั้งค่าไว้ ข้อความกระตุ้น \"เพิ่มอีกเพื่อปลดล็อก!\" จะแสดงเมื่อตะกร้าถึงยอดนี้และยังต่ำกว่าออเดอร์ขั้นต่ำ",
       "promoCardImageLabel": "รูปการ์ดโปรโมชั่น",
       "orUploadOwn": "— หรืออัปโหลดของคุณเอง —",
       "imageUploadHint": "คลิกดีไซน์ด้านบนเพื่อใช้ หรืออัปโหลด / วาง URL ของรูปของคุณเอง หากข้ามทั้งหมด ดีไซน์แรกจะใช้เป็นค่าเริ่มต้น",
-      "activationTitle": "การเปิดใช้งาน",
-      "activationSubtitle": "วิธีที่ลูกค้าเปิดใช้โปรโมชั่นนี้",
       "autoApplyLabel": "ใช้อัตโนมัติเมื่อตะกร้าเข้าเงื่อนไข",
       "autoApplyOnSub": "โปรโมชั่นจะทำงานทันทีที่ตะกร้าตรงตามกฎ รหัสคูปองด้านล่าง (ถ้ากำหนด) เป็นชื่อแทนสำหรับผู้ใช้ขั้นสูง",
       "autoApplyOffSub": "ลูกค้าต้องพิมพ์รหัสคูปองด้านล่าง — โปรโมชั่นจะไม่ทำงานอัตโนมัติแม้ตะกร้าตรงเงื่อนไข ใช้สำหรับโค้ดแผ่นพับ, ดีลเฉพาะอีเมล, หรือรางวัลที่แจกด้วยตัวเอง",
@@ -2183,8 +2175,6 @@
       "couponCodeOptional": "(ไม่บังคับ)",
       "couponCodePlaceholder": "เช่น LUNCH20",
       "couponCodeMissingError": "ต้องมีรหัสคูปองเมื่อปิดการใช้อัตโนมัติ — มิฉะนั้นลูกค้าจะไม่มีทางเปิดโปรโมชั่นนี้ได้",
-      "bannerTitle": "แบนเนอร์",
-      "bannerSubtitle": "การ์ดโปรโมชั่นบนสุดของหน้า /order",
       "showOnBannerLabel": "แสดงในแบนเนอร์ลูกค้า",
       "showOnBannerSub": "ปักหมุดโปรโมชั่นนี้ไว้ด้านบนของหน้าสั่งอาหาร",
       "bannerHeadlineLabel": "หัวข้อแบนเนอร์",
@@ -2196,7 +2186,8 @@
       "channelSubtitle": "ลูกค้า Marketplace เป็นกลุ่มผู้ชมแยกต่างหาก — เลือกว่าข้อเสนอนี้จะใช้ที่ใด",
       "channelWebsiteLabel": "เฉพาะเว็บไซต์ของคุณ",
       "channelMarketplaceLabel": "เฉพาะ Marketplace",
-      "channelBothLabel": "ทั้งสอง"
+      "channelBothLabel": "ทั้งสอง",
+      "hiddenCodeInfo": "โปรโมชันที่ซ่อนจะใช้ได้เมื่อลูกค้ากรอกรหัสนี้ตอนชำระเงินเท่านั้น"
     },
     "customersList": {
       "heading": "ลูกค้า",
@@ -3216,7 +3207,9 @@
       "successMessage": "กำหนดคูปอง <couponCode>{code}</couponCode> ({discount}) ให้กับ {customerName} แล้ว",
       "buttonCreate": "สร้างและกำหนดคูปอง",
       "emailSent": "ส่งโค้ดและเงื่อนไขให้ลูกค้าทางอีเมลแล้ว",
-      "emailSkipped": "ไม่ได้ส่งอีเมล (ลูกค้าไม่มีอีเมลในระบบหรือปฏิเสธรับข่าวสารการตลาด) — กรุณาแจ้งโค้ดให้ลูกค้าด้วยตนเอง"
+      "emailSkipped": "ไม่ได้ส่งอีเมล (ลูกค้าไม่มีอีเมลในระบบหรือปฏิเสธรับข่าวสารการตลาด) — กรุณาแจ้งโค้ดให้ลูกค้าด้วยตนเอง",
+      "labelOrderType": "ใช้ได้กับ",
+      "labelStacking": "รวมกับโปรโมชันอื่น"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "การทำงานของครัว",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "สาขานี้ใช้เมนูของแบรนด์หลัก หากต้องการนำเข้าเมนูอื่น ให้กำหนดเมนูเฉพาะสาขาจากหน้าเมนูก่อน"
     },
     "promotionsPage": {
-      "title": "โปรโมชันและคูปอง",
-      "description": "ดีลอัตโนมัติ แพ็กเกจ และรหัสคูปองสำหรับลูกค้าของคุณ",
+      "title": "โปรโมชัน",
+      "description": "ข้อเสนอ ชุดสินค้า และรหัสโปรโมชันอัตโนมัติสำหรับลูกค้าของคุณ",
       "newPromo": "โปรโมชันใหม่"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "สั่งอาหาร",
       "recentOrders": "คำสั่งซื้อล่าสุด ({count})",
       "noOrdersYet": "คุณยังไม่มีคำสั่งซื้อที่นี่",
-      "orderNow": "สั่งเลย →"
+      "orderNow": "สั่งเลย →",
+      "useOffer": "ใช้ข้อเสนอนี้"
     },
     "bundle": {
       "mealBundleWithSpeciality": "เซตอาหารพร้อมเมนูพิเศษ",

@@ -13,12 +13,12 @@ export default async function PromotionsPage() {
     return (
       <div>
         <HeaderBar t={t} />
-        <PromotionsClient promotions={[] as any} coupons={[] as any} categories={[]} menuItems={[]} />
+        <PromotionsClient promotions={[] as any} categories={[]} menuItems={[]} />
       </div>
     );
   }
 
-  // Resolve owner-id set for promo/coupon lookups. A child location's
+  // Resolve owner-id set for promo lookups. A child location's
   // /admin/promotions page also shows the parent's brand-scoped rows
   // (read-only at the API level — edit/delete rejects non-owner attempts).
   const restaurant = await prisma.restaurant.findUnique({
@@ -28,17 +28,8 @@ export default async function PromotionsPage() {
   const ownerIds: string[] = [restaurantId];
   if (restaurant?.parentRestaurantId) ownerIds.push(restaurant.parentRestaurantId);
 
-  const [promotions, coupons, categories, menuItems] = await Promise.all([
+  const [promotions, categories, menuItems] = await Promise.all([
     prisma.promotion.findMany({
-      where: {
-        OR: [
-          { restaurantId },
-          { restaurantId: { in: ownerIds }, scope: "brand" },
-        ],
-      },
-      orderBy: { createdAt: "desc" },
-    }),
-    prisma.coupon.findMany({
       where: {
         OR: [
           { restaurantId },
@@ -64,7 +55,6 @@ export default async function PromotionsPage() {
       <HeaderBar t={t} />
       <PromotionsClient
         promotions={promotions as any}
-        coupons={coupons as any}
         categories={categories}
         menuItems={menuItems}
       />

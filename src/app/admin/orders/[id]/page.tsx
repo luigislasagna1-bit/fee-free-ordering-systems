@@ -46,6 +46,7 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
   });
   if (!order) notFound();
 
+  const tConf = await getTranslations("customer.confirmation");
   const t = await getTranslations("admin.orders");
   const tc = await getTranslations("common");
   const tk = await getTranslations("checkout");
@@ -136,6 +137,32 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
           </div>
         </div>
       </div>
+
+      {/* Which promo(s) discounted this order — so the owner can see what was
+          applied (incl. a customer-assigned code). Luigi 2026-06-26. */}
+      {(() => {
+        let promos: Array<{ name?: string; discount?: number; type?: string; couponCode?: string }> = [];
+        const ap: unknown = (order as any).appliedPromos;
+        if (Array.isArray(ap)) promos = ap as any;
+        else if (typeof ap === "string") { try { promos = JSON.parse(ap); } catch { promos = []; } }
+        if (!promos.length) return null;
+        return (
+          <div className="mt-4 rounded-2xl border border-emerald-100 bg-emerald-50/50 p-4">
+            <div className="text-xs font-semibold text-emerald-700 uppercase mb-2">🎉 {tConf("promosApplied")}</div>
+            <ul className="space-y-1 text-sm">
+              {promos.map((p, i) => (
+                <li key={i} className="flex justify-between gap-3">
+                  <span className="text-gray-800">
+                    {p.name}
+                    {p.couponCode ? <code className="ml-2 text-xs font-mono bg-white border border-emerald-200 rounded px-1.5 py-0.5">{p.couponCode}</code> : null}
+                  </span>
+                  <span className="text-emerald-700 font-medium">{p.type === "free_delivery" ? "—" : `− ${money(p.discount ?? 0)}`}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })()}
 
       {order.notes && (
         <div className="mt-4 text-sm bg-yellow-50 border border-yellow-200 rounded-lg p-3">

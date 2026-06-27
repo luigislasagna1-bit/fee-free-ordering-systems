@@ -161,6 +161,10 @@ export default async function OrderingPage({
     where: {
       isActive: true,
       showOnBanner: true,
+      // HIDDEN promos (code-only) must never surface on the menu/banner, even if
+      // a stale row still has showOnBanner=true (the invariant now forces it
+      // false on save; this is the defence-in-depth read guard). Luigi 2026-06-26.
+      displayMode: { not: "hidden_coupon_only" },
       channel: { in: channelFilter },
       OR: [
         { restaurantId: restaurantBase.id },

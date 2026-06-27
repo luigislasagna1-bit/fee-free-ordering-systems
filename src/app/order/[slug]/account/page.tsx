@@ -45,20 +45,25 @@ export default async function RestaurantAccountDashboard({
   if (!me) redirect(`/order/${slug}/account/login`);
 
   const now = new Date();
-  const [coupons, orders] = await Promise.all([
-    prisma.coupon.findMany({
+  const [offers, orders] = await Promise.all([
+    // Promotions assigned to this customer (CustomerCoupon grants — the model
+    // that replaced personal coupons). Available = not yet redeemed, on an active
+    // non-expired promotion, matched by customerId OR email. Luigi 2026-06-26.
+    prisma.customerCoupon.findMany({
       where: {
         restaurantId: restaurant.id,
-        customerId: me.id,
-        isActive: true,
-        OR: [{ expiresAt: null }, { expiresAt: { gt: now } }],
+        status: { in: ["granted", "released"] },
+        OR: [
+          { customerId: me.id },
+          ...(me.email ? [{ email: { equals: me.email.toLowerCase(), mode: "insensitive" as const } }] : []),
+        ],
+        promotion: { is: { isActive: true, OR: [{ endsAt: null }, { endsAt: { gt: now } }] } },
       },
+      orderBy: { grantedAt: "desc" },
       select: {
-        id: true, code: true, description: true, discountType: true,
-        discountValue: true, minimumOrder: true, maxUses: true, usedCount: true,
-        expiresAt: true,
+        id: true, code: true,
+        promotion: { select: { name: true, promotionType: true, ruleConfig: true, minimumOrder: true, endsAt: true } },
       },
-      orderBy: { createdAt: "desc" },
     }),
     prisma.order.findMany({
       where: { customerId: me.id },
@@ -94,7 +99,7 @@ export default async function RestaurantAccountDashboard({
     },
   });
 
-  const usableCoupons = coupons.filter((c) => c.maxUses === null || c.usedCount < c.maxUses);
+  const usableOffers = offers;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -132,38 +137,45 @@ export default async function RestaurantAccountDashboard({
         <div className="mt-6">
           <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
             <Tag className="w-4 h-4 text-emerald-500" />
-            {t("yourCoupons", { count: usableCoupons.length })}
+            {t("yourCoupons", { count: usableOffers.length })}
           </h2>
-          {usableCoupons.length === 0 ? (
+          {usableOffers.length === 0 ? (
             <div className="bg-white rounded-xl border border-gray-200 p-6 text-center text-sm text-gray-500">
               {t("noCoupons", { name: restaurant.name })}
             </div>
           ) : (
             <ul className="space-y-2">
-              {usableCoupons.map((c) => {
-                const remaining = c.maxUses === null
-                  ? t("unlimitedUses")
-                  : t("usesLeft", { n: Math.max(0, c.maxUses - c.usedCount) });
-                const discount = c.discountType === "percentage"
-                  ? `${c.discountValue}% off`
-                  : `${formatCurrency(c.discountValue)} off`;
+              {usableOffers.map((g) => {
+                const rc = (g.promotion?.ruleConfig ?? {}) as { discountPercent?: number; discountAmount?: number };
+                const discount = g.promotion?.promotionType === "percentage_off"
+                  ? `${rc.discountPercent ?? 0}% off`
+                  : `${formatCurrency(rc.discountAmount ?? 0)} off`;
+                const min = g.promotion?.minimumOrder ?? 0;
+                const endsAt = g.promotion?.endsAt ?? null;
                 return (
-                  <li key={c.id} className="bg-white rounded-xl border border-emerald-200 p-4 flex items-center justify-between gap-3 flex-wrap">
+                  <li key={g.id} className="bg-white rounded-xl border border-emerald-200 p-4 flex items-center justify-between gap-3 flex-wrap">
                     <div className="min-w-0">
                       <div className="font-bold text-emerald-700">{discount}</div>
                       <div className="text-xs text-gray-500 mt-0.5">
-                        {c.description ?? t("personalCoupon")}
+                        {g.promotion?.name ?? t("personalCoupon")}
                       </div>
                       <div className="text-[11px] text-gray-400 mt-1">
-                        {remaining}
-                        {c.minimumOrder > 0 && <> · {t("minOrder", { amount: formatCurrency(c.minimumOrder) })}</>}
-                        {c.expiresAt && <> · {t("expires", { date: new Date(c.expiresAt).toLocaleDateString() })}</>}
+                        {min > 0 && <>{t("minOrder", { amount: formatCurrency(min) })}</>}
+                        {endsAt && <>{min > 0 ? " · " : ""}{t("expires", { date: new Date(endsAt).toLocaleDateString() })}</>}
                       </div>
                     </div>
-                    <div className="flex-shrink-0">
+                    <div className="flex-shrink-0 flex flex-col items-end gap-1.5">
                       <code className="bg-emerald-50 text-emerald-800 font-mono font-bold text-sm px-3 py-1.5 rounded border border-emerald-200">
-                        {c.code}
+                        {g.code}
                       </code>
+                      {g.code && (
+                        <Link
+                          href={`/order/${slug}?coupon=${encodeURIComponent(g.code)}`}
+                          className="text-xs font-semibold text-emerald-600 hover:text-emerald-800"
+                        >
+                          {t("useOffer")} →
+                        </Link>
+                      )}
                     </div>
                   </li>
                 );

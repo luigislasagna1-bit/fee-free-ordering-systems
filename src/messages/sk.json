@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} nie je v tento deň dostupná. Vyberte iný deň alebo službu.",
       "fullNameRequired": "Zadajte svoje meno a priezvisko.",
       "fulfilWindowOrderError": "\"{name}\" je možné objednať len v určité dni/časy. Naplánujte si objednávku na čas, keď je dostupné.",
-      "fulfilWindowReservationError": "\"{name}\" nie je dostupné v deň vašej rezervácie. Odstráňte ho alebo si rezervujte stôl na deň, keď je v ponuke."
+      "fulfilWindowReservationError": "\"{name}\" nie je dostupné v deň vašej rezervácie. Odstráňte ho alebo si rezervujte stôl na deň, keď je v ponuke.",
+      "promoEmailMismatch": "Tento kód je registrovaný na inú e-mailovú adresu."
     },
     "searchMenu": "Hľadať v menu…",
     "signIn": "Prihlásiť sa",
@@ -744,7 +745,7 @@
       "mapSettings": "Nastavenia mapy",
       "notifications": "Oznámenia",
       "receipts": "Účtenky",
-      "promotions": "Akcie a kupóny",
+      "promotions": "Akcie",
       "socialMedia": "Sociálne médiá",
       "autopilot": "Autopilot",
       "websiteTheme": "Téma webu",
@@ -1222,7 +1223,7 @@
       "logoHint": "Zobrazuje sa v hornej časti zákazníckej účtenky — v náhľade, na vytlačenej účtenke a v e-maile objednávky. Obrázky s vysokým kontrastom sa na termopapier tlačia najlepšie. Sekciu Logo presuniete potiahnutím."
     },
     "promotions": {
-      "title": "Akcie a kupóny",
+      "title": "Akcie",
       "subtitle": "Spúšťajte automatické akcie alebo jednorazové kódy kupónov pre vašich zákazníkov.",
       "tabPromotions": "Akcie",
       "tabCoupons": "Kupóny",
@@ -2686,7 +2687,7 @@
       "buttonNewCouponCode": "+ Nový kód kupónu",
       "stackingInfo": "<label>Skladanie: </label><master>Hlavné</master> ponuky platia popri všetkom ostatnom. <exclusive>Exkluzívne</exclusive> ponuky blokujú všetky ostatné okrem hlavných. <standard>Štandardné</standard> ponuky sa skladajú navzájom. Kódy kupónov zadáva zákazník a nikdy sa neaplikujú automaticky.",
       "emptyStateTitle": "Zatiaľ žiadne ponuky",
-      "emptyStateBody": "Kliknite na <newPromo>„+ Nová promo akcia“</newPromo> hore a vytvorte promo akciu, alebo na <newCoupon>„+ Nový kód kupónu“</newCoupon> vyššie a vytvorte kupón.",
+      "emptyStateBody": "Kliknite na <newPromo>„+ Nová akcia“</newPromo> hore a vytvorte akciu.",
       "tabSelfMade": "Vlastné",
       "tabPreMade": "Predpripravené"
     },
@@ -2832,27 +2833,18 @@
       "stackingExclusiveDesc": "Blokuje všetky ostatné okrem hlavných.",
       "stackingMasterLabel": "Hlavná",
       "stackingMasterDesc": "Platí popri akejkoľvek inej promo akcii.",
-      "limitedShowtimeTitle": "Obmedzený čas zobrazenia",
-      "limitedShowtimeSubtitle": "Promo akcia je SKRYTÁ z menu mimo týchto okien, ale stále ju možno aplikovať pomocou kupónu.",
-      "limitedShowtimeEmpty": "Nie sú nastavené žiadne okná. Promo akcia je viditeľná podľa svojich všeobecných pravidiel zobrazenia.",
-      "showtimeTo": "do",
-      "addShowtime": "Pridať čas zobrazenia",
-      "displayModeTitle": "Režim zobrazenia",
-      "displayModeSubtitle": "Ako zákazníci objavia túto promo akciu.",
-      "displayModeMenuVisibleLabel": "Viditeľná v menu",
-      "displayModeMenuVisibleDesc": "Karta sa zobrazí popri položkách menu.",
-      "displayModeCouponOnlyLabel": "Iba kupón",
-      "displayModeCouponOnlyDesc": "Skrytá z menu; aktivuje sa kódom kupónu.",
-      "displayModePopupLabel": "Vyskakovacie okno",
-      "displayModePopupDesc": "Na stránke objednávky sa zobrazí modálne okno.",
+      "displayModeTitle": "Viditeľnosť a uplatnenie",
+      "displayModeSubtitle": "Ako zákazníci nájdu a uplatnia túto akciu.",
+      "displayModeMenuVisibleLabel": "Viditeľná",
+      "displayModeMenuVisibleDesc": "Zobrazuje sa v menu. Uplatní sa automaticky alebo kódom.",
+      "displayModeCouponOnlyLabel": "Skrytá",
+      "displayModeCouponOnlyDesc": "Skrytá z menu — uplatní sa iba kódom nižšie.",
       "displayDetailsTitle": "Detaily zobrazenia",
       "highlightThresholdLabel": "Začať pobádať pri",
       "highlightThresholdHint": "Ak je nastavené, výzva „Pridajte viac a odomknite!\" sa zobrazí, keď košík dosiahne túto sumu a stále je pod minimálnou hodnotou objednávky.",
       "promoCardImageLabel": "Obrázok promo karty",
       "orUploadOwn": "— alebo nahrajte vlastný —",
       "imageUploadHint": "Kliknutím na dizajn vyššie ho použijete, alebo nahrajte / vložte URL vlastného obrázka. Ak to úplne preskočíte, ako predvolený sa použije prvý dizajn.",
-      "activationTitle": "Aktivácia",
-      "activationSubtitle": "Ako zákazníci spustia túto promo akciu.",
       "autoApplyLabel": "Automaticky aplikovať, keď košík splní podmienky",
       "autoApplyOnSub": "Promo akcia sa spustí automaticky vo chvíli, keď košík zodpovedá pravidlám. Kód kupónu nižšie (ak je nastavený) je VOLITEĽNÝ alias pre pokročilých používateľov.",
       "autoApplyOffSub": "Zákazníci MUSIA zadať kód kupónu nižšie — promo akcia sa NESPUSTÍ automaticky ani keď košík splní podmienky. Použite to pre kódy z letákov, ponuky iba pre e-mail alebo odmeny, ktoré rozdávate osobne.",
@@ -2861,8 +2853,6 @@
       "couponCodeOptional": "(voliteľné)",
       "couponCodePlaceholder": "napr. LUNCH20",
       "couponCodeMissingError": "Keď je automatické aplikovanie vypnuté, kód kupónu je povinný — inak zákazníci nemajú ako túto promo akciu spustiť.",
-      "bannerTitle": "Banner",
-      "bannerSubtitle": "Promo karta v hornej časti stránky na /order.",
       "showOnBannerLabel": "Zobraziť na banneri pre zákazníka",
       "showOnBannerSub": "Pripnite túto promo akciu na vrch stránky objednávky.",
       "bannerHeadlineLabel": "Nadpis banneru",
@@ -2874,7 +2864,8 @@
       "channelSubtitle": "Zákazníci Marketplace sú samostatné publikum — vyberte, kde táto ponuka platí.",
       "channelWebsiteLabel": "Iba váš web",
       "channelMarketplaceLabel": "Iba Marketplace",
-      "channelBothLabel": "Oboje"
+      "channelBothLabel": "Oboje",
+      "hiddenCodeInfo": "Skryté akcie sa uplatnia iba vtedy, keď zákazník pri platbe zadá tento kód."
     },
     "customersList": {
       "heading": "Zákazníci",
@@ -3216,7 +3207,9 @@
       "successMessage": "Kupón <couponCode>{code}</couponCode> ({discount}) bol pridelený zákazníkovi {customerName}.",
       "buttonCreate": "Vytvoriť a prideliť kupón",
       "emailSent": "Zákazníkovi sme e-mailom poslali kód a podmienky.",
-      "emailSkipped": "E-mail sa neodoslal (zákazník nemá uvedenú e-mailovú adresu alebo sa odhlásil z marketingu) — kód mu odovzdajte sami."
+      "emailSkipped": "E-mail sa neodoslal (zákazník nemá uvedenú e-mailovú adresu alebo sa odhlásil z marketingu) — kód mu odovzdajte sami.",
+      "labelOrderType": "Platí pre",
+      "labelStacking": "Kombinovať s inými akciami"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Kuchynský pracovný tok",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Táto pobočka používa menu značky. Ak chcete importovať iné menu, najprv prispôsobte menu tejto pobočky na stránke Menu."
     },
     "promotionsPage": {
-      "title": "Akcie a kupóny",
-      "description": "Automatické zľavy, balíčky a kupónové kódy pre vašich zákazníkov",
+      "title": "Akcie",
+      "description": "Automatické ponuky, balíčky a promo kódy pre vašich zákazníkov",
       "newPromo": "Nová akcia"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Objednať",
       "recentOrders": "Nedávne objednávky ({count})",
       "noOrdersYet": "Zatiaľ ste tu nevykonali žiadnu objednávku.",
-      "orderNow": "Objednať teraz →"
+      "orderNow": "Objednať teraz →",
+      "useOffer": "Použiť túto ponuku"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Jedlový balíček so špeciálnymi položkami",

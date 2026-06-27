@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} šią dieną neprieinama. Pasirinkite kitą dieną arba paslaugą.",
       "fullNameRequired": "Įveskite savo vardą ir pavardę.",
       "fulfilWindowOrderError": "\"{name}\" galima užsisakyti tik tam tikromis dienomis ar valandomis. Suplanuokite užsakymą laikui, kai jis bus prieinamas.",
-      "fulfilWindowReservationError": "\"{name}\" nepasiekiamas jūsų rezervacijos dieną. Pašalinkite jį arba rezervuokite staliuką dienai, kurią jis siūlomas."
+      "fulfilWindowReservationError": "\"{name}\" nepasiekiamas jūsų rezervacijos dieną. Pašalinkite jį arba rezervuokite staliuką dienai, kurią jis siūlomas.",
+      "promoEmailMismatch": "Šis kodas registruotas kitam el. pašto adresui."
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",
@@ -744,7 +745,7 @@
       "mapSettings": "Žemėlapio nustatymai",
       "notifications": "Pranešimai",
       "receipts": "Kvitai",
-      "promotions": "Akcijos ir kuponai",
+      "promotions": "Akcijos",
       "socialMedia": "Socialiniai tinklai",
       "autopilot": "Autopilotai",
       "websiteTheme": "Svetainės tema",
@@ -1222,7 +1223,7 @@
       "logoHint": "Rodomas kliento kvito viršuje — peržiūroje, atspausdintame kvite ir užsakymo el. laiške. Didelio kontrasto vaizdai geriausiai spausdinami ant terminio popieriaus. Vilkite logotipo skiltį, kad ją perkeltumėte."
     },
     "promotions": {
-      "title": "Akcijos ir kuponai",
+      "title": "Akcijos",
       "subtitle": "Vykdykite automatines akcijas arba vienkartinių kuponų kodus savo klientams.",
       "tabPromotions": "Akcijos",
       "tabCoupons": "Kuponai",
@@ -2686,7 +2687,7 @@
       "buttonNewCouponCode": "+ Naujas kupono kodas",
       "stackingInfo": "<label>Sujungimas: </label><master>Master</master> pasiūlymai galioja kartu su viskuo. <exclusive>Išskirtiniai</exclusive> pasiūlymai blokuoja visus kitus, išskyrus Master. <standard>Standartiniai</standard> pasiūlymai jungiasi tarpusavyje. Kupono kodus įveda klientai ir jie niekada netaikomi automatiškai.",
       "emptyStateTitle": "Dar nėra pasiūlymų",
-      "emptyStateBody": "Spustelėkite <newPromo>„+ Nauja akcija“</newPromo> viršuje, kad sukurtumėte akciją, arba <newCoupon>„+ Naujas kupono kodas“</newCoupon> aukščiau, kad sukurtumėte kuponą.",
+      "emptyStateBody": "Spustelėkite <newPromo>„+ Nauja akcija“</newPromo> viršuje, kad sukurtumėte akciją.",
       "tabSelfMade": "Savos",
       "tabPreMade": "Iš anksto paruoštos"
     },
@@ -2832,27 +2833,18 @@
       "stackingExclusiveDesc": "Blokuoja visas kitas, išskyrus Master.",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "Galioja kartu su bet kuria kita akcija.",
-      "limitedShowtimeTitle": "Ribotas rodymo laikas",
-      "limitedShowtimeSubtitle": "Akcija PASLĖPTA nuo meniu už šių laikotarpių ribų, bet vis tiek gali būti pritaikyta su kuponu.",
-      "limitedShowtimeEmpty": "Nenustatyta jokių laikotarpių. Akcija matoma pagal jos bendrąsias rodymo taisykles.",
-      "showtimeTo": "iki",
-      "addShowtime": "Pridėti rodymo laiką",
-      "displayModeTitle": "Rodymo režimas",
-      "displayModeSubtitle": "Kaip klientai atranda šią akciją.",
-      "displayModeMenuVisibleLabel": "Matoma meniu",
-      "displayModeMenuVisibleDesc": "Kortelė rodoma kartu su meniu prekėmis.",
-      "displayModeCouponOnlyLabel": "Tik kuponas",
-      "displayModeCouponOnlyDesc": "Paslėpta nuo meniu; aktyvuojama kupono kodu.",
-      "displayModePopupLabel": "Iškylantis langas",
-      "displayModePopupDesc": "Modalinis langas iškyla užsakymo puslapyje.",
+      "displayModeTitle": "Matomumas ir panaudojimas",
+      "displayModeSubtitle": "Kaip klientai atranda ir panaudoja šią akciją.",
+      "displayModeMenuVisibleLabel": "Matoma",
+      "displayModeMenuVisibleDesc": "Rodoma jūsų meniu. Taikoma automatiškai arba su kodu.",
+      "displayModeCouponOnlyLabel": "Paslėpta",
+      "displayModeCouponOnlyDesc": "Paslėpta iš meniu — panaudojama tik su žemiau esančiu kodu.",
       "displayDetailsTitle": "Rodymo detalės",
       "highlightThresholdLabel": "Pradėti raginti nuo",
       "highlightThresholdHint": "Jei nustatyta, raginimas „Pridėkite daugiau, kad atrakintumėte!\" rodomas, kai krepšelis pasiekia šią sumą, bet vis dar nesiekia minimalaus užsakymo.",
       "promoCardImageLabel": "Akcijos kortelės paveikslėlis",
       "orUploadOwn": "— arba įkelkite savo —",
       "imageUploadHint": "Spustelėkite dizainą aukščiau, kad jį naudotumėte, arba įkelkite / įklijuokite savo paveikslėlio URL. Jei tai praleisite, kaip numatytasis bus naudojamas pirmasis dizainas.",
-      "activationTitle": "Aktyvavimas",
-      "activationSubtitle": "Kaip klientai suaktyvina šią akciją.",
       "autoApplyLabel": "Taikyti automatiškai, kai krepšelis atitinka",
       "autoApplyOnSub": "Akcija suveikia automatiškai tą akimirką, kai krepšelis atitinka taisykles. Žemiau esantis kupono kodas (jei nustatytas) yra NEPRIVALOMAS slapyvardis pažengusiems naudotojams.",
       "autoApplyOffSub": "Klientai PRIVALO įvesti žemiau esantį kupono kodą — akcija NESUVEIKS automatiškai, net kai krepšelis atitinka. Naudokite tai skrajučių kodams, tik el. paštu siunčiamiems pasiūlymams ar atlygiams, kuriuos dalinate asmeniškai.",
@@ -2861,8 +2853,6 @@
       "couponCodeOptional": "(neprivaloma)",
       "couponCodePlaceholder": "pvz. LUNCH20",
       "couponCodeMissingError": "Kupono kodas privalomas, kai automatinis taikymas išjungtas — kitaip klientai neturi kaip suaktyvinti šios akcijos.",
-      "bannerTitle": "Reklamjuostė",
-      "bannerSubtitle": "Akcijos kortelė puslapio viršuje /order.",
       "showOnBannerLabel": "Rodyti kliento reklamjuostėje",
       "showOnBannerSub": "Prisekite šią akciją prie užsakymo puslapio viršaus.",
       "bannerHeadlineLabel": "Reklamjuostės antraštė",
@@ -2874,7 +2864,8 @@
       "channelSubtitle": "Marketplace klientai yra atskira auditorija — pasirinkite, kur galioja šis pasiūlymas.",
       "channelWebsiteLabel": "Tik jūsų svetainė",
       "channelMarketplaceLabel": "Tik Marketplace",
-      "channelBothLabel": "Abu"
+      "channelBothLabel": "Abu",
+      "hiddenCodeInfo": "Paslėptos akcijos taikomos tik tada, kai klientas atsiskaitydamas įveda šį kodą."
     },
     "customersList": {
       "heading": "Klientai",
@@ -3216,7 +3207,9 @@
       "successMessage": "Kuponas <couponCode>{code}</couponCode> ({discount}) priskirtas {customerName}.",
       "buttonCreate": "Sukurti ir priskirti kuponą",
       "emailSent": "Klientui el. paštu išsiųstas kodas ir sąlygos.",
-      "emailSkipped": "El. laiškas neišsiųstas (klientas neturi registruoto el. pašto arba atsisakė rinkodaros pranešimų) — perduokite kodą jam patys."
+      "emailSkipped": "El. laiškas neišsiųstas (klientas neturi registruoto el. pašto arba atsisakė rinkodaros pranešimų) — perduokite kodą jam patys.",
+      "labelOrderType": "Galioja",
+      "labelStacking": "Derinti su kitomis akcijomis"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Virtuvės darbo eiga",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Ši vieta naudoja prekės ženklo meniu. Norėdami importuoti kitą meniu, pirmiausia pritaikykite šios vietos meniu Meniu puslapyje."
     },
     "promotionsPage": {
-      "title": "Akcijos ir kuponai",
-      "description": "Automatiniai pasiūlymai, rinkiniai ir kuponų kodai jūsų klientams",
+      "title": "Akcijos",
+      "description": "Automatiniai pasiūlymai, rinkiniai ir nuolaidų kodai jūsų klientams",
       "newPromo": "Nauja akcija"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Užsakyti",
       "recentOrders": "Naujausi užsakymai ({count})",
       "noOrdersYet": "Jūs dar neįdėjote čia jokių užsakymų.",
-      "orderNow": "Užsakyti dabar →"
+      "orderNow": "Užsakyti dabar →",
+      "useOffer": "Naudoti pasiūlymą"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Maisto rinkinys su specialiu patiekalu",

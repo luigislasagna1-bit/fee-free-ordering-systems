@@ -238,7 +238,8 @@
       "holidayServiceClosed": "{service} isn't available on this date. Please choose a different day or service.",
       "fullNameRequired": "Please enter your first and last name.",
       "fulfilWindowOrderError": "\"{name}\" can only be ordered for certain days/times. Please schedule your order for when it's available.",
-      "fulfilWindowReservationError": "\"{name}\" isn't available on your reservation day. Please remove it, or book your table on a day it's offered."
+      "fulfilWindowReservationError": "\"{name}\" isn't available on your reservation day. Please remove it, or book your table on a day it's offered.",
+      "promoEmailMismatch": "This code is registered to a different email address."
     },
     "searchMenu": "Search the menu…",
     "expandAll": "Expand all",
@@ -767,7 +768,7 @@
       "mapSettings": "Map Settings",
       "notifications": "Notifications",
       "receipts": "Receipts",
-      "promotions": "Promotions & Coupons",
+      "promotions": "Promotions",
       "socialMedia": "Social Media",
       "autopilot": "Autopilot",
       "websiteTheme": "Website Theme",
@@ -1289,7 +1290,7 @@
       "logoHint": "Shown at the top of the customer receipt — in the preview, on the printed receipt and in the order email. High-contrast images print best on thermal paper. Drag the Logo section to reposition it."
     },
     "promotions": {
-      "title": "Promotions & Coupons",
+      "title": "Promotions",
       "subtitle": "Run automatic promotions or one-off coupon codes for your customers.",
       "tabPromotions": "Promotions",
       "tabCoupons": "Coupons",
@@ -2410,7 +2411,7 @@
       "buttonNewCouponCode": "+ New coupon code",
       "stackingInfo": "<label>Stacking: </label><master>Master</master> deals apply alongside everything. <exclusive>Exclusive</exclusive> deals block all others except Masters. <standard>Standard</standard> deals stack with each other. Coupon codes are customer-entered and never auto-applied.",
       "emptyStateTitle": "No deals yet",
-      "emptyStateBody": "Click <newPromo>“+ New Promo”</newPromo> at the top to create a promotion, or <newCoupon>“+ New coupon code”</newCoupon> above to create a coupon.",
+      "emptyStateBody": "Click <newPromo>“+ New Promo”</newPromo> at the top to create a promotion.",
       "tabSelfMade": "Self-made",
       "tabPreMade": "Pre-made"
     },
@@ -2556,27 +2557,18 @@
       "stackingExclusiveDesc": "Blocks all others except Masters.",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "Applies alongside any other promo.",
-      "limitedShowtimeTitle": "Limited Showtime",
-      "limitedShowtimeSubtitle": "Promo is HIDDEN from the menu outside these windows but can still be applied via coupon.",
-      "limitedShowtimeEmpty": "No windows set. Promo is visible during its general display rules.",
-      "showtimeTo": "to",
-      "addShowtime": "Add showtime",
-      "displayModeTitle": "Display Mode",
-      "displayModeSubtitle": "How customers discover this promo.",
-      "displayModeMenuVisibleLabel": "Menu visible",
-      "displayModeMenuVisibleDesc": "Card shows alongside menu items.",
-      "displayModeCouponOnlyLabel": "Coupon only",
-      "displayModeCouponOnlyDesc": "Hidden from menu; activates with coupon code.",
-      "displayModePopupLabel": "Popup",
-      "displayModePopupDesc": "Modal pops up on ordering page.",
+      "displayModeTitle": "Visibility & redemption",
+      "displayModeSubtitle": "How customers find and redeem this promo.",
+      "displayModeMenuVisibleLabel": "Visible",
+      "displayModeMenuVisibleDesc": "Shows on your menu. Applies automatically or with a code.",
+      "displayModeCouponOnlyLabel": "Hidden",
+      "displayModeCouponOnlyDesc": "Hidden from the menu — redeemed only with the code below.",
       "displayDetailsTitle": "Display details",
       "highlightThresholdLabel": "Start nudging at",
       "highlightThresholdHint": "If set, the \"Add more to unlock!\" nudge appears once the cart reaches this amount and is still below the minimum order.",
       "promoCardImageLabel": "Promo card image",
       "orUploadOwn": "— or upload your own —",
       "imageUploadHint": "Click a design above to use it, or upload / paste a URL for your own image. If you skip this entirely, the first design is used as a default.",
-      "activationTitle": "Activation",
-      "activationSubtitle": "How customers trigger this promo.",
       "autoApplyLabel": "Auto-apply when cart qualifies",
       "autoApplyOnSub": "The promo fires automatically the moment the cart matches the rules. The coupon code below (if set) is an OPTIONAL alias for power users.",
       "autoApplyOffSub": "Customers MUST type the coupon code below — the promo will NOT fire automatically even when the cart qualifies. Use this for flyer codes, email-only deals, or rewards you hand out personally.",
@@ -2585,8 +2577,6 @@
       "couponCodeOptional": "(optional)",
       "couponCodePlaceholder": "e.g. LUNCH20",
       "couponCodeMissingError": "A coupon code is required when auto-apply is off — otherwise customers have no way to trigger this promo.",
-      "bannerTitle": "Banner",
-      "bannerSubtitle": "Top-of-page promo card on /order.",
       "showOnBannerLabel": "Show on customer banner",
       "showOnBannerSub": "Pin this promo to the top of the ordering page.",
       "bannerHeadlineLabel": "Banner headline",
@@ -2598,7 +2588,8 @@
       "channelSubtitle": "Marketplace customers are a separate audience — choose where this offer runs.",
       "channelWebsiteLabel": "Your website only",
       "channelMarketplaceLabel": "Marketplace only",
-      "channelBothLabel": "Both"
+      "channelBothLabel": "Both",
+      "hiddenCodeInfo": "Hidden promotions only apply when the customer enters this code at checkout."
     },
     "customersList": {
       "heading": "Customers",
@@ -3654,7 +3645,9 @@
       "successMessage": "Coupon <couponCode>{code}</couponCode> ({discount}) assigned to {customerName}.",
       "buttonCreate": "Create & assign coupon",
       "emailSent": "The customer has been emailed the code and conditions.",
-      "emailSkipped": "No email sent (customer has no email on file or opted out of marketing) — share the code with them yourself."
+      "emailSkipped": "No email sent (customer has no email on file or opted out of marketing) — share the code with them yourself.",
+      "labelOrderType": "Valid for",
+      "labelStacking": "Combine with other promotions"
     },
     "legalPageShell": {
       "backToHome": "Back to Fee Free Ordering",
@@ -3664,8 +3657,8 @@
       "navRefunds": "Refunds"
     },
     "promotionsPage": {
-      "title": "Promotions & Coupons",
-      "description": "Automatic deals, bundles, and coupon codes for your customers",
+      "title": "Promotions",
+      "description": "Automatic deals, bundles, and promo codes for your customers",
       "newPromo": "New Promo"
     },
     "phoneOrderingPage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Order",
       "recentOrders": "Recent orders ({count})",
       "noOrdersYet": "You haven't placed any orders here yet.",
-      "orderNow": "Order now →"
+      "orderNow": "Order now →",
+      "useOffer": "Use this offer"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Meal bundle with speciality",

@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} tidak tersedia pada tanggal ini. Silakan pilih hari atau layanan lain.",
       "fullNameRequired": "Masukkan nama depan dan nama belakang Anda.",
       "fulfilWindowOrderError": "\"{name}\" hanya dapat dipesan pada hari/jam tertentu. Jadwalkan pesanan Anda untuk saat tersedia.",
-      "fulfilWindowReservationError": "\"{name}\" tidak tersedia pada hari reservasi Anda. Harap hapus, atau pesan meja pada hari saat tersedia."
+      "fulfilWindowReservationError": "\"{name}\" tidak tersedia pada hari reservasi Anda. Harap hapus, atau pesan meja pada hari saat tersedia.",
+      "promoEmailMismatch": "Kode ini terdaftar untuk alamat email yang berbeda."
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",
@@ -744,7 +745,7 @@
       "mapSettings": "Pengaturan Peta",
       "notifications": "Notifikasi",
       "receipts": "Kwitansi",
-      "promotions": "Promosi & Kupon",
+      "promotions": "Promosi",
       "socialMedia": "Media Sosial",
       "autopilot": "Autopilot",
       "websiteTheme": "Tema Website",
@@ -1222,7 +1223,7 @@
       "logoHint": "Ditampilkan di bagian atas struk pelanggan — di pratinjau, pada struk cetak, dan di email pesanan. Gambar kontras tinggi paling baik dicetak di kertas termal. Seret bagian Logo untuk memindahkannya."
     },
     "promotions": {
-      "title": "Promosi & Kupon",
+      "title": "Promosi",
       "subtitle": "Jalankan promosi otomatis atau kode kupon sekali pakai untuk pelanggan Anda.",
       "tabPromotions": "Promosi",
       "tabCoupons": "Kupon",
@@ -2008,7 +2009,7 @@
       "buttonNewCouponCode": "+ Kode kupon baru",
       "stackingInfo": "<label>Penggabungan: </label><master>Master</master> berlaku bersamaan dengan semua promo. <exclusive>Eksklusif</exclusive> memblokir semua kecuali Master. <standard>Standar</standard> dapat digabung satu sama lain. Kode kupon dimasukkan pelanggan dan tidak pernah diterapkan otomatis.",
       "emptyStateTitle": "Belum ada promo",
-      "emptyStateBody": "Klik <newPromo>\"+ Promo Baru\"</newPromo> di atas untuk membuat promosi, atau <newCoupon>\"+ Kode kupon baru\"</newCoupon> di atas untuk membuat kupon.",
+      "emptyStateBody": "Klik <newPromo>“+ Promo Baru”</newPromo> di atas untuk membuat promosi.",
       "tabSelfMade": "Buatan sendiri",
       "tabPreMade": "Siap pakai"
     },
@@ -2154,27 +2155,18 @@
       "stackingExclusiveDesc": "Memblokir semua kecuali Master.",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "Berlaku bersamaan dengan promo lain mana pun.",
-      "limitedShowtimeTitle": "Showtime Terbatas",
-      "limitedShowtimeSubtitle": "Promo DISEMBUNYIKAN dari menu di luar jangka waktu ini tetapi masih dapat diterapkan melalui kupon.",
-      "limitedShowtimeEmpty": "Tidak ada jangka waktu yang ditetapkan. Promo terlihat sesuai aturan tampilan umumnya.",
-      "showtimeTo": "hingga",
-      "addShowtime": "Tambah showtime",
-      "displayModeTitle": "Mode Tampilan",
-      "displayModeSubtitle": "Bagaimana pelanggan menemukan promo ini.",
-      "displayModeMenuVisibleLabel": "Terlihat di menu",
-      "displayModeMenuVisibleDesc": "Kartu ditampilkan bersamaan dengan item menu.",
-      "displayModeCouponOnlyLabel": "Hanya kupon",
-      "displayModeCouponOnlyDesc": "Disembunyikan dari menu; diaktifkan dengan kode kupon.",
-      "displayModePopupLabel": "Popup",
-      "displayModePopupDesc": "Modal muncul di halaman pemesanan.",
+      "displayModeTitle": "Visibilitas & penukaran",
+      "displayModeSubtitle": "Bagaimana pelanggan menemukan dan menukarkan promo ini.",
+      "displayModeMenuVisibleLabel": "Terlihat",
+      "displayModeMenuVisibleDesc": "Tampil di menu Anda. Berlaku otomatis atau dengan kode.",
+      "displayModeCouponOnlyLabel": "Tersembunyi",
+      "displayModeCouponOnlyDesc": "Disembunyikan dari menu — hanya ditukar dengan kode di bawah.",
       "displayDetailsTitle": "Detail tampilan",
       "highlightThresholdLabel": "Mulai dorong di",
       "highlightThresholdHint": "Jika diatur, dorongan \"Tambah lagi untuk membuka!\" muncul setelah keranjang mencapai jumlah ini dan masih di bawah minimum pemesanan.",
       "promoCardImageLabel": "Gambar kartu promo",
       "orUploadOwn": "— atau unggah milik Anda sendiri —",
       "imageUploadHint": "Klik desain di atas untuk menggunakannya, atau unggah / tempelkan URL gambar Anda sendiri. Jika Anda melewati ini sepenuhnya, desain pertama digunakan sebagai default.",
-      "activationTitle": "Aktivasi",
-      "activationSubtitle": "Bagaimana pelanggan memicu promo ini.",
       "autoApplyLabel": "Terapkan otomatis saat keranjang memenuhi syarat",
       "autoApplyOnSub": "Promo aktif otomatis begitu keranjang memenuhi aturan. Kode kupon di bawah (jika diatur) adalah alias OPSIONAL untuk pengguna mahir.",
       "autoApplyOffSub": "Pelanggan HARUS mengetikkan kode kupon di bawah — promo TIDAK akan aktif otomatis meskipun keranjang memenuhi syarat. Gunakan ini untuk kode flyer, promo khusus email, atau hadiah yang Anda berikan secara pribadi.",
@@ -2183,8 +2175,6 @@
       "couponCodeOptional": "(opsional)",
       "couponCodePlaceholder": "mis. MAKAN20",
       "couponCodeMissingError": "Kode kupon wajib diisi saat penerapan otomatis mati — jika tidak, pelanggan tidak punya cara untuk memicu promo ini.",
-      "bannerTitle": "Banner",
-      "bannerSubtitle": "Kartu promo di bagian atas halaman /order.",
       "showOnBannerLabel": "Tampilkan di banner pelanggan",
       "showOnBannerSub": "Sematkan promo ini di bagian atas halaman pemesanan.",
       "bannerHeadlineLabel": "Judul banner",
@@ -2196,7 +2186,8 @@
       "channelSubtitle": "Pelanggan Marketplace adalah audiens terpisah — pilih di mana penawaran ini berlaku.",
       "channelWebsiteLabel": "Hanya situs web Anda",
       "channelMarketplaceLabel": "Hanya Marketplace",
-      "channelBothLabel": "Keduanya"
+      "channelBothLabel": "Keduanya",
+      "hiddenCodeInfo": "Promo tersembunyi hanya berlaku saat pelanggan memasukkan kode ini saat checkout."
     },
     "customersList": {
       "heading": "Pelanggan",
@@ -3216,7 +3207,9 @@
       "successMessage": "Kupon <couponCode>{code}</couponCode> ({discount}) telah ditetapkan untuk {customerName}.",
       "buttonCreate": "Buat & tetapkan kupon",
       "emailSent": "Kode dan ketentuannya telah dikirim ke pelanggan melalui email.",
-      "emailSkipped": "Email tidak dikirim (pelanggan tidak punya email terdaftar atau menolak komunikasi pemasaran) — bagikan kodenya secara langsung."
+      "emailSkipped": "Email tidak dikirim (pelanggan tidak punya email terdaftar atau menolak komunikasi pemasaran) — bagikan kodenya secara langsung.",
+      "labelOrderType": "Berlaku untuk",
+      "labelStacking": "Gabungkan dengan promosi lain"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Alur kerja dapur",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Lokasi ini menggunakan menu merek. Untuk mengimpor menu yang berbeda, sesuaikan terlebih dahulu menu untuk lokasi ini dari halaman Menu."
     },
     "promotionsPage": {
-      "title": "Promosi & Kupon",
-      "description": "Penawaran otomatis, bundel, dan kode kupon untuk pelanggan Anda",
+      "title": "Promosi",
+      "description": "Penawaran, paket, dan kode promo otomatis untuk pelanggan Anda",
       "newPromo": "Promo Baru"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Pesan",
       "recentOrders": "Pesanan terbaru ({count})",
       "noOrdersYet": "Anda belum melakukan pesanan di sini.",
-      "orderNow": "Pesan sekarang →"
+      "orderNow": "Pesan sekarang →",
+      "useOffer": "Gunakan penawaran ini"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Paket makan dengan menu spesial",

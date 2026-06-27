@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} er ikke tilgjengelig denne datoen. Velg en annen dag eller tjeneste.",
       "fullNameRequired": "Skriv inn fornavn og etternavn.",
       "fulfilWindowOrderError": "\"{name}\" kan bare bestilles på bestemte dager/tidspunkter. Planlegg bestillingen din til når den er tilgjengelig.",
-      "fulfilWindowReservationError": "\"{name}\" er ikke tilgjengelig på reservasjonsdagen din. Fjern den, eller reserver bordet ditt en dag den tilbys."
+      "fulfilWindowReservationError": "\"{name}\" er ikke tilgjengelig på reservasjonsdagen din. Fjern den, eller reserver bordet ditt en dag den tilbys.",
+      "promoEmailMismatch": "Denne koden er registrert på en annen e-postadresse."
     },
     "searchMenu": "Søk i menyen…",
     "signIn": "Logg inn",
@@ -744,7 +745,7 @@
       "mapSettings": "Kartinnstillinger",
       "notifications": "Varsler",
       "receipts": "Kvitteringer",
-      "promotions": "Kampanjer og kuponger",
+      "promotions": "Kampanjer",
       "socialMedia": "Sosiale medier",
       "autopilot": "Autopilot",
       "websiteTheme": "Nettsidetema",
@@ -1222,7 +1223,7 @@
       "logoHint": "Vises øverst på kundens kvittering — i forhåndsvisningen, på den utskrevne kvitteringen og i ordre-e-posten. Bilder med høy kontrast skrives best ut på termopapir. Dra Logo-seksjonen for å flytte den."
     },
     "promotions": {
-      "title": "Kampanjer og kuponger",
+      "title": "Kampanjer",
       "subtitle": "Kjør automatiske kampanjer eller engangskupongkoder for kundene dine.",
       "tabPromotions": "Kampanjer",
       "tabCoupons": "Kuponger",
@@ -2008,7 +2009,7 @@
       "buttonNewCouponCode": "+ Ny kupongkode",
       "stackingInfo": "<label>Stabling: </label><master>Master</master>-tilbud gjelder sammen med alt annet. <exclusive>Eksklusive</exclusive> tilbud blokkerer alle andre unntatt Masters. <standard>Standard</standard>-tilbud stables med hverandre. Kupongkoder er kundeinntastede og brukes aldri automatisk.",
       "emptyStateTitle": "Ingen tilbud ennå",
-      "emptyStateBody": "Klikk <newPromo>«+ Nytt tilbud»</newPromo> øverst for å opprette et tilbud, eller <newCoupon>«+ Ny kupongkode»</newCoupon> ovenfor for å opprette en kupong.",
+      "emptyStateBody": "Klikk på <newPromo>«+ Ny kampanje»</newPromo> øverst for å opprette en kampanje.",
       "tabSelfMade": "Egne",
       "tabPreMade": "Forhåndslagde"
     },
@@ -2154,27 +2155,18 @@
       "stackingExclusiveDesc": "Blokkerer alle andre unntatt Masters.",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "Gjelder sammen med alle andre tilbud.",
-      "limitedShowtimeTitle": "Begrenset visningstid",
-      "limitedShowtimeSubtitle": "Tilbudet er SKJULT fra menyen utenfor disse vinduene, men kan fortsatt brukes via kupong.",
-      "limitedShowtimeEmpty": "Ingen vinduer angitt. Tilbudet er synlig i henhold til sine generelle visningsregler.",
-      "showtimeTo": "til",
-      "addShowtime": "Legg til visningstid",
-      "displayModeTitle": "Visningsmodus",
-      "displayModeSubtitle": "Hvordan kunder oppdager dette tilbudet.",
-      "displayModeMenuVisibleLabel": "Synlig i meny",
-      "displayModeMenuVisibleDesc": "Kort vises ved siden av menyelementer.",
-      "displayModeCouponOnlyLabel": "Kun kupong",
-      "displayModeCouponOnlyDesc": "Skjult fra meny; aktiveres med kupongkode.",
-      "displayModePopupLabel": "Popup",
-      "displayModePopupDesc": "Modal vises på bestillingssiden.",
+      "displayModeTitle": "Synlighet og innløsning",
+      "displayModeSubtitle": "Hvordan kunder finner og løser inn dette tilbudet.",
+      "displayModeMenuVisibleLabel": "Synlig",
+      "displayModeMenuVisibleDesc": "Vises i menyen din. Brukes automatisk eller med en kode.",
+      "displayModeCouponOnlyLabel": "Skjult",
+      "displayModeCouponOnlyDesc": "Skjult fra menyen — løses kun inn med koden nedenfor.",
       "displayDetailsTitle": "Visningsdetaljer",
       "highlightThresholdLabel": "Begynn å minne fra",
       "highlightThresholdHint": "Hvis angitt, vises «Legg til mer for å låse opp!»-påminnelsen når handlekurven når dette beløpet og fortsatt er under minimumsbestillingen.",
       "promoCardImageLabel": "Tilbudskortbilde",
       "orUploadOwn": "— eller last opp ditt eget —",
       "imageUploadHint": "Klikk på et design ovenfor for å bruke det, eller last opp / lim inn en URL for ditt eget bilde. Hvis du hopper over dette helt, brukes det første designet som standard.",
-      "activationTitle": "Aktivering",
-      "activationSubtitle": "Hvordan kunder utløser dette tilbudet.",
       "autoApplyLabel": "Bruk automatisk når handlekurven kvalifiserer",
       "autoApplyOnSub": "Tilbudet aktiveres automatisk i det handlekurven oppfyller reglene. Kupongkoden nedenfor (hvis angitt) er et VALGFRITT alias for avanserte brukere.",
       "autoApplyOffSub": "Kunder MÅ skrive inn kupongkoden nedenfor — tilbudet aktiveres IKKE automatisk selv om handlekurven kvalifiserer. Bruk dette for flyerkoder, e-postkampanjer eller belønninger du deler ut personlig.",
@@ -2183,8 +2175,6 @@
       "couponCodeOptional": "(valgfritt)",
       "couponCodePlaceholder": "f.eks. LUNSJ20",
       "couponCodeMissingError": "En kupongkode er påkrevd når automatisk bruk er av — ellers har kunder ingen måte å utløse dette tilbudet på.",
-      "bannerTitle": "Banner",
-      "bannerSubtitle": "Tilbudskort øverst på /order-siden.",
       "showOnBannerLabel": "Vis i kundebanner",
       "showOnBannerSub": "Fest dette tilbudet øverst på bestillingssiden.",
       "bannerHeadlineLabel": "Banneroverskrift",
@@ -2196,7 +2186,8 @@
       "channelSubtitle": "Marketplace-kunder er et eget publikum – velg hvor dette tilbudet gjelder.",
       "channelWebsiteLabel": "Bare nettstedet ditt",
       "channelMarketplaceLabel": "Bare Marketplace",
-      "channelBothLabel": "Begge"
+      "channelBothLabel": "Begge",
+      "hiddenCodeInfo": "Skjulte tilbud brukes bare når kunden taster inn denne koden i kassen."
     },
     "customersList": {
       "heading": "Kunder",
@@ -3216,7 +3207,9 @@
       "successMessage": "Kupong <couponCode>{code}</couponCode> ({discount}) tildelt {customerName}.",
       "buttonCreate": "Opprett og tildel kupong",
       "emailSent": "Kunden har fått koden og vilkårene tilsendt på e-post.",
-      "emailSkipped": "Ingen e-post ble sendt (kunden mangler e-postadresse eller har reservert seg mot markedsføring) – du må dele koden med kunden selv."
+      "emailSkipped": "Ingen e-post ble sendt (kunden mangler e-postadresse eller har reservert seg mot markedsføring) – du må dele koden med kunden selv.",
+      "labelOrderType": "Gjelder for",
+      "labelStacking": "Kombiner med andre kampanjer"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Kjøkkenarbeidsflyt",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Denne lokasjonen bruker merkemenyen. For å importere en annen meny, tilpass menyen for denne lokasjonen fra Meny-siden først."
     },
     "promotionsPage": {
-      "title": "Kampanjer og kuponger",
-      "description": "Automatiske tilbud, pakker og kupongkoder for kundene dine",
+      "title": "Kampanjer",
+      "description": "Automatiske tilbud, pakker og kampanjekoder til kundene dine",
       "newPromo": "Ny kampanje"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Bestill",
       "recentOrders": "Tidligere bestillinger ({count})",
       "noOrdersYet": "Du har ikke lagt inn noen bestillinger her ennå.",
-      "orderNow": "Bestill nå →"
+      "orderNow": "Bestill nå →",
+      "useOffer": "Bruk dette tilbudet"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Måltidspakke med spesialitet",

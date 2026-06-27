@@ -29,8 +29,8 @@ export default async function EditPromotionPage({
       }),
       prisma.menuCategory.findMany({
         where: { restaurantId },
-        orderBy: { sortOrder: "asc" },
-        select: { id: true, name: true },
+        orderBy: [{ menuId: "asc" }, { sortOrder: "asc" }],
+        select: { id: true, name: true, menuId: true, menu: { select: { name: true } } },
       }),
       prisma.menuItem.findMany({
         where: { restaurantId },
@@ -91,7 +91,6 @@ export default async function EditPromotionPage({
     paymentMethodSlugs: promo.paymentMethodSlugs,
     deliveryZoneIds: promo.deliveryZoneIds,
     onceLifetimePerClient: promo.onceLifetimePerClient,
-    limitedShowtimeSchedules: promo.limitedShowtimeSchedules,
     imageUrl: promo.imageUrl,
     displayMode: promo.displayMode,
     highlightThreshold: promo.highlightThreshold,
@@ -101,7 +100,7 @@ export default async function EditPromotionPage({
     <PromoWizard
       mode="edit"
       hasAdvanced={hasAdvanced}
-      categories={categories}
+      categories={categories.map((c: any) => ({ id: c.id, name: c.name, menuId: c.menuId, menuName: c.menu?.name ?? null }))}
       menuItems={menuItems}
       paymentMethods={paymentMethods}
       deliveryZones={deliveryZones}

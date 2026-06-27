@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} bu tarihte mevcut değil. Lütfen başka bir gün veya hizmet seçin.",
       "fullNameRequired": "Lütfen adınızı ve soyadınızı girin.",
       "fulfilWindowOrderError": "\"{name}\" yalnızca belirli gün/saatlerde sipariş edilebilir. Lütfen siparişinizi uygun olduğu zamana planlayın.",
-      "fulfilWindowReservationError": "\"{name}\" rezervasyon gününüzde mevcut değil. Lütfen kaldırın ya da masanızı sunulduğu bir güne ayırtın."
+      "fulfilWindowReservationError": "\"{name}\" rezervasyon gününüzde mevcut değil. Lütfen kaldırın ya da masanızı sunulduğu bir güne ayırtın.",
+      "promoEmailMismatch": "Bu kod farklı bir e-posta adresine kayıtlı."
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",
@@ -744,7 +745,7 @@
       "mapSettings": "Harita Ayarları",
       "notifications": "Bildirimler",
       "receipts": "Makbuzlar",
-      "promotions": "Promosyonlar & Kuponlar",
+      "promotions": "Promosyonlar",
       "socialMedia": "Sosyal Medya",
       "autopilot": "Otomatik Pilot",
       "websiteTheme": "Web Sitesi Teması",
@@ -1222,7 +1223,7 @@
       "logoHint": "Müşteri fişinin üstünde gösterilir — önizlemede, yazdırılan fişte ve sipariş e-postasında. Yüksek kontrastlı görseller termal kağıtta en iyi şekilde yazdırılır. Logo bölümünü taşımak için sürükleyin."
     },
     "promotions": {
-      "title": "Promosyonlar & Kuponlar",
+      "title": "Promosyonlar",
       "subtitle": "Müşterileriniz için otomatik promosyonlar veya tek kullanımlık kupon kodları oluşturun.",
       "tabPromotions": "Promosyonlar",
       "tabCoupons": "Kuponlar",
@@ -1952,7 +1953,7 @@
       "buttonNewCouponCode": "+ Yeni kupon kodu",
       "stackingInfo": "<label>Birleştirme: </label><master>Ana</master> teklifler herkesle birlikte uygulanır. <exclusive>Özel</exclusive> teklifler Ana'lar dışında hepsini engeller. <standard>Standart</standard> teklifler birbirleriyle birleşir. Kupon kodları müşteri tarafından girilir ve hiçbir zaman otomatik uygulanmaz.",
       "emptyStateTitle": "Henüz teklif yok",
-      "emptyStateBody": "Promosyon oluşturmak için üstteki <newPromo>\"+ Yeni Promosyon\"</newPromo> düğmesine, kupon oluşturmak için yukarıdaki <newCoupon>\"+ Yeni kupon kodu\"</newCoupon> düğmesine tıklayın.",
+      "emptyStateBody": "Bir promosyon oluşturmak için üstteki <newPromo>“+ Yeni Promosyon”</newPromo> öğesine tıklayın.",
       "tabSelfMade": "Kendi",
       "tabPreMade": "Hazır"
     },
@@ -2098,27 +2099,18 @@
       "stackingExclusiveDesc": "Ana'lar dışında hepsini engeller.",
       "stackingMasterLabel": "Ana",
       "stackingMasterDesc": "Diğer herhangi bir promoyla birlikte uygulanır.",
-      "limitedShowtimeTitle": "Sınırlı Gösterim Zamanı",
-      "limitedShowtimeSubtitle": "Promo bu pencereler dışında menüden GİZLENİR, ancak yine de kupon aracılığıyla uygulanabilir.",
-      "limitedShowtimeEmpty": "Pencere ayarlanmadı. Promo genel görüntüleme kuralları çerçevesinde görünür.",
-      "showtimeTo": "bitiş",
-      "addShowtime": "Gösterim zamanı ekle",
-      "displayModeTitle": "Görüntüleme Modu",
-      "displayModeSubtitle": "Müşterilerin bu promoyu nasıl keşfedeceği.",
-      "displayModeMenuVisibleLabel": "Menüde görünür",
-      "displayModeMenuVisibleDesc": "Kart, menü ürünlerinin yanında görüntülenir.",
-      "displayModeCouponOnlyLabel": "Yalnızca kupon",
-      "displayModeCouponOnlyDesc": "Menüden gizli; kupon kodu ile etkinleşir.",
-      "displayModePopupLabel": "Açılır pencere",
-      "displayModePopupDesc": "Sipariş sayfasında modal açılır.",
+      "displayModeTitle": "Görünürlük ve kullanım",
+      "displayModeSubtitle": "Müşteriler bu promosyonu nasıl keşfeder ve kullanır.",
+      "displayModeMenuVisibleLabel": "Görünür",
+      "displayModeMenuVisibleDesc": "Menünüzde gösterilir. Otomatik olarak veya bir kodla uygulanır.",
+      "displayModeCouponOnlyLabel": "Gizli",
+      "displayModeCouponOnlyDesc": "Menüden gizli — yalnızca aşağıdaki kodla kullanılır.",
       "displayDetailsTitle": "Görüntüleme ayrıntıları",
       "highlightThresholdLabel": "Teşvik mesajını şu tutardan başlat",
       "highlightThresholdHint": "Ayarlanırsa, sepet bu tutara ulaştığında ve hâlâ minimum sipariş tutarının altındaysa \"Kilidini açmak için biraz daha ekle!\" teşvik mesajı görünür.",
       "promoCardImageLabel": "Promo kart görseli",
       "orUploadOwn": "— veya kendinizinkini yükleyin —",
       "imageUploadHint": "Kullanmak için yukarıdaki bir tasarıma tıklayın veya kendi görseliniz için yükleyin / URL yapıştırın. Bu adımı tamamen atlarsanız birinci tasarım varsayılan olarak kullanılır.",
-      "activationTitle": "Etkinleştirme",
-      "activationSubtitle": "Müşterilerin bu promoyu nasıl tetikleyeceği.",
       "autoApplyLabel": "Sepet uygun olduğunda otomatik uygula",
       "autoApplyOnSub": "Promo, sepet kuralları karşılar karşılamaz otomatik olarak çalışır. Aşağıdaki kupon kodu (varsa) ileri kullanıcılar için İSTEĞE BAĞLI bir takma addır.",
       "autoApplyOffSub": "Müşterilerin aşağıdaki kupon kodunu yazması ZORUNLUDUR — sepet uygun olsa bile promo otomatik çalışmaz. Bunu el ilanı kodları, yalnızca e-posta teklifleri veya kişisel dağıttığınız ödüller için kullanın.",
@@ -2127,8 +2119,6 @@
       "couponCodeOptional": "(isteğe bağlı)",
       "couponCodePlaceholder": "örn. OGLEYEMEK20",
       "couponCodeMissingError": "Otomatik uygulama kapalıyken kupon kodu zorunludur — aksi takdirde müşterilerin bu promoyu tetikleme yolu yoktur.",
-      "bannerTitle": "Banner",
-      "bannerSubtitle": "/order sayfasında üstteki promo kartı.",
       "showOnBannerLabel": "Müşteri bannerında göster",
       "showOnBannerSub": "Bu promoyu sipariş sayfasının üstüne sabitleyin.",
       "bannerHeadlineLabel": "Banner başlığı",
@@ -2140,7 +2130,8 @@
       "channelSubtitle": "Marketplace müşterileri ayrı bir kitledir — bu teklifin nerede geçerli olacağını seçin.",
       "channelWebsiteLabel": "Yalnızca web siteniz",
       "channelMarketplaceLabel": "Yalnızca Marketplace",
-      "channelBothLabel": "Her ikisi"
+      "channelBothLabel": "Her ikisi",
+      "hiddenCodeInfo": "Gizli promosyonlar yalnızca müşteri ödeme sırasında bu kodu girdiğinde uygulanır."
     },
     "customersList": {
       "heading": "Müşteriler",
@@ -3216,7 +3207,9 @@
       "successMessage": "<couponCode>{code}</couponCode> kuponu ({discount}) {customerName} kişisine atandı.",
       "buttonCreate": "Kupon oluştur ve ata",
       "emailSent": "Kod ve koşullar müşteriye e-postayla gönderildi.",
-      "emailSkipped": "E-posta gönderilmedi (müşterinin kayıtlı e-postası yok veya pazarlama iletişimini reddetti) — kodu kendisiyle siz paylaşın."
+      "emailSkipped": "E-posta gönderilmedi (müşterinin kayıtlı e-postası yok veya pazarlama iletişimini reddetti) — kodu kendisiyle siz paylaşın.",
+      "labelOrderType": "Geçerli",
+      "labelStacking": "Diğer promosyonlarla birleştir"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Mutfak iş akışı",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Bu şube marka menüsünü kullanıyor. Farklı bir menü içe aktarmak için önce Menü sayfasından bu şubeye özel menüyü özelleştirin."
     },
     "promotionsPage": {
-      "title": "Promosyonlar ve Kuponlar",
-      "description": "Müşterileriniz için otomatik fırsatlar, paketler ve kupon kodları",
+      "title": "Promosyonlar",
+      "description": "Müşterileriniz için otomatik teklifler, paketler ve promosyon kodları",
       "newPromo": "Yeni Promosyon"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Sipariş",
       "recentOrders": "Son siparişler ({count})",
       "noOrdersYet": "Henüz buraya sipariş vermediniz.",
-      "orderNow": "Şimdi sipariş ver →"
+      "orderNow": "Şimdi sipariş ver →",
+      "useOffer": "Bu teklifi kullan"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Özel ürünlü yemek paketi",

@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service}はこの日はご利用いただけません。別の日またはサービスをお選びください。",
       "fullNameRequired": "姓と名を入力してください。",
       "fulfilWindowOrderError": "「{name}」は特定の曜日・時間帯のみ注文できます。ご利用可能な時間に合わせてご注文を予約してください。",
-      "fulfilWindowReservationError": "「{name}」はご予約日にはご利用いただけません。削除するか、提供日にテーブルをご予約ください。"
+      "fulfilWindowReservationError": "「{name}」はご予約日にはご利用いただけません。削除するか、提供日にテーブルをご予約ください。",
+      "promoEmailMismatch": "このコードは別のメールアドレスに登録されています。"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",
@@ -744,7 +745,7 @@
       "mapSettings": "マップ設定",
       "notifications": "通知",
       "receipts": "レシート",
-      "promotions": "プロモーション＆クーポン",
+      "promotions": "プロモーション",
       "socialMedia": "ソーシャルメディア",
       "autopilot": "自動化",
       "websiteTheme": "ウェブサイトテーマ",
@@ -1222,7 +1223,7 @@
       "logoHint": "お客様用レシートの上部に表示されます — プレビュー、印刷レシート、注文メールに反映されます。感熱紙にはコントラストの高い画像が最適です。ロゴセクションをドラッグして位置を変更できます。"
     },
     "promotions": {
-      "title": "プロモーション＆クーポン",
+      "title": "プロモーション",
       "subtitle": "自動プロモーションまたは1回限りのクーポンコードを作成してください。",
       "tabPromotions": "プロモーション",
       "tabCoupons": "クーポン",
@@ -2008,7 +2009,7 @@
       "buttonNewCouponCode": "+ 新しいクーポンコード",
       "stackingInfo": "<label>重複適用：</label><master>マスター</master>は他のすべてと同時に適用されます。<exclusive>排他的</exclusive>はマスター以外をすべてブロックします。<standard>標準</standard>は他の標準と重複適用されます。クーポンコードは顧客が入力するもので、自動適用されません。",
       "emptyStateTitle": "まだキャンペーンがありません",
-      "emptyStateBody": "上の <newPromo>「+ 新しいプロモ」</newPromo> をクリックしてプロモーションを作成するか、上の <newCoupon>「+ 新しいクーポンコード」</newCoupon> でクーポンを作成してください。",
+      "emptyStateBody": "プロモーションを作成するには、上部の<newPromo>「+ 新規プロモ」</newPromo>をクリックします。",
       "tabSelfMade": "自作",
       "tabPreMade": "既製"
     },
@@ -2154,27 +2155,18 @@
       "stackingExclusiveDesc": "マスター以外をすべてブロックします。",
       "stackingMasterLabel": "マスター",
       "stackingMasterDesc": "他のプロモと並行して適用されます。",
-      "limitedShowtimeTitle": "限定表示期間",
-      "limitedShowtimeSubtitle": "プロモはこの期間外はメニューから非表示になりますが、クーポンで適用できます。",
-      "limitedShowtimeEmpty": "期間が設定されていません。プロモは通常の表示ルールに従い表示されます。",
-      "showtimeTo": "〜",
-      "addShowtime": "表示期間を追加",
-      "displayModeTitle": "表示モード",
-      "displayModeSubtitle": "顧客がこのプロモを見つける方法。",
-      "displayModeMenuVisibleLabel": "メニュー表示",
-      "displayModeMenuVisibleDesc": "カードがメニュー商品と並んで表示されます。",
-      "displayModeCouponOnlyLabel": "クーポンのみ",
-      "displayModeCouponOnlyDesc": "メニューから非表示；クーポンコードで有効化。",
-      "displayModePopupLabel": "ポップアップ",
-      "displayModePopupDesc": "注文ページにモーダルが表示されます。",
+      "displayModeTitle": "表示と利用",
+      "displayModeSubtitle": "お客様がこのプロモを見つけて利用する方法。",
+      "displayModeMenuVisibleLabel": "表示",
+      "displayModeMenuVisibleDesc": "メニューに表示されます。自動またはコードで適用されます。",
+      "displayModeCouponOnlyLabel": "非表示",
+      "displayModeCouponOnlyDesc": "メニューから非表示 — 下のコードでのみ利用できます。",
       "displayDetailsTitle": "表示の詳細",
       "highlightThresholdLabel": "ナッジを開始する金額",
       "highlightThresholdHint": "設定すると、カートがこの金額に達し、かつ最低注文金額を下回っている場合に「もっと追加してアンロック！」のナッジが表示されます。",
       "promoCardImageLabel": "プロモカード画像",
       "orUploadOwn": "— または独自画像をアップロード —",
       "imageUploadHint": "上のデザインをクリックして使用するか、独自画像のURL をアップロード/貼り付けてください。スキップした場合、最初のデザインがデフォルトとして使用されます。",
-      "activationTitle": "有効化",
-      "activationSubtitle": "顧客がこのプロモをトリガーする方法。",
       "autoApplyLabel": "カートが条件を満たした時に自動適用",
       "autoApplyOnSub": "カートがルールに一致した瞬間にプロモが自動発動します。以下のクーポンコード（設定した場合）は上級ユーザー向けの任意エイリアスです。",
       "autoApplyOffSub": "顧客は以下のクーポンコードを入力する必要があります — カートが条件を満たしても自動発動しません。チラシコード、メール限定キャンペーン、個別配布の特典に使用してください。",
@@ -2183,8 +2175,6 @@
       "couponCodeOptional": "（任意）",
       "couponCodePlaceholder": "例：LUNCH20",
       "couponCodeMissingError": "自動適用がオフの場合、クーポンコードが必須です — そうしないと顧客がこのプロモをトリガーできません。",
-      "bannerTitle": "バナー",
-      "bannerSubtitle": "/order のページ上部のプロモカード。",
       "showOnBannerLabel": "顧客バナーに表示",
       "showOnBannerSub": "このプロモを注文ページの上部に固定します。",
       "bannerHeadlineLabel": "バナーヘッドライン",
@@ -2196,7 +2186,8 @@
       "channelSubtitle": "マーケットプレイスの顧客は別の客層です。この特典を適用する場所を選んでください。",
       "channelWebsiteLabel": "自社サイトのみ",
       "channelMarketplaceLabel": "マーケットプレイスのみ",
-      "channelBothLabel": "両方"
+      "channelBothLabel": "両方",
+      "hiddenCodeInfo": "非表示のプロモは、お客様が会計時にこのコードを入力した場合にのみ適用されます。"
     },
     "customersList": {
       "heading": "顧客",
@@ -3216,7 +3207,9 @@
       "successMessage": "クーポン <couponCode>{code}</couponCode>（{discount}）を {customerName} に付与しました。",
       "buttonCreate": "クーポンを作成して付与する",
       "emailSent": "コードと利用条件をお客様にメールで送信しました。",
-      "emailSkipped": "メールは送信されていません（お客様のメールアドレスが未登録か、マーケティング配信を拒否しています）— コードは直接お伝えください。"
+      "emailSkipped": "メールは送信されていません（お客様のメールアドレスが未登録か、マーケティング配信を拒否しています）— コードは直接お伝えください。",
+      "labelOrderType": "対象",
+      "labelStacking": "他のプロモーションと併用"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "キッチンワークフロー",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "この店舗はブランドメニューを使用しています。別のメニューをインポートするには、まずメニューページからこの店舗のメニューをカスタマイズしてください。"
     },
     "promotionsPage": {
-      "title": "プロモーション＆クーポン",
-      "description": "顧客向けの自動割引、バンドル、クーポンコード",
+      "title": "プロモーション",
+      "description": "お客様向けの自動オファー、セット、プロモコード",
       "newPromo": "新規プロモーション"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "注文する",
       "recentOrders": "最近の注文（{count}件）",
       "noOrdersYet": "まだこちらでご注文はありません。",
-      "orderNow": "今すぐ注文する →"
+      "orderNow": "今すぐ注文する →",
+      "useOffer": "この特典を使う"
     },
     "bundle": {
       "mealBundleWithSpeciality": "スペシャルティ付きミールバンドル",

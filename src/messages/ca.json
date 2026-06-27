@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} no està disponible en aquesta data. Tria un altre dia o servei.",
       "fullNameRequired": "Introdueix el teu nom i cognoms.",
       "fulfilWindowOrderError": "\"{name}\" només es pot demanar en certs dies/horaris. Programa la teva comanda per a quan estigui disponible.",
-      "fulfilWindowReservationError": "\"{name}\" no està disponible el dia de la teva reserva. Elimina'l o reserva la taula un dia en què s'ofereixi."
+      "fulfilWindowReservationError": "\"{name}\" no està disponible el dia de la teva reserva. Elimina'l o reserva la taula un dia en què s'ofereixi.",
+      "promoEmailMismatch": "Aquest codi està registrat amb una altra adreça de correu electrònic."
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",
@@ -744,7 +745,7 @@
       "mapSettings": "Configuració del mapa",
       "notifications": "Notificacions",
       "receipts": "Rebuts",
-      "promotions": "Promocions i cupons",
+      "promotions": "Promocions",
       "socialMedia": "Xarxes socials",
       "autopilot": "Autopilot",
       "websiteTheme": "Tema del lloc web",
@@ -1222,7 +1223,7 @@
       "logoHint": "Es mostra a la part superior del rebut del client — a la previsualització, al rebut imprès i al correu de la comanda. Les imatges d'alt contrast s'imprimeixen millor en paper tèrmic. Arrossega la secció Logotip per reubicar-la."
     },
     "promotions": {
-      "title": "Promocions i cupons",
+      "title": "Promocions",
       "subtitle": "Executeu promocions automàtiques o codis de cupó puntuals per als vostres clients.",
       "tabPromotions": "Promocions",
       "tabCoupons": "Cupons",
@@ -2008,7 +2009,7 @@
       "buttonNewCouponCode": "+ Nou codi de cupó",
       "stackingInfo": "<label>Acumulació: </label><master>Mestre</master> les ofertes s'apliquen juntament amb totes les altres. <exclusive>Exclusiu</exclusive> les ofertes bloquegen totes les altres excepte els Mestres. <standard>Estàndard</standard> les ofertes s'acumulen entre si. Els codis de cupó els introdueix el client i mai s'apliquen automàticament.",
       "emptyStateTitle": "Encara no hi ha ofertes",
-      "emptyStateBody": "Feu clic a <newPromo>\"+ Nova promo\"</newPromo> a la part superior per crear una promoció, o <newCoupon>\"+ Nou codi de cupó\"</newCoupon> a dalt per crear un cupó.",
+      "emptyStateBody": "Fes clic a <newPromo>«+ Nova promoció»</newPromo> a dalt per crear una promoció.",
       "tabSelfMade": "Pròpies",
       "tabPreMade": "Predefinides"
     },
@@ -2154,27 +2155,18 @@
       "stackingExclusiveDesc": "Bloqueja totes les altres excepte els Mestres.",
       "stackingMasterLabel": "Mestre",
       "stackingMasterDesc": "S'aplica juntament amb qualsevol altra promo.",
-      "limitedShowtimeTitle": "Horari limitat",
-      "limitedShowtimeSubtitle": "La promo s'AMAGA de la carta fora d'aquestes finestres però encara es pot aplicar amb cupó.",
-      "limitedShowtimeEmpty": "Cap finestra establerta. La promo és visible durant les seves regles de visualització generals.",
-      "showtimeTo": "fins a",
-      "addShowtime": "Afegeix horari",
-      "displayModeTitle": "Mode de visualització",
-      "displayModeSubtitle": "Com els clients descobreixen aquesta promo.",
-      "displayModeMenuVisibleLabel": "Visible a la carta",
-      "displayModeMenuVisibleDesc": "La targeta es mostra al costat dels articles de la carta.",
-      "displayModeCouponOnlyLabel": "Només cupó",
-      "displayModeCouponOnlyDesc": "Oculta de la carta; s'activa amb codi de cupó.",
-      "displayModePopupLabel": "Popup",
-      "displayModePopupDesc": "Es mostra un modal a la pàgina de comandes.",
+      "displayModeTitle": "Visibilitat i bescanvi",
+      "displayModeSubtitle": "Com els clients descobreixen i bescanvien aquesta promoció.",
+      "displayModeMenuVisibleLabel": "Visible",
+      "displayModeMenuVisibleDesc": "Es mostra al menú. S'aplica automàticament o amb un codi.",
+      "displayModeCouponOnlyLabel": "Amagada",
+      "displayModeCouponOnlyDesc": "Amagada del menú — només es bescanvia amb el codi de sota.",
       "displayDetailsTitle": "Detalls de visualització",
       "highlightThresholdLabel": "Comença a animar a partir de",
       "highlightThresholdHint": "Si s'estableix, l'avís «Afegiu-ne més per desbloquejar!» apareix quan el carret arriba a aquest import i encara està per sota de la comanda mínima.",
       "promoCardImageLabel": "Imatge de la targeta de promo",
       "orUploadOwn": "— o pengeu la vostra pròpia —",
       "imageUploadHint": "Feu clic en un disseny de dalt per usar-lo, o pengeu/enganxeu una URL de la vostra pròpia imatge. Si ometeu això completament, s'utilitza el primer disseny per defecte.",
-      "activationTitle": "Activació",
-      "activationSubtitle": "Com els clients activen aquesta promo.",
       "autoApplyLabel": "Aplica automàticament quan el carret compleix els requisits",
       "autoApplyOnSub": "La promo s'activa automàticament en el moment en què el carret compleix les regles. El codi de cupó a continuació (si s'estableix) és un àlies OPCIONAL per a usuaris avançats.",
       "autoApplyOffSub": "Els clients HAN D'escriure el codi de cupó a continuació — la promo NO s'activarà automàticament fins i tot quan el carret compleixi els requisits. Useu-ho per a codis de fullet, ofertes exclusives per correu o recompenses que distribuïu personalment.",
@@ -2183,8 +2175,6 @@
       "couponCodeOptional": "(opcional)",
       "couponCodePlaceholder": "p. ex. DINAR20",
       "couponCodeMissingError": "Cal un codi de cupó quan l'aplicació automàtica està desactivada — altrament els clients no tenen manera d'activar aquesta promo.",
-      "bannerTitle": "Bàner",
-      "bannerSubtitle": "Targeta de promo a la part superior de la pàgina /order.",
       "showOnBannerLabel": "Mostra al bàner del client",
       "showOnBannerSub": "Fixa aquesta promo a la part superior de la pàgina de comandes.",
       "bannerHeadlineLabel": "Titular del bàner",
@@ -2196,7 +2186,8 @@
       "channelSubtitle": "Els clients del Marketplace són un públic diferent: tria on s'aplica aquesta oferta.",
       "channelWebsiteLabel": "Només el teu lloc web",
       "channelMarketplaceLabel": "Només Marketplace",
-      "channelBothLabel": "Tots dos"
+      "channelBothLabel": "Tots dos",
+      "hiddenCodeInfo": "Les promocions amagades només s'apliquen quan el client introdueix aquest codi en pagar."
     },
     "customersList": {
       "heading": "Clients",
@@ -3216,7 +3207,9 @@
       "successMessage": "Cupó <couponCode>{code}</couponCode> ({discount}) assignat a {customerName}.",
       "buttonCreate": "Crear i assignar cupó",
       "emailSent": "S'ha enviat al client un correu amb el codi i les condicions.",
-      "emailSkipped": "No s'ha enviat cap correu (el client no té correu registrat o ha rebutjat les comunicacions de màrqueting) — comparteix-li el codi directament."
+      "emailSkipped": "No s'ha enviat cap correu (el client no té correu registrat o ha rebutjat les comunicacions de màrqueting) — comparteix-li el codi directament.",
+      "labelOrderType": "Vàlid per a",
+      "labelStacking": "Combinar amb altres promocions"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Flux de treball de cuina",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Aquesta ubicació utilitza el menú de la marca. Per importar un menú diferent, primer personalitza el menú d'aquesta ubicació des de la pàgina de Menú."
     },
     "promotionsPage": {
-      "title": "Promocions i cupons",
-      "description": "Ofertes automàtiques, paquets i codis de cupó per als teus clients",
+      "title": "Promocions",
+      "description": "Ofertes, paquets i codis promocionals automàtics per als teus clients",
       "newPromo": "Nova promo"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Comanda",
       "recentOrders": "Comandes recents ({count})",
       "noOrdersYet": "Encara no has fet cap comanda aquí.",
-      "orderNow": "Comanda ara →"
+      "orderNow": "Comanda ara →",
+      "useOffer": "Fes servir aquesta oferta"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Menú combinat amb especialitat",

@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} ist an diesem Datum nicht verfügbar. Bitte wählen Sie einen anderen Tag oder Service.",
       "fullNameRequired": "Bitte geben Sie Ihren Vor- und Nachnamen ein.",
       "fulfilWindowOrderError": "\"{name}\" kann nur an bestimmten Tagen/Zeiten bestellt werden. Bitte planen Sie Ihre Bestellung für einen verfügbaren Zeitpunkt.",
-      "fulfilWindowReservationError": "\"{name}\" ist am Tag Ihrer Reservierung nicht verfügbar. Bitte entfernen Sie es oder reservieren Sie Ihren Tisch an einem Tag, an dem es angeboten wird."
+      "fulfilWindowReservationError": "\"{name}\" ist am Tag Ihrer Reservierung nicht verfügbar. Bitte entfernen Sie es oder reservieren Sie Ihren Tisch an einem Tag, an dem es angeboten wird.",
+      "promoEmailMismatch": "Dieser Code ist für eine andere E-Mail-Adresse registriert."
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",
@@ -744,7 +745,7 @@
       "mapSettings": "Karteneinstellungen",
       "notifications": "Benachrichtigungen",
       "receipts": "Belege",
-      "promotions": "Aktionen & Gutscheine",
+      "promotions": "Aktionen",
       "socialMedia": "Social Media",
       "autopilot": "Autopilot",
       "websiteTheme": "Website-Design",
@@ -1222,7 +1223,7 @@
       "logoHint": "Wird oben auf dem Kundenbeleg angezeigt — in der Vorschau, auf dem gedruckten Beleg und in der Bestell-E-Mail. Kontrastreiche Bilder drucken auf Thermopapier am besten. Ziehen Sie den Logo-Abschnitt, um ihn zu verschieben."
     },
     "promotions": {
-      "title": "Aktionen & Gutscheine",
+      "title": "Aktionen",
       "subtitle": "Führen Sie automatische Aktionen oder einmalige Gutscheincodes für Ihre Kunden aus.",
       "tabPromotions": "Aktionen",
       "tabCoupons": "Gutscheine",
@@ -2008,7 +2009,7 @@
       "buttonNewCouponCode": "+ Neuer Gutscheincode",
       "stackingInfo": "<label>Kombinierbarkeit: </label><master>Master</master>-Aktionen gelten neben allen anderen. <exclusive>Exklusive</exclusive> Aktionen blockieren alle anderen außer Master. <standard>Standard</standard>-Aktionen lassen sich untereinander kombinieren. Gutscheincodes werden vom Kunden eingegeben und nie automatisch angewendet.",
       "emptyStateTitle": "Noch keine Aktionen",
-      "emptyStateBody": "Klicken Sie oben auf <newPromo>„+ Neue Aktion“</newPromo>, um eine Aktion zu erstellen, oder auf <newCoupon>„+ Neuer Gutscheincode“</newCoupon>, um einen Gutschein zu erstellen.",
+      "emptyStateBody": "Klicken Sie oben auf <newPromo>„+ Neue Aktion“</newPromo>, um eine Aktion zu erstellen.",
       "tabSelfMade": "Eigene",
       "tabPreMade": "Vorgefertigt"
     },
@@ -2154,27 +2155,18 @@
       "stackingExclusiveDesc": "Blockiert alle anderen außer Master.",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "Gilt neben jeder anderen Aktion.",
-      "limitedShowtimeTitle": "Begrenzte Anzeigezeit",
-      "limitedShowtimeSubtitle": "Aktion wird außerhalb dieser Zeitfenster im Menü AUSGEBLENDET, kann aber weiterhin per Gutschein angewendet werden.",
-      "limitedShowtimeEmpty": "Keine Zeitfenster festgelegt. Aktion ist während der allgemeinen Anzeigeregeln sichtbar.",
-      "showtimeTo": "bis",
-      "addShowtime": "Zeitfenster hinzufügen",
-      "displayModeTitle": "Anzeigemodus",
-      "displayModeSubtitle": "Wie Kunden diese Aktion entdecken.",
-      "displayModeMenuVisibleLabel": "Im Menü sichtbar",
-      "displayModeMenuVisibleDesc": "Karte wird neben Menüartikeln angezeigt.",
-      "displayModeCouponOnlyLabel": "Nur per Gutschein",
-      "displayModeCouponOnlyDesc": "Aus dem Menü ausgeblendet; wird mit Gutscheincode aktiviert.",
-      "displayModePopupLabel": "Popup",
-      "displayModePopupDesc": "Modal erscheint auf der Bestellseite.",
+      "displayModeTitle": "Sichtbarkeit & Einlösung",
+      "displayModeSubtitle": "Wie Kunden diese Aktion finden und einlösen.",
+      "displayModeMenuVisibleLabel": "Sichtbar",
+      "displayModeMenuVisibleDesc": "Wird in Ihrer Speisekarte angezeigt. Gilt automatisch oder mit Code.",
+      "displayModeCouponOnlyLabel": "Versteckt",
+      "displayModeCouponOnlyDesc": "Aus der Speisekarte ausgeblendet — nur mit dem Code unten einlösbar.",
       "displayDetailsTitle": "Anzeigedetails",
       "highlightThresholdLabel": "Hinweis anzeigen ab",
       "highlightThresholdHint": "Wenn gesetzt, erscheint der Hinweis „Mehr hinzufügen zum Freischalten!“, sobald der Warenkorb diesen Betrag erreicht und noch unter dem Mindestbestellwert liegt.",
       "promoCardImageLabel": "Aktionskartenbild",
       "orUploadOwn": "— oder eigenes hochladen —",
       "imageUploadHint": "Klicken Sie oben auf ein Design, um es zu verwenden, oder laden Sie eine URL für Ihr eigenes Bild hoch / fügen Sie sie ein. Wenn Sie das überspringen, wird das erste Design als Standard verwendet.",
-      "activationTitle": "Aktivierung",
-      "activationSubtitle": "Wie Kunden diese Aktion auslösen.",
       "autoApplyLabel": "Automatisch anwenden, wenn Warenkorb qualifiziert",
       "autoApplyOnSub": "Die Aktion wird automatisch ausgelöst, sobald der Warenkorb die Regeln erfüllt. Der Gutscheincode unten (falls gesetzt) ist ein OPTIONALER Alias für Power-User.",
       "autoApplyOffSub": "Kunden MÜSSEN den Gutscheincode unten eingeben — die Aktion wird NICHT automatisch ausgelöst, auch wenn der Warenkorb qualifiziert. Verwenden Sie dies für Flyer-Codes, E-Mail-exklusive Angebote oder persönlich ausgehändigte Prämien.",
@@ -2183,8 +2175,6 @@
       "couponCodeOptional": "(optional)",
       "couponCodePlaceholder": "z. B. MITTAG20",
       "couponCodeMissingError": "Ein Gutscheincode ist erforderlich, wenn die automatische Anwendung deaktiviert ist — sonst haben Kunden keine Möglichkeit, diese Aktion auszulösen.",
-      "bannerTitle": "Banner",
-      "bannerSubtitle": "Aktionskarte oben auf der /order-Seite.",
       "showOnBannerLabel": "Im Kunden-Banner anzeigen",
       "showOnBannerSub": "Diese Aktion oben auf der Bestellseite anpinnen.",
       "bannerHeadlineLabel": "Banner-Überschrift",
@@ -2196,7 +2186,8 @@
       "channelSubtitle": "Marketplace-Kunden sind eine eigene Zielgruppe – wählen Sie, wo dieses Angebot gilt.",
       "channelWebsiteLabel": "Nur Ihre Website",
       "channelMarketplaceLabel": "Nur Marketplace",
-      "channelBothLabel": "Beide"
+      "channelBothLabel": "Beide",
+      "hiddenCodeInfo": "Versteckte Aktionen gelten nur, wenn der Kunde diesen Code an der Kasse eingibt."
     },
     "customersList": {
       "heading": "Kunden",
@@ -3216,7 +3207,9 @@
       "successMessage": "Gutschein <couponCode>{code}</couponCode> ({discount}) wurde {customerName} zugewiesen.",
       "buttonCreate": "Gutschein erstellen & zuweisen",
       "emailSent": "Der Kunde hat den Code und die Bedingungen per E-Mail erhalten.",
-      "emailSkipped": "Keine E-Mail gesendet (keine E-Mail-Adresse hinterlegt oder Marketing abgelehnt) — teilen Sie dem Kunden den Code selbst mit."
+      "emailSkipped": "Keine E-Mail gesendet (keine E-Mail-Adresse hinterlegt oder Marketing abgelehnt) — teilen Sie dem Kunden den Code selbst mit.",
+      "labelOrderType": "Gültig für",
+      "labelStacking": "Mit anderen Aktionen kombinieren"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Küchenworkflow",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Dieser Standort verwendet das Marken-Menü. Um ein anderes Menü zu importieren, passen Sie zuerst das Menü für diesen Standort auf der Menüseite an."
     },
     "promotionsPage": {
-      "title": "Aktionen & Gutscheine",
-      "description": "Automatische Angebote, Bundles und Gutscheincodes für Ihre Kunden",
+      "title": "Aktionen",
+      "description": "Automatische Angebote, Bundles und Promo-Codes für Ihre Kunden",
       "newPromo": "Neue Aktion"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Bestellen",
       "recentOrders": "Letzte Bestellungen ({count})",
       "noOrdersYet": "Du hast hier noch keine Bestellung aufgegeben.",
-      "orderNow": "Jetzt bestellen →"
+      "orderNow": "Jetzt bestellen →",
+      "useOffer": "Dieses Angebot nutzen"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Menü-Bundle mit Spezialität",

@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} ezen a napon nem érhető el. Válassz másik napot vagy szolgáltatást.",
       "fullNameRequired": "Adja meg a vezeték- és keresztnevét.",
       "fulfilWindowOrderError": "A(z) \"{name}\" csak bizonyos napokon/időpontokban rendelhető. Ütemezze a rendelését arra az időpontra, amikor elérhető.",
-      "fulfilWindowReservationError": "A(z) \"{name}\" nem érhető el a foglalása napján. Távolítsa el, vagy foglaljon asztalt egy olyan napra, amikor elérhető."
+      "fulfilWindowReservationError": "A(z) \"{name}\" nem érhető el a foglalása napján. Távolítsa el, vagy foglaljon asztalt egy olyan napra, amikor elérhető.",
+      "promoEmailMismatch": "Ez a kód egy másik e-mail-címhez van regisztrálva."
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",
@@ -744,7 +745,7 @@
       "mapSettings": "Térkép beállítások",
       "notifications": "Értesítések",
       "receipts": "Nyugták",
-      "promotions": "Promóciók és kuponok",
+      "promotions": "Akciók",
       "socialMedia": "Közösségi média",
       "autopilot": "Autopilot",
       "websiteTheme": "Weboldal megjelenés",
@@ -1222,7 +1223,7 @@
       "logoHint": "A vásárlói nyugta tetején jelenik meg — az előnézetben, a nyomtatott nyugtán és a rendelési e-mailben. A nagy kontrasztú képek nyomtathatók legjobban hőpapírra. A Logó szakasz húzással áthelyezhető."
     },
     "promotions": {
-      "title": "Promóciók és kuponok",
+      "title": "Akciók",
       "subtitle": "Futtasson automatikus promóciókat vagy egyszeri kuponkódokat az ügyfelek számára.",
       "tabPromotions": "Promóciók",
       "tabCoupons": "Kuponok",
@@ -1952,7 +1953,7 @@
       "buttonNewCouponCode": "+ Új kuponkód",
       "stackingInfo": "<label>Összekapcsolás: </label><master>Master</master> ajánlatok minden máshoz hozzáadódnak. <exclusive>Kizárólagos</exclusive> ajánlatok blokkolják az összes többit, kivéve a Master ajánlatokat. <standard>Standard</standard> ajánlatok egymással összekapcsolhatók. A kuponkódokat az ügyfelek adják meg, és soha nem kerülnek automatikus alkalmazásra.",
       "emptyStateTitle": "Még nincsenek ajánlatok",
-      "emptyStateBody": "Kattintson a <newPromo>„+ Új promóció”</newPromo> gombra felül promóció létrehozásához, vagy a <newCoupon>„+ Új kuponkód”</newCoupon> gombra kupon létrehozásához.",
+      "emptyStateBody": "Kattintson a fenti <newPromo>„+ Új akció”</newPromo> gombra egy akció létrehozásához.",
       "tabSelfMade": "Saját",
       "tabPreMade": "Előre elkészített"
     },
@@ -2098,27 +2099,18 @@
       "stackingExclusiveDesc": "Blokkol minden mást, kivéve a Master ajánlatokat.",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "Bármely más promócióval együtt érvényes.",
-      "limitedShowtimeTitle": "Korlátozott megjelenítési ablak",
-      "limitedShowtimeSubtitle": "A promóció REJTETT az étlapról ezeken az ablakidőkön kívül, de még mindig alkalmazható kuponon keresztül.",
-      "limitedShowtimeEmpty": "Nincs megjelenítési ablak beállítva. A promóció az általános megjelenítési szabályok szerint látható.",
-      "showtimeTo": "ig",
-      "addShowtime": "Megjelenítési ablak hozzáadása",
-      "displayModeTitle": "Megjelenítési mód",
-      "displayModeSubtitle": "Hogyan találják meg az ügyfelek ezt a promóciót.",
-      "displayModeMenuVisibleLabel": "Étlapon látható",
-      "displayModeMenuVisibleDesc": "A kártya az étlaptételek mellett jelenik meg.",
-      "displayModeCouponOnlyLabel": "Csak kuponnal",
-      "displayModeCouponOnlyDesc": "Rejtett az étlapon; kuponkóddal aktiválható.",
-      "displayModePopupLabel": "Felugró ablak",
-      "displayModePopupDesc": "Modális ablak jelenik meg a rendelési oldalon.",
+      "displayModeTitle": "Láthatóság és beváltás",
+      "displayModeSubtitle": "Hogyan találják meg és váltják be a vásárlók ezt az ajánlatot.",
+      "displayModeMenuVisibleLabel": "Látható",
+      "displayModeMenuVisibleDesc": "Megjelenik az étlapon. Automatikusan vagy kóddal érvényesül.",
+      "displayModeCouponOnlyLabel": "Rejtett",
+      "displayModeCouponOnlyDesc": "Elrejtve az étlapról — csak az alábbi kóddal váltható be.",
       "displayDetailsTitle": "Megjelenítési részletek",
       "highlightThresholdLabel": "Ösztönzés indítása ettől",
       "highlightThresholdHint": "Ha be van állítva, az „Adj hozzá többet a feloldáshoz!” ösztönző akkor jelenik meg, amikor a kosár eléri ezt az összeget, de még a minimális rendelési érték alatt van.",
       "promoCardImageLabel": "Promóciós kártya képe",
       "orUploadOwn": "— vagy töltse fel sajátját —",
       "imageUploadHint": "Kattintson egy tervre fentebb a használatához, vagy töltsön fel / illesszen be URL-t a saját képéhez. Ha ezt kihagyja, az első terv kerül alapértelmezettként alkalmazásra.",
-      "activationTitle": "Aktiválás",
-      "activationSubtitle": "Hogyan indítják el az ügyfelek ezt a promóciót.",
       "autoApplyLabel": "Automatikus alkalmazás, ha a kosár jogosult",
       "autoApplyOnSub": "A promóció automatikusan aktiválódik, amint a kosár megfelel a szabályoknak. Az alábbi kuponkód (ha be van állítva) OPCIONÁLIS alias a haladó felhasználók számára.",
       "autoApplyOffSub": "Az ügyfeleknek MEG KELL ADNIUK az alábbi kuponkódot — a promóció NEM aktiválódik automatikusan, még akkor sem, ha a kosár jogosult. Használja szórólapos kódokhoz, csak e-mailen elérhető ajánlatokhoz vagy személyesen kiosztott jutalmakhoz.",
@@ -2127,8 +2119,6 @@
       "couponCodeOptional": "(opcionális)",
       "couponCodePlaceholder": "pl. LUNCH20",
       "couponCodeMissingError": "Kuponkód megadása kötelező, ha az automatikus alkalmazás ki van kapcsolva — különben az ügyfeleknek nincs módjuk aktiválni ezt a promóciót.",
-      "bannerTitle": "Banner",
-      "bannerSubtitle": "Promóciós kártya az /order oldal tetején.",
       "showOnBannerLabel": "Megjelenítés az ügyfél bannerén",
       "showOnBannerSub": "Rögzítse ezt a promóciót a rendelési oldal tetejére.",
       "bannerHeadlineLabel": "Banner főcím",
@@ -2140,7 +2130,8 @@
       "channelSubtitle": "A Marketplace ügyfelei külön közönség — válassza ki, hol érvényes ez az ajánlat.",
       "channelWebsiteLabel": "Csak a webhelye",
       "channelMarketplaceLabel": "Csak Marketplace",
-      "channelBothLabel": "Mindkettő"
+      "channelBothLabel": "Mindkettő",
+      "hiddenCodeInfo": "A rejtett ajánlatok csak akkor érvényesülnek, ha a vásárló megadja ezt a kódot a fizetésnél."
     },
     "customersList": {
       "heading": "Ügyfelek",
@@ -3216,7 +3207,9 @@
       "successMessage": "A <couponCode>{code}</couponCode> ({discount}) kupon hozzárendelve: {customerName}.",
       "buttonCreate": "Kupon létrehozása és hozzárendelése",
       "emailSent": "A vásárló e-mailben megkapta a kódot és a feltételeket.",
-      "emailSkipped": "Nem küldtünk e-mailt (a vásárlónak nincs megadott e-mail-címe, vagy nem kért marketingüzeneteket) — ossza meg vele a kódot saját maga."
+      "emailSkipped": "Nem küldtünk e-mailt (a vásárlónak nincs megadott e-mail-címe, vagy nem kért marketingüzeneteket) — ossza meg vele a kódot saját maga.",
+      "labelOrderType": "Érvényes",
+      "labelStacking": "Kombinálás más akciókkal"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Konyhai munkafolyamat",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Ez a helyszín a márkamenüt használja. Más menü importálásához előbb szabja testre a helyszín menüjét a Menü oldalon."
     },
     "promotionsPage": {
-      "title": "Promóciók és kuponok",
-      "description": "Automatikus ajánlatok, csomagok és kuponkódok a vásárlók számára",
+      "title": "Akciók",
+      "description": "Automatikus ajánlatok, csomagok és promóciós kódok az ügyfeleinek",
       "newPromo": "Új promóció"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Rendelés",
       "recentOrders": "Korábbi rendelések ({count})",
       "noOrdersYet": "Még nem adtál le rendelést itt.",
-      "orderNow": "Rendelés most →"
+      "orderNow": "Rendelés most →",
+      "useOffer": "Ajánlat felhasználása"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ételbundle különleges tétellel",

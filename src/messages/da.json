@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} er ikke tilgængelig på denne dato. Vælg en anden dag eller service.",
       "fullNameRequired": "Indtast dit fornavn og efternavn.",
       "fulfilWindowOrderError": "\"{name}\" kan kun bestilles på bestemte dage/tidspunkter. Planlæg din bestilling til, når den er tilgængelig.",
-      "fulfilWindowReservationError": "\"{name}\" er ikke tilgængelig på din reservationsdag. Fjern den, eller reservér dit bord på en dag, hvor den tilbydes."
+      "fulfilWindowReservationError": "\"{name}\" er ikke tilgængelig på din reservationsdag. Fjern den, eller reservér dit bord på en dag, hvor den tilbydes.",
+      "promoEmailMismatch": "Denne kode er registreret til en anden e-mailadresse."
     },
     "searchMenu": "Søg i menuen…",
     "signIn": "Log ind",
@@ -744,7 +745,7 @@
       "mapSettings": "Kortindstillinger",
       "notifications": "Notifikationer",
       "receipts": "Kvitteringer",
-      "promotions": "Kampagner og kuponer",
+      "promotions": "Kampagner",
       "socialMedia": "Sociale medier",
       "autopilot": "Autopilot",
       "websiteTheme": "Hjemmsidetema",
@@ -1222,7 +1223,7 @@
       "logoHint": "Vises øverst på kundens kvittering — i forhåndsvisningen, på den printede kvittering og i ordremailen. Billeder med høj kontrast printer bedst på termopapir. Træk Logo-sektionen for at flytte den."
     },
     "promotions": {
-      "title": "Kampagner og kuponer",
+      "title": "Kampagner",
       "subtitle": "Kør automatiske kampagner eller engangskuponer til dine kunder.",
       "tabPromotions": "Kampagner",
       "tabCoupons": "Kuponer",
@@ -2008,7 +2009,7 @@
       "buttonNewCouponCode": "+ Ny kuponkode",
       "stackingInfo": "<label>Stabling: </label><master>Master</master>-tilbud gælder sammen med alt andet. <exclusive>Eksklusive</exclusive> tilbud blokerer alle andre undtagen Master. <standard>Standard</standard>-tilbud stables med hinanden. Kuponkoder indtastes af kunden og anvendes aldrig automatisk.",
       "emptyStateTitle": "Ingen tilbud endnu",
-      "emptyStateBody": "Klik på <newPromo>\"+Ny kampagne\"</newPromo> øverst for at oprette en kampagne, eller <newCoupon>\"+Ny kuponkode\"</newCoupon> ovenfor for at oprette en kupon.",
+      "emptyStateBody": "Klik på <newPromo>“+ Ny kampagne”</newPromo> øverst for at oprette en kampagne.",
       "tabSelfMade": "Egne",
       "tabPreMade": "Forudlavede"
     },
@@ -2154,27 +2155,18 @@
       "stackingExclusiveDesc": "Blokerer alle andre undtagen Master.",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "Gælder sammen med enhver anden kampagne.",
-      "limitedShowtimeTitle": "Begrænset visningstid",
-      "limitedShowtimeSubtitle": "Kampagnen er SKJULT fra menuen uden for disse vinduer, men kan stadig aktiveres via kupon.",
-      "limitedShowtimeEmpty": "Ingen vinduer angivet. Kampagnen er synlig i henhold til sine generelle visningsregler.",
-      "showtimeTo": "til",
-      "addShowtime": "Tilføj visningstid",
-      "displayModeTitle": "Visningstilstand",
-      "displayModeSubtitle": "Hvordan kunder opdager denne kampagne.",
-      "displayModeMenuVisibleLabel": "Synlig i menu",
-      "displayModeMenuVisibleDesc": "Kortet vises ved siden af menuvarer.",
-      "displayModeCouponOnlyLabel": "Kun kupon",
-      "displayModeCouponOnlyDesc": "Skjult fra menu; aktiveres med kuponkode.",
-      "displayModePopupLabel": "Pop-up",
-      "displayModePopupDesc": "Modal vises på bestillingssiden.",
+      "displayModeTitle": "Synlighed og indløsning",
+      "displayModeSubtitle": "Hvordan kunder finder og indløser dette tilbud.",
+      "displayModeMenuVisibleLabel": "Synlig",
+      "displayModeMenuVisibleDesc": "Vises i din menu. Anvendes automatisk eller med en kode.",
+      "displayModeCouponOnlyLabel": "Skjult",
+      "displayModeCouponOnlyDesc": "Skjult fra menuen — indløses kun med koden nedenfor.",
       "displayDetailsTitle": "Visningsdetaljer",
       "highlightThresholdLabel": "Begynd at opfordre ved",
       "highlightThresholdHint": "Hvis angivet, vises opfordringen \"Tilføj mere for at låse op!\", når kurven når dette beløb og stadig er under minimumsordren.",
       "promoCardImageLabel": "Kampagnekortbillede",
       "orUploadOwn": "— eller upload dit eget —",
       "imageUploadHint": "Klik på et design ovenfor for at bruge det, eller upload / indsæt en URL til dit eget billede. Springer du dette over, bruges det første design som standard.",
-      "activationTitle": "Aktivering",
-      "activationSubtitle": "Hvordan kunder udløser denne kampagne.",
       "autoApplyLabel": "Anvend automatisk når kurven kvalificerer",
       "autoApplyOnSub": "Kampagnen aktiveres automatisk i det øjeblik kurven matcher reglerne. Kuponkoden nedenfor (hvis angivet) er et VALGFRIT alias for avancerede brugere.",
       "autoApplyOffSub": "Kunder SKAL indtaste kuponkoden nedenfor — kampagnen aktiveres IKKE automatisk selv når kurven kvalificerer. Brug dette til flyerkoder, e-mail-eksklusive tilbud eller belønninger du uddeler personligt.",
@@ -2183,8 +2175,6 @@
       "couponCodeOptional": "(valgfri)",
       "couponCodePlaceholder": "f.eks. FROKOST20",
       "couponCodeMissingError": "En kuponkode er påkrævet når automatisk aktivering er slået fra — ellers har kunderne ingen måde at udløse denne kampagne.",
-      "bannerTitle": "Banner",
-      "bannerSubtitle": "Kampagnekort øverst på siden på /order.",
       "showOnBannerLabel": "Vis på kundebannet",
       "showOnBannerSub": "Fastgør denne kampagne øverst på bestillingssiden.",
       "bannerHeadlineLabel": "Banneroverskrift",
@@ -2196,7 +2186,8 @@
       "channelSubtitle": "Marketplace-kunder er et separat publikum – vælg, hvor dette tilbud gælder.",
       "channelWebsiteLabel": "Kun dit website",
       "channelMarketplaceLabel": "Kun Marketplace",
-      "channelBothLabel": "Begge"
+      "channelBothLabel": "Begge",
+      "hiddenCodeInfo": "Skjulte tilbud anvendes kun, når kunden indtaster denne kode ved betaling."
     },
     "customersList": {
       "heading": "Kunder",
@@ -3216,7 +3207,9 @@
       "successMessage": "Kupon <couponCode>{code}</couponCode> ({discount}) tildelt {customerName}.",
       "buttonCreate": "Opret og tildel kupon",
       "emailSent": "Kunden har fået tilsendt koden og betingelserne på e-mail.",
-      "emailSkipped": "Der blev ikke sendt nogen e-mail (kunden har ingen e-mailadresse registreret eller har fravalgt markedsføring) – del selv koden med kunden."
+      "emailSkipped": "Der blev ikke sendt nogen e-mail (kunden har ingen e-mailadresse registreret eller har fravalgt markedsføring) – del selv koden med kunden.",
+      "labelOrderType": "Gælder for",
+      "labelStacking": "Kombiner med andre kampagner"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Køkkenworkflow",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Denne lokation bruger brandmenuen. For at importere en anden menu skal du først tilpasse menuen for denne lokation fra menusiden."
     },
     "promotionsPage": {
-      "title": "Kampagner og kuponer",
-      "description": "Automatiske tilbud, bundter og kuponer til dine kunder",
+      "title": "Kampagner",
+      "description": "Automatiske tilbud, pakker og rabatkoder til dine kunder",
       "newPromo": "Ny kampagne"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Bestil",
       "recentOrders": "Seneste bestillinger ({count})",
       "noOrdersYet": "Du har endnu ikke afgivet nogen bestillinger her.",
-      "orderNow": "Bestil nu →"
+      "orderNow": "Bestil nu →",
+      "useOffer": "Brug dette tilbud"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Måltidsbundle med specialitet",

@@ -12,15 +12,14 @@ import {
   clampMin,
   normalizeBannerHeadline,
   normalizeCustomerType,
-  normalizeDisplayMode,
   normalizeImageUrl,
   normalizeJsonStringList,
-  normalizeLimitedShowtime,
   normalizeNonNegativeFloat,
   normalizeOrderType,
   normalizeRuleConfig,
   normalizeStackingRule,
   normalizeChannel,
+  resolveDisplayFields,
 } from "@/lib/promo-fields";
 
 export async function GET() {
@@ -62,7 +61,7 @@ export async function POST(req: NextRequest) {
     daysOfWeek, startsAt, endsAt, usageLimit, autoApply, couponCode,
     scope, channel,
     usableHourStart, usableHourEnd, showOnBanner, bannerHeadline,
-    paymentMethodSlugs, deliveryZoneIds, onceLifetimePerClient, limitedShowtimeSchedules,
+    paymentMethodSlugs, deliveryZoneIds, onceLifetimePerClient,
     imageUrl, displayMode, highlightThreshold,
   } = body;
 
@@ -111,6 +110,13 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // VISIBLE/HIDDEN invariant (Luigi 2026-06-26): hidden ⇒ no auto-apply / no
+  // banner; any code-required promo (hidden, or visible-but-not-auto) needs a code.
+  const display = resolveDisplayFields({ displayMode, autoApply, showOnBanner, couponCode });
+  if (display.error === "code_required") {
+    return NextResponse.json({ error: "A code-required promotion needs a coupon code.", code: "code_required" }, { status: 400 });
+  }
+
   const promo = await prisma.promotion.create({
     data: {
       restaurantId,
@@ -136,21 +142,22 @@ export async function POST(req: NextRequest) {
       startsAt: startsAt ? new Date(startsAt) : null,
       endsAt: endsAt ? new Date(endsAt) : null,
       usageLimit: usageLimit ?? null,
-      autoApply: autoApply ?? true,
+      autoApply: display.autoApply,
       couponCode: couponCode || null,
       scope: resolvedScope,
       channel: normalizeChannel(channel),
       usableHourStart: clampMin(usableHourStart),
       usableHourEnd: clampMin(usableHourEnd),
-      showOnBanner: showOnBanner === undefined ? true : !!showOnBanner,
+      showOnBanner: display.showOnBanner,
       bannerHeadline: normalizeBannerHeadline(bannerHeadline),
       // Phase 2a restrictions + display fields
       paymentMethodSlugs: normalizeJsonStringList(paymentMethodSlugs, 8),
       deliveryZoneIds: normalizeJsonStringList(deliveryZoneIds, 64),
       onceLifetimePerClient: !!onceLifetimePerClient,
-      limitedShowtimeSchedules: normalizeLimitedShowtime(limitedShowtimeSchedules) as object,
+      // Limited Showtime retired (render-only/dead) — always empty going forward.
+      limitedShowtimeSchedules: [],
       imageUrl: normalizeImageUrl(imageUrl),
-      displayMode: normalizeDisplayMode(displayMode),
+      displayMode: display.displayMode,
       highlightThreshold: normalizeNonNegativeFloat(highlightThreshold),
       requiredAddOnSlug,
     },

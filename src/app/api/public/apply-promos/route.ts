@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { resolvePromotions, totalPromoDiscount, type ApplyContext } from "@/lib/promo-engine";
 import { parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
-import { usedLifetimePromoIds } from "@/lib/coupon-ledger";
+import { usedLifetimePromoIds, resolveAssignedPromoByCode } from "@/lib/coupon-ledger";
 import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
 
 export async function POST(req: NextRequest) {
@@ -156,6 +156,27 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // Customer-ASSIGNED code: if the entered identity doesn't match a grant for
+  // this code, drop the code so the preview doesn't show a discount the charge
+  // would refuse (preview == charge), and flag it so the cart shows a clear
+  // "registered to a different email" note. Only checked once we HAVE an
+  // identity (email/phone entered) — before that we stay optimistic, and the
+  // order route is the authoritative gate. Luigi 2026-06-26.
+  let effectiveCouponCode = couponCode;
+  let promoCodeEmailMismatch = false;
+  if (couponCode && (previewEmail || previewPhone)) {
+    const assigned = await resolveAssignedPromoByCode({
+      restaurantId: restaurant.id,
+      code: String(couponCode),
+      email: previewEmail,
+      phone: previewPhone,
+    });
+    if (assigned.kind === "mismatch") {
+      effectiveCouponCode = undefined;
+      promoCodeEmailMismatch = true;
+    }
+  }
+
   const ctx: ApplyContext = {
     orderType: orderType ?? "pickup",
     now: promoEvalNow,
@@ -163,7 +184,7 @@ export async function POST(req: NextRequest) {
     isMember: isMember ?? false,
     subtotal: parseFloat(subtotal),
     items: ctxItems,
-    couponCode,
+    couponCode: effectiveCouponCode,
     paymentMethod,
     hasUsedLifetime,
     deliveryZoneId: typeof deliveryZoneId === "string" && deliveryZoneId ? deliveryZoneId : undefined,
@@ -191,5 +212,5 @@ export async function POST(req: NextRequest) {
   // Surface promos that qualified but were blocked by the winning exclusive, so
   // the cart can explain "can't combine" and offer "remove this to use that
   // instead". Luigi 2026-06-07.
-  return NextResponse.json({ applied, totalDiscount, hasFreeDelivery, blockedPromos, newCustomerOfferUnavailable });
+  return NextResponse.json({ applied, totalDiscount, hasFreeDelivery, blockedPromos, newCustomerOfferUnavailable, promoCodeEmailMismatch });
 }

@@ -289,6 +289,64 @@ export async function usedLifetimePromoIds(args: {
   return out;
 }
 
+/** Result of resolving a typed code against the customer-assigned grants. */
+export type AssignedPromoResolution =
+  | { kind: "match"; promotionId: string; grantId: string }
+  | { kind: "mismatch" }
+  | { kind: "none" };
+
+/**
+ * Resolve a typed coupon code against CUSTOMER-ASSIGNED promotion grants
+ * (CustomerCoupon), matching the checkout identity by email OR phone — NO login
+ * required (Luigi 2026-06-26, Fabrizio F-92452C). THE single source of truth
+ * shared by the order route (charge) and the apply-promos preview so the two
+ * never disagree.
+ *   - "match"    → a grant with this code belongs to this email/phone; the
+ *                  targeted Promotion applies via its couponCode.
+ *   - "mismatch" → a grant with this code EXISTS but for a different identity →
+ *                  the caller shows "this code is registered to a different
+ *                  email address".
+ *   - "none"     → no assigned grant carries this code (a normal/open promo
+ *                  code, or a typo) → caller falls through to normal handling.
+ * Only "granted"/"released"/"applied" grants on an ACTIVE promotion count.
+ * Read-only; never throws — any error degrades to "none".
+ */
+export async function resolveAssignedPromoByCode(args: {
+  restaurantId: string;
+  code: string;
+  email?: string | null;
+  phone?: string | null;
+}): Promise<AssignedPromoResolution> {
+  try {
+    const code = typeof args.code === "string" ? args.code.trim() : "";
+    if (!code) return { kind: "none" };
+    const grants = await prisma.customerCoupon.findMany({
+      where: {
+        restaurantId: args.restaurantId,
+        code: { equals: code, mode: "insensitive" },
+        status: { in: ["granted", "released", "applied"] },
+        promotion: { is: { isActive: true } },
+      },
+      select: { id: true, promotionId: true, email: true, phone: true },
+    });
+    if (grants.length === 0) return { kind: "none" };
+    const email = normalizeEmail(args.email);
+    const phone = normalizePhone(args.phone);
+    for (const g of grants) {
+      const gEmail = normalizeEmail(g.email);
+      const gPhone = normalizePhone(g.phone);
+      if ((email && gEmail && email === gEmail) || (phone && gPhone && phone === gPhone)) {
+        return { kind: "match", promotionId: g.promotionId, grantId: g.id };
+      }
+    }
+    // A grant with this code exists, but not for the checkout identity.
+    return { kind: "mismatch" };
+  } catch (e) {
+    console.error("[coupon-ledger resolveAssignedPromoByCode]", e);
+    return { kind: "none" };
+  }
+}
+
 /**
  * Proactively GRANT a coupon to a specific customer — used by targeted
  * campaigns (Autopilot win-back, Kickstarter invite, flyer QR) in later phases.

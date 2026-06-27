@@ -233,7 +233,8 @@
       "holidayServiceClosed": "{service} non è disponibile in questa data. Scegli un altro giorno o servizio.",
       "fullNameRequired": "Inserisci il tuo nome e cognome.",
       "fulfilWindowOrderError": "\"{name}\" può essere ordinato solo in determinati giorni/orari. Programma il tuo ordine per quando è disponibile.",
-      "fulfilWindowReservationError": "\"{name}\" non è disponibile nel giorno della tua prenotazione. Rimuovilo oppure prenota il tavolo in un giorno in cui è disponibile."
+      "fulfilWindowReservationError": "\"{name}\" non è disponibile nel giorno della tua prenotazione. Rimuovilo oppure prenota il tavolo in un giorno in cui è disponibile.",
+      "promoEmailMismatch": "Questo codice è registrato a un altro indirizzo email."
     },
     "followUs": "Seguici",
     "searchMenu": "Cerca nel menu…",
@@ -744,7 +745,7 @@
       "mapSettings": "Impostazioni mappa",
       "notifications": "Notifiche",
       "receipts": "Ricevute",
-      "promotions": "Promozioni e coupon",
+      "promotions": "Promozioni",
       "autopilot": "Pilota automatico",
       "websiteTheme": "Tema del sito",
       "dashboard": "Pannello",
@@ -1222,7 +1223,7 @@
       "logoHint": "Mostrato in cima allo scontrino del cliente — nell'anteprima, sullo scontrino stampato e nell'email dell'ordine. Le immagini ad alto contrasto si stampano meglio su carta termica. Trascina la sezione Logo per riposizionarla."
     },
     "promotions": {
-      "title": "Promozioni e coupon",
+      "title": "Promozioni",
       "subtitle": "Lancia promozioni automatiche o codici coupon per i tuoi clienti.",
       "tabPromotions": "Promozioni",
       "tabCoupons": "Coupon",
@@ -2008,7 +2009,7 @@
       "buttonNewCouponCode": "+ Nuovo codice coupon",
       "stackingInfo": "<label>Cumulo: </label><master>Master</master> si applica insieme a tutto. <exclusive>Esclusivo</exclusive> blocca tutti gli altri tranne i Master. <standard>Standard</standard> si cumula con altri standard. I codici coupon sono inseriti dal cliente e non vengono mai applicati automaticamente.",
       "emptyStateTitle": "Nessuna offerta",
-      "emptyStateBody": "Clicca <newPromo>\"+ Nuova promo\"</newPromo> in alto per creare una promozione, o <newCoupon>\"+ Nuovo codice coupon\"</newCoupon> sopra per creare un coupon.",
+      "emptyStateBody": "Clicca su <newPromo>«+ Nuova promo»</newPromo> in alto per creare una promozione.",
       "tabSelfMade": "Personalizzate",
       "tabPreMade": "Predefinite"
     },
@@ -2154,27 +2155,18 @@
       "stackingExclusiveDesc": "Blocca tutti gli altri tranne i Master.",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "Si applica insieme a qualsiasi altra promo.",
-      "limitedShowtimeTitle": "Vetrina limitata",
-      "limitedShowtimeSubtitle": "La promo è NASCOSTA dal menù al di fuori di queste finestre, ma può essere applicata tramite coupon.",
-      "limitedShowtimeEmpty": "Nessuna finestra impostata. La promo è visibile durante le regole di visualizzazione generali.",
-      "showtimeTo": "a",
-      "addShowtime": "Aggiungi finestra",
-      "displayModeTitle": "Modalità di visualizzazione",
-      "displayModeSubtitle": "Come i clienti scoprono questa promo.",
-      "displayModeMenuVisibleLabel": "Visibile nel menù",
-      "displayModeMenuVisibleDesc": "La card appare accanto agli articoli del menù.",
-      "displayModeCouponOnlyLabel": "Solo coupon",
-      "displayModeCouponOnlyDesc": "Nascosta dal menù; si attiva con il codice coupon.",
-      "displayModePopupLabel": "Popup",
-      "displayModePopupDesc": "Un modale appare sulla pagina di ordinazione.",
+      "displayModeTitle": "Visibilità e riscatto",
+      "displayModeSubtitle": "Come i clienti scoprono e riscattano questa promo.",
+      "displayModeMenuVisibleLabel": "Visibile",
+      "displayModeMenuVisibleDesc": "Mostrata nel tuo menu. Si applica automaticamente o con un codice.",
+      "displayModeCouponOnlyLabel": "Nascosta",
+      "displayModeCouponOnlyDesc": "Nascosta dal menu — riscattabile solo con il codice qui sotto.",
       "displayDetailsTitle": "Dettagli di visualizzazione",
       "highlightThresholdLabel": "Inizia a invogliare a",
       "highlightThresholdHint": "Se impostata, l'invito \"Aggiungi altro per sbloccare!\" appare quando il carrello raggiunge questo importo ed è ancora sotto l'ordine minimo.",
       "promoCardImageLabel": "Immagine card promo",
       "orUploadOwn": "— o carica la tua —",
       "imageUploadHint": "Clicca un design sopra per usarlo, o carica / incolla un URL per la tua immagine. Se salti del tutto, viene usato il primo design come predefinito.",
-      "activationTitle": "Attivazione",
-      "activationSubtitle": "Come i clienti attivano questa promo.",
       "autoApplyLabel": "Applica automaticamente quando il carrello è idoneo",
       "autoApplyOnSub": "La promo si attiva automaticamente nel momento in cui il carrello soddisfa le regole. Il codice coupon sotto (se impostato) è un ALIAS FACOLTATIVO per utenti esperti.",
       "autoApplyOffSub": "I clienti DEVONO digitare il codice coupon qui sotto — la promo NON si attiva automaticamente anche quando il carrello è idoneo. Usalo per codici su volantini, offerte solo via email, o premi distribuiti personalmente.",
@@ -2183,8 +2175,6 @@
       "couponCodeOptional": "(facoltativo)",
       "couponCodePlaceholder": "es. PRANZO20",
       "couponCodeMissingError": "È richiesto un codice coupon quando l'auto-applicazione è disattivata — altrimenti i clienti non hanno modo di attivare questa promo.",
-      "bannerTitle": "Banner",
-      "bannerSubtitle": "Card promo in cima alla pagina su /order.",
       "showOnBannerLabel": "Mostra nel banner del cliente",
       "showOnBannerSub": "Fissa questa promo in cima alla pagina di ordinazione.",
       "bannerHeadlineLabel": "Titolo banner",
@@ -2196,7 +2186,8 @@
       "channelSubtitle": "I clienti del Marketplace sono un pubblico distinto: scegli dove si applica questa offerta.",
       "channelWebsiteLabel": "Solo il tuo sito web",
       "channelMarketplaceLabel": "Solo Marketplace",
-      "channelBothLabel": "Entrambi"
+      "channelBothLabel": "Entrambi",
+      "hiddenCodeInfo": "Le promo nascoste si applicano solo quando il cliente inserisce questo codice al pagamento."
     },
     "customersList": {
       "heading": "Clienti",
@@ -3216,7 +3207,9 @@
       "successMessage": "Coupon <couponCode>{code}</couponCode> ({discount}) assegnato a {customerName}.",
       "buttonCreate": "Crea e assegna coupon",
       "emailSent": "Il cliente ha ricevuto via email il codice e le condizioni.",
-      "emailSkipped": "Nessuna email inviata (il cliente non ha un indirizzo email registrato o ha rifiutato le comunicazioni di marketing) — comunica tu il codice al cliente."
+      "emailSkipped": "Nessuna email inviata (il cliente non ha un indirizzo email registrato o ha rifiutato le comunicazioni di marketing) — comunica tu il codice al cliente.",
+      "labelOrderType": "Valido per",
+      "labelStacking": "Combina con altre promozioni"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Flusso di lavoro cucina",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Questa sede utilizza il menu del brand. Per importare un menu diverso, personalizza prima il menu per questa sede dalla pagina Menu."
     },
     "promotionsPage": {
-      "title": "Promozioni e Coupon",
-      "description": "Offerte automatiche, bundle e codici coupon per i tuoi clienti",
+      "title": "Promozioni",
+      "description": "Offerte, bundle e codici promozionali automatici per i tuoi clienti",
       "newPromo": "Nuova Promo"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Ordina",
       "recentOrders": "Ordini recenti ({count})",
       "noOrdersYet": "Non hai ancora effettuato ordini qui.",
-      "orderNow": "Ordina ora →"
+      "orderNow": "Ordina ora →",
+      "useOffer": "Usa questa offerta"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Bundle pasto con specialità",

@@ -234,7 +234,8 @@
       "holidayServiceClosed": "{service} is niet beschikbaar op deze datum. Kies een andere dag of service.",
       "fullNameRequired": "Voer je voor- en achternaam in.",
       "fulfilWindowOrderError": "\"{name}\" kan alleen op bepaalde dagen/tijden worden besteld. Plan je bestelling voor een moment waarop het beschikbaar is.",
-      "fulfilWindowReservationError": "\"{name}\" is niet beschikbaar op de dag van uw reservering. Verwijder het of reserveer uw tafel op een dag waarop het wordt aangeboden."
+      "fulfilWindowReservationError": "\"{name}\" is niet beschikbaar op de dag van uw reservering. Verwijder het of reserveer uw tafel op een dag waarop het wordt aangeboden.",
+      "promoEmailMismatch": "Deze code is geregistreerd op een ander e-mailadres."
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",
@@ -744,7 +745,7 @@
       "mapSettings": "Kaartinstellingen",
       "notifications": "Meldingen",
       "receipts": "Bonnen",
-      "promotions": "Promoties en coupons",
+      "promotions": "Acties",
       "socialMedia": "Sociale media",
       "autopilot": "Autopilot",
       "websiteTheme": "Website-thema",
@@ -1222,7 +1223,7 @@
       "logoHint": "Wordt bovenaan de klantbon getoond — in de voorvertoning, op de geprinte bon en in de bestel-e-mail. Beelden met veel contrast printen het best op thermisch papier. Sleep de Logo-sectie om deze te verplaatsen."
     },
     "promotions": {
-      "title": "Promoties en coupons",
+      "title": "Acties",
       "subtitle": "Voer automatische promoties of eenmalige couponcodes uit voor uw klanten.",
       "tabPromotions": "Promoties",
       "tabCoupons": "Coupons",
@@ -2008,7 +2009,7 @@
       "buttonNewCouponCode": "+ Nieuwe couponcode",
       "stackingInfo": "<label>Stapelen: </label><master>Master</master>-deals gelden naast alles. <exclusive>Exclusieve</exclusive> deals blokkeren alle andere, behalve Masters. <standard>Standaard</standard>-deals stapelen met elkaar. Couponcodes worden door de klant ingevoerd en nooit automatisch toegepast.",
       "emptyStateTitle": "Nog geen deals",
-      "emptyStateBody": "Klik op <newPromo>\"+Nieuwe actie\"</newPromo> bovenaan om een promotie aan te maken, of op <newCoupon>\"+Nieuwe couponcode\"</newCoupon> hierboven om een coupon aan te maken.",
+      "emptyStateBody": "Klik bovenaan op <newPromo>“+ Nieuwe actie”</newPromo> om een actie te maken.",
       "tabSelfMade": "Eigen",
       "tabPreMade": "Vooraf gemaakt"
     },
@@ -2154,27 +2155,18 @@
       "stackingExclusiveDesc": "Blokkeert alle andere, behalve Masters.",
       "stackingMasterLabel": "Master",
       "stackingMasterDesc": "Geldt naast elke andere actie.",
-      "limitedShowtimeTitle": "Beperkte vertoonstijd",
-      "limitedShowtimeSubtitle": "Actie is VERBORGEN in het menu buiten deze vensters, maar kan nog steeds worden toegepast via coupon.",
-      "limitedShowtimeEmpty": "Geen vensters ingesteld. Actie is zichtbaar volgens de algemene weergaveregels.",
-      "showtimeTo": "tot",
-      "addShowtime": "Vertoonstijd toevoegen",
-      "displayModeTitle": "Weergavemodus",
-      "displayModeSubtitle": "Hoe klanten deze actie ontdekken.",
-      "displayModeMenuVisibleLabel": "Zichtbaar in menu",
-      "displayModeMenuVisibleDesc": "Kaart wordt weergegeven naast menu-artikelen.",
-      "displayModeCouponOnlyLabel": "Alleen coupon",
-      "displayModeCouponOnlyDesc": "Verborgen in menu; wordt geactiveerd met couponcode.",
-      "displayModePopupLabel": "Pop-up",
-      "displayModePopupDesc": "Modaal venster verschijnt op de bestelpagina.",
+      "displayModeTitle": "Zichtbaarheid en inwisselen",
+      "displayModeSubtitle": "Hoe klanten deze actie vinden en inwisselen.",
+      "displayModeMenuVisibleLabel": "Zichtbaar",
+      "displayModeMenuVisibleDesc": "Wordt in je menu getoond. Wordt automatisch of met een code toegepast.",
+      "displayModeCouponOnlyLabel": "Verborgen",
+      "displayModeCouponOnlyDesc": "Verborgen voor het menu — alleen in te wisselen met de code hieronder.",
       "displayDetailsTitle": "Weergavedetails",
       "highlightThresholdLabel": "Beginnen met aansporen bij",
       "highlightThresholdHint": "Indien ingesteld, verschijnt de melding \"Voeg meer toe om te ontgrendelen!\" zodra de winkelwagen dit bedrag bereikt en nog onder het minimumbestelbedrag blijft.",
       "promoCardImageLabel": "Actiekaartafbeelding",
       "orUploadOwn": "— of upload uw eigen —",
       "imageUploadHint": "Klik op een ontwerp hierboven om het te gebruiken, of upload / plak een URL voor uw eigen afbeelding. Als u dit overslaat, wordt het eerste ontwerp als standaard gebruikt.",
-      "activationTitle": "Activering",
-      "activationSubtitle": "Hoe klanten deze actie activeren.",
       "autoApplyLabel": "Automatisch toepassen wanneer winkelwagen in aanmerking komt",
       "autoApplyOnSub": "De actie wordt automatisch geactiveerd zodra de winkelwagen aan de regels voldoet. De onderstaande couponcode (indien ingesteld) is een OPTIONELE alias voor gevorderde gebruikers.",
       "autoApplyOffSub": "Klanten MOETEN de onderstaande couponcode invoeren — de actie wordt NIET automatisch geactiveerd, ook niet wanneer de winkelwagen in aanmerking komt. Gebruik dit voor flyercodes, e-mailexclusieve deals of beloningen die u persoonlijk uitdeelt.",
@@ -2183,8 +2175,6 @@
       "couponCodeOptional": "(optioneel)",
       "couponCodePlaceholder": "bijv. LUNCH20",
       "couponCodeMissingError": "Een couponcode is verplicht wanneer automatisch toepassen uitstaat — anders hebben klanten geen manier om deze actie te activeren.",
-      "bannerTitle": "Banner",
-      "bannerSubtitle": "Actiekaart bovenaan de pagina op /order.",
       "showOnBannerLabel": "Tonen op klantbanner",
       "showOnBannerSub": "Deze actie vastzetten bovenaan de bestelpagina.",
       "bannerHeadlineLabel": "Bannerkop",
@@ -2196,7 +2186,8 @@
       "channelSubtitle": "Marketplace-klanten zijn een apart publiek — kies waar deze aanbieding geldt.",
       "channelWebsiteLabel": "Alleen uw website",
       "channelMarketplaceLabel": "Alleen Marketplace",
-      "channelBothLabel": "Beide"
+      "channelBothLabel": "Beide",
+      "hiddenCodeInfo": "Verborgen acties gelden alleen wanneer de klant deze code bij het afrekenen invoert."
     },
     "customersList": {
       "heading": "Klanten",
@@ -3216,7 +3207,9 @@
       "successMessage": "Coupon <couponCode>{code}</couponCode> ({discount}) toegewezen aan {customerName}.",
       "buttonCreate": "Coupon aanmaken en toewijzen",
       "emailSent": "De klant heeft de code en voorwaarden per e-mail ontvangen.",
-      "emailSkipped": "Geen e-mail verzonden (geen e-mailadres bekend of de klant heeft zich afgemeld voor marketing) — deel de code zelf met de klant."
+      "emailSkipped": "Geen e-mail verzonden (geen e-mailadres bekend of de klant heeft zich afgemeld voor marketing) — deel de code zelf met de klant.",
+      "labelOrderType": "Geldig voor",
+      "labelStacking": "Combineren met andere acties"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Keukenworkflow",
@@ -3503,8 +3496,8 @@
       "inheritingBody": "Deze locatie gebruikt het brandmenu. Om een ander menu te importeren, pas je eerst het menu voor deze locatie aan via de Menupagina."
     },
     "promotionsPage": {
-      "title": "Promoties & Coupons",
-      "description": "Automatische aanbiedingen, bundels en couponcodes voor je klanten",
+      "title": "Acties",
+      "description": "Automatische aanbiedingen, bundels en promocodes voor je klanten",
       "newPromo": "Nieuwe promotie"
     },
     "legacyWebsitePage": {
@@ -5108,7 +5101,8 @@
       "orderFallback": "Bestellen",
       "recentOrders": "Recente bestellingen ({count})",
       "noOrdersYet": "Je hebt hier nog geen bestellingen geplaatst.",
-      "orderNow": "Nu bestellen →"
+      "orderNow": "Nu bestellen →",
+      "useOffer": "Gebruik deze aanbieding"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Maaltijdbundel met specialiteit",
