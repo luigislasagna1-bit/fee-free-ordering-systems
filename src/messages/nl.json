@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Nog geen deals",
       "emptyStateBody": "Klik bovenaan op <newPromo>“+ Nieuwe actie”</newPromo> om een actie te maken.",
       "tabSelfMade": "Eigen",
-      "tabPreMade": "Vooraf gemaakt"
+      "tabPreMade": "Vooraf gemaakt",
+      "badgeHidden": "Verborgen",
+      "tabAssigned": "Toegewezen",
+      "labelAssigned": "Toegewezen"
     },
     "promoWizard": {
       "errorPickType": "Kies een promotietype om door te gaan.",

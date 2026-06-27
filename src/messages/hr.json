@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Još nema ponuda",
       "emptyStateBody": "Kliknite <newPromo>„+ Nova promocija“</newPromo> na vrhu za izradu promocije.",
       "tabSelfMade": "Vlastite",
-      "tabPreMade": "Unaprijed izrađene"
+      "tabPreMade": "Unaprijed izrađene",
+      "badgeHidden": "Skriveno",
+      "tabAssigned": "Dodijeljeno",
+      "labelAssigned": "Dodijeljeno"
     },
     "promoWizard": {
       "errorPickType": "Odaberite vrstu promocije za nastavak.",

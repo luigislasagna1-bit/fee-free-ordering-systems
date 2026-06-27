@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "아직 딜이 없습니다",
       "emptyStateBody": "프로모션을 만들려면 상단의 <newPromo>“+ 새 프로모션”</newPromo>을 클릭하세요.",
       "tabSelfMade": "직접 만든",
-      "tabPreMade": "기본 제공"
+      "tabPreMade": "기본 제공",
+      "badgeHidden": "숨김",
+      "tabAssigned": "할당됨",
+      "labelAssigned": "할당됨"
     },
     "promoWizard": {
       "errorPickType": "계속하려면 프로모션 유형을 선택하세요.",

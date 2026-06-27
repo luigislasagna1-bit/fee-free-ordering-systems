@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Ingen tilbud endnu",
       "emptyStateBody": "Klik på <newPromo>“+ Ny kampagne”</newPromo> øverst for at oprette en kampagne.",
       "tabSelfMade": "Egne",
-      "tabPreMade": "Forudlavede"
+      "tabPreMade": "Forudlavede",
+      "badgeHidden": "Skjult",
+      "tabAssigned": "Tildelt",
+      "labelAssigned": "Tildelt"
     },
     "promoWizard": {
       "errorPickType": "Vælg en kampagnetype for at fortsætte.",

@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Акций пока нет",
       "emptyStateBody": "Нажмите <newPromo>«+ Новая акция»</newPromo> вверху, чтобы создать акцию.",
       "tabSelfMade": "Свои",
-      "tabPreMade": "Готовые"
+      "tabPreMade": "Готовые",
+      "badgeHidden": "Скрыто",
+      "tabAssigned": "Назначено",
+      "labelAssigned": "Назначено"
     },
     "promoWizard": {
       "errorPickType": "Выберите тип акции для продолжения.",

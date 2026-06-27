@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Все още няма сделки",
       "emptyStateBody": "Кликнете върху <newPromo>„+ Нова промоция“</newPromo> горе, за да създадете промоция.",
       "tabSelfMade": "Собствени",
-      "tabPreMade": "Готови"
+      "tabPreMade": "Готови",
+      "badgeHidden": "Скрит",
+      "tabAssigned": "Назначен",
+      "labelAssigned": "Назначен"
     },
     "promoWizard": {
       "errorPickType": "Избери тип промоция, за да продължиш.",

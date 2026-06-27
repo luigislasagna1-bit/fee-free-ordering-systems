@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Акцій ще немає",
       "emptyStateBody": "Натисніть <newPromo>«+ Нова акція»</newPromo> вгорі, щоб створити акцію.",
       "tabSelfMade": "Власні",
-      "tabPreMade": "Готові"
+      "tabPreMade": "Готові",
+      "badgeHidden": "Приховано",
+      "tabAssigned": "Призначено",
+      "labelAssigned": "Призначено"
     },
     "promoWizard": {
       "errorPickType": "Виберіть тип акції, щоб продовжити.",

@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "暂无优惠",
       "emptyStateBody": "点击顶部的<newPromo>“+ 新建促销”</newPromo>来创建促销。",
       "tabSelfMade": "自建",
-      "tabPreMade": "预设"
+      "tabPreMade": "预设",
+      "badgeHidden": "隐藏",
+      "tabAssigned": "已分配",
+      "labelAssigned": "已分配"
     },
     "promoWizard": {
       "errorPickType": "请选择促销类型以继续。",

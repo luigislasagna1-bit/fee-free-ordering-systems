@@ -2369,7 +2369,10 @@
       "emptyStateTitle": "अभी तक कोई डील नहीं",
       "emptyStateBody": "प्रोमोशन बनाने के लिए ऊपर <newPromo>“+ नया प्रोमो”</newPromo> पर क्लिक करें।",
       "tabSelfMade": "स्वयं बनाई",
-      "tabPreMade": "पूर्व-निर्मित"
+      "tabPreMade": "पूर्व-निर्मित",
+      "badgeHidden": "छिपा हुआ",
+      "tabAssigned": "असाइन किया गया",
+      "labelAssigned": "असाइन किया गया"
     },
     "promoWizard": {
       "errorPickType": "जारी रखने के लिए एक प्रमोशन प्रकार चुनें।",

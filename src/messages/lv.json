@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Vēl nav darījumu",
       "emptyStateBody": "Noklikšķiniet uz <newPromo>„+ Jauna akcija“</newPromo> augšpusē, lai izveidotu akciju.",
       "tabSelfMade": "Pašu veidotās",
-      "tabPreMade": "Iepriekš sagatavotās"
+      "tabPreMade": "Iepriekš sagatavotās",
+      "badgeHidden": "Slēpts",
+      "tabAssigned": "Piešķirts",
+      "labelAssigned": "Piešķirts"
     },
     "promoWizard": {
       "errorPickType": "Izvēlieties akcijas veidu, lai turpinātu.",

@@ -2689,7 +2689,10 @@
       "emptyStateTitle": "Dar nėra pasiūlymų",
       "emptyStateBody": "Spustelėkite <newPromo>„+ Nauja akcija“</newPromo> viršuje, kad sukurtumėte akciją.",
       "tabSelfMade": "Savos",
-      "tabPreMade": "Iš anksto paruoštos"
+      "tabPreMade": "Iš anksto paruoštos",
+      "badgeHidden": "Paslėpta",
+      "tabAssigned": "Priskirta",
+      "labelAssigned": "Priskirta"
     },
     "promoWizard": {
       "errorPickType": "Pasirinkite akcijos tipą, kad tęstumėte.",

@@ -1955,7 +1955,10 @@
       "emptyStateTitle": "Brak ofert",
       "emptyStateBody": "Kliknij <newPromo>„+ Nowa promocja”</newPromo> u góry, aby utworzyć promocję.",
       "tabSelfMade": "Własne",
-      "tabPreMade": "Gotowe"
+      "tabPreMade": "Gotowe",
+      "badgeHidden": "Ukryta",
+      "tabAssigned": "Przypisane",
+      "labelAssigned": "Przypisane"
     },
     "promoWizard": {
       "errorPickType": "Wybierz typ promocji, aby kontynuować.",

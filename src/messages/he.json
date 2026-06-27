@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "אין עסקאות עדיין",
       "emptyStateBody": "לחץ על <newPromo>«+ מבצע חדש»</newPromo> למעלה כדי ליצור מבצע.",
       "tabSelfMade": "משלך",
-      "tabPreMade": "מוכנות מראש"
+      "tabPreMade": "מוכנות מראש",
+      "badgeHidden": "מוסתר",
+      "tabAssigned": "הוקצה",
+      "labelAssigned": "הוקצה"
     },
     "promoWizard": {
       "errorPickType": "בחר סוג מבצע להמשך.",

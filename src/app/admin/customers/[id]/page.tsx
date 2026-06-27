@@ -197,9 +197,15 @@ export default async function CustomerDetailPage({
             <ul className="space-y-2">
               {grants.map((g) => {
                 const rc = (g.promotion?.ruleConfig ?? {}) as { discountPercent?: number; discountAmount?: number };
-                const discount = g.promotion?.promotionType === "percentage_off"
+                const pt = g.promotion?.promotionType;
+                // Only %/fixed types have a meaningful $ figure here; every other
+                // type (free_delivery, bogo, free_item, bundles…) showed a bogus
+                // "$0.00 off" — fall back to the promo name instead (audit #20).
+                const discount = pt === "percentage_off"
                   ? t("discountPercent", { value: rc.discountPercent ?? 0 })
-                  : t("discountFixed", { value: formatCurrency(rc.discountAmount ?? 0) });
+                  : (pt === "fixed_cart" || pt === "fixed_combo")
+                    ? t("discountFixed", { value: formatCurrency(rc.discountAmount ?? 0) })
+                    : (g.promotion?.name ?? "");
                 const expired = g.promotion?.endsAt && new Date(g.promotion.endsAt) < now;
                 const status = g.status === "redeemed" ? t("statusUsedUp")
                   : g.promotion && !g.promotion.isActive ? t("statusDisabled")

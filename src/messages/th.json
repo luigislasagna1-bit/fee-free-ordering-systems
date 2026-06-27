@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "ยังไม่มีดีล",
       "emptyStateBody": "คลิก <newPromo>“+ โปรโมชันใหม่”</newPromo> ด้านบนเพื่อสร้างโปรโมชัน",
       "tabSelfMade": "สร้างเอง",
-      "tabPreMade": "สำเร็จรูป"
+      "tabPreMade": "สำเร็จรูป",
+      "badgeHidden": "ซ่อน",
+      "tabAssigned": "กำหนดแล้ว",
+      "labelAssigned": "กำหนดแล้ว"
     },
     "promoWizard": {
       "errorPickType": "เลือกประเภทโปรโมชั่นเพื่อดำเนินการต่อ",

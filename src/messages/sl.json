@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Še ni ponudb",
       "emptyStateBody": "Kliknite <newPromo>„+ Nova promocija“</newPromo> zgoraj za ustvarjanje promocije.",
       "tabSelfMade": "Lastne",
-      "tabPreMade": "Vnaprej pripravljene"
+      "tabPreMade": "Vnaprej pripravljene",
+      "badgeHidden": "Skrito",
+      "tabAssigned": "Dodeljeno",
+      "labelAssigned": "Dodeljeno"
     },
     "promoWizard": {
       "errorPickType": "Za nadaljevanje izberite vrsto promocije.",

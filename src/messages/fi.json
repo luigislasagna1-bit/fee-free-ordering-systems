@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Ei tarjouksia vielä",
       "emptyStateBody": "Napsauta ylhäältä <newPromo>”+ Uusi tarjous”</newPromo> luodaksesi tarjouksen.",
       "tabSelfMade": "Omat",
-      "tabPreMade": "Valmiit"
+      "tabPreMade": "Valmiit",
+      "badgeHidden": "Piilotettu",
+      "tabAssigned": "Määritetty",
+      "labelAssigned": "Määritetty"
     },
     "promoWizard": {
       "errorPickType": "Valitse tarjoustyyppi jatkaaksesi.",

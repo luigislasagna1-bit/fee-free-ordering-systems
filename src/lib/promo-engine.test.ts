@@ -279,3 +279,27 @@ describe("engine math — Batch A correctness fixes", () => {
     expect(results.map((r) => r.promoId)).not.toContain(small.id);
   });
 });
+
+// ─── Cross-TYPE stacking (audit M2) ─────────────────────────────────────────
+// The prior matrix only mixed fixed_cart promos. These lock the stacking rules
+// across DIFFERENT promo types, where the type-specific calcs are non-zero.
+describe("resolvePromotions — cross-type stacking", () => {
+  it("exclusive combo + standard % + master free_delivery: combo & free_delivery apply, % is blocked", () => {
+    const combo = mkPromo({ stackingRule: "exclusive", promotionType: "fixed_combo", ruleConfig: { discountAmount: 10, groups: [{ id: "g", categoryIds: ["cat1"], itemIds: [] }] } });
+    const pct = mkPromo({ stackingRule: "standard", promotionType: "percentage_off", ruleConfig: { discountPercent: 10 } });
+    const fd = mkPromo({ stackingRule: "master", promotionType: "free_delivery", ruleConfig: {} });
+    const ctx = mkCtx({ orderType: "delivery", deliveryFee: 5, subtotal: 30, items: [{ menuItemId: "i1", categoryId: "cat1", price: 30, quantity: 1, subtotal: 30 }] });
+    const { results, blockedPromos } = resolvePromotions([combo, pct, fd], ctx);
+    const types = results.map((r) => r.type);
+    expect(types).toContain("fixed_combo");
+    expect(types).toContain("free_delivery");
+    expect(blockedPromos.map((b) => b.promoId)).toContain(pct.id);
+  });
+
+  it("two exclusives of different types: the larger real discount wins", () => {
+    const big = mkPromo({ stackingRule: "exclusive", promotionType: "percentage_off", ruleConfig: { discountPercent: 50 } }); // 50% of 20 = 10
+    const small = mkPromo({ stackingRule: "exclusive", promotionType: "fixed_cart", ruleConfig: { discountAmount: 3 } });
+    const ctx = mkCtx({ subtotal: 20, items: [{ menuItemId: "i1", categoryId: "cat1", price: 20, quantity: 1, subtotal: 20 }] });
+    expect(resolvePromotions([big, small], ctx).results.map((r) => r.promoId)).toEqual([big.id]);
+  });
+});

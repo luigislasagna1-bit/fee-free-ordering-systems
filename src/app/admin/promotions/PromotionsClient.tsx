@@ -17,7 +17,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
-  Tag, Edit2, Trash2, Copy, Eye, EyeOff,
+  Tag, Edit2, Trash2, Copy, EyeOff, Power, PowerOff,
   Star, Crown, Shield, Percent, Gift, Package, Zap, Truck,
 } from "lucide-react";
 import toast from "react-hot-toast";
@@ -115,6 +115,14 @@ function PromoCard({
                 {t("badgeAuto")}
               </span>
             )}
+            {/* Visible/Hidden marker so a menu-visible code promo is
+                distinguishable from a hidden code-only one (audit #17). */}
+            {promo.displayMode === "hidden_coupon_only" && (
+              <span className="inline-flex items-center gap-1 text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">
+                <EyeOff className="w-3 h-3" />
+                {t("badgeHidden")}
+              </span>
+            )}
           </div>
           <div className="text-sm text-gray-500">{typeInfo.label}</div>
           {promo.description && (
@@ -127,7 +135,7 @@ function PromoCard({
                 promo has no usage limit. Luigi 2026-06-09. */}
             {promo.campaignRef && (
               <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 font-semibold">
-                {campaignLabel(promo.campaignRef)}
+                {isAssignedRef(promo.campaignRef) ? t("labelAssigned") : campaignLabel(promo.campaignRef)}
               </span>
             )}
             {promo.campaignRef && !promo.usageLimit && (
@@ -157,7 +165,9 @@ function PromoCard({
                 : "text-gray-400 hover:text-green-500"
             }`}
           >
-            {promo.isActive ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+            {/* Power (not Eye) for active/inactive — the eye metaphor now belongs
+                to the Visible/Hidden display model (audit #19). */}
+            {promo.isActive ? <Power className="w-4 h-4" /> : <PowerOff className="w-4 h-4" />}
           </button>
           <button
             onClick={onDuplicate}
@@ -187,13 +197,21 @@ function PromoCard({
 
 // ─── PromotionsClient ──────────────────────────────────────────────────────
 
-type TabFilter = "all" | "promotions" | "active" | "inactive" | "expired" | "selfmade" | "premade";
+type TabFilter = "all" | "promotions" | "active" | "inactive" | "expired" | "selfmade" | "premade" | "assigned";
 
 /** Friendly "created for" label for a pre-made (campaign-owned) promo. The
  *  campaign names are PRODUCT names (proper nouns), so they're the same in
  *  every language — no translation key needed. Luigi 2026-06-09. */
+/** A 1:1 promotion assigned to a specific customer (the assign-to-customer
+ *  flow stamps campaignRef "assigned_manual"). */
+function isAssignedRef(ref: string | null | undefined): boolean {
+  return !!ref && ref.startsWith("assigned_manual");
+}
+
 function campaignLabel(ref: string | null | undefined): string | null {
   if (!ref) return null;
+  // Kickstarter / Autopilot are product brand names — never translated.
+  // "Assigned" is handled at the call site with t() so it localizes.
   if (ref.startsWith("kickstarter")) return "Kickstarter";
   if (ref.startsWith("autopilot")) return "Autopilot";
   return "Campaign";
@@ -261,9 +279,12 @@ export function PromotionsClient({
     if (tab === "inactive") return !p.isActive;
     if (tab === "expired") return p.endsAt && new Date(p.endsAt) < now;
     // Self-made = owner-created (no campaignRef); Pre-made = auto-created by a
-    // Kickstarter/Autopilot campaign. Luigi 2026-06-09.
+    // Kickstarter/Autopilot campaign. Assigned = 1:1 gifts (campaignRef
+    // "assigned_manual") — kept out of Pre-made so per-customer gifts don't
+    // flood it (audit confusing#18). Luigi 2026-06-09 / 2026-06-26.
     if (tab === "selfmade") return !p.campaignRef;
-    if (tab === "premade") return !!p.campaignRef;
+    if (tab === "premade") return !!p.campaignRef && !isAssignedRef(p.campaignRef);
+    if (tab === "assigned") return isAssignedRef(p.campaignRef);
     return true;
   });
 
@@ -272,13 +293,16 @@ export function PromotionsClient({
   const totalInactive = promotions.filter((p) => !p.isActive).length;
   const totalExpired = promotions.filter((p) => p.endsAt && new Date(p.endsAt) < now).length;
 
-  const premadeCount = promotions.filter((p) => !!p.campaignRef).length;
+  const assignedCount = promotions.filter((p) => isAssignedRef(p.campaignRef)).length;
+  const premadeCount = promotions.filter((p) => !!p.campaignRef && !isAssignedRef(p.campaignRef)).length;
   const selfmadeCount = promotions.filter((p) => !p.campaignRef).length;
 
   const TABS: { id: TabFilter; label: string; count: number }[] = [
     { id: "all",        label: t("tabAll"),         count: totalAll },
     { id: "selfmade",   label: t("tabSelfMade"),    count: selfmadeCount },
     { id: "premade",    label: t("tabPreMade"),     count: premadeCount },
+    // Only surface the Assigned tab once at least one gift exists.
+    ...(assignedCount > 0 ? [{ id: "assigned" as TabFilter, label: t("tabAssigned"), count: assignedCount }] : []),
     { id: "active",     label: t("tabActive"),      count: totalActive },
     { id: "inactive",   label: t("tabInactive"),    count: totalInactive },
     { id: "expired",    label: t("tabExpired"),      count: totalExpired },

@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "まだキャンペーンがありません",
       "emptyStateBody": "プロモーションを作成するには、上部の<newPromo>「+ 新規プロモ」</newPromo>をクリックします。",
       "tabSelfMade": "自作",
-      "tabPreMade": "既製"
+      "tabPreMade": "既製",
+      "badgeHidden": "非表示",
+      "tabAssigned": "割り当て済み",
+      "labelAssigned": "割り当て済み"
     },
     "promoWizard": {
       "errorPickType": "続けるにはプロモーションタイプを選択してください。",

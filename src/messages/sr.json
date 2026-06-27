@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Još nema ponuda",
       "emptyStateBody": "Кликните на <newPromo>„+ Нова промоција“</newPromo> на врху да направите промоцију.",
       "tabSelfMade": "Сопствене",
-      "tabPreMade": "Унапред направљене"
+      "tabPreMade": "Унапред направљене",
+      "badgeHidden": "Сакривено",
+      "tabAssigned": "Додељено",
+      "labelAssigned": "Додељено"
     },
     "promoWizard": {
       "errorPickType": "Odaberite vrstu promocije za nastavak.",

@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Encara no hi ha ofertes",
       "emptyStateBody": "Fes clic a <newPromo>«+ Nova promoció»</newPromo> a dalt per crear una promoció.",
       "tabSelfMade": "Pròpies",
-      "tabPreMade": "Predefinides"
+      "tabPreMade": "Predefinides",
+      "badgeHidden": "Ocult",
+      "tabAssigned": "Assignat",
+      "labelAssigned": "Assignat"
     },
     "promoWizard": {
       "errorPickType": "Trieu un tipus de promoció per continuar.",

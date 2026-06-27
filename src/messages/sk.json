@@ -2689,7 +2689,10 @@
       "emptyStateTitle": "Zatiaľ žiadne ponuky",
       "emptyStateBody": "Kliknite na <newPromo>„+ Nová akcia“</newPromo> hore a vytvorte akciu.",
       "tabSelfMade": "Vlastné",
-      "tabPreMade": "Predpripravené"
+      "tabPreMade": "Predpripravené",
+      "badgeHidden": "Skryté",
+      "tabAssigned": "Priradené",
+      "labelAssigned": "Priradené"
     },
     "promoWizard": {
       "errorPickType": "Pre pokračovanie vyberte typ promo akcie.",

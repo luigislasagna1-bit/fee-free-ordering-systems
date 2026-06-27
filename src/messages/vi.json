@@ -1955,7 +1955,10 @@
       "emptyStateTitle": "Chưa có ưu đãi",
       "emptyStateBody": "Nhấp vào <newPromo>“+ Khuyến mãi mới”</newPromo> ở trên để tạo khuyến mãi.",
       "tabSelfMade": "Tự tạo",
-      "tabPreMade": "Có sẵn"
+      "tabPreMade": "Có sẵn",
+      "badgeHidden": "Đã ẩn",
+      "tabAssigned": "Đã gán",
+      "labelAssigned": "Đã gán"
     },
     "promoWizard": {
       "errorPickType": "Chọn loại khuyến mãi để tiếp tục.",

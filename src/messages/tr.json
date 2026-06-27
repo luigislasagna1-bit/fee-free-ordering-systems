@@ -1955,7 +1955,10 @@
       "emptyStateTitle": "Henüz teklif yok",
       "emptyStateBody": "Bir promosyon oluşturmak için üstteki <newPromo>“+ Yeni Promosyon”</newPromo> öğesine tıklayın.",
       "tabSelfMade": "Kendi",
-      "tabPreMade": "Hazır"
+      "tabPreMade": "Hazır",
+      "badgeHidden": "Gizli",
+      "tabAssigned": "Atandı",
+      "labelAssigned": "Atandı"
     },
     "promoWizard": {
       "errorPickType": "Devam etmek için bir promosyon türü seçin.",

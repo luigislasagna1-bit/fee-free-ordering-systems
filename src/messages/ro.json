@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Niciun deal încă",
       "emptyStateBody": "Apasă pe <newPromo>„+ Promoție nouă”</newPromo> sus pentru a crea o promoție.",
       "tabSelfMade": "Proprii",
-      "tabPreMade": "Predefinite"
+      "tabPreMade": "Predefinite",
+      "badgeHidden": "Ascuns",
+      "tabAssigned": "Atribuit",
+      "labelAssigned": "Atribuit"
     },
     "promoWizard": {
       "errorPickType": "Alege un tip de promoție pentru a continua.",

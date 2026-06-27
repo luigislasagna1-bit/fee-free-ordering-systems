@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Belum ada promo",
       "emptyStateBody": "Klik <newPromo>“+ Promo Baru”</newPromo> di atas untuk membuat promosi.",
       "tabSelfMade": "Buatan sendiri",
-      "tabPreMade": "Siap pakai"
+      "tabPreMade": "Siap pakai",
+      "badgeHidden": "Tersembunyi",
+      "tabAssigned": "Ditugaskan",
+      "labelAssigned": "Ditugaskan"
     },
     "promoWizard": {
       "errorPickType": "Pilih jenis promosi untuk melanjutkan.",

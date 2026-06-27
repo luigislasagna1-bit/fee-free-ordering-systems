@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Zatím žádné akce",
       "emptyStateBody": "Klikněte na <newPromo>„+ Nová akce“</newPromo> nahoře a vytvořte akci.",
       "tabSelfMade": "Vlastní",
-      "tabPreMade": "Předpřipravené"
+      "tabPreMade": "Předpřipravené",
+      "badgeHidden": "Skryté",
+      "tabAssigned": "Přiřazené",
+      "labelAssigned": "Přiřazené"
     },
     "promoWizard": {
       "errorPickType": "Pro pokračování vyberte typ akce.",

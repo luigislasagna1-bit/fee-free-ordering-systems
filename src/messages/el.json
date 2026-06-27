@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Δεν υπάρχουν προσφορές ακόμα",
       "emptyStateBody": "Κάντε κλικ στο <newPromo>«+ Νέα προσφορά»</newPromo> πάνω για να δημιουργήσετε μια προσφορά.",
       "tabSelfMade": "Δικά σας",
-      "tabPreMade": "Έτοιμα"
+      "tabPreMade": "Έτοιμα",
+      "badgeHidden": "Κρυφό",
+      "tabAssigned": "Αποδόθηκε",
+      "labelAssigned": "Αποδόθηκε"
     },
     "promoWizard": {
       "errorPickType": "Επιλέξτε τύπο προσφοράς για να συνεχίσετε.",

@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "لا توجد عروض بعد",
       "emptyStateBody": "انقر على <newPromo>«+ عرض جديد»</newPromo> في الأعلى لإنشاء عرض ترويجي.",
       "tabSelfMade": "خاصة بك",
-      "tabPreMade": "جاهزة"
+      "tabPreMade": "جاهزة",
+      "badgeHidden": "مخفي",
+      "tabAssigned": "مُخصّص",
+      "labelAssigned": "مُخصّص"
     },
     "promoWizard": {
       "errorPickType": "اختر نوع العرض للمتابعة.",

@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Pakkumisi pole veel",
       "emptyStateBody": "Klõpsake üleval <newPromo>„+ Uus pakkumine“</newPromo>, et luua pakkumine.",
       "tabSelfMade": "Omad",
-      "tabPreMade": "Valmis"
+      "tabPreMade": "Valmis",
+      "badgeHidden": "Peidetud",
+      "tabAssigned": "Määratud",
+      "labelAssigned": "Määratud"
     },
     "promoWizard": {
       "errorPickType": "Jätkamiseks vali kampaania tüüp.",

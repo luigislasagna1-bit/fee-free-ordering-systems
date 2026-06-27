@@ -2413,7 +2413,10 @@
       "emptyStateTitle": "No deals yet",
       "emptyStateBody": "Click <newPromo>“+ New Promo”</newPromo> at the top to create a promotion.",
       "tabSelfMade": "Self-made",
-      "tabPreMade": "Pre-made"
+      "tabPreMade": "Pre-made",
+      "badgeHidden": "Hidden",
+      "tabAssigned": "Assigned",
+      "labelAssigned": "Assigned"
     },
     "promoWizard": {
       "errorPickType": "Pick a promotion type to continue.",

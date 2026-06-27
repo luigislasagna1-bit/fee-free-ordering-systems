@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Noch keine Aktionen",
       "emptyStateBody": "Klicken Sie oben auf <newPromo>„+ Neue Aktion“</newPromo>, um eine Aktion zu erstellen.",
       "tabSelfMade": "Eigene",
-      "tabPreMade": "Vorgefertigt"
+      "tabPreMade": "Vorgefertigt",
+      "badgeHidden": "Versteckt",
+      "tabAssigned": "Zugewiesen",
+      "labelAssigned": "Zugewiesen"
     },
     "promoWizard": {
       "errorPickType": "Wählen Sie einen Aktionstyp, um fortzufahren.",

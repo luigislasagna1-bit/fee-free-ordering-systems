@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Aucune offre",
       "emptyStateBody": "Cliquez sur <newPromo>« + Nouvelle promo »</newPromo> en haut pour créer une promotion.",
       "tabSelfMade": "Personnalisées",
-      "tabPreMade": "Prédéfinies"
+      "tabPreMade": "Prédéfinies",
+      "badgeHidden": "Masqué",
+      "tabAssigned": "Attribué",
+      "labelAssigned": "Attribué"
     },
     "promoWizard": {
       "errorPickType": "Sélectionnez un type de promotion pour continuer.",

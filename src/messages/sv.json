@@ -2011,7 +2011,10 @@
       "emptyStateTitle": "Inga erbjudanden ännu",
       "emptyStateBody": "Klicka på <newPromo>”+ Ny kampanj”</newPromo> högst upp för att skapa en kampanj.",
       "tabSelfMade": "Egna",
-      "tabPreMade": "Färdiga"
+      "tabPreMade": "Färdiga",
+      "badgeHidden": "Dold",
+      "tabAssigned": "Tilldelad",
+      "labelAssigned": "Tilldelad"
     },
     "promoWizard": {
       "errorPickType": "Välj en kampanjtyp för att fortsätta.",
