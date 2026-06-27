@@ -21,8 +21,10 @@ export default async function NewPromotionPage() {
       }),
       prisma.menuCategory.findMany({
         where: { restaurantId },
-        orderBy: { sortOrder: "asc" },
-        select: { id: true, name: true },
+        // Group by menu (contiguous) so the picker can show menu sub-headers
+        // for multi-menu stores. Luigi 2026-06-26.
+        orderBy: [{ menuId: "asc" }, { sortOrder: "asc" }],
+        select: { id: true, name: true, menuId: true, menu: { select: { name: true } } },
       }),
       prisma.menuItem.findMany({
         where: { restaurantId },
@@ -58,7 +60,7 @@ export default async function NewPromotionPage() {
     <PromoWizard
       mode="new"
       hasAdvanced={hasAdvanced}
-      categories={categories}
+      categories={categories.map((c: any) => ({ id: c.id, name: c.name, menuId: c.menuId, menuName: c.menu?.name ?? null }))}
       menuItems={menuItems}
       paymentMethods={paymentMethods}
       deliveryZones={deliveryZones}

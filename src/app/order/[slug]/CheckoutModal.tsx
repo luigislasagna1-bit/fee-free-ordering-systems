@@ -604,10 +604,11 @@ export function CheckoutModal({
                   // savings amount is accurate (it's the delivery fee).
                   .filter((p) => p.type !== "free_delivery" && p.discount > 0)
                   .map((p) =>
-                    // Deal applied more than once → list each freed item with its
-                    // own discount, so the customer sees exactly what's free
-                    // instead of one mystery lump sum. Luigi 2026-06-07.
-                    p.breakdown && p.breakdown.length > 1 ? (
+                    // Itemised deal → list each discounted dish with its own
+                    // amount, so the customer sees exactly WHICH items were
+                    // discounted instead of one mystery lump sum (incl. a single
+                    // targeted dish, e.g. "10% off your pizza"). Luigi 2026-06-26.
+                    p.breakdown && p.breakdown.length >= 1 ? (
                       <div key={p.promoId} className="space-y-1">
                         <div className="flex items-center gap-1.5 text-emerald-700 font-semibold text-xs">
                           <span aria-hidden>✓</span>

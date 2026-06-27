@@ -5101,7 +5101,8 @@
       "orderFallback": "주문",
       "recentOrders": "최근 주문 ({count})",
       "noOrdersYet": "아직 주문 내역이 없습니다.",
-      "orderNow": "지금 주문하기 →"
+      "orderNow": "지금 주문하기 →",
+      "useOffer": "이 혜택 사용"
     },
     "bundle": {
       "mealBundleWithSpeciality": "스페셜 밀 번들",

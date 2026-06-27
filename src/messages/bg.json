@@ -5101,7 +5101,8 @@
       "orderFallback": "Поръчай",
       "recentOrders": "Скорошни поръчки ({count})",
       "noOrdersYet": "Все още нямаш поръчки тук.",
-      "orderNow": "Поръчай сега →"
+      "orderNow": "Поръчай сега →",
+      "useOffer": "Използвай тази оферта"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Пакетно меню със специалитет",

@@ -5101,7 +5101,8 @@
       "orderFallback": "Pesan",
       "recentOrders": "Pesanan terbaru ({count})",
       "noOrdersYet": "Anda belum melakukan pesanan di sini.",
-      "orderNow": "Pesan sekarang →"
+      "orderNow": "Pesan sekarang →",
+      "useOffer": "Gunakan penawaran ini"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Paket makan dengan menu spesial",

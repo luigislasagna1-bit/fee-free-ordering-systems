@@ -5101,7 +5101,8 @@
       "orderFallback": "הזמן",
       "recentOrders": "הזמנות אחרונות ({count})",
       "noOrdersYet": "עדיין לא ביצעת הזמנות כאן.",
-      "orderNow": "הזמן עכשיו →"
+      "orderNow": "הזמן עכשיו →",
+      "useOffer": "השתמש במבצע"
     },
     "bundle": {
       "mealBundleWithSpeciality": "חבילת ארוחה עם פריט מיוחד",

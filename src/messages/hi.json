@@ -5101,7 +5101,8 @@
       "orderFallback": "ऑर्डर करें",
       "recentOrders": "हाल के ऑर्डर ({count})",
       "noOrdersYet": "आपने यहाँ अभी तक कोई ऑर्डर नहीं दिया है।",
-      "orderNow": "अभी ऑर्डर करें →"
+      "orderNow": "अभी ऑर्डर करें →",
+      "useOffer": "यह ऑफ़र उपयोग करें"
     },
     "bundle": {
       "mealBundleWithSpeciality": "स्पेशलिटी के साथ मील बंडल",

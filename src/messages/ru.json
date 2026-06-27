@@ -5101,7 +5101,8 @@
       "orderFallback": "Заказать",
       "recentOrders": "Последние заказы ({count})",
       "noOrdersYet": "Вы ещё не делали заказов здесь.",
-      "orderNow": "Заказать сейчас →"
+      "orderNow": "Заказать сейчас →",
+      "useOffer": "Использовать предложение"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Комбо с фирменными блюдами",

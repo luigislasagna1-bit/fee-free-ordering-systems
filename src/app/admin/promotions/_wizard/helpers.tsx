@@ -57,6 +57,11 @@ export type PromoRules = {
 export type CatEntry = {
   id: string;
   name: string;
+  /** Which menu this category belongs to — drives the menu sub-headers in the
+   *  picker for multi-menu stores (Fabrizio: categories from all menus were
+   *  merged with no way to tell them apart). Luigi 2026-06-26. */
+  menuId?: string | null;
+  menuName?: string | null;
   items: {
     id: string;
     name: string;
@@ -189,6 +194,11 @@ export function ItemGroupPicker({
       return s;
     });
 
+  // Show a menu sub-header before each category when the store has MORE THAN
+  // ONE menu (otherwise the flat list is fine). `cats` is sorted by menu by the
+  // caller, so same-menu categories are contiguous. Luigi 2026-06-26.
+  const showMenuHeaders = new Set(cats.map((c) => c.menuName).filter(Boolean)).size > 1;
+
   return (
     // Centered modal overlay (Luigi 2026-06-01). The picker used to be
     // absolutely positioned below its trigger button — when the trigger
@@ -227,14 +237,23 @@ export function ItemGroupPicker({
         {cats.length === 0 ? (
           <div className="px-3 py-4 text-sm text-gray-400 text-center">No categories found</div>
         ) : (
-          cats.map((cat) => {
+          cats.map((cat, _i) => {
             const catChecked = draft.categoryIds.includes(cat.id);
             const isExpanded = expanded.has(cat.id);
             const catItemIds = cat.items.map((i) => i.id);
             const selectedInCat = catItemIds.filter((id) => draft.itemIds.includes(id)).length;
+            // Menu sub-header when this category starts a new menu group.
+            const menuHeader = showMenuHeaders && (_i === 0 || cats[_i - 1].menuName !== cat.menuName)
+              ? (cat.menuName || "—")
+              : null;
 
             return (
               <div key={cat.id}>
+                {menuHeader && (
+                  <div className="px-3 py-1.5 bg-gray-100 text-[11px] font-bold uppercase tracking-wide text-gray-500 sticky top-0 z-10">
+                    {menuHeader}
+                  </div>
+                )}
                 <div className="flex items-center gap-2 px-3 py-2 hover:bg-gray-50">
                   <input
                     type="checkbox"

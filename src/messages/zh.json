@@ -5101,7 +5101,8 @@
       "orderFallback": "下单",
       "recentOrders": "最近订单（{count}）",
       "noOrdersYet": "您在此处还没有下过任何订单。",
-      "orderNow": "立即下单 →"
+      "orderNow": "立即下单 →",
+      "useOffer": "使用此优惠"
     },
     "bundle": {
       "mealBundleWithSpeciality": "含特色菜的套餐",

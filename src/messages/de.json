@@ -5101,7 +5101,8 @@
       "orderFallback": "Bestellen",
       "recentOrders": "Letzte Bestellungen ({count})",
       "noOrdersYet": "Du hast hier noch keine Bestellung aufgegeben.",
-      "orderNow": "Jetzt bestellen →"
+      "orderNow": "Jetzt bestellen →",
+      "useOffer": "Dieses Angebot nutzen"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Menü-Bundle mit Spezialität",

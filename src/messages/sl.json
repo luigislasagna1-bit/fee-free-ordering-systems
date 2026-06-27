@@ -5101,7 +5101,8 @@
       "orderFallback": "Naroči",
       "recentOrders": "Nedavna naročila ({count})",
       "noOrdersYet": "Tukaj še niste oddali nobenega naročila.",
-      "orderNow": "Naroči zdaj →"
+      "orderNow": "Naroči zdaj →",
+      "useOffer": "Uporabi ponudbo"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Paket obroka s specialiteto",

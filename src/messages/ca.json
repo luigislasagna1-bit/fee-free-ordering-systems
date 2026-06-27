@@ -5101,7 +5101,8 @@
       "orderFallback": "Comanda",
       "recentOrders": "Comandes recents ({count})",
       "noOrdersYet": "Encara no has fet cap comanda aquí.",
-      "orderNow": "Comanda ara →"
+      "orderNow": "Comanda ara →",
+      "useOffer": "Fes servir aquesta oferta"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Menú combinat amb especialitat",

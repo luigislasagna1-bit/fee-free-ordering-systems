@@ -29,7 +29,7 @@ export type WizardMode = "new" | "edit";
 export type WizardProps = {
   mode: WizardMode;
   hasAdvanced: boolean;
-  categories: { id: string; name: string }[];
+  categories: { id: string; name: string; menuId?: string | null; menuName?: string | null }[];
   menuItems: { id: string; name: string; categoryId: string; price: number; variants?: { id: string; name: string; price: number }[] }[];
   paymentMethods: string[];
   deliveryZones: { id: string; name: string }[];
@@ -192,6 +192,8 @@ export function PromoWizard(props: WizardProps) {
       categories.map((cat) => ({
         id: cat.id,
         name: cat.name,
+        menuId: cat.menuId ?? null,
+        menuName: cat.menuName ?? null,
         items: menuItems
           .filter((i) => i.categoryId === cat.id)
           .map((i) => ({ id: i.id, name: i.name, price: i.price, variants: i.variants ?? [] })),

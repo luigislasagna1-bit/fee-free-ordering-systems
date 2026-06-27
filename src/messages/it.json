@@ -5101,7 +5101,8 @@
       "orderFallback": "Ordina",
       "recentOrders": "Ordini recenti ({count})",
       "noOrdersYet": "Non hai ancora effettuato ordini qui.",
-      "orderNow": "Ordina ora →"
+      "orderNow": "Ordina ora →",
+      "useOffer": "Usa questa offerta"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Bundle pasto con specialità",

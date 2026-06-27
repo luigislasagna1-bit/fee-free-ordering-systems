@@ -5101,7 +5101,8 @@
       "orderFallback": "สั่งอาหาร",
       "recentOrders": "คำสั่งซื้อล่าสุด ({count})",
       "noOrdersYet": "คุณยังไม่มีคำสั่งซื้อที่นี่",
-      "orderNow": "สั่งเลย →"
+      "orderNow": "สั่งเลย →",
+      "useOffer": "ใช้ข้อเสนอนี้"
     },
     "bundle": {
       "mealBundleWithSpeciality": "เซตอาหารพร้อมเมนูพิเศษ",

@@ -5101,7 +5101,8 @@
       "orderFallback": "Beställ",
       "recentOrders": "Senaste beställningar ({count})",
       "noOrdersYet": "Du har inte gjort några beställningar här ännu.",
-      "orderNow": "Beställ nu →"
+      "orderNow": "Beställ nu →",
+      "useOffer": "Använd erbjudandet"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Matkombination med specialitet",

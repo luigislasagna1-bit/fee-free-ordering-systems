@@ -5101,7 +5101,8 @@
       "orderFallback": "注文する",
       "recentOrders": "最近の注文（{count}件）",
       "noOrdersYet": "まだこちらでご注文はありません。",
-      "orderNow": "今すぐ注文する →"
+      "orderNow": "今すぐ注文する →",
+      "useOffer": "この特典を使う"
     },
     "bundle": {
       "mealBundleWithSpeciality": "スペシャルティ付きミールバンドル",

@@ -5101,7 +5101,8 @@
       "orderFallback": "Rendelés",
       "recentOrders": "Korábbi rendelések ({count})",
       "noOrdersYet": "Még nem adtál le rendelést itt.",
-      "orderNow": "Rendelés most →"
+      "orderNow": "Rendelés most →",
+      "useOffer": "Ajánlat felhasználása"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ételbundle különleges tétellel",

@@ -5101,7 +5101,8 @@
       "orderFallback": "Telli",
       "recentOrders": "Hiljutised tellimused ({count})",
       "noOrdersYet": "Sa pole siit veel ühtegi tellimust esitanud.",
-      "orderNow": "Telli kohe →"
+      "orderNow": "Telli kohe →",
+      "useOffer": "Kasuta pakkumist"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Einepakk erivalikuga",

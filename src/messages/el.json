@@ -5101,7 +5101,8 @@
       "orderFallback": "Παραγγελία",
       "recentOrders": "Πρόσφατες παραγγελίες ({count})",
       "noOrdersYet": "Δεν έχετε κάνει καμία παραγγελία εδώ ακόμα.",
-      "orderNow": "Παραγγείλτε τώρα →"
+      "orderNow": "Παραγγείλτε τώρα →",
+      "useOffer": "Χρήση προσφοράς"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Πακέτο γεύματος με specialty",

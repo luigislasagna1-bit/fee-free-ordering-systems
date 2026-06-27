@@ -610,12 +610,37 @@ function calcBuyNGetFree(promo: PromoInput, ctx: ApplyContext): number {
   return buyNGetFreeResult(promo, ctx).total;
 }
 
-/** Per-unit discount breakdown for deals that can apply more than once (so the
- *  cart can itemise each freed item). Empty for single-shot promo types. */
+/** DISPLAY-ONLY per-item discount breakdown so the cart can show WHICH dishes a
+ *  promo discounted (GloriaFood-style — Fabrizio). NEVER used for the charge
+ *  (calcDiscount is the source of truth); this only itemises for the UI, so
+ *  extending it can't change any total. Whole-cart promos (fixed_cart,
+ *  payment_reward, free_delivery, group-less percentage_off) return [] — there's
+ *  nothing dish-specific to show. Luigi 2026-06-26. */
 function promoBreakdown(promo: PromoInput, ctx: ApplyContext): DiscountLine[] {
   switch (promo.promotionType) {
     case "bogo":           return bogoResult(promo, ctx).lines;
     case "buy_n_get_free": return buyNGetFreeResult(promo, ctx).lines;
+    case "percentage_off":
+    case "percentage_combo": {
+      // Per-matched-item % discount, one line per qualifying dish. Skipped when
+      // "once per order" (the discount is a single lump on one combo, shown as a
+      // single line by the cart) or when there are no item groups (whole-cart %).
+      const rules = getRules(promo);
+      const groups = rules.groups ?? [];
+      if (!groups.length || rules.oncePerOrder) return [];
+      const pct = rules.discountPercent ?? 0;
+      if (pct <= 0) return [];
+      const lines: DiscountLine[] = [];
+      const seen = new Set<string>();
+      for (const g of groups) {
+        for (const it of itemsMatchingGroup(g, ctx.items)) {
+          if (seen.has(it.menuItemId)) continue;
+          seen.add(it.menuItemId);
+          lines.push({ menuItemId: it.menuItemId, amount: parseFloat(((pct / 100) * it.subtotal).toFixed(2)) });
+        }
+      }
+      return lines;
+    }
     default:               return [];
   }
 }
@@ -822,9 +847,10 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
         couponCode: p.couponCode ?? undefined,
         stackingRule: p.stackingRule,
         description: p.description ?? undefined,
-        // Only itemise when the deal applied more than once — single-shot
-        // promos render as one line as before.
-        breakdown: breakdown.length > 1 ? breakdown : undefined,
+        // Itemise whenever the engine produced per-dish lines (incl. a single
+        // discounted dish) so the cart can show WHICH items were discounted.
+        // Whole-cart promos return [] from promoBreakdown → no itemisation.
+        breakdown: breakdown.length >= 1 ? breakdown : undefined,
       });
     }
   }

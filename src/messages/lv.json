@@ -5101,7 +5101,8 @@
       "orderFallback": "Pasūtīt",
       "recentOrders": "Jaunākie pasūtījumi ({count})",
       "noOrdersYet": "Jūs vēl neesat veicis nevienu pasūtījumu šeit.",
-      "orderNow": "Pasūtīt tagad →"
+      "orderNow": "Pasūtīt tagad →",
+      "useOffer": "Izmantot piedāvājumu"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ēdienreizes komplekts ar īpašumu",

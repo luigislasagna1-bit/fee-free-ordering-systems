@@ -5101,7 +5101,8 @@
       "orderFallback": "Sipariş",
       "recentOrders": "Son siparişler ({count})",
       "noOrdersYet": "Henüz buraya sipariş vermediniz.",
-      "orderNow": "Şimdi sipariş ver →"
+      "orderNow": "Şimdi sipariş ver →",
+      "useOffer": "Bu teklifi kullan"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Özel ürünlü yemek paketi",

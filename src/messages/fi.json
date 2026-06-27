@@ -5101,7 +5101,8 @@
       "orderFallback": "Tilaa",
       "recentOrders": "Viimeisimmät tilaukset ({count})",
       "noOrdersYet": "Et ole vielä tehnyt tilauksia täällä.",
-      "orderNow": "Tilaa nyt →"
+      "orderNow": "Tilaa nyt →",
+      "useOffer": "Käytä tarjous"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ateriapaketti erikoisuudella",

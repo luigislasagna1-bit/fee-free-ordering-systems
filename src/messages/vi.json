@@ -5101,7 +5101,8 @@
       "orderFallback": "Đặt hàng",
       "recentOrders": "Đơn hàng gần đây ({count})",
       "noOrdersYet": "Bạn chưa đặt đơn hàng nào tại đây.",
-      "orderNow": "Đặt ngay →"
+      "orderNow": "Đặt ngay →",
+      "useOffer": "Dùng ưu đãi này"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Combo bữa ăn với món đặc biệt",

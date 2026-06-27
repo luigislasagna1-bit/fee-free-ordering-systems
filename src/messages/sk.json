@@ -5101,7 +5101,8 @@
       "orderFallback": "Objednať",
       "recentOrders": "Nedávne objednávky ({count})",
       "noOrdersYet": "Zatiaľ ste tu nevykonali žiadnu objednávku.",
-      "orderNow": "Objednať teraz →"
+      "orderNow": "Objednať teraz →",
+      "useOffer": "Použiť túto ponuku"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Jedlový balíček so špeciálnymi položkami",

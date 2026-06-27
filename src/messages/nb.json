@@ -5101,7 +5101,8 @@
       "orderFallback": "Bestill",
       "recentOrders": "Tidligere bestillinger ({count})",
       "noOrdersYet": "Du har ikke lagt inn noen bestillinger her ennå.",
-      "orderNow": "Bestill nå →"
+      "orderNow": "Bestill nå →",
+      "useOffer": "Bruk dette tilbudet"
     },
     "bundle": {
       "mealBundleWithSpeciality": "Måltidspakke med spesialitet",
