@@ -591,11 +591,26 @@ export function GroupsEditor({
 export function DiscountStrategySection({
   rules,
   onChange,
+  promotionType = "bogo",
 }: {
   rules: PromoRules;
   onChange: (r: Partial<PromoRules>) => void;
+  /** Drives the explanatory note (BOGO discounts by price; Buy-N-Get-Free
+   *  discounts the free-group item). Luigi 2026-06-26. */
+  promotionType?: string;
 }) {
   const strategy = rules.discountStrategy ?? "cheapest";
+  // Plain-language note so the owner knows WHICH item gets discounted — Luigi's
+  // ask after "buy pizza get pasta" surprised him by discounting the pizza.
+  // NOTE: this whole section is still English-only (pre-existing) — i18n TODO.
+  const note =
+    promotionType === "buy_n_get_free"
+      ? "The item from the “free” group is the one discounted — regardless of price. The % above is how much off it gets (100% = free)."
+      : strategy === "most_expensive"
+        ? "BOGO discounts the MORE EXPENSIVE of the two qualifying items. To always discount one specific item instead, use the “Buy N, Get Free” deal."
+        : strategy === "fixed_percent"
+          ? "Each discounted item gets this % off — the cheaper item when a pair qualifies. To always discount one specific item, use the “Buy N, Get Free” deal."
+          : "BOGO discounts the CHEAPER of the two qualifying items — so if the “free” item costs more, the cheaper one is discounted instead (a customer can’t get the pricier item cheap). To always discount one specific item (e.g. a pasta), use the “Buy N, Get Free” deal.";
   return (
     <div className="space-y-2">
       <label className="block text-sm font-medium text-gray-700">Discount Strategy</label>
@@ -663,6 +678,9 @@ export function DiscountStrategySection({
           <span className="text-xs text-gray-400">%</span>
         </div>
       )}
+      <p className="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2 leading-snug">
+        💡 {note}
+      </p>
     </div>
   );
 }

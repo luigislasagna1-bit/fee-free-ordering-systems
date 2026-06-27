@@ -259,7 +259,7 @@ function TypeSpecific({
             onRemove={() => {}}
             canRemove={false}
           />
-          <DiscountStrategySection rules={rules} onChange={onRules} />
+          <DiscountStrategySection rules={rules} onChange={onRules} promotionType="bogo" />
         </div>
       );
     }
@@ -322,7 +322,7 @@ function TypeSpecific({
             onRemove={() => {}}
             canRemove={false}
           />
-          <DiscountStrategySection rules={rules} onChange={onRules} />
+          <DiscountStrategySection rules={rules} onChange={onRules} promotionType="buy_n_get_free" />
         </div>
       );
     }
