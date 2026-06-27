@@ -4,6 +4,7 @@ import { resolvePromotions, totalPromoDiscount, type ApplyContext } from "@/lib/
 import { parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
 import { usedLifetimePromoIds, resolveAssignedPromoByCode, findActiveGrants } from "@/lib/coupon-ledger";
 import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
+import { partitionMemberOnly, qualifyingMemberOnlyPromos } from "@/lib/vip-membership";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -43,6 +44,7 @@ export async function POST(req: NextRequest) {
 
   const activePromosAll = await prisma.promotion.findMany({
     where: { restaurantId: restaurant.id, isActive: true },
+    include: { groupLinks: { select: { groupId: true } } },
   });
   // Drop promos the customer chose to remove from the cart, so a different
   // (otherwise-blocked) deal can take over.
@@ -50,9 +52,11 @@ export async function POST(req: NextRequest) {
     Array.isArray(suppressedPromoIds) ? suppressedPromoIds.map((x: unknown) => String(x)) : [],
   );
   const reqChannel = channel === "marketplace" ? "marketplace" : "website";
-  const activePromos = activePromosAll.filter(
-    (p) => !suppressed.has(p.id) && ((p as any).channel === "both" || (p as any).channel === reqChannel),
-  );
+  const channelOk = (p: any) => p.channel === "both" || p.channel === reqChannel;
+  // Member-only (VIP) promos are linked to ≥1 group — keep them OUT of the public
+  // pool; they're added back below only for identified members. Luigi 2026-06-27.
+  const { general: publicPromos, memberOnly: memberOnlyPromos } = partitionMemberOnly(activePromosAll as any[]);
+  const activePromos = publicPromos.filter((p: any) => !suppressed.has(p.id) && channelOk(p));
 
   // ── First-buy eligibility for the cart preview (Luigi 2026-06-09) ─────────
   // The cart shows the first-buy / new-customer discount OPTIMISTICALLY for a
@@ -136,12 +140,14 @@ export async function POST(req: NextRequest) {
   // inclusion and the lifetime check below. Luigi 2026-06-27.
   let idEmail = previewEmail;
   let idPhone = previewPhone;
-  if (!idEmail && !idPhone) {
-    try {
-      const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
-      if (me) { idEmail = me.email?.trim().toLowerCase() ?? null; idPhone = me.phone?.trim() ?? null; }
-    } catch { /* not logged in — stay optimistic */ }
-  }
+  let idCustomerId: string | null = null;
+  try {
+    const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
+    if (me) {
+      idCustomerId = me.id ?? null; // a signed-in member is a member regardless of typed email
+      if (!idEmail && !idPhone) { idEmail = me.email?.trim().toLowerCase() ?? null; idPhone = me.phone?.trim() ?? null; }
+    }
+  } catch { /* not logged in — stay optimistic */ }
 
   // ── Auto-apply VIP-group / assigned grants (Program 3) ───────────────────
   // A member who is signed in (or typed a matching email) gets their granted
@@ -169,6 +175,24 @@ export async function POST(req: NextRequest) {
         }
       }
     } catch (e) { console.error("[apply-promos findActiveGrants]", e); }
+  }
+
+  // ── Member-only VIP specials (Phase 1, 2026-06-27) ───────────────────────
+  // A promo attached to a VIP group is hidden from the public pool and applies
+  // ONLY for members — signed in (idCustomerId) OR typing a group email/phone at
+  // checkout. Force autoApply so it applies with no code; the engine still gates
+  // eligibility, and onceLifetimePerClient (checked below) limits repeat use.
+  if (memberOnlyPromos.length && (idCustomerId || idEmail || idPhone)) {
+    try {
+      const mine = await qualifyingMemberOnlyPromos(
+        restaurant.id,
+        { customerId: idCustomerId, email: idEmail, phone: idPhone },
+        memberOnlyPromos as any[],
+      );
+      for (const p of mine) {
+        if (!suppressed.has(p.id) && channelOk(p)) activePromos.push({ ...(p as any), autoApply: true });
+      }
+    } catch (e) { console.error("[apply-promos memberOnly]", e); }
   }
 
   const hasUsedLifetime: Record<string, boolean> = {};

@@ -131,6 +131,13 @@ function PromoCard({
             </div>
           )}
           <div className="flex flex-wrap gap-3 mt-1.5 text-xs text-gray-400">
+            {/* Member-only (VIP) badge — attached to ≥1 VIP group, so it applies
+                only to members, not the public menu. Luigi 2026-06-27. */}
+            {(((promo as any)._count?.groupLinks ?? 0) > 0) && (
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 font-semibold">
+                {t("labelVip")}
+              </span>
+            )}
             {/* CREATED-FOR badge (pre-made promos) + a USED count even when the
                 promo has no usage limit. Luigi 2026-06-09. */}
             {promo.campaignRef && (

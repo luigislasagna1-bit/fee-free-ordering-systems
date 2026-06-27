@@ -36,6 +36,9 @@ export default async function PromotionsPage() {
           { restaurantId: { in: ownerIds }, scope: "brand" },
         ],
       },
+      // groupLinks count → badge member-only (VIP) promos in the list so the owner
+      // knows they apply only to a group, not the public menu. Luigi 2026-06-27.
+      include: { _count: { select: { groupLinks: true } } },
       orderBy: { createdAt: "desc" },
     }),
     prisma.menuCategory.findMany({

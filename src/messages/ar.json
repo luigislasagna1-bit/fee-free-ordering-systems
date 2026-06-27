@@ -4170,7 +4170,22 @@
       "assignButton": "إرسال إلى {count, plural, =0 {0 عضو} zero {0 عضو} one {عضو واحد} two {عضوين} few {# أعضاء} many {# عضوًا} other {# عضو}}",
       "invalidDiscount": "أدخل خصمًا أكبر من 0.",
       "assignFailed": "تعذّر إرسال العرض.",
-      "assignSuccess": "تم منح العرض لـ {count, plural, =0 {0 عضو} zero {0 عضو} one {عضو واحد} two {عضوين} few {# أعضاء} many {# عضوًا} other {# عضو}}"
+      "assignSuccess": "تم منح العرض لـ {count, plural, =0 {0 عضو} zero {0 عضو} one {عضو واحد} two {عضوين} few {# أعضاء} many {# عضوًا} other {# عضو}}",
+      "specialsHeading": "Member specials",
+      "specialsSubtitle": "Pick a promotion you've already built — it's hidden from everyone else and auto-applies for members (signed in, or when they enter a group email at checkout).",
+      "noSpecials": "No specials attached yet — add one below.",
+      "attachLabel": "Attach a promotion",
+      "attachPlaceholder": "Choose a promotion…",
+      "attach": "Attach",
+      "attached": "Special attached.",
+      "attachFailed": "Couldn't attach the special.",
+      "detach": "Remove from group",
+      "detachFailed": "Couldn't remove the special.",
+      "detached": "Special removed.",
+      "createNewPromo": "Create a new promotion",
+      "memberOnlyNote": "Attaching makes a promotion member-only: it's removed from your public menu and applies only to this group's members.",
+      "noPickable": "You haven't created any promotions yet — create one first.",
+      "inactiveBadge": "Inactive"
     }
   },
   "impersonation": {

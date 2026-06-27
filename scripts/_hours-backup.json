@@ -1,0 +1,47 @@
+{
+  "rid": "cmp7xhd3900000al2jz0db5vi",
+  "dow": 4,
+  "savedAt": "2026-06-26T02:43:39.888Z",
+  "rows": [
+    {
+      "id": "cmp7xhd4c00050al2229pj2aq",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 4,
+      "isOpen": true,
+      "openTime": "10:00",
+      "closeTime": "03:00",
+      "closesNextDay": true,
+      "service": null,
+      "intervals": [
+        {
+          "open": "10:00",
+          "close": "03:00",
+          "closesNextDay": true
+        }
+      ]
+    },
+    {
+      "id": "cmqpekazt000404junq862ob0",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 4,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "pickup",
+      "intervals": null
+    },
+    {
+      "id": "cmqpekprg000b04juu1se88rs",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 4,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "delivery",
+      "intervals": null
+    }
+  ],
+  "allowScheduledOrders": true
+}

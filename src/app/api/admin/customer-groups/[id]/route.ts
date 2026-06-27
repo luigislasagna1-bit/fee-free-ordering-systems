@@ -43,7 +43,37 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     hasAccount: !!m.customer?.passwordHash,
     addedAt: m.addedAt,
   }));
-  return NextResponse.json({ group, members });
+
+  // Member specials = promotions attached to this group (Phase 1). Plus a list of
+  // the restaurant's other promotions the owner can attach (the picker).
+  const links = await prisma.customerGroupPromotion.findMany({
+    where: { groupId: id },
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      promotion: {
+        select: { id: true, name: true, promotionType: true, isActive: true, displayMode: true, couponCode: true, ruleConfig: true, stackingRule: true, orderType: true, minimumOrder: true },
+      },
+    },
+  });
+  const specials = links.map((l) => ({ linkId: l.id, ...l.promotion }));
+  const linkedIds = new Set(specials.map((s) => s.id));
+
+  const allPromos = await prisma.promotion.findMany({
+    where: { restaurantId },
+    orderBy: { createdAt: "desc" },
+    take: 200,
+    select: {
+      id: true, name: true, promotionType: true, isActive: true, displayMode: true,
+      couponCode: true, ruleConfig: true, minimumOrder: true,
+      _count: { select: { groupLinks: true } },
+    },
+  });
+  const pickable = allPromos
+    .filter((p) => !linkedIds.has(p.id))
+    .map(({ _count, ...p }) => ({ ...p, groupCount: _count.groupLinks }));
+
+  return NextResponse.json({ group, members, specials, pickable });
 }
 
 export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {

@@ -168,6 +168,9 @@ export default async function OrderingPage({
       // otherwise "Start nudging at" silently did nothing (audit B2/B8). HIDDEN
       // (code-only) promos stay excluded so they never surface. Luigi 2026-06-26.
       displayMode: { not: "hidden_coupon_only" },
+      // VIP member-only specials (linked to a group) never surface on the public
+      // menu/banner/nudge — they're auto-applied only for members at checkout.
+      groupLinks: { none: {} },
       channel: { in: channelFilter },
       OR: [
         { restaurantId: restaurantBase.id },

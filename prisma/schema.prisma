@@ -1679,6 +1679,7 @@ model Promotion {
   restaurant      Restaurant       @relation(fields: [restaurantId], references: [id])
   customerCoupons CustomerCoupon[]
   customerGroup   CustomerGroup?   @relation(fields: [customerGroupId], references: [id], onDelete: SetNull)
+  groupLinks      CustomerGroupPromotion[]
 
   @@index([restaurantId, isActive])
   @@index([campaignRef])
@@ -1775,8 +1776,33 @@ model CustomerGroup {
   restaurant Restaurant            @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   members    CustomerGroupMember[]
   promotions Promotion[]
+  // Member-only specials attached to this group (Phase 1 of the VIP expansion):
+  // a promotion linked here becomes member-only — hidden from the public menu and
+  // auto-applied only for this group's members. Replaces the old inline-create.
+  groupPromotions CustomerGroupPromotion[]
 
   @@unique([restaurantId, name])
+  @@index([restaurantId])
+}
+
+// Many-to-many link between a VIP group and a promotion. A promotion can be
+// shared across several groups; a group can hold several member specials. The
+// presence of ANY link makes a promotion "member-only" (excluded from the public
+// pool/banner, auto-applied only for members). Per-link scheduling fields (for
+// recurring auto-send) get added in a later phase.
+model CustomerGroupPromotion {
+  id           String   @id @default(cuid())
+  groupId      String
+  promotionId  String
+  restaurantId String // denormalised for scoping without a join
+  createdAt    DateTime @default(now())
+
+  group     CustomerGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  promotion Promotion     @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, promotionId])
+  @@index([groupId])
+  @@index([promotionId])
   @@index([restaurantId])
 }
 
@@ -1803,7 +1829,12 @@ model CustomerGroupMember {
   // A linked customer can only be in a group once.
   @@unique([groupId, customerId])
   @@index([groupId])
+  // Checkout resolves "which groups is this identity in?" by customerId/email/phone
+  // (restaurant-scoped). All three are indexed so Postgres can bitmap-OR them on
+  // the hot order path. Luigi 2026-06-27.
   @@index([restaurantId, email])
+  @@index([restaurantId, phone])
+  @@index([restaurantId, customerId])
 }
 
 // ─── Marketing Suite (GloriaFood parity, 2026-05-29) ───────────────────

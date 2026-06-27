@@ -4170,7 +4170,22 @@
       "assignButton": "发送给 {count, plural, other {# 名成员}}",
       "invalidDiscount": "请输入大于 0 的折扣。",
       "assignFailed": "无法发送优惠。",
-      "assignSuccess": "已向 {count, plural, other {# 名成员}} 授予优惠"
+      "assignSuccess": "已向 {count, plural, other {# 名成员}} 授予优惠",
+      "specialsHeading": "Member specials",
+      "specialsSubtitle": "Pick a promotion you've already built — it's hidden from everyone else and auto-applies for members (signed in, or when they enter a group email at checkout).",
+      "noSpecials": "No specials attached yet — add one below.",
+      "attachLabel": "Attach a promotion",
+      "attachPlaceholder": "Choose a promotion…",
+      "attach": "Attach",
+      "attached": "Special attached.",
+      "attachFailed": "Couldn't attach the special.",
+      "detach": "Remove from group",
+      "detachFailed": "Couldn't remove the special.",
+      "detached": "Special removed.",
+      "createNewPromo": "Create a new promotion",
+      "memberOnlyNote": "Attaching makes a promotion member-only: it's removed from your public menu and applies only to this group's members.",
+      "noPickable": "You haven't created any promotions yet — create one first.",
+      "inactiveBadge": "Inactive"
     }
   },
   "impersonation": {

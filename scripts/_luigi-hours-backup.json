@@ -1,0 +1,280 @@
+{
+  "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+  "slug": "luigis-lasagna-pizzeria",
+  "savedAtUtc": "2026-06-25T18:17:27.920Z",
+  "rows": [
+    {
+      "id": "cmqpekpqc000704juql8sok0b",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 0,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "delivery",
+      "intervals": null
+    },
+    {
+      "id": "cmqpekpqm000804jucv8dz3h9",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 1,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "delivery",
+      "intervals": null
+    },
+    {
+      "id": "cmqpekpqw000904juwk5tnbbx",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 2,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "delivery",
+      "intervals": null
+    },
+    {
+      "id": "cmqpekpr7000a04juoc589zua",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 3,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "delivery",
+      "intervals": null
+    },
+    {
+      "id": "cmqpekprg000b04juu1se88rs",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 4,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "delivery",
+      "intervals": null
+    },
+    {
+      "id": "cmqpekprq000c04ju0nbnhdn1",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 5,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "delivery",
+      "intervals": null
+    },
+    {
+      "id": "cmqpekps1000d04juq0kx7gon",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 6,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "delivery",
+      "intervals": null
+    },
+    {
+      "id": "cmqpekaym000004ju7sugx2si",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 0,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "pickup",
+      "intervals": null
+    },
+    {
+      "id": "cmqpekayy000104juhg4uhtz5",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 1,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "pickup",
+      "intervals": null
+    },
+    {
+      "id": "cmqpekaz8000204julppsghxs",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 2,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "pickup",
+      "intervals": null
+    },
+    {
+      "id": "cmqpekazi000304jub27xdsgz",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 3,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "pickup",
+      "intervals": null
+    },
+    {
+      "id": "cmqpekazt000404junq862ob0",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 4,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "pickup",
+      "intervals": null
+    },
+    {
+      "id": "cmqpekb04000504ju7n1nn6az",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 5,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "pickup",
+      "intervals": null
+    },
+    {
+      "id": "cmqpekb0e000604jusl1idsk4",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 6,
+      "isOpen": true,
+      "openTime": "09:00",
+      "closeTime": "23:00",
+      "closesNextDay": false,
+      "service": "pickup",
+      "intervals": null
+    },
+    {
+      "id": "cmp7xhd3q00010al2et0kztxe",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 0,
+      "isOpen": true,
+      "openTime": "10:00",
+      "closeTime": "03:00",
+      "closesNextDay": true,
+      "service": null,
+      "intervals": [
+        {
+          "open": "10:00",
+          "close": "03:00",
+          "closesNextDay": true
+        }
+      ]
+    },
+    {
+      "id": "cmp7xhd3w00020al2pjh4umsa",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 1,
+      "isOpen": true,
+      "openTime": "10:00",
+      "closeTime": "03:00",
+      "closesNextDay": true,
+      "service": null,
+      "intervals": [
+        {
+          "open": "10:00",
+          "close": "03:00",
+          "closesNextDay": true
+        }
+      ]
+    },
+    {
+      "id": "cmp7xhd3z00030al2jxrtop0q",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 2,
+      "isOpen": true,
+      "openTime": "10:00",
+      "closeTime": "03:00",
+      "closesNextDay": true,
+      "service": null,
+      "intervals": [
+        {
+          "open": "10:00",
+          "close": "03:00",
+          "closesNextDay": true
+        }
+      ]
+    },
+    {
+      "id": "cmp7xhd4800040al2iv2mcpl9",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 3,
+      "isOpen": true,
+      "openTime": "10:00",
+      "closeTime": "03:00",
+      "closesNextDay": true,
+      "service": null,
+      "intervals": [
+        {
+          "open": "10:00",
+          "close": "03:00",
+          "closesNextDay": true
+        }
+      ]
+    },
+    {
+      "id": "cmp7xhd4c00050al2229pj2aq",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 4,
+      "isOpen": true,
+      "openTime": "10:00",
+      "closeTime": "03:00",
+      "closesNextDay": true,
+      "service": null,
+      "intervals": [
+        {
+          "open": "10:00",
+          "close": "03:00",
+          "closesNextDay": true
+        }
+      ]
+    },
+    {
+      "id": "cmp7xhd4g00060al2uayr4857",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 5,
+      "isOpen": true,
+      "openTime": "10:00",
+      "closeTime": "03:00",
+      "closesNextDay": true,
+      "service": null,
+      "intervals": [
+        {
+          "open": "10:00",
+          "close": "03:00",
+          "closesNextDay": true
+        }
+      ]
+    },
+    {
+      "id": "cmp7xhd4j00070al2tt9hi5fh",
+      "restaurantId": "cmp7xhd3900000al2jz0db5vi",
+      "dayOfWeek": 6,
+      "isOpen": true,
+      "openTime": "10:00",
+      "closeTime": "03:00",
+      "closesNextDay": true,
+      "service": null,
+      "intervals": [
+        {
+          "open": "10:00",
+          "close": "03:00",
+          "closesNextDay": true
+        }
+      ]
+    }
+  ]
+}

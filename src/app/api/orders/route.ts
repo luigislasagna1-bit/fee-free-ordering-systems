@@ -20,6 +20,7 @@ import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 import { resolveInheritedHours } from "@/lib/inherited-data";
 import { usedLifetimePromoIds, resolveAssignedPromoByCode, findActiveGrants } from "@/lib/coupon-ledger";
+import { partitionMemberOnly, qualifyingMemberOnlyPromos } from "@/lib/vip-membership";
 import { hasFeature } from "@/lib/entitlements";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
@@ -1150,6 +1151,7 @@ export async function POST(req: NextRequest) {
           { restaurantId: { in: promoOwnerIds }, scope: "brand" },
         ],
       },
+      include: { groupLinks: { select: { groupId: true } } },
       // Cap per the standing scaling rule (no unbounded findMany on a hot path).
       // No real restaurant has anywhere near this many ACTIVE promos, so this
       // never truncates a real result; it only bounds worst-case memory. No
@@ -1168,11 +1170,11 @@ export async function POST(req: NextRequest) {
     // billing below, so isOnMarketplace runs exactly once.
     const orderViaMarketplace = from === "marketplace" ? await isOnMarketplace(restaurant.id) : false;
     const orderChannel = orderViaMarketplace ? "marketplace" : "website";
-    const activePromos = activePromosAll.filter(
-      (p) =>
-        !suppressedSet.has(p.id) &&
-        ((p as any).channel === "both" || (p as any).channel === orderChannel),
-    );
+    const channelOk = (p: any) => p.channel === "both" || p.channel === orderChannel;
+    // Member-only (VIP) promos are linked to ≥1 group — keep them OUT of the
+    // public pool; added back below only for identified members. Luigi 2026-06-27.
+    const { general: publicPromos, memberOnly: memberOnlyPromos } = partitionMemberOnly(activePromosAll as any[]);
+    const activePromos = publicPromos.filter((p: any) => !suppressedSet.has(p.id) && channelOk(p));
     // ── Delivery fee + zone resolution ──────────────────────────────────────
     // Resolved BEFORE applyPromotions() so the engine can evaluate the
     // Delivery Area restriction (Phase 2a) — free-delivery promos with
@@ -1361,6 +1363,25 @@ export async function POST(req: NextRequest) {
           }
         }
       } catch (e) { console.error("[orders findActiveGrants]", e); }
+    }
+
+    // ── Member-only VIP specials (Phase 1, 2026-06-27) ──────────────────────
+    // Server-authoritative twin of the apply-promos preview: a promo attached to
+    // a VIP group is hidden from the public pool and applied ONLY for members —
+    // identified by the signed-in/ resolved customerId OR the order's email/phone
+    // (which also maps account members back to their group). Force autoApply; the
+    // engine still gates eligibility and onceLifetimePerClient (checked below).
+    if (memberOnlyPromos.length && (lifetimeCustomerId || promoCustomerEmail || customerPhone)) {
+      try {
+        const mine = await qualifyingMemberOnlyPromos(
+          restaurant.id,
+          { customerId: lifetimeCustomerId, email: promoCustomerEmail, phone: typeof customerPhone === "string" ? customerPhone : null },
+          memberOnlyPromos as any[],
+        );
+        for (const p of mine) {
+          if (!suppressedSet.has(p.id) && channelOk(p)) activePromos.push({ ...(p as any), autoApply: true });
+        }
+      } catch (e) { console.error("[orders memberOnly]", e); }
     }
 
     // ── Coupon ledger (precise, phone-aware) ────────────────────────────────

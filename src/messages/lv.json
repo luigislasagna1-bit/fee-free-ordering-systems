@@ -4170,7 +4170,22 @@
       "assignButton": "Sūtīt {count, plural, zero {# dalībniekiem} one {# dalībniekam} other {# dalībniekiem}}",
       "invalidDiscount": "Ievadiet atlaidi, kas lielāka par 0.",
       "assignFailed": "Neizdevās nosūtīt piedāvājumu.",
-      "assignSuccess": "Piedāvājums piešķirts {count, plural, zero {# dalībniekiem} one {# dalībniekam} other {# dalībniekiem}}"
+      "assignSuccess": "Piedāvājums piešķirts {count, plural, zero {# dalībniekiem} one {# dalībniekam} other {# dalībniekiem}}",
+      "specialsHeading": "Member specials",
+      "specialsSubtitle": "Pick a promotion you've already built — it's hidden from everyone else and auto-applies for members (signed in, or when they enter a group email at checkout).",
+      "noSpecials": "No specials attached yet — add one below.",
+      "attachLabel": "Attach a promotion",
+      "attachPlaceholder": "Choose a promotion…",
+      "attach": "Attach",
+      "attached": "Special attached.",
+      "attachFailed": "Couldn't attach the special.",
+      "detach": "Remove from group",
+      "detachFailed": "Couldn't remove the special.",
+      "detached": "Special removed.",
+      "createNewPromo": "Create a new promotion",
+      "memberOnlyNote": "Attaching makes a promotion member-only: it's removed from your public menu and applies only to this group's members.",
+      "noPickable": "You haven't created any promotions yet — create one first.",
+      "inactiveBadge": "Inactive"
     }
   },
   "impersonation": {
