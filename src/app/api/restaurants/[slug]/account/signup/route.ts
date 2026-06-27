@@ -95,6 +95,25 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
     );
   }
 
+  // Phone uniqueness (Luigi 2026-06-27): a phone number may belong to only ONE
+  // account, so it can't be reused to spin up duplicate accounts (and so VIP
+  // specials stay tied to a single person). Guests (no passwordHash) may still
+  // share a phone. Matched on the exact entered number; (restaurantId, phone) is
+  // indexed. NOTE: doesn't catch format variants ("(905) 385-4444" vs digits) —
+  // a normalized phone column would; tracked in TODO.
+  if (phone) {
+    const phoneTaken = await prisma.customer.findFirst({
+      where: { restaurantId: { in: chainIds }, phone, passwordHash: { not: null } },
+      select: { id: true },
+    });
+    if (phoneTaken) {
+      return NextResponse.json(
+        { error: "An account with that phone number already exists for this restaurant. Try signing in." },
+        { status: 409 },
+      );
+    }
+  }
+
   const passwordHash = await bcrypt.hash(password, 10);
   const emailVerifyToken = crypto.randomBytes(32).toString("base64url");
   const chainCustomerId = crypto.randomBytes(16).toString("base64url");

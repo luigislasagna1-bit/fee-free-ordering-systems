@@ -48,16 +48,17 @@ export function partitionMemberOnly<T extends LinkedPromo>(promos: T[]): { gener
   return { general, memberOnly };
 }
 
-/** Pure: which member-only promos apply to a resolved identity — matching ANY of
- *  a promo's targets by group membership, account id, email, or phone. */
+/** Pure: which member-only promos apply to a resolved identity. STRICT matching
+ *  (Luigi 2026-06-27): only by group membership, signed-in account id, or the
+ *  EXACT email — a phone number is deliberately NOT a match key, so nobody who
+ *  knows a member's phone can grab their deal. */
 export function promosForIdentity<T extends LinkedPromo>(memberOnly: T[], resolved: ResolvedIdentity): T[] {
-  const { groupIds, customerIds, email, phone } = resolved;
+  const { groupIds, customerIds, email } = resolved;
   return memberOnly.filter((p) =>
     (p.groupLinks ?? []).some((tgt) =>
       (!!tgt.groupId && groupIds.has(tgt.groupId)) ||
       (!!tgt.customerId && customerIds.has(tgt.customerId)) ||
-      (!!tgt.email && !!email && tgt.email.toLowerCase() === email) ||
-      (!!tgt.phone && !!phone && tgt.phone === phone),
+      (!!tgt.email && !!email && tgt.email.toLowerCase() === email),
     ),
   );
 }
@@ -69,19 +70,17 @@ export function promosForIdentity<T extends LinkedPromo>(memberOnly: T[], resolv
 export async function resolveIdentityTargets(restaurantId: string, identity: VipIdentity): Promise<ResolvedIdentity> {
   const prisma = (await import("@/lib/db")).default;
   const email = identity.email?.trim().toLowerCase() || null;
-  const phone = identity.phone?.trim() || null;
+  // STRICT (Luigi 2026-06-27): phone is intentionally NOT used to resolve a member
+  // — only the signed-in account and the EXACT email. So entering someone's phone
+  // can never auto-apply their special.
   const customerIds = new Set<string>();
   if (identity.customerId) customerIds.add(identity.customerId);
 
-  if (email || phone) {
+  // Map the entered EMAIL to an account (so an account-member who types their
+  // email matches), but never via phone.
+  if (email) {
     const custs = await prisma.customer.findMany({
-      where: {
-        restaurantId,
-        OR: [
-          ...(email ? [{ email: { equals: email, mode: "insensitive" as const } }] : []),
-          ...(phone ? [{ phone }] : []),
-        ],
-      },
+      where: { restaurantId, email: { equals: email, mode: "insensitive" as const } },
       select: { id: true },
       take: 5,
     });
@@ -89,14 +88,13 @@ export async function resolveIdentityTargets(restaurantId: string, identity: Vip
   }
 
   let groupIds = new Set<string>();
-  if (customerIds.size || email || phone) {
+  if (customerIds.size || email) {
     const members = await prisma.customerGroupMember.findMany({
       where: {
         restaurantId,
         OR: [
           ...(customerIds.size ? [{ customerId: { in: [...customerIds] } }] : []),
           ...(email ? [{ email }] : []), // guest member emails are stored lowercased
-          ...(phone ? [{ phone }] : []),
         ],
       },
       select: { groupId: true },
@@ -104,7 +102,7 @@ export async function resolveIdentityTargets(restaurantId: string, identity: Vip
     groupIds = new Set(members.map((m) => m.groupId));
   }
 
-  return { groupIds, customerIds, email, phone };
+  return { groupIds, customerIds, email, phone: null };
 }
 
 /** Full resolution for a checkout route: the member-only promos this identity is

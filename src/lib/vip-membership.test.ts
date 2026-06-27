@@ -40,9 +40,9 @@ describe("vip-membership — promosForIdentity (group + individual targets)", ()
     expect(promosForIdentity(memberOnly, r).map((p) => p.id)).toEqual(["mail"]);
   });
 
-  it("matches an individual by phone", () => {
+  it("does NOT match by phone alone (strict — email/sign-in only)", () => {
     const r = { ...empty, phone: "+15551234" };
-    expect(promosForIdentity(memberOnly, r).map((p) => p.id)).toEqual(["phone"]);
+    expect(promosForIdentity(memberOnly, r)).toEqual([]);
   });
 
   it("returns nothing for an unrelated identity", () => {

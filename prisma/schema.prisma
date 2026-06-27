@@ -1401,6 +1401,8 @@ model Customer {
 
   @@index([restaurantId])
   @@index([restaurantId, email])
+  // Account-phone uniqueness check at signup filters on (restaurantId, phone).
+  @@index([restaurantId, phone])
   @@index([customerAccountId])
   @@index([chainCustomerId])
   @@index([emailVerifyToken])
