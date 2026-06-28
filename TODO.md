@@ -194,3 +194,10 @@ Programs 2+3 BUILT this session (see memory project_reward_dollars_and_scheduler
   page + customer profile only.
 - Reward expiry enforcement: rewardExpiryDays is STORED but not enforced (needs an expiry cron).
 - Customer top-up / buy credit (Stripe charge → credit); chain-shared wallets — both deferred.
+
+## Reward Dollars earning + dedup (captured 2026-06-27, session 2)
+SHIPPED this session: configurable earn rules (signup-window / first-order / order-over / nth-order) on /admin/rewards, "Grant Reward Dollars" promo type, pay-with-credit auto-on when the program is enabled (shown on Accepted Methods page), and the "Fix duplicates" button now MERGES duplicate categories. Deferred follow-ups:
+- Item-level dedup WITHIN a merged category currently deletes only exact-duplicate items during a category merge; a standalone "merge duplicate items in this category" pass could be added (the live FK is SetNull, verified — item deletion is safe).
+- Birthday + referral earn triggers (need a Customer.birthday column + a referral link/flow).
+- Optional "earn-only mode" (let a store earn but NOT allow spending). Current design = opt-in means customers CAN pay with credit (per Luigi). Add a toggle only if Luigi wants earn-only.
+- Show the earned-credit amount on the order confirmation/receipt + a reward_credit promo's amount in the customer's "My offers".
