@@ -206,6 +206,14 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
       });
     } catch (e) { console.error("[signup reward bonus]", e); }
   }
+  // Time-bounded signup CAMPAIGNS (configurable earn rules) — additive to the
+  // flat bonus above; idempotent per customer. Luigi 2026-06-27.
+  if (restaurant.rewardsEnabled) {
+    try {
+      const { grantSignupRules } = await import("@/lib/reward-earn");
+      await grantSignupRules({ restaurantId: restaurant.id, customerId: here.id, rewardsEnabled: true });
+    } catch (e) { console.error("[signup reward rules]", e); }
+  }
 
   // Fire-and-forget verification email. Signup completes regardless of
   // mail-delivery success — customers can request a resend later.

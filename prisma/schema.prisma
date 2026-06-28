@@ -407,6 +407,7 @@ model Restaurant {
   customerGroups         CustomerGroup[]
   rewardAccounts         RewardAccount[]
   vipSchedules           VipSchedule[]
+  rewardEarnRules        RewardEarnRule[]
 
   // Reseller Partner Program — set at restaurant creation when the signup
   // carried a ?ref=<referralCode> from an approved reseller. Nullable: most
@@ -2000,6 +2001,35 @@ model RewardLedger {
   @@unique([accountId, orderId, reason])
   @@index([accountId, createdAt])
   @@index([orderId])
+}
+
+// ─── Configurable earning rules / campaigns (Reward Dollars, 2026-06-27) ──
+// Each restaurant defines MANY ways customers earn credit, on top of the base
+// %-back set on Restaurant.rewardEarn*. Side table (sparse, off the hot tables).
+// Triggers: signup (optionally date-windowed campaign), first_order, order_over
+// (subtotal ≥ threshold), nth_order (every Nth completed order). Amount is a flat
+// earnAmount OR earnPercent of the order basis. startsAt/endsAt are absolute
+// instants (the admin API converts picked dates to the restaurant's tz day
+// bounds), so rule evaluation stays pure/timezone-free. Each fired grant is
+// idempotent via the ledger reason `earn:<trigger>:<ruleId>`.
+model RewardEarnRule {
+  id             String    @id @default(cuid())
+  restaurantId   String
+  active         Boolean   @default(true)
+  triggerType    String // "signup" | "first_order" | "order_over" | "nth_order"
+  earnAmount     Float? // flat credit granted
+  earnPercent    Float? // OR % of the order basis (order triggers)
+  orderThreshold Float? // order_over: minimum order subtotal to qualify
+  nthInterval    Int? // nth_order: every Nth completed order (e.g. 5)
+  startsAt       DateTime? // campaign window (absolute instants); null = always
+  endsAt         DateTime?
+  label          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId, active])
 }
 
 // ─── Marketing Suite (GloriaFood parity, 2026-05-29) ───────────────────

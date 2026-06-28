@@ -20,6 +20,7 @@ import { dispatchOrderToShipday, cancelShipdayOrder, shouldDispatchToShipday } f
 import { verifyOrderToken } from "@/lib/order-status-token";
 import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { redeemForOrder as redeemRewardForOrder, releaseForOrder as releaseRewardForOrder, awardForOrder as awardRewardForOrder } from "@/lib/reward-ledger";
+import { awardEarnRulesForOrder } from "@/lib/reward-earn";
 import { releasePromotionUsage } from "@/lib/order-notifications";
 import { RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 
@@ -394,6 +395,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     // (both idempotent per order). Mirrors the coupon lifecycle. Luigi 2026-06-27.
     await redeemRewardForOrder(id);
     await awardRewardForOrder({ orderId: id });
+    // Configurable earn rules (first-order / order-over / nth-order bonuses).
+    await awardEarnRulesForOrder({ orderId: id });
   } else if (newStatus === "rejected" || newStatus === "cancelled") {
     await releaseCouponsForOrder(id);
     // Reward Dollars: return any spent credit to the customer's wallet.
