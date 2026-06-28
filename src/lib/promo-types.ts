@@ -187,6 +187,21 @@ export const PROMO_TYPES: ReadonlyArray<PromoTypeMeta> = [
     isBundle: true,
     isCombo: false,
   },
+  {
+    // Earn-not-discount: grants Reward Dollars on order completion instead of a
+    // cart discount. Engine-inert (calcDiscount=0) + always-stacks (forced master
+    // in resolvePromotions). Only meaningful when Reward Dollars is enabled.
+    // Luigi 2026-06-27.
+    slug: "reward_credit",
+    catalogNumber: 14,
+    name: "Grant Reward Dollars",
+    description: "Reward the customer with store credit on this order instead of a discount.",
+    tier: "free",
+    icon: "Gift",
+    needsItemGroups: false,
+    isBundle: false,
+    isCombo: false,
+  },
 ] as const;
 
 /** Set of slugs that are gated behind the Advanced Promo Marketing add-on.

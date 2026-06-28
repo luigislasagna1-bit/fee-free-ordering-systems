@@ -166,7 +166,7 @@ export function normalizeRuleConfig(v: unknown): unknown {
   for (const k of ["discountPercent", "cheapestDiscount", "mostExpensiveDiscount"]) {
     if (obj[k] != null) obj[k] = clamp01(obj[k]);
   }
-  for (const k of ["discountAmount", "bundlePrice", "triggerAmount"]) {
+  for (const k of ["discountAmount", "bundlePrice", "triggerAmount", "creditAmount"]) {
     if (obj[k] != null) obj[k] = clampPos(obj[k]);
   }
   if (Array.isArray(obj.groups)) {

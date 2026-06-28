@@ -92,3 +92,42 @@ export async function awardEarnRulesForOrder(opts: { orderId: string }): Promise
     console.error("[reward awardEarnRulesForOrder]", e);
   }
 }
+
+/** Grants from "reward_credit" PROMOTIONS that fired on this order (earn via a
+ *  special). Reads the order's appliedPromos snapshot — the promo's presence
+ *  there proves it qualified at order time — and grants ruleConfig.creditAmount.
+ *  Idempotent per (order, promo). Never throws. Luigi 2026-06-27. */
+export async function awardPromoCreditsForOrder(opts: { orderId: string }): Promise<void> {
+  try {
+    const order = await prisma.order.findUnique({
+      where: { id: opts.orderId },
+      select: {
+        restaurantId: true, customerId: true, appliedPromos: true,
+        restaurant: { select: { rewardsEnabled: true } },
+      },
+    });
+    if (!order?.customerId || !order.restaurant?.rewardsEnabled || !order.appliedPromos) return;
+
+    let promos: Array<{ promoId?: string; type?: string }> = [];
+    try { promos = JSON.parse(order.appliedPromos); } catch { return; }
+    const creditPromoIds = promos.filter((p) => p.type === "reward_credit" && p.promoId).map((p) => p.promoId!);
+    if (creditPromoIds.length === 0) return;
+
+    for (const promoId of creditPromoIds) {
+      const promo = await prisma.promotion.findUnique({ where: { id: promoId }, select: { ruleConfig: true } });
+      const rc = (promo?.ruleConfig as any) ?? {};
+      const amount = Math.max(0, Math.round((Number(rc.creditAmount) || 0) * 100) / 100);
+      if (amount <= 0) continue;
+      await grant({
+        restaurantId: order.restaurantId,
+        customerId: order.customerId,
+        amount,
+        reason: `promo:${promoId}`,
+        orderId: opts.orderId,
+        note: "promo",
+      });
+    }
+  } catch (e) {
+    console.error("[reward awardPromoCreditsForOrder]", e);
+  }
+}

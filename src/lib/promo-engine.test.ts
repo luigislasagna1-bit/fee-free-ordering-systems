@@ -449,3 +449,28 @@ describe("engine breakdown — free_item / free_dish_meal name the dish", () => 
     expect(r?.breakdown?.[0]?.amount).toBe(10); // 50% of $20
   });
 });
+
+describe("resolvePromotions — reward_credit (earn, not discount)", () => {
+  it("is included with 0 discount + its type, so it snapshots into appliedPromos", () => {
+    const rc = mkPromo({ promotionType: "reward_credit", stackingRule: "standard", ruleConfig: { creditAmount: 5 } });
+    const { results } = resolvePromotions([rc], mkCtx());
+    const hit = results.find((r) => r.type === "reward_credit");
+    expect(hit).toBeTruthy();
+    expect(hit!.discount).toBe(0);
+  });
+
+  it("always stacks — a winning exclusive does NOT block it", () => {
+    const ex = mkPromo({ stackingRule: "exclusive", ruleConfig: { discountAmount: 8 } });
+    const rc = mkPromo({ promotionType: "reward_credit", stackingRule: "standard", ruleConfig: { creditAmount: 5 } });
+    const { results, blockedPromos } = resolvePromotions([ex, rc], mkCtx());
+    expect(results.some((r) => r.type === "reward_credit")).toBe(true); // not blocked
+    expect(results.some((r) => r.type === "fixed_cart")).toBe(true);    // exclusive still applies
+    expect(blockedPromos.some((b) => b.promoId === rc.id)).toBe(false);
+  });
+
+  it("contributes nothing to the discount total", () => {
+    const rc = mkPromo({ promotionType: "reward_credit", ruleConfig: { creditAmount: 99 } });
+    const results = applyPromotions([rc], mkCtx());
+    expect(totalPromoDiscount(results, 20)).toBe(0);
+  });
+});

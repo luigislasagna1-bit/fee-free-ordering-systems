@@ -340,6 +340,21 @@ function TypeSpecific({
         />
       );
 
+    case "reward_credit":
+      // Grants store credit (Reward Dollars) on order completion — no cart
+      // discount. The amount is the credit added to the customer's balance.
+      return (
+        <div className="space-y-2">
+          <AmtInput
+            currencySymbol={currencySymbol}
+            label={t("rewardCreditLabel")}
+            value={rules.creditAmount ?? 0}
+            onChange={(v) => onRules({ creditAmount: v })}
+          />
+          <p className="text-xs text-gray-500">{t("rewardCreditHint")}</p>
+        </div>
+      );
+
     case "payment_reward": {
       // Pull the dropdown options from the restaurant's enabled payment
       // methods so the owner can't accidentally promise a PayPal discount

@@ -392,7 +392,8 @@
       "useAll": "Use all",
       "useNone": "None",
       "chargeToday": "To pay today",
-      "capNote": "You can apply up to {amount} on this order."
+      "capNote": "You can apply up to {amount} on this order.",
+      "earnLine": "+ Earn {amount}"
     },
     "estimatedReady": "Estimated ready",
     "subTotal": "Sub-Total",
@@ -2497,6 +2498,8 @@
       "bnfPaidGroupsSub": "Customer must order from each group to qualify",
       "addPaidGroupLabel": "Add paid group",
       "discountAmountLabel": "Discount Amount",
+      "rewardCreditLabel": "Reward Dollars to grant",
+      "rewardCreditHint": "Added to the customer's balance when this order completes — no cart discount. Requires Reward Dollars to be enabled.",
       "paymentLabelCash": "Cash on delivery / pickup",
       "paymentLabelCardInPerson": "Card in person (tap / chip / swipe)",
       "paymentLabelOnlineCard": "Card online (Stripe)",

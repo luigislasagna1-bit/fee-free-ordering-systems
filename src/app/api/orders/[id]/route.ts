@@ -20,7 +20,7 @@ import { dispatchOrderToShipday, cancelShipdayOrder, shouldDispatchToShipday } f
 import { verifyOrderToken } from "@/lib/order-status-token";
 import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { redeemForOrder as redeemRewardForOrder, releaseForOrder as releaseRewardForOrder, awardForOrder as awardRewardForOrder } from "@/lib/reward-ledger";
-import { awardEarnRulesForOrder } from "@/lib/reward-earn";
+import { awardEarnRulesForOrder, awardPromoCreditsForOrder } from "@/lib/reward-earn";
 import { releasePromotionUsage } from "@/lib/order-notifications";
 import { RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 
@@ -397,6 +397,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     await awardRewardForOrder({ orderId: id });
     // Configurable earn rules (first-order / order-over / nth-order bonuses).
     await awardEarnRulesForOrder({ orderId: id });
+    // Credit granted via a "Grant Reward Dollars" promotion/special on this order.
+    await awardPromoCreditsForOrder({ orderId: id });
   } else if (newStatus === "rejected" || newStatus === "cancelled") {
     await releaseCouponsForOrder(id);
     // Reward Dollars: return any spent credit to the customer's wallet.

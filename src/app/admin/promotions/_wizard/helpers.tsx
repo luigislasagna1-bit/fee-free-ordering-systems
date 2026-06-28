@@ -43,6 +43,8 @@ export type IG = {
 export type PromoRules = {
   discountPercent?: number;
   discountAmount?: number;
+  /** reward_credit: store credit (Reward Dollars) granted on completion. */
+  creditAmount?: number;
   bundlePrice?: number;
   paymentMethod?: string;
   triggerAmount?: number;

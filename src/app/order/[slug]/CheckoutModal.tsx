@@ -113,6 +113,8 @@ interface Props {
      *  that freed 3 pizzas). Each entry = one freed item + its discount, so the
      *  banner lists them individually instead of one lump sum. Luigi 2026-06-07. */
     breakdown?: Array<{ menuItemId: string; name: string; amount: number }>;
+    /** reward_credit only: store credit earned on completion (not a discount). */
+    creditAmount?: number;
   }>;
   /** Exclusive promos that qualified but lost to a bigger exclusive (only one
    *  exclusive applies per order). Shown as a small note so the customer knows
@@ -681,6 +683,21 @@ export function CheckoutModal({
                     </div>
                   </div>
                 )}
+                {/* Reward Dollars EARNED via a "Grant Reward Dollars" special —
+                    a credit (not a discount), shown as "+ Earn $X". */}
+                {appliedPromos
+                  .filter((p) => p.type === "reward_credit" && (p.creditAmount ?? 0) > 0)
+                  .map((p) => (
+                    <div key={p.promoId} className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-1.5 text-emerald-700 font-medium truncate">
+                        <span aria-hidden>🎁</span>
+                        <span className="truncate">{p.name}</span>
+                      </div>
+                      <div className="font-semibold text-emerald-800 whitespace-nowrap ml-2">
+                        {tc("reward.earnLine", { amount: formatCurrency(p.creditAmount ?? 0), label: rewardLabelPlural })}
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>

@@ -83,6 +83,9 @@ export type PromoResult = {
    *  each freed item instead of one lump sum. Empty/absent for single-shot
    *  deals. Item names are resolved downstream (the engine only knows ids). */
   breakdown?: DiscountLine[];
+  /** reward_credit only: store credit the customer will EARN on completion (not
+   *  a discount). Lets the cart show "Earn $X" instead of a discount line. */
+  creditAmount?: number;
 };
 
 export type CartItem = {
@@ -876,6 +879,7 @@ export function calcDiscount(promo: PromoInput, ctx: ApplyContext): number {
     case "fixed_combo":      return calcFixedCombo(promo, ctx);
     case "percentage_combo": return calcPercentageCombo(promo, ctx);
     case "meal_bundle_speciality": return calcMealBundleSpeciality(promo, ctx);
+    case "reward_credit":    return 0; // grants store credit at fulfillment, no cart discount
     default:                 return 0;
   }
 }
@@ -922,9 +926,13 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
 
   if (!triggered.length) return { results: [], blockedPromos: [] };
 
-  // Stacking resolution
-  const masters    = triggered.filter(p => p.stackingRule === "master");
-  const standards  = triggered.filter(p => p.stackingRule === "standard");
+  // Stacking resolution. reward_credit is ALWAYS a master (it gives no cart
+  // discount — it grants store credit at fulfillment — so it must never occupy
+  // an exclusive slot or be blocked by one, regardless of its stored
+  // stackingRule). Luigi 2026-06-27.
+  const isRewardCredit = (p: PromoInput) => p.promotionType === "reward_credit";
+  const masters    = triggered.filter(p => p.stackingRule === "master" || isRewardCredit(p));
+  const standards  = triggered.filter(p => p.stackingRule === "standard" && !isRewardCredit(p));
   // A promo's REAL value for stacking decisions. free_delivery has no cart
   // discount (calcDiscount = 0) but is worth the delivery fee on a delivery
   // order — so it's scored at the fee (audit B10). On a non-delivery order or a
@@ -970,7 +978,7 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
     if (seen.has(p.id)) continue;
     seen.add(p.id);
     const discount = calcDiscount(p, ctx);
-    if (discount > 0 || p.promotionType === "free_delivery") {
+    if (discount > 0 || p.promotionType === "free_delivery" || p.promotionType === "reward_credit") {
       const breakdown = promoBreakdown(p, ctx);
       results.push({
         promoId: p.id,
@@ -980,6 +988,9 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
         couponCode: p.couponCode ?? undefined,
         stackingRule: p.stackingRule,
         description: p.description ?? undefined,
+        creditAmount: p.promotionType === "reward_credit"
+          ? Math.max(0, Number((getRules(p) as any).creditAmount) || 0)
+          : undefined,
         // Itemise whenever the engine produced per-dish lines (incl. a single
         // discounted dish) so the cart can show WHICH items were discounted.
         // Whole-cart promos return [] from promoBreakdown → no itemisation.
