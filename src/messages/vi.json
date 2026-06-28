@@ -1928,7 +1928,9 @@
       "copySettingsNoItems": "Không có món nào khác để sao chép sang.",
       "copySettingsApply": "{n, plural, =0 {Sao chép sang các món} other {Sao chép sang # món}}",
       "copySettingsDone": "{ok, plural, other {Đã sao chép sang # món}}",
-      "copySettingsFailed": "Không thể sao chép cài đặt."
+      "copySettingsFailed": "Không thể sao chép cài đặt.",
+      "allowMultipleToppings": "Cho phép thêm nhiều cùng một loại topping",
+      "allowMultipleToppingsHint": "Cho phép khách hàng thêm gấp đôi (hoặc nhiều hơn) một loại topping — mỗi phần được tính là một topping riêng."
     },
     "promotionsList": {
       "stackingMaster": "Master",

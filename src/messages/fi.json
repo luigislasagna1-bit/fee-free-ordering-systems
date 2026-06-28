@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "Ei muita tuotteita, joihin kopioida.",
       "copySettingsApply": "{n, plural, =0 {Kopioi tuotteisiin} one {Kopioi # tuotteeseen} other {Kopioi # tuotteeseen}}",
       "copySettingsDone": "{ok, plural, one {Kopioitu # tuotteeseen} other {Kopioitu # tuotteeseen}}",
-      "copySettingsFailed": "Asetusten kopiointi epäonnistui."
+      "copySettingsFailed": "Asetusten kopiointi epäonnistui.",
+      "allowMultipleToppings": "Salli sama täyte useita kertoja",
+      "allowMultipleToppingsHint": "Antaa asiakkaiden lisätä täytteen tuplana (tai enemmän) — jokainen lasketaan erilliseksi täytteeksi."
     },
     "promotionsList": {
       "stackingMaster": "Master",

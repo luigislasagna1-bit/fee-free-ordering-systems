@@ -90,6 +90,7 @@ type PizzaFormState = {
   variantToppingPrices: Record<string, string>;
   halfToppingMultiplier: string;
   extraQuantityMultiplier: string;
+  allowMultipleToppings: boolean;
   /** Display order of customer-side sections (size, half/half toggle,
    *  modifier groups). Each entry is "section:size",
    *  "section:halfHalfToggle", "section:toppings", or a library-group
@@ -118,6 +119,7 @@ function parsePizzaForm(json?: string): PizzaFormState {
       : {},
     halfToppingMultiplier: String(p?.halfToppingMultiplier ?? "0.5"),
     extraQuantityMultiplier: String(p?.extraQuantityMultiplier ?? "0"),
+    allowMultipleToppings: p?.allowMultipleToppings !== false, // default ON
     sectionOrder: Array.isArray(p?.sectionOrder)
       ? p.sectionOrder.filter((x: unknown): x is string => typeof x === "string")
       : [],
@@ -348,80 +350,6 @@ function PizzaSectionOrderEditor({
   );
 }
 
-// ─── Extra-Quantity Upcharge Field ──────────────────────────────────────────
-// Replaces the bare number input that read "0 = no extra charge for Extra
-// quantity" with a yes/no toggle owners can actually reason about. ON stores
-// "1" (full per-size topping price added when the customer picks "Extra"),
-// OFF stores "0" (free). The customer-side PizzaBuilder pricing engine
-// already multiplied the per-size topping price by this value, so the
-// behaviour map is:
-//   • OFF (0)  → Extra costs nothing
-//   • ON (1)   → Extra costs the per-size topping price (Small +$2.25,
-//                Medium +$2.50, Large +$2.75, X Large +$3.01, etc.)
-// An Advanced expander lets the rare restaurant set a custom fractional
-// multiplier (e.g. 0.5 = half-price upcharge). Existing items whose value
-// is neither 0 nor 1 open with Advanced auto-expanded so nothing silently
-// changes their behaviour.
-function ExtraQtyUpchargeField({
-  value, onChange,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  const numeric = parseFloat(value);
-  const isOff = !Number.isFinite(numeric) || numeric === 0;
-  const isOn = numeric === 1;
-  const isAdvanced = !isOff && !isOn;
-  const t = useTranslations("admin.menuEditor");
-  const [advancedOpen, setAdvancedOpen] = useState(isAdvanced);
-  return (
-    <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">
-        {t("chargeForExtra")}
-      </label>
-      <div className="flex items-center gap-3">
-        <Toggle
-          on={!isOff}
-          onToggle={() => onChange(isOff ? "1" : "0")}
-        />
-        <span className="text-sm text-gray-600">
-          {isOff
-            ? t("extraChargeFree")
-            : isOn
-              ? t("extraChargeFullPrice")
-              : t("extraChargeCustom", { numeric })}
-        </span>
-      </div>
-      <p className="text-xs text-gray-400 mt-1">
-        {t("extraChargeHint")}
-      </p>
-      <button
-        type="button"
-        onClick={() => setAdvancedOpen(o => !o)}
-        className="text-xs text-gray-500 hover:text-gray-700 underline mt-1.5"
-      >
-        {advancedOpen ? t("hideAdvanced") : t("advancedCustomMultiplier")}
-      </button>
-      {advancedOpen && (
-        <div className="mt-2">
-          <input
-            type="number"
-            step="0.05"
-            min="0"
-            placeholder="0"
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-            value={value}
-            onChange={e => onChange(e.target.value)}
-          />
-          <p className="text-xs text-gray-400 mt-0.5">
-            {t("extraChargeMultiplierHint")}
-          </p>
-        </div>
-      )}
-    </div>
-  );
-}
-
 function ConfirmModal({ title, message, confirmLabel, onConfirm, onCancel }: {
   title: string; message: string; confirmLabel?: string;
   onConfirm: () => void; onCancel: () => void;
@@ -640,6 +568,7 @@ function ItemModal({
             : undefined,
           halfToppingMultiplier: parseFloat(pizza.halfToppingMultiplier) || 0.5,
           extraQuantityMultiplier: parseFloat(pizza.extraQuantityMultiplier) || 0,
+          allowMultipleToppings: pizza.allowMultipleToppings !== false,
           // Persist only when non-empty / non-default so older items
           // without these fields stay clean.
           sectionOrder: pizza.sectionOrder.length > 0 ? pizza.sectionOrder : undefined,
@@ -1152,10 +1081,18 @@ function ItemModal({
                           onChange={e => setPizza(p => ({ ...p, halfToppingMultiplier: e.target.value }))} />
                         <p className="text-xs text-gray-400 mt-0.5">{t("halfToppingMultiplierHint")}</p>
                       </div>
-                      <ExtraQtyUpchargeField
-                        value={pizza.extraQuantityMultiplier}
-                        onChange={(v) => setPizza(p => ({ ...p, extraQuantityMultiplier: v }))}
-                      />
+                      <label className="flex items-start gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={pizza.allowMultipleToppings !== false}
+                          onChange={e => setPizza(p => ({ ...p, allowMultipleToppings: e.target.checked }))}
+                          className="mt-0.5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                        />
+                        <span>
+                          <span className="block text-sm font-medium text-gray-700">{t("allowMultipleToppings")}</span>
+                          <span className="block text-xs text-gray-400">{t("allowMultipleToppingsHint")}</span>
+                        </span>
+                      </label>
                     </div>
                   </div>
                 </>

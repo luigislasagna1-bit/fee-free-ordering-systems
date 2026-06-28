@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "Nessun altro articolo su cui copiare.",
       "copySettingsApply": "{n, plural, =0 {Copia sugli articoli} one {Copia su # articolo} other {Copia su # articoli}}",
       "copySettingsDone": "{ok, plural, one {Copiato su # articolo} other {Copiato su # articoli}}",
-      "copySettingsFailed": "Impossibile copiare le impostazioni."
+      "copySettingsFailed": "Impossibile copiare le impostazioni.",
+      "allowMultipleToppings": "Consenti più volte lo stesso topping",
+      "allowMultipleToppingsHint": "Permette ai clienti di aggiungere un topping doppio (o più) — ognuno conta come topping separato."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "No hi ha altres elements on copiar.",
       "copySettingsApply": "{n, plural, =0 {Copia als elements} one {Copia a # element} other {Copia a # elements}}",
       "copySettingsDone": "{ok, plural, one {Copiat a # element} other {Copiat a # elements}}",
-      "copySettingsFailed": "No s’ha pogut copiar la configuració."
+      "copySettingsFailed": "No s’ha pogut copiar la configuració.",
+      "allowMultipleToppings": "Permet diverses unitats del mateix ingredient",
+      "allowMultipleToppingsHint": "Permet als clients afegir el doble (o més) d'un ingredient: cadascun compta com un ingredient independent."
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

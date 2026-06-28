@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "Pole muid tooteid, kuhu kopeerida.",
       "copySettingsApply": "{n, plural, =0 {Kopeeri toodetele} one {Kopeeri # tootele} other {Kopeeri # tootele}}",
       "copySettingsDone": "{ok, plural, one {Kopeeritud # tootele} other {Kopeeritud # tootele}}",
-      "copySettingsFailed": "Seadete kopeerimine ebaõnnestus."
+      "copySettingsFailed": "Seadete kopeerimine ebaõnnestus.",
+      "allowMultipleToppings": "Luba sama lisandit mitu korda",
+      "allowMultipleToppingsHint": "Võimaldab klientidel lisada lisandit topelt (või rohkem) — iga loetakse eraldi lisandiks."
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

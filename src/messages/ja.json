@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "コピー先となる他の商品がありません。",
       "copySettingsApply": "{n, plural, =0 {商品にコピー} other {# 件の商品にコピー}}",
       "copySettingsDone": "{ok, plural, other {# 件の商品にコピーしました}}",
-      "copySettingsFailed": "設定をコピーできませんでした。"
+      "copySettingsFailed": "設定をコピーできませんでした。",
+      "allowMultipleToppings": "同じトッピングの複数追加を許可",
+      "allowMultipleToppingsHint": "お客様が同じトッピングを2倍（以上）追加できるようになります。各トッピングは個別のトッピングとして計算されます。"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

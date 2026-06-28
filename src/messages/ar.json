@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "لا توجد عناصر أخرى للنسخ إليها.",
       "copySettingsApply": "{n, plural, =0 {نسخ إلى العناصر} zero {نسخ إلى # عنصر} one {نسخ إلى عنصر واحد} two {نسخ إلى عنصرين} few {نسخ إلى # عناصر} many {نسخ إلى # عنصرًا} other {نسخ إلى # عنصر}}",
       "copySettingsDone": "{ok, plural, zero {تم النسخ إلى # عنصر} one {تم النسخ إلى عنصر واحد} two {تم النسخ إلى عنصرين} few {تم النسخ إلى # عناصر} many {تم النسخ إلى # عنصرًا} other {تم النسخ إلى # عنصر}}",
-      "copySettingsFailed": "تعذَّر نسخ الإعدادات."
+      "copySettingsFailed": "تعذَّر نسخ الإعدادات.",
+      "allowMultipleToppings": "السماح بتكرار نفس الإضافة",
+      "allowMultipleToppingsHint": "يتيح للعملاء إضافة كمية مضاعفة (أو أكثر) من نفس الإضافة — وتُحتسب كل واحدة كإضافة منفصلة."
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",

@@ -1928,7 +1928,9 @@
       "copySettingsNoItems": "Brak innych pozycji do skopiowania.",
       "copySettingsApply": "{n, plural, =0 {Kopiuj do pozycji} one {Kopiuj do # pozycji} few {Kopiuj do # pozycji} many {Kopiuj do # pozycji} other {Kopiuj do # pozycji}}",
       "copySettingsDone": "{ok, plural, one {Skopiowano do # pozycji} few {Skopiowano do # pozycji} many {Skopiowano do # pozycji} other {Skopiowano do # pozycji}}",
-      "copySettingsFailed": "Nie udało się skopiować ustawień."
+      "copySettingsFailed": "Nie udało się skopiować ustawień.",
+      "allowMultipleToppings": "Zezwól na kilka tych samych dodatków",
+      "allowMultipleToppingsHint": "Pozwala klientom dodać podwójną (lub większą) porcję dodatku — każda liczona jest jako osobny dodatek."
     },
     "promotionsList": {
       "stackingMaster": "Master",

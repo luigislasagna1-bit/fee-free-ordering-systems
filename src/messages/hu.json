@@ -1928,7 +1928,9 @@
       "copySettingsNoItems": "Nincs más tétel, amelyre másolni lehetne.",
       "copySettingsApply": "{n, plural, =0 {Másolás tételekre} one {Másolás # tételre} other {Másolás # tételre}}",
       "copySettingsDone": "{ok, plural, one {Másolva # tételre} other {Másolva # tételre}}",
-      "copySettingsFailed": "A beállításokat nem sikerült másolni."
+      "copySettingsFailed": "A beállításokat nem sikerült másolni.",
+      "allowMultipleToppings": "Ugyanazon feltét többszöri hozzáadásának engedélyezése",
+      "allowMultipleToppingsHint": "Lehetővé teszi a vendégeknek, hogy duplán (vagy többször) adjanak hozzá egy feltétet — mindegyik külön feltétnek számít."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "ไม่มีรายการอื่นให้คัดลอกไป",
       "copySettingsApply": "{n, plural, =0 {คัดลอกไปยังรายการ} other {คัดลอกไปยัง # รายการ}}",
       "copySettingsDone": "{ok, plural, other {คัดลอกไปยัง # รายการแล้ว}}",
-      "copySettingsFailed": "ไม่สามารถคัดลอกการตั้งค่าได้"
+      "copySettingsFailed": "ไม่สามารถคัดลอกการตั้งค่าได้",
+      "allowMultipleToppings": "อนุญาตให้ใส่ท็อปปิ้งชนิดเดียวกันได้หลายครั้ง",
+      "allowMultipleToppingsHint": "ให้ลูกค้าเพิ่มท็อปปิ้งเป็นสองเท่า (หรือมากกว่า) ได้ โดยแต่ละครั้งจะนับเป็นท็อปปิ้งแยกกัน"
     },
     "promotionsList": {
       "stackingMaster": "Master",

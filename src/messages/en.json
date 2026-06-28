@@ -2224,6 +2224,8 @@
       "extraToppingPriceHint": "Charged per topping beyond the included count",
       "halfToppingMultiplier": "Half-Topping Multiplier",
       "halfToppingMultiplierHint": "0.5 = 50% price for a half-pizza topping",
+      "allowMultipleToppings": "Allow multiple of the same topping",
+      "allowMultipleToppingsHint": "Lets customers add double (or more) of a topping — each one counts as a separate topping.",
       "saving": "Saving...",
       "addItem": "Add Item",
       "saveChanges": "Save Changes",

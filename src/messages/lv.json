@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "Nav citu vienumu, uz kuriem kopēt.",
       "copySettingsApply": "{n, plural, =0 {Kopēt uz vienumiem} zero {Kopēt uz # vienumiem} one {Kopēt uz # vienumu} other {Kopēt uz # vienumiem}}",
       "copySettingsDone": "{ok, plural, zero {Nokopēts uz # vienumiem} one {Nokopēts uz # vienumu} other {Nokopēts uz # vienumiem}}",
-      "copySettingsFailed": "Neizdevās nokopēt iestatījumus."
+      "copySettingsFailed": "Neizdevās nokopēt iestatījumus.",
+      "allowMultipleToppings": "Atļaut vairākas vienas un tās pašas piedevas",
+      "allowMultipleToppingsHint": "Ļauj klientiem pievienot piedevu dubultā (vai vairāk) — katra tiek skaitīta kā atsevišķa piedeva."
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

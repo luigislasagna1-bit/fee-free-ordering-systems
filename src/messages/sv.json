@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "Inga andra artiklar att kopiera till.",
       "copySettingsApply": "{n, plural, =0 {Kopiera till artiklar} one {Kopiera till # artikel} other {Kopiera till # artiklar}}",
       "copySettingsDone": "{ok, plural, one {Kopierat till # artikel} other {Kopierat till # artiklar}}",
-      "copySettingsFailed": "Det gick inte att kopiera inställningarna."
+      "copySettingsFailed": "Det gick inte att kopiera inställningarna.",
+      "allowMultipleToppings": "Tillåt flera av samma topping",
+      "allowMultipleToppingsHint": "Låter kunderna lägga till dubbel (eller mer) av en topping — varje räknas som en separat topping."
     },
     "promotionsList": {
       "stackingMaster": "Master",

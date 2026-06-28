@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "Žádné další položky ke zkopírování.",
       "copySettingsApply": "{n, plural, =0 {Kopírovat do položek} one {Kopírovat do # položky} few {Kopírovat do # položek} many {Kopírovat do # položky} other {Kopírovat do # položek}}",
       "copySettingsDone": "{ok, plural, one {Zkopírováno do # položky} few {Zkopírováno do # položek} many {Zkopírováno do # položky} other {Zkopírováno do # položek}}",
-      "copySettingsFailed": "Nastavení se nepodařilo zkopírovat."
+      "copySettingsFailed": "Nastavení se nepodařilo zkopírovat.",
+      "allowMultipleToppings": "Povolit více kusů stejné přísady",
+      "allowMultipleToppingsHint": "Umožní zákazníkům přidat dvojitou (nebo větší) porci přísady — každá se počítá jako samostatná přísada."
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",

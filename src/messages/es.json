@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "No hay otros artículos a los que copiar.",
       "copySettingsApply": "{n, plural, =0 {Copiar a artículos} one {Copiar a # artículo} other {Copiar a # artículos}}",
       "copySettingsDone": "{ok, plural, one {Copiado a # artículo} other {Copiado a # artículos}}",
-      "copySettingsFailed": "No se pudieron copiar los ajustes."
+      "copySettingsFailed": "No se pudieron copiar los ajustes.",
+      "allowMultipleToppings": "Permitir varios del mismo ingrediente",
+      "allowMultipleToppingsHint": "Permite a los clientes añadir el doble (o más) de un ingrediente: cada uno cuenta como un ingrediente aparte."
     },
     "promotionsList": {
       "stackingMaster": "Maestro",

@@ -26,7 +26,7 @@ import { useTranslations } from "next-intl";
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 export type ToppingPlacement = "whole" | "left" | "right";
-export type ToppingQuantity  = "light" | "normal" | "extra";
+export type ToppingQuantity  = "light" | "normal";
 
 export interface PizzaConfig {
   isPizza: boolean;
@@ -52,6 +52,10 @@ export interface PizzaConfig {
   halfToppingMultiplier: number;
   /** Additional price multiplier for "Extra" quantity on top of base topping price (default 0 = no upcharge) */
   extraQuantityMultiplier: number;
+  /** Allow a customer to add MULTIPLE of the same topping (double pepperoni etc.),
+   *  each counted as a separate topping. When false, a topping is just on/off.
+   *  Default true. Luigi 2026-06-27. */
+  allowMultipleToppings?: boolean;
   /**
    * Customer-facing section display order. Each entry is either a
    * synthetic id ("section:size", "section:halfHalfToggle") or the
@@ -79,6 +83,10 @@ export interface SelectedTopping {
   groupId: string;
   placement: ToppingPlacement;
   quantity: ToppingQuantity;
+  /** How many of this topping (double pepperoni = 2). Each unit counts as a
+   *  separate topping for pricing / included-topping credits. Defaults to 1 when
+   *  absent (older carts). Gated by allowMultipleToppings. Luigi 2026-06-27. */
+  count?: number;
   /** Base unit price for one Normal whole topping */
   unitPrice: number;
 }
@@ -154,6 +162,7 @@ export function parsePizzaConfig(json: string | null | undefined): PizzaConfig |
                                 : undefined,
       halfToppingMultiplier:  Number(c.halfToppingMultiplier) || 0.5,
       extraQuantityMultiplier:Number(c.extraQuantityMultiplier)|| 0,
+      allowMultipleToppings:  c.allowMultipleToppings !== false, // default ON
       sectionOrder:           Array.isArray(c.sectionOrder)
                                 ? c.sectionOrder.filter((x: unknown): x is string => typeof x === "string")
                                 : undefined,
@@ -297,21 +306,17 @@ export function computePrice(
 
     for (const t of pricingToppings) {
       const isHalf = t.placement !== "whole";
+      const units = Math.max(1, t.count ?? 1); // double pepperoni = 2 units
       const baseUnit = isHalf
         ? config.extraToppingPrice * config.halfToppingMultiplier
         : config.extraToppingPrice;
-      const extraQtyUnit = t.quantity === "extra"
-        ? baseUnit * config.extraQuantityMultiplier
-        : 0;
-      let charge = t.quantity === "light" ? 0 : baseUnit + extraQtyUnit;
+      // Each unit of the topping is its own charge + its own credit cost, so
+      // "double pepperoni" eats two of the included toppings. Luigi 2026-06-27.
+      let charge = t.quantity === "light" ? 0 : baseUnit * units;
 
       if (t.quantity !== "light" && halfCreditsLeft > 0) {
-        const creditCost = isHalf ? 1 : 2;
+        const creditCost = (isHalf ? 1 : 2) * units;
         const used = Math.min(creditCost, halfCreditsLeft);
-        // Discount the ENTIRE charge proportionally to the credit
-        // consumed — base AND extra bump both get covered. Partial
-        // credit (e.g. 1 half-credit left + whole topping) covers
-        // half the whole charge.
         const discount = charge * (used / creditCost);
         charge = Math.max(0, charge - discount);
         halfCreditsLeft -= used;
@@ -321,18 +326,17 @@ export function computePrice(
     }
     price += toppingTotal;
   } else {
-    // Per-option price model: each option's priceAdjustment drives cost
+    // Per-option price model: each option's priceAdjustment drives cost, ×count
+    // (double pepperoni = 2× the topping price).
     for (const t of toppings) {
       const grp = toppingGroups.find(g => g.id === t.groupId);
       const opt = grp?.options.find(o => o.id === t.optionId);
       if (!opt) continue;
 
-      let adj = opt.priceAdjustment;
+      const units = Math.max(1, t.count ?? 1);
+      let adj = opt.priceAdjustment * units;
       if (t.placement !== "whole") adj *= config.halfToppingMultiplier;
-      // The "extra quantity" bump is ALSO halved on a single half (the whole
-      // topping line, base + bump, is half-priced). Luigi 2026-06-27.
-      if (t.quantity === "extra")  adj += opt.priceAdjustment * config.extraQuantityMultiplier * (t.placement !== "whole" ? config.halfToppingMultiplier : 1);
-      else if (t.quantity === "light") adj = 0;
+      if (t.quantity === "light") adj = 0;
 
       price += adj;
     }
@@ -413,7 +417,9 @@ export function pizzaCustomizationToModifiers(
     addSauceOrCheese(customization.cheeseOptionId, wholePrefix);
   }
 
-  // Toppings
+  // Toppings. A topping with count N is emitted as N separate modifier lines so
+  // the kitchen sees the quantity AND the server charges N× (it re-prices each
+  // line from the DB option + halves (L.H)/(R.H) lines). Luigi 2026-06-27.
   for (const t of customization.toppings) {
     const grp = groups.find(g => g.id === t.groupId);
     const opt = grp?.options.find(o => o.id === t.optionId);
@@ -423,15 +429,15 @@ export function pizzaCustomizationToModifiers(
       t.placement === "left"  ? leftPrefix  :
       t.placement === "right" ? rightPrefix :
       wholePrefix;
-    const quantity =
-      t.quantity === "extra" ? ", Extra" :
-      t.quantity === "light" ? ", Light" : "";
-
-    out.push({
-      modifierOptionId: opt.id,
-      name: `${prefix}${opt.name}${quantity}`,
-      priceAdjustment: opt.priceAdjustment,
-    });
+    const quantity = t.quantity === "light" ? ", Light" : "";
+    const units = Math.max(1, t.count ?? 1);
+    for (let i = 0; i < units; i++) {
+      out.push({
+        modifierOptionId: opt.id,
+        name: `${prefix}${opt.name}${quantity}`,
+        priceAdjustment: opt.priceAdjustment,
+      });
+    }
   }
 
   return out;
@@ -537,8 +543,8 @@ function PizzaVisual({
         const col = toppingColor(t.name);
         return (
           <g key={`w-${t.optionId}-${i}`}>
-            <circle cx={cx} cy={cy} r={t.quantity === "extra" ? 8 : 6.5} fill={col} opacity="0.92" />
-            {t.quantity === "extra" && (
+            <circle cx={cx} cy={cy} r={(t.count ?? 1) > 1 ? 8 : 6.5} fill={col} opacity="0.92" />
+            {(t.count ?? 1) > 1 && (
               <circle cx={cx + 6} cy={cy - 6} r={4} fill={col} opacity="0.75" />
             )}
           </g>
@@ -572,12 +578,16 @@ function PizzaVisual({
 // ── Topping pill ──────────────────────────────────────────────────────────────
 
 function ToppingPill({
-  opt, topping, onToggle, onSetQuantity, primaryColor, priceMultiplier = 1,
+  opt, topping, onToggle, onSetQuantity, onSetCount, allowMultiple = false, primaryColor, priceMultiplier = 1,
 }: {
   opt: ModOption;
   topping: SelectedTopping | undefined;
   onToggle: () => void;
   onSetQuantity: (qty: ToppingQuantity) => void;
+  /** Adjust the quantity of this topping by delta (+1 / −1). */
+  onSetCount?: (delta: number) => void;
+  /** Whether the restaurant allows multiples of the same topping. */
+  allowMultiple?: boolean;
   primaryColor: string;
   /** Half-pizza display multiplier (0.5) so a topping added on the current half
    *  shows the price it'll actually cost. 1 = whole. */
@@ -586,7 +596,9 @@ function ToppingPill({
   const formatCurrency = useCurrencyFormat();
   const selected = !!topping;
   const qty = topping?.quantity ?? "normal";
-  const shownPrice = Math.round(opt.priceAdjustment * priceMultiplier * 100) / 100;
+  const count = topping?.count ?? 1;
+  // Show the line price for the chosen quantity (× count); light is free.
+  const shownPrice = qty === "light" ? 0 : Math.round(opt.priceAdjustment * priceMultiplier * count * 100) / 100;
 
   return (
     <div
@@ -625,12 +637,29 @@ function ToppingPill({
             activeColor="#0284c7"
             onClick={(e) => { e.stopPropagation(); onSetQuantity("light"); }}
           />
-          <QtyButton
-            label="Xtra"
-            active={qty === "extra"}
-            activeColor="#059669"
-            onClick={(e) => { e.stopPropagation(); onSetQuantity("extra"); }}
-          />
+          {/* Multiple-of-the-same-topping stepper (double pepperoni etc.). Only
+              when the restaurant allows it + the topping isn't "Light". */}
+          {allowMultiple && qty !== "light" && (
+            <div className="flex items-center gap-1">
+              <button
+                type="button" aria-label="Less"
+                onClick={(e) => { e.stopPropagation(); onSetCount?.(-1); }}
+                disabled={count <= 1}
+                className="w-7 h-7 rounded-lg border-2 border-gray-200 bg-white text-gray-600 flex items-center justify-center hover:border-gray-400 disabled:opacity-40"
+              >
+                <Minus className="w-3.5 h-3.5" />
+              </button>
+              <span className="w-5 text-center font-bold text-gray-800 text-sm tabular-nums">{count}</span>
+              <button
+                type="button" aria-label="More"
+                onClick={(e) => { e.stopPropagation(); onSetCount?.(1); }}
+                className="w-7 h-7 rounded-lg border-2 flex items-center justify-center text-white"
+                style={{ backgroundColor: primaryColor, borderColor: primaryColor }}
+              >
+                <Plus className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -923,7 +952,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
         ...c,
         toppings: [...nextToppings, {
           optionId: opt.id, name: opt.name, groupId,
-          placement, quantity: "normal", unitPrice,
+          placement, quantity: "normal", count: 1, unitPrice,
         }],
       };
     });
@@ -935,9 +964,26 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
         ...c,
         toppings: c.toppings.map(t => {
           if (t.optionId !== optionId || t.placement !== placement) return t;
-          // Tapping the already-active quantity returns to normal.
+          // Tapping the already-active quantity returns to normal. Switching to
+          // Light resets the count to 1 (light double-topping is nonsensical).
           const next: ToppingQuantity = t.quantity === qty ? "normal" : qty;
-          return { ...t, quantity: next };
+          return { ...t, quantity: next, count: next === "light" ? 1 : t.count };
+        }),
+      }));
+    },
+    [],
+  );
+
+  // Adjust how many of a topping (double pepperoni etc.), clamped 1..MAX.
+  const MAX_TOPPING_COUNT = 10;
+  const setToppingCount = useCallback(
+    (optionId: string, placement: ToppingPlacement, delta: number) => {
+      setCustomization(c => ({
+        ...c,
+        toppings: c.toppings.map(t => {
+          if (t.optionId !== optionId || t.placement !== placement) return t;
+          const next = Math.max(1, Math.min(MAX_TOPPING_COUNT, (t.count ?? 1) + delta));
+          return { ...t, count: next };
         }),
       }));
     },
@@ -1475,6 +1521,8 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                               topping={t}
                               onToggle={() => toggleTopping(opt, g.id)}
                               onSetQuantity={(qty) => setToppingQuantity(opt.id, placement, qty)}
+                              onSetCount={(delta) => setToppingCount(opt.id, placement, delta)}
+                              allowMultiple={effectiveConfig.allowMultipleToppings !== false}
                               primaryColor={primaryColor}
                               priceMultiplier={placement !== "whole" ? effectiveConfig.halfToppingMultiplier : 1}
                             />
@@ -1534,10 +1582,11 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                           ({t.placement === "left" ? "L" : "R"})
                         </span>
                       )}
-                      {t.quantity !== "normal" && (
-                        <span className="font-semibold flex-shrink-0">
-                          {t.quantity === "extra" ? "✕" : "↓"}
-                        </span>
+                      {(t.count ?? 1) > 1 && (
+                        <span className="font-semibold flex-shrink-0">×{t.count}</span>
+                      )}
+                      {t.quantity === "light" && (
+                        <span className="font-semibold flex-shrink-0">↓</span>
                       )}
                     </div>
                   ))}

@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "Nu există alte produse în care să copiezi.",
       "copySettingsApply": "{n, plural, =0 {Copiază în produse} one {Copiază în # produs} few {Copiază în # produse} other {Copiază în # de produse}}",
       "copySettingsDone": "{ok, plural, one {Copiat în # produs} few {Copiat în # produse} other {Copiat în # de produse}}",
-      "copySettingsFailed": "Setările nu au putut fi copiate."
+      "copySettingsFailed": "Setările nu au putut fi copiate.",
+      "allowMultipleToppings": "Permite mai multe porții din același topping",
+      "allowMultipleToppingsHint": "Le permite clienților să adauge dublu (sau mai mult) dintr-un topping — fiecare se numără ca topping separat."
     },
     "promotionsList": {
       "stackingMaster": "Master",

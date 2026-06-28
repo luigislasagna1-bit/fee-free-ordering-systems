@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "Nema drugih stavki za kopiranje.",
       "copySettingsApply": "{n, plural, =0 {Kopiraj na stavke} one {Kopiraj na # stavku} few {Kopiraj na # stavke} other {Kopiraj na # stavki}}",
       "copySettingsDone": "{ok, plural, one {Kopirano na # stavku} few {Kopirano na # stavke} other {Kopirano na # stavki}}",
-      "copySettingsFailed": "Podešavanja nije bilo moguće kopirati."
+      "copySettingsFailed": "Podešavanja nije bilo moguće kopirati.",
+      "allowMultipleToppings": "Dozvoli više istih dodataka",
+      "allowMultipleToppingsHint": "Omogućava kupcima da dodaju duplo (ili više) jednog dodatka — svaki se računa kao poseban dodatak."
     },
     "promotionsList": {
       "stackingMaster": "Master",

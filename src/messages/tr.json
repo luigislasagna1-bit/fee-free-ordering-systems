@@ -1928,7 +1928,9 @@
       "copySettingsNoItems": "Kopyalanacak başka ürün yok.",
       "copySettingsApply": "{n, plural, =0 {Ürünlere kopyala} one {# ürüne kopyala} other {# ürüne kopyala}}",
       "copySettingsDone": "{ok, plural, one {# ürüne kopyalandı} other {# ürüne kopyalandı}}",
-      "copySettingsFailed": "Ayarlar kopyalanamadı."
+      "copySettingsFailed": "Ayarlar kopyalanamadı.",
+      "allowMultipleToppings": "Aynı malzemeden birden fazla eklemeye izin ver",
+      "allowMultipleToppingsHint": "Müşterilerin bir malzemeyi iki kat (veya daha fazla) eklemesine olanak tanır — her biri ayrı bir malzeme olarak sayılır."
     },
     "promotionsList": {
       "stackingMaster": "Ana",

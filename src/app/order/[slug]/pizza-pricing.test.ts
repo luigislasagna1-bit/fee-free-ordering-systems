@@ -64,3 +64,26 @@ describe("pizza pricing — half/half charges half", () => {
     expect(computePrice(base({ cheeseOptionId: "extra_c" }), null, item, groups, config)).toBe(12.0);
   });
 });
+
+describe("pizza pricing — multiple of the same topping (count)", () => {
+  const dbl = (placement: "whole" | "left" | "right", count: number) => ({
+    optionId: "pep", name: "Pepperoni", groupId: "t", placement, quantity: "normal" as const, count, unitPrice: 2.5,
+  });
+
+  it("double pepperoni (whole) = 2× the topping price", () => {
+    expect(computePrice(base({ toppings: [dbl("whole", 2)] }), null, item, groups, config)).toBe(15.0); // 10 + 2.50*2
+  });
+
+  it("triple pepperoni (whole) = 3×", () => {
+    expect(computePrice(base({ toppings: [dbl("whole", 3)] }), null, item, groups, config)).toBe(17.5); // 10 + 2.50*3
+  });
+
+  it("double pepperoni on ONE half = 2× the HALF price", () => {
+    expect(computePrice(base({ toppings: [dbl("left", 2)] }), null, item, groups, config)).toBe(12.5); // 10 + (2.50*0.5)*2
+  });
+
+  it("count defaults to 1 when absent", () => {
+    const t = { optionId: "pep", name: "Pepperoni", groupId: "t", placement: "whole" as const, quantity: "normal" as const, unitPrice: 2.5 };
+    expect(computePrice(base({ toppings: [t as any] }), null, item, groups, config)).toBe(12.5);
+  });
+});

@@ -2342,7 +2342,9 @@
       "copySettingsNoItems": "कॉपी करने के लिए कोई अन्य आइटम नहीं है।",
       "copySettingsApply": "{n, plural, =0 {आइटम पर कॉपी करें} one {# आइटम पर कॉपी करें} other {# आइटम पर कॉपी करें}}",
       "copySettingsDone": "{ok, plural, one {# आइटम पर कॉपी किया गया} other {# आइटम पर कॉपी किए गए}}",
-      "copySettingsFailed": "सेटिंग्स कॉपी नहीं की जा सकीं।"
+      "copySettingsFailed": "सेटिंग्स कॉपी नहीं की जा सकीं।",
+      "allowMultipleToppings": "एक ही टॉपिंग कई बार जोड़ने की अनुमति दें",
+      "allowMultipleToppingsHint": "ग्राहकों को किसी टॉपिंग को दोगुना (या उससे अधिक) जोड़ने देता है — हर एक अलग टॉपिंग के रूप में गिनी जाती है।"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",

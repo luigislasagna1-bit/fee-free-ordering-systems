@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "Ingen andre varer at kopiere til.",
       "copySettingsApply": "{n, plural, =0 {Kopiér til varer} one {Kopiér til # vare} other {Kopiér til # varer}}",
       "copySettingsDone": "{ok, plural, one {Kopieret til # vare} other {Kopieret til # varer}}",
-      "copySettingsFailed": "Indstillingerne kunne ikke kopieres."
+      "copySettingsFailed": "Indstillingerne kunne ikke kopieres.",
+      "allowMultipleToppings": "Tillad flere af samme topping",
+      "allowMultipleToppingsHint": "Lader kunderne tilføje dobbelt (eller mere) af en topping — hver enkelt tæller som en separat topping."
     },
     "promotionsList": {
       "stackingMaster": "Master",

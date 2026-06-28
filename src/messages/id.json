@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "Tidak ada item lain untuk disalin.",
       "copySettingsApply": "{n, plural, =0 {Salin ke item} other {Salin ke # item}}",
       "copySettingsDone": "{ok, plural, other {Disalin ke # item}}",
-      "copySettingsFailed": "Tidak dapat menyalin pengaturan."
+      "copySettingsFailed": "Tidak dapat menyalin pengaturan.",
+      "allowMultipleToppings": "Izinkan beberapa topping yang sama",
+      "allowMultipleToppingsHint": "Memungkinkan pelanggan menambahkan topping dua kali lipat (atau lebih) — masing-masing dihitung sebagai topping terpisah."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "Δεν υπάρχουν άλλα προϊόντα για αντιγραφή.",
       "copySettingsApply": "{n, plural, =0 {Αντιγραφή σε προϊόντα} one {Αντιγραφή σε # προϊόν} other {Αντιγραφή σε # προϊόντα}}",
       "copySettingsDone": "{ok, plural, one {Αντιγράφηκε σε # προϊόν} other {Αντιγράφηκε σε # προϊόντα}}",
-      "copySettingsFailed": "Δεν ήταν δυνατή η αντιγραφή των ρυθμίσεων."
+      "copySettingsFailed": "Δεν ήταν δυνατή η αντιγραφή των ρυθμίσεων.",
+      "allowMultipleToppings": "Να επιτρέπονται πολλαπλά ίδια συστατικά",
+      "allowMultipleToppingsHint": "Επιτρέπει στους πελάτες να προσθέτουν διπλό (ή περισσότερο) ένα συστατικό — το καθένα μετράει ως ξεχωριστό συστατικό."
     },
     "promotionsList": {
       "stackingMaster": "Master",

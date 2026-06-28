@@ -2662,7 +2662,9 @@
       "copySettingsNoItems": "Žiadne ďalšie položky na skopírovanie.",
       "copySettingsApply": "{n, plural, =0 {Kopírovať do položiek} one {Kopírovať do # položky} few {Kopírovať do # položiek} many {Kopírovať do # položky} other {Kopírovať do # položiek}}",
       "copySettingsDone": "{ok, plural, one {Skopírované do # položky} few {Skopírované do # položiek} many {Skopírované do # položky} other {Skopírované do # položiek}}",
-      "copySettingsFailed": "Nastavenia sa nepodarilo skopírovať."
+      "copySettingsFailed": "Nastavenia sa nepodarilo skopírovať.",
+      "allowMultipleToppings": "Povoliť viac kusov tej istej prísady",
+      "allowMultipleToppingsHint": "Umožní zákazníkom pridať dvojitú (alebo väčšiu) porciu prísady — každá sa počíta ako samostatná prísada."
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",

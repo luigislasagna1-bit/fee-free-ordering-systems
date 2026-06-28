@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "没有可复制到的其他商品。",
       "copySettingsApply": "{n, plural, =0 {复制到商品} other {复制到 # 个商品}}",
       "copySettingsDone": "{ok, plural, other {已复制到 # 个商品}}",
-      "copySettingsFailed": "无法复制设置。"
+      "copySettingsFailed": "无法复制设置。",
+      "allowMultipleToppings": "允许添加多份相同配料",
+      "allowMultipleToppingsHint": "允许顾客将某种配料加倍（或更多）添加——每一份都按单独的配料计算。"
     },
     "promotionsList": {
       "stackingMaster": "主控",

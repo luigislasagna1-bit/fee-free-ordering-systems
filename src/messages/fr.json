@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "Aucun autre article vers lequel copier.",
       "copySettingsApply": "{n, plural, =0 {Copier vers les articles} one {Copier vers # article} other {Copier vers # articles}}",
       "copySettingsDone": "{ok, plural, one {Copié vers # article} other {Copié vers # articles}}",
-      "copySettingsFailed": "Impossible de copier les réglages."
+      "copySettingsFailed": "Impossible de copier les réglages.",
+      "allowMultipleToppings": "Autoriser plusieurs fois la même garniture",
+      "allowMultipleToppingsHint": "Permet aux clients d'ajouter une garniture en double (ou plus) — chacune compte comme une garniture distincte."
     },
     "promotionsList": {
       "stackingMaster": "Maître",

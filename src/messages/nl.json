@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "Geen andere items om naar te kopiëren.",
       "copySettingsApply": "{n, plural, =0 {Naar items kopiëren} one {Naar # item kopiëren} other {Naar # items kopiëren}}",
       "copySettingsDone": "{ok, plural, one {Gekopieerd naar # item} other {Gekopieerd naar # items}}",
-      "copySettingsFailed": "Kon de instellingen niet kopiëren."
+      "copySettingsFailed": "Kon de instellingen niet kopiëren.",
+      "allowMultipleToppings": "Meerdere keer hetzelfde beleg toestaan",
+      "allowMultipleToppingsHint": "Laat klanten een beleg dubbel (of meer) toevoegen — elk telt als een afzonderlijk beleg."
     },
     "promotionsList": {
       "stackingMaster": "Master",

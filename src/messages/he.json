@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "אין פריטים אחרים להעתיק אליהם.",
       "copySettingsApply": "{n, plural, =0 {העתקה לפריטים} one {העתקה לפריט #} two {העתקה ל-# פריטים} many {העתקה ל-# פריטים} other {העתקה ל-# פריטים}}",
       "copySettingsDone": "{ok, plural, one {הועתק לפריט #} two {הועתק ל-# פריטים} many {הועתק ל-# פריטים} other {הועתק ל-# פריטים}}",
-      "copySettingsFailed": "לא ניתן היה להעתיק את ההגדרות."
+      "copySettingsFailed": "לא ניתן היה להעתיק את ההגדרות.",
+      "allowMultipleToppings": "אפשר כמה יחידות מאותה תוספת",
+      "allowMultipleToppingsHint": "מאפשר ללקוחות להוסיף תוספת בכפול (או יותר) — כל אחת נספרת כתוספת נפרדת."
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",

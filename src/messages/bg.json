@@ -1984,7 +1984,9 @@
       "copySettingsNoItems": "Няма други артикули за копиране.",
       "copySettingsApply": "{n, plural, =0 {Копиране към артикули} one {Копиране към # артикул} other {Копиране към # артикула}}",
       "copySettingsDone": "{ok, plural, one {Копирано към # артикул} other {Копирано към # артикула}}",
-      "copySettingsFailed": "Настройките не можаха да се копират."
+      "copySettingsFailed": "Настройките не можаха да се копират.",
+      "allowMultipleToppings": "Разрешаване на няколко от една и съща добавка",
+      "allowMultipleToppingsHint": "Позволява на клиентите да добавят двойно (или повече) от една добавка — всяка се брои като отделна добавка."
     },
     "promotionsList": {
       "stackingMaster": "Главна",
