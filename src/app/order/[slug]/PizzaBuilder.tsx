@@ -572,17 +572,21 @@ function PizzaVisual({
 // ── Topping pill ──────────────────────────────────────────────────────────────
 
 function ToppingPill({
-  opt, topping, onToggle, onSetQuantity, primaryColor,
+  opt, topping, onToggle, onSetQuantity, primaryColor, priceMultiplier = 1,
 }: {
   opt: ModOption;
   topping: SelectedTopping | undefined;
   onToggle: () => void;
   onSetQuantity: (qty: ToppingQuantity) => void;
   primaryColor: string;
+  /** Half-pizza display multiplier (0.5) so a topping added on the current half
+   *  shows the price it'll actually cost. 1 = whole. */
+  priceMultiplier?: number;
 }) {
   const formatCurrency = useCurrencyFormat();
   const selected = !!topping;
   const qty = topping?.quantity ?? "normal";
+  const shownPrice = Math.round(opt.priceAdjustment * priceMultiplier * 100) / 100;
 
   return (
     <div
@@ -606,9 +610,9 @@ function ToppingPill({
         <span className={`font-medium truncate ${selected ? "text-gray-900" : "text-gray-700"}`}>
           {opt.name}
         </span>
-        {opt.priceAdjustment > 0 && (
+        {shownPrice > 0 && (
           <span className="text-xs text-gray-400 flex-shrink-0">
-            +{formatCurrency(opt.priceAdjustment)}
+            +{formatCurrency(shownPrice)}
           </span>
         )}
       </button>
@@ -1322,6 +1326,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                         selectedId={customization.leftSauceOptionId}
                         onSelect={id => setSauce(id, "left")}
                         primaryColor={primaryColor}
+                        priceMultiplier={config.halfToppingMultiplier}
                       />
                     </div>
                     <div>
@@ -1331,6 +1336,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                         selectedId={customization.rightSauceOptionId}
                         onSelect={id => setSauce(id, "right")}
                         primaryColor={primaryColor}
+                        priceMultiplier={config.halfToppingMultiplier}
                       />
                     </div>
                   </div>
@@ -1379,6 +1385,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                         selectedId={customization.leftCheeseOptionId}
                         onSelect={id => setCheese(id, "left")}
                         primaryColor={primaryColor}
+                        priceMultiplier={config.halfToppingMultiplier}
                       />
                     </div>
                     <div>
@@ -1388,6 +1395,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                         selectedId={customization.rightCheeseOptionId}
                         onSelect={id => setCheese(id, "right")}
                         primaryColor={primaryColor}
+                        priceMultiplier={config.halfToppingMultiplier}
                       />
                     </div>
                   </div>
@@ -1468,6 +1476,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                               onToggle={() => toggleTopping(opt, g.id)}
                               onSetQuantity={(qty) => setToppingQuantity(opt.id, placement, qty)}
                               primaryColor={primaryColor}
+                              priceMultiplier={placement !== "whole" ? effectiveConfig.halfToppingMultiplier : 1}
                             />
                           );
                         })}
@@ -1615,15 +1624,20 @@ function SectionHeader({ label, required }: { label: string; required?: boolean 
 
 /** Single-select horizontal pill row (for sauce / cheese) */
 function OptionRow({
-  options, selectedId, onSelect, primaryColor,
+  options, selectedId, onSelect, primaryColor, priceMultiplier = 1,
 }: {
   options: ModOption[]; selectedId: string | null;
   onSelect: (id: string) => void; primaryColor: string;
+  /** On a single half, the option costs this fraction of its whole-pizza price
+   *  (e.g. 0.5). The displayed "+$X" is scaled to match what's charged. 1 = whole. */
+  priceMultiplier?: number;
 }) {
   const formatCurrency = useCurrencyFormat();
   return (
     <div className="flex flex-wrap gap-2">
-      {options.map(opt => (
+      {options.map(opt => {
+        const shown = Math.round(opt.priceAdjustment * priceMultiplier * 100) / 100;
+        return (
         <button
           key={opt.id}
           onClick={() => onSelect(opt.id)}
@@ -1635,11 +1649,12 @@ function OptionRow({
           }
         >
           {opt.name}
-          {opt.priceAdjustment > 0 && (
-            <span className="ml-1 text-xs opacity-70">+{formatCurrency(opt.priceAdjustment)}</span>
+          {shown > 0 && (
+            <span className="ml-1 text-xs opacity-70">+{formatCurrency(shown)}</span>
           )}
         </button>
-      ))}
+        );
+      })}
     </div>
   );
 }
