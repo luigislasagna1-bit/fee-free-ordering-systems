@@ -4350,7 +4350,9 @@
         "delete": "Slett",
         "cancel": "Avbryt",
         "save": "Legg til regel"
-      }
+      },
+      "signupBonusAlways": "Registreringsbonus (alltid på)",
+      "signupBonusDatedHint": "Gis til hver nye konto, uten sluttdato. For et tidsbegrenset registreringstilbud (start-/sluttdato) bruker du «Legg til en måte å tjene på → Når en kunde registrerer seg» ovenfor."
     }
   },
   "impersonation": {

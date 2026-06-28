@@ -4350,7 +4350,9 @@
         "delete": "Ta bort",
         "cancel": "Avbryt",
         "save": "Lägg till regel"
-      }
+      },
+      "signupBonusAlways": "Registreringsbonus (alltid på)",
+      "signupBonusDatedHint": "Ges till varje nytt konto, utan slutdatum. För ett tidsbegränsat registreringserbjudande (start-/slutdatum) använder du ”Lägg till ett sätt att tjäna → När en kund registrerar sig” ovan."
     }
   },
   "impersonation": {

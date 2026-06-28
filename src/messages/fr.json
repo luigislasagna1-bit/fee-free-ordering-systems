@@ -4350,7 +4350,9 @@
         "delete": "Supprimer",
         "cancel": "Annuler",
         "save": "Ajouter la règle"
-      }
+      },
+      "signupBonusAlways": "Bonus d’inscription (toujours actif)",
+      "signupBonusDatedHint": "Attribué à chaque nouveau compte, sans date de fin. Pour une offre d’inscription à durée limitée (dates de début/fin), utilisez « Ajouter un moyen de gagner → Lorsqu’un client s’inscrit » ci-dessus."
     }
   },
   "impersonation": {

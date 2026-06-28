@@ -4350,7 +4350,9 @@
         "delete": "Ištrinti",
         "cancel": "Atšaukti",
         "save": "Pridėti taisyklę"
-      }
+      },
+      "signupBonusAlways": "Registracijos premija (visada įjungta)",
+      "signupBonusDatedHint": "Skiriama kiekvienai naujai paskyrai, be pabaigos datos. Riboto laiko registracijos pasiūlymui (pradžios / pabaigos datos) naudokite viršuje „Pridėti uždarbio būdą → Kai klientas užsiregistruoja“."
     }
   },
   "impersonation": {

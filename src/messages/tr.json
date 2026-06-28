@@ -4350,7 +4350,9 @@
         "delete": "Sil",
         "cancel": "İptal",
         "save": "Kural ekle"
-      }
+      },
+      "signupBonusAlways": "Kayıt bonusu (her zaman açık)",
+      "signupBonusDatedHint": "Bitiş tarihi olmadan her yeni hesaba verilir. Süreli bir kayıt teklifi (başlangıç/bitiş tarihleri) için yukarıdaki “Kazanma yolu ekle → Bir müşteri kaydolduğunda” seçeneğini kullanın."
     }
   },
   "impersonation": {

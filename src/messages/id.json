@@ -4350,7 +4350,9 @@
         "delete": "Hapus",
         "cancel": "Batal",
         "save": "Tambah aturan"
-      }
+      },
+      "signupBonusAlways": "Bonus pendaftaran (selalu aktif)",
+      "signupBonusDatedHint": "Diberikan ke setiap akun baru, tanpa tanggal berakhir. Untuk penawaran pendaftaran berbatas waktu (tanggal mulai/berakhir), gunakan “Tambahkan cara mendapatkan → Saat pelanggan mendaftar” di atas."
     }
   },
   "impersonation": {

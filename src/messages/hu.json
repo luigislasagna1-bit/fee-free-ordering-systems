@@ -4350,7 +4350,9 @@
         "delete": "Törlés",
         "cancel": "Mégse",
         "save": "Szabály hozzáadása"
-      }
+      },
+      "signupBonusAlways": "Regisztrációs bónusz (mindig aktív)",
+      "signupBonusDatedHint": "Minden új fiók megkapja, befejezési dátum nélkül. Időszakos regisztrációs ajánláshoz (kezdő/záró dátum) használja fent a „Kereseti mód hozzáadása → Amikor egy vásárló regisztrál” lehetőséget."
     }
   },
   "impersonation": {

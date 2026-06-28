@@ -4350,7 +4350,9 @@
         "delete": "Verwijderen",
         "cancel": "Annuleren",
         "save": "Regel toevoegen"
-      }
+      },
+      "signupBonusAlways": "Aanmeldbonus (altijd actief)",
+      "signupBonusDatedHint": "Wordt aan elk nieuw account gegeven, zonder einddatum. Gebruik voor een tijdelijke aanmeldaanbieding (begin-/einddatum) hierboven ‘Een manier om te verdienen toevoegen → Wanneer een klant zich aanmeldt’."
     }
   },
   "impersonation": {

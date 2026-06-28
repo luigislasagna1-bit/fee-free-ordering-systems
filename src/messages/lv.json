@@ -4350,7 +4350,9 @@
         "delete": "Dzēst",
         "cancel": "Atcelt",
         "save": "Pievienot noteikumu"
-      }
+      },
+      "signupBonusAlways": "Reģistrācijas bonuss (vienmēr aktīvs)",
+      "signupBonusDatedHint": "Tiek piešķirts katram jaunam kontam, bez beigu datuma. Ierobežota laika reģistrācijas piedāvājumam (sākuma/beigu datums) izmantojiet augšā „Pievienot nopelnīšanas veidu → Kad klients reģistrējas“."
     }
   },
   "impersonation": {

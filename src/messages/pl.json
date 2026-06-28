@@ -4350,7 +4350,9 @@
         "delete": "Usuń",
         "cancel": "Anuluj",
         "save": "Dodaj regułę"
-      }
+      },
+      "signupBonusAlways": "Bonus za rejestrację (zawsze aktywny)",
+      "signupBonusDatedHint": "Przyznawany każdemu nowemu kontu, bez daty zakończenia. W przypadku oferty rejestracyjnej na czas ograniczony (daty rozpoczęcia/zakończenia) użyj powyżej opcji „Dodaj sposób zdobywania → Gdy klient się zarejestruje”."
     }
   },
   "impersonation": {

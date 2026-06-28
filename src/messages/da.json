@@ -4350,7 +4350,9 @@
         "delete": "Slet",
         "cancel": "Annuller",
         "save": "Tilføj regel"
-      }
+      },
+      "signupBonusAlways": "Tilmeldingsbonus (altid aktiv)",
+      "signupBonusDatedHint": "Gives til hver ny konto uden slutdato. For et tidsbegrænset tilmeldingstilbud (start-/slutdato) skal du bruge “Tilføj en måde at optjene på → Når en kunde tilmelder sig” ovenfor."
     }
   },
   "impersonation": {

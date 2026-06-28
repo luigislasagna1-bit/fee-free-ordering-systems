@@ -4350,7 +4350,9 @@
         "delete": "Elimina",
         "cancel": "Annulla",
         "save": "Aggiungi regola"
-      }
+      },
+      "signupBonusAlways": "Bonus di registrazione (sempre attivo)",
+      "signupBonusDatedHint": "Assegnato a ogni nuovo account, senza data di fine. Per un’offerta di registrazione a tempo limitato (date di inizio/fine), usa «Aggiungi un modo per guadagnare → Quando un cliente si registra» qui sopra."
     }
   },
   "impersonation": {

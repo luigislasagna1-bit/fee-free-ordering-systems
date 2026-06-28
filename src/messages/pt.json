@@ -4350,7 +4350,9 @@
         "delete": "Eliminar",
         "cancel": "Cancelar",
         "save": "Adicionar regra"
-      }
+      },
+      "signupBonusAlways": "Bónus de registo (sempre ativo)",
+      "signupBonusDatedHint": "Atribuído a cada nova conta, sem data de fim. Para uma oferta de registo por tempo limitado (datas de início/fim), utilize «Adicionar uma forma de ganhar → Quando um cliente se regista» acima."
     }
   },
   "impersonation": {

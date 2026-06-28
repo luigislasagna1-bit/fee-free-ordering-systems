@@ -4350,7 +4350,9 @@
         "delete": "Odstrániť",
         "cancel": "Zrušiť",
         "save": "Pridať pravidlo"
-      }
+      },
+      "signupBonusAlways": "Bonus za registráciu (vždy aktívny)",
+      "signupBonusDatedHint": "Udeľuje sa každému novému účtu, bez dátumu ukončenia. Pre časovo obmedzenú registračnú ponuku (dátumy začiatku/konca) použite vyššie „Pridať spôsob získania → Keď sa zákazník zaregistruje“."
     }
   },
   "impersonation": {

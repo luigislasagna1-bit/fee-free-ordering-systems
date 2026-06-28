@@ -180,12 +180,14 @@ export function RewardsClient({ currency, initial }: { currency: string; initial
             </div>
           </div>
 
-          {/* Sign-up bonus */}
+          {/* Sign-up bonus (always-on). For a limited-time / dated sign-up offer,
+              the owner uses "Ways to earn → When a customer signs up" above. */}
           <div className="rounded-2xl border border-gray-200 bg-white p-5">
             <div className="flex items-center justify-between gap-3 flex-wrap">
-              <span className="font-medium text-gray-900 flex items-center gap-1.5">{t("signupBonus")} <HelpTip text={t("signupBonusHelp")} /></span>
+              <span className="font-medium text-gray-900 flex items-center gap-1.5">{t("signupBonusAlways")} <HelpTip text={t("signupBonusHelp")} /></span>
               {moneyInput(s.rewardSignupBonus, (n) => set("rewardSignupBonus", n))}
             </div>
+            <p className="mt-1.5 text-xs text-gray-500">{t("signupBonusDatedHint")}</p>
           </div>
         </>
       )}

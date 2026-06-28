@@ -4350,7 +4350,9 @@
         "delete": "Șterge",
         "cancel": "Anulează",
         "save": "Adaugă regula"
-      }
+      },
+      "signupBonusAlways": "Bonus de înregistrare (mereu activ)",
+      "signupBonusDatedHint": "Se acordă fiecărui cont nou, fără dată de încheiere. Pentru o ofertă de înregistrare pe durată limitată (date de început/sfârșit), folosește mai sus „Adaugă o modalitate de câștig → Când un client se înregistrează”."
     }
   },
   "impersonation": {

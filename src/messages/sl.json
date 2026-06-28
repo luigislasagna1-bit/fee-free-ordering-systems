@@ -4350,7 +4350,9 @@
         "delete": "Izbriši",
         "cancel": "Prekliči",
         "save": "Dodaj pravilo"
-      }
+      },
+      "signupBonusAlways": "Bonus za registracijo (vedno aktiven)",
+      "signupBonusDatedHint": "Dodeli se vsakemu novemu računu, brez datuma zaključka. Za časovno omejeno registracijsko ponudbo (datuma začetka/konca) zgoraj uporabite »Dodaj način zaslužka → Ko se stranka registrira«."
     }
   },
   "impersonation": {

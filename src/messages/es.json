@@ -4350,7 +4350,9 @@
         "delete": "Eliminar",
         "cancel": "Cancelar",
         "save": "Añadir regla"
-      }
+      },
+      "signupBonusAlways": "Bono de registro (siempre activo)",
+      "signupBonusDatedHint": "Se otorga a cada cuenta nueva, sin fecha de finalización. Para una oferta de registro por tiempo limitado (fechas de inicio/fin), usa «Añadir una forma de ganar → Cuando un cliente se registra» más arriba."
     }
   },
   "impersonation": {

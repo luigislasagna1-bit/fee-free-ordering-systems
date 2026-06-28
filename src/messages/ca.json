@@ -4350,7 +4350,9 @@
         "delete": "Elimina",
         "cancel": "Cancel·la",
         "save": "Afegeix la regla"
-      }
+      },
+      "signupBonusAlways": "Bonificació de registre (sempre activa)",
+      "signupBonusDatedHint": "S’atorga a cada compte nou, sense data de finalització. Per a una oferta de registre per temps limitat (dates d’inici/fi), utilitza «Afegeix una manera de guanyar → Quan un client es registra» a dalt."
     }
   },
   "impersonation": {

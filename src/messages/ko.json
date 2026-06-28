@@ -4350,7 +4350,9 @@
         "delete": "삭제",
         "cancel": "취소",
         "save": "규칙 추가"
-      }
+      },
+      "signupBonusAlways": "가입 보너스 (항상 적용)",
+      "signupBonusDatedHint": "종료일 없이 모든 신규 계정에 지급됩니다. 기간 한정 가입 혜택(시작일/종료일)을 원하시면 위의 “적립 방법 추가 → 고객이 가입할 때”를 사용하세요."
     }
   },
   "impersonation": {

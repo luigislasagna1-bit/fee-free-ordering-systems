@@ -4350,7 +4350,9 @@
         "delete": "Excluir",
         "cancel": "Cancelar",
         "save": "Adicionar regra"
-      }
+      },
+      "signupBonusAlways": "Bônus de cadastro (sempre ativo)",
+      "signupBonusDatedHint": "Concedido a cada nova conta, sem data de término. Para uma oferta de cadastro por tempo limitado (datas de início/término), use “Adicionar uma forma de ganhar → Quando um cliente se cadastra” acima."
     }
   },
   "impersonation": {

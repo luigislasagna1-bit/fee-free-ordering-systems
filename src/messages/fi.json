@@ -4350,7 +4350,9 @@
         "delete": "Poista",
         "cancel": "Peruuta",
         "save": "Lisää sääntö"
-      }
+      },
+      "signupBonusAlways": "Rekisteröitymisbonus (aina käytössä)",
+      "signupBonusDatedHint": "Annetaan jokaiselle uudelle tilille ilman päättymispäivää. Määräaikaista rekisteröitymistarjousta varten (alku-/päättymispäivä) käytä yllä olevaa kohtaa ”Lisää ansaintatapa → Kun asiakas rekisteröityy”."
     }
   },
   "impersonation": {

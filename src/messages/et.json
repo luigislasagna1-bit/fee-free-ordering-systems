@@ -4350,7 +4350,9 @@
         "delete": "Kustuta",
         "cancel": "Tühista",
         "save": "Lisa reegel"
-      }
+      },
+      "signupBonusAlways": "Registreerumisboonus (alati aktiivne)",
+      "signupBonusDatedHint": "Antakse igale uuele kontole, lõppkuupäevata. Tähtajalise registreerumispakkumise jaoks (algus-/lõppkuupäev) kasuta ülal valikut „Lisa teenimisviis → Kui klient registreerub“."
     }
   },
   "impersonation": {

@@ -4350,7 +4350,9 @@
         "delete": "Löschen",
         "cancel": "Abbrechen",
         "save": "Regel hinzufügen"
-      }
+      },
+      "signupBonusAlways": "Anmeldebonus (immer aktiv)",
+      "signupBonusDatedHint": "Wird jedem neuen Konto ohne Enddatum gewährt. Für ein zeitlich begrenztes Anmeldeangebot (Start-/Enddatum) verwenden Sie oben „Verdienstmöglichkeit hinzufügen → Wenn sich ein Kunde anmeldet“."
     }
   },
   "impersonation": {

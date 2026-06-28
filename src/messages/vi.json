@@ -4350,7 +4350,9 @@
         "delete": "Xóa",
         "cancel": "Hủy",
         "save": "Thêm quy tắc"
-      }
+      },
+      "signupBonusAlways": "Thưởng đăng ký (luôn bật)",
+      "signupBonusDatedHint": "Được tặng cho mọi tài khoản mới, không có ngày kết thúc. Để có ưu đãi đăng ký trong thời gian giới hạn (ngày bắt đầu/kết thúc), hãy dùng “Thêm cách kiếm điểm → Khi khách hàng đăng ký” ở trên."
     }
   },
   "impersonation": {
