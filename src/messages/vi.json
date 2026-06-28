@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Những món này không được phục vụ vào ngày đặt bàn của bạn. Hãy xóa để tiếp tục, hoặc đổi lượt đặt bàn sang ngày có phục vụ:",
     "reservationCartChangeDay": "Đổi ngày đặt bàn",
     "holidayClosedHoursToday": "Đóng cửa {windows} hôm nay",
-    "servicePausedBadge": "tạm dừng"
+    "servicePausedBadge": "tạm dừng",
+    "rewardTileBadge": "Nhận",
+    "rewardTileSignup": "Đăng ký & nhận {amount}",
+    "rewardTileFirstOrder": "Nhận {amount} cho đơn hàng đầu tiên của bạn",
+    "rewardTileOrderOver": "Nhận {amount} cho đơn hàng trên {threshold}",
+    "rewardTileNth": "Nhận {amount} mỗi {n} đơn hàng"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -4349,7 +4354,12 @@
         "resume": "Tiếp tục",
         "delete": "Xóa",
         "cancel": "Hủy",
-        "save": "Thêm quy tắc"
+        "save": "Thêm quy tắc",
+        "showInPromos": "Hiển thị trong mục Khuyến mãi",
+        "showInPromosHint": "Quảng bá mục này dưới dạng ô trên trang đặt hàng của bạn để khách hàng nhìn thấy (ví dụ: “Nhận $5 cho đơn hàng đầu tiên của bạn”).",
+        "promoBadge": "Trong khuyến mãi",
+        "promoteOn": "Hiện đang hiển thị trong mục Khuyến mãi của bạn.",
+        "promoteOff": "Đã xóa khỏi mục Khuyến mãi của bạn."
       },
       "signupBonusAlways": "Thưởng đăng ký (luôn bật)",
       "signupBonusDatedHint": "Được tặng cho mọi tài khoản mới, không có ngày kết thúc. Để có ưu đãi đăng ký trong thời gian giới hạn (ngày bắt đầu/kết thúc), hãy dùng “Thêm cách kiếm điểm → Khi khách hàng đăng ký” ở trên."

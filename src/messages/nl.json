@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Deze items worden niet aangeboden op de dag van uw reservering. Verwijder ze om door te gaan, of wijzig uw reservering naar een dag waarop ze beschikbaar zijn:",
     "reservationCartChangeDay": "Reserveringsdag wijzigen",
     "holidayClosedHoursToday": "Vandaag {windows} gesloten",
-    "servicePausedBadge": "gepauzeerd"
+    "servicePausedBadge": "gepauzeerd",
+    "rewardTileBadge": "Verdien",
+    "rewardTileSignup": "Meld je aan en krijg {amount}",
+    "rewardTileFirstOrder": "Verdien {amount} bij je eerste bestelling",
+    "rewardTileOrderOver": "Verdien {amount} bij bestellingen boven {threshold}",
+    "rewardTileNth": "Verdien {amount} bij elke {n} bestellingen"
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -4349,7 +4354,12 @@
         "resume": "Hervatten",
         "delete": "Verwijderen",
         "cancel": "Annuleren",
-        "save": "Regel toevoegen"
+        "save": "Regel toevoegen",
+        "showInPromos": "Weergeven in het gedeelte Promoties",
+        "showInPromosHint": "Adverteer dit als een tegel op je bestelpagina zodat klanten het zien (bijv. ‘Verdien $5 bij je eerste bestelling’).",
+        "promoBadge": "In promoties",
+        "promoteOn": "Wordt nu weergegeven in je gedeelte Promoties.",
+        "promoteOff": "Verwijderd uit je gedeelte Promoties."
       },
       "signupBonusAlways": "Aanmeldbonus (altijd actief)",
       "signupBonusDatedHint": "Wordt aan elk nieuw account gegeven, zonder einddatum. Gebruik voor een tijdelijke aanmeldaanbieding (begin-/einddatum) hierboven ‘Een manier om te verdienen toevoegen → Wanneer een klant zich aanmeldt’."

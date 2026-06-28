@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Aquests articles no s'ofereixen el dia de la teva reserva. Elimina'ls per continuar, o canvia la reserva a un dia en què estiguin disponibles:",
     "reservationCartChangeDay": "Canvia el dia de la reserva",
     "holidayClosedHoursToday": "Tancat {windows} avui",
-    "servicePausedBadge": "en pausa"
+    "servicePausedBadge": "en pausa",
+    "rewardTileBadge": "Guanya",
+    "rewardTileSignup": "Registra't i aconsegueix {amount}",
+    "rewardTileFirstOrder": "Guanya {amount} amb la teva primera comanda",
+    "rewardTileOrderOver": "Guanya {amount} en comandes de més de {threshold}",
+    "rewardTileNth": "Guanya {amount} cada {n} comandes"
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -4349,7 +4354,12 @@
         "resume": "Reprèn",
         "delete": "Elimina",
         "cancel": "Cancel·la",
-        "save": "Afegeix la regla"
+        "save": "Afegeix la regla",
+        "showInPromos": "Mostra a la secció de promocions",
+        "showInPromosHint": "Anuncia-ho com a mosaic a la teva pàgina de comandes perquè els clients ho vegin (p. ex. «Guanya $5 amb la teva primera comanda»).",
+        "promoBadge": "En promocions",
+        "promoteOn": "Ara es mostra a la secció de promocions.",
+        "promoteOff": "S'ha tret de la secció de promocions."
       },
       "signupBonusAlways": "Bonificació de registre (sempre activa)",
       "signupBonusDatedHint": "S’atorga a cada compte nou, sense data de finalització. Per a una oferta de registre per temps limitat (dates d’inici/fi), utilitza «Afegeix una manera de guanyar → Quan un client es registra» a dalt."

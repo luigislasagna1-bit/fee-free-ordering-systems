@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Estes itens não são oferecidos no dia da sua reserva. Remova-os para continuar ou altere sua reserva para um dia em que estejam disponíveis:",
     "reservationCartChangeDay": "Alterar o dia da reserva",
     "holidayClosedHoursToday": "Fechado {windows} hoje",
-    "servicePausedBadge": "em pausa"
+    "servicePausedBadge": "em pausa",
+    "rewardTileBadge": "Ganhe",
+    "rewardTileSignup": "Cadastre-se e ganhe {amount}",
+    "rewardTileFirstOrder": "Ganhe {amount} no seu primeiro pedido",
+    "rewardTileOrderOver": "Ganhe {amount} em pedidos acima de {threshold}",
+    "rewardTileNth": "Ganhe {amount} a cada {n} pedidos"
   },
   "pizza": {
     "chooseSize": "Escolha o Tamanho",
@@ -4349,7 +4354,12 @@
         "resume": "Retomar",
         "delete": "Excluir",
         "cancel": "Cancelar",
-        "save": "Adicionar regra"
+        "save": "Adicionar regra",
+        "showInPromos": "Mostrar na seção de Promoções",
+        "showInPromosHint": "Divulgue isso como um bloco na sua página de pedidos para que os clientes vejam (ex.: «Ganhe $5 no seu primeiro pedido»).",
+        "promoBadge": "Nas promoções",
+        "promoteOn": "Agora aparece na sua seção de Promoções.",
+        "promoteOff": "Removido da sua seção de Promoções."
       },
       "signupBonusAlways": "Bônus de cadastro (sempre ativo)",
       "signupBonusDatedHint": "Concedido a cada nova conta, sem data de término. Para uma oferta de cadastro por tempo limitado (datas de início/término), use “Adicionar uma forma de ganhar → Quando um cliente se cadastra” acima."

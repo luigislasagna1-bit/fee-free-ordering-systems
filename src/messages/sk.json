@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Tieto položky sa v deň vašej rezervácie neponúkajú. Odstráňte ich a pokračujte, alebo zmeňte rezerváciu na deň, keď sú dostupné:",
     "reservationCartChangeDay": "Zmeniť deň rezervácie",
     "holidayClosedHoursToday": "Dnes zatvorené {windows}",
-    "servicePausedBadge": "pozastavené"
+    "servicePausedBadge": "pozastavené",
+    "rewardTileBadge": "Získajte",
+    "rewardTileSignup": "Zaregistrujte sa a získajte {amount}",
+    "rewardTileFirstOrder": "Získajte {amount} za prvú objednávku",
+    "rewardTileOrderOver": "Získajte {amount} pri objednávkach nad {threshold}",
+    "rewardTileNth": "Získajte {amount} za každých {n} objednávok"
   },
   "pizza": {
     "chooseSize": "Vybrať veľkosť",
@@ -4349,7 +4354,12 @@
         "resume": "Obnoviť",
         "delete": "Odstrániť",
         "cancel": "Zrušiť",
-        "save": "Pridať pravidlo"
+        "save": "Pridať pravidlo",
+        "showInPromos": "Zobraziť v sekcii Akcie",
+        "showInPromosHint": "Propagujte to ako dlaždicu na svojej objednávkovej stránke, aby to zákazníci videli (napr. „Získajte $5 za prvú objednávku“).",
+        "promoBadge": "V akciách",
+        "promoteOn": "Teraz sa zobrazuje vo vašej sekcii Akcie.",
+        "promoteOff": "Odstránené z vašej sekcie Akcie."
       },
       "signupBonusAlways": "Bonus za registráciu (vždy aktívny)",
       "signupBonusDatedHint": "Udeľuje sa každému novému účtu, bez dátumu ukončenia. Pre časovo obmedzenú registračnú ponuku (dátumy začiatku/konca) použite vyššie „Pridať spôsob získania → Keď sa zákazník zaregistruje“."

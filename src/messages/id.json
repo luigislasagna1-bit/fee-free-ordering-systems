@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Item ini tidak tersedia pada hari reservasi Anda. Hapus untuk melanjutkan, atau ubah reservasi Anda ke hari saat tersedia:",
     "reservationCartChangeDay": "Ubah hari reservasi",
     "holidayClosedHoursToday": "Tutup {windows} hari ini",
-    "servicePausedBadge": "dijeda"
+    "servicePausedBadge": "dijeda",
+    "rewardTileBadge": "Dapatkan",
+    "rewardTileSignup": "Daftar & dapatkan {amount}",
+    "rewardTileFirstOrder": "Dapatkan {amount} pada pesanan pertama Anda",
+    "rewardTileOrderOver": "Dapatkan {amount} untuk pesanan di atas {threshold}",
+    "rewardTileNth": "Dapatkan {amount} setiap {n} pesanan"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -4349,7 +4354,12 @@
         "resume": "Lanjutkan",
         "delete": "Hapus",
         "cancel": "Batal",
-        "save": "Tambah aturan"
+        "save": "Tambah aturan",
+        "showInPromos": "Tampilkan di bagian Promo",
+        "showInPromosHint": "Promosikan ini sebagai ubin di halaman pemesanan Anda agar pelanggan melihatnya (mis. “Dapatkan $5 pada pesanan pertama Anda”).",
+        "promoBadge": "Di promo",
+        "promoteOn": "Kini ditampilkan di bagian Promo Anda.",
+        "promoteOff": "Dihapus dari bagian Promo Anda."
       },
       "signupBonusAlways": "Bonus pendaftaran (selalu aktif)",
       "signupBonusDatedHint": "Diberikan ke setiap akun baru, tanpa tanggal berakhir. Untuk penawaran pendaftaran berbatas waktu (tanggal mulai/berakhir), gunakan “Tambahkan cara mendapatkan → Saat pelanggan mendaftar” di atas."

@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Näitä tuotteita ei tarjota varauspäivänäsi. Poista ne jatkaaksesi tai vaihda varauksesi päivälle, jolloin ne ovat saatavilla:",
     "reservationCartChangeDay": "Vaihda varauspäivää",
     "holidayClosedHoursToday": "Suljettu {windows} tänään",
-    "servicePausedBadge": "tauolla"
+    "servicePausedBadge": "tauolla",
+    "rewardTileBadge": "Ansaitse",
+    "rewardTileSignup": "Rekisteröidy ja saa {amount}",
+    "rewardTileFirstOrder": "Ansaitse {amount} ensimmäisellä tilauksellasi",
+    "rewardTileOrderOver": "Ansaitse {amount} yli {threshold} tilauksista",
+    "rewardTileNth": "Ansaitse {amount} joka {n} tilauksesta"
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -4349,7 +4354,12 @@
         "resume": "Jatka",
         "delete": "Poista",
         "cancel": "Peruuta",
-        "save": "Lisää sääntö"
+        "save": "Lisää sääntö",
+        "showInPromos": "Näytä Tarjoukset-osiossa",
+        "showInPromosHint": "Mainosta tätä ruutuna tilaussivullasi, jotta asiakkaat näkevät sen (esim. ”Ansaitse $5 ensimmäisellä tilauksellasi”).",
+        "promoBadge": "Tarjouksissa",
+        "promoteOn": "Näkyy nyt Tarjoukset-osiossasi.",
+        "promoteOff": "Poistettu Tarjoukset-osiostasi."
       },
       "signupBonusAlways": "Rekisteröitymisbonus (aina käytössä)",
       "signupBonusDatedHint": "Annetaan jokaiselle uudelle tilille ilman päättymispäivää. Määräaikaista rekisteröitymistarjousta varten (alku-/päättymispäivä) käytä yllä olevaa kohtaa ”Lisää ansaintatapa → Kun asiakas rekisteröityy”."

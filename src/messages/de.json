@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Diese Artikel werden am Tag Ihrer Reservierung nicht angeboten. Entfernen Sie sie, um fortzufahren, oder ändern Sie Ihre Reservierung auf einen Tag, an dem sie verfügbar sind:",
     "reservationCartChangeDay": "Reservierungstag ändern",
     "holidayClosedHoursToday": "Heute {windows} geschlossen",
-    "servicePausedBadge": "pausiert"
+    "servicePausedBadge": "pausiert",
+    "rewardTileBadge": "Verdienen",
+    "rewardTileSignup": "Registrieren & {amount} erhalten",
+    "rewardTileFirstOrder": "Verdiene {amount} bei deiner ersten Bestellung",
+    "rewardTileOrderOver": "Verdiene {amount} bei Bestellungen über {threshold}",
+    "rewardTileNth": "Verdiene {amount} alle {n} Bestellungen"
   },
   "pizza": {
     "chooseSize": "Größe wählen",
@@ -4349,7 +4354,12 @@
         "resume": "Fortsetzen",
         "delete": "Löschen",
         "cancel": "Abbrechen",
-        "save": "Regel hinzufügen"
+        "save": "Regel hinzufügen",
+        "showInPromos": "Im Bereich „Aktionen“ anzeigen",
+        "showInPromosHint": "Bewirb dies als Kachel auf deiner Bestellseite, damit Kunden es sehen (z. B. „Verdiene $5 bei deiner ersten Bestellung“).",
+        "promoBadge": "In Aktionen",
+        "promoteOn": "Wird jetzt in deinem Bereich „Aktionen“ angezeigt.",
+        "promoteOff": "Aus deinem Bereich „Aktionen“ entfernt."
       },
       "signupBonusAlways": "Anmeldebonus (immer aktiv)",
       "signupBonusDatedHint": "Wird jedem neuen Konto ohne Enddatum gewährt. Für ein zeitlich begrenztes Anmeldeangebot (Start-/Enddatum) verwenden Sie oben „Verdienstmöglichkeit hinzufügen → Wenn sich ein Kunde anmeldet“."

@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "هذه العناصر غير متوفرة في يوم حجزك. أزِلها للمتابعة، أو غيّر حجزك إلى يوم تتوفر فيه:",
     "reservationCartChangeDay": "تغيير يوم الحجز",
     "holidayClosedHoursToday": "مغلق {windows} اليوم",
-    "servicePausedBadge": "متوقّف مؤقتًا"
+    "servicePausedBadge": "متوقّف مؤقتًا",
+    "rewardTileBadge": "اكسب",
+    "rewardTileSignup": "سجّل واحصل على {amount}",
+    "rewardTileFirstOrder": "اكسب {amount} مع أول طلب",
+    "rewardTileOrderOver": "اكسب {amount} على الطلبات التي تتجاوز {threshold}",
+    "rewardTileNth": "اكسب {amount} كل {n} طلبات"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",
@@ -4349,7 +4354,12 @@
         "resume": "استئناف",
         "delete": "حذف",
         "cancel": "إلغاء",
-        "save": "إضافة قاعدة"
+        "save": "إضافة قاعدة",
+        "showInPromos": "إظهار في قسم العروض",
+        "showInPromosHint": "اعرض هذا كبطاقة على صفحة الطلب ليراه العملاء (مثال: “احصل على ‎$5‎ مع أول طلب”).",
+        "promoBadge": "في العروض",
+        "promoteOn": "يظهر الآن في قسم العروض.",
+        "promoteOff": "تمت إزالته من قسم العروض."
       },
       "signupBonusAlways": "مكافأة التسجيل (مُفعّلة دائمًا)",
       "signupBonusDatedHint": "تُمنح لكل حساب جديد دون تاريخ انتهاء. للحصول على عرض تسجيل لفترة محدودة (بتاريخَي بدء/انتهاء)، استخدم ”إضافة طريقة للكسب → عند تسجيل العميل“ أعلاه."

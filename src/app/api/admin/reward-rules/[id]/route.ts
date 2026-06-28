@@ -22,6 +22,7 @@ export async function PATCH(req: Request, ctx: { params: Promise<{ id: string }>
 
   const data: any = {};
   if ("active" in body) data.active = !!body.active;
+  if ("showInPromos" in body) data.showInPromos = !!body.showInPromos;
   if ("label" in body) data.label = typeof body.label === "string" ? body.label.trim().slice(0, 80) || null : null;
   if ("earnAmount" in body) data.earnAmount = body.earnAmount == null || body.earnAmount === "" ? null : Math.max(0, Math.round(Number(body.earnAmount) * 100) / 100);
   if ("earnPercent" in body) data.earnPercent = body.earnPercent == null || body.earnPercent === "" ? null : Math.min(100, Math.max(0, Math.round(Number(body.earnPercent) * 100) / 100));

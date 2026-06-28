@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Šīs preces jūsu rezervācijas dienā netiek piedāvātas. Noņemiet tās, lai turpinātu, vai mainiet rezervāciju uz dienu, kad tās ir pieejamas:",
     "reservationCartChangeDay": "Mainīt rezervācijas dienu",
     "holidayClosedHoursToday": "Šodien slēgts {windows}",
-    "servicePausedBadge": "pauzēts"
+    "servicePausedBadge": "pauzēts",
+    "rewardTileBadge": "Nopelniet",
+    "rewardTileSignup": "Reģistrējieties un saņemiet {amount}",
+    "rewardTileFirstOrder": "Nopelniet {amount} ar savu pirmo pasūtījumu",
+    "rewardTileOrderOver": "Nopelniet {amount} par pasūtījumiem virs {threshold}",
+    "rewardTileNth": "Nopelniet {amount} ik pēc {n} pasūtījumiem"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -4349,7 +4354,12 @@
         "resume": "Atsākt",
         "delete": "Dzēst",
         "cancel": "Atcelt",
-        "save": "Pievienot noteikumu"
+        "save": "Pievienot noteikumu",
+        "showInPromos": "Rādīt sadaļā “Akcijas”",
+        "showInPromosHint": "Reklamējiet to kā elementu savā pasūtīšanas lapā, lai klienti to redzētu (piem., “Nopelniet $5 ar savu pirmo pasūtījumu”).",
+        "promoBadge": "Akcijās",
+        "promoteOn": "Tagad redzams jūsu sadaļā “Akcijas”.",
+        "promoteOff": "Noņemts no jūsu sadaļas “Akcijas”."
       },
       "signupBonusAlways": "Reģistrācijas bonuss (vienmēr aktīvs)",
       "signupBonusDatedHint": "Tiek piešķirts katram jaunam kontam, bez beigu datuma. Ierobežota laika reģistrācijas piedāvājumam (sākuma/beigu datums) izmantojiet augšā „Pievienot nopelnīšanas veidu → Kad klients reģistrējas“."

@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Ti izdelki na dan vaše rezervacije niso na voljo. Odstranite jih za nadaljevanje ali spremenite rezervacijo na dan, ko so na voljo:",
     "reservationCartChangeDay": "Spremeni dan rezervacije",
     "holidayClosedHoursToday": "Danes zaprto {windows}",
-    "servicePausedBadge": "začasno ustavljeno"
+    "servicePausedBadge": "začasno ustavljeno",
+    "rewardTileBadge": "Prislužite si",
+    "rewardTileSignup": "Registrirajte se in prejmite {amount}",
+    "rewardTileFirstOrder": "Prislužite si {amount} ob prvem naročilu",
+    "rewardTileOrderOver": "Prislužite si {amount} pri naročilih nad {threshold}",
+    "rewardTileNth": "Prislužite si {amount} vsakih {n} naročil"
   },
   "pizza": {
     "chooseSize": "Izberite velikost",
@@ -4349,7 +4354,12 @@
         "resume": "Nadaljuj",
         "delete": "Izbriši",
         "cancel": "Prekliči",
-        "save": "Dodaj pravilo"
+        "save": "Dodaj pravilo",
+        "showInPromos": "Prikaži v razdelku Promocije",
+        "showInPromosHint": "Oglašujte to kot ploščico na svoji strani za naročanje, da jo stranke vidijo (npr. „Prislužite si $5 ob prvem naročilu“).",
+        "promoBadge": "V promocijah",
+        "promoteOn": "Zdaj je prikazano v vašem razdelku Promocije.",
+        "promoteOff": "Odstranjeno iz vašega razdelka Promocije."
       },
       "signupBonusAlways": "Bonus za registracijo (vedno aktiven)",
       "signupBonusDatedHint": "Dodeli se vsakemu novemu računu, brez datuma zaključka. Za časovno omejeno registracijsko ponudbo (datuma začetka/konca) zgoraj uporabite »Dodaj način zaslužka → Ko se stranka registrira«."

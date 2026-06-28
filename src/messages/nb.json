@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Disse varene tilbys ikke på reservasjonsdagen din. Fjern dem for å fortsette, eller endre reservasjonen til en dag de er tilgjengelige:",
     "reservationCartChangeDay": "Endre reservasjonsdag",
     "holidayClosedHoursToday": "Stengt {windows} i dag",
-    "servicePausedBadge": "satt på pause"
+    "servicePausedBadge": "satt på pause",
+    "rewardTileBadge": "Tjen",
+    "rewardTileSignup": "Registrer deg og få {amount}",
+    "rewardTileFirstOrder": "Tjen {amount} på din første bestilling",
+    "rewardTileOrderOver": "Tjen {amount} på bestillinger over {threshold}",
+    "rewardTileNth": "Tjen {amount} for hver {n} bestilling"
   },
   "pizza": {
     "chooseSize": "Velg størrelse",
@@ -4349,7 +4354,12 @@
         "resume": "Gjenoppta",
         "delete": "Slett",
         "cancel": "Avbryt",
-        "save": "Legg til regel"
+        "save": "Legg til regel",
+        "showInPromos": "Vis i Tilbud-delen",
+        "showInPromosHint": "Reklamer for dette som en flis på bestillingssiden din slik at kundene ser det (f.eks. «Tjen $5 på din første bestilling»).",
+        "promoBadge": "I tilbud",
+        "promoteOn": "Vises nå i Tilbud-delen din.",
+        "promoteOff": "Fjernet fra Tilbud-delen din."
       },
       "signupBonusAlways": "Registreringsbonus (alltid på)",
       "signupBonusDatedHint": "Gis til hver nye konto, uten sluttdato. For et tidsbegrenset registreringstilbud (start-/sluttdato) bruker du «Legg til en måte å tjene på → Når en kunde registrerer seg» ovenfor."

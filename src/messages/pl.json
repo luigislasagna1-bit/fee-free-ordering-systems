@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Te produkty nie są oferowane w dniu Twojej rezerwacji. Usuń je, aby kontynuować, lub zmień rezerwację na dzień, w którym są dostępne:",
     "reservationCartChangeDay": "Zmień dzień rezerwacji",
     "holidayClosedHoursToday": "Dziś zamknięte {windows}",
-    "servicePausedBadge": "wstrzymane"
+    "servicePausedBadge": "wstrzymane",
+    "rewardTileBadge": "Zdobądź",
+    "rewardTileSignup": "Zarejestruj się i odbierz {amount}",
+    "rewardTileFirstOrder": "Zdobądź {amount} przy pierwszym zamówieniu",
+    "rewardTileOrderOver": "Zdobądź {amount} przy zamówieniach powyżej {threshold}",
+    "rewardTileNth": "Zdobądź {amount} co {n} zamówień"
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",
@@ -4349,7 +4354,12 @@
         "resume": "Wznów",
         "delete": "Usuń",
         "cancel": "Anuluj",
-        "save": "Dodaj regułę"
+        "save": "Dodaj regułę",
+        "showInPromos": "Pokaż w sekcji Promocje",
+        "showInPromosHint": "Reklamuj to jako kafelek na swojej stronie zamówień, aby klienci go widzieli (np. „Zdobądź $5 przy pierwszym zamówieniu”).",
+        "promoBadge": "W promocjach",
+        "promoteOn": "Teraz wyświetla się w Twojej sekcji Promocje.",
+        "promoteOff": "Usunięto z Twojej sekcji Promocje."
       },
       "signupBonusAlways": "Bonus za rejestrację (zawsze aktywny)",
       "signupBonusDatedHint": "Przyznawany każdemu nowemu kontu, bez daty zakończenia. W przypadku oferty rejestracyjnej na czas ograniczony (daty rozpoczęcia/zakończenia) użyj powyżej opcji „Dodaj sposób zdobywania → Gdy klient się zarejestruje”."

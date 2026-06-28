@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Aceste produse nu sunt oferite în ziua rezervării tale. Elimină-le pentru a continua sau schimbă rezervarea într-o zi în care sunt disponibile:",
     "reservationCartChangeDay": "Schimbă ziua rezervării",
     "holidayClosedHoursToday": "Închis {windows} astăzi",
-    "servicePausedBadge": "în pauză"
+    "servicePausedBadge": "în pauză",
+    "rewardTileBadge": "Câștigă",
+    "rewardTileSignup": "Înscrie-te și primește {amount}",
+    "rewardTileFirstOrder": "Câștigă {amount} la prima ta comandă",
+    "rewardTileOrderOver": "Câștigă {amount} la comenzi de peste {threshold}",
+    "rewardTileNth": "Câștigă {amount} la fiecare {n} comenzi"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
@@ -4349,7 +4354,12 @@
         "resume": "Reia",
         "delete": "Șterge",
         "cancel": "Anulează",
-        "save": "Adaugă regula"
+        "save": "Adaugă regula",
+        "showInPromos": "Afișează în secțiunea Promoții",
+        "showInPromosHint": "Promovează acest lucru ca un panou pe pagina ta de comenzi, ca să-l vadă clienții (de ex. „Câștigă $5 la prima ta comandă”).",
+        "promoBadge": "În promoții",
+        "promoteOn": "Acum se afișează în secțiunea ta Promoții.",
+        "promoteOff": "Eliminat din secțiunea ta Promoții."
       },
       "signupBonusAlways": "Bonus de înregistrare (mereu activ)",
       "signupBonusDatedHint": "Se acordă fiecărui cont nou, fără dată de încheiere. Pentru o ofertă de înregistrare pe durată limitată (date de început/sfârșit), folosește mai sus „Adaugă o modalitate de câștig → Când un client se înregistrează”."

@@ -2024,6 +2024,9 @@ model RewardEarnRule {
   startsAt       DateTime? // campaign window (absolute instants); null = always
   endsAt         DateTime?
   label          String?
+  /** Advertise this earn rule as a customer-facing tile in the order page's
+   *  Promos section ("Earn $5 on your first order"). Luigi 2026-06-28. */
+  showInPromos   Boolean   @default(false)
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 

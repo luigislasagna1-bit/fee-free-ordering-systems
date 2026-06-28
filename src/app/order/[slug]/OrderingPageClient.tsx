@@ -5,7 +5,7 @@ import {
   ShoppingCart, MapPin, Phone, Clock, Plus, Minus, X,
   AlertCircle, Tag, Loader2, ChevronDown, Star, Info, Calendar,
   Truck, ShoppingBag, ChevronLeft, ChevronRight,
-  UserCircle, LogIn, Search, Utensils, Package,
+  UserCircle, LogIn, Search, Utensils, Package, Gift,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
@@ -765,6 +765,7 @@ export function OrderingPageClient({
   fromHostedSite = false,
   hostedSiteBackUrl,
   promoBanners = [],
+  rewardPromoTiles = [],
   customerChannel = "website",
   marketplaceAccount = null,
   customerIsReturning = false,
@@ -864,6 +865,17 @@ export function OrderingPageClient({
      *  (campaignRef === "kickstarter_first_buy") is rendered as a prominent
      *  hero above the regular promo strip. */
     campaignRef?: string | null;
+  }>;
+  /** Reward Dollars earn rules the owner flagged to advertise as Promos-section
+   *  tiles ("Earn $5 on your first order"). Informational. Luigi 2026-06-28. */
+  rewardPromoTiles?: Array<{
+    id: string;
+    triggerType: string;
+    earnAmount: number | null;
+    earnPercent: number | null;
+    orderThreshold: number | null;
+    nthInterval: number | null;
+    label: string | null;
   }>;
   /** True when the viewer is a LOGGED-IN customer with a prior fulfilled order
    *  here — used to hide the first-buy hero from returning customers (computed
@@ -4211,7 +4223,7 @@ export function OrderingPageClient({
         {/* Collapsible "Promo" header — the customer can hide the specials strip so it
             doesn't take up the whole page (mobile + desktop). Same chevron affordance as
             the collapsible categories. Luigi 2026-06-22. */}
-        {promoBanners.filter((p) => p.showOnBanner && p.campaignRef !== "kickstarter_first_buy").length > 0 && (
+        {(promoBanners.filter((p) => p.showOnBanner && p.campaignRef !== "kickstarter_first_buy").length > 0 || rewardPromoTiles.length > 0) && (
           <button
             type="button"
             onClick={() => setPromosCollapsed((c) => !c)}
@@ -4222,7 +4234,7 @@ export function OrderingPageClient({
             <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${promosCollapsed ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
           </button>
         )}
-        {!promosCollapsed && promoBanners.filter((p) => p.showOnBanner && p.campaignRef !== "kickstarter_first_buy").length > 0 && (
+        {!promosCollapsed && (promoBanners.filter((p) => p.showOnBanner && p.campaignRef !== "kickstarter_first_buy").length > 0 || rewardPromoTiles.length > 0) && (
           <div className="mb-6 flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
             {promoBanners.filter((p) => p.showOnBanner && p.campaignRef !== "kickstarter_first_buy").map((promo) => {
               const headline = promo.bannerHeadline?.trim() || promo.name;
@@ -4457,6 +4469,39 @@ export function OrderingPageClient({
                           {promo.couponCode}
                         </span>
                       )}
+                  </div>
+                </div>
+              );
+            })}
+            {/* Reward Dollars earn-rule tiles — owner flagged these earn rules to
+                advertise here ("Earn $5 on your first order"). Informational; no
+                modal. Emerald gradient + Gift icon, sized like the promo cards. */}
+            {rewardPromoTiles.map((rule) => {
+              const amountStr = rule.earnPercent != null && rule.earnPercent > 0
+                ? `${rule.earnPercent}%`
+                : fmt(rule.earnAmount ?? 0);
+              const headline = rule.label?.trim() || (
+                rule.triggerType === "signup" ? t("rewardTileSignup", { amount: amountStr })
+                : rule.triggerType === "first_order" ? t("rewardTileFirstOrder", { amount: amountStr })
+                : rule.triggerType === "order_over" ? t("rewardTileOrderOver", { amount: amountStr, threshold: fmt(rule.orderThreshold ?? 0) })
+                : rule.triggerType === "nth_order" ? t("rewardTileNth", { amount: amountStr, n: rule.nthInterval ?? 0 })
+                : amountStr
+              );
+              const rewardName = (restaurant.rewardLabelPlural?.trim?.() as string | undefined) || t("rewardTileBadge");
+              return (
+                <div
+                  key={rule.id}
+                  className="flex-shrink-0 w-[230px] h-32 rounded-xl text-white shadow-md relative overflow-hidden"
+                  style={{ background: "linear-gradient(135deg, #059669, #047857)" }}
+                >
+                  <div className="absolute top-2.5 left-3 text-[10px] uppercase tracking-widest font-bold opacity-90">
+                    {rewardName}
+                  </div>
+                  <Gift className="absolute top-2 right-3 w-5 h-5 opacity-80" />
+                  <div className="absolute inset-x-0 bottom-0 p-3">
+                    <div className="text-base font-black leading-tight line-clamp-3" style={{ textShadow: "0 1px 3px rgba(0,0,0,0.35)" }}>
+                      {headline}
+                    </div>
                   </div>
                 </div>
               );

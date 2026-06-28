@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Ови артикли нису у понуди на дан ваше резервације. Уклоните их да наставите или промените резервацију за дан када су доступни:",
     "reservationCartChangeDay": "Промени дан резервације",
     "holidayClosedHoursToday": "Данас затворено {windows}",
-    "servicePausedBadge": "паузирано"
+    "servicePausedBadge": "паузирано",
+    "rewardTileBadge": "Zaradite",
+    "rewardTileSignup": "Registrujte se i ostvarite {amount}",
+    "rewardTileFirstOrder": "Zaradite {amount} na prvoj porudžbini",
+    "rewardTileOrderOver": "Zaradite {amount} na porudžbinama preko {threshold}",
+    "rewardTileNth": "Zaradite {amount} na svakih {n} porudžbina"
   },
   "pizza": {
     "chooseSize": "Izaberite veličinu",
@@ -4349,7 +4354,12 @@
         "resume": "Nastavi",
         "delete": "Obriši",
         "cancel": "Otkaži",
-        "save": "Dodaj pravilo"
+        "save": "Dodaj pravilo",
+        "showInPromos": "Prikaži u odeljku Promocije",
+        "showInPromosHint": "Oglašavajte ovo kao pločicu na svojoj stranici za poručivanje kako bi je kupci videli (npr. „Zaradite $5 na prvoj porudžbini“).",
+        "promoBadge": "U promocijama",
+        "promoteOn": "Sada se prikazuje u vašem odeljku Promocije.",
+        "promoteOff": "Uklonjeno iz vašeg odeljka Promocije."
       },
       "signupBonusAlways": "Bonus za registraciju (uvek aktivan)",
       "signupBonusDatedHint": "Dodeljuje se svakom novom nalogu, bez datuma završetka. Za vremenski ograničenu ponudu pri registraciji (datumi početka/završetka) koristite gore „Dodaj način zarade → Kada se kupac registruje“."

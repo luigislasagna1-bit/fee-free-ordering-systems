@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "이 항목은 예약하신 날에는 제공되지 않습니다. 계속하려면 삭제하시거나 제공되는 날로 예약을 변경해 주세요:",
     "reservationCartChangeDay": "예약 날짜 변경",
     "holidayClosedHoursToday": "오늘 {windows} 휴무",
-    "servicePausedBadge": "일시중지"
+    "servicePausedBadge": "일시중지",
+    "rewardTileBadge": "적립",
+    "rewardTileSignup": "가입하고 {amount} 받기",
+    "rewardTileFirstOrder": "첫 주문 시 {amount} 적립",
+    "rewardTileOrderOver": "{threshold} 초과 주문 시 {amount} 적립",
+    "rewardTileNth": "{n}회 주문마다 {amount} 적립"
   },
   "pizza": {
     "chooseSize": "크기 선택",
@@ -4349,7 +4354,12 @@
         "resume": "재개",
         "delete": "삭제",
         "cancel": "취소",
-        "save": "규칙 추가"
+        "save": "규칙 추가",
+        "showInPromos": "프로모션 섹션에 표시",
+        "showInPromosHint": "주문 페이지에 타일로 홍보하여 고객이 볼 수 있도록 하세요(예: “첫 주문 시 $5 적립”).",
+        "promoBadge": "프로모션 게재 중",
+        "promoteOn": "이제 프로모션 섹션에 표시됩니다.",
+        "promoteOff": "프로모션 섹션에서 제거되었습니다."
       },
       "signupBonusAlways": "가입 보너스 (항상 적용)",
       "signupBonusDatedHint": "종료일 없이 모든 신규 계정에 지급됩니다. 기간 한정 가입 혜택(시작일/종료일)을 원하시면 위의 “적립 방법 추가 → 고객이 가입할 때”를 사용하세요."

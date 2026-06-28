@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Questi articoli non sono disponibili nel giorno della tua prenotazione. Rimuovili per continuare oppure sposta la prenotazione a un giorno in cui sono disponibili:",
     "reservationCartChangeDay": "Cambia il giorno della prenotazione",
     "holidayClosedHoursToday": "Chiuso {windows} oggi",
-    "servicePausedBadge": "in pausa"
+    "servicePausedBadge": "in pausa",
+    "rewardTileBadge": "Guadagna",
+    "rewardTileSignup": "Registrati e ottieni {amount}",
+    "rewardTileFirstOrder": "Guadagna {amount} sul tuo primo ordine",
+    "rewardTileOrderOver": "Guadagna {amount} sugli ordini superiori a {threshold}",
+    "rewardTileNth": "Guadagna {amount} ogni {n} ordini"
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",
@@ -4349,7 +4354,12 @@
         "resume": "Riprendi",
         "delete": "Elimina",
         "cancel": "Annulla",
-        "save": "Aggiungi regola"
+        "save": "Aggiungi regola",
+        "showInPromos": "Mostra nella sezione Promozioni",
+        "showInPromosHint": "Pubblicizzalo come riquadro sulla tua pagina degli ordini così i clienti lo vedono (es. «Guadagna $5 sul tuo primo ordine»).",
+        "promoBadge": "Nelle promozioni",
+        "promoteOn": "Ora visibile nella tua sezione Promozioni.",
+        "promoteOff": "Rimosso dalla tua sezione Promozioni."
       },
       "signupBonusAlways": "Bonus di registrazione (sempre attivo)",
       "signupBonusDatedHint": "Assegnato a ogni nuovo account, senza data di fine. Per un’offerta di registrazione a tempo limitato (date di inizio/fine), usa «Aggiungi un modo per guadagnare → Quando un cliente si registra» qui sopra."

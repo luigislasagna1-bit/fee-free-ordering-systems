@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Šie produktai jūsų rezervacijos dieną nesiūlomi. Pašalinkite juos, kad tęstumėte, arba pakeiskite rezervaciją į dieną, kai jie prieinami:",
     "reservationCartChangeDay": "Keisti rezervacijos dieną",
     "holidayClosedHoursToday": "Šiandien uždaryta {windows}",
-    "servicePausedBadge": "pristabdyta"
+    "servicePausedBadge": "pristabdyta",
+    "rewardTileBadge": "Uždirbkite",
+    "rewardTileSignup": "Užsiregistruokite ir gaukite {amount}",
+    "rewardTileFirstOrder": "Užsidirbkite {amount} už pirmą užsakymą",
+    "rewardTileOrderOver": "Užsidirbkite {amount} už užsakymus virš {threshold}",
+    "rewardTileNth": "Užsidirbkite {amount} kas {n} užsakymų"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",
@@ -4349,7 +4354,12 @@
         "resume": "Tęsti",
         "delete": "Ištrinti",
         "cancel": "Atšaukti",
-        "save": "Pridėti taisyklę"
+        "save": "Pridėti taisyklę",
+        "showInPromos": "Rodyti skiltyje „Akcijos“",
+        "showInPromosHint": "Reklamuokite tai kaip plytelę savo užsakymų puslapyje, kad klientai ją matytų (pvz., „Užsidirbkite $5 už pirmą užsakymą“).",
+        "promoBadge": "Akcijose",
+        "promoteOn": "Dabar rodoma jūsų skiltyje „Akcijos“.",
+        "promoteOff": "Pašalinta iš jūsų skilties „Akcijos“."
       },
       "signupBonusAlways": "Registracijos premija (visada įjungta)",
       "signupBonusDatedHint": "Skiriama kiekvienai naujai paskyrai, be pabaigos datos. Riboto laiko registracijos pasiūlymui (pradžios / pabaigos datos) naudokite viršuje „Pridėti uždarbio būdą → Kai klientas užsiregistruoja“."

@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "รายการเหล่านี้ไม่มีจำหน่ายในวันจองของคุณ โปรดนำออกเพื่อสั่งต่อ หรือเปลี่ยนการจองเป็นวันที่มีจำหน่าย:",
     "reservationCartChangeDay": "เปลี่ยนวันจอง",
     "holidayClosedHoursToday": "ปิด {windows} วันนี้",
-    "servicePausedBadge": "หยุดชั่วคราว"
+    "servicePausedBadge": "หยุดชั่วคราว",
+    "rewardTileBadge": "รับ",
+    "rewardTileSignup": "สมัครและรับ {amount}",
+    "rewardTileFirstOrder": "รับ {amount} จากคำสั่งซื้อแรกของคุณ",
+    "rewardTileOrderOver": "รับ {amount} สำหรับคำสั่งซื้อที่มากกว่า {threshold}",
+    "rewardTileNth": "รับ {amount} ทุก {n} คำสั่งซื้อ"
   },
   "pizza": {
     "chooseSize": "เลือกขนาด",
@@ -4349,7 +4354,12 @@
         "resume": "ดำเนินต่อ",
         "delete": "ลบ",
         "cancel": "ยกเลิก",
-        "save": "เพิ่มกฎ"
+        "save": "เพิ่มกฎ",
+        "showInPromos": "แสดงในส่วนโปรโมชัน",
+        "showInPromosHint": "โปรโมตสิ่งนี้เป็นไทล์บนหน้าสั่งซื้อของคุณเพื่อให้ลูกค้าเห็น (เช่น “รับ $5 จากคำสั่งซื้อแรกของคุณ”)",
+        "promoBadge": "ในโปรโมชัน",
+        "promoteOn": "ขณะนี้แสดงในส่วนโปรโมชันของคุณแล้ว",
+        "promoteOff": "นำออกจากส่วนโปรโมชันของคุณแล้ว"
       },
       "signupBonusAlways": "โบนัสการสมัคร (เปิดใช้งานเสมอ)",
       "signupBonusDatedHint": "มอบให้ทุกบัญชีใหม่ โดยไม่มีวันสิ้นสุด สำหรับข้อเสนอการสมัครแบบจำกัดเวลา (วันที่เริ่ม/สิ้นสุด) ให้ใช้ “เพิ่มวิธีรับคะแนน → เมื่อลูกค้าสมัคร” ด้านบน"

@@ -73,6 +73,7 @@ export async function POST(req: Request) {
       startsAt, endsAt,
       label: typeof body.label === "string" ? body.label.trim().slice(0, 80) || null : null,
       active: body.active === false ? false : true,
+      showInPromos: body.showInPromos === true,
     },
   });
   return NextResponse.json({ ok: true, id: created.id });

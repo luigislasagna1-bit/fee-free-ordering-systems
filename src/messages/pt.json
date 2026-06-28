@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Estes itens não são oferecidos no dia da sua reserva. Remova-os para continuar ou altere a sua reserva para um dia em que estejam disponíveis:",
     "reservationCartChangeDay": "Alterar o dia da reserva",
     "holidayClosedHoursToday": "Fechado {windows} hoje",
-    "servicePausedBadge": "em pausa"
+    "servicePausedBadge": "em pausa",
+    "rewardTileBadge": "Ganhe",
+    "rewardTileSignup": "Registe-se e receba {amount}",
+    "rewardTileFirstOrder": "Ganhe {amount} na sua primeira encomenda",
+    "rewardTileOrderOver": "Ganhe {amount} em encomendas acima de {threshold}",
+    "rewardTileNth": "Ganhe {amount} a cada {n} encomendas"
   },
   "pizza": {
     "chooseSize": "Escolher tamanho",
@@ -4349,7 +4354,12 @@
         "resume": "Retomar",
         "delete": "Eliminar",
         "cancel": "Cancelar",
-        "save": "Adicionar regra"
+        "save": "Adicionar regra",
+        "showInPromos": "Mostrar na secção de Promoções",
+        "showInPromosHint": "Divulgue isto como um mosaico na sua página de encomendas para que os clientes o vejam (por ex. «Ganhe $5 na sua primeira encomenda»).",
+        "promoBadge": "Nas promoções",
+        "promoteOn": "Agora visível na sua secção de Promoções.",
+        "promoteOff": "Removido da sua secção de Promoções."
       },
       "signupBonusAlways": "Bónus de registo (sempre ativo)",
       "signupBonusDatedHint": "Atribuído a cada nova conta, sem data de fim. Para uma oferta de registo por tempo limitado (datas de início/fim), utilize «Adicionar uma forma de ganhar → Quando um cliente se regista» acima."

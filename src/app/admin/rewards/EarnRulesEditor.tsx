@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
-import { Plus, Trash2, ToggleLeft, ToggleRight, Loader2, X, Sparkles } from "lucide-react";
+import { Plus, Trash2, ToggleLeft, ToggleRight, Loader2, X, Sparkles, Megaphone } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
@@ -10,6 +10,7 @@ type Rule = {
   earnAmount: number | null; earnPercent: number | null;
   orderThreshold: number | null; nthInterval: number | null;
   startsAt: string | null; endsAt: string | null; label: string | null;
+  showInPromos?: boolean;
 };
 
 /**
@@ -34,6 +35,7 @@ export function EarnRulesEditor({ currency, rewardLabelPlural }: { currency: str
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [label, setLabel] = useState("");
+  const [showInPromos, setShowInPromos] = useState(false);
 
   const reload = useCallback(async () => {
     setLoading(true);
@@ -65,7 +67,7 @@ export function EarnRulesEditor({ currency, rewardLabelPlural }: { currency: str
   const create = async () => {
     setSaving(true);
     try {
-      const payload: any = { triggerType, label: label || undefined, startDate: startDate || undefined, endDate: endDate || undefined };
+      const payload: any = { triggerType, label: label || undefined, startDate: startDate || undefined, endDate: endDate || undefined, showInPromos };
       if (amountKind === "flat") payload.earnAmount = parseFloat(amount) || 0;
       else payload.earnPercent = parseFloat(amount) || 0;
       if (triggerType === "order_over") payload.orderThreshold = parseFloat(orderThreshold) || 0;
@@ -77,7 +79,7 @@ export function EarnRulesEditor({ currency, rewardLabelPlural }: { currency: str
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       toast.success(t("created"));
-      setOpen(false); setAmount(""); setOrderThreshold(""); setLabel(""); setStartDate(""); setEndDate("");
+      setOpen(false); setAmount(""); setOrderThreshold(""); setLabel(""); setStartDate(""); setEndDate(""); setShowInPromos(false);
       reload();
     } catch (e: any) {
       toast.error(e.message || t("createFailed"));
@@ -91,6 +93,18 @@ export function EarnRulesEditor({ currency, rewardLabelPlural }: { currency: str
         method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ active: !r.active }),
       });
       if (!res.ok) throw new Error();
+    } catch { toast.error(t("saveFailed")); reload(); }
+  };
+
+  const togglePromos = async (r: Rule) => {
+    const next = !r.showInPromos;
+    setRules((prev) => prev.map((x) => x.id === r.id ? { ...x, showInPromos: next } : x));
+    try {
+      const res = await fetch(`/api/admin/reward-rules/${r.id}`, {
+        method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ showInPromos: next }),
+      });
+      if (!res.ok) throw new Error();
+      toast.success(next ? t("promoteOn") : t("promoteOff"));
     } catch { toast.error(t("saveFailed")); reload(); }
   };
 
@@ -125,10 +139,17 @@ export function EarnRulesEditor({ currency, rewardLabelPlural }: { currency: str
           {rules.map((r) => (
             <li key={r.id} className="flex items-center justify-between gap-3 py-2">
               <div className="min-w-0">
-                <div className="text-sm font-medium text-gray-900">{r.label || summary(r)}</div>
+                <div className="text-sm font-medium text-gray-900 flex items-center gap-1.5">
+                  {r.label || summary(r)}
+                  {r.showInPromos && <span className="text-[10px] font-bold uppercase text-emerald-700 bg-emerald-100 rounded px-1.5 py-0.5">{t("promoBadge")}</span>}
+                </div>
                 {r.label && <div className="text-xs text-gray-500">{summary(r)}</div>}
               </div>
               <div className="flex items-center gap-1 flex-shrink-0">
+                <button onClick={() => togglePromos(r)} title={r.showInPromos ? t("promoteOff") : t("promoteOn")}
+                  className={r.showInPromos ? "p-1 text-emerald-600" : "p-1 text-gray-300 hover:text-gray-500"}>
+                  <Megaphone className="w-4 h-4" />
+                </button>
                 <button onClick={() => toggle(r)} title={r.active ? t("pause") : t("resume")}>
                   {r.active ? <ToggleRight className="w-7 h-7 text-emerald-600" /> : <ToggleLeft className="w-7 h-7 text-gray-300" />}
                 </button>
@@ -213,6 +234,14 @@ export function EarnRulesEditor({ currency, rewardLabelPlural }: { currency: str
           </div>
 
           <p className="text-[11px] text-gray-400">{t("windowHint")}</p>
+
+          <label className="flex items-start gap-2 cursor-pointer">
+            <input type="checkbox" checked={showInPromos} onChange={(e) => setShowInPromos(e.target.checked)} className="mt-0.5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500" />
+            <span>
+              <span className="block text-sm font-medium text-gray-700">{t("showInPromos")}</span>
+              <span className="block text-xs text-gray-400">{t("showInPromosHint")}</span>
+            </span>
+          </label>
 
           <div className="flex justify-end gap-2">
             <button onClick={() => setOpen(false)} className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700">{t("cancel")}</button>

@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Dessa varor erbjuds inte på din bokningsdag. Ta bort dem för att fortsätta, eller ändra din bokning till en dag då de är tillgängliga:",
     "reservationCartChangeDay": "Ändra bokningsdag",
     "holidayClosedHoursToday": "Stängt {windows} idag",
-    "servicePausedBadge": "pausad"
+    "servicePausedBadge": "pausad",
+    "rewardTileBadge": "Tjäna",
+    "rewardTileSignup": "Registrera dig och få {amount}",
+    "rewardTileFirstOrder": "Tjäna {amount} på din första beställning",
+    "rewardTileOrderOver": "Tjäna {amount} på beställningar över {threshold}",
+    "rewardTileNth": "Tjäna {amount} var {n}:e beställning"
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -4349,7 +4354,12 @@
         "resume": "Återuppta",
         "delete": "Ta bort",
         "cancel": "Avbryt",
-        "save": "Lägg till regel"
+        "save": "Lägg till regel",
+        "showInPromos": "Visa i Erbjudanden-sektionen",
+        "showInPromosHint": "Marknadsför detta som en panel på din beställningssida så att kunderna ser det (t.ex. ”Tjäna $5 på din första beställning”).",
+        "promoBadge": "I erbjudanden",
+        "promoteOn": "Visas nu i din Erbjudanden-sektion.",
+        "promoteOff": "Borttagen från din Erbjudanden-sektion."
       },
       "signupBonusAlways": "Registreringsbonus (alltid på)",
       "signupBonusDatedHint": "Ges till varje nytt konto, utan slutdatum. För ett tidsbegränsat registreringserbjudande (start-/slutdatum) använder du ”Lägg till ett sätt att tjäna → När en kund registrerar sig” ovan."

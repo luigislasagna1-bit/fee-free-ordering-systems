@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "这些商品在您预订的当天不供应。请将其移除以继续，或将预订改到供应的日子：",
     "reservationCartChangeDay": "更改预订日期",
     "holidayClosedHoursToday": "今天 {windows} 暂停营业",
-    "servicePausedBadge": "已暂停"
+    "servicePausedBadge": "已暂停",
+    "rewardTileBadge": "赚取",
+    "rewardTileSignup": "注册即得 {amount}",
+    "rewardTileFirstOrder": "首单赚取 {amount}",
+    "rewardTileOrderOver": "订单满 {threshold} 赚取 {amount}",
+    "rewardTileNth": "每 {n} 单赚取 {amount}"
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -4349,7 +4354,12 @@
         "resume": "恢复",
         "delete": "删除",
         "cancel": "取消",
-        "save": "添加规则"
+        "save": "添加规则",
+        "showInPromos": "在促销专区显示",
+        "showInPromosHint": "将其作为磁贴展示在您的订餐页面上，让顾客看到（例如“首单赚取 $5”）。",
+        "promoBadge": "促销中",
+        "promoteOn": "现已显示在您的促销专区。",
+        "promoteOff": "已从您的促销专区移除。"
       },
       "signupBonusAlways": "注册奖励（始终开启）",
       "signupBonusDatedHint": "向每个新账户发放，无结束日期。如需限时注册优惠（开始/结束日期），请使用上方的“添加赚取方式 → 当客户注册时”。"

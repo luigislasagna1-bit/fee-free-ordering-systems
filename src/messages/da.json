@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Disse varer tilbydes ikke på din reservationsdag. Fjern dem for at fortsætte, eller skift din reservation til en dag, hvor de er tilgængelige:",
     "reservationCartChangeDay": "Skift reservationsdag",
     "holidayClosedHoursToday": "Lukket {windows} i dag",
-    "servicePausedBadge": "sat på pause"
+    "servicePausedBadge": "sat på pause",
+    "rewardTileBadge": "Optjen",
+    "rewardTileSignup": "Tilmeld dig og få {amount}",
+    "rewardTileFirstOrder": "Optjen {amount} på din første bestilling",
+    "rewardTileOrderOver": "Optjen {amount} på bestillinger over {threshold}",
+    "rewardTileNth": "Optjen {amount} for hver {n} bestillinger"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",
@@ -4349,7 +4354,12 @@
         "resume": "Genoptag",
         "delete": "Slet",
         "cancel": "Annuller",
-        "save": "Tilføj regel"
+        "save": "Tilføj regel",
+        "showInPromos": "Vis i Tilbud-sektionen",
+        "showInPromosHint": "Reklamer for dette som et felt på din bestillingsside, så kunderne ser det (f.eks. „Optjen $5 på din første bestilling“).",
+        "promoBadge": "I tilbud",
+        "promoteOn": "Vises nu i din Tilbud-sektion.",
+        "promoteOff": "Fjernet fra din Tilbud-sektion."
       },
       "signupBonusAlways": "Tilmeldingsbonus (altid aktiv)",
       "signupBonusDatedHint": "Gives til hver ny konto uden slutdato. For et tidsbegrænset tilmeldingstilbud (start-/slutdato) skal du bruge “Tilføj en måde at optjene på → Når en kunde tilmelder sig” ovenfor."

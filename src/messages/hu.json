@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "Ezeket a tételeket nem kínáljuk a foglalása napján. Távolítsa el őket a folytatáshoz, vagy módosítsa a foglalást egy olyan napra, amikor elérhetők:",
     "reservationCartChangeDay": "Foglalás napjának módosítása",
     "holidayClosedHoursToday": "Ma {windows} zárva",
-    "servicePausedBadge": "szüneteltetve"
+    "servicePausedBadge": "szüneteltetve",
+    "rewardTileBadge": "Szerezzen",
+    "rewardTileSignup": "Regisztráljon, és kapjon {amount} értéket",
+    "rewardTileFirstOrder": "Szerezzen {amount} értéket az első rendelésével",
+    "rewardTileOrderOver": "Szerezzen {amount} értéket a(z) {threshold} feletti rendeléseknél",
+    "rewardTileNth": "Szerezzen {amount} értéket minden {n} rendelésnél"
   },
   "pizza": {
     "chooseSize": "Méret választása",
@@ -4349,7 +4354,12 @@
         "resume": "Folytatás",
         "delete": "Törlés",
         "cancel": "Mégse",
-        "save": "Szabály hozzáadása"
+        "save": "Szabály hozzáadása",
+        "showInPromos": "Megjelenítés az Akciók szakaszban",
+        "showInPromosHint": "Hirdesse ezt csempeként a rendelési oldalán, hogy a vásárlók lássák (pl. „Szerezzen $5-t az első rendelésével”).",
+        "promoBadge": "Akciókban",
+        "promoteOn": "Mostantól megjelenik az Akciók szakaszában.",
+        "promoteOff": "Eltávolítva az Akciók szakaszából."
       },
       "signupBonusAlways": "Regisztrációs bónusz (mindig aktív)",
       "signupBonusDatedHint": "Minden új fiók megkapja, befejezési dátum nélkül. Időszakos regisztrációs ajánláshoz (kezdő/záró dátum) használja fent a „Kereseti mód hozzáadása → Amikor egy vásárló regisztrál” lehetőséget."

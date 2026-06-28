@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "פריטים אלה אינם מוצעים ביום ההזמנה שלך. הסר אותם כדי להמשיך, או שנה את ההזמנה ליום שבו הם זמינים:",
     "reservationCartChangeDay": "שנה את יום ההזמנה",
     "holidayClosedHoursToday": "סגור {windows} היום",
-    "servicePausedBadge": "מושהה"
+    "servicePausedBadge": "מושהה",
+    "rewardTileBadge": "צברו",
+    "rewardTileSignup": "הירשמו וקבלו {amount}",
+    "rewardTileFirstOrder": "צברו {amount} בהזמנה הראשונה שלכם",
+    "rewardTileOrderOver": "צברו {amount} בהזמנות מעל {threshold}",
+    "rewardTileNth": "צברו {amount} בכל {n} הזמנות"
   },
   "pizza": {
     "chooseSize": "בחר גודל",
@@ -4349,7 +4354,12 @@
         "resume": "המשך",
         "delete": "מחיקה",
         "cancel": "ביטול",
-        "save": "הוספת כלל"
+        "save": "הוספת כלל",
+        "showInPromos": "הצג במקטע המבצעים",
+        "showInPromosHint": "פרסמו זאת כאריח בדף ההזמנות שלכם כדי שהלקוחות יראו אותו (למשל “צברו ‎$5‎ בהזמנה הראשונה שלכם”).",
+        "promoBadge": "במבצעים",
+        "promoteOn": "מוצג כעת במקטע המבצעים שלכם.",
+        "promoteOff": "הוסר ממקטע המבצעים שלכם."
       },
       "signupBonusAlways": "בונוס הרשמה (פעיל תמיד)",
       "signupBonusDatedHint": "ניתן לכל חשבון חדש, ללא תאריך סיום. עבור מבצע הרשמה לזמן מוגבל (תאריכי התחלה/סיום), השתמשו ב„הוסף דרך לצבור → כאשר לקוח נרשם“ למעלה."

@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "ये आइटम आपके आरक्षण के दिन उपलब्ध नहीं हैं। जारी रखने के लिए इन्हें हटाएँ, या अपनी बुकिंग को उस दिन बदलें जब ये उपलब्ध हों:",
     "reservationCartChangeDay": "आरक्षण का दिन बदलें",
     "holidayClosedHoursToday": "आज {windows} बंद",
-    "servicePausedBadge": "रुका हुआ"
+    "servicePausedBadge": "रुका हुआ",
+    "rewardTileBadge": "कमाएँ",
+    "rewardTileSignup": "साइन अप करें और {amount} पाएँ",
+    "rewardTileFirstOrder": "अपने पहले ऑर्डर पर {amount} कमाएँ",
+    "rewardTileOrderOver": "{threshold} से अधिक के ऑर्डर पर {amount} कमाएँ",
+    "rewardTileNth": "हर {n} ऑर्डर पर {amount} कमाएँ"
   },
   "pizza": {
     "chooseSize": "आकार चुनें",
@@ -4349,7 +4354,12 @@
         "resume": "फिर शुरू करें",
         "delete": "हटाएँ",
         "cancel": "रद्द करें",
-        "save": "नियम जोड़ें"
+        "save": "नियम जोड़ें",
+        "showInPromos": "प्रोमो सेक्शन में दिखाएँ",
+        "showInPromosHint": "इसे अपने ऑर्डरिंग पेज पर एक टाइल के रूप में प्रचारित करें ताकि ग्राहक इसे देखें (जैसे “अपने पहले ऑर्डर पर $5 कमाएँ”)।",
+        "promoBadge": "प्रोमो में",
+        "promoteOn": "अब आपके प्रोमो सेक्शन में दिख रहा है।",
+        "promoteOff": "आपके प्रोमो सेक्शन से हटा दिया गया।"
       },
       "signupBonusAlways": "साइन-अप बोनस (हमेशा चालू)",
       "signupBonusDatedHint": "हर नए खाते को दिया जाता है, बिना किसी समाप्ति तिथि के। सीमित समय के साइन-अप ऑफ़र (आरंभ/समाप्ति तिथि) के लिए, ऊपर दिए गए “कमाई का तरीका जोड़ें → जब कोई ग्राहक साइन अप करता है” का उपयोग करें।"

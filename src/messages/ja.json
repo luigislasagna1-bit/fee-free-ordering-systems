@@ -286,7 +286,12 @@
     "reservationCartConflictBody": "これらの商品はご予約日には提供されません。続けるには削除するか、提供日にご予約を変更してください：",
     "reservationCartChangeDay": "予約日を変更",
     "holidayClosedHoursToday": "本日 {windows} は休業",
-    "servicePausedBadge": "一時停止中"
+    "servicePausedBadge": "一時停止中",
+    "rewardTileBadge": "獲得",
+    "rewardTileSignup": "登録して{amount}を獲得",
+    "rewardTileFirstOrder": "初回注文で{amount}を獲得",
+    "rewardTileOrderOver": "{threshold}を超える注文で{amount}を獲得",
+    "rewardTileNth": "{n}回の注文ごとに{amount}を獲得"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",
@@ -4349,7 +4354,12 @@
         "resume": "再開",
         "delete": "削除",
         "cancel": "キャンセル",
-        "save": "ルールを追加"
+        "save": "ルールを追加",
+        "showInPromos": "プロモーションセクションに表示",
+        "showInPromosHint": "注文ページにタイルとして掲載し、お客様に見てもらいましょう（例：“初回注文で$5を獲得”）。",
+        "promoBadge": "プロモ掲載中",
+        "promoteOn": "プロモーションセクションに表示されるようになりました。",
+        "promoteOff": "プロモーションセクションから削除されました。"
       },
       "signupBonusAlways": "登録ボーナス（常に有効）",
       "signupBonusDatedHint": "終了日なしで、すべての新規アカウントに付与されます。期間限定の登録特典（開始日/終了日）には、上部の「獲得方法を追加 → お客様が登録したとき」をご利用ください。"

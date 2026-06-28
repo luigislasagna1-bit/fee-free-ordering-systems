@@ -239,6 +239,27 @@ export default async function OrderingPage({
     }
   });
 
+  // Reward Dollars earn rules the owner flagged to advertise as Promos-section
+  // tiles ("Earn $5 on your first order"). Only when the program is on + the rule
+  // is active + inside its window. Informational tiles; the client localizes the
+  // wording. Luigi 2026-06-28.
+  const rewardPromoTiles = (restaurantBase as any).rewardsEnabled
+    ? await prisma.rewardEarnRule.findMany({
+        where: {
+          restaurantId: restaurantBase.id,
+          active: true,
+          showInPromos: true,
+          AND: [
+            { OR: [{ startsAt: null }, { startsAt: { lte: now } }] },
+            { OR: [{ endsAt: null }, { endsAt: { gte: now } }] },
+          ],
+        },
+        select: { id: true, triggerType: true, earnAmount: true, earnPercent: true, orderThreshold: true, nthInterval: true, label: true },
+        orderBy: { createdAt: "desc" },
+        take: 12,
+      })
+    : [];
+
   // Multi-menu: serve the menu that is live for the customer RIGHT NOW. With no
   // daily windows configured this is just the single active menu (unchanged);
   // with windows it auto-switches by time of day (Lunch/Dinner), restaurant tz.
@@ -457,6 +478,7 @@ export default async function OrderingPage({
         fromHostedSite={fromHostedSite}
         hostedSiteBackUrl={hostedSiteBackUrl}
         promoBanners={promoBanners}
+        rewardPromoTiles={rewardPromoTiles}
         customerChannel={customerChannel}
         marketplaceAccount={marketplaceAccount}
         customerIsReturning={customerIsReturning}
