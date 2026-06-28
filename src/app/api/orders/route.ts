@@ -2053,7 +2053,9 @@ export async function POST(req: NextRequest) {
     let creditSpenderId: string | null = null;
     {
       const requested = Number(bodyCreditToApply);
-      if (restaurant.rewardsEnabled && restaurant.rewardRedeemEnabled && Number.isFinite(requested) && requested > 0) {
+      // Spend is available whenever the program is on (rewardRedeemEnabled is
+      // auto-coupled to rewardsEnabled; don't depend on a stale value). 2026-06-27.
+      if (restaurant.rewardsEnabled && Number.isFinite(requested) && requested > 0) {
         try {
           const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
           if (me?.id) {

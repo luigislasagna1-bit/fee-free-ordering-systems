@@ -457,6 +457,13 @@ describe("resolvePromotions — reward_credit (earn, not discount)", () => {
     const hit = results.find((r) => r.type === "reward_credit");
     expect(hit).toBeTruthy();
     expect(hit!.discount).toBe(0);
+    expect(hit!.creditAmount).toBe(5); // surfaced from ruleConfig for the cart "Earn $X"
+  });
+
+  it("creditAmount is set only for reward_credit (undefined for a normal discount)", () => {
+    const fixed = mkPromo({ promotionType: "fixed_cart", ruleConfig: { discountAmount: 5 } });
+    const r = applyPromotions([fixed], mkCtx())[0];
+    expect(r.creditAmount).toBeUndefined();
   });
 
   it("always stacks — a winning exclusive does NOT block it", () => {

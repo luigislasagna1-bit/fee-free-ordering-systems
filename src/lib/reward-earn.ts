@@ -53,8 +53,8 @@ export async function awardEarnRulesForOrder(opts: { orderId: string }): Promise
     const order = await prisma.order.findUnique({
       where: { id: opts.orderId },
       select: {
-        restaurantId: true, customerId: true, subtotal: true, couponDiscount: true,
-        promoDiscount: true, completedAt: true,
+        id: true, restaurantId: true, customerId: true, subtotal: true, couponDiscount: true,
+        promoDiscount: true, completedAt: true, createdAt: true,
         restaurant: { select: { rewardsEnabled: true } },
       },
     });
@@ -63,11 +63,22 @@ export async function awardEarnRulesForOrder(opts: { orderId: string }): Promise
     const rules = await activeRules(order.restaurantId);
     if (rules.length === 0) return;
 
-    // Their Nth completed order (this one included). Cheap count; for the rare
-    // case of several of one customer's orders completing in a single sweep the
-    // rank can tie — acceptable for promotional bonuses (v1).
-    const completedOrderCount = await prisma.order.count({
-      where: { customerId: order.customerId, status: "completed" },
+    // This order's RANK among the customer's completed orders (1 = first), ranked
+    // by createdAt (immutable) so it's stable even when the Simple-mode cron
+    // completes several of one customer's orders in a single sweep (counting all
+    // "completed" rows would make every order in the batch see the same total →
+    // first_order missed / nth_order over-granted; review 2026-06-27). Tie-break
+    // on id for the rare same-instant case.
+    const completedOrderCount = 1 + await prisma.order.count({
+      where: {
+        customerId: order.customerId,
+        status: "completed",
+        id: { not: order.id },
+        OR: [
+          { createdAt: { lt: order.createdAt } },
+          { createdAt: order.createdAt, id: { lt: order.id } },
+        ],
+      },
     });
 
     const basis = Math.max(0, Math.round(((order.subtotal ?? 0) - (order.couponDiscount ?? 0) - (order.promoDiscount ?? 0)) * 100) / 100);

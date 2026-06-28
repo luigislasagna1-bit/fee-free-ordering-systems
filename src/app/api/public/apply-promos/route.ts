@@ -276,7 +276,10 @@ export async function POST(req: NextRequest) {
   } | null = null;
   try {
     const r = restaurant as any;
-    if (r.rewardsEnabled && r.rewardRedeemEnabled && idCustomerId) {
+    // Opting into the program means customers can pay with their balance — gate
+    // on rewardsEnabled alone (rewardRedeemEnabled is auto-coupled to it, but we
+    // don't depend on a possibly-stale value). Luigi 2026-06-27.
+    if (r.rewardsEnabled && idCustomerId) {
       const { getBalance } = await import("@/lib/reward-ledger");
       const balance = await getBalance({ restaurantId: restaurant.id, customerId: idCustomerId });
       if (balance > 0) {

@@ -963,7 +963,8 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
     // them. Masters still apply (they stack with everything). We report each so
     // the cart can explain it and offer "remove this to use that instead".
     for (const p of triggered) {
-      if (p.id === best.id || p.stackingRule === "master") continue;
+      // reward_credit is always a master benefit (0 cart discount) — never blocked.
+      if (p.id === best.id || p.stackingRule === "master" || isRewardCredit(p)) continue;
       if (effectiveValue(p) > 0) {
         blockedPromos.push({ promoId: p.id, name: p.name, discount: calcDiscount(p, ctx), winnerName: best.name, wasExclusive: p.stackingRule === "exclusive", couponCode: p.couponCode ?? undefined });
       }
