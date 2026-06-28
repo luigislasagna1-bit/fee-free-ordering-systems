@@ -6,6 +6,7 @@ import { getAddOnBillingState } from "@/lib/dunning";
 import { AddOnBillingNotice } from "@/components/admin/AddOnBillingNotice";
 import { parsePaymentMethods } from "@/lib/payment-methods";
 import { PaymentMethodsClient } from "./PaymentMethodsClient";
+import { RewardsPaymentNotice } from "./RewardsPaymentNotice";
 
 /**
  * /admin/payments — the owner picks which payment methods they accept.
@@ -38,6 +39,8 @@ export default async function PaymentMethodsPage() {
       acceptsDelivery: true,
       acceptsDineIn: true,
       acceptsTakeOut: true,
+      rewardsEnabled: true,
+      rewardLabelPlural: true,
     },
   });
   if (!restaurant) redirect("/admin");
@@ -89,6 +92,9 @@ export default async function PaymentMethodsPage() {
         stripeStatus={restaurant.stripeAccountStatus ?? "not_connected"}
         onlinePaymentsUnlocked={onlinePaymentsUnlocked}
       />
+      {restaurant.rewardsEnabled && (
+        <RewardsPaymentNotice label={restaurant.rewardLabelPlural?.trim() || "Reward Dollars"} />
+      )}
     </>
   );
 }

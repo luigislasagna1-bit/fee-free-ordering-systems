@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
-import { Gift, ToggleLeft, ToggleRight, Loader2 } from "lucide-react";
+import { Gift, ToggleLeft, ToggleRight, Loader2, CreditCard } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { HelpTip } from "@/components/HelpTip";
+import { EarnRulesEditor } from "./EarnRulesEditor";
 
 interface Initial {
   rewardsEnabled: boolean;
@@ -44,7 +45,9 @@ export function RewardsClient({ currency, initial }: { currency: string; initial
       const res = await fetch("/api/admin/rewards/settings", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(s),
+        // Opting into the program means customers can ALWAYS pay with their
+        // balance — redeem is bound to the master switch, not a separate toggle.
+        body: JSON.stringify({ ...s, rewardRedeemEnabled: s.rewardsEnabled }),
       });
       if (!res.ok) throw new Error();
       toast.success(tToasts("saved"));
@@ -152,21 +155,29 @@ export function RewardsClient({ currency, initial }: { currency: string; initial
             )}
           </div>
 
-          {/* Spending */}
+          {/* Ways to earn — configurable rules/campaigns on top of the base rate */}
+          <EarnRulesEditor currency={currency} rewardLabelPlural={pluralPreview} />
+
+          {/* Spending — ALWAYS available when the program is on (it's a payment
+              option, per the opt-in promise). No on/off toggle; just the caps. */}
           <div className="rounded-2xl border border-gray-200 bg-white p-5 space-y-4">
-            <Toggle on={s.rewardRedeemEnabled} onClick={() => set("rewardRedeemEnabled", !s.rewardRedeemEnabled)} label={t("redeemTitle")} help={t("redeemHelp")} />
-            {s.rewardRedeemEnabled && (
-              <div className="ml-11 grid sm:grid-cols-2 gap-4">
-                <label className="block">
-                  <span className="text-sm font-medium text-gray-700 flex items-center gap-1.5">{t("maxRedeemPercent")} <HelpTip text={t("maxRedeemPercentHelp")} /></span>
-                  <div className="mt-1">{moneyInput(s.rewardMaxRedeemPercent, (n) => set("rewardMaxRedeemPercent", n), { suffix: "%", max: 100 })}</div>
-                </label>
-                <label className="block">
-                  <span className="text-sm font-medium text-gray-700 flex items-center gap-1.5">{t("minRedeemBalance")} <HelpTip text={t("minRedeemBalanceHelp")} /></span>
-                  <div className="mt-1">{moneyInput(s.rewardMinRedeemBalance, (n) => set("rewardMinRedeemBalance", n))}</div>
-                </label>
+            <div className="flex items-start gap-2">
+              <CreditCard className="w-5 h-5 text-emerald-600 mt-0.5" />
+              <div>
+                <h2 className="font-semibold text-gray-900">{t("redeemTitle", { label: pluralPreview })}</h2>
+                <p className="text-sm text-gray-500">{t("redeemAlwaysOn", { label: pluralPreview })}</p>
               </div>
-            )}
+            </div>
+            <div className="ml-7 grid sm:grid-cols-2 gap-4">
+              <label className="block">
+                <span className="text-sm font-medium text-gray-700 flex items-center gap-1.5">{t("maxRedeemPercent")} <HelpTip text={t("maxRedeemPercentHelp")} /></span>
+                <div className="mt-1">{moneyInput(s.rewardMaxRedeemPercent, (n) => set("rewardMaxRedeemPercent", n), { suffix: "%", max: 100 })}</div>
+              </label>
+              <label className="block">
+                <span className="text-sm font-medium text-gray-700 flex items-center gap-1.5">{t("minRedeemBalance")} <HelpTip text={t("minRedeemBalanceHelp")} /></span>
+                <div className="mt-1">{moneyInput(s.rewardMinRedeemBalance, (n) => set("rewardMinRedeemBalance", n))}</div>
+              </label>
+            </div>
           </div>
 
           {/* Sign-up bonus */}
