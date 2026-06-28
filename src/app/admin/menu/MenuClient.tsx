@@ -1573,12 +1573,13 @@ function availabilityBadge(
 }
 
 function SortableItemRow({
-  item, categoryModGroups, onEdit, onDelete, onToggle, onAttach, onDetach, onReorderGroups,
+  item, categoryModGroups, onEdit, onDelete, onCopySettings, onToggle, onAttach, onDetach, onReorderGroups,
 }: {
   item: MenuItem;
   categoryModGroups: ModifierGroup[];
   onEdit: () => void;
   onDelete: () => void;
+  onCopySettings: () => void;
   onToggle: (field: "isAvailable" | "isSoldOut" | "isHidden", val: boolean) => void;
   onAttach: (libraryGroupId: string, menuItemId: string) => void;
   onDetach: (groupId: string) => void;
@@ -1700,8 +1701,136 @@ function SortableItemRow({
           <button onClick={onEdit} className="p-1.5 text-gray-400 hover:text-blue-500 rounded transition">
             <Edit2 className="w-4 h-4" />
           </button>
+          <button onClick={onCopySettings} title={t("copySettingsTitle")} className="p-1.5 text-gray-400 hover:text-emerald-600 rounded transition">
+            <Copy className="w-4 h-4" />
+          </button>
           <button onClick={onDelete} className="p-1.5 text-gray-400 hover:text-red-500 rounded transition">
             <Trash2 className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Copy item settings → other items ────────────────────────────────────────
+// Pick which sections of a SOURCE item to copy, then which items (or whole
+// categories) to apply them to. Modifiers + Pizza are checked by default (the
+// common "set up one pizza, replicate it" case). Name/photo/price/category stay
+// each item's own. Luigi 2026-06-27.
+function CopySettingsModal({
+  source, categories, onClose, onSaved,
+}: {
+  source: MenuItem; categories: Category[]; onClose: () => void; onSaved: () => void;
+}) {
+  const t = useTranslations("admin.menuEditor");
+  const SECTION_KEYS = ["modifiers", "pizza", "basic", "visibility", "availability", "sizes"] as const;
+  const [sections, setSections] = useState<Set<string>>(new Set(["modifiers", "pizza"]));
+  const [targets, setTargets] = useState<Set<string>>(new Set());
+  const [search, setSearch] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  const toggle = (set: Set<string>, key: string) => {
+    const n = new Set(set); n.has(key) ? n.delete(key) : n.add(key); return n;
+  };
+
+  const q = search.trim().toLowerCase();
+  const cats = categories
+    .map((c) => ({ id: c.id, name: c.name, items: c.menuItems.filter((i) => i.id !== source.id && (!q || i.name.toLowerCase().includes(q))) }))
+    .filter((c) => c.items.length > 0);
+
+  const selectCat = (items: MenuItem[]) => setTargets((prev) => {
+    const n = new Set(prev);
+    const allSel = items.every((i) => n.has(i.id));
+    items.forEach((i) => (allSel ? n.delete(i.id) : n.add(i.id)));
+    return n;
+  });
+
+  const submit = async () => {
+    if (targets.size === 0 || sections.size === 0) return;
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/menu/items/${source.id}/copy-settings`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ targetItemIds: [...targets], sections: [...sections] }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      toast.success(t("copySettingsDone", { ok: data.ok ?? 0 }));
+      onSaved();
+    } catch (e: any) {
+      toast.error(e.message || t("copySettingsFailed"));
+    } finally { setSaving(false); }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[85vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+        <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+          <div className="flex items-center gap-2 min-w-0">
+            <Copy className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+            <h2 className="font-bold text-gray-900 truncate">{t("copySettingsHeading", { name: source.name })}</h2>
+          </div>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600"><X className="w-5 h-5" /></button>
+        </div>
+
+        <div className="px-5 py-4 overflow-y-auto space-y-4">
+          {/* Sections */}
+          <div>
+            <div className="text-sm font-semibold text-gray-900 mb-2">{t("copySettingsPickSections")}</div>
+            <div className="grid sm:grid-cols-2 gap-1.5">
+              {SECTION_KEYS.map((k) => (
+                <label key={k} className="flex items-center gap-2 text-sm text-gray-700 rounded-lg border border-gray-200 px-3 py-2 cursor-pointer hover:bg-gray-50">
+                  <input type="checkbox" checked={sections.has(k)} onChange={() => setSections((p) => toggle(p, k))} className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500" />
+                  {t(`copySection_${k}`)}
+                </label>
+              ))}
+            </div>
+            {sections.has("pizza") && !sections.has("modifiers") && (
+              <p className="mt-1.5 text-[11px] text-gray-400">{t("copySettingsPizzaNote")}</p>
+            )}
+          </div>
+
+          {/* Targets */}
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-semibold text-gray-900">{t("copySettingsPickTargets")}</span>
+              <span className="text-xs text-gray-500">{t("copySettingsSelectedCount", { n: targets.size })}</span>
+            </div>
+            <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder={t("copySettingsSearch")}
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm mb-2 focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+            <div className="border border-gray-200 rounded-xl divide-y divide-gray-100 max-h-64 overflow-y-auto">
+              {cats.length === 0 ? (
+                <div className="p-4 text-sm text-gray-400 text-center">{t("copySettingsNoItems")}</div>
+              ) : cats.map((c) => {
+                const allSel = c.items.every((i) => targets.has(i.id));
+                return (
+                  <div key={c.id}>
+                    <div className="flex items-center justify-between bg-gray-50 px-3 py-1.5">
+                      <span className="text-xs font-bold text-gray-600 uppercase truncate">{c.name}</span>
+                      <button onClick={() => selectCat(c.items)} className="text-xs font-semibold text-emerald-600 hover:text-emerald-800">
+                        {allSel ? t("deselectAll") : t("selectAll")}
+                      </button>
+                    </div>
+                    {c.items.map((i) => (
+                      <label key={i.id} className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-50">
+                        <input type="checkbox" checked={targets.has(i.id)} onChange={() => setTargets((p) => toggle(p, i.id))} className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500" />
+                        <span className="truncate">{i.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div className="px-5 py-4 border-t border-gray-100 flex justify-end gap-2">
+          <button onClick={onClose} className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700">{t("cancel")}</button>
+          <button onClick={submit} disabled={saving || targets.size === 0 || sections.size === 0}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-700 disabled:opacity-50">
+            {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Copy className="w-4 h-4" />}
+            {t("copySettingsApply", { n: targets.size })}
           </button>
         </div>
       </div>
@@ -1712,7 +1841,7 @@ function SortableItemRow({
 // ─── Sortable Category ────────────────────────────────────────────────────────
 
 function SortableCategoryBlock({
-  cat, expanded, onToggleExpand, onAddItem, onEditItem, onDeleteItem,
+  cat, expanded, onToggleExpand, onAddItem, onEditItem, onDeleteItem, onCopyItemSettings,
   onToggleItem, onEditCategory, onDeleteCategory, onDuplicateCategory, onItemsReordered, categories,
   onAttach, onDetach, onReorderGroups,
   selectMode, isSelected, onToggleSelect,
@@ -1720,6 +1849,7 @@ function SortableCategoryBlock({
   cat: Category; expanded: boolean;
   onToggleExpand: () => void; onAddItem: () => void;
   onEditItem: (item: MenuItem) => void; onDeleteItem: (id: string) => void;
+  onCopyItemSettings: (item: MenuItem) => void;
   onToggleItem: (id: string, field: "isAvailable" | "isSoldOut" | "isHidden", val: boolean) => void;
   onEditCategory: () => void; onDeleteCategory: () => void; onDuplicateCategory: () => void;
   onItemsReordered: (catId: string, ids: string[]) => void;
@@ -1851,6 +1981,7 @@ function SortableCategoryBlock({
                     categoryModGroups={cat.modifierGroups}
                     onEdit={() => onEditItem(item)}
                     onDelete={() => onDeleteItem(item.id)}
+                    onCopySettings={() => onCopyItemSettings(item)}
                     onToggle={(field, val) => onToggleItem(item.id, field, val)}
                     onAttach={(libId, itemId) => onAttach(libId, itemId)}
                     onDetach={onDetach}
@@ -2582,6 +2713,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuId]);
   const [itemModal, setItemModal] = useState<{ catId: string; item?: MenuItem } | null>(null);
+  const [copyModal, setCopyModal] = useState<{ source: MenuItem } | null>(null);
   const [modModal, setModModal] = useState<{ group?: ModifierGroup; menuItemId?: string } | null>(null);
   const [catModal, setCatModal] = useState<{ cat?: Category } | null>(null);
   const [pdfImportOpen, setPdfImportOpen] = useState(false);
@@ -3044,6 +3176,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
                     onAddItem={() => setItemModal({ catId: cat.id })}
                     onEditItem={item => setItemModal({ catId: cat.id, item })}
                     onDeleteItem={deleteItem}
+                    onCopyItemSettings={item => setCopyModal({ source: item })}
                     onToggleItem={toggleItem}
                     onEditCategory={() => setCatModal({ cat })}
                     onDeleteCategory={() => deleteCategory(cat.id)}
@@ -3103,6 +3236,10 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
       {modModal !== null && (
         <ModifierModal group={modModal.group} menuItemId={modModal.menuItemId}
           onClose={() => setModModal(null)} onSaved={() => { setModModal(null); reload(); }} />
+      )}
+      {copyModal !== null && (
+        <CopySettingsModal source={copyModal.source} categories={categories}
+          onClose={() => setCopyModal(null)} onSaved={() => { setCopyModal(null); reload(); }} />
       )}
       {pdfImportOpen && (
         <PdfImportModal
