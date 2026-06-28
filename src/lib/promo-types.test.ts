@@ -16,9 +16,10 @@ describe("promo-types catalog", () => {
   it("forces delivery-only on the free-delivery promo", () => {
     expect(getPromoTypeMeta("free_delivery")?.forcedOrderTypes).toEqual(["delivery"]);
   });
-  it("keeps the first four types free and the rest gated", () => {
+  it("keeps the core types free (incl. reward_credit) and the rest gated", () => {
     const free = PROMO_TYPES.filter((t) => t.tier === "free").map((t) => t.slug);
-    expect(free).toEqual(["percentage_off", "free_delivery", "bogo", "fixed_cart"]);
+    // reward_credit (Grant Reward Dollars) is free for all restaurants. Luigi 2026-06-27.
+    expect(free).toEqual(["percentage_off", "free_delivery", "bogo", "fixed_cart", "reward_credit"]);
     expect(LOCKED_PROMO_SLUGS.has("free_item")).toBe(true);
   });
 });
