@@ -2819,14 +2819,25 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
   const dedupeAttachments = async () => {
     setDedupeRunning(true);
     try {
+      // 1) Merge DUPLICATE CATEGORIES (same name within a menu) — the main thing
+      //    "Fix duplicates" is expected to do. Moves items into the survivor,
+      //    drops exact-duplicate items, deletes the empty shells. Luigi 2026-06-27.
+      const catRes = await fetch("/api/admin/menu/dedupe-categories", { method: "POST" });
+      const catData = await catRes.json().catch(() => ({}));
+      if (!catRes.ok) throw new Error(catData.error || "Failed");
+      const mergedCategories = typeof catData.mergedCategories === "number" ? catData.mergedCategories : 0;
+
+      // 2) Clean duplicate MODIFIER attachments (legacy item/category repair).
       const res = await fetch("/api/admin/menu/dedupe-modifier-attachments", { method: "POST" });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Failed");
-      const n = typeof data.cleaned === "number" ? data.cleaned : 0;
-      if (n === 0) {
+      const cleaned = typeof data.cleaned === "number" ? data.cleaned : 0;
+
+      if (mergedCategories === 0 && cleaned === 0) {
         toast.success(t("dedupeNoDuplicates"));
       } else {
-        toast.success(t("dedupeSuccess", { n }));
+        if (mergedCategories > 0) toast.success(t("dedupeCategoriesSuccess", { n: mergedCategories }));
+        if (cleaned > 0) toast.success(t("dedupeSuccess", { n: cleaned }));
         await reload();
       }
     } catch (err: any) {
