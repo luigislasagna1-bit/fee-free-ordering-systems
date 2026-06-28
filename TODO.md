@@ -183,3 +183,14 @@ date + commit hash. This file is committed so the backlog never gets lost.
 - DECIDE + build in the PROMOTIONS 1-by-1 joint pass (reserved). Touches: promo wizard (a "require a
   code" option on Restrictions & Display), the apply-coupon flow, personalized coupons, and the admin
   Promotions/Coupons UI (remove "New coupon code" / "Coupon Codes" tab).
+
+## Reward Dollars + VIP scheduler — deferred follow-ups (captured 2026-06-27)
+Programs 2+3 BUILT this session (see memory project_reward_dollars_and_scheduler.md). Deferred:
+- Refund-to-wallet on a FULL refund: return spent Reward Dollars + claw back earned credit
+  (refund route currently only caps the card refund at the charged amount = total − creditApplied).
+- Phone-normalized match column for strict identity matching (VIP + reward), so phone reuse can be
+  enforced/queried without per-row normalization. (Email/sign-in matching already strict.)
+- ScheduleEditor on the VIP-home individuals (raw-email) section — currently surfaced on the group
+  page + customer profile only.
+- Reward expiry enforcement: rewardExpiryDays is STORED but not enforced (needs an expiry cron).
+- Customer top-up / buy credit (Stripe charge → credit); chain-shared wallets — both deferred.
