@@ -8,26 +8,26 @@ datasource db {
 }
 
 model Restaurant {
-  id                   String  @id @default(cuid())
-  name                 String
-  slug                 String  @unique
-  slogan               String?
-  description          String?
-  phone                String?
-  email                String?
-  address              String?
-  city                 String?
-  state                String?
-  zip                  String?
-  country              String  @default("US")
-  timezone             String  @default("America/New_York")
+  id                          String    @id @default(cuid())
+  name                        String
+  slug                        String    @unique
+  slogan                      String?
+  description                 String?
+  phone                       String?
+  email                       String?
+  address                     String?
+  city                        String?
+  state                       String?
+  zip                         String?
+  country                     String    @default("US")
+  timezone                    String    @default("America/New_York")
   // Display format for hours throughout the admin UI and customer-facing
   // surfaces. "12h" → "9:00 PM"; "24h" → "21:00". Stored hours data is
   // always 24-hour HH:MM in the DB regardless — this only controls
   // RENDERING. Default 24h is the regional convention for most of our
   // launch markets (Canada, EU); North-American restaurants typically
   // flip this to 12h on day-one.
-  hoursFormat          String  @default("24h")
+  hoursFormat                 String    @default("24h")
   // Kitchen workflow mode:
   //   "simple"   → GloriaFood-style. Kitchen only sees Accept + Reject.
   //                Once accepted, the order stays in "In Progress" with
@@ -43,36 +43,36 @@ model Restaurant {
   //
   // Toggle is per-restaurant on the admin Services & Hours page.
   // Default = "simple" to match GloriaFood's well-tested model.
-  kitchenWorkflowMode  String  @default("simple")
+  kitchenWorkflowMode         String    @default("simple")
   // PrintNode backup printer enabled? Default false. Now that the
   // Direct LAN printer (native app, mDNS auto-discovery) is the main
   // printing path, PrintNode is opt-in only — restaurants on Windows
   // browsers or with unusual network setups can enable it as a
   // backup. When false, the PrintNode setup UI is hidden from the
   // kitchen settings to keep the default experience clean.
-  printNodeEnabled     Boolean @default(false)
-  cuisineType          String?
-  logoUrl              String?
+  printNodeEnabled            Boolean   @default(false)
+  cuisineType                 String?
+  logoUrl                     String?
   /// Dedicated receipt-header logo (Vercel Blob URL). When set, the
   /// "store_logo" section prints/renders it at the top of the CUSTOMER
   /// receipt (HTML preview + email immediately; physical Star print after
   /// the Android app picks up image-line support). Separate from logoUrl on
   /// purpose: thermal printing wants a high-contrast image, which is often
   /// not the colored web logo. Luigi 2026-06-11.
-  receiptLogoUrl       String?
-  bannerUrl            String?
+  receiptLogoUrl              String?
+  bannerUrl                   String?
   /// Optional per-restaurant favicon (square icon, recommended 350x350) shown
   /// in the browser tab on the customer ordering page. Falls back to the
   /// platform default when null. Nullable + on the small Restaurant table, so
   /// no hot-path/scale concern.
-  faviconUrl           String?
-  isActive             Boolean @default(true)
-  acceptsPickup        Boolean @default(true)
-  acceptsDelivery      Boolean @default(false)
-  acceptsDineIn        Boolean @default(false)
-  acceptsCatering      Boolean @default(false)
-  acceptsTakeOut       Boolean @default(false)
-  acceptsReservations  Boolean @default(false)
+  faviconUrl                  String?
+  isActive                    Boolean   @default(true)
+  acceptsPickup               Boolean   @default(true)
+  acceptsDelivery             Boolean   @default(false)
+  acceptsDineIn               Boolean   @default(false)
+  acceptsCatering             Boolean   @default(false)
+  acceptsTakeOut              Boolean   @default(false)
+  acceptsReservations         Boolean   @default(false)
   /// Per-service pause timestamps. When non-null AND in the future,
   /// the corresponding service is paused — customers see a banner +
   /// the order button for that service is blocked. When the timestamp
@@ -81,13 +81,13 @@ model Restaurant {
   /// kitchen needs a "pause for the rest of the day" / "pause for 1
   /// hour" button when they're slammed, so they can stop new orders
   /// without disabling the service globally.
-  pickupPausedUntil       DateTime?
-  deliveryPausedUntil     DateTime?
-  dineInPausedUntil       DateTime?
-  cateringPausedUntil     DateTime?
-  takeOutPausedUntil      DateTime?
-  reservationsPausedUntil DateTime?
-  serviceSettings      String? // JSON: per-service { displayName, description, estimatedTime }
+  pickupPausedUntil           DateTime?
+  deliveryPausedUntil         DateTime?
+  dineInPausedUntil           DateTime?
+  cateringPausedUntil         DateTime?
+  takeOutPausedUntil          DateTime?
+  reservationsPausedUntil     DateTime?
+  serviceSettings             String? // JSON: per-service { displayName, description, estimatedTime }
   /// Minimum advance notice (in HOURS) required for catering orders.
   /// When the cart contains any item flagged `isCatering` — or any item
   /// in a category flagged `isCatering` — the customer MUST schedule the
@@ -96,41 +96,41 @@ model Restaurant {
   /// slot is now+cateringNoticeHours) AND server-side (/api/orders POST
   /// rejects any catering cart without a sufficiently-future scheduledFor).
   /// Default 24h matches the most common catering shop convention.
-  cateringNoticeHours  Int     @default(24)
-  minimumOrder         Float   @default(0)
-  deliveryFee          Float   @default(0)
+  cateringNoticeHours         Int       @default(24)
+  minimumOrder                Float     @default(0)
+  deliveryFee                 Float     @default(0)
   /// Delivery advanced setting (GloriaFood-parity, Luigi 2026-06-04): when
   /// true, customers may place a delivery order even if their address falls
   /// OUTSIDE every configured delivery zone. Default false = block out-of-zone
   /// orders at checkout (the restaurant must opt in to accept them).
-  acceptOutsideZoneOrders Boolean @default(false)
+  acceptOutsideZoneOrders     Boolean   @default(false)
   /// Customizable delivery-address form (GloriaFood-style). JSON map of
   /// { fieldKey: { show, required } } over the 9 canonical fields. NULL = use
   /// the default preset (Street/City/Postcode required, Apartment optional).
   /// Single source of truth: src/lib/delivery-address-fields.ts. Luigi 2026-06-04.
-  deliveryAddressConfig Json?
-  estimatedPickup      Int     @default(20)
-  estimatedDelivery    Int     @default(45)
-  taxRate              Float   @default(0)
+  deliveryAddressConfig       Json?
+  estimatedPickup             Int       @default(20)
+  estimatedDelivery           Int       @default(45)
+  taxRate                     Float     @default(0)
   /// Whether the customer-side cart shows the tip selector. False
   /// suppresses the entire tip block (no "0% / 10% / 15% / custom"
   /// row) and the order POST clamps any client-sent tip to 0 so a
   /// tampered client can't inject one. Default true to preserve the
   /// historical behaviour for restaurants that haven't touched this.
-  tipsEnabled          Boolean @default(true)
+  tipsEnabled                 Boolean   @default(true)
   /// Whether the customer ordering page shows the magnifying-glass
   /// menu search bar above the category pills. Default true to
   /// preserve the historical "always-on" behaviour (Luigi 2026-05-31).
   /// When false the entire search row is omitted — clients use the
   /// category pills to navigate, GloriaFood style. Toggled by the
   /// owner from /admin/service-fees > Customer ordering page.
-  showCustomerMenuSearch Boolean @default(true)
+  showCustomerMenuSearch      Boolean   @default(true)
   /// ISO 4217 lowercase currency code (matches Stripe's expectation:
   /// "usd", "cad", "eur", "gbp", "aud", etc.). Drives the customer
   /// price formatting, Stripe PaymentIntent currency, PayPal Order
   /// currency, kitchen receipt symbol, and email totals. Default
   /// "usd" so existing restaurants don't change behaviour silently.
-  currency             String  @default("usd")
+  currency                    String    @default("usd")
   /// Vercel-Blob URL of a custom new-order ring sound uploaded by the
   /// owner via /admin/profile. When non-null the KDS Sound Settings
   /// modal surfaces it as a third selectable option (alongside
@@ -138,88 +138,88 @@ model Restaurant {
   /// terminal still picks which sound plays so a custom track doesn't
   /// override their personal preference. Null = no custom sound on
   /// file, the picker only shows the two built-ins.
-  kitchenAlertSoundUrl String?
+  kitchenAlertSoundUrl        String?
   /// Minutes between selectable scheduling slots for customer orders.
   /// GloriaFood ships 15-minute intervals; we let owners pick from
   /// 10/15/20/30/60. Without this the schedule picker is a free-form
   /// HTML datetime-local input and a customer can schedule "3:02 PM"
   /// which doesn't fit any kitchen workflow. Italian beta tester
   /// reported 2026-05-31. Default 15 to match GloriaFood's default.
-  scheduledOrderInterval Int @default(15)
+  scheduledOrderInterval      Int       @default(15)
   /// Pre-order ("order for later") advance-time limits per service, mirroring
   /// the reservation min-notice / max-advance controls. Min lead = how soon
   /// the earliest schedulable slot can be (in MINUTES; 0 = only bounded by the
   /// prep estimate). Max advance = how many DAYS ahead a customer can schedule
   /// (0 = no limit). Applied client-side (date/time picker bounds) AND
   /// server-side (order validation). Fabrizio report cmq14gy64.
-  pickupMinLeadMinutes   Int @default(0)
-  pickupMaxAdvanceDays   Int @default(0)
-  deliveryMinLeadMinutes Int @default(0)
-  deliveryMaxAdvanceDays Int @default(0)
-  dineInMinLeadMinutes   Int @default(0)
-  dineInMaxAdvanceDays   Int @default(0)
+  pickupMinLeadMinutes        Int       @default(0)
+  pickupMaxAdvanceDays        Int       @default(0)
+  deliveryMinLeadMinutes      Int       @default(0)
+  deliveryMaxAdvanceDays      Int       @default(0)
+  dineInMinLeadMinutes        Int       @default(0)
+  dineInMaxAdvanceDays        Int       @default(0)
   /// Master switch: may customers request a specific fulfillment time at all?
   /// false → the schedule picker is hidden (ASAP only), unless a catering /
   /// closed-now rule forces scheduling. GloriaFood "Allow clients to request
   /// a specific fulfillment time".
-  allowScheduledOrders   Boolean @default(true)
+  allowScheduledOrders        Boolean   @default(true)
   /// Hide the "as soon as possible" option — every order must be scheduled
   /// for a future slot. Only effective when allowScheduledOrders is true.
   /// GloriaFood "Hide 'as soon as possible' (allow only scheduled orders)".
-  requireScheduledOrders Boolean @default(false)
+  requireScheduledOrders      Boolean   @default(false)
   /// Show each service's estimated time (e.g. "Pickup · 20 min") on the ORDERING PAGE
   /// service buttons. Default true (current behaviour). Off → those times are hidden on the
   /// order page but still shown at checkout / in the zone estimate. Fabrizio 2026-06-25.
-  showServiceTimesOnOrderPage Boolean @default(true)
+  showServiceTimesOnOrderPage Boolean   @default(true)
   /// Show the house/civic number AFTER the street name (e.g. "Via Roma 12") instead of
   /// before it ("12 Via Roma") when an address is picked from autocomplete. Default false
   /// (number-first, North-American). Per-restaurant so it never flips an existing store's
   /// format. Fabrizio 2026-06-25.
-  addressNumberAfterStreet Boolean @default(false)
+  addressNumberAfterStreet    Boolean   @default(false)
   /// Ordering-page promotional POPUP (shown once per browser session on /order/[slug]). JSON:
   /// { enabled, imageUrl?, title?, body?, buttonLabel?, buttonUrl? }. Null = no popup. The owner
   /// configures it in the admin Profile page. Additive + nullable. Fabrizio 2026-06-25.
-  orderingPopup Json?
+  orderingPopup               Json?
   /// Whether the customer's email is mandatory on the checkout form.
   /// Default true so receipts can be sent; an owner who only wants
   /// SMS notification can flip this off and require phone instead.
   /// Validation gate lives in the checkout form + order POST.
-  requireCustomerEmail Boolean @default(true)
+  requireCustomerEmail        Boolean   @default(true)
   /// Whether the customer's phone number is mandatory on checkout.
   /// Default true because the kitchen needs to call customers about
   /// delivery / pickup hand-offs.
-  requireCustomerPhone Boolean @default(true)
+  requireCustomerPhone        Boolean   @default(true)
   /// Auto phone-call alert (report cmpxeph4l): when on, a new order left
   /// unaccepted for ~90s triggers an automated voice call to the
   /// restaurant's phone so an unattended tablet doesn't drop the order.
   /// Requires the platform Twilio voice creds + a restaurant phone number.
-  autoCallOnNewOrder   Boolean @default(false)
+  autoCallOnNewOrder          Boolean   @default(false)
   /// Kitchen device alarm: vibrate alongside the ring on a new order. Default
   /// true (ring + vibrate); false = ring only. Read by the FCM push + the
   /// alarm-state poll, then honored by the native OrderAlarmService. Luigi
   /// 2026-06-16 (Fabrizio: let the restaurant choose ring+vibrate vs ring-only).
-  kitchenVibrate       Boolean @default(true)
+  kitchenVibrate              Boolean   @default(true)
   /// Kitchen order TILE: for DELIVERY orders, lead the tile with the customer
   /// NAME instead of the street address, so staff can identify an order by name
   /// when a customer calls. Default false = address (current). Fabrizio 2026-06-21.
-  kitchenDeliveryShowName Boolean @default(false)
+  kitchenDeliveryShowName     Boolean   @default(false)
   /// Delivery/catering tile ALSO shows the street address under the name (only
   /// applies when kitchenDeliveryShowName is on) → "Name — then Address".
   /// Additive (default false) so an existing name/address preference is kept.
   /// Luigi 2026-06-22.
-  kitchenDeliveryShowBoth Boolean @default(false)
+  kitchenDeliveryShowBoth     Boolean   @default(false)
   /// Kitchen order DETAIL: show each dish's menu CATEGORY under its name (helps
   /// when the same dish name appears in different categories, e.g. Japanese
   /// menus). Default false = off. Fabrizio 2026-06-21.
-  kitchenShowItemCategory Boolean @default(false)
+  kitchenShowItemCategory     Boolean   @default(false)
   /// Optional alternate number for the nearly-missed-order auto-call (e.g. the
   /// owner's cell). Null/blank ⇒ fall back to the public `phone`.
-  alertPhone           String?
+  alertPhone                  String?
   // Stripe Connect (Layer C — restaurant collects payments from customers)
-  stripeAccountId      String?
-  stripeAccountStatus  String? @default("not_connected")
-  stripeChargesEnabled Boolean @default(false)
-  stripePayoutsEnabled Boolean @default(false)
+  stripeAccountId             String?
+  stripeAccountStatus         String?   @default("not_connected")
+  stripeChargesEnabled        Boolean   @default(false)
+  stripePayoutsEnabled        Boolean   @default(false)
 
   // PayPal direct charges (Layer C alternative — same model as Stripe Connect:
   // restaurant owns the merchant account, money lands directly in their PayPal
@@ -269,35 +269,35 @@ model Restaurant {
   paymentMethods String @default("[]")
 
   // Platform subscription (Layer B — restaurant pays you monthly via Stripe Checkout)
-  subscriptionPlanId   String?
+  subscriptionPlanId     String?
   // Deprecated: trialEndsAt was used during the trial-as-default era. We
   // no longer create trials — every restaurant lands on the FREE plan
   // directly. Column kept (nullable, unused on new rows) so we don't
   // need a destructive migration to drop it.
-  trialEndsAt          DateTime?
+  trialEndsAt            DateTime?
   // Status values: "free" (default — every new restaurant lands here),
   // "active" (paid plan), "past_due" | "cancelled" | "incomplete" |
   // "expired" (Stripe-driven). "trialing" is no longer set on new
   // restaurants but may exist on legacy rows — treated equivalently to
   // "free" everywhere it's checked (see GRANTING_STATUSES in
   // src/lib/entitlements.ts).
-  subscriptionStatus   String    @default("free")
-  stripeCustomerId     String?   @unique
-  stripeSubscriptionId String?   @unique
-  currentPeriodEnd     DateTime?
-  cancelAtPeriodEnd    Boolean   @default(false)
+  subscriptionStatus     String    @default("free")
+  stripeCustomerId       String?   @unique
+  stripeSubscriptionId   String?   @unique
+  currentPeriodEnd       DateTime?
+  cancelAtPeriodEnd      Boolean   @default(false)
   /// Dunning / failed-payment grace (Luigi 2026-06-15). A failed charge does
   /// NOT cut service — it starts a grace clock; paid features stay ON until
   /// graceEndsAt, then drop to the free tier (ordering always keeps working).
   /// dunningStartedAt anchors the "day X of N" countdown; lastDunnedOn is the
   /// YYYY-MM-DD of the last daily reminder (one nudge/day idempotency). Null =
   /// billing healthy. See src/lib/entitlements.ts + /api/cron/dunning.
-  dunningStartedAt     DateTime?
-  graceEndsAt          DateTime?
-  lastDunnedOn         String?
-  reviewLink           String?
-  infoContent          String? // JSON for info page custom CTAs etc
-  themeSettings        String? // JSON for customer-facing website theme
+  dunningStartedAt       DateTime?
+  graceEndsAt            DateTime?
+  lastDunnedOn           String?
+  reviewLink             String?
+  infoContent            String? // JSON for info page custom CTAs etc
+  themeSettings          String? // JSON for customer-facing website theme
   /// JSON for the hosted marketing site (gated on the Sales Optimized
   /// Website add-on). Controls section visibility, hero copy overrides,
   /// custom CTAs, and up to 2 user-defined sections. All BASE content
@@ -305,12 +305,12 @@ model Restaurant {
   /// restaurant fields — this column only stores layout/display choices.
   /// Null = use defaults from the canonical fields (the current behavior).
   /// See src/lib/hosted-site-settings.ts for the parsed shape.
-  hostedSiteSettings   String?
-  lat                  Float? // geocoded restaurant latitude
-  lng                  Float? // geocoded restaurant longitude
-  mapProvider          String    @default("leaflet") // "leaflet" | "google"
-  googleMapsApiKey     String? // only used when mapProvider = "google"
-  autoAcceptOrders     Boolean   @default(false)
+  hostedSiteSettings     String?
+  lat                    Float? // geocoded restaurant latitude
+  lng                    Float? // geocoded restaurant longitude
+  mapProvider            String    @default("leaflet") // "leaflet" | "google"
+  googleMapsApiKey       String? // only used when mapProvider = "google"
+  autoAcceptOrders       Boolean   @default(false)
   /// Currently-active kitchen-display session token. Rotated on every
   /// /kitchen login so only the newest device's JWT matches what's
   /// in the DB — older devices' JWTs become stale and the kitchen
@@ -319,36 +319,36 @@ model Restaurant {
   /// (Luigi 2026-06-02). Null = no kitchen device has ever logged in,
   /// in which case the JWT verification is bypassed for back-compat
   /// with sessions minted before this column existed.
-  kitchenSessionToken  String?
-  defaultLanguage      String    @default("en")
+  kitchenSessionToken    String?
+  defaultLanguage        String    @default("en")
   // What the restaurant calls its VIP-special recipients in the announcement
   // email ("As a {vipMemberLabel} at …"). Owner-chosen brand term (e.g. "VIP
   // member", "Teacher", "Club member"); null → localized default "VIP member".
-  vipMemberLabel       String?
+  vipMemberLabel         String?
   // ── Reward Dollars (store-credit wallet, Program 3). Per-restaurant opt-in +
   //    fully configurable: each restaurant chooses to earn-by-auto, earn-by-grant,
   //    both, or neither. Customer-facing NAME is renameable (default localized
   //    "Reward Dollars"). Money is Float to match every other money column. ──────
-  rewardsEnabled         Boolean @default(false) // master on/off for the whole feature
+  rewardsEnabled         Boolean   @default(false) // master on/off for the whole feature
   rewardLabelSingular    String? // e.g. "Reward Dollar" — null → localized default
   rewardLabelPlural      String? // e.g. "Reward Dollars"
-  rewardEarnEnabled      Boolean @default(false) // auto-earn on completed orders
-  rewardEarnMode         String  @default("percent") // "percent" | "per_dollar"
-  rewardEarnPercent      Float   @default(0) // % of (subtotal−discount) earned back
-  rewardEarnPerDollar    Float   @default(0) // $ earned per $1 of (subtotal−discount)
-  rewardRedeemEnabled    Boolean @default(false) // customers may spend at checkout
-  rewardMinRedeemBalance Float   @default(0) // min balance before any redemption
-  rewardMaxRedeemPercent Float   @default(100) // cap % of an order coverable by credit
-  rewardSignupBonus      Float   @default(0) // credit granted on account creation
-  rewardExpiryDays       Int     @default(0) // 0 = never (stored; not enforced v1)
-  socialLinks          String? // JSON: { instagram, facebook, tiktok, x, youtube, linkedin, pinterest, snapchat, threads, whatsapp, yelp, googleBusiness, tripadvisor, website }
-  marketingTier        String    @default("free") // "free" | "social_basic" | "social_pro" | "social_managed" — gates AI-post / scheduling features
+  rewardEarnEnabled      Boolean   @default(false) // auto-earn on completed orders
+  rewardEarnMode         String    @default("percent") // "percent" | "per_dollar"
+  rewardEarnPercent      Float     @default(0) // % of (subtotal−discount) earned back
+  rewardEarnPerDollar    Float     @default(0) // $ earned per $1 of (subtotal−discount)
+  rewardRedeemEnabled    Boolean   @default(false) // customers may spend at checkout
+  rewardMinRedeemBalance Float     @default(0) // min balance before any redemption
+  rewardMaxRedeemPercent Float     @default(100) // cap % of an order coverable by credit
+  rewardSignupBonus      Float     @default(0) // credit granted on account creation
+  rewardExpiryDays       Int       @default(0) // 0 = never (stored; not enforced v1)
+  socialLinks            String? // JSON: { instagram, facebook, tiktok, x, youtube, linkedin, pinterest, snapchat, threads, whatsapp, yelp, googleBusiness, tripadvisor, website }
+  marketingTier          String    @default("free") // "free" | "social_basic" | "social_pro" | "social_managed" — gates AI-post / scheduling features
   /// Marketing & tracking integrations the OWNER configures for their own
   /// ordering site (Integrations page). The restaurant is the data controller
   /// for this tracking — injected on /order/<slug> when set. Validated to the
   /// provider's ID shape before storage. Luigi 2026-06-17.
-  facebookPixelId      String? // numeric Meta Pixel ID
-  googleAnalyticsId    String? // GA4 Measurement ID, "G-XXXXXXXXXX"
+  facebookPixelId        String? // numeric Meta Pixel ID
+  googleAnalyticsId      String? // GA4 Measurement ID, "G-XXXXXXXXXX"
 
   // Domain routing: "subdomain" → <sub>.<PLATFORM_DOMAIN>, "customDomain" → bring-your-own.
   // slug stays internal-stable (used by /order/[slug] paths and order references);
@@ -369,7 +369,7 @@ model Restaurant {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  subscriptionPlan       SubscriptionPlan?       @relation(fields: [subscriptionPlanId], references: [id])
+  subscriptionPlan       SubscriptionPlan?         @relation(fields: [subscriptionPlanId], references: [id])
   users                  User[]
   menuCategories         MenuCategory[]
   menuItems              MenuItem[]
@@ -406,6 +406,7 @@ model Restaurant {
   customerCoupons        CustomerCoupon[]
   customerGroups         CustomerGroup[]
   rewardAccounts         RewardAccount[]
+  vipSchedules           VipSchedule[]
 
   // Reseller Partner Program — set at restaurant creation when the signup
   // carried a ?ref=<referralCode> from an approved reseller. Nullable: most
@@ -802,9 +803,9 @@ model Menu {
   /// ONLY during these days/hours (restaurant tz); a menu with no window is
   /// the all-hours default. Mirrors MenuItem's availability columns. Save-
   /// time validation guarantees the active menus cover every open hour.
-  availableDays       String?   // JSON: [0,1,2,3,4,5,6] — null = every day
-  availableFrom       String?   // "HH:MM" — null = no time restriction (default menu)
-  availableTo         String?   // "HH:MM"
+  availableDays       String? // JSON: [0,1,2,3,4,5,6] — null = every day
+  availableFrom       String? // "HH:MM" — null = no time restriction (default menu)
+  availableTo         String? // "HH:MM"
   isArchived          Boolean   @default(false)
   sortOrder           Int       @default(0)
   createdAt           DateTime  @default(now())
@@ -818,21 +819,21 @@ model Menu {
 }
 
 model MenuCategory {
-  id           String   @id @default(cuid())
-  restaurantId String
+  id               String    @id @default(cuid())
+  restaurantId     String
   /// Which menu version this category belongs to. Nullable during the Phase 0
   /// migration; backfilled to the restaurant's default "Main Menu". The
   /// customer page reads only the ACTIVE menu's categories.
-  menuId       String?
-  name         String
-  description  String?
-  imageUrl     String?
-  isActive     Boolean  @default(true)
+  menuId           String?
+  name             String
+  description      String?
+  imageUrl         String?
+  isActive         Boolean   @default(true)
   /// LEGACY visibility toggle. Superseded by the visibility* model below
   /// (Luigi 2026-06-12, GloriaFood-style rebuild). Migrated to
   /// visibilityMode="hide_from_menu"; kept so old rows / un-migrated data
   /// still hide. New code reads visibilityMode first, falls back to isHidden.
-  isHidden     Boolean  @default(false)
+  isHidden         Boolean   @default(false)
   /// GloriaFood-style scheduled visibility. null = always visible. One of:
   ///   "hide_from_menu"  → hidden from customers entirely
   ///   "hide_until"      → hidden now, auto-appears at visibleUntil
@@ -843,18 +844,18 @@ model MenuCategory {
   visibleUntil     DateTime? // hide_until: hidden until this moment
   visibleStartDate DateTime? // show_from_until: visible from
   visibleEndDate   DateTime? // show_from_until: visible until
-  visibleDays      String?   // show_only_from: JSON [0..6] (null = every day)
-  visibleFrom      String?   // show_only_from: "HH:MM"
-  visibleTo        String?   // show_only_from: "HH:MM"
+  visibleDays      String? // show_only_from: JSON [0..6] (null = every day)
+  visibleFrom      String? // show_only_from: "HH:MM"
+  visibleTo        String? // show_only_from: "HH:MM"
   /// When true, every item in this category is treated as catering —
   /// cart with any of them must be scheduled ≥ Restaurant.cateringNoticeHours
   /// in advance (ASAP is blocked). Per-item MenuItem.isCatering ORs with
   /// this flag, so an owner can either tag a whole category or sprinkle
   /// catering items into a regular category.
-  isCatering   Boolean  @default(false)
-  sortOrder    Int      @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  isCatering       Boolean   @default(false)
+  sortOrder        Int       @default(0)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
   restaurant     Restaurant      @relation(fields: [restaurantId], references: [id])
   menu           Menu?           @relation(fields: [menuId], references: [id])
@@ -893,26 +894,26 @@ model PendingMenuImage {
 }
 
 model MenuItem {
-  id            String   @id @default(cuid())
-  restaurantId  String
-  categoryId    String
+  id               String    @id @default(cuid())
+  restaurantId     String
+  categoryId       String
   /// Stable identity that survives across menu versions: when a menu is
   /// duplicated, the copy's items keep the SAME lineageId as their source.
   /// Lets promotions (which reference item ids) be remapped old→new on
   /// publish, and lets reports group an item across versions. Backfilled to
   /// the item's own id for pre-existing items. Multi-menu Phase 0.
-  lineageId     String?
-  name          String
-  description   String?
-  price         Float
-  imageUrl      String?
-  isAvailable   Boolean  @default(true)
-  isFeatured    Boolean  @default(false)
-  isSoldOut     Boolean  @default(false)
+  lineageId        String?
+  name             String
+  description      String?
+  price            Float
+  imageUrl         String?
+  isAvailable      Boolean   @default(true)
+  isFeatured       Boolean   @default(false)
+  isSoldOut        Boolean   @default(false)
   /// LEGACY visibility toggle — superseded by the visibility* model below
   /// (GloriaFood-style rebuild, Luigi 2026-06-12). Migrated to
   /// visibilityMode="hide_from_menu"; new code reads visibilityMode first.
-  isHidden      Boolean  @default(false)
+  isHidden         Boolean   @default(false)
   /// GloriaFood-style scheduled visibility (same model as MenuCategory).
   /// null = always visible. One of: "hide_from_menu" | "hide_until" |
   /// "show_only_from" | "show_from_until". See MenuCategory for field meanings.
@@ -923,18 +924,18 @@ model MenuItem {
   visibleDays      String?
   visibleFrom      String?
   visibleTo        String?
-  hasVariants   Boolean  @default(false)
-  forPickup     Boolean  @default(true)
-  forDelivery   Boolean  @default(true)
+  hasVariants      Boolean   @default(false)
+  forPickup        Boolean   @default(true)
+  forDelivery      Boolean   @default(true)
   /// Per-item catering flag — opts THIS item into the catering-notice
   /// rule (see Restaurant.cateringNoticeHours). ORs with the parent
   /// category's `isCatering` flag, so either path tags the item.
   /// Cart with any catering item forces schedule-for-later mode with
   /// earliest slot = now + cateringNoticeHours.
-  isCatering    Boolean  @default(false)
-  availableDays String? // JSON: [0,1,2,3,4,5,6] — null = all days
-  availableFrom String? // "HH:MM"
-  availableTo   String? // "HH:MM"
+  isCatering       Boolean   @default(false)
+  availableDays    String? // JSON: [0,1,2,3,4,5,6] — null = all days
+  availableFrom    String? // "HH:MM"
+  availableTo      String? // "HH:MM"
   /// What happens OUTSIDE the availability window (Luigi 2026-06-11, reseller
   /// report cmpxec829 — Cloudwaitress-style): null/"hide" = item disappears
   /// from the customer menu (legacy); "show" = item stays VISIBLE with an
@@ -949,13 +950,13 @@ model MenuItem {
   /// Independent of `visible*` (show/hide) and the legacy availableDays. null
   /// = no fulfilment restriction. Restaurant timezone applies. Server rejects
   /// an order whose effective fulfilment time is outside the window.
-  fulfilDays    String? // JSON [0..6] — null = any day
-  fulfilFrom    String? // "HH:MM"
-  fulfilTo      String? // "HH:MM"
-  sortOrder     Int      @default(0)
-  calories      Int?
-  allergens     String?
-  pizzaConfig   String? // JSON: PizzaConfig — marks item as a pizza builder item
+  fulfilDays       String? // JSON [0..6] — null = any day
+  fulfilFrom       String? // "HH:MM"
+  fulfilTo         String? // "HH:MM"
+  sortOrder        Int       @default(0)
+  calories         Int?
+  allergens        String?
+  pizzaConfig      String? // JSON: PizzaConfig — marks item as a pizza builder item
   /// JSON: ComboConfig — marks this item as a COMBO (e.g. "2-Pizza Combo",
   /// "Pizza + Wings"). Defines ordered slots, each with an eligible item/
   /// category pool, min/max picks, and optional per-item upcharges. When set,
@@ -963,9 +964,9 @@ model MenuItem {
   /// pizza-builder items inside a slot open the full pizza builder. The combo
   /// is a single menu line at this item's price + any premium upcharges.
   /// Multi-pizza combos as a first-class menu item. Luigi 2026-06-05.
-  comboConfig   String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  comboConfig      String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
   restaurant     Restaurant      @relation(fields: [restaurantId], references: [id])
   category       MenuCategory    @relation(fields: [categoryId], references: [id])
@@ -999,20 +1000,20 @@ model ItemVariant {
 // - category-level: categoryId set, menuItemId null
 // - library (reusable): restaurantId set, menuItemId null, categoryId null
 model ModifierGroup {
-  id             String   @id @default(cuid())
-  restaurantId   String? // null = item-scoped, set = library group
-  menuItemId     String?
-  variantId      String?
-  categoryId     String?
-  name           String
-  description    String?
-  required       Boolean  @default(false)
-  minSelect      Int      @default(0)
-  maxSelect      Int      @default(1)
-  maxPerOption   Int      @default(1) // how many times same option can be picked
-  isHidden       Boolean  @default(false)
-  sortOrder      Int      @default(0)
-  libraryGroupId String? // if attached from a library group (points to the source library ModifierGroup id)
+  id               String   @id @default(cuid())
+  restaurantId     String? // null = item-scoped, set = library group
+  menuItemId       String?
+  variantId        String?
+  categoryId       String?
+  name             String
+  description      String?
+  required         Boolean  @default(false)
+  minSelect        Int      @default(0)
+  maxSelect        Int      @default(1)
+  maxPerOption     Int      @default(1) // how many times same option can be picked
+  isHidden         Boolean  @default(false)
+  sortOrder        Int      @default(0)
+  libraryGroupId   String? // if attached from a library group (points to the source library ModifierGroup id)
   /// Whether the group can be split half/half on a pizza item. Owners
   /// flip this for groups whose options can physically be applied
   /// per-half (toppings, sauces, cheeses, drizzles, etc.) and leave it
@@ -1022,16 +1023,16 @@ model ModifierGroup {
   /// with whole/split UI; otherwise it renders as a normal option grid.
   /// Default false — owner explicitly enables via the modifier group
   /// library editor.
-  supportsHalfHalf Boolean @default(false)
+  supportsHalfHalf Boolean  @default(false)
   /// Pizza role tag: "crust" | "sauce" | "cheese" | "topping" | null. When a
   /// role has ANY tagged group, the matching pizza picker (Crust/Sauce/Cheese
   /// dropdown or the Topping multi-select) lists ONLY tagged groups instead of
   /// every modifier in the library (Fabrizio 2026-06-21). null = untagged →
   /// shows everywhere (legacy behaviour). Owners set it in the modifier group
   /// editor. Authoring-only; not read on the customer side.
-  pizzaRole      String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  pizzaRole        String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   restaurant Restaurant?      @relation(fields: [restaurantId], references: [id])
   menuItem   MenuItem?        @relation(fields: [menuItemId], references: [id])
@@ -1076,7 +1077,7 @@ model Order {
   /// delivery zone but was accepted anyway (restaurant opted in via
   /// acceptOutsideZoneOrders). Drives a "may be outside your regular zone"
   /// note to kitchen staff. Non-null boolean = cheap on this hot table. 2026-06-04.
-  outsideDeliveryZone   Boolean @default(false)
+  outsideDeliveryZone   Boolean   @default(false)
   notes                 String?
   couponId              String?
   couponDiscount        Float     @default(0)
@@ -1130,12 +1131,12 @@ model Order {
   /// Kitchen display: orders with alertAt > now appear silently in
   /// the pending tab but DON'T trigger the ring sound or countdown
   /// until now reaches alertAt.
-  placedWhileClosed     Boolean   @default(false)
-  alertAt               DateTime?
+  placedWhileClosed Boolean   @default(false)
+  alertAt           DateTime?
   /// When the "nearly-missed order" auto phone-call was placed to the
   /// restaurant (report cmpxeph4l). Set once so the every-minute cron never
   /// double-calls for the same order. Null = no call placed yet.
-  alertCallAt           DateTime?
+  alertCallAt       DateTime?
 
   /// Marketplace channel attribution. True when the customer came from
   /// our /marketplace browse page (detected via ?from=marketplace at
@@ -1238,7 +1239,7 @@ model Order {
   /// you see the same list (Luigi 2026-06-02 GloriaFood-parity follow-
   /// up). The order itself isn't deleted — admin reports + customer
   /// status pages still see it. Just hidden from the kitchen list.
-  clearedFromKitchenAt DateTime?
+  clearedFromKitchenAt  DateTime?
   /// PER-TAB kitchen clear (Luigi 2026-06-04). Each kitchen tab clears
   /// independently — the SAME order can be dismissed from the All tab while
   /// staying visible in In Progress / Complete, and vice-versa. The In
@@ -1411,15 +1412,16 @@ model Customer {
   createdAt              DateTime  @default(now())
   updatedAt              DateTime  @updatedAt
 
-  restaurant      Restaurant       @relation(fields: [restaurantId], references: [id])
-  customerAccount CustomerAccount? @relation(fields: [customerAccountId], references: [id])
-  orders          Order[]
-  addresses       RestaurantCustomerAddress[]
-  assignedCoupons Coupon[]         @relation("CouponAssignedCustomer")
-  customerCoupons CustomerCoupon[]
-  groupMemberships CustomerGroupMember[]
+  restaurant        Restaurant                  @relation(fields: [restaurantId], references: [id])
+  customerAccount   CustomerAccount?            @relation(fields: [customerAccountId], references: [id])
+  orders            Order[]
+  addresses         RestaurantCustomerAddress[]
+  assignedCoupons   Coupon[]                    @relation("CouponAssignedCustomer")
+  customerCoupons   CustomerCoupon[]
+  groupMemberships  CustomerGroupMember[]
   vipSpecialTargets CustomerGroupPromotion[]
-  rewardAccounts   RewardAccount[]
+  rewardAccounts    RewardAccount[]
+  vipSchedules      VipSchedule[]
 
   @@index([restaurantId])
   @@index([restaurantId, email])
@@ -1647,7 +1649,7 @@ model Promotion {
   // assigns a promo to a whole CustomerGroup; lets the admin list badge it
   // "VIP: <group>". NULL for everything else. campaignRef is also stamped
   // "assigned_group:<id>" for symmetry with the 1:1 "assigned_manual".
-  customerGroupId  String?
+  customerGroupId String?
 
   // ── Restrictions (embedded wizard knobs, NOT a separate modal) ───────
   //
@@ -1705,10 +1707,11 @@ model Promotion {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  restaurant      Restaurant       @relation(fields: [restaurantId], references: [id])
+  restaurant      Restaurant               @relation(fields: [restaurantId], references: [id])
   customerCoupons CustomerCoupon[]
-  customerGroup   CustomerGroup?   @relation(fields: [customerGroupId], references: [id], onDelete: SetNull)
+  customerGroup   CustomerGroup?           @relation(fields: [customerGroupId], references: [id], onDelete: SetNull)
   groupLinks      CustomerGroupPromotion[]
+  vipSchedules    VipSchedule[]
 
   @@index([restaurantId, isActive])
   @@index([campaignRef])
@@ -1759,7 +1762,7 @@ model CustomerCoupon {
   /// "autopilot_reengage_win3", "invite", "flyer:<code>", ...
   grantSource String?
 
-  grantedAt DateTime @default(now())
+  grantedAt      DateTime  @default(now())
   /// The order it is CURRENTLY applied to (while status = applied); retained
   /// as the redeeming order once redeemed; cleared on release.
   appliedOrderId String?
@@ -1767,7 +1770,7 @@ model CustomerCoupon {
   redeemedAt     DateTime?
   releasedAt     DateTime?
   /// Optional hard validity window (e.g. first-buy good for 90 days).
-  expiresAt DateTime?
+  expiresAt      DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -1802,13 +1805,14 @@ model CustomerGroup {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  restaurant Restaurant            @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  members    CustomerGroupMember[]
-  promotions Promotion[]
+  restaurant      Restaurant               @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  members         CustomerGroupMember[]
+  promotions      Promotion[]
   // Member-only specials attached to this group (Phase 1 of the VIP expansion):
   // a promotion linked here becomes member-only — hidden from the public menu and
   // auto-applied only for this group's members. Replaces the old inline-create.
   groupPromotions CustomerGroupPromotion[]
+  vipSchedules    VipSchedule[]
 
   @@unique([restaurantId, name])
   @@index([restaurantId])
@@ -1847,8 +1851,8 @@ model CustomerGroupPromotion {
 }
 
 model CustomerGroupMember {
-  id      String @id @default(cuid())
-  groupId String
+  id           String @id @default(cuid())
+  groupId      String
   // Denormalised so member queries / scoping never need to join the group.
   restaurantId String
 
@@ -1877,6 +1881,81 @@ model CustomerGroupMember {
   @@index([restaurantId, customerId])
 }
 
+// ─── VIP recurring scheduler (Program 2, 2026-06-27) ───────────────────
+// Drives recurring/scheduled auto-sends: drop Reward Dollars credit on a cadence
+// ("credit_grant"), or re-send an existing member-only discount special
+// ("discount_resend"). Kept SEPARATE from CustomerGroupPromotion (which is read
+// on the checkout hot path) so scheduling never bloats that table. A pure lib
+// (src/lib/vip-schedules.ts) computes nextRunAt; a 5-min cron fires due rows.
+// VipScheduleGrant is the hard idempotency guard (≤1 grant per recipient per
+// period). Recipients are resolved LIVE at fire time so members added later are
+// included.
+model VipSchedule {
+  id           String @id @default(cuid())
+  restaurantId String
+  kind         String // "credit_grant" | "discount_resend"
+
+  // discount_resend: which member-only promotion to re-announce.
+  promotionId String?
+  // credit_grant: how much credit + an optional ledger note.
+  amount      Float?
+  note        String?
+
+  // Target = a group OR an individual (customerId and/or email). Mirrors the VIP
+  // target model; recipients are resolved live when the schedule fires.
+  groupId    String?
+  customerId String?
+  email      String?
+
+  // Cadence + when within it. dayOfWeek 0–6 (weekly), dayOfMonth 1–31 (monthly,
+  // clamped to the month length). sendHour "HH:mm" in the restaurant's timezone.
+  cadence    String // "once" | "daily" | "weekly" | "monthly"
+  dayOfWeek  Int?
+  dayOfMonth Int?
+  sendHour   String @default("09:00")
+  startDate  String // "YYYY-MM-DD" in the restaurant's timezone
+
+  active           Boolean   @default(true)
+  nextRunAt        DateTime?
+  lastRunAt        DateTime?
+  // tz date-key (YYYY-MM-DD) of the last fire — guards against double-firing
+  // within one local day if the cron runs twice.
+  lastFiredDateKey String?
+  runCount         Int       @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  restaurant Restaurant         @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  group      CustomerGroup?     @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  promotion  Promotion?         @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  customer   Customer?          @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  grants     VipScheduleGrant[]
+
+  @@index([active, nextRunAt])
+  @@index([restaurantId])
+}
+
+// One row per (schedule, period, recipient) — the double-grant guard. periodKey
+// is the tz-local period bucket (e.g. "2026-06" monthly, "2026-W26" weekly,
+// "2026-06-27" daily, "once"); recipientKey is `customerId` or `"email:"+email`.
+model VipScheduleGrant {
+  id           String   @id @default(cuid())
+  scheduleId   String
+  periodKey    String
+  recipientKey String
+  customerId   String?
+  email        String?
+  rewardId     String? // RewardLedger id for a credit_grant (audit trail)
+  amount       Float    @default(0)
+  createdAt    DateTime @default(now())
+
+  schedule VipSchedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+
+  @@unique([scheduleId, periodKey, recipientKey])
+  @@index([scheduleId])
+}
+
 // ─── Reward Dollars wallet (store credit, Program 3, 2026-06-27) ────────
 // Per-restaurant store credit a customer spends as PARTIAL PAYMENT at checkout.
 // Mirrors the coupon-ledger philosophy: an append-only ledger is the source of
@@ -1884,14 +1963,14 @@ model CustomerGroupMember {
 // on FULFILLMENT (completed order), released on miss/reject. One canonical
 // balance row per (restaurant, customer) so the atomic decrement is safe.
 model RewardAccount {
-  id           String @id @default(cuid())
-  restaurantId String
-  customerId   String
-  balance         Float @default(0)
-  lifetimeEarned  Float @default(0)
-  lifetimeRedeemed Float @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id               String   @id @default(cuid())
+  restaurantId     String
+  customerId       String
+  balance          Float    @default(0)
+  lifetimeEarned   Float    @default(0)
+  lifetimeRedeemed Float    @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   restaurant Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   customer   Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
@@ -1906,15 +1985,15 @@ model RewardAccount {
 // @@unique([accountId, orderId, reason]) caps it at ≤1 spend AND ≤1 earn per
 // order per account — the idempotency backbone for the completion/cron hooks.
 model RewardLedger {
-  id          String   @id @default(cuid())
-  accountId   String
-  amount      Float
+  id           String   @id @default(cuid())
+  accountId    String
+  amount       Float
   balanceAfter Float
-  reason      String
-  status      String? // for spend rows: "applied" → "redeemed" | "released"
-  orderId     String?
-  note        String?
-  createdAt   DateTime @default(now())
+  reason       String
+  status       String? // for spend rows: "applied" → "redeemed" | "released"
+  orderId      String?
+  note         String?
+  createdAt    DateTime @default(now())
 
   account RewardAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
 
@@ -2145,9 +2224,9 @@ model OpeningHours {
 // Date stored as @db.Date so timezone shifts don't smear a holiday
 // across two adjacent calendar days.
 model RestaurantHoliday {
-  id           String   @id @default(cuid())
+  id           String    @id @default(cuid())
   restaurantId String
-  date         DateTime @db.Date
+  date         DateTime  @db.Date
   // Optional human label ("Christmas Day", "Owner vacation"). Shown to
   // customers on the hosted site / order page when the restaurant is
   // closed for this reason. Falls back to a generic "Closed today" if
@@ -2172,7 +2251,7 @@ model RestaurantHoliday {
   /// Optional customer-facing notification (max 200 chars) shown in the
   /// closed/special-hours banner on the ordering page.
   message      String?
-  createdAt    DateTime @default(now())
+  createdAt    DateTime  @default(now())
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
 
@@ -2370,28 +2449,28 @@ model ReservationTable {
 }
 
 model Reservation {
-  id               String   @id @default(cuid())
-  restaurantId     String
-  tableId          String?
-  orderId          String?
-  confirmationCode String
-  status           String   @default("pending") // pending | confirmed | seated | completed | cancelled | rejected | no_show
-  customerName     String
-  customerEmail    String?
-  customerPhone    String?
-  partySize        Int
-  date             String // "YYYY-MM-DD"
-  time             String // "HH:MM"
-  durationMinutes  Int      @default(90)
-  notes            String?
-  staffNotes       String?
+  id                        String    @id @default(cuid())
+  restaurantId              String
+  tableId                   String?
+  orderId                   String?
+  confirmationCode          String
+  status                    String    @default("pending") // pending | confirmed | seated | completed | cancelled | rejected | no_show
+  customerName              String
+  customerEmail             String?
+  customerPhone             String?
+  partySize                 Int
+  date                      String // "YYYY-MM-DD"
+  time                      String // "HH:MM"
+  durationMinutes           Int       @default(90)
+  notes                     String?
+  staffNotes                String?
   /// Mirrors Order.rejectionReason. Stamped "Auto-rejected: ..." when a PENDING
   /// booking is auto-declined for not being accepted within its window (the
   /// kitchen "MISSED" case). A manual staff decline leaves this null. The
   /// kitchen badge + the customer email branch on this so an un-attended booking
   /// reads MISSED, never REJECTED/declined. Additive nullable column — cheap.
   /// Luigi 2026-06-16.
-  rejectionReason  String?
+  rejectionReason           String?
   /// Per-tab kitchen "Clear" flags — a walk-up booking shows in the All and
   /// Complete tabs just like an order, so it needs the SAME independent per-tab
   /// clear flags an Order has, plus its own Reservations-tab flag. Clearing one
@@ -2400,22 +2479,22 @@ model Reservation {
   clearedFromReservationsAt DateTime?
   clearedFromAllAt          DateTime?
   clearedFromCompleteAt     DateTime?
-  depositAmount    Float    @default(0)
-  depositPaid      Boolean  @default(false)
-  preOrderTotal    Float    @default(0)
-  paymentIntentId  String?
+  depositAmount             Float     @default(0)
+  depositPaid               Boolean   @default(false)
+  preOrderTotal             Float     @default(0)
+  paymentIntentId           String?
   /// When set + in the future, the kitchen treats this booking as "parked": it
   /// shows (highlighted, calm) but does NOT ring until this moment. Stamped =
   /// nextOpenAt() when a reservation lands while the restaurant is CLOSED, so an
   /// overnight booking rings at opening — exactly like takeaway/delivery orders —
   /// instead of waking the kitchen. Null = ring immediately. Luigi 2026-06-14.
-  alertAt          DateTime?
+  alertAt                   DateTime?
   /// Idempotency stamp for the "missed reservation" auto-call (mirrors
   /// Order.alertCallAt). Set when we place the warning call so the cron never
   /// double-dials. Luigi 2026-06-15.
-  alertCallAt      DateTime?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  alertCallAt               DateTime?
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime  @updatedAt
 
   restaurant Restaurant        @relation(fields: [restaurantId], references: [id])
   table      ReservationTable? @relation(fields: [tableId], references: [id])
@@ -3183,7 +3262,7 @@ model SmartLink {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  restaurant Restaurant      @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurant Restaurant       @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   scans      SmartLinkScan[]
   assets     MarketingAsset[]
 
@@ -3212,7 +3291,7 @@ model SmartLinkScan {
 model MarketingAsset {
   id           String   @id @default(cuid())
   restaurantId String
-  type         String   // "flyer" | "poster"
+  type         String // "flyer" | "poster"
   name         String
   smartLinkId  String?
   designJson   String   @default("{}")
@@ -3329,26 +3408,26 @@ model ConnectivityEvent {
 /// status field. Resellers see the current status as a read-only badge.
 
 model ResellerReport {
-  id          String   @id @default(cuid())
-  title       String
+  id              String   @id @default(cuid())
+  title           String
   /// Markdown allowed. Rendered as plain text on the list view, with
   /// basic newline preservation on the detail view. We deliberately
   /// don't ship a rich text editor — the tracker is meant to be
   /// fast, not polished.
-  body        String
+  body            String
   /// One of: BUG | FEATURE_REQUEST | FEATURE_ADJUSTMENT | FEATURE_UPDATE | FEATURE_FIX
   /// Drives the type badge color on the list + detail view.
-  type        String
+  type            String
   /// One of: NEW | IN_PROGRESS | IN_TESTING | FIXED | WONT_FIX
   /// Defaults to NEW on creation. Only superadmin can change it.
-  status      String   @default("NEW")
+  status          String   @default("NEW")
   /// One of: LOW | MEDIUM | HIGH | CRITICAL
   /// Defaults to MEDIUM. Optional — used for sorting the table.
-  priority    String   @default("MEDIUM")
+  priority        String   @default("MEDIUM")
   /// Identity of the person who filed the report. Stored verbatim (not
   /// as a foreign key) so the report survives reseller account deletion.
-  authorEmail String
-  authorName  String
+  authorEmail     String
+  authorName      String
   /// "Reported by" — distinct from `author*` so the superadmin can file
   /// a report on behalf of a reseller (Luigi 2026-06-02 spec). When
   /// null, callers should fall back to authorEmail/authorName. Set
@@ -3361,16 +3440,16 @@ model ResellerReport {
   /// time. Null/missing = no attachments; "[]" also means none. We use a
   /// string column for cross-DB portability (matches how availableDays
   /// is stored elsewhere in this schema).
-  imageUrls   String?
+  imageUrls       String?
   /// SUPERADMIN-ONLY AI triage analysis (markdown). Generated by Claude
   /// from the raw report on first superadmin view — restructures the
   /// report, suggests type/severity, flags the likely affected area, and
   /// proposes a solution direction. NEVER sent to reseller browsers (the
   /// detail page only threads this prop through when canChangeStatus).
   /// Null = not analyzed yet. See src/lib/reseller-reports-ai.ts.
-  aiAnalysis  String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  aiAnalysis      String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   comments      ResellerReportComment[]
   verifications ResellerReportVerification[]
@@ -3413,10 +3492,10 @@ model ResellerNotification {
 /// seen when the viewer opens the report, comments, or changes its status.
 /// Luigi 2026-06-05.
 model ResellerReportSeen {
-  id          String   @id @default(cuid())
+  id          String         @id @default(cuid())
   reportId    String
   viewerEmail String
-  seenAt      DateTime @default(now())
+  seenAt      DateTime       @default(now())
   report      ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
 
   @@unique([reportId, viewerEmail])
@@ -3440,7 +3519,7 @@ model ResellerReportVerification {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  report     ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  report ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
 
   @@unique([reportId, voterEmail])
   @@index([reportId])
@@ -3452,11 +3531,11 @@ model ResellerReportVerification {
 model ResellerReportUpvote {
   id         String   @id @default(cuid())
   reportId   String
-  voterEmail String   // lowercased
+  voterEmail String // lowercased
   voterName  String
   createdAt  DateTime @default(now())
 
-  report     ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  report ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
 
   @@unique([reportId, voterEmail])
   @@index([reportId])
@@ -3478,7 +3557,7 @@ model ResellerReportActivity {
   detail     String?
   createdAt  DateTime @default(now())
 
-  report     ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  report ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
 
   @@index([reportId, createdAt])
 }
@@ -3495,7 +3574,7 @@ model ResellerReportComment {
   imageUrls   String?
   createdAt   DateTime @default(now())
 
-  report      ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  report ResellerReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
 
   @@index([reportId, createdAt])
 }
@@ -3536,4 +3615,3 @@ model KitchenPushToken {
 
   @@index([restaurantId])
 }
-

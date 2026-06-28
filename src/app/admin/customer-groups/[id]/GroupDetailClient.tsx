@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { ChevronLeft, Users, Trash2, UserPlus, Gift, Plus, Tag, ExternalLink, Mail, Pencil } from "lucide-react";
 import { HelpTip } from "@/components/HelpTip";
+import { ScheduleEditor } from "../ScheduleEditor";
 
 type Member = { id: string; name: string | null; email: string | null; phone: string | null; hasAccount: boolean };
 type Group = { id: string; name: string; description: string | null };
@@ -14,8 +15,9 @@ type Promo = { id: string; name: string; promotionType: string; isActive: boolea
 type Special = Promo & { linkId: string };
 type Pickable = Promo & { groupCount: number };
 
-export default function GroupDetailClient({ group, initialMembers, initialSpecials, initialPickable, currency }: {
+export default function GroupDetailClient({ group, initialMembers, initialSpecials, initialPickable, currency, rewardsEnabled, rewardLabelPlural }: {
   group: Group; initialMembers: Member[]; initialSpecials: Special[]; initialPickable: Pickable[]; currency: string;
+  rewardsEnabled: boolean; rewardLabelPlural: string;
 }) {
   const t = useTranslations("admin.customerGroups");
   const router = useRouter();
@@ -280,6 +282,9 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
           <ExternalLink className="w-3.5 h-3.5" /> {t("createNewPromo")}
         </Link>
       </section>
+
+      {/* ── Automations: recurring credit grants / scheduled re-sends ──────── */}
+      <ScheduleEditor target={{ groupId: group.id }} rewardsEnabled={rewardsEnabled} currency={currency} rewardLabelPlural={rewardLabelPlural} />
     </div>
   );
 }

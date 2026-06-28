@@ -32,7 +32,7 @@ export default async function GroupDetailPage({ params }: { params: Promise<{ id
         customer: { select: { name: true, email: true, phone: true, passwordHash: true } },
       },
     }),
-    prisma.restaurant.findUnique({ where: { id: user.restaurantId }, select: { currency: true } }),
+    prisma.restaurant.findUnique({ where: { id: user.restaurantId }, select: { currency: true, rewardsEnabled: true, rewardLabelPlural: true } }),
     prisma.customerGroupPromotion.findMany({
       where: { groupId: id },
       orderBy: { createdAt: "desc" },
@@ -68,6 +68,8 @@ export default async function GroupDetailPage({ params }: { params: Promise<{ id
       initialSpecials={specials}
       initialPickable={pickable}
       currency={restaurant?.currency ?? "usd"}
+      rewardsEnabled={restaurant?.rewardsEnabled ?? false}
+      rewardLabelPlural={restaurant?.rewardLabelPlural?.trim() || "Reward Dollars"}
     />
   );
 }

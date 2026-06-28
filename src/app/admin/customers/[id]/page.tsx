@@ -247,7 +247,13 @@ export default async function CustomerDetailPage({
 
       {/* Give a VIP special (member-only, no code, auto-applies) — also shows the
           specials this customer already has, including via group membership. */}
-      <GiveVipSpecial customerId={customer.id} customerName={customer.name} currency={__currency} />
+      <GiveVipSpecial
+        customerId={customer.id}
+        customerName={customer.name}
+        currency={__currency}
+        rewardsEnabled={restaurantRow?.rewardsEnabled ?? false}
+        rewardLabelPlural={restaurantRow?.rewardLabelPlural?.trim() || "Reward Dollars"}
+      />
 
       {/* Reward Dollars wallet — balance + manual grant/adjust + recent ledger.
           Only when the restaurant has the feature on. */}

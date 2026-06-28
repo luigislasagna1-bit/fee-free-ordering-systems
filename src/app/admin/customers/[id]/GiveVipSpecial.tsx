@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { Crown, Plus, Trash2, Tag } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { ScheduleEditor } from "../../customer-groups/ScheduleEditor";
 
 type Promo = { id: string; name: string; isActive: boolean; promotionType: string; ruleConfig: any };
 type Special = { id: string; promotionId: string; promoName: string; promotionType: string; isActive: boolean; ruleConfig: any };
@@ -13,7 +14,7 @@ type ViaGroup = { id: string; groupName: string; promoName: string; promotionTyp
 /** Give a member-only VIP special (an existing promotion) to ONE customer — it
  *  auto-applies for them at checkout, no code. Lives on the customer profile;
  *  mirrors the VIP Specials page individual flow. Luigi 2026-06-27. */
-export function GiveVipSpecial({ customerId, customerName, currency }: { customerId: string; customerName: string; currency: string }) {
+export function GiveVipSpecial({ customerId, customerName, currency, rewardsEnabled = false, rewardLabelPlural = "Reward Dollars" }: { customerId: string; customerName: string; currency: string; rewardsEnabled?: boolean; rewardLabelPlural?: string }) {
   const t = useTranslations("admin.customerGroups");
   const [promos, setPromos] = useState<Promo[]>([]);
   const [specials, setSpecials] = useState<Special[]>([]);
@@ -68,6 +69,7 @@ export function GiveVipSpecial({ customerId, customerName, currency }: { custome
   const inputCls = "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none";
 
   return (
+    <>
     <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
       <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
         <Crown className="w-5 h-5 text-amber-500" />
@@ -137,5 +139,8 @@ export function GiveVipSpecial({ customerId, customerName, currency }: { custome
         <p className="text-sm text-gray-400 mt-4">{t("noPickable")}</p>
       )}
     </div>
+    {/* Recurring / scheduled auto-send for this individual. */}
+    <ScheduleEditor target={{ customerId }} rewardsEnabled={rewardsEnabled} currency={currency} rewardLabelPlural={rewardLabelPlural} />
+    </>
   );
 }
