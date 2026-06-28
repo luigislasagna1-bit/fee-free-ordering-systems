@@ -499,7 +499,8 @@
       "useAll": "Wykorzystaj wszystko",
       "useNone": "Nic",
       "chargeToday": "Do zapłaty dziś",
-      "capNote": "Do tego zamówienia możesz wykorzystać maksymalnie {amount}."
+      "capNote": "Do tego zamówienia możesz wykorzystać maksymalnie {amount}.",
+      "earnLine": "+ Zdobądź {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Aktywne",
       "activatePayments": "Aktywuj płatności",
       "deactivatePayments": "Dezaktywuj płatności",
-      "helpText": "Wprowadź klucze Stripe, aby przyjmować płatności kartą na stronie zamówień."
+      "helpText": "Wprowadź klucze Stripe, aby przyjmować płatności kartą na stronie zamówień.",
+      "rewardsNoticeTitle": "{label} to akceptowana metoda płatności",
+      "rewardsNoticeBody": "Ponieważ program nagród jest włączony, klienci mogą zapłacić część lub całość dowolnego zamówienia swoim saldem {label} przy kasie — resztę pokrywają jedną z powyższych metod.",
+      "rewardsNoticeLink": "Zarządzaj Reward Dollars"
     },
     "serviceFees": {
       "title": "Opłaty serwisowe",
@@ -1824,7 +1828,7 @@
       "menuManagementHint": "Przeciągnij, aby zmienić kolejność kategorii i pozycji",
       "importFromGloriaFood": "Importuj z GloriaFood",
       "importPdf": "Importuj PDF",
-      "fixDuplicatesTitle": "Usuń zduplikowane przypisania modyfikatorów (gdy grupa jest przypisana zarówno do kategorii, jak i pozycji)",
+      "fixDuplicatesTitle": "Scal zduplikowane kategorie (o tej samej nazwie) i usuń zduplikowane przypisania modyfikatorów. Pozycje są zachowywane i przenoszone do pozostałej kategorii.",
       "fixDuplicates": "Napraw duplikaty",
       "searchCategoriesItems": "Szukaj kategorii i pozycji…",
       "clearSearch": "Wyczyść wyszukiwanie",
@@ -1906,7 +1910,8 @@
       "fulfilAnyDay": "Dowolny dzień",
       "fulfilDaysHint": "Wybierz dni, na które tę pozycję można zamówić. Pozostaw „Dowolny dzień”, aby zezwolić na każdy dzień i ograniczać tylko godzinami.",
       "fulfilTimeHint": "Opcjonalnie — ustaw okno czasowe (np. 11:00–15:00 tylko na lunch). Pozostaw oba pola puste, aby zezwolić na dowolną godzinę w wybrane dni.",
-      "fulfilPreview": "Klienci będą widzieć tę pozycję każdego dnia z adnotacją „Zamów z wyprzedzeniem” i zostaną poproszeni o zaplanowanie zamówienia na godzinę, w której jest dostępna."
+      "fulfilPreview": "Klienci będą widzieć tę pozycję każdego dnia z adnotacją „Zamów z wyprzedzeniem” i zostaną poproszeni o zaplanowanie zamówienia na godzinę, w której jest dostępna.",
+      "dedupeCategoriesSuccess": "{n, plural, one {Scalono # zduplikowaną kategorię.} few {Scalono # zduplikowane kategorie.} many {Scalono # zduplikowanych kategorii.} other {Scalono # zduplikowanej kategorii.}}"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2058,7 +2063,9 @@
       "freeDishDiscountLabel": "Rabat na darmowe danie (100 = całkowicie bezpłatne)",
       "pickTypePrompt": "Wybierz typ promocji w Kroku 1, aby skonfigurować szczegóły tutaj.",
       "oncePerOrderLabel": "Dozwolone tylko raz na zamówienie",
-      "oncePerOrderHint": "Po zaznaczeniu ta oferta jest stosowana tylko raz na zamówienie, nawet jeśli koszyk kwalifikuje się do niej więcej niż raz (np. promocja Kup jeden, drugi gratis, która w przeciwnym razie powtórzyłaby się)."
+      "oncePerOrderHint": "Po zaznaczeniu ta oferta jest stosowana tylko raz na zamówienie, nawet jeśli koszyk kwalifikuje się do niej więcej niż raz (np. promocja Kup jeden, drugi gratis, która w przeciwnym razie powtórzyłaby się).",
+      "rewardCreditLabel": "Reward Dollars do przyznania",
+      "rewardCreditHint": "Dodawane do salda klienta po zrealizowaniu tego zamówienia — bez rabatu w koszyku. Wymaga włączenia Reward Dollars."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ograniczenia i wyświetlanie",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Stała kwota za zamówienie",
       "earnPreviewPercent": "Klienci otrzymują z powrotem {pct}% wartości każdego zamówienia jako {label}.",
       "earnPreviewPerDollar": "Klienci otrzymują {amount} w {label} za zamówienie.",
-      "redeemTitle": "Klienci mogą wykorzystać przy kasie",
+      "redeemTitle": "Zapłać za pomocą {label}",
       "redeemHelp": "Pozwól klientom przeznaczyć saldo na zamówienie. Wyłączone oznacza, że mogą zbierać saldo, ale jeszcze go nie wykorzystywać.",
       "maxRedeemPercent": "Maks. % zamówienia opłacany kredytem",
       "maxRedeemPercentHelp": "Ogranicz, jaka część jednego zamówienia może być opłacona kredytem (100% oznacza całe zamówienie).",
@@ -4284,6 +4291,46 @@
         "adjust": "Korekta",
         "signup_bonus": "Bonus za rejestrację",
         "expire": "Wygasłe"
+      },
+      "redeemAlwaysOn": "Ponieważ program jest włączony, klienci mogą zapłacić część lub całość dowolnego zamówienia swoim {label} (resztę pokrywają zwykłą metodą). Pojawia się jako opcja płatności przy kasie.",
+      "rules": {
+        "title": "Sposoby zdobywania",
+        "subtitle": "Dodaj reguły bonusowe ponad stawkę podstawową — prezenty za rejestrację, bonusy za pierwsze zamówienie, nagrody za duże zamówienia, kamienie milowe lojalności. Każda może działać w wybranym przedziale dat.",
+        "add": "Dodaj sposób zdobywania",
+        "loading": "Ładowanie…",
+        "empty": "Brak reguł bonusowych — stawka podstawowa powyżej nadal obowiązuje.",
+        "newTitle": "Nowy sposób zdobywania",
+        "trigger": "Kiedy",
+        "trigSignup": "Gdy klient się rejestruje",
+        "trigFirstOrder": "Przy pierwszym zamówieniu",
+        "trigOrderOver": "Gdy zamówienie jest wystarczająco duże",
+        "trigNth": "Co kilka zamówień (lojalność)",
+        "threshold": "Kwota zamówienia, która kwalifikuje",
+        "everyN": "Co N zamówień",
+        "rewardKind": "Nagroda",
+        "kindFlat": "Stała {label}",
+        "kindPercent": "% zamówienia",
+        "amount": "Kwota",
+        "percent": "Procent",
+        "startDate": "Początek (opcjonalnie)",
+        "endDate": "Koniec (opcjonalnie)",
+        "labelOptional": "Nazwa (opcjonalnie)",
+        "labelPlaceholder": "np. Prezent za rejestrację w Czarny Piątek",
+        "windowHint": "Pozostaw daty puste dla reguły zawsze aktywnej lub ustaw je dla kampanii ograniczonej czasowo.",
+        "sumSignup": "{amount} gdy klient się rejestruje",
+        "sumFirstOrder": "{amount} przy pierwszym zamówieniu klienta",
+        "sumOrderOver": "{amount} gdy zamówienie przekracza {threshold}",
+        "sumNth": "{amount} co {n} zamówień",
+        "created": "Reguła zdobywania dodana.",
+        "createFailed": "Nie udało się dodać reguły.",
+        "saveFailed": "Nie udało się zapisać.",
+        "confirmDelete": "Usunąć tę regułę zdobywania?",
+        "deleteFailed": "Nie udało się usunąć.",
+        "pause": "Wstrzymaj",
+        "resume": "Wznów",
+        "delete": "Usuń",
+        "cancel": "Anuluj",
+        "save": "Dodaj regułę"
       }
     }
   },

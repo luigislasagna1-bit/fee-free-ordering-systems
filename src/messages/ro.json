@@ -499,7 +499,8 @@
       "useAll": "Folosește tot",
       "useNone": "Niciunul",
       "chargeToday": "De plată azi",
-      "capNote": "Poți aplica până la {amount} la această comandă."
+      "capNote": "Poți aplica până la {amount} la această comandă.",
+      "earnLine": "+ Câștigi {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Activ",
       "activatePayments": "Activează plățile",
       "deactivatePayments": "Dezactivează plățile",
-      "helpText": "Introdu cheile Stripe pentru a accepta plăți cu cardul pe pagina de comandă."
+      "helpText": "Introdu cheile Stripe pentru a accepta plăți cu cardul pe pagina de comandă.",
+      "rewardsNoticeTitle": "{label} este o metodă de plată acceptată",
+      "rewardsNoticeBody": "Deoarece programul tău de recompense este activ, clienții pot plăti parțial sau integral orice comandă cu soldul lor {label} la finalizare — restul îl acoperă cu una dintre metodele de mai sus.",
+      "rewardsNoticeLink": "Gestionează Reward Dollars"
     },
     "serviceFees": {
       "title": "Taxe de serviciu",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "Trage pentru a reordona categorii și produse",
       "importFromGloriaFood": "Importă din GloriaFood",
       "importPdf": "Importă PDF",
-      "fixDuplicatesTitle": "Elimină atașările duplicate ale modificatorilor (când un grup este atașat atât la nivel de categorie CÂT ȘI de produs)",
+      "fixDuplicatesTitle": "Îmbină categoriile duplicate (cu același nume) și elimină atașările de modificatori duplicate. Produsele sunt păstrate și mutate în categoria rămasă.",
       "fixDuplicates": "Repară duplicatele",
       "searchCategoriesItems": "Caută categorii și produse…",
       "clearSearch": "Șterge căutarea",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "Orice zi",
       "fulfilDaysHint": "Alege zilele pentru care poate fi comandat acest produs. Lasă „Orice zi” pentru a permite fiecare zi și a limita doar în funcție de oră.",
       "fulfilTimeHint": "Opțional — setează un interval orar (de ex. 11:00–15:00 doar pentru prânz). Lasă ambele câmpuri goale pentru a permite orice oră în zilele alese.",
-      "fulfilPreview": "Clienții vor vedea acest produs în fiecare zi cu o notă „Comandă în avans” și vor fi rugați să își programeze comanda pentru un moment în care este disponibil."
+      "fulfilPreview": "Clienții vor vedea acest produs în fiecare zi cu o notă „Comandă în avans” și vor fi rugați să își programeze comanda pentru un moment în care este disponibil.",
+      "dedupeCategoriesSuccess": "{n, plural, one {S-a îmbinat # categorie duplicată.} few {S-au îmbinat # categorii duplicate.} other {S-au îmbinat # de categorii duplicate.}}"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "Reducere la felul de mâncare gratuit (100 = complet gratuit)",
       "pickTypePrompt": "Alege un tip de promoție la Pasul 1 pentru a configura detaliile aici.",
       "oncePerOrderLabel": "Permis o singură dată per comandă",
-      "oncePerOrderHint": "Când este bifat, această ofertă se aplică o singură dată per comandă, chiar dacă coșul se califică pentru ea de mai multe ori (de ex. un Cumperi-Unul-Primești-Unul care altfel s-ar repeta)."
+      "oncePerOrderHint": "Când este bifat, această ofertă se aplică o singură dată per comandă, chiar dacă coșul se califică pentru ea de mai multe ori (de ex. un Cumperi-Unul-Primești-Unul care altfel s-ar repeta).",
+      "rewardCreditLabel": "Reward Dollars de acordat",
+      "rewardCreditHint": "Se adaugă în soldul clientului la finalizarea acestei comenzi — fără reducere în coș. Necesită ca Reward Dollars să fie activat."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restricții & afișare",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Sumă fixă per comandă",
       "earnPreviewPercent": "Clienții primesc înapoi {pct}% din fiecare comandă sub formă de {label}.",
       "earnPreviewPerDollar": "Clienții câștigă {amount} în {label} per comandă.",
-      "redeemTitle": "Clienții pot cheltui la finalizarea comenzii",
+      "redeemTitle": "Plătește cu {label}",
       "redeemHelp": "Permite clienților să aplice soldul la o comandă. Dezactivat înseamnă că pot acumula un sold, dar nu îl pot cheltui încă.",
       "maxRedeemPercent": "% maxim dintr-o comandă plătit cu credit",
       "maxRedeemPercentHelp": "Limitează cât dintr-o singură comandă poate fi plătit cu credit (100% înseamnă întreaga comandă).",
@@ -4284,6 +4291,46 @@
         "adjust": "Ajustare",
         "signup_bonus": "Bonus de înregistrare",
         "expire": "Expirat"
+      },
+      "redeemAlwaysOn": "Deoarece programul este activ, clienții pot plăti parțial sau integral orice comandă cu {label} (restul îl plătesc cu metoda lor obișnuită). Apare ca opțiune de plată la finalizare.",
+      "rules": {
+        "title": "Moduri de a câștiga",
+        "subtitle": "Adaugă reguli bonus peste rata de bază — cadouri la înscriere, bonusuri la prima comandă, recompense pentru comenzi mari, etape de fidelitate. Fiecare poate rula într-un interval de date.",
+        "add": "Adaugă un mod de a câștiga",
+        "loading": "Se încarcă…",
+        "empty": "Încă nu există reguli bonus — rata de bază de mai sus se aplică în continuare.",
+        "newTitle": "Mod nou de a câștiga",
+        "trigger": "Când",
+        "trigSignup": "Când un client se înscrie",
+        "trigFirstOrder": "La prima sa comandă",
+        "trigOrderOver": "Când o comandă este suficient de mare",
+        "trigNth": "La fiecare câteva comenzi (fidelitate)",
+        "threshold": "Suma comenzii care se califică",
+        "everyN": "La fiecare N comenzi",
+        "rewardKind": "Recompensă",
+        "kindFlat": "{label} fix",
+        "kindPercent": "% din comandă",
+        "amount": "Sumă",
+        "percent": "Procent",
+        "startDate": "Începe (opțional)",
+        "endDate": "Se termină (opțional)",
+        "labelOptional": "Nume (opțional)",
+        "labelPlaceholder": "ex. Cadou la înscriere de Black Friday",
+        "windowHint": "Lasă datele goale pentru o regulă permanentă sau setează-le pentru o campanie cu durată limitată.",
+        "sumSignup": "{amount} când un client se înscrie",
+        "sumFirstOrder": "{amount} la prima comandă a unui client",
+        "sumOrderOver": "{amount} când o comandă depășește {threshold}",
+        "sumNth": "{amount} la fiecare {n} comenzi",
+        "created": "Regula de câștig a fost adăugată.",
+        "createFailed": "Regula nu a putut fi adăugată.",
+        "saveFailed": "Salvarea nu a reușit.",
+        "confirmDelete": "Ștergi această regulă de câștig?",
+        "deleteFailed": "Ștergerea nu a reușit.",
+        "pause": "Pauză",
+        "resume": "Reia",
+        "delete": "Șterge",
+        "cancel": "Anulează",
+        "save": "Adaugă regula"
       }
     }
   },

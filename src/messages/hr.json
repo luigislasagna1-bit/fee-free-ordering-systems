@@ -499,7 +499,8 @@
       "useAll": "Iskoristi sve",
       "useNone": "Ništa",
       "chargeToday": "Za platiti danas",
-      "capNote": "Na ovu narudžbu možete primijeniti najviše {amount}."
+      "capNote": "Na ovu narudžbu možete primijeniti najviše {amount}.",
+      "earnLine": "+ Zaradite {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Aktivno",
       "activatePayments": "Aktiviraj plaćanja",
       "deactivatePayments": "Deaktiviraj plaćanja",
-      "helpText": "Unesite svoje Stripe ključeve za prihvaćanje kartičnih plaćanja na stranici narudžbi."
+      "helpText": "Unesite svoje Stripe ključeve za prihvaćanje kartičnih plaćanja na stranici narudžbi.",
+      "rewardsNoticeTitle": "{label} je prihvaćen način plaćanja",
+      "rewardsNoticeBody": "Budući da je vaš program nagrada uključen, kupci mogu pri naplati platiti dio ili cijelu narudžbu svojim saldom {label} — ostatak pokrivaju jednom od gornjih metoda.",
+      "rewardsNoticeLink": "Upravljaj Reward Dollars"
     },
     "serviceFees": {
       "title": "Naknade za usluge",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "Povucite za promjenu redoslijeda kategorija i stavki",
       "importFromGloriaFood": "Uvezi iz GloriaFooda",
       "importPdf": "Uvezi PDF",
-      "fixDuplicatesTitle": "Ukloni dvostruke prilagane modifikatora (kada je grupa prilagana i na kategoriji I na razini stavke)",
+      "fixDuplicatesTitle": "Spaja duplicirane kategorije (istog naziva) i uklanja duplicirane privitke modifikatora. Stavke se zadržavaju i premještaju u preostalu kategoriju.",
       "fixDuplicates": "Popravi duplikate",
       "searchCategoriesItems": "Pretraži kategorije i stavke…",
       "clearSearch": "Očisti pretragu",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "Bilo koji dan",
       "fulfilDaysHint": "Odaberite dane za koje se ova stavka može naručiti. Ostavite „Bilo koji dan“ kako biste dopustili svaki dan i ograničili samo vremenom.",
       "fulfilTimeHint": "Neobavezno — postavite vremenski okvir (npr. 11:00–15:00 samo za ručak). Ostavite oba polja prazna kako biste dopustili bilo koje vrijeme u odabrane dane.",
-      "fulfilPreview": "Kupci će ovu stavku vidjeti svaki dan uz napomenu „Naručite unaprijed“ i bit će zamoljeni da svoju narudžbu zakažu za vrijeme kada je dostupna."
+      "fulfilPreview": "Kupci će ovu stavku vidjeti svaki dan uz napomenu „Naručite unaprijed“ i bit će zamoljeni da svoju narudžbu zakažu za vrijeme kada je dostupna.",
+      "dedupeCategoriesSuccess": "{n, plural, one {Spojena # duplicirana kategorija.} few {Spojene # duplicirane kategorije.} other {Spojeno # dupliciranih kategorija.}}"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "Popust na besplatno jelo (100 = potpuno besplatno)",
       "pickTypePrompt": "Odaberite vrstu promocije u koraku 1 za konfiguraciju detalja ovdje.",
       "oncePerOrderLabel": "Dopušteno samo jednom po narudžbi",
-      "oncePerOrderHint": "Kada je označeno, ova se ponuda primjenjuje samo jednom po narudžbi, čak i ako košarica ispunjava uvjete za nju više puta (npr. „Kupi jedan, drugi gratis” koja bi se inače ponavljala)."
+      "oncePerOrderHint": "Kada je označeno, ova se ponuda primjenjuje samo jednom po narudžbi, čak i ako košarica ispunjava uvjete za nju više puta (npr. „Kupi jedan, drugi gratis” koja bi se inače ponavljala).",
+      "rewardCreditLabel": "Reward Dollars za dodjelu",
+      "rewardCreditHint": "Dodaje se na saldo kupca kada se ova narudžba dovrši — bez popusta u košarici. Zahtijeva uključen Reward Dollars."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ograničenja i prikaz",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Fiksni iznos po narudžbi",
       "earnPreviewPercent": "Kupci dobivaju natrag {pct}% svake narudžbe kao {label}.",
       "earnPreviewPerDollar": "Kupci dobivaju {amount} u {label} po narudžbi.",
-      "redeemTitle": "Kupci mogu potrošiti pri plaćanju",
+      "redeemTitle": "Plati pomoću {label}",
       "redeemHelp": "Dopustite kupcima da stanje iskoriste za narudžbu. Isključeno znači da mogu skupljati stanje, ali ga još ne mogu potrošiti.",
       "maxRedeemPercent": "Maks. % narudžbe plaćen kreditom",
       "maxRedeemPercentHelp": "Ograničite koliko se jedne narudžbe može platiti kreditom (100 % znači cijela narudžba).",
@@ -4284,6 +4291,46 @@
         "adjust": "Prilagodba",
         "signup_bonus": "Bonus za registraciju",
         "expire": "Isteklo"
+      },
+      "redeemAlwaysOn": "Budući da je program uključen, kupci mogu platiti dio ili cijelu narudžbu svojim {label} (ostatak plaćaju uobičajenom metodom). Prikazuje se kao opcija plaćanja pri naplati.",
+      "rules": {
+        "title": "Načini zarade",
+        "subtitle": "Dodajte bonus pravila uz osnovnu stopu — darovi za registraciju, bonusi za prvu narudžbu, nagrade za velike narudžbe, prekretnice vjernosti. Svako može trajati u određenom rasponu datuma.",
+        "add": "Dodaj način zarade",
+        "loading": "Učitavanje…",
+        "empty": "Još nema bonus pravila — osnovna stopa iznad i dalje vrijedi.",
+        "newTitle": "Novi način zarade",
+        "trigger": "Kada",
+        "trigSignup": "Kada se kupac registrira",
+        "trigFirstOrder": "Pri prvoj narudžbi",
+        "trigOrderOver": "Kada je narudžba dovoljno velika",
+        "trigNth": "Svakih nekoliko narudžbi (vjernost)",
+        "threshold": "Iznos narudžbe koji se kvalificira",
+        "everyN": "Svakih N narudžbi",
+        "rewardKind": "Nagrada",
+        "kindFlat": "Fiksna {label}",
+        "kindPercent": "% narudžbe",
+        "amount": "Iznos",
+        "percent": "Postotak",
+        "startDate": "Početak (neobavezno)",
+        "endDate": "Kraj (neobavezno)",
+        "labelOptional": "Naziv (neobavezno)",
+        "labelPlaceholder": "npr. Dar za registraciju na Crni petak",
+        "windowHint": "Ostavite datume prazne za uvijek aktivno pravilo ili ih postavite za vremenski ograničenu kampanju.",
+        "sumSignup": "{amount} kada se kupac registrira",
+        "sumFirstOrder": "{amount} pri prvoj narudžbi kupca",
+        "sumOrderOver": "{amount} kada narudžba prijeđe {threshold}",
+        "sumNth": "{amount} svakih {n} narudžbi",
+        "created": "Pravilo zarade dodano.",
+        "createFailed": "Pravilo nije moguće dodati.",
+        "saveFailed": "Nije moguće spremiti.",
+        "confirmDelete": "Izbrisati ovo pravilo zarade?",
+        "deleteFailed": "Nije moguće izbrisati.",
+        "pause": "Pauziraj",
+        "resume": "Nastavi",
+        "delete": "Izbriši",
+        "cancel": "Odustani",
+        "save": "Dodaj pravilo"
       }
     }
   },

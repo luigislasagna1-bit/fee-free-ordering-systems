@@ -499,7 +499,8 @@
       "useAll": "Kasuta kõik",
       "useNone": "Mitte midagi",
       "chargeToday": "Täna maksta",
-      "capNote": "Sellele tellimusele saad kasutada kuni {amount}."
+      "capNote": "Sellele tellimusele saad kasutada kuni {amount}.",
+      "earnLine": "+ Teeni {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Aktiivne",
       "activatePayments": "Aktiveeri maksed",
       "deactivatePayments": "Deaktiveeri maksed",
-      "helpText": "Sisesta oma Stripe võtmed kaardimaksete vastuvõtmiseks tellimislehel."
+      "helpText": "Sisesta oma Stripe võtmed kaardimaksete vastuvõtmiseks tellimislehel.",
+      "rewardsNoticeTitle": "{label} on aktsepteeritud makseviis",
+      "rewardsNoticeBody": "Kuna sinu preemiaprogramm on sees, saavad kliendid maksta osa tellimusest või kogu tellimuse oma {label} saldoga kassas — ülejäänu katavad nad mõne ülaltoodud meetodiga.",
+      "rewardsNoticeLink": "Halda Reward Dollars"
     },
     "serviceFees": {
       "title": "Teenustasud",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "Lohista kategooriate ja toodete ümberjärjestamiseks",
       "importFromGloriaFood": "Impordi GloriaFoodist",
       "importPdf": "Impordi PDF",
-      "fixDuplicatesTitle": "Eemalda duplikaatide lisandite manused (kui grupp on manustatud nii kategooria KUI KA toote tasandil)",
+      "fixDuplicatesTitle": "Ühenda dubleeritud kategooriad (sama nimi) ja eemalda dubleeritud lisandite seosed. Tooted säilitatakse ja teisaldatakse alles jäävasse kategooriasse.",
       "fixDuplicates": "Paranda duplikaadid",
       "searchCategoriesItems": "Otsi kategooriaid ja tooteid…",
       "clearSearch": "Tühjenda otsing",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "Suvaline päev",
       "fulfilDaysHint": "Valige, millistel päevadel saab seda toodet tellida. Jätke valikuks „Suvaline päev“, et lubada kõik päevad ja piirata ainult kellaaja järgi.",
       "fulfilTimeHint": "Valikuline – määrake ajavahemik (nt 11:00–15:00 ainult lõunaks). Jätke mõlemad tühjaks, et lubada valitud päevadel suvaline aeg.",
-      "fulfilPreview": "Kliendid näevad seda toodet iga päev märkega „Ettetellimus“ ja neil palutakse ajastada oma tellimus ajale, mil see on saadaval."
+      "fulfilPreview": "Kliendid näevad seda toodet iga päev märkega „Ettetellimus“ ja neil palutakse ajastada oma tellimus ajale, mil see on saadaval.",
+      "dedupeCategoriesSuccess": "{n, plural, one {Ühendati # dubleeritud kategooria.} other {Ühendati # dubleeritud kategooriat.}}"
     },
     "promotionsList": {
       "stackingMaster": "Peamine",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "Soodustus tasuta roale (100 = täiesti tasuta)",
       "pickTypePrompt": "Vali 1. sammus kampaania tüüp, et seadistada üksikasjad siin.",
       "oncePerOrderLabel": "Lubatud ainult üks kord tellimuse kohta",
-      "oncePerOrderHint": "Märgituna kehtib see pakkumine ainult üks kord tellimuse kohta, isegi kui ostukorv vastab sellele mitu korda (nt \"Osta üks, saad teise\" pakkumine, mis muidu korduks)."
+      "oncePerOrderHint": "Märgituna kehtib see pakkumine ainult üks kord tellimuse kohta, isegi kui ostukorv vastab sellele mitu korda (nt \"Osta üks, saad teise\" pakkumine, mis muidu korduks).",
+      "rewardCreditLabel": "Antavad Reward Dollars",
+      "rewardCreditHint": "Lisatakse kliendi saldole, kui see tellimus on lõpetatud — ostukorvis allahindlust ei ole. Nõuab, et Reward Dollars oleks sisse lülitatud."
     },
     "promoStepRestrictions": {
       "pageTitle": "Piirangud ja kuvamine",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Fikseeritud summa tellimuse kohta",
       "earnPreviewPercent": "Kliendid saavad igast tellimusest {pct}% tagasi kui {label}.",
       "earnPreviewPerDollar": "Kliendid teenivad {amount} {label}t tellimuse kohta.",
-      "redeemTitle": "Kliendid saavad kassas kasutada",
+      "redeemTitle": "Maksa {label}-ga",
       "redeemHelp": "Luba klientidel kasutada oma saldot tellimuse eest. Välja lülitatuna saavad nad saldot koguda, kuid mitte veel kasutada.",
       "maxRedeemPercent": "Maks. % tellimusest tasutud krediidiga",
       "maxRedeemPercentHelp": "Piira, kui suure osa ühest tellimusest saab tasuda krediidiga (100% tähendab kogu tellimust).",
@@ -4284,6 +4291,46 @@
         "adjust": "Korrigeerimine",
         "signup_bonus": "Liitumisboonus",
         "expire": "Aegunud"
+      },
+      "redeemAlwaysOn": "Kuna programm on sees, saavad kliendid maksta osa tellimusest või kogu tellimuse oma {label}-ga (ülejäänu maksavad nad oma tavapärase meetodiga). See kuvatakse kassas makseviisina.",
+      "rules": {
+        "title": "Teenimisviisid",
+        "subtitle": "Lisa boonusreeglid baasmäära peale — registreerumiskingitused, esimese tellimuse boonused, preemiad suurte tellimuste eest, lojaalsuse verstapostid. Iga reegel võib kehtida kindlal ajavahemikul.",
+        "add": "Lisa teenimisviis",
+        "loading": "Laadimine…",
+        "empty": "Boonusreegleid pole veel — ülaltoodud baasmäär kehtib ikka.",
+        "newTitle": "Uus teenimisviis",
+        "trigger": "Millal",
+        "trigSignup": "Kui klient registreerub",
+        "trigFirstOrder": "Tema esimesel tellimusel",
+        "trigOrderOver": "Kui tellimus on piisavalt suur",
+        "trigNth": "Iga mõne tellimuse järel (lojaalsus)",
+        "threshold": "Kvalifitseeruv tellimuse summa",
+        "everyN": "Iga N. tellimus",
+        "rewardKind": "Preemia",
+        "kindFlat": "Kindel {label}",
+        "kindPercent": "% tellimusest",
+        "amount": "Summa",
+        "percent": "Protsent",
+        "startDate": "Algab (valikuline)",
+        "endDate": "Lõpeb (valikuline)",
+        "labelOptional": "Nimi (valikuline)",
+        "labelPlaceholder": "nt Black Friday registreerumiskingitus",
+        "windowHint": "Jäta kuupäevad tühjaks alati kehtiva reegli jaoks või määra need tähtajalise kampaania jaoks.",
+        "sumSignup": "{amount}, kui klient registreerub",
+        "sumFirstOrder": "{amount} kliendi esimesel tellimusel",
+        "sumOrderOver": "{amount}, kui tellimus on üle {threshold}",
+        "sumNth": "{amount} iga {n} tellimuse järel",
+        "created": "Teenimisreegel lisatud.",
+        "createFailed": "Reegli lisamine ebaõnnestus.",
+        "saveFailed": "Salvestamine ebaõnnestus.",
+        "confirmDelete": "Kustutada see teenimisreegel?",
+        "deleteFailed": "Kustutamine ebaõnnestus.",
+        "pause": "Peata",
+        "resume": "Jätka",
+        "delete": "Kustuta",
+        "cancel": "Tühista",
+        "save": "Lisa reegel"
       }
     }
   },

@@ -499,7 +499,8 @@
       "useAll": "전액 사용",
       "useNone": "사용 안 함",
       "chargeToday": "오늘 결제 금액",
-      "capNote": "이 주문에는 최대 {amount}까지 사용할 수 있습니다."
+      "capNote": "이 주문에는 최대 {amount}까지 사용할 수 있습니다.",
+      "earnLine": "+ {amount} 적립"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "활성",
       "activatePayments": "결제 활성화",
       "deactivatePayments": "결제 비활성화",
-      "helpText": "주문 페이지에서 카드 결제를 받으려면 Stripe 키를 입력하세요."
+      "helpText": "주문 페이지에서 카드 결제를 받으려면 Stripe 키를 입력하세요.",
+      "rewardsNoticeTitle": "{label}은(는) 사용 가능한 결제 수단입니다",
+      "rewardsNoticeBody": "리워드 프로그램이 켜져 있어 고객은 결제 시 {label} 잔액으로 주문의 일부 또는 전액을 결제할 수 있습니다. 부족한 금액은 위의 방법 중 하나로 충당합니다.",
+      "rewardsNoticeLink": "리워드 달러 관리"
     },
     "serviceFees": {
       "title": "서비스 수수료",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "드래그하여 카테고리 및 메뉴 순서 변경",
       "importFromGloriaFood": "GloriaFood에서 가져오기",
       "importPdf": "PDF 가져오기",
-      "fixDuplicatesTitle": "중복 옵션 연결 제거 (카테고리 및 메뉴 모두에 연결된 그룹)",
+      "fixDuplicatesTitle": "같은 이름의 중복 카테고리를 병합하고 중복된 옵션 연결을 제거합니다. 메뉴는 유지되어 남는 카테고리로 이동됩니다.",
       "fixDuplicates": "중복 수정",
       "searchCategoriesItems": "카테고리 및 메뉴 검색…",
       "clearSearch": "검색 초기화",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "아무 요일",
       "fulfilDaysHint": "이 항목을 주문할 수 있는 요일을 선택하세요. 매일 허용하고 시간으로만 제한하려면 \"아무 요일\"로 두세요.",
       "fulfilTimeHint": "선택 사항 — 시간대를 설정하세요(예: 점심 전용 11:00–15:00). 선택한 요일의 모든 시간을 허용하려면 둘 다 비워 두세요.",
-      "fulfilPreview": "고객은 매일 이 항목을 \"미리 주문\" 안내와 함께 보게 되며, 항목이 제공되는 시간에 주문을 예약하도록 안내됩니다."
+      "fulfilPreview": "고객은 매일 이 항목을 \"미리 주문\" 안내와 함께 보게 되며, 항목이 제공되는 시간에 주문을 예약하도록 안내됩니다.",
+      "dedupeCategoriesSuccess": "{n, plural, other {중복 카테고리 #개를 병합했습니다.}}"
     },
     "promotionsList": {
       "stackingMaster": "마스터",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "무료 요리 할인 (100 = 완전 무료)",
       "pickTypePrompt": "1단계에서 프로모션 유형을 선택하면 여기서 세부 사항을 설정할 수 있습니다.",
       "oncePerOrderLabel": "주문당 한 번만 적용",
-      "oncePerOrderHint": "선택하면 장바구니가 여러 번 조건을 충족하더라도 이 딜이 주문당 한 번만 적용됩니다(예: 반복 적용될 수 있는 '하나 사면 하나 무료' 딜)."
+      "oncePerOrderHint": "선택하면 장바구니가 여러 번 조건을 충족하더라도 이 딜이 주문당 한 번만 적용됩니다(예: 반복 적용될 수 있는 '하나 사면 하나 무료' 딜).",
+      "rewardCreditLabel": "지급할 리워드 달러",
+      "rewardCreditHint": "이 주문이 완료되면 고객 잔액에 추가됩니다 — 장바구니 할인은 없습니다. 리워드 달러를 활성화해야 합니다."
     },
     "promoStepRestrictions": {
       "pageTitle": "제한 및 표시",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "주문당 고정 금액",
       "earnPreviewPercent": "고객은 주문마다 {pct}%를 {label}(으)로 돌려받습니다.",
       "earnPreviewPerDollar": "고객은 주문마다 {amount}의 {label}을(를) 적립합니다.",
-      "redeemTitle": "고객이 결제 시 사용 가능",
+      "redeemTitle": "{label}(으)로 결제",
       "redeemHelp": "고객이 잔액을 주문에 사용할 수 있도록 합니다. 끄면 잔액은 쌓을 수 있지만 아직 사용할 수 없습니다.",
       "maxRedeemPercent": "적립금으로 결제 가능한 주문 최대 %",
       "maxRedeemPercentHelp": "단일 주문에서 적립금으로 결제할 수 있는 비율의 상한을 설정합니다 (100%는 주문 전액).",
@@ -4284,6 +4291,46 @@
         "adjust": "조정",
         "signup_bonus": "가입 보너스",
         "expire": "만료됨"
+      },
+      "redeemAlwaysOn": "프로그램이 켜져 있어 고객은 {label}(으)로 주문의 일부 또는 전액을 결제할 수 있습니다(부족분은 일반 결제 수단으로 결제). 결제 시 결제 수단으로 표시됩니다.",
+      "rules": {
+        "title": "적립 방법",
+        "subtitle": "기본 적립률 위에 보너스 규칙을 추가하세요 — 가입 선물, 첫 주문 보너스, 대량 주문 보상, 충성 마일스톤. 각 규칙에 기간을 설정할 수 있습니다.",
+        "add": "적립 방법 추가",
+        "loading": "불러오는 중…",
+        "empty": "아직 보너스 규칙이 없습니다 — 위의 기본 적립률은 계속 적용됩니다.",
+        "newTitle": "새 적립 방법",
+        "trigger": "조건",
+        "trigSignup": "고객이 가입할 때",
+        "trigFirstOrder": "첫 주문 시",
+        "trigOrderOver": "주문 금액이 충분히 클 때",
+        "trigNth": "몇 주문마다(충성)",
+        "threshold": "해당되는 주문 금액",
+        "everyN": "N 주문마다",
+        "rewardKind": "보상",
+        "kindFlat": "정액 {label}",
+        "kindPercent": "주문의 %",
+        "amount": "금액",
+        "percent": "퍼센트",
+        "startDate": "시작(선택)",
+        "endDate": "종료(선택)",
+        "labelOptional": "이름(선택)",
+        "labelPlaceholder": "예: 블랙 프라이데이 가입 선물",
+        "windowHint": "날짜를 비워 두면 상시 규칙, 설정하면 기간 한정 캠페인이 됩니다.",
+        "sumSignup": "고객 가입 시 {amount}",
+        "sumFirstOrder": "고객의 첫 주문 시 {amount}",
+        "sumOrderOver": "주문이 {threshold}을(를) 초과하면 {amount}",
+        "sumNth": "{n} 주문마다 {amount}",
+        "created": "적립 규칙을 추가했습니다.",
+        "createFailed": "규칙을 추가할 수 없습니다.",
+        "saveFailed": "저장할 수 없습니다.",
+        "confirmDelete": "이 적립 규칙을 삭제하시겠습니까?",
+        "deleteFailed": "삭제할 수 없습니다.",
+        "pause": "일시중지",
+        "resume": "재개",
+        "delete": "삭제",
+        "cancel": "취소",
+        "save": "규칙 추가"
       }
     }
   },

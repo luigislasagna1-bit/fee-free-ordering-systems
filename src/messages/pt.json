@@ -499,7 +499,8 @@
       "useAll": "Usar tudo",
       "useNone": "Nenhum",
       "chargeToday": "A pagar hoje",
-      "capNote": "Pode aplicar até {amount} nesta encomenda."
+      "capNote": "Pode aplicar até {amount} nesta encomenda.",
+      "earnLine": "+ Ganhe {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Ativo",
       "activatePayments": "Ativar pagamentos",
       "deactivatePayments": "Desativar pagamentos",
-      "helpText": "Insira suas chaves Stripe para aceitar pagamentos com cartão."
+      "helpText": "Insira suas chaves Stripe para aceitar pagamentos com cartão.",
+      "rewardsNoticeTitle": "{label} é uma opção de pagamento aceite",
+      "rewardsNoticeBody": "Como o seu programa de recompensas está ativo, os clientes podem pagar parte ou a totalidade de qualquer pedido com o saldo de {label} no pagamento — cobrem o restante com um dos métodos acima.",
+      "rewardsNoticeLink": "Gerir Reward Dollars"
     },
     "serviceFees": {
       "title": "Taxas de serviço",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "Arraste para reordenar categorias e itens",
       "importFromGloriaFood": "Importar do GloriaFood",
       "importPdf": "Importar PDF",
-      "fixDuplicatesTitle": "Remover anexos duplicados de modificadores (quando um grupo está anexado tanto na categoria quanto no item)",
+      "fixDuplicatesTitle": "Unir categorias duplicadas (mesmo nome) e remover anexos de modificadores duplicados. Os artigos são mantidos e movidos para a categoria que permanece.",
       "fixDuplicates": "Corrigir duplicatas",
       "searchCategoriesItems": "Pesquisar categorias e itens…",
       "clearSearch": "Limpar pesquisa",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "Qualquer dia",
       "fulfilDaysHint": "Escolha os dias para os quais este artigo pode ser encomendado. Deixe em «Qualquer dia» para permitir todos os dias e limitar apenas por hora.",
       "fulfilTimeHint": "Opcional — defina um intervalo horário (por ex. 11:00–15:00 só para o almoço). Deixe ambos os campos vazios para permitir qualquer hora nos dias escolhidos.",
-      "fulfilPreview": "Os clientes verão este artigo todos os dias com uma nota «Encomendar com antecedência» e ser-lhes-á pedido que agendem a encomenda para uma hora em que esteja disponível."
+      "fulfilPreview": "Os clientes verão este artigo todos os dias com uma nota «Encomendar com antecedência» e ser-lhes-á pedido que agendem a encomenda para uma hora em que esteja disponível.",
+      "dedupeCategoriesSuccess": "{n, plural, one {Unida # categoria duplicada.} other {Unidas # categorias duplicadas.}}"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "Desconto no prato gratuito (100 = totalmente grátis)",
       "pickTypePrompt": "Escolha um tipo de promoção na Etapa 1 para configurar os detalhes aqui.",
       "oncePerOrderLabel": "Permitido apenas uma vez por encomenda",
-      "oncePerOrderHint": "Quando esta opção está ativada, esta promoção aplica-se apenas uma vez por pedido, mesmo que o carrinho seja elegível mais do que uma vez (por exemplo, um \"Compra Um, Leva Outro\" que, de outra forma, se repetiria)."
+      "oncePerOrderHint": "Quando esta opção está ativada, esta promoção aplica-se apenas uma vez por pedido, mesmo que o carrinho seja elegível mais do que uma vez (por exemplo, um \"Compra Um, Leva Outro\" que, de outra forma, se repetiria).",
+      "rewardCreditLabel": "Reward Dollars a conceder",
+      "rewardCreditHint": "Adicionados ao saldo do cliente quando este pedido é concluído — sem desconto no carrinho. Requer que os Reward Dollars estejam ativados."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrições e exibição",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Valor fixo por encomenda",
       "earnPreviewPercent": "Os clientes recebem {pct}% de cada encomenda em {label}.",
       "earnPreviewPerDollar": "Os clientes ganham {amount} em {label} por encomenda.",
-      "redeemTitle": "Os clientes podem gastar ao pagar",
+      "redeemTitle": "Pagar com {label}",
       "redeemHelp": "Deixe os clientes aplicarem o saldo numa encomenda. Desligado significa que podem acumular saldo mas ainda não gastá-lo.",
       "maxRedeemPercent": "% máx. de uma encomenda paga com saldo",
       "maxRedeemPercentHelp": "Limite quanto de uma única encomenda pode ser pago com saldo (100% significa a encomenda inteira).",
@@ -4284,6 +4291,46 @@
         "adjust": "Ajuste",
         "signup_bonus": "Bónus de registo",
         "expire": "Expirado"
+      },
+      "redeemAlwaysOn": "Como o programa está ativo, os clientes podem pagar parte ou a totalidade de qualquer pedido com os seus {label} (cobrem o restante com o método habitual). Aparece como opção de pagamento no pagamento.",
+      "rules": {
+        "title": "Formas de ganhar",
+        "subtitle": "Adicione regras de bónus além da taxa base — presentes de inscrição, bónus de primeiro pedido, recompensas por pedidos grandes, marcos de fidelidade. Cada uma pode decorrer num intervalo de datas.",
+        "add": "Adicionar uma forma de ganhar",
+        "loading": "A carregar…",
+        "empty": "Ainda não há regras de bónus — a taxa base acima continua a aplicar-se.",
+        "newTitle": "Nova forma de ganhar",
+        "trigger": "Quando",
+        "trigSignup": "Quando um cliente se inscreve",
+        "trigFirstOrder": "No seu primeiro pedido",
+        "trigOrderOver": "Quando um pedido é suficientemente grande",
+        "trigNth": "A cada poucos pedidos (fidelidade)",
+        "threshold": "Valor do pedido que qualifica",
+        "everyN": "A cada N pedidos",
+        "rewardKind": "Recompensa",
+        "kindFlat": "{label} fixos",
+        "kindPercent": "% do pedido",
+        "amount": "Valor",
+        "percent": "Percentagem",
+        "startDate": "Início (opcional)",
+        "endDate": "Fim (opcional)",
+        "labelOptional": "Nome (opcional)",
+        "labelPlaceholder": "ex. Presente de inscrição da Black Friday",
+        "windowHint": "Deixe as datas vazias para uma regra sempre ativa, ou defina-as para uma campanha por tempo limitado.",
+        "sumSignup": "{amount} quando um cliente se inscreve",
+        "sumFirstOrder": "{amount} no primeiro pedido de um cliente",
+        "sumOrderOver": "{amount} quando um pedido ultrapassa {threshold}",
+        "sumNth": "{amount} a cada {n} pedidos",
+        "created": "Regra de ganho adicionada.",
+        "createFailed": "Não foi possível adicionar a regra.",
+        "saveFailed": "Não foi possível guardar.",
+        "confirmDelete": "Eliminar esta regra de ganho?",
+        "deleteFailed": "Não foi possível eliminar.",
+        "pause": "Pausar",
+        "resume": "Retomar",
+        "delete": "Eliminar",
+        "cancel": "Cancelar",
+        "save": "Adicionar regra"
       }
     }
   },

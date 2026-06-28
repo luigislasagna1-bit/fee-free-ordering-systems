@@ -499,7 +499,8 @@
       "useAll": "Využít vše",
       "useNone": "Nic",
       "chargeToday": "K úhradě dnes",
-      "capNote": "Na tuto objednávku můžete uplatnit nejvýše {amount}."
+      "capNote": "Na tuto objednávku můžete uplatnit nejvýše {amount}.",
+      "earnLine": "+ Získejte {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Aktivní",
       "activatePayments": "Aktivovat platby",
       "deactivatePayments": "Deaktivovat platby",
-      "helpText": "Zadejte klíče Stripe pro přijímání plateb kartou na vaší stránce objednávek."
+      "helpText": "Zadejte klíče Stripe pro přijímání plateb kartou na vaší stránce objednávek.",
+      "rewardsNoticeTitle": "{label} je přijímaný způsob platby",
+      "rewardsNoticeBody": "Protože je váš věrnostní program zapnutý, zákazníci mohou při pokladně zaplatit část nebo celou objednávku zůstatkem {label} — zbytek uhradí jednou z výše uvedených metod.",
+      "rewardsNoticeLink": "Spravovat Reward Dollars"
     },
     "serviceFees": {
       "title": "Servisní poplatky",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "Přetažením přeuspořádejte kategorie a položky",
       "importFromGloriaFood": "Importovat z GloriaFood",
       "importPdf": "Importovat PDF",
-      "fixDuplicatesTitle": "Odebrat duplicitní připojení modifikátorů (když je skupina připojena na úrovni kategorie I položky)",
+      "fixDuplicatesTitle": "Sloučí duplicitní kategorie (se stejným názvem) a odstraní duplicitní připojení modifikátorů. Položky se zachovají a přesunou do zbývající kategorie.",
       "fixDuplicates": "Opravit duplikáty",
       "searchCategoriesItems": "Hledat kategorie a položky…",
       "clearSearch": "Vymazat hledání",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "Kterýkoli den",
       "fulfilDaysHint": "Vyberte dny, na které lze tuto položku objednat. Ponechte „Kterýkoli den“, chcete-li povolit každý den a omezit pouze časem.",
       "fulfilTimeHint": "Volitelné — nastavte časové okno (např. 11:00–15:00 jen na oběd). Ponechte obě pole prázdná, chcete-li povolit jakýkoli čas ve zvolené dny.",
-      "fulfilPreview": "Zákazníci uvidí tuto položku každý den s poznámkou „Objednat předem“ a budou požádáni, aby si objednávku naplánovali na čas, kdy je dostupná."
+      "fulfilPreview": "Zákazníci uvidí tuto položku každý den s poznámkou „Objednat předem“ a budou požádáni, aby si objednávku naplánovali na čas, kdy je dostupná.",
+      "dedupeCategoriesSuccess": "{n, plural, one {Sloučena # duplicitní kategorie.} few {Sloučeny # duplicitní kategorie.} many {Sloučeno # duplicitní kategorie.} other {Sloučeno # duplicitních kategorií.}}"
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "Sleva na bezplatné jídlo (100 = zcela zdarma)",
       "pickTypePrompt": "V kroku 1 vyberte typ akce pro konfiguraci podrobností zde.",
       "oncePerOrderLabel": "Povoleno pouze jednou na objednávku",
-      "oncePerOrderHint": "Při zaškrtnutí se tato akce uplatní pouze jednou na objednávku, i když na ni košík splňuje podmínky vícekrát (např. akce „kup jeden, druhý zdarma\", která by se jinak opakovala)."
+      "oncePerOrderHint": "Při zaškrtnutí se tato akce uplatní pouze jednou na objednávku, i když na ni košík splňuje podmínky vícekrát (např. akce „kup jeden, druhý zdarma\", která by se jinak opakovala).",
+      "rewardCreditLabel": "Reward Dollars k udělení",
+      "rewardCreditHint": "Přidá se k zůstatku zákazníka po dokončení této objednávky — bez slevy v košíku. Vyžaduje zapnuté Reward Dollars."
     },
     "promoStepRestrictions": {
       "pageTitle": "Omezení a zobrazení",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Pevná částka za objednávku",
       "earnPreviewPercent": "Zákazníci získají zpět {pct}% z každé objednávky jako {label}.",
       "earnPreviewPerDollar": "Zákazníci získají {amount} v {label} za objednávku.",
-      "redeemTitle": "Zákazníci mohou utratit při placení",
+      "redeemTitle": "Zaplatit pomocí {label}",
       "redeemHelp": "Umožněte zákazníkům použít zůstatek na objednávku. Vypnuto znamená, že si mohou vytvářet zůstatek, ale zatím ho nemohou utratit.",
       "maxRedeemPercent": "Max. % objednávky placené kreditem",
       "maxRedeemPercentHelp": "Omezte, jakou část jedné objednávky lze zaplatit kreditem (100 % znamená celou objednávku).",
@@ -4284,6 +4291,46 @@
         "adjust": "Úprava",
         "signup_bonus": "Bonus za registraci",
         "expire": "Vypršelo"
+      },
+      "redeemAlwaysOn": "Protože je program zapnutý, zákazníci mohou zaplatit část nebo celou objednávku svými {label} (zbytek uhradí běžnou metodou). Zobrazuje se jako možnost platby při pokladně.",
+      "rules": {
+        "title": "Způsoby získávání",
+        "subtitle": "Přidejte bonusová pravidla nad základní sazbu — dárky za registraci, bonusy za první objednávku, odměny za velké objednávky, věrnostní milníky. Každé může běžet v určitém rozmezí dat.",
+        "add": "Přidat způsob získávání",
+        "loading": "Načítání…",
+        "empty": "Zatím žádná bonusová pravidla — základní sazba výše stále platí.",
+        "newTitle": "Nový způsob získávání",
+        "trigger": "Kdy",
+        "trigSignup": "Když se zákazník zaregistruje",
+        "trigFirstOrder": "Při první objednávce",
+        "trigOrderOver": "Když je objednávka dostatečně velká",
+        "trigNth": "Každých několik objednávek (věrnost)",
+        "threshold": "Částka objednávky, která kvalifikuje",
+        "everyN": "Každých N objednávek",
+        "rewardKind": "Odměna",
+        "kindFlat": "Pevná {label}",
+        "kindPercent": "% objednávky",
+        "amount": "Částka",
+        "percent": "Procento",
+        "startDate": "Začátek (volitelné)",
+        "endDate": "Konec (volitelné)",
+        "labelOptional": "Název (volitelné)",
+        "labelPlaceholder": "např. Dárek za registraci na Black Friday",
+        "windowHint": "Nechte data prázdná pro vždy aktivní pravidlo nebo je nastavte pro časově omezenou kampaň.",
+        "sumSignup": "{amount} když se zákazník zaregistruje",
+        "sumFirstOrder": "{amount} při první objednávce zákazníka",
+        "sumOrderOver": "{amount} když objednávka přesáhne {threshold}",
+        "sumNth": "{amount} každých {n} objednávek",
+        "created": "Pravidlo získávání přidáno.",
+        "createFailed": "Pravidlo se nepodařilo přidat.",
+        "saveFailed": "Nepodařilo se uložit.",
+        "confirmDelete": "Smazat toto pravidlo získávání?",
+        "deleteFailed": "Nepodařilo se smazat.",
+        "pause": "Pozastavit",
+        "resume": "Obnovit",
+        "delete": "Smazat",
+        "cancel": "Zrušit",
+        "save": "Přidat pravidlo"
       }
     }
   },

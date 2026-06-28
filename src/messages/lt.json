@@ -499,7 +499,8 @@
       "useAll": "Naudoti viską",
       "useNone": "Nė vieno",
       "chargeToday": "Mokėti šiandien",
-      "capNote": "Šiam užsakymui galite pritaikyti iki {amount}."
+      "capNote": "Šiam užsakymui galite pritaikyti iki {amount}.",
+      "earnLine": "+ Uždirbkite {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Aktyvus",
       "activatePayments": "Aktyvuoti mokėjimus",
       "deactivatePayments": "Deaktyvuoti mokėjimus",
-      "helpText": "Įveskite savo Stripe raktus, kad priimtumėte kortelių mokėjimus savo užsakymų puslapyje."
+      "helpText": "Įveskite savo Stripe raktus, kad priimtumėte kortelių mokėjimus savo užsakymų puslapyje.",
+      "rewardsNoticeTitle": "{label} yra priimamas mokėjimo būdas",
+      "rewardsNoticeBody": "Kadangi jūsų atlygio programa įjungta, klientai atsiskaitydami gali dalį arba visą užsakymą apmokėti savo {label} likučiu — likutį jie padengia vienu iš aukščiau nurodytų būdų.",
+      "rewardsNoticeLink": "Tvarkyti Reward Dollars"
     },
     "serviceFees": {
       "title": "Paslaugų mokesčiai",
@@ -2558,7 +2562,7 @@
       "menuManagementHint": "Vilkite, kad pertvarkytumėte kategorijas ir prekes",
       "importFromGloriaFood": "Importuoti iš GloriaFood",
       "importPdf": "Importuoti PDF",
-      "fixDuplicatesTitle": "Pašalinti pasikartojančius modifikatorių priskyrimus (kai grupė prisegta ir kategorijos, IR prekės lygiu)",
+      "fixDuplicatesTitle": "Sujunkite pasikartojančias kategorijas (tokiu pat pavadinimu) ir pašalinkite pasikartojančius modifikatorių priskyrimus. Prekės išsaugomos ir perkeliamos į likusią kategoriją.",
       "fixDuplicates": "Taisyti dublikatus",
       "searchCategoriesItems": "Ieškoti kategorijų ir prekių…",
       "clearSearch": "Išvalyti paiešką",
@@ -2640,7 +2644,8 @@
       "fulfilAnyDay": "Bet kuri diena",
       "fulfilDaysHint": "Pasirinkite dienas, kurioms šią prekę galima užsisakyti. Palikite „Bet kuri diena“, kad būtų leidžiamos visos dienos ir ribojama tik pagal laiką.",
       "fulfilTimeHint": "Neprivaloma – nustatykite laiko intervalą (pvz., 11:00–15:00 tik pietums). Palikite abu laukus tuščius, kad pasirinktomis dienomis būtų leidžiamas bet koks laikas.",
-      "fulfilPreview": "Klientai šią prekę matys kiekvieną dieną su žyma „Išankstinis užsakymas“, ir jų bus paprašyta suplanuoti užsakymą laikui, kada ji galima."
+      "fulfilPreview": "Klientai šią prekę matys kiekvieną dieną su žyma „Išankstinis užsakymas“, ir jų bus paprašyta suplanuoti užsakymą laikui, kada ji galima.",
+      "dedupeCategoriesSuccess": "{n, plural, one {Sujungta # pasikartojanti kategorija.} few {Sujungtos # pasikartojančios kategorijos.} many {Sujungta # pasikartojančios kategorijos.} other {Sujungta # pasikartojančių kategorijų.}}"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2792,7 +2797,9 @@
       "freeDishDiscountLabel": "Nuolaida nemokamam patiekalui (100 = visiškai nemokamai)",
       "pickTypePrompt": "Pasirinkite akcijos tipą 1 žingsnyje, kad čia sukonfigūruotumėte detales.",
       "oncePerOrderLabel": "Leidžiama tik kartą viename užsakyme",
-      "oncePerOrderHint": "Pažymėjus, šis pasiūlymas taikomas tik kartą užsakymui, net jei krepšelis atitinka jo sąlygas daugiau nei vieną kartą (pvz., „Perki vieną – gauni vieną“ akcija, kuri kitu atveju kartotųsi)."
+      "oncePerOrderHint": "Pažymėjus, šis pasiūlymas taikomas tik kartą užsakymui, net jei krepšelis atitinka jo sąlygas daugiau nei vieną kartą (pvz., „Perki vieną – gauni vieną“ akcija, kuri kitu atveju kartotųsi).",
+      "rewardCreditLabel": "Skirtini Reward Dollars",
+      "rewardCreditHint": "Pridedama prie kliento likučio, kai šis užsakymas įvykdomas — be krepšelio nuolaidos. Reikia įjungti Reward Dollars."
     },
     "promoStepRestrictions": {
       "pageTitle": "Apribojimai ir rodymas",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Fiksuota suma už užsakymą",
       "earnPreviewPercent": "Klientai už kiekvieną užsakymą atgauna {pct}% kaip {label}.",
       "earnPreviewPerDollar": "Klientai už užsakymą uždirba {amount} {label}.",
-      "redeemTitle": "Klientai gali išleisti atsiskaitydami",
+      "redeemTitle": "Mokėti su {label}",
       "redeemHelp": "Leiskite klientams panaudoti savo likutį užsakymui. Išjungta reiškia, kad jie gali kaupti likutį, bet dar negali jo išleisti.",
       "maxRedeemPercent": "Maks. % užsakymo, apmokamo kreditu",
       "maxRedeemPercentHelp": "Apribokite, kokią vieno užsakymo dalį galima apmokėti kreditu (100% reiškia visą užsakymą).",
@@ -4284,6 +4291,46 @@
         "adjust": "Koregavimas",
         "signup_bonus": "Registracijos premija",
         "expire": "Pasibaigė galiojimas"
+      },
+      "redeemAlwaysOn": "Kadangi programa įjungta, klientai gali dalį arba visą užsakymą apmokėti savo {label} (likutį jie sumoka įprastu būdu). Atsiskaitant tai rodoma kaip mokėjimo būdas.",
+      "rules": {
+        "title": "Uždarbio būdai",
+        "subtitle": "Pridėkite premijų taisyklių virš bazinio tarifo — registracijos dovanos, pirmojo užsakymo premijos, atlygiai už didelius užsakymus, lojalumo etapai. Kiekviena gali veikti per nustatytą laikotarpį.",
+        "add": "Pridėti uždarbio būdą",
+        "loading": "Įkeliama…",
+        "empty": "Premijų taisyklių dar nėra — aukščiau nurodytas bazinis tarifas vis tiek galioja.",
+        "newTitle": "Naujas uždarbio būdas",
+        "trigger": "Kada",
+        "trigSignup": "Kai klientas užsiregistruoja",
+        "trigFirstOrder": "Prie pirmojo užsakymo",
+        "trigOrderOver": "Kai užsakymas pakankamai didelis",
+        "trigNth": "Kas keletą užsakymų (lojalumas)",
+        "threshold": "Užsakymo suma, suteikianti teisę",
+        "everyN": "Kas N užsakymų",
+        "rewardKind": "Atlygis",
+        "kindFlat": "Fiksuoti {label}",
+        "kindPercent": "% nuo užsakymo",
+        "amount": "Suma",
+        "percent": "Procentas",
+        "startDate": "Pradžia (nebūtina)",
+        "endDate": "Pabaiga (nebūtina)",
+        "labelOptional": "Pavadinimas (nebūtina)",
+        "labelPlaceholder": "pvz. Juodojo penktadienio registracijos dovana",
+        "windowHint": "Palikite datas tuščias nuolat veikiančiai taisyklei arba nustatykite jas riboto laiko kampanijai.",
+        "sumSignup": "{amount} kai klientas užsiregistruoja",
+        "sumFirstOrder": "{amount} prie kliento pirmojo užsakymo",
+        "sumOrderOver": "{amount} kai užsakymas viršija {threshold}",
+        "sumNth": "{amount} kas {n} užsakymų",
+        "created": "Uždarbio taisyklė pridėta.",
+        "createFailed": "Nepavyko pridėti taisyklės.",
+        "saveFailed": "Nepavyko išsaugoti.",
+        "confirmDelete": "Ištrinti šią uždarbio taisyklę?",
+        "deleteFailed": "Nepavyko ištrinti.",
+        "pause": "Pristabdyti",
+        "resume": "Tęsti",
+        "delete": "Ištrinti",
+        "cancel": "Atšaukti",
+        "save": "Pridėti taisyklę"
       }
     }
   },

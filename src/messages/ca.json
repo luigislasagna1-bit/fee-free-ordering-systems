@@ -499,7 +499,8 @@
       "useAll": "Usar-ho tot",
       "useNone": "Cap",
       "chargeToday": "A pagar avui",
-      "capNote": "Pots aplicar fins a {amount} en aquesta comanda."
+      "capNote": "Pots aplicar fins a {amount} en aquesta comanda.",
+      "earnLine": "+ Guanya {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Actiu",
       "activatePayments": "Activa els pagaments",
       "deactivatePayments": "Desactiva els pagaments",
-      "helpText": "Introduïu les claus de Stripe per acceptar pagaments amb targeta a la pàgina de comandes."
+      "helpText": "Introduïu les claus de Stripe per acceptar pagaments amb targeta a la pàgina de comandes.",
+      "rewardsNoticeTitle": "{label} és una opció de pagament acceptada",
+      "rewardsNoticeBody": "Com que el teu programa de recompenses està actiu, els clients poden pagar una part o la totalitat de qualsevol comanda amb el seu saldo de {label} a la pantalla de pagament — cobreixen qualsevol resta amb un dels mètodes anteriors.",
+      "rewardsNoticeLink": "Gestiona els Reward Dollars"
     },
     "serviceFees": {
       "title": "Taxes de servei",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "Arrossegueu per reordenar categories i articles",
       "importFromGloriaFood": "Importa des de GloriaFood",
       "importPdf": "Importa PDF",
-      "fixDuplicatesTitle": "Elimina adjuncions de modificadors duplicades (quan un grup està adjuntat tant a nivell de categoria COM d'article)",
+      "fixDuplicatesTitle": "Fusiona categories duplicades (mateix nom) i elimina vinculacions de modificadors duplicades. Els articles es conserven i es traslladen a la categoria que es manté.",
       "fixDuplicates": "Corregeix duplicats",
       "searchCategoriesItems": "Cerca categories i articles…",
       "clearSearch": "Esborra la cerca",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "Qualsevol dia",
       "fulfilDaysHint": "Tria els dies per als quals es pot demanar aquest article. Deixa-ho a «Qualsevol dia» per permetre tots els dies i limitar només per hora.",
       "fulfilTimeHint": "Opcional — defineix una franja horària (p. ex. 11:00–15:00 només per a l'esmorzar). Deixa els dos camps buits per permetre qualsevol hora en els dies triats.",
-      "fulfilPreview": "Els clients veuran aquest article cada dia amb una nota «Demana per endavant» i se'ls demanarà que programin la comanda per a una hora en què estigui disponible."
+      "fulfilPreview": "Els clients veuran aquest article cada dia amb una nota «Demana per endavant» i se'ls demanarà que programin la comanda per a una hora en què estigui disponible.",
+      "dedupeCategoriesSuccess": "{n, plural, one {S'ha fusionat # categoria duplicada.} other {S'han fusionat # categories duplicades.}}"
     },
     "promotionsList": {
       "stackingMaster": "Mestre",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "Descompte en el plat gratuït (100 = completament gratuït)",
       "pickTypePrompt": "Trieu un tipus de promoció al Pas 1 per configurar els detalls aquí.",
       "oncePerOrderLabel": "Només permès un cop per comanda",
-      "oncePerOrderHint": "Quan està marcat, aquesta oferta s'aplica només un cop per comanda, fins i tot si el carret hi té dret més d'una vegada (p. ex. una promoció Compra'n un i emporta't l'altre que, altrament, es repetiria)."
+      "oncePerOrderHint": "Quan està marcat, aquesta oferta s'aplica només un cop per comanda, fins i tot si el carret hi té dret més d'una vegada (p. ex. una promoció Compra'n un i emporta't l'altre que, altrament, es repetiria).",
+      "rewardCreditLabel": "Reward Dollars a atorgar",
+      "rewardCreditHint": "S'afegeixen al saldo del client quan es completa aquesta comanda — sense descompte al carretó. Cal que els Reward Dollars estiguin activats."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restriccions i visualització",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Import fix per comanda",
       "earnPreviewPercent": "Els clients recuperen un {pct}% de cada comanda en {label}.",
       "earnPreviewPerDollar": "Els clients guanyen {amount} en {label} per comanda.",
-      "redeemTitle": "Els clients poden gastar en pagar",
+      "redeemTitle": "Paga amb {label}",
       "redeemHelp": "Permet que els clients apliquin el seu saldo a una comanda. Desactivat vol dir que poden acumular saldo però encara no gastar-lo.",
       "maxRedeemPercent": "% màxim d'una comanda pagat amb crèdit",
       "maxRedeemPercentHelp": "Limita quina part d'una sola comanda es pot pagar amb crèdit (100% vol dir tota la comanda).",
@@ -4284,6 +4291,46 @@
         "adjust": "Ajustament",
         "signup_bonus": "Bonificació de registre",
         "expire": "Caducat"
+      },
+      "redeemAlwaysOn": "Com que el programa està actiu, els clients poden pagar una part o la totalitat de qualsevol comanda amb els seus {label} (paguen qualsevol resta amb el seu mètode habitual). Apareix com a opció de pagament a la pantalla de pagament.",
+      "rules": {
+        "title": "Maneres de guanyar",
+        "subtitle": "Afegeix regles de bonificació per damunt de la tarifa base — regals d'inscripció, bonificacions de la primera comanda, recompenses per comandes grans, fites de fidelitat. Cadascuna pot funcionar en un interval de dates.",
+        "add": "Afegeix una manera de guanyar",
+        "loading": "S'està carregant…",
+        "empty": "Encara no hi ha regles de bonificació — la tarifa base anterior continua sent vàlida.",
+        "newTitle": "Nova manera de guanyar",
+        "trigger": "Quan",
+        "trigSignup": "Quan un client s'inscriu",
+        "trigFirstOrder": "En la seva primera comanda",
+        "trigOrderOver": "Quan una comanda és prou gran",
+        "trigNth": "Cada poques comandes (fidelitat)",
+        "threshold": "Import de la comanda que hi dóna dret",
+        "everyN": "Cada N comandes",
+        "rewardKind": "Recompensa",
+        "kindFlat": "{label} fix",
+        "kindPercent": "% de la comanda",
+        "amount": "Import",
+        "percent": "Percentatge",
+        "startDate": "Comença (opcional)",
+        "endDate": "Acaba (opcional)",
+        "labelOptional": "Nom (opcional)",
+        "labelPlaceholder": "p. ex. Regal d'inscripció del Black Friday",
+        "windowHint": "Deixa les dates buides per a una regla permanent, o estableix-les per a una campanya de durada limitada.",
+        "sumSignup": "{amount} quan un client s'inscriu",
+        "sumFirstOrder": "{amount} en la primera comanda d'un client",
+        "sumOrderOver": "{amount} quan una comanda supera els {threshold}",
+        "sumNth": "{amount} cada {n} comandes",
+        "created": "S'ha afegit la regla per guanyar.",
+        "createFailed": "No s'ha pogut afegir la regla.",
+        "saveFailed": "No s'ha pogut desar.",
+        "confirmDelete": "Vols eliminar aquesta regla per guanyar?",
+        "deleteFailed": "No s'ha pogut eliminar.",
+        "pause": "Pausa",
+        "resume": "Reprèn",
+        "delete": "Elimina",
+        "cancel": "Cancel·la",
+        "save": "Afegeix la regla"
       }
     }
   },

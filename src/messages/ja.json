@@ -499,7 +499,8 @@
       "useAll": "すべて使う",
       "useNone": "使わない",
       "chargeToday": "本日のお支払い",
-      "capNote": "このご注文では最大 {amount} までご利用いただけます。"
+      "capNote": "このご注文では最大 {amount} までご利用いただけます。",
+      "earnLine": "+ {amount} を獲得"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "有効",
       "activatePayments": "支払いを有効にする",
       "deactivatePayments": "支払いを無効にする",
-      "helpText": "Stripe キーを入力して、注文ページでカード決済を受け付けてください。"
+      "helpText": "Stripe キーを入力して、注文ページでカード決済を受け付けてください。",
+      "rewardsNoticeTitle": "{label} はご利用いただける支払い方法です",
+      "rewardsNoticeBody": "リワードプログラムが有効なため、お客様は会計時に {label} 残高で注文の一部または全額を支払えます。不足分は上記いずれかの方法で補えます。",
+      "rewardsNoticeLink": "リワードドルを管理"
     },
     "serviceFees": {
       "title": "サービス料",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "ドラッグしてカテゴリーと商品を並び替え",
       "importFromGloriaFood": "GloriaFood からインポート",
       "importPdf": "PDF インポート",
-      "fixDuplicatesTitle": "重複したモディファイア添付を削除（グループがカテゴリーと商品の両方に添付されている場合）",
+      "fixDuplicatesTitle": "同名の重複カテゴリーを統合し、重複するモディファイアの紐付けを削除します。商品は残され、統合先のカテゴリーに移されます。",
       "fixDuplicates": "重複を修正",
       "searchCategoriesItems": "カテゴリーと商品を検索…",
       "clearSearch": "検索をクリア",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "いつでも",
       "fulfilDaysHint": "この商品を注文できる曜日を選択します。「いつでも」のままにすると、毎日許可され、時間のみで制限されます。",
       "fulfilTimeHint": "任意 — 時間帯を設定します（例：ランチのみの 11:00–15:00）。両方を空欄にすると、選択した曜日のすべての時間が許可されます。",
-      "fulfilPreview": "お客様には毎日この商品が「事前注文」の注記とともに表示され、商品が利用可能な時間に注文を予約するよう求められます。"
+      "fulfilPreview": "お客様には毎日この商品が「事前注文」の注記とともに表示され、商品が利用可能な時間に注文を予約するよう求められます。",
+      "dedupeCategoriesSuccess": "{n, plural, other {# 件の重複カテゴリーを統合しました。}}"
     },
     "promotionsList": {
       "stackingMaster": "マスター",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "無料料理の割引（100 = 完全無料）",
       "pickTypePrompt": "ここで詳細を設定するには、ステップ1でプロモーションタイプを選択してください。",
       "oncePerOrderLabel": "1注文につき1回のみ適用",
-      "oncePerOrderHint": "チェックすると、カート内で複数回条件を満たす場合でも（繰り返し適用されうる「1つ買うともう1つ無料」など）、この特典は1注文につき1回のみ適用されます。"
+      "oncePerOrderHint": "チェックすると、カート内で複数回条件を満たす場合でも（繰り返し適用されうる「1つ買うともう1つ無料」など）、この特典は1注文につき1回のみ適用されます。",
+      "rewardCreditLabel": "付与するリワードドル",
+      "rewardCreditHint": "この注文の完了時にお客様の残高へ加算されます——カート割引はありません。リワードドルの有効化が必要です。"
     },
     "promoStepRestrictions": {
       "pageTitle": "制限＆表示",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "1注文あたりの固定額",
       "earnPreviewPercent": "お客様はご注文ごとに {pct}% を{label}として還元されます。",
       "earnPreviewPerDollar": "お客様はご注文ごとに {amount} 分の{label}を獲得します。",
-      "redeemTitle": "お客様がお会計時に使える",
+      "redeemTitle": "{label} で支払う",
       "redeemHelp": "お客様が残高を注文に充当できるようにします。オフの場合、残高はためられますがまだ使えません。",
       "maxRedeemPercent": "1注文でクレジット払いできる最大 %",
       "maxRedeemPercentHelp": "1注文のうちクレジットで支払える割合の上限を設定します（100% で注文全額）。",
@@ -4284,6 +4291,46 @@
         "adjust": "調整",
         "signup_bonus": "登録ボーナス",
         "expire": "失効"
+      },
+      "redeemAlwaysOn": "プログラムが有効なため、お客様は {label} で注文の一部または全額を支払えます（不足分は通常の方法で支払います）。会計時に支払い方法として表示されます。",
+      "rules": {
+        "title": "獲得方法",
+        "subtitle": "基本レートに加えてボーナスルールを追加——登録特典、初回注文ボーナス、大口注文の特典、ロイヤルティのマイルストーン。それぞれ期間を設定できます。",
+        "add": "獲得方法を追加",
+        "loading": "読み込み中…",
+        "empty": "ボーナスルールはまだありません——上記の基本レートは引き続き適用されます。",
+        "newTitle": "新しい獲得方法",
+        "trigger": "条件",
+        "trigSignup": "お客様が登録したとき",
+        "trigFirstOrder": "初回注文時",
+        "trigOrderOver": "注文金額が一定以上のとき",
+        "trigNth": "数回の注文ごと（ロイヤルティ）",
+        "threshold": "対象となる注文金額",
+        "everyN": "N 回の注文ごと",
+        "rewardKind": "リワード",
+        "kindFlat": "定額 {label}",
+        "kindPercent": "注文の％",
+        "amount": "金額",
+        "percent": "パーセント",
+        "startDate": "開始（任意）",
+        "endDate": "終了（任意）",
+        "labelOptional": "名称（任意）",
+        "labelPlaceholder": "例：ブラックフライデー登録特典",
+        "windowHint": "日付を空欄にすると常時有効のルールに、設定すると期間限定キャンペーンになります。",
+        "sumSignup": "お客様の登録時に {amount}",
+        "sumFirstOrder": "お客様の初回注文で {amount}",
+        "sumOrderOver": "注文が {threshold} を超えたら {amount}",
+        "sumNth": "{n} 回の注文ごとに {amount}",
+        "created": "獲得ルールを追加しました。",
+        "createFailed": "ルールを追加できませんでした。",
+        "saveFailed": "保存できませんでした。",
+        "confirmDelete": "この獲得ルールを削除しますか？",
+        "deleteFailed": "削除できませんでした。",
+        "pause": "一時停止",
+        "resume": "再開",
+        "delete": "削除",
+        "cancel": "キャンセル",
+        "save": "ルールを追加"
       }
     }
   },

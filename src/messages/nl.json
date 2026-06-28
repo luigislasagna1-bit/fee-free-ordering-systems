@@ -499,7 +499,8 @@
       "useAll": "Alles gebruiken",
       "useNone": "Geen",
       "chargeToday": "Vandaag te betalen",
-      "capNote": "Je kunt maximaal {amount} op deze bestelling gebruiken."
+      "capNote": "Je kunt maximaal {amount} op deze bestelling gebruiken.",
+      "earnLine": "+ Verdien {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Actief",
       "activatePayments": "Betalingen activeren",
       "deactivatePayments": "Betalingen deactiveren",
-      "helpText": "Voer uw Stripe-sleutels in om kaartbetalingen te accepteren op uw bestelpagina."
+      "helpText": "Voer uw Stripe-sleutels in om kaartbetalingen te accepteren op uw bestelpagina.",
+      "rewardsNoticeTitle": "{label} is een geaccepteerde betaalmethode",
+      "rewardsNoticeBody": "Omdat je beloningsprogramma actief is, kunnen klanten een deel of de volledige bestelling betalen met hun {label}-saldo bij het afrekenen — het resterende bedrag betalen ze met een van de bovenstaande methoden.",
+      "rewardsNoticeLink": "Reward Dollars beheren"
     },
     "serviceFees": {
       "title": "Servicekosten",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "Sleep om categorieën en artikelen te herordenen",
       "importFromGloriaFood": "Importeren vanuit GloriaFood",
       "importPdf": "PDF importeren",
-      "fixDuplicatesTitle": "Dubbele wijzigingskoppelingen verwijderen (wanneer een groep zowel op categorie- ALS artikelniveau is gekoppeld)",
+      "fixDuplicatesTitle": "Voeg dubbele categorieën (zelfde naam) samen en verwijder dubbele optiekoppelingen. Items blijven behouden en worden verplaatst naar de overblijvende categorie.",
       "fixDuplicates": "Duplicaten verwijderen",
       "searchCategoriesItems": "Categorieën en artikelen zoeken…",
       "clearSearch": "Zoekopdracht wissen",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "Elke dag",
       "fulfilDaysHint": "Kies de dagen waarvoor dit artikel kan worden besteld. Laat op «Elke dag» staan om alle dagen toe te staan en alleen op tijd te beperken.",
       "fulfilTimeHint": "Optioneel — stel een tijdvenster in (bijv. 11:00–15:00 alleen voor de lunch). Laat beide velden leeg om op de gekozen dagen elk tijdstip toe te staan.",
-      "fulfilPreview": "Klanten zien dit artikel elke dag met een notitie «Vooraf bestellen» en wordt gevraagd hun bestelling in te plannen voor een tijdstip waarop het beschikbaar is."
+      "fulfilPreview": "Klanten zien dit artikel elke dag met een notitie «Vooraf bestellen» en wordt gevraagd hun bestelling in te plannen voor een tijdstip waarop het beschikbaar is.",
+      "dedupeCategoriesSuccess": "{n, plural, one {# dubbele categorie samengevoegd.} other {# dubbele categorieën samengevoegd.}}"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "Korting op gratis gerecht (100 = volledig gratis)",
       "pickTypePrompt": "Kies een promotietype in stap 1 om de details hier te configureren.",
       "oncePerOrderLabel": "Slechts één keer per bestelling toegestaan",
-      "oncePerOrderHint": "Indien aangevinkt geldt deze actie slechts één keer per bestelling, zelfs als het winkelmandje er meerdere keren voor in aanmerking komt (bijvoorbeeld een 1+1-gratis die anders zou worden herhaald)."
+      "oncePerOrderHint": "Indien aangevinkt geldt deze actie slechts één keer per bestelling, zelfs als het winkelmandje er meerdere keren voor in aanmerking komt (bijvoorbeeld een 1+1-gratis die anders zou worden herhaald).",
+      "rewardCreditLabel": "Toe te kennen Reward Dollars",
+      "rewardCreditHint": "Wordt toegevoegd aan het saldo van de klant zodra deze bestelling is voltooid — geen winkelwagenkorting. Vereist dat Reward Dollars is ingeschakeld."
     },
     "promoStepRestrictions": {
       "pageTitle": "Beperkingen en weergave",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Vast bedrag per bestelling",
       "earnPreviewPercent": "Klanten krijgen {pct}% van elke bestelling terug als {label}.",
       "earnPreviewPerDollar": "Klanten verdienen {amount} aan {label} per bestelling.",
-      "redeemTitle": "Klanten kunnen bij het afrekenen besteden",
+      "redeemTitle": "Betalen met {label}",
       "redeemHelp": "Laat klanten hun saldo verrekenen met een bestelling. Uit betekent dat ze wel een saldo opbouwen, maar het nog niet kunnen besteden.",
       "maxRedeemPercent": "Max. % van een bestelling betaald met tegoed",
       "maxRedeemPercentHelp": "Beperk hoeveel van één bestelling met tegoed mag worden betaald (100% betekent de hele bestelling).",
@@ -4284,6 +4291,46 @@
         "adjust": "Aanpassing",
         "signup_bonus": "Aanmeldbonus",
         "expire": "Verlopen"
+      },
+      "redeemAlwaysOn": "Omdat het programma actief is, kunnen klanten een deel of de volledige bestelling betalen met hun {label} (het resterende bedrag betalen ze met hun gebruikelijke methode). Het verschijnt als betaaloptie bij het afrekenen.",
+      "rules": {
+        "title": "Manieren om te verdienen",
+        "subtitle": "Voeg bonusregels toe bovenop het basistarief — aanmeldcadeaus, bonussen voor de eerste bestelling, beloningen voor grote bestellingen, loyaliteitsmijlpalen. Elke regel kan binnen een datumbereik lopen.",
+        "add": "Een manier om te verdienen toevoegen",
+        "loading": "Laden…",
+        "empty": "Nog geen bonusregels — het basistarief hierboven geldt nog steeds.",
+        "newTitle": "Nieuwe manier om te verdienen",
+        "trigger": "Wanneer",
+        "trigSignup": "Wanneer een klant zich aanmeldt",
+        "trigFirstOrder": "Bij hun eerste bestelling",
+        "trigOrderOver": "Wanneer een bestelling groot genoeg is",
+        "trigNth": "Om de zoveel bestellingen (loyaliteit)",
+        "threshold": "Bestelbedrag dat in aanmerking komt",
+        "everyN": "Elke N bestellingen",
+        "rewardKind": "Beloning",
+        "kindFlat": "Vast bedrag {label}",
+        "kindPercent": "% van de bestelling",
+        "amount": "Bedrag",
+        "percent": "Percentage",
+        "startDate": "Begint (optioneel)",
+        "endDate": "Eindigt (optioneel)",
+        "labelOptional": "Naam (optioneel)",
+        "labelPlaceholder": "bijv. Black Friday-aanmeldcadeau",
+        "windowHint": "Laat de data leeg voor een altijd-actieve regel, of stel ze in voor een tijdelijke campagne.",
+        "sumSignup": "{amount} wanneer een klant zich aanmeldt",
+        "sumFirstOrder": "{amount} bij de eerste bestelling van een klant",
+        "sumOrderOver": "{amount} wanneer een bestelling hoger is dan {threshold}",
+        "sumNth": "{amount} elke {n} bestellingen",
+        "created": "Verdienregel toegevoegd.",
+        "createFailed": "Kon de regel niet toevoegen.",
+        "saveFailed": "Kon niet opslaan.",
+        "confirmDelete": "Deze verdienregel verwijderen?",
+        "deleteFailed": "Kon niet verwijderen.",
+        "pause": "Pauzeren",
+        "resume": "Hervatten",
+        "delete": "Verwijderen",
+        "cancel": "Annuleren",
+        "save": "Regel toevoegen"
       }
     }
   },

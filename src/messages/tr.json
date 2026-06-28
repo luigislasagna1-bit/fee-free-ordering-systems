@@ -499,7 +499,8 @@
       "useAll": "Tümünü kullan",
       "useNone": "Yok",
       "chargeToday": "Bugün ödenecek",
-      "capNote": "Bu siparişe en fazla {amount} uygulayabilirsiniz."
+      "capNote": "Bu siparişe en fazla {amount} uygulayabilirsiniz.",
+      "earnLine": "+ {amount} kazanın"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Aktif",
       "activatePayments": "Ödemeleri etkinleştir",
       "deactivatePayments": "Ödemeleri devre dışı bırak",
-      "helpText": "Sipariş sayfanızda kart ödemesi kabul etmek için Stripe anahtarlarınızı girin."
+      "helpText": "Sipariş sayfanızda kart ödemesi kabul etmek için Stripe anahtarlarınızı girin.",
+      "rewardsNoticeTitle": "{label} kabul edilen bir ödeme seçeneğidir",
+      "rewardsNoticeBody": "Ödül programınız açık olduğundan, müşteriler herhangi bir siparişin bir kısmını veya tamamını ödeme sırasında {label} bakiyeleriyle ödeyebilir — kalan tutarı yukarıdaki yöntemlerden biriyle karşılarlar.",
+      "rewardsNoticeLink": "Ödül Dolarlarını Yönet"
     },
     "serviceFees": {
       "title": "Hizmet Ücretleri",
@@ -1824,7 +1828,7 @@
       "menuManagementHint": "Kategorileri ve ürünleri yeniden sıralamak için sürükleyin",
       "importFromGloriaFood": "GloriaFood'dan İçe Aktar",
       "importPdf": "PDF İçe Aktar",
-      "fixDuplicatesTitle": "Yinelenen modifiye eklerini kaldır (bir grup hem kategori hem ürün düzeyinde eklendiğinde)",
+      "fixDuplicatesTitle": "Yinelenen kategorileri (aynı ad) birleştirin ve yinelenen değiştirici eklerini kaldırın. Ürünler korunur ve kalan kategoriye taşınır.",
       "fixDuplicates": "Yinelenenleri düzelt",
       "searchCategoriesItems": "Kategorilerde ve ürünlerde ara…",
       "clearSearch": "Aramayı temizle",
@@ -1906,7 +1910,8 @@
       "fulfilAnyDay": "Herhangi bir gün",
       "fulfilDaysHint": "Bu ürünün hangi günler için sipariş edilebileceğini seçin. Her güne izin vermek ve yalnızca saate göre sınırlamak için \"Herhangi bir gün\" olarak bırakın.",
       "fulfilTimeHint": "İsteğe bağlı — bir saat aralığı belirleyin (ör. yalnızca öğle yemeği için 11:00–15:00). Seçilen günlerde her saate izin vermek için ikisini de boş bırakın.",
-      "fulfilPreview": "Müşteriler bu ürünü her gün \"Önceden sipariş ver\" notuyla görür ve siparişlerini ürünün mevcut olduğu bir saate planlamaları istenir."
+      "fulfilPreview": "Müşteriler bu ürünü her gün \"Önceden sipariş ver\" notuyla görür ve siparişlerini ürünün mevcut olduğu bir saate planlamaları istenir.",
+      "dedupeCategoriesSuccess": "{n, plural, one {# yinelenen kategori birleştirildi.} other {# yinelenen kategori birleştirildi.}}"
     },
     "promotionsList": {
       "stackingMaster": "Ana",
@@ -2058,7 +2063,9 @@
       "freeDishDiscountLabel": "Ücretsiz tabak indirimi (100 = tamamen ücretsiz)",
       "pickTypePrompt": "Ayrıntıları burada yapılandırmak için 1. Adım'dan bir promosyon türü seçin.",
       "oncePerOrderLabel": "Sipariş başına yalnızca bir kez geçerli",
-      "oncePerOrderHint": "İşaretlendiğinde, sepet birden fazla kez uygun olsa bile bu kampanya sipariş başına yalnızca bir kez uygulanır (örneğin, aksi takdirde tekrarlanacak bir Bir Alana Bir Bedava kampanyası)."
+      "oncePerOrderHint": "İşaretlendiğinde, sepet birden fazla kez uygun olsa bile bu kampanya sipariş başına yalnızca bir kez uygulanır (örneğin, aksi takdirde tekrarlanacak bir Bir Alana Bir Bedava kampanyası).",
+      "rewardCreditLabel": "Verilecek Ödül Dolarları",
+      "rewardCreditHint": "Bu sipariş tamamlandığında müşterinin bakiyesine eklenir — sepet indirimi yok. Ödül Dolarlarının etkin olmasını gerektirir."
     },
     "promoStepRestrictions": {
       "pageTitle": "Kısıtlamalar & görüntüleme",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Sipariş başına sabit tutar",
       "earnPreviewPercent": "Müşteriler her siparişin {pct}%'ini {label} olarak geri kazanır.",
       "earnPreviewPerDollar": "Müşteriler sipariş başına {amount} {label} kazanır.",
-      "redeemTitle": "Müşteriler ödeme sırasında harcayabilir",
+      "redeemTitle": "{label} ile öde",
       "redeemHelp": "Müşterilerin bakiyelerini bir siparişe uygulamasına izin verin. Kapalıyken bakiye biriktirebilir ama henüz harcayamazlar.",
       "maxRedeemPercent": "Kredi ile ödenebilecek azami sipariş %'si",
       "maxRedeemPercentHelp": "Tek bir siparişin ne kadarının kredi ile ödenebileceğini sınırlayın (100%, siparişin tamamı demektir).",
@@ -4284,6 +4291,46 @@
         "adjust": "Düzeltme",
         "signup_bonus": "Kayıt bonusu",
         "expire": "Süresi doldu"
+      },
+      "redeemAlwaysOn": "Program açık olduğundan, müşteriler herhangi bir siparişin bir kısmını veya tamamını {label} ile ödeyebilir (kalan tutarı normal yöntemleriyle öderler). Ödeme sırasında bir ödeme seçeneği olarak görünür.",
+      "rules": {
+        "title": "Kazanma yolları",
+        "subtitle": "Temel orana ek bonus kuralları ekleyin — kayıt hediyeleri, ilk sipariş bonusları, büyük sipariş ödülleri, sadakat kilometre taşları. Her biri bir tarih aralığında çalışabilir.",
+        "add": "Bir kazanma yolu ekle",
+        "loading": "Yükleniyor…",
+        "empty": "Henüz bonus kuralı yok — yukarıdaki temel oran yine de geçerlidir.",
+        "newTitle": "Yeni kazanma yolu",
+        "trigger": "Ne zaman",
+        "trigSignup": "Bir müşteri kaydolduğunda",
+        "trigFirstOrder": "İlk siparişinde",
+        "trigOrderOver": "Sipariş yeterince büyük olduğunda",
+        "trigNth": "Her birkaç siparişte (sadakat)",
+        "threshold": "Hak kazandıran sipariş tutarı",
+        "everyN": "Her N siparişte",
+        "rewardKind": "Ödül",
+        "kindFlat": "Sabit {label}",
+        "kindPercent": "Siparişin %'si",
+        "amount": "Tutar",
+        "percent": "Yüzde",
+        "startDate": "Başlangıç (isteğe bağlı)",
+        "endDate": "Bitiş (isteğe bağlı)",
+        "labelOptional": "Ad (isteğe bağlı)",
+        "labelPlaceholder": "örn. Kara Cuma kayıt hediyesi",
+        "windowHint": "Her zaman geçerli bir kural için tarihleri boş bırakın veya süreli bir kampanya için ayarlayın.",
+        "sumSignup": "Bir müşteri kaydolduğunda {amount}",
+        "sumFirstOrder": "Müşterinin ilk siparişinde {amount}",
+        "sumOrderOver": "Sipariş {threshold} üzerinde olduğunda {amount}",
+        "sumNth": "Her {n} siparişte {amount}",
+        "created": "Kazanma kuralı eklendi.",
+        "createFailed": "Kural eklenemedi.",
+        "saveFailed": "Kaydedilemedi.",
+        "confirmDelete": "Bu kazanma kuralı silinsin mi?",
+        "deleteFailed": "Silinemedi.",
+        "pause": "Duraklat",
+        "resume": "Sürdür",
+        "delete": "Sil",
+        "cancel": "İptal",
+        "save": "Kural ekle"
       }
     }
   },

@@ -499,7 +499,8 @@
       "useAll": "Käytä kaikki",
       "useNone": "Ei mitään",
       "chargeToday": "Maksettavaa tänään",
-      "capNote": "Voit käyttää tähän tilaukseen enintään {amount}."
+      "capNote": "Voit käyttää tähän tilaukseen enintään {amount}.",
+      "earnLine": "+ Ansaitse {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Aktiivinen",
       "activatePayments": "Aktivoi maksut",
       "deactivatePayments": "Poista maksut käytöstä",
-      "helpText": "Syötä Stripe-avaimesi hyväksyäksesi korttimaksut tilaussivullasi."
+      "helpText": "Syötä Stripe-avaimesi hyväksyäksesi korttimaksut tilaussivullasi.",
+      "rewardsNoticeTitle": "{label} on hyväksytty maksutapa",
+      "rewardsNoticeBody": "Koska palkitsemisohjelmasi on käytössä, asiakkaat voivat maksaa tilauksesta osan tai kaiken {label}-saldollaan kassalla — loput he maksavat jollakin yllä olevista tavoista.",
+      "rewardsNoticeLink": "Hallitse Reward Dollars -etuja"
     },
     "serviceFees": {
       "title": "Palvelumaksut",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "Vedä järjestääksesi kategoriat ja tuotteet uudelleen",
       "importFromGloriaFood": "Tuo GloriaFoodista",
       "importPdf": "Tuo PDF",
-      "fixDuplicatesTitle": "Poista kaksoisliitokset (kun ryhmä on liitetty sekä kategorian ETTÄ tuotteen tasolla)",
+      "fixDuplicatesTitle": "Yhdistä päällekkäiset kategoriat (sama nimi) ja poista päällekkäiset lisävalintaliitokset. Tuotteet säilytetään ja siirretään jäljelle jäävään kategoriaan.",
       "fixDuplicates": "Korjaa kaksoiskappaleet",
       "searchCategoriesItems": "Hae kategorioita ja tuotteita…",
       "clearSearch": "Tyhjennä haku",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "Mikä tahansa päivä",
       "fulfilDaysHint": "Valitse, minä päivinä tämän tuotteen voi tilata. Jätä asetukseksi ”Mikä tahansa päivä”, jos haluat sallia kaikki päivät ja rajata vain kellonajan mukaan.",
       "fulfilTimeHint": "Valinnainen – aseta aikaikkuna (esim. 11:00–15:00 vain lounaalle). Jätä molemmat tyhjiksi, jos haluat sallia minkä tahansa ajan valittuina päivinä.",
-      "fulfilPreview": "Asiakkaat näkevät tämän tuotteen joka päivä ”Ennakkotilaus”-merkinnällä, ja heitä pyydetään ajastamaan tilaus ajankohtaan, jolloin se on saatavilla."
+      "fulfilPreview": "Asiakkaat näkevät tämän tuotteen joka päivä ”Ennakkotilaus”-merkinnällä, ja heitä pyydetään ajastamaan tilaus ajankohtaan, jolloin se on saatavilla.",
+      "dedupeCategoriesSuccess": "{n, plural, one {Yhdistettiin # päällekkäinen kategoria.} other {Yhdistettiin # päällekkäistä kategoriaa.}}"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "Alennus ilmaiselle annokselle (100 = täysin ilmainen)",
       "pickTypePrompt": "Valitse tarjoustyyppi vaiheessa 1 konfiguroidaksesi tiedot tässä.",
       "oncePerOrderLabel": "Sallittu vain kerran tilausta kohden",
-      "oncePerOrderHint": "Kun tämä on valittuna, tarjous kohdistuu tilaukseen vain kerran, vaikka ostoskori täyttäisi sen ehdot useammin kuin kerran (esim. kaksi yhden hinnalla -tarjous, joka muuten toistuisi)."
+      "oncePerOrderHint": "Kun tämä on valittuna, tarjous kohdistuu tilaukseen vain kerran, vaikka ostoskori täyttäisi sen ehdot useammin kuin kerran (esim. kaksi yhden hinnalla -tarjous, joka muuten toistuisi).",
+      "rewardCreditLabel": "Myönnettävät Reward Dollars",
+      "rewardCreditHint": "Lisätään asiakkaan saldoon, kun tämä tilaus on valmis — ei ostoskorialennusta. Edellyttää, että Reward Dollars on käytössä."
     },
     "promoStepRestrictions": {
       "pageTitle": "Rajoitukset & näyttö",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Kiinteä summa tilausta kohden",
       "earnPreviewPercent": "Asiakkaat saavat {pct}% jokaisesta tilauksesta takaisin {label}na.",
       "earnPreviewPerDollar": "Asiakkaat ansaitsevat {amount} {label}a tilausta kohden.",
-      "redeemTitle": "Asiakkaat voivat käyttää kassalla",
+      "redeemTitle": "Maksa {label}-saldolla",
       "redeemHelp": "Anna asiakkaiden käyttää saldoaan tilaukseen. Pois päältä tarkoittaa, että he voivat kerryttää saldoa mutta eivät vielä käyttää sitä.",
       "maxRedeemPercent": "Enint. % tilauksesta maksettu krediitillä",
       "maxRedeemPercentHelp": "Rajoita, kuinka suuri osa yhdestä tilauksesta voidaan maksaa krediitillä (100% tarkoittaa koko tilausta).",
@@ -4284,6 +4291,46 @@
         "adjust": "Muutos",
         "signup_bonus": "Liittymisbonus",
         "expire": "Vanhentunut"
+      },
+      "redeemAlwaysOn": "Koska ohjelma on käytössä, asiakkaat voivat maksaa tilauksesta osan tai kaiken {label}-saldollaan (loput he maksavat tavanomaisella tavallaan). Se näkyy maksuvaihtoehtona kassalla.",
+      "rules": {
+        "title": "Ansaintatavat",
+        "subtitle": "Lisää bonussääntöjä perustason päälle — rekisteröitymislahjat, ensimmäisen tilauksen bonukset, palkkiot suurista tilauksista, kanta-asiakasvirstanpylväät. Kukin voi toimia tietyllä aikavälillä.",
+        "add": "Lisää ansaintatapa",
+        "loading": "Ladataan…",
+        "empty": "Ei vielä bonussääntöjä — yllä oleva perustaso on silti voimassa.",
+        "newTitle": "Uusi ansaintatapa",
+        "trigger": "Milloin",
+        "trigSignup": "Kun asiakas rekisteröityy",
+        "trigFirstOrder": "Ensimmäisellä tilauksella",
+        "trigOrderOver": "Kun tilaus on riittävän suuri",
+        "trigNth": "Tietyin tilausvälein (kanta-asiakkuus)",
+        "threshold": "Hyväksyttävä tilaussumma",
+        "everyN": "Joka N. tilaus",
+        "rewardKind": "Palkkio",
+        "kindFlat": "Kiinteä {label}",
+        "kindPercent": "% tilauksesta",
+        "amount": "Summa",
+        "percent": "Prosentti",
+        "startDate": "Alkaa (valinnainen)",
+        "endDate": "Päättyy (valinnainen)",
+        "labelOptional": "Nimi (valinnainen)",
+        "labelPlaceholder": "esim. Black Friday -rekisteröitymislahja",
+        "windowHint": "Jätä päivämäärät tyhjiksi aina voimassa olevaa sääntöä varten tai aseta ne määräaikaista kampanjaa varten.",
+        "sumSignup": "{amount}, kun asiakas rekisteröityy",
+        "sumFirstOrder": "{amount} asiakkaan ensimmäisestä tilauksesta",
+        "sumOrderOver": "{amount}, kun tilaus ylittää {threshold}",
+        "sumNth": "{amount} joka {n}. tilaus",
+        "created": "Ansaintasääntö lisätty.",
+        "createFailed": "Säännön lisääminen ei onnistunut.",
+        "saveFailed": "Tallennus ei onnistunut.",
+        "confirmDelete": "Poistetaanko tämä ansaintasääntö?",
+        "deleteFailed": "Poistaminen ei onnistunut.",
+        "pause": "Keskeytä",
+        "resume": "Jatka",
+        "delete": "Poista",
+        "cancel": "Peruuta",
+        "save": "Lisää sääntö"
       }
     }
   },

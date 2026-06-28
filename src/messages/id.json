@@ -499,7 +499,8 @@
       "useAll": "Gunakan semua",
       "useNone": "Tidak ada",
       "chargeToday": "Dibayar hari ini",
-      "capNote": "Anda dapat menggunakan hingga {amount} untuk pesanan ini."
+      "capNote": "Anda dapat menggunakan hingga {amount} untuk pesanan ini.",
+      "earnLine": "+ Dapatkan {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Aktif",
       "activatePayments": "Aktifkan pembayaran",
       "deactivatePayments": "Nonaktifkan pembayaran",
-      "helpText": "Masukkan kunci Stripe Anda untuk menerima pembayaran kartu di halaman pemesanan."
+      "helpText": "Masukkan kunci Stripe Anda untuk menerima pembayaran kartu di halaman pemesanan.",
+      "rewardsNoticeTitle": "{label} adalah opsi pembayaran yang diterima",
+      "rewardsNoticeBody": "Karena program hadiah aktif, pelanggan dapat membayar sebagian atau seluruh pesanan dengan saldo {label} mereka saat checkout — sisanya ditutup dengan salah satu metode di atas.",
+      "rewardsNoticeLink": "Kelola Reward Dollars"
     },
     "serviceFees": {
       "title": "Biaya Layanan",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "Seret untuk mengurutkan ulang kategori dan item",
       "importFromGloriaFood": "Impor dari GloriaFood",
       "importPdf": "Impor PDF",
-      "fixDuplicatesTitle": "Hapus lampiran modifier duplikat (saat grup dilampirkan di tingkat kategori DAN item)",
+      "fixDuplicatesTitle": "Gabungkan kategori duplikat (nama sama) dan hapus lampiran modifier yang duplikat. Item dipertahankan dan dipindahkan ke kategori yang tersisa.",
       "fixDuplicates": "Perbaiki duplikat",
       "searchCategoriesItems": "Cari kategori dan item…",
       "clearSearch": "Hapus pencarian",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "Hari apa saja",
       "fulfilDaysHint": "Pilih hari item ini dapat dipesan untuk. Biarkan sebagai \"Hari apa saja\" untuk mengizinkan setiap hari dan membatasi hanya berdasarkan waktu.",
       "fulfilTimeHint": "Opsional — tetapkan rentang waktu (mis. 11:00–15:00 untuk makan siang saja). Biarkan keduanya kosong untuk mengizinkan waktu apa saja pada hari yang dipilih.",
-      "fulfilPreview": "Pelanggan akan melihat item ini setiap hari dengan catatan \"Pesan di muka\", dan akan diminta menjadwalkan pesanan mereka pada waktu item tersebut tersedia."
+      "fulfilPreview": "Pelanggan akan melihat item ini setiap hari dengan catatan \"Pesan di muka\", dan akan diminta menjadwalkan pesanan mereka pada waktu item tersebut tersedia.",
+      "dedupeCategoriesSuccess": "{n, plural, other {Menggabungkan # kategori duplikat.}}"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "Diskon pada menu gratis (100 = sepenuhnya gratis)",
       "pickTypePrompt": "Pilih jenis promosi di Langkah 1 untuk mengonfigurasi detail di sini.",
       "oncePerOrderLabel": "Hanya boleh sekali per pesanan",
-      "oncePerOrderHint": "Jika dicentang, penawaran ini hanya berlaku satu kali per pesanan, meskipun keranjang memenuhi syarat lebih dari sekali (misalnya Beli Satu Gratis Satu yang seharusnya berulang)."
+      "oncePerOrderHint": "Jika dicentang, penawaran ini hanya berlaku satu kali per pesanan, meskipun keranjang memenuhi syarat lebih dari sekali (misalnya Beli Satu Gratis Satu yang seharusnya berulang).",
+      "rewardCreditLabel": "Reward Dollars yang diberikan",
+      "rewardCreditHint": "Ditambahkan ke saldo pelanggan saat pesanan ini selesai — tanpa diskon keranjang. Memerlukan Reward Dollars diaktifkan."
     },
     "promoStepRestrictions": {
       "pageTitle": "Batasan & tampilan",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Jumlah tetap per pesanan",
       "earnPreviewPercent": "Pelanggan mendapatkan kembali {pct}% dari setiap pesanan sebagai {label}.",
       "earnPreviewPerDollar": "Pelanggan mendapatkan {amount} dalam {label} per pesanan.",
-      "redeemTitle": "Pelanggan bisa membelanjakan saat checkout",
+      "redeemTitle": "Bayar dengan {label}",
       "redeemHelp": "Izinkan pelanggan memakai saldo mereka untuk sebuah pesanan. Mati berarti mereka bisa mengumpulkan saldo tetapi belum bisa memakainya.",
       "maxRedeemPercent": "% maks pesanan yang dibayar dengan kredit",
       "maxRedeemPercentHelp": "Batasi seberapa besar satu pesanan dapat dibayar dengan kredit (100% berarti seluruh pesanan).",
@@ -4284,6 +4291,46 @@
         "adjust": "Penyesuaian",
         "signup_bonus": "Bonus pendaftaran",
         "expire": "Kedaluwarsa"
+      },
+      "redeemAlwaysOn": "Karena program aktif, pelanggan dapat membayar sebagian atau seluruh pesanan dengan {label} mereka (sisanya dibayar dengan metode biasa). Ini muncul sebagai opsi pembayaran saat checkout.",
+      "rules": {
+        "title": "Cara mendapatkan",
+        "subtitle": "Tambahkan aturan bonus di atas tarif dasar — hadiah pendaftaran, bonus pesanan pertama, hadiah pesanan besar, tonggak loyalitas. Tiap aturan bisa berjalan dalam rentang tanggal.",
+        "add": "Tambah cara mendapatkan",
+        "loading": "Memuat…",
+        "empty": "Belum ada aturan bonus — tarif dasar di atas tetap berlaku.",
+        "newTitle": "Cara mendapatkan baru",
+        "trigger": "Kapan",
+        "trigSignup": "Saat pelanggan mendaftar",
+        "trigFirstOrder": "Pada pesanan pertama mereka",
+        "trigOrderOver": "Saat pesanan cukup besar",
+        "trigNth": "Setiap beberapa pesanan (loyalitas)",
+        "threshold": "Nilai pesanan yang memenuhi syarat",
+        "everyN": "Setiap N pesanan",
+        "rewardKind": "Hadiah",
+        "kindFlat": "{label} tetap",
+        "kindPercent": "% dari pesanan",
+        "amount": "Jumlah",
+        "percent": "Persen",
+        "startDate": "Mulai (opsional)",
+        "endDate": "Berakhir (opsional)",
+        "labelOptional": "Nama (opsional)",
+        "labelPlaceholder": "mis. Hadiah pendaftaran Black Friday",
+        "windowHint": "Kosongkan tanggal untuk aturan yang selalu aktif, atau atur tanggal untuk kampanye berdurasi terbatas.",
+        "sumSignup": "{amount} saat pelanggan mendaftar",
+        "sumFirstOrder": "{amount} pada pesanan pertama pelanggan",
+        "sumOrderOver": "{amount} saat pesanan di atas {threshold}",
+        "sumNth": "{amount} setiap {n} pesanan",
+        "created": "Aturan perolehan ditambahkan.",
+        "createFailed": "Tidak dapat menambahkan aturan.",
+        "saveFailed": "Tidak dapat menyimpan.",
+        "confirmDelete": "Hapus aturan perolehan ini?",
+        "deleteFailed": "Tidak dapat menghapus.",
+        "pause": "Jeda",
+        "resume": "Lanjutkan",
+        "delete": "Hapus",
+        "cancel": "Batal",
+        "save": "Tambah aturan"
       }
     }
   },

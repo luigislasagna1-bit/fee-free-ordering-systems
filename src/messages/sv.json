@@ -499,7 +499,8 @@
       "useAll": "Använd allt",
       "useNone": "Inga",
       "chargeToday": "Att betala idag",
-      "capNote": "Du kan använda upp till {amount} på den här beställningen."
+      "capNote": "Du kan använda upp till {amount} på den här beställningen.",
+      "earnLine": "+ Tjäna {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Aktiv",
       "activatePayments": "Aktivera betalningar",
       "deactivatePayments": "Inaktivera betalningar",
-      "helpText": "Ange dina Stripe-nycklar för att acceptera kortbetalningar på din beställningssida."
+      "helpText": "Ange dina Stripe-nycklar för att acceptera kortbetalningar på din beställningssida.",
+      "rewardsNoticeTitle": "{label} är ett accepterat betalsätt",
+      "rewardsNoticeBody": "Eftersom ditt belöningsprogram är på kan kunder betala en del av eller hela beställningen med sitt {label}-saldo i kassan — de täcker resten med någon av metoderna ovan.",
+      "rewardsNoticeLink": "Hantera Reward Dollars"
     },
     "serviceFees": {
       "title": "Serviceavgifter",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "Dra för att ändra ordning på kategorier och artiklar",
       "importFromGloriaFood": "Importera från GloriaFood",
       "importPdf": "Importera PDF",
-      "fixDuplicatesTitle": "Ta bort dubbla tillvalsbifogningar (när en grupp är bifogad på både kategori- OCH artikelnivå)",
+      "fixDuplicatesTitle": "Slå samman dubblettkategorier (samma namn) och ta bort dubbla tillvalskopplingar. Artiklar behålls och flyttas till den kvarvarande kategorin.",
       "fixDuplicates": "Åtgärda dubletter",
       "searchCategoriesItems": "Sök kategorier och artiklar…",
       "clearSearch": "Rensa sökning",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "Vilken dag som helst",
       "fulfilDaysHint": "Välj vilka dagar den här varan kan beställas för. Lämna som ”Vilken dag som helst” för att tillåta alla dagar och begränsa endast efter tid.",
       "fulfilTimeHint": "Valfritt – ange ett tidsfönster (t.ex. 11:00–15:00 för endast lunch). Lämna båda tomma för att tillåta vilken tid som helst på de valda dagarna.",
-      "fulfilPreview": "Kunderna ser den här varan varje dag med en ”Förbeställ”-notis och ombeds schemalägga sin beställning till en tid då den är tillgänglig."
+      "fulfilPreview": "Kunderna ser den här varan varje dag med en ”Förbeställ”-notis och ombeds schemalägga sin beställning till en tid då den är tillgänglig.",
+      "dedupeCategoriesSuccess": "{n, plural, one {Slog samman # dubblettkategori.} other {Slog samman # dubblettkategorier.}}"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "Rabatt på gratisrätt (100 = helt gratis)",
       "pickTypePrompt": "Välj en kampanjtyp i steg 1 för att konfigurera detaljerna här.",
       "oncePerOrderLabel": "Tillåts endast en gång per beställning",
-      "oncePerOrderHint": "När detta är markerat gäller erbjudandet endast en gång per beställning, även om kundvagnen kvalificerar för det flera gånger (t.ex. ett Köp-en-få-en som annars skulle upprepas)."
+      "oncePerOrderHint": "När detta är markerat gäller erbjudandet endast en gång per beställning, även om kundvagnen kvalificerar för det flera gånger (t.ex. ett Köp-en-få-en som annars skulle upprepas).",
+      "rewardCreditLabel": "Reward Dollars att ge",
+      "rewardCreditHint": "Läggs till kundens saldo när den här beställningen slutförs — ingen rabatt i varukorgen. Kräver att Reward Dollars är aktiverat."
     },
     "promoStepRestrictions": {
       "pageTitle": "Begränsningar och visning",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Fast belopp per beställning",
       "earnPreviewPercent": "Kunderna får tillbaka {pct}% av varje beställning som {label}.",
       "earnPreviewPerDollar": "Kunderna tjänar {amount} i {label} per beställning.",
-      "redeemTitle": "Kunderna kan använda i kassan",
+      "redeemTitle": "Betala med {label}",
       "redeemHelp": "Låt kunderna använda sitt saldo på en beställning. Av betyder att de kan bygga upp ett saldo men inte använda det ännu.",
       "maxRedeemPercent": "Max % av en beställning betald med kredit",
       "maxRedeemPercentHelp": "Begränsa hur mycket av en enskild beställning som kan betalas med kredit (100% betyder hela beställningen).",
@@ -4284,6 +4291,46 @@
         "adjust": "Justering",
         "signup_bonus": "Välkomstbonus",
         "expire": "Utgånget"
+      },
+      "redeemAlwaysOn": "Eftersom programmet är på kan kunder betala en del av eller hela beställningen med sina {label} (de betalar resten med sitt vanliga betalsätt). Det visas som ett betalningsalternativ i kassan.",
+      "rules": {
+        "title": "Sätt att tjäna",
+        "subtitle": "Lägg till bonusregler ovanpå grundsatsen — registreringsgåvor, bonus för första beställningen, belöningar för stora beställningar, lojalitetsmilstolpar. Var och en kan köras under ett datumintervall.",
+        "add": "Lägg till ett sätt att tjäna",
+        "loading": "Läser in…",
+        "empty": "Inga bonusregler ännu — grundsatsen ovan gäller fortfarande.",
+        "newTitle": "Nytt sätt att tjäna",
+        "trigger": "När",
+        "trigSignup": "När en kund registrerar sig",
+        "trigFirstOrder": "Vid deras första beställning",
+        "trigOrderOver": "När en beställning är tillräckligt stor",
+        "trigNth": "Var n:te beställning (lojalitet)",
+        "threshold": "Beställningsbelopp som kvalificerar",
+        "everyN": "Var N:e beställning",
+        "rewardKind": "Belöning",
+        "kindFlat": "Fast {label}",
+        "kindPercent": "% av beställningen",
+        "amount": "Belopp",
+        "percent": "Procent",
+        "startDate": "Börjar (valfritt)",
+        "endDate": "Slutar (valfritt)",
+        "labelOptional": "Namn (valfritt)",
+        "labelPlaceholder": "t.ex. Black Friday-registreringsgåva",
+        "windowHint": "Lämna datumen tomma för en alltid-på-regel, eller ange dem för en tidsbegränsad kampanj.",
+        "sumSignup": "{amount} när en kund registrerar sig",
+        "sumFirstOrder": "{amount} vid en kunds första beställning",
+        "sumOrderOver": "{amount} när en beställning överstiger {threshold}",
+        "sumNth": "{amount} var {n}:e beställning",
+        "created": "Intjäningsregel tillagd.",
+        "createFailed": "Det gick inte att lägga till regeln.",
+        "saveFailed": "Det gick inte att spara.",
+        "confirmDelete": "Ta bort den här intjäningsregeln?",
+        "deleteFailed": "Det gick inte att ta bort.",
+        "pause": "Pausa",
+        "resume": "Återuppta",
+        "delete": "Ta bort",
+        "cancel": "Avbryt",
+        "save": "Lägg till regel"
       }
     }
   },

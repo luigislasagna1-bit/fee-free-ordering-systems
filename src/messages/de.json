@@ -499,7 +499,8 @@
       "useAll": "Alles einlösen",
       "useNone": "Keines",
       "chargeToday": "Heute zu zahlen",
-      "capNote": "Du kannst bei dieser Bestellung bis zu {amount} anrechnen."
+      "capNote": "Du kannst bei dieser Bestellung bis zu {amount} anrechnen.",
+      "earnLine": "+ {amount} verdienen"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Aktiv",
       "activatePayments": "Zahlungen aktivieren",
       "deactivatePayments": "Zahlungen deaktivieren",
-      "helpText": "Geben Sie Ihre Stripe-Schlüssel ein, um Kartenzahlungen auf Ihrer Bestellseite zu akzeptieren."
+      "helpText": "Geben Sie Ihre Stripe-Schlüssel ein, um Kartenzahlungen auf Ihrer Bestellseite zu akzeptieren.",
+      "rewardsNoticeTitle": "{label} ist eine akzeptierte Zahlungsoption",
+      "rewardsNoticeBody": "Da Ihr Prämienprogramm aktiv ist, können Kunden einen Teil oder den gesamten Betrag jeder Bestellung an der Kasse mit ihrem {label}-Guthaben bezahlen — den Restbetrag begleichen sie mit einer der oben genannten Methoden.",
+      "rewardsNoticeLink": "Reward Dollars verwalten"
     },
     "serviceFees": {
       "title": "Servicegebühren",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "Zum Neuanordnen von Kategorien und Artikeln ziehen",
       "importFromGloriaFood": "Aus GloriaFood importieren",
       "importPdf": "PDF importieren",
-      "fixDuplicatesTitle": "Doppelte Modifikatoranhänge entfernen (wenn eine Gruppe sowohl auf Kategorie- als auch auf Artikelebene angehängt ist)",
+      "fixDuplicatesTitle": "Doppelte Kategorien (gleicher Name) zusammenführen und doppelte Zusatzoptionen entfernen. Artikel bleiben erhalten und werden in die verbleibende Kategorie verschoben.",
       "fixDuplicates": "Duplikate bereinigen",
       "searchCategoriesItems": "Kategorien und Artikel suchen…",
       "clearSearch": "Suche löschen",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "Jeder Tag",
       "fulfilDaysHint": "Wählen Sie die Tage, für die dieser Artikel bestellt werden kann. Lassen Sie es auf „Jeder Tag“, um alle Tage zuzulassen und nur nach Uhrzeit einzuschränken.",
       "fulfilTimeHint": "Optional — legen Sie ein Zeitfenster fest (z. B. 11:00–15:00 nur zum Mittagessen). Lassen Sie beide Felder leer, um an den gewählten Tagen jede Uhrzeit zuzulassen.",
-      "fulfilPreview": "Kunden sehen diesen Artikel jeden Tag mit dem Hinweis „Vorbestellen“ und werden gebeten, ihre Bestellung für eine Uhrzeit zu planen, zu der er verfügbar ist."
+      "fulfilPreview": "Kunden sehen diesen Artikel jeden Tag mit dem Hinweis „Vorbestellen“ und werden gebeten, ihre Bestellung für eine Uhrzeit zu planen, zu der er verfügbar ist.",
+      "dedupeCategoriesSuccess": "{n, plural, one {# doppelte Kategorie zusammengeführt.} other {# doppelte Kategorien zusammengeführt.}}"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "Rabatt auf kostenloses Gericht (100 = vollständig kostenlos)",
       "pickTypePrompt": "Wählen Sie in Schritt 1 einen Aktionstyp, um die Details hier zu konfigurieren.",
       "oncePerOrderLabel": "Nur einmal pro Bestellung zulässig",
-      "oncePerOrderHint": "Wenn aktiviert, gilt diese Aktion nur ein einziges Mal, unabhängig davon, wie viele passende Artikel sich im Warenkorb befinden. Deaktiviert lassen, damit sie sich für jedes passende Paar wiederholt."
+      "oncePerOrderHint": "Wenn aktiviert, gilt diese Aktion nur ein einziges Mal, unabhängig davon, wie viele passende Artikel sich im Warenkorb befinden. Deaktiviert lassen, damit sie sich für jedes passende Paar wiederholt.",
+      "rewardCreditLabel": "Zu vergebende Reward Dollars",
+      "rewardCreditHint": "Wird dem Kundenguthaben gutgeschrieben, wenn diese Bestellung abgeschlossen ist — kein Warenkorbrabatt. Erfordert aktivierte Reward Dollars."
     },
     "promoStepRestrictions": {
       "pageTitle": "Einschränkungen & Anzeige",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Fester Betrag pro Bestellung",
       "earnPreviewPercent": "Kund:innen erhalten {pct}% jeder Bestellung als {label} zurück.",
       "earnPreviewPerDollar": "Kund:innen erhalten {amount} an {label} pro Bestellung.",
-      "redeemTitle": "Kund:innen können beim Bezahlen einlösen",
+      "redeemTitle": "Mit {label} bezahlen",
       "redeemHelp": "Lass Kund:innen ihr Guthaben auf eine Bestellung anrechnen. Aus bedeutet, dass sie ein Guthaben aufbauen, es aber noch nicht ausgeben können.",
       "maxRedeemPercent": "Max. % einer Bestellung per Guthaben bezahlbar",
       "maxRedeemPercentHelp": "Begrenze, wie viel einer einzelnen Bestellung mit Guthaben bezahlt werden kann (100% bedeutet die gesamte Bestellung).",
@@ -4284,6 +4291,46 @@
         "adjust": "Anpassung",
         "signup_bonus": "Anmeldebonus",
         "expire": "Verfallen"
+      },
+      "redeemAlwaysOn": "Da das Programm aktiv ist, können Kunden einen Teil oder den gesamten Betrag jeder Bestellung mit ihrem {label} bezahlen (den Restbetrag begleichen sie mit ihrer üblichen Methode). Es erscheint als Zahlungsoption an der Kasse.",
+      "rules": {
+        "title": "Verdienmöglichkeiten",
+        "subtitle": "Fügen Sie Bonusregeln zusätzlich zum Grundsatz hinzu — Anmeldegeschenke, Erstbestellungs-Boni, Belohnungen für Großbestellungen, Treue-Meilensteine. Jede kann in einem Datumszeitraum laufen.",
+        "add": "Verdienmöglichkeit hinzufügen",
+        "loading": "Wird geladen…",
+        "empty": "Noch keine Bonusregeln — der Grundsatz oben gilt weiterhin.",
+        "newTitle": "Neue Verdienmöglichkeit",
+        "trigger": "Wann",
+        "trigSignup": "Wenn sich ein Kunde anmeldet",
+        "trigFirstOrder": "Bei der ersten Bestellung",
+        "trigOrderOver": "Wenn eine Bestellung groß genug ist",
+        "trigNth": "Alle paar Bestellungen (Treue)",
+        "threshold": "Qualifizierender Bestellbetrag",
+        "everyN": "Alle N Bestellungen",
+        "rewardKind": "Belohnung",
+        "kindFlat": "Pauschale {label}",
+        "kindPercent": "% der Bestellung",
+        "amount": "Betrag",
+        "percent": "Prozent",
+        "startDate": "Beginnt (optional)",
+        "endDate": "Endet (optional)",
+        "labelOptional": "Name (optional)",
+        "labelPlaceholder": "z. B. Black-Friday-Anmeldegeschenk",
+        "windowHint": "Lassen Sie die Daten leer für eine dauerhafte Regel oder legen Sie sie für eine zeitlich begrenzte Kampagne fest.",
+        "sumSignup": "{amount} bei der Anmeldung eines Kunden",
+        "sumFirstOrder": "{amount} bei der ersten Bestellung eines Kunden",
+        "sumOrderOver": "{amount} bei Bestellungen über {threshold}",
+        "sumNth": "{amount} alle {n} Bestellungen",
+        "created": "Verdienregel hinzugefügt.",
+        "createFailed": "Regel konnte nicht hinzugefügt werden.",
+        "saveFailed": "Speichern fehlgeschlagen.",
+        "confirmDelete": "Diese Verdienregel löschen?",
+        "deleteFailed": "Löschen fehlgeschlagen.",
+        "pause": "Pausieren",
+        "resume": "Fortsetzen",
+        "delete": "Löschen",
+        "cancel": "Abbrechen",
+        "save": "Regel hinzufügen"
       }
     }
   },

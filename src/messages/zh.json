@@ -499,7 +499,8 @@
       "useAll": "全部使用",
       "useNone": "不使用",
       "chargeToday": "今日应付",
-      "capNote": "本订单最多可使用 {amount}。"
+      "capNote": "本订单最多可使用 {amount}。",
+      "earnLine": "+ 赚取 {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "已激活",
       "activatePayments": "激活支付",
       "deactivatePayments": "停用支付",
-      "helpText": "输入您的 Stripe 密钥以在点餐页面接受刷卡支付。"
+      "helpText": "输入您的 Stripe 密钥以在点餐页面接受刷卡支付。",
+      "rewardsNoticeTitle": "{label} 是一种受支持的付款方式",
+      "rewardsNoticeBody": "由于您已开启奖励计划，顾客在结账时可使用其 {label} 余额支付订单的部分或全部金额——余额不足部分用上述任一方式补足。",
+      "rewardsNoticeLink": "管理奖励美元"
     },
     "serviceFees": {
       "title": "服务费",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "拖动以重新排列分类和商品",
       "importFromGloriaFood": "从 GloriaFood 导入",
       "importPdf": "导入 PDF",
-      "fixDuplicatesTitle": "移除重复的修改组附加（当某组同时附加在分类和商品级别时）",
+      "fixDuplicatesTitle": "合并同名的重复分类，并移除重复的加料附加项。菜品会保留并移入保留的分类中。",
       "fixDuplicates": "修复重复项",
       "searchCategoriesItems": "搜索分类和商品…",
       "clearSearch": "清除搜索",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "任意一天",
       "fulfilDaysHint": "选择此商品可供下单的日期。保留为\"任意一天\"以允许每天下单，仅按时间加以限制。",
       "fulfilTimeHint": "可选——设置一个时间段（例如仅供午餐的 11:00–15:00）。两者均留空则允许在所选日期的任意时间下单。",
-      "fulfilPreview": "顾客每天都会看到此商品，并附有\"提前预订\"提示，系统会请他们将订单安排到商品可供应的时间。"
+      "fulfilPreview": "顾客每天都会看到此商品，并附有\"提前预订\"提示，系统会请他们将订单安排到商品可供应的时间。",
+      "dedupeCategoriesSuccess": "{n, plural, other {已合并 # 个重复分类。}}"
     },
     "promotionsList": {
       "stackingMaster": "主控",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "免费菜品折扣（100 = 完全免费）",
       "pickTypePrompt": "请在第1步选择促销类型以在此处配置详情。",
       "oncePerOrderLabel": "每笔订单仅限享用一次",
-      "oncePerOrderHint": "勾选后，此优惠每笔订单仅适用一次，即使购物车满足多次适用条件也是如此（例如本可重复触发的\"买一送一\"优惠）。"
+      "oncePerOrderHint": "勾选后，此优惠每笔订单仅适用一次，即使购物车满足多次适用条件也是如此（例如本可重复触发的\"买一送一\"优惠）。",
+      "rewardCreditLabel": "要赠送的奖励美元",
+      "rewardCreditHint": "此订单完成时计入顾客余额——不抵扣购物车金额。需启用奖励美元。"
     },
     "promoStepRestrictions": {
       "pageTitle": "限制条件与展示",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "每单固定金额",
       "earnPreviewPercent": "顾客每笔订单可返还 {pct}% 作为{label}。",
       "earnPreviewPerDollar": "顾客每笔订单可获得 {amount} 的{label}。",
-      "redeemTitle": "顾客可在结账时使用",
+      "redeemTitle": "用 {label} 支付",
       "redeemHelp": "允许顾客将余额用于订单。关闭后顾客仍可累积余额，但暂时无法使用。",
       "maxRedeemPercent": "单笔订单可用余额支付的最高 %",
       "maxRedeemPercentHelp": "限制单笔订单可用余额支付的比例（100% 表示整笔订单）。",
@@ -4284,6 +4291,46 @@
         "adjust": "调整",
         "signup_bonus": "注册奖励",
         "expire": "已过期"
+      },
+      "redeemAlwaysOn": "由于计划已开启，顾客可使用其 {label} 支付订单的部分或全部金额（余额不足部分用常规方式支付）。结账时会显示为一种付款方式。",
+      "rules": {
+        "title": "赚取方式",
+        "subtitle": "在基础比率之上添加奖励规则——注册礼、首单奖励、大额订单奖励、忠诚里程碑。每条规则均可设定有效期。",
+        "add": "添加一种赚取方式",
+        "loading": "加载中…",
+        "empty": "暂无奖励规则——上方的基础比率仍然适用。",
+        "newTitle": "新的赚取方式",
+        "trigger": "条件",
+        "trigSignup": "顾客注册时",
+        "trigFirstOrder": "首次下单时",
+        "trigOrderOver": "订单金额足够大时",
+        "trigNth": "每隔几单（忠诚）",
+        "threshold": "符合条件的订单金额",
+        "everyN": "每 N 单",
+        "rewardKind": "奖励",
+        "kindFlat": "固定 {label}",
+        "kindPercent": "订单的百分比",
+        "amount": "金额",
+        "percent": "百分比",
+        "startDate": "开始（可选）",
+        "endDate": "结束（可选）",
+        "labelOptional": "名称（可选）",
+        "labelPlaceholder": "例如：黑色星期五注册礼",
+        "windowHint": "留空日期表示长期有效规则，或设定日期用于限时活动。",
+        "sumSignup": "顾客注册时赠送 {amount}",
+        "sumFirstOrder": "顾客首单赠送 {amount}",
+        "sumOrderOver": "订单超过 {threshold} 时赠送 {amount}",
+        "sumNth": "每 {n} 单赠送 {amount}",
+        "created": "已添加赚取规则。",
+        "createFailed": "无法添加规则。",
+        "saveFailed": "无法保存。",
+        "confirmDelete": "删除此赚取规则？",
+        "deleteFailed": "无法删除。",
+        "pause": "暂停",
+        "resume": "恢复",
+        "delete": "删除",
+        "cancel": "取消",
+        "save": "添加规则"
       }
     }
   },

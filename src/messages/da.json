@@ -499,7 +499,8 @@
       "useAll": "Brug alle",
       "useNone": "Ingen",
       "chargeToday": "Skal betales i dag",
-      "capNote": "Du kan bruge op til {amount} på denne ordre."
+      "capNote": "Du kan bruge op til {amount} på denne ordre.",
+      "earnLine": "+ Optjen {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Aktiv",
       "activatePayments": "Aktivér betalinger",
       "deactivatePayments": "Deaktivér betalinger",
-      "helpText": "Indtast dine Stripe-nøgler for at acceptere kortbetalinger på din bestillingsside."
+      "helpText": "Indtast dine Stripe-nøgler for at acceptere kortbetalinger på din bestillingsside.",
+      "rewardsNoticeTitle": "{label} er en accepteret betalingsmulighed",
+      "rewardsNoticeBody": "Da dit belønningsprogram er slået til, kan kunder betale en del af eller hele bestillingen med deres {label}-saldo i kassen — de dækker resten med en af metoderne ovenfor.",
+      "rewardsNoticeLink": "Administrer Reward Dollars"
     },
     "serviceFees": {
       "title": "Servicegebyrer",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "Træk for at omarrangere kategorier og varer",
       "importFromGloriaFood": "Importer fra GloriaFood",
       "importPdf": "Importer PDF",
-      "fixDuplicatesTitle": "Fjern duplikerede tilknytninger (når en gruppe er tilknyttet både på kategori- OG vareniveau)",
+      "fixDuplicatesTitle": "Flet dublerede kategorier (samme navn) sammen, og fjern dublerede tilvalgstilknytninger. Varer bevares og flyttes til den tilbageværende kategori.",
       "fixDuplicates": "Ret duplikater",
       "searchCategoriesItems": "Søg i kategorier og varer…",
       "clearSearch": "Ryd søgning",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "Enhver dag",
       "fulfilDaysHint": "Vælg hvilke dage denne vare kan bestilles til. Lad stå som »Enhver dag« for at tillade alle dage og kun begrænse efter tid.",
       "fulfilTimeHint": "Valgfrit – angiv et tidsrum (f.eks. 11:00–15:00 kun til frokost). Lad begge stå tomme for at tillade ethvert tidspunkt på de valgte dage.",
-      "fulfilPreview": "Kunderne ser denne vare hver dag med en »Forudbestil«-note og bliver bedt om at planlægge deres bestilling til et tidspunkt, hvor den er tilgængelig."
+      "fulfilPreview": "Kunderne ser denne vare hver dag med en »Forudbestil«-note og bliver bedt om at planlægge deres bestilling til et tidspunkt, hvor den er tilgængelig.",
+      "dedupeCategoriesSuccess": "{n, plural, one {Flettede # dubleret kategori.} other {Flettede # dublerede kategorier.}}"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "Rabat på gratis ret (100 = fuldt gratis)",
       "pickTypePrompt": "Vælg en kampagnetype i trin 1 for at konfigurere detaljerne her.",
       "oncePerOrderLabel": "Kun tilladt én gang pr. ordre",
-      "oncePerOrderHint": "Når dette er valgt, gælder tilbuddet kun én gang pr. ordre, også selvom kurven er berettiget til det flere gange (f.eks. et køb-en-få-en, der ellers ville gentage sig)."
+      "oncePerOrderHint": "Når dette er valgt, gælder tilbuddet kun én gang pr. ordre, også selvom kurven er berettiget til det flere gange (f.eks. et køb-en-få-en, der ellers ville gentage sig).",
+      "rewardCreditLabel": "Reward Dollars, der skal gives",
+      "rewardCreditHint": "Føjes til kundens saldo, når denne bestilling er gennemført — ingen rabat i kurven. Kræver, at Reward Dollars er aktiveret."
     },
     "promoStepRestrictions": {
       "pageTitle": "Begrænsninger og visning",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Fast beløb pr. ordre",
       "earnPreviewPercent": "Kunderne får {pct}% af hver ordre tilbage som {label}.",
       "earnPreviewPerDollar": "Kunderne optjener {amount} i {label} pr. ordre.",
-      "redeemTitle": "Kunderne kan bruge ved kassen",
+      "redeemTitle": "Betal med {label}",
       "redeemHelp": "Lad kunderne bruge deres saldo på en ordre. Fra betyder, at de kan opbygge en saldo, men ikke bruge den endnu.",
       "maxRedeemPercent": "Maks. % af en ordre betalt med kredit",
       "maxRedeemPercentHelp": "Begræns hvor meget af én ordre der kan betales med kredit (100% betyder hele ordren).",
@@ -4284,6 +4291,46 @@
         "adjust": "Justering",
         "signup_bonus": "Velkomstbonus",
         "expire": "Udløbet"
+      },
+      "redeemAlwaysOn": "Da programmet er slået til, kan kunder betale en del af eller hele bestillingen med deres {label} (de betaler resten med deres normale metode). Det vises som en betalingsmulighed i kassen.",
+      "rules": {
+        "title": "Måder at optjene på",
+        "subtitle": "Tilføj bonusregler oven på grundsatsen — tilmeldingsgaver, bonus for første bestilling, belønninger for store bestillinger, loyalitetsmilepæle. Hver kan køre i et datointerval.",
+        "add": "Tilføj en måde at optjene på",
+        "loading": "Indlæser…",
+        "empty": "Ingen bonusregler endnu — grundsatsen ovenfor gælder stadig.",
+        "newTitle": "Ny måde at optjene på",
+        "trigger": "Hvornår",
+        "trigSignup": "Når en kunde tilmelder sig",
+        "trigFirstOrder": "Ved deres første bestilling",
+        "trigOrderOver": "Når en bestilling er stor nok",
+        "trigNth": "For hver n-te bestilling (loyalitet)",
+        "threshold": "Bestillingsbeløb, der kvalificerer",
+        "everyN": "Hver N. bestilling",
+        "rewardKind": "Belønning",
+        "kindFlat": "Fast {label}",
+        "kindPercent": "% af bestillingen",
+        "amount": "Beløb",
+        "percent": "Procent",
+        "startDate": "Starter (valgfrit)",
+        "endDate": "Slutter (valgfrit)",
+        "labelOptional": "Navn (valgfrit)",
+        "labelPlaceholder": "f.eks. Black Friday-tilmeldingsgave",
+        "windowHint": "Lad datoerne stå tomme for en altid-aktiv regel, eller angiv dem for en tidsbegrænset kampagne.",
+        "sumSignup": "{amount}, når en kunde tilmelder sig",
+        "sumFirstOrder": "{amount} ved en kundes første bestilling",
+        "sumOrderOver": "{amount}, når en bestilling er over {threshold}",
+        "sumNth": "{amount} for hver {n}. bestilling",
+        "created": "Optjeningsregel tilføjet.",
+        "createFailed": "Kunne ikke tilføje reglen.",
+        "saveFailed": "Kunne ikke gemme.",
+        "confirmDelete": "Slet denne optjeningsregel?",
+        "deleteFailed": "Kunne ikke slette.",
+        "pause": "Sæt på pause",
+        "resume": "Genoptag",
+        "delete": "Slet",
+        "cancel": "Annuller",
+        "save": "Tilføj regel"
       }
     }
   },

@@ -499,7 +499,8 @@
       "useAll": "Dùng tất cả",
       "useNone": "Không dùng",
       "chargeToday": "Cần thanh toán hôm nay",
-      "capNote": "Bạn có thể dùng tối đa {amount} cho đơn hàng này."
+      "capNote": "Bạn có thể dùng tối đa {amount} cho đơn hàng này.",
+      "earnLine": "+ Nhận {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Hoạt động",
       "activatePayments": "Kích hoạt thanh toán",
       "deactivatePayments": "Tắt thanh toán",
-      "helpText": "Nhập khóa Stripe để chấp nhận thanh toán thẻ trên trang đặt hàng."
+      "helpText": "Nhập khóa Stripe để chấp nhận thanh toán thẻ trên trang đặt hàng.",
+      "rewardsNoticeTitle": "{label} là một phương thức thanh toán được chấp nhận",
+      "rewardsNoticeBody": "Vì chương trình thưởng đang bật, khách có thể dùng số dư {label} để thanh toán một phần hoặc toàn bộ đơn hàng khi thanh toán — phần còn lại trả bằng một trong các phương thức ở trên.",
+      "rewardsNoticeLink": "Quản lý Reward Dollars"
     },
     "serviceFees": {
       "title": "Phí dịch vụ",
@@ -1824,7 +1828,7 @@
       "menuManagementHint": "Kéo để sắp xếp lại danh mục và món",
       "importFromGloriaFood": "Nhập từ GloriaFood",
       "importPdf": "Nhập PDF",
-      "fixDuplicatesTitle": "Xóa các đính kèm tùy chọn trùng lặp (khi nhóm được đính kèm cả ở cấp danh mục VÀ cấp món)",
+      "fixDuplicatesTitle": "Gộp các danh mục trùng (cùng tên) và xóa các tùy chọn thêm bị trùng. Các món được giữ lại và chuyển vào danh mục còn lại.",
       "fixDuplicates": "Sửa trùng lặp",
       "searchCategoriesItems": "Tìm danh mục và món…",
       "clearSearch": "Xóa tìm kiếm",
@@ -1906,7 +1910,8 @@
       "fulfilAnyDay": "Bất kỳ ngày nào",
       "fulfilDaysHint": "Chọn những ngày mà món này có thể được đặt cho. Để là \"Bất kỳ ngày nào\" để cho phép mọi ngày và chỉ giới hạn theo giờ.",
       "fulfilTimeHint": "Tùy chọn — đặt một khung giờ (ví dụ 11:00–15:00 chỉ cho bữa trưa). Để trống cả hai để cho phép bất kỳ giờ nào vào những ngày đã chọn.",
-      "fulfilPreview": "Khách hàng sẽ thấy món này mỗi ngày kèm ghi chú \"Đặt trước\", và sẽ được yêu cầu lên lịch đặt món vào thời điểm món có sẵn."
+      "fulfilPreview": "Khách hàng sẽ thấy món này mỗi ngày kèm ghi chú \"Đặt trước\", và sẽ được yêu cầu lên lịch đặt món vào thời điểm món có sẵn.",
+      "dedupeCategoriesSuccess": "{n, plural, other {Đã gộp # danh mục trùng.}}"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2058,7 +2063,9 @@
       "freeDishDiscountLabel": "Giảm giá món miễn phí (100 = miễn phí hoàn toàn)",
       "pickTypePrompt": "Chọn loại khuyến mãi ở Bước 1 để cấu hình chi tiết tại đây.",
       "oncePerOrderLabel": "Chỉ được áp dụng một lần mỗi đơn",
-      "oncePerOrderHint": "Khi được chọn, ưu đãi này chỉ áp dụng một lần cho mỗi đơn hàng, ngay cả khi giỏ hàng đủ điều kiện nhiều lần (ví dụ: chương trình Mua một tặng một mà nếu không sẽ lặp lại)."
+      "oncePerOrderHint": "Khi được chọn, ưu đãi này chỉ áp dụng một lần cho mỗi đơn hàng, ngay cả khi giỏ hàng đủ điều kiện nhiều lần (ví dụ: chương trình Mua một tặng một mà nếu không sẽ lặp lại).",
+      "rewardCreditLabel": "Reward Dollars để tặng",
+      "rewardCreditHint": "Được cộng vào số dư của khách khi đơn này hoàn tất — không giảm giá giỏ hàng. Cần bật Reward Dollars."
     },
     "promoStepRestrictions": {
       "pageTitle": "Giới hạn & hiển thị",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Số tiền cố định mỗi đơn",
       "earnPreviewPercent": "Khách được hoàn lại {pct}% mỗi đơn hàng dưới dạng {label}.",
       "earnPreviewPerDollar": "Khách nhận được {amount} {label} cho mỗi đơn hàng.",
-      "redeemTitle": "Khách có thể chi tiêu khi thanh toán",
+      "redeemTitle": "Thanh toán bằng {label}",
       "redeemHelp": "Cho phép khách dùng số dư cho một đơn hàng. Tắt nghĩa là khách có thể tích lũy số dư nhưng chưa được chi tiêu.",
       "maxRedeemPercent": "% tối đa của đơn hàng được trả bằng tín dụng",
       "maxRedeemPercentHelp": "Giới hạn phần đơn hàng có thể trả bằng tín dụng (100% nghĩa là toàn bộ đơn hàng).",
@@ -4284,6 +4291,46 @@
         "adjust": "Điều chỉnh",
         "signup_bonus": "Thưởng đăng ký",
         "expire": "Đã hết hạn"
+      },
+      "redeemAlwaysOn": "Vì chương trình đang bật, khách có thể dùng {label} để thanh toán một phần hoặc toàn bộ đơn hàng (phần còn lại trả bằng phương thức thông thường). Nó hiển thị như một phương thức thanh toán khi thanh toán.",
+      "rules": {
+        "title": "Cách kiếm điểm",
+        "subtitle": "Thêm quy tắc thưởng bên trên mức cơ bản — quà đăng ký, thưởng đơn đầu tiên, thưởng đơn lớn, mốc khách trung thành. Mỗi quy tắc có thể chạy trong một khoảng ngày.",
+        "add": "Thêm một cách kiếm điểm",
+        "loading": "Đang tải…",
+        "empty": "Chưa có quy tắc thưởng — mức cơ bản ở trên vẫn áp dụng.",
+        "newTitle": "Cách kiếm điểm mới",
+        "trigger": "Khi nào",
+        "trigSignup": "Khi khách đăng ký",
+        "trigFirstOrder": "Vào đơn hàng đầu tiên",
+        "trigOrderOver": "Khi đơn hàng đủ lớn",
+        "trigNth": "Cứ vài đơn (khách trung thành)",
+        "threshold": "Giá trị đơn hàng đủ điều kiện",
+        "everyN": "Mỗi N đơn hàng",
+        "rewardKind": "Phần thưởng",
+        "kindFlat": "{label} cố định",
+        "kindPercent": "% của đơn hàng",
+        "amount": "Số tiền",
+        "percent": "Phần trăm",
+        "startDate": "Bắt đầu (tùy chọn)",
+        "endDate": "Kết thúc (tùy chọn)",
+        "labelOptional": "Tên (tùy chọn)",
+        "labelPlaceholder": "ví dụ: Quà đăng ký Black Friday",
+        "windowHint": "Để trống ngày cho quy tắc luôn áp dụng, hoặc đặt ngày cho chiến dịch có thời hạn.",
+        "sumSignup": "{amount} khi khách đăng ký",
+        "sumFirstOrder": "{amount} cho đơn hàng đầu tiên của khách",
+        "sumOrderOver": "{amount} khi đơn hàng trên {threshold}",
+        "sumNth": "{amount} mỗi {n} đơn hàng",
+        "created": "Đã thêm quy tắc kiếm điểm.",
+        "createFailed": "Không thể thêm quy tắc.",
+        "saveFailed": "Không thể lưu.",
+        "confirmDelete": "Xóa quy tắc kiếm điểm này?",
+        "deleteFailed": "Không thể xóa.",
+        "pause": "Tạm dừng",
+        "resume": "Tiếp tục",
+        "delete": "Xóa",
+        "cancel": "Hủy",
+        "save": "Thêm quy tắc"
       }
     }
   },

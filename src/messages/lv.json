@@ -499,7 +499,8 @@
       "useAll": "Izmantot visu",
       "useNone": "Nevienu",
       "chargeToday": "Maksājams šodien",
-      "capNote": "Šim pasūtījumam varat izmantot līdz {amount}."
+      "capNote": "Šim pasūtījumam varat izmantot līdz {amount}.",
+      "earnLine": "+ Nopelniet {amount}"
     }
   },
   "reservation": {
@@ -1133,7 +1134,10 @@
       "active": "Aktīvs",
       "activatePayments": "Aktivizēt maksājumus",
       "deactivatePayments": "Deaktivizēt maksājumus",
-      "helpText": "Ievadiet savas Stripe atslēgas, lai pieņemtu kartes maksājumus savā pasūtīšanas lapā."
+      "helpText": "Ievadiet savas Stripe atslēgas, lai pieņemtu kartes maksājumus savā pasūtīšanas lapā.",
+      "rewardsNoticeTitle": "{label} ir pieņemts maksāšanas veids",
+      "rewardsNoticeBody": "Tā kā jūsu atlīdzību programma ir ieslēgta, klienti norēķinoties var apmaksāt daļu vai visu pasūtījumu ar savu {label} atlikumu — atlikušo summu viņi sedz ar kādu no augstāk minētajiem veidiem.",
+      "rewardsNoticeLink": "Pārvaldīt Reward Dollars"
     },
     "serviceFees": {
       "title": "Pakalpojuma maksas",
@@ -1880,7 +1884,7 @@
       "menuManagementHint": "Velciet, lai pārkārtotu kategorijas un preces",
       "importFromGloriaFood": "Importēt no GloriaFood",
       "importPdf": "Importēt PDF",
-      "fixDuplicatesTitle": "Noņemt dublikātu modifikatoru piesaistes (kad grupa piesaistīta gan kategorijas, gan preces līmenī)",
+      "fixDuplicatesTitle": "Apvienojiet dublētās kategorijas (ar vienādu nosaukumu) un noņemiet dublētos modifikatoru pievienojumus. Pozīcijas tiek saglabātas un pārvietotas uz palikušo kategoriju.",
       "fixDuplicates": "Novērst dublikātus",
       "searchCategoriesItems": "Meklēt kategorijas un preces…",
       "clearSearch": "Notīrīt meklēšanu",
@@ -1962,7 +1966,8 @@
       "fulfilAnyDay": "Jebkura diena",
       "fulfilDaysHint": "Izvēlieties dienas, kurām šo produktu var pasūtīt. Atstājiet kā „Jebkura diena“, lai atļautu visas dienas un ierobežotu tikai pēc laika.",
       "fulfilTimeHint": "Neobligāti – iestatiet laika logu (piemēram, 11:00–15:00 tikai pusdienām). Atstājiet abus tukšus, lai atļautu jebkuru laiku izvēlētajās dienās.",
-      "fulfilPreview": "Klienti šo produktu redzēs katru dienu ar piezīmi „Pasūtīt iepriekš“, un viņiem tiks lūgts ieplānot pasūtījumu uz laiku, kad tas ir pieejams."
+      "fulfilPreview": "Klienti šo produktu redzēs katru dienu ar piezīmi „Pasūtīt iepriekš“, un viņiem tiks lūgts ieplānot pasūtījumu uz laiku, kad tas ir pieejams.",
+      "dedupeCategoriesSuccess": "{n, plural, zero {Apvienotas # dublētu kategoriju.} one {Apvienota # dublēta kategorija.} other {Apvienotas # dublētas kategorijas.}}"
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",
@@ -2114,7 +2119,9 @@
       "freeDishDiscountLabel": "Atlaide bezmaksas ēdienam (100 = pilnīgi bezmaksas)",
       "pickTypePrompt": "Izvēlieties akcijas veidu 1. solī, lai šeit konfigurētu detaļas.",
       "oncePerOrderLabel": "Atļauts tikai vienreiz vienā pasūtījumā",
-      "oncePerOrderHint": "Ja atzīmēts, šī akcija tiek piemērota tikai vienu reizi vienā pasūtījumā, pat ja grozs tai atbilst vairāk nekā vienu reizi (piemēram, \"Pērc vienu, saņem vienu\", kas citādi atkārtotos)."
+      "oncePerOrderHint": "Ja atzīmēts, šī akcija tiek piemērota tikai vienu reizi vienā pasūtījumā, pat ja grozs tai atbilst vairāk nekā vienu reizi (piemēram, \"Pērc vienu, saņem vienu\", kas citādi atkārtotos).",
+      "rewardCreditLabel": "Piešķiramie Reward Dollars",
+      "rewardCreditHint": "Tiek pievienots klienta atlikumam, kad šis pasūtījums tiek izpildīts — bez atlaides grozam. Nepieciešams ieslēgts Reward Dollars."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ierobežojumi un displejs",
@@ -4257,7 +4264,7 @@
       "earnModePerDollar": "Fiksēta summa par pasūtījumu",
       "earnPreviewPercent": "Klienti par katru pasūtījumu saņem atpakaļ {pct}% kā {label}.",
       "earnPreviewPerDollar": "Klienti par pasūtījumu nopelna {amount} {label}.",
-      "redeemTitle": "Klienti var tērēt, veicot maksājumu",
+      "redeemTitle": "Maksāt ar {label}",
       "redeemHelp": "Ļaujiet klientiem izmantot savu atlikumu pasūtījumam. Izslēgts nozīmē, ka viņi var uzkrāt atlikumu, bet vēl nevar to tērēt.",
       "maxRedeemPercent": "Maks. % no pasūtījuma, kas apmaksāts ar kredītu",
       "maxRedeemPercentHelp": "Ierobežojiet, cik lielu daļu no viena pasūtījuma var apmaksāt ar kredītu (100% nozīmē visu pasūtījumu).",
@@ -4284,6 +4291,46 @@
         "adjust": "Korekcija",
         "signup_bonus": "Reģistrācijas bonuss",
         "expire": "Beidzies derīgums"
+      },
+      "redeemAlwaysOn": "Tā kā programma ir ieslēgta, klienti var apmaksāt daļu vai visu pasūtījumu ar saviem {label} (atlikumu viņi maksā ar savu parasto veidu). Norēķinoties tas tiek rādīts kā maksāšanas veids.",
+      "rules": {
+        "title": "Veidi, kā nopelnīt",
+        "subtitle": "Pievienojiet papildu noteikumus virs pamatlikmes — reģistrācijas dāvanas, pirmā pasūtījuma bonusi, atlīdzības par lieliem pasūtījumiem, lojalitātes posmi. Katrs var darboties noteiktā periodā.",
+        "add": "Pievienot veidu, kā nopelnīt",
+        "loading": "Notiek ielāde…",
+        "empty": "Vēl nav papildu noteikumu — augstāk minētā pamatlikme joprojām ir spēkā.",
+        "newTitle": "Jauns veids, kā nopelnīt",
+        "trigger": "Kad",
+        "trigSignup": "Kad klients reģistrējas",
+        "trigFirstOrder": "Pie pirmā pasūtījuma",
+        "trigOrderOver": "Kad pasūtījums ir pietiekami liels",
+        "trigNth": "Ik pa dažiem pasūtījumiem (lojalitāte)",
+        "threshold": "Pasūtījuma summa, kas kvalificējas",
+        "everyN": "Ik pēc N pasūtījumiem",
+        "rewardKind": "Atlīdzība",
+        "kindFlat": "Fiksēti {label}",
+        "kindPercent": "% no pasūtījuma",
+        "amount": "Summa",
+        "percent": "Procenti",
+        "startDate": "Sākas (nav obligāti)",
+        "endDate": "Beidzas (nav obligāti)",
+        "labelOptional": "Nosaukums (nav obligāti)",
+        "labelPlaceholder": "piem. Melnās piektdienas reģistrācijas dāvana",
+        "windowHint": "Atstājiet datumus tukšus pastāvīgam noteikumam vai iestatiet tos ierobežota laika kampaņai.",
+        "sumSignup": "{amount} kad klients reģistrējas",
+        "sumFirstOrder": "{amount} pie klienta pirmā pasūtījuma",
+        "sumOrderOver": "{amount} kad pasūtījums pārsniedz {threshold}",
+        "sumNth": "{amount} ik pēc {n} pasūtījumiem",
+        "created": "Pelnīšanas noteikums pievienots.",
+        "createFailed": "Neizdevās pievienot noteikumu.",
+        "saveFailed": "Neizdevās saglabāt.",
+        "confirmDelete": "Dzēst šo pelnīšanas noteikumu?",
+        "deleteFailed": "Neizdevās dzēst.",
+        "pause": "Apturēt",
+        "resume": "Atsākt",
+        "delete": "Dzēst",
+        "cancel": "Atcelt",
+        "save": "Pievienot noteikumu"
       }
     }
   },
