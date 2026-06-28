@@ -213,7 +213,7 @@ export function groupSupportsHalfHalf(
 
 // ── Pricing engine ────────────────────────────────────────────────────────────
 
-function computePrice(
+export function computePrice(
   customization: PizzaCustomization,
   variantId: string | null,
   item: MenuItem,
@@ -234,18 +234,24 @@ function computePrice(
   // 2 Crust
   price += findOpt(config.crustGroupId, customization.crustOptionId)?.priceAdjustment ?? 0;
 
+  // A sauce/cheese choice applied to ONE half costs the half-multiplier of its
+  // whole-pizza price (e.g. Extra Cheese $1.49 on the left half = $0.745). Both
+  // halves chosen = full price. Mirrors the topping half-pricing below + the
+  // server's (L.H)/(R.H) halving. Luigi 2026-06-27.
+  const half = config.halfToppingMultiplier;
+
   // 3 Sauce(s)
   price += findOpt(config.sauceGroupId, customization.sauceOptionId)?.priceAdjustment ?? 0;
   if (customization.isHalfHalf) {
-    price += findOpt(config.sauceGroupId, customization.leftSauceOptionId)?.priceAdjustment ?? 0;
-    price += findOpt(config.sauceGroupId, customization.rightSauceOptionId)?.priceAdjustment ?? 0;
+    price += (findOpt(config.sauceGroupId, customization.leftSauceOptionId)?.priceAdjustment ?? 0) * half;
+    price += (findOpt(config.sauceGroupId, customization.rightSauceOptionId)?.priceAdjustment ?? 0) * half;
   }
 
   // 4 Cheese(s)
   price += findOpt(config.cheeseGroupId, customization.cheeseOptionId)?.priceAdjustment ?? 0;
   if (customization.isHalfHalf) {
-    price += findOpt(config.cheeseGroupId, customization.leftCheeseOptionId)?.priceAdjustment ?? 0;
-    price += findOpt(config.cheeseGroupId, customization.rightCheeseOptionId)?.priceAdjustment ?? 0;
+    price += (findOpt(config.cheeseGroupId, customization.leftCheeseOptionId)?.priceAdjustment ?? 0) * half;
+    price += (findOpt(config.cheeseGroupId, customization.rightCheeseOptionId)?.priceAdjustment ?? 0) * half;
   }
 
   // 5 Toppings
@@ -323,7 +329,9 @@ function computePrice(
 
       let adj = opt.priceAdjustment;
       if (t.placement !== "whole") adj *= config.halfToppingMultiplier;
-      if (t.quantity === "extra")  adj += opt.priceAdjustment * config.extraQuantityMultiplier;
+      // The "extra quantity" bump is ALSO halved on a single half (the whole
+      // topping line, base + bump, is half-priced). Luigi 2026-06-27.
+      if (t.quantity === "extra")  adj += opt.priceAdjustment * config.extraQuantityMultiplier * (t.placement !== "whole" ? config.halfToppingMultiplier : 1);
       else if (t.quantity === "light") adj = 0;
 
       price += adj;

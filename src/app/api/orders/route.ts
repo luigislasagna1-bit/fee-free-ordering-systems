@@ -925,12 +925,31 @@ export async function POST(req: NextRequest) {
         ...menuItem.modifierGroups,
         ...((menuItem.category as any)?.modifierGroups ?? []),
       ];
+      // Half/half pricing: a sauce/cheese/topping placed on ONE half costs the
+      // pizza's half-multiplier of its whole price. The PizzaBuilder prefixes
+      // those modifier names with "(L.H) " / "(R.H) " (whole stays "(W) "/unprefixed).
+      // Re-derive the multiplier from the item's own pizzaConfig so the charge
+      // matches the customer's preview exactly + can't be tampered. Luigi 2026-06-27.
+      let halfMult = 1;
+      {
+        const rawPc = (menuItem as any).pizzaConfig;
+        if (rawPc) {
+          try {
+            const pc = JSON.parse(rawPc);
+            halfMult = typeof pc?.halfToppingMultiplier === "number" ? Math.max(0, Math.min(1, pc.halfToppingMultiplier)) : 0.5;
+          } catch { halfMult = 0.5; }
+        }
+      }
+      const isHalfMod = (name: unknown) => typeof name === "string" && (name.startsWith("(L.H) ") || name.startsWith("(R.H) "));
       for (const rawMod of rawMods) {
         let found = false;
         for (const group of candidateGroups) {
           const opt = group.options.find((o: any) => o.id === rawMod.modifierOptionId);
           if (opt) {
-            modTotal += opt.priceAdjustment;
+            // Only pizza items carry (L.H)/(R.H) prefixes; non-pizza modifiers are
+            // never halved (halfMult stays 1 when there's no pizzaConfig).
+            const priced = isHalfMod(rawMod.name) ? Math.round(opt.priceAdjustment * halfMult * 100) / 100 : opt.priceAdjustment;
+            modTotal += priced;
             // Prefer the client-supplied display name when present — this is how
             // PizzaBuilder labels modifiers with their role and placement
             // (e.g. "Sauce: Pizza Sauce (Left Half)", "Pepperoni (Whole)").
@@ -940,7 +959,7 @@ export async function POST(req: NextRequest) {
             validatedMods.push({
               modifierOptionId: opt.id,
               name: clientName || opt.name,
-              priceAdjustment: opt.priceAdjustment,
+              priceAdjustment: priced, // half-priced for (L.H)/(R.H) so receipts reconcile
             });
             found = true;
             break;
