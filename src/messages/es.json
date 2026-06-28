@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Uno o varios artículos de tu carrito solo se pueden pedir para ciertos días u horas. Hemos seleccionado el horario disponible más próximo a continuación — ajústalo si lo deseas.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> solo se puede pedir en determinados días u horarios. Los horarios de pedido disponibles se han limitado en consecuencia.",
     "serviceStartsPrompt": "🕒 El servicio de {service} aún no ha empezado — empieza a las {time}.",
-    "youSaved": "Ahorraste {amount}"
+    "youSaved": "Ahorraste {amount}",
+    "reward": {
+      "defaultPlural": "Saldo de recompensa",
+      "useTitle": "Usa tu {label}",
+      "balance": "Saldo: {amount}",
+      "useAll": "Usar todo",
+      "useNone": "Nada",
+      "chargeToday": "A pagar hoy",
+      "capNote": "Puedes aplicar hasta {amount} en este pedido."
+    }
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "miembro VIP",
       "memberLabelHint": "Tu correo VIP dirá: “Como {label} en tu restaurante…”",
       "vipViaGroup": "vía {group}"
+    },
+    "rewards": {
+      "title": "Saldo de recompensa",
+      "subtitle": "Da a tus clientes un saldo que pueden gastar al pagar.",
+      "defaultPlural": "Saldo de recompensa",
+      "enable": "Activar el saldo de recompensa",
+      "enableHelp": "Un monedero de saldo para tus clientes. Acumulan un saldo y lo usan como pago parcial en pedidos futuros.",
+      "enableDesc": "Los clientes pueden tener un saldo de {label} y gastarlo en pedidos futuros. Gratis para tu restaurante.",
+      "nameTitle": "¿Cómo lo llamas?",
+      "nameHelp": "Cambia el nombre del monedero para que encaje con tu marca. Los clientes ven este nombre al pagar y en su cuenta.",
+      "namePlural": "Nombre (plural)",
+      "namePluralPlaceholder": "Saldo de recompensa",
+      "nameSingular": "Nombre (singular)",
+      "nameSingularPlaceholder": "Recompensa",
+      "nameExamples": "Ejemplos: Saldo de recompensa, Puntos de fidelidad, Monedero, Euros de la casa, Pizza puntos, Crédito de tienda",
+      "earnTitle": "Los clientes ganan automáticamente",
+      "earnHelp": "Devuelve saldo en cada pedido completado. Desactívalo si solo quieres dar saldo de forma manual.",
+      "earnModePercent": "% del pedido",
+      "earnModePerDollar": "Cantidad fija por pedido",
+      "earnPreviewPercent": "Los clientes reciben el {pct}% de cada pedido en {label}.",
+      "earnPreviewPerDollar": "Los clientes ganan {amount} en {label} por pedido.",
+      "redeemTitle": "Los clientes pueden gastar al pagar",
+      "redeemHelp": "Permite que los clientes apliquen su saldo a un pedido. Desactivado significa que pueden acumular saldo pero aún no gastarlo.",
+      "maxRedeemPercent": "% máx. de un pedido pagado con saldo",
+      "maxRedeemPercentHelp": "Limita cuánto de un mismo pedido se puede pagar con saldo (100% significa el pedido completo).",
+      "minRedeemBalance": "Saldo mínimo para gastar",
+      "minRedeemBalanceHelp": "Los clientes deben tener al menos este saldo antes de poder gastar una parte.",
+      "signupBonus": "Bono de registro",
+      "signupBonusHelp": "Saldo que se da automáticamente cuando un cliente crea una cuenta en tu restaurante.",
+      "save": "Guardar cambios",
+      "balance": "Saldo",
+      "grantAmount": "Cantidad",
+      "grantNote": "Nota (opcional)",
+      "grantNotePlaceholder": "p. ej. recompensa por fidelidad, detalle",
+      "grantAdd": "Añadir",
+      "grantDeduct": "Restar",
+      "grantEnterAmount": "Introduce primero una cantidad.",
+      "grantAdded": "Saldo añadido.",
+      "grantDeducted": "Saldo restado.",
+      "grantFailed": "No se pudo aplicar el ajuste.",
+      "reason": {
+        "earn": "Ganado en un pedido",
+        "grant": "Añadido por el restaurante",
+        "spend": "Gastado en un pedido",
+        "release": "Devuelto (pedido cancelado)",
+        "adjust": "Ajuste",
+        "signup_bonus": "Bono de registro",
+        "expire": "Caducado"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Se aplica solo — sin código",
       "percentOff": "{value}% de descuento",
       "fixedOff": "{amount} de descuento",
-      "helpOffers": "Ofertas guardadas en tu cuenta. Las de “Se aplica automáticamente — sin código” se añaden solas al pagar cuando tu pedido cumple los requisitos — no hay que introducir nada. Los cupones con código se aplican cuando introduces el código."
+      "helpOffers": "Ofertas guardadas en tu cuenta. Las de “Se aplica automáticamente — sin código” se añaden solas al pagar cuando tu pedido cumple los requisitos — no hay que introducir nada. Los cupones con código se aplican cuando introduces el código.",
+      "reward": {
+        "defaultPlural": "Saldo de recompensa",
+        "help": "Tu saldo de {label}. Úsalo como pago parcial al finalizar la compra: elige cuánto usar en cada pedido.",
+        "reason": {
+          "earn": "Ganado en un pedido",
+          "grant": "Añadido por el restaurante",
+          "spend": "Gastado en un pedido",
+          "release": "Devuelto (pedido cancelado)",
+          "adjust": "Ajuste",
+          "signup_bonus": "Bono de registro",
+          "expire": "Caducado"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Combo con especialidad",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Has alcanzado tu límite — podrías estar perdiendo pedidos",
     "blockBody": "Tu restaurante ha alcanzado sus {cap} pedidos gratis de este mes, así que los nuevos pedidos y reservas se están rechazando hasta que tu límite se restablezca el {resetDate}. Quita el límite ahora para volver a aceptarlos de inmediato.",
     "cta": "Quitar el límite"
+  },
+  "sidebar": {
+    "rewards": "Saldo de recompensa"
   }
 }

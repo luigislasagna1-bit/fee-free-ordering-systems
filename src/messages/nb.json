@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Én eller flere varer i handlekurven kan bare bestilles for bestemte dager eller tider. Vi har valgt det tidligste ledige tidspunktet nedenfor – endre det om du vil.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> kan bare bestilles på bestemte dager eller tidspunkter. De tilgjengelige bestillingstidene er begrenset deretter.",
     "serviceStartsPrompt": "🕒 {service}-tjenesten har ikke startet ennå — den starter kl. {time}.",
-    "youSaved": "Du sparte {amount}"
+    "youSaved": "Du sparte {amount}",
+    "reward": {
+      "defaultPlural": "Bonuskroner",
+      "useTitle": "Bruk dine {label}",
+      "balance": "Saldo: {amount}",
+      "useAll": "Bruk alt",
+      "useNone": "Ingen",
+      "chargeToday": "Å betale i dag",
+      "capNote": "Du kan bruke inntil {amount} på denne bestillingen."
+    }
   },
   "reservation": {
     "title": "Bestill bord",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP-medlem",
       "memberLabelHint": "VIP-e-posten din vil si: “Som {label} hos restauranten din …”",
       "vipViaGroup": "via {group}"
+    },
+    "rewards": {
+      "title": "Bonuskroner",
+      "subtitle": "Gi kundene butikkreditt de kan bruke i kassen.",
+      "defaultPlural": "Bonuskroner",
+      "enable": "Slå på Bonuskroner",
+      "enableHelp": "En butikkreditt-lommebok for kundene dine. De bygger opp en saldo og bruker den som delbetaling på fremtidige bestillinger.",
+      "enableDesc": "Kundene kan ha en {label}-saldo og bruke den på fremtidige bestillinger. Gratis for restauranten din.",
+      "nameTitle": "Hva kaller du det?",
+      "nameHelp": "Gi lommeboken et navn som passer merkevaren din. Kundene ser dette navnet i kassen og på kontoen sin.",
+      "namePlural": "Navn (flertall)",
+      "namePluralPlaceholder": "Bonuskroner",
+      "nameSingular": "Navn (entall)",
+      "nameSingularPlaceholder": "Bonuskrone",
+      "nameExamples": "Eksempler: Bonuskroner, Bonuspoeng, Butikkreditt, Lojalitetskroner, Pizzapoeng, Kundekreditt",
+      "earnTitle": "Kundene tjener automatisk",
+      "earnHelp": "Gi kreditt tilbake på hver fullførte bestilling. Slå dette av hvis du bare vil dele ut kreditt manuelt.",
+      "earnModePercent": "% av bestillingen",
+      "earnModePerDollar": "Fast beløp per bestilling",
+      "earnPreviewPercent": "Kundene får {pct}% av hver bestilling tilbake som {label}.",
+      "earnPreviewPerDollar": "Kundene tjener {amount} i {label} per bestilling.",
+      "redeemTitle": "Kundene kan bruke i kassen",
+      "redeemHelp": "La kundene bruke saldoen sin på en bestilling. Av betyr at de kan bygge opp en saldo, men ikke bruke den ennå.",
+      "maxRedeemPercent": "Maks % av en bestilling betalt med kreditt",
+      "maxRedeemPercentHelp": "Begrens hvor mye av én bestilling som kan betales med kreditt (100% betyr hele bestillingen).",
+      "minRedeemBalance": "Minste saldo for å bruke",
+      "minRedeemBalanceHelp": "Kundene må ha minst denne saldoen før de kan bruke noe av den.",
+      "signupBonus": "Velkomstbonus",
+      "signupBonusHelp": "Kreditt som gis automatisk når en kunde oppretter en konto hos restauranten din.",
+      "save": "Lagre endringer",
+      "balance": "Saldo",
+      "grantAmount": "Beløp",
+      "grantNote": "Notat (valgfritt)",
+      "grantNotePlaceholder": "f.eks. Lojalitetsbelønning, velvilje",
+      "grantAdd": "Legg til",
+      "grantDeduct": "Trekk fra",
+      "grantEnterAmount": "Skriv inn et beløp først.",
+      "grantAdded": "Kreditt lagt til.",
+      "grantDeducted": "Kreditt trukket fra.",
+      "grantFailed": "Kunne ikke utføre justeringen.",
+      "reason": {
+        "earn": "Opptjent på en bestilling",
+        "grant": "Lagt til av restauranten",
+        "spend": "Brukt på en bestilling",
+        "release": "Tilbakeført (bestilling kansellert)",
+        "adjust": "Justering",
+        "signup_bonus": "Velkomstbonus",
+        "expire": "Utløpt"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Brukes automatisk — ingen kode",
       "percentOff": "{value} % rabatt",
       "fixedOff": "{amount} rabatt",
-      "helpOffers": "Tilbud er lagret på kontoen din. De som er merket “Brukes automatisk – ingen kode” legges automatisk til i kassen når bestillingen din kvalifiserer – ingenting å taste inn. Kuponger med kode gjelder når du taster inn koden."
+      "helpOffers": "Tilbud er lagret på kontoen din. De som er merket “Brukes automatisk – ingen kode” legges automatisk til i kassen når bestillingen din kvalifiserer – ingenting å taste inn. Kuponger med kode gjelder når du taster inn koden.",
+      "reward": {
+        "defaultPlural": "Bonuskroner",
+        "help": "{label}-saldoen din. Bruk den som delbetaling i kassen — velg selv hvor mye du vil bruke på hver bestilling.",
+        "reason": {
+          "earn": "Opptjent på en bestilling",
+          "grant": "Lagt til av restauranten",
+          "spend": "Brukt på en bestilling",
+          "release": "Tilbakeført (bestilling kansellert)",
+          "adjust": "Justering",
+          "signup_bonus": "Velkomstbonus",
+          "expire": "Utløpt"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Måltidspakke med spesialitet",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Du har nådd grensen din — du kan gå glipp av bestillinger",
     "blockBody": "Restauranten din har nådd sine {cap} gratis bestillinger for denne måneden, så nye bestillinger og reservasjoner avvises til grensen din nullstilles den {resetDate}. Fjern grensen nå for å begynne å ta imot dem igjen umiddelbart.",
     "cta": "Fjern grensen"
+  },
+  "sidebar": {
+    "rewards": "Bonuskroner"
   }
 }

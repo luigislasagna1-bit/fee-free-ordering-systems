@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Üht või mitut ostukorvis olevat toodet saab tellida ainult kindlatel päevadel või kellaaegadel. Oleme allpool valinud varaseima vaba aja – muutke seda soovi korral.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> saab tellida ainult teatud päevadel või kellaaegadel. Saadaolevad tellimisajad on vastavalt piiratud.",
     "serviceStartsPrompt": "🕒 {service} teenus pole veel alanud — see algab kell {time}.",
-    "youSaved": "Säästsid {amount}"
+    "youSaved": "Säästsid {amount}",
+    "reward": {
+      "defaultPlural": "Boonusraha",
+      "useTitle": "Kasuta oma {label}",
+      "balance": "Saldo: {amount}",
+      "useAll": "Kasuta kõik",
+      "useNone": "Mitte midagi",
+      "chargeToday": "Täna maksta",
+      "capNote": "Sellele tellimusele saad kasutada kuni {amount}."
+    }
   },
   "reservation": {
     "title": "Broneeri laud",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP-liige",
       "memberLabelHint": "Teie VIP-e-kiri ütleb: „Kuna olete teie restoranis {label}…”",
       "vipViaGroup": "{group} kaudu"
+    },
+    "rewards": {
+      "title": "Boonusraha",
+      "subtitle": "Anna klientidele poekrediiti, mida nad saavad kassas kasutada.",
+      "defaultPlural": "Boonusraha",
+      "enable": "Lülita Boonusraha sisse",
+      "enableHelp": "Poekrediidi rahakott sinu klientidele. Nad koguvad saldot ja kasutavad seda osamaksena tulevastes tellimustes.",
+      "enableDesc": "Kliendid saavad hoida {label} saldot ja kasutada seda tulevastes tellimustes. Sinu restoranile tasuta.",
+      "nameTitle": "Kuidas seda nimetad?",
+      "nameHelp": "Nimeta rahakott oma brändiga sobivaks. Kliendid näevad seda nime kassas ja oma kontol.",
+      "namePlural": "Nimi (mitmus)",
+      "namePluralPlaceholder": "Boonusraha",
+      "nameSingular": "Nimi (ainsus)",
+      "nameSingularPlaceholder": "Boonuspunkt",
+      "nameExamples": "Näited: Boonusraha, Boonuspunktid, Poekrediit, Püsikliendiraha, Pitsapunktid, Kliendikrediit",
+      "earnTitle": "Kliendid teenivad automaatselt",
+      "earnHelp": "Anna krediiti tagasi iga lõpetatud tellimuse eest. Lülita see välja, kui soovid krediiti jagada ainult käsitsi.",
+      "earnModePercent": "% tellimusest",
+      "earnModePerDollar": "Fikseeritud summa tellimuse kohta",
+      "earnPreviewPercent": "Kliendid saavad igast tellimusest {pct}% tagasi kui {label}.",
+      "earnPreviewPerDollar": "Kliendid teenivad {amount} {label}t tellimuse kohta.",
+      "redeemTitle": "Kliendid saavad kassas kasutada",
+      "redeemHelp": "Luba klientidel kasutada oma saldot tellimuse eest. Välja lülitatuna saavad nad saldot koguda, kuid mitte veel kasutada.",
+      "maxRedeemPercent": "Maks. % tellimusest tasutud krediidiga",
+      "maxRedeemPercentHelp": "Piira, kui suure osa ühest tellimusest saab tasuda krediidiga (100% tähendab kogu tellimust).",
+      "minRedeemBalance": "Minimaalne saldo kasutamiseks",
+      "minRedeemBalanceHelp": "Klientidel peab olema vähemalt see saldo, enne kui nad saavad sellest midagi kasutada.",
+      "signupBonus": "Liitumisboonus",
+      "signupBonusHelp": "Krediit, mis antakse automaatselt, kui klient loob sinu restoranis konto.",
+      "save": "Salvesta muudatused",
+      "balance": "Saldo",
+      "grantAmount": "Summa",
+      "grantNote": "Märkus (valikuline)",
+      "grantNotePlaceholder": "nt Püsikliendi tasu, hea tahte žest",
+      "grantAdd": "Lisa",
+      "grantDeduct": "Lahuta",
+      "grantEnterAmount": "Sisesta esmalt summa.",
+      "grantAdded": "Krediit lisatud.",
+      "grantDeducted": "Krediit maha arvatud.",
+      "grantFailed": "Muudatust ei õnnestunud rakendada.",
+      "reason": {
+        "earn": "Teenitud tellimuselt",
+        "grant": "Lisatud restorani poolt",
+        "spend": "Kulutatud tellimusele",
+        "release": "Tagastatud (tellimus tühistatud)",
+        "adjust": "Korrigeerimine",
+        "signup_bonus": "Liitumisboonus",
+        "expire": "Aegunud"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Rakendub automaatselt — koodi pole vaja",
       "percentOff": "{value}% soodustust",
       "fixedOff": "{amount} soodustust",
-      "helpOffers": "Pakkumised on salvestatud teie kontole. Need, mis „Rakenduvad automaatselt — koodi pole vaja”, lisatakse kassas automaatselt, kui teie tellimus vastab tingimustele — midagi pole vaja sisestada. Koodiga kupongid rakenduvad pärast koodi sisestamist."
+      "helpOffers": "Pakkumised on salvestatud teie kontole. Need, mis „Rakenduvad automaatselt — koodi pole vaja”, lisatakse kassas automaatselt, kui teie tellimus vastab tingimustele — midagi pole vaja sisestada. Koodiga kupongid rakenduvad pärast koodi sisestamist.",
+      "reward": {
+        "defaultPlural": "Boonusraha",
+        "help": "Sinu {label} saldo. Kasuta seda kassas osamaksena — vali ise, kui palju igale tellimusele kulutad.",
+        "reason": {
+          "earn": "Teenitud tellimuselt",
+          "grant": "Lisatud restorani poolt",
+          "spend": "Kulutatud tellimusele",
+          "release": "Tagastatud (tellimus tühistatud)",
+          "adjust": "Korrigeerimine",
+          "signup_bonus": "Liitumisboonus",
+          "expire": "Aegunud"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Einepakk erivalikuga",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Olete jõudnud oma piirini — võite tellimusi kaotada",
     "blockBody": "Teie restoran on jõudnud oma {cap} tasuta tellimuseni sel kuul, mistõttu uued tellimused ja broneeringud lükatakse tagasi, kuni piir lähtestatakse {resetDate}. Eemaldage piir nüüd, et neid kohe taas vastu võtta.",
     "cta": "Eemalda piir"
+  },
+  "sidebar": {
+    "rewards": "Boonusraha"
   }
 }

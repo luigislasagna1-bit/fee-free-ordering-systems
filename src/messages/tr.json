@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Sepetinizdeki bir veya daha fazla ürün yalnızca belirli gün ya da saatlerde sipariş edilebilir. Mevcut en erken zaman dilimini aşağıda seçtik; isterseniz değiştirebilirsiniz.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> yalnızca belirli günlerde veya saatlerde sipariş edilebilir. Mevcut sipariş saatleri buna göre sınırlandırıldı.",
     "serviceStartsPrompt": "🕒 {service} hizmeti henüz başlamadı — saat {time}'de başlıyor.",
-    "youSaved": "{amount} tasarruf ettiniz"
+    "youSaved": "{amount} tasarruf ettiniz",
+    "reward": {
+      "defaultPlural": "Ödül Dolarları",
+      "useTitle": "{label} bakiyenizi kullanın",
+      "balance": "Bakiye: {amount}",
+      "useAll": "Tümünü kullan",
+      "useNone": "Yok",
+      "chargeToday": "Bugün ödenecek",
+      "capNote": "Bu siparişe en fazla {amount} uygulayabilirsiniz."
+    }
   },
   "reservation": {
     "title": "Masa Rezervasyonu",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP üye",
       "memberLabelHint": "VIP e-postanızda şu yazacak: “Restoranınızda bir {label} olarak…”",
       "vipViaGroup": "{group} üzerinden"
+    },
+    "rewards": {
+      "title": "Ödül Dolarları",
+      "subtitle": "Müşterilere ödeme sırasında harcayabilecekleri mağaza kredisi verin.",
+      "defaultPlural": "Ödül Dolarları",
+      "enable": "Ödül Dolarları'nı aç",
+      "enableHelp": "Müşterileriniz için bir mağaza kredisi cüzdanı. Bakiye biriktirir ve gelecekteki siparişlerde kısmi ödeme olarak harcarlar.",
+      "enableDesc": "Müşteriler {label} bakiyesi tutabilir ve gelecekteki siparişlerde harcayabilir. Restoranınız için ücretsiz.",
+      "nameTitle": "Buna ne ad veriyorsunuz?",
+      "nameHelp": "Cüzdanı markanıza uyacak şekilde yeniden adlandırın. Müşteriler bu adı ödeme sırasında ve hesaplarında görür.",
+      "namePlural": "Ad (çoğul)",
+      "namePluralPlaceholder": "Ödül Dolarları",
+      "nameSingular": "Ad (tekil)",
+      "nameSingularPlaceholder": "Ödül Doları",
+      "nameExamples": "Örnekler: Ödül Dolarları, Ödül Puanları, Kredi Dolarları, Sadakat Dolarları, Pizza Paraları, Mağaza Kredisi",
+      "earnTitle": "Müşteriler otomatik kazanır",
+      "earnHelp": "Tamamlanan her siparişte kredi geri verin. Yalnızca elle kredi dağıtmak istiyorsanız bunu kapatın.",
+      "earnModePercent": "Siparişin %'si",
+      "earnModePerDollar": "Sipariş başına sabit tutar",
+      "earnPreviewPercent": "Müşteriler her siparişin {pct}%'ini {label} olarak geri kazanır.",
+      "earnPreviewPerDollar": "Müşteriler sipariş başına {amount} {label} kazanır.",
+      "redeemTitle": "Müşteriler ödeme sırasında harcayabilir",
+      "redeemHelp": "Müşterilerin bakiyelerini bir siparişe uygulamasına izin verin. Kapalıyken bakiye biriktirebilir ama henüz harcayamazlar.",
+      "maxRedeemPercent": "Kredi ile ödenebilecek azami sipariş %'si",
+      "maxRedeemPercentHelp": "Tek bir siparişin ne kadarının kredi ile ödenebileceğini sınırlayın (100%, siparişin tamamı demektir).",
+      "minRedeemBalance": "Harcamak için asgari bakiye",
+      "minRedeemBalanceHelp": "Müşteriler bakiyelerinden harcayabilmek için en az bu bakiyeye sahip olmalıdır.",
+      "signupBonus": "Kayıt bonusu",
+      "signupBonusHelp": "Bir müşteri restoranınızda hesap oluşturduğunda otomatik olarak verilen kredi.",
+      "save": "Değişiklikleri kaydet",
+      "balance": "Bakiye",
+      "grantAmount": "Tutar",
+      "grantNote": "Not (isteğe bağlı)",
+      "grantNotePlaceholder": "ör. Sadakat ödülü, jest",
+      "grantAdd": "Ekle",
+      "grantDeduct": "Düş",
+      "grantEnterAmount": "Önce bir tutar girin.",
+      "grantAdded": "Kredi eklendi.",
+      "grantDeducted": "Kredi düşüldü.",
+      "grantFailed": "Düzeltme uygulanamadı.",
+      "reason": {
+        "earn": "Bir siparişte kazanıldı",
+        "grant": "Restoran tarafından eklendi",
+        "spend": "Bir siparişte harcandı",
+        "release": "İade edildi (sipariş iptal edildi)",
+        "adjust": "Düzeltme",
+        "signup_bonus": "Kayıt bonusu",
+        "expire": "Süresi doldu"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Otomatik uygulanır — kod yok",
       "percentOff": "%{value} indirim",
       "fixedOff": "{amount} indirim",
-      "helpOffers": "Fırsatlar hesabınıza kaydedildi. “Otomatik uygulanır — kod yok” olanlar, siparişiniz uygun olduğunda ödeme sırasında otomatik eklenir — girmeniz gereken bir şey yok. Kodu olan kuponlar ise kodu girdiğinizde uygulanır."
+      "helpOffers": "Fırsatlar hesabınıza kaydedildi. “Otomatik uygulanır — kod yok” olanlar, siparişiniz uygun olduğunda ödeme sırasında otomatik eklenir — girmeniz gereken bir şey yok. Kodu olan kuponlar ise kodu girdiğinizde uygulanır.",
+      "reward": {
+        "defaultPlural": "Ödül Dolarları",
+        "help": "{label} bakiyeniz. Ödeme sırasında kısmi ödeme olarak harcayın — her siparişte ne kadar kullanacağınızı seçin.",
+        "reason": {
+          "earn": "Bir siparişte kazanıldı",
+          "grant": "Restoran tarafından eklendi",
+          "spend": "Bir siparişte harcandı",
+          "release": "İade edildi (sipariş iptal edildi)",
+          "adjust": "Düzeltme",
+          "signup_bonus": "Kayıt bonusu",
+          "expire": "Süresi doldu"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Özel ürünlü yemek paketi",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Limitinize ulaştınız — sipariş kaybediyor olabilirsiniz",
     "blockBody": "Restoranınız bu ay için {cap} ücretsiz siparişine ulaştı, bu nedenle yeni siparişler ve rezervasyonlar, limitiniz {resetDate} tarihinde sıfırlanana kadar reddediliyor. Hemen tekrar kabul etmeye başlamak için limiti şimdi kaldırın.",
     "cta": "Limiti kaldır"
+  },
+  "sidebar": {
+    "rewards": "Ödül Dolarları"
   }
 }

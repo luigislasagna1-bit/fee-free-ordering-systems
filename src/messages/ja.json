@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 カート内の1つ以上の商品は、特定の曜日または時間帯のみ注文できます。利用可能な最も早い時間枠を以下に設定しました。必要に応じて変更してください。",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> は特定の曜日や時間帯のみ注文できます。利用可能な注文時間はそれに応じて制限されています。",
     "serviceStartsPrompt": "🕒 {service}サービスはまだ始まっていません — {time}に開始します。",
-    "youSaved": "{amount}お得"
+    "youSaved": "{amount}お得",
+    "reward": {
+      "defaultPlural": "リワードドル",
+      "useTitle": "{label}を使う",
+      "balance": "残高：{amount}",
+      "useAll": "すべて使う",
+      "useNone": "使わない",
+      "chargeToday": "本日のお支払い",
+      "capNote": "このご注文では最大 {amount} までご利用いただけます。"
+    }
   },
   "reservation": {
     "title": "テーブルを予約",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP会員",
       "memberLabelHint": "VIPメールには次のように表示されます：「あなたのレストランの{label}として…」",
       "vipViaGroup": "{group}経由"
+    },
+    "rewards": {
+      "title": "リワードドル",
+      "subtitle": "お会計時に使えるストアクレジットをお客様に付与します。",
+      "defaultPlural": "リワードドル",
+      "enable": "リワードドルを有効にする",
+      "enableHelp": "お客様向けのストアクレジット用ウォレットです。残高を貯めて、今後の注文の一部支払いに使えます。",
+      "enableDesc": "お客様は{label}の残高を保持し、今後の注文に使えます。お店側は無料です。",
+      "nameTitle": "名称をどうしますか？",
+      "nameHelp": "ウォレットの名前をブランドに合わせて変更できます。この名称はお会計時とアカウント画面でお客様に表示されます。",
+      "namePlural": "名称（複数形）",
+      "namePluralPlaceholder": "リワードドル",
+      "nameSingular": "名称（単数形）",
+      "nameSingularPlaceholder": "リワードドル",
+      "nameExamples": "例：リワードドル、リワードコイン、クレジットドル、ロイヤルティドル、ピザコイン、ストアクレジット",
+      "earnTitle": "お客様が自動でためる",
+      "earnHelp": "ご注文が完了するたびにクレジットを還元します。手動でのみ付与したい場合はオフにしてください。",
+      "earnModePercent": "注文額の %",
+      "earnModePerDollar": "1注文あたりの固定額",
+      "earnPreviewPercent": "お客様はご注文ごとに {pct}% を{label}として還元されます。",
+      "earnPreviewPerDollar": "お客様はご注文ごとに {amount} 分の{label}を獲得します。",
+      "redeemTitle": "お客様がお会計時に使える",
+      "redeemHelp": "お客様が残高を注文に充当できるようにします。オフの場合、残高はためられますがまだ使えません。",
+      "maxRedeemPercent": "1注文でクレジット払いできる最大 %",
+      "maxRedeemPercentHelp": "1注文のうちクレジットで支払える割合の上限を設定します（100% で注文全額）。",
+      "minRedeemBalance": "利用に必要な最低残高",
+      "minRedeemBalanceHelp": "お客様がクレジットを使うには、少なくともこの残高が必要です。",
+      "signupBonus": "登録ボーナス",
+      "signupBonusHelp": "お客様があなたのお店でアカウントを作成したときに自動で付与されるクレジットです。",
+      "save": "変更を保存",
+      "balance": "残高",
+      "grantAmount": "金額",
+      "grantNote": "メモ（任意）",
+      "grantNotePlaceholder": "例：ロイヤルティ特典、お詫びの気持ち",
+      "grantAdd": "追加",
+      "grantDeduct": "差し引く",
+      "grantEnterAmount": "まず金額を入力してください。",
+      "grantAdded": "クレジットを追加しました。",
+      "grantDeducted": "クレジットを差し引きました。",
+      "grantFailed": "調整を適用できませんでした。",
+      "reason": {
+        "earn": "注文でためた",
+        "grant": "店舗による付与",
+        "spend": "注文で使用",
+        "release": "返還（注文キャンセル）",
+        "adjust": "調整",
+        "signup_bonus": "登録ボーナス",
+        "expire": "失効"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "自動適用 — コード不要",
       "percentOff": "{value}% 引き",
       "fixedOff": "{amount} 引き",
-      "helpOffers": "特典はアカウントに保存されています。「自動適用 — コード不要」の特典は、ご注文が条件を満たすと会計時に自動で適用され、入力は不要です。コード付きクーポンは、コードを入力すると適用されます。"
+      "helpOffers": "特典はアカウントに保存されています。「自動適用 — コード不要」の特典は、ご注文が条件を満たすと会計時に自動で適用され、入力は不要です。コード付きクーポンは、コードを入力すると適用されます。",
+      "reward": {
+        "defaultPlural": "リワードドル",
+        "help": "あなたの{label}残高です。お会計時に一部支払いとして使えます——各注文でいくら使うか選べます。",
+        "reason": {
+          "earn": "注文でためた",
+          "grant": "店舗による付与",
+          "spend": "注文で使用",
+          "release": "返還（注文キャンセル）",
+          "adjust": "調整",
+          "signup_bonus": "登録ボーナス",
+          "expire": "失効"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "スペシャルティ付きミールバンドル",
@@ -5632,5 +5703,8 @@
     "blockTitle": "上限に達しました — 注文を逃している可能性があります",
     "blockBody": "お店は今月の無料注文 {cap} 件に達したため、{resetDate} に上限がリセットされるまで新しい注文と予約は断られています。今すぐ上限を解除すると、すぐに再び受け付けられます。",
     "cta": "上限を解除"
+  },
+  "sidebar": {
+    "rewards": "リワードドル"
   }
 }

@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Vienu vai vairākus jūsu grozā esošos produktus var pasūtīt tikai noteiktās dienās vai laikos. Zemāk esam izvēlējušies agrāko pieejamo laiku – mainiet to, ja vēlaties.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> var pasūtīt tikai noteiktās dienās vai laikos. Pieejamie pasūtīšanas laiki ir attiecīgi ierobežoti.",
     "serviceStartsPrompt": "🕒 {service} pakalpojums vēl nav sācies — tas sākas plkst. {time}.",
-    "youSaved": "Ietaupīts {amount}"
+    "youSaved": "Ietaupīts {amount}",
+    "reward": {
+      "defaultPlural": "Bonusa dolāri",
+      "useTitle": "Izmantojiet savus {label}",
+      "balance": "Atlikums: {amount}",
+      "useAll": "Izmantot visu",
+      "useNone": "Nevienu",
+      "chargeToday": "Maksājams šodien",
+      "capNote": "Šim pasūtījumam varat izmantot līdz {amount}."
+    }
   },
   "reservation": {
     "title": "Rezervēt galdu",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP dalībnieks",
       "memberLabelHint": "Jūsu VIP e-pastā būs teikts: “Kā {label} jūsu restorānā…”",
       "vipViaGroup": "caur {group}"
+    },
+    "rewards": {
+      "title": "Bonusa dolāri",
+      "subtitle": "Dāviniet klientiem veikala kredītu, ko viņi var iztērēt, veicot maksājumu.",
+      "defaultPlural": "Bonusa dolāri",
+      "enable": "Ieslēgt bonusa dolārus",
+      "enableHelp": "Veikala kredīta maks jūsu klientiem. Viņi uzkrāj atlikumu un izmanto to kā daļēju samaksu turpmākajos pasūtījumos.",
+      "enableDesc": "Klienti var uzturēt {label} atlikumu un tērēt to turpmākajos pasūtījumos. Jūsu restorānam bez maksas.",
+      "nameTitle": "Kā jūs to saucat?",
+      "nameHelp": "Pārdēvējiet maku atbilstoši savam zīmolam. Klienti redz šo nosaukumu, veicot maksājumu, un savā kontā.",
+      "namePlural": "Nosaukums (daudzskaitlis)",
+      "namePluralPlaceholder": "Bonusa dolāri",
+      "nameSingular": "Nosaukums (vienskaitlis)",
+      "nameSingularPlaceholder": "Bonusa dolārs",
+      "nameExamples": "Piemēri: Bonusa dolāri, Bonusa naudiņa, Kredīta dolāri, Lojalitātes dolāri, Picas naudiņa, Veikala kredīts",
+      "earnTitle": "Klienti nopelna automātiski",
+      "earnHelp": "Atgrieziet kredītu par katru izpildīto pasūtījumu. Izslēdziet to, ja vēlaties piešķirt kredītu tikai manuāli.",
+      "earnModePercent": "% no pasūtījuma",
+      "earnModePerDollar": "Fiksēta summa par pasūtījumu",
+      "earnPreviewPercent": "Klienti par katru pasūtījumu saņem atpakaļ {pct}% kā {label}.",
+      "earnPreviewPerDollar": "Klienti par pasūtījumu nopelna {amount} {label}.",
+      "redeemTitle": "Klienti var tērēt, veicot maksājumu",
+      "redeemHelp": "Ļaujiet klientiem izmantot savu atlikumu pasūtījumam. Izslēgts nozīmē, ka viņi var uzkrāt atlikumu, bet vēl nevar to tērēt.",
+      "maxRedeemPercent": "Maks. % no pasūtījuma, kas apmaksāts ar kredītu",
+      "maxRedeemPercentHelp": "Ierobežojiet, cik lielu daļu no viena pasūtījuma var apmaksāt ar kredītu (100% nozīmē visu pasūtījumu).",
+      "minRedeemBalance": "Minimālais atlikums tērēšanai",
+      "minRedeemBalanceHelp": "Klientiem jābūt vismaz šādam atlikumam, pirms viņi var kaut ko no tā iztērēt.",
+      "signupBonus": "Reģistrācijas bonuss",
+      "signupBonusHelp": "Kredīts, kas tiek automātiski piešķirts, kad klients izveido kontu jūsu restorānā.",
+      "save": "Saglabāt izmaiņas",
+      "balance": "Atlikums",
+      "grantAmount": "Summa",
+      "grantNote": "Piezīme (neobligāti)",
+      "grantNotePlaceholder": "piem. Lojalitātes balva, labas gribas žests",
+      "grantAdd": "Pievienot",
+      "grantDeduct": "Atskaitīt",
+      "grantEnterAmount": "Vispirms ievadiet summu.",
+      "grantAdded": "Kredīts pievienots.",
+      "grantDeducted": "Kredīts atskaitīts.",
+      "grantFailed": "Neizdevās piemērot korekciju.",
+      "reason": {
+        "earn": "Nopelnīts par pasūtījumu",
+        "grant": "Pievienoja restorāns",
+        "spend": "Iztērēts pasūtījumam",
+        "release": "Atgriezts (pasūtījums atcelts)",
+        "adjust": "Korekcija",
+        "signup_bonus": "Reģistrācijas bonuss",
+        "expire": "Beidzies derīgums"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Piemērojas automātiski — bez koda",
       "percentOff": "{value}% atlaide",
       "fixedOff": "{amount} atlaide",
-      "helpOffers": "Piedāvājumi saglabāti jūsu kontā. “Tiek piemēroti automātiski — bez koda” piedāvājumi tiek pievienoti automātiski apmaksas brīdī, kad jūsu pasūtījums atbilst nosacījumiem — nekas nav jāievada. Kuponi ar kodu tiek piemēroti, tiklīdz ievadāt kodu."
+      "helpOffers": "Piedāvājumi saglabāti jūsu kontā. “Tiek piemēroti automātiski — bez koda” piedāvājumi tiek pievienoti automātiski apmaksas brīdī, kad jūsu pasūtījums atbilst nosacījumiem — nekas nav jāievada. Kuponi ar kodu tiek piemēroti, tiklīdz ievadāt kodu.",
+      "reward": {
+        "defaultPlural": "Bonusa dolāri",
+        "help": "Jūsu {label} atlikums. Tērējiet to kā daļēju samaksu, veicot maksājumu — izvēlieties, cik daudz izmantot katram pasūtījumam.",
+        "reason": {
+          "earn": "Nopelnīts par pasūtījumu",
+          "grant": "Pievienoja restorāns",
+          "spend": "Iztērēts pasūtījumam",
+          "release": "Atgriezts (pasūtījums atcelts)",
+          "adjust": "Korekcija",
+          "signup_bonus": "Reģistrācijas bonuss",
+          "expire": "Beidzies derīgums"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ēdienreizes komplekts ar īpašumu",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Esat sasniedzis limitu — iespējams, zaudējat pasūtījumus",
     "blockBody": "Jūsu restorāns ir sasniedzis savus {cap} bezmaksas pasūtījumus šim mēnesim, tāpēc jauni pasūtījumi un rezervācijas tiek noraidīti, līdz limits tiek atiestatīts {resetDate}. Noņemiet limitu tagad, lai uzreiz atsāktu tos pieņemt.",
     "cta": "Noņemt limitu"
+  },
+  "sidebar": {
+    "rewards": "Bonusa dolāri"
   }
 }

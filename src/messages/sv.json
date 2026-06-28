@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 En eller flera varor i din kundvagn kan endast beställas för vissa dagar eller tider. Vi har valt den tidigast tillgängliga tiden nedan – ändra den om du vill.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> kan endast beställas vissa dagar eller tider. De tillgängliga beställningstiderna har begränsats därefter.",
     "serviceStartsPrompt": "🕒 {service}-tjänsten har inte börjat ännu — den börjar kl. {time}.",
-    "youSaved": "Du sparade {amount}"
+    "youSaved": "Du sparade {amount}",
+    "reward": {
+      "defaultPlural": "Bonuspengar",
+      "useTitle": "Använd dina {label}",
+      "balance": "Saldo: {amount}",
+      "useAll": "Använd allt",
+      "useNone": "Inga",
+      "chargeToday": "Att betala idag",
+      "capNote": "Du kan använda upp till {amount} på den här beställningen."
+    }
   },
   "reservation": {
     "title": "Boka ett bord",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP-medlem",
       "memberLabelHint": "Ditt VIP-mejl kommer att säga: “Som {label} på din restaurang…”",
       "vipViaGroup": "via {group}"
+    },
+    "rewards": {
+      "title": "Bonuspengar",
+      "subtitle": "Ge kunderna butikskredit som de kan använda i kassan.",
+      "defaultPlural": "Bonuspengar",
+      "enable": "Slå på Bonuspengar",
+      "enableHelp": "En butikskredit-plånbok för dina kunder. De bygger upp ett saldo och använder det som delbetalning på framtida beställningar.",
+      "enableDesc": "Kunderna kan ha ett {label}-saldo och använda det på framtida beställningar. Gratis för din restaurang.",
+      "nameTitle": "Vad kallar du det?",
+      "nameHelp": "Byt namn på plånboken så att den passar ditt varumärke. Kunderna ser det här namnet i kassan och på sitt konto.",
+      "namePlural": "Namn (plural)",
+      "namePluralPlaceholder": "Bonuspengar",
+      "nameSingular": "Namn (singular)",
+      "nameSingularPlaceholder": "Bonuskrona",
+      "nameExamples": "Exempel: Bonuspengar, Bonuspoäng, Butikskredit, Lojalitetspengar, Pizzapoäng, Kundkredit",
+      "earnTitle": "Kunderna tjänar automatiskt",
+      "earnHelp": "Ge kredit tillbaka på varje slutförd beställning. Slå av det här om du bara vill dela ut kredit manuellt.",
+      "earnModePercent": "% av beställningen",
+      "earnModePerDollar": "Fast belopp per beställning",
+      "earnPreviewPercent": "Kunderna får tillbaka {pct}% av varje beställning som {label}.",
+      "earnPreviewPerDollar": "Kunderna tjänar {amount} i {label} per beställning.",
+      "redeemTitle": "Kunderna kan använda i kassan",
+      "redeemHelp": "Låt kunderna använda sitt saldo på en beställning. Av betyder att de kan bygga upp ett saldo men inte använda det ännu.",
+      "maxRedeemPercent": "Max % av en beställning betald med kredit",
+      "maxRedeemPercentHelp": "Begränsa hur mycket av en enskild beställning som kan betalas med kredit (100% betyder hela beställningen).",
+      "minRedeemBalance": "Minsta saldo för att använda",
+      "minRedeemBalanceHelp": "Kunderna måste ha minst det här saldot innan de kan använda något av det.",
+      "signupBonus": "Välkomstbonus",
+      "signupBonusHelp": "Kredit som ges automatiskt när en kund skapar ett konto hos din restaurang.",
+      "save": "Spara ändringar",
+      "balance": "Saldo",
+      "grantAmount": "Belopp",
+      "grantNote": "Anteckning (valfritt)",
+      "grantNotePlaceholder": "t.ex. Lojalitetsbelöning, goodwill",
+      "grantAdd": "Lägg till",
+      "grantDeduct": "Dra av",
+      "grantEnterAmount": "Ange ett belopp först.",
+      "grantAdded": "Kredit tillagd.",
+      "grantDeducted": "Kredit avdragen.",
+      "grantFailed": "Det gick inte att genomföra justeringen.",
+      "reason": {
+        "earn": "Intjänat på en beställning",
+        "grant": "Tillagt av restaurangen",
+        "spend": "Använt på en beställning",
+        "release": "Återförd (beställning avbruten)",
+        "adjust": "Justering",
+        "signup_bonus": "Välkomstbonus",
+        "expire": "Utgånget"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Läggs till automatiskt — ingen kod",
       "percentOff": "{value} % rabatt",
       "fixedOff": "{amount} rabatt",
-      "helpOffers": "Erbjudanden sparade på ditt konto. De med ”Tillämpas automatiskt — ingen kod” läggs till automatiskt i kassan när din beställning uppfyller villkoren — inget att ange. Kuponger med en kod tillämpas när du anger koden."
+      "helpOffers": "Erbjudanden sparade på ditt konto. De med ”Tillämpas automatiskt — ingen kod” läggs till automatiskt i kassan när din beställning uppfyller villkoren — inget att ange. Kuponger med en kod tillämpas när du anger koden.",
+      "reward": {
+        "defaultPlural": "Bonuspengar",
+        "help": "Ditt {label}-saldo. Använd det som delbetalning i kassan — välj själv hur mycket du vill använda på varje beställning.",
+        "reason": {
+          "earn": "Intjänat på en beställning",
+          "grant": "Tillagt av restaurangen",
+          "spend": "Använt på en beställning",
+          "release": "Återförd (beställning avbruten)",
+          "adjust": "Justering",
+          "signup_bonus": "Välkomstbonus",
+          "expire": "Utgånget"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Matkombination med specialitet",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Du har nått din gräns — du kan gå miste om beställningar",
     "blockBody": "Din restaurang har nått sina {cap} gratis beställningar för denna månad, så nya beställningar och bokningar avvisas tills din gräns återställs den {resetDate}. Ta bort gränsen nu för att börja ta emot dem igen direkt.",
     "cta": "Ta bort gränsen"
+  },
+  "sidebar": {
+    "rewards": "Bonuspengar"
   }
 }

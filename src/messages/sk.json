@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Jednu alebo viac položiek vo vašom košíku možno objednať len na určité dni alebo časy. Nižšie sme nastavili najbližší dostupný termín — v prípade potreby ho upravte.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> možno objednať len v určité dni alebo časy. Dostupné časy objednávok boli zodpovedajúcim spôsobom obmedzené.",
     "serviceStartsPrompt": "🕒 Služba {service} sa ešte nezačala — začína o {time}.",
-    "youSaved": "Ušetrili ste {amount}"
+    "youSaved": "Ušetrili ste {amount}",
+    "reward": {
+      "defaultPlural": "Vernostný kredit",
+      "useTitle": "Využite svoj {label}",
+      "balance": "Zostatok: {amount}",
+      "useAll": "Využiť všetko",
+      "useNone": "Nič",
+      "chargeToday": "Na úhradu dnes",
+      "capNote": "Na túto objednávku môžete uplatniť najviac {amount}."
+    }
   },
   "reservation": {
     "title": "Rezervovať stôl",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP člen",
       "memberLabelHint": "Váš VIP e-mail bude znieť: „Ako {label} vo vašej reštaurácii…“",
       "vipViaGroup": "cez {group}"
+    },
+    "rewards": {
+      "title": "Vernostný kredit",
+      "subtitle": "Dajte zákazníkom kredit, ktorý môžu minúť pri platbe.",
+      "defaultPlural": "Vernostný kredit",
+      "enable": "Zapnúť Vernostný kredit",
+      "enableHelp": "Peňaženka s kreditom pre vašich zákazníkov. Postupne si vytvárajú zostatok a využívajú ho ako čiastočnú platbu pri budúcich objednávkach.",
+      "enableDesc": "Zákazníci môžu mať zostatok {label} a minúť ho pri budúcich objednávkach. Pre vašu reštauráciu zadarmo.",
+      "nameTitle": "Ako to nazývate?",
+      "nameHelp": "Premenujte peňaženku tak, aby zodpovedala vašej značke. Zákazníci tento názov vidia pri platbe a vo svojom účte.",
+      "namePlural": "Názov (množné číslo)",
+      "namePluralPlaceholder": "Vernostný kredit",
+      "nameSingular": "Názov (jednotné číslo)",
+      "nameSingularPlaceholder": "Vernostný kredit",
+      "nameExamples": "Príklady: Vernostný kredit, Body za nákup, Kredit v obchode, Vernostné euro, Pizza eurá, Bonusový kredit",
+      "earnTitle": "Zákazníci získavajú automaticky",
+      "earnHelp": "Vracajte kredit za každú dokončenú objednávku. Vypnite, ak chcete kredit udeľovať len ručne.",
+      "earnModePercent": "% z objednávky",
+      "earnModePerDollar": "Pevná suma za objednávku",
+      "earnPreviewPercent": "Zákazníci získajú späť {pct}% z každej objednávky ako {label}.",
+      "earnPreviewPerDollar": "Zákazníci získajú {amount} v {label} za objednávku.",
+      "redeemTitle": "Zákazníci môžu minúť pri platbe",
+      "redeemHelp": "Umožnite zákazníkom použiť zostatok na objednávku. Vypnuté znamená, že si môžu vytvárať zostatok, ale zatiaľ ho nemôžu minúť.",
+      "maxRedeemPercent": "Max. % objednávky platenej kreditom",
+      "maxRedeemPercentHelp": "Obmedzte, akú časť jednej objednávky možno zaplatiť kreditom (100 % znamená celú objednávku).",
+      "minRedeemBalance": "Minimálny zostatok na minutie",
+      "minRedeemBalanceHelp": "Zákazníci musia mať aspoň tento zostatok, než z neho môžu čokoľvek minúť.",
+      "signupBonus": "Bonus za registráciu",
+      "signupBonusHelp": "Kredit automaticky udelený, keď si zákazník vytvorí účet vo vašej reštaurácii.",
+      "save": "Uložiť zmeny",
+      "balance": "Zostatok",
+      "grantAmount": "Suma",
+      "grantNote": "Poznámka (voliteľné)",
+      "grantNotePlaceholder": "napr. Vernostná odmena, ústretovosť",
+      "grantAdd": "Pridať",
+      "grantDeduct": "Odpočítať",
+      "grantEnterAmount": "Najprv zadajte sumu.",
+      "grantAdded": "Kredit pridaný.",
+      "grantDeducted": "Kredit odpočítaný.",
+      "grantFailed": "Úpravu sa nepodarilo vykonať.",
+      "reason": {
+        "earn": "Získané za objednávku",
+        "grant": "Pridané reštauráciou",
+        "spend": "Minuté za objednávku",
+        "release": "Vrátené (objednávka zrušená)",
+        "adjust": "Úprava",
+        "signup_bonus": "Bonus za registráciu",
+        "expire": "Vypršané"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Použije sa automaticky — bez kódu",
       "percentOff": "Zľava {value} %",
       "fixedOff": "Zľava {amount}",
-      "helpOffers": "Ponuky uložené vo vašom účte. Tie s označením „Použijú sa automaticky — bez kódu“ sa pri platbe pridajú automaticky, keď vaša objednávka spĺňa podmienky — nemusíte nič zadávať. Kupóny s kódom sa použijú po zadaní kódu."
+      "helpOffers": "Ponuky uložené vo vašom účte. Tie s označením „Použijú sa automaticky — bez kódu“ sa pri platbe pridajú automaticky, keď vaša objednávka spĺňa podmienky — nemusíte nič zadávať. Kupóny s kódom sa použijú po zadaní kódu.",
+      "reward": {
+        "defaultPlural": "Vernostný kredit",
+        "help": "Váš zostatok {label}. Využite ho ako čiastočnú platbu pri platbe — pri každej objednávke si zvoľte, koľko použiť.",
+        "reason": {
+          "earn": "Získané za objednávku",
+          "grant": "Pridané reštauráciou",
+          "spend": "Minuté za objednávku",
+          "release": "Vrátené (objednávka zrušená)",
+          "adjust": "Úprava",
+          "signup_bonus": "Bonus za registráciu",
+          "expire": "Vypršané"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Jedlový balíček so špeciálnymi položkami",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Dosiahli ste limit — možno prichádzate o objednávky",
     "blockBody": "Vaša reštaurácia dosiahla {cap} bezplatných objednávok za tento mesiac, takže nové objednávky a rezervácie sú odmietané, kým sa limit neobnoví dňa {resetDate}. Odstráňte limit teraz a začnite ich hneď znova prijímať.",
     "cta": "Odstrániť limit"
+  },
+  "sidebar": {
+    "rewards": "Vernostný kredit"
   }
 }

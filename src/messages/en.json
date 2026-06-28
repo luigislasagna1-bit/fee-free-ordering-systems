@@ -4129,7 +4129,7 @@
       "namePluralPlaceholder": "Reward Dollars",
       "nameSingular": "Name (singular)",
       "nameSingularPlaceholder": "Reward Dollar",
-      "nameExamples": "Examples: Reward Dollars · Rewards Bucks · Credit Dollars · Loyalty Dollars · Pizza Bucks · Store Credit",
+      "nameExamples": "Examples: Reward Dollars, Rewards Bucks, Credit Dollars, Loyalty Dollars, Pizza Bucks, Store Credit",
       "earnTitle": "Customers earn automatically",
       "earnHelp": "Give credit back on every completed order. Turn this off if you only want to hand out credit manually.",
       "earnModePercent": "% of the order",
@@ -5704,5 +5704,8 @@
     "blockTitle": "You've hit your limit — you may be losing orders",
     "blockBody": "Your restaurant has reached its {cap} free orders for this month, so new orders and reservations are being turned away until your limit resets on {resetDate}. Remove the limit now to start accepting them again right away.",
     "cta": "Remove the limit"
+  },
+  "sidebar": {
+    "rewards": "Reward Dollars"
   }
 }

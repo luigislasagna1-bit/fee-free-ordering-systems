@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 A kosarában lévő egy vagy több tétel csak bizonyos napokra vagy időpontokra rendelhető. Az alábbiakban beállítottuk a legkorábbi elérhető időpontot — szükség esetén módosíthatja.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> csak bizonyos napokon vagy időpontokban rendelhető. Az elérhető rendelési időpontok ennek megfelelően korlátozva lettek.",
     "serviceStartsPrompt": "🕒 A(z) {service} szolgáltatás még nem kezdődött el — {time}-kor indul.",
-    "youSaved": "Megtakarítás: {amount}"
+    "youSaved": "Megtakarítás: {amount}",
+    "reward": {
+      "defaultPlural": "Jutalomdollár",
+      "useTitle": "{label} felhasználása",
+      "balance": "Egyenleg: {amount}",
+      "useAll": "Mind felhasználása",
+      "useNone": "Egyik sem",
+      "chargeToday": "Ma fizetendő",
+      "capNote": "Ehhez a rendeléshez legfeljebb {amount} használható fel."
+    }
   },
   "reservation": {
     "title": "Asztal foglalása",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP tag",
       "memberLabelHint": "A VIP e-mailje így szól majd: „Mint {label} az éttermében…”",
       "vipViaGroup": "{group} révén"
+    },
+    "rewards": {
+      "title": "Jutalomdollár",
+      "subtitle": "Adj a vásárlóknak bolti kreditet, amelyet a fizetésnél felhasználhatnak.",
+      "defaultPlural": "Jutalomdollár",
+      "enable": "Jutalomdollár bekapcsolása",
+      "enableHelp": "Bolti kredit tárca a vásárlóid számára. Egyenleget gyűjtenek, és részfizetésként felhasználják a jövőbeli rendeléseknél.",
+      "enableDesc": "A vásárlók {label} egyenleget tarthatnak, és felhasználhatják jövőbeli rendeléseknél. Az étterem számára ingyenes.",
+      "nameTitle": "Minek nevezed?",
+      "nameHelp": "Nevezd át a tárcát a márkádhoz illően. A vásárlók ezt a nevet látják a fizetésnél és a fiókjukban.",
+      "namePlural": "Név (többes szám)",
+      "namePluralPlaceholder": "Jutalomdollár",
+      "nameSingular": "Név (egyes szám)",
+      "nameSingularPlaceholder": "Jutalomdollár",
+      "nameExamples": "Példák: Jutalomdollár, Jutalompont, Kreditdollár, Hűségdollár, Pizzapénz, Bolti kredit",
+      "earnTitle": "A vásárlók automatikusan gyűjtenek",
+      "earnHelp": "Adj vissza kreditet minden teljesített rendelés után. Kapcsold ki, ha csak kézzel szeretnél kreditet osztani.",
+      "earnModePercent": "A rendelés %-a",
+      "earnModePerDollar": "Fix összeg rendelésenként",
+      "earnPreviewPercent": "A vásárlók minden rendelés {pct}%-át visszakapják {label} formájában.",
+      "earnPreviewPerDollar": "A vásárlók {amount} {label} kreditet kapnak rendelésenként.",
+      "redeemTitle": "A vásárlók a fizetésnél költhetik el",
+      "redeemHelp": "Engedd, hogy a vásárlók az egyenlegüket egy rendelésre fordítsák. Kikapcsolva: gyűjthetnek egyenleget, de még nem költhetik el.",
+      "maxRedeemPercent": "Kredittel fizethető max. % egy rendelésből",
+      "maxRedeemPercentHelp": "Korlátozd, hogy egy rendelés mekkora része fizethető kredittel (100% az egész rendelést jelenti).",
+      "minRedeemBalance": "Minimális egyenleg a költéshez",
+      "minRedeemBalanceHelp": "A vásárlóknak legalább ekkora egyenlegük kell legyen, mielőtt bármit elkölthetnének belőle.",
+      "signupBonus": "Regisztrációs bónusz",
+      "signupBonusHelp": "Automatikusan jóváírt kredit, amikor egy vásárló fiókot hoz létre az éttermednél.",
+      "save": "Módosítások mentése",
+      "balance": "Egyenleg",
+      "grantAmount": "Összeg",
+      "grantNote": "Megjegyzés (opcionális)",
+      "grantNotePlaceholder": "pl. Hűségjutalom, jóindulat",
+      "grantAdd": "Hozzáadás",
+      "grantDeduct": "Levonás",
+      "grantEnterAmount": "Először adj meg egy összeget.",
+      "grantAdded": "Kredit hozzáadva.",
+      "grantDeducted": "Kredit levonva.",
+      "grantFailed": "A módosítást nem sikerült alkalmazni.",
+      "reason": {
+        "earn": "Rendelés után szerzett",
+        "grant": "Az étterem adta hozzá",
+        "spend": "Rendelésre elköltve",
+        "release": "Visszatérítve (rendelés törölve)",
+        "adjust": "Módosítás",
+        "signup_bonus": "Regisztrációs bónusz",
+        "expire": "Lejárt"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Automatikus — nincs kód",
       "percentOff": "{value}% kedvezmény",
       "fixedOff": "{amount} kedvezmény",
-      "helpOffers": "Az ajánlatok elmentve a fiókodba. Az „Automatikusan érvényesül — nincs kód” jelölésűek a fizetésnél automatikusan hozzáadódnak, ha a rendelésed jogosult — nincs mit beírni. A kóddal rendelkező kuponok a kód megadása után érvényesülnek."
+      "helpOffers": "Az ajánlatok elmentve a fiókodba. Az „Automatikusan érvényesül — nincs kód” jelölésűek a fizetésnél automatikusan hozzáadódnak, ha a rendelésed jogosult — nincs mit beírni. A kóddal rendelkező kuponok a kód megadása után érvényesülnek.",
+      "reward": {
+        "defaultPlural": "Jutalomdollár",
+        "help": "A(z) {label} egyenleged. Költsd el részfizetésként a fizetésnél — válaszd ki, mennyit használsz fel minden rendelésnél.",
+        "reason": {
+          "earn": "Rendelés után szerzett",
+          "grant": "Az étterem adta hozzá",
+          "spend": "Rendelésre elköltve",
+          "release": "Visszatérítve (rendelés törölve)",
+          "adjust": "Módosítás",
+          "signup_bonus": "Regisztrációs bónusz",
+          "expire": "Lejárt"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ételbundle különleges tétellel",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Elérte a korlátját — lehet, hogy rendeléseket veszít",
     "blockBody": "Étterme elérte a havi {cap} ingyenes rendelését, ezért az új rendeléseket és foglalásokat elutasítja, amíg a korlátja vissza nem áll {resetDate} napon. Távolítsa el a korlátot most, hogy azonnal újra fogadhassa őket.",
     "cta": "Korlát eltávolítása"
+  },
+  "sidebar": {
+    "rewards": "Jutalomdollár"
   }
 }

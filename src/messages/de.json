@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Ein oder mehrere Artikel in Ihrem Warenkorb können nur für bestimmte Tage oder Uhrzeiten bestellt werden. Wir haben unten den nächsten verfügbaren Termin ausgewählt — passen Sie ihn bei Bedarf an.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> kann nur an bestimmten Tagen oder zu bestimmten Zeiten bestellt werden. Die verfügbaren Bestellzeiten wurden entsprechend eingeschränkt.",
     "serviceStartsPrompt": "🕒 Der {service}-Service hat noch nicht begonnen — er startet um {time}.",
-    "youSaved": "Gespart: {amount}"
+    "youSaved": "Gespart: {amount}",
+    "reward": {
+      "defaultPlural": "Bonusguthaben",
+      "useTitle": "{label} einlösen",
+      "balance": "Guthaben: {amount}",
+      "useAll": "Alles einlösen",
+      "useNone": "Keines",
+      "chargeToday": "Heute zu zahlen",
+      "capNote": "Du kannst bei dieser Bestellung bis zu {amount} anrechnen."
+    }
   },
   "reservation": {
     "title": "Tisch reservieren",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP-Mitglied",
       "memberLabelHint": "In Ihrer VIP-E-Mail steht: „Als {label} in Ihrem Restaurant …“",
       "vipViaGroup": "über {group}"
+    },
+    "rewards": {
+      "title": "Bonusguthaben",
+      "subtitle": "Schenke deinen Kund:innen Guthaben, das sie beim Bezahlen einlösen können.",
+      "defaultPlural": "Bonusguthaben",
+      "enable": "Bonusguthaben aktivieren",
+      "enableHelp": "Ein Guthaben-Konto für deine Kund:innen. Sie sammeln ein Guthaben an und nutzen es als Teilzahlung bei künftigen Bestellungen.",
+      "enableDesc": "Kund:innen können ein {label}-Guthaben halten und es bei künftigen Bestellungen einsetzen. Für dein Restaurant kostenlos.",
+      "nameTitle": "Wie nennst du es?",
+      "nameHelp": "Benenne das Guthaben passend zu deiner Marke. Kund:innen sehen diesen Namen beim Bezahlen und in ihrem Konto.",
+      "namePlural": "Name (Plural)",
+      "namePluralPlaceholder": "Bonusguthaben",
+      "nameSingular": "Name (Singular)",
+      "nameSingularPlaceholder": "Bonuspunkt",
+      "nameExamples": "Beispiele: Bonusguthaben, Treuepunkte, Restaurant-Taler, Pizza-Taler, Bonus-Euro, Hausguthaben",
+      "earnTitle": "Kund:innen sammeln automatisch",
+      "earnHelp": "Gib bei jeder abgeschlossenen Bestellung Guthaben zurück. Schalte dies aus, wenn du Guthaben nur manuell vergeben möchtest.",
+      "earnModePercent": "% der Bestellung",
+      "earnModePerDollar": "Fester Betrag pro Bestellung",
+      "earnPreviewPercent": "Kund:innen erhalten {pct}% jeder Bestellung als {label} zurück.",
+      "earnPreviewPerDollar": "Kund:innen erhalten {amount} an {label} pro Bestellung.",
+      "redeemTitle": "Kund:innen können beim Bezahlen einlösen",
+      "redeemHelp": "Lass Kund:innen ihr Guthaben auf eine Bestellung anrechnen. Aus bedeutet, dass sie ein Guthaben aufbauen, es aber noch nicht ausgeben können.",
+      "maxRedeemPercent": "Max. % einer Bestellung per Guthaben bezahlbar",
+      "maxRedeemPercentHelp": "Begrenze, wie viel einer einzelnen Bestellung mit Guthaben bezahlt werden kann (100% bedeutet die gesamte Bestellung).",
+      "minRedeemBalance": "Mindestguthaben zum Einlösen",
+      "minRedeemBalanceHelp": "Kund:innen müssen mindestens dieses Guthaben haben, bevor sie etwas davon einlösen können.",
+      "signupBonus": "Anmeldebonus",
+      "signupBonusHelp": "Guthaben, das automatisch vergeben wird, wenn Kund:innen ein Konto bei deinem Restaurant erstellen.",
+      "save": "Änderungen speichern",
+      "balance": "Guthaben",
+      "grantAmount": "Betrag",
+      "grantNote": "Notiz (optional)",
+      "grantNotePlaceholder": "z. B. Treuebonus, Kulanz",
+      "grantAdd": "Hinzufügen",
+      "grantDeduct": "Abziehen",
+      "grantEnterAmount": "Gib zuerst einen Betrag ein.",
+      "grantAdded": "Guthaben hinzugefügt.",
+      "grantDeducted": "Guthaben abgezogen.",
+      "grantFailed": "Anpassung konnte nicht angewendet werden.",
+      "reason": {
+        "earn": "Auf eine Bestellung gesammelt",
+        "grant": "Vom Restaurant hinzugefügt",
+        "spend": "Auf eine Bestellung eingelöst",
+        "release": "Zurückerstattet (Bestellung storniert)",
+        "adjust": "Anpassung",
+        "signup_bonus": "Anmeldebonus",
+        "expire": "Verfallen"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Automatisch — kein Code",
       "percentOff": "{value}% Rabatt",
       "fixedOff": "{amount} Rabatt",
-      "helpOffers": "Angebote in Ihrem Konto gespeichert. Angebote mit „Automatisch — kein Code“ werden an der Kasse automatisch hinzugefügt, sobald Ihre Bestellung infrage kommt — Sie müssen nichts eingeben. Gutscheine mit Code gelten, sobald Sie den Code eingeben."
+      "helpOffers": "Angebote in Ihrem Konto gespeichert. Angebote mit „Automatisch — kein Code“ werden an der Kasse automatisch hinzugefügt, sobald Ihre Bestellung infrage kommt — Sie müssen nichts eingeben. Gutscheine mit Code gelten, sobald Sie den Code eingeben.",
+      "reward": {
+        "defaultPlural": "Bonusguthaben",
+        "help": "Dein {label}-Guthaben. Nutze es beim Bezahlen als Teilzahlung – entscheide bei jeder Bestellung, wie viel du einsetzt.",
+        "reason": {
+          "earn": "Auf eine Bestellung gesammelt",
+          "grant": "Vom Restaurant hinzugefügt",
+          "spend": "Auf eine Bestellung eingelöst",
+          "release": "Zurückerstattet (Bestellung storniert)",
+          "adjust": "Anpassung",
+          "signup_bonus": "Anmeldebonus",
+          "expire": "Verfallen"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Menü-Bundle mit Spezialität",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Limit erreicht — Ihnen entgehen möglicherweise Bestellungen",
     "blockBody": "Ihr Restaurant hat seine {cap} kostenlosen Bestellungen für diesen Monat erreicht, daher werden neue Bestellungen und Reservierungen abgelehnt, bis Ihr Limit am {resetDate} zurückgesetzt wird. Entfernen Sie das Limit jetzt, um sie sofort wieder anzunehmen.",
     "cta": "Limit entfernen"
+  },
+  "sidebar": {
+    "rewards": "Bonusguthaben"
   }
 }

@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Một hoặc nhiều món trong giỏ hàng của bạn chỉ có thể đặt vào những ngày hoặc giờ nhất định. Chúng tôi đã chọn khung giờ sớm nhất hiện có bên dưới — bạn có thể điều chỉnh nếu muốn.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> chỉ có thể đặt vào những ngày hoặc giờ nhất định. Thời gian đặt hàng khả dụng đã được giới hạn tương ứng.",
     "serviceStartsPrompt": "🕒 Dịch vụ {service} chưa bắt đầu — bắt đầu lúc {time}.",
-    "youSaved": "Bạn tiết kiệm {amount}"
+    "youSaved": "Bạn tiết kiệm {amount}",
+    "reward": {
+      "defaultPlural": "Đô-la Thưởng",
+      "useTitle": "Dùng {label} của bạn",
+      "balance": "Số dư: {amount}",
+      "useAll": "Dùng tất cả",
+      "useNone": "Không dùng",
+      "chargeToday": "Cần thanh toán hôm nay",
+      "capNote": "Bạn có thể dùng tối đa {amount} cho đơn hàng này."
+    }
   },
   "reservation": {
     "title": "Đặt bàn",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "Thành viên VIP",
       "memberLabelHint": "Email VIP của bạn sẽ ghi: “Với tư cách là một {label} tại nhà hàng của bạn…”",
       "vipViaGroup": "qua {group}"
+    },
+    "rewards": {
+      "title": "Đô-la Thưởng",
+      "subtitle": "Tặng khách hàng tín dụng cửa hàng để chi tiêu khi thanh toán.",
+      "defaultPlural": "Đô-la Thưởng",
+      "enable": "Bật Đô-la Thưởng",
+      "enableHelp": "Ví tín dụng cửa hàng dành cho khách của bạn. Khách tích lũy số dư và dùng để thanh toán một phần cho các đơn hàng sau.",
+      "enableDesc": "Khách có thể giữ số dư {label} và chi tiêu cho các đơn hàng trong tương lai. Miễn phí cho nhà hàng của bạn.",
+      "nameTitle": "Bạn gọi nó là gì?",
+      "nameHelp": "Đổi tên ví cho phù hợp với thương hiệu của bạn. Khách thấy tên này khi thanh toán và trong tài khoản của họ.",
+      "namePlural": "Tên (số nhiều)",
+      "namePluralPlaceholder": "Đô-la Thưởng",
+      "nameSingular": "Tên (số ít)",
+      "nameSingularPlaceholder": "Đô-la Thưởng",
+      "nameExamples": "Ví dụ: Đô-la Thưởng, Xu Thưởng, Đô-la Tín dụng, Đô-la Thân thiết, Xu Pizza, Tín dụng Cửa hàng",
+      "earnTitle": "Khách tích lũy tự động",
+      "earnHelp": "Hoàn tín dụng cho mỗi đơn hàng hoàn tất. Tắt nếu bạn chỉ muốn tặng tín dụng thủ công.",
+      "earnModePercent": "% của đơn hàng",
+      "earnModePerDollar": "Số tiền cố định mỗi đơn",
+      "earnPreviewPercent": "Khách được hoàn lại {pct}% mỗi đơn hàng dưới dạng {label}.",
+      "earnPreviewPerDollar": "Khách nhận được {amount} {label} cho mỗi đơn hàng.",
+      "redeemTitle": "Khách có thể chi tiêu khi thanh toán",
+      "redeemHelp": "Cho phép khách dùng số dư cho một đơn hàng. Tắt nghĩa là khách có thể tích lũy số dư nhưng chưa được chi tiêu.",
+      "maxRedeemPercent": "% tối đa của đơn hàng được trả bằng tín dụng",
+      "maxRedeemPercentHelp": "Giới hạn phần đơn hàng có thể trả bằng tín dụng (100% nghĩa là toàn bộ đơn hàng).",
+      "minRedeemBalance": "Số dư tối thiểu để chi tiêu",
+      "minRedeemBalanceHelp": "Khách phải có ít nhất số dư này trước khi được chi tiêu bất kỳ phần nào.",
+      "signupBonus": "Thưởng đăng ký",
+      "signupBonusHelp": "Tín dụng được tặng tự động khi khách tạo tài khoản tại nhà hàng của bạn.",
+      "save": "Lưu thay đổi",
+      "balance": "Số dư",
+      "grantAmount": "Số tiền",
+      "grantNote": "Ghi chú (tùy chọn)",
+      "grantNotePlaceholder": "vd. Thưởng thân thiết, thiện chí",
+      "grantAdd": "Thêm",
+      "grantDeduct": "Trừ",
+      "grantEnterAmount": "Vui lòng nhập số tiền trước.",
+      "grantAdded": "Đã thêm tín dụng.",
+      "grantDeducted": "Đã trừ tín dụng.",
+      "grantFailed": "Không thể áp dụng điều chỉnh.",
+      "reason": {
+        "earn": "Tích lũy từ đơn hàng",
+        "grant": "Nhà hàng thêm",
+        "spend": "Chi tiêu cho đơn hàng",
+        "release": "Đã hoàn lại (đơn bị hủy)",
+        "adjust": "Điều chỉnh",
+        "signup_bonus": "Thưởng đăng ký",
+        "expire": "Đã hết hạn"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Tự áp dụng — không cần mã",
       "percentOff": "Giảm {value}%",
       "fixedOff": "Giảm {amount}",
-      "helpOffers": "Ưu đãi đã được lưu vào tài khoản của bạn. Những ưu đãi “Tự động áp dụng — không cần mã” sẽ được thêm tự động khi thanh toán nếu đơn hàng của bạn đủ điều kiện — bạn không cần nhập gì cả. Phiếu giảm giá có mã sẽ được áp dụng sau khi bạn nhập mã."
+      "helpOffers": "Ưu đãi đã được lưu vào tài khoản của bạn. Những ưu đãi “Tự động áp dụng — không cần mã” sẽ được thêm tự động khi thanh toán nếu đơn hàng của bạn đủ điều kiện — bạn không cần nhập gì cả. Phiếu giảm giá có mã sẽ được áp dụng sau khi bạn nhập mã.",
+      "reward": {
+        "defaultPlural": "Đô-la Thưởng",
+        "help": "Số dư {label} của bạn. Dùng để thanh toán một phần khi thanh toán — chọn dùng bao nhiêu cho mỗi đơn hàng.",
+        "reason": {
+          "earn": "Tích lũy từ đơn hàng",
+          "grant": "Nhà hàng thêm",
+          "spend": "Chi tiêu cho đơn hàng",
+          "release": "Đã hoàn lại (đơn bị hủy)",
+          "adjust": "Điều chỉnh",
+          "signup_bonus": "Thưởng đăng ký",
+          "expire": "Đã hết hạn"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Combo bữa ăn với món đặc biệt",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Bạn đã đạt giới hạn — bạn có thể đang mất đơn hàng",
     "blockBody": "Nhà hàng của bạn đã đạt {cap} đơn miễn phí trong tháng này, nên đơn hàng và đặt bàn mới đang bị từ chối cho đến khi giới hạn đặt lại vào {resetDate}. Gỡ giới hạn ngay để bắt đầu nhận lại chúng ngay lập tức.",
     "cta": "Gỡ giới hạn"
+  },
+  "sidebar": {
+    "rewards": "Đô-la Thưởng"
   }
 }

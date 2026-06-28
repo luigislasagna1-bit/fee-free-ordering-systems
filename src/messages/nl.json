@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Een of meer artikelen in je winkelwagen kunnen alleen voor bepaalde dagen of tijden worden besteld. We hebben hieronder het eerstvolgende beschikbare tijdslot ingesteld — pas het aan als je wilt.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> kan alleen op bepaalde dagen of tijden worden besteld. De beschikbare besteltijden zijn dienovereenkomstig beperkt.",
     "serviceStartsPrompt": "🕒 De {service}-service is nog niet begonnen — die start om {time}.",
-    "youSaved": "Je bespaart {amount}"
+    "youSaved": "Je bespaart {amount}",
+    "reward": {
+      "defaultPlural": "Spaartegoed",
+      "useTitle": "Gebruik je {label}",
+      "balance": "Saldo: {amount}",
+      "useAll": "Alles gebruiken",
+      "useNone": "Geen",
+      "chargeToday": "Vandaag te betalen",
+      "capNote": "Je kunt maximaal {amount} op deze bestelling gebruiken."
+    }
   },
   "reservation": {
     "title": "Tafel reserveren",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP-lid",
       "memberLabelHint": "In uw VIP-e-mail staat: “Als {label} bij uw restaurant…”",
       "vipViaGroup": "via {group}"
+    },
+    "rewards": {
+      "title": "Spaartegoed",
+      "subtitle": "Geef klanten winkeltegoed dat ze bij het afrekenen kunnen besteden.",
+      "defaultPlural": "Spaartegoed",
+      "enable": "Spaartegoed inschakelen",
+      "enableHelp": "Een winkeltegoed-wallet voor je klanten. Ze bouwen een saldo op en gebruiken dat als deelbetaling op toekomstige bestellingen.",
+      "enableDesc": "Klanten kunnen een {label}-saldo aanhouden en dat besteden op toekomstige bestellingen. Gratis voor je restaurant.",
+      "nameTitle": "Hoe noem je het?",
+      "nameHelp": "Hernoem de wallet zodat die bij je merk past. Klanten zien deze naam bij het afrekenen en in hun account.",
+      "namePlural": "Naam (meervoud)",
+      "namePluralPlaceholder": "Spaartegoed",
+      "nameSingular": "Naam (enkelvoud)",
+      "nameSingularPlaceholder": "Spaarpunt",
+      "nameExamples": "Voorbeelden: Spaartegoed, Spaarpunten, Winkelkrediet, Loyaliteitstegoed, Pizzapunten, Klantenkaart-tegoed",
+      "earnTitle": "Klanten sparen automatisch",
+      "earnHelp": "Geef tegoed terug op elke voltooide bestelling. Zet dit uit als je tegoed alleen handmatig wilt uitdelen.",
+      "earnModePercent": "% van de bestelling",
+      "earnModePerDollar": "Vast bedrag per bestelling",
+      "earnPreviewPercent": "Klanten krijgen {pct}% van elke bestelling terug als {label}.",
+      "earnPreviewPerDollar": "Klanten verdienen {amount} aan {label} per bestelling.",
+      "redeemTitle": "Klanten kunnen bij het afrekenen besteden",
+      "redeemHelp": "Laat klanten hun saldo verrekenen met een bestelling. Uit betekent dat ze wel een saldo opbouwen, maar het nog niet kunnen besteden.",
+      "maxRedeemPercent": "Max. % van een bestelling betaald met tegoed",
+      "maxRedeemPercentHelp": "Beperk hoeveel van één bestelling met tegoed mag worden betaald (100% betekent de hele bestelling).",
+      "minRedeemBalance": "Minimumsaldo om te besteden",
+      "minRedeemBalanceHelp": "Klanten moeten minstens dit saldo hebben voordat ze er iets van kunnen besteden.",
+      "signupBonus": "Aanmeldbonus",
+      "signupBonusHelp": "Tegoed dat automatisch wordt gegeven wanneer een klant een account aanmaakt bij je restaurant.",
+      "save": "Wijzigingen opslaan",
+      "balance": "Saldo",
+      "grantAmount": "Bedrag",
+      "grantNote": "Notitie (optioneel)",
+      "grantNotePlaceholder": "bijv. Trouwheidsbeloning, geste",
+      "grantAdd": "Toevoegen",
+      "grantDeduct": "Aftrekken",
+      "grantEnterAmount": "Voer eerst een bedrag in.",
+      "grantAdded": "Tegoed toegevoegd.",
+      "grantDeducted": "Tegoed afgetrokken.",
+      "grantFailed": "Kon de aanpassing niet doorvoeren.",
+      "reason": {
+        "earn": "Verdiend op een bestelling",
+        "grant": "Toegevoegd door het restaurant",
+        "spend": "Besteed op een bestelling",
+        "release": "Teruggegeven (bestelling geannuleerd)",
+        "adjust": "Aanpassing",
+        "signup_bonus": "Aanmeldbonus",
+        "expire": "Verlopen"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Automatisch toegepast — geen code",
       "percentOff": "{value}% korting",
       "fixedOff": "{amount} korting",
-      "helpOffers": "Aanbiedingen opgeslagen op je account. Aanbiedingen met “Wordt automatisch toegepast — geen code” worden bij het afrekenen automatisch toegevoegd zodra je bestelling in aanmerking komt — je hoeft niets in te voeren. Coupons met een code worden toegepast zodra je de code invoert."
+      "helpOffers": "Aanbiedingen opgeslagen op je account. Aanbiedingen met “Wordt automatisch toegepast — geen code” worden bij het afrekenen automatisch toegevoegd zodra je bestelling in aanmerking komt — je hoeft niets in te voeren. Coupons met een code worden toegepast zodra je de code invoert.",
+      "reward": {
+        "defaultPlural": "Spaartegoed",
+        "help": "Je {label}-saldo. Gebruik het als deelbetaling bij het afrekenen — kies zelf hoeveel je per bestelling inzet.",
+        "reason": {
+          "earn": "Verdiend op een bestelling",
+          "grant": "Toegevoegd door het restaurant",
+          "spend": "Besteed op een bestelling",
+          "release": "Teruggegeven (bestelling geannuleerd)",
+          "adjust": "Aanpassing",
+          "signup_bonus": "Aanmeldbonus",
+          "expire": "Verlopen"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Maaltijdbundel met specialiteit",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Limiet bereikt — je loopt mogelijk bestellingen mis",
     "blockBody": "Je restaurant heeft zijn {cap} gratis bestellingen voor deze maand bereikt, dus nieuwe bestellingen en reserveringen worden geweigerd tot je limiet op {resetDate} wordt gereset. Verwijder de limiet nu om ze meteen weer te accepteren.",
     "cta": "Limiet verwijderen"
+  },
+  "sidebar": {
+    "rewards": "Spaartegoed"
   }
 }

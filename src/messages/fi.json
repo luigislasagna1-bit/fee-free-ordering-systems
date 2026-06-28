@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Yhtä tai useampaa ostoskorisi tuotetta voi tilata vain tiettyinä päivinä tai kellonaikoina. Olemme valinneet alle aikaisimman vapaan ajan – muuta sitä halutessasi.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> voidaan tilata vain tiettyinä päivinä tai kellonaikoina. Käytettävissä olevia tilausaikoja on rajoitettu vastaavasti.",
     "serviceStartsPrompt": "🕒 {service}-palvelu ei ole vielä alkanut — se alkaa klo {time}.",
-    "youSaved": "Säästit {amount}"
+    "youSaved": "Säästit {amount}",
+    "reward": {
+      "defaultPlural": "Bonusrahat",
+      "useTitle": "Käytä {label}",
+      "balance": "Saldo: {amount}",
+      "useAll": "Käytä kaikki",
+      "useNone": "Ei mitään",
+      "chargeToday": "Maksettavaa tänään",
+      "capNote": "Voit käyttää tähän tilaukseen enintään {amount}."
+    }
   },
   "reservation": {
     "title": "Varaa pöytä",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP-jäsen",
       "memberLabelHint": "VIP-sähköpostissasi lukee: “{label} ravintolassasi…”",
       "vipViaGroup": "{group} kautta"
+    },
+    "rewards": {
+      "title": "Bonusrahat",
+      "subtitle": "Anna asiakkaille kauppakrediittiä, jota he voivat käyttää kassalla.",
+      "defaultPlural": "Bonusrahat",
+      "enable": "Ota Bonusrahat käyttöön",
+      "enableHelp": "Kauppakrediittilompakko asiakkaillesi. He kerryttävät saldoa ja käyttävät sitä osamaksuna tulevissa tilauksissa.",
+      "enableDesc": "Asiakkaat voivat pitää {label}-saldoa ja käyttää sitä tulevissa tilauksissa. Ravintolallesi ilmainen.",
+      "nameTitle": "Miksi sitä kutsut?",
+      "nameHelp": "Nimeä lompakko brändiisi sopivaksi. Asiakkaat näkevät tämän nimen kassalla ja tilillään.",
+      "namePlural": "Nimi (monikko)",
+      "namePluralPlaceholder": "Bonusrahat",
+      "nameSingular": "Nimi (yksikkö)",
+      "nameSingularPlaceholder": "Bonusraha",
+      "nameExamples": "Esimerkkejä: Bonusrahat, Bonuspisteet, Kauppakrediitti, Kanta-asiakasrahat, Pizzapisteet, Asiakaskrediitti",
+      "earnTitle": "Asiakkaat ansaitsevat automaattisesti",
+      "earnHelp": "Anna krediittiä takaisin jokaisesta valmistuneesta tilauksesta. Poista tämä käytöstä, jos haluat jakaa krediittiä vain käsin.",
+      "earnModePercent": "% tilauksesta",
+      "earnModePerDollar": "Kiinteä summa tilausta kohden",
+      "earnPreviewPercent": "Asiakkaat saavat {pct}% jokaisesta tilauksesta takaisin {label}na.",
+      "earnPreviewPerDollar": "Asiakkaat ansaitsevat {amount} {label}a tilausta kohden.",
+      "redeemTitle": "Asiakkaat voivat käyttää kassalla",
+      "redeemHelp": "Anna asiakkaiden käyttää saldoaan tilaukseen. Pois päältä tarkoittaa, että he voivat kerryttää saldoa mutta eivät vielä käyttää sitä.",
+      "maxRedeemPercent": "Enint. % tilauksesta maksettu krediitillä",
+      "maxRedeemPercentHelp": "Rajoita, kuinka suuri osa yhdestä tilauksesta voidaan maksaa krediitillä (100% tarkoittaa koko tilausta).",
+      "minRedeemBalance": "Vähimmäissaldo käyttöä varten",
+      "minRedeemBalanceHelp": "Asiakkailla on oltava vähintään tämä saldo, ennen kuin he voivat käyttää siitä mitään.",
+      "signupBonus": "Liittymisbonus",
+      "signupBonusHelp": "Krediitti, joka annetaan automaattisesti, kun asiakas luo tilin ravintolaasi.",
+      "save": "Tallenna muutokset",
+      "balance": "Saldo",
+      "grantAmount": "Summa",
+      "grantNote": "Muistiinpano (valinnainen)",
+      "grantNotePlaceholder": "esim. Kanta-asiakaspalkkio, hyvänä eleenä",
+      "grantAdd": "Lisää",
+      "grantDeduct": "Vähennä",
+      "grantEnterAmount": "Anna ensin summa.",
+      "grantAdded": "Krediitti lisätty.",
+      "grantDeducted": "Krediitti vähennetty.",
+      "grantFailed": "Muutosta ei voitu tehdä.",
+      "reason": {
+        "earn": "Ansaittu tilauksesta",
+        "grant": "Ravintolan lisäämä",
+        "spend": "Käytetty tilaukseen",
+        "release": "Palautettu (tilaus peruttu)",
+        "adjust": "Muutos",
+        "signup_bonus": "Liittymisbonus",
+        "expire": "Vanhentunut"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Aktivoituu itsestään — ei koodia",
       "percentOff": "{value} % alennus",
       "fixedOff": "{amount} alennus",
-      "helpOffers": "Tarjoukset tallennettu tilillesi. ”Käytetään automaattisesti — ei koodia” -tarjoukset lisätään automaattisesti kassalla, kun tilauksesi täyttää ehdot — mitään ei tarvitse syöttää. Kupongit, joissa on koodi, otetaan käyttöön, kun syötät koodin."
+      "helpOffers": "Tarjoukset tallennettu tilillesi. ”Käytetään automaattisesti — ei koodia” -tarjoukset lisätään automaattisesti kassalla, kun tilauksesi täyttää ehdot — mitään ei tarvitse syöttää. Kupongit, joissa on koodi, otetaan käyttöön, kun syötät koodin.",
+      "reward": {
+        "defaultPlural": "Bonusrahat",
+        "help": "{label}-saldosi. Käytä sitä osamaksuna kassalla — valitse itse, kuinka paljon käytät kuhunkin tilaukseen.",
+        "reason": {
+          "earn": "Ansaittu tilauksesta",
+          "grant": "Ravintolan lisäämä",
+          "spend": "Käytetty tilaukseen",
+          "release": "Palautettu (tilaus peruttu)",
+          "adjust": "Muutos",
+          "signup_bonus": "Liittymisbonus",
+          "expire": "Vanhentunut"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Ateriapaketti erikoisuudella",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Olet saavuttanut rajasi — saatat menettää tilauksia",
     "blockBody": "Ravintolasi on saavuttanut {cap} ilmaista tilaustaan tässä kuussa, joten uudet tilaukset ja varaukset hylätään, kunnes rajasi nollautuu {resetDate}. Poista raja nyt, niin voit ottaa niitä taas heti vastaan.",
     "cta": "Poista raja"
+  },
+  "sidebar": {
+    "rewards": "Bonusrahat"
   }
 }

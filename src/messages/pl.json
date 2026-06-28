@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Co najmniej jedną pozycję w koszyku można zamówić tylko na określone dni lub godziny. Ustawiliśmy poniżej najbliższy dostępny termin — w razie potrzeby możesz go zmienić.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> można zamówić tylko w określone dni lub godziny. Dostępne godziny zamówień zostały odpowiednio ograniczone.",
     "serviceStartsPrompt": "🕒 Usługa {service} jeszcze się nie rozpoczęła — zaczyna się o {time}.",
-    "youSaved": "Oszczędzasz {amount}"
+    "youSaved": "Oszczędzasz {amount}",
+    "reward": {
+      "defaultPlural": "Złotówki za zakupy",
+      "useTitle": "Wykorzystaj swoje {label}",
+      "balance": "Saldo: {amount}",
+      "useAll": "Wykorzystaj wszystko",
+      "useNone": "Nic",
+      "chargeToday": "Do zapłaty dziś",
+      "capNote": "Do tego zamówienia możesz wykorzystać maksymalnie {amount}."
+    }
   },
   "reservation": {
     "title": "Zarezerwuj stolik",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "członek VIP",
       "memberLabelHint": "Twój e-mail VIP będzie brzmiał: „Jako {label} w naszej restauracji…”",
       "vipViaGroup": "przez {group}"
+    },
+    "rewards": {
+      "title": "Złotówki za zakupy",
+      "subtitle": "Daj klientom kredyt w sklepie, który mogą wykorzystać przy kasie.",
+      "defaultPlural": "Złotówki za zakupy",
+      "enable": "Włącz Złotówki za zakupy",
+      "enableHelp": "Portfel z kredytem sklepowym dla Twoich klientów. Zbierają saldo i wykorzystują je jako część płatności za przyszłe zamówienia.",
+      "enableDesc": "Klienci mogą mieć saldo {label} i wykorzystać je przy przyszłych zamówieniach. Bezpłatne dla Twojej restauracji.",
+      "nameTitle": "Jak to nazywasz?",
+      "nameHelp": "Zmień nazwę portfela, aby pasowała do Twojej marki. Klienci widzą tę nazwę przy kasie i na swoim koncie.",
+      "namePlural": "Nazwa (liczba mnoga)",
+      "namePluralPlaceholder": "Złotówki za zakupy",
+      "nameSingular": "Nazwa (liczba pojedyncza)",
+      "nameSingularPlaceholder": "Złotówka za zakupy",
+      "nameExamples": "Przykłady: Złotówki za zakupy, Punkty lojalnościowe, Kredyt sklepowy, Złotówki lojalnościowe, Pizza-złotówki, Bonusowe złotówki",
+      "earnTitle": "Klienci zbierają automatycznie",
+      "earnHelp": "Zwracaj kredyt za każde zrealizowane zamówienie. Wyłącz, jeśli chcesz przyznawać kredyt tylko ręcznie.",
+      "earnModePercent": "% wartości zamówienia",
+      "earnModePerDollar": "Stała kwota za zamówienie",
+      "earnPreviewPercent": "Klienci otrzymują z powrotem {pct}% wartości każdego zamówienia jako {label}.",
+      "earnPreviewPerDollar": "Klienci otrzymują {amount} w {label} za zamówienie.",
+      "redeemTitle": "Klienci mogą wykorzystać przy kasie",
+      "redeemHelp": "Pozwól klientom przeznaczyć saldo na zamówienie. Wyłączone oznacza, że mogą zbierać saldo, ale jeszcze go nie wykorzystywać.",
+      "maxRedeemPercent": "Maks. % zamówienia opłacany kredytem",
+      "maxRedeemPercentHelp": "Ogranicz, jaka część jednego zamówienia może być opłacona kredytem (100% oznacza całe zamówienie).",
+      "minRedeemBalance": "Minimalne saldo do wykorzystania",
+      "minRedeemBalanceHelp": "Klienci muszą mieć co najmniej takie saldo, zanim będą mogli je wykorzystać.",
+      "signupBonus": "Bonus za rejestrację",
+      "signupBonusHelp": "Kredyt przyznawany automatycznie, gdy klient zakłada konto w Twojej restauracji.",
+      "save": "Zapisz zmiany",
+      "balance": "Saldo",
+      "grantAmount": "Kwota",
+      "grantNote": "Notatka (opcjonalnie)",
+      "grantNotePlaceholder": "np. Nagroda lojalnościowa, gest dobrej woli",
+      "grantAdd": "Dodaj",
+      "grantDeduct": "Odejmij",
+      "grantEnterAmount": "Najpierw wpisz kwotę.",
+      "grantAdded": "Kredyt dodany.",
+      "grantDeducted": "Kredyt odjęty.",
+      "grantFailed": "Nie udało się zastosować korekty.",
+      "reason": {
+        "earn": "Zdobyte za zamówienie",
+        "grant": "Dodane przez restaurację",
+        "spend": "Wykorzystane na zamówienie",
+        "release": "Zwrócone (zamówienie anulowane)",
+        "adjust": "Korekta",
+        "signup_bonus": "Bonus za rejestrację",
+        "expire": "Wygasłe"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Automatycznie — bez kodu",
       "percentOff": "{value}% taniej",
       "fixedOff": "{amount} taniej",
-      "helpOffers": "Oferty zapisane na Twoim koncie. Te oznaczone „Stosuje się automatycznie — bez kodu” są dodawane automatycznie przy kasie, gdy Twoje zamówienie się kwalifikuje — nic nie musisz wpisywać. Kupony z kodem działają po wpisaniu kodu."
+      "helpOffers": "Oferty zapisane na Twoim koncie. Te oznaczone „Stosuje się automatycznie — bez kodu” są dodawane automatycznie przy kasie, gdy Twoje zamówienie się kwalifikuje — nic nie musisz wpisywać. Kupony z kodem działają po wpisaniu kodu.",
+      "reward": {
+        "defaultPlural": "Złotówki za zakupy",
+        "help": "Twoje saldo {label}. Wykorzystaj je jako część płatności przy kasie — wybierz, ile użyć przy każdym zamówieniu.",
+        "reason": {
+          "earn": "Zdobyte za zamówienie",
+          "grant": "Dodane przez restaurację",
+          "spend": "Wykorzystane na zamówienie",
+          "release": "Zwrócone (zamówienie anulowane)",
+          "adjust": "Korekta",
+          "signup_bonus": "Bonus za rejestrację",
+          "expire": "Wygasłe"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Zestaw posiłkowy ze specjalnością",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Osiągnięto limit — możesz tracić zamówienia",
     "blockBody": "Twoja restauracja osiągnęła {cap} darmowych zamówień w tym miesiącu, więc nowe zamówienia i rezerwacje są odrzucane do zresetowania limitu w dniu {resetDate}. Usuń limit teraz, aby od razu znów je przyjmować.",
     "cta": "Usuń limit"
+  },
+  "sidebar": {
+    "rewards": "Złotówki za zakupy"
   }
 }

@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Jednu ili više stavki u vašoj košarici moguće je naručiti samo za određene dane ili vremena. U nastavku smo postavili najraniji dostupni termin — po želji ga prilagodite.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> može se naručiti samo određenim danima ili u određeno vrijeme. Dostupna vremena naručivanja ograničena su u skladu s tim.",
     "serviceStartsPrompt": "🕒 Usluga {service} još nije počela — počinje u {time}.",
-    "youSaved": "Uštedjeli ste {amount}"
+    "youSaved": "Uštedjeli ste {amount}",
+    "reward": {
+      "defaultPlural": "Nagradni bodovi",
+      "useTitle": "Iskoristite svoje {label}",
+      "balance": "Stanje: {amount}",
+      "useAll": "Iskoristi sve",
+      "useNone": "Ništa",
+      "chargeToday": "Za platiti danas",
+      "capNote": "Na ovu narudžbu možete primijeniti najviše {amount}."
+    }
   },
   "reservation": {
     "title": "Rezervirajte stol",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP član",
       "memberLabelHint": "Vaš VIP e-mail će glasiti: “Kao {label} u vašem restoranu…”",
       "vipViaGroup": "putem {group}"
+    },
+    "rewards": {
+      "title": "Nagradni bodovi",
+      "subtitle": "Dajte kupcima kredit koji mogu potrošiti pri plaćanju.",
+      "defaultPlural": "Nagradni bodovi",
+      "enable": "Uključi Nagradne bodove",
+      "enableHelp": "Novčanik s kreditom za vaše kupce. Postupno skupljaju stanje i koriste ga kao djelomično plaćanje budućih narudžbi.",
+      "enableDesc": "Kupci mogu imati stanje {label} i potrošiti ga na buduće narudžbe. Besplatno za vaš restoran.",
+      "nameTitle": "Kako to nazivate?",
+      "nameHelp": "Preimenujte novčanik tako da odgovara vašoj robnoj marki. Kupci ovaj naziv vide pri plaćanju i na svom računu.",
+      "namePlural": "Naziv (množina)",
+      "namePluralPlaceholder": "Nagradni bodovi",
+      "nameSingular": "Naziv (jednina)",
+      "nameSingularPlaceholder": "Nagradni bod",
+      "nameExamples": "Primjeri: Nagradni bodovi, Bodovi vjernosti, Kredit trgovine, Kune vjernosti, Pizza bodovi, Bonus kredit",
+      "earnTitle": "Kupci skupljaju automatski",
+      "earnHelp": "Vraćajte kredit za svaku dovršenu narudžbu. Isključite ako kredit želite dodjeljivati samo ručno.",
+      "earnModePercent": "% narudžbe",
+      "earnModePerDollar": "Fiksni iznos po narudžbi",
+      "earnPreviewPercent": "Kupci dobivaju natrag {pct}% svake narudžbe kao {label}.",
+      "earnPreviewPerDollar": "Kupci dobivaju {amount} u {label} po narudžbi.",
+      "redeemTitle": "Kupci mogu potrošiti pri plaćanju",
+      "redeemHelp": "Dopustite kupcima da stanje iskoriste za narudžbu. Isključeno znači da mogu skupljati stanje, ali ga još ne mogu potrošiti.",
+      "maxRedeemPercent": "Maks. % narudžbe plaćen kreditom",
+      "maxRedeemPercentHelp": "Ograničite koliko se jedne narudžbe može platiti kreditom (100 % znači cijela narudžba).",
+      "minRedeemBalance": "Minimalno stanje za potrošnju",
+      "minRedeemBalanceHelp": "Kupci moraju imati barem ovo stanje prije nego što mogu išta potrošiti.",
+      "signupBonus": "Bonus za registraciju",
+      "signupBonusHelp": "Kredit koji se automatski dodjeljuje kada kupac otvori račun u vašem restoranu.",
+      "save": "Spremi promjene",
+      "balance": "Stanje",
+      "grantAmount": "Iznos",
+      "grantNote": "Napomena (neobavezno)",
+      "grantNotePlaceholder": "npr. Nagrada za vjernost, dobra volja",
+      "grantAdd": "Dodaj",
+      "grantDeduct": "Oduzmi",
+      "grantEnterAmount": "Najprije unesite iznos.",
+      "grantAdded": "Kredit dodan.",
+      "grantDeducted": "Kredit oduzet.",
+      "grantFailed": "Prilagodbu nije bilo moguće primijeniti.",
+      "reason": {
+        "earn": "Zarađeno na narudžbi",
+        "grant": "Dodao restoran",
+        "spend": "Potrošeno na narudžbu",
+        "release": "Vraćeno (narudžba otkazana)",
+        "adjust": "Prilagodba",
+        "signup_bonus": "Bonus za registraciju",
+        "expire": "Isteklo"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Automatski — bez koda",
       "percentOff": "{value}% popusta",
       "fixedOff": "{amount} popusta",
-      "helpOffers": "Ponude su spremljene na vaš račun. One s oznakom „Automatski se primjenjuje — bez koda” dodaju se automatski pri naplati kada vaša narudžba ispunjava uvjete — ništa ne morate unositi. Kuponi s kodom primjenjuju se nakon što unesete kod."
+      "helpOffers": "Ponude su spremljene na vaš račun. One s oznakom „Automatski se primjenjuje — bez koda” dodaju se automatski pri naplati kada vaša narudžba ispunjava uvjete — ništa ne morate unositi. Kuponi s kodom primjenjuju se nakon što unesete kod.",
+      "reward": {
+        "defaultPlural": "Nagradni bodovi",
+        "help": "Vaše stanje {label}. Iskoristite ga kao djelomično plaćanje pri plaćanju — za svaku narudžbu odaberite koliko želite upotrijebiti.",
+        "reason": {
+          "earn": "Zarađeno na narudžbi",
+          "grant": "Dodao restoran",
+          "spend": "Potrošeno na narudžbu",
+          "release": "Vraćeno (narudžba otkazana)",
+          "adjust": "Prilagodba",
+          "signup_bonus": "Bonus za registraciju",
+          "expire": "Isteklo"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Paket obroka sa specijalitetom",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Dosegli ste ograničenje — možda gubite narudžbe",
     "blockBody": "Vaš je restoran dosegnuo svojih {cap} besplatnih narudžbi za ovaj mjesec, pa se nove narudžbe i rezervacije odbijaju dok se ograničenje ne resetira {resetDate}. Uklonite ograničenje sada kako biste ih odmah ponovno počeli primati.",
     "cta": "Ukloni ograničenje"
+  },
+  "sidebar": {
+    "rewards": "Nagradni bodovi"
   }
 }

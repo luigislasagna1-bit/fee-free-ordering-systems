@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Un o més articles del teu cistell només es poden demanar per a determinats dies o hores. Hem seleccionat a sota la franja disponible més propera — ajusta-la si vols.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> només es pot demanar determinats dies o hores. Els horaris de comanda disponibles s'han limitat en conseqüència.",
     "serviceStartsPrompt": "🕒 El servei de {service} encara no ha començat — comença a les {time}.",
-    "youSaved": "Has estalviat {amount}"
+    "youSaved": "Has estalviat {amount}",
+    "reward": {
+      "defaultPlural": "Dòlars de Recompensa",
+      "useTitle": "Fes servir els teus {label}",
+      "balance": "Saldo: {amount}",
+      "useAll": "Usar-ho tot",
+      "useNone": "Cap",
+      "chargeToday": "A pagar avui",
+      "capNote": "Pots aplicar fins a {amount} en aquesta comanda."
+    }
   },
   "reservation": {
     "title": "Reservar taula",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "membre VIP",
       "memberLabelHint": "El vostre correu VIP dirà: “Com a {label} al vostre restaurant…”",
       "vipViaGroup": "via {group}"
+    },
+    "rewards": {
+      "title": "Dòlars de Recompensa",
+      "subtitle": "Dona als clients crèdit de botiga que poden gastar en pagar.",
+      "defaultPlural": "Dòlars de Recompensa",
+      "enable": "Activa els Dòlars de Recompensa",
+      "enableHelp": "Una cartera de crèdit de botiga per als teus clients. Acumulen un saldo i el gasten com a pagament parcial en comandes futures.",
+      "enableDesc": "Els clients poden tenir un saldo de {label} i gastar-lo en comandes futures. Gratuït per al teu restaurant.",
+      "nameTitle": "Com l'anomenes?",
+      "nameHelp": "Canvia el nom de la cartera perquè s'ajusti a la teva marca. Els clients veuen aquest nom en pagar i al seu compte.",
+      "namePlural": "Nom (plural)",
+      "namePluralPlaceholder": "Dòlars de Recompensa",
+      "nameSingular": "Nom (singular)",
+      "nameSingularPlaceholder": "Dòlar de Recompensa",
+      "nameExamples": "Exemples: Dòlars de Recompensa, Punts de Recompensa, Dòlars de Crèdit, Dòlars de Fidelitat, Monedes de Pizza, Crèdit de Botiga",
+      "earnTitle": "Els clients guanyen automàticament",
+      "earnHelp": "Torna crèdit en cada comanda completada. Desactiva-ho si només vols repartir crèdit manualment.",
+      "earnModePercent": "% de la comanda",
+      "earnModePerDollar": "Import fix per comanda",
+      "earnPreviewPercent": "Els clients recuperen un {pct}% de cada comanda en {label}.",
+      "earnPreviewPerDollar": "Els clients guanyen {amount} en {label} per comanda.",
+      "redeemTitle": "Els clients poden gastar en pagar",
+      "redeemHelp": "Permet que els clients apliquin el seu saldo a una comanda. Desactivat vol dir que poden acumular saldo però encara no gastar-lo.",
+      "maxRedeemPercent": "% màxim d'una comanda pagat amb crèdit",
+      "maxRedeemPercentHelp": "Limita quina part d'una sola comanda es pot pagar amb crèdit (100% vol dir tota la comanda).",
+      "minRedeemBalance": "Saldo mínim per gastar",
+      "minRedeemBalanceHelp": "Els clients han de tenir almenys aquest saldo abans de poder gastar-ne res.",
+      "signupBonus": "Bonificació de registre",
+      "signupBonusHelp": "Crèdit atorgat automàticament quan un client crea un compte al teu restaurant.",
+      "save": "Desa els canvis",
+      "balance": "Saldo",
+      "grantAmount": "Import",
+      "grantNote": "Nota (opcional)",
+      "grantNotePlaceholder": "p. ex. Recompensa de fidelitat, bona voluntat",
+      "grantAdd": "Afegeix",
+      "grantDeduct": "Descompta",
+      "grantEnterAmount": "Introdueix primer un import.",
+      "grantAdded": "Crèdit afegit.",
+      "grantDeducted": "Crèdit descomptat.",
+      "grantFailed": "No s'ha pogut aplicar l'ajustament.",
+      "reason": {
+        "earn": "Guanyat en una comanda",
+        "grant": "Afegit pel restaurant",
+        "spend": "Gastat en una comanda",
+        "release": "Retornat (comanda cancel·lada)",
+        "adjust": "Ajustament",
+        "signup_bonus": "Bonificació de registre",
+        "expire": "Caducat"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "S'aplica sol — sense codi",
       "percentOff": "{value}% de descompte",
       "fixedOff": "{amount} de descompte",
-      "helpOffers": "Ofertes desades al teu compte. Les marcades com a “S’aplica sola — sense codi” s’afegeixen automàticament en finalitzar la compra quan la teva comanda hi té dret — no cal introduir res. Els cupons amb codi s’apliquen quan introdueixes el codi."
+      "helpOffers": "Ofertes desades al teu compte. Les marcades com a “S’aplica sola — sense codi” s’afegeixen automàticament en finalitzar la compra quan la teva comanda hi té dret — no cal introduir res. Els cupons amb codi s’apliquen quan introdueixes el codi.",
+      "reward": {
+        "defaultPlural": "Dòlars de Recompensa",
+        "help": "El teu saldo de {label}. Gasta'l com a pagament parcial en pagar — tria quant fer servir a cada comanda.",
+        "reason": {
+          "earn": "Guanyat en una comanda",
+          "grant": "Afegit pel restaurant",
+          "spend": "Gastat en una comanda",
+          "release": "Retornat (comanda cancel·lada)",
+          "adjust": "Ajustament",
+          "signup_bonus": "Bonificació de registre",
+          "expire": "Caducat"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Menú combinat amb especialitat",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Has assolit el teu límit — pot ser que perdis comandes",
     "blockBody": "El teu restaurant ha assolit les seves {cap} comandes gratuïtes d'aquest mes, així que les noves comandes i reserves es rebutgen fins que el teu límit es restableixi el {resetDate}. Elimina el límit ara per tornar a acceptar-les immediatament.",
     "cta": "Elimina el límit"
+  },
+  "sidebar": {
+    "rewards": "Dòlars de Recompensa"
   }
 }

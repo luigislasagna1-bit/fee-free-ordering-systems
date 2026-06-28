@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Vieną ar kelias jūsų krepšelyje esančias prekes galima užsisakyti tik tam tikromis dienomis ar valandomis. Žemiau parinkome anksčiausią galimą laiką – pakeiskite jį, jei norite.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> galima užsisakyti tik tam tikromis dienomis ar valandomis. Galimi užsakymo laikai atitinkamai apriboti.",
     "serviceStartsPrompt": "🕒 {service} paslauga dar neprasidėjo — ji prasideda {time}.",
-    "youSaved": "Sutaupėte {amount}"
+    "youSaved": "Sutaupėte {amount}",
+    "reward": {
+      "defaultPlural": "Premijų doleriai",
+      "useTitle": "Naudoti savo {label}",
+      "balance": "Likutis: {amount}",
+      "useAll": "Naudoti viską",
+      "useNone": "Nė vieno",
+      "chargeToday": "Mokėti šiandien",
+      "capNote": "Šiam užsakymui galite pritaikyti iki {amount}."
+    }
   },
   "reservation": {
     "title": "Rezervuoti stalą",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP narys",
       "memberLabelHint": "Jūsų VIP el. laiške bus rašoma: „Kaip {label} jūsų restorane…“",
       "vipViaGroup": "per {group}"
+    },
+    "rewards": {
+      "title": "Premijų doleriai",
+      "subtitle": "Suteikite klientams parduotuvės kreditą, kurį jie gali išleisti atsiskaitydami.",
+      "defaultPlural": "Premijų doleriai",
+      "enable": "Įjungti premijų dolerius",
+      "enableHelp": "Parduotuvės kredito piniginė jūsų klientams. Jie kaupia likutį ir naudoja jį kaip dalinį būsimų užsakymų apmokėjimą.",
+      "enableDesc": "Klientai gali turėti {label} likutį ir išleisti jį būsimiems užsakymams. Jūsų restoranui nemokama.",
+      "nameTitle": "Kaip tai vadinate?",
+      "nameHelp": "Pervadinkite piniginę pagal savo prekės ženklą. Klientai mato šį pavadinimą atsiskaitydami ir savo paskyroje.",
+      "namePlural": "Pavadinimas (daugiskaita)",
+      "namePluralPlaceholder": "Premijų doleriai",
+      "nameSingular": "Pavadinimas (vienaskaita)",
+      "nameSingularPlaceholder": "Premijų doleris",
+      "nameExamples": "Pavyzdžiai: Premijų doleriai, Premijų pinigai, Kredito doleriai, Lojalumo doleriai, Picos pinigai, Parduotuvės kreditas",
+      "earnTitle": "Klientai uždirba automatiškai",
+      "earnHelp": "Grąžinkite kreditą už kiekvieną įvykdytą užsakymą. Išjunkite tai, jei norite dalyti kreditą tik rankiniu būdu.",
+      "earnModePercent": "% nuo užsakymo",
+      "earnModePerDollar": "Fiksuota suma už užsakymą",
+      "earnPreviewPercent": "Klientai už kiekvieną užsakymą atgauna {pct}% kaip {label}.",
+      "earnPreviewPerDollar": "Klientai už užsakymą uždirba {amount} {label}.",
+      "redeemTitle": "Klientai gali išleisti atsiskaitydami",
+      "redeemHelp": "Leiskite klientams panaudoti savo likutį užsakymui. Išjungta reiškia, kad jie gali kaupti likutį, bet dar negali jo išleisti.",
+      "maxRedeemPercent": "Maks. % užsakymo, apmokamo kreditu",
+      "maxRedeemPercentHelp": "Apribokite, kokią vieno užsakymo dalį galima apmokėti kreditu (100% reiškia visą užsakymą).",
+      "minRedeemBalance": "Minimalus likutis išleidimui",
+      "minRedeemBalanceHelp": "Klientai turi turėti bent tokį likutį, kad galėtų ką nors iš jo išleisti.",
+      "signupBonus": "Registracijos premija",
+      "signupBonusHelp": "Kreditas, automatiškai suteikiamas, kai klientas sukuria paskyrą jūsų restorane.",
+      "save": "Išsaugoti pakeitimus",
+      "balance": "Likutis",
+      "grantAmount": "Suma",
+      "grantNote": "Pastaba (neprivaloma)",
+      "grantNotePlaceholder": "pvz. Lojalumo premija, geranoriškumas",
+      "grantAdd": "Pridėti",
+      "grantDeduct": "Atimti",
+      "grantEnterAmount": "Pirmiausia įveskite sumą.",
+      "grantAdded": "Kreditas pridėtas.",
+      "grantDeducted": "Kreditas atimtas.",
+      "grantFailed": "Nepavyko pritaikyti koregavimo.",
+      "reason": {
+        "earn": "Uždirbta už užsakymą",
+        "grant": "Pridėjo restoranas",
+        "spend": "Išleista užsakymui",
+        "release": "Grąžinta (užsakymas atšauktas)",
+        "adjust": "Koregavimas",
+        "signup_bonus": "Registracijos premija",
+        "expire": "Pasibaigė galiojimas"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Taikoma automatiškai — be kodo",
       "percentOff": "{value} % nuolaida",
       "fixedOff": "{amount} nuolaida",
-      "helpOffers": "Pasiūlymai išsaugoti jūsų paskyroje. Tie, kurie „Pritaikomi automatiškai — be kodo“, atsiskaitant pridedami automatiškai, kai jūsų užsakymas atitinka sąlygas — nieko įvesti nereikia. Kuponai su kodu pritaikomi įvedus kodą."
+      "helpOffers": "Pasiūlymai išsaugoti jūsų paskyroje. Tie, kurie „Pritaikomi automatiškai — be kodo“, atsiskaitant pridedami automatiškai, kai jūsų užsakymas atitinka sąlygas — nieko įvesti nereikia. Kuponai su kodu pritaikomi įvedus kodą.",
+      "reward": {
+        "defaultPlural": "Premijų doleriai",
+        "help": "Jūsų {label} likutis. Išleiskite jį kaip dalinį apmokėjimą atsiskaitydami — pasirinkite, kiek panaudoti kiekvienam užsakymui.",
+        "reason": {
+          "earn": "Uždirbta už užsakymą",
+          "grant": "Pridėjo restoranas",
+          "spend": "Išleista užsakymui",
+          "release": "Grąžinta (užsakymas atšauktas)",
+          "adjust": "Koregavimas",
+          "signup_bonus": "Registracijos premija",
+          "expire": "Pasibaigė galiojimas"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Maisto rinkinys su specialiu patiekalu",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Pasiekėte limitą — galite prarasti užsakymų",
     "blockBody": "Jūsų restoranas pasiekė savo {cap} nemokamų užsakymų šį mėnesį, todėl nauji užsakymai ir rezervacijos atmetami, kol limitas atsinaujins {resetDate}. Pašalinkite limitą dabar, kad iškart vėl pradėtumėte juos priimti.",
     "cta": "Pašalinti limitą"
+  },
+  "sidebar": {
+    "rewards": "Premijų doleriai"
   }
 }

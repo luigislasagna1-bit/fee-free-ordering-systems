@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 您购物车中的一件或多件商品只能在特定日期或时间下单。我们已在下方为您选择了最早可用的时段——如有需要可自行调整。",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> 仅可在特定日期或时间下单。可用的下单时间已相应调整。",
     "serviceStartsPrompt": "🕒 {service}服务尚未开始 — 将于 {time} 开始。",
-    "youSaved": "已省 {amount}"
+    "youSaved": "已省 {amount}",
+    "reward": {
+      "defaultPlural": "奖励金",
+      "useTitle": "使用您的{label}",
+      "balance": "余额：{amount}",
+      "useAll": "全部使用",
+      "useNone": "不使用",
+      "chargeToday": "今日应付",
+      "capNote": "本订单最多可使用 {amount}。"
+    }
   },
   "reservation": {
     "title": "预订餐桌",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP 会员",
       "memberLabelHint": "您的 VIP 邮件中将显示：“作为本店的{label}……”",
       "vipViaGroup": "通过{group}"
+    },
+    "rewards": {
+      "title": "奖励金",
+      "subtitle": "向顾客发放可在结账时使用的店内余额。",
+      "defaultPlural": "奖励金",
+      "enable": "开启奖励金",
+      "enableHelp": "为顾客提供的店内余额钱包。顾客逐渐累积余额，并可在日后下单时用作部分付款。",
+      "enableDesc": "顾客可持有{label}余额并用于日后的订单。对您的餐厅免费。",
+      "nameTitle": "您想如何称呼它？",
+      "nameHelp": "为钱包重新命名以契合您的品牌。顾客会在结账时和账户中看到此名称。",
+      "namePlural": "名称（复数）",
+      "namePluralPlaceholder": "奖励金",
+      "nameSingular": "名称（单数）",
+      "nameSingularPlaceholder": "奖励金",
+      "nameExamples": "示例：奖励金、奖励币、积分金、忠诚金、披萨币、店内余额",
+      "earnTitle": "顾客自动赚取",
+      "earnHelp": "每完成一笔订单即返还余额。如果您只想手动发放余额，请关闭此项。",
+      "earnModePercent": "订单的 %",
+      "earnModePerDollar": "每单固定金额",
+      "earnPreviewPercent": "顾客每笔订单可返还 {pct}% 作为{label}。",
+      "earnPreviewPerDollar": "顾客每笔订单可获得 {amount} 的{label}。",
+      "redeemTitle": "顾客可在结账时使用",
+      "redeemHelp": "允许顾客将余额用于订单。关闭后顾客仍可累积余额，但暂时无法使用。",
+      "maxRedeemPercent": "单笔订单可用余额支付的最高 %",
+      "maxRedeemPercentHelp": "限制单笔订单可用余额支付的比例（100% 表示整笔订单）。",
+      "minRedeemBalance": "可使用的最低余额",
+      "minRedeemBalanceHelp": "顾客的余额须达到此数额，才能动用其中任何部分。",
+      "signupBonus": "注册奖励",
+      "signupBonusHelp": "顾客在您的餐厅创建账户时自动赠送的余额。",
+      "save": "保存更改",
+      "balance": "余额",
+      "grantAmount": "金额",
+      "grantNote": "备注（可选）",
+      "grantNotePlaceholder": "例如：忠诚奖励、回馈好意",
+      "grantAdd": "添加",
+      "grantDeduct": "扣除",
+      "grantEnterAmount": "请先输入金额。",
+      "grantAdded": "已添加余额。",
+      "grantDeducted": "已扣除余额。",
+      "grantFailed": "无法应用此调整。",
+      "reason": {
+        "earn": "订单赚取",
+        "grant": "餐厅添加",
+        "spend": "订单使用",
+        "release": "已退回（订单取消）",
+        "adjust": "调整",
+        "signup_bonus": "注册奖励",
+        "expire": "已过期"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "自动应用 — 无需代码",
       "percentOff": "{value}% 折扣",
       "fixedOff": "减 {amount}",
-      "helpOffers": "优惠已保存到您的账户。标有\"自动应用 — 无需代码\"的优惠会在结账时订单符合条件时自动添加，无需输入任何内容。带代码的优惠券需在输入代码后才会生效。"
+      "helpOffers": "优惠已保存到您的账户。标有\"自动应用 — 无需代码\"的优惠会在结账时订单符合条件时自动添加，无需输入任何内容。带代码的优惠券需在输入代码后才会生效。",
+      "reward": {
+        "defaultPlural": "奖励金",
+        "help": "您的{label}余额。可在结账时用作部分付款——自行选择每笔订单使用多少。",
+        "reason": {
+          "earn": "订单赚取",
+          "grant": "餐厅添加",
+          "spend": "订单使用",
+          "release": "已退回（订单取消）",
+          "adjust": "调整",
+          "signup_bonus": "注册奖励",
+          "expire": "已过期"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "含特色菜的套餐",
@@ -5632,5 +5703,8 @@
     "blockTitle": "您已达到上限——可能正在流失订单",
     "blockBody": "您的餐厅本月的 {cap} 个免费订单已用完，因此新订单和预订正被拒绝，直到您的额度于 {resetDate} 重置。立即移除上限即可马上重新接单。",
     "cta": "移除上限"
+  },
+  "sidebar": {
+    "rewards": "奖励金"
   }
 }

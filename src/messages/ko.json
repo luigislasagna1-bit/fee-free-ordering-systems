@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 장바구니에 담긴 항목 중 하나 이상은 특정 요일이나 시간에만 주문할 수 있습니다. 아래에 가장 이른 예약 가능 시간대를 설정해 두었습니다 — 원하시면 변경하세요.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong>은(는) 특정 요일이나 시간에만 주문할 수 있습니다. 이용 가능한 주문 시간이 그에 따라 제한되었습니다.",
     "serviceStartsPrompt": "🕒 {service} 서비스가 아직 시작되지 않았습니다 — {time}에 시작됩니다.",
-    "youSaved": "{amount} 절약"
+    "youSaved": "{amount} 절약",
+    "reward": {
+      "defaultPlural": "리워드 달러",
+      "useTitle": "{label} 사용하기",
+      "balance": "잔액: {amount}",
+      "useAll": "전액 사용",
+      "useNone": "사용 안 함",
+      "chargeToday": "오늘 결제 금액",
+      "capNote": "이 주문에는 최대 {amount}까지 사용할 수 있습니다."
+    }
   },
   "reservation": {
     "title": "테이블 예약",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP 회원",
       "memberLabelHint": "VIP 이메일에는 이렇게 표시됩니다: “저희 레스토랑의 {label}님으로서…”",
       "vipViaGroup": "{group}을 통해"
+    },
+    "rewards": {
+      "title": "리워드 달러",
+      "subtitle": "고객이 결제 시 사용할 수 있는 매장 적립금을 지급하세요.",
+      "defaultPlural": "리워드 달러",
+      "enable": "리워드 달러 켜기",
+      "enableHelp": "고객을 위한 매장 적립금 지갑입니다. 잔액을 쌓아 향후 주문의 일부 결제로 사용할 수 있습니다.",
+      "enableDesc": "고객은 {label} 잔액을 보유하고 향후 주문에 사용할 수 있습니다. 매장에는 무료입니다.",
+      "nameTitle": "어떻게 부르시겠어요?",
+      "nameHelp": "브랜드에 맞게 지갑 이름을 변경하세요. 이 이름은 결제 시와 계정 화면에서 고객에게 표시됩니다.",
+      "namePlural": "이름 (복수형)",
+      "namePluralPlaceholder": "리워드 달러",
+      "nameSingular": "이름 (단수형)",
+      "nameSingularPlaceholder": "리워드 달러",
+      "nameExamples": "예시: 리워드 달러, 리워드 코인, 크레딧 달러, 로열티 달러, 피자 코인, 매장 적립금",
+      "earnTitle": "고객이 자동으로 적립",
+      "earnHelp": "완료된 모든 주문에 대해 적립금을 돌려줍니다. 적립금을 수동으로만 지급하려면 끄세요.",
+      "earnModePercent": "주문 금액의 %",
+      "earnModePerDollar": "주문당 고정 금액",
+      "earnPreviewPercent": "고객은 주문마다 {pct}%를 {label}(으)로 돌려받습니다.",
+      "earnPreviewPerDollar": "고객은 주문마다 {amount}의 {label}을(를) 적립합니다.",
+      "redeemTitle": "고객이 결제 시 사용 가능",
+      "redeemHelp": "고객이 잔액을 주문에 사용할 수 있도록 합니다. 끄면 잔액은 쌓을 수 있지만 아직 사용할 수 없습니다.",
+      "maxRedeemPercent": "적립금으로 결제 가능한 주문 최대 %",
+      "maxRedeemPercentHelp": "단일 주문에서 적립금으로 결제할 수 있는 비율의 상한을 설정합니다 (100%는 주문 전액).",
+      "minRedeemBalance": "사용 가능 최소 잔액",
+      "minRedeemBalanceHelp": "고객이 적립금을 사용하려면 최소한 이 잔액이 있어야 합니다.",
+      "signupBonus": "가입 보너스",
+      "signupBonusHelp": "고객이 매장에서 계정을 만들 때 자동으로 지급되는 적립금입니다.",
+      "save": "변경사항 저장",
+      "balance": "잔액",
+      "grantAmount": "금액",
+      "grantNote": "메모 (선택)",
+      "grantNotePlaceholder": "예: 로열티 보상, 호의",
+      "grantAdd": "추가",
+      "grantDeduct": "차감",
+      "grantEnterAmount": "먼저 금액을 입력하세요.",
+      "grantAdded": "적립금이 추가되었습니다.",
+      "grantDeducted": "적립금이 차감되었습니다.",
+      "grantFailed": "조정을 적용할 수 없습니다.",
+      "reason": {
+        "earn": "주문으로 적립",
+        "grant": "매장에서 추가",
+        "spend": "주문에 사용",
+        "release": "환원 (주문 취소)",
+        "adjust": "조정",
+        "signup_bonus": "가입 보너스",
+        "expire": "만료됨"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "자동 적용 — 코드 불필요",
       "percentOff": "{value}% 할인",
       "fixedOff": "{amount} 할인",
-      "helpOffers": "혜택이 계정에 저장되었습니다. “자동 적용 — 코드 불필요” 혜택은 주문이 조건을 충족하면 결제 시 자동으로 적용됩니다 — 입력할 것이 없습니다. 코드가 있는 쿠폰은 코드를 입력하면 적용됩니다."
+      "helpOffers": "혜택이 계정에 저장되었습니다. “자동 적용 — 코드 불필요” 혜택은 주문이 조건을 충족하면 결제 시 자동으로 적용됩니다 — 입력할 것이 없습니다. 코드가 있는 쿠폰은 코드를 입력하면 적용됩니다.",
+      "reward": {
+        "defaultPlural": "리워드 달러",
+        "help": "회원님의 {label} 잔액입니다. 결제 시 일부 결제로 사용하세요 — 주문마다 얼마나 사용할지 선택할 수 있습니다.",
+        "reason": {
+          "earn": "주문으로 적립",
+          "grant": "매장에서 추가",
+          "spend": "주문에 사용",
+          "release": "환원 (주문 취소)",
+          "adjust": "조정",
+          "signup_bonus": "가입 보너스",
+          "expire": "만료됨"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "스페셜 밀 번들",
@@ -5632,5 +5703,8 @@
     "blockTitle": "한도에 도달했습니다 — 주문을 놓치고 있을 수 있습니다",
     "blockBody": "귀하의 레스토랑이 이번 달 무료 주문 {cap}건에 도달하여 {resetDate}에 한도가 초기화될 때까지 새 주문과 예약이 거절되고 있습니다. 지금 한도를 해제하면 즉시 다시 받을 수 있습니다.",
     "cta": "한도 해제"
+  },
+  "sidebar": {
+    "rewards": "리워드 달러"
   }
 }

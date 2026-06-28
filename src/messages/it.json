@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Uno o più articoli nel tuo carrello possono essere ordinati solo per determinati giorni o orari. Abbiamo selezionato qui sotto la fascia disponibile più vicina — modificala se vuoi.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> può essere ordinato solo in determinati giorni o orari. Gli orari di ordinazione disponibili sono stati limitati di conseguenza.",
     "serviceStartsPrompt": "🕒 Il servizio {service} non è ancora iniziato — inizia alle {time}.",
-    "youSaved": "Hai risparmiato {amount}"
+    "youSaved": "Hai risparmiato {amount}",
+    "reward": {
+      "defaultPlural": "Credito fedeltà",
+      "useTitle": "Usa il tuo {label}",
+      "balance": "Saldo: {amount}",
+      "useAll": "Usa tutto",
+      "useNone": "Niente",
+      "chargeToday": "Da pagare oggi",
+      "capNote": "Puoi applicare fino a {amount} su questo ordine."
+    }
   },
   "reservation": {
     "title": "Prenota un tavolo",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "membro VIP",
       "memberLabelHint": "La tua email VIP dirà: “In quanto {label} del tuo ristorante…”",
       "vipViaGroup": "tramite {group}"
+    },
+    "rewards": {
+      "title": "Credito fedeltà",
+      "subtitle": "Offri ai clienti un credito da spendere al momento del pagamento.",
+      "defaultPlural": "Credito fedeltà",
+      "enable": "Attiva il credito fedeltà",
+      "enableHelp": "Un portafoglio di credito per i tuoi clienti. Accumulano un saldo e lo usano come pagamento parziale sugli ordini futuri.",
+      "enableDesc": "I clienti possono avere un saldo di {label} e spenderlo negli ordini futuri. Gratis per il tuo ristorante.",
+      "nameTitle": "Come lo chiami?",
+      "nameHelp": "Rinomina il portafoglio in linea con il tuo brand. I clienti vedono questo nome al pagamento e nel loro account.",
+      "namePlural": "Nome (plurale)",
+      "namePluralPlaceholder": "Credito fedeltà",
+      "nameSingular": "Nome (singolare)",
+      "nameSingularPlaceholder": "Credito",
+      "nameExamples": "Esempi: Credito fedeltà, Punti fedeltà, Salvadanaio, Euro della casa, Pizza punti, Credito negozio",
+      "earnTitle": "I clienti accumulano in automatico",
+      "earnHelp": "Restituisci credito su ogni ordine completato. Disattivalo se vuoi assegnare credito solo manualmente.",
+      "earnModePercent": "% dell'ordine",
+      "earnModePerDollar": "Importo fisso per ordine",
+      "earnPreviewPercent": "I clienti ricevono il {pct}% di ogni ordine in {label}.",
+      "earnPreviewPerDollar": "I clienti guadagnano {amount} in {label} per ordine.",
+      "redeemTitle": "I clienti possono spendere al pagamento",
+      "redeemHelp": "Permetti ai clienti di applicare il saldo a un ordine. Disattivato significa che possono accumulare un saldo ma non ancora spenderlo.",
+      "maxRedeemPercent": "% max di un ordine pagabile con credito",
+      "maxRedeemPercentHelp": "Limita quanto di un singolo ordine può essere pagato con il credito (100% significa l'intero ordine).",
+      "minRedeemBalance": "Saldo minimo per spendere",
+      "minRedeemBalanceHelp": "I clienti devono avere almeno questo saldo prima di poterne spendere una parte.",
+      "signupBonus": "Bonus di iscrizione",
+      "signupBonusHelp": "Credito assegnato automaticamente quando un cliente crea un account nel tuo ristorante.",
+      "save": "Salva modifiche",
+      "balance": "Saldo",
+      "grantAmount": "Importo",
+      "grantNote": "Nota (facoltativa)",
+      "grantNotePlaceholder": "es. premio fedeltà, omaggio",
+      "grantAdd": "Aggiungi",
+      "grantDeduct": "Sottrai",
+      "grantEnterAmount": "Inserisci prima un importo.",
+      "grantAdded": "Credito aggiunto.",
+      "grantDeducted": "Credito sottratto.",
+      "grantFailed": "Impossibile applicare la rettifica.",
+      "reason": {
+        "earn": "Guadagnato su un ordine",
+        "grant": "Aggiunto dal ristorante",
+        "spend": "Speso su un ordine",
+        "release": "Restituito (ordine annullato)",
+        "adjust": "Rettifica",
+        "signup_bonus": "Bonus di iscrizione",
+        "expire": "Scaduto"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Applicato in automatico — niente codice",
       "percentOff": "{value}% di sconto",
       "fixedOff": "{amount} di sconto",
-      "helpOffers": "Offerte salvate nel tuo account. Quelle “Si applica in automatico — nessun codice” vengono aggiunte automaticamente al checkout quando il tuo ordine è idoneo, senza nulla da inserire. I coupon con un codice si applicano dopo aver inserito il codice."
+      "helpOffers": "Offerte salvate nel tuo account. Quelle “Si applica in automatico — nessun codice” vengono aggiunte automaticamente al checkout quando il tuo ordine è idoneo, senza nulla da inserire. I coupon con un codice si applicano dopo aver inserito il codice.",
+      "reward": {
+        "defaultPlural": "Credito fedeltà",
+        "help": "Il tuo saldo di {label}. Usalo come pagamento parziale al checkout: scegli quanto usarne su ogni ordine.",
+        "reason": {
+          "earn": "Guadagnato su un ordine",
+          "grant": "Aggiunto dal ristorante",
+          "spend": "Speso su un ordine",
+          "release": "Restituito (ordine annullato)",
+          "adjust": "Rettifica",
+          "signup_bonus": "Bonus di iscrizione",
+          "expire": "Scaduto"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Bundle pasto con specialità",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Hai raggiunto il limite — potresti perdere ordini",
     "blockBody": "Il tuo ristorante ha raggiunto i suoi {cap} ordini gratuiti di questo mese, quindi nuovi ordini e prenotazioni vengono rifiutati fino al ripristino del limite il {resetDate}. Rimuovi il limite ora per ricominciare ad accettarli subito.",
     "cta": "Rimuovi il limite"
+  },
+  "sidebar": {
+    "rewards": "Credito fedeltà"
   }
 }

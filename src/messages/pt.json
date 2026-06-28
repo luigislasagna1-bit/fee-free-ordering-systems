@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Um ou mais artigos no seu carrinho só podem ser encomendados para determinados dias ou horas. Selecionámos abaixo a vaga disponível mais próxima — ajuste-a se quiser.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> só pode ser encomendado em determinados dias ou horários. Os horários de encomenda disponíveis foram limitados em conformidade.",
     "serviceStartsPrompt": "🕒 O serviço de {service} ainda não começou — começa às {time}.",
-    "youSaved": "Você poupou {amount}"
+    "youSaved": "Você poupou {amount}",
+    "reward": {
+      "defaultPlural": "Saldo de recompensa",
+      "useTitle": "Use o seu {label}",
+      "balance": "Saldo: {amount}",
+      "useAll": "Usar tudo",
+      "useNone": "Nenhum",
+      "chargeToday": "A pagar hoje",
+      "capNote": "Pode aplicar até {amount} nesta encomenda."
+    }
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "membro VIP",
       "memberLabelHint": "Seu e-mail VIP dirá: “Como {label} no seu restaurante…”",
       "vipViaGroup": "via {group}"
+    },
+    "rewards": {
+      "title": "Saldo de recompensa",
+      "subtitle": "Ofereça aos clientes um saldo que podem gastar ao finalizar a encomenda.",
+      "defaultPlural": "Saldo de recompensa",
+      "enable": "Ativar o saldo de recompensa",
+      "enableHelp": "Uma carteira de saldo para os seus clientes. Acumulam saldo e usam-no como pagamento parcial em encomendas futuras.",
+      "enableDesc": "Os clientes podem ter um saldo de {label} e gastá-lo em encomendas futuras. Gratuito para o seu restaurante.",
+      "nameTitle": "Como lhe chama?",
+      "nameHelp": "Mude o nome da carteira para combinar com a sua marca. Os clientes veem este nome ao pagar e na conta deles.",
+      "namePlural": "Nome (plural)",
+      "namePluralPlaceholder": "Saldo de recompensa",
+      "nameSingular": "Nome (singular)",
+      "nameSingularPlaceholder": "Recompensa",
+      "nameExamples": "Exemplos: Saldo de recompensa, Pontos de fidelidade, Mealheiro, Euros da casa, Pizza pontos, Crédito da loja",
+      "earnTitle": "Os clientes ganham automaticamente",
+      "earnHelp": "Devolva saldo em cada encomenda concluída. Desligue se quiser atribuir saldo apenas manualmente.",
+      "earnModePercent": "% da encomenda",
+      "earnModePerDollar": "Valor fixo por encomenda",
+      "earnPreviewPercent": "Os clientes recebem {pct}% de cada encomenda em {label}.",
+      "earnPreviewPerDollar": "Os clientes ganham {amount} em {label} por encomenda.",
+      "redeemTitle": "Os clientes podem gastar ao pagar",
+      "redeemHelp": "Deixe os clientes aplicarem o saldo numa encomenda. Desligado significa que podem acumular saldo mas ainda não gastá-lo.",
+      "maxRedeemPercent": "% máx. de uma encomenda paga com saldo",
+      "maxRedeemPercentHelp": "Limite quanto de uma única encomenda pode ser pago com saldo (100% significa a encomenda inteira).",
+      "minRedeemBalance": "Saldo mínimo para gastar",
+      "minRedeemBalanceHelp": "Os clientes têm de ter pelo menos este saldo antes de poderem gastar uma parte.",
+      "signupBonus": "Bónus de registo",
+      "signupBonusHelp": "Saldo atribuído automaticamente quando um cliente cria uma conta no seu restaurante.",
+      "save": "Guardar alterações",
+      "balance": "Saldo",
+      "grantAmount": "Valor",
+      "grantNote": "Nota (opcional)",
+      "grantNotePlaceholder": "ex. prémio de fidelidade, cortesia",
+      "grantAdd": "Adicionar",
+      "grantDeduct": "Subtrair",
+      "grantEnterAmount": "Introduza primeiro um valor.",
+      "grantAdded": "Saldo adicionado.",
+      "grantDeducted": "Saldo subtraído.",
+      "grantFailed": "Não foi possível aplicar o ajuste.",
+      "reason": {
+        "earn": "Ganho numa encomenda",
+        "grant": "Adicionado pelo restaurante",
+        "spend": "Gasto numa encomenda",
+        "release": "Devolvido (encomenda cancelada)",
+        "adjust": "Ajuste",
+        "signup_bonus": "Bónus de registo",
+        "expire": "Expirado"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Aplica-se automaticamente — sem código",
       "percentOff": "{value}% de desconto",
       "fixedOff": "{amount} de desconto",
-      "helpOffers": "Ofertas guardadas na sua conta. As de “Aplicação automática — sem código” são adicionadas automaticamente no checkout quando o seu pedido se qualifica — não precisa de inserir nada. Os cupões com código aplicam-se assim que inserir o código."
+      "helpOffers": "Ofertas guardadas na sua conta. As de “Aplicação automática — sem código” são adicionadas automaticamente no checkout quando o seu pedido se qualifica — não precisa de inserir nada. Os cupões com código aplicam-se assim que inserir o código.",
+      "reward": {
+        "defaultPlural": "Saldo de recompensa",
+        "help": "O seu saldo de {label}. Use-o como pagamento parcial ao finalizar a compra — escolha quanto usar em cada encomenda.",
+        "reason": {
+          "earn": "Ganho numa encomenda",
+          "grant": "Adicionado pelo restaurante",
+          "spend": "Gasto numa encomenda",
+          "release": "Devolvido (encomenda cancelada)",
+          "adjust": "Ajuste",
+          "signup_bonus": "Bónus de registo",
+          "expire": "Expirado"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Pack de refeição com especialidade",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Atingiu o seu limite — pode estar a perder pedidos",
     "blockBody": "O seu restaurante atingiu os {cap} pedidos gratuitos deste mês, por isso novos pedidos e reservas estão a ser recusados até o seu limite ser reposto a {resetDate}. Remova o limite agora para voltar a aceitá-los de imediato.",
     "cta": "Remover o limite"
+  },
+  "sidebar": {
+    "rewards": "Saldo de recompensa"
   }
 }

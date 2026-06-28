@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Enega ali več izdelkov v vaši košarici je mogoče naročiti le za določene dni ali ure. Spodaj smo nastavili najzgodnejši razpoložljivi termin — po želji ga prilagodite.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> je mogoče naročiti le ob določenih dneh ali urah. Razpoložljivi časi naročanja so bili ustrezno omejeni.",
     "serviceStartsPrompt": "🕒 Storitev {service} se še ni začela — začne se ob {time}.",
-    "youSaved": "Prihranili ste {amount}"
+    "youSaved": "Prihranili ste {amount}",
+    "reward": {
+      "defaultPlural": "Nagradni dobropis",
+      "useTitle": "Uporabite svoj {label}",
+      "balance": "Stanje: {amount}",
+      "useAll": "Uporabi vse",
+      "useNone": "Nič",
+      "chargeToday": "Za plačilo danes",
+      "capNote": "Za to naročilo lahko uporabite največ {amount}."
+    }
   },
   "reservation": {
     "title": "Rezerviraj mizo",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "VIP član",
       "memberLabelHint": "Vaše VIP e-poštno sporočilo bo vsebovalo: “Kot {label} v vaši restavraciji …”",
       "vipViaGroup": "prek {group}"
+    },
+    "rewards": {
+      "title": "Nagradni dobropis",
+      "subtitle": "Strankam podarite dobropis, ki ga lahko porabijo pri plačilu.",
+      "defaultPlural": "Nagradni dobropis",
+      "enable": "Vklopi Nagradni dobropis",
+      "enableHelp": "Denarnica z dobropisom za vaše stranke. Postopoma si nabirajo stanje in ga uporabijo kot delno plačilo pri prihodnjih naročilih.",
+      "enableDesc": "Stranke imajo lahko stanje {label} in ga porabijo pri prihodnjih naročilih. Za vašo restavracijo brezplačno.",
+      "nameTitle": "Kako temu pravite?",
+      "nameHelp": "Preimenujte denarnico, da se ujema z vašo blagovno znamko. Stranke to ime vidijo pri plačilu in v svojem računu.",
+      "namePlural": "Ime (množina)",
+      "namePluralPlaceholder": "Nagradni dobropis",
+      "nameSingular": "Ime (ednina)",
+      "nameSingularPlaceholder": "Nagradni dobropis",
+      "nameExamples": "Primeri: Nagradni dobropis, Točke zvestobe, Dobropis trgovine, Evri zvestobe, Pica evri, Bonus dobropis",
+      "earnTitle": "Stranke zbirajo samodejno",
+      "earnHelp": "Vrnite dobropis za vsako dokončano naročilo. Izklopite, če želite dobropis dodeljevati le ročno.",
+      "earnModePercent": "% naročila",
+      "earnModePerDollar": "Fiksni znesek na naročilo",
+      "earnPreviewPercent": "Stranke prejmejo nazaj {pct}% vsakega naročila kot {label}.",
+      "earnPreviewPerDollar": "Stranke prejmejo {amount} v {label} na naročilo.",
+      "redeemTitle": "Stranke lahko porabijo pri plačilu",
+      "redeemHelp": "Strankam dovolite, da stanje uporabijo za naročilo. Izklopljeno pomeni, da lahko nabirajo stanje, vendar ga še ne morejo porabiti.",
+      "maxRedeemPercent": "Najv. % naročila, plačan z dobropisom",
+      "maxRedeemPercentHelp": "Omejite, kolikšen del posameznega naročila se lahko plača z dobropisom (100 % pomeni celotno naročilo).",
+      "minRedeemBalance": "Najmanjše stanje za porabo",
+      "minRedeemBalanceHelp": "Stranke morajo imeti vsaj to stanje, preden lahko karkoli porabijo.",
+      "signupBonus": "Bonus ob registraciji",
+      "signupBonusHelp": "Dobropis se samodejno dodeli, ko stranka ustvari račun v vaši restavraciji.",
+      "save": "Shrani spremembe",
+      "balance": "Stanje",
+      "grantAmount": "Znesek",
+      "grantNote": "Opomba (neobvezno)",
+      "grantNotePlaceholder": "npr. Nagrada za zvestobo, dobra volja",
+      "grantAdd": "Dodaj",
+      "grantDeduct": "Odštej",
+      "grantEnterAmount": "Najprej vnesite znesek.",
+      "grantAdded": "Dobropis dodan.",
+      "grantDeducted": "Dobropis odštet.",
+      "grantFailed": "Prilagoditve ni bilo mogoče izvesti.",
+      "reason": {
+        "earn": "Prislužen z naročilom",
+        "grant": "Dodala restavracija",
+        "spend": "Porabljen za naročilo",
+        "release": "Vrnjen (naročilo preklicano)",
+        "adjust": "Prilagoditev",
+        "signup_bonus": "Bonus ob registraciji",
+        "expire": "Poteklo"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Samodejno — brez kode",
       "percentOff": "{value} % popusta",
       "fixedOff": "{amount} popusta",
-      "helpOffers": "Ugodnosti so shranjene v vašem računu. Tiste z oznako „Samodejna uporaba — brez kode“ se ob plačilu samodejno dodajo, ko vaše naročilo izpolnjuje pogoje — ničesar ni treba vnesti. Kuponi s kodo se uporabijo, ko vnesete kodo."
+      "helpOffers": "Ugodnosti so shranjene v vašem računu. Tiste z oznako „Samodejna uporaba — brez kode“ se ob plačilu samodejno dodajo, ko vaše naročilo izpolnjuje pogoje — ničesar ni treba vnesti. Kuponi s kodo se uporabijo, ko vnesete kodo.",
+      "reward": {
+        "defaultPlural": "Nagradni dobropis",
+        "help": "Vaše stanje {label}. Uporabite ga kot delno plačilo pri plačilu — pri vsakem naročilu izberite, koliko želite uporabiti.",
+        "reason": {
+          "earn": "Prislužen z naročilom",
+          "grant": "Dodala restavracija",
+          "spend": "Porabljen za naročilo",
+          "release": "Vrnjen (naročilo preklicano)",
+          "adjust": "Prilagoditev",
+          "signup_bonus": "Bonus ob registraciji",
+          "expire": "Poteklo"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Paket obroka s specialiteto",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Dosegli ste omejitev — morda izgubljate naročila",
     "blockBody": "Vaša restavracija je dosegla svojih {cap} brezplačnih naročil za ta mesec, zato se nova naročila in rezervacije zavračajo, dokler se omejitev ne ponastavi {resetDate}. Odstranite omejitev zdaj in jih začnite takoj znova sprejemati.",
     "cta": "Odstrani omejitev"
+  },
+  "sidebar": {
+    "rewards": "Nagradni dobropis"
   }
 }

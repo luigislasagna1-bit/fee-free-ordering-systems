@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Satu atau beberapa item di keranjang Anda hanya bisa dipesan untuk hari atau jam tertentu. Kami telah memilih slot paling awal yang tersedia di bawah ini — sesuaikan jika Anda mau.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> hanya dapat dipesan pada hari atau waktu tertentu. Waktu pemesanan yang tersedia telah dibatasi sesuai dengan itu.",
     "serviceStartsPrompt": "🕒 Layanan {service} belum dimulai — dimulai pukul {time}.",
-    "youSaved": "Anda hemat {amount}"
+    "youSaved": "Anda hemat {amount}",
+    "reward": {
+      "defaultPlural": "Dolar Hadiah",
+      "useTitle": "Gunakan {label} Anda",
+      "balance": "Saldo: {amount}",
+      "useAll": "Gunakan semua",
+      "useNone": "Tidak ada",
+      "chargeToday": "Dibayar hari ini",
+      "capNote": "Anda dapat menggunakan hingga {amount} untuk pesanan ini."
+    }
   },
   "reservation": {
     "title": "Pesan meja",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "Member VIP",
       "memberLabelHint": "Email VIP Anda akan berbunyi: “Sebagai {label} di restoran Anda…”",
       "vipViaGroup": "via {group}"
+    },
+    "rewards": {
+      "title": "Dolar Hadiah",
+      "subtitle": "Beri pelanggan kredit toko yang bisa mereka pakai saat checkout.",
+      "defaultPlural": "Dolar Hadiah",
+      "enable": "Aktifkan Dolar Hadiah",
+      "enableHelp": "Dompet kredit toko untuk pelanggan Anda. Mereka mengumpulkan saldo dan memakainya sebagai pembayaran sebagian pada pesanan berikutnya.",
+      "enableDesc": "Pelanggan dapat memiliki saldo {label} dan memakainya untuk pesanan mendatang. Gratis untuk restoran Anda.",
+      "nameTitle": "Anda menyebutnya apa?",
+      "nameHelp": "Ganti nama dompet agar sesuai dengan merek Anda. Pelanggan melihat nama ini saat checkout dan di akun mereka.",
+      "namePlural": "Nama (jamak)",
+      "namePluralPlaceholder": "Dolar Hadiah",
+      "nameSingular": "Nama (tunggal)",
+      "nameSingularPlaceholder": "Dolar Hadiah",
+      "nameExamples": "Contoh: Dolar Hadiah, Koin Hadiah, Dolar Kredit, Dolar Loyalitas, Koin Pizza, Kredit Toko",
+      "earnTitle": "Pelanggan mendapatkannya otomatis",
+      "earnHelp": "Berikan kredit kembali pada setiap pesanan yang selesai. Matikan jika Anda hanya ingin membagikan kredit secara manual.",
+      "earnModePercent": "% dari pesanan",
+      "earnModePerDollar": "Jumlah tetap per pesanan",
+      "earnPreviewPercent": "Pelanggan mendapatkan kembali {pct}% dari setiap pesanan sebagai {label}.",
+      "earnPreviewPerDollar": "Pelanggan mendapatkan {amount} dalam {label} per pesanan.",
+      "redeemTitle": "Pelanggan bisa membelanjakan saat checkout",
+      "redeemHelp": "Izinkan pelanggan memakai saldo mereka untuk sebuah pesanan. Mati berarti mereka bisa mengumpulkan saldo tetapi belum bisa memakainya.",
+      "maxRedeemPercent": "% maks pesanan yang dibayar dengan kredit",
+      "maxRedeemPercentHelp": "Batasi seberapa besar satu pesanan dapat dibayar dengan kredit (100% berarti seluruh pesanan).",
+      "minRedeemBalance": "Saldo minimum untuk dibelanjakan",
+      "minRedeemBalanceHelp": "Pelanggan harus memiliki setidaknya saldo ini sebelum bisa memakai sebagiannya.",
+      "signupBonus": "Bonus pendaftaran",
+      "signupBonusHelp": "Kredit yang otomatis diberikan saat pelanggan membuat akun di restoran Anda.",
+      "save": "Simpan perubahan",
+      "balance": "Saldo",
+      "grantAmount": "Jumlah",
+      "grantNote": "Catatan (opsional)",
+      "grantNotePlaceholder": "mis. Hadiah loyalitas, niat baik",
+      "grantAdd": "Tambah",
+      "grantDeduct": "Kurangi",
+      "grantEnterAmount": "Masukkan jumlah terlebih dahulu.",
+      "grantAdded": "Kredit ditambahkan.",
+      "grantDeducted": "Kredit dikurangi.",
+      "grantFailed": "Tidak bisa menerapkan penyesuaian.",
+      "reason": {
+        "earn": "Diperoleh dari pesanan",
+        "grant": "Ditambahkan oleh restoran",
+        "spend": "Dibelanjakan pada pesanan",
+        "release": "Dikembalikan (pesanan dibatalkan)",
+        "adjust": "Penyesuaian",
+        "signup_bonus": "Bonus pendaftaran",
+        "expire": "Kedaluwarsa"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Otomatis berlaku — tanpa kode",
       "percentOff": "Diskon {value}%",
       "fixedOff": "Diskon {amount}",
-      "helpOffers": "Penawaran tersimpan di akun Anda. Yang “Berlaku otomatis — tanpa kode” ditambahkan otomatis saat checkout jika pesanan Anda memenuhi syarat — tidak perlu memasukkan apa pun. Kupon dengan kode berlaku setelah Anda memasukkan kodenya."
+      "helpOffers": "Penawaran tersimpan di akun Anda. Yang “Berlaku otomatis — tanpa kode” ditambahkan otomatis saat checkout jika pesanan Anda memenuhi syarat — tidak perlu memasukkan apa pun. Kupon dengan kode berlaku setelah Anda memasukkan kodenya.",
+      "reward": {
+        "defaultPlural": "Dolar Hadiah",
+        "help": "Saldo {label} Anda. Pakai sebagai pembayaran sebagian saat checkout — pilih berapa banyak yang dipakai pada setiap pesanan.",
+        "reason": {
+          "earn": "Diperoleh dari pesanan",
+          "grant": "Ditambahkan oleh restoran",
+          "spend": "Dibelanjakan pada pesanan",
+          "release": "Dikembalikan (pesanan dibatalkan)",
+          "adjust": "Penyesuaian",
+          "signup_bonus": "Bonus pendaftaran",
+          "expire": "Kedaluwarsa"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Paket makan dengan menu spesial",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Anda telah mencapai batas — Anda mungkin kehilangan pesanan",
     "blockBody": "Restoran Anda telah mencapai {cap} pesanan gratis untuk bulan ini, jadi pesanan dan reservasi baru ditolak hingga batas Anda disetel ulang pada {resetDate}. Hapus batas sekarang untuk mulai menerimanya lagi seketika.",
     "cta": "Hapus batas"
+  },
+  "sidebar": {
+    "rewards": "Dolar Hadiah"
   }
 }

@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Unul sau mai multe produse din coșul tău pot fi comandate doar pentru anumite zile sau ore. Am setat mai jos cel mai apropiat interval disponibil — ajustează-l dacă dorești.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> poate fi comandat doar în anumite zile sau ore. Orele de comandă disponibile au fost limitate în consecință.",
     "serviceStartsPrompt": "🕒 Serviciul {service} nu a început încă — începe la {time}.",
-    "youSaved": "Ai economisit {amount}"
+    "youSaved": "Ai economisit {amount}",
+    "reward": {
+      "defaultPlural": "Dolari de recompensă",
+      "useTitle": "Folosește-ți {label}",
+      "balance": "Sold: {amount}",
+      "useAll": "Folosește tot",
+      "useNone": "Niciunul",
+      "chargeToday": "De plată azi",
+      "capNote": "Poți aplica până la {amount} la această comandă."
+    }
   },
   "reservation": {
     "title": "Rezervă o masă",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "membru VIP",
       "memberLabelHint": "E-mailul dvs. VIP va spune: „În calitate de {label} la restaurantul dvs.…”",
       "vipViaGroup": "prin {group}"
+    },
+    "rewards": {
+      "title": "Dolari de recompensă",
+      "subtitle": "Oferă clienților credit de magazin pe care îl pot cheltui la finalizarea comenzii.",
+      "defaultPlural": "Dolari de recompensă",
+      "enable": "Activează Dolari de recompensă",
+      "enableHelp": "Un portofel cu credit de magazin pentru clienții tăi. Aceștia acumulează un sold și îl folosesc ca plată parțială la comenzile viitoare.",
+      "enableDesc": "Clienții pot avea un sold de {label} și îl pot cheltui la comenzi viitoare. Gratuit pentru restaurantul tău.",
+      "nameTitle": "Cum îi spui?",
+      "nameHelp": "Redenumește portofelul pentru a se potrivi cu brandul tău. Clienții văd acest nume la finalizarea comenzii și în contul lor.",
+      "namePlural": "Nume (plural)",
+      "namePluralPlaceholder": "Dolari de recompensă",
+      "nameSingular": "Nume (singular)",
+      "nameSingularPlaceholder": "Dolar de recompensă",
+      "nameExamples": "Exemple: Dolari de recompensă, Bani de recompensă, Dolari credit, Dolari de fidelitate, Bani de pizza, Credit de magazin",
+      "earnTitle": "Clienții câștigă automat",
+      "earnHelp": "Oferă credit înapoi la fiecare comandă finalizată. Dezactivează dacă vrei să acorzi credit doar manual.",
+      "earnModePercent": "% din comandă",
+      "earnModePerDollar": "Sumă fixă per comandă",
+      "earnPreviewPercent": "Clienții primesc înapoi {pct}% din fiecare comandă sub formă de {label}.",
+      "earnPreviewPerDollar": "Clienții câștigă {amount} în {label} per comandă.",
+      "redeemTitle": "Clienții pot cheltui la finalizarea comenzii",
+      "redeemHelp": "Permite clienților să aplice soldul la o comandă. Dezactivat înseamnă că pot acumula un sold, dar nu îl pot cheltui încă.",
+      "maxRedeemPercent": "% maxim dintr-o comandă plătit cu credit",
+      "maxRedeemPercentHelp": "Limitează cât dintr-o singură comandă poate fi plătit cu credit (100% înseamnă întreaga comandă).",
+      "minRedeemBalance": "Sold minim pentru a cheltui",
+      "minRedeemBalanceHelp": "Clienții trebuie să aibă cel puțin acest sold înainte de a putea cheltui ceva din el.",
+      "signupBonus": "Bonus de înregistrare",
+      "signupBonusHelp": "Credit acordat automat când un client își creează un cont la restaurantul tău.",
+      "save": "Salvează modificările",
+      "balance": "Sold",
+      "grantAmount": "Sumă",
+      "grantNote": "Notă (opțional)",
+      "grantNotePlaceholder": "de ex. Recompensă de fidelitate, gest de bunăvoință",
+      "grantAdd": "Adaugă",
+      "grantDeduct": "Scade",
+      "grantEnterAmount": "Introdu mai întâi o sumă.",
+      "grantAdded": "Credit adăugat.",
+      "grantDeducted": "Credit scăzut.",
+      "grantFailed": "Ajustarea nu a putut fi aplicată.",
+      "reason": {
+        "earn": "Câștigat la o comandă",
+        "grant": "Adăugat de restaurant",
+        "spend": "Cheltuit la o comandă",
+        "release": "Returnat (comandă anulată)",
+        "adjust": "Ajustare",
+        "signup_bonus": "Bonus de înregistrare",
+        "expire": "Expirat"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Se aplică automat — fără cod",
       "percentOff": "{value}% reducere",
       "fixedOff": "{amount} reducere",
-      "helpOffers": "Ofertele sunt salvate în contul tău. Cele „Se aplică automat — fără cod” se adaugă automat la finalizarea comenzii când comanda ta este eligibilă — nu trebuie să introduci nimic. Cupoanele cu cod se aplică după ce introduci codul."
+      "helpOffers": "Ofertele sunt salvate în contul tău. Cele „Se aplică automat — fără cod” se adaugă automat la finalizarea comenzii când comanda ta este eligibilă — nu trebuie să introduci nimic. Cupoanele cu cod se aplică după ce introduci codul.",
+      "reward": {
+        "defaultPlural": "Dolari de recompensă",
+        "help": "Soldul tău de {label}. Cheltuiește-l ca plată parțială la finalizarea comenzii — alege cât folosești la fiecare comandă.",
+        "reason": {
+          "earn": "Câștigat la o comandă",
+          "grant": "Adăugat de restaurant",
+          "spend": "Cheltuit la o comandă",
+          "release": "Returnat (comandă anulată)",
+          "adjust": "Ajustare",
+          "signup_bonus": "Bonus de înregistrare",
+          "expire": "Expirat"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Pachet de masă cu specialitate",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Ai atins limita — s-ar putea să pierzi comenzi",
     "blockBody": "Restaurantul tău a atins cele {cap} comenzi gratuite pentru această lună, așa că noile comenzi și rezervări sunt refuzate până când limita se resetează pe {resetDate}. Elimină limita acum pentru a le accepta din nou imediat.",
     "cta": "Elimină limita"
+  },
+  "sidebar": {
+    "rewards": "Dolari de recompensă"
   }
 }

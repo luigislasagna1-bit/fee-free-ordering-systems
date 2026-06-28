@@ -491,7 +491,16 @@
     "fulfilSchedulePrompt": "📅 Un ou plusieurs articles de votre panier ne peuvent être commandés que certains jours ou à certaines heures. Nous avons sélectionné le créneau disponible le plus proche ci-dessous — modifiez-le si vous le souhaitez.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> ne peut être commandé que certains jours ou à certaines heures. Les horaires de commande disponibles ont été limités en conséquence.",
     "serviceStartsPrompt": "🕒 Le service {service} n'a pas encore commencé — il commence à {time}.",
-    "youSaved": "Vous économisez {amount}"
+    "youSaved": "Vous économisez {amount}",
+    "reward": {
+      "defaultPlural": "Crédits fidélité",
+      "useTitle": "Utiliser vos {label}",
+      "balance": "Solde : {amount}",
+      "useAll": "Tout utiliser",
+      "useNone": "Aucun",
+      "chargeToday": "À payer aujourd'hui",
+      "capNote": "Vous pouvez appliquer jusqu'à {amount} sur cette commande."
+    }
   },
   "reservation": {
     "title": "Réserver une table",
@@ -4178,6 +4187,55 @@
       "memberLabelDefault": "membre VIP",
       "memberLabelHint": "Votre e-mail VIP indiquera : « En tant que {label} de votre restaurant… »",
       "vipViaGroup": "via {group}"
+    },
+    "rewards": {
+      "title": "Crédits fidélité",
+      "subtitle": "Offrez à vos clients un crédit qu'ils peuvent dépenser au paiement.",
+      "defaultPlural": "Crédits fidélité",
+      "enable": "Activer les crédits fidélité",
+      "enableHelp": "Un portefeuille de crédit pour vos clients. Ils accumulent un solde et l'utilisent en paiement partiel sur leurs prochaines commandes.",
+      "enableDesc": "Les clients peuvent conserver un solde de {label} et le dépenser sur leurs prochaines commandes. Gratuit pour votre restaurant.",
+      "nameTitle": "Comment l'appelez-vous ?",
+      "nameHelp": "Renommez le portefeuille pour qu'il colle à votre marque. Les clients voient ce nom au paiement et dans leur compte.",
+      "namePlural": "Nom (pluriel)",
+      "namePluralPlaceholder": "Crédits fidélité",
+      "nameSingular": "Nom (singulier)",
+      "nameSingularPlaceholder": "Crédit fidélité",
+      "nameExamples": "Exemples : Crédits fidélité, Points fidélité, Cagnotte, Euros maison, Pizza points, Crédit boutique",
+      "earnTitle": "Les clients gagnent automatiquement",
+      "earnHelp": "Reversez du crédit sur chaque commande terminée. Désactivez si vous voulez attribuer du crédit uniquement à la main.",
+      "earnModePercent": "% de la commande",
+      "earnModePerDollar": "Montant fixe par commande",
+      "earnPreviewPercent": "Les clients récupèrent {pct}% de chaque commande en {label}.",
+      "earnPreviewPerDollar": "Les clients gagnent {amount} en {label} par commande.",
+      "redeemTitle": "Les clients peuvent dépenser au paiement",
+      "redeemHelp": "Permettez aux clients d'appliquer leur solde sur une commande. Désactivé : ils peuvent accumuler un solde mais pas encore le dépenser.",
+      "maxRedeemPercent": "% max. d'une commande payé par crédit",
+      "maxRedeemPercentHelp": "Limitez la part d'une même commande payable en crédit (100 % correspond à la totalité de la commande).",
+      "minRedeemBalance": "Solde minimum pour dépenser",
+      "minRedeemBalanceHelp": "Les clients doivent disposer d'au moins ce solde avant de pouvoir en dépenser une partie.",
+      "signupBonus": "Bonus d'inscription",
+      "signupBonusHelp": "Crédit attribué automatiquement lorsqu'un client crée un compte dans votre restaurant.",
+      "save": "Enregistrer les modifications",
+      "balance": "Solde",
+      "grantAmount": "Montant",
+      "grantNote": "Note (facultatif)",
+      "grantNotePlaceholder": "ex. récompense fidélité, geste commercial",
+      "grantAdd": "Ajouter",
+      "grantDeduct": "Déduire",
+      "grantEnterAmount": "Saisissez d'abord un montant.",
+      "grantAdded": "Crédit ajouté.",
+      "grantDeducted": "Crédit déduit.",
+      "grantFailed": "Impossible d'appliquer l'ajustement.",
+      "reason": {
+        "earn": "Gagné sur une commande",
+        "grant": "Ajouté par le restaurant",
+        "spend": "Dépensé sur une commande",
+        "release": "Restitué (commande annulée)",
+        "adjust": "Ajustement",
+        "signup_bonus": "Bonus d'inscription",
+        "expire": "Expiré"
+      }
     }
   },
   "impersonation": {
@@ -5198,7 +5256,20 @@
       "offerAutoApplies": "Auto-appliqué — sans code",
       "percentOff": "-{value} %",
       "fixedOff": "{amount} de réduction",
-      "helpOffers": "Offres enregistrées sur votre compte. Celles « Appliquées automatiquement — sans code » sont ajoutées automatiquement au paiement lorsque votre commande y est admissible — rien à saisir. Les coupons avec un code s’appliquent une fois que vous saisissez le code."
+      "helpOffers": "Offres enregistrées sur votre compte. Celles « Appliquées automatiquement — sans code » sont ajoutées automatiquement au paiement lorsque votre commande y est admissible — rien à saisir. Les coupons avec un code s’appliquent une fois que vous saisissez le code.",
+      "reward": {
+        "defaultPlural": "Crédits fidélité",
+        "help": "Votre solde de {label}. Utilisez-le en paiement partiel au moment de payer — choisissez le montant à utiliser sur chaque commande.",
+        "reason": {
+          "earn": "Gagné sur une commande",
+          "grant": "Ajouté par le restaurant",
+          "spend": "Dépensé sur une commande",
+          "release": "Restitué (commande annulée)",
+          "adjust": "Ajustement",
+          "signup_bonus": "Bonus d'inscription",
+          "expire": "Expiré"
+        }
+      }
     },
     "bundle": {
       "mealBundleWithSpeciality": "Menu avec spécialité",
@@ -5632,5 +5703,8 @@
     "blockTitle": "Vous avez atteint votre limite — vous perdez peut-être des commandes",
     "blockBody": "Votre restaurant a atteint ses {cap} commandes gratuites pour ce mois-ci ; les nouvelles commandes et réservations sont donc refusées jusqu'à la réinitialisation de votre limite le {resetDate}. Supprimez la limite maintenant pour recommencer à les accepter immédiatement.",
     "cta": "Supprimer la limite"
+  },
+  "sidebar": {
+    "rewards": "Crédits fidélité"
   }
 }
