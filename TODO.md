@@ -201,3 +201,8 @@ SHIPPED this session: configurable earn rules (signup-window / first-order / ord
 - Birthday + referral earn triggers (need a Customer.birthday column + a referral link/flow).
 - Optional "earn-only mode" (let a store earn but NOT allow spending). Current design = opt-in means customers CAN pay with credit (per Luigi). Add a toggle only if Luigi wants earn-only.
 - Show the earned-credit amount on the order confirmation/receipt + a reward_credit promo's amount in the customer's "My offers".
+
+## Pizza half/half + copy-settings (captured 2026-06-27, session 3)
+SHIPPED: half/half pizza pricing now charges HALF for a topping/sauce/cheese on one half (client computePrice + server (L.H)/(R.H) halving, unit-tested); "Copy settings to other items" (item row → modal → pick sections + target items/categories → /api/menu/items/[id]/copy-settings, clones modifiers + remaps pizzaConfig). Deferred:
+- Copy-settings: variant-SCOPED modifier groups aren't copied (cloned as item-level); combo config not copyable (item-specific). Fine for v1.
+- Pizza extra-quantity bump: server doesn't add the extraQuantityMultiplier bump at all (pre-existing; only matters when a restaurant sets it >0, default 0). Revisit if a store uses it.
