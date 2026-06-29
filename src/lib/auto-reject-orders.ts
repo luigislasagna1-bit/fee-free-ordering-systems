@@ -14,6 +14,7 @@ import prisma from "@/lib/db";
 import { notifyCustomer, notifyStaff } from "@/lib/notifications";
 import { refundDirectPayment, voidPayment } from "@/lib/stripe";
 import { releaseCouponsForOrder } from "@/lib/coupon-ledger";
+import { releaseForOrder as releaseRewardForOrder } from "@/lib/reward-ledger";
 import { releasePromotionUsage } from "@/lib/order-notifications";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
@@ -167,6 +168,9 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       // Free any coupon this abandoned order had reserved, so the customer can
       // re-use the offer on a fresh order. Idempotent + internally safe.
       await releaseCouponsForOrder(o.id);
+      // Return any Reward Dollars reserved on this abandoned order (no-op when
+      // none were spent). Mirrors the manual cancel path in orders/[id]/route.
+      await releaseRewardForOrder(o.id);
       // Marketplace attribution shouldn't include orders that never paid.
       // (For belt-and-suspenders — usually marketplaceCounterApplied is
       // false on never-paid orders, but the rollback is idempotent.)
@@ -216,6 +220,11 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       // Coupon ledger: a timed-out ("missed") order releases its coupon back to
       // the customer — never burned by an order the restaurant never accepted.
       await releaseCouponsForOrder(order.id);
+      // Reward Dollars: a missed order returns any spent credit to the wallet,
+      // exactly like a manual reject (orders/[id]/route.ts). Without this, credit
+      // spent on an order the kitchen never accepted was stranded in "applied"
+      // forever. Idempotent — no-ops when the order spent no credit. (Luigi 2026-06-29)
+      await releaseRewardForOrder(order.id);
       // Same for the Promotion GLOBAL usage cap — give back the count this
       // released-then-missed order consumed (B11). These candidates are all
       // notifiedAt != null, so they were incremented at release.
