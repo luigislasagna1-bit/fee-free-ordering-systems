@@ -291,7 +291,9 @@
     "rewardTileSignup": "Registreeru ja saa {amount}",
     "rewardTileFirstOrder": "Teeni {amount} oma esimese tellimusega",
     "rewardTileOrderOver": "Teeni {amount} tellimustelt üle {threshold}",
-    "rewardTileNth": "Teeni {amount} iga {n} tellimuse kohta"
+    "rewardTileNth": "Teeni {amount} iga {n} tellimuse kohta",
+    "rewardSignupBannerText": "Registreeru ja teeni {label}",
+    "rewardSignupBannerCta": "Registreeru"
   },
   "pizza": {
     "chooseSize": "Vali suurus",
@@ -4268,7 +4270,8 @@
         "delete": "Kustuta",
         "cancel": "Tühista",
         "save": "Loo"
-      }
+      },
+      "memberLabelGroupHint": "Alistab vaikeväärtuse ainult selle rühma jaoks."
     },
     "rewards": {
       "title": "Boonusraha",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Eemaldatud sinu jaotisest „Pakkumised“."
       },
       "signupBonusAlways": "Registreerumisboonus (alati aktiivne)",
-      "signupBonusDatedHint": "Antakse igale uuele kontole, lõppkuupäevata. Tähtajalise registreerumispakkumise jaoks (algus-/lõppkuupäev) kasuta ülal valikut „Lisa teenimisviis → Kui klient registreerub“."
+      "signupBonusDatedHint": "Antakse igale uuele kontole, lõppkuupäevata. Tähtajalise registreerumispakkumise jaoks (algus-/lõppkuupäev) kasuta ülal valikut „Lisa teenimisviis → Kui klient registreerub“.",
+      "signupBannerTitle": "Kutsu külalised registreeruma {label} jaoks",
+      "signupBannerHelp": "Külalised saavad {label} teenida ja kulutada ainult kontoga. See näitab tellimislehel registreerumisbännerit.",
+      "signupBannerDesc": "Välja logitud kliendid näevad bännerit, mis kutsub looma konto ja teenima {label}.",
+      "excludeTitle": "Tooted, mis ei teeni {label}",
+      "excludeHelp": "Kliendid ei teeni {label} välistatud toodetelt või kategooriatelt (nt kinkekaardid). Nad saavad {label} siiski KULUTADA igale tellimusele.",
+      "excludeDesc": "Valige kategooriad või tooted, mis ei tohiks teenida {label}.",
+      "excludeOn": "Teenib",
+      "excludeOff": "Tasudeta",
+      "excludeViaCategory": "Välistatud kategooria kaudu",
+      "excludeFailed": "Salvestamine ebaõnnestus — proovige uuesti.",
+      "excludeLoading": "Menüü laadimine…",
+      "excludeNone": "Veel pole kategooriaid."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Tagastatud teie saldole",
           "reverse": "Tühistatud (tellimus tagastatud)"
         },
-        "orderRef": "Tellimus #{number}"
+        "orderRef": "Tellimus #{number}",
+        "someExcluded": "Mõned tooted (nt kinkekaardid) ei teeni {label}."
       }
     },
     "bundle": {

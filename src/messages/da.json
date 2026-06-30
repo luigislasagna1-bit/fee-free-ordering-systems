@@ -291,7 +291,9 @@
     "rewardTileSignup": "Tilmeld dig og få {amount}",
     "rewardTileFirstOrder": "Optjen {amount} på din første bestilling",
     "rewardTileOrderOver": "Optjen {amount} på bestillinger over {threshold}",
-    "rewardTileNth": "Optjen {amount} for hver {n} bestillinger"
+    "rewardTileNth": "Optjen {amount} for hver {n} bestillinger",
+    "rewardSignupBannerText": "Tilmeld dig og optjen {label}",
+    "rewardSignupBannerCta": "Tilmeld dig"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",
@@ -4268,7 +4270,8 @@
         "delete": "Slet",
         "cancel": "Annuller",
         "save": "Opret"
-      }
+      },
+      "memberLabelGroupHint": "Tilsidesætter standarden kun for denne gruppe."
     },
     "rewards": {
       "title": "Bonuskroner",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Fjernet fra din Tilbud-sektion."
       },
       "signupBonusAlways": "Tilmeldingsbonus (altid aktiv)",
-      "signupBonusDatedHint": "Gives til hver ny konto uden slutdato. For et tidsbegrænset tilmeldingstilbud (start-/slutdato) skal du bruge “Tilføj en måde at optjene på → Når en kunde tilmelder sig” ovenfor."
+      "signupBonusDatedHint": "Gives til hver ny konto uden slutdato. For et tidsbegrænset tilmeldingstilbud (start-/slutdato) skal du bruge “Tilføj en måde at optjene på → Når en kunde tilmelder sig” ovenfor.",
+      "signupBannerTitle": "Inviter gæster til at tilmelde sig {label}",
+      "signupBannerHelp": "Gæster kan kun optjene og bruge {label} med en konto. Dette viser et tilmeldingsbanner på din bestillingsside.",
+      "signupBannerDesc": "Udloggede kunder ser et banner, der inviterer dem til at oprette en konto og optjene {label}.",
+      "excludeTitle": "Varer der ikke optjener {label}",
+      "excludeHelp": "Kunder optjener ikke {label} på undtagne varer eller kategorier (f.eks. gavekort). De kan stadig BRUGE {label} på enhver ordre.",
+      "excludeDesc": "Vælg kategorier eller varer, der ikke skal optjene {label}.",
+      "excludeOn": "Optjener",
+      "excludeOff": "Ingen belønning",
+      "excludeViaCategory": "Undtaget via kategori",
+      "excludeFailed": "Kunne ikke gemme — prøv igen.",
+      "excludeLoading": "Indlæser din menu…",
+      "excludeNone": "Ingen kategorier endnu."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Refunderet til din saldo",
           "reverse": "Tilbageført (ordre refunderet)"
         },
-        "orderRef": "Ordre #{number}"
+        "orderRef": "Ordre #{number}",
+        "someExcluded": "Nogle varer (som gavekort) optjener ikke {label}."
       }
     },
     "bundle": {

@@ -291,7 +291,9 @@
     "rewardTileSignup": "Kaydol ve {amount} kazan",
     "rewardTileFirstOrder": "İlk siparişinizde {amount} kazanın",
     "rewardTileOrderOver": "{threshold} üzeri siparişlerde {amount} kazanın",
-    "rewardTileNth": "Her {n} siparişte {amount} kazanın"
+    "rewardTileNth": "Her {n} siparişte {amount} kazanın",
+    "rewardSignupBannerText": "Kaydolun ve {label} kazanın",
+    "rewardSignupBannerCta": "Kaydol"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",
@@ -4268,7 +4270,8 @@
         "delete": "Sil",
         "cancel": "İptal",
         "save": "Oluştur"
-      }
+      },
+      "memberLabelGroupHint": "Yalnızca bu grup için varsayılanı geçersiz kılar."
     },
     "rewards": {
       "title": "Ödül Dolarları",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Promosyonlar bölümünüzden kaldırıldı."
       },
       "signupBonusAlways": "Kayıt bonusu (her zaman açık)",
-      "signupBonusDatedHint": "Bitiş tarihi olmadan her yeni hesaba verilir. Süreli bir kayıt teklifi (başlangıç/bitiş tarihleri) için yukarıdaki “Kazanma yolu ekle → Bir müşteri kaydolduğunda” seçeneğini kullanın."
+      "signupBonusDatedHint": "Bitiş tarihi olmadan her yeni hesaba verilir. Süreli bir kayıt teklifi (başlangıç/bitiş tarihleri) için yukarıdaki “Kazanma yolu ekle → Bir müşteri kaydolduğunda” seçeneğini kullanın.",
+      "signupBannerTitle": "Misafirleri {label} için kaydolmaya davet edin",
+      "signupBannerHelp": "Misafirler {label} yalnızca hesapla kazanıp harcayabilir. Bu, sipariş sayfanızda bir kayıt afişi gösterir.",
+      "signupBannerDesc": "Oturumu kapalı müşteriler, hesap oluşturup {label} kazanmaya davet eden bir afiş görür.",
+      "excludeTitle": "{label} kazandırmayan ürünler",
+      "excludeHelp": "Müşteriler hariç tutulan ürün veya kategorilerde (ör. hediye kartları) {label} kazanmaz. {label} her siparişte yine de HARCAYABİLİR.",
+      "excludeDesc": "{label} kazandırmaması gereken kategorileri veya ürünleri seçin.",
+      "excludeOn": "Kazandırır",
+      "excludeOff": "Ödül yok",
+      "excludeViaCategory": "Kategori üzerinden hariç",
+      "excludeFailed": "Kaydedilemedi — tekrar deneyin.",
+      "excludeLoading": "Menünüz yükleniyor…",
+      "excludeNone": "Henüz kategori yok."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Bakiyenize iade edildi",
           "reverse": "Geri alındı (sipariş iade edildi)"
         },
-        "orderRef": "Sipariş #{number}"
+        "orderRef": "Sipariş #{number}",
+        "someExcluded": "Bazı ürünler (örn. hediye kartları) {label} kazandırmaz."
       }
     },
     "bundle": {

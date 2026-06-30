@@ -479,6 +479,11 @@ export default async function OrderingPage({
         hostedSiteBackUrl={hostedSiteBackUrl}
         promoBanners={promoBanners}
         rewardPromoTiles={rewardPromoTiles}
+        rewardSignupBanner={
+          (restaurantBase as any).rewardsEnabled && (restaurantBase as any).rewardSignupBannerEnabled && !currentCustomer
+            ? { rewardName: (restaurantBase as any).rewardLabelPlural?.trim() || (restaurantBase as any).rewardLabelSingular?.trim() || null }
+            : null
+        }
         customerChannel={customerChannel}
         marketplaceAccount={marketplaceAccount}
         customerIsReturning={customerIsReturning}

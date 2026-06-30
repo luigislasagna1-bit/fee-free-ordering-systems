@@ -18,7 +18,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (!await getOwned(id, restaurantId)) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   const body = await req.json();
-  const { name, description, imageUrl, isActive, isHidden, isCatering, sortOrder, visibility } = body;
+  const { name, description, imageUrl, isActive, isHidden, isCatering, sortOrder, visibility, rewardEarnExcluded } = body;
   let visData: Record<string, unknown> = {};
   if (visibility !== undefined) {
     const v = buildVisibilityData(visibility);
@@ -33,6 +33,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       // the existing value (matches Prisma's update semantics for the
       // other optional flags above).
       ...(isCatering !== undefined ? { isCatering: !!isCatering } : {}),
+      ...(rewardEarnExcluded !== undefined ? { rewardEarnExcluded: !!rewardEarnExcluded } : {}),
       ...visData,
     },
   });

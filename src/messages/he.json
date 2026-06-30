@@ -291,7 +291,9 @@
     "rewardTileSignup": "הירשמו וקבלו {amount}",
     "rewardTileFirstOrder": "צברו {amount} בהזמנה הראשונה שלכם",
     "rewardTileOrderOver": "צברו {amount} בהזמנות מעל {threshold}",
-    "rewardTileNth": "צברו {amount} בכל {n} הזמנות"
+    "rewardTileNth": "צברו {amount} בכל {n} הזמנות",
+    "rewardSignupBannerText": "הירשמו כדי לצבור {label}",
+    "rewardSignupBannerCta": "הרשמה"
   },
   "pizza": {
     "chooseSize": "בחר גודל",
@@ -4268,7 +4270,8 @@
         "delete": "מחק",
         "cancel": "ביטול",
         "save": "צור"
-      }
+      },
+      "memberLabelGroupHint": "עוקף את ברירת המחדל לקבוצה זו בלבד."
     },
     "rewards": {
       "title": "דולרים של תגמולים",
@@ -4364,7 +4367,19 @@
         "promoteOff": "הוסר ממקטע המבצעים שלכם."
       },
       "signupBonusAlways": "בונוס הרשמה (פעיל תמיד)",
-      "signupBonusDatedHint": "ניתן לכל חשבון חדש, ללא תאריך סיום. עבור מבצע הרשמה לזמן מוגבל (תאריכי התחלה/סיום), השתמשו ב„הוסף דרך לצבור → כאשר לקוח נרשם“ למעלה."
+      "signupBonusDatedHint": "ניתן לכל חשבון חדש, ללא תאריך סיום. עבור מבצע הרשמה לזמן מוגבל (תאריכי התחלה/סיום), השתמשו ב„הוסף דרך לצבור → כאשר לקוח נרשם“ למעלה.",
+      "signupBannerTitle": "הזמינו אורחים להירשם ל-{label}",
+      "signupBannerHelp": "אורחים יכולים לצבור ולממש {label} רק עם חשבון. אפשרות זו מציגה באנר הרשמה בעמוד ההזמנות.",
+      "signupBannerDesc": "לקוחות שאינם מחוברים רואים באנר שמזמין אותם ליצור חשבון ולהתחיל לצבור {label}.",
+      "excludeTitle": "פריטים שלא צוברים {label}",
+      "excludeHelp": "לקוחות לא יצברו {label} על פריטים או קטגוריות שהוחרגו (למשל כרטיסי מתנה). הם עדיין יכולים להוציא {label} בכל הזמנה.",
+      "excludeDesc": "בחרו קטגוריות או פריטים שלא אמורים לצבור {label}.",
+      "excludeOn": "צובר",
+      "excludeOff": "ללא תגמול",
+      "excludeViaCategory": "הוחרג דרך הקטגוריה",
+      "excludeFailed": "השמירה נכשלה — נסו שוב.",
+      "excludeLoading": "טוען את התפריט…",
+      "excludeNone": "עדיין אין קטגוריות."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "הוחזר ליתרה שלך",
           "reverse": "בוטל (ההזמנה הוחזרה)"
         },
-        "orderRef": "הזמנה #{number}"
+        "orderRef": "הזמנה #{number}",
+        "someExcluded": "פריטים מסוימים (כמו כרטיסי מתנה) לא צוברים {label}."
       }
     },
     "bundle": {

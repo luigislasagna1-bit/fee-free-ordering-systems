@@ -25,6 +25,7 @@ export default async function RewardsPage() {
       rewardMinRedeemBalance: true,
       rewardMaxRedeemPercent: true,
       rewardSignupBonus: true,
+      rewardSignupBannerEnabled: true,
     },
   });
 
@@ -43,6 +44,7 @@ export default async function RewardsPage() {
         rewardMinRedeemBalance: r?.rewardMinRedeemBalance ?? 0,
         rewardMaxRedeemPercent: r?.rewardMaxRedeemPercent ?? 100,
         rewardSignupBonus: r?.rewardSignupBonus ?? 0,
+        rewardSignupBannerEnabled: r?.rewardSignupBannerEnabled ?? false,
       }}
     />
   );

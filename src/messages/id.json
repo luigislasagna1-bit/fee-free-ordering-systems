@@ -291,7 +291,9 @@
     "rewardTileSignup": "Daftar & dapatkan {amount}",
     "rewardTileFirstOrder": "Dapatkan {amount} pada pesanan pertama Anda",
     "rewardTileOrderOver": "Dapatkan {amount} untuk pesanan di atas {threshold}",
-    "rewardTileNth": "Dapatkan {amount} setiap {n} pesanan"
+    "rewardTileNth": "Dapatkan {amount} setiap {n} pesanan",
+    "rewardSignupBannerText": "Daftar untuk mendapatkan {label}",
+    "rewardSignupBannerCta": "Daftar"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -4268,7 +4270,8 @@
         "delete": "Hapus",
         "cancel": "Batal",
         "save": "Buat"
-      }
+      },
+      "memberLabelGroupHint": "Mengganti default hanya untuk grup ini."
     },
     "rewards": {
       "title": "Dolar Hadiah",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Dihapus dari bagian Promo Anda."
       },
       "signupBonusAlways": "Bonus pendaftaran (selalu aktif)",
-      "signupBonusDatedHint": "Diberikan ke setiap akun baru, tanpa tanggal berakhir. Untuk penawaran pendaftaran berbatas waktu (tanggal mulai/berakhir), gunakan “Tambahkan cara mendapatkan → Saat pelanggan mendaftar” di atas."
+      "signupBonusDatedHint": "Diberikan ke setiap akun baru, tanpa tanggal berakhir. Untuk penawaran pendaftaran berbatas waktu (tanggal mulai/berakhir), gunakan “Tambahkan cara mendapatkan → Saat pelanggan mendaftar” di atas.",
+      "signupBannerTitle": "Ajak tamu mendaftar untuk {label}",
+      "signupBannerHelp": "Tamu hanya bisa mendapatkan dan memakai {label} dengan akun. Ini menampilkan banner pendaftaran di halaman pesanan Anda.",
+      "signupBannerDesc": "Pelanggan yang belum masuk melihat banner yang mengajak membuat akun dan mulai mendapatkan {label}.",
+      "excludeTitle": "Item yang tidak mendapatkan {label}",
+      "excludeHelp": "Pelanggan tidak akan mendapatkan {label} pada item atau kategori yang dikecualikan (mis. kartu hadiah). Mereka tetap bisa MEMBELANJAKAN {label} di pesanan mana pun.",
+      "excludeDesc": "Pilih kategori atau item yang tidak boleh mendapatkan {label}.",
+      "excludeOn": "Mendapatkan",
+      "excludeOff": "Tanpa hadiah",
+      "excludeViaCategory": "Dikecualikan via kategori",
+      "excludeFailed": "Gagal menyimpan — coba lagi.",
+      "excludeLoading": "Memuat menu Anda…",
+      "excludeNone": "Belum ada kategori."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Dikembalikan ke saldo Anda",
           "reverse": "Dibatalkan (pesanan dikembalikan)"
         },
-        "orderRef": "Pesanan #{number}"
+        "orderRef": "Pesanan #{number}",
+        "someExcluded": "Beberapa item (seperti kartu hadiah) tidak mendapatkan {label}."
       }
     },
     "bundle": {

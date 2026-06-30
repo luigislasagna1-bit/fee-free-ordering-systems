@@ -84,6 +84,16 @@ export default async function RestaurantAccountDashboard({
       }
     }
   }
+  // Does this store exclude any items/categories from EARNING? If so we tell the
+  // customer (e.g. "Gift cards don't earn Pizza Bucks"). Cheap count. Luigi 2026-06-30.
+  let rewardHasExclusions = false;
+  if (restaurant.rewardsEnabled) {
+    const [exCat, exItem] = await Promise.all([
+      prisma.menuCategory.count({ where: { restaurantId: restaurant.id, rewardEarnExcluded: true } }).catch(() => 0),
+      prisma.menuItem.count({ where: { restaurantId: restaurant.id, rewardEarnExcluded: true } }).catch(() => 0),
+    ]);
+    rewardHasExclusions = exCat + exItem > 0;
+  }
 
   const now = new Date();
   const [offers, orders] = await Promise.all([
@@ -285,6 +295,9 @@ export default async function RestaurantAccountDashboard({
                   );
                 })}
               </ul>
+            )}
+            {rewardHasExclusions && (
+              <p className="px-6 pb-4 pt-1 text-xs text-gray-400">{t("reward.someExcluded", { label: rewardLabelPlural })}</p>
             )}
           </div>
         )}

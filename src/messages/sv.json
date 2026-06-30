@@ -291,7 +291,9 @@
     "rewardTileSignup": "Registrera dig och få {amount}",
     "rewardTileFirstOrder": "Tjäna {amount} på din första beställning",
     "rewardTileOrderOver": "Tjäna {amount} på beställningar över {threshold}",
-    "rewardTileNth": "Tjäna {amount} var {n}:e beställning"
+    "rewardTileNth": "Tjäna {amount} var {n}:e beställning",
+    "rewardSignupBannerText": "Registrera dig och tjäna {label}",
+    "rewardSignupBannerCta": "Registrera dig"
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -4268,7 +4270,8 @@
         "delete": "Ta bort",
         "cancel": "Avbryt",
         "save": "Skapa"
-      }
+      },
+      "memberLabelGroupHint": "Åsidosätter standardvärdet endast för denna grupp."
     },
     "rewards": {
       "title": "Bonuspengar",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Borttagen från din Erbjudanden-sektion."
       },
       "signupBonusAlways": "Registreringsbonus (alltid på)",
-      "signupBonusDatedHint": "Ges till varje nytt konto, utan slutdatum. För ett tidsbegränsat registreringserbjudande (start-/slutdatum) använder du ”Lägg till ett sätt att tjäna → När en kund registrerar sig” ovan."
+      "signupBonusDatedHint": "Ges till varje nytt konto, utan slutdatum. För ett tidsbegränsat registreringserbjudande (start-/slutdatum) använder du ”Lägg till ett sätt att tjäna → När en kund registrerar sig” ovan.",
+      "signupBannerTitle": "Bjud in gäster att registrera sig för {label}",
+      "signupBannerHelp": "Gäster kan bara tjäna och använda {label} med ett konto. Detta visar en registreringsbanner på din beställningssida.",
+      "signupBannerDesc": "Utloggade kunder ser en banner som bjuder in dem att skapa ett konto och tjäna {label}.",
+      "excludeTitle": "Varor som inte tjänar {label}",
+      "excludeHelp": "Kunder tjänar inga {label} på undantagna varor eller kategorier (t.ex. presentkort). De kan fortfarande ANVÄNDA {label} på alla beställningar.",
+      "excludeDesc": "Välj kategorier eller varor som inte ska tjäna {label}.",
+      "excludeOn": "Tjänar",
+      "excludeOff": "Inga belöningar",
+      "excludeViaCategory": "Undantagen via kategori",
+      "excludeFailed": "Kunde inte spara — försök igen.",
+      "excludeLoading": "Laddar din meny…",
+      "excludeNone": "Inga kategorier ännu."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Återbetalt till ditt saldo",
           "reverse": "Återförd (order återbetald)"
         },
-        "orderRef": "Beställning #{number}"
+        "orderRef": "Beställning #{number}",
+        "someExcluded": "Vissa varor (som presentkort) tjänar inte {label}."
       }
     },
     "bundle": {

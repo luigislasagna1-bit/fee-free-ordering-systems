@@ -12,7 +12,7 @@
  * (Restaurant.rewardSignupBonus, reason "signup_bonus").
  */
 import prisma from "@/lib/db";
-import { grant } from "@/lib/reward-ledger";
+import { grant, earnBasisForOrder, EARN_BASIS_ORDER_SELECT } from "@/lib/reward-ledger";
 import { round2 } from "@/lib/reward-math";
 import { signupGrantsFor, orderEarnGrantsFor, type EarnRule } from "@/lib/reward-rules";
 
@@ -54,8 +54,8 @@ export async function awardEarnRulesForOrder(opts: { orderId: string }): Promise
     const order = await prisma.order.findUnique({
       where: { id: opts.orderId },
       select: {
-        id: true, restaurantId: true, customerId: true, subtotal: true, couponDiscount: true,
-        promoDiscount: true, completedAt: true, createdAt: true,
+        id: true, restaurantId: true, customerId: true, completedAt: true, createdAt: true,
+        ...EARN_BASIS_ORDER_SELECT,
         restaurant: { select: { rewardsEnabled: true } },
       },
     });
@@ -82,7 +82,7 @@ export async function awardEarnRulesForOrder(opts: { orderId: string }): Promise
       },
     });
 
-    const basis = Math.max(0, Math.round(((order.subtotal ?? 0) - (order.couponDiscount ?? 0) - (order.promoDiscount ?? 0)) * 100) / 100);
+    const basis = await earnBasisForOrder(opts.orderId, order); // excludes gift-card-style items; reuses this load
     const grants = orderEarnGrantsFor(rules, {
       at: order.completedAt ?? new Date(),
       basis,
@@ -115,8 +115,8 @@ export async function projectOrderEarn(orderId: string): Promise<number> {
     const order = await prisma.order.findUnique({
       where: { id: orderId },
       select: {
-        restaurantId: true, customerId: true, subtotal: true, couponDiscount: true,
-        promoDiscount: true, createdAt: true, completedAt: true,
+        restaurantId: true, customerId: true, createdAt: true, completedAt: true,
+        ...EARN_BASIS_ORDER_SELECT,
         restaurant: {
           select: {
             rewardsEnabled: true, rewardEarnEnabled: true, rewardEarnMode: true,
@@ -126,7 +126,7 @@ export async function projectOrderEarn(orderId: string): Promise<number> {
       },
     });
     if (!order?.customerId || !order.restaurant?.rewardsEnabled) return 0;
-    const basis = Math.max(0, round2((order.subtotal ?? 0) - (order.couponDiscount ?? 0) - (order.promoDiscount ?? 0)));
+    const basis = await earnBasisForOrder(orderId, order); // excludes gift-card-style items; reuses this load
     if (basis <= 0) return 0;
 
     const r = order.restaurant;

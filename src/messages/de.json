@@ -291,7 +291,9 @@
     "rewardTileSignup": "Registrieren & {amount} erhalten",
     "rewardTileFirstOrder": "Verdiene {amount} bei deiner ersten Bestellung",
     "rewardTileOrderOver": "Verdiene {amount} bei Bestellungen über {threshold}",
-    "rewardTileNth": "Verdiene {amount} alle {n} Bestellungen"
+    "rewardTileNth": "Verdiene {amount} alle {n} Bestellungen",
+    "rewardSignupBannerText": "Registrieren und {label} sammeln",
+    "rewardSignupBannerCta": "Registrieren"
   },
   "pizza": {
     "chooseSize": "Größe wählen",
@@ -4268,7 +4270,8 @@
         "delete": "Löschen",
         "cancel": "Abbrechen",
         "save": "Erstellen"
-      }
+      },
+      "memberLabelGroupHint": "Überschreibt die Standardeinstellung nur für diese Gruppe."
     },
     "rewards": {
       "title": "Bonusguthaben",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Aus deinem Bereich „Aktionen“ entfernt."
       },
       "signupBonusAlways": "Anmeldebonus (immer aktiv)",
-      "signupBonusDatedHint": "Wird jedem neuen Konto ohne Enddatum gewährt. Für ein zeitlich begrenztes Anmeldeangebot (Start-/Enddatum) verwenden Sie oben „Verdienstmöglichkeit hinzufügen → Wenn sich ein Kunde anmeldet“."
+      "signupBonusDatedHint": "Wird jedem neuen Konto ohne Enddatum gewährt. Für ein zeitlich begrenztes Anmeldeangebot (Start-/Enddatum) verwenden Sie oben „Verdienstmöglichkeit hinzufügen → Wenn sich ein Kunde anmeldet“.",
+      "signupBannerTitle": "Gäste einladen, sich für {label} zu registrieren",
+      "signupBannerHelp": "Gäste können {label} nur mit einem Konto sammeln und einlösen. Dies zeigt ein Registrierungs-Banner auf Ihrer Bestellseite.",
+      "signupBannerDesc": "Abgemeldete Kunden sehen ein Banner, das sie einlädt, ein Konto zu erstellen und {label} zu sammeln.",
+      "excludeTitle": "Artikel, die keine {label} verdienen",
+      "excludeHelp": "Kunden verdienen keine {label} bei ausgeschlossenen Artikeln oder Kategorien (z. B. Geschenkkarten). Sie können {label} weiterhin bei jeder Bestellung AUSGEBEN.",
+      "excludeDesc": "Wählen Sie Kategorien oder Artikel, die keine {label} verdienen sollen.",
+      "excludeOn": "Verdient",
+      "excludeOff": "Keine Prämien",
+      "excludeViaCategory": "Über Kategorie ausgeschlossen",
+      "excludeFailed": "Speichern fehlgeschlagen — bitte erneut versuchen.",
+      "excludeLoading": "Menü wird geladen…",
+      "excludeNone": "Noch keine Kategorien."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Auf Ihr Guthaben erstattet",
           "reverse": "Rückgängig gemacht (Bestellung erstattet)"
         },
-        "orderRef": "Bestellung #{number}"
+        "orderRef": "Bestellung #{number}",
+        "someExcluded": "Manche Artikel (z. B. Geschenkkarten) verdienen keine {label}."
       }
     },
     "bundle": {

@@ -10,7 +10,7 @@ import { HelpTip } from "@/components/HelpTip";
 import { ScheduleEditor } from "../ScheduleEditor";
 
 type Member = { id: string; name: string | null; email: string | null; phone: string | null; hasAccount: boolean };
-type Group = { id: string; name: string; description: string | null };
+type Group = { id: string; name: string; description: string | null; memberLabel: string | null };
 type Promo = { id: string; name: string; promotionType: string; isActive: boolean; displayMode: string; couponCode: string | null; ruleConfig: any; minimumOrder: number };
 type Special = Promo & { linkId: string };
 type Pickable = Promo & { groupCount: number };
@@ -30,6 +30,7 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
   const [editing, setEditing] = useState(false);
   const [editName, setEditName] = useState(group.name);
   const [editDesc, setEditDesc] = useState(group.description ?? "");
+  const [editLabel, setEditLabel] = useState(group.memberLabel ?? "");
   const [info, setInfo] = useState({ name: group.name, description: group.description ?? "" });
   const [savingInfo, setSavingInfo] = useState(false);
   async function saveDetails() {
@@ -39,7 +40,7 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
     try {
       const res = await fetch(`/api/admin/customer-groups/${group.id}`, {
         method: "PATCH", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, description: editDesc.trim() }),
+        body: JSON.stringify({ name, description: editDesc.trim(), memberLabel: editLabel.trim() || null }),
       });
       const data = await res.json();
       if (!res.ok) { toast.error(data.error || t("renameFailed")); return; }
@@ -162,9 +163,14 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
             <div className="space-y-2 max-w-md">
               <input className={inputCls} value={editName} maxLength={80} placeholder={t("groupNamePlaceholder")} onChange={(e) => setEditName(e.target.value)} />
               <input className={inputCls} value={editDesc} maxLength={500} placeholder={t("groupDescPlaceholder")} onChange={(e) => setEditDesc(e.target.value)} />
+              {/* Per-group "what do you call your members" — overrides the
+                  restaurant default for THIS group's VIP emails. Luigi 2026-06-30. */}
+              <label className="block text-xs font-medium text-gray-600 pt-1">{t("memberLabelLabel")}</label>
+              <input className={inputCls} value={editLabel} maxLength={40} placeholder={t("memberLabelPlaceholder")} onChange={(e) => setEditLabel(e.target.value)} />
+              <p className="text-[11px] text-gray-400">{t("memberLabelGroupHint")}</p>
               <div className="flex gap-2">
                 <button onClick={saveDetails} disabled={savingInfo} className="bg-gray-900 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-gray-800 transition disabled:opacity-50">{savingInfo ? "…" : t("memberLabelSave")}</button>
-                <button onClick={() => { setEditing(false); setEditName(info.name); setEditDesc(info.description); }} className="px-4 py-2 rounded-xl text-sm text-gray-600 hover:bg-gray-100 transition">{t("cancel")}</button>
+                <button onClick={() => { setEditing(false); setEditName(info.name); setEditDesc(info.description); setEditLabel(group.memberLabel ?? ""); }} className="px-4 py-2 rounded-xl text-sm text-gray-600 hover:bg-gray-100 transition">{t("cancel")}</button>
               </div>
             </div>
           ) : (

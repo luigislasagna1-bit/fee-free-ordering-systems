@@ -291,7 +291,9 @@
     "rewardTileSignup": "Rekisteröidy ja saa {amount}",
     "rewardTileFirstOrder": "Ansaitse {amount} ensimmäisellä tilauksellasi",
     "rewardTileOrderOver": "Ansaitse {amount} yli {threshold} tilauksista",
-    "rewardTileNth": "Ansaitse {amount} joka {n} tilauksesta"
+    "rewardTileNth": "Ansaitse {amount} joka {n} tilauksesta",
+    "rewardSignupBannerText": "Rekisteröidy ja ansaitse {label}",
+    "rewardSignupBannerCta": "Rekisteröidy"
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -4268,7 +4270,8 @@
         "delete": "Poista",
         "cancel": "Peruuta",
         "save": "Luo"
-      }
+      },
+      "memberLabelGroupHint": "Korvaa oletuksen vain tälle ryhmälle."
     },
     "rewards": {
       "title": "Bonusrahat",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Poistettu Tarjoukset-osiostasi."
       },
       "signupBonusAlways": "Rekisteröitymisbonus (aina käytössä)",
-      "signupBonusDatedHint": "Annetaan jokaiselle uudelle tilille ilman päättymispäivää. Määräaikaista rekisteröitymistarjousta varten (alku-/päättymispäivä) käytä yllä olevaa kohtaa ”Lisää ansaintatapa → Kun asiakas rekisteröityy”."
+      "signupBonusDatedHint": "Annetaan jokaiselle uudelle tilille ilman päättymispäivää. Määräaikaista rekisteröitymistarjousta varten (alku-/päättymispäivä) käytä yllä olevaa kohtaa ”Lisää ansaintatapa → Kun asiakas rekisteröityy”.",
+      "signupBannerTitle": "Kutsu vieraat rekisteröitymään {label}-etuun",
+      "signupBannerHelp": "Vieraat voivat ansaita ja käyttää {label}-etua vain tilillä. Tämä näyttää rekisteröitymisbannerin tilaussivullasi.",
+      "signupBannerDesc": "Uloskirjautuneet asiakkaat näkevät bannerin, joka kutsuu luomaan tilin ja ansaitsemaan {label}.",
+      "excludeTitle": "Tuotteet, jotka eivät kerrytä {label}",
+      "excludeHelp": "Asiakkaat eivät kerrytä {label} suljetuista tuotteista tai luokista (esim. lahjakortit). He voivat silti KÄYTTÄÄ {label} mihin tahansa tilaukseen.",
+      "excludeDesc": "Valitse luokat tai tuotteet, jotka eivät saa kerryttää {label}.",
+      "excludeOn": "Kerryttää",
+      "excludeOff": "Ei palkkioita",
+      "excludeViaCategory": "Suljettu luokan kautta",
+      "excludeFailed": "Tallennus epäonnistui — yritä uudelleen.",
+      "excludeLoading": "Ladataan valikkoa…",
+      "excludeNone": "Ei vielä luokkia."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Hyvitetty saldoosi",
           "reverse": "Peruutettu (tilaus hyvitetty)"
         },
-        "orderRef": "Tilaus #{number}"
+        "orderRef": "Tilaus #{number}",
+        "someExcluded": "Jotkin tuotteet (kuten lahjakortit) eivät kerrytä {label}."
       }
     },
     "bundle": {

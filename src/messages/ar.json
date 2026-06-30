@@ -291,7 +291,9 @@
     "rewardTileSignup": "سجّل واحصل على {amount}",
     "rewardTileFirstOrder": "اكسب {amount} مع أول طلب",
     "rewardTileOrderOver": "اكسب {amount} على الطلبات التي تتجاوز {threshold}",
-    "rewardTileNth": "اكسب {amount} كل {n} طلبات"
+    "rewardTileNth": "اكسب {amount} كل {n} طلبات",
+    "rewardSignupBannerText": "سجّل لتبدأ في كسب {label}",
+    "rewardSignupBannerCta": "سجّل"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",
@@ -4268,7 +4270,8 @@
         "delete": "حذف",
         "cancel": "إلغاء",
         "save": "إنشاء"
-      }
+      },
+      "memberLabelGroupHint": "يتجاوز الإعداد الافتراضي لهذه المجموعة فقط."
     },
     "rewards": {
       "title": "دولارات المكافآت",
@@ -4364,7 +4367,19 @@
         "promoteOff": "تمت إزالته من قسم العروض."
       },
       "signupBonusAlways": "مكافأة التسجيل (مُفعّلة دائمًا)",
-      "signupBonusDatedHint": "تُمنح لكل حساب جديد دون تاريخ انتهاء. للحصول على عرض تسجيل لفترة محدودة (بتاريخَي بدء/انتهاء)، استخدم ”إضافة طريقة للكسب → عند تسجيل العميل“ أعلاه."
+      "signupBonusDatedHint": "تُمنح لكل حساب جديد دون تاريخ انتهاء. للحصول على عرض تسجيل لفترة محدودة (بتاريخَي بدء/انتهاء)، استخدم ”إضافة طريقة للكسب → عند تسجيل العميل“ أعلاه.",
+      "signupBannerTitle": "ادعُ الزوار للتسجيل للحصول على {label}",
+      "signupBannerHelp": "لا يمكن للزوار كسب {label} وإنفاقها إلا بحساب. يعرض هذا لافتة تسجيل على صفحة الطلب.",
+      "signupBannerDesc": "يرى العملاء غير المسجّلين لافتة تدعوهم لإنشاء حساب وبدء كسب {label}.",
+      "excludeTitle": "العناصر التي لا تكسب {label}",
+      "excludeHelp": "لن يكسب العملاء {label} على العناصر أو الفئات المستثناة (مثل بطاقات الهدايا). لا يزال بإمكانهم إنفاق {label} على أي طلب.",
+      "excludeDesc": "اختر الفئات أو العناصر التي لا ينبغي أن تكسب {label}.",
+      "excludeOn": "يكسب",
+      "excludeOff": "بدون مكافآت",
+      "excludeViaCategory": "مستثنى عبر الفئة",
+      "excludeFailed": "تعذّر الحفظ — حاول مرة أخرى.",
+      "excludeLoading": "جارٍ تحميل قائمتك…",
+      "excludeNone": "لا توجد فئات بعد."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "تم ردّه إلى رصيدك",
           "reverse": "تم العكس (تم ردّ الطلب)"
         },
-        "orderRef": "الطلب #{number}"
+        "orderRef": "الطلب #{number}",
+        "someExcluded": "بعض العناصر (مثل بطاقات الهدايا) لا تكسب {label}."
       }
     },
     "bundle": {

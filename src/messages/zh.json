@@ -291,7 +291,9 @@
     "rewardTileSignup": "注册即得 {amount}",
     "rewardTileFirstOrder": "首单赚取 {amount}",
     "rewardTileOrderOver": "订单满 {threshold} 赚取 {amount}",
-    "rewardTileNth": "每 {n} 单赚取 {amount}"
+    "rewardTileNth": "每 {n} 单赚取 {amount}",
+    "rewardSignupBannerText": "注册即可赚取{label}",
+    "rewardSignupBannerCta": "注册"
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -4268,7 +4270,8 @@
         "delete": "删除",
         "cancel": "取消",
         "save": "创建"
-      }
+      },
+      "memberLabelGroupHint": "仅为该组覆盖默认值。"
     },
     "rewards": {
       "title": "奖励金",
@@ -4364,7 +4367,19 @@
         "promoteOff": "已从您的促销专区移除。"
       },
       "signupBonusAlways": "注册奖励（始终开启）",
-      "signupBonusDatedHint": "向每个新账户发放，无结束日期。如需限时注册优惠（开始/结束日期），请使用上方的“添加赚取方式 → 当客户注册时”。"
+      "signupBonusDatedHint": "向每个新账户发放，无结束日期。如需限时注册优惠（开始/结束日期），请使用上方的“添加赚取方式 → 当客户注册时”。",
+      "signupBannerTitle": "邀请访客注册以获得{label}",
+      "signupBannerHelp": "访客只有注册账户后才能赚取和使用{label}。此选项会在您的点餐页面显示注册横幅。",
+      "signupBannerDesc": "未登录的顾客会看到一个横幅，邀请他们创建账户并开始赚取{label}。",
+      "excludeTitle": "不赚取{label}的商品",
+      "excludeHelp": "顾客在被排除的商品或类别（如礼品卡）上不会赚取{label}，但仍可在任何订单中使用{label}。",
+      "excludeDesc": "选择不应赚取{label}的类别或商品。",
+      "excludeOn": "可赚取",
+      "excludeOff": "不赚取",
+      "excludeViaCategory": "通过类别排除",
+      "excludeFailed": "保存失败 — 请重试。",
+      "excludeLoading": "正在加载您的菜单…",
+      "excludeNone": "暂无菜单类别。"
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "已退回您的余额",
           "reverse": "已撤销（订单已退款）"
         },
-        "orderRef": "订单 #{number}"
+        "orderRef": "订单 #{number}",
+        "someExcluded": "部分商品（如礼品卡）不赚取{label}。"
       }
     },
     "bundle": {

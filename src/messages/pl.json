@@ -291,7 +291,9 @@
     "rewardTileSignup": "Zarejestruj się i odbierz {amount}",
     "rewardTileFirstOrder": "Zdobądź {amount} przy pierwszym zamówieniu",
     "rewardTileOrderOver": "Zdobądź {amount} przy zamówieniach powyżej {threshold}",
-    "rewardTileNth": "Zdobądź {amount} co {n} zamówień"
+    "rewardTileNth": "Zdobądź {amount} co {n} zamówień",
+    "rewardSignupBannerText": "Zarejestruj się i zbieraj {label}",
+    "rewardSignupBannerCta": "Zarejestruj się"
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",
@@ -4268,7 +4270,8 @@
         "delete": "Usuń",
         "cancel": "Anuluj",
         "save": "Utwórz"
-      }
+      },
+      "memberLabelGroupHint": "Zastępuje wartość domyślną tylko dla tej grupy."
     },
     "rewards": {
       "title": "Złotówki za zakupy",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Usunięto z Twojej sekcji Promocje."
       },
       "signupBonusAlways": "Bonus za rejestrację (zawsze aktywny)",
-      "signupBonusDatedHint": "Przyznawany każdemu nowemu kontu, bez daty zakończenia. W przypadku oferty rejestracyjnej na czas ograniczony (daty rozpoczęcia/zakończenia) użyj powyżej opcji „Dodaj sposób zdobywania → Gdy klient się zarejestruje”."
+      "signupBonusDatedHint": "Przyznawany każdemu nowemu kontu, bez daty zakończenia. W przypadku oferty rejestracyjnej na czas ograniczony (daty rozpoczęcia/zakończenia) użyj powyżej opcji „Dodaj sposób zdobywania → Gdy klient się zarejestruje”.",
+      "signupBannerTitle": "Zaproś gości do rejestracji po {label}",
+      "signupBannerHelp": "Goście mogą zdobywać i wydawać {label} tylko z kontem. To pokazuje baner rejestracji na stronie zamówień.",
+      "signupBannerDesc": "Wylogowani klienci widzą baner zachęcający do założenia konta i zbierania {label}.",
+      "excludeTitle": "Produkty, które nie zarabiają {label}",
+      "excludeHelp": "Klienci nie zdobędą {label} za wykluczone produkty lub kategorie (np. karty podarunkowe). Nadal mogą WYDAWAĆ {label} na dowolne zamówienie.",
+      "excludeDesc": "Wybierz kategorie lub produkty, które nie powinny zarabiać {label}.",
+      "excludeOn": "Zarabia",
+      "excludeOff": "Bez nagród",
+      "excludeViaCategory": "Wykluczone przez kategorię",
+      "excludeFailed": "Nie udało się zapisać — spróbuj ponownie.",
+      "excludeLoading": "Ładowanie menu…",
+      "excludeNone": "Brak kategorii."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Zwrócono na Twoje saldo",
           "reverse": "Cofnięto (zamówienie zwrócone)"
         },
-        "orderRef": "Zamówienie #{number}"
+        "orderRef": "Zamówienie #{number}",
+        "someExcluded": "Niektóre produkty (np. karty podarunkowe) nie zarabiają {label}."
       }
     },
     "bundle": {

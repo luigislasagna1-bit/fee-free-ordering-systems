@@ -291,7 +291,9 @@
     "rewardTileSignup": "Registrirajte se i ostvarite {amount}",
     "rewardTileFirstOrder": "Zaradite {amount} na prvoj narudžbi",
     "rewardTileOrderOver": "Zaradite {amount} na narudžbama iznad {threshold}",
-    "rewardTileNth": "Zaradite {amount} svakih {n} narudžbi"
+    "rewardTileNth": "Zaradite {amount} svakih {n} narudžbi",
+    "rewardSignupBannerText": "Registrirajte se i skupljajte {label}",
+    "rewardSignupBannerCta": "Registracija"
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",
@@ -4268,7 +4270,8 @@
         "delete": "Izbriši",
         "cancel": "Odustani",
         "save": "Stvori"
-      }
+      },
+      "memberLabelGroupHint": "Nadjačava zadano samo za ovu grupu."
     },
     "rewards": {
       "title": "Nagradni bodovi",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Uklonjeno iz vašeg odjeljka Promocije."
       },
       "signupBonusAlways": "Bonus za registraciju (uvijek aktivan)",
-      "signupBonusDatedHint": "Dodjeljuje se svakom novom računu, bez datuma završetka. Za vremenski ograničenu ponudu za registraciju (datumi početka/završetka) upotrijebite gore „Dodaj način zarade → Kada se kupac registrira“."
+      "signupBonusDatedHint": "Dodjeljuje se svakom novom računu, bez datuma završetka. Za vremenski ograničenu ponudu za registraciju (datumi početka/završetka) upotrijebite gore „Dodaj način zarade → Kada se kupac registrira“.",
+      "signupBannerTitle": "Pozovite goste da se registriraju za {label}",
+      "signupBannerHelp": "Gosti mogu skupljati i trošiti {label} samo s računom. Ovo prikazuje banner za registraciju na vašoj stranici za narudžbe.",
+      "signupBannerDesc": "Odjavljeni kupci vide banner koji ih poziva da otvore račun i počnu skupljati {label}.",
+      "excludeTitle": "Stavke koje ne zarađuju {label}",
+      "excludeHelp": "Kupci neće zaraditi {label} na isključenim stavkama ili kategorijama (npr. poklon-bonovi). I dalje mogu POTROŠITI {label} na bilo koju narudžbu.",
+      "excludeDesc": "Odaberite kategorije ili stavke koje ne bi trebale zarađivati {label}.",
+      "excludeOn": "Zarađuje",
+      "excludeOff": "Bez nagrada",
+      "excludeViaCategory": "Isključeno putem kategorije",
+      "excludeFailed": "Spremanje nije uspjelo — pokušajte ponovno.",
+      "excludeLoading": "Učitavanje jelovnika…",
+      "excludeNone": "Još nema kategorija."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Vraćeno na vaš saldo",
           "reverse": "Poništeno (narudžba vraćena)"
         },
-        "orderRef": "Narudžba #{number}"
+        "orderRef": "Narudžba #{number}",
+        "someExcluded": "Neke stavke (poput poklon-bonova) ne zarađuju {label}."
       }
     },
     "bundle": {

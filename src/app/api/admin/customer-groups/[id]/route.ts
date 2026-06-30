@@ -10,7 +10,7 @@ import { getSessionUser } from "@/lib/session";
 async function ownGroup(id: string, restaurantId: string) {
   const g = await prisma.customerGroup.findUnique({
     where: { id },
-    select: { id: true, restaurantId: true, name: true, description: true, createdAt: true, updatedAt: true },
+    select: { id: true, restaurantId: true, name: true, description: true, memberLabel: true, createdAt: true, updatedAt: true },
   });
   if (!g || g.restaurantId !== restaurantId) return null;
   return g;
@@ -86,13 +86,15 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
 
   let body: any;
   try { body = await req.json(); } catch { return NextResponse.json({ error: "Invalid JSON" }, { status: 400 }); }
-  const data: { name?: string; description?: string | null } = {};
+  const data: { name?: string; description?: string | null; memberLabel?: string | null } = {};
   if (typeof body.name === "string") {
     const name = body.name.trim().slice(0, 80);
     if (!name) return NextResponse.json({ error: "Group name is required" }, { status: 400 });
     data.name = name;
   }
   if (body.description !== undefined) data.description = body.description?.toString().slice(0, 500) || null;
+  // Per-group "what do you call your members" override (null → restaurant default).
+  if (body.memberLabel !== undefined) data.memberLabel = body.memberLabel?.toString().trim().slice(0, 40) || null;
 
   try {
     await prisma.customerGroup.update({ where: { id }, data });
