@@ -5400,7 +5400,9 @@
           "release": "Vrátené (objednávka zrušená)",
           "adjust": "Úprava",
           "signup_bonus": "Bonus za registráciu",
-          "expire": "Vypršané"
+          "expire": "Vypršané",
+          "refund": "Vrátené na váš zostatok",
+          "reverse": "Stornované (objednávka vrátená)"
         },
         "orderRef": "Objednávka #{number}"
       }

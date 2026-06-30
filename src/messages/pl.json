@@ -5400,7 +5400,9 @@
           "release": "Zwrócone (zamówienie anulowane)",
           "adjust": "Korekta",
           "signup_bonus": "Bonus za rejestrację",
-          "expire": "Wygasłe"
+          "expire": "Wygasłe",
+          "refund": "Zwrócono na Twoje saldo",
+          "reverse": "Cofnięto (zamówienie zwrócone)"
         },
         "orderRef": "Zamówienie #{number}"
       }

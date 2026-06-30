@@ -5400,7 +5400,9 @@
           "release": "Đã hoàn lại (đơn bị hủy)",
           "adjust": "Điều chỉnh",
           "signup_bonus": "Thưởng đăng ký",
-          "expire": "Đã hết hạn"
+          "expire": "Đã hết hạn",
+          "refund": "Đã hoàn vào số dư của bạn",
+          "reverse": "Đã đảo ngược (đơn hàng được hoàn)"
         },
         "orderRef": "Đơn hàng #{number}"
       }

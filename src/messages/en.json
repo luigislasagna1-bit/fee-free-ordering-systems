@@ -5379,7 +5379,9 @@
           "release": "Returned (order cancelled)",
           "adjust": "Adjustment",
           "signup_bonus": "Sign-up bonus",
-          "expire": "Expired"
+          "expire": "Expired",
+          "refund": "Refunded to your balance",
+          "reverse": "Reversed (order refunded)"
         },
         "orderRef": "Order #{number}"
       },

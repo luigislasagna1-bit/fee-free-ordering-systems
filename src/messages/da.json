@@ -5400,7 +5400,9 @@
           "release": "Tilbageført (ordre annulleret)",
           "adjust": "Justering",
           "signup_bonus": "Velkomstbonus",
-          "expire": "Udløbet"
+          "expire": "Udløbet",
+          "refund": "Refunderet til din saldo",
+          "reverse": "Tilbageført (ordre refunderet)"
         },
         "orderRef": "Ordre #{number}"
       }

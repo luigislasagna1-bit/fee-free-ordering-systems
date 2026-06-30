@@ -5400,7 +5400,9 @@
           "release": "Returnat (comandă anulată)",
           "adjust": "Ajustare",
           "signup_bonus": "Bonus de înregistrare",
-          "expire": "Expirat"
+          "expire": "Expirat",
+          "refund": "Rambursat în soldul tău",
+          "reverse": "Anulat (comandă rambursată)"
         },
         "orderRef": "Comanda #{number}"
       }

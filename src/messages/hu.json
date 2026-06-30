@@ -5400,7 +5400,9 @@
           "release": "Visszatérítve (rendelés törölve)",
           "adjust": "Módosítás",
           "signup_bonus": "Regisztrációs bónusz",
-          "expire": "Lejárt"
+          "expire": "Lejárt",
+          "refund": "Visszatérítve az egyenlegére",
+          "reverse": "Visszavonva (rendelés visszatérítve)"
         },
         "orderRef": "Rendelés #{number}"
       }

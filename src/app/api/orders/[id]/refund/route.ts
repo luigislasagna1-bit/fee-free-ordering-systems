@@ -3,6 +3,7 @@ import { after } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { refundDirectPayment } from "@/lib/stripe";
+import { refundForOrder as refundRewardForOrder } from "@/lib/reward-ledger";
 import { sendOrderRefundEmail } from "@/lib/email";
 import { formatCurrency } from "@/lib/utils";
 
@@ -149,6 +150,14 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     },
     select: { refundedAmount: true, refundStatus: true, paymentStatus: true },
   });
+
+  // Reward Dollars: on a FULL refund, make the wallet whole — return the credit
+  // the customer SPENT on this order and claw back the credit they EARNED on it
+  // (clamp ≥ 0). Idempotent + best-effort so it never blocks the refund response.
+  // Partial refunds leave credit untouched. Luigi 2026-06-30.
+  if (isFull) {
+    after(refundRewardForOrder(id).catch((e) => console.error("[refund reward-to-wallet]", e instanceof Error ? e.message : e)));
+  }
 
   // Transactional email — the customer always gets a written record of the
   // refund (amount + partial/full). Fire-and-forget so a slow/failed email

@@ -257,7 +257,7 @@ export default async function RestaurantAccountDashboard({
                   // Normalise reason keys like "earn:first_order" / "promo:abc" to
                   // their base label ("earn" / "grant") for translation.
                   const baseReason = l.reason.split(":")[0];
-                  const reasonLabel = ["earn", "grant", "spend", "release", "adjust", "signup_bonus", "expire"].includes(baseReason)
+                  const reasonLabel = ["earn", "grant", "spend", "release", "adjust", "signup_bonus", "expire", "refund", "reverse"].includes(baseReason)
                     ? t(`reward.reason.${baseReason}`)
                     : l.reason;
                   const orderNumber = l.orderId ? rewardOrderNumbers[l.orderId] : undefined;

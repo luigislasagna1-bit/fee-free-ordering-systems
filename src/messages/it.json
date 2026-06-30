@@ -5400,7 +5400,9 @@
           "release": "Restituito (ordine annullato)",
           "adjust": "Rettifica",
           "signup_bonus": "Bonus di iscrizione",
-          "expire": "Scaduto"
+          "expire": "Scaduto",
+          "refund": "Rimborsato sul tuo saldo",
+          "reverse": "Annullato (ordine rimborsato)"
         },
         "orderRef": "Ordine n. {number}"
       }

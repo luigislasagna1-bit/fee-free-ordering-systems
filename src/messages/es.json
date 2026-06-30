@@ -5400,7 +5400,9 @@
           "release": "Devuelto (pedido cancelado)",
           "adjust": "Ajuste",
           "signup_bonus": "Bono de registro",
-          "expire": "Caducado"
+          "expire": "Caducado",
+          "refund": "Reembolsado a tu saldo",
+          "reverse": "Revertido (pedido reembolsado)"
         },
         "orderRef": "Pedido n.º {number}"
       }

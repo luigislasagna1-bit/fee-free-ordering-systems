@@ -5400,7 +5400,9 @@
           "release": "Zurückerstattet (Bestellung storniert)",
           "adjust": "Anpassung",
           "signup_bonus": "Anmeldebonus",
-          "expire": "Verfallen"
+          "expire": "Verfallen",
+          "refund": "Auf Ihr Guthaben erstattet",
+          "reverse": "Rückgängig gemacht (Bestellung erstattet)"
         },
         "orderRef": "Bestellung #{number}"
       }

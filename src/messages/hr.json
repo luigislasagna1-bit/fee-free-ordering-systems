@@ -5400,7 +5400,9 @@
           "release": "Vraćeno (narudžba otkazana)",
           "adjust": "Prilagodba",
           "signup_bonus": "Bonus za registraciju",
-          "expire": "Isteklo"
+          "expire": "Isteklo",
+          "refund": "Vraćeno na vaš saldo",
+          "reverse": "Poništeno (narudžba vraćena)"
         },
         "orderRef": "Narudžba #{number}"
       }

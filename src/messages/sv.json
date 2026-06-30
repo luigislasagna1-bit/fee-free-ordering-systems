@@ -5400,7 +5400,9 @@
           "release": "Återförd (beställning avbruten)",
           "adjust": "Justering",
           "signup_bonus": "Välkomstbonus",
-          "expire": "Utgånget"
+          "expire": "Utgånget",
+          "refund": "Återbetalt till ditt saldo",
+          "reverse": "Återförd (order återbetald)"
         },
         "orderRef": "Beställning #{number}"
       }

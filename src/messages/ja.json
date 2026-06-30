@@ -5400,7 +5400,9 @@
           "release": "返還（注文キャンセル）",
           "adjust": "調整",
           "signup_bonus": "登録ボーナス",
-          "expire": "失効"
+          "expire": "失効",
+          "refund": "残高に返金されました",
+          "reverse": "取り消し（注文が返金されました）"
         },
         "orderRef": "注文 #{number}"
       }

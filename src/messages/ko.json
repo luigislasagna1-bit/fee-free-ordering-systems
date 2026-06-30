@@ -5400,7 +5400,9 @@
           "release": "환원 (주문 취소)",
           "adjust": "조정",
           "signup_bonus": "가입 보너스",
-          "expire": "만료됨"
+          "expire": "만료됨",
+          "refund": "잔액으로 환불됨",
+          "reverse": "취소됨 (주문 환불됨)"
         },
         "orderRef": "주문 #{number}"
       }

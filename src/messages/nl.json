@@ -5400,7 +5400,9 @@
           "release": "Teruggegeven (bestelling geannuleerd)",
           "adjust": "Aanpassing",
           "signup_bonus": "Aanmeldbonus",
-          "expire": "Verlopen"
+          "expire": "Verlopen",
+          "refund": "Teruggestort op je saldo",
+          "reverse": "Teruggedraaid (bestelling terugbetaald)"
         },
         "orderRef": "Bestelling #{number}"
       }

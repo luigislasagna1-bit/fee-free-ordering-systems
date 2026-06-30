@@ -5400,7 +5400,9 @@
           "release": "Atgriezts (pasūtījums atcelts)",
           "adjust": "Korekcija",
           "signup_bonus": "Reģistrācijas bonuss",
-          "expire": "Beidzies derīgums"
+          "expire": "Beidzies derīgums",
+          "refund": "Atgriezts jūsu atlikumā",
+          "reverse": "Atcelts (pasūtījums atmaksāts)"
         },
         "orderRef": "Pasūtījums #{number}"
       }
