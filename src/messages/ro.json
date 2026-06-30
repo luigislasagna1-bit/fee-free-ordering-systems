@@ -5355,7 +5355,8 @@
     "cancel": "Anulează",
     "save": "Salvează adresa",
     "saving": "Se salvează…",
-    "addAddress": "Adaugă o adresă"
+    "addAddress": "Adaugă o adresă",
+    "pinHint": "Trage indicatorul în locul exact de livrare."
   },
   "marketplace": {
     "headerTagline": "0% comision · Restaurante locale · Fără prețuri majorate",

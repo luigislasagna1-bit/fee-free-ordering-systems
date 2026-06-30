@@ -5355,7 +5355,8 @@
     "cancel": "Atšaukti",
     "save": "Išsaugoti adresą",
     "saving": "Saugoma…",
-    "addAddress": "Pridėti adresą"
+    "addAddress": "Pridėti adresą",
+    "pinHint": "Nuvilkite smeigtuką į tikslią pristatymo vietą."
   },
   "marketplace": {
     "headerTagline": "0% komisinių · Vietiniai restoranai · Be papildomų mokesčių",

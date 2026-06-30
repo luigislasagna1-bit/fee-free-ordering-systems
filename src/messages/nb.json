@@ -5355,7 +5355,8 @@
     "cancel": "Avbryt",
     "save": "Lagre adresse",
     "saving": "Lagrer…",
-    "addAddress": "Legg til en adresse"
+    "addAddress": "Legg til en adresse",
+    "pinHint": "Dra nålen til ditt nøyaktige leveringssted."
   },
   "marketplace": {
     "headerTagline": "0% provisjon · Lokale restauranter · Ingen prisoppgang",

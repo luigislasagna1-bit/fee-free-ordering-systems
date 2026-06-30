@@ -5355,7 +5355,8 @@
     "cancel": "キャンセル",
     "save": "住所を保存",
     "saving": "保存中…",
-    "addAddress": "住所を追加"
+    "addAddress": "住所を追加",
+    "pinHint": "ピンを正確な配達場所までドラッグしてください。"
   },
   "marketplace": {
     "headerTagline": "手数料0% · 地元レストラン · 急騰料金なし",

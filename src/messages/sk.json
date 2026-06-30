@@ -5355,7 +5355,8 @@
     "cancel": "Zrušiť",
     "save": "Uložiť adresu",
     "saving": "Ukladanie…",
-    "addAddress": "Pridať adresu"
+    "addAddress": "Pridať adresu",
+    "pinHint": "Potiahnite špendlík na presné miesto doručenia."
   },
   "marketplace": {
     "headerTagline": "0% provízia · Miestne reštaurácie · Bez dynamického zdražovania",

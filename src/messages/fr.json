@@ -5355,7 +5355,8 @@
     "cancel": "Annuler",
     "save": "Enregistrer l'adresse",
     "saving": "Enregistrement…",
-    "addAddress": "Ajouter une adresse"
+    "addAddress": "Ajouter une adresse",
+    "pinHint": "Faites glisser le repère jusqu'à l'endroit exact de livraison."
   },
   "marketplace": {
     "headerTagline": "0% de commission · Restaurants locaux · Sans frais de pointe",

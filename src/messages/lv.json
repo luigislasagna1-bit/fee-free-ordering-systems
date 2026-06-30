@@ -5355,7 +5355,8 @@
     "cancel": "Atcelt",
     "save": "Saglabāt adresi",
     "saving": "Saglabā…",
-    "addAddress": "Pievienot adresi"
+    "addAddress": "Pievienot adresi",
+    "pinHint": "Velciet adatu uz precīzo piegādes vietu."
   },
   "marketplace": {
     "headerTagline": "0% komisija · Vietējie restorāni · Nav pieprasījuma cenu pieauguma",

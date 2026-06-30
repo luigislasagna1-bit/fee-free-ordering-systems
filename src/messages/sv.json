@@ -5355,7 +5355,8 @@
     "cancel": "Avbryt",
     "save": "Spara adress",
     "saving": "Sparar…",
-    "addAddress": "Lägg till en adress"
+    "addAddress": "Lägg till en adress",
+    "pinHint": "Dra nålen till din exakta leveransplats."
   },
   "marketplace": {
     "headerTagline": "0% provision · Lokala restauranger · Inga pristoppar",

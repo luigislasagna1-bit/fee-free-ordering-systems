@@ -5355,7 +5355,8 @@
     "cancel": "Odustani",
     "save": "Spremi adresu",
     "saving": "Spremanje…",
-    "addAddress": "Dodaj adresu"
+    "addAddress": "Dodaj adresu",
+    "pinHint": "Povucite oznaku na točno mjesto dostave."
   },
   "marketplace": {
     "headerTagline": "0% provizija · Lokalni restorani · Bez naplate u vršnim satima",

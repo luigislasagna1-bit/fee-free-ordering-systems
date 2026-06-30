@@ -1208,7 +1208,7 @@ export function OrderingPageClient({
   const [editingSection, setEditingSection] = useState<null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes">(null);
   // Signed-in customer's saved delivery addresses (RestaurantCustomerAddress) —
   // powers the checkout saved-address picker + the default auto-fill below.
-  const [savedAddresses, setSavedAddresses] = useState<Array<{ id: string; label: string | null; street: string; city: string; state: string | null; zip: string | null; isDefault: boolean }>>([]);
+  const [savedAddresses, setSavedAddresses] = useState<Array<{ id: string; label: string | null; street: string; city: string; state: string | null; zip: string | null; lat: number | null; lng: number | null; isDefault: boolean }>>([]);
   // Debounce the entered email/phone so the promo preview re-evaluates ~500ms
   // after the customer stops typing (not on every keystroke). Luigi 2026-06-09.
   useEffect(() => {
@@ -1281,7 +1281,7 @@ export function OrderingPageClient({
         const def = list.find((a: { isDefault?: boolean }) => a.isDefault) ?? list[0];
         if (def) {
           setCustomerInfo((ci) =>
-            ci.address ? ci : { ...ci, address: def.street ?? "", city: def.city ?? "", zip: def.zip ?? "", lat: null, lng: null },
+            ci.address ? ci : { ...ci, address: def.street ?? "", city: def.city ?? "", zip: def.zip ?? "", lat: def.lat ?? null, lng: def.lng ?? null },
           );
         }
       } catch {}

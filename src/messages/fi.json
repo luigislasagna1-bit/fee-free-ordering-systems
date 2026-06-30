@@ -5355,7 +5355,8 @@
     "cancel": "Peruuta",
     "save": "Tallenna osoite",
     "saving": "Tallennetaan…",
-    "addAddress": "Lisää osoite"
+    "addAddress": "Lisää osoite",
+    "pinHint": "Vedä nasta tarkkaan toimituspaikkaan."
   },
   "marketplace": {
     "headerTagline": "0% provisio · Paikalliset ravintolat · Ei hintojen korotuksia",

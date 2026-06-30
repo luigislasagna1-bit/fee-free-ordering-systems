@@ -5355,7 +5355,8 @@
     "cancel": "Hủy",
     "save": "Lưu địa chỉ",
     "saving": "Đang lưu…",
-    "addAddress": "Thêm địa chỉ"
+    "addAddress": "Thêm địa chỉ",
+    "pinHint": "Kéo ghim đến đúng vị trí giao hàng của bạn."
   },
   "marketplace": {
     "headerTagline": "0% hoa hồng · Nhà hàng địa phương · Không tăng giá đột biến",

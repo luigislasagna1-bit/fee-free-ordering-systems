@@ -5355,7 +5355,8 @@
     "cancel": "Mégse",
     "save": "Cím mentése",
     "saving": "Mentés…",
-    "addAddress": "Cím hozzáadása"
+    "addAddress": "Cím hozzáadása",
+    "pinHint": "Húzza a tűt a pontos kézbesítési helyre."
   },
   "marketplace": {
     "headerTagline": "0% jutalék · Helyi éttermek · Nincs áremelkedés",

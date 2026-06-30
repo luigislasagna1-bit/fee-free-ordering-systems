@@ -5355,7 +5355,8 @@
     "cancel": "Annuller",
     "save": "Gem adresse",
     "saving": "Gemmer…",
-    "addAddress": "Tilføj en adresse"
+    "addAddress": "Tilføj en adresse",
+    "pinHint": "Træk nålen til dit præcise leveringssted."
   },
   "marketplace": {
     "headerTagline": "0% provision · Lokale restauranter · Ingen prisstigninger",

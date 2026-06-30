@@ -5355,7 +5355,8 @@
     "cancel": "Annulla",
     "save": "Salva indirizzo",
     "saving": "Salvataggio…",
-    "addAddress": "Aggiungi un indirizzo"
+    "addAddress": "Aggiungi un indirizzo",
+    "pinHint": "Trascina il segnaposto nel punto esatto di consegna."
   },
   "marketplace": {
     "headerTagline": "0% commissioni · Ristoranti locali · Nessun sovrapprezzo",

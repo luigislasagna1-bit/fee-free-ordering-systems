@@ -5355,7 +5355,8 @@
     "cancel": "Annuleren",
     "save": "Adres opslaan",
     "saving": "Opslaan…",
-    "addAddress": "Adres toevoegen"
+    "addAddress": "Adres toevoegen",
+    "pinHint": "Sleep de pin naar je exacte bezorgplek."
   },
   "marketplace": {
     "headerTagline": "0% commissie · Lokale restaurants · Geen piekprijzen",

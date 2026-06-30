@@ -5355,7 +5355,8 @@
     "cancel": "Cancel·lar",
     "save": "Desar adreça",
     "saving": "Desant…",
-    "addAddress": "Afegir una adreça"
+    "addAddress": "Afegir una adreça",
+    "pinHint": "Arrossega el marcador al punt exacte de lliurament."
   },
   "marketplace": {
     "headerTagline": "0% de comissió · Restaurants locals · Sense preus dinàmics",

@@ -5355,7 +5355,8 @@
     "cancel": "Cancelar",
     "save": "Salvar endereço",
     "saving": "Salvando…",
-    "addAddress": "Adicionar endereço"
+    "addAddress": "Adicionar endereço",
+    "pinHint": "Arraste o pino para o local exato de entrega."
   },
   "marketplace": {
     "headerTagline": "0% de comissão · Restaurantes locais · Sem preço dinâmico",

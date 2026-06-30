@@ -5355,7 +5355,8 @@
     "cancel": "Zrušit",
     "save": "Uložit adresu",
     "saving": "Ukládání…",
-    "addAddress": "Přidat adresu"
+    "addAddress": "Přidat adresu",
+    "pinHint": "Přetáhněte špendlík na přesné místo doručení."
   },
   "marketplace": {
     "headerTagline": "0% provize · Místní restaurace · Žádné přirážky",

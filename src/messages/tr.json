@@ -5355,7 +5355,8 @@
     "cancel": "İptal",
     "save": "Adresi kaydet",
     "saving": "Kaydediliyor…",
-    "addAddress": "Adres ekle"
+    "addAddress": "Adres ekle",
+    "pinHint": "İğneyi tam teslimat noktanıza sürükleyin."
   },
   "marketplace": {
     "headerTagline": "%0 komisyon · Yerel restoranlar · Fiyat artışı yok",

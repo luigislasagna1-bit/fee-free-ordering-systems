@@ -5355,7 +5355,8 @@
     "cancel": "Otkaži",
     "save": "Sačuvaj adresu",
     "saving": "Čuvanje…",
-    "addAddress": "Dodaj adresu"
+    "addAddress": "Dodaj adresu",
+    "pinHint": "Превуците ознаку на тачно место испоруке."
   },
   "marketplace": {
     "headerTagline": "0% provizije · Lokalni restorani · Bez naglih poskupljenja",

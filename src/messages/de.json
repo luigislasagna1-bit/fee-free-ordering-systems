@@ -5355,7 +5355,8 @@
     "cancel": "Abbrechen",
     "save": "Adresse speichern",
     "saving": "Wird gespeichert…",
-    "addAddress": "Adresse hinzufügen"
+    "addAddress": "Adresse hinzufügen",
+    "pinHint": "Ziehen Sie die Markierung an den genauen Lieferort."
   },
   "marketplace": {
     "headerTagline": "0% Provision · Lokale Restaurants · Keine Preisaufschläge",

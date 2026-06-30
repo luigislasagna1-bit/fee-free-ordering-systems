@@ -5355,7 +5355,8 @@
     "cancel": "취소",
     "save": "주소 저장",
     "saving": "저장 중…",
-    "addAddress": "주소 추가"
+    "addAddress": "주소 추가",
+    "pinHint": "핀을 정확한 배달 위치로 드래그하세요."
   },
   "marketplace": {
     "headerTagline": "수수료 0% · 지역 음식점 · 할증 요금 없음",

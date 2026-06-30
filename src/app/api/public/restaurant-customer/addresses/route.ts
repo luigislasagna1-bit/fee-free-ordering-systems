@@ -35,6 +35,10 @@ export async function POST(req: NextRequest) {
   const state   = body?.state   ? String(body.state).trim().slice(0, 30)  : null;
   const zip     = body?.zip     ? String(body.zip).trim().slice(0, 20)    : null;
   const country = body?.country ? String(body.country).trim().slice(0, 10) || "CA" : "CA";
+  // Pin-confirmed coords (optional) — only stored when both are finite numbers.
+  const latN = Number(body?.lat), lngN = Number(body?.lng);
+  const lat = body?.lat != null && Number.isFinite(latN) ? latN : null;
+  const lng = body?.lng != null && Number.isFinite(lngN) ? lngN : null;
   const wantsDefault = !!body?.isDefault;
 
   // Cap so a malicious client can't pile up rows.
@@ -57,7 +61,7 @@ export async function POST(req: NextRequest) {
     });
   }
   const created = await prisma.restaurantCustomerAddress.create({
-    data: { customerId: me.id, label, street, city, state, zip, country, isDefault },
+    data: { customerId: me.id, label, street, city, state, zip, country, lat, lng, isDefault },
   });
   return NextResponse.json({ address: created }, { status: 201 });
 }

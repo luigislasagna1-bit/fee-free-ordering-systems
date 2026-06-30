@@ -5355,7 +5355,8 @@
     "cancel": "取消",
     "save": "保存地址",
     "saving": "保存中…",
-    "addAddress": "添加地址"
+    "addAddress": "添加地址",
+    "pinHint": "将图钉拖到您的确切送货地点。"
   },
   "marketplace": {
     "headerTagline": "0% 佣金 · 本地餐厅 · 无浮动定价",

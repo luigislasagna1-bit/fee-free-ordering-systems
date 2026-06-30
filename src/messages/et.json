@@ -5355,7 +5355,8 @@
     "cancel": "Tühista",
     "save": "Salvesta aadress",
     "saving": "Salvestamine…",
-    "addAddress": "Lisa aadress"
+    "addAddress": "Lisa aadress",
+    "pinHint": "Lohistage nööpnõel täpsesse tarnekohta."
   },
   "marketplace": {
     "headerTagline": "0% komisjonitasu · Kohalikud restoranid · Hinnatõusuta",

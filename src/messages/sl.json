@@ -5355,7 +5355,8 @@
     "cancel": "Prekliči",
     "save": "Shrani naslov",
     "saving": "Shranjevanje…",
-    "addAddress": "Dodaj naslov"
+    "addAddress": "Dodaj naslov",
+    "pinHint": "Povlecite zatič na natančno mesto dostave."
   },
   "marketplace": {
     "headerTagline": "0% provizija · Lokalne restavracije · Brez cenovnih pribitkov",

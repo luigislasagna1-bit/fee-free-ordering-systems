@@ -1,7 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { Loader2, MapPin, Plus, Trash2, Check, X } from "lucide-react";
+
+// Leaflet touches `window`, so the map pin must be client-only. Reuses the
+// exact same draggable pin checkout uses for non-Google restaurants.
+const LeafletPin = dynamic(() => import("../CheckoutLeafletPin"), { ssr: false });
 
 type Address = {
   id: string;
@@ -27,6 +32,9 @@ export function AddressBook({ country }: { country?: string }) {
   const [city, setCity] = useState("");
   const [state, setStateVal] = useState("");
   const [zip, setZip] = useState("");
+  // Pin-confirmed coords — set when a suggestion is picked or the pin dragged.
+  const [lat, setLat] = useState<number | null>(null);
+  const [lng, setLng] = useState<number | null>(null);
 
   // ── Address autocomplete — reuses the same free OpenStreetMap proxy as
   //    checkout (/api/public/geocode/search). Typing in the street field
@@ -61,6 +69,8 @@ export function AddressBook({ country }: { country?: string }) {
     setStreet(s.line1 || street);
     if (s.city) setCity(s.city);
     if (s.postcode) setZip(s.postcode);
+    setLat(s.lat);
+    setLng(s.lng);
   };
 
   const load = async () => {
@@ -86,13 +96,13 @@ export function AddressBook({ country }: { country?: string }) {
       const r = await fetch("/api/public/restaurant-customer/addresses", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ label: label.trim() || undefined, street, city, state, zip }),
+        body: JSON.stringify({ label: label.trim() || undefined, street, city, state, zip, lat, lng }),
       });
       if (!r.ok) {
         const b = await r.json().catch(() => ({}));
         throw new Error(b.error || `Failed (${r.status})`);
       }
-      setLabel(""); setStreet(""); setCity(""); setStateVal(""); setZip("");
+      setLabel(""); setStreet(""); setCity(""); setStateVal(""); setZip(""); setLat(null); setLng(null);
       setShowForm(false);
       await load();
     } catch (e) {
@@ -227,6 +237,14 @@ export function AddressBook({ country }: { country?: string }) {
               maxLength={20}
             />
           </div>
+          {lat != null && lng != null && (
+            <div>
+              <div className="rounded-lg overflow-hidden border border-gray-200">
+                <LeafletPin center={{ lat, lng }} lat={lat} lng={lng} onMove={(la, lo) => { setLat(la); setLng(lo); }} />
+              </div>
+              <p className="text-[11px] text-gray-400 mt-1 flex items-center gap-1"><MapPin className="w-3 h-3 flex-shrink-0" /> {t("pinHint")}</p>
+            </div>
+          )}
           {err && <div className="text-xs text-red-700 bg-red-50 border border-red-200 rounded px-2 py-1">{err}</div>}
           <div className="flex gap-2 pt-1">
             <button

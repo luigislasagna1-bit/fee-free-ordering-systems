@@ -5355,7 +5355,8 @@
     "cancel": "Cancel",
     "save": "Save address",
     "saving": "Saving…",
-    "addAddress": "Add an address"
+    "addAddress": "Add an address",
+    "pinHint": "Drag the pin to your exact delivery spot."
   },
   "marketplace": {
     "headerTagline": "0% commission · Local restaurants · No surge pricing",

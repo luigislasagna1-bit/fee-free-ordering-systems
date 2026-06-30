@@ -5355,7 +5355,8 @@
     "cancel": "Anuluj",
     "save": "Zapisz adres",
     "saving": "Zapisywanie…",
-    "addAddress": "Dodaj adres"
+    "addAddress": "Dodaj adres",
+    "pinHint": "Przeciągnij pinezkę w dokładne miejsce dostawy."
   },
   "marketplace": {
     "headerTagline": "0% prowizji · Lokalne restauracje · Bez naliczania opłat w szczycie",

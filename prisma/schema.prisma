@@ -1533,6 +1533,11 @@ model RestaurantCustomerAddress {
   state      String?
   zip        String?
   country    String   @default("CA")
+  /// Pin-confirmed delivery coordinates (set via the address-book map pin /
+  /// autocomplete). When present, checkout uses these instead of re-geocoding
+  /// the typed street, so a saved address delivers to the exact spot. Luigi 2026-06-30.
+  lat        Float?
+  lng        Float?
   isDefault  Boolean  @default(false)
   createdAt  DateTime @default(now())
 

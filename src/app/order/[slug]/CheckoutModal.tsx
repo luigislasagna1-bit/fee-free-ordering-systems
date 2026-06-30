@@ -300,7 +300,7 @@ interface Props {
   deliveryFormConfig: DeliveryAddressConfig;
   /** Signed-in customer's saved delivery addresses — a quick-pick above the
    *  street input so they don't retype. Empty for guests / non-delivery. */
-  savedAddresses?: Array<{ id: string; label: string | null; street: string; city: string; state: string | null; zip: string | null; isDefault: boolean }>;
+  savedAddresses?: Array<{ id: string; label: string | null; street: string; city: string; state: string | null; zip: string | null; lat: number | null; lng: number | null; isDefault: boolean }>;
 }
 
 export function CheckoutModal({
@@ -956,7 +956,7 @@ export function CheckoutModal({
                             <button
                               key={a.id}
                               type="button"
-                              onClick={() => setCustomerInfo({ ...customerInfo, address: a.street, city: a.city, zip: a.zip ?? "", lat: null, lng: null })}
+                              onClick={() => setCustomerInfo({ ...customerInfo, address: a.street, city: a.city, zip: a.zip ?? "", lat: a.lat ?? null, lng: a.lng ?? null })}
                               className="px-2.5 py-1 rounded-full text-xs font-medium border transition"
                               style={active
                                 ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }

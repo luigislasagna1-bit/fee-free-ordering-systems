@@ -5355,7 +5355,8 @@
     "cancel": "Batal",
     "save": "Simpan alamat",
     "saving": "Menyimpan…",
-    "addAddress": "Tambah alamat"
+    "addAddress": "Tambah alamat",
+    "pinHint": "Seret pin ke titik pengiriman yang tepat."
   },
   "marketplace": {
     "headerTagline": "Komisi 0% · Restoran lokal · Tanpa harga lonjakan",
