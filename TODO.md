@@ -254,3 +254,9 @@ Run was CONFOUNDED: 2nd device was an iPhone on an OLD TestFlight build (FEEFREE
 
 ## DONE 2026-06-30: refund-to-wallet on full refund (commit 97d97586)
 reward-ledger.refundForOrder() returns spent credit + claws back earned on a FULL card refund (idempotent, after()-dispatched from api/orders/[id]/refund). Reward money lifecycle now complete (reject/auto-reject/refund all handled). Was the 🟡 "Refund-to-wallet on FULL refund" item.
+
+## Reward Dollars — deferred / follow-up (2026-06-30)
+- [ ] **Reward Dollars expiry cron** — `Restaurant.rewardExpiryDays` exists but isn't enforced. Needs FIFO lot-aging (track each earn's date, expire oldest-first, write `reason:"expire"` ledger rows, idempotent per lot+day). Design decision, not a quick add — own task.
+- [ ] **Verify earning-exclusion on device** (after deploy): in Reward Dollars settings, exclude a category (e.g. Gift Cards) → place an order with an excluded item + a normal item as a logged-in customer → confirm earn only on the non-excluded portion. Customer account page should show "Some items don't earn …".
+- [ ] **Verify per-group VIP label** (after deploy): set a group's "What do you call your members?" → send that group a special → email should use the group label, not the restaurant default.
+- [ ] **Clean up the live "Schedule Tester" VIP automation** (still granting $5/day on prod): `npx tsx scripts/run-on-prod.ts scripts/_cleanup-vip-schedule-test.ts luigis-lasagna-pizzeria "Schedule Tester" sched-test@example.com`
