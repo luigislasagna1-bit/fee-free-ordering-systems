@@ -509,7 +509,15 @@
     "pickADateFirst": "Pick a date first",
     "closedThisDay": "Closed this day",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> can only be ordered for certain days or times. The available order times have been limited accordingly.",
-    "serviceStartsPrompt": "🕒 {service} service hasn't started yet — it starts at {time}."
+    "serviceStartsPrompt": "🕒 {service} service hasn't started yet — it starts at {time}.",
+    "guestSigninMarketplace": "Already have a marketplace account? <link>Sign in</link> to skip re-typing your details.",
+    "guestSigninRestaurant": "Already have an account at this restaurant? <link>Sign in</link> to skip re-typing your details.",
+    "couponAppliedLabel": "Code <mono>{couponCode}</mono> applied",
+    "paypalNotReady": "This restaurant hasn't finished PayPal setup yet. Pick another payment method.",
+    "paypalRedirectNotice": "You'll be redirected to PayPal to approve the payment after placing your order.",
+    "emailOptional": "optional",
+    "tipBadgeSuggested": "Suggested",
+    "couponApply": "Apply"
   },
   "reservation": {
     "title": "Book a table",

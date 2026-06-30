@@ -509,7 +509,15 @@
       "capNote": "يمكنك تطبيق ما يصل إلى {amount} على هذا الطلب.",
       "earnLine": "+ اكسب {amount}",
       "capHelp": "يسمح المطعم باستخدام ما يصل إلى {percent}٪ من إجمالي الطلب بـ {label}."
-    }
+    },
+    "guestSigninMarketplace": "هل لديك حساب marketplace بالفعل؟ <link>سجّل الدخول</link> لتجنّب إعادة كتابة بياناتك.",
+    "guestSigninRestaurant": "هل لديك حساب في هذا المطعم بالفعل؟ <link>سجّل الدخول</link> لتجنّب إعادة كتابة بياناتك.",
+    "couponAppliedLabel": "تم تطبيق الرمز <mono>{couponCode}</mono>",
+    "paypalNotReady": "لم يُكمل هذا المطعم إعداد PayPal بعد. اختر طريقة دفع أخرى.",
+    "paypalRedirectNotice": "ستتم إعادة توجيهك إلى PayPal للموافقة على الدفع بعد تقديم طلبك.",
+    "emailOptional": "اختياري",
+    "tipBadgeSuggested": "مقترح",
+    "couponApply": "تطبيق"
   },
   "reservation": {
     "title": "احجز طاولة",

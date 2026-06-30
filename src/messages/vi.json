@@ -509,7 +509,15 @@
       "capNote": "Bạn có thể dùng tối đa {amount} cho đơn hàng này.",
       "earnLine": "+ Nhận {amount}",
       "capHelp": "Nhà hàng cho phép dùng tối đa {percent}% tổng đơn hàng bằng {label}."
-    }
+    },
+    "guestSigninMarketplace": "Đã có tài khoản marketplace? <link>Đăng nhập</link> để khỏi nhập lại thông tin của bạn.",
+    "guestSigninRestaurant": "Đã có tài khoản tại nhà hàng này? <link>Đăng nhập</link> để khỏi nhập lại thông tin của bạn.",
+    "couponAppliedLabel": "Đã áp dụng mã <mono>{couponCode}</mono>",
+    "paypalNotReady": "Nhà hàng này chưa hoàn tất thiết lập PayPal. Hãy chọn phương thức thanh toán khác.",
+    "paypalRedirectNotice": "Bạn sẽ được chuyển đến PayPal để duyệt thanh toán sau khi đặt hàng.",
+    "emailOptional": "tùy chọn",
+    "tipBadgeSuggested": "Đề xuất",
+    "couponApply": "Áp dụng"
   },
   "reservation": {
     "title": "Đặt bàn",

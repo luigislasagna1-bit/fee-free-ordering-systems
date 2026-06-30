@@ -509,7 +509,15 @@
       "capNote": "אפשר להחיל עד {amount} על הזמנה זו.",
       "earnLine": "+ צברו {amount}",
       "capHelp": "המסעדה מאפשרת להשתמש עד {percent}% מסכום ההזמנה ב-{label}."
-    }
+    },
+    "guestSigninMarketplace": "כבר יש לך חשבון marketplace? <link>היכנס/י</link> כדי לא להקליד שוב את הפרטים.",
+    "guestSigninRestaurant": "כבר יש לך חשבון במסעדה הזו? <link>היכנס/י</link> כדי לא להקליד שוב את הפרטים.",
+    "couponAppliedLabel": "קוד <mono>{couponCode}</mono> הוחל",
+    "paypalNotReady": "המסעדה הזו עדיין לא סיימה את הגדרת PayPal. בחר/י אמצעי תשלום אחר.",
+    "paypalRedirectNotice": "לאחר ביצוע ההזמנה תועבר/י ל-PayPal לאישור התשלום.",
+    "emailOptional": "אופציונלי",
+    "tipBadgeSuggested": "מומלץ",
+    "couponApply": "החל"
   },
   "reservation": {
     "title": "הזמן שולחן",

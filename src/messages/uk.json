@@ -509,7 +509,15 @@
       "capNote": "До цього замовлення можна застосувати до {amount}.",
       "earnLine": "+ Нарахувати {amount}",
       "capHelp": "Ресторан дозволяє використати до {percent}% від суми замовлення в {label}."
-    }
+    },
+    "guestSigninMarketplace": "Уже маєте акаунт marketplace? <link>Увійдіть</link>, щоб не вводити дані знову.",
+    "guestSigninRestaurant": "Уже маєте акаунт у цьому ресторані? <link>Увійдіть</link>, щоб не вводити дані знову.",
+    "couponAppliedLabel": "Код <mono>{couponCode}</mono> застосовано",
+    "paypalNotReady": "Цей ресторан ще не завершив налаштування PayPal. Виберіть інший спосіб оплати.",
+    "paypalRedirectNotice": "Після оформлення замовлення вас буде перенаправлено в PayPal для підтвердження оплати.",
+    "emailOptional": "необов'язково",
+    "tipBadgeSuggested": "Рекомендовано",
+    "couponApply": "Застосувати"
   },
   "reservation": {
     "title": "Забронювати столик",

@@ -509,7 +509,15 @@
       "capNote": "Pots aplicar fins a {amount} en aquesta comanda.",
       "earnLine": "+ Guanya {amount}",
       "capHelp": "El restaurant permet usar fins al {percent}% del total de la comanda en {label}."
-    }
+    },
+    "guestSigninMarketplace": "Ja tens un compte de marketplace? <link>Inicia la sessió</link> per no tornar a escriure les teves dades.",
+    "guestSigninRestaurant": "Ja tens un compte en aquest restaurant? <link>Inicia la sessió</link> per no tornar a escriure les teves dades.",
+    "couponAppliedLabel": "Codi <mono>{couponCode}</mono> aplicat",
+    "paypalNotReady": "Aquest restaurant encara no ha acabat de configurar PayPal. Tria un altre mètode de pagament.",
+    "paypalRedirectNotice": "Se't redirigirà a PayPal per aprovar el pagament després de fer la comanda.",
+    "emailOptional": "opcional",
+    "tipBadgeSuggested": "Suggerit",
+    "couponApply": "Aplica"
   },
   "reservation": {
     "title": "Reservar taula",

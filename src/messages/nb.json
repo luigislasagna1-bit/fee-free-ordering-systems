@@ -509,7 +509,15 @@
       "capNote": "Du kan bruke inntil {amount} på denne bestillingen.",
       "earnLine": "+ Tjen {amount}",
       "capHelp": "Restauranten tillater å bruke opptil {percent}% av ordresummen i {label}."
-    }
+    },
+    "guestSigninMarketplace": "Har du allerede en marketplace-konto? <link>Logg inn</link> for å slippe å skrive inn opplysningene på nytt.",
+    "guestSigninRestaurant": "Har du allerede en konto hos denne restauranten? <link>Logg inn</link> for å slippe å skrive inn opplysningene på nytt.",
+    "couponAppliedLabel": "Kode <mono>{couponCode}</mono> brukt",
+    "paypalNotReady": "Denne restauranten har ikke fullført PayPal-oppsettet ennå. Velg en annen betalingsmåte.",
+    "paypalRedirectNotice": "Du blir omdirigert til PayPal for å godkjenne betalingen etter at du har lagt inn bestillingen.",
+    "emailOptional": "valgfritt",
+    "tipBadgeSuggested": "Foreslått",
+    "couponApply": "Bruk"
   },
   "reservation": {
     "title": "Bestill bord",

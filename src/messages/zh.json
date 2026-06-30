@@ -509,7 +509,15 @@
       "capNote": "本订单最多可使用 {amount}。",
       "earnLine": "+ 赚取 {amount}",
       "capHelp": "餐厅允许使用 {label} 支付订单总额的最多 {percent}%。"
-    }
+    },
+    "guestSigninMarketplace": "已有 marketplace 账户？<link>登录</link>即可免去重新填写您的信息。",
+    "guestSigninRestaurant": "已在本餐厅有账户？<link>登录</link>即可免去重新填写您的信息。",
+    "couponAppliedLabel": "已应用代码 <mono>{couponCode}</mono>",
+    "paypalNotReady": "本餐厅尚未完成 PayPal 设置。请选择其他付款方式。",
+    "paypalRedirectNotice": "下单后，您将被重定向到 PayPal 以批准付款。",
+    "emailOptional": "可选",
+    "tipBadgeSuggested": "推荐",
+    "couponApply": "应用"
   },
   "reservation": {
     "title": "预订餐桌",

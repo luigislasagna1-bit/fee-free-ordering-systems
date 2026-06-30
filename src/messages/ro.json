@@ -509,7 +509,15 @@
       "capNote": "Poți aplica până la {amount} la această comandă.",
       "earnLine": "+ Câștigi {amount}",
       "capHelp": "Restaurantul permite folosirea a până la {percent}% din totalul comenzii în {label}."
-    }
+    },
+    "guestSigninMarketplace": "Ai deja un cont marketplace? <link>Conectează-te</link> ca să nu reintroduci datele.",
+    "guestSigninRestaurant": "Ai deja un cont la acest restaurant? <link>Conectează-te</link> ca să nu reintroduci datele.",
+    "couponAppliedLabel": "Cod <mono>{couponCode}</mono> aplicat",
+    "paypalNotReady": "Acest restaurant nu a terminat încă configurarea PayPal. Alegeți altă metodă de plată.",
+    "paypalRedirectNotice": "Veți fi redirecționat către PayPal pentru a aproba plata după plasarea comenzii.",
+    "emailOptional": "opțional",
+    "tipBadgeSuggested": "Sugerat",
+    "couponApply": "Aplică"
   },
   "reservation": {
     "title": "Rezervă o masă",

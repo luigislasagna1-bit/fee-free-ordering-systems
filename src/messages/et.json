@@ -509,7 +509,15 @@
       "capNote": "Sellele tellimusele saad kasutada kuni {amount}.",
       "earnLine": "+ Teeni {amount}",
       "capHelp": "Restoran lubab kasutada kuni {percent}% tellimuse summast: {label}."
-    }
+    },
+    "guestSigninMarketplace": "Kas teil on juba marketplace'i konto? <link>Logige sisse</link>, et oma andmeid uuesti mitte sisestada.",
+    "guestSigninRestaurant": "Kas teil on juba selle restorani konto? <link>Logige sisse</link>, et oma andmeid uuesti mitte sisestada.",
+    "couponAppliedLabel": "Kood <mono>{couponCode}</mono> rakendatud",
+    "paypalNotReady": "See restoran pole veel PayPali seadistust lõpetanud. Valige muu makseviis.",
+    "paypalRedirectNotice": "Pärast tellimuse esitamist suunatakse teid makse kinnitamiseks PayPali.",
+    "emailOptional": "valikuline",
+    "tipBadgeSuggested": "Soovitatud",
+    "couponApply": "Rakenda"
   },
   "reservation": {
     "title": "Broneeri laud",

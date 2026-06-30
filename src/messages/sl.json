@@ -509,7 +509,15 @@
       "capNote": "Za to naročilo lahko uporabite največ {amount}.",
       "earnLine": "+ Prislužite {amount}",
       "capHelp": "Restavracija dovoljuje porabo do {percent}% zneska naročila v {label}."
-    }
+    },
+    "guestSigninMarketplace": "Že imate marketplace račun? <link>Prijavite se</link>, da vam ni treba znova vnašati podatkov.",
+    "guestSigninRestaurant": "Že imate račun pri tej restavraciji? <link>Prijavite se</link>, da vam ni treba znova vnašati podatkov.",
+    "couponAppliedLabel": "Koda <mono>{couponCode}</mono> uporabljena",
+    "paypalNotReady": "Ta restavracija še ni dokončala nastavitve PayPala. Izberite drug način plačila.",
+    "paypalRedirectNotice": "Po oddaji naročila boste preusmerjeni na PayPal za potrditev plačila.",
+    "emailOptional": "neobvezno",
+    "tipBadgeSuggested": "Predlagano",
+    "couponApply": "Uporabi"
   },
   "reservation": {
     "title": "Rezerviraj mizo",

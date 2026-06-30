@@ -509,7 +509,15 @@
       "capNote": "आप इस ऑर्डर पर अधिकतम {amount} इस्तेमाल कर सकते हैं।",
       "earnLine": "+ {amount} कमाएँ",
       "capHelp": "यह रेस्टोरेंट ऑर्डर के कुल का अधिकतम {percent}% {label} में उपयोग करने देता है।"
-    }
+    },
+    "guestSigninMarketplace": "क्या आपके पास पहले से marketplace खाता है? अपनी जानकारी दोबारा न लिखने के लिए <link>साइन इन करें</link>।",
+    "guestSigninRestaurant": "क्या इस रेस्तरां में आपका पहले से खाता है? अपनी जानकारी दोबारा न लिखने के लिए <link>साइन इन करें</link>।",
+    "couponAppliedLabel": "कोड <mono>{couponCode}</mono> लागू किया गया",
+    "paypalNotReady": "इस रेस्तरां ने अभी PayPal सेटअप पूरा नहीं किया है। कोई दूसरा भुगतान तरीका चुनें।",
+    "paypalRedirectNotice": "ऑर्डर देने के बाद भुगतान को मंज़ूरी देने के लिए आपको PayPal पर भेजा जाएगा।",
+    "emailOptional": "वैकल्पिक",
+    "tipBadgeSuggested": "सुझाया गया",
+    "couponApply": "लागू करें"
   },
   "reservation": {
     "title": "टेबल बुक करें",

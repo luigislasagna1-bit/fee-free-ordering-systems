@@ -509,7 +509,15 @@
       "capNote": "Na ovu narudžbu možete primijeniti najviše {amount}.",
       "earnLine": "+ Zaradite {amount}",
       "capHelp": "Restoran dopušta korištenje do {percent}% ukupnog iznosa narudžbe u {label}."
-    }
+    },
+    "guestSigninMarketplace": "Već imate marketplace račun? <link>Prijavite se</link> da ne morate ponovno upisivati podatke.",
+    "guestSigninRestaurant": "Već imate račun u ovom restoranu? <link>Prijavite se</link> da ne morate ponovno upisivati podatke.",
+    "couponAppliedLabel": "Kod <mono>{couponCode}</mono> primijenjen",
+    "paypalNotReady": "Ovaj restoran još nije dovršio postavljanje PayPala. Odaberite drugi način plaćanja.",
+    "paypalRedirectNotice": "Nakon što pošaljete narudžbu, bit ćete preusmjereni na PayPal radi odobravanja plaćanja.",
+    "emailOptional": "neobavezno",
+    "tipBadgeSuggested": "Predloženo",
+    "couponApply": "Primijeni"
   },
   "reservation": {
     "title": "Rezervirajte stol",

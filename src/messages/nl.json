@@ -509,7 +509,15 @@
       "capNote": "Je kunt maximaal {amount} op deze bestelling gebruiken.",
       "earnLine": "+ Verdien {amount}",
       "capHelp": "Dit restaurant staat toe om tot {percent}% van het ordertotaal met {label} te betalen."
-    }
+    },
+    "guestSigninMarketplace": "Heb je al een marketplace-account? <link>Meld je aan</link> om je gegevens niet opnieuw in te voeren.",
+    "guestSigninRestaurant": "Heb je al een account bij dit restaurant? <link>Meld je aan</link> om je gegevens niet opnieuw in te voeren.",
+    "couponAppliedLabel": "Code <mono>{couponCode}</mono> toegepast",
+    "paypalNotReady": "Dit restaurant heeft de PayPal-instelling nog niet voltooid. Kies een andere betaalmethode.",
+    "paypalRedirectNotice": "Je wordt na het plaatsen van je bestelling doorgestuurd naar PayPal om de betaling goed te keuren.",
+    "emailOptional": "optioneel",
+    "tipBadgeSuggested": "Voorgesteld",
+    "couponApply": "Toepassen"
   },
   "reservation": {
     "title": "Tafel reserveren",

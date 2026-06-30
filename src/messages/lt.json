@@ -509,7 +509,15 @@
       "capNote": "Šiam užsakymui galite pritaikyti iki {amount}.",
       "earnLine": "+ Uždirbkite {amount}",
       "capHelp": "Restoranas leidžia panaudoti iki {percent}% užsakymo sumos {label}."
-    }
+    },
+    "guestSigninMarketplace": "Jau turite marketplace paskyrą? <link>Prisijunkite</link>, kad nereikėtų iš naujo įvesti duomenų.",
+    "guestSigninRestaurant": "Jau turite paskyrą šiame restorane? <link>Prisijunkite</link>, kad nereikėtų iš naujo įvesti duomenų.",
+    "couponAppliedLabel": "Kodas <mono>{couponCode}</mono> pritaikytas",
+    "paypalNotReady": "Šis restoranas dar nebaigė PayPal sąrankos. Pasirinkite kitą mokėjimo būdą.",
+    "paypalRedirectNotice": "Pateikę užsakymą būsite nukreipti į PayPal, kad patvirtintumėte mokėjimą.",
+    "emailOptional": "neprivaloma",
+    "tipBadgeSuggested": "Siūloma",
+    "couponApply": "Taikyti"
   },
   "reservation": {
     "title": "Rezervuoti stalą",

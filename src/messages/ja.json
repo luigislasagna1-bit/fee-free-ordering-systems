@@ -509,7 +509,15 @@
       "capNote": "このご注文では最大 {amount} までご利用いただけます。",
       "earnLine": "+ {amount} を獲得",
       "capHelp": "この店では注文合計の最大{percent}%まで{label}で支払えます。"
-    }
+    },
+    "guestSigninMarketplace": "marketplace アカウントをお持ちですか？<link>サインイン</link>すれば情報を再入力せずに済みます。",
+    "guestSigninRestaurant": "このレストランのアカウントをお持ちですか？<link>サインイン</link>すれば情報を再入力せずに済みます。",
+    "couponAppliedLabel": "コード <mono>{couponCode}</mono> を適用しました",
+    "paypalNotReady": "このレストランは PayPal の設定をまだ完了していません。別の支払い方法を選んでください。",
+    "paypalRedirectNotice": "注文後、支払いを承認するために PayPal にリダイレクトされます。",
+    "emailOptional": "任意",
+    "tipBadgeSuggested": "おすすめ",
+    "couponApply": "適用"
   },
   "reservation": {
     "title": "テーブルを予約",

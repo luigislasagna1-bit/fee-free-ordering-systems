@@ -509,7 +509,15 @@
       "capNote": "Na túto objednávku môžete uplatniť najviac {amount}.",
       "earnLine": "+ Získajte {amount}",
       "capHelp": "Reštaurácia umožňuje použiť až {percent}% zo sumy objednávky v {label}."
-    }
+    },
+    "guestSigninMarketplace": "Máte už účet marketplace? <link>Prihláste sa</link> a nemusíte zadávať údaje znova.",
+    "guestSigninRestaurant": "Máte už účet v tejto reštaurácii? <link>Prihláste sa</link> a nemusíte zadávať údaje znova.",
+    "couponAppliedLabel": "Kód <mono>{couponCode}</mono> uplatnený",
+    "paypalNotReady": "Táto reštaurácia ešte nedokončila nastavenie PayPal. Zvoľte iný spôsob platby.",
+    "paypalRedirectNotice": "Po odoslaní objednávky budete presmerovaní na PayPal na schválenie platby.",
+    "emailOptional": "nepovinné",
+    "tipBadgeSuggested": "Odporúčané",
+    "couponApply": "Použiť"
   },
   "reservation": {
     "title": "Rezervovať stôl",

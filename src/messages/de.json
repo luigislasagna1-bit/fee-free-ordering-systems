@@ -509,7 +509,15 @@
       "capNote": "Du kannst bei dieser Bestellung bis zu {amount} anrechnen.",
       "earnLine": "+ {amount} verdienen",
       "capHelp": "Dieses Restaurant erlaubt, bis zu {percent}% der Bestellsumme mit {label} zu bezahlen."
-    }
+    },
+    "guestSigninMarketplace": "Sie haben bereits ein Marketplace-Konto? <link>Anmelden</link>, um Ihre Daten nicht erneut einzugeben.",
+    "guestSigninRestaurant": "Sie haben bereits ein Konto bei diesem Restaurant? <link>Anmelden</link>, um Ihre Daten nicht erneut einzugeben.",
+    "couponAppliedLabel": "Code <mono>{couponCode}</mono> angewendet",
+    "paypalNotReady": "Dieses Restaurant hat die PayPal-Einrichtung noch nicht abgeschlossen. Wählen Sie eine andere Zahlungsmethode.",
+    "paypalRedirectNotice": "Nach der Bestellung werden Sie zu PayPal weitergeleitet, um die Zahlung zu genehmigen.",
+    "emailOptional": "optional",
+    "tipBadgeSuggested": "Empfohlen",
+    "couponApply": "Anwenden"
   },
   "reservation": {
     "title": "Tisch reservieren",

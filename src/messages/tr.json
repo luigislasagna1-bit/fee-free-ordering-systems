@@ -509,7 +509,15 @@
       "capNote": "Bu siparişe en fazla {amount} uygulayabilirsiniz.",
       "earnLine": "+ {amount} kazanın",
       "capHelp": "Restoran, sipariş tutarının en fazla %{percent} kadarını {label} ile ödemenize izin verir."
-    }
+    },
+    "guestSigninMarketplace": "Zaten bir marketplace hesabınız var mı? Bilgilerinizi yeniden yazmamak için <link>giriş yapın</link>.",
+    "guestSigninRestaurant": "Bu restoranda zaten bir hesabınız var mı? Bilgilerinizi yeniden yazmamak için <link>giriş yapın</link>.",
+    "couponAppliedLabel": "<mono>{couponCode}</mono> kodu uygulandı",
+    "paypalNotReady": "Bu restoran PayPal kurulumunu henüz tamamlamadı. Başka bir ödeme yöntemi seçin.",
+    "paypalRedirectNotice": "Siparişinizi verdikten sonra ödemeyi onaylamak için PayPal'a yönlendirileceksiniz.",
+    "emailOptional": "isteğe bağlı",
+    "tipBadgeSuggested": "Önerilen",
+    "couponApply": "Uygula"
   },
   "reservation": {
     "title": "Masa Rezervasyonu",

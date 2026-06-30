@@ -509,7 +509,15 @@
       "capNote": "Você pode aplicar até {amount} neste pedido.",
       "earnLine": "+ Ganhe {amount}",
       "capHelp": "O restaurante permite usar até {percent}% do total do pedido em {label}."
-    }
+    },
+    "guestSigninMarketplace": "Já tem uma conta no marketplace? <link>Entre</link> para não digitar seus dados de novo.",
+    "guestSigninRestaurant": "Já tem uma conta neste restaurante? <link>Entre</link> para não digitar seus dados de novo.",
+    "couponAppliedLabel": "Código <mono>{couponCode}</mono> aplicado",
+    "paypalNotReady": "Este restaurante ainda não concluiu a configuração do PayPal. Escolha outra forma de pagamento.",
+    "paypalRedirectNotice": "Você será redirecionado ao PayPal para aprovar o pagamento depois de fazer o pedido.",
+    "emailOptional": "opcional",
+    "tipBadgeSuggested": "Sugerido",
+    "couponApply": "Aplicar"
   },
   "reservation": {
     "title": "Reservar mesa",

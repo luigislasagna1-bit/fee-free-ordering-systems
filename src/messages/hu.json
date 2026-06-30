@@ -509,7 +509,15 @@
       "capNote": "Ehhez a rendeléshez legfeljebb {amount} használható fel.",
       "earnLine": "+ {amount} jóváírás",
       "capHelp": "Az étterem a rendelés végösszegének legfeljebb {percent}%-áig engedi a(z) {label} felhasználását."
-    }
+    },
+    "guestSigninMarketplace": "Van már marketplace-fiókja? <link>Jelentkezzen be</link>, hogy ne kelljen újra megadnia az adatait.",
+    "guestSigninRestaurant": "Van már fiókja ennél az étteremnél? <link>Jelentkezzen be</link>, hogy ne kelljen újra megadnia az adatait.",
+    "couponAppliedLabel": "<mono>{couponCode}</mono> kód alkalmazva",
+    "paypalNotReady": "Ez az étterem még nem fejezte be a PayPal beállítását. Válasszon másik fizetési módot.",
+    "paypalRedirectNotice": "A rendelés leadása után átirányítjuk a PayPalra a fizetés jóváhagyásához.",
+    "emailOptional": "nem kötelező",
+    "tipBadgeSuggested": "Javasolt",
+    "couponApply": "Alkalmaz"
   },
   "reservation": {
     "title": "Asztal foglalása",

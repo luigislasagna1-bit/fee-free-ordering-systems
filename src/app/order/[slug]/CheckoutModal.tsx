@@ -746,31 +746,21 @@ export function CheckoutModal({
                     don't have, or vice versa. Hidden when already signed
                     in (contact fields are auto-populated by the parent). */}
                 {!isSignedIn && (
-                  fromMarketplace ? (
-                    <div className="pt-3 -mb-1 text-xs text-gray-500">
-                      Already have a marketplace account?{" "}
-                      <a
-                        href={`/login?next=${encodeURIComponent(`/order/${restaurantSlug}?from=marketplace`)}`}
-                        className="font-semibold underline hover:no-underline"
-                        style={{ color: theme.primaryColor }}
-                      >
-                        Sign in
-                      </a>{" "}
-                      to skip re-typing your details.
-                    </div>
-                  ) : (
-                    <div className="pt-3 -mb-1 text-xs text-gray-500">
-                      Already have an account at this restaurant?{" "}
-                      <a
-                        href={`/order/${restaurantSlug}/account/login?next=${encodeURIComponent(`/order/${restaurantSlug}`)}`}
-                        className="font-semibold underline hover:no-underline"
-                        style={{ color: theme.primaryColor }}
-                      >
-                        Sign in
-                      </a>{" "}
-                      to skip re-typing your details.
-                    </div>
-                  )
+                  <div className="pt-3 -mb-1 text-xs text-gray-500">
+                    {tc.rich(fromMarketplace ? "guestSigninMarketplace" : "guestSigninRestaurant", {
+                      link: (chunks) => (
+                        <a
+                          href={fromMarketplace
+                            ? `/login?next=${encodeURIComponent(`/order/${restaurantSlug}?from=marketplace`)}`
+                            : `/order/${restaurantSlug}/account/login?next=${encodeURIComponent(`/order/${restaurantSlug}`)}`}
+                          className="font-semibold underline hover:no-underline"
+                          style={{ color: theme.primaryColor }}
+                        >
+                          {chunks}
+                        </a>
+                      ),
+                    })}
+                  </div>
                 )}
                 {/* Silent guest "remember me" (Luigi 2026-06-10): we pre-filled
                     these fields from details this device saved on a prior order.
@@ -849,7 +839,7 @@ export function CheckoutModal({
                     required={requireCustomerEmail}
                     className="col-span-2 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                    placeholder={`${tc("emailPlaceholder")}${requireCustomerEmail ? " *" : " (optional)"}`}
+                    placeholder={`${tc("emailPlaceholder")}${requireCustomerEmail ? " *" : ` (${tc("emailOptional")})`}`}
                     value={customerInfo.email}
                     onChange={e => setCustomerInfo({ ...customerInfo, email: e.target.value })}
                   />
@@ -1547,13 +1537,13 @@ export function CheckoutModal({
                 {customerInfo.paymentMethod === "paypal" && !paypalEnabled && (
                   <div className="mt-2 p-2.5 bg-amber-50 rounded-lg text-xs text-amber-800 flex items-start gap-2">
                     <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
-                    This restaurant hasn&apos;t finished PayPal setup yet. Pick another payment method.
+                    {tc("paypalNotReady")}
                   </div>
                 )}
                 {customerInfo.paymentMethod === "paypal" && paypalEnabled && (
                   <div className="mt-2 p-2.5 bg-blue-50 rounded-lg text-xs text-blue-700 flex items-start gap-2">
                     <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
-                    You&apos;ll be redirected to PayPal to approve the payment after placing your order.
+                    {tc("paypalRedirectNotice")}
                   </div>
                 )}
               </SectionCard>
@@ -1601,7 +1591,7 @@ export function CheckoutModal({
                                 color: "#fff",
                               }}
                             >
-                              Suggested
+                              {tc("tipBadgeSuggested")}
                             </span>
                           )}
                         </button>
@@ -1705,7 +1695,7 @@ export function CheckoutModal({
               <div className="mt-4 pt-4 border-t border-gray-200">
                 {couponId ? (
                   <div className="flex items-center justify-between text-sm text-green-700 bg-green-50 rounded-lg px-3 py-2">
-                    <span className="flex items-center gap-1.5"><Tag className="w-3.5 h-3.5" /> Code <span className="font-mono font-bold">{couponCode}</span> applied</span>
+                    <span className="flex items-center gap-1.5"><Tag className="w-3.5 h-3.5" /> {tc.rich("couponAppliedLabel", { couponCode, mono: (chunks) => <span className="font-mono font-bold">{chunks}</span> })}</span>
                     <span className="font-bold">-{formatCurrency(couponDiscount)}</span>
                   </div>
                 ) : showCouponField ? (
@@ -1722,7 +1712,7 @@ export function CheckoutModal({
                       onClick={applyCoupon} disabled={couponLoading}
                       className="bg-gray-900 text-white text-sm font-semibold px-3 rounded-lg hover:bg-gray-800 transition disabled:opacity-50"
                     >
-                      {couponLoading ? "..." : "Apply"}
+                      {couponLoading ? "…" : tc("couponApply")}
                     </button>
                   </div>
                 ) : (

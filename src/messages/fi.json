@@ -509,7 +509,15 @@
       "capNote": "Voit käyttää tähän tilaukseen enintään {amount}.",
       "earnLine": "+ Ansaitse {amount}",
       "capHelp": "Ravintola sallii käyttää enintään {percent}% tilauksen summasta: {label}."
-    }
+    },
+    "guestSigninMarketplace": "Onko sinulla jo marketplace-tili? <link>Kirjaudu sisään</link> välttääksesi tietojen uudelleen syöttämisen.",
+    "guestSigninRestaurant": "Onko sinulla jo tili tässä ravintolassa? <link>Kirjaudu sisään</link> välttääksesi tietojen uudelleen syöttämisen.",
+    "couponAppliedLabel": "Koodi <mono>{couponCode}</mono> käytetty",
+    "paypalNotReady": "Tämä ravintola ei ole vielä saanut PayPal-määritystä valmiiksi. Valitse toinen maksutapa.",
+    "paypalRedirectNotice": "Sinut ohjataan PayPaliin hyväksymään maksu tilauksen tekemisen jälkeen.",
+    "emailOptional": "valinnainen",
+    "tipBadgeSuggested": "Suositeltu",
+    "couponApply": "Käytä"
   },
   "reservation": {
     "title": "Varaa pöytä",

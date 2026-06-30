@@ -509,7 +509,15 @@
       "capNote": "Anda dapat menggunakan hingga {amount} untuk pesanan ini.",
       "earnLine": "+ Dapatkan {amount}",
       "capHelp": "Restoran mengizinkan penggunaan hingga {percent}% dari total pesanan dalam {label}."
-    }
+    },
+    "guestSigninMarketplace": "Sudah punya akun marketplace? <link>Masuk</link> agar tidak perlu mengetik ulang data Anda.",
+    "guestSigninRestaurant": "Sudah punya akun di restoran ini? <link>Masuk</link> agar tidak perlu mengetik ulang data Anda.",
+    "couponAppliedLabel": "Kode <mono>{couponCode}</mono> diterapkan",
+    "paypalNotReady": "Restoran ini belum menyelesaikan pengaturan PayPal. Pilih metode pembayaran lain.",
+    "paypalRedirectNotice": "Anda akan diarahkan ke PayPal untuk menyetujui pembayaran setelah memesan.",
+    "emailOptional": "opsional",
+    "tipBadgeSuggested": "Disarankan",
+    "couponApply": "Terapkan"
   },
   "reservation": {
     "title": "Pesan meja",

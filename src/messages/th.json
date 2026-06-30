@@ -509,7 +509,15 @@
       "capNote": "คุณใช้ได้สูงสุด {amount} กับคำสั่งซื้อนี้",
       "earnLine": "+ รับ {amount}",
       "capHelp": "ร้านอนุญาตให้ใช้ {label} ได้สูงสุด {percent}% ของยอดคำสั่งซื้อ"
-    }
+    },
+    "guestSigninMarketplace": "มีบัญชี marketplace อยู่แล้ว? <link>เข้าสู่ระบบ</link> เพื่อไม่ต้องกรอกข้อมูลใหม่",
+    "guestSigninRestaurant": "มีบัญชีกับร้านนี้อยู่แล้ว? <link>เข้าสู่ระบบ</link> เพื่อไม่ต้องกรอกข้อมูลใหม่",
+    "couponAppliedLabel": "ใช้โค้ด <mono>{couponCode}</mono> แล้ว",
+    "paypalNotReady": "ร้านนี้ยังตั้งค่า PayPal ไม่เสร็จ กรุณาเลือกวิธีชำระเงินอื่น",
+    "paypalRedirectNotice": "หลังจากสั่งซื้อ คุณจะถูกนำไปที่ PayPal เพื่ออนุมัติการชำระเงิน",
+    "emailOptional": "ไม่บังคับ",
+    "tipBadgeSuggested": "แนะนำ",
+    "couponApply": "ใช้"
   },
   "reservation": {
     "title": "จองโต๊ะ",

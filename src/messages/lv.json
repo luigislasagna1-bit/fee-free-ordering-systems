@@ -509,7 +509,15 @@
       "capNote": "Šim pasūtījumam varat izmantot līdz {amount}.",
       "earnLine": "+ Nopelniet {amount}",
       "capHelp": "Restorāns ļauj izmantot līdz {percent}% no pasūtījuma summas {label}."
-    }
+    },
+    "guestSigninMarketplace": "Vai jums jau ir marketplace konts? <link>Pierakstieties</link>, lai atkārtoti neievadītu savus datus.",
+    "guestSigninRestaurant": "Vai jums jau ir konts šajā restorānā? <link>Pierakstieties</link>, lai atkārtoti neievadītu savus datus.",
+    "couponAppliedLabel": "Kods <mono>{couponCode}</mono> piemērots",
+    "paypalNotReady": "Šis restorāns vēl nav pabeidzis PayPal iestatīšanu. Izvēlieties citu maksājuma veidu.",
+    "paypalRedirectNotice": "Pēc pasūtījuma veikšanas jūs tiksiet novirzīts uz PayPal, lai apstiprinātu maksājumu.",
+    "emailOptional": "neobligāti",
+    "tipBadgeSuggested": "Ieteicams",
+    "couponApply": "Lietot"
   },
   "reservation": {
     "title": "Rezervēt galdu",
