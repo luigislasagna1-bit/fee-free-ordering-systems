@@ -260,3 +260,6 @@ reward-ledger.refundForOrder() returns spent credit + claws back earned on a FUL
 - [ ] **Verify earning-exclusion on device** (after deploy): in Reward Dollars settings, exclude a category (e.g. Gift Cards) → place an order with an excluded item + a normal item as a logged-in customer → confirm earn only on the non-excluded portion. Customer account page should show "Some items don't earn …".
 - [ ] **Verify per-group VIP label** (after deploy): set a group's "What do you call your members?" → send that group a special → email should use the group label, not the restaurant default.
 - [ ] **Clean up the live "Schedule Tester" VIP automation** (still granting $5/day on prod): `npx tsx scripts/run-on-prod.ts scripts/_cleanup-vip-schedule-test.ts luigis-lasagna-pizzeria "Schedule Tester" sched-test@example.com`
+
+## UX notes (Luigi, 2026-06-30)
+- [ ] **"Empty cart" button throughout the checkout stages** — add a one-click clear-all-items button available in the cart drawer AND on the checkout screen(s). Today you can only remove items one at a time, which is tedious (surfaced while setting up a promo test). Scope: a small "Empty cart" / trash control on the cart slide-over + checkout, with a confirm guard.
