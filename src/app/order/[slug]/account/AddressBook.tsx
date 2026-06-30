@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Loader2, MapPin, Plus, Trash2, Check, X } from "lucide-react";
 
@@ -14,7 +14,7 @@ type Address = {
   isDefault: boolean;
 };
 
-export function AddressBook() {
+export function AddressBook({ country }: { country?: string }) {
   const t = useTranslations("addressBook");
   const [list, setList] = useState<Address[]>([]);
   const [loading, setLoading] = useState(true);
@@ -27,6 +27,41 @@ export function AddressBook() {
   const [city, setCity] = useState("");
   const [state, setStateVal] = useState("");
   const [zip, setZip] = useState("");
+
+  // ── Address autocomplete — reuses the same free OpenStreetMap proxy as
+  //    checkout (/api/public/geocode/search). Typing in the street field
+  //    suggests addresses; picking one fills street/city/zip. No schema/map —
+  //    parity with the checkout typeahead. Luigi 2026-06-30. ───────────────
+  type Suggestion = { label: string; lat: number; lng: number; line1: string; city: string; postcode: string };
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [suggestOpen, setSuggestOpen] = useState(false);
+  const justPickedRef = useRef(false);
+  useEffect(() => {
+    // Don't re-query the value we just filled from a chosen suggestion.
+    if (justPickedRef.current) { justPickedRef.current = false; return; }
+    const q = street.trim();
+    if (q.length < 3) { setSuggestions([]); setSuggestOpen(false); return; }
+    const ctrl = new AbortController();
+    const id = setTimeout(async () => {
+      try {
+        const params = new URLSearchParams({ q });
+        if (country) params.set("country", country);
+        const res = await fetch(`/api/public/geocode/search?${params.toString()}`, { signal: ctrl.signal });
+        const data = await res.json().catch(() => ({}));
+        setSuggestions(Array.isArray(data.suggestions) ? data.suggestions : []);
+        setSuggestOpen(true);
+      } catch { /* aborted / network — leave list as-is */ }
+    }, 400);
+    return () => { clearTimeout(id); ctrl.abort(); };
+  }, [street, country]);
+  const pickSuggestion = (s: Suggestion) => {
+    justPickedRef.current = true;
+    setSuggestOpen(false);
+    setSuggestions([]);
+    setStreet(s.line1 || street);
+    if (s.city) setCity(s.city);
+    if (s.postcode) setZip(s.postcode);
+  };
 
   const load = async () => {
     setLoading(true);
@@ -148,13 +183,34 @@ export function AddressBook() {
             onChange={(e) => setLabel(e.target.value)}
             maxLength={30}
           />
-          <input
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-            placeholder={t("streetPlaceholder")}
-            value={street}
-            onChange={(e) => setStreet(e.target.value)}
-            maxLength={200}
-          />
+          <div className="relative">
+            <input
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              placeholder={t("streetPlaceholder")}
+              value={street}
+              onChange={(e) => setStreet(e.target.value)}
+              onFocus={() => { if (suggestions.length) setSuggestOpen(true); }}
+              onBlur={() => setTimeout(() => setSuggestOpen(false), 150)}
+              maxLength={200}
+              autoComplete="off"
+            />
+            {suggestOpen && suggestions.length > 0 && (
+              <div className="absolute z-20 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-56 overflow-y-auto">
+                {suggestions.map((s, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => pickSuggestion(s)}
+                    className="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-emerald-50 flex items-start gap-1.5 border-b border-gray-50 last:border-0"
+                  >
+                    <MapPin className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 mt-0.5" />
+                    <span className="truncate">{s.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <div className="grid grid-cols-2 gap-2">
             <input
               className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"

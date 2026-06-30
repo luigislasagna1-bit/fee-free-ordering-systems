@@ -38,7 +38,7 @@ export default async function RestaurantAccountDashboard({
   const restaurant = await prisma.restaurant.findUnique({
     where: { slug },
     select: {
-      id: true, name: true, slug: true, isActive: true, currency: true, timezone: true,
+      id: true, name: true, slug: true, isActive: true, currency: true, timezone: true, country: true,
       rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true,
     },
   });
@@ -370,7 +370,7 @@ export default async function RestaurantAccountDashboard({
             <MapPin className="w-4 h-4 text-emerald-500" />
             {t("savedAddresses")}
           </h2>
-          <AddressBook />
+          <AddressBook country={restaurant.country} />
         </div>
 
         {/* Order again rail — top 3 successful past baskets with a
