@@ -5375,7 +5375,8 @@
           "adjust": "Adjustment",
           "signup_bonus": "Sign-up bonus",
           "expire": "Expired"
-        }
+        },
+        "orderRef": "Order #{number}"
       },
       "yourCoupons": "Your coupons ({count})",
       "noCoupons": "No coupons right now. {name} can send you personalised codes — they'll show up here.",
@@ -5449,7 +5450,10 @@
       "trackOrderStatus": "Track Order Status",
       "browseOtherRestaurants": "← Browse other restaurants",
       "placeAnotherOrder": "Place another order",
-      "scheduledFor": "Scheduled for {time}"
+      "scheduledFor": "Scheduled for {time}",
+      "paidWithReward": "Paid with {label}",
+      "earnedReward": "You earned {label}",
+      "rewardDefaultName": "Reward Dollars"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API key missing — set it in Admin → Map Settings.",
@@ -5610,7 +5614,10 @@
       "orderNotFound": "Order not found",
       "orderNumber": "Order #{number}",
       "myOrder": "My order",
-      "scheduledTitle": "Scheduled order"
+      "scheduledTitle": "Scheduled order",
+      "paidWithReward": "Paid with {label}",
+      "earnedReward": "You earned {label}",
+      "rewardDefaultName": "Reward Dollars"
     },
     "payment": {
       "paymentFailed": "Payment failed",

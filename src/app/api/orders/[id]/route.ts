@@ -19,7 +19,7 @@ import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { dispatchOrderToShipday, cancelShipdayOrder, shouldDispatchToShipday } from "@/lib/shipday";
 import { verifyOrderToken } from "@/lib/order-status-token";
 import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledger";
-import { redeemForOrder as redeemRewardForOrder, releaseForOrder as releaseRewardForOrder, awardForOrder as awardRewardForOrder } from "@/lib/reward-ledger";
+import { redeemForOrder as redeemRewardForOrder, releaseForOrder as releaseRewardForOrder, awardForOrder as awardRewardForOrder, getOrderRewardSummary } from "@/lib/reward-ledger";
 import { awardEarnRulesForOrder, awardPromoCreditsForOrder } from "@/lib/reward-earn";
 import { releasePromotionUsage } from "@/lib/order-notifications";
 import { RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
@@ -30,6 +30,9 @@ const PUBLIC_ORDER_SELECT = {
   id: true, orderNumber: true, status: true, type: true,
   customerName: true, notes: true, subtotal: true, taxAmount: true,
   deliveryFee: true, tip: true, total: true, paymentMethod: true,
+  // Reward Dollars spent on this order (part-payment). Shown on the
+  // receipt/status breakdown as "Paid with {rewardName}". Luigi 2026-06-29.
+  creditApplied: true,
   paymentStatus: true, scheduledFor: true, estimatedReady: true,
   acceptedAt: true, rejectedAt: true, rejectionReason: true,
   completedAt: true, preparationTime: true, createdAt: true,
@@ -67,6 +70,9 @@ const PUBLIC_ORDER_SELECT = {
       address: true, city: true, state: true, zip: true,
       estimatedPickup: true, estimatedDelivery: true,
       kitchenWorkflowMode: true,
+      // Reward Dollars: feature flag + customer-facing name so the receipt
+      // can label "Paid with {name}" / "You earned {name}". Luigi 2026-06-29.
+      rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true,
       // Timezone so the status page renders a scheduled order's date/time in
       // the restaurant's local clock, not the viewer's browser zone.
       timezone: true,
@@ -115,7 +121,13 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
   const order = await prisma.order.findUnique({ where: { id }, select: PUBLIC_ORDER_SELECT });
   if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 });
-  return NextResponse.json(order);
+  // Reward Dollars earned on this order (computed from the ledger, only when the
+  // feature is on — keeps this off the query path for stores that don't use it).
+  let rewardEarned = 0;
+  if (order.restaurant?.rewardsEnabled) {
+    rewardEarned = (await getOrderRewardSummary(id)).earned;
+  }
+  return NextResponse.json({ ...order, rewardEarned });
 }
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {

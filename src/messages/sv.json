@@ -787,7 +787,8 @@
       "integrations": "Integrationer",
       "orderHandling": "Orderhantering",
       "promoPopup": "Reklam-popup",
-      "customerGroups": "VIP-special"
+      "customerGroups": "VIP-special",
+      "rewards": "Bonuspengar"
     },
     "dashboard": {
       "title": "Instrumentpanel",
@@ -5395,7 +5396,8 @@
           "adjust": "Justering",
           "signup_bonus": "Välkomstbonus",
           "expire": "Utgånget"
-        }
+        },
+        "orderRef": "Beställning #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Följ orderstatus",
       "browseOtherRestaurants": "← Utforska andra restauranger",
       "placeAnotherOrder": "Lägg en ny beställning",
-      "scheduledFor": "Schemalagd för {time}"
+      "scheduledFor": "Schemalagd för {time}",
+      "paidWithReward": "Betalat med {label}",
+      "earnedReward": "Du tjänade {label}",
+      "rewardDefaultName": "Bonuspengar"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API-nyckel saknas — ange den i Admin → Kartinställningar.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Beställningen hittades inte",
       "orderNumber": "Beställning #{number}",
       "myOrder": "Min beställning",
-      "scheduledTitle": "Schemalagd beställning"
+      "scheduledTitle": "Schemalagd beställning",
+      "paidWithReward": "Betalat med {label}",
+      "earnedReward": "Du tjänade {label}",
+      "rewardDefaultName": "Bonuspengar"
     },
     "payment": {
       "paymentFailed": "Betalningen misslyckades",

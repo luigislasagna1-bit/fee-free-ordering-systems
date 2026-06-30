@@ -787,7 +787,8 @@
       "integrations": "Integrácie",
       "orderHandling": "Spracovanie objednávok",
       "promoPopup": "Promo okno",
-      "customerGroups": "VIP špeciály"
+      "customerGroups": "VIP špeciály",
+      "rewards": "Vernostný kredit"
     },
     "dashboard": {
       "title": "Prehľad",
@@ -5395,7 +5396,8 @@
           "adjust": "Úprava",
           "signup_bonus": "Bonus za registráciu",
           "expire": "Vypršané"
-        }
+        },
+        "orderRef": "Objednávka #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Sledovať stav objednávky",
       "browseOtherRestaurants": "← Prezerať iné reštaurácie",
       "placeAnotherOrder": "Zadať ďalšiu objednávku",
-      "scheduledFor": "Naplánované na {time}"
+      "scheduledFor": "Naplánované na {time}",
+      "paidWithReward": "Zaplatené pomocou {label}",
+      "earnedReward": "Získali ste {label}",
+      "rewardDefaultName": "Vernostný kredit"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Chýba kľúč Google Maps API — nastavte ho v Administrácii → Nastavenia mapy.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Objednávka sa nenašla",
       "orderNumber": "Objednávka č. {number}",
       "myOrder": "Moja objednávka",
-      "scheduledTitle": "Naplánovaná objednávka"
+      "scheduledTitle": "Naplánovaná objednávka",
+      "paidWithReward": "Zaplatené pomocou {label}",
+      "earnedReward": "Získali ste {label}",
+      "rewardDefaultName": "Vernostný kredit"
     },
     "payment": {
       "paymentFailed": "Platba zlyhala",

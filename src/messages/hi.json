@@ -810,7 +810,8 @@
       "integrations": "इंटीग्रेशन",
       "orderHandling": "ऑर्डर प्रबंधन",
       "promoPopup": "प्रोमो पॉपअप",
-      "customerGroups": "VIP स्पेशल्स"
+      "customerGroups": "VIP स्पेशल्स",
+      "rewards": "रिवॉर्ड डॉलर"
     },
     "dashboard": {
       "title": "डैशबोर्ड",
@@ -5395,7 +5396,8 @@
           "adjust": "समायोजन",
           "signup_bonus": "साइन-अप बोनस",
           "expire": "समाप्त हो गया"
-        }
+        },
+        "orderRef": "ऑर्डर #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "ऑर्डर स्थिति ट्रैक करें",
       "browseOtherRestaurants": "← अन्य रेस्तरां देखें",
       "placeAnotherOrder": "एक और ऑर्डर दें",
-      "scheduledFor": "{time} के लिए निर्धारित"
+      "scheduledFor": "{time} के लिए निर्धारित",
+      "paidWithReward": "{label} से भुगतान किया गया",
+      "earnedReward": "आपने {label} कमाए",
+      "rewardDefaultName": "रिवॉर्ड डॉलर"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API कुंजी नहीं मिली — इसे Admin → Map Settings में सेट करें।",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "ऑर्डर नहीं मिला",
       "orderNumber": "ऑर्डर #{number}",
       "myOrder": "मेरा ऑर्डर",
-      "scheduledTitle": "निर्धारित ऑर्डर"
+      "scheduledTitle": "निर्धारित ऑर्डर",
+      "paidWithReward": "{label} से भुगतान किया गया",
+      "earnedReward": "आपने {label} कमाए",
+      "rewardDefaultName": "रिवॉर्ड डॉलर"
     },
     "payment": {
       "paymentFailed": "भुगतान विफल रहा",

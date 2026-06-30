@@ -200,6 +200,34 @@ export async function releaseForOrder(orderId: string): Promise<void> {
   } catch (e) { console.error("[reward releaseForOrder]", e); }
 }
 
+/** Per-order reward summary for receipts/activity (read-only, never throws).
+ *  `used` = credit that actually stuck as payment on this order (spend rows NOT
+ *  released back); `earned` = credit earned on this order (earn / earn:<trigger>
+ *  / reward_credit promo rows — every positive order-tied row except a release).
+ *  Cacheable seam: read on the status-poll path, so gate the caller on
+ *  rewardsEnabled to avoid the query when the feature is off. */
+export async function getOrderRewardSummary(orderId: string): Promise<{ used: number; earned: number }> {
+  try {
+    const rows = await prisma.rewardLedger.findMany({
+      where: { orderId },
+      select: { amount: true, reason: true, status: true },
+    });
+    let used = 0;
+    let earned = 0;
+    for (const r of rows) {
+      if (r.reason === "spend") {
+        if (r.status !== "released") used += Math.abs(r.amount); // released = returned, didn't stick
+      } else if (r.reason !== "release" && r.amount > 0) {
+        earned += r.amount; // earn / earn:<trigger> / promo:<id>
+      }
+    }
+    return { used: round2(used), earned: round2(earned) };
+  } catch (e) {
+    console.error("[reward getOrderRewardSummary]", e);
+    return { used: 0, earned: 0 };
+  }
+}
+
 /** Order completed → award auto-earn per the restaurant's settings. Idempotent
  *  (one earn row per order). No-ops when earning is off / basis ≤0 / no customer. */
 export async function awardForOrder(opts: { orderId: string }): Promise<void> {

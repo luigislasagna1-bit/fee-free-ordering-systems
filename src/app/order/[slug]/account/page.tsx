@@ -53,16 +53,31 @@ export default async function RestaurantAccountDashboard({
   // Reward Dollars wallet (balance + last 20 ledger rows), only when the
   // restaurant has the feature on. Best-effort. Luigi 2026-06-27.
   const rewardLabelPlural = restaurant.rewardLabelPlural?.trim() || t("reward.defaultPlural");
-  let rewardWallet: { balance: number; ledger: Array<{ id: string; amount: number; reason: string; createdAt: Date }> } | null = null;
+  let rewardWallet: { balance: number; ledger: Array<{ id: string; amount: number; reason: string; createdAt: Date; orderId: string | null }> } | null = null;
+  // Map a ledger row's orderId → its order number, so each order-tied activity
+  // row can link to that order's receipt (where the full breakdown + payment
+  // method + reward used/earned live). Synthetic ids ("signup:…", "sched:…")
+  // aren't real orders and are skipped. Luigi 2026-06-29.
+  let rewardOrderNumbers: Record<string, string> = {};
   if (restaurant.rewardsEnabled) {
     const acct = await prisma.rewardAccount.findUnique({
       where: { restaurantId_customerId: { restaurantId: restaurant.id, customerId: me.id } },
       select: {
         balance: true,
-        ledger: { orderBy: { createdAt: "desc" }, take: 20, select: { id: true, amount: true, reason: true, createdAt: true } },
+        ledger: { orderBy: { createdAt: "desc" }, take: 20, select: { id: true, amount: true, reason: true, createdAt: true, orderId: true } },
       },
     }).catch(() => null);
-    if (acct) rewardWallet = { balance: acct.balance, ledger: acct.ledger };
+    if (acct) {
+      rewardWallet = { balance: acct.balance, ledger: acct.ledger };
+      const realOrderIds = [...new Set(acct.ledger.map((l) => l.orderId).filter((o): o is string => !!o && !o.includes(":")))];
+      if (realOrderIds.length) {
+        const ords = await prisma.order.findMany({
+          where: { id: { in: realOrderIds } },
+          select: { id: true, orderNumber: true },
+        }).catch(() => []);
+        rewardOrderNumbers = Object.fromEntries(ords.map((o) => [o.id, o.orderNumber]));
+      }
+    }
   }
 
   const now = new Date();
@@ -233,19 +248,37 @@ export default async function RestaurantAccountDashboard({
             </div>
             {rewardWallet.ledger.length > 0 && (
               <ul className="divide-y divide-gray-100 px-6 py-2">
-                {rewardWallet.ledger.map((l) => (
-                  <li key={l.id} className="flex items-center justify-between py-2 text-sm">
-                    <span className="text-gray-600">
-                      {["earn", "grant", "spend", "release", "adjust", "signup_bonus", "expire"].includes(l.reason)
-                        ? t(`reward.reason.${l.reason}`)
-                        : l.reason}
-                      <span className="text-gray-400"> · {l.createdAt.toLocaleDateString()}</span>
-                    </span>
-                    <span className={l.amount >= 0 ? "text-emerald-600 font-medium" : "text-gray-700 font-medium"}>
-                      {l.amount >= 0 ? "+" : "−"} {formatCurrency(Math.abs(l.amount))}
-                    </span>
-                  </li>
-                ))}
+                {rewardWallet.ledger.map((l) => {
+                  // Normalise reason keys like "earn:first_order" / "promo:abc" to
+                  // their base label ("earn" / "grant") for translation.
+                  const baseReason = l.reason.split(":")[0];
+                  const reasonLabel = ["earn", "grant", "spend", "release", "adjust", "signup_bonus", "expire"].includes(baseReason)
+                    ? t(`reward.reason.${baseReason}`)
+                    : l.reason;
+                  const orderNumber = l.orderId ? rewardOrderNumbers[l.orderId] : undefined;
+                  return (
+                    <li key={l.id} className="flex items-center justify-between py-2 text-sm">
+                      <span className="text-gray-600">
+                        {reasonLabel}
+                        {orderNumber && l.orderId && (
+                          <>
+                            {" "}
+                            <Link
+                              href={`/order/${slug}/status/${l.orderId}`}
+                              className="text-emerald-600 hover:underline font-medium"
+                            >
+                              {t("reward.orderRef", { number: orderNumber })}
+                            </Link>
+                          </>
+                        )}
+                        <span className="text-gray-400"> · {l.createdAt.toLocaleDateString()}</span>
+                      </span>
+                      <span className={l.amount >= 0 ? "text-emerald-600 font-medium" : "text-gray-700 font-medium"}>
+                        {l.amount >= 0 ? "+" : "−"} {formatCurrency(Math.abs(l.amount))}
+                      </span>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>

@@ -787,7 +787,8 @@
       "integrations": "Integrări",
       "orderHandling": "Gestionarea comenzilor",
       "promoPopup": "Fereastră promo",
-      "customerGroups": "Oferte VIP"
+      "customerGroups": "Oferte VIP",
+      "rewards": "Dolari de recompensă"
     },
     "dashboard": {
       "title": "Panou de control",
@@ -5395,7 +5396,8 @@
           "adjust": "Ajustare",
           "signup_bonus": "Bonus de înregistrare",
           "expire": "Expirat"
-        }
+        },
+        "orderRef": "Comanda #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Urmărește statusul comenzii",
       "browseOtherRestaurants": "← Explorează alte restaurante",
       "placeAnotherOrder": "Plasează o altă comandă",
-      "scheduledFor": "Programat pentru {time}"
+      "scheduledFor": "Programat pentru {time}",
+      "paidWithReward": "Plătit cu {label}",
+      "earnedReward": "Ai câștigat {label}",
+      "rewardDefaultName": "Dolari de recompensă"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Cheia API Google Maps lipsește — setați-o în Admin → Setări hartă.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Comanda nu a fost găsită",
       "orderNumber": "Comanda #{number}",
       "myOrder": "Comanda mea",
-      "scheduledTitle": "Comandă programată"
+      "scheduledTitle": "Comandă programată",
+      "paidWithReward": "Plătit cu {label}",
+      "earnedReward": "Ai câștigat {label}",
+      "rewardDefaultName": "Dolari de recompensă"
     },
     "payment": {
       "paymentFailed": "Plata a eșuat",

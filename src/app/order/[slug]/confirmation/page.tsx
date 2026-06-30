@@ -8,6 +8,7 @@ import { PoweredByCredit } from "@/components/PoweredByFeeFree";
 import { resolvePoweredByCredit, RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 import { getTranslations } from "next-intl/server";
 import { verifyAndReleaseOrderPayment } from "@/lib/stripe/verify-order-payment";
+import { getOrderRewardSummary } from "@/lib/reward-ledger";
 
 export default async function ConfirmationPage({
   params,
@@ -52,6 +53,18 @@ export default async function ConfirmationPage({
   // Render every money value in the restaurant's chosen currency (ISO 4217),
   // not the USD default — a EUR restaurant must show € on its confirmation.
   const formatCurrency = (amount: number) => fmtCurrency(amount, order.restaurant.currency);
+
+  // Reward Dollars on this order: spent (creditApplied) + earned (from the
+  // ledger, only queried when the feature is on). Labelled with the store's name.
+  const rewardUsed = order.creditApplied || 0;
+  let rewardEarned = 0;
+  if (order.restaurant.rewardsEnabled) {
+    rewardEarned = (await getOrderRewardSummary(order.id)).earned;
+  }
+  const rewardName =
+    order.restaurant.rewardLabelPlural?.trim() ||
+    order.restaurant.rewardLabelSingular?.trim() ||
+    t("rewardDefaultName");
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
@@ -231,6 +244,18 @@ export default async function ConfirmationPage({
                 )}
                 {order.taxAmount > 0 && <div className="flex justify-between text-gray-600"><span>{t("tax")}</span><span>{formatCurrency(order.taxAmount)}</span></div>}
                 <div className="flex justify-between font-bold text-gray-900"><span>{t("total")}</span><span>{formatCurrency(order.total)}</span></div>
+                {rewardUsed > 0 && (
+                  <div className="flex justify-between text-emerald-700 font-medium">
+                    <span>{t("paidWithReward", { label: rewardName })}</span>
+                    <span>− {formatCurrency(rewardUsed)}</span>
+                  </div>
+                )}
+                {rewardEarned > 0 && (
+                  <div className="flex justify-between text-emerald-600">
+                    <span>{t("earnedReward", { label: rewardName })}</span>
+                    <span>+ {formatCurrency(rewardEarned)}</span>
+                  </div>
+                )}
               </div>
             );
           })()}

@@ -787,7 +787,8 @@
       "integrations": "Integraties",
       "orderHandling": "Orderafhandeling",
       "promoPopup": "Promo-pop-up",
-      "customerGroups": "VIP Specials"
+      "customerGroups": "VIP Specials",
+      "rewards": "Spaartegoed"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -5395,7 +5396,8 @@
           "adjust": "Aanpassing",
           "signup_bonus": "Aanmeldbonus",
           "expire": "Verlopen"
-        }
+        },
+        "orderRef": "Bestelling #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Bestelstatus volgen",
       "browseOtherRestaurants": "← Andere restaurants bekijken",
       "placeAnotherOrder": "Nog een bestelling plaatsen",
-      "scheduledFor": "Gepland voor {time}"
+      "scheduledFor": "Gepland voor {time}",
+      "paidWithReward": "Betaald met {label}",
+      "earnedReward": "Je hebt {label} verdiend",
+      "rewardDefaultName": "Spaartegoed"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API-sleutel ontbreekt — stel deze in via Beheer → Kaartinstellingen.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Bestelling niet gevonden",
       "orderNumber": "Bestelling #{number}",
       "myOrder": "Mijn bestelling",
-      "scheduledTitle": "Geplande bestelling"
+      "scheduledTitle": "Geplande bestelling",
+      "paidWithReward": "Betaald met {label}",
+      "earnedReward": "Je hebt {label} verdiend",
+      "rewardDefaultName": "Spaartegoed"
     },
     "payment": {
       "paymentFailed": "Betaling mislukt",

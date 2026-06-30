@@ -787,7 +787,8 @@
       "integrations": "การผสานรวม",
       "orderHandling": "การจัดการคำสั่งซื้อ",
       "promoPopup": "ป๊อปอัปโปรโมชัน",
-      "customerGroups": "VIP Specials"
+      "customerGroups": "VIP Specials",
+      "rewards": "เงินรางวัล"
     },
     "dashboard": {
       "title": "แดชบอร์ด",
@@ -5395,7 +5396,8 @@
           "adjust": "การปรับยอด",
           "signup_bonus": "โบนัสสมัครสมาชิก",
           "expire": "หมดอายุ"
-        }
+        },
+        "orderRef": "คำสั่งซื้อ #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "ติดตามสถานะคำสั่งซื้อ",
       "browseOtherRestaurants": "← ดูร้านอาหารอื่น",
       "placeAnotherOrder": "สั่งอาหารอีกครั้ง",
-      "scheduledFor": "กำหนดเวลาสำหรับ {time}"
+      "scheduledFor": "กำหนดเวลาสำหรับ {time}",
+      "paidWithReward": "ชำระด้วย {label}",
+      "earnedReward": "คุณได้รับ {label}",
+      "rewardDefaultName": "เงินรางวัล"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "ไม่พบ Google Maps API key — ตั้งค่าได้ที่ Admin → ตั้งค่าแผนที่",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "ไม่พบคำสั่งซื้อ",
       "orderNumber": "คำสั่งซื้อ #{number}",
       "myOrder": "คำสั่งซื้อของฉัน",
-      "scheduledTitle": "คำสั่งซื้อที่กำหนดเวลาไว้"
+      "scheduledTitle": "คำสั่งซื้อที่กำหนดเวลาไว้",
+      "paidWithReward": "ชำระด้วย {label}",
+      "earnedReward": "คุณได้รับ {label}",
+      "rewardDefaultName": "เงินรางวัล"
     },
     "payment": {
       "paymentFailed": "การชำระเงินล้มเหลว",

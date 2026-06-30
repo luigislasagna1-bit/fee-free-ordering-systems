@@ -787,7 +787,8 @@
       "integrations": "Integraciones",
       "orderHandling": "Gestión de pedidos",
       "promoPopup": "Ventana promocional",
-      "customerGroups": "Ofertas VIP"
+      "customerGroups": "Ofertas VIP",
+      "rewards": "Saldo de recompensa"
     },
     "dashboard": {
       "title": "Panel principal",
@@ -5395,7 +5396,8 @@
           "adjust": "Ajuste",
           "signup_bonus": "Bono de registro",
           "expire": "Caducado"
-        }
+        },
+        "orderRef": "Pedido n.º {number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Seguir estado del pedido",
       "browseOtherRestaurants": "← Ver otros restaurantes",
       "placeAnotherOrder": "Realizar otro pedido",
-      "scheduledFor": "Programado para {time}"
+      "scheduledFor": "Programado para {time}",
+      "paidWithReward": "Pagado con {label}",
+      "earnedReward": "Ganaste {label}",
+      "rewardDefaultName": "Saldo de recompensa"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Falta la clave de API de Google Maps — configúrala en Admin → Configuración del mapa.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Pedido no encontrado",
       "orderNumber": "Pedido #{number}",
       "myOrder": "Mi pedido",
-      "scheduledTitle": "Pedido programado"
+      "scheduledTitle": "Pedido programado",
+      "paidWithReward": "Pagado con {label}",
+      "earnedReward": "Ganaste {label}",
+      "rewardDefaultName": "Saldo de recompensa"
     },
     "payment": {
       "paymentFailed": "Pago fallido",

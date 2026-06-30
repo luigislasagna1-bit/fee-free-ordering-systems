@@ -787,7 +787,8 @@
       "integrations": "Integrazioni",
       "orderHandling": "Gestione ordini",
       "promoPopup": "Popup promo",
-      "customerGroups": "VIP Specials"
+      "customerGroups": "VIP Specials",
+      "rewards": "Credito fedeltà"
     },
     "dashboard": {
       "title": "Pannello",
@@ -5395,7 +5396,8 @@
           "adjust": "Rettifica",
           "signup_bonus": "Bonus di iscrizione",
           "expire": "Scaduto"
-        }
+        },
+        "orderRef": "Ordine n. {number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Traccia lo stato dell'ordine",
       "browseOtherRestaurants": "← Sfoglia altri ristoranti",
       "placeAnotherOrder": "Effettua un altro ordine",
-      "scheduledFor": "Programmato per {time}"
+      "scheduledFor": "Programmato per {time}",
+      "paidWithReward": "Pagato con {label}",
+      "earnedReward": "Hai guadagnato {label}",
+      "rewardDefaultName": "Credito fedeltà"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Chiave API Google Maps mancante — impostala in Admin → Impostazioni mappa.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Ordine non trovato",
       "orderNumber": "Ordine #{number}",
       "myOrder": "Il mio ordine",
-      "scheduledTitle": "Ordine programmato"
+      "scheduledTitle": "Ordine programmato",
+      "paidWithReward": "Pagato con {label}",
+      "earnedReward": "Hai guadagnato {label}",
+      "rewardDefaultName": "Credito fedeltà"
     },
     "payment": {
       "paymentFailed": "Pagamento non riuscito",

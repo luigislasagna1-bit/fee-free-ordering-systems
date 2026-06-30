@@ -787,7 +787,8 @@
       "integrations": "Intégrations",
       "orderHandling": "Gestion des commandes",
       "promoPopup": "Pop-up promo",
-      "customerGroups": "VIP Specials"
+      "customerGroups": "VIP Specials",
+      "rewards": "Crédits fidélité"
     },
     "dashboard": {
       "title": "Tableau de bord",
@@ -5395,7 +5396,8 @@
           "adjust": "Ajustement",
           "signup_bonus": "Bonus d'inscription",
           "expire": "Expiré"
-        }
+        },
+        "orderRef": "Commande n° {number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Suivre le statut de ma commande",
       "browseOtherRestaurants": "← Parcourir d'autres restaurants",
       "placeAnotherOrder": "Passer une autre commande",
-      "scheduledFor": "Programmée pour {time}"
+      "scheduledFor": "Programmée pour {time}",
+      "paidWithReward": "Payé avec {label}",
+      "earnedReward": "Vous avez gagné des {label}",
+      "rewardDefaultName": "Crédits fidélité"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Clé API Google Maps manquante — configurez-la dans Admin → Paramètres de la carte.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Commande introuvable",
       "orderNumber": "Commande n°{number}",
       "myOrder": "Ma commande",
-      "scheduledTitle": "Commande programmée"
+      "scheduledTitle": "Commande programmée",
+      "paidWithReward": "Payé avec {label}",
+      "earnedReward": "Vous avez gagné des {label}",
+      "rewardDefaultName": "Crédits fidélité"
     },
     "payment": {
       "paymentFailed": "Paiement échoué",

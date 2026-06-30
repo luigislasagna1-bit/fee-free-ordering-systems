@@ -787,7 +787,8 @@
       "integrations": "Интеграции",
       "orderHandling": "Обработка заказов",
       "promoPopup": "Промо-окно",
-      "customerGroups": "VIP-предложения"
+      "customerGroups": "VIP-предложения",
+      "rewards": "Бонусные доллары"
     },
     "dashboard": {
       "title": "Панель управления",
@@ -5395,7 +5396,8 @@
           "adjust": "Корректировка",
           "signup_bonus": "Бонус за регистрацию",
           "expire": "Истекло"
-        }
+        },
+        "orderRef": "Заказ №{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Отследить статус заказа",
       "browseOtherRestaurants": "← Другие рестораны",
       "placeAnotherOrder": "Сделать ещё один заказ",
-      "scheduledFor": "Запланировано на {time}"
+      "scheduledFor": "Запланировано на {time}",
+      "paidWithReward": "Оплачено с помощью {label}",
+      "earnedReward": "Вы заработали {label}",
+      "rewardDefaultName": "Бонусные доллары"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Отсутствует ключ API Google Maps — укажите его в Администрирование → Настройки карты.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Заказ не найден",
       "orderNumber": "Заказ #{number}",
       "myOrder": "Мой заказ",
-      "scheduledTitle": "Запланированный заказ"
+      "scheduledTitle": "Запланированный заказ",
+      "paidWithReward": "Оплачено с помощью {label}",
+      "earnedReward": "Вы заработали {label}",
+      "rewardDefaultName": "Бонусные доллары"
     },
     "payment": {
       "paymentFailed": "Ошибка оплаты",

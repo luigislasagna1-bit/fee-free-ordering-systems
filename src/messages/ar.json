@@ -787,7 +787,8 @@
       "integrations": "التكاملات",
       "orderHandling": "معالجة الطلبات",
       "promoPopup": "نافذة العروض",
-      "customerGroups": "عروض VIP الخاصة"
+      "customerGroups": "عروض VIP الخاصة",
+      "rewards": "دولارات المكافآت"
     },
     "dashboard": {
       "title": "لوحة التحكم",
@@ -5395,7 +5396,8 @@
           "adjust": "تعديل",
           "signup_bonus": "مكافأة التسجيل",
           "expire": "منتهي الصلاحية"
-        }
+        },
+        "orderRef": "الطلب #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "تتبع حالة الطلب",
       "browseOtherRestaurants": "← تصفح مطاعم أخرى",
       "placeAnotherOrder": "قدّم طلباً آخر",
-      "scheduledFor": "مجدوَل لـ {time}"
+      "scheduledFor": "مجدوَل لـ {time}",
+      "paidWithReward": "تم الدفع بـ {label}",
+      "earnedReward": "لقد ربحت {label}",
+      "rewardDefaultName": "دولارات المكافآت"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "مفتاح Google Maps API مفقود — قم بتعيينه في الإدارة ← إعدادات الخريطة.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "لم يُعثر على الطلب",
       "orderNumber": "الطلب #{number}",
       "myOrder": "طلبي",
-      "scheduledTitle": "طلب مجدوَل"
+      "scheduledTitle": "طلب مجدوَل",
+      "paidWithReward": "تم الدفع بـ {label}",
+      "earnedReward": "لقد ربحت {label}",
+      "rewardDefaultName": "دولارات المكافآت"
     },
     "payment": {
       "paymentFailed": "فشل الدفع",

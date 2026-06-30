@@ -787,7 +787,8 @@
       "integrations": "Integracje",
       "orderHandling": "Obsługa zamówień",
       "promoPopup": "Okno promocji",
-      "customerGroups": "Oferty VIP"
+      "customerGroups": "Oferty VIP",
+      "rewards": "Złotówki za zakupy"
     },
     "dashboard": {
       "title": "Panel główny",
@@ -5395,7 +5396,8 @@
           "adjust": "Korekta",
           "signup_bonus": "Bonus za rejestrację",
           "expire": "Wygasłe"
-        }
+        },
+        "orderRef": "Zamówienie #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Śledź status zamówienia",
       "browseOtherRestaurants": "← Przeglądaj inne restauracje",
       "placeAnotherOrder": "Złóż kolejne zamówienie",
-      "scheduledFor": "Zaplanowane na {time}"
+      "scheduledFor": "Zaplanowane na {time}",
+      "paidWithReward": "Zapłacono za pomocą {label}",
+      "earnedReward": "Zdobyto {label}",
+      "rewardDefaultName": "Złotówki za zakupy"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Brak klucza API Google Maps — ustaw go w Panelu → Ustawienia mapy.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Nie znaleziono zamówienia",
       "orderNumber": "Zamówienie #{number}",
       "myOrder": "Moje zamówienie",
-      "scheduledTitle": "Zamówienie zaplanowane"
+      "scheduledTitle": "Zamówienie zaplanowane",
+      "paidWithReward": "Zapłacono za pomocą {label}",
+      "earnedReward": "Zdobyto {label}",
+      "rewardDefaultName": "Złotówki za zakupy"
     },
     "payment": {
       "paymentFailed": "Płatność nie powiodła się",

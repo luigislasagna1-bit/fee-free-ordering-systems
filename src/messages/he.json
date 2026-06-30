@@ -787,7 +787,8 @@
       "integrations": "אינטגרציות",
       "orderHandling": "טיפול בהזמנות",
       "promoPopup": "חלון קופץ למבצע",
-      "customerGroups": "VIP מבצעים"
+      "customerGroups": "VIP מבצעים",
+      "rewards": "דולרים של תגמולים"
     },
     "dashboard": {
       "title": "לוח בקרה",
@@ -5395,7 +5396,8 @@
           "adjust": "התאמה",
           "signup_bonus": "בונוס הרשמה",
           "expire": "פג תוקף"
-        }
+        },
+        "orderRef": "הזמנה #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "עקוב אחר סטטוס ההזמנה",
       "browseOtherRestaurants": "← עיין במסעדות אחרות",
       "placeAnotherOrder": "בצע הזמנה נוספת",
-      "scheduledFor": "מתוזמן לשעה {time}"
+      "scheduledFor": "מתוזמן לשעה {time}",
+      "paidWithReward": "שולם באמצעות {label}",
+      "earnedReward": "צברת {label}",
+      "rewardDefaultName": "דולרים של תגמולים"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "מפתח Google Maps API חסר — הגדר אותו בניהול → הגדרות מפה.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "ההזמנה לא נמצאה",
       "orderNumber": "הזמנה #{number}",
       "myOrder": "ההזמנה שלי",
-      "scheduledTitle": "הזמנה מתוזמנת"
+      "scheduledTitle": "הזמנה מתוזמנת",
+      "paidWithReward": "שולם באמצעות {label}",
+      "earnedReward": "צברת {label}",
+      "rewardDefaultName": "דולרים של תגמולים"
     },
     "payment": {
       "paymentFailed": "התשלום נכשל",

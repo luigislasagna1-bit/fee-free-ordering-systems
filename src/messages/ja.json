@@ -787,7 +787,8 @@
       "integrations": "インテグレーション",
       "orderHandling": "注文の処理",
       "promoPopup": "プロモポップアップ",
-      "customerGroups": "VIP特典"
+      "customerGroups": "VIP特典",
+      "rewards": "リワードドル"
     },
     "dashboard": {
       "title": "ダッシュボード",
@@ -5395,7 +5396,8 @@
           "adjust": "調整",
           "signup_bonus": "登録ボーナス",
           "expire": "失効"
-        }
+        },
+        "orderRef": "注文 #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "注文状況を確認する",
       "browseOtherRestaurants": "← 他のレストランを見る",
       "placeAnotherOrder": "続けて注文する",
-      "scheduledFor": "{time} にご予約"
+      "scheduledFor": "{time} にご予約",
+      "paidWithReward": "{label}で支払い",
+      "earnedReward": "{label}を獲得しました",
+      "rewardDefaultName": "リワードドル"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps APIキーがありません。管理画面 → マップ設定で設定してください。",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "注文が見つかりません",
       "orderNumber": "注文 #{number}",
       "myOrder": "マイオーダー",
-      "scheduledTitle": "予約注文"
+      "scheduledTitle": "予約注文",
+      "paidWithReward": "{label}で支払い",
+      "earnedReward": "{label}を獲得しました",
+      "rewardDefaultName": "リワードドル"
     },
     "payment": {
       "paymentFailed": "お支払いに失敗しました",

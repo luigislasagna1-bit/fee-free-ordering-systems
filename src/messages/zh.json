@@ -787,7 +787,8 @@
       "integrations": "集成",
       "orderHandling": "订单处理",
       "promoPopup": "促销弹窗",
-      "customerGroups": "VIP 专享优惠"
+      "customerGroups": "VIP 专享优惠",
+      "rewards": "奖励金"
     },
     "dashboard": {
       "title": "仪表盘",
@@ -5395,7 +5396,8 @@
           "adjust": "调整",
           "signup_bonus": "注册奖励",
           "expire": "已过期"
-        }
+        },
+        "orderRef": "订单 #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "追踪订单状态",
       "browseOtherRestaurants": "← 浏览其他餐厅",
       "placeAnotherOrder": "再下一单",
-      "scheduledFor": "预约时间：{time}"
+      "scheduledFor": "预约时间：{time}",
+      "paidWithReward": "使用 {label} 支付",
+      "earnedReward": "您获得了 {label}",
+      "rewardDefaultName": "奖励金"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "缺少 Google Maps API 密钥——请在管理后台 → 地图设置中配置。",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "未找到订单",
       "orderNumber": "订单 #{number}",
       "myOrder": "我的订单",
-      "scheduledTitle": "预约订单"
+      "scheduledTitle": "预约订单",
+      "paidWithReward": "使用 {label} 支付",
+      "earnedReward": "您获得了 {label}",
+      "rewardDefaultName": "奖励金"
     },
     "payment": {
       "paymentFailed": "支付失败",

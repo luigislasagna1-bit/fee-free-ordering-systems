@@ -787,7 +787,8 @@
       "integrations": "Integracije",
       "orderHandling": "Upravljanje naročil",
       "promoPopup": "Promocijsko okno",
-      "customerGroups": "VIP ponudbe"
+      "customerGroups": "VIP ponudbe",
+      "rewards": "Nagradni dobropis"
     },
     "dashboard": {
       "title": "Nadzorna plošča",
@@ -5395,7 +5396,8 @@
           "adjust": "Prilagoditev",
           "signup_bonus": "Bonus ob registraciji",
           "expire": "Poteklo"
-        }
+        },
+        "orderRef": "Naročilo #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Sledite statusu naročila",
       "browseOtherRestaurants": "← Oglejte si druge restavracije",
       "placeAnotherOrder": "Oddajte novo naročilo",
-      "scheduledFor": "Načrtovano za {time}"
+      "scheduledFor": "Načrtovano za {time}",
+      "paidWithReward": "Plačano z {label}",
+      "earnedReward": "Prislužili ste {label}",
+      "rewardDefaultName": "Nagradni dobropis"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Manjka ključ Google Maps API — nastavite ga v Skrbnik → Nastavitve karte.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Naročilo ni najdeno",
       "orderNumber": "Naročilo #{number}",
       "myOrder": "Moje naročilo",
-      "scheduledTitle": "Načrtovano naročilo"
+      "scheduledTitle": "Načrtovano naročilo",
+      "paidWithReward": "Plačano z {label}",
+      "earnedReward": "Prislužili ste {label}",
+      "rewardDefaultName": "Nagradni dobropis"
     },
     "payment": {
       "paymentFailed": "Plačilo ni uspelo",

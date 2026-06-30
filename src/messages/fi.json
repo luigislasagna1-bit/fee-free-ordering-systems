@@ -787,7 +787,8 @@
       "integrations": "Integraatiot",
       "orderHandling": "Tilausten käsittely",
       "promoPopup": "Promo-ponnahdusikkuna",
-      "customerGroups": "VIP-edut"
+      "customerGroups": "VIP-edut",
+      "rewards": "Bonusrahat"
     },
     "dashboard": {
       "title": "Kojelauta",
@@ -5395,7 +5396,8 @@
           "adjust": "Muutos",
           "signup_bonus": "Liittymisbonus",
           "expire": "Vanhentunut"
-        }
+        },
+        "orderRef": "Tilaus #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Seuraa tilauksen tilaa",
       "browseOtherRestaurants": "← Selaa muita ravintoloita",
       "placeAnotherOrder": "Tee uusi tilaus",
-      "scheduledFor": "Ajoitettu: {time}"
+      "scheduledFor": "Ajoitettu: {time}",
+      "paidWithReward": "Maksettu: {label}",
+      "earnedReward": "Ansaitsit {label}",
+      "rewardDefaultName": "Bonusrahat"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API-avain puuttuu — aseta se Hallintapaneelissa → Karttojen asetukset.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Tilausta ei löydy",
       "orderNumber": "Tilaus #{number}",
       "myOrder": "Tilaukseni",
-      "scheduledTitle": "Ajoitettu tilaus"
+      "scheduledTitle": "Ajoitettu tilaus",
+      "paidWithReward": "Maksettu: {label}",
+      "earnedReward": "Ansaitsit {label}",
+      "rewardDefaultName": "Bonusrahat"
     },
     "payment": {
       "paymentFailed": "Maksu epäonnistui",

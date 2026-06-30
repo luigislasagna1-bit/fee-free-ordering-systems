@@ -787,7 +787,8 @@
       "integrations": "Entegrasyonlar",
       "orderHandling": "Sipariş Yönetimi",
       "promoPopup": "Promosyon Penceresi",
-      "customerGroups": "VIP Ayrıcalıkları"
+      "customerGroups": "VIP Ayrıcalıkları",
+      "rewards": "Ödül Dolarları"
     },
     "dashboard": {
       "title": "Panel",
@@ -5395,7 +5396,8 @@
           "adjust": "Düzeltme",
           "signup_bonus": "Kayıt bonusu",
           "expire": "Süresi doldu"
-        }
+        },
+        "orderRef": "Sipariş #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Sipariş Durumunu Takip Et",
       "browseOtherRestaurants": "← Diğer restoranlara göz at",
       "placeAnotherOrder": "Yeni sipariş ver",
-      "scheduledFor": "{time} için planlandı"
+      "scheduledFor": "{time} için planlandı",
+      "paidWithReward": "{label} ile ödendi",
+      "earnedReward": "{label} kazandınız",
+      "rewardDefaultName": "Ödül Dolarları"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API anahtarı eksik — Admin → Harita Ayarları bölümünden ekleyin.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Sipariş bulunamadı",
       "orderNumber": "Sipariş #{number}",
       "myOrder": "Siparişim",
-      "scheduledTitle": "Planlanmış sipariş"
+      "scheduledTitle": "Planlanmış sipariş",
+      "paidWithReward": "{label} ile ödendi",
+      "earnedReward": "{label} kazandınız",
+      "rewardDefaultName": "Ödül Dolarları"
     },
     "payment": {
       "paymentFailed": "Ödeme başarısız",

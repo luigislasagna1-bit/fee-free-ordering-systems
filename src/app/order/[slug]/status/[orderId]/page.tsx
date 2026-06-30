@@ -238,6 +238,14 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   // rows pre-currency-column).
   const orderCurrency: string = (order.restaurant?.currency || "usd").toLowerCase();
   const formatCurrency = (amount: number) => fmtCurrency(amount, orderCurrency);
+  // Reward Dollars on this order: amount spent (creditApplied) + amount earned
+  // (computed from the ledger by the API). Labelled with the store's chosen name.
+  const rewardName: string =
+    order.restaurant?.rewardLabelPlural?.trim() ||
+    order.restaurant?.rewardLabelSingular?.trim() ||
+    t("rewardDefaultName");
+  const rewardUsed: number = Number(order.creditApplied) || 0;
+  const rewardEarned: number = Number(order.rewardEarned) || 0;
   // Pick the step set based on the restaurant's kitchenWorkflowMode.
   // Status values not present in the chosen set (e.g. "preparing" on a
   // simple-mode restaurant — shouldn't happen, but defensive) collapse
@@ -648,6 +656,20 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                 <div className="flex justify-between text-gray-600"><span>{t("tip")}</span><span>{formatCurrency(order.tip)}</span></div>
               )}
               <div className="flex justify-between font-bold text-gray-900 pt-1"><span>{t("total")}</span><span>{formatCurrency(order.total)}</span></div>
+              {/* Reward Dollars used as part-payment on this order. */}
+              {rewardUsed > 0 && (
+                <div className="flex justify-between text-emerald-700 font-medium">
+                  <span>{t("paidWithReward", { label: rewardName })}</span>
+                  <span>− {formatCurrency(rewardUsed)}</span>
+                </div>
+              )}
+              {/* Reward Dollars earned on this order (credited at completion). */}
+              {rewardEarned > 0 && (
+                <div className="flex justify-between text-emerald-600">
+                  <span>{t("earnedReward", { label: rewardName })}</span>
+                  <span>+ {formatCurrency(rewardEarned)}</span>
+                </div>
+              )}
             </div>
 
             {/* Order metadata */}

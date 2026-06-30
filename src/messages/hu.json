@@ -787,7 +787,8 @@
       "integrations": "Integrációk",
       "orderHandling": "Rendeléskezelés",
       "promoPopup": "Promóciós felugró",
-      "customerGroups": "VIP-ajánlatok"
+      "customerGroups": "VIP-ajánlatok",
+      "rewards": "Jutalomdollár"
     },
     "dashboard": {
       "title": "Irányítópult",
@@ -5395,7 +5396,8 @@
           "adjust": "Módosítás",
           "signup_bonus": "Regisztrációs bónusz",
           "expire": "Lejárt"
-        }
+        },
+        "orderRef": "Rendelés #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Rendelés állapotának követése",
       "browseOtherRestaurants": "← Más éttermek böngészése",
       "placeAnotherOrder": "Új rendelés leadása",
-      "scheduledFor": "Időpontra ütemezve: {time}"
+      "scheduledFor": "Időpontra ütemezve: {time}",
+      "paidWithReward": "Fizetve ezzel: {label}",
+      "earnedReward": "{label} jóváírva",
+      "rewardDefaultName": "Jutalomdollár"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Hiányzik a Google Maps API-kulcs – add meg az Admin → Térképbeállítások menüben.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "A rendelés nem található",
       "orderNumber": "#{number}. rendelés",
       "myOrder": "A rendelésedem",
-      "scheduledTitle": "Ütemezett rendelés"
+      "scheduledTitle": "Ütemezett rendelés",
+      "paidWithReward": "Fizetve ezzel: {label}",
+      "earnedReward": "{label} jóváírva",
+      "rewardDefaultName": "Jutalomdollár"
     },
     "payment": {
       "paymentFailed": "Fizetés sikertelen",

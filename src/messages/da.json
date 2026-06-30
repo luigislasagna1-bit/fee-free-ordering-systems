@@ -787,7 +787,8 @@
       "integrations": "Integrationer",
       "orderHandling": "Ordrehåndtering",
       "promoPopup": "Promo-pop-up",
-      "customerGroups": "VIP Specials"
+      "customerGroups": "VIP Specials",
+      "rewards": "Bonuskroner"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -5395,7 +5396,8 @@
           "adjust": "Justering",
           "signup_bonus": "Velkomstbonus",
           "expire": "Udløbet"
-        }
+        },
+        "orderRef": "Ordre #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Følg ordrestatus",
       "browseOtherRestaurants": "← Udforsk andre restauranter",
       "placeAnotherOrder": "Afgiv en ny bestilling",
-      "scheduledFor": "Planlagt til {time}"
+      "scheduledFor": "Planlagt til {time}",
+      "paidWithReward": "Betalt med {label}",
+      "earnedReward": "Du optjente {label}",
+      "rewardDefaultName": "Bonuskroner"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API-nøgle mangler — angiv den under Admin → Kortindstillinger.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Bestilling ikke fundet",
       "orderNumber": "Bestilling #{number}",
       "myOrder": "Min bestilling",
-      "scheduledTitle": "Planlagt bestilling"
+      "scheduledTitle": "Planlagt bestilling",
+      "paidWithReward": "Betalt med {label}",
+      "earnedReward": "Du optjente {label}",
+      "rewardDefaultName": "Bonuskroner"
     },
     "payment": {
       "paymentFailed": "Betaling mislykkedes",

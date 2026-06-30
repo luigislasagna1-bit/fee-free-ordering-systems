@@ -787,7 +787,8 @@
       "integrations": "Integracijos",
       "orderHandling": "Užsakymų tvarkymas",
       "promoPopup": "Akcijos langas",
-      "customerGroups": "VIP pasiūlymai"
+      "customerGroups": "VIP pasiūlymai",
+      "rewards": "Premijų doleriai"
     },
     "dashboard": {
       "title": "Skydelis",
@@ -5395,7 +5396,8 @@
           "adjust": "Koregavimas",
           "signup_bonus": "Registracijos premija",
           "expire": "Pasibaigė galiojimas"
-        }
+        },
+        "orderRef": "Užsakymas #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Sekti užsakymo būseną",
       "browseOtherRestaurants": "← Naršyti kitus restoranus",
       "placeAnotherOrder": "Pateikti kitą užsakymą",
-      "scheduledFor": "Suplanuota {time}"
+      "scheduledFor": "Suplanuota {time}",
+      "paidWithReward": "Apmokėta naudojant {label}",
+      "earnedReward": "Uždirbote {label}",
+      "rewardDefaultName": "Premijų doleriai"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Trūksta Google Maps API rakto — nustatykite jį Administravimas → Žemėlapio nustatymai.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Užsakymas nerastas",
       "orderNumber": "Užsakymas #{number}",
       "myOrder": "Mano užsakymas",
-      "scheduledTitle": "Suplanuotas užsakymas"
+      "scheduledTitle": "Suplanuotas užsakymas",
+      "paidWithReward": "Apmokėta naudojant {label}",
+      "earnedReward": "Uždirbote {label}",
+      "rewardDefaultName": "Premijų doleriai"
     },
     "payment": {
       "paymentFailed": "Mokėjimas nepavyko",

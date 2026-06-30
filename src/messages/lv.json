@@ -787,7 +787,8 @@
       "integrations": "Integrācijas",
       "orderHandling": "Pasūtījumu apstrāde",
       "promoPopup": "Akcijas logs",
-      "customerGroups": "VIP piedāvājumi"
+      "customerGroups": "VIP piedāvājumi",
+      "rewards": "Bonusa dolāri"
     },
     "dashboard": {
       "title": "Panelis",
@@ -5395,7 +5396,8 @@
           "adjust": "Korekcija",
           "signup_bonus": "Reģistrācijas bonuss",
           "expire": "Beidzies derīgums"
-        }
+        },
+        "orderRef": "Pasūtījums #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Sekot pasūtījuma statusam",
       "browseOtherRestaurants": "← Apskatīt citus restorānus",
       "placeAnotherOrder": "Veikt vēl vienu pasūtījumu",
-      "scheduledFor": "Ieplānots {time}"
+      "scheduledFor": "Ieplānots {time}",
+      "paidWithReward": "Apmaksāts ar {label}",
+      "earnedReward": "Nopelnīji {label}",
+      "rewardDefaultName": "Bonusa dolāri"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Trūkst Google Maps API atslēgas — iestatiet to Administrācija → Kartes iestatījumi.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Pasūtījums nav atrasts",
       "orderNumber": "Pasūtījums #{number}",
       "myOrder": "Mans pasūtījums",
-      "scheduledTitle": "Ieplānots pasūtījums"
+      "scheduledTitle": "Ieplānots pasūtījums",
+      "paidWithReward": "Apmaksāts ar {label}",
+      "earnedReward": "Nopelnīji {label}",
+      "rewardDefaultName": "Bonusa dolāri"
     },
     "payment": {
       "paymentFailed": "Maksājums neizdevās",

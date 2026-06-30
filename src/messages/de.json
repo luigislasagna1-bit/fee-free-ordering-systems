@@ -787,7 +787,8 @@
       "integrations": "Integrationen",
       "orderHandling": "Bestellabwicklung",
       "promoPopup": "Promo-Popup",
-      "customerGroups": "VIP-Specials"
+      "customerGroups": "VIP-Specials",
+      "rewards": "Bonusguthaben"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -5395,7 +5396,8 @@
           "adjust": "Anpassung",
           "signup_bonus": "Anmeldebonus",
           "expire": "Verfallen"
-        }
+        },
+        "orderRef": "Bestellung #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Bestellstatus verfolgen",
       "browseOtherRestaurants": "← Andere Restaurants durchsuchen",
       "placeAnotherOrder": "Weitere Bestellung aufgeben",
-      "scheduledFor": "Geplant für {time}"
+      "scheduledFor": "Geplant für {time}",
+      "paidWithReward": "Bezahlt mit {label}",
+      "earnedReward": "Sie haben {label} verdient",
+      "rewardDefaultName": "Bonusguthaben"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API-Schlüssel fehlt – bitte in Admin → Karteneinstellungen eintragen.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Bestellung nicht gefunden",
       "orderNumber": "Bestellung #{number}",
       "myOrder": "Meine Bestellung",
-      "scheduledTitle": "Geplante Bestellung"
+      "scheduledTitle": "Geplante Bestellung",
+      "paidWithReward": "Bezahlt mit {label}",
+      "earnedReward": "Sie haben {label} verdient",
+      "rewardDefaultName": "Bonusguthaben"
     },
     "payment": {
       "paymentFailed": "Zahlung fehlgeschlagen",

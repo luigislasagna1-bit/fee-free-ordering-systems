@@ -210,3 +210,9 @@ SHIPPED: half/half pizza pricing now charges HALF for a topping/sauce/cheese on 
 ## Reward Dollars — auto-reject did NOT return spent credit (FIXED 2026-06-29, found via Luigi's prod test)
 BUG (money): when an order paid partly/fully with Reward Dollars sat un-accepted and the auto-reject safety-net cron fired (4 min, status→"rejected"), the spent credit was NOT returned — only the MANUAL reject path (PATCH /api/orders/[id]) called releaseRewardForOrder. Coupons, promo-usage and the card auth were released; reward credit was stranded in status="applied" forever. Same gap in the abandoned-payment → "cancelled" sweep.
 FIX: added `releaseForOrder` (reward) to both paths in src/lib/auto-reject-orders.ts (idempotent, no-ops when no credit spent). Now full parity with manual reject. Verify on prod: place a credit order, let it time out (or trigger /api/cron/auto-reject-stale-orders), confirm balance returns.
+
+## Reward Dollars — per-order detail in customer wallet activity + receipts (flagged 2026-06-29, Luigi)
+Luigi: the customer account "Pizza Bucks" activity list shows only generic "Spent on an order / Earned on an order / Returned" + date + amount — needs to show, PER ORDER: the order number, payment method, the order breakdown (subtotal/discounts/tax/tip/total), and the reward bucks USED + EARNED on that order.
+- Account activity (src/app/order/[slug]/account/page.tsx ~line 234): ledger query currently selects only id/amount/reason/createdAt. Add orderId(+note); for order-linked rows show order # and link to its receipt; show paymentMethod. EARN test on prod CONFIRMED working (+$4.50 = 5% of $90, order dmftdh97).
+- Order receipt/confirmation/status (src/app/order/[slug]/{confirmation,status/[orderId]}/page.tsx): add "Paid with {rewardName}: −$X" + "Earned: +$Y" lines to the existing breakdown + show payment method.
+- i18n: new strings across all 38 locales. Add HelpTip where non-obvious.

@@ -787,7 +787,8 @@
       "integrations": "Интеграции",
       "orderHandling": "Обработка на поръчки",
       "promoPopup": "Промо прозорец",
-      "customerGroups": "VIP Специални оферти"
+      "customerGroups": "VIP Специални оферти",
+      "rewards": "Бонус долари"
     },
     "dashboard": {
       "title": "Табло",
@@ -5395,7 +5396,8 @@
           "adjust": "Корекция",
           "signup_bonus": "Бонус при регистрация",
           "expire": "Изтекло"
-        }
+        },
+        "orderRef": "Поръчка №{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Проследи статуса на поръчката",
       "browseOtherRestaurants": "← Разгледай други ресторанти",
       "placeAnotherOrder": "Направи нова поръчка",
-      "scheduledFor": "Планирано за {time}"
+      "scheduledFor": "Планирано за {time}",
+      "paidWithReward": "Платено с {label}",
+      "earnedReward": "Спечелихте {label}",
+      "rewardDefaultName": "Бонус долари"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Липсва API ключ за Google Maps — задай го в Администрация → Настройки на картата.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Поръчката не е намерена",
       "orderNumber": "Поръчка №{number}",
       "myOrder": "Моята поръчка",
-      "scheduledTitle": "Планирана поръчка"
+      "scheduledTitle": "Планирана поръчка",
+      "paidWithReward": "Платено с {label}",
+      "earnedReward": "Спечелихте {label}",
+      "rewardDefaultName": "Бонус долари"
     },
     "payment": {
       "paymentFailed": "Плащането не бе успешно",

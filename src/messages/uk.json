@@ -787,7 +787,8 @@
       "integrations": "Інтеграції",
       "orderHandling": "Обробка замовлень",
       "promoPopup": "Промо-вікно",
-      "customerGroups": "VIP Спеціальні пропозиції"
+      "customerGroups": "VIP Спеціальні пропозиції",
+      "rewards": "Бонусні долари"
     },
     "dashboard": {
       "title": "Панель керування",
@@ -5395,7 +5396,8 @@
           "adjust": "Коригування",
           "signup_bonus": "Бонус за реєстрацію",
           "expire": "Минув термін дії"
-        }
+        },
+        "orderRef": "Замовлення №{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Відстежити статус замовлення",
       "browseOtherRestaurants": "← Переглянути інші ресторани",
       "placeAnotherOrder": "Зробити ще одне замовлення",
-      "scheduledFor": "Заплановано на {time}"
+      "scheduledFor": "Заплановано на {time}",
+      "paidWithReward": "Оплачено за допомогою {label}",
+      "earnedReward": "Ви заробили {label}",
+      "rewardDefaultName": "Бонусні долари"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Відсутній ключ Google Maps API — вкажіть його в Адмін → Налаштування карти.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Замовлення не знайдено",
       "orderNumber": "Замовлення #{number}",
       "myOrder": "Моє замовлення",
-      "scheduledTitle": "Заплановане замовлення"
+      "scheduledTitle": "Заплановане замовлення",
+      "paidWithReward": "Оплачено за допомогою {label}",
+      "earnedReward": "Ви заробили {label}",
+      "rewardDefaultName": "Бонусні долари"
     },
     "payment": {
       "paymentFailed": "Помилка оплати",

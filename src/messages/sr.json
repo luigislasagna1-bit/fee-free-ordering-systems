@@ -787,7 +787,8 @@
       "integrations": "Интеграције",
       "orderHandling": "Upravljanje porudžbinama",
       "promoPopup": "Промо прозор",
-      "customerGroups": "VIP ponude"
+      "customerGroups": "VIP ponude",
+      "rewards": "Nagradni bodovi"
     },
     "dashboard": {
       "title": "Kontrolna tabla",
@@ -5395,7 +5396,8 @@
           "adjust": "Prilagođavanje",
           "signup_bonus": "Bonus za registraciju",
           "expire": "Isteklo"
-        }
+        },
+        "orderRef": "Поруџбина #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Prati status narudžbine",
       "browseOtherRestaurants": "← Pregledaj ostale restorane",
       "placeAnotherOrder": "Naruči ponovo",
-      "scheduledFor": "Zakazano za {time}"
+      "scheduledFor": "Zakazano za {time}",
+      "paidWithReward": "Плаћено са {label}",
+      "earnedReward": "Зарадили сте {label}",
+      "rewardDefaultName": "Nagradni bodovi"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Nedostaje API ključ za Google Maps — podesite ga u Admin → Podešavanja mape.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Narudžbina nije pronađena",
       "orderNumber": "Narudžbina #{number}",
       "myOrder": "Moja narudžbina",
-      "scheduledTitle": "Zakazana porudžbina"
+      "scheduledTitle": "Zakazana porudžbina",
+      "paidWithReward": "Плаћено са {label}",
+      "earnedReward": "Зарадили сте {label}",
+      "rewardDefaultName": "Nagradni bodovi"
     },
     "payment": {
       "paymentFailed": "Plaćanje nije uspelo",

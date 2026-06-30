@@ -787,7 +787,8 @@
       "integrations": "Integratsioonid",
       "orderHandling": "Tellimuste haldus",
       "promoPopup": "Promo hüpikaken",
-      "customerGroups": "VIP-pakkumised"
+      "customerGroups": "VIP-pakkumised",
+      "rewards": "Boonusraha"
     },
     "dashboard": {
       "title": "Juhtpaneel",
@@ -5395,7 +5396,8 @@
           "adjust": "Korrigeerimine",
           "signup_bonus": "Liitumisboonus",
           "expire": "Aegunud"
-        }
+        },
+        "orderRef": "Tellimus #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Jälgi tellimuse olekut",
       "browseOtherRestaurants": "← Sirvi teisi restorane",
       "placeAnotherOrder": "Esita uus tellimus",
-      "scheduledFor": "Ajastatud kellaajaks {time}"
+      "scheduledFor": "Ajastatud kellaajaks {time}",
+      "paidWithReward": "Makstud: {label}",
+      "earnedReward": "Teenisid {label}",
+      "rewardDefaultName": "Boonusraha"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Mapsi API võti puudub — seadista see Admin → Kaardi seaded.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Tellimust ei leitud",
       "orderNumber": "Tellimus #{number}",
       "myOrder": "Minu tellimus",
-      "scheduledTitle": "Ajastatud tellimus"
+      "scheduledTitle": "Ajastatud tellimus",
+      "paidWithReward": "Makstud: {label}",
+      "earnedReward": "Teenisid {label}",
+      "rewardDefaultName": "Boonusraha"
     },
     "payment": {
       "paymentFailed": "Makse ebaõnnestus",

@@ -787,7 +787,8 @@
       "integrations": "Ενσωματώσεις",
       "orderHandling": "Διαχείριση παραγγελιών",
       "promoPopup": "Αναδυόμενο προσφοράς",
-      "customerGroups": "VIP Specials"
+      "customerGroups": "VIP Specials",
+      "rewards": "Δολάρια Επιβράβευσης"
     },
     "dashboard": {
       "title": "Πίνακας ελέγχου",
@@ -5395,7 +5396,8 @@
           "adjust": "Προσαρμογή",
           "signup_bonus": "Μπόνους εγγραφής",
           "expire": "Έληξε"
-        }
+        },
+        "orderRef": "Παραγγελία #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Παρακολούθηση κατάστασης παραγγελίας",
       "browseOtherRestaurants": "← Περιήγηση σε άλλα εστιατόρια",
       "placeAnotherOrder": "Νέα παραγγελία",
-      "scheduledFor": "Προγραμματισμένο για {time}"
+      "scheduledFor": "Προγραμματισμένο για {time}",
+      "paidWithReward": "Πληρώθηκε με {label}",
+      "earnedReward": "Κερδίσατε {label}",
+      "rewardDefaultName": "Δολάρια Επιβράβευσης"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Λείπει το κλειδί Google Maps API — ορίστε το στο Admin → Ρυθμίσεις χάρτη.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Η παραγγελία δεν βρέθηκε",
       "orderNumber": "Παραγγελία #{number}",
       "myOrder": "Η παραγγελία μου",
-      "scheduledTitle": "Προγραμματισμένη παραγγελία"
+      "scheduledTitle": "Προγραμματισμένη παραγγελία",
+      "paidWithReward": "Πληρώθηκε με {label}",
+      "earnedReward": "Κερδίσατε {label}",
+      "rewardDefaultName": "Δολάρια Επιβράβευσης"
     },
     "payment": {
       "paymentFailed": "Η πληρωμή απέτυχε",

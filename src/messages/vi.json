@@ -787,7 +787,8 @@
       "integrations": "Tích hợp",
       "orderHandling": "Xử lý đơn hàng",
       "promoPopup": "Cửa sổ khuyến mãi",
-      "customerGroups": "VIP Specials"
+      "customerGroups": "VIP Specials",
+      "rewards": "Đô-la Thưởng"
     },
     "dashboard": {
       "title": "Bảng điều khiển",
@@ -5395,7 +5396,8 @@
           "adjust": "Điều chỉnh",
           "signup_bonus": "Thưởng đăng ký",
           "expire": "Đã hết hạn"
-        }
+        },
+        "orderRef": "Đơn hàng #{number}"
       }
     },
     "bundle": {
@@ -5430,7 +5432,10 @@
       "trackOrderStatus": "Theo dõi trạng thái đơn hàng",
       "browseOtherRestaurants": "← Xem nhà hàng khác",
       "placeAnotherOrder": "Đặt thêm đơn hàng",
-      "scheduledFor": "Đã lên lịch cho {time}"
+      "scheduledFor": "Đã lên lịch cho {time}",
+      "paidWithReward": "Đã thanh toán bằng {label}",
+      "earnedReward": "Bạn đã nhận được {label}",
+      "rewardDefaultName": "Đô-la Thưởng"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Thiếu API key Google Maps — hãy cài đặt trong Quản trị → Cài đặt bản đồ.",
@@ -5568,7 +5573,10 @@
       "orderNotFound": "Không tìm thấy đơn hàng",
       "orderNumber": "Đơn #{number}",
       "myOrder": "Đơn hàng của tôi",
-      "scheduledTitle": "Đơn hàng đã đặt lịch"
+      "scheduledTitle": "Đơn hàng đã đặt lịch",
+      "paidWithReward": "Đã thanh toán bằng {label}",
+      "earnedReward": "Bạn đã nhận được {label}",
+      "rewardDefaultName": "Đô-la Thưởng"
     },
     "payment": {
       "paymentFailed": "Thanh toán thất bại",
