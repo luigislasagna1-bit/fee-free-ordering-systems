@@ -4416,7 +4416,9 @@
       "drivingTime": "Sõiduaeg",
       "distance": "Vahemaa",
       "paidWithReward": "Makstud: {label}",
-      "earnedReward": "Teenisid {label}"
+      "earnedReward": "Teenisid {label}",
+      "balanceDue": "Maksta jääb",
+      "rewardBalance": "{label} saldo"
     },
     "reservation": {
       "title": "BRONEERING",

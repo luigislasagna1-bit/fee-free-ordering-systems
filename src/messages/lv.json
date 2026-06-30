@@ -4416,7 +4416,9 @@
       "drivingTime": "Braukšanas laiks",
       "distance": "Attālums",
       "paidWithReward": "Apmaksāts ar {label}",
-      "earnedReward": "Nopelnīji {label}"
+      "earnedReward": "Nopelnīji {label}",
+      "balanceDue": "Atlikusī summa",
+      "rewardBalance": "{label} atlikums"
     },
     "reservation": {
       "title": "REZERVĀCIJA",

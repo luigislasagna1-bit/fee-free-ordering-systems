@@ -4416,7 +4416,9 @@
       "drivingTime": "Menetidő",
       "distance": "Távolság",
       "paidWithReward": "Fizetve ezzel: {label}",
-      "earnedReward": "{label} jóváírva"
+      "earnedReward": "{label} jóváírva",
+      "balanceDue": "Fizetendő hátralék",
+      "rewardBalance": "{label} egyenleg"
     },
     "reservation": {
       "title": "FOGLALÁS",

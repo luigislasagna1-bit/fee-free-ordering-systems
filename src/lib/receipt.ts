@@ -514,11 +514,18 @@ export interface ReceiptOrder {
    *  When > 0 the receipt prints a "Paid with {rewardLabel} -$X" line under the
    *  total, mirroring the on-screen receipt. Luigi 2026-06-29. */
   creditApplied?: number;
-  /** Reward Dollars EARNED on this order (computed from the ledger). When > 0
-   *  the receipt prints a "You earned {rewardLabel} +$Y" line. */
+  /** Reward Dollars EARNED on this order — actual (ledger) once completed, else
+   *  PROJECTED (what they'll earn on completion) so the receipt printed at order
+   *  time still shows it. Drives the bottom "earned" line. */
   rewardEarned?: number;
-  /** Store's customer-facing reward name (e.g. "Pizza Bucks") for the two lines
-   *  above. Resolved by the payload builder; falls back to "Reward Dollars". */
+  /** Customer's wallet balance to print at the bottom of the receipt (current
+   *  balance after this order's spend). */
+  rewardBalance?: number;
+  /** Whether Reward Dollars is currently ON for this store AND this order has a
+   *  wallet — gates the printed reward lines + bottom summary. */
+  rewardsActive?: boolean;
+  /** Store's customer-facing reward name (e.g. "Pizza Bucks") for the reward
+   *  lines. Resolved by the payload builder; falls back to "Reward Dollars". */
   rewardLabel?: string;
   paymentMethod: string;
   paymentStatus: string;
@@ -982,14 +989,15 @@ async function renderCustomerSection(
       if ((order.tip ?? 0)  > 0) r.columns(t("receipt.customer.tip"), fmt(order.tip!));
       r.divider("-");
       r.columns(t("receipt.customer.total"), fmt(order.total));
-      // Reward Dollars used as part-payment / earned on this order. Mirrors the
-      // on-screen receipt; mirror any change in receipt-lines.ts. Luigi 2026-06-29.
-      {
+      // Reward Dollars PAYMENT SPLIT: "Paid with {label} -$X" + the remaining
+      // amount due on the customer's payment method. Mirror any change in
+      // receipt-lines.ts. The EARNED + BALANCE summary prints at the very bottom
+      // (see buildCustomerReceipt*). Luigi 2026-06-29.
+      if (order.rewardsActive && (order.creditApplied ?? 0) > 0) {
         const rewardLabel = order.rewardLabel || "Reward Dollars";
-        if ((order.creditApplied ?? 0) > 0)
-          r.columns(t("receipt.customer.paidWithReward", { label: rewardLabel }), `-${fmt(order.creditApplied!)}`);
-        if ((order.rewardEarned ?? 0) > 0)
-          r.columns(t("receipt.customer.earnedReward", { label: rewardLabel }), `+${fmt(order.rewardEarned!)}`);
+        r.columns(t("receipt.customer.paidWithReward", { label: rewardLabel }), `-${fmt(order.creditApplied!)}`);
+        const due = Math.max(0, order.total - order.creditApplied!);
+        r.columns(t("receipt.customer.balanceDue"), fmt(due));
       }
       break;
 
@@ -1169,8 +1177,28 @@ export async function buildCustomerReceiptFromConfig(
   const t = await getDict(locale);
   r.init();
   await renderSections(r, config, order, restaurant, t);
+  appendRewardSummary(r, order, t);
   r.nl(4).cut();
   return r.build();
+}
+
+// Reward Dollars summary printed at the VERY BOTTOM of the customer receipt:
+// earned-this-order (actual once completed, else projected) + current wallet
+// balance. Gated on rewardsActive so it never prints when the feature is off.
+// Mirror this in receipt-lines.ts (StarXpand bitmap path). Luigi 2026-06-29.
+function appendRewardSummary(
+  r: { resetStyle(): any; left(): any; center(): any; bold(on?: boolean): any; line(s: string): any; columns(l: string, rt: string): any; divider(c?: string): any },
+  order: ReceiptOrder,
+  t: Translator,
+): void {
+  if (!order.rewardsActive) return;
+  if ((order.rewardEarned ?? 0) <= 0 && (order.rewardBalance ?? 0) <= 0) return;
+  const label = order.rewardLabel || "Reward Dollars";
+  r.resetStyle().left().divider("-");
+  r.center().bold(true).line(label).bold(false).left();
+  if ((order.rewardEarned ?? 0) > 0)
+    r.columns(t("receipt.customer.earnedReward", { label }), `+${fmt(order.rewardEarned!)}`);
+  r.columns(t("receipt.customer.rewardBalance", { label }), fmt(order.rewardBalance ?? 0));
 }
 
 // ── Reservation receipt ──────────────────────────────────────────────────────
@@ -1487,6 +1515,8 @@ export const SAMPLE_RECEIPT_ORDER: ReceiptOrder = {
   total: 29.98,
   creditApplied: 5.00,
   rewardEarned: 1.25,
+  rewardBalance: 12.75,
+  rewardsActive: true,
   rewardLabel: "Reward Dollars",
   paymentMethod: "cash",
   paymentStatus: "pending",

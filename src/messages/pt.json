@@ -4416,7 +4416,9 @@
       "drivingTime": "Tempo de condução",
       "distance": "Distância",
       "paidWithReward": "Pago com {label}",
-      "earnedReward": "Ganhou {label}"
+      "earnedReward": "Ganhou {label}",
+      "balanceDue": "Valor a pagar",
+      "rewardBalance": "Saldo de {label}"
     },
     "reservation": {
       "title": "RESERVA",

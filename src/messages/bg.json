@@ -4416,7 +4416,9 @@
       "drivingTime": "Време за шофиране",
       "distance": "Разстояние",
       "paidWithReward": "Платено с {label}",
-      "earnedReward": "Спечелихте {label}"
+      "earnedReward": "Спечелихте {label}",
+      "balanceDue": "Остатък за плащане",
+      "rewardBalance": "Баланс {label}"
     },
     "reservation": {
       "title": "РЕЗЕРВАЦИЯ",

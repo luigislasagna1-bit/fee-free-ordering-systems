@@ -4420,7 +4420,9 @@
       "drivingTime": "Driving time",
       "distance": "Distance",
       "paidWithReward": "Paid with {label}",
-      "earnedReward": "You earned {label}"
+      "earnedReward": "You earned {label}",
+      "balanceDue": "Balance to pay",
+      "rewardBalance": "{label} balance"
     },
     "reservation": {
       "title": "RESERVATION",

@@ -13,6 +13,7 @@
  */
 import prisma from "@/lib/db";
 import { grant } from "@/lib/reward-ledger";
+import { round2 } from "@/lib/reward-math";
 import { signupGrantsFor, orderEarnGrantsFor, type EarnRule } from "@/lib/reward-rules";
 
 async function activeRules(restaurantId: string): Promise<EarnRule[]> {
@@ -101,6 +102,58 @@ export async function awardEarnRulesForOrder(opts: { orderId: string }): Promise
     }
   } catch (e) {
     console.error("[reward awardEarnRulesForOrder]", e);
+  }
+}
+
+/** Projected earn for an order that hasn't been completed yet — what the
+ *  customer WILL earn when it completes (base %-back + matching earn rules).
+ *  Read-only, never grants, never throws. Used to print "you earned X" on a
+ *  receipt produced at order/acceptance time, before the completion hook runs.
+ *  Returns 0 when earning is off / no customer / basis ≤ 0. Luigi 2026-06-29. */
+export async function projectOrderEarn(orderId: string): Promise<number> {
+  try {
+    const order = await prisma.order.findUnique({
+      where: { id: orderId },
+      select: {
+        restaurantId: true, customerId: true, subtotal: true, couponDiscount: true,
+        promoDiscount: true, createdAt: true, completedAt: true,
+        restaurant: {
+          select: {
+            rewardsEnabled: true, rewardEarnEnabled: true, rewardEarnMode: true,
+            rewardEarnPercent: true, rewardEarnPerDollar: true,
+          },
+        },
+      },
+    });
+    if (!order?.customerId || !order.restaurant?.rewardsEnabled) return 0;
+    const basis = Math.max(0, round2((order.subtotal ?? 0) - (order.couponDiscount ?? 0) - (order.promoDiscount ?? 0)));
+    if (basis <= 0) return 0;
+
+    const r = order.restaurant;
+    let total = 0;
+    // Base %-back (mirrors awardForOrder).
+    if (r.rewardEarnEnabled) {
+      total += round2(r.rewardEarnMode === "per_dollar" ? basis * (r.rewardEarnPerDollar ?? 0) : basis * ((r.rewardEarnPercent ?? 0) / 100));
+    }
+    // Rule bonuses (first/order_over/nth) — same rank logic as awardEarnRulesForOrder.
+    const rules = await activeRules(order.restaurantId);
+    if (rules.length) {
+      const completedOrderCount = 1 + await prisma.order.count({
+        where: {
+          customerId: order.customerId, status: "completed", id: { not: orderId },
+          OR: [{ createdAt: { lt: order.createdAt } }, { createdAt: order.createdAt, id: { lt: orderId } }],
+        },
+      });
+      const grants = orderEarnGrantsFor(rules, {
+        at: order.completedAt ?? new Date(),
+        basis, orderSubtotal: order.subtotal ?? 0, completedOrderCount,
+      });
+      for (const g of grants) total += g.amount;
+    }
+    return round2(total);
+  } catch (e) {
+    console.error("[reward projectOrderEarn]", e);
+    return 0;
   }
 }
 

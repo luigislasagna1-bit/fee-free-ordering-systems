@@ -4416,7 +4416,9 @@
       "drivingTime": "זמן נסיעה",
       "distance": "מרחק",
       "paidWithReward": "שולם באמצעות {label}",
-      "earnedReward": "צברת {label}"
+      "earnedReward": "צברת {label}",
+      "balanceDue": "יתרה לתשלום",
+      "rewardBalance": "יתרת {label}"
     },
     "reservation": {
       "title": "הזמנת שולחן",

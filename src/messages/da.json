@@ -4416,7 +4416,9 @@
       "drivingTime": "Køretid",
       "distance": "Afstand",
       "paidWithReward": "Betalt med {label}",
-      "earnedReward": "Du optjente {label}"
+      "earnedReward": "Du optjente {label}",
+      "balanceDue": "Tilbage at betale",
+      "rewardBalance": "{label}-saldo"
     },
     "reservation": {
       "title": "RESERVATION",

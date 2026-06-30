@@ -4416,7 +4416,9 @@
       "drivingTime": "Ajoaika",
       "distance": "Etäisyys",
       "paidWithReward": "Maksettu: {label}",
-      "earnedReward": "Ansaitsit {label}"
+      "earnedReward": "Ansaitsit {label}",
+      "balanceDue": "Maksettavaa jäljellä",
+      "rewardBalance": "{label}-saldo"
     },
     "reservation": {
       "title": "VARAUS",

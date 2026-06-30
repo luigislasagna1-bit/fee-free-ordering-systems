@@ -4416,7 +4416,9 @@
       "drivingTime": "مدة القيادة",
       "distance": "المسافة",
       "paidWithReward": "تم الدفع بـ {label}",
-      "earnedReward": "لقد ربحت {label}"
+      "earnedReward": "لقد ربحت {label}",
+      "balanceDue": "المبلغ المتبقي",
+      "rewardBalance": "رصيد {label}"
     },
     "reservation": {
       "title": "حجز",

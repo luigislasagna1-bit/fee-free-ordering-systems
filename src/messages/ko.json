@@ -4416,7 +4416,9 @@
       "drivingTime": "운전 시간",
       "distance": "거리",
       "paidWithReward": "{label}(으)로 결제",
-      "earnedReward": "{label}을(를) 적립했습니다"
+      "earnedReward": "{label}을(를) 적립했습니다",
+      "balanceDue": "결제할 잔액",
+      "rewardBalance": "{label} 잔액"
     },
     "reservation": {
       "title": "예약",

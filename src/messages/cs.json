@@ -4416,7 +4416,9 @@
       "drivingTime": "Doba jízdy",
       "distance": "Vzdálenost",
       "paidWithReward": "Zaplaceno pomocí {label}",
-      "earnedReward": "Získali jste {label}"
+      "earnedReward": "Získali jste {label}",
+      "balanceDue": "Zbývá zaplatit",
+      "rewardBalance": "Zůstatek {label}"
     },
     "reservation": {
       "title": "REZERVACE",

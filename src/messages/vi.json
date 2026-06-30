@@ -4416,7 +4416,9 @@
       "drivingTime": "Thời gian lái xe",
       "distance": "Khoảng cách",
       "paidWithReward": "Đã thanh toán bằng {label}",
-      "earnedReward": "Bạn đã nhận được {label}"
+      "earnedReward": "Bạn đã nhận được {label}",
+      "balanceDue": "Còn phải trả",
+      "rewardBalance": "Số dư {label}"
     },
     "reservation": {
       "title": "ĐẶT BÀN",

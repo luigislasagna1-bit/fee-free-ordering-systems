@@ -20,7 +20,8 @@ import {
   type ReceiptRestaurant,
 } from "@/lib/receipt";
 import { buildKitchenReceiptLines, buildCustomerReceiptLines } from "@/lib/receipt-lines";
-import { getOrderRewardSummary } from "@/lib/reward-ledger";
+import { getOrderRewardSummary, getBalance } from "@/lib/reward-ledger";
+import { projectOrderEarn } from "@/lib/reward-earn";
 import { fetchDriveEstimate, resolveDistanceMatrixKey, cardinalDirection } from "@/lib/delivery-eta";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 
@@ -59,17 +60,26 @@ export async function buildOrderReceiptPayload(opts: {
   });
   if (!order) return { ok: false, status: 404, error: "Order not found" };
 
-  // Reward Dollars used/earned on this order, for the receipt totals. `used`
-  // comes straight off the order (creditApplied); `earned` is computed from the
-  // ledger only when the feature is on. Best-effort — never blocks the print.
+  // Reward Dollars on this order, for the receipt. Active only when the feature
+  // is ON and the order has a wallet (signed-in customer). `used` = creditApplied
+  // (off the order); `earned` = ACTUAL once completed, else PROJECTED so a receipt
+  // printed at order time still shows what they'll earn; `balance` = current
+  // wallet balance. Best-effort — a reward-DB hiccup never blocks the print.
   const rewardsOn = (order.restaurant as any).rewardsEnabled === true;
+  const orderCustomerId = (order as any).customerId as string | null | undefined;
+  const rewardsActive = rewardsOn && !!orderCustomerId;
   const rewardLabel =
     ((order.restaurant as any).rewardLabelPlural?.trim() ||
       (order.restaurant as any).rewardLabelSingular?.trim() ||
       "Reward Dollars") as string;
   let rewardEarned = 0;
-  if (rewardsOn) {
-    try { rewardEarned = (await getOrderRewardSummary(order.id)).earned; } catch { /* never block print */ }
+  let rewardBalance = 0;
+  if (rewardsActive) {
+    try {
+      const actual = (await getOrderRewardSummary(order.id)).earned;
+      rewardEarned = actual > 0 ? actual : await projectOrderEarn(order.id);
+      rewardBalance = await getBalance({ restaurantId, customerId: orderCustomerId! });
+    } catch { /* never block print */ }
   }
 
   // Reserve-then-order: the linked booking (if any) so the kitchen ticket prints
@@ -149,8 +159,10 @@ export async function buildOrderReceiptPayload(opts: {
     appliedServiceFees: (order as any).appliedServiceFees ?? null,
     appliedPromos: (order as any).appliedPromos ?? null,
     total: order.total,
-    creditApplied: rewardsOn ? ((order as any).creditApplied ?? 0) : 0,
+    creditApplied: rewardsActive ? ((order as any).creditApplied ?? 0) : 0,
     rewardEarned,
+    rewardBalance,
+    rewardsActive,
     rewardLabel,
     paymentMethod: (order as any).paymentMethod ?? "",
     paymentStatus: (order as any).paymentStatus ?? "pending",

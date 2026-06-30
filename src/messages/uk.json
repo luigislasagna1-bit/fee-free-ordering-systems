@@ -4416,7 +4416,9 @@
       "drivingTime": "Час у дорозі",
       "distance": "Відстань",
       "paidWithReward": "Оплачено за допомогою {label}",
-      "earnedReward": "Ви заробили {label}"
+      "earnedReward": "Ви заробили {label}",
+      "balanceDue": "Залишок до сплати",
+      "rewardBalance": "Баланс {label}"
     },
     "reservation": {
       "title": "БРОНЮВАННЯ",

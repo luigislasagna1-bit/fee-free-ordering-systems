@@ -4416,7 +4416,9 @@
       "drivingTime": "Rijtijd",
       "distance": "Afstand",
       "paidWithReward": "Betaald met {label}",
-      "earnedReward": "Je hebt {label} verdiend"
+      "earnedReward": "Je hebt {label} verdiend",
+      "balanceDue": "Te betalen",
+      "rewardBalance": "{label}-saldo"
     },
     "reservation": {
       "title": "RESERVERING",

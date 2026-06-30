@@ -4416,7 +4416,9 @@
       "drivingTime": "Sürüş süresi",
       "distance": "Mesafe",
       "paidWithReward": "{label} ile ödendi",
-      "earnedReward": "{label} kazandınız"
+      "earnedReward": "{label} kazandınız",
+      "balanceDue": "Ödenecek tutar",
+      "rewardBalance": "{label} bakiyesi"
     },
     "reservation": {
       "title": "REZERVASYON",

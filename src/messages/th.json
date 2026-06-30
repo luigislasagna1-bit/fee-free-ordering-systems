@@ -4416,7 +4416,9 @@
       "drivingTime": "เวลาขับรถ",
       "distance": "ระยะทาง",
       "paidWithReward": "ชำระด้วย {label}",
-      "earnedReward": "คุณได้รับ {label}"
+      "earnedReward": "คุณได้รับ {label}",
+      "balanceDue": "ยอดที่ต้องชำระ",
+      "rewardBalance": "ยอดคงเหลือ {label}"
     },
     "reservation": {
       "title": "การจอง",

@@ -4416,7 +4416,9 @@
       "drivingTime": "Време вожње",
       "distance": "Удаљеност",
       "paidWithReward": "Плаћено са {label}",
-      "earnedReward": "Зарадили сте {label}"
+      "earnedReward": "Зарадили сте {label}",
+      "balanceDue": "Преостало за плаћање",
+      "rewardBalance": "Стање {label}"
     },
     "reservation": {
       "title": "REZERVACIJA",

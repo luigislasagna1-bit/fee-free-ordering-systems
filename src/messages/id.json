@@ -4416,7 +4416,9 @@
       "drivingTime": "Waktu berkendara",
       "distance": "Jarak",
       "paidWithReward": "Dibayar dengan {label}",
-      "earnedReward": "Anda mendapatkan {label}"
+      "earnedReward": "Anda mendapatkan {label}",
+      "balanceDue": "Sisa pembayaran",
+      "rewardBalance": "Saldo {label}"
     },
     "reservation": {
       "title": "RESERVASI",

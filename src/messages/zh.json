@@ -4416,7 +4416,9 @@
       "drivingTime": "驾驶时间",
       "distance": "距离",
       "paidWithReward": "使用 {label} 支付",
-      "earnedReward": "您获得了 {label}"
+      "earnedReward": "您获得了 {label}",
+      "balanceDue": "应付余额",
+      "rewardBalance": "{label} 余额"
     },
     "reservation": {
       "title": "预订",

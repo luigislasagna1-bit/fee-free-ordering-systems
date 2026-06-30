@@ -4416,7 +4416,9 @@
       "drivingTime": "Kelionės laikas",
       "distance": "Atstumas",
       "paidWithReward": "Apmokėta naudojant {label}",
-      "earnedReward": "Uždirbote {label}"
+      "earnedReward": "Uždirbote {label}",
+      "balanceDue": "Liko sumokėti",
+      "rewardBalance": "{label} likutis"
     },
     "reservation": {
       "title": "REZERVACIJA",

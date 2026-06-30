@@ -4416,7 +4416,9 @@
       "drivingTime": "Χρόνος οδήγησης",
       "distance": "Απόσταση",
       "paidWithReward": "Πληρώθηκε με {label}",
-      "earnedReward": "Κερδίσατε {label}"
+      "earnedReward": "Κερδίσατε {label}",
+      "balanceDue": "Υπόλοιπο πληρωμής",
+      "rewardBalance": "Υπόλοιπο {label}"
     },
     "reservation": {
       "title": "ΚΡΑΤΗΣΗ",

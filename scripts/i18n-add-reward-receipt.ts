@@ -49,6 +49,32 @@ const ORDER_REF: Record<string, string> = {
   he: "הזמנה #{number}", hi: "ऑर्डर #{number}",
 };
 
+const BALANCE_DUE: Record<string, string> = {
+  en: "Balance to pay", fr: "Reste à payer", es: "Saldo a pagar", it: "Resto da pagare",
+  pt: "Valor a pagar", "pt-BR": "Valor a pagar", de: "Restbetrag", nl: "Te betalen",
+  ro: "Rest de plată", sv: "Kvar att betala", da: "Tilbage at betale", nb: "Gjenstår å betale",
+  fi: "Maksettavaa jäljellä", pl: "Pozostało do zapłaty", cs: "Zbývá zaplatit", sk: "Zostáva zaplatiť",
+  hu: "Fizetendő hátralék", el: "Υπόλοιπο πληρωμής", bg: "Остатък за плащане", hr: "Preostalo za platiti",
+  sr: "Преостало за плаћање", sl: "Preostalo za plačilo", et: "Maksta jääb", lv: "Atlikusī summa",
+  lt: "Liko sumokėti", tr: "Ödenecek tutar", ru: "Остаток к оплате", uk: "Залишок до сплати",
+  ca: "Pendent de pagar", id: "Sisa pembayaran", vi: "Còn phải trả", th: "ยอดที่ต้องชำระ",
+  zh: "应付余额", ja: "お支払い残額", ko: "결제할 잔액", ar: "المبلغ المتبقي",
+  he: "יתרה לתשלום", hi: "शेष भुगतान",
+};
+
+const REWARD_BALANCE: Record<string, string> = {
+  en: "{label} balance", fr: "Solde {label}", es: "Saldo de {label}", it: "Saldo {label}",
+  pt: "Saldo de {label}", "pt-BR": "Saldo de {label}", de: "{label}-Guthaben", nl: "{label}-saldo",
+  ro: "Sold {label}", sv: "{label}-saldo", da: "{label}-saldo", nb: "{label}-saldo",
+  fi: "{label}-saldo", pl: "Saldo {label}", cs: "Zůstatek {label}", sk: "Zostatok {label}",
+  hu: "{label} egyenleg", el: "Υπόλοιπο {label}", bg: "Баланс {label}", hr: "Stanje {label}",
+  sr: "Стање {label}", sl: "Stanje {label}", et: "{label} saldo", lv: "{label} atlikums",
+  lt: "{label} likutis", tr: "{label} bakiyesi", ru: "Баланс {label}", uk: "Баланс {label}",
+  ca: "Saldo de {label}", id: "Saldo {label}", vi: "Số dư {label}", th: "ยอดคงเหลือ {label}",
+  zh: "{label} 余额", ja: "{label}残高", ko: "{label} 잔액", ar: "رصيد {label}",
+  he: "יתרת {label}", hi: "{label} शेष",
+};
+
 // rewardDefaultName reuses the locale's existing accountPage.reward.defaultPlural
 // (read live from each file) so the fallback name matches everywhere.
 
@@ -87,6 +113,8 @@ for (const f of readdirSync(DIR).filter((x) => x.endsWith(".json"))) {
   // ESC/POS + StarXpand bitmap builders via getDict).
   setDeep(data, "receipt.customer.paidWithReward", paid);
   setDeep(data, "receipt.customer.earnedReward", earned);
+  setDeep(data, "receipt.customer.balanceDue", BALANCE_DUE[loc] ?? BALANCE_DUE.en);
+  setDeep(data, "receipt.customer.rewardBalance", REWARD_BALANCE[loc] ?? REWARD_BALANCE.en);
   // Pre-existing parity gap: the sidebar nav label "Reward Dollars" only existed
   // in en. Fill all locales with the localized feature name (= defaultPlural).
   setDeep(data, "admin.sidebar.rewards", defaultName);

@@ -4416,7 +4416,9 @@
       "drivingTime": "Время в пути",
       "distance": "Расстояние",
       "paidWithReward": "Оплачено с помощью {label}",
-      "earnedReward": "Вы заработали {label}"
+      "earnedReward": "Вы заработали {label}",
+      "balanceDue": "Остаток к оплате",
+      "rewardBalance": "Баланс {label}"
     },
     "reservation": {
       "title": "БРОНИРОВАНИЕ",

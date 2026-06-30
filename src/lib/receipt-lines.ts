@@ -580,14 +580,14 @@ function renderCustomerSection(
       if ((order.tip ?? 0) > 0) r.columns(t("receipt.customer.tip"), fmt(order.tip!));
       r.divider("-");
       r.columns(t("receipt.customer.total"), fmt(order.total));
-      // Reward Dollars used as part-payment / earned on this order. Mirror of the
-      // GOLDEN receipt.ts totals block; keep the two in sync. Luigi 2026-06-29.
-      {
+      // Reward Dollars PAYMENT SPLIT — "Paid with {label} -$X" + remaining due.
+      // Mirror of the GOLDEN receipt.ts totals block; keep in sync. The earned +
+      // balance summary prints at the very bottom (see buildCustomerReceiptLines).
+      if (order.rewardsActive && (order.creditApplied ?? 0) > 0) {
         const rewardLabel = order.rewardLabel || "Reward Dollars";
-        if ((order.creditApplied ?? 0) > 0)
-          r.columns(t("receipt.customer.paidWithReward", { label: rewardLabel }), `-${fmt(order.creditApplied!)}`);
-        if ((order.rewardEarned ?? 0) > 0)
-          r.columns(t("receipt.customer.earnedReward", { label: rewardLabel }), `+${fmt(order.rewardEarned!)}`);
+        r.columns(t("receipt.customer.paidWithReward", { label: rewardLabel }), `-${fmt(order.creditApplied!)}`);
+        const due = Math.max(0, order.total - order.creditApplied!);
+        r.columns(t("receipt.customer.balanceDue"), fmt(due));
       }
       break;
 
@@ -714,6 +714,16 @@ export async function buildCustomerReceiptLines(
   const r = new LinesBuilder(paperWidth);
   const t = await getDict(locale);
   renderSections(r, config, order, restaurant, t);
+  // Reward Dollars bottom summary (earned this order + balance). Mirror of the
+  // GOLDEN appendRewardSummary in receipt.ts. Luigi 2026-06-29.
+  if (order.rewardsActive && ((order.rewardEarned ?? 0) > 0 || (order.rewardBalance ?? 0) > 0)) {
+    const label = order.rewardLabel || "Reward Dollars";
+    r.resetStyle().left().divider("-");
+    r.center().bold(true).line(label).bold(false).left();
+    if ((order.rewardEarned ?? 0) > 0)
+      r.columns(t("receipt.customer.earnedReward", { label }), `+${fmt(order.rewardEarned!)}`);
+    r.columns(t("receipt.customer.rewardBalance", { label }), fmt(order.rewardBalance ?? 0));
+  }
   r.nl(4);
   r.cut();
   return r.lines;
