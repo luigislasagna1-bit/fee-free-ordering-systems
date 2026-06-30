@@ -291,7 +291,9 @@
     "rewardTileSignup": "Registra't i aconsegueix {amount}",
     "rewardTileFirstOrder": "Guanya {amount} amb la teva primera comanda",
     "rewardTileOrderOver": "Guanya {amount} en comandes de més de {threshold}",
-    "rewardTileNth": "Guanya {amount} cada {n} comandes"
+    "rewardTileNth": "Guanya {amount} cada {n} comandes",
+    "rewardSignupBannerText": "Registra't per guanyar {label}",
+    "rewardSignupBannerCta": "Registra't"
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -4364,7 +4366,10 @@
         "promoteOff": "S'ha tret de la secció de promocions."
       },
       "signupBonusAlways": "Bonificació de registre (sempre activa)",
-      "signupBonusDatedHint": "S’atorga a cada compte nou, sense data de finalització. Per a una oferta de registre per temps limitat (dates d’inici/fi), utilitza «Afegeix una manera de guanyar → Quan un client es registra» a dalt."
+      "signupBonusDatedHint": "S’atorga a cada compte nou, sense data de finalització. Per a una oferta de registre per temps limitat (dates d’inici/fi), utilitza «Afegeix una manera de guanyar → Quan un client es registra» a dalt.",
+      "signupBannerTitle": "Convida els visitants a registrar-se per a {label}",
+      "signupBannerHelp": "Els visitants només poden guanyar i gastar {label} amb un compte. Això mostra un bàner de registre a la pàgina de comandes.",
+      "signupBannerDesc": "Els clients sense sessió veuen un bàner que els convida a crear un compte i començar a guanyar {label}."
     }
   },
   "impersonation": {

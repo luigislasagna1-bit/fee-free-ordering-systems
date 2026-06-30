@@ -291,7 +291,9 @@
     "rewardTileSignup": "سجّل واحصل على {amount}",
     "rewardTileFirstOrder": "اكسب {amount} مع أول طلب",
     "rewardTileOrderOver": "اكسب {amount} على الطلبات التي تتجاوز {threshold}",
-    "rewardTileNth": "اكسب {amount} كل {n} طلبات"
+    "rewardTileNth": "اكسب {amount} كل {n} طلبات",
+    "rewardSignupBannerText": "سجّل لتبدأ في كسب {label}",
+    "rewardSignupBannerCta": "سجّل"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",
@@ -4364,7 +4366,10 @@
         "promoteOff": "تمت إزالته من قسم العروض."
       },
       "signupBonusAlways": "مكافأة التسجيل (مُفعّلة دائمًا)",
-      "signupBonusDatedHint": "تُمنح لكل حساب جديد دون تاريخ انتهاء. للحصول على عرض تسجيل لفترة محدودة (بتاريخَي بدء/انتهاء)، استخدم ”إضافة طريقة للكسب → عند تسجيل العميل“ أعلاه."
+      "signupBonusDatedHint": "تُمنح لكل حساب جديد دون تاريخ انتهاء. للحصول على عرض تسجيل لفترة محدودة (بتاريخَي بدء/انتهاء)، استخدم ”إضافة طريقة للكسب → عند تسجيل العميل“ أعلاه.",
+      "signupBannerTitle": "ادعُ الزوار للتسجيل للحصول على {label}",
+      "signupBannerHelp": "لا يمكن للزوار كسب {label} وإنفاقها إلا بحساب. يعرض هذا لافتة تسجيل على صفحة الطلب.",
+      "signupBannerDesc": "يرى العملاء غير المسجّلين لافتة تدعوهم لإنشاء حساب وبدء كسب {label}."
     }
   },
   "impersonation": {

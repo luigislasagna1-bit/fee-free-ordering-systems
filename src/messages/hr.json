@@ -291,7 +291,9 @@
     "rewardTileSignup": "Registrirajte se i ostvarite {amount}",
     "rewardTileFirstOrder": "Zaradite {amount} na prvoj narudžbi",
     "rewardTileOrderOver": "Zaradite {amount} na narudžbama iznad {threshold}",
-    "rewardTileNth": "Zaradite {amount} svakih {n} narudžbi"
+    "rewardTileNth": "Zaradite {amount} svakih {n} narudžbi",
+    "rewardSignupBannerText": "Registrirajte se i skupljajte {label}",
+    "rewardSignupBannerCta": "Registracija"
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Uklonjeno iz vašeg odjeljka Promocije."
       },
       "signupBonusAlways": "Bonus za registraciju (uvijek aktivan)",
-      "signupBonusDatedHint": "Dodjeljuje se svakom novom računu, bez datuma završetka. Za vremenski ograničenu ponudu za registraciju (datumi početka/završetka) upotrijebite gore „Dodaj način zarade → Kada se kupac registrira“."
+      "signupBonusDatedHint": "Dodjeljuje se svakom novom računu, bez datuma završetka. Za vremenski ograničenu ponudu za registraciju (datumi početka/završetka) upotrijebite gore „Dodaj način zarade → Kada se kupac registrira“.",
+      "signupBannerTitle": "Pozovite goste da se registriraju za {label}",
+      "signupBannerHelp": "Gosti mogu skupljati i trošiti {label} samo s računom. Ovo prikazuje banner za registraciju na vašoj stranici za narudžbe.",
+      "signupBannerDesc": "Odjavljeni kupci vide banner koji ih poziva da otvore račun i počnu skupljati {label}."
     }
   },
   "impersonation": {

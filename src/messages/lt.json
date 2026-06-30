@@ -291,7 +291,9 @@
     "rewardTileSignup": "Užsiregistruokite ir gaukite {amount}",
     "rewardTileFirstOrder": "Užsidirbkite {amount} už pirmą užsakymą",
     "rewardTileOrderOver": "Užsidirbkite {amount} už užsakymus virš {threshold}",
-    "rewardTileNth": "Užsidirbkite {amount} kas {n} užsakymų"
+    "rewardTileNth": "Užsidirbkite {amount} kas {n} užsakymų",
+    "rewardSignupBannerText": "Užsiregistruokite ir kaupkite {label}",
+    "rewardSignupBannerCta": "Registruotis"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Pašalinta iš jūsų skilties „Akcijos“."
       },
       "signupBonusAlways": "Registracijos premija (visada įjungta)",
-      "signupBonusDatedHint": "Skiriama kiekvienai naujai paskyrai, be pabaigos datos. Riboto laiko registracijos pasiūlymui (pradžios / pabaigos datos) naudokite viršuje „Pridėti uždarbio būdą → Kai klientas užsiregistruoja“."
+      "signupBonusDatedHint": "Skiriama kiekvienai naujai paskyrai, be pabaigos datos. Riboto laiko registracijos pasiūlymui (pradžios / pabaigos datos) naudokite viršuje „Pridėti uždarbio būdą → Kai klientas užsiregistruoja“.",
+      "signupBannerTitle": "Pakvieskite svečius užsiregistruoti dėl {label}",
+      "signupBannerHelp": "Svečiai gali kaupti ir leisti {label} tik turėdami paskyrą. Tai rodo registracijos reklamjuostę jūsų užsakymų puslapyje.",
+      "signupBannerDesc": "Atsijungę klientai mato reklamjuostę, kviečiančią susikurti paskyrą ir kaupti {label}."
     }
   },
   "impersonation": {

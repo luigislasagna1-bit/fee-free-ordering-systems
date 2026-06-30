@@ -291,7 +291,9 @@
     "rewardTileSignup": "Înscrie-te și primește {amount}",
     "rewardTileFirstOrder": "Câștigă {amount} la prima ta comandă",
     "rewardTileOrderOver": "Câștigă {amount} la comenzi de peste {threshold}",
-    "rewardTileNth": "Câștigă {amount} la fiecare {n} comenzi"
+    "rewardTileNth": "Câștigă {amount} la fiecare {n} comenzi",
+    "rewardSignupBannerText": "Înscrie-te ca să câștigi {label}",
+    "rewardSignupBannerCta": "Înscrie-te"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Eliminat din secțiunea ta Promoții."
       },
       "signupBonusAlways": "Bonus de înregistrare (mereu activ)",
-      "signupBonusDatedHint": "Se acordă fiecărui cont nou, fără dată de încheiere. Pentru o ofertă de înregistrare pe durată limitată (date de început/sfârșit), folosește mai sus „Adaugă o modalitate de câștig → Când un client se înregistrează”."
+      "signupBonusDatedHint": "Se acordă fiecărui cont nou, fără dată de încheiere. Pentru o ofertă de înregistrare pe durată limitată (date de început/sfârșit), folosește mai sus „Adaugă o modalitate de câștig → Când un client se înregistrează”.",
+      "signupBannerTitle": "Invită vizitatorii să se înscrie pentru {label}",
+      "signupBannerHelp": "Vizitatorii pot câștiga și folosi {label} doar cu un cont. Aceasta afișează un banner de înscriere pe pagina de comandă.",
+      "signupBannerDesc": "Clienții deconectați văd un banner care îi invită să creeze un cont și să câștige {label}."
     }
   },
   "impersonation": {

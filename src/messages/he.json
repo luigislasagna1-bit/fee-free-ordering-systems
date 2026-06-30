@@ -291,7 +291,9 @@
     "rewardTileSignup": "הירשמו וקבלו {amount}",
     "rewardTileFirstOrder": "צברו {amount} בהזמנה הראשונה שלכם",
     "rewardTileOrderOver": "צברו {amount} בהזמנות מעל {threshold}",
-    "rewardTileNth": "צברו {amount} בכל {n} הזמנות"
+    "rewardTileNth": "צברו {amount} בכל {n} הזמנות",
+    "rewardSignupBannerText": "הירשמו כדי לצבור {label}",
+    "rewardSignupBannerCta": "הרשמה"
   },
   "pizza": {
     "chooseSize": "בחר גודל",
@@ -4364,7 +4366,10 @@
         "promoteOff": "הוסר ממקטע המבצעים שלכם."
       },
       "signupBonusAlways": "בונוס הרשמה (פעיל תמיד)",
-      "signupBonusDatedHint": "ניתן לכל חשבון חדש, ללא תאריך סיום. עבור מבצע הרשמה לזמן מוגבל (תאריכי התחלה/סיום), השתמשו ב„הוסף דרך לצבור → כאשר לקוח נרשם“ למעלה."
+      "signupBonusDatedHint": "ניתן לכל חשבון חדש, ללא תאריך סיום. עבור מבצע הרשמה לזמן מוגבל (תאריכי התחלה/סיום), השתמשו ב„הוסף דרך לצבור → כאשר לקוח נרשם“ למעלה.",
+      "signupBannerTitle": "הזמינו אורחים להירשם ל-{label}",
+      "signupBannerHelp": "אורחים יכולים לצבור ולממש {label} רק עם חשבון. אפשרות זו מציגה באנר הרשמה בעמוד ההזמנות.",
+      "signupBannerDesc": "לקוחות שאינם מחוברים רואים באנר שמזמין אותם ליצור חשבון ולהתחיל לצבור {label}."
     }
   },
   "impersonation": {

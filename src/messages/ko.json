@@ -291,7 +291,9 @@
     "rewardTileSignup": "가입하고 {amount} 받기",
     "rewardTileFirstOrder": "첫 주문 시 {amount} 적립",
     "rewardTileOrderOver": "{threshold} 초과 주문 시 {amount} 적립",
-    "rewardTileNth": "{n}회 주문마다 {amount} 적립"
+    "rewardTileNth": "{n}회 주문마다 {amount} 적립",
+    "rewardSignupBannerText": "가입하고 {label} 적립을 시작하세요",
+    "rewardSignupBannerCta": "가입하기"
   },
   "pizza": {
     "chooseSize": "크기 선택",
@@ -4364,7 +4366,10 @@
         "promoteOff": "프로모션 섹션에서 제거되었습니다."
       },
       "signupBonusAlways": "가입 보너스 (항상 적용)",
-      "signupBonusDatedHint": "종료일 없이 모든 신규 계정에 지급됩니다. 기간 한정 가입 혜택(시작일/종료일)을 원하시면 위의 “적립 방법 추가 → 고객이 가입할 때”를 사용하세요."
+      "signupBonusDatedHint": "종료일 없이 모든 신규 계정에 지급됩니다. 기간 한정 가입 혜택(시작일/종료일)을 원하시면 위의 “적립 방법 추가 → 고객이 가입할 때”를 사용하세요.",
+      "signupBannerTitle": "방문객에게 {label} 가입을 권유",
+      "signupBannerHelp": "게스트는 계정이 있어야만 {label}을(를) 적립하고 사용할 수 있습니다. 주문 페이지에 가입 배너를 표시합니다.",
+      "signupBannerDesc": "로그아웃한 고객에게 계정을 만들고 {label} 적립을 시작하도록 권하는 배너가 표시됩니다."
     }
   },
   "impersonation": {

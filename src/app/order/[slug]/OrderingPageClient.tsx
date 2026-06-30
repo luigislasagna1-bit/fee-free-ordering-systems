@@ -766,6 +766,7 @@ export function OrderingPageClient({
   hostedSiteBackUrl,
   promoBanners = [],
   rewardPromoTiles = [],
+  rewardSignupBanner = null,
   customerChannel = "website",
   marketplaceAccount = null,
   customerIsReturning = false,
@@ -877,6 +878,10 @@ export function OrderingPageClient({
     nthInterval: number | null;
     label: string | null;
   }>;
+  /** Set (non-null) only for LOGGED-OUT viewers when the owner enabled the
+   *  "sign up to earn" banner. rewardName is the store's reward label (null →
+   *  localized default). Luigi 2026-06-30. */
+  rewardSignupBanner?: { rewardName: string | null } | null;
   /** True when the viewer is a LOGGED-IN customer with a prior fulfilled order
    *  here — used to hide the first-buy hero from returning customers (computed
    *  server-side in page.tsx). Anonymous guests default false + get the
@@ -4220,6 +4225,24 @@ export function OrderingPageClient({
             </div>
           );
         })()}
+        {/* "Sign up to earn" banner — LOGGED-OUT customers only (gated server-side
+            in page.tsx). Prompts account creation since guests can't earn/spend.
+            Emerald to match the reward tiles. Luigi 2026-06-30. */}
+        {rewardSignupBanner && (
+          <a
+            href={`/order/${restaurant.slug}/account/login`}
+            className="flex items-center justify-between gap-3 mb-3 rounded-xl px-4 py-3 text-white shadow-md no-underline"
+            style={{ background: "linear-gradient(135deg, #059669, #047857)" }}
+          >
+            <span className="flex items-center gap-2 text-sm font-semibold">
+              <Gift className="w-5 h-5 flex-shrink-0" />
+              {t("rewardSignupBannerText", { label: rewardSignupBanner.rewardName || t("rewardTileBadge") })}
+            </span>
+            <span className="flex-shrink-0 rounded-lg bg-white/20 px-3 py-1.5 text-xs font-bold whitespace-nowrap">
+              {t("rewardSignupBannerCta")}
+            </span>
+          </a>
+        )}
         {/* Collapsible "Promo" header — the customer can hide the specials strip so it
             doesn't take up the whole page (mobile + desktop). Same chevron affordance as
             the collapsible categories. Luigi 2026-06-22. */}

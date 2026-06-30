@@ -291,7 +291,9 @@
     "reservationCartConflictBody": "These items aren't offered on your reservation day. Remove them to keep ordering, or change your booking to a day they're available:",
     "reservationCartChangeDay": "Change reservation day",
     "holidayClosedHoursToday": "Closed {windows} today",
-    "servicePausedBadge": "paused"
+    "servicePausedBadge": "paused",
+    "rewardSignupBannerText": "Sign up to start earning {label}",
+    "rewardSignupBannerCta": "Sign up"
   },
   "pizza": {
     "chooseSize": "Choose Size",
@@ -4242,7 +4244,10 @@
         "delete": "Delete",
         "cancel": "Cancel",
         "save": "Add rule"
-      }
+      },
+      "signupBannerTitle": "Invite guests to sign up for {label}",
+      "signupBannerHelp": "Guests can only earn and spend {label} with an account. This shows a sign-up banner on your order page.",
+      "signupBannerDesc": "Logged-out customers see a banner inviting them to create an account and start earning {label}."
     },
     "customerGroups": {
       "title": "VIP Specials",

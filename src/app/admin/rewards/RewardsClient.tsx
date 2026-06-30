@@ -18,6 +18,7 @@ interface Initial {
   rewardMinRedeemBalance: number;
   rewardMaxRedeemPercent: number;
   rewardSignupBonus: number;
+  rewardSignupBannerEnabled: boolean;
 }
 
 /**
@@ -188,6 +189,18 @@ export function RewardsClient({ currency, initial }: { currency: string; initial
               {moneyInput(s.rewardSignupBonus, (n) => set("rewardSignupBonus", n))}
             </div>
             <p className="mt-1.5 text-xs text-gray-500">{t("signupBonusDatedHint")}</p>
+          </div>
+
+          {/* "Sign up to earn" banner — prompts LOGGED-OUT customers on the order
+              page to create an account (guests can't earn/spend). Owner opt-in. */}
+          <div className="rounded-2xl border border-gray-200 bg-white p-5">
+            <Toggle
+              on={s.rewardSignupBannerEnabled}
+              onClick={() => set("rewardSignupBannerEnabled", !s.rewardSignupBannerEnabled)}
+              label={t("signupBannerTitle", { label: pluralPreview })}
+              help={t("signupBannerHelp", { label: pluralPreview })}
+            />
+            <p className="mt-1.5 ml-11 text-sm text-gray-500">{t("signupBannerDesc", { label: pluralPreview })}</p>
           </div>
         </>
       )}

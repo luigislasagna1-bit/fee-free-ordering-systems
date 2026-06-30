@@ -291,7 +291,9 @@
     "rewardTileSignup": "Registrera dig och få {amount}",
     "rewardTileFirstOrder": "Tjäna {amount} på din första beställning",
     "rewardTileOrderOver": "Tjäna {amount} på beställningar över {threshold}",
-    "rewardTileNth": "Tjäna {amount} var {n}:e beställning"
+    "rewardTileNth": "Tjäna {amount} var {n}:e beställning",
+    "rewardSignupBannerText": "Registrera dig och tjäna {label}",
+    "rewardSignupBannerCta": "Registrera dig"
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Borttagen från din Erbjudanden-sektion."
       },
       "signupBonusAlways": "Registreringsbonus (alltid på)",
-      "signupBonusDatedHint": "Ges till varje nytt konto, utan slutdatum. För ett tidsbegränsat registreringserbjudande (start-/slutdatum) använder du ”Lägg till ett sätt att tjäna → När en kund registrerar sig” ovan."
+      "signupBonusDatedHint": "Ges till varje nytt konto, utan slutdatum. För ett tidsbegränsat registreringserbjudande (start-/slutdatum) använder du ”Lägg till ett sätt att tjäna → När en kund registrerar sig” ovan.",
+      "signupBannerTitle": "Bjud in gäster att registrera sig för {label}",
+      "signupBannerHelp": "Gäster kan bara tjäna och använda {label} med ett konto. Detta visar en registreringsbanner på din beställningssida.",
+      "signupBannerDesc": "Utloggade kunder ser en banner som bjuder in dem att skapa ett konto och tjäna {label}."
     }
   },
   "impersonation": {

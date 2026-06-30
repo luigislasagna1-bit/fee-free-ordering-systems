@@ -341,6 +341,9 @@ model Restaurant {
   rewardMaxRedeemPercent Float     @default(100) // cap % of an order coverable by credit
   rewardSignupBonus      Float     @default(0) // credit granted on account creation
   rewardExpiryDays       Int       @default(0) // 0 = never (stored; not enforced v1)
+  // Show a "sign up to start earning {rewardName}" banner to LOGGED-OUT customers
+  // on the order page (guests can't earn/spend). Owner opt-in. Luigi 2026-06-30.
+  rewardSignupBannerEnabled Boolean @default(false)
   socialLinks            String? // JSON: { instagram, facebook, tiktok, x, youtube, linkedin, pinterest, snapchat, threads, whatsapp, yelp, googleBusiness, tripadvisor, website }
   marketingTier          String    @default("free") // "free" | "social_basic" | "social_pro" | "social_managed" — gates AI-post / scheduling features
   /// Marketing & tracking integrations the OWNER configures for their own

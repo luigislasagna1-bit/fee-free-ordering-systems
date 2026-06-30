@@ -291,7 +291,9 @@
     "rewardTileSignup": "Tilmeld dig og få {amount}",
     "rewardTileFirstOrder": "Optjen {amount} på din første bestilling",
     "rewardTileOrderOver": "Optjen {amount} på bestillinger over {threshold}",
-    "rewardTileNth": "Optjen {amount} for hver {n} bestillinger"
+    "rewardTileNth": "Optjen {amount} for hver {n} bestillinger",
+    "rewardSignupBannerText": "Tilmeld dig og optjen {label}",
+    "rewardSignupBannerCta": "Tilmeld dig"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Fjernet fra din Tilbud-sektion."
       },
       "signupBonusAlways": "Tilmeldingsbonus (altid aktiv)",
-      "signupBonusDatedHint": "Gives til hver ny konto uden slutdato. For et tidsbegrænset tilmeldingstilbud (start-/slutdato) skal du bruge “Tilføj en måde at optjene på → Når en kunde tilmelder sig” ovenfor."
+      "signupBonusDatedHint": "Gives til hver ny konto uden slutdato. For et tidsbegrænset tilmeldingstilbud (start-/slutdato) skal du bruge “Tilføj en måde at optjene på → Når en kunde tilmelder sig” ovenfor.",
+      "signupBannerTitle": "Inviter gæster til at tilmelde sig {label}",
+      "signupBannerHelp": "Gæster kan kun optjene og bruge {label} med en konto. Dette viser et tilmeldingsbanner på din bestillingsside.",
+      "signupBannerDesc": "Udloggede kunder ser et banner, der inviterer dem til at oprette en konto og optjene {label}."
     }
   },
   "impersonation": {

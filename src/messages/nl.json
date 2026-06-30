@@ -291,7 +291,9 @@
     "rewardTileSignup": "Meld je aan en krijg {amount}",
     "rewardTileFirstOrder": "Verdien {amount} bij je eerste bestelling",
     "rewardTileOrderOver": "Verdien {amount} bij bestellingen boven {threshold}",
-    "rewardTileNth": "Verdien {amount} bij elke {n} bestellingen"
+    "rewardTileNth": "Verdien {amount} bij elke {n} bestellingen",
+    "rewardSignupBannerText": "Meld je aan en spaar {label}",
+    "rewardSignupBannerCta": "Aanmelden"
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Verwijderd uit je gedeelte Promoties."
       },
       "signupBonusAlways": "Aanmeldbonus (altijd actief)",
-      "signupBonusDatedHint": "Wordt aan elk nieuw account gegeven, zonder einddatum. Gebruik voor een tijdelijke aanmeldaanbieding (begin-/einddatum) hierboven ‘Een manier om te verdienen toevoegen → Wanneer een klant zich aanmeldt’."
+      "signupBonusDatedHint": "Wordt aan elk nieuw account gegeven, zonder einddatum. Gebruik voor een tijdelijke aanmeldaanbieding (begin-/einddatum) hierboven ‘Een manier om te verdienen toevoegen → Wanneer een klant zich aanmeldt’.",
+      "signupBannerTitle": "Nodig gasten uit om zich aan te melden voor {label}",
+      "signupBannerHelp": "Gasten kunnen {label} alleen sparen en gebruiken met een account. Dit toont een aanmeldbanner op je bestelpagina.",
+      "signupBannerDesc": "Uitgelogde klanten zien een banner die hen uitnodigt een account aan te maken en {label} te sparen."
     }
   },
   "impersonation": {

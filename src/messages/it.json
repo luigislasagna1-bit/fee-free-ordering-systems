@@ -291,7 +291,9 @@
     "rewardTileSignup": "Registrati e ottieni {amount}",
     "rewardTileFirstOrder": "Guadagna {amount} sul tuo primo ordine",
     "rewardTileOrderOver": "Guadagna {amount} sugli ordini superiori a {threshold}",
-    "rewardTileNth": "Guadagna {amount} ogni {n} ordini"
+    "rewardTileNth": "Guadagna {amount} ogni {n} ordini",
+    "rewardSignupBannerText": "Iscriviti per guadagnare {label}",
+    "rewardSignupBannerCta": "Iscriviti"
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Rimosso dalla tua sezione Promozioni."
       },
       "signupBonusAlways": "Bonus di registrazione (sempre attivo)",
-      "signupBonusDatedHint": "Assegnato a ogni nuovo account, senza data di fine. Per un’offerta di registrazione a tempo limitato (date di inizio/fine), usa «Aggiungi un modo per guadagnare → Quando un cliente si registra» qui sopra."
+      "signupBonusDatedHint": "Assegnato a ogni nuovo account, senza data di fine. Per un’offerta di registrazione a tempo limitato (date di inizio/fine), usa «Aggiungi un modo per guadagnare → Quando un cliente si registra» qui sopra.",
+      "signupBannerTitle": "Invita gli ospiti a iscriversi per i {label}",
+      "signupBannerHelp": "Gli ospiti possono guadagnare e usare i {label} solo con un account. Mostra un banner di iscrizione sulla pagina degli ordini.",
+      "signupBannerDesc": "I clienti non connessi vedono un banner che li invita a creare un account e iniziare a guadagnare {label}."
     }
   },
   "impersonation": {

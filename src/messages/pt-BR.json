@@ -291,7 +291,9 @@
     "rewardTileSignup": "Cadastre-se e ganhe {amount}",
     "rewardTileFirstOrder": "Ganhe {amount} no seu primeiro pedido",
     "rewardTileOrderOver": "Ganhe {amount} em pedidos acima de {threshold}",
-    "rewardTileNth": "Ganhe {amount} a cada {n} pedidos"
+    "rewardTileNth": "Ganhe {amount} a cada {n} pedidos",
+    "rewardSignupBannerText": "Cadastre-se para ganhar {label}",
+    "rewardSignupBannerCta": "Cadastrar"
   },
   "pizza": {
     "chooseSize": "Escolha o Tamanho",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Removido da sua seção de Promoções."
       },
       "signupBonusAlways": "Bônus de cadastro (sempre ativo)",
-      "signupBonusDatedHint": "Concedido a cada nova conta, sem data de término. Para uma oferta de cadastro por tempo limitado (datas de início/término), use “Adicionar uma forma de ganhar → Quando um cliente se cadastra” acima."
+      "signupBonusDatedHint": "Concedido a cada nova conta, sem data de término. Para uma oferta de cadastro por tempo limitado (datas de início/término), use “Adicionar uma forma de ganhar → Quando um cliente se cadastra” acima.",
+      "signupBannerTitle": "Convidar visitantes a se cadastrar para {label}",
+      "signupBannerHelp": "Os visitantes só podem ganhar e usar {label} com uma conta. Isto exibe um banner de cadastro na sua página de pedidos.",
+      "signupBannerDesc": "Clientes não logados veem um banner convidando a criar uma conta e começar a ganhar {label}."
     }
   },
   "impersonation": {

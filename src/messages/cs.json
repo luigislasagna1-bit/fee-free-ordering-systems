@@ -291,7 +291,9 @@
     "rewardTileSignup": "Zaregistrujte se a získejte {amount}",
     "rewardTileFirstOrder": "Získejte {amount} za první objednávku",
     "rewardTileOrderOver": "Získejte {amount} při objednávkách nad {threshold}",
-    "rewardTileNth": "Získejte {amount} za každých {n} objednávek"
+    "rewardTileNth": "Získejte {amount} za každých {n} objednávek",
+    "rewardSignupBannerText": "Zaregistrujte se a získejte {label}",
+    "rewardSignupBannerCta": "Registrovat"
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Odebráno z vaší sekce Akce."
       },
       "signupBonusAlways": "Bonus za registraci (vždy aktivní)",
-      "signupBonusDatedHint": "Uděluje se každému novému účtu, bez data ukončení. Pro časově omezenou registrační nabídku (data zahájení/ukončení) použijte výše „Přidat způsob získání → Když se zákazník zaregistruje“."
+      "signupBonusDatedHint": "Uděluje se každému novému účtu, bez data ukončení. Pro časově omezenou registrační nabídku (data zahájení/ukončení) použijte výše „Přidat způsob získání → Když se zákazník zaregistruje“.",
+      "signupBannerTitle": "Pozvěte hosty k registraci pro {label}",
+      "signupBannerHelp": "Hosté mohou {label} získávat a utrácet jen s účtem. Toto zobrazí registrační banner na vaší stránce objednávek.",
+      "signupBannerDesc": "Odhlášení zákazníci uvidí banner, který je vyzývá k vytvoření účtu a získávání {label}."
     }
   },
   "impersonation": {

@@ -291,7 +291,9 @@
     "rewardTileSignup": "Daftar & dapatkan {amount}",
     "rewardTileFirstOrder": "Dapatkan {amount} pada pesanan pertama Anda",
     "rewardTileOrderOver": "Dapatkan {amount} untuk pesanan di atas {threshold}",
-    "rewardTileNth": "Dapatkan {amount} setiap {n} pesanan"
+    "rewardTileNth": "Dapatkan {amount} setiap {n} pesanan",
+    "rewardSignupBannerText": "Daftar untuk mendapatkan {label}",
+    "rewardSignupBannerCta": "Daftar"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Dihapus dari bagian Promo Anda."
       },
       "signupBonusAlways": "Bonus pendaftaran (selalu aktif)",
-      "signupBonusDatedHint": "Diberikan ke setiap akun baru, tanpa tanggal berakhir. Untuk penawaran pendaftaran berbatas waktu (tanggal mulai/berakhir), gunakan “Tambahkan cara mendapatkan → Saat pelanggan mendaftar” di atas."
+      "signupBonusDatedHint": "Diberikan ke setiap akun baru, tanpa tanggal berakhir. Untuk penawaran pendaftaran berbatas waktu (tanggal mulai/berakhir), gunakan “Tambahkan cara mendapatkan → Saat pelanggan mendaftar” di atas.",
+      "signupBannerTitle": "Ajak tamu mendaftar untuk {label}",
+      "signupBannerHelp": "Tamu hanya bisa mendapatkan dan memakai {label} dengan akun. Ini menampilkan banner pendaftaran di halaman pesanan Anda.",
+      "signupBannerDesc": "Pelanggan yang belum masuk melihat banner yang mengajak membuat akun dan mulai mendapatkan {label}."
     }
   },
   "impersonation": {

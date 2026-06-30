@@ -291,7 +291,9 @@
     "rewardTileSignup": "Đăng ký & nhận {amount}",
     "rewardTileFirstOrder": "Nhận {amount} cho đơn hàng đầu tiên của bạn",
     "rewardTileOrderOver": "Nhận {amount} cho đơn hàng trên {threshold}",
-    "rewardTileNth": "Nhận {amount} mỗi {n} đơn hàng"
+    "rewardTileNth": "Nhận {amount} mỗi {n} đơn hàng",
+    "rewardSignupBannerText": "Đăng ký để bắt đầu kiếm {label}",
+    "rewardSignupBannerCta": "Đăng ký"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Đã xóa khỏi mục Khuyến mãi của bạn."
       },
       "signupBonusAlways": "Thưởng đăng ký (luôn bật)",
-      "signupBonusDatedHint": "Được tặng cho mọi tài khoản mới, không có ngày kết thúc. Để có ưu đãi đăng ký trong thời gian giới hạn (ngày bắt đầu/kết thúc), hãy dùng “Thêm cách kiếm điểm → Khi khách hàng đăng ký” ở trên."
+      "signupBonusDatedHint": "Được tặng cho mọi tài khoản mới, không có ngày kết thúc. Để có ưu đãi đăng ký trong thời gian giới hạn (ngày bắt đầu/kết thúc), hãy dùng “Thêm cách kiếm điểm → Khi khách hàng đăng ký” ở trên.",
+      "signupBannerTitle": "Mời khách đăng ký để nhận {label}",
+      "signupBannerHelp": "Khách chỉ có thể kiếm và dùng {label} khi có tài khoản. Tùy chọn này hiển thị biểu ngữ đăng ký trên trang đặt hàng của bạn.",
+      "signupBannerDesc": "Khách chưa đăng nhập thấy biểu ngữ mời tạo tài khoản và bắt đầu kiếm {label}."
     }
   },
   "impersonation": {

@@ -291,7 +291,9 @@
     "rewardTileSignup": "登録して{amount}を獲得",
     "rewardTileFirstOrder": "初回注文で{amount}を獲得",
     "rewardTileOrderOver": "{threshold}を超える注文で{amount}を獲得",
-    "rewardTileNth": "{n}回の注文ごとに{amount}を獲得"
+    "rewardTileNth": "{n}回の注文ごとに{amount}を獲得",
+    "rewardSignupBannerText": "登録して{label}を貯めよう",
+    "rewardSignupBannerCta": "登録"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",
@@ -4364,7 +4366,10 @@
         "promoteOff": "プロモーションセクションから削除されました。"
       },
       "signupBonusAlways": "登録ボーナス（常に有効）",
-      "signupBonusDatedHint": "終了日なしで、すべての新規アカウントに付与されます。期間限定の登録特典（開始日/終了日）には、上部の「獲得方法を追加 → お客様が登録したとき」をご利用ください。"
+      "signupBonusDatedHint": "終了日なしで、すべての新規アカウントに付与されます。期間限定の登録特典（開始日/終了日）には、上部の「獲得方法を追加 → お客様が登録したとき」をご利用ください。",
+      "signupBannerTitle": "ゲストに{label}への登録を促す",
+      "signupBannerHelp": "ゲストはアカウントがある場合のみ{label}を貯めて使えます。注文ページに登録バナーを表示します。",
+      "signupBannerDesc": "ログアウト中のお客様には、アカウント作成と{label}獲得を促すバナーが表示されます。"
     }
   },
   "impersonation": {

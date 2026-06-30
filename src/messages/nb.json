@@ -291,7 +291,9 @@
     "rewardTileSignup": "Registrer deg og få {amount}",
     "rewardTileFirstOrder": "Tjen {amount} på din første bestilling",
     "rewardTileOrderOver": "Tjen {amount} på bestillinger over {threshold}",
-    "rewardTileNth": "Tjen {amount} for hver {n} bestilling"
+    "rewardTileNth": "Tjen {amount} for hver {n} bestilling",
+    "rewardSignupBannerText": "Registrer deg og tjen {label}",
+    "rewardSignupBannerCta": "Registrer deg"
   },
   "pizza": {
     "chooseSize": "Velg størrelse",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Fjernet fra Tilbud-delen din."
       },
       "signupBonusAlways": "Registreringsbonus (alltid på)",
-      "signupBonusDatedHint": "Gis til hver nye konto, uten sluttdato. For et tidsbegrenset registreringstilbud (start-/sluttdato) bruker du «Legg til en måte å tjene på → Når en kunde registrerer seg» ovenfor."
+      "signupBonusDatedHint": "Gis til hver nye konto, uten sluttdato. For et tidsbegrenset registreringstilbud (start-/sluttdato) bruker du «Legg til en måte å tjene på → Når en kunde registrerer seg» ovenfor.",
+      "signupBannerTitle": "Inviter gjester til å registrere seg for {label}",
+      "signupBannerHelp": "Gjester kan bare tjene og bruke {label} med en konto. Dette viser et registreringsbanner på bestillingssiden din.",
+      "signupBannerDesc": "Utloggede kunder ser et banner som inviterer dem til å opprette en konto og tjene {label}."
     }
   },
   "impersonation": {

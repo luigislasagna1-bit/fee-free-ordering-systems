@@ -291,7 +291,9 @@
     "rewardTileSignup": "Registe-se e receba {amount}",
     "rewardTileFirstOrder": "Ganhe {amount} na sua primeira encomenda",
     "rewardTileOrderOver": "Ganhe {amount} em encomendas acima de {threshold}",
-    "rewardTileNth": "Ganhe {amount} a cada {n} encomendas"
+    "rewardTileNth": "Ganhe {amount} a cada {n} encomendas",
+    "rewardSignupBannerText": "Inscreva-se para ganhar {label}",
+    "rewardSignupBannerCta": "Inscrever-se"
   },
   "pizza": {
     "chooseSize": "Escolher tamanho",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Removido da sua secção de Promoções."
       },
       "signupBonusAlways": "Bónus de registo (sempre ativo)",
-      "signupBonusDatedHint": "Atribuído a cada nova conta, sem data de fim. Para uma oferta de registo por tempo limitado (datas de início/fim), utilize «Adicionar uma forma de ganhar → Quando um cliente se regista» acima."
+      "signupBonusDatedHint": "Atribuído a cada nova conta, sem data de fim. Para uma oferta de registo por tempo limitado (datas de início/fim), utilize «Adicionar uma forma de ganhar → Quando um cliente se regista» acima.",
+      "signupBannerTitle": "Convidar visitantes a inscrever-se para {label}",
+      "signupBannerHelp": "Os visitantes só podem ganhar e usar {label} com uma conta. Isto mostra um banner de inscrição na sua página de pedidos.",
+      "signupBannerDesc": "Os clientes não autenticados veem um banner que os convida a criar uma conta e começar a ganhar {label}."
     }
   },
   "impersonation": {

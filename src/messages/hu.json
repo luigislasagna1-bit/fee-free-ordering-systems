@@ -291,7 +291,9 @@
     "rewardTileSignup": "Regisztráljon, és kapjon {amount} értéket",
     "rewardTileFirstOrder": "Szerezzen {amount} értéket az első rendelésével",
     "rewardTileOrderOver": "Szerezzen {amount} értéket a(z) {threshold} feletti rendeléseknél",
-    "rewardTileNth": "Szerezzen {amount} értéket minden {n} rendelésnél"
+    "rewardTileNth": "Szerezzen {amount} értéket minden {n} rendelésnél",
+    "rewardSignupBannerText": "Regisztrálj és gyűjts {label}",
+    "rewardSignupBannerCta": "Regisztráció"
   },
   "pizza": {
     "chooseSize": "Méret választása",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Eltávolítva az Akciók szakaszából."
       },
       "signupBonusAlways": "Regisztrációs bónusz (mindig aktív)",
-      "signupBonusDatedHint": "Minden új fiók megkapja, befejezési dátum nélkül. Időszakos regisztrációs ajánláshoz (kezdő/záró dátum) használja fent a „Kereseti mód hozzáadása → Amikor egy vásárló regisztrál” lehetőséget."
+      "signupBonusDatedHint": "Minden új fiók megkapja, befejezési dátum nélkül. Időszakos regisztrációs ajánláshoz (kezdő/záró dátum) használja fent a „Kereseti mód hozzáadása → Amikor egy vásárló regisztrál” lehetőséget.",
+      "signupBannerTitle": "Hívd meg a vendégeket, hogy regisztráljanak a {label} programra",
+      "signupBannerHelp": "A vendégek csak fiókkal gyűjthetnek és költhetnek {label}. Ez egy regisztrációs bannert jelenít meg a rendelési oldaladon.",
+      "signupBannerDesc": "A kijelentkezett vásárlók egy bannert látnak, amely fiók létrehozására és {label} gyűjtésére hívja őket."
     }
   },
   "impersonation": {

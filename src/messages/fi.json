@@ -291,7 +291,9 @@
     "rewardTileSignup": "Rekisteröidy ja saa {amount}",
     "rewardTileFirstOrder": "Ansaitse {amount} ensimmäisellä tilauksellasi",
     "rewardTileOrderOver": "Ansaitse {amount} yli {threshold} tilauksista",
-    "rewardTileNth": "Ansaitse {amount} joka {n} tilauksesta"
+    "rewardTileNth": "Ansaitse {amount} joka {n} tilauksesta",
+    "rewardSignupBannerText": "Rekisteröidy ja ansaitse {label}",
+    "rewardSignupBannerCta": "Rekisteröidy"
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -4364,7 +4366,10 @@
         "promoteOff": "Poistettu Tarjoukset-osiostasi."
       },
       "signupBonusAlways": "Rekisteröitymisbonus (aina käytössä)",
-      "signupBonusDatedHint": "Annetaan jokaiselle uudelle tilille ilman päättymispäivää. Määräaikaista rekisteröitymistarjousta varten (alku-/päättymispäivä) käytä yllä olevaa kohtaa ”Lisää ansaintatapa → Kun asiakas rekisteröityy”."
+      "signupBonusDatedHint": "Annetaan jokaiselle uudelle tilille ilman päättymispäivää. Määräaikaista rekisteröitymistarjousta varten (alku-/päättymispäivä) käytä yllä olevaa kohtaa ”Lisää ansaintatapa → Kun asiakas rekisteröityy”.",
+      "signupBannerTitle": "Kutsu vieraat rekisteröitymään {label}-etuun",
+      "signupBannerHelp": "Vieraat voivat ansaita ja käyttää {label}-etua vain tilillä. Tämä näyttää rekisteröitymisbannerin tilaussivullasi.",
+      "signupBannerDesc": "Uloskirjautuneet asiakkaat näkevät bannerin, joka kutsuu luomaan tilin ja ansaitsemaan {label}."
     }
   },
   "impersonation": {
