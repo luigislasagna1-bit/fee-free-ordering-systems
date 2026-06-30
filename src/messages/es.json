@@ -2711,8 +2711,8 @@
       "previewNote": "Esta es una vista previa simplificada.",
       "previewLivePage": "Ver página en vivo →",
       "menuList": "Lista (fotos a la izquierda)",
-      "collapsibleCategories": "Categorías plegables en móvil",
-      "collapsibleCategoriesHint": "En teléfonos, los clientes tocan una categoría para expandir sus elementos (estilo GloriaFood), con controles de Expandir todo / Contraer todo. El escritorio no se ve afectado.",
+      "collapsibleCategories": "Categorías plegables",
+      "collapsibleCategoriesHint": "Los clientes tocan una categoría para expandir o contraer sus artículos (estilo GloriaFood), con controles Expandir todo / Contraer todo. En el móvil cada categoría empieza contraída; en el escritorio empiezan abiertas.",
       "reservationFullBg": "Fondo de reserva a pantalla completa",
       "reservationFullBgHint": "En la página de Book a Table, usa la foto de tu banner como fondo a pantalla completa detrás del formulario de reserva. Requiere una imagen de banner. Desactivado = un banner destacado en la parte superior con el formulario debajo."
     },

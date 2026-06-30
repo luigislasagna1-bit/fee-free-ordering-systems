@@ -2711,8 +2711,8 @@
       "previewNote": "Dette er en forenklet forhåndsvisning.",
       "previewLivePage": "Vis live side →",
       "menuList": "Liste (bilder til venstre)",
-      "collapsibleCategories": "Sammenleggbare kategorier på mobil",
-      "collapsibleCategoriesHint": "På mobil trykker kundene på en kategori for å utvide elementene (GloriaFood-stil), med kontroller for Utvid alle / Skjul alle. Skrivebord påvirkes ikke.",
+      "collapsibleCategories": "Sammenleggbare kategorier",
+      "collapsibleCategoriesHint": "Kunder trykker på en kategori for å utvide eller skjule varene (GloriaFood-stil), med Utvid alle / Skjul alle. På telefon starter hver kategori skjult; på datamaskin starter de åpne.",
       "reservationFullBg": "Fullskjerms reservasjonsbakgrunn",
       "reservationFullBgHint": "På Book a Table-siden brukes bannerbildet ditt som fullskjermsbakgrunn bak bestillingsskjemaet. Krever et bannerbilde. Av = en bannerhero øverst med skjemaet under."
     },

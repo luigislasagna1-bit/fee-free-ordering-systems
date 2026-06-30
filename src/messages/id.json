@@ -2711,8 +2711,8 @@
       "previewNote": "Ini adalah pratinjau sederhana.",
       "previewLivePage": "Lihat halaman aktif →",
       "menuList": "Daftar (foto di kiri)",
-      "collapsibleCategories": "Kategori yang dapat dilipat di perangkat seluler",
-      "collapsibleCategoriesHint": "Di ponsel, pelanggan mengetuk kategori untuk membuka itemnya (gaya GloriaFood), dengan kontrol Buka semua / Tutup semua. Tampilan desktop tidak terpengaruh.",
+      "collapsibleCategories": "Kategori yang dapat diciutkan",
+      "collapsibleCategoriesHint": "Pelanggan mengetuk kategori untuk membuka atau menciutkan itemnya (gaya GloriaFood), dengan kontrol Buka semua / Ciutkan semua. Di ponsel setiap kategori dimulai dalam keadaan diciutkan; di desktop dimulai terbuka.",
       "reservationFullBg": "Latar belakang reservasi layar penuh",
       "reservationFullBgHint": "Pada halaman Book a Table, gunakan foto banner Anda sebagai latar belakang layar penuh di belakang formulir pemesanan. Memerlukan gambar banner. Nonaktif = banner hero di bagian atas dengan formulir di bawahnya."
     },

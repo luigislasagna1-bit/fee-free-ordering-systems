@@ -2676,8 +2676,8 @@
       "previewNote": "Tämä on yksinkertaistettu esikatselu.",
       "previewLivePage": "Katso live-sivu →",
       "menuList": "Lista (kuvat vasemmalla)",
-      "collapsibleCategories": "Tiivistettävät kategoriat mobiilissa",
-      "collapsibleCategoriesHint": "Puhelimissa asiakkaat napauttavat kategoriaa laajentaakseen sen tuotteet (GloriaFood-tyyliin), ja käytössä on Laajenna kaikki / Tiivistä kaikki -painikkeet. Työpöytänäkymä ei muutu.",
+      "collapsibleCategories": "Tiivistettävät luokat",
+      "collapsibleCategoriesHint": "Asiakkaat napauttavat luokkaa laajentaakseen tai tiivistääkseen sen tuotteet (GloriaFood-tyyli), painikkeilla Laajenna kaikki / Tiivistä kaikki. Puhelimessa jokainen luokka alkaa tiivistettynä; työpöydällä ne alkavat avattuina.",
       "reservationFullBg": "Koko näytön varaustausta",
       "reservationFullBgHint": "Käytä Book a Table -sivulla banner-kuvaasi koko näytön taustana varauslomakkeen takana. Vaatii banner-kuvan. Pois päältä = banner-hero ylhäällä ja lomake sen alla."
     },

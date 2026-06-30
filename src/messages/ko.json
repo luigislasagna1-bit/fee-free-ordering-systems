@@ -2711,8 +2711,8 @@
       "previewNote": "이것은 간략한 미리보기입니다.",
       "previewLivePage": "라이브 페이지 보기 →",
       "menuList": "목록형 (사진 왼쪽)",
-      "collapsibleCategories": "모바일에서 카테고리 접기/펼치기",
-      "collapsibleCategoriesHint": "휴대폰에서는 고객이 카테고리를 탭하여 해당 항목을 펼치며(GloriaFood 방식), 모두 펼치기 / 모두 접기 컨트롤이 제공됩니다. 데스크톱에는 영향을 주지 않습니다.",
+      "collapsibleCategories": "접을 수 있는 카테고리",
+      "collapsibleCategoriesHint": "고객이 카테고리를 탭하여 항목을 펼치거나 접을 수 있습니다(GloriaFood 스타일). 모두 펼치기 / 모두 접기 컨트롤 포함. 휴대폰에서는 모든 카테고리가 접힌 상태로 시작하고, 데스크톱에서는 펼쳐진 상태로 시작합니다.",
       "reservationFullBg": "전체 화면 예약 배경",
       "reservationFullBgHint": "Book a Table 페이지에서 배너 사진을 예약 양식 뒤의 전체 화면 배경으로 사용합니다. 배너 이미지가 필요합니다. 끄면 상단에 배너 히어로가 표시되고 그 아래에 양식이 나타납니다."
     },

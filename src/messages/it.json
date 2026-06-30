@@ -2711,8 +2711,8 @@
       "previewNote": "Questa è un'anteprima semplificata.",
       "previewLivePage": "Visualizza pagina live →",
       "menuList": "Elenco (foto a sinistra)",
-      "collapsibleCategories": "Categorie comprimibili su mobile",
-      "collapsibleCategoriesHint": "Su smartphone, i clienti toccano una categoria per espanderne gli elementi (in stile GloriaFood), con i controlli Espandi tutto / Comprimi tutto. Il desktop non è interessato.",
+      "collapsibleCategories": "Categorie comprimibili",
+      "collapsibleCategoriesHint": "I clienti toccano una categoria per espandere o comprimere i suoi articoli (stile GloriaFood), con i controlli Espandi tutto / Comprimi tutto. Su telefono ogni categoria parte compressa; su desktop partono aperte.",
       "reservationFullBg": "Sfondo prenotazione a schermo intero",
       "reservationFullBgHint": "Nella pagina Book a Table, usa la foto del banner come sfondo a schermo intero dietro il modulo di prenotazione. Richiede un'immagine banner. Off = un banner hero in alto con il modulo sotto."
     },

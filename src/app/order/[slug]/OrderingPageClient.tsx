@@ -1908,15 +1908,17 @@ export function OrderingPageClient({
     if (visibleCategories.length && !activeCategory) setActiveCategory(visibleCategories[0].id);
   }, [visibleCategories.length]);
 
-  // ── Mobile collapsible categories (GloriaFood-style accordion) ───────────
-  // Opt-in per restaurant (theme.mobileCollapsibleCategories) and ONLY on
-  // mobile. When active, every category starts collapsed; the customer expands
-  // the ones they want, with Expand all / Collapse all controls.
+  // ── Collapsible categories (GloriaFood-style accordion) ──────────────────
+  // Opt-in per restaurant (theme.mobileCollapsibleCategories) — now on BOTH
+  // mobile AND desktop (Luigi 2026-06-30). The customer expands/collapses
+  // category sections, with Expand all / Collapse all controls. Default state
+  // differs by device (see the seed effect): mobile starts ALL collapsed (true
+  // accordion); desktop starts EXPANDED so the menu stays visible.
   const isMobile = useIsMobile();
-  // Accordion is suspended while a search is active so matching items are
-  // always visible (a collapsed header would hide the very results they want).
+  // Suspended while a search is active so matching items are always visible
+  // (a collapsed header would hide the very results they want).
   const collapsibleActive =
-    !!(theme as any).mobileCollapsibleCategories && isMobile && !menuSearchQuery.trim();
+    !!(theme as any).mobileCollapsibleCategories && !menuSearchQuery.trim();
   const [collapsedCats, setCollapsedCats] = useState<Set<string>>(new Set());
   // Customer can collapse the promo strip so the specials don't eat the whole page
   // (mobile + desktop). Mirrors the collapsible-category chevron. Luigi 2026-06-22.
@@ -1926,12 +1928,15 @@ export function OrderingPageClient({
   // filters the menu we leave their open/closed choices intact.
   const collapseSeededRef = useRef(false);
   useEffect(() => {
-    if (collapsibleActive && !collapseSeededRef.current && visibleCategories.length) {
+    // Seed "all collapsed" ONLY on mobile (the accordion). On desktop we leave
+    // every category expanded so the menu is visible by default — the customer
+    // collapses what they don't want. Luigi 2026-06-30.
+    if (collapsibleActive && isMobile && !collapseSeededRef.current && visibleCategories.length) {
       collapseSeededRef.current = true;
       setCollapsedCats(new Set(visibleCategories.map((c) => c.id)));
     }
     if (!collapsibleActive) collapseSeededRef.current = false;
-  }, [collapsibleActive, visibleCategories.length]);
+  }, [collapsibleActive, isMobile, visibleCategories.length]);
   const toggleCatCollapsed = (id: string) =>
     setCollapsedCats((prev) => {
       const next = new Set(prev);

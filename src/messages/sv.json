@@ -2711,8 +2711,8 @@
       "previewNote": "Detta är en förenklad förhandsvisning.",
       "previewLivePage": "Visa live-sidan →",
       "menuList": "Lista (foton till vänster)",
-      "collapsibleCategories": "Hopfällbara kategorier på mobil",
-      "collapsibleCategoriesHint": "På telefoner trycker kunderna på en kategori för att expandera dess artiklar (GloriaFood-stil), med kontrollerna Expandera alla / Fäll ihop alla. Datorvyn påverkas inte.",
+      "collapsibleCategories": "Hopfällbara kategorier",
+      "collapsibleCategoriesHint": "Kunder trycker på en kategori för att fälla ut eller ihop dess varor (GloriaFood-stil), med Fäll ut alla / Fäll ihop alla. På telefon börjar varje kategori hopfälld; på datorn börjar de öppna.",
       "reservationFullBg": "Helskärmsbakgrund för bokning",
       "reservationFullBgHint": "På sidan Boka ett bord använder du ditt bannerfoto som en helskärmsbakgrund bakom bokningsformuläret. Kräver en bannerbild. Av = en bannerhjälte högst upp med formuläret nedanför."
     },

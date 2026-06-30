@@ -1834,8 +1834,8 @@
       "previewNote": "Tai supaprastinta peržiūra.",
       "previewLivePage": "Žiūrėti tiesioginį puslapį →",
       "menuList": "Sąrašas (nuotraukos kairėje)",
-      "collapsibleCategories": "Suskleidžiamos kategorijos mobiliuosiuose įrenginiuose",
-      "collapsibleCategoriesHint": "Telefonuose klientai paliečia kategoriją, kad išskleistų jos prekes (GloriaFood stiliumi), su valdikliais „Išskleisti visas“ / „Suskleisti visas“. Kompiuterio versijai įtakos neturi.",
+      "collapsibleCategories": "Sutraukiamos kategorijos",
+      "collapsibleCategoriesHint": "Klientai paliečia kategoriją, kad išplėstų arba sutrauktų jos prekes (GloriaFood stiliumi), su mygtukais Išplėsti viską / Sutraukti viską. Telefone kiekviena kategorija prasideda sutraukta; kompiuteryje – atidaryta.",
       "reservationFullBg": "Rezervacijos fonas per visą ekraną",
       "reservationFullBgHint": "Puslapyje „Book a Table\" naudokite savo reklamjuostės nuotrauką kaip viso ekrano foną už rezervacijos formos. Reikia reklamjuostės vaizdo. Išjungta = reklamjuostės herojus viršuje, o forma žemiau."
     },

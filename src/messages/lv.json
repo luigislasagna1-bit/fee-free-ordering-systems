@@ -2711,8 +2711,8 @@
       "previewNote": "Šis ir vienkāršots priekšskatījums.",
       "previewLivePage": "Skatīt tiešsaistes lapu →",
       "menuList": "Saraksts (foto pa kreisi)",
-      "collapsibleCategories": "Sakļaujamas kategorijas mobilajā ierīcē",
-      "collapsibleCategoriesHint": "Tālrunī klienti pieskaras kategorijai, lai izvērstu tās produktus (GloriaFood stilā), izmantojot vadīklas “Izvērst visu” / “Sakļaut visu”. Galddatorā tas neko neietekmē.",
+      "collapsibleCategories": "Sakļaujamas kategorijas",
+      "collapsibleCategoriesHint": "Klienti pieskaras kategorijai, lai izvērstu vai sakļautu tās preces (GloriaFood stilā), ar pogām Izvērst visu / Sakļaut visu. Telefonā katra kategorija sākas sakļauta; datorā tās sākas atvērtas.",
       "reservationFullBg": "Pilnekrāna rezervācijas fons",
       "reservationFullBgHint": "Lapā “Rezervēt galdu” izmantojiet sava banera fotoattēlu kā pilnekrāna fonu aiz rezervācijas formas. Nepieciešams banera attēls. Izslēgts = banera varoņattēls augšā ar formu zem tā."
     },

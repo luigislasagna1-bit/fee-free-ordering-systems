@@ -2711,8 +2711,8 @@
       "previewNote": "Aquesta és una vista prèvia simplificada.",
       "previewLivePage": "Veure la pàgina en viu →",
       "menuList": "Llista (fotos a l'esquerra)",
-      "collapsibleCategories": "Categories desplegables al mòbil",
-      "collapsibleCategoriesHint": "Al telèfon, els clients toquen una categoria per desplegar-ne els articles (estil GloriaFood), amb controls per desplegar-ho i replegar-ho tot. L'ordinador no es veu afectat.",
+      "collapsibleCategories": "Categories plegables",
+      "collapsibleCategoriesHint": "Els clients toquen una categoria per desplegar o plegar els seus articles (estil GloriaFood), amb controls Desplega-ho tot / Plega-ho tot. Al mòbil cada categoria comença plegada; a l'escriptori comencen obertes.",
       "reservationFullBg": "Fons de reserva a pantalla completa",
       "reservationFullBgHint": "A la pàgina Reservar taula, fes servir la teva imatge de capçalera com a fons a pantalla completa darrere del formulari de reserva. Cal una imatge de capçalera. Desactivat = una capçalera destacada a la part superior amb el formulari a sota."
     },

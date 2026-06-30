@@ -2711,8 +2711,8 @@
       "previewNote": "Ovo je pojednostavljeni pregled.",
       "previewLivePage": "Pogledaj aktivnu stranicu →",
       "menuList": "Popis (fotografije lijevo)",
-      "collapsibleCategories": "Sažimljive kategorije na mobitelu",
-      "collapsibleCategoriesHint": "Na mobitelima kupci dodirnu kategoriju kako bi proširili njezine stavke (u stilu GloriaFood), uz kontrole Proširi sve / Sažmi sve. Na računalu nema promjena.",
+      "collapsibleCategories": "Sklopive kategorije",
+      "collapsibleCategoriesHint": "Kupci dodiruju kategoriju za proširenje ili sklapanje njezinih stavki (GloriaFood stil), s kontrolama Proširi sve / Sklopi sve. Na telefonu svaka kategorija počinje sklopljena; na računalu počinju otvorene.",
       "reservationFullBg": "Pozadina rezervacije preko cijelog zaslona",
       "reservationFullBgHint": "Na stranici Book a Table koristite svoju banner fotografiju kao pozadinu preko cijelog zaslona iza obrasca za rezervaciju. Potrebna je banner slika. Isključeno = banner hero na vrhu s obrascem ispod."
     },

@@ -2711,8 +2711,8 @@
       "previewNote": "Dit is een vereenvoudigd voorbeeld.",
       "previewLivePage": "Bekijk live pagina →",
       "menuList": "Lijst (foto's links)",
-      "collapsibleCategories": "Inklapbare categorieën op mobiel",
-      "collapsibleCategoriesHint": "Op telefoons tikken klanten op een categorie om de items ervan uit te vouwen (GloriaFood-stijl), met knoppen om alles uit of in te vouwen. Desktop blijft ongewijzigd.",
+      "collapsibleCategories": "Inklapbare categorieën",
+      "collapsibleCategoriesHint": "Klanten tikken op een categorie om de items uit of in te klappen (GloriaFood-stijl), met Alles uitklappen / Alles inklappen. Op de telefoon start elke categorie ingeklapt; op desktop staan ze open.",
       "reservationFullBg": "Reserveringsachtergrond op volledig scherm",
       "reservationFullBgHint": "Gebruik op de Book a Table-pagina je bannerfoto als achtergrond op volledig scherm achter het reserveringsformulier. Vereist een bannerafbeelding. Uit = een bannerhero bovenaan met het formulier eronder."
     },

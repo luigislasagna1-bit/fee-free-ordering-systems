@@ -2711,8 +2711,8 @@
       "previewNote": "Ceci est un aperçu simplifié.",
       "previewLivePage": "Voir la page en ligne →",
       "menuList": "Liste (photos à gauche)",
-      "collapsibleCategories": "Catégories repliables sur mobile",
-      "collapsibleCategoriesHint": "Sur téléphone, les clients touchent une catégorie pour développer ses articles (à la manière de GloriaFood), avec des commandes Tout développer / Tout réduire. L'affichage sur ordinateur n'est pas modifié.",
+      "collapsibleCategories": "Catégories repliables",
+      "collapsibleCategoriesHint": "Les clients touchent une catégorie pour développer ou réduire ses articles (style GloriaFood), avec des boutons Tout développer / Tout réduire. Sur téléphone, chaque catégorie démarre réduite ; sur ordinateur, elles démarrent ouvertes.",
       "reservationFullBg": "Arrière-plan plein écran de la réservation",
       "reservationFullBgHint": "Sur la page Book a Table, utilisez votre photo de bannière comme arrière-plan plein écran derrière le formulaire de réservation. Nécessite une image de bannière. Désactivé = une bannière en en-tête avec le formulaire en dessous."
     },
