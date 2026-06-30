@@ -149,6 +149,9 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
                 sortOrder: g.sortOrder,
                 libraryGroupId: g.libraryGroupId,
                 supportsHalfHalf: g.supportsHalfHalf,
+                // Copy the pizza-builder role tag too — without it a copied pizza
+                // loses crust/sauce/cheese/topping classification. Luigi 2026-06-30.
+                pizzaRole: g.pizzaRole,
                 options: { create: g.options.map((o: any) => ({ name: o.name, priceAdjustment: o.priceAdjustment, isDefault: o.isDefault, isAvailable: o.isAvailable, sortOrder: o.sortOrder })) },
               },
             });
