@@ -225,3 +225,15 @@ The promo-unlocked toast ("You unlocked 50% off entire menu!") shows even when t
 
 ## CORRECTION to the toast note above (Luigi 2026-06-29)
 The gift card is NOT excluded from discounts — it's a normal menu item and DOES get the 50% once the code is applied. The "50 % off entire menu" promo is autoApply=false / couponCode=VIPSKOOLJAN (code-gated), so it correctly didn't discount a cart with no code entered. The REAL bug = the "You unlocked 50% off" nudge/toast fires for a code-gated promo even when its code hasn't been applied, implying it's active when it isn't. Fix: suppress the unlocked-toast/nudge for autoApply=false (hidden/coded) promos until the code is actually applied. Tie into the nudge/highlight rework + verify across promo types (standing rule).
+
+## Consider: exclude gift-card (or specific categories) from Reward Dollars EARNING (Luigi 2026-06-29, low priority)
+Gift cards are normal menu items in Luigi's setup, so buying a $20 gift card earned $1.00 (5%) in Pizza Bucks — a small store-credit loop (buy store credit → earn store credit). Most reward programs exclude gift cards from earning. OPTIONAL: add a per-item/per-category "no rewards earning" flag (mirror of how some stores exclude gift cards from discounts). Luigi's call — only if he wants to stop the loop. Earn basis today = subtotal − discounts across all items.
+
+## FEATURE: Reward Dollars — exclude items/categories + "sign up to earn" banner (Luigi 2026-06-29)
+TWO requests on /admin/rewards (only relevant when rewardsEnabled):
+
+1) **Exclude specific items/categories from the reward program.** Owner picks items and/or categories that are NOT part of Reward Dollars. Decisions to confirm with Luigi: earning-only exclusion (those items' subtotal doesn't count toward earn basis) vs ALSO spend-exclusion (credit can't pay for them — harder, since credit is a whole-ORDER payment, not itemized). Recommended v1: EARNING exclusion (addresses the gift-card loop), category + item granularity. Schema: side table or JSON list of excluded categoryIds/itemIds on Restaurant (sparse — keep off hot tables). Wire into reward-ledger.awardForOrder + reward-earn.projectOrderEarn + awardEarnRulesForOrder basis (subtract excluded lines). MUST show on the CUSTOMER account page ("X and Y don't earn {rewardName}"). i18n ×38 + HelpTip.
+
+2) **"Sign up to earn" banner/message toggle.** Since guests can't earn/spend (spend requires sign-in), give the owner a toggle in reward settings to show a customer-facing banner/message on the order page prompting guests to sign up to start earning {rewardName}. Only show to logged-OUT customers when rewardsEnabled. Schema: Restaurant.rewardSignupBannerEnabled (bool) + optional custom text. Customer display on /order/[slug] (OrderingPageClient) for guests. i18n ×38.
+
+### DECISIONS (Luigi 2026-06-29): exclusion = EARNING-ONLY for v1 (excluded items/categories don't earn; bucks can still pay toward the whole order). Both features queued for a fresh session, AFTER the 🔴 launch tests. Banner = guests-only, shown when rewardsEnabled.
