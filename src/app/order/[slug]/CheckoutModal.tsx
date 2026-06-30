@@ -624,7 +624,7 @@ export function CheckoutModal({
           <div className="flex items-center gap-1 flex-shrink-0">
             {onClearCart && cart.length > 0 && (
               <button onClick={onClearCart} className="text-xs font-medium text-gray-400 hover:text-red-500 inline-flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-red-50 transition">
-                <Trash2 className="w-3.5 h-3.5" /> {tOrd("emptyCart")}
+                <Trash2 className="w-3.5 h-3.5" /> {tOrd("emptyCartAction")}
               </button>
             )}
             <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-gray-700">

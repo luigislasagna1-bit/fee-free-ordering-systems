@@ -146,7 +146,7 @@
     "language": "Språk",
     "cart": "Handlekurv",
     "yourCart": "Din handlekurv",
-    "emptyCart": "Tøm handlekurv",
+    "emptyCart": "Handlekurven er tom",
     "remove": "Fjern",
     "quantity": "Antall",
     "specialInstructions": "Spesielle instruksjoner",
@@ -294,7 +294,8 @@
     "rewardTileNth": "Tjen {amount} for hver {n} bestilling",
     "rewardSignupBannerText": "Registrer deg og tjen {label}",
     "rewardSignupBannerCta": "Registrer deg",
-    "emptyCartConfirm": "Fjerne alle varer fra handlekurven?"
+    "emptyCartConfirm": "Fjerne alle varer fra handlekurven?",
+    "emptyCartAction": "Tøm handlekurv"
   },
   "pizza": {
     "chooseSize": "Velg størrelse",

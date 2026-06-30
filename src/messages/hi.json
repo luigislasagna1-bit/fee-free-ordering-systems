@@ -146,7 +146,7 @@
     "language": "भाषा",
     "cart": "कार्ट",
     "yourCart": "आपकी कार्ट",
-    "emptyCart": "कार्ट खाली करें",
+    "emptyCart": "आपकी कार्ट खाली है",
     "remove": "हटाएं",
     "quantity": "मात्रा",
     "specialInstructions": "विशेष निर्देश",
@@ -294,7 +294,8 @@
     "rewardTileNth": "हर {n} ऑर्डर पर {amount} कमाएँ",
     "rewardSignupBannerText": "{label} कमाना शुरू करने के लिए साइन अप करें",
     "rewardSignupBannerCta": "साइन अप करें",
-    "emptyCartConfirm": "अपने कार्ट से सभी आइटम हटाएँ?"
+    "emptyCartConfirm": "अपने कार्ट से सभी आइटम हटाएँ?",
+    "emptyCartAction": "कार्ट खाली करें"
   },
   "pizza": {
     "chooseSize": "आकार चुनें",

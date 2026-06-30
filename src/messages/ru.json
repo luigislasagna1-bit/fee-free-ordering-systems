@@ -146,7 +146,7 @@
     "language": "Язык",
     "cart": "Корзина",
     "yourCart": "Ваша корзина",
-    "emptyCart": "Очистить корзину",
+    "emptyCart": "Корзина пуста",
     "remove": "Убрать",
     "quantity": "Количество",
     "specialInstructions": "Особые пожелания",
@@ -294,7 +294,8 @@
     "rewardTileNth": "Получите {amount} за каждые {n} заказов",
     "rewardSignupBannerText": "Зарегистрируйтесь и зарабатывайте {label}",
     "rewardSignupBannerCta": "Регистрация",
-    "emptyCartConfirm": "Удалить все товары из корзины?"
+    "emptyCartConfirm": "Удалить все товары из корзины?",
+    "emptyCartAction": "Очистить корзину"
   },
   "pizza": {
     "chooseSize": "Выберите размер",

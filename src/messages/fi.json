@@ -146,7 +146,7 @@
     "language": "Kieli",
     "cart": "Ostoskori",
     "yourCart": "Ostoskorisi",
-    "emptyCart": "Tyhjennä ostoskori",
+    "emptyCart": "Ostoskorisi on tyhjä",
     "remove": "Poista",
     "quantity": "Määrä",
     "specialInstructions": "Erityisohjeet",
@@ -294,7 +294,8 @@
     "rewardTileNth": "Ansaitse {amount} joka {n} tilauksesta",
     "rewardSignupBannerText": "Rekisteröidy ja ansaitse {label}",
     "rewardSignupBannerCta": "Rekisteröidy",
-    "emptyCartConfirm": "Poistetaanko kaikki tuotteet ostoskorista?"
+    "emptyCartConfirm": "Poistetaanko kaikki tuotteet ostoskorista?",
+    "emptyCartAction": "Tyhjennä ostoskori"
   },
   "pizza": {
     "chooseSize": "Valitse koko",

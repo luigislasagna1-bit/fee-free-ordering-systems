@@ -146,7 +146,7 @@
     "language": "Jezik",
     "cart": "Korpa",
     "yourCart": "Vaša korpa",
-    "emptyCart": "Испразни корпу",
+    "emptyCart": "Vaša korpa je prazna",
     "remove": "Ukloni",
     "quantity": "Količina",
     "specialInstructions": "Posebne napomene",
@@ -294,7 +294,8 @@
     "rewardTileNth": "Zaradite {amount} na svakih {n} porudžbina",
     "rewardSignupBannerText": "Региструјте се и скупљајте {label}",
     "rewardSignupBannerCta": "Регистрација",
-    "emptyCartConfirm": "Уклонити све ставке из корпе?"
+    "emptyCartConfirm": "Уклонити све ставке из корпе?",
+    "emptyCartAction": "Испразни корпу"
   },
   "pizza": {
     "chooseSize": "Izaberite veličinu",

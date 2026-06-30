@@ -146,7 +146,7 @@
     "language": "Kalba",
     "cart": "Krepšelis",
     "yourCart": "Jūsų krepšelis",
-    "emptyCart": "Išvalyti krepšelį",
+    "emptyCart": "Krepšelis tuščias",
     "remove": "Šalinti",
     "quantity": "Kiekis",
     "specialInstructions": "Specialios instrukcijos",
@@ -294,7 +294,8 @@
     "rewardTileNth": "Užsidirbkite {amount} kas {n} užsakymų",
     "rewardSignupBannerText": "Užsiregistruokite ir kaupkite {label}",
     "rewardSignupBannerCta": "Registruotis",
-    "emptyCartConfirm": "Pašalinti visas prekes iš krepšelio?"
+    "emptyCartConfirm": "Pašalinti visas prekes iš krepšelio?",
+    "emptyCartAction": "Išvalyti krepšelį"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",

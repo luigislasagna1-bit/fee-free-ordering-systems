@@ -145,7 +145,7 @@
     "language": "Lingua",
     "cart": "Carrello",
     "yourCart": "Il tuo carrello",
-    "emptyCart": "Svuota carrello",
+    "emptyCart": "Il tuo carrello è vuoto",
     "remove": "Rimuovi",
     "quantity": "Quantità",
     "specialInstructions": "Istruzioni speciali",
@@ -294,7 +294,8 @@
     "rewardTileNth": "Guadagna {amount} ogni {n} ordini",
     "rewardSignupBannerText": "Iscriviti per guadagnare {label}",
     "rewardSignupBannerCta": "Iscriviti",
-    "emptyCartConfirm": "Rimuovere tutti gli articoli dal carrello?"
+    "emptyCartConfirm": "Rimuovere tutti gli articoli dal carrello?",
+    "emptyCartAction": "Svuota carrello"
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",

@@ -146,7 +146,7 @@
     "language": "Мова",
     "cart": "Кошик",
     "yourCart": "Ваш кошик",
-    "emptyCart": "Очистити кошик",
+    "emptyCart": "Ваш кошик порожній",
     "remove": "Прибрати",
     "quantity": "Кількість",
     "specialInstructions": "Особливі побажання",
@@ -294,7 +294,8 @@
     "rewardTileNth": "Отримайте {amount} за кожні {n} замовлень",
     "rewardSignupBannerText": "Зареєструйтесь і заробляйте {label}",
     "rewardSignupBannerCta": "Зареєструватися",
-    "emptyCartConfirm": "Вилучити всі товари з кошика?"
+    "emptyCartConfirm": "Вилучити всі товари з кошика?",
+    "emptyCartAction": "Очистити кошик"
   },
   "pizza": {
     "chooseSize": "Оберіть розмір",

@@ -146,7 +146,7 @@
     "language": "Sprache",
     "cart": "Warenkorb",
     "yourCart": "Ihr Warenkorb",
-    "emptyCart": "Warenkorb leeren",
+    "emptyCart": "Ihr Warenkorb ist leer",
     "remove": "Entfernen",
     "quantity": "Menge",
     "specialInstructions": "Besondere Hinweise",
@@ -294,7 +294,8 @@
     "rewardTileNth": "Verdiene {amount} alle {n} Bestellungen",
     "rewardSignupBannerText": "Registrieren und {label} sammeln",
     "rewardSignupBannerCta": "Registrieren",
-    "emptyCartConfirm": "Alle Artikel aus dem Warenkorb entfernen?"
+    "emptyCartConfirm": "Alle Artikel aus dem Warenkorb entfernen?",
+    "emptyCartAction": "Warenkorb leeren"
   },
   "pizza": {
     "chooseSize": "Größe wählen",

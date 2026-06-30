@@ -146,7 +146,7 @@
     "language": "Γλώσσα",
     "cart": "Καλάθι",
     "yourCart": "Το καλάθι σας",
-    "emptyCart": "Άδειασμα καλαθιού",
+    "emptyCart": "Το καλάθι σας είναι άδειο",
     "remove": "Αφαίρεση",
     "quantity": "Ποσότητα",
     "specialInstructions": "Ειδικές οδηγίες",
@@ -294,7 +294,8 @@
     "rewardTileNth": "Κερδίστε {amount} κάθε {n} παραγγελίες",
     "rewardSignupBannerText": "Εγγραφείτε για να κερδίζετε {label}",
     "rewardSignupBannerCta": "Εγγραφή",
-    "emptyCartConfirm": "Να αφαιρεθούν όλα τα είδη από το καλάθι σας;"
+    "emptyCartConfirm": "Να αφαιρεθούν όλα τα είδη από το καλάθι σας;",
+    "emptyCartAction": "Άδειασμα καλαθιού"
   },
   "pizza": {
     "chooseSize": "Επιλογή μεγέθους",

@@ -146,7 +146,7 @@
     "language": "Idioma",
     "cart": "Cistella",
     "yourCart": "La vostra cistella",
-    "emptyCart": "Buida el cistell",
+    "emptyCart": "La vostra cistella és buida",
     "remove": "Elimina",
     "quantity": "Quantitat",
     "specialInstructions": "Instruccions especials",
@@ -294,7 +294,8 @@
     "rewardTileNth": "Guanya {amount} cada {n} comandes",
     "rewardSignupBannerText": "Registra't per guanyar {label}",
     "rewardSignupBannerCta": "Registra't",
-    "emptyCartConfirm": "Vols treure tots els articles del cistell?"
+    "emptyCartConfirm": "Vols treure tots els articles del cistell?",
+    "emptyCartAction": "Buida el cistell"
   },
   "pizza": {
     "chooseSize": "Tria la mida",

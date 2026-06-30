@@ -146,7 +146,7 @@
     "language": "ภาษา",
     "cart": "ตะกร้า",
     "yourCart": "ตะกร้าของคุณ",
-    "emptyCart": "ล้างตะกร้า",
+    "emptyCart": "ตะกร้าของคุณว่างเปล่า",
     "remove": "นำออก",
     "quantity": "จำนวน",
     "specialInstructions": "คำแนะนำพิเศษ",
@@ -294,7 +294,8 @@
     "rewardTileNth": "รับ {amount} ทุก {n} คำสั่งซื้อ",
     "rewardSignupBannerText": "ลงทะเบียนเพื่อเริ่มรับ {label}",
     "rewardSignupBannerCta": "ลงทะเบียน",
-    "emptyCartConfirm": "นำสินค้าทั้งหมดออกจากตะกร้าหรือไม่?"
+    "emptyCartConfirm": "นำสินค้าทั้งหมดออกจากตะกร้าหรือไม่?",
+    "emptyCartAction": "ล้างตะกร้า"
   },
   "pizza": {
     "chooseSize": "เลือกขนาด",

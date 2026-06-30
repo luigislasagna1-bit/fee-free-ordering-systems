@@ -4912,7 +4912,7 @@ export function OrderingPageClient({
               <div className="flex items-center gap-1">
                 {cart.length > 0 && (
                   <button onClick={clearCart} className="text-xs font-medium text-gray-400 hover:text-red-500 inline-flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-red-50 transition">
-                    <Trash2 className="w-3.5 h-3.5" /> {t("emptyCart")}
+                    <Trash2 className="w-3.5 h-3.5" /> {t("emptyCartAction")}
                   </button>
                 )}
                 <button onClick={() => setCartOpen(false)} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5 text-gray-400" /></button>

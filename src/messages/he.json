@@ -146,7 +146,7 @@
     "language": "שפה",
     "cart": "סל",
     "yourCart": "הסל שלך",
-    "emptyCart": "רוקן עגלה",
+    "emptyCart": "הסל שלך ריק",
     "remove": "הסר",
     "quantity": "כמות",
     "specialInstructions": "הוראות מיוחדות",
@@ -294,7 +294,8 @@
     "rewardTileNth": "צברו {amount} בכל {n} הזמנות",
     "rewardSignupBannerText": "הירשמו כדי לצבור {label}",
     "rewardSignupBannerCta": "הרשמה",
-    "emptyCartConfirm": "להסיר את כל הפריטים מהעגלה?"
+    "emptyCartConfirm": "להסיר את כל הפריטים מהעגלה?",
+    "emptyCartAction": "רוקן עגלה"
   },
   "pizza": {
     "chooseSize": "בחר גודל",

@@ -146,7 +146,7 @@
     "language": "语言",
     "cart": "购物车",
     "yourCart": "您的购物车",
-    "emptyCart": "清空购物车",
+    "emptyCart": "购物车为空",
     "remove": "移除",
     "quantity": "数量",
     "specialInstructions": "特殊要求",
@@ -294,7 +294,8 @@
     "rewardTileNth": "每 {n} 单赚取 {amount}",
     "rewardSignupBannerText": "注册即可赚取{label}",
     "rewardSignupBannerCta": "注册",
-    "emptyCartConfirm": "从购物车中移除所有商品？"
+    "emptyCartConfirm": "从购物车中移除所有商品？",
+    "emptyCartAction": "清空购物车"
   },
   "pizza": {
     "chooseSize": "选择大小",

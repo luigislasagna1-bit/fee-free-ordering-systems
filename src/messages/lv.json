@@ -146,7 +146,7 @@
     "language": "Valoda",
     "cart": "Grozs",
     "yourCart": "Jūsu grozs",
-    "emptyCart": "Iztukšot grozu",
+    "emptyCart": "Jūsu grozs ir tukšs",
     "remove": "Noņemt",
     "quantity": "Daudzums",
     "specialInstructions": "Īpaši norādījumi",
@@ -294,7 +294,8 @@
     "rewardTileNth": "Nopelniet {amount} ik pēc {n} pasūtījumiem",
     "rewardSignupBannerText": "Reģistrējieties un pelniet {label}",
     "rewardSignupBannerCta": "Reģistrēties",
-    "emptyCartConfirm": "Noņemt visas preces no groza?"
+    "emptyCartConfirm": "Noņemt visas preces no groza?",
+    "emptyCartAction": "Iztukšot grozu"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
