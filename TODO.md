@@ -263,3 +263,5 @@ reward-ledger.refundForOrder() returns spent credit + claws back earned on a FUL
 
 ## UX notes (Luigi, 2026-06-30)
 - [ ] **"Empty cart" button throughout the checkout stages** — add a one-click clear-all-items button available in the cart drawer AND on the checkout screen(s). Today you can only remove items one at a time, which is tedious (surfaced while setting up a promo test). Scope: a small "Empty cart" / trash control on the cart slide-over + checkout, with a confirm guard.
+
+- [ ] **Import-to-Try restaurants shouldn't count as real restaurants (superadmin)** — Luigi 2026-06-30. The "try-*" restaurants created via the main-page GloriaFood menu test-build (Import-to-Try growth engine, e.g. "Ontario Stacked Full Menu 2025.11" → /order/try-...) are being counted in the Super Admin → All Restaurants stats (TOTAL / FREE / MRR) and listed inline with real signups. They should be bucketed separately like the existing TEST (DEMO-*) category: detect them (slug prefix "try-" or an `isImportTrial`/source flag) → exclude from real-restaurant counts → add a filter tab ("Try imports") + own count tile. Source: project_import_to_try.
