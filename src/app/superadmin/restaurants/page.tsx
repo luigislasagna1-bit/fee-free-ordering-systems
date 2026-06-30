@@ -53,20 +53,27 @@ export default async function SuperadminRestaurants() {
   });
   const lastOrderMap = new Map(lastOrders.map((g) => [g.restaurantId, g._max.createdAt]));
 
-  // Platform-wide MRR — active add-on subscriptions only.
-  const mrrCents = restaurants.reduce((sum, r) => {
+  // "Real" = production restaurants. demo-* (seeded test stores) and try-*
+  // (Import-to-Try sandboxes from the GloriaFood menu test-build) are NOT real
+  // signups, so they're EXCLUDED from the headline counts and broken out into
+  // their own tiles below. Luigi 2026-06-30.
+  const real = restaurants.filter((r) => !r.slug.startsWith("demo-") && !r.slug.startsWith("try-"));
+
+  // Platform-wide MRR — active add-on subscriptions on real restaurants only.
+  const mrrCents = real.reduce((sum, r) => {
     return sum + r.addOns.reduce((s, ra) => {
       return ra.status === "active" ? s + (ra.addOn.monthlyPriceCents ?? 0) : s;
     }, 0);
   }, 0);
 
   const stats = {
-    total:     restaurants.length,
-    published: restaurants.filter((r) => !!r.publishedAt).length,
-    paid:      restaurants.filter((r) => r.addOns.length > 0).length,
-    free:      restaurants.filter((r) => r.addOns.length === 0).length,
-    paused:    restaurants.filter((r) => !r.isActive).length,
+    real:      real.length,
+    published: real.filter((r) => !!r.publishedAt).length,
+    paid:      real.filter((r) => r.addOns.length > 0).length,
+    free:      real.filter((r) => r.addOns.length === 0).length,
+    paused:    real.filter((r) => !r.isActive).length,
     test:      restaurants.filter((r) => r.slug.startsWith("demo-")).length,
+    trial:     restaurants.filter((r) => r.slug.startsWith("try-")).length,
   };
 
   // Shape the data for the client. Dates must be ISO strings so they
@@ -79,6 +86,7 @@ export default async function SuperadminRestaurants() {
     phone: r.phone,
     isActive: r.isActive,
     isTest: r.slug.startsWith("demo-"),
+    isTrial: r.slug.startsWith("try-"),
     publishedAt: r.publishedAt?.toISOString() ?? null,
     createdAt: r.createdAt.toISOString(),
     lastOrderAt: lastOrderMap.get(r.id)?.toISOString() ?? null,
@@ -94,19 +102,20 @@ export default async function SuperadminRestaurants() {
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold text-gray-900">All Restaurants</h1>
         <div className="flex items-center gap-3">
-          <span className="text-gray-500 text-sm">{restaurants.length} total</span>
+          <span className="text-gray-500 text-sm">{stats.real} real · {restaurants.length} total</span>
           <CreateTestRestaurantButton />
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 mb-5">
-        <Stat label="Total"          value={stats.total}                       tone="default" />
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 mb-5">
+        <Stat label="Real"           value={stats.real}     hint="excl. test/trial" tone="default" />
         <Stat label="Published"      value={stats.published}                   tone="emerald" />
         <Stat label="Paid"           value={stats.paid}     hint=">= 1 add-on" tone="purple"  />
         <Stat label="Free"           value={stats.free}     hint="no add-ons"  tone="gray"    />
         <Stat label="MRR"            value={formatCurrency(mrrCents / 100)} hint="active add-ons" tone="blue" />
         <Stat label="Paused"         value={stats.paused}                      tone="yellow"  />
         <Stat label="Test (demo-*)"  value={stats.test}                        tone="purple"  />
+        <Stat label="Trials (try-*)" value={stats.trial}    hint="import-to-try" tone="purple" />
       </div>
 
       <RestaurantsTable rows={rows} />

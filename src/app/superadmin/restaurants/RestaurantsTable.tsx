@@ -13,6 +13,7 @@ export type RestaurantRow = {
   phone: string | null;
   isActive: boolean;
   isTest: boolean;
+  isTrial: boolean;
   publishedAt: string | null;
   createdAt: string;
   lastOrderAt: string | null;
@@ -38,6 +39,7 @@ type Filter = {
   status: "all" | "live" | "setup";
   active: "all" | "active" | "paused";
   test: "all" | "real" | "test";
+  trial: "all" | "real" | "trial";
   search: string;
 };
 
@@ -46,6 +48,7 @@ const DEFAULT_FILTER: Filter = {
   status: "all",
   active: "all",
   test: "real",        // hide demo-* restaurants by default — real ops view
+  trial: "real",       // hide try-* (Import-to-Try sandboxes) by default
   search: "",
 };
 
@@ -84,6 +87,8 @@ export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
       if (filter.active === "paused" && r.isActive) return false;
       if (filter.test === "real" && r.isTest) return false;
       if (filter.test === "test" && !r.isTest) return false;
+      if (filter.trial === "real" && r.isTrial) return false;
+      if (filter.trial === "trial" && !r.isTrial) return false;
       if (q) {
         const hay = `${r.name} ${r.slug} ${r.email ?? ""} ${r.phone ?? ""}`.toLowerCase();
         if (!hay.includes(q)) return false;
@@ -164,6 +169,7 @@ export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
     filter.status !== "all" ||
     filter.active !== "all" ||
     filter.test !== "real" ||
+    filter.trial !== "real" ||
     filter.search.trim().length > 0;
 
   return (
@@ -219,6 +225,16 @@ export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
             { v: "real", label: "Hide" },
             { v: "all", label: "Show" },
             { v: "test", label: "Only test" },
+          ]}
+        />
+        <FilterPills
+          label="Trials"
+          value={filter.trial}
+          onChange={(v) => setFilter((f) => ({ ...f, trial: v as Filter["trial"] }))}
+          options={[
+            { v: "real", label: "Hide" },
+            { v: "all", label: "Show" },
+            { v: "trial", label: "Only trials" },
           ]}
         />
 
@@ -316,6 +332,9 @@ export function RestaurantsTable({ rows }: { rows: RestaurantRow[] }) {
                           {r.name}
                           {r.isTest && (
                             <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">TEST</span>
+                          )}
+                          {r.isTrial && (
+                            <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-100 text-sky-700">TRIAL</span>
                           )}
                           {!r.isActive && (
                             <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded bg-gray-200 text-gray-600">PAUSED</span>
