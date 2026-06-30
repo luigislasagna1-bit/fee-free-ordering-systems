@@ -38,7 +38,7 @@ export default async function RestaurantAccountDashboard({
   const restaurant = await prisma.restaurant.findUnique({
     where: { slug },
     select: {
-      id: true, name: true, slug: true, isActive: true, currency: true,
+      id: true, name: true, slug: true, isActive: true, currency: true, timezone: true,
       rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true,
     },
   });
@@ -46,6 +46,11 @@ export default async function RestaurantAccountDashboard({
 
   // Money on this dashboard renders in the restaurant's chosen currency.
   const formatCurrency = (amount: number) => fmtCurrency(amount, restaurant.currency);
+  // Dates render in the RESTAURANT's timezone — this page is a server component
+  // (force-dynamic) so a naked toLocaleDateString() uses the server's UTC clock,
+  // showing e.g. "6/30" for a 9pm-June-29 order in Toronto. Luigi 2026-06-29.
+  const tzOpts = restaurant.timezone ? { timeZone: restaurant.timezone } : {};
+  const fmtDate = (d: Date | string) => new Date(d).toLocaleDateString(undefined, tzOpts);
 
   const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
   if (!me) redirect(`/order/${slug}/account/login`);
@@ -271,7 +276,7 @@ export default async function RestaurantAccountDashboard({
                             </Link>
                           </>
                         )}
-                        <span className="text-gray-400"> · {l.createdAt.toLocaleDateString()}</span>
+                        <span className="text-gray-400"> · {fmtDate(l.createdAt)}</span>
                       </span>
                       <span className={l.amount >= 0 ? "text-emerald-600 font-medium" : "text-gray-700 font-medium"}>
                         {l.amount >= 0 ? "+" : "−"} {formatCurrency(Math.abs(l.amount))}
@@ -317,7 +322,7 @@ export default async function RestaurantAccountDashboard({
                         <span className="text-[10px] text-gray-400">{t("minOrder", { amount: formatCurrency(o.minOrder) })}</span>
                       )}
                       {o.endsAt && (
-                        <span className="text-[10px] text-gray-400">{t("expires", { date: new Date(o.endsAt).toLocaleDateString() })}</span>
+                        <span className="text-[10px] text-gray-400">{t("expires", { date: fmtDate(o.endsAt) })}</span>
                       )}
                     </div>
                   </div>
@@ -374,7 +379,7 @@ export default async function RestaurantAccountDashboard({
                     className="bg-white rounded-xl border border-gray-200 p-4 flex flex-col gap-2"
                   >
                     <div className="text-xs uppercase tracking-wide text-gray-400 font-semibold">
-                      {new Date(o.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                      {new Date(o.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric", ...tzOpts })}
                     </div>
                     <div className="text-xs text-gray-700 line-clamp-2 min-h-[2.5em]">
                       {itemNames || t("orderFallback")}
@@ -422,7 +427,7 @@ export default async function RestaurantAccountDashboard({
                       <div className="text-[11px] text-gray-500 mt-0.5">
                         {new Date(o.createdAt).toLocaleString(undefined, {
                           month: "short", day: "numeric", year: "numeric",
-                          hour: "numeric", minute: "2-digit",
+                          hour: "numeric", minute: "2-digit", ...tzOpts,
                         })}
                         {" · "}{o.type}
                       </div>
