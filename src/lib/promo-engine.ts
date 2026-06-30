@@ -101,6 +101,10 @@ export type CartItem = {
    *  Lets free_item discount the CLAIMED freebie (not just the cheapest match)
    *  and excludes the freed unit from its own trigger. Luigi 2026-06-27. */
   isFreebie?: boolean;
+  /** Caller-supplied stable key for THIS cart line (e.g. its index). Echoed in
+   *  DiscountLine so the cart can attribute a saving to the exact line even when
+   *  the same dish is on two lines. Optional + display-only. Luigi 2026-06-30. */
+  lineKey?: string;
 };
 
 export type PromoInput = {
@@ -461,19 +465,21 @@ function calcFreeDelivery(_promo: PromoInput, _ctx: ApplyContext): number {
  *  with quantity 3 becomes 3 entries at the same per-unit price. Used
  *  by BOGO / Buy-N-Get-Free so we can discount the correct NUMBER of
  *  units when the customer has multiple qualifying pairs. */
-type DiscountUnit = { menuItemId: string; price: number };
+type DiscountUnit = { menuItemId: string; price: number; lineKey?: string };
 
 function expandToUnits(items: CartItem[]): DiscountUnit[] {
   const units: DiscountUnit[] = [];
   for (const it of items) {
-    for (let i = 0; i < it.quantity; i++) units.push({ menuItemId: it.menuItemId, price: it.price });
+    for (let i = 0; i < it.quantity; i++) units.push({ menuItemId: it.menuItemId, price: it.price, lineKey: it.lineKey });
   }
   return units;
 }
 
-/** One discounted unit — which cart item, how much came off. Lets the cart
- *  itemise a promo that applies more than once (Luigi 2026-06-07). */
-export type DiscountLine = { menuItemId: string; amount: number };
+/** One discounted unit — which cart item, how much came off. `lineKey` (when the
+ *  caller supplied one on the CartItem) pins it to the exact cart line so the
+ *  cart can show "You saved" on the right line even with duplicate dishes.
+ *  Lets the cart itemise a promo that applies more than once (Luigi 2026-06-07). */
+export type DiscountLine = { menuItemId: string; amount: number; lineKey?: string };
 
 /** Pick the N units to discount from a pool, given a strategy. The pool is
  *  expanded by quantity so a line item with qty=3 contributes 3 discountable
@@ -500,7 +506,7 @@ function discountNUnitsDetailed(
   for (let i = 0; i < take; i++) {
     const raw = units[i].price * (pct / 100);
     rawSum += raw;
-    lines.push({ menuItemId: units[i].menuItemId, amount: parseFloat(raw.toFixed(2)) });
+    lines.push({ menuItemId: units[i].menuItemId, amount: parseFloat(raw.toFixed(2)), lineKey: units[i].lineKey });
   }
   return { total: parseFloat(rawSum.toFixed(2)), lines };
 }
@@ -689,12 +695,16 @@ function promoBreakdown(promo: PromoInput, ctx: ApplyContext): DiscountLine[] {
       const pct = rules.discountPercent ?? 0;
       if (pct <= 0) return [];
       const lines: DiscountLine[] = [];
+      // Dedup per CART LINE (lineKey) not per dish, so the same dish on two
+      // separate lines each gets its own "You saved"; a single line matching
+      // two groups still dedups. Falls back to menuItemId when no lineKey.
       const seen = new Set<string>();
       for (const g of groups) {
         for (const it of itemsMatchingGroup(g, ctx.items)) {
-          if (seen.has(it.menuItemId)) continue;
-          seen.add(it.menuItemId);
-          lines.push({ menuItemId: it.menuItemId, amount: parseFloat(((pct / 100) * it.subtotal).toFixed(2)) });
+          const dedupKey = it.lineKey ?? it.menuItemId;
+          if (seen.has(dedupKey)) continue;
+          seen.add(dedupKey);
+          lines.push({ menuItemId: it.menuItemId, amount: parseFloat(((pct / 100) * it.subtotal).toFixed(2)), lineKey: it.lineKey });
         }
       }
       return lines;
@@ -708,7 +718,7 @@ function promoBreakdown(promo: PromoInput, ctx: ApplyContext): DiscountLine[] {
       const eligible = itemsMatchingGroup(freeGroup, ctx.items);
       if (!eligible.length) return [];
       const freebie = eligible.find((i) => i.isFreebie) ?? [...eligible].sort((a, b) => a.price - b.price)[0];
-      return [{ menuItemId: freebie.menuItemId, amount: parseFloat(freebie.price.toFixed(2)) }];
+      return [{ menuItemId: freebie.menuItemId, amount: parseFloat(freebie.price.toFixed(2)), lineKey: freebie.lineKey }];
     }
     case "free_dish_meal": {
       // One line for the freed dish (cheapest free-group item × discount%) so the
@@ -720,7 +730,7 @@ function promoBreakdown(promo: PromoInput, ctx: ApplyContext): DiscountLine[] {
       if (!freeItems.length) return [];
       const pct = rules.discountPercent ?? 100;
       const cheapest = [...freeItems].sort((a, b) => a.price - b.price)[0];
-      return [{ menuItemId: cheapest.menuItemId, amount: parseFloat((cheapest.price * (pct / 100)).toFixed(2)) }];
+      return [{ menuItemId: cheapest.menuItemId, amount: parseFloat((cheapest.price * (pct / 100)).toFixed(2)), lineKey: cheapest.lineKey }];
     }
     default:               return [];
   }

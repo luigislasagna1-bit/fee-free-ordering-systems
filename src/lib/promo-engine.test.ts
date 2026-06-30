@@ -450,6 +450,53 @@ describe("engine breakdown — free_item / free_dish_meal name the dish", () => 
   });
 });
 
+describe("engine breakdown — per-line lineKey attribution (d, 2026-06-30)", () => {
+  it("percentage_off: same dish on TWO lines → one breakdown line PER line (keyed by lineKey, not deduped)", () => {
+    const p = mkPromo({ promotionType: "percentage_off", ruleConfig: { discountPercent: 50, groups: [{ id: "g", categoryIds: ["cat1"], itemIds: [] }] } });
+    const { results } = resolvePromotions([p], mkCtx({
+      subtotal: 30,
+      items: [
+        { menuItemId: "pizza", categoryId: "cat1", price: 10, quantity: 1, subtotal: 10, lineKey: "0" },
+        { menuItemId: "pizza", categoryId: "cat1", price: 20, quantity: 1, subtotal: 20, lineKey: "2" }, // same dish, different line (e.g. extra mods)
+      ],
+    }));
+    const bd = results.find((r) => r.type === "percentage_off")?.breakdown ?? [];
+    expect(bd.length).toBe(2); // ← the bug: this used to be 1 (deduped by menuItemId)
+    expect(bd.map((b) => b.lineKey).sort()).toEqual(["0", "2"]);
+    expect(bd.find((b) => b.lineKey === "0")?.amount).toBe(5);  // 50% of 10
+    expect(bd.find((b) => b.lineKey === "2")?.amount).toBe(10); // 50% of 20
+  });
+
+  it("percentage_off: legacy carts WITHOUT a lineKey keep the old dedup-by-dish behaviour", () => {
+    const p = mkPromo({ promotionType: "percentage_off", ruleConfig: { discountPercent: 50, groups: [{ id: "g", categoryIds: ["cat1"], itemIds: [] }] } });
+    const { results } = resolvePromotions([p], mkCtx({
+      items: [{ menuItemId: "pizza", categoryId: "cat1", price: 20, quantity: 1, subtotal: 20 }],
+    }));
+    const bd = results.find((r) => r.type === "percentage_off")?.breakdown ?? [];
+    expect(bd.length).toBe(1);
+    expect(bd[0].lineKey).toBeUndefined();
+    expect(bd[0].amount).toBe(10);
+  });
+
+  it("bogo: each freed unit's breakdown carries its source line's lineKey", () => {
+    const p = mkPromo({ promotionType: "bogo", ruleConfig: { groups: [
+      { id: "p", role: "paid", categoryIds: ["cat1"], itemIds: [] },
+      { id: "f", role: "free", categoryIds: ["cat1"], itemIds: [] },
+    ] } });
+    const { results } = resolvePromotions([p], mkCtx({
+      subtotal: 30,
+      items: [
+        { menuItemId: "pizza", categoryId: "cat1", price: 20, quantity: 1, subtotal: 20, lineKey: "0" },
+        { menuItemId: "pizza", categoryId: "cat1", price: 10, quantity: 1, subtotal: 10, lineKey: "1" },
+      ],
+    }));
+    const bd = results.find((r) => r.type === "bogo")?.breakdown ?? [];
+    expect(bd.length).toBeGreaterThanOrEqual(1);
+    // every breakdown line is pinned to one of the two real cart lines
+    for (const b of bd) expect(["0", "1"]).toContain(b.lineKey);
+  });
+});
+
 describe("resolvePromotions — reward_credit (earn, not discount)", () => {
   it("is included with 0 discount + its type, so it snapshots into appliedPromos", () => {
     const rc = mkPromo({ promotionType: "reward_credit", stackingRule: "standard", ruleConfig: { creditAmount: 5 } });

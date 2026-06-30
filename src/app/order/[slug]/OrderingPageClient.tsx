@@ -1991,10 +1991,15 @@ export function OrderingPageClient({
         // price, and feeding the synthetic `bundle:<id>` menuItemId into
         // the public promo engine would either no-op (lookup fails) or
         // double-discount. Bundles are self-contained discounts.
-        items: cart.filter(ci => !ci.isBundle).map(ci => ({
+        items: cart.map((ci, i) => ({ ci, i })).filter((x) => !x.ci.isBundle).map(({ ci, i }) => ({
           menuItemId: ci.menuItem.id,
           categoryId: ci.menuItem.categoryId,
           variantId: ci.variant?.id ?? null,
+          // Stable per-cart-line key = the ORIGINAL cart index (assigned before the
+          // bundle filter shifts positions). Lets the engine attribute each
+          // discounted unit back to the exact line, so "You saved" no longer lands
+          // only on the first line when the same dish is on two lines. Luigi 2026-06-30.
+          lineKey: String(i),
           // Effective per-unit price = lineTotal / qty, which is ALWAYS
           // modifier-inclusive and consistent with subtotal. Using unitPrice/
           // variant/base here omitted paid modifiers for standard modal items

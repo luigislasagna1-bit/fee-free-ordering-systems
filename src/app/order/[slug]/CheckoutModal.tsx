@@ -113,7 +113,7 @@ interface Props {
     /** Per-item breakdown when the deal applied more than once (e.g. a BOGO
      *  that freed 3 pizzas). Each entry = one freed item + its discount, so the
      *  banner lists them individually instead of one lump sum. Luigi 2026-06-07. */
-    breakdown?: Array<{ menuItemId: string; name: string; amount: number }>;
+    breakdown?: Array<{ menuItemId: string; name: string; amount: number; lineKey?: string }>;
     /** reward_credit only: store credit earned on completion (not a discount). */
     creditAmount?: number;
   }>;
@@ -579,17 +579,25 @@ export function CheckoutModal({
     ? customerInfo.notes.length > 60 ? customerInfo.notes.slice(0, 60) + "…" : customerInfo.notes
     : tc("noNotes");
 
-  // Per-item discount badges (GloriaFood-style). Sum each item-targeted promo's
-  // breakdown by menuItemId, then attach the saving to the FIRST matching cart
-  // line (dedup so a repeated menuItemId isn't double-counted visually). Whole-
-  // cart promos have no breakdown → they stay in the summary below. Luigi 2026-06-27.
+  // Per-item discount badges (GloriaFood-style). Prefer PRECISE per-line
+  // attribution: the engine echoes each discounted unit's `lineKey` (the cart
+  // line's index), so the same dish on two lines each shows its own saving.
+  // Breakdown lines without a lineKey fall back to the legacy "sum by menuItemId,
+  // attach to the FIRST matching line" path. Whole-cart promos have no breakdown
+  // → they stay in the summary below. Luigi 2026-06-27 / per-line 2026-06-30.
+  const savedByLineKey = new Map<string, number>();
   const savedByItem = new Map<string, number>();
   for (const p of appliedPromos) {
     if (!p.breakdown) continue;
-    for (const b of p.breakdown) savedByItem.set(b.menuItemId, (savedByItem.get(b.menuItemId) ?? 0) + b.amount);
+    for (const b of p.breakdown) {
+      if (b.lineKey != null) savedByLineKey.set(b.lineKey, (savedByLineKey.get(b.lineKey) ?? 0) + b.amount);
+      else savedByItem.set(b.menuItemId, (savedByItem.get(b.menuItemId) ?? 0) + b.amount);
+    }
   }
   const shownSaved = new Set<string>();
-  const savedForLine = cart.map((ci) => {
+  const savedForLine = cart.map((ci, i) => {
+    const byKey = savedByLineKey.get(String(i));
+    if (byKey != null && byKey > 0) return byKey;
     const id = ci.menuItem?.id;
     if (!id) return 0;
     const amt = savedByItem.get(id);
