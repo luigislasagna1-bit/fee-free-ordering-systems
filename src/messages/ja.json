@@ -291,7 +291,9 @@
     "rewardTileSignup": "登録して{amount}を獲得",
     "rewardTileFirstOrder": "初回注文で{amount}を獲得",
     "rewardTileOrderOver": "{threshold}を超える注文で{amount}を獲得",
-    "rewardTileNth": "{n}回の注文ごとに{amount}を獲得"
+    "rewardTileNth": "{n}回の注文ごとに{amount}を獲得",
+    "rewardSignupBannerText": "登録して{label}を貯めよう",
+    "rewardSignupBannerCta": "登録"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",
@@ -4268,7 +4270,8 @@
         "delete": "削除",
         "cancel": "キャンセル",
         "save": "作成"
-      }
+      },
+      "memberLabelGroupHint": "このグループのみ既定値を上書きします。"
     },
     "rewards": {
       "title": "リワードドル",
@@ -4364,7 +4367,19 @@
         "promoteOff": "プロモーションセクションから削除されました。"
       },
       "signupBonusAlways": "登録ボーナス（常に有効）",
-      "signupBonusDatedHint": "終了日なしで、すべての新規アカウントに付与されます。期間限定の登録特典（開始日/終了日）には、上部の「獲得方法を追加 → お客様が登録したとき」をご利用ください。"
+      "signupBonusDatedHint": "終了日なしで、すべての新規アカウントに付与されます。期間限定の登録特典（開始日/終了日）には、上部の「獲得方法を追加 → お客様が登録したとき」をご利用ください。",
+      "signupBannerTitle": "ゲストに{label}への登録を促す",
+      "signupBannerHelp": "ゲストはアカウントがある場合のみ{label}を貯めて使えます。注文ページに登録バナーを表示します。",
+      "signupBannerDesc": "ログアウト中のお客様には、アカウント作成と{label}獲得を促すバナーが表示されます。",
+      "excludeTitle": "{label}が貯まらない商品",
+      "excludeHelp": "対象外の商品やカテゴリ（ギフトカードなど）では{label}は貯まりません。どの注文でも{label}は引き続き利用できます。",
+      "excludeDesc": "{label}を貯めるべきでないカテゴリや商品を選びます。",
+      "excludeOn": "貯まる",
+      "excludeOff": "対象外",
+      "excludeViaCategory": "カテゴリで対象外",
+      "excludeFailed": "保存できませんでした — もう一度お試しください。",
+      "excludeLoading": "メニューを読み込み中…",
+      "excludeNone": "カテゴリはまだありません。"
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "残高に返金されました",
           "reverse": "取り消し（注文が返金されました）"
         },
-        "orderRef": "注文 #{number}"
+        "orderRef": "注文 #{number}",
+        "someExcluded": "一部の商品（ギフトカードなど）は{label}が貯まりません。"
       }
     },
     "bundle": {

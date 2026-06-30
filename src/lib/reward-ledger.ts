@@ -294,6 +294,42 @@ export async function getOrderRewardSummary(orderId: string): Promise<{ used: nu
   }
 }
 
+/** Earn basis for an order = subtotal of NON-excluded items − discounts (clamped
+ *  ≥ 0). Items flagged `rewardEarnExcluded` (or in a category flagged so — e.g.
+ *  gift cards) don't earn store credit. Shared by the base %-back, the rule
+ *  bonuses, and the receipt projection so all three agree. Never throws. Luigi 2026-06-30. */
+export async function earnBasisForOrder(orderId: string): Promise<number> {
+  try {
+    const order = await prisma.order.findUnique({
+      where: { id: orderId },
+      select: {
+        subtotal: true, couponDiscount: true, promoDiscount: true,
+        items: { select: { menuItemId: true, subtotal: true } },
+      },
+    });
+    if (!order) return 0;
+    let excluded = 0;
+    const ids = [...new Set(order.items.map((i) => i.menuItemId).filter((x): x is string => !!x))];
+    if (ids.length) {
+      const items = await prisma.menuItem.findMany({
+        where: { id: { in: ids } },
+        select: { id: true, rewardEarnExcluded: true, category: { select: { rewardEarnExcluded: true } } },
+      });
+      const excludedIds = new Set(items.filter((m) => m.rewardEarnExcluded || m.category?.rewardEarnExcluded).map((m) => m.id));
+      if (excludedIds.size) {
+        for (const line of order.items) {
+          if (line.menuItemId && excludedIds.has(line.menuItemId)) excluded += line.subtotal ?? 0;
+        }
+      }
+    }
+    const gross = Math.max(0, (order.subtotal ?? 0) - excluded);
+    return Math.max(0, round2(gross - (order.couponDiscount ?? 0) - (order.promoDiscount ?? 0)));
+  } catch (e) {
+    console.error("[reward earnBasisForOrder]", e);
+    return 0;
+  }
+}
+
 /** Order completed → award auto-earn per the restaurant's settings. Idempotent
  *  (one earn row per order). No-ops when earning is off / basis ≤0 / no customer. */
 export async function awardForOrder(opts: { orderId: string }): Promise<void> {
@@ -308,7 +344,7 @@ export async function awardForOrder(opts: { orderId: string }): Promise<void> {
     if (!order?.customerId) return;
     const r = order.restaurant;
     if (!r?.rewardsEnabled || !r.rewardEarnEnabled) return;
-    const basis = Math.max(0, round2((order.subtotal ?? 0) - (order.couponDiscount ?? 0) - (order.promoDiscount ?? 0)));
+    const basis = await earnBasisForOrder(opts.orderId); // excludes gift-card-style items
     if (basis <= 0) return;
     const earned = round2(r.rewardEarnMode === "per_dollar" ? basis * (r.rewardEarnPerDollar ?? 0) : basis * ((r.rewardEarnPercent ?? 0) / 100));
     if (earned <= 0) return;

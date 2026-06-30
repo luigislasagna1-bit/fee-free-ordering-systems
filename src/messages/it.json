@@ -291,7 +291,9 @@
     "rewardTileSignup": "Registrati e ottieni {amount}",
     "rewardTileFirstOrder": "Guadagna {amount} sul tuo primo ordine",
     "rewardTileOrderOver": "Guadagna {amount} sugli ordini superiori a {threshold}",
-    "rewardTileNth": "Guadagna {amount} ogni {n} ordini"
+    "rewardTileNth": "Guadagna {amount} ogni {n} ordini",
+    "rewardSignupBannerText": "Iscriviti per guadagnare {label}",
+    "rewardSignupBannerCta": "Iscriviti"
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",
@@ -4268,7 +4270,8 @@
         "delete": "Elimina",
         "cancel": "Annulla",
         "save": "Crea"
-      }
+      },
+      "memberLabelGroupHint": "Sostituisce l'impostazione predefinita solo per questo gruppo."
     },
     "rewards": {
       "title": "Credito fedeltà",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Rimosso dalla tua sezione Promozioni."
       },
       "signupBonusAlways": "Bonus di registrazione (sempre attivo)",
-      "signupBonusDatedHint": "Assegnato a ogni nuovo account, senza data di fine. Per un’offerta di registrazione a tempo limitato (date di inizio/fine), usa «Aggiungi un modo per guadagnare → Quando un cliente si registra» qui sopra."
+      "signupBonusDatedHint": "Assegnato a ogni nuovo account, senza data di fine. Per un’offerta di registrazione a tempo limitato (date di inizio/fine), usa «Aggiungi un modo per guadagnare → Quando un cliente si registra» qui sopra.",
+      "signupBannerTitle": "Invita gli ospiti a iscriversi per i {label}",
+      "signupBannerHelp": "Gli ospiti possono guadagnare e usare i {label} solo con un account. Mostra un banner di iscrizione sulla pagina degli ordini.",
+      "signupBannerDesc": "I clienti non connessi vedono un banner che li invita a creare un account e iniziare a guadagnare {label}.",
+      "excludeTitle": "Articoli che non generano {label}",
+      "excludeHelp": "I clienti non guadagneranno {label} su articoli o categorie esclusi (es. buoni regalo). Possono comunque USARE i {label} su qualsiasi ordine.",
+      "excludeDesc": "Scegli categorie o articoli che non devono generare {label}.",
+      "excludeOn": "Genera",
+      "excludeOff": "Nessun premio",
+      "excludeViaCategory": "Escluso tramite categoria",
+      "excludeFailed": "Salvataggio non riuscito — riprova.",
+      "excludeLoading": "Caricamento del menu…",
+      "excludeNone": "Nessuna categoria ancora."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Rimborsato sul tuo saldo",
           "reverse": "Annullato (ordine rimborsato)"
         },
-        "orderRef": "Ordine n. {number}"
+        "orderRef": "Ordine n. {number}",
+        "someExcluded": "Alcuni articoli (come i buoni regalo) non generano {label}."
       }
     },
     "bundle": {

@@ -42,8 +42,11 @@ async function loadSpecialContext(promotionId: string, restaurantId: string) {
   return { promo, restaurant, disc: discountFromPromo(promo), orderUrl: restaurantOrderUrl(restaurant, "") };
 }
 
-async function sendToRecipients(ctx: NonNullable<Awaited<ReturnType<typeof loadSpecialContext>>>, recipients: SpecialRecipient[]): Promise<number> {
+async function sendToRecipients(ctx: NonNullable<Awaited<ReturnType<typeof loadSpecialContext>>>, recipients: SpecialRecipient[], memberLabelOverride?: string | null): Promise<number> {
   const { promo, restaurant, disc, orderUrl } = ctx;
+  // A GROUP can override "what you call your members" so its email reads e.g.
+  // "As a Bruce Trail Staff…" instead of the restaurant default. Luigi 2026-06-30.
+  const memberLabel = memberLabelOverride?.trim() || restaurant.vipMemberLabel;
   // De-dup by email so a person who is both an account and a pasted email isn't double-sent.
   const seen = new Set<string>();
   const list = recipients.filter((r) => r.email && !seen.has(r.email.toLowerCase()) && seen.add(r.email.toLowerCase()));
@@ -68,7 +71,7 @@ async function sendToRecipients(ctx: NonNullable<Awaited<ReturnType<typeof loadS
         restaurantUrl: orderUrl,
         restaurantEmail: restaurant.email,
         restaurantPhone: restaurant.phone,
-        memberLabel: restaurant.vipMemberLabel,
+        memberLabel,
         locale: restaurant.defaultLanguage,
       }),
     ));
@@ -91,6 +94,7 @@ export async function countEmailableMembers(groupId: string): Promise<number> {
 export async function notifyGroupOfSpecial(opts: { groupId: string; promotionId: string; restaurantId: string }): Promise<number> {
   const ctx = await loadSpecialContext(opts.promotionId, opts.restaurantId);
   if (!ctx) return 0;
+  const group = await prisma.customerGroup.findUnique({ where: { id: opts.groupId }, select: { memberLabel: true } });
   const members = await prisma.customerGroupMember.findMany({
     where: { groupId: opts.groupId },
     take: 5000,
@@ -103,7 +107,7 @@ export async function notifyGroupOfSpecial(opts: { groupId: string; promotionId:
       hasAccount: !!m.customer?.passwordHash,
     }))
     .filter((r): r is SpecialRecipient => !!r.email);
-  return sendToRecipients(ctx, recipients);
+  return sendToRecipients(ctx, recipients, group?.memberLabel);
 }
 
 /** Email a specific set of individuals about a special. */

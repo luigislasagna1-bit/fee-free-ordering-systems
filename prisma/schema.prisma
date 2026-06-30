@@ -341,6 +341,9 @@ model Restaurant {
   rewardMaxRedeemPercent Float     @default(100) // cap % of an order coverable by credit
   rewardSignupBonus      Float     @default(0) // credit granted on account creation
   rewardExpiryDays       Int       @default(0) // 0 = never (stored; not enforced v1)
+  // Show a "sign up to start earning {rewardName}" banner to LOGGED-OUT customers
+  // on the order page (guests can't earn/spend). Owner opt-in. Luigi 2026-06-30.
+  rewardSignupBannerEnabled Boolean @default(false)
   socialLinks            String? // JSON: { instagram, facebook, tiktok, x, youtube, linkedin, pinterest, snapchat, threads, whatsapp, yelp, googleBusiness, tripadvisor, website }
   marketingTier          String    @default("free") // "free" | "social_basic" | "social_pro" | "social_managed" — gates AI-post / scheduling features
   /// Marketing & tracking integrations the OWNER configures for their own
@@ -829,6 +832,9 @@ model MenuCategory {
   name             String
   description      String?
   imageUrl         String?
+  /// Exclude every item in this category from Reward Dollars EARNING (e.g. a
+  /// "Gift Cards" category). Per-item rewardEarnExcluded can override. Luigi 2026-06-30.
+  rewardEarnExcluded Boolean @default(false)
   isActive         Boolean   @default(true)
   /// LEGACY visibility toggle. Superseded by the visibility* model below
   /// (Luigi 2026-06-12, GloriaFood-style rebuild). Migrated to
@@ -957,6 +963,10 @@ model MenuItem {
   sortOrder        Int       @default(0)
   calories         Int?
   allergens        String?
+  /// Exclude this item from Reward Dollars EARNING (e.g. gift cards — don't earn
+  /// store credit for buying store credit). Item-level override of its category's
+  /// flag. Spending is unaffected. Luigi 2026-06-30.
+  rewardEarnExcluded Boolean @default(false)
   pizzaConfig      String? // JSON: PizzaConfig — marks item as a pizza builder item
   /// JSON: ComboConfig — marks this item as a COMBO (e.g. "2-Pizza Combo",
   /// "Pizza + Wings"). Defines ordered slots, each with an eligible item/
@@ -1803,6 +1813,10 @@ model CustomerGroup {
   restaurantId String
   name         String
   description  String?
+  /// Per-group "what do you call your members" override (e.g. "Bruce Trail Staff"
+  /// vs "VIP Pizza Club"). Null → the restaurant-level Restaurant.vipMemberLabel
+  /// default. Used in the VIP email/special copy for this group. Luigi 2026-06-30.
+  memberLabel  String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

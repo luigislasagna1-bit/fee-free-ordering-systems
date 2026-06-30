@@ -291,7 +291,9 @@
     "rewardTileSignup": "Registrer deg og få {amount}",
     "rewardTileFirstOrder": "Tjen {amount} på din første bestilling",
     "rewardTileOrderOver": "Tjen {amount} på bestillinger over {threshold}",
-    "rewardTileNth": "Tjen {amount} for hver {n} bestilling"
+    "rewardTileNth": "Tjen {amount} for hver {n} bestilling",
+    "rewardSignupBannerText": "Registrer deg og tjen {label}",
+    "rewardSignupBannerCta": "Registrer deg"
   },
   "pizza": {
     "chooseSize": "Velg størrelse",
@@ -4268,7 +4270,8 @@
         "delete": "Slett",
         "cancel": "Avbryt",
         "save": "Opprett"
-      }
+      },
+      "memberLabelGroupHint": "Overstyrer standarden bare for denne gruppen."
     },
     "rewards": {
       "title": "Bonuskroner",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Fjernet fra Tilbud-delen din."
       },
       "signupBonusAlways": "Registreringsbonus (alltid på)",
-      "signupBonusDatedHint": "Gis til hver nye konto, uten sluttdato. For et tidsbegrenset registreringstilbud (start-/sluttdato) bruker du «Legg til en måte å tjene på → Når en kunde registrerer seg» ovenfor."
+      "signupBonusDatedHint": "Gis til hver nye konto, uten sluttdato. For et tidsbegrenset registreringstilbud (start-/sluttdato) bruker du «Legg til en måte å tjene på → Når en kunde registrerer seg» ovenfor.",
+      "signupBannerTitle": "Inviter gjester til å registrere seg for {label}",
+      "signupBannerHelp": "Gjester kan bare tjene og bruke {label} med en konto. Dette viser et registreringsbanner på bestillingssiden din.",
+      "signupBannerDesc": "Utloggede kunder ser et banner som inviterer dem til å opprette en konto og tjene {label}.",
+      "excludeTitle": "Varer som ikke tjener {label}",
+      "excludeHelp": "Kunder tjener ikke {label} på ekskluderte varer eller kategorier (f.eks. gavekort). De kan fortsatt BRUKE {label} på enhver bestilling.",
+      "excludeDesc": "Velg kategorier eller varer som ikke skal tjene {label}.",
+      "excludeOn": "Tjener",
+      "excludeOff": "Ingen belønning",
+      "excludeViaCategory": "Ekskludert via kategori",
+      "excludeFailed": "Kunne ikke lagre — prøv igjen.",
+      "excludeLoading": "Laster menyen…",
+      "excludeNone": "Ingen kategorier ennå."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Refundert til saldoen din",
           "reverse": "Reversert (ordre refundert)"
         },
-        "orderRef": "Ordre #{number}"
+        "orderRef": "Ordre #{number}",
+        "someExcluded": "Noen varer (som gavekort) tjener ikke {label}."
       }
     },
     "bundle": {

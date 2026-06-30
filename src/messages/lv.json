@@ -291,7 +291,9 @@
     "rewardTileSignup": "Reģistrējieties un saņemiet {amount}",
     "rewardTileFirstOrder": "Nopelniet {amount} ar savu pirmo pasūtījumu",
     "rewardTileOrderOver": "Nopelniet {amount} par pasūtījumiem virs {threshold}",
-    "rewardTileNth": "Nopelniet {amount} ik pēc {n} pasūtījumiem"
+    "rewardTileNth": "Nopelniet {amount} ik pēc {n} pasūtījumiem",
+    "rewardSignupBannerText": "Reģistrējieties un pelniet {label}",
+    "rewardSignupBannerCta": "Reģistrēties"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -4268,7 +4270,8 @@
         "delete": "Dzēst",
         "cancel": "Atcelt",
         "save": "Izveidot"
-      }
+      },
+      "memberLabelGroupHint": "Aizstāj noklusējumu tikai šai grupai."
     },
     "rewards": {
       "title": "Bonusa dolāri",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Noņemts no jūsu sadaļas “Akcijas”."
       },
       "signupBonusAlways": "Reģistrācijas bonuss (vienmēr aktīvs)",
-      "signupBonusDatedHint": "Tiek piešķirts katram jaunam kontam, bez beigu datuma. Ierobežota laika reģistrācijas piedāvājumam (sākuma/beigu datums) izmantojiet augšā „Pievienot nopelnīšanas veidu → Kad klients reģistrējas“."
+      "signupBonusDatedHint": "Tiek piešķirts katram jaunam kontam, bez beigu datuma. Ierobežota laika reģistrācijas piedāvājumam (sākuma/beigu datums) izmantojiet augšā „Pievienot nopelnīšanas veidu → Kad klients reģistrējas“.",
+      "signupBannerTitle": "Aiciniet viesus reģistrēties {label}",
+      "signupBannerHelp": "Viesi var nopelnīt un tērēt {label} tikai ar kontu. Tas rāda reģistrācijas reklāmkarogu jūsu pasūtījumu lapā.",
+      "signupBannerDesc": "Izrakstījušies klienti redz reklāmkarogu, kas aicina izveidot kontu un pelnīt {label}.",
+      "excludeTitle": "Preces, kas nenopelna {label}",
+      "excludeHelp": "Klienti nenopelnīs {label} par izslēgtām precēm vai kategorijām (piem., dāvanu kartēm). Viņi joprojām var TĒRĒT {label} jebkurā pasūtījumā.",
+      "excludeDesc": "Izvēlieties kategorijas vai preces, kurām nevajadzētu nopelnīt {label}.",
+      "excludeOn": "Nopelna",
+      "excludeOff": "Bez atlīdzības",
+      "excludeViaCategory": "Izslēgts caur kategoriju",
+      "excludeFailed": "Neizdevās saglabāt — mēģiniet vēlreiz.",
+      "excludeLoading": "Ielādē ēdienkarti…",
+      "excludeNone": "Vēl nav kategoriju."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Atgriezts jūsu atlikumā",
           "reverse": "Atcelts (pasūtījums atmaksāts)"
         },
-        "orderRef": "Pasūtījums #{number}"
+        "orderRef": "Pasūtījums #{number}",
+        "someExcluded": "Dažas preces (piemēram, dāvanu kartes) nenopelna {label}."
       }
     },
     "bundle": {

@@ -291,7 +291,9 @@
     "rewardTileSignup": "Zaregistrujte se a získejte {amount}",
     "rewardTileFirstOrder": "Získejte {amount} za první objednávku",
     "rewardTileOrderOver": "Získejte {amount} při objednávkách nad {threshold}",
-    "rewardTileNth": "Získejte {amount} za každých {n} objednávek"
+    "rewardTileNth": "Získejte {amount} za každých {n} objednávek",
+    "rewardSignupBannerText": "Zaregistrujte se a získejte {label}",
+    "rewardSignupBannerCta": "Registrovat"
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",
@@ -4268,7 +4270,8 @@
         "delete": "Smazat",
         "cancel": "Zrušit",
         "save": "Vytvořit"
-      }
+      },
+      "memberLabelGroupHint": "Přepíše výchozí hodnotu jen pro tuto skupinu."
     },
     "rewards": {
       "title": "Věrnostní kredit",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Odebráno z vaší sekce Akce."
       },
       "signupBonusAlways": "Bonus za registraci (vždy aktivní)",
-      "signupBonusDatedHint": "Uděluje se každému novému účtu, bez data ukončení. Pro časově omezenou registrační nabídku (data zahájení/ukončení) použijte výše „Přidat způsob získání → Když se zákazník zaregistruje“."
+      "signupBonusDatedHint": "Uděluje se každému novému účtu, bez data ukončení. Pro časově omezenou registrační nabídku (data zahájení/ukončení) použijte výše „Přidat způsob získání → Když se zákazník zaregistruje“.",
+      "signupBannerTitle": "Pozvěte hosty k registraci pro {label}",
+      "signupBannerHelp": "Hosté mohou {label} získávat a utrácet jen s účtem. Toto zobrazí registrační banner na vaší stránce objednávek.",
+      "signupBannerDesc": "Odhlášení zákazníci uvidí banner, který je vyzývá k vytvoření účtu a získávání {label}.",
+      "excludeTitle": "Položky, které nezískávají {label}",
+      "excludeHelp": "Zákazníci nezískají {label} za vyloučené položky nebo kategorie (např. dárkové karty). {label} mohou stále UTRÁCET u jakékoli objednávky.",
+      "excludeDesc": "Vyberte kategorie nebo položky, které nemají získávat {label}.",
+      "excludeOn": "Získává",
+      "excludeOff": "Bez odměn",
+      "excludeViaCategory": "Vyloučeno přes kategorii",
+      "excludeFailed": "Uložení se nezdařilo — zkuste to znovu.",
+      "excludeLoading": "Načítání menu…",
+      "excludeNone": "Zatím žádné kategorie."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Vráceno na váš zůstatek",
           "reverse": "Stornováno (objednávka vrácena)"
         },
-        "orderRef": "Objednávka #{number}"
+        "orderRef": "Objednávka #{number}",
+        "someExcluded": "Některé položky (např. dárkové karty) nezískávají {label}."
       }
     },
     "bundle": {

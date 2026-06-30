@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { HelpTip } from "@/components/HelpTip";
 import { EarnRulesEditor } from "./EarnRulesEditor";
+import { EarnExclusions } from "./EarnExclusions";
 
 interface Initial {
   rewardsEnabled: boolean;
@@ -18,6 +19,7 @@ interface Initial {
   rewardMinRedeemBalance: number;
   rewardMaxRedeemPercent: number;
   rewardSignupBonus: number;
+  rewardSignupBannerEnabled: boolean;
 }
 
 /**
@@ -158,6 +160,10 @@ export function RewardsClient({ currency, initial }: { currency: string; initial
           {/* Ways to earn — configurable rules/campaigns on top of the base rate */}
           <EarnRulesEditor currency={currency} rewardLabelPlural={pluralPreview} />
 
+          {/* Exclude categories/items from EARNING (e.g. gift cards). Only relevant
+              when auto-earn is on. Luigi 2026-06-30. */}
+          {s.rewardEarnEnabled && <EarnExclusions label={pluralPreview} />}
+
           {/* Spending — ALWAYS available when the program is on (it's a payment
               option, per the opt-in promise). No on/off toggle; just the caps. */}
           <div className="rounded-2xl border border-gray-200 bg-white p-5 space-y-4">
@@ -188,6 +194,18 @@ export function RewardsClient({ currency, initial }: { currency: string; initial
               {moneyInput(s.rewardSignupBonus, (n) => set("rewardSignupBonus", n))}
             </div>
             <p className="mt-1.5 text-xs text-gray-500">{t("signupBonusDatedHint")}</p>
+          </div>
+
+          {/* "Sign up to earn" banner — prompts LOGGED-OUT customers on the order
+              page to create an account (guests can't earn/spend). Owner opt-in. */}
+          <div className="rounded-2xl border border-gray-200 bg-white p-5">
+            <Toggle
+              on={s.rewardSignupBannerEnabled}
+              onClick={() => set("rewardSignupBannerEnabled", !s.rewardSignupBannerEnabled)}
+              label={t("signupBannerTitle", { label: pluralPreview })}
+              help={t("signupBannerHelp", { label: pluralPreview })}
+            />
+            <p className="mt-1.5 ml-11 text-sm text-gray-500">{t("signupBannerDesc", { label: pluralPreview })}</p>
           </div>
         </>
       )}

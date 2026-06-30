@@ -291,7 +291,9 @@
     "rewardTileSignup": "Registe-se e receba {amount}",
     "rewardTileFirstOrder": "Ganhe {amount} na sua primeira encomenda",
     "rewardTileOrderOver": "Ganhe {amount} em encomendas acima de {threshold}",
-    "rewardTileNth": "Ganhe {amount} a cada {n} encomendas"
+    "rewardTileNth": "Ganhe {amount} a cada {n} encomendas",
+    "rewardSignupBannerText": "Inscreva-se para ganhar {label}",
+    "rewardSignupBannerCta": "Inscrever-se"
   },
   "pizza": {
     "chooseSize": "Escolher tamanho",
@@ -4268,7 +4270,8 @@
         "delete": "Eliminar",
         "cancel": "Cancelar",
         "save": "Criar"
-      }
+      },
+      "memberLabelGroupHint": "Substitui o padrão apenas para este grupo."
     },
     "rewards": {
       "title": "Saldo de recompensa",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Removido da sua secção de Promoções."
       },
       "signupBonusAlways": "Bónus de registo (sempre ativo)",
-      "signupBonusDatedHint": "Atribuído a cada nova conta, sem data de fim. Para uma oferta de registo por tempo limitado (datas de início/fim), utilize «Adicionar uma forma de ganhar → Quando um cliente se regista» acima."
+      "signupBonusDatedHint": "Atribuído a cada nova conta, sem data de fim. Para uma oferta de registo por tempo limitado (datas de início/fim), utilize «Adicionar uma forma de ganhar → Quando um cliente se regista» acima.",
+      "signupBannerTitle": "Convidar visitantes a inscrever-se para {label}",
+      "signupBannerHelp": "Os visitantes só podem ganhar e usar {label} com uma conta. Isto mostra um banner de inscrição na sua página de pedidos.",
+      "signupBannerDesc": "Os clientes não autenticados veem um banner que os convida a criar uma conta e começar a ganhar {label}.",
+      "excludeTitle": "Artigos que não ganham {label}",
+      "excludeHelp": "Os clientes não ganharão {label} em artigos ou categorias excluídos (ex. cartões-presente). Podem continuar a GASTAR {label} em qualquer pedido.",
+      "excludeDesc": "Escolha categorias ou artigos que não devem ganhar {label}.",
+      "excludeOn": "Ganha",
+      "excludeOff": "Sem recompensas",
+      "excludeViaCategory": "Excluído pela categoria",
+      "excludeFailed": "Não foi possível guardar — tente novamente.",
+      "excludeLoading": "A carregar o seu menu…",
+      "excludeNone": "Ainda sem categorias."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Reembolsado para o seu saldo",
           "reverse": "Revertido (pedido reembolsado)"
         },
-        "orderRef": "Pedido n.º {number}"
+        "orderRef": "Pedido n.º {number}",
+        "someExcluded": "Alguns artigos (como cartões-presente) não ganham {label}."
       }
     },
     "bundle": {

@@ -291,7 +291,9 @@
     "rewardTileSignup": "Registra't i aconsegueix {amount}",
     "rewardTileFirstOrder": "Guanya {amount} amb la teva primera comanda",
     "rewardTileOrderOver": "Guanya {amount} en comandes de més de {threshold}",
-    "rewardTileNth": "Guanya {amount} cada {n} comandes"
+    "rewardTileNth": "Guanya {amount} cada {n} comandes",
+    "rewardSignupBannerText": "Registra't per guanyar {label}",
+    "rewardSignupBannerCta": "Registra't"
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -4268,7 +4270,8 @@
         "delete": "Suprimeix",
         "cancel": "Cancel·la",
         "save": "Crea"
-      }
+      },
+      "memberLabelGroupHint": "Substitueix el valor predeterminat només per a aquest grup."
     },
     "rewards": {
       "title": "Dòlars de Recompensa",
@@ -4364,7 +4367,19 @@
         "promoteOff": "S'ha tret de la secció de promocions."
       },
       "signupBonusAlways": "Bonificació de registre (sempre activa)",
-      "signupBonusDatedHint": "S’atorga a cada compte nou, sense data de finalització. Per a una oferta de registre per temps limitat (dates d’inici/fi), utilitza «Afegeix una manera de guanyar → Quan un client es registra» a dalt."
+      "signupBonusDatedHint": "S’atorga a cada compte nou, sense data de finalització. Per a una oferta de registre per temps limitat (dates d’inici/fi), utilitza «Afegeix una manera de guanyar → Quan un client es registra» a dalt.",
+      "signupBannerTitle": "Convida els visitants a registrar-se per a {label}",
+      "signupBannerHelp": "Els visitants només poden guanyar i gastar {label} amb un compte. Això mostra un bàner de registre a la pàgina de comandes.",
+      "signupBannerDesc": "Els clients sense sessió veuen un bàner que els convida a crear un compte i començar a guanyar {label}.",
+      "excludeTitle": "Articles que no guanyen {label}",
+      "excludeHelp": "Els clients no guanyaran {label} en articles o categories exclosos (p. ex. targetes regal). Encara poden GASTAR {label} en qualsevol comanda.",
+      "excludeDesc": "Tria les categories o articles que no han de guanyar {label}.",
+      "excludeOn": "Guanya",
+      "excludeOff": "Sense recompenses",
+      "excludeViaCategory": "Exclòs per categoria",
+      "excludeFailed": "No s'ha pogut desar — torna-ho a provar.",
+      "excludeLoading": "Carregant el teu menú…",
+      "excludeNone": "Encara no hi ha categories."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Reemborsat al teu saldo",
           "reverse": "Revertit (comanda reemborsada)"
         },
-        "orderRef": "Comanda #{number}"
+        "orderRef": "Comanda #{number}",
+        "someExcluded": "Alguns articles (com les targetes regal) no guanyen {label}."
       }
     },
     "bundle": {

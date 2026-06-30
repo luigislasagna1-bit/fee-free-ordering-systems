@@ -12,7 +12,7 @@
  * (Restaurant.rewardSignupBonus, reason "signup_bonus").
  */
 import prisma from "@/lib/db";
-import { grant } from "@/lib/reward-ledger";
+import { grant, earnBasisForOrder } from "@/lib/reward-ledger";
 import { round2 } from "@/lib/reward-math";
 import { signupGrantsFor, orderEarnGrantsFor, type EarnRule } from "@/lib/reward-rules";
 
@@ -82,7 +82,7 @@ export async function awardEarnRulesForOrder(opts: { orderId: string }): Promise
       },
     });
 
-    const basis = Math.max(0, Math.round(((order.subtotal ?? 0) - (order.couponDiscount ?? 0) - (order.promoDiscount ?? 0)) * 100) / 100);
+    const basis = await earnBasisForOrder(opts.orderId); // excludes gift-card-style items
     const grants = orderEarnGrantsFor(rules, {
       at: order.completedAt ?? new Date(),
       basis,
@@ -126,7 +126,7 @@ export async function projectOrderEarn(orderId: string): Promise<number> {
       },
     });
     if (!order?.customerId || !order.restaurant?.rewardsEnabled) return 0;
-    const basis = Math.max(0, round2((order.subtotal ?? 0) - (order.couponDiscount ?? 0) - (order.promoDiscount ?? 0)));
+    const basis = await earnBasisForOrder(orderId); // excludes gift-card-style items
     if (basis <= 0) return 0;
 
     const r = order.restaurant;

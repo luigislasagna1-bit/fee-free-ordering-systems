@@ -35,6 +35,7 @@ export async function PATCH(req: Request) {
   if ("rewardMaxRedeemPercent" in body) data.rewardMaxRedeemPercent = num(body.rewardMaxRedeemPercent, 0, 100, 100);
   if ("rewardSignupBonus" in body) data.rewardSignupBonus = num(body.rewardSignupBonus, 0, 1_000_000, 0);
   if ("rewardExpiryDays" in body) data.rewardExpiryDays = Math.max(0, Math.min(3650, Math.round(Number(body.rewardExpiryDays) || 0)));
+  if ("rewardSignupBannerEnabled" in body) data.rewardSignupBannerEnabled = !!body.rewardSignupBannerEnabled;
   if ("rewardLabelSingular" in body)
     data.rewardLabelSingular = typeof body.rewardLabelSingular === "string" && body.rewardLabelSingular.trim()
       ? body.rewardLabelSingular.trim().slice(0, 40) : null;

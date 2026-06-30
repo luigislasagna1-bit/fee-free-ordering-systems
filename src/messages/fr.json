@@ -291,7 +291,9 @@
     "rewardTileSignup": "Inscrivez-vous et obtenez {amount}",
     "rewardTileFirstOrder": "Gagnez {amount} lors de votre première commande",
     "rewardTileOrderOver": "Gagnez {amount} sur les commandes de plus de {threshold}",
-    "rewardTileNth": "Gagnez {amount} toutes les {n} commandes"
+    "rewardTileNth": "Gagnez {amount} toutes les {n} commandes",
+    "rewardSignupBannerText": "Inscrivez-vous pour gagner des {label}",
+    "rewardSignupBannerCta": "S'inscrire"
   },
   "pizza": {
     "chooseSize": "Choisir la taille",
@@ -4268,7 +4270,8 @@
         "delete": "Supprimer",
         "cancel": "Annuler",
         "save": "Créer"
-      }
+      },
+      "memberLabelGroupHint": "Remplace la valeur par défaut pour ce groupe uniquement."
     },
     "rewards": {
       "title": "Crédits fidélité",
@@ -4364,7 +4367,19 @@
         "promoteOff": "Retiré de votre section Promos."
       },
       "signupBonusAlways": "Bonus d’inscription (toujours actif)",
-      "signupBonusDatedHint": "Attribué à chaque nouveau compte, sans date de fin. Pour une offre d’inscription à durée limitée (dates de début/fin), utilisez « Ajouter un moyen de gagner → Lorsqu’un client s’inscrit » ci-dessus."
+      "signupBonusDatedHint": "Attribué à chaque nouveau compte, sans date de fin. Pour une offre d’inscription à durée limitée (dates de début/fin), utilisez « Ajouter un moyen de gagner → Lorsqu’un client s’inscrit » ci-dessus.",
+      "signupBannerTitle": "Inviter les visiteurs à s'inscrire pour les {label}",
+      "signupBannerHelp": "Les visiteurs ne peuvent gagner et dépenser des {label} qu'avec un compte. Ceci affiche une bannière d'inscription sur votre page de commande.",
+      "signupBannerDesc": "Les clients déconnectés voient une bannière les invitant à créer un compte et à gagner des {label}.",
+      "excludeTitle": "Articles qui ne rapportent pas de {label}",
+      "excludeHelp": "Les clients ne gagneront pas de {label} sur les articles ou catégories exclus (ex. cartes-cadeaux). Ils peuvent toujours DÉPENSER des {label} sur n'importe quelle commande.",
+      "excludeDesc": "Choisissez les catégories ou articles qui ne doivent pas rapporter de {label}.",
+      "excludeOn": "Rapporte",
+      "excludeOff": "Aucune récompense",
+      "excludeViaCategory": "Exclu via la catégorie",
+      "excludeFailed": "Échec de l'enregistrement — réessayez.",
+      "excludeLoading": "Chargement de votre menu…",
+      "excludeNone": "Aucune catégorie pour l'instant."
     }
   },
   "impersonation": {
@@ -5404,7 +5419,8 @@
           "refund": "Remboursé sur votre solde",
           "reverse": "Annulé (commande remboursée)"
         },
-        "orderRef": "Commande n° {number}"
+        "orderRef": "Commande n° {number}",
+        "someExcluded": "Certains articles (comme les cartes-cadeaux) ne rapportent pas de {label}."
       }
     },
     "bundle": {
