@@ -871,6 +871,7 @@ model MenuCategory {
 
   @@index([restaurantId, isActive])
   @@index([menuId])
+  @@index([restaurantId, rewardEarnExcluded])
 }
 
 /// Background photo-import queue (Luigi/Fabrizio 2026-06-16). A GloriaFood
@@ -989,6 +990,7 @@ model MenuItem {
 
   @@index([restaurantId, isAvailable])
   @@index([categoryId, sortOrder])
+  @@index([restaurantId, rewardEarnExcluded])
 }
 
 // Represents a size/variation (e.g., Small / Medium / Large)

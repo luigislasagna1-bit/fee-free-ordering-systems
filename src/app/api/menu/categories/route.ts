@@ -26,6 +26,22 @@ export async function GET(req: NextRequest) {
   }
   if (!scopeMenuId) scopeMenuId = await resolveActiveMenuId(menuRestaurantId);
 
+  // Lightweight mode (?minimal=1): only the fields the Reward Dollars earn-
+  // exclusion editor needs. Avoids serializing every variant + modifier option
+  // (tens of thousands of rows on a large menu) for a screen that just toggles
+  // a boolean. Luigi 2026-06-30.
+  if (req.nextUrl.searchParams.get("minimal")) {
+    const lite = await prisma.menuCategory.findMany({
+      where: scopeMenuId ? { menuId: scopeMenuId } : { restaurantId: menuRestaurantId },
+      orderBy: { sortOrder: "asc" },
+      select: {
+        id: true, name: true, rewardEarnExcluded: true,
+        menuItems: { orderBy: { sortOrder: "asc" }, select: { id: true, name: true, rewardEarnExcluded: true } },
+      },
+    });
+    return NextResponse.json(lite);
+  }
+
   const cats = await prisma.menuCategory.findMany({
     where: scopeMenuId ? { menuId: scopeMenuId } : { restaurantId: menuRestaurantId },
     orderBy: { sortOrder: "asc" },

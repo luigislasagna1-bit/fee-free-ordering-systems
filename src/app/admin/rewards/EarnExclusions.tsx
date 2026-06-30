@@ -23,7 +23,7 @@ export function EarnExclusions({ label }: { label: string }) {
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/menu/categories")
+    fetch("/api/menu/categories?minimal=1")
       .then((r) => (r.ok ? r.json() : []))
       .then((data) => { if (!cancelled) setCats(Array.isArray(data) ? data : (data?.categories ?? [])); })
       .catch(() => { if (!cancelled) setCats([]); });
