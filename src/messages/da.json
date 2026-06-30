@@ -146,7 +146,7 @@
     "language": "Sprog",
     "cart": "Kurv",
     "yourCart": "Din kurv",
-    "emptyCart": "Din kurv er tom",
+    "emptyCart": "Tøm kurv",
     "remove": "Fjern",
     "quantity": "Antal",
     "specialInstructions": "Særlige ønsker",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "Optjen {amount} på bestillinger over {threshold}",
     "rewardTileNth": "Optjen {amount} for hver {n} bestillinger",
     "rewardSignupBannerText": "Tilmeld dig og optjen {label}",
-    "rewardSignupBannerCta": "Tilmeld dig"
+    "rewardSignupBannerCta": "Tilmeld dig",
+    "emptyCartConfirm": "Fjern alle varer fra din kurv?"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",

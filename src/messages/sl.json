@@ -146,7 +146,7 @@
     "language": "Jezik",
     "cart": "Košarica",
     "yourCart": "Vaša košarica",
-    "emptyCart": "Vaša košarica je prazna",
+    "emptyCart": "Izprazni košarico",
     "remove": "Odstrani",
     "quantity": "Količina",
     "specialInstructions": "Posebna navodila",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "Prislužite si {amount} pri naročilih nad {threshold}",
     "rewardTileNth": "Prislužite si {amount} vsakih {n} naročil",
     "rewardSignupBannerText": "Registrirajte se in zbirajte {label}",
-    "rewardSignupBannerCta": "Registracija"
+    "rewardSignupBannerCta": "Registracija",
+    "emptyCartConfirm": "Odstranim vse izdelke iz košarice?"
   },
   "pizza": {
     "chooseSize": "Izberite velikost",

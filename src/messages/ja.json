@@ -146,7 +146,7 @@
     "language": "言語",
     "cart": "カート",
     "yourCart": "カートの内容",
-    "emptyCart": "カートは空です",
+    "emptyCart": "カートを空にする",
     "remove": "削除",
     "quantity": "数量",
     "specialInstructions": "特別なご要望",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "{threshold}を超える注文で{amount}を獲得",
     "rewardTileNth": "{n}回の注文ごとに{amount}を獲得",
     "rewardSignupBannerText": "登録して{label}を貯めよう",
-    "rewardSignupBannerCta": "登録"
+    "rewardSignupBannerCta": "登録",
+    "emptyCartConfirm": "カート内のすべての商品を削除しますか？"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",

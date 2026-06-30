@@ -146,7 +146,7 @@
     "language": "Nyelv",
     "cart": "Kosár",
     "yourCart": "Az Ön kosara",
-    "emptyCart": "A kosara üres",
+    "emptyCart": "Kosár ürítése",
     "remove": "Eltávolítás",
     "quantity": "Mennyiség",
     "specialInstructions": "Különleges kérések",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "Szerezzen {amount} értéket a(z) {threshold} feletti rendeléseknél",
     "rewardTileNth": "Szerezzen {amount} értéket minden {n} rendelésnél",
     "rewardSignupBannerText": "Regisztrálj és gyűjts {label}",
-    "rewardSignupBannerCta": "Regisztráció"
+    "rewardSignupBannerCta": "Regisztráció",
+    "emptyCartConfirm": "Eltávolítja az összes terméket a kosárból?"
   },
   "pizza": {
     "chooseSize": "Méret választása",

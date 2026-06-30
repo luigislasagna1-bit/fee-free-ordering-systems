@@ -146,7 +146,7 @@
     "language": "Bahasa",
     "cart": "Keranjang",
     "yourCart": "Keranjang Anda",
-    "emptyCart": "Keranjang Anda kosong",
+    "emptyCart": "Kosongkan keranjang",
     "remove": "Hapus",
     "quantity": "Kuantitas",
     "specialInstructions": "Instruksi khusus",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "Dapatkan {amount} untuk pesanan di atas {threshold}",
     "rewardTileNth": "Dapatkan {amount} setiap {n} pesanan",
     "rewardSignupBannerText": "Daftar untuk mendapatkan {label}",
-    "rewardSignupBannerCta": "Daftar"
+    "rewardSignupBannerCta": "Daftar",
+    "emptyCartConfirm": "Hapus semua item dari keranjang Anda?"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",

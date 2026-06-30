@@ -146,7 +146,7 @@
     "language": "Език",
     "cart": "Количка",
     "yourCart": "Твоята количка",
-    "emptyCart": "Количката е празна",
+    "emptyCart": "Изпразни количката",
     "remove": "Премахни",
     "quantity": "Количество",
     "specialInstructions": "Специални инструкции",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "Спечелете {amount} при поръчки над {threshold}",
     "rewardTileNth": "Спечелете {amount} на всеки {n} поръчки",
     "rewardSignupBannerText": "Регистрирайте се, за да печелите {label}",
-    "rewardSignupBannerCta": "Регистрация"
+    "rewardSignupBannerCta": "Регистрация",
+    "emptyCartConfirm": "Да премахнете всички артикули от количката?"
   },
   "pizza": {
     "chooseSize": "Избери размер",

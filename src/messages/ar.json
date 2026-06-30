@@ -146,7 +146,7 @@
     "language": "اللغة",
     "cart": "السلة",
     "yourCart": "سلتك",
-    "emptyCart": "سلتك فارغة",
+    "emptyCart": "إفراغ السلة",
     "remove": "إزالة",
     "quantity": "الكمية",
     "specialInstructions": "تعليمات خاصة",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "اكسب {amount} على الطلبات التي تتجاوز {threshold}",
     "rewardTileNth": "اكسب {amount} كل {n} طلبات",
     "rewardSignupBannerText": "سجّل لتبدأ في كسب {label}",
-    "rewardSignupBannerCta": "سجّل"
+    "rewardSignupBannerCta": "سجّل",
+    "emptyCartConfirm": "إزالة جميع العناصر من سلتك؟"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",

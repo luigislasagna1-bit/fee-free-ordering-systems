@@ -5,7 +5,7 @@ import {
   ShoppingCart, MapPin, Phone, Clock, Plus, Minus, X,
   AlertCircle, Tag, Loader2, ChevronDown, Star, Info, Calendar,
   Truck, ShoppingBag, ChevronLeft, ChevronRight,
-  UserCircle, LogIn, Search, Utensils, Package, Gift,
+  UserCircle, LogIn, Search, Utensils, Package, Gift, Trash2,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
@@ -2416,6 +2416,15 @@ export function OrderingPageClient({
   const hasFulfilConflict = fulfilConflictItems.length >= 2;
   const removeConflictItem = (menuItemId: string) =>
     setCart((prev) => prev.filter((ci) => ci.menuItem.id !== menuItemId));
+  // Empty the whole cart in one tap (Luigi 2026-06-30) — available in the cart
+  // drawer + at checkout so you don't have to remove items one by one. Confirm
+  // first so nobody nukes an order by accident; also drop the persisted copy.
+  const clearCart = () => {
+    if (cart.length === 0) return;
+    if (!confirm(t("emptyCartConfirm"))) return;
+    setCart([]);
+    try { localStorage.removeItem(CART_STORAGE_KEY); } catch { /* ignore */ }
+  };
   // Surface the prompt the moment a conflict appears (covers every add path) and
   // auto-close when resolved. The ref makes it open once per onset, not per render.
   useEffect(() => {
@@ -4900,7 +4909,14 @@ export function OrderingPageClient({
           <div className="bg-white w-full max-w-md h-full overflow-y-auto flex flex-col" onClick={e => e.stopPropagation()}>
             <div className="p-4 border-b border-gray-100 flex items-center justify-between flex-shrink-0">
               <h2 className="font-bold text-lg text-gray-900">{t("yourCart")}</h2>
-              <button onClick={() => setCartOpen(false)} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5 text-gray-400" /></button>
+              <div className="flex items-center gap-1">
+                {cart.length > 0 && (
+                  <button onClick={clearCart} className="text-xs font-medium text-gray-400 hover:text-red-500 inline-flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-red-50 transition">
+                    <Trash2 className="w-3.5 h-3.5" /> {t("emptyCart")}
+                  </button>
+                )}
+                <button onClick={() => setCartOpen(false)} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5 text-gray-400" /></button>
+              </div>
             </div>
             <div className="flex-1 overflow-y-auto">
               {cart.length === 0 ? (
@@ -5411,6 +5427,7 @@ export function OrderingPageClient({
           deliveryFormConfig={deliveryFormConfig}
           reservationContext={reservationDraft ? { date: reservationDraft.date, time: reservationDraft.time, partySize: reservationDraft.partySize } : null}
           onClose={() => setCheckoutOpen(false)}
+          onClearCart={() => { clearCart(); setCheckoutOpen(false); }}
         />
       )}
 

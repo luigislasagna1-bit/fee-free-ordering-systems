@@ -146,7 +146,7 @@
     "language": "Ngôn ngữ",
     "cart": "Giỏ hàng",
     "yourCart": "Giỏ hàng của bạn",
-    "emptyCart": "Giỏ hàng trống",
+    "emptyCart": "Xóa giỏ hàng",
     "remove": "Xóa",
     "quantity": "Số lượng",
     "specialInstructions": "Yêu cầu đặc biệt",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "Nhận {amount} cho đơn hàng trên {threshold}",
     "rewardTileNth": "Nhận {amount} mỗi {n} đơn hàng",
     "rewardSignupBannerText": "Đăng ký để bắt đầu kiếm {label}",
-    "rewardSignupBannerCta": "Đăng ký"
+    "rewardSignupBannerCta": "Đăng ký",
+    "emptyCartConfirm": "Xóa tất cả mặt hàng khỏi giỏ hàng?"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",

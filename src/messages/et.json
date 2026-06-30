@@ -146,7 +146,7 @@
     "language": "Keel",
     "cart": "Ostukorv",
     "yourCart": "Sinu ostukorv",
-    "emptyCart": "Sinu ostukorv on tühi",
+    "emptyCart": "Tühjenda ostukorv",
     "remove": "Eemalda",
     "quantity": "Kogus",
     "specialInstructions": "Erijuhised",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "Teeni {amount} tellimustelt üle {threshold}",
     "rewardTileNth": "Teeni {amount} iga {n} tellimuse kohta",
     "rewardSignupBannerText": "Registreeru ja teeni {label}",
-    "rewardSignupBannerCta": "Registreeru"
+    "rewardSignupBannerCta": "Registreeru",
+    "emptyCartConfirm": "Eemaldada kõik tooted ostukorvist?"
   },
   "pizza": {
     "chooseSize": "Vali suurus",

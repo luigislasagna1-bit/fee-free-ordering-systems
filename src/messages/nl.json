@@ -146,7 +146,7 @@
     "language": "Taal",
     "cart": "Winkelwagen",
     "yourCart": "Uw winkelwagen",
-    "emptyCart": "Uw winkelwagen is leeg",
+    "emptyCart": "Winkelwagen legen",
     "remove": "Verwijderen",
     "quantity": "Aantal",
     "specialInstructions": "Speciale instructies",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "Verdien {amount} bij bestellingen boven {threshold}",
     "rewardTileNth": "Verdien {amount} bij elke {n} bestellingen",
     "rewardSignupBannerText": "Meld je aan en spaar {label}",
-    "rewardSignupBannerCta": "Aanmelden"
+    "rewardSignupBannerCta": "Aanmelden",
+    "emptyCartConfirm": "Alle items uit je winkelwagen verwijderen?"
   },
   "pizza": {
     "chooseSize": "Kies maat",

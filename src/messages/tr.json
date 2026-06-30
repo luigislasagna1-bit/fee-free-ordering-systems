@@ -146,7 +146,7 @@
     "language": "Dil",
     "cart": "Sepet",
     "yourCart": "Sepetiniz",
-    "emptyCart": "Sepetiniz boş",
+    "emptyCart": "Sepeti boşalt",
     "remove": "Kaldır",
     "quantity": "Adet",
     "specialInstructions": "Özel Talimatlar",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "{threshold} üzeri siparişlerde {amount} kazanın",
     "rewardTileNth": "Her {n} siparişte {amount} kazanın",
     "rewardSignupBannerText": "Kaydolun ve {label} kazanın",
-    "rewardSignupBannerCta": "Kaydol"
+    "rewardSignupBannerCta": "Kaydol",
+    "emptyCartConfirm": "Sepetinizdeki tüm ürünler kaldırılsın mı?"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",

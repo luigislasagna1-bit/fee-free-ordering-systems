@@ -151,7 +151,7 @@
     "language": "Language",
     "cart": "Cart",
     "yourCart": "Your Cart",
-    "emptyCart": "Your cart is empty",
+    "emptyCart": "Empty cart",
     "remove": "Remove",
     "quantity": "Quantity",
     "specialInstructions": "Special instructions",
@@ -293,7 +293,8 @@
     "holidayClosedHoursToday": "Closed {windows} today",
     "servicePausedBadge": "paused",
     "rewardSignupBannerText": "Sign up to start earning {label}",
-    "rewardSignupBannerCta": "Sign up"
+    "rewardSignupBannerCta": "Sign up",
+    "emptyCartConfirm": "Remove all items from your cart?"
   },
   "pizza": {
     "chooseSize": "Choose Size",

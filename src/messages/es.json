@@ -145,7 +145,7 @@
     "language": "Idioma",
     "cart": "Carrito",
     "yourCart": "Tu carrito",
-    "emptyCart": "Tu carrito está vacío",
+    "emptyCart": "Vaciar carrito",
     "remove": "Eliminar",
     "quantity": "Cantidad",
     "specialInstructions": "Instrucciones especiales",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "Gana {amount} en pedidos de más de {threshold}",
     "rewardTileNth": "Gana {amount} cada {n} pedidos",
     "rewardSignupBannerText": "Regístrate para ganar {label}",
-    "rewardSignupBannerCta": "Registrarse"
+    "rewardSignupBannerCta": "Registrarse",
+    "emptyCartConfirm": "¿Eliminar todos los artículos de tu carrito?"
   },
   "pizza": {
     "chooseSize": "Elegir tamaño",

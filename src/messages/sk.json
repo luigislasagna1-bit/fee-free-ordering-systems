@@ -146,7 +146,7 @@
     "language": "Jazyk",
     "cart": "Košík",
     "yourCart": "Váš košík",
-    "emptyCart": "Váš košík je prázdny",
+    "emptyCart": "Vyprázdniť košík",
     "remove": "Odstrániť",
     "quantity": "Množstvo",
     "specialInstructions": "Špeciálne pokyny",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "Získajte {amount} pri objednávkach nad {threshold}",
     "rewardTileNth": "Získajte {amount} za každých {n} objednávok",
     "rewardSignupBannerText": "Zaregistrujte sa a získajte {label}",
-    "rewardSignupBannerCta": "Registrovať"
+    "rewardSignupBannerCta": "Registrovať",
+    "emptyCartConfirm": "Odstrániť všetky položky z košíka?"
   },
   "pizza": {
     "chooseSize": "Vybrať veľkosť",

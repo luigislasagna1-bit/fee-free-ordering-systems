@@ -146,7 +146,7 @@
     "language": "Limbă",
     "cart": "Coș",
     "yourCart": "Coșul tău",
-    "emptyCart": "Coșul tău este gol",
+    "emptyCart": "Golește coșul",
     "remove": "Elimină",
     "quantity": "Cantitate",
     "specialInstructions": "Instrucțiuni speciale",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "Câștigă {amount} la comenzi de peste {threshold}",
     "rewardTileNth": "Câștigă {amount} la fiecare {n} comenzi",
     "rewardSignupBannerText": "Înscrie-te ca să câștigi {label}",
-    "rewardSignupBannerCta": "Înscrie-te"
+    "rewardSignupBannerCta": "Înscrie-te",
+    "emptyCartConfirm": "Eliminați toate articolele din coș?"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",

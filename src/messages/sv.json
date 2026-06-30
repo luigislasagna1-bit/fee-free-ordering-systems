@@ -146,7 +146,7 @@
     "language": "Språk",
     "cart": "Varukorg",
     "yourCart": "Din varukorg",
-    "emptyCart": "Din varukorg är tom",
+    "emptyCart": "Töm varukorgen",
     "remove": "Ta bort",
     "quantity": "Antal",
     "specialInstructions": "Särskilda instruktioner",
@@ -293,7 +293,8 @@
     "rewardTileOrderOver": "Tjäna {amount} på beställningar över {threshold}",
     "rewardTileNth": "Tjäna {amount} var {n}:e beställning",
     "rewardSignupBannerText": "Registrera dig och tjäna {label}",
-    "rewardSignupBannerCta": "Registrera dig"
+    "rewardSignupBannerCta": "Registrera dig",
+    "emptyCartConfirm": "Ta bort alla varor från varukorgen?"
   },
   "pizza": {
     "chooseSize": "Välj storlek",

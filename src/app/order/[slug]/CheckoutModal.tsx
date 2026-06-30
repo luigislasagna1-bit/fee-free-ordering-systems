@@ -3,7 +3,7 @@ import { useRef, useState, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
 import {
   X, User, Truck, ShoppingBag, Clock, CreditCard, Heart, Edit2, Tag,
-  AlertCircle, Loader2, ChevronDown, Utensils, Package,
+  AlertCircle, Loader2, ChevronDown, Utensils, Package, Trash2,
 } from "lucide-react";
 import { Autocomplete } from "@react-google-maps/api";
 import { useCurrencyFormat } from "@/lib/currency-context";
@@ -213,6 +213,8 @@ interface Props {
   restaurantLat?: number | null;
   restaurantLng?: number | null;
   onClose: () => void;
+  /** Empty the whole cart from the checkout screen (Luigi 2026-06-30). */
+  onClearCart?: () => void;
   /** True when the current cart contains any catering-tagged item — at
    *  the item level or via its parent category. Forces schedule-for-
    *  later mode (ASAP disabled) with min selectable time =
@@ -344,6 +346,7 @@ export function CheckoutModal({
   deliveryFormConfig,
   reservationContext = null,
   onClose,
+  onClearCart,
 }: Props) {
   const tc = useTranslations("checkout");
   const tAddr = useTranslations("checkout.addressFields");
@@ -618,9 +621,16 @@ export function CheckoutModal({
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 flex-shrink-0">
           <h2 className="text-lg font-bold text-gray-900 truncate">{tc("title")}</h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-gray-700">
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-1 flex-shrink-0">
+            {onClearCart && cart.length > 0 && (
+              <button onClick={onClearCart} className="text-xs font-medium text-gray-400 hover:text-red-500 inline-flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-red-50 transition">
+                <Trash2 className="w-3.5 h-3.5" /> {tOrd("emptyCart")}
+              </button>
+            )}
+            <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-gray-700">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Reserve-then-order: this checkout confirms a table booking AND pays
