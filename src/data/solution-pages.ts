@@ -148,7 +148,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
     "metaDescription": "Pizza ordering system software that imports every size, crust, and 'pick any toppings' group perfectly — and handles the Friday rush. 0% commission on direct orders.",
     "h1": "Pizza ordering system software built for the toppings problem",
     "eyebrow": "PIZZA OPERATIONS SOFTWARE",
-    "intro": "Generic ordering software chokes on pizza: it splits Small/Medium/Large into separate products and caps your 'pick any toppings' groups. Fee Free Ordering is a pizza ordering system built and tested on a real 12,000-option pizzeria menu — sizes fold into one selector, every topping group survives, and the whole thing runs your Friday-night rush without a hiccup.",
+    "intro": "Generic ordering software chokes on pizza: it splits Small/Medium/Large into separate products and caps your 'pick any toppings' groups. Fee Free Ordering gives independent pizzerias the most powerful custom pizza builder out there — true half-and-half with fair per-half pricing and build-your-own from crust to sauce to cheese to unlimited toppings — built and tested on a real 12,000-option pizzeria menu. Sizes fold into one selector, every topping group survives, and the whole thing runs your Friday-night rush without a hiccup.",
     "painPoint": {
       "title": "Software that can't model a pizza",
       "body": "If your ordering system turns 'choose any 4 toppings' into a mess of separate listings, customers give up and your staff fix orders by phone all night. Pizza needs software that understands sizes, crusts, half-and-half, and unlimited topping picks out of the box."

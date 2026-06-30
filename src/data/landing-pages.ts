@@ -56,9 +56,9 @@ export const LANDING_PAGES: LandingPage[] = [
     metaDescription:
       "A commission-free online ordering system built for pizzerias: every size, crust, and topping group imported perfectly from your GloriaFood menu. Keep 100% of every pizza order.",
     h1: "Online ordering for pizzerias",
-    eyebrow: "Built for pizza",
+    eyebrow: "The custom pizza builder for pizzerias",
     intro:
-      "Pizza is the most-ordered food online — and the most punished by delivery-app commissions. Fee Free Ordering gives your pizzeria its own branded ordering page where pickup, delivery, and catering orders cost you 0% commission. Your sizes, crusts, and topping groups come across exactly right, because we built the import on a real 12,000-option pizzeria menu.",
+      "Pizza is the most-ordered food online — and the most punished by delivery-app commissions. Fee Free Ordering gives your pizzeria its own branded ordering page where pickup, delivery, and catering orders cost you 0% commission. And it ships with the most powerful custom pizza builder an independent pizzeria can put in front of customers: true half-and-half with fair per-half pricing, build-your-own from crust to sauce to cheese to unlimited toppings, and every size, crust, and topping group imported exactly right — we built the import on a real 12,000-option pizzeria menu.",
     painPoint: {
       title: "Commissions eat your thinnest margins",
       body: "A large pizza nets a few dollars after dough, cheese, and labour — then a marketplace takes 20–30% and the order is barely worth making. Direct orders on your own page keep that margin where it belongs: with you.",
