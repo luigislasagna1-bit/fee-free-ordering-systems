@@ -800,7 +800,7 @@
       "integrations": "Entegrasyonlar",
       "orderHandling": "Sipariş Yönetimi",
       "promoPopup": "Promosyon Penceresi",
-      "customerGroups": "VIP Ayrıcalıkları",
+      "customerGroups": "VIP Gruplar",
       "rewards": "Ödül Dolarları"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Kaydedilemedi — lütfen tekrar deneyin"
     },
     "customerGroups": {
-      "title": "VIP Ayrıcalıkları",
+      "title": "VIP Gruplar",
       "description": "Yalnızca üyelere özel fırsatları tüm bir gruba veya belirli kişilere gönderin — ödeme sırasında otomatik uygulanır, kod gerekmez.",
       "newGroup": "Yeni grup",
       "created": "“{name}” oluşturuldu",

@@ -800,7 +800,7 @@
       "integrations": "Integrācijas",
       "orderHandling": "Pasūtījumu apstrāde",
       "promoPopup": "Akcijas logs",
-      "customerGroups": "VIP piedāvājumi",
+      "customerGroups": "VIP grupas",
       "rewards": "Bonusa dolāri"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Neizdevās saglabāt — mēģiniet vēlreiz"
     },
     "customerGroups": {
-      "title": "VIP piedāvājumi",
+      "title": "VIP grupas",
       "description": "Sūtiet tikai biedriem paredzētus piedāvājumus visai grupai vai konkrētiem cilvēkiem — tie tiek piemēroti automātiski izrakstoties, bez koda.",
       "newGroup": "Jauna grupa",
       "created": "Izveidota “{name}”",

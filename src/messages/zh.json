@@ -800,7 +800,7 @@
       "integrations": "集成",
       "orderHandling": "订单处理",
       "promoPopup": "促销弹窗",
-      "customerGroups": "VIP 专享优惠",
+      "customerGroups": "VIP 群组",
       "rewards": "奖励金"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "无法保存 — 请重试"
     },
     "customerGroups": {
-      "title": "VIP 专享优惠",
+      "title": "VIP 群组",
       "description": "向整个分组或特定客户发送会员专享优惠 — 结账时自动应用，无需代码。",
       "newGroup": "新建群组",
       "created": "已创建“{name}”",

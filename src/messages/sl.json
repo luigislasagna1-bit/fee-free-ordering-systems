@@ -800,7 +800,7 @@
       "integrations": "Integracije",
       "orderHandling": "Upravljanje naročil",
       "promoPopup": "Promocijsko okno",
-      "customerGroups": "VIP ponudbe",
+      "customerGroups": "VIP-skupine",
       "rewards": "Nagradni dobropis"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Shranjevanje ni uspelo — poskusite znova"
     },
     "customerGroups": {
-      "title": "VIP ponudbe",
+      "title": "VIP-skupine",
       "description": "Pošljite ponudbe samo za člane celotni skupini ali določenim osebam — samodejno se uporabijo ob plačilu, brez kode.",
       "newGroup": "Nova skupina",
       "created": "Ustvarjeno »{name}«",

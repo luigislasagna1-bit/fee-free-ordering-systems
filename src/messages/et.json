@@ -800,7 +800,7 @@
       "integrations": "Integratsioonid",
       "orderHandling": "Tellimuste haldus",
       "promoPopup": "Promo hüpikaken",
-      "customerGroups": "VIP-pakkumised",
+      "customerGroups": "VIP-rühmad",
       "rewards": "Boonusraha"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Salvestamine ebaõnnestus — proovige uuesti"
     },
     "customerGroups": {
-      "title": "VIP-pakkumised",
+      "title": "VIP-rühmad",
       "description": "Saada ainult liikmetele mõeldud pakkumisi tervele rühmale või konkreetsetele inimestele — need rakenduvad kassas automaatselt, koodi pole vaja.",
       "newGroup": "Uus grupp",
       "created": "Loodi „{name}“",

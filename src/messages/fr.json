@@ -800,7 +800,7 @@
       "integrations": "Intégrations",
       "orderHandling": "Gestion des commandes",
       "promoPopup": "Pop-up promo",
-      "customerGroups": "VIP Specials",
+      "customerGroups": "Groupes VIP",
       "rewards": "Crédits fidélité"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Échec de l'enregistrement — réessayez"
     },
     "customerGroups": {
-      "title": "VIP Specials",
+      "title": "Groupes VIP",
       "description": "Envoyez des offres réservées aux membres à tout un groupe ou à des personnes précises — elles s'appliquent automatiquement au paiement, sans code.",
       "newGroup": "Nouveau groupe",
       "created": "« {name} » créé",

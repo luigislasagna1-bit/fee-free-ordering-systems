@@ -800,7 +800,7 @@
       "integrations": "Integraatiot",
       "orderHandling": "Tilausten käsittely",
       "promoPopup": "Promo-ponnahdusikkuna",
-      "customerGroups": "VIP-edut",
+      "customerGroups": "VIP-ryhmät",
       "rewards": "Bonusrahat"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Tallennus epäonnistui — yritä uudelleen"
     },
     "customerGroups": {
-      "title": "VIP-edut",
+      "title": "VIP-ryhmät",
       "description": "Lähetä vain jäsenille tarkoitettuja tarjouksia koko ryhmälle tai tietyille henkilöille — ne lisätään automaattisesti kassalla, ilman koodia.",
       "newGroup": "Uusi ryhmä",
       "created": "Luotiin ”{name}”",

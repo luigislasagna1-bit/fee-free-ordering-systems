@@ -800,7 +800,7 @@
       "integrations": "Integrationer",
       "orderHandling": "Orderhantering",
       "promoPopup": "Reklam-popup",
-      "customerGroups": "VIP-special",
+      "customerGroups": "VIP-grupper",
       "rewards": "Bonuspengar"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Det gick inte att spara – försök igen"
     },
     "customerGroups": {
-      "title": "VIP-special",
+      "title": "VIP-grupper",
       "description": "Skicka erbjudanden enbart för medlemmar till en hel grupp eller till specifika personer – de tillämpas automatiskt i kassan, ingen kod.",
       "newGroup": "Ny grupp",
       "created": "Skapade ”{name}”",

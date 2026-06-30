@@ -800,7 +800,7 @@
       "integrations": "Integracions",
       "orderHandling": "Gestió de comandes",
       "promoPopup": "Finestra promocional",
-      "customerGroups": "Ofertes VIP",
+      "customerGroups": "Grups VIP",
       "rewards": "Dòlars de Recompensa"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "No s'ha pogut desar: torna-ho a provar"
     },
     "customerGroups": {
-      "title": "Ofertes VIP",
+      "title": "Grups VIP",
       "description": "Envia ofertes exclusives per a membres a tot un grup o a persones concretes: s'apliquen automàticament en finalitzar la comanda, sense codi.",
       "newGroup": "Grup nou",
       "created": "S'ha creat “{name}”",

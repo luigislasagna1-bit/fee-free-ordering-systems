@@ -800,7 +800,7 @@
       "integrations": "אינטגרציות",
       "orderHandling": "טיפול בהזמנות",
       "promoPopup": "חלון קופץ למבצע",
-      "customerGroups": "VIP מבצעים",
+      "customerGroups": "קבוצות VIP",
       "rewards": "דולרים של תגמולים"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "השמירה נכשלה — נסה שוב"
     },
     "customerGroups": {
-      "title": "VIP מבצעים",
+      "title": "קבוצות VIP",
       "description": "שלחו הטבות לחברים בלבד לקבוצה שלמה או לאנשים מסוימים — הן חלות אוטומטית בקופה, ללא קוד.",
       "newGroup": "קבוצה חדשה",
       "created": "נוצרה הקבוצה “{name}”",

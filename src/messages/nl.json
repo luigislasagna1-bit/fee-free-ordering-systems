@@ -800,7 +800,7 @@
       "integrations": "Integraties",
       "orderHandling": "Orderafhandeling",
       "promoPopup": "Promo-pop-up",
-      "customerGroups": "VIP Specials",
+      "customerGroups": "VIP-groepen",
       "rewards": "Spaartegoed"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Opslaan mislukt — probeer het opnieuw"
     },
     "customerGroups": {
-      "title": "VIP Specials",
+      "title": "VIP-groepen",
       "description": "Stuur deals voor leden naar een hele groep of naar specifieke personen — ze worden automatisch toegepast bij het afrekenen, zonder code.",
       "newGroup": "Nieuwe groep",
       "created": "“{name}” aangemaakt",

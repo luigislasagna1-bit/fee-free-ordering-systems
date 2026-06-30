@@ -800,7 +800,7 @@
       "integrations": "インテグレーション",
       "orderHandling": "注文の処理",
       "promoPopup": "プロモポップアップ",
-      "customerGroups": "VIP特典",
+      "customerGroups": "VIPグループ",
       "rewards": "リワードドル"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "保存できませんでした — もう一度お試しください"
     },
     "customerGroups": {
-      "title": "VIP特典",
+      "title": "VIPグループ",
       "description": "会員限定のお得な特典をグループ全体または特定のお客様に配信。コード不要で会計時に自動適用されます。",
       "newGroup": "新しいグループ",
       "created": "「{name}」を作成しました",

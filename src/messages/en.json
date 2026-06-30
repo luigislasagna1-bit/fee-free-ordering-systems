@@ -823,7 +823,7 @@
       "integrations": "Integrations",
       "orderHandling": "Order Handling",
       "promoPopup": "Promo Popup",
-      "customerGroups": "VIP Specials",
+      "customerGroups": "VIP Groups",
       "rewards": "Reward Dollars"
     },
     "dashboard": {
@@ -4269,7 +4269,7 @@
       "excludeNone": "No menu categories yet."
     },
     "customerGroups": {
-      "title": "VIP Specials",
+      "title": "VIP Groups",
       "description": "Send members-only deals to a whole group or to specific people — they auto-apply at checkout, no code.",
       "memberLabelLabel": "What do you call your members?",
       "memberLabelPlaceholder": "e.g. VIP member, Teacher, Club member",

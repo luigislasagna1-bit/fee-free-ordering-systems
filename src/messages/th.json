@@ -800,7 +800,7 @@
       "integrations": "การผสานรวม",
       "orderHandling": "การจัดการคำสั่งซื้อ",
       "promoPopup": "ป๊อปอัปโปรโมชัน",
-      "customerGroups": "VIP Specials",
+      "customerGroups": "กลุ่ม VIP",
       "rewards": "เงินรางวัล"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "บันทึกไม่สำเร็จ — โปรดลองอีกครั้ง"
     },
     "customerGroups": {
-      "title": "VIP Specials",
+      "title": "กลุ่ม VIP",
       "description": "ส่งดีลเฉพาะสมาชิกให้ทั้งกลุ่มหรือบุคคลที่เจาะจง — ระบบใช้ส่วนลดให้อัตโนมัติตอนชำระเงิน ไม่ต้องใช้โค้ด",
       "newGroup": "กลุ่มใหม่",
       "created": "สร้าง “{name}” แล้ว",

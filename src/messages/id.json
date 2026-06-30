@@ -800,7 +800,7 @@
       "integrations": "Integrasi",
       "orderHandling": "Penanganan Pesanan",
       "promoPopup": "Pop-up Promo",
-      "customerGroups": "VIP Specials",
+      "customerGroups": "Grup VIP",
       "rewards": "Dolar Hadiah"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Gagal menyimpan — coba lagi"
     },
     "customerGroups": {
-      "title": "VIP Specials",
+      "title": "Grup VIP",
       "description": "Kirim penawaran khusus anggota ke seluruh grup atau ke orang tertentu — otomatis diterapkan saat checkout, tanpa kode.",
       "newGroup": "Grup baru",
       "created": "“{name}” dibuat",

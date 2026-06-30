@@ -800,7 +800,7 @@
       "integrations": "Integrationen",
       "orderHandling": "Bestellabwicklung",
       "promoPopup": "Promo-Popup",
-      "customerGroups": "VIP-Specials",
+      "customerGroups": "VIP-Gruppen",
       "rewards": "Bonusguthaben"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Speichern fehlgeschlagen – bitte erneut versuchen"
     },
     "customerGroups": {
-      "title": "VIP-Specials",
+      "title": "VIP-Gruppen",
       "description": "Senden Sie Angebote nur für Mitglieder an eine ganze Gruppe oder an bestimmte Personen — sie werden an der Kasse automatisch angewendet, ohne Code.",
       "newGroup": "Neue Gruppe",
       "created": "„{name}“ erstellt",

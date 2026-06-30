@@ -800,7 +800,7 @@
       "integrations": "통합",
       "orderHandling": "주문 처리",
       "promoPopup": "프로모 팝업",
-      "customerGroups": "VIP 스페셜",
+      "customerGroups": "VIP 그룹",
       "rewards": "리워드 달러"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "저장하지 못했습니다 — 다시 시도하세요"
     },
     "customerGroups": {
-      "title": "VIP 스페셜",
+      "title": "VIP 그룹",
       "description": "회원 전용 혜택을 그룹 전체 또는 특정 고객에게 보내세요 — 결제 시 코드 없이 자동 적용됩니다.",
       "newGroup": "새 그룹",
       "created": "“{name}” 생성됨",

@@ -800,7 +800,7 @@
       "integrations": "Integrasjoner",
       "orderHandling": "Ordrehåndtering",
       "promoPopup": "Promo-popup",
-      "customerGroups": "VIP-tilbud",
+      "customerGroups": "VIP-grupper",
       "rewards": "Bonuskroner"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Kunne ikke lagre – prøv igjen"
     },
     "customerGroups": {
-      "title": "VIP-tilbud",
+      "title": "VIP-grupper",
       "description": "Send eksklusive tilbud til en hel gruppe eller til bestemte personer — de brukes automatisk i kassen, ingen kode.",
       "newGroup": "Ny gruppe",
       "created": "Opprettet «{name}»",

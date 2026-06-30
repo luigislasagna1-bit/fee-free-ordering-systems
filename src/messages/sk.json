@@ -800,7 +800,7 @@
       "integrations": "Integrácie",
       "orderHandling": "Spracovanie objednávok",
       "promoPopup": "Promo okno",
-      "customerGroups": "VIP špeciály",
+      "customerGroups": "VIP skupiny",
       "rewards": "Vernostný kredit"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Nepodarilo sa uložiť — skúste to znova"
     },
     "customerGroups": {
-      "title": "VIP špeciály",
+      "title": "VIP skupiny",
       "description": "Posielajte ponuky len pre členov celej skupine alebo konkrétnym ľuďom — pri pokladni sa použijú automaticky, bez kódu.",
       "newGroup": "Nová skupina",
       "created": "Vytvorené „{name}“",

@@ -800,7 +800,7 @@
       "integrations": "Tích hợp",
       "orderHandling": "Xử lý đơn hàng",
       "promoPopup": "Cửa sổ khuyến mãi",
-      "customerGroups": "VIP Specials",
+      "customerGroups": "Nhóm VIP",
       "rewards": "Đô-la Thưởng"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Không thể lưu — vui lòng thử lại"
     },
     "customerGroups": {
-      "title": "VIP Specials",
+      "title": "Nhóm VIP",
       "description": "Gửi ưu đãi riêng cho thành viên đến cả nhóm hoặc những người cụ thể — tự động áp dụng khi thanh toán, không cần mã.",
       "newGroup": "Nhóm mới",
       "created": "Đã tạo “{name}”",

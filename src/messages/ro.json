@@ -800,7 +800,7 @@
       "integrations": "Integrări",
       "orderHandling": "Gestionarea comenzilor",
       "promoPopup": "Fereastră promo",
-      "customerGroups": "Oferte VIP",
+      "customerGroups": "Grupuri VIP",
       "rewards": "Dolari de recompensă"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Nu s-a putut salva — încearcă din nou"
     },
     "customerGroups": {
-      "title": "Oferte VIP",
+      "title": "Grupuri VIP",
       "description": "Trimite oferte exclusive pentru membri unui întreg grup sau unor persoane anume — se aplică automat la finalizarea comenzii, fără cod.",
       "newGroup": "Grup nou",
       "created": "„{name}” a fost creat",

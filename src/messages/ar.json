@@ -800,7 +800,7 @@
       "integrations": "التكاملات",
       "orderHandling": "معالجة الطلبات",
       "promoPopup": "نافذة العروض",
-      "customerGroups": "عروض VIP الخاصة",
+      "customerGroups": "مجموعات VIP",
       "rewards": "دولارات المكافآت"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "تعذّر الحفظ — يرجى المحاولة مرة أخرى"
     },
     "customerGroups": {
-      "title": "عروض VIP الخاصة",
+      "title": "مجموعات VIP",
       "description": "أرسل عروضًا حصرية للأعضاء إلى مجموعة كاملة أو إلى أشخاص محددين — تُطبَّق تلقائيًا عند الدفع، بدون رمز.",
       "newGroup": "مجموعة جديدة",
       "created": "تم إنشاء “{name}”",

@@ -800,7 +800,7 @@
       "integrations": "Integracje",
       "orderHandling": "Obsługa zamówień",
       "promoPopup": "Okno promocji",
-      "customerGroups": "Oferty VIP",
+      "customerGroups": "Grupy VIP",
       "rewards": "Złotówki za zakupy"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Nie udało się zapisać — spróbuj ponownie"
     },
     "customerGroups": {
-      "title": "Oferty VIP",
+      "title": "Grupy VIP",
       "description": "Wysyłaj oferty tylko dla członków do całej grupy lub do wybranych osób — stosują się automatycznie przy płatności, bez kodu.",
       "newGroup": "Nowa grupa",
       "created": "Utworzono „{name}”",

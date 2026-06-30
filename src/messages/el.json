@@ -800,7 +800,7 @@
       "integrations": "Ενσωματώσεις",
       "orderHandling": "Διαχείριση παραγγελιών",
       "promoPopup": "Αναδυόμενο προσφοράς",
-      "customerGroups": "VIP Specials",
+      "customerGroups": "Ομάδες VIP",
       "rewards": "Δολάρια Επιβράβευσης"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Δεν ήταν δυνατή η αποθήκευση — δοκιμάστε ξανά"
     },
     "customerGroups": {
-      "title": "VIP Specials",
+      "title": "Ομάδες VIP",
       "description": "Στείλτε προσφορές αποκλειστικά για μέλη σε μια ολόκληρη ομάδα ή σε συγκεκριμένα άτομα — εφαρμόζονται αυτόματα στο ταμείο, χωρίς κωδικό.",
       "newGroup": "Νέα ομάδα",
       "created": "Δημιουργήθηκε η «{name}»",

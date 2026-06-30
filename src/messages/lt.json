@@ -800,7 +800,7 @@
       "integrations": "Integracijos",
       "orderHandling": "Užsakymų tvarkymas",
       "promoPopup": "Akcijos langas",
-      "customerGroups": "VIP pasiūlymai",
+      "customerGroups": "VIP grupės",
       "rewards": "Premijų doleriai"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Nepavyko išsaugoti — bandykite dar kartą"
     },
     "customerGroups": {
-      "title": "VIP pasiūlymai",
+      "title": "VIP grupės",
       "description": "Siųskite tik nariams skirtus pasiūlymus visai grupei arba konkretiems žmonėms — jie automatiškai pritaikomi atsiskaitant, be kodo.",
       "newGroup": "Nauja grupė",
       "created": "Sukurta „{name}“",

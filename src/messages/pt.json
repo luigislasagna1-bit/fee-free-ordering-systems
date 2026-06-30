@@ -800,7 +800,7 @@
       "integrations": "Integrações",
       "orderHandling": "Gestão de pedidos",
       "promoPopup": "Pop-up promocional",
-      "customerGroups": "Especiais VIP",
+      "customerGroups": "Grupos VIP",
       "rewards": "Saldo de recompensa"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Não foi possível guardar — tente novamente"
     },
     "customerGroups": {
-      "title": "Especiais VIP",
+      "title": "Grupos VIP",
       "description": "Envie ofertas exclusivas para membros a um grupo inteiro ou a pessoas específicas — aplicam-se automaticamente no checkout, sem código.",
       "newGroup": "Novo grupo",
       "created": "“{name}” criado",

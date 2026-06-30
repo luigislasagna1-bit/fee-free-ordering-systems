@@ -800,7 +800,7 @@
       "integrations": "Integrációk",
       "orderHandling": "Rendeléskezelés",
       "promoPopup": "Promóciós felugró",
-      "customerGroups": "VIP-ajánlatok",
+      "customerGroups": "VIP-csoportok",
       "rewards": "Jutalomdollár"
     },
     "dashboard": {
@@ -4161,7 +4161,7 @@
       "saveError": "Nem sikerült menteni – próbálja újra"
     },
     "customerGroups": {
-      "title": "VIP-ajánlatok",
+      "title": "VIP-csoportok",
       "description": "Küldj kizárólag tagoknak szóló ajánlatokat egy egész csoportnak vagy konkrét személyeknek – fizetéskor automatikusan érvényesülnek, kód nélkül.",
       "newGroup": "Új csoport",
       "created": "„{name}” létrehozva",
