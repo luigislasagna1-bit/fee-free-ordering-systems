@@ -83,6 +83,10 @@ for (const f of readdirSync(DIR).filter((x) => x.endsWith(".json"))) {
   setDeep(data, "customer.confirmation.earnedReward", earned);
   setDeep(data, "customer.confirmation.rewardDefaultName", defaultName);
   setDeep(data, "customer.accountPage.reward.orderRef", orderRef);
+  // Thermal/printed receipt totals (receipt.customer namespace, used by the
+  // ESC/POS + StarXpand bitmap builders via getDict).
+  setDeep(data, "receipt.customer.paidWithReward", paid);
+  setDeep(data, "receipt.customer.earnedReward", earned);
   // Pre-existing parity gap: the sidebar nav label "Reward Dollars" only existed
   // in en. Fill all locales with the localized feature name (= defaultPlural).
   setDeep(data, "admin.sidebar.rewards", defaultName);

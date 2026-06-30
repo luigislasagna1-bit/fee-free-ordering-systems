@@ -4414,7 +4414,9 @@
       "customer": "Klients",
       "address": "Adrese",
       "drivingTime": "Braukšanas laiks",
-      "distance": "Attālums"
+      "distance": "Attālums",
+      "paidWithReward": "Apmaksāts ar {label}",
+      "earnedReward": "Nopelnīji {label}"
     },
     "reservation": {
       "title": "REZERVĀCIJA",

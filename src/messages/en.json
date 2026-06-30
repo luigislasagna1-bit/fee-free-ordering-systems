@@ -4418,7 +4418,9 @@
       "customer": "Customer",
       "address": "Address",
       "drivingTime": "Driving time",
-      "distance": "Distance"
+      "distance": "Distance",
+      "paidWithReward": "Paid with {label}",
+      "earnedReward": "You earned {label}"
     },
     "reservation": {
       "title": "RESERVATION",

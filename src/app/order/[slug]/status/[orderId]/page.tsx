@@ -244,8 +244,11 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
     order.restaurant?.rewardLabelPlural?.trim() ||
     order.restaurant?.rewardLabelSingular?.trim() ||
     t("rewardDefaultName");
-  const rewardUsed: number = Number(order.creditApplied) || 0;
-  const rewardEarned: number = Number(order.rewardEarned) || 0;
+  // Only surface reward lines when the feature is currently ON for this store —
+  // a store that turned Reward Dollars off shouldn't show it on old receipts.
+  const rewardsOn: boolean = !!order.restaurant?.rewardsEnabled;
+  const rewardUsed: number = rewardsOn ? (Number(order.creditApplied) || 0) : 0;
+  const rewardEarned: number = rewardsOn ? (Number(order.rewardEarned) || 0) : 0;
   // Pick the step set based on the restaurant's kitchenWorkflowMode.
   // Status values not present in the chosen set (e.g. "preparing" on a
   // simple-mode restaurant — shouldn't happen, but defensive) collapse

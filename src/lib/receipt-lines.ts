@@ -580,6 +580,15 @@ function renderCustomerSection(
       if ((order.tip ?? 0) > 0) r.columns(t("receipt.customer.tip"), fmt(order.tip!));
       r.divider("-");
       r.columns(t("receipt.customer.total"), fmt(order.total));
+      // Reward Dollars used as part-payment / earned on this order. Mirror of the
+      // GOLDEN receipt.ts totals block; keep the two in sync. Luigi 2026-06-29.
+      {
+        const rewardLabel = order.rewardLabel || "Reward Dollars";
+        if ((order.creditApplied ?? 0) > 0)
+          r.columns(t("receipt.customer.paidWithReward", { label: rewardLabel }), `-${fmt(order.creditApplied!)}`);
+        if ((order.rewardEarned ?? 0) > 0)
+          r.columns(t("receipt.customer.earnedReward", { label: rewardLabel }), `+${fmt(order.rewardEarned!)}`);
+      }
       break;
 
     case "payment": {

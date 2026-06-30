@@ -4414,7 +4414,9 @@
       "customer": "العميل",
       "address": "العنوان",
       "drivingTime": "مدة القيادة",
-      "distance": "المسافة"
+      "distance": "المسافة",
+      "paidWithReward": "تم الدفع بـ {label}",
+      "earnedReward": "لقد ربحت {label}"
     },
     "reservation": {
       "title": "حجز",

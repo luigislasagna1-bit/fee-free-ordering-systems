@@ -510,6 +510,16 @@ export interface ReceiptOrder {
    *  delivery fee as their `discount` value. */
   appliedPromos?: string | null;
   total: number;
+  /** Reward Dollars spent on this order as part-payment (Order.creditApplied).
+   *  When > 0 the receipt prints a "Paid with {rewardLabel} -$X" line under the
+   *  total, mirroring the on-screen receipt. Luigi 2026-06-29. */
+  creditApplied?: number;
+  /** Reward Dollars EARNED on this order (computed from the ledger). When > 0
+   *  the receipt prints a "You earned {rewardLabel} +$Y" line. */
+  rewardEarned?: number;
+  /** Store's customer-facing reward name (e.g. "Pizza Bucks") for the two lines
+   *  above. Resolved by the payload builder; falls back to "Reward Dollars". */
+  rewardLabel?: string;
   paymentMethod: string;
   paymentStatus: string;
   createdAt: string | Date;
@@ -972,6 +982,15 @@ async function renderCustomerSection(
       if ((order.tip ?? 0)  > 0) r.columns(t("receipt.customer.tip"), fmt(order.tip!));
       r.divider("-");
       r.columns(t("receipt.customer.total"), fmt(order.total));
+      // Reward Dollars used as part-payment / earned on this order. Mirrors the
+      // on-screen receipt; mirror any change in receipt-lines.ts. Luigi 2026-06-29.
+      {
+        const rewardLabel = order.rewardLabel || "Reward Dollars";
+        if ((order.creditApplied ?? 0) > 0)
+          r.columns(t("receipt.customer.paidWithReward", { label: rewardLabel }), `-${fmt(order.creditApplied!)}`);
+        if ((order.rewardEarned ?? 0) > 0)
+          r.columns(t("receipt.customer.earnedReward", { label: rewardLabel }), `+${fmt(order.rewardEarned!)}`);
+      }
       break;
 
     case "payment": {
@@ -1466,6 +1485,9 @@ export const SAMPLE_RECEIPT_ORDER: ReceiptOrder = {
   couponDiscount: 0,
   promoDiscount: 0,
   total: 29.98,
+  creditApplied: 5.00,
+  rewardEarned: 1.25,
+  rewardLabel: "Reward Dollars",
   paymentMethod: "cash",
   paymentStatus: "pending",
   createdAt: new Date().toISOString(),

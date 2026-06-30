@@ -4414,7 +4414,9 @@
       "customer": "Kunde",
       "address": "Adresse",
       "drivingTime": "Kjøretid",
-      "distance": "Avstand"
+      "distance": "Avstand",
+      "paidWithReward": "Betalt med {label}",
+      "earnedReward": "Du tjente {label}"
     },
     "reservation": {
       "title": "RESERVASJON",

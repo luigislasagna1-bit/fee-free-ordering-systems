@@ -4414,7 +4414,9 @@
       "customer": "Клієнт",
       "address": "Адреса",
       "drivingTime": "Час у дорозі",
-      "distance": "Відстань"
+      "distance": "Відстань",
+      "paidWithReward": "Оплачено за допомогою {label}",
+      "earnedReward": "Ви заробили {label}"
     },
     "reservation": {
       "title": "БРОНЮВАННЯ",

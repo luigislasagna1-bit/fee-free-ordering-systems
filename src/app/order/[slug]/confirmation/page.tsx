@@ -55,10 +55,12 @@ export default async function ConfirmationPage({
   const formatCurrency = (amount: number) => fmtCurrency(amount, order.restaurant.currency);
 
   // Reward Dollars on this order: spent (creditApplied) + earned (from the
-  // ledger, only queried when the feature is on). Labelled with the store's name.
-  const rewardUsed = order.creditApplied || 0;
+  // ledger). Only surfaced when the feature is currently ON for this store, so a
+  // store that turned it off doesn't show it on old confirmations.
+  const rewardsOn = !!order.restaurant.rewardsEnabled;
+  const rewardUsed = rewardsOn ? (order.creditApplied || 0) : 0;
   let rewardEarned = 0;
-  if (order.restaurant.rewardsEnabled) {
+  if (rewardsOn) {
     rewardEarned = (await getOrderRewardSummary(order.id)).earned;
   }
   const rewardName =

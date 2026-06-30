@@ -4414,7 +4414,9 @@
       "customer": "לקוח",
       "address": "כתובת",
       "drivingTime": "זמן נסיעה",
-      "distance": "מרחק"
+      "distance": "מרחק",
+      "paidWithReward": "שולם באמצעות {label}",
+      "earnedReward": "צברת {label}"
     },
     "reservation": {
       "title": "הזמנת שולחן",

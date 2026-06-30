@@ -4414,7 +4414,9 @@
       "customer": "Klientas",
       "address": "Adresas",
       "drivingTime": "Kelionės laikas",
-      "distance": "Atstumas"
+      "distance": "Atstumas",
+      "paidWithReward": "Apmokėta naudojant {label}",
+      "earnedReward": "Uždirbote {label}"
     },
     "reservation": {
       "title": "REZERVACIJA",

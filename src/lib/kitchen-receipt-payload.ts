@@ -20,6 +20,7 @@ import {
   type ReceiptRestaurant,
 } from "@/lib/receipt";
 import { buildKitchenReceiptLines, buildCustomerReceiptLines } from "@/lib/receipt-lines";
+import { getOrderRewardSummary } from "@/lib/reward-ledger";
 import { fetchDriveEstimate, resolveDistanceMatrixKey, cardinalDirection } from "@/lib/delivery-eta";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 
@@ -49,11 +50,27 @@ export async function buildOrderReceiptPayload(opts: {
           name: true, phone: true, email: true,
           address: true, city: true, state: true, zip: true, currency: true,
           timezone: true, hoursFormat: true, receiptLogoUrl: true,
+          // Reward Dollars: feature flag + customer-facing name so the receipt
+          // can print "Paid with {name}" / "You earned {name}". Luigi 2026-06-29.
+          rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true,
         },
       },
     },
   });
   if (!order) return { ok: false, status: 404, error: "Order not found" };
+
+  // Reward Dollars used/earned on this order, for the receipt totals. `used`
+  // comes straight off the order (creditApplied); `earned` is computed from the
+  // ledger only when the feature is on. Best-effort — never blocks the print.
+  const rewardsOn = (order.restaurant as any).rewardsEnabled === true;
+  const rewardLabel =
+    ((order.restaurant as any).rewardLabelPlural?.trim() ||
+      (order.restaurant as any).rewardLabelSingular?.trim() ||
+      "Reward Dollars") as string;
+  let rewardEarned = 0;
+  if (rewardsOn) {
+    try { rewardEarned = (await getOrderRewardSummary(order.id)).earned; } catch { /* never block print */ }
+  }
 
   // Reserve-then-order: the linked booking (if any) so the kitchen ticket prints
   // the "TABLE RESERVATION + PRE-ORDER" flag. Null for normal orders.
@@ -132,6 +149,9 @@ export async function buildOrderReceiptPayload(opts: {
     appliedServiceFees: (order as any).appliedServiceFees ?? null,
     appliedPromos: (order as any).appliedPromos ?? null,
     total: order.total,
+    creditApplied: rewardsOn ? ((order as any).creditApplied ?? 0) : 0,
+    rewardEarned,
+    rewardLabel,
     paymentMethod: (order as any).paymentMethod ?? "",
     paymentStatus: (order as any).paymentStatus ?? "pending",
     createdAt: order.createdAt,
