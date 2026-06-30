@@ -4279,7 +4279,9 @@
         "cancel": "Anuluj",
         "save": "Utwórz"
       },
-      "memberLabelGroupHint": "Zastępuje wartość domyślną tylko dla tej grupy."
+      "memberLabelGroupHint": "Zastępuje wartość domyślną tylko dla tej grupy.",
+      "confirmRemoveMember": "Usunąć tego członka z grupy?",
+      "confirmRemoveSpecial": "Usunąć tę ofertę specjalną?"
     },
     "rewards": {
       "title": "Złotówki za zakupy",
@@ -5392,11 +5394,11 @@
       "backTo": "Powrót do {name}",
       "greeting": "Cześć, {name}",
       "noEmailOnFile": "Brak adresu e-mail",
-      "yourCoupons": "Twoje kupony ({count})",
-      "noCoupons": "Brak kuponów. {name} może wysyłać Ci spersonalizowane kody — pojawią się tutaj.",
+      "yourCoupons": "Twoje oferty ({count})",
+      "noCoupons": "Brak ofert w tej chwili. {name} może wysłać Ci spersonalizowane kody — pojawią się tutaj.",
       "unlimitedUses": "Nieograniczona liczba użyć",
       "usesLeft": "{n, plural, one {Pozostało # użycie} other {Pozostało # użyć}}",
-      "personalCoupon": "Kupon osobisty",
+      "personalCoupon": "Oferta osobista",
       "minOrder": "Min. zamówienie {amount}",
       "expires": "Wygasa {date}",
       "savedAddresses": "Zapisane adresy dostawy",

@@ -4279,7 +4279,9 @@
         "cancel": "Annulla",
         "save": "Crea"
       },
-      "memberLabelGroupHint": "Sostituisce l'impostazione predefinita solo per questo gruppo."
+      "memberLabelGroupHint": "Sostituisce l'impostazione predefinita solo per questo gruppo.",
+      "confirmRemoveMember": "Rimuovere questo membro dal gruppo?",
+      "confirmRemoveSpecial": "Rimuovere questa offerta speciale?"
     },
     "rewards": {
       "title": "Credito fedeltà",
@@ -5392,11 +5394,11 @@
       "backTo": "Torna a {name}",
       "greeting": "Ciao, {name}",
       "noEmailOnFile": "Nessuna email registrata",
-      "yourCoupons": "I tuoi coupon ({count})",
-      "noCoupons": "Nessun coupon al momento. {name} può inviarti codici personalizzati — appariranno qui.",
+      "yourCoupons": "Le tue offerte ({count})",
+      "noCoupons": "Nessuna offerta al momento. {name} può inviarti codici personalizzati — appariranno qui.",
       "unlimitedUses": "Usi illimitati",
       "usesLeft": "{n, plural, one {# utilizzo rimanente} other {# utilizzi rimanenti}}",
-      "personalCoupon": "Coupon personale",
+      "personalCoupon": "Offerta personale",
       "minOrder": "Ordine min. {amount}",
       "expires": "Scade il {date}",
       "savedAddresses": "Indirizzi di consegna salvati",

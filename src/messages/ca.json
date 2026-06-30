@@ -4279,7 +4279,9 @@
         "cancel": "Cancel·la",
         "save": "Crea"
       },
-      "memberLabelGroupHint": "Substitueix el valor predeterminat només per a aquest grup."
+      "memberLabelGroupHint": "Substitueix el valor predeterminat només per a aquest grup.",
+      "confirmRemoveMember": "Voleu treure aquest membre del grup?",
+      "confirmRemoveSpecial": "Voleu treure aquesta oferta especial?"
     },
     "rewards": {
       "title": "Dòlars de Recompensa",
@@ -5392,11 +5394,11 @@
       "backTo": "Tornar a {name}",
       "greeting": "Hola, {name}",
       "noEmailOnFile": "No hi ha cap correu electrònic registrat",
-      "yourCoupons": "Els teus cupons ({count})",
-      "noCoupons": "Ara mateix no tens cap cupó. {name} et pot enviar codis personalitzats — apareixeran aquí.",
+      "yourCoupons": "Les teves ofertes ({count})",
+      "noCoupons": "Cap oferta ara mateix. {name} et pot enviar codis personalitzats — apareixeran aquí.",
       "unlimitedUses": "Usos il·limitats",
       "usesLeft": "{n, plural, one {# ús restant} other {# usos restants}}",
-      "personalCoupon": "Cupó personal",
+      "personalCoupon": "Oferta personal",
       "minOrder": "Comanda mín. {amount}",
       "expires": "Caduca el {date}",
       "savedAddresses": "Adreces de lliurament desades",

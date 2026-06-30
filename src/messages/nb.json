@@ -4279,7 +4279,9 @@
         "cancel": "Avbryt",
         "save": "Opprett"
       },
-      "memberLabelGroupHint": "Overstyrer standarden bare for denne gruppen."
+      "memberLabelGroupHint": "Overstyrer standarden bare for denne gruppen.",
+      "confirmRemoveMember": "Fjerne dette medlemmet fra gruppen?",
+      "confirmRemoveSpecial": "Fjerne dette tilbudet?"
     },
     "rewards": {
       "title": "Bonuskroner",
@@ -5392,11 +5394,11 @@
       "backTo": "Tilbake til {name}",
       "greeting": "Hei, {name}",
       "noEmailOnFile": "Ingen e-post registrert",
-      "yourCoupons": "Dine kuponger ({count})",
-      "noCoupons": "Ingen kuponger for øyeblikket. {name} kan sende deg personlige koder — de vil vises her.",
+      "yourCoupons": "Dine tilbud ({count})",
+      "noCoupons": "Ingen tilbud akkurat nå. {name} kan sende deg personlige koder — de vises her.",
       "unlimitedUses": "Ubegrenset antall ganger",
       "usesLeft": "{n, plural, one {# gang igjen} other {# ganger igjen}}",
-      "personalCoupon": "Personlig kupong",
+      "personalCoupon": "Personlig tilbud",
       "minOrder": "Min. bestilling {amount}",
       "expires": "Utløper {date}",
       "savedAddresses": "Lagrede leveringsadresser",

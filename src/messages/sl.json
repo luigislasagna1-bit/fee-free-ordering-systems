@@ -4279,7 +4279,9 @@
         "cancel": "Prekliči",
         "save": "Ustvari"
       },
-      "memberLabelGroupHint": "Razveljavi privzeto samo za to skupino."
+      "memberLabelGroupHint": "Razveljavi privzeto samo za to skupino.",
+      "confirmRemoveMember": "Odstranim tega člana iz skupine?",
+      "confirmRemoveSpecial": "Odstranim to posebno ponudbo?"
     },
     "rewards": {
       "title": "Nagradni dobropis",
@@ -5392,11 +5394,11 @@
       "backTo": "Nazaj na {name}",
       "greeting": "Zdravo, {name}",
       "noEmailOnFile": "E-poštni naslov ni shranjen",
-      "yourCoupons": "Vaši kuponi ({count})",
-      "noCoupons": "Trenutno nimate kuponov. {name} vam lahko pošlje osebne kode — prikazale se bodo tukaj.",
+      "yourCoupons": "Vaše ponudbe ({count})",
+      "noCoupons": "Trenutno ni ponudb. {name} vam lahko pošlje prilagojene kode — prikazale se bodo tukaj.",
       "unlimitedUses": "Neomejene uporabe",
       "usesLeft": "{n, plural, one {# preostala uporaba} other {# preostalih uporab}}",
-      "personalCoupon": "Osebni kupon",
+      "personalCoupon": "Osebna ponudba",
       "minOrder": "Min. naročilo {amount}",
       "expires": "Velja do {date}",
       "savedAddresses": "Shranjeni naslovi za dostavo",

@@ -4279,7 +4279,9 @@
         "cancel": "ยกเลิก",
         "save": "สร้าง"
       },
-      "memberLabelGroupHint": "แทนที่ค่าเริ่มต้นเฉพาะกลุ่มนี้"
+      "memberLabelGroupHint": "แทนที่ค่าเริ่มต้นเฉพาะกลุ่มนี้",
+      "confirmRemoveMember": "นำสมาชิกนี้ออกจากกลุ่มหรือไม่?",
+      "confirmRemoveSpecial": "นำข้อเสนอพิเศษนี้ออกหรือไม่?"
     },
     "rewards": {
       "title": "เงินรางวัล",
@@ -5392,11 +5394,11 @@
       "backTo": "กลับไปที่ {name}",
       "greeting": "สวัสดี, {name}",
       "noEmailOnFile": "ไม่มีอีเมลในระบบ",
-      "yourCoupons": "คูปองของคุณ ({count})",
-      "noCoupons": "ยังไม่มีคูปองตอนนี้ {name} สามารถส่งโค้ดส่วนตัวให้คุณได้ — จะปรากฏที่นี่",
+      "yourCoupons": "ข้อเสนอของคุณ ({count})",
+      "noCoupons": "ยังไม่มีข้อเสนอในขณะนี้ {name} สามารถส่งโค้ดเฉพาะบุคคลให้คุณ — จะแสดงที่นี่",
       "unlimitedUses": "ใช้ได้ไม่จำกัด",
       "usesLeft": "{n, plural, one {เหลืออีก # ครั้ง} other {เหลืออีก # ครั้ง}}",
-      "personalCoupon": "คูปองส่วนตัว",
+      "personalCoupon": "ข้อเสนอส่วนตัว",
       "minOrder": "ยอดสั่งขั้นต่ำ {amount}",
       "expires": "หมดอายุ {date}",
       "savedAddresses": "ที่อยู่จัดส่งที่บันทึกไว้",

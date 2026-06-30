@@ -4279,7 +4279,9 @@
         "cancel": "Hủy",
         "save": "Tạo"
       },
-      "memberLabelGroupHint": "Ghi đè mặc định chỉ cho nhóm này."
+      "memberLabelGroupHint": "Ghi đè mặc định chỉ cho nhóm này.",
+      "confirmRemoveMember": "Xóa thành viên này khỏi nhóm?",
+      "confirmRemoveSpecial": "Xóa ưu đãi đặc biệt này?"
     },
     "rewards": {
       "title": "Đô-la Thưởng",
@@ -5392,11 +5394,11 @@
       "backTo": "Quay lại {name}",
       "greeting": "Xin chào, {name}",
       "noEmailOnFile": "Chưa có email",
-      "yourCoupons": "Phiếu giảm giá của bạn ({count})",
-      "noCoupons": "Hiện chưa có phiếu giảm giá nào. {name} có thể gửi cho bạn mã riêng — chúng sẽ hiển thị ở đây.",
+      "yourCoupons": "Ưu đãi của bạn ({count})",
+      "noCoupons": "Hiện chưa có ưu đãi. {name} có thể gửi cho bạn các mã cá nhân hóa — chúng sẽ hiển thị ở đây.",
       "unlimitedUses": "Không giới hạn lượt dùng",
       "usesLeft": "{n, plural, one {Còn # lượt dùng} other {Còn # lượt dùng}}",
-      "personalCoupon": "Phiếu giảm giá cá nhân",
+      "personalCoupon": "Ưu đãi cá nhân",
       "minOrder": "Đơn tối thiểu {amount}",
       "expires": "Hết hạn {date}",
       "savedAddresses": "Địa chỉ giao hàng đã lưu",

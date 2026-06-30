@@ -4279,7 +4279,9 @@
         "cancel": "취소",
         "save": "생성"
       },
-      "memberLabelGroupHint": "이 그룹에만 기본값을 재정의합니다."
+      "memberLabelGroupHint": "이 그룹에만 기본값을 재정의합니다.",
+      "confirmRemoveMember": "이 회원을 그룹에서 제거할까요?",
+      "confirmRemoveSpecial": "이 특별 혜택을 제거할까요?"
     },
     "rewards": {
       "title": "리워드 달러",
@@ -5392,11 +5394,11 @@
       "backTo": "{name}으로 돌아가기",
       "greeting": "안녕하세요, {name}님",
       "noEmailOnFile": "등록된 이메일이 없습니다",
-      "yourCoupons": "내 쿠폰 ({count})",
-      "noCoupons": "현재 쿠폰이 없습니다. {name}에서 개인 맞춤 코드를 보내드리면 여기에 표시됩니다.",
+      "yourCoupons": "내 혜택 ({count})",
+      "noCoupons": "지금은 혜택이 없습니다. {name}이(가) 맞춤 코드를 보내면 여기에 표시됩니다.",
       "unlimitedUses": "무제한 사용",
       "usesLeft": "{n, plural, one {# 번 남음} other {# 번 남음}}",
-      "personalCoupon": "개인 쿠폰",
+      "personalCoupon": "개인 혜택",
       "minOrder": "최소 주문 {amount}",
       "expires": "만료일: {date}",
       "savedAddresses": "저장된 배달 주소",

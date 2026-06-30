@@ -4279,7 +4279,9 @@
         "cancel": "إلغاء",
         "save": "إنشاء"
       },
-      "memberLabelGroupHint": "يتجاوز الإعداد الافتراضي لهذه المجموعة فقط."
+      "memberLabelGroupHint": "يتجاوز الإعداد الافتراضي لهذه المجموعة فقط.",
+      "confirmRemoveMember": "إزالة هذا العضو من المجموعة؟",
+      "confirmRemoveSpecial": "إزالة هذا العرض الخاص؟"
     },
     "rewards": {
       "title": "دولارات المكافآت",
@@ -5392,11 +5394,11 @@
       "backTo": "العودة إلى {name}",
       "greeting": "مرحباً، {name}",
       "noEmailOnFile": "لا يوجد بريد إلكتروني مسجّل",
-      "yourCoupons": "قسائمك ({count})",
-      "noCoupons": "لا توجد قسائم حالياً. يمكن لـ {name} إرسال رموز مخصصة لك — ستظهر هنا.",
+      "yourCoupons": "عروضك ({count})",
+      "noCoupons": "لا توجد عروض حاليًا. يمكن لـ {name} إرسال رموز مخصصة لك — ستظهر هنا.",
       "unlimitedUses": "استخدامات غير محدودة",
       "usesLeft": "{n, plural, one {# استخدام متبقٍّ} other {# استخدامات متبقية}}",
-      "personalCoupon": "قسيمة شخصية",
+      "personalCoupon": "عرض شخصي",
       "minOrder": "الحد الأدنى للطلب {amount}",
       "expires": "تنتهي في {date}",
       "savedAddresses": "عناوين التوصيل المحفوظة",

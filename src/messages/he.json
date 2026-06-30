@@ -4279,7 +4279,9 @@
         "cancel": "ביטול",
         "save": "צור"
       },
-      "memberLabelGroupHint": "עוקף את ברירת המחדל לקבוצה זו בלבד."
+      "memberLabelGroupHint": "עוקף את ברירת המחדל לקבוצה זו בלבד.",
+      "confirmRemoveMember": "להסיר את החבר הזה מהקבוצה?",
+      "confirmRemoveSpecial": "להסיר את המבצע הזה?"
     },
     "rewards": {
       "title": "דולרים של תגמולים",
@@ -5392,11 +5394,11 @@
       "backTo": "חזרה אל {name}",
       "greeting": "שלום, {name}",
       "noEmailOnFile": "אין כתובת אימייל שמורה",
-      "yourCoupons": "הקופונים שלך ({count})",
-      "noCoupons": "אין קופונים כרגע. {name} יכול לשלוח לך קודים אישיים — הם יופיעו כאן.",
+      "yourCoupons": "המבצעים שלך ({count})",
+      "noCoupons": "אין מבצעים כרגע. {name} יכול לשלוח לך קודים מותאמים אישית — הם יופיעו כאן.",
       "unlimitedUses": "שימוש ללא הגבלה",
       "usesLeft": "{n, plural, one {# שימוש נותר} other {# שימושים נותרו}}",
-      "personalCoupon": "קופון אישי",
+      "personalCoupon": "מבצע אישי",
       "minOrder": "הזמנה מינימלית {amount}",
       "expires": "בתוקף עד {date}",
       "savedAddresses": "כתובות משלוח שמורות",

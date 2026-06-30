@@ -4279,7 +4279,9 @@
         "cancel": "Annuleren",
         "save": "Aanmaken"
       },
-      "memberLabelGroupHint": "Overschrijft de standaard alleen voor deze groep."
+      "memberLabelGroupHint": "Overschrijft de standaard alleen voor deze groep.",
+      "confirmRemoveMember": "Dit lid uit de groep verwijderen?",
+      "confirmRemoveSpecial": "Deze aanbieding verwijderen?"
     },
     "rewards": {
       "title": "Spaartegoed",
@@ -5392,11 +5394,11 @@
       "backTo": "Terug naar {name}",
       "greeting": "Hoi, {name}",
       "noEmailOnFile": "Geen e-mailadres bekend",
-      "yourCoupons": "Jouw coupons ({count})",
-      "noCoupons": "Momenteel geen coupons. {name} kan je persoonlijke codes sturen — die verschijnen hier.",
+      "yourCoupons": "Jouw aanbiedingen ({count})",
+      "noCoupons": "Op dit moment geen aanbiedingen. {name} kan je gepersonaliseerde codes sturen — ze verschijnen hier.",
       "unlimitedUses": "Onbeperkt te gebruiken",
       "usesLeft": "{n, plural, one {# gebruik resterend} other {# gebruiken resterend}}",
-      "personalCoupon": "Persoonlijke coupon",
+      "personalCoupon": "Persoonlijke aanbieding",
       "minOrder": "Min. bestelling {amount}",
       "expires": "Vervalt op {date}",
       "savedAddresses": "Opgeslagen bezorgadressen",

@@ -4387,7 +4387,9 @@
         "cancel": "Cancel",
         "save": "Create"
       },
-      "memberLabelGroupHint": "Overrides the default for this group only."
+      "memberLabelGroupHint": "Overrides the default for this group only.",
+      "confirmRemoveMember": "Remove this member from the group?",
+      "confirmRemoveSpecial": "Remove this special?"
     }
   },
   "impersonation": {
@@ -5409,11 +5411,11 @@
         "orderRef": "Order #{number}",
         "someExcluded": "Some items (like gift cards) don't earn {label}."
       },
-      "yourCoupons": "Your coupons ({count})",
-      "noCoupons": "No coupons right now. {name} can send you personalised codes — they'll show up here.",
+      "yourCoupons": "Your offers ({count})",
+      "noCoupons": "No offers right now. {name} can send you personalised codes — they'll show up here.",
       "unlimitedUses": "Unlimited uses",
       "usesLeft": "{n, plural, one {# use left} other {# uses left}}",
-      "personalCoupon": "Personal coupon",
+      "personalCoupon": "Personal offer",
       "minOrder": "Min. order {amount}",
       "expires": "Expires {date}",
       "savedAddresses": "Saved delivery addresses",

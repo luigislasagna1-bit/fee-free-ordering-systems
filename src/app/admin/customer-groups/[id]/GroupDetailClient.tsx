@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { ChevronLeft, Users, Trash2, UserPlus, Gift, Plus, Tag, ExternalLink, Mail, Pencil } from "lucide-react";
+import { ChevronLeft, Users, Trash2, UserPlus, Gift, Plus, Tag, ExternalLink, Mail, Pencil, Loader2 } from "lucide-react";
 import { HelpTip } from "@/components/HelpTip";
 import { ScheduleEditor } from "../ScheduleEditor";
 
@@ -81,6 +81,7 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
   }
 
   async function removeMember(id: string) {
+    if (!confirm(t("confirmRemoveMember"))) return;
     const res = await fetch(`/api/admin/customer-groups/${group.id}/members?memberId=${encodeURIComponent(id)}`, { method: "DELETE" });
     if (!res.ok) { toast.error(t("removeFailed")); return; }
     setMembers((m) => m.filter((x) => x.id !== id));
@@ -135,6 +136,7 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
   }
 
   async function detachSpecial(promotionId: string) {
+    if (!confirm(t("confirmRemoveSpecial"))) return;
     const res = await fetch(`/api/admin/customer-groups/${group.id}/promotions?promotionId=${encodeURIComponent(promotionId)}`, { method: "DELETE" });
     if (!res.ok) { toast.error(t("detachFailed")); return; }
     setSpecials((s) => s.filter((x) => x.id !== promotionId));
@@ -169,7 +171,7 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
               <input className={inputCls} value={editLabel} maxLength={40} placeholder={t("memberLabelPlaceholder")} onChange={(e) => setEditLabel(e.target.value)} />
               <p className="text-[11px] text-gray-400">{t("memberLabelGroupHint")}</p>
               <div className="flex gap-2">
-                <button onClick={saveDetails} disabled={savingInfo} className="bg-gray-900 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-gray-800 transition disabled:opacity-50">{savingInfo ? "…" : t("memberLabelSave")}</button>
+                <button onClick={saveDetails} disabled={savingInfo} className="bg-gray-900 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-gray-800 transition disabled:opacity-50">{savingInfo ? <Loader2 className="w-4 h-4 animate-spin" /> : t("memberLabelSave")}</button>
                 <button onClick={() => { setEditing(false); setEditName(info.name); setEditDesc(info.description); setEditLabel(group.memberLabel ?? ""); }} className="px-4 py-2 rounded-xl text-sm text-gray-600 hover:bg-gray-100 transition">{t("cancel")}</button>
               </div>
             </div>
@@ -220,7 +222,7 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
         />
         <p className="text-[11px] text-gray-400 mt-1">{t("addMembersHint")}</p>
         <button onClick={addMembers} disabled={adding || !emailsText.trim()} className="mt-2 inline-flex items-center gap-1.5 bg-gray-900 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-gray-800 transition disabled:opacity-50">
-          <UserPlus className="w-4 h-4" /> {adding ? "…" : t("addMembers")}
+          <UserPlus className="w-4 h-4" /> {adding ? <Loader2 className="w-4 h-4 animate-spin" /> : t("addMembers")}
         </button>
       </section>
 
@@ -248,7 +250,7 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
                 </div>
                 <div className="flex items-center gap-1 flex-shrink-0">
                   <button onClick={() => notifyMembers(s.id)} disabled={notifyingId === s.id} title={t("notifyMembers")} className="inline-flex items-center gap-1 text-xs text-emerald-700 bg-emerald-50 hover:bg-emerald-100 font-semibold px-2.5 py-1 rounded-lg transition disabled:opacity-50">
-                    <Mail className="w-3.5 h-3.5" /> {notifyingId === s.id ? "…" : t("notifyMembers")}
+                    <Mail className="w-3.5 h-3.5" /> {notifyingId === s.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : t("notifyMembers")}
                   </button>
                   <button onClick={() => detachSpecial(s.id)} title={t("detach")} className="p-1 text-gray-400 hover:text-red-500 rounded"><Trash2 className="w-4 h-4" /></button>
                 </div>
@@ -274,7 +276,7 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
               ))}
             </select>
             <button onClick={attachSpecial} disabled={attaching || !pick} className="inline-flex items-center gap-1.5 bg-emerald-500 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-emerald-600 transition disabled:opacity-50">
-              <Plus className="w-4 h-4" /> {attaching ? "…" : t("attach")}
+              <Plus className="w-4 h-4" /> {attaching ? <Loader2 className="w-4 h-4 animate-spin" /> : t("attach")}
             </button>
           </div>
         )}

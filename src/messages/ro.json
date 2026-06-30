@@ -4279,7 +4279,9 @@
         "cancel": "Anulează",
         "save": "Creează"
       },
-      "memberLabelGroupHint": "Înlocuiește valoarea implicită doar pentru acest grup."
+      "memberLabelGroupHint": "Înlocuiește valoarea implicită doar pentru acest grup.",
+      "confirmRemoveMember": "Eliminați acest membru din grup?",
+      "confirmRemoveSpecial": "Eliminați această ofertă specială?"
     },
     "rewards": {
       "title": "Dolari de recompensă",
@@ -5392,11 +5394,11 @@
       "backTo": "Înapoi la {name}",
       "greeting": "Bună, {name}",
       "noEmailOnFile": "Nicio adresă de e-mail înregistrată",
-      "yourCoupons": "Cupoanele tale ({count})",
-      "noCoupons": "Niciun cupon momentan. {name} îți poate trimite coduri personalizate — vor apărea aici.",
+      "yourCoupons": "Ofertele tale ({count})",
+      "noCoupons": "Nicio ofertă momentan. {name} îți poate trimite coduri personalizate — vor apărea aici.",
       "unlimitedUses": "Utilizări nelimitate",
       "usesLeft": "{n, plural, one {# utilizare rămasă} other {# utilizări rămase}}",
-      "personalCoupon": "Cupon personal",
+      "personalCoupon": "Ofertă personală",
       "minOrder": "Comandă minimă {amount}",
       "expires": "Expiră {date}",
       "savedAddresses": "Adrese de livrare salvate",

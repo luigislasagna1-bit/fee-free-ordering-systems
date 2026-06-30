@@ -4279,7 +4279,9 @@
         "cancel": "Cancelar",
         "save": "Criar"
       },
-      "memberLabelGroupHint": "Substitui o padrão apenas para este grupo."
+      "memberLabelGroupHint": "Substitui o padrão apenas para este grupo.",
+      "confirmRemoveMember": "Remover este membro do grupo?",
+      "confirmRemoveSpecial": "Remover esta oferta especial?"
     },
     "rewards": {
       "title": "Saldo de recompensa",
@@ -5392,11 +5394,11 @@
       "backTo": "Voltar para {name}",
       "greeting": "Olá, {name}",
       "noEmailOnFile": "Nenhum e-mail cadastrado",
-      "yourCoupons": "Seus cupons ({count})",
-      "noCoupons": "Nenhum cupom no momento. {name} pode te enviar códigos personalizados — eles aparecerão aqui.",
+      "yourCoupons": "Suas ofertas ({count})",
+      "noCoupons": "Nenhuma oferta no momento. {name} pode enviar códigos personalizados — eles aparecerão aqui.",
       "unlimitedUses": "Usos ilimitados",
       "usesLeft": "{n, plural, one {# uso restante} other {# usos restantes}}",
-      "personalCoupon": "Cupom pessoal",
+      "personalCoupon": "Oferta pessoal",
       "minOrder": "Pedido mín. {amount}",
       "expires": "Expira em {date}",
       "savedAddresses": "Endereços de entrega salvos",

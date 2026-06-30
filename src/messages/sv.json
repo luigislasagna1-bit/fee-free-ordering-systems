@@ -4279,7 +4279,9 @@
         "cancel": "Avbryt",
         "save": "Skapa"
       },
-      "memberLabelGroupHint": "Åsidosätter standardvärdet endast för denna grupp."
+      "memberLabelGroupHint": "Åsidosätter standardvärdet endast för denna grupp.",
+      "confirmRemoveMember": "Ta bort den här medlemmen från gruppen?",
+      "confirmRemoveSpecial": "Ta bort det här erbjudandet?"
     },
     "rewards": {
       "title": "Bonuspengar",
@@ -5392,11 +5394,11 @@
       "backTo": "Tillbaka till {name}",
       "greeting": "Hej, {name}",
       "noEmailOnFile": "Ingen e-postadress registrerad",
-      "yourCoupons": "Dina kuponger ({count})",
-      "noCoupons": "Inga kuponger just nu. {name} kan skicka personliga koder till dig — de visas här.",
+      "yourCoupons": "Dina erbjudanden ({count})",
+      "noCoupons": "Inga erbjudanden just nu. {name} kan skicka personliga koder till dig — de visas här.",
       "unlimitedUses": "Obegränsat antal användningar",
       "usesLeft": "{n, plural, one {# användning kvar} other {# användningar kvar}}",
-      "personalCoupon": "Personlig kupong",
+      "personalCoupon": "Personligt erbjudande",
       "minOrder": "Min. beställning {amount}",
       "expires": "Går ut {date}",
       "savedAddresses": "Sparade leveransadresser",

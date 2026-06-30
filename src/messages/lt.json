@@ -4279,7 +4279,9 @@
         "cancel": "Atšaukti",
         "save": "Sukurti"
       },
-      "memberLabelGroupHint": "Pakeičia numatytąją reikšmę tik šiai grupei."
+      "memberLabelGroupHint": "Pakeičia numatytąją reikšmę tik šiai grupei.",
+      "confirmRemoveMember": "Pašalinti šį narį iš grupės?",
+      "confirmRemoveSpecial": "Pašalinti šį specialų pasiūlymą?"
     },
     "rewards": {
       "title": "Premijų doleriai",
@@ -5392,11 +5394,11 @@
       "backTo": "Grįžti į {name}",
       "greeting": "Sveiki, {name}",
       "noEmailOnFile": "El. paštas nenurodytas",
-      "yourCoupons": "Jūsų kuponai ({count})",
-      "noCoupons": "Šiuo metu kuponų nėra. {name} gali siųsti jums asmeninius kodus — jie pasirodys čia.",
+      "yourCoupons": "Jūsų pasiūlymai ({count})",
+      "noCoupons": "Šiuo metu pasiūlymų nėra. {name} gali atsiųsti jums suasmenintus kodus — jie pasirodys čia.",
       "unlimitedUses": "Neriboti naudojimai",
       "usesLeft": "{n, plural, one {Liko # naudojimas} other {Liko # naudojimų}}",
-      "personalCoupon": "Asmeninis kuponas",
+      "personalCoupon": "Asmeninis pasiūlymas",
       "minOrder": "Min. užsakymas {amount}",
       "expires": "Galioja iki {date}",
       "savedAddresses": "Išsaugoti pristatymo adresai",

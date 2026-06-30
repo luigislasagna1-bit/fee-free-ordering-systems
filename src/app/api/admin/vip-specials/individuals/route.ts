@@ -27,9 +27,9 @@ export async function GET(req: Request) {
     orderBy: { createdAt: "desc" },
     take: 1000,
     select: {
-      id: true, promotionId: true, customerId: true, email: true, createdAt: true,
+      id: true, promotionId: true, customerId: true, email: true, phone: true, createdAt: true,
       promotion: { select: { id: true, name: true, promotionType: true, isActive: true, ruleConfig: true } },
-      customer: { select: { name: true, email: true, passwordHash: true } },
+      customer: { select: { name: true, email: true, phone: true, passwordHash: true } },
     },
   });
   const targets = rows.map((t) => ({
@@ -41,6 +41,9 @@ export async function GET(req: Request) {
     ruleConfig: t.promotion.ruleConfig,
     name: t.customer?.name ?? null,
     email: t.email ?? t.customer?.email ?? null,
+    // Phone-only targets (a linked customer with a phone but no email) used to
+    // show as a blank row — surface the phone so they're identifiable. Luigi 2026-06-30.
+    phone: t.phone ?? t.customer?.phone ?? null,
     hasAccount: !!t.customer?.passwordHash,
   }));
 

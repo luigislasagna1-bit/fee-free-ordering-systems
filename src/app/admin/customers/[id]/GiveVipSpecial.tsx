@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { Crown, Plus, Trash2, Tag } from "lucide-react";
+import { Crown, Plus, Trash2, Tag, Loader2 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { ScheduleEditor } from "../../customer-groups/ScheduleEditor";
 
@@ -22,6 +22,7 @@ export function GiveVipSpecial({ customerId, customerName, currency, rewardsEnab
   const [pick, setPick] = useState("");
   const [notify, setNotify] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const reload = useCallback(async () => {
     try {
@@ -32,8 +33,10 @@ export function GiveVipSpecial({ customerId, customerName, currency, rewardsEnab
   }, [customerId]);
 
   useEffect(() => {
-    fetch("/api/admin/vip-specials/pickable").then((x) => x.json()).then((d) => { if (Array.isArray(d.promotions)) setPromos(d.promotions); }).catch(() => {});
-    reload();
+    Promise.allSettled([
+      fetch("/api/admin/vip-specials/pickable").then((x) => x.json()).then((d) => { if (Array.isArray(d.promotions)) setPromos(d.promotions); }),
+      reload(),
+    ]).finally(() => setLoading(false));
   }, [reload]);
 
   async function give() {
@@ -54,6 +57,7 @@ export function GiveVipSpecial({ customerId, customerName, currency, rewardsEnab
   }
 
   async function remove(id: string) {
+    if (!confirm(t("confirmRemoveSpecial"))) return;
     const res = await fetch(`/api/admin/vip-specials/individuals?id=${encodeURIComponent(id)}`, { method: "DELETE" });
     if (!res.ok) { toast.error(t("detachFailed")); return; }
     setSpecials((s) => s.filter((x) => x.id !== id));
@@ -117,7 +121,9 @@ export function GiveVipSpecial({ customerId, customerName, currency, rewardsEnab
         </ul>
       )}
 
-      {promos.length > 0 ? (
+      {loading ? (
+        <div className="mt-4 flex justify-center"><Loader2 className="w-5 h-5 animate-spin text-gray-300" /></div>
+      ) : promos.length > 0 ? (
         <div className="mt-4">
           <div className="flex gap-2">
             <select className={inputCls + " flex-1"} value={pick} onChange={(e) => setPick(e.target.value)}>
@@ -127,7 +133,7 @@ export function GiveVipSpecial({ customerId, customerName, currency, rewardsEnab
               ))}
             </select>
             <button onClick={give} disabled={busy || !pick} className="inline-flex items-center gap-1.5 bg-emerald-500 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-emerald-600 transition disabled:opacity-50">
-              <Plus className="w-4 h-4" /> {busy ? "…" : t("giveSpecial")}
+              <Plus className="w-4 h-4" /> {busy ? <Loader2 className="w-4 h-4 animate-spin" /> : t("giveSpecial")}
             </button>
           </div>
           <label className="flex items-center gap-2 text-xs text-gray-600 mt-2">

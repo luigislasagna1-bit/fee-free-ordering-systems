@@ -4279,7 +4279,9 @@
         "cancel": "Atcelt",
         "save": "Izveidot"
       },
-      "memberLabelGroupHint": "Aizstāj noklusējumu tikai šai grupai."
+      "memberLabelGroupHint": "Aizstāj noklusējumu tikai šai grupai.",
+      "confirmRemoveMember": "Noņemt šo dalībnieku no grupas?",
+      "confirmRemoveSpecial": "Noņemt šo īpašo piedāvājumu?"
     },
     "rewards": {
       "title": "Bonusa dolāri",
@@ -5392,11 +5394,11 @@
       "backTo": "Atpakaļ uz {name}",
       "greeting": "Sveiks, {name}",
       "noEmailOnFile": "E-pasts nav norādīts",
-      "yourCoupons": "Jūsu kuponi ({count})",
-      "noCoupons": "Šobrīd kuponu nav. {name} var nosūtīt jums personalizētus kodus — tie parādīsies šeit.",
+      "yourCoupons": "Jūsu piedāvājumi ({count})",
+      "noCoupons": "Pašlaik nav piedāvājumu. {name} var nosūtīt jums personalizētus kodus — tie parādīsies šeit.",
       "unlimitedUses": "Neierobežots lietošanas reižu skaits",
       "usesLeft": "{n, plural, one {Vēl # lietošanas reize} other {Vēl # lietošanas reizes}}",
-      "personalCoupon": "Personīgais kupons",
+      "personalCoupon": "Personīgs piedāvājums",
       "minOrder": "Min. pasūtījums {amount}",
       "expires": "Derīguma termiņš {date}",
       "savedAddresses": "Saglabātās piegādes adreses",

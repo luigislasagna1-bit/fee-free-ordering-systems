@@ -4279,7 +4279,9 @@
         "cancel": "キャンセル",
         "save": "作成"
       },
-      "memberLabelGroupHint": "このグループのみ既定値を上書きします。"
+      "memberLabelGroupHint": "このグループのみ既定値を上書きします。",
+      "confirmRemoveMember": "このメンバーをグループから削除しますか？",
+      "confirmRemoveSpecial": "この特典を削除しますか？"
     },
     "rewards": {
       "title": "リワードドル",
@@ -5392,11 +5394,11 @@
       "backTo": "{name}に戻る",
       "greeting": "こんにちは、{name}さん",
       "noEmailOnFile": "メールアドレスが登録されていません",
-      "yourCoupons": "クーポン（{count}枚）",
-      "noCoupons": "現在クーポンはありません。{name}からパーソナルコードが送られると、ここに表示されます。",
+      "yourCoupons": "あなたの特典 ({count})",
+      "noCoupons": "現在オファーはありません。{name} があなた専用のコードを送ると、ここに表示されます。",
       "unlimitedUses": "無制限に使用可能",
       "usesLeft": "{n, plural, one {残り# 回使用可能} other {残り# 回使用可能}}",
-      "personalCoupon": "パーソナルクーポン",
+      "personalCoupon": "あなた専用の特典",
       "minOrder": "最低注文金額 {amount}",
       "expires": "有効期限：{date}",
       "savedAddresses": "保存済み配達先住所",

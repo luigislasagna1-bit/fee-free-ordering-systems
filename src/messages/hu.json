@@ -4279,7 +4279,9 @@
         "cancel": "Mégse",
         "save": "Létrehozás"
       },
-      "memberLabelGroupHint": "Csak ehhez a csoporthoz írja felül az alapértelmezést."
+      "memberLabelGroupHint": "Csak ehhez a csoporthoz írja felül az alapértelmezést.",
+      "confirmRemoveMember": "Eltávolítja ezt a tagot a csoportból?",
+      "confirmRemoveSpecial": "Eltávolítja ezt az ajánlatot?"
     },
     "rewards": {
       "title": "Jutalomdollár",
@@ -5392,11 +5394,11 @@
       "backTo": "Vissza: {name}",
       "greeting": "Szia, {name}",
       "noEmailOnFile": "Nincs e-mail-cím megadva",
-      "yourCoupons": "Kuponjaid ({count})",
-      "noCoupons": "Jelenleg nincs kuponod. {name} személyre szabott kódokat küldhet neked – azok itt fognak megjelenni.",
+      "yourCoupons": "Az ajánlataid ({count})",
+      "noCoupons": "Most nincs ajánlat. {name} küldhet neked személyre szabott kódokat — itt fognak megjelenni.",
       "unlimitedUses": "Korlátlan felhasználás",
       "usesLeft": "{n, plural, one {Még # felhasználás} other {Még # felhasználás}}",
-      "personalCoupon": "Személyes kupon",
+      "personalCoupon": "Személyes ajánlat",
       "minOrder": "Min. rendelés: {amount}",
       "expires": "Lejár: {date}",
       "savedAddresses": "Mentett szállítási címek",

@@ -4279,7 +4279,9 @@
         "cancel": "Peruuta",
         "save": "Luo"
       },
-      "memberLabelGroupHint": "Korvaa oletuksen vain tälle ryhmälle."
+      "memberLabelGroupHint": "Korvaa oletuksen vain tälle ryhmälle.",
+      "confirmRemoveMember": "Poistetaanko tämä jäsen ryhmästä?",
+      "confirmRemoveSpecial": "Poistetaanko tämä tarjous?"
     },
     "rewards": {
       "title": "Bonusrahat",
@@ -5392,11 +5394,11 @@
       "backTo": "Takaisin: {name}",
       "greeting": "Hei, {name}",
       "noEmailOnFile": "Ei sähköpostiosoitetta tallennettu",
-      "yourCoupons": "Kuponkisi ({count})",
-      "noCoupons": "Ei kuponkeja tällä hetkellä. {name} voi lähettää sinulle henkilökohtaisia koodeja — ne näkyvät täällä.",
+      "yourCoupons": "Tarjouksesi ({count})",
+      "noCoupons": "Ei tarjouksia juuri nyt. {name} voi lähettää sinulle henkilökohtaisia koodeja — ne näkyvät täällä.",
       "unlimitedUses": "Rajaton käyttömäärä",
       "usesLeft": "{n, plural, one {# käyttökerta jäljellä} other {# käyttökertaa jäljellä}}",
-      "personalCoupon": "Henkilökohtainen kuponki",
+      "personalCoupon": "Henkilökohtainen tarjous",
       "minOrder": "Vähimmäistilaus {amount}",
       "expires": "Vanhenee {date}",
       "savedAddresses": "Tallennetut toimitusosoitteet",

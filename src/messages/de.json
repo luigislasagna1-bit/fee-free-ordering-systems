@@ -4279,7 +4279,9 @@
         "cancel": "Abbrechen",
         "save": "Erstellen"
       },
-      "memberLabelGroupHint": "Überschreibt die Standardeinstellung nur für diese Gruppe."
+      "memberLabelGroupHint": "Überschreibt die Standardeinstellung nur für diese Gruppe.",
+      "confirmRemoveMember": "Dieses Mitglied aus der Gruppe entfernen?",
+      "confirmRemoveSpecial": "Dieses Special entfernen?"
     },
     "rewards": {
       "title": "Bonusguthaben",
@@ -5392,11 +5394,11 @@
       "backTo": "Zurück zu {name}",
       "greeting": "Hallo, {name}",
       "noEmailOnFile": "Keine E-Mail-Adresse hinterlegt",
-      "yourCoupons": "Deine Gutscheine ({count})",
-      "noCoupons": "Momentan keine Gutscheine. {name} kann dir persönliche Codes senden – sie erscheinen dann hier.",
+      "yourCoupons": "Ihre Angebote ({count})",
+      "noCoupons": "Derzeit keine Angebote. {name} kann Ihnen personalisierte Codes senden — sie erscheinen hier.",
       "unlimitedUses": "Unbegrenzt einlösbar",
       "usesLeft": "{n, plural, one {# Einlösung übrig} other {# Einlösungen übrig}}",
-      "personalCoupon": "Persönlicher Gutschein",
+      "personalCoupon": "Persönliches Angebot",
       "minOrder": "Mindestbestellung {amount}",
       "expires": "Gültig bis {date}",
       "savedAddresses": "Gespeicherte Lieferadressen",

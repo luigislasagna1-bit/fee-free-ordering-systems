@@ -4279,7 +4279,9 @@
         "cancel": "Batal",
         "save": "Buat"
       },
-      "memberLabelGroupHint": "Mengganti default hanya untuk grup ini."
+      "memberLabelGroupHint": "Mengganti default hanya untuk grup ini.",
+      "confirmRemoveMember": "Hapus anggota ini dari grup?",
+      "confirmRemoveSpecial": "Hapus penawaran spesial ini?"
     },
     "rewards": {
       "title": "Dolar Hadiah",
@@ -5392,11 +5394,11 @@
       "backTo": "Kembali ke {name}",
       "greeting": "Hai, {name}",
       "noEmailOnFile": "Tidak ada email yang tersimpan",
-      "yourCoupons": "Kupon Anda ({count})",
-      "noCoupons": "Tidak ada kupon saat ini. {name} bisa mengirimkan kode khusus untuk Anda — akan muncul di sini.",
+      "yourCoupons": "Penawaran Anda ({count})",
+      "noCoupons": "Belum ada penawaran saat ini. {name} dapat mengirimi Anda kode yang dipersonalisasi — akan muncul di sini.",
       "unlimitedUses": "Penggunaan tidak terbatas",
       "usesLeft": "{n, plural, one {# kali tersisa} other {# kali tersisa}}",
-      "personalCoupon": "Kupon pribadi",
+      "personalCoupon": "Penawaran pribadi",
       "minOrder": "Min. pesanan {amount}",
       "expires": "Berlaku hingga {date}",
       "savedAddresses": "Alamat pengiriman tersimpan",

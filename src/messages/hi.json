@@ -4279,7 +4279,9 @@
         "cancel": "रद्द करें",
         "save": "बनाएँ"
       },
-      "memberLabelGroupHint": "केवल इस समूह के लिए डिफ़ॉल्ट को बदलता है।"
+      "memberLabelGroupHint": "केवल इस समूह के लिए डिफ़ॉल्ट को बदलता है।",
+      "confirmRemoveMember": "इस सदस्य को समूह से हटाएँ?",
+      "confirmRemoveSpecial": "इस विशेष ऑफ़र को हटाएँ?"
     },
     "rewards": {
       "title": "रिवॉर्ड डॉलर",
@@ -5392,11 +5394,11 @@
       "backTo": "{name} पर वापस जाएं",
       "greeting": "नमस्ते, {name}",
       "noEmailOnFile": "कोई ईमेल दर्ज नहीं है",
-      "yourCoupons": "आपके कूपन ({count})",
-      "noCoupons": "अभी कोई कूपन नहीं है। {name} आपको व्यक्तिगत कोड भेज सकते हैं — वे यहाँ दिखाई देंगे।",
+      "yourCoupons": "आपके ऑफ़र ({count})",
+      "noCoupons": "अभी कोई ऑफ़र नहीं है। {name} आपको व्यक्तिगत कोड भेज सकता है — वे यहाँ दिखाई देंगे।",
       "unlimitedUses": "असीमित उपयोग",
       "usesLeft": "{n, plural, one {# उपयोग शेष} other {# उपयोग शेष}}",
-      "personalCoupon": "व्यक्तिगत कूपन",
+      "personalCoupon": "व्यक्तिगत ऑफ़र",
       "minOrder": "न्यूनतम ऑर्डर {amount}",
       "expires": "समाप्ति {date}",
       "savedAddresses": "सहेजे गए डिलीवरी पते",

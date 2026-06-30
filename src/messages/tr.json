@@ -4279,7 +4279,9 @@
         "cancel": "İptal",
         "save": "Oluştur"
       },
-      "memberLabelGroupHint": "Yalnızca bu grup için varsayılanı geçersiz kılar."
+      "memberLabelGroupHint": "Yalnızca bu grup için varsayılanı geçersiz kılar.",
+      "confirmRemoveMember": "Bu üye gruptan çıkarılsın mı?",
+      "confirmRemoveSpecial": "Bu özel teklif kaldırılsın mı?"
     },
     "rewards": {
       "title": "Ödül Dolarları",
@@ -5392,11 +5394,11 @@
       "backTo": "{name} sayfasına geri dön",
       "greeting": "Merhaba, {name}",
       "noEmailOnFile": "Kayıtlı e-posta yok",
-      "yourCoupons": "Kuponlarınız ({count})",
-      "noCoupons": "Şu anda hiç kuponunuz yok. {name} size kişiselleştirilmiş kodlar gönderebilir — burada görünürler.",
+      "yourCoupons": "Fırsatlarınız ({count})",
+      "noCoupons": "Şu anda fırsat yok. {name} size kişiselleştirilmiş kodlar gönderebilir — burada görünecekler.",
       "unlimitedUses": "Sınırsız kullanım",
       "usesLeft": "{n, plural, one {# kullanım kaldı} other {# kullanım kaldı}}",
-      "personalCoupon": "Kişisel kupon",
+      "personalCoupon": "Kişisel fırsat",
       "minOrder": "Min. sipariş {amount}",
       "expires": "Son kullanım tarihi: {date}",
       "savedAddresses": "Kayıtlı teslimat adresleri",

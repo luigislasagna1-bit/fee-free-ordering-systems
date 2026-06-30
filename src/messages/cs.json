@@ -4279,7 +4279,9 @@
         "cancel": "Zrušit",
         "save": "Vytvořit"
       },
-      "memberLabelGroupHint": "Přepíše výchozí hodnotu jen pro tuto skupinu."
+      "memberLabelGroupHint": "Přepíše výchozí hodnotu jen pro tuto skupinu.",
+      "confirmRemoveMember": "Odebrat tohoto člena ze skupiny?",
+      "confirmRemoveSpecial": "Odebrat tuto speciální nabídku?"
     },
     "rewards": {
       "title": "Věrnostní kredit",
@@ -5392,11 +5394,11 @@
       "backTo": "Zpět na {name}",
       "greeting": "Ahoj, {name}",
       "noEmailOnFile": "Žádný e-mail není uložen",
-      "yourCoupons": "Vaše kupony ({count})",
-      "noCoupons": "Momentálně žádné kupony. {name} vám může poslat osobní kódy — zobrazí se zde.",
+      "yourCoupons": "Vaše nabídky ({count})",
+      "noCoupons": "Momentálně žádné nabídky. {name} vám může poslat personalizované kódy — zobrazí se zde.",
       "unlimitedUses": "Neomezené použití",
       "usesLeft": "{n, plural, one {# použití zbývá} other {# použití zbývá}}",
-      "personalCoupon": "Osobní kupon",
+      "personalCoupon": "Osobní nabídka",
       "minOrder": "Min. objednávka {amount}",
       "expires": "Platnost do {date}",
       "savedAddresses": "Uložené doručovací adresy",

@@ -4279,7 +4279,9 @@
         "cancel": "Tühista",
         "save": "Loo"
       },
-      "memberLabelGroupHint": "Alistab vaikeväärtuse ainult selle rühma jaoks."
+      "memberLabelGroupHint": "Alistab vaikeväärtuse ainult selle rühma jaoks.",
+      "confirmRemoveMember": "Eemaldada see liige rühmast?",
+      "confirmRemoveSpecial": "Eemaldada see pakkumine?"
     },
     "rewards": {
       "title": "Boonusraha",
@@ -5392,11 +5394,11 @@
       "backTo": "Tagasi {name} juurde",
       "greeting": "Tere, {name}",
       "noEmailOnFile": "E-posti aadress puudub",
-      "yourCoupons": "Sinu kupongid ({count})",
-      "noCoupons": "Praegu pole kuponge. {name} saab sulle personaalseid koode saata — need ilmuvad siia.",
+      "yourCoupons": "Sinu pakkumised ({count})",
+      "noCoupons": "Praegu pakkumisi pole. {name} saab saata teile isikupärastatud koode — need ilmuvad siia.",
       "unlimitedUses": "Piiramatu arv kasutusi",
       "usesLeft": "{n, plural, one {# kasutus järel} other {# kasutust järel}}",
-      "personalCoupon": "Isiklik kupong",
+      "personalCoupon": "Isiklik pakkumine",
       "minOrder": "Min. tellimus {amount}",
       "expires": "Aegub {date}",
       "savedAddresses": "Salvestatud tarneaadressid",
