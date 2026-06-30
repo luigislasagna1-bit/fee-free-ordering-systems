@@ -70,7 +70,7 @@ export default async function CustomerAccountPage({
       select: {
         id: true, orderNumber: true, total: true, status: true,
         type: true, createdAt: true,
-        restaurant: { select: { name: true, slug: true, currency: true } },
+        restaurant: { select: { name: true, slug: true, currency: true, timezone: true } },
       },
     }),
     // 3 most recent successful baskets across every restaurant for the
@@ -85,7 +85,7 @@ export default async function CustomerAccountPage({
       take: 3,
       select: {
         id: true, total: true, createdAt: true,
-        restaurant: { select: { name: true, slug: true, currency: true } },
+        restaurant: { select: { name: true, slug: true, currency: true, timezone: true } },
         items: { select: { name: true, quantity: true }, take: 4 },
       },
     }),
@@ -105,7 +105,7 @@ export default async function CustomerAccountPage({
         id: true, code: true, description: true, discountType: true,
         discountValue: true, minimumOrder: true, maxUses: true,
         usedCount: true, expiresAt: true,
-        restaurant: { select: { name: true, slug: true, currency: true } },
+        restaurant: { select: { name: true, slug: true, currency: true, timezone: true } },
       },
     }),
     // Favourite restaurants — top 3 the customer has ordered from
@@ -323,7 +323,7 @@ export default async function CustomerAccountPage({
                     <div className="text-[11px] text-gray-400 mt-1">
                       {remaining}
                       {c.minimumOrder > 0 && <> · Min. order {formatCurrency(c.minimumOrder, c.restaurant?.currency)}</>}
-                      {c.expiresAt && <> · Expires {new Date(c.expiresAt).toLocaleDateString()}</>}
+                      {c.expiresAt && <> · Expires {new Date(c.expiresAt).toLocaleDateString(undefined, c.restaurant?.timezone ? { timeZone: c.restaurant.timezone } : {})}</>}
                     </div>
                   </div>
                   <div className="flex-shrink-0">
@@ -403,6 +403,7 @@ export default async function CustomerAccountPage({
                       {" · "}
                       {new Date(o.createdAt).toLocaleDateString(undefined, {
                         month: "short", day: "numeric",
+                        ...(o.restaurant.timezone ? { timeZone: o.restaurant.timezone } : {}),
                       })}
                     </div>
                   </div>

@@ -57,8 +57,11 @@ export default async function CustomerDetailPage({
   // the wallet. Luigi 2026-06-27.
   const restaurantRow = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
-    select: { name: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true },
+    select: { name: true, timezone: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true },
   });
+  // Dates render in the restaurant's timezone (this is a server component, so a
+  // naked toLocale* would use the server's UTC clock). Luigi 2026-06-30.
+  const tzOpts = restaurantRow?.timezone ? { timeZone: restaurantRow.timezone } : {};
 
   const hasAccount = !!customer.passwordHash;
   const now = new Date();
@@ -231,7 +234,7 @@ export default async function CustomerDetailPage({
                       <div className="text-[11px] text-gray-500 mt-0.5">
                         {g.promotion?.name}
                         {(g.promotion?.minimumOrder ?? 0) > 0 && <> · {t("couponMin", { amount: formatCurrency(g.promotion!.minimumOrder) })}</>}
-                        {expired && <> · {t("couponExpires", { date: new Date(g.promotion!.endsAt!).toLocaleDateString() })}</>}
+                        {expired && <> · {t("couponExpires", { date: new Date(g.promotion!.endsAt!).toLocaleDateString(undefined, tzOpts) })}</>}
                       </div>
                     </div>
                     <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${statusClass}`}>
@@ -295,7 +298,7 @@ export default async function CustomerDetailPage({
                     <div className="text-xs text-gray-500 mt-0.5">
                       {new Date(o.createdAt).toLocaleString(undefined, {
                         month: "short", day: "numeric", year: "numeric",
-                        hour: "numeric", minute: "2-digit",
+                        hour: "numeric", minute: "2-digit", ...tzOpts,
                       })}
                       {" · "}{o.type}
                     </div>

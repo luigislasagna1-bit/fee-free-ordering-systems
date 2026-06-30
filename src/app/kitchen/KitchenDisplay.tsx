@@ -981,7 +981,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     }
     if (!printerSettings?.printNodeConnected || !printerSettings.selectedPrinterId) {
       toast.error("No printer configured. Open Printer Setup to connect.");
-      setShowPrinterSetup(true);
+      if (printNodeEnabled) setShowPrinterSetup(true);
       return;
     }
     try {
@@ -2775,7 +2775,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     }
     if (!printerSettings?.printNodeConnected || !printerSettings.selectedPrinterId) {
       toast.error("No printer configured. Open Printer Setup to connect.");
-      setShowPrinterSetup(true);
+      if (printNodeEnabled) setShowPrinterSetup(true);
       throw new Error("No printer");
     }
     const res = await fetch("/api/kitchen/printnode/print", {
@@ -4036,7 +4036,9 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
           path. This modal stays available as a backup for restaurants
           who can't (or don't want to) install the native app + for
           existing PrintNode-configured setups. */}
-      {showPrinterSetup && (
+      {/* PrintNode setup modal — only when the owner has opted into PrintNode.
+          Native-WiFi-only restaurants never see it (gate, Luigi 2026-06-30). */}
+      {showPrinterSetup && printNodeEnabled && (
         <PrinterSetupModal
           onClose={() => setShowPrinterSetup(false)}
           onSettingsSaved={saved => setPrinterSettings(saved)}

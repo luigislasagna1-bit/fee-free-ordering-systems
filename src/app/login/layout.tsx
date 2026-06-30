@@ -1,6 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { isNeutralResellerHost } from "@/lib/restaurant-url";
+
+/**
+ * `viewportFit: "cover"` lets the login page read `env(safe-area-inset-*)` so
+ * the top-right language switcher can clear a phone's notch / status bar instead
+ * of tucking under it (kitchen staff sign in on phones). Luigi 2026-06-30.
+ */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 /**
  * Login segment layout — metadata only.

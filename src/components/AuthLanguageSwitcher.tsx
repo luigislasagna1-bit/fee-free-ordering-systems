@@ -14,7 +14,12 @@ export function AuthLanguageSwitcher({ currentLocale }: Props) {
   };
 
   return (
-    <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-white/80 backdrop-blur rounded-lg border border-gray-200 shadow-sm px-2 py-1">
+    <div
+      className="absolute right-4 flex items-center gap-1.5 bg-white/80 backdrop-blur rounded-lg border border-gray-200 shadow-sm px-2 py-1"
+      // Sit below the phone's status bar / notch (needs viewportFit:cover, set in
+      // login/layout.tsx). Falls back to the original 1rem on devices with no inset.
+      style={{ top: "max(1rem, env(safe-area-inset-top, 1rem))" }}
+    >
       <Globe className="w-4 h-4 text-gray-500" />
       <select
         aria-label="Language"
