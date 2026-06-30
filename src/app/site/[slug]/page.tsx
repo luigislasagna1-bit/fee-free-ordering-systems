@@ -738,19 +738,32 @@ export default async function HostedSitePage({
                 ? "grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto"
                 : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
             }`}>
-              {r.specialOffers.map((promo) => (
+              {r.specialOffers.map((promo) => {
+                // Prominent deal chip from the promo's discount — percentage /
+                // free-delivery / BOGO types (no currency needed). Falls back to a
+                // generic tag for fixed-$ or other types (the name conveys those).
+                const rc = (promo.ruleConfig as Record<string, unknown> | null) || {};
+                const pct = typeof rc.discountPercent === "number" ? rc.discountPercent : 0;
+                const chip =
+                  pct > 0 ? `${pct}% OFF`
+                  : promo.promotionType === "free_delivery" ? "FREE DELIVERY"
+                  : promo.promotionType === "bogo" ? "BUY 1 GET 1"
+                  : promo.promotionType === "buy_n_get_free" ? "BUY & GET FREE"
+                  : (promo.promotionType === "free_item" || promo.promotionType === "free_dish_meal") ? "FREE ITEM"
+                  : "SPECIAL OFFER";
+                return (
                 <Link
                   key={promo.id}
                   href={orderUrl}
                   className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition overflow-hidden border border-gray-100 p-5 block"
                 >
-                  {/* Theme-colored "deal" tag at top of card */}
+                  {/* Theme-colored deal chip at top of card */}
                   <div className="flex items-center gap-1.5 mb-3">
                     <span
                       className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full text-white"
                       style={{ background: themeColor }}
                     >
-                      Special Offer
+                      {chip}
                     </span>
                   </div>
                   <h3 className="text-lg font-bold text-gray-900 group-hover:underline">
@@ -768,7 +781,8 @@ export default async function HostedSitePage({
                     Order now <span aria-hidden>→</span>
                   </p>
                 </Link>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>

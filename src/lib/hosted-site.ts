@@ -86,6 +86,7 @@ export interface HostedSiteData {
     name: string;
     description: string | null;
     promotionType: string;
+    ruleConfig: unknown;
   }>;
   acceptsPickup: boolean;
   acceptsDelivery: boolean;
@@ -298,6 +299,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
         name: true,
         description: true,
         promotionType: true,
+        ruleConfig: true,
       },
     }),
   ]);
