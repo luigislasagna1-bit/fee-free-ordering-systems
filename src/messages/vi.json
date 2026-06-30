@@ -505,7 +505,8 @@
       "useNone": "Không dùng",
       "chargeToday": "Cần thanh toán hôm nay",
       "capNote": "Bạn có thể dùng tối đa {amount} cho đơn hàng này.",
-      "earnLine": "+ Nhận {amount}"
+      "earnLine": "+ Nhận {amount}",
+      "capHelp": "Nhà hàng cho phép dùng tối đa {percent}% tổng đơn hàng bằng {label}."
     }
   },
   "reservation": {

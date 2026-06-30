@@ -505,7 +505,8 @@
       "useNone": "Niciunul",
       "chargeToday": "De plată azi",
       "capNote": "Poți aplica până la {amount} la această comandă.",
-      "earnLine": "+ Câștigi {amount}"
+      "earnLine": "+ Câștigi {amount}",
+      "capHelp": "Restaurantul permite folosirea a până la {percent}% din totalul comenzii în {label}."
     }
   },
   "reservation": {

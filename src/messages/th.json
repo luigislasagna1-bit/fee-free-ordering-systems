@@ -505,7 +505,8 @@
       "useNone": "ไม่ใช้",
       "chargeToday": "ยอดที่ต้องชำระวันนี้",
       "capNote": "คุณใช้ได้สูงสุด {amount} กับคำสั่งซื้อนี้",
-      "earnLine": "+ รับ {amount}"
+      "earnLine": "+ รับ {amount}",
+      "capHelp": "ร้านอนุญาตให้ใช้ {label} ได้สูงสุด {percent}% ของยอดคำสั่งซื้อ"
     }
   },
   "reservation": {

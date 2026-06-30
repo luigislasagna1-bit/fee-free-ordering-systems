@@ -505,7 +505,8 @@
       "useNone": "Ei mitään",
       "chargeToday": "Maksettavaa tänään",
       "capNote": "Voit käyttää tähän tilaukseen enintään {amount}.",
-      "earnLine": "+ Ansaitse {amount}"
+      "earnLine": "+ Ansaitse {amount}",
+      "capHelp": "Ravintola sallii käyttää enintään {percent}% tilauksen summasta: {label}."
     }
   },
   "reservation": {

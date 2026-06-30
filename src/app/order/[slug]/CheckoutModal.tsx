@@ -14,6 +14,7 @@ import { formatTime } from "@/lib/format-time";
 import { useGoogleMaps } from "@/lib/use-google-maps";
 import { resolveMapsBrowserKey } from "@/lib/maps-key";
 import { useTranslations } from "next-intl";
+import { HelpTip } from "@/components/HelpTip";
 import {
   type DeliveryFieldKey,
   type DeliveryAddressConfig,
@@ -1834,8 +1835,13 @@ export function CheckoutModal({
                     </button>
                   </div>
                   {rewardMax < rewardInfo!.balance && (
-                    <p className="mt-1.5 text-[11px] text-emerald-700/80">
+                    <p className="mt-1.5 flex items-center gap-1 text-[11px] text-emerald-700/80">
                       {tc("reward.capNote", { amount: formatCurrency(rewardMax) })}
+                      {/* Explain WHY it's capped — the restaurant's max-% limit.
+                          Only shown when the % (not the order total) is binding. */}
+                      {rewardInfo!.maxRedeemPercent > 0 && rewardInfo!.maxRedeemPercent < 100 && (
+                        <HelpTip text={tc("reward.capHelp", { percent: rewardInfo!.maxRedeemPercent, label: rewardLabelPlural })} />
+                      )}
                     </p>
                   )}
                 </div>

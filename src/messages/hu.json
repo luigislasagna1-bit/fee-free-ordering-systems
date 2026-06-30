@@ -505,7 +505,8 @@
       "useNone": "Egyik sem",
       "chargeToday": "Ma fizetendő",
       "capNote": "Ehhez a rendeléshez legfeljebb {amount} használható fel.",
-      "earnLine": "+ {amount} jóváírás"
+      "earnLine": "+ {amount} jóváírás",
+      "capHelp": "Az étterem a rendelés végösszegének legfeljebb {percent}%-áig engedi a(z) {label} felhasználását."
     }
   },
   "reservation": {

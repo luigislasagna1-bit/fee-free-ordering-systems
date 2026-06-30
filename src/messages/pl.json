@@ -505,7 +505,8 @@
       "useNone": "Nic",
       "chargeToday": "Do zapłaty dziś",
       "capNote": "Do tego zamówienia możesz wykorzystać maksymalnie {amount}.",
-      "earnLine": "+ Zdobądź {amount}"
+      "earnLine": "+ Zdobądź {amount}",
+      "capHelp": "Restauracja pozwala wykorzystać do {percent}% wartości zamówienia w {label}."
     }
   },
   "reservation": {

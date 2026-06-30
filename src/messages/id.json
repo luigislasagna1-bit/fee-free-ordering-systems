@@ -505,7 +505,8 @@
       "useNone": "Tidak ada",
       "chargeToday": "Dibayar hari ini",
       "capNote": "Anda dapat menggunakan hingga {amount} untuk pesanan ini.",
-      "earnLine": "+ Dapatkan {amount}"
+      "earnLine": "+ Dapatkan {amount}",
+      "capHelp": "Restoran mengizinkan penggunaan hingga {percent}% dari total pesanan dalam {label}."
     }
   },
   "reservation": {

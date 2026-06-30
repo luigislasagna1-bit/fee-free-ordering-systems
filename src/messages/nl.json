@@ -505,7 +505,8 @@
       "useNone": "Geen",
       "chargeToday": "Vandaag te betalen",
       "capNote": "Je kunt maximaal {amount} op deze bestelling gebruiken.",
-      "earnLine": "+ Verdien {amount}"
+      "earnLine": "+ Verdien {amount}",
+      "capHelp": "Dit restaurant staat toe om tot {percent}% van het ordertotaal met {label} te betalen."
     }
   },
   "reservation": {

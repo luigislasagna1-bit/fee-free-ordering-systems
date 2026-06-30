@@ -505,7 +505,8 @@
       "useNone": "لا شيء",
       "chargeToday": "المبلغ المستحق اليوم",
       "capNote": "يمكنك تطبيق ما يصل إلى {amount} على هذا الطلب.",
-      "earnLine": "+ اكسب {amount}"
+      "earnLine": "+ اكسب {amount}",
+      "capHelp": "يسمح المطعم باستخدام ما يصل إلى {percent}٪ من إجمالي الطلب بـ {label}."
     }
   },
   "reservation": {

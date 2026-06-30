@@ -505,7 +505,8 @@
       "useNone": "Nė vieno",
       "chargeToday": "Mokėti šiandien",
       "capNote": "Šiam užsakymui galite pritaikyti iki {amount}.",
-      "earnLine": "+ Uždirbkite {amount}"
+      "earnLine": "+ Uždirbkite {amount}",
+      "capHelp": "Restoranas leidžia panaudoti iki {percent}% užsakymo sumos {label}."
     }
   },
   "reservation": {

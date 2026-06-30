@@ -505,7 +505,8 @@
       "useNone": "Nevienu",
       "chargeToday": "Maksājams šodien",
       "capNote": "Šim pasūtījumam varat izmantot līdz {amount}.",
-      "earnLine": "+ Nopelniet {amount}"
+      "earnLine": "+ Nopelniet {amount}",
+      "capHelp": "Restorāns ļauj izmantot līdz {percent}% no pasūtījuma summas {label}."
     }
   },
   "reservation": {

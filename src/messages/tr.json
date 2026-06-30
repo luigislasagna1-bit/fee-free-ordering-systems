@@ -505,7 +505,8 @@
       "useNone": "Yok",
       "chargeToday": "Bugün ödenecek",
       "capNote": "Bu siparişe en fazla {amount} uygulayabilirsiniz.",
-      "earnLine": "+ {amount} kazanın"
+      "earnLine": "+ {amount} kazanın",
+      "capHelp": "Restoran, sipariş tutarının en fazla %{percent} kadarını {label} ile ödemenize izin verir."
     }
   },
   "reservation": {

@@ -505,7 +505,8 @@
       "useNone": "Inga",
       "chargeToday": "Att betala idag",
       "capNote": "Du kan använda upp till {amount} på den här beställningen.",
-      "earnLine": "+ Tjäna {amount}"
+      "earnLine": "+ Tjäna {amount}",
+      "capHelp": "Restaurangen tillåter att använda upp till {percent}% av ordersumman i {label}."
     }
   },
   "reservation": {

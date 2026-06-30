@@ -505,7 +505,8 @@
       "useNone": "使わない",
       "chargeToday": "本日のお支払い",
       "capNote": "このご注文では最大 {amount} までご利用いただけます。",
-      "earnLine": "+ {amount} を獲得"
+      "earnLine": "+ {amount} を獲得",
+      "capHelp": "この店では注文合計の最大{percent}%まで{label}で支払えます。"
     }
   },
   "reservation": {

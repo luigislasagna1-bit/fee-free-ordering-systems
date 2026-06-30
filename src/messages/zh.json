@@ -505,7 +505,8 @@
       "useNone": "不使用",
       "chargeToday": "今日应付",
       "capNote": "本订单最多可使用 {amount}。",
-      "earnLine": "+ 赚取 {amount}"
+      "earnLine": "+ 赚取 {amount}",
+      "capHelp": "餐厅允许使用 {label} 支付订单总额的最多 {percent}%。"
     }
   },
   "reservation": {

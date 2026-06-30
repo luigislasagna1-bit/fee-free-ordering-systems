@@ -505,7 +505,8 @@
       "useNone": "Нито един",
       "chargeToday": "За плащане днес",
       "capNote": "Можете да приложите до {amount} към тази поръчка.",
-      "earnLine": "+ Печелите {amount}"
+      "earnLine": "+ Печелите {amount}",
+      "capHelp": "Ресторантът позволява да използвате до {percent}% от сумата на поръчката в {label}."
     }
   },
   "reservation": {

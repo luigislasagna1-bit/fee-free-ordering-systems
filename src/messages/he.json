@@ -505,7 +505,8 @@
       "useNone": "ללא",
       "chargeToday": "לתשלום היום",
       "capNote": "אפשר להחיל עד {amount} על הזמנה זו.",
-      "earnLine": "+ צברו {amount}"
+      "earnLine": "+ צברו {amount}",
+      "capHelp": "המסעדה מאפשרת להשתמש עד {percent}% מסכום ההזמנה ב-{label}."
     }
   },
   "reservation": {

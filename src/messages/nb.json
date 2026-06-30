@@ -505,7 +505,8 @@
       "useNone": "Ingen",
       "chargeToday": "Å betale i dag",
       "capNote": "Du kan bruke inntil {amount} på denne bestillingen.",
-      "earnLine": "+ Tjen {amount}"
+      "earnLine": "+ Tjen {amount}",
+      "capHelp": "Restauranten tillater å bruke opptil {percent}% av ordresummen i {label}."
     }
   },
   "reservation": {

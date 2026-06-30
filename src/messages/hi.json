@@ -505,7 +505,8 @@
       "useNone": "कोई नहीं",
       "chargeToday": "आज देय",
       "capNote": "आप इस ऑर्डर पर अधिकतम {amount} इस्तेमाल कर सकते हैं।",
-      "earnLine": "+ {amount} कमाएँ"
+      "earnLine": "+ {amount} कमाएँ",
+      "capHelp": "यह रेस्टोरेंट ऑर्डर के कुल का अधिकतम {percent}% {label} में उपयोग करने देता है।"
     }
   },
   "reservation": {

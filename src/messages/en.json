@@ -398,7 +398,8 @@
       "useNone": "None",
       "chargeToday": "To pay today",
       "capNote": "You can apply up to {amount} on this order.",
-      "earnLine": "+ Earn {amount}"
+      "earnLine": "+ Earn {amount}",
+      "capHelp": "Your restaurant lets you use up to {percent}% of an order's total in {label}."
     },
     "estimatedReady": "Estimated ready",
     "subTotal": "Sub-Total",

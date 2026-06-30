@@ -505,7 +505,8 @@
       "useNone": "Nič",
       "chargeToday": "Za plačilo danes",
       "capNote": "Za to naročilo lahko uporabite največ {amount}.",
-      "earnLine": "+ Prislužite {amount}"
+      "earnLine": "+ Prislužite {amount}",
+      "capHelp": "Restavracija dovoljuje porabo do {percent}% zneska naročila v {label}."
     }
   },
   "reservation": {

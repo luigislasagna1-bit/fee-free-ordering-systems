@@ -505,7 +505,8 @@
       "useNone": "Nic",
       "chargeToday": "K úhradě dnes",
       "capNote": "Na tuto objednávku můžete uplatnit nejvýše {amount}.",
-      "earnLine": "+ Získejte {amount}"
+      "earnLine": "+ Získejte {amount}",
+      "capHelp": "Restaurace umožňuje použít až {percent}% z částky objednávky v {label}."
     }
   },
   "reservation": {

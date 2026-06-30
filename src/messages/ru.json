@@ -505,7 +505,8 @@
       "useNone": "Не использовать",
       "chargeToday": "К оплате сегодня",
       "capNote": "К этому заказу можно применить до {amount}.",
-      "earnLine": "+ Начислить {amount}"
+      "earnLine": "+ Начислить {amount}",
+      "capHelp": "Ресторан разрешает использовать до {percent}% от суммы заказа в {label}."
     }
   },
   "reservation": {

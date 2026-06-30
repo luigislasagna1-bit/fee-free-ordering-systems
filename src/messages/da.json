@@ -505,7 +505,8 @@
       "useNone": "Ingen",
       "chargeToday": "Skal betales i dag",
       "capNote": "Du kan bruge op til {amount} på denne ordre.",
-      "earnLine": "+ Optjen {amount}"
+      "earnLine": "+ Optjen {amount}",
+      "capHelp": "Restauranten tillader at bruge op til {percent}% af ordresummen i {label}."
     }
   },
   "reservation": {

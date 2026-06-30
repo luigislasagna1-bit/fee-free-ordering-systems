@@ -505,7 +505,8 @@
       "useNone": "Nada",
       "chargeToday": "A pagar hoy",
       "capNote": "Puedes aplicar hasta {amount} en este pedido.",
-      "earnLine": "+ Gana {amount}"
+      "earnLine": "+ Gana {amount}",
+      "capHelp": "Este restaurante permite usar hasta el {percent}% del total del pedido en {label}."
     }
   },
   "reservation": {

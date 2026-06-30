@@ -505,7 +505,8 @@
       "useNone": "사용 안 함",
       "chargeToday": "오늘 결제 금액",
       "capNote": "이 주문에는 최대 {amount}까지 사용할 수 있습니다.",
-      "earnLine": "+ {amount} 적립"
+      "earnLine": "+ {amount} 적립",
+      "capHelp": "이 매장은 주문 금액의 최대 {percent}%까지 {label}(으)로 사용할 수 있습니다."
     }
   },
   "reservation": {

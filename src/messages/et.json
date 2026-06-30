@@ -505,7 +505,8 @@
       "useNone": "Mitte midagi",
       "chargeToday": "Täna maksta",
       "capNote": "Sellele tellimusele saad kasutada kuni {amount}.",
-      "earnLine": "+ Teeni {amount}"
+      "earnLine": "+ Teeni {amount}",
+      "capHelp": "Restoran lubab kasutada kuni {percent}% tellimuse summast: {label}."
     }
   },
   "reservation": {
