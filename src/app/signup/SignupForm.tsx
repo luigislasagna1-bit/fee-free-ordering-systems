@@ -85,17 +85,21 @@ export function SignupForm({
   // value. Used for BOTH the cookie write and the register POST body below.
   const effectiveRef = brandedReferralCode || refCode || null;
 
-  // Persist the referral code to a 30-day cookie the moment the owner lands on
+  // Persist the referral code to a SESSION cookie the moment the owner lands on
   // /signup?ref=<code> OR on a reseller's branded host (?reseller= → resolved
-  // referralCode). Two reasons: (1) attribution survives if they wander off and
-  // come back to a bare /signup, and (2) /api/auth/register reads the same
-  // feefree_ref cookie as a fallback. The submit below ALSO sends it in the
-  // body, so attribution works even with cookies disabled. The branded-host
-  // code takes precedence over a stray ?ref= so the host's owner is credited.
+  // referralCode). Session-scoped (no max-age) so attribution survives them
+  // wandering off and coming back to a bare /signup WITHIN THE SAME VISIT, but
+  // does NOT linger. The old 30-day cookie meant a stale reseller-link click
+  // (e.g. from testing) wrongly credited a later genuinely-DIRECT signup to that
+  // reseller — Luigi hit exactly this (a direct signup showed "your partner is
+  // PISU MARKETING"). Luigi 2026-07-01: shortened 30 days → session.
+  // /api/auth/register reads the same feefree_ref cookie as a fallback, and the
+  // submit below ALSO sends it in the body (works even with cookies disabled).
+  // Branded-host code takes precedence over a stray ?ref=.
   // Fabrizio 2026-06-16; branded-host attribution Luigi 2026-06-23.
   useEffect(() => {
     if (effectiveRef && typeof document !== "undefined") {
-      document.cookie = `feefree_ref=${encodeURIComponent(effectiveRef)}; path=/; max-age=${60 * 60 * 24 * 30}; samesite=lax`;
+      document.cookie = `feefree_ref=${encodeURIComponent(effectiveRef)}; path=/; samesite=lax`;
     }
   }, [effectiveRef]);
 
