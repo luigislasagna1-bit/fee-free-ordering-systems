@@ -242,6 +242,90 @@ function useIsMobile(breakpointPx = 640): boolean {
   return isMobile;
 }
 
+// True when a hex colour is light enough that white text on it would be hard to
+// read — used to flip the themed-fallback banner's text to dark on a pale brand
+// colour (e.g. yellow). Photos always use white text (the scrim guarantees it).
+function isLightColor(hex: string): boolean {
+  const m = /^#?([0-9a-f]{6})$/i.exec((hex || "").trim());
+  if (!m) return false;
+  const n = parseInt(m[1], 16);
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.62;
+}
+
+// ─── Category banner (hero-band header) ──────────────────────────────────────
+// A full-width photo banner with the category name overlaid — replaces the small
+// thumbnail + text heading when the owner shows category images
+// (theme.showCategoryImages). A category with no photo falls back to a solid
+// theme-primary band with the same treatment, so the menu never looks half-empty.
+// The whole band is the collapse toggle when the accordion is active; otherwise a
+// carousel category shows its scroll arrows here. Luigi 2026-06-30.
+function CategoryBanner({ cat, theme, collapsible, collapsedNow, onToggleCollapse, onScroll }: {
+  cat: Category;
+  theme: ReturnType<typeof parseTheme>;
+  collapsible: boolean;
+  collapsedNow: boolean;
+  onToggleCollapse?: () => void;
+  onScroll?: (dir: -1 | 1) => void;
+}) {
+  const hasImage = !!cat.imageUrl;
+  const light = !hasImage && isLightColor(theme.primaryColor); // pale brand colour → dark text
+  const overlayText = light ? "#1f2937" : "#ffffff";
+  return (
+    <div
+      className={`relative mb-3 rounded-xl overflow-hidden ${collapsible ? "cursor-pointer select-none" : ""}`}
+      style={{ height: "clamp(130px, 20vw, 156px)", backgroundColor: hasImage ? "#000000" : theme.primaryColor }}
+      onClick={collapsible ? onToggleCollapse : undefined}
+      role={collapsible ? "button" : undefined}
+      aria-expanded={collapsible ? !collapsedNow : undefined}
+      aria-label={collapsible ? cat.name : undefined}
+    >
+      {hasImage && (
+        <img
+          src={cat.imageUrl!}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
+      {/* Bottom-up scrim (or a soft side wash on the themed fallback) keeps the
+          white name legible over any photo. */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: hasImage
+            ? "linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.14) 50%, rgba(0,0,0,0) 74%)"
+            : light
+              ? "transparent"
+              : "linear-gradient(120deg, rgba(0,0,0,0.28), rgba(0,0,0,0) 62%)",
+        }}
+      />
+      <div className="absolute top-3 right-3 z-10">
+        {collapsible ? (
+          <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: "rgba(0,0,0,0.34)" }}>
+            <ChevronDown className={`w-[18px] h-[18px] text-white transition-transform ${collapsedNow ? "" : "rotate-180"}`} />
+          </div>
+        ) : onScroll ? (
+          <div className="flex gap-1.5">
+            <button type="button" onClick={(e) => { e.stopPropagation(); onScroll(-1); }} className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: "rgba(0,0,0,0.34)" }} aria-label="Scroll left">
+              <ChevronLeft className="w-[18px] h-[18px] text-white" />
+            </button>
+            <button type="button" onClick={(e) => { e.stopPropagation(); onScroll(1); }} className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: "rgba(0,0,0,0.34)" }} aria-label="Scroll right">
+              <ChevronRight className="w-[18px] h-[18px] text-white" />
+            </button>
+          </div>
+        ) : null}
+      </div>
+      <div className="absolute left-4 bottom-4 right-14">
+        <div className="h-[3px] w-8 rounded mb-2" style={{ backgroundColor: hasImage ? "#f0c674" : light ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.75)" }} />
+        <h2 className="font-medium leading-tight truncate" style={{ color: overlayText, fontSize: "clamp(20px, 4.5vw, 24px)", letterSpacing: "-0.01em", textShadow: light ? "none" : "0 1px 12px rgba(0,0,0,0.5)" }}>{cat.name}</h2>
+      </div>
+    </div>
+  );
+}
+
 // ─── Category Section (carousel or grid) ─────────────────────────────────────
 
 function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, collapsed = false, onToggleCollapse }: {
@@ -285,19 +369,20 @@ function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, colla
   if (theme.menuLayout === "grid") {
     return (
       <div ref={onRef as any}>
-        <div
-          className={`flex items-center gap-3 mb-4 sticky top-0 py-2 z-10 ${collapsible ? "cursor-pointer select-none" : ""}`}
-          style={{ backgroundColor: theme.backgroundColor }}
-          onClick={collapsible ? onToggleCollapse : undefined}
-        >
-          {cat.imageUrl && theme.showCategoryImages && (
-            <img src={cat.imageUrl} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" />
-          )}
-          <h2 className="text-xl font-bold flex-1" style={{ color: theme.textColor }}>{cat.name}</h2>
-          {collapsible && (
-            <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
-          )}
-        </div>
+        {theme.showCategoryImages ? (
+          <CategoryBanner cat={cat} theme={theme} collapsible={collapsible} collapsedNow={collapsedNow} onToggleCollapse={onToggleCollapse} />
+        ) : (
+          <div
+            className={`flex items-center gap-3 mb-4 sticky top-0 py-2 z-10 ${collapsible ? "cursor-pointer select-none" : ""}`}
+            style={{ backgroundColor: theme.backgroundColor }}
+            onClick={collapsible ? onToggleCollapse : undefined}
+          >
+            <h2 className="text-xl font-bold flex-1" style={{ color: theme.textColor }}>{cat.name}</h2>
+            {collapsible && (
+              <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
+            )}
+          </div>
+        )}
         {!collapsedNow && (
           <div className="grid sm:grid-cols-2 gap-4">
             {cat.menuItems.map(item => (
@@ -315,19 +400,20 @@ function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, colla
     // no thumbnail — no blank placeholder (Luigi report cmpxe0ufs).
     return (
       <div ref={onRef as any}>
-        <div
-          className={`flex items-center gap-3 mb-4 sticky top-0 py-2 z-10 ${collapsible ? "cursor-pointer select-none" : ""}`}
-          style={{ backgroundColor: theme.backgroundColor }}
-          onClick={collapsible ? onToggleCollapse : undefined}
-        >
-          {cat.imageUrl && theme.showCategoryImages && (
-            <img src={cat.imageUrl} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" />
-          )}
-          <h2 className="text-xl font-bold flex-1" style={{ color: theme.textColor }}>{cat.name}</h2>
-          {collapsible && (
-            <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
-          )}
-        </div>
+        {theme.showCategoryImages ? (
+          <CategoryBanner cat={cat} theme={theme} collapsible={collapsible} collapsedNow={collapsedNow} onToggleCollapse={onToggleCollapse} />
+        ) : (
+          <div
+            className={`flex items-center gap-3 mb-4 sticky top-0 py-2 z-10 ${collapsible ? "cursor-pointer select-none" : ""}`}
+            style={{ backgroundColor: theme.backgroundColor }}
+            onClick={collapsible ? onToggleCollapse : undefined}
+          >
+            <h2 className="text-xl font-bold flex-1" style={{ color: theme.textColor }}>{cat.name}</h2>
+            {collapsible && (
+              <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
+            )}
+          </div>
+        )}
         {!collapsedNow && (
           <div className="flex flex-col gap-2">
             {cat.menuItems.map(item => (
@@ -350,14 +436,14 @@ function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, colla
   // Mobile interaction is unchanged: native touch swipe (snap-x).
   return (
     <div ref={onRef as any}>
+      {theme.showCategoryImages ? (
+        <CategoryBanner cat={cat} theme={theme} collapsible={collapsible} collapsedNow={collapsedNow} onToggleCollapse={onToggleCollapse} onScroll={scroll} />
+      ) : (
       <div
         className={`flex items-center gap-3 mb-3 sticky top-0 py-2 z-10 ${collapsible ? "cursor-pointer select-none" : ""}`}
         style={{ backgroundColor: theme.backgroundColor }}
         onClick={collapsible ? onToggleCollapse : undefined}
       >
-        {cat.imageUrl && theme.showCategoryImages && (
-          <img src={cat.imageUrl} alt={cat.name} className="w-8 h-8 rounded-lg object-cover" />
-        )}
         <h2 className="text-lg font-bold flex-1" style={{ color: theme.textColor }}>{cat.name}</h2>
         {collapsible ? (
           <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
@@ -372,6 +458,7 @@ function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, colla
           </div>
         )}
       </div>
+      )}
       {!collapsedNow && (
       <div
         ref={scrollRef}
