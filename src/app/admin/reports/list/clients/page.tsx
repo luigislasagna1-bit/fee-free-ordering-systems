@@ -171,7 +171,7 @@ export default async function ListClientsPage({
                     {c.email && <div>{c.email}</div>}
                     {c.phone && <div>{c.phone}</div>}
                   </td>
-                  <td className="py-2.5 px-4 text-gray-600 text-xs">{formatLastOrder(lifetimeById.get(c.id)?.lastOrder)}</td>
+                  <td className="py-2.5 px-4 text-gray-600 text-xs">{formatLastOrder(lifetimeById.get(c.id)?.lastOrder, scope.timezone ?? undefined)}</td>
                   <td className="py-2.5 px-4 text-right text-gray-700">{g._count.toLocaleString()}</td>
                   <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(g._sum.total ?? 0)}</td>
                   <td className="py-2.5 px-4 text-right text-gray-500">{(lifetimeById.get(c.id)?.orders ?? c.totalOrders).toLocaleString()}</td>
@@ -189,8 +189,11 @@ export default async function ListClientsPage({
   );
 }
 
-function formatLastOrder(d: Date | null | undefined): string {
-  return d ? new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—";
+function formatLastOrder(d: Date | null | undefined, timeZone?: string): string {
+  // Render in the restaurant's tz — server component, so a naked
+  // toLocaleDateString() uses the server's UTC clock and a late-night order can
+  // show the wrong calendar day. Luigi 2026-07-01.
+  return d ? new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric", ...(timeZone ? { timeZone } : {}) }) : "—";
 }
 
 function Pagination({ current, total, sp, t }: { current: number; total: number; sp: Record<string, string | string[] | undefined>; t: Awaited<ReturnType<typeof getTranslations>> }) {

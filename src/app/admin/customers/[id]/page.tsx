@@ -168,18 +168,18 @@ export default async function CustomerDetailPage({
         <div className="mt-4 pt-4 border-t border-gray-100 grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs text-gray-600">
           <div>
             <Calendar className="w-3.5 h-3.5 inline mr-1 text-gray-400" />
-            {t.rich("firstSeen", { date: formatDate(customer.createdAt), strong: (chunks) => <strong>{chunks}</strong> })}
+            {t.rich("firstSeen", { date: formatDate(customer.createdAt, tzOpts), strong: (chunks) => <strong>{chunks}</strong> })}
           </div>
           {customer.lastOrderAt && (
             <div>
               <ShoppingBag className="w-3.5 h-3.5 inline mr-1 text-gray-400" />
-              {t.rich("lastOrder", { date: formatDate(customer.lastOrderAt), strong: (chunks) => <strong>{chunks}</strong> })}
+              {t.rich("lastOrder", { date: formatDate(customer.lastOrderAt, tzOpts), strong: (chunks) => <strong>{chunks}</strong> })}
             </div>
           )}
           {hasAccount && customer.lastLoginAt && (
             <div>
               <KeyRound className="w-3.5 h-3.5 inline mr-1 text-gray-400" />
-              {t.rich("lastLogin", { date: formatDate(customer.lastLoginAt), strong: (chunks) => <strong>{chunks}</strong> })}
+              {t.rich("lastLogin", { date: formatDate(customer.lastLoginAt, tzOpts), strong: (chunks) => <strong>{chunks}</strong> })}
             </div>
           )}
         </div>

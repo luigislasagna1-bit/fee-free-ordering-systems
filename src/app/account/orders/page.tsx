@@ -39,7 +39,7 @@ export default async function CustomerOrdersPage() {
         type: true,
         total: true,
         createdAt: true,
-        restaurant: { select: { name: true, slug: true, currency: true } },
+        restaurant: { select: { name: true, slug: true, currency: true, timezone: true } },
       },
     }),
     // "Order again" rail data — marketplace parity with the per-
@@ -56,7 +56,7 @@ export default async function CustomerOrdersPage() {
         id: true,
         total: true,
         createdAt: true,
-        restaurant: { select: { name: true, slug: true, currency: true } },
+        restaurant: { select: { name: true, slug: true, currency: true, timezone: true } },
         items: { select: { name: true, quantity: true }, take: 4 },
       },
     }),
@@ -145,7 +145,7 @@ export default async function CustomerOrdersPage() {
                     <span>·</span>
                     <StatusPill status={o.status} />
                     <span>·</span>
-                    <span>{formatDate(o.createdAt)}</span>
+                    <span>{formatDate(o.createdAt, o.restaurant.timezone)}</span>
                   </div>
                 </div>
                 <ChevronRight className="w-4 h-4 text-gray-300 flex-shrink-0 mt-2" />
@@ -163,14 +163,19 @@ export default async function CustomerOrdersPage() {
   );
 }
 
-function formatDate(d: Date): string {
+function formatDate(d: Date, timeZone?: string | null): string {
+  // Absolute timestamps render in the order's RESTAURANT tz — server component,
+  // so a naked toLocale* uses the server's UTC clock and a late-night order shows
+  // the wrong time/day. The relative buckets ("X days ago") compare absolute
+  // instants, so they're tz-independent. Luigi 2026-07-01.
+  const tzOpts = timeZone ? { timeZone } : {};
   const now = new Date();
   const diffMs = now.getTime() - d.getTime();
   const diffDays = Math.floor(diffMs / (24 * 60 * 60_000));
-  if (diffDays === 0) return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+  if (diffDays === 0) return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", ...tzOpts });
   if (diffDays === 1) return "Yesterday";
   if (diffDays < 7) return `${diffDays} days ago`;
-  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: diffDays > 365 ? "numeric" : undefined });
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: diffDays > 365 ? "numeric" : undefined, ...tzOpts });
 }
 
 function StatusPill({ status }: { status: string }) {
