@@ -23,37 +23,10 @@ import { recordAppliedCoupons } from "@/lib/coupon-ledger";
 import { sendKitchenPush } from "@/lib/push";
 import { formatCurrency } from "@/lib/utils";
 
-/**
- * Give back one global usage count per applied promotion when a RELEASED order
- * later fails (auto-rejected / manually rejected / cancelled). Mirrors the
- * increment in fireOrderNotifications exactly — same appliedPromos source, same
- * id set — so a "max N uses" promo isn't permanently consumed by orders the
- * restaurant never fulfilled (audit B11). Gated on notifiedAt: only released
- * orders were ever incremented, so an abandoned/unpaid order (notifiedAt null)
- * must NOT be decremented. The `usedCount: { gt: 0 }` guard floors at 0 so a
- * double reject/cancel can't drive the counter negative. Luigi 2026-06-26.
- */
-export async function releasePromotionUsage(order: {
-  notifiedAt: Date | null;
-  appliedPromos: string | null;
-}): Promise<void> {
-  if (!order.notifiedAt) return;
-  let ids: string[] = [];
-  if (order.appliedPromos) {
-    try {
-      const parsed = JSON.parse(order.appliedPromos);
-      if (Array.isArray(parsed)) {
-        ids = parsed
-          .map((p: any) => p?.promoId)
-          .filter((x: unknown): x is string => typeof x === "string" && !!x);
-      }
-    } catch { /* malformed snapshot → nothing to release */ }
-  }
-  if (!ids.length) return;
-  await prisma.promotion
-    .updateMany({ where: { id: { in: ids }, usedCount: { gt: 0 } }, data: { usedCount: { decrement: 1 } } })
-    .catch((e) => console.error("[releasePromotionUsage]", e));
-}
+// Promo usage give-back on a killed/abandoned order now lives in
+// `releasePromotionUsageForOrder(orderId)` in @/lib/promo-usage — it deletes the
+// order's PromotionUsage ledger rows and decrements usedCount idempotently
+// (per-order, cap-independent), replacing the old raw-counter decrement here.
 
 export async function fireOrderNotifications(orderId: string): Promise<{ fired: boolean }> {
   // Atomic claim: only ONE caller wins the right to fire notifications.
@@ -146,19 +119,13 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       customerId: (order as any).customerId ?? null,
       appliedPromoIds,
     });
-    // GLOBAL usage cap (Fabrizio 2026-06-25): a Promotion with a `usageLimit` was never having
-    // its `usedCount` incremented, so the engine's `usedCount >= usageLimit` check
-    // (promo-engine.ts) never tripped → a "max N uses" code/auto promo could be redeemed
-    // forever. Bump it here, for EVERY applied promo type. fireOrderNotifications is idempotent
-    // (the atomic notifiedAt claim above ⇒ exactly one bump per released order — never on an
-    // abandoned unpaid card order, and re-bumped if the order is later released again after a
-    // miss/cancel only via a fresh release), and Prisma `increment` compiles to an atomic SQL
-    // `usedCount = usedCount + 1`, so concurrent orders can't lose a count. The legacy Coupon
-    // model already self-increments atomically in the order route; this closes the same gap
-    // for the Promotion model.
-    await prisma.promotion
-      .updateMany({ where: { id: { in: appliedPromoIds } }, data: { usedCount: { increment: 1 } } })
-      .catch((e) => console.error("[fireOrderNotifications] promo usedCount bump:", e));
+    // NOTE: promo `usedCount` is NOT bumped here anymore. As of B5 (2026-06-30)
+    // every applied promo — capped AND uncapped — is claimed at ORDER-CREATE (the
+    // order route bumps usedCount + writes a PromotionUsage ledger row), so bumping
+    // again at release would double-count. The give-back on a kill deletes the
+    // ledger rows (see releasePromotionUsageForOrder). Release is no longer a
+    // usage-accounting event — recordAppliedCoupons above is the only thing that
+    // still keys off it (campaign / once-per-lifetime tracking).
   }
 
   // Map order items for the email — include each item's own modifiers AND, for

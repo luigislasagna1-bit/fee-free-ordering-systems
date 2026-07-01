@@ -21,7 +21,7 @@ import { verifyOrderToken } from "@/lib/order-status-token";
 import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { redeemForOrder as redeemRewardForOrder, releaseForOrder as releaseRewardForOrder, awardForOrder as awardRewardForOrder, getOrderRewardSummary } from "@/lib/reward-ledger";
 import { awardEarnRulesForOrder, awardPromoCreditsForOrder } from "@/lib/reward-earn";
-import { releasePromotionUsage } from "@/lib/order-notifications";
+import { releasePromotionUsageForOrder } from "@/lib/promo-usage";
 import { RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 
 const ALLOWED_STATUSES = ["pending", "accepted", "preparing", "ready", "completed", "rejected", "cancelled"] as const;
@@ -415,13 +415,15 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     await releaseCouponsForOrder(id);
     // Reward Dollars: return any spent credit to the customer's wallet.
     await releaseRewardForOrder(id);
-    // Promotion GLOBAL usage cap: a released order (notifiedAt set → it was
-    // counted) that's now rejected/cancelled gives its usage back, so a
-    // "max N uses" promo isn't burned by an unfulfilled order (audit B11). Gate
-    // on the transition (was not already killed) so a repeat kill can't
-    // double-decrement; the helper also no-ops on never-released orders.
+    // Promotion usage give-back so a "max N uses" promo isn't burned by an
+    // unfulfilled order (audit B11). Deletes this order's PromotionUsage ledger
+    // rows and decrements usedCount per row actually deleted — IDEMPOTENT (a
+    // repeat or concurrent double-kill deletes nothing the 2nd time, so no double
+    // give-back) and CAP-INDEPENDENT. The status gate is now just a cheap
+    // optimisation to skip the query on an already-killed order; correctness no
+    // longer depends on it. Luigi 2026-06-30 (B5 ledger).
     if (existing.status !== "rejected" && existing.status !== "cancelled") {
-      await releasePromotionUsage(order);
+      await releasePromotionUsageForOrder(id);
     }
   }
 

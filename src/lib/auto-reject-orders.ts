@@ -15,7 +15,7 @@ import { notifyCustomer, notifyStaff } from "@/lib/notifications";
 import { refundDirectPayment, voidPayment } from "@/lib/stripe";
 import { releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { releaseForOrder as releaseRewardForOrder } from "@/lib/reward-ledger";
-import { releasePromotionUsage } from "@/lib/order-notifications";
+import { releasePromotionUsageForOrder } from "@/lib/promo-usage";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
@@ -133,30 +133,48 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
   // honoured before they get confused looking at the stale entry.
   const ABANDONED_TIMEOUT_MINUTES = 30;
   const abandonedCutoff = new Date(now.getTime() - ABANDONED_TIMEOUT_MINUTES * 60 * 1000);
-  // Covers three abandonment shapes — all where money never moved and
-  // the order never reached the kitchen:
-  //   • paymentStatus: "pending"           — checkout never authorized.
-  //   • paymentStatus: "requires_action"   — customer started 3D
-  //                                          Secure / SCA challenge
-  //                                          and abandoned it.
-  //   • paymentStatus: "processing"        — bank-debit payment that
-  //                                          never resolved (rare,
-  //                                          but possible if Stripe
-  //                                          loses the webhook).
+  // Covers every UNPAID, never-released order (money never moved, kitchen never
+  // saw it) so its coupon / reward / promo-usage claims are given back:
+  //   • paymentStatus "pending"         — checkout never authorized.
+  //   • paymentStatus "requires_action" — 3D Secure / SCA challenge abandoned.
+  //   • paymentStatus "processing"      — bank-debit that never resolved.
+  //   • paymentStatus "failed"          — card declined (the webhook flips it to
+  //                                       "failed"; nothing else cancels it).
+  //   • paymentStatus "voided"          — auth voided / PaymentIntent canceled.
+  // status is "pending" OR "accepted": auto-accept (restaurant.autoAcceptOrders)
+  // stamps a CARD order "accepted" at CREATE while its release stays deferred
+  // (notifiedAt null) until payment — so an abandoned auto-accepted card order is
+  // "accepted" + notifiedAt:null and the kitchen-stale sweep above (which requires
+  // notifiedAt) never sees it. The "failed"/"voided" and "accepted" cases were
+  // leaking a promo-usage slot until B5's ledger + this broadened sweep (Luigi
+  // 2026-06-30). notifiedAt:null keeps every genuinely-paid order (notifiedAt set
+  // + paymentStatus "paid") safely OUT of this sweep.
+  const abandonedStatuses = ["pending", "accepted"];
+  const abandonedPaymentStatuses = ["pending", "requires_action", "processing", "failed", "voided"];
   const abandoned = await prisma.order.findMany({
     where: {
-      status: "pending",
+      status: { in: abandonedStatuses },
       notifiedAt: null,
       ...(opts.restaurantId ? { restaurantId: opts.restaurantId } : {}),
-      paymentStatus: { in: ["pending", "requires_action", "processing"] },
+      paymentStatus: { in: abandonedPaymentStatuses },
       createdAt: { lt: abandonedCutoff },
     },
     select: { id: true, orderNumber: true, restaurantId: true, viaMarketplace: true, marketplaceCounterApplied: true, smartLinkCounterApplied: true, total: true },
   });
   for (const o of abandoned) {
     try {
-      await prisma.order.update({
-        where: { id: o.id },
+      // Atomic status flip re-asserting the FULL abandoned condition (status +
+      // notifiedAt:null + unpaid) so (a) two overlapping cron runs can't both
+      // cancel it, and (b) a payment that succeeds concurrently — which sets
+      // notifiedAt and paymentStatus "paid" — makes this guard MISS, so we never
+      // cancel a just-paid order out from under the customer.
+      const claimed = await prisma.order.updateMany({
+        where: {
+          id: o.id,
+          status: { in: abandonedStatuses },
+          notifiedAt: null,
+          paymentStatus: { in: abandonedPaymentStatuses },
+        },
         data: {
           status: "cancelled",
           rejectedAt: now,
@@ -164,6 +182,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
             "Payment was not completed within the checkout window. The order was cancelled automatically.",
         },
       });
+      if (claimed.count === 0) continue; // another run already cancelled it, or it just got paid
       result.abandonedCancelled += 1;
       // Free any coupon this abandoned order had reserved, so the customer can
       // re-use the offer on a fresh order. Idempotent + internally safe.
@@ -171,6 +190,11 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       // Return any Reward Dollars reserved on this abandoned order (no-op when
       // none were spent). Mirrors the manual cancel path in orders/[id]/route.
       await releaseRewardForOrder(o.id);
+      // Give back the promo usage slot(s) this abandoned order claimed at create
+      // (B5). Deletes its PromotionUsage ledger rows + decrements usedCount,
+      // idempotently — without this a capped promo leaks a slot on every
+      // abandoned card checkout.
+      await releasePromotionUsageForOrder(o.id);
       // Marketplace attribution shouldn't include orders that never paid.
       // (For belt-and-suspenders — usually marketplaceCounterApplied is
       // false on never-paid orders, but the rollback is idempotent.)
@@ -225,10 +249,10 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       // spent on an order the kitchen never accepted was stranded in "applied"
       // forever. Idempotent — no-ops when the order spent no credit. (Luigi 2026-06-29)
       await releaseRewardForOrder(order.id);
-      // Same for the Promotion GLOBAL usage cap — give back the count this
-      // released-then-missed order consumed (B11). These candidates are all
-      // notifiedAt != null, so they were incremented at release.
-      await releasePromotionUsage(order);
+      // Same for the promo usage cap — give back the slot(s) this missed order
+      // consumed (B11). Deletes its PromotionUsage ledger rows + decrements
+      // usedCount, idempotently. Luigi 2026-06-30 (B5 ledger).
+      await releasePromotionUsageForOrder(order.id);
 
       // Marketplace counter rollback (idempotent). Auto-rejected
       // marketplace orders shouldn't count toward the restaurant's

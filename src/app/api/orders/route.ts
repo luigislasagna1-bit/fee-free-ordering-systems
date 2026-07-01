@@ -18,6 +18,7 @@ import {
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
+import { writePromotionUsageRows } from "@/lib/promo-usage";
 import { resolveInheritedHours } from "@/lib/inherited-data";
 import { usedLifetimePromoIds, resolveAssignedPromoByCode, findActiveGrants } from "@/lib/coupon-ledger";
 import { partitionMemberOnly, qualifyingMemberOnlyPromos } from "@/lib/vip-membership";
@@ -2059,6 +2060,74 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // ── Promo usage claim (B5 + per-order ledger) ────────────────────────────
+    // The engine only checks usedCount < usageLimit at APPLY time, so two
+    // concurrent orders can both pass on the LAST slot, then both count it → the
+    // cap is breached and an extra discount given away. Claim each applied promo
+    // atomically at placement instead: bump usedCount NOW — capped promos with a
+    // conditional column-vs-column UPDATE (raw SQL) that a race-loser loses (0
+    // rows → we release what we grabbed + the coupon and 4xx them); uncapped
+    // promos have no cap to race, so the bump is unconditional. The matching
+    // PromotionUsage ledger rows are written just AFTER order.create (below), so
+    // the give-back on a later reject/cancel/abandon is idempotent (a repeat or
+    // concurrent kill deletes nothing the 2nd time) and cap-independent. Done
+    // BEFORE the reward reserve so a rejection needs no wallet re-credit.
+    // Luigi 2026-06-30 (B5).
+    const claimedPromoIds: string[] = [];
+    {
+      const appliedClaims = promoResults
+        .map((r: any) => ({
+          pid: r.promoId as string,
+          name: r.name as string,
+          capped: (activePromos as any[]).some((p) => p.id === r.promoId && p.usageLimit != null),
+        }))
+        .filter((c) => !!c.pid);
+      let limitReachedName: string | null = null;
+      for (const { pid, name, capped } of appliedClaims) {
+        const claimed = capped
+          ? await prisma.$executeRaw`
+              UPDATE "Promotion"
+              SET "usedCount" = "usedCount" + 1
+              WHERE id = ${pid}
+                AND "usageLimit" IS NOT NULL
+                AND "usedCount" < "usageLimit"
+            `
+          : await prisma.$executeRaw`
+              UPDATE "Promotion"
+              SET "usedCount" = "usedCount" + 1
+              WHERE id = ${pid}
+            `;
+        if (claimed === 0) {
+          // A capped promo just hit its limit → reject. An uncapped 0-rows means
+          // the promo row vanished mid-request (deleted) — nothing to count; skip.
+          if (capped) { limitReachedName = name; break; }
+          continue;
+        }
+        claimedPromoIds.push(pid);
+      }
+      if (limitReachedName !== null) {
+        // Release the slots we DID grab this attempt + the coupon claimed above,
+        // so the next legitimate customer can still redeem (best-effort). No
+        // ledger rows exist yet (written after create), so a raw counter give-back
+        // is correct and sufficient here.
+        for (const pid of claimedPromoIds) {
+          await prisma.$executeRaw`UPDATE "Promotion" SET "usedCount" = GREATEST(0, "usedCount" - 1) WHERE id = ${pid}`
+            .catch((e) => console.error("[orders POST] promo claim rollback:", e));
+        }
+        if (resolvedCouponId) {
+          await prisma.$executeRaw`UPDATE "Coupon" SET "usedCount" = GREATEST(0, "usedCount" - 1) WHERE id = ${resolvedCouponId}`
+            .catch((e) => console.error("[orders POST] coupon rollback on promo-limit:", e));
+        }
+        return NextResponse.json(
+          {
+            error: `"${limitReachedName || "A promotion"}" has just reached its usage limit. Please review your order and place it again.`,
+            code: "promo_limit_reached",
+          },
+          { status: 409 },
+        );
+      }
+    }
+
     // ── Reward Dollars (store credit) — RESERVE before order.create ──────────
     // Spend requires a SIGNED-IN restaurant customer (never email-resolved) so
     // nobody can drain another person's balance by typing their email. We
@@ -2209,6 +2278,15 @@ export async function POST(req: NextRequest) {
           );
         });
       }
+      // Release any atomically-claimed promo slots (mirror the coupon rollback) —
+      // the order never landed, so the slots must go back. Luigi 2026-06-30 (B5).
+      for (const pid of claimedPromoIds) {
+        prisma.$executeRaw`UPDATE "Promotion" SET "usedCount" = GREATEST(0, "usedCount" - 1) WHERE id = ${pid}`
+          .catch((rollbackErr) => console.error(
+            `[orders POST] order.create failed AFTER promo claim; promo ${pid} usedCount may be over by 1. Rollback also failed:`,
+            rollbackErr,
+          ));
+      }
       // Compensate the reserved Reward Dollars (no spend ledger row was written
       // yet — just re-credit the balance) so the customer doesn't lose credit on
       // a failed create. Luigi 2026-06-27.
@@ -2217,6 +2295,19 @@ export async function POST(req: NextRequest) {
           .catch((e) => console.error("[orders POST] reward refundClaim after create failure:", e));
       }
       throw createErr;
+    }
+
+    // Write the promo usage ledger rows now that the order id exists (the
+    // usedCount counters were already bumped in the claim block above). Awaited
+    // so the rows land before we respond (serverless can tear the process down
+    // after the response). The give-back on a later reject/cancel/abandon deletes
+    // by orderId, so THESE rows are what make it idempotent + cap-independent. A
+    // rare failure here leaves a counter over by 1 with no row (the same crash-
+    // window class the pre-ledger claim already had) — logged for manual repair.
+    // Luigi 2026-06-30 (B5).
+    if (claimedPromoIds.length > 0) {
+      await writePromotionUsageRows({ orderId: order.id, restaurantId: restaurant.id, promotionIds: claimedPromoIds })
+        .catch((e) => console.error("[orders POST] promotionUsage rows write failed; usedCount may be over by 1 with no ledger row:", e));
     }
 
     // Persist the spend ledger row now that the order id exists (the balance was

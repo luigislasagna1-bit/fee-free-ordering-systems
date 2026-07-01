@@ -1730,10 +1730,49 @@ model Promotion {
   customerGroup   CustomerGroup?           @relation(fields: [customerGroupId], references: [id], onDelete: SetNull)
   groupLinks      CustomerGroupPromotion[]
   vipSchedules    VipSchedule[]
+  usages          PromotionUsage[]
 
   @@index([restaurantId, isActive])
   @@index([campaignRef])
   @@index([customerGroupId])
+}
+
+/// ── Promotion usage ledger (Luigi 2026-06-30, B5) ───────────────────────────
+/// One row = "this order currently holds one usage slot of this promotion."
+/// It exists to make usage accounting IDEMPOTENT and CAP-INDEPENDENT, the same
+/// way CustomerCoupon/reward ledgers make coupon/reward releases race-safe:
+///
+///   • CLAIM (order placement): the atomic cap counter `Promotion.usedCount` is
+///     still bumped first (lock-free `UPDATE ... WHERE usedCount < usageLimit`
+///     serialises the cap and rejects the race-loser BEFORE charging). A row is
+///     then written here per applied promo — capped AND uncapped — recording the
+///     claim against the order.
+///   • RELEASE (reject / cancel / abandon): delete this order's rows and give
+///     back one `usedCount` per row ACTUALLY deleted (`DELETE ... RETURNING`).
+///     A repeat/concurrent kill deletes nothing the second time → no double
+///     give-back (fixes the raw-counter double-decrement race). Keying off the
+///     row (not the promo's current `usageLimit`) means toggling a promo's cap
+///     mid-order can't desync increment vs decrement.
+///
+/// Deliberately a SIDE TABLE with a LOOSE `orderId` (NOT an FK) so there is no
+/// back-relation on the hot Order table — same scaling rule as CustomerCoupon.
+/// `usedCount` stays the denormalised, hot-path cap counter; this table is the
+/// per-order source of truth for releasing it exactly once.
+model PromotionUsage {
+  id           String    @id @default(cuid())
+  restaurantId String
+  promotionId  String
+  orderId      String // loose reference (no FK) — keeps the hot Order table free of a back-relation
+  createdAt    DateTime  @default(now())
+
+  promotion    Promotion @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+
+  // One usage per (promotion, order): makes the claim naturally de-duped and
+  // guarantees release deletes at most one row per promo per order.
+  @@unique([promotionId, orderId])
+  @@index([orderId])
+  @@index([promotionId])
+  @@index([restaurantId])
 }
 
 /// ── Coupon-grant ledger (Luigi 2026-06-09) ──────────────────────────────
