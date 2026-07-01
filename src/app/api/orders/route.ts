@@ -20,7 +20,7 @@ import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 import { writePromotionUsageRows } from "@/lib/promo-usage";
 import { resolveInheritedHours } from "@/lib/inherited-data";
-import { usedLifetimePromoIds, resolveAssignedPromoByCode, findActiveGrants } from "@/lib/coupon-ledger";
+import { usedLifetimePromoIds, resolveAssignedPromoByCode, findActiveGrants, resolveGrantById, markGrantAppliedById } from "@/lib/coupon-ledger";
 import { partitionMemberOnly, qualifyingMemberOnlyPromos } from "@/lib/vip-membership";
 import { reserveCredit as reserveReward, recordSpendForOrder, refundClaim as refundRewardClaim } from "@/lib/reward-ledger";
 import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
@@ -138,6 +138,10 @@ export async function POST(req: NextRequest) {
       // NEVER trusted as final — the server re-validates the balance + caps and
       // claims atomically below. Luigi 2026-06-27.
       creditToApply: bodyCreditToApply,
+      // Code-less personal gift chosen from the account page ("Use this offer" →
+      // ?grant=<id>). Resolved server-side against the SIGNED-IN identity so the
+      // charge forces the same promo the preview did. Luigi 2026-07-01.
+      grantId: bodyGrantId,
     } = body;
 
     // ── Basic input validation ──────────────────────────────────────────────
@@ -1362,6 +1366,22 @@ export async function POST(req: NextRequest) {
     // member's granted promos so the engine applies them (still isEligible- and
     // lifetime-gated below). Inserted BEFORE the lifetime check so once-per-
     // lifetime still bites. Luigi 2026-06-27.
+    //
+    // Code-less personal gift chosen via ?grant= — resolve the SERVER-VERIFIED
+    // signed-in customer ONCE (the SAME identity space apply-promos uses) so the
+    // charge forces the gift into the engine exactly like the preview did
+    // (preview == charge), and we can single-use the grant after the order is
+    // created. Never trust the request-body typed email/phone here. Luigi 2026-07-01.
+    let grantSessionCustomerId: string | null = null;
+    let grantSessionEmail: string | null = null;
+    let grantSessionPhone: string | null = null;
+    if (typeof bodyGrantId === "string" && bodyGrantId) {
+      try {
+        const gme = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
+        if (gme) { grantSessionCustomerId = gme.id ?? null; grantSessionEmail = gme.email?.trim().toLowerCase() ?? null; grantSessionPhone = gme.phone?.trim() ?? null; }
+      } catch { /* not signed in — ?grant= becomes a no-op */ }
+    }
+    const grantForcedIds = new Set<string>();
     if (promoCustomerEmail || customerPhone) {
       try {
         const grants = await findActiveGrants({
@@ -1370,10 +1390,16 @@ export async function POST(req: NextRequest) {
           phone: typeof customerPhone === "string" ? customerPhone : null,
         });
         const autoIds = new Set(grants.filter((g) => g.autoApply).map((g) => g.promotionId));
+        // Force the chosen code-less gift in (identity-scoped to the SESSION
+        // customer only) AND mark it exclusive so it can WIN by value.
+        if (bodyGrantId && grantSessionCustomerId) {
+          const gg = await resolveGrantById({ restaurantId: restaurant.id, grantId: String(bodyGrantId), customerId: grantSessionCustomerId, email: grantSessionEmail, phone: grantSessionPhone });
+          if (gg && !suppressedSet.has(gg.promotionId)) { autoIds.add(gg.promotionId); grantForcedIds.add(gg.promotionId); }
+        }
         if (autoIds.size > 0) {
           for (let i = 0; i < activePromos.length; i++) {
             if (autoIds.has(activePromos[i].id)) {
-              activePromos[i] = { ...activePromos[i], autoApply: true } as any;
+              activePromos[i] = { ...activePromos[i], autoApply: true, ...(grantForcedIds.has(activePromos[i].id) ? { stackingRule: "exclusive" } : {}) } as any;
               autoIds.delete(activePromos[i].id);
             }
           }
@@ -1385,7 +1411,7 @@ export async function POST(req: NextRequest) {
                 OR: [{ restaurantId: restaurant.id }, { restaurantId: { in: promoOwnerIds }, scope: "brand" }],
               },
             });
-            for (const p of extra) if (!suppressedSet.has(p.id)) activePromos.push({ ...(p as any), autoApply: true });
+            for (const p of extra) if (!suppressedSet.has(p.id)) activePromos.push({ ...(p as any), autoApply: true, ...(grantForcedIds.has(p.id) ? { stackingRule: "exclusive" } : {}) });
           }
         }
       } catch (e) { console.error("[orders findActiveGrants]", e); }
@@ -2308,6 +2334,20 @@ export async function POST(req: NextRequest) {
     if (claimedPromoIds.length > 0) {
       await writePromotionUsageRows({ orderId: order.id, restaurantId: restaurant.id, promotionIds: claimedPromoIds })
         .catch((e) => console.error("[orders POST] promotionUsage rows write failed; usedCount may be over by 1 with no ledger row:", e));
+    }
+
+    // Single-use the code-less gift: only if the ?grant= promo ACTUALLY applied
+    // to this order (won → in promoResults), flip the grant granted/released →
+    // applied (pinned to the order) so the deep-link can't be reused. If it lost
+    // to a bigger deal it never applied, so we leave it usable. Status-guarded +
+    // idempotent, so it doesn't fight recordAppliedCoupons (which runs at release
+    // for coded/lifetime grants). Luigi 2026-07-01.
+    if (bodyGrantId && grantSessionCustomerId && grantForcedIds.size > 0 && order?.id) {
+      const giftApplied = promoResults.some((r: any) => grantForcedIds.has(r.promoId));
+      if (giftApplied) {
+        await markGrantAppliedById({ restaurantId: restaurant.id, grantId: String(bodyGrantId), orderId: order.id, customerId: grantSessionCustomerId, email: grantSessionEmail, phone: grantSessionPhone })
+          .catch((e) => console.error("[orders POST] markGrantAppliedById:", e));
+      }
     }
 
     // Persist the spend ledger row now that the order id exists (the balance was

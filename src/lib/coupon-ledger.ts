@@ -348,6 +348,82 @@ export async function resolveAssignedPromoByCode(args: {
 }
 
 /**
+ * Resolve a CustomerCoupon GRANT by its opaque id, scoped to the restaurant AND
+ * a SERVER-VERIFIED caller identity, on an ACTIVE promotion in a redeemable
+ * status ({granted, released}). Powers the account page's "Use this offer"
+ * deep-link (?grant=) for CODE-LESS 1:1 gifts (a grant whose promotion has no
+ * couponCode, so there's nothing to type/pass as a coupon code).
+ *
+ * SECURITY: the grantId is a client-supplied hint, so we NEVER do a bare
+ * where:{id}. Identity is REQUIRED and must be SERVER-VERIFIED by the caller
+ * (the signed-in restaurant-customer id, and/or that same session customer's
+ * OWN email/phone) — do NOT pass request-body typed email/phone here, or one
+ * customer could redeem another's gift by typing the victim's email.
+ *
+ * Returns { promotionId, grantId } or null. Read-only; never throws.
+ */
+export async function resolveGrantById(args: {
+  restaurantId: string;
+  grantId: string;
+  customerId?: string | null; // SERVER-VERIFIED session customer id
+  email?: string | null;      // SERVER-VERIFIED session customer email only
+  phone?: string | null;      // SERVER-VERIFIED session customer phone only
+}): Promise<{ promotionId: string; grantId: string } | null> {
+  try {
+    const grantId = typeof args.grantId === "string" ? args.grantId.trim() : "";
+    if (!grantId) return null;
+    const email = normalizeEmail(args.email);
+    const phone = normalizePhone(args.phone);
+    const idOr: Array<{ customerId: string } | { email: string } | { phone: string }> = [];
+    if (args.customerId) idOr.push({ customerId: args.customerId });
+    if (email) idOr.push({ email });
+    if (phone) idOr.push({ phone });
+    if (idOr.length === 0) return null; // no proven identity → never resolve
+    const grant = await prisma.customerCoupon.findFirst({
+      where: {
+        id: grantId,
+        restaurantId: args.restaurantId,
+        status: { in: ["granted", "released"] },
+        promotion: { is: { isActive: true } },
+        OR: idOr,
+      },
+      select: { id: true, promotionId: true },
+    });
+    return grant ? { promotionId: grant.promotionId, grantId: grant.id } : null;
+  } catch (e) {
+    console.error("[coupon-ledger resolveGrantById]", e);
+    return null;
+  }
+}
+
+/**
+ * Flip a specific grant row granted/released → applied, pinned to an order, so a
+ * ?grant= deep-link is single-use even for a promo recordAppliedCoupons ignores
+ * (a code-less gift promo with no campaignRef and not onceLifetimePerClient).
+ * Identity-scoped + status-guarded (won't touch an already-applied/redeemed
+ * row). Idempotent; the ledger's own recordAppliedCoupons is status-guarded too,
+ * so whichever flips the row first wins and the other no-ops. Never throws.
+ */
+export async function markGrantAppliedById(args: {
+  restaurantId: string; grantId: string; orderId: string;
+  customerId?: string | null; email?: string | null; phone?: string | null;
+}): Promise<void> {
+  try {
+    const email = normalizeEmail(args.email);
+    const phone = normalizePhone(args.phone);
+    const idOr: Array<{ customerId: string } | { email: string } | { phone: string }> = [];
+    if (args.customerId) idOr.push({ customerId: args.customerId });
+    if (email) idOr.push({ email });
+    if (phone) idOr.push({ phone });
+    if (idOr.length === 0) return;
+    await prisma.customerCoupon.updateMany({
+      where: { id: args.grantId, restaurantId: args.restaurantId, status: { in: ["granted", "released"] }, OR: idOr },
+      data: { status: "applied", appliedOrderId: args.orderId, appliedAt: new Date(), customerId: args.customerId ?? undefined },
+    });
+  } catch (e) { console.error("[coupon-ledger markGrantAppliedById]", e); }
+}
+
+/**
  * Proactively GRANT a coupon to a specific customer — used by targeted
  * campaigns (Autopilot win-back, Kickstarter invite, flyer QR) in later phases.
  * Idempotent per (restaurant, promotion, identity): if the customer already

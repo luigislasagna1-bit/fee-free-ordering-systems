@@ -187,7 +187,7 @@ export default async function RestaurantAccountDashboard({
 
   type UiOffer = {
     key: string; discountLabel: string; name: string; minOrder: number; endsAt: Date | null;
-    code: string | null; auto: boolean; once: boolean; used: boolean;
+    code: string | null; grantId: string | null; auto: boolean; once: boolean; used: boolean;
   };
   const vipOffers: UiOffer[] = myVip.map((p) => ({
     key: `vip-${p.id}`,
@@ -196,6 +196,7 @@ export default async function RestaurantAccountDashboard({
     minOrder: p.minimumOrder ?? 0,
     endsAt: p.endsAt ?? null,
     code: null,
+    grantId: null,
     auto: true,
     once: !!p.onceLifetimePerClient,
     used: usedSet.has(p.id),
@@ -209,6 +210,7 @@ export default async function RestaurantAccountDashboard({
       minOrder: g.promotion?.minimumOrder ?? 0,
       endsAt: g.promotion?.endsAt ?? null,
       code: g.code,
+      grantId: g.id,
       auto: false,
       once: true,
       used: false,
@@ -353,7 +355,10 @@ export default async function RestaurantAccountDashboard({
                         </Link>
                       </>
                     ) : !o.used ? (
-                      <Link href={`/order/${slug}`} className="text-xs font-semibold text-emerald-600 hover:text-emerald-800">
+                      <Link
+                        href={o.grantId ? `/order/${slug}?grant=${encodeURIComponent(o.grantId)}` : `/order/${slug}`}
+                        className="text-xs font-semibold text-emerald-600 hover:text-emerald-800"
+                      >
                         {t("useOffer")} →
                       </Link>
                     ) : null}

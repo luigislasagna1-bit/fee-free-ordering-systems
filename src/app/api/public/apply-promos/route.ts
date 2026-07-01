@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { resolvePromotions, totalPromoDiscount, type ApplyContext } from "@/lib/promo-engine";
 import { parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
-import { usedLifetimePromoIds, resolveAssignedPromoByCode, findActiveGrants } from "@/lib/coupon-ledger";
+import { usedLifetimePromoIds, resolveAssignedPromoByCode, findActiveGrants, resolveGrantById } from "@/lib/coupon-ledger";
 import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
 import { partitionMemberOnly, qualifyingMemberOnlyPromos } from "@/lib/vip-membership";
 
@@ -33,6 +33,10 @@ export async function POST(req: NextRequest) {
     // choose a different non-stackable deal). Excluded from evaluation here AND
     // re-checked on order placement. Luigi 2026-06-07.
     suppressedPromoIds,
+    // Code-less personal gift chosen from the account page ("Use this offer" →
+    // ?grant=<id>). Resolved server-side against the SIGNED-IN identity only.
+    // Luigi 2026-07-01.
+    grantId,
   } = body;
 
   if (!restaurantSlug || subtotal === undefined) {
@@ -141,11 +145,18 @@ export async function POST(req: NextRequest) {
   let idEmail = previewEmail;
   let idPhone = previewPhone;
   let idCustomerId: string | null = null;
+  // The SESSION customer's OWN email/phone (never the typed previewEmail) — used
+  // to identity-scope the ?grant= gift lookup so a typed email can't redeem
+  // someone else's gift. Luigi 2026-07-01.
+  let sessionEmail: string | null = null;
+  let sessionPhone: string | null = null;
   try {
     const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
     if (me) {
       idCustomerId = me.id ?? null; // a signed-in member is a member regardless of typed email
-      if (!idEmail && !idPhone) { idEmail = me.email?.trim().toLowerCase() ?? null; idPhone = me.phone?.trim() ?? null; }
+      sessionEmail = me.email?.trim().toLowerCase() ?? null;
+      sessionPhone = me.phone?.trim() ?? null;
+      if (!idEmail && !idPhone) { idEmail = sessionEmail; idPhone = sessionPhone; }
     }
   } catch { /* not logged in — stay optimistic */ }
 
@@ -156,14 +167,29 @@ export async function POST(req: NextRequest) {
   // autoApply:true. Surface only the grants for THIS identity, forcing
   // autoApply=true on an in-memory copy so the engine applies it (still
   // isEligible-gated). Code-only grants keep the existing code+email path.
-  if (idEmail || idPhone) {
+  // `|| idCustomerId` so the preview forces a ?grant= gift even for a signed-in
+  // customer whose row has no email/phone — matching the charge route (whose gate
+  // is effectively always true). findActiveGrants returns [] on empty identity,
+  // so this only enables the identity-scoped ?grant= path. Luigi 2026-07-01.
+  if (idEmail || idPhone || idCustomerId) {
     try {
       const grants = await findActiveGrants({ restaurantId: restaurant.id, email: idEmail, phone: idPhone });
       const autoIds = new Set(grants.filter((g) => g.autoApply).map((g) => g.promotionId));
+      // Code-less personal gift chosen via ?grant=. Resolve ONLY against the
+      // SERVER-VERIFIED signed-in identity (session customerId + the session
+      // customer's OWN email/phone — never the typed previewEmail/previewPhone),
+      // so no one can redeem another customer's gift. Force it in AND mark it
+      // exclusive so a chosen gift can WIN by value over a co-active deal.
+      // Luigi 2026-07-01.
+      const grantForcedIds = new Set<string>();
+      if (typeof grantId === "string" && grantId && idCustomerId) {
+        const g = await resolveGrantById({ restaurantId: restaurant.id, grantId, customerId: idCustomerId, email: sessionEmail, phone: sessionPhone });
+        if (g && !suppressed.has(g.promotionId)) { autoIds.add(g.promotionId); grantForcedIds.add(g.promotionId); }
+      }
       if (autoIds.size > 0) {
         for (let i = 0; i < activePromos.length; i++) {
           if (autoIds.has(activePromos[i].id)) {
-            activePromos[i] = { ...activePromos[i], autoApply: true } as any;
+            activePromos[i] = { ...activePromos[i], autoApply: true, ...(grantForcedIds.has(activePromos[i].id) ? { stackingRule: "exclusive" } : {}) } as any;
             autoIds.delete(activePromos[i].id);
           }
         }
@@ -171,7 +197,7 @@ export async function POST(req: NextRequest) {
           const extra = await prisma.promotion.findMany({
             where: { id: { in: [...autoIds] }, restaurantId: restaurant.id, isActive: true },
           });
-          for (const p of extra) if (!suppressed.has(p.id)) activePromos.push({ ...(p as any), autoApply: true });
+          for (const p of extra) if (!suppressed.has(p.id)) activePromos.push({ ...(p as any), autoApply: true, ...(grantForcedIds.has(p.id) ? { stackingRule: "exclusive" } : {}) });
         }
       }
     } catch (e) { console.error("[apply-promos findActiveGrants]", e); }

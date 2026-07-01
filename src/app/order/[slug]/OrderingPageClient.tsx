@@ -1145,6 +1145,10 @@ export function OrderingPageClient({
     { date: string; time: string; partySize: number; notes: string } | null
   >(null);
   const [couponCode, setCouponCode] = useState("");
+  // A code-less personal gift chosen from the account page ("Use this offer" →
+  // ?grant=<id>). Forwarded to the preview + order; the server resolves it
+  // identity-scoped. Luigi 2026-07-01.
+  const [pendingGrantId, setPendingGrantId] = useState<string | null>(null);
   // Live-preview flag: the typed code matches an assigned promo registered to a
   // DIFFERENT email than the one entered at checkout, so it can't apply. Shown
   // as an inline cart note instead of silently dropping (audit confusing#13).
@@ -2166,6 +2170,10 @@ export function OrderingPageClient({
         // Deals the customer manually removed from the cart — excluded so a
         // different non-stackable deal can apply instead.
         suppressedPromoIds,
+        // Code-less personal gift (?grant=): server re-resolves it identity-
+        // scoped and forces its promo into the engine so it competes. Undefined
+        // for normal carts.
+        grantId: pendingGrantId || undefined,
       }),
     })
       .then(r => r.json())
@@ -2198,7 +2206,7 @@ export function OrderingPageClient({
       })
       .catch(() => {});
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod, suppressedPromoIds, debouncedIdentity, customerIsReturning, hasOrderedHere]);
+  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod, suppressedPromoIds, debouncedIdentity, customerIsReturning, hasOrderedHere, pendingGrantId]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
   // ── Promo time-window helpers (shared with the engine via promo-window) ──
@@ -3051,6 +3059,22 @@ export function OrderingPageClient({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
+  // A CODE-LESS personal gift arrives as ?grant=<id> from the account page's
+  // "Use this offer" button (the grant's promotion has no couponCode, so there's
+  // nothing to put in the coupon field). Forward the opaque id to BOTH the cart
+  // preview and the order — each re-resolves it identity-scoped and forces its
+  // promo into the engine. One-shot. Luigi 2026-07-01.
+  const grantUrlConsumedRef = useRef(false);
+  useEffect(() => {
+    if (grantUrlConsumedRef.current) return;
+    const g = searchParams.get("grant");
+    if (!g) return;
+    grantUrlConsumedRef.current = true;
+    const id = g.trim().slice(0, 40);
+    if (id) setPendingGrantId(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
   // Marketplace attribution: when the customer arrived via /marketplace/[slug]
   // (which redirects here with ?from=marketplace), forward the flag to the
   // server so the order gets stamped + marketplace counters bump. Server
@@ -3145,6 +3169,9 @@ export function OrderingPageClient({
     // Promos the customer removed from the cart — server excludes them so the
     // charged discount matches what they saw. Luigi 2026-06-07.
     suppressedPromoIds,
+    // Same code-less gift signal as the preview so the CHARGE forces the same
+    // promo into the engine → previewed discount == charged discount. Luigi 2026-07-01.
+    grantId: pendingGrantId || undefined,
     // Reserve-then-order: when the customer came through "Add food to your
     // booking", attach the table booking so the server creates the linked
     // Reservation together with this (paid) order — one combined submission.
