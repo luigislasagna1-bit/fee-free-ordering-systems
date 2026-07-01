@@ -4803,7 +4803,10 @@ export function OrderingPageClient({
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40">
           <button
             onClick={() => setCartOpen(true)}
-            className="text-white font-bold px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 transition min-w-[240px]"
+            // White border + thin dark outer ring keep the floating button crisp
+            // on ANY background: the white border separates it from dark banners/
+            // photos it floats over, the ring delineates it on light areas. Luigi 2026-07-01.
+            className="text-white font-bold px-6 py-4 rounded-2xl shadow-2xl border-2 border-white ring-1 ring-black/10 flex items-center gap-3 transition min-w-[240px]"
             style={{ backgroundColor: theme.primaryColor }}
           >
             <div className="bg-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold flex-shrink-0" style={{ color: theme.primaryColor }}>
