@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Rocket, Pause, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Rocket, Pause, Loader2, AlertCircle, CheckCircle2, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 
 /**
@@ -23,19 +23,53 @@ import toast from "react-hot-toast";
  */
 export function RestaurantControls({
   restaurantId,
+  restaurantName,
   initialIsPublished,
   initialIsActive,
   publishReady,
   publishedAt,
 }: {
   restaurantId: string;
+  restaurantName: string;
   initialIsPublished: boolean;
   initialIsActive: boolean;
   publishReady: boolean;
   publishedAt: string | null;
 }) {
   const router = useRouter();
-  const [busy, setBusy] = useState<null | "publish" | "active">(null);
+  const [busy, setBusy] = useState<null | "publish" | "active" | "delete">(null);
+  // Permanent-delete modal: type-the-name confirmation guards a destructive,
+  // irreversible action (deletes the restaurant + ALL its data). Luigi 2026-07-01.
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [confirmText, setConfirmText] = useState("");
+
+  async function deleteRestaurant() {
+    if (busy) return;
+    if (confirmText.trim() !== restaurantName.trim()) {
+      toast.error("Type the exact restaurant name to confirm.");
+      return;
+    }
+    setBusy("delete");
+    try {
+      const r = await fetch(`/api/superadmin/restaurants/${restaurantId}`, {
+        method: "DELETE",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ confirmName: confirmText.trim() }),
+      });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) {
+        toast.error(data.error || "Delete failed");
+        return;
+      }
+      toast.success(`Deleted "${restaurantName}" permanently`);
+      // The restaurant no longer exists — leave the (now-404) detail page.
+      router.push("/superadmin/restaurants");
+    } catch (e: unknown) {
+      toast.error(e instanceof Error ? e.message : "Delete failed");
+    } finally {
+      setBusy(null);
+    }
+  }
 
   async function togglePublish() {
     if (busy) return;
@@ -110,6 +144,7 @@ export function RestaurantControls({
   }
 
   return (
+    <>
     <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3">
       <div className="flex items-center gap-3 flex-1 min-w-0">
         <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
@@ -162,7 +197,59 @@ export function RestaurantControls({
           {busy === "active" ? <Loader2 className="w-4 h-4 animate-spin" /> : <Pause className="w-4 h-4" />}
           {initialIsActive ? "Pause" : "Reactivate"}
         </button>
+        <button
+          onClick={() => { setConfirmText(""); setDeleteOpen(true); }}
+          disabled={!!busy}
+          className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold transition disabled:opacity-50 bg-red-600 hover:bg-red-700 text-white"
+          title="Permanently delete this restaurant and all its data"
+        >
+          <Trash2 className="w-4 h-4" /> Delete
+        </button>
       </div>
     </div>
+
+    {deleteOpen && (
+      <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4" onClick={() => !busy && setDeleteOpen(false)}>
+        <div className="bg-white rounded-2xl w-full max-w-md p-6 text-gray-900" onClick={(e) => e.stopPropagation()}>
+          <div className="flex items-center gap-2 text-red-600 mb-3">
+            <Trash2 className="w-5 h-5" />
+            <h2 className="text-lg font-bold">Delete restaurant permanently</h2>
+          </div>
+          <p className="text-sm text-gray-600">
+            This <strong>permanently deletes</strong> <strong>{restaurantName}</strong> and <strong>everything</strong> scoped to it —
+            menu, orders, customers, promotions, reservations, devices, billing. This <strong>cannot be undone</strong>.
+          </p>
+          <p className="text-sm text-gray-700 mt-4">
+            Type the restaurant name <span className="font-mono font-semibold">{restaurantName}</span> to confirm:
+          </p>
+          <input
+            autoFocus
+            value={confirmText}
+            onChange={(e) => setConfirmText(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") deleteRestaurant(); }}
+            placeholder={restaurantName}
+            className="mt-2 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-400"
+          />
+          <div className="flex items-center justify-end gap-2 mt-5">
+            <button
+              onClick={() => setDeleteOpen(false)}
+              disabled={!!busy}
+              className="px-4 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={deleteRestaurant}
+              disabled={!!busy || confirmText.trim() !== restaurantName.trim()}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold text-white bg-red-600 hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              {busy === "delete" ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+              Delete permanently
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
