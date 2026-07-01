@@ -273,8 +273,8 @@ function CategoryBanner({ cat, theme, collapsible, collapsedNow, onToggleCollaps
   const overlayText = light ? "#1f2937" : "#ffffff";
   return (
     <div
-      className={`relative mb-3 rounded-xl overflow-hidden ${collapsible ? "cursor-pointer select-none" : ""}`}
-      style={{ height: "clamp(130px, 20vw, 156px)", backgroundColor: hasImage ? "#000000" : theme.primaryColor }}
+      className={`group relative mb-3 rounded-xl overflow-hidden ${collapsible ? "cursor-pointer select-none" : ""}`}
+      style={{ height: "clamp(104px, 16vw, 124px)", backgroundColor: hasImage ? "#000000" : theme.primaryColor }}
       onClick={collapsible ? onToggleCollapse : undefined}
       role={collapsible ? "button" : undefined}
       aria-expanded={collapsible ? !collapsedNow : undefined}
@@ -302,6 +302,13 @@ function CategoryBanner({ cat, theme, collapsible, collapsedNow, onToggleCollaps
               : "linear-gradient(120deg, rgba(0,0,0,0.28), rgba(0,0,0,0) 62%)",
         }}
       />
+      {/* Hover tint — darkens the whole band on hover so a clickable category
+          reads as interactive. Pointer-only: no-op on touch, and skipped when
+          the band isn't itself clickable (carousel arrows handle their own
+          hover). Luigi 2026-07-01. */}
+      {collapsible && (
+        <div className="absolute inset-0 pointer-events-none bg-transparent group-hover:bg-black/20 transition-colors duration-200" />
+      )}
       <div className="absolute top-3 right-3 z-10">
         {collapsible ? (
           <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: "rgba(0,0,0,0.34)" }}>
@@ -320,7 +327,7 @@ function CategoryBanner({ cat, theme, collapsible, collapsedNow, onToggleCollaps
       </div>
       <div className="absolute left-4 bottom-4 right-14">
         <div className="h-[3px] w-8 rounded mb-2" style={{ backgroundColor: hasImage ? "#f0c674" : light ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.75)" }} />
-        <h2 className="font-medium leading-tight truncate" style={{ color: overlayText, fontSize: "clamp(20px, 4.5vw, 24px)", letterSpacing: "-0.01em", textShadow: light ? "none" : "0 1px 12px rgba(0,0,0,0.5)" }}>{cat.name}</h2>
+        <h2 className="font-medium leading-tight truncate" style={{ color: overlayText, fontSize: "clamp(18px, 4vw, 22px)", letterSpacing: "-0.01em", textShadow: light ? "none" : "0 1px 12px rgba(0,0,0,0.5)" }}>{cat.name}</h2>
       </div>
     </div>
   );
@@ -1996,11 +2003,11 @@ export function OrderingPageClient({
   }, [visibleCategories.length]);
 
   // ── Collapsible categories (GloriaFood-style accordion) ──────────────────
-  // Opt-in per restaurant (theme.mobileCollapsibleCategories) — now on BOTH
-  // mobile AND desktop (Luigi 2026-06-30). The customer expands/collapses
-  // category sections, with Expand all / Collapse all controls. Default state
-  // differs by device (see the seed effect): mobile starts ALL collapsed (true
-  // accordion); desktop starts EXPANDED so the menu stays visible.
+  // Opt-in per restaurant (theme.mobileCollapsibleCategories) — on BOTH mobile
+  // AND desktop (Luigi 2026-06-30). The customer expands/collapses category
+  // sections, with Expand all / Collapse all controls. Every category starts
+  // COLLAPSED on both devices (see the seed effect) so the customer lands on a
+  // compact list of category banners and opens the ones they want. Luigi 2026-07-01.
   const isMobile = useIsMobile();
   // Suspended while a search is active so matching items are always visible
   // (a collapsed header would hide the very results they want).
@@ -2015,10 +2022,12 @@ export function OrderingPageClient({
   // filters the menu we leave their open/closed choices intact.
   const collapseSeededRef = useRef(false);
   useEffect(() => {
-    // Seed "all collapsed" ONLY on mobile (the accordion). On desktop we leave
-    // every category expanded so the menu is visible by default — the customer
-    // collapses what they don't want. Luigi 2026-06-30.
-    if (collapsibleActive && isMobile && !collapseSeededRef.current && visibleCategories.length) {
+    // Seed "all collapsed" on BOTH mobile and desktop the first time the
+    // accordion turns on — the customer opens the categories they want rather
+    // than scrolling a fully-expanded menu. `isMobile` stays in the deps so the
+    // effect re-checks on a breakpoint change (the seededRef guards re-seeding).
+    // Luigi 2026-07-01 (was mobile-only before).
+    if (collapsibleActive && !collapseSeededRef.current && visibleCategories.length) {
       collapseSeededRef.current = true;
       setCollapsedCats(new Set(visibleCategories.map((c) => c.id)));
     }
