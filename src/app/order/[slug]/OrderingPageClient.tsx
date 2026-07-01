@@ -328,6 +328,18 @@ function CategoryBanner({ cat, theme, collapsible, collapsedNow, onToggleCollaps
       <div className="absolute left-4 bottom-4 right-14">
         <div className="h-[3px] w-8 rounded mb-2" style={{ backgroundColor: hasImage ? "#f0c674" : light ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.75)" }} />
         <h2 className="font-medium leading-tight truncate" style={{ color: overlayText, fontSize: "clamp(20px, 4.5vw, 24px)", letterSpacing: "-0.01em", textShadow: light ? "none" : "0 1px 12px rgba(0,0,0,0.5)" }}>{cat.name}</h2>
+        {/* Dish-count pill (icon + number) — deliberately language-neutral so it
+            needs no per-locale plural text. A fork/knife icon makes it read as
+            "N dishes" in any of the 38 locales. Luigi 2026-07-01. */}
+        {cat.menuItems.length > 0 && (
+          <span
+            className="inline-flex items-center gap-1 mt-1.5 text-[11px] font-semibold px-2 py-0.5 rounded-full leading-none"
+            style={{ backgroundColor: hasImage || !light ? "rgba(255,255,255,0.20)" : "rgba(0,0,0,0.10)", color: overlayText }}
+          >
+            <Utensils className="w-3 h-3" style={{ opacity: 0.85 }} aria-hidden />
+            {cat.menuItems.length}
+          </span>
+        )}
       </div>
     </div>
   );
