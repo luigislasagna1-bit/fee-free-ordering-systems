@@ -1,8 +1,8 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { Wifi, AlertCircle } from "lucide-react";
-import { eachDay } from "@/lib/reports/date-range";
-import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
+import { parseDateRangeInTz, formatRangeLabelInTz, eachDayKeyInTz } from "@/lib/reports/date-range-tz";
+import { parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { FRESHNESS_MS } from "@/lib/kitchen-devices";
 import { getTranslations } from "next-intl/server";
@@ -153,9 +153,12 @@ export default async function ConnectivityReportPage({
   // even when their single live tablet was up 100% of the day.
   // Confirmed by Luigi during UAT 2026-05-26: "should only require
   // 1 active device to be considered healthy."
-  const days = eachDay(range);
-  const dayStats = days.map((d) => {
-    const dayStart = d.getTime();
+  // Bucket by the restaurant's LOCAL calendar days (midnight→midnight in its
+  // tz), not the server's UTC days — otherwise both the day boundaries AND the
+  // labels drift for a store in another timezone. Luigi 2026-07-01.
+  const dayKeys = eachDayKeyInTz(range, tz);
+  const dayStats = dayKeys.map((dayKey) => {
+    const dayStart = parseLocalDateTimeInTz(dayKey, 0, 0, tz).getTime();
     const dayEnd = dayStart + DAY_MS;
 
     // Clip + collect every device's interval slice that overlaps this day.
@@ -183,7 +186,7 @@ export default async function ConnectivityReportPage({
     if (curStart >= 0) onlineMs += curEnd - curStart;
 
     const pct = (onlineMs / DAY_MS) * 100;
-    return { date: d, onlineMs, pct: Math.min(100, pct) };
+    return { dayKey, onlineMs, pct: Math.min(100, pct) };
   });
   const overallPct = dayStats.length > 0
     ? dayStats.reduce((s, d) => s + d.pct, 0) / dayStats.length
@@ -270,10 +273,12 @@ export default async function ConnectivityReportPage({
         <h2 className="font-semibold text-gray-900 mb-3">{t("dailyUptime")}</h2>
         <div className="space-y-2">
           {dayStats.map((d) => (
-            <div key={d.date.toISOString()}>
+            <div key={d.dayKey}>
               <div className="flex justify-between text-xs mb-1">
                 <span className="text-gray-700">
-                  {d.date.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
+                  {/* noon-anchor renders the local day key's weekday/date without
+                      any tz shift (midday is safe from offset rollover). */}
+                  {new Date(`${d.dayKey}T12:00:00`).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
                 </span>
                 <span className={`font-semibold ${d.pct >= 95 ? "text-emerald-700" : d.pct >= 80 ? "text-amber-700" : "text-red-700"}`}>
                   {d.pct.toFixed(0)}%
@@ -313,8 +318,8 @@ export default async function ConnectivityReportPage({
                 <tr key={d.id} className="border-b border-gray-50 hover:bg-gray-50/50">
                   <td className="py-2.5 px-4 font-medium text-gray-800">{d.label || t("unnamedDevice")}</td>
                   <td className="py-2.5 px-4 text-xs text-gray-500 max-w-xs truncate">{d.userAgent ?? "—"}</td>
-                  <td className="py-2.5 px-4 text-xs text-gray-500">{d.firstSeenAt?.toLocaleString() ?? "—"}</td>
-                  <td className="py-2.5 px-4 text-xs text-gray-500">{d.lastSeenAt?.toLocaleString() ?? "—"}</td>
+                  <td className="py-2.5 px-4 text-xs text-gray-500">{d.firstSeenAt?.toLocaleString(undefined, tz ? { timeZone: tz } : {}) ?? "—"}</td>
+                  <td className="py-2.5 px-4 text-xs text-gray-500">{d.lastSeenAt?.toLocaleString(undefined, tz ? { timeZone: tz } : {}) ?? "—"}</td>
                   <td className="py-2.5 px-4 text-right">
                     <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${isOnline ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-700"}`}>
                       {isOnline ? t("statusOnline") : t("statusOffline")}
