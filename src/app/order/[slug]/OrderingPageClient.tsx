@@ -274,7 +274,7 @@ function CategoryBanner({ cat, theme, collapsible, collapsedNow, onToggleCollaps
   return (
     <div
       className={`group relative mb-3 rounded-xl overflow-hidden ${collapsible ? "cursor-pointer select-none" : ""}`}
-      style={{ height: "clamp(104px, 16vw, 124px)", backgroundColor: hasImage ? "#000000" : theme.primaryColor }}
+      style={{ height: "clamp(130px, 20vw, 156px)", backgroundColor: hasImage ? "#000000" : theme.primaryColor }}
       onClick={collapsible ? onToggleCollapse : undefined}
       role={collapsible ? "button" : undefined}
       aria-expanded={collapsible ? !collapsedNow : undefined}
@@ -327,7 +327,7 @@ function CategoryBanner({ cat, theme, collapsible, collapsedNow, onToggleCollaps
       </div>
       <div className="absolute left-4 bottom-4 right-14">
         <div className="h-[3px] w-8 rounded mb-2" style={{ backgroundColor: hasImage ? "#f0c674" : light ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.75)" }} />
-        <h2 className="font-medium leading-tight truncate" style={{ color: overlayText, fontSize: "clamp(18px, 4vw, 22px)", letterSpacing: "-0.01em", textShadow: light ? "none" : "0 1px 12px rgba(0,0,0,0.5)" }}>{cat.name}</h2>
+        <h2 className="font-medium leading-tight truncate" style={{ color: overlayText, fontSize: "clamp(20px, 4.5vw, 24px)", letterSpacing: "-0.01em", textShadow: light ? "none" : "0 1px 12px rgba(0,0,0,0.5)" }}>{cat.name}</h2>
       </div>
     </div>
   );
