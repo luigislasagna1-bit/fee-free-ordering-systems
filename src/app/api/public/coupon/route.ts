@@ -52,7 +52,15 @@ export async function GET(req: NextRequest) {
     if (promo.usageLimit != null && promo.usedCount >= promo.usageLimit) {
       return NextResponse.json({ error: "This promo has reached its usage limit" }, { status: 400 });
     }
-    if (promo.minimumOrder > 0 && subtotal < promo.minimumOrder) {
+    // Only enforce the minimum when there's actually a cart to judge. On an
+    // EMPTY cart (subtotal 0) — e.g. the account "Use this offer" button / email
+    // link lands here BEFORE any items are added — accept the code optimistically
+    // and let the engine (apply-promos) + the order route enforce the minimum
+    // once items exist. Rejecting at subtotal 0 fired a spurious "minimum order"
+    // error the instant the customer arrived AND, because the client threw, never
+    // registered the coupon — so the "not applied, a bigger deal won" cart message
+    // could never show. Luigi 2026-07-01.
+    if (promo.minimumOrder > 0 && subtotal > 0 && subtotal < promo.minimumOrder) {
       return NextResponse.json(
         { error: `Minimum order of ${formatCurrency(promo.minimumOrder, restaurant.currency)} required for this promo` },
         { status: 400 },
