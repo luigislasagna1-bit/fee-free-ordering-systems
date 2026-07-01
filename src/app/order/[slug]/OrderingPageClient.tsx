@@ -4690,7 +4690,10 @@ export function OrderingPageClient({
               <button
                 key={cat.id}
                 onClick={() => scrollToCategory(cat.id)}
-                className="px-4 py-2 rounded-full text-sm font-semibold transition whitespace-nowrap flex-shrink-0 flex items-center gap-1.5"
+                // hover:brightness-90 darkens the pill ~10% on hover (mirrors the
+                // banner's darken-on-hover). Uses a filter, not a bg class, so it
+                // works over the inline theme colours below. Luigi 2026-07-01.
+                className="px-4 py-2 rounded-full text-sm font-semibold transition hover:brightness-90 whitespace-nowrap flex-shrink-0 flex items-center gap-1.5 cursor-pointer"
                 style={activeCategory === cat.id
                   ? { backgroundColor: theme.primaryColor, color: "#fff" }
                   : { backgroundColor: theme.cardBackground, border: "1px solid #e5e7eb", color: theme.textColor }
