@@ -735,6 +735,12 @@ model User {
   emailVerifiedAt  DateTime?
   emailVerifyToken String?   @unique
 
+  /// Login-lockout hardening (launch Blocker #9): consecutive failed password
+  /// attempts; at the threshold `lockedUntil` is stamped and the account
+  /// refuses logins (generic error) until it passes. Both reset on success.
+  failedLoginCount Int       @default(0)
+  lockedUntil      DateTime?
+
   restaurant       Restaurant?          @relation(fields: [restaurantId], references: [id])
   resetTokens      PasswordResetToken[]
   resellerProfile  ResellerProfile? // present only on reseller_partner users

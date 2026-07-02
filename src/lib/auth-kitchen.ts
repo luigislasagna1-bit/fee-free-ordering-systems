@@ -8,6 +8,10 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { randomUUID } from "crypto";
 import prisma from "./db";
+import {
+  loginAttemptAllowed, recordLoginFailure, userNotLocked,
+  registerUserLoginFailure, clearUserLoginFailures, ipFromHeaderBag,
+} from "./login-protection";
 
 // Match the same tunnel-aware logic as the admin auth (lib/auth.ts). Real
 // production domain → strict prefixed cookies. Tunnel hosts or dev → plain
@@ -53,18 +57,34 @@ export const kitchenAuthOptions: NextAuthOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.password) return null;
+        const emailLower = String(credentials.email).trim().toLowerCase();
+
+        // Brute-force guard (Blocker #9) — same shared-store IP+email
+        // failure limiting + User lockout as the admin login; kitchen and
+        // admin share the User table, so a lock covers both surfaces.
+        const ip = ipFromHeaderBag(req?.headers as Record<string, string | undefined> | undefined);
+        if (!(await loginAttemptAllowed({ scope: "kitchen", ip, email: emailLower }))) return null;
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
           include: { restaurant: true },
         });
 
-        if (!user || !user.isActive) return null;
+        if (!user || !user.isActive) {
+          await recordLoginFailure({ scope: "kitchen", ip, email: emailLower });
+          return null;
+        }
+        if (!userNotLocked(user)) return null;
 
         const valid = await bcrypt.compare(credentials.password, user.passwordHash);
-        if (!valid) return null;
+        if (!valid) {
+          await recordLoginFailure({ scope: "kitchen", ip, email: emailLower });
+          await registerUserLoginFailure(user.id);
+          return null;
+        }
+        await clearUserLoginFailures(user);
 
         // Single-active-kitchen-session enforcement (Luigi 2026-06-02,
         // GloriaFood parity). On every successful kitchen login we

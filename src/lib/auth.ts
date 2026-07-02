@@ -3,6 +3,10 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import prisma from "./db";
 import { userBelongsToReseller } from "./reseller-membership";
+import {
+  loginAttemptAllowed, recordLoginFailure, userNotLocked,
+  registerUserLoginFailure, clearUserLoginFailures, ipFromHeaderBag,
+} from "./login-protection";
 
 /**
  * Sentinel error string the credentials authorize() throws when a valid
@@ -141,15 +145,30 @@ export const authOptions: NextAuthOptions = {
           if (!credentials?.email || !credentials?.password) return null;
           const emailLower = String(credentials.email).trim().toLowerCase();
 
+          // Brute-force guard (Blocker #9): shared-store IP+email failure
+          // limiting + DB lockout. Every refusal is the same generic null →
+          // "invalid credentials", so nothing leaks about WHY.
+          const ip = ipFromHeaderBag(req?.headers as Record<string, string | undefined> | undefined);
+          if (!(await loginAttemptAllowed({ scope: "admin", ip, email: emailLower }))) return null;
+
           const user = await prisma.user.findUnique({
             where: { email: emailLower },
             include: { restaurant: true, resellerProfile: { select: { id: true } } },
           });
 
-          if (!user || !user.isActive) return null;
+          if (!user || !user.isActive) {
+            await recordLoginFailure({ scope: "admin", ip, email: emailLower });
+            return null;
+          }
+          if (!userNotLocked(user)) return null; // hard lock — even a correct password waits it out
 
           const valid = await bcrypt.compare(credentials.password, user.passwordHash);
-          if (!valid) return null;
+          if (!valid) {
+            await recordLoginFailure({ scope: "admin", ip, email: emailLower });
+            await registerUserLoginFailure(user.id);
+            return null;
+          }
+          await clearUserLoginFailures(user);
 
           // Reseller-scope enforcement — derived SERVER-SIDE from the
           // request host header. We can't trust the client-passed

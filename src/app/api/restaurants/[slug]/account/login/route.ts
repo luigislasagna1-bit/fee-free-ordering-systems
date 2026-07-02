@@ -25,6 +25,8 @@ import {
 } from "@/lib/restaurant-customer-session";
 import { sendPasswordResetEmail } from "@/lib/email";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
+import { getClientIp } from "@/lib/rate-limit";
+import { loginAttemptAllowed, recordLoginFailure } from "@/lib/login-protection";
 
 export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: string }> }) {
   const { slug } = await ctx.params;
@@ -57,6 +59,15 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
   const password = body.password || "";
   if (!email || !password) {
     return NextResponse.json({ error: "Email and password required" }, { status: 400 });
+  }
+
+  // Brute-force guard (Blocker #9): shared-store IP+email failure limiting.
+  // Also gates the needs_password_setup branch below, so this endpoint can't
+  // be used to flood someone's inbox with set-password emails. Same generic
+  // 401 as a wrong password — nothing leaks.
+  const ip = getClientIp(req);
+  if (!(await loginAttemptAllowed({ scope: "restcust", ip, email }))) {
+    return NextResponse.json({ error: "Email or password is incorrect" }, { status: 401 });
   }
 
   // Look up by email only — we need to distinguish "no record at all"
@@ -133,6 +144,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
   }
 
   if (!customer || !ok) {
+    await recordLoginFailure({ scope: "restcust", ip, email });
     return NextResponse.json({ error: "Email or password is incorrect" }, { status: 401 });
   }
 
