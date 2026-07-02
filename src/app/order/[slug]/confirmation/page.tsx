@@ -9,6 +9,7 @@ import { resolvePoweredByCredit, RESELLER_WHITE_LABEL_SELECT } from "@/lib/white
 import { getTranslations } from "next-intl/server";
 import { verifyAndReleaseOrderPayment } from "@/lib/stripe/verify-order-payment";
 import { getOrderRewardSummary } from "@/lib/reward-ledger";
+import { paymentMethodLabelKey } from "@/lib/payment-label";
 
 export default async function ConfirmationPage({
   params,
@@ -22,6 +23,7 @@ export default async function ConfirmationPage({
   // stops burying the tip / omitting the balance — no new i18n. Luigi 2026-07-02.
   const tStatus = await getTranslations("customer.orderStatus");
   const tReceipt = await getTranslations("receipt.customer");
+  const tRoot = await getTranslations();
   const { slug } = await params;
   const { orderId, payment_intent } = await searchParams;
   if (!orderId) notFound();
@@ -267,6 +269,12 @@ export default async function ConfirmationPage({
                   <div className="flex justify-between text-emerald-600">
                     <span>{t("earnedReward", { label: rewardName })}</span>
                     <span>+ {formatCurrency(rewardEarned)}</span>
+                  </div>
+                )}
+                {order.paymentMethod && (
+                  <div className="flex justify-between text-gray-500 text-xs pt-1.5">
+                    <span>{tStatus("payment")}</span>
+                    <span>{(() => { const k = paymentMethodLabelKey(order.paymentMethod, (order as any).type); return k ? tRoot(k) : order.paymentMethod!.replace(/_/g, " "); })()}</span>
                   </div>
                 )}
               </div>
