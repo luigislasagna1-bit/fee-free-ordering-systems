@@ -5751,6 +5751,12 @@ export function OrderingPageClient({
             if (next === "pickup" && !restaurant.acceptsPickup) return;
             setOrderType(next);
           }}
+          // Whole-cart discount CTA ("Start adding items") → pre-apply the
+          // promo's code so the customer doesn't retype it at checkout.
+          onApplyCode={(code) => {
+            setCouponCode(code);
+            applyCoupon(code);
+          }}
           // Click an eligible item in the promo modal → close the promo
           // modal + open the item-config sheet so the customer can pick
           // size/modifiers/quantity before adding to cart. Looks up the

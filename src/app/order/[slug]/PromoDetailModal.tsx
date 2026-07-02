@@ -139,6 +139,10 @@ interface Props {
   /** Switch the page-level order type — used by the free_delivery panel's
    *  "Switch to delivery" footer button. */
   onSwitchOrderType?: (next: "pickup" | "delivery") => void;
+  /** Apply a coupon code from the modal — used by the whole-cart discount
+   *  CTA so "Start adding items" also pre-applies the promo's code (the
+   *  customer doesn't have to retype it at checkout). Luigi 2026-07-02. */
+  onApplyCode?: (code: string) => void;
   /** Open the item-config sheet for the clicked item (closing this modal
    *  in the process). Lets the customer pick size / modifiers / quantity
    *  before adding to cart — necessary because a "Pizza" can't be added
@@ -550,6 +554,7 @@ export function PromoDetailModal({
   onAddBundle,
   onCompleteGuidedPromo,
   onSwitchOrderType,
+  onApplyCode,
   onOpenItem,
   allVisibleCategories,
   onAddItemDirect,
@@ -773,6 +778,27 @@ export function PromoDetailModal({
               style={{ backgroundColor: primaryColor }}
             >
               {t("switchToDelivery")}
+            </button>
+          </div>
+        )}
+
+        {/* Whole-cart discount promos (e.g. "20% off everything", a fixed-$-off
+            code) discount the WHOLE cart, so — unlike item-specific promos —
+            they have NO per-item "+ Add" buttons. Give them a CTA to start
+            adding items, and pre-apply the promo's code so the customer doesn't
+            have to retype it at checkout. Luigi 2026-07-02. */}
+        {(promo.promotionType === "fixed_cart" ||
+          (promo.promotionType === "percentage_off" && (rules.groups ?? rules.itemGroups ?? []).length === 0)) && (
+          <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex justify-center">
+            <button
+              onClick={() => {
+                if (promo.couponCode && onApplyCode) onApplyCode(promo.couponCode);
+                onClose();
+              }}
+              className="w-full text-white font-semibold px-4 py-3 rounded-xl text-sm"
+              style={{ backgroundColor: primaryColor }}
+            >
+              {t("startAddingItems")}
             </button>
           </div>
         )}
