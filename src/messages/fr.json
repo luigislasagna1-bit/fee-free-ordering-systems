@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Un ou plusieurs articles de votre panier ne peuvent être commandés que certains jours ou à certaines heures. Nous avons sélectionné le créneau disponible le plus proche ci-dessous — modifiez-le si vous le souhaitez.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> ne peut être commandé que certains jours ou à certaines heures. Les horaires de commande disponibles ont été limités en conséquence.",
     "serviceStartsPrompt": "🕒 Le service {service} n'a pas encore commencé — il commence à {time}.",
+    "asapDeliveryEstimateNote": "Le temps indiqué est une estimation approximative de préparation et de trajet — ce n'est pas un délai de livraison garanti. Le restaurant confirme votre heure de livraison réelle après avoir accepté la commande.",
     "youSaved": "Vous économisez {amount}",
     "reward": {
       "defaultPlural": "Crédits fidélité",

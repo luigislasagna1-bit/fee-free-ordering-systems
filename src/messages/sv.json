@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 En eller flera varor i din kundvagn kan endast beställas för vissa dagar eller tider. Vi har valt den tidigast tillgängliga tiden nedan – ändra den om du vill.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> kan endast beställas vissa dagar eller tider. De tillgängliga beställningstiderna har begränsats därefter.",
     "serviceStartsPrompt": "🕒 {service}-tjänsten har inte börjat ännu — den börjar kl. {time}.",
+    "asapDeliveryEstimateNote": "Den beräknade tiden är en ungefärlig uppskattning av tillagning + leverans – inte en garanterad leveranstid. Restaurangen bekräftar din faktiska leveranstid efter att beställningen har accepterats.",
     "youSaved": "Du sparade {amount}",
     "reward": {
       "defaultPlural": "Bonuspengar",

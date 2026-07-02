@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Yhtä tai useampaa ostoskorisi tuotetta voi tilata vain tiettyinä päivinä tai kellonaikoina. Olemme valinneet alle aikaisimman vapaan ajan – muuta sitä halutessasi.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> voidaan tilata vain tiettyinä päivinä tai kellonaikoina. Käytettävissä olevia tilausaikoja on rajoitettu vastaavasti.",
     "serviceStartsPrompt": "🕒 {service}-palvelu ei ole vielä alkanut — se alkaa klo {time}.",
+    "asapDeliveryEstimateNote": "Arvioitu aika on likimääräinen valmistus- ja toimitusaika-arvio – ei taattu toimitusaika. Ravintola vahvistaa todellisen toimitusaikasi hyväksyttyään tilauksen.",
     "youSaved": "Säästit {amount}",
     "reward": {
       "defaultPlural": "Bonusrahat",

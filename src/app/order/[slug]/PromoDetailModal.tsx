@@ -757,12 +757,13 @@ export function PromoDetailModal({
           />
         </div>
 
-        {/* Footer — one prominent, centered, full-width CTA. The discount
-            auto-applies once the qualifying cart is built, so the CTA invites
-            the customer to start adding items (Luigi 2026-06-26). free_delivery
-            keeps its own "switch to delivery" action. */}
-        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex justify-center">
-          {promo.promotionType === "free_delivery" && onSwitchOrderType ? (
+        {/* Footer — ONLY for free_delivery, whose "Switch to delivery" action is
+            still meaningful. Every eligible product now has its own inline
+            "+ Add" / "Customize" button (added 2026-06-26), so the old generic
+            "Start adding items" CTA that just closed the modal was redundant and
+            has been removed (Fabrizio report cmqtmfp2n). Luigi 2026-07-02. */}
+        {promo.promotionType === "free_delivery" && onSwitchOrderType && (
+          <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex justify-center">
             <button
               onClick={() => {
                 onSwitchOrderType("delivery");
@@ -773,16 +774,8 @@ export function PromoDetailModal({
             >
               {t("switchToDelivery")}
             </button>
-          ) : (
-            <button
-              onClick={onClose}
-              className="w-full text-white font-semibold px-4 py-3 rounded-xl text-sm"
-              style={{ backgroundColor: primaryColor }}
-            >
-              {t("startAddingItems")}
-            </button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

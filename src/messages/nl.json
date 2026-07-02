@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Een of meer artikelen in je winkelwagen kunnen alleen voor bepaalde dagen of tijden worden besteld. We hebben hieronder het eerstvolgende beschikbare tijdslot ingesteld — pas het aan als je wilt.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> kan alleen op bepaalde dagen of tijden worden besteld. De beschikbare besteltijden zijn dienovereenkomstig beperkt.",
     "serviceStartsPrompt": "🕒 De {service}-service is nog niet begonnen — die start om {time}.",
+    "asapDeliveryEstimateNote": "De geschatte tijd is een benadering van de bereidings- en bezorgtijd, geen gegarandeerde bezorgtijd. Het restaurant bevestigt je werkelijke bezorgtijd nadat het de bestelling heeft geaccepteerd.",
     "youSaved": "Je bespaart {amount}",
     "reward": {
       "defaultPlural": "Spaartegoed",

@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Ein oder mehrere Artikel in Ihrem Warenkorb können nur für bestimmte Tage oder Uhrzeiten bestellt werden. Wir haben unten den nächsten verfügbaren Termin ausgewählt — passen Sie ihn bei Bedarf an.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> kann nur an bestimmten Tagen oder zu bestimmten Zeiten bestellt werden. Die verfügbaren Bestellzeiten wurden entsprechend eingeschränkt.",
     "serviceStartsPrompt": "🕒 Der {service}-Service hat noch nicht begonnen — er startet um {time}.",
+    "asapDeliveryEstimateNote": "Die geschätzte Zeit ist eine ungefähre Schätzung für Zubereitung und Lieferweg — keine garantierte Lieferzeit. Das Restaurant bestätigt Ihre tatsächliche Lieferzeit, nachdem es die Bestellung angenommen hat.",
     "youSaved": "Gespart: {amount}",
     "reward": {
       "defaultPlural": "Bonusguthaben",

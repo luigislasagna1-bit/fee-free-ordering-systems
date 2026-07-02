@@ -1155,6 +1155,14 @@ export function CheckoutModal({
                 primary={theme.primaryColor}
               >
                 <div className="pt-3 space-y-2">
+                  {/* Clarify that the ASAP delivery "~X min" is an estimate, not a
+                      delivery-arrival promise — the restaurant confirms the real
+                      time after accepting (Fabrizio report cmqt99i8s). Luigi 2026-07-02. */}
+                  {orderType === "delivery" && !customerInfo.scheduledFor && !cateringMode && (
+                    <p className="text-xs text-gray-500 bg-gray-50 border border-gray-100 rounded-lg px-3 py-2 leading-snug">
+                      {tc("asapDeliveryEstimateNote")}
+                    </p>
+                  )}
                   {(cateringMode || fulfilItemsPresent) && (
                     <div className="rounded-lg border border-amber-200 bg-amber-50 text-amber-800 px-3 py-2 text-xs space-y-1">
                       {/* Forced-schedule reason (closed / catering / lead). The

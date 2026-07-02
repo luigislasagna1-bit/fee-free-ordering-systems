@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Jednu nebo více položek ve vašem košíku lze objednat pouze na určité dny nebo časy. Níže jsme nastavili nejbližší dostupný termín — v případě potřeby jej upravte.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> lze objednat pouze v určité dny nebo časy. Dostupné časy objednávek byly odpovídajícím způsobem omezeny.",
     "serviceStartsPrompt": "🕒 Služba {service} ještě nezačala — začíná v {time}.",
+    "asapDeliveryEstimateNote": "Uvedený čas je pouze přibližný odhad přípravy a dopravy — nikoli garantovaný čas doručení. Skutečný čas doručení potvrdí restaurace po přijetí objednávky.",
     "youSaved": "Ušetřili jste {amount}",
     "reward": {
       "defaultPlural": "Věrnostní kredit",

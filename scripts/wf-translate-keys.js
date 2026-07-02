@@ -6,30 +6,10 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "kitchen";
-const CONTEXT = "the restaurant Kitchen Display 'Alert Sound' settings modal (staff-facing). It controls the new-order alert bell: choosing a sound, volume, mute, and a test button. Keep the brand name 'GloriaFood' untranslated. '/admin/profile' is a path — keep it literal. Concise, clear staff tone for a busy kitchen.";
+const NS = "checkout";
+const CONTEXT = "the customer checkout of a restaurant online-ordering site. This single note appears under the 'ASAP' (as-soon-as-possible) time choice for DELIVERY orders. It clarifies that the '~X min' figure shown is only an approximate prep + travel estimate, NOT a guaranteed delivery time — the restaurant sets the real delivery time after it accepts the order. Reassuring, concise customer-facing tone.";
 const EN = {
-  "soundTitle": "Alert Sound",
-  "soundDesc": "The bell rings whenever a new order is waiting. Spaced out at first, then escalates to rapid in the final 30 seconds before the order is auto-rejected. Keep it loud so you never miss one.",
-  "soundPickerLabel": "Alert sound",
-  "soundGloriaSub": "Default",
-  "soundClassic": "Classic Bell",
-  "soundClassicSub": "Synthesized",
-  "soundCustom": "Custom Sound",
-  "soundCustomSub": "Owner-uploaded",
-  "soundCustomReplaceHint": "Upload or replace your custom ring from /admin/profile.",
-  "soundCustomUploadHint": "Want a custom sound? Upload one from /admin/profile.",
-  "soundPreviewHint": "Use the test button below to preview your selection.",
-  "soundVolume": "Volume",
-  "soundMuted": "Muted",
-  "soundMax": "Max",
-  "soundLowWarn": "Volume is below 50%. We recommend keeping it at maximum so your team never misses an order during a busy rush.",
-  "soundOffWarn": "Alert sound is OFF. New orders will appear visually only — you may not notice them in a noisy kitchen.",
-  "soundSilence": "Silence current alarm",
-  "soundMutedTap": "Sound muted — tap to unmute",
-  "soundOnTap": "Sound on — tap to mute permanently",
-  "soundTest": "Play test sound (1 ring)",
-  "soundDone": "Done",
+  "asapDeliveryEstimateNote": "The estimated time is an approximate prep + travel estimate — not a guaranteed delivery time. The restaurant confirms your actual delivery time after accepting the order.",
 };
 const KEYS = Object.keys(EN);
 

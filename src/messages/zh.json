@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 您购物车中的一件或多件商品只能在特定日期或时间下单。我们已在下方为您选择了最早可用的时段——如有需要可自行调整。",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> 仅可在特定日期或时间下单。可用的下单时间已相应调整。",
     "serviceStartsPrompt": "🕒 {service}服务尚未开始 — 将于 {time} 开始。",
+    "asapDeliveryEstimateNote": "预计时间仅为大致的备餐和配送时间估算，并非保证送达时间。餐厅在接受订单后会确认您的实际送达时间。",
     "youSaved": "已省 {amount}",
     "reward": {
       "defaultPlural": "奖励金",

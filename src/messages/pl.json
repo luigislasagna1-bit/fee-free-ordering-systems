@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Co najmniej jedną pozycję w koszyku można zamówić tylko na określone dni lub godziny. Ustawiliśmy poniżej najbliższy dostępny termin — w razie potrzeby możesz go zmienić.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> można zamówić tylko w określone dni lub godziny. Dostępne godziny zamówień zostały odpowiednio ograniczone.",
     "serviceStartsPrompt": "🕒 Usługa {service} jeszcze się nie rozpoczęła — zaczyna się o {time}.",
+    "asapDeliveryEstimateNote": "Podany czas to szacunkowy czas przygotowania i dostawy — nie jest to gwarantowany czas dostawy. Restauracja potwierdzi rzeczywisty czas dostawy po przyjęciu zamówienia.",
     "youSaved": "Oszczędzasz {amount}",
     "reward": {
       "defaultPlural": "Złotówki za zakupy",

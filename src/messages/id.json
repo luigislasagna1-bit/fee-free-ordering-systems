@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Satu atau beberapa item di keranjang Anda hanya bisa dipesan untuk hari atau jam tertentu. Kami telah memilih slot paling awal yang tersedia di bawah ini — sesuaikan jika Anda mau.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> hanya dapat dipesan pada hari atau waktu tertentu. Waktu pemesanan yang tersedia telah dibatasi sesuai dengan itu.",
     "serviceStartsPrompt": "🕒 Layanan {service} belum dimulai — dimulai pukul {time}.",
+    "asapDeliveryEstimateNote": "Perkiraan waktu ini merupakan estimasi kasar untuk persiapan + perjalanan — bukan waktu pengiriman yang dijamin. Restoran akan mengonfirmasi waktu pengiriman aktual Anda setelah menerima pesanan.",
     "youSaved": "Anda hemat {amount}",
     "reward": {
       "defaultPlural": "Dolar Hadiah",
