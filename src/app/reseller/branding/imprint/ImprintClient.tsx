@@ -32,8 +32,8 @@ export function ImprintClient({
   const [vatSavedAt, setVatSavedAt] = useState<number | null>(null);
   const [vatError, setVatError] = useState<string | null>(null);
 
-  // Save the reseller's VAT / tax number — appears as the ISSUER's VAT on the
-  // invoices your restaurants receive (alongside your company name).
+  // Save the reseller's VAT / tax number — appears on the "Your local partner"
+  // line of the invoices your restaurants receive (the platform is the issuer).
   async function saveVat() {
     setVatBusy(true);
     setVatError(null);
