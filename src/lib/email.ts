@@ -1231,9 +1231,13 @@ export interface DigestStats {
   dineInSales: number;
 
   offlinePayments: number;        // count
-  offlinePaymentsAmount: number;
+  offlinePaymentsAmount: number;  // cash/card actually collected (net of store credit)
   onlinePayments: number;
-  onlinePaymentsAmount: number;
+  onlinePaymentsAmount: number;   // cash/card actually collected (net of store credit)
+  /** Reward / store credit spent across the window — a TENDER, not cash/card. */
+  storeCreditRedeemed: number;
+  /** Real cash/card collected = sales − storeCreditRedeemed. */
+  collected: number;
 
   subTotals: number;
   taxAmount: number;

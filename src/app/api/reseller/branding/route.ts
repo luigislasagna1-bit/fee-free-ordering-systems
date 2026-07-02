@@ -24,6 +24,7 @@ export async function GET() {
     select: {
       status: true,
       imprint: true,
+      companyVatId: true,
       brandLogoUrl: true,
       brandLoginTitle: true,
       brandPrimaryColor: true,
@@ -37,6 +38,7 @@ export async function GET() {
   }
   return NextResponse.json({
     imprint: profile.imprint ?? "",
+    companyVatId: profile.companyVatId ?? "",
     brandLogoUrl: profile.brandLogoUrl ?? "",
     brandLoginTitle: profile.brandLoginTitle ?? "",
     brandPrimaryColor: profile.brandPrimaryColor ?? "",
@@ -72,6 +74,7 @@ export async function PATCH(req: NextRequest) {
   // which means "clear it".
   const data: {
     imprint?: string | null;
+    companyVatId?: string | null;
     brandLogoUrl?: string | null;
     brandLoginTitle?: string | null;
     brandPrimaryColor?: string | null;
@@ -86,6 +89,14 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: "Imprint must be 200 characters or fewer" }, { status: 400 });
     }
     data.imprint = raw && raw.length > 0 ? raw : null;
+  }
+  // Reseller's VAT / tax number for the invoice ISSUER block (Fabrizio cmr1ty0lc).
+  if ("companyVatId" in body) {
+    const raw = body.companyVatId == null ? null : String(body.companyVatId).trim();
+    if (raw && raw.length > 60) {
+      return NextResponse.json({ error: "VAT / tax number too long" }, { status: 400 });
+    }
+    data.companyVatId = raw && raw.length > 0 ? raw : null;
   }
   if ("brandLogoUrl" in body) {
     const raw = body.brandLogoUrl == null ? null : String(body.brandLogoUrl).trim();

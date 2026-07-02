@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { stripeReady } from "@/lib/stripe";
+import { getRestaurantDefaultCard } from "@/lib/addons";
 import { getOrderCapUsage } from "@/lib/order-cap";
 import { BillingClient } from "./BillingClient";
 
@@ -75,9 +76,12 @@ export default async function AdminBillingPage() {
 
   if (!restaurant) redirect("/login");
 
-  const [billingConfigured, capUsage] = await Promise.all([
+  const [billingConfigured, capUsage, savedCard] = await Promise.all([
     stripeReady(),
     getOrderCapUsage(user.restaurantId),
+    // The card future invoices auto-charge (if any) — so the billing page can
+    // show it + let the owner save one BEFORE enabling a paid service.
+    restaurant.stripeCustomerId ? getRestaurantDefaultCard(user.restaurantId) : Promise.resolve(null),
   ]);
 
   return (
@@ -88,6 +92,7 @@ export default async function AdminBillingPage() {
       marketplaceListing={marketplaceListing ? JSON.parse(JSON.stringify(marketplaceListing)) : null}
       invoices={JSON.parse(JSON.stringify(invoices))}
       billingConfigured={billingConfigured}
+      savedCard={savedCard}
       orderCapUsage={{
         count: capUsage.count,
         cap: capUsage.cap,

@@ -18,6 +18,7 @@ import { HelpTip } from "@/components/HelpTip";
 import {
   type DeliveryFieldKey,
   type DeliveryAddressConfig,
+  composeStreetLine,
 } from "@/lib/delivery-address-fields";
 
 // Leaflet pin is dynamically imported (ssr:false) — Leaflet touches `window`,
@@ -261,7 +262,12 @@ interface Props {
    *  inside the time-choice section so the customer understands
    *  whether it's a catering rule, a "we're closed right now" rule,
    *  a min-advance rule, or several at once. */
-  scheduleReason?: "catering" | "closed" | "service_later" | "both" | "lead" | "fulfil" | null;
+  scheduleReason?: "catering" | "closed" | "service_later" | "service_special_later" | "both" | "lead" | "fulfil" | null;
+  /** Today's per-service EXTRAORDINARY/special-day OPEN intervals (if any) +
+   *  the date key they apply to — so the slot picker offers the special window
+   *  for TODAY instead of the weekly hours. Luigi 2026-07-02. */
+  todayServiceSpecialIntervals?: Array<{ open: string; close: string }> | null;
+  todayServiceSpecialDateKey?: string | null;
   /** Localized name of the chosen service (Pickup/Delivery) — used by the
    *  "service_later" prompt ("Pickup starts at 2:00 PM"). Luigi 2026-06-22. */
   serviceLabel?: string;
@@ -338,6 +344,8 @@ export function CheckoutModal({
   scheduleReason = null,
   serviceLabel,
   closedNextOpenLocal,
+  todayServiceSpecialIntervals = null,
+  todayServiceSpecialDateKey = null,
   paypalEnabled,
   couponCode, setCouponCode, couponId, couponDiscount, couponLoading, applyCoupon,
   estimatedDeliveryMinutes, estimatedPickupMinutes,
@@ -465,7 +473,9 @@ export function CheckoutModal({
 
     const streetNumber = get("street_number");
     const route = get("route");
-    const street = [streetNumber, route].filter(Boolean).join(" ");
+    // House-number position follows the restaurant's country convention:
+    // "Via Mazzini 13" (IT/DE/…) vs "13 Main St" (US/CA/GB/…). Fabrizio 2026-06-24.
+    const street = composeStreetLine(route, streetNumber, geocodeCountry);
     const city = get("locality") || get("sublocality") || get("administrative_area_level_2");
     const zip = get("postal_code");
 
@@ -1155,6 +1165,14 @@ export function CheckoutModal({
                 primary={theme.primaryColor}
               >
                 <div className="pt-3 space-y-2">
+                  {/* Clarify that the ASAP delivery "~X min" is an estimate, not a
+                      delivery-arrival promise — the restaurant confirms the real
+                      time after accepting (Fabrizio report cmqt99i8s). Luigi 2026-07-02. */}
+                  {orderType === "delivery" && !customerInfo.scheduledFor && !cateringMode && (
+                    <p className="text-xs text-gray-500 bg-gray-50 border border-gray-100 rounded-lg px-3 py-2 leading-snug">
+                      {tc("asapDeliveryEstimateNote")}
+                    </p>
+                  )}
                   {(cateringMode || fulfilItemsPresent) && (
                     <div className="rounded-lg border border-amber-200 bg-amber-50 text-amber-800 px-3 py-2 text-xs space-y-1">
                       {/* Forced-schedule reason (closed / catering / lead). The
@@ -1176,6 +1194,13 @@ export function CheckoutModal({
                                 </span>
                               )}
                             </>
+                          ) : scheduleReason === "service_special_later" ? (
+                            tc("serviceOpensTodayPrompt", {
+                              service: serviceLabel ?? "",
+                              time: closedNextOpenLocal
+                                ? new Date(closedNextOpenLocal).toLocaleString(undefined, { hour: "numeric", minute: "2-digit" })
+                                : "",
+                            })
                           ) : scheduleReason === "service_later" ? (
                             tc("serviceStartsPrompt", {
                               service: serviceLabel ?? "",
@@ -1313,7 +1338,11 @@ export function CheckoutModal({
                       // rowIntervals() returns every window (legacy single-window rows
                       // become a one-element array), so we generate slots PER interval
                       // and the lunch/dinner gap simply has no slots offered.
-                      const ivs = row && row.isOpen ? rowIntervals(row as any) : [];
+                      // For TODAY, a per-service EXTRAORDINARY/special-day OPEN
+                      // window overrides the weekly row (Fabrizio cmqp8l948). Luigi 2026-07-02.
+                      const ivs = (todayServiceSpecialIntervals && todayServiceSpecialDateKey && datePart === todayServiceSpecialDateKey)
+                        ? todayServiceSpecialIntervals
+                        : (row && row.isOpen ? rowIntervals(row as any) : []);
                       if (ivs.length > 0) {
                         winOpen = ivs[0].open;                       // envelope (exact-mode bounds)
                         winClose = ivs[ivs.length - 1].close;

@@ -143,6 +143,9 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
       type: true,
       paymentMethod: true,
       paymentStatus: true,
+      // Reward / store credit spent — so "collected" reflects real cash/card,
+      // not the gross total (Luigi 2026-07-02: store credit is a separate tender).
+      creditApplied: true,
       // Per-order service fees (JSON [{name, amount}]) → the "Other fees" line.
       appliedServiceFees: true,
     },
@@ -163,6 +166,7 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
   let offlinePayments = 0, offlinePaymentsAmount = 0;
   let onlinePayments = 0, onlinePaymentsAmount = 0;
   let otherFees = 0;
+  let storeCreditRedeemed = 0;
 
   for (const o of orders) {
     sales += o.total;
@@ -170,6 +174,12 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
     taxAmount += o.taxAmount ?? 0;
     deliveryFees += o.deliveryFee ?? 0;
     tips += o.tip ?? 0;
+    // Store credit is a TENDER, not cash/card. Track it separately so the
+    // payment split + "collected" don't overstate what actually hit the till /
+    // card processor. `collectedAmt` = what was really taken in cash/card.
+    const creditUsed = (o as any).creditApplied ?? 0;
+    storeCreditRedeemed += creditUsed;
+    const collectedAmt = Math.max(0, o.total - creditUsed);
 
     // "Other fees" = sum of the order's applied service fees. Stored as JSON
     // (array or string depending on column type) — parse defensively.
@@ -186,8 +196,8 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
     else { pickupOrders++; pickupSales += o.total; }
 
     const isOnline = o.paymentMethod === "card" && o.paymentStatus === "paid";
-    if (isOnline) { onlinePayments++; onlinePaymentsAmount += o.total; }
-    else { offlinePayments++; offlinePaymentsAmount += o.total; }
+    if (isOnline) { onlinePayments++; onlinePaymentsAmount += collectedAmt; }
+    else { offlinePayments++; offlinePaymentsAmount += collectedAmt; }
   }
 
   return {
@@ -205,6 +215,9 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
     dineInOrders, dineInSales,
     offlinePayments, offlinePaymentsAmount,
     onlinePayments, onlinePaymentsAmount,
+    storeCreditRedeemed,
+    // Real cash/card collected = gross revenue − store credit redeemed.
+    collected: Math.max(0, sales - storeCreditRedeemed),
     total: sales,
   };
 }
@@ -249,6 +262,8 @@ function buildStats(
     offlinePaymentsAmount: current.offlinePaymentsAmount,
     onlinePayments: current.onlinePayments,
     onlinePaymentsAmount: current.onlinePaymentsAmount,
+    storeCreditRedeemed: current.storeCreditRedeemed,
+    collected: current.collected,
     subTotals: current.subTotals,
     taxAmount: current.taxAmount,
     deliveryFees: current.deliveryFees,

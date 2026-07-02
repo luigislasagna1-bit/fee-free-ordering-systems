@@ -46,12 +46,19 @@ export async function GET() {
     // simple-mode auto-complete sweep below.
     const restaurant = await prisma.restaurant.findUnique({
       where: { id: restaurantId },
-      select: { kitchenWorkflowMode: true, printNodeEnabled: true, timezone: true, kitchenDeliveryShowName: true, kitchenDeliveryShowBoth: true, kitchenShowItemCategory: true },
+      select: { kitchenWorkflowMode: true, printNodeEnabled: true, timezone: true, kitchenDeliveryShowName: true, kitchenDeliveryShowBoth: true, kitchenShowItemCategory: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true },
     });
     const resolvedMode = restaurant?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple";
     // Only join each line's menu category when the restaurant enabled the
     // feature — keeps the 4s-poll query lean by default (Fabrizio 2026-06-21).
     const showItemCategory = !!restaurant?.kitchenShowItemCategory;
+    // Reward / store-credit display: creditApplied is ALREADY on each order row
+    // (no extra query). We only need the restaurant's label + on/off flag so the
+    // kitchen can show "Paid with {label}" + the real amount to collect. Reward
+    // EARNED is intentionally NOT computed here — it needs a ledger read and this
+    // is the 4s-poll hot path. Luigi 2026-07-02.
+    const rewardsEnabled = !!restaurant?.rewardsEnabled;
+    const rewardLabel = restaurant?.rewardLabelPlural?.trim() || restaurant?.rewardLabelSingular?.trim() || null;
 
     // Start of TODAY in the restaurant's timezone. Used below so an order that
     // belongs in the In Progress tab (today's work) is NEVER dropped from the
@@ -223,6 +230,9 @@ export async function GET() {
         reservation: b
           ? { id: b.id, partySize: b.partySize, date: b.date, time: b.time, confirmationCode: b.confirmationCode, status: b.status }
           : null,
+        // Reward/store-credit display fields (creditApplied is already in ...o).
+        rewardLabel: rewardsEnabled ? rewardLabel : null,
+        rewardsActive: rewardsEnabled && !!(o as any).customerId,
       };
     });
 

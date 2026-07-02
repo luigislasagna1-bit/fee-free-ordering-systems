@@ -208,7 +208,15 @@ function ReservationDetail({
   currency?: string;
 }) {
   const tk = useTranslations("kitchen");
+  const locale = useLocale();
   const [busy, setBusy] = useState(false);
+  // Localized full date to match the order detail's "order for later" line
+  // (Fabrizio 2026-06-27: weekday + day + month in the kitchen's language,
+  // e.g. "sabato 27 giugno 2026", instead of the raw ISO "2026-06-27").
+  const resvDateObj = new Date(`${r.date}T${r.time || "00:00"}:00`);
+  const resvDateLabel = Number.isFinite(resvDateObj.getTime())
+    ? resvDateObj.toLocaleDateString(locale || undefined, { weekday: "long", day: "numeric", month: "long", year: "numeric" })
+    : r.date;
   const act = async (status: string) => {
     if (busy) return;
     setBusy(true);
@@ -250,7 +258,7 @@ function ReservationDetail({
       <div className="flex-1 overflow-y-auto p-4 space-y-3 text-sm">
         <div className={`flex items-center gap-2 ${t.text}`}>
           <CalendarDays className="w-4 h-4 flex-shrink-0" />
-          <span className="font-semibold">{r.date} · {formatTime(r.time, hoursFormat)}</span>
+          <span className="font-semibold capitalize">{resvDateLabel} · {formatTime(r.time, hoursFormat)}</span>
         </div>
         <div className={`flex items-center gap-2 flex-wrap ${t.muted}`}>
           <Package className="w-4 h-4 flex-shrink-0" />
@@ -258,7 +266,14 @@ function ReservationDetail({
           {r.table && <span>· {r.table.name}</span>}
         </div>
         {r.customerPhone && (
-          <div className={`${t.muted}`}>📞 {r.customerPhone}</div>
+          <div className={`${t.muted}`}>
+            📞 <a href={`tel:${r.customerPhone.replace(/\s+/g, "")}`} className="underline">{r.customerPhone}</a>
+          </div>
+        )}
+        {r.customerEmail && (
+          <div className={`${t.muted} break-all`}>
+            ✉️ <a href={`mailto:${r.customerEmail}`} className="underline">{r.customerEmail}</a>
+          </div>
         )}
         {r.notes && (
           <div className={`text-xs ${t.muted} italic border-l-2 ${t.border} pl-3`}>&quot;{r.notes}&quot;</div>
@@ -669,6 +684,7 @@ type KitchenReservation = {
   rejectionReason?: string | null;
   customerName: string;
   customerPhone: string | null;
+  customerEmail: string | null;
   partySize: number;
   date: string;
   time: string;

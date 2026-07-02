@@ -65,6 +65,10 @@ export async function GET(req: NextRequest) {
     "Lifetime orders", "Lifetime spend",
     "First seen",
   ]];
+  // Render "First seen" in the restaurant's timezone (matches the tz-correct
+  // report pages; a raw Date stringifies to a verbose UTC string). Luigi 2026-07-01.
+  const tz = scope.timezone ?? undefined;
+  const fmtDate = (d: Date) => d.toLocaleDateString("en-US", { timeZone: tz, year: "numeric", month: "short", day: "numeric" });
   for (const g of grouped) {
     const c = byId.get(g.customerId!);
     if (!c) continue;
@@ -76,7 +80,7 @@ export async function GET(req: NextRequest) {
       round2(g._sum.total ?? 0),
       lifetimeById.get(c.id)?.orders ?? c.totalOrders,
       round2(lifetimeById.get(c.id)?.spend ?? c.totalSpent),
-      c.createdAt,
+      fmtDate(c.createdAt),
     ]);
   }
 

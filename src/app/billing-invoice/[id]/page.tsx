@@ -4,7 +4,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency } from "@/lib/utils";
 import { getFiscalConfig, isKnownFiscalCountry } from "@/lib/fiscal-countries";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { ArrowLeft } from "lucide-react";
 import { PrintButton } from "./PrintButton";
 
@@ -18,6 +18,9 @@ import { PrintButton } from "./PrintButton";
 export default async function InvoicePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const t = await getTranslations("admin.invoice");
+  // Localize invoice dates to the viewer's language (system-wide, never a fixed
+  // format). Luigi 2026-07-02.
+  const locale = await getLocale();
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) notFound();
@@ -35,26 +38,49 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
       email: true, phone: true,
       billingProfile: true,
       resellerProfile: {
-        select: { status: true, companyName: true, imprint: true, brandLogoUrl: true, whiteLabelStatus: true },
+        select: { status: true, companyName: true, companyVatId: true, imprint: true, brandLogoUrl: true, whiteLabelStatus: true },
       },
     },
   });
   if (!restaurant) notFound();
 
-  // ── Biller: reseller (with active white-label) else FeeFreeOrdering ──
+  // ── Issuer (legal seller) + optional reseller "local partner" ──────────────
+  // The PLATFORM is the merchant of record (its Stripe account charged the
+  // card), so it is the legal ISSUER on EVERY invoice, including reseller
+  // de-branded ones — it can never be omitted from a fiscal document. A
+  // reseller appears as the prominent "Your local partner" (logo leads the
+  // header; name + VAT in the footer). This mirrors the GloriaFood/Oracle model
+  // the reporter cited. (Luigi 2026-07-02, invoice-issuer analysis; supersedes
+  // the earlier reseller-as-issuer approach.)
   const reseller = restaurant.resellerProfile;
-  // Free de-brand tier (Luigi 2026-06-23): an APPROVED reseller who configured branding (imprint
-  // OR logo) bills under THEIR identity here — no paid subscription required — so the invoice never
-  // leaks "Fee Free Ordering" on a de-branded restaurant. Mirrors isResellerDebranded(); we still
-  // require companyName since it's the biller name. (A reseller who set neither stays on platform.)
-  const useReseller = !!(
+  const showPartner = !!(
     reseller?.status === "approved" &&
     (reseller.imprint?.trim() || reseller.brandLogoUrl) &&
     reseller.companyName
   );
-  const biller = useReseller
-    ? { name: reseller!.companyName as string, line: reseller!.imprint ?? "", logo: reseller!.brandLogoUrl ?? null }
-    : { name: "Fee Free Ordering", line: "support@feefreeordering.com", logo: null as string | null };
+  // Platform legal-entity identity — read from PlatformSettings (configurable
+  // system-wide, never hardcoded); safe defaults so it always renders a valid
+  // issuer even before the superadmin fills it in.
+  const platform = await prisma.platformSettings.findUnique({
+    where: { id: "singleton" },
+    select: { companyLegalName: true, companyTaxId: true, companyAddress: true, companySupportEmail: true, companyLogoUrl: true },
+  }).catch(() => null);
+  const issuer = {
+    name: platform?.companyLegalName?.trim() || "Fee Free Ordering Inc.",
+    taxId: platform?.companyTaxId?.trim() || "",
+    address: platform?.companyAddress?.trim() || "",
+    email: platform?.companySupportEmail?.trim() || "support@feefreeordering.com",
+    // The Fee Free logo — shown ONLY on DIRECT (non-reseller) invoices; a
+    // reseller invoice shows the reseller's own logo instead. Luigi 2026-07-02.
+    logo: platform?.companyLogoUrl?.trim() || "",
+  };
+  const partner = showPartner
+    ? {
+        name: reseller!.companyName as string,
+        logo: reseller!.brandLogoUrl ?? null,
+        vat: reseller!.companyVatId?.trim() ?? "",
+      }
+    : null;
 
   // ── Bill-to: saved fiscal details, falling back to the restaurant record ──
   const bp = restaurant.billingProfile;
@@ -76,7 +102,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
   const when = inv.paidAt ?? inv.createdAt;
   const invoiceNo = `INV-${new Date(when).getFullYear()}-${id.slice(-6).toUpperCase()}`;
   const periodLabel = inv.periodStart && inv.periodEnd
-    ? `${new Date(inv.periodStart).toLocaleDateString()} – ${new Date(inv.periodEnd).toLocaleDateString()}`
+    ? `${new Date(inv.periodStart).toLocaleDateString(locale)} – ${new Date(inv.periodEnd).toLocaleDateString(locale)}`
     : null;
   const amount = formatCurrency(inv.amountPaid / 100, inv.currency);
   const isPaid = inv.status === "paid";
@@ -93,18 +119,29 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
       </div>
 
       <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-sm border border-gray-200 p-8 print:shadow-none print:border-0">
-        {/* Header — biller + invoice meta */}
+        {/* Header — issuer (legal seller) + invoice meta. A reseller's logo
+            leads for a de-branded account (visual primacy), but the named
+            issuer below is always the platform (merchant of record). */}
         <div className="flex items-start justify-between gap-6 pb-6 border-b border-gray-100">
           <div className="min-w-0">
+            {/* Logo: a RESELLER invoice shows the reseller's own logo (de-brand);
+                a DIRECT invoice shows the Fee Free logo. (Luigi 2026-07-02.) */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            {biller.logo ? <img src={biller.logo} alt={biller.name} className="h-10 mb-2 object-contain" /> : null}
-            <div className="text-lg font-bold text-gray-900">{biller.name}</div>
-            {biller.line && <div className="text-xs text-gray-500 mt-0.5 whitespace-pre-line">{biller.line}</div>}
+            {partner?.logo ? (
+              <img src={partner.logo} alt={partner.name} className="h-10 mb-2 object-contain" />
+            ) : !partner && issuer.logo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={issuer.logo} alt={issuer.name} className="h-10 mb-2 object-contain" />
+            ) : null}
+            <div className="text-lg font-bold text-gray-900">{issuer.name}</div>
+            {issuer.taxId && <div className="text-xs text-gray-500 mt-0.5">{issuer.taxId}</div>}
+            {issuer.address && <div className="text-xs text-gray-500 mt-0.5 whitespace-pre-line">{issuer.address}</div>}
+            <div className="text-xs text-gray-500 mt-0.5">{issuer.email}</div>
           </div>
           <div className="text-right flex-shrink-0">
             <div className="text-2xl font-bold tracking-tight text-gray-900">{t("title")}</div>
             <div className="text-xs text-gray-500 mt-1">{t("invoiceNumber")} {invoiceNo}</div>
-            <div className="text-xs text-gray-500">{t("issueDate")}: {new Date(when).toLocaleDateString()}</div>
+            <div className="text-xs text-gray-500">{t("issueDate")}: {new Date(when).toLocaleDateString(locale)}</div>
             <span className={`inline-block mt-2 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${isPaid ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}`}>
               {isPaid ? t("statusPaid") : t("statusDue")}
             </span>
@@ -144,6 +181,17 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
             </tr>
           </tfoot>
         </table>
+
+        {/* Reseller "local partner" line (GloriaFood/Oracle model): the reseller's
+            identity + its own VAT live HERE, clearly attributed to the partner —
+            never in the issuer slot above. */}
+        {partner && (
+          <p className="text-sm text-gray-600 mt-8 pt-4 border-t border-gray-100">
+            <span className="font-semibold text-gray-500">{t("localPartner")}:</span>{" "}
+            {partner.name}
+            {partner.vat ? ` · ${t("vatId")} ${partner.vat}` : ""}
+          </p>
+        )}
 
         <p className="text-xs text-gray-400 mt-8">{t("thankYou")}</p>
       </div>

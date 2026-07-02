@@ -51,6 +51,9 @@ export async function GET(req: NextRequest) {
   });
 
   const now = Date.now();
+  // Match the page: device first/last-seen times in the restaurant's timezone,
+  // not the server's UTC clock. Luigi 2026-07-01.
+  const tz = active.timezone ?? undefined;
   const rows: (string | number)[][] = [[
     "Device", "User Agent", "First Seen", "Last Seen", "Status",
   ]];
@@ -59,8 +62,8 @@ export async function GET(req: NextRequest) {
     rows.push([
       d.label || "Unnamed device",
       d.userAgent ?? "—",
-      d.firstSeenAt ? d.firstSeenAt.toLocaleString() : "—",
-      d.lastSeenAt ? d.lastSeenAt.toLocaleString() : "—",
+      d.firstSeenAt ? d.firstSeenAt.toLocaleString("en-US", { timeZone: tz }) : "—",
+      d.lastSeenAt ? d.lastSeenAt.toLocaleString("en-US", { timeZone: tz }) : "—",
       isOnline ? "Online" : "Offline",
     ]);
   }

@@ -211,6 +211,7 @@ export default async function SuperadminRestaurantDetail({
       {/* ── Quick controls (publish / active toggles) ────────────────── */}
       <RestaurantControls
         restaurantId={restaurant.id}
+        restaurantName={restaurant.name}
         initialIsPublished={isPublished}
         initialIsActive={restaurant.isActive}
         publishReady={!!setupProgress?.publishReady}

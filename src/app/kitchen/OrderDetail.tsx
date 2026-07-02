@@ -10,6 +10,7 @@ import { formatDueLabel } from "@/lib/format-time";
 import toast from "react-hot-toast";
 import type { T, Order } from "./kitchen-types";
 import { paymentStatusLabel } from "./kitchen-types";
+import { paymentMethodLabelKey } from "@/lib/payment-label";
 import { useTranslations, useLocale } from "next-intl";
 import { RejectOrderModal } from "./RejectOrderModal";
 import { Countdown } from "./Countdown";
@@ -140,6 +141,10 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
   // relabeled reprint buttons — Kitchen Receipt / Customer Receipt / Both.
   const tReceipts = useTranslations("admin.receipts");
   const tFees = useTranslations("admin.serviceFees");
+  // Reward/store-credit + "Collected" labels (already translated ×38).
+  const tRewardTxt = useTranslations("receipt.customer");
+  const tMoney = useTranslations("money");
+  const tRoot = useTranslations();
   const [showReject, setShowReject] = useState(false);
   const [showCancel, setShowCancel] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
@@ -652,6 +657,22 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                 <span>{tCommon("total").toUpperCase()}</span>
                 <span>{formatCurrency(order.total)}</span>
               </div>
+              {/* Reward / store credit used → the REAL amount to collect. Kitchen
+                  staff need to know cash-to-collect differs from the printed
+                  total when the customer paid partly with store credit. Luigi 2026-07-02. */}
+              {order.rewardsActive && (order.creditApplied ?? 0) > 0 && (
+                <>
+                  <TotalRow
+                    label={tRewardTxt("paidWithReward", { label: order.rewardLabel || tMoney("pay.rewardCredit") })}
+                    value={`-${formatCurrency(order.creditApplied!)}`}
+                    t={t}
+                  />
+                  <div className={`flex justify-between font-bold text-sm pt-1 ${t.text}`}>
+                    <span>{(order.paymentStatus === "paid" ? tMoney("amountCollected") : tMoney("toCollect")).toUpperCase()}</span>
+                    <span>{formatCurrency(Math.max(0, order.total - (order.creditApplied ?? 0)))}</span>
+                  </div>
+                </>
+              )}
             </div>
           </Section>
 
@@ -659,7 +680,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           <Section title={tc("paymentMethod")} t={t}>
             <div className="space-y-1">
               <Row icon={<CreditCard className="w-4 h-4" />} t={t}>
-                {order.paymentMethod === "card" ? tc("payWithCard") : order.paymentMethod === "cash" ? tc("payInCashPickup") : order.paymentMethod}
+                {(() => { const k = paymentMethodLabelKey(order.paymentMethod, order.type); return k ? tRoot(k) : order.paymentMethod; })()}
               </Row>
               <div className="flex items-center gap-2">
                 {(() => {

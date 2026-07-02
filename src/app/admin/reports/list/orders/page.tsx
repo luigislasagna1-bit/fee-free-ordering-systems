@@ -132,7 +132,7 @@ export default async function ListOrdersPage({
                     #{o.orderNumber}
                   </Link>
                 </td>
-                <td className="py-2.5 px-4 text-gray-600 text-xs">{o.createdAt.toLocaleString()}</td>
+                <td className="py-2.5 px-4 text-gray-600 text-xs">{o.createdAt.toLocaleString(undefined, scope.timezone ? { timeZone: scope.timezone } : {})}</td>
                 <td className="py-2.5 px-4 text-gray-800">{o.customerName}</td>
                 <td className="py-2.5 px-4 text-gray-600">{o.type === "dine_in" ? t("typeDineIn") : o.type.charAt(0).toUpperCase() + o.type.slice(1)}</td>
                 <td className="py-2.5 px-4 text-gray-600 capitalize">{o.paymentMethod}</td>

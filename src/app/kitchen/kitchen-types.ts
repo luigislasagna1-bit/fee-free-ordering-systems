@@ -84,6 +84,13 @@ export type Order = {
   couponDiscount: number | null;
   promoDiscount: number | null;
   total: number;
+  /** Reward / store-credit spent on this order (Order.creditApplied). The kitchen
+   *  shows "Paid with {rewardLabel}" + the real amount to collect (total − this). */
+  creditApplied: number | null;
+  /** Restaurant's reward name (e.g. "Pizza Bucks"), null when rewards are off. */
+  rewardLabel: string | null;
+  /** rewardsEnabled AND the order has an identified customer. */
+  rewardsActive: boolean | null;
   paymentMethod: string;
   paymentStatus: string;
   preparationTime: number | null;

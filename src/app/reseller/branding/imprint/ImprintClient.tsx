@@ -12,10 +12,12 @@ import { Loader2, CheckCircle2, Tag } from "lucide-react";
 export function ImprintClient({
   initialImprint,
   companyName,
+  initialCompanyVatId,
   initialShowCredit,
 }: {
   initialImprint: string;
   companyName: string | null;
+  initialCompanyVatId: string;
   initialShowCredit: boolean;
 }) {
   const [imprint, setImprint] = useState(initialImprint);
@@ -25,6 +27,31 @@ export function ImprintClient({
   const [showCredit, setShowCredit] = useState(initialShowCredit);
   const [creditBusy, setCreditBusy] = useState(false);
   const [creditSavedAt, setCreditSavedAt] = useState<number | null>(null);
+  const [vat, setVat] = useState(initialCompanyVatId);
+  const [vatBusy, setVatBusy] = useState(false);
+  const [vatSavedAt, setVatSavedAt] = useState<number | null>(null);
+  const [vatError, setVatError] = useState<string | null>(null);
+
+  // Save the reseller's VAT / tax number — appears on the "Your local partner"
+  // line of the invoices your restaurants receive (the platform is the issuer).
+  async function saveVat() {
+    setVatBusy(true);
+    setVatError(null);
+    try {
+      const res = await fetch("/api/reseller/branding", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ companyVatId: vat.trim() }),
+      });
+      const data = await res.json();
+      if (!res.ok) { setVatError(data.error || "Could not save"); return; }
+      setVatSavedAt(Date.now());
+    } catch {
+      setVatError("Could not save");
+    } finally {
+      setVatBusy(false);
+    }
+  }
 
   // The customer-page credit toggle saves immediately on change (optimistic;
   // reverts if the PATCH fails). Separate from the imprint "Save" button.
@@ -175,6 +202,54 @@ export function ImprintClient({
         attributed to you — order confirmations, password resets, reservation confirmations,
         etc. Per-restaurant overrides aren&apos;t supported yet, so keep this line generic to
         your brand.
+      </div>
+
+      {/* Invoice details — the reseller's VAT / tax number, shown as the ISSUER
+          (alongside your company name) on the invoices your restaurants receive. */}
+      <div className="mt-6 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <h2 className="text-lg font-bold text-gray-900 mb-1">Invoice details</h2>
+        <p className="text-sm text-gray-500 mb-4">
+          On the subscription invoices your restaurants receive,{" "}
+          <strong>{companyName || "your company"}</strong> is shown as the{" "}
+          <strong>&ldquo;local partner&rdquo;</strong> (your logo also leads the header). Add your
+          VAT / tax number so it appears next to your company on those invoices. The invoice is
+          legally issued by Fee Free Ordering Inc. (the merchant of record that charges the card),
+          with your company as the prominent local partner.
+          {!companyName && (
+            <span className="block text-xs text-amber-700 mt-1">
+              Set your company name on your profile first — it&apos;s your partner name on invoices.
+            </span>
+          )}
+        </p>
+        <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
+          VAT / tax number
+        </label>
+        <input
+          type="text"
+          value={vat}
+          onChange={(e) => setVat(e.target.value.slice(0, 60))}
+          placeholder="e.g. IT01234567890"
+          className="w-full max-w-sm border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none font-mono"
+        />
+        {vatError && (
+          <div className="mt-3 rounded-lg bg-red-50 border border-red-200 p-3 text-xs text-red-700">{vatError}</div>
+        )}
+        <div className="flex items-center gap-3 mt-4">
+          <button
+            type="button"
+            onClick={saveVat}
+            disabled={vatBusy}
+            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm px-5 py-2.5 rounded-lg disabled:opacity-50 transition"
+          >
+            {vatBusy && <Loader2 className="w-4 h-4 animate-spin" />}
+            Save VAT number
+          </button>
+          {vatSavedAt && (
+            <span className="inline-flex items-center gap-1 text-xs text-emerald-700">
+              <CheckCircle2 className="w-3.5 h-3.5" /> Saved
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Customer ordering-page credit — distinct from the email imprint above. Controls

@@ -7,6 +7,8 @@ import prisma from "@/lib/db";
 import { getTranslations } from "next-intl/server";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { formatCurrency } from "@/lib/utils";
+import { getOrderRewardSummary } from "@/lib/reward-ledger";
+import { paymentMethodLabelKey } from "@/lib/payment-label";
 
 /**
  * Admin order-detail page. The reports List View links each order here
@@ -41,7 +43,7 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
     include: {
       items: { include: { modifiers: true } },
       customer: true,
-      restaurant: { select: { name: true, currency: true, timezone: true } },
+      restaurant: { select: { name: true, currency: true, timezone: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true } },
     },
   });
   if (!order) notFound();
@@ -50,7 +52,21 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
   const t = await getTranslations("admin.orders");
   const tc = await getTranslations("common");
   const tk = await getTranslations("checkout");
+  const tRoot = await getTranslations();
   const currency = (order.restaurant?.currency ?? "USD").toUpperCase();
+  // Reward / store credit on this order (used + earned). Not a hot path (single
+  // page load), so the ledger read for `earned` is fine here. Luigi 2026-07-02.
+  const rewardsActive = !!order.restaurant?.rewardsEnabled && !!order.customerId;
+  const rewardLabel =
+    order.restaurant?.rewardLabelPlural?.trim() ||
+    order.restaurant?.rewardLabelSingular?.trim() ||
+    tRoot("money.pay.rewardCredit");
+  const rewardUsed = rewardsActive ? (order.creditApplied ?? 0) : 0;
+  const rewardEarned = rewardsActive ? (await getOrderRewardSummary(order.id)).earned : 0;
+  const paymentLabel = (() => {
+    const k = paymentMethodLabelKey(order.paymentMethod, order.type);
+    return k ? tRoot(k) : (order.paymentMethod ?? "").replace(/_/g, " ");
+  })();
   const tz = order.restaurant?.timezone ?? undefined;
   const money = (n: number) => formatCurrency(n, currency);
   const statusLabel = (() => { try { return t(order.status as any); } catch { return order.status; } })();
@@ -106,7 +122,7 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
               </div>
             )}
             {order.paymentMethod && (
-              <div className="pt-1 text-gray-500">{tk("paymentMethod")}: <span className="capitalize text-gray-700">{order.paymentMethod.replace(/_/g, " ")}</span></div>
+              <div className="pt-1 text-gray-500">{tk("paymentMethod")}: <span className="text-gray-700">{paymentLabel}</span></div>
             )}
           </div>
         </div>
@@ -134,6 +150,15 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
             {order.taxAmount > 0 && <div className="flex justify-between text-gray-600"><span>{tk("tax")}</span><span>{money(order.taxAmount)}</span></div>}
             {order.tip > 0 && <div className="flex justify-between text-gray-600"><span>{tk("tip")}</span><span>{money(order.tip)}</span></div>}
             <div className="flex justify-between font-bold text-gray-900 pt-1"><span>{tc("total")}</span><span>{money(order.total)}</span></div>
+            {rewardUsed > 0 && (
+              <>
+                <div className="flex justify-between text-emerald-700"><span>{tRoot("receipt.customer.paidWithReward", { label: rewardLabel })}</span><span>− {money(rewardUsed)}</span></div>
+                <div className="flex justify-between font-bold text-gray-900"><span>{order.paymentStatus === "paid" ? tRoot("money.amountCollected") : tRoot("money.toCollect")}</span><span>{money(Math.max(0, order.total - rewardUsed))}</span></div>
+              </>
+            )}
+            {rewardEarned > 0 && (
+              <div className="flex justify-between text-emerald-600"><span>{tRoot("receipt.customer.earnedReward", { label: rewardLabel })}</span><span>+ {money(rewardEarned)}</span></div>
+            )}
           </div>
         </div>
       </div>

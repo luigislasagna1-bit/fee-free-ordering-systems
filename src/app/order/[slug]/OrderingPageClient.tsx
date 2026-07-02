@@ -11,7 +11,8 @@ import { formatCurrency } from "@/lib/utils";
 import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
 import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib/format-time";
 import { methodsForOrderType, paymentValueToSlug } from "@/lib/payment-methods";
-import { localDowAndHHMM, liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, rowIntervals } from "@/lib/restaurant-hours";
+import { localDowAndHHMM, liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, rowIntervals, dateKeyInTimezone } from "@/lib/restaurant-hours";
+import { holidayEffectForDay, canonicalHolidayService } from "@/lib/holiday-rules";
 import { resolveServiceHours, type ServiceKind } from "@/lib/service-hours";
 import { isVisibleNow } from "@/lib/menu-visibility";
 import { hasFulfilWindow, isFulfilableAt, fulfilWindowLabel, combinedFulfilConstraint } from "@/lib/menu-fulfilment";
@@ -273,7 +274,7 @@ function CategoryBanner({ cat, theme, collapsible, collapsedNow, onToggleCollaps
   const overlayText = light ? "#1f2937" : "#ffffff";
   return (
     <div
-      className={`relative mb-3 rounded-xl overflow-hidden ${collapsible ? "cursor-pointer select-none" : ""}`}
+      className={`group relative mb-3 rounded-xl overflow-hidden ${collapsible ? "cursor-pointer select-none" : ""}`}
       style={{ height: "clamp(130px, 20vw, 156px)", backgroundColor: hasImage ? "#000000" : theme.primaryColor }}
       onClick={collapsible ? onToggleCollapse : undefined}
       role={collapsible ? "button" : undefined}
@@ -302,6 +303,13 @@ function CategoryBanner({ cat, theme, collapsible, collapsedNow, onToggleCollaps
               : "linear-gradient(120deg, rgba(0,0,0,0.28), rgba(0,0,0,0) 62%)",
         }}
       />
+      {/* Hover tint — darkens the whole band on hover so a clickable category
+          reads as interactive. Pointer-only: no-op on touch, and skipped when
+          the band isn't itself clickable (carousel arrows handle their own
+          hover). Luigi 2026-07-01. */}
+      {collapsible && (
+        <div className="absolute inset-0 pointer-events-none bg-transparent group-hover:bg-black/20 transition-colors duration-200" />
+      )}
       <div className="absolute top-3 right-3 z-10">
         {collapsible ? (
           <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: "rgba(0,0,0,0.34)" }}>
@@ -321,6 +329,18 @@ function CategoryBanner({ cat, theme, collapsible, collapsedNow, onToggleCollaps
       <div className="absolute left-4 bottom-4 right-14">
         <div className="h-[3px] w-8 rounded mb-2" style={{ backgroundColor: hasImage ? "#f0c674" : light ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.75)" }} />
         <h2 className="font-medium leading-tight truncate" style={{ color: overlayText, fontSize: "clamp(20px, 4.5vw, 24px)", letterSpacing: "-0.01em", textShadow: light ? "none" : "0 1px 12px rgba(0,0,0,0.5)" }}>{cat.name}</h2>
+        {/* Dish-count pill (icon + number) — deliberately language-neutral so it
+            needs no per-locale plural text. A fork/knife icon makes it read as
+            "N dishes" in any of the 38 locales. Luigi 2026-07-01. */}
+        {cat.menuItems.length > 0 && (
+          <span
+            className="inline-flex items-center gap-1 mt-1.5 text-[11px] font-semibold px-2 py-0.5 rounded-full leading-none"
+            style={{ backgroundColor: hasImage || !light ? "rgba(255,255,255,0.20)" : "rgba(0,0,0,0.10)", color: overlayText }}
+          >
+            <Utensils className="w-3 h-3" style={{ opacity: 0.85 }} aria-hidden />
+            {cat.menuItems.length}
+          </span>
+        )}
       </div>
     </div>
   );
@@ -1126,6 +1146,10 @@ export function OrderingPageClient({
     { date: string; time: string; partySize: number; notes: string } | null
   >(null);
   const [couponCode, setCouponCode] = useState("");
+  // A code-less personal gift chosen from the account page ("Use this offer" →
+  // ?grant=<id>). Forwarded to the preview + order; the server resolves it
+  // identity-scoped. Luigi 2026-07-01.
+  const [pendingGrantId, setPendingGrantId] = useState<string | null>(null);
   // Live-preview flag: the typed code matches an assigned promo registered to a
   // DIFFERENT email than the one entered at checkout, so it can't apply. Shown
   // as an inline cart note instead of silently dropping (audit confusing#13).
@@ -1996,11 +2020,11 @@ export function OrderingPageClient({
   }, [visibleCategories.length]);
 
   // ── Collapsible categories (GloriaFood-style accordion) ──────────────────
-  // Opt-in per restaurant (theme.mobileCollapsibleCategories) — now on BOTH
-  // mobile AND desktop (Luigi 2026-06-30). The customer expands/collapses
-  // category sections, with Expand all / Collapse all controls. Default state
-  // differs by device (see the seed effect): mobile starts ALL collapsed (true
-  // accordion); desktop starts EXPANDED so the menu stays visible.
+  // Opt-in per restaurant (theme.mobileCollapsibleCategories) — on BOTH mobile
+  // AND desktop (Luigi 2026-06-30). The customer expands/collapses category
+  // sections, with Expand all / Collapse all controls. Every category starts
+  // COLLAPSED on both devices (see the seed effect) so the customer lands on a
+  // compact list of category banners and opens the ones they want. Luigi 2026-07-01.
   const isMobile = useIsMobile();
   // Suspended while a search is active so matching items are always visible
   // (a collapsed header would hide the very results they want).
@@ -2015,10 +2039,12 @@ export function OrderingPageClient({
   // filters the menu we leave their open/closed choices intact.
   const collapseSeededRef = useRef(false);
   useEffect(() => {
-    // Seed "all collapsed" ONLY on mobile (the accordion). On desktop we leave
-    // every category expanded so the menu is visible by default — the customer
-    // collapses what they don't want. Luigi 2026-06-30.
-    if (collapsibleActive && isMobile && !collapseSeededRef.current && visibleCategories.length) {
+    // Seed "all collapsed" on BOTH mobile and desktop the first time the
+    // accordion turns on — the customer opens the categories they want rather
+    // than scrolling a fully-expanded menu. `isMobile` stays in the deps so the
+    // effect re-checks on a breakpoint change (the seededRef guards re-seeding).
+    // Luigi 2026-07-01 (was mobile-only before).
+    if (collapsibleActive && !collapseSeededRef.current && visibleCategories.length) {
       collapseSeededRef.current = true;
       setCollapsedCats(new Set(visibleCategories.map((c) => c.id)));
     }
@@ -2145,6 +2171,10 @@ export function OrderingPageClient({
         // Deals the customer manually removed from the cart — excluded so a
         // different non-stackable deal can apply instead.
         suppressedPromoIds,
+        // Code-less personal gift (?grant=): server re-resolves it identity-
+        // scoped and forces its promo into the engine so it competes. Undefined
+        // for normal carts.
+        grantId: pendingGrantId || undefined,
       }),
     })
       .then(r => r.json())
@@ -2177,7 +2207,7 @@ export function OrderingPageClient({
       })
       .catch(() => {});
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod, suppressedPromoIds, debouncedIdentity, customerIsReturning, hasOrderedHere]);
+  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod, suppressedPromoIds, debouncedIdentity, customerIsReturning, hasOrderedHere, pendingGrantId]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
   // ── Promo time-window helpers (shared with the engine via promo-window) ──
@@ -2440,8 +2470,24 @@ export function OrderingPageClient({
   const orderServiceKind: ServiceKind | null =
     orderType === "delivery" ? "delivery" : orderType === "pickup" ? "pickup" : null;
   const serviceHoursForClient = resolveServiceHours((restaurant.openingHours ?? []) as any, orderServiceKind);
+  // Per-SERVICE special-day (extraordinary) hours for TODAY: an OPEN window set
+  // for JUST this service (e.g. delivery 10:00–20:00 today) must drive its
+  // open-now status + earliest slot, taking precedence over the weekly row.
+  // Falls back to the general holiday effect when this service has no special
+  // rule today, so general custom-hours + full closures still apply. Luigi 2026-07-02.
+  const canonicalSvc = canonicalHolidayService(orderType);
+  const todaySvcSpecial = holidayEffectForDay(
+    (restaurant.holidays ?? []) as any,
+    dateKeyInTimezone(new Date(), restaurantTz || "UTC"),
+    canonicalSvc,
+  );
+  const serviceHolidayForStatus =
+    todaySvcSpecial?.kind === "closed" ? { name: todaySvcSpecial.name ?? undefined }
+    : todaySvcSpecial?.kind === "custom_hours" ? { name: todaySvcSpecial.name ?? undefined, intervals: todaySvcSpecial.intervals }
+    : holidayForStatus;
+  const serviceHasSpecialToday = todaySvcSpecial?.kind === "custom_hours" && todaySvcSpecial.intervals.length > 0;
   const serviceStatusForClient = liveOpenStatus(
-    serviceHoursForClient as any, new Date(), hoursFmt, holidayForStatus, restaurantTz,
+    serviceHoursForClient as any, new Date(), hoursFmt, serviceHolidayForStatus, restaurantTz,
   );
   const restaurantIsClosedNow = serviceStatusForClient.kind !== "open";
   // Per-service "opens at" for the tab hints — when a service starts later than now
@@ -2450,9 +2496,20 @@ export function OrderingPageClient({
   // gate above; opensAt is already in the restaurant's 12h/24h format. dine-in/take-out
   // have no service rows (they follow general), so they get no hint. Luigi 2026-06-22.
   const serviceOpensAtLabel = (kind: ServiceKind): string | null => {
+    // Each tab's "(opens HH:MM)" hint reflects THAT service's own extraordinary
+    // hours today (resolved per-kind, never the active order type's). Luigi 2026-07-02.
+    const sp = holidayEffectForDay(
+      (restaurant.holidays ?? []) as any,
+      dateKeyInTimezone(new Date(), restaurantTz || "UTC"),
+      canonicalHolidayService(kind),
+    );
+    const hol =
+      sp?.kind === "closed" ? { name: sp.name ?? undefined }
+      : sp?.kind === "custom_hours" ? { name: sp.name ?? undefined, intervals: sp.intervals }
+      : holidayForStatus;
     const st = liveOpenStatus(
       resolveServiceHours((restaurant.openingHours ?? []) as any, kind) as any,
-      new Date(), hoursFmt, holidayForStatus, restaurantTz,
+      new Date(), hoursFmt, hol, restaurantTz,
     );
     return st.kind === "opens_at" ? st.opensAt : null;
   };
@@ -2476,6 +2533,9 @@ export function OrderingPageClient({
         // Skip holiday-closed days so the "order for later" minimum never
         // lands on a date the server will reject.
         (restaurant.holidays ?? []) as any,
+        // Honour THIS service's special-day OPEN window (e.g. delivery 10:00
+        // today) so the earliest slot lands on it, not the weekly start. Luigi 2026-07-02.
+        canonicalSvc,
       )
     : null;
   // Convert nextOpenDate (a UTC Date that represents the local opening
@@ -2614,10 +2674,16 @@ export function OrderingPageClient({
   // OPEN (general hours) but the CHOSEN service starts later today (e.g. Pickup 14:00)
   // — show a service-specific "starts at" note, NOT "we're closed" (Fabrizio
   // 2026-06-22). Both still force scheduling to the service's next opening.
-  const scheduleReason: "catering" | "closed" | "service_later" | "both" | "lead" | "fulfil" | null =
+  const scheduleReason: "catering" | "closed" | "service_later" | "service_special_later" | "both" | "lead" | "fulfil" | null =
     fulfilForcesSchedule ? "fulfil"
     : cartHasCatering && restaurantIsClosedNow ? "both"
     : cartHasCatering ? "catering"
+    // A per-service EXTRAORDINARY/special-day OPEN start wins over the generic
+    // "closed" reason (so we can say "opens TODAY at …" for it) — ABOVE the
+    // general-closed check, which would otherwise mask it when the general
+    // kitchen reads closed-now. General header/chip/sound stay on the general
+    // status (untouched). Luigi 2026-07-02 (Fabrizio cmqnm3hv0).
+    : (restaurantIsClosedNow && serviceHasSpecialToday) ? "service_special_later"
     : generalIsClosedNow ? "closed"
     : restaurantIsClosedNow ? "service_later"
     : (orderMinLeadMinutes > 0 || hideAsap) ? "lead"
@@ -3030,6 +3096,22 @@ export function OrderingPageClient({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
+  // A CODE-LESS personal gift arrives as ?grant=<id> from the account page's
+  // "Use this offer" button (the grant's promotion has no couponCode, so there's
+  // nothing to put in the coupon field). Forward the opaque id to BOTH the cart
+  // preview and the order — each re-resolves it identity-scoped and forces its
+  // promo into the engine. One-shot. Luigi 2026-07-01.
+  const grantUrlConsumedRef = useRef(false);
+  useEffect(() => {
+    if (grantUrlConsumedRef.current) return;
+    const g = searchParams.get("grant");
+    if (!g) return;
+    grantUrlConsumedRef.current = true;
+    const id = g.trim().slice(0, 40);
+    if (id) setPendingGrantId(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
   // Marketplace attribution: when the customer arrived via /marketplace/[slug]
   // (which redirects here with ?from=marketplace), forward the flag to the
   // server so the order gets stamped + marketplace counters bump. Server
@@ -3124,6 +3206,9 @@ export function OrderingPageClient({
     // Promos the customer removed from the cart — server excludes them so the
     // charged discount matches what they saw. Luigi 2026-06-07.
     suppressedPromoIds,
+    // Same code-less gift signal as the preview so the CHARGE forces the same
+    // promo into the engine → previewed discount == charged discount. Luigi 2026-07-01.
+    grantId: pendingGrantId || undefined,
     // Reserve-then-order: when the customer came through "Add food to your
     // booking", attach the table booking so the server creates the linked
     // Reservation together with this (paid) order — one combined submission.
@@ -4681,7 +4766,10 @@ export function OrderingPageClient({
               <button
                 key={cat.id}
                 onClick={() => scrollToCategory(cat.id)}
-                className="px-4 py-2 rounded-full text-sm font-semibold transition whitespace-nowrap flex-shrink-0 flex items-center gap-1.5"
+                // hover:brightness-90 darkens the pill ~10% on hover (mirrors the
+                // banner's darken-on-hover). Uses a filter, not a bg class, so it
+                // works over the inline theme colours below. Luigi 2026-07-01.
+                className="px-4 py-2 rounded-full text-sm font-semibold transition hover:brightness-90 whitespace-nowrap flex-shrink-0 flex items-center gap-1.5 cursor-pointer"
                 style={activeCategory === cat.id
                   ? { backgroundColor: theme.primaryColor, color: "#fff" }
                   : { backgroundColor: theme.cardBackground, border: "1px solid #e5e7eb", color: theme.textColor }
@@ -4779,7 +4867,10 @@ export function OrderingPageClient({
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40">
           <button
             onClick={() => setCartOpen(true)}
-            className="text-white font-bold px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 transition min-w-[240px]"
+            // White border + thin dark outer ring keep the floating button crisp
+            // on ANY background: the white border separates it from dark banners/
+            // photos it floats over, the ring delineates it on light areas. Luigi 2026-07-01.
+            className="text-white font-bold px-6 py-4 rounded-2xl shadow-2xl border-2 border-white ring-1 ring-black/10 flex items-center gap-3 transition min-w-[240px]"
             style={{ backgroundColor: theme.primaryColor }}
           >
             <div className="bg-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold flex-shrink-0" style={{ color: theme.primaryColor }}>
@@ -5512,6 +5603,8 @@ export function OrderingPageClient({
           schedulingInterval={perServiceSlotInterval}
           schedulingMode={perServiceSlotMode}
           openingHours={(restaurant as any).openingHours ?? []}
+          todayServiceSpecialIntervals={serviceHasSpecialToday ? (todaySvcSpecial as any).intervals : null}
+          todayServiceSpecialDateKey={serviceHasSpecialToday ? dateKeyInTimezone(new Date(), restaurantTz || "UTC") : null}
           restaurantTimezone={(restaurant as any).timezone}
           requireCustomerEmail={(restaurant as any).requireCustomerEmail !== false}
           requireCustomerPhone={(restaurant as any).requireCustomerPhone !== false}
@@ -5657,6 +5750,12 @@ export function OrderingPageClient({
             if (next === "delivery" && !restaurant.acceptsDelivery) return;
             if (next === "pickup" && !restaurant.acceptsPickup) return;
             setOrderType(next);
+          }}
+          // Whole-cart discount CTA ("Start adding items") → pre-apply the
+          // promo's code so the customer doesn't retype it at checkout.
+          onApplyCode={(code) => {
+            setCouponCode(code);
+            applyCoupon(code);
           }}
           // Click an eligible item in the promo modal → close the promo
           // modal + open the item-config sheet so the customer can pick

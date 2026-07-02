@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { composeStreetLine } from "@/lib/delivery-address-fields";
 
 /**
  * Free address autocomplete for Leaflet (non-Google) restaurants. Proxies
@@ -50,7 +51,9 @@ export async function GET(req: NextRequest) {
       const a = row.address || {};
       const houseNumber = a.house_number || "";
       const road = a.road || a.pedestrian || a.footway || a.neighbourhood || "";
-      const line1 = [houseNumber, road].filter(Boolean).join(" ").trim() || (row.name || "");
+      // House-number position follows the restaurant's country convention:
+      // "Via Mazzini 13" (IT/DE/…) vs "13 Main St" (US/CA/GB/…). Fabrizio 2026-06-24.
+      const line1 = composeStreetLine(road, houseNumber, country) || (row.name || "");
       const city = a.city || a.town || a.village || a.municipality || a.hamlet || a.county || "";
       return {
         label: row.display_name || line1,

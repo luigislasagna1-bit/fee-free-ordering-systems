@@ -9,6 +9,7 @@ import { resolvePoweredByCredit, RESELLER_WHITE_LABEL_SELECT } from "@/lib/white
 import { getTranslations } from "next-intl/server";
 import { verifyAndReleaseOrderPayment } from "@/lib/stripe/verify-order-payment";
 import { getOrderRewardSummary } from "@/lib/reward-ledger";
+import { paymentMethodLabelKey } from "@/lib/payment-label";
 
 export default async function ConfirmationPage({
   params,
@@ -18,6 +19,11 @@ export default async function ConfirmationPage({
   searchParams: Promise<{ orderId?: string; payment_intent?: string }>;
 }) {
   const t = await getTranslations("customer.confirmation");
+  // Reuse existing, already-38-locale-translated labels so the confirmation
+  // stops burying the tip / omitting the balance — no new i18n. Luigi 2026-07-02.
+  const tStatus = await getTranslations("customer.orderStatus");
+  const tReceipt = await getTranslations("receipt.customer");
+  const tRoot = await getTranslations();
   const { slug } = await params;
   const { orderId, payment_intent } = await searchParams;
   if (!orderId) notFound();
@@ -245,6 +251,7 @@ export default async function ConfirmationPage({
                   </div>
                 )}
                 {order.taxAmount > 0 && <div className="flex justify-between text-gray-600"><span>{t("tax")}</span><span>{formatCurrency(order.taxAmount)}</span></div>}
+                {order.tip > 0 && <div className="flex justify-between text-gray-600"><span>{tStatus("tip")}</span><span>{formatCurrency(order.tip)}</span></div>}
                 <div className="flex justify-between font-bold text-gray-900"><span>{t("total")}</span><span>{formatCurrency(order.total)}</span></div>
                 {rewardUsed > 0 && (
                   <div className="flex justify-between text-emerald-700 font-medium">
@@ -252,10 +259,22 @@ export default async function ConfirmationPage({
                     <span>− {formatCurrency(rewardUsed)}</span>
                   </div>
                 )}
+                {rewardUsed > 0 && (
+                  <div className="flex justify-between font-bold text-gray-900">
+                    <span>{order.paymentStatus === "paid" ? tRoot("money.paid") : tReceipt("balanceDue")}</span>
+                    <span>{formatCurrency(Math.max(0, order.total - rewardUsed))}</span>
+                  </div>
+                )}
                 {rewardEarned > 0 && (
                   <div className="flex justify-between text-emerald-600">
                     <span>{t("earnedReward", { label: rewardName })}</span>
                     <span>+ {formatCurrency(rewardEarned)}</span>
+                  </div>
+                )}
+                {order.paymentMethod && (
+                  <div className="flex justify-between text-gray-500 text-xs pt-1.5">
+                    <span>{tStatus("payment")}</span>
+                    <span>{(() => { const k = paymentMethodLabelKey(order.paymentMethod, (order as any).type); return k ? tRoot(k) : order.paymentMethod!.replace(/_/g, " "); })()}</span>
                   </div>
                 )}
               </div>

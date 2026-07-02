@@ -769,6 +769,15 @@ model PlatformSettings {
   /// a Maps key is protected by HTTP-referrer + API restrictions, not secrecy,
   /// and the browser half is necessarily exposed client-side anyway.
   googleMapsApiKey       String?
+  /// Platform legal-entity / invoicing identity (Luigi 2026-07-02): the ISSUER
+  /// shown on subscription invoices (the platform is the merchant of record —
+  /// its Stripe charges the card). Configured ONCE in superadmin, read
+  /// system-wide, never hardcoded. companyTaxId is optional (Canada = none).
+  companyLegalName       String? // e.g. "Fee Free Ordering Inc."
+  companyTaxId           String? // GST/HST or other business/tax number; blank = render no tax line
+  companyAddress         String? // one-line legal address for the invoice issuer block
+  companySupportEmail    String? // issuer contact email (falls back to support@feefreeordering.com)
+  companyLogoUrl         String? // the Fee Free logo shown on DIRECT (non-reseller) invoices; a reseller invoice shows the reseller's own logo instead
   updatedAt              DateTime @updatedAt
   updatedBy              String?
 }
@@ -2676,6 +2685,7 @@ model ResellerProfile {
   // Application + approval lifecycle
   status           String    @default("pending") // pending | approved | suspended | rejected
   companyName      String?
+  companyVatId     String? // reseller's VAT / tax number — shown as the ISSUER on invoices to their restaurants (Fabrizio cmr1ty0lc)
   website          String?
   country          String?
   applicationNotes String? // what they wrote on the application form

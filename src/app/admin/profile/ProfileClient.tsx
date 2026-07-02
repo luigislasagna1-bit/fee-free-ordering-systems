@@ -20,6 +20,7 @@ import dynamic from "next/dynamic";
 import toast from "react-hot-toast";
 import { COUNTRIES, CURRENCIES, defaultsForCountry, regionForCountry, allTimezones } from "@/lib/regions";
 import { LOCALE_OPTIONS, SUPPORTED_LOCALES } from "@/lib/locales";
+import { composeStreetLine } from "@/lib/delivery-address-fields";
 
 // Every supported language ships a dictionary now, so the country→language
 // cascade can auto-apply any of them.
@@ -362,12 +363,17 @@ function LocationSection({
     const newLat = parseFloat(place.lat);
     const newLng = parseFloat(place.lon);
     onCoordsChange(newLat, newLng);
+    // These exact coords are authoritative — tell the auto-geocode effect to
+    // skip the field-fill it's about to trigger (no redundant re-geocode).
+    skipNextAutoRef.current = true;
 
-    // Decompose Nominatim's addressdetails into our structured fields
+    // Decompose Nominatim's addressdetails into our structured fields. The
+    // street follows the restaurant's country convention (number after the
+    // street name in IT/DE/…, before it in US/CA/…). Fabrizio 2026-06-24.
     const a = place.address;
     const streetNum = a.house_number ?? "";
     const road = a.road ?? "";
-    const streetLine = [streetNum, road].filter(Boolean).join(" ")
+    const streetLine = composeStreetLine(road, streetNum, a.country_code)
       || place.display_name.split(",")[0]; // fallback: first segment
 
     onAddressFill({
@@ -410,6 +416,50 @@ function LocationSection({
       toast.error(tProfile("geocodeFailed"));
     }
     setGeocoding(false);
+  }, [address, city, state, zip, country, onCoordsChange]);
+
+  // ── Auto-geocode: drop the map pin from the address fields BY DEFAULT ──────
+  // Luigi 2026-07-02: owners shouldn't have to click "Geocode from address
+  // fields". As they enter/edit their address we geocode it automatically and
+  // drop the pin — then they can drag the pin to fine-tune. Rules that keep it
+  // safe (no surprise pin moves):
+  //   • Only when the address TEXT changes (a pin DRAG updates lat/lng, not
+  //     these fields, so a hand-placed pin is never clobbered by this).
+  //   • Skip the address the restaurant LOADED with (seed on mount) → an
+  //     existing, hand-placed pin survives until they actually edit the address.
+  //   • Skip the address just chosen from autocomplete (selectPlace already set
+  //     exact coords) so we don't re-geocode and nudge the pin.
+  //   • Needs a street + city/zip to be worth a lookup; debounced 1s.
+  // The manual "Geocode from address fields" button remains as an explicit
+  // re-geocode / fallback.
+  const lastGeoKeyRef = useRef<string | null>(null);
+  const skipNextAutoRef = useRef(false);
+  const autoGeoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => {
+    const key = [address, city, state, zip, country].map((s) => (s || "").trim()).join("|");
+    if (lastGeoKeyRef.current === null) { lastGeoKeyRef.current = key; return; } // mount seed
+    if (skipNextAutoRef.current) { skipNextAutoRef.current = false; lastGeoKeyRef.current = key; return; }
+    if (key === lastGeoKeyRef.current) return;
+    const hasEnough = address.trim().length >= 3 && (city.trim() !== "" || zip.trim() !== "");
+    if (!hasEnough) return;
+    if (autoGeoTimerRef.current) clearTimeout(autoGeoTimerRef.current);
+    autoGeoTimerRef.current = setTimeout(async () => {
+      lastGeoKeyRef.current = key;
+      const addrStr = [address, city, state, zip, country].filter(Boolean).join(", ");
+      setGeocoding(true);
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(addrStr)}&format=json&limit=1`,
+          { headers: { "User-Agent": "FeeFreeOrderingSystems/1.0" } },
+        );
+        const data: NominatimPlace[] = await res.json();
+        if (data.length) onCoordsChange(parseFloat(data[0].lat), parseFloat(data[0].lon));
+      } catch {
+        // Silent — the manual "Geocode from address fields" button stays as fallback.
+      }
+      setGeocoding(false);
+    }, 1000);
+    return () => { if (autoGeoTimerRef.current) clearTimeout(autoGeoTimerRef.current); };
   }, [address, city, state, zip, country, onCoordsChange]);
 
   // Close dropdown on outside click

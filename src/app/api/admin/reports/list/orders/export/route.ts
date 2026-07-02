@@ -61,10 +61,15 @@ export async function GET(req: NextRequest) {
     "Order #", "Date", "Customer", "Email", "Phone", "Type", "Payment", "Status",
     "Subtotal", "Tax", "Delivery fee", "Tip", "Coupon discount", "Promo discount", "Total",
   ]];
+  // Match the page: render the timestamp in the restaurant's timezone. A raw
+  // Date stringifies to a verbose UTC string, diverging from the tz-correct
+  // page (List View → Orders). Luigi 2026-07-01.
+  const tz = scope.timezone ?? undefined;
+  const fmtWhen = (d: Date) => d.toLocaleString("en-US", { timeZone: tz, year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "2-digit" });
   for (const o of orders) {
     rows.push([
       o.orderNumber,
-      o.createdAt,
+      fmtWhen(o.createdAt),
       o.customerName,
       o.customerEmail ?? "",
       o.customerPhone ?? "",
