@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Collected",
+    "refundedSoFar": "Refunded so far",
+    "pay": {
+      "card": "Card",
+      "cardOnPickup": "Card on pickup",
+      "cardOnDelivery": "Card on delivery",
+      "cash": "Cash",
+      "cashOnPickup": "Cash on pickup",
+      "cashOnDelivery": "Cash on delivery",
+      "paypal": "PayPal",
+      "rewardCredit": "Store credit"
+    }
+  },
   "common": {
     "save": "Save",
     "saveChanges": "Save Changes",
