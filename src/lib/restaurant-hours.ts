@@ -402,9 +402,14 @@ export function nextOpenAt(
    *  later" minimums never land on a day the server would reject.
    *  (Holiday gap found during Luigi's live test of cmpxds2d2.) */
   holidays?: Parameters<typeof holidayEffectForDay>[0],
+  /** When set (e.g. "delivery"), per-SERVICE special-day rules are honoured — a
+   *  service's extraordinary OPEN window drives its next-open, not the weekly
+   *  row. Default null = general (all-services) behaviour, byte-for-byte
+   *  identical for every existing caller. Luigi 2026-07-02. */
+  service: string | null = null,
 ): Date | null {
   const holEff = (dayKey: string) =>
-    holidays && holidays.length > 0 ? holidayEffectForDay(holidays, dayKey, null) : null;
+    holidays && holidays.length > 0 ? holidayEffectForDay(holidays, dayKey, service) : null;
 
   // If currently open RIGHT NOW (weekly hours + today's holiday rules
   // agreeing), the answer is "now."

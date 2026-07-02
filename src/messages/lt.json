@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Vieną ar kelias jūsų krepšelyje esančias prekes galima užsisakyti tik tam tikromis dienomis ar valandomis. Žemiau parinkome anksčiausią galimą laiką – pakeiskite jį, jei norite.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> galima užsisakyti tik tam tikromis dienomis ar valandomis. Galimi užsakymo laikai atitinkamai apriboti.",
     "serviceStartsPrompt": "🕒 {service} paslauga dar neprasidėjo — ji prasideda {time}.",
+    "serviceOpensTodayPrompt": "🕒 Paslauga „{service}\" ŠIANDIEN pradedama teikti {time} (specialus darbo laikas) — pasirinkite laiką nuo šio momento.",
     "asapDeliveryEstimateNote": "Nurodytas laikas yra apytikslis paruošimo ir pristatymo įvertinimas, o ne garantuotas pristatymo laikas. Tikslų pristatymo laiką restoranas patvirtina priėmęs užsakymą.",
     "youSaved": "Sutaupėte {amount}",
     "reward": {

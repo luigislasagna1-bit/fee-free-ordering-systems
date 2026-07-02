@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Uno o più articoli nel tuo carrello possono essere ordinati solo per determinati giorni o orari. Abbiamo selezionato qui sotto la fascia disponibile più vicina — modificala se vuoi.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> può essere ordinato solo in determinati giorni o orari. Gli orari di ordinazione disponibili sono stati limitati di conseguenza.",
     "serviceStartsPrompt": "🕒 Il servizio {service} non è ancora iniziato — inizia alle {time}.",
+    "serviceOpensTodayPrompt": "🕒 Oggi {service} apre alle {time} (orario speciale) — scegli un orario a partire da quel momento.",
     "asapDeliveryEstimateNote": "Il tempo indicato è una stima approssimativa di preparazione e consegna, non un orario di consegna garantito. Il ristorante conferma l'orario di consegna effettivo dopo aver accettato l'ordine.",
     "youSaved": "Hai risparmiato {amount}",
     "reward": {

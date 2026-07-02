@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Jednu ili više stavki u vašoj košarici moguće je naručiti samo za određene dane ili vremena. U nastavku smo postavili najraniji dostupni termin — po želji ga prilagodite.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> može se naručiti samo određenim danima ili u određeno vrijeme. Dostupna vremena naručivanja ograničena su u skladu s tim.",
     "serviceStartsPrompt": "🕒 Usluga {service} još nije počela — počinje u {time}.",
+    "serviceOpensTodayPrompt": "🕒 {service} danas počinje u {time} (posebno radno vrijeme) — molimo odaberite vrijeme od tada nadalje.",
     "asapDeliveryEstimateNote": "Procijenjeno vrijeme je približna procjena pripreme i dostave — nije zajamčeno vrijeme dostave. Restoran potvrđuje stvarno vrijeme dostave nakon prihvaćanja narudžbe.",
     "youSaved": "Uštedjeli ste {amount}",
     "reward": {

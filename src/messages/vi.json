@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Một hoặc nhiều món trong giỏ hàng của bạn chỉ có thể đặt vào những ngày hoặc giờ nhất định. Chúng tôi đã chọn khung giờ sớm nhất hiện có bên dưới — bạn có thể điều chỉnh nếu muốn.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> chỉ có thể đặt vào những ngày hoặc giờ nhất định. Thời gian đặt hàng khả dụng đã được giới hạn tương ứng.",
     "serviceStartsPrompt": "🕒 Dịch vụ {service} chưa bắt đầu — bắt đầu lúc {time}.",
+    "serviceOpensTodayPrompt": "🕒 {service} mở cửa HÔM NAY lúc {time} (giờ đặc biệt) — vui lòng chọn giờ từ thời điểm đó trở đi.",
     "asapDeliveryEstimateNote": "Thời gian dự kiến chỉ là ước tính gần đúng cho việc chuẩn bị và giao hàng — không phải là thời gian giao hàng được đảm bảo. Nhà hàng sẽ xác nhận thời gian giao hàng thực tế sau khi nhận đơn.",
     "youSaved": "Bạn tiết kiệm {amount}",
     "reward": {

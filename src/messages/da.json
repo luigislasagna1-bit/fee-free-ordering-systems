@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 En eller flere varer i din kurv kan kun bestilles til bestemte dage eller tidspunkter. Vi har valgt det tidligst tilgængelige tidspunkt nedenfor – ret det, hvis du vil.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> kan kun bestilles på bestemte dage eller tidspunkter. De tilgængelige bestillingstidspunkter er begrænset i overensstemmelse hermed.",
     "serviceStartsPrompt": "🕒 {service}-service er ikke startet endnu — den starter kl. {time}.",
+    "serviceOpensTodayPrompt": "🕒 {service} åbner I DAG kl. {time} (særlige åbningstider) — vælg venligst et tidspunkt derfra.",
     "asapDeliveryEstimateNote": "Den anslåede tid er et omtrentligt skøn over tilberedning + transport — ikke en garanteret leveringstid. Restauranten bekræfter din faktiske leveringstid, når den har accepteret ordren.",
     "youSaved": "Du sparede {amount}",
     "reward": {

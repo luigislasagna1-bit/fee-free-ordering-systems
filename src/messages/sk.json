@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Jednu alebo viac položiek vo vašom košíku možno objednať len na určité dni alebo časy. Nižšie sme nastavili najbližší dostupný termín — v prípade potreby ho upravte.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> možno objednať len v určité dni alebo časy. Dostupné časy objednávok boli zodpovedajúcim spôsobom obmedzené.",
     "serviceStartsPrompt": "🕒 Služba {service} sa ešte nezačala — začína o {time}.",
+    "serviceOpensTodayPrompt": "🕒 {service} sa dnes otvára o {time} (mimoriadne otváracie hodiny) — vyberte si čas od tohto momentu.",
     "asapDeliveryEstimateNote": "Odhadovaný čas je len približný odhad prípravy a dopravy — nie je to garantovaný čas doručenia. Reštaurácia potvrdí váš skutočný čas doručenia po prijatí objednávky.",
     "youSaved": "Ušetrili ste {amount}",
     "reward": {

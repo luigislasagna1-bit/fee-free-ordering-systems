@@ -11,7 +11,8 @@ import { formatCurrency } from "@/lib/utils";
 import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
 import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib/format-time";
 import { methodsForOrderType, paymentValueToSlug } from "@/lib/payment-methods";
-import { localDowAndHHMM, liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, rowIntervals } from "@/lib/restaurant-hours";
+import { localDowAndHHMM, liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, rowIntervals, dateKeyInTimezone } from "@/lib/restaurant-hours";
+import { holidayEffectForDay, canonicalHolidayService } from "@/lib/holiday-rules";
 import { resolveServiceHours, type ServiceKind } from "@/lib/service-hours";
 import { isVisibleNow } from "@/lib/menu-visibility";
 import { hasFulfilWindow, isFulfilableAt, fulfilWindowLabel, combinedFulfilConstraint } from "@/lib/menu-fulfilment";
@@ -2469,8 +2470,24 @@ export function OrderingPageClient({
   const orderServiceKind: ServiceKind | null =
     orderType === "delivery" ? "delivery" : orderType === "pickup" ? "pickup" : null;
   const serviceHoursForClient = resolveServiceHours((restaurant.openingHours ?? []) as any, orderServiceKind);
+  // Per-SERVICE special-day (extraordinary) hours for TODAY: an OPEN window set
+  // for JUST this service (e.g. delivery 10:00–20:00 today) must drive its
+  // open-now status + earliest slot, taking precedence over the weekly row.
+  // Falls back to the general holiday effect when this service has no special
+  // rule today, so general custom-hours + full closures still apply. Luigi 2026-07-02.
+  const canonicalSvc = canonicalHolidayService(orderType);
+  const todaySvcSpecial = holidayEffectForDay(
+    (restaurant.holidays ?? []) as any,
+    dateKeyInTimezone(new Date(), restaurantTz || "UTC"),
+    canonicalSvc,
+  );
+  const serviceHolidayForStatus =
+    todaySvcSpecial?.kind === "closed" ? { name: todaySvcSpecial.name ?? undefined }
+    : todaySvcSpecial?.kind === "custom_hours" ? { name: todaySvcSpecial.name ?? undefined, intervals: todaySvcSpecial.intervals }
+    : holidayForStatus;
+  const serviceHasSpecialToday = todaySvcSpecial?.kind === "custom_hours" && todaySvcSpecial.intervals.length > 0;
   const serviceStatusForClient = liveOpenStatus(
-    serviceHoursForClient as any, new Date(), hoursFmt, holidayForStatus, restaurantTz,
+    serviceHoursForClient as any, new Date(), hoursFmt, serviceHolidayForStatus, restaurantTz,
   );
   const restaurantIsClosedNow = serviceStatusForClient.kind !== "open";
   // Per-service "opens at" for the tab hints — when a service starts later than now
@@ -2479,9 +2496,20 @@ export function OrderingPageClient({
   // gate above; opensAt is already in the restaurant's 12h/24h format. dine-in/take-out
   // have no service rows (they follow general), so they get no hint. Luigi 2026-06-22.
   const serviceOpensAtLabel = (kind: ServiceKind): string | null => {
+    // Each tab's "(opens HH:MM)" hint reflects THAT service's own extraordinary
+    // hours today (resolved per-kind, never the active order type's). Luigi 2026-07-02.
+    const sp = holidayEffectForDay(
+      (restaurant.holidays ?? []) as any,
+      dateKeyInTimezone(new Date(), restaurantTz || "UTC"),
+      canonicalHolidayService(kind),
+    );
+    const hol =
+      sp?.kind === "closed" ? { name: sp.name ?? undefined }
+      : sp?.kind === "custom_hours" ? { name: sp.name ?? undefined, intervals: sp.intervals }
+      : holidayForStatus;
     const st = liveOpenStatus(
       resolveServiceHours((restaurant.openingHours ?? []) as any, kind) as any,
-      new Date(), hoursFmt, holidayForStatus, restaurantTz,
+      new Date(), hoursFmt, hol, restaurantTz,
     );
     return st.kind === "opens_at" ? st.opensAt : null;
   };
@@ -2505,6 +2533,9 @@ export function OrderingPageClient({
         // Skip holiday-closed days so the "order for later" minimum never
         // lands on a date the server will reject.
         (restaurant.holidays ?? []) as any,
+        // Honour THIS service's special-day OPEN window (e.g. delivery 10:00
+        // today) so the earliest slot lands on it, not the weekly start. Luigi 2026-07-02.
+        canonicalSvc,
       )
     : null;
   // Convert nextOpenDate (a UTC Date that represents the local opening
@@ -2643,10 +2674,16 @@ export function OrderingPageClient({
   // OPEN (general hours) but the CHOSEN service starts later today (e.g. Pickup 14:00)
   // — show a service-specific "starts at" note, NOT "we're closed" (Fabrizio
   // 2026-06-22). Both still force scheduling to the service's next opening.
-  const scheduleReason: "catering" | "closed" | "service_later" | "both" | "lead" | "fulfil" | null =
+  const scheduleReason: "catering" | "closed" | "service_later" | "service_special_later" | "both" | "lead" | "fulfil" | null =
     fulfilForcesSchedule ? "fulfil"
     : cartHasCatering && restaurantIsClosedNow ? "both"
     : cartHasCatering ? "catering"
+    // A per-service EXTRAORDINARY/special-day OPEN start wins over the generic
+    // "closed" reason (so we can say "opens TODAY at …" for it) — ABOVE the
+    // general-closed check, which would otherwise mask it when the general
+    // kitchen reads closed-now. General header/chip/sound stay on the general
+    // status (untouched). Luigi 2026-07-02 (Fabrizio cmqnm3hv0).
+    : (restaurantIsClosedNow && serviceHasSpecialToday) ? "service_special_later"
     : generalIsClosedNow ? "closed"
     : restaurantIsClosedNow ? "service_later"
     : (orderMinLeadMinutes > 0 || hideAsap) ? "lead"
@@ -5566,6 +5603,8 @@ export function OrderingPageClient({
           schedulingInterval={perServiceSlotInterval}
           schedulingMode={perServiceSlotMode}
           openingHours={(restaurant as any).openingHours ?? []}
+          todayServiceSpecialIntervals={serviceHasSpecialToday ? (todaySvcSpecial as any).intervals : null}
+          todayServiceSpecialDateKey={serviceHasSpecialToday ? dateKeyInTimezone(new Date(), restaurantTz || "UTC") : null}
           restaurantTimezone={(restaurant as any).timezone}
           requireCustomerEmail={(restaurant as any).requireCustomerEmail !== false}
           requireCustomerPhone={(restaurant as any).requireCustomerPhone !== false}

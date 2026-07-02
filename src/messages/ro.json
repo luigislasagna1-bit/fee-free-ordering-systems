@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Unul sau mai multe produse din coșul tău pot fi comandate doar pentru anumite zile sau ore. Am setat mai jos cel mai apropiat interval disponibil — ajustează-l dacă dorești.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> poate fi comandat doar în anumite zile sau ore. Orele de comandă disponibile au fost limitate în consecință.",
     "serviceStartsPrompt": "🕒 Serviciul {service} nu a început încă — începe la {time}.",
+    "serviceOpensTodayPrompt": "🕒 {service} se deschide ASTĂZI la {time} (program special) — vă rugăm să alegeți o oră începând de atunci.",
     "asapDeliveryEstimateNote": "Timpul estimat este o aproximare a duratei de preparare + livrare — nu este un timp de livrare garantat. Restaurantul confirmă timpul real de livrare după ce acceptă comanda.",
     "youSaved": "Ai economisit {amount}",
     "reward": {

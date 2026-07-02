@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Un o més articles del teu cistell només es poden demanar per a determinats dies o hores. Hem seleccionat a sota la franja disponible més propera — ajusta-la si vols.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> només es pot demanar determinats dies o hores. Els horaris de comanda disponibles s'han limitat en conseqüència.",
     "serviceStartsPrompt": "🕒 El servei de {service} encara no ha començat — comença a les {time}.",
+    "serviceOpensTodayPrompt": "🕒 Avui {service} obre a les {time} (horari especial) — si us plau, tria una hora a partir d'aleshores.",
     "asapDeliveryEstimateNote": "El temps estimat és una estimació aproximada de preparació i trajecte, no un temps de lliurament garantit. El restaurant confirma el temps de lliurament real després d'acceptar la comanda.",
     "youSaved": "Has estalviat {amount}",
     "reward": {

@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 A kosarában lévő egy vagy több tétel csak bizonyos napokra vagy időpontokra rendelhető. Az alábbiakban beállítottuk a legkorábbi elérhető időpontot — szükség esetén módosíthatja.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> csak bizonyos napokon vagy időpontokban rendelhető. Az elérhető rendelési időpontok ennek megfelelően korlátozva lettek.",
     "serviceStartsPrompt": "🕒 A(z) {service} szolgáltatás még nem kezdődött el — {time}-kor indul.",
+    "serviceOpensTodayPrompt": "🕒 A(z) {service} MA {time} órakor nyit (rendkívüli nyitvatartás) — kérjük, ettől az időponttól válasszon időt.",
     "asapDeliveryEstimateNote": "A becsült idő hozzávetőleges elkészítési és szállítási becslés — nem garantált kiszállítási idő. A tényleges kiszállítási időt az étterem a rendelés elfogadása után erősíti meg.",
     "youSaved": "Megtakarítás: {amount}",
     "reward": {

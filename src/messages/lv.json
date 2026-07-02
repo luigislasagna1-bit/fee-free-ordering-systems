@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Vienu vai vairākus jūsu grozā esošos produktus var pasūtīt tikai noteiktās dienās vai laikos. Zemāk esam izvēlējušies agrāko pieejamo laiku – mainiet to, ja vēlaties.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> var pasūtīt tikai noteiktās dienās vai laikos. Pieejamie pasūtīšanas laiki ir attiecīgi ierobežoti.",
     "serviceStartsPrompt": "🕒 {service} pakalpojums vēl nav sācies — tas sākas plkst. {time}.",
+    "serviceOpensTodayPrompt": "🕒 {service} ŠODIEN sāk darboties plkst. {time} (īpašs darba laiks) — lūdzu, izvēlieties laiku, sākot no tā.",
     "asapDeliveryEstimateNote": "Norādītais laiks ir aptuvens gatavošanas un piegādes laika aprēķins — nevis garantēts piegādes laiks. Restorāns apstiprina jūsu faktisko piegādes laiku pēc pasūtījuma pieņemšanas.",
     "youSaved": "Ietaupīts {amount}",
     "reward": {

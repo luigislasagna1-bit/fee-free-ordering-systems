@@ -7,9 +7,9 @@ export const meta = {
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
 const NS = "checkout";
-const CONTEXT = "the customer checkout of a restaurant online-ordering site. This single note appears under the 'ASAP' (as-soon-as-possible) time choice for DELIVERY orders. It clarifies that the '~X min' figure shown is only an approximate prep + travel estimate, NOT a guaranteed delivery time — the restaurant sets the real delivery time after it accepts the order. Reassuring, concise customer-facing tone.";
+const CONTEXT = "the customer checkout of a restaurant online-ordering site. This short message appears when the chosen service (e.g. Pickup or Delivery) has EXTRAORDINARY / special one-off opening hours TODAY and hasn't started yet — it tells the customer the service opens today at a specific time and to pick a time from then on. {service} is a service name (Pickup/Delivery/etc.); {time} is a clock time. Keep the leading 🕒 emoji. Convey that TODAY's hours are a special one-off. Preserve the {service} and {time} placeholders EXACTLY. Concise, clear customer tone.";
 const EN = {
-  "asapDeliveryEstimateNote": "The estimated time is an approximate prep + travel estimate — not a guaranteed delivery time. The restaurant confirms your actual delivery time after accepting the order.",
+  "serviceOpensTodayPrompt": "🕒 {service} opens TODAY at {time} (special hours) — please choose a time from then on.",
 };
 const KEYS = Object.keys(EN);
 

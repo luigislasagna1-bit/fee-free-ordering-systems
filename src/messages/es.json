@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Uno o varios artículos de tu carrito solo se pueden pedir para ciertos días u horas. Hemos seleccionado el horario disponible más próximo a continuación — ajústalo si lo deseas.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> solo se puede pedir en determinados días u horarios. Los horarios de pedido disponibles se han limitado en consecuencia.",
     "serviceStartsPrompt": "🕒 El servicio de {service} aún no ha empezado — empieza a las {time}.",
+    "serviceOpensTodayPrompt": "🕒 {service} abre HOY a las {time} (horario especial) — por favor, elige una hora a partir de entonces.",
     "asapDeliveryEstimateNote": "El tiempo estimado es una estimación aproximada de preparación y envío, no un tiempo de entrega garantizado. El restaurante confirma tu tiempo de entrega real después de aceptar el pedido.",
     "youSaved": "Ahorraste {amount}",
     "reward": {

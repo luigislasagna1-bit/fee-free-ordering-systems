@@ -500,6 +500,7 @@
     "fulfilSchedulePrompt": "📅 Enega ali več izdelkov v vaši košarici je mogoče naročiti le za določene dni ali ure. Spodaj smo nastavili najzgodnejši razpoložljivi termin — po želji ga prilagodite.",
     "fulfilSchedulePromptNamed": "📅 <strong>{items}</strong> je mogoče naročiti le ob določenih dneh ali urah. Razpoložljivi časi naročanja so bili ustrezno omejeni.",
     "serviceStartsPrompt": "🕒 Storitev {service} se še ni začela — začne se ob {time}.",
+    "serviceOpensTodayPrompt": "🕒 {service} se danes odpre ob {time} (posebni odpiralni čas) — izberite čas od takrat naprej.",
     "asapDeliveryEstimateNote": "Ocenjeni čas je približna ocena priprave in dostave — ne zagotovljen čas dostave. Restavracija po sprejemu naročila potrdi vaš dejanski čas dostave.",
     "youSaved": "Prihranili ste {amount}",
     "reward": {
