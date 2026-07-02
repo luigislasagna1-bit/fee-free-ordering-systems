@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import {
@@ -68,6 +68,7 @@ export function BillingClient({
   marketplaceListing,
   invoices,
   billingConfigured,
+  savedCard,
   orderCapUsage,
 }: {
   restaurant: Restaurant;
@@ -76,6 +77,7 @@ export function BillingClient({
   marketplaceListing: MarketplaceListing | null;
   invoices: Invoice[];
   billingConfigured: boolean;
+  savedCard: { brand: string; last4: string; expMonth: number; expYear: number } | null;
   orderCapUsage: {
     count: number;
     cap: number;
@@ -87,6 +89,45 @@ export function BillingClient({
   const t = useTranslations("admin.billing");
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [cardSaved, setCardSaved] = useState(false);
+
+  // Show a one-time success note after returning from the Stripe card-setup
+  // Checkout (?card_saved=1), then strip the param so a refresh doesn't repeat it.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("card_saved") === "1") {
+      setCardSaved(true);
+      params.delete("card_saved");
+      const qs = params.toString();
+      window.history.replaceState({}, "", window.location.pathname + (qs ? `?${qs}` : ""));
+    }
+  }, []);
+
+  // Save (or change) the card used for future paid-service invoices — WITHOUT
+  // enabling any paid service. Reuses the Stripe setup-mode Checkout; 3D Secure
+  // is completed now so a later upgrade charges instantly. Fabrizio cmr1u3qxm.
+  async function saveCard() {
+    setBusy("saveCard");
+    setError(null);
+    try {
+      const res = await fetch("/api/admin/billing/setup-card", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ returnPath: "/admin/billing" }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) {
+        setError(data.error || t("saveCardError"));
+        return;
+      }
+      window.location.href = data.url;
+    } catch {
+      setError(t("saveCardError"));
+    } finally {
+      setBusy(null);
+    }
+  }
 
   // Legacy "trialing" rows are treated as "free" — the trial concept was
   // removed; every restaurant is on the FREE plan by default. Normalize
@@ -192,6 +233,43 @@ export function BillingClient({
             {t("manageSubscriptionInStripe")}
           </button>
         )}
+      </div>
+
+      {/* ── Payment method ─────────────────────────────────────────────
+          Save a card (+ complete 3D Secure) WITHOUT enabling any paid
+          service, so a later upgrade charges instantly. Fabrizio cmr1u3qxm. */}
+      <div className="mt-8 rounded-xl border border-gray-200 bg-white p-5">
+        <div className="flex items-start justify-between gap-4 flex-wrap">
+          <div className="min-w-0">
+            <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+              <CreditCard className="w-5 h-5 text-emerald-500" /> {t("paymentMethodTitle")}
+            </h2>
+            {savedCard ? (
+              <p className="mt-1 text-sm text-gray-700">
+                <span className="font-semibold capitalize">{savedCard.brand}</span>
+                {" •••• "}{savedCard.last4}
+                {savedCard.expMonth ? (
+                  <span className="text-gray-500"> · {t("cardExpires", { month: String(savedCard.expMonth).padStart(2, "0"), year: savedCard.expYear })}</span>
+                ) : null}
+              </p>
+            ) : (
+              <p className="mt-1 text-sm text-gray-500 max-w-lg">{t("paymentMethodEmptyDesc")}</p>
+            )}
+            {cardSaved && (
+              <p className="mt-2 text-sm text-green-700 flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 flex-shrink-0" /> {t("cardSavedSuccess")}
+              </p>
+            )}
+          </div>
+          <button
+            onClick={saveCard}
+            disabled={busy !== null || !billingConfigured}
+            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition disabled:opacity-50 flex-shrink-0"
+          >
+            {busy === "saveCard" ? <Loader2 className="w-4 h-4 animate-spin" /> : <CreditCard className="w-4 h-4" />}
+            {savedCard ? t("changeCard") : t("savePaymentMethod")}
+          </button>
+        </div>
       </div>
 
       {/* ── Add-Ons overview ───────────────────────────────────────────

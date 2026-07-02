@@ -6,10 +6,16 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "checkout";
-const CONTEXT = "the customer checkout of a restaurant online-ordering site. This short message appears when the chosen service (e.g. Pickup or Delivery) has EXTRAORDINARY / special one-off opening hours TODAY and hasn't started yet — it tells the customer the service opens today at a specific time and to pick a time from then on. {service} is a service name (Pickup/Delivery/etc.); {time} is a clock time. Keep the leading 🕒 emoji. Convey that TODAY's hours are a special one-off. Preserve the {service} and {time} placeholders EXACTLY. Concise, clear customer tone.";
+const NS = "admin.billing";
+const CONTEXT = "the restaurant-owner BILLING page of an online-ordering platform. This 'Payment method' card lets an owner SAVE a credit/debit card (and complete 3D Secure) even WITHOUT enabling any paid service yet, so a later upgrade charges instantly with no extra step. 'savePaymentMethod' and 'changeCard' are buttons. 'paymentMethodEmptyDesc' explains saving a card now carries no charge. 'cardExpires' shows a saved card's expiry — {month} is a 2-digit month and {year} a 4-digit year; keep the literal '{month}/{year}' EXACTLY. 'cardSavedSuccess' confirms the save; 'saveCardError' is an error. Professional, concise SaaS dashboard tone.";
 const EN = {
-  "serviceOpensTodayPrompt": "🕒 {service} opens TODAY at {time} (special hours) — please choose a time from then on.",
+  "paymentMethodTitle": "Payment method",
+  "paymentMethodEmptyDesc": "Save a card now — no charge. 3D Secure is completed up front, so the moment you enable a paid service it charges instantly, with no extra step.",
+  "savePaymentMethod": "Save a payment method",
+  "changeCard": "Change card",
+  "cardExpires": "expires {month}/{year}",
+  "cardSavedSuccess": "Payment method saved.",
+  "saveCardError": "Could not start the card setup. Please try again.",
 };
 const KEYS = Object.keys(EN);
 

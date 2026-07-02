@@ -241,3 +241,40 @@ export async function restaurantHasCardOnFile(restaurantId: string): Promise<boo
     return false;
   }
 }
+
+/**
+ * The brand + last4 + expiry of the restaurant's DEFAULT payment method
+ * (the card future invoices auto-charge), or null when none is on file / the
+ * restaurant has no Stripe Customer yet. Read-only, best-effort — any Stripe
+ * hiccup degrades to null (the caller just shows "no card saved"). Powers the
+ * billing page's "Payment method" card so an owner can save a card ahead of
+ * enabling any paid service (Fabrizio cmr1u3qxm).
+ */
+export async function getRestaurantDefaultCard(
+  restaurantId: string,
+): Promise<{ brand: string; last4: string; expMonth: number; expYear: number } | null> {
+  const r = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: { stripeCustomerId: true },
+  });
+  if (!r?.stripeCustomerId) return null;
+  try {
+    const stripe = await getStripe();
+    const customer = await stripe.customers.retrieve(r.stripeCustomerId, {
+      expand: ["invoice_settings.default_payment_method"],
+    });
+    if ("deleted" in customer && customer.deleted) return null;
+    const pm: any = (customer as any).invoice_settings?.default_payment_method;
+    const card = pm && typeof pm === "object" ? pm.card : null;
+    if (!card) return null;
+    return {
+      brand: card.brand ?? "card",
+      last4: card.last4 ?? "",
+      expMonth: card.exp_month ?? 0,
+      expYear: card.exp_year ?? 0,
+    };
+  } catch (e) {
+    console.error(`[getRestaurantDefaultCard] Stripe lookup failed for ${restaurantId}`, e);
+    return null;
+  }
+}
