@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Vybráno",
+    "toCollect": "K inkasu",
+    "paid": "Zaplaceno",
     "refundedSoFar": "Dosud vráceno",
     "pay": {
       "card": "Karta",

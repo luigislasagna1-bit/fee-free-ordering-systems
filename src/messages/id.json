@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Terkumpul",
+    "toCollect": "Perlu ditagih",
+    "paid": "Sudah dibayar",
     "refundedSoFar": "Dikembalikan sejauh ini",
     "pay": {
       "card": "Kartu",

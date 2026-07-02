@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Geïnd",
+    "toCollect": "Te innen",
+    "paid": "Betaald",
     "refundedSoFar": "Tot nu terugbetaald",
     "pay": {
       "card": "Kaart",

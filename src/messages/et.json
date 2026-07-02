@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Kogutud",
+    "toCollect": "Koguda",
+    "paid": "Makstud",
     "refundedSoFar": "Seni tagastatud",
     "pay": {
       "card": "Kaart",

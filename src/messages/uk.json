@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Отримано",
+    "toCollect": "До сплати",
+    "paid": "Оплачено",
     "refundedSoFar": "Повернуто",
     "pay": {
       "card": "Картка",

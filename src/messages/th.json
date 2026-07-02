@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "เก็บแล้ว",
+    "toCollect": "ยอดที่ต้องเก็บ",
+    "paid": "ชำระแล้ว",
     "refundedSoFar": "คืนเงินแล้ว",
     "pay": {
       "card": "บัตร",

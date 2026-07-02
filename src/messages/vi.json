@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Đã thu",
+    "toCollect": "Cần thu",
+    "paid": "Đã thanh toán",
     "refundedSoFar": "Đã hoàn đến nay",
     "pay": {
       "card": "Thẻ",

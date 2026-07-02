@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Cobrado",
+    "toCollect": "Por cobrar",
+    "paid": "Pagado",
     "refundedSoFar": "Reembolsado hasta ahora",
     "pay": {
       "card": "Tarjeta",

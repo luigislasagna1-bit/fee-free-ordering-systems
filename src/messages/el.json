@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Εισπράχθηκε",
+    "toCollect": "Προς είσπραξη",
+    "paid": "Πληρώθηκε",
     "refundedSoFar": "Επιστράφηκε έως τώρα",
     "pay": {
       "card": "Κάρτα",

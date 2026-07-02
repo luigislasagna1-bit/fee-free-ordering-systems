@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Incassato",
+    "toCollect": "Da incassare",
+    "paid": "Pagato",
     "refundedSoFar": "Rimborsato finora",
     "pay": {
       "card": "Carta",

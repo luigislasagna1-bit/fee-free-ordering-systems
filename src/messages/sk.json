@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Vybraté",
+    "toCollect": "Na inkaso",
+    "paid": "Zaplatené",
     "refundedSoFar": "Doteraz vrátené",
     "pay": {
       "card": "Karta",

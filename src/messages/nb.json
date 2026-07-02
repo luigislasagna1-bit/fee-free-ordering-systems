@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Innkrevd",
+    "toCollect": "Å kreve inn",
+    "paid": "Betalt",
     "refundedSoFar": "Refundert så langt",
     "pay": {
       "card": "Kort",

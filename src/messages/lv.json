@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Saņemts",
+    "toCollect": "Jāiekasē",
+    "paid": "Apmaksāts",
     "refundedSoFar": "Līdz šim atmaksāts",
     "pay": {
       "card": "Karte",

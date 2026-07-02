@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "المحصّل",
+    "toCollect": "للتحصيل",
+    "paid": "مدفوع",
     "refundedSoFar": "المُسترَد حتى الآن",
     "pay": {
       "card": "بطاقة",

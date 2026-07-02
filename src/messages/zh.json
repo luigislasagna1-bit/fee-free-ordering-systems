@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "已收款",
+    "toCollect": "待收款",
+    "paid": "已付款",
     "refundedSoFar": "已退款",
     "pay": {
       "card": "刷卡",

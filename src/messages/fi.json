@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Peritty",
+    "toCollect": "Peritään",
+    "paid": "Maksettu",
     "refundedSoFar": "Hyvitetty tähän mennessä",
     "pay": {
       "card": "Kortti",

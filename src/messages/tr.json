@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Tahsil edilen",
+    "toCollect": "Tahsil edilecek",
+    "paid": "Ödendi",
     "refundedSoFar": "Şu ana kadar iade edilen",
     "pay": {
       "card": "Kart",

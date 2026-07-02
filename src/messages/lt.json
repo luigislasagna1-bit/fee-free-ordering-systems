@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Surinkta",
+    "toCollect": "Surinkti",
+    "paid": "Apmokėta",
     "refundedSoFar": "Grąžinta iki šiol",
     "pay": {
       "card": "Kortelė",

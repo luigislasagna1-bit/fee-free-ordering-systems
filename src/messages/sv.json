@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Betalt",
+    "toCollect": "Att inkassera",
+    "paid": "Betald",
     "refundedSoFar": "Återbetalt hittills",
     "pay": {
       "card": "Kort",

@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "वसूल किया गया",
+    "toCollect": "वसूल करना है",
+    "paid": "भुगतान हो गया",
     "refundedSoFar": "अब तक वापस किया गया",
     "pay": {
       "card": "कार्ड",

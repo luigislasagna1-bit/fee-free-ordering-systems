@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Pobrano",
+    "toCollect": "Do pobrania",
+    "paid": "Opłacone",
     "refundedSoFar": "Zwrócono dotąd",
     "pay": {
       "card": "Karta",

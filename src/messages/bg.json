@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Събрано",
+    "toCollect": "За събиране",
+    "paid": "Платено",
     "refundedSoFar": "Възстановено досега",
     "pay": {
       "card": "Карта",

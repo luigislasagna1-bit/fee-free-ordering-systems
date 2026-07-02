@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Încasat",
+    "toCollect": "De încasat",
+    "paid": "Plătit",
     "refundedSoFar": "Rambursat până acum",
     "pay": {
       "card": "Card",

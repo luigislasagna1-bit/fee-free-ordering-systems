@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "受取済み",
+    "toCollect": "受取額",
+    "paid": "支払済み",
     "refundedSoFar": "返金済み",
     "pay": {
       "card": "カード",

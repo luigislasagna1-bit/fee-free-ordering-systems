@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Cobrat",
+    "toCollect": "A cobrar",
+    "paid": "Pagat",
     "refundedSoFar": "Reemborsat fins ara",
     "pay": {
       "card": "Targeta",

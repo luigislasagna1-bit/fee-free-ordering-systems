@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "수납액",
+    "toCollect": "받을 금액",
+    "paid": "결제 완료",
     "refundedSoFar": "환불액",
     "pay": {
       "card": "카드",

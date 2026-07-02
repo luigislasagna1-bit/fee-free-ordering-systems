@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Beszedve",
+    "toCollect": "Beszedendő",
+    "paid": "Fizetve",
     "refundedSoFar": "Eddig visszatérítve",
     "pay": {
       "card": "Kártya",

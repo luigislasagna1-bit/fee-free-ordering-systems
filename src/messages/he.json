@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "נגבה",
+    "toCollect": "לגבייה",
+    "paid": "שולם",
     "refundedSoFar": "הוחזר עד כה",
     "pay": {
       "card": "כרטיס",

@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Zbrano",
+    "toCollect": "Za plačilo",
+    "paid": "Plačano",
     "refundedSoFar": "Doslej vrnjeno",
     "pay": {
       "card": "Kartica",
