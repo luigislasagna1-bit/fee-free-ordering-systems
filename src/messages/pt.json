@@ -3916,6 +3916,7 @@
       "statusPaid": "Pago",
       "statusDue": "Em dívida",
       "vatId": "NIF / Número de contribuinte",
+      "localPartner": "O seu parceiro local",
       "download": "Transferir / Imprimir",
       "thankYou": "Obrigado pela sua preferência.",
       "notFound": "Fatura não encontrada.",

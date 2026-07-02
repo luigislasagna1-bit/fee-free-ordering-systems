@@ -6,16 +6,10 @@ export const meta = {
 
 // EMBEDDED per-feature (args delivery proved unreliable — embed instead).
 // Edit NS / CONTEXT / EN for each feature, then re-run the workflow.
-const NS = "admin.billing";
-const CONTEXT = "the restaurant-owner BILLING page of an online-ordering platform. This 'Payment method' card lets an owner SAVE a credit/debit card (and complete 3D Secure) even WITHOUT enabling any paid service yet, so a later upgrade charges instantly with no extra step. 'savePaymentMethod' and 'changeCard' are buttons. 'paymentMethodEmptyDesc' explains saving a card now carries no charge. 'cardExpires' shows a saved card's expiry — {month} is a 2-digit month and {year} a 4-digit year; keep the literal '{month}/{year}' EXACTLY. 'cardSavedSuccess' confirms the save; 'saveCardError' is an error. Professional, concise SaaS dashboard tone.";
+const NS = "admin.invoice";
+const CONTEXT = "a subscription INVOICE that a SaaS platform issues to a restaurant. This short LABEL introduces the reseller/partner who referred the restaurant, shown as a small secondary line near the bottom of the invoice (the platform itself is the legal issuer/seller at the top). It reads like 'Your local partner: {Company Name}'. Keep it short — it is a footer label on a financial document. Professional invoice tone.";
 const EN = {
-  "paymentMethodTitle": "Payment method",
-  "paymentMethodEmptyDesc": "Save a card now — no charge. 3D Secure is completed up front, so the moment you enable a paid service it charges instantly, with no extra step.",
-  "savePaymentMethod": "Save a payment method",
-  "changeCard": "Change card",
-  "cardExpires": "expires {month}/{year}",
-  "cardSavedSuccess": "Payment method saved.",
-  "saveCardError": "Could not start the card setup. Please try again.",
+  "localPartner": "Your local partner",
 };
 const KEYS = Object.keys(EN);
 

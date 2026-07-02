@@ -3916,6 +3916,7 @@
       "statusPaid": "Zaplatené",
       "statusDue": "Na úhradu",
       "vatId": "IČ DPH / DIČ",
+      "localPartner": "Váš miestny partner",
       "download": "Stiahnuť / Vytlačiť",
       "thankYou": "Ďakujeme za vašu dôveru.",
       "notFound": "Faktúra sa nenašla.",

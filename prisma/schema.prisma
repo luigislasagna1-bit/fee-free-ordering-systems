@@ -769,6 +769,14 @@ model PlatformSettings {
   /// a Maps key is protected by HTTP-referrer + API restrictions, not secrecy,
   /// and the browser half is necessarily exposed client-side anyway.
   googleMapsApiKey       String?
+  /// Platform legal-entity / invoicing identity (Luigi 2026-07-02): the ISSUER
+  /// shown on subscription invoices (the platform is the merchant of record —
+  /// its Stripe charges the card). Configured ONCE in superadmin, read
+  /// system-wide, never hardcoded. companyTaxId is optional (Canada = none).
+  companyLegalName       String? // e.g. "Fee Free Ordering Inc."
+  companyTaxId           String? // GST/HST or other business/tax number; blank = render no tax line
+  companyAddress         String? // one-line legal address for the invoice issuer block
+  companySupportEmail    String? // issuer contact email (falls back to support@feefreeordering.com)
   updatedAt              DateTime @updatedAt
   updatedBy              String?
 }

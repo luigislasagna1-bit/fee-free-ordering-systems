@@ -3916,6 +3916,7 @@
       "statusPaid": "Makstud",
       "statusDue": "Tasumisele kuuluv",
       "vatId": "KMKR / maksukohustuslase number",
+      "localPartner": "Teie kohalik partner",
       "download": "Laadi alla / Prindi",
       "thankYou": "Täname koostöö eest.",
       "notFound": "Arvet ei leitud.",

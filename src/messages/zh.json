@@ -3916,6 +3916,7 @@
       "statusPaid": "已付款",
       "statusDue": "待付款",
       "vatId": "增值税 / 税号",
+      "localPartner": "您的本地合作伙伴",
       "download": "下载 / 打印",
       "thankYou": "感谢您的惠顾。",
       "notFound": "未找到发票。",

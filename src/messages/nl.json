@@ -3916,6 +3916,7 @@
       "statusPaid": "Betaald",
       "statusDue": "Te betalen",
       "vatId": "Btw-/fiscaal nummer",
+      "localPartner": "Uw lokale partner",
       "download": "Downloaden / Afdrukken",
       "thankYou": "Bedankt voor uw vertrouwen.",
       "notFound": "Factuur niet gevonden.",

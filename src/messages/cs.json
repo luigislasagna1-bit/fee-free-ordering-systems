@@ -3916,6 +3916,7 @@
       "statusPaid": "Uhrazeno",
       "statusDue": "Splatné",
       "vatId": "DIČ / daňové číslo",
+      "localPartner": "Váš místní partner",
       "download": "Stáhnout / Tisk",
       "thankYou": "Děkujeme za vaši důvěru.",
       "notFound": "Faktura nebyla nalezena.",

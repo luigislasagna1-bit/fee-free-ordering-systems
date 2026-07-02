@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Store, CreditCard, Mail, LogOut, Zap, Users, Wallet, Sparkles, Bug, Bell, Map as MapIcon } from "lucide-react";
+import { LayoutDashboard, Store, CreditCard, Mail, LogOut, Zap, Users, Wallet, Sparkles, Bug, Bell, Map as MapIcon, Building2 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 
@@ -18,6 +18,7 @@ const items = [
   { href: "/superadmin/settings/stripe", label: "Stripe Settings", icon: Zap },
   { href: "/superadmin/settings/email", label: "Email Settings", icon: Mail },
   { href: "/superadmin/settings/maps", label: "Maps Settings", icon: MapIcon },
+  { href: "/superadmin/settings/company", label: "Company / Invoicing", icon: Building2 },
 ];
 
 export function SuperadminNav({ reportsNewCount = 0, notificationsCount = 0 }: { reportsNewCount?: number; notificationsCount?: number }) {

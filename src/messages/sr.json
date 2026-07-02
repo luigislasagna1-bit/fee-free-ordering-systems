@@ -3916,6 +3916,7 @@
       "statusPaid": "Plaćeno",
       "statusDue": "Dospelo",
       "vatId": "PIB / poreski broj",
+      "localPartner": "Vaš lokalni partner",
       "download": "Preuzmi / Štampaj",
       "thankYou": "Hvala na poverenju.",
       "notFound": "Faktura nije pronađena.",

@@ -3916,6 +3916,7 @@
       "statusPaid": "Lunas",
       "statusDue": "Jatuh tempo",
       "vatId": "NPWP / ID Pajak",
+      "localPartner": "Mitra lokal Anda",
       "download": "Unduh / Cetak",
       "thankYou": "Terima kasih atas kepercayaan Anda.",
       "notFound": "Faktur tidak ditemukan.",

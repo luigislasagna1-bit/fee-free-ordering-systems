@@ -3916,6 +3916,7 @@
       "statusPaid": "Opłacone",
       "statusDue": "Do zapłaty",
       "vatId": "NIP / numer podatkowy",
+      "localPartner": "Twój lokalny partner",
       "download": "Pobierz / Drukuj",
       "thankYou": "Dziękujemy za współpracę.",
       "notFound": "Nie znaleziono faktury.",

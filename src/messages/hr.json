@@ -3916,6 +3916,7 @@
       "statusPaid": "Plaćeno",
       "statusDue": "Dospjelo",
       "vatId": "PDV / Porezni broj",
+      "localPartner": "Vaš lokalni partner",
       "download": "Preuzmi / Ispiši",
       "thankYou": "Hvala na suradnji.",
       "notFound": "Račun nije pronađen.",

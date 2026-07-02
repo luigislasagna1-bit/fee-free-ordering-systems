@@ -3916,6 +3916,7 @@
       "statusPaid": "Payée",
       "statusDue": "À régler",
       "vatId": "N° de TVA / identifiant fiscal",
+      "localPartner": "Votre partenaire local",
       "download": "Télécharger / Imprimer",
       "thankYou": "Merci de votre confiance.",
       "notFound": "Facture introuvable.",

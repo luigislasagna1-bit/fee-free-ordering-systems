@@ -3916,6 +3916,7 @@
       "statusPaid": "Pagada",
       "statusDue": "Pendent",
       "vatId": "IVA / NIF",
+      "localPartner": "El teu soci local",
       "download": "Baixa / Imprimeix",
       "thankYou": "Gràcies per la vostra confiança.",
       "notFound": "No s'ha trobat la factura.",

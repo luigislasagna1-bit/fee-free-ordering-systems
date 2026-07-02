@@ -3916,6 +3916,7 @@
       "statusPaid": "Pagata",
       "statusDue": "Da pagare",
       "vatId": "Partita IVA / Codice fiscale",
+      "localPartner": "Il tuo partner locale",
       "download": "Scarica / Stampa",
       "thankYou": "Grazie per averci scelto.",
       "notFound": "Fattura non trovata.",

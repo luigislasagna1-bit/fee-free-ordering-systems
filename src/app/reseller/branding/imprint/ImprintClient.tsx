@@ -209,12 +209,15 @@ export function ImprintClient({
       <div className="mt-6 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         <h2 className="text-lg font-bold text-gray-900 mb-1">Invoice details</h2>
         <p className="text-sm text-gray-500 mb-4">
-          Your restaurants&apos; subscription invoices are issued under{" "}
-          <strong>{companyName || "your company"}</strong>. Add your VAT / tax number so it
-          appears as the issuing company on those invoices.
+          On the subscription invoices your restaurants receive,{" "}
+          <strong>{companyName || "your company"}</strong> is shown as the{" "}
+          <strong>&ldquo;local partner&rdquo;</strong> (your logo also leads the header). Add your
+          VAT / tax number so it appears next to your company on those invoices. The invoice is
+          legally issued by Fee Free Ordering Inc. (the merchant of record that charges the card),
+          with your company as the prominent local partner.
           {!companyName && (
             <span className="block text-xs text-amber-700 mt-1">
-              Set your company name on your profile first — it&apos;s the issuer name shown on invoices.
+              Set your company name on your profile first — it&apos;s your partner name on invoices.
             </span>
           )}
         </p>

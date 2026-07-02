@@ -3916,6 +3916,7 @@
       "statusPaid": "결제 완료",
       "statusDue": "미결제",
       "vatId": "부가세 / 사업자 등록 번호",
+      "localPartner": "현지 파트너",
       "download": "다운로드 / 인쇄",
       "thankYou": "이용해 주셔서 감사합니다.",
       "notFound": "청구서를 찾을 수 없습니다.",

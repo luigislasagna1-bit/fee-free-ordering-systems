@@ -3916,6 +3916,7 @@
       "statusPaid": "Pagada",
       "statusDue": "Pendiente",
       "vatId": "NIF / CIF",
+      "localPartner": "Tu socio local",
       "download": "Descargar / Imprimir",
       "thankYou": "Gracias por su confianza.",
       "notFound": "Factura no encontrada.",

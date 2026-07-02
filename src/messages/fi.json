@@ -3916,6 +3916,7 @@
       "statusPaid": "Maksettu",
       "statusDue": "Erääntynyt",
       "vatId": "ALV-/verotunnus",
+      "localPartner": "Paikallinen kumppanisi",
       "download": "Lataa / Tulosta",
       "thankYou": "Kiitos asioinnistasi.",
       "notFound": "Laskua ei löytynyt.",

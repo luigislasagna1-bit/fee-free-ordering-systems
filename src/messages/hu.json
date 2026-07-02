@@ -3916,6 +3916,7 @@
       "statusPaid": "Fizetve",
       "statusDue": "Fizetendő",
       "vatId": "Adószám / közösségi adószám",
+      "localPartner": "Helyi partnere",
       "download": "Letöltés / Nyomtatás",
       "thankYou": "Köszönjük, hogy minket választott.",
       "notFound": "A számla nem található.",

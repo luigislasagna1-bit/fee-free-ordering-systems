@@ -3916,6 +3916,7 @@
       "statusPaid": "Bezahlt",
       "statusDue": "Fällig",
       "vatId": "USt-IdNr. / Steuernummer",
+      "localPartner": "Ihr lokaler Partner",
       "download": "Herunterladen / Drucken",
       "thankYou": "Vielen Dank für Ihr Vertrauen.",
       "notFound": "Rechnung nicht gefunden.",

@@ -3916,6 +3916,7 @@
       "statusPaid": "Apmokėta",
       "statusDue": "Mokėtina",
       "vatId": "PVM / mokesčių mokėtojo kodas",
+      "localPartner": "Jūsų vietinis partneris",
       "download": "Atsisiųsti / spausdinti",
       "thankYou": "Dėkojame, kad naudojatės mūsų paslaugomis.",
       "notFound": "Sąskaita faktūra nerasta.",

@@ -3916,6 +3916,7 @@
       "statusPaid": "支払済み",
       "statusDue": "未払い",
       "vatId": "VAT / 税務ID",
+      "localPartner": "現地パートナー",
       "download": "ダウンロード / 印刷",
       "thankYou": "ご利用いただきありがとうございます。",
       "notFound": "請求書が見つかりません。",

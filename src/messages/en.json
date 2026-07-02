@@ -3960,6 +3960,7 @@
       "statusPaid": "Paid",
       "statusDue": "Due",
       "vatId": "VAT / Tax ID",
+      "localPartner": "Your local partner",
       "download": "Download / Print",
       "thankYou": "Thank you for your business.",
       "notFound": "Invoice not found.",

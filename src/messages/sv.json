@@ -3916,6 +3916,7 @@
       "statusPaid": "Betald",
       "statusDue": "Förfaller",
       "vatId": "Moms-/skattenummer",
+      "localPartner": "Din lokala partner",
       "download": "Ladda ner / Skriv ut",
       "thankYou": "Tack för ditt förtroende.",
       "notFound": "Fakturan kunde inte hittas.",

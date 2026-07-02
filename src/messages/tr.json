@@ -3916,6 +3916,7 @@
       "statusPaid": "Ödendi",
       "statusDue": "Ödenecek",
       "vatId": "KDV / Vergi No",
+      "localPartner": "Yerel iş ortağınız",
       "download": "İndir / Yazdır",
       "thankYou": "İş birliğiniz için teşekkür ederiz.",
       "notFound": "Fatura bulunamadı.",

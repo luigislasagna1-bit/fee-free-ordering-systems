@@ -3916,6 +3916,7 @@
       "statusPaid": "Apmaksāts",
       "statusDue": "Apmaksājams",
       "vatId": "PVN / nodokļu maksātāja Nr.",
+      "localPartner": "Jūsu vietējais partneris",
       "download": "Lejupielādēt / drukāt",
       "thankYou": "Paldies par sadarbību.",
       "notFound": "Rēķins nav atrasts.",

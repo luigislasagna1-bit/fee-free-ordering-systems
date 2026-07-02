@@ -3916,6 +3916,7 @@
       "statusPaid": "Đã thanh toán",
       "statusDue": "Cần thanh toán",
       "vatId": "Mã số thuế / VAT",
+      "localPartner": "Đối tác địa phương của bạn",
       "download": "Tải xuống / In",
       "thankYou": "Cảm ơn quý khách đã hợp tác.",
       "notFound": "Không tìm thấy hóa đơn.",

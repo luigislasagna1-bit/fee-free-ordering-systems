@@ -3916,6 +3916,7 @@
       "statusPaid": "Pago",
       "statusDue": "A pagar",
       "vatId": "CNPJ / Inscrição fiscal",
+      "localPartner": "Seu parceiro local",
       "download": "Baixar / Imprimir",
       "thankYou": "Agradecemos a sua preferência.",
       "notFound": "Fatura não encontrada.",

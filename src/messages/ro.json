@@ -3916,6 +3916,7 @@
       "statusPaid": "Plătită",
       "statusDue": "De plată",
       "vatId": "Cod TVA / Cod fiscal",
+      "localPartner": "Partenerul dvs. local",
       "download": "Descarcă / Tipărește",
       "thankYou": "Vă mulțumim pentru colaborare.",
       "notFound": "Factura nu a fost găsită.",

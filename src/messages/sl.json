@@ -3916,6 +3916,7 @@
       "statusPaid": "Plačano",
       "statusDue": "Zapadlo",
       "vatId": "ID za DDV / davčna številka",
+      "localPartner": "Vaš lokalni partner",
       "download": "Prenesi / natisni",
       "thankYou": "Hvala za vaše sodelovanje.",
       "notFound": "Računa ni mogoče najti.",

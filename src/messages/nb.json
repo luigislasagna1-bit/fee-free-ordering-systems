@@ -3916,6 +3916,7 @@
       "statusPaid": "Betalt",
       "statusDue": "Forfaller",
       "vatId": "MVA-/organisasjonsnr.",
+      "localPartner": "Din lokale partner",
       "download": "Last ned / Skriv ut",
       "thankYou": "Takk for at du handler hos oss.",
       "notFound": "Fakturaen ble ikke funnet.",
