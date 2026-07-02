@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Kogutud",
+    "refundedSoFar": "Seni tagastatud",
+    "pay": {
+      "card": "Kaart",
+      "cardOnPickup": "Kaart järeltulemisel",
+      "cardOnDelivery": "Kaart kättetoimetamisel",
+      "cash": "Sularaha",
+      "cashOnPickup": "Sularaha järeltulemisel",
+      "cashOnDelivery": "Sularaha kättetoimetamisel",
+      "paypal": "PayPal",
+      "rewardCredit": "Poekrediit"
+    }
+  },
   "common": {
     "save": "Salvesta",
     "saveChanges": "Salvesta muutused",

@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Εισπράχθηκε",
+    "refundedSoFar": "Επιστράφηκε έως τώρα",
+    "pay": {
+      "card": "Κάρτα",
+      "cardOnPickup": "Κάρτα κατά την παραλαβή",
+      "cardOnDelivery": "Κάρτα κατά την παράδοση",
+      "cash": "Μετρητά",
+      "cashOnPickup": "Μετρητά κατά την παραλαβή",
+      "cashOnDelivery": "Μετρητά κατά την παράδοση",
+      "paypal": "PayPal",
+      "rewardCredit": "Πίστωση καταστήματος"
+    }
+  },
   "common": {
     "save": "Αποθήκευση",
     "saveChanges": "Αποθήκευση αλλαγών",

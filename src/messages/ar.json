@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "المحصّل",
+    "refundedSoFar": "المُسترَد حتى الآن",
+    "pay": {
+      "card": "بطاقة",
+      "cardOnPickup": "بطاقة عند الاستلام",
+      "cardOnDelivery": "بطاقة عند التوصيل",
+      "cash": "نقداً",
+      "cashOnPickup": "نقداً عند الاستلام",
+      "cashOnDelivery": "نقداً عند التوصيل",
+      "paypal": "PayPal",
+      "rewardCredit": "رصيد المتجر"
+    }
+  },
   "common": {
     "save": "حفظ",
     "saveChanges": "حفظ التغييرات",

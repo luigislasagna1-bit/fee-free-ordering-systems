@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Încasat",
+    "refundedSoFar": "Rambursat până acum",
+    "pay": {
+      "card": "Card",
+      "cardOnPickup": "Card la ridicare",
+      "cardOnDelivery": "Card la livrare",
+      "cash": "Numerar",
+      "cashOnPickup": "Numerar la ridicare",
+      "cashOnDelivery": "Numerar la livrare",
+      "paypal": "PayPal",
+      "rewardCredit": "Credit magazin"
+    }
+  },
   "common": {
     "save": "Salvează",
     "saveChanges": "Salvează modificările",

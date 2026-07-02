@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "수납액",
+    "refundedSoFar": "환불액",
+    "pay": {
+      "card": "카드",
+      "cardOnPickup": "픽업 시 카드",
+      "cardOnDelivery": "배달 시 카드",
+      "cash": "현금",
+      "cashOnPickup": "픽업 시 현금",
+      "cashOnDelivery": "배달 시 현금",
+      "paypal": "PayPal",
+      "rewardCredit": "스토어 크레딧"
+    }
+  },
   "common": {
     "save": "저장",
     "saveChanges": "변경사항 저장",

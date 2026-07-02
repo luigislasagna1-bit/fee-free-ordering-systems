@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "נגבה",
+    "refundedSoFar": "הוחזר עד כה",
+    "pay": {
+      "card": "כרטיס",
+      "cardOnPickup": "כרטיס באיסוף",
+      "cardOnDelivery": "כרטיס במשלוח",
+      "cash": "מזומן",
+      "cashOnPickup": "מזומן באיסוף",
+      "cashOnDelivery": "מזומן במשלוח",
+      "paypal": "PayPal",
+      "rewardCredit": "קרדיט בחנות"
+    }
+  },
   "common": {
     "save": "שמור",
     "saveChanges": "שמור שינויים",

@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Đã thu",
+    "refundedSoFar": "Đã hoàn đến nay",
+    "pay": {
+      "card": "Thẻ",
+      "cardOnPickup": "Thẻ khi nhận",
+      "cardOnDelivery": "Thẻ khi giao",
+      "cash": "Tiền mặt",
+      "cashOnPickup": "Tiền mặt khi nhận",
+      "cashOnDelivery": "Tiền mặt khi giao",
+      "paypal": "PayPal",
+      "rewardCredit": "Tín dụng cửa hàng"
+    }
+  },
   "common": {
     "save": "Lưu",
     "saveChanges": "Lưu thay đổi",

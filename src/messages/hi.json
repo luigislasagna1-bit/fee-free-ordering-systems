@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "वसूल किया गया",
+    "refundedSoFar": "अब तक वापस किया गया",
+    "pay": {
+      "card": "कार्ड",
+      "cardOnPickup": "पिकअप पर कार्ड",
+      "cardOnDelivery": "डिलीवरी पर कार्ड",
+      "cash": "नकद",
+      "cashOnPickup": "पिकअप पर नकद",
+      "cashOnDelivery": "डिलीवरी पर नकद",
+      "paypal": "PayPal",
+      "rewardCredit": "स्टोर क्रेडिट"
+    }
+  },
   "common": {
     "save": "सहेजें",
     "saveChanges": "बदलाव सहेजें",

@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Отримано",
+    "refundedSoFar": "Повернуто",
+    "pay": {
+      "card": "Картка",
+      "cardOnPickup": "Картка при отриманні",
+      "cardOnDelivery": "Картка при доставці",
+      "cash": "Готівка",
+      "cashOnPickup": "Готівка при отриманні",
+      "cashOnDelivery": "Готівка при доставці",
+      "paypal": "PayPal",
+      "rewardCredit": "Бонусний рахунок"
+    }
+  },
   "common": {
     "save": "Зберегти",
     "saveChanges": "Зберегти зміни",

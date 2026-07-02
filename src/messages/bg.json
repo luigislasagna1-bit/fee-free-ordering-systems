@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Събрано",
+    "refundedSoFar": "Възстановено досега",
+    "pay": {
+      "card": "Карта",
+      "cardOnPickup": "Карта при вземане",
+      "cardOnDelivery": "Карта при доставка",
+      "cash": "В брой",
+      "cashOnPickup": "В брой при вземане",
+      "cashOnDelivery": "В брой при доставка",
+      "paypal": "PayPal",
+      "rewardCredit": "Кредит в магазина"
+    }
+  },
   "common": {
     "save": "Запази",
     "saveChanges": "Запази промените",

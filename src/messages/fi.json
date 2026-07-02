@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Peritty",
+    "refundedSoFar": "Hyvitetty tähän mennessä",
+    "pay": {
+      "card": "Kortti",
+      "cardOnPickup": "Kortti noudettaessa",
+      "cardOnDelivery": "Kortti toimituksessa",
+      "cash": "Käteinen",
+      "cashOnPickup": "Käteinen noudettaessa",
+      "cashOnDelivery": "Käteinen toimituksessa",
+      "paypal": "PayPal",
+      "rewardCredit": "Myymäläkredit"
+    }
+  },
   "common": {
     "save": "Tallenna",
     "saveChanges": "Tallenna muutokset",

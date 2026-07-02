@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Eingezogen",
+    "refundedSoFar": "Bisher erstattet",
+    "pay": {
+      "card": "Karte",
+      "cardOnPickup": "Karte bei Abholung",
+      "cardOnDelivery": "Karte bei Lieferung",
+      "cash": "Bar",
+      "cashOnPickup": "Bar bei Abholung",
+      "cashOnDelivery": "Bar bei Lieferung",
+      "paypal": "PayPal",
+      "rewardCredit": "Guthaben"
+    }
+  },
   "common": {
     "save": "Speichern",
     "saveChanges": "Änderungen speichern",

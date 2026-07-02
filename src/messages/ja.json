@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "受取済み",
+    "refundedSoFar": "返金済み",
+    "pay": {
+      "card": "カード",
+      "cardOnPickup": "受取時カード払い",
+      "cardOnDelivery": "配達時カード払い",
+      "cash": "現金",
+      "cashOnPickup": "受取時現金払い",
+      "cashOnDelivery": "配達時現金払い",
+      "paypal": "PayPal",
+      "rewardCredit": "ストアクレジット"
+    }
+  },
   "common": {
     "save": "保存",
     "saveChanges": "変更を保存",

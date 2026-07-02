@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Surinkta",
+    "refundedSoFar": "Grąžinta iki šiol",
+    "pay": {
+      "card": "Kortelė",
+      "cardOnPickup": "Kortelė atsiimant",
+      "cardOnDelivery": "Kortelė pristatant",
+      "cash": "Grynieji",
+      "cashOnPickup": "Grynieji atsiimant",
+      "cashOnDelivery": "Grynieji pristatant",
+      "paypal": "PayPal",
+      "rewardCredit": "Parduotuvės kreditas"
+    }
+  },
   "common": {
     "save": "Išsaugoti",
     "saveChanges": "Išsaugoti pakeitimus",

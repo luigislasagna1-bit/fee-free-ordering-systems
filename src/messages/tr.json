@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Tahsil edilen",
+    "refundedSoFar": "Şu ana kadar iade edilen",
+    "pay": {
+      "card": "Kart",
+      "cardOnPickup": "Teslim alırken kart",
+      "cardOnDelivery": "Teslimatta kart",
+      "cash": "Nakit",
+      "cashOnPickup": "Teslim alırken nakit",
+      "cashOnDelivery": "Teslimatta nakit",
+      "paypal": "PayPal",
+      "rewardCredit": "Mağaza kredisi"
+    }
+  },
   "common": {
     "save": "Kaydet",
     "saveChanges": "Değişiklikleri Kaydet",

@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Naplaćeno",
+    "refundedSoFar": "Dosad vraćeno",
+    "pay": {
+      "card": "Kartica",
+      "cardOnPickup": "Kartica pri preuzimanju",
+      "cardOnDelivery": "Kartica pri dostavi",
+      "cash": "Gotovina",
+      "cashOnPickup": "Gotovina pri preuzimanju",
+      "cashOnDelivery": "Gotovina pri dostavi",
+      "paypal": "PayPal",
+      "rewardCredit": "Kredit u trgovini"
+    }
+  },
   "common": {
     "save": "Spremi",
     "saveChanges": "Spremi promjene",

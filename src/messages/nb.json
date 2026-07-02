@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Innkrevd",
+    "refundedSoFar": "Refundert så langt",
+    "pay": {
+      "card": "Kort",
+      "cardOnPickup": "Kort ved henting",
+      "cardOnDelivery": "Kort ved levering",
+      "cash": "Kontant",
+      "cashOnPickup": "Kontant ved henting",
+      "cashOnDelivery": "Kontant ved levering",
+      "paypal": "PayPal",
+      "rewardCredit": "Butikkreditt"
+    }
+  },
   "common": {
     "save": "Lagre",
     "saveChanges": "Lagre endringer",

@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Betalt",
+    "refundedSoFar": "Återbetalt hittills",
+    "pay": {
+      "card": "Kort",
+      "cardOnPickup": "Kort vid avhämtning",
+      "cardOnDelivery": "Kort vid leverans",
+      "cash": "Kontant",
+      "cashOnPickup": "Kontant vid avhämtning",
+      "cashOnDelivery": "Kontant vid leverans",
+      "paypal": "PayPal",
+      "rewardCredit": "Tillgodohavande"
+    }
+  },
   "common": {
     "save": "Spara",
     "saveChanges": "Spara ändringar",

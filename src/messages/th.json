@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "เก็บแล้ว",
+    "refundedSoFar": "คืนเงินแล้ว",
+    "pay": {
+      "card": "บัตร",
+      "cardOnPickup": "บัตร (ชำระตอนรับ)",
+      "cardOnDelivery": "บัตร (ชำระตอนส่ง)",
+      "cash": "เงินสด",
+      "cashOnPickup": "เงินสด (ชำระตอนรับ)",
+      "cashOnDelivery": "เงินสด (ชำระตอนส่ง)",
+      "paypal": "PayPal",
+      "rewardCredit": "เครดิตร้าน"
+    }
+  },
   "common": {
     "save": "บันทึก",
     "saveChanges": "บันทึกการเปลี่ยนแปลง",

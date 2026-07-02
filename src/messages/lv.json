@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Saņemts",
+    "refundedSoFar": "Līdz šim atmaksāts",
+    "pay": {
+      "card": "Karte",
+      "cardOnPickup": "Karte, saņemot",
+      "cardOnDelivery": "Karte, piegādājot",
+      "cash": "Skaidra nauda",
+      "cashOnPickup": "Skaidrā, saņemot",
+      "cashOnDelivery": "Skaidrā, piegādājot",
+      "paypal": "PayPal",
+      "rewardCredit": "Veikala kredīts"
+    }
+  },
   "common": {
     "save": "Saglabāt",
     "saveChanges": "Saglabāt izmaiņas",

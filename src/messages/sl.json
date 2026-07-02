@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Zbrano",
+    "refundedSoFar": "Doslej vrnjeno",
+    "pay": {
+      "card": "Kartica",
+      "cardOnPickup": "Kartica ob prevzemu",
+      "cardOnDelivery": "Kartica ob dostavi",
+      "cash": "Gotovina",
+      "cashOnPickup": "Gotovina ob prevzemu",
+      "cashOnDelivery": "Gotovina ob dostavi",
+      "paypal": "PayPal",
+      "rewardCredit": "Dobroimetje"
+    }
+  },
   "common": {
     "save": "Shrani",
     "saveChanges": "Shrani spremembe",

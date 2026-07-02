@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Pobrano",
+    "refundedSoFar": "Zwrócono dotąd",
+    "pay": {
+      "card": "Karta",
+      "cardOnPickup": "Karta przy odbiorze",
+      "cardOnDelivery": "Karta przy dostawie",
+      "cash": "Gotówka",
+      "cashOnPickup": "Gotówka przy odbiorze",
+      "cashOnDelivery": "Gotówka przy dostawie",
+      "paypal": "PayPal",
+      "rewardCredit": "Środki w sklepie"
+    }
+  },
   "common": {
     "save": "Zapisz",
     "saveChanges": "Zapisz zmiany",

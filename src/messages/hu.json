@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Beszedve",
+    "refundedSoFar": "Eddig visszatérítve",
+    "pay": {
+      "card": "Kártya",
+      "cardOnPickup": "Kártya átvételkor",
+      "cardOnDelivery": "Kártya kiszállításkor",
+      "cash": "Készpénz",
+      "cashOnPickup": "Készpénz átvételkor",
+      "cashOnDelivery": "Készpénz kiszállításkor",
+      "paypal": "PayPal",
+      "rewardCredit": "Bolti kredit"
+    }
+  },
   "common": {
     "save": "Mentés",
     "saveChanges": "Változtatások mentése",

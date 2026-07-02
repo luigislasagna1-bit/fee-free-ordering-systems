@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Terkumpul",
+    "refundedSoFar": "Dikembalikan sejauh ini",
+    "pay": {
+      "card": "Kartu",
+      "cardOnPickup": "Kartu saat ambil",
+      "cardOnDelivery": "Kartu saat antar",
+      "cash": "Tunai",
+      "cashOnPickup": "Tunai saat ambil",
+      "cashOnDelivery": "Tunai saat antar",
+      "paypal": "PayPal",
+      "rewardCredit": "Kredit toko"
+    }
+  },
   "common": {
     "save": "Simpan",
     "saveChanges": "Simpan Perubahan",

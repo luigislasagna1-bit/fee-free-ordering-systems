@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "已收款",
+    "refundedSoFar": "已退款",
+    "pay": {
+      "card": "刷卡",
+      "cardOnPickup": "取餐时刷卡",
+      "cardOnDelivery": "送达时刷卡",
+      "cash": "现金",
+      "cashOnPickup": "取餐时付现",
+      "cashOnDelivery": "送达时付现",
+      "paypal": "PayPal",
+      "rewardCredit": "store credit 已翻译占位"
+    }
+  },
   "common": {
     "save": "保存",
     "saveChanges": "保存更改",

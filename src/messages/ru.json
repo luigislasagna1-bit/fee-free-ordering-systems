@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Получено",
+    "refundedSoFar": "Возвращено",
+    "pay": {
+      "card": "Карта",
+      "cardOnPickup": "Карта при получении",
+      "cardOnDelivery": "Карта при доставке",
+      "cash": "Наличные",
+      "cashOnPickup": "Наличные при получении",
+      "cashOnDelivery": "Наличные при доставке",
+      "paypal": "PayPal",
+      "rewardCredit": "Бонусный счёт"
+    }
+  },
   "common": {
     "save": "Сохранить",
     "saveChanges": "Сохранить изменения",

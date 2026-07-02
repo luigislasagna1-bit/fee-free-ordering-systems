@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Cobrado",
+    "refundedSoFar": "Reembolsado hasta ahora",
+    "pay": {
+      "card": "Tarjeta",
+      "cardOnPickup": "Tarjeta al recoger",
+      "cardOnDelivery": "Tarjeta al entregar",
+      "cash": "Efectivo",
+      "cashOnPickup": "Efectivo al recoger",
+      "cashOnDelivery": "Efectivo al entregar",
+      "paypal": "PayPal",
+      "rewardCredit": "Crédito en tienda"
+    }
+  },
   "common": {
     "save": "Guardar",
     "saveChanges": "Guardar cambios",

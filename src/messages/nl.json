@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Geïnd",
+    "refundedSoFar": "Tot nu terugbetaald",
+    "pay": {
+      "card": "Kaart",
+      "cardOnPickup": "Kaart bij afhalen",
+      "cardOnDelivery": "Kaart bij bezorging",
+      "cash": "Contant",
+      "cashOnPickup": "Contant bij afhalen",
+      "cashOnDelivery": "Contant bij bezorging",
+      "paypal": "PayPal",
+      "rewardCredit": "Winkeltegoed"
+    }
+  },
   "common": {
     "save": "Opslaan",
     "saveChanges": "Wijzigingen opslaan",

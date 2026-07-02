@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Vybráno",
+    "refundedSoFar": "Dosud vráceno",
+    "pay": {
+      "card": "Karta",
+      "cardOnPickup": "Karta při vyzvednutí",
+      "cardOnDelivery": "Karta při doručení",
+      "cash": "Hotovost",
+      "cashOnPickup": "Hotovost při vyzvednutí",
+      "cashOnDelivery": "Hotovost při doručení",
+      "paypal": "PayPal",
+      "rewardCredit": "Kredit v obchodě"
+    }
+  },
   "common": {
     "save": "Uložit",
     "saveChanges": "Uložit změny",

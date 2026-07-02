@@ -1,4 +1,18 @@
 {
+  "money": {
+    "amountCollected": "Cobrat",
+    "refundedSoFar": "Reemborsat fins ara",
+    "pay": {
+      "card": "Targeta",
+      "cardOnPickup": "Targeta en recollir",
+      "cardOnDelivery": "Targeta en lliurar",
+      "cash": "Efectiu",
+      "cashOnPickup": "Efectiu en recollir",
+      "cashOnDelivery": "Efectiu en lliurar",
+      "paypal": "PayPal",
+      "rewardCredit": "Crèdit de la botiga"
+    }
+  },
   "common": {
     "save": "Desa",
     "saveChanges": "Desa els canvis",
