@@ -2135,13 +2135,13 @@ export function OrderingPageClient({
           // freed unit doesn't unlock its own trigger (audit). Luigi 2026-06-27.
           isFreebie: typeof ci.notes === "string" && ci.notes.startsWith("Free with promo:"),
         })),
-        // Phase 2a restriction inputs — forward the resolved delivery
+        // Phase 2a restriction input — forward the resolved delivery
         // zone (so Delivery Area-restricted promos like "Free delivery
-        // in Zone 1-7" trigger) and the member flag (so member-only
-        // promos resolve). Both undefined when not applicable —
-        // e.g. pickup orders skip deliveryZoneId.
+        // in Zone 1-7" trigger). Undefined when not applicable —
+        // e.g. pickup orders skip deliveryZoneId. (The member flag is no
+        // longer sent: the server derives it from the session cookie, the
+        // same canonical signal the charge uses — Blocker #7.)
         deliveryZoneId: orderType === "delivery" && resolvedZone?.inside ? resolvedZone.zone.id : undefined,
-        isMember: !!currentCustomer,
         // Acquisition channel → the preview only applies promos channelled to
         // this customer's channel (website vs marketplace). Luigi 2026-06-09.
         channel: customerChannel,

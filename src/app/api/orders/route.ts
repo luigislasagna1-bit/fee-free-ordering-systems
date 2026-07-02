@@ -20,10 +20,9 @@ import { resolveMenuRestaurantId } from "@/lib/brand";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 import { writePromotionUsageRows } from "@/lib/promo-usage";
 import { resolveInheritedHours } from "@/lib/inherited-data";
-import { usedLifetimePromoIds, resolveAssignedPromoByCode, findActiveGrants, resolveGrantById, markGrantAppliedById } from "@/lib/coupon-ledger";
-import { partitionMemberOnly, qualifyingMemberOnlyPromos } from "@/lib/vip-membership";
+import { resolveAssignedPromoByCode, markGrantAppliedById } from "@/lib/coupon-ledger";
+import { buildPromoOrderContext } from "@/lib/promo-order-context";
 import { reserveCredit as reserveReward, recordSpendForOrder, refundClaim as refundRewardClaim } from "@/lib/reward-ledger";
-import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
 import { hasFeature } from "@/lib/entitlements";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
@@ -1169,42 +1168,33 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Promo engine (server-side) ──────────────────────────────────────────
-    // Same brand-scope merging as coupons above: this location's own promos
-    // AND any "brand"-scoped promos owned by the parent.
-    const promoOwnerIds: string[] = [restaurant.id];
-    if (restaurant.parentRestaurantId) promoOwnerIds.push(restaurant.parentRestaurantId);
-    const activePromosAll = await prisma.promotion.findMany({
-      where: {
-        isActive: true,
-        OR: [
-          { restaurantId: restaurant.id },
-          { restaurantId: { in: promoOwnerIds }, scope: "brand" },
-        ],
-      },
-      include: { groupLinks: { select: { groupId: true, customerId: true, email: true, phone: true } } },
-      // Cap per the standing scaling rule (no unbounded findMany on a hot path).
-      // No real restaurant has anywhere near this many ACTIVE promos, so this
-      // never truncates a real result; it only bounds worst-case memory. No
-      // orderBy → evaluation order is unchanged for every real case. (Audit fix.)
-      take: 500,
-    });
-    // Honour the customer's manual promo removals so the charged discount
-    // matches the cart preview (apply-promos does the same).
-    const suppressedSet = new Set(
-      Array.isArray(bodySuppressedPromoIds) ? bodySuppressedPromoIds.map((x: unknown) => String(x)) : [],
-    );
     // Acquisition channel gate (Luigi 2026-06-09): a marketplace-channel order
     // only gets "marketplace"/"both" promos; a website order only "website"/
     // "both". Resolved authoritatively here (via isOnMarketplace) so the charged
     // discount matches the cart preview; reused for the viaMarketplace stamp +
     // billing below, so isOnMarketplace runs exactly once.
     const orderViaMarketplace = from === "marketplace" ? await isOnMarketplace(restaurant.id) : false;
-    const orderChannel = orderViaMarketplace ? "marketplace" : "website";
-    const channelOk = (p: any) => p.channel === "both" || p.channel === orderChannel;
-    // Member-only (VIP) promos are linked to ≥1 group — keep them OUT of the
-    // public pool; added back below only for identified members. Luigi 2026-06-27.
-    const { general: publicPromos, memberOnly: memberOnlyPromos } = partitionMemberOnly(activePromosAll as any[]);
-    const activePromos = publicPromos.filter((p: any) => !suppressedSet.has(p.id) && channelOk(p));
+    const orderChannel: "website" | "marketplace" = orderViaMarketplace ? "marketplace" : "website";
+    // ── Shared promo pool + customer identity (Blocker #7) ──────────────────
+    // THE same context builder the apply-promos preview uses — promo pool
+    // (this location's own + the parent's brand-scoped promos, capped), the
+    // canonical member signal (session OR CustomerAccount email), new-vs-
+    // returning (id OR email OR phone, fulfilled orders in this channel),
+    // granted / member-only add-backs, and once-per-lifetime redemptions —
+    // so the charged discount equals the previewed one to the cent. Any
+    // change to this logic goes in src/lib/promo-order-context.ts, never here.
+    const promoCtx = await buildPromoOrderContext({
+      restaurant,
+      channel: orderChannel,
+      email: customerEmail,
+      phone: customerPhone,
+      suppressedPromoIds: bodySuppressedPromoIds,
+      grantId: typeof bodyGrantId === "string" ? bodyGrantId : null,
+      // No optimistic override: an unidentified guest stays "new" here
+      // (historical charge behavior — can only ever charge LESS than shown).
+    });
+    const activePromos = promoCtx.activePromos;
+    const grantForcedIds = promoCtx.grantForcedIds;
     // ── Delivery fee + zone resolution ──────────────────────────────────────
     // Resolved BEFORE applyPromotions() so the engine can evaluate the
     // Delivery Area restriction (Phase 2a) — free-delivery promos with
@@ -1284,179 +1274,15 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // ── Customer context for restriction enforcement ────────────────────────
-    // Restrictions like Client Type "new"/"returning"/"member" and
-    // Frequency "once per client lifetime" need to know who's ordering.
-    // We look up the Customer row (per-restaurant order history) AND
-    // the CustomerAccount row (marketplace-wide membership) by email.
-    // Both are nullable — guest checkouts with no email match nothing
-    // and fall through to defaults (isNewCustomer=true, isMember=false,
-    // hasUsedLifetime={}). Pickup/dine-in carts without email also
-    // fall through.
+    // ── Customer identity for restriction enforcement ───────────────────────
+    // Everything identity-driven — new/returning/member Client Type, once-per-
+    // lifetime, granted + member-only promo add-backs — was already resolved by
+    // buildPromoOrderContext above (identically to the preview). Only the
+    // typed-at-checkout email is still needed locally, for the assigned-code
+    // ownership check below (typed identity only, matching the preview's gate).
     const promoCustomerEmail = customerEmail
       ? String(customerEmail).trim().toLowerCase()
       : null;
-    let isNewCustomerForPromo = true; // optimistic: no email → treat as new
-    let isMemberForPromo = false;
-    const hasUsedLifetimeForPromo: Record<string, boolean> = {};
-    // Captured so the precise per-promo lifetime check below can scope its
-    // order-history scan to this customer by id (not just email/phone).
-    let lifetimeCustomerId: string | null = null;
-    if (promoCustomerEmail) {
-      // Per-restaurant Customer — drives isNewCustomer (count of prior
-      // orders) and feeds hasUsedLifetime lookup.
-      const existingCustomer = await prisma.customer.findFirst({
-        where: { restaurantId: restaurant.id, email: promoCustomerEmail },
-        select: { id: true },
-      });
-      if (existingCustomer) {
-        // "New customer" (and "has already used a once-per-lifetime promo")
-        // must be judged on FULFILLED orders only — never on orders that
-        // failed. An order that was MISSED (auto-rejected on the unattended
-        // timeout), rejected, or cancelled never actually served the customer,
-        // so it must NOT flip them to "returning" nor consume a first-time-only
-        // promo: they keep the offer until an order genuinely goes through.
-        // (Replaces the old `totalOrders > 0` test — totalOrders is incremented
-        // at PLACEMENT regardless of outcome, so a missed first order wrongly
-        // disqualified the customer from the new-customer / first-buy promo on
-        // their retry.) The fulfillment-tied coupon-grant ledger (next phase)
-        // will make this exact and also match on phone; this is the surgical
-        // correctness fix. Luigi 2026-06-09.
-        const FAILED_ORDER_STATES = ["cancelled", "rejected"]; // "missed" == auto-rejected
-        const priorFulfilledCount = await prisma.order.count({
-          where: {
-            restaurantId: restaurant.id,
-            customerId: existingCustomer.id,
-            status: { notIn: FAILED_ORDER_STATES },
-            // Per-channel new-customer (Luigi 2026-06-09, H2): the marketplace is
-            // a SEPARATE customer base, so "new" is judged WITHIN this order's
-            // channel. A website regular ordering via the marketplace counts as
-            // new there (and vice-versa) — so each channel gets its own first-buy.
-            viaMarketplace: orderViaMarketplace,
-          },
-        });
-        if (priorFulfilledCount > 0) {
-          isNewCustomerForPromo = false;
-        }
-        // Capture the customerId so the precise per-promo lifetime check below
-        // (usedLifetimePromoIds) can scan THIS customer's own order history.
-        // NOTE (Luigi 2026-06-26): the old coarse heuristic that lived here —
-        // "any prior promo-discounted order ⇒ block ALL once-per-lifetime
-        // promos" — was REMOVED. It over-blocked returning customers from a
-        // brand-new lifetime promo they'd never used, and (because the cart
-        // preview didn't replicate it) made the previewed total disagree with
-        // the charge. Enforcement is now PER-PROMO via usedLifetimePromoIds,
-        // which both this route and the apply-promos preview share.
-        lifetimeCustomerId = existingCustomer.id;
-      }
-      // Marketplace-wide CustomerAccount — drives isMember (true iff a
-      // CustomerAccount exists for this email, regardless of whether
-      // they've ordered here before).
-      const account = await prisma.customerAccount.findUnique({
-        where: { email: promoCustomerEmail },
-        select: { id: true },
-      });
-      if (account) isMemberForPromo = true;
-    }
-
-    // ── Auto-apply VIP-group / assigned grants (Program 3) ──────────────────
-    // Mirrors apply-promos so preview == charge. A member identified by email/
-    // phone gets their granted promo applied with NO code; the Promotion itself
-    // is autoApply:false so it never leaks to non-members. Force autoApply on the
-    // member's granted promos so the engine applies them (still isEligible- and
-    // lifetime-gated below). Inserted BEFORE the lifetime check so once-per-
-    // lifetime still bites. Luigi 2026-06-27.
-    //
-    // Code-less personal gift chosen via ?grant= — resolve the SERVER-VERIFIED
-    // signed-in customer ONCE (the SAME identity space apply-promos uses) so the
-    // charge forces the gift into the engine exactly like the preview did
-    // (preview == charge), and we can single-use the grant after the order is
-    // created. Never trust the request-body typed email/phone here. Luigi 2026-07-01.
-    let grantSessionCustomerId: string | null = null;
-    let grantSessionEmail: string | null = null;
-    let grantSessionPhone: string | null = null;
-    if (typeof bodyGrantId === "string" && bodyGrantId) {
-      try {
-        const gme = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
-        if (gme) { grantSessionCustomerId = gme.id ?? null; grantSessionEmail = gme.email?.trim().toLowerCase() ?? null; grantSessionPhone = gme.phone?.trim() ?? null; }
-      } catch { /* not signed in — ?grant= becomes a no-op */ }
-    }
-    const grantForcedIds = new Set<string>();
-    if (promoCustomerEmail || customerPhone) {
-      try {
-        const grants = await findActiveGrants({
-          restaurantId: restaurant.id,
-          email: promoCustomerEmail,
-          phone: typeof customerPhone === "string" ? customerPhone : null,
-        });
-        const autoIds = new Set(grants.filter((g) => g.autoApply).map((g) => g.promotionId));
-        // Force the chosen code-less gift in (identity-scoped to the SESSION
-        // customer only) AND mark it exclusive so it can WIN by value.
-        if (bodyGrantId && grantSessionCustomerId) {
-          const gg = await resolveGrantById({ restaurantId: restaurant.id, grantId: String(bodyGrantId), customerId: grantSessionCustomerId, email: grantSessionEmail, phone: grantSessionPhone });
-          if (gg && !suppressedSet.has(gg.promotionId)) { autoIds.add(gg.promotionId); grantForcedIds.add(gg.promotionId); }
-        }
-        if (autoIds.size > 0) {
-          for (let i = 0; i < activePromos.length; i++) {
-            if (autoIds.has(activePromos[i].id)) {
-              activePromos[i] = { ...activePromos[i], autoApply: true, ...(grantForcedIds.has(activePromos[i].id) ? { stackingRule: "exclusive" } : {}) } as any;
-              autoIds.delete(activePromos[i].id);
-            }
-          }
-          if (autoIds.size > 0) {
-            const extra = await prisma.promotion.findMany({
-              where: {
-                id: { in: [...autoIds] },
-                isActive: true,
-                OR: [{ restaurantId: restaurant.id }, { restaurantId: { in: promoOwnerIds }, scope: "brand" }],
-              },
-            });
-            for (const p of extra) if (!suppressedSet.has(p.id)) activePromos.push({ ...(p as any), autoApply: true, ...(grantForcedIds.has(p.id) ? { stackingRule: "exclusive" } : {}) });
-          }
-        }
-      } catch (e) { console.error("[orders findActiveGrants]", e); }
-    }
-
-    // ── Member-only VIP specials (Phase 1, 2026-06-27) ──────────────────────
-    // Server-authoritative twin of the apply-promos preview: a promo attached to
-    // a VIP group is hidden from the public pool and applied ONLY for members —
-    // identified by the signed-in/ resolved customerId OR the order's email/phone
-    // (which also maps account members back to their group). Force autoApply; the
-    // engine still gates eligibility and onceLifetimePerClient (checked below).
-    if (memberOnlyPromos.length && (lifetimeCustomerId || promoCustomerEmail || customerPhone)) {
-      try {
-        const mine = await qualifyingMemberOnlyPromos(
-          restaurant.id,
-          { customerId: lifetimeCustomerId, email: promoCustomerEmail, phone: typeof customerPhone === "string" ? customerPhone : null },
-          memberOnlyPromos as any[],
-        );
-        for (const p of mine) {
-          if (!suppressedSet.has(p.id) && channelOk(p)) activePromos.push({ ...(p as any), autoApply: true });
-        }
-      } catch (e) { console.error("[orders memberOnly]", e); }
-    }
-
-    // ── Coupon ledger (precise, phone-aware) ────────────────────────────────
-    // The fulfilled-order heuristic above is keyed on the email→Customer row, so
-    // it can miss a guest who used the offer with an email and returns with only
-    // a phone (or vice-versa). The ledger matches on email OR phone and records
-    // redemption by FULFILLMENT — a missed/rejected order is "released", never
-    // "used" — so this both tightens once-per-lifetime enforcement across
-    // identities AND keeps a missed first order's offer alive. Additive: it can
-    // only mark MORE lifetime promos used, never fewer. Luigi 2026-06-09.
-    {
-      const lifetimeIds = activePromos.filter((p) => p.onceLifetimePerClient).map((p) => p.id);
-      if (lifetimeIds.length > 0 && (promoCustomerEmail || customerPhone || lifetimeCustomerId)) {
-        const usedIds = await usedLifetimePromoIds({
-          restaurantId: restaurant.id,
-          promotionIds: lifetimeIds,
-          customerId: lifetimeCustomerId,
-          email: promoCustomerEmail,
-          phone: customerPhone,
-        });
-        for (const id of usedIds) hasUsedLifetimeForPromo[id] = true;
-      }
-    }
 
     // ── Promo engine evaluation (now has resolved zone + customer context) ──
     // Run AFTER zone resolution so Delivery Area-restricted promos (Phase 2a)
@@ -1505,9 +1331,9 @@ export async function POST(req: NextRequest) {
     const promoResults = applyPromotions(activePromos as any, {
       orderType: type,
       now: promoEvalNow,
-      isNewCustomer: isNewCustomerForPromo,
-      isMember: isMemberForPromo,
-      hasUsedLifetime: hasUsedLifetimeForPromo,
+      isNewCustomer: promoCtx.isNewCustomer,
+      isMember: promoCtx.isMember,
+      hasUsedLifetime: promoCtx.hasUsedLifetime,
       subtotal: serverSubtotal,
       // Bundle line items (menuItemId === null) are EXCLUDED from the
       // promo engine — their price is already the discounted bundle
@@ -2171,19 +1997,20 @@ export async function POST(req: NextRequest) {
       // auto-coupled to rewardsEnabled; don't depend on a stale value). 2026-06-27.
       if (restaurant.rewardsEnabled && Number.isFinite(requested) && requested > 0) {
         try {
-          const me = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
-          if (me?.id) {
+          // Session identity already resolved (once) by buildPromoOrderContext;
+          // sessionCustomerId is the server-verified signed-in Customer only.
+          if (promoCtx.sessionCustomerId) {
             const onlineCharge = (paymentMethod || "cash") === "card" || (paymentMethod || "cash") === "paypal";
             const claim = await reserveReward({
               restaurantId: restaurant.id,
-              customerId: me.id,
+              customerId: promoCtx.sessionCustomerId,
               requested,
               orderTotal: serverTotal,
               minRedeemBalance: restaurant.rewardMinRedeemBalance ?? 0,
               maxRedeemPercent: restaurant.rewardMaxRedeemPercent ?? 100,
               minCharge: onlineCharge ? 0.5 : 0,
             });
-            if (claim.ok && claim.applied > 0) { creditApplied = claim.applied; creditSpenderId = me.id; }
+            if (claim.ok && claim.applied > 0) { creditApplied = claim.applied; creditSpenderId = promoCtx.sessionCustomerId; }
           }
         } catch (e) { console.error("[orders reward reserve]", e); }
       }
@@ -2342,10 +2169,10 @@ export async function POST(req: NextRequest) {
     // to a bigger deal it never applied, so we leave it usable. Status-guarded +
     // idempotent, so it doesn't fight recordAppliedCoupons (which runs at release
     // for coded/lifetime grants). Luigi 2026-07-01.
-    if (bodyGrantId && grantSessionCustomerId && grantForcedIds.size > 0 && order?.id) {
+    if (bodyGrantId && promoCtx.sessionCustomerId && grantForcedIds.size > 0 && order?.id) {
       const giftApplied = promoResults.some((r: any) => grantForcedIds.has(r.promoId));
       if (giftApplied) {
-        await markGrantAppliedById({ restaurantId: restaurant.id, grantId: String(bodyGrantId), orderId: order.id, customerId: grantSessionCustomerId, email: grantSessionEmail, phone: grantSessionPhone })
+        await markGrantAppliedById({ restaurantId: restaurant.id, grantId: String(bodyGrantId), orderId: order.id, customerId: promoCtx.sessionCustomerId, email: promoCtx.sessionEmail, phone: promoCtx.sessionPhone })
           .catch((e) => console.error("[orders POST] markGrantAppliedById:", e));
       }
     }
