@@ -35,8 +35,8 @@ export async function GET(req: NextRequest) {
       where: scopeMenuId ? { menuId: scopeMenuId } : { restaurantId: menuRestaurantId },
       orderBy: { sortOrder: "asc" },
       select: {
-        id: true, name: true, rewardEarnExcluded: true,
-        menuItems: { orderBy: { sortOrder: "asc" }, select: { id: true, name: true, rewardEarnExcluded: true } },
+        id: true, name: true, rewardEarnExcluded: true, promoExcluded: true,
+        menuItems: { orderBy: { sortOrder: "asc" }, select: { id: true, name: true, rewardEarnExcluded: true, promoExcluded: true } },
       },
     });
     return NextResponse.json(lite);

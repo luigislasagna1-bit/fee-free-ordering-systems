@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Promosyonlar",
       "description": "Müşterileriniz için otomatik teklifler, paketler ve promosyon kodları",
-      "newPromo": "Yeni Promosyon"
+      "newPromo": "Yeni Promosyon",
+      "excludeTitle": "Bu ürünlerde indirim yok",
+      "excludeHelp": "Hariç tutulan ürün ve kategoriler (ör. hediye kartları) asla promosyon veya kupon indirimi almaz, bir promosyonun minimum sipariş tutarına sayılmaz ve ödül bakiyesiyle ödenemez — böylece 10 $ kupon 10 $ hediye kartını bedava alamaz.",
+      "excludeDesc": "Hiçbir promosyonun veya kuponun indirim yapamayacağı kategorileri veya ürünleri seçin (ör. hediye kartları).",
+      "excludeOn": "İndirimli olabilir",
+      "excludeOff": "İndirim yok",
+      "excludeViaCategory": "Kategori üzerinden hariç",
+      "excludeFailed": "Kaydedilemedi — tekrar deneyin.",
+      "excludeLoading": "Menünüz yükleniyor…",
+      "excludeNone": "Henüz kategori yok."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Yayınlamaya geri dön",

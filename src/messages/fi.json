@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Tarjoukset",
       "description": "Automaattiset tarjoukset, paketit ja tarjouskoodit asiakkaillesi",
-      "newPromo": "Uusi tarjous"
+      "newPromo": "Uusi tarjous",
+      "excludeTitle": "Ei alennuksia näistä tuotteista",
+      "excludeHelp": "Suljetut tuotteet ja luokat (esim. lahjakortit) eivät koskaan saa kampanja- tai kuponkialennusta, eivät kerrytä kampanjan vähimmäistilausta eikä niitä voi maksaa palkkiosaldolla — joten 10 $ kuponki ei voi ostaa 10 $ lahjakorttia ilmaiseksi.",
+      "excludeDesc": "Valitse luokat tai tuotteet, joita mikään kampanja tai kuponki ei saa alentaa (esim. lahjakortit).",
+      "excludeOn": "Alennettavissa",
+      "excludeOff": "Ei alennuksia",
+      "excludeViaCategory": "Suljettu luokan kautta",
+      "excludeFailed": "Tallennus epäonnistui — yritä uudelleen.",
+      "excludeLoading": "Ladataan valikkoa…",
+      "excludeNone": "Ei vielä luokkia."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Takaisin julkaisuun",

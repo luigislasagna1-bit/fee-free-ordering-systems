@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Kampanjer",
       "description": "Automatiska erbjudanden, paket och kampanjkoder till dina kunder",
-      "newPromo": "Ny kampanj"
+      "newPromo": "Ny kampanj",
+      "excludeTitle": "Inga rabatter på dessa varor",
+      "excludeHelp": "Undantagna varor och kategorier (t.ex. presentkort) får aldrig kampanj- eller kupongrabatt, räknas inte mot en kampanjs minimibelopp och kan inte betalas med belöningssaldo — så en kupong på 10 $ kan inte köpa ett presentkort på 10 $ gratis.",
+      "excludeDesc": "Välj kategorier eller varor som ingen kampanj eller kupong får rabattera (t.ex. presentkort).",
+      "excludeOn": "Rabatterbar",
+      "excludeOff": "Inga rabatter",
+      "excludeViaCategory": "Undantagen via kategori",
+      "excludeFailed": "Kunde inte spara — försök igen.",
+      "excludeLoading": "Laddar din meny…",
+      "excludeNone": "Inga kategorier ännu."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Tillbaka till publicering",

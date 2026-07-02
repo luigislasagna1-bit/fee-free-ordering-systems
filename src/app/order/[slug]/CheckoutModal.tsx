@@ -150,7 +150,7 @@ interface Props {
   /** Reward Dollars (store credit) — a signed-in customer's spendable balance +
    *  redeem settings, surfaced by apply-promos. null → no balance / feature off
    *  → the spend control is hidden entirely. Luigi 2026-06-27. */
-  rewardInfo?: { balance: number; minRedeemBalance: number; maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null } | null;
+  rewardInfo?: { balance: number; minRedeemBalance: number; maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null; redeemExcludedTotal?: number } | null;
   /** How much credit the customer chose to apply on this order (default 0). */
   creditToApply?: number;
   setCreditToApply?: (n: number) => void;
@@ -560,11 +560,15 @@ export function CheckoutModal({
   const rewardLabelPlural = rewardInfo?.labelPlural?.trim() || tc("reward.defaultPlural");
   const rewardEligible =
     !!rewardInfo && rewardInfo.balance > 0 && rewardInfo.balance >= (rewardInfo.minRedeemBalance ?? 0) && total > 0;
+  // Redeemable base excludes gift-card (promo-excluded) lines — the server
+  // clamps the claim to the same base at charge, so what we offer here is
+  // exactly what will be applied. Luigi 2026-07-02.
+  const rewardBase = rewardEligible ? Math.max(0, r2(total - (rewardInfo!.redeemExcludedTotal ?? 0))) : 0;
   const rewardMax = rewardEligible
     ? r2(Math.min(
         rewardInfo!.balance,
-        total,
-        (rewardInfo!.maxRedeemPercent > 0 ? total * (rewardInfo!.maxRedeemPercent / 100) : total),
+        rewardBase,
+        (rewardInfo!.maxRedeemPercent > 0 ? rewardBase * (rewardInfo!.maxRedeemPercent / 100) : rewardBase),
       ))
     : 0;
   const creditChosen = rewardEligible ? Math.min(Math.max(0, r2(creditToApply)), rewardMax) : 0;

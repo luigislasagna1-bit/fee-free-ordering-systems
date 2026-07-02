@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { resolvePromotions, totalPromoDiscount, type ApplyContext } from "@/lib/promo-engine";
+import { resolvePromotions, totalPromoDiscount, discountableSubtotal, type ApplyContext } from "@/lib/promo-engine";
 import { parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
 import { resolveAssignedPromoByCode } from "@/lib/coupon-ledger";
 import { buildPromoOrderContext } from "@/lib/promo-order-context";
@@ -80,17 +80,23 @@ export async function POST(req: NextRequest) {
   const lineItemIds = [...new Set(rawItems.map((i) => i?.menuItemId).filter((x): x is string => typeof x === "string" && !!x))];
   let categoryByItemId = new Map<string, string | null>();
   let nameByItemId = new Map<string, string>();
+  // Gift-card guard: lines whose MenuItem (or its category) is promoExcluded
+  // never receive a promo/coupon discount — resolved server-side here exactly
+  // like the charge route resolves it, so preview == charge. Luigi 2026-07-01.
+  const promoExcludedIds = new Set<string>();
   if (lineItemIds.length) {
     const rows = await prisma.menuItem.findMany({
       where: { id: { in: lineItemIds }, restaurantId: restaurant.id },
-      select: { id: true, categoryId: true, name: true },
+      select: { id: true, categoryId: true, name: true, promoExcluded: true, category: { select: { promoExcluded: true } } },
     });
     categoryByItemId = new Map(rows.map((r) => [r.id, r.categoryId]));
     nameByItemId = new Map(rows.map((r) => [r.id, r.name]));
+    for (const r of rows) if (r.promoExcluded || r.category?.promoExcluded) promoExcludedIds.add(r.id);
   }
   const ctxItems = rawItems.map((i) => ({
     ...i,
     categoryId: i?.categoryId ?? (i?.menuItemId ? categoryByItemId.get(i.menuItemId) ?? undefined : undefined),
+    promoExcluded: typeof i?.menuItemId === "string" && promoExcludedIds.has(i.menuItemId),
   }));
 
   const promoEvalNow: Date | undefined = (() => {
@@ -145,7 +151,9 @@ export async function POST(req: NextRequest) {
   };
 
   const { results, blockedPromos } = resolvePromotions(activePromos as any, ctx);
-  const totalDiscount = totalPromoDiscount(results, ctx.subtotal);
+  // Cap the summed discount at the DISCOUNTABLE subtotal (excludes gift-card
+  // lines) so stacked promos can't bleed into a promo-excluded line either.
+  const totalDiscount = totalPromoDiscount(results, discountableSubtotal(ctx));
   const hasFreeDelivery = results.some(r => r.type === "free_delivery");
 
   // Enrich each result's per-item breakdown with the item NAME (the engine only
@@ -164,6 +172,10 @@ export async function POST(req: NextRequest) {
   let reward: {
     balance: number; redeemEnabled: boolean; minRedeemBalance: number;
     maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null;
+    /** Sum of promo-excluded line subtotals (gift cards) — the client subtracts
+     *  this from the redeemable base so credit can't buy store credit; the
+     *  order route enforces the same cap at charge. Luigi 2026-07-02. */
+    redeemExcludedTotal: number;
   } | null = null;
   try {
     const r = restaurant as any;
@@ -183,6 +195,9 @@ export async function POST(req: NextRequest) {
           maxRedeemPercent: r.rewardMaxRedeemPercent ?? 100,
           labelSingular: r.rewardLabelSingular ?? null,
           labelPlural: r.rewardLabelPlural ?? null,
+          redeemExcludedTotal: Math.round(
+            ctxItems.reduce((s: number, i: any) => s + (i.promoExcluded ? (Number(i.subtotal) || 0) : 0), 0) * 100,
+          ) / 100,
         };
       }
     }

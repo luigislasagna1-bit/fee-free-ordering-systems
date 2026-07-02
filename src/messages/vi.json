@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Khuyến mãi",
       "description": "Ưu đãi, combo và mã khuyến mãi tự động cho khách hàng của bạn",
-      "newPromo": "Tạo khuyến mãi"
+      "newPromo": "Tạo khuyến mãi",
+      "excludeTitle": "Không giảm giá cho các mặt hàng này",
+      "excludeHelp": "Các mặt hàng và danh mục bị loại trừ (vd. thẻ quà tặng) không bao giờ được giảm giá từ khuyến mãi hay phiếu giảm giá, không tính vào đơn tối thiểu của khuyến mãi và không thể thanh toán bằng tín dụng thưởng — nên phiếu 10 $ không thể mua miễn phí thẻ quà tặng 10 $.",
+      "excludeDesc": "Chọn danh mục hoặc mặt hàng mà không khuyến mãi hay phiếu giảm giá nào được giảm giá (vd. thẻ quà tặng).",
+      "excludeOn": "Được giảm giá",
+      "excludeOff": "Không giảm giá",
+      "excludeViaCategory": "Loại trừ theo danh mục",
+      "excludeFailed": "Không lưu được — thử lại.",
+      "excludeLoading": "Đang tải thực đơn…",
+      "excludeNone": "Chưa có danh mục."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Quay lại xuất bản",

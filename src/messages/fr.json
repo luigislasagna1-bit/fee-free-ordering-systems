@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Promotions",
       "description": "Offres, formules et codes promo automatiques pour vos clients",
-      "newPromo": "Nouvelle promo"
+      "newPromo": "Nouvelle promo",
+      "excludeTitle": "Aucune remise sur ces articles",
+      "excludeHelp": "Les articles et catégories exclus (ex. cartes-cadeaux) ne reçoivent jamais de remise promo ou coupon, ne comptent pas pour le minimum d'une promo et ne peuvent pas être payés avec du crédit fidélité — un coupon de 10 $ ne peut donc pas acheter une carte-cadeau de 10 $ gratuitement.",
+      "excludeDesc": "Choisissez les catégories ou articles qu'aucune promotion ni coupon ne peut remiser (ex. cartes-cadeaux).",
+      "excludeOn": "Remisable",
+      "excludeOff": "Aucune remise",
+      "excludeViaCategory": "Exclu via la catégorie",
+      "excludeFailed": "Échec de l'enregistrement — réessayez.",
+      "excludeLoading": "Chargement de votre menu…",
+      "excludeNone": "Aucune catégorie pour l'instant."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Retour à la publication",

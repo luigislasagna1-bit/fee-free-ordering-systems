@@ -500,12 +500,23 @@ export async function POST(req: NextRequest) {
         category: {
           select: {
             isCatering: true,
+            // Gift-card guard — category-level promo exclusion ORs with the
+            // item's own flag when building the engine's cart items below.
+            promoExcluded: true,
             modifierGroups: { include: { options: { where: { isAvailable: true } } } },
           },
         },
       },
     });
     const menuItemMap = new Map(menuItems.map((m) => [m.id, m]));
+    // Lines that must never be discounted by any promo/coupon nor paid for
+    // with reward credit (gift cards). Same item||category resolution the
+    // apply-promos preview does, so preview == charge. Luigi 2026-07-01.
+    const isPromoExcludedItem = (menuItemId: string | null): boolean => {
+      if (!menuItemId) return false;
+      const m = menuItemMap.get(menuItemId);
+      return !!(m && ((m as any).promoExcluded || (m as any).category?.promoExcluded));
+    };
 
     // Authoritative bundle pricing (audit B3/B6): bundle lines used to trust the
     // client-supplied price, so a tampered request could underpay. Pre-load the
@@ -1359,6 +1370,8 @@ export async function POST(req: NextRequest) {
           // Promo-freebie tag so free_item frees the CLAIMED item + the freed
           // unit doesn't unlock its own trigger (audit). Luigi 2026-06-27.
           isFreebie: typeof i.notes === "string" && i.notes.startsWith("Free with promo:"),
+          // Gift-card guard — this line never receives a promo discount.
+          promoExcluded: isPromoExcludedItem(i.menuItemId),
         })),
       paymentMethod,
       // Phase 2a: the Delivery Area restriction needs this. Undefined
@@ -1378,7 +1391,15 @@ export async function POST(req: NextRequest) {
       // "your promo applied" (the public route uses tz too).
       restaurantTimezone: restaurant.timezone,
     });
-    const serverPromoDiscount = Math.round(totalPromoDiscount(promoResults, serverSubtotal) * 100) / 100;
+    // Cap the summed discount at the DISCOUNTABLE subtotal — gift-card /
+    // promo-excluded lines are never discountable, even by stacked promos.
+    // Same cap the apply-promos preview applies. Luigi 2026-07-01.
+    const promoExcludedLinesTotal = Math.round(
+      validatedItems.reduce((s, i) => s + (isPromoExcludedItem(i.menuItemId) ? i.subtotal : 0), 0) * 100,
+    ) / 100;
+    const serverPromoDiscount = Math.round(
+      totalPromoDiscount(promoResults, Math.max(0, serverSubtotal - promoExcludedLinesTotal)) * 100,
+    ) / 100;
     const hasFreeDelivery = promoResults.some((r: any) => r.type === "free_delivery");
 
     const serverDeliveryFee = (type === "delivery" && !hasFreeDelivery)
@@ -2005,7 +2026,10 @@ export async function POST(req: NextRequest) {
               restaurantId: restaurant.id,
               customerId: promoCtx.sessionCustomerId,
               requested,
-              orderTotal: serverTotal,
+              // Redeemable base excludes gift-card lines — store credit can't
+              // buy store credit. The cart preview subtracts the same
+              // redeemExcludedTotal, so the offered max matches this clamp.
+              orderTotal: Math.max(0, Math.round((serverTotal - promoExcludedLinesTotal) * 100) / 100),
               minRedeemBalance: restaurant.rewardMinRedeemBalance ?? 0,
               maxRedeemPercent: restaurant.rewardMaxRedeemPercent ?? 100,
               minCharge: onlineCharge ? 0.5 : 0,

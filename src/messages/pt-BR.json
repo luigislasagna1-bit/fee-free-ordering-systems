@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Promoções",
       "description": "Ofertas, combos e códigos promocionais automáticos para seus clientes",
-      "newPromo": "Nova Promoção"
+      "newPromo": "Nova Promoção",
+      "excludeTitle": "Sem descontos nestes itens",
+      "excludeHelp": "Itens e categorias excluídos (ex. vales-presente) nunca recebem descontos de promoções ou cupons, não contam para o pedido mínimo de uma promoção e não podem ser pagos com crédito de recompensas — assim um cupom de R$10 não pode comprar de graça um vale-presente de R$10.",
+      "excludeDesc": "Escolha categorias ou itens que nenhuma promoção ou cupom pode descontar (ex. vales-presente).",
+      "excludeOn": "Com desconto",
+      "excludeOff": "Sem descontos",
+      "excludeViaCategory": "Excluído pela categoria",
+      "excludeFailed": "Não foi possível salvar — tente novamente.",
+      "excludeLoading": "Carregando seu cardápio…",
+      "excludeNone": "Ainda sem categorias."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Voltar para publicação",

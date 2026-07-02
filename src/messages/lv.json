@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Akcijas",
       "description": "Automātiski piedāvājumi, komplekti un akciju kodi jūsu klientiem",
-      "newPromo": "Jauna akcija"
+      "newPromo": "Jauna akcija",
+      "excludeTitle": "Šīm precēm atlaides netiek piemērotas",
+      "excludeHelp": "Izslēgtās preces un kategorijas (piem., dāvanu kartes) nekad nesaņem akcijas vai kupona atlaidi, netiek ieskaitītas akcijas minimālajā pasūtījumā un nav apmaksājamas ar atlīdzības kredītu — tā 10 $ kupons nevar bez maksas nopirkt 10 $ dāvanu karti.",
+      "excludeDesc": "Izvēlieties kategorijas vai preces, kurām neviena akcija vai kupons nedrīkst piemērot atlaidi (piem., dāvanu kartes).",
+      "excludeOn": "Atlaižams",
+      "excludeOff": "Bez atlaidēm",
+      "excludeViaCategory": "Izslēgts caur kategoriju",
+      "excludeFailed": "Neizdevās saglabāt — mēģiniet vēlreiz.",
+      "excludeLoading": "Ielādē ēdienkarti…",
+      "excludeNone": "Vēl nav kategoriju."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Atpakaļ uz publicēšanu",

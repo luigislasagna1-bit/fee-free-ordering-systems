@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Promosi",
       "description": "Penawaran, paket, dan kode promo otomatis untuk pelanggan Anda",
-      "newPromo": "Promo Baru"
+      "newPromo": "Promo Baru",
+      "excludeTitle": "Tanpa diskon untuk item ini",
+      "excludeHelp": "Item dan kategori yang dikecualikan (mis. kartu hadiah) tidak pernah mendapat diskon promosi atau kupon, tidak dihitung untuk pesanan minimum promo, dan tidak bisa dibayar dengan kredit hadiah — jadi kupon $10 tidak bisa membeli kartu hadiah $10 secara gratis.",
+      "excludeDesc": "Pilih kategori atau item yang tidak boleh didiskon oleh promosi atau kupon apa pun (mis. kartu hadiah).",
+      "excludeOn": "Bisa didiskon",
+      "excludeOff": "Tanpa diskon",
+      "excludeViaCategory": "Dikecualikan via kategori",
+      "excludeFailed": "Gagal menyimpan — coba lagi.",
+      "excludeLoading": "Memuat menu Anda…",
+      "excludeNone": "Belum ada kategori."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Kembali ke penerbitan",

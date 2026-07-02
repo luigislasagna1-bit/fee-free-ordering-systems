@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Acties",
       "description": "Automatische aanbiedingen, bundels en promocodes voor je klanten",
-      "newPromo": "Nieuwe promotie"
+      "newPromo": "Nieuwe promotie",
+      "excludeTitle": "Geen korting op deze items",
+      "excludeHelp": "Uitgesloten items en categorieën (bijv. cadeaubonnen) krijgen nooit een promotie- of couponkorting, tellen niet mee voor het minimumbedrag van een promotie en kunnen niet met spaartegoed worden betaald — zo kan een coupon van $10 geen cadeaubon van $10 gratis kopen.",
+      "excludeDesc": "Kies categorieën of items waarop geen enkele promotie of coupon korting mag geven (bijv. cadeaubonnen).",
+      "excludeOn": "Kortbaar",
+      "excludeOff": "Geen korting",
+      "excludeViaCategory": "Uitgesloten via categorie",
+      "excludeFailed": "Opslaan mislukt — probeer opnieuw.",
+      "excludeLoading": "Menu laden…",
+      "excludeNone": "Nog geen categorieën."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Terug naar publiceren",

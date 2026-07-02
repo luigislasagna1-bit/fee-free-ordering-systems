@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "促销",
       "description": "为您的顾客提供的自动优惠、套餐和促销代码",
-      "newPromo": "新建促销"
+      "newPromo": "新建促销",
+      "excludeTitle": "这些商品不参与折扣",
+      "excludeHelp": "被排除的商品和类别（如礼品卡）永远不会获得促销或优惠券折扣，不计入促销的最低订单金额，也不能用奖励余额支付——因此 10 美元的优惠券无法免费购买 10 美元的礼品卡。",
+      "excludeDesc": "选择任何促销或优惠券都不得打折的类别或商品（如礼品卡）。",
+      "excludeOn": "可打折",
+      "excludeOff": "不打折",
+      "excludeViaCategory": "通过类别排除",
+      "excludeFailed": "保存失败 — 请重试。",
+      "excludeLoading": "正在加载您的菜单…",
+      "excludeNone": "暂无菜单类别。"
     },
     "legacyWebsitePage": {
       "backToPublishing": "返回发布页",

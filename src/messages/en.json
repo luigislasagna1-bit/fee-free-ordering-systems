@@ -3718,7 +3718,16 @@
     "promotionsPage": {
       "title": "Promotions",
       "description": "Automatic deals, bundles, and promo codes for your customers",
-      "newPromo": "New Promo"
+      "newPromo": "New Promo",
+      "excludeTitle": "No discounts on these items",
+      "excludeHelp": "Excluded items and categories (e.g. gift cards) never get a promotion or coupon discount, don't count toward a promo's minimum order, and can't be paid for with reward credit — so a $10 coupon can't buy a $10 gift card for free.",
+      "excludeDesc": "Pick categories or items no promotion or coupon may discount (e.g. gift cards).",
+      "excludeOn": "Discountable",
+      "excludeOff": "No discounts",
+      "excludeViaCategory": "Excluded via category",
+      "excludeFailed": "Couldn't save — try again.",
+      "excludeLoading": "Loading your menu…",
+      "excludeNone": "No menu categories yet."
     },
     "phoneOrderingPage": {
       "backToAdmin": "Back to admin",

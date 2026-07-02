@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Akciók",
       "description": "Automatikus ajánlatok, csomagok és promóciós kódok az ügyfeleinek",
-      "newPromo": "Új promóció"
+      "newPromo": "Új promóció",
+      "excludeTitle": "Nincs kedvezmény ezekre a termékekre",
+      "excludeHelp": "A kizárt termékek és kategóriák (pl. ajándékkártyák) soha nem kapnak promóciós vagy kuponkedvezményt, nem számítanak bele a promóció minimális rendelésébe, és nem fizethetők jutalomegyenleggel — így egy 10 $-os kupon nem vehet meg ingyen egy 10 $-os ajándékkártyát.",
+      "excludeDesc": "Válassza ki a kategóriákat vagy termékeket, amelyekre egyetlen promóció vagy kupon sem adhat kedvezményt (pl. ajándékkártyák).",
+      "excludeOn": "Kedvezményezhető",
+      "excludeOff": "Nincs kedvezmény",
+      "excludeViaCategory": "Kategórián keresztül kizárva",
+      "excludeFailed": "A mentés sikertelen — próbálja újra.",
+      "excludeLoading": "Menü betöltése…",
+      "excludeNone": "Még nincsenek kategóriák."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Vissza a közzétételhez",

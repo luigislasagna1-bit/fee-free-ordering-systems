@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Akcijos",
       "description": "Automatiniai pasiūlymai, rinkiniai ir nuolaidų kodai jūsų klientams",
-      "newPromo": "Nauja akcija"
+      "newPromo": "Nauja akcija",
+      "excludeTitle": "Šioms prekėms nuolaidos netaikomos",
+      "excludeHelp": "Neįtrauktos prekės ir kategorijos (pvz., dovanų kortelės) niekada negauna akcijos ar kupono nuolaidos, nesiskaičiuoja į akcijos minimalų užsakymą ir už jas negalima mokėti atlygio kreditu — tad 10 $ kuponas negali nemokamai nupirkti 10 $ dovanų kortelės.",
+      "excludeDesc": "Pasirinkite kategorijas ar prekes, kurioms jokia akcija ar kuponas negali taikyti nuolaidos (pvz., dovanų kortelės).",
+      "excludeOn": "Su nuolaida",
+      "excludeOff": "Be nuolaidų",
+      "excludeViaCategory": "Neįtraukta per kategoriją",
+      "excludeFailed": "Nepavyko išsaugoti — bandykite dar kartą.",
+      "excludeLoading": "Įkeliamas meniu…",
+      "excludeNone": "Kategorijų dar nėra."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Atgal į publikavimą",

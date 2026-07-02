@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "プロモーション",
       "description": "お客様向けの自動オファー、セット、プロモコード",
-      "newPromo": "新規プロモーション"
+      "newPromo": "新規プロモーション",
+      "excludeTitle": "これらの商品は割引対象外",
+      "excludeHelp": "対象外の商品やカテゴリ（ギフトカードなど）はプロモーションやクーポンの割引を受けず、プロモーションの最低注文額にも数えられず、リワード残高でも支払えません。10ドルのクーポンで10ドルのギフトカードを無料入手することはできません。",
+      "excludeDesc": "どのプロモーションやクーポンでも割引できないカテゴリや商品を選びます（ギフトカードなど）。",
+      "excludeOn": "割引可",
+      "excludeOff": "割引対象外",
+      "excludeViaCategory": "カテゴリで対象外",
+      "excludeFailed": "保存できませんでした — もう一度お試しください。",
+      "excludeLoading": "メニューを読み込み中…",
+      "excludeNone": "カテゴリはまだありません。"
     },
     "legacyWebsitePage": {
       "backToPublishing": "公開設定に戻る",

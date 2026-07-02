@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Pakkumised",
       "description": "Automaatsed pakkumised, komplektid ja sooduskoodid teie klientidele",
-      "newPromo": "Uus kampaania"
+      "newPromo": "Uus kampaania",
+      "excludeTitle": "Nendele toodetele allahindlusi ei ole",
+      "excludeHelp": "Välistatud tooted ja kategooriad (nt kinkekaardid) ei saa kunagi kampaania- ega kupongi allahindlust, ei loe kampaania miinimumtellimuse hulka ega ole makstavad preemiakrediidiga — nii ei saa 10 $ kupong osta 10 $ kinkekaarti tasuta.",
+      "excludeDesc": "Valige kategooriad või tooted, mida ükski kampaania ega kupong ei tohi allahinnata (nt kinkekaardid).",
+      "excludeOn": "Allahinnatav",
+      "excludeOff": "Allahindluseta",
+      "excludeViaCategory": "Välistatud kategooria kaudu",
+      "excludeFailed": "Salvestamine ebaõnnestus — proovige uuesti.",
+      "excludeLoading": "Menüü laadimine…",
+      "excludeNone": "Veel pole kategooriaid."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Tagasi avaldamise juurde",

@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Akcie",
       "description": "Automatické ponuky, balíčky a promo kódy pre vašich zákazníkov",
-      "newPromo": "Nová akcia"
+      "newPromo": "Nová akcia",
+      "excludeTitle": "Žiadne zľavy na tieto položky",
+      "excludeHelp": "Vylúčené položky a kategórie (napr. darčekové karty) nikdy nedostanú zľavu z akcie ani kupónu, nepočítajú sa do minimálnej objednávky akcie a nedajú sa platiť odmenovým kreditom — kupón na 10 $ tak nemôže kúpiť darčekovú kartu za 10 $ zadarmo.",
+      "excludeDesc": "Vyberte kategórie alebo položky, ktoré žiadna akcia ani kupón nesmie zľaviť (napr. darčekové karty).",
+      "excludeOn": "Možno zľaviť",
+      "excludeOff": "Bez zliav",
+      "excludeViaCategory": "Vylúčené cez kategóriu",
+      "excludeFailed": "Uloženie zlyhalo — skúste znova.",
+      "excludeLoading": "Načítava sa menu…",
+      "excludeNone": "Zatiaľ žiadne kategórie."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Späť na publikovanie",

@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Promocije",
       "description": "Automatske ponude, paketi i promo kodovi za vaše kupce",
-      "newPromo": "Nova promocija"
+      "newPromo": "Nova promocija",
+      "excludeTitle": "Bez popusta na ove stavke",
+      "excludeHelp": "Isključene stavke i kategorije (npr. poklon-bonovi) nikad ne dobivaju popust promocije ili kupona, ne računaju se u minimalnu narudžbu promocije i ne mogu se platiti nagradnim kreditom — pa kupon od 10 $ ne može besplatno kupiti poklon-bon od 10 $.",
+      "excludeDesc": "Odaberite kategorije ili stavke koje nijedna promocija ili kupon ne smije sniziti (npr. poklon-bonovi).",
+      "excludeOn": "Može se sniziti",
+      "excludeOff": "Bez popusta",
+      "excludeViaCategory": "Isključeno putem kategorije",
+      "excludeFailed": "Spremanje nije uspjelo — pokušajte ponovno.",
+      "excludeLoading": "Učitavanje jelovnika…",
+      "excludeNone": "Još nema kategorija."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Natrag na objavljivanje",

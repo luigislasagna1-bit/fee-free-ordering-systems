@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Promoții",
       "description": "Oferte, pachete și coduri promoționale automate pentru clienții tăi",
-      "newPromo": "Promoție nouă"
+      "newPromo": "Promoție nouă",
+      "excludeTitle": "Fără reduceri la aceste articole",
+      "excludeHelp": "Articolele și categoriile excluse (ex. carduri cadou) nu primesc niciodată reduceri din promoții sau cupoane, nu contează pentru comanda minimă a unei promoții și nu pot fi plătite cu credit de recompense — astfel un cupon de 10 $ nu poate cumpăra gratuit un card cadou de 10 $.",
+      "excludeDesc": "Alegeți categoriile sau articolele pe care nicio promoție sau cupon nu le poate reduce (ex. carduri cadou).",
+      "excludeOn": "Reductibil",
+      "excludeOff": "Fără reduceri",
+      "excludeViaCategory": "Exclus prin categorie",
+      "excludeFailed": "Salvarea a eșuat — încercați din nou.",
+      "excludeLoading": "Se încarcă meniul…",
+      "excludeNone": "Încă nicio categorie."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Înapoi la publicare",

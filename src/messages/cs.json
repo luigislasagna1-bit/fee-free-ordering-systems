@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Akce",
       "description": "Automatické nabídky, balíčky a promo kódy pro vaše zákazníky",
-      "newPromo": "Nová akce"
+      "newPromo": "Nová akce",
+      "excludeTitle": "Žádné slevy na tyto položky",
+      "excludeHelp": "Vyloučené položky a kategorie (např. dárkové karty) nikdy nedostanou slevu z akce ani kuponu, nepočítají se do minimální objednávky akce a nelze je platit odměnovým kreditem — kupon na 10 $ tak nemůže koupit dárkovou kartu za 10 $ zdarma.",
+      "excludeDesc": "Vyberte kategorie nebo položky, které žádná akce ani kupon nesmí zlevnit (např. dárkové karty).",
+      "excludeOn": "Lze zlevnit",
+      "excludeOff": "Bez slev",
+      "excludeViaCategory": "Vyloučeno přes kategorii",
+      "excludeFailed": "Uložení se nezdařilo — zkuste to znovu.",
+      "excludeLoading": "Načítání menu…",
+      "excludeNone": "Zatím žádné kategorie."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Zpět na publikování",

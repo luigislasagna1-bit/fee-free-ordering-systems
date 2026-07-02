@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Promozioni",
       "description": "Offerte, bundle e codici promozionali automatici per i tuoi clienti",
-      "newPromo": "Nuova Promo"
+      "newPromo": "Nuova Promo",
+      "excludeTitle": "Nessuno sconto su questi articoli",
+      "excludeHelp": "Gli articoli e le categorie esclusi (es. buoni regalo) non ricevono mai sconti da promozioni o coupon, non contano per l'ordine minimo di una promo e non possono essere pagati con credito premi — così un coupon da 10 $ non può comprare gratis un buono regalo da 10 $.",
+      "excludeDesc": "Scegli categorie o articoli che nessuna promozione o coupon può scontare (es. buoni regalo).",
+      "excludeOn": "Scontabile",
+      "excludeOff": "Nessuno sconto",
+      "excludeViaCategory": "Escluso tramite categoria",
+      "excludeFailed": "Salvataggio non riuscito — riprova.",
+      "excludeLoading": "Caricamento del menu…",
+      "excludeNone": "Nessuna categoria ancora."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Torna alla pubblicazione",

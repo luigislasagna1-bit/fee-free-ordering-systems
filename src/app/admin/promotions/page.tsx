@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { PromotionsClient } from "./PromotionsClient";
+import { PromoExclusions } from "./PromoExclusions";
 
 export default async function PromotionsPage() {
   const t = await getTranslations("admin.promotionsPage");
@@ -61,6 +62,8 @@ export default async function PromotionsPage() {
         categories={categories}
         menuItems={menuItems}
       />
+      {/* Gift-card guard — categories/items no promo or coupon may discount. */}
+      <PromoExclusions />
     </div>
   );
 }

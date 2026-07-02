@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "프로모션",
       "description": "고객을 위한 자동 혜택, 묶음 상품, 프로모션 코드",
-      "newPromo": "새 프로모션"
+      "newPromo": "새 프로모션",
+      "excludeTitle": "이 항목에는 할인이 적용되지 않음",
+      "excludeHelp": "제외된 항목과 카테고리(예: 기프트 카드)는 프로모션·쿠폰 할인을 받지 않고, 프로모션 최소 주문 금액에 포함되지 않으며, 리워드 크레딧으로 결제할 수 없습니다. 따라서 10달러 쿠폰으로 10달러 기프트 카드를 무료로 살 수 없습니다.",
+      "excludeDesc": "어떤 프로모션이나 쿠폰도 할인할 수 없는 카테고리나 항목을 선택하세요(예: 기프트 카드).",
+      "excludeOn": "할인 가능",
+      "excludeOff": "할인 없음",
+      "excludeViaCategory": "카테고리로 제외됨",
+      "excludeFailed": "저장하지 못했습니다 — 다시 시도하세요.",
+      "excludeLoading": "메뉴 불러오는 중…",
+      "excludeNone": "아직 카테고리가 없습니다."
     },
     "legacyWebsitePage": {
       "backToPublishing": "게시로 돌아가기",

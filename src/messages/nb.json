@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Kampanjer",
       "description": "Automatiske tilbud, pakker og kampanjekoder til kundene dine",
-      "newPromo": "Ny kampanje"
+      "newPromo": "Ny kampanje",
+      "excludeTitle": "Ingen rabatter på disse varene",
+      "excludeHelp": "Ekskluderte varer og kategorier (f.eks. gavekort) får aldri kampanje- eller kupongrabatt, teller ikke mot en kampanjes minstebestilling og kan ikke betales med bonuskreditt — så en kupong på 10 $ kan ikke kjøpe et gavekort på 10 $ gratis.",
+      "excludeDesc": "Velg kategorier eller varer som ingen kampanje eller kupong kan rabattere (f.eks. gavekort).",
+      "excludeOn": "Kan rabatteres",
+      "excludeOff": "Ingen rabatter",
+      "excludeViaCategory": "Ekskludert via kategori",
+      "excludeFailed": "Kunne ikke lagre — prøv igjen.",
+      "excludeLoading": "Laster menyen…",
+      "excludeNone": "Ingen kategorier ennå."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Tilbake til publisering",

@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Promocje",
       "description": "Automatyczne oferty, pakiety i kody promocyjne dla Twoich klientów",
-      "newPromo": "Nowa promocja"
+      "newPromo": "Nowa promocja",
+      "excludeTitle": "Brak zniżek na te produkty",
+      "excludeHelp": "Wykluczone produkty i kategorie (np. karty podarunkowe) nigdy nie otrzymują zniżki z promocji ani kuponu, nie liczą się do minimalnego zamówienia promocji i nie można za nie płacić środkami z nagród — dzięki temu kupon 10 $ nie kupi karty podarunkowej za 10 $ za darmo.",
+      "excludeDesc": "Wybierz kategorie lub produkty, których żadna promocja ani kupon nie może przeceniać (np. karty podarunkowe).",
+      "excludeOn": "Podlega zniżkom",
+      "excludeOff": "Bez zniżek",
+      "excludeViaCategory": "Wykluczone przez kategorię",
+      "excludeFailed": "Nie udało się zapisać — spróbuj ponownie.",
+      "excludeLoading": "Ładowanie menu…",
+      "excludeNone": "Brak kategorii."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Wróć do publikowania",

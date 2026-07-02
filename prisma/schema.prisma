@@ -844,6 +844,12 @@ model MenuCategory {
   /// Exclude every item in this category from Reward Dollars EARNING (e.g. a
   /// "Gift Cards" category). Per-item rewardEarnExcluded can override. Luigi 2026-06-30.
   rewardEarnExcluded Boolean @default(false)
+  /// Exclude every item in this category from ALL promo/coupon discounts AND
+  /// from the reward-redeemable total (e.g. "Gift Cards" — a $10 coupon must
+  /// not buy a $10 gift card for free, minting store credit). Per-item
+  /// promoExcluded ORs with this. Enforced by the promo engine in BOTH the
+  /// cart preview and the charge. Luigi 2026-07-01/02.
+  promoExcluded    Boolean   @default(false)
   isActive         Boolean   @default(true)
   /// LEGACY visibility toggle. Superseded by the visibility* model below
   /// (Luigi 2026-06-12, GloriaFood-style rebuild). Migrated to
@@ -977,6 +983,10 @@ model MenuItem {
   /// store credit for buying store credit). Item-level override of its category's
   /// flag. Spending is unaffected. Luigi 2026-06-30.
   rewardEarnExcluded Boolean @default(false)
+  /// Exclude this item from ALL promo/coupon discounts AND from the reward-
+  /// redeemable total (gift cards: no free/discounted store credit). ORs with
+  /// its category's promoExcluded. Enforced in BOTH preview + charge. Luigi 2026-07-01/02.
+  promoExcluded    Boolean   @default(false)
   pizzaConfig      String? // JSON: PizzaConfig — marks item as a pizza builder item
   /// JSON: ComboConfig — marks this item as a COMBO (e.g. "2-Pizza Combo",
   /// "Pizza + Wings"). Defines ordered slots, each with an eligible item/

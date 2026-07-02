@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Promoções",
       "description": "Ofertas, pacotes e códigos promocionais automáticos para os seus clientes",
-      "newPromo": "Nova Promoção"
+      "newPromo": "Nova Promoção",
+      "excludeTitle": "Sem descontos nestes artigos",
+      "excludeHelp": "Os artigos e categorias excluídos (ex. cartões-presente) nunca recebem descontos de promoções ou cupões, não contam para o pedido mínimo de uma promoção e não podem ser pagos com crédito de recompensas — assim um cupão de 10 $ não pode comprar de graça um cartão-presente de 10 $.",
+      "excludeDesc": "Escolha categorias ou artigos que nenhuma promoção ou cupão pode descontar (ex. cartões-presente).",
+      "excludeOn": "Com desconto",
+      "excludeOff": "Sem descontos",
+      "excludeViaCategory": "Excluído pela categoria",
+      "excludeFailed": "Não foi possível guardar — tente novamente.",
+      "excludeLoading": "A carregar o seu menu…",
+      "excludeNone": "Ainda sem categorias."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Voltar para publicação",

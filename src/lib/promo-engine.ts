@@ -105,7 +105,25 @@ export type CartItem = {
    *  DiscountLine so the cart can attribute a saving to the exact line even when
    *  the same dish is on two lines. Optional + display-only. Luigi 2026-06-30. */
   lineKey?: string;
+  /** True when this line must never be discounted by any promo/coupon (gift
+   *  cards — a $10 coupon must not buy a $10 gift card for $0, minting store
+   *  credit). Resolved by the caller from MenuItem.promoExcluded OR its
+   *  category's flag. Excluded lines: never match an item group, don't count
+   *  toward minimumOrder, and are outside the whole-cart discountable base.
+   *  Luigi 2026-07-01/02. */
+  promoExcluded?: boolean;
 };
+
+/** Subtotal of the DISCOUNTABLE lines only — the whole-cart base every
+ *  order-level discount (%-off with no groups, fixed_cart, payment_reward)
+ *  and the minimumOrder eligibility check run against. Falls back to
+ *  ctx.subtotal when no line is flagged, so legacy callers that don't thread
+ *  items (or the flag) behave exactly as before. */
+export function discountableSubtotal(ctx: ApplyContext): number {
+  const excluded = ctx.items.reduce((s, i) => s + (i.promoExcluded ? i.subtotal : 0), 0);
+  if (excluded <= 0) return ctx.subtotal;
+  return Math.max(0, parseFloat((ctx.subtotal - excluded).toFixed(2)));
+}
 
 export type PromoInput = {
   id: string;
@@ -309,7 +327,9 @@ function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
   }
 
   // ── Cart Value restriction ─────────────────────────────────────────
-  if (promo.minimumOrder > 0 && ctx.subtotal < promo.minimumOrder) return false;
+  // Judged on the DISCOUNTABLE subtotal — promo-excluded lines (gift cards)
+  // can't unlock a threshold promo they can never be discounted by.
+  if (promo.minimumOrder > 0 && discountableSubtotal(ctx) < promo.minimumOrder) return false;
 
   // ── Order channel (multi-select) ───────────────────────────────────
   // Canonicalise both sides so a "take_out" order matches a promo restricted
@@ -388,6 +408,10 @@ function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
  *  old "empty → all items" behaviour turned a single lost categoryIds array into
  *  catastrophic over-discounting. Shared by EVERY multi-group promo type. */
 function itemMatchesGroup(group: ItemGroup, i: CartItem): boolean {
+  // Promo-excluded lines (gift cards) never match ANY group — the single
+  // choke point that keeps every grouped type (BOGO, buy-N-get-free,
+  // free_item, free_dish, combos, bundles, grouped %-off) off them. Luigi 2026-07-02.
+  if (i.promoExcluded) return false;
   const { itemIds = [], categoryIds = [], variantIds = [] } = group;
   if (!itemIds.length && !categoryIds.length && !variantIds.length) return false;
   return (
@@ -447,7 +471,8 @@ function calcPercentageOff(promo: PromoInput, ctx: ApplyContext): number {
   const rules = getRules(promo);
   const pct = rules.discountPercent ?? 0;
   if (!rules.groups?.length) {
-    return parseFloat(((pct / 100) * ctx.subtotal).toFixed(2));
+    // Whole-cart %: base excludes promo-excluded lines (gift cards).
+    return parseFloat(((pct / 100) * discountableSubtotal(ctx)).toFixed(2));
   }
   // Targeted items. "Once per order" caps the discount to a single item per
   // group (one combo); otherwise it covers every qualifying item.
@@ -739,16 +764,20 @@ function promoBreakdown(promo: PromoInput, ctx: ApplyContext): DiscountLine[] {
 function calcFixedCart(promo: PromoInput, ctx: ApplyContext): number {
   const rules = getRules(promo);
   const amount = rules.discountAmount ?? 0;
-  return Math.min(amount, ctx.subtotal);
+  // Capped at the DISCOUNTABLE subtotal so a $10 coupon can't zero out a $10
+  // gift-card line (free store-credit minting). Luigi 2026-07-01.
+  return Math.min(amount, discountableSubtotal(ctx));
 }
 
 function calcPaymentReward(promo: PromoInput, ctx: ApplyContext): number {
   const rules = getRules(promo);
   const pm = rules.paymentMethod;
+  // Base excludes promo-excluded lines (gift cards) — same as every other
+  // whole-cart discount. Luigi 2026-07-02.
   // Normalize the legacy "card" value to the canonical "online_card" slug.
   const ctxPm = ctx.paymentMethod === "card" ? "online_card" : ctx.paymentMethod;
   if (pm && pm !== "any" && ctxPm && ctxPm !== pm) return 0;
-  return parseFloat(((( rules.discountPercent ?? 0) / 100) * ctx.subtotal).toFixed(2));
+  return parseFloat(((( rules.discountPercent ?? 0) / 100) * discountableSubtotal(ctx)).toFixed(2));
 }
 
 function calcFreeItem(promo: PromoInput, ctx: ApplyContext): number {
@@ -767,7 +796,9 @@ function calcFreeItem(promo: PromoInput, ctx: ApplyContext): number {
   // with a $0 order (audit self-bootstrap). Compare the trigger against the cart
   // MINUS the freed unit. Luigi 2026-06-27.
   const trigger = rules.triggerAmount ?? 0;
-  if (trigger > 0 && ctx.subtotal - freedAmount < trigger) return 0;
+  // Trigger judged on the DISCOUNTABLE subtotal — a gift-card line can't
+  // unlock the free item. Luigi 2026-07-02.
+  if (trigger > 0 && discountableSubtotal(ctx) - freedAmount < trigger) return 0;
   return freedAmount;
 }
 
@@ -849,7 +880,7 @@ function calcFixedCombo(promo: PromoInput, ctx: ApplyContext): number {
   for (const group of groups) {
     if (groupTotalQty(group, ctx.items) < 1) return 0;
   }
-  return Math.min(rules.discountAmount ?? 0, ctx.subtotal);
+  return Math.min(rules.discountAmount ?? 0, discountableSubtotal(ctx));
 }
 
 function calcPercentageCombo(promo: PromoInput, ctx: ApplyContext): number {

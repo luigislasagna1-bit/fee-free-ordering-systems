@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Aktionen",
       "description": "Automatische Angebote, Bundles und Promo-Codes für Ihre Kunden",
-      "newPromo": "Neue Aktion"
+      "newPromo": "Neue Aktion",
+      "excludeTitle": "Keine Rabatte auf diese Artikel",
+      "excludeHelp": "Ausgeschlossene Artikel und Kategorien (z. B. Geschenkkarten) erhalten nie einen Aktions- oder Gutscheinrabatt, zählen nicht zum Mindestbestellwert einer Aktion und können nicht mit Prämienguthaben bezahlt werden — ein 10-$-Gutschein kann also keine 10-$-Geschenkkarte gratis kaufen.",
+      "excludeDesc": "Wählen Sie Kategorien oder Artikel, die keine Aktion und kein Gutschein rabattieren darf (z. B. Geschenkkarten).",
+      "excludeOn": "Rabattierbar",
+      "excludeOff": "Keine Rabatte",
+      "excludeViaCategory": "Über Kategorie ausgeschlossen",
+      "excludeFailed": "Speichern fehlgeschlagen — bitte erneut versuchen.",
+      "excludeLoading": "Menü wird geladen…",
+      "excludeNone": "Noch keine Kategorien."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Zurück zur Veröffentlichung",

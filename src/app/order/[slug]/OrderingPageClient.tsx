@@ -1167,7 +1167,7 @@ export function OrderingPageClient({
   // Reward Dollars (store credit) — a signed-in customer's spendable balance +
   // redeem settings (from apply-promos), and how much they chose to apply on this
   // order (default 0 = none; they can also let it accumulate). Luigi 2026-06-27.
-  const [rewardInfo, setRewardInfo] = useState<{ balance: number; minRedeemBalance: number; maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null } | null>(null);
+  const [rewardInfo, setRewardInfo] = useState<{ balance: number; minRedeemBalance: number; maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null; redeemExcludedTotal?: number } | null>(null);
   const [creditToApply, setCreditToApply] = useState(0);
   // Cart preview: the first-buy discount was dropped because the email/phone the
   // customer entered turns out to be a returning customer. Drives the gentle

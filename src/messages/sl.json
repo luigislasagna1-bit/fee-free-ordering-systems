@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Promocije",
       "description": "Samodejne ponudbe, paketi in promocijske kode za vaše stranke",
-      "newPromo": "Nova promocija"
+      "newPromo": "Nova promocija",
+      "excludeTitle": "Brez popustov za te izdelke",
+      "excludeHelp": "Izključeni izdelki in kategorije (npr. darilne kartice) nikoli ne dobijo popusta promocije ali kupona, ne štejejo v minimalno naročilo promocije in jih ni mogoče plačati z nagradnim dobroimetjem — tako kupon za 10 $ ne more brezplačno kupiti darilne kartice za 10 $.",
+      "excludeDesc": "Izberite kategorije ali izdelke, ki jih nobena promocija ali kupon ne sme znižati (npr. darilne kartice).",
+      "excludeOn": "Dovoljen popust",
+      "excludeOff": "Brez popustov",
+      "excludeViaCategory": "Izključeno prek kategorije",
+      "excludeFailed": "Shranjevanje ni uspelo — poskusite znova.",
+      "excludeLoading": "Nalaganje menija…",
+      "excludeNone": "Še ni kategorij."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Nazaj na objavljanje",

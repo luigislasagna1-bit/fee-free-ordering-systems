@@ -3557,7 +3557,16 @@
     "promotionsPage": {
       "title": "Promocions",
       "description": "Ofertes, paquets i codis promocionals automàtics per als teus clients",
-      "newPromo": "Nova promo"
+      "newPromo": "Nova promo",
+      "excludeTitle": "Sense descomptes en aquests articles",
+      "excludeHelp": "Els articles i categories exclosos (p. ex. targetes regal) mai no reben descompte de promocions o cupons, no compten per a la comanda mínima d'una promoció i no es poden pagar amb crèdit de recompenses — així un cupó de 10 $ no pot comprar gratis una targeta regal de 10 $.",
+      "excludeDesc": "Tria les categories o articles que cap promoció ni cupó pot descomptar (p. ex. targetes regal).",
+      "excludeOn": "Descomptable",
+      "excludeOff": "Sense descomptes",
+      "excludeViaCategory": "Exclòs per categoria",
+      "excludeFailed": "No s'ha pogut desar — torna-ho a provar.",
+      "excludeLoading": "Carregant el teu menú…",
+      "excludeNone": "Encara no hi ha categories."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Tornar a publicació",
