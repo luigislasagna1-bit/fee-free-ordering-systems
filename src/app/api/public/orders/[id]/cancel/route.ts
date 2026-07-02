@@ -31,6 +31,9 @@ import { voidPayment } from "@/lib/stripe";
 import { voidPaypalAuthorization } from "@/lib/paypal";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
+import { releaseCouponsForOrder } from "@/lib/coupon-ledger";
+import { releaseForOrder as releaseRewardForOrder } from "@/lib/reward-ledger";
+import { releasePromotionUsageForOrder } from "@/lib/promo-usage";
 
 /**
  * Verify that the current viewer owns `order` by either:
@@ -120,6 +123,17 @@ export async function POST(_req: NextRequest, ctx: { params: Promise<{ id: strin
       rejectionReason: "Customer cancelled from the order status page.",
     },
   });
+
+  // Give back everything this order had claimed — exactly like the kitchen
+  // reject path (orders/[id]/route.ts) and the auto-reject cron. Without
+  // these, a customer who cancelled their OWN pending order permanently lost
+  // any Reward Dollars reserved on it (balance was decremented at create),
+  // burned their coupon grant, and leaked a capped promo's usage slot.
+  // All three are idempotent + internally try/caught. Found during the
+  // Blocker #8 wallet-restore pass (2026-07-02).
+  await releaseCouponsForOrder(order.id);
+  await releaseRewardForOrder(order.id);
+  await releasePromotionUsageForOrder(order.id);
 
   // Side effects — fire-and-forget. Cancellation should succeed even if
   // a downstream void fails (the customer already sees the order

@@ -19,7 +19,7 @@ import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { dispatchOrderToShipday, cancelShipdayOrder, shouldDispatchToShipday } from "@/lib/shipday";
 import { verifyOrderToken } from "@/lib/order-status-token";
 import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledger";
-import { redeemForOrder as redeemRewardForOrder, releaseForOrder as releaseRewardForOrder, awardForOrder as awardRewardForOrder, getOrderRewardSummary } from "@/lib/reward-ledger";
+import { redeemForOrder as redeemRewardForOrder, releaseForOrder as releaseRewardForOrder, refundForOrder as refundRewardForOrder, awardForOrder as awardRewardForOrder, getOrderRewardSummary } from "@/lib/reward-ledger";
 import { awardEarnRulesForOrder, awardPromoCreditsForOrder } from "@/lib/reward-earn";
 import { releasePromotionUsageForOrder } from "@/lib/promo-usage";
 import { RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
@@ -160,6 +160,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       marketplaceCounterApplied: true,
       smartLinkCounterApplied: true,
       total: true,
+      // Reward Dollars part-payment — the card refund is capped at what was
+      // actually captured (total − creditApplied); the credit itself is
+      // restored to the wallet via refundRewardForOrder. Blocker #8.
+      creditApplied: true,
       // Scheduled slot — on accept we set estimatedReady to this (not now+prep)
       // so a future pickup/delivery shows its real ready time, not "20 min".
       scheduledFor: true,
@@ -415,6 +419,17 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     await releaseCouponsForOrder(id);
     // Reward Dollars: return any spent credit to the customer's wallet.
     await releaseRewardForOrder(id);
+    // If the order was already COMPLETED, the spend is "redeemed" and the
+    // release above is a NO-OP — refundRewardForOrder makes the wallet whole:
+    // returns the redeemed spend AND claws back the credit earned on the
+    // order. Idempotent per order (skips a spend the release already
+    // returned; one guarded "reverse" row). Runs on the STATUS transition —
+    // not inside the card-refund callback — because the wallet portion was
+    // never captured online (the charge was total − creditApplied), so it
+    // must restore even for cash orders and even if a card refund errors.
+    // Without this, a complete→cancel refund permanently ate the customer's
+    // store credit (launch Blocker #8).
+    await refundRewardForOrder(id);
     // Promotion usage give-back so a "max N uses" promo isn't burned by an
     // unfulfilled order (audit B11). Deletes this order's PromotionUsage ledger
     // rows and decrements usedCount per row actually deleted — IDEMPOTENT (a
@@ -475,10 +490,16 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       // Real refund — post-capture cancellation. Also covers an order that
       // was PARTIALLY refunded earlier: refundDirectPayment with no amount
       // refunds Stripe's remaining balance, so cancelling refunds the rest.
+      // The card only ever captured total − creditApplied (Reward Dollars
+      // paid the rest and are restored separately above), so that's the cap
+      // recorded as refundedAmount. Blocker #8.
       after(
         (async () => {
           try {
-            await refundCapturedOrder(id, piId, existing.restaurantId, existing.total);
+            await refundCapturedOrder(
+              id, piId, existing.restaurantId,
+              Math.round((existing.total - (existing.creditApplied ?? 0)) * 100) / 100,
+            );
           } catch (e) {
             console.error("[orders PATCH] refundCapturedOrder:", e);
           }
@@ -536,6 +557,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
               data: {
                 paymentStatus: "refunded",
                 refundStatus: r.status === "COMPLETED" || r.status === "PENDING" ? "refunded" : "failed",
+                // PayPal captured total − creditApplied (Reward Dollars paid
+                // the rest and are restored to the wallet separately). Blocker #8.
+                ...(r.status === "COMPLETED" || r.status === "PENDING"
+                  ? { refundedAmount: Math.max(0, Math.round((existing.total - (existing.creditApplied ?? 0)) * 100) / 100) }
+                  : {}),
               },
             });
           } catch (e) {
@@ -804,7 +830,11 @@ async function refundCapturedOrder(
   orderId: string,
   paymentIntentId: string,
   restaurantId: string,
-  orderTotal?: number,
+  /** The amount the card actually CAPTURED — total − creditApplied. Reward
+   *  Dollars were never part of the online charge (they're restored to the
+   *  wallet by refundRewardForOrder on the status transition), so stamping
+   *  the full order total here would overstate the card refund. Blocker #8. */
+  capturedAmount?: number,
 ) {
   try {
     await prisma.order.update({ where: { id: orderId }, data: { refundStatus: "pending" } });
@@ -818,14 +848,14 @@ async function refundCapturedOrder(
     });
 
     // Key-only model: no webhook backstop — set paymentStatus → "refunded"
-    // inline so the admin UI reflects the terminal state immediately. The whole
-    // order is now refunded, so refundedAmount = the full total.
+    // inline so the admin UI reflects the terminal state immediately. The
+    // card side is now fully refunded, so refundedAmount = what was captured.
     await prisma.order.update({
       where: { id: orderId },
       data: {
         refundStatus: "refunded",
         paymentStatus: "refunded",
-        ...(typeof orderTotal === "number" ? { refundedAmount: orderTotal } : {}),
+        ...(typeof capturedAmount === "number" ? { refundedAmount: Math.max(0, capturedAmount) } : {}),
       },
     });
   } catch (err) {

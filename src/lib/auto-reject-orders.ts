@@ -14,7 +14,7 @@ import prisma from "@/lib/db";
 import { notifyCustomer, notifyStaff } from "@/lib/notifications";
 import { refundDirectPayment, voidPayment } from "@/lib/stripe";
 import { releaseCouponsForOrder } from "@/lib/coupon-ledger";
-import { releaseForOrder as releaseRewardForOrder } from "@/lib/reward-ledger";
+import { releaseForOrder as releaseRewardForOrder, refundForOrder as refundRewardForOrder } from "@/lib/reward-ledger";
 import { releasePromotionUsageForOrder } from "@/lib/promo-usage";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
@@ -98,6 +98,10 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       customerName: true,
       type: true,
       total: true,
+      // Reward Dollars part-payment — the card refund only covers what was
+      // captured (total − creditApplied); the credit restores via the reward
+      // ledger release/refund. Blocker #8.
+      creditApplied: true,
       restaurantId: true,
       viaMarketplace: true,
       marketplaceCounterApplied: true,
@@ -326,8 +330,21 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
             });
             await prisma.order.update({
               where: { id: order.id },
-              data: { refundStatus: "refunded", paymentStatus: "refunded", refundedAmount: order.total },
+              data: {
+                refundStatus: "refunded",
+                paymentStatus: "refunded",
+                // The card only captured total − creditApplied; the Reward
+                // Dollars part restores to the wallet, not the card. Blocker #8.
+                refundedAmount: Math.max(0, Math.round((order.total - (order.creditApplied ?? 0)) * 100) / 100),
+              },
             });
+            // Belt-and-suspenders wallet restore for the captured branch: the
+            // releaseRewardForOrder above already returned an "applied" spend
+            // (auto-reject only targets pending orders, so the spend is never
+            // "redeemed" here) — this covers any exotic state where it WAS,
+            // and claws back order-tied earned credit. Idempotent no-op
+            // otherwise. Blocker #8.
+            await refundRewardForOrder(order.id);
             result.refunded += 1;
           } catch (e) {
             result.refundFailed += 1;
