@@ -19,6 +19,7 @@ export default async function CompanySettingsPage() {
     companyTaxId: string | null;
     companyAddress: string | null;
     companySupportEmail: string | null;
+    companyLogoUrl: string | null;
     updatedAt: Date | null;
   } | null = null;
   try {
@@ -29,6 +30,7 @@ export default async function CompanySettingsPage() {
         companyTaxId: true,
         companyAddress: true,
         companySupportEmail: true,
+        companyLogoUrl: true,
         updatedAt: true,
       },
     });
@@ -43,6 +45,7 @@ export default async function CompanySettingsPage() {
         companyTaxId: s?.companyTaxId ?? "",
         companyAddress: s?.companyAddress ?? "",
         companySupportEmail: s?.companySupportEmail ?? "",
+        companyLogoUrl: s?.companyLogoUrl ?? "",
         updatedAt: s?.updatedAt?.toISOString() ?? null,
       }}
     />

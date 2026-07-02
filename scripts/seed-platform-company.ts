@@ -20,20 +20,28 @@ async function main() {
   const adapter = isNeon ? new PrismaNeon({ connectionString: url }) : new PrismaPg({ connectionString: url });
   const prisma = new PrismaClient({ adapter } as any);
   try {
+    // The Fee Free logo (shown on DIRECT invoices). This is the same green
+    // FF-rocket mark already in use; a superadmin can change it anytime at
+    // /superadmin/settings/company → "Logo URL".
+    const FF_LOGO = "https://1onxkssoxjxfkvnp.public.blob.vercel-storage.com/reseller/cmp91sarx00010alc8fcf2di8/1782195727492-0e9nic.png";
     const existing = await prisma.platformSettings.findUnique({
       where: { id: "singleton" },
-      select: { companyLegalName: true },
+      select: { companyLegalName: true, companyLogoUrl: true },
     }).catch(() => null);
-    if (existing?.companyLegalName?.trim()) {
-      console.log(`companyLegalName already set ("${existing.companyLegalName}") — leaving as-is.`);
+    // Only fill fields that are empty — never overwrite a superadmin's edit.
+    const data: Record<string, string> = {};
+    if (!existing?.companyLegalName?.trim()) data.companyLegalName = "Fee Free Ordering Inc.";
+    if (!existing?.companyLogoUrl?.trim()) data.companyLogoUrl = FF_LOGO;
+    if (Object.keys(data).length === 0) {
+      console.log(`Nothing to seed — companyLegalName + companyLogoUrl already set.`);
       return;
     }
     await prisma.platformSettings.upsert({
       where: { id: "singleton" },
-      create: { id: "singleton", companyLegalName: "Fee Free Ordering Inc." },
-      update: { companyLegalName: "Fee Free Ordering Inc." },
+      create: { id: "singleton", ...data },
+      update: data,
     });
-    console.log(`✅ Set PlatformSettings.companyLegalName = "Fee Free Ordering Inc." (no tax number — Canada).`);
+    console.log(`✅ Seeded: ${Object.keys(data).join(", ")} (legal name "Fee Free Ordering Inc.", no tax number — Canada).`);
   } finally {
     await prisma.$disconnect();
   }

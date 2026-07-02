@@ -777,6 +777,7 @@ model PlatformSettings {
   companyTaxId           String? // GST/HST or other business/tax number; blank = render no tax line
   companyAddress         String? // one-line legal address for the invoice issuer block
   companySupportEmail    String? // issuer contact email (falls back to support@feefreeordering.com)
+  companyLogoUrl         String? // the Fee Free logo shown on DIRECT (non-reseller) invoices; a reseller invoice shows the reseller's own logo instead
   updatedAt              DateTime @updatedAt
   updatedBy              String?
 }

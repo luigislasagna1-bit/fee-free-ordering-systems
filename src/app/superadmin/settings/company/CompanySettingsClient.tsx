@@ -17,6 +17,7 @@ export function CompanySettingsClient({
     companyTaxId: string;
     companyAddress: string;
     companySupportEmail: string;
+    companyLogoUrl: string;
     updatedAt: string | null;
   };
 }) {
@@ -24,6 +25,7 @@ export function CompanySettingsClient({
   const [taxId, setTaxId] = useState(initial.companyTaxId);
   const [address, setAddress] = useState(initial.companyAddress);
   const [supportEmail, setSupportEmail] = useState(initial.companySupportEmail);
+  const [logoUrl, setLogoUrl] = useState(initial.companyLogoUrl);
   const [busy, setBusy] = useState(false);
   const [savedAt, setSavedAt] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -40,6 +42,7 @@ export function CompanySettingsClient({
           companyTaxId: taxId,
           companyAddress: address,
           companySupportEmail: supportEmail,
+          companyLogoUrl: logoUrl,
         }),
       });
       const data = await res.json();
@@ -116,6 +119,20 @@ export function CompanySettingsClient({
           placeholder="support@feefreeordering.com"
           hint="Falls back to support@feefreeordering.com if left blank."
         />
+        <Field
+          label="Logo URL (shown on direct invoices)"
+          value={logoUrl}
+          onChange={setLogoUrl}
+          placeholder="https://…/fee-free-logo.png"
+          hint="The Fee Free logo shown on invoices for restaurants NOT under a reseller. Reseller invoices show the reseller's own logo instead. Blank = no logo."
+        />
+        {logoUrl.trim() && (
+          <div className="mb-4 -mt-2 flex items-center gap-2">
+            <span className="text-[11px] text-gray-400">Preview:</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={logoUrl} alt="Logo preview" className="h-9 object-contain rounded border border-gray-100 bg-gray-50 px-1" />
+          </div>
+        )}
 
         {error && (
           <div className="mt-2 mb-4 rounded-lg bg-red-50 border border-red-200 p-3 text-xs text-red-700">{error}</div>

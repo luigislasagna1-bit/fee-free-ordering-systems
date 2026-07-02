@@ -4,7 +4,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency } from "@/lib/utils";
 import { getFiscalConfig, isKnownFiscalCountry } from "@/lib/fiscal-countries";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { ArrowLeft } from "lucide-react";
 import { PrintButton } from "./PrintButton";
 
@@ -18,6 +18,9 @@ import { PrintButton } from "./PrintButton";
 export default async function InvoicePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const t = await getTranslations("admin.invoice");
+  // Localize invoice dates to the viewer's language (system-wide, never a fixed
+  // format). Luigi 2026-07-02.
+  const locale = await getLocale();
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) notFound();
@@ -60,13 +63,16 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
   // issuer even before the superadmin fills it in.
   const platform = await prisma.platformSettings.findUnique({
     where: { id: "singleton" },
-    select: { companyLegalName: true, companyTaxId: true, companyAddress: true, companySupportEmail: true },
+    select: { companyLegalName: true, companyTaxId: true, companyAddress: true, companySupportEmail: true, companyLogoUrl: true },
   }).catch(() => null);
   const issuer = {
     name: platform?.companyLegalName?.trim() || "Fee Free Ordering Inc.",
     taxId: platform?.companyTaxId?.trim() || "",
     address: platform?.companyAddress?.trim() || "",
     email: platform?.companySupportEmail?.trim() || "support@feefreeordering.com",
+    // The Fee Free logo — shown ONLY on DIRECT (non-reseller) invoices; a
+    // reseller invoice shows the reseller's own logo instead. Luigi 2026-07-02.
+    logo: platform?.companyLogoUrl?.trim() || "",
   };
   const partner = showPartner
     ? {
@@ -96,7 +102,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
   const when = inv.paidAt ?? inv.createdAt;
   const invoiceNo = `INV-${new Date(when).getFullYear()}-${id.slice(-6).toUpperCase()}`;
   const periodLabel = inv.periodStart && inv.periodEnd
-    ? `${new Date(inv.periodStart).toLocaleDateString()} – ${new Date(inv.periodEnd).toLocaleDateString()}`
+    ? `${new Date(inv.periodStart).toLocaleDateString(locale)} – ${new Date(inv.periodEnd).toLocaleDateString(locale)}`
     : null;
   const amount = formatCurrency(inv.amountPaid / 100, inv.currency);
   const isPaid = inv.status === "paid";
@@ -118,8 +124,15 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
             issuer below is always the platform (merchant of record). */}
         <div className="flex items-start justify-between gap-6 pb-6 border-b border-gray-100">
           <div className="min-w-0">
+            {/* Logo: a RESELLER invoice shows the reseller's own logo (de-brand);
+                a DIRECT invoice shows the Fee Free logo. (Luigi 2026-07-02.) */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            {partner?.logo ? <img src={partner.logo} alt={partner.name} className="h-10 mb-2 object-contain" /> : null}
+            {partner?.logo ? (
+              <img src={partner.logo} alt={partner.name} className="h-10 mb-2 object-contain" />
+            ) : !partner && issuer.logo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={issuer.logo} alt={issuer.name} className="h-10 mb-2 object-contain" />
+            ) : null}
             <div className="text-lg font-bold text-gray-900">{issuer.name}</div>
             {issuer.taxId && <div className="text-xs text-gray-500 mt-0.5">{issuer.taxId}</div>}
             {issuer.address && <div className="text-xs text-gray-500 mt-0.5 whitespace-pre-line">{issuer.address}</div>}
@@ -128,7 +141,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
           <div className="text-right flex-shrink-0">
             <div className="text-2xl font-bold tracking-tight text-gray-900">{t("title")}</div>
             <div className="text-xs text-gray-500 mt-1">{t("invoiceNumber")} {invoiceNo}</div>
-            <div className="text-xs text-gray-500">{t("issueDate")}: {new Date(when).toLocaleDateString()}</div>
+            <div className="text-xs text-gray-500">{t("issueDate")}: {new Date(when).toLocaleDateString(locale)}</div>
             <span className={`inline-block mt-2 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${isPaid ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}`}>
               {isPaid ? t("statusPaid") : t("statusDue")}
             </span>

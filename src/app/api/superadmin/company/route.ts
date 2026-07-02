@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
     companyTaxId: str(body.companyTaxId, 60),
     companyAddress: str(body.companyAddress, 200),
     companySupportEmail: str(body.companySupportEmail, 120),
+    companyLogoUrl: str(body.companyLogoUrl, 500),
     updatedBy: session.user?.email ?? null,
   };
 
