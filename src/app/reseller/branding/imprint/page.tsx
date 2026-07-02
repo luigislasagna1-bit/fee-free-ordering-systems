@@ -28,6 +28,7 @@ export default async function ResellerImprintPage() {
       status: true,
       imprint: true,
       companyName: true,
+      companyVatId: true,
       showCustomerPageCredit: true,
     },
   });
@@ -39,6 +40,7 @@ export default async function ResellerImprintPage() {
     <ImprintClient
       initialImprint={profile.imprint ?? ""}
       companyName={profile.companyName ?? null}
+      initialCompanyVatId={profile.companyVatId ?? ""}
       initialShowCredit={profile.showCustomerPageCredit}
     />
   );

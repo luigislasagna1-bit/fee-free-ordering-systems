@@ -35,7 +35,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
       email: true, phone: true,
       billingProfile: true,
       resellerProfile: {
-        select: { status: true, companyName: true, imprint: true, brandLogoUrl: true, whiteLabelStatus: true },
+        select: { status: true, companyName: true, companyVatId: true, imprint: true, brandLogoUrl: true, whiteLabelStatus: true },
       },
     },
   });
@@ -53,8 +53,8 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
     reseller.companyName
   );
   const biller = useReseller
-    ? { name: reseller!.companyName as string, line: reseller!.imprint ?? "", logo: reseller!.brandLogoUrl ?? null }
-    : { name: "Fee Free Ordering", line: "support@feefreeordering.com", logo: null as string | null };
+    ? { name: reseller!.companyName as string, line: reseller!.imprint ?? "", logo: reseller!.brandLogoUrl ?? null, vat: reseller!.companyVatId ?? "" }
+    : { name: "Fee Free Ordering", line: "support@feefreeordering.com", logo: null as string | null, vat: "" };
 
   // ── Bill-to: saved fiscal details, falling back to the restaurant record ──
   const bp = restaurant.billingProfile;
@@ -99,6 +99,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
             {/* eslint-disable-next-line @next/next/no-img-element */}
             {biller.logo ? <img src={biller.logo} alt={biller.name} className="h-10 mb-2 object-contain" /> : null}
             <div className="text-lg font-bold text-gray-900">{biller.name}</div>
+            {biller.vat && <div className="text-xs text-gray-500 mt-0.5">{t("vatId")}: {biller.vat}</div>}
             {biller.line && <div className="text-xs text-gray-500 mt-0.5 whitespace-pre-line">{biller.line}</div>}
           </div>
           <div className="text-right flex-shrink-0">
