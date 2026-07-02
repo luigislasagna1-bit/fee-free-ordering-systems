@@ -18,6 +18,7 @@ import { HelpTip } from "@/components/HelpTip";
 import {
   type DeliveryFieldKey,
   type DeliveryAddressConfig,
+  composeStreetLine,
 } from "@/lib/delivery-address-fields";
 
 // Leaflet pin is dynamically imported (ssr:false) — Leaflet touches `window`,
@@ -472,7 +473,9 @@ export function CheckoutModal({
 
     const streetNumber = get("street_number");
     const route = get("route");
-    const street = [streetNumber, route].filter(Boolean).join(" ");
+    // House-number position follows the restaurant's country convention:
+    // "Via Mazzini 13" (IT/DE/…) vs "13 Main St" (US/CA/GB/…). Fabrizio 2026-06-24.
+    const street = composeStreetLine(route, streetNumber, geocodeCountry);
     const city = get("locality") || get("sublocality") || get("administrative_area_level_2");
     const zip = get("postal_code");
 

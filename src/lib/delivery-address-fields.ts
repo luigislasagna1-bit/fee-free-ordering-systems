@@ -126,6 +126,40 @@ export function composeFlatDeliveryAddress(data: DeliveryAddressData): string {
 }
 
 /**
+ * Countries where the house NUMBER is written AFTER the street name
+ * ("Via Mazzini 13", "Hauptstraße 12") — most of continental Europe + Latin
+ * America. Everywhere else (US, Canada, UK, Ireland, Australia, NZ, France,
+ * India, …) keeps the Anglosphere "number first" order ("13 Main St"). Unknown
+ * country → number-first, which is the previous always-number-first behaviour,
+ * so no restaurant regresses. ISO-3166-1 alpha-2, lower-cased. (Fabrizio IT,
+ * 2026-06-24 — his "13 Via Giuseppe Mazzini" should read "Via Giuseppe Mazzini 13".)
+ */
+const NUMBER_AFTER_STREET_COUNTRIES = new Set<string>([
+  "it", "de", "at", "ch", "es", "pt", "nl", "be", "lu", "pl", "cz", "sk", "hu",
+  "hr", "si", "rs", "ba", "me", "mk", "al", "ro", "bg", "gr", "se", "no", "dk",
+  "fi", "is", "ee", "lv", "lt", "ru", "ua", "by", "tr", "br", "mx", "ar", "cl",
+  "co", "pe", "uy", "py", "ec", "bo", "ve",
+]);
+
+/**
+ * Compose the one-line street from a street NAME + house NUMBER in the order the
+ * restaurant's COUNTRY writes them. Number-after countries (Italy, Germany, …)
+ * → "Via Mazzini 13"; everywhere else → "13 Main St". Either part may be empty
+ * (returns the other). `country` is the restaurant's ISO country code (any
+ * case); unknown → number-first (unchanged behaviour, so North-American stores
+ * keep "123 Main St"). Used by BOTH the Nominatim autocomplete proxy and the
+ * Google Places handler so a saved delivery street is consistent everywhere.
+ */
+export function composeStreetLine(streetName: string, houseNumber: string, country?: string | null): string {
+  const road = (streetName || "").trim();
+  const num = (houseNumber || "").trim();
+  if (!road) return num;
+  if (!num) return road;
+  const cc = (country || "").trim().toLowerCase().slice(0, 2);
+  return NUMBER_AFTER_STREET_COUNTRIES.has(cc) ? `${road} ${num}` : `${num} ${road}`;
+}
+
+/**
  * Server-side required-field validation. Returns the key of the first required
  * field that's missing, or null when all required fields are present. Only
  * validates fields that are BOTH shown and required in the resolved config.
