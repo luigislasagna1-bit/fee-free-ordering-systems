@@ -1,6 +1,8 @@
 {
   "money": {
     "amountCollected": "Collected",
+    "toCollect": "To collect",
+    "paid": "Paid",
     "refundedSoFar": "Refunded so far",
     "pay": {
       "card": "Card",

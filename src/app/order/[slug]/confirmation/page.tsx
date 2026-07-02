@@ -261,7 +261,7 @@ export default async function ConfirmationPage({
                 )}
                 {rewardUsed > 0 && (
                   <div className="flex justify-between font-bold text-gray-900">
-                    <span>{tReceipt("balanceDue")}</span>
+                    <span>{order.paymentStatus === "paid" ? tRoot("money.paid") : tReceipt("balanceDue")}</span>
                     <span>{formatCurrency(Math.max(0, order.total - rewardUsed))}</span>
                   </div>
                 )}

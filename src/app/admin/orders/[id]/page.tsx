@@ -153,7 +153,7 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
             {rewardUsed > 0 && (
               <>
                 <div className="flex justify-between text-emerald-700"><span>{tRoot("receipt.customer.paidWithReward", { label: rewardLabel })}</span><span>− {money(rewardUsed)}</span></div>
-                <div className="flex justify-between font-bold text-gray-900"><span>{tRoot("money.amountCollected")}</span><span>{money(Math.max(0, order.total - rewardUsed))}</span></div>
+                <div className="flex justify-between font-bold text-gray-900"><span>{order.paymentStatus === "paid" ? tRoot("money.amountCollected") : tRoot("money.toCollect")}</span><span>{money(Math.max(0, order.total - rewardUsed))}</span></div>
               </>
             )}
             {rewardEarned > 0 && (

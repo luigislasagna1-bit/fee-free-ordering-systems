@@ -84,6 +84,9 @@ export interface MoneyBreakdownInput {
   showRewardEarned?: boolean;
   // Payment + refunds
   paymentMethod?: string | null;
+  /** Order.paymentStatus — drives the amount label: "paid" → Collected/Paid
+   *  (money already in), otherwise → To collect / Balance to pay (still owed). */
+  paidStatus?: string | null;
   refundedAmount?: number | null;
 }
 
@@ -188,9 +191,15 @@ export function buildMoneyBreakdown(input: MoneyBreakdownInput): MoneyBreakdown 
 
   if (rewardUsed > 0) {
     rows.push({ kind: "REWARD_USED", labelKey: "receipt.customer.paidWithReward", labelArgs: { label: rewardLabel }, amount: rewardUsed, sign: "minus" });
+    // Label depends on whether the non-credit portion was already PAID (online
+    // card/PayPal captured) or is still OWED (cash to collect at pickup). Never
+    // say "Collected" for an unpaid order (Luigi 2026-07-02).
+    const isPaid = (input.paidStatus ?? "").toLowerCase() === "paid";
     rows.push({
       kind: "AMOUNT_TO_PAY",
-      labelKey: audience === "staff" ? "money.amountCollected" : "receipt.customer.balanceDue",
+      labelKey: audience === "staff"
+        ? (isPaid ? "money.amountCollected" : "money.toCollect")
+        : (isPaid ? "money.paid" : "receipt.customer.balanceDue"),
       amount: amountToPay,
       sign: "plain",
       emphasis: true,

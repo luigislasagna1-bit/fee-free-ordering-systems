@@ -66,13 +66,19 @@ describe("buildMoneyBreakdown", () => {
     expect(b.rows.some((r) => r.kind === "PROMO_DISCOUNT")).toBe(false);
   });
 
-  it("staff audience labels the collected line differently", () => {
-    const b = buildMoneyBreakdown({
+  it("status-aware amount label: unpaid says To collect / Balance, paid says Collected / Paid", () => {
+    const base = {
       currency: "usd", subtotal: 20, deliveryFee: 0, taxAmount: 0, total: 20,
-      orderType: "pickup", audience: "staff", rewardsActive: true, reward: { used: 5, earned: 0 },
-    });
-    expect(row(b.rows, "AMOUNT_TO_PAY")!.labelKey).toBe("money.amountCollected");
-    expect(b.amountToPay).toBe(15);
+      orderType: "pickup", rewardsActive: true, reward: { used: 5, earned: 0 },
+    } as const;
+    // Staff, unpaid cash → "To collect" (NOT "Collected" — Luigi's bug).
+    expect(row(buildMoneyBreakdown({ ...base, audience: "staff" }).rows, "AMOUNT_TO_PAY")!.labelKey).toBe("money.toCollect");
+    // Staff, paid (online captured) → "Collected".
+    expect(row(buildMoneyBreakdown({ ...base, audience: "staff", paidStatus: "paid" }).rows, "AMOUNT_TO_PAY")!.labelKey).toBe("money.amountCollected");
+    // Customer, unpaid → "Balance to pay"; paid → "Paid".
+    expect(row(buildMoneyBreakdown({ ...base }).rows, "AMOUNT_TO_PAY")!.labelKey).toBe("receipt.customer.balanceDue");
+    expect(row(buildMoneyBreakdown({ ...base, paidStatus: "paid" }).rows, "AMOUNT_TO_PAY")!.labelKey).toBe("money.paid");
+    expect(buildMoneyBreakdown(base).amountToPay).toBe(15);
   });
 
   it("reward earned shows a +row; credit fully covering total → amountToPay 0", () => {
