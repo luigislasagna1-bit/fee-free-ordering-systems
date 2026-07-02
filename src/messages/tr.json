@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Kaydolun ve {label} kazanın",
     "rewardSignupBannerCta": "Kaydol",
     "emptyCartConfirm": "Sepetinizdeki tüm ürünler kaldırılsın mı?",
-    "emptyCartAction": "Sepeti boşalt"
+    "emptyCartAction": "Sepeti boşalt",
+    "consent": {
+      "message": "Bu restoran, menüsünün nasıl kullanıldığını anlamak için analiz çerezleri (Google Analytics / Meta Pikseli) kullanıyor. Uygun mu?",
+      "accept": "Kabul et",
+      "decline": "Hayır, teşekkürler"
+    }
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Ödül Dolarları"
+  },
+  "unsubscribe": {
+    "title": "Abonelikten çık",
+    "confirm": "{name} tarafından {email} adresine pazarlama e-postaları gönderilmesi durdurulsun mu?",
+    "button": "Beni listeden çıkar",
+    "done": "Abonelikten çıktınız.",
+    "doneDetail": "{email} artık {name} tarafından pazarlama e-postası almayacak. Sipariş onayları ve fişler etkilenmez.",
+    "invalid": "Bu abonelikten çıkma bağlantısı geçersiz veya süresi dolmuş. Daha yeni bir e-postadaki bağlantıyla da çıkabilirsiniz."
   }
 }

@@ -7,7 +7,7 @@ import { SandboxClaimBanner } from "./SandboxClaimBanner";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 import { resolveInheritedHours, resolveInheritedZones } from "@/lib/inherited-data";
 import { VisitTracker } from "@/components/order/VisitTracker";
-import { TrackingScripts } from "@/components/order/TrackingScripts";
+import { TrackingConsentGate } from "@/components/order/TrackingConsentGate";
 import { isSupportedLocale, type Locale } from "@/i18n/request";
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
@@ -460,11 +460,22 @@ export default async function OrderingPage({
           Website Visits + Website Funnel reports have data to render.
           Renders null; safe to mount alongside the order client. */}
       <VisitTracker restaurantId={restaurant.id} />
-      {/* Owner-configured Facebook Pixel + Google Analytics (Integrations page).
-          Injects only what they've set; no-op otherwise. Luigi 2026-06-17. */}
-      <TrackingScripts
+      {/* Owner-configured Facebook Pixel + Google Analytics (Integrations page)
+          behind the consent gate (Blocker #5): EU/EEA/UK (or unknown-country)
+          visitors must opt in before gtag/fbq load; opt-out jurisdictions load
+          as before and the Privacy Policy §7 discloses them. */}
+      <TrackingConsentGate
         facebookPixelId={(restaurant as any).facebookPixelId}
         googleAnalyticsId={(restaurant as any).googleAnalyticsId}
+        restaurantId={restaurant.id}
+        country={(restaurant as any).country ?? null}
+        primaryColor={(() => {
+          try {
+            const ts = (restaurant as any).themeSettings;
+            const o = typeof ts === "string" ? JSON.parse(ts) : ts;
+            return typeof o?.primaryColor === "string" ? o.primaryColor : null;
+          } catch { return null; }
+        })()}
       />
       <OrderingPageClient
         restaurant={restaurant as any}

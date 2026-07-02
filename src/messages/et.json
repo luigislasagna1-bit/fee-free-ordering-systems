@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Registreeru ja teeni {label}",
     "rewardSignupBannerCta": "Registreeru",
     "emptyCartConfirm": "Eemaldada kõik tooted ostukorvist?",
-    "emptyCartAction": "Tühjenda ostukorv"
+    "emptyCartAction": "Tühjenda ostukorv",
+    "consent": {
+      "message": "See restoran kasutab analüütikaküpsiseid (Google Analytics / Meta piksel), et mõista, kuidas menüüd kasutatakse. Kas sobib?",
+      "accept": "Nõustun",
+      "decline": "Ei aitäh"
+    }
   },
   "pizza": {
     "chooseSize": "Vali suurus",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Boonusraha"
+  },
+  "unsubscribe": {
+    "title": "Loobu kirjadest",
+    "confirm": "Kas lõpetada {name} turunduskirjade saatmine aadressile {email}?",
+    "button": "Loobu kirjadest",
+    "done": "Olete kirjadest loobunud.",
+    "doneDetail": "{email} ei saa enam {name} turunduskirju. Tellimuse kinnitusi ja kviitungeid see ei mõjuta.",
+    "invalid": "See loobumislink on kehtetu või aegunud. Saate loobuda ka uuema kirja lingi kaudu."
   }
 }

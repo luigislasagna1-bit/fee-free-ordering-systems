@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Tilmeld dig og optjen {label}",
     "rewardSignupBannerCta": "Tilmeld dig",
     "emptyCartConfirm": "Fjern alle varer fra din kurv?",
-    "emptyCartAction": "Tøm kurv"
+    "emptyCartAction": "Tøm kurv",
+    "consent": {
+      "message": "Denne restaurant bruger analysecookies (Google Analytics / Meta-pixel) for at forstå, hvordan menuen bruges. Er det i orden?",
+      "accept": "Accepter",
+      "decline": "Nej tak"
+    }
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Bonuskroner"
+  },
+  "unsubscribe": {
+    "title": "Afmeld",
+    "confirm": "Stop med at sende marketingmails fra {name} til {email}?",
+    "button": "Afmeld mig",
+    "done": "Du er afmeldt.",
+    "doneDetail": "{email} modtager ikke længere marketingmails fra {name}. Ordrebekræftelser og kvitteringer påvirkes ikke.",
+    "invalid": "Dette afmeldingslink er ugyldigt eller udløbet. Du kan også afmelde via linket i en nyere mail."
   }
 }

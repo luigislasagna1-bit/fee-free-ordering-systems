@@ -116,13 +116,15 @@ export default async function PrivacyPage() {
       <p>To exercise any of these rights, email <a href="mailto:support@feefreeordering.com">support@feefreeordering.com</a> from the email on your account. We respond within 30 days.</p>
 
       <h2>7. Cookies + tracking</h2>
-      <p>We use a small number of cookies, all functional:</p>
+      <p>The platform itself uses a small number of cookies, all functional:</p>
       <ul>
         <li><code>fee-free-locale</code> — remembers your language preference</li>
         <li><code>next-auth.session-token</code> — keeps you signed in</li>
         <li><code>feefree_ref</code> — attributes signups to the reseller who referred you, if any</li>
+        <li><code>ff-tracking-consent</code> (local storage) — remembers your analytics-consent choice on a restaurant&rsquo;s ordering page</li>
       </ul>
-      <p>We do not use third-party advertising cookies. We do not run Google Analytics, Facebook Pixel, or similar tracking on the customer-facing ordering pages.</p>
+      <p><strong>Restaurant-enabled analytics.</strong> Individual restaurants can connect their own Google Analytics&nbsp;4 and/or Meta (Facebook) Pixel to their ordering page to measure their marketing. When a restaurant has done this, those third-party scripts run on that restaurant&rsquo;s ordering page and may set their own cookies and collect usage data (pages viewed, device information, approximate location) under the restaurant&rsquo;s and the provider&rsquo;s own policies — see the <a href="https://policies.google.com/privacy" rel="noopener noreferrer">Google Privacy Policy</a> and the <a href="https://www.facebook.com/privacy/policy/" rel="noopener noreferrer">Meta Privacy Policy</a>. The restaurant is the controller for this tracking; we load only the IDs the restaurant configures.</p>
+      <p>In the EU/EEA, the United Kingdom, and Switzerland (and wherever the restaurant&rsquo;s region can&rsquo;t be determined), these scripts stay OFF until you accept the consent banner shown on the ordering page — declining keeps them off, and your choice is remembered per restaurant. In jurisdictions that don&rsquo;t require prior opt-in, the scripts load when the restaurant has configured them, as disclosed here. We do not run any platform-level advertising trackers of our own.</p>
 
       <h2>8. Children</h2>
       <p>The platform is intended for adults aged 18+. We do not knowingly collect personal information from anyone under 16. If you believe a child has provided us information, email <a href="mailto:support@feefreeordering.com">support@feefreeordering.com</a> and we&rsquo;ll delete it.</p>

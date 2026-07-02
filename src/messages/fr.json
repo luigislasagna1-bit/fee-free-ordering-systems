@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Inscrivez-vous pour gagner des {label}",
     "rewardSignupBannerCta": "S'inscrire",
     "emptyCartConfirm": "Retirer tous les articles de votre panier ?",
-    "emptyCartAction": "Vider le panier"
+    "emptyCartAction": "Vider le panier",
+    "consent": {
+      "message": "Ce restaurant utilise des cookies d'analyse (Google Analytics / Pixel Meta) pour comprendre l'utilisation de son menu. Êtes-vous d'accord ?",
+      "accept": "Accepter",
+      "decline": "Non merci"
+    }
   },
   "pizza": {
     "chooseSize": "Choisir la taille",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Crédits fidélité"
+  },
+  "unsubscribe": {
+    "title": "Se désabonner",
+    "confirm": "Ne plus envoyer d'e-mails marketing de {name} à {email} ?",
+    "button": "Me désabonner",
+    "done": "Vous êtes désabonné.",
+    "doneDetail": "{email} ne recevra plus d'e-mails marketing de {name}. Les confirmations de commande et les reçus ne sont pas concernés.",
+    "invalid": "Ce lien de désabonnement est invalide ou a expiré. Vous pouvez aussi vous désabonner via le lien d'un e-mail plus récent."
   }
 }

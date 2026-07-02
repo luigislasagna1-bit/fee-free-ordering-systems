@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Užsiregistruokite ir kaupkite {label}",
     "rewardSignupBannerCta": "Registruotis",
     "emptyCartConfirm": "Pašalinti visas prekes iš krepšelio?",
-    "emptyCartAction": "Išvalyti krepšelį"
+    "emptyCartAction": "Išvalyti krepšelį",
+    "consent": {
+      "message": "Šis restoranas naudoja analitikos slapukus (Google Analytics / Meta pikselis), kad suprastų, kaip naudojamas jo meniu. Ar sutinkate?",
+      "accept": "Sutinku",
+      "decline": "Ne, ačiū"
+    }
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Premijų doleriai"
+  },
+  "unsubscribe": {
+    "title": "Atsisakyti",
+    "confirm": "Nebesiųsti {name} rinkodaros laiškų adresu {email}?",
+    "button": "Atsisakyti laiškų",
+    "done": "Atsisakėte laiškų.",
+    "doneDetail": "{email} nebegaus {name} rinkodaros laiškų. Užsakymų patvirtinimai ir kvitai nesikeičia.",
+    "invalid": "Ši atsisakymo nuoroda negalioja arba pasibaigė jos galiojimas. Taip pat galite atsisakyti naujesnio laiško nuorodoje."
   }
 }

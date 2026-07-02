@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Đăng ký để bắt đầu kiếm {label}",
     "rewardSignupBannerCta": "Đăng ký",
     "emptyCartConfirm": "Xóa tất cả mặt hàng khỏi giỏ hàng?",
-    "emptyCartAction": "Xóa giỏ hàng"
+    "emptyCartAction": "Xóa giỏ hàng",
+    "consent": {
+      "message": "Nhà hàng này dùng cookie phân tích (Google Analytics / Meta Pixel) để hiểu cách thực đơn được sử dụng. Bạn đồng ý chứ?",
+      "accept": "Đồng ý",
+      "decline": "Không, cảm ơn"
+    }
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Đô-la Thưởng"
+  },
+  "unsubscribe": {
+    "title": "Hủy đăng ký",
+    "confirm": "Ngừng gửi email tiếp thị từ {name} đến {email}?",
+    "button": "Hủy đăng ký của tôi",
+    "done": "Bạn đã hủy đăng ký.",
+    "doneDetail": "{email} sẽ không còn nhận email tiếp thị từ {name}. Xác nhận đơn hàng và hóa đơn không bị ảnh hưởng.",
+    "invalid": "Liên kết hủy đăng ký này không hợp lệ hoặc đã hết hạn. Bạn cũng có thể hủy bằng liên kết trong email mới hơn."
   }
 }

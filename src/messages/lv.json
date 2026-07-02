@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Reģistrējieties un pelniet {label}",
     "rewardSignupBannerCta": "Reģistrēties",
     "emptyCartConfirm": "Noņemt visas preces no groza?",
-    "emptyCartAction": "Iztukšot grozu"
+    "emptyCartAction": "Iztukšot grozu",
+    "consent": {
+      "message": "Šis restorāns izmanto analītikas sīkfailus (Google Analytics / Meta pikselis), lai saprastu, kā tiek lietota ēdienkarte. Vai piekrītat?",
+      "accept": "Piekrītu",
+      "decline": "Nē, paldies"
+    }
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Bonusa dolāri"
+  },
+  "unsubscribe": {
+    "title": "Atrakstīties",
+    "confirm": "Pārtraukt {name} mārketinga e-pastu sūtīšanu uz {email}?",
+    "button": "Atrakstīt mani",
+    "done": "Jūs esat atrakstījies.",
+    "doneDetail": "{email} vairs nesaņems {name} mārketinga e-pastus. Pasūtījumu apstiprinājumi un čeki netiek ietekmēti.",
+    "invalid": "Šī atrakstīšanās saite nav derīga vai tās termiņš beidzies. Varat atrakstīties arī no jaunāka e-pasta saites."
   }
 }

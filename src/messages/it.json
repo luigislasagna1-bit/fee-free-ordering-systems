@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Iscriviti per guadagnare {label}",
     "rewardSignupBannerCta": "Iscriviti",
     "emptyCartConfirm": "Rimuovere tutti gli articoli dal carrello?",
-    "emptyCartAction": "Svuota carrello"
+    "emptyCartAction": "Svuota carrello",
+    "consent": {
+      "message": "Questo ristorante usa cookie di analisi (Google Analytics / Pixel Meta) per capire come viene usato il suo menu. Va bene?",
+      "accept": "Accetta",
+      "decline": "No, grazie"
+    }
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Credito fedeltà"
+  },
+  "unsubscribe": {
+    "title": "Annulla iscrizione",
+    "confirm": "Smettere di inviare email di marketing di {name} a {email}?",
+    "button": "Annulla la mia iscrizione",
+    "done": "Iscrizione annullata.",
+    "doneDetail": "{email} non riceverà più email di marketing da {name}. Le conferme d'ordine e le ricevute non sono interessate.",
+    "invalid": "Questo link di annullamento non è valido o è scaduto. Puoi anche annullare l'iscrizione dal link di un'email più recente."
   }
 }

@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Înscrie-te ca să câștigi {label}",
     "rewardSignupBannerCta": "Înscrie-te",
     "emptyCartConfirm": "Eliminați toate articolele din coș?",
-    "emptyCartAction": "Golește coșul"
+    "emptyCartAction": "Golește coșul",
+    "consent": {
+      "message": "Acest restaurant folosește cookie-uri de analiză (Google Analytics / Pixel Meta) pentru a înțelege cum este folosit meniul. Sunteți de acord?",
+      "accept": "Accept",
+      "decline": "Nu, mulțumesc"
+    }
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Dolari de recompensă"
+  },
+  "unsubscribe": {
+    "title": "Dezabonare",
+    "confirm": "Nu mai trimitem e-mailuri de marketing de la {name} către {email}?",
+    "button": "Dezabonează-mă",
+    "done": "V-ați dezabonat.",
+    "doneDetail": "{email} nu va mai primi e-mailuri de marketing de la {name}. Confirmările de comandă și chitanțele nu sunt afectate.",
+    "invalid": "Acest link de dezabonare este invalid sau a expirat. Vă puteți dezabona și din linkul unui e-mail mai recent."
   }
 }

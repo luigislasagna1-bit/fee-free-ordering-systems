@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Inscreva-se para ganhar {label}",
     "rewardSignupBannerCta": "Inscrever-se",
     "emptyCartConfirm": "Remover todos os artigos do seu carrinho?",
-    "emptyCartAction": "Esvaziar carrinho"
+    "emptyCartAction": "Esvaziar carrinho",
+    "consent": {
+      "message": "Este restaurante usa cookies de análise (Google Analytics / Pixel da Meta) para perceber como o menu é utilizado. Concorda?",
+      "accept": "Aceitar",
+      "decline": "Não, obrigado"
+    }
   },
   "pizza": {
     "chooseSize": "Escolher tamanho",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Saldo de recompensa"
+  },
+  "unsubscribe": {
+    "title": "Cancelar subscrição",
+    "confirm": "Deixar de enviar e-mails de marketing de {name} para {email}?",
+    "button": "Cancelar a minha subscrição",
+    "done": "Subscrição cancelada.",
+    "doneDetail": "{email} deixará de receber e-mails de marketing de {name}. As confirmações de encomenda e os recibos não são afetados.",
+    "invalid": "Este link de cancelamento é inválido ou expirou. Também pode cancelar através do link num e-mail mais recente."
   }
 }

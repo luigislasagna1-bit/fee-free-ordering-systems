@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Sign up to start earning {label}",
     "rewardSignupBannerCta": "Sign up",
     "emptyCartConfirm": "Remove all items from your cart?",
-    "emptyCartAction": "Empty cart"
+    "emptyCartAction": "Empty cart",
+    "consent": {
+      "message": "This restaurant uses analytics cookies (Google Analytics / Meta Pixel) to understand how its menu is used. Is that OK?",
+      "accept": "Accept",
+      "decline": "No thanks"
+    }
   },
   "pizza": {
     "chooseSize": "Choose Size",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Reward Dollars"
+  },
+  "unsubscribe": {
+    "title": "Unsubscribe",
+    "confirm": "Stop sending marketing emails from {name} to {email}?",
+    "button": "Unsubscribe me",
+    "done": "You're unsubscribed.",
+    "doneDetail": "{email} will no longer receive marketing emails from {name}. Order confirmations and receipts are not affected.",
+    "invalid": "This unsubscribe link is invalid or has expired. You can also opt out with the unsubscribe link in any newer email."
   }
 }

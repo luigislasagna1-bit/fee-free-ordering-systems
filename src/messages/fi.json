@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Rekisteröidy ja ansaitse {label}",
     "rewardSignupBannerCta": "Rekisteröidy",
     "emptyCartConfirm": "Poistetaanko kaikki tuotteet ostoskorista?",
-    "emptyCartAction": "Tyhjennä ostoskori"
+    "emptyCartAction": "Tyhjennä ostoskori",
+    "consent": {
+      "message": "Tämä ravintola käyttää analytiikkaevästeitä (Google Analytics / Meta-pikseli) ymmärtääkseen, miten sen ruokalistaa käytetään. Sopiiko se?",
+      "accept": "Hyväksy",
+      "decline": "Ei kiitos"
+    }
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Bonusrahat"
+  },
+  "unsubscribe": {
+    "title": "Peruuta tilaus",
+    "confirm": "Lopetetaanko markkinointiviestit ravintolalta {name} osoitteeseen {email}?",
+    "button": "Peruuta tilaukseni",
+    "done": "Tilaus on peruutettu.",
+    "doneDetail": "{email} ei enää saa markkinointiviestejä ravintolalta {name}. Tilausvahvistukset ja kuitit eivät muutu.",
+    "invalid": "Tämä peruutuslinkki on virheellinen tai vanhentunut. Voit perua tilauksen myös uudemman viestin linkistä."
   }
 }

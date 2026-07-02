@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "הירשמו כדי לצבור {label}",
     "rewardSignupBannerCta": "הרשמה",
     "emptyCartConfirm": "להסיר את כל הפריטים מהעגלה?",
-    "emptyCartAction": "רוקן עגלה"
+    "emptyCartAction": "רוקן עגלה",
+    "consent": {
+      "message": "מסעדה זו משתמשת בעוגיות אנליטיקה (Google Analytics / Meta Pixel) כדי להבין איך משתמשים בתפריט. מסכימים?",
+      "accept": "אישור",
+      "decline": "לא, תודה"
+    }
   },
   "pizza": {
     "chooseSize": "בחר גודל",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "דולרים של תגמולים"
+  },
+  "unsubscribe": {
+    "title": "הסרה מרשימת התפוצה",
+    "confirm": "להפסיק לשלוח הודעות שיווקיות מ-{name} אל {email}?",
+    "button": "הסירו אותי",
+    "done": "הוסרתם מרשימת התפוצה.",
+    "doneDetail": "{email} לא יקבל יותר הודעות שיווקיות מ-{name}. אישורי הזמנה וקבלות אינם מושפעים.",
+    "invalid": "קישור ההסרה אינו תקין או שפג תוקפו. אפשר להסיר גם דרך הקישור בהודעה חדשה יותר."
   }
 }

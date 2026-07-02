@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "注册即可赚取{label}",
     "rewardSignupBannerCta": "注册",
     "emptyCartConfirm": "从购物车中移除所有商品？",
-    "emptyCartAction": "清空购物车"
+    "emptyCartAction": "清空购物车",
+    "consent": {
+      "message": "本餐厅使用分析 Cookie（Google Analytics / Meta Pixel）来了解菜单的使用情况。您同意吗？",
+      "accept": "接受",
+      "decline": "不用了"
+    }
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "奖励金"
+  },
+  "unsubscribe": {
+    "title": "退订",
+    "confirm": "停止向 {email} 发送来自 {name} 的营销邮件？",
+    "button": "退订",
+    "done": "已退订。",
+    "doneDetail": "{email} 将不再收到来自 {name} 的营销邮件。订单确认和收据不受影响。",
+    "invalid": "此退订链接无效或已过期。您也可以通过较新邮件中的退订链接退订。"
   }
 }

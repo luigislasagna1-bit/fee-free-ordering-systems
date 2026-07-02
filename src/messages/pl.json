@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Zarejestruj się i zbieraj {label}",
     "rewardSignupBannerCta": "Zarejestruj się",
     "emptyCartConfirm": "Usunąć wszystkie produkty z koszyka?",
-    "emptyCartAction": "Opróżnij koszyk"
+    "emptyCartAction": "Opróżnij koszyk",
+    "consent": {
+      "message": "Ta restauracja używa plików cookie do analityki (Google Analytics / Piksel Meta), aby zrozumieć, jak używane jest menu. Czy to w porządku?",
+      "accept": "Akceptuję",
+      "decline": "Nie, dziękuję"
+    }
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Złotówki za zakupy"
+  },
+  "unsubscribe": {
+    "title": "Wypisz się",
+    "confirm": "Przestać wysyłać e-maile marketingowe od {name} na adres {email}?",
+    "button": "Wypisz mnie",
+    "done": "Wypisano cię.",
+    "doneDetail": "{email} nie będzie już otrzymywać e-maili marketingowych od {name}. Potwierdzenia zamówień i paragony pozostają bez zmian.",
+    "invalid": "Ten link do wypisania się jest nieprawidłowy lub wygasł. Możesz też wypisać się przez link w nowszym e-mailu."
   }
 }

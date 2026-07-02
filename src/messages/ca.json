@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Registra't per guanyar {label}",
     "rewardSignupBannerCta": "Registra't",
     "emptyCartConfirm": "Vols treure tots els articles del cistell?",
-    "emptyCartAction": "Buida el cistell"
+    "emptyCartAction": "Buida el cistell",
+    "consent": {
+      "message": "Aquest restaurant utilitza galetes d'anàlisi (Google Analytics / Píxel de Meta) per entendre com s'usa el seu menú. Hi esteu d'acord?",
+      "accept": "Accepta",
+      "decline": "No, gràcies"
+    }
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Dòlars de Recompensa"
+  },
+  "unsubscribe": {
+    "title": "Cancel·la la subscripció",
+    "confirm": "Deixar d'enviar correus de màrqueting de {name} a {email}?",
+    "button": "Cancel·la la meva subscripció",
+    "done": "Subscripció cancel·lada.",
+    "doneDetail": "{email} ja no rebrà correus de màrqueting de {name}. Les confirmacions de comanda i els rebuts no es veuen afectats.",
+    "invalid": "Aquest enllaç per cancel·lar la subscripció no és vàlid o ha caducat. També pots donar-te de baixa amb l'enllaç d'un correu més recent."
   }
 }

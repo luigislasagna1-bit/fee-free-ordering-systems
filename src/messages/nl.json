@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Meld je aan en spaar {label}",
     "rewardSignupBannerCta": "Aanmelden",
     "emptyCartConfirm": "Alle items uit je winkelwagen verwijderen?",
-    "emptyCartAction": "Winkelwagen legen"
+    "emptyCartAction": "Winkelwagen legen",
+    "consent": {
+      "message": "Dit restaurant gebruikt analytische cookies (Google Analytics / Meta-pixel) om te begrijpen hoe het menu wordt gebruikt. Vind je dat goed?",
+      "accept": "Accepteren",
+      "decline": "Nee bedankt"
+    }
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Spaartegoed"
+  },
+  "unsubscribe": {
+    "title": "Uitschrijven",
+    "confirm": "Geen marketing-e-mails van {name} meer sturen naar {email}?",
+    "button": "Schrijf mij uit",
+    "done": "Je bent uitgeschreven.",
+    "doneDetail": "{email} ontvangt geen marketing-e-mails meer van {name}. Bestelbevestigingen en bonnen blijven gewoon komen.",
+    "invalid": "Deze uitschrijflink is ongeldig of verlopen. Je kunt je ook uitschrijven via de link in een recentere e-mail."
   }
 }

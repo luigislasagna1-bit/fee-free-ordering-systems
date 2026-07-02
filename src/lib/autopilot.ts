@@ -42,6 +42,7 @@ import {
 } from "@/lib/autopilot-state";
 import { getStepPromos } from "@/lib/autopilot-promos";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
+import { customerUnsubscribeUrl } from "@/lib/unsubscribe";
 
 export type AutopilotRunSummary = {
   restaurantId: string;
@@ -107,8 +108,9 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
   });
 
   // Most-branded customer order root (verified custom domain > subdomain > apex).
+  // (The unsubscribe link is now built PER RECIPIENT inside each runner — a
+  // signed token per email via customerUnsubscribeUrl — Blocker #6.)
   const orderRootUrl = restaurantOrderUrl(restaurant, "");
-  const unsubscribeUrl = restaurantOrderUrl(restaurant, "?unsubscribe=1");
   const imprint =
     restaurant.resellerProfile?.status === "approved" && restaurant.resellerProfile.companyName
       ? restaurant.resellerProfile.companyName
@@ -148,7 +150,6 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
         restaurantId,
         restaurantName: restaurant.name,
         orderRootUrl,
-        unsubscribeUrl,
         restaurantEmail: restaurant.email,
         restaurantPhone: restaurant.phone,
         imprint,
@@ -168,7 +169,6 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
         restaurantId,
         restaurantName: restaurant.name,
         orderRootUrl,
-        unsubscribeUrl,
         restaurantEmail: restaurant.email,
         restaurantPhone: restaurant.phone,
         imprint,
@@ -193,7 +193,6 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
     const result = await runCartAbandonmentForRestaurant(restaurantId, {
       restaurantName: restaurant.name,
       orderRootUrl,
-      unsubscribeUrl,
       restaurantEmail: restaurant.email,
       restaurantPhone: restaurant.phone,
       imprint,
@@ -256,7 +255,6 @@ async function runStandardCampaign(opts: {
   restaurantId: string;
   restaurantName: string;
   orderRootUrl: string;
-  unsubscribeUrl: string;
   restaurantEmail: string | null;
   restaurantPhone: string | null;
   imprint: string | null;
@@ -303,7 +301,9 @@ async function runStandardCampaign(opts: {
         restaurantUrl: opts.orderRootUrl,
         restaurantEmail: opts.restaurantEmail ?? undefined,
         restaurantPhone: opts.restaurantPhone ?? undefined,
-        unsubscribeUrl: opts.unsubscribeUrl,
+        // Per-recipient SIGNED unsubscribe link (Blocker #6) — the RFC 8058
+        // header + footer now hit a real endpoint that flips marketingConsent.
+        unsubscribeUrl: customerUnsubscribeUrl({ restaurantId: opts.restaurantId, email: customer.email }),
       });
 
       if (res.success) {
@@ -354,7 +354,6 @@ async function runSteppedCampaign(opts: {
   restaurantId: string;
   restaurantName: string;
   orderRootUrl: string;
-  unsubscribeUrl: string;
   restaurantEmail: string | null;
   restaurantPhone: string | null;
   imprint: string | null;
@@ -426,7 +425,8 @@ async function runSteppedCampaign(opts: {
         restaurantUrl: opts.orderRootUrl,
         restaurantEmail: opts.restaurantEmail ?? undefined,
         restaurantPhone: opts.restaurantPhone ?? undefined,
-        unsubscribeUrl: opts.unsubscribeUrl,
+        // Per-recipient SIGNED unsubscribe link (Blocker #6).
+        unsubscribeUrl: customerUnsubscribeUrl({ restaurantId: opts.restaurantId, email: customer.email }),
       });
 
       if (res.success) {
@@ -566,7 +566,6 @@ export async function runCartAbandonmentForRestaurant(
   ctx: {
     restaurantName: string;
     orderRootUrl: string;
-    unsubscribeUrl: string;
     restaurantEmail: string | null;
     restaurantPhone: string | null;
     imprint: string | null;
@@ -668,7 +667,8 @@ export async function runCartAbandonmentForRestaurant(
         restaurantUrl: ctx.orderRootUrl,
         restaurantEmail: ctx.restaurantEmail ?? undefined,
         restaurantPhone: ctx.restaurantPhone ?? undefined,
-        unsubscribeUrl: ctx.unsubscribeUrl,
+        // Per-recipient SIGNED unsubscribe link (Blocker #6).
+        unsubscribeUrl: customerUnsubscribeUrl({ restaurantId, email: session.customerEmail }),
       });
 
       if (res.success) {

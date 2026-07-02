@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Региструјте се и скупљајте {label}",
     "rewardSignupBannerCta": "Регистрација",
     "emptyCartConfirm": "Уклонити све ставке из корпе?",
-    "emptyCartAction": "Испразни корпу"
+    "emptyCartAction": "Испразни корпу",
+    "consent": {
+      "message": "Овај ресторан користи аналитичке колачиће (Google Analytics / Meta Pixel) да разуме како се користи његов јеловник. Да ли се слажете?",
+      "accept": "Прихвати",
+      "decline": "Не, хвала"
+    }
   },
   "pizza": {
     "chooseSize": "Izaberite veličinu",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Nagradni bodovi"
+  },
+  "unsubscribe": {
+    "title": "Одјава",
+    "confirm": "Престати са слањем маркетиншких порука од {name} на {email}?",
+    "button": "Одјави ме",
+    "done": "Одјављени сте.",
+    "doneDetail": "{email} више неће примати маркетиншке поруке од {name}. Потврде поруџбина и рачуни нису обухваћени.",
+    "invalid": "Овај линк за одјаву је неважећи или је истекао. Можете се одјавити и преко линка у новијој поруци."
   }
 }

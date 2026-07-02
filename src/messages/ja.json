@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "登録して{label}を貯めよう",
     "rewardSignupBannerCta": "登録",
     "emptyCartConfirm": "カート内のすべての商品を削除しますか？",
-    "emptyCartAction": "カートを空にする"
+    "emptyCartAction": "カートを空にする",
+    "consent": {
+      "message": "このレストランは、メニューの利用状況を把握するために分析Cookie（Google Analytics / Meta Pixel）を使用します。よろしいですか？",
+      "accept": "同意する",
+      "decline": "同意しない"
+    }
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "リワードドル"
+  },
+  "unsubscribe": {
+    "title": "配信停止",
+    "confirm": "{name} からのマーケティングメールを {email} に送信しないようにしますか？",
+    "button": "配信を停止する",
+    "done": "配信を停止しました。",
+    "doneDetail": "{email} には {name} からのマーケティングメールが今後届きません。注文確認や領収書には影響しません。",
+    "invalid": "この配信停止リンクは無効か期限切れです。新しいメール内のリンクからも停止できます。"
   }
 }

@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Registrieren und {label} sammeln",
     "rewardSignupBannerCta": "Registrieren",
     "emptyCartConfirm": "Alle Artikel aus dem Warenkorb entfernen?",
-    "emptyCartAction": "Warenkorb leeren"
+    "emptyCartAction": "Warenkorb leeren",
+    "consent": {
+      "message": "Dieses Restaurant verwendet Analyse-Cookies (Google Analytics / Meta-Pixel), um die Nutzung seiner Speisekarte zu verstehen. Sind Sie einverstanden?",
+      "accept": "Akzeptieren",
+      "decline": "Nein danke"
+    }
   },
   "pizza": {
     "chooseSize": "Größe wählen",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Bonusguthaben"
+  },
+  "unsubscribe": {
+    "title": "Abmelden",
+    "confirm": "Keine Marketing-E-Mails von {name} mehr an {email} senden?",
+    "button": "Mich abmelden",
+    "done": "Sie sind abgemeldet.",
+    "doneDetail": "{email} erhält keine Marketing-E-Mails von {name} mehr. Bestellbestätigungen und Belege sind nicht betroffen.",
+    "invalid": "Dieser Abmeldelink ist ungültig oder abgelaufen. Sie können sich auch über den Link in einer neueren E-Mail abmelden."
   }
 }

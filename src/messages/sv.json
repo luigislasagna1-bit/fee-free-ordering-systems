@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Registrera dig och tjäna {label}",
     "rewardSignupBannerCta": "Registrera dig",
     "emptyCartConfirm": "Ta bort alla varor från varukorgen?",
-    "emptyCartAction": "Töm varukorgen"
+    "emptyCartAction": "Töm varukorgen",
+    "consent": {
+      "message": "Den här restaurangen använder analyscookies (Google Analytics / Meta-pixel) för att förstå hur menyn används. Är det okej?",
+      "accept": "Acceptera",
+      "decline": "Nej tack"
+    }
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Bonuspengar"
+  },
+  "unsubscribe": {
+    "title": "Avsluta prenumeration",
+    "confirm": "Sluta skicka marknadsföringsmejl från {name} till {email}?",
+    "button": "Avsluta min prenumeration",
+    "done": "Du är avprenumererad.",
+    "doneDetail": "{email} får inte längre marknadsföringsmejl från {name}. Orderbekräftelser och kvitton påverkas inte.",
+    "invalid": "Den här avprenumerationslänken är ogiltig eller har gått ut. Du kan också avsluta via länken i ett nyare mejl."
   }
 }

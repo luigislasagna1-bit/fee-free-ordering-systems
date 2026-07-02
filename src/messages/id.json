@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Daftar untuk mendapatkan {label}",
     "rewardSignupBannerCta": "Daftar",
     "emptyCartConfirm": "Hapus semua item dari keranjang Anda?",
-    "emptyCartAction": "Kosongkan keranjang"
+    "emptyCartAction": "Kosongkan keranjang",
+    "consent": {
+      "message": "Restoran ini menggunakan cookie analitik (Google Analytics / Meta Pixel) untuk memahami bagaimana menunya digunakan. Setuju?",
+      "accept": "Terima",
+      "decline": "Tidak, terima kasih"
+    }
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Dolar Hadiah"
+  },
+  "unsubscribe": {
+    "title": "Berhenti berlangganan",
+    "confirm": "Berhenti mengirim email pemasaran dari {name} ke {email}?",
+    "button": "Berhenti berlangganan",
+    "done": "Anda telah berhenti berlangganan.",
+    "doneDetail": "{email} tidak akan lagi menerima email pemasaran dari {name}. Konfirmasi pesanan dan struk tidak terpengaruh.",
+    "invalid": "Tautan berhenti berlangganan ini tidak valid atau kedaluwarsa. Anda juga bisa berhenti lewat tautan di email yang lebih baru."
   }
 }

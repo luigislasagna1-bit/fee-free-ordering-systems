@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Zaregistrujte sa a získajte {label}",
     "rewardSignupBannerCta": "Registrovať",
     "emptyCartConfirm": "Odstrániť všetky položky z košíka?",
-    "emptyCartAction": "Vyprázdniť košík"
+    "emptyCartAction": "Vyprázdniť košík",
+    "consent": {
+      "message": "Táto reštaurácia používa analytické cookies (Google Analytics / Meta Pixel), aby pochopila, ako sa jej menu používa. Súhlasíte?",
+      "accept": "Prijať",
+      "decline": "Nie, ďakujem"
+    }
   },
   "pizza": {
     "chooseSize": "Vybrať veľkosť",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Vernostný kredit"
+  },
+  "unsubscribe": {
+    "title": "Odhlásiť odber",
+    "confirm": "Prestať posielať marketingové e-maily od {name} na {email}?",
+    "button": "Odhlásiť ma",
+    "done": "Odber bol zrušený.",
+    "doneDetail": "{email} už nebude dostávať marketingové e-maily od {name}. Potvrdenia objednávok a účtenky zostávajú bez zmeny.",
+    "invalid": "Tento odhlasovací odkaz je neplatný alebo vypršal. Odhlásiť sa môžete aj odkazom v novšom e-maile."
   }
 }

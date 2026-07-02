@@ -28,6 +28,7 @@
 import prisma from "@/lib/db";
 import { sendAutopilotEmail, setEmailImprint } from "@/lib/email";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
+import { prospectUnsubscribeUrl } from "@/lib/unsubscribe";
 import type { Prospect, Restaurant } from "@/generated/prisma/client";
 
 /**
@@ -289,14 +290,11 @@ export async function sendInviteEmail(
       restaurantUrl: restaurantOrderUrl(restaurant, ""),
       restaurantEmail: restaurant.email ?? undefined,
       restaurantPhone: restaurant.phone ?? undefined,
-      // unsubscribeUrl: the prospect can unsubscribe by clicking the
-      // List-Unsubscribe header (Gmail's "Unsubscribe" button) which
-      // posts to the restaurant's ordering page with ?unsubscribe=1.
-      // Server-side handler flips Prospect.unsubscribedAt so the cron
-      // skips them next time.
-      unsubscribeUrl:
-        restaurantOrderUrl(restaurant, "") +
-        `?unsubscribe=1&prospect=${prospect.id}`,
+      // unsubscribeUrl: SIGNED per-prospect link (Blocker #6). Gmail's
+      // one-click button and the footer link both hit
+      // /api/public/unsubscribe, which flips Prospect.unsubscribedAt (for
+      // every list carrying this email) so the cron skips them next time.
+      unsubscribeUrl: prospectUnsubscribeUrl({ prospectId: prospect.id, email: prospect.email }),
     });
   } finally {
     if (restaurant.imprint) setEmailImprint(null);

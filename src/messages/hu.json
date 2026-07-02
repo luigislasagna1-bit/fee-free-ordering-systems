@@ -311,7 +311,12 @@
     "rewardSignupBannerText": "Regisztrálj és gyűjts {label}",
     "rewardSignupBannerCta": "Regisztráció",
     "emptyCartConfirm": "Eltávolítja az összes terméket a kosárból?",
-    "emptyCartAction": "Kosár ürítése"
+    "emptyCartAction": "Kosár ürítése",
+    "consent": {
+      "message": "Ez az étterem elemző sütiket használ (Google Analytics / Meta-pixel), hogy megértse, hogyan használják az étlapját. Rendben van?",
+      "accept": "Elfogadom",
+      "decline": "Köszönöm, nem"
+    }
   },
   "pizza": {
     "chooseSize": "Méret választása",
@@ -5885,5 +5890,13 @@
   },
   "sidebar": {
     "rewards": "Jutalomdollár"
+  },
+  "unsubscribe": {
+    "title": "Leiratkozás",
+    "confirm": "Ne küldjünk több marketing e-mailt {name} részéről a(z) {email} címre?",
+    "button": "Leiratkozom",
+    "done": "Sikeresen leiratkozott.",
+    "doneDetail": "A(z) {email} címre nem érkezik több marketing e-mail {name} részéről. A rendelés-visszaigazolásokat és a nyugtákat ez nem érinti.",
+    "invalid": "Ez a leiratkozó link érvénytelen vagy lejárt. Egy újabb e-mail leiratkozó linkjével is leiratkozhat."
   }
 }
