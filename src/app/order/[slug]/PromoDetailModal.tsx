@@ -161,6 +161,11 @@ interface Props {
   /** menuItemId → current cart quantity of PLAIN (un-customized) lines — drives the
    *  −/qty/+ stepper on eligible-item rows. */
   cartQuantities?: Record<string, number>;
+  /** Total units in the cart — shown on the "Go to cart" escape button. */
+  cartItemCount?: number;
+  /** Close this modal and open the cart drawer (Luigi 2026-07-03 — the promo
+   *  screens were dead ends; give customers a way onward). */
+  onGoToCart?: () => void;
   onClose: () => void;
 }
 
@@ -607,6 +612,8 @@ export function PromoDetailModal({
   onAddItemDirect,
   onRemoveItemDirect,
   cartQuantities,
+  cartItemCount,
+  onGoToCart,
   onClose,
 }: Props) {
   const t = useTranslations("customer.promoDetail");
@@ -818,48 +825,59 @@ export function PromoDetailModal({
           />
         </div>
 
-        {/* Footer — ONLY for free_delivery, whose "Switch to delivery" action is
-            still meaningful. Every eligible product now has its own inline
-            "+ Add" / "Customize" button (added 2026-06-26), so the old generic
-            "Start adding items" CTA that just closed the modal was redundant and
-            has been removed (Fabrizio report cmqtmfp2n). Luigi 2026-07-02. */}
-        {promo.promotionType === "free_delivery" && onSwitchOrderType && (
-          <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex justify-center">
+        {/* Footer — ALWAYS present (Luigi 2026-07-03: these screens were dead
+            ends, only the X escaped). Left: the escape hatches — "See full
+            menu" closes; "Go to cart" (with the unit count) closes AND opens
+            the cart drawer, shown once something's in the cart. Right: the
+            type-specific primary action where one exists — free_delivery's
+            "Switch to delivery", and the whole-cart promos' "Start adding
+            items" (pre-applies the promo code; payment_reward joined in the
+            2026-07-03 promo-flow audit). Item-specific promos have their
+            inline +Add/stepper rows, so escape hatches alone are right. */}
+        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex items-center gap-2 flex-wrap">
+          <button
+            onClick={onClose}
+            className="text-sm font-semibold px-3 py-2 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 transition"
+          >
+            {t("seeFullMenu")}
+          </button>
+          {onGoToCart && (cartItemCount ?? 0) > 0 && (
+            <button
+              onClick={onGoToCart}
+              className="text-sm font-semibold px-3 py-2 rounded-xl border transition hover:opacity-90"
+              style={{ borderColor: primaryColor, color: primaryColor }}
+            >
+              {t("goToCart")} ({cartItemCount})
+            </button>
+          )}
+          <div className="flex-1" />
+          {promo.promotionType === "free_delivery" && onSwitchOrderType && (
             <button
               onClick={() => {
                 onSwitchOrderType("delivery");
                 onClose();
               }}
-              className="w-full text-white font-semibold px-4 py-3 rounded-xl text-sm"
+              className="text-white font-semibold px-4 py-2.5 rounded-xl text-sm"
               style={{ backgroundColor: primaryColor }}
             >
               {t("switchToDelivery")}
             </button>
-          </div>
-        )}
-
-        {/* Whole-cart discount promos (e.g. "20% off everything", a fixed-$-off
-            code, "5% when you pay online") discount the WHOLE cart, so — unlike
-            item-specific promos — they have NO per-item "+ Add" buttons. Give
-            them a CTA to start adding items, and pre-apply the promo's code so
-            the customer doesn't have to retype it at checkout. Luigi 2026-07-02;
-            payment_reward added in the promo-flow audit 2026-07-03. */}
-        {(promo.promotionType === "fixed_cart" ||
-          promo.promotionType === "payment_reward" ||
-          (promo.promotionType === "percentage_off" && (rules.groups ?? rules.itemGroups ?? []).length === 0)) && (
-          <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex justify-center">
+          )}
+          {(promo.promotionType === "fixed_cart" ||
+            promo.promotionType === "payment_reward" ||
+            (promo.promotionType === "percentage_off" && (rules.groups ?? rules.itemGroups ?? []).length === 0)) && (
             <button
               onClick={() => {
                 if (promo.couponCode && onApplyCode) onApplyCode(promo.couponCode);
                 onClose();
               }}
-              className="w-full text-white font-semibold px-4 py-3 rounded-xl text-sm"
+              className="text-white font-semibold px-4 py-2.5 rounded-xl text-sm"
               style={{ backgroundColor: primaryColor }}
             >
               {t("startAddingItems")}
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

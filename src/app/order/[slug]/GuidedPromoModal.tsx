@@ -156,6 +156,10 @@ export function GuidedPromoModal({
   const [step, setStep] = useState(0);
   /** Scrolls back to the top of the modal when the step changes. */
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  /** Leave-guard (Luigi 2026-07-03): closing mid-build — some picks made but
+   *  the deal not finished — asks before discarding. Untouched or complete
+   *  closes silently. */
+  const [confirmLeave, setConfirmLeave] = useState(false);
 
   const slotMin = (i: number) => Math.max(1, Number(groups[i].minCount ?? 1));
   const slotMax = (i: number) => Math.max(slotMin(i), Number(groups[i].maxCount ?? slotMin(i)));
@@ -172,6 +176,13 @@ export function GuidedPromoModal({
   function goToStep(i: number) {
     setStep(Math.max(0, Math.min(groups.length - 1, i)));
     scrollRef.current?.scrollTo({ top: 0 });
+  }
+
+  /** X / backdrop route through here: a PARTIALLY built deal asks first. */
+  function requestClose() {
+    const hasAnyPick = picks.some((arr) => (arr ?? []).length > 0);
+    if (hasAnyPick && !allSatisfied) setConfirmLeave(true);
+    else onClose();
   }
 
   function completeWith(arr: Pick[][]) {
@@ -252,13 +263,40 @@ export function GuidedPromoModal({
   return (
     <div
       className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4"
-      onClick={onClose}
+      onClick={requestClose}
     >
       <div
         ref={scrollRef}
-        className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl"
+        className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl relative"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Leave-guard overlay — the deal is partially built; confirm before
+            discarding the picks. */}
+        {confirmLeave && (
+          <div className="absolute inset-0 z-30 bg-white/85 backdrop-blur-[2px] flex items-center justify-center p-6">
+            <div className="bg-white border border-gray-200 rounded-2xl shadow-xl p-5 max-w-sm w-full text-center">
+              <div className="text-sm font-bold text-gray-900 mb-1">{t("leaveTitle")}</div>
+              <p className="text-xs text-gray-500 mb-4">{t("remainingHint", { count: remaining })}</p>
+              <div className="flex gap-2 justify-center">
+                <button
+                  type="button"
+                  onClick={() => setConfirmLeave(false)}
+                  className="text-white font-semibold px-4 py-2 rounded-xl text-sm"
+                  style={{ backgroundColor: primaryColor }}
+                >
+                  {t("keepBuilding")}
+                </button>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="font-semibold px-4 py-2 rounded-xl text-sm border border-gray-200 text-gray-600 hover:bg-gray-50"
+                >
+                  {t("leaveAnyway")}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         {/* Header */}
         <div className="sticky top-0 bg-white z-10 px-5 py-4 border-b border-gray-100">
           <div className="flex items-start justify-between gap-3">
@@ -275,7 +313,7 @@ export function GuidedPromoModal({
               <p className="text-sm text-gray-500 mt-0.5">{benefitHint}</p>
             </div>
             <button
-              onClick={onClose}
+              onClick={requestClose}
               className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 flex-shrink-0"
               aria-label={t("closeAriaLabel")}
             >

@@ -106,6 +106,9 @@ export function BundleComposerModal({
   /** The slot currently on screen. */
   const [step, setStep] = useState(0);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  /** Leave-guard (Luigi 2026-07-03): closing a PARTIALLY built bundle asks
+   *  first; untouched or complete closes silently. */
+  const [confirmLeave, setConfirmLeave] = useState(false);
 
   /** Items pool per slot — memoised because we do this off the menu
    *  catalog which can be large. */
@@ -143,6 +146,13 @@ export function BundleComposerModal({
   function goToStep(i: number) {
     setStep(Math.max(0, Math.min(groups.length - 1, i)));
     scrollRef.current?.scrollTo({ top: 0 });
+  }
+
+  /** X / backdrop route through here: a partially built bundle asks first. */
+  function requestClose() {
+    const hasAnyPick = picks.some((arr) => (arr ?? []).length > 0);
+    if (hasAnyPick && !allSlotsSatisfied) setConfirmLeave(true);
+    else onClose();
   }
 
   function buildBundle(arr: string[][]): BundleCartItem {
@@ -231,13 +241,38 @@ export function BundleComposerModal({
   return (
     <div
       className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4"
-      onClick={onClose}
+      onClick={requestClose}
     >
       <div
         ref={scrollRef}
-        className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl"
+        className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl relative"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Leave-guard overlay — the bundle is partially built. */}
+        {confirmLeave && (
+          <div className="absolute inset-0 z-30 bg-white/85 backdrop-blur-[2px] flex items-center justify-center p-6">
+            <div className="bg-white border border-gray-200 rounded-2xl shadow-xl p-5 max-w-sm w-full text-center">
+              <div className="text-sm font-bold text-gray-900 mb-1">{tWiz("leaveTitle")}</div>
+              <div className="flex gap-2 justify-center mt-4">
+                <button
+                  type="button"
+                  onClick={() => setConfirmLeave(false)}
+                  className="text-white font-semibold px-4 py-2 rounded-xl text-sm"
+                  style={{ backgroundColor: primaryColor }}
+                >
+                  {tWiz("keepBuilding")}
+                </button>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="font-semibold px-4 py-2 rounded-xl text-sm border border-gray-200 text-gray-600 hover:bg-gray-50"
+                >
+                  {tWiz("leaveAnyway")}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         {/* Header */}
         <div className="sticky top-0 bg-white z-10 px-5 py-4 border-b border-gray-100">
           <div className="flex items-start justify-between gap-3">
@@ -259,7 +294,7 @@ export function BundleComposerModal({
               </p>
             </div>
             <button
-              onClick={onClose}
+              onClick={requestClose}
               className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 flex-shrink-0"
               aria-label={t("closeAriaLabel")}
             >

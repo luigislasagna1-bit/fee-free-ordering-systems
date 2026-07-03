@@ -360,6 +360,12 @@ function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, colla
 }) {
   // Only hide items when collapsing is actually active AND this one is closed.
   const collapsedNow = collapsible && collapsed;
+  // Which header this category gets (Luigi 2026-07-03): the photo banner when
+  // it has an image; an image-LESS category follows theme.categoryNoImageStyle
+  // — "band" keeps the solid-colour banner, "plain" falls back to the classic
+  // text header. showCategoryImages OFF = classic header for everything.
+  const useBanner =
+    theme.showCategoryImages && (!!cat.imageUrl || theme.categoryNoImageStyle !== "plain");
   const scrollRef = useRef<HTMLDivElement>(null);
   // Track drag state via refs (not state) so we never re-render mid-drag.
   //   • `armed`     — pointer is down; we MIGHT be about to drag.
@@ -389,7 +395,7 @@ function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, colla
   if (theme.menuLayout === "grid") {
     return (
       <div ref={onRef as any}>
-        {theme.showCategoryImages ? (
+        {useBanner ? (
           <CategoryBanner cat={cat} theme={theme} collapsible={collapsible} collapsedNow={collapsedNow} onToggleCollapse={onToggleCollapse} />
         ) : (
           <div
@@ -420,7 +426,7 @@ function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, colla
     // no thumbnail — no blank placeholder (Luigi report cmpxe0ufs).
     return (
       <div ref={onRef as any}>
-        {theme.showCategoryImages ? (
+        {useBanner ? (
           <CategoryBanner cat={cat} theme={theme} collapsible={collapsible} collapsedNow={collapsedNow} onToggleCollapse={onToggleCollapse} />
         ) : (
           <div
@@ -456,7 +462,7 @@ function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, colla
   // Mobile interaction is unchanged: native touch swipe (snap-x).
   return (
     <div ref={onRef as any}>
-      {theme.showCategoryImages ? (
+      {useBanner ? (
         <CategoryBanner cat={cat} theme={theme} collapsible={collapsible} collapsedNow={collapsedNow} onToggleCollapse={onToggleCollapse} onScroll={scroll} />
       ) : (
       <div
@@ -5891,6 +5897,13 @@ export function OrderingPageClient({
             });
           }}
           cartQuantities={promoCartQuantities}
+          // Escape hatches (Luigi 2026-07-03): the promo screens were dead
+          // ends — give customers "See full menu" (close) and "Go to cart".
+          cartItemCount={cart.reduce((s, ci) => s + ci.quantity, 0)}
+          onGoToCart={() => {
+            setActivePromoModal(null);
+            setCartOpen(true);
+          }}
           onClose={() => setActivePromoModal(null)}
         />
       )}
