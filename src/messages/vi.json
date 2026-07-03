@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Danh mục có thể thu gọn",
       "collapsibleCategoriesHint": "Khách nhấn vào một danh mục để mở rộng hoặc thu gọn các mặt hàng (kiểu GloriaFood), với nút Mở rộng tất cả / Thu gọn tất cả. Trên điện thoại mỗi danh mục bắt đầu thu gọn; trên máy tính chúng bắt đầu mở.",
       "reservationFullBg": "Nền đặt bàn toàn màn hình",
-      "reservationFullBgHint": "Trên trang Book a Table, dùng ảnh banner của bạn làm nền toàn màn hình phía sau biểu mẫu đặt bàn. Cần có ảnh banner. Tắt = banner hiển thị ở trên cùng với biểu mẫu bên dưới."
+      "reservationFullBgHint": "Trên trang Book a Table, dùng ảnh banner của bạn làm nền toàn màn hình phía sau biểu mẫu đặt bàn. Cần có ảnh banner. Tắt = banner hiển thị ở trên cùng với biểu mẫu bên dưới.",
+      "categoryNoImageStyle": "Danh mục không có ảnh hiển thị dạng",
+      "categoryNoImageBand": "Băng-rôn màu",
+      "categoryNoImagePlain": "Tiêu đề đơn giản (cổ điển)",
+      "categoryNoImageStyleHint": "Danh mục CÓ ảnh luôn hiển thị băng-rôn ảnh lớn. Cài đặt này chỉ quyết định giao diện của danh mục không có ảnh — tải ảnh cho từng danh mục trong Menu."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Tôi thêm các bản ghi này ở đâu?",
@@ -5800,7 +5804,9 @@
       "addOne": "Thêm",
       "customize": "Tùy chỉnh",
       "increaseQty": "Thêm một {name} nữa",
-      "decreaseQty": "Bớt một {name}"
+      "decreaseQty": "Bớt một {name}",
+      "seeFullMenu": "Xem toàn bộ thực đơn",
+      "goToCart": "Đến giỏ hàng"
     },
     "resetForm": {
       "passwordTooShort": "Mật khẩu phải có ít nhất 8 ký tự.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Chọn một món từ mỗi nhóm — món đắt hơn được giảm {pct}%.",
       "stepOf": "Bước {n}/{total}",
       "nextStep": "Tiếp",
-      "backStep": "Quay lại"
+      "backStep": "Quay lại",
+      "leaveTitle": "Rời đi khi chưa hoàn tất ưu đãi?",
+      "keepBuilding": "Tiếp tục",
+      "leaveAnyway": "Rời đi"
     }
   },
   "dunning": {

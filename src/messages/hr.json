@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Sklopive kategorije",
       "collapsibleCategoriesHint": "Kupci dodiruju kategoriju za proširenje ili sklapanje njezinih stavki (GloriaFood stil), s kontrolama Proširi sve / Sklopi sve. Na telefonu svaka kategorija počinje sklopljena; na računalu počinju otvorene.",
       "reservationFullBg": "Pozadina rezervacije preko cijelog zaslona",
-      "reservationFullBgHint": "Na stranici Book a Table koristite svoju banner fotografiju kao pozadinu preko cijelog zaslona iza obrasca za rezervaciju. Potrebna je banner slika. Isključeno = banner hero na vrhu s obrascem ispod."
+      "reservationFullBgHint": "Na stranici Book a Table koristite svoju banner fotografiju kao pozadinu preko cijelog zaslona iza obrasca za rezervaciju. Potrebna je banner slika. Isključeno = banner hero na vrhu s obrascem ispod.",
+      "categoryNoImageStyle": "Kategorije bez fotografije prikazuju se kao",
+      "categoryNoImageBand": "Traka u boji",
+      "categoryNoImagePlain": "Jednostavan naslov (klasični)",
+      "categoryNoImageStyleHint": "Kategorije SA fotografijom uvijek dobivaju veliki fotobanner. Ovo određuje samo izgled onih bez — prenesite fotografije po kategoriji u Izborniku."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Gdje dodajem ove zapise?",
@@ -5800,7 +5804,9 @@
       "addOne": "Dodaj",
       "customize": "Prilagodi",
       "increaseQty": "Dodaj još jedan {name}",
-      "decreaseQty": "Ukloni jedan {name}"
+      "decreaseQty": "Ukloni jedan {name}",
+      "seeFullMenu": "Pogledaj cijeli jelovnik",
+      "goToCart": "Idi na košaricu"
     },
     "resetForm": {
       "passwordTooShort": "Lozinka mora imati najmanje 8 znakova.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Odaberite jedan artikl iz svake skupine — skuplji artikl ima {pct}% popusta.",
       "stepOf": "Korak {n} od {total}",
       "nextStep": "Dalje",
-      "backStep": "Natrag"
+      "backStep": "Natrag",
+      "leaveTitle": "Napustiti nedovršenu ponudu?",
+      "keepBuilding": "Nastavi",
+      "leaveAnyway": "Izađi"
     }
   },
   "dunning": {

@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Склопиве категорије",
       "collapsibleCategoriesHint": "Купци додирну категорију да прошире или склопе њене ставке (GloriaFood стил), са контролама Прошири све / Склопи све. На телефону свака категорија почиње склопљена; на рачунару почињу отворене.",
       "reservationFullBg": "Pozadina rezervacije preko celog ekrana",
-      "reservationFullBgHint": "Na stranici Book a Table koristite fotografiju vašeg banera kao pozadinu preko celog ekrana iza obrasca za rezervaciju. Potrebna je slika banera. Isključeno = baner u zaglavlju na vrhu, a obrazac ispod."
+      "reservationFullBgHint": "Na stranici Book a Table koristite fotografiju vašeg banera kao pozadinu preko celog ekrana iza obrasca za rezervaciju. Potrebna je slika banera. Isključeno = baner u zaglavlju na vrhu, a obrazac ispod.",
+      "categoryNoImageStyle": "Категорије без фотографије се приказују као",
+      "categoryNoImageBand": "Трака у боји",
+      "categoryNoImagePlain": "Једноставан наслов (класични)",
+      "categoryNoImageStyleHint": "Категорије СА фотографијом увек добијају велики фото банер. Ово одређује само изглед оних без — додајте фотографије по категорији у Менију."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Gde dodajem ove zapise?",
@@ -5800,7 +5804,9 @@
       "addOne": "Додај",
       "customize": "Прилагоди",
       "increaseQty": "Додај још један {name}",
-      "decreaseQty": "Уклони један {name}"
+      "decreaseQty": "Уклони један {name}",
+      "seeFullMenu": "Погледај цео јеловник",
+      "goToCart": "Иди у корпу"
     },
     "resetForm": {
       "passwordTooShort": "Lozinka mora imati najmanje 8 karaktera.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Izaberite po jedan artikal iz svake grupe — skuplji artikal ima popust od {pct}%.",
       "stepOf": "Корак {n} од {total}",
       "nextStep": "Даље",
-      "backStep": "Назад"
+      "backStep": "Назад",
+      "leaveTitle": "Напустити недовршену понуду?",
+      "keepBuilding": "Настави",
+      "leaveAnyway": "Изађи"
     }
   },
   "dunning": {

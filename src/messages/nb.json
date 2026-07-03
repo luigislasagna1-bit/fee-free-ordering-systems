@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Sammenleggbare kategorier",
       "collapsibleCategoriesHint": "Kunder trykker på en kategori for å utvide eller skjule varene (GloriaFood-stil), med Utvid alle / Skjul alle. På telefon starter hver kategori skjult; på datamaskin starter de åpne.",
       "reservationFullBg": "Fullskjerms reservasjonsbakgrunn",
-      "reservationFullBgHint": "På Book a Table-siden brukes bannerbildet ditt som fullskjermsbakgrunn bak bestillingsskjemaet. Krever et bannerbilde. Av = en bannerhero øverst med skjemaet under."
+      "reservationFullBgHint": "På Book a Table-siden brukes bannerbildet ditt som fullskjermsbakgrunn bak bestillingsskjemaet. Krever et bannerbilde. Av = en bannerhero øverst med skjemaet under.",
+      "categoryNoImageStyle": "Kategorier uten foto vises som",
+      "categoryNoImageBand": "Fargebanner",
+      "categoryNoImagePlain": "Enkel overskrift (klassisk)",
+      "categoryNoImageStyleHint": "Kategorier MED foto får alltid det store fotobanneret. Dette bestemmer bare utseendet til dem uten — last opp bilder per kategori under Meny."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Hvor legger jeg til disse oppføringene?",
@@ -5800,7 +5804,9 @@
       "addOne": "Legg til",
       "customize": "Tilpass",
       "increaseQty": "Legg til enda en {name}",
-      "decreaseQty": "Fjern en {name}"
+      "decreaseQty": "Fjern en {name}",
+      "seeFullMenu": "Se hele menyen",
+      "goToCart": "Gå til handlekurv"
     },
     "resetForm": {
       "passwordTooShort": "Passordet må være minst 8 tegn.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Velg én vare fra hver gruppe — den dyreste varen får {pct}% rabatt.",
       "stepOf": "Trinn {n} av {total}",
       "nextStep": "Neste",
-      "backStep": "Tilbake"
+      "backStep": "Tilbake",
+      "leaveTitle": "Forlate tilbudet uferdig?",
+      "keepBuilding": "Fortsett",
+      "leaveAnyway": "Forlat"
     }
   },
   "dunning": {

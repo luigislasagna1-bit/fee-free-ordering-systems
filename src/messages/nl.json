@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Inklapbare categorieën",
       "collapsibleCategoriesHint": "Klanten tikken op een categorie om de items uit of in te klappen (GloriaFood-stijl), met Alles uitklappen / Alles inklappen. Op de telefoon start elke categorie ingeklapt; op desktop staan ze open.",
       "reservationFullBg": "Reserveringsachtergrond op volledig scherm",
-      "reservationFullBgHint": "Gebruik op de Book a Table-pagina je bannerfoto als achtergrond op volledig scherm achter het reserveringsformulier. Vereist een bannerafbeelding. Uit = een bannerhero bovenaan met het formulier eronder."
+      "reservationFullBgHint": "Gebruik op de Book a Table-pagina je bannerfoto als achtergrond op volledig scherm achter het reserveringsformulier. Vereist een bannerafbeelding. Uit = een bannerhero bovenaan met het formulier eronder.",
+      "categoryNoImageStyle": "Categorieën zonder foto tonen als",
+      "categoryNoImageBand": "Kleurenbanner",
+      "categoryNoImagePlain": "Eenvoudige kop (klassiek)",
+      "categoryNoImageStyleHint": "Categorieën MET foto krijgen altijd de grote fotobanner. Dit bepaalt alleen de weergave van categorieën zonder foto — upload foto's per categorie onder Menu."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Waar voeg ik deze records toe?",
@@ -5800,7 +5804,9 @@
       "addOne": "Toevoegen",
       "customize": "Aanpassen",
       "increaseQty": "Nog een {name} toevoegen",
-      "decreaseQty": "Eén {name} verwijderen"
+      "decreaseQty": "Eén {name} verwijderen",
+      "seeFullMenu": "Volledig menu bekijken",
+      "goToCart": "Naar winkelwagen"
     },
     "resetForm": {
       "passwordTooShort": "Het wachtwoord moet minimaal 8 tekens bevatten.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Kies één item uit elke groep — op het duurste item krijg je {pct}% korting.",
       "stepOf": "Stap {n} van {total}",
       "nextStep": "Volgende",
-      "backStep": "Terug"
+      "backStep": "Terug",
+      "leaveTitle": "Deze deal onafgemaakt verlaten?",
+      "keepBuilding": "Doorgaan",
+      "leaveAnyway": "Verlaten"
     }
   },
   "dunning": {

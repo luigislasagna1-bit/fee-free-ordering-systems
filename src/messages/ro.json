@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Categorii pliabile",
       "collapsibleCategoriesHint": "Clienții ating o categorie pentru a-i extinde sau plia articolele (stil GloriaFood), cu Extinde tot / Pliază tot. Pe telefon fiecare categorie începe pliată; pe desktop încep deschise.",
       "reservationFullBg": "Fundal rezervare pe tot ecranul",
-      "reservationFullBgHint": "Pe pagina Book a Table, folosește fotografia banner ca fundal pe tot ecranul în spatele formularului de rezervare. Necesită o imagine banner. Dezactivat = un banner hero în partea de sus, cu formularul dedesubt."
+      "reservationFullBgHint": "Pe pagina Book a Table, folosește fotografia banner ca fundal pe tot ecranul în spatele formularului de rezervare. Necesită o imagine banner. Dezactivat = un banner hero în partea de sus, cu formularul dedesubt.",
+      "categoryNoImageStyle": "Categoriile fără fotografie apar ca",
+      "categoryNoImageBand": "Banner colorat",
+      "categoryNoImagePlain": "Antet simplu (clasic)",
+      "categoryNoImageStyleHint": "Categoriile CU fotografie primesc mereu bannerul foto mare. Aceasta decide doar aspectul celor fără — încărcați fotografii pe categorie în Meniu."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Unde adaug aceste înregistrări?",
@@ -5800,7 +5804,9 @@
       "addOne": "Adaugă",
       "customize": "Personalizează",
       "increaseQty": "Adaugă încă un {name}",
-      "decreaseQty": "Elimină un {name}"
+      "decreaseQty": "Elimină un {name}",
+      "seeFullMenu": "Vezi tot meniul",
+      "goToCart": "Mergi la coș"
     },
     "resetForm": {
       "passwordTooShort": "Parola trebuie să aibă cel puțin 8 caractere.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Alege câte un produs din fiecare grup — produsul mai scump are {pct}% reducere.",
       "stepOf": "Pasul {n} din {total}",
       "nextStep": "Următorul",
-      "backStep": "Înapoi"
+      "backStep": "Înapoi",
+      "leaveTitle": "Părăsiți oferta neterminată?",
+      "keepBuilding": "Continuă",
+      "leaveAnyway": "Ieși"
     }
   },
   "dunning": {

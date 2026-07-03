@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "فئات قابلة للطي",
       "collapsibleCategoriesHint": "ينقر العملاء على فئة لتوسيع عناصرها أو طيّها (بأسلوب GloriaFood)، مع أدوات توسيع الكل / طيّ الكل. على الهاتف تبدأ كل فئة مطويّة؛ وعلى سطح المكتب تبدأ مفتوحة.",
       "reservationFullBg": "خلفية حجز بملء الشاشة",
-      "reservationFullBgHint": "في صفحة \"Book a Table\"، استخدم صورة لافتتك كخلفية بملء الشاشة خلف نموذج الحجز. يتطلب صورة لافتة. عند الإيقاف = لافتة بارزة في الأعلى مع النموذج أسفلها."
+      "reservationFullBgHint": "في صفحة \"Book a Table\"، استخدم صورة لافتتك كخلفية بملء الشاشة خلف نموذج الحجز. يتطلب صورة لافتة. عند الإيقاف = لافتة بارزة في الأعلى مع النموذج أسفلها.",
+      "categoryNoImageStyle": "تظهر الفئات بدون صورة كـ",
+      "categoryNoImageBand": "شريط ملوّن",
+      "categoryNoImagePlain": "عنوان بسيط (كلاسيكي)",
+      "categoryNoImageStyleHint": "الفئات التي لها صورة تحصل دائمًا على الشريط الكبير بالصورة. هذا يحدد فقط مظهر الفئات بدون صورة — ارفع الصور لكل فئة من قائمة الطعام."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "أين أضيف هذه السجلات؟",
@@ -5800,7 +5804,9 @@
       "addOne": "إضافة",
       "customize": "تخصيص",
       "increaseQty": "أضف {name} آخر",
-      "decreaseQty": "أزل {name} واحدًا"
+      "decreaseQty": "أزل {name} واحدًا",
+      "seeFullMenu": "عرض القائمة كاملة",
+      "goToCart": "اذهب إلى السلة"
     },
     "resetForm": {
       "passwordTooShort": "يجب أن تكون كلمة المرور 8 أحرف على الأقل.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "اختر صنفًا واحدًا من كل مجموعة — والصنف الأغلى بخصم {pct}%.",
       "stepOf": "الخطوة {n} من {total}",
       "nextStep": "التالي",
-      "backStep": "رجوع"
+      "backStep": "رجوع",
+      "leaveTitle": "مغادرة العرض دون إكماله؟",
+      "keepBuilding": "متابعة",
+      "leaveAnyway": "مغادرة"
     }
   },
   "dunning": {

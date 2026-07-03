@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Categorias recolhíveis",
       "collapsibleCategoriesHint": "Os clientes tocam em uma categoria para expandir ou recolher seus itens (estilo GloriaFood), com botões Expandir tudo / Recolher tudo. No celular cada categoria começa recolhida; no desktop começam abertas.",
       "reservationFullBg": "Fundo de tela cheia na página de reservas",
-      "reservationFullBgHint": "Na página Book a Table, use a foto do seu banner como fundo de tela cheia atrás do formulário de reserva. Requer uma imagem de banner. Desativado = um banner em destaque no topo com o formulário abaixo."
+      "reservationFullBgHint": "Na página Book a Table, use a foto do seu banner como fundo de tela cheia atrás do formulário de reserva. Requer uma imagem de banner. Desativado = um banner em destaque no topo com o formulário abaixo.",
+      "categoryNoImageStyle": "Categorias sem foto aparecem como",
+      "categoryNoImageBand": "Banner colorido",
+      "categoryNoImagePlain": "Cabeçalho simples (clássico)",
+      "categoryNoImageStyleHint": "As categorias COM foto sempre têm o banner grande com imagem. Isto só decide o visual das que não têm — envie fotos por categoria em Menu."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Onde adiciono esses registros?",
@@ -5800,7 +5804,9 @@
       "addOne": "Adicionar",
       "customize": "Personalizar",
       "increaseQty": "Adicionar mais um {name}",
-      "decreaseQty": "Remover um {name}"
+      "decreaseQty": "Remover um {name}",
+      "seeFullMenu": "Ver o cardápio completo",
+      "goToCart": "Ir para o carrinho"
     },
     "resetForm": {
       "passwordTooShort": "A senha deve ter pelo menos 8 caracteres.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Escolha um item de cada grupo — o item mais caro tem {pct}% de desconto.",
       "stepOf": "Passo {n} de {total}",
       "nextStep": "Próximo",
-      "backStep": "Voltar"
+      "backStep": "Voltar",
+      "leaveTitle": "Sair sem terminar esta oferta?",
+      "keepBuilding": "Continuar",
+      "leaveAnyway": "Sair"
     }
   },
   "dunning": {

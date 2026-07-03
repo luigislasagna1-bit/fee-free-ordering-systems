@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Sbalitelné kategorie",
       "collapsibleCategoriesHint": "Zákazníci klepnou na kategorii, aby rozbalili nebo sbalili její položky (styl GloriaFood), s tlačítky Rozbalit vše / Sbalit vše. Na telefonu každá kategorie začíná sbalená; na počítači jsou otevřené.",
       "reservationFullBg": "Pozadí rezervace na celou obrazovku",
-      "reservationFullBgHint": "Na stránce Book a Table použít fotku banneru jako pozadí na celou obrazovku za rezervačním formulářem. Vyžaduje obrázek banneru. Vypnuto = banner hero nahoře a formulář pod ním."
+      "reservationFullBgHint": "Na stránce Book a Table použít fotku banneru jako pozadí na celou obrazovku za rezervačním formulářem. Vyžaduje obrázek banneru. Vypnuto = banner hero nahoře a formulář pod ním.",
+      "categoryNoImageStyle": "Kategorie bez fotky se zobrazí jako",
+      "categoryNoImageBand": "Barevný banner",
+      "categoryNoImagePlain": "Jednoduchý nadpis (klasický)",
+      "categoryNoImageStyleHint": "Kategorie S fotkou mají vždy velký fotobanner. Toto určuje jen vzhled těch bez fotky — fotky nahrajete u kategorií v Menu."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kde přidám tyto záznamy?",
@@ -5800,7 +5804,9 @@
       "addOne": "Přidat",
       "customize": "Přizpůsobit",
       "increaseQty": "Přidat další {name}",
-      "decreaseQty": "Odebrat jeden {name}"
+      "decreaseQty": "Odebrat jeden {name}",
+      "seeFullMenu": "Zobrazit celé menu",
+      "goToCart": "Přejít do košíku"
     },
     "resetForm": {
       "passwordTooShort": "Heslo musí mít alespoň 8 znaků.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Vyberte jednu položku z každé skupiny — na dražší položku získáte slevu {pct} %.",
       "stepOf": "Krok {n} z {total}",
       "nextStep": "Další",
-      "backStep": "Zpět"
+      "backStep": "Zpět",
+      "leaveTitle": "Odejít bez dokončení nabídky?",
+      "keepBuilding": "Pokračovat",
+      "leaveAnyway": "Odejít"
     }
   },
   "dunning": {

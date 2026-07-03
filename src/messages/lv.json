@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Sakļaujamas kategorijas",
       "collapsibleCategoriesHint": "Klienti pieskaras kategorijai, lai izvērstu vai sakļautu tās preces (GloriaFood stilā), ar pogām Izvērst visu / Sakļaut visu. Telefonā katra kategorija sākas sakļauta; datorā tās sākas atvērtas.",
       "reservationFullBg": "Pilnekrāna rezervācijas fons",
-      "reservationFullBgHint": "Lapā “Rezervēt galdu” izmantojiet sava banera fotoattēlu kā pilnekrāna fonu aiz rezervācijas formas. Nepieciešams banera attēls. Izslēgts = banera varoņattēls augšā ar formu zem tā."
+      "reservationFullBgHint": "Lapā “Rezervēt galdu” izmantojiet sava banera fotoattēlu kā pilnekrāna fonu aiz rezervācijas formas. Nepieciešams banera attēls. Izslēgts = banera varoņattēls augšā ar formu zem tā.",
+      "categoryNoImageStyle": "Kategorijas bez foto tiek rādītas kā",
+      "categoryNoImageBand": "Krāsains baneris",
+      "categoryNoImagePlain": "Vienkāršs virsraksts (klasisks)",
+      "categoryNoImageStyleHint": "Kategorijas AR foto vienmēr saņem lielo foto baneri. Tas nosaka tikai to izskatu, kurām foto nav — augšupielādējiet foto pie kategorijām sadaļā Izvēlne."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kur pievienot šos ierakstus?",
@@ -5800,7 +5804,9 @@
       "addOne": "Pievienot",
       "customize": "Pielāgot",
       "increaseQty": "Pievienot vēl vienu {name}",
-      "decreaseQty": "Noņemt vienu {name}"
+      "decreaseQty": "Noņemt vienu {name}",
+      "seeFullMenu": "Skatīt visu ēdienkarti",
+      "goToCart": "Uz grozu"
     },
     "resetForm": {
       "passwordTooShort": "Parolei jābūt vismaz 8 rakstzīmēm.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Izvēlieties pa vienam ēdienam no katras grupas — dārgākajam ēdienam ir {pct}% atlaide.",
       "stepOf": "{n}. solis no {total}",
       "nextStep": "Tālāk",
-      "backStep": "Atpakaļ"
+      "backStep": "Atpakaļ",
+      "leaveTitle": "Pamest nepabeigtu piedāvājumu?",
+      "keepBuilding": "Turpināt",
+      "leaveAnyway": "Iziet"
     }
   },
   "dunning": {

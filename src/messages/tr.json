@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Daraltılabilir kategoriler",
       "collapsibleCategoriesHint": "Müşteriler bir kategoriye dokunarak ürünlerini genişletir veya daraltır (GloriaFood tarzı), Tümünü genişlet / Tümünü daralt denetimleriyle. Telefonda her kategori daraltılmış başlar; masaüstünde açık başlar.",
       "reservationFullBg": "Tam ekran rezervasyon arka planı",
-      "reservationFullBgHint": "Book a Table sayfasında, afiş fotoğrafınızı rezervasyon formunun arkasında tam ekran arka plan olarak kullanın. Bir afiş görseli gerekir. Kapalı = üstte afiş hero alanı, altında form."
+      "reservationFullBgHint": "Book a Table sayfasında, afiş fotoğrafınızı rezervasyon formunun arkasında tam ekran arka plan olarak kullanın. Bir afiş görseli gerekir. Kapalı = üstte afiş hero alanı, altında form.",
+      "categoryNoImageStyle": "Fotoğrafsız kategoriler şöyle görünür",
+      "categoryNoImageBand": "Renkli banner",
+      "categoryNoImagePlain": "Sade başlık (klasik)",
+      "categoryNoImageStyleHint": "Fotoğraflı kategoriler her zaman büyük fotoğraflı banner alır. Bu yalnızca fotoğrafı olmayanların görünümünü belirler — fotoğrafları Menü altında kategori başına yükleyin."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Bu kayıtları nereye ekliyorum?",
@@ -5800,7 +5804,9 @@
       "addOne": "Ekle",
       "customize": "Özelleştir",
       "increaseQty": "Bir {name} daha ekle",
-      "decreaseQty": "Bir {name} çıkar"
+      "decreaseQty": "Bir {name} çıkar",
+      "seeFullMenu": "Tüm menüyü gör",
+      "goToCart": "Sepete git"
     },
     "resetForm": {
       "passwordTooShort": "Şifre en az 8 karakter olmalıdır.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Her gruptan bir ürün seçin — pahalı olan üründe %{pct} indirim var.",
       "stepOf": "Adım {n}/{total}",
       "nextStep": "İleri",
-      "backStep": "Geri"
+      "backStep": "Geri",
+      "leaveTitle": "Fırsatı yarım mı bırakıyorsunuz?",
+      "keepBuilding": "Devam et",
+      "leaveAnyway": "Ayrıl"
     }
   },
   "dunning": {

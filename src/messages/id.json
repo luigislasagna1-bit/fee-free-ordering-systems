@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Kategori yang dapat diciutkan",
       "collapsibleCategoriesHint": "Pelanggan mengetuk kategori untuk membuka atau menciutkan itemnya (gaya GloriaFood), dengan kontrol Buka semua / Ciutkan semua. Di ponsel setiap kategori dimulai dalam keadaan diciutkan; di desktop dimulai terbuka.",
       "reservationFullBg": "Latar belakang reservasi layar penuh",
-      "reservationFullBgHint": "Pada halaman Book a Table, gunakan foto banner Anda sebagai latar belakang layar penuh di belakang formulir pemesanan. Memerlukan gambar banner. Nonaktif = banner hero di bagian atas dengan formulir di bawahnya."
+      "reservationFullBgHint": "Pada halaman Book a Table, gunakan foto banner Anda sebagai latar belakang layar penuh di belakang formulir pemesanan. Memerlukan gambar banner. Nonaktif = banner hero di bagian atas dengan formulir di bawahnya.",
+      "categoryNoImageStyle": "Kategori tanpa foto tampil sebagai",
+      "categoryNoImageBand": "Banner warna",
+      "categoryNoImagePlain": "Judul sederhana (klasik)",
+      "categoryNoImageStyleHint": "Kategori DENGAN foto selalu mendapat banner foto besar. Ini hanya menentukan tampilan yang tanpa foto — unggah foto per kategori di Menu."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Di mana saya menambahkan record ini?",
@@ -5800,7 +5804,9 @@
       "addOne": "Tambah",
       "customize": "Sesuaikan",
       "increaseQty": "Tambah satu {name} lagi",
-      "decreaseQty": "Hapus satu {name}"
+      "decreaseQty": "Hapus satu {name}",
+      "seeFullMenu": "Lihat menu lengkap",
+      "goToCart": "Ke keranjang"
     },
     "resetForm": {
       "passwordTooShort": "Kata sandi harus minimal 8 karakter.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Pilih satu item dari tiap grup — item yang lebih mahal diskon {pct}%.",
       "stepOf": "Langkah {n} dari {total}",
       "nextStep": "Berikutnya",
-      "backStep": "Kembali"
+      "backStep": "Kembali",
+      "leaveTitle": "Tinggalkan penawaran yang belum selesai?",
+      "keepBuilding": "Lanjutkan",
+      "leaveAnyway": "Keluar"
     }
   },
   "dunning": {

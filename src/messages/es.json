@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Categorías plegables",
       "collapsibleCategoriesHint": "Los clientes tocan una categoría para expandir o contraer sus artículos (estilo GloriaFood), con controles Expandir todo / Contraer todo. En el móvil cada categoría empieza contraída; en el escritorio empiezan abiertas.",
       "reservationFullBg": "Fondo de reserva a pantalla completa",
-      "reservationFullBgHint": "En la página de Book a Table, usa la foto de tu banner como fondo a pantalla completa detrás del formulario de reserva. Requiere una imagen de banner. Desactivado = un banner destacado en la parte superior con el formulario debajo."
+      "reservationFullBgHint": "En la página de Book a Table, usa la foto de tu banner como fondo a pantalla completa detrás del formulario de reserva. Requiere una imagen de banner. Desactivado = un banner destacado en la parte superior con el formulario debajo.",
+      "categoryNoImageStyle": "Las categorías sin foto se muestran como",
+      "categoryNoImageBand": "Banner de color",
+      "categoryNoImagePlain": "Encabezado simple (clásico)",
+      "categoryNoImageStyleHint": "Las categorías CON foto siempre tienen el banner grande con imagen. Esto solo decide el aspecto de las que no tienen — sube fotos por categoría en Menú."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "¿Dónde añado estos registros?",
@@ -5800,7 +5804,9 @@
       "addOne": "Añadir",
       "customize": "Personalizar",
       "increaseQty": "Añadir un {name} más",
-      "decreaseQty": "Quitar un {name}"
+      "decreaseQty": "Quitar un {name}",
+      "seeFullMenu": "Ver todo el menú",
+      "goToCart": "Ir al carrito"
     },
     "resetForm": {
       "passwordTooShort": "La contraseña debe tener al menos 8 caracteres.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Elige un artículo de cada grupo: el artículo más caro tiene un {pct}% de descuento.",
       "stepOf": "Paso {n} de {total}",
       "nextStep": "Siguiente",
-      "backStep": "Atrás"
+      "backStep": "Atrás",
+      "leaveTitle": "¿Salir sin terminar esta oferta?",
+      "keepBuilding": "Seguir",
+      "leaveAnyway": "Salir"
     }
   },
   "dunning": {

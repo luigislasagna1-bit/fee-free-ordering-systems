@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "可折叠的类别",
       "collapsibleCategoriesHint": "顾客点按某个类别即可展开或折叠其商品（GloriaFood 风格），并带有“全部展开/全部折叠”控件。手机上每个类别默认折叠；桌面端默认展开。",
       "reservationFullBg": "全屏预订背景",
-      "reservationFullBgHint": "在 Book a Table 页面，将横幅图片用作预订表单后方的全屏背景。需要横幅图片。关闭 = 顶部显示横幅主图，表单显示在下方。"
+      "reservationFullBgHint": "在 Book a Table 页面，将横幅图片用作预订表单后方的全屏背景。需要横幅图片。关闭 = 顶部显示横幅主图，表单显示在下方。",
+      "categoryNoImageStyle": "无图片的分类显示为",
+      "categoryNoImageBand": "彩色横幅",
+      "categoryNoImagePlain": "简洁标题（经典）",
+      "categoryNoImageStyleHint": "有图片的分类始终显示大图横幅。此设置只决定无图片分类的样式——可在“菜单”中为每个分类上传图片。"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "在哪里添加这些记录？",
@@ -5800,7 +5804,9 @@
       "addOne": "添加",
       "customize": "自定义",
       "increaseQty": "再加一份{name}",
-      "decreaseQty": "减少一份{name}"
+      "decreaseQty": "减少一份{name}",
+      "seeFullMenu": "查看完整菜单",
+      "goToCart": "前往购物车"
     },
     "resetForm": {
       "passwordTooShort": "密码至少需要 8 个字符。",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "从每组中各选一件商品 —— 较贵的那件可享 {pct}% 折扣。",
       "stepOf": "第 {n} 步，共 {total} 步",
       "nextStep": "下一步",
-      "backStep": "上一步"
+      "backStep": "上一步",
+      "leaveTitle": "要放弃未完成的优惠吗？",
+      "keepBuilding": "继续选择",
+      "leaveAnyway": "离开"
     }
   },
   "dunning": {

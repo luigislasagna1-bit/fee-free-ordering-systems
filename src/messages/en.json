@@ -3162,7 +3162,11 @@
       "previewItem3": "Veggie",
       "previewNote": "This is a simplified preview.",
       "previewLivePage": "View live page →",
-      "menuList": "List (photos left)"
+      "menuList": "List (photos left)",
+      "categoryNoImageStyle": "Categories without a photo show as",
+      "categoryNoImageBand": "Color banner",
+      "categoryNoImagePlain": "Simple header (classic)",
+      "categoryNoImageStyleHint": "Categories WITH a photo always get the big photo banner. This only decides the look of categories that don't have one — upload photos per category under Menu."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Where do I add these records?",
@@ -5613,7 +5617,10 @@
       "hintCombo": "Pick one from each group — the combo discount applies automatically.",
       "stepOf": "Step {n} of {total}",
       "nextStep": "Next",
-      "backStep": "Back"
+      "backStep": "Back",
+      "leaveTitle": "Leave this deal unfinished?",
+      "keepBuilding": "Keep building",
+      "leaveAnyway": "Leave"
     },
     "loginForm": {
       "emailLabel": "Email",
@@ -5844,7 +5851,9 @@
       "addOne": "Add",
       "customize": "Customize",
       "increaseQty": "Add one more {name}",
-      "decreaseQty": "Remove a {name}"
+      "decreaseQty": "Remove a {name}",
+      "seeFullMenu": "See full menu",
+      "goToCart": "Go to cart"
     },
     "resetForm": {
       "passwordTooShort": "Password must be at least 8 characters.",

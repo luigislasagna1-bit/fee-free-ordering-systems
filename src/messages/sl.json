@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Zložljive kategorije",
       "collapsibleCategoriesHint": "Stranke se dotaknejo kategorije, da razširijo ali strnejo njene izdelke (slog GloriaFood), z gumboma Razširi vse / Strni vse. Na telefonu se vsaka kategorija začne strnjena; na namizju se začnejo odprte.",
       "reservationFullBg": "Celozaslonsko ozadje rezervacije",
-      "reservationFullBgHint": "Na strani Book a Table uporabite fotografijo pasice kot celozaslonsko ozadje za obrazcem za rezervacijo. Potrebuje sliko pasice. Izklopljeno = pasica na vrhu z obrazcem pod njo."
+      "reservationFullBgHint": "Na strani Book a Table uporabite fotografijo pasice kot celozaslonsko ozadje za obrazcem za rezervacijo. Potrebuje sliko pasice. Izklopljeno = pasica na vrhu z obrazcem pod njo.",
+      "categoryNoImageStyle": "Kategorije brez fotografije so prikazane kot",
+      "categoryNoImageBand": "Barvna pasica",
+      "categoryNoImagePlain": "Preprost naslov (klasičen)",
+      "categoryNoImageStyleHint": "Kategorije S fotografijo vedno dobijo veliko foto pasico. To določa le videz tistih brez — fotografije naložite pri kategorijah v Meniju."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kje dodajem te zapise?",
@@ -5800,7 +5804,9 @@
       "addOne": "Dodaj",
       "customize": "Prilagodi",
       "increaseQty": "Dodaj še en {name}",
-      "decreaseQty": "Odstrani en {name}"
+      "decreaseQty": "Odstrani en {name}",
+      "seeFullMenu": "Ogled celotnega menija",
+      "goToCart": "Pojdi v košarico"
     },
     "resetForm": {
       "passwordTooShort": "Geslo mora imeti vsaj 8 znakov.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Izberite po enega artikel iz vsake skupine — dražji je {pct} % ceneje.",
       "stepOf": "Korak {n} od {total}",
       "nextStep": "Naprej",
-      "backStep": "Nazaj"
+      "backStep": "Nazaj",
+      "leaveTitle": "Zapustiti nedokončano ponudbo?",
+      "keepBuilding": "Nadaljuj",
+      "leaveAnyway": "Zapusti"
     }
   },
   "dunning": {

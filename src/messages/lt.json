@@ -1877,7 +1877,11 @@
       "collapsibleCategories": "Sutraukiamos kategorijos",
       "collapsibleCategoriesHint": "Klientai paliečia kategoriją, kad išplėstų arba sutrauktų jos prekes (GloriaFood stiliumi), su mygtukais Išplėsti viską / Sutraukti viską. Telefone kiekviena kategorija prasideda sutraukta; kompiuteryje – atidaryta.",
       "reservationFullBg": "Rezervacijos fonas per visą ekraną",
-      "reservationFullBgHint": "Puslapyje „Book a Table\" naudokite savo reklamjuostės nuotrauką kaip viso ekrano foną už rezervacijos formos. Reikia reklamjuostės vaizdo. Išjungta = reklamjuostės herojus viršuje, o forma žemiau."
+      "reservationFullBgHint": "Puslapyje „Book a Table\" naudokite savo reklamjuostės nuotrauką kaip viso ekrano foną už rezervacijos formos. Reikia reklamjuostės vaizdo. Išjungta = reklamjuostės herojus viršuje, o forma žemiau.",
+      "categoryNoImageStyle": "Kategorijos be nuotraukos rodomos kaip",
+      "categoryNoImageBand": "Spalvota juosta",
+      "categoryNoImagePlain": "Paprasta antraštė (klasikinė)",
+      "categoryNoImageStyleHint": "Kategorijos SU nuotrauka visada gauna didelę foto juostą. Tai lemia tik neturinčių išvaizdą — nuotraukas įkelkite prie kategorijų Meniu."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kur pridėti šiuos įrašus?",
@@ -5800,7 +5804,9 @@
       "addOne": "Pridėti",
       "customize": "Tinkinti",
       "increaseQty": "Pridėti dar vieną {name}",
-      "decreaseQty": "Pašalinti vieną {name}"
+      "decreaseQty": "Pašalinti vieną {name}",
+      "seeFullMenu": "Žiūrėti visą meniu",
+      "goToCart": "Į krepšelį"
     },
     "resetForm": {
       "passwordTooShort": "Slaptažodis turi būti bent 8 simbolių.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Iš kiekvienos grupės pasirinkite po vieną prekę — brangesnei prekei taikoma {pct}% nuolaida.",
       "stepOf": "{n} žingsnis iš {total}",
       "nextStep": "Toliau",
-      "backStep": "Atgal"
+      "backStep": "Atgal",
+      "leaveTitle": "Palikti nebaigtą pasiūlymą?",
+      "keepBuilding": "Tęsti",
+      "leaveAnyway": "Išeiti"
     }
   },
   "dunning": {

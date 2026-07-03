@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "접을 수 있는 카테고리",
       "collapsibleCategoriesHint": "고객이 카테고리를 탭하여 항목을 펼치거나 접을 수 있습니다(GloriaFood 스타일). 모두 펼치기 / 모두 접기 컨트롤 포함. 휴대폰에서는 모든 카테고리가 접힌 상태로 시작하고, 데스크톱에서는 펼쳐진 상태로 시작합니다.",
       "reservationFullBg": "전체 화면 예약 배경",
-      "reservationFullBgHint": "Book a Table 페이지에서 배너 사진을 예약 양식 뒤의 전체 화면 배경으로 사용합니다. 배너 이미지가 필요합니다. 끄면 상단에 배너 히어로가 표시되고 그 아래에 양식이 나타납니다."
+      "reservationFullBgHint": "Book a Table 페이지에서 배너 사진을 예약 양식 뒤의 전체 화면 배경으로 사용합니다. 배너 이미지가 필요합니다. 끄면 상단에 배너 히어로가 표시되고 그 아래에 양식이 나타납니다.",
+      "categoryNoImageStyle": "사진 없는 카테고리 표시 방식",
+      "categoryNoImageBand": "컬러 배너",
+      "categoryNoImagePlain": "간단한 헤더(클래식)",
+      "categoryNoImageStyleHint": "사진이 있는 카테고리는 항상 큰 사진 배너로 표시됩니다. 이 설정은 사진이 없는 카테고리의 모양만 결정합니다 — 메뉴에서 카테고리별로 사진을 업로드하세요."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "이 레코드를 어디에 추가하나요?",
@@ -5800,7 +5804,9 @@
       "addOne": "추가",
       "customize": "맞춤 설정",
       "increaseQty": "{name} 하나 더 추가",
-      "decreaseQty": "{name} 하나 빼기"
+      "decreaseQty": "{name} 하나 빼기",
+      "seeFullMenu": "전체 메뉴 보기",
+      "goToCart": "장바구니로"
     },
     "resetForm": {
       "passwordTooShort": "비밀번호는 8자 이상이어야 합니다.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "각 그룹에서 메뉴를 하나씩 고르세요 — 더 비싼 메뉴가 {pct}% 할인됩니다.",
       "stepOf": "{total}단계 중 {n}단계",
       "nextStep": "다음",
-      "backStep": "뒤로"
+      "backStep": "뒤로",
+      "leaveTitle": "완료하지 않고 나가시겠어요?",
+      "keepBuilding": "계속하기",
+      "leaveAnyway": "나가기"
     }
   },
   "dunning": {

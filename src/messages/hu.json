@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Összecsukható kategóriák",
       "collapsibleCategoriesHint": "Az ügyfelek egy kategóriára koppintva kibontják vagy összecsukják annak termékeit (GloriaFood-stílus), Összes kibontása / Összes összecsukása vezérlőkkel. Telefonon minden kategória összecsukva indul; asztali gépen nyitva.",
       "reservationFullBg": "Teljes képernyős foglalási háttér",
-      "reservationFullBgHint": "A Book a Table oldalon a bannerfotó teljes képernyős háttérként jelenik meg a foglalási űrlap mögött. Bannerkép szükséges hozzá. Kikapcsolva = banner hős a tetején, alatta az űrlappal."
+      "reservationFullBgHint": "A Book a Table oldalon a bannerfotó teljes képernyős háttérként jelenik meg a foglalási űrlap mögött. Bannerkép szükséges hozzá. Kikapcsolva = banner hős a tetején, alatta az űrlappal.",
+      "categoryNoImageStyle": "Fotó nélküli kategóriák megjelenése",
+      "categoryNoImageBand": "Színes banner",
+      "categoryNoImagePlain": "Egyszerű fejléc (klasszikus)",
+      "categoryNoImageStyleHint": "A fotóVAL rendelkező kategóriák mindig a nagy fotóbannert kapják. Ez csak a fotó nélküliek megjelenését szabja meg — képeket a Menü alatt tölthet fel."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Hol adhatom hozzá ezeket a rekordokat?",
@@ -5800,7 +5804,9 @@
       "addOne": "Hozzáadás",
       "customize": "Testreszabás",
       "increaseQty": "Még egy {name} hozzáadása",
-      "decreaseQty": "Egy {name} eltávolítása"
+      "decreaseQty": "Egy {name} eltávolítása",
+      "seeFullMenu": "Teljes étlap megtekintése",
+      "goToCart": "Ugrás a kosárhoz"
     },
     "resetForm": {
       "passwordTooShort": "A jelszónak legalább 8 karakterből kell állnia.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Válasszon egy-egy terméket mindkét csoportból — a drágábbik {pct}% kedvezménnyel jár.",
       "stepOf": "{n}. lépés / {total}",
       "nextStep": "Tovább",
-      "backStep": "Vissza"
+      "backStep": "Vissza",
+      "leaveTitle": "Befejezetlenül hagyja az ajánlatot?",
+      "keepBuilding": "Folytatás",
+      "leaveAnyway": "Kilépés"
     }
   },
   "dunning": {

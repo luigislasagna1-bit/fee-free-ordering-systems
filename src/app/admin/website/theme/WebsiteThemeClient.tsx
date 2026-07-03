@@ -208,17 +208,40 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                 </p>
               </div>
 
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div>
-                  <div className="text-sm font-medium text-gray-700">{t("showCategoryImages")}</div>
-                  <div className="text-xs text-gray-500">{t("showCategoryImagesHint")}</div>
+              <div className="p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-sm font-medium text-gray-700">{t("showCategoryImages")}</div>
+                    <div className="text-xs text-gray-500">{t("showCategoryImagesHint")}</div>
+                  </div>
+                  <button
+                    onClick={() => set("showCategoryImages", !theme.showCategoryImages)}
+                    className={`w-12 h-6 rounded-full transition-colors ${theme.showCategoryImages ? "bg-emerald-500" : "bg-gray-300"}`}
+                  >
+                    <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${theme.showCategoryImages ? "translate-x-6" : "translate-x-0"}`} />
+                  </button>
                 </div>
-                <button
-                  onClick={() => set("showCategoryImages", !theme.showCategoryImages)}
-                  className={`w-12 h-6 rounded-full transition-colors ${theme.showCategoryImages ? "bg-emerald-500" : "bg-gray-300"}`}
-                >
-                  <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${theme.showCategoryImages ? "translate-x-6" : "translate-x-0"}`} />
-                </button>
+                {/* Sub-choice (Luigi 2026-07-03): with banners ON, how does a
+                    category WITHOUT its own photo render — the solid colour
+                    band, or the classic text-only header? Off = everything is
+                    the classic header, so the choice is hidden. */}
+                {theme.showCategoryImages && (
+                  <div className="mt-3 pt-3 border-t border-gray-200">
+                    <label className="block text-xs font-semibold text-gray-600 mb-2">{t("categoryNoImageStyle")}</label>
+                    <div className="flex gap-2">
+                      {(["band", "plain"] as const).map((s) => (
+                        <button
+                          key={s}
+                          onClick={() => set("categoryNoImageStyle", s)}
+                          className={`flex-1 py-2 rounded-lg border-2 text-xs font-semibold transition ${theme.categoryNoImageStyle === s ? "border-emerald-500 bg-emerald-50 text-emerald-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
+                        >
+                          {s === "band" ? t("categoryNoImageBand") : t("categoryNoImagePlain")}
+                        </button>
+                      ))}
+                    </div>
+                    <p className="text-xs text-gray-400 mt-2">{t("categoryNoImageStyleHint")}</p>
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">

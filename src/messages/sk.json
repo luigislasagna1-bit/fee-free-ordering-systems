@@ -1886,7 +1886,11 @@
       "collapsibleCategories": "Zbaliteľné kategórie",
       "collapsibleCategoriesHint": "Zákazníci klepnú na kategóriu, aby rozbalili alebo zbalili jej položky (štýl GloriaFood), s tlačidlami Rozbaliť všetko / Zbaliť všetko. Na telefóne každá kategória začína zbalená; na počítači sú otvorené.",
       "reservationFullBg": "Celoobrazovkové pozadie rezervácie",
-      "reservationFullBgHint": "Na stránke Book a Table použiť fotku banneru ako celoobrazovkové pozadie za rezervačným formulárom. Vyžaduje obrázok banneru. Vypnuté = banner hero v hornej časti a formulár pod ním."
+      "reservationFullBgHint": "Na stránke Book a Table použiť fotku banneru ako celoobrazovkové pozadie za rezervačným formulárom. Vyžaduje obrázok banneru. Vypnuté = banner hero v hornej časti a formulár pod ním.",
+      "categoryNoImageStyle": "Kategórie bez fotky sa zobrazia ako",
+      "categoryNoImageBand": "Farebný banner",
+      "categoryNoImagePlain": "Jednoduchý nadpis (klasický)",
+      "categoryNoImageStyleHint": "Kategórie S fotkou majú vždy veľký fotobanner. Toto určuje len vzhľad tých bez fotky — fotky nahráte pri kategóriách v Menu."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kde pridám tieto záznamy?",
@@ -5800,7 +5804,9 @@
       "addOne": "Pridať",
       "customize": "Prispôsobiť",
       "increaseQty": "Pridať ďalší {name}",
-      "decreaseQty": "Odobrať jeden {name}"
+      "decreaseQty": "Odobrať jeden {name}",
+      "seeFullMenu": "Zobraziť celé menu",
+      "goToCart": "Prejsť do košíka"
     },
     "resetForm": {
       "passwordTooShort": "Heslo musí mať aspoň 8 znakov.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Vyberte si jednu položku z každej skupiny — na drahšiu položku získate zľavu {pct} %.",
       "stepOf": "Krok {n} z {total}",
       "nextStep": "Ďalej",
-      "backStep": "Späť"
+      "backStep": "Späť",
+      "leaveTitle": "Odísť bez dokončenia ponuky?",
+      "keepBuilding": "Pokračovať",
+      "leaveAnyway": "Odísť"
     }
   },
   "dunning": {

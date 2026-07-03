@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Categories plegables",
       "collapsibleCategoriesHint": "Els clients toquen una categoria per desplegar o plegar els seus articles (estil GloriaFood), amb controls Desplega-ho tot / Plega-ho tot. Al mòbil cada categoria comença plegada; a l'escriptori comencen obertes.",
       "reservationFullBg": "Fons de reserva a pantalla completa",
-      "reservationFullBgHint": "A la pàgina Reservar taula, fes servir la teva imatge de capçalera com a fons a pantalla completa darrere del formulari de reserva. Cal una imatge de capçalera. Desactivat = una capçalera destacada a la part superior amb el formulari a sota."
+      "reservationFullBgHint": "A la pàgina Reservar taula, fes servir la teva imatge de capçalera com a fons a pantalla completa darrere del formulari de reserva. Cal una imatge de capçalera. Desactivat = una capçalera destacada a la part superior amb el formulari a sota.",
+      "categoryNoImageStyle": "Les categories sense foto es mostren com",
+      "categoryNoImageBand": "Bàner de color",
+      "categoryNoImagePlain": "Capçalera simple (clàssica)",
+      "categoryNoImageStyleHint": "Les categories AMB foto sempre tenen el gran bàner fotogràfic. Això només decideix l'aspecte de les que no en tenen — puja fotos per categoria a Menú."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "On afegeixo aquests registres?",
@@ -5800,7 +5804,9 @@
       "addOne": "Afegeix",
       "customize": "Personalitza",
       "increaseQty": "Afegeix un {name} més",
-      "decreaseQty": "Treu un {name}"
+      "decreaseQty": "Treu un {name}",
+      "seeFullMenu": "Veure tot el menú",
+      "goToCart": "Vés al cistell"
     },
     "resetForm": {
       "passwordTooShort": "La contrasenya ha de tenir com a mínim 8 caràcters.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Tria un article de cada grup: l'article més car té un {pct}% de descompte.",
       "stepOf": "Pas {n} de {total}",
       "nextStep": "Següent",
-      "backStep": "Enrere"
+      "backStep": "Enrere",
+      "leaveTitle": "Sortir sense acabar l'oferta?",
+      "keepBuilding": "Continua",
+      "leaveAnyway": "Surt"
     }
   },
   "dunning": {

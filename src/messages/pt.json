@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Categorias recolhíveis",
       "collapsibleCategoriesHint": "Os clientes tocam numa categoria para expandir ou recolher os seus artigos (estilo GloriaFood), com botões Expandir tudo / Recolher tudo. No telemóvel cada categoria começa recolhida; no computador começam abertas.",
       "reservationFullBg": "Fundo de reserva em ecrã inteiro",
-      "reservationFullBgHint": "Na página Book a Table, utilize a foto do seu banner como fundo em ecrã inteiro por trás do formulário de reserva. Requer uma imagem de banner. Desativado = um banner em destaque no topo com o formulário por baixo."
+      "reservationFullBgHint": "Na página Book a Table, utilize a foto do seu banner como fundo em ecrã inteiro por trás do formulário de reserva. Requer uma imagem de banner. Desativado = um banner em destaque no topo com o formulário por baixo.",
+      "categoryNoImageStyle": "Categorias sem foto aparecem como",
+      "categoryNoImageBand": "Faixa colorida",
+      "categoryNoImagePlain": "Cabeçalho simples (clássico)",
+      "categoryNoImageStyleHint": "As categorias COM foto têm sempre a grande faixa fotográfica. Isto só decide o aspeto das que não têm — carregue fotos por categoria em Menu."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Onde adiciono esses registros?",
@@ -5800,7 +5804,9 @@
       "addOne": "Adicionar",
       "customize": "Personalizar",
       "increaseQty": "Adicionar mais um {name}",
-      "decreaseQty": "Remover um {name}"
+      "decreaseQty": "Remover um {name}",
+      "seeFullMenu": "Ver o menu completo",
+      "goToCart": "Ir para o carrinho"
     },
     "resetForm": {
       "passwordTooShort": "A palavra-passe deve ter pelo menos 8 caracteres.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Escolha um item de cada grupo — o item mais caro fica com {pct}% de desconto.",
       "stepOf": "Passo {n} de {total}",
       "nextStep": "Seguinte",
-      "backStep": "Voltar"
+      "backStep": "Voltar",
+      "leaveTitle": "Sair sem terminar esta oferta?",
+      "keepBuilding": "Continuar",
+      "leaveAnyway": "Sair"
     }
   },
   "dunning": {

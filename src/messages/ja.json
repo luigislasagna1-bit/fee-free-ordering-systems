@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "折りたたみ可能なカテゴリ",
       "collapsibleCategoriesHint": "お客様はカテゴリをタップして商品を展開・折りたたみできます（GloriaFood 風）。「すべて展開／すべて折りたたみ」操作付き。スマホでは各カテゴリが折りたたまれた状態で始まり、デスクトップでは開いた状態で始まります。",
       "reservationFullBg": "予約ページの全画面背景",
-      "reservationFullBgHint": "「Book a Table」ページで、バナー写真を予約フォームの背後に全画面背景として表示します。バナー画像が必要です。オフの場合は、上部にバナーのヒーロー、その下にフォームが表示されます。"
+      "reservationFullBgHint": "「Book a Table」ページで、バナー写真を予約フォームの背後に全画面背景として表示します。バナー画像が必要です。オフの場合は、上部にバナーのヒーロー、その下にフォームが表示されます。",
+      "categoryNoImageStyle": "写真のないカテゴリの表示",
+      "categoryNoImageBand": "カラーバナー",
+      "categoryNoImagePlain": "シンプルな見出し（クラシック）",
+      "categoryNoImageStyleHint": "写真のあるカテゴリは常に大きな写真バナーで表示されます。これは写真のないカテゴリの見た目のみを決めます — 写真はメニューでカテゴリごとにアップロードできます。"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "レコードはどこに追加しますか？",
@@ -5800,7 +5804,9 @@
       "addOne": "追加",
       "customize": "カスタマイズ",
       "increaseQty": "{name}をもう1つ追加",
-      "decreaseQty": "{name}を1つ減らす"
+      "decreaseQty": "{name}を1つ減らす",
+      "seeFullMenu": "メニュー全体を見る",
+      "goToCart": "カートへ"
     },
     "resetForm": {
       "passwordTooShort": "パスワードは8文字以上必要です。",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "各グループから1品ずつ選んでください。高い方の商品が{pct}％オフになります。",
       "stepOf": "ステップ {n} / {total}",
       "nextStep": "次へ",
-      "backStep": "戻る"
+      "backStep": "戻る",
+      "leaveTitle": "このお得なセットを途中でやめますか？",
+      "keepBuilding": "続ける",
+      "leaveAnyway": "やめる"
     }
   },
   "dunning": {

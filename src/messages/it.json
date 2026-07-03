@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Categorie comprimibili",
       "collapsibleCategoriesHint": "I clienti toccano una categoria per espandere o comprimere i suoi articoli (stile GloriaFood), con i controlli Espandi tutto / Comprimi tutto. Su telefono ogni categoria parte compressa; su desktop partono aperte.",
       "reservationFullBg": "Sfondo prenotazione a schermo intero",
-      "reservationFullBgHint": "Nella pagina Book a Table, usa la foto del banner come sfondo a schermo intero dietro il modulo di prenotazione. Richiede un'immagine banner. Off = un banner hero in alto con il modulo sotto."
+      "reservationFullBgHint": "Nella pagina Book a Table, usa la foto del banner come sfondo a schermo intero dietro il modulo di prenotazione. Richiede un'immagine banner. Off = un banner hero in alto con il modulo sotto.",
+      "categoryNoImageStyle": "Le categorie senza foto appaiono come",
+      "categoryNoImageBand": "Banner colorato",
+      "categoryNoImagePlain": "Intestazione semplice (classica)",
+      "categoryNoImageStyleHint": "Le categorie CON foto hanno sempre il grande banner fotografico. Questo decide solo l'aspetto di quelle senza foto — carica le foto per categoria in Menu."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Dove aggiungo questi record?",
@@ -5800,7 +5804,9 @@
       "addOne": "Aggiungi",
       "customize": "Personalizza",
       "increaseQty": "Aggiungi un altro {name}",
-      "decreaseQty": "Rimuovi un {name}"
+      "decreaseQty": "Rimuovi un {name}",
+      "seeFullMenu": "Vedi tutto il menu",
+      "goToCart": "Vai al carrello"
     },
     "resetForm": {
       "passwordTooShort": "La password deve contenere almeno 8 caratteri.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Scegli un articolo da ciascun gruppo: il più costoso ha uno sconto del {pct}%.",
       "stepOf": "Passaggio {n} di {total}",
       "nextStep": "Avanti",
-      "backStep": "Indietro"
+      "backStep": "Indietro",
+      "leaveTitle": "Uscire senza completare l'offerta?",
+      "keepBuilding": "Continua",
+      "leaveAnyway": "Esci"
     }
   },
   "dunning": {

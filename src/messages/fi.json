@@ -2722,7 +2722,11 @@
       "collapsibleCategories": "Tiivistettävät luokat",
       "collapsibleCategoriesHint": "Asiakkaat napauttavat luokkaa laajentaakseen tai tiivistääkseen sen tuotteet (GloriaFood-tyyli), painikkeilla Laajenna kaikki / Tiivistä kaikki. Puhelimessa jokainen luokka alkaa tiivistettynä; työpöydällä ne alkavat avattuina.",
       "reservationFullBg": "Koko näytön varaustausta",
-      "reservationFullBgHint": "Käytä Book a Table -sivulla banner-kuvaasi koko näytön taustana varauslomakkeen takana. Vaatii banner-kuvan. Pois päältä = banner-hero ylhäällä ja lomake sen alla."
+      "reservationFullBgHint": "Käytä Book a Table -sivulla banner-kuvaasi koko näytön taustana varauslomakkeen takana. Vaatii banner-kuvan. Pois päältä = banner-hero ylhäällä ja lomake sen alla.",
+      "categoryNoImageStyle": "Kuvattomat kategoriat näkyvät muodossa",
+      "categoryNoImageBand": "Väribanneri",
+      "categoryNoImagePlain": "Pelkkä otsikko (klassinen)",
+      "categoryNoImageStyleHint": "Kuvalliset kategoriat saavat aina ison kuvabannerin. Tämä valinta koskee vain kuvattomia — lisää kuvia kategorioittain Menu-osiossa."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Mistä lisään nämä tietueet?",
@@ -5800,7 +5804,9 @@
       "addOne": "Lisää",
       "customize": "Mukauta",
       "increaseQty": "Lisää vielä yksi {name}",
-      "decreaseQty": "Poista yksi {name}"
+      "decreaseQty": "Poista yksi {name}",
+      "seeFullMenu": "Näytä koko menu",
+      "goToCart": "Siirry ostoskoriin"
     },
     "resetForm": {
       "passwordTooShort": "Salasanan on oltava vähintään 8 merkkiä pitkä.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Valitse yksi tuote kustakin ryhmästä — kalliimmasta tuotteesta saat {pct} % alennuksen.",
       "stepOf": "Vaihe {n}/{total}",
       "nextStep": "Seuraava",
-      "backStep": "Takaisin"
+      "backStep": "Takaisin",
+      "leaveTitle": "Poistutko kesken tarjouksen?",
+      "keepBuilding": "Jatka",
+      "leaveAnyway": "Poistu"
     }
   },
   "dunning": {

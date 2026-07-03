@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Sammenklappelige kategorier",
       "collapsibleCategoriesHint": "Kunder trykker på en kategori for at folde dens varer ud eller sammen (GloriaFood-stil), med Fold alle ud / Fold alle sammen. På telefon starter hver kategori sammenfoldet; på computer starter de åbne.",
       "reservationFullBg": "Reservationsbaggrund i fuld skærm",
-      "reservationFullBgHint": "På Book a Table-siden bruges dit bannerfoto som baggrund i fuld skærm bag bookingformularen. Kræver et bannerbillede. Fra = en bannerhero øverst med formularen nedenunder."
+      "reservationFullBgHint": "På Book a Table-siden bruges dit bannerfoto som baggrund i fuld skærm bag bookingformularen. Kræver et bannerbillede. Fra = en bannerhero øverst med formularen nedenunder.",
+      "categoryNoImageStyle": "Kategorier uden foto vises som",
+      "categoryNoImageBand": "Farvebanner",
+      "categoryNoImagePlain": "Enkel overskrift (klassisk)",
+      "categoryNoImageStyleHint": "Kategorier MED foto får altid det store fotobanner. Dette bestemmer kun udseendet af dem uden — upload fotos pr. kategori under Menu."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Hvor tilføjer jeg disse poster?",
@@ -5800,7 +5804,9 @@
       "addOne": "Tilføj",
       "customize": "Tilpas",
       "increaseQty": "Tilføj endnu en {name}",
-      "decreaseQty": "Fjern en {name}"
+      "decreaseQty": "Fjern en {name}",
+      "seeFullMenu": "Se hele menuen",
+      "goToCart": "Gå til kurv"
     },
     "resetForm": {
       "passwordTooShort": "Adgangskoden skal være mindst 8 tegn.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Vælg én vare fra hver gruppe — den dyreste vare får {pct}% rabat.",
       "stepOf": "Trin {n} af {total}",
       "nextStep": "Næste",
-      "backStep": "Tilbage"
+      "backStep": "Tilbage",
+      "leaveTitle": "Forlade tilbuddet ufærdigt?",
+      "keepBuilding": "Fortsæt",
+      "leaveAnyway": "Forlad"
     }
   },
   "dunning": {

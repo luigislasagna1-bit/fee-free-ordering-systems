@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "קטגוריות מתקפלות",
       "collapsibleCategoriesHint": "לקוחות מקישים על קטגוריה כדי להרחיב או לכווץ את הפריטים שלה (בסגנון GloriaFood), עם בקרות הרחב הכול / כווץ הכול. בטלפון כל קטגוריה מתחילה מכווצת; במחשב הן מתחילות פתוחות.",
       "reservationFullBg": "רקע מסך מלא לעמוד ההזמנות",
-      "reservationFullBgHint": "בעמוד Book a Table, השתמשו בתמונת הבאנר שלכם כרקע במסך מלא מאחורי טופס ההזמנה. דורש תמונת באנר. כבוי = רצועת באנר ראשית למעלה והטופס מתחתיה."
+      "reservationFullBgHint": "בעמוד Book a Table, השתמשו בתמונת הבאנר שלכם כרקע במסך מלא מאחורי טופס ההזמנה. דורש תמונת באנר. כבוי = רצועת באנר ראשית למעלה והטופס מתחתיה.",
+      "categoryNoImageStyle": "קטגוריות ללא תמונה מוצגות כ",
+      "categoryNoImageBand": "באנר צבעוני",
+      "categoryNoImagePlain": "כותרת פשוטה (קלאסית)",
+      "categoryNoImageStyleHint": "קטגוריות עם תמונה תמיד מקבלות את באנר התמונה הגדול. זה קובע רק את מראה הקטגוריות בלי תמונה — העלו תמונות לכל קטגוריה בתפריט."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "איפה מוסיפים את הרשומות האלה?",
@@ -5800,7 +5804,9 @@
       "addOne": "הוסף",
       "customize": "התאמה אישית",
       "increaseQty": "הוסיפו {name} נוסף",
-      "decreaseQty": "הסירו {name} אחד"
+      "decreaseQty": "הסירו {name} אחד",
+      "seeFullMenu": "לתפריט המלא",
+      "goToCart": "לעגלה"
     },
     "resetForm": {
       "passwordTooShort": "הסיסמה חייבת להכיל לפחות 8 תווים.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "בחרו פריט אחד מכל קבוצה — הפריט היקר יותר ב-{pct}% הנחה.",
       "stepOf": "שלב {n} מתוך {total}",
       "nextStep": "הבא",
-      "backStep": "חזרה"
+      "backStep": "חזרה",
+      "leaveTitle": "לצאת בלי לסיים את המבצע?",
+      "keepBuilding": "להמשיך",
+      "leaveAnyway": "לצאת"
     }
   },
   "dunning": {

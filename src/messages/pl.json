@@ -2757,7 +2757,11 @@
       "collapsibleCategories": "Zwijane kategorie",
       "collapsibleCategoriesHint": "Klienci dotykają kategorii, aby rozwinąć lub zwinąć jej produkty (styl GloriaFood), z przyciskami Rozwiń wszystko / Zwiń wszystko. Na telefonie każda kategoria zaczyna zwinięta; na komputerze są otwarte.",
       "reservationFullBg": "Pełnoekranowe tło strony rezerwacji",
-      "reservationFullBgHint": "Na stronie Book a Table użyj zdjęcia banera jako pełnoekranowego tła za formularzem rezerwacji. Wymaga obrazu banera. Wyłączone = baner hero u góry, a formularz pod nim."
+      "reservationFullBgHint": "Na stronie Book a Table użyj zdjęcia banera jako pełnoekranowego tła za formularzem rezerwacji. Wymaga obrazu banera. Wyłączone = baner hero u góry, a formularz pod nim.",
+      "categoryNoImageStyle": "Kategorie bez zdjęcia wyświetlają się jako",
+      "categoryNoImageBand": "Kolorowy baner",
+      "categoryNoImagePlain": "Prosty nagłówek (klasyczny)",
+      "categoryNoImageStyleHint": "Kategorie ZE zdjęciem zawsze mają duży baner ze zdjęciem. To decyduje tylko o wyglądzie tych bez — dodaj zdjęcia kategorii w Menu."
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Gdzie dodać te rekordy?",
@@ -5800,7 +5804,9 @@
       "addOne": "Dodaj",
       "customize": "Dostosuj",
       "increaseQty": "Dodaj jeszcze jeden {name}",
-      "decreaseQty": "Usuń jeden {name}"
+      "decreaseQty": "Usuń jeden {name}",
+      "seeFullMenu": "Zobacz całe menu",
+      "goToCart": "Przejdź do koszyka"
     },
     "resetForm": {
       "passwordTooShort": "Hasło musi mieć co najmniej 8 znaków.",
@@ -5886,7 +5892,10 @@
       "hintBogoPricierPct": "Wybierz po jednej pozycji z każdej grupy — droższa pozycja ma {pct}% rabatu.",
       "stepOf": "Krok {n} z {total}",
       "nextStep": "Dalej",
-      "backStep": "Wstecz"
+      "backStep": "Wstecz",
+      "leaveTitle": "Opuścić niedokończoną ofertę?",
+      "keepBuilding": "Kontynuuj",
+      "leaveAnyway": "Wyjdź"
     }
   },
   "dunning": {
