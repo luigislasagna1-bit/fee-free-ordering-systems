@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "Εναλλαγή δόνησης για νέες παραγγελίες",
       "vibrateEnabledToast": "Δόνηση ενεργή — κουδούνισμα + δόνηση.",
       "vibrateDisabledToast": "Δόνηση ανενεργή — μόνο κουδούνισμα.",
-      "deliveryBothLabel": "Εμφάνιση και της διεύθυνσης"
+      "deliveryBothLabel": "Εμφάνιση και της διεύθυνσης",
+      "deliveryLeadLabel": "Τι εμφανίζεται στην πρώτη γραμμή μιας παραγγελίας διανομής",
+      "deliveryLeadHelp": "Η πρώτη γραμμή ενός πλακιδίου διανομής είναι πάντα μεγάλη και έντονη· η δεύτερη πιο διακριτική. Εδώ επιλέγετε μόνο ΤΙ πάει επάνω — το όνομα του πελάτη ή η διεύθυνση παράδοσης.",
+      "deliveryLeadNameOption": "Όνομα πελάτη επάνω",
+      "deliveryLeadAddressOption": "Διεύθυνση επάνω",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "Το εστιατόριό σας",

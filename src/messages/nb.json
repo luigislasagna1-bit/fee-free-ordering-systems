@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "Slå vibrering ved nye bestillinger av/på",
       "vibrateEnabledToast": "Vibrering på — lyd + vibrering.",
       "vibrateDisabledToast": "Vibrering av — bare lyd.",
-      "deliveryBothLabel": "Vis også gateadressen"
+      "deliveryBothLabel": "Vis også gateadressen",
+      "deliveryLeadLabel": "Hva som vises på øverste linje av en leveringsordre",
+      "deliveryLeadHelp": "Øverste linje på en leveringsflis er alltid stor og fet; andre linje er lysere. Dette velger bare HVA som står øverst — kundens navn eller leveringsadressen.",
+      "deliveryLeadNameOption": "Kundens navn øverst",
+      "deliveryLeadAddressOption": "Adressen øverst",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "Din restaurant",

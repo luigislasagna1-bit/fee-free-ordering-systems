@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "Uključi/isključi vibraciju za nove narudžbe",
       "vibrateEnabledToast": "Vibracija uključena — zvuk + vibracija.",
       "vibrateDisabledToast": "Vibracija isključena — samo zvuk.",
-      "deliveryBothLabel": "Prikaži i adresu ulice"
+      "deliveryBothLabel": "Prikaži i adresu ulice",
+      "deliveryLeadLabel": "Što se prikazuje u gornjem retku narudžbe s dostavom",
+      "deliveryLeadHelp": "Gornji redak pločice dostave uvijek je velik i podebljan; drugi je svjetliji. Ovdje birate samo ŠTO ide gore — ime kupca ili adresa dostave.",
+      "deliveryLeadNameOption": "Ime kupca gore",
+      "deliveryLeadAddressOption": "Adresa gore",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaš restoran",

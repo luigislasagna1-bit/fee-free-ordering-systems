@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "Comută vibrația la comenzi noi",
       "vibrateEnabledToast": "Vibrație activată — sonerie + vibrație.",
       "vibrateDisabledToast": "Vibrație dezactivată — doar sonerie.",
-      "deliveryBothLabel": "Afișează și adresa"
+      "deliveryBothLabel": "Afișează și adresa",
+      "deliveryLeadLabel": "Ce apare pe primul rând al unei comenzi cu livrare",
+      "deliveryLeadHelp": "Primul rând al unui card de livrare este mereu mare și îngroșat; al doilea este mai discret. Aici alegeți doar CE apare sus: numele clientului sau adresa de livrare.",
+      "deliveryLeadNameOption": "Numele clientului sus",
+      "deliveryLeadAddressOption": "Adresa sus",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "Restaurantul tău",

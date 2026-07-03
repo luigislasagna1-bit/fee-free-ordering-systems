@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "Activa/desactiva la vibració de noves comandes",
       "vibrateEnabledToast": "Vibració activada — so + vibració.",
       "vibrateDisabledToast": "Vibració desactivada — només so.",
-      "deliveryBothLabel": "Mostra també l'adreça del carrer"
+      "deliveryBothLabel": "Mostra també l'adreça del carrer",
+      "deliveryLeadLabel": "Què es mostra a la primera línia d'una comanda a domicili",
+      "deliveryLeadHelp": "La primera línia d'una targeta de repartiment sempre és gran i en negreta; la segona és més tènue. Això només tria QUÈ va a dalt: el nom del client o l'adreça de lliurament.",
+      "deliveryLeadNameOption": "Nom del client a dalt",
+      "deliveryLeadAddressOption": "Adreça a dalt",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "El vostre restaurant",

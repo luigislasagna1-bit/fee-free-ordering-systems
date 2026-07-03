@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "Pārslēgt vibrāciju jauniem pasūtījumiem",
       "vibrateEnabledToast": "Vibrācija ieslēgta — skaņa + vibrācija.",
       "vibrateDisabledToast": "Vibrācija izslēgta — tikai skaņa.",
-      "deliveryBothLabel": "Rādīt arī ielas adresi"
+      "deliveryBothLabel": "Rādīt arī ielas adresi",
+      "deliveryLeadLabel": "Kas redzams piegādes pasūtījuma augšējā rindā",
+      "deliveryLeadHelp": "Piegādes plāksnītes augšējā rinda vienmēr ir liela un treknrakstā; otrā ir gaišāka. Šeit tikai izvēlaties, KAS ir augšā — klienta vārds vai piegādes adrese.",
+      "deliveryLeadNameOption": "Klienta vārds augšā",
+      "deliveryLeadAddressOption": "Adrese augšā",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "Jūsu restorāns",

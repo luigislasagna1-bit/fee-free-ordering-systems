@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "החלף רטט בהזמנות חדשות",
       "vibrateEnabledToast": "רטט מופעל — צלצול + רטט.",
       "vibrateDisabledToast": "רטט כבוי — צלצול בלבד.",
-      "deliveryBothLabel": "הצג גם את כתובת הרחוב"
+      "deliveryBothLabel": "הצג גם את כתובת הרחוב",
+      "deliveryLeadLabel": "מה מוצג בשורה העליונה של הזמנת משלוח",
+      "deliveryLeadHelp": "השורה העליונה של אריח משלוח תמיד גדולה ומודגשת; השנייה בהירה יותר. כאן בוחרים רק מה יופיע למעלה — שם הלקוח או כתובת המשלוח.",
+      "deliveryLeadNameOption": "שם הלקוח למעלה",
+      "deliveryLeadAddressOption": "הכתובת למעלה",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "המסעדה שלך",

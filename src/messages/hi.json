@@ -1507,7 +1507,13 @@
       "vibrateToggleAriaLabel": "नए ऑर्डर का कंपन टॉगल करें",
       "vibrateEnabledToast": "कंपन चालू — रिंग + कंपन।",
       "vibrateDisabledToast": "कंपन बंद — केवल रिंग।",
-      "deliveryBothLabel": "गली का पता भी दिखाएँ"
+      "deliveryBothLabel": "गली का पता भी दिखाएँ",
+      "deliveryLeadLabel": "डिलीवरी ऑर्डर की शीर्ष पंक्ति में क्या दिखे",
+      "deliveryLeadHelp": "डिलीवरी टाइल की शीर्ष पंक्ति हमेशा बड़ी और बोल्ड होती है; दूसरी पंक्ति हल्की। यह केवल चुनता है कि ऊपर क्या रहे — ग्राहक का नाम या डिलीवरी पता।",
+      "deliveryLeadNameOption": "ग्राहक का नाम ऊपर",
+      "deliveryLeadAddressOption": "पता ऊपर",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "customers": {
       "title": "ग्राहक",

@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "Ativar/desativar a vibração de novos pedidos",
       "vibrateEnabledToast": "Vibração ativada — toque + vibração.",
       "vibrateDisabledToast": "Vibração desativada — apenas toque.",
-      "deliveryBothLabel": "Mostrar também a morada"
+      "deliveryBothLabel": "Mostrar também a morada",
+      "deliveryLeadLabel": "O que aparece na primeira linha de um pedido de entrega",
+      "deliveryLeadHelp": "A primeira linha de um cartão de entrega é sempre grande e a negrito; a segunda é mais leve. Isto só decide O QUE fica em cima: o nome do cliente ou a morada de entrega.",
+      "deliveryLeadNameOption": "Nome do cliente em cima",
+      "deliveryLeadAddressOption": "Morada em cima",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "O Seu Restaurante",

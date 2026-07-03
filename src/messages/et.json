@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "Lülita uute tellimuste värin sisse/välja",
       "vibrateEnabledToast": "Värin sees — heli + värin.",
       "vibrateDisabledToast": "Värin väljas — ainult heli.",
-      "deliveryBothLabel": "Näita ka tänava aadressi"
+      "deliveryBothLabel": "Näita ka tänava aadressi",
+      "deliveryLeadLabel": "Mis kuvatakse kohaletoimetamistellimuse ülemisel real",
+      "deliveryLeadHelp": "Kohaletoimetamise paani ülemine rida on alati suur ja rasvane; teine rida heledam. Siin valite vaid, MIS on üleval — kliendi nimi või tarneaadress.",
+      "deliveryLeadNameOption": "Kliendi nimi üleval",
+      "deliveryLeadAddressOption": "Aadress üleval",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "Sinu restoran",

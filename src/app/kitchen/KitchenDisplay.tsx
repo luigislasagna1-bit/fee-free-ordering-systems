@@ -145,8 +145,10 @@ function ReservationCard({
           <CalendarDays className="w-4 h-4 text-slate-500 dark:text-slate-300" />
         </div>
         <div className="flex-1 min-w-0">
-          {/* Lead line = customer name (only black text on the tile). */}
-          <div className={`font-bold ${t.text} ${compact ? "text-base" : "text-lg"} leading-tight truncate`}>
+          {/* Lead line = customer name (only black text on the tile). text-lg
+              in BOTH densities so order + reservation names read one size
+              everywhere (Fabrizio: identical sizes; Luigi 2026-07-03). */}
+          <div className={`font-bold ${t.text} text-lg leading-tight truncate`}>
             {r.customerName}
           </div>
           {/* Status chip + a single time cue below (GloriaFood-clean,
@@ -394,8 +396,10 @@ function Countdown({
 
 
 // ── Order row ─────────────────────────────────────────────────────────────────
-function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown, currency, deliveryShowName }: {
+function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown, currency, deliveryShowName, deliveryLead }: {
   order: Order; selected: boolean; onClick: () => void; t: T; now: number; currency: string; deliveryShowName?: boolean;
+  /** "name" (default) or "address" — which line leads when both show. */
+  deliveryLead?: "name" | "address";
   /** Optional day-of-week pill (MON/TUE/…) rendered alongside the
    *  order number. Used by the In Progress LATER section so the
    *  kitchen can spot which day each scheduled order is for. */
@@ -558,19 +562,23 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
           )}
         </div>
         <div className="flex-1 min-w-0">
-          {/* Lead = WHO on top, WHERE underneath (Fabrizio + Luigi 2026-07-03,
-              reverting the 2026-07-02 one-line experiment): with the show-name
-              option on, a delivery tile shows the customer's NAME (text-base —
-              exactly the reservation-tile size) with the address ("street №,
-              city", no postal code) on its OWN line below. Name option off →
-              the address is the lead. Pickup/dine-in/take-out = name only,
-              same text-base size. Long content truncates with "…". */}
-          <div className={`font-bold text-base leading-tight ${t.text} truncate`}>
-            {showAddress ? tileAddress : tileName}
+          {/* Lead = two lines when both name + address show (Fabrizio + Luigi
+              2026-07-03, reverting the 2026-07-02 one-line experiment). The TOP
+              line is always bold text-lg (matches the reservation tile; Luigi:
+              "slightly larger" than the text-base first cut), the BOTTOM line
+              always lighter text-sm — the kitchenDeliveryLead setting only
+              chooses WHICH goes on top ("name" default, or "address"). The
+              address is "street №, city" (no postal code). Name option off →
+              address-only lead. Pickup/dine-in/take-out = name only. Long
+              content truncates with "…". */}
+          <div className={`font-bold text-lg leading-tight ${t.text} truncate`}>
+            {showAddress || (showBoth && deliveryLead === "address")
+              ? tileAddress
+              : tileName}
           </div>
           {showBoth && (
             <div className={`text-sm leading-tight ${t.muted} truncate`}>
-              {tileAddress}
+              {deliveryLead === "address" ? tileName : tileAddress}
             </div>
           )}
           {/* Status chip on its own line directly below (GloriaFood-clean,
@@ -811,6 +819,12 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   // 2026-06-21). Initial from the SSR prop; the poll below keeps it live.
   const [deliveryShowName, setDeliveryShowName] = useState<boolean>(
     !!restaurant?.kitchenDeliveryShowName,
+  );
+  // Which line LEADS a delivery tile when name + address both show (Luigi
+  // 2026-07-03): "name" (default) or "address". Top line stays bold/large,
+  // bottom stays lighter — only the order flips.
+  const [deliveryLead, setDeliveryLead] = useState<"name" | "address">(
+    (restaurant as any)?.kitchenDeliveryLead === "address" ? "address" : "name",
   );
   // kitchenDeliveryShowBoth retired 2026-07-03 (Luigi): a delivery tile
   // always shows the address now — the only option left is the name prefix.
@@ -2422,6 +2436,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       setWorkflowMode(mode);
       setPrintNodeEnabled(pnEnabled);
       setDeliveryShowName(Array.isArray(body) ? false : !!body?.kitchenDeliveryShowName);
+      setDeliveryLead(!Array.isArray(body) && body?.kitchenDeliveryLead === "address" ? "address" : "name");
     } catch {}
   }, []);
 
@@ -3648,6 +3663,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                     key={`o-${it.order.id}`}
                     order={it.order}
                     deliveryShowName={deliveryShowName}
+                    deliveryLead={deliveryLead}
                     selected={selectedId === it.order.id}
                     onClick={() => {
                       // Clicking any order — including a new/ringing pending one

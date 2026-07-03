@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "Trillen bij nieuwe bestellingen aan/uit",
       "vibrateEnabledToast": "Trillen aan — geluid + trillen.",
       "vibrateDisabledToast": "Trillen uit — alleen geluid.",
-      "deliveryBothLabel": "Toon ook het straatadres"
+      "deliveryBothLabel": "Toon ook het straatadres",
+      "deliveryLeadLabel": "Wat op de bovenste regel van een bezorgorder staat",
+      "deliveryLeadHelp": "De bovenste regel van een bezorgtegel is altijd groot en vet; de tweede regel is lichter. Dit bepaalt alleen WAT bovenaan staat: de naam van de klant of het bezorgadres.",
+      "deliveryLeadNameOption": "Klantnaam bovenaan",
+      "deliveryLeadAddressOption": "Adres bovenaan",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "Uw restaurant",

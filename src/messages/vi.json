@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "Bật/tắt rung khi có đơn mới",
       "vibrateEnabledToast": "Đã bật rung — chuông + rung.",
       "vibrateDisabledToast": "Đã tắt rung — chỉ chuông.",
-      "deliveryBothLabel": "Cũng hiển thị địa chỉ đường phố"
+      "deliveryBothLabel": "Cũng hiển thị địa chỉ đường phố",
+      "deliveryLeadLabel": "Hiển thị gì ở dòng trên cùng của đơn giao hàng",
+      "deliveryLeadHelp": "Dòng trên cùng của thẻ giao hàng luôn to và đậm; dòng thứ hai nhạt hơn. Cài đặt này chỉ chọn CÁI GÌ ở trên — tên khách hàng hay địa chỉ giao hàng.",
+      "deliveryLeadNameOption": "Tên khách ở trên",
+      "deliveryLeadAddressOption": "Địa chỉ ở trên",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "Nhà hàng của bạn",

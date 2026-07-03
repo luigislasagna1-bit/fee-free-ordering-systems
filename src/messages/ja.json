@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "新規注文のバイブを切り替え",
       "vibrateEnabledToast": "バイブ オン — 着信音＋バイブ。",
       "vibrateDisabledToast": "バイブ オフ — 着信音のみ。",
-      "deliveryBothLabel": "住所も表示する"
+      "deliveryBothLabel": "住所も表示する",
+      "deliveryLeadLabel": "配達注文の最上行に表示する内容",
+      "deliveryLeadHelp": "配達タイルの最上行は常に大きく太字、2行目は薄めです。この設定では上に来る内容（顧客名か配達先住所か）だけを選びます。",
+      "deliveryLeadNameOption": "顧客名を上に",
+      "deliveryLeadAddressOption": "住所を上に",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "レストラン名",

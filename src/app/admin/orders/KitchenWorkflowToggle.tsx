@@ -33,6 +33,7 @@ export function KitchenWorkflowToggle({
   initialAutoCall = false,
   initialKitchenVibrate = true,
   initialDeliveryShowName = false,
+  initialDeliveryLead = "name",
   initialShowItemCategory = false,
   storePhone = null,
   initialAlertPhone = null,
@@ -47,6 +48,10 @@ export function KitchenWorkflowToggle({
   /** Prefix the customer name on delivery tiles (the address always shows;
    *  the old "also show address" sub-toggle was retired 2026-07-03). */
   initialDeliveryShowName?: boolean;
+  /** Which line LEADS a delivery tile when both name + address show:
+   *  "name" (default) = name bold on top, address lighter below; "address" =
+   *  the reverse. Top stays bold/large, bottom lighter. Luigi 2026-07-03. */
+  initialDeliveryLead?: "name" | "address";
   /** Show each dish's menu category on incoming orders (default false). */
   initialShowItemCategory?: boolean;
   /** The restaurant's public phone — the default alert target. */
@@ -82,6 +87,8 @@ export function KitchenWorkflowToggle({
   const [savingVibrate, setSavingVibrate] = useState(false);
   const [deliveryShowName, setDeliveryShowName] = useState<boolean>(initialDeliveryShowName);
   const [savingDeliveryName, setSavingDeliveryName] = useState(false);
+  const [deliveryLead, setDeliveryLead] = useState<"name" | "address">(initialDeliveryLead);
+  const [savingDeliveryLead, setSavingDeliveryLead] = useState(false);
   const [showItemCategory, setShowItemCategory] = useState<boolean>(initialShowItemCategory);
   const [savingItemCategory, setSavingItemCategory] = useState(false);
   // The number the system will actually ring: dedicated alert number else store phone.
@@ -216,6 +223,27 @@ export function KitchenWorkflowToggle({
   // toggleDeliveryBoth retired 2026-07-03 (Luigi): the delivery tile always
   // shows the address now — turning it off could leave a delivery order with
   // no address at all. Only the name prefix remains configurable.
+
+  async function changeDeliveryLead(lead: "name" | "address") {
+    if (lead === deliveryLead) return;
+    setSavingDeliveryLead(true);
+    const prev = deliveryLead;
+    setDeliveryLead(lead); // optimistic
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kitchenDeliveryLead: lead }),
+      });
+      if (!res.ok) throw new Error("Failed to save");
+      toast.success(t("displaySavedToast"));
+    } catch {
+      setDeliveryLead(prev);
+      toast.error(t("saveErrorToast"));
+    } finally {
+      setSavingDeliveryLead(false);
+    }
+  }
 
   async function toggleItemCategory(enabled: boolean) {
     setSavingItemCategory(true);
@@ -592,7 +620,43 @@ export function KitchenWorkflowToggle({
         </div>
         {/* The old "also show the street address" sub-toggle was retired
             2026-07-03 (Luigi): a delivery tile always shows the address now;
-            this switch only controls whether the NAME is prefixed. */}
+            this switch only controls whether the NAME is shown. */}
+        {/* Which line leads the two-line delivery tile — only meaningful when
+            the name is shown too (Luigi 2026-07-03). The top line is always
+            the bold/large one; this just picks what goes there. */}
+        {deliveryShowName && (
+          <div className="border-t border-gray-100 px-5 py-3.5 bg-gray-50/50">
+            <div className="flex items-center gap-1.5 mb-2">
+              <MapPin className="w-3.5 h-3.5 text-gray-400" />
+              <span className="text-[11px] font-semibold text-gray-600">{t("deliveryLeadLabel")}</span>
+              <HelpTip text={t("deliveryLeadHelp")} />
+            </div>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => changeDeliveryLead("name")}
+                disabled={savingDeliveryLead}
+                className={`flex-1 max-w-[220px] text-left rounded-lg border-2 px-3 py-2 transition disabled:opacity-60 ${
+                  deliveryLead === "name" ? "border-teal-500 bg-white" : "border-gray-200 bg-white hover:border-gray-300"
+                }`}
+              >
+                <div className="text-xs font-bold text-gray-900">{t("deliveryLeadNameOption")}</div>
+                <div className="text-[11px] text-gray-400 truncate">{t("deliveryLeadNamePreview")}</div>
+              </button>
+              <button
+                type="button"
+                onClick={() => changeDeliveryLead("address")}
+                disabled={savingDeliveryLead}
+                className={`flex-1 max-w-[220px] text-left rounded-lg border-2 px-3 py-2 transition disabled:opacity-60 ${
+                  deliveryLead === "address" ? "border-teal-500 bg-white" : "border-gray-200 bg-white hover:border-gray-300"
+                }`}
+              >
+                <div className="text-xs font-bold text-gray-900">{t("deliveryLeadAddressOption")}</div>
+                <div className="text-[11px] text-gray-400 truncate">{t("deliveryLeadAddressPreview")}</div>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
       )}
 

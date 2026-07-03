@@ -1551,7 +1551,13 @@
       "vibrateToggleAriaLabel": "Toggle new-order vibration",
       "vibrateEnabledToast": "Vibration on — ring + vibrate.",
       "vibrateDisabledToast": "Vibration off — ring only.",
-      "deliveryBothLabel": "Also show the street address"
+      "deliveryBothLabel": "Also show the street address",
+      "deliveryLeadLabel": "What shows on the top line of a delivery order",
+      "deliveryLeadHelp": "The top line of a delivery tile is always big and bold; the second line is lighter. This only chooses WHICH goes on top — the customer's name or the delivery address.",
+      "deliveryLeadNameOption": "Customer name on top",
+      "deliveryLeadAddressOption": "Address on top",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "customers": {
       "title": "Customers",

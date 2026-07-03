@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "Alihkan getaran pesanan baru",
       "vibrateEnabledToast": "Getaran aktif — dering + getaran.",
       "vibrateDisabledToast": "Getaran nonaktif — hanya dering.",
-      "deliveryBothLabel": "Tampilkan juga alamat jalan"
+      "deliveryBothLabel": "Tampilkan juga alamat jalan",
+      "deliveryLeadLabel": "Apa yang tampil di baris atas pesanan antar",
+      "deliveryLeadHelp": "Baris atas ubin pengantaran selalu besar dan tebal; baris kedua lebih ringan. Ini hanya memilih APA yang di atas — nama pelanggan atau alamat antar.",
+      "deliveryLeadNameOption": "Nama pelanggan di atas",
+      "deliveryLeadAddressOption": "Alamat di atas",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "Restoran Anda",

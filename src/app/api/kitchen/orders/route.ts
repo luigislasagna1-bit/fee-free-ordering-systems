@@ -46,7 +46,7 @@ export async function GET() {
     // simple-mode auto-complete sweep below.
     const restaurant = await prisma.restaurant.findUnique({
       where: { id: restaurantId },
-      select: { kitchenWorkflowMode: true, printNodeEnabled: true, timezone: true, kitchenDeliveryShowName: true, kitchenDeliveryShowBoth: true, kitchenShowItemCategory: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true },
+      select: { kitchenWorkflowMode: true, printNodeEnabled: true, timezone: true, kitchenDeliveryShowName: true, kitchenDeliveryShowBoth: true, kitchenDeliveryLead: true, kitchenShowItemCategory: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true },
     });
     const resolvedMode = restaurant?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple";
     // Only join each line's menu category when the restaurant enabled the
@@ -247,6 +247,7 @@ export async function GET() {
       printNodeEnabled: !!restaurant?.printNodeEnabled,
       kitchenDeliveryShowName: !!restaurant?.kitchenDeliveryShowName,
       kitchenDeliveryShowBoth: !!restaurant?.kitchenDeliveryShowBoth,
+      kitchenDeliveryLead: restaurant?.kitchenDeliveryLead === "address" ? "address" : "name",
       kitchenShowItemCategory: showItemCategory,
     });
   } catch (err: any) {

@@ -208,6 +208,11 @@ model Restaurant {
   /// Additive (default false) so an existing name/address preference is kept.
   /// Luigi 2026-06-22.
   kitchenDeliveryShowBoth     Boolean   @default(false)
+  /// Which line LEADS a delivery tile when both name + address show (Luigi
+  /// 2026-07-03): "name" = customer name bold on top, address lighter below
+  /// (default); "address" = the reverse. Top line is always the bold/large
+  /// one, bottom always lighter — only the ORDER is configurable.
+  kitchenDeliveryLead         String    @default("name")
   /// Kitchen order DETAIL: show each dish's menu CATEGORY under its name (helps
   /// when the same dish name appears in different categories, e.g. Japanese
   /// menus). Default false = off. Fabrizio 2026-06-21.

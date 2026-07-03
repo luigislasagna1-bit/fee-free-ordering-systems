@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "Új rendelések rezgésének be-/kikapcsolása",
       "vibrateEnabledToast": "Rezgés bekapcsolva — csengés + rezgés.",
       "vibrateDisabledToast": "Rezgés kikapcsolva — csak csengés.",
-      "deliveryBothLabel": "Az utca és házszám megjelenítése is"
+      "deliveryBothLabel": "Az utca és házszám megjelenítése is",
+      "deliveryLeadLabel": "Mi jelenjen meg a kiszállításos rendelés felső sorában",
+      "deliveryLeadHelp": "A kiszállítási csempe felső sora mindig nagy és félkövér; a második sor halványabb. Itt csak azt választja ki, MI kerüljön felülre — az ügyfél neve vagy a szállítási cím.",
+      "deliveryLeadNameOption": "Ügyfél neve felül",
+      "deliveryLeadAddressOption": "Cím felül",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "Az Ön étterme",

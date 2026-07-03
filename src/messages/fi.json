@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "Vaihda uusien tilausten värinä",
       "vibrateEnabledToast": "Värinä päällä — ääni + värinä.",
       "vibrateDisabledToast": "Värinä pois — vain ääni.",
-      "deliveryBothLabel": "Näytä myös katuosoite"
+      "deliveryBothLabel": "Näytä myös katuosoite",
+      "deliveryLeadLabel": "Mitä toimitustilauksen ylimmällä rivillä näkyy",
+      "deliveryLeadHelp": "Toimitusruudun ylin rivi on aina iso ja lihavoitu; toinen rivi on vaaleampi. Tämä valitsee vain, KUMPI on ylhäällä — asiakkaan nimi vai toimitusosoite.",
+      "deliveryLeadNameOption": "Asiakkaan nimi ylhäällä",
+      "deliveryLeadAddressOption": "Osoite ylhäällä",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "Ravintolasi",

@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "切换新订单振动",
       "vibrateEnabledToast": "已开启振动 — 响铃 + 振动。",
       "vibrateDisabledToast": "已关闭振动 — 仅响铃。",
-      "deliveryBothLabel": "同时显示街道地址"
+      "deliveryBothLabel": "同时显示街道地址",
+      "deliveryLeadLabel": "外送订单顶行显示的内容",
+      "deliveryLeadHelp": "外送卡片的顶行始终大号加粗；第二行较浅。此设置只决定哪一项在上面——客户姓名还是配送地址。",
+      "deliveryLeadNameOption": "客户姓名在上",
+      "deliveryLeadAddressOption": "地址在上",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "您的餐厅",

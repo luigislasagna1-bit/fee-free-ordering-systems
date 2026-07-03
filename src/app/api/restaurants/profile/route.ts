@@ -61,6 +61,7 @@ export async function PUT(req: NextRequest) {
     kitchenVibrate,
     kitchenDeliveryShowName,
     kitchenDeliveryShowBoth,
+    kitchenDeliveryLead,
     kitchenShowItemCategory,
     alertPhone,
     scheduledOrderInterval,
@@ -223,6 +224,14 @@ export async function PUT(req: NextRequest) {
   if (kitchenVibrate !== undefined) updateData.kitchenVibrate = !!kitchenVibrate;
   if (kitchenDeliveryShowName !== undefined) updateData.kitchenDeliveryShowName = !!kitchenDeliveryShowName;
   if (kitchenDeliveryShowBoth !== undefined) updateData.kitchenDeliveryShowBoth = !!kitchenDeliveryShowBoth;
+  // Delivery-tile lead line: only the two known values are accepted so a bad
+  // payload can never wedge the kitchen display into an unknown layout.
+  if (kitchenDeliveryLead !== undefined) {
+    if (kitchenDeliveryLead !== "name" && kitchenDeliveryLead !== "address") {
+      return NextResponse.json({ error: "Invalid kitchenDeliveryLead" }, { status: 400 });
+    }
+    updateData.kitchenDeliveryLead = kitchenDeliveryLead;
+  }
   if (kitchenShowItemCategory !== undefined) updateData.kitchenShowItemCategory = !!kitchenShowItemCategory;
   // Optional alternate alert number; trim, cap length, and store null when blank
   // so the cron falls back to the public phone.

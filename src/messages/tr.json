@@ -3347,7 +3347,13 @@
       "vibrateToggleAriaLabel": "Yeni sipariş titreşimini aç/kapat",
       "vibrateEnabledToast": "Titreşim açık — zil + titreşim.",
       "vibrateDisabledToast": "Titreşim kapalı — yalnızca zil.",
-      "deliveryBothLabel": "Açık adresi de göster"
+      "deliveryBothLabel": "Açık adresi de göster",
+      "deliveryLeadLabel": "Teslimat siparişinin üst satırında ne gösterilir",
+      "deliveryLeadHelp": "Teslimat kutucuğunun üst satırı her zaman büyük ve kalındır; ikinci satır daha soluktur. Bu yalnızca üstte NEYİN olacağını seçer — müşterinin adı mı, teslimat adresi mi.",
+      "deliveryLeadNameOption": "Müşteri adı üstte",
+      "deliveryLeadAddressOption": "Adres üstte",
+      "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
     },
     "receiptRenderer": {
       "yourRestaurant": "Restoranınız",
