@@ -20,6 +20,8 @@ export default async function CompanySettingsPage() {
     companyAddress: string | null;
     companySupportEmail: string | null;
     companyLogoUrl: string | null;
+    companyRegistryNo: string | null;
+    companyWebsite: string | null;
     updatedAt: Date | null;
   } | null = null;
   try {
@@ -31,6 +33,8 @@ export default async function CompanySettingsPage() {
         companyAddress: true,
         companySupportEmail: true,
         companyLogoUrl: true,
+        companyRegistryNo: true,
+        companyWebsite: true,
         updatedAt: true,
       },
     });
@@ -46,6 +50,8 @@ export default async function CompanySettingsPage() {
         companyAddress: s?.companyAddress ?? "",
         companySupportEmail: s?.companySupportEmail ?? "",
         companyLogoUrl: s?.companyLogoUrl ?? "",
+        companyRegistryNo: s?.companyRegistryNo ?? "",
+        companyWebsite: s?.companyWebsite ?? "",
         updatedAt: s?.updatedAt?.toISOString() ?? null,
       }}
     />

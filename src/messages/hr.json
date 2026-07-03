@@ -3971,7 +3971,17 @@
       "notFound": "Račun nije pronađen.",
       "back": "Natrag na naplatu",
       "taxRateAmount": "Porezna stopa i iznos ({rate}%)",
-      "reverseChargeNote": "Neoporeziva transakcija u skladu s člankom 44. Direktive 2006/112/EZ — prijenos porezne obveze: PDV obračunava primatelj."
+      "reverseChargeNote": "Neoporeziva transakcija u skladu s člankom 44. Direktive 2006/112/EZ — prijenos porezne obveze: PDV obračunava primatelj.",
+      "customerNo": "Broj kupca",
+      "paymentRef": "Referenca plaćanja",
+      "lineNo": "Br.",
+      "qty": "Kol.",
+      "unitPrice": "Jedinična cijena",
+      "subTotal": "Međuzbroj",
+      "restaurantIdLabel": "ID restorana",
+      "restaurantNameLabel": "Naziv restorana",
+      "restaurantAddressLabel": "Adresa restorana",
+      "licenseNote": "Ovaj je račun izdan u skladu s uvjetima usluge prihvaćenima prilikom izrade računa korisnika."
     },
     "menus": {
       "live": "Aktivno",

@@ -3971,7 +3971,17 @@
       "notFound": "청구서를 찾을 수 없습니다.",
       "back": "결제 관리로 돌아가기",
       "taxRateAmount": "세율 및 세액({rate}%)",
-      "reverseChargeNote": "지침 2006/112/EC 제44조에 따른 비과세 거래 — 대리납부: VAT는 수령자가 신고합니다."
+      "reverseChargeNote": "지침 2006/112/EC 제44조에 따른 비과세 거래 — 대리납부: VAT는 수령자가 신고합니다.",
+      "customerNo": "고객 번호",
+      "paymentRef": "결제 참조 번호",
+      "lineNo": "번호",
+      "qty": "수량",
+      "unitPrice": "단가",
+      "subTotal": "소계",
+      "restaurantIdLabel": "레스토랑 ID",
+      "restaurantNameLabel": "레스토랑 이름",
+      "restaurantAddressLabel": "레스토랑 주소",
+      "licenseNote": "이 인보이스는 계정 생성 시 동의한 서비스 약관에 따라 발행되었습니다."
     },
     "menus": {
       "live": "라이브",

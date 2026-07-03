@@ -3971,7 +3971,17 @@
       "notFound": "Faktur tidak ditemukan.",
       "back": "Kembali ke Penagihan",
       "taxRateAmount": "Tarif & jumlah pajak ({rate}%)",
-      "reverseChargeNote": "Transaksi tidak kena pajak sesuai Pasal 44 Direktif 2006/112/EC — reverse charge: PPN diperhitungkan oleh penerima."
+      "reverseChargeNote": "Transaksi tidak kena pajak sesuai Pasal 44 Direktif 2006/112/EC — reverse charge: PPN diperhitungkan oleh penerima.",
+      "customerNo": "Nomor pelanggan",
+      "paymentRef": "Referensi pembayaran",
+      "lineNo": "No.",
+      "qty": "Jml",
+      "unitPrice": "Harga satuan",
+      "subTotal": "Subtotal",
+      "restaurantIdLabel": "ID restoran",
+      "restaurantNameLabel": "Nama restoran",
+      "restaurantAddressLabel": "Alamat restoran",
+      "licenseNote": "Faktur ini diterbitkan sesuai dengan ketentuan layanan yang disetujui saat akun dibuat."
     },
     "menus": {
       "live": "Aktif",

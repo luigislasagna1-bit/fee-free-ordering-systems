@@ -3971,7 +3971,17 @@
       "notFound": "Računa ni mogoče najti.",
       "back": "Nazaj na obračun",
       "taxRateAmount": "Davčna stopnja in znesek ({rate}%)",
-      "reverseChargeNote": "Neobdavčljiva transakcija v skladu s 44. členom Direktive 2006/112/ES — obrnjena davčna obveznost: DDV obračuna prejemnik."
+      "reverseChargeNote": "Neobdavčljiva transakcija v skladu s 44. členom Direktive 2006/112/ES — obrnjena davčna obveznost: DDV obračuna prejemnik.",
+      "customerNo": "Številka stranke",
+      "paymentRef": "Sklic plačila",
+      "lineNo": "Št.",
+      "qty": "Kol.",
+      "unitPrice": "Cena na enoto",
+      "subTotal": "Vmesni seštevek",
+      "restaurantIdLabel": "ID restavracije",
+      "restaurantNameLabel": "Ime restavracije",
+      "restaurantAddressLabel": "Naslov restavracije",
+      "licenseNote": "Ta račun je bil izdan v skladu s pogoji storitve, sprejetimi ob ustvarjanju računa."
     },
     "menus": {
       "live": "V živo",

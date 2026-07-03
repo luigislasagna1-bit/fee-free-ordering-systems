@@ -3971,7 +3971,17 @@
       "notFound": "Không tìm thấy hóa đơn.",
       "back": "Quay lại Thanh toán",
       "taxRateAmount": "Thuế suất & số tiền ({rate}%)",
-      "reverseChargeNote": "Giao dịch không chịu thuế theo Điều 44 Chỉ thị 2006/112/EC — thuế đảo chiều: bên nhận tự kê khai VAT."
+      "reverseChargeNote": "Giao dịch không chịu thuế theo Điều 44 Chỉ thị 2006/112/EC — thuế đảo chiều: bên nhận tự kê khai VAT.",
+      "customerNo": "Mã khách hàng",
+      "paymentRef": "Mã tham chiếu thanh toán",
+      "lineNo": "STT",
+      "qty": "SL",
+      "unitPrice": "Đơn giá",
+      "subTotal": "Tạm tính",
+      "restaurantIdLabel": "Mã nhà hàng",
+      "restaurantNameLabel": "Tên nhà hàng",
+      "restaurantAddressLabel": "Địa chỉ nhà hàng",
+      "licenseNote": "Hóa đơn này được phát hành theo điều khoản dịch vụ đã chấp nhận khi tạo tài khoản."
     },
     "menus": {
       "live": "Đang hoạt động",

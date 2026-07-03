@@ -3971,7 +3971,17 @@
       "notFound": "Sąskaita faktūra nerasta.",
       "back": "Atgal į atsiskaitymus",
       "taxRateAmount": "Mokesčio tarifas ir suma ({rate}%)",
-      "reverseChargeNote": "Neapmokestinamasis sandoris pagal Direktyvos 2006/112/EB 44 straipsnį — atvirkštinis apmokestinimas: PVM apskaito gavėjas."
+      "reverseChargeNote": "Neapmokestinamasis sandoris pagal Direktyvos 2006/112/EB 44 straipsnį — atvirkštinis apmokestinimas: PVM apskaito gavėjas.",
+      "customerNo": "Kliento numeris",
+      "paymentRef": "Mokėjimo nuoroda",
+      "lineNo": "Nr.",
+      "qty": "Kiekis",
+      "unitPrice": "Vieneto kaina",
+      "subTotal": "Tarpinė suma",
+      "restaurantIdLabel": "Restorano ID",
+      "restaurantNameLabel": "Restorano pavadinimas",
+      "restaurantAddressLabel": "Restorano adresas",
+      "licenseNote": "Ši sąskaita faktūra išrašyta pagal paslaugų teikimo sąlygas, priimtas kuriant paskyrą."
     },
     "menus": {
       "live": "Aktyvus",

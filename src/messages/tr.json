@@ -3971,7 +3971,17 @@
       "notFound": "Fatura bulunamadı.",
       "back": "Faturalandırmaya dön",
       "taxRateAmount": "Vergi oranı ve tutarı (%{rate})",
-      "reverseChargeNote": "2006/112/AT sayılı Direktifin 44. maddesi uyarınca vergiye tabi olmayan işlem — ters vergilendirme: KDV alıcı tarafından beyan edilir."
+      "reverseChargeNote": "2006/112/AT sayılı Direktifin 44. maddesi uyarınca vergiye tabi olmayan işlem — ters vergilendirme: KDV alıcı tarafından beyan edilir.",
+      "customerNo": "Müşteri numarası",
+      "paymentRef": "Ödeme referansı",
+      "lineNo": "No",
+      "qty": "Adet",
+      "unitPrice": "Birim fiyat",
+      "subTotal": "Ara toplam",
+      "restaurantIdLabel": "Restoran kimliği",
+      "restaurantNameLabel": "Restoran adı",
+      "restaurantAddressLabel": "Restoran adresi",
+      "licenseNote": "Bu fatura, hesap oluşturulurken kabul edilen hizmet şartlarına uygun olarak düzenlenmiştir."
     },
     "menus": {
       "live": "Yayında",

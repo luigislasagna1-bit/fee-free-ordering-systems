@@ -3971,7 +3971,17 @@
       "notFound": "A számla nem található.",
       "back": "Vissza a számlázáshoz",
       "taxRateAmount": "Adókulcs és összeg ({rate}%)",
-      "reverseChargeNote": "Adómentes ügylet a 2006/112/EK irányelv 44. cikke alapján — fordított adózás: az áfát a szolgáltatás igénybevevője számolja el."
+      "reverseChargeNote": "Adómentes ügylet a 2006/112/EK irányelv 44. cikke alapján — fordított adózás: az áfát a szolgáltatás igénybevevője számolja el.",
+      "customerNo": "Ügyfélszám",
+      "paymentRef": "Fizetési hivatkozás",
+      "lineNo": "Ssz.",
+      "qty": "Menny.",
+      "unitPrice": "Egységár",
+      "subTotal": "Részösszeg",
+      "restaurantIdLabel": "Étterem-azonosító",
+      "restaurantNameLabel": "Étterem neve",
+      "restaurantAddressLabel": "Étterem címe",
+      "licenseNote": "Ez a számla a fiók létrehozásakor elfogadott szolgáltatási feltételeknek megfelelően készült."
     },
     "menus": {
       "live": "Élő",

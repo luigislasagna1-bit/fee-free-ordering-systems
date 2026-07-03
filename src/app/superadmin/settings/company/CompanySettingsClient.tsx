@@ -18,6 +18,8 @@ export function CompanySettingsClient({
     companyAddress: string;
     companySupportEmail: string;
     companyLogoUrl: string;
+    companyRegistryNo: string;
+    companyWebsite: string;
     updatedAt: string | null;
   };
 }) {
@@ -26,6 +28,8 @@ export function CompanySettingsClient({
   const [address, setAddress] = useState(initial.companyAddress);
   const [supportEmail, setSupportEmail] = useState(initial.companySupportEmail);
   const [logoUrl, setLogoUrl] = useState(initial.companyLogoUrl);
+  const [registryNo, setRegistryNo] = useState(initial.companyRegistryNo);
+  const [website, setWebsite] = useState(initial.companyWebsite);
   const [busy, setBusy] = useState(false);
   const [savedAt, setSavedAt] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -43,6 +47,8 @@ export function CompanySettingsClient({
           companyAddress: address,
           companySupportEmail: supportEmail,
           companyLogoUrl: logoUrl,
+          companyRegistryNo: registryNo,
+          companyWebsite: website,
         }),
       });
       const data = await res.json();
@@ -111,6 +117,21 @@ export function CompanySettingsClient({
           value={address}
           onChange={setAddress}
           placeholder="123 Main St, Toronto, ON, Canada"
+          hint="Registered business address. Invoices render without an issuer address until this is set."
+        />
+        <Field
+          label="Company registry number (optional)"
+          value={registryNo}
+          onChange={setRegistryNo}
+          placeholder="Corporation No. 1234567-8"
+          hint="Type the label too — it prints verbatim in the invoice legal footer (the 'Trade Register no' line on EU invoices; in Canada, your federal/provincial Corporation Number from the certificate of incorporation)."
+        />
+        <Field
+          label="Website (optional)"
+          value={website}
+          onChange={setWebsite}
+          placeholder="www.feefreeordering.com"
+          hint="Shown in the invoice legal footer."
         />
         <Field
           label="Support / billing email"

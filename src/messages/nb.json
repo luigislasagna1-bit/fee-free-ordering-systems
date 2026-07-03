@@ -3971,7 +3971,17 @@
       "notFound": "Fakturaen ble ikke funnet.",
       "back": "Tilbake til fakturering",
       "taxRateAmount": "Skattesats og beløp ({rate}%)",
-      "reverseChargeNote": "Ikke-avgiftspliktig transaksjon i henhold til artikkel 44 i direktiv 2006/112/EF — omvendt avgiftsplikt: MVA beregnes av mottakeren."
+      "reverseChargeNote": "Ikke-avgiftspliktig transaksjon i henhold til artikkel 44 i direktiv 2006/112/EF — omvendt avgiftsplikt: MVA beregnes av mottakeren.",
+      "customerNo": "Kundenummer",
+      "paymentRef": "Betalingsreferanse",
+      "lineNo": "Nr.",
+      "qty": "Antall",
+      "unitPrice": "Enhetspris",
+      "subTotal": "Delsum",
+      "restaurantIdLabel": "Restaurant-ID",
+      "restaurantNameLabel": "Restaurantnavn",
+      "restaurantAddressLabel": "Restaurantadresse",
+      "licenseNote": "Denne fakturaen ble utstedt i samsvar med tjenestevilkårene som ble akseptert da kontoen ble opprettet."
     },
     "menus": {
       "live": "Aktiv",

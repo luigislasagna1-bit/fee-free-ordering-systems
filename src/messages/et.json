@@ -3971,7 +3971,17 @@
       "notFound": "Arvet ei leitud.",
       "back": "Tagasi arvelduse juurde",
       "taxRateAmount": "Maksumäär ja summa ({rate}%)",
-      "reverseChargeNote": "Mittemaksustatav tehing vastavalt direktiivi 2006/112/EÜ artiklile 44 — pöördmaksustamine: käibemaksu arvestab saaja."
+      "reverseChargeNote": "Mittemaksustatav tehing vastavalt direktiivi 2006/112/EÜ artiklile 44 — pöördmaksustamine: käibemaksu arvestab saaja.",
+      "customerNo": "Kliendinumber",
+      "paymentRef": "Makseviide",
+      "lineNo": "Nr",
+      "qty": "Kogus",
+      "unitPrice": "Ühikuhind",
+      "subTotal": "Vahesumma",
+      "restaurantIdLabel": "Restorani ID",
+      "restaurantNameLabel": "Restorani nimi",
+      "restaurantAddressLabel": "Restorani aadress",
+      "licenseNote": "See arve on väljastatud vastavalt konto loomisel aktsepteeritud teenusetingimustele."
     },
     "menus": {
       "live": "Aktiivne",

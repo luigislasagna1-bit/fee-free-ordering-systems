@@ -3971,7 +3971,17 @@
       "notFound": "Facture introuvable.",
       "back": "Retour à la facturation",
       "taxRateAmount": "Taux et montant de la taxe ({rate} %)",
-      "reverseChargeNote": "Opération non imposable conformément à l'article 44 de la directive 2006/112/CE — autoliquidation : TVA due par le preneur."
+      "reverseChargeNote": "Opération non imposable conformément à l'article 44 de la directive 2006/112/CE — autoliquidation : TVA due par le preneur.",
+      "customerNo": "Numéro de client",
+      "paymentRef": "Référence de paiement",
+      "lineNo": "N°",
+      "qty": "Qté",
+      "unitPrice": "Prix unitaire",
+      "subTotal": "Sous-total",
+      "restaurantIdLabel": "ID du restaurant",
+      "restaurantNameLabel": "Nom du restaurant",
+      "restaurantAddressLabel": "Adresse du restaurant",
+      "licenseNote": "Cette facture a été émise conformément aux conditions d'utilisation acceptées lors de la création du compte."
     },
     "menus": {
       "live": "En ligne",

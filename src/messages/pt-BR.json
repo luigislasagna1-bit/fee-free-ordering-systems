@@ -3971,7 +3971,17 @@
       "notFound": "Fatura não encontrada.",
       "back": "Voltar para Faturamento",
       "taxRateAmount": "Alíquota e valor do imposto ({rate}%)",
-      "reverseChargeNote": "Transação não tributável conforme o artigo 44 da Diretiva 2006/112/CE — reverse charge: IVA por conta do destinatário."
+      "reverseChargeNote": "Transação não tributável conforme o artigo 44 da Diretiva 2006/112/CE — reverse charge: IVA por conta do destinatário.",
+      "customerNo": "Número do cliente",
+      "paymentRef": "Referência de pagamento",
+      "lineNo": "Nº",
+      "qty": "Qtd.",
+      "unitPrice": "Preço unitário",
+      "subTotal": "Subtotal",
+      "restaurantIdLabel": "ID do restaurante",
+      "restaurantNameLabel": "Nome do restaurante",
+      "restaurantAddressLabel": "Endereço do restaurante",
+      "licenseNote": "Esta fatura foi emitida de acordo com os termos de serviço aceitos na criação da conta."
     },
     "menus": {
       "live": "No ar",

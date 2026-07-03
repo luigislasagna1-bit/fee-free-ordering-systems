@@ -3971,7 +3971,17 @@
       "notFound": "Nie znaleziono faktury.",
       "back": "Powrót do rozliczeń",
       "taxRateAmount": "Stawka i kwota podatku ({rate}%)",
-      "reverseChargeNote": "Transakcja niepodlegająca opodatkowaniu zgodnie z art. 44 dyrektywy 2006/112/WE — odwrotne obciążenie: VAT rozlicza nabywca."
+      "reverseChargeNote": "Transakcja niepodlegająca opodatkowaniu zgodnie z art. 44 dyrektywy 2006/112/WE — odwrotne obciążenie: VAT rozlicza nabywca.",
+      "customerNo": "Numer klienta",
+      "paymentRef": "Referencja płatności",
+      "lineNo": "Nr",
+      "qty": "Ilość",
+      "unitPrice": "Cena jedn.",
+      "subTotal": "Suma częściowa",
+      "restaurantIdLabel": "ID restauracji",
+      "restaurantNameLabel": "Nazwa restauracji",
+      "restaurantAddressLabel": "Adres restauracji",
+      "licenseNote": "Niniejsza faktura została wystawiona zgodnie z warunkami usługi zaakceptowanymi przy tworzeniu konta."
     },
     "menus": {
       "live": "Na żywo",

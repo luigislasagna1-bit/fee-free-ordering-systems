@@ -4015,7 +4015,17 @@
       "notFound": "Invoice not found.",
       "back": "Back to Billing",
       "taxRateAmount": "Tax rate & amount ({rate}%)",
-      "reverseChargeNote": "Non-taxable transaction in accordance with Article 44 of Directive 2006/112/EC — reverse charge: VAT to be accounted for by the recipient."
+      "reverseChargeNote": "Non-taxable transaction in accordance with Article 44 of Directive 2006/112/EC — reverse charge: VAT to be accounted for by the recipient.",
+      "customerNo": "Customer number",
+      "paymentRef": "Payment reference",
+      "lineNo": "Nr",
+      "qty": "Qty",
+      "unitPrice": "Unit price",
+      "subTotal": "Sub-Total",
+      "restaurantIdLabel": "Restaurant ID",
+      "restaurantNameLabel": "Restaurant name",
+      "restaurantAddressLabel": "Restaurant address",
+      "licenseNote": "This invoice was issued in accordance with the terms of service accepted when the account was created."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

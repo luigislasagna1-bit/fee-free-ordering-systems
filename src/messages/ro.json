@@ -3971,7 +3971,17 @@
       "notFound": "Factura nu a fost găsită.",
       "back": "Înapoi la Facturare",
       "taxRateAmount": "Cota și valoarea taxei ({rate}%)",
-      "reverseChargeNote": "Tranzacție neimpozabilă în conformitate cu articolul 44 al Directivei 2006/112/CE — taxare inversă: TVA în sarcina beneficiarului."
+      "reverseChargeNote": "Tranzacție neimpozabilă în conformitate cu articolul 44 al Directivei 2006/112/CE — taxare inversă: TVA în sarcina beneficiarului.",
+      "customerNo": "Număr client",
+      "paymentRef": "Referință de plată",
+      "lineNo": "Nr.",
+      "qty": "Cant.",
+      "unitPrice": "Preț unitar",
+      "subTotal": "Subtotal",
+      "restaurantIdLabel": "ID restaurant",
+      "restaurantNameLabel": "Numele restaurantului",
+      "restaurantAddressLabel": "Adresa restaurantului",
+      "licenseNote": "Această factură a fost emisă în conformitate cu termenii serviciului acceptați la crearea contului."
     },
     "menus": {
       "live": "Activ",

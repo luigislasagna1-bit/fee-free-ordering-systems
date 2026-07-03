@@ -3971,7 +3971,17 @@
       "notFound": "Fakturaen blev ikke fundet.",
       "back": "Tilbage til Fakturering",
       "taxRateAmount": "Skattesats & beløb ({rate}%)",
-      "reverseChargeNote": "Ikke-afgiftspligtig transaktion i henhold til artikel 44 i direktiv 2006/112/EF — omvendt betalingspligt: momsen afregnes af modtageren."
+      "reverseChargeNote": "Ikke-afgiftspligtig transaktion i henhold til artikel 44 i direktiv 2006/112/EF — omvendt betalingspligt: momsen afregnes af modtageren.",
+      "customerNo": "Kundenummer",
+      "paymentRef": "Betalingsreference",
+      "lineNo": "Nr.",
+      "qty": "Antal",
+      "unitPrice": "Enhedspris",
+      "subTotal": "Subtotal",
+      "restaurantIdLabel": "Restaurant-ID",
+      "restaurantNameLabel": "Restaurantnavn",
+      "restaurantAddressLabel": "Restaurantadresse",
+      "licenseNote": "Denne faktura er udstedt i overensstemmelse med de servicevilkår, der blev accepteret ved oprettelsen af kontoen."
     },
     "menus": {
       "live": "Live",

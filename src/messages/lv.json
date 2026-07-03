@@ -3971,7 +3971,17 @@
       "notFound": "Rēķins nav atrasts.",
       "back": "Atpakaļ uz norēķiniem",
       "taxRateAmount": "Nodokļa likme un summa ({rate}%)",
-      "reverseChargeNote": "Ar nodokli neapliekams darījums saskaņā ar Direktīvas 2006/112/EK 44. pantu — apgrieztā maksāšana: PVN uzskaita saņēmējs."
+      "reverseChargeNote": "Ar nodokli neapliekams darījums saskaņā ar Direktīvas 2006/112/EK 44. pantu — apgrieztā maksāšana: PVN uzskaita saņēmējs.",
+      "customerNo": "Klienta numurs",
+      "paymentRef": "Maksājuma atsauce",
+      "lineNo": "Nr.",
+      "qty": "Daudz.",
+      "unitPrice": "Vienības cena",
+      "subTotal": "Starpsumma",
+      "restaurantIdLabel": "Restorāna ID",
+      "restaurantNameLabel": "Restorāna nosaukums",
+      "restaurantAddressLabel": "Restorāna adrese",
+      "licenseNote": "Šis rēķins ir izrakstīts saskaņā ar pakalpojuma noteikumiem, kas pieņemti konta izveides brīdī."
     },
     "menus": {
       "live": "Aktīvs",

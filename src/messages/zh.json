@@ -3971,7 +3971,17 @@
       "notFound": "未找到发票。",
       "back": "返回账单",
       "taxRateAmount": "税率与税额（{rate}%）",
-      "reverseChargeNote": "根据 2006/112/EC 指令第 44 条为免税交易——反向征收：增值税由接收方申报。"
+      "reverseChargeNote": "根据 2006/112/EC 指令第 44 条为免税交易——反向征收：增值税由接收方申报。",
+      "customerNo": "客户编号",
+      "paymentRef": "付款参考号",
+      "lineNo": "序号",
+      "qty": "数量",
+      "unitPrice": "单价",
+      "subTotal": "小计",
+      "restaurantIdLabel": "餐厅 ID",
+      "restaurantNameLabel": "餐厅名称",
+      "restaurantAddressLabel": "餐厅地址",
+      "licenseNote": "本发票根据创建账户时接受的服务条款开具。"
     },
     "menus": {
       "live": "使用中",

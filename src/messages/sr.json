@@ -3971,7 +3971,17 @@
       "notFound": "Faktura nije pronađena.",
       "back": "Nazad na naplatu",
       "taxRateAmount": "Пореска стопа и износ ({rate}%)",
-      "reverseChargeNote": "Неопорезива трансакција у складу са чланом 44 Директиве 2006/112/ЕЗ — обрнута наплата: ПДВ обрачунава прималац."
+      "reverseChargeNote": "Неопорезива трансакција у складу са чланом 44 Директиве 2006/112/ЕЗ — обрнута наплата: ПДВ обрачунава прималац.",
+      "customerNo": "Број купца",
+      "paymentRef": "Референца плаћања",
+      "lineNo": "Бр.",
+      "qty": "Кол.",
+      "unitPrice": "Јединична цена",
+      "subTotal": "Међузбир",
+      "restaurantIdLabel": "ID ресторана",
+      "restaurantNameLabel": "Назив ресторана",
+      "restaurantAddressLabel": "Адреса ресторана",
+      "licenseNote": "Ова фактура је издата у складу са условима услуге прихваћеним при креирању налога."
     },
     "menus": {
       "live": "Uživo",

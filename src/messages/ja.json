@@ -3971,7 +3971,17 @@
       "notFound": "請求書が見つかりません。",
       "back": "請求情報に戻る",
       "taxRateAmount": "税率・税額（{rate}%）",
-      "reverseChargeNote": "指令2006/112/EC第44条に基づく非課税取引 — リバースチャージ：VATは受領者が申告します。"
+      "reverseChargeNote": "指令2006/112/EC第44条に基づく非課税取引 — リバースチャージ：VATは受領者が申告します。",
+      "customerNo": "顧客番号",
+      "paymentRef": "支払い参照番号",
+      "lineNo": "番号",
+      "qty": "数量",
+      "unitPrice": "単価",
+      "subTotal": "小計",
+      "restaurantIdLabel": "レストランID",
+      "restaurantNameLabel": "レストラン名",
+      "restaurantAddressLabel": "レストラン住所",
+      "licenseNote": "この請求書は、アカウント作成時に同意された利用規約に基づいて発行されました。"
     },
     "menus": {
       "live": "公開中",

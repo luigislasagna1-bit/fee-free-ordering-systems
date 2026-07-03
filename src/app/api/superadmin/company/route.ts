@@ -27,6 +27,8 @@ export async function POST(req: NextRequest) {
     companyAddress: str(body.companyAddress, 200),
     companySupportEmail: str(body.companySupportEmail, 120),
     companyLogoUrl: str(body.companyLogoUrl, 500),
+    companyRegistryNo: str(body.companyRegistryNo, 120),
+    companyWebsite: str(body.companyWebsite, 200),
     updatedBy: session.user?.email ?? null,
   };
 

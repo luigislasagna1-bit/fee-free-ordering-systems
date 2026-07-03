@@ -3971,7 +3971,17 @@
       "notFound": "No s'ha trobat la factura.",
       "back": "Torna a Facturació",
       "taxRateAmount": "Tipus i import de l'impost ({rate}%)",
-      "reverseChargeNote": "Operació no subjecta d'acord amb l'article 44 de la Directiva 2006/112/CE — inversió del subjecte passiu: l'IVA va a càrrec del destinatari."
+      "reverseChargeNote": "Operació no subjecta d'acord amb l'article 44 de la Directiva 2006/112/CE — inversió del subjecte passiu: l'IVA va a càrrec del destinatari.",
+      "customerNo": "Número de client",
+      "paymentRef": "Referència de pagament",
+      "lineNo": "Núm.",
+      "qty": "Quant.",
+      "unitPrice": "Preu unitari",
+      "subTotal": "Subtotal",
+      "restaurantIdLabel": "ID del restaurant",
+      "restaurantNameLabel": "Nom del restaurant",
+      "restaurantAddressLabel": "Adreça del restaurant",
+      "licenseNote": "Aquesta factura s'ha emès d'acord amb les condicions del servei acceptades en crear el compte."
     },
     "menus": {
       "live": "En directe",

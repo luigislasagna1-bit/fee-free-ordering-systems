@@ -3971,7 +3971,17 @@
       "notFound": "Rechnung nicht gefunden.",
       "back": "Zurück zur Abrechnung",
       "taxRateAmount": "Steuersatz & Betrag ({rate} %)",
-      "reverseChargeNote": "Nicht steuerbarer Umsatz gemäß Artikel 44 der Richtlinie 2006/112/EG — Reverse Charge: Steuerschuldnerschaft des Leistungsempfängers."
+      "reverseChargeNote": "Nicht steuerbarer Umsatz gemäß Artikel 44 der Richtlinie 2006/112/EG — Reverse Charge: Steuerschuldnerschaft des Leistungsempfängers.",
+      "customerNo": "Kundennummer",
+      "paymentRef": "Zahlungsreferenz",
+      "lineNo": "Nr.",
+      "qty": "Menge",
+      "unitPrice": "Einzelpreis",
+      "subTotal": "Zwischensumme",
+      "restaurantIdLabel": "Restaurant-ID",
+      "restaurantNameLabel": "Restaurantname",
+      "restaurantAddressLabel": "Restaurantadresse",
+      "licenseNote": "Diese Rechnung wurde gemäß den bei der Kontoerstellung akzeptierten Nutzungsbedingungen ausgestellt."
     },
     "menus": {
       "live": "Live",

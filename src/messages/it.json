@@ -3971,7 +3971,17 @@
       "notFound": "Fattura non trovata.",
       "back": "Torna alla fatturazione",
       "taxRateAmount": "Aliquota e importo imposta ({rate}%)",
-      "reverseChargeNote": "Operazione non imponibile ai sensi dell'articolo 44 della Direttiva 2006/112/CE — reverse charge: IVA a carico del destinatario."
+      "reverseChargeNote": "Operazione non imponibile ai sensi dell'articolo 44 della Direttiva 2006/112/CE — reverse charge: IVA a carico del destinatario.",
+      "customerNo": "Numero cliente",
+      "paymentRef": "Riferimento pagamento",
+      "lineNo": "Nr",
+      "qty": "Q.tà",
+      "unitPrice": "Prezzo unitario",
+      "subTotal": "Subtotale",
+      "restaurantIdLabel": "ID ristorante",
+      "restaurantNameLabel": "Nome ristorante",
+      "restaurantAddressLabel": "Indirizzo ristorante",
+      "licenseNote": "Questa fattura è stata emessa in conformità con i termini di servizio accettati alla creazione dell'account."
     },
     "menus": {
       "live": "In diretta",

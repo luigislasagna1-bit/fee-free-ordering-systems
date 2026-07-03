@@ -64,13 +64,18 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
   // issuer even before the superadmin fills it in.
   const platform = await prisma.platformSettings.findUnique({
     where: { id: "singleton" },
-    select: { companyLegalName: true, companyTaxId: true, companyAddress: true, companySupportEmail: true, companyLogoUrl: true },
+    select: { companyLegalName: true, companyTaxId: true, companyAddress: true, companySupportEmail: true, companyLogoUrl: true, companyRegistryNo: true, companyWebsite: true },
   }).catch(() => null);
   const issuer = {
     name: platform?.companyLegalName?.trim() || "Fee Free Ordering Inc.",
     taxId: platform?.companyTaxId?.trim() || "",
     address: platform?.companyAddress?.trim() || "",
     email: platform?.companySupportEmail?.trim() || "support@feefreeordering.com",
+    // Registry line ("Trade Register no" on the Oracle sample; Canada =
+    // Corporation Number) + website — both free text incl. their own label,
+    // set in Superadmin → Company. Luigi 2026-07-03.
+    registryNo: platform?.companyRegistryNo?.trim() || "",
+    website: platform?.companyWebsite?.trim() || "www.feefreeordering.com",
     // The Fee Free logo — shown ONLY on DIRECT (non-reseller) invoices; a
     // reseller invoice shows the reseller's own logo instead. Luigi 2026-07-02.
     logo: platform?.companyLogoUrl?.trim() || "",
@@ -110,6 +115,19 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
 
   const when = inv.paidAt ?? inv.createdAt;
   const invoiceNo = `INV-${new Date(when).getFullYear()}-${id.slice(-6).toUpperCase()}`;
+  // Stable per-restaurant customer number + the Stripe payment reference —
+  // both on the Oracle sample ("Customer number" / "Payment Gateway ID") and
+  // what support/accountants use to match a payment to the processor.
+  const customerNo = `C-${restaurantId.slice(-8).toUpperCase()}`;
+  const paymentRef = inv.stripeInvoiceId || "";
+  // Restaurant identification inside the line item (Oracle prints ID + name +
+  // address there, so the invoice says exactly WHICH location was served).
+  const restaurantAddress = [
+    restaurant.address,
+    restaurant.city,
+    [restaurant.state, restaurant.zip].filter(Boolean).join(" "),
+    restaurant.country,
+  ].filter(Boolean).join(", ");
   const periodLabel = inv.periodStart && inv.periodEnd
     ? `${new Date(inv.periodStart).toLocaleDateString(locale)} – ${new Date(inv.periodEnd).toLocaleDateString(locale)}`
     : null;
@@ -151,6 +169,8 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
             <div className="text-2xl font-bold tracking-tight text-gray-900">{t("title")}</div>
             <div className="text-xs text-gray-500 mt-1">{t("invoiceNumber")} {invoiceNo}</div>
             <div className="text-xs text-gray-500">{t("issueDate")}: {new Date(when).toLocaleDateString(locale)}</div>
+            <div className="text-xs text-gray-500">{t("customerNo")}: {customerNo}</div>
+            {paymentRef && <div className="text-xs text-gray-500 break-all">{t("paymentRef")}: {paymentRef}</div>}
             <span className={`inline-block mt-2 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${isPaid ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}`}>
               {isPaid ? t("statusPaid") : t("statusDue")}
             </span>
@@ -166,33 +186,50 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
           {billToEmail && <div className="text-sm text-gray-600">{billToEmail}</div>}
         </div>
 
-        {/* Line items */}
+        {/* Line items — Nr/Qty/Description/Unit-price/Price like the Oracle
+            sample, with the served restaurant identified INSIDE the line so
+            the invoice says which location the service was for. */}
         <table className="w-full text-sm border-t border-gray-100">
           <thead>
             <tr className="text-xs uppercase text-gray-400">
+              <th className="text-left font-semibold py-2 pr-2 w-8">{t("lineNo")}</th>
+              <th className="text-left font-semibold py-2 pr-2 w-10">{t("qty")}</th>
               <th className="text-left font-semibold py-2">{t("description")}</th>
-              <th className="text-right font-semibold py-2">{t("amount")}</th>
+              <th className="text-right font-semibold py-2 pl-2 whitespace-nowrap">{t("unitPrice")}</th>
+              <th className="text-right font-semibold py-2 pl-2 whitespace-nowrap">{t("amount")}</th>
             </tr>
           </thead>
           <tbody>
             <tr className="border-t border-gray-100">
+              <td className="py-3 text-gray-500 align-top">1</td>
+              <td className="py-3 text-gray-500 align-top">1</td>
               <td className="py-3 text-gray-800">
                 {t("servicesLine")}
                 {periodLabel && <div className="text-xs text-gray-500 mt-0.5">{t("period")}: {periodLabel}</div>}
+                <div className="text-xs text-gray-500 mt-0.5">{t("restaurantIdLabel")}: {customerNo}</div>
+                <div className="text-xs text-gray-500">{t("restaurantNameLabel")}: {restaurant.name}</div>
+                {restaurantAddress && <div className="text-xs text-gray-500">{t("restaurantAddressLabel")}: {restaurantAddress}</div>}
               </td>
-              <td className="py-3 text-right text-gray-800 align-top">{amount}</td>
+              <td className="py-3 text-right text-gray-800 align-top whitespace-nowrap">{amount}</td>
+              <td className="py-3 text-right text-gray-800 align-top whitespace-nowrap">{amount}</td>
             </tr>
           </tbody>
           <tfoot>
-            {euReverseCharge && (
-              <tr className="border-t border-gray-100">
-                <td className="py-2 text-right text-gray-600">{t("taxRateAmount", { rate: "0.00" })}</td>
-                <td className="py-2 text-right text-gray-600">{formatCurrency(0, inv.currency)}</td>
-              </tr>
-            )}
             <tr className="border-t border-gray-200">
-              <td className="py-3 text-right font-bold text-gray-900">{t("total")}</td>
-              <td className="py-3 text-right font-bold text-gray-900">{amount}</td>
+              <td colSpan={4} className="py-2 text-right font-semibold text-gray-700">{t("subTotal")}</td>
+              <td className="py-2 text-right font-semibold text-gray-700 whitespace-nowrap">{amount}</td>
+            </tr>
+            {/* Tax line — always shown, like the Oracle sample. 0% today for
+                EVERY invoice: EU B2B = reverse charge, everyone else = no tax
+                collected yet (Canadian GST/HST arrives with Stripe Tax at
+                Stripe-Live setup — revisit this row then). */}
+            <tr className="border-t border-gray-100">
+              <td colSpan={4} className="py-2 text-right text-gray-600">{t("taxRateAmount", { rate: "0.00" })}</td>
+              <td className="py-2 text-right text-gray-600 whitespace-nowrap">{formatCurrency(0, inv.currency)}</td>
+            </tr>
+            <tr className="border-t border-gray-200">
+              <td colSpan={4} className="py-3 text-right font-bold text-gray-900">{t("total")}</td>
+              <td className="py-3 text-right font-bold text-gray-900 whitespace-nowrap">{amount}</td>
             </tr>
           </tfoot>
         </table>
@@ -214,7 +251,23 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
           </p>
         )}
 
-        <p className="text-xs text-gray-400 mt-8">{t("thankYou")}</p>
+        {/* Issuer legal footer — the full corporate-identity block the Oracle
+            sample carries (name / registry no / tax no / HQ / contact / web),
+            plus the license-terms statement. Values come from Superadmin →
+            Company; blank fields are simply omitted. */}
+        <div className="mt-8 pt-4 border-t border-gray-200 text-xs text-gray-500 leading-relaxed">
+          <div className="flex flex-wrap gap-x-4 gap-y-0.5 font-semibold text-gray-600">
+            <span>{issuer.name}</span>
+            <span>{issuer.email}</span>
+            {issuer.website && <span>{issuer.website}</span>}
+          </div>
+          {issuer.registryNo && <div className="mt-1">{issuer.registryNo}</div>}
+          {issuer.taxId && <div>{issuer.taxId}</div>}
+          {issuer.address && <div className="whitespace-pre-line">{issuer.address}</div>}
+          <p className="mt-2 text-gray-400">{t("licenseNote")}</p>
+        </div>
+
+        <p className="text-xs text-gray-400 mt-4">{t("thankYou")}</p>
       </div>
     </div>
   );

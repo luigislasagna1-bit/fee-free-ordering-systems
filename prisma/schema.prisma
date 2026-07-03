@@ -784,6 +784,12 @@ model PlatformSettings {
   companyAddress         String? // one-line legal address for the invoice issuer block
   companySupportEmail    String? // issuer contact email (falls back to support@feefreeordering.com)
   companyLogoUrl         String? // the Fee Free logo shown on DIRECT (non-reseller) invoices; a reseller invoice shows the reseller's own logo instead
+  // Invoice legal-footer completeness vs the GloriaFood/Oracle sample (Luigi
+  // 2026-07-03): corporate-registry line ("Trade Register no" there; Canada =
+  // the Corporation Number) + public website. Free text INCLUDING its own
+  // label (like companyTaxId) so any country's register wording works.
+  companyRegistryNo      String? // e.g. "Corporation No. 1234567-8"
+  companyWebsite         String? // e.g. "www.feefreeordering.com"
   updatedAt              DateTime @updatedAt
   updatedBy              String?
 }

@@ -3971,7 +3971,17 @@
       "notFound": "Factuur niet gevonden.",
       "back": "Terug naar Facturering",
       "taxRateAmount": "Btw-tarief & bedrag ({rate}%)",
-      "reverseChargeNote": "Niet-belastbare handeling overeenkomstig artikel 44 van Richtlijn 2006/112/EG — btw verlegd: btw verschuldigd door de afnemer."
+      "reverseChargeNote": "Niet-belastbare handeling overeenkomstig artikel 44 van Richtlijn 2006/112/EG — btw verlegd: btw verschuldigd door de afnemer.",
+      "customerNo": "Klantnummer",
+      "paymentRef": "Betalingsreferentie",
+      "lineNo": "Nr.",
+      "qty": "Aant.",
+      "unitPrice": "Stukprijs",
+      "subTotal": "Subtotaal",
+      "restaurantIdLabel": "Restaurant-ID",
+      "restaurantNameLabel": "Restaurantnaam",
+      "restaurantAddressLabel": "Restaurantadres",
+      "licenseNote": "Deze factuur is opgesteld in overeenstemming met de servicevoorwaarden die bij het aanmaken van het account zijn geaccepteerd."
     },
     "menus": {
       "live": "Live",

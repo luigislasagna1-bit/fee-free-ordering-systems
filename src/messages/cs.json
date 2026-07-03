@@ -3971,7 +3971,17 @@
       "notFound": "Faktura nebyla nalezena.",
       "back": "Zpět na Fakturaci",
       "taxRateAmount": "Sazba a částka daně ({rate}%)",
-      "reverseChargeNote": "Nezdanitelné plnění podle článku 44 směrnice 2006/112/ES — přenesená daňová povinnost: DPH odvede příjemce."
+      "reverseChargeNote": "Nezdanitelné plnění podle článku 44 směrnice 2006/112/ES — přenesená daňová povinnost: DPH odvede příjemce.",
+      "customerNo": "Číslo zákazníka",
+      "paymentRef": "Reference platby",
+      "lineNo": "Č.",
+      "qty": "Množ.",
+      "unitPrice": "Jedn. cena",
+      "subTotal": "Mezisoučet",
+      "restaurantIdLabel": "ID restaurace",
+      "restaurantNameLabel": "Název restaurace",
+      "restaurantAddressLabel": "Adresa restaurace",
+      "licenseNote": "Tato faktura byla vystavena v souladu s podmínkami služby přijatými při vytvoření účtu."
     },
     "menus": {
       "live": "Aktivní",

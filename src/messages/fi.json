@@ -3971,7 +3971,17 @@
       "notFound": "Laskua ei löytynyt.",
       "back": "Takaisin laskutukseen",
       "taxRateAmount": "Verokanta ja määrä ({rate} %)",
-      "reverseChargeNote": "Veroton liiketoimi direktiivin 2006/112/EY 44 artiklan mukaisesti — käännetty verovelvollisuus: vastaanottaja tilittää ALV:n."
+      "reverseChargeNote": "Veroton liiketoimi direktiivin 2006/112/EY 44 artiklan mukaisesti — käännetty verovelvollisuus: vastaanottaja tilittää ALV:n.",
+      "customerNo": "Asiakasnumero",
+      "paymentRef": "Maksuviite",
+      "lineNo": "Nro",
+      "qty": "Määrä",
+      "unitPrice": "Yksikköhinta",
+      "subTotal": "Välisumma",
+      "restaurantIdLabel": "Ravintolan tunnus",
+      "restaurantNameLabel": "Ravintolan nimi",
+      "restaurantAddressLabel": "Ravintolan osoite",
+      "licenseNote": "Tämä lasku on laadittu tilin luonnin yhteydessä hyväksyttyjen käyttöehtojen mukaisesti."
     },
     "menus": {
       "live": "Käytössä",

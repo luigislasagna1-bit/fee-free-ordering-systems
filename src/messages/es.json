@@ -3971,7 +3971,17 @@
       "notFound": "Factura no encontrada.",
       "back": "Volver a Facturación",
       "taxRateAmount": "Tipo e importe del impuesto ({rate}%)",
-      "reverseChargeNote": "Operación no sujeta conforme al artículo 44 de la Directiva 2006/112/CE — inversión del sujeto pasivo: el IVA corre a cargo del destinatario."
+      "reverseChargeNote": "Operación no sujeta conforme al artículo 44 de la Directiva 2006/112/CE — inversión del sujeto pasivo: el IVA corre a cargo del destinatario.",
+      "customerNo": "Número de cliente",
+      "paymentRef": "Referencia de pago",
+      "lineNo": "N.º",
+      "qty": "Cant.",
+      "unitPrice": "Precio unitario",
+      "subTotal": "Subtotal",
+      "restaurantIdLabel": "ID del restaurante",
+      "restaurantNameLabel": "Nombre del restaurante",
+      "restaurantAddressLabel": "Dirección del restaurante",
+      "licenseNote": "Esta factura se emitió de conformidad con los términos del servicio aceptados al crear la cuenta."
     },
     "menus": {
       "live": "En directo",

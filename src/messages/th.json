@@ -3971,7 +3971,17 @@
       "notFound": "ไม่พบใบแจ้งหนี้",
       "back": "กลับไปที่การเรียกเก็บเงิน",
       "taxRateAmount": "อัตราและจำนวนภาษี ({rate}%)",
-      "reverseChargeNote": "ธุรกรรมไม่ต้องเสียภาษีตามมาตรา 44 ของ Directive 2006/112/EC — reverse charge: ผู้รับเป็นผู้รับผิดชอบ VAT"
+      "reverseChargeNote": "ธุรกรรมไม่ต้องเสียภาษีตามมาตรา 44 ของ Directive 2006/112/EC — reverse charge: ผู้รับเป็นผู้รับผิดชอบ VAT",
+      "customerNo": "หมายเลขลูกค้า",
+      "paymentRef": "รหัสอ้างอิงการชำระเงิน",
+      "lineNo": "ลำดับ",
+      "qty": "จำนวน",
+      "unitPrice": "ราคาต่อหน่วย",
+      "subTotal": "ยอดรวมย่อย",
+      "restaurantIdLabel": "รหัสร้านอาหาร",
+      "restaurantNameLabel": "ชื่อร้านอาหาร",
+      "restaurantAddressLabel": "ที่อยู่ร้านอาหาร",
+      "licenseNote": "ใบแจ้งหนี้นี้ออกตามข้อกำหนดการให้บริการที่ยอมรับเมื่อสร้างบัญชี"
     },
     "menus": {
       "live": "ใช้งานอยู่",
