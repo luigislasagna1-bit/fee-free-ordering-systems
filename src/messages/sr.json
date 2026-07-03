@@ -252,7 +252,8 @@
       "fulfilWindowOrderError": "\"{name}\" се може наручити само одређеним данима/сатима. Закажите поруџбину за време када је доступно.",
       "fulfilWindowReservationError": "\"{name}\" није доступно на дан ваше резервације. Уклоните га или резервишите сто за дан када је у понуди.",
       "promoEmailMismatch": "Овај кôд је регистрован на другу имејл адресу.",
-      "promoUnlocked": "Otključali ste {name}!"
+      "promoUnlocked": "Otključali ste {name}!",
+      "couponNoEffect": "{code} је важећи, али тренутно не снижава ништа у вашој корпи — неки артикли (попут поклон картица) могу бити искључени или минимум није достигнут."
     },
     "searchMenu": "Pretražite meni…",
     "signIn": "Prijavite se",

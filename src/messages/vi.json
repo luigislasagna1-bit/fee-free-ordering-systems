@@ -252,7 +252,8 @@
       "fulfilWindowOrderError": "\"{name}\" chỉ có thể đặt vào một số ngày/giờ nhất định. Vui lòng lên lịch đơn hàng vào thời điểm có sẵn.",
       "fulfilWindowReservationError": "\"{name}\" không có sẵn vào ngày đặt bàn của bạn. Vui lòng xóa hoặc đặt bàn vào ngày có món này.",
       "promoEmailMismatch": "Mã này được đăng ký cho một địa chỉ email khác.",
-      "promoUnlocked": "Bạn đã mở khóa {name}!"
+      "promoUnlocked": "Bạn đã mở khóa {name}!",
+      "couponNoEffect": "{code} hợp lệ nhưng hiện không giảm giá mục nào trong giỏ hàng — một số món (như thẻ quà tặng) có thể bị loại trừ, hoặc chưa đạt mức tối thiểu."
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",

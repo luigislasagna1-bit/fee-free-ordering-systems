@@ -252,7 +252,8 @@
       "fulfilWindowOrderError": "\"{name}\" galima užsisakyti tik tam tikromis dienomis ar valandomis. Suplanuokite užsakymą laikui, kai jis bus prieinamas.",
       "fulfilWindowReservationError": "\"{name}\" nepasiekiamas jūsų rezervacijos dieną. Pašalinkite jį arba rezervuokite staliuką dienai, kurią jis siūlomas.",
       "promoEmailMismatch": "Šis kodas registruotas kitam el. pašto adresui.",
-      "promoUnlocked": "Atrakinote {name}!"
+      "promoUnlocked": "Atrakinote {name}!",
+      "couponNoEffect": "{code} galioja, bet šiuo metu jūsų krepšelyje nieko nenupigina — kai kurios prekės (pvz., dovanų kortelės) gali būti neįtrauktos arba nepasiektas minimumas."
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",

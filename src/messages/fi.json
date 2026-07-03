@@ -252,7 +252,8 @@
       "fulfilWindowOrderError": "\"{name}\" voidaan tilata vain tiettyinä päivinä/aikoina. Ajoita tilauksesi ajankohtaan, jolloin se on saatavilla.",
       "fulfilWindowReservationError": "\"{name}\" ei ole saatavilla varauspäivänäsi. Poista se tai varaa pöytäsi päivälle, jolloin se on tarjolla.",
       "promoEmailMismatch": "Tämä koodi on rekisteröity toiseen sähköpostiosoitteeseen.",
-      "promoUnlocked": "Avasit edun {name}!"
+      "promoUnlocked": "Avasit edun {name}!",
+      "couponNoEffect": "{code} on voimassa, mutta se ei juuri nyt alenna mitään ostoskorissasi — jotkin tuotteet (kuten lahjakortit) voivat olla poissuljettuja tai vähimmäissumma ei täyty."
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",

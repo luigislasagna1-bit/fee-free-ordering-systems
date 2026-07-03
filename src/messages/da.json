@@ -252,7 +252,8 @@
       "fulfilWindowOrderError": "\"{name}\" kan kun bestilles på bestemte dage/tidspunkter. Planlæg din bestilling til, når den er tilgængelig.",
       "fulfilWindowReservationError": "\"{name}\" er ikke tilgængelig på din reservationsdag. Fjern den, eller reservér dit bord på en dag, hvor den tilbydes.",
       "promoEmailMismatch": "Denne kode er registreret til en anden e-mailadresse.",
-      "promoUnlocked": "Du har låst op for {name}!"
+      "promoUnlocked": "Du har låst op for {name}!",
+      "couponNoEffect": "{code} er gyldig, men giver lige nu ingen rabat i din kurv — nogle varer (som gavekort) kan være undtaget, eller et minimum er ikke nået."
     },
     "searchMenu": "Søg i menuen…",
     "signIn": "Log ind",

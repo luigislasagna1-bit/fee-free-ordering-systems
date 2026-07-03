@@ -252,7 +252,8 @@
       "fulfilWindowOrderError": "\"{name}\" lze objednat pouze v určité dny/časy. Naplánujte si objednávku na dobu, kdy je dostupné.",
       "fulfilWindowReservationError": "\"{name}\" není dostupné v den vaší rezervace. Odeberte ho nebo si rezervujte stůl na den, kdy je nabízeno.",
       "promoEmailMismatch": "Tento kód je registrován na jinou e-mailovou adresu.",
-      "promoUnlocked": "Odemkli jste {name}!"
+      "promoUnlocked": "Odemkli jste {name}!",
+      "couponNoEffect": "{code} je platný, ale právě teď ve vašem košíku nic nezlevňuje — některé položky (např. dárkové karty) mohou být vyloučené, nebo není splněno minimum."
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",

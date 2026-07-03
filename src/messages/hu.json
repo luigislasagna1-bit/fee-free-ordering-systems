@@ -252,7 +252,8 @@
       "fulfilWindowOrderError": "A(z) \"{name}\" csak bizonyos napokon/időpontokban rendelhető. Ütemezze a rendelését arra az időpontra, amikor elérhető.",
       "fulfilWindowReservationError": "A(z) \"{name}\" nem érhető el a foglalása napján. Távolítsa el, vagy foglaljon asztalt egy olyan napra, amikor elérhető.",
       "promoEmailMismatch": "Ez a kód egy másik e-mail-címhez van regisztrálva.",
-      "promoUnlocked": "Feloldottad ezt: {name}!"
+      "promoUnlocked": "Feloldottad ezt: {name}!",
+      "couponNoEffect": "{code} érvényes, de jelenleg semmit sem kedvezményez a kosarában — egyes tételek (pl. ajándékkártyák) kizártak lehetnek, vagy nincs meg a minimum."
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",

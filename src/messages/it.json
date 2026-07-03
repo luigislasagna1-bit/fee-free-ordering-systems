@@ -251,7 +251,8 @@
       "fulfilWindowOrderError": "\"{name}\" può essere ordinato solo in determinati giorni/orari. Programma il tuo ordine per quando è disponibile.",
       "fulfilWindowReservationError": "\"{name}\" non è disponibile nel giorno della tua prenotazione. Rimuovilo oppure prenota il tavolo in un giorno in cui è disponibile.",
       "promoEmailMismatch": "Questo codice è registrato a un altro indirizzo email.",
-      "promoUnlocked": "Hai sbloccato {name}!"
+      "promoUnlocked": "Hai sbloccato {name}!",
+      "couponNoEffect": "{code} è valido, ma al momento non sconta nulla nel tuo carrello — alcuni articoli (come le carte regalo) potrebbero essere esclusi, o non è stato raggiunto un minimo."
     },
     "followUs": "Seguici",
     "searchMenu": "Cerca nel menu…",

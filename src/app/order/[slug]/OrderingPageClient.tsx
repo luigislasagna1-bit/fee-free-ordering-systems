@@ -1209,6 +1209,13 @@ export function OrderingPageClient({
   // customer the TRUTH — "applied" vs "can't combine with your other deal" —
   // instead of an optimistic "applied!" that may be wrong. Luigi 2026-06-07.
   const [pendingCoupon, setPendingCoupon] = useState<string | null>(null);
+  // The coupon code the LAST completed apply-promos evaluation was sent with —
+  // lets the pending-coupon resolver tell "the engine saw this code and it
+  // discounted nothing" apart from "the engine hasn't evaluated it yet"
+  // (avoids a false message from a stale in-flight response). Luigi 2026-07-03:
+  // a valid code on a cart of promo-EXCLUDED items (gift cards) previously got
+  // NO feedback at all — the Apply button just flashed.
+  const lastEvalCouponRef = useRef<string>("");
 
   // Tapping a promo banner: if the customer previously removed (suppressed) it,
   // tapping re-adds it (the "re-apply normally" path); otherwise open its
@@ -2100,6 +2107,9 @@ export function OrderingPageClient({
   useEffect(() => {
     if (cart.length === 0) { setPromoDiscount(0); setPromoResults([]); setHasFreeDelivery(false); promosEvaluatedRef.current = true; seenPromoIdsRef.current = new Set(); return; }
     const sub = cart.reduce((s, i) => s + i.lineTotal, 0);
+    // Captured per-request so the response handler can record WHICH code this
+    // evaluation actually included (see lastEvalCouponRef).
+    const evalCoupon = couponCode.trim().toUpperCase();
     fetch("/api/public/apply-promos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -2203,6 +2213,7 @@ export function OrderingPageClient({
         // Keep the chosen credit within the new spendable ceiling as the cart /
         // identity changes (e.g. balance only known after sign-in/email).
         if (!data.reward) setCreditToApply(0);
+        lastEvalCouponRef.current = evalCoupon;
         promosEvaluatedRef.current = true;
       })
       .catch(() => {});
@@ -2369,8 +2380,18 @@ export function OrderingPageClient({
         toast(tT("couponBlocked", { name: blocked.name, winner: blocked.winnerName }), { duration: 6000 });
       }
       setPendingCoupon(null);
+      return;
     }
-    // Neither yet → the engine hasn't evaluated this code in this pass; a later
+    // The engine HAS evaluated this exact code (the last completed pass was
+    // sent with it) and the promo is in neither list → the code is valid but
+    // discounts nothing on THIS cart (promo-excluded items like gift cards,
+    // an unmet minimum, wrong order type/time…). Say so instead of staying
+    // silent — Luigi 2026-07-03: Apply just "flashed" on a gift-card-only cart.
+    if (lastEvalCouponRef.current === code) {
+      toast(tT("couponNoEffect", { code }), { icon: "ℹ️", duration: 7000 });
+      setPendingCoupon(null);
+    }
+    // Otherwise the engine hasn't evaluated this code yet; a later
     // promoResults/blockedPromos update resolves it. (No false message.)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [promoResults, blockedPromos, pendingCoupon]);

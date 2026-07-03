@@ -252,7 +252,8 @@
       "fulfilWindowOrderError": "\"{name}\" hanya dapat dipesan pada hari/jam tertentu. Jadwalkan pesanan Anda untuk saat tersedia.",
       "fulfilWindowReservationError": "\"{name}\" tidak tersedia pada hari reservasi Anda. Harap hapus, atau pesan meja pada hari saat tersedia.",
       "promoEmailMismatch": "Kode ini terdaftar untuk alamat email yang berbeda.",
-      "promoUnlocked": "Kamu membuka {name}!"
+      "promoUnlocked": "Kamu membuka {name}!",
+      "couponNoEffect": "{code} valid, tetapi saat ini tidak memotong apa pun di keranjang Anda — beberapa item (seperti kartu hadiah) mungkin dikecualikan, atau minimum belum tercapai."
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",

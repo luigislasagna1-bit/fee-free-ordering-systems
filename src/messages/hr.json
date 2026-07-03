@@ -252,7 +252,8 @@
       "fulfilWindowOrderError": "\"{name}\" se može naručiti samo određenim danima/satima. Zakažite narudžbu za vrijeme kada je dostupno.",
       "fulfilWindowReservationError": "\"{name}\" nije dostupno na dan vaše rezervacije. Uklonite ga ili rezervirajte stol za dan kada je u ponudi.",
       "promoEmailMismatch": "Ovaj kôd registriran je na drugu e-mail adresu.",
-      "promoUnlocked": "Otključali ste {name}!"
+      "promoUnlocked": "Otključali ste {name}!",
+      "couponNoEffect": "{code} je valjan, ali trenutačno ne snižava ništa u vašoj košarici — neki artikli (poput poklon-kartica) mogu biti isključeni ili minimum nije dosegnut."
     },
     "searchMenu": "Pretraži jelovnik…",
     "signIn": "Prijava",

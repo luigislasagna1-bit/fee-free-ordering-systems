@@ -251,7 +251,8 @@
       "fulfilWindowOrderError": "« {name} » ne peut être commandé qu'à certains jours/horaires. Veuillez programmer votre commande pour un moment où il est disponible.",
       "fulfilWindowReservationError": "« {name} » n'est pas disponible le jour de votre réservation. Veuillez le retirer ou réserver votre table un jour où il est proposé.",
       "promoEmailMismatch": "Ce code est associé à une autre adresse e-mail.",
-      "promoUnlocked": "Vous avez débloqué {name} !"
+      "promoUnlocked": "Vous avez débloqué {name} !",
+      "couponNoEffect": "{code} est valide, mais il ne réduit rien dans votre panier pour le moment — certains articles (comme les cartes cadeaux) peuvent être exclus, ou un minimum n'est pas atteint."
     },
     "followUs": "Suivez-nous",
     "searchMenu": "Rechercher dans le menu…",

@@ -252,7 +252,8 @@
       "fulfilWindowOrderError": "\"{name}\" kann nur an bestimmten Tagen/Zeiten bestellt werden. Bitte planen Sie Ihre Bestellung für einen verfügbaren Zeitpunkt.",
       "fulfilWindowReservationError": "\"{name}\" ist am Tag Ihrer Reservierung nicht verfügbar. Bitte entfernen Sie es oder reservieren Sie Ihren Tisch an einem Tag, an dem es angeboten wird.",
       "promoEmailMismatch": "Dieser Code ist für eine andere E-Mail-Adresse registriert.",
-      "promoUnlocked": "Du hast {name} freigeschaltet!"
+      "promoUnlocked": "Du hast {name} freigeschaltet!",
+      "couponNoEffect": "{code} ist gültig, reduziert aber gerade nichts in Ihrem Warenkorb — manche Artikel (z. B. Geschenkkarten) sind ggf. ausgeschlossen oder ein Mindestbetrag ist nicht erreicht."
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",

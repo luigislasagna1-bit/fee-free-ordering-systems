@@ -252,7 +252,8 @@
       "fulfilWindowOrderError": "\"{name}\" je mogoče naročiti samo na določene dni/ure. Načrtujte naročilo za čas, ko je na voljo.",
       "fulfilWindowReservationError": "\"{name}\" ni na voljo na dan vaše rezervacije. Odstranite ga ali rezervirajte mizo za dan, ko je na voljo.",
       "promoEmailMismatch": "Ta koda je registrirana na drug e-poštni naslov.",
-      "promoUnlocked": "Odklenili ste {name}!"
+      "promoUnlocked": "Odklenili ste {name}!",
+      "couponNoEffect": "{code} je veljaven, a trenutno ne zniža ničesar v vaši košarici — nekateri artikli (npr. darilne kartice) so lahko izključeni ali minimum ni dosežen."
     },
     "searchMenu": "Iskanje po meniju…",
     "signIn": "Prijava",

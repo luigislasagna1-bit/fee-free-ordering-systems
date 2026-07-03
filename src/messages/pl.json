@@ -252,7 +252,8 @@
       "fulfilWindowOrderError": "\"{name}\" można zamówić tylko w określone dni/godziny. Zaplanuj zamówienie na czas, gdy będzie dostępne.",
       "fulfilWindowReservationError": "\"{name}\" nie jest dostępne w dniu Twojej rezerwacji. Usuń je lub zarezerwuj stolik na dzień, w którym jest oferowane.",
       "promoEmailMismatch": "Ten kod jest przypisany do innego adresu e-mail.",
-      "promoUnlocked": "Odblokowano {name}!"
+      "promoUnlocked": "Odblokowano {name}!",
+      "couponNoEffect": "{code} jest prawidłowy, ale w tej chwili nic nie obniża w Twoim koszyku — niektóre pozycje (np. karty podarunkowe) mogą być wyłączone lub nie osiągnięto minimum."
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
