@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Tillåts endast en gång per beställning",
       "oncePerOrderHint": "När detta är markerat gäller erbjudandet endast en gång per beställning, även om kundvagnen kvalificerar för det flera gånger (t.ex. ett Köp-en-få-en som annars skulle upprepas).",
       "rewardCreditLabel": "Reward Dollars att ge",
-      "rewardCreditHint": "Läggs till kundens saldo när den här beställningen slutförs — ingen rabatt i varukorgen. Kräver att Reward Dollars är aktiverat."
+      "rewardCreditHint": "Läggs till kundens saldo när den här beställningen slutförs — ingen rabatt i varukorgen. Kräver att Reward Dollars är aktiverat.",
+      "oncePerOrderHintPercent": "Om ikryssad gäller %-rabatten endast ETT objekt — den dyraste kvalificerade varan i varukorgen (t.ex. ”20 % på en huvudrätt”). Avmarkera för att rabattera ALLA kvalificerade varor."
     },
     "promoStepRestrictions": {
       "pageTitle": "Begränsningar och visning",

@@ -2587,7 +2587,8 @@
       "addTriggerGroupLabel": "Add trigger group",
       "freeDishPoolLabel": "Free dish pool",
       "freeDishDiscountLabel": "Discount on free dish (100 = fully free)",
-      "pickTypePrompt": "Pick a promotion type on Step 1 to configure the details here."
+      "pickTypePrompt": "Pick a promotion type on Step 1 to configure the details here.",
+      "oncePerOrderHintPercent": "When checked, the % discount applies to ONE item only — the single most expensive qualifying item in the cart (e.g. “20% off one main course”). Leave unchecked to discount EVERY qualifying item."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrictions & display",

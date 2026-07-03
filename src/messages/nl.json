@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Slechts één keer per bestelling toegestaan",
       "oncePerOrderHint": "Indien aangevinkt geldt deze actie slechts één keer per bestelling, zelfs als het winkelmandje er meerdere keren voor in aanmerking komt (bijvoorbeeld een 1+1-gratis die anders zou worden herhaald).",
       "rewardCreditLabel": "Toe te kennen Reward Dollars",
-      "rewardCreditHint": "Wordt toegevoegd aan het saldo van de klant zodra deze bestelling is voltooid — geen winkelwagenkorting. Vereist dat Reward Dollars is ingeschakeld."
+      "rewardCreditHint": "Wordt toegevoegd aan het saldo van de klant zodra deze bestelling is voltooid — geen winkelwagenkorting. Vereist dat Reward Dollars is ingeschakeld.",
+      "oncePerOrderHintPercent": "Indien aangevinkt geldt de %-korting voor slechts ÉÉN item — het duurste in aanmerking komende item in de winkelwagen (bijv. “20% op één hoofdgerecht”). Vink uit om ALLE in aanmerking komende items te korten."
     },
     "promoStepRestrictions": {
       "pageTitle": "Beperkingen en weergave",

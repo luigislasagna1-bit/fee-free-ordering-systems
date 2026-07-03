@@ -711,14 +711,31 @@ function promoBreakdown(promo: PromoInput, ctx: ApplyContext): DiscountLine[] {
     case "buy_n_get_free": return buyNGetFreeResult(promo, ctx).lines;
     case "percentage_off":
     case "percentage_combo": {
-      // Per-matched-item % discount, one line per qualifying dish. Skipped when
-      // "once per order" (the discount is a single lump on one combo, shown as a
-      // single line by the cart) or when there are no item groups (whole-cart %).
+      // Per-matched-item % discount, one line per qualifying dish. No groups →
+      // whole-cart % → nothing dish-specific to show.
       const rules = getRules(promo);
       const groups = rules.groups ?? [];
-      if (!groups.length || rules.oncePerOrder) return [];
+      if (!groups.length) return [];
       const pct = rules.discountPercent ?? 0;
       if (pct <= 0) return [];
+      // "Once per order" → the discount covers ONE unit per group (the single
+      // most expensive match — mirrors oneComboValue exactly). Emit THOSE
+      // lines instead of [] so the cart still names which dish was discounted
+      // — Fabrizio cmqtmfp2n follow-up (2026-07-02): with no lines the cart
+      // showed only "20% ASPORTO −1,20 €" and the customer couldn't tell the
+      // €102 cart was discounted on a single 6 € item.
+      if (rules.oncePerOrder) {
+        const lines: DiscountLine[] = [];
+        const used = new Set<CartItem>();
+        for (const g of groups) {
+          const matched = itemsMatchingGroup(g, ctx.items).filter((i) => !used.has(i));
+          if (!matched.length) continue;
+          const best = matched.reduce((a, b) => (a.price >= b.price ? a : b));
+          used.add(best);
+          lines.push({ menuItemId: best.menuItemId, amount: parseFloat(((pct / 100) * best.price).toFixed(2)), lineKey: best.lineKey });
+        }
+        return lines;
+      }
       const lines: DiscountLine[] = [];
       // Dedup per CART LINE (lineKey) not per dish, so the same dish on two
       // separate lines each gets its own "You saved"; a single line matching

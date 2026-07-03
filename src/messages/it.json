@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Consentita solo una volta per ordine",
       "oncePerOrderHint": "Se selezionata, questa offerta viene applicata una sola volta per ordine, anche se il carrello vi ha diritto più di una volta (ad es. un \"Prendi due paghi uno\" che altrimenti si ripeterebbe).",
       "rewardCreditLabel": "Reward Dollars da assegnare",
-      "rewardCreditHint": "Aggiunti al saldo del cliente al completamento di questo ordine — nessuno sconto sul carrello. Richiede che i Reward Dollars siano attivati."
+      "rewardCreditHint": "Aggiunti al saldo del cliente al completamento di questo ordine — nessuno sconto sul carrello. Richiede che i Reward Dollars siano attivati.",
+      "oncePerOrderHintPercent": "Se selezionato, lo sconto % si applica a UN solo articolo — il più caro tra quelli idonei nel carrello (es. “20% su un piatto”). Deseleziona per scontare TUTTI gli articoli idonei."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrizioni e visualizzazione",

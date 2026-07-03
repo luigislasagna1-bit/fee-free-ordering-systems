@@ -2133,7 +2133,8 @@
       "oncePerOrderLabel": "Rendelésenként csak egyszer érvényes",
       "oncePerOrderHint": "Ha be van jelölve, ez az ajánlat rendelésenként csak egyszer érvényesül, még akkor is, ha a kosár többször is jogosult rá (pl. egy egyet-fizet-kettőt-kap ajánlat, amely egyébként ismétlődne).",
       "rewardCreditLabel": "Jóváírandó Reward Dollars",
-      "rewardCreditHint": "A rendelés teljesítésekor a vásárló egyenlegéhez adódik — nincs kosárkedvezmény. A Reward Dollars bekapcsolása szükséges."
+      "rewardCreditHint": "A rendelés teljesítésekor a vásárló egyenlegéhez adódik — nincs kosárkedvezmény. A Reward Dollars bekapcsolása szükséges.",
+      "oncePerOrderHintPercent": "Ha be van jelölve, a %-os kedvezmény csak EGY tételre vonatkozik — a kosár legdrágább jogosult tételére (pl. „20% egy főételre”). Vegye ki a pipát, hogy MINDEN jogosult tétel kedvezményt kapjon."
     },
     "promoStepRestrictions": {
       "pageTitle": "Korlátozások & megjelenítés",

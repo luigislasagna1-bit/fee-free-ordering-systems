@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Permis o singură dată per comandă",
       "oncePerOrderHint": "Când este bifat, această ofertă se aplică o singură dată per comandă, chiar dacă coșul se califică pentru ea de mai multe ori (de ex. un Cumperi-Unul-Primești-Unul care altfel s-ar repeta).",
       "rewardCreditLabel": "Reward Dollars de acordat",
-      "rewardCreditHint": "Se adaugă în soldul clientului la finalizarea acestei comenzi — fără reducere în coș. Necesită ca Reward Dollars să fie activat."
+      "rewardCreditHint": "Se adaugă în soldul clientului la finalizarea acestei comenzi — fără reducere în coș. Necesită ca Reward Dollars să fie activat.",
+      "oncePerOrderHintPercent": "Dacă este bifat, reducerea % se aplică unui SINGUR articol — cel mai scump articol eligibil din coș (ex. „20% la un fel principal”). Debifați pentru a reduce TOATE articolele eligibile."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restricții & afișare",

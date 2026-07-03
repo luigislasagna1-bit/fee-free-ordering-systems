@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "每笔订单仅限享用一次",
       "oncePerOrderHint": "勾选后，此优惠每笔订单仅适用一次，即使购物车满足多次适用条件也是如此（例如本可重复触发的\"买一送一\"优惠）。",
       "rewardCreditLabel": "要赠送的奖励美元",
-      "rewardCreditHint": "此订单完成时计入顾客余额——不抵扣购物车金额。需启用奖励美元。"
+      "rewardCreditHint": "此订单完成时计入顾客余额——不抵扣购物车金额。需启用奖励美元。",
+      "oncePerOrderHintPercent": "勾选后，百分比折扣仅适用于一件商品——购物车中符合条件的最贵商品（例如“一份主菜八折”）。取消勾选则对所有符合条件的商品打折。"
     },
     "promoStepRestrictions": {
       "pageTitle": "限制条件与展示",

@@ -102,7 +102,12 @@ export function StepConfig({
           engine calculator actually reads rules.oncePerOrder: bogo,
           buy_n_get_free, percentage_combo, and percentage_off (which caps the
           repeat). The other 8 types apply exactly once regardless, so the
-          checkbox was a dead, confusing option there (audit dead#1). */}
+          checkbox was a dead, confusing option there (audit dead#1).
+          For the PERCENTAGE types the flag means something much stronger —
+          "discount only the single most expensive qualifying item" — so they
+          get their own explicit hint. Fabrizio cmqtmfp2n (2026-07-02): a "20%
+          off these categories" promo with this ticked discounted €1.20 on a
+          €102 cart and the owner read it as broken math. */}
       {["bogo", "buy_n_get_free", "percentage_combo", "percentage_off"].includes(promotionType) && (
         <label className="flex items-start gap-2.5 cursor-pointer border border-gray-200 rounded-xl p-4">
           <input
@@ -113,7 +118,11 @@ export function StepConfig({
           />
           <span>
             <span className="block text-sm font-medium text-gray-800">{t("oncePerOrderLabel")}</span>
-            <span className="block text-xs text-gray-500 mt-0.5">{t("oncePerOrderHint")}</span>
+            <span className="block text-xs text-gray-500 mt-0.5">
+              {["percentage_off", "percentage_combo"].includes(promotionType)
+                ? t("oncePerOrderHintPercent")
+                : t("oncePerOrderHint")}
+            </span>
           </span>
         </label>
       )}

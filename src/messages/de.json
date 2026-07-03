@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Nur einmal pro Bestellung zulässig",
       "oncePerOrderHint": "Wenn aktiviert, gilt diese Aktion nur ein einziges Mal, unabhängig davon, wie viele passende Artikel sich im Warenkorb befinden. Deaktiviert lassen, damit sie sich für jedes passende Paar wiederholt.",
       "rewardCreditLabel": "Zu vergebende Reward Dollars",
-      "rewardCreditHint": "Wird dem Kundenguthaben gutgeschrieben, wenn diese Bestellung abgeschlossen ist — kein Warenkorbrabatt. Erfordert aktivierte Reward Dollars."
+      "rewardCreditHint": "Wird dem Kundenguthaben gutgeschrieben, wenn diese Bestellung abgeschlossen ist — kein Warenkorbrabatt. Erfordert aktivierte Reward Dollars.",
+      "oncePerOrderHintPercent": "Wenn aktiviert, gilt der %-Rabatt nur für EINEN Artikel — den teuersten qualifizierten Artikel im Warenkorb (z. B. „20 % auf ein Hauptgericht“). Deaktivieren, um JEDEN qualifizierten Artikel zu rabattieren."
     },
     "promoStepRestrictions": {
       "pageTitle": "Einschränkungen & Anzeige",

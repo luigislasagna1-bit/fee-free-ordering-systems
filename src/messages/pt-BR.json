@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Permitido apenas uma vez por pedido",
       "oncePerOrderHint": "Quando marcada, esta oferta é aplicada apenas uma vez por pedido, mesmo que o carrinho se qualifique para ela mais de uma vez (por exemplo, uma promoção Compre Um Leve Outro que, de outra forma, se repetiria).",
       "rewardCreditLabel": "Reward Dollars a conceder",
-      "rewardCreditHint": "Adicionados ao saldo do cliente quando este pedido é concluído — sem desconto no carrinho. Requer que os Reward Dollars estejam ativados."
+      "rewardCreditHint": "Adicionados ao saldo do cliente quando este pedido é concluído — sem desconto no carrinho. Requer que os Reward Dollars estejam ativados.",
+      "oncePerOrderHintPercent": "Se marcado, o desconto % vale para UM item apenas — o mais caro entre os itens elegíveis do carrinho (ex. “20% em um prato principal”). Desmarque para descontar TODOS os itens elegíveis."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrições & exibição",

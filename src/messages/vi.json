@@ -2133,7 +2133,8 @@
       "oncePerOrderLabel": "Chỉ được áp dụng một lần mỗi đơn",
       "oncePerOrderHint": "Khi được chọn, ưu đãi này chỉ áp dụng một lần cho mỗi đơn hàng, ngay cả khi giỏ hàng đủ điều kiện nhiều lần (ví dụ: chương trình Mua một tặng một mà nếu không sẽ lặp lại).",
       "rewardCreditLabel": "Reward Dollars để tặng",
-      "rewardCreditHint": "Được cộng vào số dư của khách khi đơn này hoàn tất — không giảm giá giỏ hàng. Cần bật Reward Dollars."
+      "rewardCreditHint": "Được cộng vào số dư của khách khi đơn này hoàn tất — không giảm giá giỏ hàng. Cần bật Reward Dollars.",
+      "oncePerOrderHintPercent": "Khi được chọn, giảm giá % chỉ áp dụng cho MỘT món — món đủ điều kiện đắt nhất trong giỏ (vd. “giảm 20% một món chính”). Bỏ chọn để giảm giá TẤT CẢ các món đủ điều kiện."
     },
     "promoStepRestrictions": {
       "pageTitle": "Giới hạn & hiển thị",

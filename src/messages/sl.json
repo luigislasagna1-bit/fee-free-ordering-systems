@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Dovoljeno samo enkrat na naročilo",
       "oncePerOrderHint": "Če je označeno, ta ponudba velja samo enkrat na naročilo, tudi če košarica izpolnjuje pogoje zanjo večkrat (npr. ponudba Kupi enega, dobi enega, ki bi se sicer ponovila).",
       "rewardCreditLabel": "Reward Dollars za dodelitev",
-      "rewardCreditHint": "Doda se k dobroimetju stranke, ko je to naročilo zaključeno — brez popusta v košarici. Zahteva vključen Reward Dollars."
+      "rewardCreditHint": "Doda se k dobroimetju stranke, ko je to naročilo zaključeno — brez popusta v košarici. Zahteva vključen Reward Dollars.",
+      "oncePerOrderHintPercent": "Če je označeno, % popust velja samo za EN izdelek — najdražji ustrezen izdelek v košarici (npr. „20 % na eno glavno jed“). Odznačite za popust na VSE ustrezne izdelke."
     },
     "promoStepRestrictions": {
       "pageTitle": "Omejitve in prikaz",

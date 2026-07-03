@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Lubatud ainult üks kord tellimuse kohta",
       "oncePerOrderHint": "Märgituna kehtib see pakkumine ainult üks kord tellimuse kohta, isegi kui ostukorv vastab sellele mitu korda (nt \"Osta üks, saad teise\" pakkumine, mis muidu korduks).",
       "rewardCreditLabel": "Antavad Reward Dollars",
-      "rewardCreditHint": "Lisatakse kliendi saldole, kui see tellimus on lõpetatud — ostukorvis allahindlust ei ole. Nõuab, et Reward Dollars oleks sisse lülitatud."
+      "rewardCreditHint": "Lisatakse kliendi saldole, kui see tellimus on lõpetatud — ostukorvis allahindlust ei ole. Nõuab, et Reward Dollars oleks sisse lülitatud.",
+      "oncePerOrderHintPercent": "Kui märgitud, kehtib % allahindlus ainult ÜHELE tootele — ostukorvi kalleimale sobivale tootele (nt „20% ühelt pearoalt”). Eemaldage märge, et alandada KÕIKI sobivaid tooteid."
     },
     "promoStepRestrictions": {
       "pageTitle": "Piirangud ja kuvamine",

@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Autorisé une seule fois par commande",
       "oncePerOrderHint": "Lorsque cette option est cochée, cette offre ne s'applique qu'une seule fois par commande, même si le panier y est éligible plusieurs fois (par exemple un « Un acheté, un offert » qui se répéterait sinon).",
       "rewardCreditLabel": "Reward Dollars à accorder",
-      "rewardCreditHint": "Ajoutés au solde du client une fois cette commande terminée — aucune remise sur le panier. Nécessite l'activation des Reward Dollars."
+      "rewardCreditHint": "Ajoutés au solde du client une fois cette commande terminée — aucune remise sur le panier. Nécessite l'activation des Reward Dollars.",
+      "oncePerOrderHintPercent": "Si coché, la remise en % ne s'applique qu'à UN seul article — le plus cher des articles éligibles du panier (ex. « 20 % sur un plat »). Décochez pour remiser TOUS les articles éligibles."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrictions & affichage",

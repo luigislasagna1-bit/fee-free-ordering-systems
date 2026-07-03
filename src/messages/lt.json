@@ -2867,7 +2867,8 @@
       "oncePerOrderLabel": "Leidžiama tik kartą viename užsakyme",
       "oncePerOrderHint": "Pažymėjus, šis pasiūlymas taikomas tik kartą užsakymui, net jei krepšelis atitinka jo sąlygas daugiau nei vieną kartą (pvz., „Perki vieną – gauni vieną“ akcija, kuri kitu atveju kartotųsi).",
       "rewardCreditLabel": "Skirtini Reward Dollars",
-      "rewardCreditHint": "Pridedama prie kliento likučio, kai šis užsakymas įvykdomas — be krepšelio nuolaidos. Reikia įjungti Reward Dollars."
+      "rewardCreditHint": "Pridedama prie kliento likučio, kai šis užsakymas įvykdomas — be krepšelio nuolaidos. Reikia įjungti Reward Dollars.",
+      "oncePerOrderHintPercent": "Jei pažymėta, % nuolaida taikoma tik VIENAI prekei — brangiausiai tinkamai prekei krepšelyje (pvz., „20 % vienam pagrindiniam patiekalui“). Nuimkite žymę, kad nuolaida būtų taikoma VISOMS tinkamoms prekėms."
     },
     "promoStepRestrictions": {
       "pageTitle": "Apribojimai ir rodymas",

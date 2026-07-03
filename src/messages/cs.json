@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Povoleno pouze jednou na objednávku",
       "oncePerOrderHint": "Při zaškrtnutí se tato akce uplatní pouze jednou na objednávku, i když na ni košík splňuje podmínky vícekrát (např. akce „kup jeden, druhý zdarma\", která by se jinak opakovala).",
       "rewardCreditLabel": "Reward Dollars k udělení",
-      "rewardCreditHint": "Přidá se k zůstatku zákazníka po dokončení této objednávky — bez slevy v košíku. Vyžaduje zapnuté Reward Dollars."
+      "rewardCreditHint": "Přidá se k zůstatku zákazníka po dokončení této objednávky — bez slevy v košíku. Vyžaduje zapnuté Reward Dollars.",
+      "oncePerOrderHintPercent": "Je-li zaškrtnuto, % sleva platí jen pro JEDNU položku — nejdražší kvalifikovanou položku v košíku (např. „20 % na jedno hlavní jídlo“). Zrušte zaškrtnutí pro slevu na VŠECHNY kvalifikované položky."
     },
     "promoStepRestrictions": {
       "pageTitle": "Omezení a zobrazení",

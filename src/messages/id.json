@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Hanya boleh sekali per pesanan",
       "oncePerOrderHint": "Jika dicentang, penawaran ini hanya berlaku satu kali per pesanan, meskipun keranjang memenuhi syarat lebih dari sekali (misalnya Beli Satu Gratis Satu yang seharusnya berulang).",
       "rewardCreditLabel": "Reward Dollars yang diberikan",
-      "rewardCreditHint": "Ditambahkan ke saldo pelanggan saat pesanan ini selesai — tanpa diskon keranjang. Memerlukan Reward Dollars diaktifkan."
+      "rewardCreditHint": "Ditambahkan ke saldo pelanggan saat pesanan ini selesai — tanpa diskon keranjang. Memerlukan Reward Dollars diaktifkan.",
+      "oncePerOrderHintPercent": "Jika dicentang, diskon % hanya berlaku untuk SATU item — item memenuhi syarat termahal di keranjang (mis. “diskon 20% untuk satu hidangan utama”). Hapus centang untuk mendiskon SEMUA item yang memenuhi syarat."
     },
     "promoStepRestrictions": {
       "pageTitle": "Batasan & tampilan",

@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Dozvoljeno samo jednom po porudžbini",
       "oncePerOrderHint": "Kada je označeno, ova ponuda se primenjuje samo jednom po porudžbini, čak i ako korpa ispunjava uslove više puta (npr. „Kupi jedno, dobij jedno” koja bi se inače ponovila).",
       "rewardCreditLabel": "Reward Dollars za dodelu",
-      "rewardCreditHint": "Dodaje se na saldo kupca kada se ova porudžbina završi — bez popusta u korpi. Zahteva uključen Reward Dollars."
+      "rewardCreditHint": "Dodaje se na saldo kupca kada se ova porudžbina završi — bez popusta u korpi. Zahteva uključen Reward Dollars.",
+      "oncePerOrderHintPercent": "Ако је означено, % попуст важи само за ЈЕДНУ ставку — најскупљу квалификовану ставку у корпи (нпр. „20% на једно главно јело“). Уклоните ознаку за попуст на СВЕ квалификоване ставке."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ograničenja i prikaz",

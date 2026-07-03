@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Dopušteno samo jednom po narudžbi",
       "oncePerOrderHint": "Kada je označeno, ova se ponuda primjenjuje samo jednom po narudžbi, čak i ako košarica ispunjava uvjete za nju više puta (npr. „Kupi jedan, drugi gratis” koja bi se inače ponavljala).",
       "rewardCreditLabel": "Reward Dollars za dodjelu",
-      "rewardCreditHint": "Dodaje se na saldo kupca kada se ova narudžba dovrši — bez popusta u košarici. Zahtijeva uključen Reward Dollars."
+      "rewardCreditHint": "Dodaje se na saldo kupca kada se ova narudžba dovrši — bez popusta u košarici. Zahtijeva uključen Reward Dollars.",
+      "oncePerOrderHintPercent": "Ako je označeno, % popust vrijedi samo za JEDNU stavku — najskuplju kvalificiranu stavku u košarici (npr. „20 % na jedno glavno jelo“). Odznačite za popust na SVE kvalificirane stavke."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ograničenja i prikaz",

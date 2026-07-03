@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Kun tilladt én gang pr. ordre",
       "oncePerOrderHint": "Når dette er valgt, gælder tilbuddet kun én gang pr. ordre, også selvom kurven er berettiget til det flere gange (f.eks. et køb-en-få-en, der ellers ville gentage sig).",
       "rewardCreditLabel": "Reward Dollars, der skal gives",
-      "rewardCreditHint": "Føjes til kundens saldo, når denne bestilling er gennemført — ingen rabat i kurven. Kræver, at Reward Dollars er aktiveret."
+      "rewardCreditHint": "Føjes til kundens saldo, når denne bestilling er gennemført — ingen rabat i kurven. Kræver, at Reward Dollars er aktiveret.",
+      "oncePerOrderHintPercent": "Hvis markeret, gælder %-rabatten kun for ÉN vare — den dyreste kvalificerede vare i kurven (f.eks. ”20 % på én hovedret”). Fjern markeringen for at give rabat på ALLE kvalificerede varer."
     },
     "promoStepRestrictions": {
       "pageTitle": "Begrænsninger og visning",

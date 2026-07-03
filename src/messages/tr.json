@@ -2133,7 +2133,8 @@
       "oncePerOrderLabel": "Sipariş başına yalnızca bir kez geçerli",
       "oncePerOrderHint": "İşaretlendiğinde, sepet birden fazla kez uygun olsa bile bu kampanya sipariş başına yalnızca bir kez uygulanır (örneğin, aksi takdirde tekrarlanacak bir Bir Alana Bir Bedava kampanyası).",
       "rewardCreditLabel": "Verilecek Ödül Dolarları",
-      "rewardCreditHint": "Bu sipariş tamamlandığında müşterinin bakiyesine eklenir — sepet indirimi yok. Ödül Dolarlarının etkin olmasını gerektirir."
+      "rewardCreditHint": "Bu sipariş tamamlandığında müşterinin bakiyesine eklenir — sepet indirimi yok. Ödül Dolarlarının etkin olmasını gerektirir.",
+      "oncePerOrderHintPercent": "İşaretliyse % indirim yalnızca TEK bir ürüne uygulanır — sepetteki en pahalı uygun ürüne (ör. “bir ana yemekte %20”). Tüm uygun ürünleri indirmek için işareti kaldırın."
     },
     "promoStepRestrictions": {
       "pageTitle": "Kısıtlamalar & görüntüleme",

@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Sallittu vain kerran tilausta kohden",
       "oncePerOrderHint": "Kun tämä on valittuna, tarjous kohdistuu tilaukseen vain kerran, vaikka ostoskori täyttäisi sen ehdot useammin kuin kerran (esim. kaksi yhden hinnalla -tarjous, joka muuten toistuisi).",
       "rewardCreditLabel": "Myönnettävät Reward Dollars",
-      "rewardCreditHint": "Lisätään asiakkaan saldoon, kun tämä tilaus on valmis — ei ostoskorialennusta. Edellyttää, että Reward Dollars on käytössä."
+      "rewardCreditHint": "Lisätään asiakkaan saldoon, kun tämä tilaus on valmis — ei ostoskorialennusta. Edellyttää, että Reward Dollars on käytössä.",
+      "oncePerOrderHintPercent": "Kun valittu, %-alennus koskee vain YHTÄ tuotetta — ostoskorin kalleinta alennukseen oikeutettua tuotetta (esim. ”20 % yhdestä pääruoasta”). Poista valinta, jos haluat alentaa KAIKKI oikeutetut tuotteet."
     },
     "promoStepRestrictions": {
       "pageTitle": "Rajoitukset & näyttö",

@@ -2189,7 +2189,8 @@
       "oncePerOrderLabel": "Atļauts tikai vienreiz vienā pasūtījumā",
       "oncePerOrderHint": "Ja atzīmēts, šī akcija tiek piemērota tikai vienu reizi vienā pasūtījumā, pat ja grozs tai atbilst vairāk nekā vienu reizi (piemēram, \"Pērc vienu, saņem vienu\", kas citādi atkārtotos).",
       "rewardCreditLabel": "Piešķiramie Reward Dollars",
-      "rewardCreditHint": "Tiek pievienots klienta atlikumam, kad šis pasūtījums tiek izpildīts — bez atlaides grozam. Nepieciešams ieslēgts Reward Dollars."
+      "rewardCreditHint": "Tiek pievienots klienta atlikumam, kad šis pasūtījums tiek izpildīts — bez atlaides grozam. Nepieciešams ieslēgts Reward Dollars.",
+      "oncePerOrderHintPercent": "Ja atzīmēts, % atlaide attiecas tikai uz VIENU preci — dārgāko atbilstošo preci grozā (piem., „20 % vienam pamatēdienam”). Noņemiet atzīmi, lai atlaidi piemērotu VISĀM atbilstošajām precēm."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ierobežojumi un displejs",

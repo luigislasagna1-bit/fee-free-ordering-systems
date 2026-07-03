@@ -2133,7 +2133,8 @@
       "oncePerOrderLabel": "Dozwolone tylko raz na zamówienie",
       "oncePerOrderHint": "Po zaznaczeniu ta oferta jest stosowana tylko raz na zamówienie, nawet jeśli koszyk kwalifikuje się do niej więcej niż raz (np. promocja Kup jeden, drugi gratis, która w przeciwnym razie powtórzyłaby się).",
       "rewardCreditLabel": "Reward Dollars do przyznania",
-      "rewardCreditHint": "Dodawane do salda klienta po zrealizowaniu tego zamówienia — bez rabatu w koszyku. Wymaga włączenia Reward Dollars."
+      "rewardCreditHint": "Dodawane do salda klienta po zrealizowaniu tego zamówienia — bez rabatu w koszyku. Wymaga włączenia Reward Dollars.",
+      "oncePerOrderHintPercent": "Gdy zaznaczone, zniżka % dotyczy tylko JEDNEGO produktu — najdroższego kwalifikującego się w koszyku (np. „20% na jedno danie główne”). Odznacz, aby przecenić WSZYSTKIE kwalifikujące się produkty."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ograniczenia i wyświetlanie",
