@@ -551,7 +551,9 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               show-name option on, the name joins the SAME line in front —
               never a second line. Pickup/dine-in tiles carry just the name.
               Long content truncates with "…" like the reference. */}
-          <div className={`font-bold text-base leading-tight ${t.text} truncate`}>
+          {/* text-sm (14px): full "street №, ZIP, city" must fit a PHONE-width
+              tile too, not just the tablet (Luigi 2026-07-03). */}
+          <div className={`font-bold text-sm leading-tight ${t.text} truncate`}>
             {showBoth
               ? `${order.customerName.replace("[TEST] ", "")}, ${tileAddress}`
               : showAddress
