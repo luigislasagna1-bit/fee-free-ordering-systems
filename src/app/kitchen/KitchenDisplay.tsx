@@ -551,7 +551,10 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               </div>
             </>
           ) : (
-            <div className={`font-bold text-[1.15rem] leading-tight ${t.text} truncate`}>
+            // Address-as-lead uses a slightly smaller title than the name lead
+            // so "street, City" fits on one tablet line (Fabrizio cmqsn52d2
+            // follow-up 2026-07-02 — his suggested size reduction).
+            <div className={`font-bold ${showAddress ? "text-base" : "text-[1.15rem]"} leading-tight ${t.text} truncate`}>
               {showAddress
                 ? tileAddress
                 : order.customerName.replace("[TEST] ", "")}
