@@ -483,6 +483,16 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   // 20814, Varedo"); with the show-name option on, the name joins the SAME
   // line in front — never a second line. Pickup/dine-in = just the name.
   // Parts already embedded in older flat addresses aren't repeated.
+  // Kitchen-display capitalization (Luigi 2026-07-03): customers type
+  // lowercase ("via giuseppe mazzini 13", "fabrizio pisu") — the tile
+  // capitalizes each word for readability. Tokens mixing letters+digits
+  // (postal codes "l9t5m7", units "12b") go fully UPPERCASE; existing inner
+  // capitals ("McMaster") are left alone. Display-only.
+  const displayCaps = (s: string) =>
+    s.replace(/\S+/g, (w) =>
+      /\d/.test(w) && /[a-z]/i.test(w) ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1),
+    );
+  const tileName = displayCaps(order.customerName.replace("[TEST] ", ""));
   const tileAddress = (() => {
     const addr = (order.deliveryAddress ?? "").trim();
     if (!addr) return addr;
@@ -491,7 +501,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
     for (const extra of [((order as any).deliveryZip ?? "").trim(), ((order as any).deliveryCity ?? "").trim()]) {
       if (extra && !lower.includes(extra.toLowerCase())) parts.push(extra);
     }
-    return parts.join(", ");
+    return displayCaps(parts.join(", "));
   })();
 
   return (
@@ -555,10 +565,10 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               tile too, not just the tablet (Luigi 2026-07-03). */}
           <div className={`font-bold text-sm leading-tight ${t.text} truncate`}>
             {showBoth
-              ? `${order.customerName.replace("[TEST] ", "")}, ${tileAddress}`
+              ? `${tileName}, ${tileAddress}`
               : showAddress
                 ? tileAddress
-                : order.customerName.replace("[TEST] ", "")}
+                : tileName}
           </div>
           {/* Status chip on its own line directly below (GloriaFood-clean,
               Luigi 2026-06-15). Everything else — order #, item count,
