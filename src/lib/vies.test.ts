@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { viesCountryCode, isEuViesCountry, checkViesVat, euVatSubscriptionBlock } from "./vies";
+import { viesCountryCode, isEuViesCountry, checkViesVat, euVatSubscriptionBlock, parseViesVatNumber } from "./vies";
 
 // In-memory db for euVatSubscriptionBlock (dynamic import inside the lib).
 const { db } = vi.hoisted(() => ({
@@ -29,6 +29,25 @@ describe("viesCountryCode / isEuViesCountry", () => {
     expect(viesCountryCode(undefined)).toBeNull();
     expect(isEuViesCountry("CA")).toBe(false);
     expect(isEuViesCountry("FR")).toBe(true);
+  });
+});
+
+describe("parseViesVatNumber (self-prefixed reseller VAT numbers)", () => {
+  it("splits an EU-prefixed number into member state + bare number", () => {
+    expect(parseViesVatNumber("IT01234567890")).toEqual({ ms: "IT", number: "01234567890" });
+    expect(parseViesVatNumber("it 0123.456-7890")).toEqual({ ms: "IT", number: "01234567890" });
+  });
+  it("accepts both GR and EL prefixes for Greece, always emitting EL", () => {
+    expect(parseViesVatNumber("EL123456789")).toEqual({ ms: "EL", number: "123456789" });
+    expect(parseViesVatNumber("GR123456789")).toEqual({ ms: "EL", number: "123456789" });
+  });
+  it("returns null for non-EU or unprefixed numbers (can't check ≠ invalid)", () => {
+    expect(parseViesVatNumber("809409832RT0001")).toBeNull(); // Canadian GST/HST
+    expect(parseViesVatNumber("GB123456789")).toBeNull(); // post-Brexit
+    expect(parseViesVatNumber("US12-3456789")).toBeNull();
+    expect(parseViesVatNumber("")).toBeNull();
+    expect(parseViesVatNumber(null)).toBeNull();
+    expect(parseViesVatNumber("IT")).toBeNull(); // prefix only, no number
   });
 });
 

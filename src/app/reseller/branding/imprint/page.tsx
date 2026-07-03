@@ -29,6 +29,8 @@ export default async function ResellerImprintPage() {
       imprint: true,
       companyName: true,
       companyVatId: true,
+      companyVatViesValid: true,
+      companyVatViesCheckedAt: true,
       showCustomerPageCredit: true,
     },
   });
@@ -42,6 +44,8 @@ export default async function ResellerImprintPage() {
       companyName={profile.companyName ?? null}
       initialCompanyVatId={profile.companyVatId ?? ""}
       initialShowCredit={profile.showCustomerPageCredit}
+      initialVatViesValid={profile.companyVatViesValid}
+      initialVatViesCheckedAt={profile.companyVatViesCheckedAt?.toISOString() ?? null}
     />
   );
 }

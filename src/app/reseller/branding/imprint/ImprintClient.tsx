@@ -1,7 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Loader2, CheckCircle2, Tag } from "lucide-react";
+import { Loader2, CheckCircle2, Tag, ShieldCheck, ShieldAlert, ShieldQuestion } from "lucide-react";
+
+// EU VAT prefixes VIES can validate (mirror of src/lib/vies.ts — that lib can
+// touch prisma, so it stays out of the client bundle). Greece = both GR + EL.
+const EU_VAT_PREFIXES = new Set([
+  "AT", "BE", "BG", "HR", "CY", "CZ", "DE", "DK", "EE", "EL", "GR", "ES", "FI",
+  "FR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO",
+  "SE", "SI", "SK", "XI",
+]);
 
 /**
  * Editor for the reseller's imprint string. The string is appended to
@@ -14,11 +22,15 @@ export function ImprintClient({
   companyName,
   initialCompanyVatId,
   initialShowCredit,
+  initialVatViesValid,
+  initialVatViesCheckedAt,
 }: {
   initialImprint: string;
   companyName: string | null;
   initialCompanyVatId: string;
   initialShowCredit: boolean;
+  initialVatViesValid: boolean | null;
+  initialVatViesCheckedAt: string | null;
 }) {
   const [imprint, setImprint] = useState(initialImprint);
   const [busy, setBusy] = useState(false);
@@ -28,15 +40,25 @@ export function ImprintClient({
   const [creditBusy, setCreditBusy] = useState(false);
   const [creditSavedAt, setCreditSavedAt] = useState<number | null>(null);
   const [vat, setVat] = useState(initialCompanyVatId);
+  const [savedVat, setSavedVat] = useState(initialCompanyVatId); // what the server has — gates "Verify now"
   const [vatBusy, setVatBusy] = useState(false);
   const [vatSavedAt, setVatSavedAt] = useState<number | null>(null);
   const [vatError, setVatError] = useState<string | null>(null);
+  // VIES verdict for the SAVED number (null = not EU / not checked yet).
+  const [viesValid, setViesValid] = useState<boolean | null>(initialVatViesValid);
+  const [viesCheckedAt, setViesCheckedAt] = useState<string | null>(initialVatViesCheckedAt);
+  const [viesChecking, setViesChecking] = useState(false);
+  const [viesUnreachable, setViesUnreachable] = useState(false);
+
+  const isEuVat = EU_VAT_PREFIXES.has(vat.trim().slice(0, 2).toUpperCase());
 
   // Save the reseller's VAT / tax number — appears on the "Your local partner"
   // line of the invoices your restaurants receive (the platform is the issuer).
+  // EU-prefixed numbers are VIES-validated server-side on save.
   async function saveVat() {
     setVatBusy(true);
     setVatError(null);
+    setViesUnreachable(false);
     try {
       const res = await fetch("/api/reseller/branding", {
         method: "PATCH",
@@ -46,10 +68,32 @@ export function ImprintClient({
       const data = await res.json();
       if (!res.ok) { setVatError(data.error || "Could not save"); return; }
       setVatSavedAt(Date.now());
+      setSavedVat(vat.trim());
+      setViesValid(data.companyVatViesValid ?? null);
+      setViesCheckedAt(data.companyVatViesCheckedAt ?? null);
     } catch {
       setVatError("Could not save");
     } finally {
       setVatBusy(false);
+    }
+  }
+
+  // Re-run the VIES check on the saved number (VIES has downtime windows, and
+  // numbers get registered late / lapse).
+  async function recheckVies() {
+    setViesChecking(true);
+    setViesUnreachable(false);
+    try {
+      const res = await fetch("/api/reseller/branding", { method: "POST" });
+      const data = await res.json().catch(() => null);
+      if (res.ok && data?.checked) {
+        setViesValid(data.companyVatViesValid ?? null);
+        setViesCheckedAt(data.companyVatViesCheckedAt ?? null);
+      } else if (res.status === 503) {
+        setViesUnreachable(true);
+      }
+    } finally {
+      setViesChecking(false);
     }
   }
 
@@ -231,6 +275,46 @@ export function ImprintClient({
           placeholder="e.g. IT01234567890"
           className="w-full max-w-sm border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none font-mono"
         />
+        {/* VIES status of the SAVED number — checked against the EU's official
+            register (https://ec.europa.eu/taxation_customs/vies). Only shown
+            for EU-prefixed numbers; a Canadian/US tax number can't be checked. */}
+        {isEuVat && (
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            {viesValid === true && (
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-1">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                VIES: valid VAT number{viesCheckedAt ? ` (checked ${new Date(viesCheckedAt).toLocaleDateString()})` : ""}
+              </span>
+            )}
+            {viesValid === false && (
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-red-700 bg-red-50 border border-red-200 rounded-full px-2.5 py-1">
+                <ShieldAlert className="w-3.5 h-3.5" />
+                Not registered with VIES
+              </span>
+            )}
+            {viesValid === null && (
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-600 bg-gray-50 border border-gray-200 rounded-full px-2.5 py-1">
+                <ShieldQuestion className="w-3.5 h-3.5" />
+                Not verified with VIES yet
+              </span>
+            )}
+            {viesValid !== true && vat.trim() === savedVat.trim() && vat.trim() && (
+              <button
+                type="button"
+                onClick={recheckVies}
+                disabled={viesChecking}
+                className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 hover:text-emerald-800 underline disabled:opacity-50"
+              >
+                {viesChecking ? <Loader2 className="w-3 h-3 animate-spin" /> : null}
+                Verify now
+              </button>
+            )}
+            {viesUnreachable && (
+              <span className="text-xs text-amber-600">VIES is temporarily unavailable — try again in a few minutes.</span>
+            )}
+          </div>
+        )}
+
         {vatError && (
           <div className="mt-3 rounded-lg bg-red-50 border border-red-200 p-3 text-xs text-red-700">{vatError}</div>
         )}

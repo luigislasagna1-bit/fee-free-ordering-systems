@@ -2724,7 +2724,12 @@ model ResellerProfile {
   // Application + approval lifecycle
   status           String    @default("pending") // pending | approved | suspended | rejected
   companyName      String?
-  companyVatId     String? // reseller's VAT / tax number — shown as the ISSUER on invoices to their restaurants (Fabrizio cmr1ty0lc)
+  companyVatId     String? // reseller's VAT / tax number — shown on the "local partner" line of invoices to their restaurants (Fabrizio cmr1ty0lc)
+  // VIES verdict for companyVatId (Luigi 2026-07-03: resellers MUST get the
+  // same official-register validation as restaurants). null = not EU / not
+  // checked yet; the check fails soft when VIES is down.
+  companyVatViesValid     Boolean?
+  companyVatViesCheckedAt DateTime?
   website          String?
   country          String?
   applicationNotes String? // what they wrote on the application form

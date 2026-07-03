@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser, isResellerView } from "@/lib/session";
+import { checkViesVat, parseViesVatNumber } from "@/lib/vies";
 
 /**
  * GET /api/reseller/branding
@@ -25,6 +26,8 @@ export async function GET() {
       status: true,
       imprint: true,
       companyVatId: true,
+      companyVatViesValid: true,
+      companyVatViesCheckedAt: true,
       brandLogoUrl: true,
       brandLoginTitle: true,
       brandPrimaryColor: true,
@@ -39,6 +42,8 @@ export async function GET() {
   return NextResponse.json({
     imprint: profile.imprint ?? "",
     companyVatId: profile.companyVatId ?? "",
+    companyVatViesValid: profile.companyVatViesValid,
+    companyVatViesCheckedAt: profile.companyVatViesCheckedAt,
     brandLogoUrl: profile.brandLogoUrl ?? "",
     brandLoginTitle: profile.brandLoginTitle ?? "",
     brandPrimaryColor: profile.brandPrimaryColor ?? "",
@@ -90,13 +95,35 @@ export async function PATCH(req: NextRequest) {
     }
     data.imprint = raw && raw.length > 0 ? raw : null;
   }
-  // Reseller's VAT / tax number for the invoice ISSUER block (Fabrizio cmr1ty0lc).
+  // Reseller's VAT / tax number for the invoice "local partner" line (Fabrizio
+  // cmr1ty0lc). EU-prefixed numbers ("IT…", "EL…") are validated against VIES
+  // on save (Luigi 2026-07-03) — same official register as restaurant billing
+  // profiles. Fail-soft: VIES downtime keeps the previous verdict when the
+  // number is unchanged, never flips it to invalid.
+  let viesUpdate: { companyVatViesValid: boolean | null; companyVatViesCheckedAt: Date | null } | null = null;
   if ("companyVatId" in body) {
     const raw = body.companyVatId == null ? null : String(body.companyVatId).trim();
     if (raw && raw.length > 60) {
       return NextResponse.json({ error: "VAT / tax number too long" }, { status: 400 });
     }
     data.companyVatId = raw && raw.length > 0 ? raw : null;
+
+    viesUpdate = { companyVatViesValid: null, companyVatViesCheckedAt: null };
+    const parsed = parseViesVatNumber(data.companyVatId);
+    if (parsed) {
+      const result = await checkViesVat(parsed.ms, parsed.number);
+      if (result.checked) {
+        viesUpdate = { companyVatViesValid: result.valid, companyVatViesCheckedAt: new Date() };
+      } else {
+        const prev = await prisma.resellerProfile.findUnique({
+          where: { id: user.resellerProfileId },
+          select: { companyVatId: true, companyVatViesValid: true, companyVatViesCheckedAt: true },
+        });
+        if (prev?.companyVatId === data.companyVatId) {
+          viesUpdate = { companyVatViesValid: prev.companyVatViesValid, companyVatViesCheckedAt: prev.companyVatViesCheckedAt };
+        }
+      }
+    }
   }
   if ("brandLogoUrl" in body) {
     const raw = body.brandLogoUrl == null ? null : String(body.brandLogoUrl).trim();
@@ -149,10 +176,50 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ ok: true, message: "No changes" });
   }
 
-  await prisma.resellerProfile.update({
+  const updated = await prisma.resellerProfile.update({
     where: { id: user.resellerProfileId },
-    data,
+    data: viesUpdate ? { ...data, ...viesUpdate } : data,
+    select: { companyVatViesValid: true, companyVatViesCheckedAt: true },
   });
 
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({
+    ok: true,
+    companyVatViesValid: updated.companyVatViesValid,
+    companyVatViesCheckedAt: updated.companyVatViesCheckedAt,
+  });
+}
+
+/**
+ * POST /api/reseller/branding — re-run the VIES check on the SAVED VAT number
+ * without editing it (covers "VIES was down when I saved", late registration,
+ * and lapsed numbers). 503 { checked: false } when VIES is unreachable.
+ */
+export async function POST() {
+  const user = await getSessionUser();
+  if (!user || !isResellerView(user) || !user.resellerProfileId) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+  const profile = await prisma.resellerProfile.findUnique({
+    where: { id: user.resellerProfileId },
+    select: { status: true, companyVatId: true },
+  });
+  if (profile?.status !== "approved") {
+    return NextResponse.json({ error: "Not approved" }, { status: 403 });
+  }
+  const parsed = parseViesVatNumber(profile.companyVatId);
+  if (!parsed) return NextResponse.json({ error: "not_applicable" }, { status: 400 });
+  const result = await checkViesVat(parsed.ms, parsed.number);
+  if (!result.checked) {
+    return NextResponse.json({ checked: false, reason: result.reason }, { status: 503 });
+  }
+  const updated = await prisma.resellerProfile.update({
+    where: { id: user.resellerProfileId },
+    data: { companyVatViesValid: result.valid, companyVatViesCheckedAt: new Date() },
+    select: { companyVatViesValid: true, companyVatViesCheckedAt: true },
+  });
+  return NextResponse.json({
+    checked: true,
+    companyVatViesValid: updated.companyVatViesValid,
+    companyVatViesCheckedAt: updated.companyVatViesCheckedAt,
+  });
 }

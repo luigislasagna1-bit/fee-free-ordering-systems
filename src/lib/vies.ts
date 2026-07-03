@@ -40,6 +40,21 @@ export function isEuViesCountry(isoCountry: string | null | undefined): boolean 
   return viesCountryCode(isoCountry) !== null;
 }
 
+/**
+ * Parse a FULL VAT number that carries its own country prefix
+ * ("IT01234567890", "EL999999999", "gr 123…") into a VIES member-state code +
+ * bare number. Used for reseller VAT numbers, which are stored as one string
+ * with no separate country field. Returns null when the prefix isn't an EU
+ * VIES country (e.g. a Canadian GST number) — "can't check", not "invalid".
+ */
+export function parseViesVatNumber(fullVat: string | null | undefined): { ms: string; number: string } | null {
+  const raw = (fullVat ?? "").replace(/[\s.\-]/g, "").toUpperCase();
+  if (raw.length < 4) return null;
+  const ms = viesCountryCode(raw.slice(0, 2)); // accepts both GR and EL for Greece
+  if (!ms) return null;
+  return { ms, number: raw.slice(2) };
+}
+
 export type ViesResult =
   | { checked: true; valid: boolean; name?: string | null; address?: string | null }
   | { checked: false; reason: string };
