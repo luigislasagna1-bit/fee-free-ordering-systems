@@ -4,10 +4,12 @@
  * BundleComposerModal — slot-by-slot guided builder for Promo Type 8
  * (Meal bundle) and Type 13 (Meal bundle with speciality).
  *
- * Each "group" in the promo's ruleConfig represents ONE slot. The customer
- * picks `minCount..maxCount` items per slot from the group's eligible item
- * pool. The "Add bundle to cart" button enables when every slot has at
- * least `minCount` selections.
+ * STEP-BY-STEP wizard (Luigi 2026-07-03 — same GloriaFood-style flow as
+ * GuidedPromoModal): ONE slot per step. Picking from a single-pick step
+ * auto-advances; the LAST missing pick auto-adds the bundle to the cart.
+ * Finished steps become tappable chips (jump back + change, picks kept).
+ * Multi-pick slots keep an explicit Next / Add button. A slot's selection
+ * is a multi-select bounded by [minCount, maxCount].
  *
  * Type 13 adds per-item speciality upcharges: items inside a group with
  * `extraFee > 0` display a "+$X.XX" badge and add their fee to the bundle
@@ -18,8 +20,8 @@
  * carrying the child picks. The cart renders this as ONE consolidated
  * line with indented child rows; the receipt + kitchen ticket do the same.
  */
-import { useMemo, useState } from "react";
-import { X, Check } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
+import { X, Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCurrencyFormat } from "@/lib/currency-context";
 import { useTranslations } from "next-intl";
 
@@ -96,8 +98,14 @@ export function BundleComposerModal({
    * slot's selection is a multi-select bounded by [minCount, maxCount].
    */
   const t = useTranslations("customer.bundle");
+  // Shared wizard strings (Step N of M / Next / Back) — same keys as the
+  // guided promo modal so the two builders read identically.
+  const tWiz = useTranslations("customer.guidedPromo");
   const formatCurrency = useCurrencyFormat();
   const [picks, setPicks] = useState<string[][]>(() => groups.map(() => []));
+  /** The slot currently on screen. */
+  const [step, setStep] = useState(0);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   /** Items pool per slot — memoised because we do this off the menu
    *  catalog which can be large. */
@@ -126,44 +134,23 @@ export function BundleComposerModal({
   // Each slot must satisfy [minCount, maxCount]. minCount defaults to 1
   // (typical bundle: pick one from each group); maxCount defaults to 1
   // if the owner left it unset.
-  const allSlotsSatisfied = groups.every((g, i) => {
-    const min = Math.max(1, Number(g.minCount ?? 1));
-    return picks[i].length >= min;
-  });
+  const slotMinOf = (i: number) => Math.max(1, Number(groups[i].minCount ?? 1));
+  const slotMaxOf = (i: number) => Math.max(slotMinOf(i), Number(groups[i].maxCount ?? groups[i].minCount ?? 1));
+  const satisfiedIn = (arr: string[][], i: number) => (arr[i] ?? []).length >= slotMinOf(i);
+  const slotSatisfied = (i: number) => satisfiedIn(picks, i);
+  const allSlotsSatisfied = groups.every((_, i) => slotSatisfied(i));
 
-  function togglePick(slotIndex: number, itemId: string) {
-    setPicks((prev) => {
-      const next = prev.map((arr) => [...arr]);
-      const group = groups[slotIndex];
-      const max = Math.max(1, Number(group.maxCount ?? group.minCount ?? 1));
-      const current = next[slotIndex];
-      const idx = current.indexOf(itemId);
-      if (idx >= 0) {
-        current.splice(idx, 1);
-      } else {
-        if (current.length >= max) {
-          // For single-pick slots (max=1) — replace; for multi-pick at
-          // max — refuse (the click is a no-op).
-          if (max === 1) {
-            current.length = 0;
-            current.push(itemId);
-          }
-          // else: at cap, don't add.
-        } else {
-          current.push(itemId);
-        }
-      }
-      return next;
-    });
+  function goToStep(i: number) {
+    setStep(Math.max(0, Math.min(groups.length - 1, i)));
+    scrollRef.current?.scrollTo({ top: 0 });
   }
 
-  function handleAdd() {
-    if (!allSlotsSatisfied) return;
+  function buildBundle(arr: string[][]): BundleCartItem {
     const children: BundleCartItem["children"] = [];
     for (let i = 0; i < groups.length; i++) {
       const group = groups[i];
       const fee = Number(group.extraFee ?? 0);
-      for (const itemId of picks[i]) {
+      for (const itemId of arr[i] ?? []) {
         const item = slotItems[i].find((m) => m.id === itemId);
         if (!item) continue;
         children.push({
@@ -173,14 +160,72 @@ export function BundleComposerModal({
         });
       }
     }
-    onAddBundle({
+    // Speciality total recomputed off the passed picks so an auto-complete
+    // (which fires before the state round-trip) prices the same as handleAdd.
+    let spec = 0;
+    if (isSpeciality) {
+      for (let i = 0; i < groups.length; i++) {
+        const fee = Number(groups[i].extraFee ?? 0);
+        if (fee > 0) spec += (arr[i] ?? []).length * fee;
+      }
+    }
+    const total = Math.round((bundlePrice + spec) * 100) / 100;
+    return {
       syntheticMenuItemId: `bundle:${promoId}`,
       promoId,
       promoName,
       bundlePrice,
-      lineTotal,
+      lineTotal: total,
       children,
-    });
+    };
+  }
+
+  function togglePick(slotIndex: number, itemId: string) {
+    // Computed OUTSIDE setState so the wizard can advance / auto-complete on
+    // the same values it stores (mirrors GuidedPromoModal).
+    const next = picks.map((arr) => [...arr]);
+    const max = slotMaxOf(slotIndex);
+    const current = next[slotIndex];
+    const idx = current.indexOf(itemId);
+    if (idx >= 0) {
+      current.splice(idx, 1);
+    } else if (current.length >= max) {
+      // Single-pick slot → replace; multi-pick at cap → no-op.
+      if (max === 1) {
+        current.length = 0;
+        current.push(itemId);
+      } else {
+        return;
+      }
+    } else {
+      current.push(itemId);
+    }
+    setPicks(next);
+
+    // Wizard flow: single-pick slots auto-advance; the last missing pick
+    // auto-adds the finished bundle (speciality fees are shown on each item
+    // button before picking, so the price is never a surprise).
+    if (max !== 1 || !satisfiedIn(next, slotIndex)) return;
+    if (groups.every((_, i) => satisfiedIn(next, i))) {
+      onAddBundle(buildBundle(next));
+      return;
+    }
+    const nextUnfinished = groups.findIndex((_, i) => !satisfiedIn(next, i));
+    if (nextUnfinished >= 0) goToStep(nextUnfinished);
+  }
+
+  function handleAdd() {
+    if (!allSlotsSatisfied) return;
+    onAddBundle(buildBundle(picks));
+  }
+
+  /** Progress-strip chip label: picked item(s) once chosen, else slot label. */
+  function chipLabel(i: number): string {
+    const chosen = picks[i] ?? [];
+    if (chosen.length === 0) return groups[i].label?.trim() || t("slotFallbackLabel", { n: i + 1 });
+    const first = slotItems[i].find((m) => m.id === chosen[0]);
+    const name = first?.name ?? "…";
+    return chosen.length > 1 ? `${name} +${chosen.length - 1}` : name;
   }
 
   return (
@@ -189,33 +234,70 @@ export function BundleComposerModal({
       onClick={onClose}
     >
       <div
+        ref={scrollRef}
         className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white z-10 px-5 py-4 border-b border-gray-100 flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <div className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-0.5">
-              {isSpeciality ? t("mealBundleWithSpeciality") : t("mealBundle")}
+        <div className="sticky top-0 bg-white z-10 px-5 py-4 border-b border-gray-100">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <div className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-0.5">
+                {isSpeciality ? t("mealBundleWithSpeciality") : t("mealBundle")}
+                {groups.length > 1 && (
+                  <span className="ml-2 normal-case tracking-normal" style={{ color: primaryColor }}>
+                    {tWiz("stepOf", { n: step + 1, total: groups.length })}
+                  </span>
+                )}
+              </div>
+              <h2 className="text-lg font-bold text-gray-900 truncate">{promoName}</h2>
+              <p className="text-sm text-gray-500 mt-0.5">
+                {t("bundlePriceLabel")} <strong>{formatCurrency(bundlePrice)}</strong>
+                {isSpeciality && (
+                  <span className="text-xs text-gray-400 ml-2">{t("specialityUpchargeNote")}</span>
+                )}
+              </p>
             </div>
-            <h2 className="text-lg font-bold text-gray-900 truncate">{promoName}</h2>
-            <p className="text-sm text-gray-500 mt-0.5">
-              {t("bundlePriceLabel")} <strong>{formatCurrency(bundlePrice)}</strong>
-              {isSpeciality && (
-                <span className="text-xs text-gray-400 ml-2">{t("specialityUpchargeNote")}</span>
-              )}
-            </p>
+            <button
+              onClick={onClose}
+              className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 flex-shrink-0"
+              aria-label={t("closeAriaLabel")}
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 flex-shrink-0"
-            aria-label={t("closeAriaLabel")}
-          >
-            <X className="w-5 h-5" />
-          </button>
+          {/* Progress strip — finished slots show their picked item and are
+              tappable to change; current slot outlined; upcoming muted. */}
+          {groups.length > 1 && (
+            <div className="flex flex-wrap items-center gap-1.5 mt-3">
+              {groups.map((_, i) => {
+                const done = slotSatisfied(i);
+                const isCurrent = i === step;
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => goToStep(i)}
+                    className="inline-flex items-center gap-1.5 max-w-[220px] text-xs font-semibold px-2.5 py-1 rounded-full border-2 transition"
+                    style={
+                      done
+                        ? { borderColor: primaryColor, backgroundColor: `${primaryColor}12`, color: primaryColor }
+                        : isCurrent
+                          ? { borderColor: primaryColor, color: "#111827", backgroundColor: "#fff" }
+                          : { borderColor: "#e5e7eb", color: "#9ca3af", backgroundColor: "#fff" }
+                    }
+                    aria-current={isCurrent ? "step" : undefined}
+                  >
+                    {done ? <Check className="w-3 h-3 flex-shrink-0" /> : <span className="flex-shrink-0">{i + 1}.</span>}
+                    <span className="truncate">{chipLabel(i)}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
 
-        {/* Slots */}
+        {/* Current slot only — one step at a time. */}
         <div className="p-5 space-y-5">
           {groups.length === 0 ? (
             <p className="text-sm text-gray-500 text-center py-8">
@@ -223,6 +305,7 @@ export function BundleComposerModal({
             </p>
           ) : (
             groups.map((group, slotIndex) => {
+              if (slotIndex !== step) return null;
               const min = Math.max(1, Number(group.minCount ?? 1));
               const max = Math.max(min, Number(group.maxCount ?? min));
               const picked = picks[slotIndex];
@@ -297,25 +380,57 @@ export function BundleComposerModal({
           )}
         </div>
 
-        {/* Footer */}
+        {/* Footer — wizard controls + running total. */}
         <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex items-center justify-between gap-3">
-          <div className="text-sm">
-            <span className="text-gray-500">{t("totalLabel")} </span>
-            <span className="font-bold text-gray-900">{formatCurrency(lineTotal)}</span>
-            {isSpeciality && specialityTotal > 0 && (
-              <span className="text-xs text-gray-400 ml-2">
-                {t("totalBreakdown", { base: formatCurrency(bundlePrice), speciality: formatCurrency(specialityTotal) })}
-              </span>
+          <div className="flex items-center gap-3 min-w-0">
+            {step > 0 && (
+              <button
+                type="button"
+                onClick={() => goToStep(step - 1)}
+                className="inline-flex items-center gap-1 text-sm font-semibold text-gray-500 hover:text-gray-800 flex-shrink-0"
+              >
+                <ChevronLeft className="w-4 h-4" /> {tWiz("backStep")}
+              </button>
             )}
+            <div className="text-sm min-w-0 truncate">
+              <span className="text-gray-500">{t("totalLabel")} </span>
+              <span className="font-bold text-gray-900">{formatCurrency(lineTotal)}</span>
+              {isSpeciality && specialityTotal > 0 && (
+                <span className="text-xs text-gray-400 ml-2">
+                  {t("totalBreakdown", { base: formatCurrency(bundlePrice), speciality: formatCurrency(specialityTotal) })}
+                </span>
+              )}
+            </div>
           </div>
-          <button
-            onClick={handleAdd}
-            disabled={!allSlotsSatisfied}
-            className="text-white font-semibold px-4 py-2.5 rounded-xl text-sm disabled:opacity-40 disabled:cursor-not-allowed"
-            style={{ backgroundColor: primaryColor }}
-          >
-            {t("addBundleToCart")}
-          </button>
+          {allSlotsSatisfied ? (
+            <button
+              onClick={handleAdd}
+              className="text-white font-semibold px-4 py-2.5 rounded-xl text-sm flex-shrink-0"
+              style={{ backgroundColor: primaryColor }}
+            >
+              {t("addBundleToCart")}
+            </button>
+          ) : slotSatisfied(step) && step < groups.length - 1 ? (
+            <button
+              type="button"
+              onClick={() => {
+                const nextUnfinished = groups.findIndex((_, i) => i > step && !slotSatisfied(i));
+                goToStep(nextUnfinished >= 0 ? nextUnfinished : step + 1);
+              }}
+              className="inline-flex items-center gap-1 text-white font-semibold px-4 py-2.5 rounded-xl text-sm flex-shrink-0"
+              style={{ backgroundColor: primaryColor }}
+            >
+              {tWiz("nextStep")} <ChevronRight className="w-4 h-4" />
+            </button>
+          ) : (
+            <button
+              disabled
+              className="text-white font-semibold px-4 py-2.5 rounded-xl text-sm opacity-40 cursor-not-allowed flex-shrink-0"
+              style={{ backgroundColor: primaryColor }}
+            >
+              {t("addBundleToCart")}
+            </button>
+          )}
         </div>
       </div>
     </div>

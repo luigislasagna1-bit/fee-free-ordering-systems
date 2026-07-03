@@ -683,7 +683,12 @@ export function PromoDetailModal({
         allMenuItems={allMenuItems}
         primaryColor={primaryColor}
         isSpeciality={promo.promotionType === "meal_bundle_speciality"}
-        onAddBundle={onAddBundle}
+        // Close the promo modal once the bundle lands in the cart — the
+        // composer's job is done (matches the guided wizard's onComplete).
+        onAddBundle={(b) => {
+          onAddBundle(b);
+          onClose();
+        }}
         onClose={onClose}
       />
     );
@@ -834,11 +839,13 @@ export function PromoDetailModal({
         )}
 
         {/* Whole-cart discount promos (e.g. "20% off everything", a fixed-$-off
-            code) discount the WHOLE cart, so — unlike item-specific promos —
-            they have NO per-item "+ Add" buttons. Give them a CTA to start
-            adding items, and pre-apply the promo's code so the customer doesn't
-            have to retype it at checkout. Luigi 2026-07-02. */}
+            code, "5% when you pay online") discount the WHOLE cart, so — unlike
+            item-specific promos — they have NO per-item "+ Add" buttons. Give
+            them a CTA to start adding items, and pre-apply the promo's code so
+            the customer doesn't have to retype it at checkout. Luigi 2026-07-02;
+            payment_reward added in the promo-flow audit 2026-07-03. */}
         {(promo.promotionType === "fixed_cart" ||
+          promo.promotionType === "payment_reward" ||
           (promo.promotionType === "percentage_off" && (rules.groups ?? rules.itemGroups ?? []).length === 0)) && (
           <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex justify-center">
             <button
@@ -1053,7 +1060,11 @@ function PromoBody({
 
     case "payment_reward": {
       const pct = rules.discountPercent ?? 0;
-      const method = rules.paymentMethod ?? t("paymentMethodDefault");
+      // Human name, not the raw slug ("Pay online", not "online_card") —
+      // promo-flow audit 2026-07-03.
+      const method = rules.paymentMethod
+        ? formatPayment(rules.paymentMethod, t)
+        : t("paymentMethodDefault");
       return (
         <InfoCard>
           {promo.minimumOrder > 0
