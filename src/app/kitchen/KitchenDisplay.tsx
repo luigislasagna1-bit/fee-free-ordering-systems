@@ -476,6 +476,16 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   // applies when the name lead is on. Luigi 2026-06-22.
   const showBoth = isDeliveryWithAddr && !!deliveryShowName && !!deliveryShowBoth;
   const showAddress = isDeliveryWithAddr && !deliveryShowName;
+  // Tile address = "Via Giuseppe Mazzini 13, Varedo" — street, comma, CITY
+  // (Fabrizio cmqsn52d2 follow-up 2026-07-02, GloriaFood parity). Same font
+  // as before; only the city is appended. Guarded so older rows whose flat
+  // address already embeds the city don't repeat it.
+  const tileAddress = (() => {
+    const addr = (order.deliveryAddress ?? "").trim();
+    const city = ((order as any).deliveryCity ?? "").trim();
+    if (!addr || !city || addr.toLowerCase().includes(city.toLowerCase())) return addr;
+    return `${addr}, ${city}`;
+  })();
 
   return (
     <div onClick={onClick} className={`px-4 py-3 min-h-[80px] flex items-center transition-colors ${rowClass}`}>
@@ -537,13 +547,13 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
                 {order.customerName.replace("[TEST] ", "")}
               </div>
               <div className={`text-sm leading-tight ${t.muted} truncate`}>
-                {order.deliveryAddress}
+                {tileAddress}
               </div>
             </>
           ) : (
             <div className={`font-bold text-[1.15rem] leading-tight ${t.text} truncate`}>
               {showAddress
-                ? order.deliveryAddress
+                ? tileAddress
                 : order.customerName.replace("[TEST] ", "")}
             </div>
           )}
