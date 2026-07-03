@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Nyomtató leválasztva.",
     "printerForgotToast": "Nyomtató beállításai törölve – kezdd elölről.",
     "soundGateTitle": "Koppintson a rendelési értesítések bekapcsolásához",
-    "soundGateSubtitle": "Koppintson bárhova a hang bekapcsolásához, hogy halljon minden új rendelést."
+    "soundGateSubtitle": "Koppintson bárhova a hang bekapcsolásához, hogy halljon minden új rendelést.",
+    "zoomTitle": "Nagyítás — szövegméret",
+    "zoomSubtitle": "Minden szöveget és számot nagyobbá tesz ezen az eszközön",
+    "zoomStandard": "Normál"
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",

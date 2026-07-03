@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Printer afbrudt.",
     "printerForgotToast": "Printerindstillinger ryddet – start forfra.",
     "soundGateTitle": "Tryk for at aktivere ordreadvarsler",
-    "soundGateSubtitle": "Tryk et vilkårligt sted for at slå lyden til, så du hører hver ny ordre."
+    "soundGateSubtitle": "Tryk et vilkårligt sted for at slå lyden til, så du hører hver ny ordre.",
+    "zoomTitle": "Zoom — tekststørrelse",
+    "zoomSubtitle": "Gør al tekst og alle tal større på denne enhed",
+    "zoomStandard": "Standard"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbage",

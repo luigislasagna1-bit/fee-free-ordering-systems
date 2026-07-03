@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Imprimantă deconectată.",
     "printerForgotToast": "Setările imprimantei au fost șterse — începe de la capăt.",
     "soundGateTitle": "Atingeți pentru a activa alertele de comenzi",
-    "soundGateSubtitle": "Atingeți oriunde pentru a activa sunetul și a auzi fiecare comandă nouă."
+    "soundGateSubtitle": "Atingeți oriunde pentru a activa sunetul și a auzi fiecare comandă nouă.",
+    "zoomTitle": "Zoom — dimensiunea textului",
+    "zoomSubtitle": "Mărește tot textul și cifrele pe acest dispozitiv",
+    "zoomStandard": "Standard"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",

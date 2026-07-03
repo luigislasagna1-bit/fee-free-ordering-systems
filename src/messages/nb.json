@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Skriver frakoblet.",
     "printerForgotToast": "Skriverinnstillinger fjernet – start på nytt.",
     "soundGateTitle": "Trykk for å aktivere ordrevarsler",
-    "soundGateSubtitle": "Trykk hvor som helst for å slå på lyden slik at du hører hver nye ordre."
+    "soundGateSubtitle": "Trykk hvor som helst for å slå på lyden slik at du hører hver nye ordre.",
+    "zoomTitle": "Zoom — tekststørrelse",
+    "zoomSubtitle": "Gjør all tekst og alle tall større på denne enheten",
+    "zoomStandard": "Standard"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbake",

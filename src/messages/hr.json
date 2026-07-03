@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Pisač je odspojen.",
     "printerForgotToast": "Postavke pisača izbrisane — krenite ispočetka.",
     "soundGateTitle": "Dodirnite za aktivaciju upozorenja o narudžbama",
-    "soundGateSubtitle": "Dodirnite bilo gdje da uključite zvuk i čujete svaku novu narudžbu."
+    "soundGateSubtitle": "Dodirnite bilo gdje da uključite zvuk i čujete svaku novu narudžbu.",
+    "zoomTitle": "Zumiranje — veličina teksta",
+    "zoomSubtitle": "Povećava sav tekst i brojeve na ovom uređaju",
+    "zoomStandard": "Standardno"
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",

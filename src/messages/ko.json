@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "프린터 연결을 해제했습니다.",
     "printerForgotToast": "프린터 설정을 지웠습니다 — 처음부터 시작하세요.",
     "soundGateTitle": "탭하여 주문 알림 활성화",
-    "soundGateSubtitle": "어디든 탭하여 소리를 켜고 모든 새 주문을 놓치지 마세요."
+    "soundGateSubtitle": "어디든 탭하여 소리를 켜고 모든 새 주문을 놓치지 마세요.",
+    "zoomTitle": "확대 — 글자 크기",
+    "zoomSubtitle": "이 기기의 모든 글자와 숫자를 크게 표시",
+    "zoomStandard": "표준"
   },
   "admin": {
     "welcomeBack": "환영합니다",

@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "已断开打印机连接。",
     "printerForgotToast": "已清除打印机设置 — 重新开始。",
     "soundGateTitle": "点击以启用订单提醒",
-    "soundGateSubtitle": "点击任意位置开启声音，确保您听到每一个新订单。"
+    "soundGateSubtitle": "点击任意位置开启声音，确保您听到每一个新订单。",
+    "zoomTitle": "缩放 — 文字大小",
+    "zoomSubtitle": "放大此设备上的所有文字和数字",
+    "zoomStandard": "标准"
   },
   "admin": {
     "welcomeBack": "欢迎回来",

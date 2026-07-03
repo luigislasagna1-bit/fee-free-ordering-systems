@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Impressora desconectada.",
     "printerForgotToast": "Configurações da impressora apagadas — comece do zero.",
     "soundGateTitle": "Toque para ativar os alertas de pedidos",
-    "soundGateSubtitle": "Toque em qualquer lugar para ligar o som e ouvir cada novo pedido."
+    "soundGateSubtitle": "Toque em qualquer lugar para ligar o som e ouvir cada novo pedido.",
+    "zoomTitle": "Zoom — tamanho do texto",
+    "zoomSubtitle": "Aumenta todo o texto e os números neste dispositivo",
+    "zoomStandard": "Padrão"
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",

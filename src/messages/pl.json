@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Drukarka rozłączona.",
     "printerForgotToast": "Ustawienia drukarki wyczyszczone — zacznij od nowa.",
     "soundGateTitle": "Stuknij, aby włączyć powiadomienia o zamówieniach",
-    "soundGateSubtitle": "Stuknij gdziekolwiek, aby włączyć dźwięk i słyszeć każde nowe zamówienie."
+    "soundGateSubtitle": "Stuknij gdziekolwiek, aby włączyć dźwięk i słyszeć każde nowe zamówienie.",
+    "zoomTitle": "Powiększenie — rozmiar tekstu",
+    "zoomSubtitle": "Powiększa cały tekst i liczby na tym urządzeniu",
+    "zoomStandard": "Standard"
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",

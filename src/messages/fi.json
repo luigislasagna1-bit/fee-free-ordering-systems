@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Tulostimen yhteys katkaistu.",
     "printerForgotToast": "Tulostimen asetukset tyhjennetty – aloita alusta.",
     "soundGateTitle": "Napauta ottaaksesi tilaushälytykset käyttöön",
-    "soundGateSubtitle": "Napauta mitä tahansa kohtaa ottaaksesi äänen käyttöön, jotta kuulet jokaisen uuden tilauksen."
+    "soundGateSubtitle": "Napauta mitä tahansa kohtaa ottaaksesi äänen käyttöön, jotta kuulet jokaisen uuden tilauksen.",
+    "zoomTitle": "Zoomaus — tekstin koko",
+    "zoomSubtitle": "Suurentaa kaiken tekstin ja numerot tällä laitteella",
+    "zoomStandard": "Vakio"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

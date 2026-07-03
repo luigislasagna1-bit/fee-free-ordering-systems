@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Tiskalnik je odklopljen.",
     "printerForgotToast": "Nastavitve tiskalnika počiščene – začnite znova.",
     "soundGateTitle": "Dotaknite se za aktiviranje opozoril o naročilih",
-    "soundGateSubtitle": "Dotaknite se kjerkoli, da vklopite zvok in slišite vsako novo naročilo."
+    "soundGateSubtitle": "Dotaknite se kjerkoli, da vklopite zvok in slišite vsako novo naročilo.",
+    "zoomTitle": "Povečava — velikost besedila",
+    "zoomSubtitle": "Poveča vse besedilo in številke na tej napravi",
+    "zoomStandard": "Standardno"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",

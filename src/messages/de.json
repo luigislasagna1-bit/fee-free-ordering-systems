@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Drucker getrennt.",
     "printerForgotToast": "Druckereinstellungen gelöscht – neu beginnen.",
     "soundGateTitle": "Tippen um Bestellbenachrichtigungen zu aktivieren",
-    "soundGateSubtitle": "Tippe irgendwo, um den Ton einzuschalten und jede neue Bestellung zu hören."
+    "soundGateSubtitle": "Tippe irgendwo, um den Ton einzuschalten und jede neue Bestellung zu hören.",
+    "zoomTitle": "Zoom — Textgröße",
+    "zoomSubtitle": "Vergrößert alle Texte und Zahlen auf diesem Gerät",
+    "zoomStandard": "Standard"
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",

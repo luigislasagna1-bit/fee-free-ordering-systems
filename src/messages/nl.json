@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Printer losgekoppeld.",
     "printerForgotToast": "Printerinstellingen gewist — begin opnieuw.",
     "soundGateTitle": "Tik om bestellingsmeldingen in te schakelen",
-    "soundGateSubtitle": "Tik ergens om het geluid in te schakelen, zodat je elke nieuwe bestelling hoort."
+    "soundGateSubtitle": "Tik ergens om het geluid in te schakelen, zodat je elke nieuwe bestelling hoort.",
+    "zoomTitle": "Zoom — tekstgrootte",
+    "zoomSubtitle": "Maakt alle tekst en cijfers groter op dit apparaat",
+    "zoomStandard": "Standaard"
   },
   "admin": {
     "welcomeBack": "Welkom terug",

@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Spausdintuvas atjungtas.",
     "printerForgotToast": "Spausdintuvo nustatymai išvalyti — pradėkite iš naujo.",
     "soundGateTitle": "Palieskite, kad įjungtumėte užsakymų įspėjimus",
-    "soundGateSubtitle": "Palieskite bet kur, kad įjungtumėte garsą ir girdėtumėte kiekvieną naują užsakymą."
+    "soundGateSubtitle": "Palieskite bet kur, kad įjungtumėte garsą ir girdėtumėte kiekvieną naują užsakymą.",
+    "zoomTitle": "Mastelis — teksto dydis",
+    "zoomSubtitle": "Padidina visą tekstą ir skaičius šiame įrenginyje",
+    "zoomStandard": "Standartinis"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",

@@ -1,9 +1,11 @@
 "use client";
 import { currencySymbol } from "@/lib/utils";
 import { useEffect, useState, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import {
   X, Pause, Play, AlertTriangle, Loader2, Package, Search, CheckCircle2,
   Sliders, Sun, Moon, Volume2, VolumeX, Printer, RefreshCw, BarChart3, ChevronRight,
+  ZoomIn,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -56,6 +58,10 @@ interface StatusModalProps {
    *  day report) stay where they were — we just open them from here. */
   themeMode: "light" | "dark";
   onToggleTheme: () => void;
+  /** Kitchen display zoom (restaurateur accessibility feedback, 2026-07-03):
+   *  1 = standard, 1.2 / 1.5 = bigger text + numbers. Per-device. */
+  zoomLevel: number;
+  onSetZoom: (z: number) => void;
   onRefresh: () => void;
   onOpenSound: () => void;
   onOpenPrinter: () => void;
@@ -92,6 +98,7 @@ export function RestaurantStatusModal({
   pausedUntilByService,
   onChange,
   themeMode, onToggleTheme,
+  zoomLevel, onSetZoom,
   onRefresh, onOpenSound, onOpenPrinter, onOpenDayReport,
   alertMuted, alertVolume, printerReady, printerLabel, currency,
 }: StatusModalProps) {
@@ -312,6 +319,8 @@ export function RestaurantStatusModal({
           <PreferencesPanel
             themeMode={themeMode}
             onToggleTheme={onToggleTheme}
+            zoomLevel={zoomLevel}
+            onSetZoom={onSetZoom}
             onRefresh={() => { onRefresh(); onClose(); }}
             onOpenSound={() => { onOpenSound(); onClose(); }}
             onOpenPrinter={() => { onOpenPrinter(); onClose(); }}
@@ -352,11 +361,14 @@ export function RestaurantStatusModal({
  *  surface them from a cleaner control-panel hub. */
 function PreferencesPanel({
   themeMode, onToggleTheme,
+  zoomLevel, onSetZoom,
   onRefresh, onOpenSound, onOpenPrinter,
   alertMuted, alertVolume, printerReady, printerLabel,
 }: {
   themeMode: "light" | "dark";
   onToggleTheme: () => void;
+  zoomLevel: number;
+  onSetZoom: (z: number) => void;
   onRefresh: () => void;
   onOpenSound: () => void;
   onOpenPrinter: () => void;
@@ -365,6 +377,7 @@ function PreferencesPanel({
   printerReady: boolean;
   printerLabel: string | null;
 }) {
+  const tk = useTranslations("kitchen");
   const soundSubtitle = alertMuted || alertVolume === 0
     ? "Muted — kitchen won't hear new orders"
     : alertVolume < 0.5
@@ -418,6 +431,35 @@ function PreferencesPanel({
           {themeMode === "light" ? "DAY" : "NIGHT"}
         </div>
       </button>
+
+      {/* Zoom / text size — restaurateur accessibility feedback (2026-07-03):
+          scale the whole display so text + numbers are easier to read. Saved
+          per DEVICE; the choice applies instantly, no restart. */}
+      <div className="w-full flex items-center gap-3 px-3 py-3 rounded-xl border border-gray-200 bg-white text-left">
+        <div className="w-9 h-9 rounded-lg bg-violet-50 flex items-center justify-center flex-shrink-0">
+          <ZoomIn className="w-5 h-5 text-violet-500" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-semibold text-gray-900">{tk("zoomTitle")}</div>
+          <div className="text-xs text-gray-500 truncate">{tk("zoomSubtitle")}</div>
+        </div>
+        <div className="flex rounded-lg border border-gray-200 overflow-hidden flex-shrink-0">
+          {([1, 1.2, 1.5] as const).map((z) => (
+            <button
+              key={z}
+              type="button"
+              onClick={() => onSetZoom(z)}
+              className={`px-2.5 py-1.5 text-xs font-bold transition ${
+                zoomLevel === z
+                  ? "bg-violet-500 text-white"
+                  : "bg-white text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              {z === 1 ? tk("zoomStandard") : `${z}×`}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* Printer */}
       <PrefRow

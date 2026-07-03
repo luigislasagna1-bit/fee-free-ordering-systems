@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Printer lahti ühendatud.",
     "printerForgotToast": "Printeri sätted kustutatud – alusta uuesti.",
     "soundGateTitle": "Puudutage tellimuste teavituste aktiveerimiseks",
-    "soundGateSubtitle": "Puudutage ükskõik kus, et lülitada heli sisse ja kuulda iga uut tellimust."
+    "soundGateSubtitle": "Puudutage ükskõik kus, et lülitada heli sisse ja kuulda iga uut tellimust.",
+    "zoomTitle": "Suum — teksti suurus",
+    "zoomSubtitle": "Suurendab kogu teksti ja numbreid sellel seadmel",
+    "zoomStandard": "Standard"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",

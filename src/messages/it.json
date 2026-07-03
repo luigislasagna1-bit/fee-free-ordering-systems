@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Stampante disconnessa.",
     "printerForgotToast": "Impostazioni stampante cancellate — ricomincia da capo.",
     "soundGateTitle": "Tocca per attivare gli avvisi sugli ordini",
-    "soundGateSubtitle": "Tocca ovunque per attivare il suono e sentire ogni nuovo ordine."
+    "soundGateSubtitle": "Tocca ovunque per attivare il suono e sentire ogni nuovo ordine.",
+    "zoomTitle": "Zoom — dimensione del testo",
+    "zoomSubtitle": "Ingrandisce tutto il testo e i numeri su questo dispositivo",
+    "zoomStandard": "Standard"
   },
   "admin": {
     "welcomeBack": "Bentornato",

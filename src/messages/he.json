@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "המדפסת נותקה.",
     "printerForgotToast": "הגדרות המדפסת נמחקו — התחל מחדש.",
     "soundGateTitle": "הקש כדי להפעיל התראות הזמנות",
-    "soundGateSubtitle": "הקש בכל מקום להפעלת הצליל כדי שתשמע כל הזמנה חדשה."
+    "soundGateSubtitle": "הקש בכל מקום להפעלת הצליל כדי שתשמע כל הזמנה חדשה.",
+    "zoomTitle": "זום — גודל טקסט",
+    "zoomSubtitle": "מגדיל את כל הטקסט והמספרים במכשיר זה",
+    "zoomStandard": "רגיל"
   },
   "admin": {
     "welcomeBack": "ברוך שובך",

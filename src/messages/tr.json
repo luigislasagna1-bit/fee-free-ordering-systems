@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Yazıcı bağlantısı kesildi.",
     "printerForgotToast": "Yazıcı ayarları temizlendi — sıfırdan başlayın.",
     "soundGateTitle": "Sipariş uyarılarını etkinleştirmek için dokunun",
-    "soundGateSubtitle": "Her yeni siparişi duyabilmek için sesi açmak üzere herhangi bir yere dokunun."
+    "soundGateSubtitle": "Her yeni siparişi duyabilmek için sesi açmak üzere herhangi bir yere dokunun.",
+    "zoomTitle": "Yakınlaştırma — metin boyutu",
+    "zoomSubtitle": "Bu cihazda tüm metin ve rakamları büyütür",
+    "zoomStandard": "Standart"
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",

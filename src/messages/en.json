@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Disconnected from printer.",
     "printerForgotToast": "Printer settings cleared — start fresh.",
     "soundGateTitle": "Tap to enable order alerts",
-    "soundGateSubtitle": "Tap anywhere to turn on sound so you hear every new order."
+    "soundGateSubtitle": "Tap anywhere to turn on sound so you hear every new order.",
+    "zoomTitle": "Zoom — text size",
+    "zoomSubtitle": "Make all text and numbers bigger on this device",
+    "zoomStandard": "Standard"
   },
   "admin": {
     "comingSoonPlaceholder": {

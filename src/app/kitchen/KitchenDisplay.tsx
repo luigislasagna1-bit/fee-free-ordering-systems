@@ -786,6 +786,30 @@ const ACCEPT_WINDOW_MS = 245 * 1000;
 export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = null }: { restaurant: any; initialOrders: Order[]; resellerLogoUrl?: string | null }) {
   const tk = useTranslations("kitchen");
   const locale = useLocale();
+  // Kitchen zoom (restaurateur feedback via Fabrizio, 2026-07-03): scale the
+  // WHOLE display — text, numbers, tiles — for staff who have trouble seeing
+  // small print. Per-DEVICE (localStorage, like the theme): each tablet/phone
+  // keeps its own preference. Applied as CSS `zoom` on the root, so every
+  // px/rem value scales together and the layout reflows to fit.
+  // HYDRATION-SAFE load: the server always renders zoom 1 (no localStorage),
+  // so a lazy initializer reading 1.2/1.5 on the client mismatches the SSR
+  // markup and React keeps the un-zoomed style. Start at 1, read the saved
+  // value AFTER mount (normal render applies the style), and only persist
+  // once loaded so the pre-load default can't clobber the saved choice.
+  const KITCHEN_ZOOM_LEVELS = [1, 1.2, 1.5] as const;
+  const [kitchenZoom, setKitchenZoom] = useState<number>(1);
+  const zoomLoadedRef = useRef(false);
+  useEffect(() => {
+    const v = parseFloat(localStorage.getItem("kds-zoom") ?? "1");
+    if ((KITCHEN_ZOOM_LEVELS as readonly number[]).includes(v)) setKitchenZoom(v);
+    zoomLoadedRef.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    if (!zoomLoadedRef.current) return;
+    localStorage.setItem("kds-zoom", String(kitchenZoom));
+  }, [kitchenZoom]);
+
   const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
     if (typeof window === "undefined") return "light";
     return (localStorage.getItem("kds-theme") as ThemeMode) ?? "light";
@@ -3235,7 +3259,15 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     : null;
 
   return (
-    <div className={`h-[100dvh] flex flex-col overflow-hidden ${t.base}`}>
+    // `zoom` scales the entire display (text, numbers, tiles — px AND rem) per
+    // the device's saved preference. Viewport units are NOT divided by zoom
+    // (verified: 100dvh rendered at 1.5× the screen), so the root height is
+    // compensated with calc(100dvh / zoom) — the app then fits the screen
+    // exactly and the inner lists just scroll more.
+    <div
+      className={`h-[100dvh] flex flex-col overflow-hidden ${t.base}`}
+      style={kitchenZoom !== 1 ? { zoom: kitchenZoom, height: `calc(100dvh / ${kitchenZoom})` } : undefined}
+    >
       {/* iOS "tap to enable sound" gate. iOS blocks audio until a user gesture,
           so an order arriving before staff tap anything would be SILENT. Tapping
           fires the window pointerdown unlock (resumes the AudioContext + primes
@@ -4119,6 +4151,8 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
         // route to them from one centralised hub.
         themeMode={themeMode}
         onToggleTheme={() => setThemeMode((m) => (m === "light" ? "dark" : "light"))}
+        zoomLevel={kitchenZoom}
+        onSetZoom={setKitchenZoom}
         onRefresh={fetchOrders}
         onOpenSound={() => setShowSoundSettings(true)}
         onOpenPrinter={() => {

@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Printeris atvienots.",
     "printerForgotToast": "Printera iestatījumi notīrīti — sāciet no jauna.",
     "soundGateTitle": "Pieskarieties, lai iespējotu pasūtījumu paziņojumus",
-    "soundGateSubtitle": "Pieskarieties jebkur, lai ieslēgtu skaņu un dzirdētu katru jaunu pasūtījumu."
+    "soundGateSubtitle": "Pieskarieties jebkur, lai ieslēgtu skaņu un dzirdētu katru jaunu pasūtījumu.",
+    "zoomTitle": "Tālummaiņa — teksta izmērs",
+    "zoomSubtitle": "Palielina visu tekstu un skaitļus šajā ierīcē",
+    "zoomStandard": "Standarta"
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",

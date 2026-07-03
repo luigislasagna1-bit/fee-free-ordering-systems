@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "تم قطع الاتصال بالطابعة.",
     "printerForgotToast": "تم مسح إعدادات الطابعة — ابدأ من جديد.",
     "soundGateTitle": "انقر لتفعيل تنبيهات الطلبات",
-    "soundGateSubtitle": "انقر في أي مكان لتشغيل الصوت حتى تسمع كل طلب جديد."
+    "soundGateSubtitle": "انقر في أي مكان لتشغيل الصوت حتى تسمع كل طلب جديد.",
+    "zoomTitle": "التكبير — حجم النص",
+    "zoomSubtitle": "يكبّر كل النصوص والأرقام على هذا الجهاز",
+    "zoomStandard": "قياسي"
   },
   "admin": {
     "welcomeBack": "مرحباً بعودتك",

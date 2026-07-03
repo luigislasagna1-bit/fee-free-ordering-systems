@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Printer terputus.",
     "printerForgotToast": "Pengaturan printer dihapus — mulai dari awal.",
     "soundGateTitle": "Ketuk untuk mengaktifkan notifikasi pesanan",
-    "soundGateSubtitle": "Ketuk di mana saja untuk mengaktifkan suara agar Anda mendengar setiap pesanan baru."
+    "soundGateSubtitle": "Ketuk di mana saja untuk mengaktifkan suara agar Anda mendengar setiap pesanan baru.",
+    "zoomTitle": "Zoom — ukuran teks",
+    "zoomSubtitle": "Memperbesar semua teks dan angka di perangkat ini",
+    "zoomStandard": "Standar"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",

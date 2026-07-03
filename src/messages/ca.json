@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "Impressora desconnectada.",
     "printerForgotToast": "Ajustos de la impressora esborrats: comença de zero.",
     "soundGateTitle": "Toca per activar les alertes de comandes",
-    "soundGateSubtitle": "Toca qualsevol lloc per activar el so i sentir cada nova comanda."
+    "soundGateSubtitle": "Toca qualsevol lloc per activar el so i sentir cada nova comanda.",
+    "zoomTitle": "Zoom — mida del text",
+    "zoomSubtitle": "Fa més grans tot el text i els números en aquest dispositiu",
+    "zoomStandard": "Estàndard"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",

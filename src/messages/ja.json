@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "プリンターを切断しました。",
     "printerForgotToast": "プリンター設定を消去しました — 最初から設定できます。",
     "soundGateTitle": "タップして注文アラートを有効にする",
-    "soundGateSubtitle": "どこかをタップして音をオンにして、すべての新しい注文を聞き逃さないようにしましょう。"
+    "soundGateSubtitle": "どこかをタップして音をオンにして、すべての新しい注文を聞き逃さないようにしましょう。",
+    "zoomTitle": "ズーム — 文字サイズ",
+    "zoomSubtitle": "この端末のすべての文字と数字を大きくします",
+    "zoomStandard": "標準"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",

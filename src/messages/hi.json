@@ -763,7 +763,10 @@
     "printerDisconnectedToast": "प्रिंटर डिस्कनेक्ट हो गया।",
     "printerForgotToast": "प्रिंटर सेटिंग्स साफ़ कर दी गईं — नए सिरे से शुरू करें।",
     "soundGateTitle": "ऑर्डर अलर्ट सक्षम करने के लिए टैप करें",
-    "soundGateSubtitle": "हर नया ऑर्डर सुनने के लिए ध्वनि चालू करने हेतु कहीं भी टैप करें।"
+    "soundGateSubtitle": "हर नया ऑर्डर सुनने के लिए ध्वनि चालू करने हेतु कहीं भी टैप करें।",
+    "zoomTitle": "ज़ूम — टेक्स्ट आकार",
+    "zoomSubtitle": "इस डिवाइस पर सभी टेक्स्ट और अंक बड़े करता है",
+    "zoomStandard": "मानक"
   },
   "admin": {
     "comingSoonPlaceholder": {
