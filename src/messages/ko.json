@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} 사용됨",
       "couponExpires": "{date} 만료",
       "orderHistoryHeading": "주문 내역",
-      "noOrders": "아직 주문이 없습니다."
+      "noOrders": "아직 주문이 없습니다.",
+      "revokeOffer": "이 혜택 회수",
+      "confirmRevokeOffer": "이 혜택을 회수할까요? 고객은 더 이상 사용할 수 없습니다.",
+      "offerRevoked": "혜택이 회수되었습니다.",
+      "revokeFailed": "회수하지 못했습니다 — 다시 시도하세요."
     },
     "marketplacePage": {
       "loginRequired": "마켓플레이스 리스팅을 관리하려면 로그인하세요.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "이 그룹에만 기본값을 재정의합니다.",
       "confirmRemoveMember": "이 회원을 그룹에서 제거할까요?",
-      "confirmRemoveSpecial": "이 특별 혜택을 제거할까요?"
+      "confirmRemoveSpecial": "이 특별 혜택을 제거할까요?",
+      "confirmRemoveFromGroup": "{name}을(를) “{group}”에서 제거할까요? 해당 그룹에 연결된 모든 혜택을 잃게 됩니다. 그룹과 혜택은 다른 사람에게는 그대로 유지됩니다.",
+      "removeFromGroupTitle": "{group}에서 제거"
     },
     "rewards": {
       "title": "리워드 달러",

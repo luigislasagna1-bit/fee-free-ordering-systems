@@ -3483,7 +3483,11 @@
       "couponUsed": "مُستخدم {used}/{max}",
       "couponExpires": "تنتهي {date}",
       "orderHistoryHeading": "سجل الطلبات",
-      "noOrders": "لا توجد طلبات بعد."
+      "noOrders": "لا توجد طلبات بعد.",
+      "revokeOffer": "سحب هذا العرض",
+      "confirmRevokeOffer": "سحب هذا العرض؟ لن يتمكن العميل من استخدامه بعد الآن.",
+      "offerRevoked": "تم سحب العرض.",
+      "revokeFailed": "تعذّر السحب — حاول مرة أخرى."
     },
     "marketplacePage": {
       "loginRequired": "يرجى تسجيل الدخول لإدارة قائمة السوق الخاصة بك.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "يتجاوز الإعداد الافتراضي لهذه المجموعة فقط.",
       "confirmRemoveMember": "إزالة هذا العضو من المجموعة؟",
-      "confirmRemoveSpecial": "إزالة هذا العرض الخاص؟"
+      "confirmRemoveSpecial": "إزالة هذا العرض الخاص؟",
+      "confirmRemoveFromGroup": "إزالة {name} من «{group}»؟ سيفقد جميع العروض المرتبطة بهذه المجموعة. تبقى المجموعة وعروضها كما هي للبقية.",
+      "removeFromGroupTitle": "إزالة من {group}"
     },
     "rewards": {
       "title": "دولارات المكافآت",

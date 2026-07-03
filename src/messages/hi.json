@@ -1540,7 +1540,11 @@
       "couponUsed": "{used}/{max} उपयोग हुए",
       "couponExpires": "समाप्ति {date}",
       "orderHistoryHeading": "ऑर्डर इतिहास",
-      "noOrders": "अभी तक कोई ऑर्डर नहीं।"
+      "noOrders": "अभी तक कोई ऑर्डर नहीं।",
+      "revokeOffer": "यह ऑफ़र वापस लें",
+      "confirmRevokeOffer": "यह ऑफ़र वापस लें? ग्राहक इसे फिर उपयोग नहीं कर पाएगा।",
+      "offerRevoked": "ऑफ़र वापस ले लिया गया।",
+      "revokeFailed": "वापस नहीं ले सके — पुनः प्रयास करें।"
     },
     "reports": {
       "title": "रिपोर्ट",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "केवल इस समूह के लिए डिफ़ॉल्ट को बदलता है।",
       "confirmRemoveMember": "इस सदस्य को समूह से हटाएँ?",
-      "confirmRemoveSpecial": "इस विशेष ऑफ़र को हटाएँ?"
+      "confirmRemoveSpecial": "इस विशेष ऑफ़र को हटाएँ?",
+      "confirmRemoveFromGroup": "{name} को “{group}” से हटाएँ? उसे इस समूह से जुड़े सभी ऑफ़र नहीं मिलेंगे। समूह और उसके ऑफ़र बाकी लोगों के लिए वैसे ही रहेंगे।",
+      "removeFromGroupTitle": "{group} से हटाएँ"
     },
     "rewards": {
       "title": "रिवॉर्ड डॉलर",

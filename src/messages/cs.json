@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} použito",
       "couponExpires": "Platí do {date}",
       "orderHistoryHeading": "Historie objednávek",
-      "noOrders": "Zatím žádné objednávky."
+      "noOrders": "Zatím žádné objednávky.",
+      "revokeOffer": "Odvolat tuto nabídku",
+      "confirmRevokeOffer": "Odvolat tuto nabídku? Zákazník ji už nebude moci využít.",
+      "offerRevoked": "Nabídka odvolána.",
+      "revokeFailed": "Odvolání se nezdařilo — zkuste to znovu."
     },
     "marketplacePage": {
       "loginRequired": "Pro správu vašeho inzerátu na Marketplace se prosím přihlaste.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Přepíše výchozí hodnotu jen pro tuto skupinu.",
       "confirmRemoveMember": "Odebrat tohoto člena ze skupiny?",
-      "confirmRemoveSpecial": "Odebrat tuto speciální nabídku?"
+      "confirmRemoveSpecial": "Odebrat tuto speciální nabídku?",
+      "confirmRemoveFromGroup": "Odebrat {name} ze skupiny „{group}“? Přijde o všechny nabídky spojené s touto skupinou. Skupina a její nabídky zůstávají pro ostatní beze změny.",
+      "removeFromGroupTitle": "Odebrat ze skupiny {group}"
     },
     "rewards": {
       "title": "Věrnostní kredit",

@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} 使用済み",
       "couponExpires": "{date} 有効期限",
       "orderHistoryHeading": "注文履歴",
-      "noOrders": "注文はまだありません。"
+      "noOrders": "注文はまだありません。",
+      "revokeOffer": "このオファーを取り消す",
+      "confirmRevokeOffer": "このオファーを取り消しますか？お客様は今後利用できなくなります。",
+      "offerRevoked": "オファーを取り消しました。",
+      "revokeFailed": "取り消せませんでした — もう一度お試しください。"
     },
     "marketplacePage": {
       "loginRequired": "マーケットプレイスの掲載情報を管理するにはログインしてください。",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "このグループのみ既定値を上書きします。",
       "confirmRemoveMember": "このメンバーをグループから削除しますか？",
-      "confirmRemoveSpecial": "この特典を削除しますか？"
+      "confirmRemoveSpecial": "この特典を削除しますか？",
+      "confirmRemoveFromGroup": "{name} を「{group}」から削除しますか？このグループに紐づく特典をすべて失います。グループと特典は他のメンバーには影響しません。",
+      "removeFromGroupTitle": "{group}から削除"
     },
     "rewards": {
       "title": "リワードドル",

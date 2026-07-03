@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} wykorzystanych",
       "couponExpires": "Wygasa {date}",
       "orderHistoryHeading": "Historia zamówień",
-      "noOrders": "Brak zamówień."
+      "noOrders": "Brak zamówień.",
+      "revokeOffer": "Cofnij tę ofertę",
+      "confirmRevokeOffer": "Cofnąć tę ofertę? Klient nie będzie mógł już z niej skorzystać.",
+      "offerRevoked": "Oferta cofnięta.",
+      "revokeFailed": "Nie udało się cofnąć — spróbuj ponownie."
     },
     "marketplacePage": {
       "loginRequired": "Zaloguj się, aby zarządzać swoją ofertą w marketplace.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Zastępuje wartość domyślną tylko dla tej grupy.",
       "confirmRemoveMember": "Usunąć tego członka z grupy?",
-      "confirmRemoveSpecial": "Usunąć tę ofertę specjalną?"
+      "confirmRemoveSpecial": "Usunąć tę ofertę specjalną?",
+      "confirmRemoveFromGroup": "Usunąć {name} z grupy „{group}”? Straci wszystkie oferty powiązane z tą grupą. Grupa i jej oferty pozostają bez zmian dla pozostałych.",
+      "removeFromGroupTitle": "Usuń z {group}"
     },
     "rewards": {
       "title": "Złotówki za zakupy",

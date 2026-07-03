@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} folosit",
       "couponExpires": "Expiră {date}",
       "orderHistoryHeading": "Istoric comenzi",
-      "noOrders": "Nicio comandă încă."
+      "noOrders": "Nicio comandă încă.",
+      "revokeOffer": "Revocă această ofertă",
+      "confirmRevokeOffer": "Revocați această ofertă? Clientul nu o va mai putea folosi.",
+      "offerRevoked": "Ofertă revocată.",
+      "revokeFailed": "Revocarea a eșuat — încercați din nou."
     },
     "marketplacePage": {
       "loginRequired": "Autentifică-te pentru a gestiona anunțul din marketplace.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Înlocuiește valoarea implicită doar pentru acest grup.",
       "confirmRemoveMember": "Eliminați acest membru din grup?",
-      "confirmRemoveSpecial": "Eliminați această ofertă specială?"
+      "confirmRemoveSpecial": "Eliminați această ofertă specială?",
+      "confirmRemoveFromGroup": "Eliminați {name} din „{group}”? Va pierde toate ofertele atașate acelui grup. Grupul și ofertele lui rămân neschimbate pentru ceilalți.",
+      "removeFromGroupTitle": "Elimină din {group}"
     },
     "rewards": {
       "title": "Dolari de recompensă",

@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} použitých",
       "couponExpires": "Platí do {date}",
       "orderHistoryHeading": "História objednávok",
-      "noOrders": "Zatiaľ žiadne objednávky."
+      "noOrders": "Zatiaľ žiadne objednávky.",
+      "revokeOffer": "Odvolať túto ponuku",
+      "confirmRevokeOffer": "Odvolať túto ponuku? Zákazník ju už nebude môcť využiť.",
+      "offerRevoked": "Ponuka odvolaná.",
+      "revokeFailed": "Odvolanie zlyhalo — skúste znova."
     },
     "marketplacePage": {
       "loginRequired": "Prosím, prihláste sa na správu vášho záznamu na Marketplace.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Prepíše predvolenú hodnotu len pre túto skupinu.",
       "confirmRemoveMember": "Odstrániť tohto člena zo skupiny?",
-      "confirmRemoveSpecial": "Odstrániť túto špeciálnu ponuku?"
+      "confirmRemoveSpecial": "Odstrániť túto špeciálnu ponuku?",
+      "confirmRemoveFromGroup": "Odstrániť {name} zo skupiny „{group}“? Príde o všetky ponuky spojené s touto skupinou. Skupina a jej ponuky zostávajú pre ostatných bez zmeny.",
+      "removeFromGroupTitle": "Odstrániť zo skupiny {group}"
     },
     "rewards": {
       "title": "Vernostný kredit",

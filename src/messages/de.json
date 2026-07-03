@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} verwendet",
       "couponExpires": "Läuft ab am {date}",
       "orderHistoryHeading": "Bestellverlauf",
-      "noOrders": "Noch keine Bestellungen."
+      "noOrders": "Noch keine Bestellungen.",
+      "revokeOffer": "Dieses Angebot widerrufen",
+      "confirmRevokeOffer": "Dieses Angebot widerrufen? Der Kunde kann es dann nicht mehr einlösen.",
+      "offerRevoked": "Angebot widerrufen.",
+      "revokeFailed": "Widerruf fehlgeschlagen — bitte erneut versuchen."
     },
     "marketplacePage": {
       "loginRequired": "Bitte melden Sie sich an, um Ihren Marketplace-Eintrag zu verwalten.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Überschreibt die Standardeinstellung nur für diese Gruppe.",
       "confirmRemoveMember": "Dieses Mitglied aus der Gruppe entfernen?",
-      "confirmRemoveSpecial": "Dieses Special entfernen?"
+      "confirmRemoveSpecial": "Dieses Special entfernen?",
+      "confirmRemoveFromGroup": "{name} aus „{group}“ entfernen? Diese Person verliert alle mit der Gruppe verknüpften Angebote. Für alle anderen bleiben Gruppe und Angebote unverändert.",
+      "removeFromGroupTitle": "Aus {group} entfernen"
     },
     "rewards": {
       "title": "Bonusguthaben",

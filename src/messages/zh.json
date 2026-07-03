@@ -3483,7 +3483,11 @@
       "couponUsed": "已使用 {used}/{max}",
       "couponExpires": "有效期至 {date}",
       "orderHistoryHeading": "订单历史",
-      "noOrders": "暂无订单。"
+      "noOrders": "暂无订单。",
+      "revokeOffer": "撤销此优惠",
+      "confirmRevokeOffer": "撤销此优惠？该顾客将无法再使用它。",
+      "offerRevoked": "已撤销优惠。",
+      "revokeFailed": "撤销失败 — 请重试。"
     },
     "marketplacePage": {
       "loginRequired": "请登录以管理您的商城列表。",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "仅为该组覆盖默认值。",
       "confirmRemoveMember": "将此成员从该组中移除？",
-      "confirmRemoveSpecial": "移除此特别优惠？"
+      "confirmRemoveSpecial": "移除此特别优惠？",
+      "confirmRemoveFromGroup": "将 {name} 从“{group}”中移除？该顾客将失去该组的所有专属优惠。组及其优惠对其他人保持不变。",
+      "removeFromGroupTitle": "从{group}中移除"
     },
     "rewards": {
       "title": "奖励金",

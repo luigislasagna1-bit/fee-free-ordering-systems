@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} digunakan",
       "couponExpires": "Kedaluwarsa {date}",
       "orderHistoryHeading": "Riwayat pesanan",
-      "noOrders": "Belum ada pesanan."
+      "noOrders": "Belum ada pesanan.",
+      "revokeOffer": "Cabut penawaran ini",
+      "confirmRevokeOffer": "Cabut penawaran ini? Pelanggan tidak akan bisa memakainya lagi.",
+      "offerRevoked": "Penawaran dicabut.",
+      "revokeFailed": "Gagal mencabut — coba lagi."
     },
     "marketplacePage": {
       "loginRequired": "Silakan masuk untuk mengelola daftar marketplace Anda.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Mengganti default hanya untuk grup ini.",
       "confirmRemoveMember": "Hapus anggota ini dari grup?",
-      "confirmRemoveSpecial": "Hapus penawaran spesial ini?"
+      "confirmRemoveSpecial": "Hapus penawaran spesial ini?",
+      "confirmRemoveFromGroup": "Hapus {name} dari “{group}”? Ia akan kehilangan semua penawaran yang terkait grup itu. Grup dan penawarannya tetap sama untuk yang lain.",
+      "removeFromGroupTitle": "Hapus dari {group}"
     },
     "rewards": {
       "title": "Dolar Hadiah",

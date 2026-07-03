@@ -3483,7 +3483,11 @@
       "couponUsed": "ใช้แล้ว {used}/{max}",
       "couponExpires": "หมดอายุ {date}",
       "orderHistoryHeading": "ประวัติคำสั่งซื้อ",
-      "noOrders": "ยังไม่มีคำสั่งซื้อ"
+      "noOrders": "ยังไม่มีคำสั่งซื้อ",
+      "revokeOffer": "เพิกถอนข้อเสนอนี้",
+      "confirmRevokeOffer": "เพิกถอนข้อเสนอนี้หรือไม่ ลูกค้าจะใช้ไม่ได้อีกต่อไป",
+      "offerRevoked": "เพิกถอนข้อเสนอแล้ว",
+      "revokeFailed": "เพิกถอนไม่สำเร็จ — ลองอีกครั้ง"
     },
     "marketplacePage": {
       "loginRequired": "กรุณาเข้าสู่ระบบเพื่อจัดการรายการใน Marketplace",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "แทนที่ค่าเริ่มต้นเฉพาะกลุ่มนี้",
       "confirmRemoveMember": "นำสมาชิกนี้ออกจากกลุ่มหรือไม่?",
-      "confirmRemoveSpecial": "นำข้อเสนอพิเศษนี้ออกหรือไม่?"
+      "confirmRemoveSpecial": "นำข้อเสนอพิเศษนี้ออกหรือไม่?",
+      "confirmRemoveFromGroup": "นำ {name} ออกจาก “{group}” หรือไม่ เขาจะเสียสิทธิพิเศษทั้งหมดของกลุ่มนี้ ส่วนกลุ่มและสิทธิพิเศษยังคงเดิมสำหรับคนอื่น",
+      "removeFromGroupTitle": "นำออกจาก {group}"
     },
     "rewards": {
       "title": "เงินรางวัล",

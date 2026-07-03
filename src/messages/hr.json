@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} iskorišteno",
       "couponExpires": "Ističe {date}",
       "orderHistoryHeading": "Povijest narudžbi",
-      "noOrders": "Još nema narudžbi."
+      "noOrders": "Još nema narudžbi.",
+      "revokeOffer": "Opozovi ponudu",
+      "confirmRevokeOffer": "Opozvati ponudu? Kupac je više neće moći iskoristiti.",
+      "offerRevoked": "Ponuda je opozvana.",
+      "revokeFailed": "Opoziv nije uspio — pokušajte ponovno."
     },
     "marketplacePage": {
       "loginRequired": "Prijavite se za upravljanje vašim oglasom na tržištu.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Nadjačava zadano samo za ovu grupu.",
       "confirmRemoveMember": "Ukloniti ovog člana iz grupe?",
-      "confirmRemoveSpecial": "Ukloniti ovu posebnu ponudu?"
+      "confirmRemoveSpecial": "Ukloniti ovu posebnu ponudu?",
+      "confirmRemoveFromGroup": "Ukloniti {name} iz „{group}“? Izgubit će sve pogodnosti vezane uz tu grupu. Grupa i njezine pogodnosti ostaju iste za ostale.",
+      "removeFromGroupTitle": "Ukloni iz {group}"
     },
     "rewards": {
       "title": "Nagradni bodovi",

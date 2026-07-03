@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} използвани",
       "couponExpires": "Изтича {date}",
       "orderHistoryHeading": "История на поръчките",
-      "noOrders": "Няма поръчки все още."
+      "noOrders": "Няма поръчки все още.",
+      "revokeOffer": "Оттегли офертата",
+      "confirmRevokeOffer": "Да оттеглим ли офертата? Клиентът вече няма да може да я използва.",
+      "offerRevoked": "Офертата е оттеглена.",
+      "revokeFailed": "Неуспешно оттегляне — опитайте отново."
     },
     "marketplacePage": {
       "loginRequired": "Моля, влезте в акаунта си, за да управлявате обявата си в Marketplace.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Замества стойността по подразбиране само за тази група.",
       "confirmRemoveMember": "Да премахнете този член от групата?",
-      "confirmRemoveSpecial": "Да премахнете тази специална оферта?"
+      "confirmRemoveSpecial": "Да премахнете тази специална оферта?",
+      "confirmRemoveFromGroup": "Премахване на {name} от „{group}“? Ще загуби всички оферти, свързани с групата. Групата и офертите ѝ остават непроменени за останалите.",
+      "removeFromGroupTitle": "Премахни от {group}"
     },
     "rewards": {
       "title": "Бонус долари",

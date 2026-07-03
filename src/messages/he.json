@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} נוצל",
       "couponExpires": "פג תוקף {date}",
       "orderHistoryHeading": "היסטוריית הזמנות",
-      "noOrders": "אין הזמנות עדיין."
+      "noOrders": "אין הזמנות עדיין.",
+      "revokeOffer": "לבטל את ההטבה",
+      "confirmRevokeOffer": "לבטל את ההטבה? הלקוח לא יוכל להשתמש בה יותר.",
+      "offerRevoked": "ההטבה בוטלה.",
+      "revokeFailed": "הביטול נכשל — נסו שוב."
     },
     "marketplacePage": {
       "loginRequired": "יש להתחבר כדי לנהל את רישום המרקטפלייס שלך.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "עוקף את ברירת המחדל לקבוצה זו בלבד.",
       "confirmRemoveMember": "להסיר את החבר הזה מהקבוצה?",
-      "confirmRemoveSpecial": "להסיר את המבצע הזה?"
+      "confirmRemoveSpecial": "להסיר את המבצע הזה?",
+      "confirmRemoveFromGroup": "להסיר את {name} מ-“{group}”? הוא יאבד את כל ההטבות המשויכות לקבוצה. הקבוצה וההטבות נשארות ללא שינוי עבור השאר.",
+      "removeFromGroupTitle": "הסרה מ-{group}"
     },
     "rewards": {
       "title": "דולרים של תגמולים",

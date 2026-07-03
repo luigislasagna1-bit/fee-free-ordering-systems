@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} izmantots",
       "couponExpires": "Beidzas {date}",
       "orderHistoryHeading": "Pasūtījumu vēsture",
-      "noOrders": "Pasūtījumu vēl nav."
+      "noOrders": "Pasūtījumu vēl nav.",
+      "revokeOffer": "Atsaukt piedāvājumu",
+      "confirmRevokeOffer": "Atsaukt piedāvājumu? Klients to vairs nevarēs izmantot.",
+      "offerRevoked": "Piedāvājums atsaukts.",
+      "revokeFailed": "Neizdevās atsaukt — mēģiniet vēlreiz."
     },
     "marketplacePage": {
       "loginRequired": "Lūdzu, piesakieties, lai pārvaldītu savu tirgus sarakstu.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Aizstāj noklusējumu tikai šai grupai.",
       "confirmRemoveMember": "Noņemt šo dalībnieku no grupas?",
-      "confirmRemoveSpecial": "Noņemt šo īpašo piedāvājumu?"
+      "confirmRemoveSpecial": "Noņemt šo īpašo piedāvājumu?",
+      "confirmRemoveFromGroup": "Vai izņemt {name} no “{group}”? Viņš zaudēs visus grupai piesaistītos piedāvājumus. Grupa un tās piedāvājumi pārējiem paliek nemainīgi.",
+      "removeFromGroupTitle": "Izņemt no {group}"
     },
     "rewards": {
       "title": "Bonusa dolāri",

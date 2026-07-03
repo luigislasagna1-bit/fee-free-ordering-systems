@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} использовано",
       "couponExpires": "Действует до {date}",
       "orderHistoryHeading": "История заказов",
-      "noOrders": "Заказов пока нет."
+      "noOrders": "Заказов пока нет.",
+      "revokeOffer": "Отозвать предложение",
+      "confirmRevokeOffer": "Отозвать предложение? Клиент больше не сможет им воспользоваться.",
+      "offerRevoked": "Предложение отозвано.",
+      "revokeFailed": "Не удалось отозвать — попробуйте снова."
     },
     "marketplacePage": {
       "loginRequired": "Войдите, чтобы управлять размещением в маркетплейсе.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Переопределяет значение по умолчанию только для этой группы.",
       "confirmRemoveMember": "Удалить этого участника из группы?",
-      "confirmRemoveSpecial": "Удалить это спецпредложение?"
+      "confirmRemoveSpecial": "Удалить это спецпредложение?",
+      "confirmRemoveFromGroup": "Убрать {name} из группы «{group}»? Он потеряет все привязанные к группе предложения. Для остальных группа и её предложения не изменятся.",
+      "removeFromGroupTitle": "Убрать из {group}"
     },
     "rewards": {
       "title": "Бонусные доллары",

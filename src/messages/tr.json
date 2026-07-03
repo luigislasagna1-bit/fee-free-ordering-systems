@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} kullanıldı",
       "couponExpires": "{date} tarihinde sona erer",
       "orderHistoryHeading": "Sipariş geçmişi",
-      "noOrders": "Henüz sipariş yok."
+      "noOrders": "Henüz sipariş yok.",
+      "revokeOffer": "Bu teklifi geri al",
+      "confirmRevokeOffer": "Bu teklif geri alınsın mı? Müşteri artık kullanamayacak.",
+      "offerRevoked": "Teklif geri alındı.",
+      "revokeFailed": "Geri alınamadı — tekrar deneyin."
     },
     "marketplacePage": {
       "loginRequired": "Marketplace listenizi yönetmek için lütfen giriş yapın.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Yalnızca bu grup için varsayılanı geçersiz kılar.",
       "confirmRemoveMember": "Bu üye gruptan çıkarılsın mı?",
-      "confirmRemoveSpecial": "Bu özel teklif kaldırılsın mı?"
+      "confirmRemoveSpecial": "Bu özel teklif kaldırılsın mı?",
+      "confirmRemoveFromGroup": "{name} “{group}” grubundan çıkarılsın mı? Bu gruba bağlı tüm ayrıcalıkları kaybeder. Grup ve ayrıcalıkları diğerleri için aynı kalır.",
+      "removeFromGroupTitle": "{group} grubundan çıkar"
     },
     "rewards": {
       "title": "Ödül Dolarları",

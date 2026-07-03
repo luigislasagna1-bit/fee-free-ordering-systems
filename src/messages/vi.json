@@ -3483,7 +3483,11 @@
       "couponUsed": "Đã dùng {used}/{max}",
       "couponExpires": "Hết hạn {date}",
       "orderHistoryHeading": "Lịch sử đơn hàng",
-      "noOrders": "Chưa có đơn hàng nào."
+      "noOrders": "Chưa có đơn hàng nào.",
+      "revokeOffer": "Thu hồi ưu đãi này",
+      "confirmRevokeOffer": "Thu hồi ưu đãi này? Khách sẽ không thể dùng nó nữa.",
+      "offerRevoked": "Đã thu hồi ưu đãi.",
+      "revokeFailed": "Không thu hồi được — thử lại."
     },
     "marketplacePage": {
       "loginRequired": "Vui lòng đăng nhập để quản lý danh sách marketplace của bạn.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Ghi đè mặc định chỉ cho nhóm này.",
       "confirmRemoveMember": "Xóa thành viên này khỏi nhóm?",
-      "confirmRemoveSpecial": "Xóa ưu đãi đặc biệt này?"
+      "confirmRemoveSpecial": "Xóa ưu đãi đặc biệt này?",
+      "confirmRemoveFromGroup": "Xóa {name} khỏi “{group}”? Họ sẽ mất mọi ưu đãi gắn với nhóm đó. Nhóm và các ưu đãi vẫn giữ nguyên cho những người khác.",
+      "removeFromGroupTitle": "Xóa khỏi {group}"
     },
     "rewards": {
       "title": "Đô-la Thưởng",

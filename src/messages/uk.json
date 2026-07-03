@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} використано",
       "couponExpires": "Дійсний до {date}",
       "orderHistoryHeading": "Історія замовлень",
-      "noOrders": "Замовлень ще немає."
+      "noOrders": "Замовлень ще немає.",
+      "revokeOffer": "Відкликати пропозицію",
+      "confirmRevokeOffer": "Відкликати пропозицію? Клієнт більше не зможе нею скористатися.",
+      "offerRevoked": "Пропозицію відкликано.",
+      "revokeFailed": "Не вдалося відкликати — спробуйте ще раз."
     },
     "marketplacePage": {
       "loginRequired": "Будь ласка, увійдіть, щоб керувати своїм оголошенням на маркетплейсі.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Перевизначає значення за замовчуванням лише для цієї групи.",
       "confirmRemoveMember": "Вилучити цього учасника з групи?",
-      "confirmRemoveSpecial": "Вилучити цю спецпропозицію?"
+      "confirmRemoveSpecial": "Вилучити цю спецпропозицію?",
+      "confirmRemoveFromGroup": "Вилучити {name} з групи «{group}»? Він втратить усі пов'язані з групою пропозиції. Для інших група та її пропозиції не зміняться.",
+      "removeFromGroupTitle": "Вилучити з {group}"
     },
     "rewards": {
       "title": "Бонусні долари",

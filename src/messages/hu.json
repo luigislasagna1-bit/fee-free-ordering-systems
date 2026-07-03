@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} felhasználva",
       "couponExpires": "Lejár: {date}",
       "orderHistoryHeading": "Rendelési előzmények",
-      "noOrders": "Még nincsenek rendelések."
+      "noOrders": "Még nincsenek rendelések.",
+      "revokeOffer": "Ajánlat visszavonása",
+      "confirmRevokeOffer": "Visszavonja az ajánlatot? Az ügyfél többé nem tudja felhasználni.",
+      "offerRevoked": "Ajánlat visszavonva.",
+      "revokeFailed": "A visszavonás nem sikerült — próbálja újra."
     },
     "marketplacePage": {
       "loginRequired": "Kérjük, jelentkezzen be a piactéri lista kezeléséhez.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Csak ehhez a csoporthoz írja felül az alapértelmezést.",
       "confirmRemoveMember": "Eltávolítja ezt a tagot a csoportból?",
-      "confirmRemoveSpecial": "Eltávolítja ezt az ajánlatot?"
+      "confirmRemoveSpecial": "Eltávolítja ezt az ajánlatot?",
+      "confirmRemoveFromGroup": "Eltávolítja {name} tagot a(z) „{group}” csoportból? Elveszíti a csoporthoz kapcsolt összes kedvezményt. A csoport és kedvezményei a többieknek változatlanok maradnak.",
+      "removeFromGroupTitle": "Eltávolítás innen: {group}"
     },
     "rewards": {
       "title": "Jutalomdollár",

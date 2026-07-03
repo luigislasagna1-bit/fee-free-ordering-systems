@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} usados",
       "couponExpires": "Expira em {date}",
       "orderHistoryHeading": "Histórico de pedidos",
-      "noOrders": "Nenhum pedido ainda."
+      "noOrders": "Nenhum pedido ainda.",
+      "revokeOffer": "Revogar esta oferta",
+      "confirmRevokeOffer": "Revogar esta oferta? O cliente não poderá mais usá-la.",
+      "offerRevoked": "Oferta revogada.",
+      "revokeFailed": "Não foi possível revogar — tente novamente."
     },
     "marketplacePage": {
       "loginRequired": "Faça login para gerenciar seu anúncio no marketplace.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Substitui o padrão apenas para este grupo.",
       "confirmRemoveMember": "Remover este membro do grupo?",
-      "confirmRemoveSpecial": "Remover esta oferta especial?"
+      "confirmRemoveSpecial": "Remover esta oferta especial?",
+      "confirmRemoveFromGroup": "Remover {name} de “{group}”? Ele perderá todas as ofertas vinculadas a esse grupo. O grupo e suas ofertas continuam iguais para os demais.",
+      "removeFromGroupTitle": "Remover de {group}"
     },
     "rewards": {
       "title": "Saldo de recompensa",

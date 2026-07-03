@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} utilizzati",
       "couponExpires": "Scade il {date}",
       "orderHistoryHeading": "Storico ordini",
-      "noOrders": "Nessun ordine ancora."
+      "noOrders": "Nessun ordine ancora.",
+      "revokeOffer": "Revoca questa offerta",
+      "confirmRevokeOffer": "Revocare questa offerta? Il cliente non potrà più usarla.",
+      "offerRevoked": "Offerta revocata.",
+      "revokeFailed": "Revoca non riuscita — riprova."
     },
     "marketplacePage": {
       "loginRequired": "Accedi per gestire la tua inserzione nel marketplace.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Sostituisce l'impostazione predefinita solo per questo gruppo.",
       "confirmRemoveMember": "Rimuovere questo membro dal gruppo?",
-      "confirmRemoveSpecial": "Rimuovere questa offerta speciale?"
+      "confirmRemoveSpecial": "Rimuovere questa offerta speciale?",
+      "confirmRemoveFromGroup": "Rimuovere {name} da “{group}”? Perderà tutte le offerte collegate a quel gruppo. Il gruppo e le sue offerte restano invariati per gli altri.",
+      "removeFromGroupTitle": "Rimuovi da {group}"
     },
     "rewards": {
       "title": "Credito fedeltà",

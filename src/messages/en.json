@@ -1584,7 +1584,11 @@
       "couponUsed": "{used}/{max} used",
       "couponExpires": "Expires {date}",
       "orderHistoryHeading": "Order history",
-      "noOrders": "No orders yet."
+      "noOrders": "No orders yet.",
+      "revokeOffer": "Revoke this offer",
+      "confirmRevokeOffer": "Revoke this offer? The customer will no longer be able to use it.",
+      "offerRevoked": "Offer revoked.",
+      "revokeFailed": "Couldn't revoke — try again."
     },
     "reports": {
       "title": "Reports",
@@ -4410,7 +4414,9 @@
       },
       "memberLabelGroupHint": "Overrides the default for this group only.",
       "confirmRemoveMember": "Remove this member from the group?",
-      "confirmRemoveSpecial": "Remove this special?"
+      "confirmRemoveSpecial": "Remove this special?",
+      "confirmRemoveFromGroup": "Remove {name} from “{group}”? They will lose every special attached to that group. The group and its specials stay unchanged for everyone else.",
+      "removeFromGroupTitle": "Remove from {group}"
     }
   },
   "impersonation": {

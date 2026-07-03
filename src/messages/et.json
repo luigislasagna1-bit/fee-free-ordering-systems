@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} kasutatud",
       "couponExpires": "Aegub {date}",
       "orderHistoryHeading": "Tellimuste ajalugu",
-      "noOrders": "Tellimusi pole veel."
+      "noOrders": "Tellimusi pole veel.",
+      "revokeOffer": "Tühista pakkumine",
+      "confirmRevokeOffer": "Kas tühistada pakkumine? Klient ei saa seda enam kasutada.",
+      "offerRevoked": "Pakkumine tühistatud.",
+      "revokeFailed": "Tühistamine ebaõnnestus — proovige uuesti."
     },
     "marketplacePage": {
       "loginRequired": "Turuplatsikuulutuse haldamiseks palun logige sisse.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Alistab vaikeväärtuse ainult selle rühma jaoks.",
       "confirmRemoveMember": "Eemaldada see liige rühmast?",
-      "confirmRemoveSpecial": "Eemaldada see pakkumine?"
+      "confirmRemoveSpecial": "Eemaldada see pakkumine?",
+      "confirmRemoveFromGroup": "Kas eemaldada {name} rühmast „{group}”? Ta kaotab kõik selle rühmaga seotud pakkumised. Rühm ja selle pakkumised jäävad teistele samaks.",
+      "removeFromGroupTitle": "Eemalda rühmast {group}"
     },
     "rewards": {
       "title": "Boonusraha",

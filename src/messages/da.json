@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} brugt",
       "couponExpires": "Udløber {date}",
       "orderHistoryHeading": "Ordrehistorik",
-      "noOrders": "Ingen ordrer endnu."
+      "noOrders": "Ingen ordrer endnu.",
+      "revokeOffer": "Tilbagekald tilbuddet",
+      "confirmRevokeOffer": "Tilbagekald tilbuddet? Kunden kan ikke længere bruge det.",
+      "offerRevoked": "Tilbuddet er tilbagekaldt.",
+      "revokeFailed": "Kunne ikke tilbagekalde — prøv igen."
     },
     "marketplacePage": {
       "loginRequired": "Log ind for at administrere din markedspladsannonce.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Tilsidesætter standarden kun for denne gruppe.",
       "confirmRemoveMember": "Fjern dette medlem fra gruppen?",
-      "confirmRemoveSpecial": "Fjern dette tilbud?"
+      "confirmRemoveSpecial": "Fjern dette tilbud?",
+      "confirmRemoveFromGroup": "Fjern {name} fra ”{group}”? Personen mister alle tilbud knyttet til gruppen. Gruppen og dens tilbud er uændrede for alle andre.",
+      "removeFromGroupTitle": "Fjern fra {group}"
     },
     "rewards": {
       "title": "Bonuskroner",

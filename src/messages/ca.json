@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} usat",
       "couponExpires": "Caduca {date}",
       "orderHistoryHeading": "Historial de comandes",
-      "noOrders": "Encara no hi ha comandes."
+      "noOrders": "Encara no hi ha comandes.",
+      "revokeOffer": "Revoca aquesta oferta",
+      "confirmRevokeOffer": "Vols revocar aquesta oferta? El client ja no la podrà fer servir.",
+      "offerRevoked": "Oferta revocada.",
+      "revokeFailed": "No s'ha pogut revocar — torna-ho a provar."
     },
     "marketplacePage": {
       "loginRequired": "Inicia sessió per gestionar la teva fitxa al marketplace.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Substitueix el valor predeterminat només per a aquest grup.",
       "confirmRemoveMember": "Voleu treure aquest membre del grup?",
-      "confirmRemoveSpecial": "Voleu treure aquesta oferta especial?"
+      "confirmRemoveSpecial": "Voleu treure aquesta oferta especial?",
+      "confirmRemoveFromGroup": "Vols treure {name} de «{group}»? Perdrà totes les ofertes vinculades a aquest grup. El grup i les seves ofertes no canvien per a la resta.",
+      "removeFromGroupTitle": "Treu de {group}"
     },
     "rewards": {
       "title": "Dòlars de Recompensa",

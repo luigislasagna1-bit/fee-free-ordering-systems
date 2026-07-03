@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} utilisé(s)",
       "couponExpires": "Expire le {date}",
       "orderHistoryHeading": "Historique des commandes",
-      "noOrders": "Aucune commande pour l'instant."
+      "noOrders": "Aucune commande pour l'instant.",
+      "revokeOffer": "Révoquer cette offre",
+      "confirmRevokeOffer": "Révoquer cette offre ? Le client ne pourra plus l'utiliser.",
+      "offerRevoked": "Offre révoquée.",
+      "revokeFailed": "Échec de la révocation — réessayez."
     },
     "marketplacePage": {
       "loginRequired": "Veuillez vous connecter pour gérer votre annonce sur le Marketplace.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Remplace la valeur par défaut pour ce groupe uniquement.",
       "confirmRemoveMember": "Retirer ce membre du groupe ?",
-      "confirmRemoveSpecial": "Supprimer cette offre spéciale ?"
+      "confirmRemoveSpecial": "Supprimer cette offre spéciale ?",
+      "confirmRemoveFromGroup": "Retirer {name} de « {group} » ? Cette personne perdra toutes les offres liées à ce groupe. Le groupe et ses offres restent inchangés pour les autres.",
+      "removeFromGroupTitle": "Retirer de {group}"
     },
     "rewards": {
       "title": "Crédits fidélité",

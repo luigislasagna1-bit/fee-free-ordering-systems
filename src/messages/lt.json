@@ -3483,7 +3483,11 @@
       "couponUsed": "Panaudota {used}/{max}",
       "couponExpires": "Galioja iki {date}",
       "orderHistoryHeading": "Užsakymų istorija",
-      "noOrders": "Užsakymų dar nėra."
+      "noOrders": "Užsakymų dar nėra.",
+      "revokeOffer": "Atšaukti pasiūlymą",
+      "confirmRevokeOffer": "Atšaukti pasiūlymą? Klientas nebegalės juo pasinaudoti.",
+      "offerRevoked": "Pasiūlymas atšauktas.",
+      "revokeFailed": "Nepavyko atšaukti — bandykite dar kartą."
     },
     "marketplacePage": {
       "loginRequired": "Prisijunkite, kad galėtumėte tvarkyti savo rinkos įrašą.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Pakeičia numatytąją reikšmę tik šiai grupei.",
       "confirmRemoveMember": "Pašalinti šį narį iš grupės?",
-      "confirmRemoveSpecial": "Pašalinti šį specialų pasiūlymą?"
+      "confirmRemoveSpecial": "Pašalinti šį specialų pasiūlymą?",
+      "confirmRemoveFromGroup": "Pašalinti {name} iš „{group}“? Jis neteks visų su grupe susietų pasiūlymų. Grupė ir jos pasiūlymai kitiems lieka nepakitę.",
+      "removeFromGroupTitle": "Pašalinti iš {group}"
     },
     "rewards": {
       "title": "Premijų doleriai",

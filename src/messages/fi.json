@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} käytetty",
       "couponExpires": "Vanhenee {date}",
       "orderHistoryHeading": "Tilaushistoria",
-      "noOrders": "Ei tilauksia vielä."
+      "noOrders": "Ei tilauksia vielä.",
+      "revokeOffer": "Peru tämä etu",
+      "confirmRevokeOffer": "Perutaanko tämä etu? Asiakas ei voi enää käyttää sitä.",
+      "offerRevoked": "Etu peruttu.",
+      "revokeFailed": "Peruminen epäonnistui — yritä uudelleen."
     },
     "marketplacePage": {
       "loginRequired": "Kirjaudu sisään hallitaksesi markkinapaikkaluetteloasi.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Korvaa oletuksen vain tälle ryhmälle.",
       "confirmRemoveMember": "Poistetaanko tämä jäsen ryhmästä?",
-      "confirmRemoveSpecial": "Poistetaanko tämä tarjous?"
+      "confirmRemoveSpecial": "Poistetaanko tämä tarjous?",
+      "confirmRemoveFromGroup": "Poistetaanko {name} ryhmästä ”{group}”? Hän menettää kaikki ryhmään liitetyt edut. Ryhmä ja sen edut säilyvät muille ennallaan.",
+      "removeFromGroupTitle": "Poista ryhmästä {group}"
     },
     "rewards": {
       "title": "Bonusrahat",

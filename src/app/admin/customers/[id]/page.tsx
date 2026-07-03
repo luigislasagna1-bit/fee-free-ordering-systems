@@ -24,6 +24,7 @@ import { getRestaurantCurrency } from "@/lib/restaurant-currency";
 import { GiveVipSpecial } from "./GiveVipSpecial";
 import { GrantRewardCredit } from "./GrantRewardCredit";
 import { CustomerActionsCard } from "./CustomerActionsCard";
+import { RevokeGrantButton } from "./RevokeGrantButton";
 
 export const dynamic = "force-dynamic";
 
@@ -237,8 +238,14 @@ export default async function CustomerDetailPage({
                         {expired && <> · {t("couponExpires", { date: new Date(g.promotion!.endsAt!).toLocaleDateString(undefined, tzOpts) })}</>}
                       </div>
                     </div>
-                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${statusClass}`}>
-                      {status}
+                    <span className="flex items-center gap-2 flex-shrink-0">
+                      <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${statusClass}`}>
+                        {status}
+                      </span>
+                      {/* Revocable while merely granted — applied is pinned to an
+                          in-flight order, redeemed is history (server enforces
+                          the same rule). Fabrizio 2026-07-02. */}
+                      {g.status === "granted" && <RevokeGrantButton grantId={g.id} />}
                     </span>
                   </li>
                 );

@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} gebruikt",
       "couponExpires": "Verloopt {date}",
       "orderHistoryHeading": "Bestelgeschiedenis",
-      "noOrders": "Nog geen bestellingen."
+      "noOrders": "Nog geen bestellingen.",
+      "revokeOffer": "Deze aanbieding intrekken",
+      "confirmRevokeOffer": "Deze aanbieding intrekken? De klant kan haar daarna niet meer gebruiken.",
+      "offerRevoked": "Aanbieding ingetrokken.",
+      "revokeFailed": "Intrekken mislukt — probeer opnieuw."
     },
     "marketplacePage": {
       "loginRequired": "Log in om je marketplace-vermelding te beheren.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Overschrijft de standaard alleen voor deze groep.",
       "confirmRemoveMember": "Dit lid uit de groep verwijderen?",
-      "confirmRemoveSpecial": "Deze aanbieding verwijderen?"
+      "confirmRemoveSpecial": "Deze aanbieding verwijderen?",
+      "confirmRemoveFromGroup": "{name} uit “{group}” verwijderen? Deze persoon verliest alle aan die groep gekoppelde aanbiedingen. Voor de rest blijft de groep ongewijzigd.",
+      "removeFromGroupTitle": "Verwijderen uit {group}"
     },
     "rewards": {
       "title": "Spaartegoed",

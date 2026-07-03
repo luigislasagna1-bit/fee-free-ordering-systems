@@ -48,9 +48,11 @@ export async function GET(req: Request) {
   }));
 
   // For a specific customer, ALSO surface the specials they get via GROUP
-  // membership (read-only here — managed on the group), so the customer page
-  // shows everything they're entitled to, not just direct individual gifts.
-  let viaGroups: Array<{ id: string; groupName: string; promoName: string; promotionType: string; isActive: boolean; ruleConfig: unknown }> = [];
+  // membership, so the customer page shows everything they're entitled to,
+  // not just direct individual gifts. groupId is included so the page can
+  // offer "remove {customer} from {group}" (Fabrizio 2026-07-02 — a special
+  // must be removable after it's been given).
+  let viaGroups: Array<{ id: string; groupId: string; groupName: string; promoName: string; promotionType: string; isActive: boolean; ruleConfig: unknown }> = [];
   if (customerId) {
     const cust = await prisma.customer.findFirst({ where: { id: customerId, restaurantId }, select: { email: true } });
     const email = cust?.email?.trim().toLowerCase() || null;
@@ -67,6 +69,7 @@ export async function GET(req: Request) {
       });
       viaGroups = links.map((l) => ({
         id: l.id,
+        groupId: l.groupId!,
         groupName: groupName.get(l.groupId!) ?? "",
         promoName: l.promotion.name,
         promotionType: l.promotion.promotionType,
@@ -149,9 +152,36 @@ export async function DELETE(req: Request) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  const id = new URL(req.url).searchParams.get("id") || "";
+  const params = new URL(req.url).searchParams;
+
+  // Mode 2 (Fabrizio 2026-07-02): remove a CUSTOMER from a GROUP — the
+  // per-customer way to take back a special they receive via membership
+  // (the group + its links stay untouched for everyone else). Matches the
+  // same customerId-OR-email resolution the GET uses, so guest-email
+  // membership rows are removed too.
+  const groupId = params.get("groupId") || "";
+  const customerId = params.get("customerId") || "";
+  if (groupId && customerId) {
+    const cust = await prisma.customer.findFirst({
+      where: { id: customerId, restaurantId },
+      select: { email: true },
+    });
+    if (!cust) return NextResponse.json({ error: "Customer not found" }, { status: 404 });
+    const email = cust.email?.trim().toLowerCase() || null;
+    const removed = await prisma.customerGroupMember.deleteMany({
+      where: {
+        restaurantId,
+        groupId,
+        OR: [{ customerId }, ...(email ? [{ email }] : [])],
+      },
+    });
+    return NextResponse.json({ ok: true, removed: removed.count });
+  }
+
+  // Mode 1: remove one INDIVIDUAL target row.
+  const id = params.get("id") || "";
   if (!id) return NextResponse.json({ error: "id is required" }, { status: 400 });
-  // Scoped delete; groupId:null guard so this route only removes individual targets.
+  // Scoped delete; groupId:null guard so this mode only removes individual targets.
   await prisma.customerGroupPromotion.deleteMany({ where: { id, restaurantId, groupId: null } });
   return NextResponse.json({ ok: true });
 }

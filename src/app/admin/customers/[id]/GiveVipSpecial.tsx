@@ -9,7 +9,7 @@ import { ScheduleEditor } from "../../customer-groups/ScheduleEditor";
 
 type Promo = { id: string; name: string; isActive: boolean; promotionType: string; ruleConfig: any };
 type Special = { id: string; promotionId: string; promoName: string; promotionType: string; isActive: boolean; ruleConfig: any };
-type ViaGroup = { id: string; groupName: string; promoName: string; promotionType: string; isActive: boolean; ruleConfig: any };
+type ViaGroup = { id: string; groupId: string; groupName: string; promoName: string; promotionType: string; isActive: boolean; ruleConfig: any };
 
 /** Give a member-only VIP special (an existing promotion) to ONE customer — it
  *  auto-applies for them at checkout, no code. Lives on the customer profile;
@@ -63,6 +63,21 @@ export function GiveVipSpecial({ customerId, customerName, currency, rewardsEnab
     setSpecials((s) => s.filter((x) => x.id !== id));
   }
 
+  // Take back a special received VIA GROUP membership: removes THIS customer
+  // from that group (the group + its specials stay for everyone else). One
+  // group can carry several specials, so the confirm names the group, not
+  // just the promo. Fabrizio 2026-07-02 — "a VIP promotion must be removable
+  // from a customer after it has been assigned."
+  async function removeFromGroup(v: ViaGroup) {
+    if (!confirm(t("confirmRemoveFromGroup", { name: customerName, group: v.groupName }))) return;
+    const res = await fetch(
+      `/api/admin/vip-specials/individuals?groupId=${encodeURIComponent(v.groupId)}&customerId=${encodeURIComponent(customerId)}`,
+      { method: "DELETE" },
+    );
+    if (!res.ok) { toast.error(t("detachFailed")); return; }
+    setViaGroups((g) => g.filter((x) => x.groupId !== v.groupId));
+  }
+
   function chip(p: { ruleConfig: any }): string | null {
     const rc = p.ruleConfig || {};
     if (typeof rc.discountPercent === "number" && rc.discountPercent > 0) return `${rc.discountPercent}%`;
@@ -81,7 +96,9 @@ export function GiveVipSpecial({ customerId, customerName, currency, rewardsEnab
       </h2>
       <p className="text-sm text-gray-500 mt-1">{t("giveVipSpecialSubtitle", { name: customerName })}</p>
 
-      {/* Specials they get via a VIP GROUP — read-only here (managed on the group). */}
+      {/* Specials they get via a VIP GROUP. Removable per customer since
+          2026-07-02 (Fabrizio): the trash removes THIS customer from the
+          group — the group itself is managed on the VIP Groups page. */}
       {viaGroups.length > 0 && (
         <ul className="mt-4 space-y-1.5">
           {viaGroups.map((v) => {
@@ -95,6 +112,7 @@ export function GiveVipSpecial({ customerId, customerName, currency, rewardsEnab
                   {!v.isActive && <span className="text-[11px] px-1.5 py-0.5 rounded-full bg-gray-200 text-gray-500">{t("inactiveBadge")}</span>}
                   <span className="text-[11px] text-gray-400">{t("vipViaGroup", { group: v.groupName })}</span>
                 </span>
+                <button onClick={() => removeFromGroup(v)} title={t("removeFromGroupTitle", { group: v.groupName })} className="p-1 text-gray-400 hover:text-red-500 rounded flex-shrink-0"><Trash2 className="w-4 h-4" /></button>
               </li>
             );
           })}

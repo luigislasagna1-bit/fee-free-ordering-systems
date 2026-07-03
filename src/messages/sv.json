@@ -3483,7 +3483,11 @@
       "couponUsed": "{used}/{max} använda",
       "couponExpires": "Upphör {date}",
       "orderHistoryHeading": "Beställningshistorik",
-      "noOrders": "Inga beställningar ännu."
+      "noOrders": "Inga beställningar ännu.",
+      "revokeOffer": "Återkalla erbjudandet",
+      "confirmRevokeOffer": "Återkalla erbjudandet? Kunden kan inte längre använda det.",
+      "offerRevoked": "Erbjudandet återkallat.",
+      "revokeFailed": "Kunde inte återkalla — försök igen."
     },
     "marketplacePage": {
       "loginRequired": "Logga in för att hantera din marknadsplatslista.",
@@ -4297,7 +4301,9 @@
       },
       "memberLabelGroupHint": "Åsidosätter standardvärdet endast för denna grupp.",
       "confirmRemoveMember": "Ta bort den här medlemmen från gruppen?",
-      "confirmRemoveSpecial": "Ta bort det här erbjudandet?"
+      "confirmRemoveSpecial": "Ta bort det här erbjudandet?",
+      "confirmRemoveFromGroup": "Ta bort {name} från ”{group}”? Personen förlorar alla erbjudanden kopplade till gruppen. Gruppen och dess erbjudanden påverkas inte för övriga.",
+      "removeFromGroupTitle": "Ta bort från {group}"
     },
     "rewards": {
       "title": "Bonuspengar",
