@@ -5788,7 +5788,9 @@
       "maybeLater": "Ehkä myöhemmin",
       "orderForLater": "Tilaa myöhemmäksi",
       "addOne": "Lisää",
-      "customize": "Mukauta"
+      "customize": "Mukauta",
+      "increaseQty": "Lisää vielä yksi {name}",
+      "decreaseQty": "Poista yksi {name}"
     },
     "resetForm": {
       "passwordTooShort": "Salasanan on oltava vähintään 8 merkkiä pitkä.",

@@ -3574,6 +3574,26 @@ export function OrderingPageClient({
     })),
   );
 
+  // A "plain" cart line is exactly what the promo screen's quick-add creates: no size,
+  // no modifiers, no note, not a bundle/freebie/pizza-builder line. Only these are safe
+  // for the promo-screen −/qty/+ stepper to count and decrement — a customized line
+  // can't be reduced without knowing WHICH configuration to drop. (cmqtmfp2n, 2026-07-03.)
+  const isPlainCartLine = (ci: (typeof cart)[number]) =>
+    !ci.variant &&
+    Object.keys(ci.selectedMods ?? {}).length === 0 &&
+    !ci.notes &&
+    !(ci as any).isBundle &&
+    (ci as any).unitPrice == null;
+  const promoCartQuantities = useMemo(() => {
+    const out: Record<string, number> = {};
+    for (const ci of cart) {
+      if (!isPlainCartLine(ci)) continue;
+      out[ci.menuItem.id] = (out[ci.menuItem.id] ?? 0) + ci.quantity;
+    }
+    return out;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cart]);
+
   /** Add a freebie item (Promo Type 7) to the cart at $0. The engine
    *  re-validates eligibility on every cart change — if the customer
    *  drops below the trigger threshold the discount falls off, but the
@@ -5774,14 +5794,39 @@ export function OrderingPageClient({
           allVisibleCategories={visibleCategories.map((c) => ({ id: c.id, name: c.name }))}
           // Quick-add a SIMPLE eligible item (no options) straight to the cart, staying on the
           // promo screen so several can be added. Items with options use onOpenItem instead.
+          // Increments the existing plain line instead of stacking duplicate lines, so the
+          // −/qty/+ stepper on the promo screen has ONE line to drive (cmqtmfp2n, 2026-07-03).
           onAddItemDirect={(menuItemId) => {
             const full = restaurant.menuCategories
               ?.flatMap((c: any) => c.menuItems)
               ?.find((m: any) => m?.id === menuItemId);
             if (!full) return;
-            setCart((prev) => [...prev, { menuItem: full, variant: undefined, quantity: 1, selectedMods: {}, notes: "", lineTotal: full.price }]);
+            setCart((prev) => {
+              const idx = prev.findIndex((ci) => isPlainCartLine(ci) && ci.menuItem.id === menuItemId);
+              if (idx >= 0) {
+                const next = [...prev];
+                const qty = next[idx].quantity + 1;
+                next[idx] = { ...next[idx], quantity: qty, lineTotal: full.price * qty };
+                return next;
+              }
+              return [...prev, { menuItem: full, variant: undefined, quantity: 1, selectedMods: {}, notes: "", lineTotal: full.price }];
+            });
             toast.success(tT("itemAddedNamed", { name: full.name }));
           }}
+          // The − side of the promo-screen qty stepper: drop ONE unit of the plain
+          // (un-customized) line; the line disappears at zero.
+          onRemoveItemDirect={(menuItemId) => {
+            setCart((prev) => {
+              const idx = prev.findIndex((ci) => isPlainCartLine(ci) && ci.menuItem.id === menuItemId);
+              if (idx < 0) return prev;
+              const next = [...prev];
+              const qty = next[idx].quantity - 1;
+              if (qty <= 0) { next.splice(idx, 1); return next; }
+              next[idx] = { ...next[idx], quantity: qty, lineTotal: next[idx].menuItem.price * qty };
+              return next;
+            });
+          }}
+          cartQuantities={promoCartQuantities}
           onClose={() => setActivePromoModal(null)}
         />
       )}

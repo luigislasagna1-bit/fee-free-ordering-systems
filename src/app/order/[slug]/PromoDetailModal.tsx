@@ -155,6 +155,12 @@ interface Props {
   /** Quick-add a SIMPLE eligible item (no variants/modifiers) straight to the cart WITHOUT
    *  leaving the promo screen. Items with options use onOpenItem (the customizer) instead. */
   onAddItemDirect?: (menuItemId: string) => void;
+  /** Remove ONE unit of a simple quick-added item (the − side of the qty stepper).
+   *  Fabrizio follow-up cmqtmfp2n, 2026-07-03. */
+  onRemoveItemDirect?: (menuItemId: string) => void;
+  /** menuItemId → current cart quantity of PLAIN (un-customized) lines — drives the
+   *  −/qty/+ stepper on eligible-item rows. */
+  cartQuantities?: Record<string, number>;
   onClose: () => void;
 }
 
@@ -279,24 +285,36 @@ function ItemRow({
 
 // Eligible-items row WITH a quick "+ Add" (simple items) or "Customize" (items with options →
 // opens the size/modifier picker). Used by the promo "Get it now" panel. Fabrizio 2026-06-25.
+// Once a simple item is in the cart the "+ Add" flips to a −/qty/+ stepper so quantities can
+// be changed right on the promo screen (Fabrizio follow-up cmqtmfp2n, 2026-07-03).
 function EligibleItemRow({
   item,
   primaryColor,
   badge,
   onOpen,
   onAdd,
+  onRemove,
+  qty = 0,
   addLabel,
   customizeLabel,
+  increaseLabel,
+  decreaseLabel,
 }: {
   item: MenuItemLite;
   primaryColor: string;
   badge?: string | null;
   onOpen: () => void;
   onAdd?: () => void;
+  onRemove?: () => void;
+  /** Current quantity of this item in the cart (plain, un-customized lines). */
+  qty?: number;
   addLabel: string;
   customizeLabel: string;
+  increaseLabel: string;
+  decreaseLabel: string;
 }) {
   const formatCurrency = useCurrencyFormat();
+  const showStepper = !!onAdd && !!onRemove && qty > 0;
   return (
     <div className="w-full flex items-center gap-2 p-2 rounded-xl border border-gray-100 hover:bg-gray-50 transition">
       <button type="button" onClick={onOpen} className="flex-1 flex items-center gap-3 text-left min-w-0">
@@ -315,14 +333,43 @@ function EligibleItemRow({
           {badge}
         </span>
       ) : null}
-      <button
-        type="button"
-        onClick={onAdd ?? onOpen}
-        className="flex-shrink-0 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-semibold transition hover:opacity-90"
-        style={onAdd ? { backgroundColor: primaryColor, color: "#fff" } : { backgroundColor: `${primaryColor}18`, color: primaryColor }}
-      >
-        {onAdd ? `+ ${addLabel}` : customizeLabel}
-      </button>
+      {showStepper ? (
+        <div
+          className="flex items-center gap-1 flex-shrink-0 rounded-lg px-1 py-0.5"
+          style={{ backgroundColor: `${primaryColor}12` }}
+        >
+          <button
+            type="button"
+            onClick={onRemove}
+            aria-label={decreaseLabel}
+            className="w-7 h-7 rounded-md flex items-center justify-center text-base font-bold transition hover:opacity-80"
+            style={{ backgroundColor: "#fff", color: primaryColor, border: `1px solid ${primaryColor}44` }}
+          >
+            −
+          </button>
+          <span className="min-w-[1.5rem] text-center text-sm font-bold" style={{ color: primaryColor }}>
+            {qty}
+          </span>
+          <button
+            type="button"
+            onClick={onAdd}
+            aria-label={increaseLabel}
+            className="w-7 h-7 rounded-md flex items-center justify-center text-base font-bold text-white transition hover:opacity-90"
+            style={{ backgroundColor: primaryColor }}
+          >
+            +
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={onAdd ?? onOpen}
+          className="flex-shrink-0 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-semibold transition hover:opacity-90"
+          style={onAdd ? { backgroundColor: primaryColor, color: "#fff" } : { backgroundColor: `${primaryColor}18`, color: primaryColor }}
+        >
+          {onAdd ? `+ ${addLabel}` : customizeLabel}
+        </button>
+      )}
     </div>
   );
 }
@@ -558,6 +605,8 @@ export function PromoDetailModal({
   onOpenItem,
   allVisibleCategories,
   onAddItemDirect,
+  onRemoveItemDirect,
+  cartQuantities,
   onClose,
 }: Props) {
   const t = useTranslations("customer.promoDetail");
@@ -752,6 +801,8 @@ export function PromoDetailModal({
             primaryColor={primaryColor}
             categoryNames={allVisibleCategories}
             onAddItem={onAddItemDirect}
+            onRemoveItem={onRemoveItemDirect}
+            cartQuantities={cartQuantities}
             onScrollToItem={(itemId) => {
               // Prefer onOpenItem (opens the item-config sheet — better UX
               // because customer immediately gets size/mods/qty picker)
@@ -817,6 +868,8 @@ function PromoBody({
   primaryColor,
   categoryNames,
   onAddItem,
+  onRemoveItem,
+  cartQuantities,
   onScrollToItem,
 }: {
   promo: Promo;
@@ -826,6 +879,8 @@ function PromoBody({
   primaryColor: string;
   categoryNames?: { id: string; name: string }[];
   onAddItem?: (menuItemId: string) => void;
+  onRemoveItem?: (menuItemId: string) => void;
+  cartQuantities?: Record<string, number>;
   onScrollToItem: (itemId: string) => void;
 }) {
   const t = useTranslations("customer.promoDetail");
@@ -874,8 +929,12 @@ function PromoBody({
                   badge={badge ?? null}
                   onOpen={() => onScrollToItem(item.id)}
                   onAdd={onAddItem && !item.requiresChoice ? () => onAddItem(item.id) : undefined}
+                  onRemove={onRemoveItem && !item.requiresChoice ? () => onRemoveItem(item.id) : undefined}
+                  qty={item.requiresChoice ? 0 : cartQuantities?.[item.id] ?? 0}
                   addLabel={t("addOne")}
                   customizeLabel={t("customize")}
+                  increaseLabel={t("increaseQty", { name: item.name })}
+                  decreaseLabel={t("decreaseQty", { name: item.name })}
                 />
               ))}
             </div>

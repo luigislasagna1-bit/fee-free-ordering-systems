@@ -5788,7 +5788,9 @@
       "maybeLater": "Може би по-късно",
       "orderForLater": "Поръчай за по-късно",
       "addOne": "Добави",
-      "customize": "Персонализиране"
+      "customize": "Персонализиране",
+      "increaseQty": "Добави още един {name}",
+      "decreaseQty": "Премахни един {name}"
     },
     "resetForm": {
       "passwordTooShort": "Паролата трябва да е поне 8 символа.",

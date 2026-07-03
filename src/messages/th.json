@@ -5788,7 +5788,9 @@
       "maybeLater": "ไว้คราวหน้า",
       "orderForLater": "สั่งล่วงหน้า",
       "addOne": "เพิ่ม",
-      "customize": "ปรับแต่ง"
+      "customize": "ปรับแต่ง",
+      "increaseQty": "เพิ่ม {name} อีกหนึ่งรายการ",
+      "decreaseQty": "นำ {name} ออกหนึ่งรายการ"
     },
     "resetForm": {
       "passwordTooShort": "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร",

@@ -5788,7 +5788,9 @@
       "maybeLater": "あとで",
       "orderForLater": "後で受け取る注文にする",
       "addOne": "追加",
-      "customize": "カスタマイズ"
+      "customize": "カスタマイズ",
+      "increaseQty": "{name}をもう1つ追加",
+      "decreaseQty": "{name}を1つ減らす"
     },
     "resetForm": {
       "passwordTooShort": "パスワードは8文字以上必要です。",

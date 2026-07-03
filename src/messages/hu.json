@@ -5788,7 +5788,9 @@
       "maybeLater": "Talán később",
       "orderForLater": "Rendelés későbbre",
       "addOne": "Hozzáadás",
-      "customize": "Testreszabás"
+      "customize": "Testreszabás",
+      "increaseQty": "Még egy {name} hozzáadása",
+      "decreaseQty": "Egy {name} eltávolítása"
     },
     "resetForm": {
       "passwordTooShort": "A jelszónak legalább 8 karakterből kell állnia.",

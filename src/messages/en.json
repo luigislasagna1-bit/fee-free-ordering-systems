@@ -5829,7 +5829,9 @@
       "comboInfo": "Add ONE item from each of the groups below to save {value}.",
       "defaultPromoInfo": "Check the menu — eligible items will trigger this promo automatically.",
       "addOne": "Add",
-      "customize": "Customize"
+      "customize": "Customize",
+      "increaseQty": "Add one more {name}",
+      "decreaseQty": "Remove a {name}"
     },
     "resetForm": {
       "passwordTooShort": "Password must be at least 8 characters.",

@@ -5788,7 +5788,9 @@
       "maybeLater": "Plus tard",
       "orderForLater": "Commander pour plus tard",
       "addOne": "Ajouter",
-      "customize": "Personnaliser"
+      "customize": "Personnaliser",
+      "increaseQty": "Ajouter un(e) {name} de plus",
+      "decreaseQty": "Retirer un(e) {name}"
     },
     "resetForm": {
       "passwordTooShort": "Le mot de passe doit comporter au moins 8 caractères.",

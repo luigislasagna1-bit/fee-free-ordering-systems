@@ -5788,7 +5788,9 @@
       "maybeLater": "Varbūt vēlāk",
       "orderForLater": "Pasūtīt vēlākam laikam",
       "addOne": "Pievienot",
-      "customize": "Pielāgot"
+      "customize": "Pielāgot",
+      "increaseQty": "Pievienot vēl vienu {name}",
+      "decreaseQty": "Noņemt vienu {name}"
     },
     "resetForm": {
       "passwordTooShort": "Parolei jābūt vismaz 8 rakstzīmēm.",

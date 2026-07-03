@@ -5788,7 +5788,9 @@
       "maybeLater": "Để sau",
       "orderForLater": "Đặt cho sau",
       "addOne": "Thêm",
-      "customize": "Tùy chỉnh"
+      "customize": "Tùy chỉnh",
+      "increaseQty": "Thêm một {name} nữa",
+      "decreaseQty": "Bớt một {name}"
     },
     "resetForm": {
       "passwordTooShort": "Mật khẩu phải có ít nhất 8 ký tự.",

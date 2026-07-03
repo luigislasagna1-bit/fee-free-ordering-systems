@@ -5788,7 +5788,9 @@
       "maybeLater": "Ίσως αργότερα",
       "orderForLater": "Παραγγελία για αργότερα",
       "addOne": "Προσθήκη",
-      "customize": "Προσαρμογή"
+      "customize": "Προσαρμογή",
+      "increaseQty": "Προσθήκη ενός ακόμα {name}",
+      "decreaseQty": "Αφαίρεση ενός {name}"
     },
     "resetForm": {
       "passwordTooShort": "Ο κωδικός πρέπει να έχει τουλάχιστον 8 χαρακτήρες.",

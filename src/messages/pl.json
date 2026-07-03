@@ -5788,7 +5788,9 @@
       "maybeLater": "Może później",
       "orderForLater": "Zamów na później",
       "addOne": "Dodaj",
-      "customize": "Dostosuj"
+      "customize": "Dostosuj",
+      "increaseQty": "Dodaj jeszcze jeden {name}",
+      "decreaseQty": "Usuń jeden {name}"
     },
     "resetForm": {
       "passwordTooShort": "Hasło musi mieć co najmniej 8 znaków.",

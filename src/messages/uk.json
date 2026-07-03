@@ -5788,7 +5788,9 @@
       "maybeLater": "Можливо, пізніше",
       "orderForLater": "Замовити на пізніше",
       "addOne": "Додати",
-      "customize": "Налаштувати"
+      "customize": "Налаштувати",
+      "increaseQty": "Додати ще один {name}",
+      "decreaseQty": "Прибрати один {name}"
     },
     "resetForm": {
       "passwordTooShort": "Пароль має містити щонайменше 8 символів.",

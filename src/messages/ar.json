@@ -5788,7 +5788,9 @@
       "maybeLater": "ربما لاحقًا",
       "orderForLater": "اطلب لوقت لاحق",
       "addOne": "إضافة",
-      "customize": "تخصيص"
+      "customize": "تخصيص",
+      "increaseQty": "أضف {name} آخر",
+      "decreaseQty": "أزل {name} واحدًا"
     },
     "resetForm": {
       "passwordTooShort": "يجب أن تكون كلمة المرور 8 أحرف على الأقل.",

@@ -5788,7 +5788,9 @@
       "maybeLater": "Talvez depois",
       "orderForLater": "Pedido para depois",
       "addOne": "Adicionar",
-      "customize": "Personalizar"
+      "customize": "Personalizar",
+      "increaseQty": "Adicionar mais um {name}",
+      "decreaseQty": "Remover um {name}"
     },
     "resetForm": {
       "passwordTooShort": "A senha deve ter pelo menos 8 caracteres.",

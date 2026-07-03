@@ -5788,7 +5788,9 @@
       "maybeLater": "Forse più tardi",
       "orderForLater": "Ordina per dopo",
       "addOne": "Aggiungi",
-      "customize": "Personalizza"
+      "customize": "Personalizza",
+      "increaseQty": "Aggiungi un altro {name}",
+      "decreaseQty": "Rimuovi un {name}"
     },
     "resetForm": {
       "passwordTooShort": "La password deve contenere almeno 8 caratteri.",

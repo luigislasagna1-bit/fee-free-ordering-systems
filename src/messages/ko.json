@@ -5788,7 +5788,9 @@
       "maybeLater": "다음에 할게요",
       "orderForLater": "나중에 받도록 주문",
       "addOne": "추가",
-      "customize": "맞춤 설정"
+      "customize": "맞춤 설정",
+      "increaseQty": "{name} 하나 더 추가",
+      "decreaseQty": "{name} 하나 빼기"
     },
     "resetForm": {
       "passwordTooShort": "비밀번호는 8자 이상이어야 합니다.",

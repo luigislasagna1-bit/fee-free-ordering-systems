@@ -5788,7 +5788,9 @@
       "maybeLater": "Galbūt vėliau",
       "orderForLater": "Užsakyti vėlesniam laikui",
       "addOne": "Pridėti",
-      "customize": "Tinkinti"
+      "customize": "Tinkinti",
+      "increaseQty": "Pridėti dar vieną {name}",
+      "decreaseQty": "Pašalinti vieną {name}"
     },
     "resetForm": {
       "passwordTooShort": "Slaptažodis turi būti bent 8 simbolių.",

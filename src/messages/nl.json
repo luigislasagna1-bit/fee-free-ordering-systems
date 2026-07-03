@@ -5788,7 +5788,9 @@
       "maybeLater": "Misschien later",
       "orderForLater": "Bestellen voor later",
       "addOne": "Toevoegen",
-      "customize": "Aanpassen"
+      "customize": "Aanpassen",
+      "increaseQty": "Nog een {name} toevoegen",
+      "decreaseQty": "Eén {name} verwijderen"
     },
     "resetForm": {
       "passwordTooShort": "Het wachtwoord moet minimaal 8 tekens bevatten.",

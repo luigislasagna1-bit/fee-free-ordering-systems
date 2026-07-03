@@ -5788,7 +5788,9 @@
       "maybeLater": "शायद बाद में",
       "orderForLater": "बाद के लिए ऑर्डर करें",
       "addOne": "जोड़ें",
-      "customize": "अनुकूलित करें"
+      "customize": "अनुकूलित करें",
+      "increaseQty": "एक और {name} जोड़ें",
+      "decreaseQty": "एक {name} हटाएँ"
     },
     "resetForm": {
       "passwordTooShort": "पासवर्ड कम से कम 8 अक्षरों का होना चाहिए।",

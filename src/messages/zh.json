@@ -5788,7 +5788,9 @@
       "maybeLater": "稍后再说",
       "orderForLater": "预约稍后下单",
       "addOne": "添加",
-      "customize": "自定义"
+      "customize": "自定义",
+      "increaseQty": "再加一份{name}",
+      "decreaseQty": "减少一份{name}"
     },
     "resetForm": {
       "passwordTooShort": "密码至少需要 8 个字符。",

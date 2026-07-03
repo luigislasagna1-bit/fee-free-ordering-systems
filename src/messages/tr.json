@@ -5788,7 +5788,9 @@
       "maybeLater": "Belki daha sonra",
       "orderForLater": "İleri bir zamana sipariş ver",
       "addOne": "Ekle",
-      "customize": "Özelleştir"
+      "customize": "Özelleştir",
+      "increaseQty": "Bir {name} daha ekle",
+      "decreaseQty": "Bir {name} çıkar"
     },
     "resetForm": {
       "passwordTooShort": "Şifre en az 8 karakter olmalıdır.",

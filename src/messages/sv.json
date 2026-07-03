@@ -5788,7 +5788,9 @@
       "maybeLater": "Kanske senare",
       "orderForLater": "Beställ för senare",
       "addOne": "Lägg till",
-      "customize": "Anpassa"
+      "customize": "Anpassa",
+      "increaseQty": "Lägg till en {name} till",
+      "decreaseQty": "Ta bort en {name}"
     },
     "resetForm": {
       "passwordTooShort": "Lösenordet måste vara minst 8 tecken.",

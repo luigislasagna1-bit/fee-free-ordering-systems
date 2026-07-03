@@ -5788,7 +5788,9 @@
       "maybeLater": "Možná později",
       "orderForLater": "Objednat na později",
       "addOne": "Přidat",
-      "customize": "Přizpůsobit"
+      "customize": "Přizpůsobit",
+      "increaseQty": "Přidat další {name}",
+      "decreaseQty": "Odebrat jeden {name}"
     },
     "resetForm": {
       "passwordTooShort": "Heslo musí mít alespoň 8 znaků.",

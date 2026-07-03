@@ -5788,7 +5788,9 @@
       "maybeLater": "Mungkin nanti",
       "orderForLater": "Pesan untuk nanti",
       "addOne": "Tambah",
-      "customize": "Sesuaikan"
+      "customize": "Sesuaikan",
+      "increaseQty": "Tambah satu {name} lagi",
+      "decreaseQty": "Hapus satu {name}"
     },
     "resetForm": {
       "passwordTooShort": "Kata sandi harus minimal 8 karakter.",

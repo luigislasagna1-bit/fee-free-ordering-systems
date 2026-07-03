@@ -5788,7 +5788,9 @@
       "maybeLater": "Možda kasnije",
       "orderForLater": "Naruči za kasnije",
       "addOne": "Dodaj",
-      "customize": "Prilagodi"
+      "customize": "Prilagodi",
+      "increaseQty": "Dodaj još jedan {name}",
+      "decreaseQty": "Ukloni jedan {name}"
     },
     "resetForm": {
       "passwordTooShort": "Lozinka mora imati najmanje 8 znakova.",

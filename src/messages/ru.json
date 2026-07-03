@@ -5788,7 +5788,9 @@
       "maybeLater": "Возможно, позже",
       "orderForLater": "Заказать на потом",
       "addOne": "Добавить",
-      "customize": "Настроить"
+      "customize": "Настроить",
+      "increaseQty": "Добавить ещё один {name}",
+      "decreaseQty": "Убрать один {name}"
     },
     "resetForm": {
       "passwordTooShort": "Пароль должен содержать не менее 8 символов.",

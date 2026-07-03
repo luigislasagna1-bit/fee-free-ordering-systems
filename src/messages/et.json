@@ -5788,7 +5788,9 @@
       "maybeLater": "Võib-olla hiljem",
       "orderForLater": "Telli hilisemaks",
       "addOne": "Lisa",
-      "customize": "Kohanda"
+      "customize": "Kohanda",
+      "increaseQty": "Lisa veel üks {name}",
+      "decreaseQty": "Eemalda üks {name}"
     },
     "resetForm": {
       "passwordTooShort": "Parool peab olema vähemalt 8 tähemärki.",

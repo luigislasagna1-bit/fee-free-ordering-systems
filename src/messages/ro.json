@@ -5788,7 +5788,9 @@
       "maybeLater": "Poate mai târziu",
       "orderForLater": "Comandă pentru mai târziu",
       "addOne": "Adaugă",
-      "customize": "Personalizează"
+      "customize": "Personalizează",
+      "increaseQty": "Adaugă încă un {name}",
+      "decreaseQty": "Elimină un {name}"
     },
     "resetForm": {
       "passwordTooShort": "Parola trebuie să aibă cel puțin 8 caractere.",

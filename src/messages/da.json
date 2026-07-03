@@ -5788,7 +5788,9 @@
       "maybeLater": "Måske senere",
       "orderForLater": "Bestil til senere",
       "addOne": "Tilføj",
-      "customize": "Tilpas"
+      "customize": "Tilpas",
+      "increaseQty": "Tilføj endnu en {name}",
+      "decreaseQty": "Fjern en {name}"
     },
     "resetForm": {
       "passwordTooShort": "Adgangskoden skal være mindst 8 tegn.",

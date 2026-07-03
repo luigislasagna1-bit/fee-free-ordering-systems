@@ -5788,7 +5788,9 @@
       "maybeLater": "Potser més tard",
       "orderForLater": "Programar per a més tard",
       "addOne": "Afegeix",
-      "customize": "Personalitza"
+      "customize": "Personalitza",
+      "increaseQty": "Afegeix un {name} més",
+      "decreaseQty": "Treu un {name}"
     },
     "resetForm": {
       "passwordTooShort": "La contrasenya ha de tenir com a mínim 8 caràcters.",

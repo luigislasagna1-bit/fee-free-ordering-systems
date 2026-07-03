@@ -5788,7 +5788,9 @@
       "maybeLater": "אולי מאוחר יותר",
       "orderForLater": "הזמנה למועד מאוחר יותר",
       "addOne": "הוסף",
-      "customize": "התאמה אישית"
+      "customize": "התאמה אישית",
+      "increaseQty": "הוסיפו {name} נוסף",
+      "decreaseQty": "הסירו {name} אחד"
     },
     "resetForm": {
       "passwordTooShort": "הסיסמה חייבת להכיל לפחות 8 תווים.",
