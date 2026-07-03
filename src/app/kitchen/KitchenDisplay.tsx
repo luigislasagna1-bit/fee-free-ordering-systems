@@ -476,15 +476,22 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   // applies when the name lead is on. Luigi 2026-06-22.
   const showBoth = isDeliveryWithAddr && !!deliveryShowName && !!deliveryShowBoth;
   const showAddress = isDeliveryWithAddr && !deliveryShowName;
-  // Tile address = "Via Giuseppe Mazzini 13, Varedo" — street, comma, CITY
-  // (Fabrizio cmqsn52d2 follow-up 2026-07-02, GloriaFood parity). Same font
-  // as before; only the city is appended. Guarded so older rows whose flat
-  // address already embeds the city don't repeat it.
+  // Tile lead line, EXACT GloriaFood shape (Luigi's reference photo +
+  // Fabrizio cmqsn52d2, 2026-07-02): ONE line, uniform font, truncating with
+  // "…" when long. Delivery/catering = the FULL address "street №, ZIP, city"
+  // (e.g. "506 Collis Court, L9T5M7, Milton" / "Via Giuseppe Mazzini 13,
+  // 20814, Varedo"); with the show-name option on, the name joins the SAME
+  // line in front — never a second line. Pickup/dine-in = just the name.
+  // Parts already embedded in older flat addresses aren't repeated.
   const tileAddress = (() => {
     const addr = (order.deliveryAddress ?? "").trim();
-    const city = ((order as any).deliveryCity ?? "").trim();
-    if (!addr || !city || addr.toLowerCase().includes(city.toLowerCase())) return addr;
-    return `${addr}, ${city}`;
+    if (!addr) return addr;
+    const lower = addr.toLowerCase();
+    const parts = [addr];
+    for (const extra of [((order as any).deliveryZip ?? "").trim(), ((order as any).deliveryCity ?? "").trim()]) {
+      if (extra && !lower.includes(extra.toLowerCase())) parts.push(extra);
+    }
+    return parts.join(", ");
   })();
 
   return (
@@ -538,28 +545,19 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
           )}
         </div>
         <div className="flex-1 min-w-0">
-          {/* Lead line = WHO / WHERE — the only black text on the tile.
-              Delivery / catering show the ADDRESS, the NAME, or BOTH (name on
-              top + address below) per the kitchen setting. Luigi 2026-06-22. */}
-          {showBoth ? (
-            <>
-              <div className={`font-bold text-[1.15rem] leading-tight ${t.text} truncate`}>
-                {order.customerName.replace("[TEST] ", "")}
-              </div>
-              <div className={`text-sm leading-tight ${t.muted} truncate`}>
-                {tileAddress}
-              </div>
-            </>
-          ) : (
-            // Address-as-lead uses a slightly smaller title than the name lead
-            // so "street, City" fits on one tablet line (Fabrizio cmqsn52d2
-            // follow-up 2026-07-02 — his suggested size reduction).
-            <div className={`font-bold ${showAddress ? "text-base" : "text-[1.15rem]"} leading-tight ${t.text} truncate`}>
-              {showAddress
+          {/* Lead line = WHO / WHERE — ONE line for every tile, uniform font,
+              GloriaFood-exact (Luigi's reference photo, 2026-07-02): delivery
+              tiles carry the full address (street №, ZIP, city); with the
+              show-name option on, the name joins the SAME line in front —
+              never a second line. Pickup/dine-in tiles carry just the name.
+              Long content truncates with "…" like the reference. */}
+          <div className={`font-bold text-base leading-tight ${t.text} truncate`}>
+            {showBoth
+              ? `${order.customerName.replace("[TEST] ", "")}, ${tileAddress}`
+              : showAddress
                 ? tileAddress
                 : order.customerName.replace("[TEST] ", "")}
-            </div>
-          )}
+          </div>
           {/* Status chip on its own line directly below (GloriaFood-clean,
               Luigi 2026-06-15). Everything else — order #, item count,
               marketplace / first-order / reservation flags — now lives in the
