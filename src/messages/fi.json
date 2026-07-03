@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Vain verkkosivustosi",
       "channelMarketplaceLabel": "Vain Marketplace",
       "channelBothLabel": "Molemmat",
-      "hiddenCodeInfo": "Piilotetut tarjoukset käytetään vain, kun asiakas syöttää tämän koodin kassalla."
+      "hiddenCodeInfo": "Piilotetut tarjoukset käytetään vain, kun asiakas syöttää tämän koodin kassalla.",
+      "vipLockedTitle": "Vain VIP — liitetty: {groups}",
+      "vipLockedDesc": "Tämä kampanja koskee automaattisesti vain näitä VIP-jäseniä kassalla. Se ei koskaan näy julkisessa ruokalistassa, bannerissa tai sivustolla — mikään näkyvyysasetus ei muuta sitä. Julkiseksi saat sen irrottamalla sen ensin VIP-ryhmät-sivulla."
     },
     "customersList": {
       "heading": "Asiakkaat",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Suljettu luokan kautta",
       "excludeFailed": "Tallennus epäonnistui — yritä uudelleen.",
       "excludeLoading": "Ladataan valikkoa…",
-      "excludeNone": "Ei vielä luokkia."
+      "excludeNone": "Ei vielä luokkia.",
+      "whyVip": "Vain VIP — ei näy julkisesti",
+      "whyVipTip": "Liitetty VIP-ryhmään tai -jäseneen — koskee automaattisesti vain heitä eikä koskaan näy julkisessa ruokalistassa tai sivustolla. Irrota VIP-ryhmät-sivulla tehdäksesi siitä julkisen.",
+      "whyMarketplace": "Vain marketplace",
+      "whyMarketplaceTip": "Vain marketplace-asiakkaille — ei näy sivustollasi tai tilaussivulla. Muuta kampanjan kanavaa muuttaaksesi tämän.",
+      "whyBannerOff": "Bannerikortti pois",
+      "whyBannerOffTip": "”Näytä asiakasbannerissa” on pois päältä, joten kampanjalla ei ole korttia tilaussivulla tai sivustolla — se pätee silti kassalla. Kytke asetus päälle editorissa mainostaaksesi sitä."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Takaisin julkaisuun",

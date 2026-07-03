@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Alleen uw website",
       "channelMarketplaceLabel": "Alleen Marketplace",
       "channelBothLabel": "Beide",
-      "hiddenCodeInfo": "Verborgen acties gelden alleen wanneer de klant deze code bij het afrekenen invoert."
+      "hiddenCodeInfo": "Verborgen acties gelden alleen wanneer de klant deze code bij het afrekenen invoert.",
+      "vipLockedTitle": "Alleen VIP — gekoppeld aan: {groups}",
+      "vipLockedDesc": "Deze promotie geldt automatisch alleen voor die VIP-leden bij het afrekenen. Ze verschijnt nooit op je openbare menu, banner of website — geen zichtbaarheidsschakelaar verandert dat. Koppel haar eerst los op de pagina VIP-groepen om haar openbaar te maken."
     },
     "customersList": {
       "heading": "Klanten",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Uitgesloten via categorie",
       "excludeFailed": "Opslaan mislukt — probeer opnieuw.",
       "excludeLoading": "Menu laden…",
-      "excludeNone": "Nog geen categorieën."
+      "excludeNone": "Nog geen categorieën.",
+      "whyVip": "Alleen VIP — niet openbaar zichtbaar",
+      "whyVipTip": "Gekoppeld aan een VIP-groep of -lid — geldt automatisch alleen voor hen en verschijnt nooit op het openbare menu of de website. Koppel los op de pagina VIP-groepen om openbaar te maken.",
+      "whyMarketplace": "Alleen marketplace",
+      "whyMarketplaceTip": "Alleen voor marketplace-klanten — verschijnt niet op je website of bestelpagina. Wijzig het kanaal van de promo om dit te veranderen.",
+      "whyBannerOff": "Bannerkaart uit",
+      "whyBannerOffTip": "“Toon op klantbanner” staat uit, dus deze promo heeft geen kaart op de bestelpagina of website — maar geldt wél bij het afrekenen. Zet de schakelaar aan in de editor om haar te adverteren."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Terug naar publiceren",

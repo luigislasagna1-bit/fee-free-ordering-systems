@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Kun dit website",
       "channelMarketplaceLabel": "Kun Marketplace",
       "channelBothLabel": "Begge",
-      "hiddenCodeInfo": "Skjulte tilbud anvendes kun, når kunden indtaster denne kode ved betaling."
+      "hiddenCodeInfo": "Skjulte tilbud anvendes kun, når kunden indtaster denne kode ved betaling.",
+      "vipLockedTitle": "Kun VIP — knyttet til: {groups}",
+      "vipLockedDesc": "Denne kampagne gælder automatisk kun for disse VIP-medlemmer ved kassen. Den vises aldrig på din offentlige menu, banner eller hjemmeside — ingen synlighedsindstilling ændrer det. Fjern først tilknytningen på siden VIP-grupper for at gøre den offentlig."
     },
     "customersList": {
       "heading": "Kunder",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Undtaget via kategori",
       "excludeFailed": "Kunne ikke gemme — prøv igen.",
       "excludeLoading": "Indlæser din menu…",
-      "excludeNone": "Ingen kategorier endnu."
+      "excludeNone": "Ingen kategorier endnu.",
+      "whyVip": "Kun VIP — vises ikke offentligt",
+      "whyVipTip": "Knyttet til en VIP-gruppe eller et medlem — gælder automatisk kun for dem og vises aldrig på den offentlige menu eller hjemmesiden. Fjern tilknytningen på siden VIP-grupper for at gøre den offentlig.",
+      "whyMarketplace": "Kun marketplace",
+      "whyMarketplaceTip": "Kun for marketplace-kunder — vises ikke på din hjemmeside eller bestillingsside. Rediger kampagnens kanal for at ændre det.",
+      "whyBannerOff": "Bannerkort slået fra",
+      "whyBannerOffTip": "”Vis på kundebanner” er slået fra, så kampagnen har intet kort på bestillingssiden eller hjemmesiden — den gælder stadig ved kassen. Slå den til i editoren for at reklamere for den."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Tilbage til publicering",

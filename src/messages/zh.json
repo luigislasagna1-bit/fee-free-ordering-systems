@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "仅限您的网站",
       "channelMarketplaceLabel": "仅限 Marketplace",
       "channelBothLabel": "两者",
-      "hiddenCodeInfo": "隐藏的促销仅在顾客结账时输入此代码后才会生效。"
+      "hiddenCodeInfo": "隐藏的促销仅在顾客结账时输入此代码后才会生效。",
+      "vipLockedTitle": "仅限 VIP — 关联：{groups}",
+      "vipLockedDesc": "此促销仅对这些 VIP 会员在结账时自动生效。它永远不会出现在公开菜单、横幅或网站上——任何可见性开关都无法改变这一点。要公开它，请先在 VIP 组页面解除关联。"
     },
     "customersList": {
       "heading": "顾客",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "通过类别排除",
       "excludeFailed": "保存失败 — 请重试。",
       "excludeLoading": "正在加载您的菜单…",
-      "excludeNone": "暂无菜单类别。"
+      "excludeNone": "暂无菜单类别。",
+      "whyVip": "仅限 VIP — 不公开显示",
+      "whyVipTip": "已关联 VIP 组或会员——仅对他们自动生效，永远不会出现在公开菜单或网站上。在 VIP 组页面解除关联即可公开。",
+      "whyMarketplace": "仅限市集渠道",
+      "whyMarketplaceTip": "仅面向市集渠道顾客——不会出现在您的网站或点餐页。编辑促销的渠道即可更改。",
+      "whyBannerOff": "横幅卡片已关闭",
+      "whyBannerOffTip": "“显示在顾客横幅”已关闭，此促销在点餐页和网站上没有卡片——但结账时仍然生效。在编辑器中打开开关即可宣传它。"
     },
     "legacyWebsitePage": {
       "backToPublishing": "返回发布页",

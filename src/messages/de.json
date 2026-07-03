@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Nur Ihre Website",
       "channelMarketplaceLabel": "Nur Marketplace",
       "channelBothLabel": "Beide",
-      "hiddenCodeInfo": "Versteckte Aktionen gelten nur, wenn der Kunde diesen Code an der Kasse eingibt."
+      "hiddenCodeInfo": "Versteckte Aktionen gelten nur, wenn der Kunde diesen Code an der Kasse eingibt.",
+      "vipLockedTitle": "Nur VIP — verknüpft mit: {groups}",
+      "vipLockedDesc": "Diese Aktion gilt automatisch nur für diese VIP-Mitglieder an der Kasse. Sie erscheint nie auf Ihrer öffentlichen Speisekarte, im Banner oder auf der Website — kein Sichtbarkeitsschalter ändert das. Um sie öffentlich zu machen, trennen Sie sie zuerst auf der Seite VIP-Gruppen."
     },
     "customersList": {
       "heading": "Kunden",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Über Kategorie ausgeschlossen",
       "excludeFailed": "Speichern fehlgeschlagen — bitte erneut versuchen.",
       "excludeLoading": "Menü wird geladen…",
-      "excludeNone": "Noch keine Kategorien."
+      "excludeNone": "Noch keine Kategorien.",
+      "whyVip": "Nur VIP — nicht öffentlich sichtbar",
+      "whyVipTip": "Mit einer VIP-Gruppe oder einem Mitglied verknüpft — gilt automatisch nur für sie und erscheint nie im öffentlichen Menü oder auf der Website. Auf der Seite VIP-Gruppen trennen, um sie öffentlich zu machen.",
+      "whyMarketplace": "Nur Marketplace",
+      "whyMarketplaceTip": "Nur für Marketplace-Kunden — erscheint nicht auf Ihrer Website oder Bestellseite. Ändern Sie den Kanal der Aktion, um das zu ändern.",
+      "whyBannerOff": "Banner-Karte aus",
+      "whyBannerOffTip": "„Auf Kundenbanner zeigen“ ist aus — diese Aktion hat keine Karte auf der Bestellseite oder Website, gilt aber trotzdem an der Kasse. Schalten Sie die Option im Editor ein, um sie zu bewerben."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Zurück zur Veröffentlichung",

@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Només el teu lloc web",
       "channelMarketplaceLabel": "Només Marketplace",
       "channelBothLabel": "Tots dos",
-      "hiddenCodeInfo": "Les promocions amagades només s'apliquen quan el client introdueix aquest codi en pagar."
+      "hiddenCodeInfo": "Les promocions amagades només s'apliquen quan el client introdueix aquest codi en pagar.",
+      "vipLockedTitle": "Només VIP — vinculat a: {groups}",
+      "vipLockedDesc": "Aquesta promoció s'aplica automàticament només per a aquests membres VIP al pagament. Mai no apareix al menú públic, al bàner ni al web — cap interruptor de visibilitat ho pot canviar. Per fer-la pública, primer desvincula-la a la pàgina Grups VIP."
     },
     "customersList": {
       "heading": "Clients",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Exclòs per categoria",
       "excludeFailed": "No s'ha pogut desar — torna-ho a provar.",
       "excludeLoading": "Carregant el teu menú…",
-      "excludeNone": "Encara no hi ha categories."
+      "excludeNone": "Encara no hi ha categories.",
+      "whyVip": "Només VIP — no es mostra públicament",
+      "whyVipTip": "Vinculada a un grup o membre VIP — s'aplica automàticament només per a ells i mai no apareix al menú públic ni al web. Desvincula-la a la pàgina Grups VIP per fer-la pública.",
+      "whyMarketplace": "Només marketplace",
+      "whyMarketplaceTip": "Canalitzada només a clients del marketplace — no apareix al teu web ni a la pàgina de comandes. Edita el canal de la promoció per canviar-ho.",
+      "whyBannerOff": "Targeta de bàner desactivada",
+      "whyBannerOffTip": "«Mostra al bàner del client» està desactivat, així que la promo no té targeta a la pàgina de comandes ni al web — però s'aplica igualment al pagament. Activa l'interruptor a l'editor per anunciar-la."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Tornar a publicació",

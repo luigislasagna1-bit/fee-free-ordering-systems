@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Endast din webbplats",
       "channelMarketplaceLabel": "Endast Marketplace",
       "channelBothLabel": "Båda",
-      "hiddenCodeInfo": "Dolda erbjudanden tillämpas bara när kunden anger den här koden i kassan."
+      "hiddenCodeInfo": "Dolda erbjudanden tillämpas bara när kunden anger den här koden i kassan.",
+      "vipLockedTitle": "Endast VIP — kopplad till: {groups}",
+      "vipLockedDesc": "Den här kampanjen gäller automatiskt endast för dessa VIP-medlemmar i kassan. Den visas aldrig på din offentliga meny, banner eller webbplats — ingen synlighetsinställning ändrar det. Koppla först bort den på sidan VIP-grupper för att göra den offentlig."
     },
     "customersList": {
       "heading": "Kunder",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Undantagen via kategori",
       "excludeFailed": "Kunde inte spara — försök igen.",
       "excludeLoading": "Laddar din meny…",
-      "excludeNone": "Inga kategorier ännu."
+      "excludeNone": "Inga kategorier ännu.",
+      "whyVip": "Endast VIP — visas inte offentligt",
+      "whyVipTip": "Kopplad till en VIP-grupp eller medlem — gäller automatiskt endast dem och visas aldrig på den offentliga menyn eller webbplatsen. Koppla bort på sidan VIP-grupper för att göra den offentlig.",
+      "whyMarketplace": "Endast marketplace",
+      "whyMarketplaceTip": "Endast för marketplace-kunder — visas inte på din webbplats eller beställningssida. Ändra kampanjens kanal för att ändra detta.",
+      "whyBannerOff": "Bannerkort av",
+      "whyBannerOffTip": "”Visa på kundbanner” är av, så kampanjen har inget kort på beställningssidan eller webbplatsen — den gäller ändå i kassan. Slå på reglaget i redigeraren för att marknadsföra den."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Tillbaka till publicering",

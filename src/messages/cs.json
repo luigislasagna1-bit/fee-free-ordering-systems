@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Pouze váš web",
       "channelMarketplaceLabel": "Pouze Marketplace",
       "channelBothLabel": "Obojí",
-      "hiddenCodeInfo": "Skryté akce se uplatní pouze tehdy, když zákazník zadá tento kód při placení."
+      "hiddenCodeInfo": "Skryté akce se uplatní pouze tehdy, když zákazník zadá tento kód při placení.",
+      "vipLockedTitle": "Pouze VIP — připojeno k: {groups}",
+      "vipLockedDesc": "Tato akce se automaticky uplatní jen pro tyto VIP členy u pokladny. Nikdy se nezobrazí ve veřejném menu, banneru ani na webu — žádný přepínač viditelnosti to nezmění. Chcete-li ji zveřejnit, nejprve ji odpojte na stránce VIP skupiny."
     },
     "customersList": {
       "heading": "Zákazníci",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Vyloučeno přes kategorii",
       "excludeFailed": "Uložení se nezdařilo — zkuste to znovu.",
       "excludeLoading": "Načítání menu…",
-      "excludeNone": "Zatím žádné kategorie."
+      "excludeNone": "Zatím žádné kategorie.",
+      "whyVip": "Pouze VIP — veřejně se nezobrazuje",
+      "whyVipTip": "Připojena k VIP skupině nebo členovi — platí automaticky jen pro ně a nikdy se nezobrazí ve veřejném menu ani na webu. Odpojte ji na stránce VIP skupiny, aby byla veřejná.",
+      "whyMarketplace": "Pouze marketplace",
+      "whyMarketplaceTip": "Určena jen zákazníkům marketplace — nezobrazuje se na webu ani na objednávkové stránce. Změňte kanál akce.",
+      "whyBannerOff": "Karta banneru vypnuta",
+      "whyBannerOffTip": "„Zobrazit na zákaznickém banneru“ je vypnuto — akce nemá kartu na objednávkové stránce ani webu, u pokladny ale stále platí. Zapněte přepínač v editoru."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Zpět na publikování",

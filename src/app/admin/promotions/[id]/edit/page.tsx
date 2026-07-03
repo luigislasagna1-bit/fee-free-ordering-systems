@@ -22,6 +22,10 @@ export default async function EditPromotionPage({
     await Promise.all([
       prisma.promotion.findFirst({
         where: { id, restaurantId },
+        // VIP targets: when linked, the wizard replaces the Visible/Hidden +
+        // banner controls with a "VIP only" notice (those switches can't make
+        // a VIP-linked promo public — Luigi 2026-07-02).
+        include: { groupLinks: { select: { group: { select: { name: true } }, email: true, customer: { select: { name: true, email: true } } } } },
       }),
       prisma.restaurant.findUnique({
         where: { id: restaurantId },
@@ -96,6 +100,16 @@ export default async function EditPromotionPage({
     highlightThreshold: promo.highlightThreshold,
   };
 
+  // Human labels for the VIP targets this promo is attached to — group names,
+  // else the individual's name/email (deduped, capped for the notice).
+  const vipGroupNames = [
+    ...new Set(
+      (promo.groupLinks ?? []).map((l: any) =>
+        l.group?.name || l.customer?.name || l.customer?.email || l.email || "VIP",
+      ),
+    ),
+  ].slice(0, 6) as string[];
+
   return (
     <PromoWizard
       mode="edit"
@@ -107,6 +121,7 @@ export default async function EditPromotionPage({
       initialPromo={initialPromo}
       currencySymbol={currencySymbol((restaurant as any)?.currency)}
       isOnMarketplace={onMarketplace}
+      vipGroupNames={vipGroupNames}
     />
   );
 }

@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Solo il tuo sito web",
       "channelMarketplaceLabel": "Solo Marketplace",
       "channelBothLabel": "Entrambi",
-      "hiddenCodeInfo": "Le promo nascoste si applicano solo quando il cliente inserisce questo codice al pagamento."
+      "hiddenCodeInfo": "Le promo nascoste si applicano solo quando il cliente inserisce questo codice al pagamento.",
+      "vipLockedTitle": "Solo VIP — collegato a: {groups}",
+      "vipLockedDesc": "Questa promozione si applica automaticamente solo per quei membri VIP al checkout. Non appare mai sul menu pubblico, sul banner o sul sito — nessuna impostazione di visibilità può cambiarlo. Per renderla pubblica, scollegala prima nella pagina Gruppi VIP."
     },
     "customersList": {
       "heading": "Clienti",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Escluso tramite categoria",
       "excludeFailed": "Salvataggio non riuscito — riprova.",
       "excludeLoading": "Caricamento del menu…",
-      "excludeNone": "Nessuna categoria ancora."
+      "excludeNone": "Nessuna categoria ancora.",
+      "whyVip": "Solo VIP — non visibile al pubblico",
+      "whyVipTip": "Collegata a un gruppo o membro VIP — si applica automaticamente solo per loro e non appare mai sul menu pubblico né sul sito. Scollegala nella pagina Gruppi VIP per renderla pubblica.",
+      "whyMarketplace": "Solo marketplace",
+      "whyMarketplaceTip": "Riservata ai clienti marketplace — non appare sul tuo sito né sulla pagina ordini. Modifica il canale della promo per cambiarlo.",
+      "whyBannerOff": "Scheda banner disattivata",
+      "whyBannerOffTip": "“Mostra sul banner cliente” è disattivato: questa promo non ha una scheda sulla pagina ordini né sul sito — si applica comunque al checkout. Attiva l'opzione nell'editor per pubblicizzarla."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Torna alla pubblicazione",

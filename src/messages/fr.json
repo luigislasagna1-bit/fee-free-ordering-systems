@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Votre site web uniquement",
       "channelMarketplaceLabel": "Marketplace uniquement",
       "channelBothLabel": "Les deux",
-      "hiddenCodeInfo": "Les promos masquées ne s'appliquent que lorsque le client saisit ce code au paiement."
+      "hiddenCodeInfo": "Les promos masquées ne s'appliquent que lorsque le client saisit ce code au paiement.",
+      "vipLockedTitle": "VIP uniquement — attaché à : {groups}",
+      "vipLockedDesc": "Cette promotion s'applique automatiquement uniquement pour ces membres VIP au paiement. Elle n'apparaît jamais sur votre menu public, votre bannière ou votre site — aucun réglage de visibilité ne peut changer cela. Pour la rendre publique, détachez-la d'abord sur la page Groupes VIP."
     },
     "customersList": {
       "heading": "Clients",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Exclu via la catégorie",
       "excludeFailed": "Échec de l'enregistrement — réessayez.",
       "excludeLoading": "Chargement de votre menu…",
-      "excludeNone": "Aucune catégorie pour l'instant."
+      "excludeNone": "Aucune catégorie pour l'instant.",
+      "whyVip": "VIP uniquement — non visible publiquement",
+      "whyVipTip": "Attachée à un groupe ou membre VIP — elle s'applique automatiquement pour eux seulement et n'apparaît jamais sur le menu public ni le site. Détachez-la sur la page Groupes VIP pour la rendre publique.",
+      "whyMarketplace": "Marketplace uniquement",
+      "whyMarketplaceTip": "Réservée aux clients marketplace — elle n'apparaît pas sur votre site ni votre page de commande. Modifiez le canal de la promo pour changer cela.",
+      "whyBannerOff": "Carte bannière désactivée",
+      "whyBannerOffTip": "« Afficher sur la bannière client » est désactivé : cette promo n'a pas de carte sur la page de commande ni le site — elle s'applique quand même au paiement. Activez l'option dans l'éditeur pour la mettre en avant."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Retour à la publication",

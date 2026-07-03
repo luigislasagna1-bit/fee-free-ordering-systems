@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Doar site-ul dvs.",
       "channelMarketplaceLabel": "Doar Marketplace",
       "channelBothLabel": "Ambele",
-      "hiddenCodeInfo": "Promoțiile ascunse se aplică doar când clientul introduce acest cod la plată."
+      "hiddenCodeInfo": "Promoțiile ascunse se aplică doar când clientul introduce acest cod la plată.",
+      "vipLockedTitle": "Doar VIP — atașat la: {groups}",
+      "vipLockedDesc": "Această promoție se aplică automat doar pentru acei membri VIP la checkout. Nu apare niciodată în meniul public, pe banner sau pe site — nicio setare de vizibilitate nu poate schimba asta. Pentru a o face publică, detașați-o mai întâi din pagina Grupuri VIP."
     },
     "customersList": {
       "heading": "Clienți",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Exclus prin categorie",
       "excludeFailed": "Salvarea a eșuat — încercați din nou.",
       "excludeLoading": "Se încarcă meniul…",
-      "excludeNone": "Încă nicio categorie."
+      "excludeNone": "Încă nicio categorie.",
+      "whyVip": "Doar VIP — nevizibil public",
+      "whyVipTip": "Atașată unui grup sau membru VIP — se aplică automat doar pentru ei și nu apare niciodată în meniul public sau pe site. Detașați-o din pagina Grupuri VIP pentru a o face publică.",
+      "whyMarketplace": "Doar marketplace",
+      "whyMarketplaceTip": "Direcționată doar către clienții marketplace — nu apare pe site sau pe pagina de comenzi. Editați canalul promoției pentru a schimba.",
+      "whyBannerOff": "Card banner dezactivat",
+      "whyBannerOffTip": "„Afișează pe bannerul clientului” este dezactivat, deci promoția nu are card pe pagina de comenzi sau site — dar se aplică totuși la checkout. Activați opțiunea din editor pentru a o promova."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Înapoi la publicare",

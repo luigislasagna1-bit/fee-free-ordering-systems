@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Solo tu sitio web",
       "channelMarketplaceLabel": "Solo Marketplace",
       "channelBothLabel": "Ambos",
-      "hiddenCodeInfo": "Las promociones ocultas solo se aplican cuando el cliente introduce este código al pagar."
+      "hiddenCodeInfo": "Las promociones ocultas solo se aplican cuando el cliente introduce este código al pagar.",
+      "vipLockedTitle": "Solo VIP — vinculado a: {groups}",
+      "vipLockedDesc": "Esta promoción se aplica automáticamente solo para esos miembros VIP al pagar. Nunca aparece en tu menú público, banner o sitio web — ningún ajuste de visibilidad puede cambiarlo. Para hacerla pública, primero desvincúlala en la página Grupos VIP."
     },
     "customersList": {
       "heading": "Clientes",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Excluido por categoría",
       "excludeFailed": "No se pudo guardar — inténtalo de nuevo.",
       "excludeLoading": "Cargando tu menú…",
-      "excludeNone": "Aún no hay categorías."
+      "excludeNone": "Aún no hay categorías.",
+      "whyVip": "Solo VIP — no visible al público",
+      "whyVipTip": "Vinculada a un grupo o miembro VIP — se aplica automáticamente solo para ellos y nunca aparece en el menú público ni en el sitio. Desvincúlala en la página Grupos VIP para hacerla pública.",
+      "whyMarketplace": "Solo marketplace",
+      "whyMarketplaceTip": "Canalizada solo a clientes del marketplace — no aparece en tu sitio ni en la página de pedidos. Edita el canal de la promoción para cambiarlo.",
+      "whyBannerOff": "Tarjeta de banner desactivada",
+      "whyBannerOffTip": "«Mostrar en el banner del cliente» está desactivado, así que esta promo no tiene tarjeta en la página de pedidos ni en el sitio — aun así se aplica al pagar. Activa el interruptor en el editor para anunciarla."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Volver a publicación",

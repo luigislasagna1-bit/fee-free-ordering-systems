@@ -59,6 +59,7 @@ export function StepRestrictions({
   currencySymbol = "$",
   isOnMarketplace = false,
   promotionType = "",
+  vipGroupNames = [],
 }: {
   form: Step3Form;
   setForm: (patch: Partial<Step3Form>) => void;
@@ -71,6 +72,13 @@ export function StepRestrictions({
   /** Used to hide the "Hidden" option for bundle types that need a visible
    *  composer to be orderable (audit dead#2). */
   promotionType?: string;
+  /** VIP groups/individual targets this promo is attached to (edit mode).
+   *  When non-empty, the Visible/Hidden + banner controls are REPLACED by an
+   *  explanatory notice — a VIP-linked promo never shows publicly no matter
+   *  what those switches say, and letting owners flip switches that silently
+   *  do nothing caused real confusion (Luigi 2026-07-02: made a VIP special
+   *  "Visible + Show on banner", saw nothing, concluded promos were broken). */
+  vipGroupNames?: string[];
 }) {
   const t = useTranslations("admin.promoStepRestrictions");
   // Bundles are composed from a visible card — coupon code + auto-apply are
@@ -444,6 +452,17 @@ export function StepRestrictions({
           Consolidates the old Display Mode / Activation / Banner sections and
           drops the dead Limited Showtime + "popup" mode (Luigi 2026-06-26). */}
       <Section title={t("displayModeTitle")} subtitle={t("displayModeSubtitle")}>
+        {/* VIP-linked promo → these switches CANNOT make it public, so don't
+            offer them. One clear notice instead (Luigi 2026-07-02). */}
+        {vipGroupNames.length > 0 ? (
+          <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+            <p className="text-sm font-semibold text-amber-800">
+              👑 {t("vipLockedTitle", { groups: vipGroupNames.join(", ") })}
+            </p>
+            <p className="mt-1 text-xs text-amber-700 leading-snug">{t("vipLockedDesc")}</p>
+          </div>
+        ) : (
+        <>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {[
             { value: "menu_visible", label: t("displayModeMenuVisibleLabel"), desc: t("displayModeMenuVisibleDesc") },
@@ -519,6 +538,8 @@ export function StepRestrictions({
         {/* Hidden: code-only explainer. */}
         {form.displayMode === "hidden_coupon_only" && (
           <p className="mt-3 text-xs text-gray-500">{t("hiddenCodeInfo")}</p>
+        )}
+        </>
         )}
 
         {/* Coupon code — optional when auto-applying, REQUIRED otherwise (hidden,

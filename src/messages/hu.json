@@ -2223,7 +2223,9 @@
       "channelWebsiteLabel": "Csak a webhelye",
       "channelMarketplaceLabel": "Csak Marketplace",
       "channelBothLabel": "Mindkettő",
-      "hiddenCodeInfo": "A rejtett ajánlatok csak akkor érvényesülnek, ha a vásárló megadja ezt a kódot a fizetésnél."
+      "hiddenCodeInfo": "A rejtett ajánlatok csak akkor érvényesülnek, ha a vásárló megadja ezt a kódot a fizetésnél.",
+      "vipLockedTitle": "Csak VIP — hozzárendelve: {groups}",
+      "vipLockedDesc": "Ez a promóció automatikusan csak azoknak a VIP-tagoknak érvényes a pénztárnál. Soha nem jelenik meg a nyilvános étlapon, a bannerben vagy a weboldalon — ezt semmilyen láthatósági kapcsoló nem változtatja meg. Nyilvánossá tételéhez először válassza le a VIP-csoportok oldalon."
     },
     "customersList": {
       "heading": "Ügyfelek",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Kategórián keresztül kizárva",
       "excludeFailed": "A mentés sikertelen — próbálja újra.",
       "excludeLoading": "Menü betöltése…",
-      "excludeNone": "Még nincsenek kategóriák."
+      "excludeNone": "Még nincsenek kategóriák.",
+      "whyVip": "Csak VIP — nyilvánosan nem látható",
+      "whyVipTip": "VIP-csoporthoz vagy taghoz rendelve — automatikusan csak nekik érvényes, és soha nem jelenik meg a nyilvános étlapon vagy weboldalon. A nyilvánossá tételhez válassza le a VIP-csoportok oldalon.",
+      "whyMarketplace": "Csak marketplace",
+      "whyMarketplaceTip": "Csak marketplace-ügyfeleknek — nem jelenik meg a weboldalon vagy a rendelési oldalon. Módosítsa a promóció csatornáját.",
+      "whyBannerOff": "Banner-kártya kikapcsolva",
+      "whyBannerOffTip": "A „Megjelenítés az ügyfélbanneren” ki van kapcsolva, így a promóciónak nincs kártyája a rendelési oldalon vagy a weboldalon — a pénztárnál mégis érvényes. Kapcsolja be a szerkesztőben a hirdetéséhez."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Vissza a közzétételhez",

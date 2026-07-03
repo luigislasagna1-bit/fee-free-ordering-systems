@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Samo vaša web stranica",
       "channelMarketplaceLabel": "Samo Marketplace",
       "channelBothLabel": "Oboje",
-      "hiddenCodeInfo": "Skrivene promocije primjenjuju se samo kad kupac unese ovaj kod pri plaćanju."
+      "hiddenCodeInfo": "Skrivene promocije primjenjuju se samo kad kupac unese ovaj kod pri plaćanju.",
+      "vipLockedTitle": "Samo VIP — povezano s: {groups}",
+      "vipLockedDesc": "Ova promocija automatski vrijedi samo za te VIP članove na naplati. Nikad se ne prikazuje na javnom jelovniku, banneru ili web-stranici — nijedan prekidač vidljivosti to ne mijenja. Da biste je učinili javnom, prvo je odvojite na stranici VIP grupe."
     },
     "customersList": {
       "heading": "Kupci",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Isključeno putem kategorije",
       "excludeFailed": "Spremanje nije uspjelo — pokušajte ponovno.",
       "excludeLoading": "Učitavanje jelovnika…",
-      "excludeNone": "Još nema kategorija."
+      "excludeNone": "Još nema kategorija.",
+      "whyVip": "Samo VIP — nije javno vidljivo",
+      "whyVipTip": "Povezana s VIP grupom ili članom — automatski vrijedi samo za njih i nikad se ne prikazuje na javnom jelovniku ili web-stranici. Odvojite je na stranici VIP grupe da postane javna.",
+      "whyMarketplace": "Samo marketplace",
+      "whyMarketplaceTip": "Usmjerena samo na marketplace kupce — ne prikazuje se na web-stranici ni na stranici narudžbi. Uredite kanal promocije.",
+      "whyBannerOff": "Banner kartica isključena",
+      "whyBannerOffTip": "„Prikaži na korisničkom banneru“ je isključeno, pa promocija nema karticu na stranici narudžbi ni web-stranici — svejedno vrijedi na naplati. Uključite prekidač u uređivaču da je oglasite."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Natrag na objavljivanje",

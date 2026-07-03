@@ -2957,7 +2957,9 @@
       "channelWebsiteLabel": "Tik jūsų svetainė",
       "channelMarketplaceLabel": "Tik Marketplace",
       "channelBothLabel": "Abu",
-      "hiddenCodeInfo": "Paslėptos akcijos taikomos tik tada, kai klientas atsiskaitydamas įveda šį kodą."
+      "hiddenCodeInfo": "Paslėptos akcijos taikomos tik tada, kai klientas atsiskaitydamas įveda šį kodą.",
+      "vipLockedTitle": "Tik VIP — susieta su: {groups}",
+      "vipLockedDesc": "Ši akcija automatiškai taikoma tik tiems VIP nariams atsiskaitant. Ji niekada nerodoma viešame meniu, reklamjuostėje ar svetainėje — joks matomumo jungiklis to nepakeis. Norėdami ją paviešinti, pirmiausia atjunkite ją VIP grupių puslapyje."
     },
     "customersList": {
       "heading": "Klientai",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Neįtraukta per kategoriją",
       "excludeFailed": "Nepavyko išsaugoti — bandykite dar kartą.",
       "excludeLoading": "Įkeliamas meniu…",
-      "excludeNone": "Kategorijų dar nėra."
+      "excludeNone": "Kategorijų dar nėra.",
+      "whyVip": "Tik VIP — viešai nerodoma",
+      "whyVipTip": "Susieta su VIP grupe ar nariu — automatiškai taikoma tik jiems ir niekada nerodoma viešame meniu ar svetainėje. Atjunkite VIP grupių puslapyje, kad taptų vieša.",
+      "whyMarketplace": "Tik marketplace",
+      "whyMarketplaceTip": "Skirta tik marketplace klientams — nerodoma svetainėje ar užsakymų puslapyje. Pakeiskite akcijos kanalą.",
+      "whyBannerOff": "Reklamjuostės kortelė išjungta",
+      "whyBannerOffTip": "„Rodyti kliento reklamjuostėje“ išjungta, todėl akcija neturi kortelės užsakymų puslapyje ar svetainėje — bet vis tiek galioja atsiskaitant. Įjunkite jungiklį redaktoriuje, kad ją reklamuotumėte."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Atgal į publikavimą",

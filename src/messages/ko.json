@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "내 웹사이트만",
       "channelMarketplaceLabel": "마켓플레이스만",
       "channelBothLabel": "둘 다",
-      "hiddenCodeInfo": "숨김 프로모션은 고객이 결제 시 이 코드를 입력할 때만 적용됩니다."
+      "hiddenCodeInfo": "숨김 프로모션은 고객이 결제 시 이 코드를 입력할 때만 적용됩니다.",
+      "vipLockedTitle": "VIP 전용 — 연결됨: {groups}",
+      "vipLockedDesc": "이 프로모션은 결제 시 해당 VIP 회원에게만 자동 적용됩니다. 공개 메뉴, 배너, 웹사이트에는 절대 표시되지 않으며 어떤 표시 스위치로도 바꿀 수 없습니다. 공개하려면 먼저 VIP 그룹 페이지에서 연결을 해제하세요."
     },
     "customersList": {
       "heading": "고객",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "카테고리로 제외됨",
       "excludeFailed": "저장하지 못했습니다 — 다시 시도하세요.",
       "excludeLoading": "메뉴 불러오는 중…",
-      "excludeNone": "아직 카테고리가 없습니다."
+      "excludeNone": "아직 카테고리가 없습니다.",
+      "whyVip": "VIP 전용 — 공개 표시 안 됨",
+      "whyVipTip": "VIP 그룹 또는 회원에 연결됨 — 해당 회원에게만 자동 적용되며 공개 메뉴나 웹사이트에는 표시되지 않습니다. 공개하려면 VIP 그룹 페이지에서 연결을 해제하세요.",
+      "whyMarketplace": "마켓플레이스 전용",
+      "whyMarketplaceTip": "마켓플레이스 고객 전용 — 웹사이트나 주문 페이지에는 표시되지 않습니다. 변경하려면 프로모션 채널을 수정하세요.",
+      "whyBannerOff": "배너 카드 꺼짐",
+      "whyBannerOffTip": "“고객 배너에 표시”가 꺼져 있어 이 프로모션은 주문 페이지나 웹사이트에 카드가 없습니다 — 결제 시에는 여전히 적용됩니다. 홍보하려면 편집기에서 켜세요."
     },
     "legacyWebsitePage": {
       "backToPublishing": "게시로 돌아가기",

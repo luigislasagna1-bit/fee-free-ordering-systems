@@ -2681,7 +2681,9 @@
       "channelWebsiteLabel": "Your website only",
       "channelMarketplaceLabel": "Marketplace only",
       "channelBothLabel": "Both",
-      "hiddenCodeInfo": "Hidden promotions only apply when the customer enters this code at checkout."
+      "hiddenCodeInfo": "Hidden promotions only apply when the customer enters this code at checkout.",
+      "vipLockedTitle": "VIP only — attached to: {groups}",
+      "vipLockedDesc": "This promotion auto-applies only for those VIP members at checkout. It never shows on your public menu, banner, or website — no visibility switch can change that. To make it public, detach it on the VIP Groups page first."
     },
     "customersList": {
       "heading": "Customers",
@@ -3737,7 +3739,13 @@
       "excludeViaCategory": "Excluded via category",
       "excludeFailed": "Couldn't save — try again.",
       "excludeLoading": "Loading your menu…",
-      "excludeNone": "No menu categories yet."
+      "excludeNone": "No menu categories yet.",
+      "whyVip": "VIP only — not shown publicly",
+      "whyVipTip": "Attached to a VIP group or member — it auto-applies for them only and never appears on the public menu or website. Detach it on the VIP Groups page to make it public.",
+      "whyMarketplace": "Marketplace only",
+      "whyMarketplaceTip": "Channelled to marketplace customers only — it doesn't show on your website or ordering page. Edit the promo's channel to change this.",
+      "whyBannerOff": "Banner card off",
+      "whyBannerOffTip": "“Show on customer banner” is off, so this promo has no card on the ordering page or website — it still applies at checkout. Turn the toggle on in the promo editor to advertise it."
     },
     "phoneOrderingPage": {
       "backToAdmin": "Back to admin",

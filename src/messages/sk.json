@@ -2957,7 +2957,9 @@
       "channelWebsiteLabel": "Iba váš web",
       "channelMarketplaceLabel": "Iba Marketplace",
       "channelBothLabel": "Oboje",
-      "hiddenCodeInfo": "Skryté akcie sa uplatnia iba vtedy, keď zákazník pri platbe zadá tento kód."
+      "hiddenCodeInfo": "Skryté akcie sa uplatnia iba vtedy, keď zákazník pri platbe zadá tento kód.",
+      "vipLockedTitle": "Len VIP — pripojené k: {groups}",
+      "vipLockedDesc": "Táto akcia sa automaticky uplatní len pre týchto VIP členov pri pokladni. Nikdy sa nezobrazí vo verejnom menu, banneri ani na webe — žiadny prepínač viditeľnosti to nezmení. Ak ju chcete zverejniť, najprv ju odpojte na stránke VIP skupiny."
     },
     "customersList": {
       "heading": "Zákazníci",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Vylúčené cez kategóriu",
       "excludeFailed": "Uloženie zlyhalo — skúste znova.",
       "excludeLoading": "Načítava sa menu…",
-      "excludeNone": "Zatiaľ žiadne kategórie."
+      "excludeNone": "Zatiaľ žiadne kategórie.",
+      "whyVip": "Len VIP — verejne sa nezobrazuje",
+      "whyVipTip": "Pripojená k VIP skupine alebo členovi — platí automaticky len pre nich a nikdy sa nezobrazí vo verejnom menu ani na webe. Odpojte ju na stránke VIP skupiny, aby bola verejná.",
+      "whyMarketplace": "Len marketplace",
+      "whyMarketplaceTip": "Určená len zákazníkom marketplace — nezobrazuje sa na webe ani na objednávkovej stránke. Zmeňte kanál akcie.",
+      "whyBannerOff": "Karta bannera vypnutá",
+      "whyBannerOffTip": "„Zobraziť na zákazníckom banneri“ je vypnuté — akcia nemá kartu na objednávkovej stránke ani webe, pri pokladni však stále platí. Zapnite prepínač v editore."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Späť na publikovanie",

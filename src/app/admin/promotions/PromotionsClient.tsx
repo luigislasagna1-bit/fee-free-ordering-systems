@@ -123,6 +123,28 @@ function PromoCard({
                 {t("badgeHidden")}
               </span>
             )}
+            {/* WHY-NOT-PUBLIC badges (Luigi 2026-07-02 — "10+ promos enabled
+                but only 1 shows"; every non-obvious reason a promo won't tile
+                on the public page/website is now stated on its row). Hidden
+                code-only promos already carry the badge above. */}
+            {promo.isActive && promo.displayMode !== "hidden_coupon_only" && (
+              (((promo as any)._count?.groupLinks ?? 0) > 0) ? (
+                <span className="inline-flex items-center gap-1 text-xs bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full border border-amber-200" title={t("whyVipTip")}>
+                  <EyeOff className="w-3 h-3" />
+                  {t("whyVip")}
+                </span>
+              ) : promo.channel === "marketplace" ? (
+                <span className="inline-flex items-center gap-1 text-xs bg-sky-50 text-sky-700 px-2 py-0.5 rounded-full border border-sky-200" title={t("whyMarketplaceTip")}>
+                  <EyeOff className="w-3 h-3" />
+                  {t("whyMarketplace")}
+                </span>
+              ) : !(promo as any).showOnBanner ? (
+                <span className="inline-flex items-center gap-1 text-xs bg-slate-50 text-slate-600 px-2 py-0.5 rounded-full border border-slate-200" title={t("whyBannerOffTip")}>
+                  <EyeOff className="w-3 h-3" />
+                  {t("whyBannerOff")}
+                </span>
+              ) : null
+            )}
           </div>
           <div className="text-sm text-gray-500">{typeInfo.label}</div>
           {promo.description && (

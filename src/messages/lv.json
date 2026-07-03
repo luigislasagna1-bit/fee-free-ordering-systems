@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Tikai jūsu vietne",
       "channelMarketplaceLabel": "Tikai Marketplace",
       "channelBothLabel": "Abi",
-      "hiddenCodeInfo": "Slēptās akcijas tiek piemērotas tikai tad, kad klients norēķinoties ievada šo kodu."
+      "hiddenCodeInfo": "Slēptās akcijas tiek piemērotas tikai tad, kad klients norēķinoties ievada šo kodu.",
+      "vipLockedTitle": "Tikai VIP — piesaistīts: {groups}",
+      "vipLockedDesc": "Šī akcija automātiski attiecas tikai uz šiem VIP biedriem norēķinos. Tā nekad neparādās publiskajā ēdienkartē, banerī vai vietnē — neviens redzamības slēdzis to nemaina. Lai to padarītu publisku, vispirms atvienojiet to lapā VIP grupas."
     },
     "customersList": {
       "heading": "Klienti",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Izslēgts caur kategoriju",
       "excludeFailed": "Neizdevās saglabāt — mēģiniet vēlreiz.",
       "excludeLoading": "Ielādē ēdienkarti…",
-      "excludeNone": "Vēl nav kategoriju."
+      "excludeNone": "Vēl nav kategoriju.",
+      "whyVip": "Tikai VIP — publiski nav redzams",
+      "whyVipTip": "Piesaistīta VIP grupai vai biedram — automātiski attiecas tikai uz viņiem un nekad neparādās publiskajā ēdienkartē vai vietnē. Atvienojiet to lapā VIP grupas, lai padarītu publisku.",
+      "whyMarketplace": "Tikai marketplace",
+      "whyMarketplaceTip": "Paredzēta tikai marketplace klientiem — neparādās vietnē vai pasūtīšanas lapā. Rediģējiet akcijas kanālu.",
+      "whyBannerOff": "Banera kartīte izslēgta",
+      "whyBannerOffTip": "“Rādīt klientu banerī” ir izslēgts, tāpēc akcijai nav kartītes pasūtīšanas lapā vai vietnē — norēķinos tā tomēr darbojas. Ieslēdziet slēdzi redaktorā, lai to reklamētu."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Atpakaļ uz publicēšanu",

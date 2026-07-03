@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "自社サイトのみ",
       "channelMarketplaceLabel": "マーケットプレイスのみ",
       "channelBothLabel": "両方",
-      "hiddenCodeInfo": "非表示のプロモは、お客様が会計時にこのコードを入力した場合にのみ適用されます。"
+      "hiddenCodeInfo": "非表示のプロモは、お客様が会計時にこのコードを入力した場合にのみ適用されます。",
+      "vipLockedTitle": "VIP限定 — 紐づけ先：{groups}",
+      "vipLockedDesc": "このプロモーションは、対象のVIPメンバーにのみチェックアウト時に自動適用されます。公開メニュー・バナー・ウェブサイトには一切表示されず、表示設定では変更できません。公開するには、先にVIPグループページで紐づけを解除してください。"
     },
     "customersList": {
       "heading": "顧客",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "カテゴリで対象外",
       "excludeFailed": "保存できませんでした — もう一度お試しください。",
       "excludeLoading": "メニューを読み込み中…",
-      "excludeNone": "カテゴリはまだありません。"
+      "excludeNone": "カテゴリはまだありません。",
+      "whyVip": "VIP限定 — 公開表示なし",
+      "whyVipTip": "VIPグループまたはメンバーに紐づいています — 対象者にのみ自動適用され、公開メニューやサイトには表示されません。公開するにはVIPグループページで解除してください。",
+      "whyMarketplace": "マーケットプレイス限定",
+      "whyMarketplaceTip": "マーケットプレイスの顧客のみ対象 — あなたのサイトや注文ページには表示されません。変更するにはプロモーションのチャネルを編集してください。",
+      "whyBannerOff": "バナーカード：オフ",
+      "whyBannerOffTip": "「顧客バナーに表示」がオフのため、このプロモーションは注文ページやサイトにカードが出ません — チェックアウトでは適用されます。宣伝するにはエディタでオンにしてください。"
     },
     "legacyWebsitePage": {
       "backToPublishing": "公開設定に戻る",

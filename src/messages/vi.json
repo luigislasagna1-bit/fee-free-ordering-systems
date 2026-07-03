@@ -2223,7 +2223,9 @@
       "channelWebsiteLabel": "Chỉ trang web của bạn",
       "channelMarketplaceLabel": "Chỉ Marketplace",
       "channelBothLabel": "Cả hai",
-      "hiddenCodeInfo": "Khuyến mãi ẩn chỉ áp dụng khi khách hàng nhập mã này lúc thanh toán."
+      "hiddenCodeInfo": "Khuyến mãi ẩn chỉ áp dụng khi khách hàng nhập mã này lúc thanh toán.",
+      "vipLockedTitle": "Chỉ VIP — gắn với: {groups}",
+      "vipLockedDesc": "Khuyến mãi này chỉ tự động áp dụng cho các thành viên VIP đó khi thanh toán. Nó không bao giờ hiển thị trên thực đơn công khai, banner hay website — không công tắc hiển thị nào thay đổi được điều đó. Để công khai, trước tiên hãy gỡ nó ở trang Nhóm VIP."
     },
     "customersList": {
       "heading": "Khách Hàng",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Loại trừ theo danh mục",
       "excludeFailed": "Không lưu được — thử lại.",
       "excludeLoading": "Đang tải thực đơn…",
-      "excludeNone": "Chưa có danh mục."
+      "excludeNone": "Chưa có danh mục.",
+      "whyVip": "Chỉ VIP — không hiển thị công khai",
+      "whyVipTip": "Gắn với nhóm hoặc thành viên VIP — chỉ tự động áp dụng cho họ và không bao giờ hiển thị trên thực đơn công khai hay website. Gỡ ở trang Nhóm VIP để công khai.",
+      "whyMarketplace": "Chỉ marketplace",
+      "whyMarketplaceTip": "Chỉ dành cho khách marketplace — không hiển thị trên website hay trang đặt món. Sửa kênh của khuyến mãi để thay đổi.",
+      "whyBannerOff": "Thẻ banner đang tắt",
+      "whyBannerOffTip": "“Hiện trên banner khách hàng” đang tắt nên khuyến mãi không có thẻ trên trang đặt món hay website — nhưng vẫn áp dụng khi thanh toán. Bật công tắc trong trình sửa để quảng bá."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Quay lại xuất bản",

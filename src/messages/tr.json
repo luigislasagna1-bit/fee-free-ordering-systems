@@ -2223,7 +2223,9 @@
       "channelWebsiteLabel": "Yalnızca web siteniz",
       "channelMarketplaceLabel": "Yalnızca Marketplace",
       "channelBothLabel": "Her ikisi",
-      "hiddenCodeInfo": "Gizli promosyonlar yalnızca müşteri ödeme sırasında bu kodu girdiğinde uygulanır."
+      "hiddenCodeInfo": "Gizli promosyonlar yalnızca müşteri ödeme sırasında bu kodu girdiğinde uygulanır.",
+      "vipLockedTitle": "Yalnızca VIP — bağlı olduğu: {groups}",
+      "vipLockedDesc": "Bu promosyon ödeme sırasında otomatik olarak yalnızca o VIP üyeler için geçerlidir. Genel menünüzde, banner'da veya web sitenizde asla görünmez — hiçbir görünürlük anahtarı bunu değiştiremez. Herkese açmak için önce VIP Grupları sayfasından bağlantısını kaldırın."
     },
     "customersList": {
       "heading": "Müşteriler",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Kategori üzerinden hariç",
       "excludeFailed": "Kaydedilemedi — tekrar deneyin.",
       "excludeLoading": "Menünüz yükleniyor…",
-      "excludeNone": "Henüz kategori yok."
+      "excludeNone": "Henüz kategori yok.",
+      "whyVip": "Yalnızca VIP — herkese gösterilmez",
+      "whyVipTip": "Bir VIP grubuna veya üyeye bağlı — otomatik olarak yalnızca onlara uygulanır ve genel menüde veya web sitesinde asla görünmez. Herkese açmak için VIP Grupları sayfasından bağlantısını kaldırın.",
+      "whyMarketplace": "Yalnızca marketplace",
+      "whyMarketplaceTip": "Yalnızca marketplace müşterilerine yönelik — web sitenizde veya sipariş sayfasında görünmez. Değiştirmek için promosyonun kanalını düzenleyin.",
+      "whyBannerOff": "Banner kartı kapalı",
+      "whyBannerOffTip": "“Müşteri banner'ında göster” kapalı; bu promosyonun sipariş sayfasında veya web sitesinde kartı yok — yine de ödemede uygulanır. Tanıtmak için düzenleyicide anahtarı açın."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Yayınlamaya geri dön",

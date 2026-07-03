@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Samo vaše spletno mesto",
       "channelMarketplaceLabel": "Samo Marketplace",
       "channelBothLabel": "Oboje",
-      "hiddenCodeInfo": "Skrite promocije veljajo le, ko stranka pri plačilu vnese to kodo."
+      "hiddenCodeInfo": "Skrite promocije veljajo le, ko stranka pri plačilu vnese to kodo.",
+      "vipLockedTitle": "Samo VIP — povezano z: {groups}",
+      "vipLockedDesc": "Ta promocija samodejno velja samo za te VIP člane na blagajni. Nikoli se ne prikaže na javnem meniju, pasici ali spletni strani — nobeno stikalo vidnosti tega ne spremeni. Da postane javna, jo najprej odklopite na strani VIP skupine."
     },
     "customersList": {
       "heading": "Stranke",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Izključeno prek kategorije",
       "excludeFailed": "Shranjevanje ni uspelo — poskusite znova.",
       "excludeLoading": "Nalaganje menija…",
-      "excludeNone": "Še ni kategorij."
+      "excludeNone": "Še ni kategorij.",
+      "whyVip": "Samo VIP — ni javno vidno",
+      "whyVipTip": "Povezana z VIP skupino ali članom — samodejno velja samo zanje in se nikoli ne prikaže na javnem meniju ali spletni strani. Odklopite jo na strani VIP skupine, da postane javna.",
+      "whyMarketplace": "Samo marketplace",
+      "whyMarketplaceTip": "Namenjena samo strankam marketplace — ne prikazuje se na spletni strani ali strani za naročanje. Uredite kanal promocije.",
+      "whyBannerOff": "Kartica pasice izklopljena",
+      "whyBannerOffTip": "»Prikaži na pasici za stranke« je izklopljeno, zato promocija nima kartice na strani za naročanje ali spletni strani — na blagajni pa vseeno velja. Vklopite stikalo v urejevalniku, da jo oglašujete."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Nazaj na objavljanje",

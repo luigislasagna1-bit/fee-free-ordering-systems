@@ -2223,7 +2223,9 @@
       "channelWebsiteLabel": "Tylko Twoja witryna",
       "channelMarketplaceLabel": "Tylko Marketplace",
       "channelBothLabel": "Oba",
-      "hiddenCodeInfo": "Ukryte promocje obowiązują tylko wtedy, gdy klient wpisze ten kod przy płatności."
+      "hiddenCodeInfo": "Ukryte promocje obowiązują tylko wtedy, gdy klient wpisze ten kod przy płatności.",
+      "vipLockedTitle": "Tylko VIP — powiązane z: {groups}",
+      "vipLockedDesc": "Ta promocja stosuje się automatycznie tylko dla tych członków VIP przy kasie. Nigdy nie pojawia się w publicznym menu, banerze ani na stronie — żaden przełącznik widoczności tego nie zmieni. Aby ją upublicznić, najpierw odłącz ją na stronie Grupy VIP."
     },
     "customersList": {
       "heading": "Klienci",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Wykluczone przez kategorię",
       "excludeFailed": "Nie udało się zapisać — spróbuj ponownie.",
       "excludeLoading": "Ładowanie menu…",
-      "excludeNone": "Brak kategorii."
+      "excludeNone": "Brak kategorii.",
+      "whyVip": "Tylko VIP — niewidoczne publicznie",
+      "whyVipTip": "Powiązana z grupą lub członkiem VIP — stosuje się automatycznie tylko dla nich i nigdy nie pojawia się w publicznym menu ani na stronie. Odłącz na stronie Grupy VIP, aby ją upublicznić.",
+      "whyMarketplace": "Tylko marketplace",
+      "whyMarketplaceTip": "Skierowana tylko do klientów marketplace — nie pojawia się na stronie ani na stronie zamówień. Zmień kanał promocji, aby to zmienić.",
+      "whyBannerOff": "Karta banera wyłączona",
+      "whyBannerOffTip": "„Pokaż na banerze klienta” jest wyłączone, więc promocja nie ma karty na stronie zamówień ani na stronie — nadal działa przy kasie. Włącz przełącznik w edytorze, aby ją reklamować."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Wróć do publikowania",

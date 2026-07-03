@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Ainult teie veebisait",
       "channelMarketplaceLabel": "Ainult Marketplace",
       "channelBothLabel": "Mõlemad",
-      "hiddenCodeInfo": "Peidetud pakkumised rakenduvad ainult siis, kui klient sisestab selle koodi maksmisel."
+      "hiddenCodeInfo": "Peidetud pakkumised rakenduvad ainult siis, kui klient sisestab selle koodi maksmisel.",
+      "vipLockedTitle": "Ainult VIP — seotud: {groups}",
+      "vipLockedDesc": "See kampaania rakendub automaatselt ainult neile VIP-liikmetele kassas. See ei ilmu kunagi avalikus menüüs, bänneril ega veebilehel — ükski nähtavuse lüliti seda ei muuda. Avalikuks tegemiseks eemaldage see esmalt VIP-rühmade lehel."
     },
     "customersList": {
       "heading": "Kliendid",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Välistatud kategooria kaudu",
       "excludeFailed": "Salvestamine ebaõnnestus — proovige uuesti.",
       "excludeLoading": "Menüü laadimine…",
-      "excludeNone": "Veel pole kategooriaid."
+      "excludeNone": "Veel pole kategooriaid.",
+      "whyVip": "Ainult VIP — avalikult ei kuvata",
+      "whyVipTip": "Seotud VIP-rühma või liikmega — rakendub automaatselt ainult neile ega ilmu kunagi avalikus menüüs või veebilehel. Avalikuks tegemiseks eemaldage see VIP-rühmade lehel.",
+      "whyMarketplace": "Ainult marketplace",
+      "whyMarketplaceTip": "Suunatud ainult marketplace'i klientidele — ei ilmu teie veebilehel ega tellimislehel. Muutke kampaania kanalit.",
+      "whyBannerOff": "Bännerikaart väljas",
+      "whyBannerOffTip": "„Kuva kliendibänneril” on väljas, seega pole kampaanial tellimislehel ega veebilehel kaarti — kassas kehtib see siiski. Reklaamimiseks lülitage lüliti redaktoris sisse."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Tagasi avaldamise juurde",

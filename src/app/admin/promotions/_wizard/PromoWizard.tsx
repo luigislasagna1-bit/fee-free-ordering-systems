@@ -41,6 +41,10 @@ export type WizardProps = {
   /** True when the restaurant is actually listed on the marketplace — gates the
    *  channel (website / marketplace / both) picker in Step 3. Luigi 2026-06-09. */
   isOnMarketplace?: boolean;
+  /** VIP groups / individual targets this promo is attached to (edit mode) —
+   *  replaces the Visible/Hidden + banner controls with a "VIP only" notice,
+   *  because those switches can't make a VIP-linked promo public. Luigi 2026-07-02. */
+  vipGroupNames?: string[];
 };
 
 export type PromoRow = {
@@ -162,7 +166,7 @@ function initialFormFromPromo(p: PromoRow | null | undefined): Step3Form {
 // ─── Component ──────────────────────────────────────────────────────────────
 
 export function PromoWizard(props: WizardProps) {
-  const { mode, hasAdvanced, categories, menuItems, paymentMethods, deliveryZones, initialPromo, currencySymbol = "$", isOnMarketplace = false } =
+  const { mode, hasAdvanced, categories, menuItems, paymentMethods, deliveryZones, initialPromo, currencySymbol = "$", isOnMarketplace = false, vipGroupNames = [] } =
     props;
   const router = useRouter();
   const t = useTranslations("admin.promoWizard");
@@ -388,6 +392,7 @@ export function PromoWizard(props: WizardProps) {
               currencySymbol={currencySymbol}
               isOnMarketplace={isOnMarketplace}
               promotionType={promotionType}
+              vipGroupNames={vipGroupNames}
             />
           )}
         </div>

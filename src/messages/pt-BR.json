@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Apenas seu site",
       "channelMarketplaceLabel": "Apenas Marketplace",
       "channelBothLabel": "Ambos",
-      "hiddenCodeInfo": "Promoções ocultas só são aplicadas quando o cliente insere este código no checkout."
+      "hiddenCodeInfo": "Promoções ocultas só são aplicadas quando o cliente insere este código no checkout.",
+      "vipLockedTitle": "Somente VIP — vinculado a: {groups}",
+      "vipLockedDesc": "Esta promoção se aplica automaticamente apenas para esses membros VIP no checkout. Ela nunca aparece no cardápio público, banner ou site — nenhuma opção de visibilidade muda isso. Para torná-la pública, desvincule-a primeiro na página Grupos VIP."
     },
     "customersList": {
       "heading": "Clientes",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Excluído pela categoria",
       "excludeFailed": "Não foi possível salvar — tente novamente.",
       "excludeLoading": "Carregando seu cardápio…",
-      "excludeNone": "Ainda sem categorias."
+      "excludeNone": "Ainda sem categorias.",
+      "whyVip": "Somente VIP — não visível ao público",
+      "whyVipTip": "Vinculada a um grupo ou membro VIP — aplica-se automaticamente só para eles e nunca aparece no cardápio público nem no site. Desvincule na página Grupos VIP para torná-la pública.",
+      "whyMarketplace": "Somente marketplace",
+      "whyMarketplaceTip": "Canalizada apenas para clientes do marketplace — não aparece no seu site nem na página de pedidos. Edite o canal da promoção para mudar.",
+      "whyBannerOff": "Cartão de banner desligado",
+      "whyBannerOffTip": "“Mostrar no banner do cliente” está desligado, então esta promo não tem cartão na página de pedidos nem no site — ainda assim se aplica no checkout. Ligue a opção no editor para anunciá-la."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Voltar para publicação",

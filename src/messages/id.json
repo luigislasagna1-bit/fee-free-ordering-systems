@@ -2279,7 +2279,9 @@
       "channelWebsiteLabel": "Hanya situs web Anda",
       "channelMarketplaceLabel": "Hanya Marketplace",
       "channelBothLabel": "Keduanya",
-      "hiddenCodeInfo": "Promo tersembunyi hanya berlaku saat pelanggan memasukkan kode ini saat checkout."
+      "hiddenCodeInfo": "Promo tersembunyi hanya berlaku saat pelanggan memasukkan kode ini saat checkout.",
+      "vipLockedTitle": "Khusus VIP — terhubung ke: {groups}",
+      "vipLockedDesc": "Promosi ini otomatis berlaku hanya untuk anggota VIP tersebut saat checkout. Tidak pernah tampil di menu publik, banner, atau situs — tidak ada sakelar visibilitas yang bisa mengubahnya. Untuk menjadikannya publik, lepaskan dulu di halaman Grup VIP."
     },
     "customersList": {
       "heading": "Pelanggan",
@@ -3576,7 +3578,13 @@
       "excludeViaCategory": "Dikecualikan via kategori",
       "excludeFailed": "Gagal menyimpan — coba lagi.",
       "excludeLoading": "Memuat menu Anda…",
-      "excludeNone": "Belum ada kategori."
+      "excludeNone": "Belum ada kategori.",
+      "whyVip": "Khusus VIP — tidak tampil publik",
+      "whyVipTip": "Terhubung ke grup atau anggota VIP — otomatis berlaku hanya untuk mereka dan tidak pernah tampil di menu publik atau situs. Lepaskan di halaman Grup VIP untuk menjadikannya publik.",
+      "whyMarketplace": "Khusus marketplace",
+      "whyMarketplaceTip": "Hanya untuk pelanggan marketplace — tidak tampil di situs atau halaman pemesanan Anda. Ubah kanal promo untuk mengganti.",
+      "whyBannerOff": "Kartu banner mati",
+      "whyBannerOffTip": "“Tampilkan di banner pelanggan” mati, jadi promo ini tidak punya kartu di halaman pemesanan atau situs — tetap berlaku saat checkout. Nyalakan di editor untuk mengiklankannya."
     },
     "legacyWebsitePage": {
       "backToPublishing": "Kembali ke penerbitan",

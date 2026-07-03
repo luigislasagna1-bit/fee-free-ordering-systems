@@ -267,24 +267,28 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       orderBy: { date: "asc" },
       select: { id: true, date: true, endDate: true, rules: true, name: true },
     }),
-    // Active auto-apply promotions to surface as marketing cards on
-    // the hosted site. We filter to autoApply=true so customers see
-    // ONLY offers they can actually use without typing a code (code-
-    // based coupons would feel like a trick if surfaced here — "20%
-    // off!" with no way for the customer to figure out how to claim).
-    // Date window filter: include only promos whose startsAt has
-    // passed AND endsAt is in the future (or null). Cap at 6 so a
-    // restaurant running 20 promos doesn't crowd the page.
+    // ONE advertising rule across both public surfaces (Luigi 2026-07-02 —
+    // his website showed 4 offers while the ordering page showed 1, and two
+    // of the four were member-only): a promo is publicly advertised (website
+    // "Special Offers" AND ordering-page banner strip) when it is
+    //   active + VISIBLE + "Show on customer banner" ON + not VIP-linked +
+    //   channelled to the website + inside its date window.
+    // The previous query keyed on autoApply instead, which (a) LEAKED
+    // VIP-group specials onto the public site, (b) advertised the
+    // marketplace-only promo where it can never apply, and (c) dropped
+    // visible CODE promos (e.g. "20% OFF EVERYTHING · 20OFF") that the
+    // ordering page does show. Cap at 6 so the page doesn't crowd.
     prisma.promotion.findMany({
       where: {
         restaurantId: restaurant.id,
         isActive: true,
-        autoApply: true,
-        // HIDDEN (code-only) promos must never be advertised on the public
-        // marketing site. They're already auto-apply:false (the invariant), so
-        // the autoApply:true filter excludes them — this is the explicit
-        // defence-in-depth guard, mirroring the order-page banner. Luigi 2026-06-27.
         displayMode: { not: "hidden_coupon_only" },
+        showOnBanner: true,
+        // VIP member-only specials (linked to a group/individual) must never
+        // be advertised publicly — mirror of the ordering page's guard.
+        groupLinks: { none: {} },
+        // The hosted marketing site is always the WEBSITE channel.
+        channel: { in: ["website", "both"] },
         OR: [{ startsAt: null }, { startsAt: { lte: new Date() } }],
         AND: [
           {
