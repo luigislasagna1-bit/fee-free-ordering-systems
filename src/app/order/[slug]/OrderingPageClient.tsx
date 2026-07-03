@@ -3041,7 +3041,13 @@ export function OrderingPageClient({
     // codeArg lets callers apply a specific code without waiting for the
     // couponCode state to flush (used by the ?coupon= URL auto-apply). The
     // typed-input callers pass nothing and fall back to the state.
-    const codeToApply = (codeArg ?? couponCode).trim();
+    // HARDENED (Fabrizio cmqtllluu, 2026-07-03): only a STRING arg counts.
+    // The checkout Apply button was wired `onClick={applyCoupon}`, which
+    // passed the click EVENT as codeArg — `.trim()` on it threw before the
+    // fetch, so the button silently did nothing at checkout while the cart's
+    // `() => applyCoupon()` wiring worked. Type-guarding here makes every
+    // call-site shape safe.
+    const codeToApply = (typeof codeArg === "string" ? codeArg : couponCode).trim();
     if (!codeToApply) return;
     setCouponLoading(true);
     try {

@@ -1760,7 +1760,10 @@ export function CheckoutModal({
                       onKeyDown={e => e.key === "Enter" && applyCoupon()}
                     />
                     <button
-                      onClick={applyCoupon} disabled={couponLoading}
+                      // No raw handler reference: it would pass the click EVENT as the
+                      // apply function's optional code arg (the checkout-Apply-dead bug,
+                      // Fabrizio cmqtllluu 2026-07-03).
+                      onClick={() => applyCoupon()} disabled={couponLoading}
                       className="bg-gray-900 text-white text-sm font-semibold px-3 rounded-lg hover:bg-gray-800 transition disabled:opacity-50"
                     >
                       {couponLoading ? "…" : tc("couponApply")}
