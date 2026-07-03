@@ -478,18 +478,18 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   // whether the customer's NAME is prefixed on the same line.
   const showBoth = isDeliveryWithAddr && !!deliveryShowName;
   const showAddress = isDeliveryWithAddr && !deliveryShowName;
-  // Tile lead line, EXACT GloriaFood shape (Luigi's reference photo +
-  // Fabrizio cmqsn52d2, 2026-07-02): ONE line, uniform font, truncating with
-  // "…" when long. Delivery/catering = the FULL address "street №, ZIP, city"
-  // (e.g. "506 Collis Court, L9T5M7, Milton" / "Via Giuseppe Mazzini 13,
-  // 20814, Varedo"); with the show-name option on, the name joins the SAME
-  // line in front — never a second line. Pickup/dine-in = just the name.
-  // Parts already embedded in older flat addresses aren't repeated.
+  // Tile lead layout (Fabrizio + Luigi 2026-07-03 — REVERTS the one-line
+  // "name, address" experiment of 2026-07-02): with BOTH the name option and
+  // an address, the customer's NAME sits on top and the delivery address goes
+  // on its OWN line underneath — never all on one line. The address is
+  // "street №, city" WITHOUT the postal code (Fabrizio: not useful on the
+  // tile). Pickup/dine-in/take-out tiles = just the name. Every customer
+  // name renders at the SAME size as the reservation-tile name (text-base).
   // Kitchen-display capitalization (Luigi 2026-07-03): customers type
   // lowercase ("via giuseppe mazzini 13", "fabrizio pisu") — the tile
   // capitalizes each word for readability. Tokens mixing letters+digits
-  // (postal codes "l9t5m7", units "12b") go fully UPPERCASE; existing inner
-  // capitals ("McMaster") are left alone. Display-only.
+  // (units "12b") go fully UPPERCASE; existing inner capitals ("McMaster")
+  // are left alone. Display-only.
   const displayCaps = (s: string) =>
     s.replace(/\S+/g, (w) =>
       /\d/.test(w) && /[a-z]/i.test(w) ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1),
@@ -500,9 +500,10 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
     if (!addr) return addr;
     const lower = addr.toLowerCase();
     const parts = [addr];
-    for (const extra of [((order as any).deliveryZip ?? "").trim(), ((order as any).deliveryCity ?? "").trim()]) {
-      if (extra && !lower.includes(extra.toLowerCase())) parts.push(extra);
-    }
+    // Append the CITY only (no postal code — Fabrizio 2026-07-03); skip it
+    // when a legacy flat address already embeds it.
+    const city = ((order as any).deliveryCity ?? "").trim();
+    if (city && !lower.includes(city.toLowerCase())) parts.push(city);
     return displayCaps(parts.join(", "));
   })();
 
@@ -557,21 +558,21 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
           )}
         </div>
         <div className="flex-1 min-w-0">
-          {/* Lead line = WHO / WHERE — ONE line for every tile, uniform font,
-              GloriaFood-exact (Luigi's reference photo, 2026-07-02): delivery
-              tiles carry the full address (street №, ZIP, city); with the
-              show-name option on, the name joins the SAME line in front —
-              never a second line. Pickup/dine-in tiles carry just the name.
-              Long content truncates with "…" like the reference. */}
-          {/* text-sm (14px): full "street №, ZIP, city" must fit a PHONE-width
-              tile too, not just the tablet (Luigi 2026-07-03). */}
-          <div className={`font-bold text-sm leading-tight ${t.text} truncate`}>
-            {showBoth
-              ? `${tileName}, ${tileAddress}`
-              : showAddress
-                ? tileAddress
-                : tileName}
+          {/* Lead = WHO on top, WHERE underneath (Fabrizio + Luigi 2026-07-03,
+              reverting the 2026-07-02 one-line experiment): with the show-name
+              option on, a delivery tile shows the customer's NAME (text-base —
+              exactly the reservation-tile size) with the address ("street №,
+              city", no postal code) on its OWN line below. Name option off →
+              the address is the lead. Pickup/dine-in/take-out = name only,
+              same text-base size. Long content truncates with "…". */}
+          <div className={`font-bold text-base leading-tight ${t.text} truncate`}>
+            {showAddress ? tileAddress : tileName}
           </div>
+          {showBoth && (
+            <div className={`text-sm leading-tight ${t.muted} truncate`}>
+              {tileAddress}
+            </div>
+          )}
           {/* Status chip on its own line directly below (GloriaFood-clean,
               Luigi 2026-06-15). Everything else — order #, item count,
               marketplace / first-order / reservation flags — now lives in the
