@@ -2221,6 +2221,35 @@ export function OrderingPageClient({
   }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod, suppressedPromoIds, debouncedIdentity, customerIsReturning, hasOrderedHere, pendingGrantId]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
+
+  // Per-line "You saved X" badges for the CART drawer (Fabrizio cmqv33v2o
+  // follow-up, 2026-07-03 — they only showed at checkout; useful in the cart
+  // too when only SOME items are discounted). Identical attribution to
+  // CheckoutModal's savedForLine: precise engine lineKey first, legacy
+  // sum-by-menuItemId-on-first-matching-line fallback. Whole-cart promos have
+  // no breakdown → no per-line badge (they show in the totals).
+  const drawerSavedForLine = useMemo(() => {
+    const byKey = new Map<string, number>();
+    const byItem = new Map<string, number>();
+    for (const p of promoResults as any[]) {
+      if (!p?.breakdown) continue;
+      for (const b of p.breakdown) {
+        if (b.lineKey != null) byKey.set(String(b.lineKey), (byKey.get(String(b.lineKey)) ?? 0) + b.amount);
+        else byItem.set(b.menuItemId, (byItem.get(b.menuItemId) ?? 0) + b.amount);
+      }
+    }
+    const shown = new Set<string>();
+    return cart.map((ci, i) => {
+      const k = byKey.get(String(i));
+      if (k != null && k > 0) return k;
+      const id = ci.menuItem?.id;
+      if (!id) return 0;
+      const amt = byItem.get(id);
+      if (!amt || shown.has(id)) return 0;
+      shown.add(id);
+      return amt;
+    });
+  }, [promoResults, cart]);
   // ── Promo time-window helpers (shared with the engine via promo-window) ──
   // Is a promo redeemable for the customer's CURRENT order time — ASAP now, or
   // their chosen "order for later" time? Drives the nudge, the free-item
@@ -5182,6 +5211,14 @@ export function OrderingPageClient({
                             {ci.bundlePromoName ?? ci.menuItem.name}
                           </div>
                           {ci.variant && <div className="text-xs mt-0.5 font-medium" style={{ color: theme.primaryColor }}>{ci.variant.name}</div>}
+                          {/* Per-item "You saved" badge — same as checkout, so a
+                              partially-discounted cart shows WHICH dishes the promo
+                              hit right here (Fabrizio cmqv33v2o, 2026-07-03). */}
+                          {drawerSavedForLine[idx] > 0 && (
+                            <span className="inline-flex items-center gap-1 mt-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-2 py-0.5">
+                              <span aria-hidden>👍</span> {tCheckout("youSaved", { amount: fmt(drawerSavedForLine[idx]) })}
+                            </span>
+                          )}
                           {/* Time-restricted item → "Order ahead · <window>" note,
                               mirroring the menu badge so the customer is reminded
                               in the cart that this dish has order-time limits (R4). */}
