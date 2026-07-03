@@ -394,8 +394,8 @@ function Countdown({
 
 
 // ── Order row ─────────────────────────────────────────────────────────────────
-function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown, currency, deliveryShowName, deliveryShowBoth }: {
-  order: Order; selected: boolean; onClick: () => void; t: T; now: number; currency: string; deliveryShowName?: boolean; deliveryShowBoth?: boolean;
+function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown, currency, deliveryShowName }: {
+  order: Order; selected: boolean; onClick: () => void; t: T; now: number; currency: string; deliveryShowName?: boolean;
   /** Optional day-of-week pill (MON/TUE/…) rendered alongside the
    *  order number. Used by the In Progress LATER section so the
    *  kitchen can spot which day each scheduled order is for. */
@@ -472,9 +472,11 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   // tiles correct — a pickup always leads with the NAME, never an address.
   const isDeliveryWithAddr =
     (order.type === "delivery" || order.type === "catering") && !!order.deliveryAddress;
-  // Lead line: address (default) / name / BOTH (name + address). "Both" only
-  // applies when the name lead is on. Luigi 2026-06-22.
-  const showBoth = isDeliveryWithAddr && !!deliveryShowName && !!deliveryShowBoth;
+  // Lead line: a delivery tile ALWAYS carries the address (Luigi 2026-07-03 —
+  // the old "also show the street address" sub-toggle could leave a delivery
+  // tile with NO address, which is never right). The only choice left is
+  // whether the customer's NAME is prefixed on the same line.
+  const showBoth = isDeliveryWithAddr && !!deliveryShowName;
   const showAddress = isDeliveryWithAddr && !deliveryShowName;
   // Tile lead line, EXACT GloriaFood shape (Luigi's reference photo +
   // Fabrizio cmqsn52d2, 2026-07-02): ONE line, uniform font, truncating with
@@ -809,9 +811,8 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   const [deliveryShowName, setDeliveryShowName] = useState<boolean>(
     !!restaurant?.kitchenDeliveryShowName,
   );
-  const [deliveryShowBoth, setDeliveryShowBoth] = useState<boolean>(
-    !!restaurant?.kitchenDeliveryShowBoth,
-  );
+  // kitchenDeliveryShowBoth retired 2026-07-03 (Luigi): a delivery tile
+  // always shows the address now — the only option left is the name prefix.
 
   // Track which reservation IDs the kitchen has already seen — same
   // pattern as seenIdsRef for orders. Lets the fetch loop tell
@@ -2420,7 +2421,6 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       setWorkflowMode(mode);
       setPrintNodeEnabled(pnEnabled);
       setDeliveryShowName(Array.isArray(body) ? false : !!body?.kitchenDeliveryShowName);
-      setDeliveryShowBoth(Array.isArray(body) ? false : !!body?.kitchenDeliveryShowBoth);
     } catch {}
   }, []);
 
@@ -3647,7 +3647,6 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                     key={`o-${it.order.id}`}
                     order={it.order}
                     deliveryShowName={deliveryShowName}
-                    deliveryShowBoth={deliveryShowBoth}
                     selected={selectedId === it.order.id}
                     onClick={() => {
                       // Clicking any order — including a new/ringing pending one

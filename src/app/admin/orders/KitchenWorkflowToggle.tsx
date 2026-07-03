@@ -33,7 +33,6 @@ export function KitchenWorkflowToggle({
   initialAutoCall = false,
   initialKitchenVibrate = true,
   initialDeliveryShowName = false,
-  initialDeliveryShowBoth = false,
   initialShowItemCategory = false,
   storePhone = null,
   initialAlertPhone = null,
@@ -45,10 +44,9 @@ export function KitchenWorkflowToggle({
   initialAutoCall?: boolean;
   /** Kitchen device alarm: vibrate alongside the ring (default true). */
   initialKitchenVibrate?: boolean;
-  /** Delivery tile leads with the customer name vs the street address (default false). */
+  /** Prefix the customer name on delivery tiles (the address always shows;
+   *  the old "also show address" sub-toggle was retired 2026-07-03). */
   initialDeliveryShowName?: boolean;
-  /** Also show the street address under the name on delivery tiles (default false). */
-  initialDeliveryShowBoth?: boolean;
   /** Show each dish's menu category on incoming orders (default false). */
   initialShowItemCategory?: boolean;
   /** The restaurant's public phone — the default alert target. */
@@ -84,8 +82,6 @@ export function KitchenWorkflowToggle({
   const [savingVibrate, setSavingVibrate] = useState(false);
   const [deliveryShowName, setDeliveryShowName] = useState<boolean>(initialDeliveryShowName);
   const [savingDeliveryName, setSavingDeliveryName] = useState(false);
-  const [deliveryShowBoth, setDeliveryShowBoth] = useState<boolean>(initialDeliveryShowBoth);
-  const [savingDeliveryBoth, setSavingDeliveryBoth] = useState(false);
   const [showItemCategory, setShowItemCategory] = useState<boolean>(initialShowItemCategory);
   const [savingItemCategory, setSavingItemCategory] = useState(false);
   // The number the system will actually ring: dedicated alert number else store phone.
@@ -217,24 +213,9 @@ export function KitchenWorkflowToggle({
     }
   }
 
-  async function toggleDeliveryBoth(enabled: boolean) {
-    setSavingDeliveryBoth(true);
-    setDeliveryShowBoth(enabled); // optimistic
-    try {
-      const res = await fetch("/api/restaurants/profile", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ kitchenDeliveryShowBoth: enabled }),
-      });
-      if (!res.ok) throw new Error("Failed to save");
-      toast.success(t("displaySavedToast"));
-    } catch {
-      setDeliveryShowBoth(!enabled);
-      toast.error(t("saveErrorToast"));
-    } finally {
-      setSavingDeliveryBoth(false);
-    }
-  }
+  // toggleDeliveryBoth retired 2026-07-03 (Luigi): the delivery tile always
+  // shows the address now — turning it off could leave a delivery order with
+  // no address at all. Only the name prefix remains configurable.
 
   async function toggleItemCategory(enabled: boolean) {
     setSavingItemCategory(true);
@@ -609,36 +590,9 @@ export function KitchenWorkflowToggle({
             }`} />
           </button>
         </div>
-        {/* Sub-toggle: ALSO show the street address under the name → "Name —
-            then Address". Only relevant (and shown) while the name lead is on.
-            Luigi 2026-06-22. */}
-        {deliveryShowName && (
-          <div className="px-5 py-3 flex items-center gap-3 border-t border-gray-100 bg-gray-50/40">
-            <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
-              deliveryShowBoth ? "bg-teal-100 text-teal-700" : "bg-gray-100 text-gray-400"
-            }`}>
-              <MapPin className="w-5 h-5" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium text-gray-900 leading-snug">
-                {t("deliveryBothLabel")}
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={() => toggleDeliveryBoth(!deliveryShowBoth)}
-              disabled={savingDeliveryBoth}
-              aria-label={t("deliveryBothLabel")}
-              className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${
-                deliveryShowBoth ? "bg-teal-500" : "bg-gray-300"
-              } ${savingDeliveryBoth ? "opacity-50" : ""}`}
-            >
-              <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${
-                deliveryShowBoth ? "translate-x-6" : "translate-x-0"
-              }`} />
-            </button>
-          </div>
-        )}
+        {/* The old "also show the street address" sub-toggle was retired
+            2026-07-03 (Luigi): a delivery tile always shows the address now;
+            this switch only controls whether the NAME is prefixed. */}
       </div>
       )}
 
