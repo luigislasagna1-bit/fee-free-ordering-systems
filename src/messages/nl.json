@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Uitgesloten via categorie",
       "excludeFailed": "Opslaan mislukt — probeer opnieuw.",
       "excludeLoading": "Menu laden…",
-      "excludeNone": "Nog geen categorieën."
+      "excludeNone": "Nog geen categorieën.",
+      "redeemExcludeTitle": "Items die niet met {label} betaald kunnen worden",
+      "redeemExcludeHelp": "Klanten kunnen geen {label} uitgeven aan uitgesloten items of categorieën (bijv. cadeaubonnen — tegoed hoort geen tegoed te kopen). De checkout verlaagt automatisch het toepasbare {label}-bedrag. Los van de verdien-uitsluiting hierboven en de kortingsuitsluiting op de Promotiepagina.",
+      "redeemExcludeDesc": "Kies categorieën of items die klanten niet met {label} kunnen betalen.",
+      "redeemExcludeOn": "Betaalbaar",
+      "redeemExcludeOff": "Niet betaalbaar"
     }
   },
   "impersonation": {

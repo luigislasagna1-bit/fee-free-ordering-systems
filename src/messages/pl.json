@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Wykluczone przez kategorię",
       "excludeFailed": "Nie udało się zapisać — spróbuj ponownie.",
       "excludeLoading": "Ładowanie menu…",
-      "excludeNone": "Brak kategorii."
+      "excludeNone": "Brak kategorii.",
+      "redeemExcludeTitle": "Produkty, za które nie można płacić {label}",
+      "redeemExcludeHelp": "Klienci nie mogą wydawać {label} na wykluczone produkty lub kategorie (np. karty podarunkowe — środki nie powinny kupować środków). Kasa automatycznie obniża kwotę {label} do wykorzystania. Niezależne od wykluczenia zdobywania powyżej i wykluczenia zniżek na stronie Promocje.",
+      "redeemExcludeDesc": "Wybierz kategorie lub produkty, za które klienci nie mogą płacić {label}.",
+      "redeemExcludeOn": "Płatne",
+      "redeemExcludeOff": "Nie do zapłaty"
     }
   },
   "impersonation": {

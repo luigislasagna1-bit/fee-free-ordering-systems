@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { HelpTip } from "@/components/HelpTip";
 import { EarnRulesEditor } from "./EarnRulesEditor";
-import { EarnExclusions } from "./EarnExclusions";
+import { EarnExclusions, RedeemExclusions } from "./EarnExclusions";
 
 interface Initial {
   rewardsEnabled: boolean;
@@ -185,6 +185,11 @@ export function RewardsClient({ currency, initial }: { currency: string; initial
               </label>
             </div>
           </div>
+
+          {/* Exclude categories/items from being PAID FOR with credit (e.g. gift
+              cards). Separate switch from both the EARN exclusion above and the
+              promo-discount exclusion on /admin/promotions. Luigi 2026-07-02. */}
+          <RedeemExclusions label={pluralPreview} />
 
           {/* Sign-up bonus (always-on). For a limited-time / dated sign-up offer,
               the owner uses "Ways to earn → When a customer signs up" above. */}

@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Loại trừ theo danh mục",
       "excludeFailed": "Không lưu được — thử lại.",
       "excludeLoading": "Đang tải thực đơn…",
-      "excludeNone": "Chưa có danh mục."
+      "excludeNone": "Chưa có danh mục.",
+      "redeemExcludeTitle": "Mặt hàng không thể thanh toán bằng {label}",
+      "redeemExcludeHelp": "Khách không thể dùng {label} cho các mặt hàng hoặc danh mục bị loại trừ (vd. thẻ quà tặng — tín dụng không nên mua tín dụng). Thanh toán tự động giảm số {label} có thể áp dụng. Tách biệt với loại trừ tích lũy ở trên và loại trừ giảm giá ở trang Khuyến mãi.",
+      "redeemExcludeDesc": "Chọn danh mục hoặc mặt hàng khách không thể thanh toán bằng {label}.",
+      "redeemExcludeOn": "Thanh toán được",
+      "redeemExcludeOff": "Không thanh toán được"
     }
   },
   "impersonation": {

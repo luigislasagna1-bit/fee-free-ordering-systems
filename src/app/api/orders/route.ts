@@ -500,22 +500,31 @@ export async function POST(req: NextRequest) {
         category: {
           select: {
             isCatering: true,
-            // Gift-card guard — category-level promo exclusion ORs with the
-            // item's own flag when building the engine's cart items below.
+            // Gift-card guards — category-level flags OR with the item's own
+            // when building the engine's cart items / redeem base below.
             promoExcluded: true,
+            rewardRedeemExcluded: true,
             modifierGroups: { include: { options: { where: { isAvailable: true } } } },
           },
         },
       },
     });
     const menuItemMap = new Map(menuItems.map((m) => [m.id, m]));
-    // Lines that must never be discounted by any promo/coupon nor paid for
-    // with reward credit (gift cards). Same item||category resolution the
-    // apply-promos preview does, so preview == charge. Luigi 2026-07-01.
+    // Two INDEPENDENT exclusions (Luigi 2026-07-02 — "no discounts" and "no
+    // paying with store credit" are separate business choices):
+    //   promoExcluded        → the line never receives a promo/coupon discount
+    //   rewardRedeemExcluded → the line can't be PAID FOR with Reward Dollars
+    // Same item||category resolution the apply-promos preview does, so
+    // preview == charge for both.
     const isPromoExcludedItem = (menuItemId: string | null): boolean => {
       if (!menuItemId) return false;
       const m = menuItemMap.get(menuItemId);
       return !!(m && ((m as any).promoExcluded || (m as any).category?.promoExcluded));
+    };
+    const isRedeemExcludedItem = (menuItemId: string | null): boolean => {
+      if (!menuItemId) return false;
+      const m = menuItemMap.get(menuItemId);
+      return !!(m && ((m as any).rewardRedeemExcluded || (m as any).category?.rewardRedeemExcluded));
     };
 
     // Authoritative bundle pricing (audit B3/B6): bundle lines used to trust the
@@ -2022,14 +2031,18 @@ export async function POST(req: NextRequest) {
           // sessionCustomerId is the server-verified signed-in Customer only.
           if (promoCtx.sessionCustomerId) {
             const onlineCharge = (paymentMethod || "cash") === "card" || (paymentMethod || "cash") === "paypal";
+            // Redeemable base excludes rewardRedeemExcluded lines (its OWN
+            // flag, independent of promo exclusion) — e.g. store credit
+            // can't buy store credit. The cart preview subtracts the same
+            // redeemExcludedTotal, so the offered max matches this clamp.
+            const redeemExcludedLinesTotal = Math.round(
+              validatedItems.reduce((s, i) => s + (isRedeemExcludedItem(i.menuItemId) ? i.subtotal : 0), 0) * 100,
+            ) / 100;
             const claim = await reserveReward({
               restaurantId: restaurant.id,
               customerId: promoCtx.sessionCustomerId,
               requested,
-              // Redeemable base excludes gift-card lines — store credit can't
-              // buy store credit. The cart preview subtracts the same
-              // redeemExcludedTotal, so the offered max matches this clamp.
-              orderTotal: Math.max(0, Math.round((serverTotal - promoExcludedLinesTotal) * 100) / 100),
+              orderTotal: Math.max(0, Math.round((serverTotal - redeemExcludedLinesTotal) * 100) / 100),
               minRedeemBalance: restaurant.rewardMinRedeemBalance ?? 0,
               maxRedeemPercent: restaurant.rewardMaxRedeemPercent ?? 100,
               minCharge: onlineCharge ? 0.5 : 0,

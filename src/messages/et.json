@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Välistatud kategooria kaudu",
       "excludeFailed": "Salvestamine ebaõnnestus — proovige uuesti.",
       "excludeLoading": "Menüü laadimine…",
-      "excludeNone": "Veel pole kategooriaid."
+      "excludeNone": "Veel pole kategooriaid.",
+      "redeemExcludeTitle": "Tooted, mida ei saa maksta {label}",
+      "redeemExcludeHelp": "Kliendid ei saa kulutada {label} välistatud toodetele või kategooriatele (nt kinkekaardid — krediit ei tohiks osta krediiti). Kassa vähendab automaatselt rakendatavat {label} summat. Eraldi ülaltoodud teenimise välistusest ja Promotsioonide lehe allahindluse välistusest.",
+      "redeemExcludeDesc": "Valige kategooriad või tooted, mida kliendid ei saa maksta {label}.",
+      "redeemExcludeOn": "Makstav",
+      "redeemExcludeOff": "Ei ole makstav"
     }
   },
   "impersonation": {

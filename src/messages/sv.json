@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Undantagen via kategori",
       "excludeFailed": "Kunde inte spara — försök igen.",
       "excludeLoading": "Laddar din meny…",
-      "excludeNone": "Inga kategorier ännu."
+      "excludeNone": "Inga kategorier ännu.",
+      "redeemExcludeTitle": "Varor som inte kan betalas med {label}",
+      "redeemExcludeHelp": "Kunder kan inte spendera {label} på undantagna varor eller kategorier (t.ex. presentkort — saldo ska inte köpa saldo). Kassan sänker automatiskt beloppet {label} som kan användas. Separat från intjänings-undantaget ovan och rabatt-undantaget på kampanjsidan.",
+      "redeemExcludeDesc": "Välj kategorier eller varor som kunder inte kan betala med {label}.",
+      "redeemExcludeOn": "Betalbar",
+      "redeemExcludeOff": "Ej betalbar"
     }
   },
   "impersonation": {

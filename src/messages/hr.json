@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Isključeno putem kategorije",
       "excludeFailed": "Spremanje nije uspjelo — pokušajte ponovno.",
       "excludeLoading": "Učitavanje jelovnika…",
-      "excludeNone": "Još nema kategorija."
+      "excludeNone": "Još nema kategorija.",
+      "redeemExcludeTitle": "Stavke koje se ne mogu platiti s {label}",
+      "redeemExcludeHelp": "Kupci ne mogu trošiti {label} na isključene stavke ili kategorije (npr. poklon-bonovi — kredit ne smije kupovati kredit). Naplata automatski smanjuje primjenjivi iznos {label}. Odvojeno od isključenja zarade iznad i isključenja popusta na stranici Promocije.",
+      "redeemExcludeDesc": "Odaberite kategorije ili stavke koje kupci ne mogu platiti s {label}.",
+      "redeemExcludeOn": "Plativo",
+      "redeemExcludeOff": "Nije plativo"
     }
   },
   "impersonation": {

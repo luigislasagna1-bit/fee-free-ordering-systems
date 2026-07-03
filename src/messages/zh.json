@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "通过类别排除",
       "excludeFailed": "保存失败 — 请重试。",
       "excludeLoading": "正在加载您的菜单…",
-      "excludeNone": "暂无菜单类别。"
+      "excludeNone": "暂无菜单类别。",
+      "redeemExcludeTitle": "不能用{label}支付的商品",
+      "redeemExcludeHelp": "顾客不能用{label}购买被排除的商品或类别（如礼品卡——余额不应购买余额）。结账时会自动降低可使用的{label}金额。与上方的赚取排除和促销页的折扣排除相互独立。",
+      "redeemExcludeDesc": "选择顾客不能用{label}支付的类别或商品。",
+      "redeemExcludeOn": "可支付",
+      "redeemExcludeOff": "不可支付"
     }
   },
   "impersonation": {

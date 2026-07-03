@@ -4279,7 +4279,12 @@
       "excludeViaCategory": "Excluded via category",
       "excludeFailed": "Couldn't save — try again.",
       "excludeLoading": "Loading your menu…",
-      "excludeNone": "No menu categories yet."
+      "excludeNone": "No menu categories yet.",
+      "redeemExcludeTitle": "Items that can't be paid with {label}",
+      "redeemExcludeHelp": "Customers can't spend {label} on excluded items or categories (e.g. gift cards — store credit shouldn't buy store credit). The checkout automatically lowers the amount of {label} they can apply. This is separate from the earning exclusion above and from the promo-discount exclusion on the Promotions page.",
+      "redeemExcludeDesc": "Pick categories or items customers can't pay for with {label}.",
+      "redeemExcludeOn": "Payable",
+      "redeemExcludeOff": "Not payable"
     },
     "customerGroups": {
       "title": "VIP Groups",

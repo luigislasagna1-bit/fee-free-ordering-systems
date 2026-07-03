@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Undtaget via kategori",
       "excludeFailed": "Kunne ikke gemme — prøv igen.",
       "excludeLoading": "Indlæser din menu…",
-      "excludeNone": "Ingen kategorier endnu."
+      "excludeNone": "Ingen kategorier endnu.",
+      "redeemExcludeTitle": "Varer der ikke kan betales med {label}",
+      "redeemExcludeHelp": "Kunder kan ikke bruge {label} på undtagne varer eller kategorier (f.eks. gavekort — kredit skal ikke købe kredit). Kassen sænker automatisk det anvendelige {label}-beløb. Adskilt fra optjenings-undtagelsen ovenfor og rabat-undtagelsen på kampagnesiden.",
+      "redeemExcludeDesc": "Vælg kategorier eller varer, som kunder ikke kan betale med {label}.",
+      "redeemExcludeOn": "Kan betales",
+      "redeemExcludeOff": "Kan ikke betales"
     }
   },
   "impersonation": {

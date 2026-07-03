@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Neįtraukta per kategoriją",
       "excludeFailed": "Nepavyko išsaugoti — bandykite dar kartą.",
       "excludeLoading": "Įkeliamas meniu…",
-      "excludeNone": "Kategorijų dar nėra."
+      "excludeNone": "Kategorijų dar nėra.",
+      "redeemExcludeTitle": "Prekės, už kurias negalima mokėti {label}",
+      "redeemExcludeHelp": "Klientai negali leisti {label} neįtrauktoms prekėms ar kategorijoms (pvz., dovanų kortelėms — kreditas neturėtų pirkti kredito). Kasoje automatiškai sumažinama pritaikoma {label} suma. Atskira nuo aukščiau esančio uždirbimo neįtraukimo ir nuolaidų neįtraukimo Akcijų puslapyje.",
+      "redeemExcludeDesc": "Pasirinkite kategorijas ar prekes, už kurias klientai negali mokėti {label}.",
+      "redeemExcludeOn": "Apmokama",
+      "redeemExcludeOff": "Neapmokama"
     }
   },
   "impersonation": {

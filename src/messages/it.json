@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Escluso tramite categoria",
       "excludeFailed": "Salvataggio non riuscito — riprova.",
       "excludeLoading": "Caricamento del menu…",
-      "excludeNone": "Nessuna categoria ancora."
+      "excludeNone": "Nessuna categoria ancora.",
+      "redeemExcludeTitle": "Articoli non pagabili con {label}",
+      "redeemExcludeHelp": "I clienti non possono spendere {label} su articoli o categorie esclusi (es. buoni regalo — il credito non deve comprare credito). Il checkout riduce automaticamente l'importo di {label} applicabile. Indipendente dall'esclusione dei guadagni sopra e dall'esclusione sconti della pagina Promozioni.",
+      "redeemExcludeDesc": "Scegli categorie o articoli che i clienti non possono pagare con {label}.",
+      "redeemExcludeOn": "Pagabile",
+      "redeemExcludeOff": "Non pagabile"
     }
   },
   "impersonation": {

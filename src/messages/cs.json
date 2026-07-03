@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Vyloučeno přes kategorii",
       "excludeFailed": "Uložení se nezdařilo — zkuste to znovu.",
       "excludeLoading": "Načítání menu…",
-      "excludeNone": "Zatím žádné kategorie."
+      "excludeNone": "Zatím žádné kategorie.",
+      "redeemExcludeTitle": "Položky, které nelze platit {label}",
+      "redeemExcludeHelp": "Zákazníci nemohou utrácet {label} za vyloučené položky nebo kategorie (např. dárkové karty — kredit nemá kupovat kredit). Pokladna automaticky sníží uplatnitelnou částku {label}. Nezávislé na vyloučení získávání výše i na vyloučení slev na stránce Akce.",
+      "redeemExcludeDesc": "Vyberte kategorie nebo položky, které zákazníci nemohou platit {label}.",
+      "redeemExcludeOn": "Lze platit",
+      "redeemExcludeOff": "Nelze platit"
     }
   },
   "impersonation": {

@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Kategórián keresztül kizárva",
       "excludeFailed": "A mentés sikertelen — próbálja újra.",
       "excludeLoading": "Menü betöltése…",
-      "excludeNone": "Még nincsenek kategóriák."
+      "excludeNone": "Még nincsenek kategóriák.",
+      "redeemExcludeTitle": "Termékek, amelyek nem fizethetők {label} egyenleggel",
+      "redeemExcludeHelp": "Az ügyfelek nem költhetnek {label} egyenleget a kizárt termékekre vagy kategóriákra (pl. ajándékkártyák — egyenleg ne vásároljon egyenleget). A pénztár automatikusan csökkenti a felhasználható {label} összegét. Független a fenti gyűjtési kizárástól és a Promóciók oldal kedvezmény-kizárásától.",
+      "redeemExcludeDesc": "Válassza ki a kategóriákat vagy termékeket, amelyeket az ügyfelek nem fizethetnek {label} egyenleggel.",
+      "redeemExcludeOn": "Fizethető",
+      "redeemExcludeOff": "Nem fizethető"
     }
   },
   "impersonation": {

@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Kategori üzerinden hariç",
       "excludeFailed": "Kaydedilemedi — tekrar deneyin.",
       "excludeLoading": "Menünüz yükleniyor…",
-      "excludeNone": "Henüz kategori yok."
+      "excludeNone": "Henüz kategori yok.",
+      "redeemExcludeTitle": "{label} ile ödenemeyen ürünler",
+      "redeemExcludeHelp": "Müşteriler hariç tutulan ürün veya kategorilerde {label} harcayamaz (ör. hediye kartları — bakiye bakiye satın almamalı). Ödeme adımı uygulanabilir {label} tutarını otomatik düşürür. Yukarıdaki kazanma hariç tutmasından ve Promosyonlar sayfasındaki indirim hariç tutmasından bağımsızdır.",
+      "redeemExcludeDesc": "Müşterilerin {label} ile ödeyemeyeceği kategorileri veya ürünleri seçin.",
+      "redeemExcludeOn": "Ödenebilir",
+      "redeemExcludeOff": "Ödenemez"
     }
   },
   "impersonation": {

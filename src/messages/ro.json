@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Exclus prin categorie",
       "excludeFailed": "Salvarea a eșuat — încercați din nou.",
       "excludeLoading": "Se încarcă meniul…",
-      "excludeNone": "Încă nicio categorie."
+      "excludeNone": "Încă nicio categorie.",
+      "redeemExcludeTitle": "Articole care nu pot fi plătite cu {label}",
+      "redeemExcludeHelp": "Clienții nu pot cheltui {label} pe articolele sau categoriile excluse (ex. carduri cadou — creditul nu trebuie să cumpere credit). Checkout-ul reduce automat suma de {label} aplicabilă. Separată de excluderea acumulării de mai sus și de excluderea reducerilor din pagina Promoții.",
+      "redeemExcludeDesc": "Alegeți categoriile sau articolele pe care clienții nu le pot plăti cu {label}.",
+      "redeemExcludeOn": "Plătibil",
+      "redeemExcludeOff": "Nu se plătește"
     }
   },
   "impersonation": {

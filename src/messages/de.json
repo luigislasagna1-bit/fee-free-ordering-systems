@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Über Kategorie ausgeschlossen",
       "excludeFailed": "Speichern fehlgeschlagen — bitte erneut versuchen.",
       "excludeLoading": "Menü wird geladen…",
-      "excludeNone": "Noch keine Kategorien."
+      "excludeNone": "Noch keine Kategorien.",
+      "redeemExcludeTitle": "Artikel, die nicht mit {label} bezahlt werden können",
+      "redeemExcludeHelp": "Kunden können {label} nicht für ausgeschlossene Artikel oder Kategorien ausgeben (z. B. Geschenkkarten — Guthaben soll kein Guthaben kaufen). Der Checkout senkt automatisch den einsetzbaren {label}-Betrag. Unabhängig vom Verdienst-Ausschluss oben und vom Rabatt-Ausschluss auf der Aktionsseite.",
+      "redeemExcludeDesc": "Wählen Sie Kategorien oder Artikel, die Kunden nicht mit {label} bezahlen können.",
+      "redeemExcludeOn": "Bezahlbar",
+      "redeemExcludeOff": "Nicht bezahlbar"
     }
   },
   "impersonation": {

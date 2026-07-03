@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Izslēgts caur kategoriju",
       "excludeFailed": "Neizdevās saglabāt — mēģiniet vēlreiz.",
       "excludeLoading": "Ielādē ēdienkarti…",
-      "excludeNone": "Vēl nav kategoriju."
+      "excludeNone": "Vēl nav kategoriju.",
+      "redeemExcludeTitle": "Preces, ko nevar apmaksāt ar {label}",
+      "redeemExcludeHelp": "Klienti nevar tērēt {label} izslēgtām precēm vai kategorijām (piem., dāvanu kartēm — kredītam nevajadzētu pirkt kredītu). Norēķins automātiski samazina piemērojamo {label} summu. Atsevišķi no pelnīšanas izslēgšanas augstāk un atlaižu izslēgšanas lapā Akcijas.",
+      "redeemExcludeDesc": "Izvēlieties kategorijas vai preces, ko klienti nevar apmaksāt ar {label}.",
+      "redeemExcludeOn": "Apmaksājams",
+      "redeemExcludeOff": "Nav apmaksājams"
     }
   },
   "impersonation": {

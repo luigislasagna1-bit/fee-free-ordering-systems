@@ -80,18 +80,26 @@ export async function POST(req: NextRequest) {
   const lineItemIds = [...new Set(rawItems.map((i) => i?.menuItemId).filter((x): x is string => typeof x === "string" && !!x))];
   let categoryByItemId = new Map<string, string | null>();
   let nameByItemId = new Map<string, string>();
-  // Gift-card guard: lines whose MenuItem (or its category) is promoExcluded
-  // never receive a promo/coupon discount — resolved server-side here exactly
-  // like the charge route resolves it, so preview == charge. Luigi 2026-07-01.
+  // Gift-card guards — two INDEPENDENT flags, resolved item||category exactly
+  // like the charge route, so preview == charge (Luigi 2026-07-01/02):
+  //   promoExcluded        → the line never receives a promo/coupon discount
+  //   rewardRedeemExcluded → the line can't be PAID FOR with Reward Dollars
   const promoExcludedIds = new Set<string>();
+  const redeemExcludedIds = new Set<string>();
   if (lineItemIds.length) {
     const rows = await prisma.menuItem.findMany({
       where: { id: { in: lineItemIds }, restaurantId: restaurant.id },
-      select: { id: true, categoryId: true, name: true, promoExcluded: true, category: { select: { promoExcluded: true } } },
+      select: {
+        id: true, categoryId: true, name: true, promoExcluded: true, rewardRedeemExcluded: true,
+        category: { select: { promoExcluded: true, rewardRedeemExcluded: true } },
+      },
     });
     categoryByItemId = new Map(rows.map((r) => [r.id, r.categoryId]));
     nameByItemId = new Map(rows.map((r) => [r.id, r.name]));
-    for (const r of rows) if (r.promoExcluded || r.category?.promoExcluded) promoExcludedIds.add(r.id);
+    for (const r of rows) {
+      if (r.promoExcluded || r.category?.promoExcluded) promoExcludedIds.add(r.id);
+      if (r.rewardRedeemExcluded || r.category?.rewardRedeemExcluded) redeemExcludedIds.add(r.id);
+    }
   }
   const ctxItems = rawItems.map((i) => ({
     ...i,
@@ -172,9 +180,10 @@ export async function POST(req: NextRequest) {
   let reward: {
     balance: number; redeemEnabled: boolean; minRedeemBalance: number;
     maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null;
-    /** Sum of promo-excluded line subtotals (gift cards) — the client subtracts
-     *  this from the redeemable base so credit can't buy store credit; the
-     *  order route enforces the same cap at charge. Luigi 2026-07-02. */
+    /** Sum of rewardRedeemExcluded line subtotals (gift cards) — the client
+     *  subtracts this from the redeemable base so credit can't buy these
+     *  lines; the order route enforces the same cap at charge. Independent
+     *  of the promo-discount exclusion. Luigi 2026-07-02. */
     redeemExcludedTotal: number;
   } | null = null;
   try {
@@ -195,8 +204,14 @@ export async function POST(req: NextRequest) {
           maxRedeemPercent: r.rewardMaxRedeemPercent ?? 100,
           labelSingular: r.rewardLabelSingular ?? null,
           labelPlural: r.rewardLabelPlural ?? null,
+          // Keyed on rewardRedeemExcluded — its OWN flag, independent of the
+          // promo-discount exclusion (Luigi 2026-07-02).
           redeemExcludedTotal: Math.round(
-            ctxItems.reduce((s: number, i: any) => s + (i.promoExcluded ? (Number(i.subtotal) || 0) : 0), 0) * 100,
+            rawItems.reduce(
+              (s: number, i: any) =>
+                s + (typeof i?.menuItemId === "string" && redeemExcludedIds.has(i.menuItemId) ? (Number(i.subtotal) || 0) : 0),
+              0,
+            ) * 100,
           ) / 100,
         };
       }

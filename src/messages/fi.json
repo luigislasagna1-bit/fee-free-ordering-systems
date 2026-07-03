@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Suljettu luokan kautta",
       "excludeFailed": "Tallennus epäonnistui — yritä uudelleen.",
       "excludeLoading": "Ladataan valikkoa…",
-      "excludeNone": "Ei vielä luokkia."
+      "excludeNone": "Ei vielä luokkia.",
+      "redeemExcludeTitle": "Tuotteet, joita ei voi maksaa {label}",
+      "redeemExcludeHelp": "Asiakkaat eivät voi käyttää {label} suljettuihin tuotteisiin tai luokkiin (esim. lahjakortit — saldolla ei pidä ostaa saldoa). Kassa pienentää automaattisesti käytettävissä olevaa {label}-määrää. Erillinen yllä olevasta kerryttämisen poissulusta ja Kampanjat-sivun alennuspoissulusta.",
+      "redeemExcludeDesc": "Valitse luokat tai tuotteet, joita asiakkaat eivät voi maksaa {label}.",
+      "redeemExcludeOn": "Maksettavissa",
+      "redeemExcludeOff": "Ei maksettavissa"
     }
   },
   "impersonation": {

@@ -37,7 +37,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const { name, description, price, categoryId, imageUrl, isAvailable, isFeatured, isHidden,
           isSoldOut, forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
           availabilityMode, hasVariants, sortOrder, variants, pizzaConfig, comboConfig, visibility,
-          fulfilment, rewardEarnExcluded, promoExcluded } = body;
+          fulfilment, rewardEarnExcluded, promoExcluded, rewardRedeemExcluded } = body;
 
   const updateData: any = {};
   // GloriaFood-style scheduled visibility (Luigi 2026-06-12). When present,
@@ -71,6 +71,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (isSoldOut !== undefined) updateData.isSoldOut = isSoldOut;
   if (rewardEarnExcluded !== undefined) updateData.rewardEarnExcluded = !!rewardEarnExcluded;
   if (promoExcluded !== undefined) updateData.promoExcluded = !!promoExcluded;
+  if (rewardRedeemExcluded !== undefined) updateData.rewardRedeemExcluded = !!rewardRedeemExcluded;
   if (forPickup !== undefined) updateData.forPickup = forPickup;
   if (forDelivery !== undefined) updateData.forDelivery = forDelivery;
   if (isCatering !== undefined) updateData.isCatering = !!isCatering;

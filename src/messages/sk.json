@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Vylúčené cez kategóriu",
       "excludeFailed": "Uloženie zlyhalo — skúste znova.",
       "excludeLoading": "Načítava sa menu…",
-      "excludeNone": "Zatiaľ žiadne kategórie."
+      "excludeNone": "Zatiaľ žiadne kategórie.",
+      "redeemExcludeTitle": "Položky, ktoré nemožno platiť {label}",
+      "redeemExcludeHelp": "Zákazníci nemôžu míňať {label} na vylúčené položky alebo kategórie (napr. darčekové karty — kredit nemá kupovať kredit). Pokladňa automaticky zníži uplatniteľnú sumu {label}. Nezávislé od vylúčenia získavania vyššie aj od vylúčenia zliav na stránke Akcie.",
+      "redeemExcludeDesc": "Vyberte kategórie alebo položky, ktoré zákazníci nemôžu platiť {label}.",
+      "redeemExcludeOn": "Možno platiť",
+      "redeemExcludeOff": "Nemožno platiť"
     }
   },
   "impersonation": {

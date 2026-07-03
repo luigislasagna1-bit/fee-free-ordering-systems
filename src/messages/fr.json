@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Exclu via la catégorie",
       "excludeFailed": "Échec de l'enregistrement — réessayez.",
       "excludeLoading": "Chargement de votre menu…",
-      "excludeNone": "Aucune catégorie pour l'instant."
+      "excludeNone": "Aucune catégorie pour l'instant.",
+      "redeemExcludeTitle": "Articles non payables en {label}",
+      "redeemExcludeHelp": "Les clients ne peuvent pas dépenser de {label} sur les articles ou catégories exclus (ex. cartes-cadeaux — le crédit ne doit pas acheter du crédit). Le paiement réduit automatiquement le montant de {label} applicable. Indépendant de l'exclusion de gains ci-dessus et de l'exclusion de remises de la page Promotions.",
+      "redeemExcludeDesc": "Choisissez les catégories ou articles que les clients ne peuvent pas payer en {label}.",
+      "redeemExcludeOn": "Payable",
+      "redeemExcludeOff": "Non payable"
     }
   },
   "impersonation": {

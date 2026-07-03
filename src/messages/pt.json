@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Excluído pela categoria",
       "excludeFailed": "Não foi possível guardar — tente novamente.",
       "excludeLoading": "A carregar o seu menu…",
-      "excludeNone": "Ainda sem categorias."
+      "excludeNone": "Ainda sem categorias.",
+      "redeemExcludeTitle": "Artigos que não podem ser pagos com {label}",
+      "redeemExcludeHelp": "Os clientes não podem gastar {label} em artigos ou categorias excluídos (ex. cartões-presente — o crédito não deve comprar crédito). O checkout reduz automaticamente o montante de {label} aplicável. Independente da exclusão de ganhos acima e da exclusão de descontos da página de Promoções.",
+      "redeemExcludeDesc": "Escolha categorias ou artigos que os clientes não podem pagar com {label}.",
+      "redeemExcludeOn": "Pagável",
+      "redeemExcludeOff": "Não pagável"
     }
   },
   "impersonation": {

@@ -4404,7 +4404,12 @@
       "excludeViaCategory": "Izključeno prek kategorije",
       "excludeFailed": "Shranjevanje ni uspelo — poskusite znova.",
       "excludeLoading": "Nalaganje menija…",
-      "excludeNone": "Še ni kategorij."
+      "excludeNone": "Še ni kategorij.",
+      "redeemExcludeTitle": "Izdelki, ki jih ni mogoče plačati z {label}",
+      "redeemExcludeHelp": "Stranke ne morejo porabiti {label} za izključene izdelke ali kategorije (npr. darilne kartice — dobroimetje naj ne kupuje dobroimetja). Blagajna samodejno zniža uporabni znesek {label}. Ločeno od izključitve pridobivanja zgoraj in izključitve popustov na strani Promocije.",
+      "redeemExcludeDesc": "Izberite kategorije ali izdelke, ki jih stranke ne morejo plačati z {label}.",
+      "redeemExcludeOn": "Plačljivo",
+      "redeemExcludeOff": "Ni plačljivo"
     }
   },
   "impersonation": {
