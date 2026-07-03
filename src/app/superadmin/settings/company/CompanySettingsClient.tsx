@@ -9,6 +9,29 @@ import { Loader2, CheckCircle2, Building2 } from "lucide-react";
  * saves ARE read system-wide by the invoice issuer block, so they're never
  * hardcoded in a page.
  */
+// Module-level, NOT inside the component: an inline sub-component is recreated
+// every render, so React remounts the <input> on each keystroke and focus is
+// lost (the documented "Profile input bug pattern" — hit again here 2026-07-03).
+function Field({
+  label, value, onChange, placeholder, hint,
+}: {
+  label: string; value: string; onChange: (v: string) => void; placeholder: string; hint?: string;
+}) {
+  return (
+    <div className="mb-4">
+      <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">{label}</label>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+      />
+      {hint && <p className="text-[11px] text-gray-400 mt-1">{hint}</p>}
+    </div>
+  );
+}
+
 export function CompanySettingsClient({
   initial,
 }: {
@@ -63,24 +86,6 @@ export function CompanySettingsClient({
       setBusy(false);
     }
   }
-
-  const Field = ({
-    label, value, onChange, placeholder, hint,
-  }: {
-    label: string; value: string; onChange: (v: string) => void; placeholder: string; hint?: string;
-  }) => (
-    <div className="mb-4">
-      <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">{label}</label>
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-      />
-      {hint && <p className="text-[11px] text-gray-400 mt-1">{hint}</p>}
-    </div>
-  );
 
   return (
     <div className="max-w-2xl">
