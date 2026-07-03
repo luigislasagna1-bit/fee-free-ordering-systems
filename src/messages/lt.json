@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Iš kiekvienos grupės pasirinkite po vieną prekę — pigesnė prekė atiteks NEMOKAMAI.",
       "hintBogoCheaperPct": "Iš kiekvienos grupės pasirinkite po vieną prekę — pigesnei prekei taikoma {pct}% nuolaida.",
       "hintBogoPricierFree": "Iš kiekvienos grupės pasirinkite po vieną prekę — brangesnė prekė atiteks NEMOKAMAI.",
-      "hintBogoPricierPct": "Iš kiekvienos grupės pasirinkite po vieną prekę — brangesnei prekei taikoma {pct}% nuolaida."
+      "hintBogoPricierPct": "Iš kiekvienos grupės pasirinkite po vieną prekę — brangesnei prekei taikoma {pct}% nuolaida.",
+      "stepOf": "{n} žingsnis iš {total}",
+      "nextStep": "Toliau",
+      "backStep": "Atgal"
     }
   },
   "dunning": {

@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Valitse yksi tuote kustakin ryhmästä — halvempi tuote on ILMAINEN.",
       "hintBogoCheaperPct": "Valitse yksi tuote kustakin ryhmästä — halvemmasta tuotteesta saat {pct} % alennuksen.",
       "hintBogoPricierFree": "Valitse yksi tuote kustakin ryhmästä — kalliimpi tuote on ILMAINEN.",
-      "hintBogoPricierPct": "Valitse yksi tuote kustakin ryhmästä — kalliimmasta tuotteesta saat {pct} % alennuksen."
+      "hintBogoPricierPct": "Valitse yksi tuote kustakin ryhmästä — kalliimmasta tuotteesta saat {pct} % alennuksen.",
+      "stepOf": "Vaihe {n}/{total}",
+      "nextStep": "Seuraava",
+      "backStep": "Takaisin"
     }
   },
   "dunning": {

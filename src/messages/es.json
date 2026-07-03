@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Elige un artículo de cada grupo: el artículo más barato es GRATIS.",
       "hintBogoCheaperPct": "Elige un artículo de cada grupo: el artículo más barato tiene un {pct}% de descuento.",
       "hintBogoPricierFree": "Elige un artículo de cada grupo: el artículo más caro es GRATIS.",
-      "hintBogoPricierPct": "Elige un artículo de cada grupo: el artículo más caro tiene un {pct}% de descuento."
+      "hintBogoPricierPct": "Elige un artículo de cada grupo: el artículo más caro tiene un {pct}% de descuento.",
+      "stepOf": "Paso {n} de {total}",
+      "nextStep": "Siguiente",
+      "backStep": "Atrás"
     }
   },
   "dunning": {

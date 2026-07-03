@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Vyberte jednu položku z každé skupiny — levnější položku máte ZDARMA.",
       "hintBogoCheaperPct": "Vyberte jednu položku z každé skupiny — na levnější položku získáte slevu {pct} %.",
       "hintBogoPricierFree": "Vyberte jednu položku z každé skupiny — dražší položku máte ZDARMA.",
-      "hintBogoPricierPct": "Vyberte jednu položku z každé skupiny — na dražší položku získáte slevu {pct} %."
+      "hintBogoPricierPct": "Vyberte jednu položku z každé skupiny — na dražší položku získáte slevu {pct} %.",
+      "stepOf": "Krok {n} z {total}",
+      "nextStep": "Další",
+      "backStep": "Zpět"
     }
   },
   "dunning": {

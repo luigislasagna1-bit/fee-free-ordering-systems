@@ -5610,7 +5610,10 @@
       "hintBogoPricierPct": "Pick one item from each group — the pricier item is {pct}% off.",
       "hintBuyNGetFree": "Pick one from each group to unlock your free item.",
       "hintFreeDishMeal": "Build your meal — the last item is on us.",
-      "hintCombo": "Pick one from each group — the combo discount applies automatically."
+      "hintCombo": "Pick one from each group — the combo discount applies automatically.",
+      "stepOf": "Step {n} of {total}",
+      "nextStep": "Next",
+      "backStep": "Back"
     },
     "loginForm": {
       "emailLabel": "Email",

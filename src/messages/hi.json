@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "हर ग्रुप से एक आइटम चुनें — सस्ता आइटम बिल्कुल मुफ़्त (FREE) है।",
       "hintBogoCheaperPct": "हर ग्रुप से एक आइटम चुनें — सस्ते आइटम पर {pct}% की छूट है।",
       "hintBogoPricierFree": "हर ग्रुप से एक आइटम चुनें — महँगा आइटम बिल्कुल मुफ़्त (FREE) है।",
-      "hintBogoPricierPct": "हर ग्रुप से एक आइटम चुनें — महँगे आइटम पर {pct}% की छूट है।"
+      "hintBogoPricierPct": "हर ग्रुप से एक आइटम चुनें — महँगे आइटम पर {pct}% की छूट है।",
+      "stepOf": "चरण {n}/{total}",
+      "nextStep": "आगे",
+      "backStep": "पीछे"
     }
   },
   "dunning": {

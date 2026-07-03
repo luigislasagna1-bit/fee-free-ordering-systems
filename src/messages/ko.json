@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "각 그룹에서 메뉴를 하나씩 고르세요 — 더 저렴한 메뉴가 무료입니다.",
       "hintBogoCheaperPct": "각 그룹에서 메뉴를 하나씩 고르세요 — 더 저렴한 메뉴가 {pct}% 할인됩니다.",
       "hintBogoPricierFree": "각 그룹에서 메뉴를 하나씩 고르세요 — 더 비싼 메뉴가 무료입니다.",
-      "hintBogoPricierPct": "각 그룹에서 메뉴를 하나씩 고르세요 — 더 비싼 메뉴가 {pct}% 할인됩니다."
+      "hintBogoPricierPct": "각 그룹에서 메뉴를 하나씩 고르세요 — 더 비싼 메뉴가 {pct}% 할인됩니다.",
+      "stepOf": "{total}단계 중 {n}단계",
+      "nextStep": "다음",
+      "backStep": "뒤로"
     }
   },
   "dunning": {

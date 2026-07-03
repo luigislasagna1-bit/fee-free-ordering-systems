@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Her gruptan bir ürün seçin — ucuz olan ürün ÜCRETSİZ.",
       "hintBogoCheaperPct": "Her gruptan bir ürün seçin — ucuz olan üründe %{pct} indirim var.",
       "hintBogoPricierFree": "Her gruptan bir ürün seçin — pahalı olan ürün ÜCRETSİZ.",
-      "hintBogoPricierPct": "Her gruptan bir ürün seçin — pahalı olan üründe %{pct} indirim var."
+      "hintBogoPricierPct": "Her gruptan bir ürün seçin — pahalı olan üründe %{pct} indirim var.",
+      "stepOf": "Adım {n}/{total}",
+      "nextStep": "İleri",
+      "backStep": "Geri"
     }
   },
   "dunning": {

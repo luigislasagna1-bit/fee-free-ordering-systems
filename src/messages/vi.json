@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Chọn một món từ mỗi nhóm — món rẻ hơn sẽ được MIỄN PHÍ.",
       "hintBogoCheaperPct": "Chọn một món từ mỗi nhóm — món rẻ hơn được giảm {pct}%.",
       "hintBogoPricierFree": "Chọn một món từ mỗi nhóm — món đắt hơn sẽ được MIỄN PHÍ.",
-      "hintBogoPricierPct": "Chọn một món từ mỗi nhóm — món đắt hơn được giảm {pct}%."
+      "hintBogoPricierPct": "Chọn một món từ mỗi nhóm — món đắt hơn được giảm {pct}%.",
+      "stepOf": "Bước {n}/{total}",
+      "nextStep": "Tiếp",
+      "backStep": "Quay lại"
     }
   },
   "dunning": {

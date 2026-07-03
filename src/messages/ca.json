@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Tria un article de cada grup: l'article més barat és GRATIS.",
       "hintBogoCheaperPct": "Tria un article de cada grup: l'article més barat té un {pct}% de descompte.",
       "hintBogoPricierFree": "Tria un article de cada grup: l'article més car és GRATIS.",
-      "hintBogoPricierPct": "Tria un article de cada grup: l'article més car té un {pct}% de descompte."
+      "hintBogoPricierPct": "Tria un article de cada grup: l'article més car té un {pct}% de descompte.",
+      "stepOf": "Pas {n} de {total}",
+      "nextStep": "Següent",
+      "backStep": "Enrere"
     }
   },
   "dunning": {

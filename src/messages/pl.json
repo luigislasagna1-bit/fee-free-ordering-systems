@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Wybierz po jednej pozycji z każdej grupy — tańsza pozycja jest GRATIS.",
       "hintBogoCheaperPct": "Wybierz po jednej pozycji z każdej grupy — tańsza pozycja ma {pct}% rabatu.",
       "hintBogoPricierFree": "Wybierz po jednej pozycji z każdej grupy — droższa pozycja jest GRATIS.",
-      "hintBogoPricierPct": "Wybierz po jednej pozycji z każdej grupy — droższa pozycja ma {pct}% rabatu."
+      "hintBogoPricierPct": "Wybierz po jednej pozycji z każdej grupy — droższa pozycja ma {pct}% rabatu.",
+      "stepOf": "Krok {n} z {total}",
+      "nextStep": "Dalej",
+      "backStep": "Wstecz"
     }
   },
   "dunning": {

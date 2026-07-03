@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "从每组中各选一件商品 —— 较便宜的那件免费。",
       "hintBogoCheaperPct": "从每组中各选一件商品 —— 较便宜的那件可享 {pct}% 折扣。",
       "hintBogoPricierFree": "从每组中各选一件商品 —— 较贵的那件免费。",
-      "hintBogoPricierPct": "从每组中各选一件商品 —— 较贵的那件可享 {pct}% 折扣。"
+      "hintBogoPricierPct": "从每组中各选一件商品 —— 较贵的那件可享 {pct}% 折扣。",
+      "stepOf": "第 {n} 步，共 {total} 步",
+      "nextStep": "下一步",
+      "backStep": "上一步"
     }
   },
   "dunning": {

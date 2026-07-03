@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Välj en vara från varje grupp – den billigare varan är GRATIS.",
       "hintBogoCheaperPct": "Välj en vara från varje grupp – den billigare varan får {pct} % rabatt.",
       "hintBogoPricierFree": "Välj en vara från varje grupp – den dyrare varan är GRATIS.",
-      "hintBogoPricierPct": "Välj en vara från varje grupp – den dyrare varan får {pct} % rabatt."
+      "hintBogoPricierPct": "Välj en vara från varje grupp – den dyrare varan får {pct} % rabatt.",
+      "stepOf": "Steg {n} av {total}",
+      "nextStep": "Nästa",
+      "backStep": "Tillbaka"
     }
   },
   "dunning": {

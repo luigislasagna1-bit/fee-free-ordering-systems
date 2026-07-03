@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Pilih satu item dari tiap grup — item yang lebih murah GRATIS.",
       "hintBogoCheaperPct": "Pilih satu item dari tiap grup — item yang lebih murah diskon {pct}%.",
       "hintBogoPricierFree": "Pilih satu item dari tiap grup — item yang lebih mahal GRATIS.",
-      "hintBogoPricierPct": "Pilih satu item dari tiap grup — item yang lebih mahal diskon {pct}%."
+      "hintBogoPricierPct": "Pilih satu item dari tiap grup — item yang lebih mahal diskon {pct}%.",
+      "stepOf": "Langkah {n} dari {total}",
+      "nextStep": "Berikutnya",
+      "backStep": "Kembali"
     }
   },
   "dunning": {

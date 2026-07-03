@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Vali kummastki rühmast üks toode — odavam toode on TASUTA.",
       "hintBogoCheaperPct": "Vali kummastki rühmast üks toode — odavam toode on {pct}% soodsam.",
       "hintBogoPricierFree": "Vali kummastki rühmast üks toode — kallim toode on TASUTA.",
-      "hintBogoPricierPct": "Vali kummastki rühmast üks toode — kallim toode on {pct}% soodsam."
+      "hintBogoPricierPct": "Vali kummastki rühmast üks toode — kallim toode on {pct}% soodsam.",
+      "stepOf": "Samm {n}/{total}",
+      "nextStep": "Edasi",
+      "backStep": "Tagasi"
     }
   },
   "dunning": {

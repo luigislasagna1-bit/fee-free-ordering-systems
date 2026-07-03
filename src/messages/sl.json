@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Izberite po enega artikel iz vsake skupine — cenejši je BREZPLAČNO.",
       "hintBogoCheaperPct": "Izberite po enega artikel iz vsake skupine — cenejši je {pct} % ceneje.",
       "hintBogoPricierFree": "Izberite po enega artikel iz vsake skupine — dražji je BREZPLAČNO.",
-      "hintBogoPricierPct": "Izberite po enega artikel iz vsake skupine — dražji je {pct} % ceneje."
+      "hintBogoPricierPct": "Izberite po enega artikel iz vsake skupine — dražji je {pct} % ceneje.",
+      "stepOf": "Korak {n} od {total}",
+      "nextStep": "Naprej",
+      "backStep": "Nazaj"
     }
   },
   "dunning": {

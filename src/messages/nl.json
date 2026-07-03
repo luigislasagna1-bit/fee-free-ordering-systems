@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Kies één item uit elke groep — het goedkoopste item is GRATIS.",
       "hintBogoCheaperPct": "Kies één item uit elke groep — op het goedkoopste item krijg je {pct}% korting.",
       "hintBogoPricierFree": "Kies één item uit elke groep — het duurste item is GRATIS.",
-      "hintBogoPricierPct": "Kies één item uit elke groep — op het duurste item krijg je {pct}% korting."
+      "hintBogoPricierPct": "Kies één item uit elke groep — op het duurste item krijg je {pct}% korting.",
+      "stepOf": "Stap {n} van {total}",
+      "nextStep": "Volgende",
+      "backStep": "Terug"
     }
   },
   "dunning": {

@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Válasszon egy-egy terméket mindkét csoportból — az olcsóbbik INGYEN van.",
       "hintBogoCheaperPct": "Válasszon egy-egy terméket mindkét csoportból — az olcsóbbik {pct}% kedvezménnyel jár.",
       "hintBogoPricierFree": "Válasszon egy-egy terméket mindkét csoportból — a drágábbik INGYEN van.",
-      "hintBogoPricierPct": "Válasszon egy-egy terméket mindkét csoportból — a drágábbik {pct}% kedvezménnyel jár."
+      "hintBogoPricierPct": "Válasszon egy-egy terméket mindkét csoportból — a drágábbik {pct}% kedvezménnyel jár.",
+      "stepOf": "{n}. lépés / {total}",
+      "nextStep": "Tovább",
+      "backStep": "Vissza"
     }
   },
   "dunning": {

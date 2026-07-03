@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "בחרו פריט אחד מכל קבוצה — הפריט הזול יותר חינם!",
       "hintBogoCheaperPct": "בחרו פריט אחד מכל קבוצה — הפריט הזול יותר ב-{pct}% הנחה.",
       "hintBogoPricierFree": "בחרו פריט אחד מכל קבוצה — הפריט היקר יותר חינם!",
-      "hintBogoPricierPct": "בחרו פריט אחד מכל קבוצה — הפריט היקר יותר ב-{pct}% הנחה."
+      "hintBogoPricierPct": "בחרו פריט אחד מכל קבוצה — הפריט היקר יותר ב-{pct}% הנחה.",
+      "stepOf": "שלב {n} מתוך {total}",
+      "nextStep": "הבא",
+      "backStep": "חזרה"
     }
   },
   "dunning": {

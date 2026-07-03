@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Odaberite jedan artikl iz svake skupine — jeftiniji artikl je BESPLATAN.",
       "hintBogoCheaperPct": "Odaberite jedan artikl iz svake skupine — jeftiniji artikl ima {pct}% popusta.",
       "hintBogoPricierFree": "Odaberite jedan artikl iz svake skupine — skuplji artikl je BESPLATAN.",
-      "hintBogoPricierPct": "Odaberite jedan artikl iz svake skupine — skuplji artikl ima {pct}% popusta."
+      "hintBogoPricierPct": "Odaberite jedan artikl iz svake skupine — skuplji artikl ima {pct}% popusta.",
+      "stepOf": "Korak {n} od {total}",
+      "nextStep": "Dalje",
+      "backStep": "Natrag"
     }
   },
   "dunning": {

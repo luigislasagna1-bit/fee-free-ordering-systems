@@ -9,12 +9,15 @@
  *   - fixed_combo     (groups whose combined picks earn a fixed discount)
  *   - percentage_combo(groups whose combined picks earn a % discount)
  *
- * Each promo "group" is rendered as ONE slot. The customer picks
- * `minCount..maxCount` items per slot from the group's eligible pool; when a
+ * STEP-BY-STEP wizard (Luigi 2026-07-03, GloriaFood-style — replaces the old
+ * all-groups-at-once scroll that customers found confusing): ONE group per
+ * step. Picking from a single-pick step auto-advances to the next unfinished
+ * step; when the LAST requirement is met the deal auto-completes into the
+ * cart. Every picked step becomes a tappable chip in the progress strip, so
+ * the customer can jump back and change any selection. Multi-pick steps
+ * (minCount>1 or a range) keep an explicit Next / Add-to-cart button. When a
  * picked item has size variants they choose the size right here (no backing
- * out to the full menu). The "Add to cart" CTA enables only once EVERY slot
- * is satisfied — i.e. the customer is walked through each requirement and the
- * deal is completed in one place.
+ * out to the full menu).
  *
  * Output: a flat list of picks (`menuItemId` + `variantId` + `isFree`) handed
  * to the parent. Paid picks go in at their normal price; free-group picks are
@@ -23,8 +26,8 @@
  * The discount itself is always engine-driven — this modal only assembles the
  * qualifying cart, never gates the benefit.
  */
-import { useMemo, useState } from "react";
-import { X, Check } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
+import { X, Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCurrencyFormat } from "@/lib/currency-context";
 import { useTranslations } from "next-intl";
 
@@ -149,11 +152,16 @@ export function GuidedPromoModal({
 
   /** picks[slotIndex] = the (item,size) tokens chosen for that slot. */
   const [picks, setPicks] = useState<Pick[][]>(() => groups.map(() => []));
+  /** The step (group index) currently on screen. */
+  const [step, setStep] = useState(0);
+  /** Scrolls back to the top of the modal when the step changes. */
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   const slotMin = (i: number) => Math.max(1, Number(groups[i].minCount ?? 1));
   const slotMax = (i: number) => Math.max(slotMin(i), Number(groups[i].maxCount ?? slotMin(i)));
 
-  const slotSatisfied = (i: number) => (picks[i] ?? []).length >= slotMin(i);
+  const satisfiedIn = (arr: Pick[][], i: number) => (arr[i] ?? []).length >= slotMin(i);
+  const slotSatisfied = (i: number) => satisfiedIn(picks, i);
   const allSatisfied = groups.every((_, i) => slotSatisfied(i));
   const remaining = groups.reduce((sum, _, i) => sum + Math.max(0, slotMin(i) - (picks[i] ?? []).length), 0);
 
@@ -161,35 +169,72 @@ export function GuidedPromoModal({
     return a.menuItemId === b.menuItemId && (a.variantId ?? null) === (b.variantId ?? null);
   }
 
-  function togglePick(slotIndex: number, token: Pick) {
-    setPicks((prev) => {
-      const next = groups.map((_, i) => (prev[i] ?? []).map((p) => ({ ...p })));
-      const current = next[slotIndex];
-      const max = slotMax(slotIndex);
-      const idx = current.findIndex((p) => sameToken(p, token));
-      if (idx >= 0) {
-        current.splice(idx, 1);
-      } else if (current.length >= max) {
-        // Single-pick slot → replace. Multi-pick at cap → ignore the click.
-        if (max === 1) {
-          next[slotIndex] = [token];
-        }
-      } else {
-        current.push(token);
-      }
-      return next;
-    });
+  function goToStep(i: number) {
+    setStep(Math.max(0, Math.min(groups.length - 1, i)));
+    scrollRef.current?.scrollTo({ top: 0 });
   }
 
-  function handleAdd() {
-    if (!allSatisfied) return;
+  function completeWith(arr: Pick[][]) {
     const flat: GuidedPromoPick[] = [];
     groups.forEach((_, i) => {
-      for (const p of picks[i] ?? []) {
+      for (const p of arr[i] ?? []) {
         flat.push({ menuItemId: p.menuItemId, variantId: p.variantId, isFree: isFreeSlot[i] });
       }
     });
     onComplete(flat, promoName);
+  }
+
+  function togglePick(slotIndex: number, token: Pick) {
+    // Compute the next picks OUTSIDE setState so the wizard can decide the
+    // follow-up (advance / auto-complete) on the same values it stores.
+    const next = groups.map((_, i) => (picks[i] ?? []).map((p) => ({ ...p })));
+    const current = next[slotIndex];
+    const max = slotMax(slotIndex);
+    const idx = current.findIndex((p) => sameToken(p, token));
+    if (idx >= 0) {
+      current.splice(idx, 1);
+    } else if (current.length >= max) {
+      // Single-pick slot → replace. Multi-pick at cap → ignore the click.
+      if (max === 1) {
+        next[slotIndex] = [token];
+      } else {
+        return;
+      }
+    } else {
+      current.push(token);
+    }
+    setPicks(next);
+
+    // Wizard flow (Luigi 2026-07-03): a SINGLE-pick step advances the moment
+    // its item is chosen — to the next unfinished step, or, when this pick was
+    // the last missing piece, straight into the cart (GloriaFood behaviour).
+    // Multi-pick steps never auto-advance; the customer taps Next when ready.
+    if (max !== 1 || !satisfiedIn(next, slotIndex)) return;
+    if (groups.every((_, i) => satisfiedIn(next, i))) {
+      completeWith(next);
+      return;
+    }
+    const nextUnfinished = groups.findIndex((_, i) => !satisfiedIn(next, i));
+    if (nextUnfinished >= 0) goToStep(nextUnfinished);
+  }
+
+  function handleAdd() {
+    if (!allSatisfied) return;
+    completeWith(picks);
+  }
+
+  /** Progress-strip chip label: the picked item(s) once chosen, else the
+   *  group's label / fallback. */
+  function chipLabel(i: number): string {
+    const chosen = picks[i] ?? [];
+    if (chosen.length === 0) {
+      const free = isFreeSlot[i];
+      return groups[i].label?.trim() || (free ? t("freeSlotLabel") : t("slotLabelFallback", { n: i + 1 }));
+    }
+    const first = allMenuItems.find((m) => m.id === chosen[0].menuItemId);
+    const variant = first?.variants?.find((v) => v.id === chosen[0].variantId);
+    const name = `${first?.name ?? "…"}${variant ? ` (${variant.name})` : ""}`;
+    return chosen.length > 1 ? `${name} +${chosen.length - 1}` : name;
   }
 
   const bogoHint = (() => {
@@ -210,33 +255,76 @@ export function GuidedPromoModal({
       onClick={onClose}
     >
       <div
+        ref={scrollRef}
         className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white z-10 px-5 py-4 border-b border-gray-100 flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <div className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-0.5">
-              {t("buildYourDeal")}
+        <div className="sticky top-0 bg-white z-10 px-5 py-4 border-b border-gray-100">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <div className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-0.5">
+                {t("buildYourDeal")}
+                {groups.length > 1 && (
+                  <span className="ml-2 normal-case tracking-normal" style={{ color: primaryColor }}>
+                    {t("stepOf", { n: step + 1, total: groups.length })}
+                  </span>
+                )}
+              </div>
+              <h2 className="text-lg font-bold text-gray-900 truncate">{promoName}</h2>
+              <p className="text-sm text-gray-500 mt-0.5">{benefitHint}</p>
             </div>
-            <h2 className="text-lg font-bold text-gray-900 truncate">{promoName}</h2>
-            <p className="text-sm text-gray-500 mt-0.5">{benefitHint}</p>
+            <button
+              onClick={onClose}
+              className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 flex-shrink-0"
+              aria-label={t("closeAriaLabel")}
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 flex-shrink-0"
-            aria-label={t("closeAriaLabel")}
-          >
-            <X className="w-5 h-5" />
-          </button>
+          {/* Progress strip — one chip per step. A finished step shows its
+              PICKED item and is tappable to go back and change it; the
+              current step is outlined; upcoming steps are muted. */}
+          {groups.length > 1 && (
+            <div className="flex flex-wrap items-center gap-1.5 mt-3">
+              {groups.map((_, i) => {
+                const done = slotSatisfied(i);
+                const isCurrent = i === step;
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => goToStep(i)}
+                    className="inline-flex items-center gap-1.5 max-w-[220px] text-xs font-semibold px-2.5 py-1 rounded-full border-2 transition"
+                    style={
+                      done
+                        ? { borderColor: primaryColor, backgroundColor: `${primaryColor}12`, color: primaryColor }
+                        : isCurrent
+                          ? { borderColor: primaryColor, color: "#111827", backgroundColor: "#fff" }
+                          : { borderColor: "#e5e7eb", color: "#9ca3af", backgroundColor: "#fff" }
+                    }
+                    aria-current={isCurrent ? "step" : undefined}
+                  >
+                    {done ? (
+                      <Check className="w-3 h-3 flex-shrink-0" />
+                    ) : (
+                      <span className="flex-shrink-0">{i + 1}.</span>
+                    )}
+                    <span className="truncate">{chipLabel(i)}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
 
-        {/* Slots */}
+        {/* Current step only — the wizard walks one group at a time. */}
         <div className="p-5 space-y-5">
           {groups.length === 0 ? (
             <p className="text-sm text-gray-500 text-center py-8">{t("noGroupsConfigured")}</p>
           ) : (
             groups.map((group, slotIndex) => {
+              if (slotIndex !== step) return null;
               const min = slotMin(slotIndex);
               const max = slotMax(slotIndex);
               const picked = picks[slotIndex] ?? [];
@@ -369,23 +457,57 @@ export function GuidedPromoModal({
           )}
         </div>
 
-        {/* Footer */}
+        {/* Footer — wizard controls. Single-pick steps auto-advance (and the
+            last missing pick auto-completes), so Next / Add-to-cart mostly
+            matter for multi-pick steps and for revisits via the chips. */}
         <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex items-center justify-between gap-3">
-          <div className="text-sm text-gray-500 min-w-0">
-            {allSatisfied ? (
-              <span className="font-medium" style={{ color: primaryColor }}>{t("readyHint")}</span>
-            ) : (
-              t("remainingHint", { count: remaining })
+          <div className="flex items-center gap-3 min-w-0">
+            {step > 0 && (
+              <button
+                type="button"
+                onClick={() => goToStep(step - 1)}
+                className="inline-flex items-center gap-1 text-sm font-semibold text-gray-500 hover:text-gray-800 flex-shrink-0"
+              >
+                <ChevronLeft className="w-4 h-4" /> {t("backStep")}
+              </button>
             )}
+            <div className="text-sm text-gray-500 min-w-0 truncate">
+              {allSatisfied ? (
+                <span className="font-medium" style={{ color: primaryColor }}>{t("readyHint")}</span>
+              ) : (
+                t("remainingHint", { count: remaining })
+              )}
+            </div>
           </div>
-          <button
-            onClick={handleAdd}
-            disabled={!allSatisfied}
-            className="text-white font-semibold px-4 py-2.5 rounded-xl text-sm disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
-            style={{ backgroundColor: primaryColor }}
-          >
-            {t("addToCart")}
-          </button>
+          {allSatisfied ? (
+            <button
+              onClick={handleAdd}
+              className="text-white font-semibold px-4 py-2.5 rounded-xl text-sm flex-shrink-0"
+              style={{ backgroundColor: primaryColor }}
+            >
+              {t("addToCart")}
+            </button>
+          ) : slotSatisfied(step) && step < groups.length - 1 ? (
+            <button
+              type="button"
+              onClick={() => {
+                const nextUnfinished = groups.findIndex((_, i) => i > step && !slotSatisfied(i));
+                goToStep(nextUnfinished >= 0 ? nextUnfinished : step + 1);
+              }}
+              className="inline-flex items-center gap-1 text-white font-semibold px-4 py-2.5 rounded-xl text-sm flex-shrink-0"
+              style={{ backgroundColor: primaryColor }}
+            >
+              {t("nextStep")} <ChevronRight className="w-4 h-4" />
+            </button>
+          ) : (
+            <button
+              disabled
+              className="text-white font-semibold px-4 py-2.5 rounded-xl text-sm opacity-40 cursor-not-allowed flex-shrink-0"
+              style={{ backgroundColor: primaryColor }}
+            >
+              {t("addToCart")}
+            </button>
+          )}
         </div>
       </div>
     </div>

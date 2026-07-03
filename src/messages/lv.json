@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Izvēlieties pa vienam ēdienam no katras grupas — lētākais ēdiens ir BEZMAKSAS.",
       "hintBogoCheaperPct": "Izvēlieties pa vienam ēdienam no katras grupas — lētākajam ēdienam ir {pct}% atlaide.",
       "hintBogoPricierFree": "Izvēlieties pa vienam ēdienam no katras grupas — dārgākais ēdiens ir BEZMAKSAS.",
-      "hintBogoPricierPct": "Izvēlieties pa vienam ēdienam no katras grupas — dārgākajam ēdienam ir {pct}% atlaide."
+      "hintBogoPricierPct": "Izvēlieties pa vienam ēdienam no katras grupas — dārgākajam ēdienam ir {pct}% atlaide.",
+      "stepOf": "{n}. solis no {total}",
+      "nextStep": "Tālāk",
+      "backStep": "Atpakaļ"
     }
   },
   "dunning": {

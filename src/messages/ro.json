@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Alege câte un produs din fiecare grup — produsul mai ieftin este GRATUIT.",
       "hintBogoCheaperPct": "Alege câte un produs din fiecare grup — produsul mai ieftin are {pct}% reducere.",
       "hintBogoPricierFree": "Alege câte un produs din fiecare grup — produsul mai scump este GRATUIT.",
-      "hintBogoPricierPct": "Alege câte un produs din fiecare grup — produsul mai scump are {pct}% reducere."
+      "hintBogoPricierPct": "Alege câte un produs din fiecare grup — produsul mai scump are {pct}% reducere.",
+      "stepOf": "Pasul {n} din {total}",
+      "nextStep": "Următorul",
+      "backStep": "Înapoi"
     }
   },
   "dunning": {

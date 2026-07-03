@@ -5883,7 +5883,10 @@
       "hintBogoCheaperFree": "Vælg én vare fra hver gruppe — den billigste vare er GRATIS.",
       "hintBogoCheaperPct": "Vælg én vare fra hver gruppe — den billigste vare får {pct}% rabat.",
       "hintBogoPricierFree": "Vælg én vare fra hver gruppe — den dyreste vare er GRATIS.",
-      "hintBogoPricierPct": "Vælg én vare fra hver gruppe — den dyreste vare får {pct}% rabat."
+      "hintBogoPricierPct": "Vælg én vare fra hver gruppe — den dyreste vare får {pct}% rabat.",
+      "stepOf": "Trin {n} af {total}",
+      "nextStep": "Næste",
+      "backStep": "Tilbage"
     }
   },
   "dunning": {
