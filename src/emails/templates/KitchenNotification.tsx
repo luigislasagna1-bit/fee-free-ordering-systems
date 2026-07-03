@@ -49,6 +49,12 @@ export type KitchenNotificationProps = {
   dashboardUrl: string;
   imprint?: string;
   currency?: string;
+  /** Reward Dollars (store credit) the customer paid with — when > 0 the
+   *  totals add "Paid with {rewardLabel} −$X" + a bold "To collect"/
+   *  "Collected" row so staff never read the Total and over-collect
+   *  (Luigi 2026-07-02). Only sent when the rewards program is ON. */
+  creditApplied?: number;
+  rewardLabel?: string | null;
   /** Headline shown in the header subtitle + the lead badge. Defaults to
    *  "New order" (the placement ping). The acceptance/confirmation email
    *  passes a localized "Order confirmed" so staff can tell a confirmation
@@ -70,10 +76,17 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
     orderType, estimatedMinutes, paidOnline, reservationPartySize, reservationLabel, items, subtotal, taxAmount,
     taxLabel, deliveryFee, tip, discount, total, deliveryAddress,
     customerNotes, dashboardUrl, imprint, currency, headline,
+    creditApplied, rewardLabel,
   } = props;
   const leadLabel = headline ?? "New order";
   const orderTypeLabel = orderType ? (ORDER_TYPE_LABEL[orderType] ?? orderType) : null;
   const hasItems = items && items.length > 0;
+  // Store-credit part-payment → what staff actually collect. Staff email
+  // bodies are English-only by design (subjects are localized).
+  const rewardUsed = Math.max(0, Number(creditApplied ?? 0));
+  const toCollect = Math.round(Math.max(0, total - rewardUsed) * 100) / 100;
+  const rewardName = rewardLabel?.trim() || "credit";
+  const collectLabel = paidOnline ? "Collected" : "To collect";
 
   return (
     <EmailLayout preview={`${restaurantName} — Order #${orderNumber} — ${formatCurrency(total, currency ?? "usd")}`}>
@@ -149,13 +162,24 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
               discount={discount}
               total={total}
               currency={currency ?? "usd"}
+              rewardUsed={rewardUsed}
+              rewardUsedLabel={`Paid with ${rewardName}`}
+              balanceDue={toCollect}
+              balanceDueLabel={collectLabel}
             />
           </>
         ) : (
-          // Fallback: caller didn't pass items (legacy senders). Show just
-          // the total and direct them to the admin for the breakdown.
-          <InfoCard label="Order total" accent="slate">
-            <strong style={{ fontSize: 18 }}>{formatCurrency(total, currency ?? "usd")}</strong>
+          // Fallback: caller didn't pass items (legacy senders + the
+          // acceptance/confirmation email). Show the total — and when store
+          // credit part-paid, the amount actually collected — then direct
+          // them to the admin for the full breakdown.
+          <InfoCard label={rewardUsed > 0 ? collectLabel : "Order total"} accent="slate">
+            <strong style={{ fontSize: 18 }}>{formatCurrency(rewardUsed > 0 ? toCollect : total, currency ?? "usd")}</strong>
+            {rewardUsed > 0 && (
+              <div style={{ fontSize: 13, color: "#047857", marginTop: 4, fontWeight: 600 }}>
+                Order total {formatCurrency(total, currency ?? "usd")} − {formatCurrency(rewardUsed, currency ?? "usd")} paid with {rewardName}
+              </div>
+            )}
             <div style={{ fontSize: 12, color: "#6b7280", marginTop: 4 }}>
               See itemized breakdown in the admin dashboard.
             </div>

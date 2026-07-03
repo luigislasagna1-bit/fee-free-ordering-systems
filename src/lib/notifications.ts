@@ -244,7 +244,10 @@ export type StaffEventPayload =
       items?: EmailOrderItem[]; subtotal?: number; taxAmount?: number; deliveryFee?: number;
       tip?: number; discount?: number; orderType?: string; paidOnline?: boolean;
       customerPhone?: string | null; customerEmail?: string | null;
-      deliveryAddress?: string | null; customerNotes?: string | null }
+      deliveryAddress?: string | null; customerNotes?: string | null;
+      // Store-credit part-payment → "Paid with X" / "To collect" rows so staff
+      // never over-collect (Luigi 2026-07-02). Only set when rewards are ON.
+      creditApplied?: number; rewardLabel?: string | null }
   | { event: "orderRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string }
   | { event: "orderCanceled" | "orderMissed"; orderNumber: string; customerName: string; dashboardUrl: string }
   | { event: "reservationConfirmed"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "confirmed" | "pending"; dashboardUrl: string }
@@ -347,6 +350,8 @@ async function dispatchStaffEvent(
         customerEmail: payload.customerEmail,
         deliveryAddress: payload.deliveryAddress,
         customerNotes: payload.customerNotes,
+        creditApplied: payload.creditApplied,
+        rewardLabel: payload.rewardLabel,
         hoursFormat,
         locale,
         currency,
@@ -374,6 +379,9 @@ async function dispatchStaffEvent(
         dashboardUrl: payload.dashboardUrl,
         acceptedType,
         reservation: payload.reservation ?? null,
+        creditApplied: payload.creditApplied,
+        rewardLabel: payload.rewardLabel,
+        paidOnline: payload.paidOnline,
         hoursFormat,
         locale,
         currency,
@@ -458,7 +466,12 @@ export function staffAcceptEventForOrderType(
 // ─── notifyCustomer ────────────────────────────────────────────────────────
 
 export type CustomerEventPayload =
-  | { event: "orderConfirmed"; customerName: string; orderNumber: string; items: { name: string; quantity: number; price: number }[]; total: number; orderType: string; estimatedTime: number; scheduledFor?: Date | string | null; reservation?: { partySize: number; date: string; time: string } | null; trackingUrl: string; appliedPromos?: Array<{ name: string; type: string; discount: number; couponCode?: string }> }
+  | { event: "orderConfirmed"; customerName: string; orderNumber: string; items: { name: string; quantity: number; price: number }[]; total: number; orderType: string; estimatedTime: number; scheduledFor?: Date | string | null; reservation?: { partySize: number; date: string; time: string } | null; trackingUrl: string; appliedPromos?: Array<{ name: string; type: string; discount: number; couponCode?: string }>;
+      // Full money breakdown (Luigi 2026-07-02): without these the email's
+      // "Subtotal" silently fell back to the TOTAL and tax/tip/discount rows
+      // never rendered. creditApplied/rewardLabel only set when rewards are ON.
+      subtotal?: number; taxAmount?: number; deliveryFee?: number; tip?: number; discount?: number;
+      creditApplied?: number; rewardLabel?: string | null; paymentMethod?: string | null; paidStatus?: string | null }
   | { event: "orderStatusUpdate"; customerName: string; orderNumber: string; status: string; estimatedReady?: Date; rejectionReason?: string; trackingUrl?: string; paidOnline?: boolean; paymentMethod?: string }
   /** Kitchen pushed back the ready time. Fired from POST /api/orders/[id]/delay
    *  whenever staff hits "+5 / +10 / Custom" on the order detail. Customer
@@ -585,6 +598,11 @@ export async function notifyCustomer(args: {
           restaurantName: restaurant.name,
           items: payload.items,
           total: payload.total,
+          subtotal: payload.subtotal,
+          taxAmount: payload.taxAmount,
+          deliveryFee: payload.deliveryFee,
+          tip: payload.tip,
+          discount: payload.discount,
           orderType: payload.orderType,
           estimatedTime: payload.estimatedTime,
           scheduledFor: payload.scheduledFor ?? null,
@@ -596,6 +614,10 @@ export async function notifyCustomer(args: {
           appliedPromos: payload.appliedPromos,
           currency: restaurant.currency,
           logoUrl: (restaurant as any).receiptLogoUrl ?? undefined,
+          creditApplied: payload.creditApplied,
+          rewardLabel: payload.rewardLabel,
+          paymentMethod: payload.paymentMethod,
+          paidStatus: payload.paidStatus,
         });
       });
       await fireSms();

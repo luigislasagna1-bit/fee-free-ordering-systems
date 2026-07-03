@@ -345,6 +345,10 @@ export function OrderTotals({
   currency = "usd",
   taxLabel = "Tax",
   savedDeliveryFee,
+  rewardUsed, rewardUsedLabel,
+  balanceDue, balanceDueLabel,
+  paymentLabel, paymentValue,
+  subtotalLabel, deliveryFeeLabel, tipLabel, discountLabel, totalLabel, freeLabel,
 }: {
   subtotal: number;
   taxAmount?: number;
@@ -358,6 +362,30 @@ export function OrderTotals({
    *  Render the line as "FREE (was $X)" instead of "$0.00" so the
    *  savings are visible inline. */
   savedDeliveryFee?: number;
+  /** Store credit (Reward Dollars / "Pizza Bucks") applied as PAYMENT on this
+   *  order — rendered green with a minus AFTER Total, followed by the bold
+   *  balance row, so the email matches the confirmation page/receipt exactly
+   *  (Luigi 2026-07-02: staff were reading Total and over-collecting).
+   *  Callers pass the RESOLVED label ("Paid with Pizza Bucks" — localized for
+   *  customer emails, English for staff). Both rows skipped when unset/0. */
+  rewardUsed?: number;
+  rewardUsedLabel?: string;
+  /** Total − rewardUsed. Label = "Balance to pay"/"Paid" (customer) or
+   *  "To collect"/"Collected" (staff) — resolved by the caller. */
+  balanceDue?: number;
+  balanceDueLabel?: string;
+  /** Payment method line ("Payment" · "Cash on pickup"). Both caller-resolved. */
+  paymentLabel?: string;
+  paymentValue?: string;
+  /** Row labels — CUSTOMER emails pass localized text (receipt.customer.*);
+   *  STAFF emails omit them and keep the English defaults (staff bodies are
+   *  English-only by design). Luigi 2026-07-02. */
+  subtotalLabel?: string;
+  deliveryFeeLabel?: string;
+  tipLabel?: string;
+  discountLabel?: string;
+  totalLabel?: string;
+  freeLabel?: string;
 }) {
   const row = (label: string, amount: number, bold = false) => (
     <Row>
@@ -369,32 +397,58 @@ export function OrderTotals({
       </Column>
     </Row>
   );
+  const showReward = !!rewardUsed && rewardUsed > 0;
   return (
     <Section style={{ marginTop: 8, paddingTop: 8, borderTop: `1px solid ${COLORS.border}` }}>
-      {row("Subtotal", subtotal)}
+      {row(subtotalLabel ?? "Subtotal", subtotal)}
       {/* Delivery row: when a free-delivery promo fired, show the strike-
           through ORIGINAL fee + "FREE" so the savings are unmissable. */}
       {!!savedDeliveryFee && savedDeliveryFee > 0 ? (
         <Row>
           <Column style={{ fontSize: 14, color: COLORS.muted, padding: "4px 0", fontWeight: 400 }}>
-            Delivery fee
+            {deliveryFeeLabel ?? "Delivery fee"}
           </Column>
           <Column style={{ fontSize: 14, textAlign: "right", padding: "4px 0" }}>
             <span style={{ textDecoration: "line-through", color: "#9ca3af", marginRight: 6 }}>
               {formatCurrency(savedDeliveryFee, currency)}
             </span>
-            <span style={{ color: "#059669", fontWeight: 700 }}>FREE</span>
+            <span style={{ color: "#059669", fontWeight: 700 }}>{freeLabel ?? "FREE"}</span>
           </Column>
         </Row>
       ) : (
-        !!deliveryFee && deliveryFee > 0 && row("Delivery fee", deliveryFee)
+        !!deliveryFee && deliveryFee > 0 && row(deliveryFeeLabel ?? "Delivery fee", deliveryFee)
       )}
-      {!!tip && tip > 0 && row("Tip", tip)}
-      {!!discount && discount > 0 && row("Promo discount", -discount)}
+      {!!tip && tip > 0 && row(tipLabel ?? "Tip", tip)}
+      {!!discount && discount > 0 && row(discountLabel ?? "Promo discount", -discount)}
       {!!taxAmount && taxAmount > 0 && row(taxLabel, taxAmount)}
       <div style={{ borderTop: `1px solid ${COLORS.border}`, marginTop: 6, paddingTop: 6 }}>
-        {row("Total", total, true)}
+        {row(totalLabel ?? "Total", total, true)}
       </div>
+      {showReward && (
+        <Row>
+          <Column style={{ fontSize: 14, color: "#047857", padding: "4px 0", fontWeight: 600 }}>
+            {rewardUsedLabel ?? "Paid with credit"}
+          </Column>
+          <Column style={{ fontSize: 14, textAlign: "right", color: "#047857", padding: "4px 0", fontWeight: 700 }}>
+            − {formatCurrency(rewardUsed!, currency)}
+          </Column>
+        </Row>
+      )}
+      {showReward && balanceDue != null && (
+        <div style={{ borderTop: `1px solid ${COLORS.border}`, marginTop: 6, paddingTop: 6 }}>
+          {row(balanceDueLabel ?? "Balance to pay", balanceDue, true)}
+        </div>
+      )}
+      {paymentValue && (
+        <Row>
+          <Column style={{ fontSize: 13, color: COLORS.muted, padding: "4px 0" }}>
+            {paymentLabel ?? "Payment"}
+          </Column>
+          <Column style={{ fontSize: 13, textAlign: "right", color: COLORS.muted, padding: "4px 0", fontWeight: 600 }}>
+            {paymentValue}
+          </Column>
+        </Row>
+      )}
     </Section>
   );
 }

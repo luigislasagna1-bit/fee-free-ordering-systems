@@ -379,7 +379,9 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const order = await prisma.order.update({
     where: { id },
     data: updates,
-    include: { restaurant: { select: { id: true, name: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true, defaultLanguage: true } } },
+    // rewardsEnabled + labels: the accepted staff email shows "To collect"
+    // (total − store credit) ONLY when the rewards program is on. Luigi 2026-07-02.
+    include: { restaurant: { select: { id: true, name: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true, defaultLanguage: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true } } },
   });
 
   // ── Reserve-then-order: keep the linked table booking in lockstep ─────────
@@ -753,6 +755,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   // without losing delivery ones.
   if (newStatus === "accepted") {
     const acceptEvent = staffAcceptEventForOrderType(order.type, !!order.scheduledFor);
+    // Store-credit part-payment → the accepted email shows "To collect"
+    // (total − credit) instead of the misleading gross total. Feature-gated:
+    // nothing reward-related is passed when the program is off. Luigi 2026-07-02.
+    const rewardsOn = (order.restaurant as any).rewardsEnabled === true;
+    const acceptedCredit = rewardsOn ? Math.max(0, (order as any).creditApplied ?? 0) : 0;
     after(
       (async () => {
         try {
@@ -763,6 +770,13 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
               orderNumber: order.orderNumber,
               customerName: order.customerName,
               total: order.total,
+              creditApplied: acceptedCredit > 0 ? acceptedCredit : undefined,
+              rewardLabel: rewardsOn
+                ? ((order.restaurant as any).rewardLabelPlural?.trim() || (order.restaurant as any).rewardLabelSingular?.trim() || null)
+                : null,
+              // "Collected" (money already captured) vs "To collect" (cash on
+              // pickup/delivery still owed).
+              paidOnline: order.paymentStatus === "paid",
               dashboardUrl: `${baseUrl}/admin/orders`,
             },
           });

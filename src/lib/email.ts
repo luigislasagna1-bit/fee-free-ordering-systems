@@ -46,6 +46,7 @@ import ResellerApplicationStatus from "@/emails/templates/ResellerApplicationSta
 import ReportNotification        from "@/emails/templates/ReportNotification";
 import CouponAssigned            from "@/emails/templates/CouponAssigned";
 import { formatCurrency } from "@/lib/utils";
+import { paymentMethodLabelKey } from "@/lib/payment-label";
 import type { EmailOrderItem } from "@/emails/components/EmailParts";
 
 // Cached transport so we don't query PlatformSettings on every call.
@@ -283,6 +284,16 @@ interface OrderEmailParams {
     discount: number;
     couponCode?: string;
   }>;
+  /** Reward Dollars (store credit) applied as PAYMENT — adds the
+   *  "Paid with {label}" + "Balance to pay" rows so the email matches the
+   *  confirmation page to the cent (Luigi 2026-07-02). Callers only pass it
+   *  when the restaurant's rewards program is ON (feature-gated display). */
+  creditApplied?: number;
+  rewardLabel?: string | null;
+  /** Order.paymentMethod — renders a localized "Payment method" line. */
+  paymentMethod?: string | null;
+  /** Order.paymentStatus — "paid" flips the balance label to "Paid". */
+  paidStatus?: string | null;
 }
 
 /**
@@ -409,6 +420,17 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       imprint: currentImprint(),
       appliedPromos: params.appliedPromos,
       currency: params.currency,
+      // Store-credit part-payment + payment method (Luigi 2026-07-02) — the
+      // payment label resolves HERE where the RAW order type is available
+      // (the template's orderType is already localized).
+      creditApplied: params.creditApplied,
+      rewardLabel: params.rewardLabel,
+      paidStatus: params.paidStatus,
+      paymentValue: (() => {
+        if (!params.paymentMethod) return undefined;
+        const key = paymentMethodLabelKey(params.paymentMethod, params.orderType);
+        return key ? t(key) : params.paymentMethod.charAt(0).toUpperCase() + params.paymentMethod.slice(1);
+      })(),
     })
   );
   // Reply-To: the restaurant's own email. Customer hits Reply → response
@@ -455,6 +477,10 @@ export async function sendNewOrderNotificationEmail(params: {
   reservation?: { partySize: number; date: string; time: string } | null;
   /** Restaurant 12h/24h preference — clock-time formatting. */
   hoursFormat?: "12h" | "24h";
+  /** Store credit paid on this order + the reward name — drives the
+   *  "Paid with X" / "To collect" rows (Luigi 2026-07-02). */
+  creditApplied?: number;
+  rewardLabel?: string | null;
 }) {
   const t = await getDict(params.locale);
   const subject = t("email.newOrder.subject", { orderNumber: params.orderNumber, restaurant: params.restaurantName });
@@ -491,6 +517,8 @@ export async function sendNewOrderNotificationEmail(params: {
       dashboardUrl: params.dashboardUrl,
       imprint: currentImprint(),
       currency: params.currency,
+      creditApplied: params.creditApplied,
+      rewardLabel: params.rewardLabel,
     })
   );
   return send({ to: params.to, subject, html });
@@ -517,6 +545,13 @@ export async function sendOrderAcceptedNotificationEmail(params: {
   hoursFormat?: "12h" | "24h";
   locale?: string;
   currency?: string;
+  /** Store credit paid on this order + the reward name — the minimal accepted
+   *  email shows "To collect $Y" instead of the misleading full total when the
+   *  customer part-paid with credit (Luigi 2026-07-02). */
+  creditApplied?: number;
+  rewardLabel?: string | null;
+  /** True when the balance was captured online — flips "To collect" → "Collected". */
+  paidOnline?: boolean;
 }) {
   const t = await getDict(params.locale);
   const subjectKey = (
@@ -558,6 +593,9 @@ export async function sendOrderAcceptedNotificationEmail(params: {
       imprint: currentImprint(),
       currency: params.currency,
       headline: t("email.orderAccepted.badge"),
+      creditApplied: params.creditApplied,
+      rewardLabel: params.rewardLabel,
+      paidOnline: params.paidOnline,
     })
   );
   return send({ to: params.to, subject, html });

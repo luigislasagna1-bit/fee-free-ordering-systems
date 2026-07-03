@@ -69,6 +69,17 @@ export type OrderConfirmationProps = {
     discount: number;
     couponCode?: string;
   }>;
+  /** Reward Dollars (store credit) applied as PAYMENT — when > 0 the totals
+   *  block adds "Paid with {rewardLabel} −$X" + "Balance to pay $Y" so the
+   *  email matches the confirmation page to the cent (Luigi 2026-07-02).
+   *  Only sent when the restaurant's rewards program is ON (feature-gated). */
+  creditApplied?: number;
+  rewardLabel?: string | null;
+  /** RESOLVED localized payment-method text ("Cash on pickup") — the sender
+   *  resolves it (it has the raw orderType; the template's is localized). */
+  paymentValue?: string | null;
+  /** Order.paymentStatus — "paid" flips the balance label to "Paid". */
+  paidStatus?: string | null;
   t: Translator;
 };
 
@@ -78,9 +89,16 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
     estimatedMinutes, scheduledLabel, reservationPartySize, reservationLabel, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
     discount, total, deliveryAddress, trackingUrl, restaurantUrl,
     restaurantEmail, restaurantPhone, imprint, logoUrl, currency,
-    appliedPromos, t,
+    appliedPromos, creditApplied, rewardLabel, paymentValue, paidStatus, t,
   } = props;
   const cur = currency ?? "usd";
+  // Reward Dollars part-payment rows — mirror the confirmation page exactly:
+  // Total → "Paid with {label}" (green, minus) → bold "Balance to pay"/"Paid".
+  // creditApplied only arrives when the restaurant's rewards program is ON.
+  const rewardUsed = Math.max(0, Number(creditApplied ?? 0));
+  const balanceDue = Math.round(Math.max(0, total - rewardUsed) * 100) / 100;
+  const isPaid = paidOnline || (paidStatus ?? "").toLowerCase() === "paid";
+  const rewardName = rewardLabel?.trim() || t("customer.confirmation.rewardDefaultName");
   const promoList = Array.isArray(appliedPromos) ? appliedPromos : [];
   // Pull the saved delivery fee off the free-delivery promo entry (if
   // one fired) so the totals block can render "Delivery fee: ~~$7.99~~ FREE".
@@ -232,13 +250,27 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
         <OrderTotals
           subtotal={subtotal}
           taxAmount={taxAmount}
-          taxLabel={taxLabel}
+          taxLabel={taxLabel ?? t("receipt.customer.tax")}
           deliveryFee={deliveryFee}
           savedDeliveryFee={savedDeliveryFee}
           tip={tip}
           discount={discount}
           total={total}
           currency={currency ?? "usd"}
+          // Customer email → every row label localized (receipt.customer.*),
+          // fixing the hardcoded-English totals block (Luigi 2026-07-02).
+          subtotalLabel={t("receipt.customer.subtotal")}
+          deliveryFeeLabel={t("receipt.customer.deliveryFee")}
+          tipLabel={t("receipt.customer.tip")}
+          discountLabel={t("receipt.customer.promoDiscount")}
+          totalLabel={t("receipt.customer.total")}
+          freeLabel={t("email.orderConfirmed.promoFreeLabel")}
+          rewardUsed={rewardUsed}
+          rewardUsedLabel={t("receipt.customer.paidWithReward", { label: rewardName })}
+          balanceDue={balanceDue}
+          balanceDueLabel={isPaid ? t("money.paid") : t("receipt.customer.balanceDue")}
+          paymentLabel={t("checkout.paymentMethod")}
+          paymentValue={paymentValue ?? undefined}
         />
 
         <EmailButton href={trackingUrl}>{t("email.orderConfirmed.trackOrderButton")}</EmailButton>

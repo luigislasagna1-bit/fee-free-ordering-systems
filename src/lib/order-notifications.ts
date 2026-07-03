@@ -56,6 +56,11 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
           estimatedDelivery: true,
           defaultLanguage: true,
           currency: true,
+          // Reward Dollars — the emails show "Paid with {label}" / "To collect"
+          // ONLY when the program is on (feature-gated display, Luigi 2026-07-02).
+          rewardsEnabled: true,
+          rewardLabelSingular: true,
+          rewardLabelPlural: true,
         },
       },
       items: {
@@ -155,6 +160,17 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
     };
   });
 
+  // Reward Dollars part-payment — shown on BOTH emails ("Paid with {label}" /
+  // "Balance to pay" vs "To collect") so nobody reads the Total and collects
+  // the wrong amount (Luigi 2026-07-02). Feature-gated: when the rewards
+  // program is OFF nothing reward-related is passed at all (standing rule —
+  // a disabled feature must not show or count anywhere).
+  const rewardsOn = (order.restaurant as any).rewardsEnabled === true;
+  const creditApplied = rewardsOn ? Math.max(0, (order as any).creditApplied ?? 0) : 0;
+  const rewardLabel = rewardsOn
+    ? ((order.restaurant as any).rewardLabelPlural?.trim() || (order.restaurant as any).rewardLabelSingular?.trim() || null)
+    : null;
+
   // Customer confirmation email — fire-and-forget so a Resend hiccup
   // doesn't fail the webhook (Stripe would retry the whole event).
   notifyCustomer({
@@ -169,6 +185,18 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       orderNumber: order.orderNumber,
       items: emailItems,
       total: order.total,
+      // Full money breakdown — without these the email's "Subtotal" silently
+      // fell back to the TOTAL and tax/tip/discount never rendered (Luigi
+      // 2026-07-02, ORD-462443388).
+      subtotal: order.subtotal,
+      taxAmount: order.taxAmount,
+      deliveryFee: order.deliveryFee,
+      tip: order.tip ?? undefined,
+      discount: (order.couponDiscount ?? 0) + (order.promoDiscount ?? 0),
+      creditApplied: creditApplied > 0 ? creditApplied : undefined,
+      rewardLabel,
+      paymentMethod: order.paymentMethod,
+      paidStatus: order.paymentStatus,
       orderType: order.type,
       estimatedTime: order.type === "pickup"
         ? order.restaurant.estimatedPickup
@@ -207,6 +235,10 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       deliveryFee: order.deliveryFee,
       tip: order.tip,
       discount: (order.couponDiscount ?? 0) + (order.promoDiscount ?? 0),
+      // "Paid with {label}" + "To collect" rows — staff must never read the
+      // Total and over-collect a credit-part-paid order (Luigi 2026-07-02).
+      creditApplied: creditApplied > 0 ? creditApplied : undefined,
+      rewardLabel,
       orderType: order.type,
       paidOnline: order.paymentMethod !== "cash",
       customerPhone: order.customerPhone,
@@ -229,7 +261,10 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
   if (!pushDeferred) {
     sendKitchenPush(order.restaurant.id, {
       title: order.restaurant.name || "New order",
-      body: `#${order.orderNumber} · ${order.customerName} · ${formatCurrency(order.total, order.restaurant.currency)}`,
+      // Show what staff actually COLLECT (total − store credit), not the gross
+      // total — a credit-part-paid cash order was over-collected otherwise
+      // (Luigi 2026-07-02 money normalization).
+      body: `#${order.orderNumber} · ${order.customerName} · ${formatCurrency(Math.max(0, order.total - creditApplied), order.restaurant.currency)}`,
       // autoAccept flag → the native app plays a short ~3s FYI ring for an auto-accepted
       // order (its status is already "accepted" at release) instead of the full urgent
       // alarm (K3). A manual order is still "pending" here, so it gets the full alarm.
