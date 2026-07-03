@@ -1607,7 +1607,13 @@
       "fiscalSave": "Lưu thông tin thuế",
       "fiscalSaved": "Đã lưu",
       "fiscalHint": "Những thông tin này được thêm vào hồ sơ thanh toán Stripe của bạn và xuất hiện trên các hóa đơn cùng biên lai trong tương lai.",
-      "loading": "Đang tải…"
+      "loading": "Đang tải…",
+      "viesValid": "VIES: mã số VAT hợp lệ (kiểm tra {date})",
+      "viesInvalid": "Chưa đăng ký VIES cho giao dịch xuyên biên giới",
+      "viesUnverified": "Chưa xác minh với VIES",
+      "viesVerifyNow": "Xác minh ngay",
+      "viesUnreachable": "Dịch vụ VIES tạm thời không khả dụng — thử lại sau vài phút.",
+      "euVatNote": "Doanh nghiệp EU: cần mã số VAT đăng ký VIES cho gói trả phí. Mã hợp lệ được xuất hóa đơn 0% VAT (thuế đảo chiều)."
     },
     "addOns": {
       "errorCheckout": "Không thể bắt đầu thanh toán",
@@ -3963,7 +3969,9 @@
       "download": "Tải xuống / In",
       "thankYou": "Cảm ơn quý khách đã hợp tác.",
       "notFound": "Không tìm thấy hóa đơn.",
-      "back": "Quay lại Thanh toán"
+      "back": "Quay lại Thanh toán",
+      "taxRateAmount": "Thuế suất & số tiền ({rate}%)",
+      "reverseChargeNote": "Giao dịch không chịu thuế theo Điều 44 Chỉ thị 2006/112/EC — thuế đảo chiều: bên nhận tự kê khai VAT."
     },
     "menus": {
       "live": "Đang hoạt động",

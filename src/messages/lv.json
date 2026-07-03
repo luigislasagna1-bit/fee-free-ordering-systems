@@ -1529,7 +1529,13 @@
       "fiscalSave": "Saglabāt fiskālo informāciju",
       "fiscalSaved": "Saglabāts",
       "fiscalHint": "Šī informācija tiek pievienota jūsu Stripe norēķinu profilam un parādās turpmākajos rēķinos un kvītīs.",
-      "loading": "Notiek ielāde…"
+      "loading": "Notiek ielāde…",
+      "viesValid": "VIES: derīgs PVN numurs (pārbaudīts {date})",
+      "viesInvalid": "Nav reģistrēts VIES pārrobežu darījumiem",
+      "viesUnverified": "Vēl nav pārbaudīts VIES",
+      "viesVerifyNow": "Pārbaudīt tagad",
+      "viesUnreachable": "VIES pakalpojums īslaicīgi nav pieejams — mēģiniet vēlreiz pēc dažām minūtēm.",
+      "euVatNote": "ES uzņēmumi: maksas abonementiem nepieciešams VIES reģistrēts PVN numurs. Apstiprināti numuri tiek rēķināti ar 0% PVN (apgrieztā maksāšana)."
     },
     "addOns": {
       "errorCheckout": "Neizdevās sākt norēķinu",
@@ -3963,7 +3969,9 @@
       "download": "Lejupielādēt / drukāt",
       "thankYou": "Paldies par sadarbību.",
       "notFound": "Rēķins nav atrasts.",
-      "back": "Atpakaļ uz norēķiniem"
+      "back": "Atpakaļ uz norēķiniem",
+      "taxRateAmount": "Nodokļa likme un summa ({rate}%)",
+      "reverseChargeNote": "Ar nodokli neapliekams darījums saskaņā ar Direktīvas 2006/112/EK 44. pantu — apgrieztā maksāšana: PVN uzskaita saņēmējs."
     },
     "menus": {
       "live": "Aktīvs",

@@ -3,6 +3,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { getStripe } from "@/lib/stripe";
 import { ensureStripeCustomerForRestaurant } from "@/lib/addons";
+import { checkViesVat, isEuViesCountry } from "@/lib/vies";
 
 /**
  * Restaurant fiscal / billing identity (report cmpxe5fd2). Lets the owner
@@ -44,10 +45,32 @@ export async function PUT(req: NextRequest) {
     pec: STR(b.pec, 200),
   };
 
+  // ── VIES validation for EU VAT numbers (Fabrizio cmr1ty0lc, 2026-07-03) ──
+  // A changed EU VAT/country resets the verdict, then we re-check against the
+  // EU's official VIES service. Fail-soft: if VIES is unreachable the verdict
+  // stays null ("not yet checked") rather than falsely flipping to invalid —
+  // the invoice + Option-A purchase gate both key off taxIdViesValid === true.
+  const prev = await prisma.restaurantBillingProfile.findUnique({
+    where: { restaurantId },
+    select: { taxId: true, country: true, taxIdViesValid: true, taxIdViesCheckedAt: true },
+  });
+  let vies: { taxIdViesValid: boolean | null; taxIdViesCheckedAt: Date | null } = {
+    taxIdViesValid: prev?.taxIdViesValid ?? null,
+    taxIdViesCheckedAt: prev?.taxIdViesCheckedAt ?? null,
+  };
+  const identityChanged = !prev || prev.taxId !== data.taxId || prev.country !== data.country;
+  if (!isEuViesCountry(data.country) || !data.taxId) {
+    vies = { taxIdViesValid: null, taxIdViesCheckedAt: null };
+  } else if (identityChanged) {
+    vies = { taxIdViesValid: null, taxIdViesCheckedAt: null }; // reset before the fresh check
+    const result = await checkViesVat(data.country, data.taxId);
+    if (result.checked) vies = { taxIdViesValid: result.valid, taxIdViesCheckedAt: new Date() };
+  }
+
   const profile = await prisma.restaurantBillingProfile.upsert({
     where: { restaurantId },
-    update: data,
-    create: { restaurantId, ...data },
+    update: { ...data, ...vies },
+    create: { restaurantId, ...data, ...vies },
   });
 
   // Best-effort sync to the platform Stripe customer so it appears on the
@@ -100,4 +123,30 @@ export async function PUT(req: NextRequest) {
   }
 
   return NextResponse.json({ success: true, profile });
+}
+
+/**
+ * POST — re-run the VIES check on the SAVED profile without editing it.
+ * Covers "VIES was down when I saved" and "my number just got registered"
+ * (numbers also lapse — Fabrizio's JUBIN example — so owners can re-verify).
+ */
+export async function POST() {
+  const user = await getSessionUser();
+  if (!user?.restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const bp = await prisma.restaurantBillingProfile.findUnique({
+    where: { restaurantId: user.restaurantId },
+    select: { taxId: true, country: true },
+  });
+  if (!bp?.taxId || !isEuViesCountry(bp.country)) {
+    return NextResponse.json({ error: "not_applicable" }, { status: 400 });
+  }
+  const result = await checkViesVat(bp.country, bp.taxId);
+  if (!result.checked) {
+    return NextResponse.json({ checked: false, reason: result.reason }, { status: 503 });
+  }
+  const profile = await prisma.restaurantBillingProfile.update({
+    where: { restaurantId: user.restaurantId },
+    data: { taxIdViesValid: result.valid, taxIdViesCheckedAt: new Date() },
+  });
+  return NextResponse.json({ checked: true, valid: result.valid, profile });
 }

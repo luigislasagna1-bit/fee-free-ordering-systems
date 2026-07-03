@@ -1607,7 +1607,13 @@
       "fiscalSave": "保存税务信息",
       "fiscalSaved": "已保存",
       "fiscalHint": "这些信息将添加到您的 Stripe 账单资料中，并显示在今后的发票和收据上。",
-      "loading": "加载中…"
+      "loading": "加载中…",
+      "viesValid": "VIES：增值税号有效（{date} 已核验）",
+      "viesInvalid": "未在 VIES 注册跨境交易资格",
+      "viesUnverified": "尚未通过 VIES 核验",
+      "viesVerifyNow": "立即核验",
+      "viesUnreachable": "VIES 服务暂时不可用——请几分钟后重试。",
+      "euVatNote": "欧盟企业：付费订阅需要在 VIES 注册的增值税号。已验证的税号按 0% 增值税开票（反向征收）。"
     },
     "addOns": {
       "errorCheckout": "启动结账失败",
@@ -3963,7 +3969,9 @@
       "download": "下载 / 打印",
       "thankYou": "感谢您的惠顾。",
       "notFound": "未找到发票。",
-      "back": "返回账单"
+      "back": "返回账单",
+      "taxRateAmount": "税率与税额（{rate}%）",
+      "reverseChargeNote": "根据 2006/112/EC 指令第 44 条为免税交易——反向征收：增值税由接收方申报。"
     },
     "menus": {
       "live": "使用中",

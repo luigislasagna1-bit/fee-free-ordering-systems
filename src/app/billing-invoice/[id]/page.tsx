@@ -4,6 +4,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency } from "@/lib/utils";
 import { getFiscalConfig, isKnownFiscalCountry } from "@/lib/fiscal-countries";
+import { isEuViesCountry } from "@/lib/vies";
 import { getTranslations, getLocale } from "next-intl/server";
 import { ArrowLeft } from "lucide-react";
 import { PrintButton } from "./PrintButton";
@@ -99,6 +100,14 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
   ].filter(Boolean).join(", ");
   const billToEmail = bp?.billingEmail || restaurant.email || "";
 
+  // EU B2B reverse charge (Fabrizio cmr1ty0lc, 2026-07-03): an EU restaurant
+  // whose VAT number is VIES-VALIDATED is invoiced at 0% with the Art. 44
+  // note — the GloriaFood/Oracle model. (EU restaurants WITHOUT a validated
+  // number can't start paid subscriptions at all — Option A — so an EU
+  // invoice without this flag shouldn't normally exist.)
+  const euReverseCharge =
+    isEuViesCountry(bp?.country) && !!bp?.taxId && bp?.taxIdViesValid === true;
+
   const when = inv.paidAt ?? inv.createdAt;
   const invoiceNo = `INV-${new Date(when).getFullYear()}-${id.slice(-6).toUpperCase()}`;
   const periodLabel = inv.periodStart && inv.periodEnd
@@ -175,12 +184,24 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
             </tr>
           </tbody>
           <tfoot>
+            {euReverseCharge && (
+              <tr className="border-t border-gray-100">
+                <td className="py-2 text-right text-gray-600">{t("taxRateAmount", { rate: "0.00" })}</td>
+                <td className="py-2 text-right text-gray-600">{formatCurrency(0, inv.currency)}</td>
+              </tr>
+            )}
             <tr className="border-t border-gray-200">
               <td className="py-3 text-right font-bold text-gray-900">{t("total")}</td>
               <td className="py-3 text-right font-bold text-gray-900">{amount}</td>
             </tr>
           </tfoot>
         </table>
+
+        {/* Art. 44 reverse-charge disclosure — required wording for a 0% EU
+            B2B cross-border service sale (mirrors the Oracle invoice). */}
+        {euReverseCharge && (
+          <p className="text-xs text-gray-500 mt-4">{t("reverseChargeNote")}</p>
+        )}
 
         {/* Reseller "local partner" line (GloriaFood/Oracle model): the reseller's
             identity + its own VAT live HERE, clearly attributed to the partner —

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { getStripe, stripeReady } from "@/lib/stripe";
+import { euVatSubscriptionBlock } from "@/lib/vies";
 
 /**
  * Start a Stripe Checkout session to attach a payment method and begin a
@@ -17,6 +18,20 @@ export async function POST(req: NextRequest) {
   }
   if (!(await stripeReady())) {
     return NextResponse.json({ error: "Billing is not configured" }, { status: 503 });
+  }
+
+  // Launch tax policy "Option A" (Luigi 2026-07-03): EU restaurants need a
+  // VIES-validated VAT number before starting a paid plan — see lib/vies.ts.
+  const euBlock = await euVatSubscriptionBlock(user.restaurantId);
+  if (euBlock) {
+    return NextResponse.json(
+      {
+        error: "EU businesses need a VIES-registered VAT number before subscribing. Add it under Billing → Fiscal details, then try again.",
+        code: euBlock.code,
+        blockerHref: "/admin/billing",
+      },
+      { status: 403 },
+    );
   }
 
   const body = await req.json().catch(() => ({}));

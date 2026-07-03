@@ -1607,7 +1607,13 @@
       "fiscalSave": "Salvesta maksuandmed",
       "fiscalSaved": "Salvestatud",
       "fiscalHint": "Need andmed lisatakse teie Stripe’i arveldusprofiilile ja kuvatakse tulevastel arvetel ning kviitungitel.",
-      "loading": "Laadimine…"
+      "loading": "Laadimine…",
+      "viesValid": "VIES: kehtiv KMKR number (kontrollitud {date})",
+      "viesInvalid": "Ei ole VIES-is registreeritud piiriüleste tehingute jaoks",
+      "viesUnverified": "VIES-is veel kontrollimata",
+      "viesVerifyNow": "Kontrolli kohe",
+      "viesUnreachable": "VIES-teenus pole ajutiselt kättesaadav — proovige mõne minuti pärast uuesti.",
+      "euVatNote": "EL-i ettevõtted: tasuliste tellimuste jaoks on vajalik VIES-is registreeritud KMKR number. Kinnitatud numbrid arveldatakse 0% käibemaksuga (pöördmaksustamine)."
     },
     "addOns": {
       "errorCheckout": "Makse alustamine ebaõnnestus",
@@ -3963,7 +3969,9 @@
       "download": "Laadi alla / Prindi",
       "thankYou": "Täname koostöö eest.",
       "notFound": "Arvet ei leitud.",
-      "back": "Tagasi arvelduse juurde"
+      "back": "Tagasi arvelduse juurde",
+      "taxRateAmount": "Maksumäär ja summa ({rate}%)",
+      "reverseChargeNote": "Mittemaksustatav tehing vastavalt direktiivi 2006/112/EÜ artiklile 44 — pöördmaksustamine: käibemaksu arvestab saaja."
     },
     "menus": {
       "live": "Aktiivne",

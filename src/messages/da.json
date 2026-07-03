@@ -1607,7 +1607,13 @@
       "fiscalSave": "Gem skatteoplysninger",
       "fiscalSaved": "Gemt",
       "fiscalHint": "Disse oplysninger føjes til din Stripe-faktureringsprofil og vises på fremtidige fakturaer og kvitteringer.",
-      "loading": "Indlæser…"
+      "loading": "Indlæser…",
+      "viesValid": "VIES: gyldigt momsnummer (kontrolleret {date})",
+      "viesInvalid": "Ikke registreret i VIES til grænseoverskridende transaktioner",
+      "viesUnverified": "Endnu ikke kontrolleret i VIES",
+      "viesVerifyNow": "Kontrollér nu",
+      "viesUnreachable": "VIES-tjenesten er midlertidigt utilgængelig — prøv igen om et par minutter.",
+      "euVatNote": "EU-virksomheder: et VIES-registreret momsnummer kræves til betalte abonnementer. Validerede numre faktureres med 0 % moms (omvendt betalingspligt)."
     },
     "addOns": {
       "errorCheckout": "Kunne ikke starte betaling",
@@ -3963,7 +3969,9 @@
       "download": "Download / Udskriv",
       "thankYou": "Tak for din handel.",
       "notFound": "Fakturaen blev ikke fundet.",
-      "back": "Tilbage til Fakturering"
+      "back": "Tilbage til Fakturering",
+      "taxRateAmount": "Skattesats & beløb ({rate}%)",
+      "reverseChargeNote": "Ikke-afgiftspligtig transaktion i henhold til artikel 44 i direktiv 2006/112/EF — omvendt betalingspligt: momsen afregnes af modtageren."
     },
     "menus": {
       "live": "Live",

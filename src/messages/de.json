@@ -1607,7 +1607,13 @@
       "fiscalSave": "Steuerdaten speichern",
       "fiscalSaved": "Gespeichert",
       "fiscalHint": "Diese Daten werden zu Ihrem Stripe-Rechnungsprofil hinzugefügt und erscheinen auf zukünftigen Rechnungen und Belegen.",
-      "loading": "Wird geladen…"
+      "loading": "Wird geladen…",
+      "viesValid": "VIES: gültige USt-IdNr. (geprüft am {date})",
+      "viesInvalid": "Nicht im VIES für grenzüberschreitende Umsätze registriert",
+      "viesUnverified": "Noch nicht über VIES geprüft",
+      "viesVerifyNow": "Jetzt prüfen",
+      "viesUnreachable": "Der VIES-Dienst ist vorübergehend nicht erreichbar — bitte in ein paar Minuten erneut versuchen.",
+      "euVatNote": "EU-Unternehmen: Für kostenpflichtige Abos ist eine im VIES registrierte USt-IdNr. erforderlich. Validierte Nummern werden mit 0 % USt (Reverse Charge) fakturiert."
     },
     "addOns": {
       "errorCheckout": "Checkout konnte nicht gestartet werden",
@@ -3963,7 +3969,9 @@
       "download": "Herunterladen / Drucken",
       "thankYou": "Vielen Dank für Ihr Vertrauen.",
       "notFound": "Rechnung nicht gefunden.",
-      "back": "Zurück zur Abrechnung"
+      "back": "Zurück zur Abrechnung",
+      "taxRateAmount": "Steuersatz & Betrag ({rate} %)",
+      "reverseChargeNote": "Nicht steuerbarer Umsatz gemäß Artikel 44 der Richtlinie 2006/112/EG — Reverse Charge: Steuerschuldnerschaft des Leistungsempfängers."
     },
     "menus": {
       "live": "Live",

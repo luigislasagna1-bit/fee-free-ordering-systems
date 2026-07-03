@@ -1607,7 +1607,13 @@
       "fiscalSave": "Fiscale gegevens opslaan",
       "fiscalSaved": "Opgeslagen",
       "fiscalHint": "Deze gegevens worden toegevoegd aan uw Stripe-factuurprofiel en verschijnen op toekomstige facturen en bonnen.",
-      "loading": "Laden…"
+      "loading": "Laden…",
+      "viesValid": "VIES: geldig btw-nummer (gecontroleerd op {date})",
+      "viesInvalid": "Niet in VIES geregistreerd voor grensoverschrijdende transacties",
+      "viesUnverified": "Nog niet via VIES gecontroleerd",
+      "viesVerifyNow": "Nu controleren",
+      "viesUnreachable": "De VIES-dienst is tijdelijk niet beschikbaar — probeer het over enkele minuten opnieuw.",
+      "euVatNote": "EU-bedrijven: voor betaalde abonnementen is een in VIES geregistreerd btw-nummer vereist. Gevalideerde nummers worden gefactureerd met 0% btw (verleggingsregeling)."
     },
     "addOns": {
       "errorCheckout": "Afrekenen kon niet worden gestart",
@@ -3963,7 +3969,9 @@
       "download": "Downloaden / Afdrukken",
       "thankYou": "Bedankt voor uw vertrouwen.",
       "notFound": "Factuur niet gevonden.",
-      "back": "Terug naar Facturering"
+      "back": "Terug naar Facturering",
+      "taxRateAmount": "Btw-tarief & bedrag ({rate}%)",
+      "reverseChargeNote": "Niet-belastbare handeling overeenkomstig artikel 44 van Richtlijn 2006/112/EG — btw verlegd: btw verschuldigd door de afnemer."
     },
     "menus": {
       "live": "Live",

@@ -1607,7 +1607,13 @@
       "fiscalSave": "Zapisz dane podatkowe",
       "fiscalSaved": "Zapisano",
       "fiscalHint": "Te dane są dodawane do Twojego profilu rozliczeniowego Stripe i pojawią się na przyszłych fakturach i paragonach.",
-      "loading": "Ładowanie…"
+      "loading": "Ładowanie…",
+      "viesValid": "VIES: prawidłowy numer VAT (sprawdzono {date})",
+      "viesInvalid": "Niezarejestrowany w VIES dla transakcji transgranicznych",
+      "viesUnverified": "Jeszcze nie zweryfikowano w VIES",
+      "viesVerifyNow": "Zweryfikuj teraz",
+      "viesUnreachable": "Usługa VIES jest chwilowo niedostępna — spróbuj ponownie za kilka minut.",
+      "euVatNote": "Firmy z UE: do płatnych subskrypcji wymagany jest numer VAT zarejestrowany w VIES. Zweryfikowane numery są fakturowane z 0% VAT (odwrotne obciążenie)."
     },
     "addOns": {
       "errorCheckout": "Nie udało się uruchomić płatności",
@@ -3963,7 +3969,9 @@
       "download": "Pobierz / Drukuj",
       "thankYou": "Dziękujemy za współpracę.",
       "notFound": "Nie znaleziono faktury.",
-      "back": "Powrót do rozliczeń"
+      "back": "Powrót do rozliczeń",
+      "taxRateAmount": "Stawka i kwota podatku ({rate}%)",
+      "reverseChargeNote": "Transakcja niepodlegająca opodatkowaniu zgodnie z art. 44 dyrektywy 2006/112/WE — odwrotne obciążenie: VAT rozlicza nabywca."
     },
     "menus": {
       "live": "Na żywo",

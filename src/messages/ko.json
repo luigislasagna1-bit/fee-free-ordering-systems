@@ -1607,7 +1607,13 @@
       "fiscalSave": "세금 정보 저장",
       "fiscalSaved": "저장됨",
       "fiscalHint": "이 정보는 Stripe 청구 프로필에 추가되며 향후 인보이스 및 영수증에 표시됩니다.",
-      "loading": "불러오는 중…"
+      "loading": "불러오는 중…",
+      "viesValid": "VIES: 유효한 VAT 번호({date} 확인됨)",
+      "viesInvalid": "국경 간 거래용 VIES에 등록되어 있지 않음",
+      "viesUnverified": "아직 VIES로 확인되지 않음",
+      "viesVerifyNow": "지금 확인",
+      "viesUnreachable": "VIES 서비스를 일시적으로 사용할 수 없습니다 — 몇 분 후 다시 시도하세요.",
+      "euVatNote": "EU 사업자: 유료 구독에는 VIES에 등록된 VAT 번호가 필요합니다. 검증된 번호는 VAT 0%(대리납부)로 청구됩니다."
     },
     "addOns": {
       "errorCheckout": "결제 시작에 실패했습니다",
@@ -3963,7 +3969,9 @@
       "download": "다운로드 / 인쇄",
       "thankYou": "이용해 주셔서 감사합니다.",
       "notFound": "청구서를 찾을 수 없습니다.",
-      "back": "결제 관리로 돌아가기"
+      "back": "결제 관리로 돌아가기",
+      "taxRateAmount": "세율 및 세액({rate}%)",
+      "reverseChargeNote": "지침 2006/112/EC 제44조에 따른 비과세 거래 — 대리납부: VAT는 수령자가 신고합니다."
     },
     "menus": {
       "live": "라이브",

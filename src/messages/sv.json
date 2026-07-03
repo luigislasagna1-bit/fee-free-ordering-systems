@@ -1607,7 +1607,13 @@
       "fiscalSave": "Spara skatteuppgifter",
       "fiscalSaved": "Sparat",
       "fiscalHint": "Dessa uppgifter läggs till i din Stripe-faktureringsprofil och visas på framtida fakturor och kvitton.",
-      "loading": "Laddar…"
+      "loading": "Laddar…",
+      "viesValid": "VIES: giltigt momsnummer (kontrollerat {date})",
+      "viesInvalid": "Inte registrerat i VIES för gränsöverskridande transaktioner",
+      "viesUnverified": "Ännu inte kontrollerat i VIES",
+      "viesVerifyNow": "Kontrollera nu",
+      "viesUnreachable": "VIES-tjänsten är tillfälligt otillgänglig — försök igen om några minuter.",
+      "euVatNote": "EU-företag: ett VIES-registrerat momsnummer krävs för betalda prenumerationer. Validerade nummer faktureras med 0 % moms (omvänd skattskyldighet)."
     },
     "addOns": {
       "errorCheckout": "Det gick inte att starta kassan",
@@ -3963,7 +3969,9 @@
       "download": "Ladda ner / Skriv ut",
       "thankYou": "Tack för ditt förtroende.",
       "notFound": "Fakturan kunde inte hittas.",
-      "back": "Tillbaka till Fakturering"
+      "back": "Tillbaka till Fakturering",
+      "taxRateAmount": "Skattesats & belopp ({rate}%)",
+      "reverseChargeNote": "Icke skattepliktig transaktion enligt artikel 44 i direktiv 2006/112/EG — omvänd skattskyldighet: moms redovisas av mottagaren."
     },
     "menus": {
       "live": "Aktiv",

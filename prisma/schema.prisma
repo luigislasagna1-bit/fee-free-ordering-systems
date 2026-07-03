@@ -2670,6 +2670,14 @@ model RestaurantBillingProfile {
   country      String   @default("") // ISO-3166 alpha-2
   sdiCode      String   @default("") // Italy e-invoicing recipient code
   pec          String   @default("") // Italy certified email
+  /// VIES validation of the EU VAT number (Fabrizio cmr1ty0lc follow-up,
+  /// 2026-07-03): true = confirmed via the EU VIES service (invoice shows the
+  /// Art. 44 reverse-charge note, 0% VAT); false = checked and NOT registered;
+  /// null = not applicable (non-EU) or not yet checked (VIES was unreachable).
+  /// Launch policy (Luigi, Option A): EU restaurants need taxIdViesValid=true
+  /// to START a paid subscription — so the platform never owes EU VAT.
+  taxIdViesValid     Boolean?
+  taxIdViesCheckedAt DateTime?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

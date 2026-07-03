@@ -1607,7 +1607,13 @@
       "fiscalSave": "Uložit daňové údaje",
       "fiscalSaved": "Uloženo",
       "fiscalHint": "Tyto údaje se přidají do vašeho fakturačního profilu Stripe a objeví se na budoucích fakturách a účtenkách.",
-      "loading": "Načítání…"
+      "loading": "Načítání…",
+      "viesValid": "VIES: platné DIČ (ověřeno {date})",
+      "viesInvalid": "Není registrováno ve VIES pro přeshraniční transakce",
+      "viesUnverified": "Zatím neověřeno ve VIES",
+      "viesVerifyNow": "Ověřit nyní",
+      "viesUnreachable": "Služba VIES je dočasně nedostupná — zkuste to za pár minut.",
+      "euVatNote": "Firmy z EU: pro placené předplatné je nutné DIČ registrované ve VIES. Ověřená čísla fakturujeme s 0% DPH (přenesená daňová povinnost)."
     },
     "addOns": {
       "errorCheckout": "Nepodařilo se zahájit pokladnu",
@@ -3963,7 +3969,9 @@
       "download": "Stáhnout / Tisk",
       "thankYou": "Děkujeme za vaši důvěru.",
       "notFound": "Faktura nebyla nalezena.",
-      "back": "Zpět na Fakturaci"
+      "back": "Zpět na Fakturaci",
+      "taxRateAmount": "Sazba a částka daně ({rate}%)",
+      "reverseChargeNote": "Nezdanitelné plnění podle článku 44 směrnice 2006/112/ES — přenesená daňová povinnost: DPH odvede příjemce."
     },
     "menus": {
       "live": "Aktivní",

@@ -1607,7 +1607,13 @@
       "fiscalSave": "税務情報を保存",
       "fiscalSaved": "保存しました",
       "fiscalHint": "これらの情報はStripeの請求プロフィールに追加され、今後の請求書および領収書に記載されます。",
-      "loading": "読み込み中…"
+      "loading": "読み込み中…",
+      "viesValid": "VIES：有効なVAT番号（{date}確認済み）",
+      "viesInvalid": "越境取引についてVIESに未登録です",
+      "viesUnverified": "まだVIESで未確認です",
+      "viesVerifyNow": "今すぐ確認",
+      "viesUnreachable": "VIESサービスが一時的に利用できません — 数分後にもう一度お試しください。",
+      "euVatNote": "EU企業の方へ：有料サブスクリプションにはVIES登録済みのVAT番号が必要です。検証済み番号はVAT 0%（リバースチャージ）で請求されます。"
     },
     "addOns": {
       "errorCheckout": "チェックアウトを開始できませんでした",
@@ -3963,7 +3969,9 @@
       "download": "ダウンロード / 印刷",
       "thankYou": "ご利用いただきありがとうございます。",
       "notFound": "請求書が見つかりません。",
-      "back": "請求情報に戻る"
+      "back": "請求情報に戻る",
+      "taxRateAmount": "税率・税額（{rate}%）",
+      "reverseChargeNote": "指令2006/112/EC第44条に基づく非課税取引 — リバースチャージ：VATは受領者が申告します。"
     },
     "menus": {
       "live": "公開中",

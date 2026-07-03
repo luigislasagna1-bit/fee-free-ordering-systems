@@ -1607,7 +1607,13 @@
       "fiscalSave": "Lagre skattedetaljer",
       "fiscalSaved": "Lagret",
       "fiscalHint": "Disse detaljene legges til i Stripe-faktureringsprofilen din og vises på fremtidige fakturaer og kvitteringer.",
-      "loading": "Laster inn…"
+      "loading": "Laster inn…",
+      "viesValid": "VIES: gyldig MVA-nummer (kontrollert {date})",
+      "viesInvalid": "Ikke registrert i VIES for grensekryssende transaksjoner",
+      "viesUnverified": "Ennå ikke kontrollert i VIES",
+      "viesVerifyNow": "Kontroller nå",
+      "viesUnreachable": "VIES-tjenesten er midlertidig utilgjengelig — prøv igjen om noen minutter.",
+      "euVatNote": "EU-bedrifter: et VIES-registrert MVA-nummer kreves for betalte abonnementer. Validerte numre faktureres med 0 % MVA (omvendt avgiftsplikt)."
     },
     "addOns": {
       "errorCheckout": "Kunne ikke starte betaling",
@@ -3963,7 +3969,9 @@
       "download": "Last ned / Skriv ut",
       "thankYou": "Takk for at du handler hos oss.",
       "notFound": "Fakturaen ble ikke funnet.",
-      "back": "Tilbake til fakturering"
+      "back": "Tilbake til fakturering",
+      "taxRateAmount": "Skattesats og beløp ({rate}%)",
+      "reverseChargeNote": "Ikke-avgiftspliktig transaksjon i henhold til artikkel 44 i direktiv 2006/112/EF — omvendt avgiftsplikt: MVA beregnes av mottakeren."
     },
     "menus": {
       "live": "Aktiv",

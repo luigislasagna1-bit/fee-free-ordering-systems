@@ -1607,7 +1607,13 @@
       "fiscalSave": "Tallenna verotustiedot",
       "fiscalSaved": "Tallennettu",
       "fiscalHint": "Nämä tiedot lisätään Stripe-laskutusprofiiliisi ja näkyvät tulevissa laskuissa ja kuiteissa.",
-      "loading": "Ladataan…"
+      "loading": "Ladataan…",
+      "viesValid": "VIES: voimassa oleva ALV-numero (tarkistettu {date})",
+      "viesInvalid": "Ei rekisteröity VIES-järjestelmään rajat ylittäviä liiketoimia varten",
+      "viesUnverified": "Ei vielä tarkistettu VIES-järjestelmästä",
+      "viesVerifyNow": "Tarkista nyt",
+      "viesUnreachable": "VIES-palvelu on tilapäisesti poissa käytöstä — yritä uudelleen muutaman minuutin kuluttua.",
+      "euVatNote": "EU-yritykset: maksullisiin tilauksiin vaaditaan VIES-rekisteröity ALV-numero. Vahvistetut numerot laskutetaan 0 %:n ALV:lla (käännetty verovelvollisuus)."
     },
     "addOns": {
       "errorCheckout": "Kassalle siirtyminen epäonnistui",
@@ -3963,7 +3969,9 @@
       "download": "Lataa / Tulosta",
       "thankYou": "Kiitos asioinnistasi.",
       "notFound": "Laskua ei löytynyt.",
-      "back": "Takaisin laskutukseen"
+      "back": "Takaisin laskutukseen",
+      "taxRateAmount": "Verokanta ja määrä ({rate} %)",
+      "reverseChargeNote": "Veroton liiketoimi direktiivin 2006/112/EY 44 artiklan mukaisesti — käännetty verovelvollisuus: vastaanottaja tilittää ALV:n."
     },
     "menus": {
       "live": "Käytössä",

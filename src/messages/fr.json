@@ -1607,7 +1607,13 @@
       "fiscalSave": "Enregistrer les détails fiscaux",
       "fiscalSaved": "Enregistré",
       "fiscalHint": "Ces détails sont ajoutés à votre profil de facturation Stripe et apparaissent sur vos futures factures et reçus.",
-      "loading": "Chargement…"
+      "loading": "Chargement…",
+      "viesValid": "VIES : numéro de TVA valide (vérifié le {date})",
+      "viesInvalid": "Non enregistré dans VIES pour les transactions transfrontalières",
+      "viesUnverified": "Pas encore vérifié dans VIES",
+      "viesVerifyNow": "Vérifier maintenant",
+      "viesUnreachable": "Le service VIES est temporairement indisponible — réessayez dans quelques minutes.",
+      "euVatNote": "Entreprises de l'UE : un numéro de TVA enregistré dans VIES est requis pour les abonnements payants. Les numéros validés sont facturés à 0 % de TVA (autoliquidation)."
     },
     "addOns": {
       "errorCheckout": "Impossible de démarrer le paiement",
@@ -3963,7 +3969,9 @@
       "download": "Télécharger / Imprimer",
       "thankYou": "Merci de votre confiance.",
       "notFound": "Facture introuvable.",
-      "back": "Retour à la facturation"
+      "back": "Retour à la facturation",
+      "taxRateAmount": "Taux et montant de la taxe ({rate} %)",
+      "reverseChargeNote": "Opération non imposable conformément à l'article 44 de la directive 2006/112/CE — autoliquidation : TVA due par le preneur."
     },
     "menus": {
       "live": "En ligne",

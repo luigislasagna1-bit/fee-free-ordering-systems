@@ -1607,7 +1607,13 @@
       "fiscalSave": "Spremi porezne podatke",
       "fiscalSaved": "Spremljeno",
       "fiscalHint": "Ovi se podaci dodaju u vaš Stripe profil za naplatu i pojavljuju se na budućim računima i potvrdama.",
-      "loading": "Učitavanje…"
+      "loading": "Učitavanje…",
+      "viesValid": "VIES: valjan PDV broj (provjereno {date})",
+      "viesInvalid": "Nije registriran u VIES-u za prekogranične transakcije",
+      "viesUnverified": "Još nije provjereno u VIES-u",
+      "viesVerifyNow": "Provjeri sada",
+      "viesUnreachable": "Usluga VIES trenutačno nije dostupna — pokušajte ponovno za nekoliko minuta.",
+      "euVatNote": "Tvrtke iz EU: za plaćene pretplate potreban je PDV broj registriran u VIES-u. Provjereni brojevi fakturiraju se s 0% PDV-a (prijenos porezne obveze)."
     },
     "addOns": {
       "errorCheckout": "Pokretanje naplate nije uspjelo",
@@ -3963,7 +3969,9 @@
       "download": "Preuzmi / Ispiši",
       "thankYou": "Hvala na suradnji.",
       "notFound": "Račun nije pronađen.",
-      "back": "Natrag na naplatu"
+      "back": "Natrag na naplatu",
+      "taxRateAmount": "Porezna stopa i iznos ({rate}%)",
+      "reverseChargeNote": "Neoporeziva transakcija u skladu s člankom 44. Direktive 2006/112/EZ — prijenos porezne obveze: PDV obračunava primatelj."
     },
     "menus": {
       "live": "Aktivno",

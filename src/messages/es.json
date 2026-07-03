@@ -1607,7 +1607,13 @@
       "fiscalSave": "Guardar datos fiscales",
       "fiscalSaved": "Guardado",
       "fiscalHint": "Estos datos se añaden a tu perfil de facturación de Stripe y aparecen en futuras facturas y recibos.",
-      "loading": "Cargando…"
+      "loading": "Cargando…",
+      "viesValid": "VIES: número de IVA válido (comprobado el {date})",
+      "viesInvalid": "No registrado en VIES para operaciones transfronterizas",
+      "viesUnverified": "Aún no verificado en VIES",
+      "viesVerifyNow": "Verificar ahora",
+      "viesUnreachable": "El servicio VIES no está disponible temporalmente — inténtalo de nuevo en unos minutos.",
+      "euVatNote": "Empresas de la UE: se requiere un número de IVA registrado en VIES para las suscripciones de pago. Los números validados se facturan al 0 % de IVA (inversión del sujeto pasivo)."
     },
     "addOns": {
       "errorCheckout": "No se pudo iniciar el pago",
@@ -3963,7 +3969,9 @@
       "download": "Descargar / Imprimir",
       "thankYou": "Gracias por su confianza.",
       "notFound": "Factura no encontrada.",
-      "back": "Volver a Facturación"
+      "back": "Volver a Facturación",
+      "taxRateAmount": "Tipo e importe del impuesto ({rate}%)",
+      "reverseChargeNote": "Operación no sujeta conforme al artículo 44 de la Directiva 2006/112/CE — inversión del sujeto pasivo: el IVA corre a cargo del destinatario."
     },
     "menus": {
       "live": "En directo",

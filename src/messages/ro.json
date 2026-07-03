@@ -1607,7 +1607,13 @@
       "fiscalSave": "Salvează datele fiscale",
       "fiscalSaved": "Salvat",
       "fiscalHint": "Aceste date sunt adăugate în profilul tău de facturare Stripe și apar pe facturile și chitanțele viitoare.",
-      "loading": "Se încarcă…"
+      "loading": "Se încarcă…",
+      "viesValid": "VIES: număr de TVA valid (verificat la {date})",
+      "viesInvalid": "Neînregistrat în VIES pentru tranzacții transfrontaliere",
+      "viesUnverified": "Încă neverificat în VIES",
+      "viesVerifyNow": "Verifică acum",
+      "viesUnreachable": "Serviciul VIES este temporar indisponibil — încercați din nou peste câteva minute.",
+      "euVatNote": "Companii din UE: pentru abonamente plătite este necesar un număr de TVA înregistrat în VIES. Numerele validate sunt facturate cu TVA 0% (taxare inversă)."
     },
     "addOns": {
       "errorCheckout": "Nu s-a putut iniția plata",
@@ -3963,7 +3969,9 @@
       "download": "Descarcă / Tipărește",
       "thankYou": "Vă mulțumim pentru colaborare.",
       "notFound": "Factura nu a fost găsită.",
-      "back": "Înapoi la Facturare"
+      "back": "Înapoi la Facturare",
+      "taxRateAmount": "Cota și valoarea taxei ({rate}%)",
+      "reverseChargeNote": "Tranzacție neimpozabilă în conformitate cu articolul 44 al Directivei 2006/112/CE — taxare inversă: TVA în sarcina beneficiarului."
     },
     "menus": {
       "live": "Activ",

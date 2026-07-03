@@ -1607,7 +1607,13 @@
       "fiscalSave": "Desa les dades fiscals",
       "fiscalSaved": "Desat",
       "fiscalHint": "Aquestes dades s'afegeixen al teu perfil de facturació de Stripe i apareixen a les factures i els rebuts futurs.",
-      "loading": "S'està carregant…"
+      "loading": "S'està carregant…",
+      "viesValid": "VIES: número d'IVA vàlid (comprovat el {date})",
+      "viesInvalid": "No registrat a VIES per a operacions transfrontereres",
+      "viesUnverified": "Encara no verificat a VIES",
+      "viesVerifyNow": "Verifica ara",
+      "viesUnreachable": "El servei VIES no està disponible temporalment — torna-ho a provar d'aquí a uns minuts.",
+      "euVatNote": "Empreses de la UE: cal un número d'IVA registrat a VIES per a subscripcions de pagament. Els números validats es facturen amb IVA del 0% (inversió del subjecte passiu)."
     },
     "addOns": {
       "errorCheckout": "No s'ha pogut iniciar la compra",
@@ -3963,7 +3969,9 @@
       "download": "Baixa / Imprimeix",
       "thankYou": "Gràcies per la vostra confiança.",
       "notFound": "No s'ha trobat la factura.",
-      "back": "Torna a Facturació"
+      "back": "Torna a Facturació",
+      "taxRateAmount": "Tipus i import de l'impost ({rate}%)",
+      "reverseChargeNote": "Operació no subjecta d'acord amb l'article 44 de la Directiva 2006/112/CE — inversió del subjecte passiu: l'IVA va a càrrec del destinatari."
     },
     "menus": {
       "live": "En directe",

@@ -1607,7 +1607,13 @@
       "fiscalSave": "Salva dati fiscali",
       "fiscalSaved": "Salvato",
       "fiscalHint": "Questi dati vengono aggiunti al tuo profilo di fatturazione Stripe e compaiono sulle fatture e ricevute future.",
-      "loading": "Caricamento…"
+      "loading": "Caricamento…",
+      "viesValid": "VIES: partita IVA valida (verificata il {date})",
+      "viesInvalid": "Non registrato in VIES per operazioni transfrontaliere",
+      "viesUnverified": "Non ancora verificato in VIES",
+      "viesVerifyNow": "Verifica ora",
+      "viesUnreachable": "Il servizio VIES è temporaneamente non disponibile — riprova tra qualche minuto.",
+      "euVatNote": "Aziende UE: per gli abbonamenti a pagamento è richiesta una partita IVA registrata in VIES. I numeri convalidati sono fatturati con IVA 0% (reverse charge)."
     },
     "addOns": {
       "errorCheckout": "Impossibile avviare il pagamento",
@@ -3963,7 +3969,9 @@
       "download": "Scarica / Stampa",
       "thankYou": "Grazie per averci scelto.",
       "notFound": "Fattura non trovata.",
-      "back": "Torna alla fatturazione"
+      "back": "Torna alla fatturazione",
+      "taxRateAmount": "Aliquota e importo imposta ({rate}%)",
+      "reverseChargeNote": "Operazione non imponibile ai sensi dell'articolo 44 della Direttiva 2006/112/CE — reverse charge: IVA a carico del destinatario."
     },
     "menus": {
       "live": "In diretta",

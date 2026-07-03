@@ -1607,7 +1607,13 @@
       "fiscalSave": "Számlázási adatok mentése",
       "fiscalSaved": "Mentve",
       "fiscalHint": "Ezek az adatok bekerülnek a Stripe számlázási profiljába, és megjelennek a jövőbeni számlákon és bizonylatokon.",
-      "loading": "Betöltés…"
+      "loading": "Betöltés…",
+      "viesValid": "VIES: érvényes adószám (ellenőrizve: {date})",
+      "viesInvalid": "Nincs regisztrálva a VIES-ben határon átnyúló ügyletekhez",
+      "viesUnverified": "Még nincs ellenőrizve a VIES-ben",
+      "viesVerifyNow": "Ellenőrzés most",
+      "viesUnreachable": "A VIES szolgáltatás átmenetileg nem érhető el — próbálja újra néhány perc múlva.",
+      "euVatNote": "EU-s vállalkozások: a fizetős előfizetésekhez VIES-ben regisztrált adószám szükséges. Az érvényesített számokat 0% áfával számlázzuk (fordított adózás)."
     },
     "addOns": {
       "errorCheckout": "Nem sikerült elindítani a fizetést",
@@ -3963,7 +3969,9 @@
       "download": "Letöltés / Nyomtatás",
       "thankYou": "Köszönjük, hogy minket választott.",
       "notFound": "A számla nem található.",
-      "back": "Vissza a számlázáshoz"
+      "back": "Vissza a számlázáshoz",
+      "taxRateAmount": "Adókulcs és összeg ({rate}%)",
+      "reverseChargeNote": "Adómentes ügylet a 2006/112/EK irányelv 44. cikke alapján — fordított adózás: az áfát a szolgáltatás igénybevevője számolja el."
     },
     "menus": {
       "live": "Élő",

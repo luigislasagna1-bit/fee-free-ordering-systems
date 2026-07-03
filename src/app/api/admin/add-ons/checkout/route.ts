@@ -5,6 +5,7 @@ import { requireRestaurantAccess } from "@/lib/access";
 import { getStripe, stripeReady } from "@/lib/stripe";
 import { ensureStripeCustomerForRestaurant } from "@/lib/addons";
 import { getMarketplaceEligibility } from "@/lib/marketplace-eligibility";
+import { euVatSubscriptionBlock } from "@/lib/vies";
 
 /**
  * POST { addOnSlug } — start a Stripe Checkout session to subscribe the
@@ -17,6 +18,22 @@ export async function POST(req: NextRequest) {
 
   if (!(await stripeReady())) {
     return NextResponse.json({ error: "Billing is not configured" }, { status: 503 });
+  }
+
+  // Launch tax policy "Option A" (Luigi 2026-07-03, Fabrizio cmr1ty0lc): an
+  // EU restaurant needs a VIES-validated VAT number on file before starting
+  // any PAID subscription — the platform (Canadian, no EU OSS registration)
+  // must only make reverse-charge B2B sales into the EU.
+  const euBlock = await euVatSubscriptionBlock(user.restaurantId);
+  if (euBlock) {
+    return NextResponse.json(
+      {
+        error: "EU businesses need a VIES-registered VAT number before subscribing. Add it under Billing → Fiscal details, then try again.",
+        code: euBlock.code,
+        blockerHref: "/admin/billing",
+      },
+      { status: 403 },
+    );
   }
 
   const body = await req.json().catch(() => ({} as any));

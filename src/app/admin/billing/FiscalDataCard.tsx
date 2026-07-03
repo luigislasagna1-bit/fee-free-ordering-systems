@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Loader2, CheckCircle2, FileText } from "lucide-react";
+import { Loader2, CheckCircle2, FileText, ShieldCheck, ShieldAlert, ShieldQuestion } from "lucide-react";
 import { getFiscalConfig, isKnownFiscalCountry, FISCAL_COUNTRY_CODES } from "@/lib/fiscal-countries";
 
 type Profile = {
@@ -10,6 +10,15 @@ type Profile = {
   addressLine1: string; addressLine2: string; city: string; state: string;
   postalCode: string; country: string; sdiCode: string; pec: string;
 };
+
+// EU VAT-area countries where VIES validation applies (client-side copy of
+// src/lib/vies.ts's set — that lib can pull in prisma via its purchase gate,
+// so it must not be imported into a client bundle). GR listed as ISO here.
+const EU_VIES_COUNTRIES = new Set([
+  "AT", "BE", "BG", "HR", "CY", "CZ", "DE", "DK", "EE", "GR", "ES", "FI",
+  "FR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO",
+  "SE", "SI", "SK", "XI",
+]);
 
 const EMPTY: Profile = {
   legalName: "", taxId: "", taxIdType: "", billingEmail: "",
@@ -37,6 +46,17 @@ export function FiscalDataCard() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  // VIES verdict for the SAVED profile (null = not applicable / not checked).
+  const [viesValid, setViesValid] = useState<boolean | null>(null);
+  const [viesCheckedAt, setViesCheckedAt] = useState<string | null>(null);
+  const [viesChecking, setViesChecking] = useState(false);
+  const [viesUnreachable, setViesUnreachable] = useState(false);
+
+  const applyProfile = (p: any) => {
+    setForm({ ...EMPTY, ...p });
+    setViesValid(p?.taxIdViesValid ?? null);
+    setViesCheckedAt(p?.taxIdViesCheckedAt ?? null);
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -44,7 +64,7 @@ export function FiscalDataCard() {
       try {
         const res = await fetch("/api/restaurants/billing-profile");
         const data = await res.json();
-        if (!cancelled && data.profile) setForm({ ...EMPTY, ...data.profile });
+        if (!cancelled && data.profile) applyProfile(data.profile);
       } catch { /* ignore */ }
       finally { if (!cancelled) setLoading(false); }
     })();
@@ -83,17 +103,39 @@ export function FiscalDataCard() {
   async function save() {
     setSaving(true);
     setSaved(false);
+    setViesUnreachable(false);
     try {
       const res = await fetch("/api/restaurants/billing-profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      if (res.ok) setSaved(true);
+      if (res.ok) {
+        setSaved(true);
+        const data = await res.json().catch(() => null);
+        if (data?.profile) applyProfile(data.profile);
+      }
     } finally {
       setSaving(false);
     }
   }
+
+  // Re-run the VIES check on the saved profile (covers "VIES was down when I
+  // saved" + numbers that get registered/lapse later).
+  async function recheckVies() {
+    setViesChecking(true);
+    setViesUnreachable(false);
+    try {
+      const res = await fetch("/api/restaurants/billing-profile", { method: "POST" });
+      const data = await res.json().catch(() => null);
+      if (res.ok && data?.profile) applyProfile(data.profile);
+      else if (res.status === 503) setViesUnreachable(true);
+    } finally {
+      setViesChecking(false);
+    }
+  }
+
+  const isEu = EU_VIES_COUNTRIES.has((form.country || "").toUpperCase());
 
   const input = "w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500";
   const label = "block text-xs font-semibold text-gray-700 mb-1";
@@ -147,6 +189,47 @@ export function FiscalDataCard() {
                 onChange={(e) => set("taxId", e.target.value)}
                 placeholder={fiscal.taxIdPlaceholder || "—"}
               />
+              {/* EU VAT + VIES (Fabrizio cmr1ty0lc, 2026-07-03): status of the
+                  SAVED number against the EU's official VIES register. A valid
+                  number → 0% reverse-charge invoices; required before paid
+                  subscriptions (launch policy). */}
+              {isEu && (
+                <div className="mt-2 space-y-1.5">
+                  {form.taxId && viesValid === true && (
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-1">
+                      <ShieldCheck className="w-3.5 h-3.5" />
+                      {t("viesValid", { date: viesCheckedAt ? new Date(viesCheckedAt).toLocaleDateString(locale) : "" })}
+                    </span>
+                  )}
+                  {form.taxId && viesValid === false && (
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-red-700 bg-red-50 border border-red-200 rounded-full px-2.5 py-1">
+                      <ShieldAlert className="w-3.5 h-3.5" />
+                      {t("viesInvalid")}
+                    </span>
+                  )}
+                  {form.taxId && viesValid === null && (
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-600 bg-gray-50 border border-gray-200 rounded-full px-2.5 py-1">
+                      <ShieldQuestion className="w-3.5 h-3.5" />
+                      {t("viesUnverified")}
+                    </span>
+                  )}
+                  {form.taxId && viesValid !== true && (
+                    <button
+                      type="button"
+                      onClick={recheckVies}
+                      disabled={viesChecking}
+                      className="ml-2 inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 hover:text-emerald-800 underline disabled:opacity-50"
+                    >
+                      {viesChecking ? <Loader2 className="w-3 h-3 animate-spin" /> : null}
+                      {t("viesVerifyNow")}
+                    </button>
+                  )}
+                  {viesUnreachable && (
+                    <p className="text-xs text-amber-600">{t("viesUnreachable")}</p>
+                  )}
+                  <p className="text-xs text-gray-400">{t("euVatNote")}</p>
+                </div>
+              )}
             </div>
 
             <div className="sm:col-span-2">

@@ -1607,7 +1607,13 @@
       "fiscalSave": "Shrani davčne podatke",
       "fiscalSaved": "Shranjeno",
       "fiscalHint": "Ti podatki se dodajo v vaš obračunski profil Stripe in se prikažejo na prihodnjih računih in potrdilih.",
-      "loading": "Nalaganje…"
+      "loading": "Nalaganje…",
+      "viesValid": "VIES: veljavna ID za DDV (preverjeno {date})",
+      "viesInvalid": "Ni registriran v VIES za čezmejne transakcije",
+      "viesUnverified": "Še ni preverjeno v VIES",
+      "viesVerifyNow": "Preveri zdaj",
+      "viesUnreachable": "Storitev VIES je začasno nedosegljiva — poskusite znova čez nekaj minut.",
+      "euVatNote": "Podjetja iz EU: za plačljive naročnine je potrebna ID za DDV, registrirana v VIES. Potrjene številke fakturiramo z 0% DDV (obrnjena davčna obveznost)."
     },
     "addOns": {
       "errorCheckout": "Blagajne ni bilo mogoče zagnati",
@@ -3963,7 +3969,9 @@
       "download": "Prenesi / natisni",
       "thankYou": "Hvala za vaše sodelovanje.",
       "notFound": "Računa ni mogoče najti.",
-      "back": "Nazaj na obračun"
+      "back": "Nazaj na obračun",
+      "taxRateAmount": "Davčna stopnja in znesek ({rate}%)",
+      "reverseChargeNote": "Neobdavčljiva transakcija v skladu s 44. členom Direktive 2006/112/ES — obrnjena davčna obveznost: DDV obračuna prejemnik."
     },
     "menus": {
       "live": "V živo",

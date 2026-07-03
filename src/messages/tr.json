@@ -1607,7 +1607,13 @@
       "fiscalSave": "Mali bilgileri kaydet",
       "fiscalSaved": "Kaydedildi",
       "fiscalHint": "Bu bilgiler Stripe fatura profilinize eklenir ve gelecekteki faturalarda ve makbuzlarda görünür.",
-      "loading": "Yükleniyor…"
+      "loading": "Yükleniyor…",
+      "viesValid": "VIES: geçerli KDV numarası ({date} tarihinde kontrol edildi)",
+      "viesInvalid": "Sınır ötesi işlemler için VIES'te kayıtlı değil",
+      "viesUnverified": "Henüz VIES ile doğrulanmadı",
+      "viesVerifyNow": "Şimdi doğrula",
+      "viesUnreachable": "VIES hizmeti geçici olarak kullanılamıyor — birkaç dakika sonra tekrar deneyin.",
+      "euVatNote": "AB işletmeleri: ücretli abonelikler için VIES'te kayıtlı bir KDV numarası gerekir. Doğrulanmış numaralar %0 KDV ile faturalandırılır (ters vergilendirme)."
     },
     "addOns": {
       "errorCheckout": "Ödeme başlatılamadı",
@@ -3963,7 +3969,9 @@
       "download": "İndir / Yazdır",
       "thankYou": "İş birliğiniz için teşekkür ederiz.",
       "notFound": "Fatura bulunamadı.",
-      "back": "Faturalandırmaya dön"
+      "back": "Faturalandırmaya dön",
+      "taxRateAmount": "Vergi oranı ve tutarı (%{rate})",
+      "reverseChargeNote": "2006/112/AT sayılı Direktifin 44. maddesi uyarınca vergiye tabi olmayan işlem — ters vergilendirme: KDV alıcı tarafından beyan edilir."
     },
     "menus": {
       "live": "Yayında",

@@ -2009,7 +2009,13 @@
       "fiscalSave": "Save fiscal details",
       "fiscalSaved": "Saved",
       "fiscalHint": "These details are added to your Stripe billing profile and appear on future invoices and receipts.",
-      "loading": "Loading…"
+      "loading": "Loading…",
+      "viesValid": "VIES: valid VAT number (checked {date})",
+      "viesInvalid": "Not registered with VIES for cross-border transactions",
+      "viesUnverified": "Not verified with VIES yet",
+      "viesVerifyNow": "Verify now",
+      "viesUnreachable": "The VIES service is temporarily unavailable — try again in a few minutes.",
+      "euVatNote": "EU businesses: a VIES-registered VAT number is required for paid subscriptions. Validated numbers are invoiced at 0% VAT (reverse charge)."
     },
     "addOns": {
       "errorCheckout": "Failed to start checkout",
@@ -4007,7 +4013,9 @@
       "download": "Download / Print",
       "thankYou": "Thank you for your business.",
       "notFound": "Invoice not found.",
-      "back": "Back to Billing"
+      "back": "Back to Billing",
+      "taxRateAmount": "Tax rate & amount ({rate}%)",
+      "reverseChargeNote": "Non-taxable transaction in accordance with Article 44 of Directive 2006/112/EC — reverse charge: VAT to be accounted for by the recipient."
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

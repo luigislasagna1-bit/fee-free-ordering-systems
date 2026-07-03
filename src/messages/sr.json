@@ -1607,7 +1607,13 @@
       "fiscalSave": "Sačuvaj poreske podatke",
       "fiscalSaved": "Sačuvano",
       "fiscalHint": "Ovi podaci se dodaju u vaš Stripe profil za naplatu i pojavljuju se na budućim fakturama i računima.",
-      "loading": "Učitavanje…"
+      "loading": "Učitavanje…",
+      "viesValid": "VIES: важећи ПДВ број (проверено {date})",
+      "viesInvalid": "Није регистрован у VIES-у за прекограничне трансакције",
+      "viesUnverified": "Још није проверено у VIES-у",
+      "viesVerifyNow": "Провери одмах",
+      "viesUnreachable": "VIES услуга је привремено недоступна — покушајте поново за неколико минута.",
+      "euVatNote": "Фирме из ЕУ: за плаћене претплате потребан је ПДВ број регистрован у VIES-у. Потврђени бројеви се фактуришу са 0% ПДВ-а (обрнута наплата)."
     },
     "addOns": {
       "errorCheckout": "Nije uspelo pokretanje naplate",
@@ -3963,7 +3969,9 @@
       "download": "Preuzmi / Štampaj",
       "thankYou": "Hvala na poverenju.",
       "notFound": "Faktura nije pronađena.",
-      "back": "Nazad na naplatu"
+      "back": "Nazad na naplatu",
+      "taxRateAmount": "Пореска стопа и износ ({rate}%)",
+      "reverseChargeNote": "Неопорезива трансакција у складу са чланом 44 Директиве 2006/112/ЕЗ — обрнута наплата: ПДВ обрачунава прималац."
     },
     "menus": {
       "live": "Uživo",

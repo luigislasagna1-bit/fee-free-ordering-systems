@@ -1529,7 +1529,13 @@
       "fiscalSave": "Išsaugoti mokestinius duomenis",
       "fiscalSaved": "Išsaugota",
       "fiscalHint": "Šie duomenys pridedami prie jūsų Stripe atsiskaitymo profilio ir bus rodomi būsimose sąskaitose faktūrose bei kvituose.",
-      "loading": "Įkeliama…"
+      "loading": "Įkeliama…",
+      "viesValid": "VIES: galiojantis PVM numeris (patikrinta {date})",
+      "viesInvalid": "Neregistruotas VIES tarpvalstybiniams sandoriams",
+      "viesUnverified": "Dar nepatikrinta VIES",
+      "viesVerifyNow": "Patikrinti dabar",
+      "viesUnreachable": "VIES paslauga laikinai nepasiekiama — bandykite dar kartą po kelių minučių.",
+      "euVatNote": "ES įmonės: mokamoms prenumeratoms reikalingas VIES registruotas PVM numeris. Patvirtinti numeriai apmokestinami 0% PVM (atvirkštinis apmokestinimas)."
     },
     "addOns": {
       "errorCheckout": "Nepavyko pradėti apmokėjimo",
@@ -3963,7 +3969,9 @@
       "download": "Atsisiųsti / spausdinti",
       "thankYou": "Dėkojame, kad naudojatės mūsų paslaugomis.",
       "notFound": "Sąskaita faktūra nerasta.",
-      "back": "Atgal į atsiskaitymus"
+      "back": "Atgal į atsiskaitymus",
+      "taxRateAmount": "Mokesčio tarifas ir suma ({rate}%)",
+      "reverseChargeNote": "Neapmokestinamasis sandoris pagal Direktyvos 2006/112/EB 44 straipsnį — atvirkštinis apmokestinimas: PVM apskaito gavėjas."
     },
     "menus": {
       "live": "Aktyvus",
