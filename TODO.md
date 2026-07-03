@@ -347,3 +347,6 @@ Luigi: lock everything about kitchen tiles + order app display; no regressions. 
 
 ## ✅ 2026-07-03: kitchen display lock is now DEVICE-CONFIRMED
 Luigi verified everything on the kitchen apps including the zoom options; Fabrizio confirmed the tile layout in-thread ("Now it's perfect, great job!"). Tag kitchen-display-verified-2026-07-03 is a hardware-verified revert point. Remaining on cmqsn52d2: Fabrizio to try zoom + the lead-line setting, then mark FIXED (human-gated; the verify EMAIL button is Luigi's).
+
+## DONE 2026-07-03: checkout coupon "Apply" button fixed (commit dec39659, Fabrizio cmqtllluu)
+The checkout Apply was wired `onClick={applyCoupon}` — the click EVENT landed in applyCoupon's optional codeArg and `.trim()` on a MouseEvent threw BEFORE the fetch → silently dead button (cart's `() => applyCoupon()` worked, hence "works in cart, not at checkout"). Fixed both sides: CheckoutModal uses an arrow wrapper; applyCoupon type-guards codeArg (`typeof codeArg === "string"`) so any call-site shape is safe. Browser-verified with seeded TEST1 (10%): checkout → Promo code → TEST1 → Apply = −$3.90 on $38.97 instantly. Reply posted on the report; Fabrizio to retest.
