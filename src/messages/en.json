@@ -1168,7 +1168,8 @@
         "pausedToast": "Services paused",
         "resumedToast": "Services resumed",
         "saving": "Saving…"
-      }
+      },
+      "timeSelectionRange": "Time ranges (windows like 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Delivery Zones",
@@ -5634,7 +5635,8 @@
       "slotLabelPickN": "Pick {count} items",
       "hintPickCounts": "Pick {count} items — then choose your free item.",
       "addOneMoreAria": "Add a {name}",
-      "removeOneAria": "Remove a {name}"
+      "removeOneAria": "Remove a {name}",
+      "stepDoneHint": "This step is done — tap Next to continue."
     },
     "loginForm": {
       "emailLabel": "Email",

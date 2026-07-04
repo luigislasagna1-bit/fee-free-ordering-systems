@@ -1101,7 +1101,8 @@
         "pausedToast": "Послуги призупинено",
         "resumedToast": "Послуги відновлено",
         "saving": "Збереження…"
-      }
+      },
+      "timeSelectionRange": "Часові діапазони (вікна на кшталт 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Зони доставки",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Виберіть {count} позиції",
       "hintPickCounts": "Виберіть {count} позиції — потім безкоштовну.",
       "addOneMoreAria": "Додати один {name}",
-      "removeOneAria": "Прибрати один {name}"
+      "removeOneAria": "Прибрати один {name}",
+      "stepDoneHint": "Цей крок завершено — натисніть «Далі», щоб продовжити."
     }
   },
   "dunning": {

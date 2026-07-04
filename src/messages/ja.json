@@ -1101,7 +1101,8 @@
         "pausedToast": "サービスを一時停止しました",
         "resumedToast": "サービスを再開しました",
         "saving": "保存中…"
-      }
+      },
+      "timeSelectionRange": "時間帯（6:00 – 6:15 のような枠）"
     },
     "delivery": {
       "title": "デリバリーエリア",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "{count}品を選択",
       "hintPickCounts": "{count}品を選ぶと、無料の1品を選べます。",
       "addOneMoreAria": "{name}を1つ追加",
-      "removeOneAria": "{name}を1つ削除"
+      "removeOneAria": "{name}を1つ削除",
+      "stepDoneHint": "このステップは完了です — 「次へ」をタップして続行してください。"
     }
   },
   "dunning": {

@@ -464,7 +464,18 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                 </div>
                 <div className={`text-lg font-bold mt-0.5 ${t.text}`}>
                   {isLater
-                    ? fmtDateTime((order as any).scheduledFor, hoursFormat, locale)
+                    ? (() => {
+                        // Range-mode slot (Fabrizio cmqqxerxs): the customer was
+                        // promised a WINDOW — show "… 6:00 PM – 6:15 PM" so the
+                        // kitchen sees the same promise. Start stays the anchor.
+                        const base = fmtDateTime((order as any).scheduledFor, hoursFormat, locale);
+                        const w = (order as any).scheduledSlotMinutes;
+                        if (typeof w === "number" && w > 0) {
+                          const end = new Date(schedMs + w * 60_000).toISOString();
+                          return `${base} – ${fmtTimeOnly(end, hoursFormat, locale)}`;
+                        }
+                        return base;
+                      })()
                     : hasReady
                       ? `${tk("ready")} ${fmtTimeOnly(order.estimatedReady, hoursFormat, locale)}`
                       : fmtTimeOnly(order.createdAt, hoursFormat, locale)}

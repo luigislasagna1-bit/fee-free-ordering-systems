@@ -1101,7 +1101,8 @@
         "pausedToast": "服务已暂停",
         "resumedToast": "服务已恢复",
         "saving": "正在保存…"
-      }
+      },
+      "timeSelectionRange": "时间段（如 6:00 – 6:15 的窗口）"
     },
     "delivery": {
       "title": "配送区域",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "选择 {count} 件",
       "hintPickCounts": "选择 {count} 件后，再挑选您的免费商品。",
       "addOneMoreAria": "添加一份{name}",
-      "removeOneAria": "移除一份{name}"
+      "removeOneAria": "移除一份{name}",
+      "stepDoneHint": "此步骤已完成——点按“下一步”继续。"
     }
   },
   "dunning": {

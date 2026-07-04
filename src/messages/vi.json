@@ -1101,7 +1101,8 @@
         "pausedToast": "Đã tạm dừng dịch vụ",
         "resumedToast": "Đã tiếp tục dịch vụ",
         "saving": "Đang lưu…"
-      }
+      },
+      "timeSelectionRange": "Khoảng thời gian (khung như 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Khu vực giao hàng",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Chọn {count} món",
       "hintPickCounts": "Chọn {count} món — sau đó chọn món miễn phí.",
       "addOneMoreAria": "Thêm một {name}",
-      "removeOneAria": "Bớt một {name}"
+      "removeOneAria": "Bớt một {name}",
+      "stepDoneHint": "Bước này đã xong — chạm Tiếp theo để tiếp tục."
     }
   },
   "dunning": {

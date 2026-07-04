@@ -1229,6 +1229,14 @@ model Order {
   smartLinkId               String?
   smartLinkCounterApplied   Boolean   @default(false)
   scheduledFor              DateTime?
+  /// Slot-WINDOW width in minutes when the customer picked a time RANGE
+  /// ("6:00 – 6:15" = fulfil within the window; Fabrizio cmqqxerxs).
+  /// scheduledFor is the window START; displays add this many minutes for
+  /// the end. Null = an exact time was chosen (or not scheduled). Stamped
+  /// server-side from the restaurant's per-service slot settings at
+  /// placement, so later settings changes can't rewrite the promise the
+  /// customer saw at checkout.
+  scheduledSlotMinutes      Int?
   estimatedReady            DateTime?
   acceptedAt                DateTime?
   /// Set the first time this order's ticket is printed — by the web auto-print,

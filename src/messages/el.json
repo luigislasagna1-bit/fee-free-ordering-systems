@@ -1101,7 +1101,8 @@
         "pausedToast": "Οι υπηρεσίες τέθηκαν σε παύση",
         "resumedToast": "Οι υπηρεσίες συνεχίστηκαν",
         "saving": "Αποθήκευση…"
-      }
+      },
+      "timeSelectionRange": "Χρονικά διαστήματα (παράθυρα όπως 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Ζώνες παράδοσης",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Επιλέξτε {count} είδη",
       "hintPickCounts": "Επιλέξτε {count} είδη — μετά το δωρεάν είδος σας.",
       "addOneMoreAria": "Προσθήκη ενός {name}",
-      "removeOneAria": "Αφαίρεση ενός {name}"
+      "removeOneAria": "Αφαίρεση ενός {name}",
+      "stepDoneHint": "Αυτό το βήμα ολοκληρώθηκε — πατήστε Επόμενο για να συνεχίσετε."
     }
   },
   "dunning": {

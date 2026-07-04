@@ -1101,7 +1101,8 @@
         "pausedToast": "Услугите са на пауза",
         "resumedToast": "Услугите са възобновени",
         "saving": "Запазване…"
-      }
+      },
+      "timeSelectionRange": "Часови диапазони (прозорци като 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Зони за доставка",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Избери {count} артикула",
       "hintPickCounts": "Избери {count} артикула — после безплатния си артикул.",
       "addOneMoreAria": "Добави един {name}",
-      "removeOneAria": "Премахни един {name}"
+      "removeOneAria": "Премахни един {name}",
+      "stepDoneHint": "Тази стъпка е готова — натиснете Напред, за да продължите."
     }
   },
   "dunning": {

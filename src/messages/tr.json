@@ -1101,7 +1101,8 @@
         "pausedToast": "Hizmetler duraklatıldı",
         "resumedToast": "Hizmetler devam ettirildi",
         "saving": "Kaydediliyor…"
-      }
+      },
+      "timeSelectionRange": "Zaman aralıkları (6:00 – 6:15 gibi pencereler)"
     },
     "delivery": {
       "title": "Teslimat Bölgeleri",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "{count} ürün seçin",
       "hintPickCounts": "{count} ürün seçin — sonra ücretsiz ürününüzü seçin.",
       "addOneMoreAria": "Bir {name} ekle",
-      "removeOneAria": "Bir {name} çıkar"
+      "removeOneAria": "Bir {name} çıkar",
+      "stepDoneHint": "Bu adım tamamlandı — devam etmek için İleri'ye dokunun."
     }
   },
   "dunning": {

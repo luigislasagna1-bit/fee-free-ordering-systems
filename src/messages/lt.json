@@ -1101,7 +1101,8 @@
         "pausedToast": "Paslaugos pristabdytos",
         "resumedToast": "Paslaugos atnaujintos",
         "saving": "Įrašoma…"
-      }
+      },
+      "timeSelectionRange": "Laiko intervalai (langai kaip 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Pristatymo zonos",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Pasirinkite {count} prekes",
       "hintPickCounts": "Pasirinkite {count} prekes — tada nemokamą prekę.",
       "addOneMoreAria": "Pridėti vieną {name}",
-      "removeOneAria": "Pašalinti vieną {name}"
+      "removeOneAria": "Pašalinti vieną {name}",
+      "stepDoneHint": "Šis žingsnis baigtas — palieskite Toliau, kad tęstumėte."
     }
   },
   "dunning": {

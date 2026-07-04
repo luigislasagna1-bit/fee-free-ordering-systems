@@ -1101,7 +1101,8 @@
         "pausedToast": "Usługi wstrzymane",
         "resumedToast": "Usługi wznowione",
         "saving": "Zapisywanie…"
-      }
+      },
+      "timeSelectionRange": "Przedziały czasowe (okna typu 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Strefy dostawy",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Wybierz {count} pozycje",
       "hintPickCounts": "Wybierz {count} pozycje — potem darmową pozycję.",
       "addOneMoreAria": "Dodaj jeden {name}",
-      "removeOneAria": "Usuń jeden {name}"
+      "removeOneAria": "Usuń jeden {name}",
+      "stepDoneHint": "Ten krok jest gotowy — dotknij Dalej, aby kontynuować."
     }
   },
   "dunning": {

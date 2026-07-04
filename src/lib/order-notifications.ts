@@ -204,6 +204,8 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       // Scheduled ("order for later") slot — drives the prominent scheduled
       // line on the confirmation email. Null = ASAP. Luigi 2026-06-05.
       scheduledFor: (order as any).scheduledFor ?? null,
+      // Range-mode window width — email shows "start – end". Fabrizio cmqqxerxs.
+      scheduledSlotMinutes: (order as any).scheduledSlotMinutes ?? null,
       // Reserve-then-order: the table booking attached to this order, so the
       // confirmation email states the reservation too. Luigi 2026-06-08.
       reservation: linkedReservation

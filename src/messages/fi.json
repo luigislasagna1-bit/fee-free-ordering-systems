@@ -1101,7 +1101,8 @@
         "pausedToast": "Palvelut keskeytetty",
         "resumedToast": "Palvelut jatkettu",
         "saving": "Tallennetaan…"
-      }
+      },
+      "timeSelectionRange": "Aikavälit (ikkunat kuten 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Toimitusalueet",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Valitse {count} tuotetta",
       "hintPickCounts": "Valitse {count} tuotetta — sitten ilmainen tuotteesi.",
       "addOneMoreAria": "Lisää yksi {name}",
-      "removeOneAria": "Poista yksi {name}"
+      "removeOneAria": "Poista yksi {name}",
+      "stepDoneHint": "Tämä vaihe on valmis — jatka napauttamalla Seuraava."
     }
   },
   "dunning": {

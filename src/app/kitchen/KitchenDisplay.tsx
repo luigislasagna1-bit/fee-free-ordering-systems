@@ -3852,6 +3852,16 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                       // defaults to h11. Luigi 2026-06-08 / 2026-06-14.
                       hourCycle: hoursFmt === "12h" ? "h12" : "h23",
                     })}
+                    {/* Range-mode slot (Fabrizio cmqqxerxs): append the window
+                        end so staff confirm the same "6:00 – 6:15" promise the
+                        customer saw. */}
+                    {typeof (order as any)?.scheduledSlotMinutes === "number" && (order as any).scheduledSlotMinutes > 0 && (
+                      <> – {new Date(scheduledFor!.getTime() + (order as any).scheduledSlotMinutes * 60_000).toLocaleTimeString(locale || undefined, {
+                        hour: "numeric",
+                        minute: "2-digit",
+                        hourCycle: hoursFmt === "12h" ? "h12" : "h23",
+                      })}</>
+                    )}
                   </div>
                 </div>
                 <p className={`text-xs ${t.muted} mb-4`}>

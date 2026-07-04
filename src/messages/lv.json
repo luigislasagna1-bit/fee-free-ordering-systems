@@ -1101,7 +1101,8 @@
         "pausedToast": "Pakalpojumi apturēti",
         "resumedToast": "Pakalpojumi atsākti",
         "saving": "Saglabā…"
-      }
+      },
+      "timeSelectionRange": "Laika diapazoni (logi kā 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Piegādes zonas",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Izvēlies {count} produktus",
       "hintPickCounts": "Izvēlies {count} produktus — tad savu bezmaksas produktu.",
       "addOneMoreAria": "Pievienot vienu {name}",
-      "removeOneAria": "Noņemt vienu {name}"
+      "removeOneAria": "Noņemt vienu {name}",
+      "stepDoneHint": "Šis solis ir pabeigts — pieskarieties Tālāk, lai turpinātu."
     }
   },
   "dunning": {

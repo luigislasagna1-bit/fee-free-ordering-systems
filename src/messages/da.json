@@ -1101,7 +1101,8 @@
         "pausedToast": "Tjenester sat på pause",
         "resumedToast": "Tjenester genoptaget",
         "saving": "Gemmer…"
-      }
+      },
+      "timeSelectionRange": "Tidsintervaller (vinduer som 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Leveringszoner",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Vælg {count} varer",
       "hintPickCounts": "Vælg {count} varer — derefter din gratis vare.",
       "addOneMoreAria": "Tilføj en {name}",
-      "removeOneAria": "Fjern en {name}"
+      "removeOneAria": "Fjern en {name}",
+      "stepDoneHint": "Dette trin er færdigt — tryk på Næste for at fortsætte."
     }
   },
   "dunning": {

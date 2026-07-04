@@ -1101,7 +1101,8 @@
         "pausedToast": "Services en pause",
         "resumedToast": "Services repris",
         "saving": "Enregistrement…"
-      }
+      },
+      "timeSelectionRange": "Plages horaires (fenêtres du type 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Zones de livraison",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Choisissez {count} articles",
       "hintPickCounts": "Choisissez {count} articles — puis votre article offert.",
       "addOneMoreAria": "Ajouter un(e) {name}",
-      "removeOneAria": "Retirer un(e) {name}"
+      "removeOneAria": "Retirer un(e) {name}",
+      "stepDoneHint": "Cette étape est terminée — appuyez sur Suivant pour continuer."
     }
   },
   "dunning": {

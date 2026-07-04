@@ -102,12 +102,28 @@ export default async function ConfirmationPage({
             <span className="text-gray-600">
               {order.scheduledFor && new Date(order.scheduledFor).getTime() > Date.now()
                 ? t("scheduledFor", {
-                    time: new Date(order.scheduledFor).toLocaleString(undefined, {
-                      weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
-                      // Honour the restaurant's 12h/24h choice, not the browser default.
-                      hourCycle: (order.restaurant as any).hoursFormat === "24h" ? "h23" : "h12",
-                      ...(order.restaurant.timezone ? { timeZone: order.restaurant.timezone } : {}),
-                    }),
+                    time: (() => {
+                      const opts = {
+                        weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
+                        // Honour the restaurant's 12h/24h choice, not the browser default.
+                        hourCycle: (order.restaurant as any).hoursFormat === "24h" ? "h23" : "h12",
+                        ...(order.restaurant.timezone ? { timeZone: order.restaurant.timezone } : {}),
+                      } as const;
+                      const start = new Date(order.scheduledFor!).toLocaleString(undefined, opts);
+                      // Range-mode slot (Fabrizio cmqqxerxs): show the window
+                      // the customer picked — "… 6:00 PM – 6:15 PM".
+                      const w = (order as any).scheduledSlotMinutes;
+                      if (typeof w === "number" && w > 0) {
+                        const end = new Date(new Date(order.scheduledFor!).getTime() + w * 60_000)
+                          .toLocaleTimeString(undefined, {
+                            hour: "numeric", minute: "2-digit",
+                            hourCycle: (order.restaurant as any).hoursFormat === "24h" ? "h23" : "h12",
+                            ...(order.restaurant.timezone ? { timeZone: order.restaurant.timezone } : {}),
+                          });
+                        return `${start} – ${end}`;
+                      }
+                      return start;
+                    })(),
                   })
                 : t("estimatedTime", { type: order.type, minutes: order.type === "pickup" ? order.restaurant.estimatedPickup : order.restaurant.estimatedDelivery })}
             </span>

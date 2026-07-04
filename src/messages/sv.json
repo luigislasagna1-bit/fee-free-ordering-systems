@@ -1101,7 +1101,8 @@
         "pausedToast": "Tjänster pausade",
         "resumedToast": "Tjänster återupptagna",
         "saving": "Sparar…"
-      }
+      },
+      "timeSelectionRange": "Tidsintervall (fönster som 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Leveranszoner",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Välj {count} varor",
       "hintPickCounts": "Välj {count} varor — sedan din gratisvara.",
       "addOneMoreAria": "Lägg till en {name}",
-      "removeOneAria": "Ta bort en {name}"
+      "removeOneAria": "Ta bort en {name}",
+      "stepDoneHint": "Det här steget är klart — tryck på Nästa för att fortsätta."
     }
   },
   "dunning": {

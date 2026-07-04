@@ -1101,7 +1101,8 @@
         "pausedToast": "Services gepauzeerd",
         "resumedToast": "Services hervat",
         "saving": "Opslaan…"
-      }
+      },
+      "timeSelectionRange": "Tijdvakken (vensters zoals 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Bezorgzones",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Kies {count} items",
       "hintPickCounts": "Kies {count} items — daarna je gratis item.",
       "addOneMoreAria": "Eén {name} toevoegen",
-      "removeOneAria": "Eén {name} verwijderen"
+      "removeOneAria": "Eén {name} verwijderen",
+      "stepDoneHint": "Deze stap is klaar — tik op Volgende om door te gaan."
     }
   },
   "dunning": {

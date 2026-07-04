@@ -1124,7 +1124,8 @@
         "pausedToast": "सेवाएँ रोकी गईं",
         "resumedToast": "सेवाएँ फिर से शुरू हुईं",
         "saving": "सहेजा जा रहा है…"
-      }
+      },
+      "timeSelectionRange": "समय सीमाएँ (जैसे 6:00 – 6:15 की विंडो)"
     },
     "delivery": {
       "title": "डिलीवरी क्षेत्र",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "{count} आइटम चुनें",
       "hintPickCounts": "{count} आइटम चुनें — फिर अपना मुफ़्त आइटम चुनें।",
       "addOneMoreAria": "एक {name} जोड़ें",
-      "removeOneAria": "एक {name} हटाएँ"
+      "removeOneAria": "एक {name} हटाएँ",
+      "stepDoneHint": "यह चरण पूरा हो गया — जारी रखने के लिए ‘आगे’ पर टैप करें।"
     }
   },
   "dunning": {

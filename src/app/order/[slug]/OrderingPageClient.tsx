@@ -2848,14 +2848,15 @@ export function OrderingPageClient({
   })();
   // Per-service time-selection mode: "exact" lets the customer pick any minute
   // within opening hours; "bands" (default) gives a dropdown of fixed slots at
-  // perServiceSlotInterval. Reactive to orderType like the interval above.
-  // Fabrizio cmpxdtl9m.
-  const perServiceSlotMode: "bands" | "exact" | "both" = (() => {
+  // perServiceSlotInterval; "range" is bands shown as windows ("6:00 – 6:15",
+  // fulfilled within the timeframe — Fabrizio cmqqxerxs). Reactive to orderType
+  // like the interval above. Fabrizio cmpxdtl9m.
+  const perServiceSlotMode: "bands" | "exact" | "both" | "range" = (() => {
     try {
       const raw = (restaurant as any).serviceSettings;
       const ss = raw ? JSON.parse(raw) : null;
       const m = ss?.[serviceSettingsKey]?.slotMode;
-      if (m === "exact" || m === "both") return m;
+      if (m === "exact" || m === "both" || m === "range") return m;
     } catch { /* malformed serviceSettings — fall back to bands */ }
     return "bands";
   })();

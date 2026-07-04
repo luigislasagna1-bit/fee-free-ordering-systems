@@ -1101,7 +1101,8 @@
         "pausedToast": "Serviços pausados",
         "resumedToast": "Serviços retomados",
         "saving": "A guardar…"
-      }
+      },
+      "timeSelectionRange": "Intervalos de tempo (janelas tipo 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Áreas de entrega",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Escolha {count} artigos",
       "hintPickCounts": "Escolha {count} artigos — depois o seu artigo grátis.",
       "addOneMoreAria": "Adicionar um {name}",
-      "removeOneAria": "Remover um {name}"
+      "removeOneAria": "Remover um {name}",
+      "stepDoneHint": "Este passo está concluído — toque em Seguinte para continuar."
     }
   },
   "dunning": {

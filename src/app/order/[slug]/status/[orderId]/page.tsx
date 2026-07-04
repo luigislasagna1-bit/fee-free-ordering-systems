@@ -498,6 +498,16 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                       hourCycle: order.restaurant?.hoursFormat === "24h" ? "h23" : "h12",
                       ...(order.restaurant?.timezone ? { timeZone: order.restaurant.timezone } : {}),
                     })}
+                    {/* Range-mode slot (Fabrizio cmqqxerxs): the promise is a
+                        WINDOW — append its end ("… 6:00 PM – 6:15 PM"). The
+                        page's countdown logic still anchors on the START. */}
+                    {typeof (order as any).scheduledSlotMinutes === "number" && (order as any).scheduledSlotMinutes > 0 && (
+                      <> – {new Date(new Date(order.scheduledFor).getTime() + (order as any).scheduledSlotMinutes * 60_000).toLocaleTimeString(undefined, {
+                        hour: "numeric", minute: "2-digit",
+                        hourCycle: order.restaurant?.hoursFormat === "24h" ? "h23" : "h12",
+                        ...(order.restaurant?.timezone ? { timeZone: order.restaurant.timezone } : {}),
+                      })}</>
+                    )}
                   </div>
                   <div className="text-xs mt-0.5 text-emerald-700/70">{t("scheduledTitle")}</div>
                 </div>

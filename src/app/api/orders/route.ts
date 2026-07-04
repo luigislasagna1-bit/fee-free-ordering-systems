@@ -1681,6 +1681,30 @@ export async function POST(req: NextRequest) {
       Number.isFinite(scheduledForDate.getTime()) &&
       scheduledForDate.getTime() > Date.now();
 
+    // Slot-window width (Fabrizio cmqqxerxs): when THIS service's time picker
+    // is in "range" mode the customer was shown windows ("6:00 – 6:15" =
+    // fulfil within the timeframe) and scheduledFor is the window START.
+    // Stamp the width now — derived from the restaurant's OWN settings, never
+    // from client input — so confirmation/emails/kitchen keep showing the
+    // exact promise even if the owner later changes the interval.
+    const scheduledSlotMinutes: number | null = (() => {
+      if (!scheduledForDate) return null;
+      try {
+        const raw = (restaurant as any).serviceSettings;
+        const ss = raw ? JSON.parse(raw) : null;
+        const key =
+          type === "delivery" ? "delivery" :
+          type === "dine_in" ? "dineIn" :
+          type === "take_out" ? "takeOut" : "pickup";
+        if (ss?.[key]?.slotMode !== "range") return null;
+        const per = ss?.[key]?.slotInterval;
+        const iv = typeof per === "number" && per > 0
+          ? per
+          : ((restaurant as any).scheduledOrderInterval ?? 15);
+        return Math.max(5, Math.min(120, iv));
+      } catch { return null; }
+    })();
+
     // ── Special-day / holiday enforcement (Gloriafood parity) ───────────────
     // Reseller report cmpxds2d2: holiday closures must actually BLOCK orders.
     // We resolve the holiday rule for the day the order is FOR (the scheduled
@@ -2119,6 +2143,8 @@ export async function POST(req: NextRequest) {
         // above the auto-accept handling. Same Date object reused for
         // the kitchen estimatedReady math so the two can never drift.
         scheduledFor: scheduledForDate,
+        // Range-mode slot width — null for exact times. See derivation above.
+        scheduledSlotMinutes,
         // Closed-when-placed routing — see compute block above.
         placedWhileClosed: isClosedNow,
         alertAt: alertAtValue,

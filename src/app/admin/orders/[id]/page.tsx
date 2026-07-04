@@ -74,7 +74,17 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
     timeZone: tz, weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
   });
   const scheduledAt = order.scheduledFor
-    ? new Date(order.scheduledFor).toLocaleString([], { timeZone: tz, weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })
+    ? (() => {
+        const start = new Date(order.scheduledFor).toLocaleString([], { timeZone: tz, weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+        // Range-mode slot (Fabrizio cmqqxerxs): show the promised WINDOW.
+        const w = (order as any).scheduledSlotMinutes;
+        if (typeof w === "number" && w > 0) {
+          const end = new Date(new Date(order.scheduledFor).getTime() + w * 60_000)
+            .toLocaleTimeString([], { timeZone: tz, hour: "numeric", minute: "2-digit" });
+          return `${start} – ${end}`;
+        }
+        return start;
+      })()
     : null;
   const discount = (order.couponDiscount ?? 0) + (order.promoDiscount ?? 0);
   const isDelivery = order.type === "delivery";

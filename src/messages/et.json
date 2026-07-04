@@ -1101,7 +1101,8 @@
         "pausedToast": "Teenused peatatud",
         "resumedToast": "Teenused jätkatud",
         "saving": "Salvestamine…"
-      }
+      },
+      "timeSelectionRange": "Ajavahemikud (aknad nagu 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Tarnepiirkonnad",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Vali {count} toodet",
       "hintPickCounts": "Vali {count} toodet — seejärel tasuta toode.",
       "addOneMoreAria": "Lisa üks {name}",
-      "removeOneAria": "Eemalda üks {name}"
+      "removeOneAria": "Eemalda üks {name}",
+      "stepDoneHint": "See samm on valmis — jätkamiseks puudutage Edasi."
     }
   },
   "dunning": {

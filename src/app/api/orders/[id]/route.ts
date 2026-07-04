@@ -33,7 +33,9 @@ const PUBLIC_ORDER_SELECT = {
   // Reward Dollars spent on this order (part-payment). Shown on the
   // receipt/status breakdown as "Paid with {rewardName}". Luigi 2026-06-29.
   creditApplied: true,
-  paymentStatus: true, scheduledFor: true, estimatedReady: true,
+  // scheduledSlotMinutes: range-mode window width ("6:00 – 6:15" promise;
+  // Fabrizio cmqqxerxs) — status/confirmation pages append the window end.
+  paymentStatus: true, scheduledFor: true, scheduledSlotMinutes: true, estimatedReady: true,
   acceptedAt: true, rejectedAt: true, rejectionReason: true,
   completedAt: true, preparationTime: true, createdAt: true,
   refundStatus: true,

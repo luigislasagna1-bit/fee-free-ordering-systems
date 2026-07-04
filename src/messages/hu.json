@@ -1101,7 +1101,8 @@
         "pausedToast": "Szolgáltatások szüneteltetve",
         "resumedToast": "Szolgáltatások folytatva",
         "saving": "Mentés…"
-      }
+      },
+      "timeSelectionRange": "Idősávok (ablakok, pl. 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Szállítási zónák",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Válasszon {count} tételt",
       "hintPickCounts": "Válasszon {count} tételt — majd az ingyenes tételét.",
       "addOneMoreAria": "Egy {name} hozzáadása",
-      "removeOneAria": "Egy {name} eltávolítása"
+      "removeOneAria": "Egy {name} eltávolítása",
+      "stepDoneHint": "Ez a lépés kész — a folytatáshoz koppintson a Tovább gombra."
     }
   },
   "dunning": {

@@ -1101,7 +1101,8 @@
         "pausedToast": "השירותים הושהו",
         "resumedToast": "השירותים חודשו",
         "saving": "שומר…"
-      }
+      },
+      "timeSelectionRange": "טווחי זמן (חלונות כמו 6:00 – 6:15)"
     },
     "delivery": {
       "title": "אזורי משלוח",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "בחרו {count} פריטים",
       "hintPickCounts": "בחרו {count} פריטים — ואז את הפריט החינמי שלכם.",
       "addOneMoreAria": "הוסיפו {name} אחד",
-      "removeOneAria": "הסירו {name} אחד"
+      "removeOneAria": "הסירו {name} אחד",
+      "stepDoneHint": "השלב הזה הושלם — הקישו על הבא כדי להמשיך."
     }
   },
   "dunning": {

@@ -247,6 +247,9 @@ interface OrderEmailParams {
   /** Scheduled ("order for later") slot. When set, the confirmation email shows
    *  a prominent "Order for later: <date/time>" line instead of the ASAP ETA. */
   scheduledFor?: Date | string | null;
+  /** Range-mode window width in minutes (Fabrizio cmqqxerxs) — when set the
+   *  scheduled line shows "start – end" instead of a single time. */
+  scheduledSlotMinutes?: number | null;
   /** Reserve-then-order: the table booking attached to this order. When set,
    *  the confirmation email also states "Table reserved for N on <date> at
    *  <time>" so one email covers both. Luigi 2026-06-08. */
@@ -371,12 +374,26 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
   // locale (only for future-dated "order for later" orders). Luigi 2026-06-05.
   const schedDate = params.scheduledFor ? new Date(params.scheduledFor) : null;
   const scheduledLabel = schedDate && schedDate.getTime() > Date.now()
-    ? schedDate.toLocaleString(params.locale || undefined, {
-        timeZone: params.timezone || "UTC",
-        weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
-        // Follow the restaurant's 12h/24h setting, not the locale default.
-        hourCycle: params.hoursFormat === "24h" ? "h23" : "h12",
-      })
+    ? (() => {
+        const start = schedDate.toLocaleString(params.locale || undefined, {
+          timeZone: params.timezone || "UTC",
+          weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
+          // Follow the restaurant's 12h/24h setting, not the locale default.
+          hourCycle: params.hoursFormat === "24h" ? "h23" : "h12",
+        });
+        // Range-mode slot (Fabrizio cmqqxerxs): the promise is a WINDOW —
+        // append its end so the email reads "… 6:00 PM – 6:15 PM".
+        const w = params.scheduledSlotMinutes;
+        if (typeof w === "number" && w > 0) {
+          const end = new Date(schedDate.getTime() + w * 60_000).toLocaleTimeString(params.locale || undefined, {
+            timeZone: params.timezone || "UTC",
+            hour: "numeric", minute: "2-digit",
+            hourCycle: params.hoursFormat === "24h" ? "h23" : "h12",
+          });
+          return `${start} – ${end}`;
+        }
+        return start;
+      })()
     : null;
   // Reserve-then-order: a friendly "Tuesday, Jun 8 at 19:00" label for the
   // attached table booking. The stored date/time are the restaurant's local

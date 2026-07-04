@@ -1101,7 +1101,8 @@
         "pausedToast": "Servicios en pausa",
         "resumedToast": "Servicios reanudados",
         "saving": "Guardando…"
-      }
+      },
+      "timeSelectionRange": "Rangos horarios (ventanas tipo 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Zonas de entrega",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Elige {count} artículos",
       "hintPickCounts": "Elige {count} artículos y luego tu artículo gratis.",
       "addOneMoreAria": "Añadir un {name}",
-      "removeOneAria": "Quitar un {name}"
+      "removeOneAria": "Quitar un {name}",
+      "stepDoneHint": "Este paso está completo: toca Siguiente para continuar."
     }
   },
   "dunning": {

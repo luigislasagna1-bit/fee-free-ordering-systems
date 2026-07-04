@@ -1101,7 +1101,8 @@
         "pausedToast": "Услуге паузиране",
         "resumedToast": "Услуге настављене",
         "saving": "Чување…"
-      }
+      },
+      "timeSelectionRange": "Временски опсези (прозори попут 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Zone dostave",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Изабери {count} ставке",
       "hintPickCounts": "Изабери {count} ставке — затим своју бесплатну ставку.",
       "addOneMoreAria": "Додај један {name}",
-      "removeOneAria": "Уклони један {name}"
+      "removeOneAria": "Уклони један {name}",
+      "stepDoneHint": "Овај корак је готов — додирните Даље да наставите."
     }
   },
   "dunning": {

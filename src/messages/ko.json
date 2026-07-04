@@ -1101,7 +1101,8 @@
         "pausedToast": "서비스가 일시 중지됨",
         "resumedToast": "서비스가 재개됨",
         "saving": "저장 중…"
-      }
+      },
+      "timeSelectionRange": "시간대(6:00 – 6:15 같은 구간)"
     },
     "delivery": {
       "title": "배달 구역",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "{count}개 선택",
       "hintPickCounts": "{count}개를 고르면 무료 상품을 선택할 수 있어요.",
       "addOneMoreAria": "{name} 하나 추가",
-      "removeOneAria": "{name} 하나 제거"
+      "removeOneAria": "{name} 하나 제거",
+      "stepDoneHint": "이 단계가 완료되었습니다 — 계속하려면 다음을 탭하세요."
     }
   },
   "dunning": {

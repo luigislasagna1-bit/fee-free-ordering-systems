@@ -1101,7 +1101,8 @@
         "pausedToast": "Storitve ustavljene",
         "resumedToast": "Storitve nadaljevane",
         "saving": "Shranjevanje…"
-      }
+      },
+      "timeSelectionRange": "Časovni razponi (okna kot 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Območja dostave",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Izberi {count} izdelkov",
       "hintPickCounts": "Izberi {count} izdelkov — nato svoj brezplačni izdelek.",
       "addOneMoreAria": "Dodaj en {name}",
-      "removeOneAria": "Odstrani en {name}"
+      "removeOneAria": "Odstrani en {name}",
+      "stepDoneHint": "Ta korak je končan — tapnite Naprej za nadaljevanje."
     }
   },
   "dunning": {

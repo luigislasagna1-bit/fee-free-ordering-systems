@@ -1101,7 +1101,8 @@
         "pausedToast": "Serveis en pausa",
         "resumedToast": "Serveis represos",
         "saving": "S'està desant…"
-      }
+      },
+      "timeSelectionRange": "Franges horàries (finestres com 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Zones de lliurament",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Tria {count} articles",
       "hintPickCounts": "Tria {count} articles — després el teu article gratuït.",
       "addOneMoreAria": "Afegeix un {name}",
-      "removeOneAria": "Treu un {name}"
+      "removeOneAria": "Treu un {name}",
+      "stepDoneHint": "Aquest pas està complet — toca Següent per continuar."
     }
   },
   "dunning": {

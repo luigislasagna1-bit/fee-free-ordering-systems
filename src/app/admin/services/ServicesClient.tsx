@@ -44,8 +44,12 @@ interface ServiceConfig {
    *   - "exact": a free time field so the customer can pick any minute
    *     within opening hours.
    *   - "both": the customer toggles between a slot dropdown and an exact
-   *     time field. Fabrizio cmpxdtl9m (2026-06-07). */
-  slotMode?: "bands" | "exact" | "both";
+   *     time field. Fabrizio cmpxdtl9m (2026-06-07).
+   *   - "range": like "bands", but each slot is shown as a WINDOW
+   *     ("6:00 – 6:15 PM") meaning "fulfilled within this timeframe".
+   *     scheduledFor still stores the slot START, so kitchen countdowns
+   *     and ring timing are untouched. Fabrizio cmqqxerxs (2026-07-04). */
+  slotMode?: "bands" | "exact" | "both" | "range";
 }
 
 export function ServicesClient() {
@@ -227,6 +231,7 @@ export function ServicesClient() {
                         onChange={e => updateSetting(key, "slotMode", e.target.value)}
                       >
                         <option value="bands">{t("timeSelectionBands")}</option>
+                        <option value="range">{t("timeSelectionRange")}</option>
                         <option value="exact">{t("timeSelectionExact")}</option>
                         <option value="both">{t("timeSelectionBoth")}</option>
                       </select>

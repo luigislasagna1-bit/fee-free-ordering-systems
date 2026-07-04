@@ -466,7 +466,7 @@ export function staffAcceptEventForOrderType(
 // ─── notifyCustomer ────────────────────────────────────────────────────────
 
 export type CustomerEventPayload =
-  | { event: "orderConfirmed"; customerName: string; orderNumber: string; items: { name: string; quantity: number; price: number }[]; total: number; orderType: string; estimatedTime: number; scheduledFor?: Date | string | null; reservation?: { partySize: number; date: string; time: string } | null; trackingUrl: string; appliedPromos?: Array<{ name: string; type: string; discount: number; couponCode?: string }>;
+  | { event: "orderConfirmed"; customerName: string; orderNumber: string; items: { name: string; quantity: number; price: number }[]; total: number; orderType: string; estimatedTime: number; scheduledFor?: Date | string | null; scheduledSlotMinutes?: number | null; reservation?: { partySize: number; date: string; time: string } | null; trackingUrl: string; appliedPromos?: Array<{ name: string; type: string; discount: number; couponCode?: string }>;
       // Full money breakdown (Luigi 2026-07-02): without these the email's
       // "Subtotal" silently fell back to the TOTAL and tax/tip/discount rows
       // never rendered. creditApplied/rewardLabel only set when rewards are ON.
@@ -606,6 +606,8 @@ export async function notifyCustomer(args: {
           orderType: payload.orderType,
           estimatedTime: payload.estimatedTime,
           scheduledFor: payload.scheduledFor ?? null,
+          // Range-mode window width — email shows "start – end". Fabrizio cmqqxerxs.
+          scheduledSlotMinutes: payload.scheduledSlotMinutes ?? null,
           reservation: payload.reservation ?? null,
           timezone: (restaurant as any).timezone || undefined,
           hoursFormat: restaurant.hoursFormat === "12h" ? "12h" : "24h",

@@ -171,6 +171,9 @@ export function OrdersClient({ orders }: { orders: any[] }) {
                             hour: "numeric",
                             minute: "2-digit",
                           })}
+                          {/* Range-mode window end (Fabrizio cmqqxerxs). */}
+                          {typeof (order as any).scheduledSlotMinutes === "number" && (order as any).scheduledSlotMinutes > 0 &&
+                            ` – ${new Date(scheduledAt!.getTime() + (order as any).scheduledSlotMinutes * 60_000).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`}
                         </span>
                       )}
                       {order.notes && (
@@ -220,6 +223,9 @@ export function OrdersClient({ orders }: { orders: any[] }) {
                             hour: "numeric",
                             minute: "2-digit",
                           })}
+                          {/* Range-mode window end (Fabrizio cmqqxerxs). */}
+                          {typeof (order as any).scheduledSlotMinutes === "number" && (order as any).scheduledSlotMinutes > 0 &&
+                            ` – ${new Date(scheduledAt!.getTime() + (order as any).scheduledSlotMinutes * 60_000).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`}
                         </span>
                       </div>
                     )}

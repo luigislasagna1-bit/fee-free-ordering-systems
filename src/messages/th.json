@@ -1101,7 +1101,8 @@
         "pausedToast": "หยุดบริการชั่วคราวแล้ว",
         "resumedToast": "กลับมาให้บริการแล้ว",
         "saving": "กำลังบันทึก…"
-      }
+      },
+      "timeSelectionRange": "ช่วงเวลา (หน้าต่างเช่น 6:00 – 6:15)"
     },
     "delivery": {
       "title": "เขตจัดส่ง",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "เลือก {count} รายการ",
       "hintPickCounts": "เลือก {count} รายการ — แล้วเลือกรายการฟรีของคุณ",
       "addOneMoreAria": "เพิ่ม {name} หนึ่งรายการ",
-      "removeOneAria": "นำ {name} ออกหนึ่งรายการ"
+      "removeOneAria": "นำ {name} ออกหนึ่งรายการ",
+      "stepDoneHint": "ขั้นตอนนี้เสร็จแล้ว — แตะถัดไปเพื่อดำเนินการต่อ"
     }
   },
   "dunning": {

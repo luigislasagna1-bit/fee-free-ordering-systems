@@ -283,7 +283,7 @@ interface Props {
    *  "exact" shows a free time field so the customer can pick any minute
    *  within opening hours; "both" lets the customer toggle between the two.
    *  Per-service, from serviceSettings. Fabrizio cmpxdtl9m. */
-  schedulingMode?: "bands" | "exact" | "both";
+  schedulingMode?: "bands" | "exact" | "both" | "range";
   /** Restaurant opening hours by day-of-week, used to constrain the
    *  selectable slots to actual open periods. Each row: dayOfWeek
    *  0=Sunday … 6=Saturday with HH:MM open/close strings. May include
@@ -510,6 +510,22 @@ export function CheckoutModal({
     : orderType === "take_out" ? tOrd("takeOut")
     : tOrd("pickup");
 
+  // "range" slot mode (Fabrizio cmqqxerxs): every band is a WINDOW —
+  // "6:00 – 6:15 PM" = fulfilled within that timeframe. scheduledFor keeps
+  // storing the window START so validation/kitchen countdown are untouched;
+  // this helper derives the window END purely for display.
+  const slotRangeMode = schedulingMode === "range";
+  const slotEndOf = (hhmm: string): string => {
+    const [h, m] = hhmm.split(":").map(Number);
+    const step = Math.max(5, Math.min(120, schedulingInterval || 15));
+    const total = ((h ?? 0) * 60 + (m ?? 0) + step) % (24 * 60);
+    return `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
+  };
+  const slotTimeLabel = (hhmm: string): string =>
+    slotRangeMode
+      ? `${formatTime(hhmm, hoursFormat)} – ${formatTime(slotEndOf(hhmm), hoursFormat)}`
+      : formatTime(hhmm, hoursFormat);
+
   // Was hardcoded English ("ASAP · ~20 min" / "Scheduled for …") — reseller
   // report cmq3s5xjl: an Italian customer must read "Appena possibile".
   // tc("asap") carries the per-locale phrase; the rest is i18n'd too.
@@ -521,7 +537,7 @@ export function CheckoutModal({
         const dateLabel = dPart
           ? new Date(`${dPart}T00:00`).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })
           : "";
-        return tc("timeScheduledFor", { when: `${dateLabel} ${formatTime((tPart || "").slice(0, 5), hoursFormat)}`.trim() });
+        return tc("timeScheduledFor", { when: `${dateLabel} ${slotTimeLabel((tPart || "").slice(0, 5))}`.trim() });
       })()
     : cateringMode
       ? tc("timeCateringNotice", { hours: cateringNoticeHours ?? 24 })
@@ -1490,7 +1506,7 @@ export function CheckoutModal({
                               <>
                                 <option value="">{tc("pickATimePlaceholder")}</option>
                                 {slots.map((s) => (
-                                  <option key={s} value={s}>{formatTime(s, hoursFormat)}</option>
+                                  <option key={s} value={s}>{slotTimeLabel(s)}</option>
                                 ))}
                               </>
                             )}

@@ -1101,7 +1101,8 @@
         "pausedToast": "Layanan dijeda",
         "resumedToast": "Layanan dilanjutkan",
         "saving": "Menyimpan…"
-      }
+      },
+      "timeSelectionRange": "Rentang waktu (jendela seperti 6:00 – 6:15)"
     },
     "delivery": {
       "title": "Zona Pengiriman",
@@ -5909,7 +5910,8 @@
       "slotLabelPickN": "Pilih {count} item",
       "hintPickCounts": "Pilih {count} item — lalu item gratis Anda.",
       "addOneMoreAria": "Tambah satu {name}",
-      "removeOneAria": "Hapus satu {name}"
+      "removeOneAria": "Hapus satu {name}",
+      "stepDoneHint": "Langkah ini selesai — ketuk Berikutnya untuk melanjutkan."
     }
   },
   "dunning": {
