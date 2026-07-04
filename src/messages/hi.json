@@ -853,7 +853,9 @@
       "orderHandling": "ऑर्डर प्रबंधन",
       "promoPopup": "प्रोमो पॉपअप",
       "customerGroups": "VIP समूह",
-      "rewards": "रिवॉर्ड डॉलर"
+      "rewards": "रिवॉर्ड डॉलर",
+      "driverPool": "Driver Pool",
+      "support24_7": "24/7 सहायता"
     },
     "dashboard": {
       "title": "डैशबोर्ड",

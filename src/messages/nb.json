@@ -830,7 +830,9 @@
       "orderHandling": "Ordrehåndtering",
       "promoPopup": "Promo-popup",
       "customerGroups": "VIP-grupper",
-      "rewards": "Bonuskroner"
+      "rewards": "Bonuskroner",
+      "driverPool": "Sjåfør-pool",
+      "support24_7": "Døgnåpen support"
     },
     "dashboard": {
       "title": "Dashbord",

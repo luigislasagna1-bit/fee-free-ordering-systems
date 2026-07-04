@@ -830,7 +830,9 @@
       "orderHandling": "Gestión de pedidos",
       "promoPopup": "Ventana promocional",
       "customerGroups": "Grupos VIP",
-      "rewards": "Saldo de recompensa"
+      "rewards": "Saldo de recompensa",
+      "driverPool": "Pool de conductores",
+      "support24_7": "Soporte 24/7"
     },
     "dashboard": {
       "title": "Panel principal",

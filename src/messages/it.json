@@ -830,7 +830,9 @@
       "orderHandling": "Gestione ordini",
       "promoPopup": "Popup promo",
       "customerGroups": "Gruppi VIP",
-      "rewards": "Credito fedeltà"
+      "rewards": "Credito fedeltà",
+      "driverPool": "Driver pool",
+      "support24_7": "Assistenza 24/7"
     },
     "dashboard": {
       "title": "Pannello",

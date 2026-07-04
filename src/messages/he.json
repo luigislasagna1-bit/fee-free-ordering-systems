@@ -830,7 +830,9 @@
       "orderHandling": "טיפול בהזמנות",
       "promoPopup": "חלון קופץ למבצע",
       "customerGroups": "קבוצות VIP",
-      "rewards": "דולרים של תגמולים"
+      "rewards": "דולרים של תגמולים",
+      "driverPool": "מאגר נהגים",
+      "support24_7": "תמיכה 24/7"
     },
     "dashboard": {
       "title": "לוח בקרה",

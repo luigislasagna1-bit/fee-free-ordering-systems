@@ -830,7 +830,9 @@
       "orderHandling": "Обробка замовлень",
       "promoPopup": "Промо-вікно",
       "customerGroups": "VIP-групи",
-      "rewards": "Бонусні долари"
+      "rewards": "Бонусні долари",
+      "driverPool": "Пул водіїв",
+      "support24_7": "Підтримка 24/7"
     },
     "dashboard": {
       "title": "Панель керування",

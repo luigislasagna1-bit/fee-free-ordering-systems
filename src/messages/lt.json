@@ -830,7 +830,9 @@
       "orderHandling": "Užsakymų tvarkymas",
       "promoPopup": "Akcijos langas",
       "customerGroups": "VIP grupės",
-      "rewards": "Premijų doleriai"
+      "rewards": "Premijų doleriai",
+      "driverPool": "Vairuotojų telkinys",
+      "support24_7": "Pagalba 24/7"
     },
     "dashboard": {
       "title": "Skydelis",

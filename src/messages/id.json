@@ -830,7 +830,9 @@
       "orderHandling": "Penanganan Pesanan",
       "promoPopup": "Pop-up Promo",
       "customerGroups": "Grup VIP",
-      "rewards": "Dolar Hadiah"
+      "rewards": "Dolar Hadiah",
+      "driverPool": "Driver pool",
+      "support24_7": "Dukungan 24/7"
     },
     "dashboard": {
       "title": "Dasbor",

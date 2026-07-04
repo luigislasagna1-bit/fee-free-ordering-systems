@@ -830,7 +830,9 @@
       "orderHandling": "Sipariş Yönetimi",
       "promoPopup": "Promosyon Penceresi",
       "customerGroups": "VIP Gruplar",
-      "rewards": "Ödül Dolarları"
+      "rewards": "Ödül Dolarları",
+      "driverPool": "Sürücü havuzu",
+      "support24_7": "7/24 destek"
     },
     "dashboard": {
       "title": "Panel",

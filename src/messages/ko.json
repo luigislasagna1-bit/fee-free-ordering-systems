@@ -830,7 +830,9 @@
       "orderHandling": "주문 처리",
       "promoPopup": "프로모 팝업",
       "customerGroups": "VIP 그룹",
-      "rewards": "리워드 달러"
+      "rewards": "리워드 달러",
+      "driverPool": "드라이버 풀",
+      "support24_7": "연중무휴 24시간 지원"
     },
     "dashboard": {
       "title": "대시보드",

@@ -830,7 +830,9 @@
       "orderHandling": "Обработка на поръчки",
       "promoPopup": "Промо прозорец",
       "customerGroups": "VIP групи",
-      "rewards": "Бонус долари"
+      "rewards": "Бонус долари",
+      "driverPool": "Пул шофьори",
+      "support24_7": "Поддръжка 24/7"
     },
     "dashboard": {
       "title": "Табло",

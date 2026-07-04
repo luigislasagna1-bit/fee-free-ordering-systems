@@ -830,7 +830,9 @@
       "orderHandling": "معالجة الطلبات",
       "promoPopup": "نافذة العروض",
       "customerGroups": "مجموعات VIP",
-      "rewards": "دولارات المكافآت"
+      "rewards": "دولارات المكافآت",
+      "driverPool": "مجموعة السائقين",
+      "support24_7": "دعم على مدار الساعة طوال أيام الأسبوع"
     },
     "dashboard": {
       "title": "لوحة التحكم",

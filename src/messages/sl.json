@@ -830,7 +830,9 @@
       "orderHandling": "Upravljanje naročil",
       "promoPopup": "Promocijsko okno",
       "customerGroups": "VIP-skupine",
-      "rewards": "Nagradni dobropis"
+      "rewards": "Nagradni dobropis",
+      "driverPool": "Bazen voznikov",
+      "support24_7": "Podpora 24/7"
     },
     "dashboard": {
       "title": "Nadzorna plošča",

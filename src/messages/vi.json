@@ -830,7 +830,9 @@
       "orderHandling": "Xử lý đơn hàng",
       "promoPopup": "Cửa sổ khuyến mãi",
       "customerGroups": "Nhóm VIP",
-      "rewards": "Đô-la Thưởng"
+      "rewards": "Đô-la Thưởng",
+      "driverPool": "Driver pool",
+      "support24_7": "Hỗ trợ 24/7"
     },
     "dashboard": {
       "title": "Bảng điều khiển",

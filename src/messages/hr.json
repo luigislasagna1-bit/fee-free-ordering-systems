@@ -830,7 +830,9 @@
       "orderHandling": "Upravljanje narudžbama",
       "promoPopup": "Promo skočni prozor",
       "customerGroups": "VIP grupe",
-      "rewards": "Nagradni bodovi"
+      "rewards": "Nagradni bodovi",
+      "driverPool": "Skup vozača",
+      "support24_7": "Podrška 24/7"
     },
     "dashboard": {
       "title": "Upravljačka ploča",

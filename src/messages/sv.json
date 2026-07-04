@@ -830,7 +830,9 @@
       "orderHandling": "Orderhantering",
       "promoPopup": "Reklam-popup",
       "customerGroups": "VIP-grupper",
-      "rewards": "Bonuspengar"
+      "rewards": "Bonuspengar",
+      "driverPool": "Chaufförspool",
+      "support24_7": "Support dygnet runt"
     },
     "dashboard": {
       "title": "Instrumentpanel",

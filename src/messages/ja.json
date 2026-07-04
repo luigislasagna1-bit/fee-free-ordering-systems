@@ -830,7 +830,9 @@
       "orderHandling": "注文の処理",
       "promoPopup": "プロモポップアップ",
       "customerGroups": "VIPグループ",
-      "rewards": "リワードドル"
+      "rewards": "リワードドル",
+      "driverPool": "ドライバープール",
+      "support24_7": "24時間365日サポート"
     },
     "dashboard": {
       "title": "ダッシュボード",

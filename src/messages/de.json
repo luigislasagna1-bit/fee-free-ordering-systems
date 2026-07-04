@@ -830,7 +830,9 @@
       "orderHandling": "Bestellabwicklung",
       "promoPopup": "Promo-Popup",
       "customerGroups": "VIP-Gruppen",
-      "rewards": "Bonusguthaben"
+      "rewards": "Bonusguthaben",
+      "driverPool": "Fahrerpool",
+      "support24_7": "24/7-Support"
     },
     "dashboard": {
       "title": "Dashboard",

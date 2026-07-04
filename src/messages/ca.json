@@ -830,7 +830,9 @@
       "orderHandling": "Gestió de comandes",
       "promoPopup": "Finestra promocional",
       "customerGroups": "Grups VIP",
-      "rewards": "Dòlars de Recompensa"
+      "rewards": "Dòlars de Recompensa",
+      "driverPool": "Pool de conductors",
+      "support24_7": "Suport 24/7"
     },
     "dashboard": {
       "title": "Tauler de control",

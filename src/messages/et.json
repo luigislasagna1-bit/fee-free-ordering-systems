@@ -830,7 +830,9 @@
       "orderHandling": "Tellimuste haldus",
       "promoPopup": "Promo hüpikaken",
       "customerGroups": "VIP-rühmad",
-      "rewards": "Boonusraha"
+      "rewards": "Boonusraha",
+      "driverPool": "Juhtide kogum",
+      "support24_7": "Tugi 24/7"
     },
     "dashboard": {
       "title": "Juhtpaneel",

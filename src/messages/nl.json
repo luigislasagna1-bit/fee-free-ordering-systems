@@ -830,7 +830,9 @@
       "orderHandling": "Orderafhandeling",
       "promoPopup": "Promo-pop-up",
       "customerGroups": "VIP-groepen",
-      "rewards": "Spaartegoed"
+      "rewards": "Spaartegoed",
+      "driverPool": "Chauffeurpool",
+      "support24_7": "24/7 ondersteuning"
     },
     "dashboard": {
       "title": "Dashboard",

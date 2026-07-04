@@ -830,7 +830,9 @@
       "orderHandling": "Pasūtījumu apstrāde",
       "promoPopup": "Akcijas logs",
       "customerGroups": "VIP grupas",
-      "rewards": "Bonusa dolāri"
+      "rewards": "Bonusa dolāri",
+      "driverPool": "Vadītāju kopa",
+      "support24_7": "Atbalsts 24/7"
     },
     "dashboard": {
       "title": "Panelis",

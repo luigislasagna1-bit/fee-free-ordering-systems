@@ -830,7 +830,9 @@
       "orderHandling": "订单处理",
       "promoPopup": "促销弹窗",
       "customerGroups": "VIP 群组",
-      "rewards": "奖励金"
+      "rewards": "奖励金",
+      "driverPool": "配送司机池",
+      "support24_7": "24/7 全天候支持"
     },
     "dashboard": {
       "title": "仪表盘",

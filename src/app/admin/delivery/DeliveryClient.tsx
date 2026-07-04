@@ -10,6 +10,7 @@ import {
 import NextLink from "next/link";
 import { useTranslations } from "next-intl";
 import { useCurrencyFormat, useCurrencySymbol } from "@/lib/currency-context";
+import { resolveMapsBrowserKey } from "@/lib/maps-key";
 import {
   DELIVERY_ADDRESS_FIELDS,
   resolveDeliveryAddressConfig,
@@ -370,7 +371,10 @@ export function DeliveryClient({
             updateZone(id, { radiusKm: newRadiusKm });
           }}
           provider={restaurant?.mapProvider ?? "leaflet"}
-          googleMapsApiKey={restaurant?.googleMapsApiKey ?? undefined}
+          // Restaurant's own key wins, else the platform browser key — same
+          // resolution as the customer pages, so every store gets Google
+          // Maps here (Luigi 2026-07-04). Empty ⇒ Leaflet fallback.
+          googleMapsApiKey={resolveMapsBrowserKey(restaurant?.googleMapsApiKey)}
           currencySym={curSym}
         />
       </div>

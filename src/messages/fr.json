@@ -830,7 +830,9 @@
       "orderHandling": "Gestion des commandes",
       "promoPopup": "Pop-up promo",
       "customerGroups": "Groupes VIP",
-      "rewards": "Crédits fidélité"
+      "rewards": "Crédits fidélité",
+      "driverPool": "Pool de livreurs",
+      "support24_7": "Assistance 24h/24 et 7j/7"
     },
     "dashboard": {
       "title": "Tableau de bord",

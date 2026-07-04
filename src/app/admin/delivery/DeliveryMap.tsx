@@ -42,28 +42,34 @@ function isValidCoord(lat: number | null, lng: number | null): lat is number {
 }
 
 export default function DeliveryMap(props: Props) {
-  // Always the free Leaflet/OSM map (Luigi 2026-06-13): Google map tiles aren't
-  // worth the per-load cost; Google is reserved for autocomplete + distance only.
+  // Google Maps for every store when a browser key exists (Luigi 2026-07-04
+  // — consistent with the customer-facing pages; the platform browser key
+  // ships via NEXT_PUBLIC_GOOGLE_MAPS_BROWSER_KEY with referrer + API
+  // restrictions, so June's per-load cost concern no longer applies).
+  // Leaflet/OSM remains the graceful fallback when no key is configured.
+  if (props.googleMapsApiKey?.trim()) {
+    return <GoogleVariant {...props} apiKey={props.googleMapsApiKey.trim()} />;
+  }
   return <LeafletVariant {...props} />;
 }
 
-function Placeholder({ msg, error }: { msg: string; error?: boolean }) {
-  return (
-    <div
-      style={{ width: "100%", height: "100%", minHeight: 400 }}
-      className={`flex items-center justify-center text-sm px-4 text-center ${
-        error ? "bg-red-50 text-red-600" : "bg-gray-100 text-gray-500"
-      }`}
-    >
-      {msg}
-    </div>
-  );
+/** Great-circle distance in km — resize-handle math for the Google variant
+ *  (Leaflet gets this from map.distance(); Google's geometry library isn't
+ *  loaded, and a 10-line haversine beats another script chunk). */
+function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const R = 6371;
+  const toRad = (d: number) => (d * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(a));
 }
 
 // ─── Google variant ──────────────────────────────────────────────────────────
-function GoogleVariant({
-  restaurantLat, restaurantLng, zones, selectedZoneId, onZoneClick, onRestaurantMove, apiKey,
-}: Props & { apiKey: string }) {
+function GoogleVariant(props: Props & { apiKey: string }) {
+  const {
+    restaurantLat, restaurantLng, zones, selectedZoneId, onZoneClick, onRestaurantMove, onZoneResize, apiKey,
+  } = props;
   const { isLoaded, loadError } = useGoogleMaps(apiKey);
   const mapRef = useRef<google.maps.Map | null>(null);
   const hasLocation = isValidCoord(restaurantLat, restaurantLng);
@@ -72,9 +78,15 @@ function GoogleVariant({
     [hasLocation, restaurantLat, restaurantLng],
   );
   const sortedZones = useMemo(() => [...zones].sort((a, b) => b.radiusKm - a.radiusKm), [zones]);
+  const selectedZone = useMemo(
+    () => zones.find((z) => z.id === selectedZoneId) ?? null,
+    [zones, selectedZoneId],
+  );
   const containerStyle = { width: "100%", height: "100%", minHeight: 400 };
 
-  if (loadError) return <Placeholder msg="Couldn't load Google Maps. Check your API key restrictions." error />;
+  // Key rejected (referrer allow-list — localhost, an unlisted reseller
+  // custom domain, …) → a WORKING Leaflet map beats a dead error box.
+  if (loadError) return <LeafletVariant {...props} />;
   if (!isLoaded) return <div style={containerStyle} className="bg-gray-100 animate-pulse" />;
 
   return (
@@ -90,6 +102,13 @@ function GoogleVariant({
           position={center}
           draggable={!!onRestaurantMove}
           title="Restaurant (drag to adjust)"
+          // Same green white-ringed dot the Leaflet variant uses, so the
+          // provider swap doesn't change what owners recognise as "my store".
+          icon={{
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 9, fillColor: "#10b981", fillOpacity: 1,
+            strokeColor: "#ffffff", strokeWeight: 3,
+          }}
           onDragEnd={(e) => { if (e.latLng && onRestaurantMove) onRestaurantMove(e.latLng.lat(), e.latLng.lng()); }}
         />
       )}
@@ -109,6 +128,32 @@ function GoogleVariant({
           />
         );
       })}
+      {/* Drag-to-resize handle on the selected circle's east edge — same
+          behaviour as the Leaflet variant: drag out to grow, in to shrink;
+          new radius = haversine(center, handle), clamped 0.1–100 km. */}
+      {hasLocation && onZoneResize && selectedZone && (
+        <Marker
+          position={{
+            lat: restaurantLat!,
+            lng: restaurantLng! + lngOffsetForKm(restaurantLat!, selectedZone.radiusKm),
+          }}
+          draggable
+          title={`${selectedZone.radiusKm} km — drag to resize`}
+          icon={{
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 8,
+            fillColor: selectedZone.isActive ? selectedZone.color : "#9ca3af",
+            fillOpacity: 1,
+            strokeColor: "#ffffff", strokeWeight: 3,
+          }}
+          onDragEnd={(e) => {
+            if (!e.latLng) return;
+            const km = Math.round(haversineKm(restaurantLat!, restaurantLng!, e.latLng.lat(), e.latLng.lng()) * 10) / 10;
+            // Same sanity clamp as Leaflet: 0.1 km min, 100 km max.
+            onZoneResize(selectedZone.id, Math.max(0.1, Math.min(100, km)));
+          }}
+        />
+      )}
     </GoogleMap>
   );
 }
@@ -197,8 +242,8 @@ function LeafletVariant({
           >
             <LTooltip sticky>
               <strong>{zone.name}</strong>
-              <br />Fee: ${currencySym}${zone.deliveryFee.toFixed(2)}
-              <br />Min: ${currencySym}${zone.minimumOrder.toFixed(2)}
+              <br />Fee: {currencySym}{zone.deliveryFee.toFixed(2)}
+              <br />Min: {currencySym}{zone.minimumOrder.toFixed(2)}
               <br />Radius: {zone.radiusKm} km
               <br />ETA: ~{zone.estimatedMinutes} min
               {onZoneResize && isSelected && <><br /><em>Drag the handle to resize</em></>}

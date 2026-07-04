@@ -830,7 +830,9 @@
       "orderHandling": "Διαχείριση παραγγελιών",
       "promoPopup": "Αναδυόμενο προσφοράς",
       "customerGroups": "Ομάδες VIP",
-      "rewards": "Δολάρια Επιβράβευσης"
+      "rewards": "Δολάρια Επιβράβευσης",
+      "driverPool": "Driver Pool",
+      "support24_7": "Υποστήριξη 24/7"
     },
     "dashboard": {
       "title": "Πίνακας ελέγχου",

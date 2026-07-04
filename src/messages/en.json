@@ -853,7 +853,9 @@
       "orderHandling": "Order Handling",
       "promoPopup": "Promo Popup",
       "customerGroups": "VIP Groups",
-      "rewards": "Reward Dollars"
+      "rewards": "Reward Dollars",
+      "driverPool": "Driver Pool",
+      "support24_7": "24/7 support"
     },
     "dashboard": {
       "title": "Dashboard",

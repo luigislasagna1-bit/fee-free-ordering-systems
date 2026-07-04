@@ -830,7 +830,9 @@
       "orderHandling": "Upravljanje porudžbinama",
       "promoPopup": "Промо прозор",
       "customerGroups": "VIP групе",
-      "rewards": "Nagradni bodovi"
+      "rewards": "Nagradni bodovi",
+      "driverPool": "Skup vozača",
+      "support24_7": "Подршка 24/7"
     },
     "dashboard": {
       "title": "Kontrolna tabla",

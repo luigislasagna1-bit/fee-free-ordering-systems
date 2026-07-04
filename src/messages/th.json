@@ -830,7 +830,9 @@
       "orderHandling": "การจัดการคำสั่งซื้อ",
       "promoPopup": "ป๊อปอัปโปรโมชัน",
       "customerGroups": "กลุ่ม VIP",
-      "rewards": "เงินรางวัล"
+      "rewards": "เงินรางวัล",
+      "driverPool": "Driver pool",
+      "support24_7": "ฝ่ายสนับสนุนตลอด 24 ชม."
     },
     "dashboard": {
       "title": "แดชบอร์ด",

@@ -15,17 +15,13 @@ const SA_EMAIL = "admin@feefreeordering.com";
 const SA_NAME = "Super Admin";
 const REPORT_PREFIX = "cmr6meaaq";
 
-const COMMENT = `Root-caused and fixed — excellent report, the detail about accepting from your phone while the tablet rang was the key. ✅
+const COMMENT = `Found it and fixed it — great report. ✅
 
-What happened: your tablet had been signed in since the night before. When you accepted the 3 orders from your phone at 9:01, the tablet's own (now stale) list still showed them as pending. When the tablet woke up in the evening (~18:40), its expired countdowns fired the automatic "missed" rejection for all three — and the server accepted that write even though the orders had been accepted at 9:01 and had even completed at 10:02. The database confirmed it: all three were stamped "Auto-rejected" at 18:40:36, within the same second.
+WHAT HAPPENED: your tablet was signed in since the night before. You accepted the 3 orders from your phone at 9:01, but the tablet's own screen still showed them as "pending". When the tablet woke up in the evening (~18:40), its expired timers fired the automatic "missed" rejection for all three — and the server let that overwrite orders that were already accepted (and even completed). We confirmed it in the database: all three were stamped "Auto-rejected" at 18:40:36, in the same second.
 
-Fixes now live:
-1. The server refuses to reject any order that isn't still pending — a stale device physically cannot overwrite an accepted or completed order anymore, from any screen, ever. Multi-device use (tablet ringing, accept from the phone) is fully safe.
-2. Duplicate writes are ignored too — two devices accepting the same order no longer send the customer duplicate emails.
-3. Your other point is fixed as well: "missed" and "rejected" emails are now genuinely different. A missed order says "Order not accepted in time" with matching body text; a manual refusal keeps the rejected wording. And the email body no longer shows the raw English status word or a nonsensical "estimated ready" time on negative updates.
-4. Your 3 test orders (#724296909, #116497279, #366702546) have been restored to their true state — completed.
+HOW IT'S FIXED: the server now refuses to mark an order "missed"/rejected unless it is genuinely still pending. A stale device physically cannot overwrite an accepted or completed order anymore — using the tablet and phone together is fully safe. Duplicate emails from two devices are also gone, and "missed" vs "rejected" now have their own distinct email wording (missed = not accepted in time; rejected = refused by the restaurant), with no more raw English status words.
 
-Please retest the exact scenario when you can: leave the tablet signed in overnight, accept the morning orders from your phone, and check that no "missed" emails arrive later. Grazie!`;
+HOW TO CHECK: your 3 orders are restored to "completed". To verify the fix, repeat the exact scenario — tablet signed in overnight, accept the morning orders from the phone — and no "missed" email should ever arrive. If one ever does for an order you know was accepted, flag it here immediately; on our side every refused overwrite is now logged, so we'd see the attempt too. Grazie!`;
 
 async function main() {
   const url = process.env.DATABASE_URL!;

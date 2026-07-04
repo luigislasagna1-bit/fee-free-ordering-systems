@@ -830,7 +830,9 @@
       "orderHandling": "Tilausten käsittely",
       "promoPopup": "Promo-ponnahdusikkuna",
       "customerGroups": "VIP-ryhmät",
-      "rewards": "Bonusrahat"
+      "rewards": "Bonusrahat",
+      "driverPool": "Kuljettajapooli",
+      "support24_7": "Tuki 24/7"
     },
     "dashboard": {
       "title": "Kojelauta",

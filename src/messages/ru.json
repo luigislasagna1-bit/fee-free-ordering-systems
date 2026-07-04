@@ -830,7 +830,9 @@
       "orderHandling": "Обработка заказов",
       "promoPopup": "Промо-окно",
       "customerGroups": "VIP-группы",
-      "rewards": "Бонусные доллары"
+      "rewards": "Бонусные доллары",
+      "driverPool": "Пул водителей",
+      "support24_7": "Поддержка 24/7"
     },
     "dashboard": {
       "title": "Панель управления",

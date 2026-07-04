@@ -830,7 +830,9 @@
       "orderHandling": "Spracovanie objednávok",
       "promoPopup": "Promo okno",
       "customerGroups": "VIP skupiny",
-      "rewards": "Vernostný kredit"
+      "rewards": "Vernostný kredit",
+      "driverPool": "Združenie vodičov",
+      "support24_7": "Podpora 24/7"
     },
     "dashboard": {
       "title": "Prehľad",

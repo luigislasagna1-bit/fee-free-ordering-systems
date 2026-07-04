@@ -830,7 +830,9 @@
       "orderHandling": "Rendeléskezelés",
       "promoPopup": "Promóciós felugró",
       "customerGroups": "VIP-csoportok",
-      "rewards": "Jutalomdollár"
+      "rewards": "Jutalomdollár",
+      "driverPool": "Driver pool",
+      "support24_7": "0–24 órás támogatás"
     },
     "dashboard": {
       "title": "Irányítópult",

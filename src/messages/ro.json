@@ -830,7 +830,9 @@
       "orderHandling": "Gestionarea comenzilor",
       "promoPopup": "Fereastră promo",
       "customerGroups": "Grupuri VIP",
-      "rewards": "Dolari de recompensă"
+      "rewards": "Dolari de recompensă",
+      "driverPool": "Pool șoferi",
+      "support24_7": "Asistență 24/7"
     },
     "dashboard": {
       "title": "Panou de control",
