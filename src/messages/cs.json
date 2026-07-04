@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Tento kód je registrován na jinou e-mailovou adresu.",
       "promoUnlocked": "Odemkli jste {name}!",
       "couponNoEffect": "{code} je platný, ale právě teď ve vašem košíku nic nezlevňuje — některé položky (např. dárkové karty) mohou být vyloučené, nebo není splněno minimum.",
-      "itemSoldOutError": "„{name}“ se právě vyprodalo — odeberte jej z košíku a pokračujte."
+      "itemSoldOutError": "„{name}“ se právě vyprodalo — odeberte jej z košíku a pokračujte.",
+      "deliveryPrepaidRequired": "Objednávky s rozvozem v této restauraci musí být zaplaceny online — zvolte online platební metodu."
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",
@@ -546,7 +547,9 @@
     "emailOptional": "nepovinné",
     "tipBadgeSuggested": "Doporučeno",
     "couponApply": "Použít",
-    "scheduleModeRanges": "Časová rozmezí"
+    "scheduleModeRanges": "Časová rozmezí",
+    "prepaidDeliveryNote": "Rozvoz se platí online — kurýr nemůže přijmout platbu u dveří.",
+    "prepaidDeliveryUnavailable": "Online platba není momentálně dostupná, objednávky s rozvozem proto nelze zadat. Zvolte vyzvednutí."
   },
   "reservation": {
     "title": "Rezervovat stůl",
@@ -2998,7 +3001,8 @@
       "accountNo": "Ne, potřebuji",
       "noAccountConnectNote": "Žádný problém — vytvořte si bezplatný účet Shipday, pak se vraťte a zadejte svůj klíč. Když zapnete Shipday, představíme vás našemu partnerovi Shipday, aby uplatnil slevu + kredity a nastavil vaše zavedení.",
       "createAccount": "Vytvořit účet Shipday",
-      "haveAccountInstead": "Již mám účet"
+      "haveAccountInstead": "Již mám účet",
+      "toastOnlinePaymentRequired": "Nejprve přidejte online platební metodu — kurýři ShipDay pouze vyzvedávají a doručují, nemohou vybírat platbu u dveří. Zapněte platby kartou nebo připojte PayPal a poté zapněte ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Doplněk",

@@ -254,7 +254,8 @@
       "promoEmailMismatch": "Ce code est associé à une autre adresse e-mail.",
       "promoUnlocked": "Vous avez débloqué {name} !",
       "couponNoEffect": "{code} est valide, mais il ne réduit rien dans votre panier pour le moment — certains articles (comme les cartes cadeaux) peuvent être exclus, ou un minimum n'est pas atteint.",
-      "itemSoldOutError": "« {name} » vient d'être épuisé — retirez-le de votre panier pour continuer."
+      "itemSoldOutError": "« {name} » vient d'être épuisé — retirez-le de votre panier pour continuer.",
+      "deliveryPrepaidRequired": "Les commandes en livraison de ce restaurant doivent être payées en ligne — choisissez un mode de paiement en ligne."
     },
     "followUs": "Suivez-nous",
     "searchMenu": "Rechercher dans le menu…",
@@ -546,7 +547,9 @@
     "emailOptional": "facultatif",
     "tipBadgeSuggested": "Suggéré",
     "couponApply": "Appliquer",
-    "scheduleModeRanges": "Plages horaires"
+    "scheduleModeRanges": "Plages horaires",
+    "prepaidDeliveryNote": "La livraison se paie en ligne — le livreur ne peut pas encaisser à la porte.",
+    "prepaidDeliveryUnavailable": "Le paiement en ligne n'est pas disponible pour le moment, la commande en livraison est donc impossible. Veuillez choisir le retrait."
   },
   "reservation": {
     "title": "Réserver une table",
@@ -2998,7 +3001,8 @@
       "accountNo": "Non, j'en ai besoin d'un",
       "noAccountConnectNote": "Pas de problème — créez votre compte Shipday gratuit, puis revenez et entrez votre clé. Lorsque vous activez Shipday, nous vous présenterons à notre partenaire Shipday pour appliquer la réduction + les crédits et organiser votre accompagnement.",
       "createAccount": "Créer un compte Shipday",
-      "haveAccountInstead": "J'ai déjà un compte"
+      "haveAccountInstead": "J'ai déjà un compte",
+      "toastOnlinePaymentRequired": "Ajoutez d'abord un moyen de paiement en ligne — les livreurs ShipDay ne font que récupérer et livrer, ils ne peuvent pas encaisser à la porte. Activez le paiement par carte ou connectez PayPal, puis activez ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Module",

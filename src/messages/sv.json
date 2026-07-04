@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Den här koden är registrerad på en annan e-postadress.",
       "promoUnlocked": "Du har låst upp {name}!",
       "couponNoEffect": "{code} är giltig men ger just nu ingen rabatt i din varukorg — vissa varor (som presentkort) kan vara undantagna, eller så uppnås inte ett minimibelopp.",
-      "itemSoldOutError": "\"{name}\" är just slutsåld — ta bort den ur varukorgen för att fortsätta."
+      "itemSoldOutError": "\"{name}\" är just slutsåld — ta bort den ur varukorgen för att fortsätta.",
+      "deliveryPrepaidRequired": "Leveransbeställningar hos den här restaurangen måste betalas online — välj en onlinebetalningsmetod."
     },
     "searchMenu": "Sök i menyn…",
     "signIn": "Logga in",
@@ -546,7 +547,9 @@
     "emailOptional": "valfritt",
     "tipBadgeSuggested": "Föreslagen",
     "couponApply": "Använd",
-    "scheduleModeRanges": "Tidsintervall"
+    "scheduleModeRanges": "Tidsintervall",
+    "prepaidDeliveryNote": "Leverans betalas online — budet kan inte ta betalt vid dörren.",
+    "prepaidDeliveryUnavailable": "Onlinebetalning är inte tillgänglig just nu, så leveransbeställningar kan inte läggas. Välj avhämtning."
   },
   "reservation": {
     "title": "Boka ett bord",
@@ -2998,7 +3001,8 @@
       "accountNo": "Nej, jag behöver ett",
       "noAccountConnectNote": "Inga problem — skapa ditt kostnadsfria Shipday-konto, kom sedan tillbaka och ange din nyckel. När du aktiverar Shipday presenterar vi dig för vår Shipday-partner för att tillämpa rabatten + krediterna och konfigurera din introduktion.",
       "createAccount": "Skapa ett Shipday-konto",
-      "haveAccountInstead": "Jag har redan ett konto"
+      "haveAccountInstead": "Jag har redan ett konto",
+      "toastOnlinePaymentRequired": "Lägg först till en onlinebetalningsmetod — ShipDay-buden hämtar bara upp och lämnar av, de kan inte ta betalt vid dörren. Aktivera kortbetalningar eller anslut PayPal och slå sedan på ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Tillägg",

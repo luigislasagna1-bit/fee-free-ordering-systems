@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Deze code is geregistreerd op een ander e-mailadres.",
       "promoUnlocked": "Je hebt {name} ontgrendeld!",
       "couponNoEffect": "{code} is geldig, maar geeft nu geen korting op je winkelwagen — sommige artikelen (zoals cadeaubonnen) kunnen uitgesloten zijn, of een minimum is niet bereikt.",
-      "itemSoldOutError": "\"{name}\" is zojuist uitverkocht — verwijder het uit je winkelwagen om verder te gaan."
+      "itemSoldOutError": "\"{name}\" is zojuist uitverkocht — verwijder het uit je winkelwagen om verder te gaan.",
+      "deliveryPrepaidRequired": "Bezorgbestellingen bij dit restaurant moeten online worden betaald — kies een online betaalmethode."
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",
@@ -546,7 +547,9 @@
     "emailOptional": "optioneel",
     "tipBadgeSuggested": "Voorgesteld",
     "couponApply": "Toepassen",
-    "scheduleModeRanges": "Tijdvakken"
+    "scheduleModeRanges": "Tijdvakken",
+    "prepaidDeliveryNote": "Bezorging wordt online betaald — de bezorger kan aan de deur geen betaling aannemen.",
+    "prepaidDeliveryUnavailable": "Online betalen is momenteel niet beschikbaar, dus bezorgbestellingen zijn niet mogelijk. Kies afhalen."
   },
   "reservation": {
     "title": "Tafel reserveren",
@@ -2998,7 +3001,8 @@
       "accountNo": "Nee, ik heb er een nodig",
       "noAccountConnectNote": "Geen probleem — maak uw gratis Shipday-account aan, kom dan terug en voer uw sleutel in. Wanneer u Shipday inschakelt, stellen wij u voor aan onze Shipday-partner om de korting + credits toe te passen en uw onboarding in te stellen.",
       "createAccount": "Een Shipday-account aanmaken",
-      "haveAccountInstead": "Ik heb al een account"
+      "haveAccountInstead": "Ik heb al een account",
+      "toastOnlinePaymentRequired": "Voeg eerst een online betaalmethode toe — ShipDay-bezorgers halen alleen op en bezorgen, ze kunnen aan de deur niet incasseren. Schakel kaartbetalingen in of koppel PayPal en zet dan ShipDay aan."
     },
     "driverPoolLocked": {
       "addonBadge": "Add-on",

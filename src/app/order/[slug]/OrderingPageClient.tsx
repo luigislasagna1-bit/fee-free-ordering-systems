@@ -926,6 +926,7 @@ export function OrderingPageClient({
   restaurant,
   cardPaymentEnabled = false,
   paypalEnabled = false,
+  shipdayPrepaidDelivery = false,
   stripePublishableKey = null,
   themeSettings = null,
   locale = "en",
@@ -953,6 +954,11 @@ export function OrderingPageClient({
 }: {
   restaurant: any;
   cardPaymentEnabled?: boolean;
+  /** True when this restaurant dispatches delivery via ShipDay — delivery
+   *  orders must then be PREPAID online (Luigi 2026-07-04: ShipDay drivers
+   *  only pick up + drop off; no cash / card collection at the door), so the
+   *  checkout hides at-door payment methods for delivery. */
+  shipdayPrepaidDelivery?: boolean;
   /** Clickable platform credit at the bottom of the ordering page (free
    *  marketing + SEO backlink). Resolved server-side via
    *  resolvePoweredByCredit(restaurant.resellerProfile) — renders the Fee Free
@@ -1326,13 +1332,18 @@ export function OrderingPageClient({
   // methods for pickup vs delivery vs dine-in. Marketplace orders are online-
   // card-only by platform rule. Reactive to orderType so switching the order
   // type re-filters the checkout's payment options. See lib/payment-methods.ts.
-  const acceptedMethods = useMemo(
-    () =>
-      searchParams.get("from") === "marketplace"
-        ? ["online_card"]
-        : methodsForOrderType(paymentMethodsRaw, orderType),
-    [searchParams, paymentMethodsRaw, orderType],
-  );
+  const acceptedMethods = useMemo(() => {
+    if (searchParams.get("from") === "marketplace") return ["online_card"];
+    const methods = methodsForOrderType(paymentMethodsRaw, orderType);
+    // ShipDay-dispatched delivery MUST be prepaid online (Luigi 2026-07-04):
+    // the driver only picks up + drops off — nobody collects cash or taps a
+    // card at the door. Strip at-door methods for delivery; the server
+    // enforces the same rule (code delivery_prepaid_required).
+    if (shipdayPrepaidDelivery && orderType === "delivery") {
+      return methods.filter((m) => m === "online_card" || m === "paypal");
+    }
+    return methods;
+  }, [searchParams, paymentMethodsRaw, orderType, shipdayPrepaidDelivery]);
   const defaultPaymentMethod =
     acceptedMethods.includes("cash")
       ? "cash"
@@ -3537,6 +3548,11 @@ export function OrderingPageClient({
         // tell the customer WHICH item so they can remove the line and proceed.
         if (orderData.code === "item_sold_out")
           throw new Error(tT("itemSoldOutError", { name: orderData.itemName ?? "" }));
+        // ShipDay-dispatched delivery must be prepaid online (Luigi 2026-07-04) —
+        // the checkout hides at-door methods, so this only fires on a stale tab
+        // or a tampered request.
+        if (orderData.code === "delivery_prepaid_required")
+          throw new Error(tT("deliveryPrepaidRequired"));
         // Holiday closure — name the affected service when it's a
         // single-service closure (the restaurant is still open otherwise),
         // and append the owner's optional message. Luigi 2026-06-12.
@@ -5731,6 +5747,7 @@ export function OrderingPageClient({
           cardPaymentEnabled={cardPaymentEnabled}
           acceptedMethods={acceptedMethods}
           paypalEnabled={paypalEnabled}
+          prepaidDeliveryOnly={shipdayPrepaidDelivery && orderType === "delivery"}
           couponCode={couponCode}
           setCouponCode={setCouponCode}
           couponId={couponId}

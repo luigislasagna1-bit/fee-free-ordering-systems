@@ -255,7 +255,8 @@
       "promoEmailMismatch": "See kood on registreeritud teisele e-posti aadressile.",
       "promoUnlocked": "Avasid pakkumise {name}!",
       "couponNoEffect": "{code} on kehtiv, kuid praegu ei alanda see teie ostukorvis midagi — mõned tooted (nt kinkekaardid) võivad olla välistatud või miinimum pole täidetud.",
-      "itemSoldOutError": "\"{name}\" müüdi just läbi — jätkamiseks eemaldage see ostukorvist."
+      "itemSoldOutError": "\"{name}\" müüdi just läbi — jätkamiseks eemaldage see ostukorvist.",
+      "deliveryPrepaidRequired": "Selle restorani kohaletoimetamisega tellimused tuleb maksta veebis — valige veebimakseviis."
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",
@@ -546,7 +547,9 @@
     "emailOptional": "valikuline",
     "tipBadgeSuggested": "Soovitatud",
     "couponApply": "Rakenda",
-    "scheduleModeRanges": "Ajavahemikud"
+    "scheduleModeRanges": "Ajavahemikud",
+    "prepaidDeliveryNote": "Kohaletoimetamine makstakse veebis — kuller ei saa ukse peal makset vastu võtta.",
+    "prepaidDeliveryUnavailable": "Veebimakse pole praegu saadaval, seega kohaletoimetamisega tellimusi esitada ei saa. Valige järeletulemine."
   },
   "reservation": {
     "title": "Broneeri laud",
@@ -2998,7 +3001,8 @@
       "accountNo": "Ei, vajan seda",
       "noAccountConnectNote": "Pole probleemi — looge oma tasuta Shipday konto, tulge siis tagasi ja sisestage oma võti. Kui lülitate Shipday sisse, tutvustame teid meie Shipday partnerile, et rakendada allahindlust + krediite ja seadistada teie sisseelamisprogramm.",
       "createAccount": "Looge Shipday konto",
-      "haveAccountInstead": "Mul on juba konto"
+      "haveAccountInstead": "Mul on juba konto",
+      "toastOnlinePaymentRequired": "Lisage esmalt veebimakseviis — ShipDay kullerid ainult võtavad peale ja toovad kohale, ukse peal nad makset vastu võtta ei saa. Lubage kaardimaksed või ühendage PayPal, seejärel lülitage ShipDay sisse."
     },
     "driverPoolLocked": {
       "addonBadge": "Lisandmoodul",

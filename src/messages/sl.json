@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Ta koda je registrirana na drug e-poštni naslov.",
       "promoUnlocked": "Odklenili ste {name}!",
       "couponNoEffect": "{code} je veljaven, a trenutno ne zniža ničesar v vaši košarici — nekateri artikli (npr. darilne kartice) so lahko izključeni ali minimum ni dosežen.",
-      "itemSoldOutError": "\"{name}\" je pravkar razprodan — odstranite ga iz košarice za nadaljevanje."
+      "itemSoldOutError": "\"{name}\" je pravkar razprodan — odstranite ga iz košarice za nadaljevanje.",
+      "deliveryPrepaidRequired": "Naročila z dostavo v tej restavraciji je treba plačati prek spleta — izberite spletni način plačila."
     },
     "searchMenu": "Iskanje po meniju…",
     "signIn": "Prijava",
@@ -546,7 +547,9 @@
     "emailOptional": "neobvezno",
     "tipBadgeSuggested": "Predlagano",
     "couponApply": "Uporabi",
-    "scheduleModeRanges": "Časovni razponi"
+    "scheduleModeRanges": "Časovni razponi",
+    "prepaidDeliveryNote": "Dostava se plača prek spleta — dostavljavec ne more sprejeti plačila na vratih.",
+    "prepaidDeliveryUnavailable": "Spletno plačilo trenutno ni na voljo, zato naročil z dostavo ni mogoče oddati. Izberite prevzem."
   },
   "reservation": {
     "title": "Rezerviraj mizo",
@@ -2998,7 +3001,8 @@
       "accountNo": "Ne, potrebujem enega",
       "noAccountConnectNote": "Brez težav — ustvarite brezplačen račun Shipday, nato se vrnite in vnesite svoj ključ. Ko vklopite Shipday, vas bomo predstavili našemu partnerju Shipday, ki bo uveljavil popust + kredite in nastavil vaše uvajanje.",
       "createAccount": "Ustvarite račun Shipday",
-      "haveAccountInstead": "Že imam račun"
+      "haveAccountInstead": "Že imam račun",
+      "toastOnlinePaymentRequired": "Najprej dodajte spletni način plačila — dostavljavci ShipDay samo prevzamejo in dostavijo, plačila na vratih ne morejo sprejeti. Vklopite kartična plačila ali povežite PayPal, nato vklopite ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Dodatek",

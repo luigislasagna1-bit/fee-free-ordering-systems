@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Tämä koodi on rekisteröity toiseen sähköpostiosoitteeseen.",
       "promoUnlocked": "Avasit edun {name}!",
       "couponNoEffect": "{code} on voimassa, mutta se ei juuri nyt alenna mitään ostoskorissasi — jotkin tuotteet (kuten lahjakortit) voivat olla poissuljettuja tai vähimmäissumma ei täyty.",
-      "itemSoldOutError": "\"{name}\" myytiin juuri loppuun — poista se ostoskorista jatkaaksesi."
+      "itemSoldOutError": "\"{name}\" myytiin juuri loppuun — poista se ostoskorista jatkaaksesi.",
+      "deliveryPrepaidRequired": "Tämän ravintolan toimitustilaukset on maksettava verkossa — valitse verkkomaksutapa."
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",
@@ -546,7 +547,9 @@
     "emailOptional": "valinnainen",
     "tipBadgeSuggested": "Suositeltu",
     "couponApply": "Käytä",
-    "scheduleModeRanges": "Aikavälit"
+    "scheduleModeRanges": "Aikavälit",
+    "prepaidDeliveryNote": "Toimitus maksetaan verkossa — kuljettaja ei voi ottaa maksua ovella.",
+    "prepaidDeliveryUnavailable": "Verkkomaksu ei ole juuri nyt käytettävissä, joten toimitustilauksia ei voi tehdä. Valitse nouto."
   },
   "reservation": {
     "title": "Varaa pöytä",
@@ -2963,7 +2966,8 @@
       "accountNo": "Ei, tarvitsen sellaisen",
       "noAccountConnectNote": "Ei hätää — luo ilmainen Shipday-tilisi, palaa sitten takaisin ja syötä avaimesi. Kun otat Shipday-palvelun käyttöön, esittelemme sinut Shipday-kumppanillemme alennuksen + kreditien soveltamiseksi ja perehdytyksesi järjestämiseksi.",
       "createAccount": "Luo Shipday-tili",
-      "haveAccountInstead": "Minulla on jo tili"
+      "haveAccountInstead": "Minulla on jo tili",
+      "toastOnlinePaymentRequired": "Lisää ensin verkkomaksutapa — ShipDay-kuljettajat vain noutavat ja toimittavat, he eivät voi periä maksua ovella. Ota korttimaksut käyttöön tai yhdistä PayPal ja kytke sitten ShipDay päälle."
     },
     "driverPoolLocked": {
       "addonBadge": "Lisäosa",

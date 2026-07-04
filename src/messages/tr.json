@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Bu kod farklı bir e-posta adresine kayıtlı.",
       "promoUnlocked": "{name} promosyonunu açtınız!",
       "couponNoEffect": "{code} geçerli, ancak şu anda sepetinizde hiçbir şeyi indirmiyor — bazı ürünler (hediye kartları gibi) hariç olabilir veya minimum tutara ulaşılmamış olabilir.",
-      "itemSoldOutError": "\"{name}\" az önce tükendi — devam etmek için sepetinizden çıkarın."
+      "itemSoldOutError": "\"{name}\" az önce tükendi — devam etmek için sepetinizden çıkarın.",
+      "deliveryPrepaidRequired": "Bu restoranda teslimatlı siparişler online ödenmelidir — lütfen bir online ödeme yöntemi seçin."
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",
@@ -546,7 +547,9 @@
     "emailOptional": "isteğe bağlı",
     "tipBadgeSuggested": "Önerilen",
     "couponApply": "Uygula",
-    "scheduleModeRanges": "Zaman aralıkları"
+    "scheduleModeRanges": "Zaman aralıkları",
+    "prepaidDeliveryNote": "Teslimat online ödenir — kurye kapıda ödeme alamaz.",
+    "prepaidDeliveryUnavailable": "Online ödeme şu anda kullanılamıyor, bu yüzden teslimatlı sipariş verilemiyor. Lütfen gel-al'ı seçin."
   },
   "reservation": {
     "title": "Masa Rezervasyonu",
@@ -2998,7 +3001,8 @@
       "accountNo": "Hayır, ihtiyacım var",
       "noAccountConnectNote": "Sorun değil — ücretsiz Shipday hesabınızı oluşturun, sonra geri dönün ve anahtarınızı girin. Shipday'i açtığınızda, sizi Shipday ortağımızla tanıştıracağız; bu sayede indirim + kredi uygulanacak ve işe alım süreciniz kurulacak.",
       "createAccount": "Shipday hesabı oluştur",
-      "haveAccountInstead": "Zaten bir hesabım var"
+      "haveAccountInstead": "Zaten bir hesabım var",
+      "toastOnlinePaymentRequired": "Önce bir online ödeme yöntemi ekleyin — ShipDay kuryeleri yalnızca alır ve teslim eder, kapıda ödeme tahsil edemezler. Kartla ödemeyi etkinleştirin veya PayPal'ı bağlayın, sonra ShipDay'i açın."
     },
     "driverPoolLocked": {
       "addonBadge": "Eklenti",

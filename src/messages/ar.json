@@ -255,7 +255,8 @@
       "promoEmailMismatch": "هذا الرمز مسجَّل لعنوان بريد إلكتروني مختلف.",
       "promoUnlocked": "لقد فتحت {name}!",
       "couponNoEffect": "{code} صالح، لكنه لا يخصم شيئًا من سلتك حاليًا — قد تكون بعض العناصر (مثل بطاقات الهدايا) مستثناة، أو لم يتم بلوغ الحد الأدنى.",
-      "itemSoldOutError": "نفدت كمية \"{name}\" للتو — يُرجى إزالته من السلة للمتابعة."
+      "itemSoldOutError": "نفدت كمية \"{name}\" للتو — يُرجى إزالته من السلة للمتابعة.",
+      "deliveryPrepaidRequired": "طلبات التوصيل في هذا المطعم يجب دفعها عبر الإنترنت — يرجى اختيار طريقة دفع عبر الإنترنت."
     },
     "searchMenu": "ابحث في القائمة…",
     "signIn": "تسجيل الدخول",
@@ -546,7 +547,9 @@
     "emailOptional": "اختياري",
     "tipBadgeSuggested": "مقترح",
     "couponApply": "تطبيق",
-    "scheduleModeRanges": "نطاقات زمنية"
+    "scheduleModeRanges": "نطاقات زمنية",
+    "prepaidDeliveryNote": "يُدفع التوصيل عبر الإنترنت — لا يمكن للسائق تحصيل الدفع عند الباب.",
+    "prepaidDeliveryUnavailable": "الدفع عبر الإنترنت غير متاح حاليًا، لذا لا يمكن تقديم طلبات التوصيل. يرجى اختيار الاستلام."
   },
   "reservation": {
     "title": "احجز طاولة",
@@ -2998,7 +3001,8 @@
       "accountNo": "لا، أحتاج إلى واحد",
       "noAccountConnectNote": "لا مشكلة — أنشئ حساب Shipday المجاني الخاص بك، ثم عُد وأدخل مفتاحك. عندما تفعّل Shipday، سنعرّفك على شريكنا في Shipday لتطبيق الخصم + الاعتمادات وإعداد تأهيلك.",
       "createAccount": "إنشاء حساب Shipday",
-      "haveAccountInstead": "لديّ حساب بالفعل"
+      "haveAccountInstead": "لديّ حساب بالفعل",
+      "toastOnlinePaymentRequired": "أضف طريقة دفع عبر الإنترنت أولًا — سائقو ShipDay يستلمون ويوصلون فقط ولا يمكنهم تحصيل الدفع عند الباب. فعّل الدفع بالبطاقة أو اربط PayPal ثم فعّل ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "إضافة",

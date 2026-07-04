@@ -254,7 +254,8 @@
       "promoEmailMismatch": "Este código está registado noutro endereço de e-mail.",
       "promoUnlocked": "Você desbloqueou {name}!",
       "couponNoEffect": "{code} é válido, mas de momento não desconta nada no seu carrinho — alguns artigos (como cartões-presente) podem estar excluídos, ou o mínimo não foi atingido.",
-      "itemSoldOutError": "\"{name}\" acabou de esgotar — remova-o do carrinho para continuar."
+      "itemSoldOutError": "\"{name}\" acabou de esgotar — remova-o do carrinho para continuar.",
+      "deliveryPrepaidRequired": "As encomendas com entrega deste restaurante devem ser pagas online — escolha um método de pagamento online."
     },
     "followUs": "Siga-nos",
     "searchMenu": "Pesquisar no menu…",
@@ -546,7 +547,9 @@
     "emailOptional": "opcional",
     "tipBadgeSuggested": "Sugerido",
     "couponApply": "Aplicar",
-    "scheduleModeRanges": "Intervalos"
+    "scheduleModeRanges": "Intervalos",
+    "prepaidDeliveryNote": "A entrega é paga online — o estafeta não pode receber pagamento à porta.",
+    "prepaidDeliveryUnavailable": "O pagamento online não está disponível neste momento, pelo que não é possível encomendar com entrega. Escolha levantamento."
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -2998,7 +3001,8 @@
       "accountNo": "Não, preciso de um",
       "noAccountConnectNote": "Sem problema — crie a sua conta Shipday gratuita, depois volte e introduza a sua chave. Quando ativar o Shipday, apresentaremos você ao nosso parceiro Shipday para aplicar o desconto + créditos e configurar a sua integração.",
       "createAccount": "Criar uma conta Shipday",
-      "haveAccountInstead": "Já tenho uma conta"
+      "haveAccountInstead": "Já tenho uma conta",
+      "toastOnlinePaymentRequired": "Adicione primeiro um método de pagamento online — os estafetas ShipDay apenas recolhem e entregam, não podem cobrar à porta. Ative pagamentos com cartão ou ligue o PayPal e depois ative o ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Complemento",

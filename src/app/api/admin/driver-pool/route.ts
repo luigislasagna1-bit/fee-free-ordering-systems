@@ -4,6 +4,7 @@ import { getSessionUser } from "@/lib/session";
 import { hasFeature } from "@/lib/entitlements";
 import { encrypt } from "@/lib/encrypt";
 import { sendShipdayPartnerIntro } from "@/lib/email";
+import { restaurantHasOnlinePayments } from "@/lib/shipday";
 
 /**
  * PUT /api/admin/driver-pool
@@ -95,6 +96,27 @@ export async function PUT(req: NextRequest) {
       {
         error: "Subscribe to Driver Pool or Marketplace Monthly to configure ShipDay dispatch.",
         code: "addon_required",
+      },
+      { status: 412 },
+    );
+  }
+
+  // ShipDay dispatch also requires a WORKING online payment method (Luigi
+  // 2026-07-04): ShipDay drivers only pick up + drop off — they can't collect
+  // cash or take a card at the door, so every dispatched order must be prepaid
+  // online. Without Stripe keys or a connected PayPal account, enabling
+  // ShipDay would make delivery checkout impossible (the customer page hides
+  // at-door methods for ShipDay delivery). Gate only the ENABLING transition
+  // (deliverySource → shipday/both, or enabled=true) — "own drivers" saves
+  // and key-only updates pass through.
+  const enablingShipday =
+    (effectiveSource && effectiveSource !== "own") || body.enabled === true;
+  if (enablingShipday && !(await restaurantHasOnlinePayments(restaurantId))) {
+    return NextResponse.json(
+      {
+        error:
+          "ShipDay dispatch needs an online payment method first. ShipDay drivers only pick up and drop off — they can't collect payment at the door — so delivery orders must be paid online. Enable card payments (Settings → Payments) or connect PayPal, then turn ShipDay on.",
+        code: "online_payment_required",
       },
       { status: 412 },
     );

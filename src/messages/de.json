@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Dieser Code ist für eine andere E-Mail-Adresse registriert.",
       "promoUnlocked": "Du hast {name} freigeschaltet!",
       "couponNoEffect": "{code} ist gültig, reduziert aber gerade nichts in Ihrem Warenkorb — manche Artikel (z. B. Geschenkkarten) sind ggf. ausgeschlossen oder ein Mindestbetrag ist nicht erreicht.",
-      "itemSoldOutError": "\"{name}\" ist gerade ausverkauft — bitte aus dem Warenkorb entfernen, um fortzufahren."
+      "itemSoldOutError": "\"{name}\" ist gerade ausverkauft — bitte aus dem Warenkorb entfernen, um fortzufahren.",
+      "deliveryPrepaidRequired": "Lieferbestellungen bei diesem Restaurant müssen online bezahlt werden — bitte eine Online-Zahlungsart wählen."
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",
@@ -546,7 +547,9 @@
     "emailOptional": "optional",
     "tipBadgeSuggested": "Empfohlen",
     "couponApply": "Anwenden",
-    "scheduleModeRanges": "Zeitfenster"
+    "scheduleModeRanges": "Zeitfenster",
+    "prepaidDeliveryNote": "Lieferungen werden online bezahlt — der Fahrer kann an der Tür kein Geld annehmen.",
+    "prepaidDeliveryUnavailable": "Online-Zahlung ist derzeit nicht verfügbar, daher sind Lieferbestellungen nicht möglich. Bitte Abholung wählen."
   },
   "reservation": {
     "title": "Tisch reservieren",
@@ -2998,7 +3001,8 @@
       "accountNo": "Nein, ich brauche eines",
       "noAccountConnectNote": "Kein Problem — erstellen Sie Ihr kostenloses Shipday-Konto, kommen Sie dann zurück und geben Sie Ihren Schlüssel ein. Wenn Sie Shipday aktivieren, stellen wir Sie unserem Shipday-Partner vor, um den Rabatt + Guthaben anzuwenden und Ihre Einarbeitung einzurichten.",
       "createAccount": "Ein Shipday-Konto erstellen",
-      "haveAccountInstead": "Ich habe bereits ein Konto"
+      "haveAccountInstead": "Ich habe bereits ein Konto",
+      "toastOnlinePaymentRequired": "Fügen Sie zuerst eine Online-Zahlungsart hinzu — ShipDay-Fahrer holen nur ab und liefern aus, sie können an der Tür kein Geld kassieren. Aktivieren Sie Kartenzahlungen oder verbinden Sie PayPal, dann ShipDay einschalten."
     },
     "driverPoolLocked": {
       "addonBadge": "Add-on",

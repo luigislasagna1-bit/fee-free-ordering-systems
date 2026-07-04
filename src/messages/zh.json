@@ -255,7 +255,8 @@
       "promoEmailMismatch": "此代码注册在另一个电子邮箱地址下。",
       "promoUnlocked": "您解锁了 {name}！",
       "couponNoEffect": "{code} 有效，但目前不会为您的购物车带来任何折扣——某些商品（如礼品卡）可能被排除，或未达到最低消费。",
-      "itemSoldOutError": "“{name}”刚刚售罄——请从购物车中移除后继续。"
+      "itemSoldOutError": "“{name}”刚刚售罄——请从购物车中移除后继续。",
+      "deliveryPrepaidRequired": "本餐厅的外送订单必须在线支付——请选择在线支付方式。"
     },
     "searchMenu": "搜索菜单…",
     "signIn": "登录",
@@ -546,7 +547,9 @@
     "emailOptional": "可选",
     "tipBadgeSuggested": "推荐",
     "couponApply": "应用",
-    "scheduleModeRanges": "时间段"
+    "scheduleModeRanges": "时间段",
+    "prepaidDeliveryNote": "外送订单需在线支付——配送员无法在门口收款。",
+    "prepaidDeliveryUnavailable": "在线支付目前不可用，因此无法下外送订单。请选择自取。"
   },
   "reservation": {
     "title": "预订餐桌",
@@ -2998,7 +3001,8 @@
       "accountNo": "没有，我需要一个",
       "noAccountConnectNote": "没问题 — 创建您的免费 Shipday 账户，然后回来输入您的密钥。当您开启 Shipday 时，我们将为您介绍我们的 Shipday 合作伙伴，以应用折扣 + 积分并设置您的入职流程。",
       "createAccount": "创建 Shipday 账户",
-      "haveAccountInstead": "我已经有账户了"
+      "haveAccountInstead": "我已经有账户了",
+      "toastOnlinePaymentRequired": "请先添加在线支付方式——ShipDay 配送员只负责取餐和送达，无法在门口收款。启用银行卡支付或连接 PayPal，然后再开启 ShipDay。"
     },
     "driverPoolLocked": {
       "addonBadge": "附加功能",

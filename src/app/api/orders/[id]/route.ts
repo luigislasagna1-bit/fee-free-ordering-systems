@@ -628,7 +628,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
               orderNumber: true, customerName: true, customerEmail: true,
               customerPhone: true, deliveryAddress: true, deliveryCity: true,
               deliveryZip: true, notes: true, subtotal: true, taxAmount: true,
-              deliveryFee: true, tip: true, total: true, creditApplied: true, preparationTime: true,
+              deliveryFee: true, tip: true, total: true, creditApplied: true,
+              paymentMethod: true, paymentStatus: true, preparationTime: true,
               restaurant: { select: { name: true, address: true, city: true, state: true, zip: true, phone: true, lat: true, lng: true } },
             },
           });
@@ -637,6 +638,21 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
           const restaurantAddress = [full.restaurant.address, full.restaurant.city, full.restaurant.state, full.restaurant.zip].filter(Boolean).join(", ");
           if (!customerAddress || !restaurantAddress) {
             console.error("[orders PATCH] ShipDay dispatch skipped — missing address", { orderId: id });
+            return;
+          }
+          // ShipDay orders MUST be prepaid (Luigi 2026-07-04): the driver only
+          // picks up + drops off — an unpaid order would be uncollectable. The
+          // checkout + order route already block this; this guard covers edge
+          // paths (admin-created orders, legacy data). "Prepaid" = the online
+          // charge captured OR store credit covering the whole total.
+          const fullyPrepaid =
+            full.paymentStatus === "paid" ||
+            full.total - (full.creditApplied ?? 0) <= 0.009;
+          if (!fullyPrepaid) {
+            console.warn(
+              `[orders PATCH] ShipDay dispatch REFUSED for ${id}: order not prepaid ` +
+              `(method=${full.paymentMethod}, status=${full.paymentStatus}) — ShipDay drivers can't collect at the door.`,
+            );
             return;
           }
           const res = await dispatchOrderToShipday(existing.restaurantId, {

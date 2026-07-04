@@ -195,6 +195,11 @@ interface Props {
    *  card_payments entitlement. Drives whether the PayPal button works
    *  vs. shows "coming soon". */
   paypalEnabled: boolean;
+  /** ShipDay-dispatched DELIVERY order (Luigi 2026-07-04): the driver only
+   *  picks up + drops off — no at-door collection — so the order must be
+   *  prepaid online. At-door methods are hidden, the cash safety-net is
+   *  suppressed, and a short note explains why. */
+  prepaidDeliveryOnly?: boolean;
   couponCode: string;
   setCouponCode: (s: string) => void;
   couponId: string | null;
@@ -334,6 +339,7 @@ export function CheckoutModal({
   orderLoading, placeOrder,
   cardPaymentEnabled,
   acceptedMethods,
+  prepaidDeliveryOnly = false,
   cateringMode = false,
   cateringMinScheduledLocal,
   maxScheduledDate,
@@ -1585,14 +1591,27 @@ export function CheckoutModal({
                     (p) =>
                       acceptedMethods.includes(p.slug) &&
                       !(p.slug === "online_card" && !cardPaymentEnabled) &&
-                      !(p.slug === "paypal" && !paypalEnabled),
+                      !(p.slug === "paypal" && !paypalEnabled) &&
+                      // ShipDay-dispatched delivery: at-door methods are never
+                      // offered — the driver can't collect (Luigi 2026-07-04).
+                      !(prepaidDeliveryOnly && (p.slug === "cash" || p.slug === "card_in_person")),
                   );
                   // Safety net: if a restaurant's only configured methods for
                   // this order type are online card / PayPal but those are OFF
                   // (no add-on / Stripe not finished), the picker would be empty
                   // and the customer couldn't check out. Fall back to Cash (pay
                   // on pickup/delivery) so an order can always be placed.
-                  if (visible.length === 0) visible = [all[0]];
+                  // EXCEPT for prepaid-only (ShipDay) delivery — cash there
+                  // would strand the driver; show the unavailable notice instead.
+                  if (visible.length === 0 && !prepaidDeliveryOnly) visible = [all[0]];
+                  if (visible.length === 0) {
+                    return (
+                      <div className="mt-3 p-2.5 bg-amber-50 rounded-lg text-xs text-amber-800 flex items-start gap-2">
+                        <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
+                        {tc("prepaidDeliveryUnavailable")}
+                      </div>
+                    );
+                  }
                   const cols = visible.length >= 4 ? "grid-cols-2 sm:grid-cols-4" : visible.length === 3 ? "grid-cols-3" : "grid-cols-2";
                   return (
                     <div className={`pt-3 grid ${cols} gap-2`}>
@@ -1612,6 +1631,12 @@ export function CheckoutModal({
                     </div>
                   );
                 })()}
+                {prepaidDeliveryOnly && (
+                  <div className="mt-2 p-2.5 bg-blue-50 rounded-lg text-xs text-blue-700 flex items-start gap-2">
+                    <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
+                    {tc("prepaidDeliveryNote")}
+                  </div>
+                )}
                 {customerInfo.paymentMethod === "card" && !cardPaymentEnabled && (
                   <div className="mt-2 p-2.5 bg-blue-50 rounded-lg text-xs text-blue-700 flex items-start gap-2">
                     <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />

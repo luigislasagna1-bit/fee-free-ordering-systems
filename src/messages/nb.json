@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Denne koden er registrert på en annen e-postadresse.",
       "promoUnlocked": "Du låste opp {name}!",
       "couponNoEffect": "{code} er gyldig, men gir akkurat nå ingen rabatt i handlekurven — noen varer (som gavekort) kan være unntatt, eller et minimum er ikke nådd.",
-      "itemSoldOutError": "\"{name}\" ble nettopp utsolgt — fjern den fra handlekurven for å fortsette."
+      "itemSoldOutError": "\"{name}\" ble nettopp utsolgt — fjern den fra handlekurven for å fortsette.",
+      "deliveryPrepaidRequired": "Leveringsbestillinger hos denne restauranten må betales på nett — velg en nettbetalingsmetode."
     },
     "searchMenu": "Søk i menyen…",
     "signIn": "Logg inn",
@@ -546,7 +547,9 @@
     "emailOptional": "valgfritt",
     "tipBadgeSuggested": "Foreslått",
     "couponApply": "Bruk",
-    "scheduleModeRanges": "Tidsintervaller"
+    "scheduleModeRanges": "Tidsintervaller",
+    "prepaidDeliveryNote": "Levering betales på nett — budet kan ikke ta betalt på døren.",
+    "prepaidDeliveryUnavailable": "Nettbetaling er ikke tilgjengelig akkurat nå, så leveringsbestillinger kan ikke legges inn. Velg henting."
   },
   "reservation": {
     "title": "Bestill bord",
@@ -2998,7 +3001,8 @@
       "accountNo": "Nei, jeg trenger ett",
       "noAccountConnectNote": "Ikke noe problem — opprett din gratis Shipday-konto, kom deretter tilbake og skriv inn nøkkelen din. Når du slår på Shipday, introduserer vi deg for vår Shipday-partner for å bruke rabatten + kreditterne og sette opp din introduksjon.",
       "createAccount": "Opprett en Shipday-konto",
-      "haveAccountInstead": "Jeg har allerede en konto"
+      "haveAccountInstead": "Jeg har allerede en konto",
+      "toastOnlinePaymentRequired": "Legg først til en nettbetalingsmetode — ShipDay-budene henter bare og leverer, de kan ikke ta betalt på døren. Aktiver kortbetaling eller koble til PayPal, og slå deretter på ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Tillegg",

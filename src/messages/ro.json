@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Acest cod este înregistrat la o altă adresă de e-mail.",
       "promoUnlocked": "Ai deblocat {name}!",
       "couponNoEffect": "{code} este valid, dar momentan nu reduce nimic din coșul tău — unele articole (precum cardurile cadou) pot fi excluse, sau nu s-a atins un minim.",
-      "itemSoldOutError": "„{name}” tocmai s-a epuizat — eliminați-l din coș pentru a continua."
+      "itemSoldOutError": "„{name}” tocmai s-a epuizat — eliminați-l din coș pentru a continua.",
+      "deliveryPrepaidRequired": "Comenzile cu livrare la acest restaurant trebuie plătite online — alegeți o metodă de plată online."
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",
@@ -546,7 +547,9 @@
     "emailOptional": "opțional",
     "tipBadgeSuggested": "Sugerat",
     "couponApply": "Aplică",
-    "scheduleModeRanges": "Intervale orare"
+    "scheduleModeRanges": "Intervale orare",
+    "prepaidDeliveryNote": "Livrarea se plătește online — curierul nu poate încasa la ușă.",
+    "prepaidDeliveryUnavailable": "Plata online nu este disponibilă momentan, deci comenzile cu livrare nu pot fi plasate. Alegeți ridicarea."
   },
   "reservation": {
     "title": "Rezervă o masă",
@@ -2998,7 +3001,8 @@
       "accountNo": "Nu, am nevoie de unul",
       "noAccountConnectNote": "Nicio problemă — creați-vă contul Shipday gratuit, apoi reveniți și introduceți cheia dvs. Când activați Shipday, vă vom prezenta partenerului nostru Shipday pentru a aplica reducerea + creditele și a vă configura integrarea.",
       "createAccount": "Creați un cont Shipday",
-      "haveAccountInstead": "Am deja un cont"
+      "haveAccountInstead": "Am deja un cont",
+      "toastOnlinePaymentRequired": "Adăugați mai întâi o metodă de plată online — curierii ShipDay doar preiau și livrează, nu pot încasa la ușă. Activați plățile cu cardul sau conectați PayPal, apoi porniți ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Supliment",

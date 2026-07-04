@@ -254,7 +254,8 @@
       "promoEmailMismatch": "Questo codice è registrato a un altro indirizzo email.",
       "promoUnlocked": "Hai sbloccato {name}!",
       "couponNoEffect": "{code} è valido, ma al momento non sconta nulla nel tuo carrello — alcuni articoli (come le carte regalo) potrebbero essere esclusi, o non è stato raggiunto un minimo.",
-      "itemSoldOutError": "\"{name}\" è appena andato esaurito — rimuovilo dal carrello per continuare."
+      "itemSoldOutError": "\"{name}\" è appena andato esaurito — rimuovilo dal carrello per continuare.",
+      "deliveryPrepaidRequired": "Gli ordini con consegna di questo ristorante vanno pagati online — scegli un metodo di pagamento online."
     },
     "followUs": "Seguici",
     "searchMenu": "Cerca nel menu…",
@@ -546,7 +547,9 @@
     "emailOptional": "facoltativo",
     "tipBadgeSuggested": "Consigliato",
     "couponApply": "Applica",
-    "scheduleModeRanges": "Fasce orarie"
+    "scheduleModeRanges": "Fasce orarie",
+    "prepaidDeliveryNote": "La consegna si paga online — il fattorino non può incassare alla porta.",
+    "prepaidDeliveryUnavailable": "Il pagamento online non è disponibile al momento, quindi non è possibile ordinare con consegna. Scegli il ritiro."
   },
   "reservation": {
     "title": "Prenota un tavolo",
@@ -2998,7 +3001,8 @@
       "accountNo": "No, ne ho bisogno di uno",
       "noAccountConnectNote": "Nessun problema — crea il tuo account Shipday gratuito, poi torna e inserisci la tua chiave. Quando attivi Shipday, ti presenteremo al nostro partner Shipday per applicare lo sconto + i crediti e configurare il tuo onboarding.",
       "createAccount": "Crea un account Shipday",
-      "haveAccountInstead": "Ho già un account"
+      "haveAccountInstead": "Ho già un account",
+      "toastOnlinePaymentRequired": "Aggiungi prima un metodo di pagamento online — i driver ShipDay ritirano e consegnano soltanto, non possono incassare alla porta. Attiva i pagamenti con carta o collega PayPal, poi attiva ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Componente aggiuntivo",

@@ -92,6 +92,12 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
       });
       const data = await res.json();
       if (!res.ok) {
+        // ShipDay needs a working online payment method first (drivers can't
+        // collect at the door) — localized toast for that specific refusal.
+        if (data.code === "online_payment_required") {
+          toast.error(t("toastOnlinePaymentRequired"), { duration: 8000 });
+          return;
+        }
         toast.error(data.error || t("toastFailedToSave"));
         return;
       }

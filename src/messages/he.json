@@ -255,7 +255,8 @@
       "promoEmailMismatch": "קוד זה רשום לכתובת אימייל אחרת.",
       "promoUnlocked": "פתחת את {name}!",
       "couponNoEffect": "{code} תקף, אבל כרגע הוא לא מוזיל דבר בסל שלכם — ייתכן שחלק מהפריטים (כמו כרטיסי מתנה) מוחרגים, או שלא הגעתם למינימום.",
-      "itemSoldOutError": "\"{name}\" אזל הרגע — הסירו אותו מהעגלה כדי להמשיך."
+      "itemSoldOutError": "\"{name}\" אזל הרגע — הסירו אותו מהעגלה כדי להמשיך.",
+      "deliveryPrepaidRequired": "הזמנות משלוח במסעדה זו יש לשלם אונליין — בחרו אמצעי תשלום אונליין."
     },
     "searchMenu": "חפש בתפריט…",
     "signIn": "התחברות",
@@ -546,7 +547,9 @@
     "emailOptional": "אופציונלי",
     "tipBadgeSuggested": "מומלץ",
     "couponApply": "החל",
-    "scheduleModeRanges": "טווחי זמן"
+    "scheduleModeRanges": "טווחי זמן",
+    "prepaidDeliveryNote": "המשלוח משולם אונליין — השליח אינו יכול לגבות תשלום בדלת.",
+    "prepaidDeliveryUnavailable": "תשלום אונליין אינו זמין כרגע, ולכן לא ניתן לבצע הזמנות משלוח. בחרו איסוף עצמי."
   },
   "reservation": {
     "title": "הזמן שולחן",
@@ -2998,7 +3001,8 @@
       "accountNo": "לא, אני צריך אחד",
       "noAccountConnectNote": "אין בעיה — צרו את חשבון Shipday החינמי שלכם, חזרו ואז הזינו את המפתח שלכם. כשתפעילו את Shipday, נציג אתכם לשותף Shipday שלנו להחלת ההנחה + הקרדיטים ולהגדרת הקליטה שלכם.",
       "createAccount": "צרו חשבון Shipday",
-      "haveAccountInstead": "כבר יש לי חשבון"
+      "haveAccountInstead": "כבר יש לי חשבון",
+      "toastOnlinePaymentRequired": "הוסיפו קודם אמצעי תשלום אונליין — שליחי ShipDay רק אוספים ומוסרים, הם אינם יכולים לגבות תשלום בדלת. הפעילו תשלומי כרטיס או חברו PayPal, ואז הפעילו את ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "תוסף",

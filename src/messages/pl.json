@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Ten kod jest przypisany do innego adresu e-mail.",
       "promoUnlocked": "Odblokowano {name}!",
       "couponNoEffect": "{code} jest prawidłowy, ale w tej chwili nic nie obniża w Twoim koszyku — niektóre pozycje (np. karty podarunkowe) mogą być wyłączone lub nie osiągnięto minimum.",
-      "itemSoldOutError": "„{name}” właśnie się wyprzedał — usuń go z koszyka, aby kontynuować."
+      "itemSoldOutError": "„{name}” właśnie się wyprzedał — usuń go z koszyka, aby kontynuować.",
+      "deliveryPrepaidRequired": "Zamówienia z dostawą w tej restauracji muszą być opłacone online — wybierz metodę płatności online."
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
@@ -546,7 +547,9 @@
     "emailOptional": "opcjonalnie",
     "tipBadgeSuggested": "Sugerowane",
     "couponApply": "Zastosuj",
-    "scheduleModeRanges": "Przedziały czasowe"
+    "scheduleModeRanges": "Przedziały czasowe",
+    "prepaidDeliveryNote": "Dostawa jest opłacana online — kurier nie może przyjąć płatności pod drzwiami.",
+    "prepaidDeliveryUnavailable": "Płatność online jest obecnie niedostępna, więc nie można złożyć zamówienia z dostawą. Wybierz odbiór."
   },
   "reservation": {
     "title": "Zarezerwuj stolik",
@@ -2998,7 +3001,8 @@
       "accountNo": "Nie, potrzebuję",
       "noAccountConnectNote": "Żaden problem — utwórz bezpłatne konto Shipday, a następnie wróć i wprowadź swój klucz. Gdy włączysz Shipday, przedstawimy Cię naszemu partnerowi Shipday, aby zastosować zniżkę + kredyty i skonfigurować Twoje wdrożenie.",
       "createAccount": "Utwórz konto Shipday",
-      "haveAccountInstead": "Mam już konto"
+      "haveAccountInstead": "Mam już konto",
+      "toastOnlinePaymentRequired": "Najpierw dodaj metodę płatności online — kurierzy ShipDay tylko odbierają i dostarczają, nie mogą pobierać płatności pod drzwiami. Włącz płatności kartą lub podłącz PayPal, a następnie włącz ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Dodatek",

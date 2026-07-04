@@ -5,6 +5,7 @@ import prisma from "@/lib/db";
 import { OrderingPageClient } from "./OrderingPageClient";
 import { SandboxClaimBanner } from "./SandboxClaimBanner";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
+import { shouldDispatchToShipday } from "@/lib/shipday";
 import { resolveInheritedHours, resolveInheritedZones } from "@/lib/inherited-data";
 import { VisitTracker } from "@/components/order/VisitTracker";
 import { TrackingConsentGate } from "@/components/order/TrackingConsentGate";
@@ -327,6 +328,13 @@ export default async function OrderingPage({
   // EVERY ordering page with zero per-restaurant setup, all on platform billing.
   restaurant.googleMapsApiKey = await resolveEffectiveMapsKey();
 
+  // ShipDay dispatch ⇒ delivery orders MUST be prepaid online (Luigi
+  // 2026-07-04: ShipDay drivers only pick up + drop off, no at-door
+  // collection). The checkout uses this to hide cash / card-in-person for
+  // delivery. One indexed ShipdayConfig lookup; if this page's query count
+  // ever matters at scale, this is a cacheable seam (config changes rarely).
+  const shipdayPrepaidDelivery = await shouldDispatchToShipday(restaurant.id);
+
   // Card payments (KEY-ONLY model) require BOTH:
   //   1. THIS restaurant has saved active Stripe API keys (PaymentProvider)
   //      via Settings → Payments — i.e. their own publishable + secret key.
@@ -480,6 +488,7 @@ export default async function OrderingPage({
         restaurant={restaurant as any}
         cardPaymentEnabled={cardPaymentEnabled}
         paypalEnabled={paypalEnabled}
+        shipdayPrepaidDelivery={shipdayPrepaidDelivery}
         stripePublishableKey={stripePublishableKey}
         themeSettings={(restaurant as any).themeSettings ?? null}
         locale={locale}

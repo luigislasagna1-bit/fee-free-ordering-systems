@@ -255,7 +255,8 @@
       "promoEmailMismatch": "このコードは別のメールアドレスに登録されています。",
       "promoUnlocked": "{name}を獲得しました！",
       "couponNoEffect": "{code} は有効ですが、現在カート内で割引されるものがありません — 一部の商品（ギフトカードなど）が対象外か、最低金額に達していない可能性があります。",
-      "itemSoldOutError": "「{name}」は売り切れました。続行するにはカートから削除してください。"
+      "itemSoldOutError": "「{name}」は売り切れました。続行するにはカートから削除してください。",
+      "deliveryPrepaidRequired": "このレストランのデリバリー注文はオンライン決済が必要です — オンライン決済方法を選んでください。"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",
@@ -546,7 +547,9 @@
     "emailOptional": "任意",
     "tipBadgeSuggested": "おすすめ",
     "couponApply": "適用",
-    "scheduleModeRanges": "時間帯"
+    "scheduleModeRanges": "時間帯",
+    "prepaidDeliveryNote": "デリバリーはオンライン決済です — ドライバーは玄関先で支払いを受け取れません。",
+    "prepaidDeliveryUnavailable": "現在オンライン決済がご利用いただけないため、デリバリー注文はできません。テイクアウトをお選びください。"
   },
   "reservation": {
     "title": "テーブルを予約",
@@ -2998,7 +3001,8 @@
       "accountNo": "いいえ、必要です",
       "noAccountConnectNote": "問題ありません — 無料の Shipday アカウントを作成し、戻ってきてキーを入力してください。Shipday をオンにすると、割引 + クレジットを適用しオンボーディングを設定するために、私たちの Shipday パートナーをご紹介します。",
       "createAccount": "Shipday アカウントを作成する",
-      "haveAccountInstead": "すでにアカウントを持っています"
+      "haveAccountInstead": "すでにアカウントを持っています",
+      "toastOnlinePaymentRequired": "先にオンライン決済方法を追加してください — ShipDayのドライバーは受け取りと配達のみで、玄関先での集金はできません。カード決済を有効にするかPayPalを接続してから、ShipDayをオンにしてください。"
     },
     "driverPoolLocked": {
       "addonBadge": "アドオン",

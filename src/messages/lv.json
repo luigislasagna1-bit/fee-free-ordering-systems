@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Šis kods ir reģistrēts citai e-pasta adresei.",
       "promoUnlocked": "Jūs atbloķējāt {name}!",
       "couponNoEffect": "{code} ir derīgs, taču šobrīd tas neko nesamazina jūsu grozā — daži produkti (piemēram, dāvanu kartes) var būt izslēgti vai nav sasniegts minimums.",
-      "itemSoldOutError": "\"{name}\" tikko izpārdots — izņemiet to no groza, lai turpinātu."
+      "itemSoldOutError": "\"{name}\" tikko izpārdots — izņemiet to no groza, lai turpinātu.",
+      "deliveryPrepaidRequired": "Šī restorāna piegādes pasūtījumi jāapmaksā tiešsaistē — izvēlieties tiešsaistes maksājuma veidu."
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",
@@ -546,7 +547,9 @@
     "emailOptional": "neobligāti",
     "tipBadgeSuggested": "Ieteicams",
     "couponApply": "Lietot",
-    "scheduleModeRanges": "Laika diapazoni"
+    "scheduleModeRanges": "Laika diapazoni",
+    "prepaidDeliveryNote": "Piegāde tiek apmaksāta tiešsaistē — kurjers nevar pieņemt maksājumu pie durvīm.",
+    "prepaidDeliveryUnavailable": "Tiešsaistes maksājums šobrīd nav pieejams, tāpēc piegādes pasūtījumus nevar veikt. Izvēlieties saņemšanu uz vietas."
   },
   "reservation": {
     "title": "Rezervēt galdu",
@@ -2998,7 +3001,8 @@
       "accountNo": "Nē, man tas vajadzīgs",
       "noAccountConnectNote": "Nekas — izveidojiet savu bezmaksas Shipday kontu, pēc tam atgriezieties un ievadiet savu atslēgu. Kad ieslēgsit Shipday, iepazīstināsim jūs ar mūsu Shipday partneri, lai piemērotu atlaidi + kredītus un iestatītu jūsu ievadapmācību.",
       "createAccount": "Izveidot Shipday kontu",
-      "haveAccountInstead": "Man jau ir konts"
+      "haveAccountInstead": "Man jau ir konts",
+      "toastOnlinePaymentRequired": "Vispirms pievienojiet tiešsaistes maksājuma veidu — ShipDay kurjeri tikai paņem un piegādā, viņi nevar iekasēt maksājumu pie durvīm. Ieslēdziet karšu maksājumus vai pievienojiet PayPal, pēc tam ieslēdziet ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Papildinājums",

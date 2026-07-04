@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Šis kodas registruotas kitam el. pašto adresui.",
       "promoUnlocked": "Atrakinote {name}!",
       "couponNoEffect": "{code} galioja, bet šiuo metu jūsų krepšelyje nieko nenupigina — kai kurios prekės (pvz., dovanų kortelės) gali būti neįtrauktos arba nepasiektas minimumas.",
-      "itemSoldOutError": "„{name}“ ką tik išparduotas — pašalinkite jį iš krepšelio, kad tęstumėte."
+      "itemSoldOutError": "„{name}“ ką tik išparduotas — pašalinkite jį iš krepšelio, kad tęstumėte.",
+      "deliveryPrepaidRequired": "Šio restorano užsakymai su pristatymu turi būti apmokėti internetu — pasirinkite mokėjimo internetu būdą."
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",
@@ -546,7 +547,9 @@
     "emailOptional": "neprivaloma",
     "tipBadgeSuggested": "Siūloma",
     "couponApply": "Taikyti",
-    "scheduleModeRanges": "Laiko intervalai"
+    "scheduleModeRanges": "Laiko intervalai",
+    "prepaidDeliveryNote": "Pristatymas apmokamas internetu — kurjeris negali priimti mokėjimo prie durų.",
+    "prepaidDeliveryUnavailable": "Mokėjimas internetu šiuo metu negalimas, todėl užsakymų su pristatymu pateikti negalima. Pasirinkite atsiėmimą."
   },
   "reservation": {
     "title": "Rezervuoti stalą",
@@ -2118,7 +2121,8 @@
       "accountNo": "Ne, man reikia",
       "noAccountConnectNote": "Nėra problema — sukurkite savo nemokamą Shipday paskyrą, tada grįžkite ir įveskite savo raktą. Kai įjungsite Shipday, supažindinsime jus su mūsų Shipday partneriu, kad pritaikytų nuolaidą + kreditus ir nustatytų jūsų įvedimo programą.",
       "createAccount": "Sukurti Shipday paskyrą",
-      "haveAccountInstead": "Jau turiu paskyrą"
+      "haveAccountInstead": "Jau turiu paskyrą",
+      "toastOnlinePaymentRequired": "Pirmiausia pridėkite mokėjimo internetu būdą — ShipDay kurjeriai tik paima ir pristato, jie negali priimti mokėjimo prie durų. Įjunkite mokėjimus kortele arba prijunkite PayPal, tada įjunkite ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Papildinys",

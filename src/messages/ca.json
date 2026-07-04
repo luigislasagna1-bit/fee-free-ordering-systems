@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Aquest codi està registrat amb una altra adreça de correu electrònic.",
       "promoUnlocked": "Has desbloquejat {name}!",
       "couponNoEffect": "{code} és vàlid, però ara mateix no descompta res al teu cistell — alguns articles (com les targetes regal) poden estar exclosos, o no s'arriba al mínim.",
-      "itemSoldOutError": "\"{name}\" s'acaba d'esgotar — treu-lo del cistell per continuar."
+      "itemSoldOutError": "\"{name}\" s'acaba d'esgotar — treu-lo del cistell per continuar.",
+      "deliveryPrepaidRequired": "Les comandes a domicili d'aquest restaurant s'han de pagar en línia — trieu un mètode de pagament en línia."
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",
@@ -546,7 +547,9 @@
     "emailOptional": "opcional",
     "tipBadgeSuggested": "Suggerit",
     "couponApply": "Aplica",
-    "scheduleModeRanges": "Franges horàries"
+    "scheduleModeRanges": "Franges horàries",
+    "prepaidDeliveryNote": "El lliurament es paga en línia — el repartidor no pot cobrar a la porta.",
+    "prepaidDeliveryUnavailable": "El pagament en línia no està disponible ara mateix, així que no es poden fer comandes a domicili. Trieu la recollida."
   },
   "reservation": {
     "title": "Reservar taula",
@@ -2998,7 +3001,8 @@
       "accountNo": "No, en necessito un",
       "noAccountConnectNote": "Cap problema — creeu el vostre compte gratuït de Shipday, torneu i introduïu la vostra clau. Quan activeu Shipday, us presentarem al nostre soci de Shipday per aplicar el descompte + crèdits i configurar la vostra incorporació.",
       "createAccount": "Crear un compte de Shipday",
-      "haveAccountInstead": "Ja tinc un compte"
+      "haveAccountInstead": "Ja tinc un compte",
+      "toastOnlinePaymentRequired": "Afegiu primer un mètode de pagament en línia — els repartidors de ShipDay només recullen i lliuren, no poden cobrar a la porta. Activeu els pagaments amb targeta o connecteu PayPal i després activeu ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Complement",

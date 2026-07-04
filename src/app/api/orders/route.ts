@@ -39,6 +39,7 @@ import { getSessionUser } from "@/lib/session";
 import { validateBooking, resolveDayHours, resolveReservationIntervals, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
 import { isPaymentMethodAcceptedForType } from "@/lib/payment-methods";
+import { shouldDispatchToShipday } from "@/lib/shipday";
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "take_out", "catering"] as const;
 
 /** Human English label for an order type — used only as the en fallback in
@@ -1618,6 +1619,26 @@ export async function POST(req: NextRequest) {
         { error: "That payment method isn't accepted for this order type.", code: "payment_method_not_accepted" },
         { status: 400 },
       );
+    }
+
+    // ── ShipDay delivery = PREPAID ONLINE only (Luigi 2026-07-04) ────────────
+    // ShipDay drivers only pick up + drop off — they can't collect cash or tap
+    // a card at the door. The checkout already hides at-door methods for
+    // ShipDay-dispatched delivery; this is the tamper-proof server half. An
+    // at-door method here would leave the driver with an uncollectable order.
+    // (Fully-store-credit-paid orders come through as "reward_credit", not
+    // cash, so they pass — nothing is owed at the door.)
+    if (type === "delivery" && (paymentMethod === "cash" || paymentMethod === "card_in_person")) {
+      const shipday = await shouldDispatchToShipday(restaurant.id);
+      if (shipday) {
+        return NextResponse.json(
+          {
+            error: "Delivery orders at this restaurant are paid online — the delivery driver can't collect payment at the door.",
+            code: "delivery_prepaid_required",
+          },
+          { status: 400 },
+        );
+      }
     }
 
     // ── FREE-plan order cap ─────────────────────────────────────────────────

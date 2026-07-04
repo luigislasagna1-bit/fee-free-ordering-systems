@@ -18,8 +18,33 @@
 
 import prisma from "@/lib/db";
 import { decrypt } from "@/lib/encrypt";
+import { hasFeature } from "@/lib/entitlements";
 
 const SHIPDAY_BASE_URL = "https://api.shipday.com";
+
+/**
+ * ShipDay orders MUST be prepaid online (Luigi 2026-07-04): ShipDay drivers
+ * only pick up and drop off — they can't collect cash or take a card at the
+ * door. So a restaurant may only dispatch via ShipDay when an ONLINE payment
+ * method is genuinely usable: active Stripe keys or a connected PayPal
+ * account, plus the card_payments entitlement. Used by the Driver Pool admin
+ * gate and referenced by the checkout/order-route prepaid-delivery guards.
+ */
+export async function restaurantHasOnlinePayments(restaurantId: string): Promise<boolean> {
+  const [provider, restaurant, entitled] = await Promise.all([
+    prisma.paymentProvider.findUnique({
+      where: { restaurantId },
+      select: { isActive: true, publishableKey: true },
+    }),
+    prisma.restaurant.findUnique({
+      where: { id: restaurantId },
+      select: { paypalAccountStatus: true },
+    }),
+    hasFeature(restaurantId, "card_payments"),
+  ]);
+  if (!entitled) return false;
+  return !!(provider?.isActive && provider.publishableKey) || restaurant?.paypalAccountStatus === "connected";
+}
 
 /**
  * Fetch the decrypted ShipDay API key for a restaurant. Returns null if

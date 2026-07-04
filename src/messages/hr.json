@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Ovaj kôd registriran je na drugu e-mail adresu.",
       "promoUnlocked": "Otključali ste {name}!",
       "couponNoEffect": "{code} je valjan, ali trenutačno ne snižava ništa u vašoj košarici — neki artikli (poput poklon-kartica) mogu biti isključeni ili minimum nije dosegnut.",
-      "itemSoldOutError": "\"{name}\" je upravo rasprodan — uklonite ga iz košarice za nastavak."
+      "itemSoldOutError": "\"{name}\" je upravo rasprodan — uklonite ga iz košarice za nastavak.",
+      "deliveryPrepaidRequired": "Narudžbe s dostavom u ovom restoranu moraju se platiti online — odaberite online način plaćanja."
     },
     "searchMenu": "Pretraži jelovnik…",
     "signIn": "Prijava",
@@ -546,7 +547,9 @@
     "emailOptional": "neobavezno",
     "tipBadgeSuggested": "Predloženo",
     "couponApply": "Primijeni",
-    "scheduleModeRanges": "Vremenski rasponi"
+    "scheduleModeRanges": "Vremenski rasponi",
+    "prepaidDeliveryNote": "Dostava se plaća online — dostavljač ne može naplatiti na vratima.",
+    "prepaidDeliveryUnavailable": "Online plaćanje trenutno nije dostupno pa narudžbe s dostavom nisu moguće. Odaberite preuzimanje."
   },
   "reservation": {
     "title": "Rezervirajte stol",
@@ -2998,7 +3001,8 @@
       "accountNo": "Ne, trebam jedan",
       "noAccountConnectNote": "Nema problema — stvorite besplatan Shipday račun, a zatim se vratite i unesite svoj ključ. Kada uključite Shipday, upoznat ćemo vas s našim Shipday partnerom kako bi primijenili popust + kredite i postavili vaše uvođenje.",
       "createAccount": "Stvorite Shipday račun",
-      "haveAccountInstead": "Već imam račun"
+      "haveAccountInstead": "Već imam račun",
+      "toastOnlinePaymentRequired": "Najprije dodajte online način plaćanja — ShipDay dostavljači samo preuzimaju i dostavljaju, ne mogu naplatiti na vratima. Uključite kartično plaćanje ili povežite PayPal, zatim uključite ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Dodatak",

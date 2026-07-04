@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Mã này được đăng ký cho một địa chỉ email khác.",
       "promoUnlocked": "Bạn đã mở khóa {name}!",
       "couponNoEffect": "{code} hợp lệ nhưng hiện không giảm giá mục nào trong giỏ hàng — một số món (như thẻ quà tặng) có thể bị loại trừ, hoặc chưa đạt mức tối thiểu.",
-      "itemSoldOutError": "\"{name}\" vừa hết hàng — hãy xóa khỏi giỏ để tiếp tục."
+      "itemSoldOutError": "\"{name}\" vừa hết hàng — hãy xóa khỏi giỏ để tiếp tục.",
+      "deliveryPrepaidRequired": "Đơn giao hàng của nhà hàng này phải được thanh toán trực tuyến — vui lòng chọn phương thức thanh toán trực tuyến."
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",
@@ -546,7 +547,9 @@
     "emailOptional": "tùy chọn",
     "tipBadgeSuggested": "Đề xuất",
     "couponApply": "Áp dụng",
-    "scheduleModeRanges": "Khoảng thời gian"
+    "scheduleModeRanges": "Khoảng thời gian",
+    "prepaidDeliveryNote": "Đơn giao hàng được thanh toán trực tuyến — tài xế không thể thu tiền tại cửa.",
+    "prepaidDeliveryUnavailable": "Thanh toán trực tuyến hiện không khả dụng nên không thể đặt đơn giao hàng. Vui lòng chọn tự đến lấy."
   },
   "reservation": {
     "title": "Đặt bàn",
@@ -2998,7 +3001,8 @@
       "accountNo": "Không, tôi cần một cái",
       "noAccountConnectNote": "Không vấn đề — tạo tài khoản Shipday miễn phí của bạn, sau đó quay lại và nhập khóa của bạn. Khi bạn bật Shipday, chúng tôi sẽ giới thiệu bạn với đối tác Shipday của chúng tôi để áp dụng giảm giá + tín dụng và thiết lập quy trình onboarding của bạn.",
       "createAccount": "Tạo tài khoản Shipday",
-      "haveAccountInstead": "Tôi đã có tài khoản"
+      "haveAccountInstead": "Tôi đã có tài khoản",
+      "toastOnlinePaymentRequired": "Hãy thêm phương thức thanh toán trực tuyến trước — tài xế ShipDay chỉ nhận và giao hàng, họ không thể thu tiền tại cửa. Bật thanh toán thẻ hoặc kết nối PayPal, sau đó bật ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Tiện ích bổ sung",

@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Kode ini terdaftar untuk alamat email yang berbeda.",
       "promoUnlocked": "Kamu membuka {name}!",
       "couponNoEffect": "{code} valid, tetapi saat ini tidak memotong apa pun di keranjang Anda — beberapa item (seperti kartu hadiah) mungkin dikecualikan, atau minimum belum tercapai.",
-      "itemSoldOutError": "\"{name}\" baru saja habis — hapus dari keranjang untuk melanjutkan."
+      "itemSoldOutError": "\"{name}\" baru saja habis — hapus dari keranjang untuk melanjutkan.",
+      "deliveryPrepaidRequired": "Pesanan antar di restoran ini harus dibayar online — pilih metode pembayaran online."
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",
@@ -546,7 +547,9 @@
     "emailOptional": "opsional",
     "tipBadgeSuggested": "Disarankan",
     "couponApply": "Terapkan",
-    "scheduleModeRanges": "Rentang waktu"
+    "scheduleModeRanges": "Rentang waktu",
+    "prepaidDeliveryNote": "Pengantaran dibayar online — kurir tidak bisa menerima pembayaran di pintu.",
+    "prepaidDeliveryUnavailable": "Pembayaran online sedang tidak tersedia, jadi pesanan antar tidak bisa dibuat. Silakan pilih ambil sendiri."
   },
   "reservation": {
     "title": "Pesan meja",
@@ -2998,7 +3001,8 @@
       "accountNo": "Tidak, saya perlu satu",
       "noAccountConnectNote": "Tidak masalah — buat akun Shipday gratis Anda, lalu kembali dan masukkan kunci Anda. Saat Anda mengaktifkan Shipday, kami akan memperkenalkan Anda kepada mitra Shipday kami untuk menerapkan diskon + kredit dan menyiapkan orientasi Anda.",
       "createAccount": "Buat akun Shipday",
-      "haveAccountInstead": "Saya sudah punya akun"
+      "haveAccountInstead": "Saya sudah punya akun",
+      "toastOnlinePaymentRequired": "Tambahkan metode pembayaran online terlebih dahulu — kurir ShipDay hanya mengambil dan mengantar, mereka tidak bisa menagih pembayaran di pintu. Aktifkan pembayaran kartu atau hubungkan PayPal, lalu nyalakan ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Add-on",

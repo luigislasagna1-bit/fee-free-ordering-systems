@@ -255,7 +255,8 @@
       "promoEmailMismatch": "Ez a kód egy másik e-mail-címhez van regisztrálva.",
       "promoUnlocked": "Feloldottad ezt: {name}!",
       "couponNoEffect": "{code} érvényes, de jelenleg semmit sem kedvezményez a kosarában — egyes tételek (pl. ajándékkártyák) kizártak lehetnek, vagy nincs meg a minimum.",
-      "itemSoldOutError": "A(z) „{name}” épp elfogyott — a folytatáshoz távolítsa el a kosárból."
+      "itemSoldOutError": "A(z) „{name}” épp elfogyott — a folytatáshoz távolítsa el a kosárból.",
+      "deliveryPrepaidRequired": "Ennél az étteremnél a kiszállításos rendeléseket online kell fizetni — válasszon online fizetési módot."
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",
@@ -546,7 +547,9 @@
     "emailOptional": "nem kötelező",
     "tipBadgeSuggested": "Javasolt",
     "couponApply": "Alkalmaz",
-    "scheduleModeRanges": "Idősávok"
+    "scheduleModeRanges": "Idősávok",
+    "prepaidDeliveryNote": "A kiszállítást online kell fizetni — a futár nem tud fizetést átvenni az ajtóban.",
+    "prepaidDeliveryUnavailable": "Az online fizetés jelenleg nem érhető el, így kiszállításos rendelés nem adható le. Válassza az átvételt."
   },
   "reservation": {
     "title": "Asztal foglalása",
@@ -2998,7 +3001,8 @@
       "accountNo": "Nem, szükségem van egyre",
       "noAccountConnectNote": "Semmi gond — hozza létre ingyenes Shipday-fiókját, majd térjen vissza és adja meg kulcsát. Amikor bekapcsolja a Shipday-t, bemutatjuk Önt Shipday partnerünknek a kedvezmény + kreditek alkalmazásához és a bevezetés beállításához.",
       "createAccount": "Shipday-fiók létrehozása",
-      "haveAccountInstead": "Már van fiókom"
+      "haveAccountInstead": "Már van fiókom",
+      "toastOnlinePaymentRequired": "Először adjon hozzá online fizetési módot — a ShipDay futárok csak átveszik és kiszállítják a rendelést, az ajtóban nem tudnak fizetést beszedni. Kapcsolja be a kártyás fizetést vagy kösse össze a PayPalt, majd kapcsolja be a ShipDay-t."
     },
     "driverPoolLocked": {
       "addonBadge": "Bővítmény",

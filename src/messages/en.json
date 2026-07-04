@@ -264,7 +264,8 @@
       "fulfilWindowReservationError": "\"{name}\" isn't available on your reservation day. Please remove it, or book your table on a day it's offered.",
       "promoEmailMismatch": "This code is registered to a different email address.",
       "couponNoEffect": "{code} is valid, but it doesn't discount anything in your cart right now — some items (like gift cards) may be excluded, or a minimum may not be met.",
-      "itemSoldOutError": "\"{name}\" just sold out — please remove it from your cart to continue."
+      "itemSoldOutError": "\"{name}\" just sold out — please remove it from your cart to continue.",
+      "deliveryPrepaidRequired": "Delivery orders must be paid online at this restaurant — please choose an online payment method."
     },
     "searchMenu": "Search the menu…",
     "expandAll": "Expand all",
@@ -546,7 +547,9 @@
     "emailOptional": "optional",
     "tipBadgeSuggested": "Suggested",
     "couponApply": "Apply",
-    "scheduleModeRanges": "Time ranges"
+    "scheduleModeRanges": "Time ranges",
+    "prepaidDeliveryNote": "Delivery is paid online — the delivery driver can't take payment at the door.",
+    "prepaidDeliveryUnavailable": "Online payment isn't available right now, so delivery orders can't be placed. Please choose pickup instead."
   },
   "reservation": {
     "title": "Book a table",
@@ -3059,7 +3062,8 @@
       "accountNo": "No, I need one",
       "noAccountConnectNote": "No problem — create your free Shipday account, then come back and enter your key. When you turn Shipday on, we'll introduce you to our Shipday partner to apply the discount + credits and set up your onboarding.",
       "createAccount": "Create a Shipday account",
-      "haveAccountInstead": "I already have an account"
+      "haveAccountInstead": "I already have an account",
+      "toastOnlinePaymentRequired": "Add an online payment method first — ShipDay drivers only pick up and drop off, they can't collect payment at the door. Enable card payments or connect PayPal, then turn ShipDay on."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Brand dashboard",
