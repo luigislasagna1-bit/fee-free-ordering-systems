@@ -193,6 +193,33 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     return NextResponse.json({ error: "Invalid status" }, { status: 400 });
   }
 
+  // ── Transition guards (Fabrizio cmr6meaaq — 2026-07-04) ─────────────────
+  // A tablet that slept through the day woke with a stale "pending" list and
+  // auto-rejected three orders that had been ACCEPTED at opening (and even
+  // auto-COMPLETED) hours earlier — this route used to accept any status over
+  // any status, so the customers got bogus "missed" emails at 6:40 PM. Rules:
+  //   1. Same-status writes are silent no-ops → double-taps and two devices
+  //      accepting the same order stop firing duplicate customer emails.
+  //   2. "rejected" is only reachable from "pending" — both the auto-reject
+  //      and the manual Reject act on ringing orders. The kitchen client
+  //      already treats 409 as "pending cleared elsewhere, resync" (see the
+  //      auto-reject .then in KitchenDisplay). Refusing an order at a later
+  //      stage must go through "cancelled", which carries the refund flow.
+  if (newStatus === existing.status) {
+    const current = await prisma.order.findUnique({
+      where: { id },
+      include: { restaurant: { select: { id: true, name: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true, defaultLanguage: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true } } },
+    });
+    return NextResponse.json(current);
+  }
+  if (newStatus === "rejected" && existing.status !== "pending") {
+    console.warn(`[orders PATCH] refusing reject of ${id}: status is "${existing.status}", not pending (stale client?)`);
+    return NextResponse.json(
+      { error: `Order is ${existing.status}, not pending — reject refused.`, code: "not_pending" },
+      { status: 409 },
+    );
+  }
+
   // ── Capture-on-accept ────────────────────────────────────────────────────
   // Under the authorize-then-capture model, the customer's card has only
   // been AUTHORIZED at this point — no money has moved yet. When the

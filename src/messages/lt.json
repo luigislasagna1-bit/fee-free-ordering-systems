@@ -4635,7 +4635,9 @@
       "reasonLabel": "Restorano priežastis",
       "paymentLabel": "Apie jūsų mokėjimą",
       "callUs": "Turite klausimų ar reikia pagalbos? Skambinkite į {restaurantName}: {phone}",
-      "trackingCta": "Peržiūrėti užsakymo būseną"
+      "trackingCta": "Peržiūrėti užsakymo būseną",
+      "missedTitle": "Užsakymas nebuvo priimtas laiku",
+      "missedBody": "Deja, restoranas nespėjo laiku priimti jūsų užsakymo, todėl jis neįvyko. Jei mokėjote internetu, bet kokia autorizacija atlaisvinama automatiškai — pinigai nebus nuskaityti."
     },
     "orderRejected": {
       "subject": "Užsakymas #{orderNumber} atmestas",

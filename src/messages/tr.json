@@ -4635,7 +4635,9 @@
       "reasonLabel": "Restorandan neden",
       "paymentLabel": "Ödemeniz hakkında",
       "callUs": "Sorunuz veya yardıma ihtiyacınız mı var? {restaurantName} restoranını arayın: {phone}",
-      "trackingCta": "Sipariş durumunu görüntüle"
+      "trackingCta": "Sipariş durumunu görüntüle",
+      "missedTitle": "Sipariş zamanında kabul edilmedi",
+      "missedBody": "Maalesef restoran siparişinizi zamanında kabul edemedi, bu yüzden sipariş gerçekleşmedi. Çevrimiçi ödediyseniz, tüm ön provizyonlar otomatik olarak serbest bırakılır — sizden ücret alınmaz."
     },
     "orderRejected": {
       "subject": "#{orderNumber} numaralı sipariş reddedildi",

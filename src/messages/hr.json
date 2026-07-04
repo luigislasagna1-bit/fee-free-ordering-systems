@@ -4635,7 +4635,9 @@
       "reasonLabel": "Razlog restorana",
       "paymentLabel": "O vašem plaćanju",
       "callUs": "Pitanja ili potrebna pomoć? Nazovite {restaurantName}: {phone}",
-      "trackingCta": "Pogledajte status narudžbe"
+      "trackingCta": "Pogledajte status narudžbe",
+      "missedTitle": "Narudžba nije prihvaćena na vrijeme",
+      "missedBody": "Nažalost, restoran nije stigao prihvatiti vašu narudžbu na vrijeme pa nije provedena. Ako ste platili online, svaka autorizacija se automatski oslobađa — nećete biti terećeni."
     },
     "orderRejected": {
       "subject": "Narudžba #{orderNumber} odbijena",

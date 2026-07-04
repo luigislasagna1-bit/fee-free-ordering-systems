@@ -235,14 +235,20 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
     const orderTimeout = order.placedWhileClosed ? CLOSED_PLACED_TIMEOUT_MINUTES : timeoutMinutes;
     const reasonText = `Auto-rejected: not accepted within ${orderTimeout} minutes.`;
     try {
-      await prisma.order.update({
-        where: { id: order.id },
+      // Idempotent claim — same rule the reservation path below has had all
+      // along: only flip a row that's STILL pending (staff may have accepted
+      // between the candidate query and here, or another trigger already
+      // rejected it). Count 0 = someone else won; skip every side effect —
+      // no email, no coupon/credit give-back. Fabrizio cmr6meaaq 2026-07-04.
+      const claim = await prisma.order.updateMany({
+        where: { id: order.id, status: "pending" },
         data: {
           status: "rejected",
           rejectedAt: now,
           rejectionReason: reasonText,
         },
       });
+      if (claim.count === 0) continue;
       result.rejected += 1;
 
       // Coupon ledger: a timed-out ("missed") order releases its coupon back to

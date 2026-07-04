@@ -4635,7 +4635,9 @@
       "reasonLabel": "レストランからの理由",
       "paymentLabel": "お支払いについて",
       "callUs": "ご不明な点やご要望は {restaurantName} へ直接お電話ください：{phone}",
-      "trackingCta": "注文状況を確認する"
+      "trackingCta": "注文状況を確認する",
+      "missedTitle": "ご注文は時間内に受け付けられませんでした",
+      "missedBody": "申し訳ありませんが、レストランが時間内にご注文を受け付けられなかったため、ご注文は成立しませんでした。オンラインでお支払いの場合、与信は自動的に解除され、請求は発生しません。"
     },
     "orderRejected": {
       "subject": "注文 #{orderNumber} が拒否されました",

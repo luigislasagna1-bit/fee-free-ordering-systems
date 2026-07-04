@@ -4635,7 +4635,9 @@
       "reasonLabel": "Motiv din partea restaurantului",
       "paymentLabel": "Despre plata dvs.",
       "callUs": "Întrebări sau aveți nevoie de ajutor? Sunați la {restaurantName}: {phone}",
-      "trackingCta": "Vezi statusul comenzii"
+      "trackingCta": "Vezi statusul comenzii",
+      "missedTitle": "Comandă neacceptată la timp",
+      "missedBody": "Din păcate, restaurantul nu a putut accepta comanda la timp, așa că nu a fost procesată. Dacă ați plătit online, orice autorizare este eliberată automat — nu veți fi taxat."
     },
     "orderRejected": {
       "subject": "Comanda #{orderNumber} respinsă",

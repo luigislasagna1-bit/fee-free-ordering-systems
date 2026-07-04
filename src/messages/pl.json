@@ -4635,7 +4635,9 @@
       "reasonLabel": "Powód podany przez restaurację",
       "paymentLabel": "Informacje o płatności",
       "callUs": "Pytania lub potrzebujesz pomocy? Zadzwoń do {restaurantName}: {phone}",
-      "trackingCta": "Sprawdź status zamówienia"
+      "trackingCta": "Sprawdź status zamówienia",
+      "missedTitle": "Zamówienie nie zostało przyjęte na czas",
+      "missedBody": "Niestety restauracja nie zdążyła przyjąć Twojego zamówienia na czas, więc nie zostało zrealizowane. Jeśli płaciłeś online, wszelkie autoryzacje są zwalniane automatycznie — nic nie zostanie pobrane."
     },
     "orderRejected": {
       "subject": "Zamówienie #{orderNumber} odrzucone",

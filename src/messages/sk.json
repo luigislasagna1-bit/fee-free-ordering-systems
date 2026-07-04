@@ -4635,7 +4635,9 @@
       "reasonLabel": "Dôvod od reštaurácie",
       "paymentLabel": "Informácie o platbe",
       "callUs": "Otázky alebo potrebujete pomoc? Zavolajte do reštaurácie {restaurantName}: {phone}",
-      "trackingCta": "Zobraziť stav objednávky"
+      "trackingCta": "Zobraziť stav objednávky",
+      "missedTitle": "Objednávka nebola prijatá včas",
+      "missedBody": "Reštaurácia bohužiaľ nestihla vašu objednávku včas prijať, takže neprebehla. Ak ste platili online, prípadná autorizácia sa automaticky uvoľní — nič vám nebude účtované."
     },
     "orderRejected": {
       "subject": "Objednávka č. {orderNumber} odmietnutá",

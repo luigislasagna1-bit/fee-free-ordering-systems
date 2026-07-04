@@ -4635,7 +4635,9 @@
       "reasonLabel": "레스토랑 제공 사유",
       "paymentLabel": "결제 관련 안내",
       "callUs": "문의 사항이 있으신가요? {restaurantName}에 전화해 주세요: {phone}",
-      "trackingCta": "주문 상태 보기"
+      "trackingCta": "주문 상태 보기",
+      "missedTitle": "주문이 제시간에 접수되지 않았습니다",
+      "missedBody": "죄송합니다. 레스토랑이 주문을 제시간에 접수하지 못해 주문이 진행되지 않았습니다. 온라인으로 결제하셨다면 승인 금액은 자동으로 해제되며 청구되지 않습니다."
     },
     "orderRejected": {
       "subject": "주문 #{orderNumber} 거절됨",

@@ -4642,7 +4642,9 @@
       "reasonLabel": "Reason from the restaurant",
       "paymentLabel": "About your payment",
       "callUs": "Questions or need help? Call {restaurantName}: {phone}",
-      "trackingCta": "View order status"
+      "trackingCta": "View order status",
+      "missedTitle": "Order not accepted in time",
+      "missedBody": "Unfortunately the restaurant wasn't able to accept your order in time, so it didn't go through. If you paid online, any authorization is released automatically — you won't be charged."
     },
     "orderRejected": {
       "subject": "Order #{orderNumber} rejected",

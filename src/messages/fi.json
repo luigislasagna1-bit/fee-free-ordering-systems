@@ -4635,7 +4635,9 @@
       "reasonLabel": "Ravintolan antama syy",
       "paymentLabel": "Maksustasi",
       "callUs": "Kysyttävää tai tarvitsetko apua? Soita {restaurantName}: {phone}",
-      "trackingCta": "Näytä tilauksen tila"
+      "trackingCta": "Näytä tilauksen tila",
+      "missedTitle": "Tilausta ei hyväksytty ajoissa",
+      "missedBody": "Valitettavasti ravintola ei ehtinyt hyväksyä tilaustasi ajoissa, joten se ei mennyt läpi. Jos maksoit verkossa, mahdollinen varaus vapautetaan automaattisesti — sinulta ei veloiteta mitään."
     },
     "orderRejected": {
       "subject": "Tilaus #{orderNumber} hylätty",

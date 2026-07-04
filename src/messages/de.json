@@ -4635,7 +4635,9 @@
       "reasonLabel": "Grund vom Restaurant",
       "paymentLabel": "Zu Ihrer Zahlung",
       "callUs": "Fragen oder Hilfe benötigt? Rufen Sie {restaurantName} an: {phone}",
-      "trackingCta": "Bestellstatus anzeigen"
+      "trackingCta": "Bestellstatus anzeigen",
+      "missedTitle": "Bestellung nicht rechtzeitig angenommen",
+      "missedBody": "Leider konnte das Restaurant Ihre Bestellung nicht rechtzeitig annehmen, daher wurde sie nicht ausgeführt. Falls Sie online bezahlt haben, wird jede Autorisierung automatisch freigegeben — Ihnen wird nichts berechnet."
     },
     "orderRejected": {
       "subject": "Bestellung #{orderNumber} abgelehnt",

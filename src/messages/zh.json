@@ -4635,7 +4635,9 @@
       "reasonLabel": "餐厅给出的原因",
       "paymentLabel": "关于您的付款",
       "callUs": "有疑问或需要帮助？请致电 {restaurantName}：{phone}",
-      "trackingCta": "查看订单状态"
+      "trackingCta": "查看订单状态",
+      "missedTitle": "订单未能及时被接受",
+      "missedBody": "很抱歉，餐厅未能及时接受您的订单，因此订单未成立。如您已在线支付，任何预授权都会自动解除——不会向您收费。"
     },
     "orderRejected": {
       "subject": "订单 #{orderNumber} 已拒绝",

@@ -4635,7 +4635,9 @@
       "reasonLabel": "Az étterem indoka",
       "paymentLabel": "A fizetésről",
       "callUs": "Kérdése van vagy segítségre szorul? Hívja a(z) {restaurantName} éttermet: {phone}",
-      "trackingCta": "Rendelés állapotának megtekintése"
+      "trackingCta": "Rendelés állapotának megtekintése",
+      "missedTitle": "A rendelést nem fogadták el időben",
+      "missedBody": "Sajnos az étterem nem tudta időben elfogadni a rendelését, így az nem valósult meg. Ha online fizetett, az esetleges zárolás automatikusan feloldódik — nem terheljük meg."
     },
     "orderRejected": {
       "subject": "#{orderNumber}. rendelés visszautasítva",

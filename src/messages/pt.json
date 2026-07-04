@@ -4635,7 +4635,9 @@
       "reasonLabel": "Motivo do restaurante",
       "paymentLabel": "Sobre o seu pagamento",
       "callUs": "Tem dúvidas ou precisa de ajuda? Contacte {restaurantName}: {phone}",
-      "trackingCta": "Ver estado da encomenda"
+      "trackingCta": "Ver estado da encomenda",
+      "missedTitle": "Pedido não aceite a tempo",
+      "missedBody": "Infelizmente o restaurante não conseguiu aceitar o seu pedido a tempo, pelo que não foi processado. Se pagou online, qualquer autorização é libertada automaticamente — não será cobrado."
     },
     "orderRejected": {
       "subject": "Pedido #{orderNumber} recusado",

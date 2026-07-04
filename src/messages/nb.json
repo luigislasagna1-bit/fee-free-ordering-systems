@@ -4635,7 +4635,9 @@
       "reasonLabel": "Årsak fra restauranten",
       "paymentLabel": "Om betalingen din",
       "callUs": "Spørsmål eller trenger du hjelp? Ring {restaurantName}: {phone}",
-      "trackingCta": "Se bestillingsstatus"
+      "trackingCta": "Se bestillingsstatus",
+      "missedTitle": "Bestillingen ble ikke akseptert i tide",
+      "missedBody": "Dessverre klarte ikke restauranten å akseptere bestillingen din i tide, så den gikk ikke gjennom. Hvis du betalte på nett, frigis eventuell autorisasjon automatisk — du blir ikke belastet."
     },
     "orderRejected": {
       "subject": "Bestilling #{orderNumber} avvist",

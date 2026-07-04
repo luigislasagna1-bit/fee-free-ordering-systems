@@ -4635,7 +4635,9 @@
       "reasonLabel": "Restorāna iemesls",
       "paymentLabel": "Par jūsu maksājumu",
       "callUs": "Jautājumi vai nepieciešama palīdzība? Zvaniet {restaurantName}: {phone}",
-      "trackingCta": "Skatīt pasūtījuma statusu"
+      "trackingCta": "Skatīt pasūtījuma statusu",
+      "missedTitle": "Pasūtījums netika pieņemts laikā",
+      "missedBody": "Diemžēl restorāns nepaspēja laikā pieņemt jūsu pasūtījumu, tāpēc tas netika izpildīts. Ja maksājāt tiešsaistē, jebkura autorizācija tiek automātiski atbrīvota — nauda netiks ieturēta."
     },
     "orderRejected": {
       "subject": "Pasūtījums #{orderNumber} noraidīts",

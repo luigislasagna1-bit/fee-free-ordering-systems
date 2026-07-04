@@ -4635,7 +4635,9 @@
       "reasonLabel": "Razlog s strani restavracije",
       "paymentLabel": "O vašem plačilu",
       "callUs": "Vprašanja ali potrebujete pomoč? Pokličite {restaurantName}: {phone}",
-      "trackingCta": "Oglejte si stanje naročila"
+      "trackingCta": "Oglejte si stanje naročila",
+      "missedTitle": "Naročilo ni bilo sprejeto pravočasno",
+      "missedBody": "Restavracija žal ni uspela pravočasno sprejeti vašega naročila, zato ni bilo izvedeno. Če ste plačali prek spleta, se morebitna avtorizacija samodejno sprosti — bremenitve ne bo."
     },
     "orderRejected": {
       "subject": "Naročilo #{orderNumber} zavrnjeno",

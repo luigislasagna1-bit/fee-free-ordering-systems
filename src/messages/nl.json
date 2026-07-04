@@ -4635,7 +4635,9 @@
       "reasonLabel": "Reden van het restaurant",
       "paymentLabel": "Over uw betaling",
       "callUs": "Vragen of hulp nodig? Bel {restaurantName}: {phone}",
-      "trackingCta": "Bestelstatus bekijken"
+      "trackingCta": "Bestelstatus bekijken",
+      "missedTitle": "Bestelling niet op tijd geaccepteerd",
+      "missedBody": "Helaas kon het restaurant uw bestelling niet op tijd accepteren, dus is deze niet doorgegaan. Als u online heeft betaald, wordt elke reservering automatisch vrijgegeven — er wordt niets afgeschreven."
     },
     "orderRejected": {
       "subject": "Bestelling #{orderNumber} afgewezen",

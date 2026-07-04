@@ -4635,7 +4635,9 @@
       "reasonLabel": "Alasan dari restoran",
       "paymentLabel": "Tentang pembayaran Anda",
       "callUs": "Pertanyaan atau butuh bantuan? Hubungi {restaurantName}: {phone}",
-      "trackingCta": "Lihat status pesanan"
+      "trackingCta": "Lihat status pesanan",
+      "missedTitle": "Pesanan tidak diterima tepat waktu",
+      "missedBody": "Sayangnya restoran tidak sempat menerima pesanan Anda tepat waktu, jadi pesanan tidak diproses. Jika Anda membayar online, otorisasi apa pun dilepas otomatis — Anda tidak akan ditagih."
     },
     "orderRejected": {
       "subject": "Pesanan #{orderNumber} ditolak",

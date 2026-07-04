@@ -671,8 +671,13 @@ export async function sendOrderStatusUpdateEmail(params: {
       orderNumber: params.orderNumber,
       restaurantName: params.restaurantName,
       status: params.status,
+      // ONLY the estimated-ready suffix — the template owns the localized
+      // per-status body and appends this on POSITIVE updates only. The old
+      // composition here injected the RAW status word into the sentence
+      // ("è ora rejected") and glued "Estimated ready: 10:00" onto missed/
+      // rejected emails. Fabrizio cmr6meaaq, 2026-07-04.
       statusMessage: readyStr
-        ? `${t("email.orderStatus.body", { orderNumber: params.orderNumber, status: params.status })} ${t("email.orderStatus.estimatedReady", { time: readyStr })}`
+        ? t("email.orderStatus.estimatedReady", { time: readyStr })
         : undefined,
       // Forward the rejection reason (if any) so the template can surface
       // it. Previously dropped on the floor — customer never saw WHY their

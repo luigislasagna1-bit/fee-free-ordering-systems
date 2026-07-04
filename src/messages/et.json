@@ -4635,7 +4635,9 @@
       "reasonLabel": "Restorani põhjus",
       "paymentLabel": "Teie makse kohta",
       "callUs": "Küsimused või vajate abi? Helistage {restaurantName}: {phone}",
-      "trackingCta": "Vaata tellimuse olekut"
+      "trackingCta": "Vaata tellimuse olekut",
+      "missedTitle": "Tellimust ei võetud õigel ajal vastu",
+      "missedBody": "Kahjuks ei jõudnud restoran teie tellimust õigel ajal vastu võtta, seega see ei läinud läbi. Kui maksite veebis, vabastatakse võimalik broneering automaatselt — teilt ei võeta tasu."
     },
     "orderRejected": {
       "subject": "Tellimus #{orderNumber} tagasi lükatud",

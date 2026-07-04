@@ -4635,7 +4635,9 @@
       "reasonLabel": "Motivazione dal ristorante",
       "paymentLabel": "Informazioni sul pagamento",
       "callUs": "Domande o hai bisogno di aiuto? Chiama {restaurantName}: {phone}",
-      "trackingCta": "Visualizza lo stato dell'ordine"
+      "trackingCta": "Visualizza lo stato dell'ordine",
+      "missedTitle": "Ordine non accettato in tempo",
+      "missedBody": "Purtroppo il ristorante non è riuscito ad accettare il tuo ordine in tempo, quindi non è andato a buon fine. Se hai pagato online, l'eventuale autorizzazione viene rilasciata automaticamente — non ti verrà addebitato nulla."
     },
     "orderRejected": {
       "subject": "Ordine #{orderNumber} rifiutato",

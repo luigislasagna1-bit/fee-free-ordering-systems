@@ -4635,7 +4635,9 @@
       "reasonLabel": "Lý do từ nhà hàng",
       "paymentLabel": "Về khoản thanh toán của bạn",
       "callUs": "Câu hỏi hoặc cần hỗ trợ? Gọi cho {restaurantName}: {phone}",
-      "trackingCta": "Xem trạng thái đơn hàng"
+      "trackingCta": "Xem trạng thái đơn hàng",
+      "missedTitle": "Đơn hàng không được chấp nhận kịp thời",
+      "missedBody": "Rất tiếc, nhà hàng không kịp chấp nhận đơn hàng của bạn nên đơn không được thực hiện. Nếu bạn thanh toán trực tuyến, mọi khoản tạm giữ sẽ tự động được giải phóng — bạn sẽ không bị trừ tiền."
     },
     "orderRejected": {
       "subject": "Đơn #{orderNumber} bị từ chối",

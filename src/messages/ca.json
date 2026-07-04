@@ -4635,7 +4635,9 @@
       "reasonLabel": "Motiu del restaurant",
       "paymentLabel": "Sobre el vostre pagament",
       "callUs": "Preguntes o necessiteu ajuda? Truqueu a {restaurantName}: {phone}",
-      "trackingCta": "Veure l'estat de la comanda"
+      "trackingCta": "Veure l'estat de la comanda",
+      "missedTitle": "Comanda no acceptada a temps",
+      "missedBody": "Malauradament el restaurant no ha pogut acceptar la comanda a temps, així que no s'ha processat. Si has pagat en línia, qualsevol autorització s'allibera automàticament — no se't cobrarà."
     },
     "orderRejected": {
       "subject": "Comanda #{orderNumber} rebutjada",

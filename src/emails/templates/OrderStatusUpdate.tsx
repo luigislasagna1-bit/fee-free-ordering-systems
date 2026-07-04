@@ -100,13 +100,18 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
   // Map "canceled" (US) → "cancelled" (UK) so both spellings hit the same copy.
   const key = normalized === "canceled" ? "cancelled" : normalized;
   // A timed-out order is auto-rejected (rejectionReason starts with
-  // "Auto-rejected") — relabel the badge MISSED (the kitchen's word, already
-  // translated in all 38 locales) and hide the internal reason text from the
-  // customer. Same rule as the kitchen + the status page. Luigi 2026-06-09.
+  // "Auto-rejected") — that's a MISSED order, not a refusal (Fabrizio
+  // cmr6meaaq: the two mean different things). Badge, title AND body all
+  // use the missed wording; the internal reason text stays hidden. Same
+  // rule as the kitchen + the status page. Luigi 2026-06-09 / 2026-07-04.
   const isMissed = normalized === "rejected" && (rejectionReason ?? "").trim().startsWith("Auto-rejected");
   const copyKeys: StatusCopyKeys | undefined = STATUS_COPY_KEYS[key];
-  const title = copyKeys ? t(copyKeys.titleKey) : t("email.orderStatus.fallbackTitle");
-  const body = copyKeys ? t(copyKeys.bodyKey) : t("email.orderStatus.fallbackBody");
+  const title = isMissed
+    ? t("email.orderStatus.missedTitle")
+    : copyKeys ? t(copyKeys.titleKey) : t("email.orderStatus.fallbackTitle");
+  const body = isMissed
+    ? t("email.orderStatus.missedBody")
+    : copyKeys ? t(copyKeys.bodyKey) : t("email.orderStatus.fallbackBody");
   const badge = isMissed ? t("kitchen.missed") : (copyKeys ? t(copyKeys.badgeKey) : status);
   const badgeColor = copyKeys?.badgeColor ?? "sky";
   const isNegative = copyKeys?.isNegative ?? false;
@@ -141,7 +146,12 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
         <div style={{ margin: "8px 0 16px" }}>
           <Badge color={badgeColor}>{badge}</Badge>
         </div>
-        <P>{statusMessage ?? body}</P>
+        {/* Always the localized per-status copy. The estimated-ready suffix
+            only rides POSITIVE updates — a rejected/missed email used to say
+            "your order is now rejected. Estimated ready: 10:00" because the
+            dispatcher's raw-status sentence overrode this body entirely
+            (Fabrizio cmr6meaaq, 2026-07-04). */}
+        <P>{body}{!isNegative && statusMessage ? ` ${statusMessage}` : ""}</P>
         {isNegative && reason && !isMissed && (
           <InfoCard label={t("email.orderStatus.reasonLabel")} accent="rose">
             {reason}

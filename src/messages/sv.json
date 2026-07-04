@@ -4635,7 +4635,9 @@
       "reasonLabel": "Orsak från restaurangen",
       "paymentLabel": "Om din betalning",
       "callUs": "Frågor eller behöver du hjälp? Ring {restaurantName}: {phone}",
-      "trackingCta": "Visa beställningsstatus"
+      "trackingCta": "Visa beställningsstatus",
+      "missedTitle": "Beställningen accepterades inte i tid",
+      "missedBody": "Tyvärr kunde restaurangen inte acceptera din beställning i tid, så den gick inte igenom. Om du betalade online släpps eventuell auktorisering automatiskt — du debiteras inte."
     },
     "orderRejected": {
       "subject": "Beställning #{orderNumber} avvisad",
