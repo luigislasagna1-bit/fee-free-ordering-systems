@@ -253,7 +253,8 @@
       "fulfilWindowReservationError": "\"{name}\" tidak tersedia pada hari reservasi Anda. Harap hapus, atau pesan meja pada hari saat tersedia.",
       "promoEmailMismatch": "Kode ini terdaftar untuk alamat email yang berbeda.",
       "promoUnlocked": "Kamu membuka {name}!",
-      "couponNoEffect": "{code} valid, tetapi saat ini tidak memotong apa pun di keranjang Anda — beberapa item (seperti kartu hadiah) mungkin dikecualikan, atau minimum belum tercapai."
+      "couponNoEffect": "{code} valid, tetapi saat ini tidak memotong apa pun di keranjang Anda — beberapa item (seperti kartu hadiah) mungkin dikecualikan, atau minimum belum tercapai.",
+      "itemSoldOutError": "\"{name}\" baru saja habis — hapus dari keranjang untuk melanjutkan."
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",

@@ -253,7 +253,8 @@
       "fulfilWindowReservationError": "\"{name}\" nie jest dostępne w dniu Twojej rezerwacji. Usuń je lub zarezerwuj stolik na dzień, w którym jest oferowane.",
       "promoEmailMismatch": "Ten kod jest przypisany do innego adresu e-mail.",
       "promoUnlocked": "Odblokowano {name}!",
-      "couponNoEffect": "{code} jest prawidłowy, ale w tej chwili nic nie obniża w Twoim koszyku — niektóre pozycje (np. karty podarunkowe) mogą być wyłączone lub nie osiągnięto minimum."
+      "couponNoEffect": "{code} jest prawidłowy, ale w tej chwili nic nie obniża w Twoim koszyku — niektóre pozycje (np. karty podarunkowe) mogą być wyłączone lub nie osiągnięto minimum.",
+      "itemSoldOutError": "„{name}” właśnie się wyprzedał — usuń go z koszyka, aby kontynuować."
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",

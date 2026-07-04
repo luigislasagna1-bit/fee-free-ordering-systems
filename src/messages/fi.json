@@ -253,7 +253,8 @@
       "fulfilWindowReservationError": "\"{name}\" ei ole saatavilla varauspäivänäsi. Poista se tai varaa pöytäsi päivälle, jolloin se on tarjolla.",
       "promoEmailMismatch": "Tämä koodi on rekisteröity toiseen sähköpostiosoitteeseen.",
       "promoUnlocked": "Avasit edun {name}!",
-      "couponNoEffect": "{code} on voimassa, mutta se ei juuri nyt alenna mitään ostoskorissasi — jotkin tuotteet (kuten lahjakortit) voivat olla poissuljettuja tai vähimmäissumma ei täyty."
+      "couponNoEffect": "{code} on voimassa, mutta se ei juuri nyt alenna mitään ostoskorissasi — jotkin tuotteet (kuten lahjakortit) voivat olla poissuljettuja tai vähimmäissumma ei täyty.",
+      "itemSoldOutError": "\"{name}\" myytiin juuri loppuun — poista se ostoskorista jatkaaksesi."
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",

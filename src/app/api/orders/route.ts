@@ -605,6 +605,13 @@ export async function POST(req: NextRequest) {
         if (!comboConfig) {
           return NextResponse.json({ error: "Item is not a combo" }, { status: 400 });
         }
+        // Sold-out at order time — same rule as normal items (Fabrizio 2026-07-04).
+        if ((comboParent as any).isSoldOut) {
+          return NextResponse.json(
+            { error: `"${comboParent.name}" is sold out.`, code: "item_sold_out", itemName: comboParent.name },
+            { status: 400 },
+          );
+        }
         // Same day/time availability guard as normal items (restaurant tz).
         if (!isMenuItemAvailableNow(comboParent, (restaurant as any).timezone)) {
           return NextResponse.json(
@@ -907,6 +914,17 @@ export async function POST(req: NextRequest) {
       const menuItem = menuItemMap.get(String(raw.menuItemId));
       if (!menuItem) {
         return NextResponse.json({ error: `Menu item not found: ${raw.menuItemId}` }, { status: 400 });
+      }
+
+      // SOLD OUT is checked at ORDER time, not just at render time (Fabrizio
+      // 2026-07-04): an item added to the cart BEFORE the kitchen flagged it
+      // sold out sailed through on the customer's return visit. The client
+      // shows a localized message + prompts removing the line.
+      if ((menuItem as any).isSoldOut) {
+        return NextResponse.json(
+          { error: `"${menuItem.name}" is sold out.`, code: "item_sold_out", itemName: menuItem.name },
+          { status: 400 },
+        );
       }
 
       // Day/time availability guard (server-side defence). The customer page

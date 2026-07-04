@@ -253,7 +253,8 @@
       "fulfilWindowReservationError": "\"{name}\" is niet beschikbaar op de dag van uw reservering. Verwijder het of reserveer uw tafel op een dag waarop het wordt aangeboden.",
       "promoEmailMismatch": "Deze code is geregistreerd op een ander e-mailadres.",
       "promoUnlocked": "Je hebt {name} ontgrendeld!",
-      "couponNoEffect": "{code} is geldig, maar geeft nu geen korting op je winkelwagen — sommige artikelen (zoals cadeaubonnen) kunnen uitgesloten zijn, of een minimum is niet bereikt."
+      "couponNoEffect": "{code} is geldig, maar geeft nu geen korting op je winkelwagen — sommige artikelen (zoals cadeaubonnen) kunnen uitgesloten zijn, of een minimum is niet bereikt.",
+      "itemSoldOutError": "\"{name}\" is zojuist uitverkocht — verwijder het uit je winkelwagen om verder te gaan."
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",

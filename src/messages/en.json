@@ -262,7 +262,8 @@
       "fulfilWindowOrderError": "\"{name}\" can only be ordered for certain days/times. Please schedule your order for when it's available.",
       "fulfilWindowReservationError": "\"{name}\" isn't available on your reservation day. Please remove it, or book your table on a day it's offered.",
       "promoEmailMismatch": "This code is registered to a different email address.",
-      "couponNoEffect": "{code} is valid, but it doesn't discount anything in your cart right now — some items (like gift cards) may be excluded, or a minimum may not be met."
+      "couponNoEffect": "{code} is valid, but it doesn't discount anything in your cart right now — some items (like gift cards) may be excluded, or a minimum may not be met.",
+      "itemSoldOutError": "\"{name}\" just sold out — please remove it from your cart to continue."
     },
     "searchMenu": "Search the menu…",
     "expandAll": "Expand all",

@@ -253,7 +253,8 @@
       "fulfilWindowReservationError": "\"{name}\" rezervasyon gününüzde mevcut değil. Lütfen kaldırın ya da masanızı sunulduğu bir güne ayırtın.",
       "promoEmailMismatch": "Bu kod farklı bir e-posta adresine kayıtlı.",
       "promoUnlocked": "{name} promosyonunu açtınız!",
-      "couponNoEffect": "{code} geçerli, ancak şu anda sepetinizde hiçbir şeyi indirmiyor — bazı ürünler (hediye kartları gibi) hariç olabilir veya minimum tutara ulaşılmamış olabilir."
+      "couponNoEffect": "{code} geçerli, ancak şu anda sepetinizde hiçbir şeyi indirmiyor — bazı ürünler (hediye kartları gibi) hariç olabilir veya minimum tutara ulaşılmamış olabilir.",
+      "itemSoldOutError": "\"{name}\" az önce tükendi — devam etmek için sepetinizden çıkarın."
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",

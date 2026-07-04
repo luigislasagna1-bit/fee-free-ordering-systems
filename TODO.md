@@ -386,3 +386,29 @@ OWNER NOTE: on manually-built carts the promo "Discount Strategy" dropdown picks
 - 2026-07-04 CLOSING UPDATE: contact-saved test STILL fails -> handset filtering ruled out. June 13-14 Twilio logs show human-answered calls to the same Rogers cell (4-28s durations) -> break window = June 14..July 3, network-level, both directions, Rogers only. Code audit clean (only TwiML message changes in the window; cannot affect ringing). REMAINING = owner files 2 tickets (texts in chat): Twilio (SIDs + before/after) + Rogers (routing escalation). Landline alert = working; launch NOT blocked. Also still pending: check Twilio bell notification + toll-free rejection date; Bell/Telus cross-dial of 289-768-7778.
 - 2026-07-04 RESOLVED: missed-order calls to Luigi's cell WORK now. Root cause = the handset's stale network/VoLTE registration (restart + making an outbound call forced re-registration). NO Twilio/Rogers tickets needed. Keep: local FROM number +12897687778 (better answer rates + clean reputation), 289 greeting TwiML Bin, self-diagnosing test button. If a customer ever reports the same symptoms (Twilio "No Answer"/"Completed" + silent phone + call-failed dialing back): have them restart the phone and place a call first.
 - 2026-07-04 HARDENING NOTE (queued): the CLIENT slot picker is now overnight-correct (buildDaySlots, unit-tested), but /api/orders still does not validate that a handcrafted scheduledFor falls inside opening hours (it only rejects past times + holiday closures). Low risk (UI can no longer produce bad times) but worth a server-side hours check for API-crafted requests.
+
+## 2026-07-04 overnight batch — 3 Fabrizio/company items (Claude, ~3:30 AM)
+
+### Item 1 — CORPORATION REGISTERED ✅ (data entered) + OSS checklist
+DONE tonight: extracted from Certificate + Articles of Incorporation (OneDrive\Desktop\Fee Free Ordering\):
+  - Legal name: FEE FREE ORDERING INC. | Ontario Corporation No. 1001666063 | incorporated 2026-07-03
+  - Registered office: 17 Commercial Street, Unit Lower, Milton, Ontario L9T 2H6, Canada
+  - WRITTEN TO PROD PlatformSettings (script set-company-registration-2026-07-04.ts): full address (was missing unit+postal) + Corporation No. (was empty). Every subscription invoice now has the complete legal block. Check any invoice to confirm.
+OSS (what Fabrizio's cmr1ty0lc thread needs so non-VIES EU clients can PAY) — owner steps for tomorrow:
+  1. Pick the EU "member state of identification" for non-Union OSS. RECOMMEND IRELAND (English portal, non-EU friendly): Irish Revenue ROS -> "Non-Union OSS" registration.
+  2. You now HAVE everything the application asks for: legal name ✓, registered address ✓, country of establishment (Canada) ✓, national tax number (GST/HST 809409832RT0001 or OCN 1001666063) ✓, website ✓, contact email ✓, incorporation certificate PDF ✓. Also needed: a declaration you have no EU establishment (true) + date of first expected EU supply + bank details for refunds (your business account, SWIFT/IBAN accepted).
+  3. Submit; they issue an "EU" VAT ID (format EUxxxyyyyyz), usually days-weeks.
+  4. Give me that EU VAT ID + effective date -> I build task #12 (charge each EU client's local VAT at checkout, invoices show VAT line, quarterly OSS return export) and flip the Option-A block off.
+
+### Item 2 — Category banner choice: ALREADY SHIPPED as task #20 (verify + reply tomorrow)
+Fabrizio's exact ask = what we shipped 2026-07-03: Admin -> Website -> Theme -> "Show category images" toggle.
+  - OFF -> plain classic name-only headers (his "exactly how it was until a few days ago").
+  - ON -> categories WITH an image show the image banner; imageless ones use the sub-choice (gradient band vs plain).
+TOMORROW: (a) confirm per-category image UPLOAD exists in Menu Setup (category edit) — if missing, that is the one gap to build; (b) tell me which report his comment is on and I post the where-to-find-it reply.
+
+### Item 3 — SOLD-OUT CART BYPASS: FIXED tonight (server guard) ✅
+Bug confirmed: /api/orders never checked isSoldOut — an item added to cart before the kitchen flagged it sold out ordered fine on the return visit.
+  - Server now rejects with code item_sold_out + item name (normal items AND combo parents); customer sees localized "{name} just sold out — remove it from your cart to continue" (×38, parity 5331).
+  - Verified on dev end-to-end: flagged Penne Arrabbiata sold out -> POST /api/orders -> 400 item_sold_out. Reverted flag.
+  - NICE-TO-HAVE queued: auto-PRUNE sold-out lines from a restored cart on page load (with a toast) so the customer never even hits the error; and check bundle/combo COMPONENT items for sold-out too (currently only the parent).
+  - Reply to Fabrizio pending: tell me which report (or say "find it" — search body for "sold out").

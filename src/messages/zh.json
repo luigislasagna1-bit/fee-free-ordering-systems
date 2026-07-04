@@ -253,7 +253,8 @@
       "fulfilWindowReservationError": "“{name}”在您预订的当天不可供应。请将其移除，或预订在供应当天就餐。",
       "promoEmailMismatch": "此代码注册在另一个电子邮箱地址下。",
       "promoUnlocked": "您解锁了 {name}！",
-      "couponNoEffect": "{code} 有效，但目前不会为您的购物车带来任何折扣——某些商品（如礼品卡）可能被排除，或未达到最低消费。"
+      "couponNoEffect": "{code} 有效，但目前不会为您的购物车带来任何折扣——某些商品（如礼品卡）可能被排除，或未达到最低消费。",
+      "itemSoldOutError": "“{name}”刚刚售罄——请从购物车中移除后继续。"
     },
     "searchMenu": "搜索菜单…",
     "signIn": "登录",

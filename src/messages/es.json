@@ -252,7 +252,8 @@
       "fulfilWindowReservationError": "\"{name}\" no está disponible el día de tu reserva. Quítalo o reserva tu mesa un día en que se ofrezca.",
       "promoEmailMismatch": "Este código está registrado con otra dirección de correo electrónico.",
       "promoUnlocked": "¡Has desbloqueado {name}!",
-      "couponNoEffect": "{code} es válido, pero ahora mismo no descuenta nada en tu carrito — algunos artículos (como las tarjetas regalo) pueden estar excluidos o no se alcanza el mínimo."
+      "couponNoEffect": "{code} es válido, pero ahora mismo no descuenta nada en tu carrito — algunos artículos (como las tarjetas regalo) pueden estar excluidos o no se alcanza el mínimo.",
+      "itemSoldOutError": "\"{name}\" se acaba de agotar; quítalo del carrito para continuar."
     },
     "followUs": "Síguenos",
     "searchMenu": "Buscar en el menú…",

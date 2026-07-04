@@ -253,7 +253,8 @@
       "fulfilWindowReservationError": "\"{name}\" nepasiekiamas jūsų rezervacijos dieną. Pašalinkite jį arba rezervuokite staliuką dienai, kurią jis siūlomas.",
       "promoEmailMismatch": "Šis kodas registruotas kitam el. pašto adresui.",
       "promoUnlocked": "Atrakinote {name}!",
-      "couponNoEffect": "{code} galioja, bet šiuo metu jūsų krepšelyje nieko nenupigina — kai kurios prekės (pvz., dovanų kortelės) gali būti neįtrauktos arba nepasiektas minimumas."
+      "couponNoEffect": "{code} galioja, bet šiuo metu jūsų krepšelyje nieko nenupigina — kai kurios prekės (pvz., dovanų kortelės) gali būti neįtrauktos arba nepasiektas minimumas.",
+      "itemSoldOutError": "„{name}“ ką tik išparduotas — pašalinkite jį iš krepšelio, kad tęstumėte."
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",

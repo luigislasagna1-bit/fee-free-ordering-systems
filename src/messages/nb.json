@@ -253,7 +253,8 @@
       "fulfilWindowReservationError": "\"{name}\" er ikke tilgjengelig på reservasjonsdagen din. Fjern den, eller reserver bordet ditt en dag den tilbys.",
       "promoEmailMismatch": "Denne koden er registrert på en annen e-postadresse.",
       "promoUnlocked": "Du låste opp {name}!",
-      "couponNoEffect": "{code} er gyldig, men gir akkurat nå ingen rabatt i handlekurven — noen varer (som gavekort) kan være unntatt, eller et minimum er ikke nådd."
+      "couponNoEffect": "{code} er gyldig, men gir akkurat nå ingen rabatt i handlekurven — noen varer (som gavekort) kan være unntatt, eller et minimum er ikke nådd.",
+      "itemSoldOutError": "\"{name}\" ble nettopp utsolgt — fjern den fra handlekurven for å fortsette."
     },
     "searchMenu": "Søk i menyen…",
     "signIn": "Logg inn",

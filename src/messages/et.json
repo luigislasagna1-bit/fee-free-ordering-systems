@@ -253,7 +253,8 @@
       "fulfilWindowReservationError": "\"{name}\" pole teie broneeringu päeval saadaval. Eemaldage see või broneerige laud päevaks, mil seda pakutakse.",
       "promoEmailMismatch": "See kood on registreeritud teisele e-posti aadressile.",
       "promoUnlocked": "Avasid pakkumise {name}!",
-      "couponNoEffect": "{code} on kehtiv, kuid praegu ei alanda see teie ostukorvis midagi — mõned tooted (nt kinkekaardid) võivad olla välistatud või miinimum pole täidetud."
+      "couponNoEffect": "{code} on kehtiv, kuid praegu ei alanda see teie ostukorvis midagi — mõned tooted (nt kinkekaardid) võivad olla välistatud või miinimum pole täidetud.",
+      "itemSoldOutError": "\"{name}\" müüdi just läbi — jätkamiseks eemaldage see ostukorvist."
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",

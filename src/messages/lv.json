@@ -253,7 +253,8 @@
       "fulfilWindowReservationError": "\"{name}\" nav pieejams jūsu rezervācijas dienā. Lūdzu, noņemiet to vai rezervējiet galdiņu dienā, kad tas tiek piedāvāts.",
       "promoEmailMismatch": "Šis kods ir reģistrēts citai e-pasta adresei.",
       "promoUnlocked": "Jūs atbloķējāt {name}!",
-      "couponNoEffect": "{code} ir derīgs, taču šobrīd tas neko nesamazina jūsu grozā — daži produkti (piemēram, dāvanu kartes) var būt izslēgti vai nav sasniegts minimums."
+      "couponNoEffect": "{code} ir derīgs, taču šobrīd tas neko nesamazina jūsu grozā — daži produkti (piemēram, dāvanu kartes) var būt izslēgti vai nav sasniegts minimums.",
+      "itemSoldOutError": "\"{name}\" tikko izpārdots — izņemiet to no groza, lai turpinātu."
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",

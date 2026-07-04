@@ -253,7 +253,8 @@
       "fulfilWindowReservationError": "\"{name}\" nie je dostupné v deň vašej rezervácie. Odstráňte ho alebo si rezervujte stôl na deň, keď je v ponuke.",
       "promoEmailMismatch": "Tento kód je registrovaný na inú e-mailovú adresu.",
       "promoUnlocked": "Odomkli ste {name}!",
-      "couponNoEffect": "{code} je platný, ale momentálne vo vašom košíku nič nezľavňuje — niektoré položky (napr. darčekové karty) môžu byť vylúčené, alebo nie je splnené minimum."
+      "couponNoEffect": "{code} je platný, ale momentálne vo vašom košíku nič nezľavňuje — niektoré položky (napr. darčekové karty) môžu byť vylúčené, alebo nie je splnené minimum.",
+      "itemSoldOutError": "„{name}“ sa práve vypredalo — odstráňte ho z košíka a pokračujte."
     },
     "searchMenu": "Hľadať v menu…",
     "signIn": "Prihlásiť sa",

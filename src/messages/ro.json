@@ -253,7 +253,8 @@
       "fulfilWindowReservationError": "\"{name}\" nu este disponibil în ziua rezervării tale. Te rugăm să-l elimini sau să rezervi masa într-o zi în care este oferit.",
       "promoEmailMismatch": "Acest cod este înregistrat la o altă adresă de e-mail.",
       "promoUnlocked": "Ai deblocat {name}!",
-      "couponNoEffect": "{code} este valid, dar momentan nu reduce nimic din coșul tău — unele articole (precum cardurile cadou) pot fi excluse, sau nu s-a atins un minim."
+      "couponNoEffect": "{code} este valid, dar momentan nu reduce nimic din coșul tău — unele articole (precum cardurile cadou) pot fi excluse, sau nu s-a atins un minim.",
+      "itemSoldOutError": "„{name}” tocmai s-a epuizat — eliminați-l din coș pentru a continua."
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",

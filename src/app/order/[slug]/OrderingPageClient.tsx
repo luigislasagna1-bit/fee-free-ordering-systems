@@ -3471,6 +3471,10 @@ export function OrderingPageClient({
           throw new Error(tT("fulfilWindowReservationError", { name: orderData.itemName ?? "" }));
         if (orderData.code === "item_fulfilment_window")
           throw new Error(tT("fulfilWindowOrderError", { name: orderData.itemName ?? "" }));
+        // Sold out between adding-to-cart and ordering (Fabrizio 2026-07-04) —
+        // tell the customer WHICH item so they can remove the line and proceed.
+        if (orderData.code === "item_sold_out")
+          throw new Error(tT("itemSoldOutError", { name: orderData.itemName ?? "" }));
         // Holiday closure — name the affected service when it's a
         // single-service closure (the restaurant is still open otherwise),
         // and append the owner's optional message. Luigi 2026-06-12.

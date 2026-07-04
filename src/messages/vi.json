@@ -253,7 +253,8 @@
       "fulfilWindowReservationError": "\"{name}\" không có sẵn vào ngày đặt bàn của bạn. Vui lòng xóa hoặc đặt bàn vào ngày có món này.",
       "promoEmailMismatch": "Mã này được đăng ký cho một địa chỉ email khác.",
       "promoUnlocked": "Bạn đã mở khóa {name}!",
-      "couponNoEffect": "{code} hợp lệ nhưng hiện không giảm giá mục nào trong giỏ hàng — một số món (như thẻ quà tặng) có thể bị loại trừ, hoặc chưa đạt mức tối thiểu."
+      "couponNoEffect": "{code} hợp lệ nhưng hiện không giảm giá mục nào trong giỏ hàng — một số món (như thẻ quà tặng) có thể bị loại trừ, hoặc chưa đạt mức tối thiểu.",
+      "itemSoldOutError": "\"{name}\" vừa hết hàng — hãy xóa khỏi giỏ để tiếp tục."
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",

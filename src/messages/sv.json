@@ -253,7 +253,8 @@
       "fulfilWindowReservationError": "\"{name}\" är inte tillgänglig på din bokningsdag. Ta bort den eller boka ditt bord en dag då den erbjuds.",
       "promoEmailMismatch": "Den här koden är registrerad på en annan e-postadress.",
       "promoUnlocked": "Du har låst upp {name}!",
-      "couponNoEffect": "{code} är giltig men ger just nu ingen rabatt i din varukorg — vissa varor (som presentkort) kan vara undantagna, eller så uppnås inte ett minimibelopp."
+      "couponNoEffect": "{code} är giltig men ger just nu ingen rabatt i din varukorg — vissa varor (som presentkort) kan vara undantagna, eller så uppnås inte ett minimibelopp.",
+      "itemSoldOutError": "\"{name}\" är just slutsåld — ta bort den ur varukorgen för att fortsätta."
     },
     "searchMenu": "Sök i menyn…",
     "signIn": "Logga in",
