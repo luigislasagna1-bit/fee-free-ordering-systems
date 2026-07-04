@@ -45,6 +45,9 @@ export type WizardProps = {
    *  replaces the Visible/Hidden + banner controls with a "VIP only" notice,
    *  because those switches can't make a VIP-linked promo public. Luigi 2026-07-02. */
   vipGroupNames?: string[];
+  /** Reward Dollars master switch — the "Grant Reward Dollars" type card only
+   *  shows when the program is ON (feature-gated visibility, Luigi 2026-07-03). */
+  rewardsEnabled?: boolean;
 };
 
 export type PromoRow = {
@@ -166,7 +169,7 @@ function initialFormFromPromo(p: PromoRow | null | undefined): Step3Form {
 // ─── Component ──────────────────────────────────────────────────────────────
 
 export function PromoWizard(props: WizardProps) {
-  const { mode, hasAdvanced, categories, menuItems, paymentMethods, deliveryZones, initialPromo, currencySymbol = "$", isOnMarketplace = false, vipGroupNames = [] } =
+  const { mode, hasAdvanced, categories, menuItems, paymentMethods, deliveryZones, initialPromo, currencySymbol = "$", isOnMarketplace = false, vipGroupNames = [], rewardsEnabled = false } =
     props;
   const router = useRouter();
   const t = useTranslations("admin.promoWizard");
@@ -364,6 +367,7 @@ export function PromoWizard(props: WizardProps) {
               selectedType={promotionType}
               onSelect={selectType}
               hasAdvanced={hasAdvanced}
+              rewardsEnabled={rewardsEnabled}
             />
           )}
           {step === 2 && (

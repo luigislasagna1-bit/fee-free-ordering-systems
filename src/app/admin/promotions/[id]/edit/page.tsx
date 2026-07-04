@@ -29,7 +29,7 @@ export default async function EditPromotionPage({
       }),
       prisma.restaurant.findUnique({
         where: { id: restaurantId },
-        select: { paymentMethods: true, currency: true },
+        select: { paymentMethods: true, currency: true, rewardsEnabled: true },
       }),
       prisma.menuCategory.findMany({
         where: { restaurantId },
@@ -122,6 +122,7 @@ export default async function EditPromotionPage({
       currencySymbol={currencySymbol((restaurant as any)?.currency)}
       isOnMarketplace={onMarketplace}
       vipGroupNames={vipGroupNames}
+      rewardsEnabled={!!(restaurant as any)?.rewardsEnabled}
     />
   );
 }

@@ -69,6 +69,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "name and promotionType required" }, { status: 400 });
   }
 
+  // ── Feature gate: Grant Reward Dollars needs the program ON ─────────
+  // Type 14 grants store credit — meaningless (and confusing) when Reward
+  // Dollars is disabled. The wizard hides the card; this is the server-side
+  // backstop (standing rule: feature-gated surfaces, Luigi 2026-07-03).
+  if (promotionType === "reward_credit") {
+    const r = await prisma.restaurant.findUnique({
+      where: { id: restaurantId },
+      select: { rewardsEnabled: true },
+    });
+    if (!r?.rewardsEnabled) {
+      return NextResponse.json(
+        { error: "Enable Reward Dollars first — this promotion type grants store credit." },
+        { status: 400 },
+      );
+    }
+  }
+
   // ── Entitlement gate (Types 6-13) ──────────────────────────────────
   // The 8 locked types require the Advanced Promo Marketing add-on.
   // Fail-fast 403 so the wizard can render an upgrade CTA.

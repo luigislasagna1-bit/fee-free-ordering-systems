@@ -29,10 +29,14 @@ export function StepType({
   selectedType,
   onSelect,
   hasAdvanced,
+  rewardsEnabled = false,
 }: {
   selectedType: string;
   onSelect: (slug: string) => void;
   hasAdvanced: boolean;
+  /** Reward Dollars master switch — hides the Grant Reward Dollars card when
+   *  the program is OFF (feature-gated visibility, Luigi 2026-07-03). */
+  rewardsEnabled?: boolean;
 }) {
   const t = useTranslations("admin.promoStepType");
   const [upgradePromptOpen, setUpgradePromptOpen] = useState(false);
@@ -55,7 +59,12 @@ export function StepType({
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {PROMO_TYPES.map((promo) => {
+        {PROMO_TYPES.filter(
+          // Grant Reward Dollars only exists while the program is ON. Kept
+          // visible when it's the CURRENT type so editing an existing
+          // reward-credit promo doesn't lose its card.
+          (p) => p.slug !== "reward_credit" || rewardsEnabled || selectedType === "reward_credit",
+        ).map((promo) => {
           const Icon = resolveIcon(promo.icon);
           const locked = promo.tier === "locked";
           const gated = locked && !hasAdvanced;

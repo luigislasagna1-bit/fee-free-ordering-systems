@@ -17,7 +17,7 @@ export default async function NewPromotionPage() {
     await Promise.all([
       prisma.restaurant.findUnique({
         where: { id: restaurantId },
-        select: { paymentMethods: true, currency: true },
+        select: { paymentMethods: true, currency: true, rewardsEnabled: true },
       }),
       prisma.menuCategory.findMany({
         where: { restaurantId },
@@ -66,6 +66,9 @@ export default async function NewPromotionPage() {
       deliveryZones={deliveryZones}
       currencySymbol={currencySymbol(restaurant?.currency)}
       isOnMarketplace={onMarketplace}
+      // Feature-gated visibility (Luigi 2026-07-03): the Grant Reward Dollars
+      // type only shows when the Reward Dollars program is ON.
+      rewardsEnabled={!!(restaurant as any)?.rewardsEnabled}
     />
   );
 }
