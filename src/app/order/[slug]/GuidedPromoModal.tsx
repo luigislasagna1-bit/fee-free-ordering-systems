@@ -249,35 +249,8 @@ export function GuidedPromoModal({
     completeWith(picks);
   }
 
-  /** Progress-strip chip label: the picked item(s) once chosen, else the
-   *  group's label / fallback. */
-  function chipLabel(i: number): string {
-    const chosen = picks[i] ?? [];
-    if (chosen.length === 0) {
-      const free = isFreeSlot[i];
-      return (
-        groups[i].label?.trim() ||
-        (free
-          ? t("freeSlotLabel")
-          : slotMin(i) > 1
-            ? t("slotLabelPickN", { count: slotMin(i) })
-            : t("slotLabelFallback", { n: i + 1 }))
-      );
-    }
-    // List EVERY pick (Luigi 2026-07-04: "there should be 3 selected items
-    // showing" — a bare first-name+N hid what was actually chosen). Duplicate
-    // tokens collapse to "×N"; the chip's truncate handles overflow.
-    const counts = new Map<string, { label: string; n: number }>();
-    for (const p of chosen) {
-      const item = allMenuItems.find((m) => m.id === p.menuItemId);
-      const variant = item?.variants?.find((v) => v.id === p.variantId);
-      const label = `${item?.name ?? "…"}${variant ? ` (${variant.name})` : ""}`;
-      const key = `${p.menuItemId}|${p.variantId ?? ""}`;
-      const cur = counts.get(key);
-      if (cur) cur.n += 1; else counts.set(key, { label, n: 1 });
-    }
-    return [...counts.values()].map(({ label, n }) => (n > 1 ? `${label} ×${n}` : label)).join(" + ");
-  }
+  // (chipLabel removed 2026-07-04 — the progress strip now renders one chip
+  // PER UNIT, built inline where the strip renders.)
 
   const bogoHint = (() => {
     const pct = typeof discountPct === "number" ? discountPct : 100;
@@ -360,40 +333,67 @@ export function GuidedPromoModal({
               <X className="w-5 h-5" />
             </button>
           </div>
-          {/* Progress strip — one chip per step. A finished step shows its
-              PICKED item and is tappable to go back and change it; the
-              current step is outlined; upcoming steps are muted. */}
-          {groups.length > 1 && (
-            <div className="flex flex-wrap items-center gap-1.5 mt-3">
-              {groups.map((_, i) => {
-                const done = slotSatisfied(i);
-                const isCurrent = i === step;
-                return (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => goToStep(i)}
-                    className="inline-flex items-center gap-1.5 max-w-[220px] text-xs font-semibold px-2.5 py-1 rounded-full border-2 transition"
-                    style={
-                      done
-                        ? { borderColor: primaryColor, backgroundColor: `${primaryColor}12`, color: primaryColor }
-                        : isCurrent
-                          ? { borderColor: primaryColor, color: "#111827", backgroundColor: "#fff" }
-                          : { borderColor: "#e5e7eb", color: "#9ca3af", backgroundColor: "#fff" }
-                    }
-                    aria-current={isCurrent ? "step" : undefined}
-                  >
-                    {done ? (
-                      <Check className="w-3 h-3 flex-shrink-0" />
-                    ) : (
-                      <span className="flex-shrink-0">{i + 1}.</span>
-                    )}
-                    <span className="truncate">{chipLabel(i)}</span>
-                  </button>
-                );
-              })}
-            </div>
-          )}
+          {/* Progress strip — one chip PER UNIT to pick (Luigi 2026-07-04:
+              a "pick 3" group shows THREE slots that fill one by one, so
+              every chosen item is visible; then the free-item slot). A
+              filled chip shows its item and is tappable to go back; the
+              current group's chips are outlined; upcoming ones muted. */}
+          {(() => {
+            type Unit = { g: number; label: string; filled: boolean };
+            const units: Unit[] = [];
+            let n = 0;
+            groups.forEach((_, g) => {
+              const count = Math.max(slotMin(g), (picks[g] ?? []).length);
+              for (let u = 0; u < count; u++) {
+                n++;
+                const p = (picks[g] ?? [])[u];
+                let label: string;
+                if (p) {
+                  const item = allMenuItems.find((m) => m.id === p.menuItemId);
+                  const variant = item?.variants?.find((v) => v.id === p.variantId);
+                  label = `${item?.name ?? "…"}${variant ? ` (${variant.name})` : ""}`;
+                } else if (isFreeSlot[g]) {
+                  label = groups[g].label?.trim() || t("freeSlotLabel");
+                } else if (slotMin(g) === 1 && groups[g].label?.trim()) {
+                  label = groups[g].label!.trim();
+                } else {
+                  label = t("slotLabelFallback", { n });
+                }
+                units.push({ g, label, filled: !!p });
+              }
+            });
+            if (units.length < 2) return null;
+            return (
+              <div className="flex flex-wrap items-center gap-1.5 mt-3">
+                {units.map((unit, idx) => {
+                  const isCurrent = unit.g === step;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => goToStep(unit.g)}
+                      className="inline-flex items-center gap-1.5 max-w-[220px] text-xs font-semibold px-2.5 py-1 rounded-full border-2 transition"
+                      style={
+                        unit.filled
+                          ? { borderColor: primaryColor, backgroundColor: `${primaryColor}12`, color: primaryColor }
+                          : isCurrent
+                            ? { borderColor: primaryColor, color: "#111827", backgroundColor: "#fff" }
+                            : { borderColor: "#e5e7eb", color: "#9ca3af", backgroundColor: "#fff" }
+                      }
+                      aria-current={isCurrent && !unit.filled ? "step" : undefined}
+                    >
+                      {unit.filled ? (
+                        <Check className="w-3 h-3 flex-shrink-0" />
+                      ) : (
+                        <span className="flex-shrink-0">{idx + 1}.</span>
+                      )}
+                      <span className="truncate">{unit.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          })()}
         </div>
 
         {/* Current step only — the wizard walks one group at a time. */}
@@ -497,17 +497,32 @@ export function GuidedPromoModal({
                                         {isMulti && n > 0 && ` ×${n}`}
                                       </button>
                                       {/* Multi-pick slots: same size can be picked several
-                                          times; − drops one (Luigi 2026-07-03). */}
+                                          times; − drops one, + adds one — the explicit +
+                                          because "tap it again" is undiscoverable (Luigi
+                                          2026-07-04 iPhone test). */}
                                       {isMulti && n > 0 && (
-                                        <button
-                                          type="button"
-                                          onClick={() => removeOnePick(slotIndex, token)}
-                                          aria-label={t("removeOneAria", { name: `${item.name} ${v.name}` })}
-                                          className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold border transition hover:bg-gray-50"
-                                          style={{ borderColor: primaryColor, color: primaryColor }}
-                                        >
-                                          −
-                                        </button>
+                                        <>
+                                          <button
+                                            type="button"
+                                            onClick={() => removeOnePick(slotIndex, token)}
+                                            aria-label={t("removeOneAria", { name: `${item.name} ${v.name}` })}
+                                            className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold border transition hover:bg-gray-50"
+                                            style={{ borderColor: primaryColor, color: primaryColor }}
+                                          >
+                                            −
+                                          </button>
+                                          {(picks[slotIndex] ?? []).length < slotMax(slotIndex) && (
+                                            <button
+                                              type="button"
+                                              onClick={() => togglePick(slotIndex, token)}
+                                              aria-label={t("addOneMoreAria", { name: `${item.name} ${v.name}` })}
+                                              className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold border transition hover:bg-gray-50"
+                                              style={{ borderColor: primaryColor, color: primaryColor }}
+                                            >
+                                              +
+                                            </button>
+                                          )}
+                                        </>
                                       )}
                                     </span>
                                   );
@@ -562,6 +577,21 @@ export function GuidedPromoModal({
                                 >
                                   −
                                 </span>
+                                {/* Explicit + — "tap the card again" is undiscoverable
+                                    (Luigi 2026-07-04 iPhone test). */}
+                                {(picks[slotIndex] ?? []).length < slotMax(slotIndex) && (
+                                  <span
+                                    role="button"
+                                    tabIndex={0}
+                                    onClick={(e) => { e.stopPropagation(); togglePick(slotIndex, token); }}
+                                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.stopPropagation(); togglePick(slotIndex, token); } }}
+                                    aria-label={t("addOneMoreAria", { name: item.name })}
+                                    className="w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold border flex-shrink-0 transition hover:bg-gray-50"
+                                    style={{ borderColor: primaryColor, color: primaryColor }}
+                                  >
+                                    +
+                                  </span>
+                                )}
                               </>
                             )}
                             {!isMulti && isPicked && <Check className="w-4 h-4 flex-shrink-0" style={{ color: primaryColor }} />}

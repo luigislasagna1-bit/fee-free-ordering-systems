@@ -235,20 +235,8 @@ export function BundleComposerModal({
     });
   }
 
-  /** Progress-strip chip label: picked item(s) once chosen, else slot label. */
-  function chipLabel(i: number): string {
-    const chosen = picks[i] ?? [];
-    if (chosen.length === 0) return groups[i].label?.trim() || t("slotFallbackLabel", { n: i + 1 });
-    // List EVERY pick (duplicates as ×N) — same fix as GuidedPromoModal
-    // (Luigi 2026-07-04: the chip must show all selected items).
-    const counts = new Map<string, { label: string; n: number }>();
-    for (const id of chosen) {
-      const item = slotItems[i].find((m) => m.id === id);
-      const cur = counts.get(id);
-      if (cur) cur.n += 1; else counts.set(id, { label: item?.name ?? "…", n: 1 });
-    }
-    return [...counts.values()].map(({ label, n }) => (n > 1 ? `${label} ×${n}` : label)).join(" + ");
-  }
+  // (chipLabel removed 2026-07-04 — the progress strip now renders one chip
+  // PER UNIT, built inline where the strip renders.)
 
   return (
     <div
@@ -313,35 +301,54 @@ export function BundleComposerModal({
               <X className="w-5 h-5" />
             </button>
           </div>
-          {/* Progress strip — finished slots show their picked item and are
-              tappable to change; current slot outlined; upcoming muted. */}
-          {groups.length > 1 && (
-            <div className="flex flex-wrap items-center gap-1.5 mt-3">
-              {groups.map((_, i) => {
-                const done = slotSatisfied(i);
-                const isCurrent = i === step;
-                return (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => goToStep(i)}
-                    className="inline-flex items-center gap-1.5 max-w-[220px] text-xs font-semibold px-2.5 py-1 rounded-full border-2 transition"
-                    style={
-                      done
-                        ? { borderColor: primaryColor, backgroundColor: `${primaryColor}12`, color: primaryColor }
-                        : isCurrent
-                          ? { borderColor: primaryColor, color: "#111827", backgroundColor: "#fff" }
-                          : { borderColor: "#e5e7eb", color: "#9ca3af", backgroundColor: "#fff" }
-                    }
-                    aria-current={isCurrent ? "step" : undefined}
-                  >
-                    {done ? <Check className="w-3 h-3 flex-shrink-0" /> : <span className="flex-shrink-0">{i + 1}.</span>}
-                    <span className="truncate">{chipLabel(i)}</span>
-                  </button>
-                );
-              })}
-            </div>
-          )}
+          {/* Progress strip — one chip PER UNIT to pick (Luigi 2026-07-04:
+              a "pick 3" slot shows three chips filling one by one). Filled
+              chips show their item and jump back on tap. */}
+          {(() => {
+            type Unit = { g: number; label: string; filled: boolean };
+            const units: Unit[] = [];
+            let n = 0;
+            groups.forEach((_, g) => {
+              const count = Math.max(slotMinOf(g), (picks[g] ?? []).length);
+              for (let u = 0; u < count; u++) {
+                n++;
+                const id = (picks[g] ?? [])[u];
+                const label = id
+                  ? (slotItems[g].find((m) => m.id === id)?.name ?? "…")
+                  : (slotMinOf(g) === 1 && groups[g].label?.trim())
+                    ? groups[g].label!.trim()
+                    : t("slotFallbackLabel", { n });
+                units.push({ g, label, filled: !!id });
+              }
+            });
+            if (units.length < 2) return null;
+            return (
+              <div className="flex flex-wrap items-center gap-1.5 mt-3">
+                {units.map((unit, idx) => {
+                  const isCurrent = unit.g === step;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => goToStep(unit.g)}
+                      className="inline-flex items-center gap-1.5 max-w-[220px] text-xs font-semibold px-2.5 py-1 rounded-full border-2 transition"
+                      style={
+                        unit.filled
+                          ? { borderColor: primaryColor, backgroundColor: `${primaryColor}12`, color: primaryColor }
+                          : isCurrent
+                            ? { borderColor: primaryColor, color: "#111827", backgroundColor: "#fff" }
+                            : { borderColor: "#e5e7eb", color: "#9ca3af", backgroundColor: "#fff" }
+                      }
+                      aria-current={isCurrent && !unit.filled ? "step" : undefined}
+                    >
+                      {unit.filled ? <Check className="w-3 h-3 flex-shrink-0" /> : <span className="flex-shrink-0">{idx + 1}.</span>}
+                      <span className="truncate">{unit.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          })()}
         </div>
 
         {/* Current slot only — one step at a time. */}
@@ -431,6 +438,21 @@ export function BundleComposerModal({
                                 >
                                   −
                                 </span>
+                                {/* Explicit + — "tap the card again" is undiscoverable
+                                    (Luigi 2026-07-04 iPhone test). */}
+                                {(picks[slotIndex] ?? []).length < slotMaxOf(slotIndex) && (
+                                  <span
+                                    role="button"
+                                    tabIndex={0}
+                                    onClick={(e) => { e.stopPropagation(); togglePick(slotIndex, item.id); }}
+                                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.stopPropagation(); togglePick(slotIndex, item.id); } }}
+                                    aria-label={tWiz("addOneMoreAria", { name: item.name })}
+                                    className="w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold border flex-shrink-0 transition hover:bg-gray-50"
+                                    style={{ borderColor: primaryColor, color: primaryColor }}
+                                  >
+                                    +
+                                  </span>
+                                )}
                               </>
                             )}
                             {!isMulti && isPicked && (
