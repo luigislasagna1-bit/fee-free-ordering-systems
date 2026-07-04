@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "Nazwisko klienta na górze",
       "deliveryLeadAddressOption": "Adres na górze",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "Nie można wybrać tego numeru. Użyj cyfr z numerem kierunkowym (np. 6476690808) lub pełnego formatu międzynarodowego (+16476690808).",
+      "alertPhoneWillDial": "Wybierze numer: {number}",
+      "alertPhoneInvalidToast": "Tego numeru nie można wybrać — najpierw popraw format."
     },
     "receiptRenderer": {
       "yourRestaurant": "Twoja restauracja",

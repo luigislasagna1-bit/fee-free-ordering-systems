@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "Nama pelanggan di atas",
       "deliveryLeadAddressOption": "Alamat di atas",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "Nomor ini tidak dapat dihubungi. Gunakan digit dengan kode area (mis. 6476690808) atau format internasional lengkap (+16476690808).",
+      "alertPhoneWillDial": "Akan menghubungi: {number}",
+      "alertPhoneInvalidToast": "Nomor itu tidak dapat dihubungi — perbaiki formatnya dulu."
     },
     "receiptRenderer": {
       "yourRestaurant": "Restoran Anda",

@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "Asiakkaan nimi ylhäällä",
       "deliveryLeadAddressOption": "Osoite ylhäällä",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "Numeroon ei voi soittaa. Käytä numeroita suuntanumerolla (esim. 6476690808) tai täyttä kansainvälistä muotoa (+16476690808).",
+      "alertPhoneWillDial": "Soitetaan numeroon: {number}",
+      "alertPhoneInvalidToast": "Numeroon ei voi soittaa — korjaa ensin muoto."
     },
     "receiptRenderer": {
       "yourRestaurant": "Ravintolasi",

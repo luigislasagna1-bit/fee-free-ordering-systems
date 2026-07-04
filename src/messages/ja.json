@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "顧客名を上に",
       "deliveryLeadAddressOption": "住所を上に",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "この番号には発信できません。市外局番付きの数字（例: 6476690808）または完全な国際形式（+16476690808）を使用してください。",
+      "alertPhoneWillDial": "発信先: {number}",
+      "alertPhoneInvalidToast": "その番号には発信できません — まず形式を修正してください。"
     },
     "receiptRenderer": {
       "yourRestaurant": "レストラン名",

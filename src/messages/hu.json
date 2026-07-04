@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "Ügyfél neve felül",
       "deliveryLeadAddressOption": "Cím felül",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "Ez a szám nem hívható. Használjon körzetszámos számjegyeket (pl. 6476690808) vagy teljes nemzetközi formátumot (+16476690808).",
+      "alertPhoneWillDial": "Hívott szám: {number}",
+      "alertPhoneInvalidToast": "A szám nem hívható — először javítsa a formátumot."
     },
     "receiptRenderer": {
       "yourRestaurant": "Az Ön étterme",

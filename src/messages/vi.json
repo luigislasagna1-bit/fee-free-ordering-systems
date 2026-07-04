@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "Tên khách ở trên",
       "deliveryLeadAddressOption": "Địa chỉ ở trên",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "Không thể gọi số này. Dùng chữ số kèm mã vùng (vd. 6476690808) hoặc định dạng quốc tế đầy đủ (+16476690808).",
+      "alertPhoneWillDial": "Sẽ gọi: {number}",
+      "alertPhoneInvalidToast": "Không thể gọi số đó — hãy sửa định dạng trước."
     },
     "receiptRenderer": {
       "yourRestaurant": "Nhà hàng của bạn",

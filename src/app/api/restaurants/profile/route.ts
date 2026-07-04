@@ -5,6 +5,7 @@ import prisma from "@/lib/db";
 import { isValidTimezone } from "@/lib/regions";
 import { SUPPORTED_LOCALES } from "@/lib/locales";
 import { resolveDeliveryAddressConfig } from "@/lib/delivery-address-fields";
+import { sanitizePhone } from "@/lib/phone";
 
 /**
  * GET — small endpoint used by surfaces that need a single Restaurant
@@ -234,9 +235,17 @@ export async function PUT(req: NextRequest) {
   }
   if (kitchenShowItemCategory !== undefined) updateData.kitchenShowItemCategory = !!kitchenShowItemCategory;
   // Optional alternate alert number; trim, cap length, and store null when blank
-  // so the cron falls back to the public phone.
+  // so the cron falls back to the public phone. A non-empty value must be
+  // DIALABLE (sanitizePhone → E.164) — otherwise the auto-call would silently
+  // do nothing (Luigi 2026-07-03: the field must refuse unusable formats).
   if (alertPhone !== undefined) {
     const v = typeof alertPhone === "string" ? alertPhone.trim().slice(0, 32) : "";
+    if (v && sanitizePhone(v) === null) {
+      return NextResponse.json(
+        { error: "Alert phone number can't be dialed — use digits with area code, e.g. 6476690808 or +16476690808." },
+        { status: 400 },
+      );
+    }
     updateData.alertPhone = v || null;
   }
   // Allow customers to place delivery orders to addresses OUTSIDE every active

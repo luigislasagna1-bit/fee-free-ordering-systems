@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "Kliendi nimi üleval",
       "deliveryLeadAddressOption": "Aadress üleval",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "Sellele numbrile ei saa helistada. Kasutage numbreid koos suunakoodiga (nt 6476690808) või täielikku rahvusvahelist vormingut (+16476690808).",
+      "alertPhoneWillDial": "Helistatakse: {number}",
+      "alertPhoneInvalidToast": "Numbrile ei saa helistada — parandage kõigepealt vorming."
     },
     "receiptRenderer": {
       "yourRestaurant": "Sinu restoran",

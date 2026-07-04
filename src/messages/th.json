@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "ชื่อลูกค้าอยู่บน",
       "deliveryLeadAddressOption": "ที่อยู่อยู่บน",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "หมายเลขนี้โทรออกไม่ได้ ใช้ตัวเลขพร้อมรหัสพื้นที่ (เช่น 6476690808) หรือรูปแบบสากลเต็ม (+16476690808)",
+      "alertPhoneWillDial": "จะโทรไปที่: {number}",
+      "alertPhoneInvalidToast": "หมายเลขนั้นโทรออกไม่ได้ — แก้ไขรูปแบบก่อน"
     },
     "receiptRenderer": {
       "yourRestaurant": "ร้านอาหารของคุณ",

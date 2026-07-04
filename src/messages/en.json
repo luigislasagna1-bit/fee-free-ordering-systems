@@ -1561,7 +1561,10 @@
       "deliveryLeadNameOption": "Customer name on top",
       "deliveryLeadAddressOption": "Address on top",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "This number can't be dialed. Use digits with area code (e.g. 6476690808) or full international format (+16476690808).",
+      "alertPhoneWillDial": "Will dial: {number}",
+      "alertPhoneInvalidToast": "That phone number can't be dialed — fix the format first."
     },
     "customers": {
       "title": "Customers",

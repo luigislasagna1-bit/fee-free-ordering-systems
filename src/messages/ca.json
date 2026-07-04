@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "Nom del client a dalt",
       "deliveryLeadAddressOption": "Adreça a dalt",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "Aquest número no es pot marcar. Fes servir dígits amb codi d'àrea (p. ex. 6476690808) o el format internacional complet (+16476690808).",
+      "alertPhoneWillDial": "Es marcarà: {number}",
+      "alertPhoneInvalidToast": "Aquest número no es pot marcar — corregeix primer el format."
     },
     "receiptRenderer": {
       "yourRestaurant": "El vostre restaurant",

@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "Meno zákazníka hore",
       "deliveryLeadAddressOption": "Adresa hore",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "Toto číslo sa nedá vytočiť. Použite číslice s predvoľbou (napr. 6476690808) alebo plný medzinárodný formát (+16476690808).",
+      "alertPhoneWillDial": "Vytočí sa: {number}",
+      "alertPhoneInvalidToast": "Toto číslo sa nedá vytočiť — najprv opravte formát."
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaša reštaurácia",

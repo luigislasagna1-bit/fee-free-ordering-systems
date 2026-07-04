@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "Nome del cliente in alto",
       "deliveryLeadAddressOption": "Indirizzo in alto",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "Questo numero non può essere composto. Usa cifre con prefisso (es. 6476690808) o il formato internazionale completo (+16476690808).",
+      "alertPhoneWillDial": "Verrà composto: {number}",
+      "alertPhoneInvalidToast": "Quel numero non può essere composto — correggi prima il formato."
     },
     "receiptRenderer": {
       "yourRestaurant": "Il tuo ristorante",

@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Zap, Activity, ChevronDown, ChevronUp, Info, Printer, ServerCrash, PhoneCall, Vibrate, User, Tag, MapPin } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { HelpTip } from "@/components/HelpTip";
+import { sanitizePhone } from "@/lib/phone";
 
 /**
  * Kitchen workflow mode toggle for the Orders page.
@@ -82,6 +83,11 @@ export function KitchenWorkflowToggle({
   const [alertPhone, setAlertPhone] = useState<string>(initialAlertPhone ?? "");
   const [savedAlertPhone, setSavedAlertPhone] = useState<string>(initialAlertPhone ?? "");
   const [savingAlertPhone, setSavingAlertPhone] = useState(false);
+  // Live E.164 normalization of the typed alert number (Luigi 2026-07-03: the
+  // field must refuse formats that can't be dialed, and SHOW what will be
+  // dialed). null = undialable; "" = empty (allowed — falls back to store phone).
+  const alertPhoneNormalized = alertPhone.trim() ? sanitizePhone(alertPhone) : "";
+  const alertPhoneInvalid = alertPhone.trim() !== "" && alertPhoneNormalized === null;
   const [testingCall, setTestingCall] = useState(false);
   const [kitchenVibrate, setKitchenVibrate] = useState<boolean>(initialKitchenVibrate);
   const [savingVibrate, setSavingVibrate] = useState(false);
@@ -97,6 +103,12 @@ export function KitchenWorkflowToggle({
   async function saveAlertPhone() {
     const v = alertPhone.trim();
     if (v === savedAlertPhone.trim()) return; // unchanged
+    // Refuse undialable formats up front — the auto-call would silently do
+    // nothing with a number sanitizePhone can't turn into E.164.
+    if (v && sanitizePhone(v) === null) {
+      toast.error(t("alertPhoneInvalidToast"));
+      return;
+    }
     setSavingAlertPhone(true);
     try {
       const res = await fetch("/api/restaurants/profile", {
@@ -507,9 +519,14 @@ export function KitchenWorkflowToggle({
                   onChange={(e) => setAlertPhone(e.target.value)}
                   onBlur={saveAlertPhone}
                   placeholder={storePhone || t("autoCallAlertPhonePlaceholderFallback")}
-                  className="flex-1 max-w-xs border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-400"
+                  aria-invalid={alertPhoneInvalid || undefined}
+                  className={`flex-1 max-w-xs border rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 ${
+                    alertPhoneInvalid
+                      ? "border-red-400 focus:ring-red-400"
+                      : "border-gray-200 focus:ring-rose-400"
+                  }`}
                 />
-                {alertPhone.trim() !== savedAlertPhone.trim() && (
+                {alertPhone.trim() !== savedAlertPhone.trim() && !alertPhoneInvalid && (
                   <button
                     type="button"
                     onClick={saveAlertPhone}
@@ -520,7 +537,18 @@ export function KitchenWorkflowToggle({
                   </button>
                 )}
               </div>
-              <p className="text-[11px] text-gray-400 mt-1">{t("autoCallAlertPhoneHint")}</p>
+              {/* Format guard (Luigi 2026-07-03): undialable input shows a red
+                  error; a valid one shows EXACTLY what will be dialed (E.164),
+                  so "6476690808" transparently becomes +16476690808. */}
+              {alertPhoneInvalid ? (
+                <p className="text-[11px] text-red-600 mt-1">{t("alertPhoneInvalid")}</p>
+              ) : alertPhoneNormalized ? (
+                <p className="text-[11px] text-gray-500 mt-1">
+                  {t("alertPhoneWillDial", { number: alertPhoneNormalized })}
+                </p>
+              ) : (
+                <p className="text-[11px] text-gray-400 mt-1">{t("autoCallAlertPhoneHint")}</p>
+              )}
             </div>
             {effectiveAlertNumber && (
               <button

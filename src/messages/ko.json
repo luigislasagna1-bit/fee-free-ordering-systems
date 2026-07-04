@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "고객 이름 위",
       "deliveryLeadAddressOption": "주소 위",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "이 번호로 전화를 걸 수 없습니다. 지역번호가 포함된 숫자(예: 6476690808) 또는 전체 국제 형식(+16476690808)을 사용하세요.",
+      "alertPhoneWillDial": "발신 번호: {number}",
+      "alertPhoneInvalidToast": "해당 번호로 전화를 걸 수 없습니다 — 형식을 먼저 수정하세요."
     },
     "receiptRenderer": {
       "yourRestaurant": "내 레스토랑",

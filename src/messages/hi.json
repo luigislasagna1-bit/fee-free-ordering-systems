@@ -1517,7 +1517,10 @@
       "deliveryLeadNameOption": "ग्राहक का नाम ऊपर",
       "deliveryLeadAddressOption": "पता ऊपर",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "यह नंबर डायल नहीं हो सकता। क्षेत्र कोड सहित अंक (जैसे 6476690808) या पूर्ण अंतरराष्ट्रीय प्रारूप (+16476690808) उपयोग करें।",
+      "alertPhoneWillDial": "डायल होगा: {number}",
+      "alertPhoneInvalidToast": "उस नंबर पर डायल नहीं हो सकता — पहले प्रारूप ठीक करें।"
     },
     "customers": {
       "title": "ग्राहक",

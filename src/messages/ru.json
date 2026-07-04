@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "Имя клиента сверху",
       "deliveryLeadAddressOption": "Адрес сверху",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "Этот номер нельзя набрать. Используйте цифры с кодом города (напр. 6476690808) или полный международный формат (+16476690808).",
+      "alertPhoneWillDial": "Будет набран: {number}",
+      "alertPhoneInvalidToast": "Номер нельзя набрать — сначала исправьте формат."
     },
     "receiptRenderer": {
       "yourRestaurant": "Ваш ресторан",

@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "Numele clientului sus",
       "deliveryLeadAddressOption": "Adresa sus",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "Acest număr nu poate fi apelat. Folosiți cifre cu prefix (ex. 6476690808) sau formatul internațional complet (+16476690808).",
+      "alertPhoneWillDial": "Se va apela: {number}",
+      "alertPhoneInvalidToast": "Numărul nu poate fi apelat — corectați mai întâi formatul."
     },
     "receiptRenderer": {
       "yourRestaurant": "Restaurantul tău",

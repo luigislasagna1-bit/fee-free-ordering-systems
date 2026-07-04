@@ -3361,7 +3361,10 @@
       "deliveryLeadNameOption": "Klienta vārds augšā",
       "deliveryLeadAddressOption": "Adrese augšā",
       "deliveryLeadNamePreview": "Mario Rossi ▸ Via Mazzini 13, Varedo",
-      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi"
+      "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
+      "alertPhoneInvalid": "Šo numuru nevar sastādīt. Izmantojiet ciparus ar rajona kodu (piem., 6476690808) vai pilnu starptautisko formātu (+16476690808).",
+      "alertPhoneWillDial": "Tiks zvanīts: {number}",
+      "alertPhoneInvalidToast": "Numuru nevar sastādīt — vispirms izlabojiet formātu."
     },
     "receiptRenderer": {
       "yourRestaurant": "Jūsu restorāns",
