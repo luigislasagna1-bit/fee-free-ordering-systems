@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Danh mục không có ảnh hiển thị dạng",
       "categoryNoImageBand": "Băng-rôn màu",
       "categoryNoImagePlain": "Tiêu đề đơn giản (cổ điển)",
-      "categoryNoImageStyleHint": "Danh mục CÓ ảnh luôn hiển thị băng-rôn ảnh lớn. Cài đặt này chỉ quyết định giao diện của danh mục không có ảnh — tải ảnh cho từng danh mục trong Menu."
+      "categoryNoImageStyleHint": "Danh mục CÓ ảnh luôn có banner ảnh lớn (khi bật banner) — tải ảnh theo từng danh mục trong Thực đơn. Mục này quyết định giao diện của danh mục KHÔNG có ảnh: chữ đơn giản, dải màu, thẻ nút chạm được, hoặc bảng điểm nhấn hiện đại theo màu chủ đề.",
+      "categoryNoImageButton": "Thẻ nút",
+      "categoryNoImageModern": "Điểm nhấn hiện đại"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Tôi thêm các bản ghi này ở đâu?",

@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "无图片的分类显示为",
       "categoryNoImageBand": "彩色横幅",
       "categoryNoImagePlain": "简洁标题（经典）",
-      "categoryNoImageStyleHint": "有图片的分类始终显示大图横幅。此设置只决定无图片分类的样式——可在“菜单”中为每个分类上传图片。"
+      "categoryNoImageStyleHint": "有照片的分类始终显示大图横幅（横幅开启时）——请在菜单中为每个分类上传照片。此设置决定无照片分类的外观：纯文字、纯色条带、可点按的按钮卡片，或使用主题色的现代强调面板。",
+      "categoryNoImageButton": "按钮卡片",
+      "categoryNoImageModern": "现代强调"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "在哪里添加这些记录？",

@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Kategori tanpa foto tampil sebagai",
       "categoryNoImageBand": "Banner warna",
       "categoryNoImagePlain": "Judul sederhana (klasik)",
-      "categoryNoImageStyleHint": "Kategori DENGAN foto selalu mendapat banner foto besar. Ini hanya menentukan tampilan yang tanpa foto — unggah foto per kategori di Menu."
+      "categoryNoImageStyleHint": "Kategori DENGAN foto selalu mendapat banner foto besar (saat banner aktif) — unggah foto per kategori di Menu. Ini menentukan tampilan kategori TANPA foto: teks polos, pita warna, kartu tombol yang bisa diketuk, atau panel aksen modern dengan warna tema Anda.",
+      "categoryNoImageButton": "Kartu tombol",
+      "categoryNoImageModern": "Aksen modern"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Di mana saya menambahkan record ini?",

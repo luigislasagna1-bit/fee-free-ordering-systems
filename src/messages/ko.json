@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "사진 없는 카테고리 표시 방식",
       "categoryNoImageBand": "컬러 배너",
       "categoryNoImagePlain": "간단한 헤더(클래식)",
-      "categoryNoImageStyleHint": "사진이 있는 카테고리는 항상 큰 사진 배너로 표시됩니다. 이 설정은 사진이 없는 카테고리의 모양만 결정합니다 — 메뉴에서 카테고리별로 사진을 업로드하세요."
+      "categoryNoImageStyleHint": "사진이 있는 카테고리는 항상 큰 사진 배너로 표시됩니다(배너 사용 시) — 메뉴에서 카테고리별로 사진을 업로드하세요. 이 설정은 사진이 없는 카테고리의 모양을 결정합니다: 일반 텍스트, 단색 밴드, 탭 가능한 버튼 카드 또는 테마 색상의 모던 액센트 패널.",
+      "categoryNoImageButton": "버튼 카드",
+      "categoryNoImageModern": "모던 액센트"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "이 레코드를 어디에 추가하나요?",

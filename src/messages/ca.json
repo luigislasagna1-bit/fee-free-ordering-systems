@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Les categories sense foto es mostren com",
       "categoryNoImageBand": "Bàner de color",
       "categoryNoImagePlain": "Capçalera simple (clàssica)",
-      "categoryNoImageStyleHint": "Les categories AMB foto sempre tenen el gran bàner fotogràfic. Això només decideix l'aspecte de les que no en tenen — puja fotos per categoria a Menú."
+      "categoryNoImageStyleHint": "Les categories AMB foto sempre tenen el bàner fotogràfic gran (amb bàners activats) — puja fotos per categoria a Menú. Això decideix l'aspecte de les que NO en tenen: text simple, banda de color, targeta-botó tocable o panell modern amb el color del tema.",
+      "categoryNoImageButton": "Targeta botó",
+      "categoryNoImageModern": "Accent modern"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "On afegeixo aquests registres?",

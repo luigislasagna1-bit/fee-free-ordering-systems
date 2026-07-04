@@ -9,12 +9,14 @@ export type ThemeSettings = {
   bannerPosition: "top" | "center" | "bottom";
   headerLayout: "left" | "center";
   showCategoryImages: boolean;
-  /** How a category WITHOUT its own photo renders when category banners are
-   *  ON (showCategoryImages): "band" = the solid theme-colour banner (default,
-   *  current look); "plain" = the classic text-only header, so only categories
-   *  WITH a photo get the big banner. Ignored when showCategoryImages is off
-   *  (everything is the classic header then). Luigi 2026-07-03. */
-  categoryNoImageStyle: "band" | "plain";
+  /** How a category WITHOUT its own photo renders: "band" = the solid
+   *  theme-colour banner (default with banners ON); "plain" = the classic
+   *  text-only header; "button" = a clearly-tappable card like the item
+   *  cards; "modern" = an accent-bar panel in the theme colour. With
+   *  showCategoryImages OFF, "band" renders as "plain" (back-compat — OFF
+   *  stores keep the classic look) while button/modern still apply.
+   *  Luigi 2026-07-03/04 ("plain headers blend in like nothing"). */
+  categoryNoImageStyle: "band" | "plain" | "button" | "modern";
   menuLayout: "carousel" | "grid" | "list";
   /** When true, menu categories collapse into a tappable accordion on MOBILE
    *  (GloriaFood-style) — each category starts collapsed and the customer

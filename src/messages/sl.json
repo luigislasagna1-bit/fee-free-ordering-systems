@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Kategorije brez fotografije so prikazane kot",
       "categoryNoImageBand": "Barvna pasica",
       "categoryNoImagePlain": "Preprost naslov (klasičen)",
-      "categoryNoImageStyleHint": "Kategorije S fotografijo vedno dobijo veliko foto pasico. To določa le videz tistih brez — fotografije naložite pri kategorijah v Meniju."
+      "categoryNoImageStyleHint": "Kategorije S sliko vedno dobijo velik foto pasico (ko so pasice vklopljene) — slike nalagajte po kategorijah v Meniju. To določa videz kategorij BREZ slike: navadno besedilo, barvni trak, tapljiva kartica-gumb ali moderen poudarjen panel v barvi teme.",
+      "categoryNoImageButton": "Kartica-gumb",
+      "categoryNoImageModern": "Moderen poudarek"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kje dodajem te zapise?",

@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "写真のないカテゴリの表示",
       "categoryNoImageBand": "カラーバナー",
       "categoryNoImagePlain": "シンプルな見出し（クラシック）",
-      "categoryNoImageStyleHint": "写真のあるカテゴリは常に大きな写真バナーで表示されます。これは写真のないカテゴリの見た目のみを決めます — 写真はメニューでカテゴリごとにアップロードできます。"
+      "categoryNoImageStyleHint": "写真のあるカテゴリーは常に大きな写真バナーになります（バナー有効時）。写真はメニューでカテゴリーごとにアップロードしてください。この設定は写真のないカテゴリーの見た目を決めます：プレーンテキスト、カラー帯、タップできるボタンカード、テーマカラーのモダンアクセントパネル。",
+      "categoryNoImageButton": "ボタンカード",
+      "categoryNoImageModern": "モダンアクセント"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "レコードはどこに追加しますか？",

@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Fotoğrafsız kategoriler şöyle görünür",
       "categoryNoImageBand": "Renkli banner",
       "categoryNoImagePlain": "Sade başlık (klasik)",
-      "categoryNoImageStyleHint": "Fotoğraflı kategoriler her zaman büyük fotoğraflı banner alır. Bu yalnızca fotoğrafı olmayanların görünümünü belirler — fotoğrafları Menü altında kategori başına yükleyin."
+      "categoryNoImageStyleHint": "Fotoğrafı OLAN kategoriler her zaman büyük fotoğraf banner'ını alır (banner'lar açıkken) — fotoğrafları Menü'de kategori başına yükleyin. Bu, fotoğrafı OLMAYANLARIN görünümünü belirler: sade metin, düz renk bant, dokunulabilir buton kart veya tema renginizde modern vurgu paneli.",
+      "categoryNoImageButton": "Buton kart",
+      "categoryNoImageModern": "Modern vurgu"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Bu kayıtları nereye ekliyorum?",

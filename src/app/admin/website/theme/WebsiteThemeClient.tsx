@@ -221,27 +221,34 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                     <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${theme.showCategoryImages ? "translate-x-6" : "translate-x-0"}`} />
                   </button>
                 </div>
-                {/* Sub-choice (Luigi 2026-07-03): with banners ON, how does a
-                    category WITHOUT its own photo render — the solid colour
-                    band, or the classic text-only header? Off = everything is
-                    the classic header, so the choice is hidden. */}
-                {theme.showCategoryImages && (
-                  <div className="mt-3 pt-3 border-t border-gray-200">
-                    <label className="block text-xs font-semibold text-gray-600 mb-2">{t("categoryNoImageStyle")}</label>
-                    <div className="flex gap-2">
-                      {(["band", "plain"] as const).map((s) => (
-                        <button
-                          key={s}
-                          onClick={() => set("categoryNoImageStyle", s)}
-                          className={`flex-1 py-2 rounded-lg border-2 text-xs font-semibold transition ${theme.categoryNoImageStyle === s ? "border-emerald-500 bg-emerald-50 text-emerald-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
-                        >
-                          {s === "band" ? t("categoryNoImageBand") : t("categoryNoImagePlain")}
-                        </button>
-                      ))}
-                    </div>
-                    <p className="text-xs text-gray-400 mt-2">{t("categoryNoImageStyleHint")}</p>
+                {/* Sub-choice (Luigi 2026-07-03, expanded 2026-07-04): how a
+                    category WITHOUT its own photo renders. With banners ON
+                    there are 4 looks (solid band / plain / button card /
+                    modern accent); with banners OFF the band isn't offered
+                    (everything is header-style) but plain/button/modern still
+                    apply — plain headers "blend in like nothing" (Luigi), so
+                    owners can pick a clearly-tappable look. */}
+                <div className="mt-3 pt-3 border-t border-gray-200">
+                  <label className="block text-xs font-semibold text-gray-600 mb-2">{t("categoryNoImageStyle")}</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {(theme.showCategoryImages
+                      ? (["band", "plain", "button", "modern"] as const)
+                      : (["plain", "button", "modern"] as const)
+                    ).map((s) => (
+                      <button
+                        key={s}
+                        onClick={() => set("categoryNoImageStyle", s)}
+                        className={`py-2 rounded-lg border-2 text-xs font-semibold transition ${theme.categoryNoImageStyle === s ? "border-emerald-500 bg-emerald-50 text-emerald-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
+                      >
+                        {s === "band" ? t("categoryNoImageBand")
+                          : s === "plain" ? t("categoryNoImagePlain")
+                          : s === "button" ? t("categoryNoImageButton")
+                          : t("categoryNoImageModern")}
+                      </button>
+                    ))}
                   </div>
-                )}
+                  <p className="text-xs text-gray-400 mt-2">{t("categoryNoImageStyleHint")}</p>
+                </div>
               </div>
 
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">

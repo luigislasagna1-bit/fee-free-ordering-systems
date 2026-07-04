@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Categoriile fără fotografie apar ca",
       "categoryNoImageBand": "Banner colorat",
       "categoryNoImagePlain": "Antet simplu (clasic)",
-      "categoryNoImageStyleHint": "Categoriile CU fotografie primesc mereu bannerul foto mare. Aceasta decide doar aspectul celor fără — încărcați fotografii pe categorie în Meniu."
+      "categoryNoImageStyleHint": "Categoriile CU fotografie primesc mereu bannerul foto mare (cu bannerele active) — încărcați fotografii pe categorie în Meniu. Aceasta decide aspectul celor FĂRĂ: text simplu, bandă colorată, card-buton tactil sau panou modern în culoarea temei.",
+      "categoryNoImageButton": "Card buton",
+      "categoryNoImageModern": "Accent modern"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Unde adaug aceste înregistrări?",

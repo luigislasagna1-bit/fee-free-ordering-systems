@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Kategorien ohne Foto erscheinen als",
       "categoryNoImageBand": "Farbbanner",
       "categoryNoImagePlain": "Einfache Überschrift (klassisch)",
-      "categoryNoImageStyleHint": "Kategorien MIT Foto erhalten immer das große Fotobanner. Dies bestimmt nur das Aussehen der Kategorien ohne Foto — Fotos je Kategorie unter Menü hochladen."
+      "categoryNoImageStyleHint": "Kategorien MIT Foto erhalten immer das große Fotobanner (bei aktivierten Bannern) — Fotos je Kategorie unter Menü hochladen. Dies bestimmt das Aussehen der Kategorien OHNE Foto: schlichter Text, farbiges Band, tippbare Button-Karte oder modernes Akzent-Panel in Ihrer Themenfarbe.",
+      "categoryNoImageButton": "Button-Karte",
+      "categoryNoImageModern": "Moderner Akzent"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Wo füge ich diese Einträge hinzu?",

@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Le categorie senza foto appaiono come",
       "categoryNoImageBand": "Banner colorato",
       "categoryNoImagePlain": "Intestazione semplice (classica)",
-      "categoryNoImageStyleHint": "Le categorie CON foto hanno sempre il grande banner fotografico. Questo decide solo l'aspetto di quelle senza foto — carica le foto per categoria in Menu."
+      "categoryNoImageStyleHint": "Le categorie CON foto hanno sempre il grande banner fotografico (con i banner attivi) — carica le foto per categoria in Menu. Questo decide l'aspetto di quelle SENZA: testo semplice, banda colorata, scheda-pulsante toccabile o pannello moderno nel colore del tema.",
+      "categoryNoImageButton": "Scheda pulsante",
+      "categoryNoImageModern": "Accento moderno"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Dove aggiungo questi record?",

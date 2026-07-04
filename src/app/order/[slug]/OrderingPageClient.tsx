@@ -349,6 +349,77 @@ function CategoryBanner({ cat, theme, collapsible, collapsedNow, onToggleCollaps
 
 // ─── Category Section (carousel or grid) ─────────────────────────────────────
 
+/** Non-banner category header — three looks (Luigi 2026-07-04: plain headers
+ *  "blend in like nothing", so owners can pick a clearly-tappable style):
+ *    "plain"  — the classic text-only header (default)
+ *    "button" — an item-card-like tappable card (border + shadow + count)
+ *    "modern" — a theme-colour accent panel (left bar + tinted background)
+ *  Shared by all three menu layouts; `trailing` carries the carousel's
+ *  scroll arrows when the category isn't collapsible. */
+function PlainCategoryHeader({ cat, theme, styleKind, collapsible, collapsedNow, onToggleCollapse, trailing, compact }: {
+  cat: Category;
+  theme: ReturnType<typeof parseTheme>;
+  styleKind: "plain" | "button" | "modern";
+  collapsible?: boolean;
+  collapsedNow?: boolean;
+  onToggleCollapse?: () => void;
+  trailing?: React.ReactNode;
+  compact?: boolean;
+}) {
+  const count = cat.menuItems.length;
+  const nameSize = compact ? "text-lg" : "text-xl";
+  const mb = compact ? "mb-3" : "mb-4";
+  if (styleKind === "button") {
+    return (
+      <div className={`${mb} sticky top-0 py-2 z-10`} style={{ backgroundColor: theme.backgroundColor }}>
+        <div
+          className={`flex items-center gap-3 rounded-2xl border border-gray-200 shadow-sm px-4 ${compact ? "py-3" : "py-3.5"} transition hover:shadow-md ${collapsible ? "cursor-pointer select-none" : ""}`}
+          style={{ backgroundColor: theme.cardBackground }}
+          onClick={collapsible ? onToggleCollapse : undefined}
+        >
+          <h2 className={`${nameSize} font-bold flex-1 min-w-0 truncate`} style={{ color: theme.textColor }}>{cat.name}</h2>
+          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 flex-shrink-0">{count}</span>
+          {collapsible ? (
+            <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
+          ) : trailing ?? null}
+        </div>
+      </div>
+    );
+  }
+  if (styleKind === "modern") {
+    return (
+      <div className={`${mb} sticky top-0 py-2 z-10`} style={{ backgroundColor: theme.backgroundColor }}>
+        <div
+          className={`flex items-center gap-3 rounded-xl px-4 ${compact ? "py-3" : "py-3.5"} ${collapsible ? "cursor-pointer select-none" : ""}`}
+          style={{ backgroundColor: `${theme.primaryColor}0D`, borderLeft: `4px solid ${theme.primaryColor}` }}
+          onClick={collapsible ? onToggleCollapse : undefined}
+        >
+          <h2 className={`${nameSize} font-extrabold tracking-tight flex-1 min-w-0 truncate`} style={{ color: theme.textColor }}>{cat.name}</h2>
+          <span className="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0" style={{ backgroundColor: `${theme.primaryColor}1A`, color: theme.primaryColor }}>{count}</span>
+          {collapsible ? (
+            <span className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${theme.primaryColor}1A` }}>
+              <ChevronDown className={`w-4 h-4 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.primaryColor }} />
+            </span>
+          ) : trailing ?? null}
+        </div>
+      </div>
+    );
+  }
+  // "plain" — the classic header, unchanged.
+  return (
+    <div
+      className={`flex items-center gap-3 ${mb} sticky top-0 py-2 z-10 ${collapsible ? "cursor-pointer select-none" : ""}`}
+      style={{ backgroundColor: theme.backgroundColor }}
+      onClick={collapsible ? onToggleCollapse : undefined}
+    >
+      <h2 className={`${nameSize} font-bold flex-1`} style={{ color: theme.textColor }}>{cat.name}</h2>
+      {collapsible ? (
+        <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
+      ) : trailing ?? null}
+    </div>
+  );
+}
+
 function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, collapsed = false, onToggleCollapse }: {
   cat: Category;
   theme: ReturnType<typeof parseTheme>;
@@ -361,12 +432,19 @@ function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, colla
 }) {
   // Only hide items when collapsing is actually active AND this one is closed.
   const collapsedNow = collapsible && collapsed;
-  // Which header this category gets (Luigi 2026-07-03): the photo banner when
-  // it has an image; an image-LESS category follows theme.categoryNoImageStyle
-  // — "band" keeps the solid-colour banner, "plain" falls back to the classic
-  // text header. showCategoryImages OFF = classic header for everything.
+  // Which header this category gets (Luigi 2026-07-03/04): the photo banner
+  // when it has an image (banners ON); an image-LESS category follows
+  // theme.categoryNoImageStyle — "band" = solid-colour banner, else one of
+  // the header styles (plain / button / modern). With banners OFF, "band"
+  // maps to "plain" so pre-existing stores keep the classic look.
+  const noImgStyle =
+    !theme.showCategoryImages && theme.categoryNoImageStyle === "band"
+      ? "plain"
+      : theme.categoryNoImageStyle;
   const useBanner =
-    theme.showCategoryImages && (!!cat.imageUrl || theme.categoryNoImageStyle !== "plain");
+    theme.showCategoryImages && (!!cat.imageUrl || noImgStyle === "band");
+  const headerKind: "plain" | "button" | "modern" =
+    noImgStyle === "button" || noImgStyle === "modern" ? noImgStyle : "plain";
   const scrollRef = useRef<HTMLDivElement>(null);
   // Track drag state via refs (not state) so we never re-render mid-drag.
   //   • `armed`     — pointer is down; we MIGHT be about to drag.
@@ -399,16 +477,7 @@ function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, colla
         {useBanner ? (
           <CategoryBanner cat={cat} theme={theme} collapsible={collapsible} collapsedNow={collapsedNow} onToggleCollapse={onToggleCollapse} />
         ) : (
-          <div
-            className={`flex items-center gap-3 mb-4 sticky top-0 py-2 z-10 ${collapsible ? "cursor-pointer select-none" : ""}`}
-            style={{ backgroundColor: theme.backgroundColor }}
-            onClick={collapsible ? onToggleCollapse : undefined}
-          >
-            <h2 className="text-xl font-bold flex-1" style={{ color: theme.textColor }}>{cat.name}</h2>
-            {collapsible && (
-              <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
-            )}
-          </div>
+          <PlainCategoryHeader cat={cat} theme={theme} styleKind={headerKind} collapsible={collapsible} collapsedNow={collapsedNow} onToggleCollapse={onToggleCollapse} />
         )}
         {!collapsedNow && (
           <div className="grid sm:grid-cols-2 gap-4">
@@ -430,16 +499,7 @@ function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, colla
         {useBanner ? (
           <CategoryBanner cat={cat} theme={theme} collapsible={collapsible} collapsedNow={collapsedNow} onToggleCollapse={onToggleCollapse} />
         ) : (
-          <div
-            className={`flex items-center gap-3 mb-4 sticky top-0 py-2 z-10 ${collapsible ? "cursor-pointer select-none" : ""}`}
-            style={{ backgroundColor: theme.backgroundColor }}
-            onClick={collapsible ? onToggleCollapse : undefined}
-          >
-            <h2 className="text-xl font-bold flex-1" style={{ color: theme.textColor }}>{cat.name}</h2>
-            {collapsible && (
-              <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
-            )}
-          </div>
+          <PlainCategoryHeader cat={cat} theme={theme} styleKind={headerKind} collapsible={collapsible} collapsedNow={collapsedNow} onToggleCollapse={onToggleCollapse} />
         )}
         {!collapsedNow && (
           <div className="flex flex-col gap-2">
@@ -466,25 +526,20 @@ function CategorySection({ cat, theme, onRef, onOpen, collapsible = false, colla
       {useBanner ? (
         <CategoryBanner cat={cat} theme={theme} collapsible={collapsible} collapsedNow={collapsedNow} onToggleCollapse={onToggleCollapse} onScroll={scroll} />
       ) : (
-      <div
-        className={`flex items-center gap-3 mb-3 sticky top-0 py-2 z-10 ${collapsible ? "cursor-pointer select-none" : ""}`}
-        style={{ backgroundColor: theme.backgroundColor }}
-        onClick={collapsible ? onToggleCollapse : undefined}
-      >
-        <h2 className="text-lg font-bold flex-1" style={{ color: theme.textColor }}>{cat.name}</h2>
-        {collapsible ? (
-          <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
-        ) : (
-          <div className="flex gap-1">
-            <button onClick={() => scroll(-1)} className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition" style={{ backgroundColor: theme.cardBackground }} aria-label="Scroll left">
-              <ChevronLeft className="w-4 h-4 text-gray-500" />
-            </button>
-            <button onClick={() => scroll(1)} className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition" style={{ backgroundColor: theme.cardBackground }} aria-label="Scroll right">
-              <ChevronRight className="w-4 h-4 text-gray-500" />
-            </button>
-          </div>
-        )}
-      </div>
+        <PlainCategoryHeader
+          cat={cat} theme={theme} styleKind={headerKind} compact
+          collapsible={collapsible} collapsedNow={collapsedNow} onToggleCollapse={onToggleCollapse}
+          trailing={(
+            <div className="flex gap-1">
+              <button onClick={() => scroll(-1)} className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition" style={{ backgroundColor: theme.cardBackground }} aria-label="Scroll left">
+                <ChevronLeft className="w-4 h-4 text-gray-500" />
+              </button>
+              <button onClick={() => scroll(1)} className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition" style={{ backgroundColor: theme.cardBackground }} aria-label="Scroll right">
+                <ChevronRight className="w-4 h-4 text-gray-500" />
+              </button>
+            </div>
+          )}
+        />
       )}
       {!collapsedNow && (
       <div

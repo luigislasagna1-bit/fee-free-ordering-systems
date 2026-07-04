@@ -1896,7 +1896,9 @@
       "categoryNoImageStyle": "Kategórie bez fotky sa zobrazia ako",
       "categoryNoImageBand": "Farebný banner",
       "categoryNoImagePlain": "Jednoduchý nadpis (klasický)",
-      "categoryNoImageStyleHint": "Kategórie S fotkou majú vždy veľký fotobanner. Toto určuje len vzhľad tých bez fotky — fotky nahráte pri kategóriách v Menu."
+      "categoryNoImageStyleHint": "Kategórie S fotkou majú vždy veľký fotobanner (pri zapnutých banneroch) — fotky nahrávajte po kategóriách v Menu. Toto určuje vzhľad kategórií BEZ fotky: čistý text, farebný pruh, klepnuteľná karta-tlačidlo alebo moderný akcentový panel vo farbe témy.",
+      "categoryNoImageButton": "Karta-tlačidlo",
+      "categoryNoImageModern": "Moderný akcent"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kde pridám tieto záznamy?",

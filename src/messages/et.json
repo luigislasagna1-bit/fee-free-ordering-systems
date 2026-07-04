@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Fotota kategooriad kuvatakse kui",
       "categoryNoImageBand": "Värviline bänner",
       "categoryNoImagePlain": "Lihtne pealkiri (klassikaline)",
-      "categoryNoImageStyleHint": "Fotoga kategooriad saavad alati suure fotobänneri. See määrab vaid fotota kategooriate välimuse — laadige fotod üles Menüü all."
+      "categoryNoImageStyleHint": "Fotoga kategooriad saavad alati suure fotobänneri (kui bännerid on sees) — laadige fotod kategooriate kaupa Menüüs. See määrab fotota kategooriate välimuse: lihttekst, värviriba, puudutatav nupukaart või modernne aktsentpaneel teie teemavärvis.",
+      "categoryNoImageButton": "Nupukaart",
+      "categoryNoImageModern": "Modernne aktsent"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kust lisan need kirjed?",

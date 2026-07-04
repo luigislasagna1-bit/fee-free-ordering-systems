@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Kategorijas bez foto tiek rādītas kā",
       "categoryNoImageBand": "Krāsains baneris",
       "categoryNoImagePlain": "Vienkāršs virsraksts (klasisks)",
-      "categoryNoImageStyleHint": "Kategorijas AR foto vienmēr saņem lielo foto baneri. Tas nosaka tikai to izskatu, kurām foto nav — augšupielādējiet foto pie kategorijām sadaļā Izvēlne."
+      "categoryNoImageStyleHint": "Kategorijas AR fotoattēlu vienmēr saņem lielo foto reklāmkarogu (kad karogi ieslēgti) — augšupielādējiet fotoattēlus pa kategorijām sadaļā Izvēlne. Tas nosaka, kā izskatās kategorijas BEZ fotoattēla: vienkāršs teksts, krāsu josla, pieskarama pogas kartīte vai moderns akcenta panelis jūsu tēmas krāsā.",
+      "categoryNoImageButton": "Pogas kartīte",
+      "categoryNoImageModern": "Moderns akcents"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kur pievienot šos ierakstus?",

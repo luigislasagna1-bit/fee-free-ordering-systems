@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Categorieën zonder foto tonen als",
       "categoryNoImageBand": "Kleurenbanner",
       "categoryNoImagePlain": "Eenvoudige kop (klassiek)",
-      "categoryNoImageStyleHint": "Categorieën MET foto krijgen altijd de grote fotobanner. Dit bepaalt alleen de weergave van categorieën zonder foto — upload foto's per categorie onder Menu."
+      "categoryNoImageStyleHint": "Categorieën MET foto krijgen altijd de grote fotobanner (bij ingeschakelde banners) — upload foto's per categorie onder Menu. Dit bepaalt hoe categorieën ZONDER foto eruitzien: platte tekst, effen band, aantikbare knopkaart of modern accentpaneel in je themakleur.",
+      "categoryNoImageButton": "Knopkaart",
+      "categoryNoImageModern": "Modern accent"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Waar voeg ik deze records toe?",

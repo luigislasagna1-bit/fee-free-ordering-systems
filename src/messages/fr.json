@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Les catégories sans photo s'affichent comme",
       "categoryNoImageBand": "Bannière colorée",
       "categoryNoImagePlain": "En-tête simple (classique)",
-      "categoryNoImageStyleHint": "Les catégories AVEC photo ont toujours la grande bannière photo. Ce choix ne concerne que celles qui n'en ont pas — ajoutez des photos par catégorie dans Menu."
+      "categoryNoImageStyleHint": "Les catégories AVEC photo ont toujours le grand bandeau photo (si les bannières sont activées) — ajoutez des photos par catégorie dans Menu. Ceci définit l'apparence des catégories SANS photo : texte simple, bandeau uni, carte-bouton cliquable ou panneau moderne à la couleur de votre thème.",
+      "categoryNoImageButton": "Carte bouton",
+      "categoryNoImageModern": "Accent moderne"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Où ajouter ces enregistrements ?",

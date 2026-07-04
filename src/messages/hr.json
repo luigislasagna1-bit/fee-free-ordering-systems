@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Kategorije bez fotografije prikazuju se kao",
       "categoryNoImageBand": "Traka u boji",
       "categoryNoImagePlain": "Jednostavan naslov (klasični)",
-      "categoryNoImageStyleHint": "Kategorije SA fotografijom uvijek dobivaju veliki fotobanner. Ovo određuje samo izgled onih bez — prenesite fotografije po kategoriji u Izborniku."
+      "categoryNoImageStyleHint": "Kategorije SA slikom uvijek dobivaju veliki foto-banner (kad su banneri uključeni) — slike učitavajte po kategoriji u Izborniku. Ovo određuje izgled onih BEZ slike: običan tekst, obojena traka, dodirljiva kartica-gumb ili moderni naglasni panel u boji teme.",
+      "categoryNoImageButton": "Kartica-gumb",
+      "categoryNoImageModern": "Moderni naglasak"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Gdje dodajem ove zapise?",

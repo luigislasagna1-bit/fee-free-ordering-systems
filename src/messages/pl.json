@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Kategorie bez zdjęcia wyświetlają się jako",
       "categoryNoImageBand": "Kolorowy baner",
       "categoryNoImagePlain": "Prosty nagłówek (klasyczny)",
-      "categoryNoImageStyleHint": "Kategorie ZE zdjęciem zawsze mają duży baner ze zdjęciem. To decyduje tylko o wyglądzie tych bez — dodaj zdjęcia kategorii w Menu."
+      "categoryNoImageStyleHint": "Kategorie ZE zdjęciem zawsze mają duży baner (przy włączonych banerach) — dodawaj zdjęcia per kategoria w Menu. To decyduje o wyglądzie kategorii BEZ zdjęcia: zwykły tekst, kolorowy pas, dotykalna karta-przycisk lub nowoczesny panel akcentowy w kolorze motywu.",
+      "categoryNoImageButton": "Karta-przycisk",
+      "categoryNoImageModern": "Nowoczesny akcent"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Gdzie dodać te rekordy?",

@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Categorias sem foto aparecem como",
       "categoryNoImageBand": "Faixa colorida",
       "categoryNoImagePlain": "Cabeçalho simples (clássico)",
-      "categoryNoImageStyleHint": "As categorias COM foto têm sempre a grande faixa fotográfica. Isto só decide o aspeto das que não têm — carregue fotos por categoria em Menu."
+      "categoryNoImageStyleHint": "As categorias COM foto têm sempre o banner grande (com banners ativados) — carregue fotos por categoria no Menu. Isto define o aspeto das que NÃO têm: texto simples, banda de cor, cartão-botão tocável ou painel moderno na cor do tema.",
+      "categoryNoImageButton": "Cartão botão",
+      "categoryNoImageModern": "Destaque moderno"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Onde adiciono esses registros?",

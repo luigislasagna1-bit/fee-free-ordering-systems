@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Fotó nélküli kategóriák megjelenése",
       "categoryNoImageBand": "Színes banner",
       "categoryNoImagePlain": "Egyszerű fejléc (klasszikus)",
-      "categoryNoImageStyleHint": "A fotóVAL rendelkező kategóriák mindig a nagy fotóbannert kapják. Ez csak a fotó nélküliek megjelenését szabja meg — képeket a Menü alatt tölthet fel."
+      "categoryNoImageStyleHint": "A fotóVAL rendelkező kategóriák mindig a nagy fotóbannert kapják (bekapcsolt bannereknél) — töltsön fel fotókat kategóriánként a Menüben. Ez dönti el a fotó NÉLKÜLIEK kinézetét: sima szöveg, színes sáv, koppintható gombkártya vagy modern hangsúlypanel a téma színében.",
+      "categoryNoImageButton": "Gombkártya",
+      "categoryNoImageModern": "Modern hangsúly"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Hol adhatom hozzá ezeket a rekordokat?",

@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Kategorier utan foto visas som",
       "categoryNoImageBand": "Färgbanner",
       "categoryNoImagePlain": "Enkel rubrik (klassisk)",
-      "categoryNoImageStyleHint": "Kategorier MED foto får alltid den stora fotobannern. Detta avgör bara utseendet för dem utan — ladda upp foton per kategori under Meny."
+      "categoryNoImageStyleHint": "Kategorier MED foto får alltid den stora fotobannern (när banners är på) — ladda upp foton per kategori under Meny. Detta avgör hur kategorier UTAN foto ser ut: ren text, färgband, tryckbart knappkort eller modern accentpanel i din temafärg.",
+      "categoryNoImageButton": "Knappkort",
+      "categoryNoImageModern": "Modern accent"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Var lägger jag till dessa poster?",

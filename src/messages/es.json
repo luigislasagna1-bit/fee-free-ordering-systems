@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Las categorías sin foto se muestran como",
       "categoryNoImageBand": "Banner de color",
       "categoryNoImagePlain": "Encabezado simple (clásico)",
-      "categoryNoImageStyleHint": "Las categorías CON foto siempre tienen el banner grande con imagen. Esto solo decide el aspecto de las que no tienen — sube fotos por categoría en Menú."
+      "categoryNoImageStyleHint": "Las categorías CON foto siempre muestran el banner grande (si los banners están activados); sube fotos por categoría en Menú. Esto decide el aspecto de las que NO tienen: texto simple, banda de color, tarjeta-botón táctil o panel moderno con el color de tu tema.",
+      "categoryNoImageButton": "Tarjeta botón",
+      "categoryNoImageModern": "Acento moderno"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "¿Dónde añado estos registros?",

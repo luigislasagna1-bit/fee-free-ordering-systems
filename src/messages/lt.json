@@ -1887,7 +1887,9 @@
       "categoryNoImageStyle": "Kategorijos be nuotraukos rodomos kaip",
       "categoryNoImageBand": "Spalvota juosta",
       "categoryNoImagePlain": "Paprasta antraštė (klasikinė)",
-      "categoryNoImageStyleHint": "Kategorijos SU nuotrauka visada gauna didelę foto juostą. Tai lemia tik neturinčių išvaizdą — nuotraukas įkelkite prie kategorijų Meniu."
+      "categoryNoImageStyleHint": "Kategorijos SU nuotrauka visada gauna didelį foto baneris (kai baneriai įjungti) — nuotraukas kelkite pagal kategoriją Meniu. Tai lemia kategorijų BE nuotraukos išvaizdą: paprastas tekstas, spalvota juosta, paliečiama mygtuko kortelė arba modernus akcento skydelis temos spalva.",
+      "categoryNoImageButton": "Mygtuko kortelė",
+      "categoryNoImageModern": "Modernus akcentas"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kur pridėti šiuos įrašus?",

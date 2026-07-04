@@ -2732,7 +2732,9 @@
       "categoryNoImageStyle": "Kuvattomat kategoriat näkyvät muodossa",
       "categoryNoImageBand": "Väribanneri",
       "categoryNoImagePlain": "Pelkkä otsikko (klassinen)",
-      "categoryNoImageStyleHint": "Kuvalliset kategoriat saavat aina ison kuvabannerin. Tämä valinta koskee vain kuvattomia — lisää kuvia kategorioittain Menu-osiossa."
+      "categoryNoImageStyleHint": "Kuvalliset kategoriat saavat aina ison kuvabannerin (kun bannerit ovat käytössä) — lataa kuvat kategoriakohtaisesti Menu-osiossa. Tämä määrää kuvattomien ulkoasun: pelkkä teksti, värinauha, napautettava painikekortti tai moderni korostuspaneeli teemaväreissäsi.",
+      "categoryNoImageButton": "Painikekortti",
+      "categoryNoImageModern": "Moderni korostus"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Mistä lisään nämä tietueet?",

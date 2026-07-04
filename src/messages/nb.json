@@ -2767,7 +2767,9 @@
       "categoryNoImageStyle": "Kategorier uten foto vises som",
       "categoryNoImageBand": "Fargebanner",
       "categoryNoImagePlain": "Enkel overskrift (klassisk)",
-      "categoryNoImageStyleHint": "Kategorier MED foto får alltid det store fotobanneret. Dette bestemmer bare utseendet til dem uten — last opp bilder per kategori under Meny."
+      "categoryNoImageStyleHint": "Kategorier MED foto får alltid det store fotobanneret (når bannere er på) — last opp bilder per kategori under Meny. Dette bestemmer utseendet til kategorier UTEN: ren tekst, fargebånd, trykkbart knappekort eller moderne aksentpanel i temafargen din.",
+      "categoryNoImageButton": "Knappekort",
+      "categoryNoImageModern": "Moderne aksent"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Hvor legger jeg til disse oppføringene?",
