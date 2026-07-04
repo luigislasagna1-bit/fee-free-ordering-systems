@@ -2811,8 +2811,15 @@ export function OrderingPageClient({
   const minimumOrderForType = orderType === "delivery"
     ? (zoneMin !== undefined ? zoneMin : restaurant.minimumOrder)
     : restaurant.minimumOrder;
+  // The customer-facing delivery estimate = the restaurant's configured
+  // "Estimated time" (prep + delivery promise), never LESS. A zone's own
+  // minutes are TRANSIT-only (5 min for a nearby street) and used to raise
+  // the promise for far zones — they must not replace it: they were
+  // OVERRIDING it, so the "order for later" first slot floor collapsed to
+  // ~now+5 (11:30 offered at 11:19 with a 45-min estimate) and the homepage
+  // showed "~5 min" delivery. Fabrizio cmqqxerxs + cmqt99i8s, 2026-07-04.
   const estimatedDeliveryMinutes = orderType === "delivery"
-    ? (zoneMinutes !== undefined ? zoneMinutes : restaurant.estimatedDelivery)
+    ? Math.max(restaurant.estimatedDelivery, zoneMinutes ?? 0)
     : restaurant.estimatedDelivery;
   // Fabrizio 2026-06-25: hide the per-service estimated time ("· 20 min") on the order-page
   // service buttons when the owner turns it off (it still shows at checkout). Default show —
