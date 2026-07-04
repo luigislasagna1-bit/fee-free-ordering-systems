@@ -192,7 +192,7 @@
     "no": "Fără",
     "addExtra": "Adaugă extra",
     "free": "Gratuit",
-    "deliveryAreaHint": "{zone} · ~{minutes} min de drum",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Atenție: Adresa ta este în afara zonelor noastre standard de livrare. Vom face tot posibilul, dar așteptați un timp mai lung sau un apel de confirmare. Taxă: {fee}, ETA: ~{minutes} min.",
     "size": "Mărime",
     "required": "Obligatoriu",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Cod promoțional",
     "noNotes": "Fără observații",
     "locatingAddress": "Se localizează adresa…",
-    "youreIn": "Sunteți în {zone} — Taxă {fee}, ~{minutes} min de drum de la noi.",
+    "youreIn": "Ești în {zone} — Taxă {fee}, ~{minutes} min.",
     "outsideStandard": "În afara zonelor noastre standard de livrare.",
     "freeDelivery": "Livrare gratuită",
     "aptUnitPlaceholder": "Apartament / Unitate / Etaj (opțional)",
@@ -1139,7 +1139,8 @@
         "colShow": "Afișează",
         "colRequired": "Obligatoriu",
         "saved": "Formularul pentru adresa de livrare a fost actualizat"
-      }
+      },
+      "estimatedMinutesHint": "Timpul TOTAL estimat de livrare (preparare + drum) pentru adresele din această zonă. Clienții văd acest număr la finalizare și el stabilește primul interval \"pentru mai târziu\" — înlocuiește timpul estimat implicit al serviciului de livrare. O valoare realistă este 30–60 min, nu doar drumul."
     },
     "reservations": {
       "title": "Rezervări",

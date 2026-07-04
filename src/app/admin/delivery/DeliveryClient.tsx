@@ -472,6 +472,11 @@ export function DeliveryClient({
                     />
                   </div>
                 </div>
+                {/* Where this number goes (Luigi + Fabrizio 2026-07-04): admins
+                    set 5 min thinking "drive time" and customers were promised
+                    5-minute delivery. It's the TOTAL estimate for this zone and
+                    OVERRIDES the service default — say so right here. */}
+                <p className="text-[11px] text-gray-400">{t("estimatedMinutesHint")}</p>
 
                 <div className="flex gap-2">
                   <button
@@ -646,6 +651,7 @@ function ZoneRow({
   onUpdate: (data: Partial<Zone>) => void;
 }) {
   const fmt = useCurrencyFormat();
+  const t = useTranslations("admin.delivery");
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState({
     name: zone.name,
@@ -804,6 +810,9 @@ function ZoneRow({
                   />
                 </div>
               </div>
+              {/* Same explanation as the New Zone form — this is the TOTAL
+                  per-zone delivery estimate customers see, not drive time. */}
+              <p className="text-[11px] text-gray-400">{t("estimatedMinutesHint")}</p>
               <div className="flex gap-2">
                 <button
                   onClick={saveEdit}

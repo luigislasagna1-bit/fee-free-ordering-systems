@@ -201,7 +201,7 @@
     "no": "No",
     "addExtra": "Add Extra",
     "free": "Free",
-    "deliveryAreaHint": "{zone} · ~{minutes} min drive",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Heads up: Your address is outside our standard delivery areas. We'll do our best, but expect a longer wait or a follow-up call. Fee: {fee}, ETA: ~{minutes} min.",
     "size": "Size",
     "required": "Required",
@@ -496,7 +496,7 @@
     "couponCodePlaceholder": "Promo code",
     "noNotes": "No notes",
     "locatingAddress": "Locating your address…",
-    "youreIn": "You're in {zone} — Fee {fee}, ~{minutes} min drive from us.",
+    "youreIn": "You're in {zone} — Fee {fee}, ~{minutes} min.",
     "zoneMinimum": "Minimum order {min}.",
     "outsideStandard": "Outside our standard delivery areas.",
     "outsideMayContact": "You can still place the order — the store will contact you if needed.",
@@ -1206,7 +1206,8 @@
         "colShow": "Show",
         "colRequired": "Required",
         "saved": "Delivery address form updated"
-      }
+      },
+      "estimatedMinutesHint": "TOTAL estimated delivery time (preparation + travel) for addresses in this zone. Customers here see this number at checkout and it sets the earliest \"order for later\" slot — it overrides the delivery service's default Estimated time. A realistic value is 30–60 min, not the drive time alone."
     },
     "reservations": {
       "title": "Reservations",

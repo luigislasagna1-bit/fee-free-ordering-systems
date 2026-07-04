@@ -191,7 +191,7 @@
     "no": "Sin",
     "addExtra": "Añadir Extra",
     "free": "Gratis",
-    "deliveryAreaHint": "{zone} · ~{minutes} min en coche",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Atención: tu dirección está fuera de nuestras zonas de entrega estándar. Haremos lo posible, pero espera una mayor demora o una llamada de seguimiento. Coste: {fee}, ETA: ~{minutes} min.",
     "size": "Tamaño",
     "required": "Obligatorio",
@@ -471,7 +471,7 @@
     "couponCodePlaceholder": "Código promocional",
     "noNotes": "Sin notas",
     "locatingAddress": "Localizando tu dirección…",
-    "youreIn": "Estás en {zone} — Tarifa {fee}, ~{minutes} min en coche desde el local.",
+    "youreIn": "Estás en {zone} — Coste {fee}, ~{minutes} min.",
     "outsideStandard": "Fuera de nuestras zonas de entrega estándar.",
     "cardOnPickup": "Pago con tarjeta al recoger",
     "cardOnDelivery": "Pago con tarjeta en la entrega",
@@ -1139,7 +1139,8 @@
         "colShow": "Mostrar",
         "colRequired": "Obligatorio",
         "saved": "Formulario de dirección de entrega actualizado"
-      }
+      },
+      "estimatedMinutesHint": "Tiempo TOTAL estimado de entrega (preparación + trayecto) para las direcciones de esta zona. Los clientes ven este número al pagar y define la primera franja de \"pedir para más tarde\"; sustituye el tiempo estimado por defecto del servicio de reparto. Un valor realista es 30–60 min, no solo el trayecto."
     },
     "reservations": {
       "title": "Reservas",

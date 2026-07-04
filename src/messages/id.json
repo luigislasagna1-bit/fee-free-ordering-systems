@@ -192,7 +192,7 @@
     "no": "Tidak",
     "addExtra": "Tambah Ekstra",
     "free": "Gratis",
-    "deliveryAreaHint": "{zone} · ~{minutes} mnt berkendara",
+    "deliveryAreaHint": "{zone} · ~{minutes} mnt",
     "outsideAreaHeadsUp": "Perhatian: Alamat Anda berada di luar area pengiriman standar kami. Kami akan berusaha semaksimal mungkin, namun perkirakan waktu tunggu lebih lama atau panggilan tindak lanjut. Biaya: {fee}, Estimasi: ~{minutes} mnt.",
     "size": "Ukuran",
     "required": "Wajib",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Kode promo",
     "noNotes": "Tidak ada catatan",
     "locatingAddress": "Menemukan alamat Anda…",
-    "youreIn": "Anda berada di {zone} — Biaya {fee}, ~{minutes} mnt berkendara dari kami.",
+    "youreIn": "Anda berada di {zone} — Biaya {fee}, ~{minutes} mnt.",
     "outsideStandard": "Di luar area pengiriman standar kami.",
     "freeDelivery": "Gratis ongkir",
     "aptUnitPlaceholder": "Apt / Unit / Suite (opsional)",
@@ -1139,7 +1139,8 @@
         "colShow": "Tampilkan",
         "colRequired": "Wajib",
         "saved": "Formulir alamat pengiriman diperbarui"
-      }
+      },
+      "estimatedMinutesHint": "TOTAL perkiraan waktu pengantaran (persiapan + perjalanan) untuk alamat di zona ini. Pelanggan melihat angka ini saat checkout dan menentukan slot \"pesan untuk nanti\" paling awal — menggantikan perkiraan bawaan layanan antar. Nilai realistis 30–60 mnt, bukan hanya perjalanan."
     },
     "reservations": {
       "title": "Reservasi",

@@ -192,7 +192,7 @@
     "no": "Bez",
     "addExtra": "Dodaj ekstra",
     "free": "Besplatno",
-    "deliveryAreaHint": "{zone} · ~{minutes} мин вожње",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Napomena: Vaša adresa je van naše standardne zone dostave. Učinićemo sve što možemo, ali očekujte duže čekanje ili poziv. Naknada: {fee}, Procenjeno vreme: ~{minutes} min.",
     "size": "Veličina",
     "required": "Obavezno",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Промо код",
     "noNotes": "Bez napomena",
     "locatingAddress": "Pronalaženje vaše adrese…",
-    "youreIn": "У зони сте {zone} — Накнада {fee}, ~{minutes} мин вожње од нас.",
+    "youreIn": "Vi ste u {zone} — Naknada {fee}, ~{minutes} min.",
     "outsideStandard": "Van naše standardne zone dostave.",
     "freeDelivery": "Besplatna dostava",
     "aptUnitPlaceholder": "Stan / Jedinica / Apartman (opciono)",
@@ -1139,7 +1139,8 @@
         "colShow": "Prikaži",
         "colRequired": "Obavezno",
         "saved": "Obrazac adrese za dostavu je ažuriran"
-      }
+      },
+      "estimatedMinutesHint": "УКУПНО процењено време доставе (припрема + пут) за адресе у овој зони. Купци виде овај број при плаћању и он одређује најранији термин \"за касније\" — замењује подразумевану процену услуге доставе. Реална вредност је 30–60 мин, не само вожња."
     },
     "reservations": {
       "title": "Rezervacije",

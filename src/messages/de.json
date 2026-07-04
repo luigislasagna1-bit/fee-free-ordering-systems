@@ -192,7 +192,7 @@
     "no": "Ohne",
     "addExtra": "Extra hinzufügen",
     "free": "Kostenlos",
-    "deliveryAreaHint": "{zone} · ~{minutes} Min. Fahrt",
+    "deliveryAreaHint": "{zone} · ~{minutes} Min.",
     "outsideAreaHeadsUp": "Hinweis: Ihre Adresse liegt außerhalb unserer Standard-Lieferzonen. Wir tun unser Bestes, rechnen Sie aber mit einer längeren Wartezeit oder einem Rückruf. Gebühr: {fee}, ETA: ~{minutes} Min.",
     "size": "Größe",
     "required": "Pflichtfeld",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Promo-Code",
     "noNotes": "Keine Hinweise",
     "locatingAddress": "Adresse wird ermittelt…",
-    "youreIn": "Sie sind in {zone} — Gebühr {fee}, ~{minutes} Min. Fahrt von uns.",
+    "youreIn": "Sie befinden sich in {zone} — Gebühr {fee}, ~{minutes} Min.",
     "outsideStandard": "Außerhalb unserer Standard-Lieferzonen.",
     "freeDelivery": "Kostenlose Lieferung",
     "aptUnitPlaceholder": "Wohnung / Einheit / Suite (optional)",
@@ -1139,7 +1139,8 @@
         "colShow": "Anzeigen",
         "colRequired": "Pflichtfeld",
         "saved": "Formular für Lieferadresse aktualisiert"
-      }
+      },
+      "estimatedMinutesHint": "GESAMTE geschätzte Lieferzeit (Zubereitung + Fahrt) für Adressen in dieser Zone. Kunden sehen diese Zahl beim Checkout, und sie bestimmt den frühesten \"später bestellen\"-Slot — sie überschreibt die Standard-Zeitschätzung des Lieferservice. Realistisch sind 30–60 Min., nicht nur die Fahrzeit."
     },
     "reservations": {
       "title": "Reservierungen",

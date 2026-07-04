@@ -192,7 +192,7 @@
     "no": "不要",
     "addExtra": "添加额外选项",
     "free": "免费",
-    "deliveryAreaHint": "{zone} · 约 {minutes} 分钟车程",
+    "deliveryAreaHint": "{zone} · 约 {minutes} 分钟",
     "outsideAreaHeadsUp": "提示：您的地址超出我们的标准配送范围。我们会尽力配送，但预计等待时间较长或需要电话确认。费用：{fee}，预计时间：约 {minutes} 分钟。",
     "size": "规格",
     "required": "必选",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "促销代码",
     "noNotes": "无备注",
     "locatingAddress": "正在定位地址…",
-    "youreIn": "您在{zone} — 配送费 {fee}，距我们约 {minutes} 分钟车程。",
+    "youreIn": "您在 {zone} 区域 — 费用 {fee}，约 {minutes} 分钟。",
     "outsideStandard": "超出我们的标准配送范围。",
     "freeDelivery": "免费配送",
     "aptUnitPlaceholder": "门牌 / 单元 / 套房（可选）",
@@ -1139,7 +1139,8 @@
         "colShow": "显示",
         "colRequired": "必填",
         "saved": "配送地址表单已更新"
-      }
+      },
+      "estimatedMinutesHint": "该区域地址的总预计送达时间（备餐 + 路程）。顾客在结账时看到这个数字，它决定“稍后配送”的最早时段——它会覆盖配送服务的默认预计时间。合理值为 30–60 分钟，而非仅路程时间。"
     },
     "reservations": {
       "title": "预订",

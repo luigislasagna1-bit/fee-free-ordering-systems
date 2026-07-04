@@ -192,7 +192,7 @@
     "no": "Ei",
     "addExtra": "Lisää ekstra",
     "free": "Ilmainen",
-    "deliveryAreaHint": "{zone} · ~{minutes} min ajomatka",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Huomio: Osoitteesi on vakiotoimitusvyöhykkeidemme ulkopuolella. Teemme parhaamme, mutta odota pidempää odotusaikaa tai soitto meiltä. Maksu: {fee}, Arvioitu aika: ~{minutes} min.",
     "size": "Koko",
     "required": "Pakollinen",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Kampanjakoodi",
     "noNotes": "Ei muistiinpanoja",
     "locatingAddress": "Paikannetaan osoitettasi…",
-    "youreIn": "Olet alueella {zone} — Maksu {fee}, ~{minutes} min ajomatka meiltä.",
+    "youreIn": "Olet {zone} alueella — Maksu {fee}, ~{minutes} min.",
     "outsideStandard": "Vakiotoimitusvyöhykkeidemme ulkopuolella.",
     "freeDelivery": "Ilmainen toimitus",
     "aptUnitPlaceholder": "Asunto / huoneisto (valinnainen)",
@@ -1139,7 +1139,8 @@
         "colShow": "Näytä",
         "colRequired": "Pakollinen",
         "saved": "Toimitusosoitelomake päivitetty"
-      }
+      },
+      "estimatedMinutesHint": "Alueen osoitteiden KOKONAISarvio toimitusajasta (valmistus + matka). Asiakkaat näkevät tämän kassalla ja se määrää varhaisimman \"tilaa myöhemmäksi\" -ajan — se ohittaa toimituspalvelun oletusarvion. Realistinen arvo on 30–60 min, ei pelkkä ajomatka."
     },
     "reservations": {
       "title": "Varaukset",

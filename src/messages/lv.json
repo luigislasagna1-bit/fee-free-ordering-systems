@@ -192,7 +192,7 @@
     "no": "Bez",
     "addExtra": "Pievienot papildus",
     "free": "Bezmaksas",
-    "deliveryAreaHint": "{zone} · ~{minutes} min brauciens",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Uzmanību: jūsu adrese atrodas ārpus mūsu standarta piegādes zonām. Darīsim visu iespējamo, taču sagaidiet ilgāku gaidīšanas laiku vai zvanu. Maksa: {fee}, ETA: ~{minutes} min.",
     "size": "Izmērs",
     "required": "Obligāts",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Akcijas kods",
     "noNotes": "Nav piezīmju",
     "locatingAddress": "Atrod jūsu adresi…",
-    "youreIn": "Jūs esat zonā {zone} — Maksa {fee}, ~{minutes} min brauciena no mums.",
+    "youreIn": "Jūs atrodaties {zone} — Maksa {fee}, ~{minutes} min.",
     "outsideStandard": "Ārpus mūsu standarta piegādes zonām.",
     "freeDelivery": "Bezmaksas piegāde",
     "aptUnitPlaceholder": "Dzīvoklis / vienība / birojs (neobligāti)",
@@ -1139,7 +1139,8 @@
         "colShow": "Rādīt",
         "colRequired": "Obligāts",
         "saved": "Piegādes adreses forma atjaunināta"
-      }
+      },
+      "estimatedMinutesHint": "KOPĒJAIS aplēstais piegādes laiks (gatavošana + ceļš) šīs zonas adresēm. Klienti šo skaitli redz norēķinos, un tas nosaka agrāko \"pasūtīt vēlāk\" laiku — tas aizstāj piegādes pakalpojuma noklusējuma aplēsi. Reāla vērtība ir 30–60 min, ne tikai ceļš."
     },
     "reservations": {
       "title": "Rezervācijas",

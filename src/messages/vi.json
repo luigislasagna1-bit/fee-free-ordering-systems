@@ -192,7 +192,7 @@
     "no": "Không",
     "addExtra": "Thêm phần",
     "free": "Miễn phí",
-    "deliveryAreaHint": "{zone} · ~{minutes} phút lái xe",
+    "deliveryAreaHint": "{zone} · ~{minutes} phút",
     "outsideAreaHeadsUp": "Lưu ý: Địa chỉ của bạn ngoài khu vực giao hàng tiêu chuẩn. Chúng tôi sẽ cố gắng, nhưng có thể mất nhiều thời gian hơn hoặc có thể có cuộc gọi xác nhận. Phí: {fee}, dự kiến: ~{minutes} phút.",
     "size": "Kích cỡ",
     "required": "Bắt buộc",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Mã khuyến mãi",
     "noNotes": "Không có ghi chú",
     "locatingAddress": "Đang định vị địa chỉ…",
-    "youreIn": "Bạn ở {zone} — Phí {fee}, ~{minutes} phút lái xe từ nhà hàng.",
+    "youreIn": "Bạn ở {zone} — Phí {fee}, ~{minutes} phút.",
     "outsideStandard": "Ngoài khu vực giao hàng tiêu chuẩn.",
     "freeDelivery": "Miễn phí giao hàng",
     "aptUnitPlaceholder": "Căn hộ / Phòng / Suite (tùy chọn)",
@@ -1139,7 +1139,8 @@
         "colShow": "Hiển thị",
         "colRequired": "Bắt buộc",
         "saved": "Đã cập nhật biểu mẫu địa chỉ giao hàng"
-      }
+      },
+      "estimatedMinutesHint": "TỔNG thời gian giao hàng ước tính (chuẩn bị + di chuyển) cho địa chỉ trong khu vực này. Khách hàng thấy con số này khi thanh toán và nó quyết định khung \"đặt cho sau\" sớm nhất — nó thay thế ước tính mặc định của dịch vụ giao hàng. Giá trị hợp lý là 30–60 phút, không chỉ thời gian di chuyển."
     },
     "reservations": {
       "title": "Đặt bàn",

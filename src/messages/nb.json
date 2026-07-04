@@ -192,7 +192,7 @@
     "no": "Uten",
     "addExtra": "Legg til ekstra",
     "free": "Gratis",
-    "deliveryAreaHint": "{zone} · ~{minutes} min kjøring",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Merk: Adressen din er utenfor våre vanlige leveringsområder. Vi gjør vårt beste, men forvent lengre ventetid eller oppfølgingssamtale. Gebyr: {fee}, estimert tid: ~{minutes} min.",
     "size": "Størrelse",
     "required": "Påkrevd",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Kampanjekode",
     "noNotes": "Ingen notater",
     "locatingAddress": "Finner adressen din…",
-    "youreIn": "Du er i {zone} — Gebyr {fee}, ~{minutes} min kjøring fra oss.",
+    "youreIn": "Du er i {zone} — Gebyr {fee}, ~{minutes} min.",
     "outsideStandard": "Utenfor våre vanlige leveringsområder.",
     "freeDelivery": "Gratis levering",
     "aptUnitPlaceholder": "Leilighet / enhet / suite (valgfritt)",
@@ -1139,7 +1139,8 @@
         "colShow": "Vis",
         "colRequired": "Påkrevd",
         "saved": "Skjema for leveringsadresse oppdatert"
-      }
+      },
+      "estimatedMinutesHint": "TOTAL estimert leveringstid (tilberedning + kjøring) for adresser i denne sonen. Kundene ser dette tallet i kassen, og det setter tidligste \"bestill til senere\"-tidspunkt — det overstyrer leveringstjenestens standardtid. En realistisk verdi er 30–60 min, ikke bare kjøretiden."
     },
     "reservations": {
       "title": "Reservasjoner",

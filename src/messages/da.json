@@ -192,7 +192,7 @@
     "no": "Ingen",
     "addExtra": "Tilføj ekstra",
     "free": "Gratis",
-    "deliveryAreaHint": "{zone} · ~{minutes} min kørsel",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Bemærk: Din adresse er uden for vores standard leveringsområder. Vi gør vores bedste, men forvent længere ventetid eller et opfølgende opkald. Gebyr: {fee}, ETA: ~{minutes} min.",
     "size": "Størrelse",
     "required": "Påkrævet",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Kampagnekode",
     "noNotes": "Ingen noter",
     "locatingAddress": "Finder din adresse…",
-    "youreIn": "Du er i {zone} — Gebyr {fee}, ~{minutes} min kørsel fra os.",
+    "youreIn": "Du er i {zone} — Gebyr {fee}, ~{minutes} min.",
     "outsideStandard": "Uden for vores standard leveringsområder.",
     "freeDelivery": "Gratis levering",
     "aptUnitPlaceholder": "Lejlighed / Enhed / Suite (valgfrit)",
@@ -1139,7 +1139,8 @@
         "colShow": "Vis",
         "colRequired": "Påkrævet",
         "saved": "Formular til leveringsadresse opdateret"
-      }
+      },
+      "estimatedMinutesHint": "SAMLET anslået leveringstid (tilberedning + kørsel) for adresser i denne zone. Kunder ser dette tal ved checkout, og det sætter det tidligste \"bestil til senere\"-tidspunkt — det tilsidesætter leveringstjenestens standardtid. En realistisk værdi er 30–60 min., ikke kun køretiden."
     },
     "reservations": {
       "title": "Reservationer",

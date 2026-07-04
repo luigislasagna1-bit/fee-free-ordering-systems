@@ -192,7 +192,7 @@
     "no": "Nej",
     "addExtra": "Lägg till extra",
     "free": "Gratis",
-    "deliveryAreaHint": "{zone} · ~{minutes} min körning",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Obs: Din adress ligger utanför våra vanliga leveransområden. Vi gör vårt bästa, men räkna med längre väntetid eller ett uppföljningssamtal. Avgift: {fee}, ETA: ~{minutes} min.",
     "size": "Storlek",
     "required": "Obligatorisk",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Kampanjkod",
     "noNotes": "Inga anteckningar",
     "locatingAddress": "Hittar din adress…",
-    "youreIn": "Du är i {zone} — Avgift {fee}, ~{minutes} min körning från oss.",
+    "youreIn": "Du är i {zone} — Avgift {fee}, ~{minutes} min.",
     "outsideStandard": "Utanför våra vanliga leveransområden.",
     "freeDelivery": "Gratis leverans",
     "aptUnitPlaceholder": "Lägenhet / enhet / svit (valfritt)",
@@ -1139,7 +1139,8 @@
         "colShow": "Visa",
         "colRequired": "Obligatoriskt",
         "saved": "Formuläret för leveransadress har uppdaterats"
-      }
+      },
+      "estimatedMinutesHint": "TOTAL beräknad leveranstid (tillagning + resa) för adresser i denna zon. Kunder ser detta värde i kassan och det styr den tidigaste \"beställ till senare\"-tiden — det ersätter leveranstjänstens standardtid. Ett realistiskt värde är 30–60 min, inte bara körtiden."
     },
     "reservations": {
       "title": "Reservationer",

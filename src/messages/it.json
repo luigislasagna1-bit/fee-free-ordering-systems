@@ -191,7 +191,7 @@
     "no": "Senza",
     "addExtra": "Aggiungi Extra",
     "free": "Gratis",
-    "deliveryAreaHint": "{zone} · ~{minutes} min di strada",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Attenzione: il tuo indirizzo è fuori dalla nostra zona di consegna standard. Faremo del nostro meglio, ma aspettati tempi più lunghi o una telefonata. Costo: {fee}, ETA: ~{minutes} min.",
     "size": "Taglia",
     "required": "Obbligatorio",
@@ -471,7 +471,7 @@
     "couponCodePlaceholder": "Codice promozionale",
     "noNotes": "Nessuna nota",
     "locatingAddress": "Localizzazione del tuo indirizzo…",
-    "youreIn": "Sei nella zona {zone} — Costo {fee}, ~{minutes} min di strada da noi.",
+    "youreIn": "Sei in {zone} — Costo {fee}, ~{minutes} min.",
     "outsideStandard": "Fuori dalla nostra zona di consegna standard.",
     "cardOnPickup": "Carta al ritiro",
     "cardOnDelivery": "Carta alla consegna",
@@ -1139,7 +1139,8 @@
         "colShow": "Mostra",
         "colRequired": "Obbligatorio",
         "saved": "Modulo indirizzo di consegna aggiornato"
-      }
+      },
+      "estimatedMinutesHint": "Tempo TOTALE stimato di consegna (preparazione + tragitto) per gli indirizzi di questa zona. I clienti vedono questo numero al checkout e determina il primo orario disponibile \"per dopo\" — sostituisce il tempo stimato predefinito del servizio di consegna. Un valore realistico è 30–60 min, non il solo tragitto."
     },
     "reservations": {
       "title": "Prenotazioni",

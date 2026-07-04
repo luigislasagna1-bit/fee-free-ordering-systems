@@ -191,7 +191,7 @@
     "no": "Sem",
     "addExtra": "Adicionar Extra",
     "free": "Grátis",
-    "deliveryAreaHint": "{zone} · ~{minutes} min de viagem",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Atenção: seu endereço está fora da nossa área de entrega padrão. Faremos o possível, mas espere maior demora ou uma ligação. Taxa: {fee}, ETA: ~{minutes} min.",
     "size": "Tamanho",
     "required": "Obrigatório",
@@ -471,7 +471,7 @@
     "couponCodePlaceholder": "Código promocional",
     "noNotes": "Sem notas",
     "locatingAddress": "Localizando seu endereço…",
-    "youreIn": "Está em {zone} — Taxa {fee}, ~{minutes} min de viagem desde o restaurante.",
+    "youreIn": "Você está em {zone} — Taxa {fee}, ~{minutes} min.",
     "outsideStandard": "Fora da nossa área de entrega padrão.",
     "cardOnPickup": "Cartão na retirada",
     "cardOnDelivery": "Cartão na entrega",
@@ -1139,7 +1139,8 @@
         "colShow": "Mostrar",
         "colRequired": "Obrigatório",
         "saved": "Formulário de morada de entrega atualizado"
-      }
+      },
+      "estimatedMinutesHint": "Tempo TOTAL estimado de entrega (preparação + percurso) para moradas nesta zona. Os clientes veem este número no checkout e ele define o primeiro horário \"para mais tarde\" — substitui o tempo estimado padrão do serviço de entrega. Um valor realista é 30–60 min, não apenas o percurso."
     },
     "reservations": {
       "title": "Reservas",

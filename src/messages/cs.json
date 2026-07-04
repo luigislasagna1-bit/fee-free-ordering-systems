@@ -192,7 +192,7 @@
     "no": "Bez",
     "addExtra": "Přidat extra",
     "free": "Zdarma",
-    "deliveryAreaHint": "{zone} · ~{minutes} min jízdy",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Upozornění: Vaše adresa je mimo naše standardní oblasti doručení. Uděláme vše, co je v našich silách, ale očekávejte delší čekání nebo zpětný hovor. Poplatek: {fee}, předpokládaný čas: ~{minutes} min.",
     "size": "Velikost",
     "required": "Povinné",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Promo kód",
     "noNotes": "Žádné poznámky",
     "locatingAddress": "Vyhledávání vaší adresy…",
-    "youreIn": "Jste v {zone} — Poplatek {fee}, ~{minutes} min jízdy od nás.",
+    "youreIn": "Jste v {zone} — poplatek {fee}, ~{minutes} min.",
     "outsideStandard": "Mimo naše standardní oblasti doručení.",
     "freeDelivery": "Doručení zdarma",
     "aptUnitPlaceholder": "Byt / Jednotka / Suite (volitelné)",
@@ -1139,7 +1139,8 @@
         "colShow": "Zobrazit",
         "colRequired": "Povinné",
         "saved": "Formulář doručovací adresy byl aktualizován"
-      }
+      },
+      "estimatedMinutesHint": "CELKOVÝ odhad doby doručení (příprava + cesta) pro adresy v této zóně. Zákazníci toto číslo vidí u pokladny a určuje nejbližší slot \"na později\" — přepisuje výchozí odhad doručovací služby. Realistická hodnota je 30–60 min, ne jen cesta."
     },
     "reservations": {
       "title": "Rezervace",

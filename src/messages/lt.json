@@ -192,7 +192,7 @@
     "no": "Be",
     "addExtra": "Pridėti priedą",
     "free": "Nemokama",
-    "deliveryAreaHint": "{zone} · ~{minutes} min kelio",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Dėmesio: jūsų adresas yra už mūsų standartinių pristatymo zonų. Stengsiamės pristatyti, tačiau tikėkitės ilgesnio laukimo arba papildomo skambučio. Mokestis: {fee}, ETA: ~{minutes} min.",
     "size": "Dydis",
     "required": "Privaloma",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Akcijos kodas",
     "noNotes": "Nėra pastabų",
     "locatingAddress": "Ieškoma jūsų adreso…",
-    "youreIn": "Esate zonoje {zone} — Mokestis {fee}, ~{minutes} min kelio nuo mūsų.",
+    "youreIn": "Jūs esate zonoje {zone} — Mokestis {fee}, ~{minutes} min.",
     "outsideStandard": "Už standartinių pristatymo zonų.",
     "freeDelivery": "Nemokamas pristatymas",
     "aptUnitPlaceholder": "Butas / Patalpa / Apartamentai (neprivaloma)",
@@ -1139,7 +1139,8 @@
         "colShow": "Rodyti",
         "colRequired": "Privaloma",
         "saved": "Pristatymo adreso forma atnaujinta"
-      }
+      },
+      "estimatedMinutesHint": "BENDRAS numatomas pristatymo laikas (paruošimas + kelias) šios zonos adresams. Klientai šį skaičių mato atsiskaitydami, jis nustato anksčiausią \"užsakyti vėliau\" laiką — jis pakeičia numatytą pristatymo paslaugos įvertį. Reali reikšmė — 30–60 min., ne vien kelionė."
     },
     "reservations": {
       "title": "Rezervacijos",

@@ -192,7 +192,7 @@
     "no": "Hayır",
     "addExtra": "Ekstra Ekle",
     "free": "Ücretsiz",
-    "deliveryAreaHint": "{zone} · ~{minutes} dk sürüş",
+    "deliveryAreaHint": "{zone} · ~{minutes} dk",
     "outsideAreaHeadsUp": "Dikkat: Adresiniz standart teslimat bölgelerimiz dışında. Elimizden geleni yapacağız, ancak daha uzun bir bekleme veya geri arama bekleyin. Ücret: {fee}, Tahmini süre: ~{minutes} dk.",
     "size": "Boyut",
     "required": "Zorunlu",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Promosyon kodu",
     "noNotes": "Not yok",
     "locatingAddress": "Adresiniz bulunuyor…",
-    "youreIn": "{zone} bölgesindesiniz — Ücret {fee}, bizden ~{minutes} dk sürüş.",
+    "youreIn": "{zone} bölgesindesiniz — Ücret {fee}, ~{minutes} dk.",
     "outsideStandard": "Standart teslimat bölgelerimiz dışında.",
     "freeDelivery": "Ücretsiz teslimat",
     "aptUnitPlaceholder": "Daire / Birim / Kat (isteğe bağlı)",
@@ -1139,7 +1139,8 @@
         "colShow": "Göster",
         "colRequired": "Zorunlu",
         "saved": "Teslimat adresi formu güncellendi"
-      }
+      },
+      "estimatedMinutesHint": "Bu bölgedeki adresler için TOPLAM tahmini teslimat süresi (hazırlık + yol). Müşteriler bu sayıyı ödeme sırasında görür ve en erken \"sonrası için sipariş\" saatini belirler — teslimat hizmetinin varsayılan tahminini geçersiz kılar. Gerçekçi değer 30–60 dk'dır, yalnızca yol süresi değil."
     },
     "reservations": {
       "title": "Rezervasyonlar",

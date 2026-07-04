@@ -192,7 +192,7 @@
     "no": "Ei",
     "addExtra": "Lisa lisand",
     "free": "Tasuta",
-    "deliveryAreaHint": "{zone} · ~{minutes} min sõitu",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Tähelepanu: Sinu aadress asub väljaspool meie standardseid tarnepiirkondi. Teeme kõik endast oleneva, kuid arvestage pikema ooteajaga või järgneva telefonikõnega. Tasu: {fee}, ETA: ~{minutes} min.",
     "size": "Suurus",
     "required": "Nõutav",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Promokood",
     "noNotes": "Märkusi pole",
     "locatingAddress": "Sinu aadressi otsimine…",
-    "youreIn": "Olete tsoonis {zone} — Tasu {fee}, ~{minutes} min sõitu meist.",
+    "youreIn": "Sa oled piirkonnas {zone} — Tasu {fee}, ~{minutes} min.",
     "outsideStandard": "Väljaspool meie standardseid tarnepiirkondi.",
     "freeDelivery": "Tasuta kohaletoimetamine",
     "aptUnitPlaceholder": "Korter / üksus / sviit (valikuline)",
@@ -1139,7 +1139,8 @@
         "colShow": "Kuva",
         "colRequired": "Kohustuslik",
         "saved": "Tarneaadressi vorm on uuendatud"
-      }
+      },
+      "estimatedMinutesHint": "KOGU hinnanguline tarneaeg (valmistamine + sõit) selle tsooni aadressidele. Kliendid näevad seda numbrit kassas ja see määrab varaseima \"telli hiljemaks\" aja — see asendab tarneteenuse vaikimisi hinnangu. Realistlik väärtus on 30–60 min, mitte ainult sõiduaeg."
     },
     "reservations": {
       "title": "Broneeringud",

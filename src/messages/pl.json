@@ -192,7 +192,7 @@
     "no": "Bez",
     "addExtra": "Dodaj ekstra",
     "free": "Bezpłatne",
-    "deliveryAreaHint": "{zone} · ~{minutes} min jazdy",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Uwaga: Twój adres jest poza naszymi standardowymi strefami dostawy. Postaramy się, ale spodziewaj się dłuższego czasu oczekiwania lub telefonu od nas. Opłata: {fee}, szacowany czas: ~{minutes} min.",
     "size": "Rozmiar",
     "required": "Wymagane",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Kod promocyjny",
     "noNotes": "Brak uwag",
     "locatingAddress": "Lokalizowanie adresu…",
-    "youreIn": "Jesteś w {zone} — Opłata {fee}, ~{minutes} min jazdy od nas.",
+    "youreIn": "Jesteś w strefie {zone} — Opłata {fee}, ~{minutes} min.",
     "outsideStandard": "Poza naszymi standardowymi strefami dostawy.",
     "freeDelivery": "Bezpłatna dostawa",
     "aptUnitPlaceholder": "Numer lokalu / mieszkania (opcjonalnie)",
@@ -1139,7 +1139,8 @@
         "colShow": "Pokaż",
         "colRequired": "Wymagane",
         "saved": "Zaktualizowano formularz adresu dostawy"
-      }
+      },
+      "estimatedMinutesHint": "CAŁKOWITY szacowany czas dostawy (przygotowanie + dojazd) dla adresów w tej strefie. Klienci widzą tę liczbę przy kasie i wyznacza ona najwcześniejszy termin \"na później\" — zastępuje domyślny szacowany czas usługi dostawy. Realistyczna wartość to 30–60 min, nie sam dojazd."
     },
     "reservations": {
       "title": "Rezerwacje",

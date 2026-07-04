@@ -192,7 +192,7 @@
     "no": "Nee",
     "addExtra": "Extra toevoegen",
     "free": "Gratis",
-    "deliveryAreaHint": "{zone} · ~{minutes} min rijden",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Let op: uw adres valt buiten onze standaard bezorggebieden. We doen ons best, maar verwacht een langere wachttijd of een terugbelverzoek. Kosten: {fee}, ETA: ~{minutes} min.",
     "size": "Maat",
     "required": "Verplicht",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Promocode",
     "noNotes": "Geen opmerkingen",
     "locatingAddress": "Adres opzoeken…",
-    "youreIn": "Je zit in {zone} — Kosten {fee}, ~{minutes} min rijden vanaf ons.",
+    "youreIn": "U bent in {zone} — Kosten {fee}, ~{minutes} min.",
     "outsideStandard": "Buiten onze standaard bezorggebieden.",
     "freeDelivery": "Gratis bezorging",
     "aptUnitPlaceholder": "Appartement / eenheid / suite (optioneel)",
@@ -1139,7 +1139,8 @@
         "colShow": "Tonen",
         "colRequired": "Verplicht",
         "saved": "Formulier voor bezorgadres bijgewerkt"
-      }
+      },
+      "estimatedMinutesHint": "TOTALE geschatte bezorgtijd (bereiding + rit) voor adressen in deze zone. Klanten zien dit getal bij het afrekenen en het bepaalt het vroegste \"later bestellen\"-tijdstip — het vervangt de standaard geschatte tijd van de bezorgservice. Realistisch is 30–60 min, niet alleen de rijtijd."
     },
     "reservations": {
       "title": "Reserveringen",

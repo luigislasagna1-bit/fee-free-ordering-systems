@@ -192,7 +192,7 @@
     "no": "なし",
     "addExtra": "エクストラを追加",
     "free": "無料",
-    "deliveryAreaHint": "{zone} · 車で約 {minutes} 分",
+    "deliveryAreaHint": "{zone} · 約{minutes}分",
     "outsideAreaHeadsUp": "注意: ご住所は通常のデリバリーエリア外です。できる限り対応しますが、通常より時間がかかるか、確認のお電話をする場合があります。料金: {fee}、目安: 約{minutes}分。",
     "size": "サイズ",
     "required": "必須",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "プロモコード",
     "noNotes": "備考なし",
     "locatingAddress": "住所を確認中…",
-    "youreIn": "{zone} 内です — 料金 {fee}、当店から車で約 {minutes} 分。",
+    "youreIn": "{zone} エリア内 — 料金 {fee}、約{minutes}分",
     "outsideStandard": "通常のデリバリーエリア外です。",
     "freeDelivery": "配達無料",
     "aptUnitPlaceholder": "部屋番号・号室（任意）",
@@ -1139,7 +1139,8 @@
         "colShow": "表示",
         "colRequired": "必須",
         "saved": "配達先住所フォームを更新しました"
-      }
+      },
+      "estimatedMinutesHint": "このゾーンの住所への合計配達予測時間（調理＋移動）。お客様は会計時にこの数字を目にし、「後で注文」の最も早い時間枠を決めます。配達サービスの既定の予測時間より優先されます。現実的な値は 30–60 分で、移動時間だけではありません。"
     },
     "reservations": {
       "title": "予約",

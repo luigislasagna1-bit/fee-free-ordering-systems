@@ -192,7 +192,7 @@
     "no": "Sense",
     "addExtra": "Afegir extra",
     "free": "Gratis",
-    "deliveryAreaHint": "{zone} · ~{minutes} min en cotxe",
+    "deliveryAreaHint": "{zone} · ~{minutes} min",
     "outsideAreaHeadsUp": "Atenció: La vostra adreça és fora de les nostres zones de lliurament estàndard. Ho intentarem, però espereu un temps d'espera més llarg o una trucada de seguiment. Tarifa: {fee}, ETA: ~{minutes} min.",
     "size": "Mida",
     "required": "Obligatori",
@@ -473,7 +473,7 @@
     "couponCodePlaceholder": "Codi promocional",
     "noNotes": "Sense notes",
     "locatingAddress": "Localitzant la vostra adreça…",
-    "youreIn": "Ets a {zone} — Tarifa {fee}, ~{minutes} min en cotxe des d'aquí.",
+    "youreIn": "Sou a {zone} — Tarifa {fee}, ~{minutes} min.",
     "outsideStandard": "Fora de les nostres zones de lliurament estàndard.",
     "freeDelivery": "Lliurament gratuït",
     "aptUnitPlaceholder": "Pis / Unitat / Suite (opcional)",
@@ -1139,7 +1139,8 @@
         "colShow": "Mostra",
         "colRequired": "Obligatori",
         "saved": "Formulari d'adreça de lliurament actualitzat"
-      }
+      },
+      "estimatedMinutesHint": "Temps TOTAL estimat de lliurament (preparació + trajecte) per a les adreces d'aquesta zona. Els clients veuen aquest número en pagar i fixa la primera franja \"per a més tard\" — substitueix el temps estimat per defecte del servei. Un valor realista és 30–60 min, no només el trajecte."
     },
     "reservations": {
       "title": "Reserves",
