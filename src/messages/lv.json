@@ -5895,7 +5895,11 @@
       "backStep": "Atpakaļ",
       "leaveTitle": "Pamest nepabeigtu piedāvājumu?",
       "keepBuilding": "Turpināt",
-      "leaveAnyway": "Iziet"
+      "leaveAnyway": "Iziet",
+      "slotLabelPickN": "Izvēlies {count} produktus",
+      "hintPickCounts": "Izvēlies {count} produktus — tad savu bezmaksas produktu.",
+      "addOneMoreAria": "Pievienot vienu {name}",
+      "removeOneAria": "Noņemt vienu {name}"
     }
   },
   "dunning": {

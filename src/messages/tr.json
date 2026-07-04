@@ -5895,7 +5895,11 @@
       "backStep": "Geri",
       "leaveTitle": "Fırsatı yarım mı bırakıyorsunuz?",
       "keepBuilding": "Devam et",
-      "leaveAnyway": "Ayrıl"
+      "leaveAnyway": "Ayrıl",
+      "slotLabelPickN": "{count} ürün seçin",
+      "hintPickCounts": "{count} ürün seçin — sonra ücretsiz ürününüzü seçin.",
+      "addOneMoreAria": "Bir {name} ekle",
+      "removeOneAria": "Bir {name} çıkar"
     }
   },
   "dunning": {

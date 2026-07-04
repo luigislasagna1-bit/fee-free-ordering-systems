@@ -5895,7 +5895,11 @@
       "backStep": "Enrere",
       "leaveTitle": "Sortir sense acabar l'oferta?",
       "keepBuilding": "Continua",
-      "leaveAnyway": "Surt"
+      "leaveAnyway": "Surt",
+      "slotLabelPickN": "Tria {count} articles",
+      "hintPickCounts": "Tria {count} articles — després el teu article gratuït.",
+      "addOneMoreAria": "Afegeix un {name}",
+      "removeOneAria": "Treu un {name}"
     }
   },
   "dunning": {

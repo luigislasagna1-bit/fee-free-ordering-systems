@@ -5895,7 +5895,11 @@
       "backStep": "Zpět",
       "leaveTitle": "Odejít bez dokončení nabídky?",
       "keepBuilding": "Pokračovat",
-      "leaveAnyway": "Odejít"
+      "leaveAnyway": "Odejít",
+      "slotLabelPickN": "Vyberte {count} položky",
+      "hintPickCounts": "Vyberte {count} položky — pak svou položku zdarma.",
+      "addOneMoreAria": "Přidat jeden {name}",
+      "removeOneAria": "Odebrat jeden {name}"
     }
   },
   "dunning": {

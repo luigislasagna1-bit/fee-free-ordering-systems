@@ -5895,7 +5895,11 @@
       "backStep": "Назад",
       "leaveTitle": "Залишити пропозицію незавершеною?",
       "keepBuilding": "Продовжити",
-      "leaveAnyway": "Вийти"
+      "leaveAnyway": "Вийти",
+      "slotLabelPickN": "Виберіть {count} позиції",
+      "hintPickCounts": "Виберіть {count} позиції — потім безкоштовну.",
+      "addOneMoreAria": "Додати один {name}",
+      "removeOneAria": "Прибрати один {name}"
     }
   },
   "dunning": {

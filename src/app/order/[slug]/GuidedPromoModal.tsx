@@ -195,23 +195,28 @@ export function GuidedPromoModal({
     onComplete(flat, promoName);
   }
 
+  /** Occurrences of a token in a slot — multi-pick slots allow the SAME
+   *  item/size several times (Luigi 2026-07-03: "buy 3 pastas" may well be
+   *  the same pasta ×3). */
+  function countOf(slotIndex: number, token: Pick) {
+    return (picks[slotIndex] ?? []).filter((p) => sameToken(p, token)).length;
+  }
+
   function togglePick(slotIndex: number, token: Pick) {
     // Compute the next picks OUTSIDE setState so the wizard can decide the
     // follow-up (advance / auto-complete) on the same values it stores.
     const next = groups.map((_, i) => (picks[i] ?? []).map((p) => ({ ...p })));
     const current = next[slotIndex];
     const max = slotMax(slotIndex);
-    const idx = current.findIndex((p) => sameToken(p, token));
-    if (idx >= 0) {
-      current.splice(idx, 1);
-    } else if (current.length >= max) {
-      // Single-pick slot → replace. Multi-pick at cap → ignore the click.
-      if (max === 1) {
-        next[slotIndex] = [token];
-      } else {
-        return;
-      }
+    if (max === 1) {
+      // Single-pick slot: tap = select (replace); tapping the SAME token
+      // deselects.
+      const idx = current.findIndex((p) => sameToken(p, token));
+      next[slotIndex] = idx >= 0 ? [] : [token];
     } else {
+      // Multi-pick slot: every tap ADDS one more of that token (duplicates
+      // welcome) until the cap; removal is the row's − control.
+      if (current.length >= max) return;
       current.push(token);
     }
     setPicks(next);
@@ -229,6 +234,16 @@ export function GuidedPromoModal({
     if (nextUnfinished >= 0) goToStep(nextUnfinished);
   }
 
+  /** Remove ONE occurrence of a token from a multi-pick slot. */
+  function removeOnePick(slotIndex: number, token: Pick) {
+    setPicks((prev) => {
+      const next = groups.map((_, i) => (prev[i] ?? []).map((p) => ({ ...p })));
+      const idx = next[slotIndex].findIndex((p) => sameToken(p, token));
+      if (idx >= 0) next[slotIndex].splice(idx, 1);
+      return next;
+    });
+  }
+
   function handleAdd() {
     if (!allSatisfied) return;
     completeWith(picks);
@@ -240,7 +255,14 @@ export function GuidedPromoModal({
     const chosen = picks[i] ?? [];
     if (chosen.length === 0) {
       const free = isFreeSlot[i];
-      return groups[i].label?.trim() || (free ? t("freeSlotLabel") : t("slotLabelFallback", { n: i + 1 }));
+      return (
+        groups[i].label?.trim() ||
+        (free
+          ? t("freeSlotLabel")
+          : slotMin(i) > 1
+            ? t("slotLabelPickN", { count: slotMin(i) })
+            : t("slotLabelFallback", { n: i + 1 }))
+      );
     }
     const first = allMenuItems.find((m) => m.id === chosen[0].menuItemId);
     const variant = first?.variants?.find((v) => v.id === chosen[0].variantId);
@@ -254,11 +276,20 @@ export function GuidedPromoModal({
     if (pct >= 100) return pricier ? t("hintBogoPricierFree") : t("hintBogoCheaperFree");
     return pricier ? t("hintBogoPricierPct", { pct }) : t("hintBogoCheaperPct", { pct });
   })();
+  // Count-aware headline (Luigi 2026-07-03): "Pick one from each group" reads
+  // wrong for a min-3 group ("Buy 3 pastas, get 1 pizza free"). When any
+  // non-free group needs more than one pick, say so with the real number.
+  const multiPickMin = groups.reduce(
+    (best, g, i) => (!isFreeSlot[i] && slotMin(i) > best ? slotMin(i) : best),
+    1,
+  );
   const benefitHint =
-    promotionType === "bogo" ? bogoHint
-    : promotionType === "buy_n_get_free" ? t("hintBuyNGetFree")
-    : promotionType === "free_dish_meal" ? t("hintFreeDishMeal")
-    : t("hintCombo");
+    multiPickMin > 1 && (promotionType === "buy_n_get_free" || promotionType === "free_dish_meal")
+      ? t("hintPickCounts", { count: multiPickMin })
+      : promotionType === "bogo" ? bogoHint
+      : promotionType === "buy_n_get_free" ? t("hintBuyNGetFree")
+      : promotionType === "free_dish_meal" ? t("hintFreeDishMeal")
+      : t("hintCombo");
 
   return (
     <div
@@ -368,9 +399,14 @@ export function GuidedPromoModal({
               const picked = picks[slotIndex] ?? [];
               const complete = slotSatisfied(slotIndex);
               const free = isFreeSlot[slotIndex];
+              const isMulti = max > 1;
+              // Count-aware fallback (Luigi 2026-07-03): a min-3 group must say
+              // "Pick 3 items", not "Choose item 1".
               const fallbackLabel = free
                 ? t("freeSlotLabel")
-                : t("slotLabelFallback", { n: slotIndex + 1 });
+                : min > 1
+                  ? t("slotLabelPickN", { count: min })
+                  : t("slotLabelFallback", { n: slotIndex + 1 });
               return (
                 <div key={group.id ?? slotIndex}>
                   <div className="flex items-center justify-between mb-2 gap-2">
@@ -432,36 +468,56 @@ export function GuidedPromoModal({
                               <div className="flex flex-wrap gap-1.5">
                                 {variants.map((v) => {
                                   const token: Pick = { menuItemId: item.id, variantId: v.id };
-                                  const isPicked = picked.some((p) => sameToken(p, token));
+                                  const n = countOf(slotIndex, token);
+                                  const isPicked = n > 0;
                                   return (
-                                    <button
-                                      key={v.id}
-                                      type="button"
-                                      onClick={() => togglePick(slotIndex, token)}
-                                      className="text-xs font-semibold px-2.5 py-1 rounded-full border-2 transition"
-                                      style={
-                                        isPicked
-                                          ? { borderColor: primaryColor, backgroundColor: primaryColor, color: "#fff" }
-                                          : { borderColor: primaryColor, color: primaryColor }
-                                      }
-                                    >
-                                      {v.name}
-                                      {!free && ` · ${formatCurrency(v.price)}`}
-                                    </button>
+                                    <span key={v.id} className="inline-flex items-center gap-1">
+                                      <button
+                                        type="button"
+                                        onClick={() => togglePick(slotIndex, token)}
+                                        aria-label={t("addOneMoreAria", { name: `${item.name} ${v.name}` })}
+                                        className="text-xs font-semibold px-2.5 py-1 rounded-full border-2 transition"
+                                        style={
+                                          isPicked
+                                            ? { borderColor: primaryColor, backgroundColor: primaryColor, color: "#fff" }
+                                            : { borderColor: primaryColor, color: primaryColor }
+                                        }
+                                      >
+                                        {v.name}
+                                        {!free && ` · ${formatCurrency(v.price)}`}
+                                        {isMulti && n > 0 && ` ×${n}`}
+                                      </button>
+                                      {/* Multi-pick slots: same size can be picked several
+                                          times; − drops one (Luigi 2026-07-03). */}
+                                      {isMulti && n > 0 && (
+                                        <button
+                                          type="button"
+                                          onClick={() => removeOnePick(slotIndex, token)}
+                                          aria-label={t("removeOneAria", { name: `${item.name} ${v.name}` })}
+                                          className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold border transition hover:bg-gray-50"
+                                          style={{ borderColor: primaryColor, color: primaryColor }}
+                                        >
+                                          −
+                                        </button>
+                                      )}
+                                    </span>
                                   );
                                 })}
                               </div>
                             </div>
                           );
                         }
-                        // Single-price item → one toggle card.
+                        // Single-price item → one toggle card. Multi-pick slots
+                        // count duplicates (×N badge + a − to drop one).
                         const token: Pick = { menuItemId: item.id, variantId: null };
-                        const isPicked = picked.some((p) => sameToken(p, token));
+                        const n = countOf(slotIndex, token);
+                        const isPicked = n > 0;
                         return (
                           <button
                             key={item.id}
                             type="button"
                             onClick={() => togglePick(slotIndex, token)}
+                            aria-label={t("addOneMoreAria", { name: item.name })}
                             className="flex items-center gap-3 p-2 rounded-xl border-2 transition text-left"
                             style={
                               isPicked
@@ -483,7 +539,23 @@ export function GuidedPromoModal({
                                 {free ? t("free") : formatCurrency(item.price)}
                               </div>
                             </div>
-                            {isPicked && <Check className="w-4 h-4 flex-shrink-0" style={{ color: primaryColor }} />}
+                            {isMulti && n > 0 && (
+                              <>
+                                <span className="text-xs font-bold flex-shrink-0" style={{ color: primaryColor }}>×{n}</span>
+                                <span
+                                  role="button"
+                                  tabIndex={0}
+                                  onClick={(e) => { e.stopPropagation(); removeOnePick(slotIndex, token); }}
+                                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.stopPropagation(); removeOnePick(slotIndex, token); } }}
+                                  aria-label={t("removeOneAria", { name: item.name })}
+                                  className="w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold border flex-shrink-0 transition hover:bg-gray-50"
+                                  style={{ borderColor: primaryColor, color: primaryColor }}
+                                >
+                                  −
+                                </span>
+                              </>
+                            )}
+                            {!isMulti && isPicked && <Check className="w-4 h-4 flex-shrink-0" style={{ color: primaryColor }} />}
                           </button>
                         );
                       })}

@@ -5895,7 +5895,11 @@
       "backStep": "Takaisin",
       "leaveTitle": "Poistutko kesken tarjouksen?",
       "keepBuilding": "Jatka",
-      "leaveAnyway": "Poistu"
+      "leaveAnyway": "Poistu",
+      "slotLabelPickN": "Valitse {count} tuotetta",
+      "hintPickCounts": "Valitse {count} tuotetta — sitten ilmainen tuotteesi.",
+      "addOneMoreAria": "Lisää yksi {name}",
+      "removeOneAria": "Poista yksi {name}"
     }
   },
   "dunning": {

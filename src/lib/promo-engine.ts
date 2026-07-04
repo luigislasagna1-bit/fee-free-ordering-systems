@@ -684,15 +684,32 @@ function buyNGetFreeResult(promo: PromoInput, ctx: ApplyContext): { total: numbe
   // discountPercent was discarded and the freebie went 100% off (audit B1).
   const strat = rules.discountStrategy ?? "cheapest";
   const fixedPct = strat === "fixed_percent";
-  return discountNUnitsDetailed(
-    freeItems,
-    multiplier,
-    fixedPct ? "cheapest" : strat,
-    fixedPct ? (rules.discountPercent ?? 0) : (rules.cheapestDiscount ?? 100),
-    // Default 100% (free) like BOGO — was 0%, so the "most expensive item free"
-    // strategy silently discounted nothing (audit dead#2). Luigi 2026-06-27.
-    rules.mostExpensiveDiscount ?? 100,
-  );
+  const effStrategy = fixedPct ? "cheapest" : strat;
+  const cheapPct = fixedPct ? (rules.discountPercent ?? 0) : (rules.cheapestDiscount ?? 100);
+  // Default 100% (free) like BOGO — was 0%, so the "most expensive item free"
+  // strategy silently discounted nothing (audit dead#2). Luigi 2026-06-27.
+  const expPct = rules.mostExpensiveDiscount ?? 100;
+  // Customer-CHOSEN freebies first (wizard-tagged "Free with promo:" lines,
+  // same rule free_item / free_dish_meal already follow): an explicit pick
+  // must never be displaced by a cheaper eligible item that enters the cart
+  // later — Luigi 2026-07-03: the chosen $25 pizza lost its discount to a
+  // $9.99 pizza added afterwards. The configured strategy (cheapest / most
+  // expensive) only decides among UNTAGGED candidates.
+  const taggedPool = freeItems.filter((i) => i.isFreebie);
+  const untaggedPool = freeItems.filter((i) => !i.isFreebie);
+  const taggedUnits = taggedPool.reduce((s, i) => s + i.quantity, 0);
+  const takeTagged = Math.min(multiplier, taggedUnits);
+  const fromTagged = takeTagged > 0
+    ? discountNUnitsDetailed(taggedPool, takeTagged, effStrategy, cheapPct, expPct)
+    : { total: 0, lines: [] as DiscountLine[] };
+  const remainder = multiplier - takeTagged;
+  const fromUntagged = remainder > 0
+    ? discountNUnitsDetailed(untaggedPool, remainder, effStrategy, cheapPct, expPct)
+    : { total: 0, lines: [] as DiscountLine[] };
+  return {
+    total: parseFloat((fromTagged.total + fromUntagged.total).toFixed(2)),
+    lines: [...fromTagged.lines, ...fromUntagged.lines],
+  };
 }
 
 function calcBuyNGetFree(promo: PromoInput, ctx: ApplyContext): number {

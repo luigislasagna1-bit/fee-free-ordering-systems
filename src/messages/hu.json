@@ -5895,7 +5895,11 @@
       "backStep": "Vissza",
       "leaveTitle": "Befejezetlenül hagyja az ajánlatot?",
       "keepBuilding": "Folytatás",
-      "leaveAnyway": "Kilépés"
+      "leaveAnyway": "Kilépés",
+      "slotLabelPickN": "Válasszon {count} tételt",
+      "hintPickCounts": "Válasszon {count} tételt — majd az ingyenes tételét.",
+      "addOneMoreAria": "Egy {name} hozzáadása",
+      "removeOneAria": "Egy {name} eltávolítása"
     }
   },
   "dunning": {

@@ -5895,7 +5895,11 @@
       "backStep": "Wstecz",
       "leaveTitle": "Opuścić niedokończoną ofertę?",
       "keepBuilding": "Kontynuuj",
-      "leaveAnyway": "Wyjdź"
+      "leaveAnyway": "Wyjdź",
+      "slotLabelPickN": "Wybierz {count} pozycje",
+      "hintPickCounts": "Wybierz {count} pozycje — potem darmową pozycję.",
+      "addOneMoreAria": "Dodaj jeden {name}",
+      "removeOneAria": "Usuń jeden {name}"
     }
   },
   "dunning": {

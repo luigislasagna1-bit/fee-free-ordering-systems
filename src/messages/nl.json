@@ -5895,7 +5895,11 @@
       "backStep": "Terug",
       "leaveTitle": "Deze deal onafgemaakt verlaten?",
       "keepBuilding": "Doorgaan",
-      "leaveAnyway": "Verlaten"
+      "leaveAnyway": "Verlaten",
+      "slotLabelPickN": "Kies {count} items",
+      "hintPickCounts": "Kies {count} items — daarna je gratis item.",
+      "addOneMoreAria": "Eén {name} toevoegen",
+      "removeOneAria": "Eén {name} verwijderen"
     }
   },
   "dunning": {

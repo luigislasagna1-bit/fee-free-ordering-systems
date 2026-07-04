@@ -5895,7 +5895,11 @@
       "backStep": "Назад",
       "leaveTitle": "Уйти, не завершив предложение?",
       "keepBuilding": "Продолжить",
-      "leaveAnyway": "Уйти"
+      "leaveAnyway": "Уйти",
+      "slotLabelPickN": "Выберите {count} позиции",
+      "hintPickCounts": "Выберите {count} позиции — затем бесплатную.",
+      "addOneMoreAria": "Добавить один {name}",
+      "removeOneAria": "Убрать один {name}"
     }
   },
   "dunning": {

@@ -5895,7 +5895,11 @@
       "backStep": "Zurück",
       "leaveTitle": "Deal unvollendet verlassen?",
       "keepBuilding": "Weitermachen",
-      "leaveAnyway": "Verlassen"
+      "leaveAnyway": "Verlassen",
+      "slotLabelPickN": "{count} Artikel auswählen",
+      "hintPickCounts": "{count} Artikel wählen — dann Ihren Gratisartikel.",
+      "addOneMoreAria": "Ein {name} hinzufügen",
+      "removeOneAria": "Ein {name} entfernen"
     }
   },
   "dunning": {

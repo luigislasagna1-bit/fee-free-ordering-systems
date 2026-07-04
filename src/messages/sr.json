@@ -5895,7 +5895,11 @@
       "backStep": "Назад",
       "leaveTitle": "Напустити недовршену понуду?",
       "keepBuilding": "Настави",
-      "leaveAnyway": "Изађи"
+      "leaveAnyway": "Изађи",
+      "slotLabelPickN": "Изабери {count} ставке",
+      "hintPickCounts": "Изабери {count} ставке — затим своју бесплатну ставку.",
+      "addOneMoreAria": "Додај један {name}",
+      "removeOneAria": "Уклони један {name}"
     }
   },
   "dunning": {

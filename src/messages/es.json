@@ -5895,7 +5895,11 @@
       "backStep": "Atrás",
       "leaveTitle": "¿Salir sin terminar esta oferta?",
       "keepBuilding": "Seguir",
-      "leaveAnyway": "Salir"
+      "leaveAnyway": "Salir",
+      "slotLabelPickN": "Elige {count} artículos",
+      "hintPickCounts": "Elige {count} artículos y luego tu artículo gratis.",
+      "addOneMoreAria": "Añadir un {name}",
+      "removeOneAria": "Quitar un {name}"
     }
   },
   "dunning": {

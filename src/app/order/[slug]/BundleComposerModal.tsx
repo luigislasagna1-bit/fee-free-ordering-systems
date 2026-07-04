@@ -196,18 +196,14 @@ export function BundleComposerModal({
     const next = picks.map((arr) => [...arr]);
     const max = slotMaxOf(slotIndex);
     const current = next[slotIndex];
-    const idx = current.indexOf(itemId);
-    if (idx >= 0) {
-      current.splice(idx, 1);
-    } else if (current.length >= max) {
-      // Single-pick slot → replace; multi-pick at cap → no-op.
-      if (max === 1) {
-        current.length = 0;
-        current.push(itemId);
-      } else {
-        return;
-      }
+    if (max === 1) {
+      // Single-pick slot: tap = select (replace); tapping the SAME item deselects.
+      const idx = current.indexOf(itemId);
+      next[slotIndex] = idx >= 0 ? [] : [itemId];
     } else {
+      // Multi-pick slot: every tap ADDS one more (the same item can fill
+      // several picks — Luigi 2026-07-03); removal is the row's − control.
+      if (current.length >= max) return;
       current.push(itemId);
     }
     setPicks(next);
@@ -227,6 +223,16 @@ export function BundleComposerModal({
   function handleAdd() {
     if (!allSlotsSatisfied) return;
     onAddBundle(buildBundle(picks));
+  }
+
+  /** Remove ONE occurrence of an item from a multi-pick slot. */
+  function removeOnePick(slotIndex: number, itemId: string) {
+    setPicks((prev) => {
+      const next = prev.map((arr) => [...arr]);
+      const idx = next[slotIndex].indexOf(itemId);
+      if (idx >= 0) next[slotIndex].splice(idx, 1);
+      return next;
+    });
   }
 
   /** Progress-strip chip label: picked item(s) once chosen, else slot label. */
@@ -362,7 +368,9 @@ export function BundleComposerModal({
                   ) : (
                     <div className="grid sm:grid-cols-2 gap-2">
                       {slotItems[slotIndex].map((item) => {
-                        const isPicked = picked.includes(item.id);
+                        const n = picked.filter((id) => id === item.id).length;
+                        const isPicked = n > 0;
+                        const isMulti = max > 1;
                         return (
                           <button
                             key={item.id}
@@ -401,7 +409,25 @@ export function BundleComposerModal({
                                 )}
                               </div>
                             </div>
-                            {isPicked && (
+                            {/* Multi-pick slots: the same item can fill several
+                                picks (×N) with a − to drop one (Luigi 2026-07-03). */}
+                            {isMulti && n > 0 && (
+                              <>
+                                <span className="text-xs font-bold flex-shrink-0" style={{ color: primaryColor }}>×{n}</span>
+                                <span
+                                  role="button"
+                                  tabIndex={0}
+                                  onClick={(e) => { e.stopPropagation(); removeOnePick(slotIndex, item.id); }}
+                                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.stopPropagation(); removeOnePick(slotIndex, item.id); } }}
+                                  aria-label={tWiz("removeOneAria", { name: item.name })}
+                                  className="w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold border flex-shrink-0 transition hover:bg-gray-50"
+                                  style={{ borderColor: primaryColor, color: primaryColor }}
+                                >
+                                  −
+                                </span>
+                              </>
+                            )}
+                            {!isMulti && isPicked && (
                               <Check className="w-4 h-4 flex-shrink-0" style={{ color: primaryColor }} />
                             )}
                           </button>

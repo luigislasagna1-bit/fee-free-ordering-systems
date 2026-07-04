@@ -5895,7 +5895,11 @@
       "backStep": "Înapoi",
       "leaveTitle": "Părăsiți oferta neterminată?",
       "keepBuilding": "Continuă",
-      "leaveAnyway": "Ieși"
+      "leaveAnyway": "Ieși",
+      "slotLabelPickN": "Alege {count} produse",
+      "hintPickCounts": "Alege {count} produse — apoi produsul tău gratuit.",
+      "addOneMoreAria": "Adaugă un {name}",
+      "removeOneAria": "Elimină un {name}"
     }
   },
   "dunning": {

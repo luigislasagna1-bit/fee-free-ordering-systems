@@ -5895,7 +5895,11 @@
       "backStep": "पीछे",
       "leaveTitle": "क्या ऑफ़र अधूरा छोड़कर जाएँ?",
       "keepBuilding": "जारी रखें",
-      "leaveAnyway": "छोड़ें"
+      "leaveAnyway": "छोड़ें",
+      "slotLabelPickN": "{count} आइटम चुनें",
+      "hintPickCounts": "{count} आइटम चुनें — फिर अपना मुफ़्त आइटम चुनें।",
+      "addOneMoreAria": "एक {name} जोड़ें",
+      "removeOneAria": "एक {name} हटाएँ"
     }
   },
   "dunning": {

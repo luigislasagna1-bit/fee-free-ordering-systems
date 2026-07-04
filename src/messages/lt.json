@@ -5895,7 +5895,11 @@
       "backStep": "Atgal",
       "leaveTitle": "Palikti nebaigtą pasiūlymą?",
       "keepBuilding": "Tęsti",
-      "leaveAnyway": "Išeiti"
+      "leaveAnyway": "Išeiti",
+      "slotLabelPickN": "Pasirinkite {count} prekes",
+      "hintPickCounts": "Pasirinkite {count} prekes — tada nemokamą prekę.",
+      "addOneMoreAria": "Pridėti vieną {name}",
+      "removeOneAria": "Pašalinti vieną {name}"
     }
   },
   "dunning": {

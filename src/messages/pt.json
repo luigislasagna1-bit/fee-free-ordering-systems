@@ -5895,7 +5895,11 @@
       "backStep": "Voltar",
       "leaveTitle": "Sair sem terminar esta oferta?",
       "keepBuilding": "Continuar",
-      "leaveAnyway": "Sair"
+      "leaveAnyway": "Sair",
+      "slotLabelPickN": "Escolha {count} artigos",
+      "hintPickCounts": "Escolha {count} artigos — depois o seu artigo grátis.",
+      "addOneMoreAria": "Adicionar um {name}",
+      "removeOneAria": "Remover um {name}"
     }
   },
   "dunning": {

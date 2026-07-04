@@ -5895,7 +5895,11 @@
       "backStep": "Tillbaka",
       "leaveTitle": "Lämna erbjudandet ofullbordat?",
       "keepBuilding": "Fortsätt",
-      "leaveAnyway": "Lämna"
+      "leaveAnyway": "Lämna",
+      "slotLabelPickN": "Välj {count} varor",
+      "hintPickCounts": "Välj {count} varor — sedan din gratisvara.",
+      "addOneMoreAria": "Lägg till en {name}",
+      "removeOneAria": "Ta bort en {name}"
     }
   },
   "dunning": {

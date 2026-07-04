@@ -5895,7 +5895,11 @@
       "backStep": "Назад",
       "leaveTitle": "Напускате незавършената оферта?",
       "keepBuilding": "Продължи",
-      "leaveAnyway": "Напусни"
+      "leaveAnyway": "Напусни",
+      "slotLabelPickN": "Избери {count} артикула",
+      "hintPickCounts": "Избери {count} артикула — после безплатния си артикул.",
+      "addOneMoreAria": "Добави един {name}",
+      "removeOneAria": "Премахни един {name}"
     }
   },
   "dunning": {

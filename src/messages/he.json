@@ -5895,7 +5895,11 @@
       "backStep": "חזרה",
       "leaveTitle": "לצאת בלי לסיים את המבצע?",
       "keepBuilding": "להמשיך",
-      "leaveAnyway": "לצאת"
+      "leaveAnyway": "לצאת",
+      "slotLabelPickN": "בחרו {count} פריטים",
+      "hintPickCounts": "בחרו {count} פריטים — ואז את הפריט החינמי שלכם.",
+      "addOneMoreAria": "הוסיפו {name} אחד",
+      "removeOneAria": "הסירו {name} אחד"
     }
   },
   "dunning": {

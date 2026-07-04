@@ -5895,7 +5895,11 @@
       "backStep": "上一步",
       "leaveTitle": "要放弃未完成的优惠吗？",
       "keepBuilding": "继续选择",
-      "leaveAnyway": "离开"
+      "leaveAnyway": "离开",
+      "slotLabelPickN": "选择 {count} 件",
+      "hintPickCounts": "选择 {count} 件后，再挑选您的免费商品。",
+      "addOneMoreAria": "添加一份{name}",
+      "removeOneAria": "移除一份{name}"
     }
   },
   "dunning": {

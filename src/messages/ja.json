@@ -5895,7 +5895,11 @@
       "backStep": "戻る",
       "leaveTitle": "このお得なセットを途中でやめますか？",
       "keepBuilding": "続ける",
-      "leaveAnyway": "やめる"
+      "leaveAnyway": "やめる",
+      "slotLabelPickN": "{count}品を選択",
+      "hintPickCounts": "{count}品を選ぶと、無料の1品を選べます。",
+      "addOneMoreAria": "{name}を1つ追加",
+      "removeOneAria": "{name}を1つ削除"
     }
   },
   "dunning": {

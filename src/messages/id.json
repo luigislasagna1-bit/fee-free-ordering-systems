@@ -5895,7 +5895,11 @@
       "backStep": "Kembali",
       "leaveTitle": "Tinggalkan penawaran yang belum selesai?",
       "keepBuilding": "Lanjutkan",
-      "leaveAnyway": "Keluar"
+      "leaveAnyway": "Keluar",
+      "slotLabelPickN": "Pilih {count} item",
+      "hintPickCounts": "Pilih {count} item — lalu item gratis Anda.",
+      "addOneMoreAria": "Tambah satu {name}",
+      "removeOneAria": "Hapus satu {name}"
     }
   },
   "dunning": {

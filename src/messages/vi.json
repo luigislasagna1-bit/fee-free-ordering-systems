@@ -5895,7 +5895,11 @@
       "backStep": "Quay lại",
       "leaveTitle": "Rời đi khi chưa hoàn tất ưu đãi?",
       "keepBuilding": "Tiếp tục",
-      "leaveAnyway": "Rời đi"
+      "leaveAnyway": "Rời đi",
+      "slotLabelPickN": "Chọn {count} món",
+      "hintPickCounts": "Chọn {count} món — sau đó chọn món miễn phí.",
+      "addOneMoreAria": "Thêm một {name}",
+      "removeOneAria": "Bớt một {name}"
     }
   },
   "dunning": {

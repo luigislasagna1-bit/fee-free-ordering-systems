@@ -5895,7 +5895,11 @@
       "backStep": "ย้อนกลับ",
       "leaveTitle": "ออกทั้งที่ยังทำดีลไม่เสร็จ?",
       "keepBuilding": "ทำต่อ",
-      "leaveAnyway": "ออก"
+      "leaveAnyway": "ออก",
+      "slotLabelPickN": "เลือก {count} รายการ",
+      "hintPickCounts": "เลือก {count} รายการ — แล้วเลือกรายการฟรีของคุณ",
+      "addOneMoreAria": "เพิ่ม {name} หนึ่งรายการ",
+      "removeOneAria": "นำ {name} ออกหนึ่งรายการ"
     }
   },
   "dunning": {

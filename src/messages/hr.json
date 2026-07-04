@@ -5895,7 +5895,11 @@
       "backStep": "Natrag",
       "leaveTitle": "Napustiti nedovršenu ponudu?",
       "keepBuilding": "Nastavi",
-      "leaveAnyway": "Izađi"
+      "leaveAnyway": "Izađi",
+      "slotLabelPickN": "Odaberi {count} stavke",
+      "hintPickCounts": "Odaberi {count} stavke — zatim svoju besplatnu stavku.",
+      "addOneMoreAria": "Dodaj jedan {name}",
+      "removeOneAria": "Ukloni jedan {name}"
     }
   },
   "dunning": {

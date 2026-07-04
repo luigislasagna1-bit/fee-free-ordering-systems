@@ -5895,7 +5895,11 @@
       "backStep": "Tilbake",
       "leaveTitle": "Forlate tilbudet uferdig?",
       "keepBuilding": "Fortsett",
-      "leaveAnyway": "Forlat"
+      "leaveAnyway": "Forlat",
+      "slotLabelPickN": "Velg {count} varer",
+      "hintPickCounts": "Velg {count} varer — deretter gratisvaren din.",
+      "addOneMoreAria": "Legg til en {name}",
+      "removeOneAria": "Fjern en {name}"
     }
   },
   "dunning": {

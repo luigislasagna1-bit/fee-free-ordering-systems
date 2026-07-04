@@ -5895,7 +5895,11 @@
       "backStep": "Πίσω",
       "leaveTitle": "Θέλετε να φύγετε χωρίς να ολοκληρώσετε;",
       "keepBuilding": "Συνέχεια",
-      "leaveAnyway": "Έξοδος"
+      "leaveAnyway": "Έξοδος",
+      "slotLabelPickN": "Επιλέξτε {count} είδη",
+      "hintPickCounts": "Επιλέξτε {count} είδη — μετά το δωρεάν είδος σας.",
+      "addOneMoreAria": "Προσθήκη ενός {name}",
+      "removeOneAria": "Αφαίρεση ενός {name}"
     }
   },
   "dunning": {

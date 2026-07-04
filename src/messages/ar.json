@@ -5895,7 +5895,11 @@
       "backStep": "رجوع",
       "leaveTitle": "مغادرة العرض دون إكماله؟",
       "keepBuilding": "متابعة",
-      "leaveAnyway": "مغادرة"
+      "leaveAnyway": "مغادرة",
+      "slotLabelPickN": "اختر {count} أصناف",
+      "hintPickCounts": "اختر {count} أصناف — ثم اختر صنفك المجاني.",
+      "addOneMoreAria": "أضف {name} واحدًا",
+      "removeOneAria": "أزل {name} واحدًا"
     }
   },
   "dunning": {

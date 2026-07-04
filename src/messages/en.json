@@ -5620,7 +5620,11 @@
       "backStep": "Back",
       "leaveTitle": "Leave this deal unfinished?",
       "keepBuilding": "Keep building",
-      "leaveAnyway": "Leave"
+      "leaveAnyway": "Leave",
+      "slotLabelPickN": "Pick {count} items",
+      "hintPickCounts": "Pick {count} items — then choose your free item.",
+      "addOneMoreAria": "Add a {name}",
+      "removeOneAria": "Remove a {name}"
     },
     "loginForm": {
       "emailLabel": "Email",
