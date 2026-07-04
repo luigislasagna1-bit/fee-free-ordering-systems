@@ -12,6 +12,7 @@ import { rowIntervals } from "@/lib/restaurant-hours";
 import { parseTheme } from "@/lib/theme";
 import { formatTime } from "@/lib/format-time";
 import { rangeWindowMinutes } from "@/lib/slot-modes";
+import { buildDaySlots } from "@/lib/schedule-slots";
 import { useGoogleMaps } from "@/lib/use-google-maps";
 import { resolveMapsBrowserKey } from "@/lib/maps-key";
 import { useTranslations } from "next-intl";
@@ -1389,23 +1390,18 @@ export function CheckoutModal({
                         const [mh, mm] = minTimeForDate.split(":").map(Number);
                         return (mh ?? 0) * 60 + (mm ?? 0);
                       })();
-                      for (const iv of ivs) {
-                        const [oh, om] = iv.open.split(":").map(Number);
-                        const [ch, cm] = iv.close.split(":").map(Number);
-                        const start = (oh ?? 10) * 60 + (om ?? 0);
-                        let end = (ch ?? 22) * 60 + (cm ?? 0);
-                        // Overnight window (close at/before open) wraps past midnight,
-                        // e.g. 22:00 → 02:00. Each interval handles its own wrap.
-                        if (end <= start) end += 24 * 60;
-                        for (let m = start; m <= end - step; m += step) {
-                          if (m < minMin) continue;
-                          const hh = Math.floor(m / 60) % 24;
-                          const mm = m % 60;
-                          slots.push(`${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`);
-                        }
-                      }
-                      // Dedup preserving order (overlapping wraps are rare but harmless).
-                      slots = slots.filter((s, i) => slots.indexOf(s) === i);
+                      // Overnight-correct slot list (Luigi 2026-07-04): a date
+                      // offers yesterday's overnight SPILL (00:00 → spill end)
+                      // plus its own windows CLIPPED at midnight — see
+                      // buildDaySlots for the full story. Unit-tested in
+                      // src/lib/schedule-slots.test.ts.
+                      const prevRow = pickHoursForService(openingHours as any, (dow + 6) % 7, serviceKind);
+                      slots = buildDaySlots({
+                        dayIntervals: ivs as any,
+                        prevDayIntervals: (prevRow && prevRow.isOpen ? rowIntervals(prevRow as any) : []) as any,
+                        stepMinutes: step,
+                        minMinutes: minMin,
+                      });
                     }
                     // Phase 2 — restrict the time slots to the cart's fulfilment
                     // window (e.g. an 11:00–15:00 item shows only those slots).
@@ -1931,7 +1927,10 @@ export function CheckoutModal({
 
         {scheduledTooEarly && (
           <div className="border-t border-red-100 px-5 py-2.5 bg-red-50 text-xs text-red-700 font-medium flex-shrink-0">
-            {tc("toasts.scheduledInPast")}
+            {/* The key lives under ordering.toasts (NOT checkout.toasts) —
+                referencing the wrong namespace rendered the raw key string
+                to customers (Luigi 2026-07-04). */}
+            {tOrd("toasts.scheduledInPast")}
           </div>
         )}
         {/* Footer */}
