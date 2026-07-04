@@ -1104,7 +1104,8 @@
         "saving": "Salvataggio…"
       },
       "timeSelectionRange": "Fasce orarie (finestre tipo 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Spunta ogni stile disponibile per i clienti — con più di uno, scelgono al checkout. Le finestre sono limitate a 15 minuti."
+      "timeSelectionMultiHint": "Spunta ogni stile disponibile per i clienti — con più di uno, scelgono al checkout. Per le fasce, l'intervallo qui sotto è la durata di ogni finestra (15 min di default).",
+      "slotIntervalRangeLabel": "Durata e cadenza delle fasce"
     },
     "delivery": {
       "title": "Zone di consegna",

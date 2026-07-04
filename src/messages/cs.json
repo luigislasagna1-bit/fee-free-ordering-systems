@@ -1104,7 +1104,8 @@
         "saving": "Ukládání…"
       },
       "timeSelectionRange": "Časová rozmezí (okna jako 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Zaškrtněte každý styl, který mohou zákazníci použít — u více si vyberou při pokladně. Okna rozmezí jsou omezena na 15 minut."
+      "timeSelectionMultiHint": "Zaškrtněte každý styl, který mohou zákazníci použít — u více si vyberou při pokladně. U rozmezí je interval níže délkou každého okna (výchozí 15 min).",
+      "slotIntervalRangeLabel": "Délka a rozestup oken"
     },
     "delivery": {
       "title": "Oblasti doručení",

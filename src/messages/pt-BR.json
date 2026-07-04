@@ -1104,7 +1104,8 @@
         "saving": "Salvando…"
       },
       "timeSelectionRange": "Faixas de horário (janelas tipo 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Marque cada estilo disponível aos clientes — com mais de um, eles escolhem no checkout. As janelas de faixa são limitadas a 15 minutos."
+      "timeSelectionMultiHint": "Marque cada estilo disponível aos clientes — com mais de um, eles escolhem no checkout. Para faixas, o intervalo abaixo é a duração de cada janela (padrão 15 min).",
+      "slotIntervalRangeLabel": "Duração e espaçamento das janelas"
     },
     "delivery": {
       "title": "Zonas de Entrega",

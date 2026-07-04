@@ -1104,7 +1104,8 @@
         "saving": "S'està desant…"
       },
       "timeSelectionRange": "Franges horàries (finestres com 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Marca cada estil disponible per als clients — amb més d'un, trien en pagar. Les finestres de franja es limiten a 15 minuts."
+      "timeSelectionMultiHint": "Marca cada estil disponible per als clients — amb més d'un, trien en pagar. Per a les franges, l'interval de sota és la durada de cada finestra (per defecte 15 min).",
+      "slotIntervalRangeLabel": "Durada i espaiat de les finestres"
     },
     "delivery": {
       "title": "Zones de lliurament",

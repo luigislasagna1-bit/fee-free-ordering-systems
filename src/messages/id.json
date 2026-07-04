@@ -1104,7 +1104,8 @@
         "saving": "Menyimpan…"
       },
       "timeSelectionRange": "Rentang waktu (jendela seperti 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Centang setiap gaya yang boleh digunakan pelanggan — jika lebih dari satu, mereka memilih saat checkout. Jendela rentang dibatasi 15 menit."
+      "timeSelectionMultiHint": "Centang setiap gaya yang boleh digunakan pelanggan — jika lebih dari satu, mereka memilih saat checkout. Untuk rentang, interval di bawah adalah durasi tiap jendela (bawaan 15 mnt).",
+      "slotIntervalRangeLabel": "Durasi & jarak jendela"
     },
     "delivery": {
       "title": "Zona Pengiriman",

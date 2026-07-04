@@ -1104,7 +1104,8 @@
         "saving": "Spremanje…"
       },
       "timeSelectionRange": "Vremenski rasponi (prozori poput 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Označite svaki stil koji kupci smiju koristiti — s više njih biraju pri naplati. Prozori raspona ograničeni su na 15 minuta."
+      "timeSelectionMultiHint": "Označite svaki stil koji kupci smiju koristiti — s više njih biraju pri naplati. Za raspone, interval ispod je trajanje svakog prozora (zadano 15 min).",
+      "slotIntervalRangeLabel": "Trajanje i razmak prozora"
     },
     "delivery": {
       "title": "Zone dostave",

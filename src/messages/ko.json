@@ -1104,7 +1104,8 @@
         "saving": "저장 중…"
       },
       "timeSelectionRange": "시간대(6:00 – 6:15 같은 구간)",
-      "timeSelectionMultiHint": "고객이 사용할 수 있는 방식을 모두 선택하세요. 여러 개면 결제 시 고객이 선택합니다. 시간대 창은 최대 15분입니다."
+      "timeSelectionMultiHint": "고객이 사용할 수 있는 방식을 모두 선택하세요. 여러 개면 결제 시 고객이 선택합니다. 시간대의 경우 아래 간격이 각 창의 길이입니다(기본 15분).",
+      "slotIntervalRangeLabel": "시간대 길이 및 간격"
     },
     "delivery": {
       "title": "배달 구역",

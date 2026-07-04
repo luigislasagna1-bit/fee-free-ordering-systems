@@ -263,14 +263,15 @@ export async function PUT(req: NextRequest) {
   }
   // Scheduled-order slot interval (Luigi 2026-05-31). Whitelist values
   // so we don't accidentally accept 1-minute (kitchen chaos) or 1440
-  // (no slots in a day). 10/15/20/30/60 covers every real workflow.
+  // (no slots in a day). 5–60 in the preset steps covers every real workflow
+  // (5 + 45 added for the range-window control, Luigi 2026-07-04).
   if (scheduledOrderInterval !== undefined) {
     const n = typeof scheduledOrderInterval === "number"
       ? scheduledOrderInterval
       : parseInt(scheduledOrderInterval, 10);
-    if (![10, 15, 20, 30, 60].includes(n)) {
+    if (![5, 10, 15, 20, 30, 45, 60].includes(n)) {
       return NextResponse.json(
-        { error: "scheduledOrderInterval must be 10, 15, 20, 30, or 60" },
+        { error: "scheduledOrderInterval must be 5, 10, 15, 20, 30, 45, or 60" },
         { status: 400 },
       );
     }

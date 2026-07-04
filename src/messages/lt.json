@@ -1104,7 +1104,8 @@
         "saving": "Įrašoma…"
       },
       "timeSelectionRange": "Laiko intervalai (langai kaip 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Pažymėkite kiekvieną klientams leidžiamą stilių — kai jų keli, jie renkasi atsiskaitydami. Intervalų langai ribojami iki 15 minučių."
+      "timeSelectionMultiHint": "Pažymėkite kiekvieną klientams leidžiamą stilių — kai jų keli, jie renkasi atsiskaitydami. Intervalams žemiau esantis žingsnis yra kiekvieno lango trukmė (numatytoji 15 min.).",
+      "slotIntervalRangeLabel": "Lango trukmė ir žingsnis"
     },
     "delivery": {
       "title": "Pristatymo zonos",

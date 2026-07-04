@@ -1104,7 +1104,8 @@
         "saving": "Sparar…"
       },
       "timeSelectionRange": "Tidsintervall (fönster som 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Markera varje stil kunderna får använda — vid flera väljer de i kassan. Intervallfönster är begränsade till 15 minuter."
+      "timeSelectionMultiHint": "Markera varje stil kunderna får använda — vid flera väljer de i kassan. För tidsintervall är intervallet nedan varje fönsters längd (standard 15 min).",
+      "slotIntervalRangeLabel": "Fönsterlängd & intervall"
     },
     "delivery": {
       "title": "Leveranszoner",

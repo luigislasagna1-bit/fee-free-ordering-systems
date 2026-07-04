@@ -1104,7 +1104,8 @@
         "saving": "Zapisywanie…"
       },
       "timeSelectionRange": "Przedziały czasowe (okna typu 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Zaznacz każdy styl dostępny dla klientów — przy kilku wybierają przy kasie. Okna przedziałów są ograniczone do 15 minut."
+      "timeSelectionMultiHint": "Zaznacz każdy styl dostępny dla klientów — przy kilku wybierają przy kasie. Dla przedziałów interwał poniżej to długość każdego okna (domyślnie 15 min).",
+      "slotIntervalRangeLabel": "Długość i odstęp okien"
     },
     "delivery": {
       "title": "Strefy dostawy",

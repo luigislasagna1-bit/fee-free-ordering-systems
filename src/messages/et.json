@@ -1104,7 +1104,8 @@
         "saving": "Salvestamine…"
       },
       "timeSelectionRange": "Ajavahemikud (aknad nagu 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Märkige iga stiil, mida kliendid võivad kasutada — mitme puhul valivad nad kassas. Vahemikuaknad on piiratud 15 minutiga."
+      "timeSelectionMultiHint": "Märkige iga stiil, mida kliendid võivad kasutada — mitme puhul valivad nad kassas. Vahemike puhul on allolev intervall iga akna pikkus (vaikimisi 15 min).",
+      "slotIntervalRangeLabel": "Akna pikkus ja samm"
     },
     "delivery": {
       "title": "Tarnepiirkonnad",

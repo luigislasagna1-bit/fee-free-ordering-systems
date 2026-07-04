@@ -44,7 +44,7 @@ interface ServiceConfig {
    *  slotModes for back-compat readers. Fabrizio cmpxdtl9m/cmqqxerxs. */
   slotMode?: "bands" | "exact" | "both" | "range";
   /** Time-selection styles offered to customers — any COMBINATION of
-   *  "bands" (fixed times), "range" (≤15-min windows) and "exact" (free
+   *  "bands" (fixed times), "range" (fulfilment windows) and "exact" (free
    *  minute). At least one; with several, the customer toggles at checkout.
    *  Luigi 2026-07-04. */
   slotModes?: ("bands" | "range" | "exact")[];
@@ -262,14 +262,20 @@ export function ServicesClient() {
                       Hidden in "Exact time" mode, where the interval is moot. */}
                   {key !== "reservations" && resolveSlotModes(settings[key]).some((m) => m !== "exact") && (
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1">{t("slotInterval")}</label>
+                      {/* ONE control (Luigi 2026-07-04): when Time ranges are
+                          offered, this interval is ALSO each window's length —
+                          15 min → "4:00 – 4:15", "4:15 – 4:30" — so windows
+                          always tile perfectly. Relabelled to say so. */}
+                      <label className="block text-xs font-medium text-gray-600 mb-1">
+                        {resolveSlotModes(settings[key]).includes("range") ? t("slotIntervalRangeLabel") : t("slotInterval")}
+                      </label>
                       <select
                         className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white"
                         value={settings[key].slotInterval ?? 0}
                         onChange={e => updateSetting(key, "slotInterval", parseInt(e.target.value) || 0)}
                       >
                         <option value={0}>{t("slotIntervalDefault")}</option>
-                        {[10, 15, 20, 30, 45, 60].map(m => (
+                        {[5, 10, 15, 20, 30, 45, 60].map(m => (
                           <option key={m} value={m}>{t("slotIntervalMin", { min: m })}</option>
                         ))}
                       </select>

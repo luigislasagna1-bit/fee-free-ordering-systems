@@ -1104,7 +1104,8 @@
         "saving": "Tallennetaan…"
       },
       "timeSelectionRange": "Aikavälit (ikkunat kuten 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Valitse jokainen asiakkaiden käytettävissä oleva tyyli — jos niitä on useita, he valitsevat kassalla. Aikaväli-ikkunat on rajattu 15 minuuttiin."
+      "timeSelectionMultiHint": "Valitse jokainen asiakkaiden käytettävissä oleva tyyli — jos niitä on useita, he valitsevat kassalla. Aikaväleissä alla oleva väli on kunkin ikkunan pituus (oletus 15 min).",
+      "slotIntervalRangeLabel": "Ikkunan pituus ja väli"
     },
     "delivery": {
       "title": "Toimitusalueet",

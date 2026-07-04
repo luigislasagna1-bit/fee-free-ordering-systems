@@ -1104,7 +1104,8 @@
         "saving": "Mentés…"
       },
       "timeSelectionRange": "Idősávok (ablakok, pl. 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Jelölje be az ügyfelek számára elérhető minden stílust — többnél a pénztárnál választanak. Az idősáv-ablakok legfeljebb 15 percesek."
+      "timeSelectionMultiHint": "Jelölje be az ügyfelek számára elérhető minden stílust — többnél a pénztárnál választanak. Idősávoknál a lenti időköz az egyes ablakok hossza (alapértelmezés: 15 perc).",
+      "slotIntervalRangeLabel": "Ablakhossz és időköz"
     },
     "delivery": {
       "title": "Szállítási zónák",

@@ -1104,7 +1104,8 @@
         "saving": "保存中…"
       },
       "timeSelectionRange": "時間帯（6:00 – 6:15 のような枠）",
-      "timeSelectionMultiHint": "顧客が使えるスタイルをすべてチェックしてください。複数ある場合は会計時に顧客が選びます。時間帯の幅は最大 15 分です。"
+      "timeSelectionMultiHint": "顧客が使えるスタイルをすべてチェックしてください。複数ある場合は会計時に顧客が選びます。時間帯では、下の間隔が各枠の長さになります（既定 15 分）。",
+      "slotIntervalRangeLabel": "時間帯の長さと間隔"
     },
     "delivery": {
       "title": "デリバリーエリア",

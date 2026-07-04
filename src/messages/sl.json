@@ -1104,7 +1104,8 @@
         "saving": "Shranjevanje…"
       },
       "timeSelectionRange": "Časovni razponi (okna kot 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Označite vsak slog, ki ga stranke lahko uporabijo — pri več izbirajo ob plačilu. Okna razponov so omejena na 15 minut."
+      "timeSelectionMultiHint": "Označite vsak slog, ki ga stranke lahko uporabijo — pri več izbirajo ob plačilu. Pri razponih je spodnji interval dolžina vsakega okna (privzeto 15 min).",
+      "slotIntervalRangeLabel": "Dolžina in razmik oken"
     },
     "delivery": {
       "title": "Območja dostave",

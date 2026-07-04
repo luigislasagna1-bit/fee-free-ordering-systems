@@ -1104,7 +1104,8 @@
         "saving": "正在保存…"
       },
       "timeSelectionRange": "时间段（如 6:00 – 6:15 的窗口）",
-      "timeSelectionMultiHint": "勾选允许顾客使用的每种方式——多于一种时由顾客在结账时选择。时间段窗口上限为 15 分钟。"
+      "timeSelectionMultiHint": "勾选允许顾客使用的每种方式——多于一种时由顾客在结账时选择。对于时间段，下方的间隔即每个窗口的长度（默认 15 分钟）。",
+      "slotIntervalRangeLabel": "时间段长度与间隔"
     },
     "delivery": {
       "title": "配送区域",

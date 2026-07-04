@@ -1104,7 +1104,8 @@
         "saving": "Kaydediliyor…"
       },
       "timeSelectionRange": "Zaman aralıkları (6:00 – 6:15 gibi pencereler)",
-      "timeSelectionMultiHint": "Müşterilerin kullanabileceği her stili işaretleyin — birden fazlaysa ödeme sırasında seçerler. Aralık pencereleri 15 dakikayla sınırlıdır."
+      "timeSelectionMultiHint": "Müşterilerin kullanabileceği her stili işaretleyin — birden fazlaysa ödeme sırasında seçerler. Zaman aralıklarında aşağıdaki aralık her pencerenin uzunluğudur (varsayılan 15 dk).",
+      "slotIntervalRangeLabel": "Pencere uzunluğu ve aralığı"
     },
     "delivery": {
       "title": "Teslimat Bölgeleri",

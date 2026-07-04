@@ -1104,7 +1104,8 @@
         "saving": "Enregistrement…"
       },
       "timeSelectionRange": "Plages horaires (fenêtres du type 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Cochez chaque style proposé aux clients — s'il y en a plusieurs, ils choisissent au paiement. Les plages sont limitées à 15 minutes."
+      "timeSelectionMultiHint": "Cochez chaque style proposé aux clients — s'il y en a plusieurs, ils choisissent au paiement. Pour les plages, l'intervalle ci-dessous est la durée de chaque fenêtre (15 min par défaut).",
+      "slotIntervalRangeLabel": "Durée et espacement des plages"
     },
     "delivery": {
       "title": "Zones de livraison",

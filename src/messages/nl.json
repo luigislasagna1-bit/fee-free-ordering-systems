@@ -1104,7 +1104,8 @@
         "saving": "Opslaan…"
       },
       "timeSelectionRange": "Tijdvakken (vensters zoals 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Vink elke stijl aan die klanten mogen gebruiken — bij meerdere kiezen ze bij het afrekenen. Tijdvakken zijn beperkt tot 15 minuten."
+      "timeSelectionMultiHint": "Vink elke stijl aan die klanten mogen gebruiken — bij meerdere kiezen ze bij het afrekenen. Bij tijdvakken is het interval hieronder de lengte van elk vak (standaard 15 min).",
+      "slotIntervalRangeLabel": "Lengte en interval van tijdvakken"
     },
     "delivery": {
       "title": "Bezorgzones",

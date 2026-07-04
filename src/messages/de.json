@@ -1104,7 +1104,8 @@
         "saving": "Wird gespeichert…"
       },
       "timeSelectionRange": "Zeitfenster (z. B. 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Aktivieren Sie jeden Stil, den Kunden nutzen dürfen — bei mehreren wählen sie beim Checkout. Zeitfenster sind auf 15 Minuten begrenzt."
+      "timeSelectionMultiHint": "Aktivieren Sie jeden Stil, den Kunden nutzen dürfen — bei mehreren wählen sie beim Checkout. Bei Zeitfenstern ist das Intervall unten die Länge jedes Fensters (Standard 15 Min.).",
+      "slotIntervalRangeLabel": "Fensterlänge & Abstand"
     },
     "delivery": {
       "title": "Lieferzonen",

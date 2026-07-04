@@ -1104,7 +1104,8 @@
         "saving": "Guardando…"
       },
       "timeSelectionRange": "Rangos horarios (ventanas tipo 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Marca cada estilo disponible para los clientes; con más de uno, eligen al pagar. Las ventanas de rango se limitan a 15 minutos."
+      "timeSelectionMultiHint": "Marca cada estilo disponible para los clientes; con más de uno, eligen al pagar. Para los rangos, el intervalo de abajo es la duración de cada ventana (15 min por defecto).",
+      "slotIntervalRangeLabel": "Duración y espaciado de las ventanas"
     },
     "delivery": {
       "title": "Zonas de entrega",

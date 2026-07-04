@@ -1104,7 +1104,8 @@
         "saving": "Gemmer…"
       },
       "timeSelectionRange": "Tidsintervaller (vinduer som 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Markér hver stil, kunderne må bruge — ved flere vælger de ved kassen. Intervalvinduer er begrænset til 15 minutter."
+      "timeSelectionMultiHint": "Markér hver stil, kunderne må bruge — ved flere vælger de ved kassen. For tidsintervaller er intervallet nedenfor hvert vindues længde (standard 15 min).",
+      "slotIntervalRangeLabel": "Vindueslængde & interval"
     },
     "delivery": {
       "title": "Leveringszoner",

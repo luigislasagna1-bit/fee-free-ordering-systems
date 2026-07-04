@@ -1104,7 +1104,8 @@
         "saving": "Se salvează…"
       },
       "timeSelectionRange": "Intervale orare (ferestre de tip 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Bifați fiecare stil disponibil clienților — cu mai multe, aleg la finalizare. Ferestrele de interval sunt limitate la 15 minute."
+      "timeSelectionMultiHint": "Bifați fiecare stil disponibil clienților — cu mai multe, aleg la finalizare. Pentru intervale, valoarea de mai jos este durata fiecărei ferestre (implicit 15 min).",
+      "slotIntervalRangeLabel": "Durata și distanțarea ferestrelor"
     },
     "delivery": {
       "title": "Zone de livrare",

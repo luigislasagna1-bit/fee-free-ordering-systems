@@ -1104,7 +1104,8 @@
         "saving": "Saglabā…"
       },
       "timeSelectionRange": "Laika diapazoni (logi kā 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Atzīmējiet katru klientiem pieejamo stilu — ja to ir vairāki, viņi izvēlas norēķinos. Diapazona logi ir ierobežoti līdz 15 minūtēm."
+      "timeSelectionMultiHint": "Atzīmējiet katru klientiem pieejamo stilu — ja to ir vairāki, viņi izvēlas norēķinos. Diapazoniem zemāk esošais intervāls ir katra loga garums (noklusējums 15 min).",
+      "slotIntervalRangeLabel": "Loga garums un solis"
     },
     "delivery": {
       "title": "Piegādes zonas",

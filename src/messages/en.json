@@ -1171,7 +1171,8 @@
         "saving": "Saving…"
       },
       "timeSelectionRange": "Time ranges (windows like 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Check every style customers may use — with more than one, they choose at checkout. Range windows are capped at 15 minutes."
+      "timeSelectionMultiHint": "Check every style customers may use — with more than one, they choose at checkout. For time ranges, the interval below is each window's length (default 15 min).",
+      "slotIntervalRangeLabel": "Window length & spacing"
     },
     "delivery": {
       "title": "Delivery Zones",

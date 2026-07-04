@@ -1104,7 +1104,8 @@
         "saving": "Ukladá sa…"
       },
       "timeSelectionRange": "Časové rozpätia (okná ako 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Zaškrtnite každý štýl, ktorý môžu zákazníci použiť — pri viacerých si vyberú pri pokladni. Okná rozpätí sú obmedzené na 15 minút."
+      "timeSelectionMultiHint": "Zaškrtnite každý štýl, ktorý môžu zákazníci použiť — pri viacerých si vyberú pri pokladni. Pri rozpätiach je interval nižšie dĺžkou každého okna (predvolene 15 min).",
+      "slotIntervalRangeLabel": "Dĺžka a rozostup okien"
     },
     "delivery": {
       "title": "Zóny doručenia",

@@ -39,10 +39,14 @@ export function legacySlotMode(modes: SlotMode[]): "bands" | "range" | "exact" |
   return modes[0] ?? "bands";
 }
 
-/** Range windows never exceed 15 minutes (Luigi 2026-07-04): a 10-min
- *  interval gives 10-min windows; 15/30/60 all give 15-min windows. */
-export const RANGE_WINDOW_CAP_MIN = 15;
+/** Range-window LENGTH = the slot interval, clamped to 5–60 min (default 15).
+ *  ONE control (Luigi 2026-07-04): the owner's interval choice is both the
+ *  spacing between offered windows and each window's span, so windows always
+ *  tile perfectly ("4:00 – 4:15", "4:15 – 4:30") with no overlap/gap combos. */
+export const RANGE_WINDOW_DEFAULT_MIN = 15;
 export function rangeWindowMinutes(interval: number | null | undefined): number {
-  const iv = typeof interval === "number" && Number.isFinite(interval) && interval > 0 ? interval : 15;
-  return Math.max(5, Math.min(RANGE_WINDOW_CAP_MIN, iv));
+  const n = typeof interval === "number" && Number.isFinite(interval) && interval > 0
+    ? Math.floor(interval)
+    : RANGE_WINDOW_DEFAULT_MIN;
+  return Math.max(5, Math.min(60, n));
 }

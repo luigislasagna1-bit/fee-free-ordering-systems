@@ -1104,7 +1104,8 @@
         "saving": "Đang lưu…"
       },
       "timeSelectionRange": "Khoảng thời gian (khung như 6:00 – 6:15)",
-      "timeSelectionMultiHint": "Đánh dấu mọi kiểu khách có thể dùng — nếu nhiều hơn một, họ chọn khi thanh toán. Khung khoảng thời gian giới hạn 15 phút."
+      "timeSelectionMultiHint": "Đánh dấu mọi kiểu khách có thể dùng — nếu nhiều hơn một, họ chọn khi thanh toán. Với khoảng thời gian, khoảng cách bên dưới là độ dài mỗi khung (mặc định 15 phút).",
+      "slotIntervalRangeLabel": "Độ dài & khoảng cách khung"
     },
     "delivery": {
       "title": "Khu vực giao hàng",
