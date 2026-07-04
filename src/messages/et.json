@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {Kopeeritud # tootele} other {Kopeeritud # tootele}}",
       "copySettingsFailed": "Seadete kopeerimine ebaõnnestus.",
       "allowMultipleToppings": "Luba sama lisandit mitu korda",
-      "allowMultipleToppingsHint": "Võimaldab klientidel lisada lisandit topelt (või rohkem) — iga loetakse eraldi lisandiks."
+      "allowMultipleToppingsHint": "Võimaldab klientidel lisada lisandit topelt (või rohkem) — iga loetakse eraldi lisandiks.",
+      "dropToMoveItemHere": "Lase lahti, et tõsta toode sellesse kategooriasse",
+      "itemMovedToCategory": "„{name}” tõstetud kategooriasse {category}",
+      "moveItemFailed": "Toodet ei õnnestunud teisaldada — proovi uuesti."
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

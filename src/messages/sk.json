@@ -2742,7 +2742,10 @@
       "copySettingsDone": "{ok, plural, one {Skopírované do # položky} few {Skopírované do # položiek} many {Skopírované do # položky} other {Skopírované do # položiek}}",
       "copySettingsFailed": "Nastavenia sa nepodarilo skopírovať.",
       "allowMultipleToppings": "Povoliť viac kusov tej istej prísady",
-      "allowMultipleToppingsHint": "Umožní zákazníkom pridať dvojitú (alebo väčšiu) porciu prísady — každá sa počíta ako samostatná prísada."
+      "allowMultipleToppingsHint": "Umožní zákazníkom pridať dvojitú (alebo väčšiu) porciu prísady — každá sa počíta ako samostatná prísada.",
+      "dropToMoveItemHere": "Pustením sem presuniete položku do tejto kategórie",
+      "itemMovedToCategory": "„{name}“ presunuté do {category}",
+      "moveItemFailed": "Položku sa nepodarilo presunúť — skúste to znova."
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",

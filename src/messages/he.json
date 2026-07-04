@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {הועתק לפריט #} two {הועתק ל-# פריטים} many {הועתק ל-# פריטים} other {הועתק ל-# פריטים}}",
       "copySettingsFailed": "לא ניתן היה להעתיק את ההגדרות.",
       "allowMultipleToppings": "אפשר כמה יחידות מאותה תוספת",
-      "allowMultipleToppingsHint": "מאפשר ללקוחות להוסיף תוספת בכפול (או יותר) — כל אחת נספרת כתוספת נפרדת."
+      "allowMultipleToppingsHint": "מאפשר ללקוחות להוסיף תוספת בכפול (או יותר) — כל אחת נספרת כתוספת נפרדת.",
+      "dropToMoveItemHere": "שחררו כדי להעביר את הפריט לקטגוריה זו",
+      "itemMovedToCategory": "“{name}” הועבר אל {category}",
+      "moveItemFailed": "לא ניתן להעביר את הפריט — נסו שוב."
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",

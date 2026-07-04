@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, zero {تم النسخ إلى # عنصر} one {تم النسخ إلى عنصر واحد} two {تم النسخ إلى عنصرين} few {تم النسخ إلى # عناصر} many {تم النسخ إلى # عنصرًا} other {تم النسخ إلى # عنصر}}",
       "copySettingsFailed": "تعذَّر نسخ الإعدادات.",
       "allowMultipleToppings": "السماح بتكرار نفس الإضافة",
-      "allowMultipleToppingsHint": "يتيح للعملاء إضافة كمية مضاعفة (أو أكثر) من نفس الإضافة — وتُحتسب كل واحدة كإضافة منفصلة."
+      "allowMultipleToppingsHint": "يتيح للعملاء إضافة كمية مضاعفة (أو أكثر) من نفس الإضافة — وتُحتسب كل واحدة كإضافة منفصلة.",
+      "dropToMoveItemHere": "أفلت لنقل الصنف إلى هذه الفئة",
+      "itemMovedToCategory": "تم نقل “{name}” إلى {category}",
+      "moveItemFailed": "تعذر نقل الصنف — يرجى المحاولة مرة أخرى."
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",

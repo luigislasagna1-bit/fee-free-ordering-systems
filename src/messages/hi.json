@@ -2431,7 +2431,10 @@
       "copySettingsDone": "{ok, plural, one {# आइटम पर कॉपी किया गया} other {# आइटम पर कॉपी किए गए}}",
       "copySettingsFailed": "सेटिंग्स कॉपी नहीं की जा सकीं।",
       "allowMultipleToppings": "एक ही टॉपिंग कई बार जोड़ने की अनुमति दें",
-      "allowMultipleToppingsHint": "ग्राहकों को किसी टॉपिंग को दोगुना (या उससे अधिक) जोड़ने देता है — हर एक अलग टॉपिंग के रूप में गिनी जाती है।"
+      "allowMultipleToppingsHint": "ग्राहकों को किसी टॉपिंग को दोगुना (या उससे अधिक) जोड़ने देता है — हर एक अलग टॉपिंग के रूप में गिनी जाती है।",
+      "dropToMoveItemHere": "आइटम को इस श्रेणी में ले जाने के लिए छोड़ें",
+      "itemMovedToCategory": "“{name}” को {category} में ले जाया गया",
+      "moveItemFailed": "आइटम स्थानांतरित नहीं हो सका — कृपया फिर से प्रयास करें।"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",

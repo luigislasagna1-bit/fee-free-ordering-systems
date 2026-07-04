@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {Kopirano na # stavku} few {Kopirano na # stavke} other {Kopirano na # stavki}}",
       "copySettingsFailed": "Postavke nije bilo moguće kopirati.",
       "allowMultipleToppings": "Dopusti više istih dodataka",
-      "allowMultipleToppingsHint": "Omogućuje kupcima da dodaju dvostruko (ili više) jednog dodatka — svaki se broji kao zaseban dodatak."
+      "allowMultipleToppingsHint": "Omogućuje kupcima da dodaju dvostruko (ili više) jednog dodatka — svaki se broji kao zaseban dodatak.",
+      "dropToMoveItemHere": "Otpustite da premjestite stavku u ovu kategoriju",
+      "itemMovedToCategory": "„{name}“ premješteno u {category}",
+      "moveItemFailed": "Stavku nije bilo moguće premjestiti — pokušajte ponovno."
     },
     "promotionsList": {
       "stackingMaster": "Master",

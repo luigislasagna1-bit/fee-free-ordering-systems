@@ -2742,7 +2742,10 @@
       "copySettingsDone": "{ok, plural, one {Nukopijuota į # elementą} few {Nukopijuota į # elementus} many {Nukopijuota į # elemento} other {Nukopijuota į # elementų}}",
       "copySettingsFailed": "Nepavyko nukopijuoti nustatymų.",
       "allowMultipleToppings": "Leisti kelis to paties priedo vienetus",
-      "allowMultipleToppingsHint": "Leidžia klientams pridėti priedą dvigubai (ar daugiau) — kiekvienas skaičiuojamas kaip atskiras priedas."
+      "allowMultipleToppingsHint": "Leidžia klientams pridėti priedą dvigubai (ar daugiau) — kiekvienas skaičiuojamas kaip atskiras priedas.",
+      "dropToMoveItemHere": "Paleiskite, kad perkeltumėte patiekalą į šią kategoriją",
+      "itemMovedToCategory": "„{name}“ perkelta į {category}",
+      "moveItemFailed": "Nepavyko perkelti patiekalo — bandykite dar kartą."
     },
     "promotionsList": {
       "stackingMaster": "Master",

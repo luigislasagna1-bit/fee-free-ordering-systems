@@ -2001,7 +2001,10 @@
       "copySettingsDone": "{ok, plural, one {Skopiowano do # pozycji} few {Skopiowano do # pozycji} many {Skopiowano do # pozycji} other {Skopiowano do # pozycji}}",
       "copySettingsFailed": "Nie udało się skopiować ustawień.",
       "allowMultipleToppings": "Zezwól na kilka tych samych dodatków",
-      "allowMultipleToppingsHint": "Pozwala klientom dodać podwójną (lub większą) porcję dodatku — każda liczona jest jako osobny dodatek."
+      "allowMultipleToppingsHint": "Pozwala klientom dodać podwójną (lub większą) porcję dodatku — każda liczona jest jako osobny dodatek.",
+      "dropToMoveItemHere": "Upuść, aby przenieść pozycję do tej kategorii",
+      "itemMovedToCategory": "Przeniesiono „{name}” do {category}",
+      "moveItemFailed": "Nie udało się przenieść pozycji — spróbuj ponownie."
     },
     "promotionsList": {
       "stackingMaster": "Master",

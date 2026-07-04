@@ -2001,7 +2001,10 @@
       "copySettingsDone": "{ok, plural, other {Đã sao chép sang # món}}",
       "copySettingsFailed": "Không thể sao chép cài đặt.",
       "allowMultipleToppings": "Cho phép thêm nhiều cùng một loại topping",
-      "allowMultipleToppingsHint": "Cho phép khách hàng thêm gấp đôi (hoặc nhiều hơn) một loại topping — mỗi phần được tính là một topping riêng."
+      "allowMultipleToppingsHint": "Cho phép khách hàng thêm gấp đôi (hoặc nhiều hơn) một loại topping — mỗi phần được tính là một topping riêng.",
+      "dropToMoveItemHere": "Thả để chuyển món vào danh mục này",
+      "itemMovedToCategory": "Đã chuyển “{name}” sang {category}",
+      "moveItemFailed": "Không thể chuyển món — vui lòng thử lại."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {Kopierat till # artikel} other {Kopierat till # artiklar}}",
       "copySettingsFailed": "Det gick inte att kopiera inställningarna.",
       "allowMultipleToppings": "Tillåt flera av samma topping",
-      "allowMultipleToppingsHint": "Låter kunderna lägga till dubbel (eller mer) av en topping — varje räknas som en separat topping."
+      "allowMultipleToppingsHint": "Låter kunderna lägga till dubbel (eller mer) av en topping — varje räknas som en separat topping.",
+      "dropToMoveItemHere": "Släpp för att flytta artikeln till den här kategorin",
+      "itemMovedToCategory": "”{name}” flyttad till {category}",
+      "moveItemFailed": "Kunde inte flytta artikeln — försök igen."
     },
     "promotionsList": {
       "stackingMaster": "Master",

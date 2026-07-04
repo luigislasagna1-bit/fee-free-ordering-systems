@@ -2001,7 +2001,10 @@
       "copySettingsDone": "{ok, plural, one {Másolva # tételre} other {Másolva # tételre}}",
       "copySettingsFailed": "A beállításokat nem sikerült másolni.",
       "allowMultipleToppings": "Ugyanazon feltét többszöri hozzáadásának engedélyezése",
-      "allowMultipleToppingsHint": "Lehetővé teszi a vendégeknek, hogy duplán (vagy többször) adjanak hozzá egy feltétet — mindegyik külön feltétnek számít."
+      "allowMultipleToppingsHint": "Lehetővé teszi a vendégeknek, hogy duplán (vagy többször) adjanak hozzá egy feltétet — mindegyik külön feltétnek számít.",
+      "dropToMoveItemHere": "Engedje el, hogy a tételt ebbe a kategóriába helyezze",
+      "itemMovedToCategory": "„{name}” áthelyezve ide: {category}",
+      "moveItemFailed": "A tételt nem sikerült áthelyezni — próbálja újra."
     },
     "promotionsList": {
       "stackingMaster": "Master",

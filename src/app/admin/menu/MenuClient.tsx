@@ -1560,11 +1560,23 @@ function SortableItemRow({
 
   return (
     <div ref={setNodeRef} style={style}
+      // Native HTML5 drag SOURCE for moving this item into ANOTHER category
+      // (drop target = the category header, Luigi 2026-07-04). Coexists with
+      // dnd-kit: within-category reordering stays on the grip handle (pointer
+      // events), so we cancel the native drag when it starts from the grip or
+      // from the modifier-chip strip (both have their own dnd-kit drags).
+      draggable
+      onDragStart={e => {
+        const src = e.target as HTMLElement;
+        if (src.closest?.("[data-dnd-grip],[data-chip-strip]")) { e.preventDefault(); return; }
+        e.dataTransfer.setData("menuItemId", item.id);
+        e.dataTransfer.effectAllowed = "move";
+      }}
       onDragOver={handleDragOver}
       onDragLeave={() => setDragOver(false)}
       onDrop={handleDrop}
       className={`flex items-start gap-3 px-4 py-3 hover:bg-gray-50 border-b border-gray-50 last:border-0 group transition ${item.isHidden ? "opacity-50" : ""} ${dragOver ? "bg-emerald-50 outline outline-2 outline-emerald-400 outline-dashed" : ""}`}>
-      <button {...attributes} {...listeners} suppressHydrationWarning className="cursor-grab text-gray-300 hover:text-gray-400 touch-none mt-1">
+      <button data-dnd-grip {...attributes} {...listeners} suppressHydrationWarning className="cursor-grab text-gray-300 hover:text-gray-400 touch-none mt-1">
         <GripVertical className="w-4 h-4" />
       </button>
       {item.imageUrl ? (
@@ -1603,7 +1615,7 @@ function SortableItemRow({
         </div>
         {item.description && <div className="text-xs text-gray-400 truncate mt-0.5">{item.description}</div>}
         {(ownGroups.length > 0 || inheritedGroups.length > 0) && (
-          <div className="flex flex-wrap gap-1 mt-1.5">
+          <div data-chip-strip className="flex flex-wrap gap-1 mt-1.5">
             {inheritedGroups.map(g => (
               // Inherited from category — no remove button; manage via the category header
               <ModifierChip key={g.id} group={g} inherited />
@@ -1780,7 +1792,7 @@ function CopySettingsModal({
 function SortableCategoryBlock({
   cat, expanded, onToggleExpand, onAddItem, onEditItem, onDeleteItem, onCopyItemSettings,
   onToggleItem, onEditCategory, onDeleteCategory, onDuplicateCategory, onItemsReordered, categories,
-  onAttach, onDetach, onReorderGroups,
+  onAttach, onDetach, onReorderGroups, onMoveItemHere,
   selectMode, isSelected, onToggleSelect,
 }: {
   cat: Category; expanded: boolean;
@@ -1794,6 +1806,9 @@ function SortableCategoryBlock({
   onAttach: (libraryGroupId: string, menuItemId?: string, categoryId?: string) => void;
   onDetach: (groupId: string) => void;
   onReorderGroups: (scope: { itemId?: string; categoryId?: string }, orderedIds: string[]) => void;
+  /** A menu item was dragged from another category and dropped on THIS
+   *  category's header → move it here (Luigi 2026-07-04). */
+  onMoveItemHere: (menuItemId: string) => void;
   /** Bulk-select mode: when true, swap the drag handle for a checkbox
    *  and short-circuit the row click to toggle selection rather than
    *  expand the category. Lets owners blast through pre-reimport
@@ -1810,7 +1825,10 @@ function SortableCategoryBlock({
   // Slightly bigger activation for chip drags so X-button clicks register
   // as clicks, not drags.
   const chipSensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }));
-  const [catDragOver, setCatDragOver] = useState(false);
+  // What's hovering over the category header: a library modifier group
+  // (apply-to-category) or a menu item being MOVED here from another
+  // category (Luigi 2026-07-04). Drives the highlight + which hint shows.
+  const [catDragOver, setCatDragOver] = useState<false | "group" | "item">(false);
 
   const handleItemDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -1839,12 +1857,19 @@ function SortableCategoryBlock({
       <div
         className={`flex items-start gap-2 p-4 cursor-pointer hover:bg-gray-50 select-none group transition ${catDragOver ? "bg-emerald-50 outline outline-2 outline-emerald-400 outline-dashed" : ""}`}
         onClick={selectMode ? onToggleSelect : onToggleExpand}
-        onDragOver={e => { e.preventDefault(); if (e.dataTransfer.types.includes("librarygroupid")) { e.dataTransfer.dropEffect = "copy"; setCatDragOver(true); } }}
+        onDragOver={e => {
+          e.preventDefault();
+          if (e.dataTransfer.types.includes("librarygroupid")) { e.dataTransfer.dropEffect = "copy"; setCatDragOver("group"); }
+          else if (e.dataTransfer.types.includes("menuitemid")) { e.dataTransfer.dropEffect = "move"; setCatDragOver("item"); }
+        }}
         onDragLeave={() => setCatDragOver(false)}
         onDrop={e => {
           e.preventDefault(); e.stopPropagation(); setCatDragOver(false);
           const gid = e.dataTransfer.getData("libraryGroupId");
-          if (gid) onAttach(gid, undefined, cat.id);
+          if (gid) { onAttach(gid, undefined, cat.id); return; }
+          // Item dragged from another category → move it here (Luigi 2026-07-04).
+          const itemId = e.dataTransfer.getData("menuItemId");
+          if (itemId) onMoveItemHere(itemId);
         }}
       >
         {selectMode ? (
@@ -1890,7 +1915,11 @@ function SortableCategoryBlock({
               </DndContext>
             </div>
           )}
-          {catDragOver && <div className="text-xs text-emerald-500 mt-1">{t("dropToApplyToCategory")}</div>}
+          {catDragOver && (
+            <div className="text-xs text-emerald-500 mt-1">
+              {catDragOver === "item" ? t("dropToMoveItemHere") : t("dropToApplyToCategory")}
+            </div>
+          )}
         </div>
         <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition flex-shrink-0" onClick={e => e.stopPropagation()}>
           <button onClick={onAddItem} className="flex items-center gap-1 text-xs text-emerald-600 hover:text-emerald-700 font-medium px-2 py-1 rounded hover:bg-emerald-50">
@@ -2697,6 +2726,33 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
       body: JSON.stringify({ type: "items", ids }) });
   };
 
+  /** Item dragged from one category and dropped on ANOTHER category's header
+   *  (Luigi 2026-07-04) — re-home it. Optimistic move (item appends to the
+   *  end of the target), PATCH persists categoryId + a sortOrder that lands
+   *  it last; on failure a reload() reverts to server truth. */
+  const moveItemToCategory = async (itemId: string, targetCatId: string) => {
+    const sourceCat = categories.find(c => c.menuItems.some(i => i.id === itemId));
+    const targetCat = categories.find(c => c.id === targetCatId);
+    if (!sourceCat || !targetCat || sourceCat.id === targetCatId) return;
+    const item = sourceCat.menuItems.find(i => i.id === itemId)!;
+    setCategories(cats => cats.map(c =>
+      c.id === sourceCat.id ? { ...c, menuItems: c.menuItems.filter(i => i.id !== itemId) }
+      : c.id === targetCatId ? { ...c, menuItems: [...c.menuItems, item] }
+      : c
+    ));
+    const res = await fetch(`/api/menu/items/${itemId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ categoryId: targetCatId, sortOrder: targetCat.menuItems.length }),
+    });
+    if (!res.ok) {
+      toast.error(t("moveItemFailed"));
+      reload();
+      return;
+    }
+    toast.success(t("itemMovedToCategory", { name: item.name, category: targetCat.name }));
+  };
+
   /**
    * Owner dragged the modifier-group chips on an item or a category to
    * a new order. Update local state optimistically (the chips visually
@@ -3123,6 +3179,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
                     onAttach={attachModifier}
                     onDetach={detachModifier}
                     onReorderGroups={handleReorderGroups}
+                    onMoveItemHere={(itemId: string) => moveItemToCategory(itemId, cat.id)}
                     selectMode={categorySelectMode}
                     isSelected={selectedCategoryIds.has(cat.id)}
                     onToggleSelect={() => {

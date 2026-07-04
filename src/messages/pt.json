@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {Copiado para # item} other {Copiado para # itens}}",
       "copySettingsFailed": "Não foi possível copiar as definições.",
       "allowMultipleToppings": "Permitir vários do mesmo ingrediente",
-      "allowMultipleToppingsHint": "Permite aos clientes adicionar o dobro (ou mais) de um ingrediente — cada um conta como um ingrediente separado."
+      "allowMultipleToppingsHint": "Permite aos clientes adicionar o dobro (ou mais) de um ingrediente — cada um conta como um ingrediente separado.",
+      "dropToMoveItemHere": "Largue para mover o item para esta categoria",
+      "itemMovedToCategory": "“{name}” movido para {category}",
+      "moveItemFailed": "Não foi possível mover o item — tente novamente."
     },
     "promotionsList": {
       "stackingMaster": "Master",

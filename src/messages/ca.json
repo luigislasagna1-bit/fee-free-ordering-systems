@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {Copiat a # element} other {Copiat a # elements}}",
       "copySettingsFailed": "No s’ha pogut copiar la configuració.",
       "allowMultipleToppings": "Permet diverses unitats del mateix ingredient",
-      "allowMultipleToppingsHint": "Permet als clients afegir el doble (o més) d'un ingredient: cadascun compta com un ingredient independent."
+      "allowMultipleToppingsHint": "Permet als clients afegir el doble (o més) d'un ingredient: cadascun compta com un ingredient independent.",
+      "dropToMoveItemHere": "Deixa anar per moure l'article a aquesta categoria",
+      "itemMovedToCategory": "«{name}» mogut a {category}",
+      "moveItemFailed": "No s'ha pogut moure l'article — torna-ho a provar."
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

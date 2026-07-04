@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {Копирано към # артикул} other {Копирано към # артикула}}",
       "copySettingsFailed": "Настройките не можаха да се копират.",
       "allowMultipleToppings": "Разрешаване на няколко от една и съща добавка",
-      "allowMultipleToppingsHint": "Позволява на клиентите да добавят двойно (или повече) от една добавка — всяка се брои като отделна добавка."
+      "allowMultipleToppingsHint": "Позволява на клиентите да добавят двойно (или повече) от една добавка — всяка се брои като отделна добавка.",
+      "dropToMoveItemHere": "Пуснете, за да преместите артикула в тази категория",
+      "itemMovedToCategory": "„{name}“ е преместен в {category}",
+      "moveItemFailed": "Артикулът не можа да бъде преместен — опитайте отново."
     },
     "promotionsList": {
       "stackingMaster": "Главна",

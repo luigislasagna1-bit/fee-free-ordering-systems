@@ -63,7 +63,17 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (name !== undefined) updateData.name = name;
   if (description !== undefined) updateData.description = description || null;
   if (price !== undefined) updateData.price = parseFloat(price);
-  if (categoryId !== undefined) updateData.categoryId = categoryId;
+  if (categoryId !== undefined) {
+    // Never trust a client-supplied category id — re-fetch and require it to
+    // belong to THIS restaurant, or an item could be re-homed into another
+    // tenant's menu (drag-to-move exposes categoryId in the client).
+    const targetCat = await prisma.menuCategory.findFirst({
+      where: { id: categoryId, restaurantId },
+      select: { id: true },
+    });
+    if (!targetCat) return NextResponse.json({ error: "Invalid category" }, { status: 400 });
+    updateData.categoryId = categoryId;
+  }
   if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
   if (isAvailable !== undefined) updateData.isAvailable = isAvailable;
   if (isFeatured !== undefined) updateData.isFeatured = isFeatured;

@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {Copiato su # articolo} other {Copiato su # articoli}}",
       "copySettingsFailed": "Impossibile copiare le impostazioni.",
       "allowMultipleToppings": "Consenti più volte lo stesso topping",
-      "allowMultipleToppingsHint": "Permette ai clienti di aggiungere un topping doppio (o più) — ognuno conta come topping separato."
+      "allowMultipleToppingsHint": "Permette ai clienti di aggiungere un topping doppio (o più) — ognuno conta come topping separato.",
+      "dropToMoveItemHere": "Rilascia per spostare il piatto in questa categoria",
+      "itemMovedToCategory": "“{name}” spostato in {category}",
+      "moveItemFailed": "Impossibile spostare il piatto — riprova."
     },
     "promotionsList": {
       "stackingMaster": "Master",

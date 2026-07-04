@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {Copiat în # produs} few {Copiat în # produse} other {Copiat în # de produse}}",
       "copySettingsFailed": "Setările nu au putut fi copiate.",
       "allowMultipleToppings": "Permite mai multe porții din același topping",
-      "allowMultipleToppingsHint": "Le permite clienților să adauge dublu (sau mai mult) dintr-un topping — fiecare se numără ca topping separat."
+      "allowMultipleToppingsHint": "Le permite clienților să adauge dublu (sau mai mult) dintr-un topping — fiecare se numără ca topping separat.",
+      "dropToMoveItemHere": "Eliberați pentru a muta produsul în această categorie",
+      "itemMovedToCategory": "„{name}” mutat în {category}",
+      "moveItemFailed": "Produsul nu a putut fi mutat — încercați din nou."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {Copiado para # item} other {Copiado para # itens}}",
       "copySettingsFailed": "Não foi possível copiar as configurações.",
       "allowMultipleToppings": "Permitir vários do mesmo adicional",
-      "allowMultipleToppingsHint": "Permite que os clientes adicionem o dobro (ou mais) de um adicional — cada um conta como um adicional separado."
+      "allowMultipleToppingsHint": "Permite que os clientes adicionem o dobro (ou mais) de um adicional — cada um conta como um adicional separado.",
+      "dropToMoveItemHere": "Solte para mover o item para esta categoria",
+      "itemMovedToCategory": "“{name}” movido para {category}",
+      "moveItemFailed": "Não foi possível mover o item — tente novamente."
     },
     "promotionsList": {
       "stackingMaster": "Master",

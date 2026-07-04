@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {Kopiert til # vare} other {Kopiert til # varer}}",
       "copySettingsFailed": "Kunne ikke kopiere innstillingene.",
       "allowMultipleToppings": "Tillat flere av samme topping",
-      "allowMultipleToppingsHint": "Lar kundene legge til dobbel (eller mer) av en topping — hver enkelt teller som en egen topping."
+      "allowMultipleToppingsHint": "Lar kundene legge til dobbel (eller mer) av en topping — hver enkelt teller som en egen topping.",
+      "dropToMoveItemHere": "Slipp for å flytte varen til denne kategorien",
+      "itemMovedToCategory": "“{name}” flyttet til {category}",
+      "moveItemFailed": "Kunne ikke flytte varen — prøv igjen."
     },
     "promotionsList": {
       "stackingMaster": "Master",

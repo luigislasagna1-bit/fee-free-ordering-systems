@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, zero {Nokopēts uz # vienumiem} one {Nokopēts uz # vienumu} other {Nokopēts uz # vienumiem}}",
       "copySettingsFailed": "Neizdevās nokopēt iestatījumus.",
       "allowMultipleToppings": "Atļaut vairākas vienas un tās pašas piedevas",
-      "allowMultipleToppingsHint": "Ļauj klientiem pievienot piedevu dubultā (vai vairāk) — katra tiek skaitīta kā atsevišķa piedeva."
+      "allowMultipleToppingsHint": "Ļauj klientiem pievienot piedevu dubultā (vai vairāk) — katra tiek skaitīta kā atsevišķa piedeva.",
+      "dropToMoveItemHere": "Atlaidiet, lai pārvietotu produktu uz šo kategoriju",
+      "itemMovedToCategory": "“{name}” pārvietots uz {category}",
+      "moveItemFailed": "Produktu neizdevās pārvietot — mēģiniet vēlreiz."
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

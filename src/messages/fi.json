@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {Kopioitu # tuotteeseen} other {Kopioitu # tuotteeseen}}",
       "copySettingsFailed": "Asetusten kopiointi epäonnistui.",
       "allowMultipleToppings": "Salli sama täyte useita kertoja",
-      "allowMultipleToppingsHint": "Antaa asiakkaiden lisätä täytteen tuplana (tai enemmän) — jokainen lasketaan erilliseksi täytteeksi."
+      "allowMultipleToppingsHint": "Antaa asiakkaiden lisätä täytteen tuplana (tai enemmän) — jokainen lasketaan erilliseksi täytteeksi.",
+      "dropToMoveItemHere": "Pudota siirtääksesi tuotteen tähän kategoriaan",
+      "itemMovedToCategory": "”{name}” siirretty kategoriaan {category}",
+      "moveItemFailed": "Tuotetta ei voitu siirtää — yritä uudelleen."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -2475,7 +2475,10 @@
       "previewTestOrdering": "Preview & test ordering",
       "masterMenuTitle": "Master menu — {inheriting} of {total} locations inherit this menu",
       "masterMenuBody": "Changes you make here appear on every inheriting location instantly. Locations with a custom menu are not affected.",
-      "tabVisibility": "Visibility"
+      "tabVisibility": "Visibility",
+      "dropToMoveItemHere": "Drop to move the item into this category",
+      "itemMovedToCategory": "Moved “{name}” to {category}",
+      "moveItemFailed": "Couldn't move the item — please try again."
     },
     "promotionsList": {
       "stackingMaster": "Master",

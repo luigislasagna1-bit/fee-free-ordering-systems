@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {Gekopieerd naar # item} other {Gekopieerd naar # items}}",
       "copySettingsFailed": "Kon de instellingen niet kopiëren.",
       "allowMultipleToppings": "Meerdere keer hetzelfde beleg toestaan",
-      "allowMultipleToppingsHint": "Laat klanten een beleg dubbel (of meer) toevoegen — elk telt als een afzonderlijk beleg."
+      "allowMultipleToppingsHint": "Laat klanten een beleg dubbel (of meer) toevoegen — elk telt als een afzonderlijk beleg.",
+      "dropToMoveItemHere": "Laat los om het item naar deze categorie te verplaatsen",
+      "itemMovedToCategory": "“{name}” verplaatst naar {category}",
+      "moveItemFailed": "Kon het item niet verplaatsen — probeer het opnieuw."
     },
     "promotionsList": {
       "stackingMaster": "Master",

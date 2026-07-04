@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {Auf # Artikel kopiert} other {Auf # Artikel kopiert}}",
       "copySettingsFailed": "Die Einstellungen konnten nicht kopiert werden.",
       "allowMultipleToppings": "Mehrfaches Hinzufügen desselben Belags erlauben",
-      "allowMultipleToppingsHint": "Ermöglicht Kunden, einen Belag doppelt (oder mehrfach) hinzuzufügen — jeder zählt als separater Belag."
+      "allowMultipleToppingsHint": "Ermöglicht Kunden, einen Belag doppelt (oder mehrfach) hinzuzufügen — jeder zählt als separater Belag.",
+      "dropToMoveItemHere": "Loslassen, um den Artikel in diese Kategorie zu verschieben",
+      "itemMovedToCategory": "„{name}“ nach {category} verschoben",
+      "moveItemFailed": "Artikel konnte nicht verschoben werden — bitte erneut versuchen."
     },
     "promotionsList": {
       "stackingMaster": "Master",

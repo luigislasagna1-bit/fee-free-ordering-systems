@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, one {Copié vers # article} other {Copié vers # articles}}",
       "copySettingsFailed": "Impossible de copier les réglages.",
       "allowMultipleToppings": "Autoriser plusieurs fois la même garniture",
-      "allowMultipleToppingsHint": "Permet aux clients d'ajouter une garniture en double (ou plus) — chacune compte comme une garniture distincte."
+      "allowMultipleToppingsHint": "Permet aux clients d'ajouter une garniture en double (ou plus) — chacune compte comme une garniture distincte.",
+      "dropToMoveItemHere": "Déposez pour déplacer l'article dans cette catégorie",
+      "itemMovedToCategory": "« {name} » déplacé vers {category}",
+      "moveItemFailed": "Impossible de déplacer l'article — veuillez réessayer."
     },
     "promotionsList": {
       "stackingMaster": "Maître",

@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, other {Disalin ke # item}}",
       "copySettingsFailed": "Tidak dapat menyalin pengaturan.",
       "allowMultipleToppings": "Izinkan beberapa topping yang sama",
-      "allowMultipleToppingsHint": "Memungkinkan pelanggan menambahkan topping dua kali lipat (atau lebih) — masing-masing dihitung sebagai topping terpisah."
+      "allowMultipleToppingsHint": "Memungkinkan pelanggan menambahkan topping dua kali lipat (atau lebih) — masing-masing dihitung sebagai topping terpisah.",
+      "dropToMoveItemHere": "Lepas untuk memindahkan item ke kategori ini",
+      "itemMovedToCategory": "“{name}” dipindahkan ke {category}",
+      "moveItemFailed": "Tidak dapat memindahkan item — coba lagi."
     },
     "promotionsList": {
       "stackingMaster": "Master",

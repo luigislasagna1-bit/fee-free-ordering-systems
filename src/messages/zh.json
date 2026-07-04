@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, other {已复制到 # 个商品}}",
       "copySettingsFailed": "无法复制设置。",
       "allowMultipleToppings": "允许添加多份相同配料",
-      "allowMultipleToppingsHint": "允许顾客将某种配料加倍（或更多）添加——每一份都按单独的配料计算。"
+      "allowMultipleToppingsHint": "允许顾客将某种配料加倍（或更多）添加——每一份都按单独的配料计算。",
+      "dropToMoveItemHere": "松开即可将菜品移动到此分类",
+      "itemMovedToCategory": "已将“{name}”移动到 {category}",
+      "moveItemFailed": "无法移动菜品——请重试。"
     },
     "promotionsList": {
       "stackingMaster": "主控",

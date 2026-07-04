@@ -2057,7 +2057,10 @@
       "copySettingsDone": "{ok, plural, other {# 件の商品にコピーしました}}",
       "copySettingsFailed": "設定をコピーできませんでした。",
       "allowMultipleToppings": "同じトッピングの複数追加を許可",
-      "allowMultipleToppingsHint": "お客様が同じトッピングを2倍（以上）追加できるようになります。各トッピングは個別のトッピングとして計算されます。"
+      "allowMultipleToppingsHint": "お客様が同じトッピングを2倍（以上）追加できるようになります。各トッピングは個別のトッピングとして計算されます。",
+      "dropToMoveItemHere": "ここにドロップするとこのカテゴリーに移動します",
+      "itemMovedToCategory": "「{name}」を{category}に移動しました",
+      "moveItemFailed": "商品を移動できませんでした — もう一度お試しください。"
     },
     "promotionsList": {
       "stackingMaster": "マスター",
