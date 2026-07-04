@@ -6,6 +6,15 @@
  *   FFOS_TWILIO_AUTH_TOKEN
  *   FFOS_TWILIO_FROM_NUMBER   (E.164)
  *
+ * FROM-number policy (Luigi 2026-07-03): ONE local Canadian number for ALL
+ * calls. Never a toll-free FROM — mobile carriers spam-silence unattested
+ * toll-free robocalls (confirmed: landline rang, two cells stayed dark).
+ * Line-type detection is not viable in NANP (needs a paid Lookup per call),
+ * and a clean local number delivers fine to landlines + US destinations too.
+ * FUTURE SEAM: when restaurants outside Canada sign up, add per-country FROM
+ * numbers (e.g. FFOS_TWILIO_FROM_NUMBER_US) and select by the restaurant's
+ * country right where `from` is read in placeVoiceCall.
+ *
  * Used for the "nearly-missed order" auto-call (report cmpxeph4l): if a new
  * order sits unaccepted for ~90s, we ring the restaurant's phone and read a
  * short spoken message so an unattended tablet doesn't drop the order.

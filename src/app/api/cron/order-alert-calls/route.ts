@@ -36,6 +36,14 @@ import { holidayEffectToday } from "@/lib/holiday-rules";
 const THRESHOLD_MS = 90_000; // 1.5 minutes unaccepted past the anchor
 const LOOKBACK_MS = 30 * 60_000; // ignore anchors older than this (cron catch-up safety)
 const MAX_PER_RUN = 50;
+// ONE call per restaurant per sweep + a short refractory window between calls.
+// Without this, N stale orders → N simultaneous calls to the same phone: the
+// first occupies the line and the rest get "answered" by the carrier's busy
+// handling (Luigi 2026-07-03: four calls in 7s, three fake "Completed 24s",
+// nothing rang). Repeated rapid robocalls also poison the FROM number's spam
+// reputation. One call already says "check your tablet" — it covers every
+// stale order/booking at that moment.
+const RESTAURANT_COOLDOWN_MS = 3 * 60_000;
 
 export async function POST(req: NextRequest) {
   const authHeader = req.headers.get("authorization") ?? "";
@@ -80,6 +88,7 @@ export async function POST(req: NextRequest) {
       type: true,
       notifiedAt: true,
       alertAt: true,
+      restaurantId: true,
       restaurant: {
         select: {
           name: true,
@@ -99,6 +108,33 @@ export async function POST(req: NextRequest) {
 
   let called = 0;
   const results: Array<{ orderId: string; placed: boolean; reason?: string }> = [];
+
+  // Per-restaurant throttle shared by the order AND reservation loops below:
+  // one call per restaurant per sweep, none within RESTAURANT_COOLDOWN_MS of
+  // the previous call. A suppressed row still gets alertCallAt stamped — the
+  // call that DID go out already told staff to check the tablet, and stamping
+  // keeps the row from re-triggering every minute.
+  const calledThisRun = new Set<string>();
+  const cooldownCache = new Map<string, boolean>();
+  const cooldownFloor = new Date(now - RESTAURANT_COOLDOWN_MS);
+  async function inCooldown(restaurantId: string): Promise<boolean> {
+    const cached = cooldownCache.get(restaurantId);
+    if (cached !== undefined) return cached;
+    const [recentOrder, recentRes] = await Promise.all([
+      prisma.order.findFirst({
+        where: { restaurantId, alertCallAt: { gte: cooldownFloor } },
+        select: { id: true },
+      }),
+      prisma.reservation.findFirst({
+        where: { restaurantId, alertCallAt: { gte: cooldownFloor } },
+        select: { id: true },
+      }),
+    ]);
+    const hit = !!(recentOrder || recentRes);
+    cooldownCache.set(restaurantId, hit);
+    return hit;
+  }
+
   for (const o of candidates) {
     const r = o.restaurant;
     // Dedicated alert number wins; otherwise the public phone.
@@ -138,8 +174,17 @@ export async function POST(req: NextRequest) {
       continue;
     }
 
+    // One call per restaurant per sweep / per cooldown window — stamp the row
+    // so it doesn't re-trigger, but don't dial again.
+    if (calledThisRun.has(o.restaurantId) || (await inCooldown(o.restaurantId))) {
+      await prisma.order.update({ where: { id: o.id }, data: { alertCallAt: new Date() } });
+      results.push({ orderId: o.id, placed: false, reason: "covered by recent alert call" });
+      continue;
+    }
+
     // Stamp FIRST so a slow Twilio call or a retry never double-dials.
     await prisma.order.update({ where: { id: o.id }, data: { alertCallAt: new Date() } });
+    calledThisRun.add(o.restaurantId);
 
     const locale = r.defaultLanguage || "en";
     const t = await getDict(locale);
@@ -181,6 +226,7 @@ export async function POST(req: NextRequest) {
       id: true,
       alertAt: true,
       createdAt: true,
+      restaurantId: true,
       restaurant: {
         select: {
           name: true, phone: true, alertPhone: true, defaultLanguage: true,
@@ -218,8 +264,16 @@ export async function POST(req: NextRequest) {
       results.push({ orderId: `res:${b.id}`, placed: false, reason: "restaurant closed" });
       continue;
     }
+    // Same per-restaurant throttle as orders (an order call in this sweep also
+    // covers the booking — either way staff are told to check the tablet).
+    if (calledThisRun.has(b.restaurantId) || (await inCooldown(b.restaurantId))) {
+      await prisma.reservation.update({ where: { id: b.id }, data: { alertCallAt: new Date() } });
+      results.push({ orderId: `res:${b.id}`, placed: false, reason: "covered by recent alert call" });
+      continue;
+    }
     // Stamp FIRST so a slow call or retry never double-dials.
     await prisma.reservation.update({ where: { id: b.id }, data: { alertCallAt: new Date() } });
+    calledThisRun.add(b.restaurantId);
     const locale = r.defaultLanguage || "en";
     const t = await getDict(locale);
     const message = t("kitchen.autoCallReservationMessage");
