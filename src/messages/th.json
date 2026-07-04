@@ -13,7 +13,8 @@
       "cashOnDelivery": "เงินสด (ชำระตอนส่ง)",
       "paypal": "PayPal",
       "rewardCredit": "เครดิตร้าน"
-    }
+    },
+    "discounts": "ส่วนลด"
   },
   "common": {
     "save": "บันทึก",

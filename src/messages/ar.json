@@ -13,7 +13,8 @@
       "cashOnDelivery": "نقداً عند التوصيل",
       "paypal": "PayPal",
       "rewardCredit": "رصيد المتجر"
-    }
+    },
+    "discounts": "الخصومات"
   },
   "common": {
     "save": "حفظ",

@@ -13,7 +13,8 @@
       "cashOnDelivery": "डिलीवरी पर नकद",
       "paypal": "PayPal",
       "rewardCredit": "स्टोर क्रेडिट"
-    }
+    },
+    "discounts": "छूट"
   },
   "common": {
     "save": "सहेजें",

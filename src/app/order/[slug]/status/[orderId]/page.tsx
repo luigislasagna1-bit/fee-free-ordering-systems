@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
+import { paymentMethodLabelKey } from "@/lib/payment-label";
 import {
   CheckCircle, Clock, ChefHat, Package, XCircle, Loader2,
   Phone, Mail, MapPin, Repeat, Printer, HelpCircle, X,
@@ -33,6 +34,9 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   // same word the kitchen uses, already translated in all 38 locales. Luigi
   // 2026-06-09.
   const tk = useTranslations("kitchen");
+  // Root translator for the shared money.* / receipt.customer.* keys the
+  // canonical breakdown uses (same rows as the confirmation page).
+  const tRoot = useTranslations();
 
   const TRACKING_STEPS = [
     { key: "pending", label: t("stepPendingLabel"), icon: Clock, desc: t("stepPendingDesc") },
@@ -676,6 +680,15 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                   <span>− {formatCurrency(rewardUsed)}</span>
                 </div>
               )}
+              {/* What was actually charged / is still owed beyond the credit —
+                  same row the confirmation page shows, so the customer never
+                  reads the gross Total as the amount to hand over. */}
+              {rewardUsed > 0 && (
+                <div className="flex justify-between font-bold text-gray-900">
+                  <span>{order.paymentStatus === "paid" ? tRoot("money.paid") : tRoot("receipt.customer.balanceDue")}</span>
+                  <span>{formatCurrency(Math.max(0, order.total - rewardUsed))}</span>
+                </div>
+              )}
               {/* Reward Dollars earned on this order (credited at completion). */}
               {rewardEarned > 0 && (
                 <div className="flex justify-between text-emerald-600">
@@ -688,7 +701,13 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
             {/* Order metadata */}
             <div className="border-t border-gray-100 mt-3 pt-3 text-xs text-gray-500 space-y-0.5">
               <div className="flex justify-between"><span>{t("orderType")}</span><span className="capitalize">{order.type}</span></div>
-              <div className="flex justify-between"><span>{t("payment")}</span><span className="capitalize">{order.paymentMethod}</span></div>
+              <div className="flex justify-between">
+                <span>{t("payment")}</span>
+                {/* Localized label ("Cash on pickup", "Card (online)", …) — the raw
+                    DB value ("reward_credit") was showing before. Unknown methods
+                    still echo the raw string so the row is never blank. */}
+                <span>{(() => { const k = paymentMethodLabelKey(order.paymentMethod, order.type); return k ? tRoot(k) : <span className="capitalize">{String(order.paymentMethod ?? "").replace(/_/g, " ")}</span>; })()}</span>
+              </div>
               <div className="flex justify-between"><span>{t("placed")}</span><span>{new Date(order.createdAt).toLocaleString()}</span></div>
             </div>
           </div>

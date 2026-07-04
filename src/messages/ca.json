@@ -13,7 +13,8 @@
       "cashOnDelivery": "Efectiu en lliurar",
       "paypal": "PayPal",
       "rewardCredit": "Crèdit de la botiga"
-    }
+    },
+    "discounts": "Descomptes"
   },
   "common": {
     "save": "Desa",

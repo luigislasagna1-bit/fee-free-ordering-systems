@@ -13,7 +13,8 @@
       "cashOnDelivery": "Numerar la livrare",
       "paypal": "PayPal",
       "rewardCredit": "Credit magazin"
-    }
+    },
+    "discounts": "Reduceri"
   },
   "common": {
     "save": "Salvează",

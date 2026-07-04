@@ -13,7 +13,8 @@
       "cashOnDelivery": "В брой при доставка",
       "paypal": "PayPal",
       "rewardCredit": "Кредит в магазина"
-    }
+    },
+    "discounts": "Отстъпки"
   },
   "common": {
     "save": "Запази",

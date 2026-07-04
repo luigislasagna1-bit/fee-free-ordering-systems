@@ -13,7 +13,8 @@
       "cashOnDelivery": "Hotovost při doručení",
       "paypal": "PayPal",
       "rewardCredit": "Kredit v obchodě"
-    }
+    },
+    "discounts": "Slevy"
   },
   "common": {
     "save": "Uložit",

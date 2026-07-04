@@ -13,7 +13,8 @@
       "cashOnDelivery": "Kontant ved levering",
       "paypal": "PayPal",
       "rewardCredit": "Butikkreditt"
-    }
+    },
+    "discounts": "Rabatter"
   },
   "common": {
     "save": "Lagre",

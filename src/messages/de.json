@@ -13,7 +13,8 @@
       "cashOnDelivery": "Bar bei Lieferung",
       "paypal": "PayPal",
       "rewardCredit": "Guthaben"
-    }
+    },
+    "discounts": "Rabatte"
   },
   "common": {
     "save": "Speichern",

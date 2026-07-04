@@ -34,11 +34,17 @@ export type SummaryRow = {
   sortKey: string;
   orders: number;
   subtotal: number;
+  /** Promo + coupon discounts given (Order.promoDiscount + couponDiscount). */
+  discounts: number;
   tax: number;
   deliveryFee: number;
   tips: number;
   otherFees: number;
   total: number;
+  /** Store credit redeemed — a TENDER, not cash/card (Order.creditApplied). */
+  storeCredit: number;
+  /** Real cash/card collected = total − storeCredit. */
+  collected: number;
 };
 
 const DIMS: SummaryDim[] = ["day", "week", "month", "paymentMethod", "type"];
@@ -87,11 +93,12 @@ export async function buildSummaryRows(
       createdAt: true, type: true, paymentMethod: true,
       subtotal: true, taxAmount: true, deliveryFee: true, tip: true,
       appliedServiceFees: true, total: true,
+      couponDiscount: true, promoDiscount: true, creditApplied: true,
     },
   });
 
   const blank = (key: string): SummaryRow => ({
-    key, sortKey: key, orders: 0, subtotal: 0, tax: 0, deliveryFee: 0, tips: 0, otherFees: 0, total: 0,
+    key, sortKey: key, orders: 0, subtotal: 0, discounts: 0, tax: 0, deliveryFee: 0, tips: 0, otherFees: 0, total: 0, storeCredit: 0, collected: 0,
   });
   const totals = blank("__total__");
   const map = new Map<string, SummaryRow>();
@@ -101,13 +108,19 @@ export async function buildSummaryRows(
     let row = map.get(key);
     if (!row) { row = blank(key); map.set(key, row); }
     const fees = parseServiceFees((o as any).appliedServiceFees);
+    const discounts = ((o as any).couponDiscount ?? 0) + ((o as any).promoDiscount ?? 0);
+    const credit = (o as any).creditApplied ?? 0;
+    const collected = Math.max(0, o.total - credit);
     row.orders += 1;          totals.orders += 1;
     row.subtotal += o.subtotal;        totals.subtotal += o.subtotal;
+    row.discounts += discounts;        totals.discounts += discounts;
     row.tax += o.taxAmount ?? 0;       totals.tax += o.taxAmount ?? 0;
     row.deliveryFee += o.deliveryFee ?? 0; totals.deliveryFee += o.deliveryFee ?? 0;
     row.tips += o.tip ?? 0;            totals.tips += o.tip ?? 0;
     row.otherFees += fees;             totals.otherFees += fees;
     row.total += o.total;             totals.total += o.total;
+    row.storeCredit += credit;         totals.storeCredit += credit;
+    row.collected += collected;        totals.collected += collected;
   }
 
   const timeDim = dim === "day" || dim === "week" || dim === "month";

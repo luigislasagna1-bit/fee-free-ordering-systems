@@ -13,7 +13,8 @@
       "cashOnDelivery": "Tunai saat antar",
       "paypal": "PayPal",
       "rewardCredit": "Kredit toko"
-    }
+    },
+    "discounts": "Diskon"
   },
   "common": {
     "save": "Simpan",

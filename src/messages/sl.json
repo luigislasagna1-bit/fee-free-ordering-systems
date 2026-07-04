@@ -13,7 +13,8 @@
       "cashOnDelivery": "Gotovina ob dostavi",
       "paypal": "PayPal",
       "rewardCredit": "Dobroimetje"
-    }
+    },
+    "discounts": "Popusti"
   },
   "common": {
     "save": "Shrani",

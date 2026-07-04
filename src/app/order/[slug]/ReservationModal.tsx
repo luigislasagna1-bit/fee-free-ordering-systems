@@ -7,6 +7,7 @@ import { parseTheme } from "@/lib/theme";
 import { useTranslations } from "next-intl";
 import { pickHoursForService } from "@/lib/service-hours";
 import { formatTime, type HoursFormat } from "@/lib/format-time";
+import { formatCurrency } from "@/lib/utils";
 
 type Theme = ReturnType<typeof parseTheme>;
 
@@ -51,6 +52,9 @@ interface Props {
    *  local) can disagree on whether "today 6 PM" is enough notice.
    *  Luigi 2026-06-01. */
   timezone?: string;
+  /** Restaurant currency (Restaurant.currency, e.g. "cad") — drives the
+   *  deposit hint so it never shows a hardcoded "$" for non-dollar stores. */
+  currency?: string;
   theme: Theme;
   onClose: () => void;
   /** When true, render as an inline card (no fixed dark overlay, no internal
@@ -227,6 +231,7 @@ export function ReservationModal({
   requireCustomerPhone = true,
   hoursFormat = "24h",
   timezone,
+  currency = "usd",
   theme, onClose,
   embedded = false,
   allowPreOrder = false,
@@ -750,7 +755,7 @@ export function ReservationModal({
               {/* Deposit hint */}
               {settings.requireDeposit && settings.depositAmount > 0 && (
                 <div className="text-xs text-gray-500 bg-gray-50 rounded-lg px-3 py-2">
-                  {tr("depositHintPerGuest", { amount: `$${settings.depositAmount.toFixed(2)}`, total: `$${(settings.depositAmount * partySize).toFixed(2)}` })}
+                  {tr("depositHintPerGuest", { amount: formatCurrency(settings.depositAmount, currency), total: formatCurrency(settings.depositAmount * partySize, currency) })}
                 </div>
               )}
 

@@ -36,6 +36,10 @@ type Stats = {
   offlinePayments: number; offlinePaymentsAmount: number;
   onlinePayments: number; onlinePaymentsAmount: number;
   subTotals: number; taxAmount: number; deliveryFees: number; tips: number; otherFees: number; total: number;
+  /** Money-normalization additions (Luigi 2026-07-02): discounts given, store
+   *  credit redeemed (a tender, not cash/card) and real cash/card collected.
+   *  Optional so a stale cached API payload can't crash the modal. */
+  discounts?: number; storeCreditRedeemed?: number; collected?: number;
 };
 
 let activeCurrency = "usd";
@@ -77,6 +81,7 @@ export function EndOfDayModal({
 }) {
   activeCurrency = currency;
   const t = useTranslations("admin.endOfDayPage");
+  const tMoney = useTranslations("money");
   const locale = useLocale();
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState<Stats | null>(null);
@@ -230,12 +235,24 @@ export function EndOfDayModal({
                   <div className="flex justify-between"><span>{t("paymentOffline")}</span><span>{stats.offlinePayments} · {fmt(stats.offlinePaymentsAmount)}</span></div>
                   <div className="h-px bg-gray-400/30 my-2" />
                   <div className="flex justify-between"><span>{t("breakdownSubtotal")}</span><span>{fmt(stats.subTotals)}</span></div>
+                  {(stats.discounts ?? 0) > 0 && (
+                    <div className="flex justify-between"><span>{tMoney("discounts")}</span><span>−{fmt(stats.discounts!)}</span></div>
+                  )}
                   <div className="flex justify-between"><span>{t("breakdownDeliveryFees")}</span><span>{fmt(stats.deliveryFees)}</span></div>
                   <div className="flex justify-between"><span>{t("breakdownTips")}</span><span>{fmt(stats.tips)}</span></div>
                   <div className="flex justify-between"><span>{t("breakdownOtherFees")}</span><span>{fmt(stats.otherFees)}</span></div>
                   <div className="flex justify-between"><span>{t("breakdownTax")}</span><span>{fmt(stats.taxAmount)}</span></div>
                   <div className="h-px bg-gray-400/30 my-2" />
                   <div className="flex justify-between font-bold"><span>{t("breakdownTotal")}</span><span>{fmt(stats.total)}</span></div>
+                  {/* Store credit is a tender — staff reconcile the drawer/processor
+                      against COLLECTED, never the gross total. Rows only appear when
+                      credit was actually redeemed (feature-gated by the data). */}
+                  {(stats.storeCreditRedeemed ?? 0) > 0 && (
+                    <>
+                      <div className="flex justify-between"><span>{tMoney("pay.rewardCredit")}</span><span>−{fmt(stats.storeCreditRedeemed!)}</span></div>
+                      <div className="flex justify-between font-bold"><span>{tMoney("amountCollected")}</span><span>{fmt(stats.collected ?? Math.max(0, stats.total - (stats.storeCreditRedeemed ?? 0)))}</span></div>
+                    </>
+                  )}
                 </div>
               </div>
             </>

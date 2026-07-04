@@ -5997,6 +5997,7 @@ export function OrderingPageClient({
           requireCustomerPhone={(restaurant as any).requireCustomerPhone !== false}
           hoursFormat={(restaurant as any).hoursFormat === "12h" ? "12h" : "24h"}
           timezone={(restaurant as any).timezone ?? undefined}
+          currency={(restaurant as any).currency ?? "usd"}
           theme={theme}
           // Reserve-then-order: same page, so apply the draft directly (no
           // sessionStorage hop) and close the modal. Luigi 2026-06-08.

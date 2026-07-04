@@ -29,19 +29,27 @@ export async function GET(req: NextRequest) {
 
   const { rows, totals } = await buildSummaryRows(scope.ids, range, dim, scope.timezone ?? undefined);
 
+  // Store-credit tender columns only when credit was redeemed in the range —
+  // mirrors the page (stores without Reward Dollars see the classic layout).
+  const showCredit = totals.storeCredit > 0;
   const dimHeader = dimHeaderLabel(dim);
   const out: (string | number)[][] = [
-    [dimHeader, "Orders", "Subtotal", "Tax", "Delivery fee", "Tips", "Other fees", "Total"],
+    [
+      dimHeader, "Orders", "Subtotal", "Discounts", "Tax", "Delivery fee", "Tips", "Other fees", "Total",
+      ...(showCredit ? ["Store credit", "Collected"] : []),
+    ],
   ];
   for (const r of rows) {
     out.push([
       exportLabel(dim, r.key), r.orders,
-      round2(r.subtotal), round2(r.tax), round2(r.deliveryFee), round2(r.tips), round2(r.otherFees), round2(r.total),
+      round2(r.subtotal), round2(r.discounts), round2(r.tax), round2(r.deliveryFee), round2(r.tips), round2(r.otherFees), round2(r.total),
+      ...(showCredit ? [round2(r.storeCredit), round2(r.collected)] : []),
     ]);
   }
   out.push([
     "Total", totals.orders,
-    round2(totals.subtotal), round2(totals.tax), round2(totals.deliveryFee), round2(totals.tips), round2(totals.otherFees), round2(totals.total),
+    round2(totals.subtotal), round2(totals.discounts), round2(totals.tax), round2(totals.deliveryFee), round2(totals.tips), round2(totals.otherFees), round2(totals.total),
+    ...(showCredit ? [round2(totals.storeCredit), round2(totals.collected)] : []),
   ]);
 
   return buildExportResponse({

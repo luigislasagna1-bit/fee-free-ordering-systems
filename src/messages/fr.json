@@ -13,7 +13,8 @@
       "cashOnDelivery": "Espèces à la livraison",
       "paypal": "PayPal",
       "rewardCredit": "Crédit en magasin"
-    }
+    },
+    "discounts": "Remises"
   },
   "common": {
     "save": "Enregistrer",

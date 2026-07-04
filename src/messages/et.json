@@ -13,7 +13,8 @@
       "cashOnDelivery": "Sularaha kättetoimetamisel",
       "paypal": "PayPal",
       "rewardCredit": "Poekrediit"
-    }
+    },
+    "discounts": "Allahindlused"
   },
   "common": {
     "save": "Salvesta",

@@ -13,7 +13,8 @@
       "cashOnDelivery": "Gotovina pri dostavi",
       "paypal": "PayPal",
       "rewardCredit": "Kredit u prodavnici"
-    }
+    },
+    "discounts": "Popusti"
   },
   "common": {
     "save": "Sačuvaj",

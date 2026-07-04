@@ -867,12 +867,20 @@ export async function buildEndOfDayReceiptLines(
   // Money breakdown
   r.bold(true).line("MONEY BREAKDOWN").bold(false);
   r.columns("Subtotal",      formatMoney(stats.subTotals));
+  // Promo + coupon discounts given — so Subtotal→Total reconciles on paper.
+  if ((stats.discounts ?? 0) > 0) r.columns("Discounts", `-${formatMoney(stats.discounts)}`);
   r.columns("Tax",           formatMoney(stats.taxAmount));
   r.columns("Delivery fees", formatMoney(stats.deliveryFees));
   r.columns("Tips",          formatMoney(stats.tips));
   if (stats.otherFees > 0) r.columns("Other fees", formatMoney(stats.otherFees));
   r.divider("=");
   r.bold(true).columns("TOTAL TAKEN IN", formatMoney(stats.total)).bold(false);
+  // Store credit is a tender, not cash/card — split it out so the drawer /
+  // card-processor reconciliation reads COLLECTED, never the gross total.
+  if ((stats.storeCreditRedeemed ?? 0) > 0) {
+    r.columns("Store credit", `-${formatMoney(stats.storeCreditRedeemed)}`);
+    r.bold(true).columns("COLLECTED", formatMoney(stats.collected)).bold(false);
+  }
   r.line("");
 
   // Printed-at footer

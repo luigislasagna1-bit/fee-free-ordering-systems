@@ -414,6 +414,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   hideZeroCountdown?: boolean;
 }) {
   const tk = useTranslations("kitchen");
+  const tMoney = useTranslations("money");
   const locale = useLocale();
   // `now === 0` means the client hasn't mounted yet (see useNow). Render
   // stable, time-independent values during SSR/first paint to match hydration.
@@ -601,6 +602,15 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
         </div>
         <div className="flex flex-col items-end flex-shrink-0">
           <div className={`font-bold text-sm ${t.text}`}>{formatCurrency(order.total, currency)}</div>
+          {/* Store-credit part-paid + money still owed → show what staff actually
+              COLLECT, so nobody reads the gross total at the door (Luigi 2026-07-02
+              money normalization). One extra small line ONLY on those orders —
+              the locked tile layout is untouched for everything else. */}
+          {(order as any).rewardsActive && ((order as any).creditApplied ?? 0) > 0 && (order as any).paymentStatus !== "paid" && (
+            <div className="text-[10px] font-bold text-emerald-600 whitespace-nowrap leading-tight">
+              {tMoney("toCollect")}: {formatCurrency(Math.max(0, order.total - ((order as any).creditApplied ?? 0)), currency)}
+            </div>
+          )}
           {/* Live countdown to the promised ready time (Luigi 2026-06-02
               kitchen-card revamp). Larger + lower than the static "20 m"
               prep number it replaced; ticks every second; locks at 00:00

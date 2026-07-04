@@ -13,7 +13,8 @@
       "cashOnDelivery": "配達時現金払い",
       "paypal": "PayPal",
       "rewardCredit": "ストアクレジット"
-    }
+    },
+    "discounts": "割引"
   },
   "common": {
     "save": "保存",

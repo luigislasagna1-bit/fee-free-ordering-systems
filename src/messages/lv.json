@@ -13,7 +13,8 @@
       "cashOnDelivery": "Skaidrā, piegādājot",
       "paypal": "PayPal",
       "rewardCredit": "Veikala kredīts"
-    }
+    },
+    "discounts": "Atlaides"
   },
   "common": {
     "save": "Saglabāt",

@@ -42,6 +42,11 @@ export default async function SalesSummaryPage({
   const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
 
   const { rows, totals } = await buildSummaryRows(scope.ids, range, dim, scope.timezone ?? undefined);
+  const tMoney = await getTranslations("money");
+  // Store-credit tender columns only when credit was actually redeemed in the
+  // range — stores without Reward Dollars never see them (feature-gated by data).
+  const showCredit = totals.storeCredit > 0;
+  const colCount = showCredit ? 11 : 9;
 
   return (
     <div>
@@ -61,33 +66,47 @@ export default async function SalesSummaryPage({
 
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-        <table className="w-full text-sm min-w-[860px]">
+        <table className={`w-full text-sm ${showCredit ? "min-w-[1100px]" : "min-w-[940px]"}`}>
           <thead>
             <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100 bg-gray-50">
               <th className="py-2.5 px-4 font-semibold">{labelByDim(dim, t)}</th>
               <th className="py-2.5 px-4 font-semibold text-right">{t("colOrders")}</th>
               <th className="py-2.5 px-4 font-semibold text-right">{t("colSubtotal")}</th>
+              <th className="py-2.5 px-4 font-semibold text-right">{tMoney("discounts")}</th>
               <th className="py-2.5 px-4 font-semibold text-right">{t("colTax")}</th>
               <th className="py-2.5 px-4 font-semibold text-right">{t("colDeliveryFee")}</th>
               <th className="py-2.5 px-4 font-semibold text-right">{t("colTips")}</th>
               <th className="py-2.5 px-4 font-semibold text-right">{t("colOtherFees")}</th>
               <th className="py-2.5 px-4 font-semibold text-right">{t("colTotal")}</th>
+              {showCredit && (
+                <>
+                  <th className="py-2.5 px-4 font-semibold text-right">{tMoney("pay.rewardCredit")}</th>
+                  <th className="py-2.5 px-4 font-semibold text-right">{tMoney("amountCollected")}</th>
+                </>
+              )}
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 && (
-              <tr><td colSpan={8} className="py-6 px-4 text-center text-gray-400 italic">{t("emptyState")}</td></tr>
+              <tr><td colSpan={colCount} className="py-6 px-4 text-center text-gray-400 italic">{t("emptyState")}</td></tr>
             )}
             {rows.map((r) => (
               <tr key={r.key} className="border-b border-gray-50 hover:bg-gray-50/50">
                 <td className="py-2.5 px-4 font-medium text-gray-800">{rowLabel(dim, r.key, t)}</td>
                 <td className="py-2.5 px-4 text-right text-gray-700">{r.orders.toLocaleString()}</td>
                 <td className="py-2.5 px-4 text-right text-gray-600">{formatCurrency(r.subtotal)}</td>
+                <td className="py-2.5 px-4 text-right text-gray-600">{r.discounts > 0 ? `−${formatCurrency(r.discounts)}` : formatCurrency(0)}</td>
                 <td className="py-2.5 px-4 text-right text-gray-600">{formatCurrency(r.tax)}</td>
                 <td className="py-2.5 px-4 text-right text-gray-600">{formatCurrency(r.deliveryFee)}</td>
                 <td className="py-2.5 px-4 text-right text-gray-600">{formatCurrency(r.tips)}</td>
                 <td className="py-2.5 px-4 text-right text-gray-600">{formatCurrency(r.otherFees)}</td>
                 <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(r.total)}</td>
+                {showCredit && (
+                  <>
+                    <td className="py-2.5 px-4 text-right text-gray-600">{r.storeCredit > 0 ? `−${formatCurrency(r.storeCredit)}` : formatCurrency(0)}</td>
+                    <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(r.collected)}</td>
+                  </>
+                )}
               </tr>
             ))}
           </tbody>
@@ -97,11 +116,18 @@ export default async function SalesSummaryPage({
                 <td className="py-3 px-4">{t("totalRowLabel")}</td>
                 <td className="py-3 px-4 text-right">{totals.orders.toLocaleString()}</td>
                 <td className="py-3 px-4 text-right">{formatCurrency(totals.subtotal)}</td>
+                <td className="py-3 px-4 text-right">{totals.discounts > 0 ? `−${formatCurrency(totals.discounts)}` : formatCurrency(0)}</td>
                 <td className="py-3 px-4 text-right">{formatCurrency(totals.tax)}</td>
                 <td className="py-3 px-4 text-right">{formatCurrency(totals.deliveryFee)}</td>
                 <td className="py-3 px-4 text-right">{formatCurrency(totals.tips)}</td>
                 <td className="py-3 px-4 text-right">{formatCurrency(totals.otherFees)}</td>
                 <td className="py-3 px-4 text-right">{formatCurrency(totals.total)}</td>
+                {showCredit && (
+                  <>
+                    <td className="py-3 px-4 text-right">−{formatCurrency(totals.storeCredit)}</td>
+                    <td className="py-3 px-4 text-right">{formatCurrency(totals.collected)}</td>
+                  </>
+                )}
               </tr>
             </tfoot>
           )}

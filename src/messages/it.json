@@ -13,7 +13,8 @@
       "cashOnDelivery": "Contanti alla consegna",
       "paypal": "PayPal",
       "rewardCredit": "Credito negozio"
-    }
+    },
+    "discounts": "Sconti"
   },
   "common": {
     "save": "Salva",

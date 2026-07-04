@@ -13,7 +13,8 @@
       "cashOnDelivery": "Наличные при доставке",
       "paypal": "PayPal",
       "rewardCredit": "Бонусный счёт"
-    }
+    },
+    "discounts": "Скидки"
   },
   "common": {
     "save": "Сохранить",

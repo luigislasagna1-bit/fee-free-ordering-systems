@@ -13,7 +13,8 @@
       "cashOnDelivery": "מזומן במשלוח",
       "paypal": "PayPal",
       "rewardCredit": "קרדיט בחנות"
-    }
+    },
+    "discounts": "הנחות"
   },
   "common": {
     "save": "שמור",

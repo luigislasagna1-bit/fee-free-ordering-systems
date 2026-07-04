@@ -1298,6 +1298,9 @@ export interface DigestStats {
   storeCreditRedeemed: number;
   /** Real cash/card collected = sales − storeCreditRedeemed. */
   collected: number;
+  /** Promo + coupon discounts given across the window (Order.promoDiscount +
+   *  Order.couponDiscount) — the EOD/Summary "Discounts" line. */
+  discounts: number;
 
   subTotals: number;
   taxAmount: number;

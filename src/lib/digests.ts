@@ -146,6 +146,9 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
       // Reward / store credit spent — so "collected" reflects real cash/card,
       // not the gross total (Luigi 2026-07-02: store credit is a separate tender).
       creditApplied: true,
+      // Promo + coupon discounts → the "Discounts" line on EOD/Summary.
+      couponDiscount: true,
+      promoDiscount: true,
       // Per-order service fees (JSON [{name, amount}]) → the "Other fees" line.
       appliedServiceFees: true,
     },
@@ -167,6 +170,7 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
   let onlinePayments = 0, onlinePaymentsAmount = 0;
   let otherFees = 0;
   let storeCreditRedeemed = 0;
+  let discounts = 0;
 
   for (const o of orders) {
     sales += o.total;
@@ -180,6 +184,7 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
     const creditUsed = (o as any).creditApplied ?? 0;
     storeCreditRedeemed += creditUsed;
     const collectedAmt = Math.max(0, o.total - creditUsed);
+    discounts += ((o as any).couponDiscount ?? 0) + ((o as any).promoDiscount ?? 0);
 
     // "Other fees" = sum of the order's applied service fees. Stored as JSON
     // (array or string depending on column type) — parse defensively.
@@ -218,6 +223,7 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
     storeCreditRedeemed,
     // Real cash/card collected = gross revenue − store credit redeemed.
     collected: Math.max(0, sales - storeCreditRedeemed),
+    discounts,
     total: sales,
   };
 }
@@ -264,6 +270,7 @@ function buildStats(
     onlinePaymentsAmount: current.onlinePaymentsAmount,
     storeCreditRedeemed: current.storeCreditRedeemed,
     collected: current.collected,
+    discounts: current.discounts,
     subTotals: current.subTotals,
     taxAmount: current.taxAmount,
     deliveryFees: current.deliveryFees,

@@ -13,7 +13,8 @@
       "cashOnDelivery": "Готівка при доставці",
       "paypal": "PayPal",
       "rewardCredit": "Бонусний рахунок"
-    }
+    },
+    "discounts": "Знижки"
   },
   "common": {
     "save": "Зберегти",

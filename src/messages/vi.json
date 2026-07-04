@@ -13,7 +13,8 @@
       "cashOnDelivery": "Tiền mặt khi giao",
       "paypal": "PayPal",
       "rewardCredit": "Tín dụng cửa hàng"
-    }
+    },
+    "discounts": "Giảm giá"
   },
   "common": {
     "save": "Lưu",

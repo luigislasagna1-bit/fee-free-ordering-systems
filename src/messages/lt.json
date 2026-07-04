@@ -13,7 +13,8 @@
       "cashOnDelivery": "Grynieji pristatant",
       "paypal": "PayPal",
       "rewardCredit": "Parduotuvės kreditas"
-    }
+    },
+    "discounts": "Nuolaidos"
   },
   "common": {
     "save": "Išsaugoti",

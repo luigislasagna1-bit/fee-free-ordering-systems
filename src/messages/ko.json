@@ -13,7 +13,8 @@
       "cashOnDelivery": "배달 시 현금",
       "paypal": "PayPal",
       "rewardCredit": "스토어 크레딧"
-    }
+    },
+    "discounts": "할인"
   },
   "common": {
     "save": "저장",

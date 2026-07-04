@@ -125,8 +125,13 @@ type DispatchInput = {
   deliveryFee: number;
   /** Tip in dollars. */
   tip: number;
-  /** Order total in dollars. */
+  /** Order total in dollars (gross — before store credit). */
   total: number;
+  /** Reward Dollars / store credit already paid in dollars (Order.creditApplied).
+   *  Deducted from totalOrderCost so a COD driver collects total − credit,
+   *  never the gross total (Luigi 2026-07-02 money normalization). This is a
+   *  PAYMENT fact, not a display toggle — no rewardsEnabled gate. */
+  creditApplied?: number;
   /** Restaurant-set prep time in minutes. Used to compute expectedPickupTime. */
   preparationMinutes: number;
   deliveryInstruction: string | null;
@@ -181,7 +186,10 @@ export async function dispatchOrderToShipday(
     tips: input.tip,
     tax: input.taxAmount,
     deliveryFee: input.deliveryFee,
-    totalOrderCost: input.total,
+    // What the driver actually collects on COD: total minus any store credit
+    // the customer already paid with. Sending the gross total made drivers
+    // over-collect on credit-part-paid orders.
+    totalOrderCost: Math.round(Math.max(0, input.total - (input.creditApplied ?? 0)) * 100) / 100,
     deliveryInstruction: input.deliveryInstruction ?? undefined,
     orderSource: "Fee Free Ordering",
     additionalId: input.orderId,

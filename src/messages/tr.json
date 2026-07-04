@@ -13,7 +13,8 @@
       "cashOnDelivery": "Teslimatta nakit",
       "paypal": "PayPal",
       "rewardCredit": "Mağaza kredisi"
-    }
+    },
+    "discounts": "İndirimler"
   },
   "common": {
     "save": "Kaydet",

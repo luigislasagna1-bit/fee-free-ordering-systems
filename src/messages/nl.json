@@ -13,7 +13,8 @@
       "cashOnDelivery": "Contant bij bezorging",
       "paypal": "PayPal",
       "rewardCredit": "Winkeltegoed"
-    }
+    },
+    "discounts": "Kortingen"
   },
   "common": {
     "save": "Opslaan",

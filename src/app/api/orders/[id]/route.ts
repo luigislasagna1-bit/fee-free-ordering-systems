@@ -628,7 +628,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
               orderNumber: true, customerName: true, customerEmail: true,
               customerPhone: true, deliveryAddress: true, deliveryCity: true,
               deliveryZip: true, notes: true, subtotal: true, taxAmount: true,
-              deliveryFee: true, tip: true, total: true, preparationTime: true,
+              deliveryFee: true, tip: true, total: true, creditApplied: true, preparationTime: true,
               restaurant: { select: { name: true, address: true, city: true, state: true, zip: true, phone: true, lat: true, lng: true } },
             },
           });
@@ -656,6 +656,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
             deliveryFee: full.deliveryFee,
             tip: full.tip ?? 0,
             total: full.total,
+            creditApplied: full.creditApplied ?? 0,
             preparationMinutes: full.preparationTime ?? 30,
             deliveryInstruction: full.notes,
           });

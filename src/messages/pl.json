@@ -13,7 +13,8 @@
       "cashOnDelivery": "Gotówka przy dostawie",
       "paypal": "PayPal",
       "rewardCredit": "Środki w sklepie"
-    }
+    },
+    "discounts": "Rabaty"
   },
   "common": {
     "save": "Zapisz",

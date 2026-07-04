@@ -106,6 +106,7 @@ export default async function EndOfDayReportPage({
   if (!snapshot) redirect("/admin");
 
   const t = await getTranslations("admin.endOfDayPage");
+  const tMoney = await getTranslations("money");
   const locale = await getLocale();
   const dateLabel = new Date(`${dayKey}T12:00:00Z`).toLocaleDateString(locale, {
     weekday: "short", month: "short", day: "numeric", year: "numeric", timeZone: "UTC",
@@ -221,6 +222,9 @@ export default async function EndOfDayReportPage({
           <h2 className="font-semibold text-gray-900 mb-3">{t("salesBreakdownHeading")}</h2>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between text-gray-700"><span>{t("breakdownSubtotal")}</span><span className="font-semibold">{formatCurrency(snapshot.subTotals)}</span></div>
+            {(snapshot.discounts ?? 0) > 0 && (
+              <div className="flex justify-between text-gray-700"><span>{tMoney("discounts")}</span><span className="font-semibold">−{formatCurrency(snapshot.discounts)}</span></div>
+            )}
             <div className="flex justify-between text-gray-700"><span>{t("breakdownDeliveryFees")}</span><span className="font-semibold">{formatCurrency(snapshot.deliveryFees)}</span></div>
             <div className="flex justify-between text-gray-700"><span>{t("breakdownTips")}</span><span className="font-semibold">{formatCurrency(snapshot.tips)}</span></div>
             <div className="flex justify-between text-gray-700"><span>{t("breakdownOtherFees")}</span><span className="font-semibold">{formatCurrency(snapshot.otherFees)}</span></div>
@@ -229,6 +233,14 @@ export default async function EndOfDayReportPage({
               <span>{t("breakdownTotal")}</span>
               <span>{formatCurrency(snapshot.total)}</span>
             </div>
+            {/* Store credit is a tender, not cash/card — the reconciliation figure
+                is COLLECTED. Rows appear only when credit was actually redeemed. */}
+            {(snapshot.storeCreditRedeemed ?? 0) > 0 && (
+              <>
+                <div className="flex justify-between text-gray-700"><span>{tMoney("pay.rewardCredit")}</span><span className="font-semibold">−{formatCurrency(snapshot.storeCreditRedeemed)}</span></div>
+                <div className="flex justify-between text-gray-900 font-bold"><span>{tMoney("amountCollected")}</span><span>{formatCurrency(snapshot.collected)}</span></div>
+              </>
+            )}
           </div>
         </div>
       </section>

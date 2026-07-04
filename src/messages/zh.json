@@ -13,7 +13,8 @@
       "cashOnDelivery": "送达时付现",
       "paypal": "PayPal",
       "rewardCredit": "store credit 已翻译占位"
-    }
+    },
+    "discounts": "折扣"
   },
   "common": {
     "save": "保存",

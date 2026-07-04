@@ -13,7 +13,8 @@
       "cashOnDelivery": "Käteinen toimituksessa",
       "paypal": "PayPal",
       "rewardCredit": "Myymäläkredit"
-    }
+    },
+    "discounts": "Alennukset"
   },
   "common": {
     "save": "Tallenna",

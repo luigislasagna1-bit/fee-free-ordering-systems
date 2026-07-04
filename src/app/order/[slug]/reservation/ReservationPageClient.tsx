@@ -67,6 +67,7 @@ export function ReservationPageClient({ restaurant, closure }: { restaurant: any
       requireCustomerPhone={restaurant.requireCustomerPhone !== false}
       hoursFormat={restaurant.hoursFormat === "12h" ? "12h" : "24h"}
       timezone={restaurant.timezone ?? undefined}
+      currency={(restaurant as any).currency ?? "usd"}
       theme={theme}
       onClose={back}
       // Reserve-then-order (Luigi 2026-06-08): when the restaurant allows

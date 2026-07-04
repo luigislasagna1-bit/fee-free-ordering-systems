@@ -13,7 +13,8 @@
       "cashOnDelivery": "Μετρητά κατά την παράδοση",
       "paypal": "PayPal",
       "rewardCredit": "Πίστωση καταστήματος"
-    }
+    },
+    "discounts": "Εκπτώσεις"
   },
   "common": {
     "save": "Αποθήκευση",
