@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Du bliver omdirigeret til PayPal for at godkende betalingen, når du har afgivet din ordre.",
     "emailOptional": "valgfrit",
     "tipBadgeSuggested": "Foreslået",
-    "couponApply": "Anvend"
+    "couponApply": "Anvend",
+    "scheduleModeRanges": "Tidsintervaller"
   },
   "reservation": {
     "title": "Book et bord",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Tjenester genoptaget",
         "saving": "Gemmer…"
       },
-      "timeSelectionRange": "Tidsintervaller (vinduer som 6:00 – 6:15)"
+      "timeSelectionRange": "Tidsintervaller (vinduer som 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Markér hver stil, kunderne må bruge — ved flere vælger de ved kassen. Intervalvinduer er begrænset til 15 minutter."
     },
     "delivery": {
       "title": "Leveringszoner",

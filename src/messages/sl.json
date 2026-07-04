@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Po oddaji naročila boste preusmerjeni na PayPal za potrditev plačila.",
     "emailOptional": "neobvezno",
     "tipBadgeSuggested": "Predlagano",
-    "couponApply": "Uporabi"
+    "couponApply": "Uporabi",
+    "scheduleModeRanges": "Časovni razponi"
   },
   "reservation": {
     "title": "Rezerviraj mizo",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Storitve nadaljevane",
         "saving": "Shranjevanje…"
       },
-      "timeSelectionRange": "Časovni razponi (okna kot 6:00 – 6:15)"
+      "timeSelectionRange": "Časovni razponi (okna kot 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Označite vsak slog, ki ga stranke lahko uporabijo — pri več izbirajo ob plačilu. Okna razponov so omejena na 15 minut."
     },
     "delivery": {
       "title": "Območja dostave",

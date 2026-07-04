@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Se te redirigirá a PayPal para aprobar el pago después de realizar tu pedido.",
     "emailOptional": "opcional",
     "tipBadgeSuggested": "Sugerido",
-    "couponApply": "Aplicar"
+    "couponApply": "Aplicar",
+    "scheduleModeRanges": "Rangos horarios"
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Servicios reanudados",
         "saving": "Guardando…"
       },
-      "timeSelectionRange": "Rangos horarios (ventanas tipo 6:00 – 6:15)"
+      "timeSelectionRange": "Rangos horarios (ventanas tipo 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Marca cada estilo disponible para los clientes; con más de uno, eligen al pagar. Las ventanas de rango se limitan a 15 minutos."
     },
     "delivery": {
       "title": "Zonas de entrega",

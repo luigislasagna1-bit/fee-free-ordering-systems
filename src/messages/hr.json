@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Nakon što pošaljete narudžbu, bit ćete preusmjereni na PayPal radi odobravanja plaćanja.",
     "emailOptional": "neobavezno",
     "tipBadgeSuggested": "Predloženo",
-    "couponApply": "Primijeni"
+    "couponApply": "Primijeni",
+    "scheduleModeRanges": "Vremenski rasponi"
   },
   "reservation": {
     "title": "Rezervirajte stol",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Usluge nastavljene",
         "saving": "Spremanje…"
       },
-      "timeSelectionRange": "Vremenski rasponi (prozori poput 6:00 – 6:15)"
+      "timeSelectionRange": "Vremenski rasponi (prozori poput 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Označite svaki stil koji kupci smiju koristiti — s više njih biraju pri naplati. Prozori raspona ograničeni su na 15 minuta."
     },
     "delivery": {
       "title": "Zone dostave",

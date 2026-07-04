@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Siparişinizi verdikten sonra ödemeyi onaylamak için PayPal'a yönlendirileceksiniz.",
     "emailOptional": "isteğe bağlı",
     "tipBadgeSuggested": "Önerilen",
-    "couponApply": "Uygula"
+    "couponApply": "Uygula",
+    "scheduleModeRanges": "Zaman aralıkları"
   },
   "reservation": {
     "title": "Masa Rezervasyonu",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Hizmetler devam ettirildi",
         "saving": "Kaydediliyor…"
       },
-      "timeSelectionRange": "Zaman aralıkları (6:00 – 6:15 gibi pencereler)"
+      "timeSelectionRange": "Zaman aralıkları (6:00 – 6:15 gibi pencereler)",
+      "timeSelectionMultiHint": "Müşterilerin kullanabileceği her stili işaretleyin — birden fazlaysa ödeme sırasında seçerler. Aralık pencereleri 15 dakikayla sınırlıdır."
     },
     "delivery": {
       "title": "Teslimat Bölgeleri",

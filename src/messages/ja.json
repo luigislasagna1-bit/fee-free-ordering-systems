@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "注文後、支払いを承認するために PayPal にリダイレクトされます。",
     "emailOptional": "任意",
     "tipBadgeSuggested": "おすすめ",
-    "couponApply": "適用"
+    "couponApply": "適用",
+    "scheduleModeRanges": "時間帯"
   },
   "reservation": {
     "title": "テーブルを予約",
@@ -1102,7 +1103,8 @@
         "resumedToast": "サービスを再開しました",
         "saving": "保存中…"
       },
-      "timeSelectionRange": "時間帯（6:00 – 6:15 のような枠）"
+      "timeSelectionRange": "時間帯（6:00 – 6:15 のような枠）",
+      "timeSelectionMultiHint": "顧客が使えるスタイルをすべてチェックしてください。複数ある場合は会計時に顧客が選びます。時間帯の幅は最大 15 分です。"
     },
     "delivery": {
       "title": "デリバリーエリア",

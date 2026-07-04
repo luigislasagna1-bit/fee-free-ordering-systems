@@ -14,6 +14,7 @@ import { methodsForOrderType, paymentValueToSlug } from "@/lib/payment-methods";
 import { localDowAndHHMM, liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, rowIntervals, dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { holidayEffectForDay, canonicalHolidayService } from "@/lib/holiday-rules";
 import { resolveServiceHours, type ServiceKind } from "@/lib/service-hours";
+import { resolveSlotModes } from "@/lib/slot-modes";
 import { isVisibleNow } from "@/lib/menu-visibility";
 import { hasFulfilWindow, isFulfilableAt, fulfilWindowLabel, combinedFulfilConstraint } from "@/lib/menu-fulfilment";
 
@@ -1298,7 +1299,7 @@ export function OrderingPageClient({
     // them. neighbourhood/building/floor/parking are new; street→address,
     // city→city, postcode→zip, apartment→unit, intercom→buzzer.
     neighbourhood: "", building: "", floor: "", parking: "",
-    notes: "", paymentMethod: defaultPaymentMethod, scheduledFor: "",
+    notes: "", paymentMethod: defaultPaymentMethod, scheduledFor: "", scheduledStyle: "",
     // Marketing-consent opt-in checkbox on the contact section
     // (GloriaFood-parity, Luigi 2026-06-02). Default = TRUE per
     // Luigi's spec — matches the GloriaFood/Toast/Square pattern of
@@ -2846,19 +2847,18 @@ export function OrderingPageClient({
     } catch { /* malformed serviceSettings — fall back to the global default */ }
     return (restaurant as any).scheduledOrderInterval ?? 15;
   })();
-  // Per-service time-selection mode: "exact" lets the customer pick any minute
-  // within opening hours; "bands" (default) gives a dropdown of fixed slots at
-  // perServiceSlotInterval; "range" is bands shown as windows ("6:00 – 6:15",
-  // fulfilled within the timeframe — Fabrizio cmqqxerxs). Reactive to orderType
-  // like the interval above. Fabrizio cmpxdtl9m.
-  const perServiceSlotMode: "bands" | "exact" | "both" | "range" = (() => {
+  // Per-service time-selection styles (Luigi 2026-07-04: any combination of
+  // "bands" fixed times / "range" ≤15-min windows / "exact" free minute —
+  // the customer toggles at checkout when several are enabled). Reads the
+  // slotModes array with legacy slotMode fallback via resolveSlotModes.
+  // Reactive to orderType like the interval above. Fabrizio cmpxdtl9m/cmqqxerxs.
+  const perServiceSlotModes: ("bands" | "range" | "exact")[] = (() => {
     try {
       const raw = (restaurant as any).serviceSettings;
       const ss = raw ? JSON.parse(raw) : null;
-      const m = ss?.[serviceSettingsKey]?.slotMode;
-      if (m === "exact" || m === "both" || m === "range") return m;
+      return resolveSlotModes(ss?.[serviceSettingsKey]);
     } catch { /* malformed serviceSettings — fall back to bands */ }
-    return "bands";
+    return ["bands"];
   })();
   const appliedServiceFees = evaluateApplicableFees(
     (restaurant.serviceFees ?? []) as ServiceFeeRow[],
@@ -3242,6 +3242,12 @@ export function OrderingPageClient({
     deliveryLng: orderType === "delivery" ? customerInfo.lng : null,
     notes: combinedNotes, paymentMethod: customerInfo.paymentMethod,
     scheduledFor: customerInfo.scheduledFor || null,
+    // Which time-selection style the customer used ("bands"|"range"|"exact")
+    // — the server only stamps a range window when this is "range" AND the
+    // service actually enables ranges. Luigi 2026-07-04.
+    scheduledStyle: customerInfo.scheduledFor
+      ? (customerInfo.scheduledStyle || perServiceSlotModes[0] || "bands")
+      : undefined,
     // Only honour the consent flag if we actually have an email to send
     // to AND the user kept the box checked. With the box pre-ticked by
     // default (Luigi 2026-06-02), an email-less guest would otherwise
@@ -5692,7 +5698,7 @@ export function OrderingPageClient({
           serviceLabel={orderType === "delivery" ? t("delivery") : orderType === "pickup" ? t("pickup") : orderType === "dine_in" ? t("dineIn") : t("takeOut")}
           closedNextOpenLocal={closedMinScheduledLocal}
           schedulingInterval={perServiceSlotInterval}
-          schedulingMode={perServiceSlotMode}
+          schedulingModes={perServiceSlotModes}
           openingHours={(restaurant as any).openingHours ?? []}
           todayServiceSpecialIntervals={serviceHasSpecialToday ? (todaySvcSpecial as any).intervals : null}
           todayServiceSpecialDateKey={serviceHasSpecialToday ? dateKeyInTimezone(new Date(), restaurantTz || "UTC") : null}

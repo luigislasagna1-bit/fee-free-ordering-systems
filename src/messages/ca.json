@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Se't redirigirà a PayPal per aprovar el pagament després de fer la comanda.",
     "emailOptional": "opcional",
     "tipBadgeSuggested": "Suggerit",
-    "couponApply": "Aplica"
+    "couponApply": "Aplica",
+    "scheduleModeRanges": "Franges horàries"
   },
   "reservation": {
     "title": "Reservar taula",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Serveis represos",
         "saving": "S'està desant…"
       },
-      "timeSelectionRange": "Franges horàries (finestres com 6:00 – 6:15)"
+      "timeSelectionRange": "Franges horàries (finestres com 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Marca cada estil disponible per als clients — amb més d'un, trien en pagar. Les finestres de franja es limiten a 15 minuts."
     },
     "delivery": {
       "title": "Zones de lliurament",

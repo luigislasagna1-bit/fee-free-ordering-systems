@@ -11,6 +11,7 @@ import { pickHoursForService } from "@/lib/service-hours";
 import { rowIntervals } from "@/lib/restaurant-hours";
 import { parseTheme } from "@/lib/theme";
 import { formatTime } from "@/lib/format-time";
+import { rangeWindowMinutes } from "@/lib/slot-modes";
 import { useGoogleMaps } from "@/lib/use-google-maps";
 import { resolveMapsBrowserKey } from "@/lib/maps-key";
 import { useTranslations } from "next-intl";
@@ -47,6 +48,11 @@ type CustomerInfo = {
    *  CASL / GDPR compliance. */
   marketingConsent: boolean;
   notes: string; paymentMethod: string; scheduledFor: string;
+  /** Which time-selection style the customer is using when several are
+   *  enabled ("bands" | "range" | "exact"); "" = the service's first enabled
+   *  style. Sent as scheduledStyle so the server stamps range windows only
+   *  when the customer actually picked one. Luigi 2026-07-04. */
+  scheduledStyle: string;
   /** Extra structured fields for the customizable delivery form. Shown only
    *  when the restaurant's deliveryFormConfig enables them. (street→address,
    *  city→city, postcode→zip, apartment→unit, intercom→buzzer.) */
@@ -283,7 +289,10 @@ interface Props {
    *  "exact" shows a free time field so the customer can pick any minute
    *  within opening hours; "both" lets the customer toggle between the two.
    *  Per-service, from serviceSettings. Fabrizio cmpxdtl9m. */
-  schedulingMode?: "bands" | "exact" | "both" | "range";
+  /** Time-selection styles this service offers (any combination; the
+   *  customer toggles between them when several are enabled). Replaces the
+   *  old single schedulingMode. Luigi 2026-07-04. */
+  schedulingModes?: ("bands" | "range" | "exact")[];
   /** Restaurant opening hours by day-of-week, used to constrain the
    *  selectable slots to actual open periods. Each row: dayOfWeek
    *  0=Sunday … 6=Saturday with HH:MM open/close strings. May include
@@ -335,7 +344,7 @@ export function CheckoutModal({
   toWallClock,
   schedulingEnabled = true,
   schedulingInterval = 15,
-  schedulingMode = "bands",
+  schedulingModes = ["bands"],
   openingHours = [],
   requireCustomerEmail = true,
   requireCustomerPhone = true,
@@ -379,7 +388,6 @@ export function CheckoutModal({
   const [showCouponField, setShowCouponField] = useState(false);
   // When the service's time mode is "both", the customer toggles between a
   // slot dropdown (false) and a free exact-time field (true). Fabrizio cmpxdtl9m.
-  const [scheduleExactPref, setScheduleExactPref] = useState(false);
   // ASAP vs "Schedule for later" — a clear two-option choice (Fabrizio: the way back to
   // ASAP used to be a buried link). The date/time picker shows when "later" is chosen or a
   // time is already set. Luigi 2026-06-25.
@@ -510,14 +518,23 @@ export function CheckoutModal({
     : orderType === "take_out" ? tOrd("takeOut")
     : tOrd("pickup");
 
-  // "range" slot mode (Fabrizio cmqqxerxs): every band is a WINDOW —
+  // Which of the service's enabled time-selection styles is ACTIVE: the
+  // customer's chip choice when several are enabled, else the first enabled
+  // style. Luigi 2026-07-04 (multi-choice replaced the single "both" mode).
+  const activeStyle: "bands" | "range" | "exact" =
+    (customerInfo.scheduledStyle === "bands" || customerInfo.scheduledStyle === "range" || customerInfo.scheduledStyle === "exact")
+      && schedulingModes.includes(customerInfo.scheduledStyle)
+      ? customerInfo.scheduledStyle
+      : (schedulingModes[0] ?? "bands");
+  // "range" style (Fabrizio cmqqxerxs): every band is a WINDOW —
   // "6:00 – 6:15 PM" = fulfilled within that timeframe. scheduledFor keeps
   // storing the window START so validation/kitchen countdown are untouched;
-  // this helper derives the window END purely for display.
-  const slotRangeMode = schedulingMode === "range";
+  // this helper derives the window END purely for display. Width is capped
+  // at 15 minutes (rangeWindowMinutes), per Luigi 2026-07-04.
+  const slotRangeMode = activeStyle === "range";
   const slotEndOf = (hhmm: string): string => {
     const [h, m] = hhmm.split(":").map(Number);
-    const step = Math.max(5, Math.min(120, schedulingInterval || 15));
+    const step = rangeWindowMinutes(schedulingInterval);
     const total = ((h ?? 0) * 60 + (m ?? 0) + step) % (24 * 60);
     return `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
   };
@@ -1430,8 +1447,7 @@ export function CheckoutModal({
                     // and the today/lead cutoff; latest = closing time (capped
                     // at 23:59 when the window wraps past midnight). HH:MM strings
                     // compare lexically because they're zero-padded.
-                    const exactMode = schedulingMode === "exact"
-                      || (schedulingMode === "both" && scheduleExactPref);
+                    const exactMode = activeStyle === "exact";
                     let exactMin = winOpen > minTimeForDate ? winOpen : minTimeForDate;
                     let exactMax = winClose <= winOpen ? "23:59" : winClose;
                     // Tighten the free-time bounds to the fulfilment window too.
@@ -1439,18 +1455,21 @@ export function CheckoutModal({
                     if (fulfilTo && fulfilTo < exactMax) exactMax = fulfilTo;
                     return (
                       <>
-                      {schedulingMode === "both" && (
+                      {/* Style toggle — one chip per ENABLED style (Luigi
+                          2026-07-04: any 1/2/3 combination; the customer picks
+                          among what the restaurant allows). */}
+                      {schedulingModes.length > 1 && (
                         <div className="flex gap-1 mb-2 p-0.5 bg-gray-100 rounded-lg text-xs font-medium">
-                          {([["slots", false], ["exact", true]] as const).map(([k, pref]) => (
+                          {schedulingModes.map((m) => (
                             <button
-                              key={k}
+                              key={m}
                               type="button"
-                              onClick={() => setScheduleExactPref(pref)}
+                              onClick={() => setCustomerInfo({ ...customerInfo, scheduledStyle: m })}
                               className={`flex-1 py-1.5 rounded-md transition ${
-                                scheduleExactPref === pref ? "bg-white shadow-sm text-gray-900" : "text-gray-500"
+                                activeStyle === m ? "bg-white shadow-sm text-gray-900" : "text-gray-500"
                               }`}
                             >
-                              {k === "slots" ? tc("scheduleModeSlots") : tc("scheduleModeExact")}
+                              {m === "bands" ? tc("scheduleModeSlots") : m === "range" ? tc("scheduleModeRanges") : tc("scheduleModeExact")}
                             </button>
                           ))}
                         </div>

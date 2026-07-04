@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Pēc pasūtījuma veikšanas jūs tiksiet novirzīts uz PayPal, lai apstiprinātu maksājumu.",
     "emailOptional": "neobligāti",
     "tipBadgeSuggested": "Ieteicams",
-    "couponApply": "Lietot"
+    "couponApply": "Lietot",
+    "scheduleModeRanges": "Laika diapazoni"
   },
   "reservation": {
     "title": "Rezervēt galdu",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Pakalpojumi atsākti",
         "saving": "Saglabā…"
       },
-      "timeSelectionRange": "Laika diapazoni (logi kā 6:00 – 6:15)"
+      "timeSelectionRange": "Laika diapazoni (logi kā 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Atzīmējiet katru klientiem pieejamo stilu — ja to ir vairāki, viņi izvēlas norēķinos. Diapazona logi ir ierobežoti līdz 15 minūtēm."
     },
     "delivery": {
       "title": "Piegādes zonas",

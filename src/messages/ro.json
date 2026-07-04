@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Veți fi redirecționat către PayPal pentru a aproba plata după plasarea comenzii.",
     "emailOptional": "opțional",
     "tipBadgeSuggested": "Sugerat",
-    "couponApply": "Aplică"
+    "couponApply": "Aplică",
+    "scheduleModeRanges": "Intervale orare"
   },
   "reservation": {
     "title": "Rezervă o masă",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Servicii reluate",
         "saving": "Se salvează…"
       },
-      "timeSelectionRange": "Intervale orare (ferestre de tip 6:00 – 6:15)"
+      "timeSelectionRange": "Intervale orare (ferestre de tip 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Bifați fiecare stil disponibil clienților — cu mai multe, aleg la finalizare. Ferestrele de interval sunt limitate la 15 minute."
     },
     "delivery": {
       "title": "Zone de livrare",

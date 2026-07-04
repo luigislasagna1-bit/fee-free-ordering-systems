@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Pärast tellimuse esitamist suunatakse teid makse kinnitamiseks PayPali.",
     "emailOptional": "valikuline",
     "tipBadgeSuggested": "Soovitatud",
-    "couponApply": "Rakenda"
+    "couponApply": "Rakenda",
+    "scheduleModeRanges": "Ajavahemikud"
   },
   "reservation": {
     "title": "Broneeri laud",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Teenused jätkatud",
         "saving": "Salvestamine…"
       },
-      "timeSelectionRange": "Ajavahemikud (aknad nagu 6:00 – 6:15)"
+      "timeSelectionRange": "Ajavahemikud (aknad nagu 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Märkige iga stiil, mida kliendid võivad kasutada — mitme puhul valivad nad kassas. Vahemikuaknad on piiratud 15 minutiga."
     },
     "delivery": {
       "title": "Tarnepiirkonnad",

@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Sinut ohjataan PayPaliin hyväksymään maksu tilauksen tekemisen jälkeen.",
     "emailOptional": "valinnainen",
     "tipBadgeSuggested": "Suositeltu",
-    "couponApply": "Käytä"
+    "couponApply": "Käytä",
+    "scheduleModeRanges": "Aikavälit"
   },
   "reservation": {
     "title": "Varaa pöytä",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Palvelut jatkettu",
         "saving": "Tallennetaan…"
       },
-      "timeSelectionRange": "Aikavälit (ikkunat kuten 6:00 – 6:15)"
+      "timeSelectionRange": "Aikavälit (ikkunat kuten 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Valitse jokainen asiakkaiden käytettävissä oleva tyyli — jos niitä on useita, he valitsevat kassalla. Aikaväli-ikkunat on rajattu 15 minuuttiin."
     },
     "delivery": {
       "title": "Toimitusalueet",

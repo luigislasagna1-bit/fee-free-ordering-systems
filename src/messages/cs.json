@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Po odeslání objednávky budete přesměrováni na PayPal, kde platbu schválíte.",
     "emailOptional": "nepovinné",
     "tipBadgeSuggested": "Doporučeno",
-    "couponApply": "Použít"
+    "couponApply": "Použít",
+    "scheduleModeRanges": "Časová rozmezí"
   },
   "reservation": {
     "title": "Rezervovat stůl",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Služby obnoveny",
         "saving": "Ukládání…"
       },
-      "timeSelectionRange": "Časová rozmezí (okna jako 6:00 – 6:15)"
+      "timeSelectionRange": "Časová rozmezí (okna jako 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Zaškrtněte každý styl, který mohou zákazníci použít — u více si vyberou při pokladně. Okna rozmezí jsou omezena na 15 minut."
     },
     "delivery": {
       "title": "Oblasti doručení",

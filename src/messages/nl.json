@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Je wordt na het plaatsen van je bestelling doorgestuurd naar PayPal om de betaling goed te keuren.",
     "emailOptional": "optioneel",
     "tipBadgeSuggested": "Voorgesteld",
-    "couponApply": "Toepassen"
+    "couponApply": "Toepassen",
+    "scheduleModeRanges": "Tijdvakken"
   },
   "reservation": {
     "title": "Tafel reserveren",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Services hervat",
         "saving": "Opslaan…"
       },
-      "timeSelectionRange": "Tijdvakken (vensters zoals 6:00 – 6:15)"
+      "timeSelectionRange": "Tijdvakken (vensters zoals 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Vink elke stijl aan die klanten mogen gebruiken — bij meerdere kiezen ze bij het afrekenen. Tijdvakken zijn beperkt tot 15 minuten."
     },
     "delivery": {
       "title": "Bezorgzones",

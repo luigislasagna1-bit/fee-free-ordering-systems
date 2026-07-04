@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "לאחר ביצוע ההזמנה תועבר/י ל-PayPal לאישור התשלום.",
     "emailOptional": "אופציונלי",
     "tipBadgeSuggested": "מומלץ",
-    "couponApply": "החל"
+    "couponApply": "החל",
+    "scheduleModeRanges": "טווחי זמן"
   },
   "reservation": {
     "title": "הזמן שולחן",
@@ -1102,7 +1103,8 @@
         "resumedToast": "השירותים חודשו",
         "saving": "שומר…"
       },
-      "timeSelectionRange": "טווחי זמן (חלונות כמו 6:00 – 6:15)"
+      "timeSelectionRange": "טווחי זמן (חלונות כמו 6:00 – 6:15)",
+      "timeSelectionMultiHint": "סמנו כל סגנון שהלקוחות רשאים להשתמש בו — עם יותר מאחד, הם בוחרים בקופה. חלונות הטווח מוגבלים ל‑15 דקות."
     },
     "delivery": {
       "title": "אזורי משלוח",

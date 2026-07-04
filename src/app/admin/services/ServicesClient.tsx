@@ -7,6 +7,7 @@ import {
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { PauseServicesControl } from "@/components/admin/PauseServicesControl";
+import { resolveSlotModes, legacySlotMode, type SlotMode } from "@/lib/slot-modes";
 
 const SERVICE_DEFS = [
   { key: "pickup",       labelKey: "pickup",       icon: ShoppingBag,     color: "text-blue-600"   },
@@ -39,17 +40,14 @@ interface ServiceConfig {
    *  to the restaurant-wide default (Restaurant.scheduledOrderInterval). Lets
    *  e.g. delivery use 30-min slots while pickup uses 15. Luigi 2026-06-04. */
   slotInterval?: number;
-  /** How the customer picks a scheduled time for this service:
-   *   - "bands"  (default): a dropdown of fixed slots at slotInterval.
-   *   - "exact": a free time field so the customer can pick any minute
-   *     within opening hours.
-   *   - "both": the customer toggles between a slot dropdown and an exact
-   *     time field. Fabrizio cmpxdtl9m (2026-06-07).
-   *   - "range": like "bands", but each slot is shown as a WINDOW
-   *     ("6:00 – 6:15 PM") meaning "fulfilled within this timeframe".
-   *     scheduledFor still stores the slot START, so kitchen countdowns
-   *     and ring timing are untouched. Fabrizio cmqqxerxs (2026-07-04). */
+  /** LEGACY single-value time-selection mode — still written as a mirror of
+   *  slotModes for back-compat readers. Fabrizio cmpxdtl9m/cmqqxerxs. */
   slotMode?: "bands" | "exact" | "both" | "range";
+  /** Time-selection styles offered to customers — any COMBINATION of
+   *  "bands" (fixed times), "range" (≤15-min windows) and "exact" (free
+   *  minute). At least one; with several, the customer toggles at checkout.
+   *  Luigi 2026-07-04. */
+  slotModes?: ("bands" | "range" | "exact")[];
 }
 
 export function ServicesClient() {
@@ -218,30 +216,51 @@ export function ServicesClient() {
                       />
                     </div>
                   )}
-                  {/* Per-service time-selection mode. "Time slots" gives the
-                      customer a dropdown of fixed slots at the chosen cadence;
-                      "Exact time" lets them pick any minute within opening
-                      hours. Fabrizio cmpxdtl9m. */}
-                  {key !== "reservations" && (
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1">{t("timeSelectionLabel")}</label>
-                      <select
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white"
-                        value={settings[key].slotMode ?? "bands"}
-                        onChange={e => updateSetting(key, "slotMode", e.target.value)}
-                      >
-                        <option value="bands">{t("timeSelectionBands")}</option>
-                        <option value="range">{t("timeSelectionRange")}</option>
-                        <option value="exact">{t("timeSelectionExact")}</option>
-                        <option value="both">{t("timeSelectionBoth")}</option>
-                      </select>
-                    </div>
-                  )}
+                  {/* Per-service time-selection STYLES — any combination of
+                      fixed slots / ≤15-min windows / exact minute; at least
+                      one stays checked. With several, the customer toggles
+                      between them at checkout. Luigi 2026-07-04 (replaced the
+                      single dropdown whose "Both" stopped making sense once
+                      ranges made three styles). */}
+                  {key !== "reservations" && (() => {
+                    const modes = resolveSlotModes(settings[key]);
+                    const toggleMode = (m: SlotMode) => {
+                      const has = modes.includes(m);
+                      if (has && modes.length === 1) return; // at least one style
+                      const next = (["bands", "range", "exact"] as SlotMode[])
+                        .filter((x) => (x === m ? !has : modes.includes(x)));
+                      setSettings((s) => ({
+                        ...s,
+                        [key]: { ...s[key], slotModes: next, slotMode: legacySlotMode(next) },
+                      }));
+                    };
+                    return (
+                      <div>
+                        <label className="block text-xs font-medium text-gray-600 mb-1">{t("timeSelectionLabel")}</label>
+                        <div className="space-y-1.5 border border-gray-200 rounded-lg px-3 py-2 bg-white">
+                          {(["bands", "range", "exact"] as SlotMode[]).map((m) => (
+                            <label key={m} className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={modes.includes(m)}
+                                onChange={() => toggleMode(m)}
+                                className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                              />
+                              <span>
+                                {m === "bands" ? t("timeSelectionBands") : m === "range" ? t("timeSelectionRange") : t("timeSelectionExact")}
+                              </span>
+                            </label>
+                          ))}
+                        </div>
+                        <p className="text-[11px] text-gray-400 mt-1">{t("timeSelectionMultiHint")}</p>
+                      </div>
+                    );
+                  })()}
                   {/* Per-service scheduling cadence. "Default" leaves it on the
                       restaurant-wide slot interval; a specific value overrides
                       it for THIS service only (e.g. slower kitchens on delivery).
                       Hidden in "Exact time" mode, where the interval is moot. */}
-                  {key !== "reservations" && (settings[key].slotMode ?? "bands") !== "exact" && (
+                  {key !== "reservations" && resolveSlotModes(settings[key]).some((m) => m !== "exact") && (
                     <div>
                       <label className="block text-xs font-medium text-gray-600 mb-1">{t("slotInterval")}</label>
                       <select

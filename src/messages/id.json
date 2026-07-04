@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Anda akan diarahkan ke PayPal untuk menyetujui pembayaran setelah memesan.",
     "emailOptional": "opsional",
     "tipBadgeSuggested": "Disarankan",
-    "couponApply": "Terapkan"
+    "couponApply": "Terapkan",
+    "scheduleModeRanges": "Rentang waktu"
   },
   "reservation": {
     "title": "Pesan meja",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Layanan dilanjutkan",
         "saving": "Menyimpan…"
       },
-      "timeSelectionRange": "Rentang waktu (jendela seperti 6:00 – 6:15)"
+      "timeSelectionRange": "Rentang waktu (jendela seperti 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Centang setiap gaya yang boleh digunakan pelanggan — jika lebih dari satu, mereka memilih saat checkout. Jendela rentang dibatasi 15 menit."
     },
     "delivery": {
       "title": "Zona Pengiriman",

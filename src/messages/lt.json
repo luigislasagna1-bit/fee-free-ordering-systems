@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Pateikę užsakymą būsite nukreipti į PayPal, kad patvirtintumėte mokėjimą.",
     "emailOptional": "neprivaloma",
     "tipBadgeSuggested": "Siūloma",
-    "couponApply": "Taikyti"
+    "couponApply": "Taikyti",
+    "scheduleModeRanges": "Laiko intervalai"
   },
   "reservation": {
     "title": "Rezervuoti stalą",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Paslaugos atnaujintos",
         "saving": "Įrašoma…"
       },
-      "timeSelectionRange": "Laiko intervalai (langai kaip 6:00 – 6:15)"
+      "timeSelectionRange": "Laiko intervalai (langai kaip 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Pažymėkite kiekvieną klientams leidžiamą stilių — kai jų keli, jie renkasi atsiskaitydami. Intervalų langai ribojami iki 15 minučių."
     },
     "delivery": {
       "title": "Pristatymo zonos",

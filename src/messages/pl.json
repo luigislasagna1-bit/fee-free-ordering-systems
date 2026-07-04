@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Po złożeniu zamówienia zostaniesz przekierowany do PayPal, aby zatwierdzić płatność.",
     "emailOptional": "opcjonalnie",
     "tipBadgeSuggested": "Sugerowane",
-    "couponApply": "Zastosuj"
+    "couponApply": "Zastosuj",
+    "scheduleModeRanges": "Przedziały czasowe"
   },
   "reservation": {
     "title": "Zarezerwuj stolik",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Usługi wznowione",
         "saving": "Zapisywanie…"
       },
-      "timeSelectionRange": "Przedziały czasowe (okna typu 6:00 – 6:15)"
+      "timeSelectionRange": "Przedziały czasowe (okna typu 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Zaznacz każdy styl dostępny dla klientów — przy kilku wybierają przy kasie. Okna przedziałów są ograniczone do 15 minut."
     },
     "delivery": {
       "title": "Strefy dostawy",

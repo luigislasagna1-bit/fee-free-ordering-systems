@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "下单后，您将被重定向到 PayPal 以批准付款。",
     "emailOptional": "可选",
     "tipBadgeSuggested": "推荐",
-    "couponApply": "应用"
+    "couponApply": "应用",
+    "scheduleModeRanges": "时间段"
   },
   "reservation": {
     "title": "预订餐桌",
@@ -1102,7 +1103,8 @@
         "resumedToast": "服务已恢复",
         "saving": "正在保存…"
       },
-      "timeSelectionRange": "时间段（如 6:00 – 6:15 的窗口）"
+      "timeSelectionRange": "时间段（如 6:00 – 6:15 的窗口）",
+      "timeSelectionMultiHint": "勾选允许顾客使用的每种方式——多于一种时由顾客在结账时选择。时间段窗口上限为 15 分钟。"
     },
     "delivery": {
       "title": "配送区域",

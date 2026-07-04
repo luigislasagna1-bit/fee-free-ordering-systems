@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "You'll be redirected to PayPal to approve the payment after placing your order.",
     "emailOptional": "optional",
     "tipBadgeSuggested": "Suggested",
-    "couponApply": "Apply"
+    "couponApply": "Apply",
+    "scheduleModeRanges": "Time ranges"
   },
   "reservation": {
     "title": "Book a table",
@@ -1169,7 +1170,8 @@
         "resumedToast": "Services resumed",
         "saving": "Saving…"
       },
-      "timeSelectionRange": "Time ranges (windows like 6:00 – 6:15)"
+      "timeSelectionRange": "Time ranges (windows like 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Check every style customers may use — with more than one, they choose at checkout. Range windows are capped at 15 minutes."
     },
     "delivery": {
       "title": "Delivery Zones",

@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "ऑर्डर देने के बाद भुगतान को मंज़ूरी देने के लिए आपको PayPal पर भेजा जाएगा।",
     "emailOptional": "वैकल्पिक",
     "tipBadgeSuggested": "सुझाया गया",
-    "couponApply": "लागू करें"
+    "couponApply": "लागू करें",
+    "scheduleModeRanges": "समय सीमाएँ"
   },
   "reservation": {
     "title": "टेबल बुक करें",
@@ -1125,7 +1126,8 @@
         "resumedToast": "सेवाएँ फिर से शुरू हुईं",
         "saving": "सहेजा जा रहा है…"
       },
-      "timeSelectionRange": "समय सीमाएँ (जैसे 6:00 – 6:15 की विंडो)"
+      "timeSelectionRange": "समय सीमाएँ (जैसे 6:00 – 6:15 की विंडो)",
+      "timeSelectionMultiHint": "हर वह शैली चुनें जो ग्राहक उपयोग कर सकते हैं — एक से अधिक होने पर वे चेकआउट पर चुनते हैं। रेंज विंडो अधिकतम 15 मिनट की होती हैं।"
     },
     "delivery": {
       "title": "डिलीवरी क्षेत्र",

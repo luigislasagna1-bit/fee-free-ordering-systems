@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Након што пошаљете поруџбину, бићете преусмерени на PayPal ради одобравања плаћања.",
     "emailOptional": "опционо",
     "tipBadgeSuggested": "Предложено",
-    "couponApply": "Примени"
+    "couponApply": "Примени",
+    "scheduleModeRanges": "Временски опсези"
   },
   "reservation": {
     "title": "Rezerviši sto",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Услуге настављене",
         "saving": "Чување…"
       },
-      "timeSelectionRange": "Временски опсези (прозори попут 6:00 – 6:15)"
+      "timeSelectionRange": "Временски опсези (прозори попут 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Означите сваки стил доступан купцима — са више њих бирају при наплати. Прозори опсега су ограничени на 15 минута."
     },
     "delivery": {
       "title": "Zone dostave",

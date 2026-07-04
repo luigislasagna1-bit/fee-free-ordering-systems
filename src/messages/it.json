@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Verrai reindirizzato a PayPal per approvare il pagamento dopo aver effettuato l'ordine.",
     "emailOptional": "facoltativo",
     "tipBadgeSuggested": "Consigliato",
-    "couponApply": "Applica"
+    "couponApply": "Applica",
+    "scheduleModeRanges": "Fasce orarie"
   },
   "reservation": {
     "title": "Prenota un tavolo",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Servizi ripresi",
         "saving": "Salvataggio…"
       },
-      "timeSelectionRange": "Fasce orarie (finestre tipo 6:00 – 6:15)"
+      "timeSelectionRange": "Fasce orarie (finestre tipo 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Spunta ogni stile disponibile per i clienti — con più di uno, scelgono al checkout. Le finestre sono limitate a 15 minuti."
     },
     "delivery": {
       "title": "Zone di consegna",

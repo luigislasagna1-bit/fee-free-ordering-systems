@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Nach der Bestellung werden Sie zu PayPal weitergeleitet, um die Zahlung zu genehmigen.",
     "emailOptional": "optional",
     "tipBadgeSuggested": "Empfohlen",
-    "couponApply": "Anwenden"
+    "couponApply": "Anwenden",
+    "scheduleModeRanges": "Zeitfenster"
   },
   "reservation": {
     "title": "Tisch reservieren",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Services fortgesetzt",
         "saving": "Wird gespeichert…"
       },
-      "timeSelectionRange": "Zeitfenster (z. B. 6:00 – 6:15)"
+      "timeSelectionRange": "Zeitfenster (z. B. 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Aktivieren Sie jeden Stil, den Kunden nutzen dürfen — bei mehreren wählen sie beim Checkout. Zeitfenster sind auf 15 Minuten begrenzt."
     },
     "delivery": {
       "title": "Lieferzonen",

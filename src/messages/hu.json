@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "A rendelés leadása után átirányítjuk a PayPalra a fizetés jóváhagyásához.",
     "emailOptional": "nem kötelező",
     "tipBadgeSuggested": "Javasolt",
-    "couponApply": "Alkalmaz"
+    "couponApply": "Alkalmaz",
+    "scheduleModeRanges": "Idősávok"
   },
   "reservation": {
     "title": "Asztal foglalása",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Szolgáltatások folytatva",
         "saving": "Mentés…"
       },
-      "timeSelectionRange": "Idősávok (ablakok, pl. 6:00 – 6:15)"
+      "timeSelectionRange": "Idősávok (ablakok, pl. 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Jelölje be az ügyfelek számára elérhető minden stílust — többnél a pénztárnál választanak. Az idősáv-ablakok legfeljebb 15 percesek."
     },
     "delivery": {
       "title": "Szállítási zónák",

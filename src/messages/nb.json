@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Du blir omdirigert til PayPal for å godkjenne betalingen etter at du har lagt inn bestillingen.",
     "emailOptional": "valgfritt",
     "tipBadgeSuggested": "Foreslått",
-    "couponApply": "Bruk"
+    "couponApply": "Bruk",
+    "scheduleModeRanges": "Tidsintervaller"
   },
   "reservation": {
     "title": "Bestill bord",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Tjenester gjenopptatt",
         "saving": "Lagrer…"
       },
-      "timeSelectionRange": "Tidsintervaller (vinduer som 6:00 – 6:15)"
+      "timeSelectionRange": "Tidsintervaller (vinduer som 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Huk av hver stil kundene kan bruke — med flere velger de i kassen. Intervallvinduer er begrenset til 15 minutter."
     },
     "delivery": {
       "title": "Leveringssoner",

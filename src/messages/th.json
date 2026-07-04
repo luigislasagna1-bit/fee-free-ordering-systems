@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "หลังจากสั่งซื้อ คุณจะถูกนำไปที่ PayPal เพื่ออนุมัติการชำระเงิน",
     "emailOptional": "ไม่บังคับ",
     "tipBadgeSuggested": "แนะนำ",
-    "couponApply": "ใช้"
+    "couponApply": "ใช้",
+    "scheduleModeRanges": "ช่วงเวลา"
   },
   "reservation": {
     "title": "จองโต๊ะ",
@@ -1102,7 +1103,8 @@
         "resumedToast": "กลับมาให้บริการแล้ว",
         "saving": "กำลังบันทึก…"
       },
-      "timeSelectionRange": "ช่วงเวลา (หน้าต่างเช่น 6:00 – 6:15)"
+      "timeSelectionRange": "ช่วงเวลา (หน้าต่างเช่น 6:00 – 6:15)",
+      "timeSelectionMultiHint": "เลือกทุกแบบที่ลูกค้าใช้ได้ — หากมีมากกว่าหนึ่ง ลูกค้าจะเลือกตอนชำระเงิน หน้าต่างช่วงเวลาจำกัดที่ 15 นาที"
     },
     "delivery": {
       "title": "เขตจัดส่ง",

@@ -6,6 +6,7 @@ import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
 import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, localDowAndHHMM, dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { holidayEffectForDay, holidayEffectToday, canonicalHolidayService, hhmmInsideIntervals } from "@/lib/holiday-rules";
 import { resolveServiceHours } from "@/lib/service-hours";
+import { resolveSlotModes, rangeWindowMinutes } from "@/lib/slot-modes";
 import { hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import {
@@ -97,7 +98,7 @@ export async function POST(req: NextRequest) {
     const {
       restaurantSlug, type, customerName, customerEmail, customerPhone,
       deliveryAddress, deliveryCity, deliveryZip, deliveryAddressData: bodyDeliveryData, notes, paymentMethod,
-      scheduledFor, couponId, marketingConsent,
+      scheduledFor, scheduledStyle: bodyScheduledStyle, couponId, marketingConsent,
       // Owner "Preview & test ordering" (reseller report cmq3red6b). Only
       // honoured after the admin-session check below — customers can't flag
       // their own orders as tests.
@@ -1681,12 +1682,12 @@ export async function POST(req: NextRequest) {
       Number.isFinite(scheduledForDate.getTime()) &&
       scheduledForDate.getTime() > Date.now();
 
-    // Slot-window width (Fabrizio cmqqxerxs): when THIS service's time picker
-    // is in "range" mode the customer was shown windows ("6:00 – 6:15" =
-    // fulfil within the timeframe) and scheduledFor is the window START.
-    // Stamp the width now — derived from the restaurant's OWN settings, never
-    // from client input — so confirmation/emails/kitchen keep showing the
-    // exact promise even if the owner later changes the interval.
+    // Slot-window width (Fabrizio cmqqxerxs + Luigi 2026-07-04 multi-choice):
+    // when the customer scheduled via the "range" style the promise is a
+    // WINDOW ("6:00 – 6:15", ≤15 min) and scheduledFor is its START. The
+    // client says WHICH style it used (scheduledStyle), but we only honour it
+    // when the restaurant's OWN settings enable ranges for this service, and
+    // the width itself always comes from those settings — never the client.
     const scheduledSlotMinutes: number | null = (() => {
       if (!scheduledForDate) return null;
       try {
@@ -1696,12 +1697,19 @@ export async function POST(req: NextRequest) {
           type === "delivery" ? "delivery" :
           type === "dine_in" ? "dineIn" :
           type === "take_out" ? "takeOut" : "pickup";
-        if (ss?.[key]?.slotMode !== "range") return null;
+        const modes = resolveSlotModes(ss?.[key]);
+        if (!modes.includes("range")) return null;
+        // Single-style service → every schedule is a range; multi-style →
+        // trust the claimed style only if it's actually enabled.
+        const usedRange = modes.length === 1
+          ? true
+          : bodyScheduledStyle === "range";
+        if (!usedRange) return null;
         const per = ss?.[key]?.slotInterval;
         const iv = typeof per === "number" && per > 0
           ? per
           : ((restaurant as any).scheduledOrderInterval ?? 15);
-        return Math.max(5, Math.min(120, iv));
+        return rangeWindowMinutes(iv);
       } catch { return null; }
     })();
 

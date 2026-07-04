@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Bạn sẽ được chuyển đến PayPal để duyệt thanh toán sau khi đặt hàng.",
     "emailOptional": "tùy chọn",
     "tipBadgeSuggested": "Đề xuất",
-    "couponApply": "Áp dụng"
+    "couponApply": "Áp dụng",
+    "scheduleModeRanges": "Khoảng thời gian"
   },
   "reservation": {
     "title": "Đặt bàn",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Đã tiếp tục dịch vụ",
         "saving": "Đang lưu…"
       },
-      "timeSelectionRange": "Khoảng thời gian (khung như 6:00 – 6:15)"
+      "timeSelectionRange": "Khoảng thời gian (khung như 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Đánh dấu mọi kiểu khách có thể dùng — nếu nhiều hơn một, họ chọn khi thanh toán. Khung khoảng thời gian giới hạn 15 phút."
     },
     "delivery": {
       "title": "Khu vực giao hàng",

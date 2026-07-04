@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "ستتم إعادة توجيهك إلى PayPal للموافقة على الدفع بعد تقديم طلبك.",
     "emailOptional": "اختياري",
     "tipBadgeSuggested": "مقترح",
-    "couponApply": "تطبيق"
+    "couponApply": "تطبيق",
+    "scheduleModeRanges": "نطاقات زمنية"
   },
   "reservation": {
     "title": "احجز طاولة",
@@ -1102,7 +1103,8 @@
         "resumedToast": "تم استئناف الخدمات",
         "saving": "جارٍ الحفظ…"
       },
-      "timeSelectionRange": "نطاقات زمنية (نوافذ مثل 6:00 – 6:15)"
+      "timeSelectionRange": "نطاقات زمنية (نوافذ مثل 6:00 – 6:15)",
+      "timeSelectionMultiHint": "حدد كل نمط يمكن للعملاء استخدامه — مع أكثر من نمط، يختارون عند الدفع. نوافذ النطاقات محدودة بـ 15 دقيقة."
     },
     "delivery": {
       "title": "مناطق التوصيل",

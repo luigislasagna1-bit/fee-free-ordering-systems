@@ -543,7 +543,8 @@
     "paypalRedirectNotice": "Du omdirigeras till PayPal för att godkänna betalningen efter att du lagt din beställning.",
     "emailOptional": "valfritt",
     "tipBadgeSuggested": "Föreslagen",
-    "couponApply": "Använd"
+    "couponApply": "Använd",
+    "scheduleModeRanges": "Tidsintervall"
   },
   "reservation": {
     "title": "Boka ett bord",
@@ -1102,7 +1103,8 @@
         "resumedToast": "Tjänster återupptagna",
         "saving": "Sparar…"
       },
-      "timeSelectionRange": "Tidsintervall (fönster som 6:00 – 6:15)"
+      "timeSelectionRange": "Tidsintervall (fönster som 6:00 – 6:15)",
+      "timeSelectionMultiHint": "Markera varje stil kunderna får använda — vid flera väljer de i kassan. Intervallfönster är begränsade till 15 minuter."
     },
     "delivery": {
       "title": "Leveranszoner",
