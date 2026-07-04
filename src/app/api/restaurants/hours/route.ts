@@ -42,6 +42,15 @@ export async function PUT(req: NextRequest) {
   const body = await req.json().catch(() => ({}));
   const hours = Array.isArray(body?.hours) ? body.hours : [];
   const format = body?.hoursFormat === "12h" || body?.hoursFormat === "24h" ? body.hoursFormat : null;
+  // Per-service tabs the owner REMOVED in the UI — their rows get DELETED
+  // below. Explicit list (not "absent from payload") so partial saves that
+  // legitimately omit a service can never wipe it. The default/all-services
+  // rows (service null) are never deletable here. Luigi 2026-07-04: X'ing the
+  // Pickup tab + Save used to leave the rows behind, and the stale 9:00–23:00
+  // pickup hours kept blocking checkout after he'd deleted them.
+  const removedServices: string[] = Array.isArray(body?.removedServices)
+    ? body.removedServices.filter((s: unknown): s is string => s === "pickup" || s === "delivery" || s === "reservation")
+    : [];
 
   // Per-row normalize — SPLIT HOURS aware. A row may carry an `intervals`
   // array (lunch + dinner) OR the legacy single open/close pair; both produce a
@@ -143,6 +152,13 @@ export async function PUT(req: NextRequest) {
     } else {
       await prisma.openingHours.create({ data: { restaurantId, dayOfWeek: n.dayOfWeek, service: n.service, ...data } });
     }
+  }
+
+  // Delete rows for per-service tabs the owner removed (see comment above).
+  if (removedServices.length > 0) {
+    await prisma.openingHours.deleteMany({
+      where: { restaurantId, service: { in: removedServices } },
+    });
   }
 
   if (format) {

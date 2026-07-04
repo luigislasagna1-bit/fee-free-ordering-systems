@@ -360,10 +360,12 @@ export function HoursClient({
       // Build the payload: include the active "default" tab rows always,
       // plus any enabled per-service tabs. The API tags each row with
       // its service column so the DB ends up with a per-(service,day)
-      // row. Tabs that aren't enabled are NOT sent, so flipping a tab
-      // off later would leave stale rows in the DB — out of scope for
-      // this initial UI; an explicit "Remove service overrides"
-      // button can come later if owners need it.
+      // row. Per-service tabs that are NOT enabled are sent as
+      // removedServices so the server DELETES their rows — previously
+      // they were silently kept, so X + Save + refresh brought the tab
+      // back and stale hours kept gating checkout (Luigi 2026-07-04:
+      // pickup 9:00–23:00 rows survived deletion and blocked a 1:29 AM
+      // ASAP order despite open 10:00–03:00 general hours).
       const payloadHours: any[] = [];
       for (const key of ["default", "pickup", "delivery", "reservation"] as ServiceKey[]) {
         if (!enabledTabs.has(key)) continue;
@@ -371,10 +373,13 @@ export function HoursClient({
           payloadHours.push({ ...h, service: SERVICE_DB_VALUE[key] });
         }
       }
+      const removedServices = (["pickup", "delivery", "reservation"] as ServiceKey[])
+        .filter((key) => !enabledTabs.has(key))
+        .map((key) => SERVICE_DB_VALUE[key]);
       const res = await fetch("/api/restaurants/hours", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ hours: payloadHours, hoursFormat: format }),
+        body: JSON.stringify({ hours: payloadHours, hoursFormat: format, removedServices }),
       });
       if (!res.ok) throw new Error("Failed");
       toast.success(tToasts("saved"));
