@@ -264,10 +264,19 @@ export function GuidedPromoModal({
             : t("slotLabelFallback", { n: i + 1 }))
       );
     }
-    const first = allMenuItems.find((m) => m.id === chosen[0].menuItemId);
-    const variant = first?.variants?.find((v) => v.id === chosen[0].variantId);
-    const name = `${first?.name ?? "…"}${variant ? ` (${variant.name})` : ""}`;
-    return chosen.length > 1 ? `${name} +${chosen.length - 1}` : name;
+    // List EVERY pick (Luigi 2026-07-04: "there should be 3 selected items
+    // showing" — a bare first-name+N hid what was actually chosen). Duplicate
+    // tokens collapse to "×N"; the chip's truncate handles overflow.
+    const counts = new Map<string, { label: string; n: number }>();
+    for (const p of chosen) {
+      const item = allMenuItems.find((m) => m.id === p.menuItemId);
+      const variant = item?.variants?.find((v) => v.id === p.variantId);
+      const label = `${item?.name ?? "…"}${variant ? ` (${variant.name})` : ""}`;
+      const key = `${p.menuItemId}|${p.variantId ?? ""}`;
+      const cur = counts.get(key);
+      if (cur) cur.n += 1; else counts.set(key, { label, n: 1 });
+    }
+    return [...counts.values()].map(({ label, n }) => (n > 1 ? `${label} ×${n}` : label)).join(" + ");
   }
 
   const bogoHint = (() => {
@@ -584,6 +593,11 @@ export function GuidedPromoModal({
             <div className="text-sm text-gray-500 min-w-0 truncate">
               {allSatisfied ? (
                 <span className="font-medium" style={{ color: primaryColor }}>{t("readyHint")}</span>
+              ) : slotSatisfied(step) ? (
+                // Current step is full but a later step (e.g. the free item)
+                // remains — "Pick 1 more item" here read as a contradiction
+                // next to the group's "3 / 3" (Luigi 2026-07-04).
+                <span className="font-medium" style={{ color: primaryColor }}>{t("stepDoneHint")}</span>
               ) : (
                 t("remainingHint", { count: remaining })
               )}

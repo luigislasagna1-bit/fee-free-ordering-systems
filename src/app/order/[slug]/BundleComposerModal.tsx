@@ -239,9 +239,15 @@ export function BundleComposerModal({
   function chipLabel(i: number): string {
     const chosen = picks[i] ?? [];
     if (chosen.length === 0) return groups[i].label?.trim() || t("slotFallbackLabel", { n: i + 1 });
-    const first = slotItems[i].find((m) => m.id === chosen[0]);
-    const name = first?.name ?? "…";
-    return chosen.length > 1 ? `${name} +${chosen.length - 1}` : name;
+    // List EVERY pick (duplicates as ×N) — same fix as GuidedPromoModal
+    // (Luigi 2026-07-04: the chip must show all selected items).
+    const counts = new Map<string, { label: string; n: number }>();
+    for (const id of chosen) {
+      const item = slotItems[i].find((m) => m.id === id);
+      const cur = counts.get(id);
+      if (cur) cur.n += 1; else counts.set(id, { label: item?.name ?? "…", n: 1 });
+    }
+    return [...counts.values()].map(({ label, n }) => (n > 1 ? `${label} ×${n}` : label)).join(" + ");
   }
 
   return (
