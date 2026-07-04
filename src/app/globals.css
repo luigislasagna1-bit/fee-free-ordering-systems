@@ -50,3 +50,17 @@ body {
 .kitchen-flash-urgent {
   animation: kitchen-new-order-flash-urgent 0.7s ease-in-out infinite;
 }
+
+/* Mobile-safe modal height (Fabrizio 2026-07-04): on phones, `vh` measures
+   the viewport as if the browser URL bar were hidden, so a max-h-[90vh]
+   modal's bottom — including its sticky "See full menu / Go to cart"
+   footer — hung BELOW the real visible screen and customers couldn't find
+   the way out. `dvh` tracks the actual visible viewport; the vh line is
+   the fallback for pre-2022 browsers. Use this on every centered modal
+   with a sticky/pinned footer. */
+.modal-vh {
+  max-height: 90vh;
+  max-height: 86dvh;
+}
+
+/* cache-bust 2026-07-04 */

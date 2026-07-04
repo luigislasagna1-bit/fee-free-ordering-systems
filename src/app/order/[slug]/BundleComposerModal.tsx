@@ -257,7 +257,7 @@ export function BundleComposerModal({
     >
       <div
         ref={scrollRef}
-        className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl relative"
+        className="bg-white rounded-2xl w-full max-w-3xl modal-vh overflow-y-auto shadow-2xl relative"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Leave-guard overlay — the bundle is partially built. */}

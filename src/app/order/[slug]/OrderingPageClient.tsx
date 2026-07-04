@@ -4974,7 +4974,7 @@ export function OrderingPageClient({
       {/* ── Item modal ────────────────────────────────────────────────── */}
       {selectedItem && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-4" onClick={() => { setSelectedItem(null); if (editingCartIndex !== null) cancelEdit(); }}>
-          <div className="bg-white rounded-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+          <div className="bg-white rounded-2xl w-full max-w-lg modal-vh overflow-y-auto" onClick={e => e.stopPropagation()}>
             {selectedItem.imageUrl && (
               <div className="h-48 overflow-hidden rounded-t-2xl">
                 <img src={selectedItem.imageUrl} alt={selectedItem.name} className="w-full h-full object-cover" />
