@@ -52,9 +52,8 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
   if (!restaurant) notFound();
 
   // The "Our delivery areas" map here is a prominent sales visual, so it uses
-  // Google tiles — resolve the restaurant's own key, else the platform key
-  // (Luigi 2026-06-13). The functional pin/zone maps stay free Leaflet.
-  (restaurant as any).googleMapsApiKey = await resolveEffectiveMapsKey(restaurant.googleMapsApiKey);
+  // Google tiles via the platform key — the only maps key (Luigi 2026-07-04).
+  (restaurant as any).googleMapsApiKey = await resolveEffectiveMapsKey();
 
   const locale = await resolveLocale({ restaurantId: restaurant.id });
   const messages = await loadMessages(locale);

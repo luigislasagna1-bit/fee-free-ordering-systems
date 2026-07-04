@@ -371,9 +371,9 @@ export function DeliveryClient({
             updateZone(id, { radiusKm: newRadiusKm });
           }}
           provider={restaurant?.mapProvider ?? "leaflet"}
-          // Restaurant's own key wins, else the platform browser key — same
-          // resolution as the customer pages, so every store gets Google
-          // Maps here (Luigi 2026-07-04). Empty ⇒ Leaflet fallback.
+          // The platform key ONLY (Luigi 2026-07-04) — the server page already
+          // resolved it into restaurant.googleMapsApiKey; restaurants never
+          // bring their own key. Empty ⇒ Leaflet fallback.
           googleMapsApiKey={resolveMapsBrowserKey(restaurant?.googleMapsApiKey)}
           currencySym={curSym}
         />

@@ -117,12 +117,12 @@ export async function buildOrderReceiptPayload(opts: {
     if ((order as any).type === "delivery" && (order as any).deliveryAddress) {
       const r = await prisma.restaurant.findUnique({
         where: { id: restaurantId },
-        select: { lat: true, lng: true, address: true, city: true, state: true, zip: true, googleMapsApiKey: true },
+        select: { lat: true, lng: true, address: true, city: true, state: true, zip: true },
       });
       if (r?.lat != null && r?.lng != null && (order as any).deliveryLat != null && (order as any).deliveryLng != null) {
         driveDirection = cardinalDirection(r.lat, r.lng, (order as any).deliveryLat, (order as any).deliveryLng);
       }
-      const key = r ? resolveDistanceMatrixKey(await resolveEffectiveMapsKey(r.googleMapsApiKey)) : null;
+      const key = r ? resolveDistanceMatrixKey(await resolveEffectiveMapsKey()) : null;
       if (r && key) {
         const origin = r.lat != null && r.lng != null
           ? { lat: r.lat, lng: r.lng }

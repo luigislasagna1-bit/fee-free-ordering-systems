@@ -322,11 +322,10 @@ export default async function OrderingPage({
   const restaurant = { ...restaurantBase, menuCategories } as typeof restaurantBase & {
     menuCategories: typeof menuCategories;
   };
-  // Platform Google Maps fallback (Luigi 2026-06-13): a restaurant with no key
-  // of its own uses the platform key (PlatformSettings.googleMapsApiKey), so
-  // Google maps + Places autocomplete work on EVERY ordering page with zero
-  // per-restaurant setup. The restaurant's own key still wins.
-  restaurant.googleMapsApiKey = await resolveEffectiveMapsKey(restaurant.googleMapsApiKey);
+  // Platform Google Maps key (PlatformSettings.googleMapsApiKey) — the ONLY
+  // maps key, always (Luigi 2026-07-04): Google maps + Places autocomplete on
+  // EVERY ordering page with zero per-restaurant setup, all on platform billing.
+  restaurant.googleMapsApiKey = await resolveEffectiveMapsKey();
 
   // Card payments (KEY-ONLY model) require BOTH:
   //   1. THIS restaurant has saved active Stripe API keys (PaymentProvider)

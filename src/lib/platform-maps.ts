@@ -2,10 +2,11 @@ import "server-only";
 import prisma from "@/lib/db";
 
 /**
- * Platform-wide Google Maps key (Luigi 2026-06-13): set ONCE in superadmin
+ * Platform-wide Google Maps key: set ONCE in superadmin
  * (PlatformSettings.googleMapsApiKey) and every restaurant uses it for maps,
  * Places autocomplete, and Distance Matrix — no per-restaurant Google Cloud
- * setup. A restaurant's OWN key still wins (cost offload).
+ * setup. The platform key is used ALWAYS (Luigi 2026-07-04) — a restaurant's
+ * own googleMapsApiKey is never consulted anymore (legacy values ignored).
  *
  * Server-only. The browser half reaches the client by being resolved into the
  * existing `googleMapsApiKey` prop on each map-rendering page (so the client's
@@ -34,10 +35,8 @@ export async function getPlatformGoogleKey(now: number = Date.now()): Promise<st
   return key;
 }
 
-/** Resolve the effective Google Maps key for a restaurant: its own if set, else
- *  the platform key. Returns "" when neither exists (→ free Leaflet/OSM map). */
-export async function resolveEffectiveMapsKey(restaurantOwnKey?: string | null): Promise<string> {
-  const own = restaurantOwnKey?.trim();
-  if (own) return own;
+/** The Google Maps key every restaurant uses — always the platform key.
+ *  Returns "" when none is configured (→ free Leaflet/OSM map). */
+export async function resolveEffectiveMapsKey(): Promise<string> {
   return getPlatformGoogleKey();
 }

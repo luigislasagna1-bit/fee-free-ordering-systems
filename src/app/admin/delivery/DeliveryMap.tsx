@@ -42,10 +42,9 @@ function isValidCoord(lat: number | null, lng: number | null): lat is number {
 }
 
 export default function DeliveryMap(props: Props) {
-  // Google Maps for every store when a browser key exists (Luigi 2026-07-04
-  // — consistent with the customer-facing pages; the platform browser key
-  // ships via NEXT_PUBLIC_GOOGLE_MAPS_BROWSER_KEY with referrer + API
-  // restrictions, so June's per-load cost concern no longer applies).
+  // Google Maps for every store when the PLATFORM browser key resolves
+  // (Luigi 2026-07-04 — one platform key for all maps, restaurants never
+  // bring their own; the key is referrer + API restricted in Google Cloud).
   // Leaflet/OSM remains the graceful fallback when no key is configured.
   if (props.googleMapsApiKey?.trim()) {
     return <GoogleVariant {...props} apiKey={props.googleMapsApiKey.trim()} />;

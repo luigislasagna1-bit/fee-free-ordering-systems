@@ -54,7 +54,7 @@ export async function PUT(req: NextRequest) {
     acceptsPickup, acceptsDelivery, acceptsDineIn, acceptsCatering, acceptsReservations,
     logoUrl, bannerUrl, faviconUrl, reviewLink, infoContent, themeSettings,
     lat, lng,
-    mapProvider, googleMapsApiKey,
+    mapProvider,
     defaultLanguage,
     kitchenWorkflowMode,
     printNodeEnabled,
@@ -208,7 +208,8 @@ export async function PUT(req: NextRequest) {
   if (lat !== undefined) updateData.lat = lat;
   if (lng !== undefined) updateData.lng = lng;
   if (mapProvider !== undefined) updateData.mapProvider = mapProvider;
-  if (googleMapsApiKey !== undefined) updateData.googleMapsApiKey = googleMapsApiKey || null;
+  // Restaurant-own googleMapsApiKey writes retired (Luigi 2026-07-04): maps run
+  // exclusively on the platform key, so this field is no longer accepted.
   if (defaultLanguage !== undefined && ALLOWED_LOCALES.includes(defaultLanguage)) {
     updateData.defaultLanguage = defaultLanguage;
   }

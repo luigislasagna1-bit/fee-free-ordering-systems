@@ -9,9 +9,9 @@ export default async function ProfilePage() {
   const restaurant = restaurantId
     ? await prisma.restaurant.findUnique({ where: { id: restaurantId } })
     : null;
-  // Fall back to the platform Google key so the profile pin map renders with
-  // Google even when this restaurant hasn't set its own key (Luigi 2026-06-13).
-  if (restaurant && !restaurant.googleMapsApiKey) {
+  // Always the platform Google key — the only maps key (Luigi 2026-07-04); any
+  // legacy restaurant-own key is ignored.
+  if (restaurant) {
     restaurant.googleMapsApiKey = (await getPlatformGoogleKey()) || null;
   }
   return <ProfileClient restaurant={restaurant as any} />;

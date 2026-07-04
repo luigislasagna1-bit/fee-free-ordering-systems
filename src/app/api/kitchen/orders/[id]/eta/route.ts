@@ -41,7 +41,6 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
         select: {
           lat: true, lng: true,
           address: true, city: true, state: true, zip: true,
-          googleMapsApiKey: true,
         },
       },
     },
@@ -60,8 +59,8 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 
   const mapsUrl = mapsDirectionsUrl(destination);
 
-  // Restaurant's own key, else the platform key, else the legacy env-var key.
-  const key = resolveDistanceMatrixKey(await resolveEffectiveMapsKey(order.restaurant.googleMapsApiKey));
+  // Platform key (the only maps key), else the legacy env-var key.
+  const key = resolveDistanceMatrixKey(await resolveEffectiveMapsKey());
   if (!key) {
     // No Distance Matrix key wired up yet — the maps button still works.
     return NextResponse.json({ mapsUrl, estimate: { ok: false } });

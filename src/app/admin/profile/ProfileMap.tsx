@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Marker as LMarker, Tooltip as LTooltip, useMap
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useGoogleMaps } from "@/lib/use-google-maps";
+import { resolveMapsBrowserKey } from "@/lib/maps-key";
 
 interface Props {
   lat: number | null;
@@ -15,26 +16,19 @@ interface Props {
 }
 
 export default function ProfileMap(props: Props) {
-  // Always the free Leaflet/OSM map (Luigi 2026-06-13): Google reserved for
-  // autocomplete + distance only.
+  // Google Maps whenever the platform browser key resolves (Luigi 2026-07-04 —
+  // one platform key for all maps, same dispatch as the Delivery Zones editor).
+  // Leaflet/OSM remains the graceful fallback when no key is configured.
+  const key = resolveMapsBrowserKey(props.googleMapsApiKey);
+  if (key) {
+    return <GoogleVariant {...props} apiKey={key} />;
+  }
   return <LeafletVariant {...props} />;
 }
 
-function Placeholder({ msg, error }: { msg: string; error?: boolean }) {
-  return (
-    <div
-      style={{ width: "100%", height: "100%", minHeight: 320 }}
-      className={`flex items-center justify-center text-sm px-4 text-center ${
-        error ? "bg-red-50 text-red-600" : "bg-gray-100 text-gray-500"
-      }`}
-    >
-      {msg}
-    </div>
-  );
-}
-
 // ─── Google variant ──────────────────────────────────────────────────────────
-function GoogleVariant({ lat, lng, onMove, apiKey }: Props & { apiKey: string }) {
+function GoogleVariant(props: Props & { apiKey: string }) {
+  const { lat, lng, onMove, apiKey } = props;
   const { isLoaded, loadError } = useGoogleMaps(apiKey);
   const mapRef = useRef<google.maps.Map | null>(null);
   const hasCoords = lat !== null && lng !== null;
@@ -44,7 +38,9 @@ function GoogleVariant({ lat, lng, onMove, apiKey }: Props & { apiKey: string })
   );
   const containerStyle = { width: "100%", height: "100%", minHeight: 320 };
 
-  if (loadError) return <Placeholder msg="Couldn't load Google Maps. Check your API key restrictions." error />;
+  // Key rejected (referrer allow-list — localhost, an unlisted custom
+  // domain, …) → a WORKING Leaflet map beats a dead error box.
+  if (loadError) return <LeafletVariant {...props} />;
   if (!isLoaded) return <div style={containerStyle} className="bg-gray-100 animate-pulse" />;
 
   return (
@@ -61,6 +57,13 @@ function GoogleVariant({ lat, lng, onMove, apiKey }: Props & { apiKey: string })
           position={center}
           draggable
           title="Drag to fine-tune location"
+          // Same green white-ringed dot the Leaflet variant uses, so the
+          // provider swap doesn't change what owners recognise as "my store".
+          icon={{
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 9, fillColor: "#10b981", fillOpacity: 1,
+            strokeColor: "#ffffff", strokeWeight: 3,
+          }}
           onDragEnd={(e) => { if (e.latLng) onMove(e.latLng.lat(), e.latLng.lng()); }}
         />
       )}

@@ -20,9 +20,9 @@ export default async function DeliveryPage() {
     }),
   ]);
 
-  // Use the platform Google key when this restaurant hasn't set its own, so the
-  // zone map renders with Google for everyone (Luigi 2026-06-13).
-  if (restaurant && !restaurant.googleMapsApiKey) {
+  // Always the platform Google key — the only maps key (Luigi 2026-07-04); any
+  // legacy restaurant-own key is ignored so the zone map runs on platform billing.
+  if (restaurant) {
     restaurant.googleMapsApiKey = (await getPlatformGoogleKey()) || null;
   }
 

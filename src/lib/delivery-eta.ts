@@ -9,17 +9,17 @@
  * browser CORS requests, and the API key must never reach the client. The
  * kitchen detail fetches /api/kitchen/orders/[id]/eta which calls this.
  *
- * Key resolution: the restaurant's own googleMapsApiKey (the same key the
- * owner already pastes for Google maps) first, else a platform fallback env.
- * The key needs the "Distance Matrix API" enabled + billing on its Google
- * Cloud project. No key / disabled API / any error → { ok: false } so the
- * kitchen silently falls back to "open in maps" without a hard failure.
+ * Key resolution: the PLATFORM key only (Luigi 2026-07-04 — callers pass
+ * `await resolveEffectiveMapsKey()`), else the legacy fallback envs. The key
+ * needs the "Distance Matrix API" enabled + billing on its Google Cloud
+ * project. No key / disabled API / any error → { ok: false } so the kitchen
+ * silently falls back to "open in maps" without a hard failure.
  */
 const ENDPOINT = "https://maps.googleapis.com/maps/api/distancematrix/json";
 
-export function resolveDistanceMatrixKey(restaurantKey?: string | null): string | null {
+export function resolveDistanceMatrixKey(platformKey?: string | null): string | null {
   return (
-    restaurantKey?.trim() ||
+    platformKey?.trim() ||
     process.env.GOOGLE_DISTANCE_MATRIX_KEY ||
     process.env.GOOGLE_MAPS_API_KEY ||
     null
