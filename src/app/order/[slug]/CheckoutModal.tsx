@@ -658,9 +658,11 @@ export function CheckoutModal({
   });
 
   return (
+    // NO backdrop-close on checkout (Luigi 2026-07-04): a stray tap outside
+    // the white area was closing it mid-typing and wiping the customer's
+    // progress. Checkout closes ONLY via the explicit ✕ button.
     <div
       className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
-      onClick={onClose}
     >
       <div
         className="bg-white sm:rounded-2xl w-full max-w-4xl max-h-[96vh] overflow-hidden flex flex-col"
@@ -1749,7 +1751,11 @@ export function CheckoutModal({
                         </span>
                         {ci.variant && <span className="block text-xs text-gray-400">{ci.variant.name}</span>}
                         {savedForLine[i] > 0 && (
-                          <span className="inline-flex items-center gap-1 mt-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-2 py-0.5">
+                          // Own line under the item name (Fabrizio 2026-07-04:
+                          // "wrap the discount text onto a new line, exactly
+                          // how it is in the cart") — inline it squeezed next
+                          // to long names on mobile.
+                          <span className="flex w-fit items-center gap-1 mt-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-2 py-0.5">
                             <span aria-hidden>👍</span> {tc("youSaved", { amount: formatCurrency(savedForLine[i]) })}
                           </span>
                         )}
