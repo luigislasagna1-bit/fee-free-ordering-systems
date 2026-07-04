@@ -1,9 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
-import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { resolveReportScope } from "@/lib/reports/report-scope";
-import { reportOrderWhere } from "@/lib/reports/order-filter";
+import { buildPromoStatRows } from "@/lib/reports/promo-rows";
 import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
@@ -11,13 +10,13 @@ import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 /**
  * /admin/reports/online-ordering/promotions
  *
- * Per-coupon redemption stats for the date range — count of uses,
- * revenue from orders that used the coupon, and total discount given.
+ * Per-PROMOTION redemption stats for the date range — count of uses,
+ * revenue from orders the promo applied to, and total discount given.
  * Matches the GloriaFood Promotions Stats screenshot.
  *
- * Backed by Order.couponId (already populated). We groupBy couponId
- * on Order, then resolve Coupon names in a second small query — same
- * pattern as List View → Clients.
+ * Backed by each order's appliedPromos snapshot via buildPromoStatRows
+ * (shared with the export route). The old Order.couponId groupBy showed
+ * ONLY legacy coupon redemptions and missed every modern promotion.
  */
 export default async function PromotionsReportPage({
   searchParams,
@@ -34,29 +33,8 @@ export default async function PromotionsReportPage({
   const range = parseDateRangeInTz(sp, scope.timezone ?? undefined);
   const formatCurrency = (n: number) => fmtCurrency(n, scope.currency);
 
-  const rows = await prisma.order.groupBy({
-    by: ["couponId"],
-    where: {
-      ...reportOrderWhere(scope.ids, range),
-      couponId: { not: null },
-    },
-    _count: true,
-    _sum: { total: true, couponDiscount: true },
-    orderBy: { _count: { couponId: "desc" } },
-  });
-
-  const couponIds = rows.map((r) => r.couponId!).filter(Boolean);
-  const coupons = couponIds.length > 0
-    ? await prisma.coupon.findMany({
-        where: { id: { in: couponIds } },
-        select: { id: true, code: true, description: true },
-      })
-    : [];
-  const byId = new Map(coupons.map((c) => [c.id, c]));
-
-  const totalRedemptions = rows.reduce((s, r) => s + r._count, 0);
-  const totalDiscount = rows.reduce((s, r) => s + (r._sum.couponDiscount ?? 0), 0);
-  const totalRevenue = rows.reduce((s, r) => s + (r._sum.total ?? 0), 0);
+  const { rows, totalRedemptions, totalDiscount, totalRevenue } =
+    await buildPromoStatRows(scope.ids, range);
 
   return (
     <div>
@@ -91,17 +69,14 @@ export default async function PromotionsReportPage({
               <tr><td colSpan={6} className="py-6 px-4 text-center text-gray-400 italic">{t("emptyState")}</td></tr>
             )}
             {rows.map((r) => {
-              const c = byId.get(r.couponId!);
-              const revenue = r._sum.total ?? 0;
-              const discount = r._sum.couponDiscount ?? 0;
-              const pct = totalRevenue > 0 ? (revenue / totalRevenue) * 100 : 0;
+              const pct = totalRevenue > 0 ? (r.revenue / totalRevenue) * 100 : 0;
               return (
-                <tr key={r.couponId} className="border-b border-gray-50 hover:bg-gray-50/50">
-                  <td className="py-2.5 px-4 font-mono text-xs text-gray-800">{c?.code ?? "—"}</td>
-                  <td className="py-2.5 px-4 text-gray-600 max-w-xs truncate">{c?.description ?? ""}</td>
-                  <td className="py-2.5 px-4 text-right text-gray-700">{r._count.toLocaleString()}</td>
-                  <td className="py-2.5 px-4 text-right text-red-600">{formatCurrency(discount)}</td>
-                  <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(revenue)}</td>
+                <tr key={`${r.name}|${r.code}`} className="border-b border-gray-50 hover:bg-gray-50/50">
+                  <td className="py-2.5 px-4 font-mono text-xs text-gray-800">{r.code || "—"}</td>
+                  <td className="py-2.5 px-4 text-gray-600 max-w-xs truncate">{r.name}</td>
+                  <td className="py-2.5 px-4 text-right text-gray-700">{r.redemptions.toLocaleString()}</td>
+                  <td className="py-2.5 px-4 text-right text-red-600">{formatCurrency(r.discount)}</td>
+                  <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(r.revenue)}</td>
                   <td className="py-2.5 px-4 text-right text-gray-500">{pct.toFixed(1)}%</td>
                 </tr>
               );

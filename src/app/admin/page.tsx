@@ -5,6 +5,7 @@ import { isBrandParent, loadBrandSummary } from "@/lib/brand";
 import { BrandDashboardClient } from "./BrandDashboardClient";
 import { loadSetupProgress } from "@/lib/setup-checklist-loader";
 import { getOrderCapUsage } from "@/lib/order-cap";
+import { REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
 
 export default async function AdminDashboard() {
   const user = await getSessionUser();
@@ -52,7 +53,13 @@ export default async function AdminDashboard() {
     prisma.restaurant.findUnique({ where: { id: restaurantId } }),
     prisma.order.groupBy({
       by: ["status"],
-      where: { restaurantId },
+      // Same canonical "this order really counts" predicate as every report
+      // surface (drops rejected/cancelled + TEST- orders) — the dashboard's
+      // headline cards must reconcile with Reports/EOD, not overstate them.
+      // `pending` still counts (it's real demand, and the pending card needs it);
+      // the Recent-orders feed below stays unfiltered on purpose (it's an
+      // activity log, not a money figure).
+      where: { restaurantId, ...REPORT_ORDER_STATUS_WHERE },
       _count: true,
       _sum: { total: true },
     }),

@@ -67,6 +67,24 @@ export default async function CustomerDetailPage({
   const hasAccount = !!customer.passwordHash;
   const now = new Date();
 
+  // Headline Orders/Spent are RECOMPUTED from the order table with the same
+  // canonical filter every report uses (drops rejected/cancelled + TEST-),
+  // instead of trusting the stored totalOrders/totalSpent counters — those
+  // are bumped at order-create and never adjusted when an order is later
+  // rejected, so they drift high. One indexed aggregate on a detail page is
+  // cheap; the customers LIST keeps the counters (recompute there = N+1).
+  const liveStats = await prisma.order.aggregate({
+    where: {
+      customerId: customer.id,
+      status: { notIn: ["rejected", "cancelled"] },
+      orderNumber: { not: { startsWith: "TEST-" } },
+    },
+    _count: true,
+    _sum: { total: true },
+  });
+  const ordersCount = liveStats._count;
+  const spentTotal = liveStats._sum.total ?? 0;
+
   // Reward Dollars wallet for this customer (balance + recent ledger), only when
   // the restaurant has the feature on. Best-effort — never blocks the page.
   let rewardWallet: { balance: number; ledger: Array<{ id: string; amount: number; reason: string; note: string | null; createdAt: Date }> } | null = null;
@@ -157,11 +175,11 @@ export default async function CustomerDetailPage({
           </div>
           <div className="grid grid-cols-2 gap-4 text-right">
             <div>
-              <div className="text-2xl font-bold text-gray-900">{customer.totalOrders}</div>
+              <div className="text-2xl font-bold text-gray-900">{ordersCount}</div>
               <div className="text-[10px] uppercase tracking-wider text-gray-500">{t("statOrders")}</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-gray-900">{formatCurrency(customer.totalSpent)}</div>
+              <div className="text-2xl font-bold text-gray-900">{formatCurrency(spentTotal)}</div>
               <div className="text-[10px] uppercase tracking-wider text-gray-500">{t("statSpent")}</div>
             </div>
           </div>

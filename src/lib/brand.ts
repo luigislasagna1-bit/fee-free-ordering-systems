@@ -16,6 +16,7 @@
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
 import { isInheriting, type InheritableSetting } from "@/lib/inherited-settings";
+import { dateKeyInTimezone, parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
 
 export interface BrandSummary {
   id: string;
@@ -321,20 +322,24 @@ export async function deleteLocationMenuAndInherit(childRestaurantId: string): P
 export async function loadBrandSummary(parentId: string): Promise<BrandSummary | null> {
   const parent = await prisma.restaurant.findUnique({
     where: { id: parentId },
-    select: { id: true, name: true, slug: true, city: true, publishedAt: true },
+    select: { id: true, name: true, slug: true, city: true, publishedAt: true, timezone: true },
   });
   if (!parent) return null;
 
   const children = await prisma.restaurant.findMany({
     where: { parentRestaurantId: parentId },
     orderBy: { createdAt: "asc" },
-    select: { id: true, name: true, slug: true, city: true, publishedAt: true },
+    select: { id: true, name: true, slug: true, city: true, publishedAt: true, timezone: true },
   });
 
-  // Compute "today" as UTC start-of-day. Per-location restaurant timezones
-  // could make this fancier later, but UTC is fine for a dashboard tile.
-  const today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
+  // "Today" starts at LOCAL midnight in each location's own timezone —
+  // UTC start-of-day made a Toronto tile count yesterday-evening orders as
+  // today (and drop tonight's after 8 PM). Money-normalization 2026-07-04.
+  const now = new Date();
+  const startOfLocalDay = (tz: string | null | undefined): Date => {
+    const zone = tz || "UTC";
+    return parseLocalDateTimeInTz(dateKeyInTimezone(now, zone), 0, 0, zone);
+  };
 
   const allLocations = [parent, ...children];
   const locationsWithStats: BrandLocation[] = await Promise.all(
@@ -346,7 +351,11 @@ export async function loadBrandSummary(parentId: string): Promise<BrandSummary |
         prisma.order.aggregate({
           where: {
             restaurantId: loc.id,
-            createdAt: { gte: today },
+            createdAt: { gte: startOfLocalDay(loc.timezone) },
+            // Same canonical filter as every report surface — rejected/
+            // cancelled/TEST orders don't belong in a revenue tile.
+            status: { notIn: ["rejected", "cancelled"] },
+            orderNumber: { not: { startsWith: "TEST-" } },
           },
           _count: true,
           _sum: { total: true },
