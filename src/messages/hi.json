@@ -1520,7 +1520,14 @@
       "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
       "alertPhoneInvalid": "यह नंबर डायल नहीं हो सकता। क्षेत्र कोड सहित अंक (जैसे 6476690808) या पूर्ण अंतरराष्ट्रीय प्रारूप (+16476690808) उपयोग करें।",
       "alertPhoneWillDial": "डायल होगा: {number}",
-      "alertPhoneInvalidToast": "उस नंबर पर डायल नहीं हो सकता — पहले प्रारूप ठीक करें।"
+      "alertPhoneInvalidToast": "उस नंबर पर डायल नहीं हो सकता — पहले प्रारूप ठीक करें।",
+      "testCallChecking": "Twilio से जांच रहे हैं कि कॉल का क्या हुआ…",
+      "testCallStatusConnected": "Twilio के अनुसार कॉल कनेक्ट हुई और {seconds} सेकंड चली। यदि आपका फ़ोन कभी नहीं बजा, तो संभवतः आपका कैरियर हमारे नंबर से आने वाली कॉल ब्लॉक या साइलेंट कर रहा है।",
+      "testCallStatusNoAnswer": "कॉल की घंटी बजी लेकिन उत्तर नहीं मिला।",
+      "testCallStatusBusy": "लाइन व्यस्त थी।",
+      "testCallStatusFailed": "Twilio कॉल पूरी नहीं कर सका — त्रुटि {code}। {message}",
+      "testCallStatusPending": "कॉल Twilio पर अभी भी जारी है (स्थिति: {status})।",
+      "testCallStatusUnknown": "Twilio से कॉल का परिणाम प्राप्त नहीं हो सका।"
     },
     "customers": {
       "title": "ग्राहक",

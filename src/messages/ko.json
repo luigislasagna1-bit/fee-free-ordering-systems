@@ -3364,7 +3364,14 @@
       "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
       "alertPhoneInvalid": "이 번호로 전화를 걸 수 없습니다. 지역번호가 포함된 숫자(예: 6476690808) 또는 전체 국제 형식(+16476690808)을 사용하세요.",
       "alertPhoneWillDial": "발신 번호: {number}",
-      "alertPhoneInvalidToast": "해당 번호로 전화를 걸 수 없습니다 — 형식을 먼저 수정하세요."
+      "alertPhoneInvalidToast": "해당 번호로 전화를 걸 수 없습니다 — 형식을 먼저 수정하세요.",
+      "testCallChecking": "Twilio에서 통화 결과를 확인하는 중…",
+      "testCallStatusConnected": "Twilio에 따르면 통화가 연결되어 {seconds}초간 재생되었습니다. 전화가 전혀 울리지 않았다면 통신사가 저희 번호의 전화를 차단하거나 무음 처리하고 있을 가능성이 높습니다.",
+      "testCallStatusNoAnswer": "전화가 울렸지만 받지 않았습니다.",
+      "testCallStatusBusy": "통화 중이었습니다.",
+      "testCallStatusFailed": "Twilio가 통화를 완료하지 못했습니다 — 오류 {code}. {message}",
+      "testCallStatusPending": "Twilio에서 통화가 아직 진행 중입니다(상태: {status}).",
+      "testCallStatusUnknown": "Twilio에서 통화 결과를 가져오지 못했습니다."
     },
     "receiptRenderer": {
       "yourRestaurant": "내 레스토랑",

@@ -3364,7 +3364,14 @@
       "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
       "alertPhoneInvalid": "Este número não pode ser discado. Use dígitos com DDD (ex. 6476690808) ou o formato internacional completo (+16476690808).",
       "alertPhoneWillDial": "Será discado: {number}",
-      "alertPhoneInvalidToast": "Esse número não pode ser discado — corrija o formato primeiro."
+      "alertPhoneInvalidToast": "Esse número não pode ser discado — corrija o formato primeiro.",
+      "testCallChecking": "Verificando com a Twilio o que aconteceu com a chamada…",
+      "testCallStatusConnected": "A Twilio informa que a chamada CONECTOU e durou {seconds}s. Se o seu telefone nunca tocou, sua operadora provavelmente está bloqueando ou silenciando chamadas do nosso número.",
+      "testCallStatusNoAnswer": "A chamada tocou, mas não foi atendida.",
+      "testCallStatusBusy": "A linha estava ocupada.",
+      "testCallStatusFailed": "A Twilio não conseguiu concluir a chamada — erro {code}. {message}",
+      "testCallStatusPending": "A chamada ainda está em andamento na Twilio (status: {status}).",
+      "testCallStatusUnknown": "Não foi possível obter o resultado da chamada da Twilio."
     },
     "receiptRenderer": {
       "yourRestaurant": "Seu Restaurante",

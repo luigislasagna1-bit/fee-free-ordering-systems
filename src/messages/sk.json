@@ -3364,7 +3364,14 @@
       "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
       "alertPhoneInvalid": "Toto číslo sa nedá vytočiť. Použite číslice s predvoľbou (napr. 6476690808) alebo plný medzinárodný formát (+16476690808).",
       "alertPhoneWillDial": "Vytočí sa: {number}",
-      "alertPhoneInvalidToast": "Toto číslo sa nedá vytočiť — najprv opravte formát."
+      "alertPhoneInvalidToast": "Toto číslo sa nedá vytočiť — najprv opravte formát.",
+      "testCallChecking": "Zisťujeme u Twilia, čo sa s hovorom stalo…",
+      "testCallStatusConnected": "Twilio hlási, že hovor bol SPOJENÝ a trval {seconds}s. Ak telefón nikdy nezazvonil, váš operátor pravdepodobne blokuje alebo stlmuje hovory z nášho čísla.",
+      "testCallStatusNoAnswer": "Hovor zvonil, ale nikto ho neprijal.",
+      "testCallStatusBusy": "Linka bola obsadená.",
+      "testCallStatusFailed": "Twilio nemohlo hovor dokončiť — chyba {code}. {message}",
+      "testCallStatusPending": "Hovor u Twilia stále prebieha (stav: {status}).",
+      "testCallStatusUnknown": "Výsledok hovoru sa z Twilia nepodarilo získať."
     },
     "receiptRenderer": {
       "yourRestaurant": "Vaša reštaurácia",

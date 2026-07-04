@@ -1564,7 +1564,14 @@
       "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
       "alertPhoneInvalid": "This number can't be dialed. Use digits with area code (e.g. 6476690808) or full international format (+16476690808).",
       "alertPhoneWillDial": "Will dial: {number}",
-      "alertPhoneInvalidToast": "That phone number can't be dialed — fix the format first."
+      "alertPhoneInvalidToast": "That phone number can't be dialed — fix the format first.",
+      "testCallChecking": "Checking with Twilio what happened to the call…",
+      "testCallStatusConnected": "Twilio reports the call CONNECTED and played for {seconds}s. If your phone never rang, your carrier is likely blocking or silencing calls from our caller number.",
+      "testCallStatusNoAnswer": "The call rang but was not answered.",
+      "testCallStatusBusy": "The line was busy.",
+      "testCallStatusFailed": "Twilio could not complete the call — error {code}. {message}",
+      "testCallStatusPending": "The call is still in progress at Twilio (status: {status}).",
+      "testCallStatusUnknown": "Couldn't retrieve the call result from Twilio."
     },
     "customers": {
       "title": "Customers",

@@ -3364,7 +3364,14 @@
       "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
       "alertPhoneInvalid": "Nummeret kan ikke ringes op. Brug cifre med områdekode (fx 6476690808) eller fuldt internationalt format (+16476690808).",
       "alertPhoneWillDial": "Der ringes til: {number}",
-      "alertPhoneInvalidToast": "Nummeret kan ikke ringes op — ret formatet først."
+      "alertPhoneInvalidToast": "Nummeret kan ikke ringes op — ret formatet først.",
+      "testCallChecking": "Tjekker hos Twilio, hvad der skete med opkaldet…",
+      "testCallStatusConnected": "Twilio rapporterer, at opkaldet blev FORBUNDET og varede {seconds}s. Hvis din telefon aldrig ringede, blokerer eller filtrerer dit teleselskab sandsynligvis opkald fra vores nummer.",
+      "testCallStatusNoAnswer": "Opkaldet ringede, men blev ikke besvaret.",
+      "testCallStatusBusy": "Linjen var optaget.",
+      "testCallStatusFailed": "Twilio kunne ikke gennemføre opkaldet — fejl {code}. {message}",
+      "testCallStatusPending": "Opkaldet er stadig i gang hos Twilio (status: {status}).",
+      "testCallStatusUnknown": "Kunne ikke hente opkaldsresultatet fra Twilio."
     },
     "receiptRenderer": {
       "yourRestaurant": "Din restaurant",

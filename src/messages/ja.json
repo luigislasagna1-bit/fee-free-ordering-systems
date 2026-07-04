@@ -3364,7 +3364,14 @@
       "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
       "alertPhoneInvalid": "この番号には発信できません。市外局番付きの数字（例: 6476690808）または完全な国際形式（+16476690808）を使用してください。",
       "alertPhoneWillDial": "発信先: {number}",
-      "alertPhoneInvalidToast": "その番号には発信できません — まず形式を修正してください。"
+      "alertPhoneInvalidToast": "その番号には発信できません — まず形式を修正してください。",
+      "testCallChecking": "Twilio に通話の結果を確認しています…",
+      "testCallStatusConnected": "Twilio によると通話は接続され、{seconds}秒間再生されました。電話が一度も鳴らなかった場合、キャリアが当社の番号からの着信をブロックまたは消音している可能性があります。",
+      "testCallStatusNoAnswer": "電話は鳴りましたが応答されませんでした。",
+      "testCallStatusBusy": "回線が話し中でした。",
+      "testCallStatusFailed": "Twilio は通話を完了できませんでした — エラー {code}。{message}",
+      "testCallStatusPending": "Twilio で通話がまだ進行中です（ステータス: {status}）。",
+      "testCallStatusUnknown": "Twilio から通話結果を取得できませんでした。"
     },
     "receiptRenderer": {
       "yourRestaurant": "レストラン名",

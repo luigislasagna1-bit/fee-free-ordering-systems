@@ -3364,7 +3364,14 @@
       "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
       "alertPhoneInvalid": "Sellele numbrile ei saa helistada. Kasutage numbreid koos suunakoodiga (nt 6476690808) või täielikku rahvusvahelist vormingut (+16476690808).",
       "alertPhoneWillDial": "Helistatakse: {number}",
-      "alertPhoneInvalidToast": "Numbrile ei saa helistada — parandage kõigepealt vorming."
+      "alertPhoneInvalidToast": "Numbrile ei saa helistada — parandage kõigepealt vorming.",
+      "testCallChecking": "Kontrollime Twiliost, mis kõnega juhtus…",
+      "testCallStatusConnected": "Twilio teatab, et kõne ÜHENDUS ja kestis {seconds}s. Kui teie telefon ei helisenud, blokeerib või summutab teie operaator tõenäoliselt meie numbrilt tulevaid kõnesid.",
+      "testCallStatusNoAnswer": "Kõne helises, kuid sellele ei vastatud.",
+      "testCallStatusBusy": "Liin oli hõivatud.",
+      "testCallStatusFailed": "Twilio ei saanud kõnet lõpule viia — viga {code}. {message}",
+      "testCallStatusPending": "Kõne on Twilios veel pooleli (olek: {status}).",
+      "testCallStatusUnknown": "Kõne tulemust ei õnnestunud Twiliost kätte saada."
     },
     "receiptRenderer": {
       "yourRestaurant": "Sinu restoran",

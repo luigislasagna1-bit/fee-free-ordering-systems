@@ -89,6 +89,11 @@ export function KitchenWorkflowToggle({
   const alertPhoneNormalized = alertPhone.trim() ? sanitizePhone(alertPhone) : "";
   const alertPhoneInvalid = alertPhone.trim() !== "" && alertPhoneNormalized === null;
   const [testingCall, setTestingCall] = useState(false);
+  // Post-call diagnostic (Luigi 2026-07-03): Twilio accepts a call and can
+  // still fail it seconds later (geo-permissions, carrier block…), which used
+  // to look like "Test call placed" + silence. After placing, we ask Twilio
+  // what actually happened and show the verdict here.
+  const [callDiag, setCallDiag] = useState<{ tone: "info" | "ok" | "error"; text: string } | null>(null);
   const [kitchenVibrate, setKitchenVibrate] = useState<boolean>(initialKitchenVibrate);
   const [savingVibrate, setSavingVibrate] = useState(false);
   const [deliveryShowName, setDeliveryShowName] = useState<boolean>(initialDeliveryShowName);
@@ -131,11 +136,16 @@ export function KitchenWorkflowToggle({
   // (and see why if it doesn't — e.g. an international number Twilio blocks).
   async function sendTestCall() {
     setTestingCall(true);
+    setCallDiag(null);
     try {
       const res = await fetch("/api/admin/test-alert-call");
       const data = await res.json().catch(() => ({}) as Record<string, unknown>);
       if (data?.placed) {
         toast.success(t("testCallPlacedToast", { number: String(data.calledNumber ?? effectiveAlertNumber) }));
+        if (typeof data.sid === "string" && data.sid) {
+          setCallDiag({ tone: "info", text: t("testCallChecking") });
+          window.setTimeout(() => void checkCallStatus(String(data.sid), 1), 9000);
+        }
       } else {
         toast.error(t("testCallFailedToast", { reason: String(data?.reason ?? data?.error ?? "unknown") }));
       }
@@ -143,6 +153,48 @@ export function KitchenWorkflowToggle({
       toast.error(t("saveErrorToast"));
     } finally {
       setTestingCall(false);
+    }
+  }
+
+  // Ask Twilio what happened to the test call. One retry while the call is
+  // still queued/ringing; then report whatever state it's in.
+  async function checkCallStatus(sid: string, attempt: number) {
+    try {
+      const res = await fetch(`/api/admin/test-alert-call/status?sid=${encodeURIComponent(sid)}`);
+      const d = (await res.json().catch(() => ({}))) as {
+        ok?: boolean; status?: string; durationSeconds?: number | null;
+        errorCode?: string | null; errorMessage?: string | null;
+      };
+      if (!d?.ok || !d.status) {
+        setCallDiag({ tone: "error", text: t("testCallStatusUnknown") });
+        return;
+      }
+      if (["queued", "ringing", "in-progress"].includes(d.status) && attempt < 3) {
+        window.setTimeout(() => void checkCallStatus(sid, attempt + 1), 8000);
+        return;
+      }
+      switch (d.status) {
+        case "completed":
+          setCallDiag({ tone: "ok", text: t("testCallStatusConnected", { seconds: d.durationSeconds ?? 0 }) });
+          break;
+        case "no-answer":
+          setCallDiag({ tone: "error", text: t("testCallStatusNoAnswer") });
+          break;
+        case "busy":
+          setCallDiag({ tone: "error", text: t("testCallStatusBusy") });
+          break;
+        case "failed":
+        case "canceled":
+          setCallDiag({
+            tone: "error",
+            text: t("testCallStatusFailed", { code: d.errorCode || "—", message: d.errorMessage || "" }),
+          });
+          break;
+        default:
+          setCallDiag({ tone: "info", text: t("testCallStatusPending", { status: d.status }) });
+      }
+    } catch {
+      setCallDiag({ tone: "error", text: t("testCallStatusUnknown") });
     }
   }
   const [saving, setSaving] = useState(false);
@@ -561,6 +613,24 @@ export function KitchenWorkflowToggle({
                 {testingCall ? t("testCallSending") : t("testCallButton")}
               </button>
             )}
+          </div>
+        )}
+
+        {/* Post-call verdict from Twilio — persistent (not a toast) so the
+            owner can read the error code at leisure. Luigi 2026-07-03. */}
+        {callDiag && (
+          <div className="px-5 pb-4">
+            <p
+              className={`text-[11px] leading-relaxed rounded-lg border px-3 py-2 ${
+                callDiag.tone === "ok"
+                  ? "text-emerald-700 bg-emerald-50 border-emerald-200"
+                  : callDiag.tone === "error"
+                    ? "text-red-700 bg-red-50 border-red-200"
+                    : "text-gray-600 bg-gray-50 border-gray-200"
+              }`}
+            >
+              {callDiag.text}
+            </p>
           </div>
         )}
 

@@ -141,3 +141,64 @@ export async function placeVoiceCall(args: {
   console.warn("[voice-call] Polly voice failed, falling back to alice", { voice: args.voice, reason: r1.reason });
   return doCall(aliceTwiml);
 }
+
+export interface CallStatusResult {
+  ok: boolean;
+  /** Twilio call status: queued | ringing | in-progress | completed | busy |
+   *  failed | no-answer | canceled. */
+  status?: string;
+  durationSeconds?: number | null;
+  /** Twilio error code + message when the call FAILED after creation (e.g.
+   *  13227 voice geo-permissions) — pulled from the call's notifications. */
+  errorCode?: string | null;
+  errorMessage?: string | null;
+  reason?: string;
+}
+
+/**
+ * Fetch the LIVE status of a previously created call — the missing half of the
+ * missed-order diagnostics (Luigi 2026-07-03): Twilio ACCEPTS a call (SID
+ * returned) and can still fail it seconds later (geo-permissions, carrier
+ * rejection…). The test button polls this so the owner sees the real outcome
+ * without opening the Twilio console.
+ */
+export async function fetchCallStatus(callSid: string): Promise<CallStatusResult> {
+  const sid = process.env.FFOS_TWILIO_ACCOUNT_SID;
+  const token = process.env.FFOS_TWILIO_AUTH_TOKEN;
+  if (!sid || !token) return { ok: false, reason: "Twilio not configured" };
+  if (!/^CA[0-9a-fA-F]{32}$/.test(callSid)) return { ok: false, reason: "invalid call sid" };
+  const auth = Buffer.from(`${sid}:${token}`).toString("base64");
+  const base = `${TWILIO_API}/${encodeURIComponent(sid)}/Calls/${callSid}`;
+  try {
+    const res = await fetch(`${base}.json`, { headers: { Authorization: `Basic ${auth}` } });
+    if (!res.ok) return { ok: false, reason: `twilio ${res.status}` };
+    const j = (await res.json()) as { status?: string; duration?: string | null };
+    const out: CallStatusResult = {
+      ok: true,
+      status: j.status,
+      durationSeconds: j.duration != null ? parseInt(String(j.duration), 10) : null,
+      errorCode: null,
+      errorMessage: null,
+    };
+    // A post-creation failure carries its error in the call's notifications
+    // (the Call resource itself has no error fields in the 2010 API).
+    if (j.status && ["failed", "busy", "no-answer", "canceled"].includes(j.status)) {
+      const nres = await fetch(`${base}/Notifications.json?PageSize=1`, {
+        headers: { Authorization: `Basic ${auth}` },
+      }).catch(() => null);
+      if (nres?.ok) {
+        const nj = (await nres.json().catch(() => null)) as
+          | { notifications?: Array<{ error_code?: string; message_text?: string }> }
+          | null;
+        const n = nj?.notifications?.[0];
+        if (n) {
+          out.errorCode = n.error_code ?? null;
+          out.errorMessage = n.message_text ? decodeURIComponent(String(n.message_text)).slice(0, 300) : null;
+        }
+      }
+    }
+    return out;
+  } catch (e) {
+    return { ok: false, reason: e instanceof Error ? e.message : String(e) };
+  }
+}

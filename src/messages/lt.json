@@ -3364,7 +3364,14 @@
       "deliveryLeadAddressPreview": "Via Mazzini 13, Varedo ▸ Mario Rossi",
       "alertPhoneInvalid": "Šio numerio negalima surinkti. Naudokite skaitmenis su krypties kodu (pvz., 6476690808) arba pilną tarptautinį formatą (+16476690808).",
       "alertPhoneWillDial": "Bus renkama: {number}",
-      "alertPhoneInvalidToast": "Numerio negalima surinkti — pirmiausia pataisykite formatą."
+      "alertPhoneInvalidToast": "Numerio negalima surinkti — pirmiausia pataisykite formatą.",
+      "testCallChecking": "Tikriname „Twilio“, kas nutiko skambučiui…",
+      "testCallStatusConnected": "„Twilio“ praneša, kad skambutis SUJUNGTAS ir truko {seconds}s. Jei telefonas neskambėjo, jūsų operatorius greičiausiai blokuoja arba nutildo skambučius iš mūsų numerio.",
+      "testCallStatusNoAnswer": "Skambutis skambėjo, bet nebuvo atsakyta.",
+      "testCallStatusBusy": "Linija buvo užimta.",
+      "testCallStatusFailed": "„Twilio“ nepavyko užbaigti skambučio — klaida {code}. {message}",
+      "testCallStatusPending": "Skambutis „Twilio“ vis dar vyksta (būsena: {status}).",
+      "testCallStatusUnknown": "Nepavyko gauti skambučio rezultato iš „Twilio“."
     },
     "receiptRenderer": {
       "yourRestaurant": "Jūsų restoranas",
