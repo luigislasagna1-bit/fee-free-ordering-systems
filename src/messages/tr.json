@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Kendi sürücülerim",
       "sourceOwnDescription": "Her teslimatı bünyenizdeki sürücüler karşılar. ShipDay hiçbir zaman devreye girmez. Ücretsiz.",
       "sourceShipdayLabel": "Yalnızca ShipDay",
-      "sourceShipdayDescription": "Her teslimat otomatik olarak ShipDay'in üçüncü taraf havuzuna yönlendirilir.",
+      "sourceShipdayDescription": "Her yeni teslimat siparişi kabul edildiğinde otomatik olarak bir ShipDay kuryesine gider. Teslimat online ödenmelidir.",
       "sourceBothLabel": "Her ikisi — sipariş bazında seçin",
-      "sourceBothDescription": "Mutfak her teslimat siparişinde bir seçici görür: bünyemi veya havuz.",
+      "sourceBothDescription": "Mutfağınıza bir ShipDay AÇIK/KAPALI anahtarı gelir: AÇIK yeni teslimatları otomatik olarak havuza gönderir, KAPALI kendi kuryelerinize bırakır.",
       "lockedNotice": "<strong>ShipDay seçenekleri kilitli.</strong> ShipDay havuzuna teslimat göndermek için bağımsız <strong>Driver Pool</strong> eklentisine ($19,99/ay) veya <strong>Marketplace Aylık</strong> planına ($199,99/ay, Driver Pool dahil) abone olun. \"Kendi sürücülerim\" seçeneği herkes için ücretsiz ve seçilebilir kalır.",
       "getDriverPool": "Driver Pool'u Edin",
       "credentialsTitle": "ShipDay kimlik bilgileri",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Sorun değil — ücretsiz Shipday hesabınızı oluşturun, sonra geri dönün ve anahtarınızı girin. Shipday'i açtığınızda, sizi Shipday ortağımızla tanıştıracağız; bu sayede indirim + kredi uygulanacak ve işe alım süreciniz kurulacak.",
       "createAccount": "Shipday hesabı oluştur",
       "haveAccountInstead": "Zaten bir hesabım var",
-      "toastOnlinePaymentRequired": "Önce bir online ödeme yöntemi ekleyin — ShipDay kuryeleri yalnızca alır ve teslim eder, kapıda ödeme tahsil edemezler. Kartla ödemeyi etkinleştirin veya PayPal'ı bağlayın, sonra ShipDay'i açın."
+      "toastOnlinePaymentRequired": "Önce bir online ödeme yöntemi ekleyin — ShipDay kuryeleri yalnızca alır ve teslim eder, kapıda ödeme tahsil edemezler. Kartla ödemeyi etkinleştirin veya PayPal'ı bağlayın, sonra ShipDay'i açın.",
+      "howItWorksTitle": "ShipDay gönderimi nasıl çalışır",
+      "howItWorksOn": "ShipDay AÇIK: her yeni teslimat siparişi, siz kabul ettiğiniz anda otomatik olarak bir ShipDay kuryesine gönderilir — ve ShipDay kuryeleri yalnızca alıp teslim ettiği için teslimat siparişleri online ödenmelidir (kapıda nakit ve kart ödeme seçenekleri sunulmaz).",
+      "howItWorksNoSwitch": "Bir sipariş kabul edildikten sonra ShipDay ile kendi kuryeleriniz arasında değiştirilemez.",
+      "howItWorksOff": "ShipDay KAPALI: hiçbir şey otomatik gönderilmez. Yine de herhangi bir siparişi ShipDay uygulamasından manuel olarak ShipDay'e gönderebilirsiniz."
     },
     "driverPoolLocked": {
       "addonBadge": "Eklenti",

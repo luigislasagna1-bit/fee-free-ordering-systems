@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Tài xế của nhà hàng",
       "sourceOwnDescription": "Tài xế nội bộ xử lý mọi giao hàng. ShipDay không bao giờ được gọi. Miễn phí.",
       "sourceShipdayLabel": "Chỉ ShipDay",
-      "sourceShipdayDescription": "Mọi giao hàng tự động chuyển đến pool tài xế bên thứ ba của ShipDay.",
+      "sourceShipdayDescription": "Mỗi đơn giao hàng mới tự động gửi cho tài xế ShipDay khi bạn chấp nhận. Giao hàng phải thanh toán trực tuyến.",
       "sourceBothLabel": "Cả hai — chọn theo từng đơn",
-      "sourceBothDescription": "Bếp thấy lựa chọn trên mỗi đơn giao hàng: nội bộ hoặc pool.",
+      "sourceBothDescription": "Bếp có công tắc ShipDay BẬT/TẮT: BẬT tự động gửi đơn giao mới vào nhóm tài xế, TẮT để tài xế riêng của bạn nhận.",
       "lockedNotice": "<strong>Tùy chọn ShipDay đang bị khóa.</strong> Để điều phối giao hàng đến pool của ShipDay, đăng ký tiện ích <strong>Driver Pool</strong> độc lập ($19.99/tháng) hoặc <strong>Marketplace Hàng Tháng</strong> ($199.99/tháng, bao gồm Driver Pool miễn phí). \"Tài xế của nhà hàng\" vẫn miễn phí cho tất cả.",
       "getDriverPool": "Lấy Driver Pool",
       "credentialsTitle": "Thông tin xác thực ShipDay",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Không vấn đề — tạo tài khoản Shipday miễn phí của bạn, sau đó quay lại và nhập khóa của bạn. Khi bạn bật Shipday, chúng tôi sẽ giới thiệu bạn với đối tác Shipday của chúng tôi để áp dụng giảm giá + tín dụng và thiết lập quy trình onboarding của bạn.",
       "createAccount": "Tạo tài khoản Shipday",
       "haveAccountInstead": "Tôi đã có tài khoản",
-      "toastOnlinePaymentRequired": "Hãy thêm phương thức thanh toán trực tuyến trước — tài xế ShipDay chỉ nhận và giao hàng, họ không thể thu tiền tại cửa. Bật thanh toán thẻ hoặc kết nối PayPal, sau đó bật ShipDay."
+      "toastOnlinePaymentRequired": "Hãy thêm phương thức thanh toán trực tuyến trước — tài xế ShipDay chỉ nhận và giao hàng, họ không thể thu tiền tại cửa. Bật thanh toán thẻ hoặc kết nối PayPal, sau đó bật ShipDay.",
+      "howItWorksTitle": "Cách hoạt động của gửi đơn ShipDay",
+      "howItWorksOn": "ShipDay BẬT: mỗi đơn giao hàng mới được tự động gửi cho tài xế ShipDay ngay khi bạn chấp nhận — và vì tài xế ShipDay chỉ nhận và giao hàng, đơn giao hàng phải được thanh toán trực tuyến (tiền mặt và quẹt thẻ tại cửa không có ở bước thanh toán).",
+      "howItWorksNoSwitch": "Sau khi đơn được chấp nhận, không thể chuyển đổi giữa ShipDay và tài xế riêng của bạn.",
+      "howItWorksOff": "ShipDay TẮT: không có gì được gửi tự động. Bạn vẫn có thể gửi bất kỳ đơn nào cho ShipDay thủ công từ ứng dụng ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Tiện ích bổ sung",

@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Mes livreurs",
       "sourceOwnDescription": "Vos livreurs internes gèrent chaque livraison. ShipDay n'est jamais sollicité. Gratuit.",
       "sourceShipdayLabel": "ShipDay uniquement",
-      "sourceShipdayDescription": "Chaque livraison est automatiquement acheminée vers le pool tiers de ShipDay.",
+      "sourceShipdayDescription": "Chaque nouvelle commande en livraison est envoyée automatiquement à un livreur ShipDay dès son acceptation. La livraison doit être payée en ligne.",
       "sourceBothLabel": "Les deux — choisir par commande",
-      "sourceBothDescription": "La cuisine voit un sélecteur sur chaque commande de livraison : interne ou pool.",
+      "sourceBothDescription": "Votre cuisine dispose d'un interrupteur ShipDay ON/OFF : ON envoie automatiquement les nouvelles livraisons au pool, OFF les laisse à vos propres livreurs.",
       "lockedNotice": "<strong>Les options ShipDay sont verrouillées.</strong> Pour dispatcher les livraisons vers le pool de ShipDay, abonnez-vous au module autonome <strong>Driver Pool</strong> (19,99 $/mois) ou à <strong>Marketplace Mensuel</strong> (199,99 $/mois, Driver Pool inclus gratuitement). « Mes livreurs » reste gratuit et sélectionnable pour tous.",
       "getDriverPool": "Obtenir le Driver Pool",
       "credentialsTitle": "Identifiants ShipDay",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Pas de problème — créez votre compte Shipday gratuit, puis revenez et entrez votre clé. Lorsque vous activez Shipday, nous vous présenterons à notre partenaire Shipday pour appliquer la réduction + les crédits et organiser votre accompagnement.",
       "createAccount": "Créer un compte Shipday",
       "haveAccountInstead": "J'ai déjà un compte",
-      "toastOnlinePaymentRequired": "Ajoutez d'abord un moyen de paiement en ligne — les livreurs ShipDay ne font que récupérer et livrer, ils ne peuvent pas encaisser à la porte. Activez le paiement par carte ou connectez PayPal, puis activez ShipDay."
+      "toastOnlinePaymentRequired": "Ajoutez d'abord un moyen de paiement en ligne — les livreurs ShipDay ne font que récupérer et livrer, ils ne peuvent pas encaisser à la porte. Activez le paiement par carte ou connectez PayPal, puis activez ShipDay.",
+      "howItWorksTitle": "Fonctionnement de l'envoi ShipDay",
+      "howItWorksOn": "ShipDay ACTIVÉ : chaque nouvelle commande en livraison est envoyée automatiquement à un livreur ShipDay dès que vous l'acceptez — et comme les livreurs ShipDay ne font que récupérer et livrer, les commandes en livraison doivent être payées en ligne (espèces et carte à la porte ne sont pas proposées au paiement).",
+      "howItWorksNoSwitch": "Une fois la commande acceptée, elle ne peut plus passer de ShipDay à vos propres livreurs, ni l'inverse.",
+      "howItWorksOff": "ShipDay DÉSACTIVÉ : rien n'est envoyé automatiquement. Vous pouvez toujours envoyer une commande à ShipDay manuellement depuis l'application ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Module",

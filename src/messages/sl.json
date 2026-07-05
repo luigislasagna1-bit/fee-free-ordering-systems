@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Lastni vozniki",
       "sourceOwnDescription": "Vaši notranji vozniki obravnavajo vsako dostavo. ShipDay se nikoli ne pokliče. Brezplačno.",
       "sourceShipdayLabel": "Samo ShipDay",
-      "sourceShipdayDescription": "Vsaka dostava se samodejno usmeri v bazen tretjih oseb ShipDay.",
+      "sourceShipdayDescription": "Vsako novo naročilo z dostavo gre ob sprejemu samodejno dostavljavcu ShipDay. Dostava mora biti plačana prek spleta.",
       "sourceBothLabel": "Oboje — izberite pri vsakem naročilu",
-      "sourceBothDescription": "Kuhinja vidi izbirnik pri vsakem naročilu za dostavo: notranji ali bazen.",
+      "sourceBothDescription": "Kuhinja dobi stikalo ShipDay VKLOP/IZKLOP: VKLOP nove dostave samodejno pošlje v pool, IZKLOP jih prepusti lastnim dostavljavcem.",
       "lockedNotice": "<strong>Možnosti ShipDay so zaklenjene.</strong> Za razpošiljanje dostav v bazen ShipDay se naročite na samostojni dodatek <strong>Bazen voznikov</strong> (19,99 $/mes.) ali na <strong>Marketplace Mesečno</strong> (199,99 $/mes., vključuje Bazen voznikov brezplačno). \"Lastni vozniki\" ostane brezplačen in izbirljiv za vse.",
       "getDriverPool": "Pridobi Bazen voznikov",
       "credentialsTitle": "Poverilnice ShipDay",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Brez težav — ustvarite brezplačen račun Shipday, nato se vrnite in vnesite svoj ključ. Ko vklopite Shipday, vas bomo predstavili našemu partnerju Shipday, ki bo uveljavil popust + kredite in nastavil vaše uvajanje.",
       "createAccount": "Ustvarite račun Shipday",
       "haveAccountInstead": "Že imam račun",
-      "toastOnlinePaymentRequired": "Najprej dodajte spletni način plačila — dostavljavci ShipDay samo prevzamejo in dostavijo, plačila na vratih ne morejo sprejeti. Vklopite kartična plačila ali povežite PayPal, nato vklopite ShipDay."
+      "toastOnlinePaymentRequired": "Najprej dodajte spletni način plačila — dostavljavci ShipDay samo prevzamejo in dostavijo, plačila na vratih ne morejo sprejeti. Vklopite kartična plačila ali povežite PayPal, nato vklopite ShipDay.",
+      "howItWorksTitle": "Kako deluje pošiljanje prek ShipDaya",
+      "howItWorksOn": "ShipDay VKLOPLJEN: vsako novo naročilo z dostavo se samodejno pošlje dostavljavcu ShipDay, takoj ko ga sprejmete — in ker dostavljavci ShipDay samo prevzamejo in dostavijo, morajo biti naročila z dostavo plačana prek spleta (gotovina in kartica na vratih pri plačilu nista na voljo).",
+      "howItWorksNoSwitch": "Ko je naročilo sprejeto, ga ni mogoče preklapljati med ShipDayem in lastnimi dostavljavci.",
+      "howItWorksOff": "ShipDay IZKLOPLJEN: nič se ne pošilja samodejno. Vsako naročilo lahko še vedno ročno pošljete ShipDayu iz aplikacije ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Dodatek",

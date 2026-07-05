@@ -3017,9 +3017,9 @@
       "sourceOwnLabel": "Own drivers",
       "sourceOwnDescription": "Your in-house drivers handle every delivery. ShipDay is never invoked. Free.",
       "sourceShipdayLabel": "ShipDay only",
-      "sourceShipdayDescription": "Every delivery routes to ShipDay's third-party pool automatically.",
+      "sourceShipdayDescription": "Every new delivery order auto-sends to a ShipDay driver when you accept it. Delivery must be paid online.",
       "sourceBothLabel": "Both — switch per order",
-      "sourceBothDescription": "Kitchen sees a picker on each delivery order: in-house or pool.",
+      "sourceBothDescription": "Your kitchen gets a ShipDay ON/OFF switch: ON auto-sends new deliveries to the pool, OFF leaves them to your own drivers.",
       "lockedNotice": "<strong>ShipDay options are locked.</strong> To dispatch deliveries to ShipDay's pool, subscribe to the standalone <strong>Driver Pool</strong> add-on ($19.99/mo) or to <strong>Marketplace Monthly</strong> ($199.99/mo, includes Driver Pool free). \"Own drivers\" stays free and selectable for everyone.",
       "getDriverPool": "Get Driver Pool",
       "credentialsTitle": "ShipDay credentials",
@@ -3066,7 +3066,11 @@
       "noAccountConnectNote": "No problem — create your free Shipday account, then come back and enter your key. When you turn Shipday on, we'll introduce you to our Shipday partner to apply the discount + credits and set up your onboarding.",
       "createAccount": "Create a Shipday account",
       "haveAccountInstead": "I already have an account",
-      "toastOnlinePaymentRequired": "Add an online payment method first — ShipDay drivers only pick up and drop off, they can't collect payment at the door. Enable card payments or connect PayPal, then turn ShipDay on."
+      "toastOnlinePaymentRequired": "Add an online payment method first — ShipDay drivers only pick up and drop off, they can't collect payment at the door. Enable card payments or connect PayPal, then turn ShipDay on.",
+      "howItWorksTitle": "How ShipDay dispatch works",
+      "howItWorksOn": "ShipDay ON: every new delivery order is automatically sent to a ShipDay driver the moment you accept it — and because ShipDay drivers only pick up and drop off, delivery orders must be paid online (cash and card-at-the-door are not offered at checkout).",
+      "howItWorksNoSwitch": "Once an order is accepted, it cannot be switched between ShipDay and your own drivers.",
+      "howItWorksOff": "ShipDay OFF: nothing is sent automatically. You can still send any order to ShipDay manually from the ShipDay app."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Brand dashboard",

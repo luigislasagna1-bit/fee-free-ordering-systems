@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Oma juhid",
       "sourceOwnDescription": "Sinu majasisesed juhid käsitlevad iga kojuveotellimust. ShipDay'i ei kasutata. Tasuta.",
       "sourceShipdayLabel": "Ainult ShipDay",
-      "sourceShipdayDescription": "Iga kojuveotellimus suunatakse automaatselt ShipDay kolmanda osapoole kogumisse.",
+      "sourceShipdayDescription": "Iga uus kohaletoimetamise tellimus läheb vastuvõtmisel automaatselt ShipDay kullerile. Kohaletoimetamine tuleb maksta veebis.",
       "sourceBothLabel": "Mõlemad — vali tellimuse kaupa",
-      "sourceBothDescription": "Köök näeb iga kojuveotellimuse juures valimist: majasisene või kogum.",
+      "sourceBothDescription": "Köök saab ShipDay SEES/VÄLJAS lüliti: SEES saadab uued tellimused automaatselt poolile, VÄLJAS jätab need teie oma kulleritele.",
       "lockedNotice": "<strong>ShipDay valikud on lukus.</strong> ShipDay kogumisse kojuveo edastamiseks telli eraldi <strong>Juhtide kogumi</strong> lisandmoodul ($19.99/kuus) või <strong>Marketplace'i kuupõhine plaan</strong> ($199.99/kuus, sisaldab Juhtide kogumit tasuta). „Oma juhid“ jääb tasuta ja valitavaks kõigile.",
       "getDriverPool": "Hangi Juhtide kogum",
       "credentialsTitle": "ShipDay'i mandaadid",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Pole probleemi — looge oma tasuta Shipday konto, tulge siis tagasi ja sisestage oma võti. Kui lülitate Shipday sisse, tutvustame teid meie Shipday partnerile, et rakendada allahindlust + krediite ja seadistada teie sisseelamisprogramm.",
       "createAccount": "Looge Shipday konto",
       "haveAccountInstead": "Mul on juba konto",
-      "toastOnlinePaymentRequired": "Lisage esmalt veebimakseviis — ShipDay kullerid ainult võtavad peale ja toovad kohale, ukse peal nad makset vastu võtta ei saa. Lubage kaardimaksed või ühendage PayPal, seejärel lülitage ShipDay sisse."
+      "toastOnlinePaymentRequired": "Lisage esmalt veebimakseviis — ShipDay kullerid ainult võtavad peale ja toovad kohale, ukse peal nad makset vastu võtta ei saa. Lubage kaardimaksed või ühendage PayPal, seejärel lülitage ShipDay sisse.",
+      "howItWorksTitle": "Kuidas ShipDay saatmine töötab",
+      "howItWorksOn": "ShipDay SEES: iga uus kohaletoimetamise tellimus saadetakse automaatselt ShipDay kullerile kohe, kui selle vastu võtate — ja kuna ShipDay kullerid ainult võtavad peale ja toovad kohale, tuleb kohaletoimetamise tellimused maksta veebis (sularaha ja kaardimakse ukse peal kassas ei pakuta).",
+      "howItWorksNoSwitch": "Kui tellimus on vastu võetud, ei saa seda enam ShipDay ja oma kullerite vahel vahetada.",
+      "howItWorksOff": "ShipDay VÄLJAS: midagi ei saadeta automaatselt. Iga tellimuse saate siiski ShipDay rakendusest käsitsi ShipDayle saata."
     },
     "driverPoolLocked": {
       "addonBadge": "Lisandmoodul",

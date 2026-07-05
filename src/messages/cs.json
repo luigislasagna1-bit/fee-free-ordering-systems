@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Vlastní řidiči",
       "sourceOwnDescription": "Vaši interní řidiči zajišťují každé doručení. ShipDay není nikdy volán. Zdarma.",
       "sourceShipdayLabel": "Pouze ShipDay",
-      "sourceShipdayDescription": "Každé doručení je automaticky směrováno do sdružené sítě třetích stran ShipDay.",
+      "sourceShipdayDescription": "Každá nová objednávka s rozvozem se po přijetí automaticky odešle kurýrovi ShipDay. Rozvoz musí být zaplacen online.",
       "sourceBothLabel": "Oboje — přepínat u každé objednávky",
-      "sourceBothDescription": "Kuchyně vidí u každé doručovací objednávky výběr: interní nebo sdružení.",
+      "sourceBothDescription": "Kuchyně dostane přepínač ShipDay ZAP/VYP: ZAP posílá nové rozvozy automaticky do poolu, VYP je nechává vlastním kurýrům.",
       "lockedNotice": "<strong>Možnosti ShipDay jsou uzamčeny.</strong> Pro odesílání doručení do sdružené sítě ShipDay se přihlaste k samostatnému doplňku <strong>Sdružení řidičů</strong> (19,99 $/měs.) nebo k <strong>Marketplace Měsíčně</strong> (199,99 $/měs., obsahuje Sdružení řidičů zdarma). „Vlastní řidiči” zůstávají zdarma a dostupní pro všechny.",
       "getDriverPool": "Získat Sdružení řidičů",
       "credentialsTitle": "Přihlašovací údaje ShipDay",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Žádný problém — vytvořte si bezplatný účet Shipday, pak se vraťte a zadejte svůj klíč. Když zapnete Shipday, představíme vás našemu partnerovi Shipday, aby uplatnil slevu + kredity a nastavil vaše zavedení.",
       "createAccount": "Vytvořit účet Shipday",
       "haveAccountInstead": "Již mám účet",
-      "toastOnlinePaymentRequired": "Nejprve přidejte online platební metodu — kurýři ShipDay pouze vyzvedávají a doručují, nemohou vybírat platbu u dveří. Zapněte platby kartou nebo připojte PayPal a poté zapněte ShipDay."
+      "toastOnlinePaymentRequired": "Nejprve přidejte online platební metodu — kurýři ShipDay pouze vyzvedávají a doručují, nemohou vybírat platbu u dveří. Zapněte platby kartou nebo připojte PayPal a poté zapněte ShipDay.",
+      "howItWorksTitle": "Jak funguje odesílání přes ShipDay",
+      "howItWorksOn": "ShipDay ZAPNUTO: každá nová objednávka s rozvozem se automaticky odešle kurýrovi ShipDay v okamžiku, kdy ji přijmete — a protože kurýři ShipDay pouze vyzvedávají a doručují, objednávky s rozvozem musí být zaplaceny online (hotovost ani karta u dveří se v pokladně nenabízejí).",
+      "howItWorksNoSwitch": "Jakmile je objednávka přijata, nelze ji přepnout mezi ShipDay a vlastními kurýry.",
+      "howItWorksOff": "ShipDay VYPNUTO: nic se neodesílá automaticky. Jakoukoli objednávku můžete stále odeslat do ShipDay ručně z aplikace ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Doplněk",

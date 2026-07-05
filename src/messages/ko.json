@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "자체 드라이버",
       "sourceOwnDescription": "자체 드라이버가 모든 배달을 처리합니다. ShipDay는 사용하지 않습니다. 무료.",
       "sourceShipdayLabel": "ShipDay 전용",
-      "sourceShipdayDescription": "모든 배달이 ShipDay의 서드파티 풀로 자동 배차됩니다.",
+      "sourceShipdayDescription": "새 배달 주문은 수락 시 자동으로 ShipDay 기사에게 전송됩니다. 배달은 온라인 결제가 필요합니다.",
       "sourceBothLabel": "혼합 — 주문별 선택",
-      "sourceBothDescription": "주방에서 각 배달 주문에 대해 자체 드라이버 또는 풀을 선택할 수 있습니다.",
+      "sourceBothDescription": "주방에 ShipDay 켜기/끄기 스위치가 생깁니다: 켜면 새 배달이 자동으로 풀로, 끄면 자체 기사에게 갑니다.",
       "lockedNotice": "<strong>ShipDay 옵션이 잠겨 있습니다.</strong> ShipDay 풀로 배달을 배차하려면 독립형 <strong>Driver Pool</strong> 추가 기능 ($19.99/월) 또는 <strong>Marketplace 월정액</strong> ($199.99/월, Driver Pool 무료 포함)을 구독하세요. 「자체 드라이버」는 모든 사용자에게 무료로 선택 가능합니다.",
       "getDriverPool": "Driver Pool 가입",
       "credentialsTitle": "ShipDay 자격증명",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "문제없습니다 — 무료 Shipday 계정을 만든 후 돌아와서 키를 입력하세요. Shipday를 켜면 할인 + 크레딧을 적용하고 온보딩을 설정하기 위해 저희 Shipday 파트너를 소개해 드립니다.",
       "createAccount": "Shipday 계정 만들기",
       "haveAccountInstead": "이미 계정이 있습니다",
-      "toastOnlinePaymentRequired": "먼저 온라인 결제 수단을 추가하세요 — ShipDay 배달원은 픽업과 배달만 하며 문 앞에서 결제를 받을 수 없습니다. 카드 결제를 활성화하거나 PayPal을 연결한 뒤 ShipDay를 켜세요."
+      "toastOnlinePaymentRequired": "먼저 온라인 결제 수단을 추가하세요 — ShipDay 배달원은 픽업과 배달만 하며 문 앞에서 결제를 받을 수 없습니다. 카드 결제를 활성화하거나 PayPal을 연결한 뒤 ShipDay를 켜세요.",
+      "howItWorksTitle": "ShipDay 배차 작동 방식",
+      "howItWorksOn": "ShipDay 켜짐: 새 배달 주문은 수락하는 순간 자동으로 ShipDay 기사에게 전송됩니다 — ShipDay 기사는 픽업과 배달만 하므로 배달 주문은 온라인 결제가 필수입니다(결제 단계에서 현금·문앞 카드 결제는 제공되지 않습니다).",
+      "howItWorksNoSwitch": "주문이 수락된 후에는 ShipDay와 자체 기사 간에 전환할 수 없습니다.",
+      "howItWorksOff": "ShipDay 꺼짐: 자동 전송은 없습니다. 여전히 ShipDay 앱에서 원하는 주문을 수동으로 ShipDay에 보낼 수 있습니다."
     },
     "driverPoolLocked": {
       "addonBadge": "추가 기능",

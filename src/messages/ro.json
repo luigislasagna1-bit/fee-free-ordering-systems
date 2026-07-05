@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Proprii șoferi",
       "sourceOwnDescription": "Șoferii tăi interni gestionează fiecare livrare. ShipDay nu este invocat niciodată. Gratuit.",
       "sourceShipdayLabel": "Doar ShipDay",
-      "sourceShipdayDescription": "Fiecare livrare este direcționată automat în pool-ul terților ShipDay.",
+      "sourceShipdayDescription": "Fiecare comandă nouă cu livrare se trimite automat unui curier ShipDay când o acceptați. Livrarea trebuie plătită online.",
       "sourceBothLabel": "Ambele — alege per comandă",
-      "sourceBothDescription": "Bucătăria vede un selector pe fiecare comandă de livrare: intern sau pool.",
+      "sourceBothDescription": "Bucătăria primește un comutator ShipDay ON/OFF: ON trimite automat livrările noi către pool, OFF le lasă curierilor proprii.",
       "lockedNotice": "<strong>Opțiunile ShipDay sunt blocate.</strong> Pentru a expedia livrări în pool-ul ShipDay, abonează-te la suplimentul standalone <strong>Driver Pool</strong> ($19.99/lună) sau la <strong>Marketplace Lunar</strong> ($199.99/lună, include Driver Pool gratuit). „Proprii șoferi” rămâne gratuit și selectabil pentru toată lumea.",
       "getDriverPool": "Obține Driver Pool",
       "credentialsTitle": "Credențiale ShipDay",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Nicio problemă — creați-vă contul Shipday gratuit, apoi reveniți și introduceți cheia dvs. Când activați Shipday, vă vom prezenta partenerului nostru Shipday pentru a aplica reducerea + creditele și a vă configura integrarea.",
       "createAccount": "Creați un cont Shipday",
       "haveAccountInstead": "Am deja un cont",
-      "toastOnlinePaymentRequired": "Adăugați mai întâi o metodă de plată online — curierii ShipDay doar preiau și livrează, nu pot încasa la ușă. Activați plățile cu cardul sau conectați PayPal, apoi porniți ShipDay."
+      "toastOnlinePaymentRequired": "Adăugați mai întâi o metodă de plată online — curierii ShipDay doar preiau și livrează, nu pot încasa la ușă. Activați plățile cu cardul sau conectați PayPal, apoi porniți ShipDay.",
+      "howItWorksTitle": "Cum funcționează expedierea ShipDay",
+      "howItWorksOn": "ShipDay PORNIT: fiecare comandă nouă cu livrare este trimisă automat unui curier ShipDay imediat ce o acceptați — și pentru că curierii ShipDay doar preiau și livrează, comenzile cu livrare trebuie plătite online (numerar și card la ușă nu sunt oferite la checkout).",
+      "howItWorksNoSwitch": "Odată acceptată, o comandă nu mai poate fi mutată între ShipDay și curierii proprii.",
+      "howItWorksOff": "ShipDay OPRIT: nimic nu se trimite automat. Puteți trimite oricând o comandă la ShipDay manual, din aplicația ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Supliment",

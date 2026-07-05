@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "自有司机",
       "sourceOwnDescription": "由您的内部司机处理所有配送，不会调用 ShipDay。免费。",
       "sourceShipdayLabel": "仅 ShipDay",
-      "sourceShipdayDescription": "所有配送订单自动派发至 ShipDay 第三方司机池。",
+      "sourceShipdayDescription": "每个新的外送订单在接单时自动派给 ShipDay 配送员。外送必须在线支付。",
       "sourceBothLabel": "两者兼用——按订单切换",
-      "sourceBothDescription": "厨房在每个配送订单上可选择：内部司机或司机池。",
+      "sourceBothDescription": "厨房会有一个 ShipDay 开/关开关：开 = 新外送订单自动派入配送池，关 = 由自家配送员配送。",
       "lockedNotice": "<strong>ShipDay 选项已锁定。</strong>如需将配送订单派发至 ShipDay 司机池，请订阅独立的<strong>Driver Pool</strong>附加功能（$19.99/月）或<strong>Marketplace 月套餐</strong>（$199.99/月，含免费 Driver Pool）。「自有司机」对所有人免费且可随时选择。",
       "getDriverPool": "获取 Driver Pool",
       "credentialsTitle": "ShipDay 凭据",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "没问题 — 创建您的免费 Shipday 账户，然后回来输入您的密钥。当您开启 Shipday 时，我们将为您介绍我们的 Shipday 合作伙伴，以应用折扣 + 积分并设置您的入职流程。",
       "createAccount": "创建 Shipday 账户",
       "haveAccountInstead": "我已经有账户了",
-      "toastOnlinePaymentRequired": "请先添加在线支付方式——ShipDay 配送员只负责取餐和送达，无法在门口收款。启用银行卡支付或连接 PayPal，然后再开启 ShipDay。"
+      "toastOnlinePaymentRequired": "请先添加在线支付方式——ShipDay 配送员只负责取餐和送达，无法在门口收款。启用银行卡支付或连接 PayPal，然后再开启 ShipDay。",
+      "howItWorksTitle": "ShipDay 派单如何运作",
+      "howItWorksOn": "ShipDay 开启时：每个新的外送订单在您接单的那一刻会自动派给 ShipDay 配送员——由于 ShipDay 配送员只负责取餐和送达，外送订单必须在线支付（结账时不提供现金或门口刷卡）。",
+      "howItWorksNoSwitch": "订单一旦接受，就无法在 ShipDay 和自家配送员之间切换。",
+      "howItWorksOff": "ShipDay 关闭时：不会自动派单。您仍可在 ShipDay 应用中手动将任意订单发送给 ShipDay。"
     },
     "driverPoolLocked": {
       "addonBadge": "附加功能",

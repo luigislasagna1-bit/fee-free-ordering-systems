@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Saját sofőrök",
       "sourceOwnDescription": "A házon belüli sofőrök minden szállítást kezelnek. A ShipDay soha nem kerül bevonásra. Ingyenes.",
       "sourceShipdayLabel": "Csak ShipDay",
-      "sourceShipdayDescription": "Minden szállítás automatikusan a ShipDay harmadik feles pooljához kerül irányításra.",
+      "sourceShipdayDescription": "Minden új kiszállításos rendelés elfogadáskor automatikusan ShipDay-futárhoz kerül. A kiszállítást online kell fizetni.",
       "sourceBothLabel": "Mindkettő — rendelésenként válthat",
-      "sourceBothDescription": "A konyha minden szállítási rendelésnél választót lát: házon belüli vagy pool.",
+      "sourceBothDescription": "A konyha ShipDay BE/KI kapcsolót kap: BE esetén az új kiszállítások automatikusan a poolba mennek, KI esetén a saját futároké maradnak.",
       "lockedNotice": "<strong>A ShipDay lehetőségek zárolva vannak.</strong> A szállítások ShipDay pooljához való irányításhoz iratkozzon fel az önálló <strong>Driver Pool</strong> bővítményre ($19.99/hó) vagy a <strong>Marketplace Havi</strong> csomagra ($199.99/hó, tartalmazza a Driver Pool-t ingyen). A „Saját sofőrök” mindenki számára ingyenes és választható marad.",
       "getDriverPool": "Driver Pool megszerzése",
       "credentialsTitle": "ShipDay hitelesítő adatok",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Semmi gond — hozza létre ingyenes Shipday-fiókját, majd térjen vissza és adja meg kulcsát. Amikor bekapcsolja a Shipday-t, bemutatjuk Önt Shipday partnerünknek a kedvezmény + kreditek alkalmazásához és a bevezetés beállításához.",
       "createAccount": "Shipday-fiók létrehozása",
       "haveAccountInstead": "Már van fiókom",
-      "toastOnlinePaymentRequired": "Először adjon hozzá online fizetési módot — a ShipDay futárok csak átveszik és kiszállítják a rendelést, az ajtóban nem tudnak fizetést beszedni. Kapcsolja be a kártyás fizetést vagy kösse össze a PayPalt, majd kapcsolja be a ShipDay-t."
+      "toastOnlinePaymentRequired": "Először adjon hozzá online fizetési módot — a ShipDay futárok csak átveszik és kiszállítják a rendelést, az ajtóban nem tudnak fizetést beszedni. Kapcsolja be a kártyás fizetést vagy kösse össze a PayPalt, majd kapcsolja be a ShipDay-t.",
+      "howItWorksTitle": "Így működik a ShipDay-küldés",
+      "howItWorksOn": "ShipDay BE: minden új kiszállításos rendelés automatikusan egy ShipDay-futárhoz kerül, amint elfogadja — és mivel a ShipDay-futárok csak átveszik és kiszállítják a rendelést, a kiszállításos rendeléseket online kell fizetni (készpénz és kártya az ajtóban nem választható a fizetésnél).",
+      "howItWorksNoSwitch": "Az elfogadott rendelés utólag nem váltható át a ShipDay és a saját futárok között.",
+      "howItWorksOff": "ShipDay KI: semmi sem megy ki automatikusan. Bármely rendelést továbbra is elküldhet a ShipDaynek manuálisan a ShipDay alkalmazásból."
     },
     "driverPoolLocked": {
       "addonBadge": "Bővítmény",

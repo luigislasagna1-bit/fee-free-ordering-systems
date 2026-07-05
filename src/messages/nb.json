@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Egne sjåfører",
       "sourceOwnDescription": "Dine interne sjåfører håndterer alle leveringer. ShipDay involveres aldri. Gratis.",
       "sourceShipdayLabel": "Kun ShipDay",
-      "sourceShipdayDescription": "Alle leveringer rutes automatisk til ShipDays tredjepartspool.",
+      "sourceShipdayDescription": "Hver nye leveringsbestilling sendes automatisk til et ShipDay-bud når du godtar den. Levering må betales på nett.",
       "sourceBothLabel": "Begge — velg per bestilling",
-      "sourceBothDescription": "Kjøkkenet ser et valg for hver leveringsbestilling: intern eller pool.",
+      "sourceBothDescription": "Kjøkkenet får en ShipDay PÅ/AV-bryter: PÅ sender nye leveringer automatisk til poolen, AV lar dine egne bud ta dem.",
       "lockedNotice": "<strong>ShipDay-alternativer er låst.</strong> For å sende leveringer til ShipDays pool, abonner på det frittstående <strong>Driver Pool</strong>-tillegget ($19.99/mnd) eller på <strong>Marketplace Månedlig</strong> ($199.99/mnd, inkluderer Driver Pool gratis). «Egne sjåfører» forblir gratis og valgbart for alle.",
       "getDriverPool": "Få Driver Pool",
       "credentialsTitle": "ShipDay-legitimasjon",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Ikke noe problem — opprett din gratis Shipday-konto, kom deretter tilbake og skriv inn nøkkelen din. Når du slår på Shipday, introduserer vi deg for vår Shipday-partner for å bruke rabatten + kreditterne og sette opp din introduksjon.",
       "createAccount": "Opprett en Shipday-konto",
       "haveAccountInstead": "Jeg har allerede en konto",
-      "toastOnlinePaymentRequired": "Legg først til en nettbetalingsmetode — ShipDay-budene henter bare og leverer, de kan ikke ta betalt på døren. Aktiver kortbetaling eller koble til PayPal, og slå deretter på ShipDay."
+      "toastOnlinePaymentRequired": "Legg først til en nettbetalingsmetode — ShipDay-budene henter bare og leverer, de kan ikke ta betalt på døren. Aktiver kortbetaling eller koble til PayPal, og slå deretter på ShipDay.",
+      "howItWorksTitle": "Slik fungerer ShipDay-utsendelse",
+      "howItWorksOn": "ShipDay PÅ: hver nye leveringsbestilling sendes automatisk til et ShipDay-bud i det øyeblikket du godtar den — og siden ShipDay-budene bare henter og leverer, må leveringsbestillinger betales på nett (kontanter og kort på døren tilbys ikke i kassen).",
+      "howItWorksNoSwitch": "Når en bestilling er godtatt, kan den ikke byttes mellom ShipDay og dine egne bud.",
+      "howItWorksOff": "ShipDay AV: ingenting sendes automatisk. Du kan fortsatt sende enhver bestilling til ShipDay manuelt fra ShipDay-appen."
     },
     "driverPoolLocked": {
       "addonBadge": "Tillegg",

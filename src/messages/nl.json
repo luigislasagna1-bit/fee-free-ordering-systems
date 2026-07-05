@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Eigen chauffeurs",
       "sourceOwnDescription": "Uw interne chauffeurs verwerken elke bezorging. ShipDay wordt nooit ingeschakeld. Gratis.",
       "sourceShipdayLabel": "Alleen ShipDay",
-      "sourceShipdayDescription": "Elke bezorging wordt automatisch doorgestuurd naar de externe pool van ShipDay.",
+      "sourceShipdayDescription": "Elke nieuwe bezorgbestelling gaat bij acceptatie automatisch naar een ShipDay-bezorger. Bezorging moet online betaald worden.",
       "sourceBothLabel": "Beide — kiezen per bestelling",
-      "sourceBothDescription": "Keuken ziet een kiezer op elke bezorgbestelling: intern of pool.",
+      "sourceBothDescription": "Uw keuken krijgt een ShipDay AAN/UIT-schakelaar: AAN stuurt nieuwe bezorgingen automatisch naar de pool, UIT laat ze aan uw eigen bezorgers.",
       "lockedNotice": "<strong>ShipDay-opties zijn vergrendeld.</strong> Om bezorgingen naar de pool van ShipDay te sturen, abonneert u zich op de afzonderlijke add-on <strong>Chauffeurpool</strong> ($19,99/maand) of op <strong>Marketplace Maandelijks</strong> ($199,99/maand, inclusief Chauffeurpool gratis). \"Eigen chauffeurs\" blijft gratis en voor iedereen beschikbaar.",
       "getDriverPool": "Chauffeurpool aanschaffen",
       "credentialsTitle": "ShipDay-gegevens",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Geen probleem — maak uw gratis Shipday-account aan, kom dan terug en voer uw sleutel in. Wanneer u Shipday inschakelt, stellen wij u voor aan onze Shipday-partner om de korting + credits toe te passen en uw onboarding in te stellen.",
       "createAccount": "Een Shipday-account aanmaken",
       "haveAccountInstead": "Ik heb al een account",
-      "toastOnlinePaymentRequired": "Voeg eerst een online betaalmethode toe — ShipDay-bezorgers halen alleen op en bezorgen, ze kunnen aan de deur niet incasseren. Schakel kaartbetalingen in of koppel PayPal en zet dan ShipDay aan."
+      "toastOnlinePaymentRequired": "Voeg eerst een online betaalmethode toe — ShipDay-bezorgers halen alleen op en bezorgen, ze kunnen aan de deur niet incasseren. Schakel kaartbetalingen in of koppel PayPal en zet dan ShipDay aan.",
+      "howItWorksTitle": "Zo werkt ShipDay-verzending",
+      "howItWorksOn": "ShipDay AAN: elke nieuwe bezorgbestelling wordt automatisch naar een ShipDay-bezorger gestuurd zodra u die accepteert — en omdat ShipDay-bezorgers alleen ophalen en bezorgen, moeten bezorgbestellingen online worden betaald (contant en pinnen aan de deur worden niet aangeboden bij het afrekenen).",
+      "howItWorksNoSwitch": "Een geaccepteerde bestelling kan niet meer wisselen tussen ShipDay en uw eigen bezorgers.",
+      "howItWorksOff": "ShipDay UIT: er wordt niets automatisch verstuurd. U kunt elke bestelling nog steeds handmatig naar ShipDay sturen via de ShipDay-app."
     },
     "driverPoolLocked": {
       "addonBadge": "Add-on",

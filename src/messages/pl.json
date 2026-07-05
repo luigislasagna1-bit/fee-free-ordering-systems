@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Własni kierowcy",
       "sourceOwnDescription": "Twoi wewnętrzni kierowcy realizują każdą dostawę. ShipDay nigdy nie jest wywoływany. Bezpłatne.",
       "sourceShipdayLabel": "Tylko ShipDay",
-      "sourceShipdayDescription": "Każda dostawa jest automatycznie przekazywana do zewnętrznej puli ShipDay.",
+      "sourceShipdayDescription": "Każde nowe zamówienie z dostawą trafia automatycznie do kuriera ShipDay po akceptacji. Dostawa musi być opłacona online.",
       "sourceBothLabel": "Oba — wybieraj przy każdym zamówieniu",
-      "sourceBothDescription": "Kuchnia widzi selektor przy każdym zamówieniu dostawowym: wewnętrzny lub pula.",
+      "sourceBothDescription": "Kuchnia dostaje przełącznik ShipDay ON/OFF: ON wysyła nowe dostawy automatycznie do puli, OFF zostawia je własnym kurierom.",
       "lockedNotice": "<strong>Opcje ShipDay są zablokowane.</strong> Aby przekazywać dostawy do puli ShipDay, subskrybuj samodzielny dodatek <strong>Driver Pool</strong> (19,99 USD/mies.) lub <strong>Marketplace Miesięczny</strong> (199,99 USD/mies., zawiera Driver Pool bezpłatnie). «Własni kierowcy» pozostaje bezpłatne i dostępne dla wszystkich.",
       "getDriverPool": "Zdobądź Driver Pool",
       "credentialsTitle": "Dane uwierzytelniające ShipDay",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Żaden problem — utwórz bezpłatne konto Shipday, a następnie wróć i wprowadź swój klucz. Gdy włączysz Shipday, przedstawimy Cię naszemu partnerowi Shipday, aby zastosować zniżkę + kredyty i skonfigurować Twoje wdrożenie.",
       "createAccount": "Utwórz konto Shipday",
       "haveAccountInstead": "Mam już konto",
-      "toastOnlinePaymentRequired": "Najpierw dodaj metodę płatności online — kurierzy ShipDay tylko odbierają i dostarczają, nie mogą pobierać płatności pod drzwiami. Włącz płatności kartą lub podłącz PayPal, a następnie włącz ShipDay."
+      "toastOnlinePaymentRequired": "Najpierw dodaj metodę płatności online — kurierzy ShipDay tylko odbierają i dostarczają, nie mogą pobierać płatności pod drzwiami. Włącz płatności kartą lub podłącz PayPal, a następnie włącz ShipDay.",
+      "howItWorksTitle": "Jak działa wysyłka ShipDay",
+      "howItWorksOn": "ShipDay WŁĄCZONY: każde nowe zamówienie z dostawą jest automatycznie wysyłane do kuriera ShipDay w chwili akceptacji — a ponieważ kurierzy ShipDay tylko odbierają i dostarczają, zamówienia z dostawą muszą być opłacone online (gotówka i karta pod drzwiami nie są dostępne przy płatności).",
+      "howItWorksNoSwitch": "Po zaakceptowaniu zamówienia nie można go przenieść między ShipDay a własnymi kurierami.",
+      "howItWorksOff": "ShipDay WYŁĄCZONY: nic nie jest wysyłane automatycznie. Nadal możesz wysłać dowolne zamówienie do ShipDay ręcznie z aplikacji ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Dodatek",

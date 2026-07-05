@@ -2073,9 +2073,9 @@
       "sourceOwnLabel": "Savi vairuotojai",
       "sourceOwnDescription": "Jūsų vidiniai vairuotojai tvarko kiekvieną pristatymą. ShipDay niekada neinvokuojamas. Nemokama.",
       "sourceShipdayLabel": "Tik ShipDay",
-      "sourceShipdayDescription": "Kiekvienas pristatymas automatiškai nukreipiamas į ShipDay trečiųjų šalių telkinį.",
+      "sourceShipdayDescription": "Kiekvienas naujas pristatymo užsakymas priėmus automatiškai keliauja „ShipDay“ kurjeriui. Pristatymas turi būti apmokėtas internetu.",
       "sourceBothLabel": "Abu — perjungti kiekvienam užsakymui",
-      "sourceBothDescription": "Virtuvė mato kiekvieno pristatymo užsakymo parinkiklį: vidinis arba telkinio.",
+      "sourceBothDescription": "Virtuvė gauna „ShipDay“ ĮJ./IŠJ. jungiklį: ĮJUNGUS naujus pristatymus automatiškai siunčia į pulą, IŠJUNGUS palieka juos jūsų kurjeriams.",
       "lockedNotice": "<strong>ShipDay parinktys užrakintos.</strong> Norėdami siųsti pristatymus į ShipDay telkinį, užsiprenumeruokite atskirą <strong>Vairuotojų telkinio</strong> papildinį ($19,99/mėn.) arba <strong>Marketplace mėnesinį</strong> ($199,99/mėn., apima Vairuotojų telkinį nemokamai). „Savi vairuotojai” lieka nemokama ir pasirenkama visiems.",
       "getDriverPool": "Gauti Vairuotojų telkinį",
       "credentialsTitle": "ShipDay kredencialai",
@@ -2122,7 +2122,11 @@
       "noAccountConnectNote": "Nėra problema — sukurkite savo nemokamą Shipday paskyrą, tada grįžkite ir įveskite savo raktą. Kai įjungsite Shipday, supažindinsime jus su mūsų Shipday partneriu, kad pritaikytų nuolaidą + kreditus ir nustatytų jūsų įvedimo programą.",
       "createAccount": "Sukurti Shipday paskyrą",
       "haveAccountInstead": "Jau turiu paskyrą",
-      "toastOnlinePaymentRequired": "Pirmiausia pridėkite mokėjimo internetu būdą — ShipDay kurjeriai tik paima ir pristato, jie negali priimti mokėjimo prie durų. Įjunkite mokėjimus kortele arba prijunkite PayPal, tada įjunkite ShipDay."
+      "toastOnlinePaymentRequired": "Pirmiausia pridėkite mokėjimo internetu būdą — ShipDay kurjeriai tik paima ir pristato, jie negali priimti mokėjimo prie durų. Įjunkite mokėjimus kortele arba prijunkite PayPal, tada įjunkite ShipDay.",
+      "howItWorksTitle": "Kaip veikia „ShipDay“ siuntimas",
+      "howItWorksOn": "„ShipDay“ ĮJUNGTA: kiekvienas naujas pristatymo užsakymas automatiškai išsiunčiamas „ShipDay“ kurjeriui vos jį priėmus — o kadangi „ShipDay“ kurjeriai tik paima ir pristato, pristatymo užsakymai turi būti apmokėti internetu (grynieji ir kortelė prie durų atsiskaitant nesiūlomi).",
+      "howItWorksNoSwitch": "Priėmus užsakymą, jo nebegalima perkelti tarp „ShipDay“ ir savų kurjerių.",
+      "howItWorksOff": "„ShipDay“ IŠJUNGTA: automatiškai niekas nesiunčiama. Bet kurį užsakymą vis tiek galite išsiųsti „ShipDay“ rankiniu būdu per „ShipDay“ programėlę."
     },
     "driverPoolLocked": {
       "addonBadge": "Papildinys",

@@ -182,6 +182,18 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
             locked={!driverPoolEntitled}
           />
         </div>
+        {/* How ShipDay dispatch works — the rules Luigi set 2026-07-04, spelled
+            out where the owner flips the switch: ON auto-sends every new
+            delivery (⇒ prepaid online only), no per-order switching after
+            acceptance, OFF still allows manual dispatch from the ShipDay app. */}
+        <div className="mt-4 rounded-xl bg-blue-50 border border-blue-200 p-4">
+          <div className="text-sm font-bold text-blue-900">{t("howItWorksTitle")}</div>
+          <ul className="mt-2 space-y-1.5 text-[13px] text-blue-900/90 leading-snug list-disc pl-4">
+            <li>{t("howItWorksOn")}</li>
+            <li>{t("howItWorksNoSwitch")}</li>
+            <li>{t("howItWorksOff")}</li>
+          </ul>
+        </div>
         {!driverPoolEntitled && (
           <div className="mt-4 rounded-xl bg-amber-50 border border-amber-200 p-3 flex items-start gap-3">
             <Lock className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />

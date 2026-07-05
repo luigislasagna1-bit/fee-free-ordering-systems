@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Motoristas próprios",
       "sourceOwnDescription": "Seus motoristas internos cuidam de todas as entregas. O ShipDay nunca é acionado. Grátis.",
       "sourceShipdayLabel": "Somente ShipDay",
-      "sourceShipdayDescription": "Cada entrega é roteada automaticamente para o pool de terceiros do ShipDay.",
+      "sourceShipdayDescription": "Cada novo pedido com entrega é enviado automaticamente a um entregador ShipDay quando você o aceita. A entrega deve ser paga online.",
       "sourceBothLabel": "Ambos — escolher por pedido",
-      "sourceBothDescription": "A cozinha vê um seletor em cada pedido de entrega: interno ou pool.",
+      "sourceBothDescription": "Sua cozinha tem um interruptor ShipDay ON/OFF: ON envia as novas entregas automaticamente para o pool, OFF as deixa com seus entregadores.",
       "lockedNotice": "<strong>As opções do ShipDay estão bloqueadas.</strong> Para despachar entregas para o pool do ShipDay, assine o complemento standalone <strong>Driver Pool</strong> ($19.99/mês) ou o <strong>Marketplace Mensal</strong> ($199.99/mês, inclui Driver Pool grátis). «Motoristas próprios» continua grátis e selecionável para todos.",
       "getDriverPool": "Obter Driver Pool",
       "credentialsTitle": "Credenciais do ShipDay",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Sem problema — crie sua conta gratuita no Shipday, depois volte e insira sua chave. Quando você ativar o Shipday, vamos te apresentar ao nosso parceiro Shipday para aplicar o desconto + créditos e configurar seu onboarding.",
       "createAccount": "Criar uma conta no Shipday",
       "haveAccountInstead": "Já tenho uma conta",
-      "toastOnlinePaymentRequired": "Adicione primeiro um método de pagamento online — os entregadores ShipDay apenas coletam e entregam, não podem cobrar na porta. Ative pagamentos com cartão ou conecte o PayPal e depois ative o ShipDay."
+      "toastOnlinePaymentRequired": "Adicione primeiro um método de pagamento online — os entregadores ShipDay apenas coletam e entregam, não podem cobrar na porta. Ative pagamentos com cartão ou conecte o PayPal e depois ative o ShipDay.",
+      "howItWorksTitle": "Como funciona o envio ShipDay",
+      "howItWorksOn": "ShipDay LIGADO: cada novo pedido com entrega é enviado automaticamente a um entregador ShipDay assim que você o aceita — e como os entregadores ShipDay apenas coletam e entregam, pedidos com entrega devem ser pagos online (dinheiro e cartão na porta não são oferecidos no checkout).",
+      "howItWorksNoSwitch": "Depois de aceito, um pedido não pode ser trocado entre a ShipDay e seus próprios entregadores.",
+      "howItWorksOff": "ShipDay DESLIGADO: nada é enviado automaticamente. Você ainda pode enviar qualquer pedido à ShipDay manualmente pelo app ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Complemento",

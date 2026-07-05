@@ -2921,9 +2921,9 @@
       "sourceOwnLabel": "Omat kuljettajat",
       "sourceOwnDescription": "Omat kuljettajasi hoitavat jokaisen toimituksen. ShipDayta ei käytetä koskaan. Ilmainen.",
       "sourceShipdayLabel": "Vain ShipDay",
-      "sourceShipdayDescription": "Jokainen toimitus ohjautuu automaattisesti ShipDayn kolmannen osapuolen pooliin.",
+      "sourceShipdayDescription": "Jokainen uusi toimitustilaus lähtee automaattisesti ShipDay-kuljettajalle, kun hyväksyt sen. Toimitus on maksettava verkossa.",
       "sourceBothLabel": "Molemmat — valitse per tilaus",
-      "sourceBothDescription": "Keittiö näkee valitsimen jokaisessa toimitustilauksessa: oma tai pooli.",
+      "sourceBothDescription": "Keittiö saa ShipDay PÄÄLLE/POIS -kytkimen: PÄÄLLÄ uudet toimitukset lähtevät automaattisesti pooliin, POIS jättää ne omille kuljettajille.",
       "lockedNotice": "<strong>ShipDay-vaihtoehdot ovat lukittuja.</strong> Lähettääksesi toimituksia ShipDayn pooliin, tilaa erillinen <strong>Kuljettajapooli</strong>-lisäosa (19,99 $/kk) tai <strong>Marketplace Monthly</strong> (199,99 $/kk, sisältää Kuljettajapoolin ilmaiseksi). \"Omat kuljettajat\" pysyy ilmaisena ja valittavana kaikille.",
       "getDriverPool": "Hanki Kuljettajapooli",
       "credentialsTitle": "ShipDay-tunnukset",
@@ -2970,7 +2970,11 @@
       "noAccountConnectNote": "Ei hätää — luo ilmainen Shipday-tilisi, palaa sitten takaisin ja syötä avaimesi. Kun otat Shipday-palvelun käyttöön, esittelemme sinut Shipday-kumppanillemme alennuksen + kreditien soveltamiseksi ja perehdytyksesi järjestämiseksi.",
       "createAccount": "Luo Shipday-tili",
       "haveAccountInstead": "Minulla on jo tili",
-      "toastOnlinePaymentRequired": "Lisää ensin verkkomaksutapa — ShipDay-kuljettajat vain noutavat ja toimittavat, he eivät voi periä maksua ovella. Ota korttimaksut käyttöön tai yhdistä PayPal ja kytke sitten ShipDay päälle."
+      "toastOnlinePaymentRequired": "Lisää ensin verkkomaksutapa — ShipDay-kuljettajat vain noutavat ja toimittavat, he eivät voi periä maksua ovella. Ota korttimaksut käyttöön tai yhdistä PayPal ja kytke sitten ShipDay päälle.",
+      "howItWorksTitle": "Näin ShipDay-lähetys toimii",
+      "howItWorksOn": "ShipDay PÄÄLLÄ: jokainen uusi toimitustilaus lähetetään automaattisesti ShipDay-kuljettajalle heti, kun hyväksyt sen — ja koska ShipDay-kuljettajat vain noutavat ja toimittavat, toimitustilaukset on maksettava verkossa (käteistä tai korttia ovella ei tarjota kassalla).",
+      "howItWorksNoSwitch": "Kun tilaus on hyväksytty, sitä ei voi vaihtaa ShipDayn ja omien kuljettajien välillä.",
+      "howItWorksOff": "ShipDay POIS: mitään ei lähetetä automaattisesti. Voit silti lähettää minkä tahansa tilauksen ShipDaylle manuaalisesti ShipDay-sovelluksesta."
     },
     "driverPoolLocked": {
       "addonBadge": "Lisäosa",

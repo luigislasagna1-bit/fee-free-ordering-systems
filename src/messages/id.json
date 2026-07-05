@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Driver sendiri",
       "sourceOwnDescription": "Driver in-house Anda menangani setiap pengiriman. ShipDay tidak pernah dipanggil. Gratis.",
       "sourceShipdayLabel": "ShipDay saja",
-      "sourceShipdayDescription": "Setiap pengiriman dialihkan ke pool pihak ketiga ShipDay secara otomatis.",
+      "sourceShipdayDescription": "Setiap pesanan antar baru otomatis dikirim ke kurir ShipDay saat diterima. Pengantaran harus dibayar online.",
       "sourceBothLabel": "Keduanya — pilih per pesanan",
-      "sourceBothDescription": "Dapur melihat picker di setiap pesanan pengiriman: in-house atau pool.",
+      "sourceBothDescription": "Dapur mendapat sakelar ShipDay ON/OFF: ON mengirim pengantaran baru otomatis ke pool, OFF menyerahkannya ke kurir sendiri.",
       "lockedNotice": "<strong>Opsi ShipDay dikunci.</strong> Untuk mengirim pengiriman ke pool ShipDay, berlangganan add-on standalone <strong>Driver Pool</strong> ($19.99/bln) atau <strong>Marketplace Monthly</strong> ($199.99/bln, Driver Pool termasuk gratis). \"Driver sendiri\" tetap gratis dan dapat dipilih semua orang.",
       "getDriverPool": "Dapatkan Driver Pool",
       "credentialsTitle": "Kredensial ShipDay",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Tidak masalah — buat akun Shipday gratis Anda, lalu kembali dan masukkan kunci Anda. Saat Anda mengaktifkan Shipday, kami akan memperkenalkan Anda kepada mitra Shipday kami untuk menerapkan diskon + kredit dan menyiapkan orientasi Anda.",
       "createAccount": "Buat akun Shipday",
       "haveAccountInstead": "Saya sudah punya akun",
-      "toastOnlinePaymentRequired": "Tambahkan metode pembayaran online terlebih dahulu — kurir ShipDay hanya mengambil dan mengantar, mereka tidak bisa menagih pembayaran di pintu. Aktifkan pembayaran kartu atau hubungkan PayPal, lalu nyalakan ShipDay."
+      "toastOnlinePaymentRequired": "Tambahkan metode pembayaran online terlebih dahulu — kurir ShipDay hanya mengambil dan mengantar, mereka tidak bisa menagih pembayaran di pintu. Aktifkan pembayaran kartu atau hubungkan PayPal, lalu nyalakan ShipDay.",
+      "howItWorksTitle": "Cara kerja pengiriman ShipDay",
+      "howItWorksOn": "ShipDay AKTIF: setiap pesanan antar baru otomatis dikirim ke kurir ShipDay begitu Anda menerimanya — dan karena kurir ShipDay hanya mengambil dan mengantar, pesanan antar harus dibayar online (tunai dan kartu di pintu tidak tersedia saat checkout).",
+      "howItWorksNoSwitch": "Setelah pesanan diterima, pesanan tidak bisa dipindah antara ShipDay dan kurir sendiri.",
+      "howItWorksOff": "ShipDay NONAKTIF: tidak ada yang dikirim otomatis. Anda tetap bisa mengirim pesanan apa pun ke ShipDay secara manual dari aplikasi ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Add-on",

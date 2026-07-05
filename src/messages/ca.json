@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Conductors propis",
       "sourceOwnDescription": "Els vostres conductors interns gestionen cada lliurament. ShipDay no s'invoca mai. Gratuït.",
       "sourceShipdayLabel": "Només ShipDay",
-      "sourceShipdayDescription": "Cada lliurament s'encamina automàticament al pool de tercers de ShipDay.",
+      "sourceShipdayDescription": "Cada nova comanda a domicili s'envia automàticament a un repartidor de ShipDay en acceptar-la. El lliurament s'ha de pagar en línia.",
       "sourceBothLabel": "Ambdós — trieu per comanda",
-      "sourceBothDescription": "La cuina veu un selector a cada comanda de lliurament: intern o pool.",
+      "sourceBothDescription": "La cuina té un interruptor ShipDay ON/OFF: ON envia les noves comandes automàticament al pool, OFF les deixa als teus repartidors.",
       "lockedNotice": "<strong>Les opcions de ShipDay estan bloquejades.</strong> Per enviar lliuraments al pool de ShipDay, subscriviu-vos al complement autònom de <strong>Pool de conductors</strong> (19,99 $/mes) o al <strong>Marketplace Mensual</strong> (199,99 $/mes, inclou el Pool de conductors gratuït). «Conductors propis» és gratuït i seleccionable per a tothom.",
       "getDriverPool": "Obtén el Pool de conductors",
       "credentialsTitle": "Credencials de ShipDay",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Cap problema — creeu el vostre compte gratuït de Shipday, torneu i introduïu la vostra clau. Quan activeu Shipday, us presentarem al nostre soci de Shipday per aplicar el descompte + crèdits i configurar la vostra incorporació.",
       "createAccount": "Crear un compte de Shipday",
       "haveAccountInstead": "Ja tinc un compte",
-      "toastOnlinePaymentRequired": "Afegiu primer un mètode de pagament en línia — els repartidors de ShipDay només recullen i lliuren, no poden cobrar a la porta. Activeu els pagaments amb targeta o connecteu PayPal i després activeu ShipDay."
+      "toastOnlinePaymentRequired": "Afegiu primer un mètode de pagament en línia — els repartidors de ShipDay només recullen i lliuren, no poden cobrar a la porta. Activeu els pagaments amb targeta o connecteu PayPal i després activeu ShipDay.",
+      "howItWorksTitle": "Com funciona l'enviament ShipDay",
+      "howItWorksOn": "ShipDay ACTIVAT: cada nova comanda a domicili s'envia automàticament a un repartidor de ShipDay en el moment que l'acceptes — i com que els repartidors de ShipDay només recullen i lliuren, les comandes a domicili s'han de pagar en línia (efectiu i targeta a la porta no s'ofereixen al pagament).",
+      "howItWorksNoSwitch": "Un cop acceptada, una comanda no es pot canviar entre ShipDay i els teus propis repartidors.",
+      "howItWorksOff": "ShipDay DESACTIVAT: no s'envia res automàticament. Encara pots enviar qualsevol comanda a ShipDay manualment des de l'app de ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "Complement",

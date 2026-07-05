@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Sopstveni vozači",
       "sourceOwnDescription": "Vaši interni vozači obrađuju svaku dostavu. ShipDay se nikada ne poziva. Besplatno.",
       "sourceShipdayLabel": "Samo ShipDay",
-      "sourceShipdayDescription": "Svaka dostava se automatski usmerava u ShipDay-ov skup trećih lica.",
+      "sourceShipdayDescription": "Svaka nova porudžbina sa dostavom automatski ide ShipDay dostavljaču kad je prihvatite. Dostava mora biti plaćena onlajn.",
       "sourceBothLabel": "Oba — bira se po porudžbini",
-      "sourceBothDescription": "Kuhinja vidi birač na svakoj porudžbini dostave: interni ili skup.",
+      "sourceBothDescription": "Kuhinja dobija ShipDay ON/OFF prekidač: ON automatski šalje nove dostave u pool, OFF ih ostavlja vašim dostavljačima.",
       "lockedNotice": "<strong>ShipDay opcije su zaključane.</strong> Da biste otpremali dostave u ShipDay-ov skup, pretplatite se na samostalni dodatak <strong>Driver Pool</strong> (19,99 $/mes.) ili na <strong>Marketplace Mesečno</strong> (199,99 $/mes., uključuje Driver Pool besplatno). \"Sopstveni “vozači\" ostaje besplatno i dostupno za svakoga.",
       "getDriverPool": "Nabavi Driver Pool",
       "credentialsTitle": "ShipDay kredencijali",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Nema problema — napravite besplatan Shipday nalog, a zatim se vratite i unesite svoj ključ. Kada uključite Shipday, upoznaćemo vas sa našim Shipday partnerom kako bi primenili popust + kredite i postavili vaše uvođenje.",
       "createAccount": "Napravite Shipday nalog",
       "haveAccountInstead": "Već imam nalog",
-      "toastOnlinePaymentRequired": "Prvo dodajte onlajn način plaćanja — ShipDay dostavljači samo preuzimaju i dostavljaju, ne mogu da naplate na vratima. Uključite plaćanje karticom ili povežite PayPal, a zatim uključite ShipDay."
+      "toastOnlinePaymentRequired": "Prvo dodajte onlajn način plaćanja — ShipDay dostavljači samo preuzimaju i dostavljaju, ne mogu da naplate na vratima. Uključite plaćanje karticom ili povežite PayPal, a zatim uključite ShipDay.",
+      "howItWorksTitle": "Kako funkcioniše slanje putem ShipDaya",
+      "howItWorksOn": "ShipDay UKLJUČEN: svaka nova porudžbina sa dostavom automatski se šalje ShipDay dostavljaču čim je prihvatite — a pošto ShipDay dostavljači samo preuzimaju i dostavljaju, porudžbine sa dostavom moraju biti plaćene onlajn (gotovina i kartica na vratima se ne nude pri plaćanju).",
+      "howItWorksNoSwitch": "Kada je porudžbina prihvaćena, ne može se prebacivati između ShipDaya i sopstvenih dostavljača.",
+      "howItWorksOff": "ShipDay ISKLJUČEN: ništa se ne šalje automatski. I dalje možete bilo koju porudžbinu poslati ShipDayu ručno iz ShipDay aplikacije."
     },
     "driverPoolLocked": {
       "addonBadge": "Dodatak",

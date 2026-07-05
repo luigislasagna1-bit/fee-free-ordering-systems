@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "נהגים משלכם",
       "sourceOwnDescription": "הנהגים הפנימיים שלכם מטפלים בכל משלוח. ShipDay לעולם לא מופעל. בחינם.",
       "sourceShipdayLabel": "ShipDay בלבד",
-      "sourceShipdayDescription": "כל משלוח מנותב אוטומטית למאגר החיצוני של ShipDay.",
+      "sourceShipdayDescription": "כל הזמנת משלוח חדשה נשלחת אוטומטית לשליח ShipDay עם האישור. המשלוח חייב להיות משולם אונליין.",
       "sourceBothLabel": "שניהם — מעבר לפי הזמנה",
-      "sourceBothDescription": "המטבח רואה בורר בכל הזמנת משלוח: פנימי או מאגר.",
+      "sourceBothDescription": "המטבח מקבל מתג ShipDay הפעלה/כיבוי: פועל = משלוחים חדשים נשלחים אוטומטית למאגר, כבוי = השליחים שלכם מטפלים בהם.",
       "lockedNotice": "<strong>אפשרויות ShipDay נעולות.</strong> כדי לשלוח משלוחים למאגר של ShipDay, הירשמו לתוסף העצמאי <strong>Driver Pool</strong> ($19.99 לחודש) או ל-<strong>Marketplace Monthly</strong> ($199.99 לחודש, כולל Driver Pool חינם). \"נהגים משלכם\" נשאר חינמי וניתן לבחירה לכולם.",
       "getDriverPool": "קבל Driver Pool",
       "credentialsTitle": "אישורי ShipDay",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "אין בעיה — צרו את חשבון Shipday החינמי שלכם, חזרו ואז הזינו את המפתח שלכם. כשתפעילו את Shipday, נציג אתכם לשותף Shipday שלנו להחלת ההנחה + הקרדיטים ולהגדרת הקליטה שלכם.",
       "createAccount": "צרו חשבון Shipday",
       "haveAccountInstead": "כבר יש לי חשבון",
-      "toastOnlinePaymentRequired": "הוסיפו קודם אמצעי תשלום אונליין — שליחי ShipDay רק אוספים ומוסרים, הם אינם יכולים לגבות תשלום בדלת. הפעילו תשלומי כרטיס או חברו PayPal, ואז הפעילו את ShipDay."
+      "toastOnlinePaymentRequired": "הוסיפו קודם אמצעי תשלום אונליין — שליחי ShipDay רק אוספים ומוסרים, הם אינם יכולים לגבות תשלום בדלת. הפעילו תשלומי כרטיס או חברו PayPal, ואז הפעילו את ShipDay.",
+      "howItWorksTitle": "איך עובד שיגור ShipDay",
+      "howItWorksOn": "ShipDay פועל: כל הזמנת משלוח חדשה נשלחת אוטומטית לשליח ShipDay ברגע שאתם מאשרים אותה — ומכיוון ששליחי ShipDay רק אוספים ומוסרים, הזמנות משלוח חייבות להיות משולמות אונליין (מזומן וכרטיס בדלת אינם מוצעים בקופה).",
+      "howItWorksNoSwitch": "לאחר שההזמנה אושרה, אי אפשר להעביר אותה בין ShipDay לשליחים שלכם.",
+      "howItWorksOff": "ShipDay כבוי: שום דבר לא נשלח אוטומטית. עדיין אפשר לשלוח כל הזמנה ל-ShipDay ידנית מאפליקציית ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "תוסף",

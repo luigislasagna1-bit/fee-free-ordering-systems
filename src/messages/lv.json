@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Savi vadītāji",
       "sourceOwnDescription": "Jūsu iekšējie vadītāji veic katru piegādi. ShipDay netiek izmantots. Bezmaksas.",
       "sourceShipdayLabel": "Tikai ShipDay",
-      "sourceShipdayDescription": "Katra piegāde tiek automātiski novirzīta uz ShipDay trešo pušu kopu.",
+      "sourceShipdayDescription": "Katrs jauns piegādes pasūtījums pēc apstiprināšanas automātiski nonāk pie ShipDay kurjera. Piegāde jāapmaksā tiešsaistē.",
       "sourceBothLabel": "Abi — izvēlēties katram pasūtījumam",
-      "sourceBothDescription": "Virtuve redz izvēles rīku katram piegādes pasūtījumam: iekšējais vai kopa.",
+      "sourceBothDescription": "Virtuve saņem ShipDay IESL./IZSL. slēdzi: IESLĒGTS jaunās piegādes automātiski sūta uz pūlu, IZSLĒGTS tās atstāj jūsu kurjeriem.",
       "lockedNotice": "<strong>ShipDay opcijas ir bloķētas.</strong> Lai nosūtītu piegādes uz ShipDay kopu, abonējiet atsevišķo papildinājumu <strong>Vadītāju kopa</strong> ($19.99/mēn.) vai <strong>Marketplace Ikmēneša</strong> ($199.99/mēn., ietver Vadītāju kopu bez maksas). \"Savi vadītāji\" paliek bezmaksas un pieejami visiem.",
       "getDriverPool": "Iegūt vadītāju kopu",
       "credentialsTitle": "ShipDay akreditācijas dati",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Nekas — izveidojiet savu bezmaksas Shipday kontu, pēc tam atgriezieties un ievadiet savu atslēgu. Kad ieslēgsit Shipday, iepazīstināsim jūs ar mūsu Shipday partneri, lai piemērotu atlaidi + kredītus un iestatītu jūsu ievadapmācību.",
       "createAccount": "Izveidot Shipday kontu",
       "haveAccountInstead": "Man jau ir konts",
-      "toastOnlinePaymentRequired": "Vispirms pievienojiet tiešsaistes maksājuma veidu — ShipDay kurjeri tikai paņem un piegādā, viņi nevar iekasēt maksājumu pie durvīm. Ieslēdziet karšu maksājumus vai pievienojiet PayPal, pēc tam ieslēdziet ShipDay."
+      "toastOnlinePaymentRequired": "Vispirms pievienojiet tiešsaistes maksājuma veidu — ShipDay kurjeri tikai paņem un piegādā, viņi nevar iekasēt maksājumu pie durvīm. Ieslēdziet karšu maksājumus vai pievienojiet PayPal, pēc tam ieslēdziet ShipDay.",
+      "howItWorksTitle": "Kā darbojas ShipDay nosūtīšana",
+      "howItWorksOn": "ShipDay IESLĒGTS: katrs jauns piegādes pasūtījums tiek automātiski nosūtīts ShipDay kurjeram, tiklīdz to apstiprināt — un tā kā ShipDay kurjeri tikai paņem un piegādā, piegādes pasūtījumiem jābūt apmaksātiem tiešsaistē (skaidra nauda un karte pie durvīm norēķinos netiek piedāvāta).",
+      "howItWorksNoSwitch": "Kad pasūtījums ir apstiprināts, to vairs nevar pārslēgt starp ShipDay un saviem kurjeriem.",
+      "howItWorksOff": "ShipDay IZSLĒGTS: nekas netiek sūtīts automātiski. Jebkuru pasūtījumu joprojām varat nosūtīt ShipDay manuāli no ShipDay lietotnes."
     },
     "driverPoolLocked": {
       "addonBadge": "Papildinājums",

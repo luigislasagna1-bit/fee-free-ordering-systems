@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Eigene Fahrer",
       "sourceOwnDescription": "Ihre eigenen Fahrer bearbeiten jede Lieferung. ShipDay wird nie aufgerufen. Kostenlos.",
       "sourceShipdayLabel": "Nur ShipDay",
-      "sourceShipdayDescription": "Jede Lieferung wird automatisch an ShipDays Drittanbieter-Pool weitergeleitet.",
+      "sourceShipdayDescription": "Jede neue Lieferbestellung geht bei Annahme automatisch an einen ShipDay-Fahrer. Lieferung muss online bezahlt werden.",
       "sourceBothLabel": "Beide — pro Bestellung wählen",
-      "sourceBothDescription": "Die Küche sieht bei jeder Lieferbestellung eine Auswahl: intern oder Pool.",
+      "sourceBothDescription": "Ihre Küche bekommt einen ShipDay-AN/AUS-Schalter: AN sendet neue Lieferungen automatisch an den Pool, AUS überlässt sie Ihren eigenen Fahrern.",
       "lockedNotice": "<strong>ShipDay-Optionen sind gesperrt.</strong> Um Lieferungen an ShipDays Pool zu versenden, abonnieren Sie das eigenständige Add-on <strong>Driver Pool</strong> (19,99 $/Monat) oder <strong>Marketplace Monatlich</strong> (199,99 $/Monat, inkl. Driver Pool kostenlos). „Eigene Fahrer\" bleibt kostenlos und für alle wählbar.",
       "getDriverPool": "Driver Pool erhalten",
       "credentialsTitle": "ShipDay-Zugangsdaten",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Kein Problem — erstellen Sie Ihr kostenloses Shipday-Konto, kommen Sie dann zurück und geben Sie Ihren Schlüssel ein. Wenn Sie Shipday aktivieren, stellen wir Sie unserem Shipday-Partner vor, um den Rabatt + Guthaben anzuwenden und Ihre Einarbeitung einzurichten.",
       "createAccount": "Ein Shipday-Konto erstellen",
       "haveAccountInstead": "Ich habe bereits ein Konto",
-      "toastOnlinePaymentRequired": "Fügen Sie zuerst eine Online-Zahlungsart hinzu — ShipDay-Fahrer holen nur ab und liefern aus, sie können an der Tür kein Geld kassieren. Aktivieren Sie Kartenzahlungen oder verbinden Sie PayPal, dann ShipDay einschalten."
+      "toastOnlinePaymentRequired": "Fügen Sie zuerst eine Online-Zahlungsart hinzu — ShipDay-Fahrer holen nur ab und liefern aus, sie können an der Tür kein Geld kassieren. Aktivieren Sie Kartenzahlungen oder verbinden Sie PayPal, dann ShipDay einschalten.",
+      "howItWorksTitle": "So funktioniert der ShipDay-Versand",
+      "howItWorksOn": "ShipDay AN: Jede neue Lieferbestellung wird automatisch an einen ShipDay-Fahrer gesendet, sobald Sie sie annehmen — und weil ShipDay-Fahrer nur abholen und ausliefern, müssen Lieferbestellungen online bezahlt werden (Bargeld und Karte an der Tür werden im Checkout nicht angeboten).",
+      "howItWorksNoSwitch": "Nach der Annahme kann eine Bestellung nicht mehr zwischen ShipDay und Ihren eigenen Fahrern gewechselt werden.",
+      "howItWorksOff": "ShipDay AUS: Nichts wird automatisch gesendet. Sie können jede Bestellung weiterhin manuell über die ShipDay-App an ShipDay senden."
     },
     "driverPoolLocked": {
       "addonBadge": "Add-on",

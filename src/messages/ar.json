@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "سائقون خاصون",
       "sourceOwnDescription": "سائقوك الداخليون يتولون كل التوصيل. لا يُستدعى ShipDay. مجاني.",
       "sourceShipdayLabel": "ShipDay فقط",
-      "sourceShipdayDescription": "كل توصيل يُوجَّه تلقائياً إلى مجموعة الطرف الثالث من ShipDay.",
+      "sourceShipdayDescription": "كل طلب توصيل جديد يُرسل تلقائيًا إلى سائق ShipDay عند قبوله. يجب دفع التوصيل عبر الإنترنت.",
       "sourceBothLabel": "كلاهما — اختر لكل طلب",
-      "sourceBothDescription": "يرى المطبخ خياراً في كل طلب توصيل: داخلي أو مجموعة.",
+      "sourceBothDescription": "يحصل المطبخ على مفتاح ShipDay تشغيل/إيقاف: التشغيل يرسل التوصيلات الجديدة تلقائيًا إلى المجموعة، والإيقاف يتركها لسائقيك.",
       "lockedNotice": "<strong>خيارات ShipDay مقفلة.</strong> لإرسال التوصيلات إلى مجموعة ShipDay، اشترك في إضافة <strong>Driver Pool</strong> المستقلة (19.99$/شهر) أو في <strong>Marketplace Monthly</strong> (199.99$/شهر، يشمل Driver Pool مجاناً). «سائقون خاصون» مجاني ومتاح للجميع.",
       "getDriverPool": "احصل على Driver Pool",
       "credentialsTitle": "بيانات اعتماد ShipDay",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "لا مشكلة — أنشئ حساب Shipday المجاني الخاص بك، ثم عُد وأدخل مفتاحك. عندما تفعّل Shipday، سنعرّفك على شريكنا في Shipday لتطبيق الخصم + الاعتمادات وإعداد تأهيلك.",
       "createAccount": "إنشاء حساب Shipday",
       "haveAccountInstead": "لديّ حساب بالفعل",
-      "toastOnlinePaymentRequired": "أضف طريقة دفع عبر الإنترنت أولًا — سائقو ShipDay يستلمون ويوصلون فقط ولا يمكنهم تحصيل الدفع عند الباب. فعّل الدفع بالبطاقة أو اربط PayPal ثم فعّل ShipDay."
+      "toastOnlinePaymentRequired": "أضف طريقة دفع عبر الإنترنت أولًا — سائقو ShipDay يستلمون ويوصلون فقط ولا يمكنهم تحصيل الدفع عند الباب. فعّل الدفع بالبطاقة أو اربط PayPal ثم فعّل ShipDay.",
+      "howItWorksTitle": "كيف يعمل الإرسال عبر ShipDay",
+      "howItWorksOn": "ShipDay مفعّل: يُرسل كل طلب توصيل جديد تلقائيًا إلى سائق ShipDay لحظة قبولك له — ولأن سائقي ShipDay يستلمون ويوصلون فقط، يجب دفع طلبات التوصيل عبر الإنترنت (لا يُعرض الدفع نقدًا أو بالبطاقة عند الباب في صفحة الدفع).",
+      "howItWorksNoSwitch": "بعد قبول الطلب لا يمكن تبديله بين ShipDay وسائقيك.",
+      "howItWorksOff": "ShipDay غير مفعّل: لا يُرسل شيء تلقائيًا. لا يزال بإمكانك إرسال أي طلب إلى ShipDay يدويًا من تطبيق ShipDay."
     },
     "driverPoolLocked": {
       "addonBadge": "إضافة",

@@ -2956,9 +2956,9 @@
       "sourceOwnLabel": "Egna chaufförer",
       "sourceOwnDescription": "Dina egna chaufförer hanterar varje leverans. ShipDay anropas aldrig. Gratis.",
       "sourceShipdayLabel": "Endast ShipDay",
-      "sourceShipdayDescription": "Varje leverans dirigeras automatiskt till ShipDays tredjepartspool.",
+      "sourceShipdayDescription": "Varje ny leveransbeställning skickas automatiskt till ett ShipDay-bud när du accepterar den. Leverans måste betalas online.",
       "sourceBothLabel": "Båda — välj per beställning",
-      "sourceBothDescription": "Köket ser en väljare på varje leveransbeställning: egna eller pool.",
+      "sourceBothDescription": "Ditt kök får en ShipDay PÅ/AV-knapp: PÅ skickar nya leveranser automatiskt till poolen, AV lämnar dem till dina egna bud.",
       "lockedNotice": "<strong>ShipDay-alternativ är låsta.</strong> För att skicka leveranser till ShipDays pool prenumererar du på det fristående tillägget <strong>Chaufförspool</strong> (19,99 $/mån) eller på <strong>Marketplace Månadsvis</strong> (199,99 $/mån, inkluderar Chaufförspool gratis). \"Egna chaufförer\" förblir gratis och valbart för alla.",
       "getDriverPool": "Skaffa Chaufförspool",
       "credentialsTitle": "ShipDay-uppgifter",
@@ -3005,7 +3005,11 @@
       "noAccountConnectNote": "Inga problem — skapa ditt kostnadsfria Shipday-konto, kom sedan tillbaka och ange din nyckel. När du aktiverar Shipday presenterar vi dig för vår Shipday-partner för att tillämpa rabatten + krediterna och konfigurera din introduktion.",
       "createAccount": "Skapa ett Shipday-konto",
       "haveAccountInstead": "Jag har redan ett konto",
-      "toastOnlinePaymentRequired": "Lägg först till en onlinebetalningsmetod — ShipDay-buden hämtar bara upp och lämnar av, de kan inte ta betalt vid dörren. Aktivera kortbetalningar eller anslut PayPal och slå sedan på ShipDay."
+      "toastOnlinePaymentRequired": "Lägg först till en onlinebetalningsmetod — ShipDay-buden hämtar bara upp och lämnar av, de kan inte ta betalt vid dörren. Aktivera kortbetalningar eller anslut PayPal och slå sedan på ShipDay.",
+      "howItWorksTitle": "Så fungerar ShipDay-utskick",
+      "howItWorksOn": "ShipDay PÅ: varje ny leveransbeställning skickas automatiskt till ett ShipDay-bud i samma stund som du accepterar den — och eftersom ShipDay-buden bara hämtar och lämnar måste leveransbeställningar betalas online (kontanter och kort vid dörren erbjuds inte i kassan).",
+      "howItWorksNoSwitch": "När en beställning är accepterad kan den inte flyttas mellan ShipDay och dina egna bud.",
+      "howItWorksOff": "ShipDay AV: inget skickas automatiskt. Du kan fortfarande skicka valfri beställning till ShipDay manuellt via ShipDay-appen."
     },
     "driverPoolLocked": {
       "addonBadge": "Tillägg",
