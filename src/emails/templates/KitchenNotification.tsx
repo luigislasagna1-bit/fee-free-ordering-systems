@@ -29,6 +29,10 @@ export type KitchenNotificationProps = {
   orderType?: string;
   estimatedMinutes?: number;
   paidOnline?: boolean;
+  /** Raw payment method ("cash" | "card_in_person" | …) — when the order is
+   *  NOT paid online, the chip says WHAT to collect so a delivery driver
+   *  knows to bring the card terminal (Luigi 2026-07-04, ord #238064650). */
+  paymentMethod?: string;
   /** Reserve-then-order: the table booking attached to this order. When set,
    *  the store email flags "Table reserved for N — <date> <time>". */
   reservationPartySize?: number | null;
@@ -73,7 +77,7 @@ const ORDER_TYPE_LABEL: Record<string, string> = {
 export default function KitchenNotification(props: KitchenNotificationProps) {
   const {
     restaurantName, orderNumber, customerName, customerPhone, customerEmail,
-    orderType, estimatedMinutes, paidOnline, reservationPartySize, reservationLabel, items, subtotal, taxAmount,
+    orderType, estimatedMinutes, paidOnline, paymentMethod, reservationPartySize, reservationLabel, items, subtotal, taxAmount,
     taxLabel, deliveryFee, tip, discount, total, deliveryAddress,
     customerNotes, dashboardUrl, imprint, currency, headline,
     creditApplied, rewardLabel,
@@ -101,7 +105,13 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
           {orderTypeLabel && <><Badge color="slate">{orderTypeLabel}</Badge>{" "}</>}
           {typeof paidOnline === "boolean" && (
             <Badge color={paidOnline ? "sky" : "amber"}>
-              {paidOnline ? "Paid online" : "Pay at store"}
+              {paidOnline
+                ? "Paid online"
+                : paymentMethod === "card_in_person"
+                  ? "To collect — card"
+                  : paymentMethod === "cash"
+                    ? "To collect — cash"
+                    : "Pay at store"}
             </Badge>
           )}
         </div>

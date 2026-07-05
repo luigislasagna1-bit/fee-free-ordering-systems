@@ -823,6 +823,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
               // "Collected" (money already captured) vs "To collect" (cash on
               // pickup/delivery still owed).
               paidOnline: order.paymentStatus === "paid",
+              paymentMethod: order.paymentMethod,
               dashboardUrl: `${baseUrl}/admin/orders`,
             },
           });

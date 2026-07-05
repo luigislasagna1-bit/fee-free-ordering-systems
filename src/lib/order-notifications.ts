@@ -242,7 +242,13 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       creditApplied: creditApplied > 0 ? creditApplied : undefined,
       rewardLabel,
       orderType: order.type,
-      paidOnline: order.paymentMethod !== "cash",
+      // "Paid online" = the platform already captured the money (Stripe card,
+      // PayPal, or fully covered by store credit). cash AND card_in_person
+      // (card at the door / at pickup) are still TO COLLECT — `!== "cash"`
+      // here mislabeled Luigi's card-on-delivery order #238064650 as paid
+      // and staff could've skipped charging the card (2026-07-04).
+      paidOnline: ["card", "paypal", "reward_credit"].includes(order.paymentMethod),
+      paymentMethod: order.paymentMethod,
       customerPhone: order.customerPhone,
       customerEmail: order.customerEmail,
       deliveryAddress: order.deliveryAddress,

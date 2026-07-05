@@ -243,6 +243,10 @@ export type StaffEventPayload =
       // ITEMIZED (not the minimal "see breakdown in admin" fallback). Luigi 2026-06-25.
       items?: EmailOrderItem[]; subtotal?: number; taxAmount?: number; deliveryFee?: number;
       tip?: number; discount?: number; orderType?: string; paidOnline?: boolean;
+      // Raw payment method ("cash" | "card" | "card_in_person" | "paypal" |
+      // "reward_credit") — when the order ISN'T paid online, the staff email
+      // chip says WHAT to collect (cash vs card at handoff). Luigi 2026-07-04.
+      paymentMethod?: string;
       customerPhone?: string | null; customerEmail?: string | null;
       deliveryAddress?: string | null; customerNotes?: string | null;
       // Store-credit part-payment → "Paid with X" / "To collect" rows so staff
@@ -346,6 +350,7 @@ async function dispatchStaffEvent(
         discount: payload.discount,
         orderType: payload.orderType,
         paidOnline: payload.paidOnline,
+        paymentMethod: payload.paymentMethod,
         customerPhone: payload.customerPhone,
         customerEmail: payload.customerEmail,
         deliveryAddress: payload.deliveryAddress,
@@ -382,6 +387,7 @@ async function dispatchStaffEvent(
         creditApplied: payload.creditApplied,
         rewardLabel: payload.rewardLabel,
         paidOnline: payload.paidOnline,
+        paymentMethod: payload.paymentMethod,
         hoursFormat,
         locale,
         currency,

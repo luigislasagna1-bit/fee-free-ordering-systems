@@ -481,6 +481,9 @@ export async function sendNewOrderNotificationEmail(params: {
   customerEmail?: string | null;
   orderType?: string;
   paidOnline?: boolean;
+  /** Raw payment method — when not paid online, the chip says WHAT to
+   *  collect: cash vs card at handoff (Luigi 2026-07-04). */
+  paymentMethod?: string;
   items?: EmailOrderItem[];
   subtotal?: number;
   taxAmount?: number;
@@ -520,6 +523,7 @@ export async function sendNewOrderNotificationEmail(params: {
       customerEmail: params.customerEmail,
       orderType: params.orderType,
       paidOnline: params.paidOnline,
+      paymentMethod: params.paymentMethod,
       reservationPartySize: resv?.partySize ?? null,
       reservationLabel,
       items: params.items,
@@ -569,6 +573,9 @@ export async function sendOrderAcceptedNotificationEmail(params: {
   rewardLabel?: string | null;
   /** True when the balance was captured online — flips "To collect" → "Collected". */
   paidOnline?: boolean;
+  /** Raw payment method — when not paid online, the chip says WHAT to
+   *  collect: cash vs card at handoff (Luigi 2026-07-04). */
+  paymentMethod?: string;
 }) {
   const t = await getDict(params.locale);
   const subjectKey = (
@@ -613,6 +620,7 @@ export async function sendOrderAcceptedNotificationEmail(params: {
       creditApplied: params.creditApplied,
       rewardLabel: params.rewardLabel,
       paidOnline: params.paidOnline,
+      paymentMethod: params.paymentMethod,
     })
   );
   return send({ to: params.to, subject, html });
