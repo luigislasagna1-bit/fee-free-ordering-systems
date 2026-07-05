@@ -9,5 +9,12 @@
 	     BEFORE the next Codemagic build, or profile signing fails. -->
 	<key>aps-environment</key>
 	<string>production</string>
+	<!-- Order alarms must ring through Sleep/DND Focus — Luigi's locked-phone
+	     test failed silently at 12:30 AM because default Sleep Focus swallowed
+	     the push (2026-07-05). push.ts already sends interruption-level
+	     time-sensitive; this entitlement stops iOS downgrading it. Enable the
+	     "Time Sensitive Notifications" capability on the App ID first. -->
+	<key>com.apple.developer.usernotifications.time-sensitive</key>
+	<true/>
 </dict>
 </plist>

@@ -18,6 +18,15 @@
 		FFDC000000000000000000C4 /* order_alarm.caf in Resources */ = {isa = PBXBuildFile; fileRef = FFDC000000000000000000C3 /* order_alarm.caf */; };
 		FFDC000000000000000000C6 /* order_short.caf in Resources */ = {isa = PBXBuildFile; fileRef = FFDC000000000000000000C5 /* order_short.caf */; };
 		FFDC000000000000000000C9 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = FFDC000000000000000000C8 /* FirebaseMessaging */; };
+		FFDC000000000000000000E0 /* order_alarm_0.caf in Resources */ = {isa = PBXBuildFile; fileRef = FFDC000000000000000000D0 /* order_alarm_0.caf */; };
+		FFDC000000000000000000E1 /* order_alarm_1.caf in Resources */ = {isa = PBXBuildFile; fileRef = FFDC000000000000000000D1 /* order_alarm_1.caf */; };
+		FFDC000000000000000000E2 /* order_alarm_2.caf in Resources */ = {isa = PBXBuildFile; fileRef = FFDC000000000000000000D2 /* order_alarm_2.caf */; };
+		FFDC000000000000000000E3 /* order_alarm_3.caf in Resources */ = {isa = PBXBuildFile; fileRef = FFDC000000000000000000D3 /* order_alarm_3.caf */; };
+		FFDC000000000000000000E4 /* order_alarm_4.caf in Resources */ = {isa = PBXBuildFile; fileRef = FFDC000000000000000000D4 /* order_alarm_4.caf */; };
+		FFDC000000000000000000E5 /* order_alarm_5.caf in Resources */ = {isa = PBXBuildFile; fileRef = FFDC000000000000000000D5 /* order_alarm_5.caf */; };
+		FFDC000000000000000000E6 /* order_alarm_6.caf in Resources */ = {isa = PBXBuildFile; fileRef = FFDC000000000000000000D6 /* order_alarm_6.caf */; };
+		FFDC000000000000000000E7 /* order_alarm_7.caf in Resources */ = {isa = PBXBuildFile; fileRef = FFDC000000000000000000D7 /* order_alarm_7.caf */; };
+		FFDC000000000000000000E8 /* order_alarm_8.caf in Resources */ = {isa = PBXBuildFile; fileRef = FFDC000000000000000000D8 /* order_alarm_8.caf */; };
 		504EC30D1FED79650016851F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
 		504EC30F1FED79650016851F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
@@ -35,6 +44,15 @@
 		FFDC000000000000000000C3 /* order_alarm.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = order_alarm.caf; sourceTree = "<group>"; };
 		FFDC000000000000000000C5 /* order_short.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = order_short.caf; sourceTree = "<group>"; };
 		FFDC000000000000000000CA /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
+		FFDC000000000000000000D0 /* order_alarm_0.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = order_alarm_0.caf; sourceTree = "<group>"; };
+		FFDC000000000000000000D1 /* order_alarm_1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = order_alarm_1.caf; sourceTree = "<group>"; };
+		FFDC000000000000000000D2 /* order_alarm_2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = order_alarm_2.caf; sourceTree = "<group>"; };
+		FFDC000000000000000000D3 /* order_alarm_3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = order_alarm_3.caf; sourceTree = "<group>"; };
+		FFDC000000000000000000D4 /* order_alarm_4.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = order_alarm_4.caf; sourceTree = "<group>"; };
+		FFDC000000000000000000D5 /* order_alarm_5.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = order_alarm_5.caf; sourceTree = "<group>"; };
+		FFDC000000000000000000D6 /* order_alarm_6.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = order_alarm_6.caf; sourceTree = "<group>"; };
+		FFDC000000000000000000D7 /* order_alarm_7.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = order_alarm_7.caf; sourceTree = "<group>"; };
+		FFDC000000000000000000D8 /* order_alarm_8.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = order_alarm_8.caf; sourceTree = "<group>"; };
 		504EC30C1FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		504EC30E1FED79650016851F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		504EC3111FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -81,6 +99,15 @@
 				FFDC000000000000000000C1 /* GoogleService-Info.plist */,
 				FFDC000000000000000000CA /* App.entitlements */,
 				FFDC000000000000000000C3 /* order_alarm.caf */,
+				FFDC000000000000000000D0 /* order_alarm_0.caf */,
+				FFDC000000000000000000D1 /* order_alarm_1.caf */,
+				FFDC000000000000000000D2 /* order_alarm_2.caf */,
+				FFDC000000000000000000D3 /* order_alarm_3.caf */,
+				FFDC000000000000000000D4 /* order_alarm_4.caf */,
+				FFDC000000000000000000D5 /* order_alarm_5.caf */,
+				FFDC000000000000000000D6 /* order_alarm_6.caf */,
+				FFDC000000000000000000D7 /* order_alarm_7.caf */,
+				FFDC000000000000000000D8 /* order_alarm_8.caf */,
 				FFDC000000000000000000C5 /* order_short.caf */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
 				FFDC000000000000000000A1 /* DirectPrinterPlugin.swift */,
@@ -172,6 +199,15 @@
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
 				FFDC000000000000000000C2 /* GoogleService-Info.plist in Resources */,
 				FFDC000000000000000000C4 /* order_alarm.caf in Resources */,
+				FFDC000000000000000000E0 /* order_alarm_0.caf in Resources */,
+				FFDC000000000000000000E1 /* order_alarm_1.caf in Resources */,
+				FFDC000000000000000000E2 /* order_alarm_2.caf in Resources */,
+				FFDC000000000000000000E3 /* order_alarm_3.caf in Resources */,
+				FFDC000000000000000000E4 /* order_alarm_4.caf in Resources */,
+				FFDC000000000000000000E5 /* order_alarm_5.caf in Resources */,
+				FFDC000000000000000000E6 /* order_alarm_6.caf in Resources */,
+				FFDC000000000000000000E7 /* order_alarm_7.caf in Resources */,
+				FFDC000000000000000000E8 /* order_alarm_8.caf in Resources */,
 				FFDC000000000000000000C6 /* order_short.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -46,6 +46,10 @@
       "schedule": "* * * * *"
     },
     {
+      "path": "/api/cron/ios-ring-pending",
+      "schedule": "* * * * *"
+    },
+    {
       "path": "/api/cron/publish-scheduled-menus",
       "schedule": "* * * * *"
     },

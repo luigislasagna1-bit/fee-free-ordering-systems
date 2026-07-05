@@ -129,6 +129,20 @@ export interface KitchenPushDeviceResult {
 export async function sendKitchenPush(
   restaurantId: string,
   payload: KitchenPushPayload,
+  opts?: {
+    /** iOS re-ring (continuous alarm): pushes sharing a collapse id REPLACE the
+     *  previous banner instead of stacking, while each replacement replays the
+     *  full alarm sound — the cron re-fires every ~29s so a pending order rings
+     *  non-stop like Android's native loop. Android ignores this (its data-only
+     *  message never uses APNs). Luigi 2026-07-05. */
+    collapseId?: string;
+    /** Explicit iOS sound file (e.g. "order_alarm_3.caf") — the re-ring cron
+     *  walks the official 4-minute GloriaFood alarm in 29s bundled segments so
+     *  the ramp (louder/faster toward the end) plays through exactly like
+     *  Android's continuous loop. Default: order_alarm.caf / order_short.caf
+     *  by autoAccept. */
+    iosSound?: string;
+  },
 ): Promise<{ sent: number; pruned: number; results?: KitchenPushDeviceResult[] }> {
   try {
     const sa = getServiceAccount();
@@ -199,10 +213,14 @@ export async function sendKitchenPush(
                   notification: { title: payload.title, body: payload.body },
                   data,
                   apns: {
-                    headers: { "apns-priority": "10", "apns-push-type": "alert" },
+                    headers: {
+                      "apns-priority": "10",
+                      "apns-push-type": "alert",
+                      ...(opts?.collapseId ? { "apns-collapse-id": opts.collapseId } : {}),
+                    },
                     payload: {
                       aps: {
-                        sound: payload.data?.autoAccept === "true" ? "order_short.caf" : "order_alarm.caf",
+                        sound: opts?.iosSound ?? (payload.data?.autoAccept === "true" ? "order_short.caf" : "order_alarm.caf"),
                         "interruption-level": "time-sensitive",
                       },
                     },
