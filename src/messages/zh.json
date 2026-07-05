@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "选择顾客不能用{label}支付的类别或商品。",
       "redeemExcludeOn": "可支付",
       "redeemExcludeOff": "不可支付"
+    },
+    "imageCrop": {
+      "title": "调整您的照片",
+      "aspect_square": "正方形",
+      "aspect_standard": "标准",
+      "aspect_wide": "宽幅",
+      "useOriginal": "使用原图",
+      "cancel": "取消",
+      "cropAndUpload": "裁剪并上传"
     }
   },
   "impersonation": {

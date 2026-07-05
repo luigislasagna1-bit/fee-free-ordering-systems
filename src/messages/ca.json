@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Tria les categories o articles que els clients no poden pagar amb {label}.",
       "redeemExcludeOn": "Pagable",
       "redeemExcludeOff": "No pagable"
+    },
+    "imageCrop": {
+      "title": "Ajusta la foto",
+      "aspect_square": "Quadrat",
+      "aspect_standard": "Estàndard",
+      "aspect_wide": "Ample",
+      "useOriginal": "Fes servir l'original",
+      "cancel": "Cancel·la",
+      "cropAndUpload": "Retalla i puja"
     }
   },
   "impersonation": {

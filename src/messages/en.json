@@ -4489,6 +4489,15 @@
       "confirmRemoveSpecial": "Remove this special?",
       "confirmRemoveFromGroup": "Remove {name} from “{group}”? They will lose every special attached to that group. The group and its specials stay unchanged for everyone else.",
       "removeFromGroupTitle": "Remove from {group}"
+    },
+    "imageCrop": {
+      "title": "Adjust your photo",
+      "aspect_square": "Square",
+      "aspect_standard": "Standard",
+      "aspect_wide": "Wide",
+      "useOriginal": "Use original",
+      "cancel": "Cancel",
+      "cropAndUpload": "Crop & upload"
     }
   },
   "impersonation": {

@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Wählen Sie Kategorien oder Artikel, die Kunden nicht mit {label} bezahlen können.",
       "redeemExcludeOn": "Bezahlbar",
       "redeemExcludeOff": "Nicht bezahlbar"
+    },
+    "imageCrop": {
+      "title": "Foto anpassen",
+      "aspect_square": "Quadratisch",
+      "aspect_standard": "Standard",
+      "aspect_wide": "Breit",
+      "useOriginal": "Original verwenden",
+      "cancel": "Abbrechen",
+      "cropAndUpload": "Zuschneiden & hochladen"
     }
   },
   "impersonation": {

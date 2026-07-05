@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "בחרו קטגוריות או פריטים שלקוחות לא יכולים לשלם עליהם ב-{label}.",
       "redeemExcludeOn": "ניתן לתשלום",
       "redeemExcludeOff": "לא ניתן לתשלום"
+    },
+    "imageCrop": {
+      "title": "התאימו את התמונה",
+      "aspect_square": "ריבוע",
+      "aspect_standard": "רגיל",
+      "aspect_wide": "רחב",
+      "useOriginal": "השתמשו במקור",
+      "cancel": "ביטול",
+      "cropAndUpload": "חיתוך והעלאה"
     }
   },
   "impersonation": {

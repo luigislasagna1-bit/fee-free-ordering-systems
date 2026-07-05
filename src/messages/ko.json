@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "고객이 {label}(으)로 결제할 수 없는 카테고리나 항목을 선택하세요.",
       "redeemExcludeOn": "결제 가능",
       "redeemExcludeOff": "결제 불가"
+    },
+    "imageCrop": {
+      "title": "사진 조정",
+      "aspect_square": "정사각형",
+      "aspect_standard": "표준",
+      "aspect_wide": "와이드",
+      "useOriginal": "원본 사용",
+      "cancel": "취소",
+      "cropAndUpload": "자르고 업로드"
     }
   },
   "impersonation": {

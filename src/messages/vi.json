@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Chọn danh mục hoặc mặt hàng khách không thể thanh toán bằng {label}.",
       "redeemExcludeOn": "Thanh toán được",
       "redeemExcludeOff": "Không thanh toán được"
+    },
+    "imageCrop": {
+      "title": "Điều chỉnh ảnh của bạn",
+      "aspect_square": "Vuông",
+      "aspect_standard": "Chuẩn",
+      "aspect_wide": "Rộng",
+      "useOriginal": "Dùng ảnh gốc",
+      "cancel": "Hủy",
+      "cropAndUpload": "Cắt và tải lên"
     }
   },
   "impersonation": {

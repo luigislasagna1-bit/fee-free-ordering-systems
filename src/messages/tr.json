@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Müşterilerin {label} ile ödeyemeyeceği kategorileri veya ürünleri seçin.",
       "redeemExcludeOn": "Ödenebilir",
       "redeemExcludeOff": "Ödenemez"
+    },
+    "imageCrop": {
+      "title": "Fotoğrafınızı ayarlayın",
+      "aspect_square": "Kare",
+      "aspect_standard": "Standart",
+      "aspect_wide": "Geniş",
+      "useOriginal": "Orijinali kullan",
+      "cancel": "İptal",
+      "cropAndUpload": "Kırp ve yükle"
     }
   },
   "impersonation": {

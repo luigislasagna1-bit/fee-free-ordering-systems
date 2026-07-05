@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Vyberte kategórie alebo položky, ktoré zákazníci nemôžu platiť {label}.",
       "redeemExcludeOn": "Možno platiť",
       "redeemExcludeOff": "Nemožno platiť"
+    },
+    "imageCrop": {
+      "title": "Upravte fotografiu",
+      "aspect_square": "Štvorec",
+      "aspect_standard": "Štandard",
+      "aspect_wide": "Široký",
+      "useOriginal": "Použiť originál",
+      "cancel": "Zrušiť",
+      "cropAndUpload": "Orezať a nahrať"
     }
   },
   "impersonation": {

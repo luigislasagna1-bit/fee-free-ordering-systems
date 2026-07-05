@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Izvēlieties kategorijas vai preces, ko klienti nevar apmaksāt ar {label}.",
       "redeemExcludeOn": "Apmaksājams",
       "redeemExcludeOff": "Nav apmaksājams"
+    },
+    "imageCrop": {
+      "title": "Pielāgojiet foto",
+      "aspect_square": "Kvadrāts",
+      "aspect_standard": "Standarta",
+      "aspect_wide": "Plats",
+      "useOriginal": "Izmantot oriģinālu",
+      "cancel": "Atcelt",
+      "cropAndUpload": "Apgriezt un augšupielādēt"
     }
   },
   "impersonation": {

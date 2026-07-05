@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Valige kategooriad või tooted, mida kliendid ei saa maksta {label}.",
       "redeemExcludeOn": "Makstav",
       "redeemExcludeOff": "Ei ole makstav"
+    },
+    "imageCrop": {
+      "title": "Kohanda fotot",
+      "aspect_square": "Ruut",
+      "aspect_standard": "Tavaline",
+      "aspect_wide": "Lai",
+      "useOriginal": "Kasuta originaali",
+      "cancel": "Tühista",
+      "cropAndUpload": "Kärbi ja laadi üles"
     }
   },
   "impersonation": {

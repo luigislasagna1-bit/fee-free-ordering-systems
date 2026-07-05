@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Kies categorieën of items die klanten niet met {label} kunnen betalen.",
       "redeemExcludeOn": "Betaalbaar",
       "redeemExcludeOff": "Niet betaalbaar"
+    },
+    "imageCrop": {
+      "title": "Pas je foto aan",
+      "aspect_square": "Vierkant",
+      "aspect_standard": "Standaard",
+      "aspect_wide": "Breed",
+      "useOriginal": "Origineel gebruiken",
+      "cancel": "Annuleren",
+      "cropAndUpload": "Bijsnijden en uploaden"
     }
   },
   "impersonation": {

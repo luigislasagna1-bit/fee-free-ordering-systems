@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "اختر الفئات أو العناصر التي لا يمكن للعملاء دفع ثمنها بـ {label}.",
       "redeemExcludeOn": "قابل للدفع",
       "redeemExcludeOff": "غير قابل للدفع"
+    },
+    "imageCrop": {
+      "title": "اضبط صورتك",
+      "aspect_square": "مربع",
+      "aspect_standard": "قياسي",
+      "aspect_wide": "عريض",
+      "useOriginal": "استخدام الأصل",
+      "cancel": "إلغاء",
+      "cropAndUpload": "اقتصاص ورفع"
     }
   },
   "impersonation": {

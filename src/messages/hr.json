@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Odaberite kategorije ili stavke koje kupci ne mogu platiti s {label}.",
       "redeemExcludeOn": "Plativo",
       "redeemExcludeOff": "Nije plativo"
+    },
+    "imageCrop": {
+      "title": "Prilagodite fotografiju",
+      "aspect_square": "Kvadrat",
+      "aspect_standard": "Standard",
+      "aspect_wide": "Široko",
+      "useOriginal": "Koristi original",
+      "cancel": "Odustani",
+      "cropAndUpload": "Izreži i prenesi"
     }
   },
   "impersonation": {

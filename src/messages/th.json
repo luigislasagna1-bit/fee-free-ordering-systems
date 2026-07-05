@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "เลือกหมวดหรือรายการที่ลูกค้าจ่ายด้วย {label} ไม่ได้",
       "redeemExcludeOn": "จ่ายได้",
       "redeemExcludeOff": "จ่ายไม่ได้"
+    },
+    "imageCrop": {
+      "title": "ปรับรูปภาพของคุณ",
+      "aspect_square": "จัตุรัส",
+      "aspect_standard": "มาตรฐาน",
+      "aspect_wide": "กว้าง",
+      "useOriginal": "ใช้รูปต้นฉบับ",
+      "cancel": "ยกเลิก",
+      "cropAndUpload": "ครอบตัดและอัปโหลด"
     }
   },
   "impersonation": {

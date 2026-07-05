@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Виберіть категорії або товари, які клієнти не можуть оплатити {label}.",
       "redeemExcludeOn": "Можна оплатити",
       "redeemExcludeOff": "Не можна оплатити"
+    },
+    "imageCrop": {
+      "title": "Налаштуйте фото",
+      "aspect_square": "Квадрат",
+      "aspect_standard": "Стандарт",
+      "aspect_wide": "Широкий",
+      "useOriginal": "Використати оригінал",
+      "cancel": "Скасувати",
+      "cropAndUpload": "Обрізати та завантажити"
     }
   },
   "impersonation": {

@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Изберете категории или артикули, които клиентите не могат да плащат с {label}.",
       "redeemExcludeOn": "Платимо",
       "redeemExcludeOff": "Не се плаща"
+    },
+    "imageCrop": {
+      "title": "Настройте снимката",
+      "aspect_square": "Квадрат",
+      "aspect_standard": "Стандарт",
+      "aspect_wide": "Широк",
+      "useOriginal": "Използвай оригинала",
+      "cancel": "Отказ",
+      "cropAndUpload": "Изрежи и качи"
     }
   },
   "impersonation": {

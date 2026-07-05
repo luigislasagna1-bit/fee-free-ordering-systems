@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "顧客が{label}で支払えないカテゴリや商品を選びます。",
       "redeemExcludeOn": "支払い可",
       "redeemExcludeOff": "支払い不可"
+    },
+    "imageCrop": {
+      "title": "写真を調整",
+      "aspect_square": "正方形",
+      "aspect_standard": "標準",
+      "aspect_wide": "ワイド",
+      "useOriginal": "元の画像を使う",
+      "cancel": "キャンセル",
+      "cropAndUpload": "切り抜いてアップロード"
     }
   },
   "impersonation": {

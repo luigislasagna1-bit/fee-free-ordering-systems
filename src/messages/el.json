@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Επιλέξτε κατηγορίες ή είδη που οι πελάτες δεν μπορούν να πληρώσουν με {label}.",
       "redeemExcludeOn": "Πληρώνεται",
       "redeemExcludeOff": "Δεν πληρώνεται"
+    },
+    "imageCrop": {
+      "title": "Προσαρμόστε τη φωτογραφία",
+      "aspect_square": "Τετράγωνο",
+      "aspect_standard": "Κανονικό",
+      "aspect_wide": "Ευρύ",
+      "useOriginal": "Χρήση πρωτότυπου",
+      "cancel": "Άκυρο",
+      "cropAndUpload": "Περικοπή και μεταφόρτωση"
     }
   },
   "impersonation": {

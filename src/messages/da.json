@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Vælg kategorier eller varer, som kunder ikke kan betale med {label}.",
       "redeemExcludeOn": "Kan betales",
       "redeemExcludeOff": "Kan ikke betales"
+    },
+    "imageCrop": {
+      "title": "Tilpas dit foto",
+      "aspect_square": "Kvadrat",
+      "aspect_standard": "Standard",
+      "aspect_wide": "Bred",
+      "useOriginal": "Brug original",
+      "cancel": "Annuller",
+      "cropAndUpload": "Beskær og upload"
     }
   },
   "impersonation": {

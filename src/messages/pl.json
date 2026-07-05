@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Wybierz kategorie lub produkty, za które klienci nie mogą płacić {label}.",
       "redeemExcludeOn": "Płatne",
       "redeemExcludeOff": "Nie do zapłaty"
+    },
+    "imageCrop": {
+      "title": "Dopasuj zdjęcie",
+      "aspect_square": "Kwadrat",
+      "aspect_standard": "Standard",
+      "aspect_wide": "Szeroki",
+      "useOriginal": "Użyj oryginału",
+      "cancel": "Anuluj",
+      "cropAndUpload": "Przytnij i prześlij"
     }
   },
   "impersonation": {

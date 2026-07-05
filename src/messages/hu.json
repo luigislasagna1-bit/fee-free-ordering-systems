@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Válassza ki a kategóriákat vagy termékeket, amelyeket az ügyfelek nem fizethetnek {label} egyenleggel.",
       "redeemExcludeOn": "Fizethető",
       "redeemExcludeOff": "Nem fizethető"
+    },
+    "imageCrop": {
+      "title": "Fotó igazítása",
+      "aspect_square": "Négyzet",
+      "aspect_standard": "Normál",
+      "aspect_wide": "Széles",
+      "useOriginal": "Eredeti használata",
+      "cancel": "Mégse",
+      "cropAndUpload": "Kivágás és feltöltés"
     }
   },
   "impersonation": {

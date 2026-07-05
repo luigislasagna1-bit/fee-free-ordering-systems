@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Alegeți categoriile sau articolele pe care clienții nu le pot plăti cu {label}.",
       "redeemExcludeOn": "Plătibil",
       "redeemExcludeOff": "Nu se plătește"
+    },
+    "imageCrop": {
+      "title": "Ajustați fotografia",
+      "aspect_square": "Pătrat",
+      "aspect_standard": "Standard",
+      "aspect_wide": "Lat",
+      "useOriginal": "Folosiți originalul",
+      "cancel": "Anulare",
+      "cropAndUpload": "Decupați și încărcați"
     }
   },
   "impersonation": {

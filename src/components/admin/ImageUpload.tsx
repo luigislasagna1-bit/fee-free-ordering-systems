@@ -2,6 +2,7 @@
 import { useRef, useState } from "react";
 import { Upload, X, ImageIcon, Link } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { ImageCropModal } from "./ImageCropModal";
 
 interface Props {
   value: string;
@@ -25,17 +26,13 @@ export function ImageUpload({ value, onChange, label, aspectRatio = "auto" }: Pr
     ? "w-full h-24"
     : "w-full h-20";
 
-  const handleFile = async (file: File) => {
+  // Crop-before-upload (Luigi 2026-07-04): a picked file first opens the
+  // crop modal so the owner can zoom/pan to the section they want. The
+  // object URL lives in state until the modal resolves; revoked after.
+  const [cropDraft, setCropDraft] = useState<{ file: File; url: string } | null>(null);
+
+  const uploadFile = async (file: File) => {
     setError("");
-    const allowed = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-    if (!allowed.includes(file.type)) {
-      setError("Only JPG, PNG, and WebP images are allowed");
-      return;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      setError("Image must be under 5 MB");
-      return;
-    }
     setUploading(true);
     try {
       const fd = new FormData();
@@ -48,6 +45,25 @@ export function ImageUpload({ value, onChange, label, aspectRatio = "auto" }: Pr
       setError(e.message || "Upload failed");
     }
     setUploading(false);
+  };
+
+  const handleFile = (file: File) => {
+    setError("");
+    const allowed = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+    if (!allowed.includes(file.type)) {
+      setError("Only JPG, PNG, and WebP images are allowed");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setError("Image must be under 5 MB");
+      return;
+    }
+    setCropDraft({ file, url: URL.createObjectURL(file) });
+  };
+
+  const closeCrop = () => {
+    if (cropDraft) URL.revokeObjectURL(cropDraft.url);
+    setCropDraft(null);
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -152,6 +168,25 @@ export function ImageUpload({ value, onChange, label, aspectRatio = "auto" }: Pr
       )}
 
       {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
+
+      {/* Crop step — resolves to a cropped JPEG (or null = use original). */}
+      {cropDraft && (
+        <ImageCropModal
+          imageUrl={cropDraft.url}
+          initialAspect={aspectRatio === "square" ? "square" : aspectRatio === "wide" ? "wide" : "standard"}
+          onCancel={closeCrop}
+          onDone={(blob) => {
+            const original = cropDraft.file;
+            closeCrop();
+            if (blob) {
+              const base = original.name.replace(/\.[a-z0-9]+$/i, "") || "image";
+              uploadFile(new File([blob], `${base}-crop.jpg`, { type: "image/jpeg" }));
+            } else {
+              uploadFile(original);
+            }
+          }}
+        />
+      )}
 
       {/* Hidden file input */}
       <input

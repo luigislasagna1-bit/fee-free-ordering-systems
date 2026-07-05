@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Valitse luokat tai tuotteet, joita asiakkaat eivät voi maksaa {label}.",
       "redeemExcludeOn": "Maksettavissa",
       "redeemExcludeOff": "Ei maksettavissa"
+    },
+    "imageCrop": {
+      "title": "Säädä kuvaa",
+      "aspect_square": "Neliö",
+      "aspect_standard": "Vakio",
+      "aspect_wide": "Leveä",
+      "useOriginal": "Käytä alkuperäistä",
+      "cancel": "Peruuta",
+      "cropAndUpload": "Rajaa ja lataa"
     }
   },
   "impersonation": {

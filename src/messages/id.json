@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Pilih kategori atau item yang tidak bisa dibayar pelanggan dengan {label}.",
       "redeemExcludeOn": "Bisa dibayar",
       "redeemExcludeOff": "Tidak bisa dibayar"
+    },
+    "imageCrop": {
+      "title": "Sesuaikan foto Anda",
+      "aspect_square": "Persegi",
+      "aspect_standard": "Standar",
+      "aspect_wide": "Lebar",
+      "useOriginal": "Gunakan asli",
+      "cancel": "Batal",
+      "cropAndUpload": "Pangkas & unggah"
     }
   },
   "impersonation": {

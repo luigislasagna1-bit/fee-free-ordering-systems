@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "वे श्रेणियाँ या आइटम चुनें जिन्हें ग्राहक {label} से नहीं खरीद सकते।",
       "redeemExcludeOn": "देय",
       "redeemExcludeOff": "देय नहीं"
+    },
+    "imageCrop": {
+      "title": "अपनी फ़ोटो समायोजित करें",
+      "aspect_square": "वर्गाकार",
+      "aspect_standard": "मानक",
+      "aspect_wide": "चौड़ा",
+      "useOriginal": "मूल का उपयोग करें",
+      "cancel": "रद्द करें",
+      "cropAndUpload": "क्रॉप करें और अपलोड करें"
     }
   },
   "impersonation": {

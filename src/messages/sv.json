@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Välj kategorier eller varor som kunder inte kan betala med {label}.",
       "redeemExcludeOn": "Betalbar",
       "redeemExcludeOff": "Ej betalbar"
+    },
+    "imageCrop": {
+      "title": "Justera ditt foto",
+      "aspect_square": "Kvadrat",
+      "aspect_standard": "Standard",
+      "aspect_wide": "Bred",
+      "useOriginal": "Använd original",
+      "cancel": "Avbryt",
+      "cropAndUpload": "Beskär och ladda upp"
     }
   },
   "impersonation": {

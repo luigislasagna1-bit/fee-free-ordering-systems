@@ -4489,6 +4489,15 @@
       "redeemExcludeDesc": "Pasirinkite kategorijas ar prekes, už kurias klientai negali mokėti {label}.",
       "redeemExcludeOn": "Apmokama",
       "redeemExcludeOff": "Neapmokama"
+    },
+    "imageCrop": {
+      "title": "Koreguokite nuotrauką",
+      "aspect_square": "Kvadratas",
+      "aspect_standard": "Standartinis",
+      "aspect_wide": "Platus",
+      "useOriginal": "Naudoti originalą",
+      "cancel": "Atšaukti",
+      "cropAndUpload": "Apkirpti ir įkelti"
     }
   },
   "impersonation": {
