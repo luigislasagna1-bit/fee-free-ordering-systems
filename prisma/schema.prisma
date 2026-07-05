@@ -863,6 +863,10 @@ model MenuCategory {
   /// delivery-only or pickup-only. Both default true = no restriction.
   forPickup        Boolean   @default(true)
   forDelivery      Boolean   @default(true)
+  /// Optional per-category accent color (hex) overriding the theme color on
+  /// this category's header — highlight a signature section (Fabrizio
+  /// cmr80joh0, 2026-07-05). Null = theme color.
+  accentColor      String?
   /// Exclude every item in this category from Reward Dollars EARNING (e.g. a
   /// "Gift Cards" category). Per-item rewardEarnExcluded can override. Luigi 2026-06-30.
   rewardEarnExcluded Boolean @default(false)
@@ -959,6 +963,10 @@ model MenuItem {
   imageUrl         String?
   isAvailable      Boolean   @default(true)
   isFeatured       Boolean   @default(false)
+  /// Pinned dishes render as a prominent tile strip at the TOP of the order
+  /// page (next to the promo tiles) — distinct from isFeatured, which only
+  /// badges the card in place (Fabrizio cmr80joh0, 2026-07-05).
+  pinnedToTop      Boolean   @default(false)
   isSoldOut        Boolean   @default(false)
   /// LEGACY visibility toggle — superseded by the visibility* model below
   /// (GloriaFood-style rebuild, Luigi 2026-06-12). Migrated to

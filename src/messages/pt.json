@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "“{name}” movido para {category}",
       "moveItemFailed": "Não foi possível mover o item — tente novamente.",
       "expandAll": "Expandir tudo",
-      "collapseAll": "Recolher tudo"
+      "collapseAll": "Recolher tudo",
+      "pinToTop": "Fixar no topo do menu",
+      "categoryAccentColor": "Cor de destaque",
+      "categoryAccentColorClear": "Usar cor do tema",
+      "categoryAccentColorDefault": "Cor do tema (padrão)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

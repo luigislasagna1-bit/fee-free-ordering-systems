@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "“{name}” הועבר אל {category}",
       "moveItemFailed": "לא ניתן להעביר את הפריט — נסו שוב.",
       "expandAll": "הרחב הכול",
-      "collapseAll": "כווץ הכול"
+      "collapseAll": "כווץ הכול",
+      "pinToTop": "הצמד לראש התפריט",
+      "categoryAccentColor": "צבע הדגשה",
+      "categoryAccentColorClear": "השתמש בצבע ערכת הנושא",
+      "categoryAccentColorDefault": "צבע ערכת הנושא (ברירת מחדל)"
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",

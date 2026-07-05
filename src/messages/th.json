@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "ย้าย “{name}” ไปที่ {category} แล้ว",
       "moveItemFailed": "ย้ายรายการไม่สำเร็จ — โปรดลองอีกครั้ง",
       "expandAll": "ขยายทั้งหมด",
-      "collapseAll": "ยุบทั้งหมด"
+      "collapseAll": "ยุบทั้งหมด",
+      "pinToTop": "ปักหมุดไว้บนสุดของเมนู",
+      "categoryAccentColor": "สีเน้น",
+      "categoryAccentColorClear": "ใช้สีธีม",
+      "categoryAccentColorDefault": "สีธีม (ค่าเริ่มต้น)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "已将“{name}”移动到 {category}",
       "moveItemFailed": "无法移动菜品——请重试。",
       "expandAll": "全部展开",
-      "collapseAll": "全部折叠"
+      "collapseAll": "全部折叠",
+      "pinToTop": "置顶显示",
+      "categoryAccentColor": "强调色",
+      "categoryAccentColorClear": "使用主题色",
+      "categoryAccentColorDefault": "主题色（默认）"
     },
     "promotionsList": {
       "stackingMaster": "主控",

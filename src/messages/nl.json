@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "“{name}” verplaatst naar {category}",
       "moveItemFailed": "Kon het item niet verplaatsen — probeer het opnieuw.",
       "expandAll": "Alles uitklappen",
-      "collapseAll": "Alles inklappen"
+      "collapseAll": "Alles inklappen",
+      "pinToTop": "Bovenaan menu vastzetten",
+      "categoryAccentColor": "Accentkleur",
+      "categoryAccentColorClear": "Themakleur gebruiken",
+      "categoryAccentColorDefault": "Themakleur (standaard)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

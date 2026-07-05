@@ -2760,7 +2760,11 @@
       "itemMovedToCategory": "„{name}“ presunuté do {category}",
       "moveItemFailed": "Položku sa nepodarilo presunúť — skúste to znova.",
       "expandAll": "Rozbaliť všetko",
-      "collapseAll": "Zbaliť všetko"
+      "collapseAll": "Zbaliť všetko",
+      "pinToTop": "Pripnúť na začiatok menu",
+      "categoryAccentColor": "Zvýrazňujúca farba",
+      "categoryAccentColorClear": "Použiť farbu témy",
+      "categoryAccentColorDefault": "Farba témy (predvolené)"
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",

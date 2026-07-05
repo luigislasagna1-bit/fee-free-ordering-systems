@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "“{name}” dipindahkan ke {category}",
       "moveItemFailed": "Tidak dapat memindahkan item — coba lagi.",
       "expandAll": "Perluas semua",
-      "collapseAll": "Ciutkan semua"
+      "collapseAll": "Ciutkan semua",
+      "pinToTop": "Sematkan di atas menu",
+      "categoryAccentColor": "Warna aksen",
+      "categoryAccentColorClear": "Gunakan warna tema",
+      "categoryAccentColorDefault": "Warna tema (bawaan)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

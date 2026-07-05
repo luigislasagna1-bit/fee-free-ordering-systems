@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "„{name}” mutat în {category}",
       "moveItemFailed": "Produsul nu a putut fi mutat — încercați din nou.",
       "expandAll": "Extinde tot",
-      "collapseAll": "Restrânge tot"
+      "collapseAll": "Restrânge tot",
+      "pinToTop": "Fixează în capul meniului",
+      "categoryAccentColor": "Culoare de accent",
+      "categoryAccentColorClear": "Folosește culoarea temei",
+      "categoryAccentColorDefault": "Culoarea temei (implicit)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

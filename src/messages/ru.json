@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "«{name}» перемещено в {category}",
       "moveItemFailed": "Не удалось переместить позицию — попробуйте ещё раз.",
       "expandAll": "Развернуть все",
-      "collapseAll": "Свернуть все"
+      "collapseAll": "Свернуть все",
+      "pinToTop": "Закрепить вверху меню",
+      "categoryAccentColor": "Акцентный цвет",
+      "categoryAccentColorClear": "Использовать цвет темы",
+      "categoryAccentColorDefault": "Цвет темы (по умолчанию)"
     },
     "promotionsList": {
       "stackingMaster": "Мастер",

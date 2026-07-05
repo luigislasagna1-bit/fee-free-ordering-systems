@@ -2011,7 +2011,11 @@
       "itemMovedToCategory": "Đã chuyển “{name}” sang {category}",
       "moveItemFailed": "Không thể chuyển món — vui lòng thử lại.",
       "expandAll": "Mở rộng tất cả",
-      "collapseAll": "Thu gọn tất cả"
+      "collapseAll": "Thu gọn tất cả",
+      "pinToTop": "Ghim lên đầu thực đơn",
+      "categoryAccentColor": "Màu nhấn",
+      "categoryAccentColorClear": "Dùng màu chủ đề",
+      "categoryAccentColorDefault": "Màu chủ đề (mặc định)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

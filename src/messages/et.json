@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "„{name}” tõstetud kategooriasse {category}",
       "moveItemFailed": "Toodet ei õnnestunud teisaldada — proovi uuesti.",
       "expandAll": "Laienda kõik",
-      "collapseAll": "Ahenda kõik"
+      "collapseAll": "Ahenda kõik",
+      "pinToTop": "Kinnita menüü algusesse",
+      "categoryAccentColor": "Rõhuvärv",
+      "categoryAccentColorClear": "Kasuta teema värvi",
+      "categoryAccentColorDefault": "Teema värv (vaikimisi)"
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

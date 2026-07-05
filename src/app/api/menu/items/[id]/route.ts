@@ -37,7 +37,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const { name, description, price, categoryId, imageUrl, isAvailable, isFeatured, isHidden,
           isSoldOut, forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
           availabilityMode, hasVariants, sortOrder, variants, pizzaConfig, comboConfig, visibility,
-          fulfilment, rewardEarnExcluded, promoExcluded, rewardRedeemExcluded } = body;
+          fulfilment, rewardEarnExcluded, promoExcluded, rewardRedeemExcluded, pinnedToTop } = body;
 
   const updateData: any = {};
   // GloriaFood-style scheduled visibility (Luigi 2026-06-12). When present,
@@ -77,6 +77,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
   if (isAvailable !== undefined) updateData.isAvailable = isAvailable;
   if (isFeatured !== undefined) updateData.isFeatured = isFeatured;
+  // Pin-to-top featured strip (Fabrizio cmr80joh0).
+  if (pinnedToTop !== undefined) updateData.pinnedToTop = !!pinnedToTop;
   if (isHidden !== undefined) updateData.isHidden = isHidden;
   if (isSoldOut !== undefined) updateData.isSoldOut = isSoldOut;
   if (rewardEarnExcluded !== undefined) updateData.rewardEarnExcluded = !!rewardEarnExcluded;

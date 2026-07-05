@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "„{name}“ přesunuto do {category}",
       "moveItemFailed": "Položku se nepodařilo přesunout — zkuste to znovu.",
       "expandAll": "Rozbalit vše",
-      "collapseAll": "Sbalit vše"
+      "collapseAll": "Sbalit vše",
+      "pinToTop": "Připnout na začátek menu",
+      "categoryAccentColor": "Zvýrazňující barva",
+      "categoryAccentColorClear": "Použít barvu motivu",
+      "categoryAccentColorDefault": "Barva motivu (výchozí)"
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",

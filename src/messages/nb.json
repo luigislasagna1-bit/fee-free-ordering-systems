@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "“{name}” flyttet til {category}",
       "moveItemFailed": "Kunne ikke flytte varen — prøv igjen.",
       "expandAll": "Utvid alle",
-      "collapseAll": "Skjul alle"
+      "collapseAll": "Skjul alle",
+      "pinToTop": "Fest øverst i menyen",
+      "categoryAccentColor": "Aksentfarge",
+      "categoryAccentColorClear": "Bruk temafarge",
+      "categoryAccentColorDefault": "Temafarge (standard)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "”{name}” flyttad till {category}",
       "moveItemFailed": "Kunde inte flytta artikeln — försök igen.",
       "expandAll": "Expandera alla",
-      "collapseAll": "Fäll ihop alla"
+      "collapseAll": "Fäll ihop alla",
+      "pinToTop": "Fäst högst upp i menyn",
+      "categoryAccentColor": "Accentfärg",
+      "categoryAccentColorClear": "Använd temafärg",
+      "categoryAccentColorDefault": "Temafärg (standard)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

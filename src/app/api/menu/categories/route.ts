@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
   if (blocked) return blocked;
 
   const body = await req.json();
-  const { name, description, imageUrl, isHidden, isCatering, forPickup, forDelivery, menuId: bodyMenuId, visibility } = body;
+  const { name, description, imageUrl, isHidden, isCatering, forPickup, forDelivery, accentColor, menuId: bodyMenuId, visibility } = body;
   if (!name?.trim()) return NextResponse.json({ error: "Name required" }, { status: 400 });
   let visData: Record<string, unknown> = {};
   if (visibility !== undefined) {
@@ -107,6 +107,8 @@ export async function POST(req: NextRequest) {
       // unrestricted when omitted.
       forPickup: forPickup !== undefined ? !!forPickup : true,
       forDelivery: forDelivery !== undefined ? !!forDelivery : true,
+      // Optional header accent color (Fabrizio cmr80joh0) — hex only.
+      accentColor: typeof accentColor === "string" && /^#[0-9a-fA-F]{6}$/.test(accentColor) ? accentColor : null,
       sortOrder: existing,
       ...visData,
     },

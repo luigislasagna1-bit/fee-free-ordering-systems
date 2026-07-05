@@ -2011,7 +2011,11 @@
       "itemMovedToCategory": "Przeniesiono „{name}” do {category}",
       "moveItemFailed": "Nie udało się przenieść pozycji — spróbuj ponownie.",
       "expandAll": "Rozwiń wszystko",
-      "collapseAll": "Zwiń wszystko"
+      "collapseAll": "Zwiń wszystko",
+      "pinToTop": "Przypnij na górze menu",
+      "categoryAccentColor": "Kolor akcentu",
+      "categoryAccentColorClear": "Użyj koloru motywu",
+      "categoryAccentColorDefault": "Kolor motywu (domyślny)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

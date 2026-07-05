@@ -2441,7 +2441,11 @@
       "itemMovedToCategory": "“{name}” को {category} में ले जाया गया",
       "moveItemFailed": "आइटम स्थानांतरित नहीं हो सका — कृपया फिर से प्रयास करें।",
       "expandAll": "सभी विस्तृत करें",
-      "collapseAll": "सभी संक्षिप्त करें"
+      "collapseAll": "सभी संक्षिप्त करें",
+      "pinToTop": "मेनू में सबसे ऊपर पिन करें",
+      "categoryAccentColor": "एक्सेंट रंग",
+      "categoryAccentColorClear": "थीम रंग उपयोग करें",
+      "categoryAccentColorDefault": "थीम रंग (डिफ़ॉल्ट)"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",

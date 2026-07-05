@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "„{name}“ е преместен в {category}",
       "moveItemFailed": "Артикулът не можа да бъде преместен — опитайте отново.",
       "expandAll": "Разгъни всички",
-      "collapseAll": "Свий всички"
+      "collapseAll": "Свий всички",
+      "pinToTop": "Закачи най-отгоре в менюто",
+      "categoryAccentColor": "Акцентен цвят",
+      "categoryAccentColorClear": "Използвай цвета на темата",
+      "categoryAccentColorDefault": "Цвят на темата (по подразбиране)"
     },
     "promotionsList": {
       "stackingMaster": "Главна",

@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "«{name}» переміщено до {category}",
       "moveItemFailed": "Не вдалося перемістити позицію — спробуйте ще раз.",
       "expandAll": "Розгорнути все",
-      "collapseAll": "Згорнути все"
+      "collapseAll": "Згорнути все",
+      "pinToTop": "Закріпити вгорі меню",
+      "categoryAccentColor": "Акцентний колір",
+      "categoryAccentColorClear": "Використати колір теми",
+      "categoryAccentColorDefault": "Колір теми (типово)"
     },
     "promotionsList": {
       "stackingMaster": "Майстер",

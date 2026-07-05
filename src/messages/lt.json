@@ -2760,7 +2760,11 @@
       "itemMovedToCategory": "„{name}“ perkelta į {category}",
       "moveItemFailed": "Nepavyko perkelti patiekalo — bandykite dar kartą.",
       "expandAll": "Išskleisti viską",
-      "collapseAll": "Suskleisti viską"
+      "collapseAll": "Suskleisti viską",
+      "pinToTop": "Prisegti meniu viršuje",
+      "categoryAccentColor": "Akcento spalva",
+      "categoryAccentColorClear": "Naudoti temos spalvą",
+      "categoryAccentColorDefault": "Temos spalva (numatytoji)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

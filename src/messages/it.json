@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "“{name}” spostato in {category}",
       "moveItemFailed": "Impossibile spostare il piatto — riprova.",
       "expandAll": "Espandi tutto",
-      "collapseAll": "Comprimi tutto"
+      "collapseAll": "Comprimi tutto",
+      "pinToTop": "Fissa in cima al menu",
+      "categoryAccentColor": "Colore in evidenza",
+      "categoryAccentColorClear": "Usa il colore del tema",
+      "categoryAccentColorDefault": "Colore del tema (predefinito)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

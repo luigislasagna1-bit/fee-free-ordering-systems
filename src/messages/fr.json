@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "« {name} » déplacé vers {category}",
       "moveItemFailed": "Impossible de déplacer l'article — veuillez réessayer.",
       "expandAll": "Tout déplier",
-      "collapseAll": "Tout replier"
+      "collapseAll": "Tout replier",
+      "pinToTop": "Épingler en haut du menu",
+      "categoryAccentColor": "Couleur d'accent",
+      "categoryAccentColorClear": "Utiliser la couleur du thème",
+      "categoryAccentColorDefault": "Couleur du thème (par défaut)"
     },
     "promotionsList": {
       "stackingMaster": "Maître",

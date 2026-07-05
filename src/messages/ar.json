@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "تم نقل “{name}” إلى {category}",
       "moveItemFailed": "تعذر نقل الصنف — يرجى المحاولة مرة أخرى.",
       "expandAll": "توسيع الكل",
-      "collapseAll": "طي الكل"
+      "collapseAll": "طي الكل",
+      "pinToTop": "تثبيت أعلى القائمة",
+      "categoryAccentColor": "لون مميز",
+      "categoryAccentColorClear": "استخدام لون السمة",
+      "categoryAccentColorDefault": "لون السمة (افتراضي)"
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",

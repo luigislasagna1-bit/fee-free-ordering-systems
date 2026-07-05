@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "“{name}” pārvietots uz {category}",
       "moveItemFailed": "Produktu neizdevās pārvietot — mēģiniet vēlreiz.",
       "expandAll": "Izvērst visu",
-      "collapseAll": "Sakļaut visu"
+      "collapseAll": "Sakļaut visu",
+      "pinToTop": "Piespraust ēdienkartes augšā",
+      "categoryAccentColor": "Akcenta krāsa",
+      "categoryAccentColorClear": "Izmantot tēmas krāsu",
+      "categoryAccentColorDefault": "Tēmas krāsa (noklusējums)"
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

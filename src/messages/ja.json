@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "「{name}」を{category}に移動しました",
       "moveItemFailed": "商品を移動できませんでした — もう一度お試しください。",
       "expandAll": "すべて展開",
-      "collapseAll": "すべて折りたたむ"
+      "collapseAll": "すべて折りたたむ",
+      "pinToTop": "メニューの先頭に固定",
+      "categoryAccentColor": "アクセントカラー",
+      "categoryAccentColorClear": "テーマカラーを使用",
+      "categoryAccentColorDefault": "テーマカラー（既定）"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

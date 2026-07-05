@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "Το “{name}” μετακινήθηκε στην κατηγορία {category}",
       "moveItemFailed": "Δεν ήταν δυνατή η μετακίνηση του προϊόντος — δοκιμάστε ξανά.",
       "expandAll": "Ανάπτυξη όλων",
-      "collapseAll": "Σύμπτυξη όλων"
+      "collapseAll": "Σύμπτυξη όλων",
+      "pinToTop": "Καρφίτσωμα στην κορυφή του μενού",
+      "categoryAccentColor": "Χρώμα έμφασης",
+      "categoryAccentColorClear": "Χρήση χρώματος θέματος",
+      "categoryAccentColorDefault": "Χρώμα θέματος (προεπιλογή)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

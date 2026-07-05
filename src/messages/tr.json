@@ -2011,7 +2011,11 @@
       "itemMovedToCategory": "“{name}” {category} kategorisine taşındı",
       "moveItemFailed": "Ürün taşınamadı — lütfen tekrar deneyin.",
       "expandAll": "Tümünü genişlet",
-      "collapseAll": "Tümünü daralt"
+      "collapseAll": "Tümünü daralt",
+      "pinToTop": "Menünün başına sabitle",
+      "categoryAccentColor": "Vurgu rengi",
+      "categoryAccentColorClear": "Tema rengini kullan",
+      "categoryAccentColorDefault": "Tema rengi (varsayılan)"
     },
     "promotionsList": {
       "stackingMaster": "Ana",

@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "«{name}» mogut a {category}",
       "moveItemFailed": "No s'ha pogut moure l'article — torna-ho a provar.",
       "expandAll": "Expandeix-ho tot",
-      "collapseAll": "Redueix-ho tot"
+      "collapseAll": "Redueix-ho tot",
+      "pinToTop": "Fixa a dalt del menú",
+      "categoryAccentColor": "Color d'accent",
+      "categoryAccentColorClear": "Usa el color del tema",
+      "categoryAccentColorDefault": "Color del tema (per defecte)"
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

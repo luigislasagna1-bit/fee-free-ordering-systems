@@ -7,7 +7,7 @@ import {
   Edit2, Trash2, Copy, X, Check, AlertCircle, Tag, Layers,
   Image as ImageIcon, Clock, Truck, ShoppingBag, UtensilsCrossed,
   Settings, ChevronUp, MoreVertical, Upload, FileText, Loader2,
-  PartyPopper, Download, Search,
+  PartyPopper, Download, Search, Star,
 } from "lucide-react";
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, useSortable, verticalListSortingStrategy, rectSortingStrategy, arrayMove } from "@dnd-kit/sortable";
@@ -409,6 +409,8 @@ function ItemModal({
      *  any catering-tagged item — or any item in a catering category —
      *  forces schedule-for-later mode at checkout. */
     isCatering: (item as any)?.isCatering ?? false,
+    // Pin-to-top featured strip (Fabrizio cmr80joh0).
+    pinnedToTop: (item as any)?.pinnedToTop ?? false,
     hasVariants: item?.hasVariants ?? false,
     availableFrom: item?.availableFrom ?? "",
     availableTo: item?.availableTo ?? "",
@@ -742,6 +744,9 @@ function ItemModal({
                   ["forPickup", t("availableForPickup"), ShoppingBag],
                   ["forDelivery", t("availableForDelivery"), Truck],
                   ["isCatering", t("cateringItem"), PartyPopper],
+                  // Pin-to-top featured strip (Fabrizio cmr80joh0) — the dish
+                  // shows as a prominent tile at the very top of the order page.
+                  ["pinnedToTop", t("pinToTop"), Star],
                 ] as [keyof typeof form, string, any][]).map(([field, label, Icon]) => (
                   <button key={field} onClick={() => toggle(field)}
                     className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form[field] ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}>
@@ -2228,6 +2233,8 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
     // category can be pickup-only / delivery-only, mirroring the item flags.
     forPickup: (cat as any)?.forPickup ?? true,
     forDelivery: (cat as any)?.forDelivery ?? true,
+    // Optional header accent color (Fabrizio cmr80joh0). "" = theme color.
+    accentColor: (cat as any)?.accentColor ?? "",
   });
   const [visibility, setVisibility] = useState<VisibilityValue>(() => visibilityFromRow(cat));
   const [saving, setSaving] = useState(false);
@@ -2295,6 +2302,25 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.forDelivery ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
               <Truck className="w-4 h-4" /> {t("availableForDelivery")} {form.forDelivery && <Check className="w-3.5 h-3.5" />}
             </button>
+          </div>
+          {/* Optional header accent color (Fabrizio cmr80joh0) — highlights
+              this category's header on the order page; empty = theme color. */}
+          <div className="flex items-center gap-3">
+            <label className="text-sm font-medium text-gray-700">{t("categoryAccentColor")}</label>
+            <input
+              type="color"
+              value={form.accentColor || "#10b981"}
+              onChange={e => setForm(f => ({ ...f, accentColor: e.target.value }))}
+              className="w-9 h-9 rounded-lg border border-gray-300 cursor-pointer p-0.5"
+            />
+            {form.accentColor ? (
+              <button onClick={() => setForm(f => ({ ...f, accentColor: "" }))}
+                className="text-xs font-semibold text-gray-500 hover:text-gray-800 underline underline-offset-2">
+                {t("categoryAccentColorClear")}
+              </button>
+            ) : (
+              <span className="text-xs text-gray-400">{t("categoryAccentColorDefault")}</span>
+            )}
           </div>
         </div>
         <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl flex-shrink-0">

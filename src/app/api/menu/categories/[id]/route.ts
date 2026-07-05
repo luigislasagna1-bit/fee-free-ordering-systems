@@ -18,7 +18,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (!await getOwned(id, restaurantId)) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   const body = await req.json();
-  const { name, description, imageUrl, isActive, isHidden, isCatering, sortOrder, visibility, rewardEarnExcluded, promoExcluded, rewardRedeemExcluded, forPickup, forDelivery } = body;
+  const { name, description, imageUrl, isActive, isHidden, isCatering, sortOrder, visibility, rewardEarnExcluded, promoExcluded, rewardRedeemExcluded, forPickup, forDelivery, accentColor } = body;
   let visData: Record<string, unknown> = {};
   if (visibility !== undefined) {
     const v = buildVisibilityData(visibility);
@@ -39,6 +39,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       // Category-level service restriction (Fabrizio cmr803ovq).
       ...(forPickup !== undefined ? { forPickup: !!forPickup } : {}),
       ...(forDelivery !== undefined ? { forDelivery: !!forDelivery } : {}),
+      // Optional header accent color (Fabrizio cmr80joh0) — hex or null to clear.
+      ...(accentColor !== undefined
+        ? { accentColor: typeof accentColor === "string" && /^#[0-9a-fA-F]{6}$/.test(accentColor) ? accentColor : null }
+        : {}),
       ...visData,
     },
   });

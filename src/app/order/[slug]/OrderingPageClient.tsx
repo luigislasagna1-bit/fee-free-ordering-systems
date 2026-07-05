@@ -76,6 +76,8 @@ interface VisibilityProps {
 interface MenuItem extends VisibilityProps {
   id: string; name: string; description: string; price: number;
   imageUrl?: string; isFeatured: boolean; isSoldOut: boolean;
+  /** Pin-to-top featured strip (Fabrizio cmr80joh0). */
+  pinnedToTop?: boolean;
   hasVariants: boolean; forPickup: boolean; forDelivery: boolean;
   availableDays?: number[]; availableFrom?: string; availableTo?: string;
   // Phase 2 Fulfilment Time: item visible all week, orderable only for these
@@ -90,6 +92,8 @@ interface Category extends VisibilityProps {
   /** Category-level service restriction (Fabrizio cmr803ovq) — mirrors the
    *  item flags; missing/undefined = unrestricted (legacy rows). */
   forPickup?: boolean; forDelivery?: boolean;
+  /** Optional header accent color overriding the theme color (cmr80joh0). */
+  accentColor?: string | null;
 }
 interface CartItem {
   menuItem: MenuItem; variant?: ItemVariant; quantity: number;
@@ -276,12 +280,14 @@ function CategoryBanner({ cat, theme, collapsible, collapsedNow, onToggleCollaps
   onScroll?: (dir: -1 | 1) => void;
 }) {
   const hasImage = !!cat.imageUrl;
-  const light = !hasImage && isLightColor(theme.primaryColor); // pale brand colour → dark text
+  // Per-category accent color overrides the theme color (Fabrizio cmr80joh0).
+  const bandColor = (cat as any).accentColor || theme.primaryColor;
+  const light = !hasImage && isLightColor(bandColor); // pale colour → dark text
   const overlayText = light ? "#1f2937" : "#ffffff";
   return (
     <div
       className={`group relative mb-3 rounded-xl overflow-hidden ${collapsible ? "cursor-pointer select-none" : ""}`}
-      style={{ height: "clamp(130px, 20vw, 156px)", backgroundColor: hasImage ? "#000000" : theme.primaryColor }}
+      style={{ height: "clamp(130px, 20vw, 156px)", backgroundColor: hasImage ? "#000000" : bandColor }}
       onClick={collapsible ? onToggleCollapse : undefined}
       role={collapsible ? "button" : undefined}
       aria-expanded={collapsible ? !collapsedNow : undefined}
@@ -374,6 +380,8 @@ function PlainCategoryHeader({ cat, theme, styleKind, collapsible, collapsedNow,
   const count = cat.menuItems.length;
   const nameSize = compact ? "text-lg" : "text-xl";
   const mb = compact ? "mb-3" : "mb-4";
+  // Per-category accent color overrides the theme color (Fabrizio cmr80joh0).
+  const accent = (cat as any).accentColor || theme.primaryColor;
   if (styleKind === "button") {
     return (
       <div className={`${mb} sticky top-0 py-2 z-10`} style={{ backgroundColor: theme.backgroundColor }}>
@@ -396,14 +404,14 @@ function PlainCategoryHeader({ cat, theme, styleKind, collapsible, collapsedNow,
       <div className={`${mb} sticky top-0 py-2 z-10`} style={{ backgroundColor: theme.backgroundColor }}>
         <div
           className={`flex items-center gap-3 rounded-xl px-4 ${compact ? "py-3" : "py-3.5"} ${collapsible ? "cursor-pointer select-none" : ""}`}
-          style={{ backgroundColor: `${theme.primaryColor}0D`, borderLeft: `4px solid ${theme.primaryColor}` }}
+          style={{ backgroundColor: `${accent}0D`, borderLeft: `4px solid ${accent}` }}
           onClick={collapsible ? onToggleCollapse : undefined}
         >
           <h2 className={`${nameSize} font-extrabold tracking-tight flex-1 min-w-0 truncate`} style={{ color: theme.textColor }}>{cat.name}</h2>
-          <span className="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0" style={{ backgroundColor: `${theme.primaryColor}1A`, color: theme.primaryColor }}>{count}</span>
+          <span className="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0" style={{ backgroundColor: `${accent}1A`, color: accent }}>{count}</span>
           {collapsible ? (
-            <span className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${theme.primaryColor}1A` }}>
-              <ChevronDown className={`w-4 h-4 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.primaryColor }} />
+            <span className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${accent}1A` }}>
+              <ChevronDown className={`w-4 h-4 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: accent }} />
             </span>
           ) : trailing ?? null}
         </div>
@@ -4699,6 +4707,30 @@ export function OrderingPageClient({
             </span>
           </a>
         )}
+        {/* Pinned dishes — "pin to top" strip (Fabrizio cmr80joh0): the owner's
+            highlighted dishes render as prominent tiles at the very top, above
+            the promo strip. Sourced from the FILTERED menu, so visibility /
+            service-restriction / sold-out states carry over automatically, and
+            tapping opens the normal item modal (combo/pizza aware). */}
+        {(() => {
+          const pinned = visibleCategories.flatMap((c) => c.menuItems).filter((i) => (i as any).pinnedToTop);
+          if (pinned.length === 0) return null;
+          return (
+            <>
+              <div className="flex items-center gap-2 mb-2">
+                <Star className="w-5 h-5" style={{ color: theme.primaryColor, fill: theme.primaryColor }} />
+                <span className="text-lg font-bold" style={{ color: theme.textColor }}>{t("featured")}</span>
+              </div>
+              <div className="mb-6 flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
+                {pinned.map((item) => (
+                  <div key={item.id} className="w-[230px] flex-shrink-0">
+                    <CarouselCard item={item} theme={theme} onOpen={openItem} />
+                  </div>
+                ))}
+              </div>
+            </>
+          );
+        })()}
         {/* Collapsible "Promo" header — the customer can hide the specials strip so it
             doesn't take up the whole page (mobile + desktop). Same chevron affordance as
             the collapsible categories. Luigi 2026-06-22. */}

@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "„{name}“ nach {category} verschoben",
       "moveItemFailed": "Artikel konnte nicht verschoben werden — bitte erneut versuchen.",
       "expandAll": "Alle ausklappen",
-      "collapseAll": "Alle einklappen"
+      "collapseAll": "Alle einklappen",
+      "pinToTop": "Oben in der Karte anpinnen",
+      "categoryAccentColor": "Akzentfarbe",
+      "categoryAccentColorClear": "Themenfarbe verwenden",
+      "categoryAccentColorDefault": "Themenfarbe (Standard)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

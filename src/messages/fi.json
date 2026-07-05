@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "”{name}” siirretty kategoriaan {category}",
       "moveItemFailed": "Tuotetta ei voitu siirtää — yritä uudelleen.",
       "expandAll": "Laajenna kaikki",
-      "collapseAll": "Supista kaikki"
+      "collapseAll": "Supista kaikki",
+      "pinToTop": "Kiinnitä valikon alkuun",
+      "categoryAccentColor": "Korostusväri",
+      "categoryAccentColorClear": "Käytä teeman väriä",
+      "categoryAccentColorDefault": "Teeman väri (oletus)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

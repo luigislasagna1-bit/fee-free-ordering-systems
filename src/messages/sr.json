@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "„{name}“ premešteno u {category}",
       "moveItemFailed": "Stavku nije bilo moguće premestiti — pokušajte ponovo.",
       "expandAll": "Прошири све",
-      "collapseAll": "Скупи све"
+      "collapseAll": "Скупи све",
+      "pinToTop": "Закачи на врх менија",
+      "categoryAccentColor": "Акцентна боја",
+      "categoryAccentColorClear": "Користи боју теме",
+      "categoryAccentColorDefault": "Боја теме (подразумевано)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

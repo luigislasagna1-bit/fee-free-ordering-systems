@@ -2011,7 +2011,11 @@
       "itemMovedToCategory": "„{name}” áthelyezve ide: {category}",
       "moveItemFailed": "A tételt nem sikerült áthelyezni — próbálja újra.",
       "expandAll": "Összes kibontása",
-      "collapseAll": "Összes összecsukása"
+      "collapseAll": "Összes összecsukása",
+      "pinToTop": "Kitűzés az étlap tetejére",
+      "categoryAccentColor": "Kiemelőszín",
+      "categoryAccentColorClear": "Téma színének használata",
+      "categoryAccentColorDefault": "Téma színe (alapértelmezett)"
     },
     "promotionsList": {
       "stackingMaster": "Master",

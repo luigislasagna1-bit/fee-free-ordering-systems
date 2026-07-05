@@ -2067,7 +2067,11 @@
       "itemMovedToCategory": "„{name}“ premaknjeno v {category}",
       "moveItemFailed": "Izdelka ni bilo mogoče premakniti — poskusite znova.",
       "expandAll": "Razširi vse",
-      "collapseAll": "Strni vse"
+      "collapseAll": "Strni vse",
+      "pinToTop": "Pripni na vrh menija",
+      "categoryAccentColor": "Poudarna barva",
+      "categoryAccentColorClear": "Uporabi barvo teme",
+      "categoryAccentColorDefault": "Barva teme (privzeto)"
     },
     "promotionsList": {
       "stackingMaster": "Master",
