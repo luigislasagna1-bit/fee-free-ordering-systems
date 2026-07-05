@@ -116,13 +116,23 @@ export interface KitchenPushPayload {
  * logging / tests). A no-op (sent:0) when push isn't configured or no devices
  * are registered.
  */
+/** Per-device outcome — surfaced by the kitchen test-push diagnostic so a
+ *  failing FCM send is READABLE (status + error text) instead of buried in
+ *  server logs. Regular callers ignore it. Luigi 2026-07-05 (iOS no-ring). */
+export interface KitchenPushDeviceResult {
+  platform: string;
+  ok: boolean;
+  status?: number;
+  error?: string;
+}
+
 export async function sendKitchenPush(
   restaurantId: string,
   payload: KitchenPushPayload,
-): Promise<{ sent: number; pruned: number }> {
+): Promise<{ sent: number; pruned: number; results?: KitchenPushDeviceResult[] }> {
   try {
     const sa = getServiceAccount();
-    if (!sa) return { sent: 0, pruned: 0 };
+    if (!sa) return { sent: 0, pruned: 0, results: [{ platform: "-", ok: false, error: "FIREBASE_SERVICE_ACCOUNT not configured" }] };
 
     // Single ACTIVE device per kitchen, mirroring the single-session login rule
     // (logging in on one device logs the others out). Push ONLY to the
@@ -139,7 +149,7 @@ export async function sendKitchenPush(
       orderBy: { lastSeenAt: "desc" },
       take: 1,
     });
-    if (devices.length === 0) return { sent: 0, pruned: 0 };
+    if (devices.length === 0) return { sent: 0, pruned: 0, results: [{ platform: "-", ok: false, error: "no registered devices" }] };
 
     // Per-restaurant alarm preference: ring + vibrate (default) vs ring only.
     // Forwarded in the push data so the native OrderAlarmService knows whether
@@ -152,10 +162,11 @@ export async function sendKitchenPush(
     const vibrate = rest?.kitchenVibrate !== false;
 
     const accessToken = await getAccessToken(sa);
-    if (!accessToken) return { sent: 0, pruned: 0 };
+    if (!accessToken) return { sent: 0, pruned: 0, results: [{ platform: "-", ok: false, error: "OAuth token exchange failed" }] };
 
     const endpoint = `https://fcm.googleapis.com/v1/projects/${sa.projectId}/messages:send`;
     const deadTokenIds: string[] = [];
+    const results: KitchenPushDeviceResult[] = [];
     let sent = 0;
 
     await Promise.allSettled(
@@ -227,9 +238,11 @@ export async function sendKitchenPush(
         });
         if (res.ok) {
           sent++;
+          results.push({ platform: d.platform, ok: true, status: res.status });
           return;
         }
         const errText = await res.text().catch(() => "");
+        results.push({ platform: d.platform, ok: false, status: res.status, error: errText.slice(0, 600) });
         // Prune ONLY tokens FCM clearly reports as dead — never on a transient
         // 401/403/5xx or a payload-level 400 (that would silently empty a
         // restaurant's device list over a bug).
@@ -246,9 +259,9 @@ export async function sendKitchenPush(
       const del = await prisma.kitchenPushToken.deleteMany({ where: { id: { in: deadTokenIds } } });
       pruned = del.count;
     }
-    return { sent, pruned };
+    return { sent, pruned, results };
   } catch (e) {
     console.error("[push] sendKitchenPush error", e);
-    return { sent: 0, pruned: 0 };
+    return { sent: 0, pruned: 0, results: [{ platform: "-", ok: false, error: e instanceof Error ? e.message : String(e) }] };
   }
 }
