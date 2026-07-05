@@ -158,6 +158,19 @@ export default async function ComparisonPage({
             <p className="mt-6 text-xs text-gray-500">
               No credit card · No commission on direct orders · Cancel anytime
             </p>
+            {/* Event-driven notice (e.g. GloriaFood shutdown) — factual +
+                sourced urgency with a link to the dedicated migration page. */}
+            {c.notice && (
+              <div className="mt-8 max-w-2xl mx-auto rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-left">
+                <p className="text-sm text-amber-900">
+                  <span className="font-bold">Heads up: </span>
+                  {c.notice.text}{" "}
+                  <Link href={c.notice.href} className="font-bold underline underline-offset-2 hover:text-amber-700">
+                    {c.notice.linkLabel} →
+                  </Link>
+                </p>
+              </div>
+            )}
           </div>
         </section>
 

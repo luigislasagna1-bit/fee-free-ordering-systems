@@ -54,6 +54,10 @@ export type Competitor = {
    *  Fee Free's answer becomes the citable response. Each answer is
    *  ≤ 2 sentences, factual, links-friendly. */
   faqs: { q: string; a: string }[];
+  /** Optional event-driven notice rendered as an amber banner under the
+   *  hero (e.g. "GloriaFood is shutting down — migration guide →").
+   *  Must be FACTUAL + sourced; this is urgency, not FUD. 2026-07-05. */
+  notice?: { text: string; href: string; linkLabel: string };
 };
 
 const FEEFREE_CORE = "Free forever for direct orders. No per-order commission. Paid add-ons (Online Payments $29.99/mo, Hosted Website $19.99/mo, etc.) are optional, only when you need them.";
@@ -590,9 +594,16 @@ export const COMPETITORS: Competitor[] = [
     brandColor: "#1d2935",
     category: "ordering_platform",
     tagline: "GloriaFood alternative",
-    costSummary: "Free core platform, paid add-ons for SMS / promo automation / hosted site (typically $9–29/mo each).",
-    whatTheyAre: "A free zero-commission online ordering system for independent restaurants, owned by Oracle since 2018. Strong feature set for ordering + table reservations.",
+    costSummary: "Free core platform, paid add-ons for SMS / promo automation / hosted site (typically $9–29/mo each). Note: Oracle has announced end-of-life for the entire GloriaFood product line — last day of service April 30, 2027.",
+    whatTheyAre: "A free zero-commission online ordering system for independent restaurants, owned by Oracle since 2018. Strong feature set for ordering + table reservations — but Oracle has announced the product line's end-of-life, with a last day of service of April 30, 2027 and no data retention afterwards.",
+    notice: {
+      text: "Oracle is shutting GloriaFood down: last day of service April 30, 2027, no data retention afterwards, and no replacement product.",
+      href: "/gloriafood-alternative",
+      linkLabel: "Read the migration guide — import your menu free",
+    },
     whyFeeFree: [
+      { title: "Automated GloriaFood menu import — photos included",
+        body: "Paste your GloriaFood ordering link and your entire menu is recreated automatically: categories, items, size variants and every modifier group and option (a verified production import moved 12,653 modifier options in 1.2 seconds), with food photos transferred in the background. No retyping, and you can preview your live page before creating an account." },
       { title: "Built-in marketplace included",
         body: "Fee Free Marketplace (feefreefood.com) is part of the platform — your restaurant is listed and discoverable from day one for a $3-max-per-order fee (capped at $249.99/mo). GloriaFood has no marketplace; restaurants only get the customers they bring themselves." },
       { title: "Direct charges + manual capture",

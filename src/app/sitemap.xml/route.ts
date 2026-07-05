@@ -109,6 +109,10 @@ function buildPlatformSitemap(host: string): string {
   const urls: UrlEntry[] = [
     { loc: `${base}/`, changefreq: "weekly", priority: 1.0 },
     { loc: `${base}/pricing`, changefreq: "weekly", priority: 0.8 },
+    // GloriaFood-shutdown migration page (Oracle EOL Apr 30 2027) — timely,
+    // high-intent organic target; priority above the /vs pages while the
+    // migration wave lasts. COMPETITOR-TOWNCLUB-PLAN.md action #1.
+    { loc: `${base}/gloriafood-alternative`, changefreq: "weekly", priority: 0.8 },
     { loc: `${base}/features`, changefreq: "weekly", priority: 0.7 },
     { loc: `${base}/faq`, changefreq: "monthly", priority: 0.5 },
     { loc: `${base}/partners`, changefreq: "monthly", priority: 0.5 },
