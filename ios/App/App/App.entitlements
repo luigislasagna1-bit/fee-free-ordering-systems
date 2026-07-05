@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Native push for the order alarm (Luigi 2026-07-04). "production" is
+	     correct for both TestFlight and App Store distribution builds.
+	     REQUIRES the Push Notifications capability to be enabled on the
+	     com.feefreeordering.kitchen App ID in the Apple Developer portal
+	     BEFORE the next Codemagic build, or profile signing fails. -->
+	<key>aps-environment</key>
+	<string>production</string>
+</dict>
+</plist>

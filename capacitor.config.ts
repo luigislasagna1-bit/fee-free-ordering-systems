@@ -69,6 +69,15 @@ const config: CapacitorConfig = {
       style: "DARK",
       backgroundColor: "#111827",
     },
+    PushNotifications: {
+      // iOS foreground presentation: NOTHING. Same split as Android — when
+      // the app is on screen the WEB ring engine owns the alarm (stops on
+      // open/accept); the native alert push with its bundled .caf sound only
+      // ever plays when the app is backgrounded/closed/locked. Showing the
+      // banner+sound in foreground too would double-ring. Android ignores
+      // this option entirely.
+      presentationOptions: [],
+    },
   },
   // Android-specific overrides
   android: {

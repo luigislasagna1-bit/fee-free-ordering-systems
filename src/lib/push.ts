@@ -135,7 +135,7 @@ export async function sendKitchenPush(
     // 2026-06-16 (Fabrizio multi-device "logged-out phones still vibrate" report).
     const devices = await prisma.kitchenPushToken.findMany({
       where: { restaurantId },
-      select: { id: true, token: true },
+      select: { id: true, token: true, platform: true },
       orderBy: { lastSeenAt: "desc" },
       take: 1,
     });
@@ -168,25 +168,55 @@ export async function sendKitchenPush(
         // point it at the high-importance "orders_loud" channel whose sound is the
         // restaurant's order ring (order_alarm), so it's loud + reliable. data is
         // kept for foreground handling + the tap target.
-        const message = {
-          message: {
-            token: d.token,
-            // DATA-ONLY: the alarm is driven by the native keep-alive POLL (the
-            // reliable path on every device — it rings until the order is accepted
-            // or its window expires). So we do NOT ring via a system notification
-            // here (that would double up + couldn't stop on accept). This push is
-            // just an instant nudge — KitchenMessagingService starts the alarm
-            // right away when delivered (modern devices); on a throttled old
-            // Samsung it simply doesn't arrive and the ~4s poll covers it.
-            // Luigi 2026-06-16.
-            data: { ...(payload.data ?? {}), title: payload.title, body: payload.body, vibrate: vibrate ? "true" : "false" },
-            android: { priority: "high" },
-            apns: {
-              headers: { "apns-priority": "10", "apns-push-type": "background" },
-              payload: { aps: { "content-available": 1 } },
-            },
-          },
-        };
+        const data = { ...(payload.data ?? {}), title: payload.title, body: payload.body, vibrate: vibrate ? "true" : "false" };
+        // Two payload shapes, one per platform (Luigi 2026-07-04). iOS has no
+        // equivalent of Android's native keep-alive poll/alarm service, so a
+        // silent content-available push rings nothing when the app is closed
+        // or the phone is locked — iOS devices get an ALERT push whose sound
+        // is the bundled order alarm (order_alarm.caf = the finalized ring
+        // capped at iOS's 30s notification-sound limit; order_short.caf ≈ the
+        // Android ~3s auto-accept chirp). Foreground stays with the WEB ring
+        // engine on both platforms (presentationOptions: [] in
+        // capacitor.config.ts), so behavior matches Android: full alarm when
+        // pending, short ring when auto-accepted, web engine on screen.
+        // The Android branch below is the v2.8-verified shape — DO NOT touch.
+        const message =
+          d.platform === "ios"
+            ? {
+                message: {
+                  token: d.token,
+                  notification: { title: payload.title, body: payload.body },
+                  data,
+                  apns: {
+                    headers: { "apns-priority": "10", "apns-push-type": "alert" },
+                    payload: {
+                      aps: {
+                        sound: payload.data?.autoAccept === "true" ? "order_short.caf" : "order_alarm.caf",
+                        "interruption-level": "time-sensitive",
+                      },
+                    },
+                  },
+                },
+              }
+            : {
+                message: {
+                  token: d.token,
+                  // DATA-ONLY: the alarm is driven by the native keep-alive POLL (the
+                  // reliable path on every device — it rings until the order is accepted
+                  // or its window expires). So we do NOT ring via a system notification
+                  // here (that would double up + couldn't stop on accept). This push is
+                  // just an instant nudge — KitchenMessagingService starts the alarm
+                  // right away when delivered (modern devices); on a throttled old
+                  // Samsung it simply doesn't arrive and the ~4s poll covers it.
+                  // Luigi 2026-06-16.
+                  data,
+                  android: { priority: "high" },
+                  apns: {
+                    headers: { "apns-priority": "10", "apns-push-type": "background" },
+                    payload: { aps: { "content-available": 1 } },
+                  },
+                },
+              };
         const res = await fetch(endpoint, {
           method: "POST",
           headers: {
