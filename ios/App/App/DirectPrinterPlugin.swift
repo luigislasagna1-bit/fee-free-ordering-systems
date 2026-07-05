@@ -117,7 +117,21 @@ public class DirectPrinterPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "print", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "ping", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "discover", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getInfo", returnType: CAPPluginReturnPromise),
     ]
+
+    /// App version for the kitchen UI's "vX.Y" label (3-dot menu + login).
+    /// iOS counterpart of the Android OrderAlarm plugin's getInfo() — that
+    /// plugin doesn't exist on iOS, so without this the version line was
+    /// simply absent on iPhone/iPad (Luigi 2026-07-04). Returns
+    /// "1.0 (21)"-style: CFBundleShortVersionString + TestFlight build no.
+    @objc func getInfo(_ call: CAPPluginCall) {
+        let info = Bundle.main.infoDictionary
+        let version = (info?["CFBundleShortVersionString"] as? String) ?? ""
+        let build = (info?["CFBundleVersion"] as? String) ?? ""
+        let display = build.isEmpty ? version : "\(version) (\(build))"
+        call.resolve(["version": display, "build": build, "shortVersion": version])
+    }
 
     private static let DEFAULT_PORT: UInt16 = 9100
     private static let DEFAULT_TIMEOUT_MS: Int = 5000

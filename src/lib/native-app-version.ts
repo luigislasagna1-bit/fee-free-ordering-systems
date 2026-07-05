@@ -11,13 +11,20 @@ export async function getNativeAppVersion(): Promise<string | null> {
   if (typeof window === "undefined") return null; // SSR
   const cap = (window as any).Capacitor;
   if (!cap || typeof cap.isNativePlatform !== "function" || !cap.isNativePlatform()) return null;
-  const plugin = cap.Plugins?.OrderAlarm;
-  if (!plugin || typeof plugin.getInfo !== "function") return null;
-  try {
-    const info = await plugin.getInfo();
-    const v = info?.version;
-    return typeof v === "string" && v.length > 0 ? v : null;
-  } catch {
-    return null;
+  // Android exposes getInfo() on the OrderAlarm plugin (the native alarm
+  // engine). iOS has no OrderAlarm — its DirectPrinter plugin carries the
+  // same getInfo() instead (added 2026-07-04 so iPhone/iPad show the build
+  // in the 3-dot menu like Android does). Try both; first answer wins.
+  for (const name of ["OrderAlarm", "DirectPrinter"]) {
+    const plugin = cap.Plugins?.[name];
+    if (!plugin || typeof plugin.getInfo !== "function") continue;
+    try {
+      const info = await plugin.getInfo();
+      const v = info?.version;
+      if (typeof v === "string" && v.length > 0) return v;
+    } catch {
+      /* try the next plugin */
+    }
   }
+  return null;
 }
