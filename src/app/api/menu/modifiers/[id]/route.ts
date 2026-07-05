@@ -3,6 +3,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { blockIfInheritingMenu } from "@/lib/brand";
 import { deleteModifierGroupsCascade } from "@/lib/modifier-delete";
+import { syncCopyOptionsFromLibrary } from "@/lib/modifier-sync";
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const user = await getSessionUser();
@@ -83,6 +84,14 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
           data: { modifierGroupId: id, name: opt.name, priceAdjustment: parseFloat(opt.priceAdjustment ?? 0), isDefault: opt.isDefault ?? false, isAvailable: opt.isAvailable ?? true, sortOrder: i },
         });
       }
+    }
+    // Library group → push the fresh option list to every attached copy.
+    // The scalar fields already propagate above; without this half, copies
+    // kept the options from the day they were attached — customers saw stale
+    // choices and were charged OLD prices (Luigi 2026-07-04, PIZZA CHEESE).
+    if (current?.restaurantId && !current.menuItemId && !current.categoryId) {
+      const synced = await syncCopyOptionsFromLibrary(id);
+      if (synced > 0) console.log(`[modifiers PATCH] options re-synced to ${synced} attached cop${synced === 1 ? "y" : "ies"} of ${id}`);
     }
   }
 
