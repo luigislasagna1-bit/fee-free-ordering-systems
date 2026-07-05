@@ -143,7 +143,17 @@ export async function POST(req: NextRequest) {
       // ?grant=<id>). Resolved server-side against the SIGNED-IN identity so the
       // charge forces the same promo the preview did. Luigi 2026-07-01.
       grantId: bodyGrantId,
+      // Duplicate-submission guard (Luigi 2026-07-05): client-generated key,
+      // one per checkout attempt, reused across retries of that attempt. A
+      // second POST with the same key returns the already-created order.
+      idempotencyKey: bodyIdemKey,
     } = body;
+
+    // Strict shape or ignored — never let a garbage value into a unique column.
+    const idemKey =
+      typeof bodyIdemKey === "string" && /^[A-Za-z0-9_-]{16,64}$/.test(bodyIdemKey)
+        ? bodyIdemKey
+        : null;
 
     // ── Basic input validation ──────────────────────────────────────────────
     if (!restaurantSlug || !type || !customerName || !customerPhone) {
@@ -204,6 +214,33 @@ export async function POST(req: NextRequest) {
       },
     });
     if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+
+    // ── Duplicate-submission guard (Luigi 2026-07-05) ───────────────────────
+    // The checkout can sit on a slow POST long enough for the customer to
+    // click "Place order" again (or retry after a timeout the server actually
+    // completed). Same key → same logical order: return the one that already
+    // landed, shaped exactly like the 201 so the client continues normally
+    // (the card/PayPal payment surfaces are created AFTER this response, so a
+    // duplicate return re-enters that flow against the same order). Unique-
+    // indexed lookup — negligible on the hot path.
+    if (idemKey) {
+      const existing = await prisma.order.findUnique({
+        where: { idempotencyKey: idemKey },
+        select: { id: true, orderNumber: true, restaurantId: true, total: true, creditApplied: true, paymentMethod: true, paymentStatus: true },
+      });
+      if (existing && existing.restaurantId === restaurant.id) {
+        return NextResponse.json({
+          id: existing.id,
+          orderNumber: existing.orderNumber,
+          total: existing.total,
+          creditApplied: existing.creditApplied ?? 0,
+          requiresPayment:
+            (existing.paymentMethod === "card" || existing.paymentMethod === "paypal") &&
+            existing.paymentStatus === "pending",
+          duplicate: true,
+        }, { status: 200 });
+      }
+    }
 
     // Live inheritance (Phase 3, Luigi 2026-06-13): a child that inherits "hours"
     // is validated against the BRAND's opening hours — the SAME resolution the
@@ -2157,6 +2194,10 @@ export async function POST(req: NextRequest) {
               })),
             )
           : null,
+        // Duplicate-submission guard — see the idemKey block near the top.
+        // The unique constraint is the race-proof backstop (two simultaneous
+        // POSTs: the loser hits P2002 and returns the winner's order).
+        idempotencyKey: idemKey ?? undefined,
         type,
         customerName: isVerifiedTest
           ? `[TEST] ${sanitize(customerName, 92).replace(/^\[TEST\] /, "")}`
@@ -2256,6 +2297,28 @@ export async function POST(req: NextRequest) {
       if (creditApplied > 0 && creditSpenderId) {
         await refundRewardClaim({ restaurantId: restaurant.id, customerId: creditSpenderId, amount: creditApplied })
           .catch((e) => console.error("[orders POST] reward refundClaim after create failure:", e));
+      }
+      // Duplicate-submission RACE: two simultaneous POSTs with the same
+      // idempotency key — the loser hits the unique constraint here. Its own
+      // claims were rolled back above; return the winner's order so the
+      // customer lands on the same confirmation either way.
+      if (idemKey && (createErr as any)?.code === "P2002") {
+        const dup = await prisma.order.findUnique({
+          where: { idempotencyKey: idemKey },
+          select: { id: true, orderNumber: true, total: true, creditApplied: true, paymentMethod: true, paymentStatus: true },
+        });
+        if (dup) {
+          return NextResponse.json({
+            id: dup.id,
+            orderNumber: dup.orderNumber,
+            total: dup.total,
+            creditApplied: dup.creditApplied ?? 0,
+            requiresPayment:
+              (dup.paymentMethod === "card" || dup.paymentMethod === "paypal") &&
+              dup.paymentStatus === "pending",
+            duplicate: true,
+          }, { status: 200 });
+        }
       }
       throw createErr;
     }

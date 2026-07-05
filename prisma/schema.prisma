@@ -1118,6 +1118,12 @@ model Order {
   restaurantId          String
   customerId            String?
   orderNumber           String
+  /// Client-generated per-checkout-attempt key (UUID). UNIQUE — a retried or
+  /// double-clicked POST /api/orders carrying the same key returns the
+  /// already-created order instead of creating a duplicate (Luigi 2026-07-05:
+  /// a slow checkout + multiple "Place order" clicks produced 2-3 real
+  /// orders). Null for legacy rows / callers that don't send one.
+  idempotencyKey        String?   @unique
   status                String    @default("pending")
   type                  String    @default("pickup")
   customerName          String

@@ -1297,6 +1297,18 @@ export function OrderingPageClient({
     setActivePromoModal(promo);
   };
   const [orderLoading, setOrderLoading] = useState(false);
+  // Duplicate-submission guards (Luigi 2026-07-05, after a slow checkout let
+  // multiple "Place order" clicks create 2-3 real orders):
+  //  - placingRef: SYNCHRONOUS latch — a fast double-tap can fire two click
+  //    events before React re-renders the disabled button; a ref can't lose
+  //    that race.
+  //  - orderIdemKeyRef: per-checkout-attempt idempotency key sent to
+  //    /api/orders. Kept across RETRIES of the same attempt (timeout, error,
+  //    re-click) so the server maps them all to ONE order; reset when the
+  //    cart changes or an order succeeds.
+  const placingRef = useRef(false);
+  const orderIdemKeyRef = useRef<string | null>(null);
+  useEffect(() => { orderIdemKeyRef.current = null; }, [cart]);
   const [activeCategory, setActiveCategory] = useState<string>("");
   /** Transient banner shown after a "Reorder" handshake from the order
    *  status page. Tells the customer "we added N items from your last
@@ -3523,12 +3535,20 @@ export function OrderingPageClient({
       return;
     }
     if (cart.length === 0) { toast.error(tT("cartEmpty")); return; }
+    if (placingRef.current) return; // double-tap can beat the disabled re-render
+    placingRef.current = true;
     setOrderLoading(true);
+    if (!orderIdemKeyRef.current) {
+      orderIdemKeyRef.current =
+        typeof crypto !== "undefined" && "randomUUID" in crypto
+          ? crypto.randomUUID()
+          : `idem-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
+    }
     try {
       const orderRes = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(buildOrderPayload()),
+        body: JSON.stringify({ ...buildOrderPayload(), idempotencyKey: orderIdemKeyRef.current }),
       });
       const orderData = await orderRes.json();
       if (!orderRes.ok) {
@@ -3579,6 +3599,9 @@ export function OrderingPageClient({
         throw new Error(orderData.error || tT("orderFailed"));
       }
 
+      // Order landed → this checkout attempt is DONE; the next attempt (e.g.
+      // "Place another order") must be a fresh logical order, not a replay.
+      orderIdemKeyRef.current = null;
       // Order accepted by the API → clear the persisted cart so a return
       // visit doesn't show the same items they just ordered. The in-memory
       // `cart` state stays as-is (the next route owns the UI) — only the
@@ -3685,6 +3708,7 @@ export function OrderingPageClient({
         router.push(`/order/${restaurant.slug}/confirmation?orderId=${orderData.id}`);
       }
     } catch (e: any) { toast.error(e.message); }
+    placingRef.current = false;
     setOrderLoading(false);
   };
 
