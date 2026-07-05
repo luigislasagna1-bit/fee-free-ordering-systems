@@ -657,15 +657,18 @@ function ItemModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
-        <div className="flex items-center justify-between p-5 border-b">
+        <div className="flex items-center justify-between p-5 border-b flex-shrink-0">
           <h2 className="text-lg font-bold text-gray-900">{isNew ? t("addMenuItem") : t("editItem")}</h2>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
         </div>
 
         {/* Tabs — each gets its own accent color so the modal sections
             are scannable at a glance (per Luigi's UAT feedback that all
-            same-color tabs look confusing). */}
-        <div className="flex border-b px-5 overflow-x-auto">
+            same-color tabs look confusing). flex-shrink-0 is load-bearing:
+            without it, a tall tab (Pizza/Combo) makes the flex column crush
+            this row to zero height and the tab bar "disappears" (Luigi
+            2026-07-04). */}
+        <div className="flex border-b px-5 overflow-x-auto flex-shrink-0">
           {([
             ["basic",        t("tabBasic"),                                             "border-emerald-500", "text-emerald-700", "bg-emerald-50", "text-emerald-500"],
             ["visibility",   t("tabVisibility"),                                        "border-rose-500",    "text-rose-700",    "bg-rose-50",    "text-rose-500"   ],
@@ -1210,7 +1213,7 @@ function ItemModal({
           )}
         </div>
 
-        <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl">
+        <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl flex-shrink-0">
           <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800">{t("cancel")}</button>
           <button onClick={save} disabled={saving}
             className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 transition disabled:opacity-50">
@@ -1269,7 +1272,7 @@ function ModifierModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col">
-        <div className="flex items-center justify-between p-5 border-b">
+        <div className="flex items-center justify-between p-5 border-b flex-shrink-0">
           <h2 className="text-lg font-bold">{isNew ? t("addModifierGroup") : t("editModifierGroup")}</h2>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
         </div>
@@ -1370,7 +1373,7 @@ function ModifierModal({
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl">
+        <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl flex-shrink-0">
           <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">{t("cancel")}</button>
           <button onClick={save} disabled={saving}
             className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50">
@@ -2280,7 +2283,7 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
             </button>
           </div>
         </div>
-        <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl">
+        <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl flex-shrink-0">
           <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">{t("cancel")}</button>
           <button onClick={save} disabled={saving} className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50">
             {saving ? t("saving") : isNew ? t("addCategory") : t("save")}
