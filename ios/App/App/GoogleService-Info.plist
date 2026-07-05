@@ -2,23 +2,29 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- ⚠️ PLACEHOLDER — replace with the REAL file from the Firebase console:
-	     Project settings → Your apps → Add app → iOS →
-	     bundle id com.feefreeordering.kitchen → download GoogleService-Info.plist
-	     and overwrite this file. The AppDelegate detects the PLACEHOLDER
-	     GOOGLE_APP_ID below and skips Firebase entirely until the real file is
-	     in place, so builds succeed either way — native push just stays off. -->
 	<key>API_KEY</key>
-	<string>PLACEHOLDER</string>
+	<string>AIzaSyDY427_V_pZ_VEW5J1MnX4Y0vgxP4BqV64</string>
 	<key>GCM_SENDER_ID</key>
-	<string>000000000000</string>
+	<string>720779870480</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.feefreeordering.kitchen</string>
 	<key>PROJECT_ID</key>
-	<string>placeholder</string>
+	<string>fee-free-ordering</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fee-free-ordering.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>PLACEHOLDER</string>
+	<string>1:720779870480:ios:75f0f2477a97b288f0e595</string>
 </dict>
 </plist>
