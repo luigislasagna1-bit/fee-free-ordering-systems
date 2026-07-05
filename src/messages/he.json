@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "שם השלב (מוצג ללקוחות, לדוגמה \"בחרו את הפיצה\")",
       "toppingsOptionalTitle": "תוספות הן רשות",
       "toppingsOptionalOnHint": "לקוחות יכולים להשלים הזמנה גם בלי תוספות (למשל גבינה בלבד).",
-      "toppingsOptionalOffHint": "יש לבחור לפחות תוספת אחת כדי להמשיך.",
+      "toppingsOptionalOffHint": "הגדרות החובה / המינימום של כל קבוצת תוספות קובעות אם חייבים לבחור תוספת.",
       "availabilityModeLabel": "כשאינו זמין",
       "availabilityModeHide": "הסתר מהתפריט",
       "availabilityModeShow": "הצג אך חסום הזמנה",

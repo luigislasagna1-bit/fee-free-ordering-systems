@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Vaiheen nimi (näkyy asiakkaille, esim. \"Valitse pizzasi\")",
       "toppingsOptionalTitle": "Täytteet valinnaisia",
       "toppingsOptionalOnHint": "Asiakkaat voivat jättää täytteet pois (esim. pelkkä juusto) ja silti viedä tilauksen kassalle.",
-      "toppingsOptionalOffHint": "Jatkaminen edellyttää vähintään yhtä täytettä.",
+      "toppingsOptionalOffHint": "Kunkin täyteryhmän omat Pakollinen/Minimi-asetukset ratkaisevat, onko täyte valittava.",
       "availabilityModeLabel": "Kun ei saatavilla",
       "availabilityModeHide": "Piilota valikosta",
       "availabilityModeShow": "Näytä, mutta estä tilaaminen",

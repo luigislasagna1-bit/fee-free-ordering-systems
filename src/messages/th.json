@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "ชื่อขั้นตอน (แสดงให้ลูกค้าเห็น เช่น \"เลือกพิซซ่าของคุณ\")",
       "toppingsOptionalTitle": "ท็อปปิ้งไม่บังคับ",
       "toppingsOptionalOnHint": "ลูกค้าสามารถไม่ใส่ท็อปปิ้ง (เช่น ชีสล้วน) และสั่งซื้อได้ตามปกติ",
-      "toppingsOptionalOffHint": "ต้องเลือกท็อปปิ้งอย่างน้อยหนึ่งอย่างจึงจะดำเนินการต่อได้",
+      "toppingsOptionalOffHint": "การตั้งค่า จำเป็น / ขั้นต่ำ ของแต่ละกลุ่มท็อปปิงจะเป็นตัวกำหนดว่าต้องเลือกท็อปปิงหรือไม่",
       "availabilityModeLabel": "เมื่อไม่พร้อมจำหน่าย",
       "availabilityModeHide": "ซ่อนจากเมนู",
       "availabilityModeShow": "แสดงแต่ห้ามสั่ง",

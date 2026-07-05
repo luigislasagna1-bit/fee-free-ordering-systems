@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Soļa nosaukums (redzams klientiem, piem., \"Izvēlieties picu\")",
       "toppingsOptionalTitle": "Piedevas pēc izvēles",
       "toppingsOptionalOnHint": "Klienti var nepievienot piedevas (piemēram, tikai siers) un tomēr noformēt pasūtījumu.",
-      "toppingsOptionalOffHint": "Lai turpinātu, jāizvēlas vismaz viena piedeva.",
+      "toppingsOptionalOffHint": "To, vai piedeva jāizvēlas, nosaka katras piedevu grupas iestatījumi Obligāts / Minimums.",
       "availabilityModeLabel": "Kad nav pieejams",
       "availabilityModeHide": "Slēpt no ēdienkartes",
       "availabilityModeShow": "Rādīt, bet bloķēt pasūtīšanu",

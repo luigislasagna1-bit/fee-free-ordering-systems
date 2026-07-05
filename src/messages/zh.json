@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "步骤名称（向顾客显示，例如\"选择您的披萨\"）",
       "toppingsOptionalTitle": "配料可选",
       "toppingsOptionalOnHint": "顾客可以不添加任何配料（例如纯芝士）即可结账。",
-      "toppingsOptionalOffHint": "至少需要选择一种配料才能继续。",
+      "toppingsOptionalOffHint": "是否必须选择配料，由每个配料组自己的“必选 / 最少”设置决定。",
       "availabilityModeLabel": "不可用时",
       "availabilityModeHide": "从菜单隐藏",
       "availabilityModeShow": "显示但禁止下单",

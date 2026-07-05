@@ -2302,7 +2302,7 @@
       "includedToppingsHint": "Free toppings in base price (0 = use each option's price)",
       "toppingsOptionalTitle": "Toppings optional",
       "toppingsOptionalOnHint": "Customers can add no toppings (e.g. plain cheese) and still check out.",
-      "toppingsOptionalOffHint": "At least one topping is required to continue.",
+      "toppingsOptionalOffHint": "Each topping group's own Required / Min settings decide whether a topping must be picked.",
       "pricePerExtraToppingBySize": "Price per Extra Topping — by Size",
       "addSizesFirstHint": "Add sizes in the Variants tab first, then set a topping price for each.",
       "toppingPricePerSizeHint": "Topping price charged per each additional topping for that size",

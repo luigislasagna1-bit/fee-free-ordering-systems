@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Nombre del paso (visible para los clientes, p. ej. \"Elige tu pizza\")",
       "toppingsOptionalTitle": "Ingredientes opcionales",
       "toppingsOptionalOnHint": "Los clientes pueden no añadir ingredientes (p. ej. solo queso) y aun así finalizar el pedido.",
-      "toppingsOptionalOffHint": "Se requiere al menos un ingrediente para continuar.",
+      "toppingsOptionalOffHint": "Los ajustes Obligatorio / Mínimo de cada grupo de ingredientes deciden si hay que elegir un ingrediente.",
       "availabilityModeLabel": "Cuando no está disponible",
       "availabilityModeHide": "Ocultar del menú",
       "availabilityModeShow": "Mostrar, pero bloquear el pedido",

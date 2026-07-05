@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "단계 이름 (고객에게 표시, 예: \"피자를 선택하세요\")",
       "toppingsOptionalTitle": "토핑 선택 사항",
       "toppingsOptionalOnHint": "고객이 토핑을 추가하지 않고도(예: 플레인 치즈) 결제할 수 있습니다.",
-      "toppingsOptionalOffHint": "계속하려면 토핑을 하나 이상 선택해야 합니다.",
+      "toppingsOptionalOffHint": "토핑 선택이 필수인지 여부는 각 토핑 그룹의 필수/최소 설정이 결정합니다.",
       "availabilityModeLabel": "이용 불가 시간에는",
       "availabilityModeHide": "메뉴에서 숨기기",
       "availabilityModeShow": "표시하되 주문 차단",

@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "اسم الخطوة (يظهر للعملاء، مثل \"اختر البيتزا\")",
       "toppingsOptionalTitle": "الإضافات اختيارية",
       "toppingsOptionalOnHint": "يمكن للعملاء عدم إضافة أي مكوّنات (مثل الجبن السادة) وإتمام الطلب رغم ذلك.",
-      "toppingsOptionalOffHint": "يلزم اختيار إضافة واحدة على الأقل للمتابعة.",
+      "toppingsOptionalOffHint": "إعدادات الإلزامي / الحد الأدنى الخاصة بكل مجموعة إضافات هي التي تحدد ما إذا كان يجب اختيار إضافة.",
       "availabilityModeLabel": "عند عدم التوفر",
       "availabilityModeHide": "إخفاء من القائمة",
       "availabilityModeShow": "إظهار مع منع الطلب",

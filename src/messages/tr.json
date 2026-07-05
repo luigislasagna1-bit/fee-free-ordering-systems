@@ -1963,7 +1963,7 @@
       "comboSlotNameLabel": "Adım adı (müşterilere gösterilir, örn. \"Pizzanızı seçin\")",
       "toppingsOptionalTitle": "Malzemeler isteğe bağlı",
       "toppingsOptionalOnHint": "Müşteriler hiç malzeme eklemeden (ör. sade peynirli) sipariş verebilir.",
-      "toppingsOptionalOffHint": "Devam etmek için en az bir malzeme seçilmelidir.",
+      "toppingsOptionalOffHint": "Bir malzemenin seçilmesinin zorunlu olup olmadığına her malzeme grubunun kendi Zorunlu / Minimum ayarları karar verir.",
       "availabilityModeLabel": "Mevcut olmadığında",
       "availabilityModeHide": "Menüden gizle",
       "availabilityModeShow": "Göster ama siparişi engelle",

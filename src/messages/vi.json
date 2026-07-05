@@ -1963,7 +1963,7 @@
       "comboSlotNameLabel": "Tên bước (hiển thị cho khách hàng, ví dụ \"Chọn pizza của bạn\")",
       "toppingsOptionalTitle": "Topping không bắt buộc",
       "toppingsOptionalOnHint": "Khách hàng có thể không thêm topping nào (ví dụ: chỉ phô mai) mà vẫn thanh toán được.",
-      "toppingsOptionalOffHint": "Cần chọn ít nhất một topping để tiếp tục.",
+      "toppingsOptionalOffHint": "Cài đặt Bắt buộc / Tối thiểu của từng nhóm topping quyết định có phải chọn topping hay không.",
       "availabilityModeLabel": "Khi không có sẵn",
       "availabilityModeHide": "Ẩn khỏi thực đơn",
       "availabilityModeShow": "Hiển thị nhưng chặn đặt món",

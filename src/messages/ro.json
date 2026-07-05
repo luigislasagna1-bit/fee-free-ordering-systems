@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Nume pas (afișat clienților, ex.: „Alege pizza\")",
       "toppingsOptionalTitle": "Toppinguri opționale",
       "toppingsOptionalOnHint": "Clienții pot să nu adauge niciun topping (de ex. doar cu brânză) și pot finaliza comanda.",
-      "toppingsOptionalOffHint": "Este necesar cel puțin un topping pentru a continua.",
+      "toppingsOptionalOffHint": "Setările Obligatoriu / Minim ale fiecărui grup de topping decid dacă trebuie ales un topping.",
       "availabilityModeLabel": "Când nu este disponibil",
       "availabilityModeHide": "Ascunde din meniu",
       "availabilityModeShow": "Afișează, dar blochează comanda",

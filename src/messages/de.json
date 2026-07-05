@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Schrittname (für Kunden sichtbar, z. B. „Wähle deine Pizza\")",
       "toppingsOptionalTitle": "Beläge optional",
       "toppingsOptionalOnHint": "Kunden können auch ohne Beläge bestellen (z. B. nur Käse) und trotzdem zur Kasse gehen.",
-      "toppingsOptionalOffHint": "Mindestens ein Belag ist erforderlich, um fortzufahren.",
+      "toppingsOptionalOffHint": "Ob ein Belag gewählt werden muss, bestimmen die Pflicht-/Mindest-Einstellungen der jeweiligen Belag-Gruppe.",
       "availabilityModeLabel": "Wenn nicht verfügbar",
       "availabilityModeHide": "Aus dem Menü ausblenden",
       "availabilityModeShow": "Anzeigen, aber Bestellung sperren",

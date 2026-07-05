@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "ステップ名（お客様に表示されます。例：「ピザを選ぶ」）",
       "toppingsOptionalTitle": "トッピングは任意",
       "toppingsOptionalOnHint": "お客様はトッピングを追加せずに（例：プレーンチーズ）注文を完了できます。",
-      "toppingsOptionalOffHint": "続行するには少なくとも1つのトッピングが必要です。",
+      "toppingsOptionalOffHint": "トッピングの選択が必須かどうかは、各トッピンググループ自身の必須／最小設定で決まります。",
       "availabilityModeLabel": "提供時間外のとき",
       "availabilityModeHide": "メニューから非表示",
       "availabilityModeShow": "表示するが注文は不可",

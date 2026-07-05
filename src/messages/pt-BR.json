@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Nome da etapa (exibido aos clientes, ex.: \"Escolha sua pizza\")",
       "toppingsOptionalTitle": "Coberturas opcionais",
       "toppingsOptionalOnHint": "Os clientes podem não adicionar nenhuma cobertura (ex.: só queijo) e mesmo assim finalizar o pedido.",
-      "toppingsOptionalOffHint": "É obrigatório escolher pelo menos uma cobertura para continuar.",
+      "toppingsOptionalOffHint": "As configurações Obrigatório / Mínimo de cada grupo de coberturas decidem se é preciso escolher uma cobertura.",
       "availabilityModeLabel": "Quando indisponível",
       "availabilityModeHide": "Ocultar do cardápio",
       "availabilityModeShow": "Mostrar, mas bloquear o pedido",

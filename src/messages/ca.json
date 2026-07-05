@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Nom del pas (visible per als clients, p. ex. \"Tria la teva pizza\")",
       "toppingsOptionalTitle": "Ingredients opcionals",
       "toppingsOptionalOnHint": "Els clients poden no afegir cap ingredient (per exemple, només formatge) i tot i així finalitzar la comanda.",
-      "toppingsOptionalOffHint": "Cal com a mínim un ingredient per continuar.",
+      "toppingsOptionalOffHint": "Els ajustos Obligatori / Mínim de cada grup d'ingredients decideixen si cal triar-ne un.",
       "availabilityModeLabel": "Quan no està disponible",
       "availabilityModeHide": "Amaga del menú",
       "availabilityModeShow": "Mostra, però bloqueja la comanda",

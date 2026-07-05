@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Sammu nimi (kuvatakse klientidele, nt \"Vali oma pitsa\")",
       "toppingsOptionalTitle": "Lisandid pole kohustuslikud",
       "toppingsOptionalOnHint": "Kliendid saavad tellimuse vormistada ka ilma lisanditeta (nt tavaline juustupitsa).",
-      "toppingsOptionalOffHint": "Jätkamiseks on vaja vähemalt üht lisandit.",
+      "toppingsOptionalOffHint": "Kas kate tuleb valida, otsustavad iga katterühma enda Kohustuslik/Miinimum seaded.",
       "availabilityModeLabel": "Kui pole saadaval",
       "availabilityModeHide": "Peida menüüst",
       "availabilityModeShow": "Näita, kuid blokeeri tellimine",

@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Stapnaam (zichtbaar voor klanten, bijv. \"Kies je pizza\")",
       "toppingsOptionalTitle": "Toppings optioneel",
       "toppingsOptionalOnHint": "Klanten kunnen geen toppings toevoegen (bijv. alleen kaas) en toch afrekenen.",
-      "toppingsOptionalOffHint": "Minstens één topping is vereist om verder te gaan.",
+      "toppingsOptionalOffHint": "De eigen Verplicht/Minimum-instellingen van elke toppinggroep bepalen of een topping gekozen moet worden.",
       "availabilityModeLabel": "Wanneer niet beschikbaar",
       "availabilityModeHide": "Verbergen in menu",
       "availabilityModeShow": "Tonen, maar bestellen blokkeren",

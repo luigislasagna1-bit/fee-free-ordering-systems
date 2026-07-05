@@ -1963,7 +1963,7 @@
       "comboSlotNameLabel": "Lépés neve (a vendégeknek látszik, pl. „Válassz pizzát”)",
       "toppingsOptionalTitle": "Feltétek megadása nem kötelező",
       "toppingsOptionalOnHint": "A vásárlók feltétek nélkül is leadhatják a rendelést (pl. csak sajttal).",
-      "toppingsOptionalOffHint": "A folytatáshoz legalább egy feltét kiválasztása szükséges.",
+      "toppingsOptionalOffHint": "Azt, hogy kell-e feltétet választani, az egyes feltétcsoportok saját Kötelező / Minimum beállításai döntik el.",
       "availabilityModeLabel": "Ha nem elérhető",
       "availabilityModeHide": "Elrejtés az étlapról",
       "availabilityModeShow": "Mutasd, de tiltsd a rendelést",

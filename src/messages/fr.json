@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Nom de l'étape (visible par les clients, ex. « Choisissez votre pizza »)",
       "toppingsOptionalTitle": "Garnitures facultatives",
       "toppingsOptionalOnHint": "Les clients peuvent ne sélectionner aucune garniture (par ex. fromage nature) et valider leur commande.",
-      "toppingsOptionalOffHint": "Au moins une garniture est requise pour continuer.",
+      "toppingsOptionalOffHint": "Les réglages Requis / Minimum de chaque groupe de garnitures déterminent si une garniture doit être choisie.",
       "availabilityModeLabel": "Quand indisponible",
       "availabilityModeHide": "Masquer du menu",
       "availabilityModeShow": "Afficher, mais bloquer la commande",

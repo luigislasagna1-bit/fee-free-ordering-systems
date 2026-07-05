@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Nome del passaggio (mostrato ai clienti, es. \"Scegli la tua pizza\")",
       "toppingsOptionalTitle": "Aggiunte facoltative",
       "toppingsOptionalOnHint": "I clienti possono non aggiungere alcun ingrediente (ad es. solo formaggio) e procedere comunque all'ordine.",
-      "toppingsOptionalOffHint": "È necessario almeno un ingrediente per continuare.",
+      "toppingsOptionalOffHint": "Sono le impostazioni Obbligatorio / Minimo di ogni gruppo di condimenti a decidere se va scelto un condimento.",
       "availabilityModeLabel": "Quando non è disponibile",
       "availabilityModeHide": "Nascondi dal menu",
       "availabilityModeShow": "Mostra, ma blocca l'ordine",

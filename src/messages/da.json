@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Trinnavn (vises til kunder, f.eks. \"Vælg din pizza\")",
       "toppingsOptionalTitle": "Fyld valgfrit",
       "toppingsOptionalOnHint": "Kunder kan undlade at tilføje fyld (f.eks. ren ost) og stadig gennemføre bestillingen.",
-      "toppingsOptionalOffHint": "Mindst ét fyld er påkrævet for at fortsætte.",
+      "toppingsOptionalOffHint": "Hver fyldgruppes egne Påkrævet/Min-indstillinger afgør, om der skal vælges fyld.",
       "availabilityModeLabel": "Når ikke tilgængelig",
       "availabilityModeHide": "Skjul fra menuen",
       "availabilityModeShow": "Vis, men bloker bestilling",

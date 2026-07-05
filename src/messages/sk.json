@@ -2708,7 +2708,7 @@
       "comboSlotNameLabel": "Názov kroku (zobrazí sa zákazníkom, napr. „Vyberte si pizzu\")",
       "toppingsOptionalTitle": "Ingrediencie voliteľné",
       "toppingsOptionalOnHint": "Zákazníci môžu nepridať žiadne ingrediencie (napr. iba syr) a aj tak dokončiť objednávku.",
-      "toppingsOptionalOffHint": "Na pokračovanie je potrebná aspoň jedna ingrediencia.",
+      "toppingsOptionalOffHint": "Či je potrebné prílohu vybrať, určujú vlastné nastavenia Povinné / Minimum každej skupiny príloh.",
       "availabilityModeLabel": "Keď nie je k dispozícii",
       "availabilityModeHide": "Skryť z ponuky",
       "availabilityModeShow": "Zobraziť, ale blokovať objednanie",

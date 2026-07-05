@@ -1963,7 +1963,7 @@
       "comboSlotNameLabel": "Nazwa kroku (widoczna dla klientów, np. „Wybierz pizzę”)",
       "toppingsOptionalTitle": "Dodatki opcjonalne",
       "toppingsOptionalOnHint": "Klienci mogą nie wybierać żadnych dodatków (np. sama pizza z serem) i mimo to złożyć zamówienie.",
-      "toppingsOptionalOffHint": "Aby kontynuować, wymagany jest co najmniej jeden dodatek.",
+      "toppingsOptionalOffHint": "O tym, czy dodatek trzeba wybrać, decydują ustawienia Wymagane / Minimum każdej grupy dodatków.",
       "availabilityModeLabel": "Gdy niedostępne",
       "availabilityModeHide": "Ukryj w menu",
       "availabilityModeShow": "Pokaż, ale zablokuj zamawianie",

@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Naziv koraka (prikazuje se kupcima, npr. \"Odaberite pizzu\")",
       "toppingsOptionalTitle": "Dodaci nisu obavezni",
       "toppingsOptionalOnHint": "Kupci mogu ne odabrati nijedan dodatak (npr. samo sir) i svejedno dovršiti narudžbu.",
-      "toppingsOptionalOffHint": "Za nastavak je potreban barem jedan dodatak.",
+      "toppingsOptionalOffHint": "Hoće li se dodatak morati odabrati, određuju postavke Obavezno / Minimum svake grupe dodataka.",
       "availabilityModeLabel": "Kad nije dostupno",
       "availabilityModeHide": "Sakrij iz izbornika",
       "availabilityModeShow": "Prikaži, ali blokiraj naručivanje",

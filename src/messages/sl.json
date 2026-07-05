@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Ime koraka (vidno strankam, npr. »Izberite svojo pico«)",
       "toppingsOptionalTitle": "Dodatki neobvezni",
       "toppingsOptionalOnHint": "Stranke lahko ne dodajo nobenega dodatka (npr. samo sir) in vseeno zaključijo naročilo.",
-      "toppingsOptionalOffHint": "Za nadaljevanje je potreben vsaj en dodatek.",
+      "toppingsOptionalOffHint": "Ali je treba dodatek izbrati, določajo nastavitve Obvezno / Najmanj vsake skupine dodatkov.",
       "availabilityModeLabel": "Ko ni na voljo",
       "availabilityModeHide": "Skrij iz menija",
       "availabilityModeShow": "Prikaži, a prepreči naročanje",

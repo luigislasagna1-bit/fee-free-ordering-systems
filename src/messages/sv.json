@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Stegnamn (visas för kunder, t.ex. \"Välj din pizza\")",
       "toppingsOptionalTitle": "Pålägg valfria",
       "toppingsOptionalOnHint": "Kunder kan välja inga pålägg (t.ex. enbart ost) och ändå slutföra köpet.",
-      "toppingsOptionalOffHint": "Minst ett pålägg krävs för att fortsätta.",
+      "toppingsOptionalOffHint": "Varje fyllningsgrupps egna Obligatorisk/Min-inställningar avgör om en fyllning måste väljas.",
       "availabilityModeLabel": "När den inte är tillgänglig",
       "availabilityModeHide": "Dölj från menyn",
       "availabilityModeShow": "Visa, men blockera beställning",

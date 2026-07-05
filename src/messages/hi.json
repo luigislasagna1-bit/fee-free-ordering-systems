@@ -2393,7 +2393,7 @@
       "comboSlotNameLabel": "चरण का नाम (ग्राहकों को दिखता है, जैसे \"अपना पिज़्ज़ा चुनें\")",
       "toppingsOptionalTitle": "टॉपिंग वैकल्पिक",
       "toppingsOptionalOnHint": "ग्राहक बिना किसी टॉपिंग के (जैसे सादा चीज़) भी ऑर्डर पूरा कर सकते हैं।",
-      "toppingsOptionalOffHint": "आगे बढ़ने के लिए कम से कम एक टॉपिंग आवश्यक है।",
+      "toppingsOptionalOffHint": "टॉपिंग चुनना ज़रूरी है या नहीं, यह हर टॉपिंग समूह की अपनी आवश्यक / न्यूनतम सेटिंग तय करती है।",
       "availabilityModeLabel": "जब उपलब्ध न हो",
       "availabilityModeHide": "मेनू से छिपाएँ",
       "availabilityModeShow": "दिखाएँ, पर ऑर्डर रोकें",

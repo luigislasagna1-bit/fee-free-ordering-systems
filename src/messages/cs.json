@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Název kroku (zobrazí se zákazníkům, např. „Vyberte si pizzu\")",
       "toppingsOptionalTitle": "Přílohy volitelné",
       "toppingsOptionalOnHint": "Zákazníci nemusí přidat žádné přílohy (např. jen sýr) a přesto mohou dokončit objednávku.",
-      "toppingsOptionalOffHint": "Pro pokračování je nutná alespoň jedna příloha.",
+      "toppingsOptionalOffHint": "Zda je nutné přílohu vybrat, určují vlastní nastavení Povinné / Minimum každé skupiny příloh.",
       "availabilityModeLabel": "Když není k dispozici",
       "availabilityModeHide": "Skrýt z nabídky",
       "availabilityModeShow": "Zobrazit, ale blokovat objednání",

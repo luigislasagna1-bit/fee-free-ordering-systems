@@ -2019,7 +2019,7 @@
       "comboSlotNameLabel": "Trinnnavn (vises for kundene, f.eks. \"Velg pizzaen din\")",
       "toppingsOptionalTitle": "Fyll valgfritt",
       "toppingsOptionalOnHint": "Kunder kan velge ingen fyll (f.eks. ren ost) og likevel fullføre bestillingen.",
-      "toppingsOptionalOffHint": "Minst ett fyll kreves for å fortsette.",
+      "toppingsOptionalOffHint": "Hver fyllgruppes egne Påkrevd/Min-innstillinger avgjør om fyll må velges.",
       "availabilityModeLabel": "Når ikke tilgjengelig",
       "availabilityModeHide": "Skjul fra menyen",
       "availabilityModeShow": "Vis, men blokker bestilling",
