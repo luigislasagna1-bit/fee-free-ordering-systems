@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "يتيح للعملاء إضافة كمية مضاعفة (أو أكثر) من نفس الإضافة — وتُحتسب كل واحدة كإضافة منفصلة.",
       "dropToMoveItemHere": "أفلت لنقل الصنف إلى هذه الفئة",
       "itemMovedToCategory": "تم نقل “{name}” إلى {category}",
-      "moveItemFailed": "تعذر نقل الصنف — يرجى المحاولة مرة أخرى."
+      "moveItemFailed": "تعذر نقل الصنف — يرجى المحاولة مرة أخرى.",
+      "expandAll": "توسيع الكل",
+      "collapseAll": "طي الكل"
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",

@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Permet aux clients d'ajouter une garniture en double (ou plus) — chacune compte comme une garniture distincte.",
       "dropToMoveItemHere": "Déposez pour déplacer l'article dans cette catégorie",
       "itemMovedToCategory": "« {name} » déplacé vers {category}",
-      "moveItemFailed": "Impossible de déplacer l'article — veuillez réessayer."
+      "moveItemFailed": "Impossible de déplacer l'article — veuillez réessayer.",
+      "expandAll": "Tout déplier",
+      "collapseAll": "Tout replier"
     },
     "promotionsList": {
       "stackingMaster": "Maître",

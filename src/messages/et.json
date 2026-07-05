@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Võimaldab klientidel lisada lisandit topelt (või rohkem) — iga loetakse eraldi lisandiks.",
       "dropToMoveItemHere": "Lase lahti, et tõsta toode sellesse kategooriasse",
       "itemMovedToCategory": "„{name}” tõstetud kategooriasse {category}",
-      "moveItemFailed": "Toodet ei õnnestunud teisaldada — proovi uuesti."
+      "moveItemFailed": "Toodet ei õnnestunud teisaldada — proovi uuesti.",
+      "expandAll": "Laienda kõik",
+      "collapseAll": "Ahenda kõik"
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

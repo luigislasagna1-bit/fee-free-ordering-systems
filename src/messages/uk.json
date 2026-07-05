@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Дозволяє клієнтам додати подвійну (або більшу) порцію добавки — кожна рахується як окрема добавка.",
       "dropToMoveItemHere": "Відпустіть, щоб перемістити позицію в цю категорію",
       "itemMovedToCategory": "«{name}» переміщено до {category}",
-      "moveItemFailed": "Не вдалося перемістити позицію — спробуйте ще раз."
+      "moveItemFailed": "Не вдалося перемістити позицію — спробуйте ще раз.",
+      "expandAll": "Розгорнути все",
+      "collapseAll": "Згорнути все"
     },
     "promotionsList": {
       "stackingMaster": "Майстер",

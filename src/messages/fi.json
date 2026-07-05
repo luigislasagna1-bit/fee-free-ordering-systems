@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Antaa asiakkaiden lisätä täytteen tuplana (tai enemmän) — jokainen lasketaan erilliseksi täytteeksi.",
       "dropToMoveItemHere": "Pudota siirtääksesi tuotteen tähän kategoriaan",
       "itemMovedToCategory": "”{name}” siirretty kategoriaan {category}",
-      "moveItemFailed": "Tuotetta ei voitu siirtää — yritä uudelleen."
+      "moveItemFailed": "Tuotetta ei voitu siirtää — yritä uudelleen.",
+      "expandAll": "Laajenna kaikki",
+      "collapseAll": "Supista kaikki"
     },
     "promotionsList": {
       "stackingMaster": "Master",

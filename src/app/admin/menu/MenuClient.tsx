@@ -3082,6 +3082,24 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
               {!categorySelectMode ? (
                 <>
                   <span className="text-xs text-gray-500">{t("categoryCount", { n: categories.length })}</span>
+                  {/* Bulk expand/collapse (Fabrizio cmr809iu8) — a 113-category
+                      menu is unmanageable with everything open. Mirrors the
+                      customer page's Expand all | Collapse all. */}
+                  <span className="flex items-center gap-1 text-xs font-semibold">
+                    <button
+                      onClick={() => setExpandedCats(Object.fromEntries(categories.map((c) => [c.id, true])))}
+                      className="text-emerald-700 hover:text-emerald-900 px-2 py-1 rounded hover:bg-white transition"
+                    >
+                      {t("expandAll")}
+                    </button>
+                    <span className="text-gray-300">|</span>
+                    <button
+                      onClick={() => setExpandedCats(Object.fromEntries(categories.map((c) => [c.id, false])))}
+                      className="text-emerald-700 hover:text-emerald-900 px-2 py-1 rounded hover:bg-white transition"
+                    >
+                      {t("collapseAll")}
+                    </button>
+                  </span>
                   <button
                     onClick={() => setCategorySelectMode(true)}
                     className="text-xs font-semibold text-gray-600 hover:text-gray-900 px-2 py-1 rounded hover:bg-white transition"

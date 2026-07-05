@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Permite que os clientes adicionem o dobro (ou mais) de um adicional — cada um conta como um adicional separado.",
       "dropToMoveItemHere": "Solte para mover o item para esta categoria",
       "itemMovedToCategory": "“{name}” movido para {category}",
-      "moveItemFailed": "Não foi possível mover o item — tente novamente."
+      "moveItemFailed": "Não foi possível mover o item — tente novamente.",
+      "expandAll": "Expandir tudo",
+      "collapseAll": "Recolher tudo"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "מאפשר ללקוחות להוסיף תוספת בכפול (או יותר) — כל אחת נספרת כתוספת נפרדת.",
       "dropToMoveItemHere": "שחררו כדי להעביר את הפריט לקטגוריה זו",
       "itemMovedToCategory": "“{name}” הועבר אל {category}",
-      "moveItemFailed": "לא ניתן להעביר את הפריט — נסו שוב."
+      "moveItemFailed": "לא ניתן להעביר את הפריט — נסו שוב.",
+      "expandAll": "הרחב הכול",
+      "collapseAll": "כווץ הכול"
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",

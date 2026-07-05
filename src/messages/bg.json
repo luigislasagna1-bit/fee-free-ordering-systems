@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Позволява на клиентите да добавят двойно (или повече) от една добавка — всяка се брои като отделна добавка.",
       "dropToMoveItemHere": "Пуснете, за да преместите артикула в тази категория",
       "itemMovedToCategory": "„{name}“ е преместен в {category}",
-      "moveItemFailed": "Артикулът не можа да бъде преместен — опитайте отново."
+      "moveItemFailed": "Артикулът не можа да бъде преместен — опитайте отново.",
+      "expandAll": "Разгъни всички",
+      "collapseAll": "Свий всички"
     },
     "promotionsList": {
       "stackingMaster": "Главна",

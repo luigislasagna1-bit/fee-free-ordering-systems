@@ -2435,7 +2435,9 @@
       "allowMultipleToppingsHint": "ग्राहकों को किसी टॉपिंग को दोगुना (या उससे अधिक) जोड़ने देता है — हर एक अलग टॉपिंग के रूप में गिनी जाती है।",
       "dropToMoveItemHere": "आइटम को इस श्रेणी में ले जाने के लिए छोड़ें",
       "itemMovedToCategory": "“{name}” को {category} में ले जाया गया",
-      "moveItemFailed": "आइटम स्थानांतरित नहीं हो सका — कृपया फिर से प्रयास करें।"
+      "moveItemFailed": "आइटम स्थानांतरित नहीं हो सका — कृपया फिर से प्रयास करें।",
+      "expandAll": "सभी विस्तृत करें",
+      "collapseAll": "सभी संक्षिप्त करें"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",

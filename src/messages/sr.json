@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Omogućava kupcima da dodaju duplo (ili više) jednog dodatka — svaki se računa kao poseban dodatak.",
       "dropToMoveItemHere": "Otpustite da premestite stavku u ovu kategoriju",
       "itemMovedToCategory": "„{name}“ premešteno u {category}",
-      "moveItemFailed": "Stavku nije bilo moguće premestiti — pokušajte ponovo."
+      "moveItemFailed": "Stavku nije bilo moguće premestiti — pokušajte ponovo.",
+      "expandAll": "Прошири све",
+      "collapseAll": "Скупи све"
     },
     "promotionsList": {
       "stackingMaster": "Master",

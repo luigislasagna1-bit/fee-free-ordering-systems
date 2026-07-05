@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Permet als clients afegir el doble (o més) d'un ingredient: cadascun compta com un ingredient independent.",
       "dropToMoveItemHere": "Deixa anar per moure l'article a aquesta categoria",
       "itemMovedToCategory": "«{name}» mogut a {category}",
-      "moveItemFailed": "No s'ha pogut moure l'article — torna-ho a provar."
+      "moveItemFailed": "No s'ha pogut moure l'article — torna-ho a provar.",
+      "expandAll": "Expandeix-ho tot",
+      "collapseAll": "Redueix-ho tot"
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

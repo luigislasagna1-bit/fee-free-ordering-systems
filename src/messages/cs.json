@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Umožní zákazníkům přidat dvojitou (nebo větší) porci přísady — každá se počítá jako samostatná přísada.",
       "dropToMoveItemHere": "Přetažením sem přesunete položku do této kategorie",
       "itemMovedToCategory": "„{name}“ přesunuto do {category}",
-      "moveItemFailed": "Položku se nepodařilo přesunout — zkuste to znovu."
+      "moveItemFailed": "Položku se nepodařilo přesunout — zkuste to znovu.",
+      "expandAll": "Rozbalit vše",
+      "collapseAll": "Sbalit vše"
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",

@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Ermöglicht Kunden, einen Belag doppelt (oder mehrfach) hinzuzufügen — jeder zählt als separater Belag.",
       "dropToMoveItemHere": "Loslassen, um den Artikel in diese Kategorie zu verschieben",
       "itemMovedToCategory": "„{name}“ nach {category} verschoben",
-      "moveItemFailed": "Artikel konnte nicht verschoben werden — bitte erneut versuchen."
+      "moveItemFailed": "Artikel konnte nicht verschoben werden — bitte erneut versuchen.",
+      "expandAll": "Alle ausklappen",
+      "collapseAll": "Alle einklappen"
     },
     "promotionsList": {
       "stackingMaster": "Master",

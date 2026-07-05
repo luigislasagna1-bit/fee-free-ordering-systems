@@ -2005,7 +2005,9 @@
       "allowMultipleToppingsHint": "Pozwala klientom dodać podwójną (lub większą) porcję dodatku — każda liczona jest jako osobny dodatek.",
       "dropToMoveItemHere": "Upuść, aby przenieść pozycję do tej kategorii",
       "itemMovedToCategory": "Przeniesiono „{name}” do {category}",
-      "moveItemFailed": "Nie udało się przenieść pozycji — spróbuj ponownie."
+      "moveItemFailed": "Nie udało się przenieść pozycji — spróbuj ponownie.",
+      "expandAll": "Rozwiń wszystko",
+      "collapseAll": "Zwiń wszystko"
     },
     "promotionsList": {
       "stackingMaster": "Master",

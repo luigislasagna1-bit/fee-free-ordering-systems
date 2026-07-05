@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Ļauj klientiem pievienot piedevu dubultā (vai vairāk) — katra tiek skaitīta kā atsevišķa piedeva.",
       "dropToMoveItemHere": "Atlaidiet, lai pārvietotu produktu uz šo kategoriju",
       "itemMovedToCategory": "“{name}” pārvietots uz {category}",
-      "moveItemFailed": "Produktu neizdevās pārvietot — mēģiniet vēlreiz."
+      "moveItemFailed": "Produktu neizdevās pārvietot — mēģiniet vēlreiz.",
+      "expandAll": "Izvērst visu",
+      "collapseAll": "Sakļaut visu"
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

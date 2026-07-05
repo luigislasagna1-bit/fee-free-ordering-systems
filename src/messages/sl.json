@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Strankam omogoča, da dodajo dvojni (ali večji) odmerek dodatka — vsak šteje kot ločen dodatek.",
       "dropToMoveItemHere": "Spustite, da premaknete izdelek v to kategorijo",
       "itemMovedToCategory": "„{name}“ premaknjeno v {category}",
-      "moveItemFailed": "Izdelka ni bilo mogoče premakniti — poskusite znova."
+      "moveItemFailed": "Izdelka ni bilo mogoče premakniti — poskusite znova.",
+      "expandAll": "Razširi vse",
+      "collapseAll": "Strni vse"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Lar kundene legge til dobbel (eller mer) av en topping — hver enkelt teller som en egen topping.",
       "dropToMoveItemHere": "Slipp for å flytte varen til denne kategorien",
       "itemMovedToCategory": "“{name}” flyttet til {category}",
-      "moveItemFailed": "Kunne ikke flytte varen — prøv igjen."
+      "moveItemFailed": "Kunne ikke flytte varen — prøv igjen.",
+      "expandAll": "Utvid alle",
+      "collapseAll": "Skjul alle"
     },
     "promotionsList": {
       "stackingMaster": "Master",

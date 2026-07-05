@@ -2479,7 +2479,9 @@
       "tabVisibility": "Visibility",
       "dropToMoveItemHere": "Drop to move the item into this category",
       "itemMovedToCategory": "Moved “{name}” to {category}",
-      "moveItemFailed": "Couldn't move the item — please try again."
+      "moveItemFailed": "Couldn't move the item — please try again.",
+      "expandAll": "Expand all",
+      "collapseAll": "Collapse all"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -2750,7 +2750,9 @@
       "allowMultipleToppingsHint": "Umožní zákazníkom pridať dvojitú (alebo väčšiu) porciu prísady — každá sa počíta ako samostatná prísada.",
       "dropToMoveItemHere": "Pustením sem presuniete položku do tejto kategórie",
       "itemMovedToCategory": "„{name}“ presunuté do {category}",
-      "moveItemFailed": "Položku sa nepodarilo presunúť — skúste to znova."
+      "moveItemFailed": "Položku sa nepodarilo presunúť — skúste to znova.",
+      "expandAll": "Rozbaliť všetko",
+      "collapseAll": "Zbaliť všetko"
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",

@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Laat klanten een beleg dubbel (of meer) toevoegen — elk telt als een afzonderlijk beleg.",
       "dropToMoveItemHere": "Laat los om het item naar deze categorie te verplaatsen",
       "itemMovedToCategory": "“{name}” verplaatst naar {category}",
-      "moveItemFailed": "Kon het item niet verplaatsen — probeer het opnieuw."
+      "moveItemFailed": "Kon het item niet verplaatsen — probeer het opnieuw.",
+      "expandAll": "Alles uitklappen",
+      "collapseAll": "Alles inklappen"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "お客様が同じトッピングを2倍（以上）追加できるようになります。各トッピングは個別のトッピングとして計算されます。",
       "dropToMoveItemHere": "ここにドロップするとこのカテゴリーに移動します",
       "itemMovedToCategory": "「{name}」を{category}に移動しました",
-      "moveItemFailed": "商品を移動できませんでした — もう一度お試しください。"
+      "moveItemFailed": "商品を移動できませんでした — もう一度お試しください。",
+      "expandAll": "すべて展開",
+      "collapseAll": "すべて折りたたむ"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

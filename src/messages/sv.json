@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Låter kunderna lägga till dubbel (eller mer) av en topping — varje räknas som en separat topping.",
       "dropToMoveItemHere": "Släpp för att flytta artikeln till den här kategorin",
       "itemMovedToCategory": "”{name}” flyttad till {category}",
-      "moveItemFailed": "Kunde inte flytta artikeln — försök igen."
+      "moveItemFailed": "Kunde inte flytta artikeln — försök igen.",
+      "expandAll": "Expandera alla",
+      "collapseAll": "Fäll ihop alla"
     },
     "promotionsList": {
       "stackingMaster": "Master",

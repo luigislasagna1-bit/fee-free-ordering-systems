@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Permite aos clientes adicionar o dobro (ou mais) de um ingrediente — cada um conta como um ingrediente separado.",
       "dropToMoveItemHere": "Largue para mover o item para esta categoria",
       "itemMovedToCategory": "“{name}” movido para {category}",
-      "moveItemFailed": "Não foi possível mover o item — tente novamente."
+      "moveItemFailed": "Não foi possível mover o item — tente novamente.",
+      "expandAll": "Expandir tudo",
+      "collapseAll": "Recolher tudo"
     },
     "promotionsList": {
       "stackingMaster": "Master",

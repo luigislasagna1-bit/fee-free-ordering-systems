@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "Le permite clienților să adauge dublu (sau mai mult) dintr-un topping — fiecare se numără ca topping separat.",
       "dropToMoveItemHere": "Eliberați pentru a muta produsul în această categorie",
       "itemMovedToCategory": "„{name}” mutat în {category}",
-      "moveItemFailed": "Produsul nu a putut fi mutat — încercați din nou."
+      "moveItemFailed": "Produsul nu a putut fi mutat — încercați din nou.",
+      "expandAll": "Extinde tot",
+      "collapseAll": "Restrânge tot"
     },
     "promotionsList": {
       "stackingMaster": "Master",

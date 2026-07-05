@@ -2061,7 +2061,9 @@
       "allowMultipleToppingsHint": "ให้ลูกค้าเพิ่มท็อปปิ้งเป็นสองเท่า (หรือมากกว่า) ได้ โดยแต่ละครั้งจะนับเป็นท็อปปิ้งแยกกัน",
       "dropToMoveItemHere": "วางเพื่อย้ายรายการไปยังหมวดหมู่นี้",
       "itemMovedToCategory": "ย้าย “{name}” ไปที่ {category} แล้ว",
-      "moveItemFailed": "ย้ายรายการไม่สำเร็จ — โปรดลองอีกครั้ง"
+      "moveItemFailed": "ย้ายรายการไม่สำเร็จ — โปรดลองอีกครั้ง",
+      "expandAll": "ขยายทั้งหมด",
+      "collapseAll": "ยุบทั้งหมด"
     },
     "promotionsList": {
       "stackingMaster": "Master",

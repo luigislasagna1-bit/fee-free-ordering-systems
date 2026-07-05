@@ -2005,7 +2005,9 @@
       "allowMultipleToppingsHint": "Cho phép khách hàng thêm gấp đôi (hoặc nhiều hơn) một loại topping — mỗi phần được tính là một topping riêng.",
       "dropToMoveItemHere": "Thả để chuyển món vào danh mục này",
       "itemMovedToCategory": "Đã chuyển “{name}” sang {category}",
-      "moveItemFailed": "Không thể chuyển món — vui lòng thử lại."
+      "moveItemFailed": "Không thể chuyển món — vui lòng thử lại.",
+      "expandAll": "Mở rộng tất cả",
+      "collapseAll": "Thu gọn tất cả"
     },
     "promotionsList": {
       "stackingMaster": "Master",

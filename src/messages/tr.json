@@ -2005,7 +2005,9 @@
       "allowMultipleToppingsHint": "Müşterilerin bir malzemeyi iki kat (veya daha fazla) eklemesine olanak tanır — her biri ayrı bir malzeme olarak sayılır.",
       "dropToMoveItemHere": "Ürünü bu kategoriye taşımak için bırakın",
       "itemMovedToCategory": "“{name}” {category} kategorisine taşındı",
-      "moveItemFailed": "Ürün taşınamadı — lütfen tekrar deneyin."
+      "moveItemFailed": "Ürün taşınamadı — lütfen tekrar deneyin.",
+      "expandAll": "Tümünü genişlet",
+      "collapseAll": "Tümünü daralt"
     },
     "promotionsList": {
       "stackingMaster": "Ana",
