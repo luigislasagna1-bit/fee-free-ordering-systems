@@ -1030,15 +1030,22 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     const wake = () => {
       if (document.visibilityState === "visible") fetchRes();
     };
+    // Push-landed + iOS-resume signals — same rationale as the orders poll
+    // (a reservation push can also arrive while WKWebView reports hidden).
+    const pushWake = () => fetchRes();
     document.addEventListener("visibilitychange", wake);
     window.addEventListener("focus", wake);
     window.addEventListener("online", wake);
+    window.addEventListener("pageshow", wake);
+    window.addEventListener("ffo:kitchen-refresh", pushWake);
     return () => {
       cancelled = true;
       clearInterval(id);
       document.removeEventListener("visibilitychange", wake);
       window.removeEventListener("focus", wake);
       window.removeEventListener("online", wake);
+      window.removeEventListener("pageshow", wake);
+      window.removeEventListener("ffo:kitchen-refresh", pushWake);
     };
   }, [activeTab]);
 
@@ -2504,14 +2511,26 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       // because the tab is being hidden, not shown).
       if (document.visibilityState === "visible") fetchOrders();
     };
+    // A native push just landed (see native-push.ts) — the strongest "new
+    // order NOW" signal. Fetch unconditionally: on iOS the push can arrive
+    // while the WKWebView still reports itself hidden, and waiting for
+    // visibility meant the phone RANG but the list stayed stale until a
+    // touch (build-17 bug, Luigi 2026-07-04).
+    const pushWake = () => fetchOrders();
     document.addEventListener("visibilitychange", wake);
     window.addEventListener("focus", wake);
     window.addEventListener("online", wake);
+    // pageshow = the resume signal iOS WKWebView fires reliably (incl.
+    // back-forward-cache restores) even when visibilitychange doesn't.
+    window.addEventListener("pageshow", wake);
+    window.addEventListener("ffo:kitchen-refresh", pushWake);
     return () => {
       clearInterval(interval);
       document.removeEventListener("visibilitychange", wake);
       window.removeEventListener("focus", wake);
       window.removeEventListener("online", wake);
+      window.removeEventListener("pageshow", wake);
+      window.removeEventListener("ffo:kitchen-refresh", pushWake);
     };
   }, [fetchOrders]);
 

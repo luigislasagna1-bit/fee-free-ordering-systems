@@ -103,9 +103,24 @@ export async function registerKitchenPush(): Promise<void> {
     await push.addListener("registrationError", (err: unknown) => {
       console.error("[native-push] registration error", err);
     });
+    // A push landing is the strongest "there's a new order RIGHT NOW" signal —
+    // stronger than visibilitychange, which iOS WKWebView doesn't always fire
+    // on app resume. Broadcast a window event so the kitchen pollers refetch
+    // IMMEDIATELY instead of waiting for the (possibly just-resumed) 4s timer.
+    // Fixes the iOS build-17 bug: the phone RANG but the order didn't appear
+    // in the list until the screen was touched. Luigi 2026-07-04.
+    const broadcastRefresh = () => {
+      try { window.dispatchEvent(new CustomEvent("ffo:kitchen-refresh")); } catch { /* SSR-safe */ }
+    };
+    await push.addListener("pushNotificationReceived", () => {
+      // App in FOREGROUND when the push arrived.
+      broadcastRefresh();
+    });
     await push.addListener("pushNotificationActionPerformed", (action: any) => {
+      // User tapped the notification banner (app was backgrounded/locked).
       const orderId = action?.notification?.data?.orderId;
       if (orderId) console.log("[native-push] opened from order", orderId);
+      broadcastRefresh();
     });
 
     const perm = await push.requestPermissions();
