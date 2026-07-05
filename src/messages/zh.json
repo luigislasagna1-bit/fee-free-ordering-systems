@@ -256,7 +256,8 @@
       "promoUnlocked": "您解锁了 {name}！",
       "couponNoEffect": "{code} 有效，但目前不会为您的购物车带来任何折扣——某些商品（如礼品卡）可能被排除，或未达到最低消费。",
       "itemSoldOutError": "“{name}”刚刚售罄——请从购物车中移除后继续。",
-      "deliveryPrepaidRequired": "本餐厅的外送订单必须在线支付——请选择在线支付方式。"
+      "deliveryPrepaidRequired": "本餐厅的外送订单必须在线支付——请选择在线支付方式。",
+      "itemSoldOutRemoved": "“{name}”在您上次访问后已售罄——我们已将其从您的购物车中移除。"
     },
     "searchMenu": "搜索菜单…",
     "signIn": "登录",

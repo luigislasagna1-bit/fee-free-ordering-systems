@@ -256,7 +256,8 @@
       "promoUnlocked": "Avasid pakkumise {name}!",
       "couponNoEffect": "{code} on kehtiv, kuid praegu ei alanda see teie ostukorvis midagi — mõned tooted (nt kinkekaardid) võivad olla välistatud või miinimum pole täidetud.",
       "itemSoldOutError": "\"{name}\" müüdi just läbi — jätkamiseks eemaldage see ostukorvist.",
-      "deliveryPrepaidRequired": "Selle restorani kohaletoimetamisega tellimused tuleb maksta veebis — valige veebimakseviis."
+      "deliveryPrepaidRequired": "Selle restorani kohaletoimetamisega tellimused tuleb maksta veebis — valige veebimakseviis.",
+      "itemSoldOutRemoved": "\"{name}\" müüdi pärast teie viimast külastust läbi — eemaldasime selle teie ostukorvist."
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",

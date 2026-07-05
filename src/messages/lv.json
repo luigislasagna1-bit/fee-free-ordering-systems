@@ -256,7 +256,8 @@
       "promoUnlocked": "Jūs atbloķējāt {name}!",
       "couponNoEffect": "{code} ir derīgs, taču šobrīd tas neko nesamazina jūsu grozā — daži produkti (piemēram, dāvanu kartes) var būt izslēgti vai nav sasniegts minimums.",
       "itemSoldOutError": "\"{name}\" tikko izpārdots — izņemiet to no groza, lai turpinātu.",
-      "deliveryPrepaidRequired": "Šī restorāna piegādes pasūtījumi jāapmaksā tiešsaistē — izvēlieties tiešsaistes maksājuma veidu."
+      "deliveryPrepaidRequired": "Šī restorāna piegādes pasūtījumi jāapmaksā tiešsaistē — izvēlieties tiešsaistes maksājuma veidu.",
+      "itemSoldOutRemoved": "\"{name}\" ir izpārdots kopš jūsu pēdējā apmeklējuma — mēs to izņēmām no jūsu groza."
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",

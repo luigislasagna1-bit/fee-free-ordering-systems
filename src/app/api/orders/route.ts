@@ -675,6 +675,16 @@ export async function POST(req: NextRequest) {
           if (!cm) {
             return NextResponse.json({ error: `Combo references unknown menu item: ${cid}` }, { status: 400 });
           }
+          // Sold-out COMPONENT — same rule as parents (2026-07-04 sold-out
+          // bypass fix only covered top-level items; a sold-out dish could
+          // still ship inside a combo). Same code so the client's localized
+          // "{name} just sold out" message renders.
+          if ((cm as any).isSoldOut) {
+            return NextResponse.json(
+              { error: `"${cm.name}" is sold out.`, code: "item_sold_out", itemName: cm.name },
+              { status: 400 },
+            );
+          }
           // Greedily assign to the first slot that accepts this item and
           // still has room. Eligibility = explicit itemId OR category match.
           let assigned = -1;
@@ -871,6 +881,16 @@ export async function POST(req: NextRequest) {
           if (!childMenuItem) {
             return NextResponse.json(
               { error: `Bundle item references unknown menu item: ${cid}` },
+              { status: 400 },
+            );
+          }
+          // Sold-out COMPONENT — same rule as parents (2026-07-04 sold-out
+          // bypass fix only covered top-level items; a sold-out dish could
+          // still ship inside a bundle). Same code so the client's localized
+          // "{name} just sold out" message renders.
+          if ((childMenuItem as any).isSoldOut) {
+            return NextResponse.json(
+              { error: `"${childMenuItem.name}" is sold out.`, code: "item_sold_out", itemName: childMenuItem.name },
               { status: 400 },
             );
           }

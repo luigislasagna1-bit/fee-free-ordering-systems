@@ -256,7 +256,8 @@
       "promoUnlocked": "Odomkli ste {name}!",
       "couponNoEffect": "{code} je platný, ale momentálne vo vašom košíku nič nezľavňuje — niektoré položky (napr. darčekové karty) môžu byť vylúčené, alebo nie je splnené minimum.",
       "itemSoldOutError": "„{name}“ sa práve vypredalo — odstráňte ho z košíka a pokračujte.",
-      "deliveryPrepaidRequired": "Objednávky s rozvozom v tejto reštaurácii musia byť zaplatené online — zvoľte online platobnú metódu."
+      "deliveryPrepaidRequired": "Objednávky s rozvozom v tejto reštaurácii musia byť zaplatené online — zvoľte online platobnú metódu.",
+      "itemSoldOutRemoved": "\"{name}\" sa od vašej poslednej návštevy vypredalo — odstránili sme ho z košíka."
     },
     "searchMenu": "Hľadať v menu…",
     "signIn": "Prihlásiť sa",

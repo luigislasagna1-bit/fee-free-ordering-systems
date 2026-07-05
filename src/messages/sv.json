@@ -256,7 +256,8 @@
       "promoUnlocked": "Du har låst upp {name}!",
       "couponNoEffect": "{code} är giltig men ger just nu ingen rabatt i din varukorg — vissa varor (som presentkort) kan vara undantagna, eller så uppnås inte ett minimibelopp.",
       "itemSoldOutError": "\"{name}\" är just slutsåld — ta bort den ur varukorgen för att fortsätta.",
-      "deliveryPrepaidRequired": "Leveransbeställningar hos den här restaurangen måste betalas online — välj en onlinebetalningsmetod."
+      "deliveryPrepaidRequired": "Leveransbeställningar hos den här restaurangen måste betalas online — välj en onlinebetalningsmetod.",
+      "itemSoldOutRemoved": "\"{name}\" tog slut sedan ditt senaste besök — vi har tagit bort den ur din varukorg."
     },
     "searchMenu": "Sök i menyn…",
     "signIn": "Logga in",

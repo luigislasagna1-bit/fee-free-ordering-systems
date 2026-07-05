@@ -256,7 +256,8 @@
       "promoUnlocked": "Feloldottad ezt: {name}!",
       "couponNoEffect": "{code} érvényes, de jelenleg semmit sem kedvezményez a kosarában — egyes tételek (pl. ajándékkártyák) kizártak lehetnek, vagy nincs meg a minimum.",
       "itemSoldOutError": "A(z) „{name}” épp elfogyott — a folytatáshoz távolítsa el a kosárból.",
-      "deliveryPrepaidRequired": "Ennél az étteremnél a kiszállításos rendeléseket online kell fizetni — válasszon online fizetési módot."
+      "deliveryPrepaidRequired": "Ennél az étteremnél a kiszállításos rendeléseket online kell fizetni — válasszon online fizetési módot.",
+      "itemSoldOutRemoved": "A(z) \"{name}\" elfogyott a legutóbbi látogatásod óta — eltávolítottuk a kosaradból."
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",

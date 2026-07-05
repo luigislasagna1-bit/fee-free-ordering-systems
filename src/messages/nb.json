@@ -256,7 +256,8 @@
       "promoUnlocked": "Du låste opp {name}!",
       "couponNoEffect": "{code} er gyldig, men gir akkurat nå ingen rabatt i handlekurven — noen varer (som gavekort) kan være unntatt, eller et minimum er ikke nådd.",
       "itemSoldOutError": "\"{name}\" ble nettopp utsolgt — fjern den fra handlekurven for å fortsette.",
-      "deliveryPrepaidRequired": "Leveringsbestillinger hos denne restauranten må betales på nett — velg en nettbetalingsmetode."
+      "deliveryPrepaidRequired": "Leveringsbestillinger hos denne restauranten må betales på nett — velg en nettbetalingsmetode.",
+      "itemSoldOutRemoved": "\"{name}\" ble utsolgt siden sist du var her — vi har fjernet den fra handlekurven din."
     },
     "searchMenu": "Søk i menyen…",
     "signIn": "Logg inn",

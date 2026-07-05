@@ -256,7 +256,8 @@
       "promoUnlocked": "Odklenili ste {name}!",
       "couponNoEffect": "{code} je veljaven, a trenutno ne zniža ničesar v vaši košarici — nekateri artikli (npr. darilne kartice) so lahko izključeni ali minimum ni dosežen.",
       "itemSoldOutError": "\"{name}\" je pravkar razprodan — odstranite ga iz košarice za nadaljevanje.",
-      "deliveryPrepaidRequired": "Naročila z dostavo v tej restavraciji je treba plačati prek spleta — izberite spletni način plačila."
+      "deliveryPrepaidRequired": "Naročila z dostavo v tej restavraciji je treba plačati prek spleta — izberite spletni način plačila.",
+      "itemSoldOutRemoved": "\"{name}\" je razprodan od vašega zadnjega obiska — odstranili smo ga iz vaše košarice."
     },
     "searchMenu": "Iskanje po meniju…",
     "signIn": "Prijava",

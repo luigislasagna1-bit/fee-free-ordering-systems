@@ -256,7 +256,8 @@
       "promoUnlocked": "{name}を獲得しました！",
       "couponNoEffect": "{code} は有効ですが、現在カート内で割引されるものがありません — 一部の商品（ギフトカードなど）が対象外か、最低金額に達していない可能性があります。",
       "itemSoldOutError": "「{name}」は売り切れました。続行するにはカートから削除してください。",
-      "deliveryPrepaidRequired": "このレストランのデリバリー注文はオンライン決済が必要です — オンライン決済方法を選んでください。"
+      "deliveryPrepaidRequired": "このレストランのデリバリー注文はオンライン決済が必要です — オンライン決済方法を選んでください。",
+      "itemSoldOutRemoved": "「{name}」は前回のご利用後に売り切れました。カートから削除しました。"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",

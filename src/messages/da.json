@@ -256,7 +256,8 @@
       "promoUnlocked": "Du har låst op for {name}!",
       "couponNoEffect": "{code} er gyldig, men giver lige nu ingen rabat i din kurv — nogle varer (som gavekort) kan være undtaget, eller et minimum er ikke nået.",
       "itemSoldOutError": "\"{name}\" er netop udsolgt — fjern den fra kurven for at fortsætte.",
-      "deliveryPrepaidRequired": "Leveringsordrer hos denne restaurant skal betales online — vælg en onlinebetalingsmetode."
+      "deliveryPrepaidRequired": "Leveringsordrer hos denne restaurant skal betales online — vælg en onlinebetalingsmetode.",
+      "itemSoldOutRemoved": "\"{name}\" blev udsolgt siden dit sidste besøg — vi har fjernet den fra din kurv."
     },
     "searchMenu": "Søg i menuen…",
     "signIn": "Log ind",

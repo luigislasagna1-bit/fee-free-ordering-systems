@@ -256,7 +256,8 @@
       "promoUnlocked": "Je hebt {name} ontgrendeld!",
       "couponNoEffect": "{code} is geldig, maar geeft nu geen korting op je winkelwagen — sommige artikelen (zoals cadeaubonnen) kunnen uitgesloten zijn, of een minimum is niet bereikt.",
       "itemSoldOutError": "\"{name}\" is zojuist uitverkocht — verwijder het uit je winkelwagen om verder te gaan.",
-      "deliveryPrepaidRequired": "Bezorgbestellingen bij dit restaurant moeten online worden betaald — kies een online betaalmethode."
+      "deliveryPrepaidRequired": "Bezorgbestellingen bij dit restaurant moeten online worden betaald — kies een online betaalmethode.",
+      "itemSoldOutRemoved": "\"{name}\" is sinds je vorige bezoek uitverkocht — we hebben het uit je winkelwagen verwijderd."
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",

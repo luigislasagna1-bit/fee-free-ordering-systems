@@ -256,7 +256,8 @@
       "promoUnlocked": "Avasit edun {name}!",
       "couponNoEffect": "{code} on voimassa, mutta se ei juuri nyt alenna mitään ostoskorissasi — jotkin tuotteet (kuten lahjakortit) voivat olla poissuljettuja tai vähimmäissumma ei täyty.",
       "itemSoldOutError": "\"{name}\" myytiin juuri loppuun — poista se ostoskorista jatkaaksesi.",
-      "deliveryPrepaidRequired": "Tämän ravintolan toimitustilaukset on maksettava verkossa — valitse verkkomaksutapa."
+      "deliveryPrepaidRequired": "Tämän ravintolan toimitustilaukset on maksettava verkossa — valitse verkkomaksutapa.",
+      "itemSoldOutRemoved": "\"{name}\" myytiin loppuun edellisen käyntisi jälkeen — poistimme sen ostoskoristasi."
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",

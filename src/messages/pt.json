@@ -255,7 +255,8 @@
       "promoUnlocked": "Você desbloqueou {name}!",
       "couponNoEffect": "{code} é válido, mas de momento não desconta nada no seu carrinho — alguns artigos (como cartões-presente) podem estar excluídos, ou o mínimo não foi atingido.",
       "itemSoldOutError": "\"{name}\" acabou de esgotar — remova-o do carrinho para continuar.",
-      "deliveryPrepaidRequired": "As encomendas com entrega deste restaurante devem ser pagas online — escolha um método de pagamento online."
+      "deliveryPrepaidRequired": "As encomendas com entrega deste restaurante devem ser pagas online — escolha um método de pagamento online.",
+      "itemSoldOutRemoved": "\"{name}\" esgotou desde a sua última visita — retirámo-lo do seu carrinho."
     },
     "followUs": "Siga-nos",
     "searchMenu": "Pesquisar no menu…",

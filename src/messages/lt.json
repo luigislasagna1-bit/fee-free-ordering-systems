@@ -256,7 +256,8 @@
       "promoUnlocked": "Atrakinote {name}!",
       "couponNoEffect": "{code} galioja, bet šiuo metu jūsų krepšelyje nieko nenupigina — kai kurios prekės (pvz., dovanų kortelės) gali būti neįtrauktos arba nepasiektas minimumas.",
       "itemSoldOutError": "„{name}“ ką tik išparduotas — pašalinkite jį iš krepšelio, kad tęstumėte.",
-      "deliveryPrepaidRequired": "Šio restorano užsakymai su pristatymu turi būti apmokėti internetu — pasirinkite mokėjimo internetu būdą."
+      "deliveryPrepaidRequired": "Šio restorano užsakymai su pristatymu turi būti apmokėti internetu — pasirinkite mokėjimo internetu būdą.",
+      "itemSoldOutRemoved": "\"{name}\" išparduota nuo paskutinio jūsų apsilankymo — pašalinome ją iš jūsų krepšelio."
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",

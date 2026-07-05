@@ -256,7 +256,8 @@
       "promoUnlocked": "Has desbloquejat {name}!",
       "couponNoEffect": "{code} és vàlid, però ara mateix no descompta res al teu cistell — alguns articles (com les targetes regal) poden estar exclosos, o no s'arriba al mínim.",
       "itemSoldOutError": "\"{name}\" s'acaba d'esgotar — treu-lo del cistell per continuar.",
-      "deliveryPrepaidRequired": "Les comandes a domicili d'aquest restaurant s'han de pagar en línia — trieu un mètode de pagament en línia."
+      "deliveryPrepaidRequired": "Les comandes a domicili d'aquest restaurant s'han de pagar en línia — trieu un mètode de pagament en línia.",
+      "itemSoldOutRemoved": "\"{name}\" s'ha esgotat des de la teva darrera visita — l'hem tret del teu cistell."
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",

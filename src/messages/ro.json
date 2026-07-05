@@ -256,7 +256,8 @@
       "promoUnlocked": "Ai deblocat {name}!",
       "couponNoEffect": "{code} este valid, dar momentan nu reduce nimic din coșul tău — unele articole (precum cardurile cadou) pot fi excluse, sau nu s-a atins un minim.",
       "itemSoldOutError": "„{name}” tocmai s-a epuizat — eliminați-l din coș pentru a continua.",
-      "deliveryPrepaidRequired": "Comenzile cu livrare la acest restaurant trebuie plătite online — alegeți o metodă de plată online."
+      "deliveryPrepaidRequired": "Comenzile cu livrare la acest restaurant trebuie plătite online — alegeți o metodă de plată online.",
+      "itemSoldOutRemoved": "\"{name}\" s-a epuizat de la ultima ta vizită — l-am scos din coșul tău."
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",

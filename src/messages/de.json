@@ -256,7 +256,8 @@
       "promoUnlocked": "Du hast {name} freigeschaltet!",
       "couponNoEffect": "{code} ist gültig, reduziert aber gerade nichts in Ihrem Warenkorb — manche Artikel (z. B. Geschenkkarten) sind ggf. ausgeschlossen oder ein Mindestbetrag ist nicht erreicht.",
       "itemSoldOutError": "\"{name}\" ist gerade ausverkauft — bitte aus dem Warenkorb entfernen, um fortzufahren.",
-      "deliveryPrepaidRequired": "Lieferbestellungen bei diesem Restaurant müssen online bezahlt werden — bitte eine Online-Zahlungsart wählen."
+      "deliveryPrepaidRequired": "Lieferbestellungen bei diesem Restaurant müssen online bezahlt werden — bitte eine Online-Zahlungsart wählen.",
+      "itemSoldOutRemoved": "\"{name}\" ist seit deinem letzten Besuch ausverkauft — wir haben es aus deinem Warenkorb entfernt."
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",

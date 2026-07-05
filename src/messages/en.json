@@ -265,7 +265,8 @@
       "promoEmailMismatch": "This code is registered to a different email address.",
       "couponNoEffect": "{code} is valid, but it doesn't discount anything in your cart right now — some items (like gift cards) may be excluded, or a minimum may not be met.",
       "itemSoldOutError": "\"{name}\" just sold out — please remove it from your cart to continue.",
-      "deliveryPrepaidRequired": "Delivery orders must be paid online at this restaurant — please choose an online payment method."
+      "deliveryPrepaidRequired": "Delivery orders must be paid online at this restaurant — please choose an online payment method.",
+      "itemSoldOutRemoved": "\"{name}\" sold out while you were away — we removed it from your cart."
     },
     "searchMenu": "Search the menu…",
     "expandAll": "Expand all",

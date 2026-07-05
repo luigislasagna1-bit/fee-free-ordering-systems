@@ -1612,7 +1612,38 @@ export function OrderingPageClient({
         typeof parsed.t === "number" &&
         (Date.now() - parsed.t) < CART_TTL_MS
       ) {
-        setCart(parsed.items);
+        // Auto-prune SOLD-OUT lines from the restored cart (follow-up to the
+        // 2026-07-04 sold-out bypass fix): the server rejects them at checkout,
+        // but erroring AFTER the customer filled in their details is hostile —
+        // drop the line up-front with a toast naming the dish. Covers the
+        // top-level item AND combo/bundle children (the server now checks
+        // components too). Other menu drift still follows the gentle rule in
+        // the comment above (keep the line, clean error at checkout).
+        const soldOutIds = new Set<string>();
+        for (const c of (restaurant.menuCategories as Category[]) ?? []) {
+          for (const mi of c.menuItems ?? []) if (mi.isSoldOut) soldOutIds.add(mi.id);
+        }
+        const removedNames: string[] = [];
+        const kept = (parsed.items as CartItem[]).filter((ci) => {
+          const hitParent = !!ci?.menuItem?.id && soldOutIds.has(ci.menuItem.id);
+          const hitChild = Array.isArray(ci?.bundleItems) &&
+            ci.bundleItems.some((b) => !!b?.menuItemId && soldOutIds.has(b.menuItemId));
+          if (hitParent || hitChild) { removedNames.push(ci?.menuItem?.name ?? ""); return false; }
+          return true;
+        });
+        setCart(kept);
+        if (removedNames.length > 0) {
+          // Persist the pruned cart NOW: when everything was pruned, kept ([])
+          // equals the initial state, so the persistence effect never fires and
+          // the stale save would re-toast on every visit.
+          try {
+            if (kept.length === 0) localStorage.removeItem(CART_STORAGE_KEY);
+            else localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({ items: kept, t: parsed.t }));
+          } catch { /* storage disabled */ }
+          for (const name of removedNames.filter(Boolean)) {
+            toast.error(tT("itemSoldOutRemoved", { name }));
+          }
+        }
       }
     } catch { /* malformed — drop silently */ }
     cartRestoredRef.current = true;

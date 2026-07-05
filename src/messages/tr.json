@@ -256,7 +256,8 @@
       "promoUnlocked": "{name} promosyonunu açtınız!",
       "couponNoEffect": "{code} geçerli, ancak şu anda sepetinizde hiçbir şeyi indirmiyor — bazı ürünler (hediye kartları gibi) hariç olabilir veya minimum tutara ulaşılmamış olabilir.",
       "itemSoldOutError": "\"{name}\" az önce tükendi — devam etmek için sepetinizden çıkarın.",
-      "deliveryPrepaidRequired": "Bu restoranda teslimatlı siparişler online ödenmelidir — lütfen bir online ödeme yöntemi seçin."
+      "deliveryPrepaidRequired": "Bu restoranda teslimatlı siparişler online ödenmelidir — lütfen bir online ödeme yöntemi seçin.",
+      "itemSoldOutRemoved": "\"{name}\" son ziyaretinizden bu yana tükendi — sepetinizden kaldırdık."
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",

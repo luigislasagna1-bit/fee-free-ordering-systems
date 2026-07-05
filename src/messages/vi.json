@@ -256,7 +256,8 @@
       "promoUnlocked": "Bạn đã mở khóa {name}!",
       "couponNoEffect": "{code} hợp lệ nhưng hiện không giảm giá mục nào trong giỏ hàng — một số món (như thẻ quà tặng) có thể bị loại trừ, hoặc chưa đạt mức tối thiểu.",
       "itemSoldOutError": "\"{name}\" vừa hết hàng — hãy xóa khỏi giỏ để tiếp tục.",
-      "deliveryPrepaidRequired": "Đơn giao hàng của nhà hàng này phải được thanh toán trực tuyến — vui lòng chọn phương thức thanh toán trực tuyến."
+      "deliveryPrepaidRequired": "Đơn giao hàng của nhà hàng này phải được thanh toán trực tuyến — vui lòng chọn phương thức thanh toán trực tuyến.",
+      "itemSoldOutRemoved": "\"{name}\" đã hết hàng kể từ lần ghé trước của bạn — chúng tôi đã xóa món này khỏi giỏ hàng."
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",

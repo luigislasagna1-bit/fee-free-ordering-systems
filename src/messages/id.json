@@ -256,7 +256,8 @@
       "promoUnlocked": "Kamu membuka {name}!",
       "couponNoEffect": "{code} valid, tetapi saat ini tidak memotong apa pun di keranjang Anda — beberapa item (seperti kartu hadiah) mungkin dikecualikan, atau minimum belum tercapai.",
       "itemSoldOutError": "\"{name}\" baru saja habis — hapus dari keranjang untuk melanjutkan.",
-      "deliveryPrepaidRequired": "Pesanan antar di restoran ini harus dibayar online — pilih metode pembayaran online."
+      "deliveryPrepaidRequired": "Pesanan antar di restoran ini harus dibayar online — pilih metode pembayaran online.",
+      "itemSoldOutRemoved": "\"{name}\" habis terjual sejak kunjungan terakhir Anda — kami menghapusnya dari keranjang Anda."
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",

@@ -256,7 +256,8 @@
       "promoUnlocked": "Otključali ste {name}!",
       "couponNoEffect": "{code} је важећи, али тренутно не снижава ништа у вашој корпи — неки артикли (попут поклон картица) могу бити искључени или минимум није достигнут.",
       "itemSoldOutError": "„{name}“ је управо распродат — уклоните га из корпе да наставите.",
-      "deliveryPrepaidRequired": "Porudžbine sa dostavom u ovom restoranu moraju se platiti onlajn — izaberite onlajn način plaćanja."
+      "deliveryPrepaidRequired": "Porudžbine sa dostavom u ovom restoranu moraju se platiti onlajn — izaberite onlajn način plaćanja.",
+      "itemSoldOutRemoved": "\"{name}\" је распродат од ваше последње посете — уклонили смо га из ваше корпе."
     },
     "searchMenu": "Pretražite meni…",
     "signIn": "Prijavite se",

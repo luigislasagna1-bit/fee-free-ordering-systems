@@ -255,7 +255,8 @@
       "promoUnlocked": "Vous avez débloqué {name} !",
       "couponNoEffect": "{code} est valide, mais il ne réduit rien dans votre panier pour le moment — certains articles (comme les cartes cadeaux) peuvent être exclus, ou un minimum n'est pas atteint.",
       "itemSoldOutError": "« {name} » vient d'être épuisé — retirez-le de votre panier pour continuer.",
-      "deliveryPrepaidRequired": "Les commandes en livraison de ce restaurant doivent être payées en ligne — choisissez un mode de paiement en ligne."
+      "deliveryPrepaidRequired": "Les commandes en livraison de ce restaurant doivent être payées en ligne — choisissez un mode de paiement en ligne.",
+      "itemSoldOutRemoved": "« {name} » est en rupture depuis votre dernière visite — nous l'avons retiré de votre panier."
     },
     "followUs": "Suivez-nous",
     "searchMenu": "Rechercher dans le menu…",

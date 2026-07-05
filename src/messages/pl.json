@@ -256,7 +256,8 @@
       "promoUnlocked": "Odblokowano {name}!",
       "couponNoEffect": "{code} jest prawidłowy, ale w tej chwili nic nie obniża w Twoim koszyku — niektóre pozycje (np. karty podarunkowe) mogą być wyłączone lub nie osiągnięto minimum.",
       "itemSoldOutError": "„{name}” właśnie się wyprzedał — usuń go z koszyka, aby kontynuować.",
-      "deliveryPrepaidRequired": "Zamówienia z dostawą w tej restauracji muszą być opłacone online — wybierz metodę płatności online."
+      "deliveryPrepaidRequired": "Zamówienia z dostawą w tej restauracji muszą być opłacone online — wybierz metodę płatności online.",
+      "itemSoldOutRemoved": "\"{name}\" wyprzedało się od Twojej ostatniej wizyty — usunęliśmy tę pozycję z koszyka."
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
