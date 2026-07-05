@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} は有効ですが、現在カート内で割引されるものがありません — 一部の商品（ギフトカードなど）が対象外か、最低金額に達していない可能性があります。",
       "itemSoldOutError": "「{name}」は売り切れました。続行するにはカートから削除してください。",
       "deliveryPrepaidRequired": "このレストランのデリバリー注文はオンライン決済が必要です — オンライン決済方法を選んでください。",
-      "itemSoldOutRemoved": "「{name}」は前回のご利用後に売り切れました。カートから削除しました。"
+      "itemSoldOutRemoved": "「{name}」は前回のご利用後に売り切れました。カートから削除しました。",
+      "itemNotForDeliveryError": "「{name}」はテイクアウト限定です。続行するにはカートから削除してください。",
+      "itemNotForPickupError": "「{name}」はデリバリー限定です。続行するにはカートから削除してください。"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",
@@ -321,7 +323,9 @@
       "message": "このレストランは、メニューの利用状況を把握するために分析Cookie（Google Analytics / Meta Pixel）を使用します。よろしいですか？",
       "accept": "同意する",
       "decline": "同意しない"
-    }
+    },
+    "deliveryOnlyLabel": "デリバリー限定",
+    "pickupOnlyLabel": "テイクアウト限定"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "シンプルな見出し（クラシック）",
       "categoryNoImageStyleHint": "写真のあるカテゴリーは常に大きな写真バナーになります（バナー有効時）。写真はメニューでカテゴリーごとにアップロードしてください。この設定は写真のないカテゴリーの見た目を決めます：プレーンテキスト、カラー帯、タップできるボタンカード、テーマカラーのモダンアクセントパネル。",
       "categoryNoImageButton": "ボタンカード",
-      "categoryNoImageModern": "モダンアクセント"
+      "categoryNoImageModern": "モダンアクセント",
+      "serviceRestrictedTitle": "選択したサービスで提供されない料理",
+      "serviceRestrictedHint": "テイクアウト限定・デリバリー限定の料理（またはカテゴリ）を、お客様が別のサービスを選んだ場合：メニューから隠すか、「〜限定」の注記付きでグレー表示します。",
+      "serviceRestrictedHide": "メニューから隠す",
+      "serviceRestrictedLabel": "注記付きで表示"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "レコードはどこに追加しますか？",

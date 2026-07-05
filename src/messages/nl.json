@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} is geldig, maar geeft nu geen korting op je winkelwagen — sommige artikelen (zoals cadeaubonnen) kunnen uitgesloten zijn, of een minimum is niet bereikt.",
       "itemSoldOutError": "\"{name}\" is zojuist uitverkocht — verwijder het uit je winkelwagen om verder te gaan.",
       "deliveryPrepaidRequired": "Bezorgbestellingen bij dit restaurant moeten online worden betaald — kies een online betaalmethode.",
-      "itemSoldOutRemoved": "\"{name}\" is sinds je vorige bezoek uitverkocht — we hebben het uit je winkelwagen verwijderd."
+      "itemSoldOutRemoved": "\"{name}\" is sinds je vorige bezoek uitverkocht — we hebben het uit je winkelwagen verwijderd.",
+      "itemNotForDeliveryError": "\"{name}\" is alleen voor afhalen — verwijder het uit je winkelwagen om verder te gaan.",
+      "itemNotForPickupError": "\"{name}\" is alleen voor bezorging — verwijder het uit je winkelwagen om verder te gaan."
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",
@@ -321,7 +323,9 @@
       "message": "Dit restaurant gebruikt analytische cookies (Google Analytics / Meta-pixel) om te begrijpen hoe het menu wordt gebruikt. Vind je dat goed?",
       "accept": "Accepteren",
       "decline": "Nee bedankt"
-    }
+    },
+    "deliveryOnlyLabel": "Alleen beschikbaar bij bezorging",
+    "pickupOnlyLabel": "Alleen beschikbaar voor afhalen"
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Eenvoudige kop (klassiek)",
       "categoryNoImageStyleHint": "Categorieën MET foto krijgen altijd de grote fotobanner (bij ingeschakelde banners) — upload foto's per categorie onder Menu. Dit bepaalt hoe categorieën ZONDER foto eruitzien: platte tekst, effen band, aantikbare knopkaart of modern accentpaneel in je themakleur.",
       "categoryNoImageButton": "Knopkaart",
-      "categoryNoImageModern": "Modern accent"
+      "categoryNoImageModern": "Modern accent",
+      "serviceRestrictedTitle": "Gerechten die niet voor de gekozen service gelden",
+      "serviceRestrictedHint": "Een gerecht (of categorie) alleen voor afhalen of bezorgen, wanneer de klant de andere service koos: verbergen uit het menu, of grijs tonen met de melding \"Alleen beschikbaar …\".",
+      "serviceRestrictedHide": "Verbergen uit menu",
+      "serviceRestrictedLabel": "Tonen met melding"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Waar voeg ik deze records toe?",

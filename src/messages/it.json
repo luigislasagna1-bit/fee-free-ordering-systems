@@ -256,7 +256,9 @@
       "couponNoEffect": "{code} è valido, ma al momento non sconta nulla nel tuo carrello — alcuni articoli (come le carte regalo) potrebbero essere esclusi, o non è stato raggiunto un minimo.",
       "itemSoldOutError": "\"{name}\" è appena andato esaurito — rimuovilo dal carrello per continuare.",
       "deliveryPrepaidRequired": "Gli ordini con consegna di questo ristorante vanno pagati online — scegli un metodo di pagamento online.",
-      "itemSoldOutRemoved": "\"{name}\" è andato esaurito dalla tua ultima visita — l'abbiamo rimosso dal carrello."
+      "itemSoldOutRemoved": "\"{name}\" è andato esaurito dalla tua ultima visita — l'abbiamo rimosso dal carrello.",
+      "itemNotForDeliveryError": "\"{name}\" è disponibile solo per il ritiro — rimuovilo dal carrello per continuare.",
+      "itemNotForPickupError": "\"{name}\" è disponibile solo per la consegna — rimuovilo dal carrello per continuare."
     },
     "followUs": "Seguici",
     "searchMenu": "Cerca nel menu…",
@@ -321,7 +323,9 @@
       "message": "Questo ristorante usa cookie di analisi (Google Analytics / Pixel Meta) per capire come viene usato il suo menu. Va bene?",
       "accept": "Accetta",
       "decline": "No, grazie"
-    }
+    },
+    "deliveryOnlyLabel": "Disponibile solo per la consegna",
+    "pickupOnlyLabel": "Disponibile solo per il ritiro"
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Intestazione semplice (classica)",
       "categoryNoImageStyleHint": "Le categorie CON foto hanno sempre il grande banner fotografico (con i banner attivi) — carica le foto per categoria in Menu. Questo decide l'aspetto di quelle SENZA: testo semplice, banda colorata, scheda-pulsante toccabile o pannello moderno nel colore del tema.",
       "categoryNoImageButton": "Scheda pulsante",
-      "categoryNoImageModern": "Accento moderno"
+      "categoryNoImageModern": "Accento moderno",
+      "serviceRestrictedTitle": "Piatti non offerti per il servizio selezionato",
+      "serviceRestrictedHint": "Un piatto (o categoria) solo ritiro o solo consegna, quando il cliente ha scelto l'altro servizio: nasconderlo dal menu o mostrarlo in grigio con la nota \"Disponibile solo…\".",
+      "serviceRestrictedHide": "Nascondi dal menu",
+      "serviceRestrictedLabel": "Mostra con nota"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Dove aggiungo questi record?",

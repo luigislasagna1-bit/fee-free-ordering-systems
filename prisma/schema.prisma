@@ -858,6 +858,11 @@ model MenuCategory {
   name             String
   description      String?
   imageUrl         String?
+  /// Category-level service restriction (Fabrizio cmr803ovq, 2026-07-05):
+  /// mirrors MenuItem.forPickup/forDelivery so a whole category can be
+  /// delivery-only or pickup-only. Both default true = no restriction.
+  forPickup        Boolean   @default(true)
+  forDelivery      Boolean   @default(true)
   /// Exclude every item in this category from Reward Dollars EARNING (e.g. a
   /// "Gift Cards" category). Per-item rewardEarnExcluded can override. Luigi 2026-06-30.
   rewardEarnExcluded Boolean @default(false)

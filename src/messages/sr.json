@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} је важећи, али тренутно не снижава ништа у вашој корпи — неки артикли (попут поклон картица) могу бити искључени или минимум није достигнут.",
       "itemSoldOutError": "„{name}“ је управо распродат — уклоните га из корпе да наставите.",
       "deliveryPrepaidRequired": "Porudžbine sa dostavom u ovom restoranu moraju se platiti onlajn — izaberite onlajn način plaćanja.",
-      "itemSoldOutRemoved": "\"{name}\" је распродат од ваше последње посете — уклонили смо га из ваше корпе."
+      "itemSoldOutRemoved": "\"{name}\" је распродат од ваше последње посете — уклонили смо га из ваше корпе.",
+      "itemNotForDeliveryError": "\"{name}\" је доступан само за преузимање — уклоните га из корпе да наставите.",
+      "itemNotForPickupError": "\"{name}\" је доступан само за доставу — уклоните га из корпе да наставите."
     },
     "searchMenu": "Pretražite meni…",
     "signIn": "Prijavite se",
@@ -321,7 +323,9 @@
       "message": "Овај ресторан користи аналитичке колачиће (Google Analytics / Meta Pixel) да разуме како се користи његов јеловник. Да ли се слажете?",
       "accept": "Прихвати",
       "decline": "Не, хвала"
-    }
+    },
+    "deliveryOnlyLabel": "Доступно само за доставу",
+    "pickupOnlyLabel": "Доступно само за преузимање"
   },
   "pizza": {
     "chooseSize": "Izaberite veličinu",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Једноставан наслов (класични)",
       "categoryNoImageStyleHint": "Категорије СА сликом увек добијају велики фото-банер (када су банери укључени) — слике додајте по категорији у Менију. Ово одређује изглед оних БЕЗ слике: обичан текст, обојена трака, додирљива картица-дугме или модеран панел у боји теме.",
       "categoryNoImageButton": "Картица-дугме",
-      "categoryNoImageModern": "Модерни акценат"
+      "categoryNoImageModern": "Модерни акценат",
+      "serviceRestrictedTitle": "Јела која се не нуде за изабрану услугу",
+      "serviceRestrictedHint": "Јело (или категорија) само за преузимање или доставу, када је купац изабрао другу услугу: сакриј са менија или прикажи засивљено са напоменом \"Доступно само…\".",
+      "serviceRestrictedHide": "Сакриј са менија",
+      "serviceRestrictedLabel": "Прикажи са напоменом"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Gde dodajem ove zapise?",

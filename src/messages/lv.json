@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} ir derīgs, taču šobrīd tas neko nesamazina jūsu grozā — daži produkti (piemēram, dāvanu kartes) var būt izslēgti vai nav sasniegts minimums.",
       "itemSoldOutError": "\"{name}\" tikko izpārdots — izņemiet to no groza, lai turpinātu.",
       "deliveryPrepaidRequired": "Šī restorāna piegādes pasūtījumi jāapmaksā tiešsaistē — izvēlieties tiešsaistes maksājuma veidu.",
-      "itemSoldOutRemoved": "\"{name}\" ir izpārdots kopš jūsu pēdējā apmeklējuma — mēs to izņēmām no jūsu groza."
+      "itemSoldOutRemoved": "\"{name}\" ir izpārdots kopš jūsu pēdējā apmeklējuma — mēs to izņēmām no jūsu groza.",
+      "itemNotForDeliveryError": "\"{name}\" ir pieejams tikai saņemšanai — izņemiet to no groza, lai turpinātu.",
+      "itemNotForPickupError": "\"{name}\" ir pieejams tikai piegādei — izņemiet to no groza, lai turpinātu."
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",
@@ -321,7 +323,9 @@
       "message": "Šis restorāns izmanto analītikas sīkfailus (Google Analytics / Meta pikselis), lai saprastu, kā tiek lietota ēdienkarte. Vai piekrītat?",
       "accept": "Piekrītu",
       "decline": "Nē, paldies"
-    }
+    },
+    "deliveryOnlyLabel": "Pieejams tikai piegādei",
+    "pickupOnlyLabel": "Pieejams tikai saņemšanai"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Vienkāršs virsraksts (klasisks)",
       "categoryNoImageStyleHint": "Kategorijas AR fotoattēlu vienmēr saņem lielo foto reklāmkarogu (kad karogi ieslēgti) — augšupielādējiet fotoattēlus pa kategorijām sadaļā Izvēlne. Tas nosaka, kā izskatās kategorijas BEZ fotoattēla: vienkāršs teksts, krāsu josla, pieskarama pogas kartīte vai moderns akcenta panelis jūsu tēmas krāsā.",
       "categoryNoImageButton": "Pogas kartīte",
-      "categoryNoImageModern": "Moderns akcents"
+      "categoryNoImageModern": "Moderns akcents",
+      "serviceRestrictedTitle": "Ēdieni, kas izvēlētajam pakalpojumam nav pieejami",
+      "serviceRestrictedHint": "Ēdiens (vai kategorija) tikai saņemšanai vai piegādei, kad klients izvēlējies otru pakalpojumu: paslēpt no ēdienkartes vai rādīt pelēku ar piezīmi \"Pieejams tikai…\".",
+      "serviceRestrictedHide": "Paslēpt no ēdienkartes",
+      "serviceRestrictedLabel": "Rādīt ar piezīmi"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kur pievienot šos ierakstus?",

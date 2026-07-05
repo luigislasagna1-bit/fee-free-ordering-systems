@@ -2224,6 +2224,10 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
     // item isCatering flag. Owners with a dedicated catering menu just
     // tag the whole category instead of every item one by one.
     isCatering: (cat as any)?.isCatering ?? false,
+    // Category-level service restriction (Fabrizio cmr803ovq) — the whole
+    // category can be pickup-only / delivery-only, mirroring the item flags.
+    forPickup: (cat as any)?.forPickup ?? true,
+    forDelivery: (cat as any)?.forDelivery ?? true,
   });
   const [visibility, setVisibility] = useState<VisibilityValue>(() => visibilityFromRow(cat));
   const [saving, setSaving] = useState(false);
@@ -2280,6 +2284,16 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
               title={t("cateringCategoryTitle")}
             >
               <PartyPopper className="w-4 h-4" /> {t("cateringCategory")} {form.isCatering && "✓"}
+            </button>
+            {/* Category-level service restriction (Fabrizio cmr803ovq) —
+                same toggles the item modal has; both ON = unrestricted. */}
+            <button onClick={() => setForm(f => ({ ...f, forPickup: !f.forPickup }))}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.forPickup ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
+              <ShoppingBag className="w-4 h-4" /> {t("availableForPickup")} {form.forPickup && <Check className="w-3.5 h-3.5" />}
+            </button>
+            <button onClick={() => setForm(f => ({ ...f, forDelivery: !f.forDelivery }))}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.forDelivery ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
+              <Truck className="w-4 h-4" /> {t("availableForDelivery")} {form.forDelivery && <Check className="w-3.5 h-3.5" />}
             </button>
           </div>
         </div>

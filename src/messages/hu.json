@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} érvényes, de jelenleg semmit sem kedvezményez a kosarában — egyes tételek (pl. ajándékkártyák) kizártak lehetnek, vagy nincs meg a minimum.",
       "itemSoldOutError": "A(z) „{name}” épp elfogyott — a folytatáshoz távolítsa el a kosárból.",
       "deliveryPrepaidRequired": "Ennél az étteremnél a kiszállításos rendeléseket online kell fizetni — válasszon online fizetési módot.",
-      "itemSoldOutRemoved": "A(z) \"{name}\" elfogyott a legutóbbi látogatásod óta — eltávolítottuk a kosaradból."
+      "itemSoldOutRemoved": "A(z) \"{name}\" elfogyott a legutóbbi látogatásod óta — eltávolítottuk a kosaradból.",
+      "itemNotForDeliveryError": "A(z) \"{name}\" csak elvitelre kapható — távolítsd el a kosaradból a folytatáshoz.",
+      "itemNotForPickupError": "A(z) \"{name}\" csak kiszállításra kapható — távolítsd el a kosaradból a folytatáshoz."
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",
@@ -321,7 +323,9 @@
       "message": "Ez az étterem elemző sütiket használ (Google Analytics / Meta-pixel), hogy megértse, hogyan használják az étlapját. Rendben van?",
       "accept": "Elfogadom",
       "decline": "Köszönöm, nem"
-    }
+    },
+    "deliveryOnlyLabel": "Csak kiszállításra",
+    "pickupOnlyLabel": "Csak elvitelre"
   },
   "pizza": {
     "chooseSize": "Méret választása",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Egyszerű fejléc (klasszikus)",
       "categoryNoImageStyleHint": "A fotóVAL rendelkező kategóriák mindig a nagy fotóbannert kapják (bekapcsolt bannereknél) — töltsön fel fotókat kategóriánként a Menüben. Ez dönti el a fotó NÉLKÜLIEK kinézetét: sima szöveg, színes sáv, koppintható gombkártya vagy modern hangsúlypanel a téma színében.",
       "categoryNoImageButton": "Gombkártya",
-      "categoryNoImageModern": "Modern hangsúly"
+      "categoryNoImageModern": "Modern hangsúly",
+      "serviceRestrictedTitle": "A kiválasztott szolgáltatásban nem elérhető ételek",
+      "serviceRestrictedHint": "Csak elvitelre vagy csak kiszállításra elérhető étel (vagy kategória), ha a vevő a másik szolgáltatást választotta: rejtsd el az étlapról, vagy jelenjen meg szürkén \"Csak…\" megjegyzéssel.",
+      "serviceRestrictedHide": "Elrejtés az étlapról",
+      "serviceRestrictedLabel": "Megjelenítés megjegyzéssel"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Hol adhatom hozzá ezeket a rekordokat?",

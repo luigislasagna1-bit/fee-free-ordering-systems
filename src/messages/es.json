@@ -256,7 +256,9 @@
       "couponNoEffect": "{code} es válido, pero ahora mismo no descuenta nada en tu carrito — algunos artículos (como las tarjetas regalo) pueden estar excluidos o no se alcanza el mínimo.",
       "itemSoldOutError": "\"{name}\" se acaba de agotar; quítalo del carrito para continuar.",
       "deliveryPrepaidRequired": "Los pedidos a domicilio de este restaurante deben pagarse en línea — elige un método de pago en línea.",
-      "itemSoldOutRemoved": "\"{name}\" se agotó desde tu última visita — lo hemos quitado de tu carrito."
+      "itemSoldOutRemoved": "\"{name}\" se agotó desde tu última visita — lo hemos quitado de tu carrito.",
+      "itemNotForDeliveryError": "\"{name}\" solo está disponible para recoger — quítalo del carrito para continuar.",
+      "itemNotForPickupError": "\"{name}\" solo está disponible a domicilio — quítalo del carrito para continuar."
     },
     "followUs": "Síguenos",
     "searchMenu": "Buscar en el menú…",
@@ -321,7 +323,9 @@
       "message": "Este restaurante usa cookies de análisis (Google Analytics / Píxel de Meta) para entender cómo se usa su menú. ¿Te parece bien?",
       "accept": "Aceptar",
       "decline": "No, gracias"
-    }
+    },
+    "deliveryOnlyLabel": "Disponible solo a domicilio",
+    "pickupOnlyLabel": "Disponible solo para recoger"
   },
   "pizza": {
     "chooseSize": "Elegir tamaño",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Encabezado simple (clásico)",
       "categoryNoImageStyleHint": "Las categorías CON foto siempre muestran el banner grande (si los banners están activados); sube fotos por categoría en Menú. Esto decide el aspecto de las que NO tienen: texto simple, banda de color, tarjeta-botón táctil o panel moderno con el color de tu tema.",
       "categoryNoImageButton": "Tarjeta botón",
-      "categoryNoImageModern": "Acento moderno"
+      "categoryNoImageModern": "Acento moderno",
+      "serviceRestrictedTitle": "Platos no ofrecidos para el servicio elegido",
+      "serviceRestrictedHint": "Un plato (o categoría) solo para recoger o solo a domicilio, cuando el cliente eligió el otro servicio: ocultarlo del menú o mostrarlo en gris con la nota \"Disponible solo…\".",
+      "serviceRestrictedHide": "Ocultar del menú",
+      "serviceRestrictedLabel": "Mostrar con nota"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "¿Dónde añado estos registros?",

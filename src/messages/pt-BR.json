@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} é válido, mas no momento não desconta nada no seu carrinho — alguns itens (como vales-presente) podem estar excluídos, ou o mínimo não foi atingido.",
       "itemSoldOutError": "\"{name}\" acabou de esgotar — remova-o do carrinho para continuar.",
       "deliveryPrepaidRequired": "Pedidos com entrega deste restaurante devem ser pagos online — escolha um método de pagamento online.",
-      "itemSoldOutRemoved": "\"{name}\" esgotou desde a sua última visita — removemos do seu carrinho."
+      "itemSoldOutRemoved": "\"{name}\" esgotou desde a sua última visita — removemos do seu carrinho.",
+      "itemNotForDeliveryError": "\"{name}\" só está disponível para retirada — remova do carrinho para continuar.",
+      "itemNotForPickupError": "\"{name}\" só está disponível para entrega — remova do carrinho para continuar."
     },
     "searchMenu": "Buscar no cardápio…",
     "signIn": "Entrar",
@@ -321,7 +323,9 @@
       "message": "Este restaurante usa cookies de análise (Google Analytics / Pixel da Meta) para entender como o cardápio é usado. Tudo bem?",
       "accept": "Aceitar",
       "decline": "Não, obrigado"
-    }
+    },
+    "deliveryOnlyLabel": "Disponível apenas para entrega",
+    "pickupOnlyLabel": "Disponível apenas para retirada"
   },
   "pizza": {
     "chooseSize": "Escolha o Tamanho",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Cabeçalho simples (clássico)",
       "categoryNoImageStyleHint": "Categorias COM foto sempre têm o banner grande (com banners ativados) — envie fotos por categoria no Menu. Isto define o visual das que NÃO têm: texto simples, faixa de cor, cartão-botão tocável ou painel moderno na cor do tema.",
       "categoryNoImageButton": "Cartão botão",
-      "categoryNoImageModern": "Destaque moderno"
+      "categoryNoImageModern": "Destaque moderno",
+      "serviceRestrictedTitle": "Pratos não oferecidos para o serviço escolhido",
+      "serviceRestrictedHint": "Um prato (ou categoria) só para retirada ou só para entrega, quando o cliente escolheu o outro serviço: ocultar do cardápio ou mostrar acinzentado com a nota \"Disponível apenas…\".",
+      "serviceRestrictedHide": "Ocultar do cardápio",
+      "serviceRestrictedLabel": "Mostrar com nota"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Onde adiciono esses registros?",

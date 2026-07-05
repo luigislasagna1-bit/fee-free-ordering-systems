@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} este valid, dar momentan nu reduce nimic din coșul tău — unele articole (precum cardurile cadou) pot fi excluse, sau nu s-a atins un minim.",
       "itemSoldOutError": "„{name}” tocmai s-a epuizat — eliminați-l din coș pentru a continua.",
       "deliveryPrepaidRequired": "Comenzile cu livrare la acest restaurant trebuie plătite online — alegeți o metodă de plată online.",
-      "itemSoldOutRemoved": "\"{name}\" s-a epuizat de la ultima ta vizită — l-am scos din coșul tău."
+      "itemSoldOutRemoved": "\"{name}\" s-a epuizat de la ultima ta vizită — l-am scos din coșul tău.",
+      "itemNotForDeliveryError": "\"{name}\" este disponibil doar pentru ridicare — scoate-l din coș pentru a continua.",
+      "itemNotForPickupError": "\"{name}\" este disponibil doar pentru livrare — scoate-l din coș pentru a continua."
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",
@@ -321,7 +323,9 @@
       "message": "Acest restaurant folosește cookie-uri de analiză (Google Analytics / Pixel Meta) pentru a înțelege cum este folosit meniul. Sunteți de acord?",
       "accept": "Accept",
       "decline": "Nu, mulțumesc"
-    }
+    },
+    "deliveryOnlyLabel": "Disponibil doar pentru livrare",
+    "pickupOnlyLabel": "Disponibil doar pentru ridicare"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Antet simplu (clasic)",
       "categoryNoImageStyleHint": "Categoriile CU fotografie primesc mereu bannerul foto mare (cu bannerele active) — încărcați fotografii pe categorie în Meniu. Aceasta decide aspectul celor FĂRĂ: text simplu, bandă colorată, card-buton tactil sau panou modern în culoarea temei.",
       "categoryNoImageButton": "Card buton",
-      "categoryNoImageModern": "Accent modern"
+      "categoryNoImageModern": "Accent modern",
+      "serviceRestrictedTitle": "Preparate neoferite pentru serviciul ales",
+      "serviceRestrictedHint": "Un preparat (sau o categorie) doar pentru ridicare sau doar pentru livrare, când clientul a ales celălalt serviciu: ascunde-l din meniu sau afișează-l gri cu nota \"Disponibil doar…\".",
+      "serviceRestrictedHide": "Ascunde din meniu",
+      "serviceRestrictedLabel": "Afișează cu notă"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Unde adaug aceste înregistrări?",

@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} geçerli, ancak şu anda sepetinizde hiçbir şeyi indirmiyor — bazı ürünler (hediye kartları gibi) hariç olabilir veya minimum tutara ulaşılmamış olabilir.",
       "itemSoldOutError": "\"{name}\" az önce tükendi — devam etmek için sepetinizden çıkarın.",
       "deliveryPrepaidRequired": "Bu restoranda teslimatlı siparişler online ödenmelidir — lütfen bir online ödeme yöntemi seçin.",
-      "itemSoldOutRemoved": "\"{name}\" son ziyaretinizden bu yana tükendi — sepetinizden kaldırdık."
+      "itemSoldOutRemoved": "\"{name}\" son ziyaretinizden bu yana tükendi — sepetinizden kaldırdık.",
+      "itemNotForDeliveryError": "\"{name}\" yalnızca gel-al içindir — devam etmek için sepetinizden çıkarın.",
+      "itemNotForPickupError": "\"{name}\" yalnızca teslimat içindir — devam etmek için sepetinizden çıkarın."
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",
@@ -321,7 +323,9 @@
       "message": "Bu restoran, menüsünün nasıl kullanıldığını anlamak için analiz çerezleri (Google Analytics / Meta Pikseli) kullanıyor. Uygun mu?",
       "accept": "Kabul et",
       "decline": "Hayır, teşekkürler"
-    }
+    },
+    "deliveryOnlyLabel": "Yalnızca teslimat için",
+    "pickupOnlyLabel": "Yalnızca gel-al için"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Sade başlık (klasik)",
       "categoryNoImageStyleHint": "Fotoğrafı OLAN kategoriler her zaman büyük fotoğraf banner'ını alır (banner'lar açıkken) — fotoğrafları Menü'de kategori başına yükleyin. Bu, fotoğrafı OLMAYANLARIN görünümünü belirler: sade metin, düz renk bant, dokunulabilir buton kart veya tema renginizde modern vurgu paneli.",
       "categoryNoImageButton": "Buton kart",
-      "categoryNoImageModern": "Modern vurgu"
+      "categoryNoImageModern": "Modern vurgu",
+      "serviceRestrictedTitle": "Seçilen hizmette sunulmayan yemekler",
+      "serviceRestrictedHint": "Yalnızca gel-al veya teslimat için olan bir yemek (ya da kategori), müşteri diğer hizmeti seçtiğinde: menüden gizle ya da \"Yalnızca …\" notuyla soluk göster.",
+      "serviceRestrictedHide": "Menüden gizle",
+      "serviceRestrictedLabel": "Notla göster"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Bu kayıtları nereye ekliyorum?",

@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} je valjan, ali trenutačno ne snižava ništa u vašoj košarici — neki artikli (poput poklon-kartica) mogu biti isključeni ili minimum nije dosegnut.",
       "itemSoldOutError": "\"{name}\" je upravo rasprodan — uklonite ga iz košarice za nastavak.",
       "deliveryPrepaidRequired": "Narudžbe s dostavom u ovom restoranu moraju se platiti online — odaberite online način plaćanja.",
-      "itemSoldOutRemoved": "\"{name}\" je rasprodan od vašeg zadnjeg posjeta — uklonili smo ga iz vaše košarice."
+      "itemSoldOutRemoved": "\"{name}\" je rasprodan od vašeg zadnjeg posjeta — uklonili smo ga iz vaše košarice.",
+      "itemNotForDeliveryError": "\"{name}\" je dostupan samo za preuzimanje — uklonite ga iz košarice za nastavak.",
+      "itemNotForPickupError": "\"{name}\" je dostupan samo za dostavu — uklonite ga iz košarice za nastavak."
     },
     "searchMenu": "Pretraži jelovnik…",
     "signIn": "Prijava",
@@ -321,7 +323,9 @@
       "message": "Ovaj restoran koristi analitičke kolačiće (Google Analytics / Meta Pixel) kako bi razumio kako se koristi njegov jelovnik. Slažete li se?",
       "accept": "Prihvati",
       "decline": "Ne, hvala"
-    }
+    },
+    "deliveryOnlyLabel": "Dostupno samo za dostavu",
+    "pickupOnlyLabel": "Dostupno samo za preuzimanje"
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Jednostavan naslov (klasični)",
       "categoryNoImageStyleHint": "Kategorije SA slikom uvijek dobivaju veliki foto-banner (kad su banneri uključeni) — slike učitavajte po kategoriji u Izborniku. Ovo određuje izgled onih BEZ slike: običan tekst, obojena traka, dodirljiva kartica-gumb ili moderni naglasni panel u boji teme.",
       "categoryNoImageButton": "Kartica-gumb",
-      "categoryNoImageModern": "Moderni naglasak"
+      "categoryNoImageModern": "Moderni naglasak",
+      "serviceRestrictedTitle": "Jela koja se ne nude za odabranu uslugu",
+      "serviceRestrictedHint": "Jelo (ili kategorija) samo za preuzimanje ili dostavu, kad je kupac odabrao drugu uslugu: sakrij ga s jelovnika ili prikaži zasivljeno s napomenom \"Dostupno samo…\".",
+      "serviceRestrictedHide": "Sakrij s jelovnika",
+      "serviceRestrictedLabel": "Prikaži s napomenom"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Gdje dodajem ove zapise?",

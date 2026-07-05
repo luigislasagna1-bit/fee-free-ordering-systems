@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} on kehtiv, kuid praegu ei alanda see teie ostukorvis midagi — mõned tooted (nt kinkekaardid) võivad olla välistatud või miinimum pole täidetud.",
       "itemSoldOutError": "\"{name}\" müüdi just läbi — jätkamiseks eemaldage see ostukorvist.",
       "deliveryPrepaidRequired": "Selle restorani kohaletoimetamisega tellimused tuleb maksta veebis — valige veebimakseviis.",
-      "itemSoldOutRemoved": "\"{name}\" müüdi pärast teie viimast külastust läbi — eemaldasime selle teie ostukorvist."
+      "itemSoldOutRemoved": "\"{name}\" müüdi pärast teie viimast külastust läbi — eemaldasime selle teie ostukorvist.",
+      "itemNotForDeliveryError": "\"{name}\" on saadaval ainult kaasa — jätkamiseks eemaldage see ostukorvist.",
+      "itemNotForPickupError": "\"{name}\" on saadaval ainult kulleriga — jätkamiseks eemaldage see ostukorvist."
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",
@@ -321,7 +323,9 @@
       "message": "See restoran kasutab analüütikaküpsiseid (Google Analytics / Meta piksel), et mõista, kuidas menüüd kasutatakse. Kas sobib?",
       "accept": "Nõustun",
       "decline": "Ei aitäh"
-    }
+    },
+    "deliveryOnlyLabel": "Saadaval ainult kulleriga",
+    "pickupOnlyLabel": "Saadaval ainult kaasa"
   },
   "pizza": {
     "chooseSize": "Vali suurus",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Lihtne pealkiri (klassikaline)",
       "categoryNoImageStyleHint": "Fotoga kategooriad saavad alati suure fotobänneri (kui bännerid on sees) — laadige fotod kategooriate kaupa Menüüs. See määrab fotota kategooriate välimuse: lihttekst, värviriba, puudutatav nupukaart või modernne aktsentpaneel teie teemavärvis.",
       "categoryNoImageButton": "Nupukaart",
-      "categoryNoImageModern": "Modernne aktsent"
+      "categoryNoImageModern": "Modernne aktsent",
+      "serviceRestrictedTitle": "Road, mida valitud teenusele ei pakuta",
+      "serviceRestrictedHint": "Ainult kaasa või ainult kulleriga road (või kategooria), kui klient valis teise teenuse: peida menüüst või näita hallina märkusega \"Saadaval ainult…\".",
+      "serviceRestrictedHide": "Peida menüüst",
+      "serviceRestrictedLabel": "Näita märkusega"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kust lisan need kirjed?",

@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} valid, tetapi saat ini tidak memotong apa pun di keranjang Anda — beberapa item (seperti kartu hadiah) mungkin dikecualikan, atau minimum belum tercapai.",
       "itemSoldOutError": "\"{name}\" baru saja habis — hapus dari keranjang untuk melanjutkan.",
       "deliveryPrepaidRequired": "Pesanan antar di restoran ini harus dibayar online — pilih metode pembayaran online.",
-      "itemSoldOutRemoved": "\"{name}\" habis terjual sejak kunjungan terakhir Anda — kami menghapusnya dari keranjang Anda."
+      "itemSoldOutRemoved": "\"{name}\" habis terjual sejak kunjungan terakhir Anda — kami menghapusnya dari keranjang Anda.",
+      "itemNotForDeliveryError": "\"{name}\" hanya tersedia untuk ambil sendiri — hapus dari keranjang untuk melanjutkan.",
+      "itemNotForPickupError": "\"{name}\" hanya tersedia untuk pengantaran — hapus dari keranjang untuk melanjutkan."
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",
@@ -321,7 +323,9 @@
       "message": "Restoran ini menggunakan cookie analitik (Google Analytics / Meta Pixel) untuk memahami bagaimana menunya digunakan. Setuju?",
       "accept": "Terima",
       "decline": "Tidak, terima kasih"
-    }
+    },
+    "deliveryOnlyLabel": "Hanya tersedia untuk pengantaran",
+    "pickupOnlyLabel": "Hanya tersedia untuk ambil sendiri"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Judul sederhana (klasik)",
       "categoryNoImageStyleHint": "Kategori DENGAN foto selalu mendapat banner foto besar (saat banner aktif) — unggah foto per kategori di Menu. Ini menentukan tampilan kategori TANPA foto: teks polos, pita warna, kartu tombol yang bisa diketuk, atau panel aksen modern dengan warna tema Anda.",
       "categoryNoImageButton": "Kartu tombol",
-      "categoryNoImageModern": "Aksen modern"
+      "categoryNoImageModern": "Aksen modern",
+      "serviceRestrictedTitle": "Hidangan yang tidak tersedia untuk layanan terpilih",
+      "serviceRestrictedHint": "Hidangan (atau kategori) khusus ambil sendiri atau antar, saat pelanggan memilih layanan lain: sembunyikan dari menu, atau tampilkan abu-abu dengan catatan \"Hanya tersedia…\".",
+      "serviceRestrictedHide": "Sembunyikan dari menu",
+      "serviceRestrictedLabel": "Tampilkan dengan catatan"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Di mana saya menambahkan record ini?",

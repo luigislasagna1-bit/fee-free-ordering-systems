@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} jest prawidłowy, ale w tej chwili nic nie obniża w Twoim koszyku — niektóre pozycje (np. karty podarunkowe) mogą być wyłączone lub nie osiągnięto minimum.",
       "itemSoldOutError": "„{name}” właśnie się wyprzedał — usuń go z koszyka, aby kontynuować.",
       "deliveryPrepaidRequired": "Zamówienia z dostawą w tej restauracji muszą być opłacone online — wybierz metodę płatności online.",
-      "itemSoldOutRemoved": "\"{name}\" wyprzedało się od Twojej ostatniej wizyty — usunęliśmy tę pozycję z koszyka."
+      "itemSoldOutRemoved": "\"{name}\" wyprzedało się od Twojej ostatniej wizyty — usunęliśmy tę pozycję z koszyka.",
+      "itemNotForDeliveryError": "\"{name}\" jest dostępne tylko na odbiór — usuń je z koszyka, aby kontynuować.",
+      "itemNotForPickupError": "\"{name}\" jest dostępne tylko w dostawie — usuń je z koszyka, aby kontynuować."
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",
@@ -321,7 +323,9 @@
       "message": "Ta restauracja używa plików cookie do analityki (Google Analytics / Piksel Meta), aby zrozumieć, jak używane jest menu. Czy to w porządku?",
       "accept": "Akceptuję",
       "decline": "Nie, dziękuję"
-    }
+    },
+    "deliveryOnlyLabel": "Dostępne tylko w dostawie",
+    "pickupOnlyLabel": "Dostępne tylko na odbiór"
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Prosty nagłówek (klasyczny)",
       "categoryNoImageStyleHint": "Kategorie ZE zdjęciem zawsze mają duży baner (przy włączonych banerach) — dodawaj zdjęcia per kategoria w Menu. To decyduje o wyglądzie kategorii BEZ zdjęcia: zwykły tekst, kolorowy pas, dotykalna karta-przycisk lub nowoczesny panel akcentowy w kolorze motywu.",
       "categoryNoImageButton": "Karta-przycisk",
-      "categoryNoImageModern": "Nowoczesny akcent"
+      "categoryNoImageModern": "Nowoczesny akcent",
+      "serviceRestrictedTitle": "Dania niedostępne dla wybranej usługi",
+      "serviceRestrictedHint": "Danie (lub kategoria) tylko na odbiór lub tylko w dostawie, gdy klient wybrał drugą usługę: ukryj je z menu lub pokaż wyszarzone z notą \"Dostępne tylko…\".",
+      "serviceRestrictedHide": "Ukryj z menu",
+      "serviceRestrictedLabel": "Pokaż z notą"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Gdzie dodać te rekordy?",

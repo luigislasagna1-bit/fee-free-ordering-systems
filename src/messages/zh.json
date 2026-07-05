@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} 有效，但目前不会为您的购物车带来任何折扣——某些商品（如礼品卡）可能被排除，或未达到最低消费。",
       "itemSoldOutError": "“{name}”刚刚售罄——请从购物车中移除后继续。",
       "deliveryPrepaidRequired": "本餐厅的外送订单必须在线支付——请选择在线支付方式。",
-      "itemSoldOutRemoved": "“{name}”在您上次访问后已售罄——我们已将其从您的购物车中移除。"
+      "itemSoldOutRemoved": "“{name}”在您上次访问后已售罄——我们已将其从您的购物车中移除。",
+      "itemNotForDeliveryError": "“{name}”仅限自取——请从购物车中移除后继续。",
+      "itemNotForPickupError": "“{name}”仅限外送——请从购物车中移除后继续。"
     },
     "searchMenu": "搜索菜单…",
     "signIn": "登录",
@@ -321,7 +323,9 @@
       "message": "本餐厅使用分析 Cookie（Google Analytics / Meta Pixel）来了解菜单的使用情况。您同意吗？",
       "accept": "接受",
       "decline": "不用了"
-    }
+    },
+    "deliveryOnlyLabel": "仅限外送",
+    "pickupOnlyLabel": "仅限自取"
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "简洁标题（经典）",
       "categoryNoImageStyleHint": "有照片的分类始终显示大图横幅（横幅开启时）——请在菜单中为每个分类上传照片。此设置决定无照片分类的外观：纯文字、纯色条带、可点按的按钮卡片，或使用主题色的现代强调面板。",
       "categoryNoImageButton": "按钮卡片",
-      "categoryNoImageModern": "现代强调"
+      "categoryNoImageModern": "现代强调",
+      "serviceRestrictedTitle": "所选服务不提供的菜品",
+      "serviceRestrictedHint": "仅自取或仅外送的菜品（或分类），当顾客选择了另一种服务时：从菜单隐藏，或灰显并标注“仅限……”。",
+      "serviceRestrictedHide": "从菜单隐藏",
+      "serviceRestrictedLabel": "灰显并标注"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "在哪里添加这些记录？",

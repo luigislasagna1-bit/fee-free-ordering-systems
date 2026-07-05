@@ -544,6 +544,10 @@ export async function POST(req: NextRequest) {
             // when building the engine's cart items / redeem base below.
             promoExcluded: true,
             rewardRedeemExcluded: true,
+            // Category-level service restriction (Fabrizio cmr803ovq) —
+            // enforced with the item's own flags in the per-item guard below.
+            forPickup: true,
+            forDelivery: true,
             modifierGroups: { include: { options: { where: { isAvailable: true } } } },
           },
         },
@@ -989,6 +993,29 @@ export async function POST(req: NextRequest) {
           { error: `"${menuItem.name}" is sold out.`, code: "item_sold_out", itemName: menuItem.name },
           { status: 400 },
         );
+      }
+
+      // Service restriction (Fabrizio cmr803ovq): a delivery-only dish can't
+      // ride a pickup-style order and vice versa — item AND category level.
+      // The customer page hides or greys+blocks these, so this only fires on
+      // a stale cart or a tampered request. Delivery uses forDelivery; every
+      // pickup-style channel (pickup / dine-in / take-out) uses forPickup —
+      // the same rule the customer filter applies.
+      {
+        const svcOk = type === "delivery"
+          ? ((menuItem as any).forDelivery !== false && ((menuItem as any).category?.forDelivery ?? true))
+          : ((menuItem as any).forPickup !== false && ((menuItem as any).category?.forPickup ?? true));
+        if (!svcOk) {
+          return NextResponse.json(
+            {
+              error: `"${menuItem.name}" isn't available for ${type === "delivery" ? "delivery" : "pickup"} orders.`,
+              code: "item_service_unavailable",
+              itemName: menuItem.name,
+              service: type === "delivery" ? "delivery" : "pickup",
+            },
+            { status: 400 },
+          );
+        }
       }
 
       // Day/time availability guard (server-side defence). The customer page

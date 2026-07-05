@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} galioja, bet šiuo metu jūsų krepšelyje nieko nenupigina — kai kurios prekės (pvz., dovanų kortelės) gali būti neįtrauktos arba nepasiektas minimumas.",
       "itemSoldOutError": "„{name}“ ką tik išparduotas — pašalinkite jį iš krepšelio, kad tęstumėte.",
       "deliveryPrepaidRequired": "Šio restorano užsakymai su pristatymu turi būti apmokėti internetu — pasirinkite mokėjimo internetu būdą.",
-      "itemSoldOutRemoved": "\"{name}\" išparduota nuo paskutinio jūsų apsilankymo — pašalinome ją iš jūsų krepšelio."
+      "itemSoldOutRemoved": "\"{name}\" išparduota nuo paskutinio jūsų apsilankymo — pašalinome ją iš jūsų krepšelio.",
+      "itemNotForDeliveryError": "\"{name}\" galima tik atsiimti — pašalinkite iš krepšelio, kad tęstumėte.",
+      "itemNotForPickupError": "\"{name}\" galima tik pristatymui — pašalinkite iš krepšelio, kad tęstumėte."
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",
@@ -321,7 +323,9 @@
       "message": "Šis restoranas naudoja analitikos slapukus (Google Analytics / Meta pikselis), kad suprastų, kaip naudojamas jo meniu. Ar sutinkate?",
       "accept": "Sutinku",
       "decline": "Ne, ačiū"
-    }
+    },
+    "deliveryOnlyLabel": "Tik pristatymui",
+    "pickupOnlyLabel": "Tik atsiėmimui"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",
@@ -1896,7 +1900,11 @@
       "categoryNoImagePlain": "Paprasta antraštė (klasikinė)",
       "categoryNoImageStyleHint": "Kategorijos SU nuotrauka visada gauna didelį foto baneris (kai baneriai įjungti) — nuotraukas kelkite pagal kategoriją Meniu. Tai lemia kategorijų BE nuotraukos išvaizdą: paprastas tekstas, spalvota juosta, paliečiama mygtuko kortelė arba modernus akcento skydelis temos spalva.",
       "categoryNoImageButton": "Mygtuko kortelė",
-      "categoryNoImageModern": "Modernus akcentas"
+      "categoryNoImageModern": "Modernus akcentas",
+      "serviceRestrictedTitle": "Patiekalai, nesiūlomi pasirinktai paslaugai",
+      "serviceRestrictedHint": "Patiekalas (ar kategorija) tik atsiėmimui arba pristatymui, kai klientas pasirinko kitą paslaugą: paslėpti iš meniu arba rodyti papilkintą su pastaba \"Tik…\".",
+      "serviceRestrictedHide": "Slėpti iš meniu",
+      "serviceRestrictedLabel": "Rodyti su pastaba"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kur pridėti šiuos įrašus?",

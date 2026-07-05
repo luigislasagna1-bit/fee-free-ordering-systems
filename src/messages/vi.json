@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} hợp lệ nhưng hiện không giảm giá mục nào trong giỏ hàng — một số món (như thẻ quà tặng) có thể bị loại trừ, hoặc chưa đạt mức tối thiểu.",
       "itemSoldOutError": "\"{name}\" vừa hết hàng — hãy xóa khỏi giỏ để tiếp tục.",
       "deliveryPrepaidRequired": "Đơn giao hàng của nhà hàng này phải được thanh toán trực tuyến — vui lòng chọn phương thức thanh toán trực tuyến.",
-      "itemSoldOutRemoved": "\"{name}\" đã hết hàng kể từ lần ghé trước của bạn — chúng tôi đã xóa món này khỏi giỏ hàng."
+      "itemSoldOutRemoved": "\"{name}\" đã hết hàng kể từ lần ghé trước của bạn — chúng tôi đã xóa món này khỏi giỏ hàng.",
+      "itemNotForDeliveryError": "\"{name}\" chỉ có khi tự đến lấy — vui lòng xóa khỏi giỏ hàng để tiếp tục.",
+      "itemNotForPickupError": "\"{name}\" chỉ có khi giao hàng — vui lòng xóa khỏi giỏ hàng để tiếp tục."
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",
@@ -321,7 +323,9 @@
       "message": "Nhà hàng này dùng cookie phân tích (Google Analytics / Meta Pixel) để hiểu cách thực đơn được sử dụng. Bạn đồng ý chứ?",
       "accept": "Đồng ý",
       "decline": "Không, cảm ơn"
-    }
+    },
+    "deliveryOnlyLabel": "Chỉ có khi giao hàng",
+    "pickupOnlyLabel": "Chỉ có khi tự đến lấy"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Tiêu đề đơn giản (cổ điển)",
       "categoryNoImageStyleHint": "Danh mục CÓ ảnh luôn có banner ảnh lớn (khi bật banner) — tải ảnh theo từng danh mục trong Thực đơn. Mục này quyết định giao diện của danh mục KHÔNG có ảnh: chữ đơn giản, dải màu, thẻ nút chạm được, hoặc bảng điểm nhấn hiện đại theo màu chủ đề.",
       "categoryNoImageButton": "Thẻ nút",
-      "categoryNoImageModern": "Điểm nhấn hiện đại"
+      "categoryNoImageModern": "Điểm nhấn hiện đại",
+      "serviceRestrictedTitle": "Món không phục vụ cho hình thức đã chọn",
+      "serviceRestrictedHint": "Món (hoặc danh mục) chỉ tự lấy hoặc chỉ giao hàng, khi khách chọn hình thức còn lại: ẩn khỏi thực đơn, hoặc hiển thị mờ kèm ghi chú \"Chỉ có khi…\".",
+      "serviceRestrictedHide": "Ẩn khỏi thực đơn",
+      "serviceRestrictedLabel": "Hiển thị kèm ghi chú"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Tôi thêm các bản ghi này ở đâu?",

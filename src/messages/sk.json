@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} je platný, ale momentálne vo vašom košíku nič nezľavňuje — niektoré položky (napr. darčekové karty) môžu byť vylúčené, alebo nie je splnené minimum.",
       "itemSoldOutError": "„{name}“ sa práve vypredalo — odstráňte ho z košíka a pokračujte.",
       "deliveryPrepaidRequired": "Objednávky s rozvozom v tejto reštaurácii musia byť zaplatené online — zvoľte online platobnú metódu.",
-      "itemSoldOutRemoved": "\"{name}\" sa od vašej poslednej návštevy vypredalo — odstránili sme ho z košíka."
+      "itemSoldOutRemoved": "\"{name}\" sa od vašej poslednej návštevy vypredalo — odstránili sme ho z košíka.",
+      "itemNotForDeliveryError": "\"{name}\" je iba na vyzdvihnutie — odstráňte ho z košíka a pokračujte.",
+      "itemNotForPickupError": "\"{name}\" je iba pre donášku — odstráňte ho z košíka a pokračujte."
     },
     "searchMenu": "Hľadať v menu…",
     "signIn": "Prihlásiť sa",
@@ -321,7 +323,9 @@
       "message": "Táto reštaurácia používa analytické cookies (Google Analytics / Meta Pixel), aby pochopila, ako sa jej menu používa. Súhlasíte?",
       "accept": "Prijať",
       "decline": "Nie, ďakujem"
-    }
+    },
+    "deliveryOnlyLabel": "Iba pre donášku",
+    "pickupOnlyLabel": "Iba na vyzdvihnutie"
   },
   "pizza": {
     "chooseSize": "Vybrať veľkosť",
@@ -1905,7 +1909,11 @@
       "categoryNoImagePlain": "Jednoduchý nadpis (klasický)",
       "categoryNoImageStyleHint": "Kategórie S fotkou majú vždy veľký fotobanner (pri zapnutých banneroch) — fotky nahrávajte po kategóriách v Menu. Toto určuje vzhľad kategórií BEZ fotky: čistý text, farebný pruh, klepnuteľná karta-tlačidlo alebo moderný akcentový panel vo farbe témy.",
       "categoryNoImageButton": "Karta-tlačidlo",
-      "categoryNoImageModern": "Moderný akcent"
+      "categoryNoImageModern": "Moderný akcent",
+      "serviceRestrictedTitle": "Jedlá neponúkané pre zvolenú službu",
+      "serviceRestrictedHint": "Jedlo (alebo kategóriu) iba na vyzdvihnutie či donášku, keď zákazník zvolil druhú službu: skryť z menu alebo zobraziť sivé s poznámkou \"Iba…\".",
+      "serviceRestrictedHide": "Skryť z menu",
+      "serviceRestrictedLabel": "Zobraziť s poznámkou"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kde pridám tieto záznamy?",

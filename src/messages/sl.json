@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} je veljaven, a trenutno ne zniža ničesar v vaši košarici — nekateri artikli (npr. darilne kartice) so lahko izključeni ali minimum ni dosežen.",
       "itemSoldOutError": "\"{name}\" je pravkar razprodan — odstranite ga iz košarice za nadaljevanje.",
       "deliveryPrepaidRequired": "Naročila z dostavo v tej restavraciji je treba plačati prek spleta — izberite spletni način plačila.",
-      "itemSoldOutRemoved": "\"{name}\" je razprodan od vašega zadnjega obiska — odstranili smo ga iz vaše košarice."
+      "itemSoldOutRemoved": "\"{name}\" je razprodan od vašega zadnjega obiska — odstranili smo ga iz vaše košarice.",
+      "itemNotForDeliveryError": "\"{name}\" je na voljo samo za prevzem — odstranite ga iz košarice za nadaljevanje.",
+      "itemNotForPickupError": "\"{name}\" je na voljo samo za dostavo — odstranite ga iz košarice za nadaljevanje."
     },
     "searchMenu": "Iskanje po meniju…",
     "signIn": "Prijava",
@@ -321,7 +323,9 @@
       "message": "Ta restavracija uporablja analitične piškotke (Google Analytics / Meta Pixel), da razume, kako se uporablja njen jedilnik. Se strinjate?",
       "accept": "Sprejmi",
       "decline": "Ne, hvala"
-    }
+    },
+    "deliveryOnlyLabel": "Na voljo samo za dostavo",
+    "pickupOnlyLabel": "Na voljo samo za prevzem"
   },
   "pizza": {
     "chooseSize": "Izberite velikost",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Preprost naslov (klasičen)",
       "categoryNoImageStyleHint": "Kategorije S sliko vedno dobijo velik foto pasico (ko so pasice vklopljene) — slike nalagajte po kategorijah v Meniju. To določa videz kategorij BREZ slike: navadno besedilo, barvni trak, tapljiva kartica-gumb ali moderen poudarjen panel v barvi teme.",
       "categoryNoImageButton": "Kartica-gumb",
-      "categoryNoImageModern": "Moderen poudarek"
+      "categoryNoImageModern": "Moderen poudarek",
+      "serviceRestrictedTitle": "Jedi, ki niso na voljo za izbrano storitev",
+      "serviceRestrictedHint": "Jed (ali kategorija) samo za prevzem ali dostavo, ko je stranka izbrala drugo storitev: skrij z menija ali prikaži posivljeno z opombo \"Na voljo samo…\".",
+      "serviceRestrictedHide": "Skrij z menija",
+      "serviceRestrictedLabel": "Prikaži z opombo"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Kje dodajem te zapise?",

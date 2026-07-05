@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
   if (blocked) return blocked;
 
   const body = await req.json();
-  const { name, description, imageUrl, isHidden, isCatering, menuId: bodyMenuId, visibility } = body;
+  const { name, description, imageUrl, isHidden, isCatering, forPickup, forDelivery, menuId: bodyMenuId, visibility } = body;
   if (!name?.trim()) return NextResponse.json({ error: "Name required" }, { status: 400 });
   let visData: Record<string, unknown> = {};
   if (visibility !== undefined) {
@@ -103,6 +103,10 @@ export async function POST(req: NextRequest) {
       name: name.trim(), description, imageUrl,
       isHidden: isHidden ?? false,
       isCatering: !!isCatering,
+      // Category-level service restriction (Fabrizio cmr803ovq); default
+      // unrestricted when omitted.
+      forPickup: forPickup !== undefined ? !!forPickup : true,
+      forDelivery: forDelivery !== undefined ? !!forDelivery : true,
       sortOrder: existing,
       ...visData,
     },

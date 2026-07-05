@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} er gyldig, men giver lige nu ingen rabat i din kurv — nogle varer (som gavekort) kan være undtaget, eller et minimum er ikke nået.",
       "itemSoldOutError": "\"{name}\" er netop udsolgt — fjern den fra kurven for at fortsætte.",
       "deliveryPrepaidRequired": "Leveringsordrer hos denne restaurant skal betales online — vælg en onlinebetalingsmetode.",
-      "itemSoldOutRemoved": "\"{name}\" blev udsolgt siden dit sidste besøg — vi har fjernet den fra din kurv."
+      "itemSoldOutRemoved": "\"{name}\" blev udsolgt siden dit sidste besøg — vi har fjernet den fra din kurv.",
+      "itemNotForDeliveryError": "\"{name}\" fås kun ved afhentning — fjern den fra kurven for at fortsætte.",
+      "itemNotForPickupError": "\"{name}\" fås kun ved levering — fjern den fra kurven for at fortsætte."
     },
     "searchMenu": "Søg i menuen…",
     "signIn": "Log ind",
@@ -321,7 +323,9 @@
       "message": "Denne restaurant bruger analysecookies (Google Analytics / Meta-pixel) for at forstå, hvordan menuen bruges. Er det i orden?",
       "accept": "Accepter",
       "decline": "Nej tak"
-    }
+    },
+    "deliveryOnlyLabel": "Kun ved levering",
+    "pickupOnlyLabel": "Kun ved afhentning"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Enkel overskrift (klassisk)",
       "categoryNoImageStyleHint": "Kategorier MED foto får altid det store fotobanner (når bannere er slået til) — upload fotos pr. kategori under Menu. Dette bestemmer udseendet af kategorier UDEN: ren tekst, farvebånd, trykbart knapkort eller moderne accentpanel i din temafarve.",
       "categoryNoImageButton": "Knapkort",
-      "categoryNoImageModern": "Moderne accent"
+      "categoryNoImageModern": "Moderne accent",
+      "serviceRestrictedTitle": "Retter der ikke tilbydes for den valgte service",
+      "serviceRestrictedHint": "En ret (eller kategori) kun til afhentning eller levering, når kunden valgte den anden service: skjul den fra menuen, eller vis den nedtonet med noten \"Kun ved …\".",
+      "serviceRestrictedHide": "Skjul fra menuen",
+      "serviceRestrictedLabel": "Vis med note"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Hvor tilføjer jeg disse poster?",

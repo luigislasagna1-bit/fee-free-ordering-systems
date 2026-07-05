@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} är giltig men ger just nu ingen rabatt i din varukorg — vissa varor (som presentkort) kan vara undantagna, eller så uppnås inte ett minimibelopp.",
       "itemSoldOutError": "\"{name}\" är just slutsåld — ta bort den ur varukorgen för att fortsätta.",
       "deliveryPrepaidRequired": "Leveransbeställningar hos den här restaurangen måste betalas online — välj en onlinebetalningsmetod.",
-      "itemSoldOutRemoved": "\"{name}\" tog slut sedan ditt senaste besök — vi har tagit bort den ur din varukorg."
+      "itemSoldOutRemoved": "\"{name}\" tog slut sedan ditt senaste besök — vi har tagit bort den ur din varukorg.",
+      "itemNotForDeliveryError": "\"{name}\" finns endast för avhämtning — ta bort den ur varukorgen för att fortsätta.",
+      "itemNotForPickupError": "\"{name}\" finns endast för leverans — ta bort den ur varukorgen för att fortsätta."
     },
     "searchMenu": "Sök i menyn…",
     "signIn": "Logga in",
@@ -321,7 +323,9 @@
       "message": "Den här restaurangen använder analyscookies (Google Analytics / Meta-pixel) för att förstå hur menyn används. Är det okej?",
       "accept": "Acceptera",
       "decline": "Nej tack"
-    }
+    },
+    "deliveryOnlyLabel": "Endast för leverans",
+    "pickupOnlyLabel": "Endast för avhämtning"
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Enkel rubrik (klassisk)",
       "categoryNoImageStyleHint": "Kategorier MED foto får alltid den stora fotobannern (när banners är på) — ladda upp foton per kategori under Meny. Detta avgör hur kategorier UTAN foto ser ut: ren text, färgband, tryckbart knappkort eller modern accentpanel i din temafärg.",
       "categoryNoImageButton": "Knappkort",
-      "categoryNoImageModern": "Modern accent"
+      "categoryNoImageModern": "Modern accent",
+      "serviceRestrictedTitle": "Rätter som inte erbjuds för vald tjänst",
+      "serviceRestrictedHint": "En rätt (eller kategori) endast för avhämtning eller leverans, när kunden valt den andra tjänsten: dölj den från menyn eller visa den gråad med noteringen \"Endast för …\".",
+      "serviceRestrictedHide": "Dölj från menyn",
+      "serviceRestrictedLabel": "Visa med notering"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Var lägger jag till dessa poster?",

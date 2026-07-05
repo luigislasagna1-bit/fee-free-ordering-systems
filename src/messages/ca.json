@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} és vàlid, però ara mateix no descompta res al teu cistell — alguns articles (com les targetes regal) poden estar exclosos, o no s'arriba al mínim.",
       "itemSoldOutError": "\"{name}\" s'acaba d'esgotar — treu-lo del cistell per continuar.",
       "deliveryPrepaidRequired": "Les comandes a domicili d'aquest restaurant s'han de pagar en línia — trieu un mètode de pagament en línia.",
-      "itemSoldOutRemoved": "\"{name}\" s'ha esgotat des de la teva darrera visita — l'hem tret del teu cistell."
+      "itemSoldOutRemoved": "\"{name}\" s'ha esgotat des de la teva darrera visita — l'hem tret del teu cistell.",
+      "itemNotForDeliveryError": "\"{name}\" només està disponible per recollir — treu-lo del cistell per continuar.",
+      "itemNotForPickupError": "\"{name}\" només està disponible a domicili — treu-lo del cistell per continuar."
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",
@@ -321,7 +323,9 @@
       "message": "Aquest restaurant utilitza galetes d'anàlisi (Google Analytics / Píxel de Meta) per entendre com s'usa el seu menú. Hi esteu d'acord?",
       "accept": "Accepta",
       "decline": "No, gràcies"
-    }
+    },
+    "deliveryOnlyLabel": "Disponible només a domicili",
+    "pickupOnlyLabel": "Disponible només per recollir"
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Capçalera simple (clàssica)",
       "categoryNoImageStyleHint": "Les categories AMB foto sempre tenen el bàner fotogràfic gran (amb bàners activats) — puja fotos per categoria a Menú. Això decideix l'aspecte de les que NO en tenen: text simple, banda de color, targeta-botó tocable o panell modern amb el color del tema.",
       "categoryNoImageButton": "Targeta botó",
-      "categoryNoImageModern": "Accent modern"
+      "categoryNoImageModern": "Accent modern",
+      "serviceRestrictedTitle": "Plats no oferts per al servei triat",
+      "serviceRestrictedHint": "Un plat (o categoria) només per recollir o a domicili, quan el client ha triat l'altre servei: amaga'l del menú o mostra'l en gris amb la nota \"Disponible només…\".",
+      "serviceRestrictedHide": "Amaga del menú",
+      "serviceRestrictedLabel": "Mostra amb nota"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "On afegeixo aquests registres?",

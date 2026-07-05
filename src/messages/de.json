@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} ist gültig, reduziert aber gerade nichts in Ihrem Warenkorb — manche Artikel (z. B. Geschenkkarten) sind ggf. ausgeschlossen oder ein Mindestbetrag ist nicht erreicht.",
       "itemSoldOutError": "\"{name}\" ist gerade ausverkauft — bitte aus dem Warenkorb entfernen, um fortzufahren.",
       "deliveryPrepaidRequired": "Lieferbestellungen bei diesem Restaurant müssen online bezahlt werden — bitte eine Online-Zahlungsart wählen.",
-      "itemSoldOutRemoved": "\"{name}\" ist seit deinem letzten Besuch ausverkauft — wir haben es aus deinem Warenkorb entfernt."
+      "itemSoldOutRemoved": "\"{name}\" ist seit deinem letzten Besuch ausverkauft — wir haben es aus deinem Warenkorb entfernt.",
+      "itemNotForDeliveryError": "\"{name}\" ist nur zur Abholung erhältlich — bitte aus dem Warenkorb entfernen, um fortzufahren.",
+      "itemNotForPickupError": "\"{name}\" ist nur bei Lieferung erhältlich — bitte aus dem Warenkorb entfernen, um fortzufahren."
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",
@@ -321,7 +323,9 @@
       "message": "Dieses Restaurant verwendet Analyse-Cookies (Google Analytics / Meta-Pixel), um die Nutzung seiner Speisekarte zu verstehen. Sind Sie einverstanden?",
       "accept": "Akzeptieren",
       "decline": "Nein danke"
-    }
+    },
+    "deliveryOnlyLabel": "Nur bei Lieferung erhältlich",
+    "pickupOnlyLabel": "Nur zur Abholung erhältlich"
   },
   "pizza": {
     "chooseSize": "Größe wählen",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Einfache Überschrift (klassisch)",
       "categoryNoImageStyleHint": "Kategorien MIT Foto erhalten immer das große Fotobanner (bei aktivierten Bannern) — Fotos je Kategorie unter Menü hochladen. Dies bestimmt das Aussehen der Kategorien OHNE Foto: schlichter Text, farbiges Band, tippbare Button-Karte oder modernes Akzent-Panel in Ihrer Themenfarbe.",
       "categoryNoImageButton": "Button-Karte",
-      "categoryNoImageModern": "Moderner Akzent"
+      "categoryNoImageModern": "Moderner Akzent",
+      "serviceRestrictedTitle": "Gerichte, die es für den gewählten Service nicht gibt",
+      "serviceRestrictedHint": "Ein Gericht (oder eine Kategorie) nur zur Abholung oder nur zur Lieferung, wenn der Kunde den anderen Service gewählt hat: aus der Karte ausblenden oder ausgegraut mit dem Hinweis \"Nur … erhältlich\" anzeigen.",
+      "serviceRestrictedHide": "Aus der Karte ausblenden",
+      "serviceRestrictedLabel": "Mit Hinweis anzeigen"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Wo füge ich diese Einträge hinzu?",

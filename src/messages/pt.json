@@ -256,7 +256,9 @@
       "couponNoEffect": "{code} é válido, mas de momento não desconta nada no seu carrinho — alguns artigos (como cartões-presente) podem estar excluídos, ou o mínimo não foi atingido.",
       "itemSoldOutError": "\"{name}\" acabou de esgotar — remova-o do carrinho para continuar.",
       "deliveryPrepaidRequired": "As encomendas com entrega deste restaurante devem ser pagas online — escolha um método de pagamento online.",
-      "itemSoldOutRemoved": "\"{name}\" esgotou desde a sua última visita — retirámo-lo do seu carrinho."
+      "itemSoldOutRemoved": "\"{name}\" esgotou desde a sua última visita — retirámo-lo do seu carrinho.",
+      "itemNotForDeliveryError": "\"{name}\" só está disponível para levantamento — remova-o do carrinho para continuar.",
+      "itemNotForPickupError": "\"{name}\" só está disponível para entrega — remova-o do carrinho para continuar."
     },
     "followUs": "Siga-nos",
     "searchMenu": "Pesquisar no menu…",
@@ -321,7 +323,9 @@
       "message": "Este restaurante usa cookies de análise (Google Analytics / Pixel da Meta) para perceber como o menu é utilizado. Concorda?",
       "accept": "Aceitar",
       "decline": "Não, obrigado"
-    }
+    },
+    "deliveryOnlyLabel": "Disponível apenas para entrega",
+    "pickupOnlyLabel": "Disponível apenas para levantamento"
   },
   "pizza": {
     "chooseSize": "Escolher tamanho",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Cabeçalho simples (clássico)",
       "categoryNoImageStyleHint": "As categorias COM foto têm sempre o banner grande (com banners ativados) — carregue fotos por categoria no Menu. Isto define o aspeto das que NÃO têm: texto simples, banda de cor, cartão-botão tocável ou painel moderno na cor do tema.",
       "categoryNoImageButton": "Cartão botão",
-      "categoryNoImageModern": "Destaque moderno"
+      "categoryNoImageModern": "Destaque moderno",
+      "serviceRestrictedTitle": "Pratos não oferecidos para o serviço escolhido",
+      "serviceRestrictedHint": "Um prato (ou categoria) só para levantamento ou só para entrega, quando o cliente escolheu o outro serviço: ocultá-lo do menu ou mostrá-lo acinzentado com a nota \"Disponível apenas…\".",
+      "serviceRestrictedHide": "Ocultar do menu",
+      "serviceRestrictedLabel": "Mostrar com nota"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Onde adiciono esses registros?",

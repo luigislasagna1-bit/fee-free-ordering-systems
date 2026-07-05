@@ -251,6 +251,26 @@ export function WebsiteThemeClient({ restaurant }: { restaurant: any }) {
                 </div>
               </div>
 
+              {/* Service-restricted dishes: hide vs show-with-label (Fabrizio
+                  cmr803ovq). Applies to dishes AND categories that are
+                  pickup-only / delivery-only when the customer picked the
+                  other service. */}
+              <div className="p-3 bg-gray-50 rounded-lg">
+                <label className="block text-sm font-medium text-gray-700">{t("serviceRestrictedTitle")}</label>
+                <div className="text-xs text-gray-500 mb-2">{t("serviceRestrictedHint")}</div>
+                <div className="grid grid-cols-2 gap-2">
+                  {(["hide", "label"] as const).map((mode) => (
+                    <button
+                      key={mode}
+                      onClick={() => set("serviceRestrictedDisplay", mode)}
+                      className={`py-2 rounded-lg border-2 text-xs font-semibold transition ${theme.serviceRestrictedDisplay === mode ? "border-emerald-500 bg-emerald-50 text-emerald-600" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}
+                    >
+                      {mode === "hide" ? t("serviceRestrictedHide") : t("serviceRestrictedLabel")}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div>
                   <div className="text-sm font-medium text-gray-700">{t("collapsibleCategories")}</div>

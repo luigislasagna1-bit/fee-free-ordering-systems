@@ -28,6 +28,12 @@ export type ThemeSettings = {
    *  overlay) instead of the default branded hero band at the top. Only takes
    *  effect when a banner is set. Fabrizio cmpxeacks. */
   reservationFullBg: boolean;
+  /** How a dish/category restricted to ONE service (pickup-only or
+   *  delivery-only) renders when the customer selected the OTHER service:
+   *  "hide" (default, historic behavior) removes it from the menu; "label"
+   *  keeps it visible but greyed with an "Available for … only" note so
+   *  customers know it exists. Fabrizio cmr803ovq, 2026-07-05. */
+  serviceRestrictedDisplay: "hide" | "label";
 };
 
 export const DEFAULT_THEME: ThemeSettings = {
@@ -45,6 +51,7 @@ export const DEFAULT_THEME: ThemeSettings = {
   menuLayout: "carousel",
   mobileCollapsibleCategories: false,
   reservationFullBg: false,
+  serviceRestrictedDisplay: "hide",
 };
 
 export function parseTheme(raw: string | null | undefined): ThemeSettings {

@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} er gyldig, men gir akkurat nå ingen rabatt i handlekurven — noen varer (som gavekort) kan være unntatt, eller et minimum er ikke nådd.",
       "itemSoldOutError": "\"{name}\" ble nettopp utsolgt — fjern den fra handlekurven for å fortsette.",
       "deliveryPrepaidRequired": "Leveringsbestillinger hos denne restauranten må betales på nett — velg en nettbetalingsmetode.",
-      "itemSoldOutRemoved": "\"{name}\" ble utsolgt siden sist du var her — vi har fjernet den fra handlekurven din."
+      "itemSoldOutRemoved": "\"{name}\" ble utsolgt siden sist du var her — vi har fjernet den fra handlekurven din.",
+      "itemNotForDeliveryError": "\"{name}\" er kun for henting — fjern den fra handlekurven for å fortsette.",
+      "itemNotForPickupError": "\"{name}\" er kun for levering — fjern den fra handlekurven for å fortsette."
     },
     "searchMenu": "Søk i menyen…",
     "signIn": "Logg inn",
@@ -321,7 +323,9 @@
       "message": "Denne restauranten bruker analysecookies (Google Analytics / Meta-piksel) for å forstå hvordan menyen brukes. Er det greit?",
       "accept": "Godta",
       "decline": "Nei takk"
-    }
+    },
+    "deliveryOnlyLabel": "Kun for levering",
+    "pickupOnlyLabel": "Kun for henting"
   },
   "pizza": {
     "chooseSize": "Velg størrelse",
@@ -2781,7 +2785,11 @@
       "categoryNoImagePlain": "Enkel overskrift (klassisk)",
       "categoryNoImageStyleHint": "Kategorier MED foto får alltid det store fotobanneret (når bannere er på) — last opp bilder per kategori under Meny. Dette bestemmer utseendet til kategorier UTEN: ren tekst, fargebånd, trykkbart knappekort eller moderne aksentpanel i temafargen din.",
       "categoryNoImageButton": "Knappekort",
-      "categoryNoImageModern": "Moderne aksent"
+      "categoryNoImageModern": "Moderne aksent",
+      "serviceRestrictedTitle": "Retter som ikke tilbys for valgt tjeneste",
+      "serviceRestrictedHint": "En rett (eller kategori) kun for henting eller levering, når kunden valgte den andre tjenesten: skjul den fra menyen, eller vis den grået ut med merknaden \"Kun for …\".",
+      "serviceRestrictedHide": "Skjul fra menyen",
+      "serviceRestrictedLabel": "Vis med merknad"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Hvor legger jeg til disse oppføringene?",

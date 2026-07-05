@@ -266,7 +266,9 @@
       "couponNoEffect": "{code} is valid, but it doesn't discount anything in your cart right now — some items (like gift cards) may be excluded, or a minimum may not be met.",
       "itemSoldOutError": "\"{name}\" just sold out — please remove it from your cart to continue.",
       "deliveryPrepaidRequired": "Delivery orders must be paid online at this restaurant — please choose an online payment method.",
-      "itemSoldOutRemoved": "\"{name}\" sold out while you were away — we removed it from your cart."
+      "itemSoldOutRemoved": "\"{name}\" sold out while you were away — we removed it from your cart.",
+      "itemNotForDeliveryError": "\"{name}\" is only available for pickup — please remove it from your cart to continue.",
+      "itemNotForPickupError": "\"{name}\" is only available for delivery — please remove it from your cart to continue."
     },
     "searchMenu": "Search the menu…",
     "expandAll": "Expand all",
@@ -321,7 +323,9 @@
       "message": "This restaurant uses analytics cookies (Google Analytics / Meta Pixel) to understand how its menu is used. Is that OK?",
       "accept": "Accept",
       "decline": "No thanks"
-    }
+    },
+    "deliveryOnlyLabel": "Available for delivery only",
+    "pickupOnlyLabel": "Available for pickup only"
   },
   "pizza": {
     "chooseSize": "Choose Size",
@@ -3201,7 +3205,11 @@
       "categoryNoImagePlain": "Simple header (classic)",
       "categoryNoImageStyleHint": "Categories WITH a photo always get the big photo banner (when banners are on) — upload photos per category under Menu. This decides how categories WITHOUT one look: plain text, a solid band, a tappable button card, or a modern accent panel in your theme colour.",
       "categoryNoImageButton": "Button card",
-      "categoryNoImageModern": "Modern accent"
+      "categoryNoImageModern": "Modern accent",
+      "serviceRestrictedTitle": "Dishes not offered for the selected service",
+      "serviceRestrictedHint": "A pickup-only or delivery-only dish (or category), when the customer picked the other service: hide it from the menu, or show it greyed with an \"Available for … only\" note.",
+      "serviceRestrictedHide": "Hide from menu",
+      "serviceRestrictedLabel": "Show with note"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Where do I add these records?",

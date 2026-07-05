@@ -18,7 +18,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (!await getOwned(id, restaurantId)) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   const body = await req.json();
-  const { name, description, imageUrl, isActive, isHidden, isCatering, sortOrder, visibility, rewardEarnExcluded, promoExcluded, rewardRedeemExcluded } = body;
+  const { name, description, imageUrl, isActive, isHidden, isCatering, sortOrder, visibility, rewardEarnExcluded, promoExcluded, rewardRedeemExcluded, forPickup, forDelivery } = body;
   let visData: Record<string, unknown> = {};
   if (visibility !== undefined) {
     const v = buildVisibilityData(visibility);
@@ -36,6 +36,9 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       ...(rewardEarnExcluded !== undefined ? { rewardEarnExcluded: !!rewardEarnExcluded } : {}),
       ...(promoExcluded !== undefined ? { promoExcluded: !!promoExcluded } : {}),
       ...(rewardRedeemExcluded !== undefined ? { rewardRedeemExcluded: !!rewardRedeemExcluded } : {}),
+      // Category-level service restriction (Fabrizio cmr803ovq).
+      ...(forPickup !== undefined ? { forPickup: !!forPickup } : {}),
+      ...(forDelivery !== undefined ? { forDelivery: !!forDelivery } : {}),
       ...visData,
     },
   });

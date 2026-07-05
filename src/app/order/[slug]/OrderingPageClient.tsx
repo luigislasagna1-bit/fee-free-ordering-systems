@@ -85,7 +85,12 @@ interface MenuItem extends VisibilityProps {
   categoryId?: string;
   pizzaConfig?: string;
 }
-interface Category extends VisibilityProps { id: string; name: string; imageUrl?: string; modifierGroups: ModGroup[]; menuItems: MenuItem[] }
+interface Category extends VisibilityProps {
+  id: string; name: string; imageUrl?: string; modifierGroups: ModGroup[]; menuItems: MenuItem[];
+  /** Category-level service restriction (Fabrizio cmr803ovq) — mirrors the
+   *  item flags; missing/undefined = unrestricted (legacy rows). */
+  forPickup?: boolean; forDelivery?: boolean;
+}
 interface CartItem {
   menuItem: MenuItem; variant?: ItemVariant; quantity: number;
   selectedMods: Record<string, string[]>; notes: string; lineTotal: number;
@@ -2032,8 +2037,20 @@ export function OrderingPageClient({
       restaurantTz,
     );
   })();
+  // Service-restriction display mode (Fabrizio cmr803ovq): "hide" (historic
+  // behavior) removes a pickup-/delivery-only dish from the other service's
+  // menu; "label" keeps it visible but greyed with an "Available for … only"
+  // note (rides the existing __availabilityBlocked card pipeline). Category-
+  // level restriction composes with the item flags: a dish is orderable for
+  // this service only when BOTH its own flag AND its category's flag allow it.
+  const showServiceLabel = theme.serviceRestrictedDisplay === "label";
+  const catServiceOk = (c: Category) =>
+    orderType === "delivery" ? (c.forDelivery ?? true) : (c.forPickup ?? true);
   const visibleCategories: Category[] = (restaurant.menuCategories as Category[])
     .filter(c => isVisibleNow(c, visNow, restaurantTz))
+    // A fully service-restricted category disappears in "hide" mode; in
+    // "label" mode it stays and every dish inside renders the notice.
+    .filter(c => catServiceOk(c) || showServiceLabel)
     .map(c => {
       const catGroups: ModGroup[] = (c.modifierGroups ?? []).filter((g: ModGroup) => !g.isHidden);
       return {
@@ -2043,7 +2060,9 @@ export function OrderingPageClient({
             isVisibleNow(i, visNow, restaurantTz) &&
             // Delivery uses forDelivery; pickup / dine-in / take-out all use
             // the pickup availability flag (they're pickup-style channels).
-            (orderType === "delivery" ? i.forDelivery : i.forPickup) &&
+            // Item flag AND category flag; "label" mode keeps the dish
+            // visible (greyed + noted in the map below).
+            (((orderType === "delivery" ? i.forDelivery : i.forPickup) && catServiceOk(c)) || showServiceLabel) &&
             // availabilityMode "show" keeps the item VISIBLE outside its TIME
             // window — greyed with an "Available …" note, not addable — but
             // only on days it's actually sold: on an excluded DAY it hides
@@ -2099,16 +2118,28 @@ export function OrderingPageClient({
                 // window). If today isn't in the window, the cart's forced
                 // scheduling still guides the customer to a valid slot.
                 : t("availableOnlyLabel", { window: fulfilWin });
+            // Service restriction note (Fabrizio cmr803ovq): only in "label"
+            // mode — the dish (or its whole category) isn't offered for the
+            // selected service, so it renders greyed with "Available for …
+            // only" instead of vanishing. The note names the service the dish
+            // IS available for.
+            const itemServiceOk = orderType === "delivery" ? item.forDelivery : item.forPickup;
+            const serviceOk = itemServiceOk && catServiceOk(c);
+            const serviceNote = !serviceOk && showServiceLabel
+              ? (orderType === "delivery" ? t("pickupOnlyLabel") : t("deliveryOnlyLabel"))
+              : undefined;
             return {
               ...item,
               categoryId: c.id,
               modifierGroups: [...item.modifierGroups, ...uniqueCatGroups],
-              __availabilityNote: availabilityNote,
-              // Blocked (greyed + not addable) by the legacy time gate OR, in
-              // reservation mode, when the item can't be made for the booking
-              // day/time — there's no picker to reschedule it onto a valid slot.
+              // The categorical service note wins over the time-window note.
+              __availabilityNote: serviceNote ?? availabilityNote,
+              // Blocked (greyed + not addable) by a service restriction, the
+              // legacy time gate OR, in reservation mode, when the item can't
+              // be made for the booking day/time — there's no picker to
+              // reschedule it onto a valid slot.
               __availabilityBlocked:
-                (!isItemAvailableNow(item, restaurantTz) || reservationFulfilable === false) || undefined,
+                (!serviceOk || !isItemAvailableNow(item, restaurantTz) || reservationFulfilable === false) || undefined,
               __fulfilNote: fulfilNote,
               // Greyed (but addable) when an ASAP order couldn't be fulfilled
               // right now — signals "you'll need to schedule this". Only OUTSIDE
@@ -3599,6 +3630,14 @@ export function OrderingPageClient({
         // tell the customer WHICH item so they can remove the line and proceed.
         if (orderData.code === "item_sold_out")
           throw new Error(tT("itemSoldOutError", { name: orderData.itemName ?? "" }));
+        // Service-restricted dish in a stale cart (Fabrizio cmr803ovq) — name
+        // the service it IS available for so the customer knows what to do.
+        if (orderData.code === "item_service_unavailable")
+          throw new Error(
+            orderData.service === "delivery"
+              ? tT("itemNotForDeliveryError", { name: orderData.itemName ?? "" })
+              : tT("itemNotForPickupError", { name: orderData.itemName ?? "" }),
+          );
         // ShipDay-dispatched delivery must be prepaid online (Luigi 2026-07-04) —
         // the checkout hides at-door methods, so this only fires on a stale tab
         // or a tampered request.

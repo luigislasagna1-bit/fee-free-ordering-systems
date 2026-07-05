@@ -257,7 +257,9 @@
       "couponNoEffect": "{code} on voimassa, mutta se ei juuri nyt alenna mitään ostoskorissasi — jotkin tuotteet (kuten lahjakortit) voivat olla poissuljettuja tai vähimmäissumma ei täyty.",
       "itemSoldOutError": "\"{name}\" myytiin juuri loppuun — poista se ostoskorista jatkaaksesi.",
       "deliveryPrepaidRequired": "Tämän ravintolan toimitustilaukset on maksettava verkossa — valitse verkkomaksutapa.",
-      "itemSoldOutRemoved": "\"{name}\" myytiin loppuun edellisen käyntisi jälkeen — poistimme sen ostoskoristasi."
+      "itemSoldOutRemoved": "\"{name}\" myytiin loppuun edellisen käyntisi jälkeen — poistimme sen ostoskoristasi.",
+      "itemNotForDeliveryError": "\"{name}\" on vain noudettavaksi — poista se ostoskorista jatkaaksesi.",
+      "itemNotForPickupError": "\"{name}\" on vain kotiinkuljetukseen — poista se ostoskorista jatkaaksesi."
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",
@@ -321,7 +323,9 @@
       "message": "Tämä ravintola käyttää analytiikkaevästeitä (Google Analytics / Meta-pikseli) ymmärtääkseen, miten sen ruokalistaa käytetään. Sopiiko se?",
       "accept": "Hyväksy",
       "decline": "Ei kiitos"
-    }
+    },
+    "deliveryOnlyLabel": "Vain kotiinkuljetukseen",
+    "pickupOnlyLabel": "Vain noudettavaksi"
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -2746,7 +2750,11 @@
       "categoryNoImagePlain": "Pelkkä otsikko (klassinen)",
       "categoryNoImageStyleHint": "Kuvalliset kategoriat saavat aina ison kuvabannerin (kun bannerit ovat käytössä) — lataa kuvat kategoriakohtaisesti Menu-osiossa. Tämä määrää kuvattomien ulkoasun: pelkkä teksti, värinauha, napautettava painikekortti tai moderni korostuspaneeli teemaväreissäsi.",
       "categoryNoImageButton": "Painikekortti",
-      "categoryNoImageModern": "Moderni korostus"
+      "categoryNoImageModern": "Moderni korostus",
+      "serviceRestrictedTitle": "Annokset, joita ei tarjota valitulle palvelulle",
+      "serviceRestrictedHint": "Vain noudettava tai vain kuljetettava annos (tai kategoria), kun asiakas valitsi toisen palvelun: piilota valikosta tai näytä harmaana huomautuksella \"Vain …\".",
+      "serviceRestrictedHide": "Piilota valikosta",
+      "serviceRestrictedLabel": "Näytä huomautuksella"
     },
     "registrarGuide": {
       "whereDoIAddRecords": "Mistä lisään nämä tietueet?",
