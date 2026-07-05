@@ -40,6 +40,7 @@ import prisma from "@/lib/db";
 import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
 import { usedLifetimePromoIds, findActiveGrants, resolveGrantById } from "@/lib/coupon-ledger";
 import { partitionMemberOnly, qualifyingMemberOnlyPromos } from "@/lib/vip-membership";
+import { resolvePromoMenuRefsForServing } from "@/lib/menu";
 
 export type PromoChannel = "website" | "marketplace";
 
@@ -310,8 +311,16 @@ export async function buildPromoOrderContext(args: {
     }
   }
 
+  // ── Serve-time lineage resolution (Fabrizio cmr80t9rk) ───────────────────
+  // A promo built against an INACTIVE menu version references item/category
+  // ids the displayed menu doesn't have (menu duplicated → copy set live →
+  // promo created later against the original). Translate stale refs through
+  // MenuItem.lineageId / category name to the live menu — additive + fail-open,
+  // and here in the SHARED context so preview and charge stay identical.
+  const activePromosResolved = await resolvePromoMenuRefsForServing(restaurant.id, activePromos);
+
   return {
-    activePromos,
+    activePromos: activePromosResolved,
     isNewCustomer,
     isMember,
     hasUsedLifetime,

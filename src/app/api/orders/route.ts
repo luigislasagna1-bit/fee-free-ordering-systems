@@ -18,6 +18,7 @@ import {
 } from "@/lib/delivery-address-fields";
 import { evaluateApplicableFees, sumAppliedFees, type ServiceFeeRow } from "@/lib/service-fees";
 import { resolveMenuRestaurantId } from "@/lib/brand";
+import { resolvePromoMenuRefsForServing } from "@/lib/menu";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 import { writePromotionUsageRows } from "@/lib/promo-usage";
 import { resolveInheritedHours } from "@/lib/inherited-data";
@@ -607,7 +608,12 @@ export async function POST(req: NextRequest) {
         },
         select: { id: true, name: true, promotionType: true, ruleConfig: true, rules: true },
       });
-      for (const bp of bps) bundlePromoMap.set(bp.id, bp as any);
+      // Serve-time lineage resolution (Fabrizio cmr80t9rk): the child-pick
+      // validation below matches against ruleConfig group ids — resolve stale
+      // inactive-menu references to the live menu so a bundle the customer
+      // could COMPOSE also passes the charge. Same helper as preview/display.
+      const bpsResolved = await resolvePromoMenuRefsForServing(restaurant.id, bps as any[]);
+      for (const bp of bpsResolved) bundlePromoMap.set((bp as any).id, bp as any);
     }
 
     let serverSubtotal = 0;

@@ -12,6 +12,7 @@ import { TrackingConsentGate } from "@/components/order/TrackingConsentGate";
 import { isSupportedLocale, type Locale } from "@/i18n/request";
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
+import { resolvePromoMenuRefsForServing } from "@/lib/menu";
 import { resolveScheduledMenuId } from "@/lib/menu-schedule";
 import { resolveTodayHolidayClosure } from "@/lib/holiday-rules";
 import { isOnMarketplace } from "@/lib/marketplace";
@@ -229,7 +230,7 @@ export default async function OrderingPage({
 
   // Day-of-week filter happens in app code (DB stores as JSON string
   // for backwards compat). NULL/empty daysOfWeek = all days.
-  const promoBanners = rawPromotions.filter((p) => {
+  const promoBannersUnresolved = rawPromotions.filter((p) => {
     if (!p.daysOfWeek) return true;
     try {
       const days = JSON.parse(p.daysOfWeek);
@@ -239,6 +240,12 @@ export default async function OrderingPage({
       return true; // malformed → show defensively rather than hide
     }
   });
+
+  // Serve-time lineage resolution (Fabrizio cmr80t9rk): a promo built against
+  // an INACTIVE menu version references item/category ids the displayed menu
+  // doesn't have — translate them so the wizards/banners resolve eligible
+  // items. Additive + fail-open; same helper the checkout routes use.
+  const promoBanners = await resolvePromoMenuRefsForServing(restaurantBase.id, promoBannersUnresolved);
 
   // Reward Dollars earn rules the owner flagged to advertise as Promos-section
   // tiles ("Earn $5 on your first order"). Only when the program is on + the rule

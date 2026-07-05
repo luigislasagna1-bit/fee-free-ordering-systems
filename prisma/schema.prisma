@@ -1035,6 +1035,9 @@ model MenuItem {
 
   @@index([restaurantId, isAvailable])
   @@index([categoryId, sortOrder])
+  // Serve-time promo lineage resolution looks up live items by lineageId
+  // (resolvePromoMenuRefsForServing) — hot-path adjacent, must be indexed.
+  @@index([restaurantId, lineageId])
   @@index([restaurantId, rewardEarnExcluded])
 }
 
