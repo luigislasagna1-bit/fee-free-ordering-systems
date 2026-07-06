@@ -159,7 +159,7 @@ export async function POST(req: NextRequest) {
         : null;
 
     // ── Basic input validation ──────────────────────────────────────────────
-    if (!restaurantSlug || !type || !customerName || !customerPhone) {
+    if (!restaurantSlug || !type || !customerName || !customerPhone || !customerEmail) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
     // Phone must be an actual phone number — digits + intl formatting only, no
@@ -169,6 +169,13 @@ export async function POST(req: NextRequest) {
       if (/[a-z]/i.test(customerPhone) || (customerPhone.match(/\d/g)?.length ?? 0) < 6) {
         return NextResponse.json({ error: "Please enter a valid phone number.", code: "invalid_phone" }, { status: 400 });
       }
+    }
+    // Email is REQUIRED for EVERY customer order — no phone-only customers
+    // (Luigi 2026-07-06, stabilization H7). The checkout form requires it, but
+    // the server must enforce it too (a crafted request or the removed
+    // "email optional" toggle could otherwise slip a phone-only order through).
+    if (typeof customerEmail !== "string" || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(customerEmail.trim())) {
+      return NextResponse.json({ error: "A valid email address is required.", code: "invalid_email" }, { status: 400 });
     }
     if (!ALLOWED_ORDER_TYPES.includes(type)) {
       return NextResponse.json({ error: "Invalid order type" }, { status: 400 });

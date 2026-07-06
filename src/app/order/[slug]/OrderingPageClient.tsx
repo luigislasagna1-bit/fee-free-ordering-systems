@@ -5928,7 +5928,7 @@ export function OrderingPageClient({
           todayServiceSpecialIntervals={serviceHasSpecialToday ? (todaySvcSpecial as any).intervals : null}
           todayServiceSpecialDateKey={serviceHasSpecialToday ? dateKeyInTimezone(new Date(), restaurantTz || "UTC") : null}
           restaurantTimezone={(restaurant as any).timezone}
-          requireCustomerEmail={(restaurant as any).requireCustomerEmail !== false}
+          requireCustomerEmail={true}
           requireCustomerPhone={(restaurant as any).requireCustomerPhone !== false}
           hoursFormat={hoursFmt}
           deliveryFormConfig={deliveryFormConfig}
@@ -6152,7 +6152,7 @@ export function OrderingPageClient({
           // because the default reservationHours JSON is "{}". Luigi
           // 2026-05-31, multiple restaurants reported.
           fallbackOpeningHours={restaurant.openingHours ?? []}
-          requireCustomerEmail={(restaurant as any).requireCustomerEmail !== false}
+          requireCustomerEmail={true}
           requireCustomerPhone={(restaurant as any).requireCustomerPhone !== false}
           hoursFormat={(restaurant as any).hoursFormat === "12h" ? "12h" : "24h"}
           timezone={(restaurant as any).timezone ?? undefined}

@@ -82,9 +82,7 @@ export function ServiceFeesClient() {
   // so an owner finds them in one place instead of hunting the Profile.
   const [scheduledOrderInterval, setScheduledOrderInterval] = useState<number>(15);
   const [savingInterval, setSavingInterval] = useState(false);
-  const [requireCustomerEmail, setRequireCustomerEmail] = useState(true);
   const [requireCustomerPhone, setRequireCustomerPhone] = useState(true);
-  const [savingReqEmail, setSavingReqEmail] = useState(false);
   const [savingReqPhone, setSavingReqPhone] = useState(false);
 
   const load = async () => {
@@ -102,7 +100,6 @@ export function ServiceFeesClient() {
         if (typeof p.tipsEnabled === "boolean") setTipsEnabled(p.tipsEnabled);
         if (typeof p.currency === "string" && p.currency) setCurrency(p.currency);
         if (typeof p.scheduledOrderInterval === "number") setScheduledOrderInterval(p.scheduledOrderInterval);
-        if (typeof p.requireCustomerEmail === "boolean") setRequireCustomerEmail(p.requireCustomerEmail);
         if (typeof p.requireCustomerPhone === "boolean") setRequireCustomerPhone(p.requireCustomerPhone);
         if (typeof p.showCustomerMenuSearch === "boolean") setShowCustomerMenuSearch(p.showCustomerMenuSearch);
       }
@@ -510,32 +507,9 @@ export function ServiceFeesClient() {
           </select>
         </div>
 
-        {/* Require email */}
-        <div className="flex items-center justify-between gap-3 pt-2 border-t border-gray-100">
-          <div className="flex-1 min-w-0">
-            <div className="font-medium text-sm text-gray-800">Require customer email</div>
-            <div className="text-xs text-gray-500 mt-0.5">
-              When ON, the checkout form rejects orders without an email address. OFF lets phone-only ordering through.
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={() =>
-              saveField(
-                "requireCustomerEmail",
-                !requireCustomerEmail,
-                setRequireCustomerEmail,
-                setSavingReqEmail,
-                requireCustomerEmail,
-              )
-            }
-            disabled={savingReqEmail}
-            className={`relative w-12 h-7 rounded-full transition-colors flex-shrink-0 ${requireCustomerEmail ? "bg-emerald-500" : "bg-gray-300"} disabled:opacity-60`}
-            aria-label={requireCustomerEmail ? "Make email optional" : "Make email required"}
-          >
-            <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-all ${requireCustomerEmail ? "left-[22px]" : "left-0.5"}`} />
-          </button>
-        </div>
+        {/* Customer email is ALWAYS required now — no per-restaurant toggle
+            (Luigi 2026-07-06: no phone-only customers). Enforced on the server
+            (POST /api/orders) + the checkout form. */}
 
         {/* Require phone */}
         <div className="flex items-center justify-between gap-3 pt-2 border-t border-gray-100">

@@ -63,7 +63,7 @@ export function ReservationPageClient({ restaurant, closure }: { restaurant: any
       restaurantName={restaurant.name}
       settings={restaurant.reservationSettings}
       fallbackOpeningHours={restaurant.openingHours ?? []}
-      requireCustomerEmail={restaurant.requireCustomerEmail !== false}
+      requireCustomerEmail={true}
       requireCustomerPhone={restaurant.requireCustomerPhone !== false}
       hoursFormat={restaurant.hoursFormat === "12h" ? "12h" : "24h"}
       timezone={restaurant.timezone ?? undefined}
