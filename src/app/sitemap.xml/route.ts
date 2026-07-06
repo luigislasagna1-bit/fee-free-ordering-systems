@@ -113,6 +113,9 @@ function buildPlatformSitemap(host: string): string {
     // high-intent organic target; priority above the /vs pages while the
     // migration wave lasts. COMPETITOR-TOWNCLUB-PLAN.md action #1.
     { loc: `${base}/gloriafood-alternative`, changefreq: "weekly", priority: 0.8 },
+    // Flagship kitchen-reliability landing page (ring→print→call→auto-accept) —
+    // our most defensible operational moat. COMPETITOR-TOWNCLUB-PLAN.md action #5.
+    { loc: `${base}/never-miss-an-order`, changefreq: "monthly", priority: 0.8 },
     { loc: `${base}/features`, changefreq: "weekly", priority: 0.7 },
     { loc: `${base}/faq`, changefreq: "monthly", priority: 0.5 },
     { loc: `${base}/partners`, changefreq: "monthly", priority: 0.5 },

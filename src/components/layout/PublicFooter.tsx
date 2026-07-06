@@ -42,6 +42,9 @@ export function PublicFooter() {
             <div className="space-y-2 text-sm">
               <Link href="/features" className="block hover:text-white transition">{tNav("features")}</Link>
               <Link href="/pricing" className="block hover:text-white transition">{tNav("pricing")}</Link>
+              {/* EN-only hardcoded (like the sibling Marketplace/Partners links) so
+                  no i18n key is added — keeps the 38-locale parity audit green. */}
+              <Link href="/never-miss-an-order" className="block hover:text-white transition">Never miss an order</Link>
               <Link href="/demo" className="block hover:text-white transition">{tNav("demo")}</Link>
               <Link href="/faq" className="block hover:text-white transition">{tNav("faq")}</Link>
             </div>

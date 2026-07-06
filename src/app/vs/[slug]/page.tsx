@@ -6,6 +6,8 @@ import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
 import { COMPETITORS, getCompetitor } from "@/data/competitors";
 import { ArrowRight, Check, X as XIcon, MinusCircle, Sparkles } from "lucide-react";
+import { TrustChips } from "@/components/marketing/TrustChips";
+import { SavingsCalculator } from "@/components/marketing/SavingsCalculator";
 
 /**
  * Public "Fee Free Ordering vs {Competitor}" comparison page.
@@ -155,9 +157,9 @@ export default async function ComparisonPage({
                 See full pricing
               </Link>
             </div>
-            <p className="mt-6 text-xs text-gray-500">
-              No credit card · No commission on direct orders · Cancel anytime
-            </p>
+            <div className="mt-6 flex justify-center">
+              <TrustChips variant="inline" />
+            </div>
             {/* Event-driven notice (e.g. GloriaFood shutdown) — factual +
                 sourced urgency with a link to the dedicated migration page. */}
             {c.notice && (
@@ -189,6 +191,23 @@ export default async function ComparisonPage({
               <div className="text-base font-bold text-gray-900 mb-2 leading-tight">{c.costSummary.split(".")[0]}.</div>
               <p className="text-sm text-gray-600 leading-relaxed">{c.costSummary.split(".").slice(1).join(".").trim()}</p>
             </div>
+          </div>
+        </section>
+
+        {/* ─── SAVINGS CALCULATOR — what commission really costs ─────── */}
+        <section className="py-14 px-4 bg-emerald-50/40 border-y border-emerald-100/70">
+          <div className="max-w-5xl mx-auto">
+            <div className="max-w-2xl mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
+                Run your own numbers.
+              </h2>
+              <p className="mt-3 text-gray-600">
+                Whatever {c.name} costs, the bigger number is usually what the delivery apps take in
+                commission. Drag your real volume in and see what you&apos;d keep on direct orders with
+                Fee Free Ordering.
+              </p>
+            </div>
+            <SavingsCalculator />
           </div>
         </section>
 

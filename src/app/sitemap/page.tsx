@@ -60,6 +60,8 @@ export default function SitemapPage() {
   const company: LinkItem[] = [
     { href: "/features", text: "Features" },
     { href: "/pricing", text: "Pricing" },
+    { href: "/never-miss-an-order", text: "Never miss an order" },
+    { href: "/gloriafood-alternative", text: "GloriaFood is shutting down — migrate free" },
     { href: "/demo", text: "Demo" },
     { href: "/import", text: "Import your menu" },
     { href: "/faq", text: "FAQ" },
