@@ -7,6 +7,15 @@
 ## Totals
 **53 findings — 3 Critical · 10 High · 22 Medium · 18 Low.** The 3 Criticals were re‑verified by re‑reading the actual code (not taken on the auditors' word).
 
+## ✅ Fix log (2026‑07‑06)
+Shipped this session, in tier order:
+- **C3** capture‑on‑authorize for auto‑accepted card/PayPal (`215ce14a`) — ⚠️ live $1 test pending.
+- **C1 + C2** modifier PATCH/POST ownership checks + **H1** kitchen login (emailLower) + **H5** reservation stale‑transition guard (`8b69d204`).
+- **H9** money‑path Sentry alerting (`reportError`) + **H10** seven crons fail‑closed (`requireCronAuth`) (`1abf3bb0`).
+- **H3** out‑of‑zone delivery rejected server‑side (this commit).
+
+**Remaining:** H2 (order‑page caching), H4 (stuck‑card recovery), H6 (native‑print outage window), H7 (phone‑only SMS), H8 (silent email‑transport failure) + the Medium/Low tiers.
+
 ## How to read this
 Tiers = when it must be fixed:
 - 🔴 **Critical** — before **any** real restaurant touches it.

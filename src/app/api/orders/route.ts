@@ -1453,6 +1453,20 @@ export async function POST(req: NextRequest) {
           }
         }
       }
+      // Out-of-zone delivery guard (stabilization H3): the client refuses a
+      // delivery to an address outside every zone when the restaurant hasn't
+      // opted into out-of-zone orders, but the server never enforced it — a
+      // stale tab, a mismatched client/server geocode, or a crafted request
+      // could place (and pay for) a delivery the restaurant said it won't make.
+      // Reject on a POSITIVE out-of-zone resolution only; a geocode failure
+      // leaves outsideDeliveryZone false and falls through to the base-fee path,
+      // so a Nominatim outage can't block all delivery.
+      if (outsideDeliveryZone && !(restaurant as any).acceptOutsideZoneOrders) {
+        return NextResponse.json(
+          { error: "This address is outside the restaurant's delivery area.", code: "delivery_out_of_area" },
+          { status: 400 },
+        );
+      }
       // Server-side minimum-order enforcement (uses resolved zone if any).
       if (zoneMinimumOrder > 0 && serverSubtotal < zoneMinimumOrder) {
         return NextResponse.json(
