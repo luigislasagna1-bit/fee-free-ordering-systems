@@ -157,12 +157,34 @@ export function MenuSwitcher({ menus, selectedMenuId, hoursFormat = "24h" }: { m
     if (!window.confirm(t("activateConfirm", { name: selected.name }))) return;
     run(() => fetch(`/api/menus/${selected.id}/activate`, { method: "POST" }), t("activated"));
   };
-  const del = () => {
+  const del = async () => {
     if (!window.confirm(t("deleteConfirm", { name: selected.name }))) return;
-    run(() => fetch(`/api/menus/${selected.id}`, { method: "DELETE" }), t("deleted"), () => {
+    const onDeleted = () => {
       const fallback = menus.find((m) => m.isActive) ?? menus.find((m) => m.id !== selected.id);
       if (fallback) go(fallback.id);
-    });
+    };
+    // The server refuses (409 referenced_by_promos) when a promotion targets a
+    // dish/size on this menu — a menu delete cascade-nukes those, silently
+    // breaking live promos. Name the promos + offer to force. Red-team 2026-07-06.
+    setBusy(true);
+    try {
+      let res = await fetch(`/api/menus/${selected.id}`, { method: "DELETE" });
+      if (res.status === 409) {
+        const j = await res.json().catch(() => ({}));
+        if (j.error === "referenced_by_promos") {
+          const names = Array.isArray(j.promoNames) ? j.promoNames.join(", ") : "";
+          if (!window.confirm(t("deletePromoBlocked", { names }))) { setBusy(false); return; }
+          res = await fetch(`/api/menus/${selected.id}?force=1`, { method: "DELETE" });
+        }
+      }
+      if (!res.ok) { const j = await res.json().catch(() => ({})); throw new Error(j.error || "Failed"); }
+      toast.success(t("deleted"));
+      onDeleted();
+      router.refresh();
+    } catch (e: any) {
+      toast.error(e.message || t("failed"));
+    }
+    setBusy(false);
   };
   const saveSchedule = () => {
     if (!schedAt) return;

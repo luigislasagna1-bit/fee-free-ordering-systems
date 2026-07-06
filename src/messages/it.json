@@ -4097,7 +4097,8 @@
       "everyDay": "Tutti i giorni",
       "coverageGap": "Alcune ore di apertura resterebbero senza menu: {list}. Aggiungi un menu che copra quelle ore o impostale come chiuse.",
       "dailyHoursExplainer": "Il tuo menu Attivo è quello predefinito: i clienti lo vedono quando nessun menu programmato è in vigore. Assegna ad altri menu i loro orari giornalieri e subentreranno automaticamente in quelle fasce, per poi restituire il controllo al predefinito. Ogni ora di apertura deve essere coperta da un menu.",
-      "scheduleHelp": "Scegli data e ora e questo menu sostituirà automaticamente il menu attivo in quel momento — un cambio una tantum. Per un menu che si ripete ogni giorno (pranzo/cena), usa invece gli Orari giornalieri."
+      "scheduleHelp": "Scegli data e ora e questo menu sostituirà automaticamente il menu attivo in quel momento — un cambio una tantum. Per un menu che si ripete ogni giorno (pranzo/cena), usa invece gli Orari giornalieri.",
+      "deletePromoBlocked": "I piatti di questo menu sono usati da queste promozioni: {names}. Eliminarlo può romperle per i tuoi clienti. Eliminare comunque?"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

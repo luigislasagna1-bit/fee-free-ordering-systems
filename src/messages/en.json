@@ -995,6 +995,7 @@
       "renamePrompt": "Rename this menu:",
       "activateConfirm": "Make \"{name}\" the live menu customers see right now?",
       "deleteConfirm": "Delete \"{name}\" and all its categories/items? This can't be undone.",
+      "deletePromoBlocked": "This menu's dishes are used by these promotions: {names}. Deleting it may break them for your customers. Delete anyway?",
       "schedule": "Schedule go-live",
       "scheduleGoLive": "Go live on:",
       "scheduleSave": "Schedule",

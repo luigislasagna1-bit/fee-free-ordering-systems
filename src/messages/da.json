@@ -4097,7 +4097,8 @@
       "everyDay": "Hver dag",
       "coverageGap": "Nogle åbningstider ville mangle en menu: {list}. Tilføj en menu, der dækker de timer, eller markér dem som lukkede.",
       "dailyHoursExplainer": "Din Aktive menu er standard — kunder ser den, når ingen tidsstyret menu gælder. Giv andre menuer deres egne daglige tider, så overtager de automatisk i de tidsrum og giver derefter tilbage til standarden. Hver åbningstime skal være dækket af en menu.",
-      "scheduleHelp": "Vælg en dato og tid, så erstatter denne menu automatisk din aktive menu på det tidspunkt — et engangsskift. Til en menu, der gentages hver dag (frokost/aftensmad), skal du i stedet bruge Daglige tider."
+      "scheduleHelp": "Vælg en dato og tid, så erstatter denne menu automatisk din aktive menu på det tidspunkt — et engangsskift. Til en menu, der gentages hver dag (frokost/aftensmad), skal du i stedet bruge Daglige tider.",
+      "deletePromoBlocked": "Retterne i denne menu bruges af disse kampagner: {names}. Sletning kan ødelægge dem for dine kunder. Slet alligevel?"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

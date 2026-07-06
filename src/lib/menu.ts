@@ -398,11 +398,17 @@ export async function resolvePromoMenuRefsForServing<
  */
 export async function promosReferencing(
   restaurantId: string,
-  refs: { itemIds?: string[]; categoryIds?: string[] },
+  refs: { itemIds?: string[]; categoryIds?: string[]; variantIds?: string[] },
 ): Promise<{ id: string; name: string; isActive: boolean }[]> {
   const wantItems = new Set(refs.itemIds ?? []);
   const wantCats = new Set(refs.categoryIds ?? []);
-  if (wantItems.size === 0 && wantCats.size === 0) return [];
+  // A which-dishes group can target a specific SIZE variant only (itemIds empty,
+  // variantIds:['v_large']) — the engine matches it (promo-engine itemMatchesGroup)
+  // but the guard was blind to it, so deleting the dish (which cascade-deletes its
+  // variants) silently broke a live promo with no 409. Scan variantIds too.
+  // Red-team fix 2026-07-06.
+  const wantVariants = new Set(refs.variantIds ?? []);
+  if (wantItems.size === 0 && wantCats.size === 0 && wantVariants.size === 0) return [];
   const promos = await prisma.promotion.findMany({
     where: { restaurantId },
     select: { id: true, name: true, isActive: true, ruleConfig: true, rules: true },
@@ -415,6 +421,7 @@ export async function promosReferencing(
     for (const g of promoGroupsOf(rc)) {
       for (const id of [...(g.itemIds ?? []), ...(g.menuItemIds ?? [])]) if (wantItems.has(String(id))) { referenced = true; break; }
       if (!referenced) for (const id of g.categoryIds ?? []) if (wantCats.has(String(id))) { referenced = true; break; }
+      if (!referenced && wantVariants.size) for (const id of (g as { variantIds?: unknown[] }).variantIds ?? []) if (wantVariants.has(String(id))) { referenced = true; break; }
       if (referenced) break;
     }
     if (referenced) hits.push({ id: p.id, name: p.name, isActive: p.isActive });
@@ -461,6 +468,13 @@ export async function findDeadPromoIds<
 
     const menuOwnerId = await resolveMenuRestaurantId(restaurantId);
     const servedMenuId = await resolveScheduledMenuId(menuOwnerId);
+    // No scheduled/active menu resolved: the order page falls back to serving
+    // dishes restaurant-wide (page.tsx serves category+item without a menuId
+    // filter), so we CANNOT judge deadness by menuId — doing so would quarantine
+    // every item/category-targeting promo while those exact dishes are on screen.
+    // Serve everything; the resolver self-heals once a menu is scheduled again.
+    // Red-team fix 2026-07-06.
+    if (servedMenuId == null) return dead;
     const [liveItems, liveCats] = await Promise.all([
       itemRefs.size
         ? prisma.menuItem.findMany({

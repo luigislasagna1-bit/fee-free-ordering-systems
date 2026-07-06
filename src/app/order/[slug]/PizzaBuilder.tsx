@@ -250,18 +250,25 @@ export function computePrice(
   // server's (L.H)/(R.H) halving. Luigi 2026-06-27.
   const half = config.halfToppingMultiplier;
 
-  // 3 Sauce(s)
-  price += findOpt(config.sauceGroupId, customization.sauceOptionId)?.priceAdjustment ?? 0;
-  if (customization.isHalfHalf) {
+  // 3 Sauce(s) — mirror pizzaCustomizationToModifiers EXACTLY: only the lines
+  // that get SERIALISED are charged, so preview must add the same set. When
+  // split with a half chosen, the two half lines are sent (whole is NOT) — so
+  // the whole sauceOptionId price must NOT be added on top, or preview reads
+  // higher than the charge (defaultCustomization seeds a paid default sauce
+  // that lingers after switching to Split). Red-team fix 2026-07-06.
+  if (customization.isHalfHalf && (customization.leftSauceOptionId || customization.rightSauceOptionId)) {
     price += (findOpt(config.sauceGroupId, customization.leftSauceOptionId)?.priceAdjustment ?? 0) * half;
     price += (findOpt(config.sauceGroupId, customization.rightSauceOptionId)?.priceAdjustment ?? 0) * half;
+  } else {
+    price += findOpt(config.sauceGroupId, customization.sauceOptionId)?.priceAdjustment ?? 0;
   }
 
-  // 4 Cheese(s)
-  price += findOpt(config.cheeseGroupId, customization.cheeseOptionId)?.priceAdjustment ?? 0;
-  if (customization.isHalfHalf) {
+  // 4 Cheese(s) — same mirror as sauce above.
+  if (customization.isHalfHalf && (customization.leftCheeseOptionId || customization.rightCheeseOptionId)) {
     price += (findOpt(config.cheeseGroupId, customization.leftCheeseOptionId)?.priceAdjustment ?? 0) * half;
     price += (findOpt(config.cheeseGroupId, customization.rightCheeseOptionId)?.priceAdjustment ?? 0) * half;
+  } else {
+    price += findOpt(config.cheeseGroupId, customization.cheeseOptionId)?.priceAdjustment ?? 0;
   }
 
   // 5 Toppings — priced by the SHARED engine (src/lib/pizza-topping-pricing.ts),

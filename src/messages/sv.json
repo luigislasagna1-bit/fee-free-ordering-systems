@@ -4097,7 +4097,8 @@
       "everyDay": "Varje dag",
       "coverageGap": "Vissa öppettider skulle sakna meny: {list}. Lägg till en meny som täcker de timmarna, eller markera dem som stängda.",
       "dailyHoursExplainer": "Din Aktiva meny är standard — kunder ser den när ingen tidsstyrd meny gäller. Ge andra menyer egna dagliga tider, så tar de automatiskt över under de tiderna och lämnar sedan tillbaka till standardmenyn. Varje öppettimme måste täckas av en meny.",
-      "scheduleHelp": "Välj datum och tid, så ersätter den här menyn automatiskt din aktiva meny vid den tidpunkten — ett engångsbyte. För en meny som återkommer varje dag (lunch/middag) använder du Dagliga tider i stället."
+      "scheduleHelp": "Välj datum och tid, så ersätter den här menyn automatiskt din aktiva meny vid den tidpunkten — ett engångsbyte. För en meny som återkommer varje dag (lunch/middag) använder du Dagliga tider i stället.",
+      "deletePromoBlocked": "Rätterna i denna meny används av dessa kampanjer: {names}. Att ta bort den kan göra dem obrukbara för dina kunder. Ta bort ändå?"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

@@ -4097,7 +4097,8 @@
       "everyDay": "Iga päev",
       "coverageGap": "Mõnel lahtiolekuajal poleks menüüd: {list}. Lisa menüü, mis katab need ajad, või märgi need suletuks.",
       "dailyHoursExplainer": "Sinu Aktiivne menüü on vaikemenüü — kliendid näevad seda alati, kui ükski ajastatud menüü ei kehti. Anna teistele menüüdele oma päevased kellaajad ja need võtavad neil aegadel automaatselt üle, andes seejärel vaikemenüüle tagasi. Iga lahtiolekutund peab olema mõne menüüga kaetud.",
-      "scheduleHelp": "Vali kuupäev ja kellaaeg ning see menüü asendab sel hetkel automaatselt sinu aktiivse menüü — ühekordne vahetus. Iga päev korduva menüü jaoks (lõuna/õhtu) kasuta hoopis Päevaseid kellaaegu."
+      "scheduleHelp": "Vali kuupäev ja kellaaeg ning see menüü asendab sel hetkel automaatselt sinu aktiivse menüü — ühekordne vahetus. Iga päev korduva menüü jaoks (lõuna/õhtu) kasuta hoopis Päevaseid kellaaegu.",
+      "deletePromoBlocked": "Selle menüü roogi kasutavad need kampaaniad: {names}. Kustutamine võib need klientide jaoks rikkuda. Kas kustutada ikkagi?"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

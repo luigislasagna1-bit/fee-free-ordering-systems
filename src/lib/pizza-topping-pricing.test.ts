@@ -31,15 +31,29 @@ describe("flat model (extraToppingPrice > 0)", () => {
     expect(priceToppingLines(cfg, [line("a", { isLight: true }), line("b")])).toEqual([0, 0]);
   });
 
-  it("whole supersedes half: an option's half lines are ignored when it also has a whole line", () => {
+  it("no free ride: a whole + its own half lines are ALL charged (tamper-proof — kitchen makes all three)", () => {
+    // Regression for the red-teamed 'whole supersedes half' dedupe: a crafted
+    // body sending whole "a" + (L.H) "a" + (R.H) "a" must be billed for every
+    // line, not just the whole. Each line the kitchen prints is charged.
     const cfg = { extraToppingPrice: 10, includedToppings: 0, halfToppingMultiplier: 0.5 };
     expect(priceToppingLines(cfg, [line("a"), line("a", { isHalf: true }), line("b", { isHalf: true })]))
-      .toEqual([10, 0, 5]);
+      .toEqual([10, 5, 5]);
   });
 
   it("double topping (two lines) eats two credits", () => {
     const cfg = { extraToppingPrice: 3, includedToppings: 2, halfToppingMultiplier: 0.5 };
     expect(priceToppingLines(cfg, [line("a"), line("a"), line("b")])).toEqual([0, 0, 3]);
+  });
+
+  it("halfToppingMultiplier > 1 clamps to 1.0 (matches the route's clamp — no preview/charge divergence)", () => {
+    const cfg = { extraToppingPrice: 10, includedToppings: 0, halfToppingMultiplier: 1.5 };
+    // A half topping is billed at flat × 1.0 = $10 (NOT the old ×0.5 fallback of $5).
+    expect(priceToppingLines(cfg, [line("a", { isHalf: true })])).toEqual([10]);
+  });
+
+  it("negative halfToppingMultiplier clamps to 0", () => {
+    const cfg = { extraToppingPrice: 10, includedToppings: 0, halfToppingMultiplier: -0.5 };
+    expect(priceToppingLines(cfg, [line("a", { isHalf: true })])).toEqual([0]);
   });
 });
 

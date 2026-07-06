@@ -1049,7 +1049,13 @@ export async function POST(req: NextRequest) {
       // Validate modifiers
       let modTotal = 0;
       const validatedMods: Array<{ modifierOptionId: string; name: string; priceAdjustment: number }> = [];
-      const rawMods: any[] = Array.isArray(raw.modifiers) ? raw.modifiers : [];
+      // Cap modifiers-per-line like the combo (60) / bundle (20) child paths do:
+      // MAX_ITEMS bounds line count but nothing bounded mods-per-line, so a
+      // crafted body with tens of thousands of fake modifiers forced an
+      // O(items × mods × groups × options) scan synchronously on this hot
+      // charge route. 120 is far above any real pizza (crust+sauce+cheese+cook
+      // + a heavy topping load × counts). Red-team fix 2026-07-06.
+      const rawMods: any[] = Array.isArray(raw.modifiers) ? raw.modifiers.slice(0, 120) : [];
 
       // Search both item-level groups (menuItem.modifierGroups — covers
       // item-scoped AND variant-scoped because both have menuItemId set)

@@ -4097,7 +4097,8 @@
       "everyDay": "Minden nap",
       "coverageGap": "Egyes nyitvatartási órákhoz nem tartozna étlap: {list}. Adj hozzá egy étlapot azokra az órákra, vagy állítsd zárva állapotúra.",
       "dailyHoursExplainer": "Az Aktív étlapod az alapértelmezett — a vásárlók akkor látják, amikor nincs érvényben időzített étlap. Adj más étlapoknak saját napi órákat, és azok automatikusan átveszik a helyet azokban az időszakokban, majd visszaadják az alapértelmezettnek. Minden nyitvatartási órát le kell fednie valamelyik étlapnak.",
-      "scheduleHelp": "Válassz dátumot és időpontot, és ez az étlap abban a pillanatban automatikusan lecseréli az aktív étlapot — egyszeri váltás. A naponta ismétlődő étlaphoz (ebéd/vacsora) használd inkább a Napi órákat."
+      "scheduleHelp": "Válassz dátumot és időpontot, és ez az étlap abban a pillanatban automatikusan lecseréli az aktív étlapot — egyszeri váltás. A naponta ismétlődő étlaphoz (ebéd/vacsora) használd inkább a Napi órákat.",
+      "deletePromoBlocked": "Ennek a menünek az ételeit a következő akciók használják: {names}. Törlése tönkreteheti azokat a vendégei számára. Mégis törli?"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

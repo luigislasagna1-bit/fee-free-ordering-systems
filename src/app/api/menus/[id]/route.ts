@@ -125,7 +125,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   return NextResponse.json({ ok: true });
 }
 
-export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -141,10 +141,33 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
   // keep their snapshot (OrderItem.menuItemId is SetNull). Delete in FK order.
   const cats = await prisma.menuCategory.findMany({ where: { menuId: id }, select: { id: true } });
   const catIds = cats.map((c) => c.id);
+  const items = catIds.length
+    ? await prisma.menuItem.findMany({ where: { categoryId: { in: catIds } }, select: { id: true } })
+    : [];
+  const itemIds = items.map((i) => i.id);
+  const variants = itemIds.length
+    ? await prisma.itemVariant.findMany({ where: { menuItemId: { in: itemIds } }, select: { id: true } })
+    : [];
+
+  // Promo delete-guard (Red-team fix 2026-07-06): the per-item / per-category
+  // DELETE routes refuse when a promo targets the dish, but deleting a whole
+  // (inactive) menu wiped its items/categories/variants with no guard at all —
+  // even though a cross-menu promo can legitimately still reference an inactive
+  // menu (the serve-time lineage resolver exists for exactly that). Refuse with
+  // the promo names unless the owner forces.
+  if (req.nextUrl.searchParams.get("force") !== "1") {
+    const { promosReferencing } = await import("@/lib/menu");
+    const promos = await promosReferencing(restaurantId, { itemIds, categoryIds: catIds, variantIds: variants.map((v) => v.id) });
+    if (promos.length > 0) {
+      return NextResponse.json(
+        { error: "referenced_by_promos", promoNames: promos.map((p) => p.name).slice(0, 8), promoCount: promos.length },
+        { status: 409 },
+      );
+    }
+  }
+
   await prisma.$transaction(async (tx) => {
     if (catIds.length) {
-      const items = await tx.menuItem.findMany({ where: { categoryId: { in: catIds } }, select: { id: true } });
-      const itemIds = items.map((i) => i.id);
       // Modifier groups (category-, item-, variant-level) → cascade their options.
       await tx.modifierGroup.deleteMany({ where: { OR: [{ categoryId: { in: catIds } }, { menuItemId: { in: itemIds } }] } });
       await tx.itemVariant.deleteMany({ where: { menuItemId: { in: itemIds } } });

@@ -4097,7 +4097,8 @@
       "everyDay": "Vsak dan",
       "coverageGap": "Nekatere ure odprtja bi ostale brez menija: {list}. Dodajte meni za te ure ali jih označite kot zaprte.",
       "dailyHoursExplainer": "Vaš Aktivni meni je privzeti — stranke ga vidijo, kadar ne velja noben časovni meni. Drugim menijem dajte lastne dnevne ure in v teh terminih samodejno prevzamejo, nato pa predajo nazaj privzetemu. Vsako uro odprtja mora pokrivati nek meni.",
-      "scheduleHelp": "Izberite datum in uro in ta meni bo v tem trenutku samodejno zamenjal vaš aktivni meni — enkratna zamenjava. Za meni, ki se ponavlja vsak dan (kosilo/večerja), namesto tega uporabite Dnevne ure."
+      "scheduleHelp": "Izberite datum in uro in ta meni bo v tem trenutku samodejno zamenjal vaš aktivni meni — enkratna zamenjava. Za meni, ki se ponavlja vsak dan (kosilo/večerja), namesto tega uporabite Dnevne ure.",
+      "deletePromoBlocked": "Jedi tega menija uporabljajo te promocije: {names}. Izbris jih lahko pokvari za vaše stranke. Vseeno izbrišem?"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

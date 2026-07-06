@@ -583,7 +583,8 @@ function ItemModal({
                   .map(v => [v.name.trim(), parseFloat(pizza.variantToppingPrices[v.name.trim()] || "0") || 0])
               )
             : undefined,
-          halfToppingMultiplier: parseFloat(pizza.halfToppingMultiplier) || 0.5,
+          halfToppingMultiplier: Math.min(1, Math.max(0, parseFloat(pizza.halfToppingMultiplier) || 0.5)), // clamp [0,1]: the engine + orders route both clamp, so >1 must never persist
+
           extraQuantityMultiplier: parseFloat(pizza.extraQuantityMultiplier) || 0,
           allowMultipleToppings: pizza.allowMultipleToppings !== false,
           // Persist only when non-empty / non-default so older items

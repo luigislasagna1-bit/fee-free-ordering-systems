@@ -172,7 +172,11 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
     // so a stale tab can't slip past the warning dialog.
     if (req.nextUrl.searchParams.get("force") !== "1") {
       const { promosReferencing } = await import("@/lib/menu");
-      const promos = await promosReferencing(restaurantId, { itemIds: [id] });
+      // Include the item's size variants — a promo can target a specific
+      // variant only (e.g. 20%-off Large), and deleting the dish cascade-deletes
+      // those variants, so the guard must see them too. Red-team fix 2026-07-06.
+      const variants = await prisma.itemVariant.findMany({ where: { menuItemId: id }, select: { id: true } });
+      const promos = await promosReferencing(restaurantId, { itemIds: [id], variantIds: variants.map((v) => v.id) });
       if (promos.length > 0) {
         return NextResponse.json(
           { error: "referenced_by_promos", promoNames: promos.map((p) => p.name).slice(0, 8), promoCount: promos.length },

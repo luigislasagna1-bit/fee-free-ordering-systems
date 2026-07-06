@@ -68,7 +68,12 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
     if (req.nextUrl.searchParams.get("force") !== "1") {
       const { promosReferencing } = await import("@/lib/menu");
       const items = await prisma.menuItem.findMany({ where: { categoryId: id }, select: { id: true } });
-      const promos = await promosReferencing(restaurantId, { itemIds: items.map((i) => i.id), categoryIds: [id] });
+      // Size-variant-only promos target a variant, not the item/category — the
+      // cascade delete nukes those variants too, so feed them to the guard.
+      const variants = items.length
+        ? await prisma.itemVariant.findMany({ where: { menuItemId: { in: items.map((i) => i.id) } }, select: { id: true } })
+        : [];
+      const promos = await promosReferencing(restaurantId, { itemIds: items.map((i) => i.id), categoryIds: [id], variantIds: variants.map((v) => v.id) });
       if (promos.length > 0) {
         return NextResponse.json(
           { error: "referenced_by_promos", promoNames: promos.map((p) => p.name).slice(0, 8), promoCount: promos.length },

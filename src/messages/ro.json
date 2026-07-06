@@ -4097,7 +4097,8 @@
       "everyDay": "În fiecare zi",
       "coverageGap": "Unele ore de program nu ar avea niciun meniu: {list}. Adaugă un meniu pentru acele ore sau marchează-le ca închise.",
       "dailyHoursExplainer": "Meniul tău Activ este cel implicit — clienții îl văd ori de câte ori nu se aplică niciun meniu programat. Dă altor meniuri propriile ore zilnice și vor prelua automat în acele intervale, apoi predau înapoi celui implicit. Fiecare oră de program trebuie acoperită de un meniu.",
-      "scheduleHelp": "Alege o dată și o oră, iar acest meniu îți înlocuiește automat meniul activ în acel moment — o schimbare unică. Pentru un meniu care se repetă zilnic (prânz/cină), folosește în schimb Orele zilnice."
+      "scheduleHelp": "Alege o dată și o oră, iar acest meniu îți înlocuiește automat meniul activ în acel moment — o schimbare unică. Pentru un meniu care se repetă zilnic (prânz/cină), folosește în schimb Orele zilnice.",
+      "deletePromoBlocked": "Felurile din acest meniu sunt folosite de aceste promoții: {names}. Ștergerea lui le poate strica pentru clienți. Ștergeți oricum?"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

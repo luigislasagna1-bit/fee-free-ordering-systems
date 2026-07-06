@@ -4097,7 +4097,8 @@
       "everyDay": "Todos los días",
       "coverageGap": "Algunas horas de apertura quedarían sin menú: {list}. Añade un menú que cubra esas horas o márcalas como cerradas.",
       "dailyHoursExplainer": "Tu menú Activo es el predeterminado: los clientes lo ven cuando no aplica ningún menú programado. Da a otros menús sus propios horarios diarios y tomarán el relevo automáticamente en esas horas, devolviendo luego el control al predeterminado. Cada hora de apertura debe estar cubierta por un menú.",
-      "scheduleHelp": "Elige una fecha y hora y este menú reemplazará tu menú activo automáticamente en ese momento: un cambio único. Para un menú que se repite cada día (comida/cena), usa el Horario diario."
+      "scheduleHelp": "Elige una fecha y hora y este menú reemplazará tu menú activo automáticamente en ese momento: un cambio único. Para un menú que se repite cada día (comida/cena), usa el Horario diario.",
+      "deletePromoBlocked": "Los platos de este menú se usan en estas promociones: {names}. Eliminarlo puede romperlas para tus clientes. ¿Eliminar de todos modos?"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",
