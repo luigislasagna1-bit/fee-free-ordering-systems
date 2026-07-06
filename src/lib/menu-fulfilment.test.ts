@@ -37,7 +37,7 @@ describe("buildFulfilData — admin input normalisation", () => {
     expect(fulfil({ from: "25:99", to: "15:00" }).fulfilFrom).toBe(null);
   });
   it("null input clears everything", () => {
-    expect(fulfil(null)).toEqual({ fulfilDays: null, fulfilFrom: null, fulfilTo: null });
+    expect(fulfil(null)).toEqual({ fulfilDays: null, fulfilFrom: null, fulfilTo: null, fulfilWindows: null });
   });
 });
 
@@ -127,5 +127,74 @@ describe("earliestFulfilSlot", () => {
     expect(slot).not.toBe(null);
     expect(slot!.getUTCDay()).toBe(target);
     expect(slot!.getTime()).toBeGreaterThan(now.getTime());
+  });
+});
+
+describe("multi-window fulfilment (Fabrizio cmr803ovq c)", () => {
+  // Fabrizio's exact example: Mon–Thu 10:00–15:00 PLUS Fri–Sun 15:00–20:00.
+  const item = {
+    fulfilWindows: [
+      { days: [1, 2, 3, 4], from: "10:00", to: "15:00" },
+      { days: [5, 6, 0], from: "15:00", to: "20:00" },
+    ],
+  };
+  it("orderable inside the weekday window", () => {
+    expect(isFulfilableAt(item, new Date("2026-06-16T12:00:00Z"), "UTC")).toBe(true); // Tue 12:00
+  });
+  it("NOT orderable on a weekday outside its hours", () => {
+    expect(isFulfilableAt(item, new Date("2026-06-16T16:00:00Z"), "UTC")).toBe(false); // Tue 16:00
+  });
+  it("orderable inside the weekend window (which would fail the weekday one)", () => {
+    expect(isFulfilableAt(item, new Date("2026-06-20T16:00:00Z"), "UTC")).toBe(true); // Sat 16:00
+  });
+  it("NOT orderable on the weekend outside its hours", () => {
+    expect(isFulfilableAt(item, new Date("2026-06-20T12:00:00Z"), "UTC")).toBe(false); // Sat 12:00
+  });
+  it("hasFulfilWindow sees the list; the legacy triple still works as one window", () => {
+    expect(hasFulfilWindow(item)).toBe(true);
+    expect(hasFulfilWindow({ fulfilDays: "[2]" })).toBe(true);
+    expect(hasFulfilWindow({})).toBe(false);
+  });
+  it("stringified JSON column value parses the same as an array", () => {
+    expect(isFulfilableAt({ fulfilWindows: JSON.stringify(item.fulfilWindows) }, new Date("2026-06-20T16:00:00Z"), "UTC")).toBe(true);
+  });
+  it("label lists every window", () => {
+    const label = fulfilWindowLabel(item, (d) => "DAY" + d, (t) => t);
+    expect(label).toContain(" / ");
+    expect(label).toContain("10:00 – 15:00");
+    expect(label).toContain("15:00 – 20:00");
+  });
+  it("buildFulfilData: 2+ windows persist the list and mirror window 1 into the legacy triple", () => {
+    const r = buildFulfilData({ windows: [
+      { days: [1, 2, 3, 4], from: "10:00", to: "15:00" },
+      { days: [5, 6, 0], from: "15:00", to: "20:00" },
+    ] });
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      expect(r.data.fulfilWindows).toHaveLength(2);
+      expect(r.data.fulfilDays).toBe("[1,2,3,4]");
+      expect([r.data.fulfilFrom, r.data.fulfilTo]).toEqual(["10:00", "15:00"]);
+    }
+  });
+  it("buildFulfilData: a single window stays legacy-only (fulfilWindows null)", () => {
+    const r = buildFulfilData({ windows: [{ days: [2], from: "10:00", to: "15:00" }] });
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      expect(r.data.fulfilWindows).toBe(null);
+      expect(r.data.fulfilDays).toBe("[2]");
+    }
+  });
+  it("combinedFulfilConstraint: multi-window item contributes the UNION of its days", () => {
+    // The two windows together cover all 7 days → day-unrestricted; and a
+    // multi-timed-window item can't be represented by one [from,to] band, so
+    // time tightening is skipped (the server's per-item check still guards).
+    const r = combinedFulfilConstraint([item as any]);
+    expect(r.days).toBe(null);
+    expect([r.from, r.to]).toEqual([null, null]);
+    // Partial coverage still restricts: Mon/Tue lunch window + all-day Saturday.
+    const partial = combinedFulfilConstraint([
+      { fulfilWindows: [{ days: [1, 2], from: "10:00", to: "15:00" }, { days: [6], from: null, to: null }] } as any,
+    ]);
+    expect(partial.days).toEqual([1, 2, 6]);
   });
 });

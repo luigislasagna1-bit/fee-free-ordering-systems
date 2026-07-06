@@ -2071,7 +2071,9 @@
       "pinToTop": "Pripni na vrh menija",
       "categoryAccentColor": "Poudarna barva",
       "categoryAccentColorClear": "Uporabi barvo teme",
-      "categoryAccentColorDefault": "Barva teme (privzeto)"
+      "categoryAccentColorDefault": "Barva teme (privzeto)",
+      "addFulfilWindow": "Dodaj še eno časovno okno",
+      "fulfilWindowN": "Okno {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

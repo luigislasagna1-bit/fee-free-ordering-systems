@@ -900,6 +900,10 @@ model MenuCategory {
   visibleDays      String? // show_only_from: JSON [0..6] (null = every day)
   visibleFrom      String? // show_only_from: "HH:MM"
   visibleTo        String? // show_only_from: "HH:MM"
+  /// MULTI-WINDOW show_only_from visibility (Fabrizio cmr803ovq c): JSON array
+  /// of { days, from, to } — visible when ANY window matches. Null = legacy
+  /// triple. Resolve ONLY via src/lib/menu-visibility.ts visibleWindowsOf().
+  visibleWindows   Json?
   /// When true, every item in this category is treated as catering —
   /// cart with any of them must be scheduled ≥ Restaurant.cateringNoticeHours
   /// in advance (ASAP is blocked). Per-item MenuItem.isCatering ORs with
@@ -967,6 +971,12 @@ model MenuItem {
   /// page (next to the promo tiles) — distinct from isFeatured, which only
   /// badges the card in place (Fabrizio cmr80joh0, 2026-07-05).
   pinnedToTop      Boolean   @default(false)
+  /// MULTI-WINDOW fulfilment (Fabrizio cmr803ovq c): JSON array of
+  /// { days: number[]|null, from, to } — orderable when ANY window matches
+  /// (e.g. Mon–Thu 10–15 + Fri–Sun 15–20). Null = the legacy single
+  /// fulfilDays/From/To triple applies. Resolve ONLY via
+  /// src/lib/menu-fulfilment.ts fulfilWindowsOf().
+  fulfilWindows    Json?
   isSoldOut        Boolean   @default(false)
   /// LEGACY visibility toggle — superseded by the visibility* model below
   /// (GloriaFood-style rebuild, Luigi 2026-06-12). Migrated to
@@ -982,6 +992,11 @@ model MenuItem {
   visibleDays      String?
   visibleFrom      String?
   visibleTo        String?
+  /// MULTI-WINDOW show_only_from visibility (Fabrizio cmr803ovq c): JSON array
+  /// of { days: number[]|null, from, to } — visible when ANY window matches.
+  /// Null = the legacy visibleDays/From/To triple applies. Resolve ONLY via
+  /// src/lib/menu-visibility.ts visibleWindowsOf().
+  visibleWindows   Json?
   hasVariants      Boolean   @default(false)
   forPickup        Boolean   @default(true)
   forDelivery      Boolean   @default(true)

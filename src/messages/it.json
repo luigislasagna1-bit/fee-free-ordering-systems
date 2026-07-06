@@ -2071,7 +2071,9 @@
       "pinToTop": "Fissa in cima al menu",
       "categoryAccentColor": "Colore in evidenza",
       "categoryAccentColorClear": "Usa il colore del tema",
-      "categoryAccentColorDefault": "Colore del tema (predefinito)"
+      "categoryAccentColorDefault": "Colore del tema (predefinito)",
+      "addFulfilWindow": "Aggiungi un'altra fascia oraria",
+      "fulfilWindowN": "Fascia {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

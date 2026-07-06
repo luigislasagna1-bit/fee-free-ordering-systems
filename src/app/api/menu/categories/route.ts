@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { blockIfInheritingMenu, resolveMenuRestaurantId } from "@/lib/brand";
 import { resolveActiveMenuId } from "@/lib/menu";
 import { buildVisibilityData } from "@/lib/menu-visibility";
+import { Prisma } from "@/generated/prisma/client";
 
 export async function GET(req: NextRequest) {
   const user = await getSessionUser();
@@ -82,7 +83,9 @@ export async function POST(req: NextRequest) {
   if (visibility !== undefined) {
     const v = buildVisibilityData(visibility);
     if (!v.ok) return NextResponse.json({ error: v.error }, { status: 400 });
-    visData = v.data;
+    // Json columns can't take plain null in Prisma — DbNull writes SQL NULL
+    // (clears the multi-window list when dropping back to 0/1 windows).
+    visData = { ...v.data, visibleWindows: v.data.visibleWindows ?? Prisma.DbNull };
   }
 
   // New categories belong to the targeted menu (the one being edited) — or the

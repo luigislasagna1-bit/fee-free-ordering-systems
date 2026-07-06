@@ -2071,7 +2071,9 @@
       "pinToTop": "Καρφίτσωμα στην κορυφή του μενού",
       "categoryAccentColor": "Χρώμα έμφασης",
       "categoryAccentColorClear": "Χρήση χρώματος θέματος",
-      "categoryAccentColorDefault": "Χρώμα θέματος (προεπιλογή)"
+      "categoryAccentColorDefault": "Χρώμα θέματος (προεπιλογή)",
+      "addFulfilWindow": "Προσθήκη άλλου χρονικού παραθύρου",
+      "fulfilWindowN": "Παράθυρο {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

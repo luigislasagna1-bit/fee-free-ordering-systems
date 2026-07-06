@@ -2071,7 +2071,9 @@
       "pinToTop": "ปักหมุดไว้บนสุดของเมนู",
       "categoryAccentColor": "สีเน้น",
       "categoryAccentColorClear": "ใช้สีธีม",
-      "categoryAccentColorDefault": "สีธีม (ค่าเริ่มต้น)"
+      "categoryAccentColorDefault": "สีธีม (ค่าเริ่มต้น)",
+      "addFulfilWindow": "เพิ่มช่วงเวลาอีกช่วง",
+      "fulfilWindowN": "ช่วงที่ {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

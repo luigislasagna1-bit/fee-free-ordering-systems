@@ -2445,7 +2445,9 @@
       "pinToTop": "मेनू में सबसे ऊपर पिन करें",
       "categoryAccentColor": "एक्सेंट रंग",
       "categoryAccentColorClear": "थीम रंग उपयोग करें",
-      "categoryAccentColorDefault": "थीम रंग (डिफ़ॉल्ट)"
+      "categoryAccentColorDefault": "थीम रंग (डिफ़ॉल्ट)",
+      "addFulfilWindow": "एक और समय विंडो जोड़ें",
+      "fulfilWindowN": "विंडो {n}"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",

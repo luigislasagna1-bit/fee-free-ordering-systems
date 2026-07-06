@@ -2071,7 +2071,9 @@
       "pinToTop": "Fixează în capul meniului",
       "categoryAccentColor": "Culoare de accent",
       "categoryAccentColorClear": "Folosește culoarea temei",
-      "categoryAccentColorDefault": "Culoarea temei (implicit)"
+      "categoryAccentColorDefault": "Culoarea temei (implicit)",
+      "addFulfilWindow": "Adaugă altă fereastră orară",
+      "fulfilWindowN": "Fereastra {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -2071,7 +2071,9 @@
       "pinToTop": "Fäst högst upp i menyn",
       "categoryAccentColor": "Accentfärg",
       "categoryAccentColorClear": "Använd temafärg",
-      "categoryAccentColorDefault": "Temafärg (standard)"
+      "categoryAccentColorDefault": "Temafärg (standard)",
+      "addFulfilWindow": "Lägg till ett till tidsfönster",
+      "fulfilWindowN": "Fönster {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

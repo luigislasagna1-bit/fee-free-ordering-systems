@@ -2071,7 +2071,9 @@
       "pinToTop": "メニューの先頭に固定",
       "categoryAccentColor": "アクセントカラー",
       "categoryAccentColorClear": "テーマカラーを使用",
-      "categoryAccentColorDefault": "テーマカラー（既定）"
+      "categoryAccentColorDefault": "テーマカラー（既定）",
+      "addFulfilWindow": "別の時間帯を追加",
+      "fulfilWindowN": "時間帯 {n}"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

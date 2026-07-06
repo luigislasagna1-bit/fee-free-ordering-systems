@@ -2764,7 +2764,9 @@
       "pinToTop": "Prisegti meniu viršuje",
       "categoryAccentColor": "Akcento spalva",
       "categoryAccentColorClear": "Naudoti temos spalvą",
-      "categoryAccentColorDefault": "Temos spalva (numatytoji)"
+      "categoryAccentColorDefault": "Temos spalva (numatytoji)",
+      "addFulfilWindow": "Pridėti dar vieną laiko langą",
+      "fulfilWindowN": "Langas {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

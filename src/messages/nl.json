@@ -2071,7 +2071,9 @@
       "pinToTop": "Bovenaan menu vastzetten",
       "categoryAccentColor": "Accentkleur",
       "categoryAccentColorClear": "Themakleur gebruiken",
-      "categoryAccentColorDefault": "Themakleur (standaard)"
+      "categoryAccentColorDefault": "Themakleur (standaard)",
+      "addFulfilWindow": "Nog een tijdvenster toevoegen",
+      "fulfilWindowN": "Venster {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

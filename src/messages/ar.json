@@ -2071,7 +2071,9 @@
       "pinToTop": "تثبيت أعلى القائمة",
       "categoryAccentColor": "لون مميز",
       "categoryAccentColorClear": "استخدام لون السمة",
-      "categoryAccentColorDefault": "لون السمة (افتراضي)"
+      "categoryAccentColorDefault": "لون السمة (افتراضي)",
+      "addFulfilWindow": "إضافة نافذة زمنية أخرى",
+      "fulfilWindowN": "نافذة {n}"
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",

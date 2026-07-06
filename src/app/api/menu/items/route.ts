@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { Prisma } from "@/generated/prisma/client";
 import { syncPizzaConfigAttachments } from "@/lib/pizza-config";
 import { blockIfInheritingMenu } from "@/lib/brand";
 import { hasFeature } from "@/lib/entitlements";
@@ -28,7 +29,9 @@ export async function POST(req: NextRequest) {
   if (visibility !== undefined) {
     const v = buildVisibilityData(visibility);
     if (!v.ok) return NextResponse.json({ error: v.error }, { status: 400 });
-    visData = v.data;
+    // Json columns can't take plain null in Prisma — DbNull writes SQL NULL
+    // (clears the multi-window list when dropping back to 0/1 windows).
+    visData = { ...v.data, visibleWindows: v.data.visibleWindows ?? Prisma.DbNull };
   }
   // Phase 2 Fulfilment Time — when supplied, it's the sole order-window system
   // for the item (the legacy availability* fields stay null below).
@@ -36,7 +39,9 @@ export async function POST(req: NextRequest) {
   if (fulfilment !== undefined) {
     const f = buildFulfilData(fulfilment);
     if (!f.ok) return NextResponse.json({ error: f.error }, { status: 400 });
-    fulfilData = f.data;
+    // Json columns can't take plain null in Prisma — DbNull writes SQL NULL
+    // (clears the multi-window list when the admin drops back to 0/1 windows).
+    fulfilData = { ...f.data, fulfilWindows: f.data.fulfilWindows ?? Prisma.DbNull };
   }
 
   const cat = await prisma.menuCategory.findFirst({ where: { id: categoryId, restaurantId } });

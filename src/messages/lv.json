@@ -2071,7 +2071,9 @@
       "pinToTop": "Piespraust ēdienkartes augšā",
       "categoryAccentColor": "Akcenta krāsa",
       "categoryAccentColorClear": "Izmantot tēmas krāsu",
-      "categoryAccentColorDefault": "Tēmas krāsa (noklusējums)"
+      "categoryAccentColorDefault": "Tēmas krāsa (noklusējums)",
+      "addFulfilWindow": "Pievienot vēl vienu laika logu",
+      "fulfilWindowN": "Logs {n}"
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

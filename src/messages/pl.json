@@ -2015,7 +2015,9 @@
       "pinToTop": "Przypnij na górze menu",
       "categoryAccentColor": "Kolor akcentu",
       "categoryAccentColorClear": "Użyj koloru motywu",
-      "categoryAccentColorDefault": "Kolor motywu (domyślny)"
+      "categoryAccentColorDefault": "Kolor motywu (domyślny)",
+      "addFulfilWindow": "Dodaj kolejne okno czasowe",
+      "fulfilWindowN": "Okno {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

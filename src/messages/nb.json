@@ -2071,7 +2071,9 @@
       "pinToTop": "Fest øverst i menyen",
       "categoryAccentColor": "Aksentfarge",
       "categoryAccentColorClear": "Bruk temafarge",
-      "categoryAccentColorDefault": "Temafarge (standard)"
+      "categoryAccentColorDefault": "Temafarge (standard)",
+      "addFulfilWindow": "Legg til enda et tidsvindu",
+      "fulfilWindowN": "Vindu {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

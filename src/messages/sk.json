@@ -2764,7 +2764,9 @@
       "pinToTop": "Pripnúť na začiatok menu",
       "categoryAccentColor": "Zvýrazňujúca farba",
       "categoryAccentColorClear": "Použiť farbu témy",
-      "categoryAccentColorDefault": "Farba témy (predvolené)"
+      "categoryAccentColorDefault": "Farba témy (predvolené)",
+      "addFulfilWindow": "Pridať ďalšie časové okno",
+      "fulfilWindowN": "Okno {n}"
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",

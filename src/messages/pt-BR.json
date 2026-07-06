@@ -2071,7 +2071,9 @@
       "pinToTop": "Fixar no topo do cardápio",
       "categoryAccentColor": "Cor de destaque",
       "categoryAccentColorClear": "Usar cor do tema",
-      "categoryAccentColorDefault": "Cor do tema (padrão)"
+      "categoryAccentColorDefault": "Cor do tema (padrão)",
+      "addFulfilWindow": "Adicionar outra janela de horário",
+      "fulfilWindowN": "Janela {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

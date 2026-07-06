@@ -2071,7 +2071,9 @@
       "pinToTop": "הצמד לראש התפריט",
       "categoryAccentColor": "צבע הדגשה",
       "categoryAccentColorClear": "השתמש בצבע ערכת הנושא",
-      "categoryAccentColorDefault": "צבע ערכת הנושא (ברירת מחדל)"
+      "categoryAccentColorDefault": "צבע ערכת הנושא (ברירת מחדל)",
+      "addFulfilWindow": "הוסף חלון זמן נוסף",
+      "fulfilWindowN": "חלון {n}"
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",

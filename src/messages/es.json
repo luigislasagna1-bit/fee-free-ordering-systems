@@ -2071,7 +2071,9 @@
       "pinToTop": "Fijar arriba del menú",
       "categoryAccentColor": "Color de acento",
       "categoryAccentColorClear": "Usar color del tema",
-      "categoryAccentColorDefault": "Color del tema (predeterminado)"
+      "categoryAccentColorDefault": "Color del tema (predeterminado)",
+      "addFulfilWindow": "Añadir otra franja horaria",
+      "fulfilWindowN": "Franja {n}"
     },
     "promotionsList": {
       "stackingMaster": "Maestro",

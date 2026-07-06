@@ -2071,7 +2071,9 @@
       "pinToTop": "Épingler en haut du menu",
       "categoryAccentColor": "Couleur d'accent",
       "categoryAccentColorClear": "Utiliser la couleur du thème",
-      "categoryAccentColorDefault": "Couleur du thème (par défaut)"
+      "categoryAccentColorDefault": "Couleur du thème (par défaut)",
+      "addFulfilWindow": "Ajouter une autre plage horaire",
+      "fulfilWindowN": "Plage {n}"
     },
     "promotionsList": {
       "stackingMaster": "Maître",

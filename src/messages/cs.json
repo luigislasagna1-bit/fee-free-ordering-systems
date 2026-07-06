@@ -2071,7 +2071,9 @@
       "pinToTop": "Připnout na začátek menu",
       "categoryAccentColor": "Zvýrazňující barva",
       "categoryAccentColorClear": "Použít barvu motivu",
-      "categoryAccentColorDefault": "Barva motivu (výchozí)"
+      "categoryAccentColorDefault": "Barva motivu (výchozí)",
+      "addFulfilWindow": "Přidat další časové okno",
+      "fulfilWindowN": "Okno {n}"
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",

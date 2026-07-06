@@ -2071,7 +2071,9 @@
       "pinToTop": "置顶显示",
       "categoryAccentColor": "强调色",
       "categoryAccentColorClear": "使用主题色",
-      "categoryAccentColorDefault": "主题色（默认）"
+      "categoryAccentColorDefault": "主题色（默认）",
+      "addFulfilWindow": "添加另一个时间段",
+      "fulfilWindowN": "时间段 {n}"
     },
     "promotionsList": {
       "stackingMaster": "主控",

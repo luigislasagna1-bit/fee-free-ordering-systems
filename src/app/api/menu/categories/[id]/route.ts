@@ -3,6 +3,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { blockIfInheritingMenu } from "@/lib/brand";
 import { buildVisibilityData } from "@/lib/menu-visibility";
+import { Prisma } from "@/generated/prisma/client";
 
 async function getOwned(id: string, restaurantId: string) {
   return prisma.menuCategory.findFirst({ where: { id, restaurantId } });
@@ -23,7 +24,9 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (visibility !== undefined) {
     const v = buildVisibilityData(visibility);
     if (!v.ok) return NextResponse.json({ error: v.error }, { status: 400 });
-    visData = v.data;
+    // Json columns can't take plain null in Prisma — DbNull writes SQL NULL
+    // (clears the multi-window list when dropping back to 0/1 windows).
+    visData = { ...v.data, visibleWindows: v.data.visibleWindows ?? Prisma.DbNull };
   }
   const cat = await prisma.menuCategory.update({
     where: { id },

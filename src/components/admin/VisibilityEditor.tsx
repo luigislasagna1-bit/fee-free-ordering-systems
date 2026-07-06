@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations, useLocale } from "next-intl";
-import { Eye, EyeOff, CalendarClock } from "lucide-react";
+import { Eye, EyeOff, CalendarClock, Plus, X } from "lucide-react";
 import { HelpTip } from "@/components/HelpTip";
 
 /**
@@ -20,10 +20,14 @@ export type VisibilityValue = {
   days: number[] | null;      // show_only_from
   from: string | null;        // "HH:MM"
   to: string | null;
+  /** EXTRA show_only_from windows beyond the primary days/from/to (Fabrizio
+   *  cmr803ovq c) — sent verbatim; buildVisibilityData merges them into one
+   *  window list where ANY match makes the entity visible. */
+  extraWindows: { days: number[]; from: string | null; to: string | null }[];
 };
 
 export const EMPTY_VISIBILITY: VisibilityValue = {
-  mode: null, until: null, startDate: null, endDate: null, days: null, from: null, to: null,
+  mode: null, until: null, startDate: null, endDate: null, days: null, from: null, to: null, extraWindows: [],
 };
 
 /** Build the editor value from a menu item/category row's flat columns. */
@@ -40,6 +44,17 @@ export function visibilityFromRow(row: any): VisibilityValue {
   if (row?.visibleDays) {
     try { const a = JSON.parse(row.visibleDays); if (Array.isArray(a)) days = a.map(Number); } catch { /* */ }
   }
+  // Multi-window list: window[0] is mirrored in the legacy columns above, so
+  // only windows 2+ become editable extra rows (matches how the API persists).
+  let extraWindows: VisibilityValue["extraWindows"] = [];
+  const rawWindows = row?.visibleWindows;
+  if (Array.isArray(rawWindows) && rawWindows.length > 1) {
+    extraWindows = rawWindows.slice(1).map((w: any) => ({
+      days: Array.isArray(w?.days) ? w.days.map(Number).filter((d: number) => d >= 0 && d <= 6) : [0, 1, 2, 3, 4, 5, 6],
+      from: typeof w?.from === "string" ? w.from : null,
+      to: typeof w?.to === "string" ? w.to : null,
+    }));
+  }
   return {
     mode: row?.visibilityMode ?? null,
     until: toLocal(row?.visibleUntil),
@@ -48,6 +63,7 @@ export function visibilityFromRow(row: any): VisibilityValue {
     days,
     from: row?.visibleFrom ?? null,
     to: row?.visibleTo ?? null,
+    extraWindows,
   };
 }
 
@@ -58,9 +74,14 @@ function dowLabels(locale: string): string[] {
 
 export function VisibilityEditor({ value, onChange }: { value: VisibilityValue; onChange: (v: VisibilityValue) => void }) {
   const t = useTranslations("admin.visibilityEditor");
+  // Multi-window strings shared with the Availability tab's window editor.
+  const tm = useTranslations("admin.menuEditor");
   const locale = useLocale();
   const dayNames = dowLabels(locale);
   const set = (patch: Partial<VisibilityValue>) => onChange({ ...value, ...patch });
+  const extra = value.extraWindows ?? [];
+  const setWindow = (wi: number, patch: Partial<VisibilityValue["extraWindows"][number]>) =>
+    set({ extraWindows: extra.map((w, i) => (i === wi ? { ...w, ...patch } : w)) });
 
   const isHide = value.mode === "hide_from_menu" || value.mode === "hide_until";
   const isShow = value.mode === "show_only_from" || value.mode === "show_from_until";
@@ -135,6 +156,39 @@ export function VisibilityEditor({ value, onChange }: { value: VisibilityValue; 
                 <input type="time" className={input} value={value.to ?? ""} onChange={(e) => set({ to: e.target.value || null })} />
                 <span className="text-[11px] text-gray-400">{t("timeOptional")}</span>
               </div>
+              {/* EXTRA windows (Fabrizio cmr803ovq c) — the entity shows when
+                  ANY window (primary above or one of these) matches. */}
+              {extra.map((w, wi) => (
+                <div key={wi} className="space-y-2 rounded-lg border border-sky-100 bg-white p-2.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold text-sky-700">{tm("fulfilWindowN", { n: wi + 2 })}</span>
+                    <button type="button" onClick={() => set({ extraWindows: extra.filter((_, i) => i !== wi) })}
+                      className="p-1 rounded text-gray-400 hover:text-rose-600 hover:bg-rose-50 transition" aria-label={tm("cancel")}>
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                  <div className="flex gap-1.5 flex-wrap">
+                    {dayNames.map((label, d) => (
+                      <button key={d} type="button"
+                        onClick={() => setWindow(wi, { days: w.days.includes(d) ? w.days.filter((x) => x !== d) : [...w.days, d].sort((a, b) => a - b) })}
+                        className={`px-2.5 py-1 rounded-full text-xs font-semibold border transition ${w.days.includes(d) ? "bg-sky-500 border-sky-500 text-white" : "border-gray-300 text-gray-600 hover:border-gray-400"}`}>
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-xs text-gray-500">{t("from")}</span>
+                    <input type="time" className={input} value={w.from ?? ""} onChange={(e) => setWindow(wi, { from: e.target.value || null })} />
+                    <span className="text-xs text-gray-500">{t("to")}</span>
+                    <input type="time" className={input} value={w.to ?? ""} onChange={(e) => setWindow(wi, { to: e.target.value || null })} />
+                  </div>
+                </div>
+              ))}
+              <button type="button"
+                onClick={() => set({ extraWindows: [...extra, { days: [0, 1, 2, 3, 4, 5, 6], from: null, to: null }] })}
+                className="flex items-center gap-1.5 text-xs font-semibold text-sky-600 hover:text-sky-800 transition">
+                <Plus className="w-3.5 h-3.5" /> {tm("addFulfilWindow")}
+              </button>
             </div>
           )}
           <label className="flex items-center gap-2 text-sm text-gray-700">

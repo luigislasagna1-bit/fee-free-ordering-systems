@@ -2489,7 +2489,9 @@
       "pinToTop": "Pin to top of menu",
       "categoryAccentColor": "Accent color",
       "categoryAccentColorClear": "Use theme color",
-      "categoryAccentColorDefault": "Theme color (default)"
+      "categoryAccentColorDefault": "Theme color (default)",
+      "addFulfilWindow": "Add another time window",
+      "fulfilWindowN": "Window {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

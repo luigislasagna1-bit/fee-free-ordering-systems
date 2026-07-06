@@ -2071,7 +2071,9 @@
       "pinToTop": "Kinnita menüü algusesse",
       "categoryAccentColor": "Rõhuvärv",
       "categoryAccentColorClear": "Kasuta teema värvi",
-      "categoryAccentColorDefault": "Teema värv (vaikimisi)"
+      "categoryAccentColorDefault": "Teema värv (vaikimisi)",
+      "addFulfilWindow": "Lisa veel üks ajaaken",
+      "fulfilWindowN": "Aken {n}"
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

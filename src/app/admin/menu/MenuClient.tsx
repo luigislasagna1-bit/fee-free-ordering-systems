@@ -436,6 +436,21 @@ function ItemModal({
     })(),
     fulfilFrom: (item as any)?.fulfilFrom ?? "",
     fulfilTo: (item as any)?.fulfilTo ?? "",
+    // MULTI-WINDOW fulfilment (Fabrizio cmr803ovq c): windows beyond the
+    // first. Window #1 lives in the fields above (mirrored into the legacy
+    // columns by the API); these are windows #2+ from fulfilWindows.
+    fulfilExtraWindows: (() => {
+      const raw = (item as any)?.fulfilWindows;
+      let arr: any[] | null = null;
+      if (Array.isArray(raw)) arr = raw;
+      else if (typeof raw === "string" && raw) { try { const p = JSON.parse(raw); if (Array.isArray(p)) arr = p; } catch { /* ignore */ } }
+      if (!arr || arr.length < 2) return [] as Array<{ days: number[]; from: string; to: string }>;
+      return arr.slice(1).map((w: any) => ({
+        days: Array.isArray(w?.days) ? w.days.filter((x: unknown) => typeof x === "number") : [],
+        from: typeof w?.from === "string" ? w.from : "",
+        to: typeof w?.to === "string" ? w.to : "",
+      }));
+    })(),
   });
   const [variants, setVariants] = useState<ItemVariant[]>(
     item?.variants?.length ? item.variants : [{ name: "", price: 0, sortOrder: 0, isDefault: true }]
@@ -628,6 +643,7 @@ function ItemModal({
     const {
       availableDays: _ad, availableFrom: _af, availableTo: _at, availabilityMode: _am,
       fulfilEnabled: _fe, fulfilDays: _fd, fulfilFrom: _ff, fulfilTo: _ft,
+      fulfilExtraWindows: _fw,
       ...formRest
     } = form;
     const payload = {
@@ -637,10 +653,17 @@ function ItemModal({
       pizzaConfig,
       comboConfig,
       visibility,
-      // Only send a real restriction when enabled; otherwise nulls clear it.
+      // Only send a real restriction when enabled; otherwise an empty windows
+      // list clears it. Window #1 = the main editor; extras follow (Fabrizio
+      // cmr803ovq c — e.g. Mon–Thu 10–15 PLUS Fri–Sun 15–20).
       fulfilment: form.fulfilEnabled
-        ? { days: form.fulfilDays, from: form.fulfilFrom || null, to: form.fulfilTo || null }
-        : { days: null, from: null, to: null },
+        ? {
+            windows: [
+              { days: form.fulfilDays, from: form.fulfilFrom || null, to: form.fulfilTo || null },
+              ...form.fulfilExtraWindows.map((w) => ({ days: w.days, from: w.from || null, to: w.to || null })),
+            ],
+          }
+        : { windows: [] },
     };
     try {
       const url = isNew ? "/api/menu/items" : `/api/menu/items/${item!.id}`;
@@ -822,6 +845,46 @@ function ItemModal({
                     </div>
                   </div>
                   <p className="text-xs text-gray-400">{t("fulfilTimeHint")}</p>
+                  {/* Additional windows (Fabrizio cmr803ovq c): each row is a
+                      full days+times window; the item is orderable when ANY
+                      window matches (Mon–Thu 10–15 PLUS Fri–Sun 15–20). */}
+                  {form.fulfilExtraWindows.map((w, wi) => (
+                    <div key={wi} className="rounded-lg border border-indigo-200 bg-white p-3 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold uppercase tracking-wide text-indigo-500">{t("fulfilWindowN", { n: wi + 2 })}</span>
+                        <button onClick={() => setForm(f => ({ ...f, fulfilExtraWindows: f.fulfilExtraWindows.filter((_, i) => i !== wi) }))}
+                          className="p-1 rounded hover:bg-gray-100 text-gray-400" aria-label={t("cancel")}>
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                      <div className="flex gap-2 flex-wrap">
+                        {DAY_NAMES.map((d, i) => (
+                          <button key={i}
+                            onClick={() => setForm(f => ({
+                              ...f,
+                              fulfilExtraWindows: f.fulfilExtraWindows.map((x, xi) => xi !== wi ? x : {
+                                ...x,
+                                days: x.days.includes(i) ? x.days.filter((dd: number) => dd !== i) : [...x.days, i].sort((a: number, b: number) => a - b),
+                              }),
+                            }))}
+                            className={`w-12 h-10 rounded-lg border text-sm font-medium transition ${w.days.includes(i) ? "bg-indigo-500 border-indigo-500 text-white" : "border-gray-200 text-gray-500 hover:border-gray-400 bg-white"}`}>
+                            {d}
+                          </button>
+                        ))}
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                          value={w.from} onChange={e => setForm(f => ({ ...f, fulfilExtraWindows: f.fulfilExtraWindows.map((x, xi) => xi === wi ? { ...x, from: e.target.value } : x) }))} />
+                        <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                          value={w.to} onChange={e => setForm(f => ({ ...f, fulfilExtraWindows: f.fulfilExtraWindows.map((x, xi) => xi === wi ? { ...x, to: e.target.value } : x) }))} />
+                      </div>
+                    </div>
+                  ))}
+                  <button
+                    onClick={() => setForm(f => ({ ...f, fulfilExtraWindows: [...f.fulfilExtraWindows, { days: [], from: "", to: "" }] }))}
+                    className="flex items-center gap-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800">
+                    <Plus className="w-4 h-4" /> {t("addFulfilWindow")}
+                  </button>
                   <div className="rounded-lg bg-white border border-indigo-200 px-3 py-2 text-xs text-indigo-700 font-medium">
                     {t("fulfilPreview")}
                   </div>
@@ -1487,6 +1550,7 @@ const MenuEditCtx = createContext<{ menuId?: string }>({});
 function availabilityBadge(
   item: {
     fulfilDays?: number[] | string | null; fulfilFrom?: string | null; fulfilTo?: string | null;
+    fulfilWindows?: unknown;
     availableDays?: number[] | string | null; availableFrom?: string | null; availableTo?: string | null;
   },
   hoursFormat: HoursFormat = "24h",
@@ -1496,6 +1560,21 @@ function availabilityBadge(
     if (typeof d === "string" && d) { try { const a = JSON.parse(d); if (Array.isArray(a)) return a; } catch { /* ignore */ } }
     return null;
   };
+  // MULTI-WINDOW item (cmr803ovq c): show every window, not just the mirrored
+  // first one — e.g. "Mon–Thu · 10:00–15:00 / Fri–Sun · 15:00–20:00".
+  if (Array.isArray(item.fulfilWindows) && item.fulfilWindows.length > 1) {
+    const text = (item.fulfilWindows as Array<{ days?: number[] | null; from?: string | null; to?: string | null }>)
+      .map((w) => {
+        const parts: string[] = [];
+        const wd = Array.isArray(w?.days) ? w.days.filter((d) => typeof d === "number" && d >= 0 && d <= 6) : null;
+        if (wd && wd.length > 0 && wd.length < 7) parts.push([...wd].sort((a, b) => a - b).map((d) => DAY_NAMES[d] ?? "").filter(Boolean).join(", "));
+        if (w?.from && w?.to) parts.push(`${formatTime(w.from, hoursFormat)}–${formatTime(w.to, hoursFormat)}`);
+        return parts.join(" · ");
+      })
+      .filter(Boolean)
+      .join(" / ");
+    if (text) return { text, kind: "fulfil" };
+  }
   // Prefer the Fulfilment Time fields (the orderable "Availability" window); fall
   // back to the legacy "Visibility" (show/hide) fields so an older, un-re-saved
   // item still shows its badge. The KIND drives the colour (Fabrizio 2026-06-16):

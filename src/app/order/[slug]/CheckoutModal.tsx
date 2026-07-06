@@ -251,6 +251,12 @@ interface Props {
   fulfilDays?: number[] | null;
   fulfilFrom?: string | null;
   fulfilTo?: string | null;
+  /** Per-(date, slot) fulfilment check for MULTI-WINDOW items (cmr803ovq c).
+   *  A single from/to band can't express per-day time differences (Tue 10–15
+   *  vs Wed 15–20), so the parent also passes this predicate and the picker
+   *  drops any slot outside EVERY restricted item's windows. Both args are
+   *  restaurant wall-clock ("YYYY-MM-DD", "HH:MM"). */
+  fulfilSlotAllowed?: (dateStr: string, hhmm: string) => boolean;
   /** True when the cart holds any fulfilment-time-restricted item. Drives the
    *  NAMED "only available certain days/times" heads-up in the time section —
    *  shown even when the item is orderable right now (so the customer knows the
@@ -346,6 +352,7 @@ export function CheckoutModal({
   fulfilDays = null,
   fulfilFrom = null,
   fulfilTo = null,
+  fulfilSlotAllowed,
   fulfilItemsPresent = false,
   fulfilItemNames = [],
   toWallClock,
@@ -1417,6 +1424,16 @@ export function CheckoutModal({
                       slots = slots.filter((s) =>
                         fulfilFrom <= fulfilTo ? s >= fulfilFrom && s < fulfilTo : s >= fulfilFrom || s < fulfilTo,
                       );
+                    }
+                    // MULTI-WINDOW carts (cmr803ovq c): per-day windows differ
+                    // (Tue 10–15 vs Wed 15–20), which the single band above
+                    // can't express — also drop slots the per-item windows
+                    // reject for the SELECTED date. (Exact-time mode can't be
+                    // bounded this way; the server's isFulfilableAt guard still
+                    // rejects an off-window exact time with the localized
+                    // reschedule message.)
+                    if (fulfilSlotAllowed && datePart) {
+                      slots = slots.filter((s) => fulfilSlotAllowed(datePart, s));
                     }
                     // Day-restricted fulfilment ⇒ offer a dropdown of ONLY the valid
                     // upcoming dates (a Monday-only item lists just the next Mondays).

@@ -2071,7 +2071,9 @@
       "pinToTop": "Kiinnitä valikon alkuun",
       "categoryAccentColor": "Korostusväri",
       "categoryAccentColorClear": "Käytä teeman väriä",
-      "categoryAccentColorDefault": "Teeman väri (oletus)"
+      "categoryAccentColorDefault": "Teeman väri (oletus)",
+      "addFulfilWindow": "Lisää toinen aikaikkuna",
+      "fulfilWindowN": "Ikkuna {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

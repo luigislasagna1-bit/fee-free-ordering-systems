@@ -2071,7 +2071,9 @@
       "pinToTop": "Fastgør øverst i menuen",
       "categoryAccentColor": "Accentfarve",
       "categoryAccentColorClear": "Brug temafarve",
-      "categoryAccentColorDefault": "Temafarve (standard)"
+      "categoryAccentColorDefault": "Temafarve (standard)",
+      "addFulfilWindow": "Tilføj endnu et tidsvindue",
+      "fulfilWindowN": "Vindue {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

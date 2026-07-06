@@ -2071,7 +2071,9 @@
       "pinToTop": "Закачи на врх менија",
       "categoryAccentColor": "Акцентна боја",
       "categoryAccentColorClear": "Користи боју теме",
-      "categoryAccentColorDefault": "Боја теме (подразумевано)"
+      "categoryAccentColorDefault": "Боја теме (подразумевано)",
+      "addFulfilWindow": "Додај још један временски оквир",
+      "fulfilWindowN": "Оквир {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

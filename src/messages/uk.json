@@ -2071,7 +2071,9 @@
       "pinToTop": "Закріпити вгорі меню",
       "categoryAccentColor": "Акцентний колір",
       "categoryAccentColorClear": "Використати колір теми",
-      "categoryAccentColorDefault": "Колір теми (типово)"
+      "categoryAccentColorDefault": "Колір теми (типово)",
+      "addFulfilWindow": "Додати ще одне часове вікно",
+      "fulfilWindowN": "Вікно {n}"
     },
     "promotionsList": {
       "stackingMaster": "Майстер",

@@ -2071,7 +2071,9 @@
       "pinToTop": "Закачи най-отгоре в менюто",
       "categoryAccentColor": "Акцентен цвят",
       "categoryAccentColorClear": "Използвай цвета на темата",
-      "categoryAccentColorDefault": "Цвят на темата (по подразбиране)"
+      "categoryAccentColorDefault": "Цвят на темата (по подразбиране)",
+      "addFulfilWindow": "Добави още един времеви прозорец",
+      "fulfilWindowN": "Прозорец {n}"
     },
     "promotionsList": {
       "stackingMaster": "Главна",

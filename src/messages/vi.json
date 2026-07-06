@@ -2015,7 +2015,9 @@
       "pinToTop": "Ghim lên đầu thực đơn",
       "categoryAccentColor": "Màu nhấn",
       "categoryAccentColorClear": "Dùng màu chủ đề",
-      "categoryAccentColorDefault": "Màu chủ đề (mặc định)"
+      "categoryAccentColorDefault": "Màu chủ đề (mặc định)",
+      "addFulfilWindow": "Thêm khung giờ khác",
+      "fulfilWindowN": "Khung {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

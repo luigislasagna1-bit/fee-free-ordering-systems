@@ -2015,7 +2015,9 @@
       "pinToTop": "Kitűzés az étlap tetejére",
       "categoryAccentColor": "Kiemelőszín",
       "categoryAccentColorClear": "Téma színének használata",
-      "categoryAccentColorDefault": "Téma színe (alapértelmezett)"
+      "categoryAccentColorDefault": "Téma színe (alapértelmezett)",
+      "addFulfilWindow": "Újabb idősáv hozzáadása",
+      "fulfilWindowN": "Idősáv {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

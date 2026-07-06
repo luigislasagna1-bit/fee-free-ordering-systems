@@ -2071,7 +2071,9 @@
       "pinToTop": "Fixa a dalt del menú",
       "categoryAccentColor": "Color d'accent",
       "categoryAccentColorClear": "Usa el color del tema",
-      "categoryAccentColorDefault": "Color del tema (per defecte)"
+      "categoryAccentColorDefault": "Color del tema (per defecte)",
+      "addFulfilWindow": "Afegeix una altra franja horària",
+      "fulfilWindowN": "Franja {n}"
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

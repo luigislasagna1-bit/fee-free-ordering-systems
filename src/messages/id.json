@@ -2071,7 +2071,9 @@
       "pinToTop": "Sematkan di atas menu",
       "categoryAccentColor": "Warna aksen",
       "categoryAccentColorClear": "Gunakan warna tema",
-      "categoryAccentColorDefault": "Warna tema (bawaan)"
+      "categoryAccentColorDefault": "Warna tema (bawaan)",
+      "addFulfilWindow": "Tambah jendela waktu lain",
+      "fulfilWindowN": "Jendela {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -2071,7 +2071,9 @@
       "pinToTop": "Prikvači na vrh jelovnika",
       "categoryAccentColor": "Naglasna boja",
       "categoryAccentColorClear": "Koristi boju teme",
-      "categoryAccentColorDefault": "Boja teme (zadano)"
+      "categoryAccentColorDefault": "Boja teme (zadano)",
+      "addFulfilWindow": "Dodaj još jedan vremenski okvir",
+      "fulfilWindowN": "Okvir {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",

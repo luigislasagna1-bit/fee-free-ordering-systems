@@ -2071,7 +2071,9 @@
       "pinToTop": "Закрепить вверху меню",
       "categoryAccentColor": "Акцентный цвет",
       "categoryAccentColorClear": "Использовать цвет темы",
-      "categoryAccentColorDefault": "Цвет темы (по умолчанию)"
+      "categoryAccentColorDefault": "Цвет темы (по умолчанию)",
+      "addFulfilWindow": "Добавить ещё одно временное окно",
+      "fulfilWindowN": "Окно {n}"
     },
     "promotionsList": {
       "stackingMaster": "Мастер",

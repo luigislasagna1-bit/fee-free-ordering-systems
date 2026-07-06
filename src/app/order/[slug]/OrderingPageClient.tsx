@@ -16,7 +16,7 @@ import { holidayEffectForDay, canonicalHolidayService } from "@/lib/holiday-rule
 import { resolveServiceHours, type ServiceKind } from "@/lib/service-hours";
 import { resolveSlotModes } from "@/lib/slot-modes";
 import { isVisibleNow } from "@/lib/menu-visibility";
-import { hasFulfilWindow, isFulfilableAt, fulfilWindowLabel, combinedFulfilConstraint } from "@/lib/menu-fulfilment";
+import { hasFulfilWindow, isFulfilableAt, fulfilWindowLabel, combinedFulfilConstraint, fulfilWindowsOf, windowMatches } from "@/lib/menu-fulfilment";
 
 /** Convert minutes-since-midnight (0..1440) into "HH:MM" 24-hour format.
  *  Used by the promo-banner usability-window label so a 12-3 PM lunch
@@ -72,6 +72,8 @@ interface VisibilityProps {
   visibleDays?: string | null;
   visibleFrom?: string | null;
   visibleTo?: string | null;
+  /** Multi-window show_only_from list (cmr803ovq c); resolved by isVisibleNow. */
+  visibleWindows?: unknown;
 }
 interface MenuItem extends VisibilityProps {
   id: string; name: string; description: string; price: number;
@@ -83,6 +85,8 @@ interface MenuItem extends VisibilityProps {
   // Phase 2 Fulfilment Time: item visible all week, orderable only for these
   // days/times (forces scheduling, like catering). null = no restriction.
   fulfilDays?: string | null; fulfilFrom?: string | null; fulfilTo?: string | null;
+  /** Multi-window fulfilment list (cmr803ovq c); resolved by fulfilWindowsOf. */
+  fulfilWindows?: unknown;
   modifierGroups: ModGroup[]; variants: ItemVariant[];
   categoryId?: string;
   pizzaConfig?: string;
@@ -2858,6 +2862,17 @@ export function OrderingPageClient({
   // The cart's combined order-window so the checkout picker offers ONLY valid
   // days/times (e.g. a Monday-only item → only Mondays selectable).
   const cartFulfilConstraint = combinedFulfilConstraint(cartFulfilItems);
+  // Per-(date, slot) check for MULTI-WINDOW items (cmr803ovq c): the flattened
+  // from/to band above can't express per-day time differences (Tue 10–15 vs
+  // Wed 15–20). Args are restaurant wall-clock strings — same convention the
+  // picker's own validDates math uses.
+  const cartFulfilSlotAllowed = (dateStr: string, hhmm: string): boolean => {
+    const dow = new Date(`${dateStr}T12:00:00`).getDay();
+    return cartFulfilItems.every((mi) => {
+      const ws = fulfilWindowsOf(mi);
+      return ws.length === 0 || ws.some((w) => windowMatches(w, dow, hhmm));
+    });
+  };
   const scheduleRequired = cartHasCatering || restaurantIsClosedNow || orderMinLeadMinutes > 0 || hideAsap || fulfilForcesSchedule;
   // Whether the schedule picker is shown at all. Off only when the owner
   // disabled scheduling AND nothing forces it (catering / closed now / fulfilment).
@@ -5900,6 +5915,7 @@ export function OrderingPageClient({
           fulfilDays={cartFulfilConstraint.days}
           fulfilFrom={cartFulfilConstraint.from}
           fulfilTo={cartFulfilConstraint.to}
+          fulfilSlotAllowed={cartFulfilItems.length > 0 ? cartFulfilSlotAllowed : undefined}
           fulfilItemsPresent={cartHasFulfil}
           fulfilItemNames={fulfilItemNames}
           schedulingEnabled={schedulingEnabled}

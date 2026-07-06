@@ -2015,7 +2015,9 @@
       "pinToTop": "Menünün başına sabitle",
       "categoryAccentColor": "Vurgu rengi",
       "categoryAccentColorClear": "Tema rengini kullan",
-      "categoryAccentColorDefault": "Tema rengi (varsayılan)"
+      "categoryAccentColorDefault": "Tema rengi (varsayılan)",
+      "addFulfilWindow": "Başka bir zaman aralığı ekle",
+      "fulfilWindowN": "Aralık {n}"
     },
     "promotionsList": {
       "stackingMaster": "Ana",

@@ -15,6 +15,7 @@
  * All day/time math is in the restaurant's timezone.
  */
 import { localDowAndHHMM } from "@/lib/restaurant-hours";
+import { normaliseWindow, windowMatches, type FulfilWindow } from "@/lib/menu-fulfilment";
 
 export type VisibilityFields = {
   isHidden?: boolean | null;
@@ -25,6 +26,11 @@ export type VisibilityFields = {
   visibleDays?: string | null; // JSON [0..6]
   visibleFrom?: string | null; // "HH:MM"
   visibleTo?: string | null;
+  /** MULTI-WINDOW show_only_from list (Fabrizio cmr803ovq c, 2026-07-05):
+   *  JSON array of { days: number[]|null, from, to } — visible when ANY window
+   *  matches. Same shape + matching rules as fulfilment windows. When absent,
+   *  the legacy visibleDays/From/To triple acts as a one-window list. */
+  visibleWindows?: unknown;
 };
 
 function asDate(v: Date | string | null | undefined): Date | null {
@@ -42,11 +48,22 @@ function parseDays(raw: string | null | undefined): number[] | null {
   return null;
 }
 
-/** Is `hhmm` (e.g. "13:05") inside [from,to)? Handles overnight (from > to). */
-function inTimeWindow(hhmm: string, from: string, to: string): boolean {
-  if (from === to) return true; // 24h
-  if (from < to) return hhmm >= from && hhmm < to;
-  return hhmm >= from || hhmm < to; // overnight spill
+/** The entity's effective show_only_from window LIST: the multi-window JSON
+ *  when present, else the legacy triple as a one-element list, else []
+ *  (day/time-unrestricted). ANY matching window makes the entity visible. */
+export function visibleWindowsOf(e: VisibilityFields): FulfilWindow[] {
+  const raw = e.visibleWindows;
+  let arr: any[] | null = null;
+  if (Array.isArray(raw)) arr = raw;
+  else if (typeof raw === "string" && raw.trim()) { try { const p = JSON.parse(raw); if (Array.isArray(p)) arr = p; } catch { /* ignore */ } }
+  if (arr) {
+    const windows = arr.map(normaliseWindow).filter((w): w is FulfilWindow => !!w);
+    if (windows.length > 0) return windows;
+  }
+  const days = parseDays(e.visibleDays);
+  const both = e.visibleFrom && e.visibleTo ? { from: e.visibleFrom, to: e.visibleTo } : { from: null, to: null };
+  if (!days && !both.from) return [];
+  return [{ days, ...both }];
 }
 
 /**
@@ -65,18 +82,13 @@ export function isVisibleNow(e: VisibilityFields, now: Date = new Date(), timezo
       return until ? now >= until : true; // no date set → already un-hidden
     }
     case "show_only_from": {
+      // Multi-window aware: visible when ANY window covers the local moment
+      // (same day + overnight-spill matching the single-window code always
+      // had — a one-window list is behaviourally identical to the old logic).
+      const windows = visibleWindowsOf(e);
+      if (windows.length === 0) return true; // mode set but no restriction
       const { dow, hhmm } = localDowAndHHMM(now, timezone);
-      const days = parseDays(e.visibleDays);
-      if (days && !days.includes(dow)) {
-        // Could still be inside an overnight window that started yesterday.
-        if (e.visibleFrom && e.visibleTo && e.visibleFrom > e.visibleTo) {
-          const prev = (dow + 6) % 7;
-          if (days.includes(prev) && hhmm < e.visibleTo) return true;
-        }
-        return false;
-      }
-      if (e.visibleFrom && e.visibleTo) return inTimeWindow(hhmm, e.visibleFrom, e.visibleTo);
-      return true; // day matches, no time restriction
+      return windows.some((w) => windowMatches(w, dow, hhmm));
     }
     case "show_from_until": {
       const start = asDate(e.visibleStartDate);
@@ -107,6 +119,10 @@ export type VisibilityInput = {
   days?: number[] | null;
   from?: string | null;
   to?: string | null;
+  /** EXTRA show_only_from windows beyond the primary days/from/to above
+   *  (Fabrizio cmr803ovq c). The primary + extras form one list; window[0]
+   *  of the normalised list mirrors into the legacy columns. */
+  extraWindows?: { days?: number[] | null; from?: string | null; to?: string | null }[] | null;
 };
 
 /**
@@ -121,6 +137,8 @@ export function buildVisibilityData(
   const base: Record<string, unknown> = {
     visibilityMode: null, visibleUntil: null, visibleStartDate: null,
     visibleEndDate: null, visibleDays: null, visibleFrom: null, visibleTo: null,
+    // FulfilWindow[] | null — routes convert null → Prisma.DbNull (Json column).
+    visibleWindows: null,
     isHidden: false,
   };
   if (!v || v.mode == null) return { ok: true, data: base }; // "always visible"
@@ -146,16 +164,31 @@ export function buildVisibilityData(
   if (v.from != null && !HHMM.test(v.from)) return { ok: false, error: "Invalid start time." };
   if (v.to != null && !HHMM.test(v.to)) return { ok: false, error: "Invalid end time." };
   if ((v.from == null) !== (v.to == null)) return { ok: false, error: "Set both a start and end time, or neither." };
-  let days: number[] | null = null;
-  if (Array.isArray(v.days)) {
-    // Drop junk (null/strings) BEFORE coercion — Number(null) is 0 (Sunday).
-    days = [...new Set(v.days.filter((x) => typeof x === "number" && Number.isInteger(x) && x >= 0 && x <= 6))].sort((a, b) => a - b);
-    if (days.length === 0) return { ok: false, error: "Pick at least one day." };
-    if (days.length === 7) days = null;
-  }
-  if (!days && v.from == null) return { ok: false, error: "Choose the days and/or times this is shown." };
+  // Explicitly-empty day set = the admin deselected every day — error (as the
+  // single-window code always did) instead of silently meaning "every day".
+  if (Array.isArray(v.days) && !v.days.some((x) => typeof x === "number" && Number.isInteger(x) && x >= 0 && x <= 6))
+    return { ok: false, error: "Pick at least one day." };
+  // Primary window (the historic days/from/to) + any extraWindows form ONE
+  // list (Fabrizio cmr803ovq c). Each is normalised identically; window[0] of
+  // the normalised list mirrors into the legacy columns so anything still
+  // reading them sees the first window; the FULL list persists in
+  // visibleWindows only when 2+ windows carry a real restriction.
+  const rawList = [
+    { days: v.days ?? null, from: v.from ?? null, to: v.to ?? null },
+    ...(Array.isArray(v.extraWindows) ? v.extraWindows : []),
+  ];
+  const norm = rawList.map((w) => normaliseWindow(w)).filter((w): w is FulfilWindow => !!w);
+  if (norm.length === 0) return { ok: false, error: "Choose the days and/or times this is shown." };
+  const first = norm[0];
   return {
     ok: true,
-    data: { ...base, visibilityMode: v.mode, visibleDays: days ? JSON.stringify(days) : null, visibleFrom: v.from ?? null, visibleTo: v.to ?? null },
+    data: {
+      ...base,
+      visibilityMode: v.mode,
+      visibleDays: first.days ? JSON.stringify(first.days) : null,
+      visibleFrom: first.from,
+      visibleTo: first.to,
+      visibleWindows: norm.length > 1 ? norm : null,
+    },
   };
 }

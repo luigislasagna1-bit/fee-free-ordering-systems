@@ -2071,7 +2071,9 @@
       "pinToTop": "Oben in der Karte anpinnen",
       "categoryAccentColor": "Akzentfarbe",
       "categoryAccentColorClear": "Themenfarbe verwenden",
-      "categoryAccentColorDefault": "Themenfarbe (Standard)"
+      "categoryAccentColorDefault": "Themenfarbe (Standard)",
+      "addFulfilWindow": "Weiteres Zeitfenster hinzufügen",
+      "fulfilWindowN": "Zeitfenster {n}"
     },
     "promotionsList": {
       "stackingMaster": "Master",
