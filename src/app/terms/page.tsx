@@ -99,7 +99,7 @@ export default async function TermsPage() {
       <p>If you participate in the partner / reseller program, you may refer restaurants to Fee Free using your referral code or invite link. You earn commission on paid add-on subscriptions for restaurants you refer, per the Reseller Agreement you accept when you apply. Highlights:</p>
       <ul>
         <li>Commissions accrue monthly and pay out once you cross the minimum payout threshold.</li>
-        <li>Self-referrals are prohibited (you can&rsquo;t earn commission on your own restaurant).</li>
+        <li>You may refer your own restaurants and earn commission on them — your own restaurants count toward your tier and payouts like any other referral.</li>
         <li>We may pause or end the program with reasonable notice. Earned commissions are honored.</li>
       </ul>
 

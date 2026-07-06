@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL } from "@/lib/support";
 import { LANDING_PAGES } from "@/data/landing-pages";
 import { SOLUTION_PAGES } from "@/data/solution-pages";
+import { SEGMENT_PAGES } from "@/data/segment-pages";
 import { COMPETITORS } from "@/data/competitors";
 
 /**
@@ -88,6 +89,9 @@ export function PublicFooter() {
           )}
           {SOLUTION_PAGES.some((p) => p.category === "city") && (
             <SeoLinkRow label="Cities" moreHref="/sitemap#cities" items={SOLUTION_PAGES.filter((p) => p.category === "city").map((p) => ({ href: `/${p.slug}`, text: p.h1 }))} />
+          )}
+          {SEGMENT_PAGES.length > 0 && (
+            <SeoLinkRow label="For your business" moreHref="/sitemap#segments" items={SEGMENT_PAGES.map((p) => ({ href: `/for/${p.slug}`, text: p.label }))} />
           )}
           {COMPETITORS.length > 0 && (
             <SeoLinkRow label="Compare" moreHref="/sitemap#compare" items={COMPETITORS.map((c) => ({ href: `/vs/${c.slug}`, text: `${c.name} alternative` }))} />

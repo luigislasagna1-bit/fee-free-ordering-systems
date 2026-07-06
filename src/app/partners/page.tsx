@@ -409,10 +409,12 @@ export default async function PartnersPage() {
               keeps paying as long as those restaurants remain active.
             </Faq>
             <Faq q="Can I be both a reseller and a restaurant owner?">
-              Yes. Use <strong>different email addresses</strong> for each account — one for your restaurant,
-              one for your reseller account. Log in with whichever email matches what you want to do. Your own
-              restaurant <strong>doesn't count</strong> toward your reseller tier (no self-referrals — we flag and
-              remove any). This mirrors how other partner programs handle the same case.
+              Yes — and your own restaurants count fully. Set your restaurant up with your reseller referral
+              link and it&rsquo;s attributed to you like any restaurant you refer: it counts toward your
+              reseller tier <strong>and</strong> earns you commission on its add-on subscriptions. Running your
+              own restaurant on the platform you resell is one of the best ways to know the product inside out.
+              You can keep your reseller and restaurant logins on separate emails if you prefer, but it&rsquo;s
+              not required.
             </Faq>
           </div>
         </div>

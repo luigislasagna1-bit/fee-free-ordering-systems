@@ -26,6 +26,7 @@ import { buildSeoLinks } from "@/lib/hosted-site-seo";
 import { COMPETITORS } from "@/data/competitors";
 import { LANDING_PAGES } from "@/data/landing-pages";
 import { SOLUTION_PAGES } from "@/data/solution-pages";
+import { SEGMENT_PAGES } from "@/data/segment-pages";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -141,6 +142,11 @@ function buildPlatformSitemap(host: string): string {
   // e.g. /online-ordering-system, /wordpress-restaurant-ordering-plugin. Same SSG + JSON-LD engine.
   for (const p of SOLUTION_PAGES) {
     urls.push({ loc: `${base}/${p.slug}`, changefreq: "monthly", priority: 0.6 });
+  }
+  // Segment pages (/for/restaurant-groups, /for/virtual-brands) — same SEO
+  // engine, priority 0.6. COMPETITOR-TOWNCLUB-PLAN.md action #8.
+  for (const p of SEGMENT_PAGES) {
+    urls.push({ loc: `${base}/for/${p.slug}`, changefreq: "monthly", priority: 0.6 });
   }
   // Also surface /demo + /import (the conversion entry points) so crawlers index them.
   urls.push({ loc: `${base}/demo`, changefreq: "monthly", priority: 0.6 });

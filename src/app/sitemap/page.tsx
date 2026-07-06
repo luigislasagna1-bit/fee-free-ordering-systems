@@ -4,6 +4,7 @@ import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
 import { LANDING_PAGES } from "@/data/landing-pages";
 import { SOLUTION_PAGES } from "@/data/solution-pages";
+import { SEGMENT_PAGES } from "@/data/segment-pages";
 import { COMPETITORS } from "@/data/competitors";
 
 /**
@@ -57,6 +58,7 @@ export default function SitemapPage() {
   const platforms: LinkItem[] = SOLUTION_PAGES.filter((p) => p.category === "platform").map((p) => ({ href: `/${p.slug}`, text: p.h1 }));
   const cities: LinkItem[] = SOLUTION_PAGES.filter((p) => p.category === "city").map((p) => ({ href: `/${p.slug}`, text: p.h1 }));
   const compare: LinkItem[] = COMPETITORS.map((c) => ({ href: `/vs/${c.slug}`, text: `${c.name} alternative` }));
+  const segments: LinkItem[] = SEGMENT_PAGES.map((p) => ({ href: `/for/${p.slug}`, text: p.label }));
   const company: LinkItem[] = [
     { href: "/features", text: "Features" },
     { href: "/pricing", text: "Pricing" },
@@ -89,6 +91,7 @@ export default function SitemapPage() {
         <Section id="solutions" title="Solutions" items={solutions} />
         <Section id="platforms" title="Add ordering to your website" items={platforms} />
         <Section id="cities" title="Online ordering by city" items={cities} />
+        <Section id="segments" title="For your business" items={segments} />
         <Section id="compare" title="Compare Fee Free Ordering" items={compare} />
         <Section id="company" title="Company" items={company} />
       </main>
