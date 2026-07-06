@@ -22,6 +22,18 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       return NextResponse.json({ error: "Invalid status" }, { status: 400 });
     }
 
+    // Stale-device guard (stabilization H5): the kitchen client auto-declines a
+    // PENDING booking whose accept-countdown elapsed. A slept/backgrounded
+    // tablet can wake with a STALE list and fire that auto-decline against a
+    // booking the server already moved to "confirmed" — flipping it to rejected
+    // and emailing the guest "missed". Only allow the autoMissed decline while
+    // the booking is still pending (mirrors the order route's #37 fix). Manual
+    // staff reject/cancel (no autoMissed flag) is untouched. The KDS treats 409
+    // as "already moved, resync".
+    if (autoMissed === true && status === "rejected" && existing.status !== "pending") {
+      return NextResponse.json({ error: "Reservation is no longer pending", code: "not_pending" }, { status: 409 });
+    }
+
     // The kitchen client auto-declines a PENDING booking whose accept countdown
     // elapsed (KitchenDisplay) by PATCHing status:"rejected" with autoMissed:true.
     // That's a MISSED booking, not a manual staff reject — stamp the same

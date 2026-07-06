@@ -32,6 +32,22 @@ export async function POST(req: NextRequest) {
           supportsHalfHalf, pizzaRole, menuItemId, variantId, categoryId, options } = body;
   if (!name?.trim()) return NextResponse.json({ error: "Name required" }, { status: 400 });
 
+  // Ownership (stabilization C2): a target item/category/variant supplied in the
+  // body MUST belong to the caller's restaurant. Previously honored blindly — an
+  // admin could attach a priced (required) group to ANOTHER restaurant's item/
+  // category, overcharging that restaurant's customers on its own Stripe (IDOR).
+  // POST is blocked for inheriting locations above, so the caller owns its menu
+  // directly under restaurantId.
+  if (menuItemId && !(await prisma.menuItem.findFirst({ where: { id: menuItemId, restaurantId }, select: { id: true } }))) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+  if (categoryId && !(await prisma.menuCategory.findFirst({ where: { id: categoryId, restaurantId }, select: { id: true } }))) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+  if (variantId && !(await prisma.itemVariant.findFirst({ where: { id: variantId, menuItem: { restaurantId } }, select: { id: true } }))) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
   const count = await prisma.modifierGroup.count({ where: { restaurantId } });
 
   // If menuItemId provided, it's item-scoped; otherwise library group

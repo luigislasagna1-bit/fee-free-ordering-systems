@@ -30,6 +30,21 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (blocked) return blocked;
   const { id } = await params;
 
+  // Ownership (stabilization C1): PATCH previously updated the group by id with
+  // NO restaurant scoping — a cross-tenant IDOR letting any admin rewrite
+  // another restaurant's modifier options/prices. Mirror the DELETE handler's
+  // check: a group belongs to us directly (library group) OR via an item/
+  // category we own. Item-scoped groups have restaurantId=null, so the OR logic
+  // is required (a naive where:{id,restaurantId} would break pizza/item groups).
+  {
+    const g = await prisma.modifierGroup.findUnique({ where: { id }, select: { restaurantId: true, menuItemId: true, categoryId: true } });
+    if (!g) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    let ok = g.restaurantId === restaurantId;
+    if (!ok && g.menuItemId) ok = !!(await prisma.menuItem.findFirst({ where: { id: g.menuItemId, restaurantId }, select: { id: true } }));
+    if (!ok && g.categoryId) ok = !!(await prisma.menuCategory.findFirst({ where: { id: g.categoryId, restaurantId }, select: { id: true } }));
+    if (!ok) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
   const body = await req.json();
   const { name, description, required, minSelect, maxSelect, maxPerOption, isHidden, supportsHalfHalf, pizzaRole, sortOrder, options } = body;
 

@@ -68,7 +68,12 @@ export const kitchenAuthOptions: NextAuthOptions = {
         if (!(await loginAttemptAllowed({ scope: "kitchen", ip, email: emailLower }))) return null;
 
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
+          // emailLower, NOT the raw credential — User.email is always stored
+          // lowercase (register + admin auth normalize), but this lookup used
+          // the raw value, so a tablet auto-capitalizing the first letter
+          // ("Luigi@…") found nothing and failed with "invalid credentials"
+          // though the password was right (stabilization H1).
+          where: { email: emailLower },
           include: { restaurant: true },
         });
 
