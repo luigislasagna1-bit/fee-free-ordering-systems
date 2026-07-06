@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { priceToppingLines, isHalfToppingName, isLightToppingName } from "./pizza-topping-pricing";
+import { priceToppingLines, isHalfToppingName } from "./pizza-topping-pricing";
 
-const line = (optionId: string, over: Partial<{ optionPrice: number; isHalf: boolean; isLight: boolean }> = {}) => ({
-  optionId, optionPrice: over.optionPrice ?? 2.5, isHalf: over.isHalf ?? false, isLight: over.isLight ?? false,
+const line = (optionId: string, over: Partial<{ optionPrice: number; isHalf: boolean }> = {}) => ({
+  optionId, optionPrice: over.optionPrice ?? 2.5, isHalf: over.isHalf ?? false,
 });
 
 describe("flat model (extraToppingPrice > 0)", () => {
@@ -26,9 +26,14 @@ describe("flat model (extraToppingPrice > 0)", () => {
     expect(priceToppingLines(cfg, [line("a", { isHalf: true }), line("b")])).toEqual([0, 1.25]);
   });
 
-  it("light lines are free and consume no credit", () => {
+  it("Light is price-neutral: a light topping is priced + credited exactly like a normal one (Luigi 2026-07-06)", () => {
+    // "Light" only means less of the topping — it's still a paid topping and
+    // carries no surcharge/discount. The engine has no isLight input; light and
+    // normal are indistinguishable to pricing, so relabelling can't discount.
     const cfg = { extraToppingPrice: 2.5, includedToppings: 1, halfToppingMultiplier: 0.5 };
-    expect(priceToppingLines(cfg, [line("a", { isLight: true }), line("b")])).toEqual([0, 0]);
+    // Two whole toppings, 1 credit (=2 half-units) → first free, second $2.50.
+    // Identical whether either is served "light" — same result.
+    expect(priceToppingLines(cfg, [line("a"), line("b")])).toEqual([0, 2.5]);
   });
 
   it("no free ride: a whole + its own half lines are ALL charged (tamper-proof — kitchen makes all three)", () => {
@@ -59,12 +64,12 @@ describe("flat model (extraToppingPrice > 0)", () => {
 
 describe("per-option model (extraToppingPrice = 0)", () => {
   const cfg = { extraToppingPrice: 0, includedToppings: 0, halfToppingMultiplier: 0.5 };
-  it("charges each option's own price; halves × multiplier; light free", () => {
+  it("charges each option's own price; halves × multiplier (light does not discount)", () => {
     expect(priceToppingLines(cfg, [
       line("a", { optionPrice: 2.5 }),
       line("b", { optionPrice: 2.5, isHalf: true }),
-      line("c", { optionPrice: 4, isLight: true }),
-    ])).toEqual([2.5, 1.25, 0]);
+      line("c", { optionPrice: 4 }),
+    ])).toEqual([2.5, 1.25, 4]);
   });
   it("includedToppings grants nothing in this model (matches the builder)", () => {
     expect(priceToppingLines({ ...cfg, includedToppings: 3 }, [line("a", { optionPrice: 2 })])).toEqual([2]);
@@ -72,12 +77,11 @@ describe("per-option model (extraToppingPrice = 0)", () => {
 });
 
 describe("modifier-name helpers (serializer contract)", () => {
-  it("detects half and light lines from the kitchen name format", () => {
+  it("detects half placement from the kitchen name format (light suffix never affects it)", () => {
     expect(isHalfToppingName("(L.H) Pepperoni")).toBe(true);
     expect(isHalfToppingName("(R.H) Anchovies, Light")).toBe(true);
     expect(isHalfToppingName("(W) Pepperoni")).toBe(false);
     expect(isHalfToppingName("Pepperoni")).toBe(false);
-    expect(isLightToppingName("(W) Pepperoni, Light")).toBe(true);
-    expect(isLightToppingName("Pepperoni")).toBe(false);
+    expect(isHalfToppingName("Pepperoni, Light")).toBe(false);
   });
 });

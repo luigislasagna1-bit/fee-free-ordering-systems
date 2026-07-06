@@ -8,7 +8,7 @@ import { holidayEffectForDay, holidayEffectToday, canonicalHolidayService, hhmmI
 import { resolveServiceHours } from "@/lib/service-hours";
 import { resolveSlotModes, rangeWindowMinutes } from "@/lib/slot-modes";
 import { hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
-import { priceToppingLines, isHalfToppingName, isLightToppingName } from "@/lib/pizza-topping-pricing";
+import { priceToppingLines, isHalfToppingName } from "@/lib/pizza-topping-pricing";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import {
   resolveDeliveryAddressConfig,
@@ -1103,7 +1103,7 @@ export async function POST(req: NextRequest) {
         }
       }
       const isHalfMod = isHalfToppingName;
-      const toppingLines: Array<{ optionId: string; optionPrice: number; isHalf: boolean; isLight: boolean }> = [];
+      const toppingLines: Array<{ optionId: string; optionPrice: number; isHalf: boolean }> = [];
       const toppingModIndexes: number[] = [];
       for (const rawMod of rawMods) {
         let found = false;
@@ -1122,11 +1122,13 @@ export async function POST(req: NextRequest) {
             if (isToppingLine) {
               // Charge assigned after the loop by the shared engine (credit
               // allocation needs the full line list in order).
+              // "Light" is a kitchen label only (the ", Light" suffix rides in
+              // clientName) — it never changes price, so the engine only needs
+              // the half/whole placement. Luigi 2026-07-06.
               toppingLines.push({
                 optionId: opt.id,
                 optionPrice: opt.priceAdjustment,
                 isHalf: isHalfMod(rawMod.name),
-                isLight: isLightToppingName(rawMod.name),
               });
               toppingModIndexes.push(validatedMods.length);
               validatedMods.push({ modifierOptionId: opt.id, name: clientName || opt.name, priceAdjustment: 0 });

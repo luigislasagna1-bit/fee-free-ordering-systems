@@ -14,10 +14,16 @@
  *  - extraToppingPrice > 0 → FLAT model: every topping line costs the flat
  *    price (halves × halfToppingMultiplier). includedToppings grants free
  *    credits in HALF-UNITS (1 whole topping = 2 half-units), consumed in
- *    line order with pro-rata partial credit. "Light" lines are free and
- *    consume no credit.
+ *    line order with pro-rata partial credit.
  *  - extraToppingPrice = 0 → PER-OPTION model: each line costs its option's
- *    own priceAdjustment (halves × halfToppingMultiplier, light = 0).
+ *    own priceAdjustment (halves × halfToppingMultiplier).
+ *
+ * "Light"/"Normal"/"Extra" describe the AMOUNT of a topping, NOT its price
+ * (Luigi 2026-07-06): a topping is PAID once it's added, and going Light
+ * neither surcharges nor discounts. The amount lives only in the kitchen
+ * label (the ", Light" suffix the serializer adds) — the pricing engine
+ * treats a light line EXACTLY like a normal one (same charge, consumes
+ * credits the same). The ×N count stepper is the paid multiplier.
  *
  * EVERY line the kitchen makes is charged. There is deliberately NO
  * "whole supersedes its own half lines" dedupe: on the charge path isHalf
@@ -43,14 +49,12 @@ export type ToppingPricingConfig = {
 };
 
 export type ToppingChargeLine = {
-  /** Modifier option id — used for the whole-supersedes-half dedupe. */
+  /** Modifier option id — identifies the line's option (not used for pricing). */
   optionId: string;
   /** The option's own priceAdjustment (per-option model). */
   optionPrice: number;
   /** True for a left/right half line ("(L.H) " / "(R.H) " prefix). */
   isHalf: boolean;
-  /** True for a "Light" quantity line — always free. */
-  isLight: boolean;
 };
 
 const round2 = (n: number) => Math.round(n * 100) / 100;
@@ -68,13 +72,12 @@ export function priceToppingLines(cfg: ToppingPricingConfig, lines: ToppingCharg
 
   if (flat <= 0) {
     // Per-option model — every line charged on its own merits.
-    return lines.map((l) => (l.isLight ? 0 : round2(l.optionPrice * (l.isHalf ? halfMult : 1))));
+    return lines.map((l) => round2(l.optionPrice * (l.isHalf ? halfMult : 1)));
   }
 
   // Flat model with half-unit credits.
   let halfCreditsLeft = Math.max(0, Math.floor(Number(cfg.includedToppings) || 0)) * 2;
   return lines.map((l) => {
-    if (l.isLight) return 0;
     let charge = l.isHalf ? flat * halfMult : flat;
     if (halfCreditsLeft > 0) {
       const creditCost = l.isHalf ? 1 : 2;
@@ -86,10 +89,9 @@ export function priceToppingLines(cfg: ToppingPricingConfig, lines: ToppingCharg
   });
 }
 
-/** Modifier-line helpers shared with the orders route: the serializer marks
- *  half lines with "(L.H) "/"(R.H) " prefixes and light lines with a
- *  ", Light" suffix (see pizzaCustomizationToModifiers). */
+/** Half-placement detector shared with the orders route: the serializer marks
+ *  left/right-half lines with "(L.H) "/"(R.H) " prefixes (see
+ *  pizzaCustomizationToModifiers). The ", Light" suffix is a kitchen label
+ *  only — it never affects price, so there is no light-name parser. */
 export const isHalfToppingName = (name: unknown): boolean =>
   typeof name === "string" && (name.startsWith("(L.H) ") || name.startsWith("(R.H) "));
-export const isLightToppingName = (name: unknown): boolean =>
-  typeof name === "string" && name.endsWith(", Light");

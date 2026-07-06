@@ -289,11 +289,12 @@ export function computePrice(
     const opt = grp?.options.find(o => o.id === t.optionId);
     const units = Math.max(1, t.count ?? 1); // double pepperoni = 2 units
     for (let i = 0; i < units; i++) {
+      // Light/Normal/Extra describe the AMOUNT, not the price — a light topping
+      // is charged like a normal one. Only the placement affects price here.
       toppingLines.push({
         optionId: t.optionId,
         optionPrice: opt?.priceAdjustment ?? 0,
         isHalf: t.placement !== "whole",
-        isLight: t.quantity === "light",
       });
     }
   }
