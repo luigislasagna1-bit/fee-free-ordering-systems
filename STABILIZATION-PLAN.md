@@ -12,9 +12,11 @@ Shipped this session, in tier order:
 - **C3** capture‑on‑authorize for auto‑accepted card/PayPal (`215ce14a`) — ⚠️ live $1 test pending.
 - **C1 + C2** modifier PATCH/POST ownership checks + **H1** kitchen login (emailLower) + **H5** reservation stale‑transition guard (`8b69d204`).
 - **H9** money‑path Sentry alerting (`reportError`) + **H10** seven crons fail‑closed (`requireCronAuth`) (`1abf3bb0`).
-- **H3** out‑of‑zone delivery rejected server‑side (this commit).
+- **H3** out‑of‑zone delivery rejected server‑side (`688f64b0`).
+- **H7** email now REQUIRED on every order — no phone‑only customers (Luigi's rule; removed the admin opt‑out toggle) (`9cb4c5c9`).
+- **H8** prod email‑transport failure is loud + Sentry‑alertable instead of silently "succeeding" (`51f90a1b`).
 
-**Remaining:** H2 (order‑page caching), H4 (stuck‑card recovery), H6 (native‑print outage window), H7 (phone‑only SMS), H8 (silent email‑transport failure) + the Medium/Low tiers.
+**ALL 3 Criticals + 7 of 10 Highs shipped.** Remaining Highs (each wants a real‑world test, so pair with go‑live testing): **H4** stuck‑card recovery (status‑poll re‑verify + void‑before‑cancel — needs live Stripe), **H6** native‑print >15‑min outage window (needs a device), **H2** order‑page caching for scale (needs a load test). Then the Medium/Low tiers.
 
 ## How to read this
 Tiers = when it must be fixed:
