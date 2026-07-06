@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Postavljanje pisača jednim dodirom",
             "body": "„Pronađi pisače” pretražuje vaš WiFi i prikazuje vaš termalni pisač — bez traženja IP adresa."
-          }
+          },
+          "neverMissLink": "Pogledajte kako ništa ne promakne"
         },
         "run": {
           "eyebrow": "Vodite posao",

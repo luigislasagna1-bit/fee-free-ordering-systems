@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Configuração de impressora num toque",
             "body": "O “Procurar Impressoras” analisa o seu WiFi e lista a sua impressora térmica — sem andar à procura de IPs."
-          }
+          },
+          "neverMissLink": "Veja como nada passa despercebido"
         },
         "run": {
           "eyebrow": "Gerir o negócio",

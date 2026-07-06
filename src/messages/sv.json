@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Skrivarinställning med ett tryck",
             "body": "”Hitta skrivare” söker igenom ditt WiFi och listar din termoskrivare – inget letande efter IP-adresser."
-          }
+          },
+          "neverMissLink": "Se hur ingenting slinker igenom"
         },
         "run": {
           "eyebrow": "Driv verksamheten",

@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Printera iestatīšana ar vienu pieskārienu",
             "body": "“Find Printers” skenē tavu WiFi un parāda tavu termoprinteri — bez IP meklēšanas."
-          }
+          },
+          "neverMissLink": "Skatiet, kā nekas nepaslīd garām"
         },
         "run": {
           "eyebrow": "Vadi biznesu",

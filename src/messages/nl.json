@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Printer instellen met één tik",
             "body": "“Printers zoeken” scant je WiFi en toont je thermische printer — geen gedoe met IP-adressen."
-          }
+          },
+          "neverMissLink": "Ontdek hoe er niets doorheen glipt"
         },
         "run": {
           "eyebrow": "Run de zaak",

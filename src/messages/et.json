@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Printeri seadistus ühe puudutusega",
             "body": "„Leia printerid“ skannib su WiFi-võrgu ja kuvab su termoprinteri — IP-aadressi jahtimist pole vaja."
-          }
+          },
+          "neverMissLink": "Vaadake, kuidas miski ei jää märkamata"
         },
         "run": {
           "eyebrow": "Juhi äri",

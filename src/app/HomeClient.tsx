@@ -333,13 +333,14 @@ export function HomeClient({ locale }: { locale: string }) {
         <div className="mt-14 text-center">
           <p className="text-sm font-semibold text-gray-700 mb-4">{t("kitchen.getApp")}</p>
           <div className="flex justify-center"><AppDownloadBadges /></div>
-          {/* Teaser into the deep-dive reliability page. Hardcoded English (NOT a
-              new marketing.home.v2.* key) so the 38-locale parity gate stays green. */}
+          {/* Teaser into the deep-dive reliability page. Translated in all 38
+              locales (marketing.home.v2.kitchen.neverMissLink) so the homepage
+              never carries a lone English string — Luigi 2026-07-06. */}
           <Link
             href="/never-miss-an-order"
             className="mt-6 inline-flex items-center gap-1.5 text-emerald-700 font-semibold text-sm hover:text-emerald-800 hover:gap-2.5 transition-all"
           >
-            See how nothing ever slips through
+            {t("kitchen.neverMissLink")}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

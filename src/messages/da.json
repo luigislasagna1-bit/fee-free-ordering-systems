@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Printeropsætning med ét tryk",
             "body": "“Find printere” scanner dit WiFi og viser din termoprinter — ingen jagt på IP-adresser."
-          }
+          },
+          "neverMissLink": "Se hvordan intet slipper igennem"
         },
         "run": {
           "eyebrow": "Driv forretningen",

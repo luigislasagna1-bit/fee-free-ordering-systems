@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Cài đặt máy in chỉ một chạm",
             "body": "“Tìm máy in” quét mạng WiFi của bạn và liệt kê máy in nhiệt — không cần dò địa chỉ IP."
-          }
+          },
+          "neverMissLink": "Xem cách không đơn nào bị bỏ lỡ"
         },
         "run": {
           "eyebrow": "Vận hành công việc kinh doanh",

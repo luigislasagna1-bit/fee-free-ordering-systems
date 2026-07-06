@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Druckereinrichtung mit einem Tipp",
             "body": "„Drucker suchen“ durchsucht Ihr WiFi und listet Ihren Thermodrucker auf – kein Suchen nach IP-Adressen."
-          }
+          },
+          "neverMissLink": "So geht keine Bestellung verloren"
         },
         "run": {
           "eyebrow": "Das Geschäft führen",

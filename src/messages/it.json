@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Configurazione stampante con un tocco",
             "body": "“Trova stampanti” analizza il tuo WiFi ed elenca la tua stampante termica — senza cercare indirizzi IP."
-          }
+          },
+          "neverMissLink": "Scopri come non sfugge mai nulla"
         },
         "run": {
           "eyebrow": "Gestisci l'attività",

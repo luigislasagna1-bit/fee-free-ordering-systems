@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Penyiapan printer satu ketukan",
             "body": "“Cari Printer” memindai WiFi Anda dan menampilkan printer termal Anda — tanpa perlu mencari IP."
-          }
+          },
+          "neverMissLink": "Lihat cara agar tidak ada yang terlewat"
         },
         "run": {
           "eyebrow": "Jalankan bisnisnya",

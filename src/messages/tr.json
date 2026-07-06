@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Tek dokunuşla yazıcı kurulumu",
             "body": "“Yazıcıları Bul” WiFi'nizi tarar ve termal yazıcınızı listeler — IP arayıp durmak yok."
-          }
+          },
+          "neverMissLink": "Hiçbir siparişin nasıl kaçmadığını görün"
         },
         "run": {
           "eyebrow": "İşinizi yönetin",

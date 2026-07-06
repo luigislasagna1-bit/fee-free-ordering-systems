@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Konfiguracja drukarki jednym dotknięciem",
             "body": "„Znajdź drukarki” skanuje Twoje WiFi i wyświetla drukarkę termiczną — bez szukania adresów IP."
-          }
+          },
+          "neverMissLink": "Zobacz, jak nic nie umknie"
         },
         "run": {
           "eyebrow": "Prowadź biznes",

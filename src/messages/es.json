@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Configura la impresora con un toque",
             "body": "«Buscar impresoras» rastrea tu WiFi y muestra tu impresora térmica — sin buscar IPs."
-          }
+          },
+          "neverMissLink": "Descubre cómo no se escapa ningún pedido"
         },
         "run": {
           "eyebrow": "Gestiona el negocio",

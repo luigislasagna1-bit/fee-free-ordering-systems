@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Nastavitev tiskalnika z enim dotikom",
             "body": "»Najdi tiskalnike« preišče vaš WiFi in izpiše vaš termalni tiskalnik — brez iskanja IP-naslovov."
-          }
+          },
+          "neverMissLink": "Poglejte, kako nič ne uide"
         },
         "run": {
           "eyebrow": "Vodite posel",

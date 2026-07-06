@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Configurarea imprimantei dintr-o atingere",
             "body": "„Caută imprimante” scanează rețeaua WiFi și îți afișează imprimanta termică — fără să cauți IP-uri."
-          }
+          },
+          "neverMissLink": "Vezi cum nu-ți scapă nicio comandă"
         },
         "run": {
           "eyebrow": "Gestionează afacerea",

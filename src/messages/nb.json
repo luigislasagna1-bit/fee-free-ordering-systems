@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Skriveroppsett med ett trykk",
             "body": "«Finn skrivere» søker gjennom WiFi-et ditt og viser termoskriveren din — ingen jakt på IP-adresser."
-          }
+          },
+          "neverMissLink": "Se hvordan ingenting slipper gjennom"
         },
         "run": {
           "eyebrow": "Driv virksomheten",

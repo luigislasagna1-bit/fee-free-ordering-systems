@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Egyérintéses nyomtatóbeállítás",
             "body": "A „Nyomtatók keresése” átvizsgálja a WiFi-d, és kilistázza a hőnyomtatódat — nincs többé IP-cím keresgélés."
-          }
+          },
+          "neverMissLink": "Nézze meg, hogyan nem sikkad el semmi"
         },
         "run": {
           "eyebrow": "Vezesd az üzletet",

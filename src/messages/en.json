@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "One-tap printer setup",
             "body": "“Find Printers” scans your WiFi and lists your thermal printer — no IP hunting."
-          }
+          },
+          "neverMissLink": "See how nothing ever slips through"
         },
         "run": {
           "eyebrow": "Run the business",

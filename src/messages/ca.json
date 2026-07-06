@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Configuració de la impressora amb un toc",
             "body": "«Cerca impressores» escaneja la teva WiFi i mostra la teva impressora tèrmica — sense haver de buscar cap IP."
-          }
+          },
+          "neverMissLink": "Mira com no se t'escapa res"
         },
         "run": {
           "eyebrow": "Gestiona el negoci",

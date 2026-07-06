@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Podešavanje štampača u jednom dodiru",
             "body": "„Pronađi štampače“ pretražuje vaš WiFi i izlistava vaš termalni štampač — bez traženja IP adresa."
-          }
+          },
+          "neverMissLink": "Погледајте како ништа не промакне"
         },
         "run": {
           "eyebrow": "Vodite posao",

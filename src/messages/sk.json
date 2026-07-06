@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Nastavenie tlačiarne jedným klepnutím",
             "body": "„Nájsť tlačiarne“ prehľadá vašu WiFi a zobrazí vašu termálnu tlačiareň — žiadne hľadanie IP adries."
-          }
+          },
+          "neverMissLink": "Pozrite sa, ako nič neprekĺzne"
         },
         "run": {
           "eyebrow": "Riaďte svoj podnik",

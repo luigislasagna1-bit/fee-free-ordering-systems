@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Configuration de l'imprimante en un toucher",
             "body": "« Trouver les imprimantes » analyse votre WiFi et liste votre imprimante thermique — sans chercher d'adresse IP."
-          }
+          },
+          "neverMissLink": "Découvrez comment rien ne passe à travers"
         },
         "run": {
           "eyebrow": "Gérez votre entreprise",

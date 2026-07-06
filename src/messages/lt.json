@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Spausdintuvo nustatymas vienu paspaudimu",
             "body": "„Rasti spausdintuvus“ nuskaito jūsų WiFi ir parodo jūsų terminį spausdintuvą — nereikia ieškoti IP."
-          }
+          },
+          "neverMissLink": "Pažiūrėkite, kaip niekas nepraslysta"
         },
         "run": {
           "eyebrow": "Valdykite verslą",

@@ -5028,7 +5028,8 @@
           "printer": {
             "title": "Tulostimen asennus yhdellä napautuksella",
             "body": "”Etsi tulostimet” skannaa WiFi-verkkosi ja listaa lämpötulostimesi — ei IP-osoitteiden metsästystä."
-          }
+          },
+          "neverMissLink": "Katso, miten mikään ei jää huomaamatta"
         },
         "run": {
           "eyebrow": "Pyöritä liiketoimintaa",
