@@ -8,6 +8,7 @@ import { holidayEffectForDay, holidayEffectToday, canonicalHolidayService, hhmmI
 import { resolveServiceHours } from "@/lib/service-hours";
 import { resolveSlotModes, rangeWindowMinutes } from "@/lib/slot-modes";
 import { hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
+import { priceToppingLines, isHalfToppingName, isLightToppingName } from "@/lib/pizza-topping-pricing";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import {
   resolveDeliveryAddressConfig,
@@ -1064,37 +1065,76 @@ export async function POST(req: NextRequest) {
       // those modifier names with "(L.H) " / "(R.H) " (whole stays "(W) "/unprefixed).
       // Re-derive the multiplier from the item's own pizzaConfig so the charge
       // matches the customer's preview exactly + can't be tampered. Luigi 2026-06-27.
+      //
+      // TOPPING PRICING ENGINE (Luigi 2026-07-05): topping lines of a pizza
+      // item are priced by the SHARED engine (Included Toppings + Price per
+      // Extra Topping + per-size overrides), NOT the option's own price —
+      // the exact function the builder displays with, so preview == charge.
+      // Previously the server summed option.priceAdjustment for every line:
+      // a $10/topping pizza charged $2.50/topping, and "included" toppings
+      // the builder showed FREE were charged. Non-topping modifiers (crust,
+      // sauce, cheese, cook level, non-pizza items) keep DB option pricing.
       let halfMult = 1;
+      let toppingEngine: { extraToppingPrice: number; includedToppings: number; halfToppingMultiplier: number } | null = null;
+      const toppingGroupKeys = new Set<string>();
       {
         const rawPc = (menuItem as any).pizzaConfig;
         if (rawPc) {
           try {
             const pc = JSON.parse(rawPc);
             halfMult = typeof pc?.halfToppingMultiplier === "number" ? Math.max(0, Math.min(1, pc.halfToppingMultiplier)) : 0.5;
+            for (const id of Array.isArray(pc?.toppingGroupIds) ? pc.toppingGroupIds : []) toppingGroupKeys.add(String(id));
+            // Per-size override mirrors the builder (variantToppingPrices by name).
+            const byVariant = pc?.variantToppingPrices && typeof pc.variantToppingPrices === "object" ? pc.variantToppingPrices : null;
+            const overridden = byVariant && variantName != null ? byVariant[variantName] : undefined;
+            const effectiveExtra = Number(overridden !== undefined ? overridden : pc?.extraToppingPrice) || 0;
+            toppingEngine = {
+              extraToppingPrice: effectiveExtra,
+              includedToppings: Number(pc?.includedToppings) || 0,
+              halfToppingMultiplier: halfMult,
+            };
           } catch { halfMult = 0.5; }
         }
       }
-      const isHalfMod = (name: unknown) => typeof name === "string" && (name.startsWith("(L.H) ") || name.startsWith("(R.H) "));
+      const isHalfMod = isHalfToppingName;
+      const toppingLines: Array<{ optionId: string; optionPrice: number; isHalf: boolean; isLight: boolean }> = [];
+      const toppingModIndexes: number[] = [];
       for (const rawMod of rawMods) {
         let found = false;
         for (const group of candidateGroups) {
           const opt = group.options.find((o: any) => o.id === rawMod.modifierOptionId);
           if (opt) {
-            // Only pizza items carry (L.H)/(R.H) prefixes; non-pizza modifiers are
-            // never halved (halfMult stays 1 when there's no pizzaConfig).
-            const priced = isHalfMod(rawMod.name) ? Math.round(opt.priceAdjustment * halfMult * 100) / 100 : opt.priceAdjustment;
-            modTotal += priced;
             // Prefer the client-supplied display name when present — this is how
             // PizzaBuilder labels modifiers with their role and placement
             // (e.g. "Sauce: Pizza Sauce (Left Half)", "Pepperoni (Whole)").
-            // Price is always taken from the DB option, so this can't be abused
+            // Price is always derived server-side, so this can't be abused
             // for price tampering. Length-capped via sanitize().
             const clientName = typeof rawMod.name === "string" ? sanitize(rawMod.name, 200) : "";
-            validatedMods.push({
-              modifierOptionId: opt.id,
-              name: clientName || opt.name,
-              priceAdjustment: priced, // half-priced for (L.H)/(R.H) so receipts reconcile
-            });
+            const isToppingLine =
+              toppingEngine !== null &&
+              (toppingGroupKeys.has(group.id) || (group.libraryGroupId && toppingGroupKeys.has(group.libraryGroupId)));
+            if (isToppingLine) {
+              // Charge assigned after the loop by the shared engine (credit
+              // allocation needs the full line list in order).
+              toppingLines.push({
+                optionId: opt.id,
+                optionPrice: opt.priceAdjustment,
+                isHalf: isHalfMod(rawMod.name),
+                isLight: isLightToppingName(rawMod.name),
+              });
+              toppingModIndexes.push(validatedMods.length);
+              validatedMods.push({ modifierOptionId: opt.id, name: clientName || opt.name, priceAdjustment: 0 });
+            } else {
+              // Only pizza items carry (L.H)/(R.H) prefixes; non-pizza modifiers
+              // are never halved (halfMult stays 1 when there's no pizzaConfig).
+              const priced = isHalfMod(rawMod.name) ? Math.round(opt.priceAdjustment * halfMult * 100) / 100 : opt.priceAdjustment;
+              modTotal += priced;
+              validatedMods.push({
+                modifierOptionId: opt.id,
+                name: clientName || opt.name,
+                priceAdjustment: priced, // half-priced for (L.H)/(R.H) so receipts reconcile
+              });
+            }
             found = true;
             break;
           }
@@ -1103,8 +1143,17 @@ export async function POST(req: NextRequest) {
           return NextResponse.json({ error: `Invalid modifier option: ${rawMod.modifierOptionId}` }, { status: 400 });
         }
       }
+      if (toppingEngine && toppingLines.length > 0) {
+        const charges = priceToppingLines(toppingEngine, toppingLines);
+        charges.forEach((charge, i) => {
+          validatedMods[toppingModIndexes[i]].priceAdjustment = charge; // receipts reconcile per line
+          modTotal += charge;
+        });
+      }
 
-      const unitPrice = Math.max(0, basePrice + modTotal);
+      // Round the stored unit to 2dp — fp drift (9.99 + 15 = 24.990000000000002)
+      // otherwise lands verbatim on receipts/exports.
+      const unitPrice = Math.round(Math.max(0, basePrice + modTotal) * 100) / 100;
       const lineTotal = Math.round(unitPrice * qty * 100) / 100;
       serverSubtotal += lineTotal;
 

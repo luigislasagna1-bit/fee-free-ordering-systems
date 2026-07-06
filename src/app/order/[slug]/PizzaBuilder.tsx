@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { useCurrencyFormat } from "@/lib/currency-context";
 import { useTranslations } from "next-intl";
+import { priceToppingLines, type ToppingChargeLine } from "@/lib/pizza-topping-pricing";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -263,84 +264,40 @@ export function computePrice(
     price += (findOpt(config.cheeseGroupId, customization.rightCheeseOptionId)?.priceAdjustment ?? 0) * half;
   }
 
-  // 5 Toppings
-  const toppingGroups = groups.filter(g => config.toppingGroupIds.includes(g.id));
+  // 5 Toppings — priced by the SHARED engine (src/lib/pizza-topping-pricing.ts),
+  // the exact function the orders route charges with, so the on-screen price
+  // and the real charge can never disagree (Luigi 2026-07-05; previously the
+  // server re-priced every topping from option.priceAdjustment and ignored
+  // Included Toppings / Price per Extra Topping entirely). Full semantics —
+  // half-unit credits, whole-supersedes-half dedupe, light = free — live in
+  // that module. Lines are per UNIT (double pepperoni = two lines), matching
+  // how pizzaCustomizationToModifiers serialises for the kitchen + server.
+  const toppingGroups = groups.filter(g =>
+    config.toppingGroupIds.includes(g.id) || (g.libraryGroupId && config.toppingGroupIds.includes(g.libraryGroupId)),
+  );
   const { toppings } = customization;
-
-  if (config.extraToppingPrice > 0) {
-    // Included-toppings model. The "included" count is denominated in
-    // WHOLE toppings, but customers can split a whole-credit across
-    // two halves on opposite sides (left + right). Internally we
-    // track credit in HALF UNITS where 1 whole topping = 2 half
-    // units. A whole-pizza topping costs 2 half-units (= 1 whole),
-    // a half-pizza topping costs 1 half-unit. So 1 included topping
-    // covers either 1 whole OR 2 halves on different sides.
-    //
-    // The credit covers the WHOLE charge of the topping line item,
-    // including the "extra" quantity bump. Luigi 2026-06-01: "the
-    // extra bump should only be charged if it goes over the allotted
-    // free included toppings." So 1 included topping covers either:
-    //   - 1 Pepperoni (whole, normal)
-    //   - 1 Pepperoni (whole, extra)
-    //   - 2 Pepperoni halves on different sides
-    //   - 1 Pepperoni (half, extra) — partial credit used
-    // 7 toppings on a "6 included" pizza → 6 free, 1 charged
-    // (with the extra bump on whichever one didn't get covered).
-    let toppingTotal = 0;
-    let halfCreditsLeft = (config.includedToppings || 0) * 2;
-
-    // Defensive dedupe — collapse any legacy state where the same
-    // option exists as Whole AND a half (L or R). Whole wins because
-    // it semantically supersedes the halves. The new toggleTopping
-    // handler prevents this from ever being produced at runtime, but
-    // round-tripping older cart entries through the editor could
-    // surface the old shape. Pricing a duplicated topping would
-    // burn the included-topping credit on the halves and leave the
-    // Whole at full charge — Luigi's 2026-06-01 bug.
-    const hasWhole = new Set(
-      toppings.filter(t => t.placement === "whole").map(t => t.optionId)
-    );
-    const pricingToppings = toppings.filter(
-      t => t.placement === "whole" || !hasWhole.has(t.optionId)
-    );
-
-    for (const t of pricingToppings) {
-      const isHalf = t.placement !== "whole";
-      const units = Math.max(1, t.count ?? 1); // double pepperoni = 2 units
-      const baseUnit = isHalf
-        ? config.extraToppingPrice * config.halfToppingMultiplier
-        : config.extraToppingPrice;
-      // Each unit of the topping is its own charge + its own credit cost, so
-      // "double pepperoni" eats two of the included toppings. Luigi 2026-06-27.
-      let charge = t.quantity === "light" ? 0 : baseUnit * units;
-
-      if (t.quantity !== "light" && halfCreditsLeft > 0) {
-        const creditCost = (isHalf ? 1 : 2) * units;
-        const used = Math.min(creditCost, halfCreditsLeft);
-        const discount = charge * (used / creditCost);
-        charge = Math.max(0, charge - discount);
-        halfCreditsLeft -= used;
-      }
-
-      toppingTotal += charge;
-    }
-    price += toppingTotal;
-  } else {
-    // Per-option price model: each option's priceAdjustment drives cost, ×count
-    // (double pepperoni = 2× the topping price).
-    for (const t of toppings) {
-      const grp = toppingGroups.find(g => g.id === t.groupId);
-      const opt = grp?.options.find(o => o.id === t.optionId);
-      if (!opt) continue;
-
-      const units = Math.max(1, t.count ?? 1);
-      let adj = opt.priceAdjustment * units;
-      if (t.placement !== "whole") adj *= config.halfToppingMultiplier;
-      if (t.quantity === "light") adj = 0;
-
-      price += adj;
+  const toppingLines: ToppingChargeLine[] = [];
+  for (const t of toppings) {
+    const grp = toppingGroups.find(g => g.id === t.groupId);
+    const opt = grp?.options.find(o => o.id === t.optionId);
+    const units = Math.max(1, t.count ?? 1); // double pepperoni = 2 units
+    for (let i = 0; i < units; i++) {
+      toppingLines.push({
+        optionId: t.optionId,
+        optionPrice: opt?.priceAdjustment ?? 0,
+        isHalf: t.placement !== "whole",
+        isLight: t.quantity === "light",
+      });
     }
   }
+  price += priceToppingLines(
+    {
+      extraToppingPrice: config.extraToppingPrice,
+      includedToppings: config.includedToppings,
+      halfToppingMultiplier: config.halfToppingMultiplier,
+    },
+    toppingLines,
+  ).reduce((s, c) => s + c, 0);
 
   // 6 Other (non-role) modifier groups — flat priceAdjustment per selected option
   for (const [groupId, optionIds] of Object.entries(customization.otherSelections)) {
