@@ -4579,7 +4579,11 @@
       "paidWithReward": "Оплачено за допомогою {label}",
       "earnedReward": "Ви заробили {label}",
       "balanceDue": "Залишок до сплати",
-      "rewardBalance": "Баланс {label}"
+      "rewardBalance": "Баланс {label}",
+      "qty": "Кількість",
+      "items": "Позиції",
+      "price": "Ціна",
+      "lineNote": "Примітка"
     },
     "reservation": {
       "title": "БРОНЮВАННЯ",

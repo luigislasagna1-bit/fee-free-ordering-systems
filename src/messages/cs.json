@@ -4579,7 +4579,11 @@
       "paidWithReward": "Zaplaceno pomocí {label}",
       "earnedReward": "Získali jste {label}",
       "balanceDue": "Zbývá zaplatit",
-      "rewardBalance": "Zůstatek {label}"
+      "rewardBalance": "Zůstatek {label}",
+      "qty": "Množ.",
+      "items": "Položky",
+      "price": "Cena",
+      "lineNote": "Poznámka"
     },
     "reservation": {
       "title": "REZERVACE",

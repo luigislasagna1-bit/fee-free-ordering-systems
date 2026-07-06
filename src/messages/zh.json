@@ -4579,7 +4579,11 @@
       "paidWithReward": "使用 {label} 支付",
       "earnedReward": "您获得了 {label}",
       "balanceDue": "应付余额",
-      "rewardBalance": "{label} 余额"
+      "rewardBalance": "{label} 余额",
+      "qty": "数量",
+      "items": "商品",
+      "price": "价格",
+      "lineNote": "备注"
     },
     "reservation": {
       "title": "预订",

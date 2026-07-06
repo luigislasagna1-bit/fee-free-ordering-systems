@@ -4579,7 +4579,11 @@
       "paidWithReward": "Makstud: {label}",
       "earnedReward": "Teenisid {label}",
       "balanceDue": "Maksta jääb",
-      "rewardBalance": "{label} saldo"
+      "rewardBalance": "{label} saldo",
+      "qty": "Kogus",
+      "items": "Tooted",
+      "price": "Hind",
+      "lineNote": "Märkus"
     },
     "reservation": {
       "title": "BRONEERING",

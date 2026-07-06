@@ -184,7 +184,14 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
         <div style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", color: "#6b7280", marginTop: 20, marginBottom: 4 }}>
           {t("email.orderConfirmed.orderDetailsSectionHeading")}
         </div>
-        <OrderItemsTable items={items} currency={currency ?? "usd"} />
+        <OrderItemsTable
+          items={items}
+          currency={currency ?? "usd"}
+          qtyLabel={t("receipt.customer.qty")}
+          itemsLabel={t("receipt.customer.items")}
+          priceLabel={t("receipt.customer.price")}
+          noteLabel={t("receipt.customer.lineNote")}
+        />
 
         {/* Promos applied — boxed highlight above totals (Phase 2 +
             Luigi feedback 2026-05-29). Skipped when nothing fired. */}

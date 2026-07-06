@@ -4579,7 +4579,11 @@
       "paidWithReward": "Bezahlt mit {label}",
       "earnedReward": "Sie haben {label} verdient",
       "balanceDue": "Restbetrag",
-      "rewardBalance": "{label}-Guthaben"
+      "rewardBalance": "{label}-Guthaben",
+      "qty": "Menge",
+      "items": "Artikel",
+      "price": "Preis",
+      "lineNote": "Notiz"
     },
     "reservation": {
       "title": "RESERVIERUNG",

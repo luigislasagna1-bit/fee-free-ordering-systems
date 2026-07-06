@@ -4579,7 +4579,11 @@
       "paidWithReward": "Платено с {label}",
       "earnedReward": "Спечелихте {label}",
       "balanceDue": "Остатък за плащане",
-      "rewardBalance": "Баланс {label}"
+      "rewardBalance": "Баланс {label}",
+      "qty": "Количество",
+      "items": "Артикули",
+      "price": "Цена",
+      "lineNote": "Бележка"
     },
     "reservation": {
       "title": "РЕЗЕРВАЦИЯ",

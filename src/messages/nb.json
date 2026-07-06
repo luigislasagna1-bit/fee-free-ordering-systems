@@ -4579,7 +4579,11 @@
       "paidWithReward": "Betalt med {label}",
       "earnedReward": "Du tjente {label}",
       "balanceDue": "Gjenstår å betale",
-      "rewardBalance": "{label}-saldo"
+      "rewardBalance": "{label}-saldo",
+      "qty": "Antall",
+      "items": "Varer",
+      "price": "Pris",
+      "lineNote": "Notat"
     },
     "reservation": {
       "title": "RESERVASJON",

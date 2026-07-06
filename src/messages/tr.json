@@ -4579,7 +4579,11 @@
       "paidWithReward": "{label} ile ödendi",
       "earnedReward": "{label} kazandınız",
       "balanceDue": "Ödenecek tutar",
-      "rewardBalance": "{label} bakiyesi"
+      "rewardBalance": "{label} bakiyesi",
+      "qty": "Adet",
+      "items": "Ürünler",
+      "price": "Fiyat",
+      "lineNote": "Not"
     },
     "reservation": {
       "title": "REZERVASYON",

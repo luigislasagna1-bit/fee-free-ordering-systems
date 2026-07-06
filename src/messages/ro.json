@@ -4579,7 +4579,11 @@
       "paidWithReward": "Plătit cu {label}",
       "earnedReward": "Ai câștigat {label}",
       "balanceDue": "Rest de plată",
-      "rewardBalance": "Sold {label}"
+      "rewardBalance": "Sold {label}",
+      "qty": "Cant.",
+      "items": "Produse",
+      "price": "Preț",
+      "lineNote": "Notă"
     },
     "reservation": {
       "title": "REZERVARE",

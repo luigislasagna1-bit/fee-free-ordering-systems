@@ -4579,7 +4579,11 @@
       "paidWithReward": "Dibayar dengan {label}",
       "earnedReward": "Anda mendapatkan {label}",
       "balanceDue": "Sisa pembayaran",
-      "rewardBalance": "Saldo {label}"
+      "rewardBalance": "Saldo {label}",
+      "qty": "Jml",
+      "items": "Item",
+      "price": "Harga",
+      "lineNote": "Catatan"
     },
     "reservation": {
       "title": "RESERVASI",

@@ -4583,7 +4583,11 @@
       "paidWithReward": "Paid with {label}",
       "earnedReward": "You earned {label}",
       "balanceDue": "Balance to pay",
-      "rewardBalance": "{label} balance"
+      "rewardBalance": "{label} balance",
+      "qty": "Qty",
+      "items": "Items",
+      "price": "Price",
+      "lineNote": "Note"
     },
     "reservation": {
       "title": "RESERVATION",

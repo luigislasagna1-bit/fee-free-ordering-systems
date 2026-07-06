@@ -4579,7 +4579,11 @@
       "paidWithReward": "Πληρώθηκε με {label}",
       "earnedReward": "Κερδίσατε {label}",
       "balanceDue": "Υπόλοιπο πληρωμής",
-      "rewardBalance": "Υπόλοιπο {label}"
+      "rewardBalance": "Υπόλοιπο {label}",
+      "qty": "Ποσότητα",
+      "items": "Είδη",
+      "price": "Τιμή",
+      "lineNote": "Σημείωση"
     },
     "reservation": {
       "title": "ΚΡΑΤΗΣΗ",

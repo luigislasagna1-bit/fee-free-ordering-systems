@@ -4579,7 +4579,11 @@
       "paidWithReward": "Betaald met {label}",
       "earnedReward": "Je hebt {label} verdiend",
       "balanceDue": "Te betalen",
-      "rewardBalance": "{label}-saldo"
+      "rewardBalance": "{label}-saldo",
+      "qty": "Aantal",
+      "items": "Artikelen",
+      "price": "Prijs",
+      "lineNote": "Notitie"
     },
     "reservation": {
       "title": "RESERVERING",

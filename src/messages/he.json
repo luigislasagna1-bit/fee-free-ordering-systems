@@ -4579,7 +4579,11 @@
       "paidWithReward": "שולם באמצעות {label}",
       "earnedReward": "צברת {label}",
       "balanceDue": "יתרה לתשלום",
-      "rewardBalance": "יתרת {label}"
+      "rewardBalance": "יתרת {label}",
+      "qty": "כמות",
+      "items": "פריטים",
+      "price": "מחיר",
+      "lineNote": "הערה"
     },
     "reservation": {
       "title": "הזמנת שולחן",

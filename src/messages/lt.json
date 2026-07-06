@@ -4579,7 +4579,11 @@
       "paidWithReward": "Apmokėta naudojant {label}",
       "earnedReward": "Uždirbote {label}",
       "balanceDue": "Liko sumokėti",
-      "rewardBalance": "{label} likutis"
+      "rewardBalance": "{label} likutis",
+      "qty": "Kiekis",
+      "items": "Prekės",
+      "price": "Kaina",
+      "lineNote": "Pastaba"
     },
     "reservation": {
       "title": "REZERVACIJA",

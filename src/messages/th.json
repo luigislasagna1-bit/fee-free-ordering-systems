@@ -4579,7 +4579,11 @@
       "paidWithReward": "ชำระด้วย {label}",
       "earnedReward": "คุณได้รับ {label}",
       "balanceDue": "ยอดที่ต้องชำระ",
-      "rewardBalance": "ยอดคงเหลือ {label}"
+      "rewardBalance": "ยอดคงเหลือ {label}",
+      "qty": "จำนวน",
+      "items": "รายการ",
+      "price": "ราคา",
+      "lineNote": "หมายเหตุ"
     },
     "reservation": {
       "title": "การจอง",

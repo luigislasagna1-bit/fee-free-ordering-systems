@@ -4579,7 +4579,11 @@
       "paidWithReward": "Оплачено с помощью {label}",
       "earnedReward": "Вы заработали {label}",
       "balanceDue": "Остаток к оплате",
-      "rewardBalance": "Баланс {label}"
+      "rewardBalance": "Баланс {label}",
+      "qty": "Кол-во",
+      "items": "Позиции",
+      "price": "Цена",
+      "lineNote": "Примечание"
     },
     "reservation": {
       "title": "БРОНИРОВАНИЕ",

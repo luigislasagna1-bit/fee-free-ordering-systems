@@ -4579,7 +4579,11 @@
       "paidWithReward": "{label}(으)로 결제",
       "earnedReward": "{label}을(를) 적립했습니다",
       "balanceDue": "결제할 잔액",
-      "rewardBalance": "{label} 잔액"
+      "rewardBalance": "{label} 잔액",
+      "qty": "수량",
+      "items": "항목",
+      "price": "가격",
+      "lineNote": "참고"
     },
     "reservation": {
       "title": "예약",

@@ -4579,7 +4579,11 @@
       "paidWithReward": "Fizetve ezzel: {label}",
       "earnedReward": "{label} jóváírva",
       "balanceDue": "Fizetendő hátralék",
-      "rewardBalance": "{label} egyenleg"
+      "rewardBalance": "{label} egyenleg",
+      "qty": "Menny.",
+      "items": "Tételek",
+      "price": "Ár",
+      "lineNote": "Megjegyzés"
     },
     "reservation": {
       "title": "FOGLALÁS",

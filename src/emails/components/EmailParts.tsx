@@ -219,10 +219,17 @@ export type EmailOrderItem = {
 };
 
 export function OrderItemsTable({
-  items, currency = "usd",
+  items, currency = "usd", qtyLabel, itemsLabel, priceLabel, noteLabel,
 }: {
   items: EmailOrderItem[];
   currency?: string;
+  // Column headers + the per-line "Note" label. Optional so the kitchen/staff
+  // email (intentionally English) can omit them; the customer receipt passes
+  // localized values from receipt.customer.*. Fall back to English.
+  qtyLabel?: string;
+  itemsLabel?: string;
+  priceLabel?: string;
+  noteLabel?: string;
 }) {
   return (
     <table
@@ -251,7 +258,7 @@ export function OrderItemsTable({
               width: 40,
             }}
           >
-            Qty
+            {qtyLabel ?? "Qty"}
           </th>
           <th
             style={{
@@ -265,7 +272,7 @@ export function OrderItemsTable({
               borderBottom: `1px solid ${COLORS.border}`,
             }}
           >
-            Items
+            {itemsLabel ?? "Items"}
           </th>
           <th
             style={{
@@ -279,7 +286,7 @@ export function OrderItemsTable({
               borderBottom: `1px solid ${COLORS.border}`,
             }}
           >
-            Price
+            {priceLabel ?? "Price"}
           </th>
         </tr>
       </thead>
@@ -323,7 +330,7 @@ export function OrderItemsTable({
               )}
               {item.notes && (
                 <div style={{ fontSize: 13, color: COLORS.muted, marginTop: 4, fontStyle: "italic" }}>
-                  Note: {item.notes}
+                  {noteLabel ?? "Note"}: {item.notes}
                 </div>
               )}
             </td>

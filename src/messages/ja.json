@@ -4579,7 +4579,11 @@
       "paidWithReward": "{label}で支払い",
       "earnedReward": "{label}を獲得しました",
       "balanceDue": "お支払い残額",
-      "rewardBalance": "{label}残高"
+      "rewardBalance": "{label}残高",
+      "qty": "数量",
+      "items": "商品",
+      "price": "価格",
+      "lineNote": "備考"
     },
     "reservation": {
       "title": "予約",

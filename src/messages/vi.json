@@ -4579,7 +4579,11 @@
       "paidWithReward": "Đã thanh toán bằng {label}",
       "earnedReward": "Bạn đã nhận được {label}",
       "balanceDue": "Còn phải trả",
-      "rewardBalance": "Số dư {label}"
+      "rewardBalance": "Số dư {label}",
+      "qty": "SL",
+      "items": "Món",
+      "price": "Giá",
+      "lineNote": "Ghi chú"
     },
     "reservation": {
       "title": "ĐẶT BÀN",

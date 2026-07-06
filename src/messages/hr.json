@@ -4579,7 +4579,11 @@
       "paidWithReward": "Plaćeno s {label}",
       "earnedReward": "Zaradili ste {label}",
       "balanceDue": "Preostalo za platiti",
-      "rewardBalance": "Stanje {label}"
+      "rewardBalance": "Stanje {label}",
+      "qty": "Količina",
+      "items": "Stavke",
+      "price": "Cijena",
+      "lineNote": "Napomena"
     },
     "reservation": {
       "title": "REZERVACIJA",

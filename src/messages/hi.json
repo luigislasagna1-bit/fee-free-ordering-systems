@@ -4579,7 +4579,11 @@
       "paidWithReward": "{label} से भुगतान किया गया",
       "earnedReward": "आपने {label} कमाए",
       "balanceDue": "शेष भुगतान",
-      "rewardBalance": "{label} शेष"
+      "rewardBalance": "{label} शेष",
+      "qty": "मात्रा",
+      "items": "आइटम",
+      "price": "कीमत",
+      "lineNote": "नोट"
     },
     "reservation": {
       "title": "आरक्षण",

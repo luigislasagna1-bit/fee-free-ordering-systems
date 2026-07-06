@@ -4579,7 +4579,11 @@
       "paidWithReward": "Maksettu: {label}",
       "earnedReward": "Ansaitsit {label}",
       "balanceDue": "Maksettavaa jäljellä",
-      "rewardBalance": "{label}-saldo"
+      "rewardBalance": "{label}-saldo",
+      "qty": "Määrä",
+      "items": "Tuotteet",
+      "price": "Hinta",
+      "lineNote": "Huomautus"
     },
     "reservation": {
       "title": "VARAUS",
