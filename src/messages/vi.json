@@ -2017,7 +2017,12 @@
       "categoryAccentColorClear": "Dùng màu chủ đề",
       "categoryAccentColorDefault": "Màu chủ đề (mặc định)",
       "addFulfilWindow": "Thêm khung giờ khác",
-      "fulfilWindowN": "Khung {n}"
+      "fulfilWindowN": "Khung {n}",
+      "itemInPromosTitle": "Đang dùng trong khuyến mãi",
+      "itemInPromosMessage": "Món này thuộc các khuyến mãi: {names}. Xóa món có thể làm hỏng khuyến mãi với khách hàng.",
+      "categoryInPromosMessage": "Danh mục này hoặc các món trong đó đang được dùng trong khuyến mãi: {names}. Xóa có thể làm hỏng khuyến mãi.",
+      "bulkBlockedByPromosMessage": "{n} danh mục đã chọn đang dùng trong khuyến mãi ({names}). Vẫn xóa?",
+      "deleteAnyway": "Vẫn xóa"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2082,7 +2087,8 @@
       "badgeHidden": "Đã ẩn",
       "tabAssigned": "Đã gán",
       "labelAssigned": "Đã gán",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Không còn món hoạt động — chọn lại"
     },
     "promoWizard": {
       "errorPickType": "Chọn loại khuyến mãi để tiếp tục.",

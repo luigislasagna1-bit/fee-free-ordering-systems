@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "השתמש בצבע ערכת הנושא",
       "categoryAccentColorDefault": "צבע ערכת הנושא (ברירת מחדל)",
       "addFulfilWindow": "הוסף חלון זמן נוסף",
-      "fulfilWindowN": "חלון {n}"
+      "fulfilWindowN": "חלון {n}",
+      "itemInPromosTitle": "בשימוש במבצעים",
+      "itemInPromosMessage": "המנה הזו היא חלק מהמבצעים: {names}. מחיקתה עלולה לשבור אותם עבור הלקוחות שלכם.",
+      "categoryInPromosMessage": "הקטגוריה הזו או המנות שבה בשימוש במבצעים: {names}. מחיקה עלולה לשבור אותם.",
+      "bulkBlockedByPromosMessage": "{n} מהקטגוריות שנבחרו בשימוש במבצעים ({names}). למחוק בכל זאת?",
+      "deleteAnyway": "למחוק בכל זאת"
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "מוסתר",
       "tabAssigned": "הוקצה",
       "labelAssigned": "הוקצה",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "אין מנות פעילות — בחרו מחדש"
     },
     "promoWizard": {
       "errorPickType": "בחר סוג מבצע להמשך.",

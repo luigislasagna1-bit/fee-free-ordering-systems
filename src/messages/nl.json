@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Themakleur gebruiken",
       "categoryAccentColorDefault": "Themakleur (standaard)",
       "addFulfilWindow": "Nog een tijdvenster toevoegen",
-      "fulfilWindowN": "Venster {n}"
+      "fulfilWindowN": "Venster {n}",
+      "itemInPromosTitle": "Gebruikt door promoties",
+      "itemInPromosMessage": "Dit gerecht maakt deel uit van deze promoties: {names}. Verwijderen kan ze voor uw klanten breken.",
+      "categoryInPromosMessage": "Deze categorie of de gerechten erin worden gebruikt door deze promoties: {names}. Verwijderen kan ze voor uw klanten breken.",
+      "bulkBlockedByPromosMessage": "{n} van de geselecteerde categorieën worden gebruikt door promoties ({names}). Toch verwijderen?",
+      "deleteAnyway": "Toch verwijderen"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Verborgen",
       "tabAssigned": "Toegewezen",
       "labelAssigned": "Toegewezen",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Geen actieve gerechten — opnieuw selecteren"
     },
     "promoWizard": {
       "errorPickType": "Kies een promotietype om door te gaan.",

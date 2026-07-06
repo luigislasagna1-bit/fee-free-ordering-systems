@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Bruk temafarge",
       "categoryAccentColorDefault": "Temafarge (standard)",
       "addFulfilWindow": "Legg til enda et tidsvindu",
-      "fulfilWindowN": "Vindu {n}"
+      "fulfilWindowN": "Vindu {n}",
+      "itemInPromosTitle": "Brukes av kampanjer",
+      "itemInPromosMessage": "Denne retten inngår i disse kampanjene: {names}. Sletting kan ødelegge dem for kundene dine.",
+      "categoryInPromosMessage": "Denne kategorien eller rettene i den brukes av disse kampanjene: {names}. Sletting kan ødelegge dem.",
+      "bulkBlockedByPromosMessage": "{n} av de valgte kategoriene brukes av kampanjer ({names}). Slette likevel?",
+      "deleteAnyway": "Slett likevel"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Skjult",
       "tabAssigned": "Tildelt",
       "labelAssigned": "Tildelt",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Ingen aktive retter — velg på nytt"
     },
     "promoWizard": {
       "errorPickType": "Velg en tilbudstype for å fortsette.",

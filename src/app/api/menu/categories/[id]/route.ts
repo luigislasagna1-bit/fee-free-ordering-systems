@@ -52,7 +52,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   return NextResponse.json(cat);
 }
 
-export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -62,6 +62,20 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
   if (!await getOwned(id, restaurantId)) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   try {
+    // Promo delete-guard (Luigi 2026-07-05): deleting a category kills every
+    // dish inside it too — refuse with the promo names when the category OR
+    // any of its dishes is targeted by a promotion, unless explicitly forced.
+    if (req.nextUrl.searchParams.get("force") !== "1") {
+      const { promosReferencing } = await import("@/lib/menu");
+      const items = await prisma.menuItem.findMany({ where: { categoryId: id }, select: { id: true } });
+      const promos = await promosReferencing(restaurantId, { itemIds: items.map((i) => i.id), categoryIds: [id] });
+      if (promos.length > 0) {
+        return NextResponse.json(
+          { error: "referenced_by_promos", promoNames: promos.map((p) => p.name).slice(0, 8), promoCount: promos.length },
+          { status: 409 },
+        );
+      }
+    }
     // Delete all items in the category first (menuItemId on OrderItem is now nullable/SetNull)
     await prisma.menuItem.deleteMany({ where: { categoryId: id } });
     await prisma.menuCategory.delete({ where: { id } });

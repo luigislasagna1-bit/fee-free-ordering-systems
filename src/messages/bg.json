@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Използвай цвета на темата",
       "categoryAccentColorDefault": "Цвят на темата (по подразбиране)",
       "addFulfilWindow": "Добави още един времеви прозорец",
-      "fulfilWindowN": "Прозорец {n}"
+      "fulfilWindowN": "Прозорец {n}",
+      "itemInPromosTitle": "Използва се от промоции",
+      "itemInPromosMessage": "Това ястие е част от тези промоции: {names}. Изтриването му може да ги развали за клиентите ви.",
+      "categoryInPromosMessage": "Тази категория или ястията ѝ се използват от тези промоции: {names}. Изтриването може да ги развали.",
+      "bulkBlockedByPromosMessage": "{n} от избраните категории се използват от промоции ({names}). Да се изтрият ли въпреки това?",
+      "deleteAnyway": "Изтрий въпреки това"
     },
     "promotionsList": {
       "stackingMaster": "Главна",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Скрит",
       "tabAssigned": "Назначен",
       "labelAssigned": "Назначен",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Няма активни ястия — изберете отново"
     },
     "promoWizard": {
       "errorPickType": "Избери тип промоция, за да продължиш.",

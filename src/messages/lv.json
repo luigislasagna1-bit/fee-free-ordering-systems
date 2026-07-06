@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Izmantot tēmas krāsu",
       "categoryAccentColorDefault": "Tēmas krāsa (noklusējums)",
       "addFulfilWindow": "Pievienot vēl vienu laika logu",
-      "fulfilWindowN": "Logs {n}"
+      "fulfilWindowN": "Logs {n}",
+      "itemInPromosTitle": "Izmanto akcijās",
+      "itemInPromosMessage": "Šis ēdiens ietilpst šajās akcijās: {names}. Dzēšana var tās sabojāt jūsu klientiem.",
+      "categoryInPromosMessage": "Šo kategoriju vai tās ēdienus izmanto šīs akcijas: {names}. Dzēšana var tās sabojāt klientiem.",
+      "bulkBlockedByPromosMessage": "{n} no izvēlētajām kategorijām izmanto akcijas ({names}). Vai tomēr dzēst?",
+      "deleteAnyway": "Tomēr dzēst"
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Slēpts",
       "tabAssigned": "Piešķirts",
       "labelAssigned": "Piešķirts",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Nav aktīvu ēdienu — izvēlieties vēlreiz"
     },
     "promoWizard": {
       "errorPickType": "Izvēlieties akcijas veidu, lai turpinātu.",

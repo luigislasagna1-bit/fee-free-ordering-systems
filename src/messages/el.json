@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Χρήση χρώματος θέματος",
       "categoryAccentColorDefault": "Χρώμα θέματος (προεπιλογή)",
       "addFulfilWindow": "Προσθήκη άλλου χρονικού παραθύρου",
-      "fulfilWindowN": "Παράθυρο {n}"
+      "fulfilWindowN": "Παράθυρο {n}",
+      "itemInPromosTitle": "Χρησιμοποιείται σε προσφορές",
+      "itemInPromosMessage": "Αυτό το πιάτο είναι μέρος αυτών των προσφορών: {names}. Η διαγραφή του μπορεί να τις χαλάσει για τους πελάτες σας.",
+      "categoryInPromosMessage": "Αυτή η κατηγορία ή τα πιάτα της χρησιμοποιούνται από αυτές τις προσφορές: {names}. Η διαγραφή μπορεί να τις χαλάσει.",
+      "bulkBlockedByPromosMessage": "{n} από τις επιλεγμένες κατηγορίες χρησιμοποιούνται σε προσφορές ({names}). Διαγραφή ούτως ή άλλως;",
+      "deleteAnyway": "Διαγραφή ούτως ή άλλως"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Κρυφό",
       "tabAssigned": "Αποδόθηκε",
       "labelAssigned": "Αποδόθηκε",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Κανένα ενεργό πιάτο — επιλέξτε ξανά"
     },
     "promoWizard": {
       "errorPickType": "Επιλέξτε τύπο προσφοράς για να συνεχίσετε.",

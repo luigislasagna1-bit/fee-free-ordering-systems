@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "ใช้สีธีม",
       "categoryAccentColorDefault": "สีธีม (ค่าเริ่มต้น)",
       "addFulfilWindow": "เพิ่มช่วงเวลาอีกช่วง",
-      "fulfilWindowN": "ช่วงที่ {n}"
+      "fulfilWindowN": "ช่วงที่ {n}",
+      "itemInPromosTitle": "ถูกใช้ในโปรโมชัน",
+      "itemInPromosMessage": "เมนูนี้อยู่ในโปรโมชัน: {names} การลบอาจทำให้โปรโมชันใช้ไม่ได้สำหรับลูกค้า",
+      "categoryInPromosMessage": "หมวดหมู่นี้หรือเมนูในหมวดถูกใช้ในโปรโมชัน: {names} การลบอาจทำให้โปรโมชันใช้ไม่ได้",
+      "bulkBlockedByPromosMessage": "{n} หมวดหมู่ที่เลือกถูกใช้ในโปรโมชัน ({names}) ยืนยันลบหรือไม่",
+      "deleteAnyway": "ยืนยันลบ"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "ซ่อน",
       "tabAssigned": "กำหนดแล้ว",
       "labelAssigned": "กำหนดแล้ว",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "ไม่มีเมนูที่ใช้งานอยู่ — โปรดเลือกใหม่"
     },
     "promoWizard": {
       "errorPickType": "เลือกประเภทโปรโมชั่นเพื่อดำเนินการต่อ",

@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Gunakan warna tema",
       "categoryAccentColorDefault": "Warna tema (bawaan)",
       "addFulfilWindow": "Tambah jendela waktu lain",
-      "fulfilWindowN": "Jendela {n}"
+      "fulfilWindowN": "Jendela {n}",
+      "itemInPromosTitle": "Dipakai oleh promo",
+      "itemInPromosMessage": "Hidangan ini bagian dari promo berikut: {names}. Menghapusnya dapat merusak promo bagi pelanggan Anda.",
+      "categoryInPromosMessage": "Kategori ini atau hidangannya dipakai oleh promo berikut: {names}. Menghapusnya dapat merusak promo tersebut.",
+      "bulkBlockedByPromosMessage": "{n} kategori terpilih dipakai oleh promo ({names}). Tetap hapus?",
+      "deleteAnyway": "Tetap hapus"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Tersembunyi",
       "tabAssigned": "Ditugaskan",
       "labelAssigned": "Ditugaskan",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Tidak ada hidangan aktif — pilih ulang"
     },
     "promoWizard": {
       "errorPickType": "Pilih jenis promosi untuk melanjutkan.",

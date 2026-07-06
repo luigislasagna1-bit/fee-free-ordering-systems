@@ -12,7 +12,7 @@ import { TrackingConsentGate } from "@/components/order/TrackingConsentGate";
 import { isSupportedLocale, type Locale } from "@/i18n/request";
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
-import { resolvePromoMenuRefsForServing } from "@/lib/menu";
+import { resolvePromoMenuRefsForServing, findDeadPromoIds } from "@/lib/menu";
 import { resolveScheduledMenuId } from "@/lib/menu-schedule";
 import { resolveTodayHolidayClosure } from "@/lib/holiday-rules";
 import { isOnMarketplace } from "@/lib/marketplace";
@@ -245,7 +245,14 @@ export default async function OrderingPage({
   // an INACTIVE menu version references item/category ids the displayed menu
   // doesn't have — translate them so the wizards/banners resolve eligible
   // items. Additive + fail-open; same helper the checkout routes use.
-  const promoBanners = await resolvePromoMenuRefsForServing(restaurantBase.id, promoBannersUnresolved);
+  const promoBannersResolved = await resolvePromoMenuRefsForServing(restaurantBase.id, promoBannersUnresolved);
+  // DEAD-PROMO QUARANTINE (Luigi 2026-07-05): a promo whose which-dishes
+  // group has zero dishes left on the served menu (e.g. its dish was DELETED
+  // — no lineage twin can rescue that) is a guaranteed dead-end for the
+  // customer ("No eligible items"). Skip serving it; nothing is written, so
+  // fixing the promo's picks brings it straight back. Admin list badges it.
+  const deadPromoIds = await findDeadPromoIds(restaurantBase.id, promoBannersResolved);
+  const promoBanners = promoBannersResolved.filter((p) => !deadPromoIds.has(p.id));
 
   // Reward Dollars earn rules the owner flagged to advertise as Promos-section
   // tiles ("Earn $5 on your first order"). Only when the program is on + the rule

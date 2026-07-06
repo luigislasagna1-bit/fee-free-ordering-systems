@@ -2491,7 +2491,12 @@
       "categoryAccentColorClear": "Use theme color",
       "categoryAccentColorDefault": "Theme color (default)",
       "addFulfilWindow": "Add another time window",
-      "fulfilWindowN": "Window {n}"
+      "fulfilWindowN": "Window {n}",
+      "itemInPromosTitle": "Used by promotions",
+      "itemInPromosMessage": "This dish is part of these promotions: {names}. Deleting it may break them for your customers.",
+      "categoryInPromosMessage": "This category or its dishes are used by these promotions: {names}. Deleting it may break them for your customers.",
+      "bulkBlockedByPromosMessage": "{n} of the selected categories are used by promotions ({names}). Delete them anyway?",
+      "deleteAnyway": "Delete anyway"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2556,7 +2561,8 @@
       "badgeHidden": "Hidden",
       "tabAssigned": "Assigned",
       "labelAssigned": "Assigned",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Targets no live dishes — re-select"
     },
     "promoWizard": {
       "errorPickType": "Pick a promotion type to continue.",

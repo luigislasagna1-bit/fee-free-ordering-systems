@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Använd temafärg",
       "categoryAccentColorDefault": "Temafärg (standard)",
       "addFulfilWindow": "Lägg till ett till tidsfönster",
-      "fulfilWindowN": "Fönster {n}"
+      "fulfilWindowN": "Fönster {n}",
+      "itemInPromosTitle": "Används av kampanjer",
+      "itemInPromosMessage": "Denna rätt ingår i dessa kampanjer: {names}. Att ta bort den kan göra dem obrukbara för dina kunder.",
+      "categoryInPromosMessage": "Denna kategori eller dess rätter används av dessa kampanjer: {names}. Att ta bort den kan göra dem obrukbara.",
+      "bulkBlockedByPromosMessage": "{n} av de valda kategorierna används av kampanjer ({names}). Ta bort ändå?",
+      "deleteAnyway": "Ta bort ändå"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Dold",
       "tabAssigned": "Tilldelad",
       "labelAssigned": "Tilldelad",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Inga aktiva rätter — välj igen"
     },
     "promoWizard": {
       "errorPickType": "Välj en kampanjtyp för att fortsätta.",

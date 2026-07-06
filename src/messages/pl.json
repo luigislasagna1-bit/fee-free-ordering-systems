@@ -2017,7 +2017,12 @@
       "categoryAccentColorClear": "Użyj koloru motywu",
       "categoryAccentColorDefault": "Kolor motywu (domyślny)",
       "addFulfilWindow": "Dodaj kolejne okno czasowe",
-      "fulfilWindowN": "Okno {n}"
+      "fulfilWindowN": "Okno {n}",
+      "itemInPromosTitle": "Używane przez promocje",
+      "itemInPromosMessage": "To danie jest częścią tych promocji: {names}. Usunięcie może je zepsuć dla klientów.",
+      "categoryInPromosMessage": "Ta kategoria lub jej dania są używane przez te promocje: {names}. Usunięcie może je zepsuć dla klientów.",
+      "bulkBlockedByPromosMessage": "{n} z wybranych kategorii jest używanych przez promocje ({names}). Usunąć mimo to?",
+      "deleteAnyway": "Usuń mimo to"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2082,7 +2087,8 @@
       "badgeHidden": "Ukryta",
       "tabAssigned": "Przypisane",
       "labelAssigned": "Przypisane",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Brak aktywnych dań — wybierz ponownie"
     },
     "promoWizard": {
       "errorPickType": "Wybierz typ promocji, aby kontynuować.",

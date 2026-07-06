@@ -63,11 +63,13 @@ function StackingBadge({ rule }: { rule: string }) {
 
 function PromoCard({
   promo,
+  deadTargets = false,
   onDelete,
   onToggle,
   onDuplicate,
 }: {
   promo: any;
+  deadTargets?: boolean;
   onDelete: () => void;
   onToggle: () => void;
   onDuplicate: () => void;
@@ -102,6 +104,14 @@ function PromoCard({
             {!promo.isActive && (
               <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">
                 {t("badgeInactive")}
+              </span>
+            )}
+            {/* DEAD-TARGET quarantine badge (Luigi 2026-07-05): the promo's
+                dishes no longer exist on the served menu — it is hidden from
+                customers until the owner re-selects its dishes. */}
+            {deadTargets && (
+              <span className="inline-flex items-center gap-1 text-xs bg-rose-50 text-rose-700 px-2 py-0.5 rounded-full border border-rose-200 font-semibold">
+                ⚠ {t("badgeDeadTargets")}
               </span>
             )}
             <StackingBadge rule={promo.stackingRule} />
@@ -252,11 +262,16 @@ function campaignLabel(ref: string | null | undefined): string | null {
 
 export function PromotionsClient({
   promotions: initial,
+  deadPromoIds = [],
 }: {
   promotions: any[];
   // Kept for backwards compat with page.tsx — wizard now fetches its own.
   categories?: any[];
   menuItems?: any[];
+  /** Promos whose which-dishes picks resolve to NOTHING on the served menu
+   *  (dish deleted etc.) — quarantined from the customer page; badge them
+   *  here so the owner knows to re-select (Luigi 2026-07-05). */
+  deadPromoIds?: string[];
 }) {
   const t = useTranslations("admin.promotionsList");
   const [promotions, setPromotions] = useState(initial);
@@ -396,6 +411,7 @@ export function PromotionsClient({
             <PromoCard
               key={p.id}
               promo={p}
+              deadTargets={deadPromoIds.includes(p.id)}
               onDelete={() => deletePromo(p.id)}
               onToggle={() => togglePromo(p)}
               onDuplicate={() => duplicatePromo(p)}

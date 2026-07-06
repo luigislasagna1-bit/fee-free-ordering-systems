@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Käytä teeman väriä",
       "categoryAccentColorDefault": "Teeman väri (oletus)",
       "addFulfilWindow": "Lisää toinen aikaikkuna",
-      "fulfilWindowN": "Ikkuna {n}"
+      "fulfilWindowN": "Ikkuna {n}",
+      "itemInPromosTitle": "Käytössä kampanjoissa",
+      "itemInPromosMessage": "Tämä annos kuuluu näihin kampanjoihin: {names}. Poistaminen voi rikkoa ne asiakkailtasi.",
+      "categoryInPromosMessage": "Tämä kategoria tai sen annokset kuuluvat näihin kampanjoihin: {names}. Poistaminen voi rikkoa ne.",
+      "bulkBlockedByPromosMessage": "{n} valituista kategorioista kuuluu kampanjoihin ({names}). Poistetaanko silti?",
+      "deleteAnyway": "Poista silti"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Piilotettu",
       "tabAssigned": "Määritetty",
       "labelAssigned": "Määritetty",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Ei aktiivisia annoksia — valitse uudelleen"
     },
     "promoWizard": {
       "errorPickType": "Valitse tarjoustyyppi jatkaaksesi.",

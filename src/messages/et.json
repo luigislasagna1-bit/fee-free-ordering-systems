@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Kasuta teema värvi",
       "categoryAccentColorDefault": "Teema värv (vaikimisi)",
       "addFulfilWindow": "Lisa veel üks ajaaken",
-      "fulfilWindowN": "Aken {n}"
+      "fulfilWindowN": "Aken {n}",
+      "itemInPromosTitle": "Kasutusel kampaaniates",
+      "itemInPromosMessage": "See roog kuulub nendesse kampaaniatesse: {names}. Kustutamine võib need klientide jaoks rikkuda.",
+      "categoryInPromosMessage": "Seda kategooriat või selle roogi kasutavad need kampaaniad: {names}. Kustutamine võib need rikkuda.",
+      "bulkBlockedByPromosMessage": "{n} valitud kategooriat on kasutusel kampaaniates ({names}). Kas kustutada ikkagi?",
+      "deleteAnyway": "Kustuta ikkagi"
     },
     "promotionsList": {
       "stackingMaster": "Peamine",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Peidetud",
       "tabAssigned": "Määratud",
       "labelAssigned": "Määratud",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Aktiivseid roogi pole — valige uuesti"
     },
     "promoWizard": {
       "errorPickType": "Jätkamiseks vali kampaania tüüp.",

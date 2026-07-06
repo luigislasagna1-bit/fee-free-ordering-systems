@@ -5,6 +5,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { PromotionsClient } from "./PromotionsClient";
 import { PromoExclusions } from "./PromoExclusions";
+import { resolvePromoMenuRefsForServing, findDeadPromoIds } from "@/lib/menu";
 
 export default async function PromotionsPage() {
   const t = await getTranslations("admin.promotionsPage");
@@ -54,6 +55,16 @@ export default async function PromotionsPage() {
     }),
   ]);
 
+  // DEAD-TARGET badge (Luigi 2026-07-05): promos whose which-dishes picks no
+  // longer resolve to ANY dish on the served menu (dish deleted etc.) are
+  // quarantined from the customer page — tell the owner here so they know
+  // to re-select. Same helpers the order page uses, so they always agree.
+  let deadPromoIds: string[] = [];
+  try {
+    const resolved = await resolvePromoMenuRefsForServing(restaurantId, promotions);
+    deadPromoIds = [...(await findDeadPromoIds(restaurantId, resolved))];
+  } catch { /* informational badge only — never block the page */ }
+
   return (
     <div>
       <HeaderBar t={t} />
@@ -61,6 +72,7 @@ export default async function PromotionsPage() {
         promotions={promotions as any}
         categories={categories}
         menuItems={menuItems}
+        deadPromoIds={deadPromoIds}
       />
       {/* Gift-card guard — categories/items no promo or coupon may discount. */}
       <PromoExclusions />

@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "使用主题色",
       "categoryAccentColorDefault": "主题色（默认）",
       "addFulfilWindow": "添加另一个时间段",
-      "fulfilWindowN": "时间段 {n}"
+      "fulfilWindowN": "时间段 {n}",
+      "itemInPromosTitle": "被促销使用中",
+      "itemInPromosMessage": "此菜品属于以下促销：{names}。删除可能会导致这些促销对顾客失效。",
+      "categoryInPromosMessage": "此分类或其中的菜品被以下促销使用：{names}。删除可能会导致这些促销失效。",
+      "bulkBlockedByPromosMessage": "所选分类中有 {n} 个被促销使用（{names}）。仍要删除吗？",
+      "deleteAnyway": "仍要删除"
     },
     "promotionsList": {
       "stackingMaster": "主控",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "隐藏",
       "tabAssigned": "已分配",
       "labelAssigned": "已分配",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "没有可用菜品 — 请重新选择"
     },
     "promoWizard": {
       "errorPickType": "请选择促销类型以继续。",

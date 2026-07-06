@@ -2017,7 +2017,12 @@
       "categoryAccentColorClear": "Tema rengini kullan",
       "categoryAccentColorDefault": "Tema rengi (varsayılan)",
       "addFulfilWindow": "Başka bir zaman aralığı ekle",
-      "fulfilWindowN": "Aralık {n}"
+      "fulfilWindowN": "Aralık {n}",
+      "itemInPromosTitle": "Promosyonlarda kullanılıyor",
+      "itemInPromosMessage": "Bu yemek şu promosyonların parçası: {names}. Silmek bunları müşterileriniz için bozabilir.",
+      "categoryInPromosMessage": "Bu kategori veya içindeki yemekler şu promosyonlarda kullanılıyor: {names}. Silmek bunları bozabilir.",
+      "bulkBlockedByPromosMessage": "Seçilen kategorilerden {n} tanesi promosyonlarda kullanılıyor ({names}). Yine de silinsin mi?",
+      "deleteAnyway": "Yine de sil"
     },
     "promotionsList": {
       "stackingMaster": "Ana",
@@ -2082,7 +2087,8 @@
       "badgeHidden": "Gizli",
       "tabAssigned": "Atandı",
       "labelAssigned": "Atandı",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Aktif yemek yok — yeniden seçin"
     },
     "promoWizard": {
       "errorPickType": "Devam etmek için bir promosyon türü seçin.",

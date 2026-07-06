@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Користи боју теме",
       "categoryAccentColorDefault": "Боја теме (подразумевано)",
       "addFulfilWindow": "Додај још један временски оквир",
-      "fulfilWindowN": "Оквир {n}"
+      "fulfilWindowN": "Оквир {n}",
+      "itemInPromosTitle": "Користе га промоције",
+      "itemInPromosMessage": "Ово јело је део ових промоција: {names}. Брисање их може покварити за ваше купце.",
+      "categoryInPromosMessage": "Ову категорију или њена јела користе ове промоције: {names}. Брисање их може покварити за купце.",
+      "bulkBlockedByPromosMessage": "{n} изабраних категорија користе промоције ({names}). Ипак избрисати?",
+      "deleteAnyway": "Ипак избриши"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Сакривено",
       "tabAssigned": "Додељено",
       "labelAssigned": "Додељено",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Нема активних јела — изаберите поново"
     },
     "promoWizard": {
       "errorPickType": "Odaberite vrstu promocije za nastavak.",

@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "استخدام لون السمة",
       "categoryAccentColorDefault": "لون السمة (افتراضي)",
       "addFulfilWindow": "إضافة نافذة زمنية أخرى",
-      "fulfilWindowN": "نافذة {n}"
+      "fulfilWindowN": "نافذة {n}",
+      "itemInPromosTitle": "مستخدم في عروض",
+      "itemInPromosMessage": "هذا الطبق جزء من هذه العروض: {names}. حذفه قد يعطلها لعملائك.",
+      "categoryInPromosMessage": "هذه الفئة أو أطباقها مستخدمة في هذه العروض: {names}. حذفها قد يعطلها لعملائك.",
+      "bulkBlockedByPromosMessage": "{n} من الفئات المحددة مستخدمة في عروض ({names}). حذفها على أي حال؟",
+      "deleteAnyway": "احذف على أي حال"
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "مخفي",
       "tabAssigned": "مُخصّص",
       "labelAssigned": "مُخصّص",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "لا توجد أطباق نشطة — أعد الاختيار"
     },
     "promoWizard": {
       "errorPickType": "اختر نوع العرض للمتابعة.",

@@ -2766,7 +2766,12 @@
       "categoryAccentColorClear": "Naudoti temos spalvą",
       "categoryAccentColorDefault": "Temos spalva (numatytoji)",
       "addFulfilWindow": "Pridėti dar vieną laiko langą",
-      "fulfilWindowN": "Langas {n}"
+      "fulfilWindowN": "Langas {n}",
+      "itemInPromosTitle": "Naudojama akcijose",
+      "itemInPromosMessage": "Šis patiekalas įtrauktas į šias akcijas: {names}. Ištrynus jas galite sugadinti klientams.",
+      "categoryInPromosMessage": "Šią kategoriją ar jos patiekalus naudoja šios akcijos: {names}. Ištrynus jas galite sugadinti.",
+      "bulkBlockedByPromosMessage": "{n} pasirinktų kategorijų naudojamos akcijose ({names}). Vis tiek ištrinti?",
+      "deleteAnyway": "Vis tiek ištrinti"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2831,7 +2836,8 @@
       "badgeHidden": "Paslėpta",
       "tabAssigned": "Priskirta",
       "labelAssigned": "Priskirta",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Nėra aktyvių patiekalų — pasirinkite iš naujo"
     },
     "promoWizard": {
       "errorPickType": "Pasirinkite akcijos tipą, kad tęstumėte.",

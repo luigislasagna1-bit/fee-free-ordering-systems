@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Brug temafarve",
       "categoryAccentColorDefault": "Temafarve (standard)",
       "addFulfilWindow": "Tilføj endnu et tidsvindue",
-      "fulfilWindowN": "Vindue {n}"
+      "fulfilWindowN": "Vindue {n}",
+      "itemInPromosTitle": "Bruges af kampagner",
+      "itemInPromosMessage": "Denne ret indgår i disse kampagner: {names}. Sletning kan ødelægge dem for dine kunder.",
+      "categoryInPromosMessage": "Denne kategori eller dens retter bruges af disse kampagner: {names}. Sletning kan ødelægge dem for dine kunder.",
+      "bulkBlockedByPromosMessage": "{n} af de valgte kategorier bruges af kampagner ({names}). Slet alligevel?",
+      "deleteAnyway": "Slet alligevel"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Skjult",
       "tabAssigned": "Tildelt",
       "labelAssigned": "Tildelt",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Ingen aktive retter — vælg igen"
     },
     "promoWizard": {
       "errorPickType": "Vælg en kampagnetype for at fortsætte.",

@@ -2931,8 +2931,25 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
       onConfirm: async () => {
         setConfirmDialog(null);
         const res = await fetch(`/api/menu/items/${id}`, { method: "DELETE" });
+        const body = await res.json().catch(() => ({}));
+        // Promo delete-guard (Luigi 2026-07-05): the server refuses when a
+        // promotion targets this dish — surface the names, allow forcing.
+        if (res.status === 409 && body.error === "referenced_by_promos") {
+          setConfirmDialog({
+            title: t("itemInPromosTitle"),
+            message: t("itemInPromosMessage", { names: (body.promoNames ?? []).join(", ") }),
+            confirmLabel: t("deleteAnyway"),
+            onConfirm: async () => {
+              setConfirmDialog(null);
+              const res2 = await fetch(`/api/menu/items/${id}?force=1`, { method: "DELETE" });
+              if (!res2.ok) { toast.error(t("failedToDeleteItem")); return; }
+              toast.success(t("itemDeleted"));
+              await reload();
+            },
+          });
+          return;
+        }
         if (!res.ok) {
-          const body = await res.json().catch(() => ({}));
           toast.error(body.error || t("failedToDeleteItem"));
           return;
         }
@@ -2968,6 +2985,23 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
         setConfirmDialog(null);
         const res = await fetch(`/api/menu/categories/${id}`, { method: "DELETE" });
         const body = await res.json().catch(() => ({}));
+        // Promo delete-guard: the category or one of its dishes is targeted
+        // by a promotion — surface the names, allow forcing.
+        if (res.status === 409 && body.error === "referenced_by_promos") {
+          setConfirmDialog({
+            title: t("itemInPromosTitle"),
+            message: t("categoryInPromosMessage", { names: (body.promoNames ?? []).join(", ") }),
+            confirmLabel: t("deleteAnyway"),
+            onConfirm: async () => {
+              setConfirmDialog(null);
+              const res2 = await fetch(`/api/menu/categories/${id}?force=1`, { method: "DELETE" });
+              if (!res2.ok) { toast.error(t("failedToDeleteCategory")); return; }
+              toast.success(t("categoryDeleted"));
+              await reload();
+            },
+          });
+          return;
+        }
         if (!res.ok) {
           toast.error(body.error || t("failedToDeleteCategory"));
           return;
@@ -2983,8 +3017,9 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
    * 5 so we don't blast Vercel with 30+ in-flight). Returns once every
    * delete has settled so a single reload() refreshes the UI.
    */
-  const bulkDelete = async (ids: string[], urlFor: (id: string) => string): Promise<{ ok: number; failed: number }> => {
+  const bulkDelete = async (ids: string[], urlFor: (id: string) => string): Promise<{ ok: number; failed: number; blocked: { id: string; promoNames: string[] }[] }> => {
     let ok = 0, failed = 0;
+    const blocked: { id: string; promoNames: string[] }[] = [];
     const CONC = 5;
     const queue = [...ids];
     const worker = async () => {
@@ -2992,12 +3027,18 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
         const id = queue.shift()!;
         try {
           const res = await fetch(urlFor(id), { method: "DELETE" });
-          if (res.ok) ok++; else failed++;
+          if (res.ok) { ok++; continue; }
+          // Promo delete-guard 409s are collected, not counted as failures —
+          // the caller offers one "delete anyway" pass for all of them.
+          const body = await res.json().catch(() => ({}));
+          if (res.status === 409 && body.error === "referenced_by_promos") {
+            blocked.push({ id, promoNames: body.promoNames ?? [] });
+          } else failed++;
         } catch { failed++; }
       }
     };
     await Promise.all(Array.from({ length: CONC }, worker));
-    return { ok, failed };
+    return { ok, failed, blocked };
   };
 
   const bulkDeleteCategories = (ids: string[]) => {
@@ -3008,7 +3049,29 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
       confirmLabel: t("deleteCount", { n: ids.length }),
       onConfirm: async () => {
         setConfirmDialog(null);
-        const { ok, failed } = await bulkDelete(ids, id => `/api/menu/categories/${id}`);
+        const { ok, failed, blocked } = await bulkDelete(ids, id => `/api/menu/categories/${id}`);
+        if (blocked.length > 0) {
+          // One follow-up warning covering every promo-guarded category.
+          const names = [...new Set(blocked.flatMap(b => b.promoNames))].slice(0, 8).join(", ");
+          setConfirmDialog({
+            title: t("itemInPromosTitle"),
+            message: t("bulkBlockedByPromosMessage", { n: blocked.length, names }),
+            confirmLabel: t("deleteAnyway"),
+            onConfirm: async () => {
+              setConfirmDialog(null);
+              const second = await bulkDelete(blocked.map(b => b.id), id => `/api/menu/categories/${id}?force=1`);
+              const okAll = ok + second.ok, failedAll = failed + second.failed;
+              if (failedAll > 0) toast.error(t("bulkDeletePartial", { ok: okAll, failed: failedAll }));
+              else toast.success(t("bulkDeleteCategoriesSuccess", { n: okAll }));
+              setSelectedCategoryIds(new Set());
+              setCategorySelectMode(false);
+              await reload();
+            },
+          });
+          // Refresh behind the dialog so already-deleted rows disappear.
+          await reload();
+          return;
+        }
         if (failed > 0) toast.error(t("bulkDeletePartial", { ok, failed }));
         else toast.success(t("bulkDeleteCategoriesSuccess", { n: ok }));
         setSelectedCategoryIds(new Set());

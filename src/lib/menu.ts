@@ -390,6 +390,106 @@ export async function resolvePromoMenuRefsForServing<
 }
 
 /**
+ * Which promotions reference ANY of the given item/category ids in their
+ * which-dishes groups. Drives the delete-time guard (Luigi 2026-07-05):
+ * deleting a dish that a promo targets silently breaks the promo — a deleted
+ * dish has no lineage twin anywhere, so nothing can ever rescue it. Active
+ * promos first, then by name, so the warning reads sensibly.
+ */
+export async function promosReferencing(
+  restaurantId: string,
+  refs: { itemIds?: string[]; categoryIds?: string[] },
+): Promise<{ id: string; name: string; isActive: boolean }[]> {
+  const wantItems = new Set(refs.itemIds ?? []);
+  const wantCats = new Set(refs.categoryIds ?? []);
+  if (wantItems.size === 0 && wantCats.size === 0) return [];
+  const promos = await prisma.promotion.findMany({
+    where: { restaurantId },
+    select: { id: true, name: true, isActive: true, ruleConfig: true, rules: true },
+  });
+  const hits: { id: string; name: string; isActive: boolean }[] = [];
+  for (const p of promos) {
+    const rc = parsePromoRc(p);
+    if (!rc) continue;
+    let referenced = false;
+    for (const g of promoGroupsOf(rc)) {
+      for (const id of [...(g.itemIds ?? []), ...(g.menuItemIds ?? [])]) if (wantItems.has(String(id))) { referenced = true; break; }
+      if (!referenced) for (const id of g.categoryIds ?? []) if (wantCats.has(String(id))) { referenced = true; break; }
+      if (referenced) break;
+    }
+    if (referenced) hits.push({ id: p.id, name: p.name, isActive: p.isActive });
+  }
+  return hits.sort((a, b) => (b.isActive ? 1 : 0) - (a.isActive ? 1 : 0) || a.name.localeCompare(b.name));
+}
+
+/**
+ * Promos whose which-dishes config is DEAD: some ref-bearing group has ZERO
+ * refs that exist on the served menu, even after lineage resolution — e.g. a
+ * bundle slot whose only dish was deleted. Such a promo is unfulfillable and
+ * shows customers a dead-end ("No eligible items"), so the order page
+ * quarantines it (nothing is written — fix the picks and it self-heals) and
+ * the admin list badges it. Existence check only: hidden/sold-out are
+ * temporary states and deliberately still count as live (they self-resolve;
+ * quarantining on them would flap with visibility schedules). Fail-soft to
+ * "nothing dead". Callers pass ALREADY-RESOLVED promos (post
+ * resolvePromoMenuRefsForServing) so lineage rescues count.
+ */
+export async function findDeadPromoIds<
+  T extends { id: string; ruleConfig?: unknown; rules?: string | null },
+>(restaurantId: string, resolvedPromos: T[]): Promise<Set<string>> {
+  const dead = new Set<string>();
+  try {
+    const itemRefs = new Set<string>();
+    const catRefs = new Set<string>();
+    type Group = { items: string[]; cats: string[] };
+    const perPromo = new Map<string, Group[]>();
+    for (const p of resolvedPromos) {
+      const rc = parsePromoRc(p);
+      if (!rc) continue;
+      const groups: Group[] = [];
+      for (const g of promoGroupsOf(rc)) {
+        const items: string[] = [...(g.itemIds ?? []), ...(g.menuItemIds ?? [])].map(String);
+        const cats: string[] = (g.categoryIds ?? []).map(String);
+        if (items.length === 0 && cats.length === 0) continue; // "any dish" group — never dead
+        items.forEach((id) => itemRefs.add(id));
+        cats.forEach((id) => catRefs.add(id));
+        groups.push({ items, cats });
+      }
+      if (groups.length) perPromo.set(p.id, groups);
+    }
+    if (perPromo.size === 0) return dead;
+
+    const menuOwnerId = await resolveMenuRestaurantId(restaurantId);
+    const servedMenuId = await resolveScheduledMenuId(menuOwnerId);
+    const [liveItems, liveCats] = await Promise.all([
+      itemRefs.size
+        ? prisma.menuItem.findMany({
+            where: { id: { in: [...itemRefs] }, OR: [{ category: { menuId: servedMenuId } }, { category: { menuId: null } }] },
+            select: { id: true },
+          })
+        : Promise.resolve([] as { id: string }[]),
+      catRefs.size
+        ? prisma.menuCategory.findMany({
+            where: { id: { in: [...catRefs] }, OR: [{ menuId: servedMenuId }, { menuId: null }] },
+            select: { id: true },
+          })
+        : Promise.resolve([] as { id: string }[]),
+    ]);
+    const liveItemIds = new Set(liveItems.map((i) => i.id));
+    const liveCatIds = new Set(liveCats.map((c) => c.id));
+    for (const [promoId, groups] of perPromo) {
+      const broken = groups.some(
+        (g) => !g.items.some((id) => liveItemIds.has(id)) && !g.cats.some((id) => liveCatIds.has(id)),
+      );
+      if (broken) dead.add(promoId);
+    }
+  } catch (e) {
+    console.error("[menu] findDeadPromoIds failed — treating all promos as servable", e);
+  }
+  return dead;
+}
+
+/**
  * Admin-facing companion to the serve-time resolver (Luigi 2026-07-05):
  * for ONE promo, report whether any of its dish/category picks live on an
  * INACTIVE menu, and — if so — the names of what the promo actually targets

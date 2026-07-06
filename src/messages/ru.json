@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Использовать цвет темы",
       "categoryAccentColorDefault": "Цвет темы (по умолчанию)",
       "addFulfilWindow": "Добавить ещё одно временное окно",
-      "fulfilWindowN": "Окно {n}"
+      "fulfilWindowN": "Окно {n}",
+      "itemInPromosTitle": "Используется в акциях",
+      "itemInPromosMessage": "Это блюдо входит в акции: {names}. Удаление может сломать их для ваших клиентов.",
+      "categoryInPromosMessage": "Эта категория или её блюда используются в акциях: {names}. Удаление может сломать их для клиентов.",
+      "bulkBlockedByPromosMessage": "{n} из выбранных категорий используются в акциях ({names}). Всё равно удалить?",
+      "deleteAnyway": "Всё равно удалить"
     },
     "promotionsList": {
       "stackingMaster": "Мастер",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Скрыто",
       "tabAssigned": "Назначено",
       "labelAssigned": "Назначено",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Нет активных блюд — выберите заново"
     },
     "promoWizard": {
       "errorPickType": "Выберите тип акции для продолжения.",

@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Utiliser la couleur du thème",
       "categoryAccentColorDefault": "Couleur du thème (par défaut)",
       "addFulfilWindow": "Ajouter une autre plage horaire",
-      "fulfilWindowN": "Plage {n}"
+      "fulfilWindowN": "Plage {n}",
+      "itemInPromosTitle": "Utilisé par des promotions",
+      "itemInPromosMessage": "Ce plat fait partie de ces promotions : {names}. Le supprimer peut les casser pour vos clients.",
+      "categoryInPromosMessage": "Cette catégorie ou ses plats sont utilisés par ces promotions : {names}. La supprimer peut les casser pour vos clients.",
+      "bulkBlockedByPromosMessage": "{n} des catégories sélectionnées sont utilisées par des promotions ({names}). Les supprimer quand même ?",
+      "deleteAnyway": "Supprimer quand même"
     },
     "promotionsList": {
       "stackingMaster": "Maître",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Masqué",
       "tabAssigned": "Attribué",
       "labelAssigned": "Attribué",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Ne cible aucun plat actif — resélectionnez"
     },
     "promoWizard": {
       "errorPickType": "Sélectionnez un type de promotion pour continuer.",

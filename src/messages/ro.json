@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Folosește culoarea temei",
       "categoryAccentColorDefault": "Culoarea temei (implicit)",
       "addFulfilWindow": "Adaugă altă fereastră orară",
-      "fulfilWindowN": "Fereastra {n}"
+      "fulfilWindowN": "Fereastra {n}",
+      "itemInPromosTitle": "Folosit de promoții",
+      "itemInPromosMessage": "Acest fel de mâncare face parte din aceste promoții: {names}. Ștergerea lui le poate strica pentru clienți.",
+      "categoryInPromosMessage": "Această categorie sau felurile ei sunt folosite de aceste promoții: {names}. Ștergerea o poate strica pentru clienți.",
+      "bulkBlockedByPromosMessage": "{n} dintre categoriile selectate sunt folosite de promoții ({names}). Le ștergeți oricum?",
+      "deleteAnyway": "Șterge oricum"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Ascuns",
       "tabAssigned": "Atribuit",
       "labelAssigned": "Atribuit",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Niciun fel activ — reselectați"
     },
     "promoWizard": {
       "errorPickType": "Alege un tip de promoție pentru a continua.",

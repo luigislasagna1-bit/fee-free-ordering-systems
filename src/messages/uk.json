@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Використати колір теми",
       "categoryAccentColorDefault": "Колір теми (типово)",
       "addFulfilWindow": "Додати ще одне часове вікно",
-      "fulfilWindowN": "Вікно {n}"
+      "fulfilWindowN": "Вікно {n}",
+      "itemInPromosTitle": "Використовується в акціях",
+      "itemInPromosMessage": "Ця страва входить до цих акцій: {names}. Видалення може зламати їх для ваших клієнтів.",
+      "categoryInPromosMessage": "Цю категорію або її страви використовують ці акції: {names}. Видалення може зламати їх для клієнтів.",
+      "bulkBlockedByPromosMessage": "{n} з вибраних категорій використовуються в акціях ({names}). Все одно видалити?",
+      "deleteAnyway": "Все одно видалити"
     },
     "promotionsList": {
       "stackingMaster": "Майстер",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Приховано",
       "tabAssigned": "Призначено",
       "labelAssigned": "Призначено",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Немає активних страв — виберіть знову"
     },
     "promoWizard": {
       "errorPickType": "Виберіть тип акції, щоб продовжити.",

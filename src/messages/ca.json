@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Usa el color del tema",
       "categoryAccentColorDefault": "Color del tema (per defecte)",
       "addFulfilWindow": "Afegeix una altra franja horària",
-      "fulfilWindowN": "Franja {n}"
+      "fulfilWindowN": "Franja {n}",
+      "itemInPromosTitle": "Usat per promocions",
+      "itemInPromosMessage": "Aquest plat forma part d'aquestes promocions: {names}. Eliminar-lo pot fer que deixin de funcionar.",
+      "categoryInPromosMessage": "Aquesta categoria o els seus plats s'usen en aquestes promocions: {names}. Eliminar-la pot fer que fallin.",
+      "bulkBlockedByPromosMessage": "{n} de les categories seleccionades s'usen en promocions ({names}). Eliminar-les igualment?",
+      "deleteAnyway": "Eliminar igualment"
     },
     "promotionsList": {
       "stackingMaster": "Mestre",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Ocult",
       "tabAssigned": "Assignat",
       "labelAssigned": "Assignat",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Cap plat actiu — torneu a seleccionar"
     },
     "promoWizard": {
       "errorPickType": "Trieu un tipus de promoció per continuar.",

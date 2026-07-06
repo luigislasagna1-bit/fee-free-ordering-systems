@@ -159,13 +159,27 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   return PATCH(req, { params });
 }
 
-export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const restaurantId = await getRestaurantId();
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const blocked = await blockIfInheritingMenu(restaurantId);
   if (blocked) return blocked;
   const { id } = await params;
   try {
+    // Promo delete-guard (Luigi 2026-07-05): a deleted dish has no lineage
+    // twin anywhere, so any promo targeting it silently breaks. Refuse with
+    // the promo names unless the owner explicitly forces — server-enforced
+    // so a stale tab can't slip past the warning dialog.
+    if (req.nextUrl.searchParams.get("force") !== "1") {
+      const { promosReferencing } = await import("@/lib/menu");
+      const promos = await promosReferencing(restaurantId, { itemIds: [id] });
+      if (promos.length > 0) {
+        return NextResponse.json(
+          { error: "referenced_by_promos", promoNames: promos.map((p) => p.name).slice(0, 8), promoCount: promos.length },
+          { status: 409 },
+        );
+      }
+    }
     await prisma.menuItem.deleteMany({ where: { id, restaurantId } });
     return NextResponse.json({ success: true });
   } catch (e: any) {

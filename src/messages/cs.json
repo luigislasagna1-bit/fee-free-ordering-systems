@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Použít barvu motivu",
       "categoryAccentColorDefault": "Barva motivu (výchozí)",
       "addFulfilWindow": "Přidat další časové okno",
-      "fulfilWindowN": "Okno {n}"
+      "fulfilWindowN": "Okno {n}",
+      "itemInPromosTitle": "Používáno akcemi",
+      "itemInPromosMessage": "Toto jídlo je součástí těchto akcí: {names}. Smazáním je můžete pro zákazníky rozbít.",
+      "categoryInPromosMessage": "Tuto kategorii nebo její jídla používají tyto akce: {names}. Smazáním je můžete pro zákazníky rozbít.",
+      "bulkBlockedByPromosMessage": "{n} z vybraných kategorií používají akce ({names}). Přesto smazat?",
+      "deleteAnyway": "Přesto smazat"
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Skryté",
       "tabAssigned": "Přiřazené",
       "labelAssigned": "Přiřazené",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Žádná aktivní jídla — vyberte znovu"
     },
     "promoWizard": {
       "errorPickType": "Pro pokračování vyberte typ akce.",

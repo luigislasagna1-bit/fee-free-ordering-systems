@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "Themenfarbe verwenden",
       "categoryAccentColorDefault": "Themenfarbe (Standard)",
       "addFulfilWindow": "Weiteres Zeitfenster hinzufügen",
-      "fulfilWindowN": "Zeitfenster {n}"
+      "fulfilWindowN": "Zeitfenster {n}",
+      "itemInPromosTitle": "In Aktionen verwendet",
+      "itemInPromosMessage": "Dieses Gericht ist Teil dieser Aktionen: {names}. Das Löschen kann sie für Ihre Kunden unbrauchbar machen.",
+      "categoryInPromosMessage": "Diese Kategorie oder ihre Gerichte werden von diesen Aktionen verwendet: {names}. Das Löschen kann sie für Ihre Kunden unbrauchbar machen.",
+      "bulkBlockedByPromosMessage": "{n} der ausgewählten Kategorien werden von Aktionen verwendet ({names}). Trotzdem löschen?",
+      "deleteAnyway": "Trotzdem löschen"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "Versteckt",
       "tabAssigned": "Zugewiesen",
       "labelAssigned": "Zugewiesen",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Keine aktiven Gerichte — neu auswählen"
     },
     "promoWizard": {
       "errorPickType": "Wählen Sie einen Aktionstyp, um fortzufahren.",

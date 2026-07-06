@@ -2073,7 +2073,12 @@
       "categoryAccentColorClear": "テーマカラーを使用",
       "categoryAccentColorDefault": "テーマカラー（既定）",
       "addFulfilWindow": "別の時間帯を追加",
-      "fulfilWindowN": "時間帯 {n}"
+      "fulfilWindowN": "時間帯 {n}",
+      "itemInPromosTitle": "プロモーションで使用中",
+      "itemInPromosMessage": "この料理は次のプロモーションに含まれています：{names}。削除するとお客様向けに機能しなくなる可能性があります。",
+      "categoryInPromosMessage": "このカテゴリまたはその料理は次のプロモーションで使用されています：{names}。削除すると機能しなくなる可能性があります。",
+      "bulkBlockedByPromosMessage": "選択したカテゴリのうち{n}件がプロモーションで使用されています（{names}）。それでも削除しますか？",
+      "deleteAnyway": "それでも削除"
     },
     "promotionsList": {
       "stackingMaster": "マスター",
@@ -2138,7 +2143,8 @@
       "badgeHidden": "非表示",
       "tabAssigned": "割り当て済み",
       "labelAssigned": "割り当て済み",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "対象の料理がありません — 再選択してください"
     },
     "promoWizard": {
       "errorPickType": "続けるにはプロモーションタイプを選択してください。",

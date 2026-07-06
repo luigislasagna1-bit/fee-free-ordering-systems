@@ -2447,7 +2447,12 @@
       "categoryAccentColorClear": "थीम रंग उपयोग करें",
       "categoryAccentColorDefault": "थीम रंग (डिफ़ॉल्ट)",
       "addFulfilWindow": "एक और समय विंडो जोड़ें",
-      "fulfilWindowN": "विंडो {n}"
+      "fulfilWindowN": "विंडो {n}",
+      "itemInPromosTitle": "प्रोमोशन में उपयोग में",
+      "itemInPromosMessage": "यह व्यंजन इन प्रोमोशन का हिस्सा है: {names}। इसे हटाने से ये आपके ग्राहकों के लिए टूट सकते हैं।",
+      "categoryInPromosMessage": "यह श्रेणी या इसके व्यंजन इन प्रोमोशन में उपयोग हो रहे हैं: {names}। हटाने से ये टूट सकते हैं।",
+      "bulkBlockedByPromosMessage": "चयनित श्रेणियों में से {n} प्रोमोशन में उपयोग हो रही हैं ({names})। फिर भी हटाएँ?",
+      "deleteAnyway": "फिर भी हटाएँ"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",
@@ -2512,7 +2517,8 @@
       "badgeHidden": "छिपा हुआ",
       "tabAssigned": "असाइन किया गया",
       "labelAssigned": "असाइन किया गया",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "कोई सक्रिय व्यंजन नहीं — फिर से चुनें"
     },
     "promoWizard": {
       "errorPickType": "जारी रखने के लिए एक प्रमोशन प्रकार चुनें।",

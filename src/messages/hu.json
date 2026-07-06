@@ -2017,7 +2017,12 @@
       "categoryAccentColorClear": "Téma színének használata",
       "categoryAccentColorDefault": "Téma színe (alapértelmezett)",
       "addFulfilWindow": "Újabb idősáv hozzáadása",
-      "fulfilWindowN": "Idősáv {n}"
+      "fulfilWindowN": "Idősáv {n}",
+      "itemInPromosTitle": "Akciók használják",
+      "itemInPromosMessage": "Ez az étel a következő akciók része: {names}. Törlése tönkreteheti azokat a vendégei számára.",
+      "categoryInPromosMessage": "Ezt a kategóriát vagy ételeit a következő akciók használják: {names}. Törlése tönkreteheti azokat.",
+      "bulkBlockedByPromosMessage": "A kiválasztott kategóriák közül {n} akciókban szerepel ({names}). Mégis törli?",
+      "deleteAnyway": "Törlés mindenképp"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -2082,7 +2087,8 @@
       "badgeHidden": "Rejtett",
       "tabAssigned": "Hozzárendelve",
       "labelAssigned": "Hozzárendelve",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Nincs aktív étel — válasszon újra"
     },
     "promoWizard": {
       "errorPickType": "Válasszon promóciótípust a folytatáshoz.",

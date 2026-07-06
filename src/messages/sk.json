@@ -2766,7 +2766,12 @@
       "categoryAccentColorClear": "Použiť farbu témy",
       "categoryAccentColorDefault": "Farba témy (predvolené)",
       "addFulfilWindow": "Pridať ďalšie časové okno",
-      "fulfilWindowN": "Okno {n}"
+      "fulfilWindowN": "Okno {n}",
+      "itemInPromosTitle": "Používané akciami",
+      "itemInPromosMessage": "Toto jedlo je súčasťou týchto akcií: {names}. Vymazaním ich môžete pre zákazníkov pokaziť.",
+      "categoryInPromosMessage": "Túto kategóriu alebo jej jedlá používajú tieto akcie: {names}. Vymazaním ich môžete pokaziť.",
+      "bulkBlockedByPromosMessage": "{n} z vybraných kategórií používajú akcie ({names}). Napriek tomu vymazať?",
+      "deleteAnyway": "Napriek tomu vymazať"
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",
@@ -2831,7 +2836,8 @@
       "badgeHidden": "Skryté",
       "tabAssigned": "Priradené",
       "labelAssigned": "Priradené",
-      "labelVip": "VIP"
+      "labelVip": "VIP",
+      "badgeDeadTargets": "Žiadne aktívne jedlá — vyberte znova"
     },
     "promoWizard": {
       "errorPickType": "Pre pokračovanie vyberte typ promo akcie.",
