@@ -31,6 +31,9 @@ type MenuItemLite = {
   price: number;
   imageUrl?: string;
   categoryId?: string;
+  /** Sold-out in the main menu — rendered DISABLED + "Sold out" here
+   *  (display-only; the orders route still rejects a sold-out pick). */
+  isSoldOut?: boolean;
 };
 
 type RuleConfigGroup = {
@@ -101,6 +104,8 @@ export function BundleComposerModal({
   // Shared wizard strings (Step N of M / Next / Back) — same keys as the
   // guided promo modal so the two builders read identically.
   const tWiz = useTranslations("customer.guidedPromo");
+  // Reused "Sold out" string (same key the menu card uses) for disabled picks.
+  const tOrder = useTranslations("ordering");
   const formatCurrency = useCurrencyFormat();
   const [picks, setPicks] = useState<string[][]>(() => groups.map(() => []));
   /** The slot currently on screen. */
@@ -191,6 +196,9 @@ export function BundleComposerModal({
   }
 
   function togglePick(slotIndex: number, itemId: string) {
+    // Sold-out items are display-disabled; never let a pick (incl. a
+    // single-pick auto-advance) complete a bundle through one.
+    if (slotItems[slotIndex].find((m) => m.id === itemId)?.isSoldOut) return;
     // Computed OUTSIDE setState so the wizard can advance / auto-complete on
     // the same values it stores (mirrors GuidedPromoModal).
     const next = picks.map((arr) => [...arr]);
@@ -384,12 +392,14 @@ export function BundleComposerModal({
                         const n = picked.filter((id) => id === item.id).length;
                         const isPicked = n > 0;
                         const isMulti = max > 1;
+                        const isSold = !!item.isSoldOut;
                         return (
                           <button
                             key={item.id}
                             type="button"
+                            disabled={isSold}
                             onClick={() => togglePick(slotIndex, item.id)}
-                            className="flex items-center gap-3 p-2 rounded-xl border-2 transition text-left"
+                            className={`flex items-center gap-3 p-2 rounded-xl border-2 transition text-left ${isSold ? "opacity-60 cursor-not-allowed" : ""}`}
                             style={
                               isPicked
                                 ? { borderColor: primaryColor, backgroundColor: `${primaryColor}10` }
@@ -413,7 +423,11 @@ export function BundleComposerModal({
                                 {item.name}
                               </div>
                               <div className="text-xs text-gray-500">
-                                {isSpeciality && fee > 0 ? (
+                                {isSold ? (
+                                  <span className="inline-block bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                    {tOrder("soldOut")}
+                                  </span>
+                                ) : isSpeciality && fee > 0 ? (
                                   <span className="font-semibold" style={{ color: primaryColor }}>
                                     {t("specialityFee", { fee: formatCurrency(fee) })}
                                   </span>

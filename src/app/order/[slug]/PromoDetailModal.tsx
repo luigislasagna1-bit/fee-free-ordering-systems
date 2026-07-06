@@ -97,6 +97,10 @@ type MenuItemLite = {
   /** True when the item needs a choice before adding (has variants or modifier groups) — the
    *  promo panel then shows "Customize" (open the picker) instead of a quick "+ Add". */
   requiresChoice?: boolean;
+  /** Sold-out in the main menu — the picker renders it DISABLED + "Sold out"
+   *  (display-only; the orders route is the real gate). Flows through
+   *  collectGroupItems / collectFreebieOptions via the `...mi` spread. */
+  isSoldOut?: boolean;
 };
 
 type DeliveryZoneLite = {

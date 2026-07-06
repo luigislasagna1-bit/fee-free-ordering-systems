@@ -24,6 +24,9 @@ type MenuItemLite = {
   price: number;
   imageUrl?: string;
   variants?: { id: string; name: string; price: number }[];
+  /** Sold-out in the main menu — rendered DISABLED + "Sold out" here
+   *  (display-only; the orders route still rejects a sold-out pick). */
+  isSoldOut?: boolean;
 };
 
 interface Props {
@@ -46,6 +49,8 @@ export function FreebiePromptModal({
   onClose,
 }: Props) {
   const t = useTranslations("customer.freebie");
+  // Reused "Sold out" string (same key the menu card uses) for disabled picks.
+  const tOrder = useTranslations("ordering");
   const formatCurrency = useCurrencyFormat();
   const unlocked = cartSubtotal >= triggerAmount;
   const missing = Math.max(0, triggerAmount - cartSubtotal);
@@ -103,6 +108,10 @@ export function FreebiePromptModal({
             <div className="grid sm:grid-cols-2 gap-3">
               {eligibleItems.map((item) => {
                 const variants = item.variants ?? [];
+                // Sold-out (main menu) items are display-disabled even once the
+                // cart unlocks the freebie — the orders route would reject them.
+                const isSold = !!item.isSoldOut;
+                const pickable = unlocked && !isSold;
                 const image = item.imageUrl ? (
                   <div className="aspect-[16/9] overflow-hidden bg-gray-50">
                     <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
@@ -116,24 +125,30 @@ export function FreebiePromptModal({
                 // Item with size variants → let the customer pick which size.
                 if (variants.length > 0) {
                   return (
-                    <div key={item.id} className={`flex flex-col rounded-xl border-2 border-gray-100 overflow-hidden ${unlocked ? "" : "opacity-40"}`}>
+                    <div key={item.id} className={`flex flex-col rounded-xl border-2 border-gray-100 overflow-hidden ${pickable ? "" : "opacity-40"}`}>
                       {image}
                       <div className="p-3">
                         <div className="text-sm font-semibold text-gray-900">{item.name}</div>
+                        {isSold ? (
+                          <span className="inline-block mt-2 bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                            {tOrder("soldOut")}
+                          </span>
+                        ) : (
                         <div className="flex flex-wrap gap-1.5 mt-2">
                           {variants.map((v) => (
                             <button
                               key={v.id}
                               type="button"
-                              disabled={!unlocked}
-                              onClick={() => unlocked && onAddFreebie(item, v.id)}
-                              className={`text-xs font-semibold px-2.5 py-1 rounded-full border-2 transition ${unlocked ? "hover:opacity-80 cursor-pointer" : "cursor-not-allowed"}`}
+                              disabled={!pickable}
+                              onClick={() => pickable && onAddFreebie(item, v.id)}
+                              className={`text-xs font-semibold px-2.5 py-1 rounded-full border-2 transition ${pickable ? "hover:opacity-80 cursor-pointer" : "cursor-not-allowed"}`}
                               style={{ borderColor: primaryColor, color: primaryColor }}
                             >
                               {v.name} · {formatCurrency(v.price)}
                             </button>
                           ))}
                         </div>
+                        )}
                       </div>
                     </div>
                   );
@@ -143,10 +158,10 @@ export function FreebiePromptModal({
                   <button
                     key={item.id}
                     type="button"
-                    disabled={!unlocked}
-                    onClick={() => unlocked && onAddFreebie(item)}
+                    disabled={!pickable}
+                    onClick={() => pickable && onAddFreebie(item)}
                     className={`flex flex-col text-left rounded-xl border-2 overflow-hidden transition ${
-                      unlocked
+                      pickable
                         ? "border-gray-100 hover:border-gray-300 cursor-pointer"
                         : "border-gray-100 opacity-40 cursor-not-allowed"
                     }`}
@@ -157,14 +172,18 @@ export function FreebiePromptModal({
                       <div className="text-xs text-gray-400 line-through mt-0.5">
                         {formatCurrency(item.price)}
                       </div>
-                      {unlocked && (
+                      {isSold ? (
+                        <span className="inline-block mt-1 bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                          {tOrder("soldOut")}
+                        </span>
+                      ) : unlocked ? (
                         <span
                           className="inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-full"
                           style={{ backgroundColor: `${primaryColor}22`, color: primaryColor }}
                         >
                           {t("freeBadge")}
                         </span>
-                      )}
+                      ) : null}
                     </div>
                   </button>
                 );

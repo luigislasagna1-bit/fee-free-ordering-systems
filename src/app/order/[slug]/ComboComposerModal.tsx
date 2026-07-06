@@ -54,6 +54,8 @@ function needsCustomizer(item: AnyItem, allowedVariants: AnyItem[]): boolean {
  */
 export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onAddCombo, onClose }: Props) {
   const t = useTranslations("customer.combo");
+  // Reused "Sold out" string (same key the menu card uses) for disabled picks.
+  const tOrder = useTranslations("ordering");
   const config = useMemo(() => parseComboConfig(comboItem.comboConfig), [comboItem.comboConfig]);
 
   const slotPools = useMemo(() => {
@@ -96,6 +98,9 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
     setPicks((p) => ({ ...p, [slotId]: (p[slotId] ?? []).filter((x) => x.key !== key) }));
 
   const choose = (slotId: string, item: AnyItem) => {
+    // Sold-out items are display-disabled; never open the builder / add a pick
+    // through one (the orders route would reject it anyway).
+    if (item.isSoldOut) return;
     const slot = slotById(slotId);
     if (parsePizzaConfig(item.pizzaConfig)) {
       setPizzaFor({ slotId, item, upcharge: comboUpchargeFor(slot, item.id) }); // pizza → builder
@@ -180,17 +185,24 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
                       : comboUpchargeFor(slot, it.id);
                     const fromPrice = sizes.length > 1;
                     const customizable = isPizza || needsCustomizer(it, sizes);
+                    const isSold = !!it.isSoldOut;
                     return (
-                      <button key={it.id} disabled={atMax} onClick={() => choose(slot.id, it)}
-                        className="flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border border-gray-200 text-sm text-left hover:border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed">
+                      <button key={it.id} disabled={atMax || isSold} onClick={() => choose(slot.id, it)}
+                        className={`flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border border-gray-200 text-sm text-left hover:border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed ${isSold ? "opacity-60 cursor-not-allowed" : ""}`}>
                         <span className="min-w-0 truncate">
                           <span className="font-medium text-gray-800">{it.name}</span>
-                          {customizable && <span className="ml-1.5 text-[10px] font-bold" style={{ color: primaryColor }}>{t("customizable")}</span>}
-                          {fromPrice && <span className="ml-1.5 text-[10px] text-gray-400">{t("chooseSize")}</span>}
+                          {!isSold && customizable && <span className="ml-1.5 text-[10px] font-bold" style={{ color: primaryColor }}>{t("customizable")}</span>}
+                          {!isSold && fromPrice && <span className="ml-1.5 text-[10px] text-gray-400">{t("chooseSize")}</span>}
                         </span>
                         <span className="flex items-center gap-2 flex-shrink-0">
-                          {up > 0 && <span className="text-xs text-gray-500">{fromPrice ? t("fromUpcharge", { price: fmt(up) }) : `+${fmt(up)}`}</span>}
-                          <Plus className="w-4 h-4 text-gray-400" />
+                          {isSold ? (
+                            <span className="inline-block bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">{tOrder("soldOut")}</span>
+                          ) : (
+                            <>
+                              {up > 0 && <span className="text-xs text-gray-500">{fromPrice ? t("fromUpcharge", { price: fmt(up) }) : `+${fmt(up)}`}</span>}
+                              <Plus className="w-4 h-4 text-gray-400" />
+                            </>
+                          )}
                         </span>
                       </button>
                     );

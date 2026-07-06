@@ -40,6 +40,9 @@ type MenuItemLite = {
   imageUrl?: string;
   categoryId?: string;
   variants?: VariantLite[];
+  /** Sold-out in the main menu — rendered DISABLED + "Sold out" here
+   *  (display-only; the orders route still rejects a sold-out pick). */
+  isSoldOut?: boolean;
 };
 
 type RuleConfigGroup = {
@@ -138,6 +141,8 @@ export function GuidedPromoModal({
   onClose,
 }: Props) {
   const t = useTranslations("customer.guidedPromo");
+  // Reused "Sold out" string (same key the menu card uses) for disabled picks.
+  const tOrder = useTranslations("ordering");
   const formatCurrency = useCurrencyFormat();
   const freeBadge =
     typeof discountPct === "number" && discountPct < 100
@@ -203,6 +208,9 @@ export function GuidedPromoModal({
   }
 
   function togglePick(slotIndex: number, token: Pick) {
+    // Sold-out items are display-disabled; never let a pick (incl. a
+    // single-pick auto-complete) assemble the deal through one.
+    if (allMenuItems.find((m) => m.id === token.menuItemId)?.isSoldOut) return;
     // Compute the next picks OUTSIDE setState so the wizard can decide the
     // follow-up (advance / auto-complete) on the same values it stores.
     const next = groups.map((_, i) => (picks[i] ?? []).map((p) => ({ ...p })));
@@ -454,13 +462,14 @@ export function GuidedPromoModal({
                     <div className="grid sm:grid-cols-2 gap-2">
                       {slotItems[slotIndex].map((item) => {
                         const variants = item.variants ?? [];
+                        const isSold = !!item.isSoldOut;
                         // Item with sizes → render a size chip row; each size is
                         // its own selectable token so "which size?" is answered here.
                         if (variants.length > 0) {
                           return (
                             <div
                               key={item.id}
-                              className="flex flex-col gap-2 p-2 rounded-xl border-2"
+                              className={`flex flex-col gap-2 p-2 rounded-xl border-2 ${isSold ? "opacity-60" : ""}`}
                               style={{ borderColor: "#f3f4f6" }}
                             >
                               <div className="flex items-center gap-3">
@@ -473,7 +482,13 @@ export function GuidedPromoModal({
                                   />
                                 )}
                                 <div className="text-sm font-semibold text-gray-900 truncate">{item.name}</div>
+                                {isSold && (
+                                  <span className="ml-auto inline-block bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0">
+                                    {tOrder("soldOut")}
+                                  </span>
+                                )}
                               </div>
+                              {!isSold && (
                               <div className="flex flex-wrap gap-1.5">
                                 {variants.map((v) => {
                                   const token: Pick = { menuItemId: item.id, variantId: v.id };
@@ -528,6 +543,7 @@ export function GuidedPromoModal({
                                   );
                                 })}
                               </div>
+                              )}
                             </div>
                           );
                         }
@@ -540,9 +556,10 @@ export function GuidedPromoModal({
                           <button
                             key={item.id}
                             type="button"
+                            disabled={isSold}
                             onClick={() => togglePick(slotIndex, token)}
                             aria-label={t("addOneMoreAria", { name: item.name })}
-                            className="flex items-center gap-3 p-2 rounded-xl border-2 transition text-left"
+                            className={`flex items-center gap-3 p-2 rounded-xl border-2 transition text-left ${isSold ? "opacity-60 cursor-not-allowed" : ""}`}
                             style={
                               isPicked
                                 ? { borderColor: primaryColor, backgroundColor: `${primaryColor}10` }
@@ -560,7 +577,11 @@ export function GuidedPromoModal({
                             <div className="flex-1 min-w-0">
                               <div className="text-sm font-semibold text-gray-900 truncate">{item.name}</div>
                               <div className="text-xs text-gray-500">
-                                {free ? t("free") : formatCurrency(item.price)}
+                                {isSold ? (
+                                  <span className="inline-block bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                    {tOrder("soldOut")}
+                                  </span>
+                                ) : free ? t("free") : formatCurrency(item.price)}
                               </div>
                             </div>
                             {isMulti && n > 0 && (

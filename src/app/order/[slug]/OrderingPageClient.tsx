@@ -3835,6 +3835,10 @@ export function OrderingPageClient({
       price: mi.price,
       imageUrl: mi.imageUrl,
       categoryId: mi.categoryId,
+      // Carry the sold-out flag so every promo/bundle/combo picker can show
+      // the dish DISABLED + "Sold out" (matches the menu card). Display-only:
+      // the orders route is the real gate (rejects with item_sold_out).
+      isSoldOut: !!mi.isSoldOut,
       variants: (mi.variants ?? []).map((v) => ({ id: v.id, name: v.name, price: v.price })),
       // "+ Add" quick-add is only offered for truly-simple items (no size choice + no modifier
       // groups at all); anything with options opens the customizer. Fabrizio 2026-06-25.
