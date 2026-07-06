@@ -6,6 +6,7 @@
  * Stripe dispute. Refund treatment same as rejection.
  */
 import type { Translator } from "@/lib/i18n-dict";
+import { escapeHtml } from "@/lib/html-safe";
 import { EmailLayout, EmailHeader, EmailFooter, COLORS } from "../components/EmailLayout";
 import { EmailBody, P, InfoCard, Badge } from "../components/EmailParts";
 
@@ -39,7 +40,7 @@ export default function OrderCanceled(props: OrderCanceledProps) {
         </div>
         <p
           style={{ fontSize: 15, lineHeight: 1.55, color: COLORS.text, margin: "0 0 14px" }}
-          dangerouslySetInnerHTML={{ __html: t("email.orderCanceled.body", { restaurantName: `<strong>${restaurantName}</strong>` }) }}
+          dangerouslySetInnerHTML={{ __html: t("email.orderCanceled.body", { restaurantName: `<strong>${escapeHtml(restaurantName)}</strong>` }) }}
         />
         {reason && (
           <InfoCard label={t("email.orderCanceled.reasonLabel")} accent="amber">

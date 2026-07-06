@@ -23,6 +23,34 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "**.blob.vercel-storage.com" },
     ],
   },
+  // Baseline HTTP security headers (2026-07-06 security audit). These are the
+  // SAFE-to-enforce set — none touch script execution, so no CSP script-src
+  // here (that needs a report-only rollout with nonces; tracked in TODO). HSTS
+  // ships WITHOUT `preload` deliberately — preload is a months-long one-way
+  // commitment; add it only after confirming no plain-HTTP subdomain is needed.
+  async headers() {
+    const SECURITY_HEADERS = [
+      { key: "X-Content-Type-Options", value: "nosniff" },
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
+      // Kill camera/mic (never used); KEEP payment (Stripe Elements delegates to
+      // js.stripe.com) + geolocation (order-page address autocomplete + zones map,
+      // also delegated into the embed iframe) or those features break.
+      { key: "Permissions-Policy", value: 'camera=(), microphone=(), payment=(self "https://js.stripe.com"), geolocation=(self)' },
+    ];
+    // Anti-clickjacking for the whole app EXCEPT the embeddable widget and the
+    // order page it renders — those MUST stay frameable by third-party sites.
+    // next.config can't unset a header, so scope the frame rule to
+    // non-embed/non-order paths with a negative lookahead.
+    const FRAME_HEADERS = [
+      { key: "X-Frame-Options", value: "SAMEORIGIN" },
+      { key: "Content-Security-Policy", value: "frame-ancestors 'self'" },
+    ];
+    return [
+      { source: "/(.*)", headers: SECURITY_HEADERS },
+      { source: "/((?!embed|order).*)", headers: FRAME_HEADERS },
+    ];
+  },
 };
 
 // Plugin order: next-intl wraps first (Babel-style locale rewriting), then

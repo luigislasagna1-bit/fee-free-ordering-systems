@@ -5,6 +5,8 @@ import Image from "next/image";
 import { MapPin, Phone, Mail, Globe, Clock, ShoppingBag } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
 import { buildSeoLinks } from "@/lib/hosted-site-seo";
+import { safeJsonLd } from "@/lib/safe-json-ld";
+import { sanitizeExternalHref } from "@/lib/html-safe";
 import { resolvePoweredByCredit } from "@/lib/white-label";
 import { PoweredByCredit } from "@/components/PoweredByFeeFree";
 import { VisitTracker } from "@/components/order/VisitTracker";
@@ -239,7 +241,9 @@ export default async function HostedSitePage({
   const primaryCta = s.cta.primary.enabled
     ? {
         label: (s.cta.primary.label || "Order Online").trim(),
-        href: (s.cta.primary.href || orderUrl).trim() || orderUrl,
+        // Owner-supplied href: allowlist the scheme so a javascript:/data: URL
+        // can't turn the CTA into click-to-XSS. Falls back to the order page.
+        href: sanitizeExternalHref(s.cta.primary.href, orderUrl),
       }
     : null;
   const secondaryCtaEnabled = s.cta.secondary.enabled && r.acceptsReservations;
@@ -252,7 +256,7 @@ export default async function HostedSitePage({
   const secondaryCta = secondaryCtaEnabled
     ? {
         label: (s.cta.secondary.label || "Book a Table").trim(),
-        href: (s.cta.secondary.href || reservationDirectUrl).trim() || reservationDirectUrl,
+        href: sanitizeExternalHref(s.cta.secondary.href, reservationDirectUrl),
       }
     : null;
 
@@ -395,7 +399,7 @@ export default async function HostedSitePage({
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(cleanJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(cleanJsonLd) }}
       />
 
       {/* ── Sticky top nav ───────────────────────────────────────────────

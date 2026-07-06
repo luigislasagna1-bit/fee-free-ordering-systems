@@ -1,0 +1,79 @@
+[
+  {
+    "id": "cmoofqlvs00089kvh6n5tm5d7",
+    "restaurantId": "cmoofqlcq00059kvh4m59wk2b",
+    "dayOfWeek": 0,
+    "isOpen": true,
+    "openTime": "11:00",
+    "closeTime": "22:00",
+    "closesNextDay": false,
+    "service": null,
+    "intervals": null
+  },
+  {
+    "id": "cmoofqlvx00099kvh9bvz64tg",
+    "restaurantId": "cmoofqlcq00059kvh4m59wk2b",
+    "dayOfWeek": 1,
+    "isOpen": false,
+    "openTime": "11:00",
+    "closeTime": "22:00",
+    "closesNextDay": false,
+    "service": null,
+    "intervals": null
+  },
+  {
+    "id": "cmoofqlw2000a9kvhw8equ78w",
+    "restaurantId": "cmoofqlcq00059kvh4m59wk2b",
+    "dayOfWeek": 2,
+    "isOpen": true,
+    "openTime": "11:00",
+    "closeTime": "22:00",
+    "closesNextDay": false,
+    "service": null,
+    "intervals": null
+  },
+  {
+    "id": "cmoofqlw6000b9kvhg6ndhmfu",
+    "restaurantId": "cmoofqlcq00059kvh4m59wk2b",
+    "dayOfWeek": 3,
+    "isOpen": true,
+    "openTime": "11:00",
+    "closeTime": "22:00",
+    "closesNextDay": false,
+    "service": null,
+    "intervals": null
+  },
+  {
+    "id": "cmoofqlwa000c9kvhun3qxuwc",
+    "restaurantId": "cmoofqlcq00059kvh4m59wk2b",
+    "dayOfWeek": 4,
+    "isOpen": true,
+    "openTime": "11:00",
+    "closeTime": "22:00",
+    "closesNextDay": false,
+    "service": null,
+    "intervals": null
+  },
+  {
+    "id": "cmoofqlwe000d9kvhozn8e053",
+    "restaurantId": "cmoofqlcq00059kvh4m59wk2b",
+    "dayOfWeek": 5,
+    "isOpen": true,
+    "openTime": "11:00",
+    "closeTime": "22:00",
+    "closesNextDay": false,
+    "service": null,
+    "intervals": null
+  },
+  {
+    "id": "cmoofqlwi000e9kvhia751y8w",
+    "restaurantId": "cmoofqlcq00059kvh4m59wk2b",
+    "dayOfWeek": 6,
+    "isOpen": true,
+    "openTime": "11:00",
+    "closeTime": "22:00",
+    "closesNextDay": false,
+    "service": null,
+    "intervals": null
+  }
+]

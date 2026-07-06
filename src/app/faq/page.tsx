@@ -5,6 +5,7 @@ import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
 import { COMPETITORS } from "@/data/competitors";
 import { SUPPORT_PHONE_DISPLAY, SUPPORT_EMAIL } from "@/lib/support";
+import { safeJsonLd } from "@/lib/safe-json-ld";
 import { ArrowRight } from "lucide-react";
 
 /**
@@ -166,7 +167,7 @@ export default async function FaqPage() {
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(faqPage) }}
       />
 
       <main className="flex-1">

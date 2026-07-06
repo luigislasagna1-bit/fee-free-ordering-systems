@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { resolveLocale } from "@/lib/i18n-server";
 import { SUPPORT_PHONE_TEL } from "@/lib/support";
+import { safeJsonLd } from "@/lib/safe-json-ld";
 import { HomeClient } from "./HomeClient";
 
 // Homepage-specific SEO metadata (overrides the layout default). Targets the
@@ -80,8 +81,8 @@ export default async function HomePage() {
   const locale = await resolveLocale();
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_LD) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(APP_LD) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(ORG_LD) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(APP_LD) }} />
       <HomeClient locale={locale} />
     </>
   );

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { hasFeature } from "@/lib/entitlements";
+import { sanitizeExternalHref } from "@/lib/html-safe";
 import {
   defaultHostedSiteSettings,
   parseHostedSiteSettings,
@@ -117,6 +118,12 @@ export async function PATCH(req: NextRequest) {
       ? body.customSections
       : current.customSections,
   };
+
+  // Never persist a script-executing CTA href (javascript:/data:/…). The render
+  // path also sanitizes, but scrub on write so the DB stays clean + no other
+  // consumer is exposed. Bad/empty → "" (render falls back to the order page).
+  merged.cta.primary.href = sanitizeExternalHref(merged.cta.primary.href, "");
+  merged.cta.secondary.href = sanitizeExternalHref(merged.cta.secondary.href, "");
 
   // Validate caps + lengths.
   if (merged.customSections.length > MAX_CUSTOM_SECTIONS) {

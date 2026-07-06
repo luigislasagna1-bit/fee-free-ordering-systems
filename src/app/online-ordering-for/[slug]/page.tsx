@@ -5,6 +5,7 @@ import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
 import { LANDING_PAGES, getLandingPage } from "@/data/landing-pages";
 import { SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL } from "@/lib/support";
+import { safeJsonLd } from "@/lib/safe-json-ld";
 import {
   ArrowRight, Upload, Check, Percent, ChefHat, Printer, CalendarCheck, Megaphone, Globe, Headset,
 } from "lucide-react";
@@ -84,8 +85,8 @@ export default async function LandingPage({ params }: { params: Promise<{ slug: 
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <PublicNav currentLocale="en" />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplication) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(softwareApplication) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(faqPage) }} />
 
       <main className="flex-1">
         {/* ─── HERO ─────────────────────────────────────────────────── */}

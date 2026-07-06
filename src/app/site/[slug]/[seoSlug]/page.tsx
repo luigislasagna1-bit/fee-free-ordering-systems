@@ -6,6 +6,7 @@ import { MapPin, Phone, ArrowRight } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
 import { buildSeoLinks, parseSeoSlug } from "@/lib/hosted-site-seo";
 import { resolvePoweredByCredit } from "@/lib/white-label";
+import { safeJsonLd } from "@/lib/safe-json-ld";
 import { PoweredByCredit } from "@/components/PoweredByFeeFree";
 import { VisitTracker } from "@/components/order/VisitTracker";
 
@@ -137,7 +138,7 @@ export default async function SeoLandingPage({
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(cleanJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(cleanJsonLd) }}
       />
 
       {/* Hero — focused on the keyword */}

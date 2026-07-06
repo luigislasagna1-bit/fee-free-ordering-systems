@@ -8,6 +8,7 @@ import { COMPETITORS, getCompetitor } from "@/data/competitors";
 import { ArrowRight, Check, X as XIcon, MinusCircle, Sparkles } from "lucide-react";
 import { TrustChips } from "@/components/marketing/TrustChips";
 import { SavingsCalculator } from "@/components/marketing/SavingsCalculator";
+import { safeJsonLd } from "@/lib/safe-json-ld";
 
 /**
  * Public "Fee Free Ordering vs {Competitor}" comparison page.
@@ -120,12 +121,12 @@ export default async function ComparisonPage({
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplication) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(softwareApplication) }}
       />
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(faqPage) }}
       />
 
       <main className="flex-1">

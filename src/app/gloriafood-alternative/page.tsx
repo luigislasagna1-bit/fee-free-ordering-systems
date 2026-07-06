@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
 import { COMPETITORS } from "@/data/competitors";
+import { safeJsonLd } from "@/lib/safe-json-ld";
 import { AlertTriangle, ArrowRight, Check, Clock, Database, ShieldOff } from "lucide-react";
 
 /**
@@ -119,12 +120,12 @@ export default async function GloriaFoodAlternativePage() {
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplication) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(softwareApplication) }}
       />
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(faqPage) }}
       />
 
       <main className="flex-1">
