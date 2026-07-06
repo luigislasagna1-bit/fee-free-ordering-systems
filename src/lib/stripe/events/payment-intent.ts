@@ -1,6 +1,8 @@
 import type Stripe from "stripe";
 import prisma from "@/lib/db";
 import { fireOrderNotifications } from "@/lib/order-notifications";
+import { capturePayment } from "@/lib/stripe";
+import { isStripeAlreadyCaptured } from "@/lib/capture-idempotency";
 
 /**
  * Handle payment_intent.* events for customer-to-restaurant orders.
@@ -60,7 +62,7 @@ export async function handlePaymentIntentEvent(event: Stripe.Event) {
 
   const order = await prisma.order.findUnique({
     where: { id: orderId },
-    select: { id: true, paymentStatus: true, notifiedAt: true },
+    select: { id: true, paymentStatus: true, notifiedAt: true, status: true, restaurantId: true },
   });
   if (!order) {
     console.warn(`[stripe] payment_intent event for unknown order ${orderId}`);
@@ -85,6 +87,35 @@ export async function handlePaymentIntentEvent(event: Stripe.Event) {
         paymentIntentId: intent.id,
       },
     });
+    // AUTO-ACCEPT capture-on-authorize (Luigi 2026-07-06, stabilization C3).
+    // A normal order captures when the kitchen clicks Accept (PATCH
+    // /api/orders/[id]). But an AUTO-ACCEPTED order is created with
+    // status="accepted" and never hits that path — so without this, the
+    // authorization would simply expire (~7 days) and the restaurant would
+    // never be paid for food it already cooked. When the order is already
+    // accepted, capture the funds NOW so the payment is collected immediately.
+    // Gate strictly on status==="accepted" so a normal order (still "pending"
+    // at authorize time — the kitchen hasn't seen it yet) keeps capturing only
+    // on Accept. Idempotent vs webhook replay: the paid/refunded early-return
+    // above skips a second capture; a mid-capture DB failure self-heals because
+    // isStripeAlreadyCaptured treats the retry as success. A capture FAILURE
+    // must NOT block releasing the order to the kitchen — leave it "authorized"
+    // (the kitchen still sees it; a manual re-accept or reconcile can retry).
+    if (order.status === "accepted") {
+      try {
+        await capturePayment({ paymentIntentId: intent.id, restaurantId: order.restaurantId });
+        await prisma.order.update({ where: { id: orderId }, data: { paymentStatus: "paid" } });
+      } catch (e) {
+        if (isStripeAlreadyCaptured(e)) {
+          await prisma.order.update({ where: { id: orderId }, data: { paymentStatus: "paid" } });
+        } else {
+          console.error(
+            `[stripe] auto-accept capture-on-authorize failed for order ${orderId} — left authorized for retry:`,
+            e instanceof Error ? e.message : String(e),
+          );
+        }
+      }
+    }
     // IMPORTANT: await — Vercel kills unawaited promises after the
     // webhook 200. fireOrderNotifications is idempotent (notifiedAt guard).
     await fireOrderNotifications(orderId);

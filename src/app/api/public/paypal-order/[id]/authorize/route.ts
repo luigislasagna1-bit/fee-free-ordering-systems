@@ -19,7 +19,8 @@
 
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { authorizePaypalOrder, getPaypalAuthorizationStatus } from "@/lib/paypal";
+import { authorizePaypalOrder, getPaypalAuthorizationStatus, capturePaypalAuthorization } from "@/lib/paypal";
+import { isPaypalAlreadyCaptured } from "@/lib/capture-idempotency";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 
 export async function POST(_req: Request, ctx: { params: Promise<{ id: string }> }) {
@@ -29,7 +30,7 @@ export async function POST(_req: Request, ctx: { params: Promise<{ id: string }>
   const order = await prisma.order.findUnique({
     where: { id },
     select: {
-      id: true, restaurantId: true, paymentMethod: true, paymentStatus: true,
+      id: true, restaurantId: true, paymentMethod: true, paymentStatus: true, status: true,
       paypalOrderId: true, paypalAuthorizationId: true,
     },
   });
@@ -39,6 +40,13 @@ export async function POST(_req: Request, ctx: { params: Promise<{ id: string }>
   }
   if (!order.paypalOrderId) {
     return NextResponse.json({ error: "PayPal order not created yet" }, { status: 400 });
+  }
+  // Already settled (captured→paid, refunded, or voided) → nothing to do. Also
+  // guards the re-call after the auto-accept capture below flips us to "paid":
+  // without this, a customer refresh would fall through and try to re-authorize
+  // an order whose funds were already captured.
+  if (order.paymentStatus === "paid" || order.paymentStatus === "refunded" || order.paymentStatus === "voided") {
+    return NextResponse.json({ ok: true, idempotent: true });
   }
 
   // Already authorized → potentially idempotent success path. Customer
@@ -96,6 +104,37 @@ export async function POST(_req: Request, ctx: { params: Promise<{ id: string }>
         paymentStatus: "authorized",
       },
     });
+
+    // AUTO-ACCEPT capture-on-authorize (Luigi 2026-07-06, stabilization C3): an
+    // auto-accepted order (status="accepted") never reaches the kitchen Accept
+    // path where PayPal capture normally happens, so the authorization would
+    // expire uncaptured and the restaurant would never be paid. Capture now so
+    // the payment is collected immediately. PayPal capture is idempotent
+    // (PayPal-Request-Id = capture:<orderId>), so a replay/retry is safe; a
+    // capture FAILURE must NOT block releasing the order to the kitchen — leave
+    // it "authorized" for a manual re-accept / reconcile.
+    if (order.status === "accepted") {
+      try {
+        const cap = await capturePaypalAuthorization({
+          restaurantId: order.restaurantId,
+          authorizationId: result.authorizationId,
+          orderId: order.id,
+        });
+        await prisma.order.update({
+          where: { id: order.id },
+          data: { paymentStatus: "paid", paypalCaptureId: cap.captureId },
+        });
+      } catch (capErr) {
+        if (isPaypalAlreadyCaptured(capErr)) {
+          await prisma.order.update({ where: { id: order.id }, data: { paymentStatus: "paid" } });
+        } else {
+          console.error(
+            `[paypal authorize] auto-accept capture failed for order ${order.id} — left authorized for retry:`,
+            capErr instanceof Error ? capErr.message : String(capErr),
+          );
+        }
+      }
+    }
 
     // Release the order to the kitchen + send customer "Order received"
     // email. fireOrderNotifications is idempotent on notifiedAt, so a

@@ -14,6 +14,7 @@ import {
   voidPaypalAuthorization,
   refundPaypalCapture,
 } from "@/lib/paypal";
+import { isStripeAlreadyCaptured, isPaypalAlreadyCaptured } from "@/lib/capture-idempotency";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { dispatchOrderToShipday, cancelShipdayOrder, shouldDispatchToShipday } from "@/lib/shipday";
@@ -256,14 +257,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       // with a message that includes "already been captured" or
       // "already_captured" or status "succeeded" / "canceled". We
       // accept any of these as "OK, money already moved, proceed".
-      const stripeCode = (e as any)?.code ?? "";
-      const stripeStatus = (e as any)?.raw?.payment_intent?.status ?? "";
-      const isAlreadyCaptured =
-        stripeCode === "payment_intent_unexpected_state" &&
-        (msg.toLowerCase().includes("already") ||
-         stripeStatus === "succeeded" ||
-         stripeStatus === "canceled");
-      if (isAlreadyCaptured) {
+      if (isStripeAlreadyCaptured(e)) {
         console.warn(
           `[orders PATCH] capturePayment for ${id} reports already-captured — treating as success and proceeding with accept.`,
         );
@@ -309,13 +303,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       // case is `AUTH_CAPTURE_NOT_ALLOWED` / `AUTH_VOIDED` with a
       // status string of "CAPTURED" / "COMPLETED". Treat any of these
       // as success — money already moved.
-      const lower = msg.toLowerCase();
-      const isAlreadyCaptured =
-        lower.includes("already_captured") ||
-        lower.includes("already been captured") ||
-        lower.includes("authorization_already_captured") ||
-        lower.includes("auth_capture_not_allowed");
-      if (isAlreadyCaptured) {
+      if (isPaypalAlreadyCaptured(e)) {
         console.warn(
           `[orders PATCH] PayPal capture for ${id} reports already-captured — treating as success.`,
         );
