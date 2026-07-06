@@ -73,7 +73,6 @@ export type Competitor = {
   };
 };
 
-const FEEFREE_CORE = "Free forever for direct orders. No per-order commission. Paid add-ons (Online Payments $29.99/mo, Hosted Website $19.99/mo, etc.) are optional, only when you need them.";
 
 export const COMPETITORS: Competitor[] = [
   {
@@ -651,11 +650,11 @@ export const COMPETITORS: Competitor[] = [
     comparison: [
       { feature: "Commission on direct orders",         feefree: "0%",                              competitor: "0%" },
       { feature: "Marketplace included",                 feefree: "Yes — feefreefood.com",          competitor: "No" },
-      { feature: "Marketplace fee structure",            feefree: "$3 max/order or $199.99/mo flat", competitor: "N/A" },
+      { feature: "Marketplace fee structure",            feefree: "Low per-order cap or flat monthly — see /pricing", competitor: "N/A" },
       { feature: "Card auth-then-capture",               feefree: "Yes",                            competitor: "Immediate charge + refund" },
       { feature: "Partner / reseller program",           feefree: "Up to 10% lifetime",             competitor: "No" },
       { feature: "Languages supported",                  feefree: "38 languages",         competitor: "20+ (Oracle scale)" },
-      { feature: "Hosted website included",              feefree: "$19.99/mo add-on",               competitor: "Bundled with paid plans" },
+      { feature: "Hosted website included",              feefree: "Optional add-on — see /pricing", competitor: "Bundled with paid plans" },
       { feature: "Email/SMS marketing automation",       feefree: "Built-in (Autopilot)",           competitor: "Paid add-on" },
       { feature: "Founded",                              feefree: "2025",                            competitor: "2014 (Oracle since 2018)" },
     ],
@@ -665,7 +664,7 @@ export const COMPETITORS: Competitor[] = [
       { q: "Why would I switch from GloriaFood to Fee Free Ordering?",
         a: "Three reasons most owners cite: (1) the included marketplace gives you new-customer discovery without extra setup, (2) modern direct charges + manual capture means card authorizations void cleanly on rejected orders with no Stripe fees, (3) a smaller team that ships changes weekly and reads every support email." },
       { q: "Does Fee Free Ordering charge commission like UberEats?",
-        a: "No. Direct orders through your own ordering page or hosted site cost $0 in platform commission — forever. Customers who find you through our marketplace cost at most $3/order, capped at $249.99/month, or you can pay $199.99/mo flat for unlimited marketplace orders." },
+        a: "No. Direct orders through your own ordering page or hosted site cost $0 in platform commission — forever. Customers who find you through our optional marketplace carry only a small per-order cap (or a flat monthly option for unlimited marketplace orders) — see /pricing for current numbers." },
     ],
   },
   {
@@ -691,7 +690,7 @@ export const COMPETITORS: Competitor[] = [
       { title: "Free core platform vs $149+/mo SaaS",
         body: "Fee Free Ordering's core (admin, widget, kitchen app, customer database) is free forever. ChowNow charges $149-199/mo per location just to use the platform, before add-ons." },
       { title: "Pay only for add-ons you actually use",
-        body: "Online Payments ($29.99/mo), Hosted Website ($19.99/mo), Multi-Location ($49.99/mo per child site) — each is optional. ChowNow bundles features into tiers, forcing you to pay for what you don't need." },
+        body: "Online Payments, Hosted Website and Multi-Location are each optional à-la-carte add-ons — turn on only what you need (current prices are public at /pricing). ChowNow bundles features into tiers, forcing you to pay for what you don't need." },
       { title: "Marketplace discovery built-in",
         body: "Customers find restaurants on feefreefood.com. ChowNow has no marketplace; you bring 100% of your own customers." },
       { title: "No setup fee",
@@ -702,14 +701,14 @@ export const COMPETITORS: Competitor[] = [
       { feature: "Setup fee",                            feefree: "$0",                              competitor: "Typically $399+" },
       { feature: "Commission on direct orders",          feefree: "0%",                              competitor: "0%" },
       { feature: "Marketplace included",                 feefree: "Yes (feefreefood.com)",          competitor: "No" },
-      { feature: "Hosted website",                       feefree: "$19.99/mo add-on",               competitor: "Bundled (tier-dependent)" },
-      { feature: "Multi-location",                       feefree: "$49.99/mo per child site",       competitor: "Per-location pricing" },
-      { feature: "Card payments",                        feefree: "$29.99/mo Online Payments add-on", competitor: "Bundled with Stripe Connect" },
+      { feature: "Hosted website",                       feefree: "Optional add-on — see /pricing", competitor: "Bundled (tier-dependent)" },
+      { feature: "Multi-location",                       feefree: "Optional add-on — see /pricing", competitor: "Per-location pricing" },
+      { feature: "Card payments",                        feefree: "Optional add-on — see /pricing", competitor: "Bundled with Stripe Connect" },
       { feature: "Setup time",                           feefree: "Minutes (self-serve)",           competitor: "Days (sales call required)" },
     ],
     faqs: [
       { q: "What is the cheapest alternative to ChowNow?",
-        a: "Fee Free Ordering — the core platform is free. Compared to ChowNow's $149-199/mo per location, an independent restaurant on Fee Free only pays for the add-ons it uses (typically $29.99-79.99/mo total) and saves $1,000+/year per location." },
+        a: "Fee Free Ordering — the core platform is free. Compared to ChowNow's $149-199/mo per location, an independent restaurant on Fee Free only pays for the à-la-carte add-ons it actually uses (current prices public at /pricing), typically saving well over $1,000/year per location." },
       { q: "Is ChowNow really zero-commission?",
         a: "Yes — ChowNow charges a monthly SaaS fee instead of per-order commission. Fee Free Ordering does the same thing but the core platform is free with paid add-ons à la carte, which works out much cheaper for most single-location independents." },
     ],
@@ -915,7 +914,7 @@ export const COMPETITORS: Competitor[] = [
         body: "Wix's marketplace doesn't exist. Fee Free Marketplace gets you in front of new customers without you paying Wix more." },
     ],
     comparison: [
-      { feature: "Hosted website",                       feefree: "Optional $19.99/mo add-on",      competitor: "Required (Wix plan)" },
+      { feature: "Hosted website",                       feefree: "Optional add-on — see /pricing", competitor: "Required (Wix plan)" },
       { feature: "Restaurant-first features",            feefree: "Native",                         competitor: "Module on general builder" },
       { feature: "Embed on existing website",            feefree: "Yes (one-line snippet)",         competitor: "Wix-only" },
       { feature: "Marketplace included",                 feefree: "Yes",                            competitor: "No" },
@@ -938,7 +937,7 @@ export const COMPETITORS: Competitor[] = [
       { title: "Reservations AND ordering in one platform",
         body: "Fee Free handles reservations, online ordering, kitchen display, customer database — one login, one bill. OpenTable is reservations-only; you'd still need a separate ordering platform." },
       { title: "Flat fee, no per-cover",
-        body: "Reservations on Fee Free's Reservation Deposits add-on ($9.99/mo) cover unlimited reservations. OpenTable's per-cover fee scales with success — the more reservations you take, the more they charge." },
+        body: "Fee Free's Reservation Deposits add-on (a flat monthly price, public at /pricing) covers unlimited reservations. OpenTable's per-cover fee scales with success — the more reservations you take, the more they charge." },
     ],
     comparison: [
       { feature: "Per-reservation fee",                  feefree: "$0",                              competitor: "$0.25-$1.00/cover" },
@@ -948,7 +947,7 @@ export const COMPETITORS: Competitor[] = [
     ],
     faqs: [
       { q: "Is there an OpenTable alternative without per-cover fees?",
-        a: "Yes — Fee Free Ordering. Reservations are part of the platform (the Reservation Deposits add-on is $9.99/mo flat for unlimited reservations) and you get online ordering, kitchen display, and customer database in the same login." },
+        a: "Yes — Fee Free Ordering. Reservations are part of the platform (an optional Reservation Deposits add-on, flat monthly, covers unlimited reservations — see /pricing) and you get online ordering, kitchen display, and customer database in the same login." },
     ],
   },
   {
@@ -970,7 +969,7 @@ export const COMPETITORS: Competitor[] = [
     ],
     faqs: [
       { q: "Is Resy expensive for small restaurants?",
-        a: "For most independents, yes — Resy starts at $249/mo just for reservations. Fee Free Ordering handles reservations + online ordering + kitchen display + customer database for $0 base + $9.99/mo for the Reservation Deposits add-on if you want to take deposits on bookings." },
+        a: "For most independents, yes — Resy starts at $249/mo just for reservations. Fee Free Ordering handles reservations + online ordering + kitchen display + customer database for a $0 base, with an optional Reservation Deposits add-on (flat monthly, see /pricing) if you want to take deposits on bookings." },
     ],
   },
   // ─── Niche / pizza-specific ───────────────────────────────────────
