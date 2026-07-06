@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { requireCronAuth } from "@/lib/cron-auth";
 import prisma from "@/lib/db";
 import { daysLeft, dayStamp, clearRestaurantGrace } from "@/lib/dunning";
 import { cascadeMultiLocationDowngrade } from "@/lib/multi-location-downgrade";
@@ -31,13 +32,8 @@ export const dynamic = "force-dynamic";
  * sweep. Best-effort sends never throw (see dunning-notify).
  */
 export async function GET(req: NextRequest) {
-  const cronSecret = process.env.CRON_SECRET;
-  if (cronSecret) {
-    const auth = req.headers.get("authorization");
-    if (auth !== `Bearer ${cronSecret}`) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-  }
+  const denied = requireCronAuth(req);
+  if (denied) return denied;
 
   const now = new Date();
   const today = dayStamp(now);

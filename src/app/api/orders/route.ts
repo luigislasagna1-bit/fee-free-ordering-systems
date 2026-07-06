@@ -9,6 +9,7 @@ import { resolveServiceHours } from "@/lib/service-hours";
 import { resolveSlotModes, rangeWindowMinutes } from "@/lib/slot-modes";
 import { hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
 import { priceToppingLines, isHalfToppingName } from "@/lib/pizza-topping-pricing";
+import { reportError } from "@/lib/report-error";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import {
   resolveDeliveryAddressConfig,
@@ -2609,7 +2610,10 @@ export async function POST(req: NextRequest) {
       requiresPayment: deferKitchenRelease,
     }, { status: 201 });
   } catch (err) {
+    // A customer just saw "Failed to place order" and the sale was lost — alert
+    // on it so we're not blind to order-create failures (stabilization H9).
     console.error("[orders POST]", err);
+    reportError(err, { stage: "orders-post" });
     return NextResponse.json({ error: "Failed to place order" }, { status: 500 });
   }
 }

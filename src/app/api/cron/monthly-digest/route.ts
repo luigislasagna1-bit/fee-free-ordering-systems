@@ -14,6 +14,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { requireCronAuth } from "@/lib/cron-auth";
 import prisma from "@/lib/db";
 import { buildMonthlyDigest } from "@/lib/digests";
 import { sendMonthlyDigestEmail, setEmailImprint, type DigestStats } from "@/lib/email";
@@ -22,13 +23,8 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
-  const cronSecret = process.env.CRON_SECRET;
-  if (cronSecret) {
-    const auth = req.headers.get("authorization");
-    if (auth !== `Bearer ${cronSecret}`) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-  }
+  const denied = requireCronAuth(req);
+  if (denied) return denied;
 
   // Monthly cron is scheduled for the 1st — but we guard anyway so a manual
   // hit on the 15th doesn't accidentally fire a 14-day-stale "monthly" report.

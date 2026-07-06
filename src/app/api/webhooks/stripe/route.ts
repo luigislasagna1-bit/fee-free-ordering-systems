@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe, getWebhookSecrets } from "@/lib/stripe";
 import { dispatchStripeEvent } from "@/lib/stripe/events";
+import { reportError } from "@/lib/report-error";
 
 // Stripe's signature verification needs the raw request body — NOT the parsed
 // JSON. The runtime + dynamic flags below stop Next.js from caching or
@@ -50,6 +51,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ received: true, ...result });
   } catch (err: any) {
     // Dispatcher throws on handler error → 500 → Stripe retries with backoff.
+    // A persistent handler bug would 500 every retry for ~3 days silently, so
+    // alert on it (IDs only, no PII). Stabilization H9.
+    console.error("[stripe webhook] handler failure:", err?.message, `event=${event?.id} type=${event?.type}`);
+    reportError(err, { stage: "stripe-webhook-dispatch", eventId: event?.id, eventType: event?.type });
     return NextResponse.json(
       { error: err?.message ?? "handler failure" },
       { status: 500 }

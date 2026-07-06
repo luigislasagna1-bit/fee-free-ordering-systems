@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { requireCronAuth } from "@/lib/cron-auth";
 import prisma from "@/lib/db";
 import { deleteSandbox } from "@/lib/menu-import/sandbox";
 
@@ -11,11 +12,8 @@ export const maxDuration = 120;
  * one run can't blow the function budget; the next run picks up any remainder.
  */
 export async function GET(req: NextRequest) {
-  const authHeader = req.headers.get("authorization") ?? "";
-  const cronSecret = process.env.CRON_SECRET;
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireCronAuth(req);
+  if (denied) return denied;
 
   const expired = await prisma.sandboxRestaurant.findMany({
     where: { claimedAt: null, expiresAt: { lt: new Date() } },

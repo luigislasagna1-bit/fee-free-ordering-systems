@@ -42,6 +42,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { verifyPaypalWebhookSignature, getPaypalOrder } from "@/lib/paypal";
 import { fireOrderNotifications } from "@/lib/order-notifications";
+import { reportError } from "@/lib/report-error";
 
 type PaypalEvent = {
   id: string;
@@ -190,6 +191,7 @@ export async function POST(req: NextRequest) {
     const msg = e instanceof Error ? e.message : String(e);
     console.error("[paypal webhook] handler failed:", msg);
     await markEvent(evt.id, "failed", msg).catch(() => {});
+    reportError(e, { stage: "paypal-webhook-dispatch", eventId: evt.id, eventType: evt.event_type }); // stabilization H9
     // 500 → PayPal retries.
     return NextResponse.json({ error: "Handler failed" }, { status: 500 });
   }
