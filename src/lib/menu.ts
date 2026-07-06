@@ -1,5 +1,6 @@
 import prisma from "@/lib/db";
 import { resolveMenuRestaurantId } from "@/lib/brand";
+import { remapComboConfigIds } from "@/lib/combo";
 
 /**
  * Resolve the id of a restaurant's single ACTIVE menu — the one customers see.
@@ -294,6 +295,17 @@ export async function duplicateMenu(restaurantId: string, sourceMenuId: string, 
       data: { restaurantId, name: name.slice(0, 80) || "Menu copy", isActive: false, sortOrder: (sortAgg._max.sortOrder ?? 0) + 1 },
     });
 
+    // Old→new id maps across the WHOLE clone, so comboConfig slot references
+    // (which can point at items/categories in OTHER categories of this menu)
+    // can be re-pointed at the copies once everything exists. Without this the
+    // copy's combos still reference the SOURCE menu's ids and resolve zero
+    // eligible items on the customer page once the copy goes live — same bug
+    // class as the promo lineage fix (resolvePromoMenuRefsForServing above).
+    const catIdMap = new Map<string, string>();
+    const itemIdMap = new Map<string, string>();
+    const variantIdMap = new Map<string, string>();
+    const comboItems: { newItemId: string; comboConfig: string }[] = [];
+
     for (const c of cats) {
       const newCat = await tx.menuCategory.create({
         data: {
@@ -301,6 +313,7 @@ export async function duplicateMenu(restaurantId: string, sourceMenuId: string, 
           isActive: c.isActive, isHidden: c.isHidden, isCatering: c.isCatering, sortOrder: c.sortOrder,
         },
       });
+      catIdMap.set(c.id, newCat.id);
       // Category-level modifier groups.
       for (const g of c.modifierGroups) {
         await tx.modifierGroup.create({
@@ -326,7 +339,8 @@ export async function duplicateMenu(restaurantId: string, sourceMenuId: string, 
             comboConfig: item.comboConfig,
           },
         });
-        const variantIdMap = new Map<string, string>();
+        itemIdMap.set(item.id, newItem.id);
+        if (item.comboConfig) comboItems.push({ newItemId: newItem.id, comboConfig: item.comboConfig });
         for (const v of item.variants) {
           const nv = await tx.itemVariant.create({ data: { menuItemId: newItem.id, name: v.name, price: v.price, sortOrder: v.sortOrder, isDefault: v.isDefault } });
           variantIdMap.set(v.id, nv.id);
@@ -345,6 +359,15 @@ export async function duplicateMenu(restaurantId: string, sourceMenuId: string, 
         }
       }
     }
+
+    // Re-point combo slot references (itemIds/categoryIds/upcharges/variants)
+    // at the clones, now that every old→new pair is known. References outside
+    // this menu are kept verbatim (no worse than before).
+    for (const combo of comboItems) {
+      const remapped = remapComboConfigIds(combo.comboConfig, { itemIds: itemIdMap, categoryIds: catIdMap, variantIds: variantIdMap });
+      if (remapped) await tx.menuItem.update({ where: { id: combo.newItemId }, data: { comboConfig: remapped } });
+    }
+
     return menu.id;
   }, { timeout: 30_000 });
 }
