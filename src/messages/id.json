@@ -2157,7 +2157,10 @@
       "savePromo": "Simpan promo",
       "stepType": "Jenis",
       "stepConfigure": "Konfigurasi",
-      "stepRestrictionsDisplay": "Batasan & Tampilan"
+      "stepRestrictionsDisplay": "Batasan & Tampilan",
+      "staleMenuTargets": "Promo ini dibuat pada menu yang sudah tidak aktif. Pada menu aktif saat ini, promo berlaku untuk:",
+      "staleMenuMore": "+{n} lagi",
+      "staleMenuNoTargets": "Promo ini dibuat pada menu yang sudah tidak aktif dan tidak ada hidangannya yang cocok dengan menu aktif saat ini — silakan pilih ulang hidangannya."
     },
     "promoStepType": {
       "heading": "Pilih jenis promosi",

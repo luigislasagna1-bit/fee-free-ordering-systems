@@ -2157,7 +2157,10 @@
       "savePromo": "保存促销",
       "stepType": "类型",
       "stepConfigure": "配置",
-      "stepRestrictionsDisplay": "限制条件与展示"
+      "stepRestrictionsDisplay": "限制条件与展示",
+      "staleMenuTargets": "此促销是基于已不再使用的菜单创建的。在当前使用的菜单上，它适用于：",
+      "staleMenuMore": "另外 {n} 个",
+      "staleMenuNoTargets": "此促销是基于已不再使用的菜单创建的，且其中的菜品在当前使用的菜单上均无匹配 — 请重新选择菜品。"
     },
     "promoStepType": {
       "heading": "选择促销类型",

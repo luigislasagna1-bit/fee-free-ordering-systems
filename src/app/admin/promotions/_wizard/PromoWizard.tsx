@@ -48,6 +48,11 @@ export type WizardProps = {
   /** Reward Dollars master switch — the "Grant Reward Dollars" type card only
    *  shows when the program is ON (feature-gated visibility, Luigi 2026-07-03). */
   rewardsEnabled?: boolean;
+  /** Non-null when some dish/category pick lives on an INACTIVE menu (edit
+   *  mode): the names the promo actually targets on the LIVE menu after
+   *  lineage resolution — drives the amber stale-menu notice. Empty names =
+   *  nothing matched (owner must re-pick). Luigi 2026-07-05. */
+  staleLiveTargets?: { names: string[]; total: number } | null;
 };
 
 export type PromoRow = {
@@ -169,7 +174,7 @@ function initialFormFromPromo(p: PromoRow | null | undefined): Step3Form {
 // ─── Component ──────────────────────────────────────────────────────────────
 
 export function PromoWizard(props: WizardProps) {
-  const { mode, hasAdvanced, categories, menuItems, paymentMethods, deliveryZones, initialPromo, currencySymbol = "$", isOnMarketplace = false, vipGroupNames = [], rewardsEnabled = false } =
+  const { mode, hasAdvanced, categories, menuItems, paymentMethods, deliveryZones, initialPromo, currencySymbol = "$", isOnMarketplace = false, vipGroupNames = [], rewardsEnabled = false, staleLiveTargets = null } =
     props;
   const router = useRouter();
   const t = useTranslations("admin.promoWizard");
@@ -347,6 +352,24 @@ export function PromoWizard(props: WizardProps) {
           &larr; {t("backToPromotions")}
         </Link>
       </div>
+
+      {/* Stale-menu notice (Luigi 2026-07-05): some picks live on an inactive
+          menu — show what the promo actually targets on the LIVE menu after
+          lineage resolution, or a re-pick warning when nothing matched. */}
+      {staleLiveTargets && (
+        <div className="mb-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+          {staleLiveTargets.names.length > 0 ? (
+            <>
+              <span className="font-semibold">⚠ {t("staleMenuTargets")}</span>{" "}
+              {staleLiveTargets.names.join(", ")}
+              {staleLiveTargets.total > staleLiveTargets.names.length &&
+                ` ${t("staleMenuMore", { n: staleLiveTargets.total - staleLiveTargets.names.length })}`}
+            </>
+          ) : (
+            <span className="font-semibold">⚠ {t("staleMenuNoTargets")}</span>
+          )}
+        </div>
+      )}
 
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         {/* Header + step indicator */}

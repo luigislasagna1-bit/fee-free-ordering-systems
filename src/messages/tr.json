@@ -2101,7 +2101,10 @@
       "savePromo": "Promoyu kaydet",
       "stepType": "Tür",
       "stepConfigure": "Yapılandır",
-      "stepRestrictionsDisplay": "Kısıtlamalar & Görüntüleme"
+      "stepRestrictionsDisplay": "Kısıtlamalar & Görüntüleme",
+      "staleMenuTargets": "Bu promosyon artık yayında olmayan bir menüde oluşturuldu. Mevcut yayındaki menüde şunları hedefliyor:",
+      "staleMenuMore": "+{n} tane daha",
+      "staleMenuNoTargets": "Bu promosyon artık yayında olmayan bir menüde oluşturuldu ve yemeklerinden hiçbiri mevcut yayındaki menüyle eşleşmiyor — lütfen yemekleri yeniden seçin."
     },
     "promoStepType": {
       "heading": "Bir promosyon türü seçin",

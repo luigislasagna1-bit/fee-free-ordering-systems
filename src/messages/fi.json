@@ -2157,7 +2157,10 @@
       "savePromo": "Tallenna tarjous",
       "stepType": "Tyyppi",
       "stepConfigure": "Konfiguroi",
-      "stepRestrictionsDisplay": "Rajoitukset & näyttö"
+      "stepRestrictionsDisplay": "Rajoitukset & näyttö",
+      "staleMenuTargets": "Tämä kampanja luotiin ruokalistalle, joka ei ole enää käytössä. Nykyisellä aktiivisella listalla se koskee:",
+      "staleMenuMore": "+{n} lisää",
+      "staleMenuNoTargets": "Tämä kampanja luotiin ruokalistalle, joka ei ole enää käytössä, eikä yksikään sen annoksista vastaa nykyistä aktiivista listaa — valitse annokset uudelleen."
     },
     "promoStepType": {
       "heading": "Valitse tarjoustyyppi",

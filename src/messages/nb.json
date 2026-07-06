@@ -2157,7 +2157,10 @@
       "savePromo": "Lagre tilbud",
       "stepType": "Type",
       "stepConfigure": "Konfigurer",
-      "stepRestrictionsDisplay": "Begrensninger og visning"
+      "stepRestrictionsDisplay": "Begrensninger og visning",
+      "staleMenuTargets": "Denne kampanjen ble laget på en meny som ikke lenger er aktiv. På den gjeldende aktive menyen gjelder den:",
+      "staleMenuMore": "+{n} flere",
+      "staleMenuNoTargets": "Denne kampanjen ble laget på en meny som ikke lenger er aktiv, og ingen av rettene samsvarer med den gjeldende aktive menyen — velg rettene på nytt."
     },
     "promoStepType": {
       "heading": "Velg tilbudstype",

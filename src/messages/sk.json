@@ -2850,7 +2850,10 @@
       "savePromo": "Uložiť promo akciu",
       "stepType": "Typ",
       "stepConfigure": "Konfigurácia",
-      "stepRestrictionsDisplay": "Obmedzenia a zobrazenie"
+      "stepRestrictionsDisplay": "Obmedzenia a zobrazenie",
+      "staleMenuTargets": "Táto akcia bola vytvorená na menu, ktoré už nie je aktívne. Na aktuálnom aktívnom menu sa vzťahuje na:",
+      "staleMenuMore": "+{n} ďalších",
+      "staleMenuNoTargets": "Táto akcia bola vytvorená na menu, ktoré už nie je aktívne, a žiadne z jej jedál nezodpovedá aktuálnemu aktívnemu menu — vyberte jedlá znova."
     },
     "promoStepType": {
       "heading": "Vyberte typ promo akcie",

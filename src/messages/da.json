@@ -2157,7 +2157,10 @@
       "savePromo": "Gem kampagne",
       "stepType": "Type",
       "stepConfigure": "Konfigurér",
-      "stepRestrictionsDisplay": "Begrænsninger og visning"
+      "stepRestrictionsDisplay": "Begrænsninger og visning",
+      "staleMenuTargets": "Denne kampagne blev oprettet på en menu, der ikke længere er aktiv. På den aktuelle aktive menu gælder den:",
+      "staleMenuMore": "+{n} flere",
+      "staleMenuNoTargets": "Denne kampagne blev oprettet på en menu, der ikke længere er aktiv, og ingen af retterne matcher den aktuelle aktive menu — vælg venligst retterne igen."
     },
     "promoStepType": {
       "heading": "Vælg en kampagnetype",

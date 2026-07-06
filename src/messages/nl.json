@@ -2157,7 +2157,10 @@
       "savePromo": "Actie opslaan",
       "stepType": "Type",
       "stepConfigure": "Configureren",
-      "stepRestrictionsDisplay": "Beperkingen en weergave"
+      "stepRestrictionsDisplay": "Beperkingen en weergave",
+      "staleMenuTargets": "Deze promotie is gemaakt op een menu dat niet meer live is. Op het huidige live menu geldt hij voor:",
+      "staleMenuMore": "+{n} meer",
+      "staleMenuNoTargets": "Deze promotie is gemaakt op een menu dat niet meer live is en geen van de gerechten komt overeen met het huidige live menu — selecteer de gerechten opnieuw."
     },
     "promoStepType": {
       "heading": "Kies een promotietype",

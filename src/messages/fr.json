@@ -2157,7 +2157,10 @@
       "savePromo": "Enregistrer la promo",
       "stepType": "Type",
       "stepConfigure": "Configurer",
-      "stepRestrictionsDisplay": "Restrictions & Affichage"
+      "stepRestrictionsDisplay": "Restrictions & Affichage",
+      "staleMenuTargets": "Cette promotion a été créée sur un menu qui n'est plus actif. Sur le menu actif actuel, elle cible :",
+      "staleMenuMore": "+{n} autres",
+      "staleMenuNoTargets": "Cette promotion a été créée sur un menu qui n'est plus actif et aucun de ses plats ne correspond au menu actif actuel — veuillez resélectionner les plats."
     },
     "promoStepType": {
       "heading": "Choisissez un type de promotion",

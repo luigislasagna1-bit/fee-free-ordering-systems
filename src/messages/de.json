@@ -2157,7 +2157,10 @@
       "savePromo": "Aktion speichern",
       "stepType": "Typ",
       "stepConfigure": "Konfigurieren",
-      "stepRestrictionsDisplay": "Einschränkungen & Anzeige"
+      "stepRestrictionsDisplay": "Einschränkungen & Anzeige",
+      "staleMenuTargets": "Diese Aktion wurde auf einem nicht mehr aktiven Menü erstellt. Auf dem aktuellen Live-Menü gilt sie für:",
+      "staleMenuMore": "+{n} weitere",
+      "staleMenuNoTargets": "Diese Aktion wurde auf einem nicht mehr aktiven Menü erstellt und keines ihrer Gerichte passt zum aktuellen Live-Menü — bitte wählen Sie die Gerichte neu aus."
     },
     "promoStepType": {
       "heading": "Aktionstyp wählen",

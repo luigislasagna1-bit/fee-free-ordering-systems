@@ -2157,7 +2157,10 @@
       "savePromo": "Saglabāt akciju",
       "stepType": "Veids",
       "stepConfigure": "Konfigurēt",
-      "stepRestrictionsDisplay": "Ierobežojumi un displejs"
+      "stepRestrictionsDisplay": "Ierobežojumi un displejs",
+      "staleMenuTargets": "Šī akcija tika izveidota ēdienkartē, kas vairs nav aktīva. Pašreizējā aktīvajā ēdienkartē tā attiecas uz:",
+      "staleMenuMore": "+{n} vairāk",
+      "staleMenuNoTargets": "Šī akcija tika izveidota ēdienkartē, kas vairs nav aktīva, un neviens tās ēdiens neatbilst pašreizējai aktīvajai ēdienkartei — lūdzu, izvēlieties ēdienus vēlreiz."
     },
     "promoStepType": {
       "heading": "Izvēlieties akcijas veidu",

@@ -2157,7 +2157,10 @@
       "savePromo": "Salvesta kampaania",
       "stepType": "Tüüp",
       "stepConfigure": "Seadista",
-      "stepRestrictionsDisplay": "Piirangud ja kuvamine"
+      "stepRestrictionsDisplay": "Piirangud ja kuvamine",
+      "staleMenuTargets": "See kampaania loodi menüül, mis pole enam aktiivne. Praegusel aktiivsel menüül kehtib see:",
+      "staleMenuMore": "+{n} veel",
+      "staleMenuNoTargets": "See kampaania loodi menüül, mis pole enam aktiivne, ja ükski selle roog ei vasta praegusele aktiivsele menüüle — palun valige road uuesti."
     },
     "promoStepType": {
       "heading": "Vali kampaania tüüp",

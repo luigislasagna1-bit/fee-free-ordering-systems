@@ -2157,7 +2157,10 @@
       "savePromo": "Shrani promocijo",
       "stepType": "Vrsta",
       "stepConfigure": "Konfiguracija",
-      "stepRestrictionsDisplay": "Omejitve in prikaz"
+      "stepRestrictionsDisplay": "Omejitve in prikaz",
+      "staleMenuTargets": "Ta promocija je bila ustvarjena na meniju, ki ni več aktiven. Na trenutno aktivnem meniju velja za:",
+      "staleMenuMore": "+{n} več",
+      "staleMenuNoTargets": "Ta promocija je bila ustvarjena na meniju, ki ni več aktiven, in nobena od njenih jedi se ne ujema s trenutno aktivnim menijem — znova izberite jedi."
     },
     "promoStepType": {
       "heading": "Izberite vrsto promocije",

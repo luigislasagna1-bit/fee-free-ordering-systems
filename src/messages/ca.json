@@ -2157,7 +2157,10 @@
       "savePromo": "Desa la promo",
       "stepType": "Tipus",
       "stepConfigure": "Configura",
-      "stepRestrictionsDisplay": "Restriccions i visualització"
+      "stepRestrictionsDisplay": "Restriccions i visualització",
+      "staleMenuTargets": "Aquesta promoció es va crear en un menú que ja no està actiu. En el menú actiu actual s'aplica a:",
+      "staleMenuMore": "+{n} més",
+      "staleMenuNoTargets": "Aquesta promoció es va crear en un menú que ja no està actiu i cap dels seus plats coincideix amb el menú actiu actual — torneu a seleccionar els plats."
     },
     "promoStepType": {
       "heading": "Trieu un tipus de promoció",

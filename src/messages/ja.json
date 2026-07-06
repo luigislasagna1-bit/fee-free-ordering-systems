@@ -2157,7 +2157,10 @@
       "savePromo": "プロモーションを保存",
       "stepType": "タイプ",
       "stepConfigure": "設定",
-      "stepRestrictionsDisplay": "制限＆表示"
+      "stepRestrictionsDisplay": "制限＆表示",
+      "staleMenuTargets": "このプロモーションは現在使用されていないメニューで作成されました。現在のメニューでは以下が対象です：",
+      "staleMenuMore": "他{n}件",
+      "staleMenuNoTargets": "このプロモーションは現在使用されていないメニューで作成され、対象料理が現在のメニューに一致しません — 料理を選び直してください。"
     },
     "promoStepType": {
       "heading": "プロモーションタイプを選択",

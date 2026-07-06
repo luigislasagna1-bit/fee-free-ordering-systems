@@ -5,6 +5,7 @@ import { hasFeature } from "@/lib/entitlements";
 import { isOnMarketplace } from "@/lib/marketplace";
 import { currencySymbol } from "@/lib/utils";
 import { PromoWizard, PromoRow } from "../../_wizard/PromoWizard";
+import { describePromoLiveTargets } from "@/lib/menu";
 
 export default async function EditPromotionPage({
   params,
@@ -57,6 +58,11 @@ export default async function EditPromotionPage({
     ]);
 
   if (!promo) notFound();
+
+  // Stale-menu notice (Luigi 2026-07-05): if any dish/category pick lives on
+  // an INACTIVE menu, tell the owner what the promo actually targets on the
+  // live menu after lineage resolution (admin-only, informational).
+  const liveTargets = await describePromoLiveTargets(restaurantId, promo);
 
   let paymentMethods: string[] = [];
   if (restaurant?.paymentMethods) {
@@ -123,6 +129,7 @@ export default async function EditPromotionPage({
       isOnMarketplace={onMarketplace}
       vipGroupNames={vipGroupNames}
       rewardsEnabled={!!(restaurant as any)?.rewardsEnabled}
+      staleLiveTargets={liveTargets.stale ? { names: liveTargets.liveTargetNames, total: liveTargets.totalLive } : null}
     />
   );
 }

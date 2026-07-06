@@ -2101,7 +2101,10 @@
       "savePromo": "Lưu khuyến mãi",
       "stepType": "Loại",
       "stepConfigure": "Cấu hình",
-      "stepRestrictionsDisplay": "Giới hạn & Hiển thị"
+      "stepRestrictionsDisplay": "Giới hạn & Hiển thị",
+      "staleMenuTargets": "Khuyến mãi này được tạo trên thực đơn không còn hoạt động. Trên thực đơn đang hoạt động, nó áp dụng cho:",
+      "staleMenuMore": "+{n} nữa",
+      "staleMenuNoTargets": "Khuyến mãi này được tạo trên thực đơn không còn hoạt động và không món nào khớp với thực đơn đang hoạt động — vui lòng chọn lại các món."
     },
     "promoStepType": {
       "heading": "Chọn loại khuyến mãi",

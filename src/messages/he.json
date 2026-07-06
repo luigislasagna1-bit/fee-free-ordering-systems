@@ -2157,7 +2157,10 @@
       "savePromo": "שמור מבצע",
       "stepType": "סוג",
       "stepConfigure": "הגדרה",
-      "stepRestrictionsDisplay": "הגבלות ותצוגה"
+      "stepRestrictionsDisplay": "הגבלות ותצוגה",
+      "staleMenuTargets": "המבצע הזה נוצר על תפריט שאינו פעיל עוד. בתפריט הפעיל הנוכחי הוא חל על:",
+      "staleMenuMore": "+{n} נוספים",
+      "staleMenuNoTargets": "המבצע הזה נוצר על תפריט שאינו פעיל עוד ואף אחת מהמנות שלו לא נמצאה בתפריט הפעיל הנוכחי — אנא בחרו את המנות מחדש."
     },
     "promoStepType": {
       "heading": "בחר סוג מבצע",

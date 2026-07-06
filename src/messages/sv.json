@@ -2157,7 +2157,10 @@
       "savePromo": "Spara kampanj",
       "stepType": "Typ",
       "stepConfigure": "Konfigurera",
-      "stepRestrictionsDisplay": "Begränsningar och visning"
+      "stepRestrictionsDisplay": "Begränsningar och visning",
+      "staleMenuTargets": "Denna kampanj skapades på en meny som inte längre är aktiv. På den aktuella aktiva menyn gäller den:",
+      "staleMenuMore": "+{n} till",
+      "staleMenuNoTargets": "Denna kampanj skapades på en meny som inte längre är aktiv och ingen av rätterna matchar den aktuella aktiva menyn — välj rätterna igen."
     },
     "promoStepType": {
       "heading": "Välj en kampanjtyp",

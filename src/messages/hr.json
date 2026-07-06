@@ -2157,7 +2157,10 @@
       "savePromo": "Spremi promo",
       "stepType": "Vrsta",
       "stepConfigure": "Konfiguriraj",
-      "stepRestrictionsDisplay": "Ograničenja i prikaz"
+      "stepRestrictionsDisplay": "Ograničenja i prikaz",
+      "staleMenuTargets": "Ova promocija izrađena je na jelovniku koji više nije aktivan. Na trenutno aktivnom jelovniku odnosi se na:",
+      "staleMenuMore": "+{n} više",
+      "staleMenuNoTargets": "Ova promocija izrađena je na jelovniku koji više nije aktivan i nijedno njezino jelo ne odgovara trenutno aktivnom jelovniku — ponovno odaberite jela."
     },
     "promoStepType": {
       "heading": "Odaberi vrstu promocije",

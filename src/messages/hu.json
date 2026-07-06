@@ -2101,7 +2101,10 @@
       "savePromo": "Promóció mentése",
       "stepType": "Típus",
       "stepConfigure": "Konfiguráció",
-      "stepRestrictionsDisplay": "Korlátozások & megjelenítés"
+      "stepRestrictionsDisplay": "Korlátozások & megjelenítés",
+      "staleMenuTargets": "Ez az akció egy már nem aktív étlapon készült. A jelenlegi aktív étlapon a következőkre vonatkozik:",
+      "staleMenuMore": "+{n} további",
+      "staleMenuNoTargets": "Ez az akció egy már nem aktív étlapon készült, és egyik étele sem található meg a jelenlegi aktív étlapon — kérjük, válassza ki újra az ételeket."
     },
     "promoStepType": {
       "heading": "Válasszon promóciótípust",

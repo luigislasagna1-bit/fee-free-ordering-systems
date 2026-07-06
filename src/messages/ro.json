@@ -2157,7 +2157,10 @@
       "savePromo": "Salvează promoția",
       "stepType": "Tip",
       "stepConfigure": "Configurare",
-      "stepRestrictionsDisplay": "Restricții & Afișare"
+      "stepRestrictionsDisplay": "Restricții & Afișare",
+      "staleMenuTargets": "Această promoție a fost creată pe un meniu care nu mai este activ. Pe meniul activ actual vizează:",
+      "staleMenuMore": "+{n} altele",
+      "staleMenuNoTargets": "Această promoție a fost creată pe un meniu care nu mai este activ și niciun fel de mâncare nu corespunde meniului activ actual — vă rugăm să reselectați felurile."
     },
     "promoStepType": {
       "heading": "Alege un tip de promoție",

@@ -2575,7 +2575,10 @@
       "savePromo": "Save promo",
       "stepType": "Type",
       "stepConfigure": "Configure",
-      "stepRestrictionsDisplay": "Restrictions & Display"
+      "stepRestrictionsDisplay": "Restrictions & Display",
+      "staleMenuTargets": "This promo was built on a menu that's no longer live. On the current live menu it targets:",
+      "staleMenuMore": "+{n} more",
+      "staleMenuNoTargets": "This promo was built on a menu that's no longer live, and none of its dishes matched the current live menu — please re-select the dishes."
     },
     "promoStepType": {
       "heading": "Choose a promotion type",

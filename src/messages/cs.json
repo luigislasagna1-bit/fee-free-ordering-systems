@@ -2157,7 +2157,10 @@
       "savePromo": "Uložit akci",
       "stepType": "Typ",
       "stepConfigure": "Konfigurace",
-      "stepRestrictionsDisplay": "Omezení a zobrazení"
+      "stepRestrictionsDisplay": "Omezení a zobrazení",
+      "staleMenuTargets": "Tato akce byla vytvořena na menu, které již není aktivní. Na aktuálním aktivním menu se vztahuje na:",
+      "staleMenuMore": "+{n} dalších",
+      "staleMenuNoTargets": "Tato akce byla vytvořena na menu, které již není aktivní, a žádné z jejích jídel neodpovídá aktuálnímu aktivnímu menu — vyberte prosím jídla znovu."
     },
     "promoStepType": {
       "heading": "Vyberte typ akce",

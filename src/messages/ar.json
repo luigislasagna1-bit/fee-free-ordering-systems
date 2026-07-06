@@ -2157,7 +2157,10 @@
       "savePromo": "حفظ العرض",
       "stepType": "النوع",
       "stepConfigure": "الضبط",
-      "stepRestrictionsDisplay": "القيود والعرض"
+      "stepRestrictionsDisplay": "القيود والعرض",
+      "staleMenuTargets": "تم إنشاء هذا العرض على قائمة لم تعد نشطة. في القائمة النشطة الحالية يستهدف:",
+      "staleMenuMore": "+{n} أخرى",
+      "staleMenuNoTargets": "تم إنشاء هذا العرض على قائمة لم تعد نشطة، ولا يتطابق أي من أطباقه مع القائمة النشطة الحالية — يرجى إعادة اختيار الأطباق."
     },
     "promoStepType": {
       "heading": "اختر نوع العرض",

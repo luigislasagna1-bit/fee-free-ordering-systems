@@ -2850,7 +2850,10 @@
       "savePromo": "Išsaugoti akciją",
       "stepType": "Tipas",
       "stepConfigure": "Konfigūruoti",
-      "stepRestrictionsDisplay": "Apribojimai ir rodymas"
+      "stepRestrictionsDisplay": "Apribojimai ir rodymas",
+      "staleMenuTargets": "Ši akcija sukurta meniu, kuris nebėra aktyvus. Dabartiniame aktyviame meniu ji taikoma:",
+      "staleMenuMore": "+{n} daugiau",
+      "staleMenuNoTargets": "Ši akcija sukurta meniu, kuris nebėra aktyvus, ir nė vienas jos patiekalas neatitinka dabartinio aktyvaus meniu — pasirinkite patiekalus iš naujo."
     },
     "promoStepType": {
       "heading": "Pasirinkite akcijos tipą",
