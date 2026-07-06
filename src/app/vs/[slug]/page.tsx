@@ -183,16 +183,71 @@ export default async function ComparisonPage({
               <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 mb-2">Fee Free Ordering</div>
               <div className="text-3xl font-extrabold text-emerald-700 mb-2">$0</div>
               <p className="text-sm text-emerald-900 leading-relaxed">
-                Free core platform. Optional add-ons (Online Payments $29.99/mo, Hosted Website $19.99/mo) only when you need them. Marketplace at $3 max/order or $199.99/mo unlimited.
+                Free core platform. First 100 orders every month free, 0% commission on direct orders.
+                Turn on optional add-ons (card payments, hosted website, marketplace) only when you need
+                them — <Link href="/pricing" className="font-semibold underline underline-offset-2">see full pricing</Link>.
               </p>
             </div>
             <div className="rounded-2xl border border-gray-200 bg-white p-6">
               <div className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">{c.name}</div>
-              <div className="text-base font-bold text-gray-900 mb-2 leading-tight">{c.costSummary.split(".")[0]}.</div>
-              <p className="text-sm text-gray-600 leading-relaxed">{c.costSummary.split(".").slice(1).join(".").trim()}</p>
+              {(() => {
+                // Split on the FIRST ". " (period-space), not any period — so a
+                // headline containing "Owner." / "town.club" / "$199.99" isn't
+                // truncated (was a live bug on /vs/owner-com). Luigi 2026-07-06.
+                const i = c.costSummary.indexOf(". ");
+                const head = i === -1 ? c.costSummary : c.costSummary.slice(0, i + 1);
+                const rest = i === -1 ? "" : c.costSummary.slice(i + 2).trim();
+                return (
+                  <>
+                    <div className="text-base font-bold text-gray-900 mb-2 leading-tight">{head}</div>
+                    {rest && <p className="text-sm text-gray-600 leading-relaxed">{rest}</p>}
+                  </>
+                );
+              })()}
             </div>
           </div>
         </section>
+
+        {/* ─── PRICING TABLE (real numbers, only when set) ──────────── */}
+        {c.pricingTable && (
+          <section className="py-12 px-4 bg-white border-t border-gray-100">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-3">
+                What you actually pay
+              </h2>
+              <p className="text-gray-600 text-center mb-8">
+                The real numbers, side by side. We keep ours public; theirs are from their published pricing.
+              </p>
+              <div className="overflow-x-auto rounded-2xl border border-gray-200 shadow-sm">
+                <table className="w-full text-sm min-w-[520px]">
+                  <thead>
+                    <tr className="bg-gray-50 border-b border-gray-200">
+                      <th className="text-left px-4 py-4 text-xs uppercase tracking-wider font-bold text-gray-500"></th>
+                      <th className="text-left px-4 py-4 text-xs uppercase tracking-wider font-bold text-emerald-700 bg-emerald-50">Fee Free Ordering</th>
+                      <th className="text-left px-4 py-4 text-xs uppercase tracking-wider font-bold text-gray-500" style={{ color: c.brandColor }}>{c.name}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {c.pricingTable.rows.map((row, i) => (
+                      <tr key={i} className="border-b border-gray-100 last:border-0">
+                        <td className="px-4 py-3.5 font-semibold text-gray-900">{row.label}</td>
+                        <td className="px-4 py-3.5 bg-emerald-50/50 text-emerald-900 font-medium">{row.feefree}</td>
+                        <td className="px-4 py-3.5 text-gray-700">
+                          {row.competitor ?? (
+                            <span className="inline-flex items-center gap-1 text-gray-400"><MinusCircle className="w-3.5 h-3.5" />N/A</span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {c.pricingTable.footnote && (
+                <p className="text-center text-xs text-gray-500 mt-4 max-w-2xl mx-auto">{c.pricingTable.footnote}</p>
+              )}
+            </div>
+          </section>
+        )}
 
         {/* ─── SAVINGS CALCULATOR — what commission really costs ─────── */}
         <section className="py-14 px-4 bg-emerald-50/40 border-y border-emerald-100/70">

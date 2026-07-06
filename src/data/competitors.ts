@@ -58,6 +58,19 @@ export type Competitor = {
    *  hero (e.g. "GloriaFood is shutting down — migration guide →").
    *  Must be FACTUAL + sourced; this is urgency, not FUD. 2026-07-05. */
   notice?: { text: string; href: string; linkLabel: string };
+  /** Optional real-numbers pricing table, rendered as a dedicated section
+   *  between the cost-summary cards and the "why switch" grid. Every existing
+   *  entry omits it and renders byte-identical. RULE: never put OUR add-on
+   *  dollar figures in `feefree` — quote our side as "$0", "0%", "First 100
+   *  orders/mo free", "Optional add-on — see /pricing", or "No". Competitor
+   *  side carries their real, sourced numbers with hedged phrasing (Luigi
+   *  2026-07-06, COMPETITOR-TOWNCLUB-PLAN.md action #2). Canonical row order:
+   *  Setup fee · Monthly cost · Commission on direct orders · Hidden /
+   *  customer-side fees · Contract / commitment · Free to try (no demo call). */
+  pricingTable?: {
+    rows: { label: string; feefree: string; competitor: string | null }[];
+    footnote?: string;
+  };
 };
 
 const FEEFREE_CORE = "Free forever for direct orders. No per-order commission. Paid add-ons (Online Payments $29.99/mo, Hosted Website $19.99/mo, etc.) are optional, only when you need them.";
@@ -440,6 +453,17 @@ export const COMPETITORS: Competitor[] = [
   "name": "Owner.com",
   "category": "ordering_platform",
   "tagline": "Owner.com alternative",
+  "pricingTable": {
+    "rows": [
+      { "label": "Setup fee", "feefree": "$0", "competitor": "~$800 one-time (per figures cited in published compare tables, as of 2026)" },
+      { "label": "Monthly cost", "feefree": "$0 core + optional add-ons", "competitor": "~$500/mo (sales-quoted; not publicly published)" },
+      { "label": "Commission on direct orders", "feefree": "0%", "competitor": "0% (per their published model)" },
+      { "label": "Hidden / customer-side fees", "feefree": "None on direct orders", "competitor": "None claimed on direct orders" },
+      { "label": "Contract / commitment", "feefree": "None — cancel anytime", "competitor": "Sales-led; term varies by quote" },
+      { "label": "Free to try (no demo call)", "feefree": "Yes — paste your menu, live in seconds", "competitor": "No — demo/sales call to see pricing" }
+    ],
+    "footnote": "Owner.com does not publish a pricing page; the figures above come from third-party and competitor compare tables current as of 2026. Confirm live terms with Owner.com. Our numbers are public at /pricing."
+  },
   "costSummary": "As of 2026, Owner.com is generally sold as a flat monthly subscription covering a branded website, online ordering, a mobile app and automated marketing, with no per-order commission, per their published model. Pricing is typically sales-led, so confirm current terms with Owner.com directly.",
   "whatTheyAre": "Owner.com is a platform that gives independent restaurants a branded website, online ordering, a mobile app and automated marketing under a flat monthly subscription with no per-order commission. It is typically sold through a sales/demo process.",
   "whyFeeFree": [
@@ -516,6 +540,17 @@ export const COMPETITORS: Competitor[] = [
   "name": "Popmenu",
   "category": "ordering_platform",
   "tagline": "Popmenu alternative",
+  "pricingTable": {
+    "rows": [
+      { "label": "Setup fee", "feefree": "$0", "competitor": "Varies by plan (sales-quoted)" },
+      { "label": "Monthly cost", "feefree": "$0 core + optional add-ons", "competitor": "From ~$399/mo entry tier (per published pricing, as of 2026)" },
+      { "label": "Commission on direct orders", "feefree": "0%", "competitor": "0% (per their model)" },
+      { "label": "Hidden / customer-side fees", "feefree": "None on direct orders", "competitor": "None claimed on direct orders" },
+      { "label": "Contract / commitment", "feefree": "None — cancel anytime", "competitor": "Often an annual term (confirm at quote)" },
+      { "label": "Free to try (no demo call)", "feefree": "Yes — paste your menu, live in seconds", "competitor": "No — demo/sales call" }
+    ],
+    "footnote": "Popmenu pricing is tiered and largely sales-led; the ~$399/mo figure reflects commonly cited entry pricing as of 2026. Confirm live terms with Popmenu. Our numbers are public at /pricing."
+  },
   "costSummary": "As of 2026, Popmenu is typically sold as a tiered monthly subscription for an interactive website, online ordering and marketing tools, with no per-order commission, per their published model. Pricing is generally sales-led, so confirm current terms with Popmenu directly.",
   "whatTheyAre": "Popmenu is a restaurant marketing and online-ordering platform known for interactive, dynamic menus, a branded website and automated marketing. It is generally sold as a tiered monthly subscription with no per-order commission, through a sales/demo process.",
   "whyFeeFree": [
@@ -639,6 +674,17 @@ export const COMPETITORS: Competitor[] = [
     brandColor: "#7c3aed",
     category: "ordering_platform",
     tagline: "ChowNow alternative",
+    pricingTable: {
+      rows: [
+        { label: "Setup fee", feefree: "$0", competitor: "One-time setup fee (often cited ~$399, as of 2026)" },
+        { label: "Monthly cost", feefree: "$0 core + optional add-ons", competitor: "~$150–199/mo per location (per published pricing)" },
+        { label: "Commission on direct orders", feefree: "0%", competitor: "0% to the restaurant" },
+        { label: "Hidden / customer-side fees", feefree: "None on direct orders", competitor: "7% \"Support Local Fee\" charged to diners on ChowNow app/marketplace orders" },
+        { label: "Contract / commitment", feefree: "None — cancel anytime", competitor: "Monthly SaaS; confirm term at signup" },
+        { label: "Free to try (no demo call)", feefree: "Yes — paste your menu, live in seconds", competitor: "No — sales call to activate" },
+      ],
+      footnote: "ChowNow's 7% diner-side \"Support Local Fee\" applies to orders through ChowNow's own app/marketplace, not necessarily your embedded direct widget — confirm which of your orders it touches. Figures as of 2026; our numbers are public at /pricing.",
+    },
     costSummary: "$149–199/month per location plus a one-time setup fee. Zero commission.",
     whatTheyAre: "A zero-commission online ordering platform charging a fixed monthly SaaS fee per restaurant location. Popular in the US.",
     whyFeeFree: [
@@ -712,6 +758,17 @@ export const COMPETITORS: Competitor[] = [
     brandColor: "#ef0a30",
     category: "delivery_aggregator",
     tagline: "DoorDash alternative for restaurants",
+    pricingTable: {
+      rows: [
+        { label: "Setup fee", feefree: "$0", competitor: "$0 to join (activation may apply)" },
+        { label: "Monthly cost", feefree: "$0 core + optional add-ons", competitor: "$0 fixed — but 15–30% per order" },
+        { label: "Commission on direct orders", feefree: "0% (Stripe card fees only)", competitor: "15–30% per order (plan-dependent)" },
+        { label: "Hidden / customer-side fees", feefree: "None on direct orders", competitor: "Diner delivery + service fees on every order" },
+        { label: "Contract / commitment", feefree: "None — cancel anytime", competitor: "Plan-based; higher placement = higher tier" },
+        { label: "Free to try (no demo call)", feefree: "Yes — paste your menu, live in seconds", competitor: "Marketplace onboarding, not self-serve ordering software" },
+      ],
+      footnote: "DoorDash is a delivery marketplace, not direct ordering software — the comparison is direct-ordering economics vs marketplace commission. Commission tiers as of 2026; our numbers are public at /pricing.",
+    },
     costSummary: "15-30% commission per order. Optional $0/$0.99 customer-side fees for DashPass members.",
     whatTheyAre: "A consumer-facing food-delivery marketplace. Restaurants pay 15-30% commission depending on the plan (Basic / Plus / Premier).",
     whyFeeFree: [
