@@ -12,6 +12,11 @@
 // params, render the template, and hand HTML to send().
 
 import { Resend } from "resend";
+import { reportError } from "@/lib/report-error";
+
+/** True on a production deployment (Vercel or NODE_ENV). Email failures are
+ *  silent-in-dev but must be loud + alertable in prod (stabilization H8). */
+const IS_PROD = process.env.NODE_ENV === "production" || process.env.VERCEL_ENV === "production";
 import prisma from "@/lib/db";
 import { decrypt } from "@/lib/encrypt";
 import { getDict, type Translator } from "@/lib/i18n-dict";
@@ -70,6 +75,9 @@ async function getTransport(): Promise<{ client: Resend | null; from: string }> 
       } catch (e: unknown) {
         const msg = e instanceof Error ? e.message : String(e);
         console.error("[Email transport] Decryption of saved Resend key FAILED:", msg);
+        // A wrong/rotated ENCRYPTION_KEY silently disables ALL email in prod —
+        // alert on it (stabilization H8).
+        if (IS_PROD) reportError(e, { stage: "email-key-decrypt" });
       }
     }
     if (settings?.emailFrom) from = settings.emailFrom;
@@ -162,6 +170,17 @@ async function send({
   const { client, from: defaultFrom } = await getTransport();
   const from = applyFromName(defaultFrom, fromName);
   if (!client) {
+    if (IS_PROD) {
+      // No working Resend transport in production = every email (customer
+      // confirmations, staff new-order, password resets, reservations) silently
+      // dropped. Make it LOUD + alertable and return FAILURE so callers don't
+      // record a false "sent" (stabilization H8). Cause is a missing Resend key
+      // or an ENCRYPTION_KEY that can't decrypt the saved one. Don't log the
+      // recipient (PII) — the subject is enough to locate it.
+      console.error("[Email] transport UNCONFIGURED in production — email NOT sent. subject:", subject);
+      reportError(new Error("Email transport unconfigured (no Resend client) in production"), { stage: "email-send", subject });
+      return { success: false, error: "email transport unconfigured" };
+    }
     console.log("[Email placeholder]", to, "·", subject);
     return { success: true };
   }
