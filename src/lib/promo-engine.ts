@@ -890,11 +890,27 @@ function calcFreeItem(promo: PromoInput, ctx: ApplyContext): number {
   return freeableAmount(freedItem, normalizeFreeBasis((rules as { freeItemExtraChargeMode?: unknown }).freeItemExtraChargeMode));
 }
 
-function calcMealBundle(promo: PromoInput, ctx: ApplyContext): number {
+/** A claiming promo's discount PLUS the exact cart units it prices. `claimed`
+ *  has one entry per physical unit the promo owns (a line of qty 2 both folded
+ *  into a bundle appears twice), referencing the CartItem it came from — so the
+ *  resolver can remove those units from the pool the OTHER item promos see and
+ *  stop a second promo discounting the same unit. Empty when the promo yields no
+ *  benefit (it then owns nothing). Luigi 2026-07-07. */
+type ClaimResult = { total: number; claimed: CartItem[] };
+
+/** One formed bundle: the units that fill it + the per-slot speciality fee it
+ *  carries. `saved` = (Σ its unit prices) − bundlePrice − its fee. Surfaced so
+ *  the cart can show each repeated bundle as its own "2 pizzas $30 · saved X"
+ *  line with its contents (GloriaFood parity — Luigi 2026-07-07). */
+export type BundleInstance = { units: CartItem[]; fee: number; itemsTotal: number; saved: number };
+
+function mealBundleInstances(promo: PromoInput, ctx: ApplyContext): BundleInstance[] {
   const rules = getRules(promo);
   const groups = rules.groups ?? [];
-  if (!groups.length) return 0;
+  if (!groups.length) return [];
   const isSpeciality = promo.promotionType === "meal_bundle_speciality";
+  const bundlePrice = rules.bundlePrice ?? 0;
+  const onceOnly = !!rules.oncePerOrder;
 
   // Expand the cart to individual UNITS so each physical unit fills at most ONE
   // slot — overlapping slots (e.g. two "Pizza" groups) must not both claim the
@@ -907,30 +923,68 @@ function calcMealBundle(promo: PromoInput, ctx: ApplyContext): number {
     for (let q = 0; q < i.quantity; q++) units.push({ price: unit, item: i, used: false });
   }
 
-  let eligibleTotal = 0;
-  let feeTotal = 0;
-  for (const group of groups) {
-    // minCount clamped to >=1 so a slot saved with min 0 can't auto-satisfy or
-    // auto-fold priciest units for free (audit). maxCount >= min.
-    const min = Math.max(1, group.minCount ?? 1);
-    const cap = Math.max(min, group.maxCount ?? min);
-    const avail = units
-      .filter((u) => !u.used && itemMatchesGroup(group, u.item))
-      .sort((a, b) => b.price - a.price);
-    // Each slot needs `min` DISTINCT units; if the cart can't supply them with
-    // units not already claimed by another slot, the bundle doesn't qualify.
-    if (avail.length < min) return 0;
-    const take = avail.slice(0, cap);
-    for (const u of take) {
-      u.used = true;
-      eligibleTotal += u.price;
+  const instances: BundleInstance[] = [];
+  // Form as many COMPLETE bundles as the cart supports — 4 eligible pizzas fill
+  // a "2 for $30" bundle TWICE (GloriaFood parity, Luigi 2026-07-07). Each pass
+  // fills every group (min..cap priciest still-unclaimed units); stop when a
+  // group can't supply its min, or after one pass when the promo is once-per-order.
+  while (true) {
+    // Tentatively reserve one bundle's worth across all groups. minCount clamped
+    // to >=1 so a slot saved with min 0 can't auto-fold priciest units for free.
+    const passUnits: { price: number; item: CartItem; used: boolean }[] = [];
+    let feeTotal = 0;
+    let canForm = true;
+    for (const group of groups) {
+      const min = Math.max(1, group.minCount ?? 1);
+      const cap = Math.max(min, group.maxCount ?? min);
+      const avail = units
+        .filter((u) => !u.used && itemMatchesGroup(group, u.item))
+        .sort((a, b) => b.price - a.price);
+      if (avail.length < min) { canForm = false; break; }
+      const take = avail.slice(0, cap);
+      for (const u of take) u.used = true; // reserve so overlapping slots don't reuse a unit
+      passUnits.push(...take);
+      if (isSpeciality) feeTotal += Math.max(0, Number(group.extraFee ?? 0)) * take.length;
     }
-    // Speciality bundles add a per-slot fee per claimed unit — it's NOT part of
-    // the discount, so it reduces the savings (customer pays bundlePrice + fees).
-    if (isSpeciality) feeTotal += Math.max(0, Number(group.extraFee ?? 0)) * take.length;
+    if (!canForm) {
+      for (const u of passUnits) u.used = false; // roll back the incomplete pass
+      break;
+    }
+    const itemsTotal = passUnits.reduce((s, u) => s + u.price, 0);
+    const saved = parseFloat((itemsTotal - bundlePrice - feeTotal).toFixed(2));
+    // A bundle only APPLIES when the items cost MORE than the bundle price — else
+    // it would charge the customer extra (2 cheap pizzas for $30 > their real
+    // price). Since units are taken priciest-first, once a pass isn't beneficial
+    // no later pass will be, so stop AND leave those units unclaimed for other
+    // promos (don't lock them into a $0-benefit bundle). Luigi 2026-07-07.
+    if (saved <= 0) {
+      for (const u of passUnits) u.used = false;
+      break;
+    }
+    instances.push({
+      units: passUnits.map((u) => u.item),
+      fee: feeTotal,
+      itemsTotal: parseFloat(itemsTotal.toFixed(2)),
+      saved,
+    });
+    if (onceOnly) break;
   }
-  const bundlePrice = rules.bundlePrice ?? 0;
-  return Math.max(0, parseFloat((eligibleTotal - bundlePrice - feeTotal).toFixed(2)));
+  return instances;
+}
+
+function mealBundleResult(promo: PromoInput, ctx: ApplyContext): ClaimResult {
+  const instances = mealBundleInstances(promo, ctx);
+  if (!instances.length) return { total: 0, claimed: [] };
+  const total = parseFloat(instances.reduce((s, b) => s + b.saved, 0).toFixed(2));
+  // A bundle that saves nothing OWNS nothing — leave the units for other promos.
+  if (total <= 0) return { total: 0, claimed: [] };
+  const claimed: CartItem[] = [];
+  for (const b of instances) claimed.push(...b.units);
+  return { total, claimed };
+}
+
+function calcMealBundle(promo: PromoInput, ctx: ApplyContext): number {
+  return mealBundleResult(promo, ctx).total;
 }
 
 function calcFreeDishMeal(promo: PromoInput, ctx: ApplyContext): number {
@@ -962,33 +1016,92 @@ function calcFreeDishMeal(promo: PromoInput, ctx: ApplyContext): number {
   return parseFloat((freeableAmount(sorted[0], basis) * (pct / 100)).toFixed(2));
 }
 
-function calcFixedCombo(promo: PromoInput, ctx: ApplyContext): number {
+/** Per-unit price of a cart line (its subtotal spread over its quantity). */
+function perUnitPrice(i: CartItem): number {
+  return i.quantity > 0 ? i.subtotal / i.quantity : i.price;
+}
+
+/** Claim one unit from each group — the combo the customer formed. Greedily
+ *  picks the priciest still-available match per group (a line can supply up to
+ *  its quantity, so two "pizza" groups can each take a unit from one qty-2 line).
+ *  Shared by fixed_combo (owns the units its flat discount rewards). */
+function claimOnePerGroup(groups: ItemGroup[], items: CartItem[]): CartItem[] {
+  const takenPerLine = new Map<CartItem, number>();
+  for (const group of groups) {
+    const match = itemsMatchingGroup(group, items)
+      .filter((i) => (takenPerLine.get(i) ?? 0) < i.quantity)
+      .sort((a, b) => b.price - a.price)[0];
+    if (match) takenPerLine.set(match, (takenPerLine.get(match) ?? 0) + 1);
+  }
+  const claimed: CartItem[] = [];
+  for (const [line, n] of takenPerLine) for (let k = 0; k < n; k++) claimed.push(line);
+  return claimed;
+}
+
+function fixedComboResult(promo: PromoInput, ctx: ApplyContext): ClaimResult {
   const rules = getRules(promo);
   const groups = rules.groups ?? [];
   // A combo with NO groups is a misconfiguration — must NOT behave like an
   // unconditional whole-cart discount (audit). Luigi 2026-06-27.
-  if (!groups.length) return 0;
+  if (!groups.length) return { total: 0, claimed: [] };
   for (const group of groups) {
-    if (groupTotalQty(group, ctx.items) < 1) return 0;
+    if (groupTotalQty(group, ctx.items) < 1) return { total: 0, claimed: [] };
   }
-  return Math.min(rules.discountAmount ?? 0, discountableSubtotal(ctx));
+  // The flat discount is capped at the value of the units the combo OWNS (one per
+  // group), NOT the whole cart — otherwise a $60 combo on $25 of claimed items ate
+  // $35 out of unclaimed units that a later item promo also discounts (double-dip;
+  // adversarial Defect 3, Luigi 2026-07-07). discountableSubtotal stays as a
+  // second, gift-card-aware ceiling.
+  const claimed = claimOnePerGroup(groups, ctx.items);
+  const claimedValue = parseFloat(claimed.reduce((s, u) => s + perUnitPrice(u), 0).toFixed(2));
+  const total = Math.min(rules.discountAmount ?? 0, discountableSubtotal(ctx), claimedValue);
+  return { total, claimed: total > 0 ? claimed : [] };
 }
 
-function calcPercentageCombo(promo: PromoInput, ctx: ApplyContext): number {
+function calcFixedCombo(promo: PromoInput, ctx: ApplyContext): number {
+  return fixedComboResult(promo, ctx).total;
+}
+
+function percentageComboResult(promo: PromoInput, ctx: ApplyContext): ClaimResult {
   const rules = getRules(promo);
   const groups = rules.groups ?? [];
-  if (!groups.length) return 0; // no groups = misconfig, never whole-cart
+  if (!groups.length) return { total: 0, claimed: [] }; // no groups = misconfig, never whole-cart
   for (const group of groups) {
-    if (groupTotalQty(group, ctx.items) < 1) return 0;
+    if (groupTotalQty(group, ctx.items) < 1) return { total: 0, claimed: [] };
   }
   // "Once per order" → discount ONE combo (one item per group, the customer's
   // best). Unchecked (default) → discount every qualifying item, i.e. all the
   // combos the cart forms. Luigi 2026-06-07: "buy 4 items — all 4 or just one
   // 2-item combo? — this is what that option adjusts."
-  const eligible = rules.oncePerOrder
-    ? oneComboValue(groups, ctx.items)
-    : allGroupsValue(groups, ctx.items);
-  return parseFloat((((rules.discountPercent ?? 0) / 100) * eligible).toFixed(2));
+  // The claimed units MIRROR the eligible base exactly (oneComboValue picks one
+  // best unit per group; allGroupsValue takes every qualifying unit) so the total
+  // stays byte-for-byte identical to the pre-ownership behaviour.
+  const claimed: CartItem[] = [];
+  let eligible = 0;
+  if (rules.oncePerOrder) {
+    const used = new Set<CartItem>();
+    for (const group of groups) {
+      const matched = itemsMatchingGroup(group, ctx.items).filter((i) => !used.has(i));
+      if (!matched.length) continue;
+      const best = matched.reduce((a, b) => (a.price >= b.price ? a : b));
+      used.add(best);
+      eligible += best.price;
+      claimed.push(best); // one unit of the best line
+    }
+  } else {
+    const matched = new Set<CartItem>();
+    for (const group of groups) for (const i of itemsMatchingGroup(group, ctx.items)) matched.add(i);
+    for (const i of matched) {
+      eligible += i.subtotal;
+      for (let k = 0; k < i.quantity; k++) claimed.push(i); // every unit of every matching line
+    }
+  }
+  const total = parseFloat((((rules.discountPercent ?? 0) / 100) * eligible).toFixed(2));
+  return { total, claimed: total > 0 ? claimed : [] };
+}
+
+function calcPercentageCombo(promo: PromoInput, ctx: ApplyContext): number {
+  return percentageComboResult(promo, ctx).total;
 }
 
 function calcMealBundleSpeciality(promo: PromoInput, ctx: ApplyContext): number {
@@ -1037,6 +1150,63 @@ export type ResolvedPromotions = {
    *  is active alongside other qualifying deals. */
   blockedPromos: BlockedPromo[];
 };
+
+// ── Cross-promo unit ownership (Luigi 2026-07-07) ─────────────────────────────
+// A bundle/combo OWNS the physical units it prices — another item-targeting promo
+// (BOGO, free-item, grouped %-off) must not discount the SAME unit a second time.
+// A "2 pizzas for $30" bundle + a BOGO on the same 2 pizzas used to stack and net
+// the pair below the $30 bundle floor (each promo's calc ran over the same
+// untouched cart with no shared unit accounting). Bundles/combos now CLAIM their
+// units first; the other item promos see only what's left. Whole-cart /
+// order-level promos (fixed_cart, payment_reward, group-less %-off, free_delivery,
+// reward_credit) discount the cart as a whole, not specific units, so they're
+// unaffected and keep running over the full original cart.
+const CLAIMING_TYPES = new Set(["meal_bundle", "meal_bundle_speciality", "fixed_combo", "percentage_combo"]);
+const ITEM_TYPES = new Set(["bogo", "buy_n_get_free", "free_item", "free_dish_meal"]);
+
+/** Which resolution lane a promo runs in: "claim" (bundle/combo — owns its units,
+ *  goes first), "item" (targets specific dishes — sees only unclaimed units), or
+ *  "order" (whole-cart / no specific units — unchanged, runs on the full cart). */
+function promoLane(p: PromoInput): "claim" | "item" | "order" {
+  if (CLAIMING_TYPES.has(p.promotionType)) return "claim";
+  if (ITEM_TYPES.has(p.promotionType)) return "item";
+  // percentage_off is item-targeted only when it carries groups; otherwise it's a
+  // whole-cart discount and must NOT shrink to the post-claim pool.
+  if (p.promotionType === "percentage_off") return (getRules(p).groups?.length ?? 0) > 0 ? "item" : "order";
+  return "order";
+}
+
+/** A claiming promo's discount + the units it owns, so the resolver can pull them
+ *  out of the pool. Non-claiming types report no claimed units. */
+function claimingResult(promo: PromoInput, ctx: ApplyContext): ClaimResult {
+  switch (promo.promotionType) {
+    case "meal_bundle":
+    case "meal_bundle_speciality": return mealBundleResult(promo, ctx);
+    case "fixed_combo":            return fixedComboResult(promo, ctx);
+    case "percentage_combo":       return percentageComboResult(promo, ctx);
+    default:                       return { total: calcDiscount(promo, ctx), claimed: [] };
+  }
+}
+
+/** Return a copy of `items` with the claimed UNITS removed (identity-matched to
+ *  the source lines). A line loses one unit of quantity per claimed entry; a line
+ *  fully claimed drops out. Per-unit price/base fields are preserved so a partly
+ *  claimed line still prices its remaining units correctly for the next promo. */
+function removeClaimedUnits(items: CartItem[], claimed: CartItem[]): CartItem[] {
+  if (!claimed.length) return items;
+  const counts = new Map<CartItem, number>();
+  for (const u of claimed) counts.set(u, (counts.get(u) ?? 0) + 1);
+  const out: CartItem[] = [];
+  for (const it of items) {
+    const n = counts.get(it) ?? 0;
+    if (n <= 0) { out.push(it); continue; }
+    const newQty = it.quantity - n;
+    if (newQty <= 0) continue; // every unit of this line was claimed
+    const perUnit = it.quantity > 0 ? it.subtotal / it.quantity : it.price;
+    out.push({ ...it, quantity: newQty, subtotal: parseFloat((perUnit * newQty).toFixed(2)) });
+  }
+  return out;
+}
 
 export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): ResolvedPromotions {
   // Split coupon vs auto
@@ -1121,14 +1291,64 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
     }
   }
 
+  // Resolve each active promo's discount with cross-promo unit ownership. The
+  // discount + the ctx it was measured against are stored so the itemisation
+  // breakdown below reflects the SAME (possibly reduced) cart.
+  const computed = new Map<string, { discount: number; ctxUsed: ApplyContext }>();
+  const uniqueActive = active.filter((p, i) => active.findIndex(q => q.id === p.id) === i);
+
+  // Phase 1 — claiming promos (bundle/combo) take their units, biggest deal
+  // first, off a shrinking pool. GLORIAFOOD TIE-BREAK KNOB (Luigi 2026-07-07):
+  // claiming promos run BEFORE the other item promos, so a bundle KEEPS its items
+  // even when a BOGO alone would beat the bundle price — "bundle owns its items".
+  // To switch to "the customer gets the cheaper of the two", merge the claim +
+  // item lanes into one list sorted by descending discount instead of claim-first.
+  let workingItems = ctx.items;
+  const claimLane = uniqueActive
+    .filter(p => promoLane(p) === "claim")
+    .map(p => ({ p, standalone: claimingResult(p, ctx).total }))
+    .sort((a, b) => b.standalone - a.standalone);
+  for (const { p } of claimLane) {
+    const ctxUsed = workingItems === ctx.items ? ctx : { ...ctx, items: workingItems };
+    const { total, claimed } = claimingResult(p, ctxUsed);
+    computed.set(p.id, { discount: total, ctxUsed });
+    if (total > 0 && claimed.length) workingItems = removeClaimedUnits(workingItems, claimed);
+  }
+
+  // Phase 2 — remaining item-targeted promos see ONLY the unclaimed units (so a
+  // BOGO can't re-free a bundled pizza). Keep the original subtotal so spend-based
+  // triggers (free_item "spend $40") aren't perturbed by the bundling.
+  const itemCtx = workingItems === ctx.items ? ctx : { ...ctx, items: workingItems };
+  for (const p of uniqueActive) {
+    if (promoLane(p) !== "item") continue;
+    computed.set(p.id, { discount: calcDiscount(p, itemCtx), ctxUsed: itemCtx });
+  }
+
+  // Phase 3 — whole-cart / order-level promos (group-less %-off, fixed_cart,
+  // payment_reward) discount the REMAINDER after bundles/combos took their units,
+  // NOT the full cart. Otherwise a "20% off everything" coupon re-discounts pizzas
+  // already priced by a "2 for $30" bundle and pushes the pair under its $30 floor
+  // (adversarial Defect 1, Luigi 2026-07-07). With no claiming promo the pool is
+  // unchanged, so carts without a bundle behave exactly as before. free_delivery /
+  // reward_credit don't read the subtotal, so the reduced ctx is a no-op for them.
+  const orderSubtotal = workingItems === ctx.items
+    ? ctx.subtotal
+    : parseFloat(workingItems.reduce((s, i) => s + i.subtotal, 0).toFixed(2));
+  const orderCtx = workingItems === ctx.items ? ctx : { ...ctx, items: workingItems, subtotal: orderSubtotal };
+  for (const p of uniqueActive) {
+    if (promoLane(p) !== "order") continue;
+    computed.set(p.id, { discount: calcDiscount(p, orderCtx), ctxUsed: orderCtx });
+  }
+
+  // Emit in the original active order (dedup by id) — output shape unchanged.
   const seen = new Set<string>();
   const results: PromoResult[] = [];
   for (const p of active) {
     if (seen.has(p.id)) continue;
     seen.add(p.id);
-    const discount = calcDiscount(p, ctx);
+    const { discount, ctxUsed } = computed.get(p.id) ?? { discount: calcDiscount(p, ctx), ctxUsed: ctx };
     if (discount > 0 || p.promotionType === "free_delivery" || p.promotionType === "reward_credit") {
-      const breakdown = promoBreakdown(p, ctx);
+      const breakdown = promoBreakdown(p, ctxUsed);
       results.push({
         promoId: p.id,
         name: p.name,
