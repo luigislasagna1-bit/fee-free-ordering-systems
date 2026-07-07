@@ -130,6 +130,10 @@ interface Props {
     breakdown?: Array<{ menuItemId: string; name: string; amount: number; lineKey?: string }>;
     /** reward_credit only: store credit earned on completion (not a discount). */
     creditAmount?: number;
+    /** meal_bundle only: the concrete bundles formed, so the summary can GROUP the
+     *  bundled lines under a "2 pizzas $30 · $30.00 · saved X" card (GloriaFood
+     *  parity, Luigi 2026-07-07). `parts` map to cart lines by lineKey. */
+    bundles?: Array<{ price: number; saved: number; parts: Array<{ lineKey?: string; menuItemId: string }> }>;
   }>;
   /** Exclusive promos that qualified but lost to a bigger exclusive (only one
    *  exclusive applies per order). Shown as a small note so the customer knows
@@ -676,6 +680,27 @@ export function CheckoutModal({
     return amt;
   });
 
+  // Group auto-applied meal bundles into a "2 pizzas $30" card with its pizzas
+  // beneath (GloriaFood parity, Luigi 2026-07-07). Instances come from each
+  // bundle promo's `bundles`, mapped to cart lines by lineKey (= cart index).
+  // The grouped lines are hidden from the flat summary + the bundle promo is
+  // dropped from the celebration strip (it's the card now). Display-only.
+  const checkoutBundleGroups: Array<{ key: string; promoName: string; price: number; saved: number; lineIdxs: number[] }> = [];
+  const checkoutBundledIdx = new Set<number>();
+  const checkoutBundlePromoIds = new Set<string>();
+  for (const p of appliedPromos as any[]) {
+    if (!Array.isArray(p?.bundles) || !p.bundles.length) continue;
+    checkoutBundlePromoIds.add(p.promoId);
+    p.bundles.forEach((b: any, bi: number) => {
+      const seen = new Set<number>();
+      for (const part of b?.parts ?? []) {
+        const idx = part?.lineKey != null ? Number(part.lineKey) : NaN;
+        if (Number.isInteger(idx) && idx >= 0 && idx < cart.length) { seen.add(idx); checkoutBundledIdx.add(idx); }
+      }
+      if (seen.size) checkoutBundleGroups.push({ key: `${p.promoId}:${bi}`, promoName: p.name, price: Number(b.price) || 0, saved: Number(b.saved) || 0, lineIdxs: [...seen] });
+    });
+  }
+
   return (
     // NO backdrop-close on checkout (Luigi 2026-07-04): a stray tap outside
     // the white area was closing it mid-typing and wiping the customer's
@@ -722,13 +747,13 @@ export function CheckoutModal({
             row shows the promo name + savings. Stays sticky-at-top of the
             modal body so customers see what they earned even as they
             scroll the form below. */}
-        {(appliedPromos.length > 0 || (hasFreeDelivery && baseDeliveryFee > 0)) && (
+        {(appliedPromos.some((p) => p.type !== "free_delivery" && p.discount > 0 && !checkoutBundlePromoIds.has(p.promoId)) || (hasFreeDelivery && baseDeliveryFee > 0)) && (
           <div className="px-5 pt-4 flex-shrink-0">
             <div className="rounded-xl border-2 border-emerald-200 bg-gradient-to-br from-emerald-50 to-green-50 p-4 shadow-sm">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-xl" aria-hidden>🎉</span>
                 <div className="text-sm font-bold text-emerald-800">
-                  {appliedPromos.length + (hasFreeDelivery && baseDeliveryFee > 0 ? 1 : 0) === 1
+                  {appliedPromos.filter((p) => p.type !== "free_delivery" && p.discount > 0 && !checkoutBundlePromoIds.has(p.promoId)).length + (hasFreeDelivery && baseDeliveryFee > 0 ? 1 : 0) === 1
                     ? tc("unlockedPromoOne")
                     : tc("unlockedPromoMany")}
                 </div>
@@ -738,7 +763,8 @@ export function CheckoutModal({
                   // Free Delivery promos have discount=0 — surface them via
                   // the separate "Free Delivery" line below instead so the
                   // savings amount is accurate (it's the delivery fee).
-                  .filter((p) => p.type !== "free_delivery" && p.discount > 0)
+                  // Bundle promos are shown as their own grouped card above.
+                  .filter((p) => p.type !== "free_delivery" && p.discount > 0 && !checkoutBundlePromoIds.has(p.promoId))
                   // One line per promo (NAME + total). Item-targeted deals now
                   // show WHICH dishes inline on each cart line above (the green
                   // "You saved" badge), so the summary stays a clean per-promo
@@ -1790,7 +1816,39 @@ export function CheckoutModal({
                 <div className="py-10 text-center text-gray-400 text-sm">{tc("cartEmpty")}</div>
               ) : (
                 <div className="divide-y divide-gray-100">
-                  {cart.map((ci, i) => (
+                  {/* Auto-applied meal bundles as a GloriaFood-style grouped line:
+                      the "2 pizzas $30" deal at its price + savings, with the
+                      bundled pizzas beneath. Those lines are hidden below. */}
+                  {checkoutBundleGroups.map((g) => (
+                    <div key={g.key} className="grid grid-cols-[40px_1fr_70px] gap-3 py-2.5 text-sm items-start">
+                      <span className="font-semibold text-gray-700" aria-hidden>🎉</span>
+                      <span className="text-gray-700 min-w-0 break-words">
+                        <span className="font-semibold">{g.promoName}</span>
+                        {g.saved > 0 && (
+                          <span className="flex w-fit items-center gap-1 mt-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-2 py-0.5">
+                            <span aria-hidden>👍</span> {tc("youSaved", { amount: formatCurrency(g.saved) })}
+                          </span>
+                        )}
+                        <span className="block mt-1 pl-3 border-l-2 border-gray-100 text-xs text-gray-500 space-y-0.5">
+                          {g.lineIdxs.map((idx) => {
+                            const bi = cart[idx];
+                            if (!bi) return null;
+                            return (
+                              <span key={idx} className="block">
+                                • {bi.menuItem.name}{bi.variant ? ` (${bi.variant.name})` : ""}
+                                {bi.modifierLabels && bi.modifierLabels.length ? ` — ${bi.modifierLabels.join(", ")}` : ""}
+                              </span>
+                            );
+                          })}
+                        </span>
+                      </span>
+                      <span className="text-right text-gray-700 font-medium">{formatCurrency(g.price)}</span>
+                    </div>
+                  ))}
+                  {cart.map((ci, i) => {
+                    // Lines folded into a bundle card above are hidden here.
+                    if (checkoutBundledIdx.has(i)) return null;
+                    return (
                     <div key={i} className="grid grid-cols-[40px_1fr_70px] gap-3 py-2.5 text-sm items-start">
                       <span className="font-semibold text-gray-700">{ci.isBundle ? "1×" : `${ci.quantity}×`}</span>
                       <span className="text-gray-700 min-w-0 break-words">
@@ -1830,7 +1888,7 @@ export function CheckoutModal({
                       </span>
                       <span className="text-right text-gray-700 font-medium">{formatCurrency(ci.lineTotal)}</span>
                     </div>
-                  ))}
+                  );})}
                 </div>
               )}
 

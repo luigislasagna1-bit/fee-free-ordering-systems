@@ -2463,6 +2463,32 @@ export function OrderingPageClient({
       return amt;
     });
   }, [promoResults, cart]);
+
+  // Group auto-applied meal bundles so the cart shows a "2 pizzas $30 · $30.00 ·
+  // saved X" card with its pizzas beneath (GloriaFood parity, Luigi 2026-07-07)
+  // instead of loose lines + a bare discount. Instances come from the engine (each
+  // meal_bundle result's `bundles`), mapped back to cart lines by lineKey (= cart
+  // index). Display-only — the charge total is unchanged. Lines any bundle touched
+  // are pulled from the flat list and shown under the card; the bundle promo is
+  // dropped from the "You unlocked promos" strip (it's the card now).
+  const bundleGrouping = useMemo(() => {
+    const groups: Array<{ key: string; promoName: string; price: number; saved: number; lineIdxs: number[] }> = [];
+    const bundledIdx = new Set<number>();
+    const bundlePromoIds = new Set<string>();
+    for (const p of promoResults as any[]) {
+      if (!Array.isArray(p?.bundles) || !p.bundles.length) continue;
+      bundlePromoIds.add(p.promoId);
+      p.bundles.forEach((b: any, bi: number) => {
+        const seen = new Set<number>();
+        for (const part of b?.parts ?? []) {
+          const idx = part?.lineKey != null ? Number(part.lineKey) : NaN;
+          if (Number.isInteger(idx) && idx >= 0 && idx < cart.length) { seen.add(idx); bundledIdx.add(idx); }
+        }
+        if (seen.size) groups.push({ key: `${p.promoId}:${bi}`, promoName: p.name, price: Number(b.price) || 0, saved: Number(b.saved) || 0, lineIdxs: [...seen] });
+      });
+    }
+    return { groups, bundledIdx, bundlePromoIds };
+  }, [promoResults, cart]);
   // ── Promo time-window helpers (shared with the engine via promo-window) ──
   // Is a promo redeemable for the customer's CURRENT order time — ASAP now, or
   // their chosen "order for later" time? Drives the nudge, the free-item
@@ -5500,7 +5526,41 @@ export function OrderingPageClient({
                 </div>
               ) : (
                 <div className="divide-y divide-gray-50">
-                  {cart.map((ci, idx) => (
+                  {/* Auto-applied meal bundles, GloriaFood-style: a "2 pizzas $30"
+                      card at the bundle price + "You saved X" with its pizzas
+                      beneath. The pizzas are hidden from the flat list below. */}
+                  {bundleGrouping.groups.map((g) => (
+                    <div key={g.key} className="p-4">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                          <div className="font-semibold text-gray-900 text-sm">🎉 {g.promoName}</div>
+                          {g.saved > 0 && (
+                            <span className="inline-flex items-center gap-1 mt-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-2 py-0.5">
+                              <span aria-hidden>👍</span> {tCheckout("youSaved", { amount: fmt(g.saved) })}
+                            </span>
+                          )}
+                          <div className="mt-1 pl-4 border-l-2 border-gray-100 space-y-0.5">
+                            {g.lineIdxs.map((i) => {
+                              const bi = cart[i];
+                              if (!bi) return null;
+                              const mods = cartItemModifierLabels(bi);
+                              return (
+                                <div key={i} className="text-xs text-gray-500">
+                                  • {bi.menuItem.name}{bi.variant ? ` (${bi.variant.name})` : ""}
+                                  {mods.length ? <span className="text-gray-400"> — {mods.join(", ")}</span> : null}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                        <div className="text-sm font-bold text-gray-900 flex-shrink-0">{fmt(g.price)}</div>
+                      </div>
+                    </div>
+                  ))}
+                  {cart.map((ci, idx) => {
+                    // Lines folded into a bundle card above are hidden here.
+                    if (bundleGrouping.bundledIdx.has(idx)) return null;
+                    return (
                     <div key={idx} className="p-4">
                       <div className="flex items-start justify-between gap-2">
                         <div
@@ -5590,7 +5650,7 @@ export function OrderingPageClient({
                         </button>
                       )}
                     </div>
-                  ))}
+                  );})}
                 </div>
               )}
             </div>
@@ -5611,9 +5671,11 @@ export function OrderingPageClient({
                 {/* Promo results — each applied deal can be removed (X) so the
                     customer can choose a different non-stackable deal. Luigi
                     2026-06-07. */}
-                {promoResults.length > 0 && (
+                {(promoResults.some((r: any) => !bundleGrouping.bundlePromoIds.has(r.promoId)) || (hasFreeDelivery && baseDeliveryFee > 0)) && (
                   <div className="px-4 py-3 bg-green-50 border-b border-green-100 space-y-1">
-                    {promoResults.map((r: any) => (
+                    {/* Bundle promos are shown as their own grouped card above, so
+                        they're dropped from this strip to avoid showing twice. */}
+                    {(promoResults as any[]).filter((r) => !bundleGrouping.bundlePromoIds.has(r.promoId)).map((r: any) => (
                       <div key={r.promoId} className="flex justify-between items-center gap-2 text-sm text-green-700 font-medium">
                         <span className="truncate">🎉 {r.name}</span>
                         <span className="flex items-center gap-2 flex-shrink-0">

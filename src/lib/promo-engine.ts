@@ -86,6 +86,23 @@ export type PromoResult = {
   /** reward_credit only: store credit the customer will EARN on completion (not
    *  a discount). Lets the cart show "Earn $X" instead of a discount line. */
   creditAmount?: number;
+  /** meal_bundle / meal_bundle_speciality only: the concrete bundles this promo
+   *  formed from the loose cart — one entry per repeated instance (4 pizzas → two
+   *  "2 for $30" bundles). Lets the cart GROUP the bundled lines under a single
+   *  "2 pizzas $30 · $30.00 · saved X" card (GloriaFood parity, Luigi 2026-07-07)
+   *  instead of a bare discount line. `parts` point back to the exact cart lines
+   *  by lineKey (falling back to menuItemId). Display-only — the charge total is
+   *  unchanged. */
+  bundles?: BundleView[];
+};
+
+/** One formed bundle, shaped for the cart UI. `price` = what the customer pays
+ *  for this bundle (bundlePrice + any speciality fee); `saved` = the discount it
+ *  represents; `parts` = the cart lines it grouped (one entry per unit). */
+export type BundleView = {
+  price: number;
+  saved: number;
+  parts: Array<{ lineKey?: string; menuItemId: string }>;
 };
 
 export type CartItem = {
@@ -1349,6 +1366,18 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
     const { discount, ctxUsed } = computed.get(p.id) ?? { discount: calcDiscount(p, ctx), ctxUsed: ctx };
     if (discount > 0 || p.promotionType === "free_delivery" || p.promotionType === "reward_credit") {
       const breakdown = promoBreakdown(p, ctxUsed);
+      // Bundle types expose their concrete instances so the cart can GROUP the
+      // bundled lines under one "2 pizzas $30" card (one per repeated bundle).
+      const isBundleType = p.promotionType === "meal_bundle" || p.promotionType === "meal_bundle_speciality";
+      const bundles: BundleView[] | undefined = isBundleType
+        ? mealBundleInstances(p, ctxUsed)
+            .filter((b) => b.saved > 0)
+            .map((b) => ({
+              price: parseFloat((b.itemsTotal - b.saved).toFixed(2)),
+              saved: b.saved,
+              parts: b.units.map((u) => ({ lineKey: u.lineKey, menuItemId: u.menuItemId })),
+            }))
+        : undefined;
       results.push({
         promoId: p.id,
         name: p.name,
@@ -1364,6 +1393,7 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
         // discounted dish) so the cart can show WHICH items were discounted.
         // Whole-cart promos return [] from promoBreakdown → no itemisation.
         breakdown: breakdown.length >= 1 ? breakdown : undefined,
+        bundles: bundles && bundles.length ? bundles : undefined,
       });
     }
   }
