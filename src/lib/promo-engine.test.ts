@@ -770,6 +770,29 @@ describe("bundle/combo claims its units (no double-discount)", () => {
     expect(results.find((r) => r.type === "fixed_combo")?.discount).toBe(25); // capped at claimed $25, NOT $60
   });
 
+  it("fixed_combo exposes a grouped bundle card (GloriaFood-style combo grouping)", () => {
+    const combo = mkPromo({
+      promotionType: "fixed_combo", name: "combo $10",
+      ruleConfig: { discountAmount: 10, groups: [
+        { id: "p", categoryIds: ["cat1"], itemIds: [] },
+        { id: "w", categoryIds: ["cat2"], itemIds: [] },
+      ] },
+    });
+    const ctx = mkCtx({
+      subtotal: 40,
+      items: [
+        { menuItemId: "pizza", categoryId: "cat1", price: 25, quantity: 1, subtotal: 25, lineKey: "L0" },
+        { menuItemId: "wing", categoryId: "cat2", price: 15, quantity: 1, subtotal: 15, lineKey: "L1" },
+      ],
+    });
+    const r = resolvePromotions([combo], ctx).results.find((x) => x.type === "fixed_combo");
+    expect(r?.discount).toBe(10);
+    expect(r?.bundles?.length).toBe(1);
+    expect(r?.bundles?.[0].saved).toBe(10);
+    expect(r?.bundles?.[0].price).toBe(30); // 40 claimed − 10 off
+    expect(r?.bundles?.[0].parts.map((p) => p.lineKey).sort()).toEqual(["L0", "L1"]);
+  });
+
   it("charge == preview: applyPromotions totals the same reduced discount", () => {
     // Same call both routes make; the fix lives in the shared resolver so both agree.
     const total = totalPromoDiscount(applyPromotions([bundle2for30(), bogoPizza()], twoPizzas()), 50);

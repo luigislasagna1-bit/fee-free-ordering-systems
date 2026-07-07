@@ -1368,16 +1368,32 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
       const breakdown = promoBreakdown(p, ctxUsed);
       // Bundle types expose their concrete instances so the cart can GROUP the
       // bundled lines under one "2 pizzas $30" card (one per repeated bundle).
+      // Bundle + combo types expose a grouped "card" so the cart shows the deal
+      // as one line (name · net price · saved) with its items beneath, GloriaFood-
+      // style (Luigi 2026-07-07). Bundles can REPEAT (one card per instance); a
+      // combo is a single card grouping the units it claimed (one per group).
       const isBundleType = p.promotionType === "meal_bundle" || p.promotionType === "meal_bundle_speciality";
-      const bundles: BundleView[] | undefined = isBundleType
-        ? mealBundleInstances(p, ctxUsed)
-            .filter((b) => b.saved > 0)
-            .map((b) => ({
-              price: parseFloat((b.itemsTotal - b.saved).toFixed(2)),
-              saved: b.saved,
-              parts: b.units.map((u) => ({ lineKey: u.lineKey, menuItemId: u.menuItemId })),
-            }))
-        : undefined;
+      const isComboType = p.promotionType === "fixed_combo" || p.promotionType === "percentage_combo";
+      let bundles: BundleView[] | undefined;
+      if (isBundleType) {
+        bundles = mealBundleInstances(p, ctxUsed)
+          .filter((b) => b.saved > 0)
+          .map((b) => ({
+            price: parseFloat((b.itemsTotal - b.saved).toFixed(2)),
+            saved: b.saved,
+            parts: b.units.map((u) => ({ lineKey: u.lineKey, menuItemId: u.menuItemId })),
+          }));
+      } else if (isComboType) {
+        const cr = claimingResult(p, ctxUsed);
+        if (cr.total > 0 && cr.claimed.length) {
+          const itemsTotal = parseFloat(cr.claimed.reduce((s, u) => s + perUnitPrice(u), 0).toFixed(2));
+          bundles = [{
+            price: parseFloat((itemsTotal - cr.total).toFixed(2)),
+            saved: cr.total,
+            parts: cr.claimed.map((u) => ({ lineKey: u.lineKey, menuItemId: u.menuItemId })),
+          }];
+        }
+      }
       results.push({
         promoId: p.id,
         name: p.name,
