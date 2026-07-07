@@ -33,21 +33,3 @@ export async function resolvePaymentCapabilities(
   const publishableKey = cardPaymentEnabled ? provider?.publishableKey ?? null : null;
   return { cardPaymentEnabled, paypalEnabled, publishableKey };
 }
-
-/**
- * Filter a restaurant's ACCEPTED payment-method slugs down to the ones a
- * customer can actually pay with — drops online_card / paypal when their
- * capability is off. Cash / card_in_person are always usable (no entitlement).
- * Used by the promo wizard so a payment_reward (or a payment-method restriction)
- * can't target a method that isn't live.
- */
-export function usablePaymentMethods(
-  methods: string[],
-  caps: { cardPaymentEnabled: boolean; paypalEnabled: boolean },
-): string[] {
-  return methods.filter(
-    (m) =>
-      !(m === "online_card" && !caps.cardPaymentEnabled) &&
-      !(m === "paypal" && !caps.paypalEnabled),
-  );
-}

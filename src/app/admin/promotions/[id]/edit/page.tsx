@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
-import { resolvePaymentCapabilities, usablePaymentMethods } from "@/lib/payment-capabilities";
+import { allAcceptedMethods } from "@/lib/payment-methods";
 import { isOnMarketplace } from "@/lib/marketplace";
 import { currencySymbol } from "@/lib/utils";
 import { PromoWizard, PromoRow } from "../../_wizard/PromoWizard";
@@ -31,7 +31,7 @@ export default async function EditPromotionPage({
       }),
       prisma.restaurant.findUnique({
         where: { id: restaurantId },
-        select: { paymentMethods: true, currency: true, rewardsEnabled: true, paypalAccountStatus: true },
+        select: { paymentMethods: true, currency: true, rewardsEnabled: true },
       }),
       prisma.menuCategory.findMany({
         where: { restaurantId },
@@ -65,20 +65,10 @@ export default async function EditPromotionPage({
   // live menu after lineage resolution (admin-only, informational).
   const liveTargets = await describePromoLiveTargets(restaurantId, promo);
 
-  let paymentMethods: string[] = [];
-  if (restaurant?.paymentMethods) {
-    try {
-      const parsed = JSON.parse(restaurant.paymentMethods);
-      if (Array.isArray(parsed)) paymentMethods = parsed.map((s) => String(s));
-    } catch {
-      paymentMethods = [];
-    }
-  }
-  // Only offer LIVE payment methods (drops online-card / PayPal when the Online
-  // Payments add-on isn't active) so a reward can't target an unusable method.
-  // Same helper as the customer checkout + new-promo page. Luigi 2026-07-07.
-  const caps = await resolvePaymentCapabilities(restaurantId, (restaurant as any)?.paypalAccountStatus);
-  const usableMethods = usablePaymentMethods(paymentMethods, caps);
+  // Accepted payment methods (union across order types — handles both the
+  // legacy flat array and the per-order-type object; online methods only appear
+  // when the Online Payments add-on is active). Luigi 2026-07-07.
+  const usableMethods = allAcceptedMethods(restaurant?.paymentMethods);
 
   // Serialise Date → ISO so the client component receives plain JSON.
   const initialPromo: PromoRow = {

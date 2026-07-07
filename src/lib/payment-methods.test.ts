@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   parsePaymentMethods,
   methodsForOrderType,
+  allAcceptedMethods,
   isPaymentMethodAcceptedForType,
   slugToPaymentValue,
   paymentValueToSlug,
@@ -64,6 +65,33 @@ describe("methodsForOrderType", () => {
     expect(methodsForOrderType('{"dine_in":["card_in_person"]}', "catering")).toEqual([
       "card_in_person",
     ]);
+  });
+});
+
+describe("allAcceptedMethods — promo wizard union", () => {
+  it("returns the flat list as-is (legacy)", () => {
+    expect(allAcceptedMethods('["cash","card_in_person"]').sort()).toEqual(["card_in_person", "cash"]);
+  });
+
+  it("unions the per-order-type object across all types (deduped)", () => {
+    // The bug Luigi hit: online_card lived only under some order types, and the
+    // promo pages (which assumed a flat array) got [] and hid every method. The
+    // union must surface online_card so the wizard can offer it once enabled.
+    const raw = '{"pickup":["cash","card_in_person","online_card"],"delivery":["cash","online_card"],"dine_in":["card_in_person"]}';
+    expect(allAcceptedMethods(raw).sort()).toEqual(["card_in_person", "cash", "online_card"]);
+  });
+
+  it("excludes online methods when they aren't in the accepted list", () => {
+    // Original bug direction: a store WITHOUT the add-on has no online_card in
+    // its saved methods, so the wizard must NOT offer it.
+    const raw = '{"pickup":["cash","card_in_person"],"delivery":["cash"]}';
+    expect(allAcceptedMethods(raw).sort()).toEqual(["card_in_person", "cash"]);
+  });
+
+  it("returns [] for empty / malformed config (caller supplies a safe default)", () => {
+    expect(allAcceptedMethods("[]")).toEqual([]);
+    expect(allAcceptedMethods("{}")).toEqual([]);
+    expect(allAcceptedMethods(null)).toEqual([]);
   });
 });
 

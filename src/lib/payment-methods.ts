@@ -77,6 +77,23 @@ export function methodsForOrderType(raw: unknown, orderType: string): string[] {
   return union.length ? union : ["cash"];
 }
 
+/**
+ * The UNION of accepted payment-method SLUGS across every order type. Used by
+ * the promo wizard, whose reward / payment-restriction dropdown offers any
+ * method the restaurant accepts anywhere (a payment_reward isn't tied to one
+ * order type). Handles BOTH the legacy flat array and the per-order-type object
+ * — the promo pages previously assumed a flat array and silently got [] for the
+ * per-type shape, hiding every real method. Online methods are already
+ * entitlement-gated at save time (PUT /api/restaurants/payment-methods strips
+ * online_card / paypal without the card_payments add-on), so the list is
+ * authoritative — no capability re-check needed here. Luigi 2026-07-07.
+ */
+export function allAcceptedMethods(raw: unknown): string[] {
+  const cfg = parsePaymentMethods(raw);
+  if (cfg.mode === "all") return Array.from(new Set(cfg.methods));
+  return Array.from(new Set(Object.values(cfg.perType).flat()));
+}
+
 /** True when `paymentValue` (checkout VALUE, e.g. "card"/"cash") is accepted
  *  for `orderType`. Used for server-side defense-in-depth in /api/orders. */
 export function isPaymentMethodAcceptedForType(raw: unknown, orderType: string, paymentValue: string): boolean {

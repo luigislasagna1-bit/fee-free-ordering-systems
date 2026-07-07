@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
-import { resolvePaymentCapabilities, usablePaymentMethods } from "@/lib/payment-capabilities";
+import { allAcceptedMethods } from "@/lib/payment-methods";
 import { isOnMarketplace } from "@/lib/marketplace";
 import { currencySymbol } from "@/lib/utils";
 import { PromoWizard } from "../_wizard/PromoWizard";
@@ -18,7 +18,7 @@ export default async function NewPromotionPage() {
     await Promise.all([
       prisma.restaurant.findUnique({
         where: { id: restaurantId },
-        select: { paymentMethods: true, currency: true, rewardsEnabled: true, paypalAccountStatus: true },
+        select: { paymentMethods: true, currency: true, rewardsEnabled: true },
       }),
       prisma.menuCategory.findMany({
         where: { restaurantId },
@@ -47,20 +47,12 @@ export default async function NewPromotionPage() {
       isOnMarketplace(restaurantId),
     ]);
 
-  let paymentMethods: string[] = [];
-  if (restaurant?.paymentMethods) {
-    try {
-      const parsed = JSON.parse(restaurant.paymentMethods);
-      if (Array.isArray(parsed)) paymentMethods = parsed.map((s) => String(s));
-    } catch {
-      paymentMethods = [];
-    }
-  }
-  // Only offer payment methods that are actually LIVE — an online-card / PayPal
-  // reward (or restriction) can't target a method customers can't use because
-  // the Online Payments add-on isn't active. Luigi 2026-07-07.
-  const caps = await resolvePaymentCapabilities(restaurantId, (restaurant as any)?.paypalAccountStatus);
-  const usableMethods = usablePaymentMethods(paymentMethods, caps);
+  // Accepted payment methods (union across order types — handles both the
+  // legacy flat array and the per-order-type object). Online methods only
+  // appear here if the Online Payments add-on is active (the save route strips
+  // them otherwise), so this list is authoritative for the reward dropdown.
+  // Luigi 2026-07-07.
+  const usableMethods = allAcceptedMethods(restaurant?.paymentMethods);
 
   return (
     <PromoWizard
