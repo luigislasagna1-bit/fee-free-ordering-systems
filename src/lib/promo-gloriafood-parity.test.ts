@@ -90,3 +90,116 @@ describe("GloriaFood parity — Standard / Exclusive / Master ($100 cart)", () =
     const r = run([M(), N()]); expect(r.applied).toEqual(["M master $10", "N master $5"]); expect(r.total).toBe(15);
   });
 });
+
+// ─── blockedPromos metadata + the switch round-trip ─────────────────────────
+// The cart's "Use this instead" card reads blockedPromos: `.wasExclusive` drives
+// the suppress set, `.couponCode` matches the couponBlocked toast, `.winnerName`
+// names the kept deal. Nothing in the parity matrix above asserts these fields or
+// the transition a customer makes when they actually tap the switch. Luigi 2026-07-07.
+describe("GloriaFood parity — blockedPromos metadata + switch round-trip", () => {
+  it("keep-current: two exclusives blocked by a kept standard both carry wasExclusive + winnerName", () => {
+    // X ($30 excl) + Y ($15 excl) + A ($20 std) → keep A; both exclusives are switches.
+    const { results, blockedPromos } = resolvePromotions([X(), Y(), A()], CART());
+    expect(results.map((r) => r.name)).toEqual(["A std $20"]);
+    expect(blockedPromos.map((b) => b.name).sort()).toEqual(["X excl $30", "Y excl $15"]);
+    for (const b of blockedPromos) {
+      expect(b.wasExclusive).toBe(true);
+      expect(b.winnerName).toBe("A std $20");
+    }
+  });
+
+  it("no-standard: the losing exclusive carries wasExclusive + the winning exclusive's name", () => {
+    // X ($30 excl) + Y ($15 excl), no standard → X wins; Y blocked by X.
+    const { results, blockedPromos } = resolvePromotions([X(), Y()], CART());
+    expect(results.map((r) => r.name)).toEqual(["X excl $30"]);
+    expect(blockedPromos).toHaveLength(1);
+    expect(blockedPromos[0]).toMatchObject({ name: "Y excl $15", wasExclusive: true, winnerName: "X excl $30" });
+  });
+
+  it("a coupon-gated exclusive blocked by a kept standard keeps its couponCode (drives the couponBlocked toast)", () => {
+    const std = P({ name: "std $5", stackingRule: "standard", ruleConfig: { discountAmount: 5 } });
+    const ex = P({ name: "SAVE8 $8", stackingRule: "exclusive", autoApply: false, couponCode: "SAVE8", ruleConfig: { discountAmount: 8 } });
+    const { results, blockedPromos } = resolvePromotions([std, ex], { ...CART(), couponCode: "SAVE8" });
+    expect(results.map((r) => r.name)).toEqual(["std $5"]);
+    expect(blockedPromos).toHaveLength(1);
+    expect(blockedPromos[0]).toMatchObject({ name: "SAVE8 $8", couponCode: "SAVE8", wasExclusive: true });
+  });
+
+  it("the switch round-trip: kept standard → suppress it → the exclusive then applies", () => {
+    const ex = P({ name: "ex $8", stackingRule: "exclusive", ruleConfig: { discountAmount: 8 } });
+    const std = P({ name: "std $5", stackingRule: "standard", ruleConfig: { discountAmount: 5 } });
+    // Step 1: standard kept, exclusive offered as a switch.
+    const step1 = resolvePromotions([ex, std], CART());
+    expect(step1.results.map((r) => r.name)).toEqual(["std $5"]);
+    expect(step1.blockedPromos.map((b) => b.promoId)).toEqual([ex.id]);
+    // Step 2: the client suppresses the standard (drops it from the list) → the exclusive applies.
+    const step2 = resolvePromotions([ex], CART());
+    expect(step2.results.map((r) => r.name)).toEqual(["ex $8"]);
+    expect(totalPromoDiscount(step2.results, 100)).toBe(8);
+  });
+
+  it("exclusive-vs-exclusive TIE keeps the first-listed (no re-render flicker)", () => {
+    const a = P({ name: "a excl $10", stackingRule: "exclusive", ruleConfig: { discountAmount: 10 } });
+    const b = P({ name: "b excl $10", stackingRule: "exclusive", ruleConfig: { discountAmount: 10 } });
+    const { results, blockedPromos } = resolvePromotions([a, b], CART());
+    expect(results.map((r) => r.promoId)).toEqual([a.id]);
+    expect(blockedPromos.map((b) => b.promoId)).toEqual([b.id]);
+  });
+});
+
+// ─── Master + free_delivery stacking (never a switch) ───────────────────────
+describe("GloriaFood parity — masters stack, never blocked", () => {
+  const DELIVERY = (): ApplyContext => ({
+    orderType: "delivery", isNewCustomer: true, isMember: false, subtotal: 40, deliveryFee: 6,
+    items: [{ menuItemId: "i1", categoryId: "cat1", price: 40, quantity: 1, subtotal: 40 }],
+  });
+
+  it("a master free_delivery stacks with a winning exclusive and is NEVER blocked", () => {
+    const fd = P({ name: "fd master", stackingRule: "master", promotionType: "free_delivery", ruleConfig: {} });
+    const ex = P({ name: "ex $8", stackingRule: "exclusive", ruleConfig: { discountAmount: 8 } });
+    const { results, blockedPromos } = resolvePromotions([fd, ex], DELIVERY());
+    expect(results.map((r) => r.type).sort()).toEqual(["fixed_cart", "free_delivery"]);
+    expect(blockedPromos.map((b) => b.promoId)).not.toContain(fd.id);
+  });
+
+  it("a master free_delivery on a PICKUP order is absent (forcedOrderTypes) and blocks nothing", () => {
+    const fd = P({ name: "fd master", stackingRule: "master", promotionType: "free_delivery", ruleConfig: {} });
+    const ex = P({ name: "ex $8", stackingRule: "exclusive", ruleConfig: { discountAmount: 8 } });
+    const { results, blockedPromos } = resolvePromotions([fd, ex], CART()); // CART() is pickup
+    expect(results.map((r) => r.type)).not.toContain("free_delivery");
+    expect(results.map((r) => r.name)).toEqual(["ex $8"]); // exclusive alone applies
+    expect(blockedPromos).toHaveLength(0);
+  });
+
+  it("keep-current holds when the kept standard is a claiming bundle and the exclusive is an item promo", () => {
+    const bundle = P({
+      name: "2 for $30", stackingRule: "standard", promotionType: "meal_bundle",
+      ruleConfig: { bundlePrice: 30, groups: [{ id: "g", role: "", minCount: 2, maxCount: 2, categoryIds: ["pizzas"], itemIds: [] }] },
+    });
+    const ex = P({
+      name: "BOGO pizza", stackingRule: "exclusive", promotionType: "bogo",
+      ruleConfig: { discountStrategy: "cheapest", cheapestDiscount: 100, groups: [
+        { id: "p", role: "paid", categoryIds: ["pizzas"], itemIds: [] },
+        { id: "f", role: "free", categoryIds: ["pizzas"], itemIds: [] },
+      ] },
+    });
+    const ctx: ApplyContext = {
+      orderType: "pickup", isNewCustomer: true, isMember: false, subtotal: 50,
+      items: [{ menuItemId: "pizza", categoryId: "pizzas", price: 25, quantity: 2, subtotal: 50, lineKey: "L0" }],
+    };
+    const { results, blockedPromos } = resolvePromotions([bundle, ex], ctx);
+    expect(results.find((r) => r.type === "meal_bundle")?.discount).toBe(20); // bundle claims both pizzas
+    expect(blockedPromos.map((b) => b.promoId)).toContain(ex.id);           // BOGO offered as a switch
+  });
+
+  it("an inert $0 master is silent — in neither results nor blockedPromos", () => {
+    const m = P({
+      name: "inert master", stackingRule: "master", promotionType: "percentage_off",
+      ruleConfig: { discountPercent: 50, groups: [{ id: "g", label: "", categoryIds: ["catNOPE"], itemIds: [] }] },
+    });
+    const std = P({ name: "std $5", stackingRule: "standard", ruleConfig: { discountAmount: 5 } });
+    const { results, blockedPromos } = resolvePromotions([m, std], CART());
+    expect(results.map((r) => r.name)).toEqual(["std $5"]);
+    expect(blockedPromos).toHaveLength(0);
+  });
+});

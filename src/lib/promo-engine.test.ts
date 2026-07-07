@@ -775,4 +775,376 @@ describe("bundle/combo claims its units (no double-discount)", () => {
     const total = totalPromoDiscount(applyPromotions([bundle2for30(), bogoPizza()], twoPizzas()), 50);
     expect(total).toBe(20);
   });
+
+  it("bundle claims its pizzas away from a free_dish_meal on the same group (owns them)", () => {
+    // free_dish_meal is the one ITEM-lane type never tested against a claim. Bundle
+    // takes both pizzas → the free-dish promo (trigger + free both pizzas) finds none.
+    const freeDish = mkPromo({
+      promotionType: "free_dish_meal", name: "free pizza w/ meal",
+      ruleConfig: { discountPercent: 100, groups: [
+        { id: "t", role: "trigger", categoryIds: ["cat1"], itemIds: [] },
+        { id: "f", role: "free", categoryIds: ["cat1"], itemIds: [] },
+      ] },
+    });
+    const { results } = resolvePromotions([bundle2for30(), freeDish], twoPizzas());
+    expect(results.find((r) => r.type === "meal_bundle")?.discount).toBe(20);
+    expect(results.find((r) => r.type === "free_dish_meal")?.discount ?? 0).toBe(0);
+  });
+
+  it("bundle shrinks a buy_n_get_free's PAID group so the freebie can't unlock", () => {
+    // Bundle claims the 2 pizzas → the buy_n_get_free (buy 2 pizzas, get a side)
+    // has 0 paid pizzas left → its free side is never unlocked.
+    const bng = mkPromo({
+      promotionType: "buy_n_get_free", name: "buy 2 pizzas get a side",
+      ruleConfig: { groups: [
+        { id: "p", role: "paid", minCount: 2, categoryIds: ["cat1"], itemIds: [] },
+        { id: "f", role: "free", categoryIds: ["cat2"], itemIds: [] },
+      ] },
+    });
+    const ctx = mkCtx({
+      subtotal: 58,
+      items: [
+        { menuItemId: "pizza", categoryId: "cat1", price: 25, quantity: 2, subtotal: 50, lineKey: "L0" },
+        { menuItemId: "side", categoryId: "cat2", price: 8, quantity: 1, subtotal: 8, lineKey: "L1" },
+      ],
+    });
+    const { results } = resolvePromotions([bundle2for30(), bng], ctx);
+    expect(results.find((r) => r.type === "meal_bundle")?.discount).toBe(20);
+    expect(results.find((r) => r.type === "buy_n_get_free")?.discount ?? 0).toBe(0);
+  });
+
+  it("percentage_combo OWNS its units vs a later BOGO on the same category", () => {
+    // 20% combo (pizzas + wings) claims all its matching units; the BOGO on pizzas
+    // then has none left.
+    const combo = mkPromo({
+      promotionType: "percentage_combo", name: "20% combo",
+      ruleConfig: { discountPercent: 20, groups: [
+        { id: "a", categoryIds: ["cat1"], itemIds: [] },
+        { id: "b", categoryIds: ["cat2"], itemIds: [] },
+      ] },
+    });
+    const ctx = mkCtx({
+      subtotal: 60,
+      items: [
+        { menuItemId: "pizza", categoryId: "cat1", price: 25, quantity: 2, subtotal: 50, lineKey: "L0" },
+        { menuItemId: "wing", categoryId: "cat2", price: 10, quantity: 1, subtotal: 10, lineKey: "L1" },
+      ],
+    });
+    const { results } = resolvePromotions([combo, bogoPizza()], ctx);
+    expect(results.find((r) => r.type === "percentage_combo")?.discount).toBe(12); // 20% of $60
+    expect(results.find((r) => r.type === "bogo")?.discount ?? 0).toBe(0);
+  });
+
+  it("percentage_combo oncePerOrder claims one-per-group; BOGO frees a leftover pizza", () => {
+    // 50% once-per-order combo claims one $20 pizza + one $10 wing (−$15) and removes
+    // those units. Of the 2 remaining pizzas the BOGO frees one ($20). Total $35.
+    const combo = mkPromo({
+      promotionType: "percentage_combo", name: "50% combo (once)",
+      ruleConfig: { discountPercent: 50, oncePerOrder: true, groups: [
+        { id: "a", categoryIds: ["cat1"], itemIds: [] },
+        { id: "b", categoryIds: ["cat2"], itemIds: [] },
+      ] },
+    });
+    const ctx = mkCtx({
+      subtotal: 70,
+      items: [
+        { menuItemId: "pizza", categoryId: "cat1", price: 20, quantity: 3, subtotal: 60, lineKey: "L0" },
+        { menuItemId: "wing", categoryId: "cat2", price: 10, quantity: 1, subtotal: 10, lineKey: "L1" },
+      ],
+    });
+    const { results } = resolvePromotions([combo, bogoPizza()], ctx);
+    expect(results.find((r) => r.type === "percentage_combo")?.discount).toBe(15);
+    expect(results.find((r) => r.type === "bogo")?.discount).toBe(20);
+    expect(totalPromoDiscount(results, 70)).toBe(35);
+  });
+
+  it("mixed-price cart: bundle claims the two $25s, BOGO frees a leftover $10 pizza", () => {
+    // 2 pizzas @ $25 + 2 @ $10. The repeating "2 for $30" bundle folds the two $25s
+    // (−$20); the next pass would be 2×$10 < $30, so it stops. BOGO frees one $10.
+    const ctx = mkCtx({
+      subtotal: 70,
+      items: [
+        { menuItemId: "pzA", categoryId: "cat1", price: 25, quantity: 2, subtotal: 50, lineKey: "L0" },
+        { menuItemId: "pzB", categoryId: "cat1", price: 10, quantity: 2, subtotal: 20, lineKey: "L1" },
+      ],
+    });
+    const { results } = resolvePromotions([bundle2for30(), bogoPizza()], ctx);
+    expect(results.find((r) => r.type === "meal_bundle")?.discount).toBe(20);
+    expect(results.find((r) => r.type === "bogo")?.discount).toBe(10);
+    expect(totalPromoDiscount(results, 70)).toBe(30);
+  });
+
+  it("payment_reward base excludes bundled units (order-lane on the remainder)", () => {
+    const pay = mkPromo({
+      promotionType: "payment_reward", name: "10% any method",
+      ruleConfig: { paymentMethod: "any", discountPercent: 10 },
+    });
+    const ctx = mkCtx({
+      subtotal: 50, paymentMethod: "cash",
+      items: [{ menuItemId: "pizza", categoryId: "cat1", price: 25, quantity: 2, subtotal: 50, lineKey: "L0" }],
+    });
+    const { results } = resolvePromotions([bundle2for30(), pay], ctx);
+    expect(results.find((r) => r.type === "meal_bundle")?.discount).toBe(20);
+    expect(results.find((r) => r.type === "payment_reward")?.discount ?? 0).toBe(0); // whole cart bundled
+  });
+
+  it("fixed_cart discounts only the non-bundled remainder", () => {
+    const fixed = mkPromo({
+      promotionType: "fixed_cart", name: "$10 off",
+      ruleConfig: { discountAmount: 10 },
+    });
+    const ctx = mkCtx({
+      subtotal: 58,
+      items: [
+        { menuItemId: "pizza", categoryId: "cat1", price: 25, quantity: 2, subtotal: 50, lineKey: "L0" },
+        { menuItemId: "drink", categoryId: "cat3", price: 8, quantity: 1, subtotal: 8, lineKey: "L1" },
+      ],
+    });
+    const { results } = resolvePromotions([bundle2for30(), fixed], ctx);
+    expect(results.find((r) => r.type === "meal_bundle")?.discount).toBe(20);
+    expect(results.find((r) => r.type === "fixed_cart")?.discount).toBe(8); // min($10, $8 remainder)
+  });
+
+  it("fixed_cart is $0 when the whole cart is bundled (floor protection)", () => {
+    const fixed = mkPromo({
+      promotionType: "fixed_cart", name: "$10 off",
+      ruleConfig: { discountAmount: 10 },
+    });
+    const { results } = resolvePromotions([bundle2for30(), fixed], twoPizzas());
+    expect(results.find((r) => r.type === "meal_bundle")?.discount).toBe(20);
+    expect(results.find((r) => r.type === "fixed_cart")?.discount ?? 0).toBe(0); // $0 remainder
+    expect(50 - totalPromoDiscount(results, 50)).toBe(30); // pair holds at the $30 floor
+  });
+});
+
+// ─── Strategy + once-per-order branches (bogo / buy_n_get_free / free_item) ──
+// The matrix above only pins bogo fixed_percent and buy_n_get_free most_expensive.
+// These lock the remaining discount-selection knobs so a strategy/cap regression
+// is caught at the calc level. Luigi 2026-07-07.
+describe("engine math — strategy + oncePerOrder branches", () => {
+  const twoPizzas = (a: number, b: number) => mkCtx({
+    subtotal: a + b,
+    items: [
+      { menuItemId: "pzA", categoryId: "cat1", price: a, quantity: 1, subtotal: a },
+      { menuItemId: "pzB", categoryId: "cat1", price: b, quantity: 1, subtotal: b },
+    ],
+  });
+
+  it("bogo most_expensive frees the pricier unit (100%)", () => {
+    const p = mkPromo({ promotionType: "bogo", ruleConfig: {
+      discountStrategy: "most_expensive", mostExpensiveDiscount: 100, groups: [
+        { id: "p", role: "paid", categoryIds: ["cat1"], itemIds: [] },
+        { id: "f", role: "free", categoryIds: ["cat1"], itemIds: [] },
+      ] } });
+    expect(applyPromotions([p], twoPizzas(25, 18))[0]?.discount).toBe(25);
+  });
+
+  it("bogo cheapest with a PARTIAL cheapestDiscount (50%, not free)", () => {
+    const p = mkPromo({ promotionType: "bogo", ruleConfig: {
+      discountStrategy: "cheapest", cheapestDiscount: 50, groups: [
+        { id: "p", role: "paid", categoryIds: ["cat1"], itemIds: [] },
+        { id: "f", role: "free", categoryIds: ["cat1"], itemIds: [] },
+      ] } });
+    expect(applyPromotions([p], twoPizzas(25, 18))[0]?.discount).toBe(9); // 50% of the $18
+  });
+
+  it("bogo oncePerOrder caps to ONE freed unit (not one per pair)", () => {
+    const p = mkPromo({ promotionType: "bogo", ruleConfig: {
+      discountStrategy: "cheapest", cheapestDiscount: 100, oncePerOrder: true, groups: [
+        { id: "p", role: "paid", categoryIds: ["cat1"], itemIds: [] },
+        { id: "f", role: "free", categoryIds: ["cat1"], itemIds: [] },
+      ] } });
+    // 4 pizzas @ $20 → 2 pairs, but once-per-order → only 1 free.
+    const ctx = mkCtx({ subtotal: 80, items: [{ menuItemId: "pz", categoryId: "cat1", price: 20, quantity: 4, subtotal: 80 }] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(20);
+  });
+
+  it("buy_n_get_free oncePerOrder caps to ONE freebie", () => {
+    const p = mkPromo({ promotionType: "buy_n_get_free", ruleConfig: {
+      oncePerOrder: true, cheapestDiscount: 100, groups: [
+        { id: "p", role: "paid", minCount: 3, categoryIds: ["cat1"], itemIds: [] },
+        { id: "f", role: "free", categoryIds: ["cat2"], itemIds: [] },
+      ] } });
+    // 6 pastas → 2 sets, capped to 1 → one $15 pizza free.
+    const ctx = mkCtx({ subtotal: 90, items: [
+      { menuItemId: "pasta", categoryId: "cat1", price: 10, quantity: 6, subtotal: 60 },
+      { menuItemId: "pizza", categoryId: "cat2", price: 15, quantity: 2, subtotal: 30 },
+    ] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(15);
+  });
+
+  it("buy_n_get_free with TWO paid groups: the bottleneck group caps the multiplier", () => {
+    const p = mkPromo({ promotionType: "buy_n_get_free", ruleConfig: { cheapestDiscount: 100, groups: [
+      { id: "p", role: "paid", minCount: 2, categoryIds: ["cat1"], itemIds: [] },
+      { id: "r", role: "required", minCount: 1, categoryIds: ["cat2"], itemIds: [] },
+      { id: "f", role: "free", categoryIds: ["cat3"], itemIds: [] },
+    ] } });
+    // pizzas: floor(4/2)=2, drinks: floor(1/1)=1 → multiplier = 1 → one $6 side free.
+    const ctx = mkCtx({ subtotal: 60, items: [
+      { menuItemId: "pizza", categoryId: "cat1", price: 12, quantity: 4, subtotal: 48 },
+      { menuItemId: "drink", categoryId: "cat2", price: 3, quantity: 1, subtotal: 3 },
+      { menuItemId: "side", categoryId: "cat3", price: 6, quantity: 2, subtotal: 12 },
+    ] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(6);
+  });
+
+  it("free_item frees exactly ONE unit even with many eligible", () => {
+    const p = mkPromo({ promotionType: "free_item", ruleConfig: { triggerAmount: 20, groups: [
+      { id: "f", role: "free", categoryIds: ["cat2"], itemIds: [] },
+    ] } });
+    // $40 main + 3 sides @ $6 → trigger met, ONE $6 side free (not $18).
+    const ctx = mkCtx({ subtotal: 58, items: [
+      { menuItemId: "main", categoryId: "cat1", price: 40, quantity: 1, subtotal: 40 },
+      { menuItemId: "side", categoryId: "cat2", price: 6, quantity: 3, subtotal: 18 },
+    ] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(6);
+  });
+});
+
+// ─── Whole-cart / order-lane calculators, standalone ─────────────────────────
+// %-off / fixed_cart / payment_reward are exercised through gift-card and bundle
+// contexts elsewhere; these lock their headline math in isolation. Luigi 2026-07-07.
+describe("engine math — whole-cart / order-lane standalone", () => {
+  it("percentage_off (group-less): 15% of a clean $80 cart", () => {
+    const p = mkPromo({ promotionType: "percentage_off", ruleConfig: { discountPercent: 15 } });
+    const ctx = mkCtx({ subtotal: 80, items: [{ menuItemId: "i1", categoryId: "cat1", price: 80, quantity: 1, subtotal: 80 }] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(12);
+  });
+
+  it("fixed_cart clamps to a small discountable subtotal (non-gift path)", () => {
+    const p = mkPromo({ promotionType: "fixed_cart", ruleConfig: { discountAmount: 25 } });
+    const ctx = mkCtx({ subtotal: 18, items: [{ menuItemId: "i1", categoryId: "cat1", price: 18, quantity: 1, subtotal: 18 }] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(18); // min($25, $18)
+  });
+
+  it("percentage_off grouped, oncePerOrder OFF: 20% of every match across groups", () => {
+    const p = mkPromo({ promotionType: "percentage_off", ruleConfig: { discountPercent: 20, groups: [
+      { id: "a", categoryIds: ["catA"], itemIds: [] },
+      { id: "b", categoryIds: ["catB"], itemIds: [] },
+    ] } });
+    const ctx = mkCtx({ subtotal: 50, items: [
+      { menuItemId: "a", categoryId: "catA", price: 10, quantity: 2, subtotal: 20 },
+      { menuItemId: "b", categoryId: "catB", price: 30, quantity: 1, subtotal: 30 },
+    ] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(10); // 20% of $50
+  });
+
+  it("percentage_off grouped, oncePerOrder ON: 20% of one best unit PER group", () => {
+    const p = mkPromo({ promotionType: "percentage_off", ruleConfig: { discountPercent: 20, oncePerOrder: true, groups: [
+      { id: "a", categoryIds: ["catA"], itemIds: [] },
+      { id: "b", categoryIds: ["catB"], itemIds: [] },
+    ] } });
+    const ctx = mkCtx({ subtotal: 80, items: [
+      { menuItemId: "a", categoryId: "catA", price: 10, quantity: 2, subtotal: 20 },
+      { menuItemId: "b", categoryId: "catB", price: 30, quantity: 2, subtotal: 60 },
+    ] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(8); // 20% of ($10 + $30)
+  });
+
+  it("payment_reward paymentMethod:'any' discounts every method", () => {
+    const p = mkPromo({ promotionType: "payment_reward", ruleConfig: { paymentMethod: "any", discountPercent: 10 } });
+    const base = { subtotal: 50, items: [{ menuItemId: "i1", categoryId: "cat1", price: 50, quantity: 1, subtotal: 50 }] };
+    expect(applyPromotions([p], mkCtx({ ...base, paymentMethod: "cash" }))[0]?.discount).toBe(5);
+    expect(applyPromotions([p], mkCtx({ ...base, paymentMethod: "card" }))[0]?.discount).toBe(5);
+    expect(applyPromotions([p], mkCtx({ ...base }))[0]?.discount).toBe(5); // no method chosen yet
+  });
+
+  it("payment_reward returns $0 from the calc on the wrong method", () => {
+    const p = mkPromo({ promotionType: "payment_reward", ruleConfig: { paymentMethod: "cash", discountPercent: 10 } });
+    const base = { subtotal: 50, items: [{ menuItemId: "i1", categoryId: "cat1", price: 50, quantity: 1, subtotal: 50 }] };
+    // Wrong method → calc 0 → no result emitted.
+    expect(applyPromotions([p], mkCtx({ ...base, paymentMethod: "card" }))[0]?.discount ?? 0).toBe(0);
+    expect(applyPromotions([p], mkCtx({ ...base, paymentMethod: "cash" }))[0]?.discount).toBe(5);
+  });
+});
+
+// ─── Bundle / combo determinism ──────────────────────────────────────────────
+// The repeat/tie-break paths must be order-independent and repeat their per-slot
+// costs on every instance. Luigi 2026-07-07.
+describe("engine math — bundle/combo determinism", () => {
+  it("meal_bundle_speciality: the per-slot extraFee is charged on EVERY repeat", () => {
+    const p = mkPromo({ promotionType: "meal_bundle_speciality", ruleConfig: { bundlePrice: 20, groups: [
+      { id: "a", minCount: 1, maxCount: 1, extraFee: 5, categoryIds: ["cat1"], itemIds: [] },
+    ] } });
+    // 2 units @ $30 → two bundles, each (30 - 20 - 5) = $5 → $10.
+    const ctx = mkCtx({ subtotal: 60, items: [{ menuItemId: "i1", categoryId: "cat1", price: 30, quantity: 2, subtotal: 60 }] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(10);
+  });
+
+  it("multi-group meal_bundle repeats across every pair", () => {
+    const p = mkPromo({ promotionType: "meal_bundle", ruleConfig: { bundlePrice: 30, groups: [
+      { id: "pz", minCount: 1, maxCount: 1, categoryIds: ["cat1"], itemIds: [] },
+      { id: "dr", minCount: 1, maxCount: 1, categoryIds: ["cat2"], itemIds: [] },
+    ] } });
+    // 4 pizzas @ $25 + 4 drinks @ $10 → four bundles, each (35 - 30) = $5 → $20.
+    const ctx = mkCtx({ subtotal: 140, items: [
+      { menuItemId: "pizza", categoryId: "cat1", price: 25, quantity: 4, subtotal: 100 },
+      { menuItemId: "drink", categoryId: "cat2", price: 10, quantity: 4, subtotal: 40 },
+    ] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(20);
+  });
+
+  it("two EQUAL bundles: only one applies, deterministic on input order", () => {
+    const bundleA = mkPromo({ promotionType: "meal_bundle", name: "A", ruleConfig: { bundlePrice: 30, groups: [{ id: "g", minCount: 2, maxCount: 2, categoryIds: ["cat1"], itemIds: [] }] } });
+    const bundleB = mkPromo({ promotionType: "meal_bundle", name: "B", ruleConfig: { bundlePrice: 30, groups: [{ id: "g", minCount: 2, maxCount: 2, categoryIds: ["cat1"], itemIds: [] }] } });
+    const ctx = mkCtx({ subtotal: 50, items: [{ menuItemId: "pizza", categoryId: "cat1", price: 25, quantity: 2, subtotal: 50, lineKey: "L0" }] });
+    const { results } = resolvePromotions([bundleA, bundleB], ctx);
+    expect(totalPromoDiscount(results, 50)).toBe(20);
+    const discounts = [results.find((r) => r.name === "A")?.discount ?? 0, results.find((r) => r.name === "B")?.discount ?? 0].sort();
+    expect(discounts).toEqual([0, 20]); // exactly one wins the pair
+  });
+
+  it("two fixed_combos competing for one shared pizza are order-independent", () => {
+    const c1 = mkPromo({ promotionType: "fixed_combo", name: "c1", ruleConfig: { discountAmount: 10, groups: [
+      { id: "a", categoryIds: ["cat1"], itemIds: [] }, { id: "b", categoryIds: ["cat2"], itemIds: [] },
+    ] } });
+    const c2 = mkPromo({ promotionType: "fixed_combo", name: "c2", ruleConfig: { discountAmount: 15, groups: [
+      { id: "a", categoryIds: ["cat1"], itemIds: [] }, { id: "b", categoryIds: ["cat3"], itemIds: [] },
+    ] } });
+    const ctx = () => mkCtx({ subtotal: 53, items: [
+      { menuItemId: "pizza", categoryId: "cat1", price: 25, quantity: 1, subtotal: 25, lineKey: "L0" },
+      { menuItemId: "wing", categoryId: "cat2", price: 20, quantity: 1, subtotal: 20, lineKey: "L1" },
+      { menuItemId: "drink", categoryId: "cat3", price: 8, quantity: 1, subtotal: 8, lineKey: "L2" },
+    ] });
+    // c2 ($15) is the bigger deal → claims the lone pizza + a drink; c1 then starves.
+    for (const order of [[c1, c2], [c2, c1]]) {
+      const { results } = resolvePromotions(order, ctx());
+      expect(totalPromoDiscount(results, 53)).toBe(15);
+      expect(results.find((r) => r.name === "c2")?.discount).toBe(15);
+      expect(results.find((r) => r.name === "c1")?.discount ?? 0).toBe(0);
+    }
+  });
+
+  it("fixed_combo claims a unit off a qty>1 line at per-unit price, capped at owned value", () => {
+    const combo = mkPromo({ promotionType: "fixed_combo", name: "big combo", ruleConfig: { discountAmount: 100, groups: [
+      { id: "a", categoryIds: ["cat1"], itemIds: [] }, { id: "b", categoryIds: ["cat2"], itemIds: [] },
+    ] } });
+    // One $30 pizza + one $12 wing owned → capped at $42 (not $100, not $84).
+    const ctx = mkCtx({ subtotal: 84, items: [
+      { menuItemId: "pizza", categoryId: "cat1", price: 30, quantity: 2, subtotal: 60, lineKey: "L0" },
+      { menuItemId: "wing", categoryId: "cat2", price: 12, quantity: 2, subtotal: 24, lineKey: "L1" },
+    ] });
+    expect(applyPromotions([combo], ctx)[0]?.discount).toBe(42);
+  });
+});
+
+// ─── reward_credit sanitize + free_delivery emit-at-$0 ───────────────────────
+describe("engine — reward_credit sanitize + free_delivery emit", () => {
+  it("reward_credit sanitizes a bad creditAmount to 0 (no NaN, no negative)", () => {
+    for (const bad of [-5, "abc", {}]) {
+      const rc = mkPromo({ promotionType: "reward_credit", ruleConfig: { creditAmount: bad as any } });
+      const r = applyPromotions([rc], mkCtx())[0];
+      expect(r?.discount).toBe(0);
+      expect(r?.creditAmount).toBe(0);
+      expect(Number.isNaN(r?.creditAmount as number)).toBe(false);
+    }
+  });
+
+  it("free_delivery on a delivery order is EMITTED even at a positive fee (discount 0)", () => {
+    const fd = mkPromo({ promotionType: "free_delivery", ruleConfig: {} });
+    const results = applyPromotions([fd], mkCtx({ orderType: "delivery", deliveryFee: 6, subtotal: 40 }));
+    expect(results).toHaveLength(1);
+    expect(results[0].type).toBe("free_delivery");
+    expect(results[0].discount).toBe(0);
+  });
 });

@@ -110,3 +110,45 @@ describe("Free-item extra-charges modes (GloriaFood parity)", () => {
     expect(discountOf(freeItem("addons_sizes"), mainPlusSide())).toBe(8);
   });
 });
+
+describe("Free-dish-with-a-meal extra-charges modes (GloriaFood parity)", () => {
+  // "Free dish with a meal": a $20 main (trigger) unlocks a free side (the free
+  // dish). The freed side is $12 (base $8 + size $2 + toppings $2). calcFreeDishMeal
+  // reads freeItemExtraChargeMode (engine line 1032) — the one give-away path that
+  // had NO extra-charges test. Freed amount by mode:
+  //   none 12 · addons 10 (charge $2 toppings) · addons_sizes 8 (charge $2 size + $2 toppings)
+  const freeDish = (mode?: string): PromoInput => ({
+    id: `fd${++_seq}`, name: "FreeDish", description: null, promotionType: "free_dish_meal",
+    isActive: true, stackingRule: "standard", orderType: "both", customerType: "any",
+    minimumOrder: 0, rules: "{}", usedCount: 0, autoApply: true, couponCode: null,
+    ruleConfig: {
+      discountPercent: 100,
+      groups: [
+        { id: "t", role: "trigger", categoryIds: ["mains"], itemIds: [] },
+        { id: "f", role: "free", categoryIds: ["sides"], itemIds: [] },
+      ],
+      ...(mode ? { freeItemExtraChargeMode: mode } : {}),
+    },
+  });
+  const mainPlusSide = (withBreakdown = true): ApplyContext => ({
+    orderType: "pickup", isNewCustomer: true, isMember: false, subtotal: 32,
+    items: [
+      { menuItemId: "main", categoryId: "mains", price: 20, quantity: 1, subtotal: 20 },
+      { menuItemId: "side", categoryId: "sides", price: 12, quantity: 1, subtotal: 12, ...(withBreakdown ? { sizedBase: 10, baseNoSize: 8 } : {}) },
+    ],
+  });
+
+  it("No extra charges → frees the whole dish (−$12)", () => {
+    expect(discountOf(freeDish(), mainPlusSide())).toBe(12);
+    expect(discountOf(freeDish("none"), mainPlusSide())).toBe(12);
+  });
+  it("Charge Add-ons → frees the sized base (−$10, toppings billed)", () => {
+    expect(discountOf(freeDish("addons"), mainPlusSide())).toBe(10);
+  });
+  it("Charge Add-ons & Sizes → frees the base (−$8, size + toppings billed)", () => {
+    expect(discountOf(freeDish("addons_sizes"), mainPlusSide())).toBe(8);
+  });
+  it("legacy carts without the breakdown fall back to the whole dish even with a mode set", () => {
+    expect(discountOf(freeDish("addons"), mainPlusSide(false))).toBe(12);
+  });
+});
