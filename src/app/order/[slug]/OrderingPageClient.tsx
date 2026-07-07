@@ -98,6 +98,8 @@ interface Category extends VisibilityProps {
   forPickup?: boolean; forDelivery?: boolean;
   /** Optional header accent color overriding the theme color (cmr80joh0). */
   accentColor?: string | null;
+  /** Pin this category to the top "Featured" strip (Fabrizio cmr80joh0). */
+  pinnedToTop?: boolean;
 }
 interface CartItem {
   menuItem: MenuItem; variant?: ItemVariant; quantity: number;
@@ -4731,6 +4733,33 @@ export function OrderingPageClient({
             the promo strip. Sourced from the FILTERED menu, so visibility /
             service-restriction / sold-out states carry over automatically, and
             tapping opens the normal item modal (combo/pizza aware). */}
+        {/* Pinned CATEGORIES (Fabrizio cmr80joh0): accent jump-chips that
+            smooth-scroll to the category's section (reuses scrollToCategory,
+            which also expands the mobile accordion). Own overflow container so
+            it never causes body horizontal scroll. */}
+        {(() => {
+          const pinnedCats = visibleCategories.filter((c) => c.pinnedToTop);
+          if (pinnedCats.length === 0) return null;
+          return (
+            <div className="mb-5 flex gap-2 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
+              {pinnedCats.map((cat) => {
+                const accent = cat.accentColor || theme.primaryColor;
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => scrollToCategory(cat.id)}
+                    className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-full border-2 font-semibold text-sm whitespace-nowrap transition active:scale-95"
+                    style={{ borderColor: accent, color: accent, background: `${accent}12` }}
+                  >
+                    <Star className="w-4 h-4" style={{ fill: accent }} />
+                    {cat.name}
+                  </button>
+                );
+              })}
+            </div>
+          );
+        })()}
         {(() => {
           const pinned = visibleCategories.flatMap((c) => c.menuItems).filter((i) => (i as any).pinnedToTop);
           if (pinned.length === 0) return null;

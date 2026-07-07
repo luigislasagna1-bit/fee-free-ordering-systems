@@ -867,6 +867,11 @@ model MenuCategory {
   /// this category's header — highlight a signature section (Fabrizio
   /// cmr80joh0, 2026-07-05). Null = theme color.
   accentColor      String?
+  /// Pin this whole category to the top "Featured" strip on the order page so
+  /// customers jump straight to it (Fabrizio cmr80joh0, 2026-07-06). The tile
+  /// reuses the existing scroll-to-category behavior. Small table (one row per
+  /// section) so a boolean-with-default add is backfill-free + safe.
+  pinnedToTop      Boolean   @default(false)
   /// Exclude every item in this category from Reward Dollars EARNING (e.g. a
   /// "Gift Cards" category). Per-item rewardEarnExcluded can override. Luigi 2026-06-30.
   rewardEarnExcluded Boolean @default(false)

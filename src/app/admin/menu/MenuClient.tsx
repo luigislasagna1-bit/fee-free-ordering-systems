@@ -2315,6 +2315,8 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
     forDelivery: (cat as any)?.forDelivery ?? true,
     // Optional header accent color (Fabrizio cmr80joh0). "" = theme color.
     accentColor: (cat as any)?.accentColor ?? "",
+    // Pin the whole category to the order-page "Featured" strip (Fabrizio cmr80joh0).
+    pinnedToTop: (cat as any)?.pinnedToTop ?? false,
   });
   const [visibility, setVisibility] = useState<VisibilityValue>(() => visibilityFromRow(cat));
   const [saving, setSaving] = useState(false);
@@ -2381,6 +2383,11 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
             <button onClick={() => setForm(f => ({ ...f, forDelivery: !f.forDelivery }))}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.forDelivery ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
               <Truck className="w-4 h-4" /> {t("availableForDelivery")} {form.forDelivery && <Check className="w-3.5 h-3.5" />}
+            </button>
+            {/* Pin the whole category to the order-page "Featured" strip (Fabrizio cmr80joh0). */}
+            <button onClick={() => setForm(f => ({ ...f, pinnedToTop: !f.pinnedToTop }))}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.pinnedToTop ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
+              <Star className="w-4 h-4" /> {t("pinToTop")} {form.pinnedToTop && <Check className="w-3.5 h-3.5" />}
             </button>
           </div>
           {/* Optional header accent color (Fabrizio cmr80joh0) — highlights

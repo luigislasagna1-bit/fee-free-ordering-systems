@@ -19,7 +19,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (!await getOwned(id, restaurantId)) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   const body = await req.json();
-  const { name, description, imageUrl, isActive, isHidden, isCatering, sortOrder, visibility, rewardEarnExcluded, promoExcluded, rewardRedeemExcluded, forPickup, forDelivery, accentColor } = body;
+  const { name, description, imageUrl, isActive, isHidden, isCatering, sortOrder, visibility, rewardEarnExcluded, promoExcluded, rewardRedeemExcluded, forPickup, forDelivery, accentColor, pinnedToTop } = body;
   let visData: Record<string, unknown> = {};
   if (visibility !== undefined) {
     const v = buildVisibilityData(visibility);
@@ -46,6 +46,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       ...(accentColor !== undefined
         ? { accentColor: typeof accentColor === "string" && /^#[0-9a-fA-F]{6}$/.test(accentColor) ? accentColor : null }
         : {}),
+      // Pin the category to the order-page "Featured" strip (Fabrizio cmr80joh0).
+      ...(pinnedToTop !== undefined ? { pinnedToTop: !!pinnedToTop } : {}),
       ...visData,
     },
   });
