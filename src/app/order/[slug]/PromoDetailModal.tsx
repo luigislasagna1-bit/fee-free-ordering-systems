@@ -1001,17 +1001,27 @@ function PromoBody({
 
     case "free_delivery": {
       const pct = rules.deliveryFeeDiscountPercent ?? 100;
+      // Show only the zones this promo ACTUALLY covers. When the promo is
+      // restricted to specific delivery zones (deliveryZoneIds), the chip list
+      // must match that subset — not every zone the restaurant delivers to —
+      // otherwise it contradicts the "Conditions" line right above (which
+      // correctly lists just the restricted zones). No restriction → all zones.
+      // Luigi 2026-07-06 (caught while testing free delivery).
+      const restrictedZoneIds = safeJsonArray(promo.deliveryZoneIds);
+      const shownZones = restrictedZoneIds.length > 0
+        ? deliveryZones.filter((z) => restrictedZoneIds.includes(z.id))
+        : deliveryZones;
       return (
         <>
           <InfoCard>
             {pct === 100 ? <strong>{t("freeDeliveryFull")}</strong> : <strong>{t("freeDeliveryPartial", { pct })}</strong>}
             {promo.minimumOrder > 0 ? t("freeDeliveryOnMinOrder", { minOrder: formatCurrency(promo.minimumOrder) }) : ""}.
           </InfoCard>
-          {deliveryZones.length > 0 && (
+          {shownZones.length > 0 && (
             <div className="mb-4">
               <div className="font-semibold text-gray-900 text-sm mb-2">{t("eligibleDeliveryZones")}</div>
               <div className="flex flex-wrap gap-2">
-                {deliveryZones.map((z) => (
+                {shownZones.map((z) => (
                   <span
                     key={z.id}
                     className="text-xs font-medium px-2.5 py-1 rounded-full"

@@ -70,12 +70,36 @@ describe("gift-card promo exclusion", () => {
     expect(totalPromoDiscount(results, 15)).toBe(0);
   });
 
-  it("minimumOrder is judged on the discountable subtotal — gift cards can't unlock a threshold promo", () => {
+  it("minimumOrder counts gift cards as REAL spend for cart-discount promos (but still only discounts food) — Luigi 2026-07-06", () => {
     const p = promo({ promotionType: "percentage_off", minimumOrder: 20, ruleConfig: { discountPercent: 10 } });
-    // $15 pizza + $10 gift = $25 subtotal, but only $15 discountable → not eligible.
-    expect(applyPromotions([p as any], ctx([pizza, giftCard]))).toHaveLength(0);
-    // $15 pizza + $5 soda = $20 discountable → eligible.
-    expect(applyPromotions([p as any], ctx([pizza, soda]))).toHaveLength(1);
+    // $15 pizza + $10 gift = $25 spent → meets the $20 threshold (a gift card is
+    // a real purchase). The discount is still 10% of the discountable $15 = $1.50
+    // — the gift card is never discounted.
+    const withGift = applyPromotions([p as any], ctx([pizza, giftCard]));
+    expect(withGift).toHaveLength(1);
+    expect(withGift[0]?.discount).toBe(1.5);
+    // $15 pizza + $5 soda = $20 discountable → 10% of $20 = $2.
+    expect(applyPromotions([p as any], ctx([pizza, soda]))[0]?.discount).toBe(2);
+  });
+
+  it("free_delivery: a gift-card purchase DOES count toward the spend minimum — the bug Luigi caught 2026-07-06", () => {
+    const p = promo({ promotionType: "free_delivery", minimumOrder: 30, orderType: "delivery", ruleConfig: {} });
+    // 3× $10 gift card = $30 delivery order → meets "$30+ = free delivery".
+    const at = ctx([{ ...giftCard, quantity: 3, subtotal: 30 }], { orderType: "delivery", deliveryFee: 7.99 });
+    expect(applyPromotions([p as any], at)).toHaveLength(1);
+    // 2× $10 gift card = $20 → falls short of the $30 minimum.
+    const under = ctx([{ ...giftCard, quantity: 2, subtotal: 20 }], { orderType: "delivery", deliveryFee: 7.99 });
+    expect(applyPromotions([p as any], under)).toHaveLength(0);
+  });
+
+  it("free_item + reward_credit stay STRICT — gift-card spend can't mint free product or store credit", () => {
+    // "Free soda when you spend $16", configured via the generic minimumOrder.
+    const fi = promo({ promotionType: "free_item", minimumOrder: 16, ruleConfig: { groups: [{ role: "free", itemIds: ["soda"] }] } });
+    // $30 gift + $5 soda: only $5 is discountable food → still blocked.
+    expect(applyPromotions([fi as any], ctx([{ ...giftCard, quantity: 3, subtotal: 30 }, soda]))).toHaveLength(0);
+    // "Spend $30 → earn store credit": a gift-card-only cart can't earn it.
+    const rc = promo({ promotionType: "reward_credit", minimumOrder: 30, ruleConfig: {} });
+    expect(applyPromotions([rc as any], ctx([{ ...giftCard, quantity: 3, subtotal: 30 }]))).toHaveLength(0);
   });
 
   it("free_item: a gift card can't unlock the trigger and can't be the freed item", () => {

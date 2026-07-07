@@ -327,9 +327,19 @@ function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
   }
 
   // ── Cart Value restriction ─────────────────────────────────────────
-  // Judged on the DISCOUNTABLE subtotal — promo-excluded lines (gift cards)
-  // can't unlock a threshold promo they can never be discounted by.
-  if (promo.minimumOrder > 0 && discountableSubtotal(ctx) < promo.minimumOrder) return false;
+  // "Did the customer spend enough to qualify?" A gift card is a REAL
+  // purchase, so it counts toward the spend threshold for fee-waiver and
+  // cart-discount promos (buying $30 unlocks a "$30+ → free delivery" deal).
+  // Gift cards are still never DISCOUNTED: every benefit calc runs on the
+  // discountable base, so a gift-card-only cart yields $0 for cart-discount
+  // promos (they self-cap and drop out of the results). The two types that
+  // GIVE something away for free — a free item, or granted store credit —
+  // keep the strict discountable gate, so nobody can mint free value by buying
+  // a gift card. Luigi 2026-07-06 (was: discountable-only for every type).
+  const givesFreeValue =
+    promo.promotionType === "free_item" || promo.promotionType === "reward_credit";
+  const spendBase = givesFreeValue ? discountableSubtotal(ctx) : ctx.subtotal;
+  if (promo.minimumOrder > 0 && spendBase < promo.minimumOrder) return false;
 
   // ── Order channel (multi-select) ───────────────────────────────────
   // Canonicalise both sides so a "take_out" order matches a promo restricted
