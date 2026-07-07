@@ -909,7 +909,14 @@ function calcPaymentReward(promo: PromoInput, ctx: ApplyContext): number {
   // whole-cart discount. Luigi 2026-07-02.
   // Normalize the legacy "card" value to the canonical "online_card" slug.
   const ctxPm = ctx.paymentMethod === "card" ? "online_card" : ctx.paymentMethod;
-  if (pm && pm !== "any" && ctxPm && ctxPm !== pm) return 0;
+  // Fail CLOSED: a method-restricted reward requires a MATCHING method to be
+  // PRESENT. A missing/unknown method — a crafted order request that omits
+  // paymentMethod, or the early cart before a method is chosen — must NOT
+  // collect an online-only reward, else it leaks the discount onto a de-facto
+  // cash order (the charge route stores an omitted method as "cash"). Audit
+  // 2026-07-07. Unrestricted ("any"/empty) rewards are unaffected and still
+  // apply to every method, including before one is picked.
+  if (pm && pm !== "any" && (!ctxPm || ctxPm !== pm)) return 0;
   return parseFloat(((( rules.discountPercent ?? 0) / 100) * discountableSubtotal(ctx)).toFixed(2));
 }
 

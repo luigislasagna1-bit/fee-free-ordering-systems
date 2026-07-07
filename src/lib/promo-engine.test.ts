@@ -1079,6 +1079,18 @@ describe("engine math — whole-cart / order-lane standalone", () => {
     expect(applyPromotions([p], mkCtx({ ...base, paymentMethod: "card" }))[0]?.discount ?? 0).toBe(0);
     expect(applyPromotions([p], mkCtx({ ...base, paymentMethod: "cash" }))[0]?.discount).toBe(5);
   });
+
+  it("payment_reward fails CLOSED when the restricted method is absent (no money leak)", () => {
+    // A method-RESTRICTED reward must NOT apply when no payment method is present
+    // (a crafted order request that omits paymentMethod, or the early cart before
+    // a method is chosen). Otherwise the online-only discount leaks onto an order
+    // the charge route stores as cash. Audit 2026-07-07.
+    const online = mkPromo({ promotionType: "payment_reward", ruleConfig: { paymentMethod: "online_card", discountPercent: 10 } });
+    const base = { subtotal: 50, items: [{ menuItemId: "i1", categoryId: "cat1", price: 50, quantity: 1, subtotal: 50 }] };
+    expect(applyPromotions([online], mkCtx({ ...base }))[0]?.discount ?? 0).toBe(0); // no method → fail closed
+    expect(applyPromotions([online], mkCtx({ ...base, paymentMethod: "card" }))[0]?.discount).toBe(5); // online → applies
+    expect(applyPromotions([online], mkCtx({ ...base, paymentMethod: "cash" }))[0]?.discount ?? 0).toBe(0); // cash → 0
+  });
 });
 
 // ─── Bundle / combo determinism ──────────────────────────────────────────────
