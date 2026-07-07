@@ -135,6 +135,12 @@ interface Props {
      *  parity, Luigi 2026-07-07). `parts` map to cart lines by lineKey. */
     bundles?: Array<{ price: number; saved: number; parts: Array<{ lineKey?: string; menuItemId: string }> }>;
   }>;
+  /** "🎯 Add {amount} more to unlock {name}!" nudge — the SAME almost-there
+   *  prompt shown on the menu, surfaced at checkout too (where the customer is
+   *  looking at the delivery fee and most likely to add one more item to hit
+   *  the free-delivery / promo threshold). Pre-translated by the parent; null
+   *  when the cart isn't within range of any promo. Luigi 2026-07-07. */
+  promoNudgeText?: string | null;
   /** Exclusive promos that qualified but lost to a bigger exclusive (only one
    *  exclusive applies per order). Shown as a small note so the customer knows
    *  why a deal they expected didn't apply. Luigi 2026-06-07. */
@@ -345,7 +351,7 @@ export function CheckoutModal({
   acceptsDineIn = false, acceptsTakeOut = false,
   restaurantSlug, isSignedIn, fromMarketplace,
   cart, subtotal, totalDiscount,
-  appliedPromos = [], bumpedExclusives = [], hasFreeDelivery = false, baseDeliveryFee = 0,
+  appliedPromos = [], promoNudgeText = null, bumpedExclusives = [], hasFreeDelivery = false, baseDeliveryFee = 0,
   deliveryFee, appliedServiceFees, taxAmount,
   tipAmount, tipPercent, setTipPercent, tipsEnabled = true, total, taxRate,
   rewardInfo = null, creditToApply = 0, setCreditToApply,
@@ -738,6 +744,18 @@ export function CheckoutModal({
                 time: formatTime(reservationContext.time, hoursFormat),
                 n: reservationContext.partySize,
               })}
+            </div>
+          </div>
+        )}
+
+        {/* "Almost there" nudge — the SAME menu prompt, surfaced at checkout
+            (Luigi 2026-07-07): the customer is looking at the delivery fee here,
+            so "Add $X more to unlock FREE DELIVERY!" is at its most persuasive.
+            Prominent dashed banner at the top of the modal body. */}
+        {promoNudgeText && (
+          <div className="px-5 pt-4 flex-shrink-0">
+            <div className="rounded-xl border-2 border-dashed border-emerald-300 bg-emerald-50 px-4 py-3 text-center text-sm font-semibold text-emerald-800 shadow-sm">
+              🎯 {promoNudgeText}
             </div>
           </div>
         )}

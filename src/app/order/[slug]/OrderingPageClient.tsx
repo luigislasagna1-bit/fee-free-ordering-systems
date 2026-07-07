@@ -6036,6 +6036,13 @@ export function OrderingPageClient({
           // top of the checkout. Each entry = one applied promo (name,
           // type, discount amount, optional couponCode).
           appliedPromos={promoResults}
+          // "Add $X more to unlock {name}!" — the same menu nudge, shown at
+          // checkout too (Luigi 2026-07-07). Pre-translated here so the modal
+          // needn't re-derive the promo/threshold logic.
+          promoNudgeText={promoNudge ? t("promoUnlockNudge", {
+            amount: formatCurrency(promoNudge.remaining, restaurant.currency ?? "usd"),
+            name: promoNudge.name,
+          }) : null}
           bumpedExclusives={blockedPromos.filter((b) => b.wasExclusive)}
           hasFreeDelivery={hasFreeDelivery}
           baseDeliveryFee={baseDeliveryFee}
