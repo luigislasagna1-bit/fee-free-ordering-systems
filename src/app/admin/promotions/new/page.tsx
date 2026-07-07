@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
+import { resolvePaymentCapabilities, usablePaymentMethods } from "@/lib/payment-capabilities";
 import { isOnMarketplace } from "@/lib/marketplace";
 import { currencySymbol } from "@/lib/utils";
 import { PromoWizard } from "../_wizard/PromoWizard";
@@ -17,7 +18,7 @@ export default async function NewPromotionPage() {
     await Promise.all([
       prisma.restaurant.findUnique({
         where: { id: restaurantId },
-        select: { paymentMethods: true, currency: true, rewardsEnabled: true },
+        select: { paymentMethods: true, currency: true, rewardsEnabled: true, paypalAccountStatus: true },
       }),
       prisma.menuCategory.findMany({
         where: { restaurantId },
@@ -55,6 +56,11 @@ export default async function NewPromotionPage() {
       paymentMethods = [];
     }
   }
+  // Only offer payment methods that are actually LIVE — an online-card / PayPal
+  // reward (or restriction) can't target a method customers can't use because
+  // the Online Payments add-on isn't active. Luigi 2026-07-07.
+  const caps = await resolvePaymentCapabilities(restaurantId, (restaurant as any)?.paypalAccountStatus);
+  const usableMethods = usablePaymentMethods(paymentMethods, caps);
 
   return (
     <PromoWizard
@@ -62,7 +68,7 @@ export default async function NewPromotionPage() {
       hasAdvanced={hasAdvanced}
       categories={categories.map((c: any) => ({ id: c.id, name: c.name, menuId: c.menuId, menuName: c.menu?.name ?? null }))}
       menuItems={menuItems}
-      paymentMethods={paymentMethods}
+      paymentMethods={usableMethods}
       deliveryZones={deliveryZones}
       currencySymbol={currencySymbol(restaurant?.currency)}
       isOnMarketplace={onMarketplace}

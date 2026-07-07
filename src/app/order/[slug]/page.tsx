@@ -11,6 +11,7 @@ import { VisitTracker } from "@/components/order/VisitTracker";
 import { TrackingConsentGate } from "@/components/order/TrackingConsentGate";
 import { isSupportedLocale, type Locale } from "@/i18n/request";
 import { hasFeature } from "@/lib/entitlements";
+import { resolvePaymentCapabilities } from "@/lib/payment-capabilities";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { resolvePromoMenuRefsForServing, findDeadPromoIds } from "@/lib/menu";
 import { resolveScheduledMenuId } from "@/lib/menu-schedule";
@@ -356,38 +357,22 @@ export default async function OrderingPage({
   //      Payments add-on subscription in /admin/billing/add-ons).
   // The old Stripe Connect path (stripeAccountId / stripeChargesEnabled /
   // platform stripeReady) is gone — restaurants connect with their own keys.
-  const [provider, hasCardPayments, hasHostedSite] = await Promise.all([
-    prisma.paymentProvider.findUnique({
-      where: { restaurantId: restaurant.id },
-      select: { isActive: true, publishableKey: true },
-    }),
-    hasFeature(restaurant.id, "card_payments"),
+  // Online-card / PayPal availability — resolved via the SAME helper the admin
+  // promo wizard uses (src/lib/payment-capabilities.ts) so a "pay online" reward
+  // is never offered for a method customers can't actually use. The returned
+  // publishableKey is null unless card is truly live.
+  const [caps, hasHostedSite] = await Promise.all([
+    resolvePaymentCapabilities(restaurant.id, (restaurant as any).paypalAccountStatus),
     // Gate the "Back to <name>'s site" breadcrumb: a branded host only has a
     // real marketing site to return to when the Sales Optimized Website add-on
     // is active AND the site is published.
     hasFeature(restaurant.id, "hosted_marketing_page"),
   ]);
+  const { cardPaymentEnabled, paypalEnabled, publishableKey: stripePublishableKey } = caps;
   // Final hosted-site flag: trust an explicit ?from=hosted; otherwise only
   // infer it from a branded host when the hosted site genuinely exists.
   const fromHostedSite =
     fromHostedParam || (isBrandedHost && hasHostedSite && !!(restaurant as any).publishedAt);
-  const providerReady = !!(provider?.isActive && provider.publishableKey);
-  const cardPaymentEnabled = providerReady && hasCardPayments;
-
-  // PayPal mirrors the card-payments gate but uses the per-restaurant
-  // PayPal connection. Shares the `card_payments` entitlement so
-  // restaurants paying for Online Payments get both processors for the
-  // same subscription.
-  const paypalEnabled =
-    (restaurant as any).paypalAccountStatus === "connected" && hasCardPayments;
-
-  // The restaurant's OWN publishable key (key-only model). The actual
-  // per-order PaymentIntent + matching publishable key come back from
-  // /api/public/payment-intent at checkout time; this prop is kept for any
-  // UI that needs to know a key is present.
-  const stripePublishableKey = cardPaymentEnabled
-    ? provider?.publishableKey ?? null
-    : null;
 
   // Resolve effective locale: cookie override → restaurant default → "en".
   const cookieStore = await cookies();

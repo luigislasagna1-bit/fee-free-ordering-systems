@@ -377,9 +377,14 @@ function TypeSpecific({
         online_card: t("paymentLabelOnlineCard"),
         paypal: t("paymentLabelPaypal"),
       };
+      // The list is already filtered to LIVE methods upstream (the promo pages
+      // drop online_card / paypal when the Online Payments add-on is off). Fall
+      // back to the always-usable methods only — NEVER re-introduce online
+      // options here, or the owner could promise a discount for a method no
+      // customer can select. Luigi 2026-07-07.
       const enabled = paymentMethods && paymentMethods.length > 0
         ? paymentMethods
-        : ["cash", "card_in_person", "online_card", "paypal"];
+        : ["cash", "card_in_person"];
       return (
         <div className="space-y-4">
           <div>

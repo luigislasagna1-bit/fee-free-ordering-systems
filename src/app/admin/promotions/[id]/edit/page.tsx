@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
+import { resolvePaymentCapabilities, usablePaymentMethods } from "@/lib/payment-capabilities";
 import { isOnMarketplace } from "@/lib/marketplace";
 import { currencySymbol } from "@/lib/utils";
 import { PromoWizard, PromoRow } from "../../_wizard/PromoWizard";
@@ -30,7 +31,7 @@ export default async function EditPromotionPage({
       }),
       prisma.restaurant.findUnique({
         where: { id: restaurantId },
-        select: { paymentMethods: true, currency: true, rewardsEnabled: true },
+        select: { paymentMethods: true, currency: true, rewardsEnabled: true, paypalAccountStatus: true },
       }),
       prisma.menuCategory.findMany({
         where: { restaurantId },
@@ -73,6 +74,11 @@ export default async function EditPromotionPage({
       paymentMethods = [];
     }
   }
+  // Only offer LIVE payment methods (drops online-card / PayPal when the Online
+  // Payments add-on isn't active) so a reward can't target an unusable method.
+  // Same helper as the customer checkout + new-promo page. Luigi 2026-07-07.
+  const caps = await resolvePaymentCapabilities(restaurantId, (restaurant as any)?.paypalAccountStatus);
+  const usableMethods = usablePaymentMethods(paymentMethods, caps);
 
   // Serialise Date → ISO so the client component receives plain JSON.
   const initialPromo: PromoRow = {
@@ -122,7 +128,7 @@ export default async function EditPromotionPage({
       hasAdvanced={hasAdvanced}
       categories={categories.map((c: any) => ({ id: c.id, name: c.name, menuId: c.menuId, menuName: c.menu?.name ?? null }))}
       menuItems={menuItems}
-      paymentMethods={paymentMethods}
+      paymentMethods={usableMethods}
       deliveryZones={deliveryZones}
       initialPromo={initialPromo}
       currencySymbol={currencySymbol((restaurant as any)?.currency)}
