@@ -119,10 +119,10 @@ interface Props {
   deliveryZones?: DeliveryZoneLite[];
   /** Current cart subtotal — drives free_item gating. */
   cartSubtotal: number;
-  /** free_dish_meal only: the "meal" (all trigger groups) is already in the cart,
-   *  so show the simple "pick your free dish" picker instead of the guided
-   *  meal-walk. Luigi 2026-07-07. */
-  freeDishTriggerMet?: boolean;
+  /** free_dish_meal / buy_n_get_free: the required items (meal / paid group) are
+   *  already in the cart, so show the simple "pick your free item" picker instead
+   *  of the guided walk that would re-ask for them. Luigi 2026-07-07. */
+  giveawayTriggerMet?: boolean;
   /** Primary brand color from the theme — keeps the modal on-palette. */
   primaryColor: string;
   /** Add a freebie item to the cart at $0 (or discounted) — see
@@ -608,7 +608,7 @@ export function PromoDetailModal({
   allMenuItems,
   deliveryZones = [],
   cartSubtotal,
-  freeDishTriggerMet = false,
+  giveawayTriggerMet = false,
   primaryColor,
   usableNow = true,
   windowLabel,
@@ -739,11 +739,12 @@ export function PromoDetailModal({
     );
   }
 
-  // free_dish_meal with the "meal" ALREADY in the cart → the simple "pick your
-  // free dish" picker (the free group only), NOT the guided meal-walk (which
-  // would ask the customer to re-add the pizza they already have). Luigi
-  // 2026-07-07. When the meal isn't there yet, fall through to the guided modal.
-  if (promo.promotionType === "free_dish_meal" && freeDishTriggerMet) {
+  // free_dish_meal / buy_n_get_free with the required items ALREADY in the cart →
+  // the simple "pick your free item" picker (the free group only), NOT the guided
+  // walk (which would ask the customer to re-add the meal / paid items they
+  // already have). Luigi 2026-07-07. When they're not there yet, fall through to
+  // the guided modal.
+  if ((promo.promotionType === "free_dish_meal" || promo.promotionType === "buy_n_get_free") && giveawayTriggerMet) {
     const groups = (rules.groups ?? rules.itemGroups ?? []) as RuleConfigGroup[];
     const freeMap = new Map<string, MenuItemLite>();
     for (const g of groups) {

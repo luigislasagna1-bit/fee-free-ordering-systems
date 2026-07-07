@@ -2556,21 +2556,31 @@ export function OrderingPageClient({
     const iid = ci?.menuItem?.id != null ? String(ci.menuItem.id) : "";
     return (itemIds.length > 0 && itemIds.includes(iid)) || (catIds.length > 0 && catIds.includes(cid));
   };
-  // Is a free_dish_meal promo's "meal" (every trigger group) already in the cart
-  // (so the customer just needs to pick their free dish)? Drives both the
-  // auto-prompt AND the picker-vs-guided choice in PromoDetailModal so we never
-  // ask the customer to re-add a meal they already have. Luigi 2026-07-07.
-  const freeDishTriggerMet = (p: any): boolean => {
-    if (p?.promotionType !== "free_dish_meal") return false;
+  // Has the customer already bought what a "get a free X" deal requires — so they
+  // just need to PICK their free item? Covers free_dish_meal (every trigger group
+  // present) AND buy_n_get_free (each paid/required group has its minCount). Drives
+  // both the auto-prompt AND the picker-vs-guided choice in PromoDetailModal so we
+  // never ask the customer to re-add items they already have. Luigi 2026-07-07.
+  const giveawayTriggerMet = (p: any): boolean => {
+    const type = p?.promotionType;
+    if (type !== "free_dish_meal" && type !== "buy_n_get_free") return false;
     let rc: any = p.ruleConfig;
     if (!rc || typeof rc !== "object") { try { rc = JSON.parse((p as any).rules || "{}"); } catch { rc = {}; } }
     const groups: any[] = Array.isArray(rc?.groups) ? rc.groups : [];
-    const triggerGroups = groups.filter((g) => g?.role === "trigger");
-    if (!triggerGroups.length || !groups.some((g) => g?.role === "free")) return false;
+    if (!groups.some((g) => g?.role === "free")) return false;
+    const reqGroups = groups.filter((g) => g?.role === "trigger" || g?.role === "paid" || g?.role === "required");
+    if (!reqGroups.length) return false;
     if ((p.minimumOrder ?? 0) > 0 && subtotal < (p.minimumOrder ?? 0)) return false;
-    return triggerGroups.every((g) =>
-      cart.some((ci) => !String(ci.notes ?? "").startsWith("Free with promo:") && cartLineMatchesGroup(ci, g)),
-    );
+    // Each required group needs its minCount worth of matching, non-freebie units.
+    return reqGroups.every((g) => {
+      const need = Math.max(1, Number(g?.minCount ?? 1) || 1);
+      let have = 0;
+      for (const ci of cart) {
+        if (String(ci.notes ?? "").startsWith("Free with promo:")) continue;
+        if (cartLineMatchesGroup(ci, g)) have += ci.quantity ?? 1;
+      }
+      return have >= need;
+    });
   };
 
   // Auto-prompt for unlocked give-away promos. Their discount can't auto-apply
@@ -2609,7 +2619,7 @@ export function OrderingPageClient({
         const threshold = Math.max(p.minimumOrder ?? 0, trigger);
         return threshold > 0 && subtotal >= threshold;
       }
-      if (p.promotionType === "free_dish_meal") return freeDishTriggerMet(p);
+      if (p.promotionType === "free_dish_meal" || p.promotionType === "buy_n_get_free") return giveawayTriggerMet(p);
       return false;
     });
     if (target) {
@@ -6207,9 +6217,10 @@ export function OrderingPageClient({
           allMenuItems={flatMenuItems}
           deliveryZones={(restaurant.deliveryZones ?? []).map((z: any) => ({ id: z.id, name: z.name }))}
           cartSubtotal={subtotal}
-          // free_dish_meal: when the meal is already in the cart, show the simple
-          // "pick your free dish" picker instead of re-walking the meal.
-          freeDishTriggerMet={activePromoModal ? freeDishTriggerMet(activePromoModal) : false}
+          // free_dish_meal / buy_n_get_free: when the required items are already in
+          // the cart, show the simple "pick your free item" picker instead of
+          // re-walking the meal / paid items.
+          giveawayTriggerMet={activePromoModal ? giveawayTriggerMet(activePromoModal) : false}
           primaryColor={theme.primaryColor}
           // Time-window gating: redeemable for the current order time? If not,
           // the modal shows "order for later" instead of the claim builder.
