@@ -543,7 +543,7 @@ function PizzaVisual({
 // ── Topping pill ──────────────────────────────────────────────────────────────
 
 function ToppingPill({
-  opt, topping, onToggle, onSetQuantity, onSetCount, allowMultiple = false, primaryColor, priceMultiplier = 1,
+  opt, topping, onToggle, onSetQuantity, onSetCount, allowMultiple = false, primaryColor, priceMultiplier = 1, flatToppingPrice = 0,
 }: {
   opt: ModOption;
   topping: SelectedTopping | undefined;
@@ -557,13 +557,24 @@ function ToppingPill({
   /** Half-pizza display multiplier (0.5) so a topping added on the current half
    *  shows the price it'll actually cost. 1 = whole. */
   priceMultiplier?: number;
+  /** Pizza's FLAT per-topping price (config.extraToppingPrice, variant-resolved).
+   *  When > 0 the flat model applies and every topping costs THIS — not the
+   *  modifier option's own priceAdjustment — so the on-screen "+$X" matches the
+   *  shared charge engine (priceToppingLines). 0 = per-option model (use the
+   *  option's price). Luigi 2026-07-06: SUPER PARTY charged $10/topping but the
+   *  pill showed the option's $2.50. */
+  flatToppingPrice?: number;
 }) {
   const formatCurrency = useCurrencyFormat();
   const selected = !!topping;
   const qty = topping?.quantity ?? "normal";
   const count = topping?.count ?? 1;
-  // Show the line price for the chosen quantity (× count); light is free.
-  const shownPrice = qty === "light" ? 0 : Math.round(opt.priceAdjustment * priceMultiplier * count * 100) / 100;
+  // Show the per-line price the SHARED engine will actually charge: the pizza's
+  // flat topping price when set, else the option's own price, scaled by the half
+  // multiplier and count. "Light" is price-neutral (charged exactly like normal),
+  // so it is NOT shown as free. Luigi 2026-07-06.
+  const unitToppingPrice = flatToppingPrice > 0 ? flatToppingPrice : opt.priceAdjustment;
+  const shownPrice = Math.round(unitToppingPrice * priceMultiplier * count * 100) / 100;
 
   return (
     <div
@@ -1490,6 +1501,7 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
                               allowMultiple={effectiveConfig.allowMultipleToppings !== false}
                               primaryColor={primaryColor}
                               priceMultiplier={placement !== "whole" ? effectiveConfig.halfToppingMultiplier : 1}
+                              flatToppingPrice={effectiveConfig.extraToppingPrice}
                             />
                           );
                         })}
