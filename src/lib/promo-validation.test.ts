@@ -18,12 +18,12 @@ describe("fixedDiscountMinError — min cart ≥ fixed discount (Luigi 2026-07-0
     expect(fixedDiscountMinError("fixed_cart", { discountAmount: 30 }, 50)).toBeNull();
   });
 
-  it("applies to fixed_combo as well", () => {
-    expect(fixedDiscountMinError("fixed_combo", { discountAmount: 25 }, 10)).not.toBeNull();
-    expect(fixedDiscountMinError("fixed_combo", { discountAmount: 25 }, 25)).toBeNull();
+  it("does NOT apply to fixed_combo — it requires items + caps at their value (GloriaFood parity)", () => {
+    expect(fixedDiscountMinError("fixed_combo", { discountAmount: 25 }, 10)).toBeNull();
+    expect(fixedDiscountMinError("fixed_combo", { discountAmount: 25 }, 0)).toBeNull();
   });
 
-  it("ignores non-fixed-dollar types (%-off, bundles, bogo)", () => {
+  it("ignores non-whole-cart-fixed types (%-off, bundles, bogo, combos)", () => {
     expect(fixedDiscountMinError("percentage_off", { discountPercent: 50 }, 0)).toBeNull();
     expect(fixedDiscountMinError("meal_bundle", { bundlePrice: 30 }, 0)).toBeNull();
     expect(fixedDiscountMinError("bogo", {}, 0)).toBeNull();
@@ -35,9 +35,9 @@ describe("fixedDiscountMinError — min cart ≥ fixed discount (Luigi 2026-07-0
     expect(fixedDiscountMinError("fixed_cart", null, 0)).toBeNull();
   });
 
-  it("isFixedDiscountType flags only the fixed-dollar types", () => {
+  it("isFixedDiscountType flags only whole-cart fixed_cart", () => {
     expect(isFixedDiscountType("fixed_cart")).toBe(true);
-    expect(isFixedDiscountType("fixed_combo")).toBe(true);
+    expect(isFixedDiscountType("fixed_combo")).toBe(false);
     expect(isFixedDiscountType("percentage_off")).toBe(false);
     expect(isFixedDiscountType("meal_bundle")).toBe(false);
   });
