@@ -902,21 +902,30 @@ function calcFixedCart(promo: PromoInput, ctx: ApplyContext): number {
   return Math.min(amount, discountableSubtotal(ctx));
 }
 
+const normPaymentSlug = (m: string): string => (m === "card" ? "online_card" : m);
+
 function calcPaymentReward(promo: PromoInput, ctx: ApplyContext): number {
   const rules = getRules(promo);
-  const pm = rules.paymentMethod;
+  // Allowed methods: the multi-select array `paymentMethods` (new) OR the legacy
+  // single `paymentMethod` (backward compat). An EMPTY set (or "any") = every
+  // method. Normalize the legacy "card" value to the canonical "online_card"
+  // slug on both sides. Luigi 2026-07-07 (multi-select).
+  const arr = (rules as any).paymentMethods;
+  const allowed: string[] = (Array.isArray(arr)
+    ? arr.filter((m: unknown): m is string => typeof m === "string")
+    : (rules.paymentMethod && rules.paymentMethod !== "any" ? [rules.paymentMethod] : [])
+  ).map(normPaymentSlug);
   // Base excludes promo-excluded lines (gift cards) — same as every other
   // whole-cart discount. Luigi 2026-07-02.
-  // Normalize the legacy "card" value to the canonical "online_card" slug.
   const ctxPm = ctx.paymentMethod === "card" ? "online_card" : ctx.paymentMethod;
   // Fail CLOSED: a method-restricted reward requires a MATCHING method to be
   // PRESENT. A missing/unknown method — a crafted order request that omits
   // paymentMethod, or the early cart before a method is chosen — must NOT
   // collect an online-only reward, else it leaks the discount onto a de-facto
   // cash order (the charge route stores an omitted method as "cash"). Audit
-  // 2026-07-07. Unrestricted ("any"/empty) rewards are unaffected and still
-  // apply to every method, including before one is picked.
-  if (pm && pm !== "any" && (!ctxPm || ctxPm !== pm)) return 0;
+  // 2026-07-07. Unrestricted (empty set / "any") rewards are unaffected and
+  // still apply to every method, including before one is picked.
+  if (allowed.length > 0 && (!ctxPm || !allowed.includes(ctxPm))) return 0;
   return parseFloat(((( rules.discountPercent ?? 0) / 100) * discountableSubtotal(ctx)).toFixed(2));
 }
 

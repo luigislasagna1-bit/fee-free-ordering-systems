@@ -46,7 +46,13 @@ export type PromoRules = {
   /** reward_credit: store credit (Reward Dollars) granted on completion. */
   creditAmount?: number;
   bundlePrice?: number;
+  /** payment_reward: LEGACY single accepted method ("online_card" | "cash" | …
+   *  | "any"). Superseded by `paymentMethods` (multi-select) but still read for
+   *  backward compat. */
   paymentMethod?: string;
+  /** payment_reward: the set of accepted methods that earn the reward
+   *  (multi-select checkboxes). Empty / absent = ANY method. Luigi 2026-07-07. */
+  paymentMethods?: string[];
   triggerAmount?: number;
   discountStrategy?: "cheapest" | "most_expensive" | "fixed_percent";
   cheapestDiscount?: number;

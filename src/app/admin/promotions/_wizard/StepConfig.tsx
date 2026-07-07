@@ -377,32 +377,52 @@ function TypeSpecific({
         online_card: t("paymentLabelOnlineCard"),
         paypal: t("paymentLabelPaypal"),
       };
-      // The list is already filtered to LIVE methods upstream (the promo pages
-      // drop online_card / paypal when the Online Payments add-on is off). Fall
-      // back to the always-usable methods only — NEVER re-introduce online
-      // options here, or the owner could promise a discount for a method no
-      // customer can select. Luigi 2026-07-07.
+      // Accepted methods (union across order types, resolved upstream). Online
+      // methods only appear when the Online Payments add-on is active, so the
+      // list is safe to offer. Fall back to the always-usable methods when the
+      // restaurant hasn't configured any. Luigi 2026-07-07.
       const enabled = paymentMethods && paymentMethods.length > 0
         ? paymentMethods
         : ["cash", "card_in_person"];
+      // Multi-select (checkboxes): the owner can reward SEVERAL methods — e.g.
+      // "pay online" = Card online OR PayPal but NOT cash, which a single
+      // dropdown couldn't express. Stored as rules.paymentMethods[]; an EMPTY
+      // set = any method. Seed from the legacy single `paymentMethod` on edit.
+      // Luigi 2026-07-07.
+      const selectedMethods: string[] = Array.isArray((rules as any).paymentMethods)
+        ? (rules as any).paymentMethods
+        : (rules.paymentMethod && rules.paymentMethod !== "any" ? [rules.paymentMethod] : []);
+      const toggleMethod = (slug: string) => {
+        const set = new Set(selectedMethods);
+        if (set.has(slug)) set.delete(slug);
+        else set.add(slug);
+        // Store the array + clear the legacy single field so they can't disagree.
+        onRules({ paymentMethods: Array.from(set), paymentMethod: undefined });
+      };
       return (
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               {t("paymentMethodLabel")}
             </label>
-            <select
-              value={rules.paymentMethod ?? "any"}
-              onChange={(e) => onRules({ paymentMethod: e.target.value })}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-            >
-              <option value="any">{t("paymentMethodAny")}</option>
+            <div className="space-y-1.5">
               {enabled.map((slug) => (
-                <option key={slug} value={slug}>
+                <label key={slug} className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={selectedMethods.includes(slug)}
+                    onChange={() => toggleMethod(slug)}
+                    className="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                  />
                   {PAYMENT_LABELS[slug] ?? slug}
-                </option>
+                </label>
               ))}
-            </select>
+            </div>
+            {selectedMethods.length === 0 && (
+              <p className="text-xs text-emerald-600 font-medium mt-1.5">
+                {t("paymentMethodAny")}
+              </p>
+            )}
             <p className="text-xs text-gray-400 mt-1">
               {t("paymentMethodHint")}
             </p>

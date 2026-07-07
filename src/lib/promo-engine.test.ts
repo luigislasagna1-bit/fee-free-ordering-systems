@@ -1091,6 +1091,34 @@ describe("engine math — whole-cart / order-lane standalone", () => {
     expect(applyPromotions([online], mkCtx({ ...base, paymentMethod: "card" }))[0]?.discount).toBe(5); // online → applies
     expect(applyPromotions([online], mkCtx({ ...base, paymentMethod: "cash" }))[0]?.discount ?? 0).toBe(0); // cash → 0
   });
+
+  it("payment_reward MULTI-SELECT applies to any method in the set, not others", () => {
+    // "Pay online" = Card online OR PayPal, but NOT cash / card-in-person.
+    // Luigi 2026-07-07 (multi-select checkboxes).
+    const p = mkPromo({ promotionType: "payment_reward", ruleConfig: { paymentMethods: ["online_card", "paypal"], discountPercent: 10 } });
+    const base = { subtotal: 50, items: [{ menuItemId: "i1", categoryId: "cat1", price: 50, quantity: 1, subtotal: 50 }] };
+    expect(applyPromotions([p], mkCtx({ ...base, paymentMethod: "card" }))[0]?.discount).toBe(5); // online card ("card"→online_card)
+    expect(applyPromotions([p], mkCtx({ ...base, paymentMethod: "paypal" }))[0]?.discount).toBe(5); // paypal
+    expect(applyPromotions([p], mkCtx({ ...base, paymentMethod: "cash" }))[0]?.discount ?? 0).toBe(0); // cash → 0
+    expect(applyPromotions([p], mkCtx({ ...base, paymentMethod: "card_in_person" }))[0]?.discount ?? 0).toBe(0); // in-person → 0
+    expect(applyPromotions([p], mkCtx({ ...base }))[0]?.discount ?? 0).toBe(0); // no method → fail closed
+  });
+
+  it("payment_reward MULTI-SELECT empty array = ANY method (unrestricted)", () => {
+    const p = mkPromo({ promotionType: "payment_reward", ruleConfig: { paymentMethods: [], discountPercent: 10 } });
+    const base = { subtotal: 50, items: [{ menuItemId: "i1", categoryId: "cat1", price: 50, quantity: 1, subtotal: 50 }] };
+    expect(applyPromotions([p], mkCtx({ ...base, paymentMethod: "cash" }))[0]?.discount).toBe(5);
+    expect(applyPromotions([p], mkCtx({ ...base, paymentMethod: "card" }))[0]?.discount).toBe(5);
+    expect(applyPromotions([p], mkCtx({ ...base }))[0]?.discount).toBe(5); // no method chosen → still any
+  });
+
+  it("payment_reward MULTI-SELECT array wins over a stale legacy single value", () => {
+    // Backward-compat safety: if both are present, the new array is authoritative.
+    const p = mkPromo({ promotionType: "payment_reward", ruleConfig: { paymentMethods: ["cash"], paymentMethod: "online_card", discountPercent: 10 } });
+    const base = { subtotal: 50, items: [{ menuItemId: "i1", categoryId: "cat1", price: 50, quantity: 1, subtotal: 50 }] };
+    expect(applyPromotions([p], mkCtx({ ...base, paymentMethod: "cash" }))[0]?.discount).toBe(5); // array says cash → applies
+    expect(applyPromotions([p], mkCtx({ ...base, paymentMethod: "card" }))[0]?.discount ?? 0).toBe(0); // legacy online ignored
+  });
 });
 
 // ─── Bundle / combo determinism ──────────────────────────────────────────────
