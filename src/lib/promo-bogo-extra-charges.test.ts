@@ -152,3 +152,55 @@ describe("Free-dish-with-a-meal extra-charges modes (GloriaFood parity)", () => 
     expect(discountOf(freeDish("addons"), mainPlusSide(false))).toBe(12);
   });
 });
+
+// ── %-off / %-combo extra-charges (GloriaFood parity, Luigi 2026-07-07) ──────
+// Same two pizzas as above. 20% off, applied to the whole line / sized base /
+// un-sized base per mode:
+//   none         → 20% of (25 + 18) = 8.60
+//   addons       → 20% of (20 + 16) = 7.20   (toppings kept)
+//   addons_sizes → 20% of (15 + 13) = 5.60   (size + toppings kept)
+const pctOff = (mode?: string, oncePerOrder = false): PromoInput => ({
+  id: `p${++_seq}`, name: "20% pizzas", description: null, promotionType: "percentage_off",
+  isActive: true, stackingRule: "standard", orderType: "both", customerType: "any",
+  minimumOrder: 0, rules: "{}", usedCount: 0, autoApply: true, couponCode: null,
+  ruleConfig: { discountPercent: 20, oncePerOrder, groups: [{ id: "g", categoryIds: ["pizzas"], itemIds: [] }], ...(mode ? { freeItemExtraChargeMode: mode } : {}) },
+});
+const pctCombo = (mode?: string): PromoInput => ({
+  id: `p${++_seq}`, name: "20% combo", description: null, promotionType: "percentage_combo",
+  isActive: true, stackingRule: "standard", orderType: "both", customerType: "any",
+  minimumOrder: 0, rules: "{}", usedCount: 0, autoApply: true, couponCode: null,
+  ruleConfig: { discountPercent: 20, groups: [{ id: "g1", categoryIds: ["pizzas"], itemIds: [] }, { id: "g2", categoryIds: ["pizzas"], itemIds: [] }], ...(mode ? { freeItemExtraChargeMode: mode } : {}) },
+});
+
+describe("percentage_off extra-charges modes", () => {
+  it("none (default) → 20% of the whole lines (−$8.60)", () => {
+    expect(discountOf(pctOff(), twoPizzas())).toBe(8.6);
+    expect(discountOf(pctOff("none"), twoPizzas())).toBe(8.6);
+  });
+  it("addons → 20% of the sized bases only (−$7.20)", () => {
+    expect(discountOf(pctOff("addons"), twoPizzas())).toBe(7.2);
+  });
+  it("addons_sizes → 20% of the un-sized bases only (−$5.60)", () => {
+    expect(discountOf(pctOff("addons_sizes"), twoPizzas())).toBe(5.6);
+  });
+  it("legacy cart without the breakdown falls back to the whole line even with a mode", () => {
+    expect(discountOf(pctOff("addons"), twoPizzas(false))).toBe(8.6);
+  });
+  it("oncePerOrder honors the mode on the single best item (25 / 20 / 15 → 5 / 4 / 3)", () => {
+    expect(discountOf(pctOff(undefined, true), twoPizzas())).toBe(5);
+    expect(discountOf(pctOff("addons", true), twoPizzas())).toBe(4);
+    expect(discountOf(pctOff("addons_sizes", true), twoPizzas())).toBe(3);
+  });
+});
+
+describe("percentage_combo extra-charges modes", () => {
+  it("none → 20% of the whole lines (−$8.60)", () => {
+    expect(discountOf(pctCombo(), twoPizzas())).toBe(8.6);
+  });
+  it("addons → 20% of the sized bases (−$7.20)", () => {
+    expect(discountOf(pctCombo("addons"), twoPizzas())).toBe(7.2);
+  });
+  it("addons_sizes → 20% of the un-sized bases (−$5.60)", () => {
+    expect(discountOf(pctCombo("addons_sizes"), twoPizzas())).toBe(5.6);
+  });
+});

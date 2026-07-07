@@ -473,12 +473,14 @@ function groupTotalQty(group: ItemGroup, items: CartItem[]): number {
  *  Used when a group/combo % discount is capped to once per order, so it covers
  *  one item per group (the customer's best single combo) instead of every
  *  qualifying item. Luigi 2026-06-07. */
-function oneComboValue(groups: ItemGroup[], items: CartItem[]): number {
+function oneComboValue(groups: ItemGroup[], items: CartItem[], basis: FreeBasis = "none"): number {
   // Each group contributes its single best item, but a given cart LINE can only
   // be claimed by ONE group — otherwise two overlapping groups (e.g. both target
   // "Pizzas") would both count the same pizza, double-charging the combo value
   // (audit percentage_combo over-count). Greedily give each group its best still-
-  // unclaimed match. Luigi 2026-06-27.
+  // unclaimed match. Luigi 2026-06-27. `basis` (extra-charges mode) shrinks the
+  // per-unit base to just the sized/un-sized base when set; `none` keeps the
+  // original `best.price` exactly. Luigi 2026-07-07.
   let total = 0;
   const used = new Set<CartItem>();
   for (const group of groups) {
@@ -486,7 +488,7 @@ function oneComboValue(groups: ItemGroup[], items: CartItem[]): number {
     if (!matched.length) continue;
     const best = matched.reduce((a, b) => (a.price >= b.price ? a : b));
     used.add(best);
-    total += best.price;
+    total += basis === "none" ? best.price : unitFreeableBase(best, basis);
   }
   return total;
 }
@@ -495,28 +497,38 @@ function oneComboValue(groups: ItemGroup[], items: CartItem[]): number {
  *  even if it matches multiple groups (dedup by identity), so overlapping groups
  *  can't inflate the eligible base (audit percentage_off / percentage_combo
  *  over-count). Luigi 2026-06-27. */
-function allGroupsValue(groups: ItemGroup[], items: CartItem[]): number {
+function allGroupsValue(groups: ItemGroup[], items: CartItem[], basis: FreeBasis = "none"): number {
   const matched = new Set<CartItem>();
   for (const group of groups) {
     for (const i of itemsMatchingGroup(group, items)) matched.add(i);
   }
   let total = 0;
-  for (const i of matched) total += i.subtotal;
+  // lineFreeableBase(i, "none") === i.subtotal, so `none` is byte-identical; the
+  // modes shrink each line to its base (charge toppings) / un-sized base (charge
+  // size + toppings). Luigi 2026-07-07.
+  for (const i of matched) total += lineFreeableBase(i, basis);
   return total;
 }
 
 function calcPercentageOff(promo: PromoInput, ctx: ApplyContext): number {
   const rules = getRules(promo);
   const pct = rules.discountPercent ?? 0;
+  // "Extra charges" mode (GloriaFood parity, Luigi 2026-07-07): the % applies to
+  // the whole line (none, default), the sized base only (addons — charge
+  // toppings), or the un-sized base (addons_sizes — charge size + toppings).
+  const basis = normalizeFreeBasis((rules as { freeItemExtraChargeMode?: unknown }).freeItemExtraChargeMode);
   if (!rules.groups?.length) {
-    // Whole-cart %: base excludes promo-excluded lines (gift cards).
-    return parseFloat(((pct / 100) * discountableSubtotal(ctx)).toFixed(2));
+    // Whole-cart %: base excludes promo-excluded lines (gift cards). With a mode,
+    // sum each non-excluded line's freeable base instead of the full subtotal.
+    if (basis === "none") return parseFloat(((pct / 100) * discountableSubtotal(ctx)).toFixed(2));
+    const base = ctx.items.reduce((s, i) => s + (i.promoExcluded ? 0 : lineFreeableBase(i, basis)), 0);
+    return parseFloat(((pct / 100) * base).toFixed(2));
   }
   // Targeted items. "Once per order" caps the discount to a single item per
   // group (one combo); otherwise it covers every qualifying item.
   const eligible = rules.oncePerOrder
-    ? oneComboValue(rules.groups, ctx.items)
-    : allGroupsValue(rules.groups, ctx.items);
+    ? oneComboValue(rules.groups, ctx.items, basis)
+    : allGroupsValue(rules.groups, ctx.items, basis);
   return parseFloat(((pct / 100) * eligible).toFixed(2));
 }
 
@@ -566,6 +578,21 @@ function freeableAmount(u: DiscountUnit, basis: FreeBasis): number {
   if (basis === "addons_sizes") return Math.min(u.price, u.baseNoSize ?? u.price);
   if (basis === "addons") return Math.min(u.price, u.sizedBase ?? u.price);
   return u.price;
+}
+
+/** The discountable base of ONE unit of a cart line under a freeBasis — used by
+ *  the %-off / %-combo "extra charges" modes so the percent can apply to the
+ *  base only (charge toppings) / the un-sized base (charge size + toppings)
+ *  instead of the whole line. `none` returns the per-unit price (subtotal/qty),
+ *  which times quantity is the line subtotal — byte-identical to the old path.
+ *  Luigi 2026-07-07. */
+function unitFreeableBase(i: CartItem, basis: FreeBasis): number {
+  const per = i.quantity > 0 ? i.subtotal / i.quantity : i.price;
+  return freeableAmount({ menuItemId: i.menuItemId, price: per, sizedBase: i.sizedBase, baseNoSize: i.baseNoSize }, basis);
+}
+/** unitFreeableBase × the line's quantity — the whole line's discountable base. */
+function lineFreeableBase(i: CartItem, basis: FreeBasis): number {
+  return unitFreeableBase(i, basis) * i.quantity;
 }
 
 function discountNUnitsDetailed(
@@ -803,6 +830,9 @@ function promoBreakdown(promo: PromoInput, ctx: ApplyContext): DiscountLine[] {
       if (!groups.length) return [];
       const pct = rules.discountPercent ?? 0;
       if (pct <= 0) return [];
+      // Mirror the calculator's extra-charges mode so the "You saved" badge shows
+      // the SAME amount the charge applies (Luigi 2026-07-07).
+      const basis = normalizeFreeBasis((rules as { freeItemExtraChargeMode?: unknown }).freeItemExtraChargeMode);
       // "Once per order" → the discount covers ONE unit per group (the single
       // most expensive match — mirrors oneComboValue exactly). Emit THOSE
       // lines instead of [] so the cart still names which dish was discounted
@@ -817,7 +847,8 @@ function promoBreakdown(promo: PromoInput, ctx: ApplyContext): DiscountLine[] {
           if (!matched.length) continue;
           const best = matched.reduce((a, b) => (a.price >= b.price ? a : b));
           used.add(best);
-          lines.push({ menuItemId: best.menuItemId, amount: parseFloat(((pct / 100) * best.price).toFixed(2)), lineKey: best.lineKey });
+          const base = basis === "none" ? best.price : unitFreeableBase(best, basis);
+          lines.push({ menuItemId: best.menuItemId, amount: parseFloat(((pct / 100) * base).toFixed(2)), lineKey: best.lineKey });
         }
         return lines;
       }
@@ -831,7 +862,7 @@ function promoBreakdown(promo: PromoInput, ctx: ApplyContext): DiscountLine[] {
           const dedupKey = it.lineKey ?? it.menuItemId;
           if (seen.has(dedupKey)) continue;
           seen.add(dedupKey);
-          lines.push({ menuItemId: it.menuItemId, amount: parseFloat(((pct / 100) * it.subtotal).toFixed(2)), lineKey: it.lineKey });
+          lines.push({ menuItemId: it.menuItemId, amount: parseFloat(((pct / 100) * lineFreeableBase(it, basis)).toFixed(2)), lineKey: it.lineKey });
         }
       }
       return lines;
@@ -1093,6 +1124,10 @@ function percentageComboResult(promo: PromoInput, ctx: ApplyContext): ClaimResul
   // The claimed units MIRROR the eligible base exactly (oneComboValue picks one
   // best unit per group; allGroupsValue takes every qualifying unit) so the total
   // stays byte-for-byte identical to the pre-ownership behaviour.
+  // "Extra charges" mode (GloriaFood parity, Luigi 2026-07-07) — the % applies to
+  // the whole line (none), the sized base (addons), or the un-sized base
+  // (addons_sizes). Only the AMOUNT changes; the claimed UNITS are identical.
+  const basis = normalizeFreeBasis((rules as { freeItemExtraChargeMode?: unknown }).freeItemExtraChargeMode);
   const claimed: CartItem[] = [];
   let eligible = 0;
   if (rules.oncePerOrder) {
@@ -1102,14 +1137,14 @@ function percentageComboResult(promo: PromoInput, ctx: ApplyContext): ClaimResul
       if (!matched.length) continue;
       const best = matched.reduce((a, b) => (a.price >= b.price ? a : b));
       used.add(best);
-      eligible += best.price;
+      eligible += basis === "none" ? best.price : unitFreeableBase(best, basis);
       claimed.push(best); // one unit of the best line
     }
   } else {
     const matched = new Set<CartItem>();
     for (const group of groups) for (const i of itemsMatchingGroup(group, ctx.items)) matched.add(i);
     for (const i of matched) {
-      eligible += i.subtotal;
+      eligible += lineFreeableBase(i, basis); // === i.subtotal when basis is "none"
       for (let k = 0; k < i.quantity; k++) claimed.push(i); // every unit of every matching line
     }
   }

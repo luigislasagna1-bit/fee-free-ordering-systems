@@ -209,6 +209,7 @@ function TypeSpecific({
               </div>
             )}
           </div>
+          {!wholeCart && <ExtraChargeModeSelect rules={rules} onChange={onRules} />}
         </div>
       );
     }
@@ -548,6 +549,7 @@ function TypeSpecific({
               minGroups={2}
             />
           </div>
+          <ExtraChargeModeSelect rules={rules} onChange={onRules} />
         </div>
       );
 
