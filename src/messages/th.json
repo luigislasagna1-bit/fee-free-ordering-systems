@@ -2150,6 +2150,7 @@
       "errorPickType": "เลือกประเภทโปรโมชั่นเพื่อดำเนินการต่อ",
       "errorNameRequired": "ต้องใส่ชื่อโปรโมชั่น",
       "errorTypeRequired": "ต้องใส่ประเภทโปรโมชั่น",
+      "errorMinBelowDiscount": "ยอดขั้นต่ำของตะกร้าต้องไม่น้อยกว่าจำนวนส่วนลด ({amount}) มิฉะนั้นข้อเสนอนี้อาจให้มากกว่ามูลค่าของคำสั่งซื้อ",
       "errorSaveFailed": "บันทึกล้มเหลว ({status})",
       "errorSaveFailedGeneric": "บันทึกโปรโมชั่นล้มเหลว",
       "successUpdated": "อัปเดตโปรโมชั่นแล้ว",

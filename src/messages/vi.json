@@ -2094,6 +2094,7 @@
       "errorPickType": "Chọn loại khuyến mãi để tiếp tục.",
       "errorNameRequired": "Tên khuyến mãi là bắt buộc.",
       "errorTypeRequired": "Loại khuyến mãi là bắt buộc.",
+      "errorMinBelowDiscount": "Giá trị giỏ hàng tối thiểu phải ít nhất bằng số tiền giảm giá ({amount}). Nếu không, ưu đãi này có thể cho đi nhiều hơn giá trị của đơn hàng.",
       "errorSaveFailed": "Lưu thất bại ({status})",
       "errorSaveFailedGeneric": "Lưu khuyến mãi thất bại",
       "successUpdated": "Đã cập nhật khuyến mãi",

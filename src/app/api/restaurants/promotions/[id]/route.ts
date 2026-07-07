@@ -8,6 +8,7 @@ import {
   ADVANCED_PROMO_FEATURE,
   isLockedType,
 } from "@/lib/promo-types";
+import { fixedDiscountMinError } from "@/lib/promo-validation";
 import {
   clampMin,
   normalizeBannerHeadline,
@@ -68,6 +69,23 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       // Switching from a locked type to a free one — clear the gate.
       requiredAddOnSlugUpdate = null;
     }
+  }
+
+  // ── Fixed-dollar discount sanity: min cart ≥ discount (see POST) ─────
+  // The wizard sends the full config on save; for a partial patch we fall back
+  // to the stored promo for any of {type, ruleConfig, minimumOrder} it omits so
+  // lowering the minimum ALONE can't slip a "$30 off, $5 min" config past the
+  // guard. Luigi 2026-07-07.
+  if (promotionType !== undefined || minimumOrder !== undefined || ruleConfig !== undefined) {
+    const current = await prisma.promotion.findFirst({
+      where: { id, restaurantId },
+      select: { promotionType: true, minimumOrder: true, ruleConfig: true },
+    });
+    const effType = (promotionType ?? current?.promotionType) ?? "";
+    const effRc = ruleConfig ?? current?.ruleConfig;
+    const effMin = minimumOrder ?? current?.minimumOrder;
+    const minDiscErr = fixedDiscountMinError(effType, effRc, effMin);
+    if (minDiscErr) return NextResponse.json(minDiscErr, { status: 400 });
   }
 
   // If trying to flip scope to/from "brand", verify this restaurant is

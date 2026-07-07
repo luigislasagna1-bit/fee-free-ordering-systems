@@ -2150,6 +2150,7 @@
       "errorPickType": "Odaberite vrstu promocije za nastavak.",
       "errorNameRequired": "Naziv promocije je obavezan.",
       "errorTypeRequired": "Vrsta promocije je obavezna.",
+      "errorMinBelowDiscount": "Minimalni iznos košarice mora biti barem jednak iznosu popusta ({amount}). U protivnom bi ova ponuda mogla dati više nego što narudžba vrijedi.",
       "errorSaveFailed": "Spremanje nije uspjelo ({status})",
       "errorSaveFailedGeneric": "Nije uspjelo spremanje promocije",
       "successUpdated": "Promocija ažurirana",

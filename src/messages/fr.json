@@ -2150,6 +2150,7 @@
       "errorPickType": "Sélectionnez un type de promotion pour continuer.",
       "errorNameRequired": "Le nom de la promotion est obligatoire.",
       "errorTypeRequired": "Le type de promotion est obligatoire.",
+      "errorMinBelowDiscount": "Le montant minimum du panier doit être au moins égal au montant de la remise ({amount}). Sinon, cette offre pourrait donner plus que ce que vaut la commande.",
       "errorSaveFailed": "Échec de l'enregistrement ({status})",
       "errorSaveFailedGeneric": "Échec de l'enregistrement de la promotion",
       "successUpdated": "Promotion mise à jour",

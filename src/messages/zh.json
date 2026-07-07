@@ -2150,6 +2150,7 @@
       "errorPickType": "请选择促销类型以继续。",
       "errorNameRequired": "促销名称为必填项。",
       "errorTypeRequired": "促销类型为必填项。",
+      "errorMinBelowDiscount": "购物车最低金额必须至少等于折扣金额（{amount}）。否则，此优惠可能会赠送超过订单本身的价值。",
       "errorSaveFailed": "保存失败（{status}）",
       "errorSaveFailedGeneric": "保存促销活动失败",
       "successUpdated": "促销活动已更新",

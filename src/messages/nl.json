@@ -2150,6 +2150,7 @@
       "errorPickType": "Kies een promotietype om door te gaan.",
       "errorNameRequired": "Promotienaam is verplicht.",
       "errorTypeRequired": "Promotietype is verplicht.",
+      "errorMinBelowDiscount": "Het minimale winkelwagenbedrag moet minstens gelijk zijn aan het kortingsbedrag ({amount}). Anders kan deze aanbieding meer weggeven dan de bestelling waard is.",
       "errorSaveFailed": "Opslaan mislukt ({status})",
       "errorSaveFailedGeneric": "Opslaan van promotie mislukt",
       "successUpdated": "Promotie bijgewerkt",

@@ -2150,6 +2150,7 @@
       "errorPickType": "Wählen Sie einen Aktionstyp, um fortzufahren.",
       "errorNameRequired": "Aktionsname ist erforderlich.",
       "errorTypeRequired": "Aktionstyp ist erforderlich.",
+      "errorMinBelowDiscount": "Der Mindestbestellwert muss mindestens dem Rabattbetrag ({amount}) entsprechen. Andernfalls könnte diese Aktion mehr verschenken, als die Bestellung wert ist.",
       "errorSaveFailed": "Speichern fehlgeschlagen ({status})",
       "errorSaveFailedGeneric": "Aktion konnte nicht gespeichert werden",
       "successUpdated": "Aktion aktualisiert",

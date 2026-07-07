@@ -2150,6 +2150,7 @@
       "errorPickType": "続けるにはプロモーションタイプを選択してください。",
       "errorNameRequired": "プロモーション名は必須です。",
       "errorTypeRequired": "プロモーションタイプは必須です。",
+      "errorMinBelowDiscount": "最低カート金額は、少なくとも割引額（{amount}）以上である必要があります。そうでない場合、この特典は注文金額を上回る価値を提供してしまう可能性があります。",
       "errorSaveFailed": "保存に失敗しました ({status})",
       "errorSaveFailedGeneric": "プロモーションの保存に失敗しました",
       "successUpdated": "プロモーションを更新しました",

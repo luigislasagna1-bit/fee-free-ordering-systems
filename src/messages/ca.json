@@ -2150,6 +2150,7 @@
       "errorPickType": "Trieu un tipus de promoció per continuar.",
       "errorNameRequired": "Cal el nom de la promoció.",
       "errorTypeRequired": "Cal el tipus de promoció.",
+      "errorMinBelowDiscount": "L'import mínim de la comanda ha de ser com a mínim l'import del descompte ({amount}). Altrament, aquesta oferta podria regalar més del que val la comanda.",
       "errorSaveFailed": "Error en desar ({status})",
       "errorSaveFailedGeneric": "No s'ha pogut desar la promoció",
       "successUpdated": "Promoció actualitzada",

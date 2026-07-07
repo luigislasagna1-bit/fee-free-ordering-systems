@@ -2569,6 +2569,7 @@
       "errorPickType": "Pick a promotion type to continue.",
       "errorNameRequired": "Promotion name is required.",
       "errorTypeRequired": "Promotion type is required.",
+      "errorMinBelowDiscount": "The minimum cart amount must be at least the discount amount ({amount}). Otherwise this deal could give away more than the order is worth.",
       "errorSaveFailed": "Save failed ({status})",
       "errorSaveFailedGeneric": "Failed to save promotion",
       "successUpdated": "Promotion updated",

@@ -2150,6 +2150,7 @@
       "errorPickType": "Elige un tipo de promoción para continuar.",
       "errorNameRequired": "El nombre de la promoción es obligatorio.",
       "errorTypeRequired": "El tipo de promoción es obligatorio.",
+      "errorMinBelowDiscount": "El importe mínimo del carrito debe ser al menos igual al importe del descuento ({amount}). De lo contrario, esta oferta podría regalar más de lo que vale el pedido.",
       "errorSaveFailed": "Error al guardar ({status})",
       "errorSaveFailedGeneric": "Error al guardar la promoción",
       "successUpdated": "Promoción actualizada",

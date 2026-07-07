@@ -2150,6 +2150,7 @@
       "errorPickType": "Valitse tarjoustyyppi jatkaaksesi.",
       "errorNameRequired": "Tarjouksen nimi vaaditaan.",
       "errorTypeRequired": "Tarjoustyyppi vaaditaan.",
+      "errorMinBelowDiscount": "Ostoskorin vähimmäissumman on oltava vähintään alennuksen suuruinen ({amount}). Muuten tämä tarjous voi antaa enemmän kuin tilaus on arvoltaan.",
       "errorSaveFailed": "Tallennus epäonnistui ({status})",
       "errorSaveFailedGeneric": "Tarjouksen tallennus epäonnistui",
       "successUpdated": "Tarjous päivitetty",

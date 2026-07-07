@@ -2524,6 +2524,7 @@
       "errorPickType": "जारी रखने के लिए एक प्रमोशन प्रकार चुनें।",
       "errorNameRequired": "प्रमोशन का नाम आवश्यक है।",
       "errorTypeRequired": "प्रमोशन प्रकार आवश्यक है।",
+      "errorMinBelowDiscount": "न्यूनतम कार्ट राशि कम से कम छूट राशि ({amount}) के बराबर होनी चाहिए। अन्यथा यह ऑफ़र ऑर्डर की कीमत से अधिक दे सकता है।",
       "errorSaveFailed": "सेव विफल हुआ ({status})",
       "errorSaveFailedGeneric": "प्रमोशन सेव करने में विफलता",
       "successUpdated": "प्रमोशन अपडेट हो गया",

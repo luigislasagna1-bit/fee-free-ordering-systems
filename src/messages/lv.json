@@ -2150,6 +2150,7 @@
       "errorPickType": "Izvēlieties akcijas veidu, lai turpinātu.",
       "errorNameRequired": "Akcijas nosaukums ir obligāts.",
       "errorTypeRequired": "Akcijas veids ir obligāts.",
+      "errorMinBelowDiscount": "Groza minimālajai summai jābūt vismaz tikpat lielai kā atlaides summa ({amount}). Pretējā gadījumā šis piedāvājums var atdot vairāk, nekā pasūtījums ir vērts.",
       "errorSaveFailed": "Saglabāšana neizdevās ({status})",
       "errorSaveFailedGeneric": "Neizdevās saglabāt akciju",
       "successUpdated": "Akcija atjaunināta",

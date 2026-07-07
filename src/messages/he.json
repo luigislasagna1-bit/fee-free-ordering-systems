@@ -2150,6 +2150,7 @@
       "errorPickType": "בחר סוג מבצע להמשך.",
       "errorNameRequired": "שם המבצע נדרש.",
       "errorTypeRequired": "סוג המבצע נדרש.",
+      "errorMinBelowDiscount": "סכום המינימום בעגלה חייב להיות לפחות בגובה סכום ההנחה ({amount}). אחרת, מבצע זה עלול להעניק יותר מהערך של ההזמנה.",
       "errorSaveFailed": "השמירה נכשלה ({status})",
       "errorSaveFailedGeneric": "שמירת המבצע נכשלה",
       "successUpdated": "מבצע עודכן",

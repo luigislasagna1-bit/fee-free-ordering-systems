@@ -2150,6 +2150,7 @@
       "errorPickType": "Pro pokračování vyberte typ akce.",
       "errorNameRequired": "Název akce je povinný.",
       "errorTypeRequired": "Typ akce je povinný.",
+      "errorMinBelowDiscount": "Minimální hodnota košíku musí být alespoň rovna výši slevy ({amount}). Jinak by tato nabídka mohla rozdat víc, než kolik objednávka stojí.",
       "errorSaveFailed": "Uložení selhalo ({status})",
       "errorSaveFailedGeneric": "Uložení akce selhalo",
       "successUpdated": "Akce aktualizována",

@@ -2150,6 +2150,7 @@
       "errorPickType": "Selecione um tipo de promoção para continuar.",
       "errorNameRequired": "Nome da promoção é obrigatório.",
       "errorTypeRequired": "Tipo de promoção é obrigatório.",
+      "errorMinBelowDiscount": "O valor mínimo do carrinho deve ser pelo menos igual ao valor do desconto ({amount}). Caso contrário, esta oferta pode dar mais do que o pedido vale.",
       "errorSaveFailed": "Falha ao salvar ({status})",
       "errorSaveFailedGeneric": "Falha ao salvar promoção",
       "successUpdated": "Promoção atualizada",

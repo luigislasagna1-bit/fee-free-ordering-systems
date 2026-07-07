@@ -2150,6 +2150,7 @@
       "errorPickType": "Pilih jenis promosi untuk melanjutkan.",
       "errorNameRequired": "Nama promosi wajib diisi.",
       "errorTypeRequired": "Jenis promosi wajib diisi.",
+      "errorMinBelowDiscount": "Jumlah minimum keranjang harus setidaknya sama dengan jumlah diskon ({amount}). Jika tidak, penawaran ini bisa memberikan lebih banyak daripada nilai pesanan.",
       "errorSaveFailed": "Gagal menyimpan ({status})",
       "errorSaveFailedGeneric": "Gagal menyimpan promosi",
       "successUpdated": "Promosi diperbarui",

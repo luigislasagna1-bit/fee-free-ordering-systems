@@ -2150,6 +2150,7 @@
       "errorPickType": "Alege un tip de promoție pentru a continua.",
       "errorNameRequired": "Numele promoției este obligatoriu.",
       "errorTypeRequired": "Tipul promoției este obligatoriu.",
+      "errorMinBelowDiscount": "Suma minimă a coșului trebuie să fie cel puțin egală cu valoarea reducerii ({amount}). În caz contrar, această ofertă ar putea oferi mai mult decât valorează comanda.",
       "errorSaveFailed": "Salvarea a eșuat ({status})",
       "errorSaveFailedGeneric": "Salvarea promoției a eșuat",
       "successUpdated": "Promoție actualizată",

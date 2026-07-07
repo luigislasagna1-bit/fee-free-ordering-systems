@@ -2150,6 +2150,7 @@
       "errorPickType": "Velg en tilbudstype for å fortsette.",
       "errorNameRequired": "Tilbudsnavn er påkrevd.",
       "errorTypeRequired": "Tilbudstype er påkrevd.",
+      "errorMinBelowDiscount": "Minstebeløpet for handlekurven må være minst like stort som rabattbeløpet ({amount}). Ellers kan dette tilbudet gi bort mer enn bestillingen er verdt.",
       "errorSaveFailed": "Lagring mislyktes ({status})",
       "errorSaveFailedGeneric": "Kunne ikke lagre tilbud",
       "successUpdated": "Tilbud oppdatert",

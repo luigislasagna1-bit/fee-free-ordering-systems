@@ -2150,6 +2150,7 @@
       "errorPickType": "Jätkamiseks vali kampaania tüüp.",
       "errorNameRequired": "Kampaania nimi on nõutav.",
       "errorTypeRequired": "Kampaania tüüp on nõutav.",
+      "errorMinBelowDiscount": "Ostukorvi miinimumsumma peab olema vähemalt allahindluse suurune ({amount}). Muidu võib see pakkumine anda ära rohkem, kui tellimus väärt on.",
       "errorSaveFailed": "Salvestamine ebaõnnestus ({status})",
       "errorSaveFailedGeneric": "Kampaania salvestamine ebaõnnestus",
       "successUpdated": "Kampaania uuendatud",

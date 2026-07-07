@@ -17,6 +17,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check, Save } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
+import { fixedDiscountMinError } from "@/lib/promo-validation";
 
 import { PROMO_TYPES, isLockedType } from "@/lib/promo-types";
 import { CatEntry, hhmmToMin, initRulesForType, minToHHMM, PromoRules } from "./helpers";
@@ -265,6 +266,15 @@ export function PromoWizard(props: WizardProps) {
     }
     if (!promotionType) {
       toast.error(t("errorTypeRequired"));
+      return;
+    }
+    // Fixed dollar-off promos: the minimum cart must be ≥ the discount amount,
+    // else a "$30 off" promo qualifies on a sub-$30 cart and gives away more than
+    // the order (Luigi 2026-07-07). Same rule the server enforces.
+    const minDiscErr = fixedDiscountMinError(promotionType, rules, parseFloat(step3.minimumOrder) || 0);
+    if (minDiscErr) {
+      toast.error(t("errorMinBelowDiscount", { amount: `${currencySymbol}${minDiscErr.discount.toFixed(2)}` }));
+      setStep(3);
       return;
     }
     setSaving(true);

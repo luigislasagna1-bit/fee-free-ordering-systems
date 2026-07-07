@@ -8,6 +8,7 @@ import {
   ADVANCED_PROMO_FEATURE,
   isLockedType,
 } from "@/lib/promo-types";
+import { fixedDiscountMinError } from "@/lib/promo-validation";
 import {
   clampMin,
   normalizeBannerHeadline,
@@ -67,6 +68,17 @@ export async function POST(req: NextRequest) {
 
   if (!name || !promotionType) {
     return NextResponse.json({ error: "name and promotionType required" }, { status: 400 });
+  }
+
+  // ── Fixed-dollar discount sanity: min cart ≥ discount ───────────────
+  // A "$30 off" promo with a minimum below $30 qualifies on a sub-$30 cart and
+  // gives away more than the order is worth (it only caps at $0). The minimum
+  // cart is therefore MANDATORY and must be ≥ the discount amount for fixed
+  // dollar-off types. Authoritative backstop; the wizard blocks it first with a
+  // localized message. Luigi 2026-07-07.
+  {
+    const minDiscErr = fixedDiscountMinError(promotionType, ruleConfig, minimumOrder);
+    if (minDiscErr) return NextResponse.json(minDiscErr, { status: 400 });
   }
 
   // ── Feature gate: Grant Reward Dollars needs the program ON ─────────

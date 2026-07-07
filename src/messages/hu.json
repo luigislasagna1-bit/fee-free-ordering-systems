@@ -2094,6 +2094,7 @@
       "errorPickType": "Válasszon promóciótípust a folytatáshoz.",
       "errorNameRequired": "A promóció neve kötelező.",
       "errorTypeRequired": "A promóció típusának megadása kötelező.",
+      "errorMinBelowDiscount": "A kosár minimális összegének legalább a kedvezmény összegével ({amount}) kell megegyeznie. Ellenkező esetben ez az ajánlat többet adhat, mint amennyit a rendelés ér.",
       "errorSaveFailed": "Mentés sikertelen ({status})",
       "errorSaveFailedGeneric": "Nem sikerült menteni a promóciót",
       "successUpdated": "Promóció frissítve",

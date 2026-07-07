@@ -2843,6 +2843,7 @@
       "errorPickType": "Pre pokračovanie vyberte typ promo akcie.",
       "errorNameRequired": "Názov promo akcie je povinný.",
       "errorTypeRequired": "Typ promo akcie je povinný.",
+      "errorMinBelowDiscount": "Minimálna hodnota košíka musí byť aspoň taká ako výška zľavy ({amount}). Inak by táto ponuka mohla rozdať viac, než koľko objednávka stojí.",
       "errorSaveFailed": "Uloženie zlyhalo ({status})",
       "errorSaveFailedGeneric": "Promo akciu sa nepodarilo uložiť",
       "successUpdated": "Promo akcia aktualizovaná",

@@ -2150,6 +2150,7 @@
       "errorPickType": "계속하려면 프로모션 유형을 선택하세요.",
       "errorNameRequired": "프로모션 이름이 필요합니다.",
       "errorTypeRequired": "프로모션 유형이 필요합니다.",
+      "errorMinBelowDiscount": "최소 장바구니 금액은 최소한 할인 금액({amount}) 이상이어야 합니다. 그렇지 않으면 이 혜택이 주문 금액보다 더 많은 것을 제공할 수 있습니다.",
       "errorSaveFailed": "저장 실패 ({status})",
       "errorSaveFailedGeneric": "프로모션 저장에 실패했습니다",
       "successUpdated": "프로모션이 업데이트되었습니다",

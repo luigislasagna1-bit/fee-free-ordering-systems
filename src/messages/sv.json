@@ -2150,6 +2150,7 @@
       "errorPickType": "Välj en kampanjtyp för att fortsätta.",
       "errorNameRequired": "Kampanjnamn krävs.",
       "errorTypeRequired": "Kampanjtyp krävs.",
+      "errorMinBelowDiscount": "Lägsta belopp i varukorgen måste vara minst lika stort som rabattbeloppet ({amount}). Annars kan detta erbjudande ge bort mer än vad beställningen är värd.",
       "errorSaveFailed": "Sparandet misslyckades ({status})",
       "errorSaveFailedGeneric": "Det gick inte att spara kampanjen",
       "successUpdated": "Kampanj uppdaterad",

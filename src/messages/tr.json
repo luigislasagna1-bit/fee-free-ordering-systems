@@ -2094,6 +2094,7 @@
       "errorPickType": "Devam etmek için bir promosyon türü seçin.",
       "errorNameRequired": "Promosyon adı zorunludur.",
       "errorTypeRequired": "Promosyon türü zorunludur.",
+      "errorMinBelowDiscount": "Minimum sepet tutarı en az indirim tutarı ({amount}) kadar olmalıdır. Aksi takdirde bu kampanya, siparişin değerinden daha fazlasını verebilir.",
       "errorSaveFailed": "Kaydetme başarısız ({status})",
       "errorSaveFailedGeneric": "Promosyon kaydedilemedi",
       "successUpdated": "Promosyon güncellendi",

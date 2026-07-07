@@ -2094,6 +2094,7 @@
       "errorPickType": "Wybierz typ promocji, aby kontynuować.",
       "errorNameRequired": "Nazwa promocji jest wymagana.",
       "errorTypeRequired": "Typ promocji jest wymagany.",
+      "errorMinBelowDiscount": "Minimalna wartość koszyka musi być co najmniej równa kwocie rabatu ({amount}). W przeciwnym razie ta oferta może dać więcej, niż wynosi wartość zamówienia.",
       "errorSaveFailed": "Zapis nie powiódł się ({status})",
       "errorSaveFailedGeneric": "Nie udało się zapisać promocji",
       "successUpdated": "Promocja zaktualizowana",

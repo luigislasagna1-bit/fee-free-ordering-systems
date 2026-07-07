@@ -2843,6 +2843,7 @@
       "errorPickType": "Pasirinkite akcijos tipą, kad tęstumėte.",
       "errorNameRequired": "Akcijos pavadinimas privalomas.",
       "errorTypeRequired": "Akcijos tipas privalomas.",
+      "errorMinBelowDiscount": "Minimali krepšelio suma turi būti bent tokia, kokia yra nuolaidos suma ({amount}). Priešingu atveju šis pasiūlymas gali atiduoti daugiau, nei vertas užsakymas.",
       "errorSaveFailed": "Nepavyko išsaugoti ({status})",
       "errorSaveFailedGeneric": "Nepavyko išsaugoti akcijos",
       "successUpdated": "Akcija atnaujinta",

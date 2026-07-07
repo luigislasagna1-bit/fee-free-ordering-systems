@@ -2150,6 +2150,7 @@
       "errorPickType": "Vælg en kampagnetype for at fortsætte.",
       "errorNameRequired": "Kampagnenavn er påkrævet.",
       "errorTypeRequired": "Kampagnetype er påkrævet.",
+      "errorMinBelowDiscount": "Minimumsbeløbet for kurven skal mindst svare til rabatbeløbet ({amount}). Ellers kan dette tilbud give mere væk, end ordren er værd.",
       "errorSaveFailed": "Gem mislykkedes ({status})",
       "errorSaveFailedGeneric": "Kunne ikke gemme kampagne",
       "successUpdated": "Kampagne opdateret",

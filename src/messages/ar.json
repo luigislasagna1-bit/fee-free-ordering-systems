@@ -2150,6 +2150,7 @@
       "errorPickType": "اختر نوع العرض للمتابعة.",
       "errorNameRequired": "اسم العرض مطلوب.",
       "errorTypeRequired": "نوع العرض مطلوب.",
+      "errorMinBelowDiscount": "يجب ألا يقل الحد الأدنى لمبلغ السلة عن قيمة الخصم ({amount})، وإلا فقد يمنح هذا العرض أكثر من قيمة الطلب.",
       "errorSaveFailed": "فشل الحفظ ({status})",
       "errorSaveFailedGeneric": "فشل حفظ العرض",
       "successUpdated": "تم تحديث العرض",
