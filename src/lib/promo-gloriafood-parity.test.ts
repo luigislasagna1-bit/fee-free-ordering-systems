@@ -56,8 +56,11 @@ describe("GloriaFood parity — Standard / Exclusive / Master ($100 cart)", () =
   it("S3  X alone (Exclusive) → X, $30", () => {
     const r = run([X()]); expect(r.applied).toEqual(["X excl $30"]); expect(r.total).toBe(30);
   });
-  it("S4  X + A (Excl + Std) → only X ($30); A blocked", () => {
-    const r = run([X(), A()]); expect(r.applied).toEqual(["X excl $30"]); expect(r.blocked).toEqual(["A std $20"]); expect(r.total).toBe(30);
+  it("S4  X + A (Excl + Std) → KEEP the standard A ($20); X offered as a switch (GloriaFood parity, Luigi 2026-07-07)", () => {
+    // Verified live: GloriaFood keeps the standard already in the cart and marks
+    // the exclusive "incompatible — switch?"; it does NOT auto-apply the exclusive
+    // (that was FeeFree's downgrade bug when the exclusive was smaller).
+    const r = run([X(), A()]); expect(r.applied).toEqual(["A std $20"]); expect(r.blocked).toEqual(["X excl $30"]); expect(r.total).toBe(20);
   });
   it("S5  X + Y (Excl + Excl) → best wins = X ($30); Y blocked", () => {
     const r = run([X(), Y()]); expect(r.applied).toEqual(["X excl $30"]); expect(r.blocked).toEqual(["Y excl $15"]); expect(r.total).toBe(30);
@@ -71,14 +74,14 @@ describe("GloriaFood parity — Standard / Exclusive / Master ($100 cart)", () =
   it("S8  A + B + M (Std + Std + Master) → all three, $35", () => {
     const r = run([A(), B(), M()]); expect(r.applied).toEqual(["A std $20", "B std $5", "M master $10"]); expect(r.total).toBe(35);
   });
-  it("S9  X + A + M (Excl + Std + Master) → X + M ($40); A blocked", () => {
-    const r = run([X(), A(), M()]); expect(r.applied).toEqual(["M master $10", "X excl $30"]); expect(r.blocked).toEqual(["A std $20"]); expect(r.total).toBe(40);
+  it("S9  X + A + M (Excl + Std + Master) → KEEP A + M ($30); X offered as a switch (GloriaFood parity)", () => {
+    const r = run([X(), A(), M()]); expect(r.applied).toEqual(["A std $20", "M master $10"]); expect(r.blocked).toEqual(["X excl $30"]); expect(r.total).toBe(30);
   });
-  it("S10 X + Y + A + B + M (everything) → X + M ($40); Y, A, B blocked", () => {
+  it("S10 X + Y + A + B + M (everything) → KEEP A + B + M ($35); X, Y offered as switches (GloriaFood parity)", () => {
     const r = run([X(), Y(), A(), B(), M()]);
-    expect(r.applied).toEqual(["M master $10", "X excl $30"]);
-    expect(r.blocked).toEqual(["A std $20", "B std $5", "Y excl $15"]);
-    expect(r.total).toBe(40);
+    expect(r.applied).toEqual(["A std $20", "B std $5", "M master $10"]);
+    expect(r.blocked).toEqual(["X excl $30", "Y excl $15"]);
+    expect(r.total).toBe(35);
   });
   it("S11 Z(inert $0 exclusive) + A → A applies ($20); an inert exclusive blocks NOTHING", () => {
     const r = run([Z(), A()]); expect(r.applied).toEqual(["A std $20"]); expect(r.total).toBe(20);

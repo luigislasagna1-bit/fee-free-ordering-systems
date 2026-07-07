@@ -1305,12 +1305,24 @@ export function OrderingPageClient({
   // eligible exclusive (the applied winner + the blocked exclusives) and
   // suppress all of them except the target.
   const useThisPromoInstead = (targetId: string) => {
-    const exclusiveIds = new Set<string>();
-    for (const r of promoResults) if (r?.stackingRule === "exclusive" && r.promoId) exclusiveIds.add(r.promoId);
-    for (const b of blockedPromos) if (b.wasExclusive) exclusiveIds.add(b.promoId);
-    exclusiveIds.delete(targetId);
-    if (exclusiveIds.size === 0) return;
-    setSuppressedPromoIds((prev) => [...new Set([...prev, ...exclusiveIds])]);
+    const toSuppress = new Set<string>();
+    // Every APPLIED promo that clashes with the target: applied Standards clash
+    // with an Exclusive target; an applied Exclusive clashes with anything.
+    // Masters (incl. reward_credit) always stack, so keep them. GloriaFood-parity
+    // fix (Luigi 2026-07-07): to switch to a blocked Exclusive we must drop the
+    // STANDARDS keeping it out — the old version only dropped other exclusives,
+    // so "Use this instead" did nothing when a Standard was the current deal.
+    for (const r of promoResults) {
+      if (!r?.promoId || r.promoId === targetId) continue;
+      if (r.stackingRule === "master" || r.type === "reward_credit") continue;
+      toSuppress.add(r.promoId);
+    }
+    // Other blocked exclusives, so the target wins the single exclusive slot.
+    for (const b of blockedPromos) {
+      if (b.wasExclusive && b.promoId !== targetId) toSuppress.add(b.promoId);
+    }
+    if (toSuppress.size === 0) return;
+    setSuppressedPromoIds((prev) => [...new Set([...prev, ...toSuppress])]);
   };
 
   // Re-add a previously removed promo (un-suppress) — e.g. tapping its banner.
@@ -2581,19 +2593,13 @@ export function OrderingPageClient({
     }
     const blocked = blockedPromos.find((b) => String(b.couponCode ?? "").toUpperCase() === code);
     if (blocked) {
-      // Compare REAL savings before claiming anything. The applied (winning)
-      // deal doesn't always save more — an exclusive blocks a standard by rule,
-      // not by amount. If the coupon the customer just entered saves MORE, do
-      // the right thing: switch to it (removing the blockers). Only when the
-      // applied deal genuinely saves more do we keep it + say so. Either way the
-      // customer can still swap manually in the cart. Luigi 2026-06-08.
-      const winnerDiscount = promoResults.find((r: any) => r.name === blocked.winnerName)?.discount ?? 0;
-      if (blocked.discount > winnerDiscount + 0.005) {
-        useThisPromoInstead(blocked.promoId);
-        toast.success(tT("couponSwitchedSavesMore", { name: blocked.name, winner: blocked.winnerName }));
-      } else {
-        toast(tT("couponBlocked", { name: blocked.name, winner: blocked.winnerName }), { duration: 6000 });
-      }
+      // GloriaFood parity (Luigi 2026-07-07): NEVER auto-switch — not even when
+      // the entered code would save more. Keep the deal already in the cart and
+      // tell the customer it can't be combined; they switch deliberately via the
+      // cart's "Use this instead" control. (Was: auto-swapped when the code saved
+      // more, which silently changed the customer's deal. GloriaFood keeps the
+      // current deal and makes the swap a conscious choice — verified live.)
+      toast(tT("couponBlocked", { name: blocked.name, winner: blocked.winnerName }), { duration: 6000 });
       setPendingCoupon(null);
       return;
     }

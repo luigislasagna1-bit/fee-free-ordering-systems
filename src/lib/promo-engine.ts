@@ -1036,17 +1036,26 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
     p => p.stackingRule === "exclusive" && effectiveValue(p) > 0,
   );
 
+  // GloriaFood parity (Luigi 2026-07-07): a Standard the customer already has is
+  // KEPT by default — an Exclusive NEVER silently overrides it. (Entering a 15%
+  // exclusive code used to drop a 30% standard: a downgrade.) When both are
+  // present we keep the Standards (+ Masters) and hand each qualifying Exclusive
+  // back as a *switchable alternative* (blockedPromos, wasExclusive) so the cart
+  // can say "can't be combined — use this instead". The customer switches by
+  // suppressing the standards (client → suppressedPromoIds), which re-resolves
+  // into the no-standard branch below where the exclusive then applies.
+  const beneficialStandards = standards.filter(p => effectiveValue(p) > 0);
+
   let active: PromoInput[];
   const blockedPromos: BlockedPromo[] = [];
-  if (exclusives.length > 0) {
+  if (exclusives.length > 0 && beneficialStandards.length === 0) {
+    // No Standard to clash with → the best Exclusive applies alongside Masters
+    // (exclusive-alone, exclusive + free-delivery master, exclusive-vs-exclusive).
+    // The best exclusive wins its slot; other exclusives are switchable.
     const best = exclusives.reduce((a, b) =>
       effectiveValue(a) >= effectiveValue(b) ? a : b
     );
     active = [best, ...masters];
-    // Everything else that qualified — the other exclusives AND every standard
-    // deal — is blocked, because the winning exclusive can't be combined with
-    // them. Masters still apply (they stack with everything). We report each so
-    // the cart can explain it and offer "remove this to use that instead".
     for (const p of triggered) {
       // reward_credit is always a master benefit (0 cart discount) — never blocked.
       if (p.id === best.id || p.stackingRule === "master" || isRewardCredit(p)) continue;
@@ -1055,7 +1064,14 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
       }
     }
   } else {
+    // Keep the stackable Standards (+ Masters). Any qualifying Exclusive is
+    // offered as a switchable alternative rather than auto-applied — so it can
+    // never silently replace (and possibly shrink) the customer's current deal.
     active = [...standards, ...masters];
+    const keptName = beneficialStandards[0]?.name ?? masters[0]?.name ?? "";
+    for (const p of exclusives) {
+      blockedPromos.push({ promoId: p.id, name: p.name, discount: calcDiscount(p, ctx), winnerName: keptName, wasExclusive: true, couponCode: p.couponCode ?? undefined });
+    }
   }
 
   const seen = new Set<string>();

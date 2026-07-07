@@ -54,21 +54,21 @@ describe("resolvePromotions — stacking matrix", () => {
     expect(results).toHaveLength(2);
   });
 
-  it("an exclusive blocks standards (best exclusive wins)", () => {
+  it("a standard already in the cart is KEPT; the exclusive is offered as a switch (GloriaFood parity, Luigi 2026-07-07)", () => {
     const ex = mkPromo({ stackingRule: "exclusive", ruleConfig: { discountAmount: 8 } });
     const std = mkPromo({ stackingRule: "standard", ruleConfig: { discountAmount: 5 } });
     const { results, blockedPromos } = resolvePromotions([ex, std], mkCtx());
-    expect(results.map((r) => r.promoId)).toEqual([ex.id]);
-    expect(blockedPromos.map((b) => b.promoId)).toContain(std.id);
+    expect(results.map((r) => r.promoId)).toEqual([std.id]);
+    expect(blockedPromos.map((b) => b.promoId)).toContain(ex.id);
   });
 
-  it("masters ALWAYS apply alongside the winning exclusive", () => {
+  it("masters ALWAYS apply; with a standard present the standard is kept and the exclusive is a switch", () => {
     const master = mkPromo({ stackingRule: "master", ruleConfig: { discountAmount: 2 } });
     const ex = mkPromo({ stackingRule: "exclusive", ruleConfig: { discountAmount: 8 } });
     const std = mkPromo({ stackingRule: "standard", ruleConfig: { discountAmount: 5 } });
     const { results } = resolvePromotions([master, ex, std], mkCtx());
     const ids = results.map((r) => r.promoId).sort();
-    expect(ids).toEqual([master.id, ex.id].sort());
+    expect(ids).toEqual([master.id, std.id].sort());
   });
 
   it("between two exclusives the larger discount wins", () => {
@@ -89,14 +89,15 @@ describe("resolvePromotions — stacking matrix", () => {
     expect(results.map((r) => r.promoId)).toEqual([std.id]);
   });
 
-  it("a free_delivery exclusive DOES occupy the slot (counts as a benefit)", () => {
+  it("a free_delivery EXCLUSIVE counts as a benefit, so with a standard present it's a SWITCH, not auto-applied", () => {
     const fd = mkPromo({ stackingRule: "exclusive", promotionType: "free_delivery", ruleConfig: {} });
     const std = mkPromo({ stackingRule: "standard", ruleConfig: { discountAmount: 5 } });
-    // free_delivery is delivery-only (B4) AND only occupies the exclusive slot
-    // when it has real value (a non-$0 delivery fee) — so set a fee here.
+    // free_delivery is a real benefit at a non-$0 fee, so it's an eligible
+    // exclusive — but a standard already in the cart is KEPT and the free_delivery
+    // is offered as a switch (GloriaFood parity). Luigi 2026-07-07.
     const { results, blockedPromos } = resolvePromotions([fd, std], mkCtx({ orderType: "delivery", deliveryFee: 5 }));
-    expect(results.map((r) => r.type)).toContain("free_delivery");
-    expect(blockedPromos.map((b) => b.promoId)).toContain(std.id);
+    expect(results.map((r) => r.promoId)).toEqual([std.id]);
+    expect(blockedPromos.map((b) => b.promoId)).toContain(fd.id);
   });
 
   it("a $0-fee free_delivery exclusive does NOT block a real standard discount", () => {
@@ -293,16 +294,16 @@ describe("engine math — Batch A correctness fixes", () => {
 // The prior matrix only mixed fixed_cart promos. These lock the stacking rules
 // across DIFFERENT promo types, where the type-specific calcs are non-zero.
 describe("resolvePromotions — cross-type stacking", () => {
-  it("exclusive combo + standard % + master free_delivery: combo & free_delivery apply, % is blocked", () => {
+  it("exclusive combo + standard % + master free_delivery: the % (standard) & free_delivery apply, combo is a switch (GloriaFood parity)", () => {
     const combo = mkPromo({ stackingRule: "exclusive", promotionType: "fixed_combo", ruleConfig: { discountAmount: 10, groups: [{ id: "g", categoryIds: ["cat1"], itemIds: [] }] } });
     const pct = mkPromo({ stackingRule: "standard", promotionType: "percentage_off", ruleConfig: { discountPercent: 10 } });
     const fd = mkPromo({ stackingRule: "master", promotionType: "free_delivery", ruleConfig: {} });
     const ctx = mkCtx({ orderType: "delivery", deliveryFee: 5, subtotal: 30, items: [{ menuItemId: "i1", categoryId: "cat1", price: 30, quantity: 1, subtotal: 30 }] });
     const { results, blockedPromos } = resolvePromotions([combo, pct, fd], ctx);
     const types = results.map((r) => r.type);
-    expect(types).toContain("fixed_combo");
+    expect(types).toContain("percentage_off");
     expect(types).toContain("free_delivery");
-    expect(blockedPromos.map((b) => b.promoId)).toContain(pct.id);
+    expect(blockedPromos.map((b) => b.promoId)).toContain(combo.id);
   });
 
   it("two exclusives of different types: the larger real discount wins", () => {
