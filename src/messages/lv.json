@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} noņemts — jūsu pasūtījums vairs nav tiesīgs saņemt bezmaksas preci",
       "freebieRemovedExclusive": "{name} noņemts — jūsu piedāvājums \"{winner}\" ietaupa vairāk un nav apvienojams ar šo piedāvājumu",
       "couponPromoApplied": "Akcija \"{name}\" piemērota!",
-      "couponBlocked": "\"{name}\" nav apvienojams ar \"{winner}\", kas jau ietaupa vairāk. Jūs joprojām varat noņemt \"{winner}\" no groza, lai izmantotu šo.",
+      "couponBlocked": "\"{name}\" nevar apvienot ar \"{winner}\" — vienlaikus tiek piemērots tikai viens piedāvājums. Pieskarieties \"Lietot šo\" zemāk, lai pārslēgtos.",
       "promoReadded": "\"{name}\" pievienots atpakaļ",
       "couponSwitchedSavesMore": "\"{name}\" piemērots — tas ietaupa vairāk, tāpēc noņēmām \"{winner}\". Pieskarieties tā reklāmkarogam, lai jebkurā brīdī pārslēgtos atpakaļ.",
       "itemUnavailable": "Šī prece nav pieejama",

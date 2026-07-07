@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} eliminat — comanda ta nu mai îndeplinește condițiile pentru produsul gratuit",
       "freebieRemovedExclusive": "{name} eliminat — dealul tău \"{winner}\" te economisește mai mult și nu poate fi combinat cu această ofertă",
       "couponPromoApplied": "Promoția „{name}\" a fost aplicată!",
-      "couponBlocked": "\"{name}\" nu poate fi combinat cu \"{winner}\", care îți oferă deja o reducere mai mare. Totuși, poți elimina \"{winner}\" din coș ca să folosești în loc această ofertă.",
+      "couponBlocked": "„{name}” nu poate fi combinat cu „{winner}” — se aplică o singură ofertă pe rând. Apasă „Folosește această ofertă” mai jos ca să schimbi.",
       "promoReadded": "„{name}\" a fost adăugată din nou",
       "couponSwitchedSavesMore": "\"{name}\" a fost aplicat — îți oferă o reducere mai mare, așa că am eliminat \"{winner}\". Atinge bannerul lui \"{winner}\" oricând ca să revii.",
       "itemUnavailable": "Acest produs nu este disponibil",

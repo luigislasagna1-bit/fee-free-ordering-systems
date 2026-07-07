@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} eemaldati — teie tellimus ei vasta enam tasuta toote tingimustele",
       "freebieRemovedExclusive": "{name} eemaldati — teie \"{winner}\" pakkumine annab suurema säästu ega ole selle pakkumisega kombineeritav",
       "couponPromoApplied": "Pakkumine „{name}” rakendatud!",
-      "couponBlocked": "\"{name}\" ei saa kombineerida sooduspakkumisega \"{winner}\", mis juba säästab sulle rohkem. Soovi korral eemalda \"{winner}\" ostukorvist, et selle asemel seda kasutada.",
+      "couponBlocked": "\"{name}\" ei saa kombineerida sooduspakkumisega \"{winner}\" — korraga kehtib ainult üks pakkumine. Vahetamiseks puuduta all nuppu \"Kasuta hoopis seda\".",
       "promoReadded": "„{name}” lisati uuesti",
       "couponSwitchedSavesMore": "\"{name}\" rakendatud — see säästab sulle rohkem, seega eemaldasime \"{winner}\". Tagasi vahetamiseks puuduta selle bännerit igal ajal.",
       "itemUnavailable": "See toode pole saadaval",

@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "A(z) {name} eltávolítva – a rendelésed már nem jogosult az ingyenes termékre",
       "freebieRemovedExclusive": "A(z) {name} eltávolítva – a(z) \"{winner}\" ajánlatoddal többet spórolsz, és az nem vonható össze ezzel az ajánlattal",
       "couponPromoApplied": "A(z) \"{name}\" akció alkalmazva!",
-      "couponBlocked": "A(z) \"{name}\" nem vonható össze a(z) \"{winner}\" akcióval, amellyel jelenleg többet spórolsz. Ha mégis ezt szeretnéd, a kosaradban eltávolíthatod a(z) \"{winner}\" akciót.",
+      "couponBlocked": "A(z) „{name}\" nem kombinálható ezzel: „{winner}\" – egyszerre csak egy ajánlat érvényes. Koppintson az alábbi „Ezt használom inkább\" gombra a váltáshoz.",
       "promoReadded": "A(z) \"{name}\" visszaadva",
       "couponSwitchedSavesMore": "A(z) \"{name}\" alkalmazva – ezzel többet spórolsz, ezért eltávolítottuk a(z) \"{winner}\" akciót. Bármikor visszaválthatsz a(z) \"{winner}\" szalagjára koppintva.",
       "itemUnavailable": "Ez a tétel nem elérhető",

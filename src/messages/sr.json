@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} je uklonjeno — vaša porudžbina više ne ispunjava uslove za besplatnu stavku",
       "freebieRemovedExclusive": "{name} je uklonjeno — vaša ponuda „{winner}“ donosi veću uštedu i ne može se kombinovati sa ovom ponudom",
       "couponPromoApplied": "Promocija „{name}” je primenjena!",
-      "couponBlocked": "\"{name}\" se ne može kombinovati sa \"{winner}\", koji vam već donosi veću uštedu. I dalje možete ukloniti \"{winner}\" iz korpe da biste umesto njega iskoristili ovaj.",
+      "couponBlocked": "„{name}” se ne može kombinovati sa „{winner}” — istovremeno važi samo jedna ponuda. Dodirnite „Koristi ovu” ispod da biste je zamenili.",
       "promoReadded": "„{name}” je ponovo dodata",
       "couponSwitchedSavesMore": "\"{name}\" je primenjen — donosi vam veću uštedu, pa smo uklonili \"{winner}\". Dodirnite njegov baner da se vratite nazad bilo kada.",
       "itemUnavailable": "Ова ставка није доступна",

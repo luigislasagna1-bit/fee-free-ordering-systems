@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} fjernet — din ordre giver ikke længere ret til den gratis vare",
       "freebieRemovedExclusive": "{name} fjernet — dit \"{winner}\"-tilbud sparer mere og kan ikke kombineres med dette tilbud",
       "couponPromoApplied": "Tilbuddet \"{name}\" er anvendt!",
-      "couponBlocked": "\"{name}\" kan ikke kombineres med \"{winner}\", som allerede sparer dig mere. Du kan stadig fjerne \"{winner}\" i din kurv for at bruge denne i stedet.",
+      "couponBlocked": "\"{name}\" kan ikke kombineres med \"{winner}\" — kun ét tilbud gælder ad gangen. Tryk på \"Brug denne i stedet\" nedenfor for at skifte.",
       "promoReadded": "\"{name}\" er tilføjet igen",
       "couponSwitchedSavesMore": "\"{name}\" er anvendt – den sparer dig mere, så vi fjernede \"{winner}\". Tryk på dens banner for at skifte tilbage når som helst.",
       "itemUnavailable": "Denne vare er ikke tilgængelig",

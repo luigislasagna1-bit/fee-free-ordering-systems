@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} eliminat — la teva comanda ja no compleix els requisits per a l'article gratuït",
       "freebieRemovedExclusive": "{name} eliminat — l'oferta \"{winner}\" t'estalvia més i no es pot combinar amb aquesta promoció",
       "couponPromoApplied": "Promoció \"{name}\" aplicada!",
-      "couponBlocked": "\"{name}\" no es pot combinar amb \"{winner}\", que ja t'estalvia més. Si vols, pots treure \"{winner}\" de la cistella per fer servir aquesta.",
+      "couponBlocked": "«{name}» no es pot combinar amb «{winner}»: només s'aplica una oferta alhora. Toca «Fes servir aquesta» a sota per canviar.",
       "promoReadded": "\"{name}\" tornada a afegir",
       "couponSwitchedSavesMore": "\"{name}\" aplicada: t'estalvia més, així que hem tret \"{winner}\". Toca el seu rètol per tornar-hi quan vulguis.",
       "itemUnavailable": "Aquest article no està disponible",

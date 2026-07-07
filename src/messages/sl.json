@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} odstranjeno – vaše naročilo ne izpolnjuje več pogojev za brezplačni izdelek",
       "freebieRemovedExclusive": "{name} odstranjeno – vaša ugodnost \"{winner}\" vam prihrani več in je ni mogoče kombinirati s to ponudbo",
       "couponPromoApplied": "Promocija \"{name}\" uveljavljena!",
-      "couponBlocked": "\"{name}\" ni mogoče združiti s promocijo \"{winner}\", ki vam že prinese večji prihranek. Če želite namesto tega uporabiti to ponudbo, lahko \"{winner}\" odstranite iz košarice.",
+      "couponBlocked": "Kode »{name}« ni mogoče kombinirati s ponudbo »{winner}« – naenkrat velja samo ena ugodnost. Za zamenjavo spodaj tapnite »Uporabi to namesto tega«.",
       "promoReadded": "\"{name}\" znova dodano",
       "couponSwitchedSavesMore": "\"{name}\" je uporabljena – prinese vam večji prihranek, zato smo odstranili \"{winner}\". Za vrnitev kadar koli tapnite pasico \"{winner}\".",
       "itemUnavailable": "Ta izdelek ni na voljo",

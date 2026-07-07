@@ -241,7 +241,7 @@
       "freebieRemovedThreshold": "{name} eliminado: tu pedido ya no cumple los requisitos para el artículo gratis",
       "freebieRemovedExclusive": "{name} eliminado: tu oferta \"{winner}\" te ahorra más y no se puede combinar con esta promoción",
       "couponPromoApplied": "¡Promoción \"{name}\" aplicada!",
-      "couponBlocked": "\"{name}\" no se puede combinar con \"{winner}\", que ya te hace ahorrar más. Si quieres, puedes quitar \"{winner}\" de tu carrito para usar esta en su lugar.",
+      "couponBlocked": "\"{name}\" no se puede combinar con \"{winner}\" — solo se aplica una oferta a la vez. Toca \"Usar esta en su lugar\" abajo para cambiar.",
       "promoReadded": "\"{name}\" añadida de nuevo",
       "couponSwitchedSavesMore": "\"{name}\" aplicada: te hace ahorrar más, así que quitamos \"{winner}\". Toca su banner para volver a cambiar cuando quieras.",
       "itemUnavailable": "Este artículo no está disponible",

@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} kaldırıldı — siparişiniz artık ücretsiz ürün için uygun değil",
       "freebieRemovedExclusive": "{name} kaldırıldı — \"{winner}\" fırsatınız daha fazla kazandırıyor ve bu teklifle birleştirilemiyor",
       "couponPromoApplied": "\"{name}\" kampanyası uygulandı!",
-      "couponBlocked": "\"{name}\" kuponu, zaten size daha fazla kazandıran \"{winner}\" ile birleştirilemez. Bunu kullanmak isterseniz sepetinizden \"{winner}\" kuponunu kaldırabilirsiniz.",
+      "couponBlocked": "\"{name}\", \"{winner}\" ile birlikte kullanılamaz — aynı anda yalnızca bir kampanya geçerli olur. Geçiş yapmak için aşağıdaki \"Bunu kullan\" düğmesine dokunun.",
       "promoReadded": "\"{name}\" yeniden eklendi",
       "couponSwitchedSavesMore": "\"{name}\" uygulandı — size daha fazla kazandırdığı için \"{winner}\" kuponunu kaldırdık. Geri dönmek isterseniz dilediğiniz zaman afişine dokunabilirsiniz.",
       "itemUnavailable": "Bu ürün mevcut değil",

@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} bola odstránená — vaša objednávka už nespĺňa podmienky pre položku zadarmo",
       "freebieRemovedExclusive": "{name} bola odstránená — vaša ponuka „{winner}“ vám ušetrí viac a nedá sa kombinovať s touto akciou",
       "couponPromoApplied": "Akcia „{name}“ bola uplatnená!",
-      "couponBlocked": "\"{name}\" sa nedá kombinovať s \"{winner}\", ktorá vám ušetrí viac. Ak chcete použiť túto namiesto nej, môžete \"{winner}\" odstrániť v košíku.",
+      "couponBlocked": "„{name}“ nemožno kombinovať s „{winner}“ — naraz platí len jedna ponuka. Ak chcete prejsť na túto, ťuknite nižšie na „Použiť túto“.",
       "promoReadded": "„{name}“ bola pridaná späť",
       "couponSwitchedSavesMore": "\"{name}\" sa použila – ušetrí vám viac, preto sme odstránili \"{winner}\". Späť môžete kedykoľvek prepnúť klepnutím na jej banner.",
       "itemUnavailable": "Táto položka nie je dostupná",

@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} dihapus — pesanan Anda tidak lagi memenuhi syarat untuk item gratis",
       "freebieRemovedExclusive": "{name} dihapus — penawaran \"{winner}\" Anda lebih hemat dan tidak dapat digabungkan dengan promo ini",
       "couponPromoApplied": "Promo \"{name}\" diterapkan!",
-      "couponBlocked": "\"{name}\" tidak bisa digabung dengan \"{winner}\", yang sudah menghemat lebih banyak untukmu. Kamu tetap bisa menghapus \"{winner}\" di keranjang untuk memakai ini sebagai gantinya.",
+      "couponBlocked": "\"{name}\" tidak bisa digabung dengan \"{winner}\" — hanya satu penawaran yang berlaku dalam satu waktu. Ketuk \"Pakai ini saja\" di bawah untuk beralih.",
       "promoReadded": "\"{name}\" ditambahkan kembali",
       "couponSwitchedSavesMore": "\"{name}\" diterapkan — ini menghemat lebih banyak, jadi kami menghapus \"{winner}\". Ketuk bannernya kapan saja untuk beralih kembali.",
       "itemUnavailable": "Item ini tidak tersedia",

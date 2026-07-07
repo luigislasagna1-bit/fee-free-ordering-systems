@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} poistettu — tilauksesi ei enää oikeuta ilmaiseen tuotteeseen",
       "freebieRemovedExclusive": "{name} poistettu — \"{winner}\"-tarjouksesi säästää enemmän, eikä sitä voi yhdistää tähän etuun",
       "couponPromoApplied": "Tarjous \"{name}\" lisätty!",
-      "couponBlocked": "\"{name}\" ei ole yhdistettävissä etuun \"{winner}\", joka tuo sinulle jo suuremmat säästöt. Voit silti poistaa \"{winner}\"-edun ostoskorista ja käyttää tätä sen sijaan.",
+      "couponBlocked": "\"{name}\" ja \"{winner}\" eivät ole yhdistettävissä — vain yksi etu on voimassa kerrallaan. Vaihda napauttamalla alta \"Käytä tätä\".",
       "promoReadded": "\"{name}\" lisätty takaisin",
       "couponSwitchedSavesMore": "\"{name}\" otettiin käyttöön – se tuo sinulle suuremmat säästöt, joten poistimme \"{winner}\"-edun. Voit milloin tahansa vaihtaa takaisin napauttamalla sen banneria.",
       "itemUnavailable": "Tämä tuote ei ole saatavilla",

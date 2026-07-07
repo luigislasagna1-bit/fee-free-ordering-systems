@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "已移除{name}——您的订单不再符合获得免费商品的条件",
       "freebieRemovedExclusive": "已移除{name}——您的\"{winner}\"优惠更划算，且无法与本优惠叠加使用",
       "couponPromoApplied": "已应用优惠 \"{name}\"！",
-      "couponBlocked": "\"{name}\" 无法与 \"{winner}\" 同时使用，而 \"{winner}\" 为您节省得更多。如果想改用此优惠，您仍可在购物车中移除 \"{winner}\"。",
+      "couponBlocked": "“{name}”不能与“{winner}”叠加使用——每次只能享受一个优惠。点击下方的“改用此优惠”即可切换。",
       "promoReadded": "已重新添加 \"{name}\"",
       "couponSwitchedSavesMore": "已应用 \"{name}\"——它为您节省得更多，因此我们移除了 \"{winner}\"。随时点按其横幅即可切换回来。",
       "itemUnavailable": "此商品暂不可用",

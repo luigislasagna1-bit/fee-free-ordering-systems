@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} הוסר — ההזמנה שלך כבר לא זכאית לפריט החינמי",
       "freebieRemovedExclusive": "{name} הוסר — המבצע \"{winner}\" שלך חוסך יותר ולא ניתן לשלב אותו עם הצעה זו",
       "couponPromoApplied": "המבצע \"{name}\" הופעל!",
-      "couponBlocked": "\"{name}\" לא ניתן לשילוב עם \"{winner}\", שכבר חוסך לך יותר. תמיד אפשר להסיר את \"{winner}\" בעגלה כדי להשתמש בזה במקום.",
+      "couponBlocked": "לא ניתן לשלב את \"{name}\" עם \"{winner}\" — רק מבצע אחד חל בכל פעם. הקישו על \"השתמשו בזה במקום\" למטה כדי להחליף.",
       "promoReadded": "\"{name}\" נוסף בחזרה",
       "couponSwitchedSavesMore": "\"{name}\" הוחל — הוא חוסך לך יותר, אז הסרנו את \"{winner}\". אפשר להקיש על הבאנר שלו כדי לחזור אחורה בכל רגע.",
       "itemUnavailable": "פריט זה אינו זמין",

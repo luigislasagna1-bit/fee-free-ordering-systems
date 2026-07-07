@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} je uklonjeno — vaša narudžba više ne ispunjava uvjete za besplatnu stavku",
       "freebieRemovedExclusive": "{name} je uklonjeno — vaša ponuda \"{winner}\" donosi veću uštedu i ne može se kombinirati s ovom ponudom",
       "couponPromoApplied": "Promocija \"{name}\" primijenjena!",
-      "couponBlocked": "\"{name}\" se ne može kombinirati s \"{winner}\", koja vam već donosi veću uštedu. Možete ukloniti \"{winner}\" iz košarice ako želite umjesto nje iskoristiti ovu.",
+      "couponBlocked": "„{name}” se ne može kombinirati s „{winner}” — istovremeno vrijedi samo jedna ponuda. Dodirnite „Primijeni ovu” u nastavku za promjenu.",
       "promoReadded": "\"{name}\" ponovno dodana",
       "couponSwitchedSavesMore": "\"{name}\" je primijenjena — donosi vam veću uštedu, pa smo uklonili \"{winner}\". Dodirnite njezin natpis da se u svakom trenutku vratite na nju.",
       "itemUnavailable": "Ova stavka nije dostupna",

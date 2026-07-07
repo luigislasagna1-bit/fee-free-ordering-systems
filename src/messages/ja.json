@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} を削除しました — ご注文が無料アイテムの対象条件を満たさなくなりました",
       "freebieRemovedExclusive": "{name} を削除しました — 「{winner}」の特典の方がお得で、こちらの特典とは併用できません",
       "couponPromoApplied": "プロモ「{name}」を適用しました！",
-      "couponBlocked": "「{name}」は、すでにそれ以上お得な「{winner}」とは併用できません。代わりにこちらを使うには、カート内の「{winner}」を解除してください。",
+      "couponBlocked": "「{name}」は「{winner}」と併用できません — 一度に適用できるお得情報は1つだけです。切り替えるには下の「これを使う」をタップしてください。",
       "promoReadded": "「{name}」を再度追加しました",
       "couponSwitchedSavesMore": "「{name}」を適用しました。こちらのほうがお得なので、「{winner}」を解除しました。「{winner}」のバナーをタップすれば、いつでも元に戻せます。",
       "itemUnavailable": "この商品は現在ご利用いただけません",

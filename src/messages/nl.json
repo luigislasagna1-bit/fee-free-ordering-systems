@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} verwijderd — je bestelling komt niet meer in aanmerking voor het gratis item",
       "freebieRemovedExclusive": "{name} verwijderd — je \"{winner}\"-deal levert meer op en kan niet met deze aanbieding worden gecombineerd",
       "couponPromoApplied": "Promotie \"{name}\" toegepast!",
-      "couponBlocked": "\"{name}\" kan niet worden gecombineerd met \"{winner}\", waarmee je al meer bespaart. Je kunt \"{winner}\" nog steeds uit je winkelwagen verwijderen om in plaats daarvan deze te gebruiken.",
+      "couponBlocked": "\"{name}\" kan niet worden gecombineerd met \"{winner}\" — er geldt maar één deal tegelijk. Tik hieronder op \"Gebruik deze in plaats daarvan\" om te wisselen.",
       "promoReadded": "\"{name}\" opnieuw toegevoegd",
       "couponSwitchedSavesMore": "\"{name}\" toegepast — hiermee bespaar je meer, dus we hebben \"{winner}\" verwijderd. Tik op de banner ervan om altijd weer terug te wisselen.",
       "itemUnavailable": "Dit item is niet beschikbaar",

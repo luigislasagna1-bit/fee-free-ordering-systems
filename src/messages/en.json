@@ -238,7 +238,7 @@
       "couponAppliedAmount": "Coupon applied! -{amount}",
       "couponPromoApplied": "Promo \"{name}\" applied!",
       "promoUnlocked": "You unlocked {name}!",
-      "couponBlocked": "\"{name}\" can't be combined with \"{winner}\", which already saves you more. You can still remove \"{winner}\" in your cart to use this instead.",
+      "couponBlocked": "\"{name}\" can't be combined with \"{winner}\" — only one deal applies at a time. Tap \"Use this instead\" below to switch.",
       "couponSwitchedSavesMore": "\"{name}\" applied — it saves you more, so we removed \"{winner}\". Tap its banner to switch back anytime.",
       "promoReadded": "\"{name}\" added back",
       "invalidCoupon": "Invalid or expired coupon",

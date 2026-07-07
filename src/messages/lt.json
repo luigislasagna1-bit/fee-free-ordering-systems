@@ -242,7 +242,7 @@
       "freebieRemovedThreshold": "{name} pašalinta — jūsų užsakymas nebeatitinka nemokamo produkto sąlygų",
       "freebieRemovedExclusive": "{name} pašalinta — jūsų pasiūlymas „{winner}“ leidžia sutaupyti daugiau ir negali būti derinamas su šiuo pasiūlymu",
       "couponPromoApplied": "Pasiūlymas „{name}\" pritaikytas!",
-      "couponBlocked": "\"{name}\" negalima derinti su \"{winner}\", kuris jau leidžia sutaupyti daugiau. Vis dėlto galite pašalinti \"{winner}\" iš krepšelio ir vietoj jo pritaikyti šį.",
+      "couponBlocked": "„{name}“ negalima derinti su „{winner}“ — vienu metu galioja tik vienas pasiūlymas. Norėdami perjungti, žemiau spustelėkite „Naudoti šį“.",
       "promoReadded": "„{name}\" pridėtas atgal",
       "couponSwitchedSavesMore": "\"{name}\" pritaikytas — su juo sutaupote daugiau, todėl pašalinome \"{winner}\". Bet kada bakstelėkite jo juostą, kad grįžtumėte atgal.",
       "itemUnavailable": "Ši prekė neprieinama",
