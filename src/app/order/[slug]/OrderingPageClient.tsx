@@ -2548,10 +2548,37 @@ export function OrderingPageClient({
     return best;
   })();
 
-  // Auto-prompt for unlocked "Get a free item" promos (Luigi 2026-06-07). A
-  // free_item promo can't auto-apply its discount until the free item is in the
-  // cart — so when the cart crosses the promo's threshold AND the order type
-  // matches, pop the promo's claim modal ONCE so the customer doesn't miss it.
+  // Does a cart line match a promo item-group (by menu item id or category id)? */
+  const cartLineMatchesGroup = (ci: any, g: any): boolean => {
+    const catIds: string[] = (g?.categoryIds ?? []).map(String);
+    const itemIds: string[] = [...(g?.itemIds ?? []), ...(g?.menuItemIds ?? [])].map(String);
+    const cid = ci?.menuItem?.categoryId != null ? String(ci.menuItem.categoryId) : "";
+    const iid = ci?.menuItem?.id != null ? String(ci.menuItem.id) : "";
+    return (itemIds.length > 0 && itemIds.includes(iid)) || (catIds.length > 0 && catIds.includes(cid));
+  };
+  // Is a free_dish_meal promo's "meal" (every trigger group) already in the cart
+  // (so the customer just needs to pick their free dish)? Drives both the
+  // auto-prompt AND the picker-vs-guided choice in PromoDetailModal so we never
+  // ask the customer to re-add a meal they already have. Luigi 2026-07-07.
+  const freeDishTriggerMet = (p: any): boolean => {
+    if (p?.promotionType !== "free_dish_meal") return false;
+    let rc: any = p.ruleConfig;
+    if (!rc || typeof rc !== "object") { try { rc = JSON.parse((p as any).rules || "{}"); } catch { rc = {}; } }
+    const groups: any[] = Array.isArray(rc?.groups) ? rc.groups : [];
+    const triggerGroups = groups.filter((g) => g?.role === "trigger");
+    if (!triggerGroups.length || !groups.some((g) => g?.role === "free")) return false;
+    if ((p.minimumOrder ?? 0) > 0 && subtotal < (p.minimumOrder ?? 0)) return false;
+    return triggerGroups.every((g) =>
+      cart.some((ci) => !String(ci.notes ?? "").startsWith("Free with promo:") && cartLineMatchesGroup(ci, g)),
+    );
+  };
+
+  // Auto-prompt for unlocked give-away promos. Their discount can't auto-apply
+  // until the free thing is in the cart — so when the customer QUALIFIES
+  // (free_item: crosses the spend threshold; free_dish_meal: has the meal), pop
+  // the claim picker ONCE so they don't miss it. Luigi 2026-06-07 (free_item) /
+  // 2026-07-07 (free_dish_meal — "if a pizza's in the cart, tell me I've earned
+  // a free dessert and let me pick it").
   useEffect(() => {
     if (activePromoModal) return; // a modal is already open
     const canon = (t: string) => {
@@ -2567,20 +2594,23 @@ export function OrderingPageClient({
       return set.length === 0 || set.map(canon).includes(canon(ot));
     };
     const target = promoBanners.find((p) => {
-      if (p.promotionType !== "free_item" || !p.autoApply) return false;
+      if (!p.autoApply) return false;
       if (autoPromptedFreebies.has(p.id)) return false;
       if (!allowsOrderType(p.orderType, orderType)) return false;
-      // Don't auto-prompt a free item the customer can't redeem for this order
-      // time — it would only apply if they scheduled into the promo's window.
+      // Don't auto-prompt something the customer can't redeem for this order time
+      // — it would only apply if they scheduled into the promo's window.
       if (!promoIsUsable(p)) return false;
-      let rc: any = p.ruleConfig;
-      if (!rc || typeof rc !== "object") { try { rc = JSON.parse((p as any).rules || "{}"); } catch { rc = {}; } }
-      const trigger = typeof rc?.triggerAmount === "number" ? rc.triggerAmount : 0;
-      const threshold = Math.max(p.minimumOrder ?? 0, trigger);
-      if (threshold <= 0 || subtotal < threshold) return false;
       // Already claimed? addFreebieToCart tags the free line with the promo name.
       if (cart.some((ci) => ci.notes === `Free with promo: ${p.name}`)) return false;
-      return true;
+      if (p.promotionType === "free_item") {
+        let rc: any = p.ruleConfig;
+        if (!rc || typeof rc !== "object") { try { rc = JSON.parse((p as any).rules || "{}"); } catch { rc = {}; } }
+        const trigger = typeof rc?.triggerAmount === "number" ? rc.triggerAmount : 0;
+        const threshold = Math.max(p.minimumOrder ?? 0, trigger);
+        return threshold > 0 && subtotal >= threshold;
+      }
+      if (p.promotionType === "free_dish_meal") return freeDishTriggerMet(p);
+      return false;
     });
     if (target) {
       setActivePromoModal(target);
@@ -6177,6 +6207,9 @@ export function OrderingPageClient({
           allMenuItems={flatMenuItems}
           deliveryZones={(restaurant.deliveryZones ?? []).map((z: any) => ({ id: z.id, name: z.name }))}
           cartSubtotal={subtotal}
+          // free_dish_meal: when the meal is already in the cart, show the simple
+          // "pick your free dish" picker instead of re-walking the meal.
+          freeDishTriggerMet={activePromoModal ? freeDishTriggerMet(activePromoModal) : false}
           primaryColor={theme.primaryColor}
           // Time-window gating: redeemable for the current order time? If not,
           // the modal shows "order for later" instead of the claim builder.

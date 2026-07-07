@@ -31,6 +31,8 @@ import { GuidedPromoModal, type GuidedPromoPick } from "./GuidedPromoModal";
 type RuleConfigGroup = {
   id?: string;
   label?: string;
+  /** the group's part in a multi-group deal (matches GuidedPromoModal). */
+  role?: "paid" | "free" | "trigger" | "required";
   categoryIds?: string[];
   itemIds?: string[];
   menuItemIds?: string[]; // legacy alias
@@ -117,6 +119,10 @@ interface Props {
   deliveryZones?: DeliveryZoneLite[];
   /** Current cart subtotal — drives free_item gating. */
   cartSubtotal: number;
+  /** free_dish_meal only: the "meal" (all trigger groups) is already in the cart,
+   *  so show the simple "pick your free dish" picker instead of the guided
+   *  meal-walk. Luigi 2026-07-07. */
+  freeDishTriggerMet?: boolean;
   /** Primary brand color from the theme — keeps the modal on-palette. */
   primaryColor: string;
   /** Add a freebie item to the cart at $0 (or discounted) — see
@@ -602,6 +608,7 @@ export function PromoDetailModal({
   allMenuItems,
   deliveryZones = [],
   cartSubtotal,
+  freeDishTriggerMet = false,
   primaryColor,
   usableNow = true,
   windowLabel,
@@ -730,6 +737,35 @@ export function PromoDetailModal({
         onClose={onClose}
       />
     );
+  }
+
+  // free_dish_meal with the "meal" ALREADY in the cart → the simple "pick your
+  // free dish" picker (the free group only), NOT the guided meal-walk (which
+  // would ask the customer to re-add the pizza they already have). Luigi
+  // 2026-07-07. When the meal isn't there yet, fall through to the guided modal.
+  if (promo.promotionType === "free_dish_meal" && freeDishTriggerMet) {
+    const groups = (rules.groups ?? rules.itemGroups ?? []) as RuleConfigGroup[];
+    const freeMap = new Map<string, MenuItemLite>();
+    for (const g of groups) {
+      if (g.role !== "free") continue;
+      for (const it of collectFreebieOptions(g, allMenuItems)) freeMap.set(it.id, it);
+    }
+    if (freeMap.size > 0) {
+      return (
+        <FreebiePromptModal
+          promoName={promo.name}
+          triggerAmount={0} // the meal already qualifies — the picker is always unlocked
+          cartSubtotal={cartSubtotal}
+          eligibleItems={Array.from(freeMap.values())}
+          primaryColor={primaryColor}
+          onAddFreebie={(item, variantId) => {
+            onAddFreebie(item, promo.name, variantId);
+            onClose();
+          }}
+          onClose={onClose}
+        />
+      );
+    }
   }
 
   // Set-completion types get the guided slot picker — walk the customer
