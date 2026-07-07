@@ -77,3 +77,36 @@ describe("BOGO extra-charges modes (GloriaFood parity)", () => {
     expect(discountOf(bn("addons"), twoPizzas())).toBe(16);
   });
 });
+
+describe("Free-item extra-charges modes (GloriaFood parity)", () => {
+  // "Spend $20, get a free side." The freed side is $12 (base $8 + size $2 +
+  // toppings $2). Trigger is met by the $30 main. Freed amount by mode:
+  //   none 12 · addons 10 (charge $2 toppings) · addons_sizes 8 (charge $2 size + $2 toppings)
+  const freeItem = (mode?: string): PromoInput => ({
+    id: `fi${++_seq}`, name: "FreeItem", description: null, promotionType: "free_item",
+    isActive: true, stackingRule: "standard", orderType: "both", customerType: "any",
+    minimumOrder: 0, rules: "{}", usedCount: 0, autoApply: true, couponCode: null,
+    ruleConfig: {
+      triggerAmount: 20,
+      groups: [{ id: "g", role: "free", categoryIds: ["sides"], itemIds: [] }],
+      ...(mode ? { freeItemExtraChargeMode: mode } : {}),
+    },
+  });
+  const mainPlusSide = (): ApplyContext => ({
+    orderType: "pickup", isNewCustomer: true, isMember: false, subtotal: 42,
+    items: [
+      { menuItemId: "main", categoryId: "pizzas", price: 30, quantity: 1, subtotal: 30 },
+      { menuItemId: "side", categoryId: "sides", price: 12, sizedBase: 10, baseNoSize: 8, quantity: 1, subtotal: 12 },
+    ],
+  });
+
+  it("No extra charges → frees the whole side (−$12)", () => {
+    expect(discountOf(freeItem(), mainPlusSide())).toBe(12);
+  });
+  it("Charge Add-ons → frees the sized base (−$10, toppings billed)", () => {
+    expect(discountOf(freeItem("addons"), mainPlusSide())).toBe(10);
+  });
+  it("Charge Add-ons & Sizes → frees the base (−$8, size + toppings billed)", () => {
+    expect(discountOf(freeItem("addons_sizes"), mainPlusSide())).toBe(8);
+  });
+});

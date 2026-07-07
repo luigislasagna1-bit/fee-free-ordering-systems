@@ -875,16 +875,19 @@ function calcFreeItem(promo: PromoInput, ctx: ApplyContext): number {
   // otherwise the cheapest eligible unit. Before, it ALWAYS freed the cheapest
   // category match, so a customer who claimed a pricier freebie overpaid (audit).
   const claimed = eligible.find((i) => i.isFreebie);
-  const freedAmount = (claimed ?? [...eligible].sort((a, b) => a.price - b.price)[0]).price;
+  const freedItem = claimed ?? [...eligible].sort((a, b) => a.price - b.price)[0];
   // The freed unit must NOT count toward unlocking its own trigger — otherwise a
   // customer reached the threshold by adding only the free item and walked away
   // with a $0 order (audit self-bootstrap). Compare the trigger against the cart
-  // MINUS the freed unit. Luigi 2026-06-27.
+  // MINUS the freed unit's FULL price (unaffected by the extra-charges mode).
+  // Trigger judged on the DISCOUNTABLE subtotal — a gift-card line can't unlock
+  // the free item. Luigi 2026-06-27 / 2026-07-02.
   const trigger = rules.triggerAmount ?? 0;
-  // Trigger judged on the DISCOUNTABLE subtotal — a gift-card line can't
-  // unlock the free item. Luigi 2026-07-02.
-  if (trigger > 0 && discountableSubtotal(ctx) - freedAmount < trigger) return 0;
-  return freedAmount;
+  if (trigger > 0 && discountableSubtotal(ctx) - freedItem.price < trigger) return 0;
+  // "Extra charges" mode (GloriaFood parity, Luigi 2026-07-07): free the whole
+  // item / just the sized base (charge toppings) / just the base (charge size +
+  // toppings). Absent breakdown → full price (unchanged default).
+  return freeableAmount(freedItem, normalizeFreeBasis((rules as { freeItemExtraChargeMode?: unknown }).freeItemExtraChargeMode));
 }
 
 function calcMealBundle(promo: PromoInput, ctx: ApplyContext): number {
@@ -953,7 +956,10 @@ function calcFreeDishMeal(promo: PromoInput, ctx: ApplyContext): number {
   }
   const pct = rules.discountPercent ?? 100;
   const sorted = [...freeItems].sort((a, b) => a.price - b.price);
-  return parseFloat((sorted[0].price * (pct / 100)).toFixed(2));
+  // "Extra charges" mode (GloriaFood parity, Luigi 2026-07-07) — free the whole
+  // dish / sized base / base, same as free_item & BOGO.
+  const basis = normalizeFreeBasis((rules as { freeItemExtraChargeMode?: unknown }).freeItemExtraChargeMode);
+  return parseFloat((freeableAmount(sorted[0], basis) * (pct / 100)).toFixed(2));
 }
 
 function calcFixedCombo(promo: PromoInput, ctx: ApplyContext): number {

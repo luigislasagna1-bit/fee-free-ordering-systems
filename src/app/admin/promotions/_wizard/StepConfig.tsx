@@ -12,6 +12,7 @@ import {
   AmtInput,
   CatEntry,
   DiscountStrategySection,
+  ExtraChargeModeSelect,
   GroupsEditor,
   IG,
   ItemGroupRow,
@@ -441,6 +442,7 @@ function TypeSpecific({
               canRemove={false}
             />
           </div>
+          <ExtraChargeModeSelect rules={rules} onChange={onRules} />
         </div>
       );
     }
@@ -612,6 +614,7 @@ function TypeSpecific({
             value={rules.discountPercent ?? 100}
             onChange={(v) => onRules({ discountPercent: v })}
           />
+          <ExtraChargeModeSelect rules={rules} onChange={onRules} />
         </div>
       );
     }
