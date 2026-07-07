@@ -1558,19 +1558,40 @@ export async function POST(req: NextRequest) {
       // a 22-beverage cart because categoryId wasn't being threaded.
       items: validatedItems
         .filter((i) => i.menuItemId !== null)
-        .map((i) => ({
-          menuItemId: i.menuItemId as string,
-          categoryId: menuItemMap.get(i.menuItemId as string)?.categoryId ?? undefined,
-          variantId: i.variantId ?? null,
-          price: i.price,
-          quantity: i.quantity,
-          subtotal: i.subtotal,
-          // Promo-freebie tag so free_item frees the CLAIMED item + the freed
-          // unit doesn't unlock its own trigger (audit). Luigi 2026-06-27.
-          isFreebie: typeof i.notes === "string" && i.notes.startsWith("Free with promo:"),
-          // Gift-card guard — this line never receives a promo discount.
-          promoExcluded: isPromoExcludedItem(i.menuItemId),
-        })),
+        .map((i) => {
+          // Per-unit base prices for the BOGO/free-item "extra charges" modes
+          // (GloriaFood parity, Luigi 2026-07-07) — computed server-side from the
+          // authoritative menu prices so the CHARGE matches the preview exactly:
+          //   sizedBase  = the chosen size's base (= validated basePrice) WITHOUT
+          //                toppings/choices, so "Charge extra for Choices/Add-ons"
+          //                still bills the toppings on the freed item.
+          //   baseNoSize = the cheapest size's base, so "…& Sizes" also bills the
+          //                size upgrade. min() keeps base ≤ sizedBase ≤ full price
+          //                so a promo can never free MORE than the unit.
+          const mi = menuItemMap.get(i.menuItemId as string) as { price?: number; hasVariants?: boolean; variants?: Array<{ id: string; price: number }> } | undefined;
+          const variants = mi?.variants ?? [];
+          const sizedBaseRaw = mi?.hasVariants && i.variantId
+            ? (variants.find((v) => v.id === i.variantId)?.price ?? mi?.price ?? i.price)
+            : (mi?.price ?? i.price);
+          const cheapestSize = variants.length ? Math.min(...variants.map((v) => v.price)) : (mi?.price ?? i.price);
+          const sizedBase = Math.min(i.price, Math.round(sizedBaseRaw * 100) / 100);
+          const baseNoSize = Math.min(sizedBase, Math.round(cheapestSize * 100) / 100);
+          return {
+            menuItemId: i.menuItemId as string,
+            categoryId: menuItemMap.get(i.menuItemId as string)?.categoryId ?? undefined,
+            variantId: i.variantId ?? null,
+            price: i.price,
+            sizedBase,
+            baseNoSize,
+            quantity: i.quantity,
+            subtotal: i.subtotal,
+            // Promo-freebie tag so free_item frees the CLAIMED item + the freed
+            // unit doesn't unlock its own trigger (audit). Luigi 2026-06-27.
+            isFreebie: typeof i.notes === "string" && i.notes.startsWith("Free with promo:"),
+            // Gift-card guard — this line never receives a promo discount.
+            promoExcluded: isPromoExcludedItem(i.menuItemId),
+          };
+        }),
       paymentMethod,
       // Phase 2a: the Delivery Area restriction needs this. Undefined
       // for pickup/dine-in (the engine short-circuits zone-restricted

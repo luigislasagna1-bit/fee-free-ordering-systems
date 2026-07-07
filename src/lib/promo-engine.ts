@@ -97,6 +97,17 @@ export type CartItem = {
   price: number;
   quantity: number;
   subtotal: number;
+  /** Per-unit price of the sized item WITHOUT its choices/add-ons/toppings
+   *  (= the chosen size variant's price, or the item price when no variant).
+   *  Lets a BOGO/free-item promo free just the base and still charge for the
+   *  toppings ("Charge extra for Choices/Add-ons" — GloriaFood parity). Absent
+   *  → falls back to `price` (whole unit free, the default). Luigi 2026-07-07. */
+  sizedBase?: number;
+  /** Per-unit item price WITHOUT the size upcharge AND without choices/add-ons
+   *  (= MenuItem.price). Lets a promo free only the base and charge for both the
+   *  size upgrade and the toppings ("Charge extra for Choices/Add-ons & Sizes").
+   *  Absent → falls back to `price`. Luigi 2026-07-07. */
+  baseNoSize?: number;
   /** True when this line was added as a promo freebie ("Free with promo: …").
    *  Lets free_item discount the CLAIMED freebie (not just the cheapest match)
    *  and excludes the freed unit from its own trigger. Luigi 2026-06-27. */
@@ -500,12 +511,12 @@ function calcFreeDelivery(_promo: PromoInput, _ctx: ApplyContext): number {
  *  with quantity 3 becomes 3 entries at the same per-unit price. Used
  *  by BOGO / Buy-N-Get-Free so we can discount the correct NUMBER of
  *  units when the customer has multiple qualifying pairs. */
-type DiscountUnit = { menuItemId: string; price: number; lineKey?: string };
+type DiscountUnit = { menuItemId: string; price: number; sizedBase?: number; baseNoSize?: number; lineKey?: string };
 
 function expandToUnits(items: CartItem[]): DiscountUnit[] {
   const units: DiscountUnit[] = [];
   for (const it of items) {
-    for (let i = 0; i < it.quantity; i++) units.push({ menuItemId: it.menuItemId, price: it.price, lineKey: it.lineKey });
+    for (let i = 0; i < it.quantity; i++) units.push({ menuItemId: it.menuItemId, price: it.price, sizedBase: it.sizedBase, baseNoSize: it.baseNoSize, lineKey: it.lineKey });
   }
   return units;
 }
@@ -519,17 +530,41 @@ export type DiscountLine = { menuItemId: string; amount: number; lineKey?: strin
 /** Pick the N units to discount from a pool, given a strategy. The pool is
  *  expanded by quantity so a line item with qty=3 contributes 3 discountable
  *  units. Returns the total discount $ AND the per-unit breakdown. */
+/** How much of a freed unit the discount covers (GloriaFood BOGO "extra charges"
+ *  parity, Luigi 2026-07-07):
+ *   "none"         → the whole unit (base + size + toppings) — the default.
+ *   "addons"       → only the sized base; the customer still pays for toppings /
+ *                    choices / add-ons on the freed item.
+ *   "addons_sizes" → only the un-sized base; the customer pays for the size
+ *                    upgrade AND the toppings on the freed item. */
+type FreeBasis = "none" | "addons" | "addons_sizes";
+function normalizeFreeBasis(v: unknown): FreeBasis {
+  return v === "addons" || v === "addons_sizes" ? v : "none";
+}
+/** The portion of a unit eligible for the free/percentage discount, per the
+ *  promo's freeBasis. Falls back to the full price when the caller didn't send
+ *  the breakdown (legacy carts) or the base is missing, so behaviour is
+ *  unchanged unless a restaurant opts into charging for extras. */
+function freeableAmount(u: DiscountUnit, basis: FreeBasis): number {
+  if (basis === "addons_sizes") return Math.min(u.price, u.baseNoSize ?? u.price);
+  if (basis === "addons") return Math.min(u.price, u.sizedBase ?? u.price);
+  return u.price;
+}
+
 function discountNUnitsDetailed(
   pool: CartItem[],
   count: number,
   strategy: string,
   cheapestPct: number,
   mostExpensivePct: number,
+  freeBasis: FreeBasis = "none",
 ): { total: number; lines: DiscountLine[] } {
   if (count <= 0 || !pool.length) return { total: 0, lines: [] };
   const units = expandToUnits(pool);
   if (!units.length) return { total: 0, lines: [] };
   const isMostExpensive = strategy === "most_expensive";
+  // Selection of WHICH unit is cheapest/priciest stays on the full price (the
+  // customer's actual cheapest item); only the freed AMOUNT uses freeBasis.
   units.sort((a, b) => (isMostExpensive ? b.price - a.price : a.price - b.price));
   const pct = isMostExpensive ? mostExpensivePct : cheapestPct;
   const take = Math.min(count, units.length);
@@ -539,7 +574,7 @@ function discountNUnitsDetailed(
   let rawSum = 0;
   const lines: DiscountLine[] = [];
   for (let i = 0; i < take; i++) {
-    const raw = units[i].price * (pct / 100);
+    const raw = freeableAmount(units[i], freeBasis) * (pct / 100);
     rawSum += raw;
     lines.push({ menuItemId: units[i].menuItemId, amount: parseFloat(raw.toFixed(2)), lineKey: units[i].lineKey });
   }
@@ -650,6 +685,9 @@ function bogoResult(promo: PromoInput, ctx: ApplyContext): { total: number; line
     fixedPct ? "cheapest" : strat,
     fixedPct ? (rules.discountPercent ?? 0) : (rules.cheapestDiscount ?? 100),
     rules.mostExpensiveDiscount ?? 100,
+    // "No extra charges" (default) / "Charge extra for Choices/Add-ons" /
+    // "…& Sizes" — free the whole unit, the sized base, or the un-sized base.
+    normalizeFreeBasis((rules as { freeItemExtraChargeMode?: unknown }).freeItemExtraChargeMode),
   );
 }
 
@@ -705,16 +743,19 @@ function buyNGetFreeResult(promo: PromoInput, ctx: ApplyContext): { total: numbe
   // later — Luigi 2026-07-03: the chosen $25 pizza lost its discount to a
   // $9.99 pizza added afterwards. The configured strategy (cheapest / most
   // expensive) only decides among UNTAGGED candidates.
+  // "Extra charges" mode (GloriaFood parity): free the whole unit / the sized
+  // base / the un-sized base of each freed item. Luigi 2026-07-07.
+  const freeBasis = normalizeFreeBasis((rules as { freeItemExtraChargeMode?: unknown }).freeItemExtraChargeMode);
   const taggedPool = freeItems.filter((i) => i.isFreebie);
   const untaggedPool = freeItems.filter((i) => !i.isFreebie);
   const taggedUnits = taggedPool.reduce((s, i) => s + i.quantity, 0);
   const takeTagged = Math.min(multiplier, taggedUnits);
   const fromTagged = takeTagged > 0
-    ? discountNUnitsDetailed(taggedPool, takeTagged, effStrategy, cheapPct, expPct)
+    ? discountNUnitsDetailed(taggedPool, takeTagged, effStrategy, cheapPct, expPct, freeBasis)
     : { total: 0, lines: [] as DiscountLine[] };
   const remainder = multiplier - takeTagged;
   const fromUntagged = remainder > 0
-    ? discountNUnitsDetailed(untaggedPool, remainder, effStrategy, cheapPct, expPct)
+    ? discountNUnitsDetailed(untaggedPool, remainder, effStrategy, cheapPct, expPct, freeBasis)
     : { total: 0, lines: [] as DiscountLine[] };
   return {
     total: parseFloat((fromTagged.total + fromUntagged.total).toFixed(2)),

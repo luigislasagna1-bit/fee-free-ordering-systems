@@ -2317,15 +2317,7 @@ export function OrderingPageClient({
         // price, and feeding the synthetic `bundle:<id>` menuItemId into
         // the public promo engine would either no-op (lookup fails) or
         // double-discount. Bundles are self-contained discounts.
-        items: cart.map((ci, i) => ({ ci, i })).filter((x) => !x.ci.isBundle).map(({ ci, i }) => ({
-          menuItemId: ci.menuItem.id,
-          categoryId: ci.menuItem.categoryId,
-          variantId: ci.variant?.id ?? null,
-          // Stable per-cart-line key = the ORIGINAL cart index (assigned before the
-          // bundle filter shifts positions). Lets the engine attribute each
-          // discounted unit back to the exact line, so "You saved" no longer lands
-          // only on the first line when the same dish is on two lines. Luigi 2026-06-30.
-          lineKey: String(i),
+        items: cart.map((ci, i) => ({ ci, i })).filter((x) => !x.ci.isBundle).map(({ ci, i }) => {
           // Effective per-unit price = lineTotal / qty, which is ALWAYS
           // modifier-inclusive and consistent with subtotal. Using unitPrice/
           // variant/base here omitted paid modifiers for standard modal items
@@ -2334,15 +2326,38 @@ export function OrderingPageClient({
           // price while the charge route nets base+mods — preview != charge
           // (audit confusing#8). The charge route stays authoritative; this only
           // makes the PREVIEW match it. Luigi 2026-06-26.
-          price: ci.quantity > 0
+          const price = ci.quantity > 0
             ? Math.round((ci.lineTotal / ci.quantity) * 100) / 100
-            : (ci.unitPrice ?? ci.variant?.price ?? ci.menuItem.price),
-          quantity: ci.quantity,
-          subtotal: ci.lineTotal,
-          // Tag promo-freebie lines so free_item frees the CLAIMED item + the
-          // freed unit doesn't unlock its own trigger (audit). Luigi 2026-06-27.
-          isFreebie: typeof ci.notes === "string" && ci.notes.startsWith("Free with promo:"),
-        })),
+            : (ci.unitPrice ?? ci.variant?.price ?? ci.menuItem.price);
+          // Per-unit base prices for the BOGO/free-item "extra charges" modes
+          // (GloriaFood parity, Luigi 2026-07-07): sizedBase = the chosen size
+          // WITHOUT toppings/choices; baseNoSize = the cheapest size's base.
+          // min() keeps base ≤ sizedBase ≤ full price so a promo can never free
+          // MORE than the unit. The charge route recomputes these server-side.
+          const sizedBase = Math.min(price, Math.round((ci.variant?.price ?? ci.menuItem.price) * 100) / 100);
+          const variants = ci.menuItem.variants;
+          const cheapestSize = variants && variants.length
+            ? Math.min(...variants.map((v) => v.price))
+            : ci.menuItem.price;
+          const baseNoSize = Math.min(sizedBase, Math.round(cheapestSize * 100) / 100);
+          return {
+            menuItemId: ci.menuItem.id,
+            categoryId: ci.menuItem.categoryId,
+            variantId: ci.variant?.id ?? null,
+            // Stable per-cart-line key = the ORIGINAL cart index (assigned before
+            // the bundle filter shifts positions). Lets the engine attribute each
+            // discounted unit back to the exact line. Luigi 2026-06-30.
+            lineKey: String(i),
+            price,
+            sizedBase,
+            baseNoSize,
+            quantity: ci.quantity,
+            subtotal: ci.lineTotal,
+            // Tag promo-freebie lines so free_item frees the CLAIMED item + the
+            // freed unit doesn't unlock its own trigger (audit). Luigi 2026-06-27.
+            isFreebie: typeof ci.notes === "string" && ci.notes.startsWith("Free with promo:"),
+          };
+        }),
         // Phase 2a restriction input — forward the resolved delivery
         // zone (so Delivery Area-restricted promos like "Free delivery
         // in Zone 1-7" trigger). Undefined when not applicable —

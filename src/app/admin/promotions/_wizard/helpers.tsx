@@ -51,6 +51,10 @@ export type PromoRules = {
   discountStrategy?: "cheapest" | "most_expensive" | "fixed_percent";
   cheapestDiscount?: number;
   mostExpensiveDiscount?: number;
+  /** BOGO / Buy-N-Get-Free free-item "extra charges" mode (GloriaFood parity,
+   *  Luigi 2026-07-07): "none" frees the whole free item; "addons" still charges
+   *  its toppings/choices; "addons_sizes" also charges the size upgrade. */
+  freeItemExtraChargeMode?: "none" | "addons" | "addons_sizes";
   /** Cap a repeating deal (BOGO / buy-N-get-free) to one application per order. */
   oncePerOrder?: boolean;
   groups?: IG[];
@@ -681,6 +685,23 @@ export function DiscountStrategySection({
           <span className="text-xs text-gray-400">%</span>
         </div>
       )}
+      {/* Extra-charges mode on the FREE item (GloriaFood parity, Luigi
+          2026-07-07). Section is English-only like the rest of this component. */}
+      <div className="pt-1">
+        <label className="block text-sm font-medium text-gray-700 mb-1">Charges on the free item</label>
+        <select
+          value={rules.freeItemExtraChargeMode ?? "none"}
+          onChange={(e) => onChange({ freeItemExtraChargeMode: e.target.value as PromoRules["freeItemExtraChargeMode"] })}
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+        >
+          <option value="none">No extra charges (whole free item is free)</option>
+          <option value="addons">Charge extra for Choices / Add-ons (toppings still billed)</option>
+          <option value="addons_sizes">Charge extra for Choices / Add-ons &amp; Sizes (toppings + size upgrade billed)</option>
+        </select>
+        <p className="text-[11px] text-gray-400 mt-1">
+          Whether the freed item&rsquo;s toppings and size upgrade are still charged — matches GloriaFood.
+        </p>
+      </div>
       <p className="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2 leading-snug">
         💡 {note}
       </p>
