@@ -139,6 +139,31 @@ interface CartItem {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
+/** The "+ …" build labels shown under a cart line: pizza-builder selections
+ *  (half/half, toppings, sauce, cheese) via pizzaCustomizationToModifiers, or
+ *  plain modifier-group picks. Shared by the cart drawer AND the checkout
+ *  summary so both show the SAME build — the checkout summary was dropping
+ *  pizza toppings entirely (Luigi 2026-07-06). Bundles render their children
+ *  separately (bundleItems), so they contribute no labels here. */
+function cartItemModifierLabels(ci: CartItem): string[] {
+  if (ci.isBundle) return [];
+  if (ci.pizzaCustomization) {
+    return pizzaCustomizationToModifiers(
+      ci.pizzaCustomization,
+      ci.menuItem.modifierGroups as any,
+    ).map((m) => m.name);
+  }
+  const out: string[] = [];
+  for (const [gId, optIds] of Object.entries(ci.selectedMods)) {
+    const g = ci.menuItem.modifierGroups.find((grp) => grp.id === gId);
+    for (const optId of optIds) {
+      const opt = g?.options.find((o) => o.id === optId);
+      if (opt) out.push(opt.name);
+    }
+  }
+  return out;
+}
+
 const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
 /** Human-readable availability window for a day/time-limited item, e.g.
@@ -5512,20 +5537,12 @@ export function OrderingPageClient({
                               ))}
                             </div>
                           )}
-                          {/* Pizza customization details */}
-                          {!ci.isBundle && (ci.pizzaCustomization
-                            ? pizzaCustomizationToModifiers(ci.pizzaCustomization, ci.menuItem.modifierGroups as any)
-                                .map((m, i) => (
-                                  <div key={i} className="text-xs text-gray-400">+ {m.name}</div>
-                                ))
-                            : Object.entries(ci.selectedMods).map(([gId, optIds]) => {
-                                const g = ci.menuItem.modifierGroups.find(g => g.id === gId);
-                                return (optIds as string[]).map(optId => {
-                                  const opt = g?.options.find(o => o.id === optId);
-                                  return opt ? <div key={optId} className="text-xs text-gray-400">+ {opt.name}</div> : null;
-                                });
-                              }))
-                          }
+                          {/* Build details (toppings / modifier picks) — shared
+                              with the checkout summary via cartItemModifierLabels
+                              so both always match (Luigi 2026-07-06). */}
+                          {cartItemModifierLabels(ci).map((label, i) => (
+                            <div key={i} className="text-xs text-gray-400">+ {label}</div>
+                          ))}
                           {ci.notes && <div className="text-xs text-gray-400 italic mt-0.5">&ldquo;{ci.notes}&rdquo;</div>}
                         </div>
                         <div className="text-sm font-bold text-gray-900 flex-shrink-0">{fmt(ci.lineTotal)}</div>
@@ -5886,7 +5903,10 @@ export function OrderingPageClient({
           isSignedIn={!!currentCustomer}
           savedAddresses={savedAddresses}
           fromMarketplace={fromMarketplace}
-          cart={cart}
+          // Enrich each line with its "+ …" build labels (pizza toppings /
+          // modifier picks) so the checkout summary shows the SAME build as the
+          // cart drawer — it used to omit them entirely (Luigi 2026-07-06).
+          cart={cart.map((ci) => ({ ...ci, modifierLabels: cartItemModifierLabels(ci) }))}
           subtotal={subtotal}
           totalDiscount={totalDiscount}
           // Drives the "🎉 You unlocked …" celebration banner at the

@@ -68,6 +68,12 @@ type CartLine = {
   variant?: { name: string };
   quantity: number;
   lineTotal: number;
+  /** "+ …" build labels (pizza-builder selections — half/half, toppings,
+   *  sauce, cheese — or plain modifier picks), pre-computed by the parent so
+   *  the checkout summary shows the SAME build as the cart drawer. The
+   *  checkout used to drop pizza toppings entirely (Luigi 2026-07-06).
+   *  Empty/absent for bundles, which render their children via bundleItems. */
+  modifierLabels?: string[];
   /** Bundle line item (Promo Type 8 / 13) — when true the summary
    *  renders this as a parent row + indented children instead of a
    *  single line. The child names come from `bundleItems[]`. */
@@ -1792,6 +1798,13 @@ export function CheckoutModal({
                           {ci.isBundle ? (ci.bundlePromoName ?? ci.menuItem.name) : ci.menuItem.name}
                         </span>
                         {ci.variant && <span className="block text-xs text-gray-400">{ci.variant.name}</span>}
+                        {ci.modifierLabels && ci.modifierLabels.length > 0 && (
+                          <span className="block mt-0.5">
+                            {ci.modifierLabels.map((label, mi) => (
+                              <span key={mi} className="block text-xs text-gray-400">+ {label}</span>
+                            ))}
+                          </span>
+                        )}
                         {savedForLine[i] > 0 && (
                           // Own line under the item name (Fabrizio 2026-07-04:
                           // "wrap the discount text onto a new line, exactly
