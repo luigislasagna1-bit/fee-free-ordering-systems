@@ -325,7 +325,8 @@
       "decline": "Nē, paldies"
     },
     "deliveryOnlyLabel": "Pieejams tikai piegādei",
-    "pickupOnlyLabel": "Pieejams tikai saņemšanai"
+    "pickupOnlyLabel": "Pieejams tikai saņemšanai",
+    "refundableDeposit": "Atmaksājama drošības nauda"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Produktu neizdevās dublēt — mēģiniet vēlreiz.",
       "duplicateGroup": "Dublēt grupu",
       "groupDuplicated": "Grupa dublēta",
-      "failedToDuplicateGroup": "Grupu neizdevās dublēt — mēģiniet vēlreiz."
+      "failedToDuplicateGroup": "Grupu neizdevās dublēt — mēģiniet vēlreiz.",
+      "refundableDeposit": "Atmaksājama drošības nauda",
+      "refundableDepositHint": "Tiek iekasēta no klienta, bet netiek aplikta ar nodokli. Nekad netiek atlaista vai kvalificēta atlīdzībām, un ir pilnībā atmaksājama."
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

@@ -325,7 +325,8 @@
       "decline": "No, gracias"
     },
     "deliveryOnlyLabel": "Disponible solo a domicilio",
-    "pickupOnlyLabel": "Disponible solo para recoger"
+    "pickupOnlyLabel": "Disponible solo para recoger",
+    "refundableDeposit": "Depósito reembolsable"
   },
   "pizza": {
     "chooseSize": "Elegir tamaño",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "No se pudo duplicar el artículo — inténtalo de nuevo.",
       "duplicateGroup": "Duplicar grupo",
       "groupDuplicated": "Grupo duplicado",
-      "failedToDuplicateGroup": "No se pudo duplicar el grupo — inténtalo de nuevo."
+      "failedToDuplicateGroup": "No se pudo duplicar el grupo — inténtalo de nuevo.",
+      "refundableDeposit": "Depósito reembolsable",
+      "refundableDepositHint": "Se cobra al cliente pero no lleva impuestos. Nunca se descuenta ni es elegible para recompensas, y es totalmente reembolsable."
     },
     "promotionsList": {
       "stackingMaster": "Maestro",

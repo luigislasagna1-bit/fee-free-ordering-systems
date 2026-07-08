@@ -325,7 +325,8 @@
       "decline": "Nie, ďakujem"
     },
     "deliveryOnlyLabel": "Iba pre donášku",
-    "pickupOnlyLabel": "Iba na vyzdvihnutie"
+    "pickupOnlyLabel": "Iba na vyzdvihnutie",
+    "refundableDeposit": "Vratná záloha"
   },
   "pizza": {
     "chooseSize": "Vybrať veľkosť",
@@ -2777,7 +2778,9 @@
       "failedToDuplicateItem": "Položku sa nepodarilo duplikovať — skúste to znova.",
       "duplicateGroup": "Duplikovať skupinu",
       "groupDuplicated": "Skupina duplikovaná",
-      "failedToDuplicateGroup": "Skupinu sa nepodarilo duplikovať — skúste to znova."
+      "failedToDuplicateGroup": "Skupinu sa nepodarilo duplikovať — skúste to znova.",
+      "refundableDeposit": "Vratná záloha",
+      "refundableDepositHint": "Účtuje sa zákazníkovi, ale nezdaňuje sa. Nikdy sa nezľavňuje ani nie je oprávnená na odmeny a je plne vratná."
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",

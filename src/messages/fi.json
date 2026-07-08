@@ -325,7 +325,8 @@
       "decline": "Ei kiitos"
     },
     "deliveryOnlyLabel": "Vain kotiinkuljetukseen",
-    "pickupOnlyLabel": "Vain noudettavaksi"
+    "pickupOnlyLabel": "Vain noudettavaksi",
+    "refundableDeposit": "Palautettava pantti"
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Tuotetta ei voitu monistaa — yritä uudelleen.",
       "duplicateGroup": "Monista ryhmä",
       "groupDuplicated": "Ryhmä monistettu",
-      "failedToDuplicateGroup": "Ryhmää ei voitu monistaa — yritä uudelleen."
+      "failedToDuplicateGroup": "Ryhmää ei voitu monistaa — yritä uudelleen.",
+      "refundableDeposit": "Palautettava pantti",
+      "refundableDepositHint": "Veloitetaan asiakkaalta mutta ei veroteta. Ei koskaan alennettu tai palkintoihin oikeutettu, ja täysin palautettavissa."
     },
     "promotionsList": {
       "stackingMaster": "Master",

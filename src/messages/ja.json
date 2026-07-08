@@ -325,7 +325,8 @@
       "decline": "同意しない"
     },
     "deliveryOnlyLabel": "デリバリー限定",
-    "pickupOnlyLabel": "テイクアウト限定"
+    "pickupOnlyLabel": "テイクアウト限定",
+    "refundableDeposit": "返金可能なデポジット"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "商品を複製できませんでした — もう一度お試しください。",
       "duplicateGroup": "グループを複製",
       "groupDuplicated": "グループを複製しました",
-      "failedToDuplicateGroup": "グループを複製できませんでした — もう一度お試しください。"
+      "failedToDuplicateGroup": "グループを複製できませんでした — もう一度お試しください。",
+      "refundableDeposit": "返金可能なデポジット",
+      "refundableDepositHint": "お客様に請求されますが課税されません。割引や特典の対象にはならず、全額返金できます。"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

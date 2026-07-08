@@ -325,7 +325,8 @@
       "decline": "नहीं, धन्यवाद"
     },
     "deliveryOnlyLabel": "केवल डिलीवरी के लिए उपलब्ध",
-    "pickupOnlyLabel": "केवल पिकअप के लिए उपलब्ध"
+    "pickupOnlyLabel": "केवल पिकअप के लिए उपलब्ध",
+    "refundableDeposit": "वापसी योग्य जमा"
   },
   "pizza": {
     "chooseSize": "आकार चुनें",
@@ -2458,7 +2459,9 @@
       "failedToDuplicateItem": "आइटम डुप्लिकेट नहीं हो सका — कृपया फिर से प्रयास करें।",
       "duplicateGroup": "समूह डुप्लिकेट करें",
       "groupDuplicated": "समूह डुप्लिकेट किया गया",
-      "failedToDuplicateGroup": "समूह डुप्लिकेट नहीं हो सका — कृपया फिर से प्रयास करें।"
+      "failedToDuplicateGroup": "समूह डुप्लिकेट नहीं हो सका — कृपया फिर से प्रयास करें।",
+      "refundableDeposit": "वापसी योग्य जमा",
+      "refundableDepositHint": "ग्राहक से लिया जाता है लेकिन कर नहीं लगता। कभी छूट या पुरस्कार के योग्य नहीं, और पूरी तरह वापसी योग्य।"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",

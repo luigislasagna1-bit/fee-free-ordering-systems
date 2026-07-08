@@ -325,7 +325,8 @@
       "decline": "Nee bedankt"
     },
     "deliveryOnlyLabel": "Alleen beschikbaar bij bezorging",
-    "pickupOnlyLabel": "Alleen beschikbaar voor afhalen"
+    "pickupOnlyLabel": "Alleen beschikbaar voor afhalen",
+    "refundableDeposit": "Terugbetaalbare borg"
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Kon het item niet dupliceren — probeer het opnieuw.",
       "duplicateGroup": "Groep dupliceren",
       "groupDuplicated": "Groep gedupliceerd",
-      "failedToDuplicateGroup": "Kon de groep niet dupliceren — probeer het opnieuw."
+      "failedToDuplicateGroup": "Kon de groep niet dupliceren — probeer het opnieuw.",
+      "refundableDeposit": "Terugbetaalbare borg",
+      "refundableDepositHint": "Wordt aan de klant in rekening gebracht maar niet belast. Nooit met korting of in aanmerking voor beloningen, en volledig terugbetaalbaar."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Plus, Wallet, Trash2, Pencil, Loader2, X, ToggleLeft, ToggleRight, Receipt, Search } from "lucide-react";
+import { Plus, Wallet, Trash2, Pencil, Loader2, X, ToggleLeft, ToggleRight, Receipt, Search, StickyNote } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { SUPPORTED_CURRENCIES } from "@/lib/utils";
@@ -75,6 +75,13 @@ export function ServiceFeesClient() {
   // behaviour for restaurants that had the bar pre-toggle.
   const [showCustomerMenuSearch, setShowCustomerMenuSearch] = useState(true);
   const [savingMenuSearch, setSavingMenuSearch] = useState(false);
+  // Per-item special-instructions note toggle (Luigi 2026-07-07). When ON,
+  // each item's customization modal on /order/[slug] shows a "Special
+  // instructions" note box, persisted to OrderItem.notes. When OFF, only the
+  // whole-order note at checkout is available. Default ON to match the
+  // historical always-shown behaviour (flip off for order-level-only).
+  const [allowItemNotes, setAllowItemNotes] = useState(true);
+  const [savingItemNotes, setSavingItemNotes] = useState(false);
   const [currency, setCurrency] = useState<string>("usd");
   const [savingCurrency, setSavingCurrency] = useState(false);
   // Scheduled-order interval + checkout-required toggles (Luigi 2026-05-31).
@@ -102,6 +109,7 @@ export function ServiceFeesClient() {
         if (typeof p.scheduledOrderInterval === "number") setScheduledOrderInterval(p.scheduledOrderInterval);
         if (typeof p.requireCustomerPhone === "boolean") setRequireCustomerPhone(p.requireCustomerPhone);
         if (typeof p.showCustomerMenuSearch === "boolean") setShowCustomerMenuSearch(p.showCustomerMenuSearch);
+        if (typeof p.allowItemNotes === "boolean") setAllowItemNotes(p.allowItemNotes);
       }
     } finally {
       setLoading(false);
@@ -168,6 +176,27 @@ export function ServiceFeesClient() {
       toast.error(tToasts("saveFailed"));
     } finally {
       setSavingMenuSearch(false);
+    }
+  };
+
+  // Save the per-item note toggle. Mirrors saveMenuSearch — optimistic
+  // update, revert on error (Luigi 2026-07-07).
+  const saveItemNotes = async (next: boolean) => {
+    setAllowItemNotes(next);
+    setSavingItemNotes(true);
+    try {
+      const res = await fetch("/api/restaurants/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ allowItemNotes: next }),
+      });
+      if (!res.ok) throw new Error();
+      toast.success(tToasts("saved"));
+    } catch {
+      setAllowItemNotes(!next);
+      toast.error(tToasts("saveFailed"));
+    } finally {
+      setSavingItemNotes(false);
     }
   };
 
@@ -457,6 +486,40 @@ export function ServiceFeesClient() {
             aria-label={showCustomerMenuSearch ? "Hide menu search on customer page" : "Show menu search on customer page"}
           >
             <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-all ${showCustomerMenuSearch ? "left-[22px]" : "left-0.5"}`} />
+          </button>
+        </div>
+      </div>
+
+      {/* ── Per-item special-instructions note (Luigi 2026-07-07) ─────
+          ON = each item's customization popup shows a "Special
+          instructions" box so a customer can note "no onions on THIS
+          pizza". OFF = only the whole-order note at checkout is offered
+          (that one is always available). Default ON — historically the
+          per-item box was always shown, so flipping it off is opt-in. */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-start gap-3 min-w-0 flex-1">
+            <div className="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center flex-shrink-0">
+              <StickyNote className="w-5 h-5 text-violet-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="font-semibold text-gray-900">Per-item special instructions</h2>
+              <p className="text-xs text-gray-500 mt-0.5">
+                When ON, customers can add a note to <span className="font-medium">each item</span>{" "}
+                (e.g. &ldquo;extra crispy&rdquo;, &ldquo;no onions on this one&rdquo;) — it prints on the
+                kitchen ticket for that item. When OFF, they can still leave one note for the{" "}
+                <span className="font-medium">whole order</span> at checkout.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => saveItemNotes(!allowItemNotes)}
+            disabled={savingItemNotes}
+            className={`relative w-12 h-7 rounded-full transition-colors flex-shrink-0 ${allowItemNotes ? "bg-emerald-500" : "bg-gray-300"} disabled:opacity-60`}
+            aria-label={allowItemNotes ? "Turn off per-item notes" : "Turn on per-item notes"}
+          >
+            <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-all ${allowItemNotes ? "left-[22px]" : "left-0.5"}`} />
           </button>
         </div>
       </div>

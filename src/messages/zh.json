@@ -325,7 +325,8 @@
       "decline": "不用了"
     },
     "deliveryOnlyLabel": "仅限外送",
-    "pickupOnlyLabel": "仅限自取"
+    "pickupOnlyLabel": "仅限自取",
+    "refundableDeposit": "可退押金"
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "无法复制菜品——请重试。",
       "duplicateGroup": "复制分组",
       "groupDuplicated": "分组已复制",
-      "failedToDuplicateGroup": "无法复制分组——请重试。"
+      "failedToDuplicateGroup": "无法复制分组——请重试。",
+      "refundableDeposit": "可退押金",
+      "refundableDepositHint": "向顾客收取但不计税。永不打折，也不参与奖励，可全额退还。"
     },
     "promotionsList": {
       "stackingMaster": "主控",

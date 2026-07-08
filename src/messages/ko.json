@@ -325,7 +325,8 @@
       "decline": "괜찮습니다"
     },
     "deliveryOnlyLabel": "배달 전용",
-    "pickupOnlyLabel": "픽업 전용"
+    "pickupOnlyLabel": "픽업 전용",
+    "refundableDeposit": "환불 가능한 보증금"
   },
   "pizza": {
     "chooseSize": "크기 선택",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "항목을 복제하지 못했습니다 — 다시 시도해 주세요.",
       "duplicateGroup": "그룹 복제",
       "groupDuplicated": "그룹이 복제되었습니다",
-      "failedToDuplicateGroup": "그룹을 복제하지 못했습니다 — 다시 시도해 주세요."
+      "failedToDuplicateGroup": "그룹을 복제하지 못했습니다 — 다시 시도해 주세요.",
+      "refundableDeposit": "환불 가능한 보증금",
+      "refundableDepositHint": "고객에게 청구되지만 과세되지 않습니다. 할인이나 보상 대상이 아니며 전액 환불됩니다."
     },
     "promotionsList": {
       "stackingMaster": "마스터",

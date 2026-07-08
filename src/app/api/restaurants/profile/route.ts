@@ -29,6 +29,7 @@ export async function GET() {
       requireCustomerEmail: true,
       requireCustomerPhone: true,
       showCustomerMenuSearch: true,
+      allowItemNotes: true,
       // acceptsReservations so the Reservations → Settings page loads the REAL
       // value. It previously defaulted to "Yes" when this field was absent from
       // the response, conflicting with the Services page's Table Reservations
@@ -69,6 +70,7 @@ export async function PUT(req: NextRequest) {
     requireCustomerEmail,
     requireCustomerPhone,
     showCustomerMenuSearch,
+    allowItemNotes,
     acceptOutsideZoneOrders,
     deliveryAddressConfig,
     orderingPopup,
@@ -141,6 +143,7 @@ export async function PUT(req: NextRequest) {
   }
   if (tipsEnabled !== undefined) updateData.tipsEnabled = !!tipsEnabled;
   if (showCustomerMenuSearch !== undefined) updateData.showCustomerMenuSearch = !!showCustomerMenuSearch;
+  if (allowItemNotes !== undefined) updateData.allowItemNotes = !!allowItemNotes;
   if (currency !== undefined && typeof currency === "string") {
     // ISO 4217 sanity — 3 letters. Normalize to lowercase (matches
     // Stripe's expected format and our DB default). Anything else is

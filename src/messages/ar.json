@@ -325,7 +325,8 @@
       "decline": "لا، شكرًا"
     },
     "deliveryOnlyLabel": "متاح للتوصيل فقط",
-    "pickupOnlyLabel": "متاح للاستلام فقط"
+    "pickupOnlyLabel": "متاح للاستلام فقط",
+    "refundableDeposit": "وديعة قابلة للاسترداد"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "تعذّر تكرار الصنف — يرجى المحاولة مرة أخرى.",
       "duplicateGroup": "تكرار المجموعة",
       "groupDuplicated": "تم تكرار المجموعة",
-      "failedToDuplicateGroup": "تعذّر تكرار المجموعة — يرجى المحاولة مرة أخرى."
+      "failedToDuplicateGroup": "تعذّر تكرار المجموعة — يرجى المحاولة مرة أخرى.",
+      "refundableDeposit": "وديعة قابلة للاسترداد",
+      "refundableDepositHint": "تُحصَّل من العميل لكنها غير خاضعة للضريبة. لا تُخصَّم أبدًا ولا تؤهّل للمكافآت، وقابلة للاسترداد بالكامل."
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",

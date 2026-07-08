@@ -325,7 +325,8 @@
       "decline": "No, gràcies"
     },
     "deliveryOnlyLabel": "Disponible només a domicili",
-    "pickupOnlyLabel": "Disponible només per recollir"
+    "pickupOnlyLabel": "Disponible només per recollir",
+    "refundableDeposit": "Dipòsit reemborsable"
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "No s'ha pogut duplicar l'article — torna-ho a provar.",
       "duplicateGroup": "Duplica el grup",
       "groupDuplicated": "Grup duplicat",
-      "failedToDuplicateGroup": "No s'ha pogut duplicar el grup — torna-ho a provar."
+      "failedToDuplicateGroup": "No s'ha pogut duplicar el grup — torna-ho a provar.",
+      "refundableDeposit": "Dipòsit reemborsable",
+      "refundableDepositHint": "Es cobra al client però no té impostos. Mai no es descompta ni és elegible per a recompenses, i és totalment reemborsable."
     },
     "promotionsList": {
       "stackingMaster": "Mestre",

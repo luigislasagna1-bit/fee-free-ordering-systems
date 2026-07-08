@@ -325,7 +325,8 @@
       "decline": "Nein danke"
     },
     "deliveryOnlyLabel": "Nur bei Lieferung erhältlich",
-    "pickupOnlyLabel": "Nur zur Abholung erhältlich"
+    "pickupOnlyLabel": "Nur zur Abholung erhältlich",
+    "refundableDeposit": "Erstattbare Kaution"
   },
   "pizza": {
     "chooseSize": "Größe wählen",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Artikel konnte nicht dupliziert werden — bitte erneut versuchen.",
       "duplicateGroup": "Gruppe duplizieren",
       "groupDuplicated": "Gruppe dupliziert",
-      "failedToDuplicateGroup": "Gruppe konnte nicht dupliziert werden — bitte erneut versuchen."
+      "failedToDuplicateGroup": "Gruppe konnte nicht dupliziert werden — bitte erneut versuchen.",
+      "refundableDeposit": "Erstattbare Kaution",
+      "refundableDepositHint": "Wird dem Kunden berechnet, aber nicht besteuert. Nie rabattiert oder prämienberechtigt und vollständig erstattbar."
     },
     "promotionsList": {
       "stackingMaster": "Master",

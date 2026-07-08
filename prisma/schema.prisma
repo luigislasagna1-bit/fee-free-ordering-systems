@@ -125,6 +125,15 @@ model Restaurant {
   /// category pills to navigate, GloriaFood style. Toggled by the
   /// owner from /admin/service-fees > Customer ordering page.
   showCustomerMenuSearch      Boolean   @default(true)
+  /// Global toggle: may customers attach a per-ITEM "Special instructions"
+  /// note (e.g. "no onions on THIS pizza")? When true, every item's
+  /// customization modal shows a note box that persists to OrderItem.notes
+  /// and surfaces on the kitchen tile + receipt + printer. When false, only
+  /// the whole-ORDER note at checkout is available (that one is always on).
+  /// Default TRUE because the per-item note box has historically been shown
+  /// unconditionally — flipping it off is opt-in, so no existing store loses
+  /// the field. Toggled from /admin/service-fees. Luigi 2026-07-07.
+  allowItemNotes              Boolean   @default(true)
   /// ISO 4217 lowercase currency code (matches Stripe's expectation:
   /// "usd", "cad", "eur", "gbp", "aud", etc.). Drives the customer
   /// price formatting, Stripe PaymentIntent currency, PayPal Order
@@ -1046,6 +1055,16 @@ model MenuItem {
   /// from promoExcluded (separate business choices — Luigi 2026-07-02).
   /// ORs with its category's flag. Enforced in BOTH preview + charge.
   rewardRedeemExcluded Boolean @default(false)
+  /// REFUNDABLE DEPOSIT item (Luigi 2026-07-07). When true this menu item is
+  /// a returnable deposit (e.g. "$50 Catering Deposit", "Keg Deposit") rather
+  /// than a taxable good: its `price` is the deposit amount the owner sets, it
+  /// is EXCLUDED from tax (subtracted from the tax base in the orders route +
+  /// the client preview), and it never earns/spends Reward Dollars nor takes a
+  /// promo discount (a deposit isn't a discountable purchase). It still adds to
+  /// the order total, is labelled "Refundable deposit" on every money surface,
+  /// and is returned automatically by the existing amount-based refund flow.
+  /// Nullable-free default keeps the hot MenuItem table backfill-free.
+  isRefundableDeposit Boolean @default(false)
   pizzaConfig      String? // JSON: PizzaConfig — marks item as a pizza builder item
   /// JSON: ComboConfig — marks this item as a COMBO (e.g. "2-Pizza Combo",
   /// "Pizza + Wings"). Defines ordered slots, each with an eligible item/
@@ -1425,6 +1444,12 @@ model OrderItem {
   quantity    Int
   notes       String?
   subtotal    Float
+  /// Snapshot of MenuItem.isRefundableDeposit at order time. The customer-
+  /// facing name is only a snapshot string, so this flag is what receipts /
+  /// kitchen / refund logic key off to treat the line as a non-taxable
+  /// returnable deposit even after the source item is edited or deleted
+  /// (menuItemId is nullable SetNull). Luigi 2026-07-07.
+  isRefundableDeposit Boolean @default(false)
   createdAt   DateTime @default(now())
 
   // ── Meal-bundle line item (Promo Types 8 + 13) ──────────────────────

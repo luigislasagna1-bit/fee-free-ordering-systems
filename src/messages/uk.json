@@ -325,7 +325,8 @@
       "decline": "Ні, дякую"
     },
     "deliveryOnlyLabel": "Доступно лише для доставки",
-    "pickupOnlyLabel": "Доступно лише для самовивозу"
+    "pickupOnlyLabel": "Доступно лише для самовивозу",
+    "refundableDeposit": "Поворотний депозит"
   },
   "pizza": {
     "chooseSize": "Оберіть розмір",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Не вдалося дублювати позицію — спробуйте ще раз.",
       "duplicateGroup": "Дублювати групу",
       "groupDuplicated": "Групу дубльовано",
-      "failedToDuplicateGroup": "Не вдалося дублювати групу — спробуйте ще раз."
+      "failedToDuplicateGroup": "Не вдалося дублювати групу — спробуйте ще раз.",
+      "refundableDeposit": "Поворотний депозит",
+      "refundableDepositHint": "Стягується з клієнта, але не оподатковується. Ніколи не знижується та не дає право на винагороди, повністю повертається."
     },
     "promotionsList": {
       "stackingMaster": "Майстер",

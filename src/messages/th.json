@@ -325,7 +325,8 @@
       "decline": "ไม่ล่ะ ขอบคุณ"
     },
     "deliveryOnlyLabel": "มีเฉพาะบริการส่งเท่านั้น",
-    "pickupOnlyLabel": "มีเฉพาะรับเองเท่านั้น"
+    "pickupOnlyLabel": "มีเฉพาะรับเองเท่านั้น",
+    "refundableDeposit": "เงินมัดจำที่คืนได้"
   },
   "pizza": {
     "chooseSize": "เลือกขนาด",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "ทำสำเนารายการไม่สำเร็จ — โปรดลองอีกครั้ง",
       "duplicateGroup": "ทำสำเนากลุ่ม",
       "groupDuplicated": "ทำสำเนากลุ่มแล้ว",
-      "failedToDuplicateGroup": "ทำสำเนากลุ่มไม่สำเร็จ — โปรดลองอีกครั้ง"
+      "failedToDuplicateGroup": "ทำสำเนากลุ่มไม่สำเร็จ — โปรดลองอีกครั้ง",
+      "refundableDeposit": "เงินมัดจำที่คืนได้",
+      "refundableDepositHint": "เรียกเก็บจากลูกค้าแต่ไม่คิดภาษี ไม่มีส่วนลดหรือสิทธิ์รับรางวัล และคืนเงินได้เต็มจำนวน"
     },
     "promotionsList": {
       "stackingMaster": "Master",

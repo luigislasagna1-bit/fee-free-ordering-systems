@@ -325,7 +325,8 @@
       "decline": "Όχι, ευχαριστώ"
     },
     "deliveryOnlyLabel": "Διαθέσιμο μόνο για διανομή",
-    "pickupOnlyLabel": "Διαθέσιμο μόνο για παραλαβή"
+    "pickupOnlyLabel": "Διαθέσιμο μόνο για παραλαβή",
+    "refundableDeposit": "Επιστρεπτέα εγγύηση"
   },
   "pizza": {
     "chooseSize": "Επιλογή μεγέθους",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Δεν ήταν δυνατή η αντιγραφή του προϊόντος — δοκιμάστε ξανά.",
       "duplicateGroup": "Διπλότυπο ομάδας",
       "groupDuplicated": "Η ομάδα αντιγράφηκε",
-      "failedToDuplicateGroup": "Δεν ήταν δυνατή η αντιγραφή της ομάδας — δοκιμάστε ξανά."
+      "failedToDuplicateGroup": "Δεν ήταν δυνατή η αντιγραφή της ομάδας — δοκιμάστε ξανά.",
+      "refundableDeposit": "Επιστρεπτέα εγγύηση",
+      "refundableDepositHint": "Χρεώνεται στον πελάτη αλλά δεν φορολογείται. Ποτέ με έκπτωση ούτε επιλέξιμη για ανταμοιβές, και πλήρως επιστρεπτέα."
     },
     "promotionsList": {
       "stackingMaster": "Master",

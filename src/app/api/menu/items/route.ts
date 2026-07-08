@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
   const { name, description, price, categoryId, imageUrl, isHidden, isSoldOut,
           forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
           availabilityMode, hasVariants, variants, pizzaConfig, comboConfig, visibility,
-          fulfilment, pinnedToTop } = body;
+          fulfilment, pinnedToTop, isRefundableDeposit } = body;
   if (!name || price === undefined || !categoryId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
   // Scheduled visibility (GloriaFood-style). Overrides isHidden when supplied.
@@ -63,6 +63,15 @@ export async function POST(req: NextRequest) {
         forDelivery: forDelivery ?? true, isCatering: !!isCatering,
         // Pin-to-top featured strip (Fabrizio cmr80joh0).
         pinnedToTop: !!pinnedToTop,
+        // Refundable deposit (Luigi 2026-07-07): a returnable deposit is never
+        // discounted nor Reward-Dollar eligible, so setting the deposit flag
+        // force-sets the three exclusions ON — the deposit then rides the same
+        // (tested) gift-card exclusion plumbing across engine/preview/earn/redeem.
+        // The tax carve-out is handled in the orders route.
+        isRefundableDeposit: !!isRefundableDeposit,
+        ...(isRefundableDeposit
+          ? { promoExcluded: true, rewardEarnExcluded: true, rewardRedeemExcluded: true }
+          : {}),
         hasVariants: hasVariants ?? false,
         availableDays: availableDays ? JSON.stringify(availableDays) : null,
         availableFrom: availableFrom || null, availableTo: availableTo || null,

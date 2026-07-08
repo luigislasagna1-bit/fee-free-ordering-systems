@@ -325,7 +325,8 @@
       "decline": "לא, תודה"
     },
     "deliveryOnlyLabel": "זמין למשלוח בלבד",
-    "pickupOnlyLabel": "זמין לאיסוף עצמי בלבד"
+    "pickupOnlyLabel": "זמין לאיסוף עצמי בלבד",
+    "refundableDeposit": "פיקדון בר-החזר"
   },
   "pizza": {
     "chooseSize": "בחר גודל",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "לא ניתן לשכפל את הפריט — נסו שוב.",
       "duplicateGroup": "שכפול קבוצה",
       "groupDuplicated": "הקבוצה שוכפלה",
-      "failedToDuplicateGroup": "לא ניתן לשכפל את הקבוצה — נסו שוב."
+      "failedToDuplicateGroup": "לא ניתן לשכפל את הקבוצה — נסו שוב.",
+      "refundableDeposit": "פיקדון בר-החזר",
+      "refundableDepositHint": "מחויב מהלקוח אך אינו ממוסה. לעולם אינו מוזל או זכאי לתגמולים, וניתן להחזר מלא."
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",

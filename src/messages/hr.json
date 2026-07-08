@@ -325,7 +325,8 @@
       "decline": "Ne, hvala"
     },
     "deliveryOnlyLabel": "Dostupno samo za dostavu",
-    "pickupOnlyLabel": "Dostupno samo za preuzimanje"
+    "pickupOnlyLabel": "Dostupno samo za preuzimanje",
+    "refundableDeposit": "Povratni polog"
   },
   "pizza": {
     "chooseSize": "Odaberite veličinu",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Stavku nije bilo moguće duplicirati — pokušajte ponovno.",
       "duplicateGroup": "Dupliciraj grupu",
       "groupDuplicated": "Grupa duplicirana",
-      "failedToDuplicateGroup": "Grupu nije bilo moguće duplicirati — pokušajte ponovno."
+      "failedToDuplicateGroup": "Grupu nije bilo moguće duplicirati — pokušajte ponovno.",
+      "refundableDeposit": "Povratni polog",
+      "refundableDepositHint": "Naplaćuje se kupcu, ali se ne oporezuje. Nikada se ne umanjuje niti daje pravo na nagrade te je u potpunosti povratni."
     },
     "promotionsList": {
       "stackingMaster": "Master",

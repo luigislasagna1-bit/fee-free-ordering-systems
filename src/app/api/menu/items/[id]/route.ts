@@ -38,7 +38,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const { name, description, price, categoryId, imageUrl, isAvailable, isFeatured, isHidden,
           isSoldOut, forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
           availabilityMode, hasVariants, sortOrder, variants, pizzaConfig, comboConfig, visibility,
-          fulfilment, rewardEarnExcluded, promoExcluded, rewardRedeemExcluded, pinnedToTop } = body;
+          fulfilment, rewardEarnExcluded, promoExcluded, rewardRedeemExcluded, pinnedToTop,
+          isRefundableDeposit } = body;
 
   const updateData: any = {};
   // GloriaFood-style scheduled visibility (Luigi 2026-06-12). When present,
@@ -89,6 +90,18 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (rewardEarnExcluded !== undefined) updateData.rewardEarnExcluded = !!rewardEarnExcluded;
   if (promoExcluded !== undefined) updateData.promoExcluded = !!promoExcluded;
   if (rewardRedeemExcluded !== undefined) updateData.rewardRedeemExcluded = !!rewardRedeemExcluded;
+  // Refundable deposit (Luigi 2026-07-07). Turning it ON force-sets the three
+  // exclusions (a deposit is never discounted / Reward-Dollar eligible) so it
+  // rides the existing gift-card plumbing; applied AFTER the individual flags
+  // above so the deposit always wins. The tax carve-out lives in the orders route.
+  if (isRefundableDeposit !== undefined) {
+    updateData.isRefundableDeposit = !!isRefundableDeposit;
+    if (isRefundableDeposit) {
+      updateData.promoExcluded = true;
+      updateData.rewardEarnExcluded = true;
+      updateData.rewardRedeemExcluded = true;
+    }
+  }
   if (forPickup !== undefined) updateData.forPickup = forPickup;
   if (forDelivery !== undefined) updateData.forDelivery = forDelivery;
   if (isCatering !== undefined) updateData.isCatering = !!isCatering;

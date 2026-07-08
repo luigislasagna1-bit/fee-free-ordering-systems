@@ -325,7 +325,8 @@
       "decline": "Ne, díky"
     },
     "deliveryOnlyLabel": "Pouze pro rozvoz",
-    "pickupOnlyLabel": "Pouze k vyzvednutí"
+    "pickupOnlyLabel": "Pouze k vyzvednutí",
+    "refundableDeposit": "Vratná záloha"
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Položku se nepodařilo duplikovat — zkuste to znovu.",
       "duplicateGroup": "Duplikovat skupinu",
       "groupDuplicated": "Skupina duplikována",
-      "failedToDuplicateGroup": "Skupinu se nepodařilo duplikovat — zkuste to znovu."
+      "failedToDuplicateGroup": "Skupinu se nepodařilo duplikovat — zkuste to znovu.",
+      "refundableDeposit": "Vratná záloha",
+      "refundableDepositHint": "Účtuje se zákazníkovi, ale nedaní se. Nikdy se neslevňuje ani není způsobilá k odměnám a je plně vratná."
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",

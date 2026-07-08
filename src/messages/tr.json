@@ -325,7 +325,8 @@
       "decline": "Hayır, teşekkürler"
     },
     "deliveryOnlyLabel": "Yalnızca teslimat için",
-    "pickupOnlyLabel": "Yalnızca gel-al için"
+    "pickupOnlyLabel": "Yalnızca gel-al için",
+    "refundableDeposit": "İade edilebilir depozito"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",
@@ -2028,7 +2029,9 @@
       "failedToDuplicateItem": "Ürün çoğaltılamadı — lütfen tekrar deneyin.",
       "duplicateGroup": "Grubu çoğalt",
       "groupDuplicated": "Grup çoğaltıldı",
-      "failedToDuplicateGroup": "Grup çoğaltılamadı — lütfen tekrar deneyin."
+      "failedToDuplicateGroup": "Grup çoğaltılamadı — lütfen tekrar deneyin.",
+      "refundableDeposit": "İade edilebilir depozito",
+      "refundableDepositHint": "Müşteriden tahsil edilir ancak vergilendirilmez. Asla indirim veya ödül kapsamına girmez ve tamamen iade edilebilir."
     },
     "promotionsList": {
       "stackingMaster": "Ana",

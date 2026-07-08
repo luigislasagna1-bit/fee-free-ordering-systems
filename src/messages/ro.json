@@ -325,7 +325,8 @@
       "decline": "Nu, mulțumesc"
     },
     "deliveryOnlyLabel": "Disponibil doar pentru livrare",
-    "pickupOnlyLabel": "Disponibil doar pentru ridicare"
+    "pickupOnlyLabel": "Disponibil doar pentru ridicare",
+    "refundableDeposit": "Depozit rambursabil"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Produsul nu a putut fi duplicat — încercați din nou.",
       "duplicateGroup": "Duplică grupul",
       "groupDuplicated": "Grup duplicat",
-      "failedToDuplicateGroup": "Grupul nu a putut fi duplicat — încercați din nou."
+      "failedToDuplicateGroup": "Grupul nu a putut fi duplicat — încercați din nou.",
+      "refundableDeposit": "Depozit rambursabil",
+      "refundableDepositHint": "Se percepe clientului dar nu se impozitează. Niciodată redus sau eligibil pentru recompense, și complet rambursabil."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -325,7 +325,8 @@
       "decline": "Нет, спасибо"
     },
     "deliveryOnlyLabel": "Доступно только на доставку",
-    "pickupOnlyLabel": "Доступно только навынос"
+    "pickupOnlyLabel": "Доступно только навынос",
+    "refundableDeposit": "Возвратный депозит"
   },
   "pizza": {
     "chooseSize": "Выберите размер",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Не удалось дублировать позицию — попробуйте ещё раз.",
       "duplicateGroup": "Дублировать группу",
       "groupDuplicated": "Группа дублирована",
-      "failedToDuplicateGroup": "Не удалось дублировать группу — попробуйте ещё раз."
+      "failedToDuplicateGroup": "Не удалось дублировать группу — попробуйте ещё раз.",
+      "refundableDeposit": "Возвратный депозит",
+      "refundableDepositHint": "Взимается с клиента, но не облагается налогом. Никогда не участвует в скидках и вознаграждениях, полностью возвращается."
     },
     "promotionsList": {
       "stackingMaster": "Мастер",

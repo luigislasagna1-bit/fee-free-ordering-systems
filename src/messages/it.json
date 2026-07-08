@@ -325,7 +325,8 @@
       "decline": "No, grazie"
     },
     "deliveryOnlyLabel": "Disponibile solo per la consegna",
-    "pickupOnlyLabel": "Disponibile solo per il ritiro"
+    "pickupOnlyLabel": "Disponibile solo per il ritiro",
+    "refundableDeposit": "Cauzione rimborsabile"
   },
   "pizza": {
     "chooseSize": "Scegli la taglia",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Impossibile duplicare il piatto — riprova.",
       "duplicateGroup": "Duplica gruppo",
       "groupDuplicated": "Gruppo duplicato",
-      "failedToDuplicateGroup": "Impossibile duplicare il gruppo — riprova."
+      "failedToDuplicateGroup": "Impossibile duplicare il gruppo — riprova.",
+      "refundableDeposit": "Cauzione rimborsabile",
+      "refundableDepositHint": "Addebitata al cliente ma non tassata. Mai scontata né idonea ai premi, e completamente rimborsabile."
     },
     "promotionsList": {
       "stackingMaster": "Master",

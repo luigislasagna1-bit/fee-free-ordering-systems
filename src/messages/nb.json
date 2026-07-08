@@ -325,7 +325,8 @@
       "decline": "Nei takk"
     },
     "deliveryOnlyLabel": "Kun for levering",
-    "pickupOnlyLabel": "Kun for henting"
+    "pickupOnlyLabel": "Kun for henting",
+    "refundableDeposit": "Refunderbart depositum"
   },
   "pizza": {
     "chooseSize": "Velg størrelse",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Kunne ikke duplisere varen — prøv igjen.",
       "duplicateGroup": "Dupliser gruppe",
       "groupDuplicated": "Gruppe duplisert",
-      "failedToDuplicateGroup": "Kunne ikke duplisere gruppen — prøv igjen."
+      "failedToDuplicateGroup": "Kunne ikke duplisere gruppen — prøv igjen.",
+      "refundableDeposit": "Refunderbart depositum",
+      "refundableDepositHint": "Belastes kunden, men beskattes ikke. Aldri rabattert eller kvalifisert for belønninger, og fullt refunderbart."
     },
     "promotionsList": {
       "stackingMaster": "Master",

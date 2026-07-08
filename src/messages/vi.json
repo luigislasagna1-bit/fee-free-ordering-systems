@@ -325,7 +325,8 @@
       "decline": "Không, cảm ơn"
     },
     "deliveryOnlyLabel": "Chỉ có khi giao hàng",
-    "pickupOnlyLabel": "Chỉ có khi tự đến lấy"
+    "pickupOnlyLabel": "Chỉ có khi tự đến lấy",
+    "refundableDeposit": "Tiền đặt cọc hoàn lại"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -2028,7 +2029,9 @@
       "failedToDuplicateItem": "Không thể nhân bản món — vui lòng thử lại.",
       "duplicateGroup": "Nhân bản nhóm",
       "groupDuplicated": "Đã nhân bản nhóm",
-      "failedToDuplicateGroup": "Không thể nhân bản nhóm — vui lòng thử lại."
+      "failedToDuplicateGroup": "Không thể nhân bản nhóm — vui lòng thử lại.",
+      "refundableDeposit": "Tiền đặt cọc hoàn lại",
+      "refundableDepositHint": "Được tính cho khách nhưng không chịu thuế. Không bao giờ được giảm giá hay đủ điều kiện nhận thưởng, và hoàn lại đầy đủ."
     },
     "promotionsList": {
       "stackingMaster": "Master",

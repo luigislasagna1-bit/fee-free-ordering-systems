@@ -325,7 +325,8 @@
       "decline": "Nej tack"
     },
     "deliveryOnlyLabel": "Endast för leverans",
-    "pickupOnlyLabel": "Endast för avhämtning"
+    "pickupOnlyLabel": "Endast för avhämtning",
+    "refundableDeposit": "Återbetalbar deposition"
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Kunde inte duplicera artikeln — försök igen.",
       "duplicateGroup": "Duplicera grupp",
       "groupDuplicated": "Grupp duplicerad",
-      "failedToDuplicateGroup": "Kunde inte duplicera gruppen — försök igen."
+      "failedToDuplicateGroup": "Kunde inte duplicera gruppen — försök igen.",
+      "refundableDeposit": "Återbetalbar deposition",
+      "refundableDepositHint": "Debiteras kunden men beskattas inte. Aldrig rabatterad eller berättigad till belöningar, och helt återbetalbar."
     },
     "promotionsList": {
       "stackingMaster": "Master",

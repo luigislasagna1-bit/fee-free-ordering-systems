@@ -2434,6 +2434,12 @@ export function OrderingPageClient({
   }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod, suppressedPromoIds, debouncedIdentity, customerIsReturning, hasOrderedHere, pendingGrantId]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
+  // Refundable-deposit lines are charged but NOT taxed — sum them so we can
+  // pull them out of the tax base and add them back to the total (mirrors the
+  // server in api/orders/route.ts). ci.menuItem carries the flag.
+  const depositLinesTotal = Math.round(
+    cart.reduce((s, i) => s + ((i.menuItem as any)?.isRefundableDeposit ? i.lineTotal : 0), 0) * 100,
+  ) / 100;
 
   // Per-line "You saved X" badges for the CART drawer (Fabrizio cmqv33v2o
   // follow-up, 2026-07-03 — they only showed at checkout; useful in the cart
@@ -3149,9 +3155,9 @@ export function OrderingPageClient({
     { subtotal, type: feeOrderType, at: new Date() },
   );
   const serviceFeesTotal = appliedServiceFees.reduce((s, f) => s + f.amount, 0);
-  const taxBase = Math.max(0, subtotal - totalDiscount + deliveryFee + serviceFeesTotal);
+  const taxBase = Math.max(0, subtotal - totalDiscount - depositLinesTotal + deliveryFee + serviceFeesTotal);
   const taxAmount = taxBase * (restaurant.taxRate / 100);
-  const total = taxBase + taxAmount + tipAmount;
+  const total = taxBase + taxAmount + tipAmount + depositLinesTotal;
 
   const getModPrice = (item: MenuItem, selectedMods: Record<string, string[]>) =>
     item.modifierGroups.reduce((sum, g) => {
@@ -5500,12 +5506,16 @@ export function OrderingPageClient({
               );
             })}
 
-            {/* Notes */}
-            <div className="p-5 border-b border-gray-100">
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t("specialInstructions")}</label>
-              <textarea className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none resize-none"
-                rows={2} placeholder={t("notesPlaceholder")} value={itemNotes} onChange={e => setItemNotes(e.target.value)} />
-            </div>
+            {/* Notes — gated on the owner's per-item-note toggle. Default ON
+                (=== false only hides it), so no existing store loses the box.
+                When OFF, customers use the whole-order note at checkout. */}
+            {(restaurant as any)?.allowItemNotes !== false && (
+              <div className="p-5 border-b border-gray-100">
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("specialInstructions")}</label>
+                <textarea className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none resize-none"
+                  rows={2} placeholder={t("notesPlaceholder")} value={itemNotes} onChange={e => setItemNotes(e.target.value)} />
+              </div>
+            )}
 
             {/* Quantity stepper + Add to Cart */}
             <div className="p-5">
@@ -5626,6 +5636,13 @@ export function OrderingPageClient({
                             {ci.bundlePromoName ?? ci.menuItem.name}
                           </div>
                           {ci.variant && <div className="text-xs mt-0.5 font-medium" style={{ color: theme.primaryColor }}>{ci.variant.name}</div>}
+                          {/* Refundable-deposit badge — reminds the customer this
+                              line is a returnable, untaxed deposit (Luigi 2026-07-07). */}
+                          {(ci.menuItem as any)?.isRefundableDeposit && (
+                            <div className="inline-flex items-center gap-1 mt-0.5 text-[11px] font-medium text-violet-700 bg-violet-50 border border-violet-100 rounded-full px-2 py-0.5">
+                              {t("refundableDeposit")}
+                            </div>
+                          )}
                           {/* Per-item "You saved" badge — same as checkout, so a
                               partially-discounted cart shows WHICH dishes the promo
                               hit right here (Fabrizio cmqv33v2o, 2026-07-03). */}

@@ -579,6 +579,19 @@ export async function POST(req: NextRequest) {
       const m = menuItemMap.get(menuItemId);
       return !!(m && ((m as any).rewardRedeemExcluded || (m as any).category?.rewardRedeemExcluded));
     };
+    // Refundable-deposit lines (Luigi 2026-07-07): a returnable deposit is
+    // CHARGED (part of the subtotal + total) but NOT taxed — it isn't a sale of
+    // goods. We pull its amount out of the tax base below and add it straight
+    // back into the total. Promo/reward exclusion is enforced separately via the
+    // item's promoExcluded/rewardEarnExcluded/rewardRedeemExcluded flags, which
+    // the item editor force-sets ON whenever the deposit flag is set — so the
+    // existing gift-card exclusion plumbing covers discounts + Reward Dollars
+    // and we only handle the tax carve-out here.
+    const isDepositItem = (menuItemId: string | null): boolean => {
+      if (!menuItemId) return false;
+      const m = menuItemMap.get(menuItemId);
+      return !!(m && (m as any).isRefundableDeposit);
+    };
 
     // Authoritative bundle pricing (audit B3/B6): bundle lines used to trust the
     // client-supplied price, so a tampered request could underpay. Pre-load the
@@ -1650,7 +1663,13 @@ export async function POST(req: NextRequest) {
 
     // ── Tax & total ─────────────────────────────────────────────────────────
     const totalDiscount = serverCouponDiscount + serverPromoDiscount;
-    const taxBase = Math.max(0, serverSubtotal - totalDiscount + serverDeliveryFee + serverServiceFeesTotal);
+    // Refundable deposits are in serverSubtotal (they're charged) but must NOT
+    // be taxed — carve them out of the tax base, then add them back into the
+    // total below so they're still collected. Mirrors the client preview.
+    const depositLinesTotal = Math.round(
+      validatedItems.reduce((s, i) => s + (isDepositItem(i.menuItemId) ? i.subtotal : 0), 0) * 100,
+    ) / 100;
+    const taxBase = Math.max(0, serverSubtotal - totalDiscount - depositLinesTotal + serverDeliveryFee + serverServiceFeesTotal);
     const serverTax = Math.round(taxBase * (restaurant.taxRate / 100) * 100) / 100;
     // Hard server-side clamp when the restaurant has tipping disabled.
     // Owners flip Restaurant.tipsEnabled = false from /admin/service-fees
@@ -1661,7 +1680,7 @@ export async function POST(req: NextRequest) {
     const serverTip = tippingAllowed && typeof clientTip === "number" && clientTip >= 0
       ? Math.min(Math.round(clientTip * 100) / 100, serverSubtotal * 2) // cap at 200% of subtotal
       : 0;
-    const serverTotal = Math.round((taxBase + serverTax + serverTip) * 100) / 100;
+    const serverTotal = Math.round((taxBase + serverTax + serverTip + depositLinesTotal) * 100) / 100;
 
     // ── Find or create customer ─────────────────────────────────────────────
     //
@@ -2419,6 +2438,9 @@ export async function POST(req: NextRequest) {
             quantity: item.quantity,
             notes: item.notes,
             subtotal: item.subtotal,
+            // Snapshot the deposit flag so receipts/refunds treat this line as a
+            // non-taxable returnable deposit even after the source item changes.
+            isRefundableDeposit: isDepositItem(item.menuItemId),
             modifiers: { create: item.modifiers },
             // Bundle line items carry their child picks here. Null for
             // normal line items. See prisma/schema.prisma `OrderItem.bundleItems`.

@@ -325,7 +325,8 @@
       "decline": "Ei aitäh"
     },
     "deliveryOnlyLabel": "Saadaval ainult kulleriga",
-    "pickupOnlyLabel": "Saadaval ainult kaasa"
+    "pickupOnlyLabel": "Saadaval ainult kaasa",
+    "refundableDeposit": "Tagastatav tagatis"
   },
   "pizza": {
     "chooseSize": "Vali suurus",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Toodet ei õnnestunud dubleerida — proovi uuesti.",
       "duplicateGroup": "Dubleeri rühm",
       "groupDuplicated": "Rühm dubleeritud",
-      "failedToDuplicateGroup": "Rühma ei õnnestunud dubleerida — proovi uuesti."
+      "failedToDuplicateGroup": "Rühma ei õnnestunud dubleerida — proovi uuesti.",
+      "refundableDeposit": "Tagastatav tagatis",
+      "refundableDepositHint": "Kliendile esitatakse arve, kuid seda ei maksustata. Kunagi ei allahinnata ega anna õigust preemiatele ning on täielikult tagastatav."
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

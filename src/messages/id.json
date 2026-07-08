@@ -325,7 +325,8 @@
       "decline": "Tidak, terima kasih"
     },
     "deliveryOnlyLabel": "Hanya tersedia untuk pengantaran",
-    "pickupOnlyLabel": "Hanya tersedia untuk ambil sendiri"
+    "pickupOnlyLabel": "Hanya tersedia untuk ambil sendiri",
+    "refundableDeposit": "Deposit yang dapat dikembalikan"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Tidak dapat menduplikat item — coba lagi.",
       "duplicateGroup": "Duplikat grup",
       "groupDuplicated": "Grup diduplikat",
-      "failedToDuplicateGroup": "Tidak dapat menduplikat grup — coba lagi."
+      "failedToDuplicateGroup": "Tidak dapat menduplikat grup — coba lagi.",
+      "refundableDeposit": "Deposit yang dapat dikembalikan",
+      "refundableDepositHint": "Dibebankan ke pelanggan tetapi tidak dikenai pajak. Tidak pernah didiskon atau memenuhi syarat hadiah, dan sepenuhnya dapat dikembalikan."
     },
     "promotionsList": {
       "stackingMaster": "Master",

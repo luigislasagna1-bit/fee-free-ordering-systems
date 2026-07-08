@@ -325,7 +325,8 @@
       "decline": "Nie, dziękuję"
     },
     "deliveryOnlyLabel": "Dostępne tylko w dostawie",
-    "pickupOnlyLabel": "Dostępne tylko na odbiór"
+    "pickupOnlyLabel": "Dostępne tylko na odbiór",
+    "refundableDeposit": "Zwrotna kaucja"
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",
@@ -2028,7 +2029,9 @@
       "failedToDuplicateItem": "Nie udało się zduplikować pozycji — spróbuj ponownie.",
       "duplicateGroup": "Duplikuj grupę",
       "groupDuplicated": "Grupa zduplikowana",
-      "failedToDuplicateGroup": "Nie udało się zduplikować grupy — spróbuj ponownie."
+      "failedToDuplicateGroup": "Nie udało się zduplikować grupy — spróbuj ponownie.",
+      "refundableDeposit": "Zwrotna kaucja",
+      "refundableDepositHint": "Pobierana od klienta, ale nieopodatkowana. Nigdy nie objęta rabatem ani nagrodami i w pełni zwrotna."
     },
     "promotionsList": {
       "stackingMaster": "Master",

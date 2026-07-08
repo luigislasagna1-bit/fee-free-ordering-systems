@@ -7,7 +7,7 @@ import {
   Edit2, Trash2, Copy, CopyPlus, X, Check, AlertCircle, Tag, Layers,
   Image as ImageIcon, Clock, Truck, ShoppingBag, UtensilsCrossed,
   Settings, ChevronUp, MoreVertical, Upload, FileText, Loader2,
-  PartyPopper, Download, Search, Star,
+  PartyPopper, Download, Search, Star, PiggyBank,
 } from "lucide-react";
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, useSortable, verticalListSortingStrategy, rectSortingStrategy, arrayMove } from "@dnd-kit/sortable";
@@ -411,6 +411,10 @@ function ItemModal({
     isCatering: (item as any)?.isCatering ?? false,
     // Pin-to-top featured strip (Fabrizio cmr80joh0).
     pinnedToTop: (item as any)?.pinnedToTop ?? false,
+    // Refundable deposit: this item is a returnable deposit (its price is the
+    // deposit amount), charged but NOT taxed, never discounted or Reward-Dollar
+    // eligible. The save route force-sets promo/reward exclusions when on.
+    isRefundableDeposit: (item as any)?.isRefundableDeposit ?? false,
     hasVariants: item?.hasVariants ?? false,
     availableFrom: item?.availableFrom ?? "",
     availableTo: item?.availableTo ?? "",
@@ -771,6 +775,9 @@ function ItemModal({
                   // Pin-to-top featured strip (Fabrizio cmr80joh0) — the dish
                   // shows as a prominent tile at the very top of the order page.
                   ["pinnedToTop", t("pinToTop"), Star],
+                  // Refundable deposit item (Luigi 2026-07-07) — charged but not
+                  // taxed, never discounted / Reward-Dollar eligible, refundable.
+                  ["isRefundableDeposit", t("refundableDeposit"), PiggyBank],
                 ] as [keyof typeof form, string, any][]).map(([field, label, Icon]) => (
                   <button key={field} onClick={() => toggle(field)}
                     className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form[field] ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}>
@@ -780,6 +787,11 @@ function ItemModal({
                   </button>
                 ))}
               </div>
+              {form.isRefundableDeposit && (
+                <p className="text-xs text-violet-700 bg-violet-50 border border-violet-100 rounded-lg px-3 py-2 mt-2">
+                  {t("refundableDepositHint")}
+                </p>
+              )}
             </>
           )}
 

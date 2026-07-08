@@ -135,6 +135,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
   const tk = useTranslations("kitchen");
   const locale = useLocale();
   const tc = useTranslations("checkout");
+  const tOrd = useTranslations("ordering");
   const tCommon = useTranslations("common");
   const tReceipt = useTranslations("receipt.orderTypes");
   // Reuse the already-translated receipt labels (all 38 locales) for the
@@ -550,6 +551,11 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                       <span className={`text-sm font-medium ${t.text}`}>{formatCurrency(item.subtotal)}</span>
                     </div>
                     {item.variantName && <div className={`text-xs ${t.muted} pl-3`}>{item.variantName}</div>}
+                    {/* Refundable-deposit cue — tells staff this line is a
+                        returnable deposit they may need to refund later. */}
+                    {(item as any).isRefundableDeposit && (
+                      <div className="text-[11px] font-semibold text-violet-500 pl-3">↩ {tOrd("refundableDeposit")}</div>
+                    )}
                     {/* Menu category under the dish name — only present when the
                         restaurant enabled "show item category" (Fabrizio 2026-06-21).
                         Lighter than the dish name so it reads as a sub-label. */}

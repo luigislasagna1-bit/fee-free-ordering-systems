@@ -325,7 +325,8 @@
       "decline": "Не, благодаря"
     },
     "deliveryOnlyLabel": "Само за доставка",
-    "pickupOnlyLabel": "Само за взимане"
+    "pickupOnlyLabel": "Само за взимане",
+    "refundableDeposit": "Възстановим депозит"
   },
   "pizza": {
     "chooseSize": "Избери размер",
@@ -2084,7 +2085,9 @@
       "failedToDuplicateItem": "Артикулът не можа да бъде дублиран — опитайте отново.",
       "duplicateGroup": "Дублирай групата",
       "groupDuplicated": "Групата е дублирана",
-      "failedToDuplicateGroup": "Групата не можа да бъде дублирана — опитайте отново."
+      "failedToDuplicateGroup": "Групата не можа да бъде дублирана — опитайте отново.",
+      "refundableDeposit": "Възстановим депозит",
+      "refundableDepositHint": "Начислява се на клиента, но не се облага с данък. Никога не се намалява, нито дава право на награди, и подлежи на пълно възстановяване."
     },
     "promotionsList": {
       "stackingMaster": "Главна",

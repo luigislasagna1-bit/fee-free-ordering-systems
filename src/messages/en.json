@@ -325,7 +325,8 @@
       "decline": "No thanks"
     },
     "deliveryOnlyLabel": "Available for delivery only",
-    "pickupOnlyLabel": "Available for pickup only"
+    "pickupOnlyLabel": "Available for pickup only",
+    "refundableDeposit": "Refundable deposit"
   },
   "pizza": {
     "chooseSize": "Choose Size",
@@ -2503,7 +2504,9 @@
       "failedToDuplicateItem": "Couldn't duplicate the item — please try again.",
       "duplicateGroup": "Duplicate group",
       "groupDuplicated": "Group duplicated",
-      "failedToDuplicateGroup": "Couldn't duplicate the group — please try again."
+      "failedToDuplicateGroup": "Couldn't duplicate the group — please try again.",
+      "refundableDeposit": "Refundable deposit",
+      "refundableDepositHint": "Charged to the customer but not taxed. Never discounted or eligible for rewards, and fully refundable."
     },
     "promotionsList": {
       "stackingMaster": "Master",

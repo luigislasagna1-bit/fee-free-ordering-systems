@@ -64,7 +64,7 @@ type CustomerInfo = {
 };
 
 type CartLine = {
-  menuItem: { id: string; name: string };
+  menuItem: { id: string; name: string; isRefundableDeposit?: boolean };
   variant?: { name: string };
   quantity: number;
   lineTotal: number;
@@ -1874,6 +1874,11 @@ export function CheckoutModal({
                           {ci.isBundle ? (ci.bundlePromoName ?? ci.menuItem.name) : ci.menuItem.name}
                         </span>
                         {ci.variant && <span className="block text-xs text-gray-400">{ci.variant.name}</span>}
+                        {ci.menuItem?.isRefundableDeposit && (
+                          <span className="inline-flex w-fit items-center gap-1 mt-0.5 text-[11px] font-medium text-violet-700 bg-violet-50 border border-violet-100 rounded-full px-2 py-0.5">
+                            {tOrd("refundableDeposit")}
+                          </span>
+                        )}
                         {ci.modifierLabels && ci.modifierLabels.length > 0 && (
                           <span className="block mt-0.5">
                             {ci.modifierLabels.map((label, mi) => (
