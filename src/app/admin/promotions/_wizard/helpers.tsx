@@ -390,6 +390,92 @@ export function ItemGroupPicker({
   );
 }
 
+// ─── SpecialityFeePicker ────────────────────────────────────────────────────
+// meal_bundle_speciality (Luigi 2026-07-07): choose WHICH sizes/items in a slot
+// carry the speciality fee (e.g. only "Large"), so base sizes stay free —
+// matching GloriaFood. Writes group.specialityVariantIds / specialityItemIds.
+// Only offers the slot's already-eligible items.
+function SpecialityFeePicker({
+  group, cats, currencySymbol = "$", onApply, onCancel,
+}: {
+  group: IG;
+  cats: CatEntry[];
+  currencySymbol?: string;
+  onApply: (partial: { specialityVariantIds: string[]; specialityItemIds: string[] }) => void;
+  onCancel: () => void;
+}) {
+  const [vIds, setVIds] = useState<string[]>([...(group.specialityVariantIds ?? [])]);
+  const [iIds, setIIds] = useState<string[]>([...(group.specialityItemIds ?? [])]);
+  const toggleV = (id: string) => setVIds((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
+  const toggleI = (id: string) => setIIds((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
+
+  // Items eligible in this slot: explicitly picked, or in a picked category.
+  const eligible: CatEntry["items"] = [];
+  const seen = new Set<string>();
+  for (const c of cats) {
+    const catSel = group.categoryIds.includes(c.id);
+    for (const it of c.items) {
+      if ((catSel || group.itemIds.includes(it.id)) && !seen.has(it.id)) {
+        seen.add(it.id);
+        eligible.push(it);
+      }
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" onMouseDown={onCancel}>
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-md max-h-[80vh] flex flex-col" onMouseDown={(e) => e.stopPropagation()}>
+        <div className="px-4 py-3 border-b">
+          <div className="text-sm font-semibold text-gray-800">Charge the fee only for these sizes</div>
+          <div className="text-xs text-gray-500 mt-0.5">
+            Tick the premium sizes that add the fee — base sizes stay free. Leave all unticked to charge the fee on every pick.
+          </div>
+        </div>
+        <div className="flex-1 overflow-y-auto px-3 py-2 space-y-1" onScroll={(e) => e.stopPropagation()}>
+          {eligible.length === 0 ? (
+            <div className="text-xs text-gray-400 py-6 text-center">Pick this slot&apos;s items first, then choose which sizes cost extra.</div>
+          ) : (
+            eligible.map((item) => {
+              const variants = item.variants ?? [];
+              if (variants.length > 0) {
+                return (
+                  <div key={item.id}>
+                    <div className="text-xs font-medium text-gray-500 pt-1.5">{item.name}</div>
+                    <div className="pl-3 space-y-0.5">
+                      {variants.map((v) => (
+                        <label key={v.id} className="flex items-center gap-2 py-0.5 text-sm cursor-pointer">
+                          <input type="checkbox" checked={vIds.includes(v.id)} onChange={() => toggleV(v.id)}
+                            className="rounded border-gray-300 text-emerald-500 focus:ring-emerald-500" />
+                          <span className="flex-1 text-gray-700">{v.name}</span>
+                          <span className="text-xs text-gray-400">{currencySymbol}{v.price.toFixed(2)}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <label key={item.id} className="flex items-center gap-2 py-1 text-sm cursor-pointer">
+                  <input type="checkbox" checked={iIds.includes(item.id)} onChange={() => toggleI(item.id)}
+                    className="rounded border-gray-300 text-emerald-500 focus:ring-emerald-500" />
+                  <span className="flex-1 text-gray-700">{item.name}</span>
+                  <span className="text-xs text-gray-400">{currencySymbol}{item.price.toFixed(2)}</span>
+                </label>
+              );
+            })
+          )}
+        </div>
+        <div className="flex gap-2 px-3 py-2 border-t bg-gray-50">
+          <button onClick={() => onApply({ specialityVariantIds: vIds, specialityItemIds: iIds })}
+            className="flex-1 bg-emerald-500 text-white text-sm font-semibold py-2 rounded-lg hover:bg-emerald-600 transition">Apply</button>
+          <button onClick={onCancel}
+            className="px-4 text-sm text-gray-600 rounded-lg border border-gray-200 hover:bg-gray-100 transition">Cancel</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── ItemGroupRow ───────────────────────────────────────────────────────────
 
 function ItemGroupRow({
@@ -420,6 +506,7 @@ function ItemGroupRow({
   showSpecialityFee?: boolean;
 }) {
   const [open, setOpen] = useState(false);
+  const [feeOpen, setFeeOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -531,21 +618,49 @@ function ItemGroupRow({
             </>
           )}
           {showSpecialityFee && (
-            <label className="flex items-center gap-1.5 text-xs text-gray-500">
-              <span>Speciality fee per item +{currencySymbol}</span>
-              <input
-                type="number"
-                min={0}
-                step={0.01}
-                value={group.extraFee ?? 0}
-                onChange={(e) => {
-                  const v = Math.max(0, parseFloat(e.target.value) || 0);
-                  onChange({ ...group, extraFee: v });
-                }}
-                className="w-20 border border-gray-200 rounded px-2 py-1 text-xs text-gray-700"
-                placeholder="0.00"
-              />
-            </label>
+            <div className="flex items-center gap-2 flex-wrap">
+              <label className="flex items-center gap-1.5 text-xs text-gray-500">
+                <span>Speciality fee +{currencySymbol}</span>
+                <input
+                  type="number"
+                  min={0}
+                  step={0.01}
+                  value={group.extraFee ?? 0}
+                  onChange={(e) => {
+                    const v = Math.max(0, parseFloat(e.target.value) || 0);
+                    onChange({ ...group, extraFee: v });
+                  }}
+                  className="w-20 border border-gray-200 rounded px-2 py-1 text-xs text-gray-700"
+                  placeholder="0.00"
+                />
+              </label>
+              {/* Scope the fee to the premium sizes only (e.g. Large = +$5), so
+                  base sizes stay free — GloriaFood parity. Luigi 2026-07-07. */}
+              {(group.extraFee ?? 0) > 0 && (() => {
+                const nSel = (group.specialityVariantIds?.length ?? 0) + (group.specialityItemIds?.length ?? 0);
+                return (
+                  <button
+                    type="button"
+                    onClick={() => setFeeOpen(true)}
+                    className="text-xs text-emerald-600 hover:text-emerald-700 font-medium underline decoration-dotted"
+                  >
+                    {nSel > 0 ? `for ${nSel} size${nSel === 1 ? "" : "s"}` : "for all sizes — pick which cost extra"}
+                  </button>
+                );
+              })()}
+              {feeOpen && (
+                <SpecialityFeePicker
+                  group={group}
+                  cats={cats}
+                  currencySymbol={currencySymbol}
+                  onApply={(partial) => {
+                    onChange({ ...group, ...partial });
+                    setFeeOpen(false);
+                  }}
+                  onCancel={() => setFeeOpen(false)}
+                />
+              )}
+            </div>
           )}
         </div>
       )}
