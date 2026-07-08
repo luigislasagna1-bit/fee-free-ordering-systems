@@ -31,6 +31,10 @@ type MenuItemLite = {
   price: number;
   imageUrl?: string;
   categoryId?: string;
+  /** Size variants — for speciality bundles each size becomes its own pickable
+   *  option so the customer chooses Regular vs Large in the slot, and the fee
+   *  can attach to just the premium size. Luigi 2026-07-07. */
+  variants?: { id: string; name: string; price: number }[];
   /** Sold-out in the main menu — rendered DISABLED + "Sold out" here
    *  (display-only; the orders route still rejects a sold-out pick). */
   isSoldOut?: boolean;
@@ -42,10 +46,47 @@ type RuleConfigGroup = {
   categoryIds?: string[];
   itemIds?: string[];
   menuItemIds?: string[];
+  /** Eligibility: narrow the slot to specific size-variants (empty = all sizes). */
+  variantIds?: string[];
   minCount?: number;
   maxCount?: number;
-  extraFee?: number; // Type 13 — per-item upcharge for items in this slot
+  extraFee?: number; // Type 13 — the premium upcharge for this slot
+  /** Type 13: the specific size-variants that carry extraFee (e.g. Large = +$5);
+   *  base sizes are free. Empty = the fee applies to every pick (legacy). */
+  specialityVariantIds?: string[];
+  /** Type 13: whole-item premium picks (non-sized dishes) that carry extraFee. */
+  specialityItemIds?: string[];
 };
+
+/** One pickable option in a slot. For speciality bundles a sized item expands
+ *  to one option per size; otherwise one option per item. `fee` is the upcharge
+ *  THIS option adds (0 unless it's a premium size/item). Luigi 2026-07-07. */
+type SlotOption = {
+  key: string;
+  itemId: string;
+  variantId?: string;
+  variantName?: string;
+  name: string;
+  price: number;
+  imageUrl?: string;
+  isSoldOut?: boolean;
+  fee: number;
+};
+
+/** The upcharge a pick adds in its slot: the slot fee ONLY when the chosen
+ *  size/item is in the speciality set; base sizes are free. No set → every pick
+ *  carries the fee (legacy). Mirrors the engine's specialityFeeForPick so the
+ *  displayed total matches the server charge. */
+function feeForOption(group: RuleConfigGroup, variantId: string | undefined, itemId: string): number {
+  const fee = Math.max(0, Number(group.extraFee ?? 0));
+  if (fee <= 0) return 0;
+  const sv = group.specialityVariantIds ?? [];
+  const si = group.specialityItemIds ?? [];
+  if (sv.length === 0 && si.length === 0) return fee;
+  if (variantId && sv.includes(variantId)) return fee;
+  if (itemId && si.includes(itemId)) return fee;
+  return 0;
+}
 
 /** Shape emitted by the composer for the parent OrderingPageClient to
  *  drop into the cart. Mirrors the CartItem.bundleItems schema. */
@@ -115,11 +156,28 @@ export function BundleComposerModal({
    *  first; untouched or complete closes silently. */
   const [confirmLeave, setConfirmLeave] = useState(false);
 
-  /** Items pool per slot — memoised because we do this off the menu
-   *  catalog which can be large. */
-  const slotItems = useMemo(
-    () => groups.map((g) => collectGroupItems(g, allMenuItems)),
-    [groups, allMenuItems],
+  /** Pickable options per slot — one per size for speciality bundles (so the
+   *  customer chooses Regular vs Large), one per item otherwise. Memoised off
+   *  the menu catalog which can be large. */
+  const slotOptions = useMemo<SlotOption[][]>(
+    () => groups.map((g) => {
+      const items = collectGroupItems(g, allMenuItems);
+      const opts: SlotOption[] = [];
+      for (const it of items) {
+        const variants = it.variants ?? [];
+        if (isSpeciality && variants.length > 0) {
+          const varFilter = new Set(g.variantIds ?? []);
+          for (const v of variants) {
+            if (varFilter.size > 0 && !varFilter.has(v.id)) continue; // eligibility narrowing
+            opts.push({ key: `${it.id}::${v.id}`, itemId: it.id, variantId: v.id, variantName: v.name, name: it.name, price: v.price, imageUrl: it.imageUrl, isSoldOut: it.isSoldOut, fee: feeForOption(g, v.id, it.id) });
+          }
+        } else {
+          opts.push({ key: it.id, itemId: it.id, name: it.name, price: it.price, imageUrl: it.imageUrl, isSoldOut: it.isSoldOut, fee: isSpeciality ? feeForOption(g, undefined, it.id) : 0 });
+        }
+      }
+      return opts;
+    }),
+    [groups, allMenuItems, isSpeciality],
   );
 
   /** Total speciality upcharge so the "Add bundle" button can show the
@@ -128,13 +186,12 @@ export function BundleComposerModal({
     if (!isSpeciality) return 0;
     let sum = 0;
     for (let i = 0; i < groups.length; i++) {
-      const fee = Number(groups[i].extraFee ?? 0);
-      if (fee > 0) {
-        sum += picks[i].length * fee;
+      for (const key of picks[i] ?? []) {
+        sum += slotOptions[i]?.find((o) => o.key === key)?.fee ?? 0;
       }
     }
     return Math.round(sum * 100) / 100;
-  }, [picks, groups, isSpeciality]);
+  }, [picks, groups, isSpeciality, slotOptions]);
 
   const lineTotal = Math.round((bundlePrice + specialityTotal) * 100) / 100;
 
@@ -162,26 +219,21 @@ export function BundleComposerModal({
 
   function buildBundle(arr: string[][]): BundleCartItem {
     const children: BundleCartItem["children"] = [];
-    for (let i = 0; i < groups.length; i++) {
-      const group = groups[i];
-      const fee = Number(group.extraFee ?? 0);
-      for (const itemId of arr[i] ?? []) {
-        const item = slotItems[i].find((m) => m.id === itemId);
-        if (!item) continue;
-        children.push({
-          menuItemId: item.id,
-          name: item.name,
-          specialityFee: isSpeciality && fee > 0 ? fee : undefined,
-        });
-      }
-    }
     // Speciality total recomputed off the passed picks so an auto-complete
     // (which fires before the state round-trip) prices the same as handleAdd.
     let spec = 0;
-    if (isSpeciality) {
-      for (let i = 0; i < groups.length; i++) {
-        const fee = Number(groups[i].extraFee ?? 0);
-        if (fee > 0) spec += (arr[i] ?? []).length * fee;
+    for (let i = 0; i < groups.length; i++) {
+      for (const key of arr[i] ?? []) {
+        const opt = slotOptions[i].find((o) => o.key === key);
+        if (!opt) continue;
+        if (isSpeciality) spec += opt.fee;
+        children.push({
+          menuItemId: opt.itemId,
+          name: opt.name,
+          variantId: opt.variantId,
+          variantName: opt.variantName,
+          specialityFee: isSpeciality && opt.fee > 0 ? opt.fee : undefined,
+        });
       }
     }
     const total = Math.round((bundlePrice + spec) * 100) / 100;
@@ -195,24 +247,24 @@ export function BundleComposerModal({
     };
   }
 
-  function togglePick(slotIndex: number, itemId: string) {
-    // Sold-out items are display-disabled; never let a pick (incl. a
+  function togglePick(slotIndex: number, key: string) {
+    // Sold-out options are display-disabled; never let a pick (incl. a
     // single-pick auto-advance) complete a bundle through one.
-    if (slotItems[slotIndex].find((m) => m.id === itemId)?.isSoldOut) return;
+    if (slotOptions[slotIndex].find((o) => o.key === key)?.isSoldOut) return;
     // Computed OUTSIDE setState so the wizard can advance / auto-complete on
     // the same values it stores (mirrors GuidedPromoModal).
     const next = picks.map((arr) => [...arr]);
     const max = slotMaxOf(slotIndex);
     const current = next[slotIndex];
     if (max === 1) {
-      // Single-pick slot: tap = select (replace); tapping the SAME item deselects.
-      const idx = current.indexOf(itemId);
-      next[slotIndex] = idx >= 0 ? [] : [itemId];
+      // Single-pick slot: tap = select (replace); tapping the SAME option deselects.
+      const idx = current.indexOf(key);
+      next[slotIndex] = idx >= 0 ? [] : [key];
     } else {
-      // Multi-pick slot: every tap ADDS one more (the same item can fill
+      // Multi-pick slot: every tap ADDS one more (the same option can fill
       // several picks — Luigi 2026-07-03); removal is the row's − control.
       if (current.length >= max) return;
-      current.push(itemId);
+      current.push(key);
     }
     setPicks(next);
 
@@ -233,11 +285,11 @@ export function BundleComposerModal({
     onAddBundle(buildBundle(picks));
   }
 
-  /** Remove ONE occurrence of an item from a multi-pick slot. */
-  function removeOnePick(slotIndex: number, itemId: string) {
+  /** Remove ONE occurrence of an option from a multi-pick slot. */
+  function removeOnePick(slotIndex: number, key: string) {
     setPicks((prev) => {
       const next = prev.map((arr) => [...arr]);
-      const idx = next[slotIndex].indexOf(itemId);
+      const idx = next[slotIndex].indexOf(key);
       if (idx >= 0) next[slotIndex].splice(idx, 1);
       return next;
     });
@@ -320,13 +372,14 @@ export function BundleComposerModal({
               const count = Math.max(slotMinOf(g), (picks[g] ?? []).length);
               for (let u = 0; u < count; u++) {
                 n++;
-                const id = (picks[g] ?? [])[u];
-                const label = id
-                  ? (slotItems[g].find((m) => m.id === id)?.name ?? "…")
+                const key = (picks[g] ?? [])[u];
+                const opt = key ? slotOptions[g].find((o) => o.key === key) : undefined;
+                const label = opt
+                  ? (opt.variantName ? `${opt.name} · ${opt.variantName}` : opt.name)
                   : (slotMinOf(g) === 1 && groups[g].label?.trim())
                     ? groups[g].label!.trim()
                     : t("slotFallbackLabel", { n });
-                units.push({ g, label, filled: !!id });
+                units.push({ g, label, filled: !!key });
               }
             });
             if (units.length < 2) return null;
@@ -371,7 +424,6 @@ export function BundleComposerModal({
               const min = Math.max(1, Number(group.minCount ?? 1));
               const max = Math.max(min, Number(group.maxCount ?? min));
               const picked = picks[slotIndex];
-              const fee = Number(group.extraFee ?? 0);
               const slotComplete = picked.length >= min;
               return (
                 <div key={group.id ?? slotIndex}>
@@ -384,21 +436,21 @@ export function BundleComposerModal({
                       {t("pickCount", { range: min === max ? String(min) : `${min}–${max}`, picked: picked.length, max })}
                     </div>
                   </div>
-                  {slotItems[slotIndex].length === 0 ? (
+                  {slotOptions[slotIndex].length === 0 ? (
                     <p className="text-xs text-gray-400 italic">{t("noEligibleItems")}</p>
                   ) : (
                     <div className="grid sm:grid-cols-2 gap-2">
-                      {slotItems[slotIndex].map((item) => {
-                        const n = picked.filter((id) => id === item.id).length;
+                      {slotOptions[slotIndex].map((opt) => {
+                        const n = picked.filter((k) => k === opt.key).length;
                         const isPicked = n > 0;
                         const isMulti = max > 1;
-                        const isSold = !!item.isSoldOut;
+                        const isSold = !!opt.isSoldOut;
                         return (
                           <button
-                            key={item.id}
+                            key={opt.key}
                             type="button"
                             disabled={isSold}
-                            onClick={() => togglePick(slotIndex, item.id)}
+                            onClick={() => togglePick(slotIndex, opt.key)}
                             className={`flex items-center gap-3 p-2 rounded-xl border-2 transition text-left ${isSold ? "opacity-60 cursor-not-allowed" : ""}`}
                             style={
                               isPicked
@@ -406,9 +458,9 @@ export function BundleComposerModal({
                                 : { borderColor: "#f3f4f6" }
                             }
                           >
-                            {item.imageUrl ? (
+                            {opt.imageUrl ? (
                               <img
-                                src={item.imageUrl}
+                                src={opt.imageUrl}
                                 alt=""
                                 className="w-12 h-12 rounded-lg object-cover flex-shrink-0"
                               />
@@ -420,16 +472,19 @@ export function BundleComposerModal({
                             )}
                             <div className="flex-1 min-w-0">
                               <div className="text-sm font-semibold text-gray-900 truncate">
-                                {item.name}
+                                {opt.name}
+                                {opt.variantName && (
+                                  <span className="text-gray-500 font-normal"> · {opt.variantName}</span>
+                                )}
                               </div>
                               <div className="text-xs text-gray-500">
                                 {isSold ? (
                                   <span className="inline-block bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">
                                     {tOrder("soldOut")}
                                   </span>
-                                ) : isSpeciality && fee > 0 ? (
+                                ) : isSpeciality && opt.fee > 0 ? (
                                   <span className="font-semibold" style={{ color: primaryColor }}>
-                                    {t("specialityFee", { fee: formatCurrency(fee) })}
+                                    {t("specialityFee", { fee: formatCurrency(opt.fee) })}
                                   </span>
                                 ) : (
                                   t("included")
@@ -444,9 +499,9 @@ export function BundleComposerModal({
                                 <span
                                   role="button"
                                   tabIndex={0}
-                                  onClick={(e) => { e.stopPropagation(); removeOnePick(slotIndex, item.id); }}
-                                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.stopPropagation(); removeOnePick(slotIndex, item.id); } }}
-                                  aria-label={tWiz("removeOneAria", { name: item.name })}
+                                  onClick={(e) => { e.stopPropagation(); removeOnePick(slotIndex, opt.key); }}
+                                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.stopPropagation(); removeOnePick(slotIndex, opt.key); } }}
+                                  aria-label={tWiz("removeOneAria", { name: opt.name })}
                                   className="w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold border flex-shrink-0 transition hover:bg-gray-50"
                                   style={{ borderColor: primaryColor, color: primaryColor }}
                                 >
@@ -458,9 +513,9 @@ export function BundleComposerModal({
                                   <span
                                     role="button"
                                     tabIndex={0}
-                                    onClick={(e) => { e.stopPropagation(); togglePick(slotIndex, item.id); }}
-                                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.stopPropagation(); togglePick(slotIndex, item.id); } }}
-                                    aria-label={tWiz("addOneMoreAria", { name: item.name })}
+                                    onClick={(e) => { e.stopPropagation(); togglePick(slotIndex, opt.key); }}
+                                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.stopPropagation(); togglePick(slotIndex, opt.key); } }}
+                                    aria-label={tWiz("addOneMoreAria", { name: opt.name })}
                                     className="w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold border flex-shrink-0 transition hover:bg-gray-50"
                                     style={{ borderColor: primaryColor, color: primaryColor }}
                                   >

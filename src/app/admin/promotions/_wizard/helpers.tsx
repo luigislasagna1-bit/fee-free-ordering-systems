@@ -437,26 +437,40 @@ function SpecialityFeePicker({
           ) : (
             eligible.map((item) => {
               const variants = item.variants ?? [];
+              // Whole-item premium (e.g. a premium steak): ticking the item adds
+              // the fee to EVERY size. Ticking specific sizes below scopes it to
+              // just those. Luigi 2026-07-07.
+              const itemChecked = iIds.includes(item.id);
               if (variants.length > 0) {
                 return (
                   <div key={item.id}>
-                    <div className="text-xs font-medium text-gray-500 pt-1.5">{item.name}</div>
-                    <div className="pl-3 space-y-0.5">
-                      {variants.map((v) => (
-                        <label key={v.id} className="flex items-center gap-2 py-0.5 text-sm cursor-pointer">
-                          <input type="checkbox" checked={vIds.includes(v.id)} onChange={() => toggleV(v.id)}
-                            className="rounded border-gray-300 text-emerald-500 focus:ring-emerald-500" />
-                          <span className="flex-1 text-gray-700">{v.name}</span>
-                          <span className="text-xs text-gray-400">{currencySymbol}{v.price.toFixed(2)}</span>
-                        </label>
-                      ))}
+                    <label className="flex items-center gap-2 py-1 text-sm cursor-pointer">
+                      <input type="checkbox" checked={itemChecked} onChange={() => toggleI(item.id)}
+                        className="rounded border-gray-300 text-emerald-500 focus:ring-emerald-500" />
+                      <span className="flex-1 font-medium text-gray-700">
+                        {item.name}<span className="text-xs text-gray-400 font-normal"> · whole item (all sizes)</span>
+                      </span>
+                    </label>
+                    <div className="pl-6 space-y-0.5">
+                      {variants.map((v) => {
+                        const vChecked = itemChecked || vIds.includes(v.id);
+                        return (
+                          <label key={v.id} className={`flex items-center gap-2 py-0.5 text-sm cursor-pointer ${itemChecked ? "opacity-50" : ""}`}>
+                            <input type="checkbox" checked={vChecked} disabled={itemChecked}
+                              onChange={() => !itemChecked && toggleV(v.id)}
+                              className="rounded border-gray-300 text-emerald-500 focus:ring-emerald-500" />
+                            <span className="flex-1 text-gray-600">{v.name}</span>
+                            <span className="text-xs text-gray-400">{currencySymbol}{v.price.toFixed(2)}</span>
+                          </label>
+                        );
+                      })}
                     </div>
                   </div>
                 );
               }
               return (
                 <label key={item.id} className="flex items-center gap-2 py-1 text-sm cursor-pointer">
-                  <input type="checkbox" checked={iIds.includes(item.id)} onChange={() => toggleI(item.id)}
+                  <input type="checkbox" checked={itemChecked} onChange={() => toggleI(item.id)}
                     className="rounded border-gray-300 text-emerald-500 focus:ring-emerald-500" />
                   <span className="flex-1 text-gray-700">{item.name}</span>
                   <span className="text-xs text-gray-400">{currencySymbol}{item.price.toFixed(2)}</span>
