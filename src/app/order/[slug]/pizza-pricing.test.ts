@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { computePrice, type PizzaConfig, type PizzaCustomization } from "./PizzaBuilder";
+import { computePrice, resolveEffectivePizzaConfig, defaultCustomization, type PizzaConfig, type PizzaCustomization } from "./PizzaBuilder";
 
 // Minimal fixtures — computePrice only reads the fields below.
 const config: PizzaConfig = {
@@ -85,5 +85,80 @@ describe("pizza pricing — multiple of the same topping (count)", () => {
   it("count defaults to 1 when absent", () => {
     const t = { optionId: "pep", name: "Pepperoni", groupId: "t", placement: "whole" as const, quantity: "normal" as const, unitPrice: 2.5 };
     expect(computePrice(base({ toppings: [t as any] }), null, item, groups, config)).toBe(12.5);
+  });
+});
+
+describe("resolveEffectivePizzaConfig — back-fill role ids from pizzaRole tags (Bug: base sauce had no half/half)", () => {
+  const baseCfg: PizzaConfig = {
+    isPizza: true, allowHalfHalf: true,
+    toppingGroupIds: [], includedToppings: 0, extraToppingPrice: 0,
+    halfToppingMultiplier: 0.5, extraQuantityMultiplier: 0,
+  };
+
+  it("unset sauceGroupId → back-fills from a group tagged pizzaRole=sauce", () => {
+    const g: any[] = [{ id: "gsauce", libraryGroupId: "lib_sauce", pizzaRole: "sauce", options: [] }];
+    const out = resolveEffectivePizzaConfig({ ...baseCfg, sauceGroupId: undefined }, g);
+    expect(out.sauceGroupId).toBe("lib_sauce"); // prefers the library id configs store
+  });
+
+  it("uses the group id when it has no libraryGroupId", () => {
+    const g: any[] = [{ id: "gsauce", pizzaRole: "sauce", options: [] }];
+    expect(resolveEffectivePizzaConfig({ ...baseCfg }, g).sauceGroupId).toBe("gsauce");
+  });
+
+  it("leaves an EXPLICIT, still-attached sauceGroupId untouched (owner wins)", () => {
+    const g: any[] = [
+      { id: "explicit", pizzaRole: null, options: [] },
+      { id: "tagged", pizzaRole: "sauce", options: [] },
+    ];
+    const out = resolveEffectivePizzaConfig({ ...baseCfg, sauceGroupId: "explicit" }, g);
+    expect(out.sauceGroupId).toBe("explicit");
+  });
+
+  it("returns the SAME reference when nothing needs back-filling (no-op)", () => {
+    const g: any[] = [{ id: "s", options: [] }];
+    const cfg = { ...baseCfg, sauceGroupId: "s" };
+    expect(resolveEffectivePizzaConfig(cfg, g)).toBe(cfg);
+  });
+
+  it("does NOT touch toppingGroupIds (server prices toppings via config → preview≠charge risk)", () => {
+    const g: any[] = [{ id: "gt", pizzaRole: "topping", options: [] }];
+    expect(resolveEffectivePizzaConfig({ ...baseCfg }, g).toppingGroupIds).toEqual([]);
+  });
+
+  it("back-fills crust + sauce + cheese together", () => {
+    const g: any[] = [
+      { id: "gc", pizzaRole: "crust", options: [] },
+      { id: "gs", pizzaRole: "sauce", options: [] },
+      { id: "gh", pizzaRole: "cheese", options: [] },
+    ];
+    const out = resolveEffectivePizzaConfig({ ...baseCfg }, g);
+    expect([out.crustGroupId, out.sauceGroupId, out.cheeseGroupId]).toEqual(["gc", "gs", "gh"]);
+  });
+});
+
+describe("defaultCustomization — Required default seeds for a back-filled, library-attached role group (review fix #1)", () => {
+  const baseCfg: PizzaConfig = {
+    isPizza: true, allowHalfHalf: true,
+    toppingGroupIds: [], includedToppings: 0, extraToppingPrice: 0,
+    halfToppingMultiplier: 0.5, extraQuantityMultiplier: 0,
+  };
+  // Instance id 'grp_abc' differs from the library id 'lib_sauce' the config stores.
+  const sauceGroup: any = {
+    id: "grp_abc", libraryGroupId: "lib_sauce", pizzaRole: "sauce", name: "PIZZA BASE SAUCE",
+    required: true, minSelect: 1, maxSelect: 1,
+    options: [
+      { id: "gb", name: "Garlic Butter Base", priceAdjustment: 0, isDefault: true, isAvailable: true },
+      { id: "ps", name: "Pizza Sauce Base", priceAdjustment: 0, isDefault: false, isAvailable: true },
+    ],
+  };
+  const item: any = { id: "i", name: "Garlic Cheese Sticks", price: 11.99, hasVariants: false, variants: [], modifierGroups: [sauceGroup] };
+
+  it("seeds sauceOptionId to the Required default (not null) after back-fill", () => {
+    const cfg = resolveEffectivePizzaConfig({ ...baseCfg, sauceGroupId: undefined }, [sauceGroup]);
+    expect(cfg.sauceGroupId).toBe("lib_sauce");
+    const dc = defaultCustomization(item, cfg, [sauceGroup]);
+    expect(dc.sauceOptionId).toBe("gb");              // pre-selected default survives
+    expect(dc.otherSelections["grp_abc"]).toBeUndefined(); // NOT double-stored as an "other" group
   });
 });

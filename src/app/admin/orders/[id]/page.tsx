@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { childBuildLines } from "@/lib/bundle-child-lines";
 import { getTranslations } from "next-intl/server";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { formatCurrency } from "@/lib/utils";
@@ -150,6 +151,31 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
                 {item.modifiers?.map((mod: any) => (
                   <div key={mod.id} className="text-xs text-gray-500 pl-4">+ {mod.name}</div>
                 ))}
+                {/* Combo/bundle children + their full build (crust/sauce/half-half/
+                    toppings/flavour) + notes — was previously omitted entirely, so
+                    the owner couldn't see what a combo actually contained. 2026-07-08. */}
+                {Array.isArray(item.bundleItems) && item.bundleItems.length > 0 && (
+                  <div className="mt-0.5 pl-4 border-l-2 border-gray-100 space-y-0.5">
+                    {item.bundleItems.map((child: any, ci: number) => {
+                      const { modifierLines, notes } = childBuildLines(child);
+                      return (
+                        <div key={ci} className="text-xs text-gray-500">
+                          • {child.name}
+                          {child.variantName ? ` (${child.variantName})` : ""}
+                          {child.specialityFee && child.specialityFee > 0 ? ` (+${money(child.specialityFee)})` : ""}
+                          {/* Names only — a combo child's modifier prices are
+                              baked into the fixed combo price, so annotating them
+                              would imply an extra charge (matches the 5 other
+                              surfaces). The real upcharge is child.specialityFee. */}
+                          {modifierLines.map((m, mi) => (
+                            <div key={mi} className="pl-3 text-gray-400">+ {m.name}</div>
+                          ))}
+                          {notes && <div className="pl-3 text-gray-400 italic">&ldquo;{notes}&rdquo;</div>}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             ))}
           </div>

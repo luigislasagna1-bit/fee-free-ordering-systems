@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency, formatDate } from "@/lib/utils";
+import { childBuildLines } from "@/lib/bundle-child-lines";
 import Link from "next/link";
 import { CheckCircle, Clock, MapPin, ArrowRight } from "lucide-react";
 import { OrderPlacedTracker } from "@/components/order/OrderPlacedTracker";
@@ -157,7 +158,9 @@ export default async function ConfirmationPage({
                   </div>
                   {bundle && bundle.length > 0 && (
                     <div className="mt-1 pl-3 border-l-2 border-gray-100 space-y-0.5 text-xs text-gray-500">
-                      {bundle.map((child, i) => (
+                      {bundle.map((child, i) => {
+                        const { modifierLines, notes } = childBuildLines(child);
+                        return (
                         <div key={i}>
                           <div>
                             • {child.name}
@@ -166,15 +169,17 @@ export default async function ConfirmationPage({
                               ? ` (+${formatCurrency(child.specialityFee)})`
                               : ""}
                           </div>
-                          {Array.isArray(child.modifiers) && child.modifiers.length > 0 && (
+                          {modifierLines.length > 0 && (
                             <div className="pl-3 text-gray-400">
-                              {child.modifiers.map((m, mi) => (
+                              {modifierLines.map((m, mi) => (
                                 <div key={mi}>+ {m.name}</div>
                               ))}
                             </div>
                           )}
+                          {notes && <div className="pl-3 text-gray-400 italic">&ldquo;{notes}&rdquo;</div>}
                         </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   )}
                 </div>

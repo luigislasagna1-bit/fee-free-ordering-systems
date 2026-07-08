@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Autocomplete } from "@react-google-maps/api";
 import { useCurrencyFormat } from "@/lib/currency-context";
+import { childBuildLines } from "@/lib/bundle-child-lines";
 import { pickHoursForService } from "@/lib/service-hours";
 import { rowIntervals } from "@/lib/restaurant-hours";
 import { parseTheme } from "@/lib/theme";
@@ -83,6 +84,11 @@ type CartLine = {
     name: string;
     variantName?: string;
     specialityFee?: number;
+    // A combo/bundle child's full build (crust/sauce/half-half/toppings/flavour)
+    // is pre-flattened here so checkout shows the same build as the cart — the
+    // customer verifies before paying (Luigi 2026-07-08).
+    modifiers?: Array<{ name: string; priceAdjustment?: number }>;
+    notes?: string;
   }>;
 };
 
@@ -1897,15 +1903,25 @@ export function CheckoutModal({
                         )}
                         {ci.isBundle && ci.bundleItems && ci.bundleItems.length > 0 && (
                           <span className="block mt-1 pl-3 border-l-2 border-gray-100 text-xs text-gray-500 space-y-0.5">
-                            {ci.bundleItems.map((child, ci2) => (
+                            {ci.bundleItems.map((child, ci2) => {
+                              // Full child build (crust/sauce/half-half/toppings/
+                              // flavour) + note so checkout matches the cart and
+                              // the customer can verify before paying (2026-07-08).
+                              const { modifierLines, notes } = childBuildLines(child);
+                              return (
                               <span key={ci2} className="block">
                                 • {child.name}
                                 {child.variantName ? ` (${child.variantName})` : ""}
                                 {child.specialityFee && child.specialityFee > 0
                                   ? ` (+${formatCurrency(child.specialityFee)})`
                                   : ""}
+                                {modifierLines.map((m, mi) => (
+                                  <span key={mi} className="block pl-3 text-gray-400">+ {m.name}</span>
+                                ))}
+                                {notes && <span className="block pl-3 text-gray-400 italic">&ldquo;{notes}&rdquo;</span>}
                               </span>
-                            ))}
+                              );
+                            })}
                           </span>
                         )}
                       </span>

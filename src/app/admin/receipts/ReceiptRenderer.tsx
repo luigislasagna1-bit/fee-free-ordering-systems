@@ -3,6 +3,7 @@ import { forwardRef } from "react";
 import { useTranslations } from "next-intl";
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "@/lib/receipt-schema";
 import { formatCurrency } from "@/lib/utils";
+import { childBuildLines } from "@/lib/bundle-child-lines";
 
 // Paper widths in px at 96 dpi:
 //   80 mm thermal = 302 px (default — by far the most common)
@@ -34,8 +35,15 @@ export const SAMPLE_ORDER = {
     { name: "Margherita Pizza", quantity: 2, price: 14.99, subtotal: 29.98, modifiers: [{ name: 'Large (14")' }, { name: "Extra Cheese" }], notes: "Well done please" },
     { name: "Caesar Salad",     quantity: 1, price: 9.99,  subtotal: 9.99,  modifiers: [], notes: "" },
     { name: "Soda",             quantity: 2, price: 2.99,  subtotal: 5.98,  modifiers: [{ name: "Diet Coke" }], notes: "" },
+    // A combo/bundle line with each child's full build — shows owners how their
+    // receipt renders a customized combo (Luigi 2026-07-08).
+    { name: "Large / Wings Combo", quantity: 1, price: 33.99, subtotal: 33.99, modifiers: [], notes: "",
+      bundleItems: [
+        { name: "Large 3 Topping", variantName: "Large", modifiers: [{ name: "Regular Crust" }, { name: "Garlic Butter Base" }, { name: "Pepperoni" }, { name: "Mushrooms" }, { name: "Extra Cheese" }] },
+        { name: "Chicken Wings (20)", modifiers: [{ name: "Buffalo" }, { name: "Ranch dip" }], notes: "extra crispy" },
+      ] },
   ],
-  subtotal: 45.95, taxAmount: 4.07, deliveryFee: 0, couponDiscount: 0, total: 50.02,
+  subtotal: 79.94, taxAmount: 7.08, deliveryFee: 0, couponDiscount: 0, total: 87.02,
   paymentMethod: "cash",
   notes: "Extra napkins please",
   preparationTime: 20,
@@ -208,7 +216,8 @@ function renderCustomer(
                   name: string;
                   variantName?: string | null;
                   specialityFee?: number;
-                  modifiers?: Array<{ name: string }>;
+                  modifiers?: Array<{ name: string; priceAdjustment?: number }>;
+                  notes?: string | null;
                 }>)
               : null;
             return (
@@ -217,13 +226,20 @@ function renderCustomer(
                   <span style={{ fontWeight: "inherit" }}>{item.quantity}× {item.name}</span>
                   <span style={{ fontWeight: "inherit" }}>{fmt(item.subtotal)}</span>
                 </span>
-                {bundle && bundle.length > 0 && bundle.map((child, j) => (
+                {bundle && bundle.length > 0 && bundle.map((child, j) => {
+                  const { modifierLines, notes } = childBuildLines(child);
+                  return (
                   <span key={`b${j}`} style={{ display: "block", paddingLeft: "14px", ...(modCSS ?? small) }}>
                     - {child.name}
                     {child.variantName ? ` (${child.variantName})` : ""}
                     {child.specialityFee && child.specialityFee > 0 ? ` (+${fmt(child.specialityFee)})` : ""}
+                    {modifierLines.map((m, mi) => (
+                      <span key={mi} style={{ display: "block", paddingLeft: "12px" }}>+ {m.name}</span>
+                    ))}
+                    {notes && <span style={{ display: "block", paddingLeft: "12px", fontStyle: "italic" }}>&ldquo;{notes}&rdquo;</span>}
                   </span>
-                ))}
+                  );
+                })}
                 {modsEnabled && item.modifiers.map((m, j) => (
                   <span key={j} style={{ display: "block", paddingLeft: "14px", ...(modCSS ?? small) }}>+ {m.name}</span>
                 ))}
@@ -371,17 +387,26 @@ function renderKitchen(section: Section, order: SampleOrder, config: KitchenConf
                   name: string;
                   variantName?: string | null;
                   specialityFee?: number;
+                  modifiers?: Array<{ name: string; priceAdjustment?: number }>;
+                  notes?: string | null;
                 }>)
               : null;
             return (
             <span key={i} style={{ display: "block", marginBottom: "10px" }}>
               <span style={{ display: "block" }}>{item.quantity}× {item.name}</span>
-              {bundle && bundle.length > 0 && bundle.map((child, j) => (
+              {bundle && bundle.length > 0 && bundle.map((child, j) => {
+                const { modifierLines, notes } = childBuildLines(child);
+                return (
                 <span key={`b${j}`} style={{ display: "block", paddingLeft: "16px", ...(modCSS ?? { ...small, fontSize: `${Math.max(10, s.fontSize - 4)}px` }) }}>
                   - {child.name}
                   {child.variantName ? ` (${child.variantName})` : ""}
+                  {modifierLines.map((m, mi) => (
+                    <span key={mi} style={{ display: "block", paddingLeft: "12px" }}>→ {m.name}</span>
+                  ))}
+                  {notes && <span style={{ display: "block", paddingLeft: "12px", fontWeight: "bold" }}>⚠ {notes}</span>}
                 </span>
-              ))}
+                );
+              })}
               {modsEnabled && item.modifiers.map((m, j) => (
                 <span key={j} style={{ display: "block", paddingLeft: "16px", ...(modCSS ?? { ...small, fontSize: `${Math.max(10, s.fontSize - 4)}px` }) }}>
                   → {m.name}

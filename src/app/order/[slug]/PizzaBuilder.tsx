@@ -125,6 +125,11 @@ interface ModGroup {
   id: string; name: string; description?: string;
   required: boolean; minSelect: number; maxSelect: number;
   libraryGroupId?: string | null;
+  /** The pizza role this group plays ("crust" | "sauce" | "cheese" |
+   *  "topping"), set on the modifier group. Used as a FALLBACK binding when
+   *  pizzaConfig.*GroupId is left unset/unmatched, so a role-tagged group still
+   *  gets its role section + half/half UI (Luigi 2026-07-08). */
+  pizzaRole?: string | null;
   /** Per-group half/half eligibility (per the modifier-group library
    *  toggle). When undefined we fall through to the legacy
    *  pizzaConfig.halfHalfRoles check for the sauce/cheese/toppings
@@ -219,6 +224,41 @@ export function groupSupportsHalfHalf(
   if (group?.supportsHalfHalf) return true;
   if (role) return roleSupportsHalfHalf(config, role);
   return false;
+}
+
+/**
+ * Back-fill unset crust/sauce/cheese group ids in a pizzaConfig from the
+ * attached groups' own `pizzaRole` tags (Luigi 2026-07-08).
+ *
+ * The pizza builder binds a modifier group to a role (and thus gives it the
+ * Whole/Split half-half control) ONLY via pizzaConfig.{crust,sauce,cheese}
+ * GroupId. When an owner tags a group with a pizzaRole (e.g. "PIZZA BASE SAUCE"
+ * → sauce) but never picks it in the Pizza-tab dropdown, that id is empty and
+ * the group falls through to a plain single-select with NO half/half — even
+ * though half/half is enabled. Resolving the id here (once, at the top of the
+ * builder) makes the WHOLE component consistent: role binding, the live price
+ * (computePrice), the default-selection seeding, and serialization all key off
+ * the same id.
+ *
+ * Scope is deliberately crust/sauce/cheese only: the server charges these by
+ * per-option lookup (not by group id), so a client-side back-fill can never
+ * make the preview disagree with the charge. Toppings are NOT back-filled — the
+ * server prices those THROUGH pizzaConfig.toppingGroupIds, so touching them
+ * here would risk preview≠charge; owners configure the topping list explicitly.
+ * Never overrides an explicit, still-attached selection.
+ */
+export function resolveEffectivePizzaConfig(config: PizzaConfig, groups: ModGroup[]): PizzaConfig {
+  const hasAttached = (id: string | undefined) =>
+    !!id && groups.some(g => g.id === id || g.libraryGroupId === id);
+  const byRole = (role: string) => groups.find(g => (g.pizzaRole ?? null) === role);
+  const idOf = (g: ModGroup) => g.libraryGroupId ?? g.id; // configs store library ids
+  const patch: Partial<PizzaConfig> = {};
+  if (!hasAttached(config.crustGroupId))  { const g = byRole("crust");  if (g) patch.crustGroupId  = idOf(g); }
+  if (!hasAttached(config.sauceGroupId))  { const g = byRole("sauce");  if (g) patch.sauceGroupId  = idOf(g); }
+  if (!hasAttached(config.cheeseGroupId)) { const g = byRole("cheese"); if (g) patch.cheeseGroupId = idOf(g); }
+  // Return the SAME reference when nothing changed (referential stability for
+  // useMemo consumers / correctly-configured pizzas are untouched).
+  return Object.keys(patch).length ? { ...config, ...patch } : config;
 }
 
 // ── Pricing engine ────────────────────────────────────────────────────────────
@@ -704,11 +744,16 @@ interface PizzaBuilderProps {
   };
 }
 
-// Default customization state
-function defaultCustomization(item: MenuItem, config: PizzaConfig, groups: ModGroup[]): PizzaCustomization {
+// Default customization state (exported for regression tests).
+export function defaultCustomization(item: MenuItem, config: PizzaConfig, groups: ModGroup[]): PizzaCustomization {
+  // Match by id OR libraryGroupId — consistent with matchesGroup/findOpt and the
+  // role-exclusion loop below. A back-filled role id (resolveEffectivePizzaConfig)
+  // is stored as the LIBRARY id, so without the libraryGroupId branch the Required
+  // default option wouldn't seed for a library-attached role group and the builder
+  // would open with nothing selected (adversarial-review fix, Luigi 2026-07-08).
   const findDefault = (groupId?: string) =>
     groupId
-      ? groups.find(g => g.id === groupId)?.options.find(o => o.isDefault && o.isAvailable)?.id ?? null
+      ? groups.find(g => g.id === groupId || g.libraryGroupId === groupId)?.options.find(o => o.isDefault && o.isAvailable)?.id ?? null
       : null;
 
   // Pre-fill defaults on any non-role groups attached to the item.
@@ -741,11 +786,30 @@ function defaultCustomization(item: MenuItem, config: PizzaConfig, groups: ModGr
   };
 }
 
-export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initial }: PizzaBuilderProps) {
+export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, onAdd, initial }: PizzaBuilderProps) {
   const tp = useTranslations("pizza");
   const tOrd = useTranslations("ordering");
   const formatCurrency = useCurrencyFormat();
   const groups = item.modifierGroups;
+  // Effective config: back-fill any crust/sauce/cheese role id the owner left
+  // unset from the group's own pizzaRole tag, so a role-tagged group still gets
+  // its role section + half/half. Done ONCE here so binding, pricing, default
+  // seeding and serialization all agree (Luigi 2026-07-08). No-op (same ref)
+  // for correctly-configured pizzas.
+  const config = useMemo(() => resolveEffectivePizzaConfig(rawConfig, groups), [rawConfig, groups]);
+  // Instance ids of the groups now bound to a pizza ROLE under the resolved
+  // config. Used to strip STALE otherSelections entries when re-opening a
+  // persisted cart: if a group used to be a plain "other" group (its pick stored
+  // in otherSelections) but is now a role group (e.g. after the pizzaRole
+  // back-fill), that stale entry would double-count alongside the role pick.
+  // Adversarial-review fix, Luigi 2026-07-08.
+  const roleGroupInstanceIds = useMemo(() => {
+    const cfgIds = [config.crustGroupId, config.sauceGroupId, config.cheeseGroupId, ...(config.toppingGroupIds ?? [])]
+      .filter(Boolean) as string[];
+    return new Set(
+      groups.filter(g => cfgIds.some(cid => g.id === cid || g.libraryGroupId === cid)).map(g => g.id),
+    );
+  }, [config, groups]);
 
   // ── State ────────────────────────────────────────────────────────────────
   const [variantId, setVariantId] = useState<string | null>(
@@ -755,9 +819,18 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
         : null
     )
   );
-  const [customization, setCustomization] = useState<PizzaCustomization>(() =>
-    initial?.customization ?? defaultCustomization(item, config, groups)
-  );
+  const [customization, setCustomization] = useState<PizzaCustomization>(() => {
+    const seed = initial?.customization ?? defaultCustomization(item, config, groups);
+    // Never let a role group's pick linger in otherSelections (double-count guard).
+    const stale = Object.keys(seed.otherSelections ?? {}).filter(k => roleGroupInstanceIds.has(k));
+    if (stale.length === 0) return seed;
+    return {
+      ...seed,
+      otherSelections: Object.fromEntries(
+        Object.entries(seed.otherSelections).filter(([k]) => !roleGroupInstanceIds.has(k)),
+      ),
+    };
+  });
   const [toppingPlacement, setToppingPlacement] = useState<ToppingPlacement>("whole");
   const [sauceMode, setSauceMode] = useState<"whole" | "split">(
     initial?.customization.isHalfHalf &&
@@ -778,6 +851,10 @@ export function PizzaBuilder({ item, config, primaryColor, onClose, onAdd, initi
   // item.modifierGroups contains attached copies whose libraryGroupId points back to the source)
   const matchesGroup = (g: ModGroup, configId: string | undefined) =>
     !!configId && (g.id === configId || g.libraryGroupId === configId);
+  // `config` here is the EFFECTIVE config (role ids back-filled from pizzaRole
+  // tags — see resolveEffectivePizzaConfig at the top of the component), so a
+  // sauce/crust/cheese group the owner tagged but didn't wire into the Pizza-tab
+  // dropdown still binds to its role and gets its half/half UI. Luigi 2026-07-08.
   const crustGroup    = groups.find(g => matchesGroup(g, config.crustGroupId));
   const sauceGroup    = groups.find(g => matchesGroup(g, config.sauceGroupId));
   const cheeseGroup   = groups.find(g => matchesGroup(g, config.cheeseGroupId));

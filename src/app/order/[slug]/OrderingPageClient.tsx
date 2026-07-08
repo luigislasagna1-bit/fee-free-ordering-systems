@@ -11,6 +11,7 @@ import { formatCurrency } from "@/lib/utils";
 import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
 import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib/format-time";
 import { methodsForOrderType, paymentValueToSlug } from "@/lib/payment-methods";
+import { childBuildLines } from "@/lib/bundle-child-lines";
 import { localDowAndHHMM, liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, rowIntervals, dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { holidayEffectForDay, canonicalHolidayService } from "@/lib/holiday-rules";
 import { resolveServiceHours, type ServiceKind } from "@/lib/service-hours";
@@ -5662,7 +5663,14 @@ export function OrderingPageClient({
                           {/* Bundle child rows — indented under the parent. */}
                           {ci.isBundle && ci.bundleItems && ci.bundleItems.length > 0 && (
                             <div className="mt-1 pl-4 border-l-2 border-gray-100 space-y-0.5">
-                              {ci.bundleItems.map((child, i) => (
+                              {ci.bundleItems.map((child, i) => {
+                                // Show the child's FULL build (crust / sauce /
+                                // half-half / toppings / flavour) + note so the
+                                // customer can verify a combo before paying. The
+                                // build lives pre-flattened in child.modifiers
+                                // (Luigi 2026-07-08).
+                                const { modifierLines, notes } = childBuildLines(child);
+                                return (
                                 <div key={i} className="text-xs text-gray-500">
                                   • {child.name}
                                   {child.variantName ? ` (${child.variantName})` : ""}
@@ -5671,8 +5679,13 @@ export function OrderingPageClient({
                                       (+{fmt(child.specialityFee)})
                                     </span>
                                   ) : null}
+                                  {modifierLines.map((m, mi) => (
+                                    <div key={mi} className="pl-3 text-gray-400">+ {m.name}</div>
+                                  ))}
+                                  {notes && <div className="pl-3 text-gray-400 italic">&ldquo;{notes}&rdquo;</div>}
                                 </div>
-                              ))}
+                                );
+                              })}
                             </div>
                           )}
                           {/* Build details (toppings / modifier picks) — shared

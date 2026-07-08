@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
+import { childBuildLines } from "@/lib/bundle-child-lines";
 import { paymentMethodLabelKey } from "@/lib/payment-label";
 import {
   CheckCircle, Clock, ChefHat, Package, XCircle, Loader2,
@@ -593,15 +594,22 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                     )}
                     {bundle && bundle.length > 0 && (
                       <div className="mt-1 pl-3 border-l-2 border-gray-100 space-y-0.5 text-xs text-gray-500">
-                        {bundle.map((child: any, i: number) => (
+                        {bundle.map((child: any, i: number) => {
+                          const { modifierLines, notes } = childBuildLines(child);
+                          return (
                           <div key={i}>
                             • {child.name}
                             {child.variantName ? ` (${child.variantName})` : ""}
                             {child.specialityFee && child.specialityFee > 0
                               ? ` (+${formatCurrency(child.specialityFee)})`
                               : ""}
+                            {modifierLines.map((m, mi) => (
+                              <div key={mi} className="pl-3 text-gray-400">+ {m.name}</div>
+                            ))}
+                            {notes && <div className="pl-3 text-gray-400 italic">{t("itemNote", { notes })}</div>}
                           </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     )}
                     {item.notes && (
