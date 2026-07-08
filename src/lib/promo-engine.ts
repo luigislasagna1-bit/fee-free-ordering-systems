@@ -44,7 +44,18 @@ export type ItemGroup = {
   role?: "paid" | "free" | "trigger" | "required";
   minCount?: number;
   maxCount?: number;
+  /** meal_bundle_speciality: the flat upcharge added for a PREMIUM pick in this
+   *  slot (e.g. a Large size = +$5). */
   extraFee?: number;
+  /** meal_bundle_speciality (GloriaFood parity, Luigi 2026-07-07): the SPECIFIC
+   *  size-variant IDs that carry `extraFee`. When set, the fee is added ONLY when
+   *  the customer's chosen variant is in this list, so base sizes are free and
+   *  only the premium size(s) upcharge — all within one slot. Empty/absent =
+   *  legacy behaviour (the fee applies to EVERY pick from the slot). */
+  specialityVariantIds?: string[];
+  /** meal_bundle_speciality: same as specialityVariantIds but for whole ITEMS
+   *  (for non-sized dishes that are themselves the premium pick). */
+  specialityItemIds?: string[];
 };
 
 export type PromoRules = {
@@ -461,6 +472,30 @@ function itemMatchesGroup(group: ItemGroup, i: CartItem): boolean {
 
 function itemsMatchingGroup(group: ItemGroup, items: CartItem[]): CartItem[] {
   return items.filter((i) => itemMatchesGroup(group, i));
+}
+
+/** meal_bundle_speciality: the upcharge a specific PICK adds in its slot. The
+ *  fee (`group.extraFee`) is charged ONLY when the chosen variant/item is in the
+ *  slot's speciality set (e.g. the Large size), so base sizes are free — matching
+ *  GloriaFood. Backward-compatible: when no speciality set is configured, the fee
+ *  applies to EVERY pick (the pre-2026-07-07 per-group behaviour). Shared by the
+ *  loose-cart engine path AND the server bundle reprice so they never diverge.
+ *  Accepts a loose object so the server's raw ruleConfig group works too. */
+export function specialityFeeForPick(
+  group: { extraFee?: number; specialityVariantIds?: string[]; specialityItemIds?: string[] },
+  variantId: string | null | undefined,
+  menuItemId: string | null | undefined,
+): number {
+  const fee = Math.max(0, Number(group?.extraFee ?? 0));
+  if (fee <= 0) return 0;
+  const svIds = Array.isArray(group?.specialityVariantIds) ? group.specialityVariantIds : [];
+  const siIds = Array.isArray(group?.specialityItemIds) ? group.specialityItemIds : [];
+  // No speciality set → legacy: the fee applies to every pick from this slot.
+  if (svIds.length === 0 && siIds.length === 0) return fee;
+  // Scoped → only the configured premium variants / items carry the fee.
+  if (variantId != null && svIds.includes(String(variantId))) return fee;
+  if (menuItemId != null && siIds.includes(String(menuItemId))) return fee;
+  return 0;
 }
 
 function groupTotalQty(group: ItemGroup, items: CartItem[]): number {
@@ -1008,7 +1043,12 @@ function mealBundleInstances(promo: PromoInput, ctx: ApplyContext): BundleInstan
       const take = avail.slice(0, cap);
       for (const u of take) u.used = true; // reserve so overlapping slots don't reuse a unit
       passUnits.push(...take);
-      if (isSpeciality) feeTotal += Math.max(0, Number(group.extraFee ?? 0)) * take.length;
+      // Speciality upcharge: only the premium pick (e.g. the Large variant) in
+      // this slot carries the fee; base sizes are free. Legacy bundles (no
+      // speciality set) still charge every pick. Luigi 2026-07-07.
+      if (isSpeciality) {
+        for (const u of take) feeTotal += specialityFeeForPick(group, u.item.variantId, u.item.menuItemId);
+      }
     }
     if (!canForm) {
       for (const u of passUnits) u.used = false; // roll back the incomplete pass

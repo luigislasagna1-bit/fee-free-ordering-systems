@@ -38,6 +38,12 @@ export type IG = {
   minCount?: number;
   maxCount?: number;
   extraFee?: number;
+  /** meal_bundle_speciality (Luigi 2026-07-07): the specific size-variant IDs
+   *  in this slot that carry `extraFee` (e.g. the Large size = +$5). Base sizes
+   *  are free. Empty/absent = the fee applies to every pick (legacy). */
+  specialityVariantIds?: string[];
+  /** Same as specialityVariantIds but for whole ITEMS (non-sized premium picks). */
+  specialityItemIds?: string[];
 };
 
 export type PromoRules = {

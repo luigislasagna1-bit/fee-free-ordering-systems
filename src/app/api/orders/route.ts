@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { after } from "next/server";
 import prisma from "@/lib/db";
 import { generateOrderNumber, formatCurrency } from "@/lib/utils";
-import { applyPromotions, totalPromoDiscount } from "@/lib/promo-engine";
+import { applyPromotions, totalPromoDiscount, specialityFeeForPick } from "@/lib/promo-engine";
 import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, localDowAndHHMM, dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { holidayEffectForDay, holidayEffectToday, canonicalHolidayService, hhmmInsideIntervals } from "@/lib/holiday-rules";
 import { resolveServiceHours } from "@/lib/service-hours";
@@ -940,7 +940,17 @@ export async function POST(req: NextRequest) {
           let slotFee = 0;
           if (assigned >= 0) {
             slotFill[assigned] += 1;
-            if (isSpeciality) slotFee = Math.max(0, Number(bundleGroups[assigned]?.extraFee ?? 0));
+            // Only the premium pick (e.g. the chosen Large variant) carries the
+            // slot's speciality fee; base sizes are free. Legacy bundles with no
+            // speciality set still charge every pick. Server-authoritative — the
+            // client's specialityFee is never trusted. Luigi 2026-07-07.
+            if (isSpeciality) {
+              slotFee = specialityFeeForPick(
+                bundleGroups[assigned],
+                child.variantId ? String(child.variantId) : null,
+                cid,
+              );
+            }
             specialityUpcharge += slotFee;
           }
           sanitisedChildren.push({

@@ -383,6 +383,36 @@ describe("engine math — per-type debug fixes", () => {
     expect(applyPromotions([p], ctx)[0]?.discount).toBe(5); // 30 - 20 - 5 fee
   });
 
+  it("meal_bundle_speciality: the fee applies ONLY to the premium variant — base size is free (GloriaFood)", () => {
+    // "Large = +$5"; a Regular/base pick in the same slot adds nothing. Luigi 2026-07-07.
+    const p = mkPromo({ promotionType: "meal_bundle_speciality", ruleConfig: { bundlePrice: 20, groups: [
+      { id: "a", minCount: 1, maxCount: 1, extraFee: 5, categoryIds: ["cat1"], itemIds: [], specialityVariantIds: ["large"] },
+    ] } });
+    const large = mkCtx({ subtotal: 30, items: [{ menuItemId: "i1", categoryId: "cat1", variantId: "large", price: 30, quantity: 1, subtotal: 30 }] });
+    expect(applyPromotions([p], large)[0]?.discount).toBe(5);  // 30 - 20 - 5 (Large carries the fee)
+    const regular = mkCtx({ subtotal: 30, items: [{ menuItemId: "i1", categoryId: "cat1", variantId: "regular", price: 30, quantity: 1, subtotal: 30 }] });
+    expect(applyPromotions([p], regular)[0]?.discount).toBe(10); // 30 - 20 - 0 (base pick is free)
+  });
+
+  it("meal_bundle_speciality: whole-item premium via specialityItemIds", () => {
+    const p = mkPromo({ promotionType: "meal_bundle_speciality", ruleConfig: { bundlePrice: 20, groups: [
+      { id: "a", minCount: 1, maxCount: 1, extraFee: 5, categoryIds: ["cat1"], itemIds: [], specialityItemIds: ["premium"] },
+    ] } });
+    const prem = mkCtx({ subtotal: 30, items: [{ menuItemId: "premium", categoryId: "cat1", price: 30, quantity: 1, subtotal: 30 }] });
+    expect(applyPromotions([p], prem)[0]?.discount).toBe(5);   // 30 - 20 - 5
+    const base = mkCtx({ subtotal: 30, items: [{ menuItemId: "basic", categoryId: "cat1", price: 30, quantity: 1, subtotal: 30 }] });
+    expect(applyPromotions([p], base)[0]?.discount).toBe(10);  // 30 - 20 - 0
+  });
+
+  it("meal_bundle_speciality: with NO speciality set, the fee still applies to every pick (backward compat)", () => {
+    const p = mkPromo({ promotionType: "meal_bundle_speciality", ruleConfig: { bundlePrice: 20, groups: [
+      { id: "a", minCount: 1, maxCount: 1, extraFee: 5, categoryIds: ["cat1"], itemIds: [] },
+    ] } });
+    // Any variant → legacy behaviour: fee on every pick → 30 - 20 - 5.
+    const ctx = mkCtx({ subtotal: 30, items: [{ menuItemId: "i1", categoryId: "cat1", variantId: "regular", price: 30, quantity: 1, subtotal: 30 }] });
+    expect(applyPromotions([p], ctx)[0]?.discount).toBe(5);
+  });
+
   it("free_dish_meal: an overlapping trigger+free needs 2 units (a dish can't free itself)", () => {
     const p = mkPromo({ promotionType: "free_dish_meal", ruleConfig: { discountPercent: 100, groups: [
       { id: "t", role: "trigger", categoryIds: ["cat1"], itemIds: [] },
