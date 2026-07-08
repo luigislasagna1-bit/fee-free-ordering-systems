@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Dostępne tylko w dostawie",
     "pickupOnlyLabel": "Dostępne tylko na odbiór",
-    "refundableDeposit": "Zwrotna kaucja"
+    "refundableDeposit": "Zwrotna kaucja",
+    "refundableDepositNotice": "Zawiera zwrotną kaucję w wysokości {amount}, zwracaną po jej oddaniu.",
+    "refundableDepositBadge": "+ {amount} zwrotnej kaucji",
+    "refundableDepositNotTaxed": "Zwrotna kaucja (bez podatku)"
   },
   "pizza": {
     "chooseSize": "Wybierz rozmiar",
@@ -2031,7 +2034,8 @@
       "groupDuplicated": "Grupa zduplikowana",
       "failedToDuplicateGroup": "Nie udało się zduplikować grupy — spróbuj ponownie.",
       "refundableDeposit": "Zwrotna kaucja",
-      "refundableDepositHint": "Pobierana od klienta, ale nieopodatkowana. Nigdy nie objęta rabatem ani nagrodami i w pełni zwrotna."
+      "refundableDepositHint": "Dodaje zwrotną kaucję do ceny — pobierana od klienta, ale nieopodatkowana, nigdy nierabatowana ani uprawniająca do nagród, i w pełni zwracana.",
+      "depositAmountLabel": "Kwota kaucji"
     },
     "promotionsList": {
       "stackingMaster": "Master",

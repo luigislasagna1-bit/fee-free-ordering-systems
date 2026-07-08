@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Nur bei Lieferung erhältlich",
     "pickupOnlyLabel": "Nur zur Abholung erhältlich",
-    "refundableDeposit": "Erstattbare Kaution"
+    "refundableDeposit": "Erstattbare Kaution",
+    "refundableDepositNotice": "Enthält eine erstattbare Kaution von {amount}, die bei Rückgabe zurückerstattet wird.",
+    "refundableDepositBadge": "+ {amount} erstattbare Kaution",
+    "refundableDepositNotTaxed": "Erstattbare Kaution (nicht besteuert)"
   },
   "pizza": {
     "chooseSize": "Größe wählen",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "Gruppe dupliziert",
       "failedToDuplicateGroup": "Gruppe konnte nicht dupliziert werden — bitte erneut versuchen.",
       "refundableDeposit": "Erstattbare Kaution",
-      "refundableDepositHint": "Wird dem Kunden berechnet, aber nicht besteuert. Nie rabattiert oder prämienberechtigt und vollständig erstattbar."
+      "refundableDepositHint": "Fügt dem Preis eine rückgabefähige Kaution hinzu — wird dem Kunden berechnet, aber nicht besteuert, nie rabattiert oder prämienberechtigt und vollständig erstattbar.",
+      "depositAmountLabel": "Kautionsbetrag"
     },
     "promotionsList": {
       "stackingMaster": "Master",

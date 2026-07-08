@@ -53,6 +53,7 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
   const t = await getTranslations("admin.orders");
   const tc = await getTranslations("common");
   const tk = await getTranslations("checkout");
+  const tOrd = await getTranslations("ordering");
   const tRoot = await getTranslations();
   const currency = (order.restaurant?.currency ?? "USD").toUpperCase();
   // Reward / store credit on this order (used + earned). Not a hot path (single
@@ -148,6 +149,9 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
                   <span className="text-gray-800">{item.quantity}× {item.name}</span>
                   <span className="text-gray-600">{money(item.subtotal)}</span>
                 </div>
+                {item.isRefundableDeposit && item.depositAmount > 0 && (
+                  <div className="text-xs text-violet-700 pl-4">{tOrd("refundableDepositBadge", { amount: money(item.depositAmount) })}</div>
+                )}
                 {item.modifiers?.map((mod: any) => (
                   <div key={mod.id} className="text-xs text-gray-500 pl-4">+ {mod.name}</div>
                 ))}
@@ -185,6 +189,10 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
             {order.deliveryFee > 0 && <div className="flex justify-between text-gray-600"><span>{tk("delivery")}</span><span>{money(order.deliveryFee)}</span></div>}
             {order.taxAmount > 0 && <div className="flex justify-between text-gray-600"><span>{tk("tax")}</span><span>{money(order.taxAmount)}</span></div>}
             {order.tip > 0 && <div className="flex justify-between text-gray-600"><span>{tk("tip")}</span><span>{money(order.tip)}</span></div>}
+            {(() => {
+              const dep = order.items.reduce((s: number, it: any) => s + (it.isRefundableDeposit && it.depositAmount > 0 ? it.depositAmount * it.quantity : 0), 0);
+              return dep > 0 ? <div className="flex justify-between text-violet-700"><span>{tOrd("refundableDepositNotTaxed")}</span><span>{money(dep)}</span></div> : null;
+            })()}
             <div className="flex justify-between font-bold text-gray-900 pt-1"><span>{tc("total")}</span><span>{money(order.total)}</span></div>
             {rewardUsed > 0 && (
               <>

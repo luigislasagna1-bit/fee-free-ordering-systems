@@ -39,7 +39,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
           isSoldOut, forPickup, forDelivery, isCatering, availableDays, availableFrom, availableTo,
           availabilityMode, hasVariants, sortOrder, variants, pizzaConfig, comboConfig, visibility,
           fulfilment, rewardEarnExcluded, promoExcluded, rewardRedeemExcluded, pinnedToTop,
-          isRefundableDeposit } = body;
+          isRefundableDeposit, depositAmount } = body;
 
   const updateData: any = {};
   // GloriaFood-style scheduled visibility (Luigi 2026-06-12). When present,
@@ -96,6 +96,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   // above so the deposit always wins. The tax carve-out lives in the orders route.
   if (isRefundableDeposit !== undefined) {
     updateData.isRefundableDeposit = !!isRefundableDeposit;
+    // Per-unit deposit amount (untaxed, added on top). ≥ 0, NaN/empty → 0; null
+    // when the toggle is off so no stale amount lingers. Luigi 2026-07-08.
+    updateData.depositAmount = isRefundableDeposit
+      ? Math.max(0, Number.isFinite(Number(depositAmount)) ? Number(depositAmount) : 0)
+      : null;
     if (isRefundableDeposit) {
       updateData.promoExcluded = true;
       updateData.rewardEarnExcluded = true;

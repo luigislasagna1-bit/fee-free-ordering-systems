@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Na voljo samo za dostavo",
     "pickupOnlyLabel": "Na voljo samo za prevzem",
-    "refundableDeposit": "Vračljiva varščina"
+    "refundableDeposit": "Vračljiva varščina",
+    "refundableDepositNotice": "Vključuje vračljivo varščino v višini {amount}, ki se povrne, ko jo prinesete nazaj.",
+    "refundableDepositBadge": "+ {amount} vračljive varščine",
+    "refundableDepositNotTaxed": "Vračljiva varščina (neobdavčena)"
   },
   "pizza": {
     "chooseSize": "Izberite velikost",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "Skupina podvojena",
       "failedToDuplicateGroup": "Skupine ni bilo mogoče podvojiti — poskusite znova.",
       "refundableDeposit": "Vračljiva varščina",
-      "refundableDepositHint": "Zaračuna se stranki, a ni obdavčena. Nikoli ni znižana ali upravičena do nagrad in je v celoti vračljiva."
+      "refundableDepositHint": "Ceni doda vračljivo varščino — zaračuna se kupcu, a se ne obdavči, nikoli se ne zniža niti ne omogoča nagrad in se v celoti povrne.",
+      "depositAmountLabel": "Znesek varščine"
     },
     "promotionsList": {
       "stackingMaster": "Master",

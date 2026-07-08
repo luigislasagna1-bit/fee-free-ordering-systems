@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "متاح للتوصيل فقط",
     "pickupOnlyLabel": "متاح للاستلام فقط",
-    "refundableDeposit": "وديعة قابلة للاسترداد"
+    "refundableDeposit": "وديعة قابلة للاسترداد",
+    "refundableDepositNotice": "يشمل وديعة قابلة للاسترداد بقيمة {amount}، تُعاد عند إرجاعها.",
+    "refundableDepositBadge": "+ {amount} وديعة قابلة للاسترداد",
+    "refundableDepositNotTaxed": "وديعة قابلة للاسترداد (غير خاضعة للضريبة)"
   },
   "pizza": {
     "chooseSize": "اختر الحجم",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "تم تكرار المجموعة",
       "failedToDuplicateGroup": "تعذّر تكرار المجموعة — يرجى المحاولة مرة أخرى.",
       "refundableDeposit": "وديعة قابلة للاسترداد",
-      "refundableDepositHint": "تُحصَّل من العميل لكنها غير خاضعة للضريبة. لا تُخصَّم أبدًا ولا تؤهّل للمكافآت، وقابلة للاسترداد بالكامل."
+      "refundableDepositHint": "يضيف وديعة قابلة للإرجاع فوق السعر — تُحصَّل من العميل لكنها غير خاضعة للضريبة، ولا تُخصم أبدًا ولا تؤهل للمكافآت، وتُسترد بالكامل.",
+      "depositAmountLabel": "مبلغ الوديعة"
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",

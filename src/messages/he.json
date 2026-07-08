@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "זמין למשלוח בלבד",
     "pickupOnlyLabel": "זמין לאיסוף עצמי בלבד",
-    "refundableDeposit": "פיקדון בר-החזר"
+    "refundableDeposit": "פיקדון בר-החזר",
+    "refundableDepositNotice": "כולל פיקדון בר-החזר בסך {amount}, המוחזר כאשר אתם מחזירים אותו.",
+    "refundableDepositBadge": "+ {amount} פיקדון בר-החזר",
+    "refundableDepositNotTaxed": "פיקדון בר-החזר (ללא מס)"
   },
   "pizza": {
     "chooseSize": "בחר גודל",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "הקבוצה שוכפלה",
       "failedToDuplicateGroup": "לא ניתן לשכפל את הקבוצה — נסו שוב.",
       "refundableDeposit": "פיקדון בר-החזר",
-      "refundableDepositHint": "מחויב מהלקוח אך אינו ממוסה. לעולם אינו מוזל או זכאי לתגמולים, וניתן להחזר מלא."
+      "refundableDepositHint": "מוסיף פיקדון בר-החזר על גבי המחיר — נגבה מהלקוח אך אינו חייב במס, לעולם אינו מוזל או זכאי לתגמולים, ומוחזר במלואו.",
+      "depositAmountLabel": "סכום הפיקדון"
     },
     "promotionsList": {
       "stackingMaster": "מאסטר",

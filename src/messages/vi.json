@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Chỉ có khi giao hàng",
     "pickupOnlyLabel": "Chỉ có khi tự đến lấy",
-    "refundableDeposit": "Tiền đặt cọc hoàn lại"
+    "refundableDeposit": "Tiền đặt cọc hoàn lại",
+    "refundableDepositNotice": "Bao gồm tiền đặt cọc hoàn lại {amount}, được hoàn khi bạn mang trả lại.",
+    "refundableDepositBadge": "+ {amount} tiền đặt cọc hoàn lại",
+    "refundableDepositNotTaxed": "Tiền đặt cọc hoàn lại (không tính thuế)"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -2031,7 +2034,8 @@
       "groupDuplicated": "Đã nhân bản nhóm",
       "failedToDuplicateGroup": "Không thể nhân bản nhóm — vui lòng thử lại.",
       "refundableDeposit": "Tiền đặt cọc hoàn lại",
-      "refundableDepositHint": "Được tính cho khách nhưng không chịu thuế. Không bao giờ được giảm giá hay đủ điều kiện nhận thưởng, và hoàn lại đầy đủ."
+      "refundableDepositHint": "Thêm khoản đặt cọc hoàn lại vào giá — tính cho khách nhưng không chịu thuế, không bao giờ được giảm giá hoặc đủ điều kiện nhận thưởng, và được hoàn lại toàn bộ.",
+      "depositAmountLabel": "Số tiền đặt cọc"
     },
     "promotionsList": {
       "stackingMaster": "Master",

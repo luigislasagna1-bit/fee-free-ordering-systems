@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Доступно лише для доставки",
     "pickupOnlyLabel": "Доступно лише для самовивозу",
-    "refundableDeposit": "Поворотний депозит"
+    "refundableDeposit": "Поворотний депозит",
+    "refundableDepositNotice": "Включає поворотний депозит {amount}, який повертається, коли ви приносите його назад.",
+    "refundableDepositBadge": "+ {amount} поворотний депозит",
+    "refundableDepositNotTaxed": "Поворотний депозит (без податку)"
   },
   "pizza": {
     "chooseSize": "Оберіть розмір",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "Групу дубльовано",
       "failedToDuplicateGroup": "Не вдалося дублювати групу — спробуйте ще раз.",
       "refundableDeposit": "Поворотний депозит",
-      "refundableDepositHint": "Стягується з клієнта, але не оподатковується. Ніколи не знижується та не дає право на винагороди, повністю повертається."
+      "refundableDepositHint": "Додає до ціни поворотний депозит — стягується з клієнта, але не оподатковується, ніколи не знижується та не дає права на винагороду, і повністю повертається.",
+      "depositAmountLabel": "Сума депозиту"
     },
     "promotionsList": {
       "stackingMaster": "Майстер",

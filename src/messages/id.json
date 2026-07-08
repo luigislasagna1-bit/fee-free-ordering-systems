@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Hanya tersedia untuk pengantaran",
     "pickupOnlyLabel": "Hanya tersedia untuk ambil sendiri",
-    "refundableDeposit": "Deposit yang dapat dikembalikan"
+    "refundableDeposit": "Deposit yang dapat dikembalikan",
+    "refundableDepositNotice": "Termasuk deposit yang dapat dikembalikan sebesar {amount}, dikembalikan saat Anda membawanya kembali.",
+    "refundableDepositBadge": "+ {amount} deposit yang dapat dikembalikan",
+    "refundableDepositNotTaxed": "Deposit yang dapat dikembalikan (tanpa pajak)"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "Grup diduplikat",
       "failedToDuplicateGroup": "Tidak dapat menduplikat grup — coba lagi.",
       "refundableDeposit": "Deposit yang dapat dikembalikan",
-      "refundableDepositHint": "Dibebankan ke pelanggan tetapi tidak dikenai pajak. Tidak pernah didiskon atau memenuhi syarat hadiah, dan sepenuhnya dapat dikembalikan."
+      "refundableDepositHint": "Menambahkan deposit yang dapat dikembalikan di atas harga — dibebankan kepada pelanggan tetapi tidak dikenai pajak, tidak pernah didiskon atau memenuhi syarat hadiah, dan dapat dikembalikan sepenuhnya.",
+      "depositAmountLabel": "Jumlah deposit"
     },
     "promotionsList": {
       "stackingMaster": "Master",

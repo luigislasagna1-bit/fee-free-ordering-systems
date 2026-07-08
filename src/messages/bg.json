@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Само за доставка",
     "pickupOnlyLabel": "Само за взимане",
-    "refundableDeposit": "Възстановим депозит"
+    "refundableDeposit": "Възстановим депозит",
+    "refundableDepositNotice": "Включва възстановим депозит от {amount}, който се връща, когато го върнете.",
+    "refundableDepositBadge": "+ {amount} възстановим депозит",
+    "refundableDepositNotTaxed": "Възстановим депозит (без данък)"
   },
   "pizza": {
     "chooseSize": "Избери размер",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "Групата е дублирана",
       "failedToDuplicateGroup": "Групата не можа да бъде дублирана — опитайте отново.",
       "refundableDeposit": "Възстановим депозит",
-      "refundableDepositHint": "Начислява се на клиента, но не се облага с данък. Никога не се намалява, нито дава право на награди, и подлежи на пълно възстановяване."
+      "refundableDepositHint": "Добавя възстановим депозит върху цената — начислява се на клиента, но не се облага с данък, никога не се отстъпва и не дава право на награди, и се възстановява напълно.",
+      "depositAmountLabel": "Сума на депозита"
     },
     "promotionsList": {
       "stackingMaster": "Главна",

@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Available for delivery only",
     "pickupOnlyLabel": "Available for pickup only",
-    "refundableDeposit": "Refundable deposit"
+    "refundableDeposit": "Refundable deposit",
+    "refundableDepositNotice": "Includes a {amount} refundable deposit, returned when you bring it back.",
+    "refundableDepositBadge": "+ {amount} refundable deposit",
+    "refundableDepositNotTaxed": "Refundable deposit (not taxed)"
   },
   "pizza": {
     "chooseSize": "Choose Size",
@@ -2506,7 +2509,8 @@
       "groupDuplicated": "Group duplicated",
       "failedToDuplicateGroup": "Couldn't duplicate the group — please try again.",
       "refundableDeposit": "Refundable deposit",
-      "refundableDepositHint": "Charged to the customer but not taxed. Never discounted or eligible for rewards, and fully refundable."
+      "refundableDepositHint": "Adds a returnable deposit on top of the price — charged to the customer but not taxed, never discounted or reward-eligible, and fully refundable.",
+      "depositAmountLabel": "Deposit amount"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "デリバリー限定",
     "pickupOnlyLabel": "テイクアウト限定",
-    "refundableDeposit": "返金可能なデポジット"
+    "refundableDeposit": "返金可能なデポジット",
+    "refundableDepositNotice": "{amount} の返金可能なデポジットを含みます。返却時に返金されます。",
+    "refundableDepositBadge": "+ {amount} 返金可能なデポジット",
+    "refundableDepositNotTaxed": "返金可能なデポジット（非課税）"
   },
   "pizza": {
     "chooseSize": "サイズを選ぶ",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "グループを複製しました",
       "failedToDuplicateGroup": "グループを複製できませんでした — もう一度お試しください。",
       "refundableDeposit": "返金可能なデポジット",
-      "refundableDepositHint": "お客様に請求されますが課税されません。割引や特典の対象にはならず、全額返金できます。"
+      "refundableDepositHint": "価格に返却式のデポジットを追加します。お客様に請求されますが課税されず、割引や特典の対象にもならず、全額返金されます。",
+      "depositAmountLabel": "デポジット金額"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

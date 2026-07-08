@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Доступно само за доставу",
     "pickupOnlyLabel": "Доступно само за преузимање",
-    "refundableDeposit": "Povratni depozit"
+    "refundableDeposit": "Povratni depozit",
+    "refundableDepositNotice": "Uključuje povratni depozit od {amount}, koji se vraća kada ga donesete nazad.",
+    "refundableDepositBadge": "+ {amount} povratnog depozita",
+    "refundableDepositNotTaxed": "Povratni depozit (bez poreza)"
   },
   "pizza": {
     "chooseSize": "Izaberite veličinu",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "Grupa duplirana",
       "failedToDuplicateGroup": "Grupu nije bilo moguće duplirati — pokušajte ponovo.",
       "refundableDeposit": "Povratni depozit",
-      "refundableDepositHint": "Naplaćuje se kupcu, ali se ne oporezuje. Nikada se ne umanjuje niti daje pravo na nagrade i u potpunosti je povratan."
+      "refundableDepositHint": "Dodaje povratni depozit na cenu — naplaćuje se kupcu, ali se ne oporezuje, nikada se ne umanjuje niti daje pravo na nagrade, i u potpunosti se vraća.",
+      "depositAmountLabel": "Iznos depozita"
     },
     "promotionsList": {
       "stackingMaster": "Master",

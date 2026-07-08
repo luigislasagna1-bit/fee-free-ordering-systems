@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "केवल डिलीवरी के लिए उपलब्ध",
     "pickupOnlyLabel": "केवल पिकअप के लिए उपलब्ध",
-    "refundableDeposit": "वापसी योग्य जमा"
+    "refundableDeposit": "वापसी योग्य जमा",
+    "refundableDepositNotice": "इसमें {amount} की वापसी योग्य जमा राशि शामिल है, जो वापस लाने पर लौटा दी जाती है।",
+    "refundableDepositBadge": "+ {amount} वापसी योग्य जमा",
+    "refundableDepositNotTaxed": "वापसी योग्य जमा (कर रहित)"
   },
   "pizza": {
     "chooseSize": "आकार चुनें",
@@ -2461,7 +2464,8 @@
       "groupDuplicated": "समूह डुप्लिकेट किया गया",
       "failedToDuplicateGroup": "समूह डुप्लिकेट नहीं हो सका — कृपया फिर से प्रयास करें।",
       "refundableDeposit": "वापसी योग्य जमा",
-      "refundableDepositHint": "ग्राहक से लिया जाता है लेकिन कर नहीं लगता। कभी छूट या पुरस्कार के योग्य नहीं, और पूरी तरह वापसी योग्य।"
+      "refundableDepositHint": "कीमत के ऊपर एक लौटाने योग्य जमा जोड़ता है — ग्राहक से लिया जाता है लेकिन इस पर कर नहीं लगता, इस पर कभी छूट नहीं मिलती और न ही यह इनाम के योग्य होता है, और यह पूरी तरह वापसी योग्य है।",
+      "depositAmountLabel": "जमा राशि"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",

@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "仅限外送",
     "pickupOnlyLabel": "仅限自取",
-    "refundableDeposit": "可退押金"
+    "refundableDeposit": "可退押金",
+    "refundableDepositNotice": "包含 {amount} 可退押金，归还时退回。",
+    "refundableDepositBadge": "+ {amount} 可退押金",
+    "refundableDepositNotTaxed": "可退押金（不计税）"
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "分组已复制",
       "failedToDuplicateGroup": "无法复制分组——请重试。",
       "refundableDeposit": "可退押金",
-      "refundableDepositHint": "向顾客收取但不计税。永不打折，也不参与奖励，可全额退还。"
+      "refundableDepositHint": "在价格之外加收可退押金——向顾客收取但不计税，永不打折也不参与奖励，可全额退还。",
+      "depositAmountLabel": "押金金额"
     },
     "promotionsList": {
       "stackingMaster": "主控",

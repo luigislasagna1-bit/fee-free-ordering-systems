@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Pieejams tikai piegādei",
     "pickupOnlyLabel": "Pieejams tikai saņemšanai",
-    "refundableDeposit": "Atmaksājama drošības nauda"
+    "refundableDeposit": "Atmaksājama drošības nauda",
+    "refundableDepositNotice": "Ietver atmaksājamu drošības naudu {amount} apmērā, kas tiek atmaksāta, kad to atgriežat.",
+    "refundableDepositBadge": "+ {amount} atmaksājama drošības nauda",
+    "refundableDepositNotTaxed": "Atmaksājama drošības nauda (bez nodokļa)"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "Grupa dublēta",
       "failedToDuplicateGroup": "Grupu neizdevās dublēt — mēģiniet vēlreiz.",
       "refundableDeposit": "Atmaksājama drošības nauda",
-      "refundableDepositHint": "Tiek iekasēta no klienta, bet netiek aplikta ar nodokli. Nekad netiek atlaista vai kvalificēta atlīdzībām, un ir pilnībā atmaksājama."
+      "refundableDepositHint": "Pievieno cenai atmaksājamu drošības naudu — tiek iekasēta no klienta, bet netiek aplikta ar nodokli, nekad netiek atlaista un nedod tiesības uz atlīdzību, un tiek pilnībā atmaksāta.",
+      "depositAmountLabel": "Drošības naudas summa"
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

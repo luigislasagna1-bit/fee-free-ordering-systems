@@ -98,6 +98,9 @@ const PUBLIC_ORDER_SELECT = {
       id: true, menuItemId: true, variantId: true,
       name: true, price: true, quantity: true, subtotal: true,
       notes: true, variantName: true, bundleItems: true,
+      // Refundable deposit — needed so the status page shows the badge + the
+      // "Refundable deposit (not taxed)" total line (else it'd read blank/NaN).
+      isRefundableDeposit: true, depositAmount: true,
       modifiers: { select: { name: true, priceAdjustment: true } },
     },
   },

@@ -94,6 +94,10 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
         rewardEarnExcluded: source.rewardEarnExcluded,
         promoExcluded: source.promoExcluded,
         rewardRedeemExcluded: source.rewardRedeemExcluded,
+        // Carry the refundable deposit onto the copy (a duplicated keg keeps
+        // its $50 deposit). Luigi 2026-07-08.
+        isRefundableDeposit: source.isRefundableDeposit,
+        depositAmount: source.depositAmount,
         // pizzaConfig is remapped AFTER the groups clone (needs their new ids).
         pizzaConfig: source.pizzaConfig,
         comboConfig: source.comboConfig,

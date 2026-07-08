@@ -35,6 +35,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   // same word the kitchen uses, already translated in all 38 locales. Luigi
   // 2026-06-09.
   const tk = useTranslations("kitchen");
+  const tOrd = useTranslations("ordering");
   // Root translator for the shared money.* / receipt.customer.* keys the
   // canonical breakdown uses (same rows as the confirmation page).
   const tRoot = useTranslations();
@@ -300,6 +301,11 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
     .filter((p) => p.type !== "free_delivery")
     .reduce((s, p) => s + (p.discount || 0), 0)
     + ((order.couponDiscount as number | undefined) ?? 0);
+  // Refundable-deposit portions — charged, not taxed; shown on their own line.
+  const depositLinesTotal = (order.items ?? []).reduce(
+    (s: number, it: any) => s + (it.isRefundableDeposit && it.depositAmount > 0 ? it.depositAmount * it.quantity : 0),
+    0,
+  );
 
   // Subject prefilled with order number so the restaurant can pull the
   // order up immediately when they open the email.
@@ -582,6 +588,11 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                       </span>
                       <span className="text-gray-600 whitespace-nowrap">{formatCurrency(item.subtotal)}</span>
                     </div>
+                    {(item as any).isRefundableDeposit && (item as any).depositAmount > 0 && (
+                      <div className="text-xs text-violet-700 mt-0.5">
+                        {tOrd("refundableDepositBadge", { amount: formatCurrency((item as any).depositAmount) })}
+                      </div>
+                    )}
                     {mods.length > 0 && (
                       <div className="mt-0.5 pl-3 text-xs text-gray-500">
                         {mods.map((m: any, i: number) => (
@@ -679,6 +690,9 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
               )}
               {order.tip > 0 && (
                 <div className="flex justify-between text-gray-600"><span>{t("tip")}</span><span>{formatCurrency(order.tip)}</span></div>
+              )}
+              {depositLinesTotal > 0 && (
+                <div className="flex justify-between text-violet-700"><span>{tOrd("refundableDepositNotTaxed")}</span><span>{formatCurrency(depositLinesTotal)}</span></div>
               )}
               <div className="flex justify-between font-bold text-gray-900 pt-1"><span>{t("total")}</span><span>{formatCurrency(order.total)}</span></div>
               {/* Reward Dollars used as part-payment on this order. */}

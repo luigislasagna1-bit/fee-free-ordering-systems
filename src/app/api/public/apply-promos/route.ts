@@ -86,11 +86,14 @@ export async function POST(req: NextRequest) {
   //   rewardRedeemExcluded → the line can't be PAID FOR with Reward Dollars
   const promoExcludedIds = new Set<string>();
   const redeemExcludedIds = new Set<string>();
+  // menuItemId → per-unit refundable deposit (untaxed, never reward-redeemable).
+  const depositById = new Map<string, number>();
   if (lineItemIds.length) {
     const rows = await prisma.menuItem.findMany({
       where: { id: { in: lineItemIds }, restaurantId: restaurant.id },
       select: {
         id: true, categoryId: true, name: true, promoExcluded: true, rewardRedeemExcluded: true,
+        isRefundableDeposit: true, depositAmount: true,
         category: { select: { promoExcluded: true, rewardRedeemExcluded: true } },
       },
     });
@@ -99,6 +102,11 @@ export async function POST(req: NextRequest) {
     for (const r of rows) {
       if (r.promoExcluded || r.category?.promoExcluded) promoExcludedIds.add(r.id);
       if (r.rewardRedeemExcluded || r.category?.rewardRedeemExcluded) redeemExcludedIds.add(r.id);
+      // Per-unit refundable deposit — excluded from the reward-redeemable base
+      // (mirrors the charge path; a deposit is never paid with store credit).
+      if (r.isRefundableDeposit && r.depositAmount != null && r.depositAmount > 0) {
+        depositById.set(r.id, Math.max(0, Math.round(r.depositAmount * 100) / 100));
+      }
     }
   }
   const ctxItems = rawItems.map((i) => ({
@@ -208,8 +216,15 @@ export async function POST(req: NextRequest) {
           // promo-discount exclusion (Luigi 2026-07-02).
           redeemExcludedTotal: Math.round(
             rawItems.reduce(
-              (s: number, i: any) =>
-                s + (typeof i?.menuItemId === "string" && redeemExcludedIds.has(i.menuItemId) ? (Number(i.subtotal) || 0) : 0),
+              (s: number, i: any) => {
+                if (typeof i?.menuItemId !== "string") return s;
+                // Redeem-excluded item bases (gift cards) PLUS every refundable
+                // deposit portion (base is in subtotal; the deposit rides on top,
+                // untaxed and never store-credit-payable) — mirrors the charge path.
+                const base = redeemExcludedIds.has(i.menuItemId) ? (Number(i.subtotal) || 0) : 0;
+                const dep = (depositById.get(i.menuItemId) || 0) * (Number(i.quantity) || 1);
+                return s + base + dep;
+              },
               0,
             ) * 100,
           ) / 100,

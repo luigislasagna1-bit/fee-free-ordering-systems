@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Alleen beschikbaar bij bezorging",
     "pickupOnlyLabel": "Alleen beschikbaar voor afhalen",
-    "refundableDeposit": "Terugbetaalbare borg"
+    "refundableDeposit": "Terugbetaalbare borg",
+    "refundableDepositNotice": "Bevat een terugbetaalbare borg van {amount}, die wordt terugbetaald wanneer u deze terugbrengt.",
+    "refundableDepositBadge": "+ {amount} terugbetaalbare borg",
+    "refundableDepositNotTaxed": "Terugbetaalbare borg (niet belast)"
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "Groep gedupliceerd",
       "failedToDuplicateGroup": "Kon de groep niet dupliceren — probeer het opnieuw.",
       "refundableDeposit": "Terugbetaalbare borg",
-      "refundableDepositHint": "Wordt aan de klant in rekening gebracht maar niet belast. Nooit met korting of in aanmerking voor beloningen, en volledig terugbetaalbaar."
+      "refundableDepositHint": "Voegt een statiegeldborg toe boven op de prijs — wordt aan de klant in rekening gebracht maar niet belast, nooit met korting of in aanmerking voor beloningen, en volledig terugbetaalbaar.",
+      "depositAmountLabel": "Borgbedrag"
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -5,7 +5,7 @@ import {
   ShoppingCart, MapPin, Phone, Clock, Plus, Minus, X,
   AlertCircle, Tag, Loader2, ChevronDown, Star, Info, Calendar,
   Truck, ShoppingBag, ChevronLeft, ChevronRight,
-  UserCircle, LogIn, Search, Utensils, Package, Gift, Trash2,
+  UserCircle, LogIn, Search, Utensils, Package, Gift, Trash2, PiggyBank,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
@@ -2435,11 +2435,21 @@ export function OrderingPageClient({
   }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod, suppressedPromoIds, debouncedIdentity, customerIsReturning, hasOrderedHere, pendingGrantId]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
-  // Refundable-deposit lines are charged but NOT taxed — sum them so we can
-  // pull them out of the tax base and add them back to the total (mirrors the
-  // server in api/orders/route.ts). ci.menuItem carries the flag.
+  // Per-unit refundable deposit for a cart line — derived from the line's menu
+  // item (single source of truth), so it can't drift from the stored lineTotal.
+  // Null depositAmount = no deposit (retired old-model item). Mirrors
+  // depositPerUnit() in api/orders/route.ts. Luigi 2026-07-08.
+  const depositPerUnit = (ci: CartItem): number => {
+    const m = ci.menuItem as any;
+    if (!m?.isRefundableDeposit || m.depositAmount == null) return 0;
+    const amt = Number(m.depositAmount);
+    return Number.isFinite(amt) ? Math.max(0, Math.round(amt * 100) / 100) : 0;
+  };
+  // Refundable-deposit PORTIONS are charged but NOT taxed and are NOT in the
+  // subtotal (base only) — sum them so we add them to the total as their own
+  // line, kept out of the taxed base + promo/min-order math (mirrors the server).
   const depositLinesTotal = Math.round(
-    cart.reduce((s, i) => s + ((i.menuItem as any)?.isRefundableDeposit ? i.lineTotal : 0), 0) * 100,
+    cart.reduce((s, i) => s + depositPerUnit(i) * i.quantity, 0) * 100,
   ) / 100;
 
   // Per-line "You saved X" badges for the CART drawer (Fabrizio cmqv33v2o
@@ -3156,7 +3166,9 @@ export function OrderingPageClient({
     { subtotal, type: feeOrderType, at: new Date() },
   );
   const serviceFeesTotal = appliedServiceFees.reduce((s, f) => s + f.amount, 0);
-  const taxBase = Math.max(0, subtotal - totalDiscount - depositLinesTotal + deliveryFee + serviceFeesTotal);
+  // Deposit is NOT in `subtotal` (base only) so it's already out of the tax base;
+  // it's added back into the total on its own line below. Mirrors the server.
+  const taxBase = Math.max(0, subtotal - totalDiscount + deliveryFee + serviceFeesTotal);
   const taxAmount = taxBase * (restaurant.taxRate / 100);
   const total = taxBase + taxAmount + tipAmount + depositLinesTotal;
 
@@ -3318,6 +3330,14 @@ export function OrderingPageClient({
   const currentItemPrice = selectedItem
     ? (selectedVariant ? selectedVariant.price : selectedItem.price) + getModPrice(selectedItem, mods)
     : 0;
+  // Per-unit refundable deposit for the item open in the customizer (untaxed,
+  // added on top). 0 when the item has none. Luigi 2026-07-08.
+  const currentItemDeposit = (() => {
+    const m = selectedItem as any;
+    if (!m?.isRefundableDeposit || m.depositAmount == null) return 0;
+    const amt = Number(m.depositAmount);
+    return Number.isFinite(amt) ? Math.max(0, Math.round(amt * 100) / 100) : 0;
+  })();
 
   const addToCart = () => {
     if (!selectedItem) return;
@@ -5518,6 +5538,19 @@ export function OrderingPageClient({
               </div>
             )}
 
+            {/* Refundable-deposit notice — discloses the returnable, untaxed
+                deposit added on top before the customer commits (Luigi
+                2026-07-08). Inline (not a blocking modal) — disclosure, not a
+                decision. */}
+            {currentItemDeposit > 0 && (
+              <div className="px-5 pb-1">
+                <div className="flex items-start gap-2 text-sm text-violet-700 bg-violet-50 border border-violet-100 rounded-xl px-3 py-2.5">
+                  <PiggyBank className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                  <span>{t("refundableDepositNotice", { amount: fmt(currentItemDeposit) })}</span>
+                </div>
+              </div>
+            )}
+
             {/* Quantity stepper + Add to Cart */}
             <div className="p-5">
               <div className="flex items-center gap-3">
@@ -5542,11 +5575,13 @@ export function OrderingPageClient({
                     <Plus className="w-5 h-5" />
                   </button>
                 </div>
-                {/* Add to Cart — price now multiplies by qty */}
+                {/* Add to Cart — shows base + deposit so the button reflects the
+                    full charge for this item (deposit is stored/summed
+                    separately; this is display only). */}
                 <button onClick={addToCart}
                   className="flex-1 text-white font-bold py-4 rounded-xl transition"
                   style={{ backgroundColor: theme.primaryColor }}>
-                  {t("addToCart")} · {fmt(currentItemPrice * itemQuantity)}
+                  {t("addToCart")} · {fmt((currentItemPrice + currentItemDeposit) * itemQuantity)}
                 </button>
               </div>
             </div>
@@ -5637,11 +5672,13 @@ export function OrderingPageClient({
                             {ci.bundlePromoName ?? ci.menuItem.name}
                           </div>
                           {ci.variant && <div className="text-xs mt-0.5 font-medium" style={{ color: theme.primaryColor }}>{ci.variant.name}</div>}
-                          {/* Refundable-deposit badge — reminds the customer this
-                              line is a returnable, untaxed deposit (Luigi 2026-07-07). */}
-                          {(ci.menuItem as any)?.isRefundableDeposit && (
+                          {/* Refundable-deposit badge — shows the returnable,
+                              untaxed deposit added on top of this item (Luigi
+                              2026-07-08). Per-unit amount; the line's deposit is
+                              added to the order total on its own line. */}
+                          {depositPerUnit(ci) > 0 && (
                             <div className="inline-flex items-center gap-1 mt-0.5 text-[11px] font-medium text-violet-700 bg-violet-50 border border-violet-100 rounded-full px-2 py-0.5">
-                              {t("refundableDeposit")}
+                              {t("refundableDepositBadge", { amount: fmt(depositPerUnit(ci)) })}
                             </div>
                           )}
                           {/* Per-item "You saved" badge — same as checkout, so a
@@ -5896,6 +5933,14 @@ export function OrderingPageClient({
                       <span>{fmt(tipAmount)}</span>
                     </div>
                   )}
+                  {/* Refundable deposit — charged but not taxed; its own line
+                      so the customer sees the returnable amount clearly. */}
+                  {depositLinesTotal > 0 && (
+                    <div className="flex justify-between text-violet-700">
+                      <span>{t("refundableDepositNotTaxed")}</span>
+                      <span>{fmt(depositLinesTotal)}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between font-bold text-gray-900 text-base pt-2 border-t border-gray-100 mt-1"><span>{t("total")}</span><span>{fmt(total)}</span></div>
                 </div>
 
@@ -6089,6 +6134,7 @@ export function OrderingPageClient({
           deliveryFee={deliveryFee}
           appliedServiceFees={appliedServiceFees}
           taxAmount={taxAmount}
+          depositLinesTotal={depositLinesTotal}
           tipAmount={tipAmount}
           tipPercent={tipPercent}
           setTipPercent={setTipPercent}

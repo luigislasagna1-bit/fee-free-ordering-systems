@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Endast för leverans",
     "pickupOnlyLabel": "Endast för avhämtning",
-    "refundableDeposit": "Återbetalbar deposition"
+    "refundableDeposit": "Återbetalbar deposition",
+    "refundableDepositNotice": "Inkluderar en återbetalbar deposition på {amount}, som återlämnas när du lämnar tillbaka den.",
+    "refundableDepositBadge": "+ {amount} återbetalbar deposition",
+    "refundableDepositNotTaxed": "Återbetalbar deposition (ej beskattad)"
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "Grupp duplicerad",
       "failedToDuplicateGroup": "Kunde inte duplicera gruppen — försök igen.",
       "refundableDeposit": "Återbetalbar deposition",
-      "refundableDepositHint": "Debiteras kunden men beskattas inte. Aldrig rabatterad eller berättigad till belöningar, och helt återbetalbar."
+      "refundableDepositHint": "Lägger till en pant utöver priset — debiteras kunden men beskattas inte, ges aldrig rabatt eller belöning, och återbetalas helt.",
+      "depositAmountLabel": "Depositionsbelopp"
     },
     "promotionsList": {
       "stackingMaster": "Master",

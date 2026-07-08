@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Διαθέσιμο μόνο για διανομή",
     "pickupOnlyLabel": "Διαθέσιμο μόνο για παραλαβή",
-    "refundableDeposit": "Επιστρεπτέα εγγύηση"
+    "refundableDeposit": "Επιστρεπτέα εγγύηση",
+    "refundableDepositNotice": "Περιλαμβάνει επιστρεπτέα εγγύηση {amount}, που επιστρέφεται όταν την φέρετε πίσω.",
+    "refundableDepositBadge": "+ {amount} επιστρεπτέα εγγύηση",
+    "refundableDepositNotTaxed": "Επιστρεπτέα εγγύηση (χωρίς φόρο)"
   },
   "pizza": {
     "chooseSize": "Επιλογή μεγέθους",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "Η ομάδα αντιγράφηκε",
       "failedToDuplicateGroup": "Δεν ήταν δυνατή η αντιγραφή της ομάδας — δοκιμάστε ξανά.",
       "refundableDeposit": "Επιστρεπτέα εγγύηση",
-      "refundableDepositHint": "Χρεώνεται στον πελάτη αλλά δεν φορολογείται. Ποτέ με έκπτωση ούτε επιλέξιμη για ανταμοιβές, και πλήρως επιστρεπτέα."
+      "refundableDepositHint": "Προσθέτει μια επιστρεπτέα εγγύηση πάνω από την τιμή — χρεώνεται στον πελάτη αλλά δεν φορολογείται, δεν εκπίπτει ποτέ ούτε είναι επιλέξιμη για επιβραβεύσεις, και επιστρέφεται πλήρως.",
+      "depositAmountLabel": "Ποσό εγγύησης"
     },
     "promotionsList": {
       "stackingMaster": "Master",

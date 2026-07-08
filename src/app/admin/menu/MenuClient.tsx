@@ -411,10 +411,12 @@ function ItemModal({
     isCatering: (item as any)?.isCatering ?? false,
     // Pin-to-top featured strip (Fabrizio cmr80joh0).
     pinnedToTop: (item as any)?.pinnedToTop ?? false,
-    // Refundable deposit: this item is a returnable deposit (its price is the
-    // deposit amount), charged but NOT taxed, never discounted or Reward-Dollar
-    // eligible. The save route force-sets promo/reward exclusions when on.
+    // Refundable deposit: this item ALSO carries a returnable deposit of
+    // `depositAmount` per unit (e.g. a $150 keg + $50 deposit), charged but NOT
+    // taxed, never discounted or Reward-Dollar eligible. The save route force-
+    // sets promo/reward exclusions when on. Luigi 2026-07-08.
     isRefundableDeposit: (item as any)?.isRefundableDeposit ?? false,
+    depositAmount: (item as any)?.depositAmount != null ? String((item as any).depositAmount) : "",
     hasVariants: item?.hasVariants ?? false,
     availableFrom: item?.availableFrom ?? "",
     availableTo: item?.availableTo ?? "",
@@ -654,6 +656,9 @@ function ItemModal({
     const payload = {
       ...formRest,
       price: parseFloat(form.price) || 0,
+      // Deposit amount is a currency string in the form — ship a number, or null
+      // when the deposit toggle is off (clears any stale amount). Luigi 2026-07-08.
+      depositAmount: form.isRefundableDeposit ? (parseFloat(form.depositAmount) || 0) : null,
       variants: form.hasVariants ? variants.filter(v => v.name) : undefined,
       pizzaConfig,
       comboConfig,
@@ -788,9 +793,17 @@ function ItemModal({
                 ))}
               </div>
               {form.isRefundableDeposit && (
-                <p className="text-xs text-violet-700 bg-violet-50 border border-violet-100 rounded-lg px-3 py-2 mt-2">
-                  {t("refundableDepositHint")}
-                </p>
+                <div className="mt-2 space-y-2 rounded-lg border border-violet-100 bg-violet-50 px-3 py-2.5">
+                  <p className="text-xs text-violet-700">{t("refundableDepositHint")}</p>
+                  <div>
+                    <label className="block text-xs font-medium text-violet-800 mb-1">{t("depositAmountLabel")}</label>
+                    <div className="flex items-center w-full max-w-[180px] border border-violet-200 rounded-lg bg-white focus-within:ring-2 focus-within:ring-violet-500">
+                      <span className="pl-3 pr-1 text-gray-400 text-sm flex-shrink-0">{curSym}</span>
+                      <input type="number" step="0.01" min="0" className="flex-1 min-w-0 border-none bg-transparent pr-3 py-2 text-sm focus:outline-none focus:ring-0"
+                        value={form.depositAmount} onChange={e => setForm(f => ({ ...f, depositAmount: e.target.value }))} placeholder="0.00" />
+                    </div>
+                  </div>
+                </div>
               )}
             </>
           )}

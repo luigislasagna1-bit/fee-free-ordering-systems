@@ -24,6 +24,7 @@ export default async function ConfirmationPage({
   // stops burying the tip / omitting the balance — no new i18n. Luigi 2026-07-02.
   const tStatus = await getTranslations("customer.orderStatus");
   const tReceipt = await getTranslations("receipt.customer");
+  const tOrd = await getTranslations("ordering");
   const tRoot = await getTranslations();
   const { slug } = await params;
   const { orderId, payment_intent } = await searchParams;
@@ -156,6 +157,11 @@ export default async function ConfirmationPage({
                     <span className="text-gray-700">{item.quantity}× {item.name}</span>
                     <span className="text-gray-600">{formatCurrency(item.subtotal)}</span>
                   </div>
+                  {(item as any).isRefundableDeposit && (item as any).depositAmount > 0 && (
+                    <div className="text-xs text-violet-700 mt-0.5">
+                      {tOrd("refundableDepositBadge", { amount: formatCurrency((item as any).depositAmount) })}
+                    </div>
+                  )}
                   {bundle && bundle.length > 0 && (
                     <div className="mt-1 pl-3 border-l-2 border-gray-100 space-y-0.5 text-xs text-gray-500">
                       {bundle.map((child, i) => {
@@ -245,6 +251,12 @@ export default async function ConfirmationPage({
               .reduce((s, p) => s + (p.discount || 0), 0)
               + ((order as any).couponDiscount ?? 0);
             const isDelivery = (order as any).type === "delivery";
+            // Refundable-deposit portions — charged, not taxed; shown as their
+            // own line (already folded into order.total). Luigi 2026-07-08.
+            const depositLinesTotal = order.items.reduce(
+              (s, it) => s + ((it as any).isRefundableDeposit && (it as any).depositAmount > 0 ? (it as any).depositAmount * it.quantity : 0),
+              0,
+            );
             return (
               <div className="border-t border-gray-100 mt-3 pt-3 space-y-1 text-sm">
                 <div className="flex justify-between text-gray-600"><span>{t("subtotal")}</span><span>{formatCurrency(order.subtotal)}</span></div>
@@ -273,6 +285,7 @@ export default async function ConfirmationPage({
                 )}
                 {order.taxAmount > 0 && <div className="flex justify-between text-gray-600"><span>{t("tax")}</span><span>{formatCurrency(order.taxAmount)}</span></div>}
                 {order.tip > 0 && <div className="flex justify-between text-gray-600"><span>{tStatus("tip")}</span><span>{formatCurrency(order.tip)}</span></div>}
+                {depositLinesTotal > 0 && <div className="flex justify-between text-violet-700"><span>{tOrd("refundableDepositNotTaxed")}</span><span>{formatCurrency(depositLinesTotal)}</span></div>}
                 <div className="flex justify-between font-bold text-gray-900"><span>{t("total")}</span><span>{formatCurrency(order.total)}</span></div>
                 {rewardUsed > 0 && (
                   <div className="flex justify-between text-emerald-700 font-medium">

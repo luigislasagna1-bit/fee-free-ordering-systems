@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Tik pristatymui",
     "pickupOnlyLabel": "Tik atsiėmimui",
-    "refundableDeposit": "Grąžinamas užstatas"
+    "refundableDeposit": "Grąžinamas užstatas",
+    "refundableDepositNotice": "Įskaičiuotas grąžinamas {amount} užstatas, grąžinamas, kai jį atnešate atgal.",
+    "refundableDepositBadge": "+ {amount} grąžinamas užstatas",
+    "refundableDepositNotTaxed": "Grąžinamas užstatas (neapmokestinamas)"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",
@@ -2780,7 +2783,8 @@
       "groupDuplicated": "Grupė dubliuota",
       "failedToDuplicateGroup": "Nepavyko dubliuoti grupės — bandykite dar kartą.",
       "refundableDeposit": "Grąžinamas užstatas",
-      "refundableDepositHint": "Priskaičiuojamas klientui, bet neapmokestinamas. Niekada netaikoma nuolaida ar apdovanojimai, ir visiškai grąžinamas."
+      "refundableDepositHint": "Prie kainos prideda grąžinamą užstatą — imamas iš kliento, bet neapmokestinamas, niekada nenuolaidžiaujamas ir nesuteikia teisės į atlygį, ir visiškai grąžinamas.",
+      "depositAmountLabel": "Užstato suma"
     },
     "promotionsList": {
       "stackingMaster": "Master",

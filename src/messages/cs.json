@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Pouze pro rozvoz",
     "pickupOnlyLabel": "Pouze k vyzvednutí",
-    "refundableDeposit": "Vratná záloha"
+    "refundableDeposit": "Vratná záloha",
+    "refundableDepositNotice": "Zahrnuje vratnou zálohu {amount}, která se vrací při jejím vrácení.",
+    "refundableDepositBadge": "+ {amount} vratná záloha",
+    "refundableDepositNotTaxed": "Vratná záloha (nezdaněná)"
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "Skupina duplikována",
       "failedToDuplicateGroup": "Skupinu se nepodařilo duplikovat — zkuste to znovu.",
       "refundableDeposit": "Vratná záloha",
-      "refundableDepositHint": "Účtuje se zákazníkovi, ale nedaní se. Nikdy se neslevňuje ani není způsobilá k odměnám a je plně vratná."
+      "refundableDepositHint": "Přidává k ceně vratnou zálohu — účtuje se zákazníkovi, ale nezdaňuje se, nikdy se neslevuje ani neopravňuje k odměnám a plně se vrací.",
+      "depositAmountLabel": "Výše zálohy"
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",

@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Csak kiszállításra",
     "pickupOnlyLabel": "Csak elvitelre",
-    "refundableDeposit": "Visszatérítendő letét"
+    "refundableDeposit": "Visszatérítendő letét",
+    "refundableDepositNotice": "Tartalmaz egy {amount} összegű visszatérítendő letétet, amelyet visszahozatalkor visszakap.",
+    "refundableDepositBadge": "+ {amount} visszatérítendő letét",
+    "refundableDepositNotTaxed": "Visszatérítendő letét (adómentes)"
   },
   "pizza": {
     "chooseSize": "Méret választása",
@@ -2031,7 +2034,8 @@
       "groupDuplicated": "Csoport duplikálva",
       "failedToDuplicateGroup": "A csoportot nem sikerült duplikálni — próbálja újra.",
       "refundableDeposit": "Visszatérítendő letét",
-      "refundableDepositHint": "A vevőnek felszámítjuk, de nem adózik. Soha nem kedvezményes, jutalomra sem jogosít, és teljesen visszatéríthető."
+      "refundableDepositHint": "Visszaváltható letétet ad az árhoz — a vásárlónak felszámítjuk, de nem adózik, soha nem kedvezményezhető és nem jogosít jutalomra, és teljes mértékben visszatérítendő.",
+      "depositAmountLabel": "Letét összege"
     },
     "promotionsList": {
       "stackingMaster": "Master",

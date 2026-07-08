@@ -326,7 +326,10 @@
     },
     "deliveryOnlyLabel": "Saadaval ainult kulleriga",
     "pickupOnlyLabel": "Saadaval ainult kaasa",
-    "refundableDeposit": "Tagastatav tagatis"
+    "refundableDeposit": "Tagastatav tagatis",
+    "refundableDepositNotice": "Sisaldab {amount} tagastatavat tagatist, mis tagastatakse, kui selle tagasi toote.",
+    "refundableDepositBadge": "+ {amount} tagastatav tagatis",
+    "refundableDepositNotTaxed": "Tagastatav tagatis (maksuvaba)"
   },
   "pizza": {
     "chooseSize": "Vali suurus",
@@ -2087,7 +2090,8 @@
       "groupDuplicated": "Rühm dubleeritud",
       "failedToDuplicateGroup": "Rühma ei õnnestunud dubleerida — proovi uuesti.",
       "refundableDeposit": "Tagastatav tagatis",
-      "refundableDepositHint": "Kliendile esitatakse arve, kuid seda ei maksustata. Kunagi ei allahinnata ega anna õigust preemiatele ning on täielikult tagastatav."
+      "refundableDepositHint": "Lisab hinnale tagastatava tagatise — võetakse kliendilt, kuid seda ei maksustata, sellele ei tehta kunagi allahindlust ega anna preemiaõigust ja see tagastatakse täielikult.",
+      "depositAmountLabel": "Tagatise summa"
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

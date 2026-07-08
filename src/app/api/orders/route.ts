@@ -592,6 +592,20 @@ export async function POST(req: NextRequest) {
       const m = menuItemMap.get(menuItemId);
       return !!(m && (m as any).isRefundableDeposit);
     };
+    // Per-unit refundable deposit, always re-derived from the trusted menu row
+    // (never the client body). Charged UNTAXED on top of the taxed base price.
+    // The per-item `depositAmount` is the single source of truth: null means no
+    // added deposit (a retired old-model item stays a normal taxed item until
+    // the owner re-enters its amount — clean break, no price fallback here or a
+    // legacy pure-deposit item would double-charge base + deposit). Luigi
+    // 2026-07-08.
+    const depositPerUnit = (menuItemId: string | null): number => {
+      if (!menuItemId) return 0;
+      const m = menuItemMap.get(menuItemId) as any;
+      if (!m || !m.isRefundableDeposit || m.depositAmount == null) return 0;
+      const amt = Number(m.depositAmount);
+      return Number.isFinite(amt) ? Math.max(0, Math.round(amt * 100) / 100) : 0;
+    };
 
     // Authoritative bundle pricing (audit B3/B6): bundle lines used to trust the
     // client-supplied price, so a tampered request could underpay. Pre-load the
@@ -646,6 +660,11 @@ export async function POST(req: NextRequest) {
     const validatedItems: Array<{
       menuItemId: string | null; variantId: string | null; variantName: string | null;
       name: string; price: number; quantity: number; notes: string | null; subtotal: number;
+      // Per-unit refundable-deposit portion (0 when none). NOT included in
+      // `subtotal` (base only); summed separately as depositLinesTotal and added
+      // to the order total as its own untaxed line — kept out of the taxed base,
+      // minimum-order, and promo/discount math.
+      depositAmount: number;
       modifiers: Array<{ modifierOptionId: string; name: string; priceAdjustment: number }>;
       bundleItems: unknown | null;
     }> = [];
@@ -839,6 +858,9 @@ export async function POST(req: NextRequest) {
         }
         const comboQty = Math.max(1, Math.min(99, parseInt(raw.quantity, 10) || 1));
         const comboUnit = Math.max(0, Math.round((comboParent.price + comboUpcharge) * 100) / 100);
+        // A combo item can itself carry a refundable deposit (untaxed, added to
+        // the order total as its own line below — not folded into the subtotal).
+        const comboDepUnit = depositPerUnit(comboParent.id);
         const comboLineTotal = Math.round(comboUnit * comboQty * 100) / 100;
         serverSubtotal += comboLineTotal;
         validatedItems.push({
@@ -850,6 +872,7 @@ export async function POST(req: NextRequest) {
           quantity: comboQty,
           notes: raw.notes ? sanitize(raw.notes, 200) : null,
           subtotal: comboLineTotal,
+          depositAmount: comboDepUnit,
           modifiers: [],
           bundleItems: comboChildren,
         });
@@ -1005,6 +1028,7 @@ export async function POST(req: NextRequest) {
           quantity: bundleQty,
           notes: raw.notes ? sanitize(raw.notes, 200) : null,
           subtotal: bundleLineTotal,
+          depositAmount: 0, // promo bundles never carry a deposit
           modifiers: [],
           bundleItems: sanitisedChildren,
         });
@@ -1193,6 +1217,11 @@ export async function POST(req: NextRequest) {
       // Round the stored unit to 2dp — fp drift (9.99 + 15 = 24.990000000000002)
       // otherwise lands verbatim on receipts/exports.
       const unitPrice = Math.round(Math.max(0, basePrice + modTotal) * 100) / 100;
+      // Refundable deposit (untaxed) is tracked per line via `depositAmount` and
+      // added to the ORDER total as its own line below — NOT folded into this
+      // line's subtotal — so it stays out of the taxed base, minimum-order, and
+      // promo math automatically (base price behaves like any normal product).
+      const depUnit = depositPerUnit(menuItem.id);
       const lineTotal = Math.round(unitPrice * qty * 100) / 100;
       serverSubtotal += lineTotal;
 
@@ -1205,6 +1234,7 @@ export async function POST(req: NextRequest) {
         quantity: qty,
         notes: raw.notes ? sanitize(raw.notes, 200) : null,
         subtotal: lineTotal,
+        depositAmount: depUnit,
         modifiers: validatedMods,
         bundleItems: null,
       });
@@ -1663,13 +1693,15 @@ export async function POST(req: NextRequest) {
 
     // ── Tax & total ─────────────────────────────────────────────────────────
     const totalDiscount = serverCouponDiscount + serverPromoDiscount;
-    // Refundable deposits are in serverSubtotal (they're charged) but must NOT
-    // be taxed — carve them out of the tax base, then add them back into the
-    // total below so they're still collected. Mirrors the client preview.
+    // Refundable-deposit PORTIONS (depositAmount × qty) are NOT in serverSubtotal
+    // (base only) — they're added to the total as their own line below, kept out
+    // of the taxed base, minimum-order, and promo/discount math. The item's base
+    // price is taxed as usual. Mirrors the client preview exactly
+    // (preview==charge). Luigi 2026-07-08.
     const depositLinesTotal = Math.round(
-      validatedItems.reduce((s, i) => s + (isDepositItem(i.menuItemId) ? i.subtotal : 0), 0) * 100,
+      validatedItems.reduce((s, i) => s + (i.depositAmount || 0) * i.quantity, 0) * 100,
     ) / 100;
-    const taxBase = Math.max(0, serverSubtotal - totalDiscount - depositLinesTotal + serverDeliveryFee + serverServiceFeesTotal);
+    const taxBase = Math.max(0, serverSubtotal - totalDiscount + serverDeliveryFee + serverServiceFeesTotal);
     const serverTax = Math.round(taxBase * (restaurant.taxRate / 100) * 100) / 100;
     // Hard server-side clamp when the restaurant has tipping disabled.
     // Owners flip Restaurant.tipsEnabled = false from /admin/service-fees
@@ -2332,7 +2364,12 @@ export async function POST(req: NextRequest) {
               restaurantId: restaurant.id,
               customerId: promoCtx.sessionCustomerId,
               requested,
-              orderTotal: Math.max(0, Math.round((serverTotal - redeemExcludedLinesTotal) * 100) / 100),
+              // Exclude BOTH redeem-excluded item bases AND every refundable
+              // deposit portion from the redeemable base — a returnable, untaxed
+              // deposit must never be paid with store credit (else the return
+              // refund converts store credit into a cash outflow). subtotal is
+              // base-only, so deposit portions are disjoint — no double-subtract.
+              orderTotal: Math.max(0, Math.round((serverTotal - redeemExcludedLinesTotal - depositLinesTotal) * 100) / 100),
               minRedeemBalance: restaurant.rewardMinRedeemBalance ?? 0,
               maxRedeemPercent: restaurant.rewardMaxRedeemPercent ?? 100,
               minCharge: onlineCharge ? 0.5 : 0,
@@ -2438,9 +2475,12 @@ export async function POST(req: NextRequest) {
             quantity: item.quantity,
             notes: item.notes,
             subtotal: item.subtotal,
-            // Snapshot the deposit flag so receipts/refunds treat this line as a
-            // non-taxable returnable deposit even after the source item changes.
-            isRefundableDeposit: isDepositItem(item.menuItemId),
+            // Snapshot the deposit flag + charged amount so receipts/refunds
+            // treat this line's deposit portion as a non-taxable returnable
+            // deposit even after the source item changes. depositAmount 0 ⇒ null
+            // (no deposit) to keep non-deposit rows clean.
+            isRefundableDeposit: (item.depositAmount || 0) > 0,
+            depositAmount: (item.depositAmount || 0) > 0 ? item.depositAmount : null,
             modifiers: { create: item.modifiers },
             // Bundle line items carry their child picks here. Null for
             // normal line items. See prisma/schema.prisma `OrderItem.bundleItems`.

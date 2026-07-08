@@ -65,7 +65,7 @@ type CustomerInfo = {
 };
 
 type CartLine = {
-  menuItem: { id: string; name: string; isRefundableDeposit?: boolean };
+  menuItem: { id: string; name: string; isRefundableDeposit?: boolean; depositAmount?: number | null };
   variant?: { name: string };
   quantity: number;
   lineTotal: number;
@@ -166,6 +166,9 @@ interface Props {
   deliveryFee: number;
   appliedServiceFees: { name: string; amount: number }[];
   taxAmount: number;
+  /** Sum of refundable-deposit portions across the cart — charged but NOT taxed,
+   *  shown as its own line and already folded into `total`. Luigi 2026-07-08. */
+  depositLinesTotal?: number;
   tipAmount: number;
   tipPercent: number;
   setTipPercent: (n: number) => void;
@@ -358,7 +361,7 @@ export function CheckoutModal({
   restaurantSlug, isSignedIn, fromMarketplace,
   cart, subtotal, totalDiscount,
   appliedPromos = [], promoNudgeText = null, bumpedExclusives = [], hasFreeDelivery = false, baseDeliveryFee = 0,
-  deliveryFee, appliedServiceFees, taxAmount,
+  deliveryFee, appliedServiceFees, taxAmount, depositLinesTotal = 0,
   tipAmount, tipPercent, setTipPercent, tipsEnabled = true, total, taxRate,
   rewardInfo = null, creditToApply = 0, setCreditToApply,
   customerInfo, setCustomerInfo, onMarketingToggle, savedGuestInfo, onClearSavedInfo,
@@ -1880,9 +1883,9 @@ export function CheckoutModal({
                           {ci.isBundle ? (ci.bundlePromoName ?? ci.menuItem.name) : ci.menuItem.name}
                         </span>
                         {ci.variant && <span className="block text-xs text-gray-400">{ci.variant.name}</span>}
-                        {ci.menuItem?.isRefundableDeposit && (
+                        {ci.menuItem?.isRefundableDeposit && ci.menuItem?.depositAmount != null && ci.menuItem.depositAmount > 0 && (
                           <span className="inline-flex w-fit items-center gap-1 mt-0.5 text-[11px] font-medium text-violet-700 bg-violet-50 border border-violet-100 rounded-full px-2 py-0.5">
-                            {tOrd("refundableDeposit")}
+                            {tOrd("refundableDepositBadge", { amount: formatCurrency(ci.menuItem.depositAmount) })}
                           </span>
                         )}
                         {ci.modifierLabels && ci.modifierLabels.length > 0 && (
@@ -2012,6 +2015,10 @@ export function CheckoutModal({
                 )}
                 {tipAmount > 0 && (
                   <div className="flex justify-between text-gray-600"><span>{tc("tip")}</span><span>{formatCurrency(tipAmount)}</span></div>
+                )}
+                {/* Refundable deposit — charged, not taxed; already in `total`. */}
+                {depositLinesTotal > 0 && (
+                  <div className="flex justify-between text-violet-700"><span>{tOrd("refundableDepositNotTaxed")}</span><span>{formatCurrency(depositLinesTotal)}</span></div>
                 )}
                 <div className="flex justify-between font-bold text-gray-900 text-base pt-2 border-t border-gray-200 mt-1">
                   <span>{tc("total")}</span><span>{formatCurrency(total)}</span>

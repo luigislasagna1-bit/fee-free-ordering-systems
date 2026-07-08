@@ -1055,16 +1055,20 @@ model MenuItem {
   /// from promoExcluded (separate business choices — Luigi 2026-07-02).
   /// ORs with its category's flag. Enforced in BOTH preview + charge.
   rewardRedeemExcluded Boolean @default(false)
-  /// REFUNDABLE DEPOSIT item (Luigi 2026-07-07). When true this menu item is
-  /// a returnable deposit (e.g. "$50 Catering Deposit", "Keg Deposit") rather
-  /// than a taxable good: its `price` is the deposit amount the owner sets, it
-  /// is EXCLUDED from tax (subtracted from the tax base in the orders route +
-  /// the client preview), and it never earns/spends Reward Dollars nor takes a
-  /// promo discount (a deposit isn't a discountable purchase). It still adds to
-  /// the order total, is labelled "Refundable deposit" on every money surface,
-  /// and is returned automatically by the existing amount-based refund flow.
-  /// Nullable-free default keeps the hot MenuItem table backfill-free.
+  /// REFUNDABLE DEPOSIT (Luigi 2026-07-08, redesigned). When true, this NORMAL
+  /// sellable item ALSO carries a returnable deposit of `depositAmount` per unit
+  /// (e.g. a $150 keg with a $50 deposit). The base `price` is taxed as usual;
+  /// only the deposit PORTION (depositAmount × qty) is added on top UNTAXED,
+  /// never discounted or reward-eligible, and refunded by the amount-based flow.
+  /// The customer sees a "refundable deposit" notice on add + on every money
+  /// surface. Legacy rows (pre-2026-07-08) have depositAmount=null and their
+  /// whole `price` was the deposit — read null as that fallback.
   isRefundableDeposit Boolean @default(false)
+  /// Per-unit refundable-deposit amount, added UNTAXED on top of `price` when
+  /// isRefundableDeposit is true. Nullable side-column (sparse — most items have
+  /// none — so the hot MenuItem table stays backfill-free). Null + the flag =
+  /// legacy "whole price is the deposit". Luigi 2026-07-08.
+  depositAmount    Float?
   pizzaConfig      String? // JSON: PizzaConfig — marks item as a pizza builder item
   /// JSON: ComboConfig — marks this item as a COMBO (e.g. "2-Pizza Combo",
   /// "Pizza + Wings"). Defines ordered slots, each with an eligible item/
@@ -1444,12 +1448,17 @@ model OrderItem {
   quantity    Int
   notes       String?
   subtotal    Float
-  /// Snapshot of MenuItem.isRefundableDeposit at order time. The customer-
-  /// facing name is only a snapshot string, so this flag is what receipts /
-  /// kitchen / refund logic key off to treat the line as a non-taxable
-  /// returnable deposit even after the source item is edited or deleted
-  /// (menuItemId is nullable SetNull). Luigi 2026-07-07.
+  /// Snapshot of MenuItem.isRefundableDeposit at order time — marks that this
+  /// line carries a returnable deposit. Receipts / kitchen / refund logic key
+  /// off this even after the source item is edited or deleted (menuItemId is
+  /// nullable SetNull). `price` and `subtotal` are the TAXED BASE only; the
+  /// deposit portion is `depositAmount` × quantity, added to the order total
+  /// separately as an untaxed line (Formula B). Luigi 2026-07-07/08.
   isRefundableDeposit Boolean @default(false)
+  /// Per-unit refundable-deposit amount charged (UNTAXED) on this line, snapshot
+  /// at order time. Null on legacy rows (whole `price` was the deposit) and on
+  /// non-deposit lines. Luigi 2026-07-08.
+  depositAmount Float?
   createdAt   DateTime @default(now())
 
   // ── Meal-bundle line item (Promo Types 8 + 13) ──────────────────────
