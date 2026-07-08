@@ -9,6 +9,10 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const {
     restaurantSlug, orderType, subtotal, items, couponCode, isNewCustomer, paymentMethod,
+    // ids of any built EXCLUSIVE bundles committed in the cart — the resolver
+    // blocks clashing standards/exclusives against them (exclusivity re-derived
+    // server-side from stackingRule; the client can't spoof it). Luigi 2026-07-08.
+    committedBundlePromoIds,
     // Checkout identity (optional) — once the customer types their email / phone
     // we re-derive new-vs-returning AUTHORITATIVELY (below) so the previewed
     // total matches the real charge. Empty until they reach the details step.
@@ -144,6 +148,39 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // A built exclusive bundle committed in the cart occupies the single exclusive
+  // slot — block clashing deals in the preview exactly like the charge. Derive it
+  // under the SAME conditions the CHARGE uses (orders/route.ts bundlePromoMap):
+  // isActive + start/end window + meal_bundle type + owner — NOT the
+  // channel/member/suppression-filtered activePromos, or the preview could see a
+  // committed exclusive the charge doesn't (or vice-versa) and diverge. stacking
+  // is read server-side, never from the client. Luigi 2026-07-08 (Fabrizio fix).
+  const committedIds: string[] = Array.isArray(committedBundlePromoIds)
+    ? committedBundlePromoIds.filter((x: unknown): x is string => typeof x === "string")
+    : [];
+  let committedExclusive: { id: string; name: string } | null = null;
+  if (committedIds.length > 0) {
+    const bundleOwnerIds = Array.from(
+      new Set([restaurant.id, restaurant.parentRestaurantId].filter(Boolean)),
+    ) as string[];
+    const nowTs = new Date();
+    const row = await prisma.promotion.findFirst({
+      where: {
+        id: { in: committedIds },
+        restaurantId: { in: bundleOwnerIds },
+        isActive: true,
+        stackingRule: "exclusive",
+        promotionType: { in: ["meal_bundle", "meal_bundle_speciality"] },
+        AND: [
+          { OR: [{ startsAt: null }, { startsAt: { lte: nowTs } }] },
+          { OR: [{ endsAt: null }, { endsAt: { gte: nowTs } }] },
+        ],
+      },
+      select: { id: true, name: true },
+    });
+    committedExclusive = row ? { id: row.id, name: row.name } : null;
+  }
+
   const ctx: ApplyContext = {
     orderType: orderType ?? "pickup",
     now: promoEvalNow,
@@ -151,6 +188,7 @@ export async function POST(req: NextRequest) {
     isMember: promoCtx.isMember,
     subtotal: parseFloat(subtotal),
     items: ctxItems,
+    committedExclusive,
     couponCode: effectiveCouponCode,
     paymentMethod,
     hasUsedLifetime: promoCtx.hasUsedLifetime,

@@ -136,6 +136,11 @@ interface CartItem {
    *  can label the parent row with the bundle's promo name. */
   bundlePromoId?: string;
   bundlePromoName?: string;
+  /** The source bundle promo's stacking rule (standard|exclusive|master),
+   *  captured at compose time and persisted on the line so the exclusive-stacking
+   *  guard + nudge suppression survive a localStorage restore even after the
+   *  promo drops out of the day-filtered promoBanners. Luigi 2026-07-08. */
+  bundleStackingRule?: string;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -1077,6 +1082,11 @@ export function OrderingPageClient({
      *  them via the Promotion select clause. */
     autoApply?: boolean;
     customerType?: string;
+    /** standard | exclusive | master. Drives the nudge suppression: while an
+     *  EXCLUSIVE bundle is committed in the cart, don't nudge toward a standard
+     *  (or another exclusive) that GloriaFood rules won't let apply alongside it.
+     *  Luigi 2026-07-08. */
+    stackingRule?: string;
     startsAt?: Date | string | null;
     endsAt?: Date | string | null;
     paymentMethodSlugs?: string | null;
@@ -2314,6 +2324,11 @@ export function OrderingPageClient({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         restaurantSlug: restaurant.slug, orderType, subtotal: sub,
+        // ids of built bundles in the cart — the server keeps only the EXCLUSIVE
+        // ones (re-derives stackingRule) so a committed exclusive bundle blocks
+        // clashing standards/exclusives in the preview too (Fabrizio fix). The
+        // bundle LINES stay excluded from `items` below (no double-discount).
+        committedBundlePromoIds: cart.filter((ci) => ci.isBundle && ci.bundlePromoId).map((ci) => ci.bundlePromoId),
         // Skip bundle line items — their price is the owner's fixed bundle
         // price, and feeding the synthetic `bundle:<id>` menuItemId into
         // the public promo engine would either no-op (lookup fails) or
@@ -2526,6 +2541,14 @@ export function OrderingPageClient({
   // unlocking once the cart has reached its highlight value.
   const promoNudge = (() => {
     if (subtotal <= 0) return null;
+    // While an EXCLUSIVE bundle is committed in the cart, GloriaFood rules block
+    // every Standard (and other Exclusive) — so don't nudge toward one that can't
+    // apply. Masters / reward_credit still stack, so they may still nudge. The
+    // committed bundle's own promo carries its stackingRule via promoBanners.
+    const exclusiveCommitted = cart.some(
+      (ci) => ci.isBundle &&
+        ((ci.bundleStackingRule ?? (ci.bundlePromoId ? promoBanners.find((p) => p.id === ci.bundlePromoId)?.stackingRule : undefined)) === "exclusive"),
+    );
     // Canonical order-type matching — handles "both", single values, JSON-array
     // multi-channel promos, and dine_in/take_out spelling. The old naive
     // `p.orderType !== orderType` silently skipped every multi-channel promo.
@@ -2548,6 +2571,9 @@ export function OrderingPageClient({
       if (!allowsOrderType(p.orderType, orderType)) continue;
       // Don't nudge toward a promo that can't be redeemed for this order time.
       if (!promoIsUsable(p)) continue;
+      // A committed exclusive bundle blocks standards + other exclusives — don't
+      // nudge toward one that can't apply. Masters / reward_credit still nudge.
+      if (exclusiveCommitted && p.stackingRule !== "master" && p.promotionType !== "reward_credit") continue;
       // Effective threshold to unlock: the cart minimum, or a free-item spend
       // trigger (so "spend $100, get a free item" promos nudge too).
       let rc: any = p.ruleConfig;
@@ -4076,6 +4102,23 @@ export function OrderingPageClient({
    *  fixed bundlePrice + summed speciality fees (computed by the
    *  composer). Server validates the bundle composition at /api/orders. */
   const addBundleToCart = (bundle: BundleCartItem) => {
+    // One EXCLUSIVE deal per order (GloriaFood): a built exclusive bundle bakes
+    // its discount into a cart line, so the promo engine can't arbitrate two of
+    // them — block a second exclusive bundle at commit time. (A committed
+    // exclusive vs à-la-carte/standard promos is handled by the engine's
+    // committedExclusive branch.) Luigi 2026-07-08 (Fabrizio stacking fix).
+    const thisStackingRule = promoBanners.find((p) => p.id === bundle.promoId)?.stackingRule;
+    const thisIsExclusive = thisStackingRule === "exclusive";
+    // Read the stored rule off the cart line (survives a localStorage restore),
+    // falling back to promoBanners for legacy lines added before this field.
+    const existingExclusiveBundle = cart.find(
+      (ci) => ci.isBundle &&
+        ((ci.bundleStackingRule ?? (ci.bundlePromoId ? promoBanners.find((p) => p.id === ci.bundlePromoId)?.stackingRule : undefined)) === "exclusive"),
+    );
+    if (thisIsExclusive && existingExclusiveBundle) {
+      toast.error(t("cantCombineWith", { winner: existingExclusiveBundle.bundlePromoName ?? existingExclusiveBundle.menuItem.name }));
+      return;
+    }
     // Synthesize a minimal MenuItem so the existing CartItem.menuItem
     // shape is satisfied. The id is prefixed `bundle:` so backend +
     // receipt rendering can detect it.
@@ -4107,6 +4150,7 @@ export function OrderingPageClient({
         isBundle: true,
         bundlePromoId: bundle.promoId,
         bundlePromoName: bundle.promoName,
+        bundleStackingRule: thisStackingRule,
         bundleItems: bundle.children.map((c) => ({
           menuItemId: c.menuItemId,
           variantId: c.variantId,

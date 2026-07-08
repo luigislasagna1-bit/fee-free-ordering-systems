@@ -626,7 +626,7 @@ export async function POST(req: NextRequest) {
             : "";
       if (pid) bundlePromoIdSet.add(pid);
     }
-    const bundlePromoMap = new Map<string, { id: string; name: string; promotionType: string; ruleConfig: unknown; rules: string | null }>();
+    const bundlePromoMap = new Map<string, { id: string; name: string; promotionType: string; ruleConfig: unknown; rules: string | null; stackingRule: string | null }>();
     if (bundlePromoIdSet.size > 0) {
       const ownerIds = Array.from(new Set([restaurant.id, menuRestaurantId]));
       const nowTs = new Date();
@@ -646,7 +646,7 @@ export async function POST(req: NextRequest) {
           ],
           promotionType: { in: ["meal_bundle", "meal_bundle_speciality"] },
         },
-        select: { id: true, name: true, promotionType: true, ruleConfig: true, rules: true },
+        select: { id: true, name: true, promotionType: true, ruleConfig: true, rules: true, stackingRule: true },
       });
       // Serve-time lineage resolution (Fabrizio cmr80t9rk): the child-pick
       // validation below matches against ruleConfig group ids — resolve stale
@@ -654,6 +654,28 @@ export async function POST(req: NextRequest) {
       // could COMPOSE also passes the charge. Same helper as preview/display.
       const bpsResolved = await resolvePromoMenuRefsForServing(restaurant.id, bps as any[]);
       for (const bp of bpsResolved) bundlePromoMap.set((bp as any).id, bp as any);
+    }
+    // A built EXCLUSIVE bundle committed in the cart occupies the single
+    // exclusive slot — under GloriaFood rules it must block clashing standards +
+    // other exclusives. stackingRule is re-derived from the trusted promo row
+    // (never the client), so preview == charge and exclusivity can't be spoofed.
+    // Fabrizio stacking fix (Luigi 2026-07-08). One committed exclusive max (the
+    // client guard prevents composing two).
+    let committedExclusive: { id: string; name: string } | null = null;
+    let committedExclusiveCount = 0;
+    for (const pid of bundlePromoIdSet) {
+      const bp = bundlePromoMap.get(pid);
+      if (bp && bp.stackingRule === "exclusive") {
+        committedExclusiveCount++;
+        if (!committedExclusive) committedExclusive = { id: bp.id, name: bp.name };
+      }
+    }
+    // AUTHORITATIVE one-exclusive-per-order guard (GloriaFood). The client blocks
+    // composing a second exclusive bundle, but that guard can be bypassed (stale
+    // localStorage cart, crafted request) — reject here on the trusted path so two
+    // baked-in exclusive-bundle discounts can never both be charged. Luigi 2026-07-08.
+    if (committedExclusiveCount > 1) {
+      return NextResponse.json({ error: "Only one exclusive deal can be applied per order." }, { status: 400 });
     }
 
     let serverSubtotal = 0;
@@ -1597,6 +1619,9 @@ export async function POST(req: NextRequest) {
       isMember: promoCtx.isMember,
       hasUsedLifetime: promoCtx.hasUsedLifetime,
       subtotal: serverSubtotal,
+      // A committed exclusive bundle blocks clashing standards/exclusives (its
+      // own discount is already baked into its cart line — exclusivity only).
+      committedExclusive,
       // Bundle line items (menuItemId === null) are EXCLUDED from the
       // promo engine — their price is already the discounted bundle
       // total and applying further per-item promos would double-dip.

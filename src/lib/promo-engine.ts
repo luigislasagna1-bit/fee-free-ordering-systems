@@ -265,6 +265,16 @@ export type ApplyContext = {
    *  a silent no-apply (Luigi flagged 2026-05-31, Italian beta tester).
    *  Falls back to the server clock when undefined for legacy callers. */
   restaurantTimezone?: string;
+  /** An exclusive the customer has already COMMITTED — a built exclusive
+   *  meal_bundle whose discount is baked into a pre-priced cart line (so it is
+   *  NOT in `items` and never re-enters the discount engine). Its mere presence
+   *  occupies the single exclusive slot: under GloriaFood rules every beneficial
+   *  Standard and every OTHER qualifying Exclusive is blocked (handed back as a
+   *  switchable alternative), while Masters / reward_credit still stack. Absent
+   *  / null → the resolver behaves EXACTLY as before, so the b3d3e5ba
+   *  keep-standard-when-exclusive-merely-qualifies path is fully preserved.
+   *  Luigi 2026-07-08 (Fabrizio exclusive-stacking fix). */
+  committedExclusive?: { id: string; name: string } | null;
 };
 
 // localDateParts + isWithinUsableWindow now live in ./promo-window (shared with
@@ -1373,7 +1383,23 @@ export function resolvePromotions(promos: PromoInput[], ctx: ApplyContext): Reso
 
   let active: PromoInput[];
   const blockedPromos: BlockedPromo[] = [];
-  if (exclusives.length > 0 && beneficialStandards.length === 0) {
+  if (ctx.committedExclusive) {
+    // A built exclusive bundle is already committed in the cart (priced, discount
+    // baked into its line — so it is NOT among `triggered` and contributes NO
+    // engine discount here, only exclusivity). Under GloriaFood rules it owns the
+    // single exclusive slot: Masters / reward_credit still stack, but every
+    // beneficial Standard AND every other qualifying Exclusive is handed back as a
+    // switchable alternative. This runs ONLY when the committed signal is set, so
+    // the b3d3e5ba keep-standard path (below) is untouched for every other case.
+    active = [...masters];
+    const winnerName = ctx.committedExclusive.name;
+    for (const p of triggered) {
+      if (p.id === ctx.committedExclusive.id || p.stackingRule === "master" || isRewardCredit(p)) continue;
+      if (effectiveValue(p) > 0) {
+        blockedPromos.push({ promoId: p.id, name: p.name, discount: calcDiscount(p, ctx), winnerName, wasExclusive: p.stackingRule === "exclusive", couponCode: p.couponCode ?? undefined });
+      }
+    }
+  } else if (exclusives.length > 0 && beneficialStandards.length === 0) {
     // No Standard to clash with → the best Exclusive applies alongside Masters
     // (exclusive-alone, exclusive + free-delivery master, exclusive-vs-exclusive).
     // The best exclusive wins its slot; other exclusives are switchable.

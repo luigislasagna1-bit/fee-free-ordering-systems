@@ -109,6 +109,45 @@ describe("resolvePromotions — stacking matrix", () => {
   });
 });
 
+// ─── Committed exclusive bundle blocks standards (Fabrizio fix, 2026-07-08) ──
+// A built exclusive meal_bundle is a pre-priced cart line stripped before the
+// engine, so it never reached the resolver — letting a Standard (and a second
+// exclusive) apply alongside it. ctx.committedExclusive re-injects the signal.
+describe("resolvePromotions — committed exclusive bundle (GloriaFood parity)", () => {
+  const committed = { id: "bundleX", name: "2 for 30" };
+
+  it("Bug 1: a committed exclusive blocks a beneficial standard (offered as a switch)", () => {
+    const std = mkPromo({ stackingRule: "standard", ruleConfig: { discountAmount: 5 } });
+    const { results, blockedPromos } = resolvePromotions([std], mkCtx({ committedExclusive: committed }));
+    expect(results.map((r) => r.promoId)).not.toContain(std.id);
+    const b = blockedPromos.find((x) => x.promoId === std.id);
+    expect(b?.winnerName).toBe("2 for 30");
+    expect(b?.wasExclusive).toBe(false);
+  });
+
+  it("masters still stack alongside a committed exclusive", () => {
+    const master = mkPromo({ stackingRule: "master", ruleConfig: { discountAmount: 2 } });
+    const std = mkPromo({ stackingRule: "standard", ruleConfig: { discountAmount: 5 } });
+    const { results } = resolvePromotions([master, std], mkCtx({ committedExclusive: committed }));
+    expect(results.map((r) => r.promoId)).toEqual([master.id]);
+  });
+
+  it("Bug 3: a second qualifying exclusive is blocked (switchable) while a bundle is committed", () => {
+    const ex2 = mkPromo({ stackingRule: "exclusive", ruleConfig: { discountAmount: 8 } });
+    const { results, blockedPromos } = resolvePromotions([ex2], mkCtx({ committedExclusive: committed }));
+    expect(results.map((r) => r.promoId)).not.toContain(ex2.id);
+    expect(blockedPromos.find((x) => x.promoId === ex2.id)?.wasExclusive).toBe(true);
+  });
+
+  it("b3d3e5ba preserved: WITHOUT the committed signal the standard is kept and the exclusive is a switch (new branch is inert)", () => {
+    const ex = mkPromo({ stackingRule: "exclusive", ruleConfig: { discountAmount: 8 } });
+    const std = mkPromo({ stackingRule: "standard", ruleConfig: { discountAmount: 5 } });
+    const { results, blockedPromos } = resolvePromotions([ex, std], mkCtx());
+    expect(results.map((r) => r.promoId)).toEqual([std.id]);
+    expect(blockedPromos.map((b) => b.promoId)).toContain(ex.id);
+  });
+});
+
 // ─── Coupon-gating split (autoApply vs coupon code) ─────────────────────────
 describe("resolvePromotions — coupon code gating", () => {
   const coded = () => mkPromo({ autoApply: false, couponCode: "SAVE", ruleConfig: { discountAmount: 5 } });

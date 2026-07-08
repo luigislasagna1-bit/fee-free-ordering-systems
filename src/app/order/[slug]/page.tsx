@@ -216,6 +216,8 @@ export default async function OrderingPage({
       // optional on the modal side; pass through whatever's set.
       autoApply: true,
       customerType: true,
+      // Drives the nudge suppression when an exclusive bundle is committed.
+      stackingRule: true,
       startsAt: true,
       endsAt: true,
       paymentMethodSlugs: true,
