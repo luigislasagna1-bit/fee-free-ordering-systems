@@ -6005,8 +6005,14 @@ export function OrderingPageClient({
         <ComboComposerModal
           comboItem={comboItem as any}
           /* Full items (variants, pizzaConfig, modifierGroups) — the composer
-             opens the pizza builder per pizza slot and offers per-size picks. */
-          allItems={visibleCategories.flatMap((c) => c.menuItems) as any}
+             opens the pizza builder per pizza slot and offers per-size picks.
+             Use the UNFILTERED menu (not visibleCategories): a combo slot must
+             offer its configured items even when they're hidden or time-
+             restricted à la carte (e.g. a Daily-Deals pizza outside its window)
+             — the slot pool already narrows to only the items the owner picked,
+             so nothing extra leaks in. Sold-out picks stay disabled. Luigi
+             2026-07-08. */
+          allItems={((restaurant.menuCategories as any[]) ?? []).flatMap((c) => c.menuItems) as any}
           primaryColor={theme.primaryColor}
           fmt={fmt}
           onAddCombo={addComboToCart}
