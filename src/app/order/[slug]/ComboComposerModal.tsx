@@ -23,7 +23,7 @@ export type ComboCartChild = {
    *  (0 when the combo includes extras for free). */
   extrasFee?: number;
 };
-export type ComboCartResult = { comboItem: AnyItem; lineTotal: number; children: ComboCartChild[] };
+export type ComboCartResult = { comboItem: AnyItem; lineTotal: number; children: ComboCartChild[]; notes?: string };
 
 type Pick = ComboCartChild & { key: string; upcharge: number };
 
@@ -34,6 +34,9 @@ interface Props {
   fmt: (n: number) => string;
   onAddCombo: (result: ComboCartResult) => void;
   onClose: () => void;
+  /** Owner's per-item-note setting — when true, the combo shows one Special-
+   *  instructions box (matching every other item type). Default true. */
+  allowItemNotes?: boolean;
 }
 
 /** True when a non-pizza item needs the customizer (a size choice to make OR
@@ -52,10 +55,12 @@ function needsCustomizer(item: AnyItem, allowedVariants: AnyItem[]): boolean {
  * owner's per-item/size upcharges; add-ons are free or charged per the combo's
  * extrasCharge setting. Luigi 2026-06-06.
  */
-export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onAddCombo, onClose }: Props) {
+export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onAddCombo, onClose, allowItemNotes = true }: Props) {
   const t = useTranslations("customer.combo");
-  // Reused "Sold out" string (same key the menu card uses) for disabled picks.
+  // Reused strings from the ordering namespace: "Sold out" for disabled picks,
+  // and specialInstructions/notesPlaceholder for the combo-level note box.
   const tOrder = useTranslations("ordering");
+  const [notes, setNotes] = useState("");
   const config = useMemo(() => parseComboConfig(comboItem.comboConfig), [comboItem.comboConfig]);
 
   const slotPools = useMemo(() => {
@@ -134,7 +139,7 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
         upcharge: p.upcharge, extrasFee: p.extrasFee,
       })),
     );
-    onAddCombo({ comboItem, lineTotal, children });
+    onAddCombo({ comboItem, lineTotal, children, notes: notes.trim() || undefined });
   };
 
   return (
@@ -211,6 +216,23 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
               </div>
             );
           })}
+
+          {/* One Special-instructions note for the whole combo — gated on the
+              owner's per-item-note toggle so combos match every other item type
+              (Luigi 2026-07-08). Reuses the ordering-namespace note strings. */}
+          {allowItemNotes !== false && (
+            <div className="px-4 pb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">{tOrder("specialInstructions")}</label>
+              <textarea
+                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 text-gray-900 placeholder:text-gray-400"
+                style={{ "--tw-ring-color": primaryColor } as React.CSSProperties}
+                rows={2}
+                placeholder={tOrder("notesPlaceholder")}
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+              />
+            </div>
+          )}
         </div>
 
         <div className="p-4 border-t bg-gray-50 rounded-b-2xl">
@@ -230,6 +252,8 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
             item={pizzaFor.item}
             config={pc}
             primaryColor={primaryColor}
+            /* One note per combo (added below), not per pizza slot. */
+            allowItemNotes={false}
             onClose={() => setPizzaFor(null)}
             onAdd={(result) => {
               // Pizza extra toppings are an "extra": charged only when the combo

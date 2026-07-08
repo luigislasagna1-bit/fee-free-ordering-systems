@@ -734,6 +734,11 @@ interface PizzaBuilderProps {
   primaryColor: string;
   onClose: () => void;
   onAdd: (result: PizzaAddResult) => void;
+  // Owner's per-item-note setting. Default true (show the box); false hides the
+  // Special-instructions section so pizzas match every other item type when the
+  // owner turns per-item notes off. Passed false when the builder is opened
+  // INSIDE a combo (the combo carries the single note). Luigi 2026-07-08.
+  allowItemNotes?: boolean;
   // When present (re-editing an existing cart entry), seeds the builder state
   // instead of using defaultCustomization().
   initial?: {
@@ -786,7 +791,7 @@ export function defaultCustomization(item: MenuItem, config: PizzaConfig, groups
   };
 }
 
-export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, onAdd, initial }: PizzaBuilderProps) {
+export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, onAdd, allowItemNotes = true, initial }: PizzaBuilderProps) {
   const tp = useTranslations("pizza");
   const tOrd = useTranslations("ordering");
   const formatCurrency = useCurrencyFormat();
@@ -1594,7 +1599,9 @@ export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, o
               </section>
             )}
 
-            {/* Special instructions */}
+            {/* Special instructions — gated on the owner's per-item-note toggle
+                (all item types honour it), and suppressed inside a combo. */}
+            {allowItemNotes !== false && (
             <section>
               <SectionHeader label={tp("specialInstructions")} />
               <textarea
@@ -1606,6 +1613,7 @@ export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, o
                 onChange={e => setNotes(e.target.value)}
               />
             </section>
+            )}
           </div>
 
           {/* ── Right: Pizza visual (desktop only) ── */}

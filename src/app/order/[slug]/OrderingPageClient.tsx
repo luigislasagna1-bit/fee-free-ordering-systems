@@ -3236,7 +3236,7 @@ export function OrderingPageClient({
       variant: undefined,
       quantity: 1,
       selectedMods: {},
-      notes: "",
+      notes: result.notes ?? "",
       lineTotal: result.lineTotal,
       unitPrice: result.lineTotal,
       isBundle: true,
@@ -6011,6 +6011,7 @@ export function OrderingPageClient({
           item={pizzaItem as any}
           config={activePizzaConfig}
           primaryColor={theme.primaryColor}
+          allowItemNotes={(restaurant as any)?.allowItemNotes !== false}
           onClose={() => {
             setPizzaItem(null);
             setActivePizzaConfig(null);
@@ -6045,6 +6046,7 @@ export function OrderingPageClient({
           allItems={((restaurant.menuCategories as any[]) ?? []).flatMap((c) => c.menuItems) as any}
           primaryColor={theme.primaryColor}
           fmt={fmt}
+          allowItemNotes={(restaurant as any)?.allowItemNotes !== false}
           onAddCombo={addComboToCart}
           onClose={() => setComboItem(null)}
         />
