@@ -5719,7 +5719,10 @@ export function OrderingPageClient({
                       <div key={r.promoId} className="flex justify-between items-center gap-2 text-sm text-green-700 font-medium">
                         <span className="truncate">🎉 {r.name}</span>
                         <span className="flex items-center gap-2 flex-shrink-0">
-                          <span>-{fmt(r.discount)}</span>
+                          {/* free_delivery records discount=0 (it zeroes the delivery
+                              fee, not the subtotal) — show the WAIVED fee as the
+                              saving instead of a misleading -$0.00. Luigi 2026-07-07. */}
+                          <span>-{fmt(r.type === "free_delivery" ? baseDeliveryFee : r.discount)}</span>
                           <button
                             type="button"
                             onClick={() => removePromo(r.promoId)}
@@ -5732,11 +5735,10 @@ export function OrderingPageClient({
                         </span>
                       </div>
                     ))}
-                    {/* Hide the "Free delivery applied" badge when the
-                        base delivery fee was already zero — nothing to
-                        discount, so the badge would be confusing.
-                        Audit polish #64. */}
-                    {hasFreeDelivery && baseDeliveryFee > 0 && <div className="text-sm text-green-700 font-medium">🚚 {t("freeDeliveryApplied")}</div>}
+                    {/* The free_delivery promo now renders in the strip above with
+                        its real saving (the waived fee), so the separate "Free
+                        delivery applied" badge would just repeat it. Luigi
+                        2026-07-07. */}
                   </div>
                 )}
 
