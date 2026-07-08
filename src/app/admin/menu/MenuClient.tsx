@@ -385,12 +385,12 @@ function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
 }
 
 function ItemModal({
-  item, categoryId, categories, libraryGroups, onClose, onSaved, canUseCombos = false,
+  item, categoryId, categories, libraryGroups, onClose, onSaved, onDuplicate, canUseCombos = false,
 }: {
   item?: MenuItem; categoryId: string; categories: Category[];
   libraryGroups: ModifierGroup[];
   canUseCombos?: boolean;
-  onClose: () => void; onSaved: () => void;
+  onClose: () => void; onSaved: () => void; onDuplicate?: () => void;
 }) {
   const t = useTranslations("admin.menuEditor");
   const curSym = useCurrencySymbol();
@@ -1282,12 +1282,21 @@ function ItemModal({
           )}
         </div>
 
-        <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl flex-shrink-0">
-          <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800">{t("cancel")}</button>
-          <button onClick={save} disabled={saving}
-            className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 transition disabled:opacity-50">
-            {saving ? t("saving") : isNew ? t("addItem") : t("saveChanges")}
-          </button>
+        <div className="flex items-center justify-between gap-3 p-5 border-t bg-gray-50 rounded-b-2xl flex-shrink-0">
+          {/* Clearly-labelled Duplicate (the row-hover icon is easy to miss).
+              Only for an existing item. Luigi 2026-07-08. */}
+          {!isNew && onDuplicate ? (
+            <button onClick={onDuplicate} className="flex items-center gap-1.5 px-3 py-2 text-sm text-gray-600 hover:text-emerald-600 font-medium transition">
+              <CopyPlus className="w-4 h-4" /> {t("duplicateItem")}
+            </button>
+          ) : <span />}
+          <div className="flex items-center gap-3">
+            <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800">{t("cancel")}</button>
+            <button onClick={save} disabled={saving}
+              className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 transition disabled:opacity-50">
+              {saving ? t("saving") : isNew ? t("addItem") : t("saveChanges")}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1297,10 +1306,10 @@ function ItemModal({
 // ─── Modifier Group Modal ─────────────────────────────────────────────────────
 
 function ModifierModal({
-  group, menuItemId, onClose, onSaved,
+  group, menuItemId, onClose, onSaved, onDuplicate,
 }: {
   group?: ModifierGroup; menuItemId?: string;
-  onClose: () => void; onSaved: () => void;
+  onClose: () => void; onSaved: () => void; onDuplicate?: () => void;
 }) {
   const t = useTranslations("admin.menuEditor");
   const curSym = useCurrencySymbol();
@@ -1442,12 +1451,19 @@ function ModifierModal({
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl flex-shrink-0">
-          <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">{t("cancel")}</button>
-          <button onClick={save} disabled={saving}
-            className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50">
-            {saving ? t("saving") : isNew ? t("addGroup") : t("save")}
-          </button>
+        <div className="flex items-center justify-between gap-3 p-5 border-t bg-gray-50 rounded-b-2xl flex-shrink-0">
+          {!isNew && onDuplicate ? (
+            <button onClick={onDuplicate} className="flex items-center gap-1.5 px-3 py-2 text-sm text-gray-600 hover:text-emerald-600 font-medium transition">
+              <CopyPlus className="w-4 h-4" /> {t("duplicateGroup")}
+            </button>
+          ) : <span />}
+          <div className="flex items-center gap-3">
+            <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">{t("cancel")}</button>
+            <button onClick={save} disabled={saving}
+              className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50">
+              {saving ? t("saving") : isNew ? t("addGroup") : t("save")}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -3470,11 +3486,13 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
       {itemModal !== null && (
         <ItemModal item={itemModal.item} categoryId={itemModal.catId} categories={categories} canUseCombos={canUseCombos}
           libraryGroups={libraryGroups}
-          onClose={() => setItemModal(null)} onSaved={() => { setItemModal(null); reload(); }} />
+          onClose={() => setItemModal(null)} onSaved={() => { setItemModal(null); reload(); }}
+          onDuplicate={itemModal.item ? () => { const id = itemModal.item!.id; setItemModal(null); duplicateItem(id); } : undefined} />
       )}
       {modModal !== null && (
         <ModifierModal group={modModal.group} menuItemId={modModal.menuItemId}
-          onClose={() => setModModal(null)} onSaved={() => { setModModal(null); reload(); }} />
+          onClose={() => setModModal(null)} onSaved={() => { setModModal(null); reload(); }}
+          onDuplicate={modModal.group ? () => { const id = modModal.group!.id; setModModal(null); duplicateModGroup(id); } : undefined} />
       )}
       {copyModal !== null && (
         <CopySettingsModal source={copyModal.source} categories={categories}
