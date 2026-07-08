@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "Denne retten inngår i disse kampanjene: {names}. Sletting kan ødelegge dem for kundene dine.",
       "categoryInPromosMessage": "Denne kategorien eller rettene i den brukes av disse kampanjene: {names}. Sletting kan ødelegge dem.",
       "bulkBlockedByPromosMessage": "{n} av de valgte kategoriene brukes av kampanjer ({names}). Slette likevel?",
-      "deleteAnyway": "Slett likevel"
+      "deleteAnyway": "Slett likevel",
+      "duplicateItem": "Dupliser vare",
+      "itemDuplicated": "Vare duplisert (skjult — vis den når den er klar)",
+      "failedToDuplicateItem": "Kunne ikke duplisere varen — prøv igjen.",
+      "duplicateGroup": "Dupliser gruppe",
+      "groupDuplicated": "Gruppe duplisert",
+      "failedToDuplicateGroup": "Kunne ikke duplisere gruppen — prøv igjen."
     },
     "promotionsList": {
       "stackingMaster": "Master",

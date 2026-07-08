@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "此菜品属于以下促销：{names}。删除可能会导致这些促销对顾客失效。",
       "categoryInPromosMessage": "此分类或其中的菜品被以下促销使用：{names}。删除可能会导致这些促销失效。",
       "bulkBlockedByPromosMessage": "所选分类中有 {n} 个被促销使用（{names}）。仍要删除吗？",
-      "deleteAnyway": "仍要删除"
+      "deleteAnyway": "仍要删除",
+      "duplicateItem": "复制菜品",
+      "itemDuplicated": "菜品已复制（已隐藏——准备好后显示）",
+      "failedToDuplicateItem": "无法复制菜品——请重试。",
+      "duplicateGroup": "复制分组",
+      "groupDuplicated": "分组已复制",
+      "failedToDuplicateGroup": "无法复制分组——请重试。"
     },
     "promotionsList": {
       "stackingMaster": "主控",

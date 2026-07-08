@@ -2497,7 +2497,13 @@
       "itemInPromosMessage": "This dish is part of these promotions: {names}. Deleting it may break them for your customers.",
       "categoryInPromosMessage": "This category or its dishes are used by these promotions: {names}. Deleting it may break them for your customers.",
       "bulkBlockedByPromosMessage": "{n} of the selected categories are used by promotions ({names}). Delete them anyway?",
-      "deleteAnyway": "Delete anyway"
+      "deleteAnyway": "Delete anyway",
+      "duplicateItem": "Duplicate item",
+      "itemDuplicated": "Item duplicated (hidden — show it when ready)",
+      "failedToDuplicateItem": "Couldn't duplicate the item — please try again.",
+      "duplicateGroup": "Duplicate group",
+      "groupDuplicated": "Group duplicated",
+      "failedToDuplicateGroup": "Couldn't duplicate the group — please try again."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "هذا الطبق جزء من هذه العروض: {names}. حذفه قد يعطلها لعملائك.",
       "categoryInPromosMessage": "هذه الفئة أو أطباقها مستخدمة في هذه العروض: {names}. حذفها قد يعطلها لعملائك.",
       "bulkBlockedByPromosMessage": "{n} من الفئات المحددة مستخدمة في عروض ({names}). حذفها على أي حال؟",
-      "deleteAnyway": "احذف على أي حال"
+      "deleteAnyway": "احذف على أي حال",
+      "duplicateItem": "تكرار الصنف",
+      "itemDuplicated": "تم تكرار الصنف (مخفي — أظهره عندما يكون جاهزًا)",
+      "failedToDuplicateItem": "تعذّر تكرار الصنف — يرجى المحاولة مرة أخرى.",
+      "duplicateGroup": "تكرار المجموعة",
+      "groupDuplicated": "تم تكرار المجموعة",
+      "failedToDuplicateGroup": "تعذّر تكرار المجموعة — يرجى المحاولة مرة أخرى."
     },
     "promotionsList": {
       "stackingMaster": "رئيسي",

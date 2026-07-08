@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "เมนูนี้อยู่ในโปรโมชัน: {names} การลบอาจทำให้โปรโมชันใช้ไม่ได้สำหรับลูกค้า",
       "categoryInPromosMessage": "หมวดหมู่นี้หรือเมนูในหมวดถูกใช้ในโปรโมชัน: {names} การลบอาจทำให้โปรโมชันใช้ไม่ได้",
       "bulkBlockedByPromosMessage": "{n} หมวดหมู่ที่เลือกถูกใช้ในโปรโมชัน ({names}) ยืนยันลบหรือไม่",
-      "deleteAnyway": "ยืนยันลบ"
+      "deleteAnyway": "ยืนยันลบ",
+      "duplicateItem": "ทำสำเนารายการ",
+      "itemDuplicated": "ทำสำเนารายการแล้ว (ซ่อนอยู่ — แสดงเมื่อพร้อม)",
+      "failedToDuplicateItem": "ทำสำเนารายการไม่สำเร็จ — โปรดลองอีกครั้ง",
+      "duplicateGroup": "ทำสำเนากลุ่ม",
+      "groupDuplicated": "ทำสำเนากลุ่มแล้ว",
+      "failedToDuplicateGroup": "ทำสำเนากลุ่มไม่สำเร็จ — โปรดลองอีกครั้ง"
     },
     "promotionsList": {
       "stackingMaster": "Master",

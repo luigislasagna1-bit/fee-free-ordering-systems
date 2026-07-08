@@ -2022,7 +2022,13 @@
       "itemInPromosMessage": "Món này thuộc các khuyến mãi: {names}. Xóa món có thể làm hỏng khuyến mãi với khách hàng.",
       "categoryInPromosMessage": "Danh mục này hoặc các món trong đó đang được dùng trong khuyến mãi: {names}. Xóa có thể làm hỏng khuyến mãi.",
       "bulkBlockedByPromosMessage": "{n} danh mục đã chọn đang dùng trong khuyến mãi ({names}). Vẫn xóa?",
-      "deleteAnyway": "Vẫn xóa"
+      "deleteAnyway": "Vẫn xóa",
+      "duplicateItem": "Nhân bản món",
+      "itemDuplicated": "Đã nhân bản món (đang ẩn — hiển thị khi sẵn sàng)",
+      "failedToDuplicateItem": "Không thể nhân bản món — vui lòng thử lại.",
+      "duplicateGroup": "Nhân bản nhóm",
+      "groupDuplicated": "Đã nhân bản nhóm",
+      "failedToDuplicateGroup": "Không thể nhân bản nhóm — vui lòng thử lại."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "Denne ret indgår i disse kampagner: {names}. Sletning kan ødelægge dem for dine kunder.",
       "categoryInPromosMessage": "Denne kategori eller dens retter bruges af disse kampagner: {names}. Sletning kan ødelægge dem for dine kunder.",
       "bulkBlockedByPromosMessage": "{n} af de valgte kategorier bruges af kampagner ({names}). Slet alligevel?",
-      "deleteAnyway": "Slet alligevel"
+      "deleteAnyway": "Slet alligevel",
+      "duplicateItem": "Dupliker vare",
+      "itemDuplicated": "Vare dupliceret (skjult — vis den, når den er klar)",
+      "failedToDuplicateItem": "Kunne ikke duplikere varen — prøv igen.",
+      "duplicateGroup": "Dupliker gruppe",
+      "groupDuplicated": "Gruppe dupliceret",
+      "failedToDuplicateGroup": "Kunne ikke duplikere gruppen — prøv igen."
     },
     "promotionsList": {
       "stackingMaster": "Master",

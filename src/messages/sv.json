@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "Denna rätt ingår i dessa kampanjer: {names}. Att ta bort den kan göra dem obrukbara för dina kunder.",
       "categoryInPromosMessage": "Denna kategori eller dess rätter används av dessa kampanjer: {names}. Att ta bort den kan göra dem obrukbara.",
       "bulkBlockedByPromosMessage": "{n} av de valda kategorierna används av kampanjer ({names}). Ta bort ändå?",
-      "deleteAnyway": "Ta bort ändå"
+      "deleteAnyway": "Ta bort ändå",
+      "duplicateItem": "Duplicera artikel",
+      "itemDuplicated": "Artikel duplicerad (dold — visa den när den är klar)",
+      "failedToDuplicateItem": "Kunde inte duplicera artikeln — försök igen.",
+      "duplicateGroup": "Duplicera grupp",
+      "groupDuplicated": "Grupp duplicerad",
+      "failedToDuplicateGroup": "Kunde inte duplicera gruppen — försök igen."
     },
     "promotionsList": {
       "stackingMaster": "Master",

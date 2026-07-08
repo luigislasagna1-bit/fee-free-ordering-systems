@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "Acest fel de mâncare face parte din aceste promoții: {names}. Ștergerea lui le poate strica pentru clienți.",
       "categoryInPromosMessage": "Această categorie sau felurile ei sunt folosite de aceste promoții: {names}. Ștergerea o poate strica pentru clienți.",
       "bulkBlockedByPromosMessage": "{n} dintre categoriile selectate sunt folosite de promoții ({names}). Le ștergeți oricum?",
-      "deleteAnyway": "Șterge oricum"
+      "deleteAnyway": "Șterge oricum",
+      "duplicateItem": "Duplică produsul",
+      "itemDuplicated": "Produs duplicat (ascuns — afișați-l când e gata)",
+      "failedToDuplicateItem": "Produsul nu a putut fi duplicat — încercați din nou.",
+      "duplicateGroup": "Duplică grupul",
+      "groupDuplicated": "Grup duplicat",
+      "failedToDuplicateGroup": "Grupul nu a putut fi duplicat — încercați din nou."
     },
     "promotionsList": {
       "stackingMaster": "Master",

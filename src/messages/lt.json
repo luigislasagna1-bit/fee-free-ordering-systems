@@ -2771,7 +2771,13 @@
       "itemInPromosMessage": "Šis patiekalas įtrauktas į šias akcijas: {names}. Ištrynus jas galite sugadinti klientams.",
       "categoryInPromosMessage": "Šią kategoriją ar jos patiekalus naudoja šios akcijos: {names}. Ištrynus jas galite sugadinti.",
       "bulkBlockedByPromosMessage": "{n} pasirinktų kategorijų naudojamos akcijose ({names}). Vis tiek ištrinti?",
-      "deleteAnyway": "Vis tiek ištrinti"
+      "deleteAnyway": "Vis tiek ištrinti",
+      "duplicateItem": "Dubliuoti patiekalą",
+      "itemDuplicated": "Patiekalas dubliuotas (paslėptas — parodykite jį, kai bus paruoštas)",
+      "failedToDuplicateItem": "Nepavyko dubliuoti patiekalo — bandykite dar kartą.",
+      "duplicateGroup": "Dubliuoti grupę",
+      "groupDuplicated": "Grupė dubliuota",
+      "failedToDuplicateGroup": "Nepavyko dubliuoti grupės — bandykite dar kartą."
     },
     "promotionsList": {
       "stackingMaster": "Master",

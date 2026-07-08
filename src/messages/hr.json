@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "Ovo jelo je dio ovih promocija: {names}. Brisanje ih može pokvariti za vaše kupce.",
       "categoryInPromosMessage": "Ovu kategoriju ili njezina jela koriste ove promocije: {names}. Brisanje ih može pokvariti za kupce.",
       "bulkBlockedByPromosMessage": "{n} odabranih kategorija koriste promocije ({names}). Svejedno izbrisati?",
-      "deleteAnyway": "Svejedno izbriši"
+      "deleteAnyway": "Svejedno izbriši",
+      "duplicateItem": "Dupliciraj stavku",
+      "itemDuplicated": "Stavka duplicirana (skrivena — prikažite je kad bude gotova)",
+      "failedToDuplicateItem": "Stavku nije bilo moguće duplicirati — pokušajte ponovno.",
+      "duplicateGroup": "Dupliciraj grupu",
+      "groupDuplicated": "Grupa duplicirana",
+      "failedToDuplicateGroup": "Grupu nije bilo moguće duplicirati — pokušajte ponovno."
     },
     "promotionsList": {
       "stackingMaster": "Master",

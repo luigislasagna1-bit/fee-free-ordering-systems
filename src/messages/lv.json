@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "Šis ēdiens ietilpst šajās akcijās: {names}. Dzēšana var tās sabojāt jūsu klientiem.",
       "categoryInPromosMessage": "Šo kategoriju vai tās ēdienus izmanto šīs akcijas: {names}. Dzēšana var tās sabojāt klientiem.",
       "bulkBlockedByPromosMessage": "{n} no izvēlētajām kategorijām izmanto akcijas ({names}). Vai tomēr dzēst?",
-      "deleteAnyway": "Tomēr dzēst"
+      "deleteAnyway": "Tomēr dzēst",
+      "duplicateItem": "Dublēt produktu",
+      "itemDuplicated": "Produkts dublēts (paslēpts — parādiet to, kad būs gatavs)",
+      "failedToDuplicateItem": "Produktu neizdevās dublēt — mēģiniet vēlreiz.",
+      "duplicateGroup": "Dublēt grupu",
+      "groupDuplicated": "Grupa dublēta",
+      "failedToDuplicateGroup": "Grupu neizdevās dublēt — mēģiniet vēlreiz."
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",

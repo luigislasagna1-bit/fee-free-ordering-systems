@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "Tämä annos kuuluu näihin kampanjoihin: {names}. Poistaminen voi rikkoa ne asiakkailtasi.",
       "categoryInPromosMessage": "Tämä kategoria tai sen annokset kuuluvat näihin kampanjoihin: {names}. Poistaminen voi rikkoa ne.",
       "bulkBlockedByPromosMessage": "{n} valituista kategorioista kuuluu kampanjoihin ({names}). Poistetaanko silti?",
-      "deleteAnyway": "Poista silti"
+      "deleteAnyway": "Poista silti",
+      "duplicateItem": "Monista tuote",
+      "itemDuplicated": "Tuote monistettu (piilotettu — näytä se, kun se on valmis)",
+      "failedToDuplicateItem": "Tuotetta ei voitu monistaa — yritä uudelleen.",
+      "duplicateGroup": "Monista ryhmä",
+      "groupDuplicated": "Ryhmä monistettu",
+      "failedToDuplicateGroup": "Ryhmää ei voitu monistaa — yritä uudelleen."
     },
     "promotionsList": {
       "stackingMaster": "Master",

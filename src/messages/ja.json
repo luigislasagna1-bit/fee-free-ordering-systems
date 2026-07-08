@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "この料理は次のプロモーションに含まれています：{names}。削除するとお客様向けに機能しなくなる可能性があります。",
       "categoryInPromosMessage": "このカテゴリまたはその料理は次のプロモーションで使用されています：{names}。削除すると機能しなくなる可能性があります。",
       "bulkBlockedByPromosMessage": "選択したカテゴリのうち{n}件がプロモーションで使用されています（{names}）。それでも削除しますか？",
-      "deleteAnyway": "それでも削除"
+      "deleteAnyway": "それでも削除",
+      "duplicateItem": "商品を複製",
+      "itemDuplicated": "商品を複製しました（非表示 — 準備ができたら表示してください）",
+      "failedToDuplicateItem": "商品を複製できませんでした — もう一度お試しください。",
+      "duplicateGroup": "グループを複製",
+      "groupDuplicated": "グループを複製しました",
+      "failedToDuplicateGroup": "グループを複製できませんでした — もう一度お試しください。"
     },
     "promotionsList": {
       "stackingMaster": "マスター",

@@ -2452,7 +2452,13 @@
       "itemInPromosMessage": "यह व्यंजन इन प्रोमोशन का हिस्सा है: {names}। इसे हटाने से ये आपके ग्राहकों के लिए टूट सकते हैं।",
       "categoryInPromosMessage": "यह श्रेणी या इसके व्यंजन इन प्रोमोशन में उपयोग हो रहे हैं: {names}। हटाने से ये टूट सकते हैं।",
       "bulkBlockedByPromosMessage": "चयनित श्रेणियों में से {n} प्रोमोशन में उपयोग हो रही हैं ({names})। फिर भी हटाएँ?",
-      "deleteAnyway": "फिर भी हटाएँ"
+      "deleteAnyway": "फिर भी हटाएँ",
+      "duplicateItem": "आइटम डुप्लिकेट करें",
+      "itemDuplicated": "आइटम डुप्लिकेट किया गया (छिपा हुआ — तैयार होने पर दिखाएँ)",
+      "failedToDuplicateItem": "आइटम डुप्लिकेट नहीं हो सका — कृपया फिर से प्रयास करें।",
+      "duplicateGroup": "समूह डुप्लिकेट करें",
+      "groupDuplicated": "समूह डुप्लिकेट किया गया",
+      "failedToDuplicateGroup": "समूह डुप्लिकेट नहीं हो सका — कृपया फिर से प्रयास करें।"
     },
     "promotionsList": {
       "stackingMaster": "मास्टर",

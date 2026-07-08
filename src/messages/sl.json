@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "Ta jed je del teh promocij: {names}. Izbris jih lahko pokvari za vaše stranke.",
       "categoryInPromosMessage": "To kategorijo ali njene jedi uporabljajo te promocije: {names}. Izbris jih lahko pokvari za stranke.",
       "bulkBlockedByPromosMessage": "{n} izbranih kategorij uporabljajo promocije ({names}). Vseeno izbrišem?",
-      "deleteAnyway": "Vseeno izbriši"
+      "deleteAnyway": "Vseeno izbriši",
+      "duplicateItem": "Podvoji izdelek",
+      "itemDuplicated": "Izdelek podvojen (skrit — prikažite ga, ko bo pripravljen)",
+      "failedToDuplicateItem": "Izdelka ni bilo mogoče podvojiti — poskusite znova.",
+      "duplicateGroup": "Podvoji skupino",
+      "groupDuplicated": "Skupina podvojena",
+      "failedToDuplicateGroup": "Skupine ni bilo mogoče podvojiti — poskusite znova."
     },
     "promotionsList": {
       "stackingMaster": "Master",

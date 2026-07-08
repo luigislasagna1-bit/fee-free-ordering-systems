@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "이 메뉴는 다음 프로모션에 포함되어 있습니다: {names}. 삭제하면 고객에게 프로모션이 작동하지 않을 수 있습니다.",
       "categoryInPromosMessage": "이 카테고리 또는 카테고리의 메뉴가 다음 프로모션에서 사용됩니다: {names}. 삭제하면 프로모션이 작동하지 않을 수 있습니다.",
       "bulkBlockedByPromosMessage": "선택한 카테고리 중 {n}개가 프로모션에서 사용됩니다({names}). 그래도 삭제할까요?",
-      "deleteAnyway": "그래도 삭제"
+      "deleteAnyway": "그래도 삭제",
+      "duplicateItem": "항목 복제",
+      "itemDuplicated": "항목이 복제되었습니다 (숨김 — 준비되면 표시하세요)",
+      "failedToDuplicateItem": "항목을 복제하지 못했습니다 — 다시 시도해 주세요.",
+      "duplicateGroup": "그룹 복제",
+      "groupDuplicated": "그룹이 복제되었습니다",
+      "failedToDuplicateGroup": "그룹을 복제하지 못했습니다 — 다시 시도해 주세요."
     },
     "promotionsList": {
       "stackingMaster": "마스터",

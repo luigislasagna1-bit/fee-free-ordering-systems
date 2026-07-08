@@ -4,7 +4,7 @@ import { formatTime, type HoursFormat } from "@/lib/format-time";
 import { useState, useCallback, createContext, useContext, useEffect, useRef } from "react";
 import {
   Plus, GripVertical, ChevronDown, ChevronRight, Eye, EyeOff,
-  Edit2, Trash2, Copy, X, Check, AlertCircle, Tag, Layers,
+  Edit2, Trash2, Copy, CopyPlus, X, Check, AlertCircle, Tag, Layers,
   Image as ImageIcon, Clock, Truck, ShoppingBag, UtensilsCrossed,
   Settings, ChevronUp, MoreVertical, Upload, FileText, Loader2,
   PartyPopper, Download, Search, Star,
@@ -1598,12 +1598,13 @@ function availabilityBadge(
 }
 
 function SortableItemRow({
-  item, categoryModGroups, onEdit, onDelete, onCopySettings, onToggle, onAttach, onDetach, onReorderGroups,
+  item, categoryModGroups, onEdit, onDelete, onDuplicate, onCopySettings, onToggle, onAttach, onDetach, onReorderGroups,
 }: {
   item: MenuItem;
   categoryModGroups: ModifierGroup[];
   onEdit: () => void;
   onDelete: () => void;
+  onDuplicate: () => void;
   onCopySettings: () => void;
   onToggle: (field: "isAvailable" | "isSoldOut" | "isHidden", val: boolean) => void;
   onAttach: (libraryGroupId: string, menuItemId: string) => void;
@@ -1737,6 +1738,9 @@ function SortableItemRow({
           </button>
           <button onClick={onEdit} className="p-1.5 text-gray-400 hover:text-blue-500 rounded transition">
             <Edit2 className="w-4 h-4" />
+          </button>
+          <button onClick={onDuplicate} title={t("duplicateItem")} className="p-1.5 text-gray-400 hover:text-emerald-600 rounded transition">
+            <CopyPlus className="w-4 h-4" />
           </button>
           <button onClick={onCopySettings} title={t("copySettingsTitle")} className="p-1.5 text-gray-400 hover:text-emerald-600 rounded transition">
             <Copy className="w-4 h-4" />
@@ -1878,7 +1882,7 @@ function CopySettingsModal({
 // ─── Sortable Category ────────────────────────────────────────────────────────
 
 function SortableCategoryBlock({
-  cat, expanded, onToggleExpand, onAddItem, onEditItem, onDeleteItem, onCopyItemSettings,
+  cat, expanded, onToggleExpand, onAddItem, onEditItem, onDeleteItem, onDuplicateItem, onCopyItemSettings,
   onToggleItem, onEditCategory, onDeleteCategory, onDuplicateCategory, onItemsReordered, categories,
   onAttach, onDetach, onReorderGroups, onMoveItemHere,
   selectMode, isSelected, onToggleSelect,
@@ -1886,6 +1890,7 @@ function SortableCategoryBlock({
   cat: Category; expanded: boolean;
   onToggleExpand: () => void; onAddItem: () => void;
   onEditItem: (item: MenuItem) => void; onDeleteItem: (id: string) => void;
+  onDuplicateItem: (id: string) => void;
   onCopyItemSettings: (item: MenuItem) => void;
   onToggleItem: (id: string, field: "isAvailable" | "isSoldOut" | "isHidden", val: boolean) => void;
   onEditCategory: () => void; onDeleteCategory: () => void; onDuplicateCategory: () => void;
@@ -2035,6 +2040,7 @@ function SortableCategoryBlock({
                     categoryModGroups={cat.modifierGroups}
                     onEdit={() => onEditItem(item)}
                     onDelete={() => onDeleteItem(item.id)}
+                    onDuplicate={() => onDuplicateItem(item.id)}
                     onCopySettings={() => onCopyItemSettings(item)}
                     onToggle={(field, val) => onToggleItem(item.id, field, val)}
                     onAttach={(libId, itemId) => onAttach(libId, itemId)}
@@ -2054,13 +2060,14 @@ function SortableCategoryBlock({
 // ─── Right Panel: Modifier Library ───────────────────────────────────────────
 
 function ModifierLibraryPanel({
-  groups, onAddGroup, onEditGroup, onDeleteGroup,
+  groups, onAddGroup, onEditGroup, onDeleteGroup, onDuplicateGroup,
   selectMode, selectedIds, onToggleSelect, onSetSelectMode, onSetSelectedIds, onBulkDelete,
 }: {
   groups: ModifierGroup[];
   onAddGroup: () => void;
   onEditGroup: (g: ModifierGroup) => void;
   onDeleteGroup: (id: string) => void;
+  onDuplicateGroup: (id: string) => void;
   selectMode: boolean;
   selectedIds: Set<string>;
   onToggleSelect: (id: string) => void;
@@ -2270,6 +2277,9 @@ function ModifierLibraryPanel({
               <div className="flex items-center gap-1 flex-shrink-0">
                 <button onClick={e => { e.stopPropagation(); onEditGroup(g); }} className="p-1 text-gray-400 hover:text-blue-500 rounded">
                   <Edit2 className="w-3.5 h-3.5" />
+                </button>
+                <button onClick={e => { e.stopPropagation(); onDuplicateGroup(g.id); }} title={t("duplicateGroup")} className="p-1 text-gray-400 hover:text-emerald-600 rounded">
+                  <CopyPlus className="w-3.5 h-3.5" />
                 </button>
                 <button onClick={e => { e.stopPropagation(); onDeleteGroup(g.id); }} className="p-1 text-gray-400 hover:text-red-500 rounded">
                   <Trash2 className="w-3.5 h-3.5" />
@@ -2984,6 +2994,28 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
     await reload();
   };
 
+  const duplicateItem = async (id: string) => {
+    const res = await fetch(`/api/menu/items/${id}/duplicate`, { method: "POST" });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      toast.error(body.error || t("failedToDuplicateItem"));
+      return;
+    }
+    toast.success(t("itemDuplicated"));
+    await reload();
+  };
+
+  const duplicateModGroup = async (id: string) => {
+    const res = await fetch(`/api/menu/modifiers/${id}/duplicate`, { method: "POST" });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      toast.error(body.error || t("failedToDuplicateGroup"));
+      return;
+    }
+    toast.success(t("groupDuplicated"));
+    await reload();
+  };
+
   const deleteCategory = (id: string) => {
     setConfirmDialog({
       title: t("deleteCategoryTitle"),
@@ -3380,6 +3412,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
                     onAddItem={() => setItemModal({ catId: cat.id })}
                     onEditItem={item => setItemModal({ catId: cat.id, item })}
                     onDeleteItem={deleteItem}
+                    onDuplicateItem={duplicateItem}
                     onCopyItemSettings={item => setCopyModal({ source: item })}
                     onToggleItem={toggleItem}
                     onEditCategory={() => setCatModal({ cat })}
@@ -3414,6 +3447,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
           onAddGroup={() => setModModal({})}
           onEditGroup={g => setModModal({ group: g })}
           onDeleteGroup={deleteModGroup}
+          onDuplicateGroup={duplicateModGroup}
           selectMode={modGroupSelectMode}
           selectedIds={selectedModGroupIds}
           onToggleSelect={id => {

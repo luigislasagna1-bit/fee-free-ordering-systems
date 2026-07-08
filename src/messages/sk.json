@@ -2771,7 +2771,13 @@
       "itemInPromosMessage": "Toto jedlo je súčasťou týchto akcií: {names}. Vymazaním ich môžete pre zákazníkov pokaziť.",
       "categoryInPromosMessage": "Túto kategóriu alebo jej jedlá používajú tieto akcie: {names}. Vymazaním ich môžete pokaziť.",
       "bulkBlockedByPromosMessage": "{n} z vybraných kategórií používajú akcie ({names}). Napriek tomu vymazať?",
-      "deleteAnyway": "Napriek tomu vymazať"
+      "deleteAnyway": "Napriek tomu vymazať",
+      "duplicateItem": "Duplikovať položku",
+      "itemDuplicated": "Položka duplikovaná (skrytá — zobrazte ju, keď bude hotová)",
+      "failedToDuplicateItem": "Položku sa nepodarilo duplikovať — skúste to znova.",
+      "duplicateGroup": "Duplikovať skupinu",
+      "groupDuplicated": "Skupina duplikovaná",
+      "failedToDuplicateGroup": "Skupinu sa nepodarilo duplikovať — skúste to znova."
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",

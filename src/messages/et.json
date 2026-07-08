@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "See roog kuulub nendesse kampaaniatesse: {names}. Kustutamine võib need klientide jaoks rikkuda.",
       "categoryInPromosMessage": "Seda kategooriat või selle roogi kasutavad need kampaaniad: {names}. Kustutamine võib need rikkuda.",
       "bulkBlockedByPromosMessage": "{n} valitud kategooriat on kasutusel kampaaniates ({names}). Kas kustutada ikkagi?",
-      "deleteAnyway": "Kustuta ikkagi"
+      "deleteAnyway": "Kustuta ikkagi",
+      "duplicateItem": "Dubleeri toode",
+      "itemDuplicated": "Toode dubleeritud (peidetud — kuva see, kui valmis)",
+      "failedToDuplicateItem": "Toodet ei õnnestunud dubleerida — proovi uuesti.",
+      "duplicateGroup": "Dubleeri rühm",
+      "groupDuplicated": "Rühm dubleeritud",
+      "failedToDuplicateGroup": "Rühma ei õnnestunud dubleerida — proovi uuesti."
     },
     "promotionsList": {
       "stackingMaster": "Peamine",

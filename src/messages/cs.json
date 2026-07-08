@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "Toto jídlo je součástí těchto akcí: {names}. Smazáním je můžete pro zákazníky rozbít.",
       "categoryInPromosMessage": "Tuto kategorii nebo její jídla používají tyto akce: {names}. Smazáním je můžete pro zákazníky rozbít.",
       "bulkBlockedByPromosMessage": "{n} z vybraných kategorií používají akce ({names}). Přesto smazat?",
-      "deleteAnyway": "Přesto smazat"
+      "deleteAnyway": "Přesto smazat",
+      "duplicateItem": "Duplikovat položku",
+      "itemDuplicated": "Položka duplikována (skrytá — zobrazte ji, až bude hotová)",
+      "failedToDuplicateItem": "Položku se nepodařilo duplikovat — zkuste to znovu.",
+      "duplicateGroup": "Duplikovat skupinu",
+      "groupDuplicated": "Skupina duplikována",
+      "failedToDuplicateGroup": "Skupinu se nepodařilo duplikovat — zkuste to znovu."
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",

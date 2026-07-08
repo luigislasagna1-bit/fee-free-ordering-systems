@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "Este plato forma parte de estas promociones: {names}. Eliminarlo puede romperlas para tus clientes.",
       "categoryInPromosMessage": "Esta categoría o sus platos se usan en estas promociones: {names}. Eliminarla puede romperlas para tus clientes.",
       "bulkBlockedByPromosMessage": "{n} de las categorías seleccionadas se usan en promociones ({names}). ¿Eliminarlas de todos modos?",
-      "deleteAnyway": "Eliminar de todos modos"
+      "deleteAnyway": "Eliminar de todos modos",
+      "duplicateItem": "Duplicar artículo",
+      "itemDuplicated": "Artículo duplicado (oculto — muéstralo cuando esté listo)",
+      "failedToDuplicateItem": "No se pudo duplicar el artículo — inténtalo de nuevo.",
+      "duplicateGroup": "Duplicar grupo",
+      "groupDuplicated": "Grupo duplicado",
+      "failedToDuplicateGroup": "No se pudo duplicar el grupo — inténtalo de nuevo."
     },
     "promotionsList": {
       "stackingMaster": "Maestro",

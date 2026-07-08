@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "Ця страва входить до цих акцій: {names}. Видалення може зламати їх для ваших клієнтів.",
       "categoryInPromosMessage": "Цю категорію або її страви використовують ці акції: {names}. Видалення може зламати їх для клієнтів.",
       "bulkBlockedByPromosMessage": "{n} з вибраних категорій використовуються в акціях ({names}). Все одно видалити?",
-      "deleteAnyway": "Все одно видалити"
+      "deleteAnyway": "Все одно видалити",
+      "duplicateItem": "Дублювати позицію",
+      "itemDuplicated": "Позицію дубльовано (приховано — покажіть її, коли буде готова)",
+      "failedToDuplicateItem": "Не вдалося дублювати позицію — спробуйте ще раз.",
+      "duplicateGroup": "Дублювати групу",
+      "groupDuplicated": "Групу дубльовано",
+      "failedToDuplicateGroup": "Не вдалося дублювати групу — спробуйте ще раз."
     },
     "promotionsList": {
       "stackingMaster": "Майстер",

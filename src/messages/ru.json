@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "Это блюдо входит в акции: {names}. Удаление может сломать их для ваших клиентов.",
       "categoryInPromosMessage": "Эта категория или её блюда используются в акциях: {names}. Удаление может сломать их для клиентов.",
       "bulkBlockedByPromosMessage": "{n} из выбранных категорий используются в акциях ({names}). Всё равно удалить?",
-      "deleteAnyway": "Всё равно удалить"
+      "deleteAnyway": "Всё равно удалить",
+      "duplicateItem": "Дублировать позицию",
+      "itemDuplicated": "Позиция дублирована (скрыта — покажите её, когда будет готова)",
+      "failedToDuplicateItem": "Не удалось дублировать позицию — попробуйте ещё раз.",
+      "duplicateGroup": "Дублировать группу",
+      "groupDuplicated": "Группа дублирована",
+      "failedToDuplicateGroup": "Не удалось дублировать группу — попробуйте ещё раз."
     },
     "promotionsList": {
       "stackingMaster": "Мастер",

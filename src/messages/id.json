@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "Hidangan ini bagian dari promo berikut: {names}. Menghapusnya dapat merusak promo bagi pelanggan Anda.",
       "categoryInPromosMessage": "Kategori ini atau hidangannya dipakai oleh promo berikut: {names}. Menghapusnya dapat merusak promo tersebut.",
       "bulkBlockedByPromosMessage": "{n} kategori terpilih dipakai oleh promo ({names}). Tetap hapus?",
-      "deleteAnyway": "Tetap hapus"
+      "deleteAnyway": "Tetap hapus",
+      "duplicateItem": "Duplikat item",
+      "itemDuplicated": "Item diduplikat (disembunyikan — tampilkan saat siap)",
+      "failedToDuplicateItem": "Tidak dapat menduplikat item — coba lagi.",
+      "duplicateGroup": "Duplikat grup",
+      "groupDuplicated": "Grup diduplikat",
+      "failedToDuplicateGroup": "Tidak dapat menduplikat grup — coba lagi."
     },
     "promotionsList": {
       "stackingMaster": "Master",

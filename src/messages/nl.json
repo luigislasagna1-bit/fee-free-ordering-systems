@@ -2078,7 +2078,13 @@
       "itemInPromosMessage": "Dit gerecht maakt deel uit van deze promoties: {names}. Verwijderen kan ze voor uw klanten breken.",
       "categoryInPromosMessage": "Deze categorie of de gerechten erin worden gebruikt door deze promoties: {names}. Verwijderen kan ze voor uw klanten breken.",
       "bulkBlockedByPromosMessage": "{n} van de geselecteerde categorieën worden gebruikt door promoties ({names}). Toch verwijderen?",
-      "deleteAnyway": "Toch verwijderen"
+      "deleteAnyway": "Toch verwijderen",
+      "duplicateItem": "Item dupliceren",
+      "itemDuplicated": "Item gedupliceerd (verborgen — toon het wanneer klaar)",
+      "failedToDuplicateItem": "Kon het item niet dupliceren — probeer het opnieuw.",
+      "duplicateGroup": "Groep dupliceren",
+      "groupDuplicated": "Groep gedupliceerd",
+      "failedToDuplicateGroup": "Kon de groep niet dupliceren — probeer het opnieuw."
     },
     "promotionsList": {
       "stackingMaster": "Master",

@@ -2022,7 +2022,13 @@
       "itemInPromosMessage": "Ez az étel a következő akciók része: {names}. Törlése tönkreteheti azokat a vendégei számára.",
       "categoryInPromosMessage": "Ezt a kategóriát vagy ételeit a következő akciók használják: {names}. Törlése tönkreteheti azokat.",
       "bulkBlockedByPromosMessage": "A kiválasztott kategóriák közül {n} akciókban szerepel ({names}). Mégis törli?",
-      "deleteAnyway": "Törlés mindenképp"
+      "deleteAnyway": "Törlés mindenképp",
+      "duplicateItem": "Tétel duplikálása",
+      "itemDuplicated": "Tétel duplikálva (rejtett — jelenítse meg, ha kész)",
+      "failedToDuplicateItem": "A tételt nem sikerült duplikálni — próbálja újra.",
+      "duplicateGroup": "Csoport duplikálása",
+      "groupDuplicated": "Csoport duplikálva",
+      "failedToDuplicateGroup": "A csoportot nem sikerült duplikálni — próbálja újra."
     },
     "promotionsList": {
       "stackingMaster": "Master",

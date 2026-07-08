@@ -2022,7 +2022,13 @@
       "itemInPromosMessage": "To danie jest częścią tych promocji: {names}. Usunięcie może je zepsuć dla klientów.",
       "categoryInPromosMessage": "Ta kategoria lub jej dania są używane przez te promocje: {names}. Usunięcie może je zepsuć dla klientów.",
       "bulkBlockedByPromosMessage": "{n} z wybranych kategorii jest używanych przez promocje ({names}). Usunąć mimo to?",
-      "deleteAnyway": "Usuń mimo to"
+      "deleteAnyway": "Usuń mimo to",
+      "duplicateItem": "Duplikuj pozycję",
+      "itemDuplicated": "Pozycja zduplikowana (ukryta — pokaż, gdy będzie gotowa)",
+      "failedToDuplicateItem": "Nie udało się zduplikować pozycji — spróbuj ponownie.",
+      "duplicateGroup": "Duplikuj grupę",
+      "groupDuplicated": "Grupa zduplikowana",
+      "failedToDuplicateGroup": "Nie udało się zduplikować grupy — spróbuj ponownie."
     },
     "promotionsList": {
       "stackingMaster": "Master",

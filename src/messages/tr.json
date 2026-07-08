@@ -2022,7 +2022,13 @@
       "itemInPromosMessage": "Bu yemek şu promosyonların parçası: {names}. Silmek bunları müşterileriniz için bozabilir.",
       "categoryInPromosMessage": "Bu kategori veya içindeki yemekler şu promosyonlarda kullanılıyor: {names}. Silmek bunları bozabilir.",
       "bulkBlockedByPromosMessage": "Seçilen kategorilerden {n} tanesi promosyonlarda kullanılıyor ({names}). Yine de silinsin mi?",
-      "deleteAnyway": "Yine de sil"
+      "deleteAnyway": "Yine de sil",
+      "duplicateItem": "Ürünü çoğalt",
+      "itemDuplicated": "Ürün çoğaltıldı (gizli — hazır olduğunda gösterin)",
+      "failedToDuplicateItem": "Ürün çoğaltılamadı — lütfen tekrar deneyin.",
+      "duplicateGroup": "Grubu çoğalt",
+      "groupDuplicated": "Grup çoğaltıldı",
+      "failedToDuplicateGroup": "Grup çoğaltılamadı — lütfen tekrar deneyin."
     },
     "promotionsList": {
       "stackingMaster": "Ana",
