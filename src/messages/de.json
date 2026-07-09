@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Paket",
+      "remove": "Paket entfernen",
+      "addedNamed": "Paket hinzugefügt: {name}",
+      "editUnavailable": "Die Aktion für dieses Paket ist nicht mehr verfügbar, daher kann es nicht bearbeitet werden. Sie können es entfernen und ein neues zusammenstellen.",
       "mealBundleWithSpeciality": "Menü-Bundle mit Spezialität",
       "mealBundle": "Menü-Bundle",
       "bundlePriceLabel": "Bundle-Preis:",

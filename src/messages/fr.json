@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Menu",
+      "remove": "Retirer le menu",
+      "addedNamed": "Menu ajouté : {name}",
+      "editUnavailable": "La promotion de ce menu n’est plus disponible, il ne peut donc plus être modifié. Vous pouvez le retirer et en composer un nouveau.",
       "mealBundleWithSpeciality": "Menu avec spécialité",
       "mealBundle": "Menu groupé",
       "bundlePriceLabel": "Prix du menu :",

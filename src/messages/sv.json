@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Paket",
+      "remove": "Ta bort paket",
+      "addedNamed": "Paket tillagt: {name}",
+      "editUnavailable": "Kampanjen för det här paketet är inte längre tillgänglig, så det kan inte redigeras. Du kan ta bort det och bygga ett nytt.",
       "mealBundleWithSpeciality": "Matkombination med specialitet",
       "mealBundle": "Matkombination",
       "bundlePriceLabel": "Kombinationspris:",

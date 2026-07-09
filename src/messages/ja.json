@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "セット",
+      "remove": "セットを削除",
+      "addedNamed": "セットを追加しました：{name}",
+      "editUnavailable": "このセットのプロモーションはご利用いただけなくなったため、編集できません。セットを削除して、新しく作り直すことができます。",
       "mealBundleWithSpeciality": "スペシャルティ付きミールバンドル",
       "mealBundle": "ミールバンドル",
       "bundlePriceLabel": "バンドル価格：",

@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Csomag",
+      "remove": "Csomag eltávolítása",
+      "addedNamed": "Csomag hozzáadva: {name}",
+      "editUnavailable": "Ennek a csomagnak a promóciója már nem érhető el, ezért nem szerkeszthető. Eltávolíthatod, és összeállíthatsz egy újat.",
       "mealBundleWithSpeciality": "Ételbundle különleges tétellel",
       "mealBundle": "Ételbundle",
       "bundlePriceLabel": "Bundle ára:",

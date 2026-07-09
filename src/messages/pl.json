@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Pakiet",
+      "remove": "Usuń pakiet",
+      "addedNamed": "Dodano pakiet: {name}",
+      "editUnavailable": "Promocja tego pakietu nie jest już dostępna, więc nie można go edytować. Możesz go usunąć i złożyć nowy.",
       "mealBundleWithSpeciality": "Zestaw posiłkowy ze specjalnością",
       "mealBundle": "Zestaw posiłkowy",
       "bundlePriceLabel": "Cena zestawu:",

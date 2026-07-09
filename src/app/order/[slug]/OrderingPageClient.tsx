@@ -131,6 +131,9 @@ interface CartItem {
     /** Combo component that's a customized pizza — carries the builder
      *  selections (half/half, toppings) so the kitchen ticket shows them. */
     pizzaCustomization?: PizzaCustomization;
+    /** Which combo slot this pick fills — lets cart re-edit reseed the composer
+     *  exactly (absent on pre-2026-07-09 lines → greedy fallback). */
+    slotId?: string;
   }>;
   /** True when this line is a COMBO menu item (vs a promo bundle). Renders the
    *  same consolidated parent + children, but priced as a menu item. */
@@ -1208,6 +1211,7 @@ export function OrderingPageClient({
   const t = useTranslations("ordering");
   const tT = useTranslations("ordering.toasts");
   const tCombo = useTranslations("customer.combo");
+  const tBundle = useTranslations("customer.bundle");
   const tAddr = useTranslations("checkout.addressFields");
   const tCheckout = useTranslations("checkout");
   const tPromoDetail = useTranslations("customer.promoDetail");
@@ -1462,6 +1466,10 @@ export function OrderingPageClient({
   const [comboItem, setComboItem] = useState<MenuItem | null>(null);
   // When set, the next "Add to Cart" replaces this index instead of appending.
   const [editingCartIndex, setEditingCartIndex] = useState<number | null>(null);
+  // Snapshot of the bundle line's children being re-edited — seeds the
+  // BundleComposerModal (via PromoDetailModal) with the current picks. Cleared
+  // on close/save. Luigi 2026-07-09.
+  const [bundleEditSeed, setBundleEditSeed] = useState<CartItem["bundleItems"] | null>(null);
   // Drives the "Adjust this item?" confirmation dialog.
   const [pendingEditIndex, setPendingEditIndex] = useState<number | null>(null);
   // Default payment method: pick the FIRST accepted method so the
@@ -3401,11 +3409,23 @@ export function OrderingPageClient({
         pizzaCustomization: c.pizzaCustomization,
         specialityFee: c.upcharge,
         extrasFee: c.extrasFee,
+        // Which combo slot this pick fills — lets re-edit reseed the composer
+        // EXACTLY (no greedy slot-matching ambiguity). Luigi 2026-07-09.
+        slotId: c.slotId,
       })),
     };
-    setCart((prev) => [...prev, newEntry]);
+    // Editing an existing combo line REPLACES it in place (same index, cart
+    // count unchanged); a fresh compose appends. Luigi 2026-07-09.
+    const isComboEdit = editingCartIndex !== null;
+    setCart((prev) => (isComboEdit ? prev.map((it, i) => (i === editingCartIndex ? newEntry : it)) : [...prev, newEntry]));
     setComboItem(null);
-    toast.success(tT("itemAddedNamed", { name: result.comboItem.name }) + " 🧩");
+    if (isComboEdit) {
+      setEditingCartIndex(null);
+      setCartOpen(true);
+      toast.success(tT("itemUpdated"));
+    } else {
+      toast.success(tT("itemAddedNamed", { name: result.comboItem.name }) + " 🧩");
+    }
   };
 
   // Open the appropriate editor pre-seeded with the cart entry's current selections.
@@ -3413,6 +3433,33 @@ export function OrderingPageClient({
     const ci = cart[idx];
     if (!ci) return;
     setPendingEditIndex(null);
+
+    // COMBO line → reopen the combo composer seeded with the current picks
+    // (matches openItem precedence: combo checked before pizza). Luigi 2026-07-09.
+    if (parseComboConfig((ci.menuItem as any).comboConfig)) {
+      setEditingCartIndex(idx);
+      setCartOpen(false);
+      setComboItem(ci.menuItem);
+      return;
+    }
+    // MEAL-BUNDLE line → reopen its promo's composer seeded with the current
+    // picks. The cart line stores only bundlePromoId + bundleItems, so if the
+    // promo is no longer served (deleted / outside its window) there is nothing
+    // to rebuild the slots from — block gracefully, keep the line. Luigi 2026-07-09.
+    if (ci.isBundle && ci.bundlePromoId) {
+      const promo = promoBanners.find((p) => p.id === ci.bundlePromoId);
+      if (!promo) {
+        toast.error(tBundle("editUnavailable"));
+        setEditingCartIndex(null);
+        return;
+      }
+      setEditingCartIndex(idx);
+      setCartOpen(false);
+      setBundleEditSeed((ci.bundleItems ?? []) as any);
+      setActivePromoModal(promo);
+      return;
+    }
+
     setEditingCartIndex(idx);
     setCartOpen(false);
 
@@ -3432,6 +3479,7 @@ export function OrderingPageClient({
   // Cancel an edit without saving — drop the edit pointer, reopen the drawer.
   const cancelEdit = () => {
     setEditingCartIndex(null);
+    setBundleEditSeed(null);
     setCartOpen(true);
   };
 
@@ -4219,12 +4267,14 @@ export function OrderingPageClient({
     // them — block a second exclusive bundle at commit time. (A committed
     // exclusive vs à-la-carte/standard promos is handled by the engine's
     // committedExclusive branch.) Luigi 2026-07-08 (Fabrizio stacking fix).
+    const isBundleEdit = editingCartIndex !== null;
     const thisStackingRule = promoBanners.find((p) => p.id === bundle.promoId)?.stackingRule;
     const thisIsExclusive = thisStackingRule === "exclusive";
     // Read the stored rule off the cart line (survives a localStorage restore),
     // falling back to promoBanners for legacy lines added before this field.
+    // When RE-EDITING, skip the line being edited — it must not block itself.
     const existingExclusiveBundle = cart.find(
-      (ci) => ci.isBundle &&
+      (ci, i) => ci.isBundle && !(isBundleEdit && i === editingCartIndex) &&
         ((ci.bundleStackingRule ?? (ci.bundlePromoId ? promoBanners.find((p) => p.id === ci.bundlePromoId)?.stackingRule : undefined)) === "exclusive"),
     );
     if (thisIsExclusive && existingExclusiveBundle) {
@@ -4249,31 +4299,38 @@ export function OrderingPageClient({
       modifierGroups: [],
       variants: [],
     };
-    setCart((prev) => [
-      ...prev,
-      {
-        menuItem: syntheticMenuItem,
-        variant: undefined,
-        quantity: 1,
-        selectedMods: {},
-        notes: "",
-        lineTotal: bundle.lineTotal,
-        unitPrice: bundle.lineTotal,
-        isBundle: true,
-        bundlePromoId: bundle.promoId,
-        bundlePromoName: bundle.promoName,
-        bundleStackingRule: thisStackingRule,
-        bundleItems: bundle.children.map((c) => ({
-          menuItemId: c.menuItemId,
-          variantId: c.variantId,
-          name: c.name,
-          variantName: c.variantName,
-          notes: c.notes,
-          specialityFee: c.specialityFee,
-        })),
-      },
-    ]);
-    toast.success(`Added bundle: ${bundle.promoName}`);
+    const newEntry: CartItem = {
+      menuItem: syntheticMenuItem,
+      variant: undefined,
+      quantity: 1,
+      selectedMods: {},
+      notes: "",
+      lineTotal: bundle.lineTotal,
+      unitPrice: bundle.lineTotal,
+      isBundle: true,
+      bundlePromoId: bundle.promoId,
+      bundlePromoName: bundle.promoName,
+      bundleStackingRule: thisStackingRule,
+      bundleItems: bundle.children.map((c) => ({
+        menuItemId: c.menuItemId,
+        variantId: c.variantId,
+        name: c.name,
+        variantName: c.variantName,
+        notes: c.notes,
+        specialityFee: c.specialityFee,
+      })),
+    };
+    // Editing an existing bundle line REPLACES it in place; a fresh compose
+    // appends. Luigi 2026-07-09.
+    setCart((prev) => (isBundleEdit ? prev.map((it, i) => (i === editingCartIndex ? newEntry : it)) : [...prev, newEntry]));
+    setBundleEditSeed(null);
+    if (isBundleEdit) {
+      setEditingCartIndex(null);
+      setCartOpen(true);
+      toast.success(tT("itemUpdated"));
+    } else {
+      toast.success(tBundle("addedNamed", { name: bundle.promoName }));
+    }
   };
 
   /** Complete a guided multi-group promo (bogo / buy_n_get_free /
@@ -5807,14 +5864,13 @@ export function OrderingPageClient({
                       <div className="flex items-start justify-between gap-2">
                         <div
                           className="flex-1 min-w-0"
-                          // Bundles aren't editable from the cart (the
-                          // composer would need to re-open with state
-                          // restoration — TODO). Normal items still open
-                          // the edit confirmation.
-                          onClick={() => { if (!ci.isBundle) setPendingEditIndex(idx); }}
-                          role={ci.isBundle ? undefined : "button"}
-                          aria-label={ci.isBundle ? undefined : t("editItem")}
-                          style={{ cursor: ci.isBundle ? "default" : "pointer" }}
+                          // Every line is editable — combos/bundles reopen their
+                          // composer seeded with the current picks (beginEdit
+                          // routes by type). Luigi 2026-07-09.
+                          onClick={() => setPendingEditIndex(idx)}
+                          role="button"
+                          aria-label={t("editItem")}
+                          style={{ cursor: "pointer" }}
                         >
                           <div className="font-semibold text-gray-900 text-sm">
                             {ci.isBundle && (
@@ -5822,7 +5878,7 @@ export function OrderingPageClient({
                                 className="inline-block text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded mr-1.5 align-middle"
                                 style={{ backgroundColor: `${theme.primaryColor}22`, color: theme.primaryColor }}
                               >
-                                {ci.isCombo ? tCombo("badge") : "Bundle"}
+                                {ci.isCombo ? tCombo("badge") : tBundle("badge")}
                               </span>
                             )}
                             {ci.bundlePromoName ?? ci.menuItem.name}
@@ -5909,7 +5965,7 @@ export function OrderingPageClient({
                           }}
                           className="text-xs mt-2 text-red-600 hover:text-red-700 underline"
                         >
-                          Remove bundle
+                          {tBundle("remove")}
                         </button>
                       )}
                     </div>
@@ -6249,7 +6305,17 @@ export function OrderingPageClient({
           fmt={fmt}
           allowItemNotes={(restaurant as any)?.allowItemNotes !== false}
           onAddCombo={addComboToCart}
-          onClose={() => setComboItem(null)}
+          onClose={() => { setComboItem(null); if (editingCartIndex !== null) cancelEdit(); }}
+          /* Re-edit: seed the composer with the cart line's current picks
+             (specialityFee on the line maps back to the child's upcharge). */
+          initial={
+            editingCartIndex !== null && cart[editingCartIndex]?.isCombo
+              ? {
+                  children: (cart[editingCartIndex].bundleItems ?? []).map((b) => ({ ...b, upcharge: b.specialityFee })) as any,
+                  notes: cart[editingCartIndex].notes || undefined,
+                }
+              : undefined
+          }
         />
       )}
 
@@ -6519,6 +6585,8 @@ export function OrderingPageClient({
           }
           onAddFreebie={addFreebieToCart}
           onAddBundle={addBundleToCart}
+          /* Re-edit: seed the bundle composer with the cart line's current picks. */
+          bundleInitial={editingCartIndex !== null && bundleEditSeed ? { children: bundleEditSeed as any } : undefined}
           onCompleteGuidedPromo={addGuidedPromoToCart}
           onSwitchOrderType={(next) => {
             // Never strand the order on a channel the restaurant doesn't offer
@@ -6590,9 +6658,15 @@ export function OrderingPageClient({
           cartItemCount={cart.reduce((s, ci) => s + ci.quantity, 0)}
           onGoToCart={() => {
             setActivePromoModal(null);
+            if (editingCartIndex !== null) cancelEdit();
             setCartOpen(true);
           }}
-          onClose={() => setActivePromoModal(null)}
+          onClose={() => {
+            setActivePromoModal(null);
+            // Abandoning a bundle re-edit must clear the edit pointer, or the
+            // next fresh add would silently overwrite this line. Luigi 2026-07-09.
+            if (editingCartIndex !== null) cancelEdit();
+          }}
         />
       )}
 

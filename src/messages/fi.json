@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Paketti",
+      "remove": "Poista paketti",
+      "addedNamed": "Paketti lisätty: {name}",
+      "editUnavailable": "Tämän paketin tarjous ei ole enää saatavilla, joten pakettia ei voi muokata. Voit poistaa sen ja koota uuden.",
       "mealBundleWithSpeciality": "Ateriapaketti erikoisuudella",
       "mealBundle": "Ateriapaketti",
       "bundlePriceLabel": "Paketin hinta:",

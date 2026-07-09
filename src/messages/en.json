@@ -5614,6 +5614,10 @@
       "helpOffers": "Deals saved to your account. “Auto-applies — no code” ones are added automatically at checkout when your order qualifies — nothing to enter. Offers with a code apply once you enter the code."
     },
     "bundle": {
+      "badge": "Bundle",
+      "remove": "Remove bundle",
+      "addedNamed": "Added bundle: {name}",
+      "editUnavailable": "This bundle's promotion is no longer available, so it can't be edited. You can remove it and build a new one.",
       "mealBundleWithSpeciality": "Meal bundle with speciality",
       "mealBundle": "Meal bundle",
       "bundlePriceLabel": "Bundle price:",

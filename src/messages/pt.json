@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Pacote",
+      "remove": "Remover pacote",
+      "addedNamed": "Pacote adicionado: {name}",
+      "editUnavailable": "A promoção deste pacote já não está disponível, pelo que não pode ser editado. Pode removê-lo e criar um novo.",
       "mealBundleWithSpeciality": "Pack de refeição com especialidade",
       "mealBundle": "Pack de refeição",
       "bundlePriceLabel": "Preço do pack:",

@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Paket",
+      "remove": "Hapus paket",
+      "addedNamed": "Paket ditambahkan: {name}",
+      "editUnavailable": "Promosi paket ini sudah tidak tersedia, jadi paket tidak dapat diedit. Anda dapat menghapusnya dan membuat yang baru.",
       "mealBundleWithSpeciality": "Paket makan dengan menu spesial",
       "mealBundle": "Paket makan",
       "bundlePriceLabel": "Harga paket:",

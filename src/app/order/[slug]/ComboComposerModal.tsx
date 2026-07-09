@@ -22,6 +22,9 @@ export type ComboCartChild = {
   /** Add-on/extra surcharge — already gated by the combo's extrasCharge flag
    *  (0 when the combo includes extras for free). */
   extrasFee?: number;
+  /** Which combo slot this pick fills — emitted so cart re-edit can reseed the
+   *  composer EXACTLY (no greedy slot-matching). Luigi 2026-07-09. */
+  slotId?: string;
 };
 export type ComboCartResult = { comboItem: AnyItem; lineTotal: number; children: ComboCartChild[]; notes?: string };
 
@@ -37,6 +40,11 @@ interface Props {
   /** Owner's per-item-note setting — when true, the combo shows one Special-
    *  instructions box (matching every other item type). Default true. */
   allowItemNotes?: boolean;
+  /** Re-edit seed: the cart line's current children + note. The composer opens
+   *  with these picks already filled; the customer edits from there. Children
+   *  with a slotId land in that exact slot; legacy children (no slotId) are
+   *  greedily matched to the first eligible slot. Luigi 2026-07-09. */
+  initial?: { children: ComboCartChild[]; notes?: string };
 }
 
 /** True when a non-pizza item needs the customizer (a size choice to make OR
@@ -55,12 +63,12 @@ function needsCustomizer(item: AnyItem, allowedVariants: AnyItem[]): boolean {
  * owner's per-item/size upcharges; add-ons are free or charged per the combo's
  * extrasCharge setting. Luigi 2026-06-06.
  */
-export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onAddCombo, onClose, allowItemNotes = true }: Props) {
+export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onAddCombo, onClose, allowItemNotes = true, initial }: Props) {
   const t = useTranslations("customer.combo");
   // Reused strings from the ordering namespace: "Sold out" for disabled picks,
   // and specialInstructions/notesPlaceholder for the combo-level note box.
   const tOrder = useTranslations("ordering");
-  const [notes, setNotes] = useState("");
+  const [notes, setNotes] = useState(initial?.notes ?? "");
   const config = useMemo(() => parseComboConfig(comboItem.comboConfig), [comboItem.comboConfig]);
 
   const slotPools = useMemo(() => {
@@ -71,9 +79,35 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
     });
   }, [config, allItems]);
 
-  const [picks, setPicks] = useState<Record<string, Pick[]>>(() =>
-    Object.fromEntries((config?.slots ?? []).map((s) => [s.id, []])),
-  );
+  // Re-edit: seed the picks from the cart line's children. Exact slot via the
+  // stored slotId; legacy children (pre-slotId lines) fall back to the first
+  // eligible slot with room. Each child already carries its own upcharge /
+  // extrasFee / modifiers / pizzaCustomization, so submit() re-emits them
+  // verbatim and lineTotal recomputes identically. Luigi 2026-07-09.
+  const [picks, setPicks] = useState<Record<string, Pick[]>>(() => {
+    const seeded: Record<string, Pick[]> = Object.fromEntries((config?.slots ?? []).map((s) => [s.id, []]));
+    if (!initial?.children?.length || !config) return seeded;
+    for (const c of initial.children) {
+      let slotIdx = -1;
+      if (c.slotId && seeded[c.slotId] && seeded[c.slotId].length < (config.slots.find((s) => s.id === c.slotId)?.max ?? 0)) {
+        slotIdx = config.slots.findIndex((s) => s.id === c.slotId);
+      } else {
+        slotIdx = config.slots.findIndex((s, si) => {
+          if ((seeded[s.id]?.length ?? 0) >= s.max) return false;
+          return slotPools[si]?.some((p: AnyItem) => p.id === c.menuItemId) ?? false;
+        });
+      }
+      if (slotIdx === -1) continue; // stale pick (combo config changed) → drop
+      const slot = config.slots[slotIdx];
+      seeded[slot.id].push({
+        key: `${c.menuItemId}-${seeded[slot.id].length}-${c.variantId ?? c.name}`,
+        menuItemId: c.menuItemId, name: c.name, variantId: c.variantId, variantName: c.variantName,
+        modifiers: c.modifiers, pizzaCustomization: c.pizzaCustomization,
+        upcharge: c.upcharge ?? 0, extrasFee: c.extrasFee,
+      });
+    }
+    return seeded;
+  });
   const [pizzaFor, setPizzaFor] = useState<{ slotId: string; item: AnyItem; upcharge: number } | null>(null);
   // Full customizer (size + modifiers) for a non-pizza item.
   const [customizeFor, setCustomizeFor] = useState<{ slotId: string; item: AnyItem; allowedVariants: AnyItem[] } | null>(null);
@@ -137,6 +171,7 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
         menuItemId: p.menuItemId, name: p.name, variantId: p.variantId, variantName: p.variantName,
         modifiers: p.modifiers, pizzaCustomization: p.pizzaCustomization,
         upcharge: p.upcharge, extrasFee: p.extrasFee,
+        slotId: s.id,
       })),
     );
     onAddCombo({ comboItem, lineTotal, children, notes: notes.trim() || undefined });

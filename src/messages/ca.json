@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Paquet",
+      "remove": "Elimina el paquet",
+      "addedNamed": "Paquet afegit: {name}",
+      "editUnavailable": "La promoció d’aquest paquet ja no està disponible, per això no es pot editar. Pots eliminar-lo i crear-ne un de nou.",
       "mealBundleWithSpeciality": "Menú combinat amb especialitat",
       "mealBundle": "Menú combinat",
       "bundlePriceLabel": "Preu del menú:",

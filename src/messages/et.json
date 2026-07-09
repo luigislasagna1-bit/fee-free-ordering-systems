@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Pakett",
+      "remove": "Eemalda pakett",
+      "addedNamed": "Pakett lisatud: {name}",
+      "editUnavailable": "Selle paketi pakkumine pole enam saadaval, seega ei saa seda muuta. Võite selle eemaldada ja uue kokku panna.",
       "mealBundleWithSpeciality": "Einepakk erivalikuga",
       "mealBundle": "Einepakk",
       "bundlePriceLabel": "Pakihind:",

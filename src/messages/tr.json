@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Paket",
+      "remove": "Paketi kaldır",
+      "addedNamed": "Paket eklendi: {name}",
+      "editUnavailable": "Bu paketin promosyonu artık mevcut değil, bu yüzden düzenlenemez. Paketi kaldırıp yeni bir tane oluşturabilirsiniz.",
       "mealBundleWithSpeciality": "Özel ürünlü yemek paketi",
       "mealBundle": "Yemek paketi",
       "bundlePriceLabel": "Paket fiyatı:",

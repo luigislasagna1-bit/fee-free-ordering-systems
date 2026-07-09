@@ -131,6 +131,10 @@ interface Props {
   /** Add a fully-built bundle to the cart as ONE consolidated line — see
    *  BundleComposerModal for the contract. */
   onAddBundle: (bundle: BundleCartItem) => void;
+  /** Re-edit seed forwarded to the BundleComposerModal — the cart line's
+   *  current children when the customer is editing an existing bundle line.
+   *  Luigi 2026-07-09. */
+  bundleInitial?: { children: Array<{ menuItemId: string; variantId?: string; specialityFee?: number }> };
   /** Complete a guided multi-group promo (bogo / buy_n_get_free /
    *  free_dish_meal / combo): drop the chosen items into the cart (free-group
    *  picks tagged so the engine nets them) and let the engine auto-apply.
@@ -615,6 +619,7 @@ export function PromoDetailModal({
   onOrderForLater,
   onAddFreebie,
   onAddBundle,
+  bundleInitial,
   onCompleteGuidedPromo,
   onSwitchOrderType,
   onApplyCode,
@@ -701,6 +706,7 @@ export function PromoDetailModal({
         allMenuItems={allMenuItems}
         primaryColor={primaryColor}
         isSpeciality={promo.promotionType === "meal_bundle_speciality"}
+        initial={bundleInitial}
         // Close the promo modal once the bundle lands in the cart — the
         // composer's job is done (matches the guided wizard's onComplete).
         onAddBundle={(b) => {

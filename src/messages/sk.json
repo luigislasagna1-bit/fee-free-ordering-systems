@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Balík",
+      "remove": "Odstrániť balík",
+      "addedNamed": "Pridaný balík: {name}",
+      "editUnavailable": "Akcia tohto balíka už nie je dostupná, takže ho nemožno upraviť. Môžete ho odstrániť a zostaviť nový.",
       "mealBundleWithSpeciality": "Jedlový balíček so špeciálnymi položkami",
       "mealBundle": "Jedlový balíček",
       "bundlePriceLabel": "Cena balíčka:",

@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Balíček",
+      "remove": "Odebrat balíček",
+      "addedNamed": "Přidán balíček: {name}",
+      "editUnavailable": "Akce tohoto balíčku už není dostupná, takže ho nelze upravit. Můžete ho odebrat a sestavit nový.",
       "mealBundleWithSpeciality": "Sada jídel se specialitou",
       "mealBundle": "Sada jídel",
       "bundlePriceLabel": "Cena sady:",

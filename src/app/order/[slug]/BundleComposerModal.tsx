@@ -118,6 +118,11 @@ interface Props {
   isSpeciality: boolean;
   onAddBundle: (bundle: BundleCartItem) => void;
   onClose: () => void;
+  /** Re-edit seed: the cart line's current children. The composer opens with
+   *  these picks already selected (greedy slot-matching with a specialityFee
+   *  tie-break for overlapping groups); stale picks (config changed since) are
+   *  dropped. Luigi 2026-07-09. */
+  initial?: { children: Array<{ menuItemId: string; variantId?: string; specialityFee?: number }> };
 }
 
 function collectGroupItems(group: RuleConfigGroup, allMenuItems: MenuItemLite[]): MenuItemLite[] {
@@ -136,6 +141,7 @@ export function BundleComposerModal({
   isSpeciality,
   onAddBundle,
   onClose,
+  initial,
 }: Props) {
   /**
    * `picks[slotIndex]` = array of menuItemIds chosen for that slot. A
@@ -148,17 +154,11 @@ export function BundleComposerModal({
   // Reused "Sold out" string (same key the menu card uses) for disabled picks.
   const tOrder = useTranslations("ordering");
   const formatCurrency = useCurrencyFormat();
-  const [picks, setPicks] = useState<string[][]>(() => groups.map(() => []));
-  /** The slot currently on screen. */
-  const [step, setStep] = useState(0);
-  const scrollRef = useRef<HTMLDivElement | null>(null);
-  /** Leave-guard (Luigi 2026-07-03): closing a PARTIALLY built bundle asks
-   *  first; untouched or complete closes silently. */
-  const [confirmLeave, setConfirmLeave] = useState(false);
 
   /** Pickable options per slot — one per size for speciality bundles (so the
    *  customer chooses Regular vs Large), one per item otherwise. Memoised off
-   *  the menu catalog which can be large. */
+   *  the menu catalog which can be large. Hoisted ABOVE the picks state so the
+   *  re-edit seed initializer can resolve option keys. Luigi 2026-07-09. */
   const slotOptions = useMemo<SlotOption[][]>(
     () => groups.map((g) => {
       const items = collectGroupItems(g, allMenuItems);
@@ -179,6 +179,40 @@ export function BundleComposerModal({
     }),
     [groups, allMenuItems, isSpeciality],
   );
+
+  // Re-edit: seed picks from the cart line's children. Greedy over the slot
+  // groups with a specialityFee TIE-BREAK — when a pick is eligible in several
+  // groups, prefer the one whose fee matches what the line actually charged, so
+  // re-pricing can't drift. Stale picks (config changed) are dropped; the
+  // customer just re-picks. Luigi 2026-07-09.
+  const [picks, setPicks] = useState<string[][]>(() => {
+    const result = groups.map(() => [] as string[]);
+    if (!initial?.children?.length) return result;
+    const maxOf = (i: number) => {
+      const min = Math.max(1, Number(groups[i].minCount ?? 1));
+      return Math.max(min, Number(groups[i].maxCount ?? groups[i].minCount ?? 1));
+    };
+    for (const child of initial.children) {
+      const matchIn = (i: number) =>
+        slotOptions[i]?.find((o) => o.itemId === child.menuItemId && (o.variantId ?? null) === (child.variantId ?? null));
+      const cands: number[] = [];
+      for (let i = 0; i < groups.length; i++) {
+        if (result[i].length >= maxOf(i)) continue;
+        if (matchIn(i)) cands.push(i);
+      }
+      if (cands.length === 0) continue; // stale pick → drop
+      const wantFee = Math.round(Math.max(0, Number(child.specialityFee ?? 0)) * 100);
+      const chosen = cands.find((i) => Math.round((matchIn(i)!.fee ?? 0) * 100) === wantFee) ?? cands[0];
+      result[chosen].push(matchIn(chosen)!.key);
+    }
+    return result;
+  });
+  /** The slot currently on screen. */
+  const [step, setStep] = useState(0);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  /** Leave-guard (Luigi 2026-07-03): closing a PARTIALLY built bundle asks
+   *  first; untouched or complete closes silently. */
+  const [confirmLeave, setConfirmLeave] = useState(false);
 
   /** Total speciality upcharge so the "Add bundle" button can show the
    *  accurate final price as the customer toggles items. */

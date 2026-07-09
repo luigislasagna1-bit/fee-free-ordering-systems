@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "套餐",
+      "remove": "移除套餐",
+      "addedNamed": "已添加套餐：{name}",
+      "editUnavailable": "该套餐的促销活动已不再可用，因此无法编辑。您可以移除该套餐并重新创建一个。",
       "mealBundleWithSpeciality": "含特色菜的套餐",
       "mealBundle": "套餐",
       "bundlePriceLabel": "套餐价格：",

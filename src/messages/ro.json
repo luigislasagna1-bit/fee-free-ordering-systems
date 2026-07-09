@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Pachet",
+      "remove": "Elimină pachetul",
+      "addedNamed": "Pachet adăugat: {name}",
+      "editUnavailable": "Promoția acestui pachet nu mai este disponibilă, așa că nu poate fi editat. Îl poți elimina și crea unul nou.",
       "mealBundleWithSpeciality": "Pachet de masă cu specialitate",
       "mealBundle": "Pachet de masă",
       "bundlePriceLabel": "Preț pachet:",

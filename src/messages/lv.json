@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Komplekts",
+      "remove": "Noņemt komplektu",
+      "addedNamed": "Pievienots komplekts: {name}",
+      "editUnavailable": "Šī komplekta akcija vairs nav pieejama, tāpēc to nevar rediģēt. Varat to noņemt un izveidot jaunu.",
       "mealBundleWithSpeciality": "Ēdienreizes komplekts ar īpašumu",
       "mealBundle": "Ēdienreizes komplekts",
       "bundlePriceLabel": "Komplekta cena:",

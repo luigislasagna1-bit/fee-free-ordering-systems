@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "번들",
+      "remove": "번들 제거",
+      "addedNamed": "번들 추가됨: {name}",
+      "editUnavailable": "이 번들의 프로모션을 더 이상 이용할 수 없어 수정할 수 없습니다. 번들을 제거하고 새로 만들 수 있습니다.",
       "mealBundleWithSpeciality": "스페셜 밀 번들",
       "mealBundle": "밀 번들",
       "bundlePriceLabel": "번들 가격:",

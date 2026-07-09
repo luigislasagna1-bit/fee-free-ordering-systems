@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "חבילה",
+      "remove": "הסרת החבילה",
+      "addedNamed": "נוספה חבילה: {name}",
+      "editUnavailable": "המבצע של החבילה הזו כבר לא זמין, ולכן אי אפשר לערוך אותה. אפשר להסיר אותה ולהרכיב חבילה חדשה.",
       "mealBundleWithSpeciality": "חבילת ארוחה עם פריט מיוחד",
       "mealBundle": "חבילת ארוחה",
       "bundlePriceLabel": "מחיר החבילה:",

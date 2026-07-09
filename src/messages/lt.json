@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Rinkinys",
+      "remove": "Pašalinti rinkinį",
+      "addedNamed": "Pridėtas rinkinys: {name}",
+      "editUnavailable": "Šio rinkinio akcija nebegalioja, todėl jo redaguoti negalima. Galite jį pašalinti ir sudaryti naują.",
       "mealBundleWithSpeciality": "Maisto rinkinys su specialiu patiekalu",
       "mealBundle": "Maisto rinkinys",
       "bundlePriceLabel": "Rinkinio kaina:",

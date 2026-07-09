@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Paket",
+      "remove": "Ukloni paket",
+      "addedNamed": "Dodan paket: {name}",
+      "editUnavailable": "Promocija ovog paketa više nije dostupna pa se ne može uređivati. Možete ga ukloniti i sastaviti novi.",
       "mealBundleWithSpeciality": "Paket obroka sa specijalitetom",
       "mealBundle": "Paket obroka",
       "bundlePriceLabel": "Cijena paketa:",

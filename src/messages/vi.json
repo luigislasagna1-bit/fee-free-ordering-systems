@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Combo",
+      "remove": "Xóa combo",
+      "addedNamed": "Đã thêm combo: {name}",
+      "editUnavailable": "Khuyến mãi của combo này không còn khả dụng nên không thể chỉnh sửa. Bạn có thể xóa combo và tạo một combo mới.",
       "mealBundleWithSpeciality": "Combo bữa ăn với món đặc biệt",
       "mealBundle": "Combo bữa ăn",
       "bundlePriceLabel": "Giá combo:",

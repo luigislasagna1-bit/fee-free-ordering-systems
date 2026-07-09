@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Bundel",
+      "remove": "Bundel verwijderen",
+      "addedNamed": "Bundel toegevoegd: {name}",
+      "editUnavailable": "De promotie van deze bundel is niet meer beschikbaar, dus de bundel kan niet worden bewerkt. Je kunt hem verwijderen en een nieuwe samenstellen.",
       "mealBundleWithSpeciality": "Maaltijdbundel met specialiteit",
       "mealBundle": "Maaltijdbundel",
       "bundlePriceLabel": "Bundelprijs:",

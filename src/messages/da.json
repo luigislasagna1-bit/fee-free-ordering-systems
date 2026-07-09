@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "Pakke",
+      "remove": "Fjern pakke",
+      "addedNamed": "Pakke tilføjet: {name}",
+      "editUnavailable": "Kampagnen for denne pakke er ikke længere tilgængelig, så den kan ikke redigeres. Du kan fjerne den og sammensætte en ny.",
       "mealBundleWithSpeciality": "Måltidsbundle med specialitet",
       "mealBundle": "Måltidsbundle",
       "bundlePriceLabel": "Bundlepris:",

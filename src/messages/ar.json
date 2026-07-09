@@ -5614,6 +5614,10 @@
       }
     },
     "bundle": {
+      "badge": "حزمة",
+      "remove": "إزالة الحزمة",
+      "addedNamed": "تمت إضافة الحزمة: {name}",
+      "editUnavailable": "عرض هذه الحزمة لم يعد متاحًا، لذا لا يمكن تعديلها. يمكنك إزالتها وإنشاء حزمة جديدة.",
       "mealBundleWithSpeciality": "وجبة مجمّعة مع مميزات خاصة",
       "mealBundle": "وجبة مجمّعة",
       "bundlePriceLabel": "سعر المجموعة:",
