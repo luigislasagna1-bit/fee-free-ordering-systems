@@ -1899,6 +1899,7 @@
       "pizzaRoleSauce": "Kastike",
       "pizzaRoleCheese": "Juusto",
       "pizzaRoleTopping": "Täyte",
+      "pizzaRoleGarnish": "Viimeistely (lisätään paistamisen jälkeen)",
       "optionsChoices": "Vaihtoehdot / Valinnat",
       "addOption": "Lisää vaihtoehto",
       "optionNamePlaceholder": "Vaihtoehdon nimi",

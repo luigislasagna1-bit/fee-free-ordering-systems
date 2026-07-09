@@ -2592,6 +2592,7 @@
       "pizzaRoleSauce": "Omáčka",
       "pizzaRoleCheese": "Syr",
       "pizzaRoleTopping": "Topping",
+      "pizzaRoleGarnish": "Ozdoba (pridáva sa po upečení)",
       "optionsChoices": "Možnosti / Voľby",
       "addOption": "Pridať možnosť",
       "optionNamePlaceholder": "Názov možnosti",

@@ -1899,6 +1899,7 @@
       "pizzaRoleSauce": "ソース",
       "pizzaRoleCheese": "チーズ",
       "pizzaRoleTopping": "トッピング",
+      "pizzaRoleGarnish": "仕上げ（焼き上がり後に追加）",
       "optionsChoices": "オプション / 選択肢",
       "addOption": "オプションを追加",
       "optionNamePlaceholder": "オプション名",

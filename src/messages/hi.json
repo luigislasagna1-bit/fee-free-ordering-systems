@@ -2273,6 +2273,7 @@
       "pizzaRoleSauce": "सॉस",
       "pizzaRoleCheese": "चीज़",
       "pizzaRoleTopping": "टॉपिंग",
+      "pizzaRoleGarnish": "गार्निश (बेकिंग के बाद डाला जाता है)",
       "optionsChoices": "विकल्प / चयन",
       "addOption": "विकल्प जोड़ें",
       "optionNamePlaceholder": "विकल्प का नाम",

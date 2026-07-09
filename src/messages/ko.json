@@ -1899,6 +1899,7 @@
       "pizzaRoleSauce": "소스",
       "pizzaRoleCheese": "치즈",
       "pizzaRoleTopping": "토핑",
+      "pizzaRoleGarnish": "가니시 (구운 후 추가)",
       "optionsChoices": "옵션 / 선택사항",
       "addOption": "옵션 추가",
       "optionNamePlaceholder": "옵션 이름",

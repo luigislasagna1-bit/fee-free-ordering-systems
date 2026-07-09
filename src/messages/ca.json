@@ -1899,6 +1899,7 @@
       "pizzaRoleSauce": "Salsa",
       "pizzaRoleCheese": "Formatge",
       "pizzaRoleTopping": "Ingredient",
+      "pizzaRoleGarnish": "Toc final (afegit després de la cocció)",
       "optionsChoices": "Opcions / Eleccions",
       "addOption": "Afegeix opció",
       "optionNamePlaceholder": "Nom de l'opció",

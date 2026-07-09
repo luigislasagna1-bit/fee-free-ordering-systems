@@ -1899,6 +1899,7 @@
       "pizzaRoleSauce": "Salsa",
       "pizzaRoleCheese": "Queso",
       "pizzaRoleTopping": "Ingrediente",
+      "pizzaRoleGarnish": "Toque final (añadido después del horneado)",
       "optionsChoices": "Opciones / Elecciones",
       "addOption": "Añadir opción",
       "optionNamePlaceholder": "Nombre de la opción",

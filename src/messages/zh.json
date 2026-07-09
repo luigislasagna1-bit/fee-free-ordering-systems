@@ -1899,6 +1899,7 @@
       "pizzaRoleSauce": "酱料",
       "pizzaRoleCheese": "奶酪",
       "pizzaRoleTopping": "配料",
+      "pizzaRoleGarnish": "点缀（烤后添加）",
       "optionsChoices": "选项 / 选择",
       "addOption": "添加选项",
       "optionNamePlaceholder": "选项名称",

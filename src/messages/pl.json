@@ -1843,6 +1843,7 @@
       "pizzaRoleSauce": "Sos",
       "pizzaRoleCheese": "Ser",
       "pizzaRoleTopping": "Dodatek",
+      "pizzaRoleGarnish": "Przybranie (dodawane po upieczeniu)",
       "optionsChoices": "Opcje / Wybory",
       "addOption": "Dodaj opcję",
       "optionNamePlaceholder": "Nazwa opcji",

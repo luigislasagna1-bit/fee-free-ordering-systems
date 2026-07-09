@@ -1899,6 +1899,7 @@
       "pizzaRoleSauce": "Saus",
       "pizzaRoleCheese": "Ost",
       "pizzaRoleTopping": "Topping",
+      "pizzaRoleGarnish": "Garnityr (tilsettes etter steking)",
       "optionsChoices": "Alternativer / Valg",
       "addOption": "Legg til alternativ",
       "optionNamePlaceholder": "Alternativnavn",

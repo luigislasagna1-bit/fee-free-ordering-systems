@@ -1899,6 +1899,7 @@
       "pizzaRoleSauce": "Umak",
       "pizzaRoleCheese": "Sir",
       "pizzaRoleTopping": "Dodatak",
+      "pizzaRoleGarnish": "Ukras (dodaje se nakon pečenja)",
       "optionsChoices": "Opcije / Izbori",
       "addOption": "Dodaj opciju",
       "optionNamePlaceholder": "Naziv opcije",

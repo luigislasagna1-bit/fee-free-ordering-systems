@@ -1843,6 +1843,7 @@
       "pizzaRoleSauce": "Szósz",
       "pizzaRoleCheese": "Sajt",
       "pizzaRoleTopping": "Feltét",
+      "pizzaRoleGarnish": "Díszítés (sütés után kerül rá)",
       "optionsChoices": "Lehetőségek / Választások",
       "addOption": "Lehetőség hozzáadása",
       "optionNamePlaceholder": "Lehetőség neve",

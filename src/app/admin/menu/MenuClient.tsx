@@ -1534,6 +1534,10 @@ function ModifierModal({
               <option value="sauce">{t("pizzaRoleSauce")}</option>
               <option value="cheese">{t("pizzaRoleCheese")}</option>
               <option value="topping">{t("pizzaRoleTopping")}</option>
+              {/* Post-oven finishes (fresh herbs, sauce swirl). Not bound into
+                  the crust/sauce/cheese/topping pickers or the topping pricing
+                  engine — renders as its own section with per-option prices. */}
+              <option value="garnish">{t("pizzaRoleGarnish")}</option>
             </select>
             <p className="text-xs text-gray-400 mt-1">{t("pizzaRoleHint")}</p>
           </div>

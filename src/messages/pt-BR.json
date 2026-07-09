@@ -1899,6 +1899,7 @@
       "pizzaRoleSauce": "Molho",
       "pizzaRoleCheese": "Queijo",
       "pizzaRoleTopping": "Cobertura",
+      "pizzaRoleGarnish": "Finalização (adicionada após assar)",
       "optionsChoices": "Opções / Escolhas",
       "addOption": "Adicionar opção",
       "optionNamePlaceholder": "Nome da opção",

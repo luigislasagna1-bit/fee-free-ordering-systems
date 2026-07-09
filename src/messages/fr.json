@@ -1899,6 +1899,7 @@
       "pizzaRoleSauce": "Sauce",
       "pizzaRoleCheese": "Fromage",
       "pizzaRoleTopping": "Garniture",
+      "pizzaRoleGarnish": "Finition (ajoutée après cuisson)",
       "optionsChoices": "Options / Choix",
       "addOption": "Ajouter une option",
       "optionNamePlaceholder": "Nom de l'option",

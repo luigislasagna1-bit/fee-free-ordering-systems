@@ -2592,6 +2592,7 @@
       "pizzaRoleSauce": "Padažas",
       "pizzaRoleCheese": "Sūris",
       "pizzaRoleTopping": "Priedas",
+      "pizzaRoleGarnish": "Papuošimas (dedamas po kepimo)",
       "optionsChoices": "Pasirinkimai / variantai",
       "addOption": "Pridėti pasirinkimą",
       "optionNamePlaceholder": "Pasirinkimo pavadinimas",

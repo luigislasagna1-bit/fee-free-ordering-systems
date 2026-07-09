@@ -1899,6 +1899,7 @@
       "pizzaRoleSauce": "Sås",
       "pizzaRoleCheese": "Ost",
       "pizzaRoleTopping": "Topping",
+      "pizzaRoleGarnish": "Garnering (tillsätts efter gräddning)",
       "optionsChoices": "Alternativ / val",
       "addOption": "Lägg till alternativ",
       "optionNamePlaceholder": "Alternativnamn",

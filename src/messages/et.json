@@ -1899,6 +1899,7 @@
       "pizzaRoleSauce": "Kaste",
       "pizzaRoleCheese": "Juust",
       "pizzaRoleTopping": "Kate",
+      "pizzaRoleGarnish": "Kaunistus (lisatakse pärast küpsetamist)",
       "optionsChoices": "Valikud / Võimalused",
       "addOption": "Lisa valik",
       "optionNamePlaceholder": "Valiku nimi",

@@ -1843,6 +1843,7 @@
       "pizzaRoleSauce": "Sos",
       "pizzaRoleCheese": "Peynir",
       "pizzaRoleTopping": "Malzeme",
+      "pizzaRoleGarnish": "Süsleme (pişirme sonrası eklenir)",
       "optionsChoices": "Seçenekler / Tercihler",
       "addOption": "Seçenek ekle",
       "optionNamePlaceholder": "Seçenek adı",

@@ -2356,6 +2356,7 @@
       "pizzaRoleSauce": "Sauce",
       "pizzaRoleCheese": "Cheese",
       "pizzaRoleTopping": "Topping",
+      "pizzaRoleGarnish": "Garnish (added after baking)",
       "optionsChoices": "Options / Choices",
       "addOption": "Add option",
       "optionNamePlaceholder": "Option name",

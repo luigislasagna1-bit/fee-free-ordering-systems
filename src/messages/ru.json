@@ -1899,6 +1899,7 @@
       "pizzaRoleSauce": "Соус",
       "pizzaRoleCheese": "Сыр",
       "pizzaRoleTopping": "Начинка",
+      "pizzaRoleGarnish": "Украшение (добавляется после выпечки)",
       "optionsChoices": "Варианты / Выборы",
       "addOption": "Добавить вариант",
       "optionNamePlaceholder": "Название варианта",
