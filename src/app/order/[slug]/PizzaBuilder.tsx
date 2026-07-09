@@ -54,6 +54,9 @@ export interface PizzaConfig {
    *  is a base credit, so removing below the included count refunds. false =
    *  legacy free-credits (removing below included does not refund). */
   reduceOnRemove?: boolean;
+  /** Topping OPTION ids that pre-fill the builder's included slots (whole,
+   *  normal amount). The customer can add/remove from there. Luigi 2026-07-09. */
+  presetToppings?: string[];
   /** Multiplier applied to half-pizza toppings (default 0.5 → 50%) */
   halfToppingMultiplier: number;
   /** Additional price multiplier for "Extra" quantity on top of base topping price (default 0 = no upcharge) */
@@ -174,6 +177,7 @@ export function parsePizzaConfig(json: string | null | undefined): PizzaConfig |
       // Default true (symmetric pay-per-topping) — only an explicit false opts
       // a pizza into the legacy free-credit model. Luigi 2026-07-09.
       reduceOnRemove:         c.reduceOnRemove !== false,
+      presetToppings:         Array.isArray(c.presetToppings) ? c.presetToppings.filter((x: unknown): x is string => typeof x === "string") : undefined,
       halfToppingMultiplier:  Number(c.halfToppingMultiplier) || 0.5,
       extraQuantityMultiplier:Number(c.extraQuantityMultiplier)|| 0,
       allowMultipleToppings:  c.allowMultipleToppings !== false, // default ON
@@ -792,6 +796,22 @@ export function defaultCustomization(item: MenuItem, config: PizzaConfig, groups
     if (preselected.length > 0) otherSelections[g.id] = preselected;
   }
 
+  // Pre-fill the included slots with the owner's PRESET toppings (whole, normal
+  // amount) — the customer can add/remove from there. Each preset option id is
+  // resolved to its topping group (id OR libraryGroupId). Luigi 2026-07-09.
+  const presetToppings: SelectedTopping[] = (config.presetToppings ?? [])
+    .map((optId): SelectedTopping | null => {
+      const grp = groups.find(
+        (g) =>
+          (config.toppingGroupIds.includes(g.id) || (g.libraryGroupId != null && config.toppingGroupIds.includes(g.libraryGroupId))) &&
+          g.options.some((o) => o.id === optId && o.isAvailable),
+      );
+      const opt = grp?.options.find((o) => o.id === optId);
+      if (!grp || !opt) return null;
+      return { optionId: optId, name: opt.name, groupId: grp.id, placement: "whole", quantity: "normal", count: 1, unitPrice: opt.priceAdjustment ?? 0 };
+    })
+    .filter((t): t is SelectedTopping => t !== null);
+
   return {
     isHalfHalf: false,
     crustOptionId:       findDefault(config.crustGroupId),
@@ -801,7 +821,7 @@ export function defaultCustomization(item: MenuItem, config: PizzaConfig, groups
     cheeseOptionId:      findDefault(config.cheeseGroupId),
     leftCheeseOptionId:  null,
     rightCheeseOptionId: null,
-    toppings: [],
+    toppings: presetToppings,
     otherSelections,
   };
 }

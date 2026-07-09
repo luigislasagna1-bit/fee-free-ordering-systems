@@ -107,6 +107,12 @@ type PizzaFormState = {
   /** Pizza roles that expose the customer-side Whole/Split toggle.
    *  Defaults to all three when undefined (legacy behaviour). */
   halfHalfRoles: Array<"sauce" | "cheese" | "toppings">;
+  /** "Removing toppings reduces the price" — default ON (symmetric pay-per-
+   *  topping). Off = legacy free-credits. Luigi 2026-07-09. */
+  reduceOnRemove: boolean;
+  /** Topping OPTION ids that pre-fill the builder's included slots (whole,
+   *  normal). Empty = customer starts from an empty pizza. Luigi 2026-07-09. */
+  presetToppings: string[];
 };
 
 function parsePizzaForm(json?: string): PizzaFormState {
@@ -136,6 +142,10 @@ function parsePizzaForm(json?: string): PizzaFormState {
           r === "sauce" || r === "cheese" || r === "toppings",
         )
       : ["sauce", "cheese", "toppings"],
+    reduceOnRemove: p?.reduceOnRemove !== false, // default ON (symmetric)
+    presetToppings: Array.isArray(p?.presetToppings)
+      ? p.presetToppings.filter((x: unknown): x is string => typeof x === "string")
+      : [],
   };
 }
 
@@ -612,6 +622,11 @@ function ItemModal({
               && pizza.halfHalfRoles.length === all.length;
             return isDefault ? undefined : pizza.halfHalfRoles;
           })(),
+          // Persist reduceOnRemove ONLY when the owner opted OUT (false) — default
+          // ON is the absent-flag behaviour, so old pizzas stay clean. Luigi 2026-07-09.
+          reduceOnRemove: pizza.reduceOnRemove === false ? false : undefined,
+          // Preset (default-selected) topping option ids — omit when empty.
+          presetToppings: pizza.presetToppings.length > 0 ? pizza.presetToppings : undefined,
         })
       : null;
     // Build comboConfig from the slot editor. Only slots with at least one
@@ -1198,7 +1213,56 @@ function ItemModal({
                           <span className="block text-xs text-gray-400">{t("allowMultipleToppingsHint")}</span>
                         </span>
                       </label>
+                      {/* "Removing toppings reduces the price" — default ON. Off =
+                          the included toppings are free and removing one doesn't
+                          refund. Luigi 2026-07-09. */}
+                      <label className="flex items-start gap-2 cursor-pointer col-span-2">
+                        <input
+                          type="checkbox"
+                          checked={pizza.reduceOnRemove}
+                          onChange={e => setPizza(p => ({ ...p, reduceOnRemove: e.target.checked }))}
+                          className="mt-0.5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                        />
+                        <span>
+                          <span className="block text-sm font-medium text-gray-700">{t("reduceOnRemoveTitle")}</span>
+                          <span className="block text-xs text-gray-400">{t("reduceOnRemoveHint")}</span>
+                        </span>
+                      </label>
                     </div>
+
+                    {/* Preset (default-selected) toppings — pre-fill the included
+                        slots so the pizza opens with these already chosen; the
+                        customer can add/remove from there. Luigi 2026-07-09. */}
+                    {pizza.toppingGroupIds.length > 0 && (() => {
+                      const opts = libraryGroups
+                        .filter(g => pizza.toppingGroupIds.includes(g.id))
+                        .flatMap(g => (g.options ?? []).map((o: any) => ({ id: o.id as string, name: o.name as string })));
+                      if (opts.length === 0) return null;
+                      return (
+                        <div className="border-t pt-3">
+                          <p className="text-sm font-medium text-gray-700">{t("presetToppingsTitle")}</p>
+                          <p className="text-xs text-gray-400 mb-2">{t("presetToppingsHint")}</p>
+                          <div className="max-h-44 overflow-y-auto border border-gray-100 rounded-lg p-2 space-y-1 bg-gray-50">
+                            {opts.map(o => (
+                              <label key={o.id} className="flex items-center gap-2 text-sm cursor-pointer">
+                                <input
+                                  type="checkbox"
+                                  checked={pizza.presetToppings.includes(o.id)}
+                                  onChange={e => setPizza(p => ({
+                                    ...p,
+                                    presetToppings: e.target.checked
+                                      ? [...p.presetToppings, o.id]
+                                      : p.presetToppings.filter(id => id !== o.id),
+                                  }))}
+                                  className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                                />
+                                <span className="text-gray-700">{o.name}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })()}
                   </div>
                 </>
               )}
