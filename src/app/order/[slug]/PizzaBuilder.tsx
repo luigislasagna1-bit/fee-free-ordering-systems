@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { useCurrencyFormat } from "@/lib/currency-context";
 import { useTranslations } from "next-intl";
-import { priceToppingLines, type ToppingChargeLine } from "@/lib/pizza-topping-pricing";
+import { priceToppingLines, toppingBaseAdjust, type ToppingChargeLine } from "@/lib/pizza-topping-pricing";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -49,6 +49,11 @@ export interface PizzaConfig {
   extraToppingPrice: number;
   /** Per-variant topping prices keyed by variant name (overrides extraToppingPrice when a size is selected) */
   variantToppingPrices?: Record<string, number>;
+  /** "Removing toppings reduces the price" (Luigi 2026-07-09). Default true =
+   *  symmetric pay-per-topping: every topping is charged, the included allowance
+   *  is a base credit, so removing below the included count refunds. false =
+   *  legacy free-credits (removing below included does not refund). */
+  reduceOnRemove?: boolean;
   /** Multiplier applied to half-pizza toppings (default 0.5 → 50%) */
   halfToppingMultiplier: number;
   /** Additional price multiplier for "Extra" quantity on top of base topping price (default 0 = no upcharge) */
@@ -166,6 +171,9 @@ export function parsePizzaConfig(json: string | null | undefined): PizzaConfig |
                                     Object.entries(c.variantToppingPrices).map(([k, v]) => [k, Number(v) || 0])
                                   )
                                 : undefined,
+      // Default true (symmetric pay-per-topping) — only an explicit false opts
+      // a pizza into the legacy free-credit model. Luigi 2026-07-09.
+      reduceOnRemove:         c.reduceOnRemove !== false,
       halfToppingMultiplier:  Number(c.halfToppingMultiplier) || 0.5,
       extraQuantityMultiplier:Number(c.extraQuantityMultiplier)|| 0,
       allowMultipleToppings:  c.allowMultipleToppings !== false, // default ON
@@ -338,14 +346,20 @@ export function computePrice(
       });
     }
   }
-  price += priceToppingLines(
-    {
-      extraToppingPrice: config.extraToppingPrice,
-      includedToppings: config.includedToppings,
-      halfToppingMultiplier: config.halfToppingMultiplier,
-    },
-    toppingLines,
-  ).reduce((s, c) => s + c, 0);
+  const toppingCfg = {
+    extraToppingPrice: config.extraToppingPrice,
+    includedToppings: config.includedToppings,
+    halfToppingMultiplier: config.halfToppingMultiplier,
+    reduceOnRemove: config.reduceOnRemove,
+  };
+  // Symmetric pay-per-topping (default): the included allowance is a one-time
+  // BASE credit (−included × extra), and EVERY topping below is charged — so the
+  // price drops when a customer removes a topping and rises when they add one.
+  // Applied even at 0 toppings (a stripped preset pizza falls to its base). The
+  // orders route applies the SAME toppingBaseAdjust to the SAME base, so
+  // preview == charge. In legacy mode toppingBaseAdjust returns 0. Luigi 2026-07-09.
+  price += toppingBaseAdjust(toppingCfg);
+  price += priceToppingLines(toppingCfg, toppingLines).reduce((s, c) => s + c, 0);
 
   // 6 Other (non-role) modifier groups — flat priceAdjustment per selected option
   for (const [groupId, optionIds] of Object.entries(customization.otherSelections)) {
@@ -357,8 +371,9 @@ export function computePrice(
     }
   }
 
-  // Round to 2 dp without fp drift
-  return Math.round(price * 100) / 100;
+  // Round to 2 dp without fp drift; never below 0 (a large included-topping base
+  // credit on a small base could otherwise go negative). Mirrors the route clamp.
+  return Math.max(0, Math.round(price * 100) / 100);
 }
 
 // ── Serialise PizzaCustomization → OrderItemModifier array ───────────────────

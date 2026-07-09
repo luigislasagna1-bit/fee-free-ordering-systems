@@ -46,7 +46,21 @@ export type ToppingPricingConfig = {
   includedToppings: number;
   /** 0..1 multiplier for half-pizza lines (default 0.5). */
   halfToppingMultiplier: number;
+  /** "Removing toppings reduces the price" (Luigi 2026-07-09). DEFAULT true =
+   *  SYMMETRIC "pay-per-topping": EVERY topping is charged the flat price and the
+   *  `includedToppings` allowance is a BASE credit (see toppingBaseAdjust), so a
+   *  pizza priced at the included count gets CHEAPER when a customer removes a
+   *  topping and pricier when they add one — both directions. Explicit `false` =
+   *  LEGACY behaviour: the first `includedToppings` are free credits and removing
+   *  below them does not refund (only toppings BEYOND the count add cost). */
+  reduceOnRemove?: boolean;
 };
+
+/** Symmetric "pay-per-topping" is the default; only an explicit false opts a
+ *  pizza back into the legacy free-credit model. Per-option model (flat 0) has
+ *  no included/flat concept, so it's never symmetric. */
+const isSymmetric = (cfg: ToppingPricingConfig): boolean =>
+  cfg.reduceOnRemove !== false && Number(cfg.extraToppingPrice) > 0;
 
 export type ToppingChargeLine = {
   /** Modifier option id — identifies the line's option (not used for pricing). */
@@ -75,7 +89,15 @@ export function priceToppingLines(cfg: ToppingPricingConfig, lines: ToppingCharg
     return lines.map((l) => round2(l.optionPrice * (l.isHalf ? halfMult : 1)));
   }
 
-  // Flat model with half-unit credits.
+  if (isSymmetric(cfg)) {
+    // Symmetric "pay-per-topping": every line is charged the flat price (halves
+    // × halfMult). The `includedToppings` allowance is NOT free credits here —
+    // it's a one-time BASE credit the caller applies via toppingBaseAdjust, so
+    // removing a topping below the included count refunds. Luigi 2026-07-09.
+    return lines.map((l) => round2(l.isHalf ? flat * halfMult : flat));
+  }
+
+  // LEGACY flat model with half-unit free credits (reduceOnRemove === false).
   let halfCreditsLeft = Math.max(0, Math.floor(Number(cfg.includedToppings) || 0)) * 2;
   return lines.map((l) => {
     let charge = l.isHalf ? flat * halfMult : flat;
@@ -87,6 +109,27 @@ export function priceToppingLines(cfg: ToppingPricingConfig, lines: ToppingCharg
     }
     return round2(charge);
   });
+}
+
+/**
+ * One-time BASE-price credit for the `includedToppings` under SYMMETRIC pricing.
+ * The item's price is the "list price" AT the included count (e.g. a $20 pizza
+ * with 5 included @ $2 = a $10 effective base + 5 paid toppings). Since
+ * priceToppingLines charges EVERY topping in symmetric mode, the caller subtracts
+ * this credit (= includedToppings × flat) from the pizza base once, so:
+ *
+ *   pizzaTotal = max(0, base + toppingBaseAdjust(cfg) + Σ priceToppingLines(cfg,lines))
+ *
+ * At the included count the toppings add back exactly what this removes → the
+ * list price. Below → cheaper; above → pricier. Returns 0 (no adjustment) in
+ * legacy or per-option mode. Both the preview and the charge MUST apply this to
+ * the SAME base with the SAME cfg, or preview ≠ charge. Luigi 2026-07-09.
+ */
+export function toppingBaseAdjust(cfg: ToppingPricingConfig): number {
+  if (!isSymmetric(cfg)) return 0;
+  const flat = Number(cfg.extraToppingPrice);
+  const included = Math.max(0, Math.floor(Number(cfg.includedToppings) || 0));
+  return -round2(included * flat);
 }
 
 /** Half-placement detector shared with the orders route: the serializer marks

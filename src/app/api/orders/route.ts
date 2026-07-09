@@ -8,7 +8,7 @@ import { holidayEffectForDay, holidayEffectToday, canonicalHolidayService, hhmmI
 import { resolveServiceHours } from "@/lib/service-hours";
 import { resolveSlotModes, rangeWindowMinutes } from "@/lib/slot-modes";
 import { hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
-import { priceToppingLines, isHalfToppingName } from "@/lib/pizza-topping-pricing";
+import { priceToppingLines, toppingBaseAdjust, isHalfToppingName } from "@/lib/pizza-topping-pricing";
 import { reportError } from "@/lib/report-error";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import {
@@ -1165,7 +1165,7 @@ export async function POST(req: NextRequest) {
       // the builder showed FREE were charged. Non-topping modifiers (crust,
       // sauce, cheese, cook level, non-pizza items) keep DB option pricing.
       let halfMult = 1;
-      let toppingEngine: { extraToppingPrice: number; includedToppings: number; halfToppingMultiplier: number } | null = null;
+      let toppingEngine: { extraToppingPrice: number; includedToppings: number; halfToppingMultiplier: number; reduceOnRemove: boolean } | null = null;
       const toppingGroupKeys = new Set<string>();
       {
         const rawPc = (menuItem as any).pizzaConfig;
@@ -1182,6 +1182,9 @@ export async function POST(req: NextRequest) {
               extraToppingPrice: effectiveExtra,
               includedToppings: Number(pc?.includedToppings) || 0,
               halfToppingMultiplier: halfMult,
+              // Default true (symmetric pay-per-topping) — matches the builder;
+              // only an explicit false keeps the legacy free-credit model.
+              reduceOnRemove: pc?.reduceOnRemove !== false,
             };
           } catch { halfMult = 0.5; }
         }
@@ -1242,10 +1245,17 @@ export async function POST(req: NextRequest) {
           modTotal += charge;
         });
       }
+      // Symmetric pay-per-topping base credit (Luigi 2026-07-09): the included
+      // allowance is subtracted from the base ONCE, and every topping above was
+      // charged in full — so removing a topping below the included count refunds.
+      // Applied even with ZERO topping lines (a stripped preset pizza falls to
+      // its base). Uses the SAME toppingEngine the preview does → preview==charge.
+      // 0 in legacy/per-option mode.
+      const toppingBaseAdj = toppingEngine ? toppingBaseAdjust(toppingEngine) : 0;
 
       // Round the stored unit to 2dp — fp drift (9.99 + 15 = 24.990000000000002)
       // otherwise lands verbatim on receipts/exports.
-      const unitPrice = Math.round(Math.max(0, basePrice + modTotal) * 100) / 100;
+      const unitPrice = Math.round(Math.max(0, basePrice + toppingBaseAdj + modTotal) * 100) / 100;
       // Refundable deposit (untaxed) is tracked per line via `depositAmount` and
       // added to the ORDER total as its own line below — NOT folded into this
       // line's subtotal — so it stays out of the taxed base, minimum-order, and
