@@ -1773,6 +1773,13 @@ function SortableItemRow({
               {t(serviceOnlyKind(item) === "deliveryOnly" ? "deliveryOnlyBadge" : "pickupOnlyBadge")}
             </span>
           )}
+          {/* Refundable-deposit attribute — visible at a glance without opening
+              the item (Luigi 2026-07-09). Violet to match the feature. */}
+          {(item as any).isRefundableDeposit && ((item as any).depositAmount ?? 0) > 0 && (
+            <span className="text-xs bg-violet-100 text-violet-700 px-1.5 py-0.5 rounded inline-flex items-center gap-1" title={t("refundableDepositHint")}>
+              <PiggyBank className="w-3 h-3" /> {t("refundableDeposit")}
+            </span>
+          )}
         </div>
         {item.description && <div className="text-xs text-gray-400 truncate mt-0.5">{item.description}</div>}
         {(ownGroups.length > 0 || inheritedGroups.length > 0) && (
