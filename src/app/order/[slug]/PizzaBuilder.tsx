@@ -414,17 +414,6 @@ export function pizzaCustomizationToModifiers(
     if (o) out.push({ modifierOptionId: o.id, name: o.name, priceAdjustment: o.priceAdjustment });
   }
 
-  // Other (non-role) modifier groups — cook level, allergen flags, etc.
-  // Apply to the whole pizza by convention, so no half/half prefix.
-  for (const [groupId, optionIds] of Object.entries(customization.otherSelections)) {
-    const grp = groups.find(g => g.id === groupId);
-    if (!grp) continue;
-    for (const optId of optionIds) {
-      const o = grp.options.find(opt => opt.id === optId);
-      if (o) out.push({ modifierOptionId: o.id, name: o.name, priceAdjustment: o.priceAdjustment });
-    }
-  }
-
   // Sauce / cheese — half/half codes only when applicable
   const addSauceOrCheese = (optId: string | null, prefix: string) => {
     if (!optId) return;
@@ -467,6 +456,21 @@ export function pizzaCustomizationToModifiers(
         name: `${prefix}${opt.name}${quantity}`,
         priceAdjustment: opt.priceAdjustment,
       });
+    }
+  }
+
+  // Other (non-role) modifier groups LAST — garnishes, cook level, allergen
+  // flags. Matches the builder's section order (crust → sauce → cheese →
+  // toppings → everything else), so the cart / kitchen ticket / receipt read
+  // in the same order the pizza was built. Was emitted right after crust,
+  // which printed garnish swirls before the sauce (Luigi 2026-07-09). Whole-
+  // pizza by convention, so no half/half prefix.
+  for (const [groupId, optionIds] of Object.entries(customization.otherSelections)) {
+    const grp = groups.find(g => g.id === groupId);
+    if (!grp) continue;
+    for (const optId of optionIds) {
+      const o = grp.options.find(opt => opt.id === optId);
+      if (o) out.push({ modifierOptionId: o.id, name: o.name, priceAdjustment: o.priceAdjustment });
     }
   }
 
