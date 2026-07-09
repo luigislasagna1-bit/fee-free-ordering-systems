@@ -797,18 +797,21 @@ export function defaultCustomization(item: MenuItem, config: PizzaConfig, groups
   }
 
   // Pre-fill the included slots with the owner's PRESET toppings (whole, normal
-  // amount) — the customer can add/remove from there. Each preset option id is
-  // resolved to its topping group (id OR libraryGroupId). Luigi 2026-07-09.
+  // amount) — the customer can add/remove from there. Preset entries are option
+  // NAMES (stable across the library→attached-copy id split and cross-restaurant
+  // pizza-config copies — same reason variantToppingPrices keys by variant name);
+  // ids are also accepted for any config saved before the name switch. The group
+  // is matched by id OR libraryGroupId. Luigi 2026-07-09.
   const presetToppings: SelectedTopping[] = (config.presetToppings ?? [])
-    .map((optId): SelectedTopping | null => {
+    .map((preset): SelectedTopping | null => {
       const grp = groups.find(
         (g) =>
           (config.toppingGroupIds.includes(g.id) || (g.libraryGroupId != null && config.toppingGroupIds.includes(g.libraryGroupId))) &&
-          g.options.some((o) => o.id === optId && o.isAvailable),
+          g.options.some((o) => (o.id === preset || o.name === preset) && o.isAvailable),
       );
-      const opt = grp?.options.find((o) => o.id === optId);
+      const opt = grp?.options.find((o) => (o.id === preset || o.name === preset) && o.isAvailable);
       if (!grp || !opt) return null;
-      return { optionId: optId, name: opt.name, groupId: grp.id, placement: "whole", quantity: "normal", count: 1, unitPrice: opt.priceAdjustment ?? 0 };
+      return { optionId: opt.id, name: opt.name, groupId: grp.id, placement: "whole", quantity: "normal", count: 1, unitPrice: opt.priceAdjustment ?? 0 };
     })
     .filter((t): t is SelectedTopping => t !== null);
 

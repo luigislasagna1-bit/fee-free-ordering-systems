@@ -625,8 +625,19 @@ function ItemModal({
           // Persist reduceOnRemove ONLY when the owner opted OUT (false) — default
           // ON is the absent-flag behaviour, so old pizzas stay clean. Luigi 2026-07-09.
           reduceOnRemove: pizza.reduceOnRemove === false ? false : undefined,
-          // Preset (default-selected) topping option ids — omit when empty.
-          presetToppings: pizza.presetToppings.length > 0 ? pizza.presetToppings : undefined,
+          // Preset (default-selected) toppings, stored by option NAME (stable
+          // across library→attached-copy ids + cross-restaurant copies). Any
+          // legacy id entry (saved before the name switch) is migrated to its
+          // library option's name here. Omit when empty. Luigi 2026-07-09.
+          presetToppings: pizza.presetToppings.length > 0
+            ? Array.from(new Set(pizza.presetToppings.map((p) => {
+                for (const g of libraryGroups) {
+                  const o = (g.options ?? []).find((opt: any) => opt.id === p);
+                  if (o) return o.name as string;
+                }
+                return p;
+              })))
+            : undefined,
         })
       : null;
     // Build comboConfig from the slot editor. Only slots with at least one
@@ -1247,12 +1258,17 @@ function ItemModal({
                               <label key={o.id} className="flex items-center gap-2 text-sm cursor-pointer">
                                 <input
                                   type="checkbox"
-                                  checked={pizza.presetToppings.includes(o.id)}
+                                  /* Presets are stored by option NAME — names survive the
+                                     library→attached-copy id split (the customer-side groups
+                                     are copies with different option ids) and cross-restaurant
+                                     config copies. Legacy id entries still read as checked and
+                                     are migrated to names on save. Luigi 2026-07-09. */
+                                  checked={pizza.presetToppings.includes(o.name) || pizza.presetToppings.includes(o.id)}
                                   onChange={e => setPizza(p => ({
                                     ...p,
                                     presetToppings: e.target.checked
-                                      ? [...p.presetToppings, o.id]
-                                      : p.presetToppings.filter(id => id !== o.id),
+                                      ? [...p.presetToppings.filter(x => x !== o.id && x !== o.name), o.name]
+                                      : p.presetToppings.filter(x => x !== o.id && x !== o.name),
                                   }))}
                                   className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
                                 />
