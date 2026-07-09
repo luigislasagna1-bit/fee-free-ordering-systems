@@ -578,6 +578,8 @@ function renderCustomerSection(
       }
       if (order.taxAmount > 0) r.columns(t("receipt.customer.tax"), fmt(order.taxAmount));
       if ((order.tip ?? 0) > 0) r.columns(t("receipt.customer.tip"), fmt(order.tip!));
+      // Per-item refundable deposit (untaxed) — mirror of receipt.ts. Luigi 2026-07-09.
+      if ((order.depositTotal ?? 0) > 0) r.columns(t("ordering.refundableDepositNotTaxed"), fmt(order.depositTotal!));
       r.divider("-");
       r.columns(t("receipt.customer.total"), fmt(order.total));
       // Reward Dollars PAYMENT SPLIT — "Paid with {label} -$X" + remaining due.

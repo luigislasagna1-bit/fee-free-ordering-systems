@@ -46,6 +46,7 @@ export type OrderConfirmationProps = {
   taxLabel?: string;
   deliveryFee?: number;
   tip?: number;
+  depositTotal?: number;
   discount?: number;
   total: number;
   /** Delivery address — only shown when orderType === "delivery". */
@@ -87,7 +88,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
   const {
     customerName, orderNumber, restaurantName, orderType, paidOnline,
     estimatedMinutes, scheduledLabel, reservationPartySize, reservationLabel, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
-    discount, total, deliveryAddress, trackingUrl, restaurantUrl,
+    depositTotal, discount, total, deliveryAddress, trackingUrl, restaurantUrl,
     restaurantEmail, restaurantPhone, imprint, logoUrl, currency,
     appliedPromos, creditApplied, rewardLabel, paymentValue, paidStatus, t,
   } = props;
@@ -191,6 +192,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
           itemsLabel={t("receipt.customer.items")}
           priceLabel={t("receipt.customer.price")}
           noteLabel={t("receipt.customer.lineNote")}
+          depositLabel={t("ordering.refundableDeposit")}
         />
 
         {/* Promos applied — boxed highlight above totals (Phase 2 +
@@ -261,6 +263,8 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
           deliveryFee={deliveryFee}
           savedDeliveryFee={savedDeliveryFee}
           tip={tip}
+          depositTotal={depositTotal}
+          depositTotalLabel={t("ordering.refundableDepositNotTaxed")}
           discount={discount}
           total={total}
           currency={currency ?? "usd"}

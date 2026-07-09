@@ -46,6 +46,7 @@ export type KitchenNotificationProps = {
   taxLabel?: string;
   deliveryFee?: number;
   tip?: number;
+  depositTotal?: number;
   discount?: number;
   total: number;
   deliveryAddress?: string | null;
@@ -78,7 +79,7 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
   const {
     restaurantName, orderNumber, customerName, customerPhone, customerEmail,
     orderType, estimatedMinutes, paidOnline, paymentMethod, reservationPartySize, reservationLabel, items, subtotal, taxAmount,
-    taxLabel, deliveryFee, tip, discount, total, deliveryAddress,
+    taxLabel, deliveryFee, tip, depositTotal, discount, total, deliveryAddress,
     customerNotes, dashboardUrl, imprint, currency, headline,
     creditApplied, rewardLabel,
   } = props;
@@ -169,6 +170,7 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
               taxLabel={taxLabel}
               deliveryFee={deliveryFee}
               tip={tip}
+              depositTotal={depositTotal}
               discount={discount}
               total={total}
               currency={currency ?? "usd"}

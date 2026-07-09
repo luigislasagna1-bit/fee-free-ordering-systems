@@ -242,7 +242,7 @@ export type StaffEventPayload =
       // Full order detail — passed for orderPlaced so the kitchen "new order" email is
       // ITEMIZED (not the minimal "see breakdown in admin" fallback). Luigi 2026-06-25.
       items?: EmailOrderItem[]; subtotal?: number; taxAmount?: number; deliveryFee?: number;
-      tip?: number; discount?: number; orderType?: string; paidOnline?: boolean;
+      tip?: number; depositTotal?: number; discount?: number; orderType?: string; paidOnline?: boolean;
       // Raw payment method ("cash" | "card" | "card_in_person" | "paypal" |
       // "reward_credit") — when the order ISN'T paid online, the staff email
       // chip says WHAT to collect (cash vs card at handoff). Luigi 2026-07-04.
@@ -347,6 +347,7 @@ async function dispatchStaffEvent(
         taxAmount: payload.taxAmount,
         deliveryFee: payload.deliveryFee,
         tip: payload.tip,
+        depositTotal: payload.depositTotal,
         discount: payload.discount,
         orderType: payload.orderType,
         paidOnline: payload.paidOnline,
@@ -476,7 +477,7 @@ export type CustomerEventPayload =
       // Full money breakdown (Luigi 2026-07-02): without these the email's
       // "Subtotal" silently fell back to the TOTAL and tax/tip/discount rows
       // never rendered. creditApplied/rewardLabel only set when rewards are ON.
-      subtotal?: number; taxAmount?: number; deliveryFee?: number; tip?: number; discount?: number;
+      subtotal?: number; taxAmount?: number; deliveryFee?: number; tip?: number; depositTotal?: number; discount?: number;
       creditApplied?: number; rewardLabel?: string | null; paymentMethod?: string | null; paidStatus?: string | null }
   | { event: "orderStatusUpdate"; customerName: string; orderNumber: string; status: string; estimatedReady?: Date; rejectionReason?: string; trackingUrl?: string; paidOnline?: boolean; paymentMethod?: string }
   /** Kitchen pushed back the ready time. Fired from POST /api/orders/[id]/delay
@@ -608,6 +609,7 @@ export async function notifyCustomer(args: {
           taxAmount: payload.taxAmount,
           deliveryFee: payload.deliveryFee,
           tip: payload.tip,
+          depositTotal: payload.depositTotal,
           discount: payload.discount,
           orderType: payload.orderType,
           estimatedTime: payload.estimatedTime,

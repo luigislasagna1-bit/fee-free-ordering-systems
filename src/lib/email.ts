@@ -291,6 +291,8 @@ interface OrderEmailParams {
   taxAmount?: number;
   deliveryFee?: number;
   tip?: number;
+  /** Sum of per-item refundable deposits (untaxed; already inside total). */
+  depositTotal?: number;
   discount?: number;
   paidOnline?: boolean;
   deliveryAddress?: string | null;
@@ -445,6 +447,7 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       taxAmount: params.taxAmount,
       deliveryFee: params.deliveryFee,
       tip: params.tip,
+      depositTotal: params.depositTotal,
       discount: params.discount,
       total: params.total,
       deliveryAddress: params.deliveryAddress,
@@ -508,6 +511,8 @@ export async function sendNewOrderNotificationEmail(params: {
   taxAmount?: number;
   deliveryFee?: number;
   tip?: number;
+  /** Sum of per-item refundable deposits (untaxed; already inside total). */
+  depositTotal?: number;
   discount?: number;
   deliveryAddress?: string | null;
   customerNotes?: string | null;
@@ -550,6 +555,7 @@ export async function sendNewOrderNotificationEmail(params: {
       taxAmount: params.taxAmount,
       deliveryFee: params.deliveryFee,
       tip: params.tip,
+      depositTotal: params.depositTotal,
       discount: params.discount,
       total: params.total,
       deliveryAddress: params.deliveryAddress,

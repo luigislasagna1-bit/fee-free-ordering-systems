@@ -71,6 +71,10 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
           variantName: true,
           notes: true,
           bundleItems: true,
+          // Per-item refundable deposit — so the email can itemize it + reconcile
+          // the breakdown to order.total (which already includes it). Luigi 2026-07-09.
+          isRefundableDeposit: true,
+          depositAmount: true,
           modifiers: { select: { name: true, priceAdjustment: true } },
         },
       },
@@ -144,6 +148,9 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       name: i.name,
       quantity: i.quantity,
       price: i.price,
+      // Per-item refundable deposit (untaxed, added to the total on top).
+      isRefundableDeposit: !!i.isRefundableDeposit && (i.depositAmount ?? 0) > 0,
+      depositAmount: (i.depositAmount ?? 0) > 0 ? i.depositAmount : undefined,
       modifiers: Array.isArray(i.modifiers) && i.modifiers.length > 0
         ? i.modifiers.map((m: any) => ({ label: "", value: m.name, priceAdjustment: m.priceAdjustment || 0 }))
         : undefined,
@@ -165,6 +172,13 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
   // the wrong amount (Luigi 2026-07-02). Feature-gated: when the rewards
   // program is OFF nothing reward-related is passed at all (standing rule —
   // a disabled feature must not show or count anywhere).
+  // Sum of the per-item refundable deposits (untaxed, already inside order.total).
+  // Passed so the email can show a "Refundable deposit (not taxed)" row and the
+  // breakdown reconciles to the Total. Luigi 2026-07-09.
+  const depositTotal = Math.round(
+    order.items.reduce((s: number, i: any) => s + (i.isRefundableDeposit && (i.depositAmount ?? 0) > 0 ? Number(i.depositAmount) * i.quantity : 0), 0) * 100,
+  ) / 100;
+
   const rewardsOn = (order.restaurant as any).rewardsEnabled === true;
   const creditApplied = rewardsOn ? Math.max(0, (order as any).creditApplied ?? 0) : 0;
   const rewardLabel = rewardsOn
@@ -192,6 +206,7 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       taxAmount: order.taxAmount,
       deliveryFee: order.deliveryFee,
       tip: order.tip ?? undefined,
+      depositTotal: depositTotal > 0 ? depositTotal : undefined,
       discount: (order.couponDiscount ?? 0) + (order.promoDiscount ?? 0),
       creditApplied: creditApplied > 0 ? creditApplied : undefined,
       rewardLabel,
@@ -236,6 +251,7 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       taxAmount: order.taxAmount,
       deliveryFee: order.deliveryFee,
       tip: order.tip,
+      depositTotal: depositTotal > 0 ? depositTotal : undefined,
       discount: (order.couponDiscount ?? 0) + (order.promoDiscount ?? 0),
       // "Paid with {label}" + "To collect" rows — staff must never read the
       // Total and over-collect a credit-part-paid order (Luigi 2026-07-02).

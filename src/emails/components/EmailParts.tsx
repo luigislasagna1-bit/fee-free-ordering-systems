@@ -205,6 +205,10 @@ export type EmailOrderItem = {
   name: string;
   quantity: number;
   price: number;
+  /** Per-item refundable deposit (untaxed) — shown as a "+ $X refundable deposit"
+   *  line under the item so the breakdown reconciles to the Total. Luigi 2026-07-09. */
+  isRefundableDeposit?: boolean;
+  depositAmount?: number;
   /** Modifier / option lines shown indented under the item name. */
   modifiers?: { label: string; value: string; priceAdjustment?: number }[];
   /** Free-text customer note shown italic under modifiers. */
@@ -219,10 +223,12 @@ export type EmailOrderItem = {
 };
 
 export function OrderItemsTable({
-  items, currency = "usd", qtyLabel, itemsLabel, priceLabel, noteLabel,
+  items, currency = "usd", qtyLabel, itemsLabel, priceLabel, noteLabel, depositLabel,
 }: {
   items: EmailOrderItem[];
   currency?: string;
+  /** Localized "Refundable deposit" word for the per-item deposit line. */
+  depositLabel?: string;
   // Column headers + the per-line "Note" label. Optional so the kitchen/staff
   // email (intentionally English) can omit them; the customer receipt passes
   // localized values from receipt.customer.*. Fall back to English.
@@ -333,6 +339,11 @@ export function OrderItemsTable({
                   {noteLabel ?? "Note"}: {item.notes}
                 </div>
               )}
+              {item.isRefundableDeposit && (item.depositAmount ?? 0) > 0 && (
+                <div style={{ fontSize: 13, color: "#6d28d9", marginTop: 4 }}>
+                  + {formatCurrency(item.depositAmount ?? 0, currency)} {depositLabel ?? "refundable deposit"}
+                </div>
+              )}
             </td>
             <td style={{ padding: "10px 0", color: COLORS.text, textAlign: "right", fontWeight: 600 }}>
               {formatCurrency(item.price, currency)}
@@ -349,6 +360,7 @@ export function OrderItemsTable({
  */
 export function OrderTotals({
   subtotal, taxAmount, deliveryFee, tip, discount, total,
+  depositTotal, depositTotalLabel,
   currency = "usd",
   taxLabel = "Tax",
   savedDeliveryFee,
@@ -363,6 +375,10 @@ export function OrderTotals({
   tip?: number;
   discount?: number;
   total: number;
+  /** Sum of per-item refundable deposits (untaxed) — shown as its own row so the
+   *  breakdown reconciles to the Total, which already includes it. Luigi 2026-07-09. */
+  depositTotal?: number;
+  depositTotalLabel?: string;
   currency?: string;
   taxLabel?: string;
   /** When set + > 0, the customer earned free delivery via a promo.
@@ -428,6 +444,16 @@ export function OrderTotals({
       {!!tip && tip > 0 && row(tipLabel ?? "Tip", tip)}
       {!!discount && discount > 0 && row(discountLabel ?? "Promo discount", -discount)}
       {!!taxAmount && taxAmount > 0 && row(taxLabel, taxAmount)}
+      {!!depositTotal && depositTotal > 0 && (
+        <Row>
+          <Column style={{ fontSize: 14, color: "#6d28d9", padding: "4px 0", fontWeight: 400 }}>
+            {depositTotalLabel ?? "Refundable deposit (not taxed)"}
+          </Column>
+          <Column style={{ fontSize: 14, textAlign: "right", color: "#6d28d9", padding: "4px 0", fontWeight: 600 }}>
+            {formatCurrency(depositTotal, currency)}
+          </Column>
+        </Row>
+      )}
       <div style={{ borderTop: `1px solid ${COLORS.border}`, marginTop: 6, paddingTop: 6 }}>
         {row(totalLabel ?? "Total", total, true)}
       </div>

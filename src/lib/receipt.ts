@@ -510,6 +510,8 @@ export interface ReceiptOrder {
    *  delivery fee as their `discount` value. */
   appliedPromos?: string | null;
   total: number;
+  /** Sum of per-item refundable deposits (untaxed; already inside total). */
+  depositTotal?: number;
   /** Reward Dollars spent on this order as part-payment (Order.creditApplied).
    *  When > 0 the receipt prints a "Paid with {rewardLabel} -$X" line under the
    *  total, mirroring the on-screen receipt. Luigi 2026-06-29. */
@@ -548,6 +550,9 @@ export interface ReceiptItem {
   price: number;
   subtotal: number;
   notes?: string | null;
+  /** Per-item refundable deposit (untaxed) — surfaced via the depositTotal row. */
+  isRefundableDeposit?: boolean;
+  depositAmount?: number;
   modifiers: { name: string; priceAdjustment: number }[];
   /** Promo Type 8 / 13 bundle line item. When present + non-empty the
    *  renderer prints the parent name + bundle price ONCE, then for each
@@ -987,6 +992,10 @@ async function renderCustomerSection(
       }
       if (order.taxAmount   > 0) r.columns(t("receipt.customer.tax"), fmt(order.taxAmount));
       if ((order.tip ?? 0)  > 0) r.columns(t("receipt.customer.tip"), fmt(order.tip!));
+      // Per-item refundable deposit (untaxed) — itemized so the breakdown
+      // reconciles to Total (which already includes it). Additive line only; the
+      // reserve-then-order deposit above is a different thing. Luigi 2026-07-09.
+      if ((order.depositTotal ?? 0) > 0) r.columns(t("ordering.refundableDepositNotTaxed"), fmt(order.depositTotal!));
       r.divider("-");
       r.columns(t("receipt.customer.total"), fmt(order.total));
       // Reward Dollars PAYMENT SPLIT: "Paid with {label} -$X" + the remaining

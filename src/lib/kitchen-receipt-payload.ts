@@ -159,6 +159,11 @@ export async function buildOrderReceiptPayload(opts: {
     appliedServiceFees: (order as any).appliedServiceFees ?? null,
     appliedPromos: (order as any).appliedPromos ?? null,
     total: order.total,
+    // Sum of per-item refundable deposits (untaxed; already inside total). Lets
+    // the receipt itemize the deposit so the breakdown reconciles. Luigi 2026-07-09.
+    depositTotal: Math.round(
+      order.items.reduce((s: number, it: any) => s + (it.isRefundableDeposit && (it.depositAmount ?? 0) > 0 ? Number(it.depositAmount) * (it.quantity ?? 1) : 0), 0) * 100,
+    ) / 100,
     creditApplied: rewardsActive ? ((order as any).creditApplied ?? 0) : 0,
     rewardEarned,
     rewardBalance,
@@ -179,6 +184,8 @@ export async function buildOrderReceiptPayload(opts: {
       price: it.price,
       subtotal: it.subtotal ?? (it.price * (it.quantity ?? 1)),
       notes: it.notes,
+      isRefundableDeposit: !!it.isRefundableDeposit && (it.depositAmount ?? 0) > 0,
+      depositAmount: (it.depositAmount ?? 0) > 0 ? it.depositAmount : undefined,
       modifiers: (it.modifiers ?? []).map((m: any) => ({ name: m.name, priceAdjustment: m.priceAdjustment ?? 0 })),
       bundleItems: Array.isArray(it.bundleItems) ? it.bundleItems : null,
     })),
