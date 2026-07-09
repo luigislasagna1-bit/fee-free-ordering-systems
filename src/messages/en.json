@@ -2360,6 +2360,7 @@
       "addOption": "Add option",
       "optionNamePlaceholder": "Option name",
       "setAsDefault": "Set as default",
+      "tooManyDefaults": "Only {max} default choices allowed — that's this group's maximum selections.",
       "addGroup": "Add Group",
       "save": "Save",
       "inheritedFromCategory": "Inherited from category",

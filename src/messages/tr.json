@@ -1847,6 +1847,7 @@
       "addOption": "Seçenek ekle",
       "optionNamePlaceholder": "Seçenek adı",
       "setAsDefault": "Varsayılan olarak ayarla",
+      "tooManyDefaults": "Yalnızca {max} varsayılan seçime izin verilir — bu, bu grubun en fazla seçim sayısıdır.",
       "addGroup": "Grup Ekle",
       "save": "Kaydet",
       "inheritedFromCategory": "Kategoriden devralındı",

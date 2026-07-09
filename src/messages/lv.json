@@ -1903,6 +1903,7 @@
       "addOption": "Pievienot opciju",
       "optionNamePlaceholder": "Opcijas nosaukums",
       "setAsDefault": "Iestatīt kā noklusējumu",
+      "tooManyDefaults": "Atļautas tikai {max} noklusējuma izvēles — tas ir šīs grupas maksimālais izvēļu skaits.",
       "addGroup": "Pievienot grupu",
       "save": "Saglabāt",
       "inheritedFromCategory": "Mantots no kategorijas",

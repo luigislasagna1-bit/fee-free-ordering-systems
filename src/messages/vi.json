@@ -1847,6 +1847,7 @@
       "addOption": "Thêm tùy chọn",
       "optionNamePlaceholder": "Tên tùy chọn",
       "setAsDefault": "Đặt làm mặc định",
+      "tooManyDefaults": "Chỉ cho phép {max} lựa chọn mặc định — đó là số lựa chọn tối đa của nhóm này.",
       "addGroup": "Thêm Nhóm",
       "save": "Lưu",
       "inheritedFromCategory": "Kế thừa từ danh mục",

@@ -3342,7 +3342,11 @@ export function OrderingPageClient({
 
     const defaultMods: Record<string, string[]> = {};
     for (const g of item.modifierGroups) {
-      const defs = g.options.filter(o => o.isDefault && o.isAvailable).map(o => o.id);
+      // Cap at the group's max selections — a group saved with more starred
+      // defaults than maxSelect must not seed an over-limit selection the
+      // customer couldn't build by hand. Luigi 2026-07-09.
+      const defs = g.options.filter(o => o.isDefault && o.isAvailable).map(o => o.id)
+        .slice(0, Math.max(1, g.maxSelect || 1));
       if (defs.length) defaultMods[g.id] = defs;
     }
     const defaultVariant = item.variants?.find(v => v.isDefault) ?? item.variants?.[0] ?? null;

@@ -1903,6 +1903,7 @@
       "addOption": "オプションを追加",
       "optionNamePlaceholder": "オプション名",
       "setAsDefault": "デフォルトに設定",
+      "tooManyDefaults": "デフォルトに設定できるのは{max}件までです — これはこのグループの最大選択数です。",
       "addGroup": "グループを追加",
       "save": "保存",
       "inheritedFromCategory": "カテゴリーから継承",

@@ -1903,6 +1903,7 @@
       "addOption": "Dodaj možnost",
       "optionNamePlaceholder": "Ime možnosti",
       "setAsDefault": "Nastavi kot privzeto",
+      "tooManyDefaults": "Dovoljenih je le {max} privzetih izbir — to je največje število izbir te skupine.",
       "addGroup": "Dodaj skupino",
       "save": "Shrani",
       "inheritedFromCategory": "Podedovano iz kategorije",

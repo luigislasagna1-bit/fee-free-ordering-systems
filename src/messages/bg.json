@@ -1903,6 +1903,7 @@
       "addOption": "Добави опция",
       "optionNamePlaceholder": "Ime на опцията",
       "setAsDefault": "Задай като по подразбиране",
+      "tooManyDefaults": "Разрешени са само {max} избора по подразбиране — това е максималният брой селекции за тази група.",
       "addGroup": "Добави група",
       "save": "Запази",
       "inheritedFromCategory": "Наследено от категория",

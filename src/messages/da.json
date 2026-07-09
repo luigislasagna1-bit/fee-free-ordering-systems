@@ -1903,6 +1903,7 @@
       "addOption": "Tilføj mulighed",
       "optionNamePlaceholder": "Navn på mulighed",
       "setAsDefault": "Angiv som standard",
+      "tooManyDefaults": "Kun {max} standardvalg er tilladt — det er gruppens maksimale antal valg.",
       "addGroup": "Tilføj gruppe",
       "save": "Gem",
       "inheritedFromCategory": "Arvet fra kategori",

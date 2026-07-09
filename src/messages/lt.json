@@ -2596,6 +2596,7 @@
       "addOption": "Pridėti pasirinkimą",
       "optionNamePlaceholder": "Pasirinkimo pavadinimas",
       "setAsDefault": "Nustatyti numatytuoju",
+      "tooManyDefaults": "Leidžiama tik {max} numatytųjų pasirinkimų — tai didžiausias šios grupės pasirinkimų skaičius.",
       "addGroup": "Pridėti grupę",
       "save": "Išsaugoti",
       "inheritedFromCategory": "Paveldėta iš kategorijos",

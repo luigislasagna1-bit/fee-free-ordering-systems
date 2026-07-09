@@ -1903,6 +1903,7 @@
       "addOption": "Legg til alternativ",
       "optionNamePlaceholder": "Alternativnavn",
       "setAsDefault": "Angi som standard",
+      "tooManyDefaults": "Bare {max} standardvalg er tillatt — det er gruppens maksimale antall valg.",
       "addGroup": "Legg til gruppe",
       "save": "Lagre",
       "inheritedFromCategory": "Arvet fra kategori",

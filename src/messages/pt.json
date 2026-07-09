@@ -1903,6 +1903,7 @@
       "addOption": "Adicionar opção",
       "optionNamePlaceholder": "Nome da opção",
       "setAsDefault": "Definir como padrão",
+      "tooManyDefaults": "Só são permitidas {max} escolhas predefinidas — é o máximo de seleções deste grupo.",
       "addGroup": "Adicionar Grupo",
       "save": "Salvar",
       "inheritedFromCategory": "Herdado da categoria",

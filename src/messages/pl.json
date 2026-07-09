@@ -1847,6 +1847,7 @@
       "addOption": "Dodaj opcję",
       "optionNamePlaceholder": "Nazwa opcji",
       "setAsDefault": "Ustaw jako domyślną",
+      "tooManyDefaults": "Dozwolone jest tylko {max} domyślnych wyborów — to maksymalna liczba wyborów w tej grupie.",
       "addGroup": "Dodaj grupę",
       "save": "Zapisz",
       "inheritedFromCategory": "Odziedziczone z kategorii",

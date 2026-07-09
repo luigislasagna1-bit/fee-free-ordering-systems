@@ -1903,6 +1903,7 @@
       "addOption": "הוסף אפשרות",
       "optionNamePlaceholder": "שם אפשרות",
       "setAsDefault": "קבע כברירת מחדל",
+      "tooManyDefaults": "מותרות רק {max} בחירות ברירת מחדל — זהו מספר הבחירות המרבי של קבוצה זו.",
       "addGroup": "הוסף קבוצה",
       "save": "שמור",
       "inheritedFromCategory": "עובר בירושה מהקטגוריה",

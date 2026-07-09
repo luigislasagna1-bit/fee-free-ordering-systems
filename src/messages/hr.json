@@ -1903,6 +1903,7 @@
       "addOption": "Dodaj opciju",
       "optionNamePlaceholder": "Naziv opcije",
       "setAsDefault": "Postavi kao zadano",
+      "tooManyDefaults": "Dopušteno je samo {max} zadanih odabira — to je najveći broj odabira ove grupe.",
       "addGroup": "Dodaj grupu",
       "save": "Spremi",
       "inheritedFromCategory": "Naslijeđeno iz kategorije",

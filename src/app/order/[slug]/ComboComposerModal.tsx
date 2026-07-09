@@ -449,7 +449,10 @@ function ChildCustomizer({
     }
     const def: Record<string, string[]> = {};
     for (const g of groups) {
-      const defs = g.options.filter((o: AnyItem) => o.isDefault && o.isAvailable).map((o: AnyItem) => o.id);
+      // Capped at maxSelect — over-starred groups must not seed an over-limit
+      // selection (mirrors the item modal + pizza builder). Luigi 2026-07-09.
+      const defs = g.options.filter((o: AnyItem) => o.isDefault && o.isAvailable).map((o: AnyItem) => o.id)
+        .slice(0, Math.max(1, g.maxSelect || 1));
       if (defs.length) def[g.id] = defs;
     }
     return def;

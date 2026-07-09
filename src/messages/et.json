@@ -1903,6 +1903,7 @@
       "addOption": "Lisa valik",
       "optionNamePlaceholder": "Valiku nimi",
       "setAsDefault": "Määra vaikimisi",
+      "tooManyDefaults": "Lubatud on ainult {max} vaikimisi valikut — see on selle rühma valikute maksimum.",
       "addGroup": "Lisa grupp",
       "save": "Salvesta",
       "inheritedFromCategory": "Päritud kategooriast",

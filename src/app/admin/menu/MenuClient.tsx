@@ -1448,7 +1448,16 @@ function ModifierModal({
   const save = async () => {
     if (!form.name.trim()) { toast.error(t("groupNameRequired")); return; }
     setSaving(true);
-    const payload = { ...form, menuItemId: menuItemId || undefined, options: options.filter(o => o.name.trim()) };
+    // Defaults can't exceed maxSelect — also enforced here in case the owner
+    // LOWERED max after starring (keep the first N starred). Luigi 2026-07-09.
+    const maxDefaults = Math.max(1, Number(form.maxSelect) || 1);
+    let seen = 0;
+    const cappedOptions = options.filter(o => o.name.trim()).map(o => {
+      if (!o.isDefault) return o;
+      seen += 1;
+      return seen <= maxDefaults ? o : { ...o, isDefault: false };
+    });
+    const payload = { ...form, menuItemId: menuItemId || undefined, options: cappedOptions };
     try {
       const url = isNew ? "/api/menu/modifiers" : `/api/menu/modifiers/${group!.id}`;
       const method = isNew ? "POST" : "PATCH";
@@ -1550,7 +1559,20 @@ function ModifierModal({
                       onChange={e => setOptions(os => os.map((o, j) => j === i ? { ...o, priceAdjustment: parseFloat(e.target.value) || 0 } : o))} />
                   </div>
                   <button
-                    onClick={() => setOptions(os => os.map((o, j) => j === i ? { ...o, isDefault: !o.isDefault } : o))}
+                    onClick={() => setOptions(os => {
+                      // Defaults can never exceed the group's max selections
+                      // (Luigi 2026-07-09: a max-1 group allowed 2 starred
+                      // defaults). Max 1 ⇒ the star is a RADIO (starring one
+                      // unstars the rest); max N ⇒ cap at N with a toast.
+                      if (os[i].isDefault) return os.map((o, j) => j === i ? { ...o, isDefault: false } : o);
+                      const max = Math.max(1, Number(form.maxSelect) || 1);
+                      if (max === 1) return os.map((o, j) => ({ ...o, isDefault: j === i }));
+                      if (os.filter(o => o.isDefault).length >= max) {
+                        toast.error(t("tooManyDefaults", { max }));
+                        return os;
+                      }
+                      return os.map((o, j) => j === i ? { ...o, isDefault: true } : o);
+                    })}
                     title={t("setAsDefault")}
                     className={`p-1.5 rounded text-xs transition ${opt.isDefault ? "bg-emerald-100 text-emerald-600" : "text-gray-400 hover:text-gray-600"}`}>
                     ★

@@ -1903,6 +1903,7 @@
       "addOption": "Přidat možnost",
       "optionNamePlaceholder": "Název možnosti",
       "setAsDefault": "Nastavit jako výchozí",
+      "tooManyDefaults": "Povoleno je pouze {max} výchozích voleb — to je maximální počet výběrů této skupiny.",
       "addGroup": "Přidat skupinu",
       "save": "Uložit",
       "inheritedFromCategory": "Zděděno z kategorie",

@@ -2277,6 +2277,7 @@
       "addOption": "विकल्प जोड़ें",
       "optionNamePlaceholder": "विकल्प का नाम",
       "setAsDefault": "डिफ़ॉल्ट के रूप में सेट करें",
+      "tooManyDefaults": "केवल {max} डिफ़ॉल्ट विकल्पों की अनुमति है — यह इस समूह के चयनों की अधिकतम संख्या है।",
       "addGroup": "समूह जोड़ें",
       "save": "सहेजें",
       "inheritedFromCategory": "श्रेणी से प्राप्त",

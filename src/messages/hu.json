@@ -1847,6 +1847,7 @@
       "addOption": "Lehetőség hozzáadása",
       "optionNamePlaceholder": "Lehetőség neve",
       "setAsDefault": "Beállítás alapértelmezettként",
+      "tooManyDefaults": "Csak {max} alapértelmezett választás engedélyezett — ez a csoport választásainak maximuma.",
       "addGroup": "Csoport hozzáadása",
       "save": "Mentés",
       "inheritedFromCategory": "Kategóriától örökölve",

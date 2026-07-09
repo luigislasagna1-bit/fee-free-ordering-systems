@@ -2596,6 +2596,7 @@
       "addOption": "Pridať možnosť",
       "optionNamePlaceholder": "Názov možnosti",
       "setAsDefault": "Nastaviť ako predvolené",
+      "tooManyDefaults": "Povolených je iba {max} predvolených volieb — to je maximálny počet výberov tejto skupiny.",
       "addGroup": "Pridať skupinu",
       "save": "Uložiť",
       "inheritedFromCategory": "Zdedené z kategórie",
