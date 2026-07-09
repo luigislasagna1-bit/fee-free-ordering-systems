@@ -4,6 +4,8 @@ import prisma from "@/lib/db";
 import { blockIfInheritingMenu, resolveMenuRestaurantId } from "@/lib/brand";
 import { resolveActiveMenuId } from "@/lib/menu";
 import { buildVisibilityData } from "@/lib/menu-visibility";
+import { buildFulfilData } from "@/lib/menu-fulfilment";
+import { logMenuChange } from "@/lib/menu-change-log";
 import { Prisma } from "@/generated/prisma/client";
 
 export async function GET(req: NextRequest) {
@@ -77,7 +79,7 @@ export async function POST(req: NextRequest) {
   if (blocked) return blocked;
 
   const body = await req.json();
-  const { name, description, imageUrl, isHidden, isCatering, forPickup, forDelivery, accentColor, pinnedToTop, menuId: bodyMenuId, visibility } = body;
+  const { name, description, imageUrl, isHidden, isCatering, forPickup, forDelivery, accentColor, pinnedToTop, menuId: bodyMenuId, visibility, fulfilment } = body;
   if (!name?.trim()) return NextResponse.json({ error: "Name required" }, { status: 400 });
   let visData: Record<string, unknown> = {};
   if (visibility !== undefined) {
@@ -86,6 +88,14 @@ export async function POST(req: NextRequest) {
     // Json columns can't take plain null in Prisma — DbNull writes SQL NULL
     // (clears the multi-window list when dropping back to 0/1 windows).
     visData = { ...v.data, visibleWindows: v.data.visibleWindows ?? Prisma.DbNull };
+  }
+  // Category-level Fulfilment Time (Fabrizio 2026-07-08) — same builder + DbNull
+  // handling as items, so a category window persists identically.
+  let fulfilData: Record<string, unknown> = {};
+  if (fulfilment !== undefined) {
+    const f = buildFulfilData(fulfilment);
+    if (!f.ok) return NextResponse.json({ error: f.error }, { status: 400 });
+    fulfilData = { ...f.data, fulfilWindows: f.data.fulfilWindows ?? Prisma.DbNull };
   }
 
   // New categories belong to the targeted menu (the one being edited) — or the
@@ -116,7 +126,9 @@ export async function POST(req: NextRequest) {
       pinnedToTop: !!pinnedToTop,
       sortOrder: existing,
       ...visData,
+      ...fulfilData,
     },
   });
+  await logMenuChange({ user, restaurantId, entityType: "category", entityId: cat.id, entityName: cat.name, action: "create", summary: `Added category "${cat.name}"` });
   return NextResponse.json(cat);
 }

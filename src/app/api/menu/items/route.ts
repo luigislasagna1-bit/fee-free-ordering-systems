@@ -7,6 +7,7 @@ import { blockIfInheritingMenu } from "@/lib/brand";
 import { hasFeature } from "@/lib/entitlements";
 import { buildVisibilityData } from "@/lib/menu-visibility";
 import { buildFulfilData } from "@/lib/menu-fulfilment";
+import { logMenuChange } from "@/lib/menu-change-log";
 
 export async function POST(req: NextRequest) {
   const user = await getSessionUser();
@@ -101,6 +102,7 @@ export async function POST(req: NextRequest) {
     }
 
     // New item — no prior pizzaConfig, so pass null as old.
+    await logMenuChange({ user, restaurantId, entityType: "item", entityId: item.id, entityName: item.name, action: "create", summary: `Added "${item.name}"` });
     await syncPizzaConfigAttachments(item.id, restaurantId, pizzaConfig, null);
 
     return NextResponse.json(item, { status: 201 });

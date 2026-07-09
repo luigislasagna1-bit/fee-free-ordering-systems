@@ -557,6 +557,13 @@ export async function POST(req: NextRequest) {
             // enforced with the item's own flags in the per-item guard below.
             forPickup: true,
             forDelivery: true,
+            // Category-level Fulfilment Time (Fabrizio 2026-07-08) — a whole
+            // category can be orderable only on given days/times; ANDs with the
+            // item's own window in the per-item fulfilment guard below.
+            fulfilDays: true,
+            fulfilFrom: true,
+            fulfilTo: true,
+            fulfilWindows: true,
             modifierGroups: { include: { options: { where: { isAvailable: true } } } },
           },
         },
@@ -2162,8 +2169,16 @@ export async function POST(req: NextRequest) {
       for (const vi of validatedItems) {
         if (!vi.menuItemId) continue; // bundle wrapper
         const mi = menuItemMap.get(vi.menuItemId) as any;
-        if (!mi || !hasFulfilWindow(mi)) continue;
-        if (!isFulfilableAt(mi, fulfilMoment, fulfilTz)) {
+        if (!mi) continue;
+        // The item is orderable for this moment only if BOTH its own window AND
+        // its category's window include it (AND = intersect; Fabrizio 2026-07-08).
+        // When the CATEGORY is the blocker, surface the category's window so the
+        // client's reschedule helper offers the right slots.
+        const cat = mi.category;
+        const itemBlocked = hasFulfilWindow(mi) && !isFulfilableAt(mi, fulfilMoment, fulfilTz);
+        const catBlocked = !!cat && hasFulfilWindow(cat) && !isFulfilableAt(cat, fulfilMoment, fulfilTz);
+        if (itemBlocked || catBlocked) {
+          const win = itemBlocked ? mi : cat; // the blocking window drives the payload
           // In reservation mode the order time is LOCKED to the booking (no
           // schedule picker), so "schedule your order for when it's available" is
           // a dead-end — tell them to remove it or rebook on a day it's offered.
@@ -2177,9 +2192,9 @@ export async function POST(req: NextRequest) {
                 : `"${mi.name}" can only be ordered for certain days/times. Please schedule your order for when it's available.`,
               code: forReservation ? "item_fulfilment_window_reservation" : "item_fulfilment_window",
               itemName: mi.name,
-              fulfilDays: mi.fulfilDays ?? null,
-              fulfilFrom: mi.fulfilFrom ?? null,
-              fulfilTo: mi.fulfilTo ?? null,
+              fulfilDays: win.fulfilDays ?? null,
+              fulfilFrom: win.fulfilFrom ?? null,
+              fulfilTo: win.fulfilTo ?? null,
             },
             { status: 400 },
           );

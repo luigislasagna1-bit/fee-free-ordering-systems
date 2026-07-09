@@ -3,6 +3,8 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { blockIfInheritingMenu } from "@/lib/brand";
 import { buildVisibilityData } from "@/lib/menu-visibility";
+import { buildFulfilData } from "@/lib/menu-fulfilment";
+import { logMenuChange } from "@/lib/menu-change-log";
 import { Prisma } from "@/generated/prisma/client";
 
 async function getOwned(id: string, restaurantId: string) {
@@ -19,7 +21,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (!await getOwned(id, restaurantId)) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   const body = await req.json();
-  const { name, description, imageUrl, isActive, isHidden, isCatering, sortOrder, visibility, rewardEarnExcluded, promoExcluded, rewardRedeemExcluded, forPickup, forDelivery, accentColor, pinnedToTop } = body;
+  const { name, description, imageUrl, isActive, isHidden, isCatering, sortOrder, visibility, fulfilment, rewardEarnExcluded, promoExcluded, rewardRedeemExcluded, forPickup, forDelivery, accentColor, pinnedToTop } = body;
   let visData: Record<string, unknown> = {};
   if (visibility !== undefined) {
     const v = buildVisibilityData(visibility);
@@ -27,6 +29,13 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     // Json columns can't take plain null in Prisma — DbNull writes SQL NULL
     // (clears the multi-window list when dropping back to 0/1 windows).
     visData = { ...v.data, visibleWindows: v.data.visibleWindows ?? Prisma.DbNull };
+  }
+  // Category-level Fulfilment Time (Fabrizio 2026-07-08).
+  let fulfilData: Record<string, unknown> = {};
+  if (fulfilment !== undefined) {
+    const f = buildFulfilData(fulfilment);
+    if (!f.ok) return NextResponse.json({ error: f.error }, { status: 400 });
+    fulfilData = { ...f.data, fulfilWindows: f.data.fulfilWindows ?? Prisma.DbNull };
   }
   const cat = await prisma.menuCategory.update({
     where: { id },
@@ -49,8 +58,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       // Pin the category to the order-page "Featured" strip (Fabrizio cmr80joh0).
       ...(pinnedToTop !== undefined ? { pinnedToTop: !!pinnedToTop } : {}),
       ...visData,
+      ...fulfilData,
     },
   });
+  if (user) await logMenuChange({ user, restaurantId, entityType: "category", entityId: cat.id, entityName: cat.name, action: "update", summary: `Updated category "${cat.name}"` });
   return NextResponse.json(cat);
 }
 
@@ -83,9 +94,12 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
         );
       }
     }
+    // Snapshot the name BEFORE deleting so the log still reads afterward.
+    const gone = await prisma.menuCategory.findFirst({ where: { id, restaurantId }, select: { name: true } });
     // Delete all items in the category first (menuItemId on OrderItem is now nullable/SetNull)
     await prisma.menuItem.deleteMany({ where: { categoryId: id } });
     await prisma.menuCategory.delete({ where: { id } });
+    await logMenuChange({ user, restaurantId, entityType: "category", entityId: id, entityName: gone?.name ?? null, action: "delete", summary: `Deleted category "${gone?.name ?? id}"` });
     return NextResponse.json({ ok: true });
   } catch (e: any) {
     console.error("[DELETE /api/menu/categories/:id]", e);

@@ -42,6 +42,11 @@ type MenuItem = {
   forPickup: boolean; forDelivery: boolean;
   availableDays?: number[]; availableFrom?: string; availableTo?: string;
   availabilityMode?: string | null;
+  // Loaded via the admin menu `include` loader (all scalars). Declared here so
+  // the exception-badge predicates typecheck. Luigi 2026-07-08 (Fabrizio).
+  visibilityMode?: string | null;
+  fulfilDays?: number[] | string | null; fulfilFrom?: string | null; fulfilTo?: string | null;
+  fulfilWindows?: unknown;
   sortOrder: number; variants: ItemVariant[];
   modifierGroups: ModifierGroup[];
   pizzaConfig?: string;
@@ -50,6 +55,9 @@ type MenuItem = {
 type Category = {
   id: string; name: string; description?: string; imageUrl?: string;
   isActive: boolean; isHidden: boolean; sortOrder: number;
+  // Service restriction + scheduled visibility (loaded via include) — drive the
+  // category exception badges. Luigi 2026-07-08 (Fabrizio).
+  forPickup?: boolean; forDelivery?: boolean; visibilityMode?: string | null;
   modifierGroups: ModifierGroup[];
   menuItems: MenuItem[];
 };
@@ -1638,6 +1646,21 @@ function availabilityBadge(
   return { text: parts.join(" · "), kind: fRestricted ? "fulfil" : "visibility" };
 }
 
+// ─── Exception badges (Fabrizio 2026-07-08) ─────────────────────────────────
+// So the owner can see at a glance which dishes/categories have "active
+// exceptions" they might forget: a service restriction (pickup/delivery-only) or
+// a scheduled visibility. Availability WINDOWS are already badged separately.
+function itemHasException(item: MenuItem, hoursFormat: HoursFormat = "24h"): boolean {
+  return item.forPickup === false || item.forDelivery === false || !!item.visibilityMode || availabilityBadge(item, hoursFormat) != null;
+}
+/** "pickupOnly" | "deliveryOnly" | null — a category restricted to ONE channel
+ *  (both-false = fully hidden, handled by the hidden badge elsewhere). */
+function serviceOnlyKind(x: { forPickup?: boolean; forDelivery?: boolean }): "pickupOnly" | "deliveryOnly" | null {
+  if (x.forDelivery === false && x.forPickup !== false) return "pickupOnly";
+  if (x.forPickup === false && x.forDelivery !== false) return "deliveryOnly";
+  return null;
+}
+
 function SortableItemRow({
   item, categoryModGroups, onEdit, onDelete, onDuplicate, onCopySettings, onToggle, onAttach, onDetach, onReorderGroups,
 }: {
@@ -1742,6 +1765,14 @@ function SortableItemRow({
               </span>
             );
           })()}
+          {/* Service restriction (pickup/delivery-only) — a common "exception"
+              the owner might forget. Fabrizio 2026-07-08. */}
+          {serviceOnlyKind(item) && (
+            <span className="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded inline-flex items-center gap-1">
+              {serviceOnlyKind(item) === "deliveryOnly" ? <Truck className="w-3 h-3" /> : <ShoppingBag className="w-3 h-3" />}
+              {t(serviceOnlyKind(item) === "deliveryOnly" ? "deliveryOnlyBadge" : "pickupOnlyBadge")}
+            </span>
+          )}
         </div>
         {item.description && <div className="text-xs text-gray-400 truncate mt-0.5">{item.description}</div>}
         {(ownGroups.length > 0 || inheritedGroups.length > 0) && (
@@ -1952,6 +1983,7 @@ function SortableCategoryBlock({
   onToggleSelect?: () => void;
 }) {
   const t = useTranslations("admin.menuEditor");
+  const catHoursFormat = useContext(MenuHoursFormatCtx);
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: cat.id });
   const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
@@ -2030,6 +2062,38 @@ function SortableCategoryBlock({
           <div className="flex items-center gap-2 flex-wrap">
             <h2 className="font-bold text-gray-900">{cat.name}</h2>
             {cat.isHidden && <span className="text-xs bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded">{t("hiddenBadge")}</span>}
+            {/* Category-level exceptions the owner might forget (Fabrizio
+                2026-07-08): the WHOLE category restricted to one channel, a
+                scheduled visibility, and a roll-up of how many DISHES inside
+                have their own exception. */}
+            {serviceOnlyKind(cat) && (
+              <span className="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded inline-flex items-center gap-1">
+                {serviceOnlyKind(cat) === "deliveryOnly" ? <Truck className="w-3 h-3" /> : <ShoppingBag className="w-3 h-3" />}
+                {t(serviceOnlyKind(cat) === "deliveryOnly" ? "deliveryOnlyBadge" : "pickupOnlyBadge")}
+              </span>
+            )}
+            {cat.visibilityMode && (
+              <span className="text-xs bg-sky-100 text-sky-700 px-1.5 py-0.5 rounded inline-flex items-center gap-1">
+                <Clock className="w-3 h-3" /> {t("scheduledBadge")}
+              </span>
+            )}
+            {(() => {
+              // The category's OWN Fulfilment Time window (Fabrizio 2026-07-08).
+              const b = availabilityBadge(cat as any, catHoursFormat);
+              return b ? (
+                <span className="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded inline-flex items-center gap-1">
+                  <Clock className="w-3 h-3" /> {b.text}
+                </span>
+              ) : null;
+            })()}
+            {(() => {
+              const n = cat.menuItems.filter((i) => itemHasException(i)).length;
+              return n > 0 ? (
+                <span className="text-xs bg-amber-50 text-amber-600 px-1.5 py-0.5 rounded inline-flex items-center gap-1" title={t("someItemsLimitedTitle")}>
+                  {t("someItemsLimitedBadge", { count: n })}
+                </span>
+              ) : null;
+            })()}
             <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{cat.menuItems.length}</span>
           </div>
           {cat.description && <div className="text-xs text-gray-400 truncate">{cat.description}</div>}
@@ -2346,6 +2410,63 @@ function ModifierLibraryPanel({
   );
 }
 
+// ─── Menu change-history modal (Fabrizio 2026-07-08) ──────────────────────────
+// Read-only audit of menu edits (who / what / when), newest first, from the
+// session-scoped GET /api/menu/change-log (hard-capped at 50 rows server-side).
+function MenuHistoryModal({ onClose }: { onClose: () => void }) {
+  const t = useTranslations("admin.menuEditor");
+  const [entries, setEntries] = useState<Array<{ id: string; action: string; entityType: string; entityName: string | null; actorName: string | null; viaImpersonation: string | null; createdAt: string }> | null>(null);
+  useEffect(() => {
+    let live = true;
+    fetch("/api/menu/change-log")
+      .then((r) => r.json())
+      .then((d) => { if (live) setEntries(Array.isArray(d.entries) ? d.entries : []); })
+      .catch(() => { if (live) setEntries([]); });
+    return () => { live = false; };
+  }, []);
+  const actionLabel = (a: string): string => {
+    const k: Record<string, string> = {
+      create: "changeLogActionCreate", update: "changeLogActionUpdate", delete: "changeLogActionDelete",
+      duplicate: "changeLogActionDuplicate", import: "changeLogActionImport",
+    };
+    return k[a] ? t(k[a]) : a;
+  };
+  const entityLabel = (e: string): string => (e === "category" ? t("changeLogCategory") : t("changeLogItem"));
+  const fmtTime = (iso: string): string => { try { return new Date(iso).toLocaleString(); } catch { return iso; } };
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[80vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between p-5 border-b">
+          <h2 className="text-lg font-bold flex items-center gap-2"><Clock className="w-5 h-5" /> {t("changeLogHeading")}</h2>
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
+        </div>
+        <div className="p-4 overflow-y-auto">
+          {entries === null ? (
+            <div className="flex justify-center py-8"><Loader2 className="w-6 h-6 animate-spin text-gray-400" /></div>
+          ) : entries.length === 0 ? (
+            <p className="text-sm text-gray-500 text-center py-8">{t("changeLogEmpty")}</p>
+          ) : (
+            <ul className="space-y-2">
+              {entries.map((e) => (
+                <li key={e.id} className="text-sm border border-gray-100 rounded-lg px-3 py-2">
+                  <div className="font-medium text-gray-900">
+                    {actionLabel(e.action)} {entityLabel(e.entityType)}{e.entityName ? ` — ${e.entityName}` : ""}
+                  </div>
+                  <div className="text-xs text-gray-400 mt-0.5 flex items-center gap-1.5 flex-wrap">
+                    <span>{fmtTime(e.createdAt)}</span>
+                    {e.actorName && <span>· {e.actorName}</span>}
+                    {e.viaImpersonation && <span className="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full font-medium">{t("changeLogStaffBadge")}</span>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Category Edit Modal ──────────────────────────────────────────────────────
 
 function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () => void; onSaved: () => void }) {
@@ -2370,6 +2491,16 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
     pinnedToTop: (cat as any)?.pinnedToTop ?? false,
   });
   const [visibility, setVisibility] = useState<VisibilityValue>(() => visibilityFromRow(cat));
+  // Category-level Fulfilment Time (Fabrizio 2026-07-08) — single window (days +
+  // time); reuses the item fulfilment i18n. Sent as `fulfilment` and normalised
+  // by buildFulfilData server-side, identical to items.
+  const [catFulfil, setCatFulfil] = useState<{ enabled: boolean; days: number[]; from: string; to: string }>(() => {
+    let days: number[] = [];
+    try { const a = JSON.parse((cat as any)?.fulfilDays ?? "null"); if (Array.isArray(a)) days = a.filter((x: any) => typeof x === "number" && x >= 0 && x <= 6); } catch { /* ignore */ }
+    const from = (cat as any)?.fulfilFrom ?? "";
+    const to = (cat as any)?.fulfilTo ?? "";
+    return { enabled: days.length > 0 || (!!from && !!to), days, from, to };
+  });
   const [saving, setSaving] = useState(false);
 
   const { menuId: editMenuId } = useContext(MenuEditCtx);
@@ -2379,9 +2510,13 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
     try {
       const url = isNew ? "/api/menu/categories" : `/api/menu/categories/${cat!.id}`;
       const method = isNew ? "POST" : "PATCH";
+      // null clears the window server-side; a single {days,from,to} sets it.
+      const fulfilment = catFulfil.enabled
+        ? { days: catFulfil.days, from: catFulfil.from || null, to: catFulfil.to || null }
+        : null;
       // On create, tell the server which menu version this category belongs to
       // (the one being edited) so it doesn't default to the live menu.
-      const payload = isNew ? { ...form, visibility, menuId: editMenuId } : { ...form, visibility };
+      const payload = isNew ? { ...form, visibility, fulfilment, menuId: editMenuId } : { ...form, visibility, fulfilment };
       await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       toast.success(isNew ? t("categoryAdded") : t("categoryUpdated"));
       onSaved();
@@ -2440,6 +2575,58 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.pinnedToTop ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
               <Star className="w-4 h-4" /> {t("pinToTop")} {form.pinnedToTop && <Check className="w-3.5 h-3.5" />}
             </button>
+          </div>
+          {/* Category-level Fulfilment Time (Fabrizio 2026-07-08) — the days/times
+              the WHOLE category can be ORDERED FOR (ANDs with each item's own
+              window). Single window; reuses the item fulfilment i18n. */}
+          <div className="border-t border-gray-100 pt-4">
+            <div className="flex items-center gap-1.5 mb-1">
+              <label className="block text-sm font-semibold text-gray-800">{t("fulfilTitle")}</label>
+              <HelpTip text={t("fulfilHelp")} />
+            </div>
+            <p className="text-xs text-gray-500 mb-2">{t("fulfilIntro")}</p>
+            <div className="flex gap-2">
+              <button type="button" onClick={() => setCatFulfil(f => ({ ...f, enabled: false }))}
+                className={`flex-1 text-sm font-medium py-2 px-3 rounded-lg border transition ${!catFulfil.enabled ? "border-emerald-400 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600 hover:border-gray-400"}`}>
+                {t("fulfilAlways")}
+              </button>
+              <button type="button" onClick={() => setCatFulfil(f => ({ ...f, enabled: true }))}
+                className={`flex-1 text-sm font-medium py-2 px-3 rounded-lg border transition ${catFulfil.enabled ? "border-indigo-400 bg-indigo-50 text-indigo-700" : "border-gray-200 text-gray-600 hover:border-gray-400"}`}>
+                {t("fulfilRestricted")}
+              </button>
+            </div>
+            {catFulfil.enabled && (
+              <div className="space-y-4 rounded-xl border border-indigo-100 bg-indigo-50/40 p-4 mt-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{t("fulfilDaysLabel")}</label>
+                  <div className="flex gap-2 flex-wrap">
+                    {DAY_NAMES.map((d, i) => (
+                      <button key={i} type="button"
+                        onClick={() => setCatFulfil(f => ({ ...f, days: f.days.includes(i) ? f.days.filter(x => x !== i) : [...f.days, i].sort((a, b) => a - b) }))}
+                        className={`w-12 h-10 rounded-lg border text-sm font-medium transition ${catFulfil.days.includes(i) ? "bg-indigo-500 border-indigo-500 text-white" : "border-gray-200 text-gray-500 hover:border-gray-400 bg-white"}`}>
+                        {d}
+                      </button>
+                    ))}
+                    <button type="button" onClick={() => setCatFulfil(f => ({ ...f, days: [] }))}
+                      className="px-3 h-10 rounded-lg border border-gray-200 bg-white text-xs text-gray-500 hover:border-gray-400">{t("fulfilAnyDay")}</button>
+                  </div>
+                  <p className="text-xs text-gray-400 mt-1.5">{t("fulfilDaysHint")}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("availableFrom")}</label>
+                    <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                      value={catFulfil.from} onChange={e => setCatFulfil(f => ({ ...f, from: e.target.value }))} />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("availableUntil")}</label>
+                    <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                      value={catFulfil.to} onChange={e => setCatFulfil(f => ({ ...f, to: e.target.value }))} />
+                  </div>
+                </div>
+                <p className="text-xs text-gray-400">{t("fulfilTimeHint")}</p>
+              </div>
+            )}
           </div>
           {/* Optional header accent color (Fabrizio cmr80joh0) — highlights
               this category's header on the order page; empty = theme color. */}
@@ -2864,6 +3051,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
   const [modModal, setModModal] = useState<{ group?: ModifierGroup; menuItemId?: string } | null>(null);
   const [catModal, setCatModal] = useState<{ cat?: Category } | null>(null);
   const [pdfImportOpen, setPdfImportOpen] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   // Bulk-select state for the category list and the modifier-library
   // panel. selectMode flips on the checkboxes + bulk action bar; the
   // Set tracks which ids are picked. Wiping the menu before a re-
@@ -3302,6 +3490,11 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
             {dedupeRunning ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
             {t("fixDuplicates")}
           </button>
+          {/* Change history — audit of menu edits (Fabrizio 2026-07-08). */}
+          <button onClick={() => setHistoryOpen(true)}
+            className="flex items-center gap-2 bg-white border border-gray-300 text-gray-700 font-semibold px-3 py-2.5 rounded-xl hover:bg-gray-50 transition text-sm shadow-sm">
+            <Clock className="w-4 h-4" /> {t("changeLogTab")}
+          </button>
           <button onClick={() => setCatModal({})}
             className="flex items-center gap-2 bg-emerald-500 text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-emerald-600 transition text-sm shadow-sm">
             <Plus className="w-4 h-4" /> {t("addCategory")}
@@ -3505,6 +3698,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
       </div>
 
       {/* Modals */}
+      {historyOpen && <MenuHistoryModal onClose={() => setHistoryOpen(false)} />}
       {catModal !== null && (
         <CategoryModal cat={catModal.cat} onClose={() => setCatModal(null)} onSaved={() => { setCatModal(null); reload(); }} />
       )}

@@ -924,6 +924,17 @@ model MenuCategory {
   /// this flag, so an owner can either tag a whole category or sprinkle
   /// catering items into a regular category.
   isCatering       Boolean   @default(false)
+  /// CATEGORY-LEVEL FULFILMENT TIME (Fabrizio 2026-07-08). Mirrors the item
+  /// fields exactly — a whole category can be ORDERABLE only on given days/times
+  /// (e.g. a "Lunch Specials" section orderable Mon–Fri 11–15). The category
+  /// window ANDs with each item's own window (both must pass). Resolve ONLY via
+  /// src/lib/menu-fulfilment.ts (FulfilFields is structural, so a category row
+  /// flows through every helper unchanged). Nullable → no backfill; MenuCategory
+  /// is a small table so the columns are cheap.
+  fulfilDays       String?   // JSON [0..6] — null = any day
+  fulfilFrom       String?   // "HH:MM"
+  fulfilTo         String?   // "HH:MM"
+  fulfilWindows    Json?     // multi-window list; null = the legacy triple applies
   sortOrder        Int       @default(0)
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
@@ -936,6 +947,36 @@ model MenuCategory {
   @@index([restaurantId, isActive])
   @@index([menuId])
   @@index([restaurantId, rewardEarnExcluded])
+}
+
+/// Append-only audit log of owner edits in the menu editor (Fabrizio 2026-07-08).
+/// A dedicated SPARSE side-table (never nullable columns on the hot MenuItem /
+/// Order tables) so the owner can see what changed + when. Writes are
+/// fire-and-forget — a log failure must never break an edit.
+model MenuChangeLog {
+  id               String   @id @default(cuid())
+  restaurantId     String
+  /// Nullable — the acting user may later be deleted; email/name are snapshots.
+  actorUserId      String?
+  actorEmail       String
+  actorName        String?
+  /// The superadmin impersonation mode when the edit was made via impersonation
+  /// (null = the owner acted directly).
+  viaImpersonation String?
+  /// item | category | modifier_group | modifier_option | attachment
+  entityType       String
+  entityId         String?
+  /// Snapshot of the entity name so the log still reads after the row is gone.
+  entityName       String?
+  /// create | update | delete | duplicate | reorder | import
+  action           String
+  /// Human summary, e.g. "Updated \"Margherita\" (price, delivery-only)".
+  summary          String
+  /// Phase 2 (deferred): field-level [{field, before, after}] diff.
+  changes          Json?
+  createdAt        DateTime @default(now())
+
+  @@index([restaurantId, createdAt])
 }
 
 /// Background photo-import queue (Luigi/Fabrizio 2026-06-16). A GloriaFood

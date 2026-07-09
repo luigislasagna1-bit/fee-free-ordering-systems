@@ -97,6 +97,9 @@ interface Category extends VisibilityProps {
   /** Category-level service restriction (Fabrizio cmr803ovq) — mirrors the
    *  item flags; missing/undefined = unrestricted (legacy rows). */
   forPickup?: boolean; forDelivery?: boolean;
+  /** Category-level Fulfilment Time (Fabrizio 2026-07-08) — mirrors the item
+   *  fulfil fields; a whole category orderable only on given days/times. */
+  fulfilDays?: string | null; fulfilFrom?: string | null; fulfilTo?: string | null; fulfilWindows?: unknown;
   /** Optional header accent color overriding the theme color (cmr80joh0). */
   accentColor?: string | null;
   /** Pin this category to the top "Featured" strip (Fabrizio cmr80joh0). */
@@ -380,15 +383,37 @@ function CategoryBanner({ cat, theme, collapsible, collapsedNow, onToggleCollaps
         <h2 className="font-medium leading-tight truncate" style={{ color: overlayText, fontSize: "clamp(20px, 4.5vw, 24px)", letterSpacing: "-0.01em", textShadow: light ? "none" : "0 1px 12px rgba(0,0,0,0.5)" }}>{cat.name}</h2>
         {/* Dish-count pill (icon + number) — deliberately language-neutral so it
             needs no per-locale plural text. A fork/knife icon makes it read as
-            "N dishes" in any of the 38 locales. Luigi 2026-07-01. */}
-        {cat.menuItems.length > 0 && (
-          <span
-            className="inline-flex items-center gap-1 mt-1.5 text-[11px] font-semibold px-2 py-0.5 rounded-full leading-none"
-            style={{ backgroundColor: hasImage || !light ? "rgba(255,255,255,0.20)" : "rgba(0,0,0,0.10)", color: overlayText }}
-          >
-            <Utensils className="w-3 h-3" style={{ opacity: 0.85 }} aria-hidden />
-            {cat.menuItems.length}
-          </span>
+            "N dishes" in any of the 38 locales. Luigi 2026-07-01. Alongside it, a
+            service-restriction note when the WHOLE category is pickup/delivery
+            only (Fabrizio 2026-07-08) — flex-wrap so both flow on mobile. */}
+        {(cat.menuItems.length > 0 || (cat as any).__serviceNote) && (
+          <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+            {cat.menuItems.length > 0 && (
+              <span
+                className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full leading-none"
+                style={{ backgroundColor: hasImage || !light ? "rgba(255,255,255,0.20)" : "rgba(0,0,0,0.10)", color: overlayText }}
+              >
+                <Utensils className="w-3 h-3" style={{ opacity: 0.85 }} aria-hidden />
+                {cat.menuItems.length}
+              </span>
+            )}
+            {(cat as any).__serviceNote && (
+              <span
+                className="inline-flex items-center text-[11px] font-semibold px-2 py-0.5 rounded-full leading-none whitespace-nowrap"
+                style={{ backgroundColor: hasImage || !light ? "rgba(255,255,255,0.20)" : "rgba(0,0,0,0.10)", color: overlayText }}
+              >
+                {(cat as any).__serviceNote}
+              </span>
+            )}
+            {(cat as any).__fulfilNote && (
+              <span
+                className="inline-flex items-center text-[11px] font-semibold px-2 py-0.5 rounded-full leading-none"
+                style={{ backgroundColor: hasImage || !light ? "rgba(255,255,255,0.20)" : "rgba(0,0,0,0.10)", color: overlayText }}
+              >
+                {(cat as any).__fulfilNote}
+              </span>
+            )}
+          </div>
         )}
       </div>
     </div>
@@ -419,6 +444,19 @@ function PlainCategoryHeader({ cat, theme, styleKind, collapsible, collapsedNow,
   const mb = compact ? "mb-3" : "mb-4";
   // Per-category accent color overrides the theme color (Fabrizio cmr80joh0).
   const accent = (cat as any).accentColor || theme.primaryColor;
+  // Service-restriction note beside the category name when the WHOLE category is
+  // pickup/delivery only (Fabrizio 2026-07-08). Amber = the same "notice" style
+  // dish-level availability notes use. flex-shrink-0 + nowrap keeps it tidy.
+  const serviceNote = (cat as any).__serviceNote as string | undefined;
+  const notePill = serviceNote ? (
+    <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 flex-shrink-0 whitespace-nowrap">{serviceNote}</span>
+  ) : null;
+  // Fulfilment window note — rendered BELOW the header row (it can be long, so
+  // never inline beside the truncating name). Fabrizio 2026-07-08.
+  const fulfilNote = (cat as any).__fulfilNote as string | undefined;
+  const belowNote = fulfilNote ? (
+    <p className="text-[11px] font-semibold text-indigo-600 mt-1 px-1 leading-tight">{fulfilNote}</p>
+  ) : null;
   if (styleKind === "button") {
     return (
       <div className={`${mb} sticky top-0 py-2 z-10`} style={{ backgroundColor: theme.backgroundColor }}>
@@ -428,11 +466,13 @@ function PlainCategoryHeader({ cat, theme, styleKind, collapsible, collapsedNow,
           onClick={collapsible ? onToggleCollapse : undefined}
         >
           <h2 className={`${nameSize} font-bold flex-1 min-w-0 truncate`} style={{ color: theme.textColor }}>{cat.name}</h2>
+          {notePill}
           <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 flex-shrink-0">{count}</span>
           {collapsible ? (
             <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
           ) : trailing ?? null}
         </div>
+        {belowNote}
       </div>
     );
   }
@@ -445,6 +485,7 @@ function PlainCategoryHeader({ cat, theme, styleKind, collapsible, collapsedNow,
           onClick={collapsible ? onToggleCollapse : undefined}
         >
           <h2 className={`${nameSize} font-extrabold tracking-tight flex-1 min-w-0 truncate`} style={{ color: theme.textColor }}>{cat.name}</h2>
+          {notePill}
           <span className="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0" style={{ backgroundColor: `${accent}1A`, color: accent }}>{count}</span>
           {collapsible ? (
             <span className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${accent}1A` }}>
@@ -452,20 +493,25 @@ function PlainCategoryHeader({ cat, theme, styleKind, collapsible, collapsedNow,
             </span>
           ) : trailing ?? null}
         </div>
+        {belowNote}
       </div>
     );
   }
-  // "plain" — the classic header, unchanged.
+  // "plain" — the classic header (+ optional fulfilment note below).
   return (
+    <div className={mb}>
     <div
-      className={`flex items-center gap-3 ${mb} sticky top-0 py-2 z-10 ${collapsible ? "cursor-pointer select-none" : ""}`}
+      className={`flex items-center gap-3 sticky top-0 py-2 z-10 ${collapsible ? "cursor-pointer select-none" : ""}`}
       style={{ backgroundColor: theme.backgroundColor }}
       onClick={collapsible ? onToggleCollapse : undefined}
     >
-      <h2 className={`${nameSize} font-bold flex-1`} style={{ color: theme.textColor }}>{cat.name}</h2>
+      <h2 className={`${nameSize} font-bold flex-1 min-w-0 truncate`} style={{ color: theme.textColor }}>{cat.name}</h2>
+      {notePill}
       {collapsible ? (
         <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
       ) : trailing ?? null}
+    </div>
+      {belowNote}
     </div>
   );
 }
@@ -2145,6 +2191,19 @@ export function OrderingPageClient({
       const catGroups: ModGroup[] = (c.modifierGroups ?? []).filter((g: ModGroup) => !g.isHidden);
       return {
         ...c,
+        // Service note next to the CATEGORY name when the WHOLE category is
+        // restricted for the current order type (Fabrizio 2026-07-08). Only in
+        // "label" display mode — in "hide" mode the category is filtered above.
+        // Mirrors the per-dish note; reuses the same i18n keys (no new strings).
+        __serviceNote: (!catServiceOk(c) && showServiceLabel)
+          ? (orderType === "delivery" ? t("pickupOnlyLabel") : t("deliveryOnlyLabel"))
+          : undefined,
+        // Category-level Fulfilment Time window, e.g. "Available Tue · 12:00–15:00"
+        // (Fabrizio 2026-07-08). Reuses the item helpers + the availableOnlyLabel
+        // string; rendered BELOW the category name (it can be long).
+        __fulfilNote: hasFulfilWindow(c as unknown as MenuItem)
+          ? t("availableOnlyLabel", { window: itemFulfilWindow(c as unknown as MenuItem, hoursFmt) })
+          : undefined,
         menuItems: c.menuItems
           .filter(i =>
             isVisibleNow(i, visNow, restaurantTz) &&
@@ -2946,22 +3005,45 @@ export function OrderingPageClient({
   // orderable, starting no earlier than the other minimums (catering /
   // lead / closed) so the one forced slot satisfies all constraints. If
   // they're already orderable now, no extra minimum is added (ASAP is fine).
-  const cartFulfilItems = cart.map((ci) => ci.menuItem).filter(hasFulfilWindow);
+  // Each item's own fulfilment window PLUS its CATEGORY's window (Fabrizio
+  // 2026-07-08) — both constrain the schedulable slots (AND), so the forced
+  // scheduler only offers days/times the SERVER will accept. Categories are
+  // structurally fulfil-compatible (same fields + name); the fulfil helpers only
+  // read those, so they slot in as MenuItem-shaped for this computation.
+  const catFulfilById = new Map((restaurant.menuCategories as Category[]).map((c) => [c.id, c]));
+  const cartFulfilCats = Array.from(
+    new Set(cart.map((ci) => ci.menuItem.categoryId).filter((x): x is string => !!x)),
+  )
+    .map((cid) => catFulfilById.get(cid))
+    .filter((c): c is Category => !!c && hasFulfilWindow(c));
+  const cartFulfilItems = [
+    ...cart.map((ci) => ci.menuItem).filter(hasFulfilWindow),
+    ...(cartFulfilCats as unknown as MenuItem[]),
+  ];
   const cartHasFulfil = cartFulfilItems.length > 0;
+  // A cart LINE is time-constrained when its own item OR its category has a
+  // window (Fabrizio 2026-07-08). We name + offer to remove the actual DISHES
+  // (never a category "section") in every customer-facing heads-up/conflict,
+  // while cartFulfilItems (which includes categories) drives the scheduling math.
+  const cartFulfilDishes = cart
+    .map((ci) => ci.menuItem)
+    .filter((mi) => hasFulfilWindow(mi) || (!!mi.categoryId && !!catFulfilById.get(mi.categoryId) && hasFulfilWindow(catFulfilById.get(mi.categoryId)!)));
   // Distinct dish names of the time-restricted items in the cart — used to
   // NAME them in the "only available certain days/times" heads-up (cart +
-  // checkout), per reseller R4. Shown whenever a restricted item is in the
-  // cart, even when it's orderable right now (so the customer understands
-  // why the order time is constrained before they schedule).
-  const fulfilItemNames = Array.from(new Set(cartFulfilItems.map((i) => i.name)));
-  // Two restricted items whose windows can't overlap can't be made for one order
-  // (e.g. Monday-only + Tuesday-only). Detect that and prompt to drop one rather
-  // than dead-end at checkout. Only scans when 2+ restricted items are present.
-  const fulfilConflictItems =
-    cartFulfilItems.length >= 2 ? conflictingFulfilItems(cartFulfilItems, new Date(), restaurantTz) : [];
-  const hasFulfilConflict = fulfilConflictItems.length >= 2;
-  const removeConflictItem = (menuItemId: string) =>
-    setCart((prev) => prev.filter((ci) => ci.menuItem.id !== menuItemId));
+  // checkout), per reseller R4. Dish names only (never a section name).
+  const fulfilItemNames = Array.from(new Set(cartFulfilDishes.map((i) => i.name)));
+  // Two restricted things whose windows can't overlap can't be made for one order
+  // (e.g. Monday-only + Tuesday-only). Detect that (across item AND category
+  // windows) and prompt to drop a dish rather than dead-end at checkout.
+  const hasFulfilConflict =
+    cartFulfilItems.length >= 2 && conflictingFulfilItems(cartFulfilItems, new Date(), restaurantTz).length >= 2;
+  // The DISHES the customer can remove to resolve the conflict (real ids, so the
+  // Remove button works — a category entry has no cart line to filter).
+  const fulfilConflictItems = hasFulfilConflict ? cartFulfilDishes : [];
+  // Remove by dish id; also purge a whole category's dishes if a category id is
+  // ever passed (defensive — cuid ids never collide). Review fix 2026-07-08.
+  const removeConflictItem = (id: string) =>
+    setCart((prev) => prev.filter((ci) => ci.menuItem.id !== id && ci.menuItem.categoryId !== id));
   // Empty the whole cart in one tap (Luigi 2026-06-30) — available in the cart
   // drawer + at checkout so you don't have to remove items one by one. Confirm
   // first so nobody nukes an order by accident; also drop the persisted copy.
@@ -2987,7 +3069,9 @@ export function OrderingPageClient({
   // the conflict prompt above; `reservationMoment` is null outside reservation
   // mode so this is inert for normal/ASAP/order-ahead orders. Luigi 2026-06-16.
   const reservationCartConflictItems = reservationMoment
-    ? cartFulfilItems.filter((mi) => !isFulfilableAt(mi, reservationMoment, restaurantTz))
+    ? cartFulfilDishes.filter((mi) =>
+        !isFulfilableAt(mi, reservationMoment, restaurantTz) ||
+        (!!mi.categoryId && !!catFulfilById.get(mi.categoryId) && !isFulfilableAt(catFulfilById.get(mi.categoryId)!, reservationMoment, restaurantTz)))
     : [];
   const hasReservationCartConflict = reservationCartConflictItems.length > 0;
   useEffect(() => {

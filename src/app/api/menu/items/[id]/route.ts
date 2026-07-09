@@ -7,6 +7,7 @@ import { blockIfInheritingMenu } from "@/lib/brand";
 import { hasFeature } from "@/lib/entitlements";
 import { buildVisibilityData } from "@/lib/menu-visibility";
 import { buildFulfilData } from "@/lib/menu-fulfilment";
+import { logMenuChange } from "@/lib/menu-change-log";
 
 async function getRestaurantId() {
   const user = await getSessionUser();
@@ -165,6 +166,15 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       await syncPizzaConfigAttachments(id, restaurantId, pizzaConfig, priorPizzaConfig);
     }
 
+    // Audit log is best-effort — its own guard so a name-snapshot / session read
+    // can never turn a committed update into a 500 (review fix).
+    try {
+      const u = await getSessionUser();
+      if (u) {
+        const nm = (await prisma.menuItem.findFirst({ where: { id, restaurantId }, select: { name: true } }))?.name ?? null;
+        await logMenuChange({ user: u, restaurantId, entityType: "item", entityId: id, entityName: nm, action: "update", summary: `Updated "${nm ?? id}"` });
+      }
+    } catch (logErr) { console.error("[menu update log]", logErr); }
     return NextResponse.json({ success: true });
   } catch (e: any) {
     console.error("[PATCH /api/menu/items/:id]", e);
@@ -202,7 +212,14 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
         );
       }
     }
+    // Snapshot the name BEFORE deleting so the log still reads afterward.
+    const gone = await prisma.menuItem.findFirst({ where: { id, restaurantId }, select: { name: true } });
     await prisma.menuItem.deleteMany({ where: { id, restaurantId } });
+    // Best-effort audit — its own guard so it can never 500 a committed delete.
+    try {
+      const u = await getSessionUser();
+      if (u) await logMenuChange({ user: u, restaurantId, entityType: "item", entityId: id, entityName: gone?.name ?? null, action: "delete", summary: `Deleted "${gone?.name ?? id}"` });
+    } catch (logErr) { console.error("[menu delete log]", logErr); }
     return NextResponse.json({ success: true });
   } catch (e: any) {
     console.error("[DELETE /api/menu/items/:id]", e);
