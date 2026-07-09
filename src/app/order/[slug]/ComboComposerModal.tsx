@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import { X, Check, Plus, Trash2 } from "lucide-react";
+import { X, Check, Plus, Trash2, Pencil } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PizzaBuilder, parsePizzaConfig, pizzaCustomizationToModifiers, type PizzaCustomization } from "./PizzaBuilder";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
@@ -108,9 +108,17 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
     }
     return seeded;
   });
-  const [pizzaFor, setPizzaFor] = useState<{ slotId: string; item: AnyItem; upcharge: number } | null>(null);
+  const [pizzaFor, setPizzaFor] = useState<{
+    slotId: string; item: AnyItem; upcharge: number;
+    /** In-place pick edit (Luigi 2026-07-09): the key of the pick being edited
+     *  (save REPLACES it) + the build to seed the pizza builder with. */
+    editKey?: string; initial?: { variantId: string | null; customization: PizzaCustomization };
+  } | null>(null);
   // Full customizer (size + modifiers) for a non-pizza item.
-  const [customizeFor, setCustomizeFor] = useState<{ slotId: string; item: AnyItem; allowedVariants: AnyItem[] } | null>(null);
+  const [customizeFor, setCustomizeFor] = useState<{
+    slotId: string; item: AnyItem; allowedVariants: AnyItem[];
+    editKey?: string; initial?: { variantId?: string; modifiers?: ComboCartChild["modifiers"] };
+  } | null>(null);
 
   if (!config) return null;
 
@@ -135,6 +143,35 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
     });
   const removePick = (slotId: string, key: string) =>
     setPicks((p) => ({ ...p, [slotId]: (p[slotId] ?? []).filter((x) => x.key !== key) }));
+  // In-place edit: swap the pick at `key` for the adjusted one, keeping its
+  // position (and key — uniqueness is all that matters). Luigi 2026-07-09.
+  const replacePick = (slotId: string, key: string, next: Omit<Pick, "key">) =>
+    setPicks((p) => ({ ...p, [slotId]: (p[slotId] ?? []).map((x) => (x.key === key ? { ...next, key } : x)) }));
+
+  // Tap a picked chip → reopen its builder/customizer seeded with the current
+  // build; saving replaces the pick in place. Plain items (no sizes, no
+  // modifiers) have nothing to adjust → no-op. Luigi 2026-07-09.
+  const editPick = (slotId: string, p: Pick) => {
+    const si = config.slots.findIndex((s) => s.id === slotId);
+    const item =
+      (slotPools[si] ?? []).find((i: AnyItem) => i.id === p.menuItemId) ??
+      allItems.find((i) => i.id === p.menuItemId);
+    if (!item) return;
+    const slot = slotById(slotId);
+    if (parsePizzaConfig(item.pizzaConfig)) {
+      setPizzaFor({
+        slotId, item,
+        upcharge: p.upcharge ?? comboUpchargeFor(slot, item.id),
+        editKey: p.key,
+        initial: p.pizzaCustomization ? { variantId: p.variantId ?? null, customization: p.pizzaCustomization } : undefined,
+      });
+      return;
+    }
+    const allowed = allowedVariantsFor(slotId, item);
+    if (needsCustomizer(item, allowed)) {
+      setCustomizeFor({ slotId, item, allowedVariants: allowed, editKey: p.key, initial: { variantId: p.variantId, modifiers: p.modifiers } });
+    }
+  };
 
   const choose = (slotId: string, item: AnyItem) => {
     // Sold-out items are display-disabled; never open the builder / add a pick
@@ -208,8 +245,17 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
                     {cur.map((p) => {
                       const extra = (p.upcharge ?? 0) + (p.extrasFee ?? 0);
                       return (
-                        <span key={p.key} className="inline-flex items-center gap-1.5 bg-gray-100 rounded-full pl-3 pr-1.5 py-1 text-sm">
-                          {p.name}{p.variantName ? ` (${p.variantName})` : ""}{p.pizzaCustomization || (p.modifiers && p.modifiers.length) ? " ⭐" : ""}{extra > 0 ? ` (+${fmt(extra)})` : ""}
+                        <span key={p.key} className="inline-flex items-center gap-1.5 bg-gray-100 rounded-full pl-1.5 pr-1.5 py-1 text-sm">
+                          {/* Tap the pick to adjust it in place (reopens its
+                              builder/customizer pre-filled). Luigi 2026-07-09. */}
+                          <button
+                            onClick={() => editPick(slot.id, p)}
+                            className="inline-flex items-center gap-1 pl-1.5 rounded-full hover:bg-gray-200 text-left"
+                            title={t("customizable")}
+                          >
+                            <Pencil className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                            <span>{p.name}{p.variantName ? ` (${p.variantName})` : ""}{p.pizzaCustomization || (p.modifiers && p.modifiers.length) ? " ⭐" : ""}{extra > 0 ? ` (+${fmt(extra)})` : ""}</span>
+                          </button>
                           <button onClick={() => removePick(slot.id, p.key)} className="p-0.5 text-gray-400 hover:text-red-500"><Trash2 className="w-3.5 h-3.5" /></button>
                         </span>
                       );
@@ -289,6 +335,10 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
             primaryColor={primaryColor}
             /* One note per combo (added below), not per pizza slot. */
             allowItemNotes={false}
+            /* Editing an existing pick → open pre-filled with its build. */
+            initial={pizzaFor.initial
+              ? { variantId: pizzaFor.initial.variantId, customization: pizzaFor.initial.customization, quantity: 1, notes: "" }
+              : undefined}
             onClose={() => setPizzaFor(null)}
             onAdd={(result) => {
               // Pizza extra toppings are an "extra": charged only when the combo
@@ -297,15 +347,19 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
               const basePrice = result.variant?.price ?? pizzaFor.item.price ?? 0;
               const qty = result.quantity || 1;
               const extrasUnit = Math.max(0, Math.round(((result.lineTotal / qty) - basePrice) * 100) / 100);
-              addPick(pizzaFor.slotId, {
-                key: `${pizzaFor.item.id}-${result.variant?.id ?? ""}-${(picks[pizzaFor.slotId]?.length ?? 0)}`,
+              const next = {
                 menuItemId: pizzaFor.item.id, name: pizzaFor.item.name,
                 variantId: result.variant?.id, variantName: result.variant?.name,
                 modifiers: pizzaCustomizationToModifiers(result.customization, pizzaFor.item.modifierGroups ?? []),
                 pizzaCustomization: result.customization,
                 upcharge: pizzaFor.upcharge,
                 extrasFee: extrasCharge ? extrasUnit : 0,
-              });
+              };
+              if (pizzaFor.editKey) {
+                replacePick(pizzaFor.slotId, pizzaFor.editKey, next); // in-place edit
+              } else {
+                addPick(pizzaFor.slotId, { key: `${pizzaFor.item.id}-${result.variant?.id ?? ""}-${(picks[pizzaFor.slotId]?.length ?? 0)}`, ...next });
+              }
               setPizzaFor(null);
             }}
           />
@@ -320,8 +374,19 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
           fmt={fmt}
           extrasCharge={extrasCharge}
           upchargeFor={(variantId) => comboUpchargeFor(slotById(customizeFor.slotId), customizeFor.item.id, variantId)}
+          initial={customizeFor.initial}
           onClose={() => setCustomizeFor(null)}
           onConfirm={(pick) => {
+            if (customizeFor.editKey) {
+              // In-place edit — swap the pick, keep its position.
+              replacePick(customizeFor.slotId, customizeFor.editKey, {
+                menuItemId: customizeFor.item.id, name: customizeFor.item.name,
+                ...pick,
+                upcharge: pick.upcharge ?? 0,
+              });
+              setCustomizeFor(null);
+              return;
+            }
             addPick(customizeFor.slotId, {
               key: `${customizeFor.item.id}-${pick.variantId ?? ""}-${(picks[customizeFor.slotId]?.length ?? 0)}`,
               menuItemId: customizeFor.item.id, name: customizeFor.item.name,
@@ -339,7 +404,7 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
 /** Size + modifier customizer for a non-pizza combo child — the same walk-through
  *  a regular item gets, scoped to the combo's pricing rules. */
 function ChildCustomizer({
-  item, allowedVariants, primaryColor, fmt, extrasCharge, upchargeFor, onConfirm, onClose,
+  item, allowedVariants, primaryColor, fmt, extrasCharge, upchargeFor, onConfirm, onClose, initial,
 }: {
   item: AnyItem;
   allowedVariants: AnyItem[];
@@ -349,16 +414,39 @@ function ChildCustomizer({
   upchargeFor: (variantId?: string | null) => number;
   onConfirm: (pick: Partial<ComboCartChild>) => void;
   onClose: () => void;
+  /** In-place pick edit: the pick's current size + flat modifier list to seed
+   *  the customizer with (instead of the group defaults). Luigi 2026-07-09. */
+  initial?: { variantId?: string; modifiers?: ComboCartChild["modifiers"] };
 }) {
   const t = useTranslations("customer.combo");
   const tc = useTranslations("ordering");
   const groups: AnyItem[] = (Array.isArray(item.modifierGroups) ? item.modifierGroups : []).filter((g: AnyItem) => !g.isHidden);
   const hasSizeChoice = allowedVariants.length > 1;
 
+  // Half/half detection is needed by the seed initializers below, so it's
+  // declared first. Only single-select groups flagged "Can be Half/Half" qualify.
+  const isHalfGroup = (g: AnyItem) => g.supportsHalfHalf === true && g.maxSelect === 1;
+  // A half-line's name is "(<localized side>) <option>", built by buildMods below.
+  const leftPrefix = `(${t("leftHalf")})`;
+  const rightPrefix = `(${t("rightHalf")})`;
+
   const [variant, setVariant] = useState<AnyItem | null>(
-    allowedVariants.length >= 1 ? allowedVariants[0] : null,
+    (initial?.variantId ? allowedVariants.find((v) => v.id === initial.variantId) : undefined) ??
+      (allowedVariants.length >= 1 ? allowedVariants[0] : null),
   );
   const [mods, setMods] = useState<Record<string, string[]>>(() => {
+    // Re-edit: seed from the pick's stored flat modifier list (by option id);
+    // half-line entries are handled by the `half` state below, not here.
+    if (initial?.modifiers?.length) {
+      const seeded: Record<string, string[]> = {};
+      for (const g of groups) {
+        const ids = initial.modifiers
+          .filter((m) => m.modifierOptionId && !m.name.startsWith("(") && g.options.some((o: AnyItem) => o.id === m.modifierOptionId))
+          .map((m) => m.modifierOptionId as string);
+        if (ids.length) seeded[g.id] = ids.slice(0, g.maxSelect || 99);
+      }
+      return seeded;
+    }
     const def: Record<string, string[]> = {};
     for (const g of groups) {
       const defs = g.options.filter((o: AnyItem) => o.isDefault && o.isAvailable).map((o: AnyItem) => o.id);
@@ -368,10 +456,22 @@ function ChildCustomizer({
   });
 
   // Half/half state per eligible group: pick a different option for each half
-  // (e.g. half BBQ wings, half Hot). Only single-select groups flagged
-  // "Can be Half/Half" qualify.
-  const isHalfGroup = (g: AnyItem) => g.supportsHalfHalf === true && g.maxSelect === 1;
-  const [half, setHalf] = useState<Record<string, { on: boolean; left?: string; right?: string }>>({});
+  // (e.g. half BBQ wings, half Hot). Seeded from the pick's "(Left/Right half)"
+  // lines on re-edit (labels are locale-local; a locale switch since the pick
+  // was made simply drops the half seed — the customer re-picks).
+  const [half, setHalf] = useState<Record<string, { on: boolean; left?: string; right?: string }>>(() => {
+    const seeded: Record<string, { on: boolean; left?: string; right?: string }> = {};
+    if (initial?.modifiers?.length) {
+      for (const g of groups) {
+        if (!isHalfGroup(g)) continue;
+        const inGroup = initial.modifiers.filter((m) => m.modifierOptionId && g.options.some((o: AnyItem) => o.id === m.modifierOptionId));
+        const left = inGroup.find((m) => m.name.startsWith(leftPrefix))?.modifierOptionId;
+        const right = inGroup.find((m) => m.name.startsWith(rightPrefix))?.modifierOptionId;
+        if (left || right) seeded[g.id] = { on: true, left, right };
+      }
+    }
+    return seeded;
+  });
 
   const toggleMod = (g: AnyItem, optId: string) => {
     setMods((prev) => {
