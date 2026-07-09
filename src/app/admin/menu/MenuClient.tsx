@@ -7,7 +7,7 @@ import {
   Edit2, Trash2, Copy, CopyPlus, X, Check, AlertCircle, Tag, Layers,
   Image as ImageIcon, Clock, Truck, ShoppingBag, UtensilsCrossed,
   Settings, ChevronUp, MoreVertical, Upload, FileText, Loader2,
-  PartyPopper, Download, Search, Star, PiggyBank,
+  PartyPopper, Download, Search, Star, PiggyBank, ListPlus,
 } from "lucide-react";
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, useSortable, verticalListSortingStrategy, rectSortingStrategy, arrayMove } from "@dnd-kit/sortable";
@@ -2278,7 +2278,7 @@ function SortableCategoryBlock({
 // ─── Right Panel: Modifier Library ───────────────────────────────────────────
 
 function ModifierLibraryPanel({
-  groups, onAddGroup, onEditGroup, onDeleteGroup, onDuplicateGroup,
+  groups, onAddGroup, onEditGroup, onDeleteGroup, onDuplicateGroup, onBulkAttach,
   selectMode, selectedIds, onToggleSelect, onSetSelectMode, onSetSelectedIds, onBulkDelete,
 }: {
   groups: ModifierGroup[];
@@ -2286,6 +2286,8 @@ function ModifierLibraryPanel({
   onEditGroup: (g: ModifierGroup) => void;
   onDeleteGroup: (id: string) => void;
   onDuplicateGroup: (id: string) => void;
+  /** Attach this group to MANY items at once (checklist modal). Luigi 2026-07-09. */
+  onBulkAttach: (g: ModifierGroup) => void;
   selectMode: boolean;
   selectedIds: Set<string>;
   onToggleSelect: (id: string) => void;
@@ -2499,6 +2501,9 @@ function ModifierLibraryPanel({
                 <button onClick={e => { e.stopPropagation(); onDuplicateGroup(g.id); }} title={t("duplicateGroup")} className="p-1 text-gray-400 hover:text-emerald-600 rounded">
                   <CopyPlus className="w-3.5 h-3.5" />
                 </button>
+                <button onClick={e => { e.stopPropagation(); onBulkAttach(g); }} title={t("bulkAttachTooltip")} className="p-1 text-gray-400 hover:text-emerald-600 rounded">
+                  <ListPlus className="w-3.5 h-3.5" />
+                </button>
                 <button onClick={e => { e.stopPropagation(); onDeleteGroup(g.id); }} className="p-1 text-gray-400 hover:text-red-500 rounded">
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
@@ -2518,6 +2523,133 @@ function ModifierLibraryPanel({
           </div>
           );
         })}
+      </div>
+    </div>
+  );
+}
+
+// ─── Bulk-attach modal (Luigi 2026-07-09) ─────────────────────────────────────
+// Attach ONE library modifier group to MANY items in one shot — a checklist of
+// the whole menu with per-category select-all + search, instead of dragging the
+// group onto items one by one. Items that already carry the group (directly or
+// inherited from their category) are shown checked-disabled.
+function BulkAttachModal({ group, categories, onClose, onDone }: {
+  group: ModifierGroup;
+  categories: Category[];
+  onClose: () => void;
+  onDone: () => void;
+}) {
+  const t = useTranslations("admin.menuEditor");
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [query, setQuery] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  // Items that already carry this group — a copy on the item itself, or one
+  // inherited from the item's category.
+  const alreadyAttached = new Set<string>();
+  for (const c of categories) {
+    const viaCat = (c.modifierGroups ?? []).some(g => g.libraryGroupId === group.id || g.id === group.id);
+    for (const it of c.menuItems) {
+      if (viaCat || (it.modifierGroups ?? []).some(g => g.libraryGroupId === group.id)) alreadyAttached.add(it.id);
+    }
+  }
+
+  const q = query.trim().toLowerCase();
+  const visibleCats = categories
+    .map(c => ({
+      ...c,
+      menuItems: c.menuItems.filter(i => !q || i.name.toLowerCase().includes(q) || c.name.toLowerCase().includes(q)),
+    }))
+    .filter(c => c.menuItems.length > 0);
+
+  const toggleItem = (id: string) =>
+    setSelected(prev => { const n = new Set(prev); if (n.has(id)) n.delete(id); else n.add(id); return n; });
+  const toggleCategory = (c: Category) => {
+    const ids = c.menuItems.filter(i => !alreadyAttached.has(i.id)).map(i => i.id);
+    const allOn = ids.length > 0 && ids.every(id => selected.has(id));
+    setSelected(prev => {
+      const n = new Set(prev);
+      for (const id of ids) { if (allOn) n.delete(id); else n.add(id); }
+      return n;
+    });
+  };
+
+  const attach = async () => {
+    if (selected.size === 0 || saving) return;
+    setSaving(true);
+    try {
+      const res = await fetch("/api/menu/modifiers/attach-bulk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ libraryGroupId: group.id, menuItemIds: Array.from(selected) }),
+      });
+      if (!res.ok) throw new Error("Failed");
+      const data = await res.json();
+      toast.success(t("bulkAttachSuccess", { count: data.attached ?? selected.size }));
+      onDone();
+    } catch {
+      toast.error(t("modifierGroupSaveFailed"));
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[85vh] flex flex-col" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between p-5 border-b flex-shrink-0">
+          <h2 className="text-lg font-bold flex items-center gap-2 min-w-0">
+            <ListPlus className="w-5 h-5 flex-shrink-0" />
+            <span className="truncate">{t("bulkAttachTitle", { name: group.name })}</span>
+          </h2>
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg flex-shrink-0"><X className="w-5 h-5" /></button>
+        </div>
+        <div className="p-4 border-b flex-shrink-0">
+          <div className="relative">
+            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <input
+              className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              placeholder={t("searchCategoriesItems")}
+              value={query} onChange={e => setQuery(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {visibleCats.map(c => {
+            const selectableIds = c.menuItems.filter(i => !alreadyAttached.has(i.id)).map(i => i.id);
+            const allOn = selectableIds.length > 0 && selectableIds.every(id => selected.has(id));
+            return (
+              <div key={c.id}>
+                <label className="flex items-center gap-2 text-sm font-semibold text-gray-800 cursor-pointer mb-1.5">
+                  <input type="checkbox" checked={allOn} disabled={selectableIds.length === 0}
+                    onChange={() => toggleCategory(c)}
+                    className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500" />
+                  {c.name}
+                </label>
+                <div className="space-y-1 pl-6">
+                  {c.menuItems.map(i => {
+                    const done = alreadyAttached.has(i.id);
+                    return (
+                      <label key={i.id} className={`flex items-center gap-2 text-sm ${done ? "text-gray-400" : "text-gray-700 cursor-pointer"}`}>
+                        <input type="checkbox" checked={done || selected.has(i.id)} disabled={done}
+                          onChange={() => toggleItem(i.id)}
+                          className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 disabled:opacity-50" />
+                        <span className="min-w-0 truncate">{i.name}</span>
+                        {done && <span className="text-[10px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded flex-shrink-0">{t("bulkAttachAlready")}</span>}
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="flex justify-end gap-3 p-5 border-t bg-gray-50 rounded-b-2xl flex-shrink-0">
+          <button onClick={onClose} className="px-4 py-2 text-sm text-gray-600">{t("cancel")}</button>
+          <button onClick={attach} disabled={selected.size === 0 || saving}
+            className="px-6 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50">
+            {saving ? t("saving") : t("bulkAttachCta", { count: selected.size })}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -3167,6 +3299,8 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
   const [copyModal, setCopyModal] = useState<{ source: MenuItem } | null>(null);
   const [modModal, setModModal] = useState<{ group?: ModifierGroup; menuItemId?: string } | null>(null);
   const [catModal, setCatModal] = useState<{ cat?: Category } | null>(null);
+  // Bulk-attach a library group to many items at once (Luigi 2026-07-09).
+  const [bulkAttachGroup, setBulkAttachGroup] = useState<ModifierGroup | null>(null);
   const [pdfImportOpen, setPdfImportOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   // Bulk-select state for the category list and the modifier-library
@@ -3799,6 +3933,7 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
           onEditGroup={g => setModModal({ group: g })}
           onDeleteGroup={deleteModGroup}
           onDuplicateGroup={duplicateModGroup}
+          onBulkAttach={g => setBulkAttachGroup(g)}
           selectMode={modGroupSelectMode}
           selectedIds={selectedModGroupIds}
           onToggleSelect={id => {
@@ -3816,6 +3951,14 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
 
       {/* Modals */}
       {historyOpen && <MenuHistoryModal onClose={() => setHistoryOpen(false)} />}
+      {bulkAttachGroup && (
+        <BulkAttachModal
+          group={bulkAttachGroup}
+          categories={categories}
+          onClose={() => setBulkAttachGroup(null)}
+          onDone={() => { setBulkAttachGroup(null); reload(); }}
+        />
+      )}
       {catModal !== null && (
         <CategoryModal cat={catModal.cat} onClose={() => setCatModal(null)} onSaved={() => { setCatModal(null); reload(); }} />
       )}
