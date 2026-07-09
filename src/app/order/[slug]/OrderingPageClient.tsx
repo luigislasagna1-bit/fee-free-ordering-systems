@@ -1304,6 +1304,10 @@ export function OrderingPageClient({
   // Promo IDs the customer manually removed (X) from the cart, so a different
   // non-stackable deal can take over. Sent to apply-promos + order placement.
   const [suppressedPromoIds, setSuppressedPromoIds] = useState<string[]>([]);
+  // Pending "switch off the exclusive bundle to use this deal" confirmation —
+  // set when the customer taps "Use this instead" on a promo blocked by a
+  // committed exclusive bundle; the modal confirms before discarding the bundle.
+  const [pendingBundleSwitch, setPendingBundleSwitch] = useState<{ targetId: string; targetName: string; bundleName: string } | null>(null);
 
   // Remove an applied promo from the cart (X button). Suppressing it re-runs the
   // engine so the next-best deal can take over. Luigi 2026-06-07.
@@ -1316,6 +1320,21 @@ export function OrderingPageClient({
   // eligible exclusive (the applied winner + the blocked exclusives) and
   // suppress all of them except the target.
   const useThisPromoInstead = (targetId: string) => {
+    // The target is a deal BLOCKED by a committed EXCLUSIVE bundle — a pre-priced
+    // cart line, not a promo the engine can suppress. Switching to the target
+    // therefore means REMOVING that bundle so the target can apply (you can't
+    // "suppress" a bundle like a promo). Without this, toSuppress stayed empty and
+    // the "Use this instead" button did nothing. Luigi 2026-07-09 (Fabrizio).
+    const targetIsBlocked = blockedPromos.some((b) => b.promoId === targetId);
+    const committedExclusiveBundles = cart.filter((ci) => ci.isBundle && ci.bundleStackingRule === "exclusive");
+    if (targetIsBlocked && committedExclusiveBundles.length > 0) {
+      // Removing the bundle discards the items the customer built into it, so
+      // CONFIRM first ("Remove {bundle} to use {promo}?") — Luigi 2026-07-09.
+      const targetName = blockedPromos.find((b) => b.promoId === targetId)?.name ?? "";
+      const bundleName = committedExclusiveBundles[0].bundlePromoName ?? committedExclusiveBundles[0].menuItem.name;
+      setPendingBundleSwitch({ targetId, targetName, bundleName });
+      return;
+    }
     const toSuppress = new Set<string>();
     // Every APPLIED promo that clashes with the target: applied Standards clash
     // with an Exclusive target; an applied Exclusive clashes with anything.
@@ -1334,6 +1353,15 @@ export function OrderingPageClient({
     }
     if (toSuppress.size === 0) return;
     setSuppressedPromoIds((prev) => [...new Set([...prev, ...toSuppress])]);
+  };
+
+  // Confirmed: drop the committed exclusive bundle(s) so the chosen deal applies.
+  const confirmBundleSwitch = () => {
+    if (!pendingBundleSwitch) return;
+    const { targetName } = pendingBundleSwitch;
+    setCart((prev) => prev.filter((ci) => !(ci.isBundle && ci.bundleStackingRule === "exclusive")));
+    toast.success(tT("switchedFromBundle", { name: targetName }));
+    setPendingBundleSwitch(null);
   };
 
   // Re-add a previously removed promo (un-suppress) — e.g. tapping its banner.
@@ -6139,6 +6167,33 @@ export function OrderingPageClient({
           onAddCombo={addComboToCart}
           onClose={() => setComboItem(null)}
         />
+      )}
+
+      {/* ── Switch-off-bundle confirmation ────────────────────────────── */}
+      {pendingBundleSwitch && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4" onClick={() => setPendingBundleSwitch(null)}>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-5" onClick={(e) => e.stopPropagation()}>
+            <p className="text-gray-900 font-medium mb-1">{t("switchRemoveBundleTitle")}</p>
+            <p className="text-sm text-gray-600 mb-4">
+              {t("switchRemoveBundleBody", { bundle: pendingBundleSwitch.bundleName, promo: pendingBundleSwitch.targetName })}
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setPendingBundleSwitch(null)}
+                className="flex-1 py-2.5 rounded-xl border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition"
+              >
+                {t("cancel")}
+              </button>
+              <button
+                onClick={confirmBundleSwitch}
+                className="flex-1 py-2.5 rounded-xl text-white font-semibold transition"
+                style={{ backgroundColor: theme.primaryColor }}
+              >
+                {t("remove")}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* ── Checkout modal ────────────────────────────────────────────── */}
