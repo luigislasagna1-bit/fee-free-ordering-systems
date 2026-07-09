@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "已附加",
       "bulkAttachCta": "附加到 {count, plural, other {# 个商品}}",
       "bulkAttachSuccess": "已附加到 {count, plural, other {# 个商品}}",
+      "presetGarnishesTitle": "预设点缀",
+      "presetGarnishesHint": "选择这款披萨自带的点缀（例如顶部的新鲜罗勒）。顾客仍可自行添加或移除。",
       "addGroup": "添加分组",
       "save": "保存",
       "inheritedFromCategory": "继承自分类",

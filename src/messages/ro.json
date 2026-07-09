@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Atașat",
       "bulkAttachCta": "Atașează la {count, plural, one {# articol} few {# articole} other {# de articole}}",
       "bulkAttachSuccess": "Atașat la {count, plural, one {# articol} few {# articole} other {# de articole}}",
+      "presetGarnishesTitle": "Presetează decorurile",
+      "presetGarnishesHint": "Alege decorurile cu care vine această pizza (de ex. busuioc proaspăt deasupra). Clienții le pot adăuga sau elimina în continuare.",
       "addGroup": "Adaugă grup",
       "save": "Salvează",
       "inheritedFromCategory": "Moștenit din categorie",

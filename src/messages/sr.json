@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Povezano",
       "bulkAttachCta": "Poveži {count, plural, one {sa # stavkom} few {sa # stavke} other {sa # stavki}}",
       "bulkAttachSuccess": "Povezano {count, plural, one {sa # stavkom} few {sa # stavke} other {sa # stavki}}",
+      "presetGarnishesTitle": "Unapred odaberite ukrase",
+      "presetGarnishesHint": "Odaberite ukrase sa kojima ova pica dolazi (npr. svež bosiljak na vrhu). Kupci i dalje mogu da ih dodaju ili uklone.",
       "addGroup": "Dodaj grupu",
       "save": "Sačuvaj",
       "inheritedFromCategory": "Nasleđeno iz kategorije",

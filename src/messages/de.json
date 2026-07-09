@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Angehängt",
       "bulkAttachCta": "An {count, plural, one {# Artikel} other {# Artikel}} anhängen",
       "bulkAttachSuccess": "An {count, plural, one {# Artikel} other {# Artikel}} angehängt",
+      "presetGarnishesTitle": "Garnituren vorauswählen",
+      "presetGarnishesHint": "Wähle die Garnituren, mit denen diese Pizza serviert wird (z. B. frisches Basilikum obendrauf). Kunden können sie weiterhin hinzufügen oder entfernen.",
       "addGroup": "Gruppe hinzufügen",
       "save": "Speichern",
       "inheritedFromCategory": "Von Kategorie geerbt",

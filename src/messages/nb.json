@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Tilknyttet",
       "bulkAttachCta": "Knytt til {count, plural, one {# vare} other {# varer}}",
       "bulkAttachSuccess": "Knyttet til {count, plural, one {# vare} other {# varer}}",
+      "presetGarnishesTitle": "Forhåndsvelg garnityr",
+      "presetGarnishesHint": "Velg garnityret denne pizzaen kommer med (f.eks. fersk basilikum på toppen). Kundene kan fortsatt legge til eller fjerne det.",
       "addGroup": "Legg til gruppe",
       "save": "Lagre",
       "inheritedFromCategory": "Arvet fra kategori",

@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Bifogad",
       "bulkAttachCta": "Bifoga till {count, plural, one {# artikel} other {# artiklar}}",
       "bulkAttachSuccess": "Bifogad till {count, plural, one {# artikel} other {# artiklar}}",
+      "presetGarnishesTitle": "Förvälj garneringar",
+      "presetGarnishesHint": "Välj de garneringar som denna pizza serveras med (t.ex. färsk basilika på toppen). Kunderna kan fortfarande lägga till eller ta bort dem.",
       "addGroup": "Lägg till grupp",
       "save": "Spara",
       "inheritedFromCategory": "Ärvd från kategori",

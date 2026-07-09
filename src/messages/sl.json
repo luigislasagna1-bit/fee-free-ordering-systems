@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Priloženo",
       "bulkAttachCta": "Priloži {count, plural, one {# artiklu} two {# artikloma} few {# artiklom} other {# artiklom}}",
       "bulkAttachSuccess": "Priloženo {count, plural, one {# artiklu} two {# artikloma} few {# artiklom} other {# artiklom}}",
+      "presetGarnishesTitle": "Vnaprej nastavite okrase",
+      "presetGarnishesHint": "Izberite okrase, s katerimi je ta pica postrežena (npr. sveža bazilika na vrhu). Stranke jih še vedno lahko dodajo ali odstranijo.",
       "addGroup": "Dodaj skupino",
       "save": "Shrani",
       "inheritedFromCategory": "Podedovano iz kategorije",

@@ -1854,6 +1854,8 @@
       "bulkAttachAlready": "Dołączono",
       "bulkAttachCta": "Dołącz do {count, plural, one {# pozycji} few {# pozycji} many {# pozycji} other {# pozycji}}",
       "bulkAttachSuccess": "Dołączono do {count, plural, one {# pozycji} few {# pozycji} many {# pozycji} other {# pozycji}}",
+      "presetGarnishesTitle": "Wstępnie ustaw przybrania",
+      "presetGarnishesHint": "Wybierz przybrania, z którymi podawana jest ta pizza (np. świeża bazylia na wierzchu). Klienci nadal mogą je dodać lub usunąć.",
       "addGroup": "Dodaj grupę",
       "save": "Zapisz",
       "inheritedFromCategory": "Odziedziczone z kategorii",

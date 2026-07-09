@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Привязано",
       "bulkAttachCta": "Привязать к {count, plural, one {# позиции} few {# позициям} many {# позициям} other {# позиции}}",
       "bulkAttachSuccess": "Привязано к {count, plural, one {# позиции} few {# позициям} many {# позициям} other {# позиции}}",
+      "presetGarnishesTitle": "Задайте украшения заранее",
+      "presetGarnishesHint": "Выберите украшения, с которыми подаётся эта пицца (например, свежий базилик сверху). Клиенты всё равно смогут добавить или убрать их.",
       "addGroup": "Добавить группу",
       "save": "Сохранить",
       "inheritedFromCategory": "Унаследовано из категории",

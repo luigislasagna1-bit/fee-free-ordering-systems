@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Allegato",
       "bulkAttachCta": "Allega a {count, plural, one {# articolo} other {# articoli}}",
       "bulkAttachSuccess": "Allegato a {count, plural, one {# articolo} other {# articoli}}",
+      "presetGarnishesTitle": "Preimposta le guarnizioni",
+      "presetGarnishesHint": "Scegli le guarnizioni con cui viene servita questa pizza (ad es. basilico fresco sopra). I clienti possono comunque aggiungerle o rimuoverle.",
       "addGroup": "Aggiungi gruppo",
       "save": "Salva",
       "inheritedFromCategory": "Ereditato dalla categoria",

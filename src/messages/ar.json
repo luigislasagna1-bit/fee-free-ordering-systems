@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "مرفق",
       "bulkAttachCta": "إرفاق بـ {count, plural, zero {# عنصر} one {عنصر واحد} two {عنصرين} few {# عناصر} many {# عنصرًا} other {# عنصر}}",
       "bulkAttachSuccess": "تم الإرفاق بـ {count, plural, zero {# عنصر} one {عنصر واحد} two {عنصرين} few {# عناصر} many {# عنصرًا} other {# عنصر}}",
+      "presetGarnishesTitle": "حدّد الزينة مسبقًا",
+      "presetGarnishesHint": "اختر الزينة التي تأتي مع هذه البيتزا (مثل الريحان الطازج فوقها). ولا يزال بإمكان العملاء إضافتها أو إزالتها.",
       "addGroup": "إضافة مجموعة",
       "save": "حفظ",
       "inheritedFromCategory": "موروث من الفئة",

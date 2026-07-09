@@ -2284,6 +2284,8 @@
       "bulkAttachAlready": "जुड़ा हुआ",
       "bulkAttachCta": "{count, plural, one {# आइटम} other {# आइटम}} से जोड़ें",
       "bulkAttachSuccess": "{count, plural, one {# आइटम} other {# आइटम}} से जोड़ा गया",
+      "presetGarnishesTitle": "गार्निश पहले से सेट करें",
+      "presetGarnishesHint": "वे गार्निश चुनें जो इस पिज़्ज़ा के साथ आती हैं (जैसे ऊपर ताज़ा बेसिल)। ग्राहक फिर भी उन्हें जोड़ या हटा सकते हैं।",
       "addGroup": "समूह जोड़ें",
       "save": "सहेजें",
       "inheritedFromCategory": "श्रेणी से प्राप्त",

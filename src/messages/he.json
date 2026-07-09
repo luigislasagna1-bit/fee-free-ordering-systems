@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "מצורף",
       "bulkAttachCta": "צרף {count, plural, one {לפריט אחד} two {ל-# פריטים} other {ל-# פריטים}}",
       "bulkAttachSuccess": "צורף {count, plural, one {לפריט אחד} two {ל-# פריטים} other {ל-# פריטים}}",
+      "presetGarnishesTitle": "הגדר מראש את הקישוטים",
+      "presetGarnishesHint": "בחר את הקישוטים שמגיעים עם הפיצה הזו (למשל בזיליקום טרי מעל). לקוחות עדיין יכולים להוסיף או להסיר אותם.",
       "addGroup": "הוסף קבוצה",
       "save": "שמור",
       "inheritedFromCategory": "עובר בירושה מהקטגוריה",

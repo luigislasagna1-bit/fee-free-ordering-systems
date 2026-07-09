@@ -113,6 +113,9 @@ type PizzaFormState = {
   /** Topping OPTION ids that pre-fill the builder's included slots (whole,
    *  normal). Empty = customer starts from an empty pizza. Luigi 2026-07-09. */
   presetToppings: string[];
+  /** Garnish option NAMES pre-selected on this pizza (from garnish-role
+   *  groups). Names survive the library→copy re-sync. Luigi 2026-07-09. */
+  presetGarnishes: string[];
 };
 
 function parsePizzaForm(json?: string): PizzaFormState {
@@ -145,6 +148,9 @@ function parsePizzaForm(json?: string): PizzaFormState {
     reduceOnRemove: p?.reduceOnRemove !== false, // default ON (symmetric)
     presetToppings: Array.isArray(p?.presetToppings)
       ? p.presetToppings.filter((x: unknown): x is string => typeof x === "string")
+      : [],
+    presetGarnishes: Array.isArray(p?.presetGarnishes)
+      ? p.presetGarnishes.filter((x: unknown): x is string => typeof x === "string")
       : [],
   };
 }
@@ -637,6 +643,10 @@ function ItemModal({
                 }
                 return p;
               })))
+            : undefined,
+          // Garnish presets — stored by NAME from day one (no id migration).
+          presetGarnishes: pizza.presetGarnishes.length > 0
+            ? Array.from(new Set(pizza.presetGarnishes))
             : undefined,
         })
       : null;
@@ -1273,6 +1283,43 @@ function ItemModal({
                                   className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
                                 />
                                 <span className="text-gray-700">{o.name}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })()}
+
+                    {/* Preset GARNISHES — options from garnish-role groups open
+                        pre-selected on this pizza (e.g. fresh basil). Stored by
+                        NAME so per-pizza presets survive the library→copy option
+                        re-sync (which resets per-copy stars). Luigi 2026-07-09. */}
+                    {(() => {
+                      const garnishOpts = Array.from(new Map(
+                        libraryGroups
+                          .filter(g => g.pizzaRole === "garnish")
+                          .flatMap(g => (g.options ?? []).map((o: any) => [o.name as string, o.name as string] as const)),
+                      ).values());
+                      if (garnishOpts.length === 0) return null;
+                      return (
+                        <div className="border-t pt-3">
+                          <p className="text-sm font-medium text-gray-700">{t("presetGarnishesTitle")}</p>
+                          <p className="text-xs text-gray-400 mb-2">{t("presetGarnishesHint")}</p>
+                          <div className="max-h-44 overflow-y-auto border border-gray-100 rounded-lg p-2 space-y-1 bg-gray-50">
+                            {garnishOpts.map(name => (
+                              <label key={name} className="flex items-center gap-2 text-sm cursor-pointer">
+                                <input
+                                  type="checkbox"
+                                  checked={pizza.presetGarnishes.includes(name)}
+                                  onChange={e => setPizza(p => ({
+                                    ...p,
+                                    presetGarnishes: e.target.checked
+                                      ? [...p.presetGarnishes, name]
+                                      : p.presetGarnishes.filter(x => x !== name),
+                                  }))}
+                                  className="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                                />
+                                <span className="text-gray-700">{name}</span>
                               </label>
                             ))}
                           </div>

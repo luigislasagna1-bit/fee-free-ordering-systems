@@ -1854,6 +1854,8 @@
       "bulkAttachAlready": "Csatolva",
       "bulkAttachCta": "Csatolás {count, plural, one {# tételhez} other {# tételhez}}",
       "bulkAttachSuccess": "Csatolva {count, plural, one {# tételhez} other {# tételhez}}",
+      "presetGarnishesTitle": "Állítsd be előre a díszítéseket",
+      "presetGarnishesHint": "Válaszd ki, milyen díszítésekkel készül ez a pizza (pl. friss bazsalikom a tetején). A vendégek továbbra is hozzáadhatják vagy eltávolíthatják őket.",
       "addGroup": "Csoport hozzáadása",
       "save": "Mentés",
       "inheritedFromCategory": "Kategóriától örökölve",

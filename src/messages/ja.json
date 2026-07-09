@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "割り当て済み",
       "bulkAttachCta": "{count, plural, other {# 件の商品}}に割り当て",
       "bulkAttachSuccess": "{count, plural, other {# 件の商品}}に割り当てました",
+      "presetGarnishesTitle": "仕上げを事前設定",
+      "presetGarnishesHint": "このピザに最初から付く仕上げを選択します（例：上にフレッシュバジル）。お客様は後から追加・削除できます。",
       "addGroup": "グループを追加",
       "save": "保存",
       "inheritedFromCategory": "カテゴリーから継承",

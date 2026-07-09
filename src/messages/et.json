@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Seotud",
       "bulkAttachCta": "Seo {count, plural, one {# tootega} other {# tootega}}",
       "bulkAttachSuccess": "Seotud {count, plural, one {# tootega} other {# tootega}}",
+      "presetGarnishesTitle": "Määra kaunistused ette",
+      "presetGarnishesHint": "Vali kaunistused, millega see pitsa serveeritakse (nt värske basiilik peal). Kliendid saavad neid endiselt lisada või eemaldada.",
       "addGroup": "Lisa grupp",
       "save": "Salvesta",
       "inheritedFromCategory": "Päritud kategooriast",

@@ -2367,6 +2367,8 @@
       "bulkAttachAlready": "Attached",
       "bulkAttachCta": "Attach to {count, plural, one {# item} other {# items}}",
       "bulkAttachSuccess": "Attached to {count, plural, one {# item} other {# items}}",
+      "presetGarnishesTitle": "Pre-set the garnishes",
+      "presetGarnishesHint": "Pick garnishes this pizza comes with (e.g. fresh basil on top). Customers can still add or remove them.",
       "addGroup": "Add Group",
       "save": "Save",
       "inheritedFromCategory": "Inherited from category",

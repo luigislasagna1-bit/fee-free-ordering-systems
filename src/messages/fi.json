@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Liitetty",
       "bulkAttachCta": "Liitä {count, plural, one {# tuotteeseen} other {# tuotteeseen}}",
       "bulkAttachSuccess": "Liitetty {count, plural, one {# tuotteeseen} other {# tuotteeseen}}",
+      "presetGarnishesTitle": "Esivalitse viimeistelyt",
+      "presetGarnishesHint": "Valitse viimeistelyt, joiden kanssa tämä pizza tarjoillaan (esim. tuoretta basilikaa päällä). Asiakkaat voivat silti lisätä tai poistaa niitä.",
       "addGroup": "Lisää ryhmä",
       "save": "Tallenna",
       "inheritedFromCategory": "Peritty kategoriasta",

@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Povezano",
       "bulkAttachCta": "Poveži {count, plural, one {s # stavkom} few {s # stavke} other {s # stavki}}",
       "bulkAttachSuccess": "Povezano {count, plural, one {s # stavkom} few {s # stavke} other {s # stavki}}",
+      "presetGarnishesTitle": "Unaprijed odaberite ukrase",
+      "presetGarnishesHint": "Odaberite ukrase s kojima ova pizza dolazi (npr. svježi bosiljak na vrhu). Kupci ih i dalje mogu dodati ili ukloniti.",
       "addGroup": "Dodaj grupu",
       "save": "Spremi",
       "inheritedFromCategory": "Naslijeđeno iz kategorije",

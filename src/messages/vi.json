@@ -1854,6 +1854,8 @@
       "bulkAttachAlready": "Đã gắn",
       "bulkAttachCta": "Gắn vào {count, plural, other {# món}}",
       "bulkAttachSuccess": "Đã gắn vào {count, plural, other {# món}}",
+      "presetGarnishesTitle": "Thiết lập sẵn phần trang trí",
+      "presetGarnishesHint": "Chọn các phần trang trí đi kèm với pizza này (ví dụ: húng quế tươi rắc lên trên). Khách hàng vẫn có thể thêm hoặc bỏ chúng.",
       "addGroup": "Thêm Nhóm",
       "save": "Lưu",
       "inheritedFromCategory": "Kế thừa từ danh mục",

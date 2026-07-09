@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Gekoppeld",
       "bulkAttachCta": "Koppelen aan {count, plural, one {# item} other {# items}}",
       "bulkAttachSuccess": "Gekoppeld aan {count, plural, one {# item} other {# items}}",
+      "presetGarnishesTitle": "Stel de garneringen vooraf in",
+      "presetGarnishesHint": "Kies de garneringen waarmee deze pizza wordt geserveerd (bijv. verse basilicum erbovenop). Klanten kunnen ze nog steeds toevoegen of verwijderen.",
       "addGroup": "Groep toevoegen",
       "save": "Opslaan",
       "inheritedFromCategory": "Overgenomen van categorie",

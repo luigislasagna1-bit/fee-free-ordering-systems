@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Terlampir",
       "bulkAttachCta": "Lampirkan ke {count, plural, other {# item}}",
       "bulkAttachSuccess": "Dilampirkan ke {count, plural, other {# item}}",
+      "presetGarnishesTitle": "Atur hiasan bawaan",
+      "presetGarnishesHint": "Pilih hiasan yang menyertai pizza ini (mis. daun basil segar di atasnya). Pelanggan tetap dapat menambah atau menghapusnya.",
       "addGroup": "Tambah Grup",
       "save": "Simpan",
       "inheritedFromCategory": "Diwarisi dari kategori",

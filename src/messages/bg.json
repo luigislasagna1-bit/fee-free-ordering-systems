@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Прикачено",
       "bulkAttachCta": "Прикачи към {count, plural, one {# артикул} other {# артикула}}",
       "bulkAttachSuccess": "Прикачено към {count, plural, one {# артикул} other {# артикула}}",
+      "presetGarnishesTitle": "Задайте украсите предварително",
+      "presetGarnishesHint": "Изберете украсите, с които идва тази пица (напр. пресен босилек отгоре). Клиентите все пак могат да ги добавят или премахват.",
       "addGroup": "Добави група",
       "save": "Запази",
       "inheritedFromCategory": "Наследено от категория",

@@ -1854,6 +1854,8 @@
       "bulkAttachAlready": "Ekli",
       "bulkAttachCta": "{count, plural, one {# ürüne} other {# ürüne}} ekle",
       "bulkAttachSuccess": "{count, plural, one {# ürüne} other {# ürüne}} eklendi",
+      "presetGarnishesTitle": "Süslemeleri önceden ayarlayın",
+      "presetGarnishesHint": "Bu pizzayla birlikte gelen süslemeleri seçin (örn. üzerinde taze fesleğen). Müşteriler yine de bunları ekleyebilir veya çıkarabilir.",
       "addGroup": "Grup Ekle",
       "save": "Kaydet",
       "inheritedFromCategory": "Kategoriden devralındı",

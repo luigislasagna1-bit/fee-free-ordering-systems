@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Attaché",
       "bulkAttachCta": "Attacher à {count, plural, one {# article} other {# articles}}",
       "bulkAttachSuccess": "Attaché à {count, plural, one {# article} other {# articles}}",
+      "presetGarnishesTitle": "Présélectionnez les finitions",
+      "presetGarnishesHint": "Choisissez les finitions avec lesquelles cette pizza est servie (p. ex. basilic frais sur le dessus). Les clients peuvent toujours les ajouter ou les retirer.",
       "addGroup": "Ajouter un groupe",
       "save": "Enregistrer",
       "inheritedFromCategory": "Hérité de la catégorie",

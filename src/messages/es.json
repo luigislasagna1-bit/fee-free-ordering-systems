@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Adjunto",
       "bulkAttachCta": "Adjuntar a {count, plural, one {# artículo} other {# artículos}}",
       "bulkAttachSuccess": "Adjuntado a {count, plural, one {# artículo} other {# artículos}}",
+      "presetGarnishesTitle": "Preselecciona los toques finales",
+      "presetGarnishesHint": "Elige los toques finales con los que viene esta pizza (p. ej., albahaca fresca por encima). Los clientes aún pueden añadirlos o quitarlos.",
       "addGroup": "Añadir grupo",
       "save": "Guardar",
       "inheritedFromCategory": "Heredado de la categoría",

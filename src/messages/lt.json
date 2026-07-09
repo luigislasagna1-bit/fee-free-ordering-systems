@@ -2603,6 +2603,8 @@
       "bulkAttachAlready": "Prisegta",
       "bulkAttachCta": "Prisegti prie {count, plural, one {# prekės} few {# prekių} other {# prekių}}",
       "bulkAttachSuccess": "Prisegta prie {count, plural, one {# prekės} few {# prekių} other {# prekių}}",
+      "presetGarnishesTitle": "Iš anksto nustatykite papuošimus",
+      "presetGarnishesHint": "Pasirinkite papuošimus, su kuriais patiekiama ši pica (pvz., šviežias bazilikas ant viršaus). Klientai vis tiek gali juos pridėti ar pašalinti.",
       "addGroup": "Pridėti grupę",
       "save": "Išsaugoti",
       "inheritedFromCategory": "Paveldėta iš kategorijos",

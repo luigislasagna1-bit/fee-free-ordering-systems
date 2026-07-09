@@ -2603,6 +2603,8 @@
       "bulkAttachAlready": "Pripojené",
       "bulkAttachCta": "Pripojiť k {count, plural, one {# položke} few {# položkám} many {# položkám} other {# položkám}}",
       "bulkAttachSuccess": "Pripojené k {count, plural, one {# položke} few {# položkám} many {# položkám} other {# položkám}}",
+      "presetGarnishesTitle": "Prednastavte ozdoby",
+      "presetGarnishesHint": "Vyberte ozdoby, s ktorými sa táto pizza podáva (napr. čerstvá bazalka navrchu). Zákazníci ich stále môžu pridať alebo odobrať.",
       "addGroup": "Pridať skupinu",
       "save": "Uložiť",
       "inheritedFromCategory": "Zdedené z kategórie",

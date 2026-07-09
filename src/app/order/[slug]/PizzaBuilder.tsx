@@ -57,6 +57,11 @@ export interface PizzaConfig {
   /** Topping OPTION ids that pre-fill the builder's included slots (whole,
    *  normal amount). The customer can add/remove from there. Luigi 2026-07-09. */
   presetToppings?: string[];
+  /** Option NAMES from garnish-role groups that open pre-selected on this pizza
+   *  (e.g. "Fresh Basil" on a Margherita). Stored by NAME so per-pizza presets
+   *  survive the library→copy option re-sync (which resets per-copy isDefault
+   *  stars). Customers can remove/add; per-option pricing. Luigi 2026-07-09. */
+  presetGarnishes?: string[];
   /** Multiplier applied to half-pizza toppings (default 0.5 → 50%) */
   halfToppingMultiplier: number;
   /** Additional price multiplier for "Extra" quantity on top of base topping price (default 0 = no upcharge) */
@@ -178,6 +183,7 @@ export function parsePizzaConfig(json: string | null | undefined): PizzaConfig |
       // a pizza into the legacy free-credit model. Luigi 2026-07-09.
       reduceOnRemove:         c.reduceOnRemove !== false,
       presetToppings:         Array.isArray(c.presetToppings) ? c.presetToppings.filter((x: unknown): x is string => typeof x === "string") : undefined,
+      presetGarnishes:        Array.isArray(c.presetGarnishes) ? c.presetGarnishes.filter((x: unknown): x is string => typeof x === "string") : undefined,
       halfToppingMultiplier:  Number(c.halfToppingMultiplier) || 0.5,
       extraQuantityMultiplier:Number(c.extraQuantityMultiplier)|| 0,
       allowMultipleToppings:  c.allowMultipleToppings !== false, // default ON
@@ -789,10 +795,14 @@ export function defaultCustomization(item: MenuItem, config: PizzaConfig, groups
   const otherSelections: Record<string, string[]> = {};
   for (const g of groups) {
     if (roleIds.has(g.id) || (g.libraryGroupId && roleIds.has(g.libraryGroupId))) continue;
-    const preselected = g.options
-      .filter(o => o.isDefault && o.isAvailable)
-      .slice(0, Math.max(1, g.maxSelect))
-      .map(o => o.id);
+    // GARNISH groups with per-pizza presets: seed the config's preset NAMES
+    // (survive the library→copy option re-sync) instead of the copy's isDefault
+    // stars. Other groups (and garnish groups without presets) keep star-based
+    // defaults. Luigi 2026-07-09.
+    const presets = g.pizzaRole === "garnish" && (config.presetGarnishes?.length ?? 0) > 0
+      ? g.options.filter(o => o.isAvailable && (config.presetGarnishes!.includes(o.name) || config.presetGarnishes!.includes(o.id)))
+      : g.options.filter(o => o.isDefault && o.isAvailable);
+    const preselected = presets.slice(0, Math.max(1, g.maxSelect)).map(o => o.id);
     if (preselected.length > 0) otherSelections[g.id] = preselected;
   }
 

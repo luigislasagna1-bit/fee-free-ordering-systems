@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "แนบแล้ว",
       "bulkAttachCta": "แนบกับ {count, plural, other {# รายการ}}",
       "bulkAttachSuccess": "แนบกับ {count, plural, other {# รายการ}} แล้ว",
+      "presetGarnishesTitle": "ตั้งค่าเครื่องตกแต่งล่วงหน้า",
+      "presetGarnishesHint": "เลือกเครื่องตกแต่งที่มาพร้อมพิซซ่านี้ (เช่น ใบโหระพาสดโรยด้านบน) ลูกค้ายังสามารถเพิ่มหรือนำออกได้",
       "addGroup": "เพิ่มกลุ่ม",
       "save": "บันทึก",
       "inheritedFromCategory": "รับมาจากหมวดหมู่",

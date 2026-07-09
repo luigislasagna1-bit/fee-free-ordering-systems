@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Прикріплено",
       "bulkAttachCta": "Прикріпити до {count, plural, one {# позиції} few {# позицій} many {# позицій} other {# позиції}}",
       "bulkAttachSuccess": "Прикріплено до {count, plural, one {# позиції} few {# позицій} many {# позицій} other {# позиції}}",
+      "presetGarnishesTitle": "Задайте прикраси заздалегідь",
+      "presetGarnishesHint": "Виберіть прикраси, з якими подається ця піца (наприклад, свіжий базилік зверху). Клієнти все одно зможуть додати або прибрати їх.",
       "addGroup": "Додати групу",
       "save": "Зберегти",
       "inheritedFromCategory": "Успадковано від категорії",

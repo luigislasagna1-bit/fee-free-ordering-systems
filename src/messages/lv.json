@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Piesaistīts",
       "bulkAttachCta": "Piesaistīt {count, plural, zero {# precēm} one {# precei} other {# precēm}}",
       "bulkAttachSuccess": "Piesaistīts {count, plural, zero {# precēm} one {# precei} other {# precēm}}",
+      "presetGarnishesTitle": "Iepriekš iestatiet rotājumus",
+      "presetGarnishesHint": "Izvēlieties rotājumus, ar kuriem šī pica tiek pasniegta (piem., svaigs baziliks virsū). Klienti tos joprojām var pievienot vai noņemt.",
       "addGroup": "Pievienot grupu",
       "save": "Saglabāt",
       "inheritedFromCategory": "Mantots no kategorijas",

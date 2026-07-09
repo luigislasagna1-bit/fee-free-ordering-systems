@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Συνδεδεμένο",
       "bulkAttachCta": "Σύνδεση σε {count, plural, one {# είδος} other {# είδη}}",
       "bulkAttachSuccess": "Συνδέθηκε σε {count, plural, one {# είδος} other {# είδη}}",
+      "presetGarnishesTitle": "Προεπιλέξτε τις γαρνιτούρες",
+      "presetGarnishesHint": "Επιλέξτε τις γαρνιτούρες με τις οποίες σερβίρεται αυτή η πίτσα (π.χ. φρέσκος βασιλικός από πάνω). Οι πελάτες μπορούν πάντα να τις προσθέσουν ή να τις αφαιρέσουν.",
       "addGroup": "Προσθήκη ομάδας",
       "save": "Αποθήκευση",
       "inheritedFromCategory": "Κληρονομείται από κατηγορία",

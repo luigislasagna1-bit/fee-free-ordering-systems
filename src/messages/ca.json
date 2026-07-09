@@ -1910,6 +1910,8 @@
       "bulkAttachAlready": "Adjuntat",
       "bulkAttachCta": "Adjunta a {count, plural, one {# article} other {# articles}}",
       "bulkAttachSuccess": "Adjuntat a {count, plural, one {# article} other {# articles}}",
+      "presetGarnishesTitle": "Preselecciona els tocs finals",
+      "presetGarnishesHint": "Tria els tocs finals amb què ve aquesta pizza (p. ex. alfàbrega fresca per sobre). Els clients encara poden afegir-los o treure'ls.",
       "addGroup": "Afegeix grup",
       "save": "Desa",
       "inheritedFromCategory": "Heretat de la categoria",
