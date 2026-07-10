@@ -16,9 +16,9 @@ import { config } from "dotenv";
 import { PrismaClient, Prisma } from "../src/generated/prisma/client";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { gunzipSync } from "node:zlib";
 import { readFileSync } from "node:fs";
 import { backupModelNames, delegateOf } from "./_backup-models";
+import { loadBackupPayload } from "../src/lib/db-backup";
 
 config({ path: ".env.local" });
 config({ path: ".env" });
@@ -29,10 +29,19 @@ function reviver(_k: string, v: any): any {
   return v;
 }
 
+async function loadFile(arg: string): Promise<Buffer> {
+  if (/^https?:\/\//.test(arg)) {
+    const res = await fetch(arg);
+    if (!res.ok) throw new Error(`fetch ${res.status}`);
+    return Buffer.from(await res.arrayBuffer());
+  }
+  return readFileSync(arg);
+}
+
 async function main() {
-  const file = process.argv.find((a) => a.endsWith(".json.gz"));
+  const file = process.argv.find((a) => a.endsWith(".json.gz") || a.endsWith(".enc") || /^https?:\/\//.test(a));
   const dryRun = process.argv.includes("--dry-run");
-  if (!file) { console.error("usage: restore-db.ts <backup.json.gz> [--dry-run]"); process.exit(1); }
+  if (!file) { console.error("usage: restore-db.ts <backup.json.gz | backup.enc | https://blob-url> [--dry-run]"); process.exit(1); }
 
   const url = process.env.DATABASE_URL!;
   if (/dawn-tree/.test(url)) {
@@ -40,9 +49,14 @@ async function main() {
     process.exit(1);
   }
 
-  const payload = JSON.parse(gunzipSync(readFileSync(file)).toString("utf8"), reviver);
+  // .enc = the encrypted off-site backup (needs ENCRYPTION_KEY); .json.gz =
+  // local plaintext. loadBackupPayload handles both.
+  const isEncrypted = file.endsWith(".enc");
+  const buf = await loadFile(file);
+  const raw = loadBackupPayload(buf, isEncrypted); // decrypt (if .enc) + gunzip + parse
+  const payload = JSON.parse(JSON.stringify(raw), reviver); // apply bigint/decimal revival
   const tables: Record<string, any[]> = payload.tables;
-  console.log(`restore source: ${file}  (takenAt=${payload.takenAt}, target-at-backup=${payload.target})`);
+  console.log(`restore source: ${file}${isEncrypted ? " (encrypted)" : ""}  (takenAt=${payload.takenAt})`);
   console.log(`restore INTO: ${url.replace(/:[^:@/]+@/, ":****@").slice(0, 70)}...`);
 
   const plan = backupModelNames()
@@ -55,22 +69,44 @@ async function main() {
   const adapter = isNeon ? new PrismaNeon({ connectionString: url }) : new PrismaPg({ connectionString: url });
   const prisma = new PrismaClient({ adapter } as any);
 
-  // Defer FK constraints so table order doesn't matter (best-effort — requires
-  // privileges; Neon roles may not allow session_replication_role, in which
-  // case a scratch-restore should be done via `pg_restore` on a paid tier).
-  try { await prisma.$executeRawUnsafe(`SET session_replication_role = replica`); } catch { /* ignore */ }
-
+  // MULTI-PASS restore: Neon's role can't SET session_replication_role, so we
+  // can't defer FK checks. Instead we retry — each pass inserts every
+  // still-pending table; parents succeed first, their children succeed on the
+  // next pass, and so on. Stop when a pass makes NO progress (the remaining
+  // failures are real, not ordering) and report them loudly. Non-transactional
+  // per table (createMany), skipDuplicates for idempotent re-runs.
+  let remaining = [...plan];
   let loaded = 0;
-  for (const t of plan) {
-    try {
-      await (prisma as any)[t.delegate].createMany({ data: tables[t.name], skipDuplicates: true });
-      loaded += t.rows;
-      console.log(`  ✓ ${t.name}: ${t.rows}`);
-    } catch (e) {
-      console.log(`  ✗ ${t.name}: ${(e as Error)?.message?.slice(0, 120)}`);
+  let pass = 0;
+  while (remaining.length && pass < 12) {
+    pass++;
+    const stillFailing: typeof remaining = [];
+    let progressed = false;
+    for (const t of remaining) {
+      try {
+        await (prisma as any)[t.delegate].createMany({ data: tables[t.name], skipDuplicates: true });
+        loaded += t.rows;
+        progressed = true;
+        console.log(`  ✓ pass ${pass} · ${t.name}: ${t.rows}`);
+      } catch {
+        stillFailing.push(t);
+      }
     }
+    remaining = stillFailing;
+    if (!progressed) break; // no table succeeded this pass → real errors, not ordering
   }
-  console.log(`\nrestored ~${loaded} rows. Verify with a COUNT(*) spot-check.`);
+
+  if (remaining.length) {
+    console.log(`\n❌ ${remaining.length} table(s) could NOT be restored (real errors, not FK ordering):`);
+    for (const t of remaining) {
+      try { await (prisma as any)[t.delegate].createMany({ data: tables[t.name], skipDuplicates: true }); }
+      catch (e) { console.log(`  ✗ ${t.name}: ${(e as Error)?.message?.slice(0, 140)}`); }
+    }
+    console.log(`\nrestored ~${loaded} rows across ${pass} passes; ${remaining.length} tables FAILED — restore is INCOMPLETE.`);
+    await prisma.$disconnect();
+    process.exit(1);
+  }
+  console.log(`\n✅ restored ~${loaded} rows across ${pass} passes, all ${plan.length} tables. Spot-check with COUNT(*).`);
   await prisma.$disconnect();
 }
 main().catch((e) => { console.error("RESTORE ERROR:", e?.message?.slice(0, 300)); process.exit(1); });

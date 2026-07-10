@@ -253,30 +253,38 @@ async function handleDispute(event: Stripe.Event, restaurantId: string): Promise
   const closed = event.type === "charge.dispute.closed";
   const dueBy = dispute.evidence_details?.due_by ? new Date(dispute.evidence_details.due_by * 1000) : null;
 
-  // Record (or update) the dispute. Relation-less orderId — falls back to the
-  // dispute id as the key when we can't resolve the order (still recorded).
+  // Record (or update) the dispute, keyed on the unique stripeDisputeId.
+  // orderId is NOT unique (an order can have an inquiry + a later chargeback),
+  // so no collision there. The P2002 catch is belt-and-suspenders: a duplicate
+  // delivery that races the unique stripeDisputeId is already-recorded → no-op,
+  // NOT a 500 (a 500 loop could get the whole endpoint disabled by Stripe).
   const key = order?.id ?? `unmatched:${dispute.id}`;
-  await prisma.orderDispute.upsert({
-    where: { stripeDisputeId: dispute.id },
-    create: {
-      orderId: key,
-      restaurantId,
-      stripeDisputeId: dispute.id,
-      stripeChargeId: chargeId,
-      status: dispute.status,
-      reason: dispute.reason ?? null,
-      amountCents: dispute.amount ?? 0,
-      currency,
-      dueBy,
-      openedAt: new Date((dispute.created ?? Math.floor(Date.now() / 1000)) * 1000),
-      closedAt: closed ? new Date() : null,
-    },
-    update: {
-      status: dispute.status,
-      closedAt: closed ? new Date() : null,
-      ...(order?.id ? { orderId: order.id } : {}),
-    },
-  });
+  try {
+    await prisma.orderDispute.upsert({
+      where: { stripeDisputeId: dispute.id },
+      create: {
+        orderId: key,
+        restaurantId,
+        stripeDisputeId: dispute.id,
+        stripeChargeId: chargeId,
+        status: dispute.status,
+        reason: dispute.reason ?? null,
+        amountCents: dispute.amount ?? 0,
+        currency,
+        dueBy,
+        openedAt: new Date((dispute.created ?? Math.floor(Date.now() / 1000)) * 1000),
+        closedAt: closed ? new Date() : null,
+      },
+      update: {
+        status: dispute.status,
+        closedAt: closed ? new Date() : null,
+        ...(order?.id ? { orderId: order.id } : {}),
+      },
+    });
+  } catch (e) {
+    if ((e as { code?: string })?.code !== "P2002") throw e; // already recorded → idempotent
+    return; // don't re-alert on a duplicate delivery
+  }
 
   // Alert the owner ONLY on creation (a live deadline to act). Best-effort.
   if (!closed && order?.restaurant.email) {

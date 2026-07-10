@@ -16,9 +16,9 @@ import { config } from "dotenv";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { gunzipSync } from "node:zlib";
 import { readFileSync } from "node:fs";
 import { backupModelNames, delegateOf } from "./_backup-models";
+import { loadBackupPayload } from "../src/lib/db-backup";
 
 config({ path: ".env.local" });
 config({ path: ".env" });
@@ -26,10 +26,10 @@ config({ path: ".env" });
 const CRITICAL = new Set(["Order", "OrderItem", "Customer", "RewardLedger", "RewardAccount", "PaymentProvider", "Restaurant", "User"]);
 
 async function main() {
-  const file = process.argv[2] || process.argv.find((a) => a.endsWith(".json.gz"));
-  if (!file) { console.error("usage: verify-backup.ts <path-to-backup.json.gz>"); process.exit(1); }
+  const file = process.argv.find((a) => a.endsWith(".json.gz") || a.endsWith(".enc"));
+  if (!file) { console.error("usage: verify-backup.ts <backup.json.gz | backup.enc>"); process.exit(1); }
 
-  const payload = JSON.parse(gunzipSync(readFileSync(file)).toString("utf8"));
+  const payload = loadBackupPayload(readFileSync(file), file.endsWith(".enc"));
   const tables: Record<string, any[]> = payload.tables;
   const backupCounts: Record<string, number> = payload.counts;
   console.log(`backup: ${file}\n  format=${payload.format} takenAt=${payload.takenAt} target=${payload.target} models=${payload.modelCount}`);

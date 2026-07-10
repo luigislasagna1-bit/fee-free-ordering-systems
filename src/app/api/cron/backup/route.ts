@@ -15,11 +15,10 @@
  * Retention: keeps the most recent MAX_KEEP backups, prunes older.
  */
 import { NextRequest, NextResponse } from "next/server";
-import crypto from "crypto";
 import { put, list, del } from "@vercel/blob";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { dumpDatabase } from "@/lib/db-backup";
+import { dumpDatabase, encryptBackup } from "@/lib/db-backup";
 import { reportError } from "@/lib/report-error";
 import { timingSafeEqualString } from "@/lib/security";
 
@@ -29,18 +28,6 @@ export const maxDuration = 60; // whole-DB dump; needs Vercel Pro for >10s
 
 const PREFIX = "db-backups/";
 const MAX_KEEP = 14;
-
-function encryptBuffer(plain: Buffer): Buffer {
-  const raw = process.env.ENCRYPTION_KEY;
-  if (!raw) throw new Error("ENCRYPTION_KEY not set — cannot encrypt backup");
-  const key = Buffer.from(raw, "hex");
-  if (key.length !== 32) throw new Error("ENCRYPTION_KEY must be 32 bytes");
-  const iv = crypto.randomBytes(12);
-  const cipher = crypto.createCipheriv("aes-256-gcm", key, iv);
-  const ct = Buffer.concat([cipher.update(plain), cipher.final()]);
-  // Self-describing envelope: [iv(12)][tag(16)][ciphertext]
-  return Buffer.concat([iv, cipher.getAuthTag(), ct]);
-}
 
 async function handle(req: NextRequest) {
   const authHeader = req.headers.get("authorization") ?? "";
@@ -59,36 +46,51 @@ async function handle(req: NextRequest) {
       throw new Error("BLOB_READ_WRITE_TOKEN not set — no off-site backup destination");
     }
     const { gz, totalRows, counts, errors } = await dumpDatabase(prisma);
-    const encrypted = encryptBuffer(gz);
+    const modelErrors = Object.keys(errors).length;
+    const encrypted = encryptBackup(gz);
 
     const stamp = new Date().toISOString().replace(/[:.]/g, "-");
-    const { url } = await put(`${PREFIX}db-${stamp}.enc`, encrypted, {
+    // A degraded (partial) dump is still uploaded — a partial backup beats none
+    // — but marked `.partial.enc` so it's never mistaken for a full one.
+    const suffix = modelErrors ? ".partial.enc" : ".enc";
+    await put(`${PREFIX}db-${stamp}${suffix}`, encrypted, {
       access: "public", // unguessable URL; contents are AES-256-GCM encrypted
       addRandomSuffix: true,
       contentType: "application/octet-stream",
     });
 
-    // Prune old backups beyond MAX_KEEP (oldest first).
+    // Prune old FULL backups beyond MAX_KEEP — ONLY on a clean run, and never
+    // count `.partial.` artifacts, so a degraded run can't evict the last good
+    // full backup.
     let pruned = 0;
-    try {
-      const { blobs } = await list({ prefix: PREFIX });
-      const sorted = blobs.sort((a, b) => a.uploadedAt.getTime() - b.uploadedAt.getTime());
-      const excess = sorted.slice(0, Math.max(0, sorted.length - MAX_KEEP));
-      for (const b of excess) { await del(b.url); pruned++; }
-    } catch (e) {
-      // Pruning failure must not fail the backup itself.
-      console.error("[cron/backup] prune failed", e instanceof Error ? e.message : e);
+    if (modelErrors === 0) {
+      try {
+        const { blobs } = await list({ prefix: PREFIX });
+        const full = blobs
+          .filter((b) => !b.pathname.includes(".partial."))
+          .sort((a, b) => a.uploadedAt.getTime() - b.uploadedAt.getTime());
+        const excess = full.slice(0, Math.max(0, full.length - MAX_KEEP));
+        for (const b of excess) { await del(b.url); pruned++; }
+      } catch (e) {
+        console.error("[cron/backup] prune failed", e instanceof Error ? e.message : e);
+      }
     }
 
-    const modelErrors = Object.keys(errors).length;
-    console.log(`[cron/backup] ok — ${totalRows} rows, ${(encrypted.length / 1024).toFixed(0)}KB encrypted, pruned ${pruned}${modelErrors ? `, ${modelErrors} model errors` : ""}`);
+    if (modelErrors) {
+      // Incomplete backup → alert (Sentry). Not a 500 (avoids a retry storm on a
+      // big dump); the `.partial` artifact is kept for forensics.
+      reportError(new Error(`backup degraded: ${modelErrors} model(s) failed to dump`), { cron: "backup", models: Object.keys(errors).join(",").slice(0, 300) });
+      console.error(`[cron/backup] DEGRADED — ${modelErrors} model(s) failed: ${Object.keys(errors).join(", ")}`);
+      return NextResponse.json({ ok: false, degraded: true, totalRows, modelErrors }, { status: 200 });
+    }
+
+    console.log(`[cron/backup] ok — ${totalRows} rows, ${(encrypted.length / 1024).toFixed(0)}KB encrypted, pruned ${pruned}`);
     return NextResponse.json({
       ok: true,
       totalRows,
       tableCount: Object.keys(counts).length,
       encryptedKB: Math.round(encrypted.length / 1024),
       pruned,
-      modelErrors,
       // never return the blob URL in a shared response — it grants read access
     });
   } catch (e) {

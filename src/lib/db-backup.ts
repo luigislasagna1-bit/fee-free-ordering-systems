@@ -9,10 +9,50 @@
  * move to a streamed pg_dump run from a scheduled worker (documented in
  * docs/launch-readiness/10-release-and-rollback-plan.md).
  */
+import crypto from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { gzipSync } from "node:zlib";
+import { gzipSync, gunzipSync } from "node:zlib";
 import type { PrismaClient } from "@/generated/prisma/client";
+
+/**
+ * Encrypt/decrypt a backup buffer with ENCRYPTION_KEY (AES-256-GCM). ONE source
+ * of truth for the off-site cron (which encrypts) and the restore tooling
+ * (which must be able to decrypt) — a mismatch would make every cloud backup
+ * unrecoverable. Envelope: [iv(12)][tag(16)][ciphertext].
+ */
+function backupKey(): Buffer {
+  const raw = process.env.ENCRYPTION_KEY;
+  if (!raw) throw new Error("ENCRYPTION_KEY not set — cannot encrypt/decrypt backup");
+  const key = Buffer.from(raw, "hex");
+  if (key.length !== 32) throw new Error("ENCRYPTION_KEY must be 32 bytes (64 hex chars)");
+  return key;
+}
+
+export function encryptBackup(plain: Buffer): Buffer {
+  const iv = crypto.randomBytes(12);
+  const cipher = crypto.createCipheriv("aes-256-gcm", backupKey(), iv);
+  const ct = Buffer.concat([cipher.update(plain), cipher.final()]);
+  return Buffer.concat([iv, cipher.getAuthTag(), ct]);
+}
+
+export function decryptBackup(envelope: Buffer): Buffer {
+  const iv = envelope.subarray(0, 12);
+  const tag = envelope.subarray(12, 28);
+  const ct = envelope.subarray(28);
+  const decipher = crypto.createDecipheriv("aes-256-gcm", backupKey(), iv);
+  decipher.setAuthTag(tag);
+  return Buffer.concat([decipher.update(ct), decipher.final()]);
+}
+
+/** Load a backup file to its JSON payload, transparently handling both the
+ *  local plaintext `.json.gz` and the encrypted off-site `.enc` (needs
+ *  ENCRYPTION_KEY). Used by verify + restore so an encrypted cloud backup is
+ *  as restorable as a local one. */
+export function loadBackupPayload(buf: Buffer, isEncrypted: boolean): any {
+  const gz = isEncrypted ? decryptBackup(buf) : buf;
+  return JSON.parse(gunzipSync(gz).toString("utf8"));
+}
 
 export function backupModelNames(): string[] {
   const schema = readFileSync(join(process.cwd(), "prisma", "schema.prisma"), "utf8");

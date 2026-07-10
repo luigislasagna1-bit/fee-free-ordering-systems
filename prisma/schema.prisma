@@ -2879,7 +2879,11 @@ model PaymentProvider {
 /// stop counting a disputed order as clean revenue.
 model OrderDispute {
   id              String    @id @default(cuid())
-  orderId         String    @unique
+  // NOT unique: one order can legitimately have TWO disputes (a network
+  // inquiry that escalates to a separate chargeback). Uniqueness lives on
+  // stripeDisputeId; a unique orderId here caused a P2002 500-loop that could
+  // disable the whole per-restaurant webhook (review 2026-07-10).
+  orderId         String
   restaurantId    String
   stripeDisputeId String    @unique
   stripeChargeId  String?
@@ -2897,6 +2901,7 @@ model OrderDispute {
   updatedAt       DateTime  @updatedAt
 
   @@index([restaurantId])
+  @@index([orderId])
 }
 
 // ─── Reseller Partner Program ──────────────────────────────────────────────
