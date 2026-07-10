@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Deze stap is klaar — tik op Volgende om door te gaan."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Gratis partnerperiode: {count, plural, one {# gratis add-on blijft} other {# gratis add-ons blijven}} kosteloos tot {date}. Om betaalde diensten daarna te behouden, abonneer je met een kaart — anders worden ze automatisch uitgeschakeld.",
+    "bannerCta": "Add-ons bekijken"
+  },
   "dunning": {
     "ownerSubject": "Betaling achterstallig — werk je kaart bij",
     "ownerHeadline": "We konden je betaling nog steeds niet verwerken",

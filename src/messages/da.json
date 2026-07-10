@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Dette trin er færdigt — tryk på Næste for at fortsætte."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Gratis partnerperiode: {count, plural, one {# medfølgende tilvalg forbliver gratis} other {# medfølgende tilvalg forbliver gratis}} indtil {date}. Hvis du vil beholde betalte tjenester derefter, skal du tegne et abonnement med kort — ellers slås de automatisk fra.",
+    "bannerCta": "Se tilvalg"
+  },
   "dunning": {
     "ownerSubject": "Betaling forfalden — opdater venligst dit kort",
     "ownerHeadline": "Vi kunne stadig ikke gennemføre din betaling",

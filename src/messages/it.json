@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Questo passaggio è completo — tocca Avanti per continuare."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Periodo partner gratuito: {count, plural, one {# componente aggiuntivo in omaggio resta gratuito} other {# componenti aggiuntivi in omaggio restano gratuiti}} fino al {date}. Per mantenere i servizi a pagamento dopo tale data, abbonati con una carta — altrimenti verranno disattivati automaticamente.",
+    "bannerCta": "Vedi i componenti aggiuntivi"
+  },
   "dunning": {
     "ownerSubject": "Pagamento scaduto — aggiorna la tua carta",
     "ownerHeadline": "Non siamo ancora riusciti a elaborare il tuo pagamento",

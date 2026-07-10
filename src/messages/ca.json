@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Aquest pas està complet — toca Següent per continuar."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Període de soci gratuït: {count, plural, one {# complement de cortesia es manté gratuït} other {# complements de cortesia es mantenen gratuïts}} fins al {date}. Per conservar els serveis de pagament després d'aquesta data, subscriviu-vos amb una targeta — altrament es desactivaran automàticament.",
+    "bannerCta": "Veure els complements"
+  },
   "dunning": {
     "ownerSubject": "Pagament pendent — actualitzeu la vostra targeta",
     "ownerHeadline": "Encara no hem pogut processar el vostre pagament",

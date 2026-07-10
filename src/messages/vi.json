@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Bước này đã xong — chạm Tiếp theo để tiếp tục."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Giai đoạn đối tác miễn phí: {count, plural, other {# tiện ích bổ sung tặng kèm}} vẫn miễn phí đến {date}. Để tiếp tục dùng các dịch vụ trả phí sau đó, hãy đăng ký bằng thẻ — nếu không, chúng sẽ tự động tắt.",
+    "bannerCta": "Xem tiện ích bổ sung"
+  },
   "dunning": {
     "ownerSubject": "Quá hạn thanh toán — vui lòng cập nhật thẻ của bạn",
     "ownerHeadline": "Chúng tôi vẫn chưa thể xử lý khoản thanh toán của bạn",

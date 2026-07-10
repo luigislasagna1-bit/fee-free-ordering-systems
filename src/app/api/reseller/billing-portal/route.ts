@@ -39,6 +39,26 @@ export async function POST(req: NextRequest) {
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || req.nextUrl.origin;
   const stripe = await getStripe();
+  // A customer id minted on a different Stripe account/mode (platform
+  // test→live switch, 2026-07-10) makes the portal call throw. Definitive
+  // "doesn't exist" → clear the stale id and route them to Subscribe, which
+  // lazily creates a fresh customer on the current account.
+  try {
+    const existing = await stripe.customers.retrieve(profile.stripeCustomerId);
+    if (("deleted" in existing) && existing.deleted) throw Object.assign(new Error("deleted"), { code: "resource_missing" });
+  } catch (e: any) {
+    if (e?.code === "resource_missing" || e?.raw?.code === "resource_missing" || e?.statusCode === 404) {
+      await prisma.resellerProfile.update({
+        where: { id: user.resellerProfileId },
+        data: { stripeCustomerId: null },
+      });
+      return NextResponse.json(
+        { error: "No billing account yet — subscribe first to set one up" },
+        { status: 400 },
+      );
+    }
+    // Transient failure — fall through and let the portal call try anyway.
+  }
   const session = await stripe.billingPortal.sessions.create({
     customer: profile.stripeCustomerId,
     return_url: `${baseUrl}/reseller/branding`,

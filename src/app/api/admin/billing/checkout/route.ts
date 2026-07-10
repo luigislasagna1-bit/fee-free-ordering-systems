@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { getStripe, stripeReady } from "@/lib/stripe";
+import { ensureStripeCustomerForRestaurant } from "@/lib/addons";
 import { euVatSubscriptionBlock } from "@/lib/vies";
 
 /**
@@ -57,21 +58,10 @@ export async function POST(req: NextRequest) {
 
   const stripe = await getStripe();
 
-  // Create the Stripe Customer lazily if it wasn't set at signup (older accounts
-  // or if Stripe wasn't configured at the time).
-  let customerId = restaurant.stripeCustomerId;
-  if (!customerId) {
-    const customer = await stripe.customers.create({
-      email: restaurant.email || undefined,
-      name: restaurant.name,
-      metadata: { restaurantId: restaurant.id },
-    });
-    customerId = customer.id;
-    await prisma.restaurant.update({
-      where: { id: restaurant.id },
-      data: { stripeCustomerId: customerId },
-    });
-  }
+  // Resolve (or lazily create) the Stripe Customer via the shared helper —
+  // it also self-heals ids minted on a different Stripe account/mode (the
+  // platform test→live switch left stale ids that live Checkout rejects).
+  const customerId = await ensureStripeCustomerForRestaurant(restaurant.id);
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || req.nextUrl.origin;
   const session = await stripe.checkout.sessions.create({

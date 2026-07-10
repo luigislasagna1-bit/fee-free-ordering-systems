@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Langkah ini selesai — ketuk Berikutnya untuk melanjutkan."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Periode mitra gratis: {count, plural, other {# add-on komplimenter}} tetap gratis hingga {date}. Untuk tetap menggunakan layanan berbayar setelah itu, berlanggananlah dengan kartu — jika tidak, layanan tersebut akan dinonaktifkan secara otomatis.",
+    "bannerCta": "Lihat add-on"
+  },
   "dunning": {
     "ownerSubject": "Pembayaran tertunggak — harap perbarui kartu Anda",
     "ownerHeadline": "Kami masih belum dapat memproses pembayaran Anda",

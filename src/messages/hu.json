@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Ez a lépés kész — a folytatáshoz koppintson a Tovább gombra."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Ingyenes partneri időszak: {count, plural, one {# ajándék bővítmény ingyenes marad} other {# ajándék bővítmény ingyenes marad}} {date}-ig. Ha ezt követően is meg szeretné tartani a fizetős szolgáltatásokat, fizessen elő kártyával — különben azok automatikusan kikapcsolnak.",
+    "bannerCta": "Bővítmények megtekintése"
+  },
   "dunning": {
     "ownerSubject": "Lejárt fizetés — kérjük, frissítse kártyaadatait",
     "ownerHeadline": "Még mindig nem sikerült feldolgoznunk a fizetését",

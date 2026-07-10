@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Bu adım tamamlandı — devam etmek için İleri'ye dokunun."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Ücretsiz iş ortağı dönemi: {count, plural, one {size hediye edilen # eklenti} other {size hediye edilen # eklenti}} {date} tarihine kadar ücretsiz kalır. Sonrasında ücretli hizmetleri kullanmaya devam etmek için kartla abone olun — aksi halde bunlar otomatik olarak kapatılır.",
+    "bannerCta": "Eklentileri görüntüle"
+  },
   "dunning": {
     "ownerSubject": "Ödeme gecikti — lütfen kartınızı güncelleyin",
     "ownerHeadline": "Ödemenizi yine de işleme alamadık",

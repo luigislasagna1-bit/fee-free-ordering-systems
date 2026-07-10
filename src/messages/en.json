@@ -6036,6 +6036,10 @@
       "scopeNote": "This account is for <strong>{name}</strong> only — separate from any marketplace account you may have at feefreefood.com."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Free partner period: {count, plural, one {# complimentary add-on stays} other {# complimentary add-ons stay}} free until {date}. To keep paid services after that, subscribe with a card — otherwise they switch off automatically.",
+    "bannerCta": "View add-ons"
+  },
   "dunning": {
     "ownerSubject": "Payment overdue — please update your card",
     "ownerHeadline": "We still couldn't process your payment",

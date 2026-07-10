@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Šis žingsnis baigtas — palieskite Toliau, kad tęstumėte."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Nemokamas partnerystės laikotarpis: {count, plural, one {# dovanotas papildinys lieka nemokamas} few {# dovanoti papildiniai lieka nemokami} other {# dovanotų papildinių lieka nemokami}} iki {date}. Kad mokamos paslaugos veiktų ir po to, užsiprenumeruokite kortele — kitaip jos bus automatiškai išjungtos.",
+    "bannerCta": "Peržiūrėti papildinius"
+  },
   "dunning": {
     "ownerSubject": "Mokėjimas pradelstas — atnaujinkite kortelės duomenis",
     "ownerHeadline": "Vis dar nepavyko apdoroti jūsų mokėjimo",

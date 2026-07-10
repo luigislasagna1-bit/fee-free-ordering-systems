@@ -167,9 +167,12 @@ export async function ensureStripeCustomerForRestaurant(restaurantId: string): P
     // Reconcile in the background — don't await if it slows the billing
     // flow, but do await here because the result is on-screen immediately
     // (Stripe Checkout pulls name from the customer object).
+    let mustRecreate = false;
     try {
       const existing = await stripe.customers.retrieve(r.stripeCustomerId);
-      if (!("deleted" in existing) || !existing.deleted) {
+      if (("deleted" in existing) && existing.deleted) {
+        mustRecreate = true; // deleted on Stripe — id is unusable
+      } else {
         const c = existing as { name?: string | null; email?: string | null; metadata?: Record<string, string> };
         const expectedRestaurantId = r.id;
         const expectedName = r.name;
@@ -185,13 +188,21 @@ export async function ensureStripeCustomerForRestaurant(restaurantId: string): P
           });
         }
       }
-    } catch (e) {
-      // Reconcile failed (network, deleted customer, etc.) — don't block
-      // billing flows. Worst case: customer sees stale name on Checkout
-      // for this one session, which is what they'd see today anyway.
-      console.error(`[ensureStripeCustomerForRestaurant] reconcile failed for ${r.stripeCustomerId}`, e);
+    } catch (e: any) {
+      // SELF-HEAL (platform test→live switch, 2026-07-10): a customer id
+      // minted on a different Stripe account/mode comes back resource_missing
+      // here — returning it anyway makes every Checkout/Portal call fail with
+      // "No such customer". Definitive "doesn't exist" → mint a fresh one.
+      // Transient errors (network etc.) keep the old id — never churn
+      // customers on a flaky call.
+      if (e?.code === "resource_missing" || e?.raw?.code === "resource_missing" || e?.statusCode === 404) {
+        mustRecreate = true;
+      } else {
+        console.error(`[ensureStripeCustomerForRestaurant] reconcile failed for ${r.stripeCustomerId}`, e);
+      }
     }
-    return r.stripeCustomerId;
+    if (!mustRecreate) return r.stripeCustomerId;
+    console.warn(`[ensureStripeCustomerForRestaurant] ${r.stripeCustomerId} missing on current Stripe account — creating a replacement for restaurant ${r.id}`);
   }
 
   const c = await stripe.customers.create({

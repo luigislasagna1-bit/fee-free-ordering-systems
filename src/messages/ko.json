@@ -6036,6 +6036,10 @@
       "stepDoneHint": "이 단계가 완료되었습니다 — 계속하려면 다음을 탭하세요."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "무료 파트너 기간: {count, plural, other {무료로 제공된 추가 기능 #개}}가 {date}까지 무료로 유지됩니다. 이후에도 유료 서비스를 계속 사용하려면 카드로 구독하세요 — 그렇지 않으면 자동으로 꺼집니다.",
+    "bannerCta": "추가 기능 보기"
+  },
   "dunning": {
     "ownerSubject": "결제 연체 — 카드 정보를 업데이트해 주세요",
     "ownerHeadline": "여전히 결제를 처리하지 못했습니다",

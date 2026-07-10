@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Dieser Schritt ist fertig — tippen Sie auf Weiter."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Kostenlose Partnerphase: {count, plural, one {# kostenloses Add-on bleibt} other {# kostenlose Add-ons bleiben}} bis zum {date} gratis. Um kostenpflichtige Dienste danach zu behalten, abonnieren Sie mit einer Karte — andernfalls werden sie automatisch abgeschaltet.",
+    "bannerCta": "Add-ons ansehen"
+  },
   "dunning": {
     "ownerSubject": "Zahlung überfällig — bitte aktualisieren Sie Ihre Karte",
     "ownerHeadline": "Wir konnten Ihre Zahlung weiterhin nicht verarbeiten",

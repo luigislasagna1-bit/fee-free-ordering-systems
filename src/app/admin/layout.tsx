@@ -19,6 +19,7 @@ import { getEntitlements } from "@/lib/entitlements";
 import { getOrderCapUsage } from "@/lib/order-cap";
 import { FreePlanCapBanner } from "@/components/admin/FreePlanCapBanner";
 import { DunningBanner } from "@/components/admin/DunningBanner";
+import { PartnerPeriodBanner } from "@/components/admin/PartnerPeriodBanner";
 import { daysLeft as graceDaysLeft } from "@/lib/dunning";
 import { CurrencyProvider } from "@/lib/currency-context";
 import { isResellerDebranded, RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
@@ -90,6 +91,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   /** Days left in the failed-payment grace window → drives the dunning banner.
    *  null = not in dunning (banner hidden). */
   let dunningDaysLeft: number | null = null;
+  /** Free partner period (test→live Stripe switch, Luigi 2026-07-10): when the
+   *  restaurant has unbilled trialing add-ons, this carries the earliest end
+   *  date + count for the countdown banner. null = no banner. */
+  let partnerPeriod: { endsAt: string; count: number } | null = null;
   /** Reseller's brand logo for the sidebar header — only when the restaurant's
    *  reseller passes the FREE de-brand gate (isResellerDebranded). null = show
    *  the default ChefHat. */
@@ -158,6 +163,30 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     const inGrace = !!restaurant?.graceEndsAt && restaurant.graceEndsAt > new Date();
     if (inGrace && restaurant?.graceEndsAt) {
       dunningDaysLeft = graceDaysLeft(restaurant.graceEndsAt);
+    }
+
+    // Free partner period (Luigi 2026-07-10): unbilled trialing add-ons are
+    // complimentary until trialEndsAt, then the expire-addon-trials cron
+    // switches them off. Surface the earliest end date so the owner knows to
+    // subscribe with a card before then. Failure is non-fatal — no banner.
+    try {
+      const partnerRows = await prisma.restaurantAddOn.findMany({
+        where: {
+          restaurantId,
+          status: "trialing",
+          stripeSubscriptionId: null,
+          trialEndsAt: { gt: new Date() },
+        },
+        select: { trialEndsAt: true },
+      });
+      if (partnerRows.length > 0) {
+        const earliest = partnerRows
+          .map((r) => r.trialEndsAt!)
+          .sort((a, b) => a.getTime() - b.getTime())[0];
+        partnerPeriod = { endsAt: earliest.toISOString(), count: partnerRows.length };
+      }
+    } catch (err) {
+      console.error("[admin-layout] partner-period lookup failed", err);
     }
 
     // Email-verification state — only relevant for restaurant_admin users
@@ -333,6 +362,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <div className="flex h-screen bg-gray-50 overflow-hidden flex-col">
         <EmailVerificationBanner email={ownerEmail} verified={ownerEmailVerified} />
         {dunningDaysLeft !== null && <DunningBanner daysLeft={dunningDaysLeft} />}
+        {partnerPeriod && <PartnerPeriodBanner endsAt={partnerPeriod.endsAt} count={partnerPeriod.count} />}
         {user?.isImpersonating && (
           <ImpersonationBanner
             restaurantName={restaurantName}

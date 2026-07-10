@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Tento krok je hotový — pokračujte ťuknutím na Ďalej."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Bezplatné partnerské obdobie: {count, plural, one {# doplnok zostáva zadarmo} few {# doplnky zostávajú zadarmo} many {# doplnku zostáva zadarmo} other {# doplnkov zostáva zadarmo}} do {date}. Ak chcete platené služby využívať aj potom, predplaťte si ich kartou — inak sa automaticky vypnú.",
+    "bannerCta": "Zobraziť doplnky"
+  },
   "dunning": {
     "ownerSubject": "Platba je po splatnosti — aktualizujte si prosím kartu",
     "ownerHeadline": "Vašu platbu sa nám stále nepodarilo spracovať",

@@ -6036,6 +6036,10 @@
       "stepDoneHint": "此步骤已完成——点按“下一步”继续。"
     }
   },
+  "partnerPeriod": {
+    "bannerText": "合作伙伴免费期：{count, plural, other {# 项赠送的附加功能}}可免费使用至 {date}。之后若要继续使用付费服务，请使用银行卡订阅 — 否则这些服务将自动关闭。",
+    "bannerCta": "查看附加功能"
+  },
   "dunning": {
     "ownerSubject": "付款逾期 — 请更新您的银行卡",
     "ownerHeadline": "我们仍然无法处理您的付款",

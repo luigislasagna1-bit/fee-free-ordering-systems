@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Acest pas este gata — apăsați Înainte pentru a continua."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Perioadă de parteneriat gratuită: {count, plural, one {# supliment de curtoazie rămâne gratuit} few {# suplimente de curtoazie rămân gratuite} other {# de suplimente de curtoazie rămân gratuite}} până la {date}. Pentru a păstra serviciile plătite după această dată, abonați-vă cu un card — altfel se vor dezactiva automat.",
+    "bannerCta": "Vedeți suplimentele"
+  },
   "dunning": {
     "ownerSubject": "Plată restantă — actualizați-vă cardul",
     "ownerHeadline": "Tot nu am putut procesa plata dvs.",

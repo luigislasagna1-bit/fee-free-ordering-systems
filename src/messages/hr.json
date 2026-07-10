@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Ovaj je korak gotov — dodirnite Dalje za nastavak."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Besplatno partnersko razdoblje: {count, plural, one {# poklonjeni dodatak ostaje besplatan} few {# poklonjena dodatka ostaju besplatna} other {# poklonjenih dodataka ostaje besplatno}} do {date}. Da biste nakon toga zadržali plaćene usluge, pretplatite se karticom — u suprotnom će se automatski isključiti.",
+    "bannerCta": "Pogledaj dodatke"
+  },
   "dunning": {
     "ownerSubject": "Plaćanje je dospjelo — molimo ažurirajte svoju karticu",
     "ownerHeadline": "I dalje nismo mogli obraditi vaše plaćanje",

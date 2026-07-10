@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { getStripe, stripeReady } from "@/lib/stripe";
+import { ensureStripeCustomerForRestaurant } from "@/lib/addons";
 
 /**
  * Open the Stripe-hosted Customer Portal so the restaurant owner can manage
@@ -30,8 +31,11 @@ export async function POST(req: NextRequest) {
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || req.nextUrl.origin;
   const stripe = await getStripe();
+  // Self-heals ids minted on a different Stripe account/mode (test→live
+  // switch) — a stale id makes billingPortal.sessions.create throw.
+  const customerId = await ensureStripeCustomerForRestaurant(user.restaurantId);
   const session = await stripe.billingPortal.sessions.create({
-    customer: restaurant.stripeCustomerId,
+    customer: customerId,
     return_url: `${baseUrl}/admin/billing`,
   });
 

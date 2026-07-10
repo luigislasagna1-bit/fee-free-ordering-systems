@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Tämä vaihe on valmis — jatka napauttamalla Seuraava."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Maksuton kumppanuusjakso: {count, plural, one {# veloitukseton lisäosa pysyy maksuttomana} other {# veloituksetonta lisäosaa pysyy maksuttomana}} {date} asti. Jos haluat pitää maksulliset palvelut käytössä sen jälkeen, tilaa ne kortilla — muuten ne poistuvat käytöstä automaattisesti.",
+    "bannerCta": "Katso lisäosat"
+  },
   "dunning": {
     "ownerSubject": "Maksu myöhässä — päivitäthän korttisi",
     "ownerHeadline": "Maksuasi ei vieläkään saatu käsiteltyä",

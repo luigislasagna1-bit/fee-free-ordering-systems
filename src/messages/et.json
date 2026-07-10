@@ -6036,6 +6036,10 @@
       "stepDoneHint": "See samm on valmis — jätkamiseks puudutage Edasi."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Tasuta partneriperiood: {count, plural, one {# kingitud lisa jääb tasuta} other {# kingitud lisa jääb tasuta}} kuni {date}. Kui soovite tasulisi teenuseid ka pärast seda kasutada, vormistage tellimus kaardiga — muidu lülituvad need automaatselt välja.",
+    "bannerCta": "Vaata lisasid"
+  },
   "dunning": {
     "ownerSubject": "Makse on tähtaja ületanud — palun uuendage oma kaarti",
     "ownerHeadline": "Teie makset ei õnnestunud ikkagi töödelda",

@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Šis solis ir pabeigts — pieskarieties Tālāk, lai turpinātu."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Bezmaksas partnera periods: {count, plural, zero {# dāvinātu papildinājumu paliek bez maksas} one {# dāvināts papildinājums paliek bez maksas} other {# dāvināti papildinājumi paliek bez maksas}} līdz {date}. Lai pēc tam saglabātu maksas pakalpojumus, noformējiet abonementu ar karti — pretējā gadījumā tie automātiski izslēgsies.",
+    "bannerCta": "Skatīt papildinājumus"
+  },
   "dunning": {
     "ownerSubject": "Maksājums nokavēts — lūdzu, atjauniniet savu karti",
     "ownerHeadline": "Mēs joprojām nevarējām apstrādāt jūsu maksājumu",

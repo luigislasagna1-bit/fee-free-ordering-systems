@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Este paso está completo: toca Siguiente para continuar."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Período de socio gratuito: {count, plural, one {# complemento de cortesía sigue siendo gratuito} other {# complementos de cortesía siguen siendo gratuitos}} hasta el {date}. Para conservar los servicios de pago después de esa fecha, suscríbete con una tarjeta — de lo contrario se desactivarán automáticamente.",
+    "bannerCta": "Ver complementos"
+  },
   "dunning": {
     "ownerSubject": "Pago vencido — actualiza tu tarjeta, por favor",
     "ownerHeadline": "Aún no hemos podido procesar tu pago",

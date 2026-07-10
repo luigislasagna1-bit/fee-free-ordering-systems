@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Ten krok jest gotowy — dotknij Dalej, aby kontynuować."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Bezpłatny okres partnerski: {count, plural, one {# dodatek pozostaje bezpłatny} few {# dodatki pozostają bezpłatne} many {# dodatków pozostaje bezpłatnych} other {# dodatku pozostaje bezpłatne}} do {date}. Aby po tej dacie zachować płatne usługi, wykup subskrypcję kartą — w przeciwnym razie zostaną one automatycznie wyłączone.",
+    "bannerCta": "Zobacz dodatki"
+  },
   "dunning": {
     "ownerSubject": "Zaległa płatność — zaktualizuj swoją kartę",
     "ownerHeadline": "Nadal nie udało nam się przetworzyć Twojej płatności",

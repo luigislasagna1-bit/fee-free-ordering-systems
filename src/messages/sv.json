@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Det här steget är klart — tryck på Nästa för att fortsätta."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Kostnadsfri partnerperiod: {count, plural, one {# kostnadsfritt tillägg förblir gratis} other {# kostnadsfria tillägg förblir gratis}} till {date}. För att behålla betalda tjänster efter det behöver du prenumerera med kort — annars stängs de av automatiskt.",
+    "bannerCta": "Visa tillägg"
+  },
   "dunning": {
     "ownerSubject": "Betalning förfallen — uppdatera ditt kort",
     "ownerHeadline": "Vi kunde fortfarande inte genomföra din betalning",

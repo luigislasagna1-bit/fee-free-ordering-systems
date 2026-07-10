@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Cette étape est terminée — appuyez sur Suivant pour continuer."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Période partenaire gratuite : {count, plural, one {# module offert reste gratuit} other {# modules offerts restent gratuits}} jusqu'au {date}. Pour conserver les services payants ensuite, abonnez-vous avec une carte — sinon ils seront désactivés automatiquement.",
+    "bannerCta": "Voir les modules"
+  },
   "dunning": {
     "ownerSubject": "Paiement en retard — veuillez mettre à jour votre carte",
     "ownerHeadline": "Nous n'avons toujours pas pu traiter votre paiement",

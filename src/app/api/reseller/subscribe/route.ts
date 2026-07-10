@@ -123,7 +123,19 @@ export async function POST(req: NextRequest) {
 
   // Lazily create the Stripe Customer the first time the reseller
   // checks out. Same pattern as the restaurant billing endpoint.
+  // A stored id minted on a different Stripe account/mode (platform
+  // test→live switch, 2026-07-10) is unusable — verify it exists here and
+  // fall through to create a fresh one if not.
   let customerId = profile.stripeCustomerId;
+  if (customerId) {
+    try {
+      const existing = await stripe.customers.retrieve(customerId);
+      if (("deleted" in existing) && existing.deleted) customerId = null;
+    } catch (e: any) {
+      if (e?.code === "resource_missing" || e?.raw?.code === "resource_missing" || e?.statusCode === 404) customerId = null;
+      // other errors: keep the id — transient failures must not churn customers
+    }
+  }
   if (!customerId) {
     const customer = await stripe.customers.create({
       email: profile.user.email,

@@ -6036,6 +6036,10 @@
       "stepDoneHint": "Este passo está concluído — toque em Seguinte para continuar."
     }
   },
+  "partnerPeriod": {
+    "bannerText": "Período de parceria gratuito: {count, plural, one {# extra de cortesia continua gratuito} other {# extras de cortesia continuam gratuitos}} até {date}. Para manter os serviços pagos depois dessa data, subscreva com um cartão — caso contrário, serão desativados automaticamente.",
+    "bannerCta": "Ver extras"
+  },
   "dunning": {
     "ownerSubject": "Pagamento em atraso — atualize o seu cartão",
     "ownerHeadline": "Continuámos sem conseguir processar o seu pagamento",
