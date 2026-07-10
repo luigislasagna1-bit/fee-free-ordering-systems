@@ -8,7 +8,8 @@
  * Stripe DASHBOARD used to leave the order marked "paid" forever and never
  * restored/clawed back Reward Dollars.
  *
- * Handles charge.refunded only. Mirrors the admin refund route's semantics
+ * Handles charge.refunded (refund sync) and charge.dispute.* (chargeback
+ * visibility, H-1). Refund path mirrors the admin refund route's semantics
  * exactly (refundable base = total − creditApplied; refundedAmount is the
  * cumulative major-unit total; FULL refund → paymentStatus "refunded" +
  * wallet make-whole via refundForOrder). Idempotent: Stripe's
@@ -23,7 +24,7 @@ import prisma from "@/lib/db";
 import { decrypt } from "@/lib/encrypt";
 import { fromStripeMinorUnits } from "@/lib/stripe";
 import { refundForOrder as refundRewardForOrder } from "@/lib/reward-ledger";
-import { sendOrderRefundEmail } from "@/lib/email";
+import { sendOrderRefundEmail, sendDisputeOwnerAlert } from "@/lib/email";
 import { formatCurrency } from "@/lib/utils";
 
 export const runtime = "nodejs";
@@ -89,6 +90,21 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ restaurant
       data: { status, processedAt: new Date(), errorMessage: errorMessage?.slice(0, 500) ?? null },
     }).catch(() => {});
   };
+
+  // Disputes / chargebacks (H-1 / LR-PAY-02) — record + alert the owner. Kept
+  // in its own handler so the refund path below is unchanged.
+  if (event.type === "charge.dispute.created" || event.type === "charge.dispute.closed") {
+    try {
+      await handleDispute(event, restaurantId);
+      await finish("processed");
+      return NextResponse.json({ received: true });
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "unknown";
+      console.error("[restaurant-stripe webhook] dispute", msg);
+      await finish("failed", msg);
+      return NextResponse.json({ error: "Processing failed" }, { status: 500 });
+    }
+  }
 
   if (event.type !== "charge.refunded") {
     await finish("ignored");
@@ -206,4 +222,76 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ restaurant
     // 500 → Stripe retries; the claim is status-gated so the retry reprocesses.
     return NextResponse.json({ error: "Processing failed" }, { status: 500 });
   }
+}
+
+/**
+ * charge.dispute.created / .closed → record the dispute + alert the owner
+ * (H-1 / LR-PAY-02). We do NOT auto-claw-back reward credit on `created` — a
+ * dispute can still be WON, and clawing back prematurely would wrongly debit
+ * the customer. The OrderDispute row is the durable state; reports/UI can
+ * left-join it so a disputed order stops counting as clean revenue. Idempotent
+ * via upsert on the unique orderId + the outer StripeWebhookEvent claim.
+ */
+async function handleDispute(event: Stripe.Event, restaurantId: string): Promise<void> {
+  const dispute = event.data.object as Stripe.Dispute;
+  const pi = typeof dispute.payment_intent === "string" ? dispute.payment_intent : dispute.payment_intent?.id;
+  const chargeId = typeof dispute.charge === "string" ? dispute.charge : dispute.charge?.id ?? null;
+
+  // Resolve the order: metadata.orderId isn't on the dispute, so match by the
+  // charge's payment intent, scoped to THIS restaurant.
+  const order = pi
+    ? await prisma.order.findFirst({
+        where: { restaurantId, paymentIntentId: pi },
+        select: {
+          id: true, orderNumber: true,
+          restaurant: { select: { name: true, email: true, currency: true } },
+        },
+      })
+    : null;
+
+  const currency = order?.restaurant.currency || dispute.currency || "usd";
+  const closed = event.type === "charge.dispute.closed";
+  const dueBy = dispute.evidence_details?.due_by ? new Date(dispute.evidence_details.due_by * 1000) : null;
+
+  // Record (or update) the dispute. Relation-less orderId — falls back to the
+  // dispute id as the key when we can't resolve the order (still recorded).
+  const key = order?.id ?? `unmatched:${dispute.id}`;
+  await prisma.orderDispute.upsert({
+    where: { stripeDisputeId: dispute.id },
+    create: {
+      orderId: key,
+      restaurantId,
+      stripeDisputeId: dispute.id,
+      stripeChargeId: chargeId,
+      status: dispute.status,
+      reason: dispute.reason ?? null,
+      amountCents: dispute.amount ?? 0,
+      currency,
+      dueBy,
+      openedAt: new Date((dispute.created ?? Math.floor(Date.now() / 1000)) * 1000),
+      closedAt: closed ? new Date() : null,
+    },
+    update: {
+      status: dispute.status,
+      closedAt: closed ? new Date() : null,
+      ...(order?.id ? { orderId: order.id } : {}),
+    },
+  });
+
+  // Alert the owner ONLY on creation (a live deadline to act). Best-effort.
+  if (!closed && order?.restaurant.email) {
+    const amountLabel = formatCurrency(fromStripeMinorUnits(dispute.amount ?? 0, currency), currency);
+    after(
+      sendDisputeOwnerAlert({
+        to: order.restaurant.email,
+        restaurantName: order.restaurant.name,
+        orderNumber: order.orderNumber,
+        amountLabel,
+        reason: dispute.reason ?? null,
+        dueByLabel: dueBy ? dueBy.toUTCString() : null,
+        stripeUrl: "https://dashboard.stripe.com/disputes",
+      }).catch((e) => console.error("[restaurant-stripe webhook dispute email]", e instanceof Error ? e.message : e)),
+    );
+  }
+  console.log(`[restaurant-stripe webhook] dispute ${dispute.status}`, { orderId: order?.id ?? "unmatched", disputeId: dispute.id.slice(-8) });
 }

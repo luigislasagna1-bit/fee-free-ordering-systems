@@ -13,6 +13,7 @@
 
 import { Resend } from "resend";
 import { reportError } from "@/lib/report-error";
+import { escapeHtml } from "@/lib/html-safe";
 
 /** True on a production deployment (Vercel or NODE_ENV). Email failures are
  *  silent-in-dev but must be loud + alertable in prod (stabilization H8). */
@@ -1686,4 +1687,40 @@ export async function sendScheduledOrderReminderEmail(params: {
     subject: t("email.scheduledReminder.subject", { orderNumber: params.orderNumber }),
     html,
   });
+}
+
+/**
+ * Owner alert: a customer disputed a card charge (H-1 / LR-PAY-02). Sent to the
+ * restaurant owner because the money + a fee are pulled from THEIR Stripe
+ * balance and they have a hard deadline to submit evidence in Stripe. Staff-
+ * facing → English body (matches the other owner/staff notifications), all
+ * dynamic values escaped. Best-effort; never blocks the webhook.
+ */
+export async function sendDisputeOwnerAlert(params: {
+  to: string;
+  restaurantName: string;
+  orderNumber: string;
+  amountLabel: string;
+  reason?: string | null;
+  dueByLabel?: string | null;
+  stripeUrl?: string;
+}): Promise<{ success: boolean; error?: string }> {
+  const esc = (s: string) => escapeHtml(s);
+  const due = params.dueByLabel
+    ? `<p style="margin:0 0 12px"><strong>Respond by ${esc(params.dueByLabel)}</strong> or the dispute is automatically lost.</p>`
+    : "";
+  const reason = params.reason ? `<p style="margin:0 0 8px">Reason given: <strong>${esc(params.reason)}</strong></p>` : "";
+  const link = params.stripeUrl
+    ? `<p style="margin:16px 0 0"><a href="${esc(params.stripeUrl)}" style="color:#059669">Open your Stripe dashboard to respond →</a></p>`
+    : `<p style="margin:16px 0 0">Log in to your Stripe dashboard to review and respond.</p>`;
+  const html = `<div style="font-family:system-ui,Arial,sans-serif;max-width:520px;margin:0 auto;padding:24px;color:#111">
+    <h2 style="margin:0 0 12px;font-size:18px">⚠️ A customer disputed a payment</h2>
+    <p style="margin:0 0 8px">Order <strong>#${esc(params.orderNumber)}</strong> at <strong>${esc(params.restaurantName)}</strong> was disputed for <strong>${esc(params.amountLabel)}</strong>.</p>
+    ${reason}
+    <p style="margin:0 0 12px">Stripe has placed a hold on these funds and charged a dispute fee to your account. If you don't respond with evidence, the dispute is lost and the amount is not returned.</p>
+    ${due}
+    ${link}
+    <p style="margin:24px 0 0;font-size:12px;color:#666">You're receiving this because you're the account owner for ${esc(params.restaurantName)}.</p>
+  </div>`;
+  return send({ to: params.to, subject: `Payment disputed — order #${params.orderNumber}`, html, fromName: params.restaurantName });
 }

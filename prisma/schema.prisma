@@ -2869,6 +2869,36 @@ model PaymentProvider {
   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
 }
 
+/// Card dispute / chargeback on a restaurant's OWN Stripe account
+/// (launch-readiness H-1 / LR-PAY-02). Under the key-only model the platform
+/// webhook never sees these — they arrive on the per-restaurant webhook
+/// (/api/webhooks/restaurant-stripe/[id], charge.dispute.* events). A SPARSE
+/// side-table (relation-less orderId to keep the hot Order table lean):
+/// disputes are rare, so no column is added to Order. One dispute per order
+/// (Stripe: one dispute per charge). Reports/UI can LEFT-JOIN on orderId to
+/// stop counting a disputed order as clean revenue.
+model OrderDispute {
+  id              String    @id @default(cuid())
+  orderId         String    @unique
+  restaurantId    String
+  stripeDisputeId String    @unique
+  stripeChargeId  String?
+  /// Stripe dispute.status: warning_needs_response | needs_response |
+  /// under_review | charge_refunded | won | lost.
+  status          String
+  reason          String?
+  amountCents     Int
+  currency        String
+  /// Stripe evidence-submission deadline (dispute.evidence_details.due_by).
+  dueBy           DateTime?
+  openedAt        DateTime
+  closedAt        DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([restaurantId])
+}
+
 // ─── Reseller Partner Program ──────────────────────────────────────────────
 //
 // One ResellerProfile per reseller_partner user. Status drives whether they

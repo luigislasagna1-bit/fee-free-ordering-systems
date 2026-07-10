@@ -20,7 +20,14 @@ import type Stripe from "stripe";
 import prisma from "@/lib/db";
 import { encrypt } from "@/lib/encrypt";
 
-const WEBHOOK_EVENTS: Stripe.WebhookEndpointCreateParams.EnabledEvent[] = ["charge.refunded"];
+const WEBHOOK_EVENTS: Stripe.WebhookEndpointCreateParams.EnabledEvent[] = [
+  "charge.refunded",
+  // Disputes/chargebacks land on the RESTAURANT'S account too (H-1 / LR-PAY-02)
+  // — without these the platform was blind to a disputed order (stayed "paid"
+  // forever, owner never told, reward never clawed back).
+  "charge.dispute.created",
+  "charge.dispute.closed",
+];
 
 export function restaurantWebhookUrl(restaurantId: string): string {
   const base = process.env.NEXT_PUBLIC_APP_URL || "https://feefreeordering.com";
