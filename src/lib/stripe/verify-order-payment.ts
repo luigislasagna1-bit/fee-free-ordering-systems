@@ -1,5 +1,6 @@
 import prisma from "@/lib/db";
-import { getRestaurantStripe } from "@/lib/stripe";
+import { getRestaurantStripe, capturePayment } from "@/lib/stripe";
+import { isStripeAlreadyCaptured } from "@/lib/capture-idempotency";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 
 /**
@@ -40,6 +41,7 @@ export async function verifyAndReleaseOrderPayment(params: {
     select: {
       id: true,
       restaurantId: true,
+      status: true,
       paymentMethod: true,
       paymentStatus: true,
       paymentIntentId: true,
@@ -51,15 +53,24 @@ export async function verifyAndReleaseOrderPayment(params: {
   // PaymentIntent.
   if (order.paymentMethod !== "card") return order.paymentStatus;
 
-  // Already in a settled/advanced state — nothing to do. fireOrderNotifications
-  // is idempotent but we avoid a needless Stripe round-trip on every poll.
+  // Terminal states — nothing left to verify.
   if (
-    order.paymentStatus === "authorized" ||
     order.paymentStatus === "paid" ||
     order.paymentStatus === "refunded" ||
     order.paymentStatus === "voided"
   ) {
     return order.paymentStatus;
+  }
+
+  // "authorized" is normally terminal for verify — EXCEPT for an auto-accepted
+  // order (status already "accepted"): the funds are only held, not captured,
+  // and the capture must still happen here because the pending→accepted PATCH
+  // that normally captures never runs for auto-accept. Letting accepted+
+  // authorized fall through also lets a later poll RETRY a capture whose first
+  // attempt failed. A normal (manually-accepted) authorized order early-returns
+  // — its capture happens on the Accept PATCH. (LR-PAY-01 fix, 2026-07-10.)
+  if (order.paymentStatus === "authorized" && order.status !== "accepted") {
+    return "authorized";
   }
 
   const intentId = order.paymentIntentId || params.paymentIntentId || null;
@@ -94,6 +105,31 @@ export async function verifyAndReleaseOrderPayment(params: {
         where: { id: order.id },
         data: { paymentStatus: "authorized", paymentIntentId: intent.id },
       });
+      // AUTO-ACCEPT: if the order is already "accepted", the pending→accepted
+      // PATCH that normally captures never runs, so capture NOW or the
+      // restaurant is never paid for food it will make (LR-PAY-01). Mirrors the
+      // platform-webhook fix in events/payment-intent.ts. A capture FAILURE
+      // must not block releasing the order to the kitchen — leave it
+      // "authorized" (a later poll retries via the fall-through above);
+      // isStripeAlreadyCaptured treats a mid-capture DB-write failure as done.
+      if (order.status === "accepted") {
+        try {
+          await capturePayment({ paymentIntentId: intent.id, restaurantId: order.restaurantId });
+          await prisma.order.update({ where: { id: order.id }, data: { paymentStatus: "paid" } });
+          await fireOrderNotifications(order.id);
+          return "paid";
+        } catch (e) {
+          if (isStripeAlreadyCaptured(e)) {
+            await prisma.order.update({ where: { id: order.id }, data: { paymentStatus: "paid" } });
+            await fireOrderNotifications(order.id);
+            return "paid";
+          }
+          console.error(
+            `[verify-payment] auto-accept capture failed for order ${order.id} — left authorized for retry:`,
+            e instanceof Error ? e.message : String(e),
+          );
+        }
+      }
       await fireOrderNotifications(order.id);
       return "authorized";
     }
