@@ -3490,7 +3490,11 @@ export function OrderingPageClient({
   const toggleMod = (group: ModGroup, optId: string) => {
     const current = mods[group.id] || [];
     if (group.maxSelect === 1) {
-      setMods({ ...mods, [group.id]: [optId] });
+      // Single-select: tapping the selected option again DESELECTS it when the
+      // group is optional — an "Add extra Patties" (min 0) must allow "none".
+      // Required single-selects stay switch-only (mirrors the pizza builder's
+      // toggleOtherOption). Luigi 2026-07-09.
+      setMods({ ...mods, [group.id]: current.includes(optId) && !group.required ? [] : [optId] });
     } else if (current.includes(optId)) {
       setMods({ ...mods, [group.id]: current.filter(id => id !== optId) });
     } else if (current.length < group.maxSelect) {
