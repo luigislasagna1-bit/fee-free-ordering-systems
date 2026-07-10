@@ -68,6 +68,10 @@
     {
       "path": "/api/cron/expire-addon-trials",
       "schedule": "10 6 * * *"
+    },
+    {
+      "path": "/api/cron/backup",
+      "schedule": "0 5 * * *"
     }
   ]
 }
