@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
-import { createDirectPaymentIntent } from "@/lib/stripe";
+import { createDirectPaymentIntent, toStripeMinorUnits } from "@/lib/stripe";
 import { hasFeature } from "@/lib/entitlements";
 
 // Currencies we support charging in across Stripe + PayPal + our UI.
@@ -113,15 +113,10 @@ export async function POST(req: NextRequest) {
     // Always charge in the restaurant's configured currency — the
     // client value is advisory only.
     const chargeCurrency = (restaurant.currency || currency || "usd").toLowerCase();
-    // Zero-decimal currencies (JPY etc) — Stripe expects whole units,
-    // not cents. Most of our SUPPORTED_CURRENCIES are 2-decimal so
-    // the default `amount * 100` is correct; we just special-case JPY
-    // (and a few sister currencies) here. See:
-    // https://docs.stripe.com/currencies#zero-decimal
-    const ZERO_DECIMAL = new Set(["jpy", "krw", "vnd", "clp", "isk"]);
-    const amountMinor = ZERO_DECIMAL.has(chargeCurrency)
-      ? Math.round(amount)
-      : Math.round(amount * 100);
+    // Zero-decimal currencies (JPY etc) — Stripe expects whole units, not
+    // cents. Shared helper so charge and refund can never disagree (a
+    // drift between them would mis-refund by 100×).
+    const amountMinor = toStripeMinorUnits(amount, chargeCurrency);
     const intent = await createDirectPaymentIntent({
       amountCents: amountMinor,
       currency: chargeCurrency,

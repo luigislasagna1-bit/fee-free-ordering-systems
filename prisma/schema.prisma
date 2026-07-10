@@ -1436,7 +1436,17 @@ model Order {
 
   @@index([restaurantId, createdAt])
   @@index([restaurantId, status])
-  @@index([restaurantId, orderNumber])
+  // UNIQUE (was a plain index): orderNumber is 6-digits-of-timestamp + 3
+  // random digits, so a same-millisecond-window collision was a SILENT
+  // duplicate — two live orders sharing one human number (stabilization
+  // M10). The orders route regenerates + retries on P2002. Both branches
+  // audited duplicate-free before the constraint (2026-07-10).
+  @@unique([restaurantId, orderNumber])
+  // Webhook lookups arrive with only the third-party id — without these,
+  // ShipDay status callbacks and PayPal capture reconciliation full-table
+  // scan the Order table.
+  @@index([shipdayOrderId])
+  @@index([paypalCaptureId])
   // Reports: filter by channel within a date range. Used by the
   // /admin/reports/sales/summary "by payment type / by channel" pivot.
   @@index([restaurantId, channel, createdAt])
@@ -2843,6 +2853,16 @@ model PaymentProvider {
   stripeAccountId String?
   lastTestedAt    DateTime?
   lastTestStatus  String?
+  /// Webhook endpoint registered on the RESTAURANT'S OWN Stripe account
+  /// (key-only model: their charge events never reach the platform webhook,
+  /// so a Stripe-dashboard refund was invisible to us — hardening
+  /// 2026-07-10). Created/refreshed by ensureRestaurantStripeWebhook on
+  /// Test-connection; consumed by /api/webhooks/restaurant-stripe/[id].
+  /// Secret encrypted AES-256-GCM like secretKey.
+  webhookEndpointId String?
+  webhookSecretEnc  String    @default("")
+  webhookSecretIv   String    @default("")
+  webhookSecretTag  String    @default("")
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 

@@ -28,20 +28,36 @@ export async function dispatchStripeEvent(event: Stripe.Event): Promise<{
   status: "processed" | "skipped_duplicate" | "ignored" | "failed";
   message?: string;
 }> {
-  // 1. Idempotency check — already processed?
-  const existing = await prisma.stripeWebhookEvent.findUnique({
-    where: { stripeEventId: event.id },
-  });
-  if (existing && existing.status === "processed") {
-    return { status: "skipped_duplicate", message: "already processed" };
+  // 1+2. ATOMIC claim-first (mirrors the PayPal webhook, but STATUS-GATED):
+  // the INSERT itself is the mutex, closing the create-vs-create race the
+  // old findUnique-then-create had (loser used to 500 on P2002). On P2002 we
+  // re-read the row and only dedup when it actually finished ("processed" /
+  // "ignored"); a row stuck in "received"/"failed" means the earlier attempt
+  // died mid-handler — Stripe's retry must REPROCESS it, not get swallowed
+  // (Stripe webhooks are authoritative here, unlike PayPal's best-effort
+  // backups whose claim is deliberately status-blind). LIMITS, stated
+  // honestly: a retry arriving while the first attempt is STILL RUNNING sees
+  // "received" and runs the handlers concurrently — per-handler idempotency
+  // is the real guarantee there. And a row finalized "ignored" dedups
+  // forever: if we later ship a handler for that event type, a manual
+  // dashboard RESEND of an old event is suppressed until the ops recovery
+  // (delete its StripeWebhookEvent row) is applied.
+  let log;
+  try {
+    log = await prisma.stripeWebhookEvent.create({
+      data: { stripeEventId: event.id, eventType: event.type, status: "received" },
+    });
+  } catch (e) {
+    if ((e as { code?: string })?.code !== "P2002") throw e;
+    const existing = await prisma.stripeWebhookEvent.findUnique({
+      where: { stripeEventId: event.id },
+    });
+    if (!existing) throw e; // claimed then deleted — shouldn't happen; let Stripe retry
+    if (existing.status === "processed" || existing.status === "ignored") {
+      return { status: "skipped_duplicate", message: "already processed" };
+    }
+    log = existing; // received/failed → reprocess on this delivery
   }
-
-  // 2. Record receipt
-  const log = existing
-    ? existing
-    : await prisma.stripeWebhookEvent.create({
-        data: { stripeEventId: event.id, eventType: event.type, status: "received" },
-      });
 
   // 3. Route by event.type. Each handler returns a verb describing what it did.
   //    Unrecognised events fall through to "ignored" — Stripe still gets 200

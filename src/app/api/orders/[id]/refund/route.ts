@@ -2,21 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { after } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { refundDirectPayment } from "@/lib/stripe";
+import { refundDirectPayment, toStripeMinorUnits } from "@/lib/stripe";
 import { refundForOrder as refundRewardForOrder } from "@/lib/reward-ledger";
 import { sendOrderRefundEmail } from "@/lib/email";
 import { formatCurrency } from "@/lib/utils";
 
-// Zero-decimal currencies — Stripe expects whole units, not cents.
-// Mirrors the set in /api/public/payment-intent so refund amounts are
-// converted to minor units the SAME way the charge was.
-const ZERO_DECIMAL = new Set(["jpy", "krw", "vnd", "clp", "isk"]);
-
-function toMinorUnits(amount: number, currency: string): number {
-  return ZERO_DECIMAL.has(currency.toLowerCase())
-    ? Math.round(amount)
-    : Math.round(amount * 100);
-}
+// Zero-decimal minor-unit conversion is the SHARED helper in @/lib/stripe —
+// refunds must convert the exact same way the charge did, or a set drift
+// mis-refunds by 100×.
+const toMinorUnits = toStripeMinorUnits;
 
 /**
  * Manual refund (Refund Offer — report cmpxeh56g). Lets the restaurant

@@ -30,7 +30,13 @@ export async function POST(_req: NextRequest) {
       where: { restaurantId },
       data: { lastTestedAt: new Date(), lastTestStatus: "ok" },
     });
-    return NextResponse.json({ success: true, mode: status });
+    // Register (or refresh) the refund-sync webhook on the restaurant's own
+    // Stripe account — their charge events never reach the platform webhook,
+    // so without this a dashboard refund is invisible to us. Best-effort:
+    // a registration failure must not fail a successful key test.
+    const { ensureRestaurantStripeWebhook } = await import("@/lib/restaurant-stripe-webhook");
+    const webhook = await ensureRestaurantStripeWebhook({ restaurantId, stripe });
+    return NextResponse.json({ success: true, mode: status, refundWebhook: webhook.detail });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : "Unknown error";
     await prisma.paymentProvider.update({

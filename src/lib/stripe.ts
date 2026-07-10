@@ -227,6 +227,35 @@ export async function getWebhookSecrets(): Promise<string[]> {
 export const PLATFORM_FEE_PERCENT = 0;
 export const PLATFORM_FEE_FIXED_CENTS = 0;
 
+/**
+ * Stripe's official ZERO-DECIMAL currencies (minor unit == whole unit —
+ * amounts are sent as-is, NOT ×100). Single source of truth for every
+ * amount conversion; the payment-intent and refund routes previously each
+ * kept their own copy, and a drift between them would mis-charge or
+ * mis-refund by 100× (stabilization finding L8). NOTE: ISK was in the old
+ * copies but is NOT zero-decimal on Stripe (it treats ISK as two-decimal)
+ * — removed per Stripe's list. Only JPY is currently reachable via the
+ * supported-currency lists.
+ */
+export const STRIPE_ZERO_DECIMAL_CURRENCIES = new Set([
+  "bif", "clp", "djf", "gnf", "jpy", "kmf", "krw", "mga",
+  "pyg", "rwf", "ugx", "vnd", "vuv", "xaf", "xof", "xpf",
+]);
+
+/** Major units → the integer amount Stripe expects for this currency. */
+export function toStripeMinorUnits(amount: number, currency: string): number {
+  return STRIPE_ZERO_DECIMAL_CURRENCIES.has(currency.toLowerCase())
+    ? Math.round(amount)
+    : Math.round(amount * 100);
+}
+
+/** Stripe's integer amount → major units (e.g. webhook amount_refunded). */
+export function fromStripeMinorUnits(minor: number, currency: string): number {
+  return STRIPE_ZERO_DECIMAL_CURRENCIES.has(currency.toLowerCase())
+    ? minor
+    : Math.round(minor) / 100;
+}
+
 /** Compute platform application fee for a Connect destination charge. Returns
  *  0 under the current Fee Free model. Kept as a function (not just a
  *  constant) so we can later swap to a per-restaurant override without

@@ -2439,13 +2439,21 @@ export async function POST(req: NextRequest) {
     // ── Create order ────────────────────────────────────────────────────────
     let order;
     try {
-      order = await prisma.order.create({
+      // Unique [restaurantId, orderNumber] (hardening 2026-07-10): a
+      // same-instant collision on the human order number regenerates and
+      // retries — each createOrderRow() call mints a fresh number. ONLY the
+      // orderNumber constraint retries; an idempotencyKey P2002 must fall
+      // through to the duplicate-return path in the catch below. The
+      // coupon/promo/reward claims above are outside the loop (never re-run)
+      // and the compensating rollbacks below only fire once we give up.
+      const createOrderRow = () => prisma.order.create({
       data: {
         restaurantId: restaurant.id,
         customerId: customer?.id || null,
         // Verified owner test orders take the kitchen-test TEST- prefix so the
-        // kitchen badges them and the report aggregators exclude them.
-        orderNumber: isVerifiedTest ? `TEST-${Date.now()}` : generateOrderNumber(),
+        // kitchen badges them and the report aggregators exclude them (random
+        // tail so two same-ms test orders can't collide on the constraint).
+        orderNumber: isVerifiedTest ? `TEST-${Date.now()}-${100 + Math.floor(Math.random() * 900)}` : generateOrderNumber(),
         status: initialStatus,
         acceptedAt: acceptedAtValue,
         estimatedReady: estimatedReadyValue,
@@ -2543,7 +2551,24 @@ export async function POST(req: NextRequest) {
         },
       },
       include: { items: { include: { modifiers: true } } },
-    });
+      });
+      for (let attempt = 0; ; attempt++) {
+        try {
+          order = await createOrderRow();
+          break;
+        } catch (e) {
+          const err = e as { code?: string; meta?: { target?: unknown } };
+          const t = err?.meta?.target;
+          // target arrives as a field array (native engine), a constraint-name
+          // string (driver adapters), or occasionally an array holding the
+          // constraint name — substring-match every string we can find.
+          const orderNumberClash = err?.code === "P2002" &&
+            ((Array.isArray(t) && (t as unknown[]).some((x) => typeof x === "string" && x.includes("orderNumber"))) ||
+              (typeof t === "string" && t.includes("orderNumber")));
+          if (orderNumberClash && attempt < 3) continue; // fresh number next attempt
+          throw e;
+        }
+      }
     } catch (createErr) {
       // Best-effort rollback of the coupon claim above. If THIS update
       // also fails, log loudly — the operator can correct by hand. The

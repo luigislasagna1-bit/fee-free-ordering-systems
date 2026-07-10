@@ -128,9 +128,10 @@ export async function POST() {
 
     // Generate order number — `TEST-` prefix so it's identifiable in
     // reports, but the rest is the same 6-digit timestamp tail used in
-    // real order numbers.
+    // real order numbers, plus a random tail: orderNumber is UNIQUE per
+    // restaurant now, and the bare 6-digit-ms tail recycles every ~17 min.
     const ts = Date.now().toString().slice(-6);
-    const orderNumber = `TEST-${ts}`;
+    const orderNumber = `TEST-${ts}${100 + Math.floor(Math.random() * 900)}`;
 
     const order = await prisma.order.create({
       data: {

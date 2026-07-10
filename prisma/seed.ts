@@ -344,7 +344,9 @@ async function main() {
     data: {
       restaurantId: demoRestaurant.id,
       customerId: customer.id,
-      orderNumber: "ORD-001234",
+      // Random tail: orderNumber is unique per restaurant, so a re-seed with
+      // a hardcoded number would P2002.
+      orderNumber: `ORD-00${1000 + Math.floor(Math.random() * 9000)}`,
       status: "completed",
       type: "pickup",
       customerName: "Jane Smith",
