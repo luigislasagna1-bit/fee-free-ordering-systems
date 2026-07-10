@@ -573,7 +573,7 @@ export function BundleComposerModal({
         </div>
 
         {/* Footer — wizard controls + running total. */}
-        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex items-center justify-between gap-3">
+        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex items-center justify-between gap-3 safe-bottom">
           <div className="flex items-center gap-3 min-w-0">
             {step > 0 && (
               <button

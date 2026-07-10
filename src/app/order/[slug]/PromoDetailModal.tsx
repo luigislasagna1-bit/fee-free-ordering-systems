@@ -881,7 +881,7 @@ export function PromoDetailModal({
             items" (pre-applies the promo code; payment_reward joined in the
             2026-07-03 promo-flow audit). Item-specific promos have their
             inline +Add/stepper rows, so escape hatches alone are right. */}
-        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex items-center gap-2 flex-wrap">
+        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex items-center gap-2 flex-wrap safe-bottom">
           <button
             onClick={onClose}
             className="text-sm font-semibold px-3 py-2 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 transition"

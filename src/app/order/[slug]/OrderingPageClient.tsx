@@ -4953,7 +4953,7 @@ export function OrderingPageClient({
             instead of scrolling away at the top. Per reseller feedback
             (GloriaFood parity). */}
         {promoNudge && (
-          <div className={`fixed inset-x-0 z-30 px-4 pointer-events-none ${cartCount > 0 ? "bottom-24" : "bottom-6"}`}>
+          <div className={`fixed inset-x-0 z-30 px-4 pb-[env(safe-area-inset-bottom)] pointer-events-none ${cartCount > 0 ? "bottom-24" : "bottom-6"}`}>
             <div className="mx-auto max-w-md rounded-xl border-2 border-dashed border-emerald-300 bg-emerald-50 px-4 py-3 text-center text-sm font-semibold text-emerald-800 shadow-lg pointer-events-auto">
               🎯 {t("promoUnlockNudge", {
                 amount: formatCurrency(promoNudge.remaining, restaurant.currency ?? "usd"),
@@ -5580,7 +5580,7 @@ export function OrderingPageClient({
 
       {/* ── Floating cart ─────────────────────────────────────────────── */}
       {cartCount > 0 && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40">
+        <div className="fixed safe-bottom-offset left-1/2 -translate-x-1/2 z-40">
           <button
             onClick={() => setCartOpen(true)}
             // White border + thin dark outer ring keep the floating button crisp
@@ -5601,7 +5601,7 @@ export function OrderingPageClient({
       {/* ── Item modal ────────────────────────────────────────────────── */}
       {selectedItem && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-4" onClick={() => { setSelectedItem(null); if (editingCartIndex !== null) cancelEdit(); }}>
-          <div className="bg-white rounded-2xl w-full max-w-lg modal-vh overflow-y-auto" onClick={e => e.stopPropagation()}>
+          <div className="bg-white rounded-2xl w-full max-w-lg modal-vh overflow-y-auto safe-bottom" onClick={e => e.stopPropagation()}>
             {selectedItem.imageUrl && (
               <div className="h-48 overflow-hidden rounded-t-2xl">
                 <img src={selectedItem.imageUrl} alt={selectedItem.name} className="w-full h-full object-cover" />
@@ -6002,7 +6002,7 @@ export function OrderingPageClient({
             </div>
 
             {cart.length > 0 && (
-              <div className="flex-shrink-0 border-t border-gray-100">
+              <div className="flex-shrink-0 border-t border-gray-100 safe-bottom">
                 {/* Time-restriction heads-up — named, shown whenever the cart
                     holds a fulfilment-restricted item so the customer knows the
                     order time is constrained before they reach checkout (R4). */}

@@ -2099,7 +2099,7 @@ export function CheckoutModal({
           </div>
         )}
         {/* Footer */}
-        <div className="border-t border-gray-100 px-5 py-4 bg-white flex-shrink-0 flex items-center gap-3">
+        <div className="border-t border-gray-100 px-5 py-4 bg-white flex-shrink-0 flex items-center gap-3 safe-bottom">
           <div className="flex-1">
             <div className="text-xs text-gray-500 uppercase font-bold">{creditChosen > 0 ? tc("reward.chargeToday") : tc("total")}</div>
             <div className="text-lg font-bold text-gray-900">{formatCurrency(creditChosen > 0 ? chargeToday : total)}</div>

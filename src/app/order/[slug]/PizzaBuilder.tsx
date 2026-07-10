@@ -1711,7 +1711,7 @@ export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, o
         </div>
 
         {/* ── Sticky footer ── */}
-        <div className="flex-shrink-0 border-t border-gray-100 p-4 bg-white">
+        <div className="flex-shrink-0 border-t border-gray-100 p-4 bg-white safe-bottom">
           {!canAdd && (
             <button
               type="button"

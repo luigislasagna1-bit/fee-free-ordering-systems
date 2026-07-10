@@ -630,7 +630,7 @@ export function GuidedPromoModal({
         {/* Footer — wizard controls. Single-pick steps auto-advance (and the
             last missing pick auto-completes), so Next / Add-to-cart mostly
             matter for multi-pick steps and for revisits via the chips. */}
-        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex items-center justify-between gap-3">
+        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex items-center justify-between gap-3 safe-bottom">
           <div className="flex items-center gap-3 min-w-0">
             {step > 0 && (
               <button

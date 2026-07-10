@@ -193,7 +193,7 @@ export function FreebiePromptModal({
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex justify-end">
+        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex justify-end safe-bottom">
           <button
             onClick={onClose}
             className="font-semibold px-4 py-2.5 rounded-xl text-sm border border-gray-200 text-gray-700 hover:bg-gray-50"
