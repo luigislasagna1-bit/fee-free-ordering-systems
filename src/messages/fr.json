@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Fromage",
       "pizzaRoleTopping": "Garniture",
       "pizzaRoleGarnish": "Finition (ajoutée après cuisson)",
+      "pizzaRoleCookLevel": "Niveau de cuisson",
       "optionsChoices": "Options / Choix",
       "addOption": "Ajouter une option",
       "optionNamePlaceholder": "Nom de l'option",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Mettez-le en avant comme une tuile sur votre page de commande pour que les clients le voient (par ex. « Gagnez $5 lors de votre première commande »).",
         "promoBadge": "Dans les promos",
         "promoteOn": "Désormais affiché dans votre section Promos.",
-        "promoteOff": "Retiré de votre section Promos."
+        "promoteOff": "Retiré de votre section Promos.",
+        "tileImage": "Image de la tuile",
+        "tileImageHint": "Affichée en arrière-plan de la tuile promo à la place de la carte verte. Effacez-la pour revenir à l'apparence par défaut."
       },
       "signupBonusAlways": "Bonus d’inscription (toujours actif)",
       "signupBonusDatedHint": "Attribué à chaque nouveau compte, sans date de fin. Pour une offre d’inscription à durée limitée (dates de début/fin), utilisez « Ajouter un moyen de gagner → Lorsqu’un client s’inscrit » ci-dessus.",

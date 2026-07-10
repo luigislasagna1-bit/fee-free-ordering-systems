@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Queijo",
       "pizzaRoleTopping": "Cobertura",
       "pizzaRoleGarnish": "Finalização (adicionada após assar)",
+      "pizzaRoleCookLevel": "Nível de cozimento",
       "optionsChoices": "Opções / Escolhas",
       "addOption": "Adicionar opção",
       "optionNamePlaceholder": "Nome da opção",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Divulgue isso como um bloco na sua página de pedidos para que os clientes vejam (ex.: «Ganhe $5 no seu primeiro pedido»).",
         "promoBadge": "Nas promoções",
         "promoteOn": "Agora aparece na sua seção de Promoções.",
-        "promoteOff": "Removido da sua seção de Promoções."
+        "promoteOff": "Removido da sua seção de Promoções.",
+        "tileImage": "Imagem do bloco",
+        "tileImageHint": "Exibida como plano de fundo do bloco da promoção em vez do cartão verde. Remova-a para voltar ao visual padrão."
       },
       "signupBonusAlways": "Bônus de cadastro (sempre ativo)",
       "signupBonusDatedHint": "Concedido a cada nova conta, sem data de término. Para uma oferta de cadastro por tempo limitado (datas de início/término), use “Adicionar uma forma de ganhar → Quando um cliente se cadastra” acima.",

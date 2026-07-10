@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Queijo",
       "pizzaRoleTopping": "Cobertura",
       "pizzaRoleGarnish": "Finalização (adicionada após a cozedura)",
+      "pizzaRoleCookLevel": "Nível de cozedura",
       "optionsChoices": "Opções / Escolhas",
       "addOption": "Adicionar opção",
       "optionNamePlaceholder": "Nome da opção",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Divulgue isto como um mosaico na sua página de encomendas para que os clientes o vejam (por ex. «Ganhe $5 na sua primeira encomenda»).",
         "promoBadge": "Nas promoções",
         "promoteOn": "Agora visível na sua secção de Promoções.",
-        "promoteOff": "Removido da sua secção de Promoções."
+        "promoteOff": "Removido da sua secção de Promoções.",
+        "tileImage": "Imagem do mosaico",
+        "tileImageHint": "Apresentada como fundo do mosaico da promoção em vez do cartão verde. Limpe-a para voltar ao aspeto predefinido."
       },
       "signupBonusAlways": "Bónus de registo (sempre ativo)",
       "signupBonusDatedHint": "Atribuído a cada nova conta, sem data de fim. Para uma oferta de registo por tempo limitado (datas de início/fim), utilize «Adicionar uma forma de ganhar → Quando um cliente se regista» acima.",

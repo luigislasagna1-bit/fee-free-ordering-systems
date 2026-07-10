@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Juusto",
       "pizzaRoleTopping": "Täyte",
       "pizzaRoleGarnish": "Viimeistely (lisätään paistamisen jälkeen)",
+      "pizzaRoleCookLevel": "Paistoaste",
       "optionsChoices": "Vaihtoehdot / Valinnat",
       "addOption": "Lisää vaihtoehto",
       "optionNamePlaceholder": "Vaihtoehdon nimi",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Mainosta tätä ruutuna tilaussivullasi, jotta asiakkaat näkevät sen (esim. ”Ansaitse $5 ensimmäisellä tilauksellasi”).",
         "promoBadge": "Tarjouksissa",
         "promoteOn": "Näkyy nyt Tarjoukset-osiossasi.",
-        "promoteOff": "Poistettu Tarjoukset-osiostasi."
+        "promoteOff": "Poistettu Tarjoukset-osiostasi.",
+        "tileImage": "Ruudun kuva",
+        "tileImageHint": "Näytetään tarjousruudun taustana vihreän kortin sijaan. Tyhjennä se, niin palaat oletusulkoasuun."
       },
       "signupBonusAlways": "Rekisteröitymisbonus (aina käytössä)",
       "signupBonusDatedHint": "Annetaan jokaiselle uudelle tilille ilman päättymispäivää. Määräaikaista rekisteröitymistarjousta varten (alku-/päättymispäivä) käytä yllä olevaa kohtaa ”Lisää ansaintatapa → Kun asiakas rekisteröityy”.",

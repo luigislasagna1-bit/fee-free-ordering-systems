@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Ost",
       "pizzaRoleTopping": "Topping",
       "pizzaRoleGarnish": "Garnering (tilføjes efter bagning)",
+      "pizzaRoleCookLevel": "Bagningsgrad",
       "optionsChoices": "Muligheder / Valg",
       "addOption": "Tilføj mulighed",
       "optionNamePlaceholder": "Navn på mulighed",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Reklamer for dette som et felt på din bestillingsside, så kunderne ser det (f.eks. „Optjen $5 på din første bestilling“).",
         "promoBadge": "I tilbud",
         "promoteOn": "Vises nu i din Tilbud-sektion.",
-        "promoteOff": "Fjernet fra din Tilbud-sektion."
+        "promoteOff": "Fjernet fra din Tilbud-sektion.",
+        "tileImage": "Billede til feltet",
+        "tileImageHint": "Vises som feltets baggrund i stedet for det grønne kort. Ryd det for at vende tilbage til standardudseendet."
       },
       "signupBonusAlways": "Tilmeldingsbonus (altid aktiv)",
       "signupBonusDatedHint": "Gives til hver ny konto uden slutdato. For et tidsbegrænset tilmeldingstilbud (start-/slutdato) skal du bruge “Tilføj en måde at optjene på → Når en kunde tilmelder sig” ovenfor.",

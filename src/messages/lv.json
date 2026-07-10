@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Siers",
       "pizzaRoleTopping": "Piedeva",
       "pizzaRoleGarnish": "Rotājums (pievieno pēc cepšanas)",
+      "pizzaRoleCookLevel": "Cepšanas pakāpe",
       "optionsChoices": "Opcijas / Izvēles",
       "addOption": "Pievienot opciju",
       "optionNamePlaceholder": "Opcijas nosaukums",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Reklamējiet to kā elementu savā pasūtīšanas lapā, lai klienti to redzētu (piem., “Nopelniet $5 ar savu pirmo pasūtījumu”).",
         "promoBadge": "Akcijās",
         "promoteOn": "Tagad redzams jūsu sadaļā “Akcijas”.",
-        "promoteOff": "Noņemts no jūsu sadaļas “Akcijas”."
+        "promoteOff": "Noņemts no jūsu sadaļas “Akcijas”.",
+        "tileImage": "Elementa attēls",
+        "tileImageHint": "Tiek rādīts kā akcijas elementa fons zaļās kartītes vietā. Notīriet to, lai atgrieztos pie noklusējuma izskata."
       },
       "signupBonusAlways": "Reģistrācijas bonuss (vienmēr aktīvs)",
       "signupBonusDatedHint": "Tiek piešķirts katram jaunam kontam, bez beigu datuma. Ierobežota laika reģistrācijas piedāvājumam (sākuma/beigu datums) izmantojiet augšā „Pievienot nopelnīšanas veidu → Kad klients reģistrējas“.",

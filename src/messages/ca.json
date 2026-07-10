@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Formatge",
       "pizzaRoleTopping": "Ingredient",
       "pizzaRoleGarnish": "Toc final (afegit després de la cocció)",
+      "pizzaRoleCookLevel": "Nivell de cocció",
       "optionsChoices": "Opcions / Eleccions",
       "addOption": "Afegeix opció",
       "optionNamePlaceholder": "Nom de l'opció",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Anuncia-ho com a mosaic a la teva pàgina de comandes perquè els clients ho vegin (p. ex. «Guanya $5 amb la teva primera comanda»).",
         "promoBadge": "En promocions",
         "promoteOn": "Ara es mostra a la secció de promocions.",
-        "promoteOff": "S'ha tret de la secció de promocions."
+        "promoteOff": "S'ha tret de la secció de promocions.",
+        "tileImage": "Imatge del mosaic",
+        "tileImageHint": "Es mostra com a fons del mosaic de la promoció en lloc de la targeta verda. Esborra-la per tornar a l'aspecte predeterminat."
       },
       "signupBonusAlways": "Bonificació de registre (sempre activa)",
       "signupBonusDatedHint": "S’atorga a cada compte nou, sense data de finalització. Per a una oferta de registre per temps limitat (dates d’inici/fi), utilitza «Afegeix una manera de guanyar → Quan un client es registra» a dalt.",

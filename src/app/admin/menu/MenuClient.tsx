@@ -1585,6 +1585,10 @@ function ModifierModal({
                   the crust/sauce/cheese/topping pickers or the topping pricing
                   engine — renders as its own section with per-option prices. */}
               <option value="garnish">{t("pizzaRoleGarnish")}</option>
+              {/* How well-baked the pizza is (Lightly Cooked … Double Well Done).
+                  Same mechanics as garnish: its own builder section, per-option
+                  prices, never in the role pickers or the topping engine. */}
+              <option value="cook_level">{t("pizzaRoleCookLevel")}</option>
             </select>
             <p className="text-xs text-gray-400 mt-1">{t("pizzaRoleHint")}</p>
           </div>

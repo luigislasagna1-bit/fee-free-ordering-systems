@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Kaas",
       "pizzaRoleTopping": "Topping",
       "pizzaRoleGarnish": "Garnering (na het bakken toegevoegd)",
+      "pizzaRoleCookLevel": "Bakniveau",
       "optionsChoices": "Opties / Keuzes",
       "addOption": "Optie toevoegen",
       "optionNamePlaceholder": "Optienaam",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Adverteer dit als een tegel op je bestelpagina zodat klanten het zien (bijv. ‘Verdien $5 bij je eerste bestelling’).",
         "promoBadge": "In promoties",
         "promoteOn": "Wordt nu weergegeven in je gedeelte Promoties.",
-        "promoteOff": "Verwijderd uit je gedeelte Promoties."
+        "promoteOff": "Verwijderd uit je gedeelte Promoties.",
+        "tileImage": "Tegelafbeelding",
+        "tileImageHint": "Wordt getoond als achtergrond van de promotegel in plaats van de groene kaart. Wis deze om terug te keren naar de standaardweergave."
       },
       "signupBonusAlways": "Aanmeldbonus (altijd actief)",
       "signupBonusDatedHint": "Wordt aan elk nieuw account gegeven, zonder einddatum. Gebruik voor een tijdelijke aanmeldaanbieding (begin-/einddatum) hierboven ‘Een manier om te verdienen toevoegen → Wanneer een klant zich aanmeldt’.",

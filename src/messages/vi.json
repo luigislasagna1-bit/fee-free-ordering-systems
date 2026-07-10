@@ -1844,6 +1844,7 @@
       "pizzaRoleCheese": "Phô mai",
       "pizzaRoleTopping": "Topping",
       "pizzaRoleGarnish": "Trang trí (thêm sau khi nướng)",
+      "pizzaRoleCookLevel": "Độ chín",
       "optionsChoices": "Tùy chọn / Lựa chọn",
       "addOption": "Thêm tùy chọn",
       "optionNamePlaceholder": "Tên tùy chọn",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Quảng bá mục này dưới dạng ô trên trang đặt hàng của bạn để khách hàng nhìn thấy (ví dụ: “Nhận $5 cho đơn hàng đầu tiên của bạn”).",
         "promoBadge": "Trong khuyến mãi",
         "promoteOn": "Hiện đang hiển thị trong mục Khuyến mãi của bạn.",
-        "promoteOff": "Đã xóa khỏi mục Khuyến mãi của bạn."
+        "promoteOff": "Đã xóa khỏi mục Khuyến mãi của bạn.",
+        "tileImage": "Hình ảnh của ô",
+        "tileImageHint": "Hiển thị làm nền của ô khuyến mãi thay cho thẻ màu xanh lá. Xóa ảnh để quay lại giao diện mặc định."
       },
       "signupBonusAlways": "Thưởng đăng ký (luôn bật)",
       "signupBonusDatedHint": "Được tặng cho mọi tài khoản mới, không có ngày kết thúc. Để có ưu đãi đăng ký trong thời gian giới hạn (ngày bắt đầu/kết thúc), hãy dùng “Thêm cách kiếm điểm → Khi khách hàng đăng ký” ở trên.",

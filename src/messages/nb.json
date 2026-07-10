@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Ost",
       "pizzaRoleTopping": "Topping",
       "pizzaRoleGarnish": "Garnityr (tilsettes etter steking)",
+      "pizzaRoleCookLevel": "Stekegrad",
       "optionsChoices": "Alternativer / Valg",
       "addOption": "Legg til alternativ",
       "optionNamePlaceholder": "Alternativnavn",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Reklamer for dette som en flis på bestillingssiden din slik at kundene ser det (f.eks. «Tjen $5 på din første bestilling»).",
         "promoBadge": "I tilbud",
         "promoteOn": "Vises nå i Tilbud-delen din.",
-        "promoteOff": "Fjernet fra Tilbud-delen din."
+        "promoteOff": "Fjernet fra Tilbud-delen din.",
+        "tileImage": "Flisbilde",
+        "tileImageHint": "Vises som bakgrunn for promoflisen i stedet for det grønne kortet. Fjern det for å gå tilbake til standardutseendet."
       },
       "signupBonusAlways": "Registreringsbonus (alltid på)",
       "signupBonusDatedHint": "Gis til hver nye konto, uten sluttdato. For et tidsbegrenset registreringstilbud (start-/sluttdato) bruker du «Legg til en måte å tjene på → Når en kunde registrerer seg» ovenfor.",

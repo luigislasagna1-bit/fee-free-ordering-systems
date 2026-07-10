@@ -1844,6 +1844,7 @@
       "pizzaRoleCheese": "Sajt",
       "pizzaRoleTopping": "Feltét",
       "pizzaRoleGarnish": "Díszítés (sütés után kerül rá)",
+      "pizzaRoleCookLevel": "Sütési fokozat",
       "optionsChoices": "Lehetőségek / Választások",
       "addOption": "Lehetőség hozzáadása",
       "optionNamePlaceholder": "Lehetőség neve",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Hirdesse ezt csempeként a rendelési oldalán, hogy a vásárlók lássák (pl. „Szerezzen $5-t az első rendelésével”).",
         "promoBadge": "Akciókban",
         "promoteOn": "Mostantól megjelenik az Akciók szakaszában.",
-        "promoteOff": "Eltávolítva az Akciók szakaszából."
+        "promoteOff": "Eltávolítva az Akciók szakaszából.",
+        "tileImage": "Csempe képe",
+        "tileImageHint": "A zöld kártya helyett a promóciós csempe háttereként jelenik meg. Törölje, ha vissza szeretne térni az alapértelmezett megjelenéshez."
       },
       "signupBonusAlways": "Regisztrációs bónusz (mindig aktív)",
       "signupBonusDatedHint": "Minden új fiók megkapja, befejezési dátum nélkül. Időszakos regisztrációs ajánláshoz (kezdő/záró dátum) használja fent a „Kereseti mód hozzáadása → Amikor egy vásárló regisztrál” lehetőséget.",

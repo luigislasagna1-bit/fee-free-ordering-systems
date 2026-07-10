@@ -1844,6 +1844,7 @@
       "pizzaRoleCheese": "Peynir",
       "pizzaRoleTopping": "Malzeme",
       "pizzaRoleGarnish": "Süsleme (pişirme sonrası eklenir)",
+      "pizzaRoleCookLevel": "Pişirme derecesi",
       "optionsChoices": "Seçenekler / Tercihler",
       "addOption": "Seçenek ekle",
       "optionNamePlaceholder": "Seçenek adı",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Müşterilerin görmesi için bunu sipariş sayfanızda bir kutu olarak tanıtın (örn. “İlk siparişinizde $5 kazanın”).",
         "promoBadge": "Promosyonlarda",
         "promoteOn": "Artık Promosyonlar bölümünüzde gösteriliyor.",
-        "promoteOff": "Promosyonlar bölümünüzden kaldırıldı."
+        "promoteOff": "Promosyonlar bölümünüzden kaldırıldı.",
+        "tileImage": "Kutu görseli",
+        "tileImageHint": "Yeşil kartın yerine promosyon kutusunun arka planı olarak gösterilir. Varsayılan görünüme dönmek için temizleyin."
       },
       "signupBonusAlways": "Kayıt bonusu (her zaman açık)",
       "signupBonusDatedHint": "Bitiş tarihi olmadan her yeni hesaba verilir. Süreli bir kayıt teklifi (başlangıç/bitiş tarihleri) için yukarıdaki “Kazanma yolu ekle → Bir müşteri kaydolduğunda” seçeneğini kullanın.",

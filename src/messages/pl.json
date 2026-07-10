@@ -1844,6 +1844,7 @@
       "pizzaRoleCheese": "Ser",
       "pizzaRoleTopping": "Dodatek",
       "pizzaRoleGarnish": "Przybranie (dodawane po upieczeniu)",
+      "pizzaRoleCookLevel": "Stopień wypieczenia",
       "optionsChoices": "Opcje / Wybory",
       "addOption": "Dodaj opcję",
       "optionNamePlaceholder": "Nazwa opcji",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Reklamuj to jako kafelek na swojej stronie zamówień, aby klienci go widzieli (np. „Zdobądź $5 przy pierwszym zamówieniu”).",
         "promoBadge": "W promocjach",
         "promoteOn": "Teraz wyświetla się w Twojej sekcji Promocje.",
-        "promoteOff": "Usunięto z Twojej sekcji Promocje."
+        "promoteOff": "Usunięto z Twojej sekcji Promocje.",
+        "tileImage": "Obraz kafelka",
+        "tileImageHint": "Wyświetlany jako tło kafelka promocji zamiast zielonej karty. Wyczyść go, aby wrócić do domyślnego wyglądu."
       },
       "signupBonusAlways": "Bonus za rejestrację (zawsze aktywny)",
       "signupBonusDatedHint": "Przyznawany każdemu nowemu kontu, bez daty zakończenia. W przypadku oferty rejestracyjnej na czas ograniczony (daty rozpoczęcia/zakończenia) użyj powyżej opcji „Dodaj sposób zdobywania → Gdy klient się zarejestruje”.",

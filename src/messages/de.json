@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Käse",
       "pizzaRoleTopping": "Belag",
       "pizzaRoleGarnish": "Garnitur (nach dem Backen hinzugefügt)",
+      "pizzaRoleCookLevel": "Garstufe",
       "optionsChoices": "Optionen / Auswahl",
       "addOption": "Option hinzufügen",
       "optionNamePlaceholder": "Optionsname",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Bewirb dies als Kachel auf deiner Bestellseite, damit Kunden es sehen (z. B. „Verdiene $5 bei deiner ersten Bestellung“).",
         "promoBadge": "In Aktionen",
         "promoteOn": "Wird jetzt in deinem Bereich „Aktionen“ angezeigt.",
-        "promoteOff": "Aus deinem Bereich „Aktionen“ entfernt."
+        "promoteOff": "Aus deinem Bereich „Aktionen“ entfernt.",
+        "tileImage": "Kachelbild",
+        "tileImageHint": "Wird als Hintergrund der Promo-Kachel anstelle der grünen Karte angezeigt. Entferne es, um zum Standardaussehen zurückzukehren."
       },
       "signupBonusAlways": "Anmeldebonus (immer aktiv)",
       "signupBonusDatedHint": "Wird jedem neuen Konto ohne Enddatum gewährt. Für ein zeitlich begrenztes Anmeldeangebot (Start-/Enddatum) verwenden Sie oben „Verdienstmöglichkeit hinzufügen → Wenn sich ein Kunde anmeldet“.",

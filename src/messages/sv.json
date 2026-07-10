@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Ost",
       "pizzaRoleTopping": "Topping",
       "pizzaRoleGarnish": "Garnering (tillsätts efter gräddning)",
+      "pizzaRoleCookLevel": "Gräddningsgrad",
       "optionsChoices": "Alternativ / val",
       "addOption": "Lägg till alternativ",
       "optionNamePlaceholder": "Alternativnamn",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Marknadsför detta som en panel på din beställningssida så att kunderna ser det (t.ex. ”Tjäna $5 på din första beställning”).",
         "promoBadge": "I erbjudanden",
         "promoteOn": "Visas nu i din Erbjudanden-sektion.",
-        "promoteOff": "Borttagen från din Erbjudanden-sektion."
+        "promoteOff": "Borttagen från din Erbjudanden-sektion.",
+        "tileImage": "Panelbild",
+        "tileImageHint": "Visas som panelens bakgrund i stället för det gröna kortet. Rensa den för att gå tillbaka till standardutseendet."
       },
       "signupBonusAlways": "Registreringsbonus (alltid på)",
       "signupBonusDatedHint": "Ges till varje nytt konto, utan slutdatum. För ett tidsbegränsat registreringserbjudande (start-/slutdatum) använder du ”Lägg till ett sätt att tjäna → När en kund registrerar sig” ovan.",

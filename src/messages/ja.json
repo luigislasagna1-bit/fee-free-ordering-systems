@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "チーズ",
       "pizzaRoleTopping": "トッピング",
       "pizzaRoleGarnish": "仕上げ（焼き上がり後に追加）",
+      "pizzaRoleCookLevel": "焼き加減",
       "optionsChoices": "オプション / 選択肢",
       "addOption": "オプションを追加",
       "optionNamePlaceholder": "オプション名",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "注文ページにタイルとして掲載し、お客様に見てもらいましょう（例：“初回注文で$5を獲得”）。",
         "promoBadge": "プロモ掲載中",
         "promoteOn": "プロモーションセクションに表示されるようになりました。",
-        "promoteOff": "プロモーションセクションから削除されました。"
+        "promoteOff": "プロモーションセクションから削除されました。",
+        "tileImage": "タイル画像",
+        "tileImageHint": "緑のカードの代わりにプロモタイルの背景として表示されます。クリアすると既定の見た目に戻ります。"
       },
       "signupBonusAlways": "登録ボーナス（常に有効）",
       "signupBonusDatedHint": "終了日なしで、すべての新規アカウントに付与されます。期間限定の登録特典（開始日/終了日）には、上部の「獲得方法を追加 → お客様が登録したとき」をご利用ください。",

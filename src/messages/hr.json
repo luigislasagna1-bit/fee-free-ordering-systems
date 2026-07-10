@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Sir",
       "pizzaRoleTopping": "Dodatak",
       "pizzaRoleGarnish": "Ukras (dodaje se nakon pečenja)",
+      "pizzaRoleCookLevel": "Stupanj pečenja",
       "optionsChoices": "Opcije / Izbori",
       "addOption": "Dodaj opciju",
       "optionNamePlaceholder": "Naziv opcije",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Oglašavajte ovo kao pločicu na svojoj stranici za naručivanje kako bi je kupci vidjeli (npr. „Zaradite $5 na prvoj narudžbi“).",
         "promoBadge": "U promocijama",
         "promoteOn": "Sada se prikazuje u vašem odjeljku Promocije.",
-        "promoteOff": "Uklonjeno iz vašeg odjeljka Promocije."
+        "promoteOff": "Uklonjeno iz vašeg odjeljka Promocije.",
+        "tileImage": "Slika pločice",
+        "tileImageHint": "Prikazuje se kao pozadina promo pločice umjesto zelene kartice. Uklonite je da biste se vratili na zadani izgled."
       },
       "signupBonusAlways": "Bonus za registraciju (uvijek aktivan)",
       "signupBonusDatedHint": "Dodjeljuje se svakom novom računu, bez datuma završetka. Za vremenski ograničenu ponudu za registraciju (datumi početka/završetka) upotrijebite gore „Dodaj način zarade → Kada se kupac registrira“.",

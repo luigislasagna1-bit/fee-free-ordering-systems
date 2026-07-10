@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "치즈",
       "pizzaRoleTopping": "토핑",
       "pizzaRoleGarnish": "가니시 (구운 후 추가)",
+      "pizzaRoleCookLevel": "굽기 정도",
       "optionsChoices": "옵션 / 선택사항",
       "addOption": "옵션 추가",
       "optionNamePlaceholder": "옵션 이름",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "주문 페이지에 타일로 홍보하여 고객이 볼 수 있도록 하세요(예: “첫 주문 시 $5 적립”).",
         "promoBadge": "프로모션 게재 중",
         "promoteOn": "이제 프로모션 섹션에 표시됩니다.",
-        "promoteOff": "프로모션 섹션에서 제거되었습니다."
+        "promoteOff": "프로모션 섹션에서 제거되었습니다.",
+        "tileImage": "타일 이미지",
+        "tileImageHint": "녹색 카드 대신 프로모션 타일의 배경으로 표시됩니다. 지우면 기본 모양으로 돌아갑니다."
       },
       "signupBonusAlways": "가입 보너스 (항상 적용)",
       "signupBonusDatedHint": "종료일 없이 모든 신규 계정에 지급됩니다. 기간 한정 가입 혜택(시작일/종료일)을 원하시면 위의 “적립 방법 추가 → 고객이 가입할 때”를 사용하세요.",

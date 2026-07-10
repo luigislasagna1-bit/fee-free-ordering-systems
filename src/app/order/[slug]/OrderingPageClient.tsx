@@ -1156,6 +1156,8 @@ export function OrderingPageClient({
     orderThreshold: number | null;
     nthInterval: number | null;
     label: string | null;
+    /** Custom tile image (owner-uploaded); null = default green gradient. */
+    imageUrl?: string | null;
   }>;
   /** Set (non-null) only for LOGGED-OUT viewers when the owner enabled the
    *  "sign up to earn" banner. rewardName is the store's reward label (null →
@@ -5413,6 +5415,15 @@ export function OrderingPageClient({
                   className="flex-shrink-0 w-[230px] h-32 rounded-xl text-white shadow-md relative overflow-hidden"
                   style={{ background: "linear-gradient(135deg, #059669, #047857)" }}
                 >
+                  {/* Owner-uploaded tile image (Luigi 2026-07-09) — sits over the
+                      gradient with a bottom scrim so the text stays legible. */}
+                  {rule.imageUrl && (
+                    <>
+                      <img src={rule.imageUrl} alt="" aria-hidden="true" loading="lazy" decoding="async"
+                        className="absolute inset-0 w-full h-full object-cover" />
+                      <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 55%, rgba(0,0,0,0.10) 100%)" }} />
+                    </>
+                  )}
                   <div className="absolute top-2.5 left-3 text-[10px] uppercase tracking-widest font-bold opacity-90">
                     {rewardName}
                   </div>

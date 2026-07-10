@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Juust",
       "pizzaRoleTopping": "Kate",
       "pizzaRoleGarnish": "Kaunistus (lisatakse pärast küpsetamist)",
+      "pizzaRoleCookLevel": "Küpsetusaste",
       "optionsChoices": "Valikud / Võimalused",
       "addOption": "Lisa valik",
       "optionNamePlaceholder": "Valiku nimi",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Reklaami seda paanina oma tellimislehel, et kliendid seda näeksid (nt „Teeni $5 oma esimese tellimusega“).",
         "promoBadge": "Pakkumistes",
         "promoteOn": "Kuvatakse nüüd sinu jaotises „Pakkumised“.",
-        "promoteOff": "Eemaldatud sinu jaotisest „Pakkumised“."
+        "promoteOff": "Eemaldatud sinu jaotisest „Pakkumised“.",
+        "tileImage": "Paani pilt",
+        "tileImageHint": "Kuvatakse promopaani taustana rohelise kaardi asemel. Tühjenda see, et naasta vaikevälimuse juurde."
       },
       "signupBonusAlways": "Registreerumisboonus (alati aktiivne)",
       "signupBonusDatedHint": "Antakse igale uuele kontole, lõppkuupäevata. Tähtajalise registreerumispakkumise jaoks (algus-/lõppkuupäev) kasuta ülal valikut „Lisa teenimisviis → Kui klient registreerub“.",

@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "奶酪",
       "pizzaRoleTopping": "配料",
       "pizzaRoleGarnish": "点缀（烤后添加）",
+      "pizzaRoleCookLevel": "烤制程度",
       "optionsChoices": "选项 / 选择",
       "addOption": "添加选项",
       "optionNamePlaceholder": "选项名称",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "将其作为磁贴展示在您的订餐页面上，让顾客看到（例如“首单赚取 $5”）。",
         "promoBadge": "促销中",
         "promoteOn": "现已显示在您的促销专区。",
-        "promoteOff": "已从您的促销专区移除。"
+        "promoteOff": "已从您的促销专区移除。",
+        "tileImage": "磁贴图片",
+        "tileImageHint": "作为促销磁贴的背景显示，取代绿色卡片。清除后即可恢复默认外观。"
       },
       "signupBonusAlways": "注册奖励（始终开启）",
       "signupBonusDatedHint": "向每个新账户发放，无结束日期。如需限时注册优惠（开始/结束日期），请使用上方的“添加赚取方式 → 当客户注册时”。",

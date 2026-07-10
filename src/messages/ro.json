@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Brânză",
       "pizzaRoleTopping": "Topping",
       "pizzaRoleGarnish": "Decor (adăugat după coacere)",
+      "pizzaRoleCookLevel": "Nivel de coacere",
       "optionsChoices": "Opțiuni / Alegeri",
       "addOption": "Adaugă opțiune",
       "optionNamePlaceholder": "Numele opțiunii",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Promovează acest lucru ca un panou pe pagina ta de comenzi, ca să-l vadă clienții (de ex. „Câștigă $5 la prima ta comandă”).",
         "promoBadge": "În promoții",
         "promoteOn": "Acum se afișează în secțiunea ta Promoții.",
-        "promoteOff": "Eliminat din secțiunea ta Promoții."
+        "promoteOff": "Eliminat din secțiunea ta Promoții.",
+        "tileImage": "Imaginea panoului",
+        "tileImageHint": "Afișată ca fundal al panoului promoțional în locul cardului verde. Șterge-o ca să revii la aspectul implicit."
       },
       "signupBonusAlways": "Bonus de înregistrare (mereu activ)",
       "signupBonusDatedHint": "Se acordă fiecărui cont nou, fără dată de încheiere. Pentru o ofertă de înregistrare pe durată limitată (date de început/sfârșit), folosește mai sus „Adaugă o modalitate de câștig → Când un client se înregistrează”.",

@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Sýr",
       "pizzaRoleTopping": "Topping",
       "pizzaRoleGarnish": "Ozdoba (přidává se po upečení)",
+      "pizzaRoleCookLevel": "Stupeň propečení",
       "optionsChoices": "Možnosti / Výběry",
       "addOption": "Přidat možnost",
       "optionNamePlaceholder": "Název možnosti",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Propagujte to jako dlaždici na své objednávkové stránce, aby to zákazníci viděli (např. „Získejte $5 za první objednávku“).",
         "promoBadge": "V akcích",
         "promoteOn": "Nyní se zobrazuje ve vaší sekci Akce.",
-        "promoteOff": "Odebráno z vaší sekce Akce."
+        "promoteOff": "Odebráno z vaší sekce Akce.",
+        "tileImage": "Obrázek dlaždice",
+        "tileImageHint": "Zobrazí se jako pozadí promo dlaždice místo zelené karty. Vymažte jej, pokud se chcete vrátit k výchozímu vzhledu."
       },
       "signupBonusAlways": "Bonus za registraci (vždy aktivní)",
       "signupBonusDatedHint": "Uděluje se každému novému účtu, bez data ukončení. Pro časově omezenou registrační nabídku (data zahájení/ukončení) použijte výše „Přidat způsob získání → Když se zákazník zaregistruje“.",

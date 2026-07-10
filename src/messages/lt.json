@@ -2593,6 +2593,7 @@
       "pizzaRoleCheese": "Sūris",
       "pizzaRoleTopping": "Priedas",
       "pizzaRoleGarnish": "Papuošimas (dedamas po kepimo)",
+      "pizzaRoleCookLevel": "Kepimo lygis",
       "optionsChoices": "Pasirinkimai / variantai",
       "addOption": "Pridėti pasirinkimą",
       "optionNamePlaceholder": "Pasirinkimo pavadinimas",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Reklamuokite tai kaip plytelę savo užsakymų puslapyje, kad klientai ją matytų (pvz., „Užsidirbkite $5 už pirmą užsakymą“).",
         "promoBadge": "Akcijose",
         "promoteOn": "Dabar rodoma jūsų skiltyje „Akcijos“.",
-        "promoteOff": "Pašalinta iš jūsų skilties „Akcijos“."
+        "promoteOff": "Pašalinta iš jūsų skilties „Akcijos“.",
+        "tileImage": "Plytelės paveikslėlis",
+        "tileImageHint": "Rodomas kaip akcijos plytelės fonas vietoj žalios kortelės. Išvalykite jį, kad grįžtumėte prie numatytosios išvaizdos."
       },
       "signupBonusAlways": "Registracijos premija (visada įjungta)",
       "signupBonusDatedHint": "Skiriama kiekvienai naujai paskyrai, be pabaigos datos. Riboto laiko registracijos pasiūlymui (pradžios / pabaigos datos) naudokite viršuje „Pridėti uždarbio būdą → Kai klientas užsiregistruoja“.",

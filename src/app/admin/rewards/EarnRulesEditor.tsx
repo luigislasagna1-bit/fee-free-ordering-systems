@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
-import { Plus, Trash2, ToggleLeft, ToggleRight, Loader2, X, Sparkles, Megaphone } from "lucide-react";
+import { Plus, Trash2, ToggleLeft, ToggleRight, Loader2, X, Sparkles, Megaphone, Image as ImageIcon } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 type Rule = {
   id: string; active: boolean; triggerType: string;
@@ -11,6 +12,8 @@ type Rule = {
   orderThreshold: number | null; nthInterval: number | null;
   startsAt: string | null; endsAt: string | null; label: string | null;
   showInPromos?: boolean;
+  /** Custom promo-tile image; null = the default green gradient. */
+  imageUrl?: string | null;
 };
 
 /**
@@ -108,6 +111,18 @@ export function EarnRulesEditor({ currency, rewardLabelPlural }: { currency: str
     } catch { toast.error(t("saveFailed")); reload(); }
   };
 
+  // Which rule's tile-image editor is open (image only matters for promo tiles).
+  const [imageEditId, setImageEditId] = useState<string | null>(null);
+  const patchImage = async (r: Rule, url: string) => {
+    setRules((prev) => prev.map((x) => x.id === r.id ? { ...x, imageUrl: url || null } : x));
+    try {
+      const res = await fetch(`/api/admin/reward-rules/${r.id}`, {
+        method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ imageUrl: url }),
+      });
+      if (!res.ok) throw new Error();
+    } catch { toast.error(t("saveFailed")); reload(); }
+  };
+
   const remove = async (r: Rule) => {
     if (!confirm(t("confirmDelete"))) return;
     try {
@@ -137,26 +152,42 @@ export function EarnRulesEditor({ currency, rewardLabelPlural }: { currency: str
       ) : rules.length > 0 ? (
         <ul className="mt-3 divide-y divide-gray-100">
           {rules.map((r) => (
-            <li key={r.id} className="flex items-center justify-between gap-3 py-2">
-              <div className="min-w-0">
-                <div className="text-sm font-medium text-gray-900 flex items-center gap-1.5">
-                  {r.label || summary(r)}
-                  {r.showInPromos && <span className="text-[10px] font-bold uppercase text-emerald-700 bg-emerald-100 rounded px-1.5 py-0.5">{t("promoBadge")}</span>}
+            <li key={r.id} className="py-2">
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="text-sm font-medium text-gray-900 flex items-center gap-1.5">
+                    {r.label || summary(r)}
+                    {r.showInPromos && <span className="text-[10px] font-bold uppercase text-emerald-700 bg-emerald-100 rounded px-1.5 py-0.5">{t("promoBadge")}</span>}
+                  </div>
+                  {r.label && <div className="text-xs text-gray-500">{summary(r)}</div>}
                 </div>
-                {r.label && <div className="text-xs text-gray-500">{summary(r)}</div>}
+                <div className="flex items-center gap-1 flex-shrink-0">
+                  {/* Tile image — only meaningful when the rule is a promo tile.
+                      Emerald when a custom image is set. Luigi 2026-07-09. */}
+                  {r.showInPromos && (
+                    <button onClick={() => setImageEditId(imageEditId === r.id ? null : r.id)} title={t("tileImage")}
+                      className={r.imageUrl ? "p-1 text-emerald-600" : "p-1 text-gray-300 hover:text-gray-500"}>
+                      <ImageIcon className="w-4 h-4" />
+                    </button>
+                  )}
+                  <button onClick={() => togglePromos(r)} title={r.showInPromos ? t("promoteOff") : t("promoteOn")}
+                    className={r.showInPromos ? "p-1 text-emerald-600" : "p-1 text-gray-300 hover:text-gray-500"}>
+                    <Megaphone className="w-4 h-4" />
+                  </button>
+                  <button onClick={() => toggle(r)} title={r.active ? t("pause") : t("resume")}>
+                    {r.active ? <ToggleRight className="w-7 h-7 text-emerald-600" /> : <ToggleLeft className="w-7 h-7 text-gray-300" />}
+                  </button>
+                  <button onClick={() => remove(r)} className="p-1 text-gray-400 hover:text-red-600" title={t("delete")}>
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
-              <div className="flex items-center gap-1 flex-shrink-0">
-                <button onClick={() => togglePromos(r)} title={r.showInPromos ? t("promoteOff") : t("promoteOn")}
-                  className={r.showInPromos ? "p-1 text-emerald-600" : "p-1 text-gray-300 hover:text-gray-500"}>
-                  <Megaphone className="w-4 h-4" />
-                </button>
-                <button onClick={() => toggle(r)} title={r.active ? t("pause") : t("resume")}>
-                  {r.active ? <ToggleRight className="w-7 h-7 text-emerald-600" /> : <ToggleLeft className="w-7 h-7 text-gray-300" />}
-                </button>
-                <button onClick={() => remove(r)} className="p-1 text-gray-400 hover:text-red-600" title={t("delete")}>
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
+              {r.showInPromos && imageEditId === r.id && (
+                <div className="mt-2 rounded-xl border border-gray-100 bg-gray-50 p-3">
+                  <ImageUpload value={r.imageUrl ?? ""} onChange={(url) => patchImage(r, url)} label={t("tileImage")} />
+                  <p className="mt-1 text-xs text-gray-400">{t("tileImageHint")}</p>
+                </div>
+              )}
             </li>
           ))}
         </ul>

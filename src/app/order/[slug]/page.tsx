@@ -272,7 +272,7 @@ export default async function OrderingPage({
             { OR: [{ endsAt: null }, { endsAt: { gte: now } }] },
           ],
         },
-        select: { id: true, triggerType: true, earnAmount: true, earnPercent: true, orderThreshold: true, nthInterval: true, label: true },
+        select: { id: true, triggerType: true, earnAmount: true, earnPercent: true, orderThreshold: true, nthInterval: true, label: true, imageUrl: true },
         orderBy: { createdAt: "desc" },
         take: 12,
       })

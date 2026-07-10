@@ -1900,6 +1900,7 @@
       "pizzaRoleCheese": "Keju",
       "pizzaRoleTopping": "Topping",
       "pizzaRoleGarnish": "Hiasan (ditambahkan setelah dipanggang)",
+      "pizzaRoleCookLevel": "Tingkat kematangan",
       "optionsChoices": "Opsi / Pilihan",
       "addOption": "Tambah opsi",
       "optionNamePlaceholder": "Nama opsi",
@@ -4541,7 +4542,9 @@
         "showInPromosHint": "Promosikan ini sebagai ubin di halaman pemesanan Anda agar pelanggan melihatnya (mis. “Dapatkan $5 pada pesanan pertama Anda”).",
         "promoBadge": "Di promo",
         "promoteOn": "Kini ditampilkan di bagian Promo Anda.",
-        "promoteOff": "Dihapus dari bagian Promo Anda."
+        "promoteOff": "Dihapus dari bagian Promo Anda.",
+        "tileImage": "Gambar ubin",
+        "tileImageHint": "Ditampilkan sebagai latar belakang ubin promo, bukan kartu hijau. Hapus untuk kembali ke tampilan bawaan."
       },
       "signupBonusAlways": "Bonus pendaftaran (selalu aktif)",
       "signupBonusDatedHint": "Diberikan ke setiap akun baru, tanpa tanggal berakhir. Untuk penawaran pendaftaran berbatas waktu (tanggal mulai/berakhir), gunakan “Tambahkan cara mendapatkan → Saat pelanggan mendaftar” di atas.",
