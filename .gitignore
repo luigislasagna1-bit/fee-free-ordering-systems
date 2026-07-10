@@ -65,3 +65,6 @@ ios/App/Pods
 ios/DerivedData
 ios/App/App/public/
 android/app/src/main/assets/public/
+
+# Database backups — contain PII, never commit (launch-readiness C-2)
+backups/
