@@ -4497,12 +4497,16 @@
         "release": "Zurückerstattet (Bestellung storniert)",
         "adjust": "Anpassung",
         "signup_bonus": "Anmeldebonus",
-        "expire": "Verfallen"
+        "expire": "Verfallen",
+        "refund": "Auf das Guthaben erstattet",
+        "reverse": "Rückgängig gemacht (Bestellung erstattet)",
+        "promo": "Bonus aus einer Aktion"
       },
       "redeemAlwaysOn": "Da das Programm aktiv ist, können Kunden einen Teil oder den gesamten Betrag jeder Bestellung mit ihrem {label} bezahlen (den Restbetrag begleichen sie mit ihrer üblichen Methode). Es erscheint als Zahlungsoption an der Kasse.",
       "rules": {
         "title": "Verdienmöglichkeiten",
         "subtitle": "Fügen Sie Bonusregeln zusätzlich zum Grundsatz hinzu — Anmeldegeschenke, Erstbestellungs-Boni, Belohnungen für Großbestellungen, Treue-Meilensteine. Jede kann in einem Datumszeitraum laufen.",
+        "doubleSignupWarn": "Achtung: Der dauerhaft aktive Anmeldebonus ({bonus}) UND eine Regel „wenn sich ein Kunde anmeldet“ sind beide aktiv — jedes neue Konto erhält BEIDE Beträge. Deaktivieren Sie eine davon, sofern das nicht beabsichtigt ist.",
         "add": "Verdienmöglichkeit hinzufügen",
         "loading": "Wird geladen…",
         "empty": "Noch keine Bonusregeln — der Grundsatz oben gilt weiterhin.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Anmeldebonus",
           "expire": "Verfallen",
           "refund": "Auf Ihr Guthaben erstattet",
-          "reverse": "Rückgängig gemacht (Bestellung erstattet)"
+          "reverse": "Rückgängig gemacht (Bestellung erstattet)",
+          "promo": "Bonus aus einer Aktion"
         },
         "orderRef": "Bestellung #{number}",
         "someExcluded": "Manche Artikel (z. B. Geschenkkarten) verdienen keine {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Maria Rossi",
       "labelEmail": "E-Mail",
       "placeholderEmail": "du@beispiel.de",
-      "labelPhone": "Telefon (optional)",
+      "labelPhone": "Telefon",
       "placeholderPhone": "0151-123-4567",
       "labelPassword": "Passwort",
       "placeholderPassword": "Mindestens 8 Zeichen",

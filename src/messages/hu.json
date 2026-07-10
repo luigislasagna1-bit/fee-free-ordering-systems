@@ -4497,12 +4497,16 @@
         "release": "Visszatérítve (rendelés törölve)",
         "adjust": "Módosítás",
         "signup_bonus": "Regisztrációs bónusz",
-        "expire": "Lejárt"
+        "expire": "Lejárt",
+        "reverse": "Visszavonva (rendelés visszatérítve)",
+        "refund": "Visszatérítve az egyenlegre",
+        "promo": "Bónusz egy ajánlatból"
       },
       "redeemAlwaysOn": "Mivel a program be van kapcsolva, a vásárlók bármely rendelés egy részét vagy egészét kifizethetik a {label} egyenlegükkel (a maradékot a szokásos módjukkal fizetik). Fizetési lehetőségként jelenik meg a fizetésnél.",
       "rules": {
         "title": "Szerzési módok",
         "subtitle": "Adjon bónuszszabályokat az alapkulcs fölé — regisztrációs ajándékok, első rendelés bónuszok, nagy rendelés jutalmak, hűségmérföldkövek. Mindegyik futhat egy időszakban.",
+        "doubleSignupWarn": "Figyelem: a mindig aktív regisztrációs bónusz ({bonus}) ÉS egy „amikor egy vásárló regisztrál” szabály egyszerre aktív — minden új fiók MINDKÉT összeget megkapja. Kapcsolja ki az egyiket, hacsak nem ez a szándék.",
         "add": "Szerzési mód hozzáadása",
         "loading": "Betöltés…",
         "empty": "Még nincsenek bónuszszabályok — a fenti alapkulcs továbbra is érvényes.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Regisztrációs bónusz",
           "expire": "Lejárt",
           "refund": "Visszatérítve az egyenlegére",
-          "reverse": "Visszavonva (rendelés visszatérítve)"
+          "reverse": "Visszavonva (rendelés visszatérítve)",
+          "promo": "Bónusz egy ajánlatból"
         },
         "orderRef": "Rendelés #{number}",
         "someExcluded": "Egyes termékek (például ajándékkártyák) nem gyűjtenek {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Kiss Mária",
       "labelEmail": "E-mail",
       "placeholderEmail": "te@pelda.com",
-      "labelPhone": "Telefon (nem kötelező)",
+      "labelPhone": "Telefon",
       "placeholderPhone": "06-30-123-4567",
       "labelPassword": "Jelszó",
       "placeholderPassword": "Legalább 8 karakter",

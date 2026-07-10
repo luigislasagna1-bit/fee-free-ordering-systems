@@ -4497,12 +4497,16 @@
         "release": "Returnat (comandă anulată)",
         "adjust": "Ajustare",
         "signup_bonus": "Bonus de înregistrare",
-        "expire": "Expirat"
+        "expire": "Expirat",
+        "refund": "Rambursat în sold",
+        "reverse": "Anulat (comandă rambursată)",
+        "promo": "Bonus dintr-o promoție"
       },
       "redeemAlwaysOn": "Deoarece programul este activ, clienții pot plăti parțial sau integral orice comandă cu {label} (restul îl plătesc cu metoda lor obișnuită). Apare ca opțiune de plată la finalizare.",
       "rules": {
         "title": "Moduri de a câștiga",
         "subtitle": "Adaugă reguli bonus peste rata de bază — cadouri la înscriere, bonusuri la prima comandă, recompense pentru comenzi mari, etape de fidelitate. Fiecare poate rula într-un interval de date.",
+        "doubleSignupWarn": "Atenție: bonusul de înregistrare permanent ({bonus}) ȘI o regulă „când un client se înscrie” sunt active simultan — fiecare cont nou va primi AMBELE sume. Dezactivează una dintre ele, dacă nu este intenționat.",
         "add": "Adaugă un mod de a câștiga",
         "loading": "Se încarcă…",
         "empty": "Încă nu există reguli bonus — rata de bază de mai sus se aplică în continuare.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Bonus de înregistrare",
           "expire": "Expirat",
           "refund": "Rambursat în soldul tău",
-          "reverse": "Anulat (comandă rambursată)"
+          "reverse": "Anulat (comandă rambursată)",
+          "promo": "Bonus dintr-o promoție"
         },
         "orderRef": "Comanda #{number}",
         "someExcluded": "Unele articole (precum cardurile cadou) nu acumulează {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Maria Ionescu",
       "labelEmail": "E-mail",
       "placeholderEmail": "tu@exemplu.com",
-      "labelPhone": "Telefon (opțional)",
+      "labelPhone": "Telefon",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Parolă",
       "placeholderPassword": "Cel puțin 8 caractere",

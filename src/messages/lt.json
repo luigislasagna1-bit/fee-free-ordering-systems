@@ -4497,12 +4497,16 @@
         "release": "Grąžinta (užsakymas atšauktas)",
         "adjust": "Koregavimas",
         "signup_bonus": "Registracijos premija",
-        "expire": "Pasibaigė galiojimas"
+        "expire": "Pasibaigė galiojimas",
+        "reverse": "Atšaukta (užsakymas grąžintas)",
+        "refund": "Grąžinta į likutį",
+        "promo": "Premija iš akcijos"
       },
       "redeemAlwaysOn": "Kadangi programa įjungta, klientai gali dalį arba visą užsakymą apmokėti savo {label} (likutį jie sumoka įprastu būdu). Atsiskaitant tai rodoma kaip mokėjimo būdas.",
       "rules": {
         "title": "Uždarbio būdai",
         "subtitle": "Pridėkite premijų taisyklių virš bazinio tarifo — registracijos dovanos, pirmojo užsakymo premijos, atlygiai už didelius užsakymus, lojalumo etapai. Kiekviena gali veikti per nustatytą laikotarpį.",
+        "doubleSignupWarn": "Dėmesio: visada įjungta registracijos premija ({bonus}) IR taisyklė „kai klientas užsiregistruoja“ veikia vienu metu — kiekviena nauja paskyra gaus ABI sumas. Išjunkite vieną iš jų, nebent taip ir buvo numatyta.",
         "add": "Pridėti uždarbio būdą",
         "loading": "Įkeliama…",
         "empty": "Premijų taisyklių dar nėra — aukščiau nurodytas bazinis tarifas vis tiek galioja.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Registracijos premija",
           "expire": "Pasibaigė galiojimas",
           "refund": "Grąžinta į jūsų likutį",
-          "reverse": "Atšaukta (užsakymas grąžintas)"
+          "reverse": "Atšaukta (užsakymas grąžintas)",
+          "promo": "Premija iš akcijos"
         },
         "orderRef": "Užsakymas #{number}",
         "someExcluded": "Kai kurios prekės (pvz., dovanų kortelės) neuždirba {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Jonas Jonaitis",
       "labelEmail": "El. paštas",
       "placeholderEmail": "jusu@pavyzdys.lt",
-      "labelPhone": "Telefonas (neprivaloma)",
+      "labelPhone": "Telefonas",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Slaptažodis",
       "placeholderPassword": "Bent 8 simboliai",

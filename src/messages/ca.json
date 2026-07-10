@@ -4497,12 +4497,16 @@
         "release": "Retornat (comanda cancel·lada)",
         "adjust": "Ajustament",
         "signup_bonus": "Bonificació de registre",
-        "expire": "Caducat"
+        "expire": "Caducat",
+        "refund": "Reemborsat al saldo",
+        "reverse": "Revertit (comanda reemborsada)",
+        "promo": "Bonificació d'una promoció"
       },
       "redeemAlwaysOn": "Com que el programa està actiu, els clients poden pagar una part o la totalitat de qualsevol comanda amb els seus {label} (paguen qualsevol resta amb el seu mètode habitual). Apareix com a opció de pagament a la pantalla de pagament.",
       "rules": {
         "title": "Maneres de guanyar",
         "subtitle": "Afegeix regles de bonificació per damunt de la tarifa base — regals d'inscripció, bonificacions de la primera comanda, recompenses per comandes grans, fites de fidelitat. Cadascuna pot funcionar en un interval de dates.",
+        "doubleSignupWarn": "Atenció: la bonificació de registre permanent ({bonus}) I una regla «quan un client s'inscriu» estan actives alhora — cada compte nou rebrà TOTS DOS imports. Desactiva'n una, tret que sigui intencionat.",
         "add": "Afegeix una manera de guanyar",
         "loading": "S'està carregant…",
         "empty": "Encara no hi ha regles de bonificació — la tarifa base anterior continua sent vàlida.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Bonificació de registre",
           "expire": "Caducat",
           "refund": "Reemborsat al teu saldo",
-          "reverse": "Revertit (comanda reemborsada)"
+          "reverse": "Revertit (comanda reemborsada)",
+          "promo": "Bonificació d'una promoció"
         },
         "orderRef": "Comanda #{number}",
         "someExcluded": "Alguns articles (com les targetes regal) no guanyen {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Maria Rossi",
       "labelEmail": "Correu electrònic",
       "placeholderEmail": "tu@exemple.com",
-      "labelPhone": "Telèfon (opcional)",
+      "labelPhone": "Telèfon",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Contrasenya",
       "placeholderPassword": "Com a mínim 8 caràcters",

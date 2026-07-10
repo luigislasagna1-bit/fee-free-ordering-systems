@@ -4497,12 +4497,16 @@
         "release": "Tagastatud (tellimus tühistatud)",
         "adjust": "Korrigeerimine",
         "signup_bonus": "Liitumisboonus",
-        "expire": "Aegunud"
+        "expire": "Aegunud",
+        "reverse": "Tühistatud (tellimus tagastatud)",
+        "refund": "Tagastatud saldole",
+        "promo": "Boonus eripakkumisest"
       },
       "redeemAlwaysOn": "Kuna programm on sees, saavad kliendid maksta osa tellimusest või kogu tellimuse oma {label}-ga (ülejäänu maksavad nad oma tavapärase meetodiga). See kuvatakse kassas makseviisina.",
       "rules": {
         "title": "Teenimisviisid",
         "subtitle": "Lisa boonusreeglid baasmäära peale — registreerumiskingitused, esimese tellimuse boonused, preemiad suurte tellimuste eest, lojaalsuse verstapostid. Iga reegel võib kehtida kindlal ajavahemikul.",
+        "doubleSignupWarn": "Tähelepanu: alati sees olev liitumisboonus ({bonus}) JA reegel „kui klient registreerub“ on mõlemad korraga aktiivsed — iga uus konto saab MÕLEMAD summad. Lülita üks välja, kui see pole taotluslik.",
         "add": "Lisa teenimisviis",
         "loading": "Laadimine…",
         "empty": "Boonusreegleid pole veel — ülaltoodud baasmäär kehtib ikka.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Liitumisboonus",
           "expire": "Aegunud",
           "refund": "Tagastatud teie saldole",
-          "reverse": "Tühistatud (tellimus tagastatud)"
+          "reverse": "Tühistatud (tellimus tagastatud)",
+          "promo": "Boonus eripakkumisest"
         },
         "orderRef": "Tellimus #{number}",
         "someExcluded": "Mõned tooted (nt kinkekaardid) ei teeni {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Maria Rossi",
       "labelEmail": "E-post",
       "placeholderEmail": "sina@näide.ee",
-      "labelPhone": "Telefon (valikuline)",
+      "labelPhone": "Telefon",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Parool",
       "placeholderPassword": "Vähemalt 8 tähemärki",

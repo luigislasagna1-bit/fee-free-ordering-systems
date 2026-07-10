@@ -4497,12 +4497,16 @@
         "release": "Đã hoàn lại (đơn bị hủy)",
         "adjust": "Điều chỉnh",
         "signup_bonus": "Thưởng đăng ký",
-        "expire": "Đã hết hạn"
+        "expire": "Đã hết hạn",
+        "reverse": "Đã đảo ngược (đơn hàng được hoàn)",
+        "refund": "Đã hoàn vào số dư",
+        "promo": "Thưởng từ ưu đãi"
       },
       "redeemAlwaysOn": "Vì chương trình đang bật, khách có thể dùng {label} để thanh toán một phần hoặc toàn bộ đơn hàng (phần còn lại trả bằng phương thức thông thường). Nó hiển thị như một phương thức thanh toán khi thanh toán.",
       "rules": {
         "title": "Cách kiếm điểm",
         "subtitle": "Thêm quy tắc thưởng bên trên mức cơ bản — quà đăng ký, thưởng đơn đầu tiên, thưởng đơn lớn, mốc khách trung thành. Mỗi quy tắc có thể chạy trong một khoảng ngày.",
+        "doubleSignupWarn": "Lưu ý: thưởng đăng ký luôn bật ({bonus}) VÀ quy tắc “Khi khách đăng ký” đang cùng hoạt động — mỗi tài khoản mới sẽ nhận CẢ HAI khoản. Hãy tắt một trong hai nếu đó không phải là chủ ý.",
         "add": "Thêm một cách kiếm điểm",
         "loading": "Đang tải…",
         "empty": "Chưa có quy tắc thưởng — mức cơ bản ở trên vẫn áp dụng.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Thưởng đăng ký",
           "expire": "Đã hết hạn",
           "refund": "Đã hoàn vào số dư của bạn",
-          "reverse": "Đã đảo ngược (đơn hàng được hoàn)"
+          "reverse": "Đã đảo ngược (đơn hàng được hoàn)",
+          "promo": "Thưởng từ ưu đãi"
         },
         "orderRef": "Đơn hàng #{number}",
         "someExcluded": "Một số mặt hàng (như thẻ quà tặng) không tích {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Nguyễn Văn An",
       "labelEmail": "Email",
       "placeholderEmail": "ban@example.com",
-      "labelPhone": "Số điện thoại (tuỳ chọn)",
+      "labelPhone": "Điện thoại",
       "placeholderPhone": "0901-234-567",
       "labelPassword": "Mật khẩu",
       "placeholderPassword": "Ít nhất 8 ký tự",

@@ -4497,12 +4497,16 @@
         "release": "Vrnjen (naročilo preklicano)",
         "adjust": "Prilagoditev",
         "signup_bonus": "Bonus ob registraciji",
-        "expire": "Poteklo"
+        "expire": "Poteklo",
+        "reverse": "Razveljavljeno (naročilo vrnjeno)",
+        "refund": "Vrnjeno na stanje",
+        "promo": "Bonus iz posebne ponudbe"
       },
       "redeemAlwaysOn": "Ker je program vključen, lahko stranke del ali celotno naročilo plačajo s svojimi {label} (preostanek plačajo z običajnim načinom). Prikaže se kot možnost plačila ob blagajni.",
       "rules": {
         "title": "Načini pridobivanja",
         "subtitle": "Dodajte bonusna pravila poleg osnovne stopnje — darila ob prijavi, bonusi za prvo naročilo, nagrade za velika naročila, mejniki zvestobe. Vsako lahko poteka v določenem časovnem obdobju.",
+        "doubleSignupWarn": "Opozorilo: stalno vklopljeni bonus ob registraciji ({bonus}) IN pravilo »ko se stranka prijavi« sta hkrati aktivna — vsak nov račun bo prejel OBA zneska. Izklopite enega, razen če je to namerno.",
         "add": "Dodaj način pridobivanja",
         "loading": "Nalaganje…",
         "empty": "Še ni bonusnih pravil — osnovna stopnja zgoraj še vedno velja.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Bonus ob registraciji",
           "expire": "Poteklo",
           "refund": "Vrnjeno na vaše stanje",
-          "reverse": "Razveljavljeno (naročilo vrnjeno)"
+          "reverse": "Razveljavljeno (naročilo vrnjeno)",
+          "promo": "Bonus iz posebne ponudbe"
         },
         "orderRef": "Naročilo #{number}",
         "someExcluded": "Nekateri izdelki (npr. darilne kartice) ne prinašajo {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Ana Novak",
       "labelEmail": "E-pošta",
       "placeholderEmail": "vi@primer.com",
-      "labelPhone": "Telefon (neobvezno)",
+      "labelPhone": "Telefon",
       "placeholderPhone": "041-123-456",
       "labelPassword": "Geslo",
       "placeholderPassword": "Vsaj 8 znakov",

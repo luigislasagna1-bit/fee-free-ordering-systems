@@ -4497,12 +4497,16 @@
         "release": "Restituito (ordine annullato)",
         "adjust": "Rettifica",
         "signup_bonus": "Bonus di iscrizione",
-        "expire": "Scaduto"
+        "expire": "Scaduto",
+        "refund": "Rimborsato sul saldo",
+        "reverse": "Annullato (ordine rimborsato)",
+        "promo": "Bonus da una promozione"
       },
       "redeemAlwaysOn": "Poiché il programma è attivo, i clienti possono pagare parte o l'intero importo di qualsiasi ordine con i loro {label} (coprono l'eventuale resto con il loro metodo abituale). Appare come opzione di pagamento al checkout.",
       "rules": {
         "title": "Modi per guadagnare",
         "subtitle": "Aggiungi regole bonus oltre al tasso base — regali di iscrizione, bonus per il primo ordine, premi per ordini grandi, traguardi fedeltà. Ciascuna può essere attiva in un intervallo di date.",
+        "doubleSignupWarn": "Attenzione: il bonus di iscrizione sempre attivo ({bonus}) E una regola “quando un cliente si iscrive” sono entrambi attivi — ogni nuovo account riceverà ENTRAMBI gli importi. Disattivane uno, a meno che non sia voluto.",
         "add": "Aggiungi un modo per guadagnare",
         "loading": "Caricamento…",
         "empty": "Ancora nessuna regola bonus — il tasso base sopra resta valido.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Bonus di iscrizione",
           "expire": "Scaduto",
           "refund": "Rimborsato sul tuo saldo",
-          "reverse": "Annullato (ordine rimborsato)"
+          "reverse": "Annullato (ordine rimborsato)",
+          "promo": "Bonus da una promozione"
         },
         "orderRef": "Ordine n. {number}",
         "someExcluded": "Alcuni articoli (come i buoni regalo) non generano {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Maria Rossi",
       "labelEmail": "Email",
       "placeholderEmail": "tu@esempio.com",
-      "labelPhone": "Telefono (opzionale)",
+      "labelPhone": "Telefono",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Password",
       "placeholderPassword": "Almeno 8 caratteri",

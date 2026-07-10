@@ -4497,12 +4497,16 @@
         "release": "Återförd (beställning avbruten)",
         "adjust": "Justering",
         "signup_bonus": "Välkomstbonus",
-        "expire": "Utgånget"
+        "expire": "Utgånget",
+        "reverse": "Återförd (order återbetald)",
+        "refund": "Återbetalt till saldot",
+        "promo": "Bonus från ett erbjudande"
       },
       "redeemAlwaysOn": "Eftersom programmet är på kan kunder betala en del av eller hela beställningen med sina {label} (de betalar resten med sitt vanliga betalsätt). Det visas som ett betalningsalternativ i kassan.",
       "rules": {
         "title": "Sätt att tjäna",
         "subtitle": "Lägg till bonusregler ovanpå grundsatsen — registreringsgåvor, bonus för första beställningen, belöningar för stora beställningar, lojalitetsmilstolpar. Var och en kan köras under ett datumintervall.",
+        "doubleSignupWarn": "Obs! Både den alltid aktiva registreringsbonusen ({bonus}) OCH en regel av typen ”när en kund registrerar sig” är aktiva — varje nytt konto får BÅDA beloppen. Stäng av den ena om det inte är avsikten.",
         "add": "Lägg till ett sätt att tjäna",
         "loading": "Läser in…",
         "empty": "Inga bonusregler ännu — grundsatsen ovan gäller fortfarande.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Välkomstbonus",
           "expire": "Utgånget",
           "refund": "Återbetalt till ditt saldo",
-          "reverse": "Återförd (order återbetald)"
+          "reverse": "Återförd (order återbetald)",
+          "promo": "Bonus från ett erbjudande"
         },
         "orderRef": "Beställning #{number}",
         "someExcluded": "Vissa varor (som presentkort) tjänar inte {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Maria Rossi",
       "labelEmail": "E-post",
       "placeholderEmail": "du@exempel.se",
-      "labelPhone": "Telefon (valfritt)",
+      "labelPhone": "Telefon",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Lösenord",
       "placeholderPassword": "Minst 8 tecken",

@@ -4497,12 +4497,16 @@
         "release": "已退回（订单取消）",
         "adjust": "调整",
         "signup_bonus": "注册奖励",
-        "expire": "已过期"
+        "expire": "已过期",
+        "reverse": "已撤销（订单已退款）",
+        "refund": "已退回余额",
+        "promo": "优惠活动奖励"
       },
       "redeemAlwaysOn": "由于计划已开启，顾客可使用其 {label} 支付订单的部分或全部金额（余额不足部分用常规方式支付）。结账时会显示为一种付款方式。",
       "rules": {
         "title": "赚取方式",
         "subtitle": "在基础比率之上添加奖励规则——注册礼、首单奖励、大额订单奖励、忠诚里程碑。每条规则均可设定有效期。",
+        "doubleSignupWarn": "请注意：始终生效的注册奖励（{bonus}）和「顾客注册时」规则同时处于启用状态——每个新账户将同时获得两笔金额。除非有意如此，请关闭其中一个。",
         "add": "添加一种赚取方式",
         "loading": "加载中…",
         "empty": "暂无奖励规则——上方的基础比率仍然适用。",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "注册奖励",
           "expire": "已过期",
           "refund": "已退回您的余额",
-          "reverse": "已撤销（订单已退款）"
+          "reverse": "已撤销（订单已退款）",
+          "promo": "优惠活动奖励"
         },
         "orderRef": "订单 #{number}",
         "someExcluded": "部分商品（如礼品卡）不赚取{label}。"
@@ -5963,7 +5968,7 @@
       "placeholderName": "张三",
       "labelEmail": "邮箱",
       "placeholderEmail": "you@example.com",
-      "labelPhone": "电话（选填）",
+      "labelPhone": "电话",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "密码",
       "placeholderPassword": "至少 8 个字符",

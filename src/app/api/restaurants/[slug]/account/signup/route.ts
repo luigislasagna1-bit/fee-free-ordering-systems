@@ -71,6 +71,13 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
   if (!name) {
     return NextResponse.json({ error: "Name is required" }, { status: 400 });
   }
+  // Phone is REQUIRED for accounts (Luigi 2026-07-09): the restaurant must be
+  // able to call about an order, and the phone-uniqueness guard below only
+  // deters duplicate accounts when every account actually has one. ≥7 digits
+  // keeps "123" out without being strict about formatting.
+  if (!phone || phone.replace(/\D/g, "").length < 7) {
+    return NextResponse.json({ error: "A valid phone number is required" }, { status: 400 });
+  }
 
   // Resolve the chain (this restaurant + all sibling chain locations).
   // We replicate the new account to every location so one login works
@@ -152,6 +159,9 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
             chainCustomerId,
             emailVerifyToken,
             lastLoginAt: new Date(),
+            // Guest row becomes an account NOW — orders placed before this
+            // moment never earn reward credit (see orderEligibleToEarn).
+            signedUpAt: new Date(),
           },
           select: { id: true, restaurantId: true },
         });
@@ -166,6 +176,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
           chainCustomerId,
           emailVerifyToken,
           lastLoginAt: new Date(),
+          signedUpAt: new Date(),
         },
         select: { id: true, restaurantId: true },
       });

@@ -7,6 +7,10 @@ import { useTranslations } from "next-intl";
 
 export function SignupForm({ slug, restaurantName }: { slug: string; restaurantName: string }) {
   const t = useTranslations("customer.signupForm");
+  // Reuse the checkout flow's already-translated phone message — the native
+  // minLength counts formatting chars, so "+1 (55)" would pass it and hit the
+  // server's English-only 400; this check catches it in the user's language.
+  const tToast = useTranslations("ordering.toasts");
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -14,6 +18,10 @@ export function SignupForm({ slug, restaurantName }: { slug: string; restaurantN
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (form.phone.replace(/\D/g, "").length < 7) {
+      setError(tToast("phoneInvalid"));
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
@@ -64,6 +72,8 @@ export function SignupForm({ slug, restaurantName }: { slug: string; restaurantN
         <input
           type="tel"
           inputMode="tel"
+          required
+          minLength={7}
           value={form.phone}
           onChange={(e) => setForm({ ...form, phone: e.target.value.replace(/[^\d+()\-.\s]/g, "") })}
           className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"

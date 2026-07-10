@@ -4497,12 +4497,16 @@
         "release": "Vraćeno (porudžbina otkazana)",
         "adjust": "Prilagođavanje",
         "signup_bonus": "Bonus za registraciju",
-        "expire": "Isteklo"
+        "expire": "Isteklo",
+        "reverse": "Poništeno (porudžbina vraćena)",
+        "refund": "Vraćeno na saldo",
+        "promo": "Bonus iz specijalne ponude"
       },
       "redeemAlwaysOn": "Pošto je program uključen, kupci mogu da plate deo ili celu porudžbinu svojim {label} (ostatak plaćaju uobičajenom metodom). Prikazuje se kao opcija plaćanja pri naplati.",
       "rules": {
         "title": "Načini zarade",
         "subtitle": "Dodajte bonus pravila uz osnovnu stopu — pokloni za registraciju, bonusi za prvu porudžbinu, nagrade za velike porudžbine, prekretnice lojalnosti. Svako može trajati u određenom rasponu datuma.",
+        "doubleSignupWarn": "Napomena: stalno uključeni bonus za registraciju ({bonus}) I pravilo „kada se kupac registruje” istovremeno su aktivni — svaki novi nalog dobiće OBA iznosa. Isključite jedno, osim ako je to namerno.",
         "add": "Dodaj način zarade",
         "loading": "Učitavanje…",
         "empty": "Još nema bonus pravila — osnovna stopa iznad i dalje važi.",
@@ -5618,8 +5622,9 @@
           "adjust": "Prilagođavanje",
           "signup_bonus": "Bonus za registraciju",
           "expire": "Isteklo",
-          "refund": "Враћено на ваш салдо",
-          "reverse": "Поништено (поруџбина враћена)"
+          "refund": "Vraćeno na vaš saldo",
+          "reverse": "Poništeno (porudžbina vraćena)",
+          "promo": "Bonus iz specijalne ponude"
         },
         "orderRef": "Поруџбина #{number}",
         "someExcluded": "Неке ставке (попут поклон картица) не зарађују {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Marija Petrović",
       "labelEmail": "E-mail",
       "placeholderEmail": "vase@ime.com",
-      "labelPhone": "Telefon (neobavezno)",
+      "labelPhone": "Telefon",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Lozinka",
       "placeholderPassword": "Najmanje 8 karaktera",

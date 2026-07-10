@@ -35,7 +35,17 @@ export async function PATCH(req: NextRequest) {
   }
   if (typeof body.phone === "string") {
     const p = body.phone.trim().slice(0, 30);
-    data.phone = p === "" ? null : p;
+    // Phone is required at signup (Luigi 2026-07-09) and must stay set —
+    // an empty value here would let customers blank it right back out (and
+    // dodge the signup phone-uniqueness guard). Empty = leave unchanged;
+    // a new value must look like a real number (≥7 digits), same rule as
+    // the signup route.
+    if (p !== "") {
+      if (p.replace(/\D/g, "").length < 7) {
+        return NextResponse.json({ error: "A valid phone number is required" }, { status: 400 });
+      }
+      data.phone = p;
+    }
   }
   // Marketing-consent toggle — customer can opt in or out from their
   // own profile. When they flip the box on, we stamp the consent date

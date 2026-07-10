@@ -4497,12 +4497,16 @@
         "release": "Tilbageført (ordre annulleret)",
         "adjust": "Justering",
         "signup_bonus": "Velkomstbonus",
-        "expire": "Udløbet"
+        "expire": "Udløbet",
+        "reverse": "Tilbageført (ordre refunderet)",
+        "refund": "Refunderet til saldoen",
+        "promo": "Bonus fra et tilbud"
       },
       "redeemAlwaysOn": "Da programmet er slået til, kan kunder betale en del af eller hele bestillingen med deres {label} (de betaler resten med deres normale metode). Det vises som en betalingsmulighed i kassen.",
       "rules": {
         "title": "Måder at optjene på",
         "subtitle": "Tilføj bonusregler oven på grundsatsen — tilmeldingsgaver, bonus for første bestilling, belønninger for store bestillinger, loyalitetsmilepæle. Hver kan køre i et datointerval.",
+        "doubleSignupWarn": "Vær opmærksom: den altid aktive tilmeldingsbonus ({bonus}) OG en regel af typen ”når en kunde tilmelder sig” er begge aktive — hver ny konto vil modtage BEGGE beløb. Slå den ene fra, medmindre det er meningen.",
         "add": "Tilføj en måde at optjene på",
         "loading": "Indlæser…",
         "empty": "Ingen bonusregler endnu — grundsatsen ovenfor gælder stadig.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Velkomstbonus",
           "expire": "Udløbet",
           "refund": "Refunderet til din saldo",
-          "reverse": "Tilbageført (ordre refunderet)"
+          "reverse": "Tilbageført (ordre refunderet)",
+          "promo": "Bonus fra et tilbud"
         },
         "orderRef": "Ordre #{number}",
         "someExcluded": "Nogle varer (som gavekort) optjener ikke {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Maria Rossi",
       "labelEmail": "E-mail",
       "placeholderEmail": "dig@eksempel.dk",
-      "labelPhone": "Telefon (valgfrit)",
+      "labelPhone": "Telefon",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Adgangskode",
       "placeholderPassword": "Mindst 8 tegn",

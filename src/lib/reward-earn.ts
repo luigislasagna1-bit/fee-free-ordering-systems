@@ -12,7 +12,7 @@
  * (Restaurant.rewardSignupBonus, reason "signup_bonus").
  */
 import prisma from "@/lib/db";
-import { grant, earnBasisForOrder, EARN_BASIS_ORDER_SELECT } from "@/lib/reward-ledger";
+import { grant, earnBasisForOrder, earnSignupDateFor, orderEligibleToEarn, EARN_BASIS_ORDER_SELECT } from "@/lib/reward-ledger";
 import { round2 } from "@/lib/reward-math";
 import { signupGrantsFor, orderEarnGrantsFor, type EarnRule } from "@/lib/reward-rules";
 
@@ -60,6 +60,8 @@ export async function awardEarnRulesForOrder(opts: { orderId: string }): Promise
       },
     });
     if (!order?.customerId || !order.restaurant?.rewardsEnabled) return;
+    const signedUp = await earnSignupDateFor(order.customerId);
+    if (!signedUp || signedUp > order.createdAt) return; // guest at order time → no earn
 
     const rules = await activeRules(order.restaurantId);
     if (rules.length === 0) return;
@@ -69,12 +71,15 @@ export async function awardEarnRulesForOrder(opts: { orderId: string }): Promise
     // completes several of one customer's orders in a single sweep (counting all
     // "completed" rows would make every order in the batch see the same total →
     // first_order missed / nth_order over-granted; review 2026-06-27). Tie-break
-    // on id for the rare same-instant case.
+    // on id for the rare same-instant case. Only orders placed AFTER signup
+    // count — first_order means "first order as a member", not "first ever"
+    // (guest history must not consume the bonus; Luigi 2026-07-09).
     const completedOrderCount = 1 + await prisma.order.count({
       where: {
         customerId: order.customerId,
         status: "completed",
         id: { not: order.id },
+        createdAt: { gte: signedUp },
         OR: [
           { createdAt: { lt: order.createdAt } },
           { createdAt: order.createdAt, id: { lt: order.id } },
@@ -126,6 +131,8 @@ export async function projectOrderEarn(orderId: string): Promise<number> {
       },
     });
     if (!order?.customerId || !order.restaurant?.rewardsEnabled) return 0;
+    const signedUp = await earnSignupDateFor(order.customerId);
+    if (!signedUp || signedUp > order.createdAt) return 0; // guest at order time → receipt must not promise earn
     const basis = await earnBasisForOrder(orderId, order); // excludes gift-card-style items; reuses this load
     if (basis <= 0) return 0;
 
@@ -141,6 +148,7 @@ export async function projectOrderEarn(orderId: string): Promise<number> {
       const completedOrderCount = 1 + await prisma.order.count({
         where: {
           customerId: order.customerId, status: "completed", id: { not: orderId },
+          createdAt: { gte: signedUp }, // member orders only — mirrors awardEarnRulesForOrder
           OR: [{ createdAt: { lt: order.createdAt } }, { createdAt: order.createdAt, id: { lt: orderId } }],
         },
       });
@@ -166,11 +174,12 @@ export async function awardPromoCreditsForOrder(opts: { orderId: string }): Prom
     const order = await prisma.order.findUnique({
       where: { id: opts.orderId },
       select: {
-        restaurantId: true, customerId: true, appliedPromos: true,
+        restaurantId: true, customerId: true, appliedPromos: true, createdAt: true,
         restaurant: { select: { rewardsEnabled: true } },
       },
     });
     if (!order?.customerId || !order.restaurant?.rewardsEnabled || !order.appliedPromos) return;
+    if (!(await orderEligibleToEarn(order.customerId, order.createdAt))) return; // guest at order time → no promo credit accrual
 
     let promos: Array<{ promoId?: string; type?: string }> = [];
     try { promos = JSON.parse(order.appliedPromos); } catch { return; }

@@ -21,7 +21,7 @@ type Rule = {
  * Rewards page. Sits on top of the base %-back. Restaurant-scoped CRUD via
  * /api/admin/reward-rules. Luigi 2026-06-27.
  */
-export function EarnRulesEditor({ currency, rewardLabelPlural }: { currency: string; rewardLabelPlural: string }) {
+export function EarnRulesEditor({ currency, rewardLabelPlural, signupBonus = 0 }: { currency: string; rewardLabelPlural: string; signupBonus?: number }) {
   const t = useTranslations("admin.rewards.rules");
   const fmt = (n: number) => fmtCurrency(n, currency);
 
@@ -146,6 +146,16 @@ export function EarnRulesEditor({ currency, rewardLabelPlural }: { currency: str
         )}
       </div>
       <p className="mt-1 text-xs text-gray-500">{t("subtitle", { label: rewardLabelPlural })}</p>
+
+      {/* Both the always-on sign-up bonus AND an active sign-up campaign are
+          configured → every new account is credited BOTH amounts at once.
+          That's valid (they're additive by design) but usually accidental —
+          Luigi hit the surprise double-grant live on 2026-07-09. */}
+      {signupBonus > 0 && rules.some((r) => r.active && r.triggerType === "signup") && (
+        <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-800">
+          {t("doubleSignupWarn", { bonus: fmt(signupBonus) })}
+        </div>
+      )}
 
       {loading ? (
         <p className="mt-3 text-sm text-gray-400">{t("loading")}</p>

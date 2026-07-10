@@ -4497,12 +4497,16 @@
         "release": "Atgriezts (pasūtījums atcelts)",
         "adjust": "Korekcija",
         "signup_bonus": "Reģistrācijas bonuss",
-        "expire": "Beidzies derīgums"
+        "expire": "Beidzies derīgums",
+        "reverse": "Atcelts (pasūtījums atmaksāts)",
+        "refund": "Atgriezts atlikumā",
+        "promo": "Bonuss no akcijas"
       },
       "redeemAlwaysOn": "Tā kā programma ir ieslēgta, klienti var apmaksāt daļu vai visu pasūtījumu ar saviem {label} (atlikumu viņi maksā ar savu parasto veidu). Norēķinoties tas tiek rādīts kā maksāšanas veids.",
       "rules": {
         "title": "Veidi, kā nopelnīt",
         "subtitle": "Pievienojiet papildu noteikumus virs pamatlikmes — reģistrācijas dāvanas, pirmā pasūtījuma bonusi, atlīdzības par lieliem pasūtījumiem, lojalitātes posmi. Katrs var darboties noteiktā periodā.",
+        "doubleSignupWarn": "Uzmanību: vienmēr ieslēgtais reģistrācijas bonuss ({bonus}) UN noteikums „kad klients reģistrējas” ir aktīvi vienlaikus — katrs jauns konts saņems ABAS summas. Izslēdziet vienu no tiem, ja vien tas nav iecerēts.",
         "add": "Pievienot veidu, kā nopelnīt",
         "loading": "Notiek ielāde…",
         "empty": "Vēl nav papildu noteikumu — augstāk minētā pamatlikme joprojām ir spēkā.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Reģistrācijas bonuss",
           "expire": "Beidzies derīgums",
           "refund": "Atgriezts jūsu atlikumā",
-          "reverse": "Atcelts (pasūtījums atmaksāts)"
+          "reverse": "Atcelts (pasūtījums atmaksāts)",
+          "promo": "Bonuss no akcijas"
         },
         "orderRef": "Pasūtījums #{number}",
         "someExcluded": "Dažas preces (piemēram, dāvanu kartes) nenopelna {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Jānis Bērziņš",
       "labelEmail": "E-pasts",
       "placeholderEmail": "jus@piemers.lv",
-      "labelPhone": "Tālrunis (pēc izvēles)",
+      "labelPhone": "Tālrunis",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Parole",
       "placeholderPassword": "Vismaz 8 rakstzīmes",

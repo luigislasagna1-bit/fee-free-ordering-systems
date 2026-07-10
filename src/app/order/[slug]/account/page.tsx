@@ -266,10 +266,15 @@ export default async function RestaurantAccountDashboard({
             {rewardWallet.ledger.length > 0 && (
               <ul className="divide-y divide-gray-100 px-6 py-2">
                 {rewardWallet.ledger.map((l) => {
-                  // Normalise reason keys like "earn:first_order" / "promo:abc" to
-                  // their base label ("earn" / "grant") for translation.
-                  const baseReason = l.reason.split(":")[0];
-                  const reasonLabel = ["earn", "grant", "spend", "release", "adjust", "signup_bonus", "expire", "refund", "reverse"].includes(baseReason)
+                  // Normalise reason keys like "earn:first_order:<ruleId>" to a
+                  // display label. "earn:signup:<ruleId>" is a sign-up campaign
+                  // grant — it must read "Sign-up bonus", not "Earned on an
+                  // order" (there is no order; Luigi 2026-07-09). "promo:<id>"
+                  // maps to its own label so the raw promo id never leaks.
+                  const baseReason = l.reason.startsWith("earn:signup:") ? "signup_bonus"
+                    : l.reason.startsWith("promo:") ? "promo"
+                    : l.reason.split(":")[0];
+                  const reasonLabel = ["earn", "grant", "spend", "release", "adjust", "signup_bonus", "expire", "refund", "reverse", "promo"].includes(baseReason)
                     ? t(`reward.reason.${baseReason}`)
                     : l.reason;
                   const orderNumber = l.orderId ? rewardOrderNumbers[l.orderId] : undefined;

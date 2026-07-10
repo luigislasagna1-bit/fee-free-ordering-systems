@@ -4497,12 +4497,16 @@
         "release": "Vraćeno (narudžba otkazana)",
         "adjust": "Prilagodba",
         "signup_bonus": "Bonus za registraciju",
-        "expire": "Isteklo"
+        "expire": "Isteklo",
+        "reverse": "Poništeno (narudžba vraćena)",
+        "refund": "Vraćeno na saldo",
+        "promo": "Bonus iz posebne ponude"
       },
       "redeemAlwaysOn": "Budući da je program uključen, kupci mogu platiti dio ili cijelu narudžbu svojim {label} (ostatak plaćaju uobičajenom metodom). Prikazuje se kao opcija plaćanja pri naplati.",
       "rules": {
         "title": "Načini zarade",
         "subtitle": "Dodajte bonus pravila uz osnovnu stopu — darovi za registraciju, bonusi za prvu narudžbu, nagrade za velike narudžbe, prekretnice vjernosti. Svako može trajati u određenom rasponu datuma.",
+        "doubleSignupWarn": "Napomena: stalno uključeni bonus za registraciju ({bonus}) I pravilo „kada se kupac registrira” istovremeno su aktivni — svaki novi račun dobit će OBA iznosa. Isključite jedno, osim ako je to namjerno.",
         "add": "Dodaj način zarade",
         "loading": "Učitavanje…",
         "empty": "Još nema bonus pravila — osnovna stopa iznad i dalje vrijedi.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Bonus za registraciju",
           "expire": "Isteklo",
           "refund": "Vraćeno na vaš saldo",
-          "reverse": "Poništeno (narudžba vraćena)"
+          "reverse": "Poništeno (narudžba vraćena)",
+          "promo": "Bonus iz posebne ponude"
         },
         "orderRef": "Narudžba #{number}",
         "someExcluded": "Neke stavke (poput poklon-bonova) ne zarađuju {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Marija Horvat",
       "labelEmail": "E-mail",
       "placeholderEmail": "vi@primjer.com",
-      "labelPhone": "Telefon (neobavezno)",
+      "labelPhone": "Telefon",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Lozinka",
       "placeholderPassword": "Najmanje 8 znakova",

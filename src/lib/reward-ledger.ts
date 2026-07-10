@@ -294,6 +294,39 @@ export async function getOrderRewardSummary(orderId: string): Promise<{ used: nu
   }
 }
 
+/** An order earns wallet credit ONLY when the customer already had an account
+ *  when the order was PLACED. Guests must not silently accrue a wallet that a
+ *  later signup hands over retroactively (Luigi 2026-07-09 — a brand-new
+ *  account surfaced $3.46 earned on a guest order 10 days earlier). Counts
+ *  either account system: the per-restaurant account (Customer.signedUpAt) or
+ *  a marketplace CustomerAccount linked to this Customer row (its createdAt =
+ *  the signup moment). Fails CLOSED — a lookup error means no earn, matching
+ *  the payment_reward precedent. Signup bonuses, admin grants, and spend /
+ *  release / clawback flows are NOT gated by this. */
+export async function earnSignupDateFor(customerId: string | null): Promise<Date | null> {
+  if (!customerId) return null;
+  try {
+    const c = await prisma.customer.findUnique({
+      where: { id: customerId },
+      select: { signedUpAt: true, customerAccount: { select: { createdAt: true } } },
+    });
+    // EARLIEST of the two account systems — a customer with an older
+    // marketplace account who later adds a restaurant account must not have
+    // in-flight orders retro-blocked by the newer stamp.
+    const dates = [c?.signedUpAt, c?.customerAccount?.createdAt].filter((d): d is Date => !!d);
+    if (dates.length === 0) return null;
+    return dates.length === 1 ? dates[0] : new Date(Math.min(dates[0].getTime(), dates[1].getTime()));
+  } catch (e) {
+    console.error("[reward earnSignupDateFor]", e);
+    return null; // fail closed — no earn
+  }
+}
+
+export async function orderEligibleToEarn(customerId: string | null, orderCreatedAt: Date): Promise<boolean> {
+  const signedUp = await earnSignupDateFor(customerId);
+  return !!signedUp && signedUp <= orderCreatedAt;
+}
+
 /** Earn basis for an order = subtotal of NON-excluded items − discounts (clamped
  *  ≥ 0). Items flagged `rewardEarnExcluded` (or in a category flagged so — e.g.
  *  gift cards) don't earn store credit. Shared by the base %-back, the rule
@@ -360,13 +393,14 @@ export async function awardForOrder(opts: { orderId: string }): Promise<void> {
     const order = await prisma.order.findUnique({
       where: { id: opts.orderId },
       select: {
-        restaurantId: true, customerId: true, ...EARN_BASIS_ORDER_SELECT,
+        restaurantId: true, customerId: true, createdAt: true, ...EARN_BASIS_ORDER_SELECT,
         restaurant: { select: { rewardsEnabled: true, rewardEarnEnabled: true, rewardEarnMode: true, rewardEarnPercent: true, rewardEarnPerDollar: true } },
       },
     });
     if (!order?.customerId) return;
     const r = order.restaurant;
     if (!r?.rewardsEnabled || !r.rewardEarnEnabled) return;
+    if (!(await orderEligibleToEarn(order.customerId, order.createdAt))) return; // guest at order time → no earn
     const basis = await earnBasisForOrder(opts.orderId, order); // excludes gift-card-style items; reuses this load
     if (basis <= 0) return;
     const earned = round2(r.rewardEarnMode === "per_dollar" ? basis * (r.rewardEarnPerDollar ?? 0) : basis * ((r.rewardEarnPercent ?? 0) / 100));

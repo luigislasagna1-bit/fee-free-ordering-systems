@@ -4497,12 +4497,16 @@
         "release": "Devolvido (pedido cancelado)",
         "adjust": "Ajuste",
         "signup_bonus": "Bônus de cadastro",
-        "expire": "Expirado"
+        "expire": "Expirado",
+        "refund": "Reembolsado para o saldo",
+        "reverse": "Revertido (pedido reembolsado)",
+        "promo": "Bônus de uma promoção"
       },
       "redeemAlwaysOn": "Como o programa está ativo, os clientes podem pagar parte ou o total de qualquer pedido com seus {label} (eles cobrem o restante com o método habitual). Aparece como opção de pagamento na finalização.",
       "rules": {
         "title": "Formas de ganhar",
         "subtitle": "Adicione regras de bônus além da taxa base — presentes de cadastro, bônus de primeiro pedido, recompensas por pedidos grandes, marcos de fidelidade. Cada uma pode rodar em um intervalo de datas.",
+        "doubleSignupWarn": "Atenção: o bônus de cadastro permanente ({bonus}) E uma regra “quando um cliente se cadastra” estão ambos ativos — cada nova conta receberá AMBOS os valores. Desative um deles, a menos que seja intencional.",
         "add": "Adicionar uma forma de ganhar",
         "loading": "Carregando…",
         "empty": "Ainda não há regras de bônus — a taxa base acima continua valendo.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Bônus de cadastro",
           "expire": "Expirado",
           "refund": "Reembolsado para o seu saldo",
-          "reverse": "Revertido (pedido reembolsado)"
+          "reverse": "Revertido (pedido reembolsado)",
+          "promo": "Bônus de uma promoção"
         },
         "orderRef": "Pedido nº {number}",
         "someExcluded": "Alguns itens (como vales-presente) não ganham {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Maria Silva",
       "labelEmail": "E-mail",
       "placeholderEmail": "voce@exemplo.com",
-      "labelPhone": "Telefone (opcional)",
+      "labelPhone": "Telefone",
       "placeholderPhone": "11 91234-5678",
       "labelPassword": "Senha",
       "placeholderPassword": "Pelo menos 8 caracteres",

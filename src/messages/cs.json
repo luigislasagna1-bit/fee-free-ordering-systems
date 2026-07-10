@@ -4497,12 +4497,16 @@
         "release": "Vráceno (objednávka zrušena)",
         "adjust": "Úprava",
         "signup_bonus": "Bonus za registraci",
-        "expire": "Vypršelo"
+        "expire": "Vypršelo",
+        "reverse": "Stornováno (objednávka vrácena)",
+        "refund": "Vráceno na zůstatek",
+        "promo": "Bonus z akce"
       },
       "redeemAlwaysOn": "Protože je program zapnutý, zákazníci mohou zaplatit část nebo celou objednávku svými {label} (zbytek uhradí běžnou metodou). Zobrazuje se jako možnost platby při pokladně.",
       "rules": {
         "title": "Způsoby získávání",
         "subtitle": "Přidejte bonusová pravidla nad základní sazbu — dárky za registraci, bonusy za první objednávku, odměny za velké objednávky, věrnostní milníky. Každé může běžet v určitém rozmezí dat.",
+        "doubleSignupWarn": "Pozor: vždy aktivní bonus za registraci ({bonus}) A ZÁROVEŇ pravidlo „když se zákazník zaregistruje“ jsou aktivní současně — každý nový účet obdrží OBĚ částky. Pokud to není záměr, jedno z nich vypněte.",
         "add": "Přidat způsob získávání",
         "loading": "Načítání…",
         "empty": "Zatím žádná bonusová pravidla — základní sazba výše stále platí.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Bonus za registraci",
           "expire": "Vypršelo",
           "refund": "Vráceno na váš zůstatek",
-          "reverse": "Stornováno (objednávka vrácena)"
+          "reverse": "Stornováno (objednávka vrácena)",
+          "promo": "Bonus z akce"
         },
         "orderRef": "Objednávka #{number}",
         "someExcluded": "Některé položky (např. dárkové karty) nezískávají {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Jana Nováková",
       "labelEmail": "E-mail",
       "placeholderEmail": "vy@example.com",
-      "labelPhone": "Telefon (volitelné)",
+      "labelPhone": "Telefon",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Heslo",
       "placeholderPassword": "Alespoň 8 znaků",

@@ -81,6 +81,15 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
         passwordResetExpiresAt: null,
       },
     });
+    // This flow is ALSO how a guest becomes a member (login's
+    // "needs_password_setup" emails a set-password link that lands here).
+    // Stamp signedUpAt for rows that never had it, or the reward-earn gate
+    // (orderEligibleToEarn) treats the new member as a guest forever. Only
+    // where null — a real password RESET must not move an existing stamp.
+    await prisma.customer.updateMany({
+      where: { chainCustomerId: customer.chainCustomerId, signedUpAt: null },
+      data: { signedUpAt: new Date() },
+    });
   } else {
     await prisma.customer.update({
       where: { id: customer.id },
@@ -89,6 +98,10 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
         passwordResetToken: null,
         passwordResetExpiresAt: null,
       },
+    });
+    await prisma.customer.updateMany({
+      where: { id: customer.id, signedUpAt: null },
+      data: { signedUpAt: new Date() },
     });
   }
 

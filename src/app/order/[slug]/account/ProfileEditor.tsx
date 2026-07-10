@@ -28,6 +28,7 @@ export function ProfileEditor({
   initialMarketingConsent?: boolean;
 }) {
   const t = useTranslations("customer.profile");
+  const tToast = useTranslations("ordering.toasts");
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(initialName);
   const [phone, setPhone] = useState(initialPhone ?? "");
@@ -36,6 +37,12 @@ export function ProfileEditor({
   const [err, setErr] = useState<string | null>(null);
 
   const save = async () => {
+    // A non-empty phone must look real (≥7 digits) — same rule as signup +
+    // the PATCH route. Empty is allowed here (server keeps the old number).
+    if (phone.trim() !== "" && phone.replace(/\D/g, "").length < 7) {
+      setErr(tToast("phoneInvalid"));
+      return;
+    }
     setSaving(true);
     setErr(null);
     try {

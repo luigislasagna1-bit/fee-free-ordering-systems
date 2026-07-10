@@ -4497,12 +4497,16 @@
         "release": "Dikembalikan (pesanan dibatalkan)",
         "adjust": "Penyesuaian",
         "signup_bonus": "Bonus pendaftaran",
-        "expire": "Kedaluwarsa"
+        "expire": "Kedaluwarsa",
+        "reverse": "Dibatalkan (pesanan dikembalikan)",
+        "refund": "Dikembalikan ke saldo",
+        "promo": "Bonus dari promo spesial"
       },
       "redeemAlwaysOn": "Karena program aktif, pelanggan dapat membayar sebagian atau seluruh pesanan dengan {label} mereka (sisanya dibayar dengan metode biasa). Ini muncul sebagai opsi pembayaran saat checkout.",
       "rules": {
         "title": "Cara mendapatkan",
         "subtitle": "Tambahkan aturan bonus di atas tarif dasar — hadiah pendaftaran, bonus pesanan pertama, hadiah pesanan besar, tonggak loyalitas. Tiap aturan bisa berjalan dalam rentang tanggal.",
+        "doubleSignupWarn": "Perhatian: bonus pendaftaran yang selalu aktif ({bonus}) DAN aturan “Saat pelanggan mendaftar” sama-sama aktif — setiap akun baru akan menerima KEDUA jumlah tersebut. Matikan salah satunya kecuali memang disengaja.",
         "add": "Tambah cara mendapatkan",
         "loading": "Memuat…",
         "empty": "Belum ada aturan bonus — tarif dasar di atas tetap berlaku.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Bonus pendaftaran",
           "expire": "Kedaluwarsa",
           "refund": "Dikembalikan ke saldo Anda",
-          "reverse": "Dibatalkan (pesanan dikembalikan)"
+          "reverse": "Dibatalkan (pesanan dikembalikan)",
+          "promo": "Bonus dari promo spesial"
         },
         "orderRef": "Pesanan #{number}",
         "someExcluded": "Beberapa item (seperti kartu hadiah) tidak mendapatkan {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Budi Santoso",
       "labelEmail": "Email",
       "placeholderEmail": "anda@contoh.com",
-      "labelPhone": "Telepon (opsional)",
+      "labelPhone": "Telepon",
       "placeholderPhone": "0812-345-6789",
       "labelPassword": "Kata sandi",
       "placeholderPassword": "Minimal 8 karakter",

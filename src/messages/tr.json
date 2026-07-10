@@ -4497,12 +4497,16 @@
         "release": "İade edildi (sipariş iptal edildi)",
         "adjust": "Düzeltme",
         "signup_bonus": "Kayıt bonusu",
-        "expire": "Süresi doldu"
+        "expire": "Süresi doldu",
+        "reverse": "Geri alındı (sipariş iade edildi)",
+        "refund": "Bakiyeye iade edildi",
+        "promo": "Kampanyadan gelen bonus"
       },
       "redeemAlwaysOn": "Program açık olduğundan, müşteriler herhangi bir siparişin bir kısmını veya tamamını {label} ile ödeyebilir (kalan tutarı normal yöntemleriyle öderler). Ödeme sırasında bir ödeme seçeneği olarak görünür.",
       "rules": {
         "title": "Kazanma yolları",
         "subtitle": "Temel orana ek bonus kuralları ekleyin — kayıt hediyeleri, ilk sipariş bonusları, büyük sipariş ödülleri, sadakat kilometre taşları. Her biri bir tarih aralığında çalışabilir.",
+        "doubleSignupWarn": "Dikkat: her zaman açık olan kayıt bonusu ({bonus}) VE “bir müşteri kaydolduğunda” kuralı aynı anda etkin — her yeni hesap HER İKİ tutarı da alacak. Bilerek yapmıyorsanız birini kapatın.",
         "add": "Bir kazanma yolu ekle",
         "loading": "Yükleniyor…",
         "empty": "Henüz bonus kuralı yok — yukarıdaki temel oran yine de geçerlidir.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Kayıt bonusu",
           "expire": "Süresi doldu",
           "refund": "Bakiyenize iade edildi",
-          "reverse": "Geri alındı (sipariş iade edildi)"
+          "reverse": "Geri alındı (sipariş iade edildi)",
+          "promo": "Kampanyadan gelen bonus"
         },
         "orderRef": "Sipariş #{number}",
         "someExcluded": "Bazı ürünler (örn. hediye kartları) {label} kazandırmaz."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Ayşe Yılmaz",
       "labelEmail": "E-posta",
       "placeholderEmail": "siz@ornek.com",
-      "labelPhone": "Telefon (isteğe bağlı)",
+      "labelPhone": "Telefon",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Şifre",
       "placeholderPassword": "En az 8 karakter",

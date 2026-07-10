@@ -4373,11 +4373,15 @@
         "release": "Returned (order cancelled)",
         "adjust": "Adjustment",
         "signup_bonus": "Sign-up bonus",
-        "expire": "Expired"
+        "expire": "Expired",
+        "refund": "Refunded to balance",
+        "reverse": "Reversed (order refunded)",
+        "promo": "Bonus from a special"
       },
       "rules": {
         "title": "Ways to earn",
         "subtitle": "Add bonus rules on top of the base rate — sign-up gifts, first-order bonuses, big-order rewards, loyalty milestones. Each can run on a date range.",
+        "doubleSignupWarn": "Heads up: the always-on sign-up bonus ({bonus}) AND a \"when a customer signs up\" rule are both active — every new account will receive BOTH amounts. Turn one off unless that's intended.",
         "add": "Add a way to earn",
         "loading": "Loading…",
         "empty": "No bonus rules yet — the base rate above still applies.",
@@ -5598,7 +5602,8 @@
           "signup_bonus": "Sign-up bonus",
           "expire": "Expired",
           "refund": "Refunded to your balance",
-          "reverse": "Reversed (order refunded)"
+          "reverse": "Reversed (order refunded)",
+          "promo": "Bonus from a special"
         },
         "orderRef": "Order #{number}",
         "someExcluded": "Some items (like gift cards) don't earn {label}."
@@ -6015,7 +6020,7 @@
       "placeholderName": "Maria Rossi",
       "labelEmail": "Email",
       "placeholderEmail": "you@example.com",
-      "labelPhone": "Phone (optional)",
+      "labelPhone": "Phone",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Password",
       "placeholderPassword": "At least 8 characters",

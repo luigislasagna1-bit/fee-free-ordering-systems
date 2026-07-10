@@ -1773,7 +1773,11 @@ export async function POST(req: NextRequest) {
     const cleanPhone = customerPhone ? sanitize(customerPhone, 30) : null;
     if (cleanEmail || cleanPhone) {
       const where = cleanEmail ? { restaurantId: restaurant.id, email: cleanEmail } : undefined;
-      if (where) customer = await prisma.customer.findFirst({ where });
+      // Duplicate guest + account rows for one email exist in the wild (see
+      // login route's preference logic). Prefer the ACCOUNT row so a member's
+      // order lands on the row with signedUpAt — binding to the guest twin
+      // would silently block their reward earn under orderEligibleToEarn.
+      if (where) customer = await prisma.customer.findFirst({ where, orderBy: { passwordHash: { sort: "desc", nulls: "last" } } });
       // BIDIRECTIONAL marketing consent (GloriaFood-parity, Luigi 2026-06-03).
       // The checkbox state IS the customer's explicit choice on this order:
       //   ticked   → opt IN

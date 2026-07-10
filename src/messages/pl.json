@@ -4497,12 +4497,16 @@
         "release": "Zwrócone (zamówienie anulowane)",
         "adjust": "Korekta",
         "signup_bonus": "Bonus za rejestrację",
-        "expire": "Wygasłe"
+        "expire": "Wygasłe",
+        "reverse": "Cofnięto (zamówienie zwrócone)",
+        "refund": "Zwrócono na saldo",
+        "promo": "Bonus z promocji"
       },
       "redeemAlwaysOn": "Ponieważ program jest włączony, klienci mogą zapłacić część lub całość dowolnego zamówienia swoim {label} (resztę pokrywają zwykłą metodą). Pojawia się jako opcja płatności przy kasie.",
       "rules": {
         "title": "Sposoby zdobywania",
         "subtitle": "Dodaj reguły bonusowe ponad stawkę podstawową — prezenty za rejestrację, bonusy za pierwsze zamówienie, nagrody za duże zamówienia, kamienie milowe lojalności. Każda może działać w wybranym przedziale dat.",
+        "doubleSignupWarn": "Uwaga: stale aktywny bonus za rejestrację ({bonus}) ORAZ reguła „gdy klient się rejestruje” są jednocześnie aktywne — każde nowe konto otrzyma OBIE kwoty. Wyłącz jedno z nich, o ile nie jest to zamierzone.",
         "add": "Dodaj sposób zdobywania",
         "loading": "Ładowanie…",
         "empty": "Brak reguł bonusowych — stawka podstawowa powyżej nadal obowiązuje.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Bonus za rejestrację",
           "expire": "Wygasłe",
           "refund": "Zwrócono na Twoje saldo",
-          "reverse": "Cofnięto (zamówienie zwrócone)"
+          "reverse": "Cofnięto (zamówienie zwrócone)",
+          "promo": "Bonus z promocji"
         },
         "orderRef": "Zamówienie #{number}",
         "someExcluded": "Niektóre produkty (np. karty podarunkowe) nie zarabiają {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Jan Kowalski",
       "labelEmail": "E-mail",
       "placeholderEmail": "ty@przyklad.pl",
-      "labelPhone": "Telefon (opcjonalnie)",
+      "labelPhone": "Telefon",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Hasło",
       "placeholderPassword": "Co najmniej 8 znaków",

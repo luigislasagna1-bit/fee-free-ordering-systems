@@ -4497,12 +4497,16 @@
         "release": "Devuelto (pedido cancelado)",
         "adjust": "Ajuste",
         "signup_bonus": "Bono de registro",
-        "expire": "Caducado"
+        "expire": "Caducado",
+        "refund": "Reembolsado al saldo",
+        "reverse": "Revertido (pedido reembolsado)",
+        "promo": "Bono de una promoción"
       },
       "redeemAlwaysOn": "Como el programa está activado, los clientes pueden pagar parte o la totalidad de cualquier pedido con sus {label} (cubren el resto con su método habitual). Aparece como opción de pago al finalizar la compra.",
       "rules": {
         "title": "Formas de ganar",
         "subtitle": "Añade reglas de bonificación además de la tasa base — regalos de registro, bonos por primer pedido, recompensas por pedidos grandes, hitos de fidelidad. Cada una puede aplicarse en un rango de fechas.",
+        "doubleSignupWarn": "Atención: el bono de registro permanente ({bonus}) Y una regla “cuando un cliente se registra” están activos a la vez — cada cuenta nueva recibirá AMBOS importes. Desactiva uno, salvo que sea intencionado.",
         "add": "Añadir una forma de ganar",
         "loading": "Cargando…",
         "empty": "Aún no hay reglas de bonificación — la tasa base de arriba sigue vigente.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Bono de registro",
           "expire": "Caducado",
           "refund": "Reembolsado a tu saldo",
-          "reverse": "Revertido (pedido reembolsado)"
+          "reverse": "Revertido (pedido reembolsado)",
+          "promo": "Bono de una promoción"
         },
         "orderRef": "Pedido n.º {number}",
         "someExcluded": "Algunos artículos (como las tarjetas regalo) no ganan {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "María García",
       "labelEmail": "Correo electrónico",
       "placeholderEmail": "tu@ejemplo.com",
-      "labelPhone": "Teléfono (opcional)",
+      "labelPhone": "Teléfono",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Contraseña",
       "placeholderPassword": "Al menos 8 caracteres",

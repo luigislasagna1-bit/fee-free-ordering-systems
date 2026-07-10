@@ -55,8 +55,14 @@ export function GrantRewardCredit({
   };
 
   const reasonLabel = (reason: string) => {
-    const known = ["earn", "grant", "spend", "release", "adjust", "signup_bonus", "expire"];
-    return known.includes(reason) ? t(`reason.${reason}`) : reason;
+    // Same normalisation as the customer wallet: "earn:signup:<ruleId>" is a
+    // sign-up campaign (no order), other "earn:<trigger>:<ruleId>" rows are
+    // order-triggered bonuses, "promo:<id>" must not leak the promo id.
+    const base = reason.startsWith("earn:signup:") ? "signup_bonus"
+      : reason.startsWith("promo:") ? "promo"
+      : reason.split(":")[0];
+    const known = ["earn", "grant", "spend", "release", "adjust", "signup_bonus", "expire", "refund", "reverse", "promo"];
+    return known.includes(base) ? t(`reason.${base}`) : reason;
   };
 
   return (

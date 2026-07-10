@@ -1551,6 +1551,12 @@ model Customer {
   // restaurant (separate from the marketplace-wide CustomerAccount).
   // See src/lib/restaurant-customer-session.ts for the auth flow.
   passwordHash           String?
+  /// The moment this customer became an ACCOUNT holder here (fresh signup or
+  /// a guest row hydrated with credentials — set in the signup route for the
+  /// whole chain). Orders placed BEFORE this moment never earn reward credit:
+  /// guests must not silently accrue a wallet that signing up later hands
+  /// over retroactively (Luigi 2026-07-09). Null = still a guest row.
+  signedUpAt             DateTime?
   emailVerifiedAt        DateTime?
   emailVerifyToken       String?
   passwordResetToken     String?

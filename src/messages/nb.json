@@ -4497,12 +4497,16 @@
         "release": "Tilbakeført (bestilling kansellert)",
         "adjust": "Justering",
         "signup_bonus": "Velkomstbonus",
-        "expire": "Utløpt"
+        "expire": "Utløpt",
+        "reverse": "Reversert (ordre refundert)",
+        "refund": "Refundert til saldoen",
+        "promo": "Bonus fra et tilbud"
       },
       "redeemAlwaysOn": "Siden programmet er på, kan kunder betale deler av eller hele bestillingen med {label} (de betaler resten med sin vanlige metode). Det vises som et betalingsalternativ i kassen.",
       "rules": {
         "title": "Måter å tjene på",
         "subtitle": "Legg til bonusregler i tillegg til grunnsatsen — registreringsgaver, bonus for første bestilling, belønninger for store bestillinger, lojalitetsmilepæler. Hver kan kjøre i et datointervall.",
+        "doubleSignupWarn": "Obs: den alltid aktive registreringsbonusen ({bonus}) OG en regel av typen «når en kunde registrerer seg» er begge aktive — hver ny konto vil motta BEGGE beløpene. Slå av den ene med mindre det er meningen.",
         "add": "Legg til en måte å tjene på",
         "loading": "Laster …",
         "empty": "Ingen bonusregler ennå — grunnsatsen ovenfor gjelder fortsatt.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Velkomstbonus",
           "expire": "Utløpt",
           "refund": "Refundert til saldoen din",
-          "reverse": "Reversert (ordre refundert)"
+          "reverse": "Reversert (ordre refundert)",
+          "promo": "Bonus fra et tilbud"
         },
         "orderRef": "Ordre #{number}",
         "someExcluded": "Noen varer (som gavekort) tjener ikke {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Kari Nordmann",
       "labelEmail": "E-post",
       "placeholderEmail": "deg@eksempel.no",
-      "labelPhone": "Telefon (valgfritt)",
+      "labelPhone": "Telefon",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Passord",
       "placeholderPassword": "Minst 8 tegn",

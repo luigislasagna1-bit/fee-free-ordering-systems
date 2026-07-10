@@ -4497,12 +4497,16 @@
         "release": "Restitué (commande annulée)",
         "adjust": "Ajustement",
         "signup_bonus": "Bonus d'inscription",
-        "expire": "Expiré"
+        "expire": "Expiré",
+        "refund": "Remboursé sur le solde",
+        "reverse": "Annulé (commande remboursée)",
+        "promo": "Bonus d'une promotion"
       },
       "redeemAlwaysOn": "Comme le programme est activé, les clients peuvent payer tout ou partie de n'importe quelle commande avec leurs {label} (ils règlent le reste avec leur moyen habituel). Cela apparaît comme moyen de paiement au moment du règlement.",
       "rules": {
         "title": "Façons de gagner",
         "subtitle": "Ajoutez des règles de bonus en plus du taux de base — cadeaux d'inscription, bonus de première commande, récompenses pour grosses commandes, paliers de fidélité. Chacune peut s'appliquer sur une période donnée.",
+        "doubleSignupWarn": "Attention : le bonus d'inscription permanent ({bonus}) ET une règle « lorsqu'un client s'inscrit » sont tous les deux actifs — chaque nouveau compte recevra les DEUX montants. Désactivez-en un, sauf si c'est voulu.",
         "add": "Ajouter une façon de gagner",
         "loading": "Chargement…",
         "empty": "Aucune règle de bonus pour l'instant — le taux de base ci-dessus s'applique toujours.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Bonus d'inscription",
           "expire": "Expiré",
           "refund": "Remboursé sur votre solde",
-          "reverse": "Annulé (commande remboursée)"
+          "reverse": "Annulé (commande remboursée)",
+          "promo": "Bonus d'une promotion"
         },
         "orderRef": "Commande n° {number}",
         "someExcluded": "Certains articles (comme les cartes-cadeaux) ne rapportent pas de {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Marie Dupont",
       "labelEmail": "E-mail",
       "placeholderEmail": "vous@exemple.com",
-      "labelPhone": "Téléphone (facultatif)",
+      "labelPhone": "Téléphone",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Mot de passe",
       "placeholderPassword": "Au moins 8 caractères",

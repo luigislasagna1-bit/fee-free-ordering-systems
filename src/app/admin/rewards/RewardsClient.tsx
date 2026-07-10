@@ -158,7 +158,7 @@ export function RewardsClient({ currency, initial }: { currency: string; initial
           </div>
 
           {/* Ways to earn — configurable rules/campaigns on top of the base rate */}
-          <EarnRulesEditor currency={currency} rewardLabelPlural={pluralPreview} />
+          <EarnRulesEditor currency={currency} rewardLabelPlural={pluralPreview} signupBonus={s.rewardSignupBonus} />
 
           {/* Exclude categories/items from EARNING (e.g. gift cards). Only relevant
               when auto-earn is on. Luigi 2026-06-30. */}

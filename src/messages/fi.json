@@ -4497,12 +4497,16 @@
         "release": "Palautettu (tilaus peruttu)",
         "adjust": "Muutos",
         "signup_bonus": "Liittymisbonus",
-        "expire": "Vanhentunut"
+        "expire": "Vanhentunut",
+        "reverse": "Peruutettu (tilaus hyvitetty)",
+        "refund": "Hyvitetty saldoon",
+        "promo": "Bonus tarjouksesta"
       },
       "redeemAlwaysOn": "Koska ohjelma on käytössä, asiakkaat voivat maksaa tilauksesta osan tai kaiken {label}-saldollaan (loput he maksavat tavanomaisella tavallaan). Se näkyy maksuvaihtoehtona kassalla.",
       "rules": {
         "title": "Ansaintatavat",
         "subtitle": "Lisää bonussääntöjä perustason päälle — rekisteröitymislahjat, ensimmäisen tilauksen bonukset, palkkiot suurista tilauksista, kanta-asiakasvirstanpylväät. Kukin voi toimia tietyllä aikavälillä.",
+        "doubleSignupWarn": "Huomio: aina käytössä oleva rekisteröitymisbonus ({bonus}) JA ”kun asiakas rekisteröityy” -sääntö ovat molemmat aktiivisia — jokainen uusi tili saa MOLEMMAT summat. Poista toinen käytöstä, ellei tämä ole tarkoitus.",
         "add": "Lisää ansaintatapa",
         "loading": "Ladataan…",
         "empty": "Ei vielä bonussääntöjä — yllä oleva perustaso on silti voimassa.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Liittymisbonus",
           "expire": "Vanhentunut",
           "refund": "Hyvitetty saldoosi",
-          "reverse": "Peruutettu (tilaus hyvitetty)"
+          "reverse": "Peruutettu (tilaus hyvitetty)",
+          "promo": "Bonus tarjouksesta"
         },
         "orderRef": "Tilaus #{number}",
         "someExcluded": "Jotkin tuotteet (kuten lahjakortit) eivät kerrytä {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Matti Meikäläinen",
       "labelEmail": "Sähköposti",
       "placeholderEmail": "sinä@esimerkki.fi",
-      "labelPhone": "Puhelinnumero (valinnainen)",
+      "labelPhone": "Puhelin",
       "placeholderPhone": "040-123-4567",
       "labelPassword": "Salasana",
       "placeholderPassword": "Vähintään 8 merkkiä",

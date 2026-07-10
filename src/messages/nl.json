@@ -4497,12 +4497,16 @@
         "release": "Teruggegeven (bestelling geannuleerd)",
         "adjust": "Aanpassing",
         "signup_bonus": "Aanmeldbonus",
-        "expire": "Verlopen"
+        "expire": "Verlopen",
+        "refund": "Teruggestort op het saldo",
+        "reverse": "Teruggedraaid (bestelling terugbetaald)",
+        "promo": "Bonus van een actie"
       },
       "redeemAlwaysOn": "Omdat het programma actief is, kunnen klanten een deel of de volledige bestelling betalen met hun {label} (het resterende bedrag betalen ze met hun gebruikelijke methode). Het verschijnt als betaaloptie bij het afrekenen.",
       "rules": {
         "title": "Manieren om te verdienen",
         "subtitle": "Voeg bonusregels toe bovenop het basistarief — aanmeldcadeaus, bonussen voor de eerste bestelling, beloningen voor grote bestellingen, loyaliteitsmijlpalen. Elke regel kan binnen een datumbereik lopen.",
+        "doubleSignupWarn": "Let op: de altijd actieve aanmeldbonus ({bonus}) ÉN een regel “wanneer een klant zich aanmeldt” zijn allebei actief — elk nieuw account ontvangt BEIDE bedragen. Zet er één uit, tenzij dit de bedoeling is.",
         "add": "Een manier om te verdienen toevoegen",
         "loading": "Laden…",
         "empty": "Nog geen bonusregels — het basistarief hierboven geldt nog steeds.",
@@ -5619,7 +5623,8 @@
           "signup_bonus": "Aanmeldbonus",
           "expire": "Verlopen",
           "refund": "Teruggestort op je saldo",
-          "reverse": "Teruggedraaid (bestelling terugbetaald)"
+          "reverse": "Teruggedraaid (bestelling terugbetaald)",
+          "promo": "Bonus van een actie"
         },
         "orderRef": "Bestelling #{number}",
         "someExcluded": "Sommige items (zoals cadeaubonnen) verdienen geen {label}."
@@ -5963,7 +5968,7 @@
       "placeholderName": "Maria Rossi",
       "labelEmail": "E-mail",
       "placeholderEmail": "jij@voorbeeld.nl",
-      "labelPhone": "Telefoon (optioneel)",
+      "labelPhone": "Telefoon",
       "placeholderPhone": "555-123-4567",
       "labelPassword": "Wachtwoord",
       "placeholderPassword": "Minimaal 8 tekens",
