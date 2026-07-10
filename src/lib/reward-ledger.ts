@@ -146,8 +146,26 @@ export async function refundClaim(opts: { restaurantId: string; customerId: stri
   } catch (e) { console.error("[reward refundClaim]", e); }
 }
 
+/** The reward "spend" ledger-row payload for an order. Shared so the atomic
+ *  order-create transaction (orders route, LR-DB-02) and recordSpendForOrder
+ *  build an IDENTICAL row — the `reason`/`status` values are the contract that
+ *  releaseForOrder / refundForOrder query on, so they must never drift. */
+export function buildSpendLedgerData(opts: { accountId: string; applied: number; balance: number; orderId: string }) {
+  return {
+    accountId: opts.accountId,
+    amount: -round2(opts.applied),
+    balanceAfter: round2(opts.balance),
+    reason: "spend" as const,
+    status: "applied" as const,
+    orderId: opts.orderId,
+  };
+}
+
 /** Persist the spend ledger row after order.create (the claim already decremented
- *  the balance; this records it against the new order id). Idempotent. */
+ *  the balance; this records it against the new order id). Idempotent.
+ *  NOTE: the primary path now writes this row ATOMICALLY inside the order-create
+ *  transaction (orders route). This standalone helper is retained for any
+ *  recovery/backfill use and as the idempotent contract holder. */
 export async function recordSpendForOrder(opts: { restaurantId: string; customerId: string; orderId: string; applied: number }): Promise<void> {
   const applied = round2(opts.applied);
   if (applied <= 0) return;
@@ -158,7 +176,7 @@ export async function recordSpendForOrder(opts: { restaurantId: string; customer
     });
     if (!acct) return;
     await prisma.rewardLedger.create({
-      data: { accountId: acct.id, amount: -applied, balanceAfter: round2(acct.balance), reason: "spend", status: "applied", orderId: opts.orderId },
+      data: buildSpendLedgerData({ accountId: acct.id, applied, balance: acct.balance, orderId: opts.orderId }),
     });
   } catch (e: any) {
     if (e?.code !== "P2002") console.error("[reward recordSpendForOrder]", e); // P2002 = already recorded

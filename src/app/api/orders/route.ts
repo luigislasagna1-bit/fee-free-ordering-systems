@@ -26,7 +26,7 @@ import { writePromotionUsageRows } from "@/lib/promo-usage";
 import { resolveInheritedHours } from "@/lib/inherited-data";
 import { resolveAssignedPromoByCode, markGrantAppliedById } from "@/lib/coupon-ledger";
 import { buildPromoOrderContext } from "@/lib/promo-order-context";
-import { reserveCredit as reserveReward, recordSpendForOrder, refundClaim as refundRewardClaim } from "@/lib/reward-ledger";
+import { reserveCredit as reserveReward, refundClaim as refundRewardClaim, buildSpendLedgerData } from "@/lib/reward-ledger";
 import { hasFeature } from "@/lib/entitlements";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
@@ -2446,7 +2446,8 @@ export async function POST(req: NextRequest) {
       // through to the duplicate-return path in the catch below. The
       // coupon/promo/reward claims above are outside the loop (never re-run)
       // and the compensating rollbacks below only fire once we give up.
-      const createOrderRow = () => prisma.order.create({
+      const createOrderRow = () => prisma.$transaction(async (tx) => {
+      const created = await tx.order.create({
       data: {
         restaurantId: restaurant.id,
         customerId: customer?.id || null,
@@ -2552,6 +2553,27 @@ export async function POST(req: NextRequest) {
       },
       include: { items: { include: { modifiers: true } } },
       });
+      // Atomic with the order (LR-DB-02 / H-2): reserveReward already
+      // decremented the wallet balance above (locking the funds against
+      // concurrency); writing the "spend" ledger row in the SAME transaction
+      // guarantees the invariant "balance decremented ⟺ spend row exists".
+      // Without it, a crash between order.create and the old standalone
+      // recordSpendForOrder left the wallet debited with NO ledger row, so a
+      // later refund/release (which key off the spend row) could never return
+      // the customer's credit — a silent wallet loss.
+      if (creditApplied > 0 && creditSpenderId) {
+        const acct = await tx.rewardAccount.findUnique({
+          where: { restaurantId_customerId: { restaurantId: restaurant.id, customerId: creditSpenderId } },
+          select: { id: true, balance: true },
+        });
+        if (acct) {
+          await tx.rewardLedger.create({
+            data: buildSpendLedgerData({ accountId: acct.id, applied: creditApplied, balance: acct.balance, orderId: created.id }),
+          });
+        }
+      }
+      return created;
+      });
       for (let attempt = 0; ; attempt++) {
         try {
           order = await createOrderRow();
@@ -2654,12 +2676,10 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Persist the spend ledger row now that the order id exists (the balance was
-    // already decremented by reserveReward). Fire-and-forget; idempotent.
-    if (creditApplied > 0 && creditSpenderId) {
-      await recordSpendForOrder({ restaurantId: restaurant.id, customerId: creditSpenderId, orderId: order.id, applied: creditApplied })
-        .catch((e) => console.error("[orders POST] reward recordSpend:", e));
-    }
+    // (The reward "spend" ledger row is now written ATOMICALLY inside the
+    // order-create transaction above — LR-DB-02 / H-2 — so there is no longer a
+    // separate recordSpendForOrder call here that could crash after create and
+    // leave the wallet debited with no row.)
 
     // ── Reserve-then-order: create the linked table booking ──────────────────
     // The order is the food + the payment; this is the table. We link via
