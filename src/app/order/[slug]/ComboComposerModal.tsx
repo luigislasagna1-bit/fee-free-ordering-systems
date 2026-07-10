@@ -579,11 +579,17 @@ function ChildCustomizer({
             const canHalf = isHalfGroup(g);
             const halfOn = canHalf && !!half[g.id]?.on;
             const opts = g.options.filter((o: AnyItem) => o.isAvailable !== false);
-            const optRow = (o: AnyItem, checked: boolean, onChange: () => void, type: "radio" | "checkbox", disabled = false) => (
+            // Toggle on label CLICK, not input onChange — an already-checked
+            // RADIO never fires change, which trapped optional single-selects
+            // at their first pick (same fix as the item modal; Luigi
+            // 2026-07-10). preventDefault keeps one path for click/tap/Space;
+            // the callback (toggleMod / setHalfSide) owns the semantics.
+            const optRow = (o: AnyItem, checked: boolean, onPick: () => void, type: "radio" | "checkbox", disabled = false) => (
               <label key={o.id + (type === "radio" ? "r" : "c")} className={`flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border cursor-pointer ${disabled ? "opacity-40 cursor-not-allowed" : ""}`}
-                style={checked ? { borderColor: primaryColor, backgroundColor: `${primaryColor}11` } : { borderColor: "#e5e7eb" }}>
+                style={checked ? { borderColor: primaryColor, backgroundColor: `${primaryColor}11` } : { borderColor: "#e5e7eb" }}
+                onClick={(e) => { e.preventDefault(); if (!disabled) onPick(); }}>
                 <span className="flex items-center gap-2 min-w-0">
-                  <input type={type} checked={checked} disabled={disabled} onChange={onChange} className="w-4 h-4 flex-shrink-0" style={{ accentColor: primaryColor }} />
+                  <input type={type} checked={checked} disabled={disabled} readOnly onChange={() => {}} className="w-4 h-4 flex-shrink-0" style={{ accentColor: primaryColor, pointerEvents: "none" }} />
                   <span className="text-sm text-gray-800 truncate">{o.name}</span>
                 </span>
                 {extrasCharge && o.priceAdjustment > 0 && <span className="text-xs text-gray-500 flex-shrink-0">+{fmt(o.priceAdjustment)}</span>}

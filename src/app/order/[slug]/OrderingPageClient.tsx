@@ -5740,11 +5740,19 @@ export function OrderingPageClient({
                               ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}12` }
                               : !disabled ? { borderColor: "#f3f4f6" } : {}
                             }
+                            // Toggle on CLICK, not the input's onChange: clicking an
+                            // already-checked RADIO never fires change, which made the
+                            // optional single-select deselect (028e1cc3) unreachable —
+                            // the radio looked stuck once picked (Luigi 2026-07-09/10).
+                            // preventDefault stops the label re-activating the input, so
+                            // mouse, tap, AND keyboard (Space bubbles a click) all take
+                            // this one path; toggleMod owns select/deselect rules.
+                            onClick={(e) => { e.preventDefault(); if (!disabled) toggleMod(group, opt.id); }}
                           >
                             <div className="flex items-center gap-3">
                               <input type={group.maxSelect === 1 ? "radio" : "checkbox"} checked={selected}
-                                disabled={disabled}
-                                onChange={() => !disabled && toggleMod(group, opt.id)} style={{ accentColor: theme.primaryColor }} />
+                                disabled={disabled} readOnly
+                                onChange={() => {}} style={{ accentColor: theme.primaryColor, pointerEvents: "none" }} />
                               <span className="text-sm text-gray-800">{opt.name}</span>
                             </div>
                             {opt.priceAdjustment !== 0 && (
