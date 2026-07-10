@@ -1,6 +1,7 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
+import { allAcceptedMethods } from "@/lib/payment-methods";
 import { ProvidersClient } from "./ProvidersClient";
 
 export default async function ProvidersPage() {
@@ -46,17 +47,11 @@ export default async function ProvidersPage() {
   // Methods? Having the add-on AND not opting in is a valid state — we
   // shouldn't push Stripe setup on them. The page treats this as
   // "online card payment is dormant; enable in Accepted Methods to use".
-  let onlineCardEnabled = false;
-  let paypalEnabled = false;
-  if (restaurant?.paymentMethods) {
-    try {
-      const arr = JSON.parse(restaurant.paymentMethods);
-      if (Array.isArray(arr)) {
-        onlineCardEnabled = arr.includes("online_card");
-        paypalEnabled = arr.includes("paypal");
-      }
-    } catch { /* malformed JSON — treat as nothing enabled */ }
-  }
+  // paymentMethods can be a flat array (legacy) or per-order-type object —
+  // allAcceptedMethods handles both.
+  const acceptedMethods = allAcceptedMethods(restaurant?.paymentMethods);
+  const onlineCardEnabled = acceptedMethods.includes("online_card");
+  const paypalEnabled = acceptedMethods.includes("paypal");
 
   return (
     <ProvidersClient
