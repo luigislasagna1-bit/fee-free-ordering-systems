@@ -2446,8 +2446,10 @@ export async function POST(req: NextRequest) {
       // through to the duplicate-return path in the catch below. The
       // coupon/promo/reward claims above are outside the loop (never re-run)
       // and the compensating rollbacks below only fire once we give up.
-      const createOrderRow = () => prisma.$transaction(async (tx) => {
-      const created = await tx.order.create({
+      // The order create, parameterized by the DB client so it can run either
+      // standalone (the common no-reward case) or inside a transaction (when
+      // reward credit is spent — see createOrderRow below).
+      const doCreateOrder = (client: { order: typeof prisma.order }) => client.order.create({
       data: {
         restaurantId: restaurant.id,
         customerId: customer?.id || null,
@@ -2553,27 +2555,33 @@ export async function POST(req: NextRequest) {
       },
       include: { items: { include: { modifiers: true } } },
       });
-      // Atomic with the order (LR-DB-02 / H-2): reserveReward already
-      // decremented the wallet balance above (locking the funds against
-      // concurrency); writing the "spend" ledger row in the SAME transaction
-      // guarantees the invariant "balance decremented ⟺ spend row exists".
-      // Without it, a crash between order.create and the old standalone
-      // recordSpendForOrder left the wallet debited with NO ledger row, so a
-      // later refund/release (which key off the spend row) could never return
-      // the customer's credit — a silent wallet loss.
-      if (creditApplied > 0 && creditSpenderId) {
-        const acct = await tx.rewardAccount.findUnique({
-          where: { restaurantId_customerId: { restaurantId: restaurant.id, customerId: creditSpenderId } },
-          select: { id: true, balance: true },
-        });
-        if (acct) {
-          await tx.rewardLedger.create({
-            data: buildSpendLedgerData({ accountId: acct.id, applied: creditApplied, balance: acct.balance, orderId: created.id }),
-          });
-        }
-      }
-      return created;
-      });
+      // Reward-spend orders write the "spend" ledger row ATOMICALLY with the
+      // order (LR-DB-02 / H-2): reserveReward already decremented the balance
+      // above (locking funds vs concurrency); committing the spend row in the
+      // SAME transaction means a crash can't leave the wallet debited with no
+      // ledger row for a later refund/release to return. The invariant holds
+      // via this atomicity PLUS the create-failure catch's refundClaim
+      // compensation (a lambda kill between reserveReward and either the commit
+      // or the compensation is the same narrow residual window as the coupon /
+      // promo best-effort rollbacks — strictly narrower than the pre-fix bug).
+      // The COMMON no-reward order skips the interactive transaction entirely so
+      // the checkout hot path keeps its single-write cost (scale: 10k target).
+      const createOrderRow = () =>
+        creditApplied > 0 && creditSpenderId
+          ? prisma.$transaction(async (tx) => {
+              const created = await doCreateOrder(tx);
+              const acct = await tx.rewardAccount.findUnique({
+                where: { restaurantId_customerId: { restaurantId: restaurant.id, customerId: creditSpenderId! } },
+                select: { id: true, balance: true },
+              });
+              if (acct) {
+                await tx.rewardLedger.create({
+                  data: buildSpendLedgerData({ accountId: acct.id, applied: creditApplied, balance: acct.balance, orderId: created.id }),
+                });
+              }
+              return created;
+            })
+          : doCreateOrder(prisma);
       for (let attempt = 0; ; attempt++) {
         try {
           order = await createOrderRow();
