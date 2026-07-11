@@ -8,6 +8,7 @@ import { holidayEffectForDay, holidayEffectToday, canonicalHolidayService, hhmmI
 import { resolveServiceHours } from "@/lib/service-hours";
 import { resolveSlotModes, rangeWindowMinutes } from "@/lib/slot-modes";
 import { hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
+import { blockingServiceKind } from "@/lib/service-restriction";
 import { priceToppingLines, toppingBaseAdjust, isHalfToppingName } from "@/lib/pizza-topping-pricing";
 import { reportError } from "@/lib/report-error";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
@@ -1085,11 +1086,12 @@ export async function POST(req: NextRequest) {
       // The customer page hides or greys+blocks these, so this only fires on
       // a stale cart or a tampered request. Delivery uses forDelivery; every
       // pickup-style channel (pickup / dine-in / take-out) uses forPickup —
-      // the same rule the customer filter applies.
+      // the same rule the customer filter applies. Both-false = NO restriction
+      // (shared predicate, service-restriction.ts — Fabrizio 2026-07-11).
       {
-        const svcOk = type === "delivery"
-          ? ((menuItem as any).forDelivery !== false && ((menuItem as any).category?.forDelivery ?? true))
-          : ((menuItem as any).forPickup !== false && ((menuItem as any).category?.forPickup ?? true));
+        const svcGuard = type === "delivery" ? ("delivery" as const) : ("pickup" as const);
+        const svcOk =
+          blockingServiceKind(menuItem as any, ((menuItem as any).category ?? {}) as any, svcGuard) === null;
         if (!svcOk) {
           return NextResponse.json(
             {

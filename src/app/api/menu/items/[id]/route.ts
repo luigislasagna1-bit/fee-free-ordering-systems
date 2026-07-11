@@ -7,6 +7,7 @@ import { blockIfInheritingMenu } from "@/lib/brand";
 import { hasFeature } from "@/lib/entitlements";
 import { buildVisibilityData } from "@/lib/menu-visibility";
 import { buildFulfilData } from "@/lib/menu-fulfilment";
+import { normalizedServiceWrite } from "@/lib/service-restriction";
 import { logMenuChange } from "@/lib/menu-change-log";
 
 async function getRestaurantId() {
@@ -108,8 +109,9 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       updateData.rewardRedeemExcluded = true;
     }
   }
-  if (forPickup !== undefined) updateData.forPickup = forPickup;
-  if (forDelivery !== undefined) updateData.forDelivery = forDelivery;
+  // Both-false normalizes to both-true — "no restriction", never "blocked"
+  // (Fabrizio 2026-07-11; service-restriction.ts). Undefined keys omitted.
+  Object.assign(updateData, normalizedServiceWrite(forPickup, forDelivery));
   if (isCatering !== undefined) updateData.isCatering = !!isCatering;
   if (availableDays !== undefined) updateData.availableDays = availableDays ? JSON.stringify(availableDays) : null;
   if (availableFrom !== undefined) updateData.availableFrom = availableFrom;

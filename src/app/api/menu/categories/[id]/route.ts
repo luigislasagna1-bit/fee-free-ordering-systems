@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { blockIfInheritingMenu } from "@/lib/brand";
 import { buildVisibilityData } from "@/lib/menu-visibility";
 import { buildFulfilData } from "@/lib/menu-fulfilment";
+import { normalizedServiceWrite } from "@/lib/service-restriction";
 import { logMenuChange } from "@/lib/menu-change-log";
 import { Prisma } from "@/generated/prisma/client";
 
@@ -48,9 +49,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       ...(rewardEarnExcluded !== undefined ? { rewardEarnExcluded: !!rewardEarnExcluded } : {}),
       ...(promoExcluded !== undefined ? { promoExcluded: !!promoExcluded } : {}),
       ...(rewardRedeemExcluded !== undefined ? { rewardRedeemExcluded: !!rewardRedeemExcluded } : {}),
-      // Category-level service restriction (Fabrizio cmr803ovq).
-      ...(forPickup !== undefined ? { forPickup: !!forPickup } : {}),
-      ...(forDelivery !== undefined ? { forDelivery: !!forDelivery } : {}),
+      // Category-level service restriction (Fabrizio cmr803ovq). Both-false
+      // requests normalize to both-true — unchecking both boxes means "no
+      // restriction", never "blocked" (Fabrizio 2026-07-11).
+      ...normalizedServiceWrite(forPickup, forDelivery),
       // Optional header accent color (Fabrizio cmr80joh0) — hex or null to clear.
       ...(accentColor !== undefined
         ? { accentColor: typeof accentColor === "string" && /^#[0-9a-fA-F]{6}$/.test(accentColor) ? accentColor : null }

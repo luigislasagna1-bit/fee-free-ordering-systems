@@ -5,6 +5,7 @@ import { blockIfInheritingMenu, resolveMenuRestaurantId } from "@/lib/brand";
 import { resolveActiveMenuId } from "@/lib/menu";
 import { buildVisibilityData } from "@/lib/menu-visibility";
 import { buildFulfilData } from "@/lib/menu-fulfilment";
+import { normalizedServiceWrite } from "@/lib/service-restriction";
 import { logMenuChange } from "@/lib/menu-change-log";
 import { Prisma } from "@/generated/prisma/client";
 
@@ -117,9 +118,10 @@ export async function POST(req: NextRequest) {
       isHidden: isHidden ?? false,
       isCatering: !!isCatering,
       // Category-level service restriction (Fabrizio cmr803ovq); default
-      // unrestricted when omitted.
-      forPickup: forPickup !== undefined ? !!forPickup : true,
-      forDelivery: forDelivery !== undefined ? !!forDelivery : true,
+      // unrestricted when omitted; both-false normalizes to both-true ("no
+      // restriction", never "blocked" — Fabrizio 2026-07-11).
+      forPickup: normalizedServiceWrite(forPickup, forDelivery).forPickup ?? true,
+      forDelivery: normalizedServiceWrite(forPickup, forDelivery).forDelivery ?? true,
       // Optional header accent color (Fabrizio cmr80joh0) — hex only.
       accentColor: typeof accentColor === "string" && /^#[0-9a-fA-F]{6}$/.test(accentColor) ? accentColor : null,
       // Pin the category to the order-page "Featured" strip (Fabrizio cmr80joh0).

@@ -7,6 +7,7 @@ import { blockIfInheritingMenu } from "@/lib/brand";
 import { hasFeature } from "@/lib/entitlements";
 import { buildVisibilityData } from "@/lib/menu-visibility";
 import { buildFulfilData } from "@/lib/menu-fulfilment";
+import { normalizedServiceWrite } from "@/lib/service-restriction";
 import { logMenuChange } from "@/lib/menu-change-log";
 
 export async function POST(req: NextRequest) {
@@ -60,8 +61,12 @@ export async function POST(req: NextRequest) {
         restaurantId, categoryId, name, description: description || null,
         price: parseFloat(price), imageUrl: imageUrl || null,
         isHidden: isHidden ?? false,
-        isSoldOut: isSoldOut ?? false, forPickup: forPickup ?? true,
-        forDelivery: forDelivery ?? true, isCatering: !!isCatering,
+        isSoldOut: isSoldOut ?? false,
+        // Both-false normalizes to both-true — "no restriction", never
+        // "blocked" (Fabrizio 2026-07-11; service-restriction.ts).
+        forPickup: normalizedServiceWrite(forPickup, forDelivery).forPickup ?? true,
+        forDelivery: normalizedServiceWrite(forPickup, forDelivery).forDelivery ?? true,
+        isCatering: !!isCatering,
         // Pin-to-top featured strip (Fabrizio cmr80joh0).
         pinnedToTop: !!pinnedToTop,
         // Refundable deposit (Luigi 2026-07-07): a returnable deposit is never

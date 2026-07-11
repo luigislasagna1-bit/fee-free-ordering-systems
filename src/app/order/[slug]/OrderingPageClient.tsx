@@ -18,6 +18,7 @@ import { resolveServiceHours, type ServiceKind } from "@/lib/service-hours";
 import { resolveSlotModes } from "@/lib/slot-modes";
 import { isVisibleNow } from "@/lib/menu-visibility";
 import { hasFulfilWindow, isFulfilableAt, fulfilWindowLabel, combinedFulfilConstraint, fulfilWindowsOf, windowMatches } from "@/lib/menu-fulfilment";
+import { serviceAllows, serviceRestrictionKind, blockingServiceKind, type ServiceFlags, type ServiceChannel } from "@/lib/service-restriction";
 
 /** Convert minutes-since-midnight (0..1440) into "HH:MM" 24-hour format.
  *  Used by the promo-banner usability-window label so a 12-3 PM lunch
@@ -447,18 +448,21 @@ function PlainCategoryHeader({ cat, theme, styleKind, collapsible, collapsedNow,
   const mb = compact ? "mb-3" : "mb-4";
   // Per-category accent color overrides the theme color (Fabrizio cmr80joh0).
   const accent = (cat as any).accentColor || theme.primaryColor;
-  // Service-restriction note beside the category name when the WHOLE category is
-  // pickup/delivery only (Fabrizio 2026-07-08). Amber = the same "notice" style
-  // dish-level availability notes use. flex-shrink-0 + nowrap keeps it tidy.
+  // Service-restriction + fulfilment notes — BOTH rendered BELOW the header
+  // row at every breakpoint, never inline beside the truncating name: the
+  // inline pill crowded the name off narrow screens (Fabrizio 2026-07-11
+  // screenshot, "SPECIA…"). Same treatment the fulfil note always had.
   const serviceNote = (cat as any).__serviceNote as string | undefined;
-  const notePill = serviceNote ? (
-    <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 flex-shrink-0 whitespace-nowrap">{serviceNote}</span>
-  ) : null;
-  // Fulfilment window note — rendered BELOW the header row (it can be long, so
-  // never inline beside the truncating name). Fabrizio 2026-07-08.
   const fulfilNote = (cat as any).__fulfilNote as string | undefined;
-  const belowNote = fulfilNote ? (
-    <p className="text-[11px] font-semibold text-indigo-600 mt-1 px-1 leading-tight">{fulfilNote}</p>
+  const belowNote = (serviceNote || fulfilNote) ? (
+    <div className="flex flex-wrap items-center gap-1.5 mt-1 px-1">
+      {serviceNote && (
+        <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">{serviceNote}</span>
+      )}
+      {fulfilNote && (
+        <span className="text-[11px] font-semibold text-indigo-600 leading-tight">{fulfilNote}</span>
+      )}
+    </div>
   ) : null;
   if (styleKind === "button") {
     return (
@@ -469,7 +473,6 @@ function PlainCategoryHeader({ cat, theme, styleKind, collapsible, collapsedNow,
           onClick={collapsible ? onToggleCollapse : undefined}
         >
           <h2 className={`${nameSize} font-bold flex-1 min-w-0 truncate`} style={{ color: theme.textColor }}>{cat.name}</h2>
-          {notePill}
           <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 flex-shrink-0">{count}</span>
           {collapsible ? (
             <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
@@ -488,7 +491,6 @@ function PlainCategoryHeader({ cat, theme, styleKind, collapsible, collapsedNow,
           onClick={collapsible ? onToggleCollapse : undefined}
         >
           <h2 className={`${nameSize} font-extrabold tracking-tight flex-1 min-w-0 truncate`} style={{ color: theme.textColor }}>{cat.name}</h2>
-          {notePill}
           <span className="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0" style={{ backgroundColor: `${accent}1A`, color: accent }}>{count}</span>
           {collapsible ? (
             <span className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${accent}1A` }}>
@@ -509,7 +511,6 @@ function PlainCategoryHeader({ cat, theme, styleKind, collapsible, collapsedNow,
       onClick={collapsible ? onToggleCollapse : undefined}
     >
       <h2 className={`${nameSize} font-bold flex-1 min-w-0 truncate`} style={{ color: theme.textColor }}>{cat.name}</h2>
-      {notePill}
       {collapsible ? (
         <ChevronDown className={`w-5 h-5 flex-shrink-0 transition-transform ${collapsedNow ? "" : "rotate-180"}`} style={{ color: theme.textColor }} />
       ) : trailing ?? null}
@@ -2190,8 +2191,12 @@ export function OrderingPageClient({
   // level restriction composes with the item flags: a dish is orderable for
   // this service only when BOTH its own flag AND its category's flag allow it.
   const showServiceLabel = theme.serviceRestrictedDisplay === "label";
-  const catServiceOk = (c: Category) =>
-    orderType === "delivery" ? (c.forDelivery ?? true) : (c.forPickup ?? true);
+  // Delivery uses the delivery flag; pickup / dine-in / take-out are
+  // pickup-style channels. Both-false = NO restriction (unchecking both
+  // boxes means "every service", never "blocked" — Fabrizio 2026-07-11;
+  // see src/lib/service-restriction.ts).
+  const svcChannel: ServiceChannel = orderType === "delivery" ? "delivery" : "pickup";
+  const catServiceOk = (c: Category) => serviceAllows(c as ServiceFlags, svcChannel);
   const visibleCategories: Category[] = (restaurant.menuCategories as Category[])
     .filter(c => isVisibleNow(c, visNow, restaurantTz))
     // A fully service-restricted category disappears in "hide" mode; in
@@ -2199,14 +2204,20 @@ export function OrderingPageClient({
     .filter(c => catServiceOk(c) || showServiceLabel)
     .map(c => {
       const catGroups: ModGroup[] = (c.modifierGroups ?? []).filter((g: ModGroup) => !g.isHidden);
+      // The category's OWN restriction (null = unrestricted incl. both-false).
+      const catKind = serviceRestrictionKind(c as ServiceFlags);
       return {
         ...c,
-        // Service note next to the CATEGORY name when the WHOLE category is
-        // restricted for the current order type (Fabrizio 2026-07-08). Only in
-        // "label" display mode — in "hide" mode the category is filtered above.
-        // Mirrors the per-dish note; reuses the same i18n keys (no new strings).
-        __serviceNote: (!catServiceOk(c) && showServiceLabel)
-          ? (orderType === "delivery" ? t("pickupOnlyLabel") : t("deliveryOnlyLabel"))
+        // ALWAYS-ON service note under the CATEGORY name whenever the category
+        // itself is restricted — derived from the category's OWN flags, not the
+        // currently-selected service, so it shows immediately on first load and
+        // never names the wrong service (Fabrizio 2026-07-11: the old
+        // conflict-gated note only appeared after switching to the blocked
+        // service, and lied on both-false rows). Shown in BOTH display modes —
+        // in "hide" mode the conflicting categories are filtered above, so this
+        // only ever decorates categories that are orderable right now.
+        __serviceNote: catKind
+          ? t(catKind === "pickupOnly" ? "pickupOnlyLabel" : "deliveryOnlyLabel")
           : undefined,
         // Category-level Fulfilment Time window, e.g. "Available Tue · 12:00–15:00"
         // (Fabrizio 2026-07-08). Reuses the item helpers + the availableOnlyLabel
@@ -2217,11 +2228,10 @@ export function OrderingPageClient({
         menuItems: c.menuItems
           .filter(i =>
             isVisibleNow(i, visNow, restaurantTz) &&
-            // Delivery uses forDelivery; pickup / dine-in / take-out all use
-            // the pickup availability flag (they're pickup-style channels).
-            // Item flag AND category flag; "label" mode keeps the dish
-            // visible (greyed + noted in the map below).
-            (((orderType === "delivery" ? i.forDelivery : i.forPickup) && catServiceOk(c)) || showServiceLabel) &&
+            // Item flag AND category flag for the current channel (both-false
+            // = unrestricted); "label" mode keeps the dish visible (greyed +
+            // noted in the map below).
+            ((serviceAllows(i as ServiceFlags, svcChannel) && catServiceOk(c)) || showServiceLabel) &&
             // availabilityMode "show" keeps the item VISIBLE outside its TIME
             // window — greyed with an "Available …" note, not addable — but
             // only on days it's actually sold: on an excluded DAY it hides
@@ -2277,16 +2287,24 @@ export function OrderingPageClient({
                 // window). If today isn't in the window, the cart's forced
                 // scheduling still guides the customer to a valid slot.
                 : t("availableOnlyLabel", { window: fulfilWin });
-            // Service restriction note (Fabrizio cmr803ovq): only in "label"
-            // mode — the dish (or its whole category) isn't offered for the
-            // selected service, so it renders greyed with "Available for …
-            // only" instead of vanishing. The note names the service the dish
-            // IS available for.
-            const itemServiceOk = orderType === "delivery" ? item.forDelivery : item.forPickup;
-            const serviceOk = itemServiceOk && catServiceOk(c);
+            // Service restriction note (Fabrizio cmr803ovq → 2026-07-11).
+            // Two regimes:
+            //  - CONFLICT (dish/category not offered for the selected service,
+            //    "label" mode): greyed with the note naming the service the
+            //    BLOCKING entity IS available for — same text as before for
+            //    every valid config.
+            //  - NO CONFLICT: always-on informational pill from the item's OWN
+            //    restriction so the customer knows before switching service;
+            //    suppressed when it matches the category's (the header already
+            //    announces it — no per-dish repetition).
+            const itemKind = serviceRestrictionKind(item as ServiceFlags);
+            const blocking = blockingServiceKind(item as ServiceFlags, c as ServiceFlags, svcChannel);
+            const serviceOk = blocking === null;
             const serviceNote = !serviceOk && showServiceLabel
-              ? (orderType === "delivery" ? t("pickupOnlyLabel") : t("deliveryOnlyLabel"))
-              : undefined;
+              ? t(blocking === "pickupOnly" ? "pickupOnlyLabel" : "deliveryOnlyLabel")
+              : serviceOk && itemKind && itemKind !== catKind
+                ? t(itemKind === "pickupOnly" ? "pickupOnlyLabel" : "deliveryOnlyLabel")
+                : undefined;
             return {
               ...item,
               categoryId: c.id,

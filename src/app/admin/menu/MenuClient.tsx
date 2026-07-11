@@ -15,6 +15,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { useCurrencyFormat, useCurrencySymbol } from "@/lib/currency-context";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { parseComboConfig } from "@/lib/combo";
+import { serviceRestrictionKind } from "@/lib/service-restriction";
 import { VisibilityEditor, visibilityFromRow, type VisibilityValue } from "@/components/admin/VisibilityEditor";
 import { HelpTip } from "@/components/HelpTip";
 import toast from "react-hot-toast";
@@ -426,8 +427,10 @@ function ItemModal({
     categoryId: item ? (categories.find(c => c.menuItems.some(i => i.id === item.id))?.id ?? categoryId) : categoryId,
     imageUrl: item?.imageUrl ?? "",
     isSoldOut: item?.isSoldOut ?? false,
-    forPickup: item?.forPickup ?? true,
-    forDelivery: item?.forDelivery ?? true,
+    // Legacy both-false rows display as both-checked — both-false means "no
+    // restriction" everywhere now (Fabrizio 2026-07-11; service-restriction.ts).
+    forPickup: (item?.forPickup === false && item?.forDelivery === false) ? true : (item?.forPickup ?? true),
+    forDelivery: (item?.forPickup === false && item?.forDelivery === false) ? true : (item?.forDelivery ?? true),
     /** Per-item catering tag. Opts THIS item into the catering advance-
      *  notice rule (Restaurant.cateringNoticeHours). Cart that contains
      *  any catering-tagged item — or any item in a catering category —
@@ -568,7 +571,17 @@ function ItemModal({
     idx === i ? { ...sl, variantUpcharges: { ...sl.variantUpcharges, [`${itemId}::${variantId}`]: value } } : sl,
   ));
 
-  const toggle = (field: keyof typeof form) => setForm(f => ({ ...f, [field]: !f[field as keyof typeof form] }));
+  const toggle = (field: keyof typeof form) => setForm(f => {
+    const next: any = { ...f, [field]: !f[field as keyof typeof form] };
+    // Both service boxes unchecked = "no restriction" — snap both back on so
+    // the modal always shows the effective truth instead of a state the
+    // server would normalize away anyway (Fabrizio 2026-07-11).
+    if ((field === "forPickup" || field === "forDelivery") && !next.forPickup && !next.forDelivery) {
+      next.forPickup = true;
+      next.forDelivery = true;
+    }
+    return next;
+  });
   const toggleDay = (d: number) => {
     const days = form.availableDays.includes(d)
       ? form.availableDays.filter(x => x !== d)
@@ -1808,14 +1821,15 @@ function availabilityBadge(
 // exceptions" they might forget: a service restriction (pickup/delivery-only) or
 // a scheduled visibility. Availability WINDOWS are already badged separately.
 function itemHasException(item: MenuItem, hoursFormat: HoursFormat = "24h"): boolean {
-  return item.forPickup === false || item.forDelivery === false || !!item.visibilityMode || availabilityBadge(item, hoursFormat) != null;
+  // Service restriction counts only when it's a REAL one-channel restriction —
+  // legacy both-false rows are unrestricted (no phantom exception badge).
+  return serviceRestrictionKind(item) !== null || !!item.visibilityMode || availabilityBadge(item, hoursFormat) != null;
 }
-/** "pickupOnly" | "deliveryOnly" | null — a category restricted to ONE channel
- *  (both-false = fully hidden, handled by the hidden badge elsewhere). */
+/** "pickupOnly" | "deliveryOnly" | null — a category/item restricted to ONE
+ *  channel. Both-false = NO restriction (shared semantics with the customer
+ *  page + server guard — src/lib/service-restriction.ts, Fabrizio 2026-07-11). */
 function serviceOnlyKind(x: { forPickup?: boolean; forDelivery?: boolean }): "pickupOnly" | "deliveryOnly" | null {
-  if (x.forDelivery === false && x.forPickup !== false) return "pickupOnly";
-  if (x.forPickup === false && x.forDelivery !== false) return "deliveryOnly";
-  return null;
+  return serviceRestrictionKind(x);
 }
 
 function SortableItemRow({
@@ -2779,23 +2793,39 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
     isCatering: (cat as any)?.isCatering ?? false,
     // Category-level service restriction (Fabrizio cmr803ovq) — the whole
     // category can be pickup-only / delivery-only, mirroring the item flags.
-    forPickup: (cat as any)?.forPickup ?? true,
-    forDelivery: (cat as any)?.forDelivery ?? true,
+    // Legacy both-false rows display as both-checked: both-false means "no
+    // restriction" everywhere now (Fabrizio 2026-07-11).
+    forPickup: ((cat as any)?.forPickup === false && (cat as any)?.forDelivery === false) ? true : ((cat as any)?.forPickup ?? true),
+    forDelivery: ((cat as any)?.forPickup === false && (cat as any)?.forDelivery === false) ? true : ((cat as any)?.forDelivery ?? true),
     // Optional header accent color (Fabrizio cmr80joh0). "" = theme color.
     accentColor: (cat as any)?.accentColor ?? "",
     // Pin the whole category to the order-page "Featured" strip (Fabrizio cmr80joh0).
     pinnedToTop: (cat as any)?.pinnedToTop ?? false,
   });
   const [visibility, setVisibility] = useState<VisibilityValue>(() => visibilityFromRow(cat));
-  // Category-level Fulfilment Time (Fabrizio 2026-07-08) — single window (days +
-  // time); reuses the item fulfilment i18n. Sent as `fulfilment` and normalised
-  // by buildFulfilData server-side, identical to items.
-  const [catFulfil, setCatFulfil] = useState<{ enabled: boolean; days: number[]; from: string; to: string }>(() => {
+  // Category-level Fulfilment Time (Fabrizio 2026-07-08 → multi-window
+  // 2026-07-11) — window #1 in days/from/to (mirrored into the legacy columns
+  // by the API), windows #2+ in `extras` from fulfilWindows. Sent as
+  // `fulfilment: { windows: [...] }` and normalised by buildFulfilData
+  // server-side, identical to items (which had multi-window first).
+  const [catFulfil, setCatFulfil] = useState<{ enabled: boolean; days: number[]; from: string; to: string; extras: Array<{ days: number[]; from: string; to: string }> }>(() => {
     let days: number[] = [];
     try { const a = JSON.parse((cat as any)?.fulfilDays ?? "null"); if (Array.isArray(a)) days = a.filter((x: any) => typeof x === "number" && x >= 0 && x <= 6); } catch { /* ignore */ }
     const from = (cat as any)?.fulfilFrom ?? "";
     const to = (cat as any)?.fulfilTo ?? "";
-    return { enabled: days.length > 0 || (!!from && !!to), days, from, to };
+    const extras = (() => {
+      const raw = (cat as any)?.fulfilWindows;
+      let arr: any[] | null = null;
+      if (Array.isArray(raw)) arr = raw;
+      else if (typeof raw === "string" && raw) { try { const p = JSON.parse(raw); if (Array.isArray(p)) arr = p; } catch { /* ignore */ } }
+      if (!arr || arr.length < 2) return [] as Array<{ days: number[]; from: string; to: string }>;
+      return arr.slice(1).map((w: any) => ({
+        days: Array.isArray(w?.days) ? w.days.filter((x: unknown) => typeof x === "number") : [],
+        from: typeof w?.from === "string" ? w.from : "",
+        to: typeof w?.to === "string" ? w.to : "",
+      }));
+    })();
+    return { enabled: days.length > 0 || (!!from && !!to) || extras.length > 0, days, from, to, extras };
   });
   const [saving, setSaving] = useState(false);
 
@@ -2806,17 +2836,30 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
     try {
       const url = isNew ? "/api/menu/categories" : `/api/menu/categories/${cat!.id}`;
       const method = isNew ? "POST" : "PATCH";
-      // null clears the window server-side; a single {days,from,to} sets it.
+      // null clears the windows server-side; enabled sends the FULL window
+      // list — window #1 from the main editor plus every extra (multi-window
+      // parity with items, Fabrizio 2026-07-11).
       const fulfilment = catFulfil.enabled
-        ? { days: catFulfil.days, from: catFulfil.from || null, to: catFulfil.to || null }
+        ? {
+            windows: [
+              { days: catFulfil.days, from: catFulfil.from || null, to: catFulfil.to || null },
+              ...catFulfil.extras.map((w) => ({ days: w.days, from: w.from || null, to: w.to || null })),
+            ],
+          }
         : null;
       // On create, tell the server which menu version this category belongs to
       // (the one being edited) so it doesn't default to the live menu.
       const payload = isNew ? { ...form, visibility, fulfilment, menuId: editMenuId } : { ...form, visibility, fulfilment };
-      await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      // A rejected save used to toast success anyway (silent 400s — found
+      // during the 2026-07-11 review); surface the server's error instead.
+      if (!res.ok) {
+        const errBody = await res.json().catch(() => ({}));
+        throw new Error(errBody.error || `Server error ${res.status}`);
+      }
       toast.success(isNew ? t("categoryAdded") : t("categoryUpdated"));
       onSaved();
-    } catch { toast.error(t("saveFailed")); }
+    } catch (e) { toast.error(e instanceof Error && e.message ? e.message : t("saveFailed")); }
     setSaving(false);
   };
 
@@ -2861,12 +2904,14 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
               <PartyPopper className="w-4 h-4" /> {t("cateringCategory")} {form.isCatering && "✓"}
             </button>
             {/* Category-level service restriction (Fabrizio cmr803ovq) —
-                same toggles the item modal has; both ON = unrestricted. */}
-            <button onClick={() => setForm(f => ({ ...f, forPickup: !f.forPickup }))}
+                same toggles the item modal has; both ON = unrestricted.
+                Unchecking the LAST box snaps both back on: both-unchecked
+                means "no restriction", never "blocked" (Fabrizio 2026-07-11). */}
+            <button onClick={() => setForm(f => (!f.forDelivery && f.forPickup ? { ...f, forPickup: true, forDelivery: true } : { ...f, forPickup: !f.forPickup }))}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.forPickup ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
               <ShoppingBag className="w-4 h-4" /> {t("availableForPickup")} {form.forPickup && <Check className="w-3.5 h-3.5" />}
             </button>
-            <button onClick={() => setForm(f => ({ ...f, forDelivery: !f.forDelivery }))}
+            <button onClick={() => setForm(f => (!f.forPickup && f.forDelivery ? { ...f, forPickup: true, forDelivery: true } : { ...f, forDelivery: !f.forDelivery }))}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition ${form.forDelivery ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-gray-200 text-gray-600"}`}>
               <Truck className="w-4 h-4" /> {t("availableForDelivery")} {form.forDelivery && <Check className="w-3.5 h-3.5" />}
             </button>
@@ -2925,6 +2970,46 @@ function CategoryModal({ cat, onClose, onSaved }: { cat?: Category; onClose: () 
                   </div>
                 </div>
                 <p className="text-xs text-gray-400">{t("fulfilTimeHint")}</p>
+                {/* Windows #2+ — multi-window parity with the item editor
+                    (Fabrizio 2026-07-11). Same shape the API + customer
+                    display already handle for categories. */}
+                {catFulfil.extras.map((w, wi) => (
+                  <div key={wi} className="space-y-3 rounded-lg border border-indigo-200 bg-white/60 p-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold uppercase tracking-wide text-indigo-500">{t("fulfilWindowN", { n: wi + 2 })}</span>
+                      <button onClick={() => setCatFulfil(f => ({ ...f, extras: f.extras.filter((_, i) => i !== wi) }))}
+                        className="p-1 rounded hover:bg-gray-100 text-gray-400" aria-label={t("cancel")}>
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <div className="flex gap-2 flex-wrap">
+                      {DAY_NAMES.map((d, i) => (
+                        <button key={i} type="button"
+                          onClick={() => setCatFulfil(f => ({
+                            ...f,
+                            extras: f.extras.map((x, xi) => xi !== wi ? x : {
+                              ...x,
+                              days: x.days.includes(i) ? x.days.filter((dd: number) => dd !== i) : [...x.days, i].sort((a: number, b: number) => a - b),
+                            }),
+                          }))}
+                          className={`w-12 h-10 rounded-lg border text-sm font-medium transition ${w.days.includes(i) ? "bg-indigo-500 border-indigo-500 text-white" : "border-gray-200 text-gray-500 hover:border-gray-400 bg-white"}`}>
+                          {d}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                        value={w.from} onChange={e => setCatFulfil(f => ({ ...f, extras: f.extras.map((x, xi) => xi === wi ? { ...x, from: e.target.value } : x) }))} />
+                      <input type="time" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                        value={w.to} onChange={e => setCatFulfil(f => ({ ...f, extras: f.extras.map((x, xi) => xi === wi ? { ...x, to: e.target.value } : x) }))} />
+                    </div>
+                  </div>
+                ))}
+                <button type="button"
+                  onClick={() => setCatFulfil(f => ({ ...f, extras: [...f.extras, { days: [], from: "", to: "" }] }))}
+                  className="flex items-center gap-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800">
+                  <Plus className="w-4 h-4" /> {t("addFulfilWindow")}
+                </button>
               </div>
             )}
           </div>
