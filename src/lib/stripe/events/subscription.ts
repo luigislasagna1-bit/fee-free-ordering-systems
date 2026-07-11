@@ -1,5 +1,6 @@
 import type Stripe from "stripe";
 import prisma from "@/lib/db";
+import { getStripe } from "@/lib/stripe";
 import { ensureMarketplaceListing } from "@/lib/marketplace";
 import { notifyAddOnChange } from "@/lib/platform-notifications";
 import { graceDeadline, startRestaurantGrace } from "@/lib/dunning";
@@ -45,7 +46,7 @@ export async function handleSubscriptionEvent(event: Stripe.Event) {
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { stripeCustomerId: customerId },
-    select: { id: true, email: true, name: true, defaultLanguage: true },
+    select: { id: true, email: true, name: true, defaultLanguage: true, stripeSubscriptionId: true },
   });
   if (!restaurant) {
     // Customer may have been deleted on our side; nothing to update.
@@ -54,6 +55,14 @@ export async function handleSubscriptionEvent(event: Stripe.Event) {
   }
 
   if (event.type === "customer.subscription.deleted") {
+    // Deletion of a SUPERSEDED duplicate (see supersedeDuplicateSubscription)
+    // must not cancel the row that now tracks the surviving subscription.
+    if (restaurant.stripeSubscriptionId && restaurant.stripeSubscriptionId !== sub.id) {
+      console.warn(
+        `[stripe] ignoring deletion of superseded platform subscription ${sub.id} for restaurant ${restaurant.id} (row tracks ${restaurant.stripeSubscriptionId})`
+      );
+      return;
+    }
     await prisma.restaurant.update({
       where: { id: restaurant.id },
       data: {
@@ -72,6 +81,12 @@ export async function handleSubscriptionEvent(event: Stripe.Event) {
     // logging "unhandled". Legacy subscriptions that still emit this
     // were grandfathered: they're still on the platform but their
     // "trial" is effectively a FREE plan now.
+    return;
+  }
+
+  // Duplicate guard: if the row already tracks a DIFFERENT live subscription
+  // (double Checkout race), keep exactly one and cancel the other in Stripe.
+  if (!(await supersedeDuplicateSubscription(sub, restaurant.stripeSubscriptionId, `platform plan (restaurant ${restaurant.id})`))) {
     return;
   }
 
@@ -132,11 +147,20 @@ async function handleAddOnSubscriptionEvent(
   // failures never affect the webhook — notifyAddOnChange is best-effort.)
   const prior = await prisma.restaurantAddOn.findUnique({
     where: { restaurantId_addOnId: { restaurantId, addOnId: addOn.id } },
-    select: { status: true, graceEndsAt: true },
+    select: { status: true, graceEndsAt: true, stripeSubscriptionId: true },
   });
   const wasActive = !!prior && (prior.status === "active" || prior.status === "trialing");
 
   if (event.type === "customer.subscription.deleted") {
+    // Deletion of a SUPERSEDED duplicate (see supersedeDuplicateSubscription)
+    // must not cancel the row that now tracks the surviving subscription —
+    // otherwise cancelling the duplicate would kill the paid entitlement.
+    if (prior?.stripeSubscriptionId && prior.stripeSubscriptionId !== sub.id) {
+      console.warn(
+        `[stripe] ignoring deletion of superseded add-on subscription ${sub.id} for ${addOnSlug} (restaurant ${restaurantId}, row tracks ${prior.stripeSubscriptionId})`
+      );
+      return;
+    }
     await prisma.restaurantAddOn.updateMany({
       where: { restaurantId, addOnId: addOn.id },
       data: {
@@ -153,6 +177,13 @@ async function handleAddOnSubscriptionEvent(
         console.error("[stripe] add-on cancel notification failed", e);
       }
     }
+    return;
+  }
+
+  // Duplicate guard: if the row already tracks a DIFFERENT live subscription
+  // (double Checkout race), keep exactly one and cancel the other in Stripe.
+  // Complimentary rows (stripeSubscriptionId null) pass straight through.
+  if (!(await supersedeDuplicateSubscription(sub, prior?.stripeSubscriptionId, `add-on ${addOnSlug} (restaurant ${restaurantId})`))) {
     return;
   }
 
@@ -305,7 +336,7 @@ async function handleResellerWhiteLabelEvent(
 ) {
   const profile = await prisma.resellerProfile.findUnique({
     where: { id: resellerProfileId },
-    select: { id: true },
+    select: { id: true, whiteLabelStripeSubscriptionId: true },
   });
   if (!profile) {
     console.warn(`[stripe] white-label event for unknown reseller ${resellerProfileId}`);
@@ -313,6 +344,14 @@ async function handleResellerWhiteLabelEvent(
   }
 
   if (event.type === "customer.subscription.deleted") {
+    // Deletion of a SUPERSEDED duplicate (see supersedeDuplicateSubscription)
+    // must not cancel the row that now tracks the surviving subscription.
+    if (profile.whiteLabelStripeSubscriptionId && profile.whiteLabelStripeSubscriptionId !== sub.id) {
+      console.warn(
+        `[stripe] ignoring deletion of superseded white-label subscription ${sub.id} for reseller ${resellerProfileId} (row tracks ${profile.whiteLabelStripeSubscriptionId})`
+      );
+      return;
+    }
     await prisma.resellerProfile.update({
       where: { id: resellerProfileId },
       data: {
@@ -322,6 +361,13 @@ async function handleResellerWhiteLabelEvent(
         whiteLabelCancelAtPeriodEnd: false,
       },
     });
+    return;
+  }
+
+  // Duplicate guard: if the profile already tracks a DIFFERENT live
+  // subscription (double Checkout race), keep exactly one and cancel the
+  // other in Stripe. (Tier swaps reuse the same sub id — never guarded.)
+  if (!(await supersedeDuplicateSubscription(sub, profile.whiteLabelStripeSubscriptionId, `white-label (reseller ${resellerProfileId})`))) {
     return;
   }
 
@@ -352,6 +398,183 @@ async function handleResellerWhiteLabelEvent(
   // re-checks whiteLabelStatus === "active" internally.
   if (status === "active") {
     await ensureResellerGenericSubdomain(resellerProfileId);
+  }
+}
+
+// ─── Duplicate-subscription supersede guard ─────────────────────────────────
+//
+// Two Checkout sessions opened before the first completes can BOTH be
+// completed (they're independent Stripe sessions), yielding TWO live
+// subscriptions for the same add-on / plan / white-label tier while our row
+// only stores ONE sub id — the loser keeps billing with no in-app cancel
+// path. checkoutSessionExpiresAt() shrinks the race window to ~35 min; this
+// guard is the backstop for duplicates that still land: when an event tries
+// to stamp a row that already tracks a DIFFERENT live subscription, keep
+// exactly one and cancel the other in Stripe.
+//
+// The winner rule must be STABLE across Stripe's out-of-order delivery and
+// retries — both subs' events must independently agree on the same survivor,
+// or each would cancel the other:
+//   1. a live sub beats an incomplete one (never kill a paying sub for a
+//      husk whose first payment never landed),
+//   2. then the NEWER `created` wins (the latest completed checkout is the
+//      customer's most recent intent — also means a fresh checkout replaces
+//      a months-old sub instead of being killed by it),
+//   3. then the greater id, as a pure tie-break.
+// Every step is best-effort: a supersede hiccup must never throw (the whole
+// webhook event would 500 → Stripe retries) or block the row update.
+
+/** Checkout's max session lifetime (24h) + slack. Two subs born within this
+ *  window are a true double-checkout → full refund of the duplicate charge.
+ *  Anything older being replaced gets prorated credit instead — a blanket
+ *  refund would hand back weeks of already-consumed service. */
+const DUPLICATE_CHECKOUT_WINDOW_SEC = 26 * 60 * 60;
+
+/** 0 = dead, 1 = incomplete (first payment never landed), 2 = live. */
+function subscriptionLiveness(s: Stripe.Subscription): number {
+  if (s.status === "canceled" || s.status === "incomplete_expired") return 0;
+  if (s.status === "incomplete") return 1;
+  return 2;
+}
+
+/**
+ * Decide whether `incoming` may be stamped onto a row currently tracking
+ * `existingSubId`, cancelling (+ refunding) whichever subscription loses.
+ * Returns false when the row must be left pointing at the existing
+ * subscription (late / out-of-order event from the sub that lost).
+ */
+async function supersedeDuplicateSubscription(
+  incoming: Stripe.Subscription,
+  existingSubId: string | null | undefined,
+  label: string,
+): Promise<boolean> {
+  if (!existingSubId || existingSubId === incoming.id) return true;
+
+  let existing: Stripe.Subscription;
+  try {
+    const stripe = await getStripe();
+    existing = await stripe.subscriptions.retrieve(existingSubId);
+  } catch (e: any) {
+    const missing =
+      e?.code === "resource_missing" || e?.raw?.code === "resource_missing" || e?.statusCode === 404;
+    if (!missing) {
+      console.error(
+        `[stripe] supersede check for ${label}: could not inspect ${existingSubId}; stamping ${incoming.id} (pre-guard behavior)`,
+        e
+      );
+    }
+    // Tracked sub is gone entirely (deleted long ago, or a legacy id from the
+    // platform test→live switch) — nothing to supersede, stamp normally.
+    return true;
+  }
+
+  if (subscriptionLiveness(existing) === 0) return true; // legit re-subscribe after cancel
+  if (subscriptionLiveness(incoming) === 0) {
+    // Late event from a sub that's already dead must not clobber the live row.
+    console.warn(
+      `[stripe] supersede for ${label}: ignoring event for dead subscription ${incoming.id}; row keeps ${existing.id}`
+    );
+    return false;
+  }
+
+  const incomingWins =
+    subscriptionLiveness(incoming) !== subscriptionLiveness(existing)
+      ? subscriptionLiveness(incoming) > subscriptionLiveness(existing)
+      : incoming.created !== existing.created
+        ? incoming.created > existing.created
+        : incoming.id > existing.id;
+  const winner = incomingWins ? incoming : existing;
+  const loser = incomingWins ? existing : incoming;
+  console.warn(
+    `[stripe] duplicate subscription for ${label}: keeping ${winner.id} (created ${winner.created}), superseding ${loser.id} (created ${loser.created})`
+  );
+  await cancelSupersededSubscription(loser, winner, label);
+  return incomingWins;
+}
+
+/** Cancel the losing subscription in Stripe and make the money right. */
+async function cancelSupersededSubscription(
+  loser: Stripe.Subscription,
+  winner: Stripe.Subscription,
+  label: string,
+) {
+  const isCheckoutDuplicate =
+    Math.abs(winner.created - loser.created) <= DUPLICATE_CHECKOUT_WINDOW_SEC;
+  try {
+    const stripe = await getStripe();
+    await stripe.subscriptions.cancel(
+      loser.id,
+      // True duplicate → plain cancel; the full refund below squares it.
+      // Older sub replaced → prorated credit for its unused time instead.
+      isCheckoutDuplicate ? {} : { prorate: true, invoice_now: true },
+    );
+    console.warn(`[stripe] cancelled superseded subscription ${loser.id} for ${label}`);
+  } catch (e) {
+    // "Already canceled" (webhook retry) lands here too — the refund below is
+    // idempotent, so still attempt it. A real failure leaves the loser
+    // billing: log loudly for a manual dashboard cancel; the next event on
+    // either sub re-runs this whole path.
+    console.error(
+      `[stripe] FAILED to cancel superseded subscription ${loser.id} for ${label} — cancel manually in the Stripe dashboard`,
+      e
+    );
+  }
+  if (isCheckoutDuplicate) {
+    await refundLatestPaidInvoice(loser, label);
+  }
+}
+
+/** Best-effort full refund of a duplicate subscription's charge. Never throws. */
+async function refundLatestPaidInvoice(loser: Stripe.Subscription, label: string) {
+  try {
+    const stripe = await getStripe();
+    const invoiceId =
+      typeof loser.latest_invoice === "string" ? loser.latest_invoice : loser.latest_invoice?.id ?? null;
+    if (!invoiceId) {
+      console.warn(`[stripe] superseded ${loser.id} (${label}) has no invoice — nothing to refund`);
+      return;
+    }
+    // The invoice→payment link moved across Stripe API versions: legacy
+    // top-level payment_intent / charge vs the newer `payments` list. Ask
+    // for the expansion but tolerate versions that reject it, read all shapes.
+    let invoice: any;
+    try {
+      invoice = await stripe.invoices.retrieve(invoiceId, { expand: ["payments"] });
+    } catch {
+      invoice = await stripe.invoices.retrieve(invoiceId);
+    }
+    if (invoice?.status !== "paid" || !(invoice.amount_paid > 0)) {
+      console.warn(
+        `[stripe] superseded ${loser.id} (${label}): invoice ${invoiceId} is ${invoice?.status} / ${invoice?.amount_paid} — not refunding`
+      );
+      return;
+    }
+    const paidPayment = invoice.payments?.data?.find((p: any) => p?.status === "paid")?.payment;
+    const piRef = invoice.payment_intent ?? paidPayment?.payment_intent ?? null;
+    const paymentIntent = typeof piRef === "string" ? piRef : piRef?.id ?? null;
+    const chargeRef = invoice.charge ?? paidPayment?.charge ?? null;
+    const charge = typeof chargeRef === "string" ? chargeRef : chargeRef?.id ?? null;
+    if (!paymentIntent && !charge) {
+      console.error(
+        `[stripe] superseded ${loser.id} (${label}): cannot resolve invoice ${invoiceId}'s payment — REFUND MANUALLY in the Stripe dashboard`
+      );
+      return;
+    }
+    await stripe.refunds.create(
+      {
+        ...(paymentIntent ? { payment_intent: paymentIntent } : { charge: charge as string }),
+        reason: "duplicate",
+      },
+      // Keyed on the invoice so webhook retries / re-entry never refund twice.
+      { idempotencyKey: `supersede-refund-${invoiceId}` },
+    );
+    console.warn(`[stripe] refunded duplicate charge on invoice ${invoiceId} (sub ${loser.id}, ${label})`);
+  } catch (e: any) {
+    if (e?.code === "charge_already_refunded" || e?.raw?.code === "charge_already_refunded") return;
+    console.error(
+      `[stripe] refund of superseded subscription ${loser.id} (${label}) FAILED — refund manually in the Stripe dashboard`,
+      e
+    );
   }
 }
 

@@ -209,6 +209,22 @@ export async function getWebhookSecrets(): Promise<string[]> {
 }
 
 /**
+ * `expires_at` for platform subscription Checkout Sessions. Stripe's default
+ * session lifetime is 24 HOURS — long enough for an owner to open checkout
+ * twice (two tabs, a retry after a hiccup) and complete BOTH, producing two
+ * live subscriptions for the same add-on/plan while our row only tracks one
+ * sub id: the duplicate keeps billing with no in-app cancel path. A short
+ * fuse shrinks that window to ~35 minutes. Stripe's documented minimum is 30
+ * minutes in the future; the extra 5 absorb clock skew so we never trip the
+ * validation floor. (The webhook-side supersede guard in
+ * src/lib/stripe/events/subscription.ts handles duplicates that still race
+ * inside this window.)
+ */
+export function checkoutSessionExpiresAt(): number {
+  return Math.floor(Date.now() / 1000) + 35 * 60;
+}
+
+/**
  * Platform fee on Connect destination charges.
  *
  * **Fee Free Ordering takes 0% of every order.** Restaurants keep 100% of

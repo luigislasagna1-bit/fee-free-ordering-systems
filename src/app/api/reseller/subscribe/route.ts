@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser, isResellerView } from "@/lib/session";
-import { getStripe, stripeReady } from "@/lib/stripe";
+import { checkoutSessionExpiresAt, getStripe, stripeReady } from "@/lib/stripe";
 import { ensureResellerGenericSubdomain } from "@/lib/reseller-subdomain";
 
 /**
@@ -170,6 +170,9 @@ export async function POST(req: NextRequest) {
     success_url: `${baseUrl}/reseller/branding?subscribed=1`,
     cancel_url: `${baseUrl}/reseller/branding`,
     allow_promotion_codes: true,
+    // Short fuse (Stripe default is 24h): two open sessions can BOTH be
+    // completed → duplicate live white-label subscriptions.
+    expires_at: checkoutSessionExpiresAt(),
   });
 
   return NextResponse.json({ url: session.url });
