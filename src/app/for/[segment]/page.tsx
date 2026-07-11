@@ -54,7 +54,7 @@ const PRODUCT_HIGHLIGHTS: { icon: typeof Percent; title: string; body: string }[
   { icon: ChefHat, title: "Kitchen Order App", body: "Orders ring instantly on iOS & Android — even screen-off — with a missed-order phone alert." },
   { icon: Printer, title: "WiFi thermal printing", body: "Print tickets straight from the tablet to Star, Epson, Bixolon, and Citizen receipt printers." },
   { icon: CalendarCheck, title: "Reservations", body: "Take table bookings and reserve-then-order pre-orders from the same branded page." },
-  { icon: Megaphone, title: "GrowthNet marketing", body: "Smart Links, QR codes, Autopilot win-backs, and SMS turn one-time customers into regulars." },
+  { icon: Megaphone, title: "GrowthNet marketing", body: "Smart Links, QR codes, and Autopilot win-backs turn one-time customers into regulars." },
   { icon: Globe, title: "38 languages", body: "Your ordering page, kitchen app, and emails — all localised for your customers." },
   { icon: Headset, title: "Real human support", body: "Talk to a real person who knows restaurants — no bots, no ticket-queue limbo." },
 ];

@@ -52,7 +52,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "What does Fee Free Ordering cost compared to GloriaFood?",
-    a: "The core platform is free, like GloriaFood's free plan: branded ordering page, kitchen order app, thermal printing, reservations and your customer database, with 0% commission on direct orders. Optional paid add-ons (online card payments, hosted website, SMS and similar) are à la carte, so you only pay for what you actually use.",
+    a: "The core platform is free, like GloriaFood's free plan: branded ordering page, kitchen order app, thermal printing, reservations and your customer database, with 0% commission on direct orders. Optional paid add-ons (online card payments, hosted website, custom domain and similar) are à la carte, so you only pay for what you actually use.",
   },
   {
     q: "I take orders on a tablet and print tickets. Does that still work?",
@@ -311,7 +311,7 @@ export default async function GloriaFoodAlternativePage() {
                 },
                 {
                   title: "Reservations that take orders",
-                  body: "Guests can book a table and pre-order their food in one checkout — with an optional deposit. The kitchen sees one clean booking-with-order.",
+                  body: "Guests can book a table and pre-order their food in one checkout. The kitchen sees one clean booking-with-order.",
                 },
                 {
                   title: "Your own domain, zero platform branding",

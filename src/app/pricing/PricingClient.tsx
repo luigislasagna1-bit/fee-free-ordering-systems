@@ -57,7 +57,10 @@ export function PricingClient({ locale, addOns }: { locale: string; addOns: Pric
 
   const bundle = addOns.find((a) => a.slug === "growthnet");
   const members = addOns.filter((a) => a.inGrowthNet && a.slug !== "growthnet");
-  const standalone = addOns.filter((a) => !a.inGrowthNet && a.slug !== "growthnet");
+  // While the growthnet bundle row is inactive (not fetched), its member add-ons
+  // must still be sellable — render them as normal à-la-carte cards. Once the
+  // bundle goes active they move back inside the bundle presentation above.
+  const standalone = addOns.filter((a) => a.slug !== "growthnet" && (!a.inGrowthNet || !bundle));
 
   return (
     <div className="min-h-screen bg-white flex flex-col">

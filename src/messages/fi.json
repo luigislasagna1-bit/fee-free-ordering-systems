@@ -332,7 +332,8 @@
     "refundableDeposit": "Palautettava pantti",
     "refundableDepositNotice": "Sisältää {amount} palautettavan pantin, joka palautetaan, kun tuot sen takaisin.",
     "refundableDepositBadge": "+ {amount} palautettava pantti",
-    "refundableDepositNotTaxed": "Palautettava pantti (veroton)"
+    "refundableDepositNotTaxed": "Palautettava pantti (veroton)",
+    "rewardTileEarnRate": "+{pct}% takaisin jokaisesta tilauksesta"
   },
   "pizza": {
     "chooseSize": "Valitse koko",
@@ -848,7 +849,7 @@
       "customerGroups": "VIP-ryhmät",
       "rewards": "Bonusrahat",
       "driverPool": "Kuljettajapooli",
-      "support24_7": "Tuki 24/7"
+      "support24_7": "Tuki"
     },
     "dashboard": {
       "title": "Kojelauta",
@@ -4990,7 +4991,7 @@
       "account": "Tili",
       "copyright": "© {year} Fee Free Ordering. Kaikki oikeudet pidätetään.",
       "tagline": "Maksuton tilausalusta itsenäisille ravintoloille.",
-      "support24_7": "Kanadalainen tuki 24/7"
+      "support24_7": "Kanadalaista tukea aidoilta ihmisiltä"
     },
     "home": {
       "heroBadge": "0 % provisio tilauksista",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Ravintoloitsijoille",
           "title": "Sinun ravintolasi. <accent>0 % komissiota. 100 % omasi.</accent>",
-          "subtitle": "Hyödynnä FeeFreen ainutlaatuisia GrowthNet-markkinointityökaluja ja Marketplace-mainontaa: hanki uusia asiakkaita ja muuta heidät palaaviksi, pitkäaikaisiksi suoriksi asiakkaiksi",
+          "subtitle": "Ota vastaan nouto-, toimitus-, paikan päällä- ja catering-tilauksia omalla brändätyllä sivullasi 0% komissiolla — ja lanseerauksen myötä saapuvat GrowthNet-markkinointityökalut ja Marketplace-mainonta muuttavat ensikävijät palaaviksi suoriksi asiakkaiksi.",
           "ctaStart": "Aloita ilmaiseksi",
           "ctaDemo": "Katso elävä tilaussivu",
           "badge": "0 % komissiota",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Smart Link -analytiikka — skannaukset muuttuvat aidoiksi tilauksiksi ja liikevaihdoksi",
           "badge": "Yksi paketti · viisi työkalua",
           "blurb": "Jokainen markkinointi-, sitouttamis- ja hankintatyökalu yhteen alennettuun hintaan — tai lisää mikä tahansa yksittäinen omana valintanaan.",
-          "pricingCta": "Katso GrowthNet-hinnoittelu",
+          "pricingCta": "Lue lisää GrowthNetistä",
           "apmBody": "8 edistynyttä kampanjatyyppiä, asiakassegmentit ja automatisoidut sähköpostikampanjat.",
           "studioBody": "Seurattavat QR-koodit, Smart Links ja brändätyt esitteet — näe, mikä muuttaa skannaukset tilauksiksi.",
           "kickstarterBody": "Lähetysvalmiit ensitilaus- ja takaisinvoittokampanjat, jotka tuovat asiakkaita heti ensimmäisestä päivästä.",
           "smsBody": "Lähetä asiakkaille tekstiviestejä tilauksen edetessä keittiössä — vahvistettu, valmis, valmistunut.",
           "contentpilotBody": "AI-somemanagerisi — luonnostelee ja ajastaa julkaisuja Instagramiin, Facebookiin, X:ään ja TikTokiin.",
           "saveTitle": "Niputa ja säästä",
-          "saveBody": "Saat koko paketin halvemmalla kuin ostamalla jokaisen työkalun erikseen. <link>Katso laskelma →</link>",
+          "saveBody": "Paketti maksaa vähemmän kuin työkalujen ostaminen erikseen — hinnat julkistetaan lanseerauksessa.",
           "ownMessage": "GrowthNet ja ainutlaatuiset markkinointityökalumme muuttavat ensikertalaiset markkinapaikan asiakkaat <em>suoriksi, uskollisiksi ja palaaviksi asiakkaiksi, jotka ovat sinun omiasi.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Myyntioptimoitu verkkosivusto",
-            "body": "Isännöity, SEO-valmis markkinointi- ja tilaussivusto, joka rakennetaan automaattisesti ruokalistastasi, omalla verkkotunnuksellasi."
+            "body": "Isännöity, SEO-valmis markkinointi- ja tilaussivusto, joka rakennetaan automaattisesti ruokalistastasi, osoitteessa your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Useat toimipisteet",
@@ -5248,8 +5249,8 @@
           "badge": "Ylpeästi kanadalainen",
           "title": "Rakennettu ja operoitu Ontariossa, Kanadassa.",
           "body": "Kanadalainen yritys — ei kasvoton merentakainen välittäjä. Maksusi, datasi ja asiakkaasi pysyvät sinun.",
-          "supportTitle": "24/7 kanadalainen tuki",
-          "supportBody": "Aitoja ihmisiä, milloin tahansa — päivin tai öin. Soita <phone>1-888-618-8765</phone> tai chattaile suoraan sen rakentaneiden ihmisten kanssa."
+          "supportTitle": "Kanadalaista tukea aidoilta ihmisiltä",
+          "supportBody": "Aitoja ihmisiä, jotka tuntevat ravintola-alan — soita <phone>1-888-618-8765</phone> ja juttele sen rakentaneiden ihmisten kanssa."
         },
         "demo": {
           "title": "Katso aito tilaussivu.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Rakennettu kasvuun",
             "title": "Enemmän tilauksia. Pienemmät maksut. Suuremmat voitot.",
-            "b1": "Rajattomasti tilauksia",
+            "b1": "Ei tilauskohtaisia maksuja",
             "b2": "Ei piilokuluja",
             "b3": "Ei käyttöönottomaksuja",
             "b4": "Peru milloin tahansa"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Tulossa pian",
     "nativeAppsBody": "Täysiveriset natiivisovellukset ovat työn alla. Sillä välin napauta selaimesi <b>jakamisvalikkoa</b> ja valitse <b>\"Add to Home Screen\"</b> — saat markkinapaikan oikeana sovelluskuvakkeena, käynnistysnäyttöineen ja koko näytön kokemuksena. App Storea ei tarvita.",
     "ownerTitle": "Ravintolan omistaja? Tule mukaan.",
-    "ownerBody": "Kiinteä <b>$199.99/kk enintään</b> (tai per tilaus, sen mukaan kumpi on edullisempi) — ei provisioita, ei ylimääräisiä asiakasmaksuja, ei yksinoikeussopimuksia. UberEats veloittaa noin <b>$200 provisiota $660:n tilauksista.</b> Markkinapaikallamme $200:lla saat rajattomasti tilauksia koko kuukaudeksi.",
-    "getListedFree": "Liity ilmaiseksi",
+    "ownerBody": "Ei komissioita, ei lisämaksuja asiakkaille, ei yksinoikeussopimuksia — Marketplace-ravintolat maksavat <b>kiinteän kuukausittaisen listausmaksun</b> isojen sovellusten jopa 30%:n komissioiden sijaan. Hinnat julkistetaan lanseerauksessa.",
+    "getListedFree": "Aloita ilmaiseksi",
     "seePricing": "Katso hinnoittelu",
     "searchPlaceholder": "Hae ravintoloita, ruokia, kaupunkeja, ruokalajeja…",
     "clearSearch": "Tyhjennä haku",
@@ -5597,7 +5598,7 @@
     "featured": "Suositellut",
     "allRestaurants": "Kaikki ravintolat",
     "emptyTitle": "Olemme vasta aloittamassa",
-    "emptyBody": "Markkinapaikalla ei vielä ole ravintoloita. Jos pyörität ravintolaa, tilaa <b>Marketplace Listing</b> -lisäosa hallintapaneelistasi päästäksesi mukaan.",
+    "emptyBody": "Markkinapaikalla ei vielä ole ravintoloita — listaukset avautuvat lanseerauksessa. Jos pyörität ravintolaa, luo ilmainen tili jo nyt, niin pääset mukaan <b>Marketplace</b>-alustalle heti avauspäivänä.",
     "restaurantLogin": "Ravintolan kirjautuminen",
     "noMatchesTitle": "Ei tuloksia",
     "noMatchesBody": "Kokeile eri hakusanaa tai poista suodattimet.",

@@ -92,7 +92,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
       },
       {
         "q": "Do I get help setting it up?",
-        "a": "Yes. We offer 24/7 Canadian phone support staffed by real people, and the import does most of the heavy lifting for you. The whole platform is also available in 38 languages."
+        "a": "Yes. Real Canadian phone support from people who know restaurants, and the import does most of the heavy lifting for you. The whole platform is also available in 38 languages."
       }
     ]
   },
@@ -209,7 +209,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
       },
       {
         "title": "Every delivery builds your customer list",
-        "body": "Each order saves to your own customer database with address history. GrowthNet's Autopilot win-back emails and SMS bring those customers back to order direct — instead of you re-paying an app to reach them."
+        "body": "Each order saves to your own customer database with address history. GrowthNet's Autopilot win-back emails bring those customers back to order direct — instead of you re-paying an app to reach them."
       }
     ],
     "faqs": [
@@ -227,7 +227,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
       },
       {
         "q": "Do you provide the delivery drivers?",
-        "a": "Today you deliver with your own drivers, which is how you keep the full order total — we give you the ordering, delivery fees, ETAs, and kitchen tools. A managed driver-dispatch option is coming soon."
+        "a": "You can deliver with your own drivers and keep the full order total — we give you the ordering, delivery fees, ETAs, and kitchen tools. Or add the optional Driver Pool add-on to dispatch orders to a managed driver network when you don't run your own fleet."
       }
     ]
   },
@@ -317,7 +317,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
       },
       {
         "q": "Where do my reservations and guest data live?",
-        "a": "On your own platform. Every booking saves to your customer database, which you can use for win-back emails, SMS, and promotions through GrowthNet. The data is yours, not a booking platform's."
+        "a": "On your own platform. Every booking saves to your customer database, which you can use for win-back emails and promotions through GrowthNet. The data is yours, not a booking platform's."
       }
     ]
   },
@@ -362,7 +362,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
       },
       {
         "q": "Do I own my reservation and guest data?",
-        "a": "Completely. Every booking saves to your own customer database, which you can use with GrowthNet promotions, win-back emails, and SMS. Nothing is locked inside a third-party booking platform."
+        "a": "Completely. Every booking saves to your own customer database, which you can use with GrowthNet promotions and win-back emails. Nothing is locked inside a third-party booking platform."
       }
     ]
   },
@@ -471,7 +471,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
     "benefits": [
       {
         "title": "Hosted Website with ordering built in",
-        "body": "Add the optional Hosted Website to get a clean restaurant site where ordering is the core feature, not a plug-in. Custom domains are coming soon, so you'll be able to put it on your own web address too."
+        "body": "Add the optional Hosted Website to get a clean restaurant site where ordering is the core feature, not a plug-in — and add the optional Custom Domain add-on to serve it on your own web address, fully white-labelled."
       },
       {
         "title": "Add ordering to the site you already have — free",
@@ -489,7 +489,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
       },
       {
         "q": "Can Fee Free host a website for me?",
-        "a": "Yes — the optional Hosted Website add-on gives you a hosted restaurant site with ordering built in. Custom domains for it are coming soon."
+        "a": "Yes — the optional Hosted Website add-on gives you a hosted restaurant site with ordering built in, and the optional Custom Domain add-on puts it on your own web address."
       },
       {
         "q": "Which website platforms does the widget work with?",
@@ -524,7 +524,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
       },
       {
         "title": "Own the customer, not just the order",
-        "body": "Every direct order saves to your own customer database. With GrowthNet's Autopilot win-back emails, SMS, and promotions, you bring customers back commission-free — instead of re-paying a marketplace to reach them."
+        "body": "Every direct order saves to your own customer database. With GrowthNet's Autopilot win-back emails and promotions, you bring customers back commission-free — instead of re-paying a marketplace to reach them."
       }
     ],
     "faqs": [
@@ -538,7 +538,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
       },
       {
         "q": "What's the catch — how does Fee Free make money?",
-        "a": "Through optional, à-la-carte add-ons like online card payments and multi-location management, plus an optional Marketplace listing. You only pay for what you use. The core ordering is commission-free and free for your first 100 orders monthly."
+        "a": "Through optional, à-la-carte add-ons like online card payments and multi-location management. You only pay for what you use. The core ordering is commission-free and free for your first 100 orders monthly. An optional Marketplace listing is coming soon — pricing announced at launch."
       },
       {
         "q": "How quickly can I start taking commission-free orders?",
@@ -1110,7 +1110,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
       },
       {
         "q": "I already have a website. Do I need to rebuild it?",
-        "a": "No. Keep your current site and point its 'Order' button at your free Fee Free page — nothing to install or maintain on the existing site. (Putting it on your own domain is coming soon.)"
+        "a": "No. Keep your current site and point its 'Order' button at your free Fee Free page — nothing to install or maintain on the existing site. (An optional Custom Domain add-on can put it on your own domain.)"
       },
       {
         "q": "How fast can my Toronto restaurant be taking orders?",
@@ -1145,7 +1145,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
       },
       {
         "title": "Turn a one-off catering order into a regular",
-        "body": "An office or family that orders a big tray once should come back direct, not through an app. Every order grows your own customer list; GrowthNet QR codes on the bag, Smart Links, and SMS or Autopilot win-back offers bring that customer back at 0% commission next time."
+        "body": "An office or family that orders a big tray once should come back direct, not through an app. Every order grows your own customer list; GrowthNet QR codes on the bag, Smart Links, and Autopilot win-back offers bring that customer back at 0% commission next time."
       }
     ],
     "faqs": [
@@ -1175,10 +1175,10 @@ export const SOLUTION_PAGES: SolutionPage[] = [
     "slug": "online-ordering-system-ontario",
     "category": "city",
     "metaTitle": "Online Ordering System Ontario | Fee Free Ordering",
-    "metaDescription": "0% commission online ordering for Ontario restaurant groups. One hub for multiple locations across the province, consistent 13% HST, and 24/7 Canadian support.",
+    "metaDescription": "0% commission online ordering for Ontario restaurant groups. One hub for multiple locations across the province, consistent 13% HST, and real Canadian phone support.",
     "h1": "Online ordering system for Ontario restaurants",
     "eyebrow": "ONTARIO, CANADA",
-    "intro": "Run more than one location across Ontario — a downtown flagship plus a suburban second site, or a small group expanding from a town to the GTA — and you need one system that behaves the same in every region. Fee Free Ordering is a provincial hub: manage multiple locations from one place, apply Ontario's 13% HST consistently everywhere, and lean on 24/7 Canadian phone support, all at 0% commission on direct orders.",
+    "intro": "Run more than one location across Ontario — a downtown flagship plus a suburban second site, or a small group expanding from a town to the GTA — and you need one system that behaves the same in every region. Fee Free Ordering is a provincial hub: manage multiple locations from one place, apply Ontario's 13% HST consistently everywhere, and lean on Canadian phone support from real people, all at 0% commission on direct orders.",
     "painPoint": {
       "title": "A growing Ontario group, stitched from mismatched tools",
       "body": "Most multi-location operators end up with a different setup at each site — one café on an aggregator, another on a website builder, a third on a clipboard — so menus drift, tax is handled inconsistently, and there's no single customer list across the province. Add the aggregators' roughly quarter-to-third commission on top and growth quietly leaks margin at every new location. A single provincial hub fixes the drift and keeps the margin."
@@ -1190,7 +1190,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
       },
       {
         "title": "Consistent provincial HST and Canadian rules",
-        "body": "Ontario's 13% HST is applied correctly on orders and on every location's invoices — the same way at each site, no per-store fiddling. Built in Canada, with 24/7 Canadian phone support from people who understand how Ontario restaurants actually run, not an overseas ticket queue."
+        "body": "Ontario's 13% HST is applied correctly on orders and on every location's invoices — the same way at each site, no per-store fiddling. Built in Canada, with Canadian phone support from real people who understand how Ontario restaurants actually run, not an overseas ticket queue."
       },
       {
         "title": "One customer list across every region",
@@ -1208,7 +1208,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
       },
       {
         "q": "Is there real Canadian support if something breaks on a Friday night?",
-        "a": "Yes — 24/7 Canadian phone support. You reach people who understand Ontario restaurants, and the Kitchen Order App can phone the owner directly at any location if an order isn't accepted in time."
+        "a": "Yes — Canadian phone support from real people. You reach people who understand Ontario restaurants, and the Kitchen Order App can phone the owner directly at any location if an order isn't accepted in time."
       },
       {
         "q": "Will it work for a restaurant outside the GTA?",

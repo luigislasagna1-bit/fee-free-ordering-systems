@@ -37,7 +37,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   // ── Money: the #1 objection ────────────────────────────────────────────
   {
     q: "What does it actually cost? Is there really no commission?",
-    a: "The core platform is free — $0/month — and your first 100 orders every month are free. On direct orders (anything a customer places through your own ordering page, QR code or link) we take 0% commission, forever. That's the whole model: unlike a marketplace that skims 15–30% off every order, we don't take a cut of your food sales. Optional add-ons (things like online card payments, a hosted website, or SMS marketing) are à la carte, so you only pay for the extras you actually turn on. You can run a complete, working ordering operation without paying us anything.",
+    a: "The core platform is free — $0/month — and your first 100 orders every month are free. On direct orders (anything a customer places through your own ordering page, QR code or link) we take 0% commission, forever. That's the whole model: unlike a marketplace that skims 15–30% off every order, we don't take a cut of your food sales. Optional add-ons (things like online card payments, a hosted website, or a custom domain) are à la carte, so you only pay for the extras you actually turn on. You can run a complete, working ordering operation without paying us anything.",
   },
   {
     q: "Am I locked into a contract? How do I cancel?",
@@ -45,7 +45,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "Are there hidden fees — setup, onboarding, or a percentage on top?",
-    a: "No. We don't charge a setup fee, an onboarding fee, or a per-order \"service\" or \"support\" fee on top of orders. This matters because hidden fees are common in this space: ChowNow, for example, adds a 7% \"Support Local Fee\" that lands on your diners at checkout, and several platforms quote a low monthly number but attach a four-figure setup charge. With us, the free core is genuinely free and every paid add-on is a plain, published monthly price you opt into — nothing bolted onto each order.",
+    a: "No. We don't charge a setup fee, an onboarding fee, or a per-order \"service\" or \"support\" fee on top of orders. This matters because hidden fees are common in this space: ChowNow, for example, adds a 7% \"Support Local Fee\" that lands on diners ordering through its app and marketplace, and several platforms quote a low monthly number but attach a four-figure setup charge. With us, the free core is genuinely free and every paid add-on is a plain, published monthly price you opt into — nothing bolted onto each order.",
   },
   {
     q: "Do you charge extra on top of Stripe's payment processing fees?",
@@ -93,11 +93,11 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "Can customers book a table and pre-order at the same time?",
-    a: "Yes — this is one of our favorite features, and most platforms can't do it. A guest can reserve a table and pre-order their food in a single checkout, with an optional deposit collected up front. The kitchen sees one clean booking-with-order, so front-of-house and the kitchen are on the same page before the guest walks in. Standalone reservations (with no pre-order) work too.",
+    a: "Yes — this is one of our favorite features, and most platforms can't do it. A guest can reserve a table and pre-order their food in a single checkout. (Optional up-front deposits are coming soon.) The kitchen sees one clean booking-with-order, so front-of-house and the kitchen are on the same page before the guest walks in. Standalone reservations (with no pre-order) work too.",
   },
   {
     q: "Do you have loyalty and promotions, or just a basic coupon field?",
-    a: "A full engine, not a coupon box. You get visible and hidden promotions, BOGOs and bundles, a combo builder, discount codes, offers you can assign to specific customers or VIPs, store-credit \"Reward Dollars\" that customers earn and spend at checkout, sign-up bonuses, and scheduled automations that run promotions for you. And because you own your customer list, these actually bring people back — which is the entire point of moving diners off marketplaces and onto your own page. (Some competitors gate loyalty behind a pricey add-on; ours is part of the platform.)",
+    a: "A full engine, not a coupon box. Percent and fixed discounts, free delivery, BOGOs and hidden discount codes are included free for every restaurant. The advanced suite — meal bundles, combos, offers you can assign to specific customers or VIPs, and scheduled automations that run promotions for you — is one flat monthly add-on (see our pricing page), never a per-order cut. Store-credit \"Reward Dollars\" that customers earn and spend at checkout and sign-up bonuses are part of the platform. And because you own your customer list, these actually bring people back — which is the entire point of moving diners off marketplaces and onto your own page.",
   },
   {
     q: "Can I build custom pizzas — half-and-half, per-topping pricing?",

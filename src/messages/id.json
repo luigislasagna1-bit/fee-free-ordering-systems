@@ -332,7 +332,8 @@
     "refundableDeposit": "Deposit yang dapat dikembalikan",
     "refundableDepositNotice": "Termasuk deposit yang dapat dikembalikan sebesar {amount}, dikembalikan saat Anda membawanya kembali.",
     "refundableDepositBadge": "+ {amount} deposit yang dapat dikembalikan",
-    "refundableDepositNotTaxed": "Deposit yang dapat dikembalikan (tanpa pajak)"
+    "refundableDepositNotTaxed": "Deposit yang dapat dikembalikan (tanpa pajak)",
+    "rewardTileEarnRate": "+{pct}% kembali di setiap pesanan"
   },
   "pizza": {
     "chooseSize": "Pilih Ukuran",
@@ -848,7 +849,7 @@
       "customerGroups": "Grup VIP",
       "rewards": "Dolar Hadiah",
       "driverPool": "Driver pool",
-      "support24_7": "Dukungan 24/7"
+      "support24_7": "Dukungan"
     },
     "dashboard": {
       "title": "Dasbor",
@@ -4990,7 +4991,7 @@
       "account": "Akun",
       "copyright": "© {year} Fee Free Ordering. Hak cipta dilindungi.",
       "tagline": "Platform pemesanan bebas biaya untuk restoran independen.",
-      "support24_7": "Dukungan Kanada 24/7"
+      "support24_7": "Dukungan Kanada dari manusia sungguhan"
     },
     "home": {
       "heroBadge": "0% komisi pesanan",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Untuk pemilik restoran",
           "title": "Restoran Anda. <accent>Komisi 0%. 100% Milik Anda.</accent>",
-          "subtitle": "Manfaatkan tools marketing unik GrowthNet dari FeeFree dan kekuatan iklan Marketplace untuk menjaring pelanggan baru lalu mengubahnya menjadi pelanggan langsung yang setia dan loyal untuk jangka panjang",
+          "subtitle": "Terima pesanan ambil sendiri, antar, makan di tempat & katering di halaman branded milik Anda sendiri dengan komisi 0% — plus tools marketing GrowthNet dan iklan Marketplace yang hadir saat peluncuran untuk mengubah pengunjung baru menjadi pelanggan langsung yang setia.",
           "ctaStart": "Mulai gratis",
           "ctaDemo": "Lihat etalase langsung",
           "badge": "Komisi 0%",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Analitik Smart Link — pindaian yang berubah menjadi pesanan & pendapatan nyata",
           "badge": "Satu paket · lima alat",
           "blurb": "Setiap alat pemasaran, retensi, dan akuisisi dalam satu harga diskon — atau tambahkan salah satunya saja secara terpisah.",
-          "pricingCta": "Lihat harga GrowthNet",
+          "pricingCta": "Pelajari lebih lanjut tentang GrowthNet",
           "apmBody": "8 jenis promo lanjutan, segmen pelanggan, dan kampanye email otomatis.",
           "studioBody": "Kode QR yang dapat dilacak, Smart Links, dan brosur berlabel merek — lihat apa yang mengubah pindaian menjadi pesanan.",
           "kickstarterBody": "Kampanye pesanan pertama dan win-back siap kirim yang mendatangkan pelanggan sejak hari pertama.",
           "smsBody": "Kirim SMS ke pelanggan saat pesanan mereka melewati setiap tahap di dapur — dikonfirmasi, siap, selesai.",
           "contentpilotBody": "Manajer media sosial AI Anda — menyusun draf dan menjadwalkan unggahan ke Instagram, Facebook, X & TikTok.",
           "saveTitle": "Paketkan & hemat",
-          "saveBody": "Dapatkan seluruh paket dengan harga lebih murah daripada membeli setiap alat secara terpisah. <link>Lihat hitungannya →</link>",
+          "saveBody": "Paket akan lebih murah daripada membeli setiap alat secara terpisah — harga diumumkan saat peluncuran.",
           "ownMessage": "GrowthNet dan alat pemasaran eksklusif kami mengubah pelanggan marketplace yang baru pertama kali menjadi <em>pelanggan langsung, setia, dan berulang yang menjadi milik Anda.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Situs Web yang Dioptimalkan untuk Penjualan",
-            "body": "Situs pemasaran + pemesanan yang dihosting, siap SEO, dibuat otomatis dari menu Anda, di domain Anda sendiri."
+            "body": "Situs pemasaran + pemesanan yang dihosting, siap SEO, dibuat otomatis dari menu Anda, di your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Multi-Lokasi",
@@ -5248,8 +5249,8 @@
           "badge": "Bangga Kanada",
           "title": "Dibuat & dijalankan di Ontario, Kanada.",
           "body": "Perusahaan Kanada — bukan agregator luar negeri tanpa wajah. Biaya, data, dan pelanggan Anda tetap menjadi milik Anda.",
-          "supportTitle": "Dukungan Kanada 24/7",
-          "supportBody": "Manusia sungguhan, kapan saja — siang atau malam. Hubungi <phone>1-888-618-8765</phone> atau chat langsung dengan orang-orang yang benar-benar membangunnya."
+          "supportTitle": "Dukungan Kanada dari manusia sungguhan",
+          "supportBody": "Manusia sungguhan yang paham restoran — hubungi <phone>1-888-618-8765</phone> dan bicaralah dengan orang-orang yang benar-benar membangunnya."
         },
         "demo": {
           "title": "Lihat etalase sungguhan.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Dirancang untuk berkembang",
             "title": "Lebih banyak pesanan. Biaya lebih rendah. Keuntungan lebih tinggi.",
-            "b1": "Pesanan tanpa batas",
+            "b1": "Tanpa biaya per pesanan",
             "b2": "Tanpa biaya tersembunyi",
             "b3": "Tanpa biaya pemasangan",
             "b4": "Batalkan kapan saja"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Segera Hadir",
     "nativeAppsBody": "Aplikasi native lengkap sedang dalam pengembangan. Sementara itu, ketuk <b>menu berbagi</b> di browser Anda dan pilih <b>“Add to Home Screen”</b> — marketplace akan tampil sebagai ikon aplikasi sungguhan, lengkap dengan splash screen dan tampilan layar penuh. Tanpa perlu App Store.",
     "ownerTitle": "Pemilik restoran? Daftarkan diri Anda.",
-    "ownerBody": "Maksimal <b>$199.99/bulan</b> (atau per pesanan, mana yang lebih murah) — tanpa komisi, tanpa biaya ekstra pelanggan, tanpa kontrak eksklusivitas. UberEats membebankan sekitar <b>$200 komisi dari $660 pesanan.</b> Di marketplace kami, $200 memberikan Anda pesanan tak terbatas sepanjang bulan.",
-    "getListedFree": "Daftar gratis sekarang",
+    "ownerBody": "Tanpa komisi, tanpa biaya tambahan untuk pelanggan, tanpa kontrak eksklusivitas — restoran Marketplace membayar <b>biaya listing bulanan tetap</b> alih-alih komisi hingga 30% yang dikenakan aplikasi besar. Harga diumumkan saat peluncuran.",
+    "getListedFree": "Mulai gratis",
     "seePricing": "Lihat harga",
     "searchPlaceholder": "Cari restoran, masakan, kota, menu…",
     "clearSearch": "Hapus pencarian",
@@ -5597,7 +5598,7 @@
     "featured": "Unggulan",
     "allRestaurants": "Semua restoran",
     "emptyTitle": "Kami baru saja memulai",
-    "emptyBody": "Belum ada restoran di marketplace ini. Jika Anda mengelola restoran, berlangganan add-on <b>Marketplace Listing</b> dari dasbor admin Anda untuk terdaftar di sini.",
+    "emptyBody": "Belum ada restoran di marketplace ini — pendaftaran dibuka saat peluncuran. Jika Anda mengelola restoran, buat akun gratis Anda sekarang dan Anda bisa bergabung dengan <b>Marketplace</b> tepat di hari pembukaannya.",
     "restaurantLogin": "Masuk sebagai restoran",
     "noMatchesTitle": "Tidak ada hasil",
     "noMatchesBody": "Coba kata kunci lain atau hapus filter yang diterapkan.",

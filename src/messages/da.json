@@ -332,7 +332,8 @@
     "refundableDeposit": "Refunderbart depositum",
     "refundableDepositNotice": "Inkluderer et refunderbart depositum på {amount}, som returneres, når du bringer det tilbage.",
     "refundableDepositBadge": "+ {amount} refunderbart depositum",
-    "refundableDepositNotTaxed": "Refunderbart depositum (ikke beskattet)"
+    "refundableDepositNotTaxed": "Refunderbart depositum (ikke beskattet)",
+    "rewardTileEarnRate": "+{pct}% tilbage på hver bestilling"
   },
   "pizza": {
     "chooseSize": "Vælg størrelse",
@@ -848,7 +849,7 @@
       "customerGroups": "VIP-grupper",
       "rewards": "Bonuskroner",
       "driverPool": "Chaufførpulje",
-      "support24_7": "Support døgnet rundt"
+      "support24_7": "Support"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -4990,7 +4991,7 @@
       "account": "Konto",
       "copyright": "© {year} Fee Free Ordering. Alle rettigheder forbeholdes.",
       "tagline": "Den gebyrfrie bestillingsplatform for uafhængige restauranter.",
-      "support24_7": "Canadisk support 24/7"
+      "support24_7": "Canadisk support fra rigtige mennesker"
     },
     "home": {
       "heroBadge": "0% kommission på ordrer",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Til restauratører",
           "title": "Din restaurant. <accent>0 % i kommission. 100 % din egen.</accent>",
-          "subtitle": "Brug FeeFrees unikke GrowthNet-marketingværktøjer og Marketplace-annoncering til at tiltrække nye kunder og gøre dem til loyale, faste kunder, der bestiller direkte hos dig",
+          "subtitle": "Modtag afhentnings-, leverings-, dine-in- og cateringordrer på din egen brandede side med 0% i kommission — med GrowthNet-marketingværktøjer og Marketplace-annoncering, der kommer ved lanceringen og gør førstegangsbesøgende til faste, direkte kunder.",
           "ctaStart": "Kom gratis i gang",
           "ctaDemo": "Se en live bestillingsside",
           "badge": "0% i kommission",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Smart Link-analyse — scanninger, der bliver til rigtige bestillinger og omsætning",
           "badge": "Én pakke · fem værktøjer",
           "blurb": "Alle værktøjer til markedsføring, fastholdelse og erhvervelse til én rabatpris — eller tilføj et enkelt af dem alene.",
-          "pricingCta": "Se GrowthNet-priser",
+          "pricingCta": "Læs mere om GrowthNet",
           "apmBody": "8 avancerede kampagnetyper, kundesegmenter og automatiserede e-mailkampagner.",
           "studioBody": "Sporbare QR-koder, Smart Links og brandede flyers — se, hvad der gør scanninger til bestillinger.",
           "kickstarterBody": "Klar-til-at-sende kampagner til førstegangsordrer og tilbageerobring, der trækker kunder ind fra dag ét.",
           "smsBody": "Send sms til kunderne, mens deres bestilling bevæger sig gennem køkkenet — bekræftet, klar, færdig.",
           "contentpilotBody": "Din AI-socialmediechef — skriver og planlægger opslag til Instagram, Facebook, X og TikTok.",
           "saveTitle": "Saml og spar",
-          "saveBody": "Få hele pakken for mindre end at købe hvert værktøj for sig. <link>Se regnestykket →</link>",
+          "saveBody": "Pakken vil koste mindre end at købe hvert værktøj separat — priser annonceres ved lanceringen.",
           "ownMessage": "GrowthNet og vores eksklusive markedsføringsværktøjer forvandler nye marketplace-kunder til <em>direkte, loyale og tilbagevendende kunder, der er dine egne.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Salgsoptimeret hjemmeside",
-            "body": "En hostet, SEO-klar markedsførings- og bestillingsside, der automatisk bygges ud fra din menu, på dit eget domæne."
+            "body": "En hostet, SEO-klar markedsførings- og bestillingsside, der automatisk bygges ud fra din menu, på your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Flere lokationer",
@@ -5248,8 +5249,8 @@
           "badge": "Stolt canadisk",
           "title": "Bygget og drevet i Ontario, Canada.",
           "body": "En canadisk virksomhed — ikke en ansigtsløs udenlandsk aggregator. Dine gebyrer, dine data og dine kunder forbliver dine.",
-          "supportTitle": "24/7 canadisk support",
-          "supportBody": "Rigtige mennesker, når som helst — dag eller nat. Ring til <phone>1-888-618-8765</phone> eller chat live med dem, der rent faktisk byggede det."
+          "supportTitle": "Canadisk support fra rigtige mennesker",
+          "supportBody": "Rigtige mennesker, der forstår restauranter — ring til <phone>1-888-618-8765</phone> og tal med dem, der rent faktisk byggede det."
         },
         "demo": {
           "title": "Se en rigtig bestillingsside.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Skabt til vækst",
             "title": "Flere ordrer. Lavere gebyrer. Større overskud.",
-            "b1": "Ubegrænset antal ordrer",
+            "b1": "Ingen gebyrer pr. ordre",
             "b2": "Ingen skjulte gebyrer",
             "b3": "Ingen oprettelsesgebyrer",
             "b4": "Opsig når som helst"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Kommer snart",
     "nativeAppsBody": "De fuldt udstyrede native apps er på vej. I mellemtiden kan du trykke på din browsers <b>delingsmenu</b> og vælge <b>\"Add to Home Screen\"</b> — så får du markedspladsen som et rigtigt app-ikon, splash-skærm og fuldskærmsoplevelse. Intet App Store kræves.",
     "ownerTitle": "Restaurantejer? Bliv oplistet.",
-    "ownerBody": "Fast <b>$199.99/måned maks</b> (eller per ordre, hvad end der er billigst) — ingen provision, ingen ekstra kundegebyrer, ingen eksklusivitetskontrakter. UberEats tager ca. <b>$200 i provision på $660 i ordrer.</b> På vores markedsplads giver $200 dig ubegrænsede ordrer hele måneden.",
-    "getListedFree": "Bliv oplistet gratis",
+    "ownerBody": "Ingen kommissioner, ingen ekstra gebyrer for kunderne, ingen eksklusivitetskontrakter — restauranter på Marketplace betaler et <b>fast månedligt gebyr for at være oplistet</b> i stedet for de op til 30% i kommission, som de store apps opkræver. Priserne offentliggøres ved lanceringen.",
+    "getListedFree": "Kom i gang gratis",
     "seePricing": "Se priser",
     "searchPlaceholder": "Søg restauranter, køkkener, byer, retter…",
     "clearSearch": "Ryd søgning",
@@ -5597,7 +5598,7 @@
     "featured": "Fremhævede",
     "allRestaurants": "Alle restauranter",
     "emptyTitle": "Vi er lige startet",
-    "emptyBody": "Ingen restauranter på markedspladsen endnu. Hvis du driver en restaurant, skal du abonnere på <b>Marketplace Listing</b>-tilføjelsen fra dit admin-dashboard for at blive oplistet her.",
+    "emptyBody": "Ingen restauranter på markedspladsen endnu — oplistningerne åbner ved lanceringen. Driver du en restaurant, så opret din gratis konto nu, og du kan blive en del af <b>Marketplace</b> den dag, den åbner.",
     "restaurantLogin": "Restaurant log ind",
     "noMatchesTitle": "Ingen resultater",
     "noMatchesBody": "Prøv et andet søgeord, eller ryd filtrene.",

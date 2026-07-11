@@ -123,7 +123,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         title: "Own the relationship, not just the order",
-        body: "Every order grows your own customer list. Win regulars back with GrowthNet Smart Links and SMS offers instead of paying a marketplace to rent you the same customer again.",
+        body: "Every order grows your own customer list. Win regulars back with GrowthNet Smart Links and Autopilot win-back offers instead of paying a marketplace to rent you the same customer again.",
       },
     ],
     faqs: [
@@ -221,7 +221,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         title: "Keep your regulars regular",
-        body: "Build your own customer list with every order, then bring people back with GrowthNet Smart Links and SMS offers — direct, commission-free, again and again.",
+        body: "Build your own customer list with every order, then bring people back with GrowthNet Smart Links and Autopilot win-back offers — direct, commission-free, again and again.",
       },
     ],
     faqs: [
@@ -319,7 +319,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         title: "Turn delivery customers into regulars",
-        body: "Every order builds your own customer list. GrowthNet Smart Links and SMS win-backs bring them back to order direct — commission-free — instead of through a marketplace.",
+        body: "Every order builds your own customer list. GrowthNet Smart Links and Autopilot win-backs bring them back to order direct — commission-free — instead of through a marketplace.",
       },
     ],
     faqs: [
@@ -368,7 +368,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         title: "Build a loyal, direct following",
-        body: "Each order grows your own customer list. GrowthNet QR codes and SMS offers bring customers back to order direct — commission-free — every time.",
+        body: "Each order grows your own customer list. GrowthNet QR codes and Autopilot win-back offers bring customers back to order direct — commission-free — every time.",
       },
     ],
     faqs: [
@@ -417,7 +417,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         title: "Reward the repeat habit",
-        body: "Every order builds your own customer list. GrowthNet Smart Links, QR codes, and SMS offers bring regulars back daily — direct and commission-free.",
+        body: "Every order builds your own customer list. GrowthNet Smart Links, QR codes, and Autopilot win-back offers bring regulars back daily — direct and commission-free.",
       },
     ],
     faqs: [

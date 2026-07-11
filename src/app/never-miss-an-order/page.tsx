@@ -65,7 +65,7 @@ const LAYERS = [
     Icon: PhoneCall,
     eyebrow: "LAYER 3",
     heading: "If an order still sits unaccepted, the system phones the restaurant.",
-    body: "This is the layer nobody else has. Suppose it's the middle of a rush, the ring got silenced, and the ticket didn't get grabbed. After an order has been waiting too long, Fee Free Ordering places an actual automated phone call to the restaurant — a real ringing telephone, the one thing in a busy kitchen that always gets answered.",
+    body: "This is the layer we've never seen on any other platform. Suppose it's the middle of a rush, the ring got silenced, and the ticket didn't get grabbed. After an order has been waiting too long, Fee Free Ordering places an actual automated phone call to the restaurant — a real ringing telephone, the one thing in a busy kitchen that always gets answered.",
     bullets: [
       "A real voice call, not another app notification. When an order sits unaccepted past the threshold, the platform dials your restaurant line and announces there's an order waiting.",
       "It only calls when it needs to. The call fires only if the earlier layers didn't get the order accepted in time — so it's a genuine 'something's wrong, look now' signal, not noise.",
@@ -83,7 +83,7 @@ const LAYERS = [
     bullets: [
       "Instant accept, instant print. With auto-accept on, an order is confirmed and its ticket prints the moment it lands — the customer gets an immediate confirmation and the kitchen gets the ticket, hands-free.",
       "You choose the mode per your workflow. Run manual-accept when you want control over what you take, or auto-accept when the kitchen is slammed and every order is one you'd accept anyway. It lives in Order Handling, saved with one switch.",
-      "Payment is captured the right way. When you accept an order (by hand or automatically), the customer's card is charged on acceptance — you're never cooking food for an order that didn't pay, and you're never holding money for an order you can't make.",
+      "Payment is captured the right way. With the online card payments add-on, the customer's card is charged the moment you accept (by hand or automatically) — you're never cooking a card order that didn't pay, and never holding money for an order you can't make.",
     ],
     note: "Auto-accept and the ring/print/call layers aren't either-or. Most restaurants run auto-accept for reliability and keep the ring on so the kitchen still hears every new ticket land.",
   },
@@ -92,7 +92,7 @@ const LAYERS = [
 const FAQS: Array<{ q: string; a: string }> = [
   {
     q: "What actually happens the moment a customer places an order?",
-    a: "Your Kitchen Order App rings — loudly, and even if the tablet's screen is off — and keeps ringing until a staff member accepts the order. On acceptance, a kitchen ticket prints to your thermal printer and the customer's card is charged. If you'd rather not touch the tablet, auto-accept does the accepting and printing automatically the instant the order arrives.",
+    a: "Your Kitchen Order App rings — loudly, and even if the tablet's screen is off — and keeps ringing until a staff member accepts the order. On acceptance, a kitchen ticket prints to your thermal printer, and if the order was paid online the customer's card is charged. If you'd rather not touch the tablet, auto-accept does the accepting and printing automatically the instant the order arrives.",
   },
   {
     q: "Will it really ring if the tablet is locked or asleep?",

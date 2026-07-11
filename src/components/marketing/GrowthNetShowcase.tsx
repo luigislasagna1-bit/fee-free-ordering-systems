@@ -15,15 +15,16 @@ import { ScreenshotFrame } from "./sections";
  *
  * ACCURACY: members map 1:1 to the inGrowthNet add-ons in prisma/seed-addons.ts
  * (advanced_promos, marketing_studio, kickstarter, customer_sms, contentpilot).
- * Marketplace is deliberately NOT a member. ContentPilot is the only not-yet-built
- * member → tagged "Soon". Member NAMES are brand/product names → never translated;
+ * Marketplace is deliberately NOT a member. Only APM and Kickstarter are live at
+ * launch — Marketing Studio, Customer SMS and ContentPilot are coming-soon →
+ * tagged "Soon". Member NAMES are brand/product names → never translated;
  * the bodies + labels translate via marketing.home.v2.growthnet.*.
  */
 const MEMBER_DEFS: { icon: typeof Tag; name: string; bodyKey: string; comingSoon?: boolean }[] = [
   { icon: Tag, name: "APM (Advanced Promo Marketing)", bodyKey: "apmBody" },
-  { icon: QrCode, name: "Marketing Studio", bodyKey: "studioBody" },
+  { icon: QrCode, name: "Marketing Studio", bodyKey: "studioBody", comingSoon: true },
   { icon: Rocket, name: "Kickstarter", bodyKey: "kickstarterBody" },
-  { icon: MessageSquare, name: "Customer SMS", bodyKey: "smsBody" },
+  { icon: MessageSquare, name: "Customer SMS", bodyKey: "smsBody", comingSoon: true },
   { icon: Sparkles, name: "ContentPilot", bodyKey: "contentpilotBody", comingSoon: true },
 ];
 

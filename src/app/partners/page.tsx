@@ -37,8 +37,8 @@ export default async function PartnersPage() {
             Earn recurring revenue<br />by bringing restaurants on board.
           </h1>
           <p className="text-xl text-emerald-100 mb-10 max-w-2xl mx-auto">
-            Every restaurant you sign up pays a monthly subscription. You earn up to
-            15% of that — every month, for as long as they're active.
+            Restaurants you sign up subscribe to paid add-ons — and you earn up to
+            15% of that spend, every month, for as long as they're active.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -65,7 +65,7 @@ export default async function PartnersPage() {
               The more you sell, the more you earn.
             </h2>
             <p className="text-gray-600">
-              Hit 5 active paying restaurants and every one of them starts earning you commission — retroactively. Scale to 50+ and you triple your rate to 15%.
+              Hit 5 active paying restaurants and every one of them starts earning you commission — retroactively. Scale to 51+ and you triple your rate to 15%.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -85,7 +85,7 @@ export default async function PartnersPage() {
             />
             <TierCard
               rate="15%"
-              range="50+ active"
+              range="51+ active"
               tone="green"
               body="Cross 50 active paying restaurants and you unlock our top tier. Power-partner status."
             />
@@ -101,14 +101,16 @@ export default async function PartnersPage() {
           "what if they go all-in?" both. So we show 3 spend tiers and
           3 portfolio sizes, all 9 cells visible at once.
 
-          Spend tiers (per restaurant per month):
-            - 1 add-on   = ~$29.99 (Online Payments alone — the most-common
+          Spend tiers (per restaurant per month), priced from the canonical
+          AddOn table — ACTIVE add-ons only, never coming-soon ones:
+            - 1 add-on   = $39.99  (Online Payments alone — the most-common
                                     first add-on, required for card orders)
-            - 3 add-ons  = ~$59.97 (OP $29.99 + Hosted Website $19.99 +
+            - 3 add-ons  = $69.97  (OP $39.99 + Hosted Website $19.99 +
                                     Custom Domain $9.99 — typical sweet spot)
-            - All add-ons = ~$149.95 (the above + Multi-Location $49.99 +
-                                    Advanced Promos $29.99 + Reservation
-                                    Deposits $9.99 — power user) */}
+            - All active = $174.92 (the above + Multi-Location $49.99 +
+                                    Advanced Promos $19.99 + Kickstarter $9.99 +
+                                    Driver Pool $9.99 + Unlimited Orders $14.99
+                                    — power user) */}
       <section className="py-20 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
@@ -137,9 +139,9 @@ export default async function PartnersPage() {
               highlight
             />
             <EarningsTierCard
-              count="50+ restaurants"
+              count="51+ restaurants"
               rate="15%"
-              note="At 50+ active paying restaurants you unlock the top 15% tier. Power-partner territory."
+              note="At 51+ active paying restaurants you unlock the top 15% tier. Power-partner territory."
             />
           </div>
 
@@ -158,26 +160,26 @@ export default async function PartnersPage() {
                     30 restaurants<br /><span className="font-normal text-emerald-600">(10%)</span>
                   </th>
                   <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-bold text-gray-500">
-                    50+ restaurants<br /><span className="font-normal text-gray-400">(15%)</span>
+                    51+ restaurants<br /><span className="font-normal text-gray-400">(15%)</span>
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <EarningsRow
                   scenario="1 add-on"
-                  scenarioDetail="e.g. just Online Payments — $29.99/mo per restaurant"
-                  perRestaurant={29.99}
+                  scenarioDetail="e.g. just Online Payments — $39.99/mo per restaurant"
+                  perRestaurant={39.99}
                 />
                 <EarningsRow
                   scenario="3 add-ons"
-                  scenarioDetail="e.g. Online Payments + Hosted Website + Custom Domain — $59.97/mo per restaurant"
-                  perRestaurant={59.97}
+                  scenarioDetail="e.g. Online Payments + Hosted Website + Custom Domain — $69.97/mo per restaurant"
+                  perRestaurant={69.97}
                   highlightMid
                 />
                 <EarningsRow
-                  scenario="All paid add-ons"
-                  scenarioDetail="OP + Hosted Site + Custom Domain + Multi-Location + Promos + Reservations — $149.95/mo per restaurant"
-                  perRestaurant={149.95}
+                  scenario="All active add-ons"
+                  scenarioDetail="OP + Hosted Site + Custom Domain + Multi-Location + Advanced Promos + Kickstarter + Driver Pool + Unlimited Orders — $174.92/mo per restaurant"
+                  perRestaurant={174.92}
                 />
               </tbody>
             </table>
@@ -186,15 +188,15 @@ export default async function PartnersPage() {
           <div className="mt-6 grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
             <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-4">
               <div className="text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1">Best case in the table</div>
-              {/* 50 × $149.95/mo × 15% = $1,124.625/mo → $13,495.50/yr */}
-              <div className="text-2xl font-extrabold text-emerald-700">$1,124.62/mo</div>
-              <div className="text-xs text-emerald-800 mt-1">50 restaurants × all add-ons × 15% = <strong>$13,495.50/year</strong> recurring.</div>
+              {/* 51 × $174.92/mo × 15% = $1,338.138/mo → $16,057.66/yr */}
+              <div className="text-2xl font-extrabold text-emerald-700">$1,338.14/mo</div>
+              <div className="text-xs text-emerald-800 mt-1">51 restaurants × all active add-ons × 15% = <strong>$16,057.66/year</strong> recurring.</div>
             </div>
             <div className="rounded-xl bg-gray-50 border border-gray-200 p-4">
               <div className="text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Common scenario</div>
-              {/* 30 × $59.97/mo × 10% = $179.91/mo → $2,158.92/yr */}
-              <div className="text-2xl font-extrabold text-gray-900">$179.91/mo</div>
-              <div className="text-xs text-gray-700 mt-1">30 restaurants × 3 add-ons × 10% = <strong>$2,158.92/year</strong>, on autopilot.</div>
+              {/* 30 × $69.97/mo × 10% = $209.91/mo → $2,518.92/yr */}
+              <div className="text-2xl font-extrabold text-gray-900">$209.91/mo</div>
+              <div className="text-xs text-gray-700 mt-1">30 restaurants × 3 add-ons × 10% = <strong>$2,518.92/year</strong>, on autopilot.</div>
             </div>
           </div>
 
@@ -281,7 +283,7 @@ export default async function PartnersPage() {
             <Feature
               icon={<TrendingUp className="w-5 h-5 text-emerald-500" />}
               title="Retroactive at every tier"
-              body="Hit 5 restaurants — every restaurant under you starts earning 5%, not just the new one. Same retroactive jump at 26 (10%) and 50 (15%)."
+              body="Hit 5 restaurants — every restaurant under you starts earning 5%, not just the new one. Same retroactive jump at 26 (10%) and 51 (15%)."
             />
           </div>
         </div>
@@ -321,15 +323,15 @@ export default async function PartnersPage() {
               tone="emerald"
               icon={<CheckCircle2 className="w-5 h-5" />}
               label="Live today"
-              count="6+ paid add-ons"
-              body="Online Payments, Hosted Website, Custom Domain, Multi-Location, Advanced Promotions, Reservation Deposits, Marketplace, Driver Pool, Unlimited Orders, and more. Every one of them attaches commission to your name."
+              count="8 paid add-ons"
+              body="Online Payments, Hosted Website, Custom Domain, Multi-Location, Advanced Promo Marketing, Kickstarter, Driver Pool, FREE Unlimited Orders. Every one of them attaches commission to your name."
             />
             <GrowthCard
               tone="amber"
               icon={<Hammer className="w-5 h-5" />}
               label="In development"
-              count="3 more shipping soon"
-              body="Loyalty + rewards, advanced kitchen display (Toast/Square-style KDS), SMS marketing automation. Currently being built — your restaurants get them automatically when they launch."
+              count="5 more shipping soon"
+              body="Reservation deposits, the discovery Marketplace, loyalty + rewards, advanced kitchen display (Toast/Square-style KDS), SMS marketing automation. Currently being built — your restaurants get them automatically when they launch."
               highlight
             />
             <GrowthCard
@@ -352,7 +354,7 @@ export default async function PartnersPage() {
                   The compounding effect
                 </div>
                 <p className="text-sm md:text-base text-emerald-50 leading-relaxed">
-                  Today, a restaurant on all paid add-ons spends ~$150/mo. By the time we&apos;ve
+                  Today, a restaurant on all active paid add-ons spends ~$175/mo. By the time we&apos;ve
                   doubled our add-on catalog (planned by end of 2026), that same restaurant&apos;s
                   add-on ceiling roughly <strong className="text-white">doubles</strong> — and
                   so does your commission per account.{" "}
@@ -514,8 +516,9 @@ function EarningsTierCard({
  * three portfolio sizes given per-restaurant add-on spend.
  *
  * Column rates mirror the 4-tier system but only 3 columns are shown
- * (10 / 30 / 50+ restaurants) — 10 falls in tier1 (5%), 30 in tier2
- * (10%), 50+ in tier3 (15%). The 0% tier (0-4 restaurants) isn't shown
+ * (10 / 30 / 51+ restaurants) — 10 falls in tier1 (5%), 30 in tier2
+ * (10%), 51+ in tier3 (15%; the threshold is 51, not 50 — at exactly 50
+ * the rate is still 10%). The 0% tier (0-4 restaurants) isn't shown
  * since those resellers don't earn commission yet.
  */
 function EarningsRow({
@@ -547,8 +550,8 @@ function EarningsRow({
         </div>
       </td>
       <td className="px-4 py-4 text-right align-top">
-        <div className="text-lg font-bold text-emerald-700">{row(50, 0.15)}<span className="text-xs font-normal text-gray-500">/mo</span></div>
-        <div className="text-xs text-emerald-600">{fmt(perRestaurant * 50 * 0.15 * 12)}/yr</div>
+        <div className="text-lg font-bold text-emerald-700">{row(51, 0.15)}<span className="text-xs font-normal text-gray-500">/mo</span></div>
+        <div className="text-xs text-emerald-600">{fmt(perRestaurant * 51 * 0.15 * 12)}/yr</div>
       </td>
     </tr>
   );

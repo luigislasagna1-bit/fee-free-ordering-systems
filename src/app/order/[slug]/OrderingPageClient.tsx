@@ -5535,6 +5535,17 @@ export function OrderingPageClient({
                 : amountStr
               );
               const rewardName = (restaurant.rewardLabelPlural?.trim?.() as string | undefined) || t("rewardTileBadge");
+              // Base per-order earn rate (Luigi 2026-07-11): small line on every
+              // reward tile showing the restaurant's "% back on every order"
+              // setting, so the ongoing benefit is visible next to the one-off
+              // bonus. per_dollar mode ($ per $1) converts to the equivalent %.
+              const baseEarnPct = restaurant.rewardEarnEnabled
+                ? Math.round(
+                    ((restaurant.rewardEarnMode === "per_dollar"
+                      ? (restaurant.rewardEarnPerDollar ?? 0) * 100
+                      : restaurant.rewardEarnPercent ?? 0) + Number.EPSILON) * 100,
+                  ) / 100
+                : 0;
               return (
                 <div
                   key={rule.id}
@@ -5558,6 +5569,11 @@ export function OrderingPageClient({
                     <div className="text-base font-black leading-tight line-clamp-3" style={{ textShadow: "0 1px 3px rgba(0,0,0,0.35)" }}>
                       {headline}
                     </div>
+                    {baseEarnPct > 0 && (
+                      <div className="text-[11px] font-semibold opacity-90 mt-0.5" style={{ textShadow: "0 1px 3px rgba(0,0,0,0.35)" }}>
+                        {t("rewardTileEarnRate", { pct: baseEarnPct, label: rewardName })}
+                      </div>
+                    )}
                   </div>
                 </div>
               );

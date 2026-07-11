@@ -332,7 +332,8 @@
     "refundableDeposit": "Dipòsit reemborsable",
     "refundableDepositNotice": "Inclou un dipòsit reemborsable de {amount}, retornat quan el tornes.",
     "refundableDepositBadge": "+ {amount} de dipòsit reemborsable",
-    "refundableDepositNotTaxed": "Dipòsit reemborsable (sense impostos)"
+    "refundableDepositNotTaxed": "Dipòsit reemborsable (sense impostos)",
+    "rewardTileEarnRate": "+{pct}% de retorn a cada comanda"
   },
   "pizza": {
     "chooseSize": "Tria la mida",
@@ -848,7 +849,7 @@
       "customerGroups": "Grups VIP",
       "rewards": "Dòlars de Recompensa",
       "driverPool": "Pool de conductors",
-      "support24_7": "Suport 24/7"
+      "support24_7": "Suport"
     },
     "dashboard": {
       "title": "Tauler de control",
@@ -4990,7 +4991,7 @@
       "account": "Compte",
       "copyright": "© {year} Fee Free Ordering. Tots els drets reservats.",
       "tagline": "La plataforma de comandes sense comissions per a restaurants independents.",
-      "support24_7": "Suport canadenc 24/7"
+      "support24_7": "Suport canadenc de persones reals"
     },
     "home": {
       "heroBadge": "0% de comissió en les comandes",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Per a propietaris de restaurants",
           "title": "El teu restaurant. <accent>0% de comissió. 100% teu.</accent>",
-          "subtitle": "Aprofita les exclusives eines de màrqueting GrowthNet de FeeFree i la publicitat al Marketplace per captar nous clients i convertir-los en clients directes, fidels i recurrents",
+          "subtitle": "Rep comandes per recollir, a domicili, al local i de càtering a la teva pròpia pàgina amb la teva marca, amb un 0% de comissió — i amb les eines de màrqueting GrowthNet i la publicitat al Marketplace, que arriben amb el llançament, converteix els visitants nous en clients directes i recurrents.",
           "ctaStart": "Comença gratis",
           "ctaDemo": "Mira una botiga real",
           "badge": "0% de comissió",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Analítica de Smart Link — escaneigs que es converteixen en comandes i ingressos reals",
           "badge": "Un paquet · cinc eines",
           "blurb": "Totes les eines de màrqueting, fidelització i captació a un preu únic amb descompte — o afegeix-ne qualsevol per separat.",
-          "pricingCta": "Mira els preus de GrowthNet",
+          "pricingCta": "Més informació sobre GrowthNet",
           "apmBody": "8 tipus de promoció avançats, segments de clients i campanyes de correu electrònic automatitzades.",
           "studioBody": "Codis QR rastrejables, Smart Links i fullets amb la teva marca — descobreix què converteix els escaneigs en comandes.",
           "kickstarterBody": "Campanyes de primera comanda i de recuperació a punt per enviar que porten clients des del primer dia.",
           "smsBody": "Envia missatges de text als clients a mesura que la seva comanda avança per la cuina — confirmada, llesta, completada.",
           "contentpilotBody": "El teu gestor de xarxes amb AI — redacta i programa publicacions a Instagram, Facebook, X i TikTok.",
           "saveTitle": "Empaqueta i estalvia",
-          "saveBody": "Aconsegueix tot el paquet per menys que comprant cada eina per separat. <link>Mira els números →</link>",
+          "saveBody": "El paquet costarà menys que comprar cada eina per separat — preus anunciats al llançament.",
           "ownMessage": "GrowthNet i les nostres eines de màrqueting exclusives converteixen els clients que arriben per primera vegada del marketplace en <em>clients directes, fidels i recurrents que són teus.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Lloc web optimitzat per a vendes",
-            "body": "Un lloc de màrqueting i comandes allotjat i preparat per a SEO, construït automàticament a partir del teu menú, al teu propi domini."
+            "body": "Un lloc de màrqueting i comandes allotjat i preparat per a SEO, construït automàticament a partir del teu menú, a your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Multilocal",
@@ -5248,8 +5249,8 @@
           "badge": "Orgullosament canadenc",
           "title": "Creat i operat a Ontario, Canadà.",
           "body": "Una empresa canadenca — no un agregador estranger sense rostre. Les teves comissions, dades i clients continuen sent teus.",
-          "supportTitle": "Suport canadenc 24/7",
-          "supportBody": "Persones reals, a qualsevol hora — dia o nit. Truca al <phone>1-888-618-8765</phone> o xateja en directe amb la gent que de debò el va construir."
+          "supportTitle": "Suport canadenc de persones reals",
+          "supportBody": "Persones reals que coneixen la restauració — truca al <phone>1-888-618-8765</phone> i parla amb la gent que de debò el va construir."
         },
         "demo": {
           "title": "Mira una botiga real.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Pensat per créixer",
             "title": "Més comandes. Menys comissions. Més beneficis.",
-            "b1": "Comandes il·limitades",
+            "b1": "Sense costos per comanda",
             "b2": "Sense comissions ocultes",
             "b3": "Sense costos d'instal·lació",
             "b4": "Cancel·la quan vulguis"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Properament",
     "nativeAppsBody": "Les apps natives completes estan en camí. Mentrestant, toca el <b>menú de compartir</b> del teu navegador i tria <b>\"Add to Home Screen\"</b> — obtindràs el marketplace com una icona d'app real, pantalla de presentació i experiència en pantalla completa. No cal l'App Store.",
     "ownerTitle": "Ets propietari d'un restaurant? Apareix al llistat.",
-    "ownerBody": "Màxim <b>$199.99/mes</b> (o per comanda, el que sigui més barat) — sense comissions, sense càrrecs addicionals al client, sense contractes d'exclusivitat. UberEats cobra uns <b>$200 de comissió per $660 de comandes.</b> Al nostre marketplace, $200 et donen comandes il·limitades durant tot el mes.",
-    "getListedFree": "Apareix al llistat gratuïtament",
+    "ownerBody": "Sense comissions, sense costos extres per als clients, sense contractes d'exclusivitat — els restaurants del Marketplace paguen una <b>quota mensual fixa pel llistat</b> en lloc de les comissions de fins al 30% que cobren les grans apps. Els preus s'anunciaran al llançament.",
+    "getListedFree": "Comença gratis",
     "seePricing": "Veure preus",
     "searchPlaceholder": "Cerca restaurants, cuines, ciutats, plats…",
     "clearSearch": "Esborra la cerca",
@@ -5597,7 +5598,7 @@
     "featured": "Destacats",
     "allRestaurants": "Tots els restaurants",
     "emptyTitle": "Acabem de començar",
-    "emptyBody": "Encara no hi ha restaurants al marketplace. Si tens un restaurant, subscriu-te al complement <b>Marketplace Listing</b> des del tauler d'administració per aparèixer aquí.",
+    "emptyBody": "Encara no hi ha restaurants al marketplace — els llistats s'obriran al llançament. Si tens un restaurant, crea ara el teu compte gratuït i podràs unir-te al <b>Marketplace</b> el dia que obri.",
     "restaurantLogin": "Accés per a restaurants",
     "noMatchesTitle": "Sense resultats",
     "noMatchesBody": "Prova un terme de cerca diferent o esborra els filtres.",

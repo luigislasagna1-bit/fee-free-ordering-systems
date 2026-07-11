@@ -332,7 +332,8 @@
     "refundableDeposit": "환불 가능한 보증금",
     "refundableDepositNotice": "{amount}의 환불 가능한 보증금이 포함되며, 반납 시 환불됩니다.",
     "refundableDepositBadge": "+ {amount} 환불 가능한 보증금",
-    "refundableDepositNotTaxed": "환불 가능한 보증금 (비과세)"
+    "refundableDepositNotTaxed": "환불 가능한 보증금 (비과세)",
+    "rewardTileEarnRate": "주문할 때마다 {pct}% 적립"
   },
   "pizza": {
     "chooseSize": "크기 선택",
@@ -848,7 +849,7 @@
       "customerGroups": "VIP 그룹",
       "rewards": "리워드 달러",
       "driverPool": "드라이버 풀",
-      "support24_7": "연중무휴 24시간 지원"
+      "support24_7": "지원"
     },
     "dashboard": {
       "title": "대시보드",
@@ -4990,7 +4991,7 @@
       "account": "계정",
       "copyright": "© {year} Fee Free Ordering. All rights reserved.",
       "tagline": "독립 레스토랑을 위한 수수료 없는 주문 플랫폼.",
-      "support24_7": "24/7 캐나다 지원"
+      "support24_7": "진짜 사람이 응대하는 캐나다 지원"
     },
     "home": {
       "heroBadge": "주문 수수료 0%",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "레스토랑 사장님을 위한",
           "title": "당신의 레스토랑. <accent>수수료 0%. 100% 당신의 것.</accent>",
-          "subtitle": "FeeFree만의 GrowthNet 마케팅 도구와 Marketplace 광고로 신규 고객을 모으고, 매장에서 직접 주문하는 평생 단골로 만드세요",
+          "subtitle": "픽업, 배달, 매장 식사, 케이터링 주문을 0% 수수료로 나만의 브랜드 페이지에서 받으세요. 출시와 함께 제공되는 GrowthNet 마케팅 도구와 Marketplace 광고가 첫 방문 고객을 직접 주문하는 단골로 만들어 드립니다.",
           "ctaStart": "무료로 시작하기",
           "ctaDemo": "실제 매장 페이지 보기",
           "badge": "수수료 0%",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Smart Link 분석 — 스캔이 실제 주문과 매출로 이어지는 과정",
           "badge": "하나의 번들 · 다섯 가지 도구",
           "blurb": "모든 마케팅, 리텐션, 고객 확보 도구를 하나의 할인된 가격으로 — 또는 원하는 하나만 단독으로 추가하세요.",
-          "pricingCta": "GrowthNet 요금 보기",
+          "pricingCta": "GrowthNet 자세히 알아보기",
           "apmBody": "8가지 고급 프로모션 유형, 고객 세그먼트, 자동화된 이메일 캠페인.",
           "studioBody": "추적 가능한 QR 코드, Smart Links, 브랜드 전단지 — 어떤 스캔이 주문으로 이어지는지 확인하세요.",
           "kickstarterBody": "첫날부터 고객을 불러오는, 바로 보낼 수 있는 첫 주문 및 재유치 캠페인.",
           "smsBody": "주문이 주방을 거치는 동안 고객에게 문자 발송 — 접수, 준비 완료, 완료까지.",
           "contentpilotBody": "사장님의 AI 소셜 매니저 — Instagram, Facebook, X & TikTok 게시물을 작성하고 예약 발행합니다.",
           "saveTitle": "묶어서 절약하세요",
-          "saveBody": "각 도구를 따로 사는 것보다 저렴하게 전체 번들을 받으세요. <link>계산 보기 →</link>",
+          "saveBody": "번들은 각 도구를 따로 구매하는 것보다 저렴합니다 — 가격은 출시 시 공개됩니다.",
           "ownMessage": "GrowthNet과 우리만의 마케팅 도구가 마켓플레이스에서 처음 만난 고객을 <em>직접 보유한 단골 충성 고객</em>으로 바꿔 드립니다."
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "판매 최적화 웹사이트",
-            "body": "메뉴에서 자동으로 만들어지는, 호스팅되는 SEO 최적화 마케팅 + 주문 사이트를 사장님 도메인에."
+            "body": "메뉴에서 자동으로 만들어지는, 호스팅되는 SEO 최적화 마케팅 + 주문 사이트를 your-name.feefreeordering.com 주소로."
           },
           "multiLocation": {
             "title": "다중 매장",
@@ -5248,8 +5249,8 @@
           "badge": "자랑스러운 캐나다 기업",
           "title": "캐나다 온타리오에서 만들고 운영합니다.",
           "body": "이름 없는 해외 플랫폼이 아닌, 캐나다 기업입니다. 사장님의 수수료, 데이터, 고객은 모두 사장님의 것으로 남습니다.",
-          "supportTitle": "24/7 캐나다 지원",
-          "supportBody": "낮이든 밤이든, 언제든 진짜 사람이 응대합니다. <phone>1-888-618-8765</phone>로 전화하거나, 이 제품을 직접 만든 사람들과 실시간 채팅하세요."
+          "supportTitle": "진짜 사람이 응대하는 캐나다 지원",
+          "supportBody": "음식점을 잘 아는 진짜 사람들 — <phone>1-888-618-8765</phone>로 전화해 이 제품을 직접 만든 사람들과 이야기하세요."
         },
         "demo": {
           "title": "실제 매장 페이지를 둘러보세요.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "성장을 위한 설계",
             "title": "더 많은 주문. 더 낮은 수수료. 더 높은 수익.",
-            "b1": "무제한 주문",
+            "b1": "주문당 수수료 없음",
             "b2": "숨은 수수료 없음",
             "b3": "설치 비용 없음",
             "b4": "언제든 해지 가능"
@@ -5584,8 +5585,8 @@
     "comingSoon": "출시 예정",
     "nativeAppsBody": "완전한 네이티브 앱이 준비 중입니다. 그 전까지는 브라우저의 <b>공유 메뉴</b>를 탭하고 <b>“Add to Home Screen”</b>을 선택하세요 — 마켓플레이스가 실제 앱 아이콘, 스플래시 화면, 전체 화면으로 구동됩니다. App Store 설치가 필요 없습니다.",
     "ownerTitle": "음식점 사장님이신가요? 지금 등록하세요.",
-    "ownerBody": "월 <b>최대 $199.99</b>(또는 주문당 요금 중 더 저렴한 방식) — 수수료 없음, 추가 고객 수수료 없음, 독점 계약 없음. UberEats는 $660 주문에 약 <b>$200의 수수료를 부과합니다.</b> 저희 마켓플레이스에서 $200으로 한 달 내내 무제한 주문을 받으세요.",
-    "getListedFree": "무료로 등록하기",
+    "ownerBody": "수수료 없음, 고객 추가 요금 없음, 독점 계약 없음 — Marketplace 음식점은 대형 앱이 부과하는 최대 30% 수수료 대신 <b>고정 월 등록비</b>만 냅니다. 가격은 출시 시 공개됩니다.",
+    "getListedFree": "무료로 시작하기",
     "seePricing": "요금제 보기",
     "searchPlaceholder": "음식점, 음식 종류, 도시, 메뉴 검색…",
     "clearSearch": "검색 초기화",
@@ -5597,7 +5598,7 @@
     "featured": "추천",
     "allRestaurants": "전체 음식점",
     "emptyTitle": "지금 막 시작했어요",
-    "emptyBody": "아직 마켓플레이스에 등록된 음식점이 없습니다. 음식점을 운영하신다면 관리자 대시보드에서 <b>Marketplace Listing</b> 애드온을 구독하여 여기에 등록하세요.",
+    "emptyBody": "아직 마켓플레이스에 등록된 음식점이 없습니다 — 등록은 출시와 함께 시작됩니다. 음식점을 운영하신다면 지금 무료 계정을 만들어 두세요. 오픈 당일 바로 <b>Marketplace</b>에 참여할 수 있습니다.",
     "restaurantLogin": "음식점 로그인",
     "noMatchesTitle": "검색 결과 없음",
     "noMatchesBody": "다른 검색어를 사용하거나 필터를 초기화해 보세요.",

@@ -332,7 +332,8 @@
     "refundableDeposit": "Tagastatav tagatis",
     "refundableDepositNotice": "Sisaldab {amount} tagastatavat tagatist, mis tagastatakse, kui selle tagasi toote.",
     "refundableDepositBadge": "+ {amount} tagastatav tagatis",
-    "refundableDepositNotTaxed": "Tagastatav tagatis (maksuvaba)"
+    "refundableDepositNotTaxed": "Tagastatav tagatis (maksuvaba)",
+    "rewardTileEarnRate": "+{pct}% tagasi igalt tellimuselt"
   },
   "pizza": {
     "chooseSize": "Vali suurus",
@@ -848,7 +849,7 @@
       "customerGroups": "VIP-rühmad",
       "rewards": "Boonusraha",
       "driverPool": "Juhtide kogum",
-      "support24_7": "Tugi 24/7"
+      "support24_7": "Tugi"
     },
     "dashboard": {
       "title": "Juhtpaneel",
@@ -4990,7 +4991,7 @@
       "account": "Konto",
       "copyright": "© {year} Fee Free Ordering. Kõik õigused kaitstud.",
       "tagline": "Komisjonitasuvaba tellimisplatvorm sõltumatutele restoranidele.",
-      "support24_7": "Kanada tugi 24/7"
+      "support24_7": "Kanada tugi päris inimestelt"
     },
     "home": {
       "heroBadge": "0% komisjonitasu tellimustelt",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Restoranipidajatele",
           "title": "Sinu restoran. <accent>0% vahendustasu. 100% sinu oma.</accent>",
-          "subtitle": "Kasuta FeeFree ainulaadseid GrowthNet turundustööriistu ja võimenda kasvu Marketplace reklaamiga, et võita uusi kliente ning muuta neid püsivateks, pikaajalisteks otseklientideks",
+          "subtitle": "Võta vastu kaasaostu-, kulleri-, kohapeal söömise ja catering-tellimusi omaenda brändiga lehel 0% komisjonitasuga — GrowthNet turundustööriistad ja Marketplace reklaam, mis saabuvad käivitamisel, muudavad esmakülastajad püsivateks otseklientideks.",
           "ctaStart": "Alusta tasuta",
           "ctaDemo": "Vaata päris tellimislehte",
           "badge": "0% komisjonitasu",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Smart Linki analüütika — skannimised, mis muutuvad päris tellimusteks ja käibeks",
           "badge": "Üks komplekt · viis tööriista",
           "blurb": "Iga turundus-, hoidmis- ja hankimistööriist ühe soodushinnaga — või lisa neist ükskõik milline üksikuna.",
-          "pricingCta": "Vaata GrowthNet'i hindu",
+          "pricingCta": "Loe GrowthNeti kohta lähemalt",
           "apmBody": "8 täiustatud kampaaniatüüpi, kliendisegmendid ja automatiseeritud e-kirja kampaaniad.",
           "studioBody": "Jälgitavad QR-koodid, Smart Links ja brändiga flaierid — näe, mis muudab skannimised tellimusteks.",
           "kickstarterBody": "Saatmisvalmis esimese tellimuse ja tagasivõitmise kampaaniad, mis toovad kliendid kohale juba esimesest päevast.",
           "smsBody": "Saada klientidele sõnumeid, kui nende tellimus köögis edeneb — kinnitatud, valmis, lõpetatud.",
           "contentpilotBody": "Sinu AI sotsiaalmeedia haldur — koostab ja ajastab postitusi Instagrami, Facebooki, X-i ja TikTokisse.",
           "saveTitle": "Komplekt ja sääst",
-          "saveBody": "Saa kogu komplekt odavamalt, kui iga tööriista eraldi ostes. <link>Vaata arvutust →</link>",
+          "saveBody": "Komplekt maksab vähem kui iga tööriista eraldi ostmine — hinnad avaldatakse turuletulekul.",
           "ownMessage": "GrowthNet ja meie eksklusiivsed turundustööriistad muudavad esmakordsed turuplatsi kliendid <em>otseseks, lojaalseks ja korduvaks kliendiks, kes kuulub sulle.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Müügile optimeeritud veebileht",
-            "body": "Majutatud, SEO-valmis turundus- ja tellimisleht, mis ehitatakse automaatselt su menüüst, sinu enda domeenil."
+            "body": "Majutatud, SEO-valmis turundus- ja tellimisleht, mis ehitatakse automaatselt su menüüst, aadressil your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Mitu asukohta",
@@ -5248,8 +5249,8 @@
           "badge": "Uhkelt kanadalik",
           "title": "Loodud ja juhitud Ontarios, Kanadas.",
           "body": "Kanada ettevõte — mitte näotu välismaine agregaator. Su tasud, andmed ja kliendid jäävad sinu omaks.",
-          "supportTitle": "24/7 kanadalik tugi",
-          "supportBody": "Päris inimesed, igal ajal — päeval või öösel. Helista <phone>1-888-618-8765</phone> või vestle reaalajas inimestega, kes selle päriselt ehitasid."
+          "supportTitle": "Kanada tugi päris inimestelt",
+          "supportBody": "Päris inimesed, kes tunnevad restoranielu — helista <phone>1-888-618-8765</phone> ja räägi inimestega, kes selle päriselt ehitasid."
         },
         "demo": {
           "title": "Vaata päris tellimislehte.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Loodud kasvuks",
             "title": "Rohkem tellimusi. Madalamad tasud. Suurem kasum.",
-            "b1": "Piiramatu arv tellimusi",
+            "b1": "Ilma tellimusepõhiste tasudeta",
             "b2": "Ei mingeid peidetud tasusid",
             "b3": "Ei mingeid seadistustasusid",
             "b4": "Tühista igal ajal"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Tulemas",
     "nativeAppsBody": "Täisfunktsionaalsed natiivsed rakendused on arenduses. Vahepeal vajuta brauseri <b>jagamismenüüd</b> ja vali <b>„Add to Home Screen“</b> — saad turuplats päris rakenduseikooni, avakuva ja täisekraanikogemusena. App Store'i pole vaja.",
     "ownerTitle": "Restoraniomanik? Lase end lisada.",
-    "ownerBody": "Tasane <b>$199.99/kuus maksimaalselt</b> (või tellimuse põhine, olenevalt kumb on odavam) — komisjonitasudeta, ilma lisatasudeta klientidele, ilma eksklusiivsuslepinguteta. UberEats võtab $660 tellimuste pealt umbes <b>$200 komisjonitasu.</b> Meie turuplatsis ostab $200 sulle piiramatu arvu tellimusi terve kuu jooksul.",
-    "getListedFree": "Lisa end tasuta",
+    "ownerBody": "Ei mingeid komisjonitasusid, lisatasusid klientidele ega ainuõiguslepinguid — Marketplace'i restoranid maksavad <b>fikseeritud kuutasu nimekirjas olemise eest</b>, mitte kuni 30% komisjonitasu nagu suurtes äppides. Hinnad avaldatakse käivitamisel.",
+    "getListedFree": "Alusta tasuta",
     "seePricing": "Vaata hinnakirja",
     "searchPlaceholder": "Otsi restorane, köögistiile, linnu, toite…",
     "clearSearch": "Tühjenda otsing",
@@ -5597,7 +5598,7 @@
     "featured": "Esiletõstetud",
     "allRestaurants": "Kõik restoranid",
     "emptyTitle": "Alles alustame",
-    "emptyBody": "Turuplatsis pole veel ühtegi restorani. Kui sul on restoran, telli <b>Marketplace Listing</b> lisandmoodul oma administraatoripaneelilt, et siia jõuda.",
+    "emptyBody": "Turuplatsis pole veel ühtegi restorani — nimekirjad avanevad käivitamisel. Kui sul on restoran, loo oma tasuta konto juba praegu ja saad avamispäeval liituda platvormiga <b>Marketplace</b>.",
     "restaurantLogin": "Restorani sisselogimine",
     "noMatchesTitle": "Tulemusi pole",
     "noMatchesBody": "Proovi teist otsingusõna või tühjenda filtrid.",

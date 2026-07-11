@@ -13,8 +13,8 @@
 
 ### A1. ☐ Re-subscribe "Online Payments" with your real card — DEADLINE THURSDAY JULY 17
 **Why:** your free partner period ends July 17. When it does, card checkout on luigispizzapastawings.com STOPS until this is done.
-**⚠️ 2026-07-11 update:** you tried this and the page showed "Renews automatically" with NO Subscribe button — that was a bug (the free-period card looked subscribed and the system even refused an early subscribe). Claude built the fix: the card now says **"Free until July 17, 2026"** with a **"Subscribe to keep it"** button, and subscribing early does NOT double-charge — your card is saved now and the first charge lands only when the free period ends. **Waiting on Luigi to say "deploy" first.**
-1. (After Claude deploys) go to `feefreeordering.com/admin` → **Billing** → **Add-ons**.
+**⚠️ 2026-07-11 update:** you tried this and the page showed "Renews automatically" with NO Subscribe button — that was a bug (the free-period card looked subscribed and the system even refused an early subscribe). Claude built the fix: the card now says **"Free until July 17, 2026"** with a **"Subscribe to keep it"** button, and subscribing early does NOT double-charge — your card is saved now and the first charge lands only when the free period ends. **✅ DEPLOYED 2026-07-11 (056747a1, adversarially reviewed, site verified healthy) — ready for your click:**
+1. Go to `feefreeordering.com/admin` → **Billing** → **Add-ons**.
 2. On the **Online Payments ($39.99/mo)** card, click **"Subscribe to keep it"**.
 3. Complete the Stripe checkout with your real business card ($0.00 due today — billing starts July 17).
 4. Tell Claude "done A1" → Claude verifies the subscription is attached on the platform Stripe account.

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
-import { COMPETITORS, getCompetitor } from "@/data/competitors";
+import { COMPETITORS, getCompetitor, COMPETITOR_FACTS_VERIFIED } from "@/data/competitors";
 import { ArrowRight, Check, X as XIcon, MinusCircle, Sparkles } from "lucide-react";
 import { TrustChips } from "@/components/marketing/TrustChips";
 import { SavingsCalculator } from "@/components/marketing/SavingsCalculator";
@@ -44,7 +44,7 @@ export async function generateMetadata({
   const c = getCompetitor(slug);
   if (!c) return { title: "Fee Free Ordering" };
   const title = `Fee Free Ordering vs ${c.name} — ${c.tagline}`;
-  const description = `Looking for a ${c.tagline}? Fee Free Ordering is a 0%-commission online ordering platform for independent restaurants, with a built-in marketplace. ${c.whatTheyAre.slice(0, 80)}…`;
+  const description = `Looking for a ${c.tagline}? Fee Free Ordering is a 0%-commission online ordering platform for independent restaurants — free core, optional add-ons. ${c.whatTheyAre.slice(0, 80)}…`;
   return {
     title,
     description,
@@ -185,7 +185,7 @@ export default async function ComparisonPage({
               <div className="text-3xl font-extrabold text-emerald-700 mb-2">$0</div>
               <p className="text-sm text-emerald-900 leading-relaxed">
                 Free core platform. First 100 orders every month free, 0% commission on direct orders.
-                Turn on optional add-ons (card payments, hosted website, marketplace) only when you need
+                Turn on optional add-ons (card payments, hosted website, custom domain) only when you need
                 them — <Link href="/pricing" className="font-semibold underline underline-offset-2">see full pricing</Link>.
               </p>
             </div>
@@ -341,7 +341,7 @@ export default async function ComparisonPage({
               </table>
             </div>
             <p className="text-center text-xs text-gray-500 mt-4 max-w-2xl mx-auto">
-              Facts checked against {c.name}&apos;s public pricing as of {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}. We update this page when their pricing changes — flag anything stale at <a href="mailto:support@feefreeordering.com" className="text-emerald-700 hover:underline">support@feefreeordering.com</a>.
+              Facts checked against {c.name}&apos;s public pricing as of {COMPETITOR_FACTS_VERIFIED}. We update this page when their pricing changes — flag anything stale at <a href="mailto:support@feefreeordering.com" className="text-emerald-700 hover:underline">support@feefreeordering.com</a>.
             </p>
           </div>
         </section>

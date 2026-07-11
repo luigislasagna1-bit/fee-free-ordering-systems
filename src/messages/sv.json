@@ -332,7 +332,8 @@
     "refundableDeposit": "Återbetalbar deposition",
     "refundableDepositNotice": "Inkluderar en återbetalbar deposition på {amount}, som återlämnas när du lämnar tillbaka den.",
     "refundableDepositBadge": "+ {amount} återbetalbar deposition",
-    "refundableDepositNotTaxed": "Återbetalbar deposition (ej beskattad)"
+    "refundableDepositNotTaxed": "Återbetalbar deposition (ej beskattad)",
+    "rewardTileEarnRate": "+{pct}% tillbaka på varje beställning"
   },
   "pizza": {
     "chooseSize": "Välj storlek",
@@ -848,7 +849,7 @@
       "customerGroups": "VIP-grupper",
       "rewards": "Bonuspengar",
       "driverPool": "Chaufförspool",
-      "support24_7": "Support dygnet runt"
+      "support24_7": "Support"
     },
     "dashboard": {
       "title": "Instrumentpanel",
@@ -4990,7 +4991,7 @@
       "account": "Konto",
       "copyright": "© {year} Fee Free Ordering. Alla rättigheter förbehållna.",
       "tagline": "Den avgiftsfria beställningsplattformen för oberoende restauranger.",
-      "support24_7": "Kanadensisk support 24/7"
+      "support24_7": "Kanadensisk support från riktiga människor"
     },
     "home": {
       "heroBadge": "0% provision på beställningar",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "För restaurangägare",
           "title": "Din restaurang. <accent>0% provision. 100% din.</accent>",
-          "subtitle": "Använd FeeFrees unika GrowthNet-marknadsföringsverktyg och annonsera på Marketplace för att locka nya gäster – och förvandla dem till lojala stamkunder som beställer direkt hos dig",
+          "subtitle": "Ta emot avhämtnings-, leverans-, dine-in- och cateringbeställningar på din egen profilerade sida med 0% provision – med GrowthNet-marknadsföringsverktyg och Marketplace-annonsering som kommer vid lanseringen och gör förstagångsbesökare till återkommande direktkunder.",
           "ctaStart": "Kom igång gratis",
           "ctaDemo": "Se en livebutik",
           "badge": "0% i provision",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Smart Link-analys – skanningar som blir riktiga beställningar och intäkter",
           "badge": "Ett paket · fem verktyg",
           "blurb": "Varje verktyg för marknadsföring, lojalitet och värvning till ett rabatterat pris – eller lägg till ett enskilt verktyg på egen hand.",
-          "pricingCta": "Se priser för GrowthNet",
+          "pricingCta": "Läs mer om GrowthNet",
           "apmBody": "8 avancerade kampanjtyper, kundsegment och automatiserade e-postkampanjer.",
           "studioBody": "Spårbara QR-koder, Smart Links och flyers med din profil – se vad som gör skanningar till beställningar.",
           "kickstarterBody": "Färdiga kampanjer för första beställning och återvinning som drar in kunder från dag ett.",
           "smsBody": "Sms:a kunderna allteftersom deras beställning rör sig genom köket – bekräftad, klar, färdig.",
           "contentpilotBody": "Din AI-baserade social media-ansvarige – skapar utkast och schemalägger inlägg till Instagram, Facebook, X och TikTok.",
           "saveTitle": "Paketera och spara",
-          "saveBody": "Få hela paketet för mindre än att köpa varje verktyg separat. <link>Se uträkningen →</link>",
+          "saveBody": "Paketet kommer att kosta mindre än att köpa varje verktyg separat — priser meddelas vid lanseringen.",
           "ownMessage": "GrowthNet och våra exklusiva marknadsföringsverktyg förvandlar förstagångskunder från marknadsplatsen till <em>direkta, lojala återkommande kunder som du äger.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Försäljningsoptimerad webbplats",
-            "body": "En hostad, SEO-redo marknadsförings- och beställningssida, automatiskt byggd från din meny, på din egen domän."
+            "body": "En hostad, SEO-redo marknadsförings- och beställningssida, automatiskt byggd från din meny, på your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Flera platser",
@@ -5248,8 +5249,8 @@
           "badge": "Stolt kanadensiskt",
           "title": "Byggd och driven i Ontario, Kanada.",
           "body": "Ett kanadensiskt företag – inte en ansiktslös förmedlare på andra sidan jorden. Dina avgifter, din data och dina kunder förblir dina.",
-          "supportTitle": "Kanadensisk support dygnet runt",
-          "supportBody": "Riktiga människor, när som helst – dygnet runt. Ring <phone>1-888-618-8765</phone> eller chatta live med personerna som faktiskt byggde det."
+          "supportTitle": "Kanadensisk support från riktiga människor",
+          "supportBody": "Riktiga människor som kan restauranger – ring <phone>1-888-618-8765</phone> och prata med personerna som faktiskt byggde det."
         },
         "demo": {
           "title": "Se en riktig butik.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Byggd för tillväxt",
             "title": "Fler beställningar. Lägre avgifter. Högre vinst.",
-            "b1": "Obegränsat antal beställningar",
+            "b1": "Inga avgifter per beställning",
             "b2": "Inga dolda avgifter",
             "b3": "Inga startavgifter",
             "b4": "Avsluta när som helst"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Kommer snart",
     "nativeAppsBody": "De fullständiga inbyggda apparna är på gång. Under tiden trycker du på webbläsarens <b>delningsmenyn</b> och väljer <b>\"Add to Home Screen\"</b> — du får då Marketplace som en riktig app-ikon, välkomstskärm och helskärmsupplevelse. Inget App Store behövs.",
     "ownerTitle": "Restaurangägare? Kom med på listan.",
-    "ownerBody": "Fast avgift på max <b>$199.99/månad</b> (eller per beställning, beroende på vad som är billigast) — ingen provision, inga extra kundavgifter, inga exklusivitetsavtal. UberEats tar ungefär <b>$200 i provision på $660 i beställningar.</b> På vårt Marketplace räcker $200 till obegränsade beställningar under hela månaden.",
-    "getListedFree": "Registrera dig gratis",
+    "ownerBody": "Inga provisioner, inga extra avgifter för gästerna, inga exklusivitetsavtal – restauranger på Marketplace betalar en <b>fast månatlig listningsavgift</b> i stället för de provisioner på upp till 30% som de stora apparna tar. Priserna presenteras vid lanseringen.",
+    "getListedFree": "Kom igång gratis",
     "seePricing": "Se priser",
     "searchPlaceholder": "Sök restauranger, kök, städer, rätter…",
     "clearSearch": "Rensa sökning",
@@ -5597,7 +5598,7 @@
     "featured": "Utvalda",
     "allRestaurants": "Alla restauranger",
     "emptyTitle": "Vi har precis börjat",
-    "emptyBody": "Inga restauranger på Marketplace ännu. Har du en restaurang? Prenumerera på tillägget <b>Marketplace Listing</b> från din adminpanel för att komma med här.",
+    "emptyBody": "Inga restauranger på marketplace ännu – listningarna öppnar vid lanseringen. Driver du en restaurang? Skapa ditt kostnadsfria konto nu, så kan du gå med i <b>Marketplace</b> samma dag det öppnar.",
     "restaurantLogin": "Restauranginloggning",
     "noMatchesTitle": "Inga träffar",
     "noMatchesBody": "Prova ett annat sökord eller rensa filtren.",

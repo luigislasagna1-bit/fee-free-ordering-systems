@@ -332,7 +332,8 @@
     "refundableDeposit": "Visszatérítendő letét",
     "refundableDepositNotice": "Tartalmaz egy {amount} összegű visszatérítendő letétet, amelyet visszahozatalkor visszakap.",
     "refundableDepositBadge": "+ {amount} visszatérítendő letét",
-    "refundableDepositNotTaxed": "Visszatérítendő letét (adómentes)"
+    "refundableDepositNotTaxed": "Visszatérítendő letét (adómentes)",
+    "rewardTileEarnRate": "+{pct}% visszajár minden rendelés után"
   },
   "pizza": {
     "chooseSize": "Méret választása",
@@ -848,7 +849,7 @@
       "customerGroups": "VIP-csoportok",
       "rewards": "Jutalomdollár",
       "driverPool": "Driver pool",
-      "support24_7": "0–24 órás támogatás"
+      "support24_7": "Támogatás"
     },
     "dashboard": {
       "title": "Irányítópult",
@@ -4990,7 +4991,7 @@
       "account": "Fiók",
       "copyright": "© {year} Fee Free Ordering. Minden jog fenntartva.",
       "tagline": "A díjmentes rendelési platform független éttermeknek.",
-      "support24_7": "Kanadai támogatás a nap 24 órájában (24/7)"
+      "support24_7": "Kanadai támogatás valódi emberektől"
     },
     "home": {
       "heroBadge": "0% jutalék a rendeléseken",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Éttermeseknek",
           "title": "Az Ön étterme. <accent>0% jutalék. 100% az Öné.</accent>",
-          "subtitle": "Használd a FeeFree egyedülálló GrowthNet marketingeszközeit, és hirdess a Marketplace felületén – szerezz új vendégeket, és tedd őket hűséges, közvetlenül nálad rendelő törzsvendégekké",
+          "subtitle": "Fogadj elviteles, kiszállításos, helyben fogyasztásos és catering-rendeléseket a saját, márkádra szabott oldaladon 0% jutalékkal — a rajtkor érkező GrowthNet marketingeszközök és a Marketplace-hirdetések pedig hűséges, közvetlenül nálad rendelő törzsvendégekké teszik az első látogatókat.",
           "ctaStart": "Kezdd el ingyen",
           "ctaDemo": "Nézz meg egy élő rendelési oldalt",
           "badge": "0% jutalék",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Smart Link analitika — szkennelésekből valódi rendelések és bevétel",
           "badge": "Egy csomag · öt eszköz",
           "blurb": "Minden marketing-, megtartási és szerzési eszköz egy kedvezményes áron — vagy add hozzá bármelyiket önállóan.",
-          "pricingCta": "Nézd meg a GrowthNet árazását",
+          "pricingCta": "Tudjon meg többet a GrowthNetről",
           "apmBody": "8 haladó promóciótípus, vendégszegmensek és automatizált e-mail kampányok.",
           "studioBody": "Követhető QR-kódok, Smart Links és márkázott szórólapok — lásd, mi alakítja a szkenneléseket rendelésekké.",
           "kickstarterBody": "Indításra kész első-rendelés és visszahívó kampányok, amelyek már az első naptól behozzák a vendégeket.",
           "smsBody": "Üzenj a vendégeknek, ahogy a rendelésük halad a konyhán — visszaigazolva, kész, befejezve.",
           "contentpilotBody": "Az AI közösségi médiamenedzsered — bejegyzéseket fogalmaz és ütemez az Instagram, Facebook, X és TikTok platformokra.",
           "saveTitle": "Csomagolj és spórolj",
-          "saveBody": "Vedd meg az egész csomagot olcsóbban, mint külön-külön minden eszközt. <link>Nézd meg a számítást →</link>",
+          "saveBody": "A csomag kevesebbe kerül majd, mint az eszközök külön-külön megvásárlása — az árakat az induláskor jelentjük be.",
           "ownMessage": "A GrowthNet és exkluzív marketingeszközeink az először a piactérről érkező vásárlókat <em>közvetlen, hűséges és visszatérő vásárlókká teszik, akik a tieid.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Értékesítésre optimalizált weboldal",
-            "body": "Tárhelyes, SEO-kész marketing- és rendelési oldal, az étlapodból automatikusan felépítve, a saját domaineden."
+            "body": "Tárhelyes, SEO-kész marketing- és rendelési oldal, az étlapodból automatikusan felépítve, a your-name.feefreeordering.com címen."
           },
           "multiLocation": {
             "title": "Több telephely",
@@ -5248,8 +5249,8 @@
           "badge": "Büszkén kanadai",
           "title": "A kanadai Ontarióban épült és üzemeltetve.",
           "body": "Egy kanadai cég — nem egy arctalan tengerentúli közvetítő. A díjaid, az adataid és a vendégeid a tieid maradnak.",
-          "supportTitle": "24/7 kanadai ügyfélszolgálat",
-          "supportBody": "Valódi emberek, bármikor — éjjel-nappal. Hívd a <phone>1-888-618-8765</phone> számot, vagy chatelj élőben azokkal, akik tényleg megépítették."
+          "supportTitle": "Kanadai támogatás valódi emberektől",
+          "supportBody": "Valódi emberek, akik értik az éttermek világát — hívd a <phone>1-888-618-8765</phone> számot, és beszélj azokkal, akik tényleg megépítették."
         },
         "demo": {
           "title": "Nézz meg egy valódi rendelési oldalt.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "A növekedésre tervezve",
             "title": "Több rendelés. Alacsonyabb díjak. Magasabb profit.",
-            "b1": "Korlátlan rendelés",
+            "b1": "Nincs rendelésenkénti díj",
             "b2": "Nincsenek rejtett díjak",
             "b3": "Nincs beállítási díj",
             "b4": "Bármikor lemondható"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Hamarosan",
     "nativeAppsBody": "A teljes értékű natív appok fejlesztés alatt állnak. Addig is koppints a böngésző <b>megosztás menüjére</b>, és válaszd a <b>„Add to Home Screen”</b> lehetőséget — így a piactér valódi app ikonként, betöltőképernyővel és teljes képernyős élménnyel jelenik meg. App Store nem szükséges.",
     "ownerTitle": "Étteremtulajdonos? Kerülj fel a listára.",
-    "ownerBody": "Lapos díj: maximum <b>$199.99/hó</b> (vagy rendelésenként, amelyik olcsóbb) — nincs jutalék, nincs extra ügyfélköltség, nincs kizárólagossági szerződés. Az UberEats $660 értékű rendelésen körülbelül <b>$200 jutalékot számít fel.</b> A mi piacterünkön $200-ért az egész hónapban korlátlan rendelést kapsz.",
-    "getListedFree": "Kerülj fel ingyen",
+    "ownerBody": "Nincs jutalék, nincs extra díj a vendégeknek, nincs kizárólagossági szerződés — a Marketplace-éttermek <b>fix havi listázási díjat</b> fizetnek a nagy appok akár 30%-os jutaléka helyett. Az árakat a rajtkor jelentjük be.",
+    "getListedFree": "Kezdd el ingyen",
     "seePricing": "Árak megtekintése",
     "searchPlaceholder": "Keress étteremre, konyhára, városra, ételre…",
     "clearSearch": "Keresés törlése",
@@ -5597,7 +5598,7 @@
     "featured": "Kiemelt",
     "allRestaurants": "Összes étterem",
     "emptyTitle": "Épp csak elkezdtük",
-    "emptyBody": "Még nincs étterem a piactéren. Ha éttermet üzemeltetsz, iratkozz fel a <b>Marketplace Listing</b> bővítményre az admin vezérlőpultodból, és kerülj fel ide.",
+    "emptyBody": "Még nincs étterem a piactéren — a listázás a rajtkor nyílik meg. Ha éttermet üzemeltetsz, hozd létre ingyenes fiókod már most, és a nyitás napján csatlakozhatsz a <b>Marketplace</b>-hez.",
     "restaurantLogin": "Éttermi bejelentkezés",
     "noMatchesTitle": "Nincs találat",
     "noMatchesBody": "Próbálj más keresőszót, vagy töröld a szűrőket.",

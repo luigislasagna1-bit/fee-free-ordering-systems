@@ -332,7 +332,8 @@
     "refundableDeposit": "Depozit rambursabil",
     "refundableDepositNotice": "Include un depozit rambursabil de {amount}, returnat când îl aduceți înapoi.",
     "refundableDepositBadge": "+ {amount} depozit rambursabil",
-    "refundableDepositNotTaxed": "Depozit rambursabil (fără taxe)"
+    "refundableDepositNotTaxed": "Depozit rambursabil (fără taxe)",
+    "rewardTileEarnRate": "+{pct}% înapoi la fiecare comandă"
   },
   "pizza": {
     "chooseSize": "Alege mărimea",
@@ -848,7 +849,7 @@
       "customerGroups": "Grupuri VIP",
       "rewards": "Dolari de recompensă",
       "driverPool": "Pool șoferi",
-      "support24_7": "Asistență 24/7"
+      "support24_7": "Asistență"
     },
     "dashboard": {
       "title": "Panou de control",
@@ -4990,7 +4991,7 @@
       "account": "Cont",
       "copyright": "© {year} Fee Free Ordering. Toate drepturile rezervate.",
       "tagline": "Platforma de comenzi fără comision pentru restaurante independente.",
-      "support24_7": "Asistență canadiană 24/7"
+      "support24_7": "Asistență canadiană de la oameni reali"
     },
     "home": {
       "heroBadge": "0% comision pe comenzi",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Pentru proprietarii de restaurante",
           "title": "Restaurantul tău. <accent>0% comision. 100% al tău.</accent>",
-          "subtitle": "Folosește instrumentele unice de marketing GrowthNet de la FeeFree și valorifică publicitatea Marketplace ca să atragi clienți noi și să-i transformi în clienți fideli, pe termen lung, care comandă direct de la tine",
+          "subtitle": "Primește comenzi de ridicare, livrare, servire în local și catering pe propria ta pagină personalizată, cu 0% comision — iar instrumentele de marketing GrowthNet și publicitatea Marketplace, disponibile la lansare, transformă vizitatorii ocazionali în clienți direcți și fideli.",
           "ctaStart": "Începe gratuit",
           "ctaDemo": "Vezi un magazin live",
           "badge": "0% comision",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Analize Smart Link — scanări transformate în comenzi și venituri reale",
           "badge": "Un pachet · cinci instrumente",
           "blurb": "Fiecare instrument de marketing, fidelizare și atragere la un preț redus — sau adaugă oricare separat.",
-          "pricingCta": "Vezi prețurile GrowthNet",
+          "pricingCta": "Află mai multe despre GrowthNet",
           "apmBody": "8 tipuri avansate de promoții, segmente de clienți și campanii de e-mail automatizate.",
           "studioBody": "Coduri QR urmăribile, Smart Links și flyere cu brandul tău — vezi ce transformă scanările în comenzi.",
           "kickstarterBody": "Campanii gata de trimis pentru prima comandă și pentru recâștigarea clienților, care aduc oamenii din prima zi.",
           "smsBody": "Trimite SMS clienților pe măsură ce comanda lor avansează în bucătărie — confirmată, gata, finalizată.",
           "contentpilotBody": "Managerul tău AI de social media — redactează și programează postări pe Instagram, Facebook, X și TikTok.",
           "saveTitle": "Grupează și economisește",
-          "saveBody": "Ia întregul pachet pentru mai puțin decât dacă ai cumpăra fiecare instrument separat. <link>Vezi calculul →</link>",
+          "saveBody": "Pachetul va costa mai puțin decât cumpărarea fiecărui instrument separat — prețurile vor fi anunțate la lansare.",
           "ownMessage": "GrowthNet și instrumentele noastre exclusive de marketing transformă clienții care vin prima dată din marketplace în <em>clienți direcți, fideli și constanți, care îți aparțin.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Site optimizat pentru vânzări",
-            "body": "Un site de marketing și comenzi găzduit, pregătit pentru SEO, construit automat din meniul tău, pe propriul tău domeniu."
+            "body": "Un site de marketing și comenzi găzduit, pregătit pentru SEO, construit automat din meniul tău, la your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Locații multiple",
@@ -5248,8 +5249,8 @@
           "badge": "Cu mândrie canadian",
           "title": "Creat și operat în Ontario, Canada.",
           "body": "O companie canadiană — nu un agregator anonim de peste hotare. Comisioanele, datele și clienții tăi rămân ai tăi.",
-          "supportTitle": "Asistență canadiană 24/7",
-          "supportBody": "Oameni reali, oricând — zi sau noapte. Sună la <phone>1-888-618-8765</phone> sau discută live cu cei care chiar au construit produsul."
+          "supportTitle": "Asistență canadiană de la oameni reali",
+          "supportBody": "Oameni reali care înțeleg restaurantele — sună la <phone>1-888-618-8765</phone> și vorbește cu cei care chiar au construit produsul."
         },
         "demo": {
           "title": "Vezi un magazin real.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Creat pentru creștere",
             "title": "Mai multe comenzi. Comisioane mai mici. Profit mai mare.",
-            "b1": "Comenzi nelimitate",
+            "b1": "Fără taxe per comandă",
             "b2": "Fără taxe ascunse",
             "b3": "Fără taxe de configurare",
             "b4": "Anulează oricând"
@@ -5584,8 +5585,8 @@
     "comingSoon": "În curând",
     "nativeAppsBody": "Aplicațiile native complete sunt în pregătire. Între timp, apasă pe <b>meniul de partajare</b> al browserului tău şi alege <b>„Add to Home Screen”</b> — vei obține marketplace-ul ca o pictogramă reală de aplicație, ecran de pornire şi experiență pe tot ecranul. Nu este necesar App Store.",
     "ownerTitle": "Eşti proprietar de restaurant? Încrie-te.",
-    "ownerBody": "Maxim <b>$199.99/lună</b> (sau per comandă, oricare este mai mic) — fără comisioane, fără taxe suplimentare pentru clienți, fără contracte de exclusivitate. UberEats percepe aproximativ <b>$200 în comisioane la $660 de comenzi.</b> Pe marketplace-ul nostru, $200 îți oferă comenzi nelimitate pentru întreaga lună.",
-    "getListedFree": "Înscrie-te gratuit",
+    "ownerBody": "Fără comisioane, fără costuri suplimentare pentru clienți, fără contracte de exclusivitate — restaurantele din Marketplace plătesc un <b>abonament lunar fix pentru listare</b> în locul comisioanelor de până la 30% percepute de aplicațiile mari. Prețurile vor fi anunțate la lansare.",
+    "getListedFree": "Începe gratuit",
     "seePricing": "Vezi prețurile",
     "searchPlaceholder": "Caută restaurante, bucătării, oraşe, preparate…",
     "clearSearch": "Ştergă căutarea",
@@ -5597,7 +5598,7 @@
     "featured": "Recomandate",
     "allRestaurants": "Toate restaurantele",
     "emptyTitle": "Abia am început",
-    "emptyBody": "Niciun restaurant pe marketplace deocamdată. Dacă conduci un restaurant, abonaeză-te la add-on-ul <b>Marketplace Listing</b> din panoul tău de administrare pentru a fi listat aici.",
+    "emptyBody": "Niciun restaurant pe marketplace deocamdată — listările se deschid la lansare. Dacă conduci un restaurant, creează-ți acum contul gratuit și vei putea intra în <b>Marketplace</b> chiar din ziua deschiderii.",
     "restaurantLogin": "Autentificare restaurant",
     "noMatchesTitle": "Niciun rezultat",
     "noMatchesBody": "Încearcă un alt termen de căutare sau şterge filtrele.",

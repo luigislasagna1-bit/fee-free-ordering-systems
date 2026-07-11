@@ -332,7 +332,8 @@
     "refundableDeposit": "Caution remboursable",
     "refundableDepositNotice": "Comprend une caution remboursable de {amount}, restituée lorsque vous la rapportez.",
     "refundableDepositBadge": "+ {amount} de caution remboursable",
-    "refundableDepositNotTaxed": "Caution remboursable (non taxée)"
+    "refundableDepositNotTaxed": "Caution remboursable (non taxée)",
+    "rewardTileEarnRate": "+{pct}% de retour sur chaque commande"
   },
   "pizza": {
     "chooseSize": "Choisir la taille",
@@ -848,7 +849,7 @@
       "customerGroups": "Groupes VIP",
       "rewards": "Crédits fidélité",
       "driverPool": "Pool de livreurs",
-      "support24_7": "Assistance 24h/24 et 7j/7"
+      "support24_7": "Assistance"
     },
     "dashboard": {
       "title": "Tableau de bord",
@@ -4990,7 +4991,7 @@
       "account": "Compte",
       "copyright": "© {year} Fee Free Ordering. Tous droits réservés.",
       "tagline": "La plateforme de commande sans frais pour restaurants indépendants.",
-      "support24_7": "Assistance canadienne 24/7"
+      "support24_7": "Soutien canadien par de vraies personnes"
     },
     "home": {
       "heroBadge": "0 % de commission sur les commandes",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Pour les restaurateurs",
           "title": "Votre restaurant. <accent>0 % de commission. 100 % à vous.</accent>",
-          "subtitle": "Exploitez les outils marketing exclusifs GrowthNet de FeeFree et la publicité Marketplace pour conquérir de nouveaux clients et les fidéliser en clients directs et durables",
+          "subtitle": "Recevez vos commandes à emporter, en livraison, sur place et traiteur sur votre propre page à votre image, à 0% de commission — avec les outils marketing GrowthNet et la publicité Marketplace, offerts dès le lancement, pour transformer les visiteurs de passage en clients directs et fidèles.",
           "ctaStart": "Commencer gratuitement",
           "ctaDemo": "Voir une vitrine en direct",
           "badge": "0 % de commission",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Analyses Smart Link — des scans qui se transforment en commandes et en revenus réels",
           "badge": "Un forfait · cinq outils",
           "blurb": "Tous les outils de marketing, de fidélisation et d'acquisition à un prix réduit — ou ajoutez-en un seul à la carte.",
-          "pricingCta": "Voir les tarifs GrowthNet",
+          "pricingCta": "En savoir plus sur GrowthNet",
           "apmBody": "8 types de promos avancées, segments de clients et campagnes courriel automatisées.",
           "studioBody": "Des codes QR traçables, des Smart Links et des dépliants à votre image — voyez ce qui transforme les scans en commandes.",
           "kickstarterBody": "Des campagnes prêtes à envoyer pour la première commande et la reconquête qui attirent des clients dès le premier jour.",
           "smsBody": "Envoyez des textos à vos clients au fil de leur commande en cuisine — confirmée, prête, terminée.",
           "contentpilotBody": "Votre gestionnaire de réseaux sociaux par IA — rédige et planifie vos publications sur Instagram, Facebook, X et TikTok.",
           "saveTitle": "Le forfait, plus économique",
-          "saveBody": "Obtenez le forfait complet pour moins cher que l'achat de chaque outil séparément. <link>Voir le calcul →</link>",
+          "saveBody": "Le pack coûtera moins cher que l'achat de chaque outil séparément — tarifs annoncés au lancement.",
           "ownMessage": "GrowthNet et nos outils marketing exclusifs transforment les nouveaux clients de la marketplace en <em>clients directs, fidèles et récurrents qui vous appartiennent.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Site web optimisé pour les ventes",
-            "body": "Un site marketing et de commande hébergé, prêt pour le SEO, généré automatiquement à partir de votre menu, sur votre propre domaine."
+            "body": "Un site marketing et de commande hébergé, prêt pour le SEO, généré automatiquement à partir de votre menu, à l'adresse your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Multi-établissements",
@@ -5248,8 +5249,8 @@
           "badge": "Fièrement canadien",
           "title": "Conçu et exploité en Ontario, au Canada.",
           "body": "Une entreprise canadienne — pas une plateforme étrangère sans visage. Vos frais, vos données et vos clients restent les vôtres.",
-          "supportTitle": "Soutien canadien 24/7",
-          "supportBody": "De vraies personnes, à tout moment — jour et nuit. Appelez le <phone>1-888-618-8765</phone> ou clavardez en direct avec ceux qui l'ont vraiment conçu."
+          "supportTitle": "Soutien canadien par de vraies personnes",
+          "supportBody": "De vraies personnes qui connaissent la restauration — appelez le <phone>1-888-618-8765</phone> et parlez à ceux qui l'ont vraiment conçu."
         },
         "demo": {
           "title": "Découvrez une vraie vitrine.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Conçu pour la croissance",
             "title": "Plus de commandes. Moins de frais. Plus de profits.",
-            "b1": "Commandes illimitées",
+            "b1": "Aucuns frais par commande",
             "b2": "Aucuns frais cachés",
             "b3": "Aucuns frais d'installation",
             "b4": "Annulez à tout moment"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Bientôt disponible",
     "nativeAppsBody": "Les applications natives complètes sont en cours de développement. En attendant, appuyez sur le <b>menu de partage</b> de votre navigateur et choisissez <b>\"Add to Home Screen\"</b> — vous obtiendrez le marketplace sous forme d'icône d'application avec écran de démarrage et expérience plein écran. App Store non requis.",
     "ownerTitle": "Vous êtes restaurateur ? Faites-vous référencer.",
-    "ownerBody": "Maximum <b>$199.99/mois</b> (ou à la commande, selon ce qui est le moins cher) — sans commissions, sans frais supplémentaires pour les clients, sans contrat d'exclusivité. UberEats facture environ <b>$200 de commission sur $660 de commandes.</b> Sur notre marketplace, $200 vous offre des commandes illimitées pour tout le mois.",
-    "getListedFree": "Référencez-vous gratuitement",
+    "ownerBody": "Sans commissions, sans frais supplémentaires pour les clients, sans contrat d'exclusivité — les restaurants du Marketplace paient un <b>tarif mensuel fixe de référencement</b> au lieu des commissions pouvant atteindre 30% que facturent les grandes applis. Tarifs annoncés au lancement.",
+    "getListedFree": "Commencez gratuitement",
     "seePricing": "Voir les tarifs",
     "searchPlaceholder": "Rechercher restaurants, cuisines, villes, plats…",
     "clearSearch": "Effacer la recherche",
@@ -5597,7 +5598,7 @@
     "featured": "Mis en avant",
     "allRestaurants": "Tous les restaurants",
     "emptyTitle": "Nous démarrons tout juste",
-    "emptyBody": "Aucun restaurant sur le marketplace pour l'instant. Si vous gérez un restaurant, abonnez-vous à l'extension <b>Marketplace Listing</b> depuis votre tableau de bord administrateur pour apparaître ici.",
+    "emptyBody": "Aucun restaurant sur le marketplace pour l'instant — les inscriptions ouvriront au lancement. Si vous gérez un restaurant, créez votre compte gratuit dès maintenant et vous pourrez rejoindre le <b>Marketplace</b> dès son ouverture.",
     "restaurantLogin": "Connexion restaurant",
     "noMatchesTitle": "Aucun résultat",
     "noMatchesBody": "Essayez un autre terme de recherche ou effacez les filtres.",

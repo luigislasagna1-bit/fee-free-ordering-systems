@@ -332,7 +332,8 @@
     "refundableDeposit": "Vratná záloha",
     "refundableDepositNotice": "Zahrnuje vratnou zálohu {amount}, která se vrací při jejím vrácení.",
     "refundableDepositBadge": "+ {amount} vratná záloha",
-    "refundableDepositNotTaxed": "Vratná záloha (nezdaněná)"
+    "refundableDepositNotTaxed": "Vratná záloha (nezdaněná)",
+    "rewardTileEarnRate": "+{pct}% zpět z každé objednávky"
   },
   "pizza": {
     "chooseSize": "Vyberte velikost",
@@ -848,7 +849,7 @@
       "customerGroups": "VIP skupiny",
       "rewards": "Věrnostní kredit",
       "driverPool": "Sdružení řidičů",
-      "support24_7": "Podpora 24/7"
+      "support24_7": "Podpora"
     },
     "dashboard": {
       "title": "Přehled",
@@ -4990,7 +4991,7 @@
       "account": "Účet",
       "copyright": "© {year} Fee Free Ordering. Všechna práva vyhrazena.",
       "tagline": "Platforma pro objednávání bez poplatků pro nezávislé restaurace.",
-      "support24_7": "Kanadská podpora 24/7"
+      "support24_7": "Kanadská podpora od skutečných lidí"
     },
     "home": {
       "heroBadge": "0% provize z objednávek",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Pro majitele restaurací",
           "title": "Vaše restaurace. <accent>0% provize. 100% vaše.</accent>",
-          "subtitle": "Využijte jedinečné marketingové nástroje GrowthNet od FeeFree a inzerci na Marketplace, získejte nové zákazníky a proměňte je ve vracející se, dlouhodobé a přímé zákazníky",
+          "subtitle": "Přijímejte objednávky s vyzvednutím, rozvozem, konzumací v restauraci i catering na vlastní značkové stránce s 0% provizí — marketingové nástroje GrowthNet a inzerce na Marketplace, které dorazí při spuštění, promění první návštěvníky ve stálé přímé zákazníky.",
           "ctaStart": "Začít zdarma",
           "ctaDemo": "Prohlédnout živou stránku",
           "badge": "0% provize",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Analytika Smart Link — skeny, které se mění ve skutečné objednávky a tržby",
           "badge": "Jeden balíček · pět nástrojů",
           "blurb": "Všechny nástroje pro marketing, udržení a získávání zákazníků za jednu zvýhodněnou cenu — nebo přidejte kterýkoli jednotlivě.",
-          "pricingCta": "Zobrazit ceny GrowthNet",
+          "pricingCta": "Zjistěte více o GrowthNetu",
           "apmBody": "8 pokročilých typů akcí, zákaznické segmenty a automatizované e-mailové kampaně.",
           "studioBody": "Sledovatelné QR kódy, Smart Links a značkové letáky — uvidíte, co mění skeny v objednávky.",
           "kickstarterBody": "Připravené kampaně na první objednávku a získání zpět, které přivedou zákazníky hned od prvního dne.",
           "smsBody": "Posílejte zákazníkům zprávy, jak jejich objednávka prochází kuchyní — potvrzeno, hotovo, dokončeno.",
           "contentpilotBody": "Váš AI správce sociálních sítí — připraví a naplánuje příspěvky na Instagram, Facebook, X a TikTok.",
           "saveTitle": "Balíček a úspora",
-          "saveBody": "Získejte celý balíček levněji, než kdybyste kupovali každý nástroj zvlášť. <link>Spočítejte si to →</link>",
+          "saveBody": "Balíček bude stát méně než nákup jednotlivých nástrojů zvlášť — ceny oznámíme při spuštění.",
           "ownMessage": "GrowthNet a naše exkluzivní marketingové nástroje promění zákazníky z tržiště v <em>přímé, věrné a vracející se zákazníky, kteří patří vám.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Web optimalizovaný pro prodej",
-            "body": "Hostovaný, pro SEO připravený marketingový a objednávkový web, automaticky sestavený z vašeho menu, na vaší vlastní doméně."
+            "body": "Hostovaný, pro SEO připravený marketingový a objednávkový web, automaticky sestavený z vašeho menu, na adrese your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Více poboček",
@@ -5248,8 +5249,8 @@
           "badge": "Hrdě kanadské",
           "title": "Vytvořeno a provozováno v Ontariu v Kanadě.",
           "body": "Kanadská společnost — ne bezejmenné zámořské tržiště. Vaše poplatky, data i zákazníci zůstávají vaše.",
-          "supportTitle": "Kanadská podpora 24/7",
-          "supportBody": "Skuteční lidé, kdykoli — ve dne i v noci. Zavolejte na <phone>1-888-618-8765</phone> nebo si pište přes živý chat s lidmi, kteří to skutečně vytvořili."
+          "supportTitle": "Kanadská podpora od skutečných lidí",
+          "supportBody": "Skuteční lidé, kteří rozumí restauracím — zavolejte na <phone>1-888-618-8765</phone> a mluvte s lidmi, kteří to skutečně vytvořili."
         },
         "demo": {
           "title": "Prohlédněte si skutečnou stránku.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Stvořeno pro růst",
             "title": "Více objednávek. Nižší poplatky. Vyšší zisky.",
-            "b1": "Neomezené objednávky",
+            "b1": "Žádné poplatky za objednávku",
             "b2": "Žádné skryté poplatky",
             "b3": "Žádné poplatky za zřízení",
             "b4": "Zrušte kdykoli"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Již brzy",
     "nativeAppsBody": "Plnohodnotné nativní aplikace jsou v přípravě. Mezitím klepněte na <b>nabídku sdílení</b> v prohlížeči a zvolte <b>„Add to Home Screen“</b> — marketplace se vám zobrazí jako skutečná ikona aplikace se splash obrazovkou a zobrazením na celou obrazovku. App Store není potřeba.",
     "ownerTitle": "Jste majitel restaurace? Nechte se zapsat.",
-    "ownerBody": "Pevný strop <b>$199.99/měsíc</b> (nebo platba za objednávku, podle toho, co je levnější) — žádné provize, žádné extra poplatky pro zákazníky, žádné smlouvy o exkluzivitě. UberEats si účtuje přibližně <b>$200 na provizích z objednávek za $660.</b> Na našem marketplace vám $200 zajistí neomezené objednávky po celý měsíc.",
-    "getListedFree": "Zapsat se zdarma",
+    "ownerBody": "Žádné provize, žádné příplatky pro zákazníky, žádné exkluzivní smlouvy — restaurace na Marketplace platí <b>pevný měsíční poplatek za zápis</b> místo provizí až 30%, které si účtují velké aplikace. Ceny oznámíme při spuštění.",
+    "getListedFree": "Začněte zdarma",
     "seePricing": "Zobrazit ceník",
     "searchPlaceholder": "Hledejte restaurace, kuchyně, města, jídla…",
     "clearSearch": "Vymazat hledání",
@@ -5597,7 +5598,7 @@
     "featured": "Doporučené",
     "allRestaurants": "Všechny restaurace",
     "emptyTitle": "Teprve začínáme",
-    "emptyBody": "Na marketplace zatím nejsou žádné restaurace. Pokud provozujete restauraci, přihlaste se k odběru doplňku <b>Marketplace Listing</b> v administrátorském panelu a nechte se zde zapsat.",
+    "emptyBody": "Na marketplace zatím nejsou žádné restaurace — zápisy se otevřou při spuštění. Pokud provozujete restauraci, vytvořte si bezplatný účet už teď a v den otevření se budete moci připojit k <b>Marketplace</b>.",
     "restaurantLogin": "Přihlášení pro restaurace",
     "noMatchesTitle": "Žádné výsledky",
     "noMatchesBody": "Zkuste jiný výraz nebo zrušte filtry.",

@@ -332,7 +332,8 @@
     "refundableDeposit": "Grąžinamas užstatas",
     "refundableDepositNotice": "Įskaičiuotas grąžinamas {amount} užstatas, grąžinamas, kai jį atnešate atgal.",
     "refundableDepositBadge": "+ {amount} grąžinamas užstatas",
-    "refundableDepositNotTaxed": "Grąžinamas užstatas (neapmokestinamas)"
+    "refundableDepositNotTaxed": "Grąžinamas užstatas (neapmokestinamas)",
+    "rewardTileEarnRate": "+{pct}% grąžinama už kiekvieną užsakymą"
   },
   "pizza": {
     "chooseSize": "Pasirinkite dydį",
@@ -848,7 +849,7 @@
       "customerGroups": "VIP grupės",
       "rewards": "Premijų doleriai",
       "driverPool": "Vairuotojų telkinys",
-      "support24_7": "Pagalba 24/7"
+      "support24_7": "Pagalba"
     },
     "dashboard": {
       "title": "Skydelis",
@@ -4990,7 +4991,7 @@
       "account": "Paskyra",
       "copyright": "© {year} Fee Free Ordering. Visos teisės saugomos.",
       "tagline": "Mokesčio neimanti užsakymų platforma nepriklausomiems restoranams.",
-      "support24_7": "Kanadietiškas palaikymas 24/7"
+      "support24_7": "Kanadietiškas tikrų žmonių palaikymas"
     },
     "home": {
       "heroBadge": "0% komisinių nuo užsakymų",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Restoranų savininkams",
           "title": "Jūsų restoranas. <accent>0 % komisinių. 100 % jūsų.</accent>",
-          "subtitle": "Naudokitės išskirtiniais FeeFree GrowthNet rinkodaros įrankiais ir pasitelkite Marketplace reklamą, kad pritrauktumėte naujų klientų ir paverstumėte juos nuolatiniais, ilgalaikiais tiesioginiais klientais",
+          "subtitle": "Priimkite atsiėmimo, pristatymo, vietoje ir furšetų užsakymus savo firminiame puslapyje su 0% komisiniu — o GrowthNet rinkodaros įrankiai ir Marketplace reklama, pasirodysiantys startuojant, pirmą kartą apsilankiusius pavers nuolatiniais tiesioginiais klientais.",
           "ctaStart": "Pradėkite nemokamai",
           "ctaDemo": "Pažiūrėkite veikiančią parduotuvę",
           "badge": "0 % komisinių",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Smart Link analitika — nuskaitymai, virstantys tikrais užsakymais ir pajamomis",
           "badge": "Vienas rinkinys · penki įrankiai",
           "blurb": "Visi rinkodaros, lojalumo ir pritraukimo įrankiai už vieną sumažintą kainą — arba pridėkite bet kurį atskirai.",
-          "pricingCta": "Peržiūrėti GrowthNet kainas",
+          "pricingCta": "Sužinokite daugiau apie GrowthNet",
           "apmBody": "8 pažangūs akcijų tipai, klientų segmentai ir automatizuotos el. pašto kampanijos.",
           "studioBody": "Sekami QR kodai, Smart Links ir prekės ženklu pažymėti lankstinukai — matykite, kas paverčia nuskaitymus užsakymais.",
           "kickstarterBody": "Paruoštos siųsti pirmojo užsakymo ir susigrąžinimo kampanijos, pritraukiančios klientus nuo pirmos dienos.",
           "smsBody": "Rašykite klientams žinutes, kai jų užsakymas keliauja per virtuvę — patvirtinta, paruošta, įvykdyta.",
           "contentpilotBody": "Jūsų AI socialinių tinklų vadybininkas — rengia ir suplanuoja įrašus Instagram, Facebook, X ir TikTok.",
           "saveTitle": "Rinkinys ir taupymas",
-          "saveBody": "Gaukite visą rinkinį pigiau nei perkant kiekvieną įrankį atskirai. <link>Pažiūrėkite skaičiavimus →</link>",
+          "saveBody": "Rinkinys kainuos mažiau nei perkant kiekvieną įrankį atskirai — kainos bus paskelbtos paleidimo metu.",
           "ownMessage": "GrowthNet ir mūsų išskirtiniai rinkodaros įrankiai pirmą kartą prekyvietėje apsilankiusius klientus paverčia <em>tiesioginiais, lojaliais ir nuolatiniais klientais, kurie priklauso jums.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Pardavimams pritaikyta svetainė",
-            "body": "Talpinama, SEO parengta rinkodaros ir užsakymų svetainė, automatiškai sukurta iš jūsų meniu, jūsų pačių domene."
+            "body": "Talpinama, SEO parengta rinkodaros ir užsakymų svetainė, automatiškai sukurta iš jūsų meniu, adresu your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Kelios vietos",
@@ -5248,8 +5249,8 @@
           "badge": "Su pasididžiavimu kanadietiška",
           "title": "Sukurta ir valdoma Ontarijuje, Kanadoje.",
           "body": "Kanados įmonė — ne beveidis užjūrio agregatorius. Jūsų mokesčiai, duomenys ir klientai lieka jūsų.",
-          "supportTitle": "24/7 kanadietiškas palaikymas",
-          "supportBody": "Tikri žmonės, bet kuriuo metu — dieną ar naktį. Skambinkite <phone>1-888-618-8765</phone> arba bendraukite gyvai su tais, kurie tai iš tiesų sukūrė."
+          "supportTitle": "Kanadietiškas tikrų žmonių palaikymas",
+          "supportBody": "Tikri žmonės, išmanantys restoranus — skambinkite <phone>1-888-618-8765</phone> ir kalbėkitės su tais, kurie tai iš tiesų sukūrė."
         },
         "demo": {
           "title": "Pažiūrėkite tikrą parduotuvę.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Sukurta augimui",
             "title": "Daugiau užsakymų. Mažesni mokesčiai. Didesnis pelnas.",
-            "b1": "Neriboti užsakymai",
+            "b1": "Jokių mokesčių už užsakymą",
             "b2": "Jokių paslėptų mokesčių",
             "b3": "Jokių paleidimo mokesčių",
             "b4": "Atšaukite bet kada"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Netrukus",
     "nativeAppsBody": "Pilnavertės natyvios programėlės jau kuriamos. Tuo tarpu naršyklėje bakstelėkite <b>dalinimosi meniu</b> ir pasirinkite <b>„Add to Home Screen“</b> — gausite rinkos vietą kaip tikrą programėlės ikoną, paleidimo ekraną ir viso ekrano patirtį. App Store nereikalingas.",
     "ownerTitle": "Restorano savininkas? Prisijunkite.",
-    "ownerBody": "Fiksuotas <b>$199.99/mėn. maksimumas</b> (arba mokėjimas už užsakymą — kas pigiau) — jokių komisinių, jokių papildomų klientų mokesčių, jokių išskirtinumo sutarčių. UberEats ima apie <b>$200 komisinių nuo $660 vertės užsakymų.</b> Mūsų rinkoje $200 suteikia neribotus užsakymus visam mėnesiui.",
-    "getListedFree": "Įtraukti nemokamai",
+    "ownerBody": "Jokių komisinių, jokių papildomų mokesčių klientams, jokių išskirtinumo sutarčių — Marketplace restoranai moka <b>fiksuotą mėnesinį įtraukimo mokestį</b> vietoj iki 30% komisinių, kuriuos ima didžiosios programėlės. Kainos bus paskelbtos startuojant.",
+    "getListedFree": "Pradėkite nemokamai",
     "seePricing": "Peržiūrėti kainas",
     "searchPlaceholder": "Ieškokite restoranų, virtuvių, miestų, patiekalų…",
     "clearSearch": "Išvalyti paiešką",
@@ -5597,7 +5598,7 @@
     "featured": "Rekomenduojami",
     "allRestaurants": "Visi restoranai",
     "emptyTitle": "Mes tik pradedame",
-    "emptyBody": "Rinkoje dar nėra restoranų. Jei valdote restoraną, administravimo skydelyje užsisakykite <b>Marketplace Listing</b> priedą ir būsite čia rodomi.",
+    "emptyBody": "Rinkoje dar nėra restoranų — įtraukimas prasidės startuojant. Jei valdote restoraną, susikurkite nemokamą paskyrą jau dabar ir atidarymo dieną galėsite prisijungti prie <b>Marketplace</b> platformos.",
     "restaurantLogin": "Restorano prisijungimas",
     "noMatchesTitle": "Nieko nerasta",
     "noMatchesBody": "Pabandykite kitą paieškos frazę arba išvalykite filtrus.",

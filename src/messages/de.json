@@ -332,7 +332,8 @@
     "refundableDeposit": "Erstattbare Kaution",
     "refundableDepositNotice": "Enthält eine erstattbare Kaution von {amount}, die bei Rückgabe zurückerstattet wird.",
     "refundableDepositBadge": "+ {amount} erstattbare Kaution",
-    "refundableDepositNotTaxed": "Erstattbare Kaution (nicht besteuert)"
+    "refundableDepositNotTaxed": "Erstattbare Kaution (nicht besteuert)",
+    "rewardTileEarnRate": "+{pct}% zurück bei jeder Bestellung"
   },
   "pizza": {
     "chooseSize": "Größe wählen",
@@ -848,7 +849,7 @@
       "customerGroups": "VIP-Gruppen",
       "rewards": "Bonusguthaben",
       "driverPool": "Fahrerpool",
-      "support24_7": "24/7-Support"
+      "support24_7": "Support"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -4990,7 +4991,7 @@
       "account": "Konto",
       "copyright": "© {year} Fee Free Ordering. Alle Rechte vorbehalten.",
       "tagline": "Die provisionsfreie Bestellplattform für unabhängige Restaurants.",
-      "support24_7": "Kanadischer Support rund um die Uhr (24/7)"
+      "support24_7": "Kanadischer Support von echten Menschen"
     },
     "home": {
       "heroBadge": "0 % Provision auf Bestellungen",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Für Restaurantbetreiber",
           "title": "Ihr Restaurant. <accent>0% Provision. 100% Ihres.</accent>",
-          "subtitle": "Mit FeeFrees einzigartigen GrowthNet-Marketing-Tools und gezielter Marketplace-Werbung gewinnen Sie neue Gäste – und machen sie zu treuen Stammkunden, die langfristig direkt bei Ihnen bestellen",
+          "subtitle": "Nehmen Sie Abhol-, Liefer-, Vor-Ort- und Catering-Bestellungen auf Ihrer eigenen Marken-Seite entgegen — mit 0% Provision. GrowthNet-Marketing-Tools und Marketplace-Werbung kommen zum Launch und machen aus Erstbesuchern treue Direktkunden.",
           "ctaStart": "Kostenlos starten",
           "ctaDemo": "Live-Shop ansehen",
           "badge": "0 % Provision",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Smart-Link-Analysen – Scans, die zu echten Bestellungen & Umsatz werden",
           "badge": "Ein Paket · fünf Tools",
           "blurb": "Jedes Marketing-, Bindungs- und Akquise-Tool zu einem vergünstigten Preis – oder buchen Sie jedes einzeln dazu.",
-          "pricingCta": "GrowthNet-Preise ansehen",
+          "pricingCta": "Mehr über GrowthNet erfahren",
           "apmBody": "8 erweiterte Promo-Typen, Kundensegmente und automatisierte E-Mail-Kampagnen.",
           "studioBody": "Nachverfolgbare QR-Codes, Smart Links und gebrandete Flyer – sehen Sie, was Scans in Bestellungen verwandelt.",
           "kickstarterBody": "Sofort versandfertige Erstbestellungs- und Rückgewinnungskampagnen, die Kunden vom ersten Tag an bringen.",
           "smsBody": "Schreiben Sie Kunden, während ihre Bestellung die Küche durchläuft – bestätigt, fertig, abgeschlossen.",
           "contentpilotBody": "Ihr KI-Social-Manager – entwirft und plant Beiträge für Instagram, Facebook, X & TikTok.",
           "saveTitle": "Bündeln & sparen",
-          "saveBody": "Holen Sie sich das ganze Paket für weniger, als jedes Tool einzeln zu kaufen. <link>Sehen Sie die Rechnung →</link>",
+          "saveBody": "Das Paket wird weniger kosten als der Einzelkauf der Tools — Preise werden zum Launch bekannt gegeben.",
           "ownMessage": "GrowthNet und unsere exklusiven Marketing-Tools machen aus einmaligen Marketplace-Kunden <em>direkte, treue und wiederkehrende Kunden, die Ihnen gehören.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Verkaufsoptimierte Website",
-            "body": "Eine gehostete, SEO-fertige Marketing- + Bestellseite, automatisch aus Ihrer Speisekarte erstellt, auf Ihrer eigenen Domain."
+            "body": "Eine gehostete, SEO-fertige Marketing- + Bestellseite, automatisch aus Ihrer Speisekarte erstellt, unter your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Mehrere Standorte",
@@ -5248,8 +5249,8 @@
           "badge": "Stolz kanadisch",
           "title": "Entwickelt & betrieben in Ontario, Kanada.",
           "body": "Ein kanadisches Unternehmen – kein gesichtsloser Aggregator aus Übersee. Ihre Gebühren, Daten und Kunden bleiben Ihre.",
-          "supportTitle": "24/7 kanadischer Support",
-          "supportBody": "Echte Menschen, jederzeit – Tag und Nacht. Rufen Sie <phone>1-888-618-8765</phone> an oder chatten Sie live mit den Leuten, die es tatsächlich gebaut haben."
+          "supportTitle": "Kanadischer Support von echten Menschen",
+          "supportBody": "Echte Menschen, die Restaurants verstehen — rufen Sie <phone>1-888-618-8765</phone> an und sprechen Sie mit den Leuten, die es tatsächlich gebaut haben."
         },
         "demo": {
           "title": "Sehen Sie sich einen echten Shop an.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Für Wachstum gemacht",
             "title": "Mehr Bestellungen. Weniger Gebühren. Höhere Gewinne.",
-            "b1": "Unbegrenzte Bestellungen",
+            "b1": "Keine Gebühren pro Bestellung",
             "b2": "Keine versteckten Gebühren",
             "b3": "Keine Einrichtungsgebühren",
             "b4": "Jederzeit kündbar"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Demnächst verfügbar",
     "nativeAppsBody": "Die vollwertigen nativen Apps sind in Entwicklung. In der Zwischenzeit tippen Sie auf das <b>Teilen-Menü</b> Ihres Browsers und wählen Sie <b>„Add to Home Screen“</b> — Sie erhalten den Marketplace als echtes App-Symbol, mit Ladebildschirm und Vollbild-Erlebnis. Kein App Store erforderlich.",
     "ownerTitle": "Restaurantbesitzer? Jetzt eintragen lassen.",
-    "ownerBody": "Maximal <b>$199.99/Monat</b> (oder pro Bestellung, je nachdem was günstiger ist) — keine Provisionen, keine zusätzlichen Kundengebühren, keine Exklusivverträge. UberEats berechnet ca. <b>$200 Provision auf $660 Bestellwert.</b> Auf unserem Marketplace kaufen Sie sich mit $200 unbegrenzte Bestellungen für den gesamten Monat.",
-    "getListedFree": "Kostenlos eintragen lassen",
+    "ownerBody": "Keine Provisionen, keine zusätzlichen Kundengebühren, keine Exklusivverträge — Marketplace-Restaurants zahlen eine <b>feste monatliche Listing-Gebühr</b> statt der bis zu 30% Provision, die die großen Apps verlangen. Preise werden zum Launch bekannt gegeben.",
+    "getListedFree": "Kostenlos starten",
     "seePricing": "Preise ansehen",
     "searchPlaceholder": "Restaurants, Küchen, Städte, Gerichte suchen…",
     "clearSearch": "Suche löschen",
@@ -5597,7 +5598,7 @@
     "featured": "Empfohlen",
     "allRestaurants": "Alle Restaurants",
     "emptyTitle": "Wir fangen gerade erst an",
-    "emptyBody": "Noch keine Restaurants im Marketplace. Wenn Sie ein Restaurant betreiben, abonnieren Sie das Add-on <b>Marketplace Listing</b> über Ihr Admin-Dashboard, um hier gelistet zu werden.",
+    "emptyBody": "Noch keine Restaurants im Marketplace — die Listings öffnen zum Launch. Wenn Sie ein Restaurant betreiben, erstellen Sie jetzt Ihr kostenloses Konto und Sie können dem <b>Marketplace</b> am Eröffnungstag beitreten.",
     "restaurantLogin": "Restaurant-Anmeldung",
     "noMatchesTitle": "Keine Treffer",
     "noMatchesBody": "Versuchen Sie einen anderen Suchbegriff oder entfernen Sie die Filter.",

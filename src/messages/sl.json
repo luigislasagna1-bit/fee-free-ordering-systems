@@ -332,7 +332,8 @@
     "refundableDeposit": "Vračljiva varščina",
     "refundableDepositNotice": "Vključuje vračljivo varščino v višini {amount}, ki se povrne, ko jo prinesete nazaj.",
     "refundableDepositBadge": "+ {amount} vračljive varščine",
-    "refundableDepositNotTaxed": "Vračljiva varščina (neobdavčena)"
+    "refundableDepositNotTaxed": "Vračljiva varščina (neobdavčena)",
+    "rewardTileEarnRate": "+{pct}% vračila ob vsakem naročilu"
   },
   "pizza": {
     "chooseSize": "Izberite velikost",
@@ -848,7 +849,7 @@
       "customerGroups": "VIP-skupine",
       "rewards": "Nagradni dobropis",
       "driverPool": "Bazen voznikov",
-      "support24_7": "Podpora 24/7"
+      "support24_7": "Podpora"
     },
     "dashboard": {
       "title": "Nadzorna plošča",
@@ -4990,7 +4991,7 @@
       "account": "Račun",
       "copyright": "© {year} Fee Free Ordering. Vse pravice pridržane.",
       "tagline": "Platforma za naročanje brez provizij za neodvisne restavracije.",
-      "support24_7": "Kanadska podpora 24/7"
+      "support24_7": "Kanadska podpora pravih ljudi"
     },
     "home": {
       "heroBadge": "0 % provizije na naročila",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Za lastnike restavracij",
           "title": "Vaša restavracija. <accent>0 % provizije. 100 % vaše.</accent>",
-          "subtitle": "Z edinstvenimi marketinškimi orodji GrowthNet podjetja FeeFree in oglaševanjem na Marketplace pridobivajte nove goste ter jih spreminjajte v zveste, dolgoročne neposredne stranke",
+          "subtitle": "Sprejemajte naročila za prevzem, dostavo, v restavraciji in catering na lastni strani z vašo blagovno znamko ob 0% provizije — marketinška orodja GrowthNet in oglaševanje Marketplace, na voljo ob zagonu, pa prve obiskovalce spremenijo v stalne, neposredne stranke.",
           "ctaStart": "Začnite brezplačno",
           "ctaDemo": "Oglejte si delujočo trgovino",
           "badge": "0% provizije",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Analitika Smart Link — skeniranja, ki se spremenijo v resnična naročila in prihodke",
           "badge": "En paket · pet orodij",
           "blurb": "Vsako orodje za trženje, zadrževanje in pridobivanje po eni znižani ceni — ali dodajte katero koli posamično.",
-          "pricingCta": "Oglejte si cene GrowthNet",
+          "pricingCta": "Več o GrowthNetu",
           "apmBody": "8 naprednih vrst promocij, segmenti strank in samodejne e-poštne kampanje.",
           "studioBody": "Sledljive QR kode, Smart Links in letaki z lastno blagovno znamko — poglejte, kaj spremeni skeniranja v naročila.",
           "kickstarterBody": "Kampanje za prvo naročilo in vrnitev strank, pripravljene za pošiljanje, ki pripeljejo stranke že od prvega dne.",
           "smsBody": "Pošiljajte sporočila strankam, ko se njihovo naročilo premika skozi kuhinjo — potrjeno, pripravljeno, dokončano.",
           "contentpilotBody": "Vaš upravitelj družbenih omrežij z AI — pripravlja in razporeja objave na Instagram, Facebook, X in TikTok.",
           "saveTitle": "Paket in prihranek",
-          "saveBody": "Dobite celoten paket za manj, kot če bi vsako orodje kupili posebej. <link>Poglejte izračun →</link>",
+          "saveBody": "Paket bo cenejši od nakupa vsakega orodja posebej — cene bodo objavljene ob zagonu.",
           "ownMessage": "GrowthNet in naša ekskluzivna tržna orodja spremenijo stranke, ki prvič pridejo s tržnice, v <em>neposredne, zveste in stalne stranke, ki so vaše.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Prodajno optimizirana spletna stran",
-            "body": "Gostovana, za SEO pripravljena trženjska in naročilna stran, samodejno zgrajena iz vašega jedilnika, na vaši lastni domeni."
+            "body": "Gostovana, za SEO pripravljena trženjska in naročilna stran, samodejno zgrajena iz vašega jedilnika, na naslovu your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Več lokacij",
@@ -5248,8 +5249,8 @@
           "badge": "Ponosno kanadsko",
           "title": "Ustvarjeno in vodeno v Ontariu v Kanadi.",
           "body": "Kanadsko podjetje — ne brezimni čezmorski posrednik. Vaše provizije, podatki in stranke ostanejo vaši.",
-          "supportTitle": "Kanadska podpora 24/7",
-          "supportBody": "Pravi ljudje, kadar koli — podnevi ali ponoči. Pokličite <phone>1-888-618-8765</phone> ali klepetajte v živo z ljudmi, ki so to dejansko ustvarili."
+          "supportTitle": "Kanadska podpora pravih ljudi",
+          "supportBody": "Pravi ljudje, ki razumejo restavracije — pokličite <phone>1-888-618-8765</phone> in se pogovorite z ljudmi, ki so to dejansko ustvarili."
         },
         "demo": {
           "title": "Oglejte si pravo trgovino.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Ustvarjeno za rast",
             "title": "Več naročil. Nižje provizije. Višji dobiček.",
-            "b1": "Neomejena naročila",
+            "b1": "Brez stroškov na naročilo",
             "b2": "Brez skritih stroškov",
             "b3": "Brez stroškov nastavitve",
             "b4": "Prekličite kadar koli"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Kmalu na voljo",
     "nativeAppsBody": "Polnovredni izvirni aplikaciji sta v pripravi. Do takrat tapnite <b>meni za deljenje</b> v svojem brskalniku in izberite <b>„Add to Home Screen“</b> — tržnico boste dobili kot pravo ikono aplikacije z uvodnim zaslonom in celozaslonsko izkušnjo. App Store ni potreben.",
     "ownerTitle": "Lastnik restavracije? Pridružite se.",
-    "ownerBody": "Paušalno <b>največ $199.99/mesec</b> (ali po naročilu, kar je ceneje) — brez provizij, brez dodatnih stroškov za stranke, brez pogodb o izključnosti. UberEats zaračuna okrog <b>$200 provizije na $660 naročil.</b> Pri nas $200 zagotavlja neomejeno število naročil za celoten mesec.",
-    "getListedFree": "Brezplačna uvrstitev",
+    "ownerBody": "Brez provizij, brez dodatnih stroškov za stranke, brez ekskluzivnih pogodb — restavracije na Marketplace plačujejo <b>fiksno mesečno naročnino za uvrstitev</b> namesto do 30% provizij, ki jih zaračunavajo velike aplikacije. Cene bodo objavljene ob zagonu.",
+    "getListedFree": "Začnite brezplačno",
     "seePricing": "Oglej si cene",
     "searchPlaceholder": "Išči restavracije, kuhinje, mesta, jedi…",
     "clearSearch": "Počisti iskanje",
@@ -5597,7 +5598,7 @@
     "featured": "Izpostavljeni",
     "allRestaurants": "Vse restavracije",
     "emptyTitle": "Šele začenjamo",
-    "emptyBody": "Na tržnici še ni restavracij. Če upravljate restavracijo, se naročite na dodatek <b>Marketplace Listing</b> v skrbniškem nadzorni plošči, da se uvrstite sem.",
+    "emptyBody": "Na tržnici še ni restavracij — uvrstitve se odprejo ob zagonu. Če upravljate restavracijo, si zdaj ustvarite brezplačen račun in se boste lahko pridružili platformi <b>Marketplace</b> že na dan odprtja.",
     "restaurantLogin": "Prijava za restavracije",
     "noMatchesTitle": "Ni zadetkov",
     "noMatchesBody": "Poskusite z drugačnim iskalnim izrazom ali počistite filtre.",

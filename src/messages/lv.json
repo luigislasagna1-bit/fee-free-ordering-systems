@@ -332,7 +332,8 @@
     "refundableDeposit": "Atmaksājama drošības nauda",
     "refundableDepositNotice": "Ietver atmaksājamu drošības naudu {amount} apmērā, kas tiek atmaksāta, kad to atgriežat.",
     "refundableDepositBadge": "+ {amount} atmaksājama drošības nauda",
-    "refundableDepositNotTaxed": "Atmaksājama drošības nauda (bez nodokļa)"
+    "refundableDepositNotTaxed": "Atmaksājama drošības nauda (bez nodokļa)",
+    "rewardTileEarnRate": "+{pct}% atpakaļ par katru pasūtījumu"
   },
   "pizza": {
     "chooseSize": "Izvēlēties izmēru",
@@ -848,7 +849,7 @@
       "customerGroups": "VIP grupas",
       "rewards": "Bonusa dolāri",
       "driverPool": "Vadītāju kopa",
-      "support24_7": "Atbalsts 24/7"
+      "support24_7": "Atbalsts"
     },
     "dashboard": {
       "title": "Panelis",
@@ -4990,7 +4991,7 @@
       "account": "Konts",
       "copyright": "© {year} Fee Free Ordering. Visas tiesības aizsargātas.",
       "tagline": "Bez komisijas pasūtīšanas platforma neatkarīgiem restorāniem.",
-      "support24_7": "Kanādas atbalsts 24/7"
+      "support24_7": "Kanādas atbalsts no īstiem cilvēkiem"
     },
     "home": {
       "heroBadge": "0% komisija par pasūtījumiem",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Restorānu īpašniekiem",
           "title": "Jūsu restorāns. <accent>0% komisijas. 100% jūsu.</accent>",
-          "subtitle": "Izmanto FeeFree unikālos GrowthNet mārketinga rīkus un Marketplace reklāmu, lai piesaistītu jaunus klientus un pārvērstu tos par lojāliem, ilgtermiņa tiešajiem klientiem",
+          "subtitle": "Pieņem līdzņemšanas, piegādes, uz vietas un ēdināšanas pasūtījumus savā zīmola lapā ar 0% komisiju — GrowthNet mārketinga rīki un Marketplace reklāma, kas būs pieejami no starta, pārvērš pirmreizējos apmeklētājus par pastāvīgiem, tiešajiem klientiem.",
           "ctaStart": "Sākt bez maksas",
           "ctaDemo": "Apskati reālu veikalu",
           "badge": "0% komisijas",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Smart Link analītika — skenējumi, kas pārvēršas reālos pasūtījumos un ieņēmumos",
           "badge": "Viens komplekts · pieci rīki",
           "blurb": "Katrs mārketinga, noturēšanas un piesaistes rīks vienā izdevīgā cenā — vai pievieno jebkuru vienu atsevišķi.",
-          "pricingCta": "Apskati GrowthNet cenas",
+          "pricingCta": "Uzziniet vairāk par GrowthNet",
           "apmBody": "8 uzlaboti akciju veidi, klientu segmenti un automatizētas e-pasta kampaņas.",
           "studioBody": "Izsekojami QR kodi, Smart Links un zīmola bukleti — redzi, kas pārvērš skenējumus pasūtījumos.",
           "kickstarterBody": "Gatavi nosūtīšanai pirmā pasūtījuma un atgriešanas kampaņas, kas atved klientus jau no pirmās dienas.",
           "smsBody": "Sūti klientiem īsziņas, kamēr viņu pasūtījums virzās caur virtuvi — apstiprināts, gatavs, pabeigts.",
           "contentpilotBody": "Tavs AI sociālo tīklu pārvaldnieks — sagatavo un ieplāno ierakstus Instagram, Facebook, X un TikTok.",
           "saveTitle": "Apvieno un ietaupi",
-          "saveBody": "Iegūsti visu komplektu par mazāku cenu, nekā pērkot katru rīku atsevišķi. <link>Apskati aprēķinus →</link>",
+          "saveBody": "Komplekts maksās mazāk nekā katra rīka iegāde atsevišķi — cenas tiks paziņotas palaišanas brīdī.",
           "ownMessage": "GrowthNet un mūsu ekskluzīvie mārketinga rīki pārvērš tirdzniecības vietā pirmoreiz nonākušos klientus par <em>tiešiem, lojāliem un pastāvīgiem klientiem, kas pieder jums.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Pārdošanai optimizēta vietne",
-            "body": "Mitināta, SEO gatava mārketinga un pasūtīšanas vietne, automātiski izveidota no tavas ēdienkartes, tavā paša domēnā."
+            "body": "Mitināta, SEO gatava mārketinga un pasūtīšanas vietne, automātiski izveidota no tavas ēdienkartes, adresē your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Vairākas atrašanās vietas",
@@ -5248,8 +5249,8 @@
           "badge": "Lepni kanādisks",
           "title": "Veidots un vadīts Ontario, Kanādā.",
           "body": "Kanādas uzņēmums — nevis bezsejas aizjūras agregators. Tavas maksas, dati un klienti paliek tavi.",
-          "supportTitle": "24/7 kanādisks atbalsts",
-          "supportBody": "Īsti cilvēki, jebkurā laikā — dienu vai nakti. Zvani <phone>1-888-618-8765</phone> vai tērzē tiešsaistē ar cilvēkiem, kuri to patiešām izveidoja."
+          "supportTitle": "Kanādas atbalsts no īstiem cilvēkiem",
+          "supportBody": "Īsti cilvēki, kas pārzina restorānus — zvani <phone>1-888-618-8765</phone> un runā ar cilvēkiem, kuri to patiešām izveidoja."
         },
         "demo": {
           "title": "Apskati īstu veikalu.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Veidots izaugsmei",
             "title": "Vairāk pasūtījumu. Zemākas maksas. Lielāka peļņa.",
-            "b1": "Neierobežots pasūtījumu skaits",
+            "b1": "Bez komisijas par pasūtījumu",
             "b2": "Bez slēptām maksām",
             "b3": "Bez iestatīšanas maksas",
             "b4": "Atceliet jebkurā brīdī"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Drīzumā",
     "nativeAppsBody": "Pilnvērtīgās natīvās aplikācijas ir izstrādes procesā. Pa to laiku pieskarieties pārlūka <b>kopīgošanas izvēlnei</b> un izvēlieties <b>„Add to Home Screen“</b> — jūs iegūsiet tirgus vietu kā īstu aplikācijas ikonu, ielādes ekrānu un pilnekrāna pieredzi. App Store nav nepieciešams.",
     "ownerTitle": "Restorāna īpašnieks? Reģistrējieties.",
-    "ownerBody": "Fiksēts <b>$199.99/mēnesī maksimums</b> (vai par katru pasūtījumu — atkarībā no tā, kas ir lētāk) — bez komisijām, bez papildu maksām klientiem, bez ekskluzivitātes līgumiem. UberEats iekasē apmēram <b>$200 komisijā par $660 vērtiem pasūtījumiem.</b> Mūsu tirgus vietā par $200 jūs saņemat neierobežotus pasūtījumus visu mēnesi.",
-    "getListedFree": "Reģistrējieties bez maksas",
+    "ownerBody": "Bez komisijām, bez papildu maksām klientiem, bez ekskluzivitātes līgumiem — Marketplace restorāni maksā <b>fiksētu ikmēneša maksu par iekļaušanu</b>, nevis līdz pat 30% komisiju, ko iekasē lielās lietotnes. Cenas tiks paziņotas startā.",
+    "getListedFree": "Sāciet bez maksas",
     "seePricing": "Skatīt cenas",
     "searchPlaceholder": "Meklēt restorānus, virtuves, pilsētas, ēdienus…",
     "clearSearch": "Notīrīt meklēšanu",
@@ -5597,7 +5598,7 @@
     "featured": "Izceltie",
     "allRestaurants": "Visi restorāni",
     "emptyTitle": "Mēs tikko sākam",
-    "emptyBody": "Tirgus vietā vēl nav neviena restorāna. Ja jums pieder restorāns, abonējiet <b>Marketplace Listing</b> papildinājumu savā administratora panelī, lai tiktu iekļauts šeit.",
+    "emptyBody": "Tirgus vietā vēl nav neviena restorāna — iekļaušana sāksies līdz ar startu. Ja jums pieder restorāns, izveidojiet bezmaksas kontu jau tagad, un atvēršanas dienā varēsiet pievienoties <b>Marketplace</b> platformai.",
     "restaurantLogin": "Restorāna pieteikšanās",
     "noMatchesTitle": "Nav rezultātu",
     "noMatchesBody": "Izmēģiniet citu meklēšanas terminu vai notīriet filtrus.",

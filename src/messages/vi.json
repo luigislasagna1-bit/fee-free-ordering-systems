@@ -332,7 +332,8 @@
     "refundableDeposit": "Tiền đặt cọc hoàn lại",
     "refundableDepositNotice": "Bao gồm tiền đặt cọc hoàn lại {amount}, được hoàn khi bạn mang trả lại.",
     "refundableDepositBadge": "+ {amount} tiền đặt cọc hoàn lại",
-    "refundableDepositNotTaxed": "Tiền đặt cọc hoàn lại (không tính thuế)"
+    "refundableDepositNotTaxed": "Tiền đặt cọc hoàn lại (không tính thuế)",
+    "rewardTileEarnRate": "+{pct}% hoàn lại cho mỗi đơn hàng"
   },
   "pizza": {
     "chooseSize": "Chọn kích cỡ",
@@ -848,7 +849,7 @@
       "customerGroups": "Nhóm VIP",
       "rewards": "Đô-la Thưởng",
       "driverPool": "Driver pool",
-      "support24_7": "Hỗ trợ 24/7"
+      "support24_7": "Hỗ trợ"
     },
     "dashboard": {
       "title": "Bảng điều khiển",
@@ -4990,7 +4991,7 @@
       "account": "Tài khoản",
       "copyright": "© {year} Fee Free Ordering. Bảo lưu mọi quyền.",
       "tagline": "Nền tảng đặt hàng không phí cho nhà hàng độc lập.",
-      "support24_7": "Hỗ trợ Canada 24/7"
+      "support24_7": "Hỗ trợ từ Canada bởi người thật"
     },
     "home": {
       "heroBadge": "0% hoa hồng đơn hàng",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Dành cho chủ nhà hàng",
           "title": "Nhà Hàng Của Bạn. <accent>0% Hoa Hồng. 100% Của Bạn.</accent>",
-          "subtitle": "Tận dụng bộ công cụ marketing độc quyền GrowthNet của FeeFree cùng quảng cáo trên Marketplace để thu hút khách hàng mới và biến họ thành khách quen gắn bó lâu dài, đặt hàng trực tiếp",
+          "subtitle": "Nhận đơn mang đi, giao hàng, dùng tại chỗ và tiệc trên trang mang thương hiệu riêng của bạn với 0% hoa hồng — cùng bộ công cụ marketing GrowthNet và quảng cáo Marketplace ra mắt ngay khi khai trương, biến khách ghé lần đầu thành khách quen đặt hàng trực tiếp.",
           "ctaStart": "Bắt đầu miễn phí",
           "ctaDemo": "Xem cửa hàng trực tuyến mẫu",
           "badge": "0% hoa hồng",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Phân tích Smart Link — lượt quét biến thành đơn hàng & doanh thu thực tế",
           "badge": "Một gói · năm công cụ",
           "blurb": "Mọi công cụ tiếp thị, giữ chân và thu hút khách hàng với một mức giá ưu đãi — hoặc thêm riêng lẻ bất kỳ công cụ nào.",
-          "pricingCta": "Xem bảng giá GrowthNet",
+          "pricingCta": "Tìm hiểu thêm về GrowthNet",
           "apmBody": "8 loại khuyến mãi nâng cao, phân nhóm khách hàng và chiến dịch email tự động.",
           "studioBody": "Mã QR theo dõi được, Smart Links và tờ rơi mang thương hiệu — xem điều gì biến lượt quét thành đơn hàng.",
           "kickstarterBody": "Các chiến dịch đơn-đầu-tiên và giành-lại-khách sẵn sàng gửi, đưa khách hàng đến ngay từ ngày đầu.",
           "smsBody": "Nhắn tin cho khách khi đơn của họ di chuyển qua bếp — đã xác nhận, sẵn sàng, hoàn tất.",
           "contentpilotBody": "Trợ lý mạng xã hội AI của bạn — soạn và lên lịch bài đăng lên Instagram, Facebook, X & TikTok.",
           "saveTitle": "Mua gói & tiết kiệm",
-          "saveBody": "Nhận trọn gói với giá rẻ hơn mua từng công cụ riêng lẻ. <link>Xem cách tính →</link>",
+          "saveBody": "Gói sẽ rẻ hơn so với mua từng công cụ riêng lẻ — giá sẽ được công bố khi ra mắt.",
           "ownMessage": "GrowthNet và các công cụ tiếp thị độc quyền của chúng tôi biến khách lần đầu từ sàn thương mại thành <em>khách hàng trực tiếp, trung thành và quay lại thuộc về riêng bạn.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Website tối ưu bán hàng",
-            "body": "Một trang tiếp thị + đặt món được lưu trữ sẵn, chuẩn SEO, tự động dựng từ thực đơn của bạn, trên tên miền của riêng bạn."
+            "body": "Một trang tiếp thị + đặt món được lưu trữ sẵn, chuẩn SEO, tự động dựng từ thực đơn của bạn, tại your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Nhiều chi nhánh",
@@ -5248,8 +5249,8 @@
           "badge": "Tự hào Canada",
           "title": "Được xây dựng & vận hành tại Ontario, Canada.",
           "body": "Một công ty Canada — không phải một sàn trung gian vô danh ở nước ngoài. Phí, dữ liệu và khách hàng của bạn vẫn là của bạn.",
-          "supportTitle": "Hỗ trợ Canada 24/7",
-          "supportBody": "Người thật, bất cứ lúc nào — ngày hay đêm. Gọi <phone>1-888-618-8765</phone> hoặc trò chuyện trực tiếp với chính những người đã xây dựng nó."
+          "supportTitle": "Hỗ trợ từ Canada bởi người thật",
+          "supportBody": "Người thật, hiểu rõ nhà hàng — gọi <phone>1-888-618-8765</phone> để trò chuyện với chính những người đã xây dựng nó."
         },
         "demo": {
           "title": "Xem một cửa hàng trực tuyến thực tế.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Sinh ra để tăng trưởng",
             "title": "Nhiều đơn hơn. Phí thấp hơn. Lợi nhuận cao hơn.",
-            "b1": "Đơn hàng không giới hạn",
+            "b1": "Không phí trên mỗi đơn hàng",
             "b2": "Không có phí ẩn",
             "b3": "Không có phí cài đặt",
             "b4": "Hủy bất cứ lúc nào"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Sắp ra mắt",
     "nativeAppsBody": "Ứng dụng di động chính thức đang trong quá trình phát triển. Trong thời gian chờ đợi, hãy nhấn vào <b>menu chia sẻ</b> của trình duyệt và chọn <b>“Add to Home Screen”</b> — bạn sẽ có marketplace như một ứng dụng thực sự với icon, màn hình chào và trải nghiệm toàn màn hình. Không cần App Store.",
     "ownerTitle": "Bạn là chủ nhà hàng? Đăng ký ngay.",
-    "ownerBody": "Tối đa chỉ <b>$199.99/tháng</b> (hoặc theo từng đơn hàng, tùy mức nào thấp hơn) — không hoa hồng, không phí phụ thu từ khách, không ràng buộc độc quyền. UberEats thu khoảng <b>$200 tiền hoa hồng trên $660 doanh thu đơn hàng.</b> Trên marketplace của chúng tôi, $200 giúp bạn nhận đơn không giới hạn trong cả tháng.",
-    "getListedFree": "Đăng ký miễn phí",
+    "ownerBody": "Không hoa hồng, không phụ phí cho khách, không hợp đồng độc quyền — nhà hàng trên Marketplace chỉ trả <b>một khoản phí niêm yết cố định hằng tháng</b> thay vì mức hoa hồng lên tới 30% mà các ứng dụng lớn thu. Giá sẽ được công bố khi ra mắt.",
+    "getListedFree": "Bắt đầu miễn phí",
     "seePricing": "Xem bảng giá",
     "searchPlaceholder": "Tìm nhà hàng, món ăn, thành phố, ẩm thực…",
     "clearSearch": "Xóa tìm kiếm",
@@ -5597,7 +5598,7 @@
     "featured": "Nổi bật",
     "allRestaurants": "Tất cả nhà hàng",
     "emptyTitle": "Chúng tôi đang bắt đầu",
-    "emptyBody": "Chưa có nhà hàng nào trên marketplace. Nếu bạn là chủ nhà hàng, hãy đăng ký gói <b>Marketplace Listing</b> từ bảng quản trị để xuất hiện tại đây.",
+    "emptyBody": "Chưa có nhà hàng nào trên marketplace — danh sách sẽ mở khi ra mắt. Nếu bạn là chủ nhà hàng, hãy tạo tài khoản miễn phí ngay hôm nay để có thể tham gia <b>Marketplace</b> ngay ngày đầu mở cửa.",
     "restaurantLogin": "Đăng nhập dành cho nhà hàng",
     "noMatchesTitle": "Không có kết quả",
     "noMatchesBody": "Hãy thử từ khóa khác hoặc xóa bộ lọc.",

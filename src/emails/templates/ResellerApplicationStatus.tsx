@@ -107,7 +107,7 @@ export default function ResellerApplicationStatus(props: ResellerApplicationStat
               </InfoCard>
             )}
             <P size="sm" muted>
-              Commission rate scales with active paying restaurants — 5% at 5+, 10% at 26+, 15% at 50+. Earnings hold for 7 days after each invoice paid (in case of refunds) and become available for payout once cleared. Minimum payout is $50.
+              Commission rate scales with active paying restaurants — 5% at 5+, 10% at 26+, 15% at 51+. Earnings hold for 7 days after each invoice paid (in case of refunds) and become available for payout once cleared. Minimum payout is $50.
             </P>
           </>
         )}

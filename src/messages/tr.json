@@ -332,7 +332,8 @@
     "refundableDeposit": "İade edilebilir depozito",
     "refundableDepositNotice": "{amount} tutarında iade edilebilir bir depozito içerir, geri getirdiğinizde iade edilir.",
     "refundableDepositBadge": "+ {amount} iade edilebilir depozito",
-    "refundableDepositNotTaxed": "İade edilebilir depozito (vergiye tabi değil)"
+    "refundableDepositNotTaxed": "İade edilebilir depozito (vergiye tabi değil)",
+    "rewardTileEarnRate": "Her siparişte %{pct} geri kazanın"
   },
   "pizza": {
     "chooseSize": "Boyut Seçin",
@@ -848,7 +849,7 @@
       "customerGroups": "VIP Gruplar",
       "rewards": "Ödül Dolarları",
       "driverPool": "Sürücü havuzu",
-      "support24_7": "7/24 destek"
+      "support24_7": "Destek"
     },
     "dashboard": {
       "title": "Panel",
@@ -4990,7 +4991,7 @@
       "account": "Hesap",
       "copyright": "© {year} Fee Free Ordering. Tüm hakları saklıdır.",
       "tagline": "Bağımsız restoranlar için komisyonsuz sipariş platformu.",
-      "support24_7": "7/24 Kanada desteği"
+      "support24_7": "Gerçek insanlardan Kanada desteği"
     },
     "home": {
       "heroBadge": "%0 komisyon",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Restoran sahipleri için",
           "title": "Restoranınız. <accent>0% Komisyon. 100% Sizin.</accent>",
-          "subtitle": "FeeFree'nin eşsiz GrowthNet pazarlama araçları ve Marketplace reklamlarının gücüyle yeni müşteriler kazanın, onları doğrudan sizden sipariş veren sadık ve kalıcı müşterilere dönüştürün",
+          "subtitle": "Gel-al, teslimat, restoranda ve catering siparişlerini kendi markalı sayfanızda 0% komisyonla alın — lansmanla birlikte gelecek GrowthNet pazarlama araçları ve Marketplace reklamlarıyla ilk kez gelen ziyaretçileri doğrudan sipariş veren sadık müşterilere dönüştürün.",
           "ctaStart": "Ücretsiz başlayın",
           "ctaDemo": "Canlı bir vitrini görün",
           "badge": "%0 komisyon",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Smart Link analizleri — taramaların gerçek siparişlere ve gelire dönüşmesi",
           "badge": "Tek paket · beş araç",
           "blurb": "Her pazarlama, elde tutma ve kazanım aracı indirimli tek bir fiyatta — ya da herhangi birini tek başına ekleyin.",
-          "pricingCta": "GrowthNet fiyatlandırmasını görün",
+          "pricingCta": "GrowthNet hakkında daha fazla bilgi",
           "apmBody": "8 gelişmiş kampanya türü, müşteri segmentleri ve otomatik e-posta kampanyaları.",
           "studioBody": "İzlenebilir QR kodları, Smart Links ve markalı broşürler — taramaları siparişe neyin dönüştürdüğünü görün.",
           "kickstarterBody": "İlk günden itibaren müşterileri kapınıza getiren, göndermeye hazır ilk-sipariş ve geri-kazanım kampanyaları.",
           "smsBody": "Siparişi mutfakta ilerledikçe müşterilere mesaj atın — onaylandı, hazır, tamamlandı.",
           "contentpilotBody": "Yapay zekâ sosyal medya yöneticiniz — Instagram, Facebook, X ve TikTok için gönderileri hazırlar ve zamanlar.",
           "saveTitle": "Paketle ve tasarruf et",
-          "saveBody": "Tüm paketi her aracı ayrı ayrı almaktan daha ucuza alın. <link>Hesabı görün →</link>",
+          "saveBody": "Paket, her aracı ayrı satın almaktan daha ucuz olacak — fiyatlar lansmanla birlikte açıklanacak.",
           "ownMessage": "GrowthNet ve özel pazarlama araçlarımız, pazar yerinden gelen ilk kez gelen müşterileri <em>size ait doğrudan, sadık ve tekrar gelen müşterilere</em> dönüştürür."
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Satış Odaklı Web Sitesi",
-            "body": "Menünüzden otomatik oluşturulan, barındırmalı, SEO uyumlu bir pazarlama + sipariş sitesi, kendi alan adınızda."
+            "body": "Menünüzden otomatik oluşturulan, barındırmalı, SEO uyumlu bir pazarlama + sipariş sitesi — your-name.feefreeordering.com adresinde."
           },
           "multiLocation": {
             "title": "Çoklu Şube",
@@ -5248,8 +5249,8 @@
           "badge": "Gururla Kanadalı",
           "title": "Ontario, Kanada'da üretildi ve işletiliyor.",
           "body": "Kanadalı bir şirket — kimliksiz, denizaşırı bir aracı değil. Ücretleriniz, verileriniz ve müşterileriniz size ait kalır.",
-          "supportTitle": "7/24 Kanada desteği",
-          "supportBody": "Gerçek insanlar, her an — gece ya da gündüz. <phone>1-888-618-8765</phone> numarasını arayın ya da bunu gerçekten geliştiren ekiple canlı sohbet edin."
+          "supportTitle": "Gerçek insanlardan Kanada desteği",
+          "supportBody": "Restoranları gerçekten anlayan gerçek insanlar — <phone>1-888-618-8765</phone> numarasını arayın, bunu gerçekten geliştiren ekiple konuşun."
         },
         "demo": {
           "title": "Gerçek bir vitrini görün.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Büyüme için tasarlandı",
             "title": "Daha çok sipariş. Daha düşük ücret. Daha yüksek kâr.",
-            "b1": "Sınırsız sipariş",
+            "b1": "Sipariş başına ücret yok",
             "b2": "Gizli ücret yok",
             "b3": "Kurulum ücreti yok",
             "b4": "İstediğiniz zaman iptal edin"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Çok Yakında",
     "nativeAppsBody": "Tam özellikli yerli uygulamalar yolda. Bu süreçte tarayıcınızın <b>paylaşım menüsüne</b> dokunun ve <b>\"Add to Home Screen\"</b> seçeneğini seçin — marketplace gerçek bir uygulama simgesi, açılış ekranı ve tam ekran deneyimiyle karşınıza çıkar. App Store gerekmez.",
     "ownerTitle": "Restoran sahibi misiniz? Listeleyin.",
-    "ownerBody": "Aylık en fazla <b>$199.99</b> (ya da sipariş başına, hangisi daha ucuzsa) — komisyon yok, ekstra müşteri ücreti yok, dışlayıcı sözleşme yok. UberEats, $660 siparişte yaklaşık <b>$200 komisyon alır.</b> Bizim marketplace'imizde $200 ile tüm ay boyunca sınırsız sipariş alırsınız.",
-    "getListedFree": "Ücretsiz listelenin",
+    "ownerBody": "Komisyon yok, müşteriye ek ücret yok, münhasırlık sözleşmesi yok — Marketplace restoranları, büyük uygulamaların aldığı %30'a varan komisyonlar yerine <b>sabit aylık listeleme ücreti</b> öder. Fiyatlar lansmanla birlikte açıklanacak.",
+    "getListedFree": "Ücretsiz başlayın",
     "seePricing": "Fiyatları gör",
     "searchPlaceholder": "Restoran, mutfak, şehir, yemek ara…",
     "clearSearch": "Aramayı temizle",
@@ -5597,7 +5598,7 @@
     "featured": "Öne Çıkanlar",
     "allRestaurants": "Tüm restoranlar",
     "emptyTitle": "Henüz yeni başlıyoruz",
-    "emptyBody": "Marketplace'te henüz restoran yok. Bir restoranınız varsa, buraya listelenmek için yönetim panelinizden <b>Marketplace Listing</b> eklentisine abone olun.",
+    "emptyBody": "Marketplace'te henüz restoran yok — listelemeler lansmanla birlikte açılıyor. Bir restoranınız varsa, ücretsiz hesabınızı şimdi oluşturun; açıldığı gün <b>Marketplace</b>'e katılabilirsiniz.",
     "restaurantLogin": "Restoran girişi",
     "noMatchesTitle": "Sonuç bulunamadı",
     "noMatchesBody": "Farklı bir arama terimi deneyin veya filtreleri temizleyin.",

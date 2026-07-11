@@ -332,7 +332,8 @@
     "refundableDeposit": "Refundable deposit",
     "refundableDepositNotice": "Includes a {amount} refundable deposit, returned when you bring it back.",
     "refundableDepositBadge": "+ {amount} refundable deposit",
-    "refundableDepositNotTaxed": "Refundable deposit (not taxed)"
+    "refundableDepositNotTaxed": "Refundable deposit (not taxed)",
+    "rewardTileEarnRate": "+{pct}% back on every order"
   },
   "pizza": {
     "chooseSize": "Choose Size",
@@ -871,7 +872,7 @@
       "customerGroups": "VIP Groups",
       "rewards": "Reward Dollars",
       "driverPool": "Driver Pool",
-      "support24_7": "24/7 support"
+      "support24_7": "Support"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -4990,7 +4991,7 @@
       "account": "Account",
       "copyright": "© {year} Fee Free Ordering. All rights reserved.",
       "tagline": "The fee-free ordering platform for independent restaurants.",
-      "support24_7": "24/7 Canadian support"
+      "support24_7": "Real human Canadian support"
     },
     "home": {
       "heroBadge": "0% commission on orders",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "For restaurant owners",
           "title": "Your Restaurant. <accent>0% Commission. 100% Yours.</accent>",
-          "subtitle": "Use FeeFree's Unique GrowthNet Marketing Tools & Leverage Marketplace Advertising To Acquire New Customers And Convert Them To Repeat, Long-Term Direct Customers",
+          "subtitle": "Take pickup, delivery, dine-in & catering orders on your own branded page at 0% commission — with GrowthNet marketing tools and Marketplace advertising arriving at launch to turn first-time visitors into repeat, direct customers.",
           "ctaStart": "Start free",
           "ctaDemo": "See a live storefront",
           "badge": "0% commission",
@@ -5149,14 +5150,14 @@
           "frameAlt": "Smart Link analytics — scans turning into real orders & revenue",
           "badge": "One bundle · five tools",
           "blurb": "Every marketing, retention and acquisition tool at one discounted price — or add any single one on its own.",
-          "pricingCta": "See GrowthNet pricing",
+          "pricingCta": "Learn more about GrowthNet",
           "apmBody": "8 advanced promo types, customer segments, and automated email campaigns.",
           "studioBody": "Trackable QR codes, Smart Links and branded flyers — see what turns scans into orders.",
           "kickstarterBody": "Ready-to-send first-order and win-back campaigns that bring customers in from day one.",
           "smsBody": "Text customers as their order moves through the kitchen — confirmed, ready, complete.",
           "contentpilotBody": "Your AI social manager — drafts and schedules posts to Instagram, Facebook, X & TikTok.",
           "saveTitle": "Bundle & save",
-          "saveBody": "Get the whole bundle for less than buying each tool separately. <link>See the math →</link>"
+          "saveBody": "The bundle will cost less than buying each tool separately — pricing announced at launch."
         },
         "addons": {
           "eyebrow": "Add-ons — no tiers",
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Sales-Optimized Website",
-            "body": "A hosted, SEO-ready marketing + ordering site, auto-built from your menu, on your own domain."
+            "body": "A hosted, SEO-ready marketing + ordering site, auto-built from your menu, at your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Multi-Location",
@@ -5248,8 +5249,8 @@
           "badge": "Proudly Canadian",
           "title": "Built & operated in Ontario, Canada.",
           "body": "A Canadian company — not a faceless overseas aggregator. Your fees, data and customers stay yours.",
-          "supportTitle": "24/7 Canadian support",
-          "supportBody": "Real humans, any time — day or night. Call <phone>1-888-618-8765</phone> or live-chat the people who actually built it."
+          "supportTitle": "Real human Canadian support",
+          "supportBody": "Real humans who know restaurants — call <phone>1-888-618-8765</phone> and talk to the people who actually built it."
         },
         "demo": {
           "title": "See a real storefront.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Built for growth",
             "title": "More orders. Lower fees. Higher profits.",
-            "b1": "Unlimited orders",
+            "b1": "No per-order fees",
             "b2": "No hidden fees",
             "b3": "No setup fees",
             "b4": "Cancel anytime"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Coming Soon",
     "nativeAppsBody": "The full-fat native apps are in the pipeline. In the meantime, tap your browser’s <b>share menu</b> and choose <b>“Add to Home Screen”</b> — you’ll get the marketplace as a real app icon, splash screen and full-screen experience. No App Store required.",
     "ownerTitle": "Restaurant owner? Get listed.",
-    "ownerBody": "Flat <b>$199.99/month max</b> (or per-order, whichever is cheaper) — no commissions, no extra customer fees, no exclusivity contracts. UberEats charges about <b>$200 in commission on $660 of orders.</b> On our marketplace, $200 buys you unlimited orders for the entire month.",
-    "getListedFree": "Get listed for free",
+    "ownerBody": "No commissions, no extra customer fees, no exclusivity contracts — Marketplace restaurants pay a <b>flat monthly listing fee</b> instead of the up-to-30% commissions the big apps charge. Pricing announced at launch.",
+    "getListedFree": "Get started free",
     "seePricing": "See pricing",
     "searchPlaceholder": "Search restaurants, cuisines, cities, dishes…",
     "clearSearch": "Clear search",
@@ -5597,7 +5598,7 @@
     "featured": "Featured",
     "allRestaurants": "All restaurants",
     "emptyTitle": "We’re just getting started",
-    "emptyBody": "No restaurants on the marketplace yet. If you run a restaurant, subscribe to the <b>Marketplace Listing</b> add-on from your admin dashboard to get listed here.",
+    "emptyBody": "No restaurants on the marketplace yet — listings open at launch. If you run a restaurant, create your free account now and you'll be able to join the <b>Marketplace</b> the day it opens.",
     "restaurantLogin": "Restaurant log in",
     "noMatchesTitle": "No matches",
     "noMatchesBody": "Try a different search term or clear the filters.",

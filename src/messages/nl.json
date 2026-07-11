@@ -332,7 +332,8 @@
     "refundableDeposit": "Terugbetaalbare borg",
     "refundableDepositNotice": "Bevat een terugbetaalbare borg van {amount}, die wordt terugbetaald wanneer u deze terugbrengt.",
     "refundableDepositBadge": "+ {amount} terugbetaalbare borg",
-    "refundableDepositNotTaxed": "Terugbetaalbare borg (niet belast)"
+    "refundableDepositNotTaxed": "Terugbetaalbare borg (niet belast)",
+    "rewardTileEarnRate": "+{pct}% terug bij elke bestelling"
   },
   "pizza": {
     "chooseSize": "Kies maat",
@@ -848,7 +849,7 @@
       "customerGroups": "VIP-groepen",
       "rewards": "Spaartegoed",
       "driverPool": "Chauffeurpool",
-      "support24_7": "24/7 ondersteuning"
+      "support24_7": "Ondersteuning"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -4990,7 +4991,7 @@
       "account": "Account",
       "copyright": "© {year} Fee Free Ordering. Alle rechten voorbehouden.",
       "tagline": "Het commissievrije bestelplatform voor zelfstandige restaurants.",
-      "support24_7": "Canadese ondersteuning 24/7"
+      "support24_7": "Canadese ondersteuning door echte mensen"
     },
     "home": {
       "heroBadge": "0% commissie op bestellingen",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "Voor restauranthouders",
           "title": "Jouw restaurant. <accent>0% commissie. 100% van jou.</accent>",
-          "subtitle": "Zet FeeFree's unieke GrowthNet-marketingtools in en benut Marketplace-advertenties om nieuwe klanten aan te trekken en ze om te zetten in trouwe, vaste klanten die rechtstreeks bij jou bestellen",
+          "subtitle": "Ontvang afhaal-, bezorg-, dine-in- en cateringbestellingen op je eigen pagina in jouw huisstijl, tegen 0% commissie — met GrowthNet-marketingtools en Marketplace-advertenties die bij de lancering verschijnen om eerste bezoekers om te zetten in vaste, directe klanten.",
           "ctaStart": "Gratis starten",
           "ctaDemo": "Bekijk een live winkel",
           "badge": "0% commissie",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Smart Link-analyse — scans die echte bestellingen & omzet worden",
           "badge": "Eén bundel · vijf tools",
           "blurb": "Elke tool voor marketing, retentie en werving tegen één voordelige prijs — of voeg er los eentje toe.",
-          "pricingCta": "Bekijk GrowthNet-prijzen",
+          "pricingCta": "Meer over GrowthNet",
           "apmBody": "8 geavanceerde promotietypes, klantsegmenten en geautomatiseerde e-mailcampagnes.",
           "studioBody": "Traceerbare QR-codes, Smart Links en flyers met huisstijl — zie wat scans in bestellingen omzet.",
           "kickstarterBody": "Kant-en-klare campagnes voor eerste bestellingen en terugwinnen die vanaf dag één klanten binnenhalen.",
           "smsBody": "Stuur klanten een sms terwijl hun bestelling door de keuken gaat — bevestigd, klaar, voltooid.",
           "contentpilotBody": "Je AI-socialmanager — schrijft en plant berichten voor Instagram, Facebook, X & TikTok.",
           "saveTitle": "Bundel & bespaar",
-          "saveBody": "Krijg de hele bundel voor minder dan elke tool apart te kopen. <link>Bekijk de rekensom →</link>",
+          "saveBody": "De bundel kost straks minder dan elke tool los kopen — prijzen bekend bij de lancering.",
           "ownMessage": "GrowthNet en onze exclusieve marketingtools veranderen eenmalige marktplaatsklanten in <em>directe, loyale en terugkerende klanten die van jou zijn.</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "Verkoopgerichte website",
-            "body": "Een gehoste, SEO-klare marketing- + bestelsite, automatisch gebouwd uit je menu, op je eigen domein."
+            "body": "Een gehoste, SEO-klare marketing- + bestelsite, automatisch gebouwd uit je menu, op your-name.feefreeordering.com."
           },
           "multiLocation": {
             "title": "Meerdere vestigingen",
@@ -5248,8 +5249,8 @@
           "badge": "Trots Canadees",
           "title": "Gebouwd & beheerd in Ontario, Canada.",
           "body": "Een Canadees bedrijf — geen gezichtloos buitenlands platform. Je kosten, gegevens en klanten blijven van jou.",
-          "supportTitle": "24/7 Canadese support",
-          "supportBody": "Echte mensen, op elk moment — dag en nacht. Bel <phone>1-888-618-8765</phone> of chat live met de mensen die het echt gebouwd hebben."
+          "supportTitle": "Canadese ondersteuning door echte mensen",
+          "supportBody": "Echte mensen die restaurants begrijpen — bel <phone>1-888-618-8765</phone> en praat met de mensen die het echt gebouwd hebben."
         },
         "demo": {
           "title": "Bekijk een echte winkel.",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "Gebouwd voor groei",
             "title": "Meer bestellingen. Lagere kosten. Hogere winst.",
-            "b1": "Onbeperkt bestellingen",
+            "b1": "Geen kosten per bestelling",
             "b2": "Geen verborgen kosten",
             "b3": "Geen opstartkosten",
             "b4": "Altijd opzegbaar"
@@ -5584,8 +5585,8 @@
     "comingSoon": "Binnenkort beschikbaar",
     "nativeAppsBody": "De volwaardige native apps zijn in ontwikkeling. Tik ondertussen op het <b>deelmenu</b> van je browser en kies <b>\"Add to Home Screen\"</b> — zo krijg je de marketplace als echt app-icoon, opstartscherm en volledig scherm. Geen App Store nodig.",
     "ownerTitle": "Restauranteigenaar? Laat je vermelden.",
-    "ownerBody": "Maximaal <b>$199.99/maand</b> (of per bestelling, wat voordeliger is) — geen commissies, geen extra klantkosten, geen exclusiviteitscontracten. UberEats rekent al snel <b>$200 aan commissie over $660 aan bestellingen.</b> Op onze marketplace koop je voor $200 onbeperkte bestellingen voor de hele maand.",
-    "getListedFree": "Gratis vermeld worden",
+    "ownerBody": "Geen commissies, geen extra kosten voor klanten, geen exclusiviteitscontracten — Marketplace-restaurants betalen een <b>vast maandelijks vermeldingstarief</b> in plaats van de commissies tot 30% die de grote apps rekenen. Prijzen worden bij de lancering bekendgemaakt.",
+    "getListedFree": "Gratis aan de slag",
     "seePricing": "Bekijk prijzen",
     "searchPlaceholder": "Zoek restaurants, keukens, steden, gerechten…",
     "clearSearch": "Zoekopdracht wissen",
@@ -5597,7 +5598,7 @@
     "featured": "Uitgelicht",
     "allRestaurants": "Alle restaurants",
     "emptyTitle": "We zijn net begonnen",
-    "emptyBody": "Nog geen restaurants op de marketplace. Als je een restaurant runt, abonneer je dan op de <b>Marketplace Listing</b>-add-on via je beheerdashboard om hier vermeld te worden.",
+    "emptyBody": "Nog geen restaurants op de marketplace — vermeldingen openen bij de lancering. Run je een restaurant, maak dan nu je gratis account aan en je kunt je op de openingsdag meteen bij de <b>Marketplace</b> aansluiten.",
     "restaurantLogin": "Restaurantlogin",
     "noMatchesTitle": "Geen resultaten",
     "noMatchesBody": "Probeer een andere zoekterm of verwijder de filters.",

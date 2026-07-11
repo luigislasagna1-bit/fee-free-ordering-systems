@@ -17,6 +17,14 @@
  * The whole point is that GOOGLE finds these, not casual visitors.
  */
 
+/**
+ * The "facts checked … as of" date rendered in the /vs comparison-table
+ * footnote. Bump this ONLY when the competitor numbers above are actually
+ * re-verified — never derive the footnote from the build date, which would
+ * falsely re-assert freshness on every deploy.
+ */
+export const COMPETITOR_FACTS_VERIFIED = "May 2026";
+
 export type CompetitorCategory =
   | "ordering_platform"      // peer (GloriaFood, ChowNow, Slice)
   | "delivery_aggregator"    // takes 30% (UberEats, DoorDash, Skip, Foodpanda)
@@ -89,7 +97,7 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "title": "The diner becomes your customer, not the marketplace's",
-      "body": "Every Fee Free order drops the customer's name, contact and order history into your own built-in CRM, so you can run GrowthNet Autopilot win-back emails, SMS, coupons and Smart Links. On an aggregator the diner relationship and the data sit behind the platform's marketing wall."
+      "body": "Every Fee Free order drops the customer's name, contact and order history into your own built-in CRM, so you can bring diners back with coupons, QR codes and Smart Links — with GrowthNet Autopilot win-back email + SMS marketing coming soon. On an aggregator the diner relationship and the data sit behind the platform's marketing wall."
     },
     {
       "title": "Run both — GrubHub for reach, Fee Free for repeat orders",
@@ -118,7 +126,7 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "feature": "Win-back marketing to past diners",
-      "feefree": "Built-in GrowthNet (Autopilot email + SMS, coupons)",
+      "feefree": "Coupons, Smart Links + your own CRM (GrowthNet email + SMS coming soon)",
       "competitor": "Restricted to the platform's own promo tools"
     },
     {
@@ -147,7 +155,7 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "q": "Does Fee Free Ordering run its own delivery drivers like GrubHub?",
-      "a": "Fee Free gives you a delivery order type with your own zones, fees, ETAs and minimums, fulfilled by your own staff or driver. It does not operate a courier pool the way GrubHub does (a managed driver pool is coming soon) — in exchange you keep 100% of the order value today."
+      "a": "Fee Free gives you a delivery order type with your own zones, fees, ETAs and minimums, fulfilled by your own staff or driver, and an optional Driver Pool add-on can dispatch orders to a managed driver network — see /pricing. Direct orders carry 0% platform commission either way."
     }
   ]
 },
@@ -165,7 +173,7 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "title": "Own the regular instead of renting them",
-      "body": "Seamless customers belong to the marketplace. With Fee Free, every order builds your own customer list with contact details and order history, so GrowthNet can market repeat business directly with Autopilot emails, SMS and coupons rather than you paying to reach the same person again."
+      "body": "Seamless customers belong to the marketplace. With Fee Free, every order builds your own customer list with contact details and order history, so you can market repeat business directly with coupons and Smart Links — GrowthNet Autopilot email + SMS marketing is coming soon — rather than paying to reach the same person again."
     },
     {
       "title": "Layer Fee Free on top — don't rip Seamless out",
@@ -194,7 +202,7 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "feature": "Repeat-order marketing",
-      "feefree": "Built-in GrowthNet (Autopilot email + SMS, coupons)",
+      "feefree": "Coupons, Smart Links + your own CRM (GrowthNet email + SMS coming soon)",
       "competitor": "Marketplace promo tools only"
     },
     {
@@ -295,7 +303,7 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "q": "Does Fee Free Ordering arrange delivery drivers like Just Eat?",
-      "a": "Fee Free gives you a delivery order type with your own zones, fees, ETAs and minimums, fulfilled by your own staff or driver. It does not provide a courier network like Just Eat's today (managed dispatch is coming soon) — in exchange you keep the full order value."
+      "a": "Fee Free gives you a delivery order type with your own zones, fees, ETAs and minimums, fulfilled by your own staff or driver, and an optional Driver Pool add-on can dispatch orders to a managed driver network — see /pricing. Direct orders carry 0% platform commission either way."
     },
     {
       "q": "Can I keep my Just Eat listing and add Fee Free?",
@@ -321,7 +329,7 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "title": "Built-in marketing and CRM, not just ordering",
-      "body": "GrowthNet gives you Smart Links, QR codes, Autopilot win-back emails, SMS, a customer database and promotions/coupons in the same login as your ordering page — so you can actually bring diners back, not just take a single order."
+      "body": "Smart Links, QR codes, a customer database and promotions/coupons come in the same login as your ordering page — with GrowthNet Autopilot win-back email + SMS marketing coming soon — so you can actually bring diners back, not just take a single order."
     }
   ],
   "comparison": [
@@ -347,7 +355,7 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "feature": "Built-in marketing (email/SMS/CRM)",
-      "feefree": "GrowthNet: Autopilot, Smart Links, coupons",
+      "feefree": "Smart Links, coupons + CRM (GrowthNet email/SMS coming soon)",
       "competitor": "Limited"
     },
     {
@@ -393,7 +401,7 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "title": "Pay only for the add-ons you actually use",
-      "body": "Instead of a bundled package, Fee Free lets you assemble exactly the stack you need from optional à-la-carte add-ons — you pay only for what you turn on. Custom domains and reservation deposits are on the roadmap (coming soon), while reservations and reserve-then-order are already live."
+      "body": "Instead of a bundled package, Fee Free lets you assemble exactly the stack you need from optional à-la-carte add-ons — you pay only for what you turn on. Custom domains are available as an optional add-on, reservation deposits are coming soon, and reservations and reserve-then-order are already live."
     }
   ],
   "comparison": [
@@ -419,7 +427,7 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "feature": "Built-in marketing + CRM",
-      "feefree": "GrowthNet included (Autopilot, Smart Links, coupons)",
+      "feefree": "Promotions, Smart Links + CRM built in (GrowthNet coming soon)",
       "competitor": "Available, often packaged"
     },
     {
@@ -439,7 +447,7 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "q": "Does Fee Free Ordering give me a branded ordering page like Flipdish?",
-      "a": "Yes. Your ordering page carries your name, colors and logo, and supports pickup, delivery, dine-in and catering, each with their own fees and ETAs. Custom domains are coming soon; in the meantime you can keep your existing website and link your Fee Free page from its Order button."
+      "a": "Yes. Your ordering page carries your name, colors and logo, and supports pickup, delivery, dine-in and catering, each with their own fees and ETAs. Custom domains are available as an optional add-on — see /pricing — or keep your existing website and link your Fee Free page from its Order button."
     },
     {
       "q": "Can Fee Free Ordering handle multiple locations?",
@@ -511,7 +519,7 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "feature": "Built-in marketing + CRM",
-      "feefree": "GrowthNet included (Autopilot, Smart Links, coupons)",
+      "feefree": "Promotions, Smart Links + CRM built in (GrowthNet coming soon)",
       "competitor": "Included in subscription"
     }
   ],
@@ -526,11 +534,11 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "q": "Can I get a branded restaurant website with Fee Free like Owner.com offers?",
-      "a": "Yes — a hosted branded ordering page is part of the platform, with optional add-ons available. You can also keep your existing website and simply link your free Fee Free ordering page from its menu or Order button. Custom domains are coming soon."
+      "a": "Yes — a hosted branded ordering page is part of the platform, with optional add-ons available. You can also keep your existing website and simply link your free Fee Free ordering page from its menu or Order button. Custom domains are available as an optional add-on — see /pricing."
     },
     {
       "q": "Does Fee Free Ordering include marketing automation like Owner.com?",
-      "a": "Yes. GrowthNet includes Autopilot win-back emails, SMS, Smart Links, QR codes, a customer database and promotions/coupons, all in the same login as your ordering page."
+      "a": "Promotions, coupons, Smart Links, QR codes and a customer database are built in, all in the same login as your ordering page — and GrowthNet Autopilot win-back email + SMS marketing is coming soon."
     }
   ]
 },
@@ -562,8 +570,8 @@ export const COMPETITORS: Competitor[] = [
       "body": "Beyond an attractive ordering page, Fee Free ships a native Kitchen Order App that rings new orders even screen-off, can phone-call the owner on a missed order, and prints tickets over WiFi to Star, Epson, Bixolon and Citizen printers — the back-of-house side a marketing-first tool can leave thin."
     },
     {
-      "title": "Marketing included without the bundle price",
-      "body": "GrowthNet gives you Smart Links, QR codes, Autopilot win-back emails, SMS, a CRM and promotions/coupons inside the free core, so you get automated marketing without committing to a tiered subscription up front."
+      "title": "Marketing tools without the bundle price",
+      "body": "Smart Links, QR codes, a CRM and promotions/coupons are built in — with GrowthNet Autopilot win-back email + SMS marketing coming soon — so you get marketing tools without committing to a tiered subscription up front."
     },
     {
       "title": "Try the menu import with no demo",
@@ -593,7 +601,7 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "feature": "Built-in marketing + CRM",
-      "feefree": "GrowthNet included in the free core",
+      "feefree": "Promotions, Smart Links + CRM built in (GrowthNet coming soon)",
       "competitor": "Core to the subscription"
     },
     {
@@ -613,7 +621,7 @@ export const COMPETITORS: Competitor[] = [
     },
     {
       "q": "Does Fee Free Ordering include marketing automation like Popmenu?",
-      "a": "Yes. GrowthNet bundles Autopilot win-back emails, SMS, Smart Links, QR codes, a customer database and promotions/coupons into the free core platform, so automated marketing doesn't require a separate subscription."
+      "a": "Smart Links, QR codes, a customer database and promotions/coupons are built into the free core, and GrowthNet — Autopilot win-back email + SMS automation — is coming soon, so automated marketing won't require a separate subscription."
     },
     {
       "q": "Can I keep my current website and still use Fee Free Ordering?",
@@ -638,33 +646,33 @@ export const COMPETITORS: Competitor[] = [
     whyFeeFree: [
       { title: "Automated GloriaFood menu import — photos included",
         body: "Paste your GloriaFood ordering link and your entire menu is recreated automatically: categories, items, size variants and every modifier group and option (a verified production import moved 12,653 modifier options in 1.2 seconds), with food photos transferred in the background. No retyping, and you can preview your live page before creating an account." },
-      { title: "Built-in marketplace included",
-        body: "Fee Free Marketplace (feefreefood.com) is part of the platform — your restaurant is listed and discoverable from day one for a $3-max-per-order fee (capped at $249.99/mo). GloriaFood has no marketplace; restaurants only get the customers they bring themselves." },
+      { title: "Marketplace discovery coming at launch",
+        body: "Fee Free Marketplace (feefreefood.com) is coming soon — your restaurant gets listed for new-customer discovery at launch, with pricing announced at launch. GloriaFood has no marketplace at all; restaurants only get the customers they bring themselves." },
       { title: "Direct charges + manual capture",
         body: "Customer payments go straight to your Stripe account. The card is only AUTHORIZED at checkout; we capture when you accept the order. Reject = void, no Stripe fee, no chargeback risk. GloriaFood requires Stripe but uses a simpler immediate-charge flow with separate refunds." },
       { title: "Reseller / partner program",
-        body: "Up to 10% lifetime commission for partners who refer restaurants. Real recurring revenue for agencies + tech consultants serving restaurants. GloriaFood has no such program." },
+        body: "Up to 15% lifetime commission for partners who refer restaurants. Real recurring revenue for agencies + tech consultants serving restaurants. GloriaFood has no such program." },
       { title: "Younger codebase, no Oracle layer",
         body: "We're a small team that ships changes weekly. Owners get features faster + can email actual humans for feedback. GloriaFood inherited Oracle's enterprise release cadence post-acquisition." },
     ],
     comparison: [
       { feature: "Commission on direct orders",         feefree: "0%",                              competitor: "0%" },
-      { feature: "Marketplace included",                 feefree: "Yes — feefreefood.com",          competitor: "No" },
-      { feature: "Marketplace fee structure",            feefree: "Low per-order cap or flat monthly — see /pricing", competitor: "N/A" },
+      { feature: "Marketplace included",                 feefree: "Coming soon (feefreefood.com)",  competitor: "No" },
+      { feature: "Marketplace fee structure",            feefree: "Pricing announced at launch",    competitor: "N/A" },
       { feature: "Card auth-then-capture",               feefree: "Yes",                            competitor: "Immediate charge + refund" },
-      { feature: "Partner / reseller program",           feefree: "Up to 10% lifetime",             competitor: "No" },
+      { feature: "Partner / reseller program",           feefree: "Up to 15% lifetime",             competitor: "No" },
       { feature: "Languages supported",                  feefree: "38 languages",         competitor: "20+ (Oracle scale)" },
       { feature: "Hosted website included",              feefree: "Optional add-on — see /pricing", competitor: "Bundled with paid plans" },
-      { feature: "Email/SMS marketing automation",       feefree: "Built-in (Autopilot)",           competitor: "Paid add-on" },
+      { feature: "Email/SMS marketing automation",       feefree: "Autopilot email via optional add-on; SMS coming soon", competitor: "Paid add-on" },
       { feature: "Founded",                              feefree: "2025",                            competitor: "2014 (Oracle since 2018)" },
     ],
     faqs: [
       { q: "Is there a real GloriaFood alternative?",
-        a: "Yes — Fee Free Ordering. Same zero-commission ordering for independent restaurants, plus a built-in marketplace at feefreefood.com that GloriaFood doesn't have, plus a reseller program with up to 10% lifetime commission." },
+        a: "Yes — Fee Free Ordering. Same zero-commission ordering for independent restaurants, plus a discovery marketplace at feefreefood.com coming soon (GloriaFood has none), plus a reseller program with up to 15% lifetime commission." },
       { q: "Why would I switch from GloriaFood to Fee Free Ordering?",
-        a: "Three reasons most owners cite: (1) the included marketplace gives you new-customer discovery without extra setup, (2) modern direct charges + manual capture means card authorizations void cleanly on rejected orders with no Stripe fees, (3) a smaller team that ships changes weekly and reads every support email." },
+        a: "Three reasons most owners cite: (1) the upcoming Fee Free Marketplace (coming soon) adds new-customer discovery without extra setup, (2) modern direct charges + manual capture means card authorizations void cleanly on rejected orders with no Stripe fees, (3) a smaller team that ships changes weekly and reads every support email." },
       { q: "Does Fee Free Ordering charge commission like UberEats?",
-        a: "No. Direct orders through your own ordering page or hosted site cost $0 in platform commission — forever. Customers who find you through our optional marketplace carry only a small per-order cap (or a flat monthly option for unlimited marketplace orders) — see /pricing for current numbers." },
+        a: "No. Direct orders through your own ordering page or hosted site cost $0 in platform commission — forever. An optional discovery marketplace is coming soon — pricing announced at launch." },
     ],
   },
   {
@@ -691,8 +699,8 @@ export const COMPETITORS: Competitor[] = [
         body: "Fee Free Ordering's core (admin, widget, kitchen app, customer database) is free forever. ChowNow charges $149-199/mo per location just to use the platform, before add-ons." },
       { title: "Pay only for add-ons you actually use",
         body: "Online Payments, Hosted Website and Multi-Location are each optional à-la-carte add-ons — turn on only what you need (current prices are public at /pricing). ChowNow bundles features into tiers, forcing you to pay for what you don't need." },
-      { title: "Marketplace discovery built-in",
-        body: "Customers find restaurants on feefreefood.com. ChowNow has no marketplace; you bring 100% of your own customers." },
+      { title: "Marketplace discovery coming soon",
+        body: "A discovery marketplace at feefreefood.com is coming soon. ChowNow has no marketplace; you bring 100% of your own customers." },
       { title: "No setup fee",
         body: "Sign up at /signup, paste your menu, you're live. ChowNow charges a one-time setup fee (often quoted at $399+) to get started." },
     ],
@@ -700,7 +708,7 @@ export const COMPETITORS: Competitor[] = [
       { feature: "Base monthly cost",                    feefree: "$0",                              competitor: "$149–199 / location" },
       { feature: "Setup fee",                            feefree: "$0",                              competitor: "Typically $399+" },
       { feature: "Commission on direct orders",          feefree: "0%",                              competitor: "0%" },
-      { feature: "Marketplace included",                 feefree: "Yes (feefreefood.com)",          competitor: "No" },
+      { feature: "Marketplace included",                 feefree: "Coming soon (feefreefood.com)",  competitor: "No" },
       { feature: "Hosted website",                       feefree: "Optional add-on — see /pricing", competitor: "Bundled (tier-dependent)" },
       { feature: "Multi-location",                       feefree: "Optional add-on — see /pricing", competitor: "Per-location pricing" },
       { feature: "Card payments",                        feefree: "Optional add-on — see /pricing", competitor: "Bundled with Stripe Connect" },
@@ -729,11 +737,9 @@ export const COMPETITORS: Competitor[] = [
         body: "Customers who order through Fee Free become YOUR customers — email, phone, order history go into your database for future marketing. UberEats blocks contact info; customers belong to UberEats." },
       { title: "Use UberEats AND Fee Free together",
         body: "We're not anti-UberEats — keep using them for new-customer discovery. Then put a QR card in every bag pointing customers to your Fee Free ordering page for repeat orders at zero commission. Best of both." },
-      { title: "Marketplace at 5× lower cost",
-        body: "If you want a discovery channel like UberEats, our marketplace at feefreefood.com costs at most $3/order (capped at $249.99/mo) — 5× cheaper than a UE commission on the same revenue." },
     ],
     comparison: [
-      { feature: "Commission per order",                 feefree: "0% on direct, $3 max on marketplace", competitor: "15-30%" },
+      { feature: "Commission per order",                 feefree: "0% on direct orders (discovery marketplace coming soon)", competitor: "15-30%" },
       { feature: "Setup fee",                            feefree: "$0",                              competitor: "$350 \"activation fee\"" },
       { feature: "Monthly fee",                          feefree: "$0 (core)",                       competitor: "$0" },
       { feature: "Customer data ownership",              feefree: "Yours",                          competitor: "Uber's" },
@@ -746,7 +752,7 @@ export const COMPETITORS: Competitor[] = [
       { q: "How can a restaurant reduce UberEats commission?",
         a: "Stop paying it where you don't have to. Set up Fee Free Ordering as your direct ordering channel, drop a QR card in every UberEats bag pointing customers to your Fee Free page, and customers reorder direct at 0% commission. UberEats stays useful for new-customer discovery; Fee Free captures the lifetime value." },
       { q: "What is the best UberEats alternative for small restaurants?",
-        a: "Fee Free Ordering — the core platform is free, you keep 100% of direct-order revenue, and the included marketplace at feefreefood.com gives you a UberEats-style discovery channel at $3 max per order (5× cheaper than UE's 30%)." },
+        a: "Fee Free Ordering — the core platform is free, you keep 100% of direct-order revenue, and a UberEats-style discovery marketplace at feefreefood.com is coming soon — pricing announced at launch." },
       { q: "Can I stop using UberEats entirely?",
         a: "Most restaurants don't — UberEats is great for first-time-customer discovery. The smart play is keeping UE listed for reach and using Fee Free for repeat orders, where the margin is. After ~3 months you'll see your direct orders climb and your UberEats dependency drop naturally." },
     ],
@@ -779,7 +785,7 @@ export const COMPETITORS: Competitor[] = [
         body: "Stay on DoorDash for discovery, slip a QR card in the bag pointing to your Fee Free page, capture repeat orders at zero commission. Most restaurants see direct-order share grow to 60%+ within 6 months." },
     ],
     comparison: [
-      { feature: "Commission per order",                 feefree: "0% on direct, $3 max on marketplace", competitor: "15-30% (plan-dependent)" },
+      { feature: "Commission per order",                 feefree: "0% on direct orders (discovery marketplace coming soon)", competitor: "15-30% (plan-dependent)" },
       { feature: "Higher placement costs",               feefree: "N/A",                            competitor: "Premier plan = 30% for more visibility" },
       { feature: "Customer data ownership",              feefree: "Yours",                          competitor: "DoorDash's" },
       { feature: "Marketing to past customers",          feefree: "Full (your DB)",                 competitor: "Blocked" },
@@ -787,9 +793,9 @@ export const COMPETITORS: Competitor[] = [
     ],
     faqs: [
       { q: "Is there a DoorDash alternative with no commission?",
-        a: "Yes — Fee Free Ordering. Direct orders cost 0% in platform commission (only standard Stripe card fees), and the optional Fee Free Marketplace provides a DoorDash-style discovery channel at $3 max per order — about 5× cheaper than DoorDash's 30%." },
+        a: "Yes — Fee Free Ordering. Direct orders cost 0% in platform commission (only standard Stripe card fees), and an optional DoorDash-style discovery channel — the Fee Free Marketplace — is coming soon, pricing announced at launch." },
       { q: "Why do restaurants hate the DoorDash commission?",
-        a: "On a $30 order, DoorDash takes $9 (30%), leaves you $21. Stripe takes another $1. After food cost (~35%) and labor (~25%), you might net $2. Fee Free's direct-order route leaves you the full $30 minus just the Stripe fee — usually $20+ in your pocket vs $2." },
+        a: "On a $30 order, DoorDash takes $9 (30%), leaves you $21. Stripe takes another $1. After food cost (~35%) and labor (~25%), you might net $2. Fee Free's direct-order route leaves you the full $30 minus roughly $1 in card fees — after the same food and labor costs you net about $11 instead of $2." },
     ],
   },
   {
@@ -805,18 +811,18 @@ export const COMPETITORS: Competitor[] = [
         body: "Fee Free Ordering is built in Ontario, Canada — same time zone, same banking system, instant CAD payouts via Stripe Connect. No more Skip's 20-30% commission on every order they send your way." },
       { title: "Same customers, way more margin",
         body: "The same person who orders pizza via Skip can order direct from your Fee Free page tomorrow. You keep the $9-15/order Skip would have taken." },
-      { title: "Marketplace replaces Skip's discovery role",
-        body: "Our feefreefood.com marketplace lists you with the same 'browse local restaurants' UX customers expect, at $3 max per order — Canadian dollars, Canadian tax, Canadian support." },
+      { title: "A marketplace for Skip's discovery role — coming soon",
+        body: "Our feefreefood.com marketplace is coming soon: the same 'browse local restaurants' UX customers expect, with Canadian dollars, Canadian tax and Canadian support. Pricing announced at launch." },
     ],
     comparison: [
-      { feature: "Commission per order",                 feefree: "0% direct / $3 max marketplace",  competitor: "20-30%" },
+      { feature: "Commission per order",                 feefree: "0% on direct orders (discovery marketplace coming soon)", competitor: "20-30%" },
       { feature: "Payout currency",                      feefree: "CAD direct to your Stripe",      competitor: "CAD (weekly batch)" },
       { feature: "Canadian tax handling",                feefree: "Built-in (HST/GST by province)", competitor: "Yes" },
       { feature: "Customer ownership",                   feefree: "Yours",                          competitor: "Skip's" },
     ],
     faqs: [
       { q: "What's a Canadian alternative to SkipTheDishes for restaurants?",
-        a: "Fee Free Ordering — built in Ontario, supports HST/GST per province out of the box, payouts in CAD direct to your Stripe account, and 0% platform commission on direct orders. The optional marketplace at feefreefood.com gives you a Skip-style discovery channel at $3 max per order vs Skip's 20-30%." },
+        a: "Fee Free Ordering — built in Ontario, supports HST/GST per province out of the box, payouts in CAD direct to your Stripe account, and 0% platform commission on direct orders. An optional Skip-style discovery marketplace at feefreefood.com is coming soon — pricing announced at launch." },
     ],
   },
   {
@@ -840,7 +846,7 @@ export const COMPETITORS: Competitor[] = [
     ],
     faqs: [
       { q: "Is there a Foodpanda alternative with lower fees?",
-        a: "Fee Free Ordering — the core platform is free, you keep 100% of direct-order revenue, and the included marketplace charges at most $3 per order (vs Foodpanda's 20-35%)." },
+        a: "Fee Free Ordering — the core platform is free, you keep 100% of direct-order revenue, and a discovery marketplace is coming soon — pricing announced at launch." },
     ],
   },
   // ─── POS-first / payment-first platforms ──────────────────────────
@@ -883,12 +889,12 @@ export const COMPETITORS: Competitor[] = [
     whyFeeFree: [
       { title: "Bring your own payment processor",
         body: "Fee Free uses Stripe Connect — you keep your existing Stripe account or open a new one in 5 minutes. Square Online forces you to use Square Payments at Square's rates." },
-      { title: "Marketplace included",
-        body: "Square has no marketplace — your only customers are people who already know your URL. Fee Free includes feefreefood.com discovery for new customers." },
+      { title: "Marketplace discovery coming soon",
+        body: "Square has no marketplace — your only customers are people who already know your URL. Fee Free's discovery marketplace at feefreefood.com is coming soon." },
     ],
     comparison: [
       { feature: "Payment processor",                    feefree: "Stripe (yours)",                 competitor: "Square Payments only" },
-      { feature: "Marketplace discovery",                feefree: "Included",                       competitor: "None" },
+      { feature: "Marketplace discovery",                feefree: "Coming soon (feefreefood.com)",  competitor: "None" },
       { feature: "Monthly cost",                         feefree: "$0 core + add-ons",              competitor: "$29-79/mo" },
     ],
     faqs: [
@@ -910,14 +916,14 @@ export const COMPETITORS: Competitor[] = [
         body: "Fee Free is restaurant-first — kitchen display, receipt printing, delivery zones, opening hours, prep-time logic are all native. Wix Restaurants is a module bolted on a general website builder; everything works but the depth isn't the same." },
       { title: "Embed in your existing site",
         body: "Already have a website (Wix, WordPress, Squarespace, Shopify, plain HTML)? Drop our snippet on your existing site and a 'See MENU & Order' button appears. No need to rebuild on a different platform." },
-      { title: "0% commission, included marketplace",
-        body: "Wix's marketplace doesn't exist. Fee Free Marketplace gets you in front of new customers without you paying Wix more." },
+      { title: "0% commission — marketplace coming soon",
+        body: "Wix's marketplace doesn't exist. Fee Free Marketplace (coming soon) will get you in front of new customers without you paying Wix more." },
     ],
     comparison: [
       { feature: "Hosted website",                       feefree: "Optional add-on — see /pricing", competitor: "Required (Wix plan)" },
       { feature: "Restaurant-first features",            feefree: "Native",                         competitor: "Module on general builder" },
       { feature: "Embed on existing website",            feefree: "Yes (one-line snippet)",         competitor: "Wix-only" },
-      { feature: "Marketplace included",                 feefree: "Yes",                            competitor: "No" },
+      { feature: "Marketplace included",                 feefree: "Coming soon",                    competitor: "No" },
     ],
     faqs: [
       { q: "Can I use Fee Free Ordering with my Wix website?",
@@ -936,18 +942,18 @@ export const COMPETITORS: Competitor[] = [
     whyFeeFree: [
       { title: "Reservations AND ordering in one platform",
         body: "Fee Free handles reservations, online ordering, kitchen display, customer database — one login, one bill. OpenTable is reservations-only; you'd still need a separate ordering platform." },
-      { title: "Flat fee, no per-cover",
-        body: "Fee Free's Reservation Deposits add-on (a flat monthly price, public at /pricing) covers unlimited reservations. OpenTable's per-cover fee scales with success — the more reservations you take, the more they charge." },
+      { title: "No per-cover fees",
+        body: "Reservations are included with no per-cover fee, and an optional Reservation Deposits add-on is coming soon — pricing announced at launch. OpenTable's per-cover fee scales with success — the more reservations you take, the more they charge." },
     ],
     comparison: [
       { feature: "Per-reservation fee",                  feefree: "$0",                              competitor: "$0.25-$1.00/cover" },
       { feature: "Includes online ordering",             feefree: "Yes",                            competitor: "No (separate platform)" },
       { feature: "Includes kitchen display",             feefree: "Yes",                            competitor: "No" },
-      { feature: "Monthly cost",                         feefree: "$0 core + $9.99 reservations",   competitor: "$0-$249+ tier-dependent" },
+      { feature: "Monthly cost",                         feefree: "$0 core (reservations included; deposits add-on coming soon)", competitor: "$0-$249+ tier-dependent" },
     ],
     faqs: [
       { q: "Is there an OpenTable alternative without per-cover fees?",
-        a: "Yes — Fee Free Ordering. Reservations are part of the platform (an optional Reservation Deposits add-on, flat monthly, covers unlimited reservations — see /pricing) and you get online ordering, kitchen display, and customer database in the same login." },
+        a: "Yes — Fee Free Ordering. Reservations are part of the platform with no per-cover fee (an optional Reservation Deposits add-on is coming soon — pricing announced at launch), and you get online ordering, kitchen display, and customer database in the same login." },
     ],
   },
   {
@@ -963,13 +969,13 @@ export const COMPETITORS: Competitor[] = [
         body: "Fee Free handles reservations AND ordering for less than Resy's lowest tier costs JUST for reservations. Great for restaurants that don't need the upmarket-curation positioning." },
     ],
     comparison: [
-      { feature: "Monthly cost",                         feefree: "$0 core + $9.99 reservations",   competitor: "$249-$899" },
+      { feature: "Monthly cost",                         feefree: "$0 core (reservations included; deposits add-on coming soon)", competitor: "$249-$899" },
       { feature: "Includes online ordering",             feefree: "Yes",                            competitor: "No" },
       { feature: "Customer database",                    feefree: "Yes",                            competitor: "Yes (Resy CRM)" },
     ],
     faqs: [
       { q: "Is Resy expensive for small restaurants?",
-        a: "For most independents, yes — Resy starts at $249/mo just for reservations. Fee Free Ordering handles reservations + online ordering + kitchen display + customer database for a $0 base, with an optional Reservation Deposits add-on (flat monthly, see /pricing) if you want to take deposits on bookings." },
+        a: "For most independents, yes — Resy starts at $249/mo just for reservations. Fee Free Ordering handles reservations + online ordering + kitchen display + customer database for a $0 base, with an optional Reservation Deposits add-on coming soon if you want to take deposits on bookings — pricing announced at launch." },
     ],
   },
   // ─── Niche / pizza-specific ───────────────────────────────────────
@@ -1026,7 +1032,7 @@ export const COMPETITORS: Competitor[] = [
       { title: "Kitchen hardware BentoBox doesn't cover",
         body: "Fee Free's native Kitchen Order App rings orders even with the phone locked, auto-accepts, phone-calls the owner on a missed order, and prints over WiFi to Star, Epson, Bixolon and Citizen printers. A website-first platform typically leaves this to your POS." },
       { title: "38 languages + reserve-then-order",
-        body: "Your ordering page speaks 38 languages, and customers can book a table, pre-order and pay a deposit in one checkout — reach and a combined booking flow a US-focused website builder doesn't offer." },
+        body: "Your ordering page speaks 38 languages, and customers can book a table and pre-order in one checkout (optional deposits coming soon) — reach and a combined booking flow a US-focused website builder doesn't offer." },
       { title: "Self-serve, public pricing, keep-your-site option",
         body: "Paste your menu and go live in minutes, or keep any existing site and embed our free ordering widget. No demo call to see the price." },
       { title: "Where BentoBox is genuinely strong",
@@ -1039,7 +1045,7 @@ export const COMPETITORS: Competitor[] = [
       { feature: "Loyalty / rewards", feefree: "Built in (Reward Dollars, VIP, automations)", competitor: "Paid add-on (cited ~+$199/mo)" },
       { feature: "Native kitchen app (rings phone-locked)", feefree: "Yes — iOS + Android, missed-order call, thermal print", competitor: "Not a focus (POS-dependent)" },
       { feature: "Languages", feefree: "38 languages", competitor: "English-first" },
-      { feature: "Reserve-then-order (book + pre-order + deposit)", feefree: "Yes — one checkout", competitor: "Reservations/events tooling" },
+      { feature: "Reserve-then-order (book + pre-order)", feefree: "Yes — one checkout (deposits coming soon)", competitor: "Reservations/events tooling" },
       { feature: "Onboarding", feefree: "Self-serve; instant menu import, no signup to try", competitor: "Sales-led design/onboarding" },
     ],
     faqs: [
@@ -1088,13 +1094,13 @@ export const COMPETITORS: Competitor[] = [
       { feature: "Commission on direct orders", feefree: "0%", competitor: "Model varies (confirm at quote)" },
       { feature: "Native kitchen app (rings phone-locked)", feefree: "Yes — iOS + Android, missed-order call, thermal print", competitor: "Not a focus" },
       { feature: "Languages", feefree: "38 languages", competitor: "English-first" },
-      { feature: "Reserve-then-order (book + pre-order + deposit)", feefree: "Yes — one checkout", competitor: "Reservations tooling" },
+      { feature: "Reserve-then-order (book + pre-order)", feefree: "Yes — one checkout (deposits coming soon)", competitor: "Reservations tooling" },
       { feature: "Onboarding", feefree: "Self-serve; instant menu import, no signup to try", competitor: "Managed, sales-led" },
     ],
     faqs: [
       { q: "How does SpotHopper pricing compare to Fee Free Ordering?", a: "SpotHopper doesn't publish pricing and is typically sold as a managed monthly subscription on an annual contract via a demo. Fee Free Ordering's core is free with your first 100 orders/month free, no contract, and all pricing public at /pricing." },
       { q: "Is there a SpotHopper alternative without an annual contract?", a: "Yes — Fee Free Ordering. The core platform is free, add-ons are month-to-month, and you can cancel anytime. You also get ordering-and-kitchen depth SpotHopper's marketing-first suite doesn't emphasize: locked-phone ring, missed-order phone call and WiFi thermal printing." },
-      { q: "Does Fee Free do marketing like SpotHopper?", a: "Fee Free includes GrowthNet — win-back email/SMS automation, Smart Links, QR codes, a CRM and promotions — built into the free core. It's more self-serve than SpotHopper's fully-managed service, but there's no annual contract and the pricing is public." },
+      { q: "Does Fee Free do marketing like SpotHopper?", a: "Fee Free includes Smart Links, QR codes, a CRM and promotions built into the free core, with GrowthNet win-back email/SMS automation coming soon. It's more self-serve than SpotHopper's fully-managed service, but there's no annual contract and the pricing is public." },
     ],
   },
   {
@@ -1131,7 +1137,7 @@ export const COMPETITORS: Competitor[] = [
       { title: "Kitchen hardware Town never mentions",
         body: "Fee Free's native Kitchen Order App rings orders even with the phone locked (Android + iOS), auto-accepts, phone-calls the owner on a missed order, and prints over WiFi to Star, Epson, Bixolon and Citizen printers. Town's marketing doesn't cover the kitchen at all." },
       { title: "Deeper loyalty, promotions and reserve-then-order",
-        body: "Visible and hidden promos, VIP assignment, Reward Dollars store credit, automations and sign-up bonuses — plus book-a-table + pre-order + deposit in one checkout, and a half/half pizza builder. Town offers basic points loyalty." },
+        body: "Visible and hidden promos, VIP assignment, Reward Dollars store credit, automations and sign-up bonuses — plus book-a-table + pre-order in one checkout (deposits coming soon), and a half/half pizza builder. Town offers basic points loyalty." },
       { title: "Where Town is genuinely strong",
         body: "Town's marketing craft is genuinely sharp — enemy-first messaging against the delivery apps, outcome-as-headline testimonials and an interactive savings calculator that lands. If polished, numbers-driven copy is what wins you over, they do that well. What's underneath is thinner: no published pricing, town.club subdomains, English-only, and a half-finished site — where Fee Free is deeper on kitchen tooling, languages, white-label and transparent pricing." },
     ],
@@ -1144,7 +1150,7 @@ export const COMPETITORS: Competitor[] = [
       { feature: "Languages", feefree: "38 languages", competitor: "English-only" },
       { feature: "Native kitchen app (rings phone-locked)", feefree: "Yes — iOS + Android, missed-order call, thermal print", competitor: "Not mentioned" },
       { feature: "Loyalty / promotions depth", feefree: "Reward Dollars, VIP, visible/hidden promos, automations", competitor: "Basic points" },
-      { feature: "Reserve-then-order (book + pre-order + deposit)", feefree: "Yes — one checkout", competitor: "Basic reservations" },
+      { feature: "Reserve-then-order (book + pre-order)", feefree: "Yes — one checkout (deposits coming soon)", competitor: "Basic reservations" },
       { feature: "Availability", feefree: "Built in Canada; CAD/GST-correct; global", competitor: "US / Texas, English-only" },
     ],
     faqs: [

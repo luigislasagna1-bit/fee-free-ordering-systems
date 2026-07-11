@@ -19,7 +19,7 @@ export default function PartnersApplyPage() {
           <Tier rate="0%" range="0–4 active" tone="gray" />
           <Tier rate="5%" range="5–25 active" tone="orange" highlight />
           <Tier rate="10%" range="26–50 active" tone="green" />
-          <Tier rate="15%" range="50+ active" tone="green" />
+          <Tier rate="15%" range="51+ active" tone="green" />
         </div>
 
         <ApplyClient />

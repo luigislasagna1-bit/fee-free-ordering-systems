@@ -332,7 +332,8 @@
     "refundableDeposit": "可退押金",
     "refundableDepositNotice": "包含 {amount} 可退押金，归还时退回。",
     "refundableDepositBadge": "+ {amount} 可退押金",
-    "refundableDepositNotTaxed": "可退押金（不计税）"
+    "refundableDepositNotTaxed": "可退押金（不计税）",
+    "rewardTileEarnRate": "每单返还 {pct}%"
   },
   "pizza": {
     "chooseSize": "选择大小",
@@ -848,7 +849,7 @@
       "customerGroups": "VIP 群组",
       "rewards": "奖励金",
       "driverPool": "配送司机池",
-      "support24_7": "24/7 全天候支持"
+      "support24_7": "支持"
     },
     "dashboard": {
       "title": "仪表盘",
@@ -4990,7 +4991,7 @@
       "account": "账户",
       "copyright": "© {year} Fee Free Ordering。保留所有权利。",
       "tagline": "专为独立餐厅打造的零佣金点餐平台。",
-      "support24_7": "24/7 加拿大支持"
+      "support24_7": "加拿大真人客服支持"
     },
     "home": {
       "heroBadge": "订单零佣金",
@@ -5015,7 +5016,7 @@
         "hero": {
           "eyebrow": "专为餐厅老板打造",
           "title": "您的餐厅。<accent>0% 佣金。100% 归您所有。</accent>",
-          "subtitle": "善用 FeeFree 独家 GrowthNet 营销工具，结合 Marketplace 广告曝光，吸引新客上门，更将他们转化为长期复购、直接下单的忠实客户",
+          "subtitle": "在你自己的品牌页面上接收自取、外送、堂食和宴席订单，佣金 0% —— GrowthNet 营销工具与 Marketplace 广告将随平台上线推出，把首次到访的顾客变成长期复购的直接客户。",
           "ctaStart": "免费开始",
           "ctaDemo": "查看真实店面",
           "badge": "0% 抽成",
@@ -5148,14 +5149,14 @@
           "frameAlt": "Smart Link 数据分析——扫码如何转化为真实订单与营收",
           "badge": "一个套装 · 五大工具",
           "blurb": "全部营销、留存与获客工具，一个优惠价打包——也可单独加购任意一项。",
-          "pricingCta": "查看 GrowthNet 价格",
+          "pricingCta": "进一步了解 GrowthNet",
           "apmBody": "8 种高级促销类型、客户分群，以及自动化邮件营销活动。",
           "studioBody": "可追踪的 QR 码、Smart Links 和品牌化传单——看清是什么把扫码变成了订单。",
           "kickstarterBody": "开箱即用的首单与挽回营销活动，从第一天起就为你带来客流。",
           "smsBody": "随着订单在厨房中流转，向顾客发送短信——已确认、已备好、已完成。",
           "contentpilotBody": "你的 AI 社媒经理——为 Instagram、Facebook、X 和 TikTok 撰写并定时发布内容。",
           "saveTitle": "打包更省",
-          "saveBody": "整套打包购买，比逐项单买更划算。<link>算笔账给你看 →</link>",
+          "saveBody": "整套购买将比单独购买每个工具更划算——价格将在上线时公布。",
           "ownMessage": "GrowthNet 和我们独家的营销工具，将首次光顾的平台顾客转化为<em>真正属于你的直接、忠诚、回头的客户。</em>"
         },
         "addons": {
@@ -5170,7 +5171,7 @@
           },
           "website": {
             "title": "销售优化型网站",
-            "body": "一个托管的、为 SEO 做好准备的营销 + 点餐网站，依据你的菜单自动生成，使用你自己的域名。"
+            "body": "一个托管的、为 SEO 做好准备的营销 + 点餐网站，依据你的菜单自动生成，网址为 your-name.feefreeordering.com。"
           },
           "multiLocation": {
             "title": "多门店",
@@ -5248,8 +5249,8 @@
           "badge": "加拿大荣誉出品",
           "title": "在加拿大安大略省研发与运营。",
           "body": "一家加拿大公司——而非一个面目模糊的海外外卖平台。你的费用、数据和客户，始终归你所有。",
-          "supportTitle": "24/7 加拿大本地支持",
-          "supportBody": "真人客服，随时待命——无论白天黑夜。拨打 <phone>1-888-618-8765</phone>，或与亲手打造这款产品的团队在线交流。"
+          "supportTitle": "加拿大真人客服支持",
+          "supportBody": "懂餐厅的真人客服——拨打 <phone>1-888-618-8765</phone>，与亲手打造这款产品的团队直接交流。"
         },
         "demo": {
           "title": "看一个真实的店面。",
@@ -5299,7 +5300,7 @@
           "growth": {
             "eyebrow": "为增长而生",
             "title": "订单更多，费用更低，利润更高。",
-            "b1": "订单无上限",
+            "b1": "不收每单费用",
             "b2": "绝无隐藏费用",
             "b3": "免开通费",
             "b4": "随时取消"
@@ -5584,8 +5585,8 @@
     "comingSoon": "即将推出",
     "nativeAppsBody": "完整原生应用正在研发中。现在，您可以点击浏览器的<b>分享菜单</b>，选择<b>“Add to Home Screen”</b>——即可将平台添加为真正的应用图标，享受启动画面与全屏体验。无需 App Store。",
     "ownerTitle": "您是餐厅老板？立即上架。",
-    "ownerBody": "每月最高仅需 <b>$199.99</b>（或按订单计费，取较低者）——无佣金、无额外顾客费用、无独家合同。UberEats 在 <b>$660 的订单中约收取 $200 佣金。</b>在我们的平台，$200 可让您整个月享有无限订单。",
-    "getListedFree": "免费上架",
+    "ownerBody": "没有佣金、不向顾客加收费用、没有独家合约——Marketplace 上的餐厅只需支付<b>固定的每月上架费</b>，而不是大平台收取的高达 30% 的佣金。价格将在上线时公布。",
+    "getListedFree": "免费开始",
     "seePricing": "查看定价",
     "searchPlaceholder": "搜索餐厅、菜系、城市、菜品…",
     "clearSearch": "清除搜索",
@@ -5597,7 +5598,7 @@
     "featured": "精选",
     "allRestaurants": "全部餐厅",
     "emptyTitle": "我们刚刚起步",
-    "emptyBody": "平台上暂无餐厅。如果您经营餐厅，请从管理后台订阅 <b>Marketplace Listing</b> 附加功能，即可在此上架。",
+    "emptyBody": "平台上暂无餐厅——上线时开放入驻。如果您经营餐厅，现在就创建免费账户，开放当天即可加入 <b>Marketplace</b>。",
     "restaurantLogin": "餐厅登录",
     "noMatchesTitle": "无匹配结果",
     "noMatchesBody": "请尝试其他搜索词或清除筛选条件。",
