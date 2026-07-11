@@ -5,7 +5,7 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-07-10 (early morning) by Claude.
+**Last updated:** 2026-07-10 by Claude (A3 keystore backup → DONE LOG).
 
 ---
 
@@ -24,15 +24,6 @@
 1. `feefreeordering.com/admin` → **Payments** → **Payment providers**.
 2. In the Stripe card, click **Test connection**. Expect the green success message.
 3. Tell Claude "done A2" → Claude verifies the webhook registered in the database.
-
-### A3. ☐ Back up the Android signing key — CRITICAL, 10 minutes
-**Why:** `feefree-release.jks` exists as ONE copy on this PC. If the disk dies, the Android app can NEVER be updated again — not by anyone, ever. This is the highest-consequence item on this list.
-1. On this PC, search for the file `feefree-release.jks` (File Explorer → search in `C:\FeeFreeOrderingSystems`, likely under the `android` folder).
-2. Copy it to your Google Drive (drag into drive.google.com).
-3. Copy it to a USB stick you keep somewhere safe.
-4. Put the keystore PASSWORD in your password manager (or written note stored separately from the USB).
-5. Verify: re-download the file from Google Drive once and confirm it opens/downloads (don't skip this).
-6. Tell Claude "done A3".
 
 ### A4. ☐ Turn on Apple membership auto-renew — expires ~August 3
 **Why:** if the Luigi's Lasagna Apple Developer membership lapses mid-launch, the iOS app can't be submitted and TestFlight stops.
@@ -168,6 +159,7 @@ When you have the iPad handy, tell Claude "let's do C3": print a real test order
 | 2026-07-10 | D-U-N-S requested for Fee Free Ordering Inc. (developer queue) | Luigi confirmed registration done |
 | 2026-07-10 | Free partner periods set (yours Jul 17, Fabrizio Aug 24, Milton Aug 2) | Conversion script ran; prod DB verified |
 | 2026-07-10 | Money-path hardening shipped (commit 91d11c07) | 590 tests, adversarial review, pushed |
+| 2026-07-10 | A3 — Android signing key backed up to multiple sources (Google Drive + USB) + passwords saved | Luigi confirmed in chat; original at android/app/feefree-release.jks intact |
 
 ---
 
