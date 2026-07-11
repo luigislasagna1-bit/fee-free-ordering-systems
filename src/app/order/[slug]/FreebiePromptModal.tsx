@@ -27,6 +27,9 @@ type MenuItemLite = {
   /** Sold-out in the main menu — rendered DISABLED + "Sold out" here
    *  (display-only; the orders route still rejects a sold-out pick). */
   isSoldOut?: boolean;
+  /** Pre-translated per-dish window note ("Available lun, mer, ven · 10:00 –
+   *  20:00") — shown under the name (Fabrizio cmr80t9rk, 2026-07-11). */
+  availabilityNote?: string;
 };
 
 interface Props {
@@ -129,6 +132,9 @@ export function FreebiePromptModal({
                       {image}
                       <div className="p-3">
                         <div className="text-sm font-semibold text-gray-900">{item.name}</div>
+                        {!isSold && item.availabilityNote && (
+                          <div className="text-[11px] font-medium text-indigo-600 leading-tight mt-0.5">{item.availabilityNote}</div>
+                        )}
                         {isSold ? (
                           <span className="inline-block mt-2 bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">
                             {tOrder("soldOut")}
@@ -172,6 +178,9 @@ export function FreebiePromptModal({
                       <div className="text-xs text-gray-400 line-through mt-0.5">
                         {formatCurrency(item.price)}
                       </div>
+                      {!isSold && item.availabilityNote && (
+                        <div className="text-[11px] font-medium text-indigo-600 leading-tight mt-0.5">{item.availabilityNote}</div>
+                      )}
                       {isSold ? (
                         <span className="inline-block mt-1 bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">
                           {tOrder("soldOut")}

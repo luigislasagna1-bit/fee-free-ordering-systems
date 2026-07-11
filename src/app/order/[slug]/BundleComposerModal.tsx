@@ -38,6 +38,9 @@ type MenuItemLite = {
   /** Sold-out in the main menu — rendered DISABLED + "Sold out" here
    *  (display-only; the orders route still rejects a sold-out pick). */
   isSoldOut?: boolean;
+  /** Pre-translated per-dish window note ("Available lun, mer, ven · 10:00 –
+   *  20:00") — shown under the option name (Fabrizio cmr80t9rk, 2026-07-11). */
+  availabilityNote?: string;
 };
 
 type RuleConfigGroup = {
@@ -70,6 +73,8 @@ type SlotOption = {
   price: number;
   imageUrl?: string;
   isSoldOut?: boolean;
+  /** Pre-translated per-dish window note — see MenuItemLite.availabilityNote. */
+  availabilityNote?: string;
   fee: number;
 };
 
@@ -169,10 +174,10 @@ export function BundleComposerModal({
           const varFilter = new Set(g.variantIds ?? []);
           for (const v of variants) {
             if (varFilter.size > 0 && !varFilter.has(v.id)) continue; // eligibility narrowing
-            opts.push({ key: `${it.id}::${v.id}`, itemId: it.id, variantId: v.id, variantName: v.name, name: it.name, price: v.price, imageUrl: it.imageUrl, isSoldOut: it.isSoldOut, fee: feeForOption(g, v.id, it.id) });
+            opts.push({ key: `${it.id}::${v.id}`, itemId: it.id, variantId: v.id, variantName: v.name, name: it.name, price: v.price, imageUrl: it.imageUrl, isSoldOut: it.isSoldOut, availabilityNote: it.availabilityNote, fee: feeForOption(g, v.id, it.id) });
           }
         } else {
-          opts.push({ key: it.id, itemId: it.id, name: it.name, price: it.price, imageUrl: it.imageUrl, isSoldOut: it.isSoldOut, fee: isSpeciality ? feeForOption(g, undefined, it.id) : 0 });
+          opts.push({ key: it.id, itemId: it.id, name: it.name, price: it.price, imageUrl: it.imageUrl, isSoldOut: it.isSoldOut, availabilityNote: it.availabilityNote, fee: isSpeciality ? feeForOption(g, undefined, it.id) : 0 });
         }
       }
       return opts;
@@ -524,6 +529,14 @@ export function BundleComposerModal({
                                   t("included")
                                 )}
                               </div>
+                              {/* Per-dish availability window — customers see WHEN
+                                  a windowed dish is orderable BEFORE picking it
+                                  (Fabrizio cmr80t9rk, 2026-07-11). */}
+                              {!isSold && opt.availabilityNote && (
+                                <div className="text-[11px] font-medium text-indigo-600 leading-tight mt-0.5">
+                                  {opt.availabilityNote}
+                                </div>
+                              )}
                             </div>
                             {/* Multi-pick slots: the same item can fill several
                                 picks (×N) with a − to drop one (Luigi 2026-07-03). */}

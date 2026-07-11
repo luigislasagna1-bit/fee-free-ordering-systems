@@ -147,6 +147,14 @@ interface Props {
    *  the free-delivery / promo threshold). Pre-translated by the parent; null
    *  when the cart isn't within range of any promo. Luigi 2026-07-07. */
   promoNudgeText?: string | null;
+  /** Pre-translated service-conflict message ("'X' is only available for
+   *  delivery — please remove it from your cart to continue") — non-null when
+   *  a cart line's dish/category isn't offered for the SELECTED ordering
+   *  method. Renders a red banner and disables Place order, so the customer
+   *  never fills in the whole checkout only to hit the server rejection
+   *  (Luigi 2026-07-11, ristorante-test). Recomputed by the parent when the
+   *  method changes (including via the in-checkout method switcher). */
+  serviceConflictText?: string | null;
   /** Exclusive promos that qualified but lost to a bigger exclusive (only one
    *  exclusive applies per order). Shown as a small note so the customer knows
    *  why a deal they expected didn't apply. Luigi 2026-06-07. */
@@ -360,7 +368,7 @@ export function CheckoutModal({
   acceptsDineIn = false, acceptsTakeOut = false,
   restaurantSlug, isSignedIn, fromMarketplace,
   cart, subtotal, totalDiscount,
-  appliedPromos = [], promoNudgeText = null, bumpedExclusives = [], hasFreeDelivery = false, baseDeliveryFee = 0,
+  appliedPromos = [], promoNudgeText = null, serviceConflictText = null, bumpedExclusives = [], hasFreeDelivery = false, baseDeliveryFee = 0,
   deliveryFee, appliedServiceFees, taxAmount, depositLinesTotal = 0,
   tipAmount, tipPercent, setTipPercent, tipsEnabled = true, total, taxRate,
   rewardInfo = null, creditToApply = 0, setCreditToApply,
@@ -765,6 +773,17 @@ export function CheckoutModal({
           <div className="px-5 pt-4 flex-shrink-0">
             <div className="rounded-xl border-2 border-dashed border-emerald-300 bg-emerald-50 px-4 py-3 text-center text-sm font-semibold text-emerald-800 shadow-sm">
               🎯 {promoNudgeText}
+            </div>
+          </div>
+        )}
+
+        {/* Service conflict — a cart line isn't offered for the selected
+            ordering method. Red banner + Place order disabled below; switching
+            the method (or removing the line) clears it live. */}
+        {serviceConflictText && (
+          <div className="px-5 pt-4 flex-shrink-0">
+            <div className="rounded-xl border-2 border-red-300 bg-red-50 px-4 py-3 text-center text-sm font-bold text-red-700 shadow-sm">
+              {serviceConflictText}
             </div>
           </div>
         )}
@@ -2106,7 +2125,7 @@ export function CheckoutModal({
           </div>
           <button
             onClick={placeOrder}
-            disabled={orderLoading || cart.length === 0 || scheduledTooEarly}
+            disabled={orderLoading || cart.length === 0 || scheduledTooEarly || !!serviceConflictText}
             className="flex-1 sm:flex-none text-white font-bold py-3 px-6 rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-50 text-base"
             style={{ backgroundColor: theme.primaryColor }}
           >

@@ -2197,6 +2197,13 @@ export function OrderingPageClient({
   // see src/lib/service-restriction.ts).
   const svcChannel: ServiceChannel = orderType === "delivery" ? "delivery" : "pickup";
   const catServiceOk = (c: Category) => serviceAllows(c as ServiceFlags, svcChannel);
+  // Category service flags by id — for judging CART lines. Built from ALL
+  // categories (not visibleCategories): in "hide" mode a conflicting category
+  // is filtered from the menu, but its lines can still sit in the cart after
+  // a service switch (Luigi 2026-07-11, ristorante-test).
+  const svcFlagsByCat = new Map<string, ServiceFlags>(
+    (restaurant.menuCategories as Category[]).map((c) => [c.id, { forPickup: (c as any).forPickup, forDelivery: (c as any).forDelivery }]),
+  );
   const visibleCategories: Category[] = (restaurant.menuCategories as Category[])
     .filter(c => isVisibleNow(c, visNow, restaurantTz))
     // A fully service-restricted category disappears in "hide" mode; in
@@ -2365,6 +2372,43 @@ export function OrderingPageClient({
   // Customer can collapse the promo strip so the specials don't eat the whole page
   // (mobile + desktop). Mirrors the collapsible-category chevron. Luigi 2026-06-22.
   const [promosCollapsed, setPromosCollapsed] = useState(false);
+  // Overflow tracking for the PROMO card strip — mirrors pillScrollState, but
+  // these arrows show on MOBILE too: with several promos, customers didn't
+  // realize the strip scrolls sideways and never saw the rest (Fabrizio
+  // cmr80t9rk, 2026-07-11). STATE-ref (not useRef): React re-creates the strip
+  // node when the promo data loads / the collapse toggles — the listeners must
+  // follow the node, or the arrows go stale on the replaced element.
+  const [promoStripEl, setPromoStripEl] = useState<HTMLDivElement | null>(null);
+  const [promoScrollState, setPromoScrollState] = useState<{ left: boolean; right: boolean }>({ left: false, right: false });
+  const promoStripUpdateRef = useRef<() => void>(() => {});
+  useEffect(() => {
+    const el = promoStripEl;
+    if (!el) { setPromoScrollState({ left: false, right: false }); return; }
+    const update = () => {
+      const max = el.scrollWidth - el.clientWidth;
+      setPromoScrollState({ left: el.scrollLeft > 2, right: el.scrollLeft < max - 2 });
+    };
+    promoStripUpdateRef.current = update;
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => { el.removeEventListener("scroll", update); ro.disconnect(); };
+  }, [promoStripEl]);
+  const nudgePromos = (dir: -1 | 1) => {
+    const el = promoStripEl;
+    if (!el) return;
+    const before = el.scrollLeft;
+    const delta = dir * Math.max(200, el.clientWidth * 0.7);
+    el.scrollBy({ left: delta, behavior: "smooth" });
+    // Some embedded webviews silently no-op smooth scrolling — if nothing
+    // moved, jump instantly so the tap ALWAYS reveals the next cards; also
+    // refresh the arrows in case the scroll event was coalesced away.
+    setTimeout(() => {
+      if (Math.abs(el.scrollLeft - before) < 4) el.scrollBy({ left: delta });
+      promoStripUpdateRef.current();
+    }, 350);
+  };
   // Seed "all collapsed" the first time the accordion becomes active (so it
   // doesn't fight the customer if they later expand things). When a search
   // filters the menu we leave their open/closed choices intact.
@@ -4216,6 +4260,18 @@ export function OrderingPageClient({
       // the dish DISABLED + "Sold out" (matches the menu card). Display-only:
       // the orders route is the real gate (rejects with item_sold_out).
       isSoldOut: !!mi.isSoldOut,
+      // Pre-translated per-dish availability note ("Available lun, mer, ven ·
+      // 10:00 – 20:00") so promo/bundle pickers show WHEN a windowed dish is
+      // orderable — same helpers + string the menu card uses. Fabrizio
+      // cmr80t9rk 2026-07-11: customers picked a windowed dish in a promo and
+      // only learned at checkout. Fulfil windows win; legacy availability
+      // window is the fallback (mirrors the card precedence).
+      availabilityNote: (() => {
+        const fulfilWin = hasFulfilWindow(mi) ? itemFulfilWindow(mi, hoursFmt) : "";
+        const legacyWin = fulfilWin ? "" : itemAvailabilityWindow(mi, hoursFmt);
+        const win = fulfilWin || legacyWin;
+        return win ? t("availableOnlyLabel", { window: win }) : undefined;
+      })(),
       variants: (mi.variants ?? []).map((v) => ({ id: v.id, name: v.name, price: v.price })),
       // "+ Add" quick-add is only offered for truly-simple items (no size choice + no modifier
       // groups at all); anything with options opens the customizer. Fabrizio 2026-06-25.
@@ -5196,7 +5252,37 @@ export function OrderingPageClient({
           </button>
         )}
         {!promosCollapsed && (promoBanners.filter((p) => p.showOnBanner && p.campaignRef !== "kickstarter_first_buy").length > 0 || rewardPromoTiles.length > 0) && (
-          <div className="mb-6 flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
+          <div className="relative mb-6">
+            {/* Overflow arrows + edge fades — visible on MOBILE too, unlike the
+                category pill nav: customers with several promos didn't realize
+                the strip scrolls and never saw the rest (Fabrizio cmr80t9rk). */}
+            {promoScrollState.left && (
+              <>
+                <div className="pointer-events-none absolute left-0 top-0 bottom-2 w-10 z-10" style={{ background: `linear-gradient(to right, ${theme.backgroundColor}f0, transparent)` }} />
+                <button
+                  type="button"
+                  onClick={() => nudgePromos(-1)}
+                  aria-label="Scroll promotions left"
+                  className="absolute left-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-white shadow-md border border-gray-200 flex items-center justify-center"
+                >
+                  <ChevronLeft className="w-5 h-5 text-gray-700" />
+                </button>
+              </>
+            )}
+            {promoScrollState.right && (
+              <>
+                <div className="pointer-events-none absolute right-0 top-0 bottom-2 w-10 z-10" style={{ background: `linear-gradient(to left, ${theme.backgroundColor}f0, transparent)` }} />
+                <button
+                  type="button"
+                  onClick={() => nudgePromos(1)}
+                  aria-label="Scroll promotions right"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-white shadow-md border border-gray-200 flex items-center justify-center"
+                >
+                  <ChevronRight className="w-5 h-5 text-gray-700" />
+                </button>
+              </>
+            )}
+          <div ref={setPromoStripEl} className="flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
             {promoBanners.filter((p) => p.showOnBanner && p.campaignRef !== "kickstarter_first_buy").map((promo) => {
               const headline = promo.bannerHeadline?.trim() || promo.name;
               const hasUsableWindow =
@@ -5476,6 +5562,7 @@ export function OrderingPageClient({
                 </div>
               );
             })}
+          </div>
           </div>
         )}
 
@@ -5976,6 +6063,23 @@ export function OrderingPageClient({
                               {t("availableOnlyLabel", { window: itemFulfilWindow(ci.menuItem, hoursFmt) })}
                             </div>
                           )}
+                          {/* Service conflict → the line's dish (or its category)
+                              isn't offered for the CURRENT service. Red note so a
+                              customer who added under Delivery then switched to
+                              Pickup sees it in the cart, not at the final server
+                              error (Luigi 2026-07-11, ristorante-test). */}
+                          {!ci.isBundle && (() => {
+                            const kind = blockingServiceKind(
+                              ci.menuItem as ServiceFlags,
+                              svcFlagsByCat.get((ci.menuItem as any).categoryId) ?? {},
+                              svcChannel,
+                            );
+                            return kind ? (
+                              <div className="text-[11px] mt-0.5 font-bold text-red-600">
+                                {t(kind === "pickupOnly" ? "pickupOnlyLabel" : "deliveryOnlyLabel")}
+                              </div>
+                            ) : null;
+                          })()}
                           {/* Bundle child rows — indented under the parent. */}
                           {ci.isBundle && ci.bundleItems && ci.bundleItems.length > 0 && (
                             <div className="mt-1 pl-4 border-l-2 border-gray-100 space-y-0.5">
@@ -6296,10 +6400,44 @@ export function OrderingPageClient({
                   </div>
                 )}
 
+                {/* Service-conflict gate: a line added under one service that
+                    the current service doesn't offer (e.g. delivery-only dish
+                    + switch to Pickup) blocks checkout HERE with the same
+                    localized message the server would return — not at the
+                    final "Place order" error (Luigi 2026-07-11). */}
+                {(() => {
+                  const conflict = cart.find(
+                    (ci) =>
+                      !ci.isBundle &&
+                      blockingServiceKind(
+                        ci.menuItem as ServiceFlags,
+                        svcFlagsByCat.get((ci.menuItem as any).categoryId) ?? {},
+                        svcChannel,
+                      ) !== null,
+                  );
+                  return conflict ? (
+                    <div className="mx-4 mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700">
+                      {svcChannel === "pickup"
+                        ? tT("itemNotForPickupError", { name: conflict.menuItem.name })
+                        : tT("itemNotForDeliveryError", { name: conflict.menuItem.name })}
+                    </div>
+                  ) : null;
+                })()}
                 <div className="p-4">
                   <button
                     onClick={() => { if (hasFulfilConflict) { setFulfilConflictOpen(true); return; } if (hasReservationCartConflict) { setReservationCartOpen(true); return; } setCartOpen(false); setCheckoutOpen(true); }}
-                    disabled={orderType === "delivery" && minimumOrderForType > 0 && subtotal < minimumOrderForType}
+                    disabled={
+                      (orderType === "delivery" && minimumOrderForType > 0 && subtotal < minimumOrderForType) ||
+                      cart.some(
+                        (ci) =>
+                          !ci.isBundle &&
+                          blockingServiceKind(
+                            ci.menuItem as ServiceFlags,
+                            svcFlagsByCat.get((ci.menuItem as any).categoryId) ?? {},
+                            svcChannel,
+                          ) !== null,
+                      )
+                    }
                     className="w-full text-white font-bold py-4 rounded-xl transition text-base disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ backgroundColor: theme.primaryColor }}>
                     {t("proceedToCheckout")} → {fmt(cartCreditChosen > 0 ? cartChargeToday : total)}
@@ -6457,6 +6595,25 @@ export function OrderingPageClient({
             amount: formatCurrency(promoNudge.remaining, restaurant.currency ?? "usd"),
             name: promoNudge.name,
           }) : null}
+          // A cart line the SELECTED method doesn't offer → red banner + Place
+          // order disabled in the modal (same localized message the server
+          // would return). Recomputes when the customer switches the method
+          // inside checkout, since orderType lives here. Luigi 2026-07-11.
+          serviceConflictText={(() => {
+            const conflict = cart.find(
+              (ci) =>
+                !ci.isBundle &&
+                blockingServiceKind(
+                  ci.menuItem as ServiceFlags,
+                  svcFlagsByCat.get((ci.menuItem as any).categoryId) ?? {},
+                  svcChannel,
+                ) !== null,
+            );
+            if (!conflict) return null;
+            return svcChannel === "pickup"
+              ? tT("itemNotForPickupError", { name: conflict.menuItem.name })
+              : tT("itemNotForDeliveryError", { name: conflict.menuItem.name });
+          })()}
           bumpedExclusives={blockedPromos.filter((b) => b.wasExclusive)}
           hasFreeDelivery={hasFreeDelivery}
           baseDeliveryFee={baseDeliveryFee}

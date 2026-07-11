@@ -43,6 +43,9 @@ type MenuItemLite = {
   /** Sold-out in the main menu — rendered DISABLED + "Sold out" here
    *  (display-only; the orders route still rejects a sold-out pick). */
   isSoldOut?: boolean;
+  /** Pre-translated per-dish window note ("Available lun, mer, ven · 10:00 –
+   *  20:00") — shown under the option (Fabrizio cmr80t9rk, 2026-07-11). */
+  availabilityNote?: string;
 };
 
 type RuleConfigGroup = {
@@ -481,7 +484,12 @@ export function GuidedPromoModal({
                                     style={{ background: `linear-gradient(135deg, ${primaryColor}22, #f3f4f6)` }}
                                   />
                                 )}
-                                <div className="text-sm font-semibold text-gray-900 truncate">{item.name}</div>
+                                <div className="min-w-0">
+                                  <div className="text-sm font-semibold text-gray-900 truncate">{item.name}</div>
+                                  {!isSold && item.availabilityNote && (
+                                    <div className="text-[11px] font-medium text-indigo-600 leading-tight">{item.availabilityNote}</div>
+                                  )}
+                                </div>
                                 {isSold && (
                                   <span className="ml-auto inline-block bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0">
                                     {tOrder("soldOut")}
@@ -583,6 +591,9 @@ export function GuidedPromoModal({
                                   </span>
                                 ) : free ? t("free") : formatCurrency(item.price)}
                               </div>
+                              {!isSold && item.availabilityNote && (
+                                <div className="text-[11px] font-medium text-indigo-600 leading-tight mt-0.5">{item.availabilityNote}</div>
+                              )}
                             </div>
                             {isMulti && n > 0 && (
                               <>

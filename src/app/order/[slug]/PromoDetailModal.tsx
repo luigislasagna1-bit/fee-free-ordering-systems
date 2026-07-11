@@ -103,6 +103,10 @@ type MenuItemLite = {
    *  (display-only; the orders route is the real gate). Flows through
    *  collectGroupItems / collectFreebieOptions via the `...mi` spread. */
   isSoldOut?: boolean;
+  /** Pre-translated per-dish window note ("Available lun, mer, ven · 10:00 –
+   *  20:00") — rendered under the name so customers see WHEN a windowed dish
+   *  is orderable before adding it (Fabrizio cmr80t9rk, 2026-07-11). */
+  availabilityNote?: string;
 };
 
 type DeliveryZoneLite = {
@@ -318,6 +322,7 @@ function EligibleItemRow({
   customizeLabel,
   increaseLabel,
   decreaseLabel,
+  soldOutLabel,
 }: {
   item: MenuItemLite;
   primaryColor: string;
@@ -331,12 +336,18 @@ function EligibleItemRow({
   customizeLabel: string;
   increaseLabel: string;
   decreaseLabel: string;
+  /** Localized "Sold out" — rendered as a badge + the row disabled when
+   *  item.isSoldOut (Fabrizio cmr80t9rk 2026-07-11: the bundle composer
+   *  already did this; the promo screen let customers add a sold-out dish
+   *  and only fail at checkout). */
+  soldOutLabel?: string;
 }) {
   const formatCurrency = useCurrencyFormat();
-  const showStepper = !!onAdd && !!onRemove && qty > 0;
+  const isSold = !!item.isSoldOut;
+  const showStepper = !isSold && !!onAdd && !!onRemove && qty > 0;
   return (
-    <div className="w-full flex items-center gap-2 p-2 rounded-xl border border-gray-100 hover:bg-gray-50 transition">
-      <button type="button" onClick={onOpen} className="flex-1 flex items-center gap-3 text-left min-w-0">
+    <div className={`w-full flex items-center gap-2 p-2 rounded-xl border border-gray-100 transition ${isSold ? "opacity-60" : "hover:bg-gray-50"}`}>
+      <button type="button" onClick={onOpen} disabled={isSold} className={`flex-1 flex items-center gap-3 text-left min-w-0 ${isSold ? "cursor-not-allowed" : ""}`}>
         {item.imageUrl ? (
           <img src={item.imageUrl} alt="" className="w-12 h-12 rounded-lg object-cover flex-shrink-0" />
         ) : (
@@ -345,14 +356,24 @@ function EligibleItemRow({
         <div className="flex-1 min-w-0">
           <div className="text-sm font-semibold text-gray-900 truncate">{item.name}</div>
           <div className="text-xs text-gray-500">{formatCurrency(item.price)}</div>
+          {/* Per-dish availability window ("Available lun, mer, ven · 10:00 –
+              20:00") — pre-translated by the page; blue like the menu card's
+              window note so customers know BEFORE adding. */}
+          {item.availabilityNote && (
+            <div className="text-[11px] font-medium text-indigo-600 leading-tight mt-0.5">{item.availabilityNote}</div>
+          )}
         </div>
       </button>
-      {badge ? (
+      {isSold ? (
+        <span className="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-gray-200 text-gray-700">
+          {soldOutLabel ?? "Sold out"}
+        </span>
+      ) : badge ? (
         <span className="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0" style={{ backgroundColor: `${primaryColor}22`, color: primaryColor }}>
           {badge}
         </span>
       ) : null}
-      {showStepper ? (
+      {isSold ? null : showStepper ? (
         <div
           className="flex items-center gap-1 flex-shrink-0 rounded-lg px-1 py-0.5"
           style={{ backgroundColor: `${primaryColor}12` }}
@@ -969,6 +990,9 @@ function PromoBody({
   );
 
   const catNameOf = (id?: string) => (id ? categoryNames?.find((c) => c.id === id)?.name ?? null : null);
+  // "Sold out" lives in the ordering namespace (same key the menu card +
+  // bundle composer use — no new strings).
+  const tOrdering = useTranslations("ordering");
   const renderGroupItems = (group: RuleConfigGroup, badge?: string | null) => {
     const items = collectGroupItems(group, allMenuItems);
     if (items.length === 0) {
@@ -1000,13 +1024,14 @@ function PromoBody({
                   primaryColor={primaryColor}
                   badge={badge ?? null}
                   onOpen={() => onScrollToItem(item.id)}
-                  onAdd={onAddItem && !item.requiresChoice ? () => onAddItem(item.id) : undefined}
-                  onRemove={onRemoveItem && !item.requiresChoice ? () => onRemoveItem(item.id) : undefined}
+                  onAdd={onAddItem && !item.requiresChoice && !item.isSoldOut ? () => onAddItem(item.id) : undefined}
+                  onRemove={onRemoveItem && !item.requiresChoice && !item.isSoldOut ? () => onRemoveItem(item.id) : undefined}
                   qty={item.requiresChoice ? 0 : cartQuantities?.[item.id] ?? 0}
                   addLabel={t("addOne")}
                   customizeLabel={t("customize")}
                   increaseLabel={t("increaseQty", { name: item.name })}
                   decreaseLabel={t("decreaseQty", { name: item.name })}
+                  soldOutLabel={tOrdering("soldOut")}
                 />
               ))}
             </div>
