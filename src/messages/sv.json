@@ -4747,7 +4747,8 @@
       "callUs": "Frågor eller behöver du hjälp? Ring {restaurantName}: {phone}",
       "trackingCta": "Visa beställningsstatus",
       "missedTitle": "Beställningen accepterades inte i tid",
-      "missedBody": "Tyvärr kunde restaurangen inte acceptera din beställning i tid, så den gick inte igenom. Om du betalade online släpps eventuell auktorisering automatiskt — du debiteras inte."
+      "missedBody": "Tyvärr kunde restaurangen inte acceptera din beställning i tid, så den gick inte igenom. Om du betalade online släpps eventuell auktorisering automatiskt — du debiteras inte.",
+      "creditReturned": "Beloppet {amount} som du betalade med {label} har återförts till din plånbok."
     },
     "orderRejected": {
       "subject": "Beställning #{orderNumber} avvisad",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} har utfärdat en återbetalning för din beställning. Beloppet nedan har återförts till din ursprungliga betalningsmetod.",
       "amountLabel": "Återbetalat belopp",
       "timing": "Det kan ta 5–10 bankdagar innan det syns på ditt kontoutdrag.",
-      "contactLine": "Om du har några frågor är det bara att svara på detta mejl."
+      "contactLine": "Om du har några frågor är det bara att svara på detta mejl.",
+      "creditReturned": "Beloppet {amount} som du betalade med {label} har också återförts till din plånbok."
     },
     "couponAssigned": {
       "subject": "Du har fått en kupong från {restaurantName} – {discountLabel}",

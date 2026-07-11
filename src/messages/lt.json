@@ -4747,7 +4747,8 @@
       "callUs": "Turite klausimų ar reikia pagalbos? Skambinkite į {restaurantName}: {phone}",
       "trackingCta": "Peržiūrėti užsakymo būseną",
       "missedTitle": "Užsakymas nebuvo priimtas laiku",
-      "missedBody": "Deja, restoranas nespėjo laiku priimti jūsų užsakymo, todėl jis neįvyko. Jei mokėjote internetu, bet kokia autorizacija atlaisvinama automatiškai — pinigai nebus nuskaityti."
+      "missedBody": "Deja, restoranas nespėjo laiku priimti jūsų užsakymo, todėl jis neįvyko. Jei mokėjote internetu, bet kokia autorizacija atlaisvinama automatiškai — pinigai nebus nuskaityti.",
+      "creditReturned": "{amount} suma, sumokėta naudojant {label}, grąžinta į jūsų piniginę."
     },
     "orderRejected": {
       "subject": "Užsakymas #{orderNumber} atmestas",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} grąžino pinigus už jūsų užsakymą. Toliau nurodyta suma buvo grąžinta į pradinį jūsų apmokėjimo būdą.",
       "amountLabel": "Grąžinama suma",
       "timing": "Suma jūsų sąskaitos išraše gali atsirasti per 5–10 darbo dienų.",
-      "contactLine": "Jei turite klausimų, tiesiog atsakykite į šį el. laišką."
+      "contactLine": "Jei turite klausimų, tiesiog atsakykite į šį el. laišką.",
+      "creditReturned": "{amount} suma, sumokėta naudojant {label}, taip pat grąžinta į jūsų piniginę."
     },
     "couponAssigned": {
       "subject": "Gavote kuponą iš {restaurantName} — {discountLabel}",

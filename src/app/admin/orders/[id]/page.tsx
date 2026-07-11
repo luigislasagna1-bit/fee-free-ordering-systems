@@ -90,6 +90,19 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
     : null;
   const discount = (order.couponDiscount ?? 0) + (order.promoDiscount ?? 0);
   const isDelivery = order.type === "delivery";
+  // Named service/other fees frozen at order time (JSON string [{name,amount}]).
+  // Defensive parse mirrors asArray() in src/lib/money-breakdown.ts — tolerate
+  // an already-parsed array, a JSON string, or garbage. Only nonzero fees render.
+  const serviceFees = (() => {
+    let fees: Array<{ name?: string; amount?: number }> = [];
+    const sf: unknown = (order as any).appliedServiceFees;
+    if (Array.isArray(sf)) fees = sf as any;
+    else if (typeof sf === "string" && sf.trim()) {
+      try { const p = JSON.parse(sf); fees = Array.isArray(p) ? p : []; } catch { fees = []; }
+    }
+    return fees.filter((f) => f && Number(f.amount ?? 0) !== 0);
+  })();
+  const refunded = order.refundedAmount ?? 0;
 
   return (
     <div className="max-w-3xl mx-auto p-4 sm:p-6">
@@ -187,6 +200,9 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
             <div className="flex justify-between text-gray-600"><span>{tc("subtotal")}</span><span>{money(order.subtotal)}</span></div>
             {discount > 0 && <div className="flex justify-between text-emerald-700"><span>{tk("discount")}</span><span>− {money(discount)}</span></div>}
             {order.deliveryFee > 0 && <div className="flex justify-between text-gray-600"><span>{tk("delivery")}</span><span>{money(order.deliveryFee)}</span></div>}
+            {serviceFees.map((f, i) => (
+              <div key={i} className="flex justify-between text-gray-600"><span>{f.name}</span><span>{money(Number(f.amount))}</span></div>
+            ))}
             {order.taxAmount > 0 && <div className="flex justify-between text-gray-600"><span>{tk("tax")}</span><span>{money(order.taxAmount)}</span></div>}
             {order.tip > 0 && <div className="flex justify-between text-gray-600"><span>{tk("tip")}</span><span>{money(order.tip)}</span></div>}
             {(() => {
@@ -202,6 +218,24 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
             )}
             {rewardEarned > 0 && (
               <div className="flex justify-between text-emerald-600"><span>{tRoot("receipt.customer.earnedReward", { label: rewardLabel })}</span><span>+ {money(rewardEarned)}</span></div>
+            )}
+            {/* Money already sent back to the customer — mirrors the kitchen
+                OrderDetail "Refunded so far" line + refund-status badge, so a
+                partially refunded order doesn't read as fully collected. */}
+            {refunded > 0 && (
+              <div className="flex justify-between text-blue-700">
+                <span>
+                  {tRoot("money.refundedSoFar")}
+                  {order.refundStatus && (
+                    <span className={`ml-2 align-middle text-[10px] px-1.5 py-0.5 rounded-full font-semibold uppercase tracking-wider ${
+                      order.refundStatus === "refunded" || order.refundStatus === "partial" ? "bg-blue-100 text-blue-700" :
+                      order.refundStatus === "pending" ? "bg-yellow-100 text-yellow-700" :
+                      "bg-red-100 text-red-700"
+                    }`}>{order.refundStatus}</span>
+                  )}
+                </span>
+                <span>− {money(refunded)}</span>
+              </div>
             )}
           </div>
         </div>

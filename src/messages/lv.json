@@ -4747,7 +4747,8 @@
       "callUs": "Jautājumi vai nepieciešama palīdzība? Zvaniet {restaurantName}: {phone}",
       "trackingCta": "Skatīt pasūtījuma statusu",
       "missedTitle": "Pasūtījums netika pieņemts laikā",
-      "missedBody": "Diemžēl restorāns nepaspēja laikā pieņemt jūsu pasūtījumu, tāpēc tas netika izpildīts. Ja maksājāt tiešsaistē, jebkura autorizācija tiek automātiski atbrīvota — nauda netiks ieturēta."
+      "missedBody": "Diemžēl restorāns nepaspēja laikā pieņemt jūsu pasūtījumu, tāpēc tas netika izpildīts. Ja maksājāt tiešsaistē, jebkura autorizācija tiek automātiski atbrīvota — nauda netiks ieturēta.",
+      "creditReturned": "Summa {amount}, ko samaksājāt ar {label}, ir atgriezta jūsu makā."
     },
     "orderRejected": {
       "subject": "Pasūtījums #{orderNumber} noraidīts",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} ir veicis atmaksu par jūsu pasūtījumu. Zemāk norādītā summa ir atgriezta jūsu sākotnējā maksājuma metodē.",
       "amountLabel": "Atmaksas summa",
       "timing": "Lai summa parādītos jūsu konta pārskatā, var paiet 5–10 darba dienas.",
-      "contactLine": "Ja jums ir kādi jautājumi, vienkārši atbildiet uz šo e-pastu."
+      "contactLine": "Ja jums ir kādi jautājumi, vienkārši atbildiet uz šo e-pastu.",
+      "creditReturned": "Arī summa {amount}, ko samaksājāt ar {label}, ir atgriezta jūsu makā."
     },
     "couponAssigned": {
       "subject": "Jūs saņēmāt kuponu no {restaurantName} — {discountLabel}",

@@ -4747,7 +4747,8 @@
       "callUs": "有疑问或需要帮助？请致电 {restaurantName}：{phone}",
       "trackingCta": "查看订单状态",
       "missedTitle": "订单未能及时被接受",
-      "missedBody": "很抱歉，餐厅未能及时接受您的订单，因此订单未成立。如您已在线支付，任何预授权都会自动解除——不会向您收费。"
+      "missedBody": "很抱歉，餐厅未能及时接受您的订单，因此订单未成立。如您已在线支付，任何预授权都会自动解除——不会向您收费。",
+      "creditReturned": "您使用{label}支付的 {amount} 已退回您的钱包。"
     },
     "orderRejected": {
       "subject": "订单 #{orderNumber} 已拒绝",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} 已就您的订单发起退款。以下金额已退回至您的原支付方式。",
       "amountLabel": "退款金额",
       "timing": "退款可能需要 5–10 个工作日才会显示在您的对账单上。",
-      "contactLine": "如有任何疑问，请直接回复本邮件。"
+      "contactLine": "如有任何疑问，请直接回复本邮件。",
+      "creditReturned": "您使用{label}支付的 {amount} 也已退回您的钱包。"
     },
     "couponAssigned": {
       "subject": "您收到了来自{restaurantName}的优惠券 — {discountLabel}",

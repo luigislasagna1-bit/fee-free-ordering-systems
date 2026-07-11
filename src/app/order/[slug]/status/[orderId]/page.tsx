@@ -297,6 +297,19 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
   }
   const freeDelivery = appliedPromos.find((p) => p.type === "free_delivery");
   const savedDeliveryFee = freeDelivery ? freeDelivery.discount : 0;
+  // Service/other fees frozen at order time — one row per fee, by its dynamic
+  // name (canonical position: after Delivery, before Tax — matches the
+  // confirmation page + money-breakdown.ts). Defensive parse: malformed JSON
+  // just skips the section (same as asArray in src/lib/money-breakdown.ts).
+  let serviceFees: Array<{ name?: string; amount?: number }> = [];
+  if (Array.isArray(order.appliedServiceFees)) {
+    serviceFees = order.appliedServiceFees;
+  } else if (typeof order.appliedServiceFees === "string" && order.appliedServiceFees.trim()) {
+    try {
+      const f = JSON.parse(order.appliedServiceFees);
+      if (Array.isArray(f)) serviceFees = f;
+    } catch { /* ignore */ }
+  }
   const cartDiscountTotal = appliedPromos
     .filter((p) => p.type !== "free_delivery")
     .reduce((s, p) => s + (p.discount || 0), 0)
@@ -684,6 +697,11 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
                     )}
                   </span>
                 </div>
+              )}
+              {serviceFees.map((f, i) =>
+                f && Number(f.amount ?? 0) !== 0 ? (
+                  <div key={i} className="flex justify-between text-gray-600"><span>{f.name ?? ""}</span><span>{formatCurrency(Number(f.amount))}</span></div>
+                ) : null,
               )}
               {order.taxAmount > 0 && (
                 <div className="flex justify-between text-gray-600"><span>{t("tax")}</span><span>{formatCurrency(order.taxAmount)}</span></div>

@@ -295,6 +295,8 @@ interface OrderEmailParams {
   /** Sum of per-item refundable deposits (untaxed; already inside total). */
   depositTotal?: number;
   discount?: number;
+  /** Per-order service/other fees (parsed [{name, amount}]) — named rows. */
+  serviceFees?: Array<{ name?: string; amount?: number }>;
   paidOnline?: boolean;
   deliveryAddress?: string | null;
   restaurantUrl?: string;
@@ -450,6 +452,7 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       tip: params.tip,
       depositTotal: params.depositTotal,
       discount: params.discount,
+      serviceFees: params.serviceFees,
       total: params.total,
       deliveryAddress: params.deliveryAddress,
       trackingUrl: params.trackingUrl,
@@ -515,6 +518,8 @@ export async function sendNewOrderNotificationEmail(params: {
   /** Sum of per-item refundable deposits (untaxed; already inside total). */
   depositTotal?: number;
   discount?: number;
+  /** Per-order service/other fees (parsed [{name, amount}]) — named rows. */
+  serviceFees?: Array<{ name?: string; amount?: number }>;
   deliveryAddress?: string | null;
   customerNotes?: string | null;
   /** Reserve-then-order: the table booking attached to this order, so the
@@ -558,6 +563,7 @@ export async function sendNewOrderNotificationEmail(params: {
       tip: params.tip,
       depositTotal: params.depositTotal,
       discount: params.discount,
+      serviceFees: params.serviceFees,
       total: params.total,
       deliveryAddress: params.deliveryAddress,
       customerNotes: params.customerNotes,
@@ -669,6 +675,10 @@ export async function sendOrderStatusUpdateEmail(params: {
    *  updated yet. */
   paidOnline?: boolean;
   paymentMethod?: string;
+  /** PRE-FORMATTED store-credit amount returned to the wallet on a
+   *  rejected/cancelled order (caller formats + gates on rewardsEnabled). */
+  creditReturned?: string;
+  rewardLabel?: string | null;
   /** Restaurant contact info — surfaced in the email footer. Missing
    *  these used to mean the customer got an accepted/rejected email
    *  with no way to call the restaurant. Luigi 2026-05-31. */
@@ -723,6 +733,8 @@ export async function sendOrderStatusUpdateEmail(params: {
       trackingUrl: params.trackingUrl ?? "#",
       paidOnline: params.paidOnline,
       paymentMethod: params.paymentMethod,
+      creditReturned: params.creditReturned,
+      rewardLabel: params.rewardLabel,
       restaurantPhone: params.restaurantPhone ?? undefined,
       restaurantEmail: params.restaurantEmail ?? undefined,
       restaurantUrl: params.restaurantUrl ?? undefined,
@@ -860,6 +872,12 @@ export async function sendOrderRefundEmail(params: {
   /** Pre-formatted in the restaurant's currency, e.g. "$30.00". */
   refundAmountLabel: string;
   isFull: boolean;
+  /** Pre-formatted store credit returned to the wallet on a FULL refund of a
+   *  credit-part-paid order ("$10.00") — without it the email claims "Full
+   *  refund — $20.00" and never mentions the bucks (audit 2026-07-11).
+   *  Caller gates on rewardsEnabled. */
+  creditReturnedLabel?: string;
+  rewardLabel?: string | null;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
@@ -871,6 +889,8 @@ export async function sendOrderRefundEmail(params: {
       restaurantName: params.restaurantName,
       refundAmountLabel: params.refundAmountLabel,
       isFull: params.isFull,
+      creditReturnedLabel: params.creditReturnedLabel,
+      rewardLabel: params.rewardLabel,
       imprint: currentImprint(),
     })
   );
@@ -1381,6 +1401,12 @@ async function sendDigestEmail(
       breakdown: {
         subTotals: stats.subTotals, deliveryFees: stats.deliveryFees, tips: stats.tips,
         otherFees: stats.otherFees, tax: stats.taxAmount, total: stats.total,
+        // Discounts + store-credit reconciliation rows — were silently dropped
+        // here, so the emailed breakdown didn't reconcile and the owner never
+        // saw credit-vs-collected in the digest (audit 2026-07-11).
+        discounts: stats.discounts,
+        storeCreditRedeemed: stats.storeCreditRedeemed,
+        collected: stats.collected,
       },
       pickup:    { count: stats.pickupOrders,   value: money(stats.pickupSales) },
       delivery:  { count: stats.deliveryOrders, value: money(stats.deliverySales) },

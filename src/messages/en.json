@@ -4754,7 +4754,8 @@
       "callUs": "Questions or need help? Call {restaurantName}: {phone}",
       "trackingCta": "View order status",
       "missedTitle": "Order not accepted in time",
-      "missedBody": "Unfortunately the restaurant wasn't able to accept your order in time, so it didn't go through. If you paid online, any authorization is released automatically — you won't be charged."
+      "missedBody": "Unfortunately the restaurant wasn't able to accept your order in time, so it didn't go through. If you paid online, any authorization is released automatically — you won't be charged.",
+      "creditReturned": "The {amount} you paid with {label} has been returned to your wallet."
     },
     "orderRejected": {
       "subject": "Order #{orderNumber} rejected",
@@ -4926,7 +4927,8 @@
       "body": "{restaurantName} has issued a refund on your order. The amount below has been returned to your original payment method.",
       "amountLabel": "Refund amount",
       "timing": "It may take 5–10 business days to appear on your statement.",
-      "contactLine": "If you have any questions, just reply to this email."
+      "contactLine": "If you have any questions, just reply to this email.",
+      "creditReturned": "The {amount} you paid with {label} has also been returned to your wallet."
     },
     "couponAssigned": {
       "subject": "You've received a coupon from {restaurantName} — {discountLabel}",

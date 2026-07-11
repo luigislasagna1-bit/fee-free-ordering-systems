@@ -251,6 +251,18 @@ export default async function ConfirmationPage({
               .reduce((s, p) => s + (p.discount || 0), 0)
               + ((order as any).couponDiscount ?? 0);
             const isDelivery = (order as any).type === "delivery";
+            // Service/other fees frozen at order time — one row per fee, by its
+            // dynamic name (canonical position: after Delivery, before Tax —
+            // matches money-breakdown.ts + CheckoutModal). Defensive parse:
+            // malformed JSON just skips the section (same as asArray in
+            // src/lib/money-breakdown.ts).
+            const feesRaw = (order as any).appliedServiceFees;
+            let serviceFees: Array<{ name?: string; amount?: number }> = [];
+            if (Array.isArray(feesRaw)) {
+              serviceFees = feesRaw;
+            } else if (typeof feesRaw === "string" && feesRaw.trim()) {
+              try { const f = JSON.parse(feesRaw); if (Array.isArray(f)) serviceFees = f; } catch { /* ignore */ }
+            }
             // Refundable-deposit portions — charged, not taxed; shown as their
             // own line (already folded into order.total). Luigi 2026-07-08.
             const depositLinesTotal = order.items.reduce(
@@ -282,6 +294,11 @@ export default async function ConfirmationPage({
                       )}
                     </span>
                   </div>
+                )}
+                {serviceFees.map((f, i) =>
+                  f && Number(f.amount ?? 0) !== 0 ? (
+                    <div key={i} className="flex justify-between text-gray-600"><span>{f.name ?? ""}</span><span>{formatCurrency(Number(f.amount))}</span></div>
+                  ) : null,
                 )}
                 {order.taxAmount > 0 && <div className="flex justify-between text-gray-600"><span>{t("tax")}</span><span>{formatCurrency(order.taxAmount)}</span></div>}
                 {order.tip > 0 && <div className="flex justify-between text-gray-600"><span>{tStatus("tip")}</span><span>{formatCurrency(order.tip)}</span></div>}

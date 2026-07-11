@@ -52,6 +52,10 @@ const PUBLIC_ORDER_SELECT = {
   // revisits the order from /account.
   appliedPromos: true,
   couponDiscount: true, promoDiscount: true,
+  // Service/other fees frozen at order time (JSON [{ name, amount }]) — the
+  // status page renders one row per fee between Delivery and Tax, mirroring
+  // the confirmation page + the canonical money-breakdown order.
+  appliedServiceFees: true,
   // Marketplace attribution — used by the status page so the "← Back"
   // link sends customers back to the marketplace grid (where they came
   // from) instead of the standalone restaurant menu.
@@ -779,6 +783,21 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
               order.paymentMethod === "card" || order.paymentMethod === "paypal"
                 ? ["authorized", "paid", "refunded"].includes(order.paymentStatus ?? "")
                 : false,
+            // Rejected/cancelled + store credit spent → the email must say the
+            // wallet got it back (the reject path released it via
+            // releaseRewardForOrder). Feature-gated; the template only renders
+            // this on negative statuses. Audit 2026-07-11.
+            ...(["rejected", "cancelled", "canceled"].includes(newStatus) &&
+            (order.restaurant as any).rewardsEnabled === true &&
+            (order.creditApplied ?? 0) > 0
+              ? {
+                  creditApplied: order.creditApplied,
+                  rewardLabel:
+                    (order.restaurant as any).rewardLabelPlural?.trim() ||
+                    (order.restaurant as any).rewardLabelSingular?.trim() ||
+                    null,
+                }
+              : {}),
           },
         });
       } catch (e) {

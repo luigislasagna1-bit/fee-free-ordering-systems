@@ -4747,7 +4747,8 @@
       "callUs": "Spørgsmål eller brug for hjælp? Ring til {restaurantName}: {phone}",
       "trackingCta": "Se ordrestatus",
       "missedTitle": "Ordren blev ikke accepteret i tide",
-      "missedBody": "Desværre kunne restauranten ikke acceptere din ordre i tide, så den gik ikke igennem. Hvis du betalte online, frigives enhver godkendelse automatisk — du bliver ikke opkrævet."
+      "missedBody": "Desværre kunne restauranten ikke acceptere din ordre i tide, så den gik ikke igennem. Hvis du betalte online, frigives enhver godkendelse automatisk — du bliver ikke opkrævet.",
+      "creditReturned": "Beløbet {amount}, som du betalte med {label}, er ført tilbage til din saldo."
     },
     "orderRejected": {
       "subject": "Ordre #{orderNumber} afvist",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} har gennemført en refusion på din ordre. Beløbet nedenfor er blevet tilbageført til din oprindelige betalingsmetode.",
       "amountLabel": "Refusionsbeløb",
       "timing": "Der kan gå 5-10 hverdage, før det fremgår af din kontoudskrift.",
-      "contactLine": "Hvis du har spørgsmål, kan du blot svare på denne e-mail."
+      "contactLine": "Hvis du har spørgsmål, kan du blot svare på denne e-mail.",
+      "creditReturned": "Beløbet {amount}, som du betalte med {label}, er også ført tilbage til din saldo."
     },
     "couponAssigned": {
       "subject": "Du har fået en rabatkupon fra {restaurantName} – {discountLabel}",

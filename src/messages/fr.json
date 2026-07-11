@@ -4747,7 +4747,8 @@
       "callUs": "Des questions ou besoin d'aide ? Appelez {restaurantName} : {phone}",
       "trackingCta": "Voir le statut de la commande",
       "missedTitle": "Commande non acceptée à temps",
-      "missedBody": "Malheureusement, le restaurant n'a pas pu accepter votre commande à temps ; elle n'a donc pas été prise en compte. Si vous avez payé en ligne, toute autorisation est libérée automatiquement — vous ne serez pas débité."
+      "missedBody": "Malheureusement, le restaurant n'a pas pu accepter votre commande à temps ; elle n'a donc pas été prise en compte. Si vous avez payé en ligne, toute autorisation est libérée automatiquement — vous ne serez pas débité.",
+      "creditReturned": "Le montant de {amount} payé avec {label} a été recrédité sur votre cagnotte."
     },
     "orderRejected": {
       "subject": "Commande #{orderNumber} refusée",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} a effectué un remboursement sur votre commande. Le montant ci-dessous a été reversé sur votre moyen de paiement d'origine.",
       "amountLabel": "Montant remboursé",
       "timing": "L'opération peut prendre 5 à 10 jours ouvrés avant d'apparaître sur votre relevé.",
-      "contactLine": "Si vous avez des questions, il vous suffit de répondre à cet e-mail."
+      "contactLine": "Si vous avez des questions, il vous suffit de répondre à cet e-mail.",
+      "creditReturned": "Le montant de {amount} payé avec {label} a également été recrédité sur votre cagnotte."
     },
     "couponAssigned": {
       "subject": "Vous avez reçu un coupon de {restaurantName} — {discountLabel}",

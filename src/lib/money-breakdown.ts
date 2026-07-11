@@ -9,7 +9,7 @@
  *
  * Canonical order: line items → Subtotal → each discount (by promo NAME+code,
  * or a generic fallback) → Delivery fee (struck "FREE" when a free-delivery
- * promo fired) → service/other fees → Tax → Tip → TOTAL → reward/store-credit
+ * promo fired) → service/other fees → Tax → Tip → Refundable deposit → TOTAL → reward/store-credit
  * USED ("Paid with {label}") → AMOUNT TO PAY / COLLECTED (Total − credit) →
  * payment method → reward EARNED (+). Zero-value lines are skipped.
  *
@@ -31,6 +31,7 @@ export type MoneyRowKind =
   | "SERVICE_FEE"
   | "TAX"
   | "TIP"
+  | "DEPOSIT"
   | "TOTAL"
   | "REWARD_USED"
   | "AMOUNT_TO_PAY"
@@ -70,6 +71,10 @@ export interface MoneyBreakdownInput {
   appliedServiceFees?: Array<{ name?: string; amount?: number }> | string | null;
   taxAmount: number;
   tip?: number;
+  /** Sum of per-item refundable deposits (inside total, NOT in subtotal/tax —
+   *  see orders route: total = taxBase + tax + tip + deposits). Callers with
+   *  items compute: Σ item.isRefundableDeposit ? depositAmount × quantity : 0. */
+  depositTotal?: number;
   total: number;
   orderType?: string | null;
   // Reward / store credit
@@ -176,6 +181,7 @@ export function buildMoneyBreakdown(input: MoneyBreakdownInput): MoneyBreakdown 
 
   if (round2(input.taxAmount ?? 0) > 0) rows.push({ kind: "TAX", labelKey: "receipt.customer.tax", amount: round2(input.taxAmount), sign: "plain" });
   if (round2(input.tip ?? 0) > 0) rows.push({ kind: "TIP", labelKey: "receipt.customer.tip", amount: round2(input.tip!), sign: "plain" });
+  if (round2(input.depositTotal ?? 0) > 0) rows.push({ kind: "DEPOSIT", labelKey: "ordering.refundableDepositNotTaxed", amount: round2(input.depositTotal!), sign: "plain" });
 
   rows.push({ kind: "TOTAL", labelKey: "receipt.customer.total", amount: round2(input.total), sign: "plain", emphasis: true });
 

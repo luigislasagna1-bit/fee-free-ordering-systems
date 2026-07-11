@@ -185,6 +185,22 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
     ? ((order.restaurant as any).rewardLabelPlural?.trim() || (order.restaurant as any).rewardLabelSingular?.trim() || null)
     : null;
 
+  // Per-order service fees (JSON [{name, amount}]) — parsed once, named rows
+  // on BOTH order emails so the totals reconcile to Total (audit 2026-07-11).
+  const serviceFeesForEmail: Array<{ name?: string; amount?: number }> = (() => {
+    const raw: unknown = (order as any).appliedServiceFees;
+    if (Array.isArray(raw)) return raw as any[];
+    if (typeof raw === "string" && raw.trim()) {
+      try {
+        const p = JSON.parse(raw);
+        return Array.isArray(p) ? p : [];
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  })();
+
   // Customer confirmation email — fire-and-forget so a Resend hiccup
   // doesn't fail the webhook (Stripe would retry the whole event).
   notifyCustomer({
@@ -208,10 +224,15 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       tip: order.tip ?? undefined,
       depositTotal: depositTotal > 0 ? depositTotal : undefined,
       discount: (order.couponDiscount ?? 0) + (order.promoDiscount ?? 0),
+      serviceFees: serviceFeesForEmail,
       creditApplied: creditApplied > 0 ? creditApplied : undefined,
       rewardLabel,
       paymentMethod: order.paymentMethod,
       paidStatus: order.paymentStatus,
+      // Same rule as the staff email below: card/PayPal are captured online,
+      // reward_credit means the wallet fully covered it — nothing to collect.
+      // Never passed before 2026-07-11 → every receipt email said "Pay at store".
+      paidOnline: ["card", "paypal", "reward_credit"].includes(order.paymentMethod),
       orderType: order.type,
       estimatedTime: order.type === "pickup"
         ? order.restaurant.estimatedPickup
@@ -253,6 +274,7 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       tip: order.tip,
       depositTotal: depositTotal > 0 ? depositTotal : undefined,
       discount: (order.couponDiscount ?? 0) + (order.promoDiscount ?? 0),
+      serviceFees: serviceFeesForEmail,
       // "Paid with {label}" + "To collect" rows — staff must never read the
       // Total and over-collect a credit-part-paid order (Luigi 2026-07-02).
       creditApplied: creditApplied > 0 ? creditApplied : undefined,

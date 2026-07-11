@@ -4747,7 +4747,8 @@
       "callUs": "Kérdése van vagy segítségre szorul? Hívja a(z) {restaurantName} éttermet: {phone}",
       "trackingCta": "Rendelés állapotának megtekintése",
       "missedTitle": "A rendelést nem fogadták el időben",
-      "missedBody": "Sajnos az étterem nem tudta időben elfogadni a rendelését, így az nem valósult meg. Ha online fizetett, az esetleges zárolás automatikusan feloldódik — nem terheljük meg."
+      "missedBody": "Sajnos az étterem nem tudta időben elfogadni a rendelését, így az nem valósult meg. Ha online fizetett, az esetleges zárolás automatikusan feloldódik — nem terheljük meg.",
+      "creditReturned": "A {label} egyenlegből fizetett {amount} összeg visszakerült a tárcájába."
     },
     "orderRejected": {
       "subject": "#{orderNumber}. rendelés visszautasítva",
@@ -4919,7 +4920,8 @@
       "body": "A(z) {restaurantName} visszatérítést indított a rendelésedhez. Az alább látható összeget visszautaltuk az eredeti fizetési módodra.",
       "amountLabel": "Visszatérített összeg",
       "timing": "5–10 munkanapba telhet, mire megjelenik a számlakivonatodon.",
-      "contactLine": "Ha bármilyen kérdésed van, csak válaszolj erre az e-mailre."
+      "contactLine": "Ha bármilyen kérdésed van, csak válaszolj erre az e-mailre.",
+      "creditReturned": "A {label} egyenlegből fizetett {amount} összeg szintén visszakerült a tárcájába."
     },
     "couponAssigned": {
       "subject": "Kupont kapott a(z) {restaurantName} étteremtől — {discountLabel}",

@@ -4747,7 +4747,8 @@
       "callUs": "Kysyttävää tai tarvitsetko apua? Soita {restaurantName}: {phone}",
       "trackingCta": "Näytä tilauksen tila",
       "missedTitle": "Tilausta ei hyväksytty ajoissa",
-      "missedBody": "Valitettavasti ravintola ei ehtinyt hyväksyä tilaustasi ajoissa, joten se ei mennyt läpi. Jos maksoit verkossa, mahdollinen varaus vapautetaan automaattisesti — sinulta ei veloiteta mitään."
+      "missedBody": "Valitettavasti ravintola ei ehtinyt hyväksyä tilaustasi ajoissa, joten se ei mennyt läpi. Jos maksoit verkossa, mahdollinen varaus vapautetaan automaattisesti — sinulta ei veloiteta mitään.",
+      "creditReturned": "Summa {amount}, jonka maksoit {label}-saldolla, on palautettu lompakkoosi."
     },
     "orderRejected": {
       "subject": "Tilaus #{orderNumber} hylätty",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} on tehnyt hyvityksen tilauksestasi. Alla oleva summa on palautettu alkuperäiseen maksutapaasi.",
       "amountLabel": "Hyvityksen summa",
       "timing": "Summa voi näkyä tiliotteellasi 5–10 arkipäivän kuluessa.",
-      "contactLine": "Jos sinulla on kysyttävää, vastaa vain tähän sähköpostiin."
+      "contactLine": "Jos sinulla on kysyttävää, vastaa vain tähän sähköpostiin.",
+      "creditReturned": "Myös summa {amount}, jonka maksoit {label}-saldolla, on palautettu lompakkoosi."
     },
     "couponAssigned": {
       "subject": "Olet saanut kupongin ravintolalta {restaurantName} — {discountLabel}",

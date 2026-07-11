@@ -35,6 +35,15 @@ export type OrderStatusUpdateProps = {
    *  and clear. Luigi 2026-05-31. */
   paidOnline?: boolean;
   paymentMethod?: string;
+  /** PRE-FORMATTED store-credit amount (e.g. "$5.00") returned to the wallet
+   *  when this order was rejected/cancelled. The reject/refund paths release
+   *  the spent credit (releaseRewardForOrder), but the email used to stay
+   *  silent — a fully-bucks-paid customer even read "nothing to refund"
+   *  while their wallet had been debited (audit 2026-07-11). Only pass when
+   *  the restaurant's rewards feature is ON and credit was actually used. */
+  creditReturned?: string;
+  /** Restaurant's reward label ("Pizza Bucks") — required with creditReturned. */
+  rewardLabel?: string | null;
   trackingUrl: string;
   restaurantUrl?: string;
   restaurantEmail?: string;
@@ -93,7 +102,7 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
   const {
     t,
     customerName, orderNumber, restaurantName, status, statusMessage, rejectionReason,
-    paidOnline, paymentMethod,
+    paidOnline, paymentMethod, creditReturned, rewardLabel,
     trackingUrl, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
   } = props;
   const normalized = status.toLowerCase();
@@ -126,7 +135,11 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
   const isCardPay = paymentMethod === "card" || paymentMethod === "online_card";
   const isPaypal = paymentMethod === "paypal";
   const isCashIsh = paymentMethod === "cash" || paymentMethod === "card_in_person";
-  const refundCopy = isNegative
+  // Fully store-credit-paid: the wallet WAS debited, so the method-based copy
+  // must not run — "no payment was taken, nothing to refund" was a lie for
+  // these orders. The credit-returned card below tells the real story.
+  const isFullyCredit = paymentMethod === "reward_credit";
+  const refundCopy = isNegative && !isFullyCredit
     ? isCashIsh || paidOnline === false
       ? t("email.orderStatus.refundCash")
       : isCardPay
@@ -136,6 +149,12 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
           : paidOnline === true
             ? t("email.orderStatus.refundGeneric")
             : null
+    : null;
+  // Store-credit part (or all) of the payment — returned to the wallet on
+  // rejection/cancellation. Rides ALONGSIDE the method copy for part-paid
+  // orders (card/cash portion refunds per method; bucks go back to wallet).
+  const creditCopy = isNegative && creditReturned
+    ? t("email.orderStatus.creditReturned", { label: rewardLabel || "", amount: creditReturned })
     : null;
 
   return (
@@ -160,6 +179,11 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
         {refundCopy && (
           <InfoCard label={t("email.orderStatus.paymentLabel")} accent="amber">
             {refundCopy}
+          </InfoCard>
+        )}
+        {creditCopy && (
+          <InfoCard label={t("email.orderStatus.paymentLabel")} accent="emerald">
+            {creditCopy}
           </InfoCard>
         )}
         {isNegative && restaurantPhone && (

@@ -4747,7 +4747,8 @@
       "callUs": "Sorunuz veya yardıma ihtiyacınız mı var? {restaurantName} restoranını arayın: {phone}",
       "trackingCta": "Sipariş durumunu görüntüle",
       "missedTitle": "Sipariş zamanında kabul edilmedi",
-      "missedBody": "Maalesef restoran siparişinizi zamanında kabul edemedi, bu yüzden sipariş gerçekleşmedi. Çevrimiçi ödediyseniz, tüm ön provizyonlar otomatik olarak serbest bırakılır — sizden ücret alınmaz."
+      "missedBody": "Maalesef restoran siparişinizi zamanında kabul edemedi, bu yüzden sipariş gerçekleşmedi. Çevrimiçi ödediyseniz, tüm ön provizyonlar otomatik olarak serbest bırakılır — sizden ücret alınmaz.",
+      "creditReturned": "{label} ile ödediğiniz {amount} tutarı cüzdanınıza iade edildi."
     },
     "orderRejected": {
       "subject": "#{orderNumber} numaralı sipariş reddedildi",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} siparişiniz için bir iade gerçekleştirdi. Aşağıdaki tutar, ödeme yaptığınız orijinal yönteme geri aktarıldı.",
       "amountLabel": "İade tutarı",
       "timing": "Tutarın hesap ekstrenizde görünmesi 5–10 iş günü sürebilir.",
-      "contactLine": "Herhangi bir sorunuz varsa, bu e-postayı yanıtlamanız yeterlidir."
+      "contactLine": "Herhangi bir sorunuz varsa, bu e-postayı yanıtlamanız yeterlidir.",
+      "creditReturned": "{label} ile ödediğiniz {amount} tutarı da cüzdanınıza iade edildi."
     },
     "couponAssigned": {
       "subject": "{restaurantName} size bir kupon gönderdi — {discountLabel}",

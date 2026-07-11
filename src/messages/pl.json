@@ -4747,7 +4747,8 @@
       "callUs": "Pytania lub potrzebujesz pomocy? Zadzwoń do {restaurantName}: {phone}",
       "trackingCta": "Sprawdź status zamówienia",
       "missedTitle": "Zamówienie nie zostało przyjęte na czas",
-      "missedBody": "Niestety restauracja nie zdążyła przyjąć Twojego zamówienia na czas, więc nie zostało zrealizowane. Jeśli płaciłeś online, wszelkie autoryzacje są zwalniane automatycznie — nic nie zostanie pobrane."
+      "missedBody": "Niestety restauracja nie zdążyła przyjąć Twojego zamówienia na czas, więc nie zostało zrealizowane. Jeśli płaciłeś online, wszelkie autoryzacje są zwalniane automatycznie — nic nie zostanie pobrane.",
+      "creditReturned": "Kwota {amount} zapłacona za pomocą {label} została zwrócona do Twojego portfela."
     },
     "orderRejected": {
       "subject": "Zamówienie #{orderNumber} odrzucone",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} zrealizowała zwrot za Twoje zamówienie. Poniższa kwota została zwrócona na Twoją pierwotną metodę płatności.",
       "amountLabel": "Kwota zwrotu",
       "timing": "Zaksięgowanie na Twoim wyciągu może potrwać od 5 do 10 dni roboczych.",
-      "contactLine": "W razie pytań wystarczy odpowiedzieć na tę wiadomość."
+      "contactLine": "W razie pytań wystarczy odpowiedzieć na tę wiadomość.",
+      "creditReturned": "Kwota {amount} zapłacona za pomocą {label} również została zwrócona do Twojego portfela."
     },
     "couponAssigned": {
       "subject": "Masz kupon od {restaurantName} — {discountLabel}",

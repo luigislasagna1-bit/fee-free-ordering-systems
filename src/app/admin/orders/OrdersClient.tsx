@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/lib/utils";
 import { useCurrencyFormat } from "@/lib/currency-context";
+import { buildMoneyBreakdown } from "@/lib/money-breakdown";
 import { ShoppingBag, Search, RefreshCw } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
@@ -19,11 +20,24 @@ const statusColors: Record<string, string> = {
   cancelled: "bg-red-100 text-red-700",
 };
 
-export function OrdersClient({ orders }: { orders: any[] }) {
+export function OrdersClient({
+  orders,
+  rewardsEnabled = false,
+  rewardLabelSingular = null,
+  rewardLabelPlural = null,
+}: {
+  orders: any[];
+  rewardsEnabled?: boolean;
+  rewardLabelSingular?: string | null;
+  rewardLabelPlural?: string | null;
+}) {
   const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.orders");
   const tCommon = useTranslations("common");
   const tCheckout = useTranslations("checkout");
+  // Root translator: buildMoneyBreakdown rows carry FULL key paths
+  // (receipt.customer.*, money.*, ordering.*) — resolve them from the root.
+  const tRoot = useTranslations();
   const router = useRouter();
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
@@ -256,11 +270,72 @@ export function OrdersClient({ orders }: { orders: any[] }) {
                             </div>
                           ))}
                         </div>
+                        {/* Full canonical money stack via the shared helper — this
+                            row previously showed only subtotal/tax/delivery/total,
+                            hiding tip, discounts, fees, deposit, Pizza Bucks and how
+                            the order was paid (Luigi 2026-07-11 screenshot). Reward
+                            EARNED is deliberately omitted: it needs a per-order
+                            ledger read = N+1 on the 5s refresh; the /admin/orders/[id]
+                            detail shows it. */}
                         <div className="border-t border-gray-200 mt-3 pt-3 space-y-1 text-sm">
-                          <div className="flex justify-between text-gray-600"><span>{tCommon("subtotal")}</span><span>{formatCurrency(order.subtotal)}</span></div>
-                          {order.taxAmount > 0 && <div className="flex justify-between text-gray-600"><span>{tCheckout("tax")}</span><span>{formatCurrency(order.taxAmount)}</span></div>}
-                          {order.deliveryFee > 0 && <div className="flex justify-between text-gray-600"><span>{tCheckout("delivery")}</span><span>{formatCurrency(order.deliveryFee)}</span></div>}
-                          <div className="flex justify-between font-bold text-gray-900"><span>{tCommon("total")}</span><span>{formatCurrency(order.total)}</span></div>
+                          {buildMoneyBreakdown({
+                            currency: "",
+                            audience: "staff",
+                            subtotal: order.subtotal,
+                            appliedPromos: order.appliedPromos,
+                            promoDiscount: order.promoDiscount,
+                            couponDiscount: order.couponDiscount,
+                            deliveryFee: order.deliveryFee,
+                            appliedServiceFees: order.appliedServiceFees,
+                            taxAmount: order.taxAmount,
+                            tip: order.tip,
+                            depositTotal: (order.items ?? []).reduce(
+                              (s: number, i: any) =>
+                                s + (i.isRefundableDeposit && Number(i.depositAmount ?? 0) > 0
+                                  ? Number(i.depositAmount) * (i.quantity ?? 1)
+                                  : 0),
+                              0,
+                            ),
+                            total: order.total,
+                            orderType: order.type,
+                            rewardsActive: rewardsEnabled,
+                            rewardLabelSingular,
+                            rewardLabelPlural,
+                            creditApplied: order.creditApplied,
+                            paymentMethod: order.paymentMethod,
+                            paidStatus: order.paymentStatus,
+                            refundedAmount: order.refundedAmount,
+                          }).rows.map((row, idx) => {
+                            const label = row.labelKey
+                              ? tRoot(row.labelKey, row.labelArgs)
+                              : [row.labelArgs?.name, row.labelArgs?.code ? `(${row.labelArgs.code})` : ""]
+                                  .filter(Boolean)
+                                  .join(" ");
+                            if (row.kind === "PAYMENT_METHOD") {
+                              return (
+                                <div key={idx} className="flex justify-between text-gray-500 text-xs pt-1">
+                                  <span>{tCheckout("paymentMethod")}</span>
+                                  <span>{label || row.meta?.rawPaymentMethod}</span>
+                                </div>
+                              );
+                            }
+                            return (
+                              <div
+                                key={idx}
+                                className={`flex justify-between ${
+                                  row.emphasis ? "font-bold text-gray-900" : "text-gray-600"
+                                } ${row.kind === "REWARD_USED" || row.kind === "REFUNDED_SO_FAR" ? "text-emerald-700" : ""}`}
+                              >
+                                <span>
+                                  {row.free ? `${label} — ${tCheckout("free")}` : label}
+                                </span>
+                                <span>
+                                  {row.sign === "minus" ? "−" : row.sign === "plus" ? "+" : ""}
+                                  {formatCurrency(row.amount)}
+                                </span>
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
                     </div>

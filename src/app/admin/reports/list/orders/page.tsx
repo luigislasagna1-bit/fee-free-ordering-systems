@@ -9,6 +9,7 @@ import { TableControls } from "@/components/admin/reports/TableControls";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { paymentMethodLabelKey } from "@/lib/payment-label";
 
 /**
  * /admin/reports/list/orders
@@ -35,6 +36,8 @@ export default async function ListOrdersPage({
 }) {
   const sp = await searchParams;
   const t = await getTranslations("admin.reportOrdersList");
+  // Root translator: paymentMethodLabelKey returns full key paths (money.pay.*).
+  const tRoot = await getTranslations();
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   const page = Math.max(1, Number(Array.isArray(sp.page) ? sp.page[0] : sp.page) || 1);
@@ -135,7 +138,14 @@ export default async function ListOrdersPage({
                 <td className="py-2.5 px-4 text-gray-600 text-xs">{o.createdAt.toLocaleString(undefined, scope.timezone ? { timeZone: scope.timezone } : {})}</td>
                 <td className="py-2.5 px-4 text-gray-800">{o.customerName}</td>
                 <td className="py-2.5 px-4 text-gray-600">{o.type === "dine_in" ? t("typeDineIn") : o.type.charAt(0).toUpperCase() + o.type.slice(1)}</td>
-                <td className="py-2.5 px-4 text-gray-600 capitalize">{o.paymentMethod}</td>
+                <td className="py-2.5 px-4 text-gray-600">
+                  {/* Localized tender label (money.pay.*) — same mapping as the
+                      order-detail page; unknown methods echo the raw string. */}
+                  {(() => {
+                    const k = paymentMethodLabelKey(o.paymentMethod, o.type);
+                    return k ? tRoot(k) : <span className="capitalize">{(o.paymentMethod ?? "").replace(/_/g, " ")}</span>;
+                  })()}
+                </td>
                 <td className="py-2.5 px-4"><StatusBadge status={o.status} /></td>
                 <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(o.total)}</td>
               </tr>

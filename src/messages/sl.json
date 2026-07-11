@@ -4747,7 +4747,8 @@
       "callUs": "Vprašanja ali potrebujete pomoč? Pokličite {restaurantName}: {phone}",
       "trackingCta": "Oglejte si stanje naročila",
       "missedTitle": "Naročilo ni bilo sprejeto pravočasno",
-      "missedBody": "Restavracija žal ni uspela pravočasno sprejeti vašega naročila, zato ni bilo izvedeno. Če ste plačali prek spleta, se morebitna avtorizacija samodejno sprosti — bremenitve ne bo."
+      "missedBody": "Restavracija žal ni uspela pravočasno sprejeti vašega naročila, zato ni bilo izvedeno. Če ste plačali prek spleta, se morebitna avtorizacija samodejno sprosti — bremenitve ne bo.",
+      "creditReturned": "Znesek {amount}, plačan z {label}, je bil vrnjen v vašo denarnico."
     },
     "orderRejected": {
       "subject": "Naročilo #{orderNumber} zavrnjeno",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} je izvedel vračilo za vaše naročilo. Spodnji znesek je bil vrnjen na vaš prvotni način plačila.",
       "amountLabel": "Znesek vračila",
       "timing": "Lahko traja od 5 do 10 delovnih dni, da se prikaže na vašem izpisku.",
-      "contactLine": "Če imate kakršna koli vprašanja, preprosto odgovorite na to e-poštno sporočilo."
+      "contactLine": "Če imate kakršna koli vprašanja, preprosto odgovorite na to e-poštno sporočilo.",
+      "creditReturned": "Tudi znesek {amount}, plačan z {label}, je bil vrnjen v vašo denarnico."
     },
     "couponAssigned": {
       "subject": "{restaurantName} vam podarja kupon — {discountLabel}",

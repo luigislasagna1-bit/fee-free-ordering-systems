@@ -53,20 +53,37 @@ export async function GET(req: NextRequest) {
       couponDiscount: true,
       promoDiscount: true,
       total: true,
+      creditApplied: true,
+      paymentStatus: true,
+      refundedAmount: true,
+      appliedServiceFees: true,
     },
     orderBy: { createdAt: "desc" },
   });
 
+  // Money-accounting columns (after Total). Mirrors the Sales-Summary export:
+  // optional columns only appear when the range actually has the data, so the
+  // classic file layout is unchanged for stores that never use the feature.
+  // "Payment status" is always included — it's what makes the export auditable.
+  const feeSums = orders.map((o) => sumServiceFees(o.appliedServiceFees));
+  const showServiceFees = feeSums.some((s) => s !== 0);
+  const showCredit = orders.some((o) => (o.creditApplied ?? 0) > 0);
+  const showRefunded = orders.some((o) => (o.refundedAmount ?? 0) > 0);
+
   const rows: (string | number | Date)[][] = [[
     "Order #", "Date", "Customer", "Email", "Phone", "Type", "Payment", "Status",
     "Subtotal", "Tax", "Delivery fee", "Tip", "Coupon discount", "Promo discount", "Total",
+    ...(showServiceFees ? ["Service fees"] : []),
+    ...(showCredit ? ["Store credit used", "Collected"] : []),
+    "Payment status",
+    ...(showRefunded ? ["Refunded"] : []),
   ]];
   // Match the page: render the timestamp in the restaurant's timezone. A raw
   // Date stringifies to a verbose UTC string, diverging from the tz-correct
   // page (List View → Orders). Luigi 2026-07-01.
   const tz = scope.timezone ?? undefined;
   const fmtWhen = (d: Date) => d.toLocaleString("en-US", { timeZone: tz, year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "2-digit" });
-  for (const o of orders) {
+  orders.forEach((o, i) => {
     rows.push([
       o.orderNumber,
       fmtWhen(o.createdAt),
@@ -83,8 +100,14 @@ export async function GET(req: NextRequest) {
       round2(o.couponDiscount),
       round2(o.promoDiscount),
       round2(o.total),
+      ...(showServiceFees ? [round2(feeSums[i])] : []),
+      ...(showCredit
+        ? [round2(o.creditApplied ?? 0), round2(Math.max(0, o.total - (o.creditApplied ?? 0)))]
+        : []),
+      o.paymentStatus,
+      ...(showRefunded ? [round2(o.refundedAmount ?? 0)] : []),
     ]);
-  }
+  });
 
   return buildExportResponse({
     restaurantSlug: scope.slug,
@@ -102,3 +125,17 @@ export async function GET(req: NextRequest) {
 }
 
 function round2(v: number): number { return Math.round(v * 100) / 100; }
+
+/** Sum the named service/other fees frozen on the order (JSON string
+ *  [{name,amount}]). Defensive per-row parse — mirrors asArray() in
+ *  src/lib/money-breakdown.ts — so one corrupt row can't 500 the export. */
+function sumServiceFees(raw: string | null): number {
+  if (!raw || !raw.trim()) return 0;
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return 0;
+    return parsed.reduce((s: number, f: any) => s + (Number(f?.amount) || 0), 0);
+  } catch {
+    return 0;
+  }
+}

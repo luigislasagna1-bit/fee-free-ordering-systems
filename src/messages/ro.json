@@ -4747,7 +4747,8 @@
       "callUs": "Întrebări sau aveți nevoie de ajutor? Sunați la {restaurantName}: {phone}",
       "trackingCta": "Vezi statusul comenzii",
       "missedTitle": "Comandă neacceptată la timp",
-      "missedBody": "Din păcate, restaurantul nu a putut accepta comanda la timp, așa că nu a fost procesată. Dacă ați plătit online, orice autorizare este eliberată automat — nu veți fi taxat."
+      "missedBody": "Din păcate, restaurantul nu a putut accepta comanda la timp, așa că nu a fost procesată. Dacă ați plătit online, orice autorizare este eliberată automat — nu veți fi taxat.",
+      "creditReturned": "Suma de {amount} plătită cu {label} a fost returnată în portofelul tău."
     },
     "orderRejected": {
       "subject": "Comanda #{orderNumber} respinsă",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} a efectuat o rambursare pentru comanda ta. Suma de mai jos a fost returnată pe metoda ta de plată inițială.",
       "amountLabel": "Suma rambursată",
       "timing": "Pot trece între 5 și 10 zile lucrătoare până când suma apare pe extrasul tău.",
-      "contactLine": "Dacă ai întrebări, răspunde pur și simplu la acest e-mail."
+      "contactLine": "Dacă ai întrebări, răspunde pur și simplu la acest e-mail.",
+      "creditReturned": "Suma de {amount} plătită cu {label} a fost, de asemenea, returnată în portofelul tău."
     },
     "couponAssigned": {
       "subject": "Ai primit un cupon de la {restaurantName} — {discountLabel}",

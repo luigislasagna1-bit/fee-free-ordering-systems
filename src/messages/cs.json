@@ -4747,7 +4747,8 @@
       "callUs": "Dotazy nebo potřebujete pomoc? Zavolejte do restaurace {restaurantName}: {phone}",
       "trackingCta": "Zobrazit stav objednávky",
       "missedTitle": "Objednávka nebyla přijata včas",
-      "missedBody": "Restaurace bohužel nestihla vaši objednávku včas přijmout, takže neproběhla. Pokud jste platili online, případná autorizace se automaticky uvolní — nic vám nebude účtováno."
+      "missedBody": "Restaurace bohužel nestihla vaši objednávku včas přijmout, takže neproběhla. Pokud jste platili online, případná autorizace se automaticky uvolní — nic vám nebude účtováno.",
+      "creditReturned": "Částka {amount} zaplacená pomocí {label} byla vrácena do vaší peněženky."
     },
     "orderRejected": {
       "subject": "Objednávka #{orderNumber} odmítnuta",
@@ -4919,7 +4920,8 @@
       "body": "Restaurace {restaurantName} vrátila platbu za vaši objednávku. Níže uvedená částka byla vrácena na váš původní platební prostředek.",
       "amountLabel": "Vrácená částka",
       "timing": "Připsání na váš výpis může trvat 5–10 pracovních dnů.",
-      "contactLine": "Máte-li jakékoli dotazy, stačí odpovědět na tento e-mail."
+      "contactLine": "Máte-li jakékoli dotazy, stačí odpovědět na tento e-mail.",
+      "creditReturned": "Částka {amount} zaplacená pomocí {label} byla rovněž vrácena do vaší peněženky."
     },
     "couponAssigned": {
       "subject": "Dostali jste kupon od {restaurantName} — {discountLabel}",

@@ -16,6 +16,7 @@
 import prisma from "@/lib/db";
 import type { DigestStats } from "@/lib/email";
 import { parseLocalDateTimeInTz, dateKeyInTimezone } from "@/lib/restaurant-hours";
+import { isOnlineCapturedPayment } from "@/lib/payment-classify";
 
 // ── Local-date key math (DST-safe) ──────────────────────────────────────────
 // Windows are computed in the RESTAURANT's local timezone, then projected to
@@ -200,7 +201,9 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
     else if (t === "dine_in" || t === "dinein" || t === "dine-in") { dineInOrders++; dineInSales += o.total; }
     else { pickupOrders++; pickupSales += o.total; }
 
-    const isOnline = o.paymentMethod === "card" && o.paymentStatus === "paid";
+    // Shared pure predicate (see payment-classify.ts) — PayPal was
+    // misclassified as Offline until 2026-07-11, overstating till cash.
+    const isOnline = isOnlineCapturedPayment(o.paymentMethod, o.paymentStatus);
     if (isOnline) { onlinePayments++; onlinePaymentsAmount += collectedAmt; }
     else { offlinePayments++; offlinePaymentsAmount += collectedAmt; }
   }

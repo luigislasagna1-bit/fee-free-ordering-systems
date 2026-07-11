@@ -3320,6 +3320,28 @@ export function OrderingPageClient({
   const taxAmount = taxBase * (restaurant.taxRate / 100);
   const total = taxBase + taxAmount + tipAmount + depositLinesTotal;
 
+  // ── Projected Reward-Dollar credit for the CART drawer ────────────────────
+  // creditToApply persists after the customer picks credit in CheckoutModal,
+  // but the drawer's totals strip kept quoting the GROSS total. Mirror
+  // CheckoutModal's clamp EXACTLY (min of balance, redeemable base, max-% cap;
+  // gated on min balance) so the drawer never promises more credit than
+  // checkout will apply. Preview UX only — the server re-validates + claims
+  // atomically at charge.
+  const cartR2 = (n: number) => Math.round(n * 100) / 100;
+  const cartRewardLabelPlural = rewardInfo?.labelPlural?.trim() || tCheckout("reward.defaultPlural");
+  const cartRewardEligible =
+    !!rewardInfo && rewardInfo.balance > 0 && rewardInfo.balance >= (rewardInfo.minRedeemBalance ?? 0) && total > 0;
+  const cartRewardBase = cartRewardEligible ? Math.max(0, cartR2(total - (rewardInfo!.redeemExcludedTotal ?? 0))) : 0;
+  const cartRewardMax = cartRewardEligible
+    ? cartR2(Math.min(
+        rewardInfo!.balance,
+        cartRewardBase,
+        (rewardInfo!.maxRedeemPercent > 0 ? cartRewardBase * (rewardInfo!.maxRedeemPercent / 100) : cartRewardBase),
+      ))
+    : 0;
+  const cartCreditChosen = cartRewardEligible ? Math.min(Math.max(0, cartR2(creditToApply)), cartRewardMax) : 0;
+  const cartChargeToday = cartR2(total - cartCreditChosen);
+
   const getModPrice = (item: MenuItem, selectedMods: Record<string, string[]>) =>
     item.modifierGroups.reduce((sum, g) => {
       return sum + (selectedMods[g.id] || []).reduce((s2, optId) => {
@@ -6181,6 +6203,19 @@ export function OrderingPageClient({
                     </div>
                   )}
                   <div className="flex justify-between font-bold text-gray-900 text-base pt-2 border-t border-gray-100 mt-1"><span>{t("total")}</span><span>{fmt(total)}</span></div>
+                  {/* Credit the customer chose at checkout — same label + clamp
+                      as CheckoutModal's totals block, so drawer and checkout
+                      always quote the same charge. */}
+                  {cartCreditChosen > 0 && (
+                    <>
+                      <div className="flex justify-between text-emerald-600 font-medium">
+                        <span>{cartRewardLabelPlural}</span><span>− {fmt(cartCreditChosen)}</span>
+                      </div>
+                      <div className="flex justify-between font-bold text-gray-900 text-base">
+                        <span>{tCheckout("reward.chargeToday")}</span><span>{fmt(cartChargeToday)}</span>
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 {/* Out-of-area BLOCK — the address is outside every delivery
@@ -6249,7 +6284,7 @@ export function OrderingPageClient({
                     disabled={orderType === "delivery" && minimumOrderForType > 0 && subtotal < minimumOrderForType}
                     className="w-full text-white font-bold py-4 rounded-xl transition text-base disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ backgroundColor: theme.primaryColor }}>
-                    {t("proceedToCheckout")} → {fmt(total)}
+                    {t("proceedToCheckout")} → {fmt(cartCreditChosen > 0 ? cartChargeToday : total)}
                   </button>
                 </div>
               </div>

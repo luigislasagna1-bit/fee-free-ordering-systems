@@ -4747,7 +4747,8 @@
       "callUs": "Pertanyaan atau butuh bantuan? Hubungi {restaurantName}: {phone}",
       "trackingCta": "Lihat status pesanan",
       "missedTitle": "Pesanan tidak diterima tepat waktu",
-      "missedBody": "Sayangnya restoran tidak sempat menerima pesanan Anda tepat waktu, jadi pesanan tidak diproses. Jika Anda membayar online, otorisasi apa pun dilepas otomatis — Anda tidak akan ditagih."
+      "missedBody": "Sayangnya restoran tidak sempat menerima pesanan Anda tepat waktu, jadi pesanan tidak diproses. Jika Anda membayar online, otorisasi apa pun dilepas otomatis — Anda tidak akan ditagih.",
+      "creditReturned": "Jumlah {amount} yang Anda bayar dengan {label} telah dikembalikan ke dompet Anda."
     },
     "orderRejected": {
       "subject": "Pesanan #{orderNumber} ditolak",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} telah memproses pengembalian dana untuk pesanan Anda. Jumlah di bawah ini telah dikembalikan ke metode pembayaran awal Anda.",
       "amountLabel": "Jumlah pengembalian dana",
       "timing": "Dana mungkin membutuhkan waktu 5–10 hari kerja untuk muncul di laporan rekening Anda.",
-      "contactLine": "Jika Anda memiliki pertanyaan, cukup balas email ini."
+      "contactLine": "Jika Anda memiliki pertanyaan, cukup balas email ini.",
+      "creditReturned": "Jumlah {amount} yang Anda bayar dengan {label} juga telah dikembalikan ke dompet Anda."
     },
     "couponAssigned": {
       "subject": "Anda menerima kupon dari {restaurantName} — {discountLabel}",

@@ -50,7 +50,16 @@ export type DigestEmailProps = {
   reservations?: DigestStat;
   /** Sales breakdown — raw amounts; rendered via formatCurrency. Mirrors the
    *  in-app end-of-day report so the email matches what the owner sees. */
-  breakdown?: { subTotals: number; deliveryFees: number; tips: number; otherFees: number; tax: number; total: number };
+  breakdown?: {
+    subTotals: number; deliveryFees: number; tips: number; otherFees: number; tax: number; total: number;
+    /** Promo+coupon discounts in the window — without it the rows don't sum
+     *  to Total whenever a promo fired (matches the in-app EOD "Discounts"). */
+    discounts?: number;
+    /** Store credit redeemed (a tender) + real cash/card collected = total −
+     *  credit — the drawer/processor reconciliation rows the EOD page shows. */
+    storeCreditRedeemed?: number;
+    collected?: number;
+  };
   /** Channel breakdown */
   pickup: { count: number; value: string };
   delivery: { count: number; value: string };
@@ -87,10 +96,10 @@ export default function DigestEmail(props: DigestEmailProps) {
   const title = t(period === "daily" ? "email.digest.headlineDaily" : "email.digest.headlineMonthly");
   const money = (n: number) => formatCurrency(n, currency);
 
-  const breakdownRow = (label: string, amount: number, bold = false) => (
+  const breakdownRow = (label: string, amount: number, bold = false, minus = false) => (
     <Row>
       <Column style={{ fontSize: 14, color: bold ? COLORS.text : COLORS.muted, padding: "4px 0", fontWeight: bold ? 700 : 400 }}>{label}</Column>
-      <Column style={{ fontSize: 14, textAlign: "right", color: bold ? COLORS.text : COLORS.muted, padding: "4px 0", fontWeight: bold ? 700 : 600 }}>{money(amount)}</Column>
+      <Column style={{ fontSize: 14, textAlign: "right", color: bold ? COLORS.text : COLORS.muted, padding: "4px 0", fontWeight: bold ? 700 : 600 }}>{minus ? "−" : ""}{money(amount)}</Column>
     </Row>
   );
 
@@ -123,12 +132,26 @@ export default function DigestEmail(props: DigestEmailProps) {
             <SectionLabel>{t("email.digest.salesBreakdown")}</SectionLabel>
             <Section style={{ marginTop: 4 }}>
               {breakdownRow(t("email.digest.subTotals"), breakdown.subTotals)}
+              {/* Discounts row (nonzero-gated) — without it the rows above
+                  don't sum to Total whenever a promo fired. Mirrors the
+                  in-app EOD page + slip (money.* keys exist ×38). */}
+              {(breakdown.discounts ?? 0) > 0 &&
+                breakdownRow(t("money.discounts"), breakdown.discounts!, false, true)}
               {breakdownRow(t("email.digest.deliveryFees"), breakdown.deliveryFees)}
               {breakdownRow(t("email.digest.tips"), breakdown.tips)}
               {breakdownRow(t("email.digest.otherFees"), breakdown.otherFees)}
               {breakdownRow(t("email.digest.tax"), breakdown.tax)}
               <div style={{ borderTop: `1px solid ${COLORS.border}`, marginTop: 6, paddingTop: 6 }}>
                 {breakdownRow(t("email.digest.total"), breakdown.total, true)}
+                {/* Store-credit tender + real cash/card collected — the
+                    drawer/processor reconciliation pair the in-app EOD shows.
+                    Gated together on any credit redeemed in the window. */}
+                {(breakdown.storeCreditRedeemed ?? 0) > 0 && (
+                  <>
+                    {breakdownRow(t("money.pay.rewardCredit"), breakdown.storeCreditRedeemed!, false, true)}
+                    {breakdownRow(t("money.amountCollected"), breakdown.collected ?? Math.max(0, breakdown.total - breakdown.storeCreditRedeemed!), true)}
+                  </>
+                )}
               </div>
             </Section>
           </>

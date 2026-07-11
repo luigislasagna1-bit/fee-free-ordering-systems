@@ -137,7 +137,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ restaurant
         id: true, restaurantId: true, total: true, creditApplied: true, refundedAmount: true,
         paymentIntentId: true, orderNumber: true, customerName: true, customerEmail: true,
         paymentStatus: true, refundStatus: true,
-        restaurant: { select: { name: true, currency: true, defaultLanguage: true } },
+        restaurant: { select: { name: true, currency: true, defaultLanguage: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true } },
       },
     });
     if (!order || order.restaurantId !== restaurantId) {
@@ -199,6 +199,13 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ restaurant
     // here before it writes refundedAmount) — the admin route sends its own
     // email, so ours would be a duplicate.
     if (order.customerEmail && order.refundStatus !== "pending") {
+      // Full refund of a credit-part-paid order: the wallet make-whole above
+      // returns the bucks — the email says so (same as the admin refund
+      // route; audit 2026-07-11). Feature-gated on rewardsEnabled.
+      const creditBack =
+        isFull && order.restaurant.rewardsEnabled === true && (order.creditApplied ?? 0) > 0
+          ? order.creditApplied!
+          : 0;
       after(
         sendOrderRefundEmail({
           to: order.customerEmail,
@@ -207,6 +214,11 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ restaurant
           customerName: order.customerName,
           refundAmountLabel: formatCurrency(delta, currency),
           isFull,
+          creditReturnedLabel: creditBack > 0 ? formatCurrency(creditBack, currency) : undefined,
+          rewardLabel:
+            creditBack > 0
+              ? order.restaurant.rewardLabelPlural?.trim() || order.restaurant.rewardLabelSingular?.trim() || null
+              : undefined,
           locale: order.restaurant.defaultLanguage || "en",
         }).catch((e) => console.error("[restaurant-stripe webhook email]", e instanceof Error ? e.message : e)),
       );

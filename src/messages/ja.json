@@ -4747,7 +4747,8 @@
       "callUs": "ご不明な点やご要望は {restaurantName} へ直接お電話ください：{phone}",
       "trackingCta": "注文状況を確認する",
       "missedTitle": "ご注文は時間内に受け付けられませんでした",
-      "missedBody": "申し訳ありませんが、レストランが時間内にご注文を受け付けられなかったため、ご注文は成立しませんでした。オンラインでお支払いの場合、与信は自動的に解除され、請求は発生しません。"
+      "missedBody": "申し訳ありませんが、レストランが時間内にご注文を受け付けられなかったため、ご注文は成立しませんでした。オンラインでお支払いの場合、与信は自動的に解除され、請求は発生しません。",
+      "creditReturned": "{label}でお支払いいただいた{amount}は、ウォレットに返金されました。"
     },
     "orderRejected": {
       "subject": "注文 #{orderNumber} が拒否されました",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} がお客様のご注文に対して返金を行いました。下記の金額が元のお支払い方法に返金されています。",
       "amountLabel": "返金額",
       "timing": "ご利用明細に反映されるまで5〜10営業日かかる場合があります。",
-      "contactLine": "ご不明な点がございましたら、このメールにご返信ください。"
+      "contactLine": "ご不明な点がございましたら、このメールにご返信ください。",
+      "creditReturned": "{label}でお支払いいただいた{amount}も、ウォレットに返金されました。"
     },
     "couponAssigned": {
       "subject": "{restaurantName}からクーポンが届きました — {discountLabel}",

@@ -17,6 +17,12 @@ export type OrderRefundProps = {
   refundAmountLabel: string;
   /** True when the whole order has now been refunded. */
   isFull: boolean;
+  /** Pre-formatted store credit returned to the wallet alongside the card
+   *  refund (full refunds of credit-part-paid orders). Optional — when unset
+   *  the email reads exactly as before. */
+  creditReturnedLabel?: string;
+  /** Restaurant's reward label ("Pizza Bucks") — required with creditReturnedLabel. */
+  rewardLabel?: string | null;
   imprint?: string;
   restaurantUrl?: string;
   restaurantEmail?: string;
@@ -25,6 +31,7 @@ export type OrderRefundProps = {
 
 export default function OrderRefund(props: OrderRefundProps) {
   const { t, customerName, orderNumber, restaurantName, refundAmountLabel, isFull,
+    creditReturnedLabel, rewardLabel,
     imprint, restaurantUrl, restaurantEmail, restaurantPhone } = props;
   return (
     <EmailLayout preview={t("email.orderRefund.preview", { orderNumber })}>
@@ -49,6 +56,14 @@ export default function OrderRefund(props: OrderRefundProps) {
           <div style={{ fontSize: 13, color: COLORS.muted, marginTop: 4 }}>
             {t("email.orderRefund.timing")}
           </div>
+          {/* Store credit spent on this order goes back to the WALLET, not the
+              card — without this line a $30 order paid $10 bucks + $20 card
+              read "Full refund — $20.00" with the bucks unexplained. */}
+          {creditReturnedLabel && (
+            <div style={{ fontSize: 13, color: COLORS.text, marginTop: 8 }}>
+              {t("email.orderRefund.creditReturned", { label: rewardLabel || "", amount: creditReturnedLabel })}
+            </div>
+          )}
         </InfoCard>
         <P>{t("email.orderRefund.contactLine")}</P>
       </EmailBody>

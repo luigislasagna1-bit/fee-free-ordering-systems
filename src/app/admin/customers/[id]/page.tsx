@@ -315,7 +315,7 @@ export default async function CustomerDetailPage({
             {orders.map((o) => (
               <li key={o.id}>
                 <Link
-                  href={`/admin/orders?id=${o.id}`}
+                  href={`/admin/orders/${o.id}`}
                   className="flex items-center justify-between gap-3 px-6 py-3 hover:bg-gray-50 transition"
                 >
                   <div>

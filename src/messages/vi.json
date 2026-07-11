@@ -4747,7 +4747,8 @@
       "callUs": "Câu hỏi hoặc cần hỗ trợ? Gọi cho {restaurantName}: {phone}",
       "trackingCta": "Xem trạng thái đơn hàng",
       "missedTitle": "Đơn hàng không được chấp nhận kịp thời",
-      "missedBody": "Rất tiếc, nhà hàng không kịp chấp nhận đơn hàng của bạn nên đơn không được thực hiện. Nếu bạn thanh toán trực tuyến, mọi khoản tạm giữ sẽ tự động được giải phóng — bạn sẽ không bị trừ tiền."
+      "missedBody": "Rất tiếc, nhà hàng không kịp chấp nhận đơn hàng của bạn nên đơn không được thực hiện. Nếu bạn thanh toán trực tuyến, mọi khoản tạm giữ sẽ tự động được giải phóng — bạn sẽ không bị trừ tiền.",
+      "creditReturned": "Số tiền {amount} bạn đã thanh toán bằng {label} đã được hoàn lại vào ví của bạn."
     },
     "orderRejected": {
       "subject": "Đơn #{orderNumber} bị từ chối",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} đã hoàn tiền cho đơn hàng của bạn. Số tiền dưới đây đã được trả lại về phương thức thanh toán ban đầu của bạn.",
       "amountLabel": "Số tiền hoàn lại",
       "timing": "Có thể mất 5–10 ngày làm việc để khoản tiền hiển thị trên sao kê của bạn.",
-      "contactLine": "Nếu bạn có bất kỳ thắc mắc nào, chỉ cần trả lời email này."
+      "contactLine": "Nếu bạn có bất kỳ thắc mắc nào, chỉ cần trả lời email này.",
+      "creditReturned": "Số tiền {amount} bạn đã thanh toán bằng {label} cũng đã được hoàn lại vào ví của bạn."
     },
     "couponAssigned": {
       "subject": "Bạn nhận được phiếu giảm giá từ {restaurantName} — {discountLabel}",

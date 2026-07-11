@@ -360,6 +360,7 @@ export function OrderItemsTable({
  */
 export function OrderTotals({
   subtotal, taxAmount, deliveryFee, tip, discount, total,
+  serviceFees,
   depositTotal, depositTotalLabel,
   currency = "usd",
   taxLabel = "Tax",
@@ -375,6 +376,10 @@ export function OrderTotals({
   tip?: number;
   discount?: number;
   total: number;
+  /** Per-order service/other fees ([{name, amount}], parsed by the caller) —
+   *  each rendered by NAME so the rows reconcile to Total on fee-bearing
+   *  stores (the GOLDEN receipt + web surfaces already do; audit 2026-07-11). */
+  serviceFees?: Array<{ name?: string; amount?: number }>;
   /** Sum of per-item refundable deposits (untaxed) — shown as its own row so the
    *  breakdown reconciles to the Total, which already includes it. Luigi 2026-07-09. */
   depositTotal?: number;
@@ -441,6 +446,20 @@ export function OrderTotals({
       ) : (
         !!deliveryFee && deliveryFee > 0 && row(deliveryFeeLabel ?? "Delivery fee", deliveryFee)
       )}
+      {/* Service/other fees by name — position mirrors the web surfaces
+          (after delivery, before tax). Dynamic names, no i18n. */}
+      {(serviceFees ?? [])
+        .filter((f) => f && Number(f.amount ?? 0) !== 0)
+        .map((f, i) => (
+          <Row key={`fee-${i}`}>
+            <Column style={{ fontSize: 14, color: COLORS.muted, padding: "4px 0", fontWeight: 400 }}>
+              {f.name ?? ""}
+            </Column>
+            <Column style={{ fontSize: 14, textAlign: "right", color: COLORS.muted, padding: "4px 0", fontWeight: 600 }}>
+              {formatCurrency(Number(f.amount), currency)}
+            </Column>
+          </Row>
+        ))}
       {!!tip && tip > 0 && row(tipLabel ?? "Tip", tip)}
       {!!discount && discount > 0 && row(discountLabel ?? "Promo discount", -discount)}
       {!!taxAmount && taxAmount > 0 && row(taxLabel, taxAmount)}

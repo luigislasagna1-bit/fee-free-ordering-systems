@@ -4747,7 +4747,8 @@
       "callUs": "Vragen of hulp nodig? Bel {restaurantName}: {phone}",
       "trackingCta": "Bestelstatus bekijken",
       "missedTitle": "Bestelling niet op tijd geaccepteerd",
-      "missedBody": "Helaas kon het restaurant uw bestelling niet op tijd accepteren, dus is deze niet doorgegaan. Als u online heeft betaald, wordt elke reservering automatisch vrijgegeven — er wordt niets afgeschreven."
+      "missedBody": "Helaas kon het restaurant uw bestelling niet op tijd accepteren, dus is deze niet doorgegaan. Als u online heeft betaald, wordt elke reservering automatisch vrijgegeven — er wordt niets afgeschreven.",
+      "creditReturned": "Het bedrag van {amount} dat je met {label} betaalde, is teruggestort in je tegoed."
     },
     "orderRejected": {
       "subject": "Bestelling #{orderNumber} afgewezen",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} heeft een terugbetaling op je bestelling uitgevoerd. Het onderstaande bedrag is teruggestort naar je oorspronkelijke betaalmethode.",
       "amountLabel": "Terugbetaald bedrag",
       "timing": "Het kan 5–10 werkdagen duren voordat dit op je afschrift verschijnt.",
-      "contactLine": "Heb je vragen? Beantwoord dan gewoon deze e-mail."
+      "contactLine": "Heb je vragen? Beantwoord dan gewoon deze e-mail.",
+      "creditReturned": "Het bedrag van {amount} dat je met {label} betaalde, is eveneens teruggestort in je tegoed."
     },
     "couponAssigned": {
       "subject": "Je hebt een coupon ontvangen van {restaurantName} — {discountLabel}",

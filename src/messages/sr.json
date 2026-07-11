@@ -4747,7 +4747,8 @@
       "callUs": "Pitanja ili potrebna pomoć? Pozovite {restaurantName}: {phone}",
       "trackingCta": "Pogledajte status porudžbine",
       "missedTitle": "Поруџбина није прихваћена на време",
-      "missedBody": "Нажалост, ресторан није стигао да прихвати вашу поруџбину на време, па није реализована. Ако сте платили онлајн, свака ауторизација се аутоматски ослобађа — нећете бити наплаћени."
+      "missedBody": "Нажалост, ресторан није стигао да прихвати вашу поруџбину на време, па није реализована. Ако сте платили онлајн, свака ауторизација се аутоматски ослобађа — нећете бити наплаћени.",
+      "creditReturned": "Iznos od {amount} plaćen sa {label} vraćen je u vaš novčanik."
     },
     "orderRejected": {
       "subject": "Porudžbina #{orderNumber} odbijena",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} je izvršio povraćaj sredstava za vašu porudžbinu. Iznos naveden ispod je vraćen na vaš prvobitni način plaćanja.",
       "amountLabel": "Iznos povraćaja",
       "timing": "Može potrajati 5–10 radnih dana da se prikaže na vašem izvodu.",
-      "contactLine": "Ako imate bilo kakvih pitanja, samo odgovorite na ovaj imejl."
+      "contactLine": "Ako imate bilo kakvih pitanja, samo odgovorite na ovaj imejl.",
+      "creditReturned": "Iznos od {amount} plaćen sa {label} takođe je vraćen u vaš novčanik."
     },
     "couponAssigned": {
       "subject": "Dobili ste kupon od {restaurantName} — {discountLabel}",

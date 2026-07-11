@@ -10,8 +10,18 @@ import {
 } from "@stripe/react-stripe-js";
 import { Loader2, ShieldCheck, ArrowLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { formatCurrency } from "@/lib/utils";
 
-function CheckoutForm({ orderId, slug }: { orderId: string; slug: string }) {
+function CheckoutForm({
+  orderId,
+  slug,
+  payAmountLabel,
+}: {
+  orderId: string;
+  slug: string;
+  /** Preformatted net amount ("$12.34") appended to the Pay Now button, or null when the summary fetch failed. */
+  payAmountLabel: string | null;
+}) {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
@@ -53,7 +63,7 @@ function CheckoutForm({ orderId, slug }: { orderId: string; slug: string }) {
         className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-50"
       >
         {paying && <Loader2 className="w-5 h-5 animate-spin" />}
-        {paying ? t("processing") : t("payNow")}
+        {paying ? t("processing") : payAmountLabel ? `${t("payNow")} · ${payAmountLabel}` : t("payNow")}
       </button>
     </form>
   );
@@ -63,6 +73,9 @@ export function PaymentPageClient({ slug }: { slug: string }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const t = useTranslations("customer.payment");
+  // Root translator for the shared checkout.* / receipt.customer.* money keys
+  // (already translated in all 38 locales) — same pattern as the status page.
+  const tRoot = useTranslations();
   const orderId = searchParams.get("orderId") ?? "";
   const clientSecret = searchParams.get("clientSecret") ?? "";
   const pk = searchParams.get("pk") ?? "";
@@ -77,6 +90,46 @@ export function PaymentPageClient({ slug }: { slug: string }) {
       ? loadStripe(pk, stripeAccount ? { stripeAccount } : undefined)
       : null,
   );
+
+  // Money summary — what the card is about to be charged. Fetched from the
+  // public order endpoint (same select the status page uses) so the page can
+  // show Total / credit used / net "To pay today" above the card form.
+  // STRICTLY best-effort: any failure leaves `summary` null and the page
+  // renders exactly as before — payment must never be blocked by the summary.
+  const [summary, setSummary] = useState<{
+    total: number;
+    creditUsed: number;
+    toPay: number;
+    rewardLabel: string;
+    currency: string;
+  } | null>(null);
+  useEffect(() => {
+    if (!orderId) return;
+    let cancelled = false;
+    fetch(`/api/orders/${orderId}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((o) => {
+        if (cancelled || !o || typeof o.total !== "number") return;
+        // Reward rows only when the program is currently ON for this store.
+        const rewardsOn = !!o.restaurant?.rewardsEnabled;
+        const creditUsed = rewardsOn ? Math.max(0, Number(o.creditApplied) || 0) : 0;
+        setSummary({
+          total: o.total,
+          creditUsed,
+          // The PaymentIntent was created for total − credit; quote the same net.
+          toPay: Math.max(0, Math.round((o.total - creditUsed) * 100) / 100),
+          rewardLabel:
+            o.restaurant?.rewardLabelPlural?.trim() ||
+            o.restaurant?.rewardLabelSingular?.trim() ||
+            tRoot("checkout.reward.defaultPlural"),
+          currency: (o.restaurant?.currency || "usd").toLowerCase(),
+        });
+      })
+      .catch(() => { /* silent — summary is optional */ });
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderId]);
+  const fmt = (amount: number) => formatCurrency(amount, summary?.currency ?? "usd");
 
   if (!clientSecret || !pk || !orderId) {
     return (
@@ -107,9 +160,36 @@ export function PaymentPageClient({ slug }: { slug: string }) {
           {t("securedByStripe")}
         </div>
 
+        {/* Money summary — Total, credit used, net to pay. Skipped entirely
+            when the fetch failed (summary null) so payment is never blocked. */}
+        {summary && (
+          <div className="border border-gray-100 rounded-xl p-3 space-y-1 text-sm">
+            <div className="flex justify-between text-gray-600">
+              <span>{tRoot("checkout.total")}</span>
+              <span>{fmt(summary.total)}</span>
+            </div>
+            {summary.creditUsed > 0 && (
+              <>
+                <div className="flex justify-between text-emerald-600 font-medium">
+                  <span>{tRoot("receipt.customer.paidWithReward", { label: summary.rewardLabel })}</span>
+                  <span>− {fmt(summary.creditUsed)}</span>
+                </div>
+                <div className="flex justify-between font-bold text-gray-900">
+                  <span>{tRoot("checkout.reward.chargeToday")}</span>
+                  <span>{fmt(summary.toPay)}</span>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
         {stripePromise && (
           <Elements stripe={stripePromise} options={{ clientSecret }}>
-            <CheckoutForm orderId={orderId} slug={slug} />
+            <CheckoutForm
+              orderId={orderId}
+              slug={slug}
+              payAmountLabel={summary ? fmt(summary.toPay) : null}
+            />
           </Elements>
         )}
       </div>

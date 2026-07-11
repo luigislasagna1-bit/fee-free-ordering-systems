@@ -4747,7 +4747,8 @@
       "callUs": "¿Preguntas o necesitas ayuda? Llama a {restaurantName}: {phone}",
       "trackingCta": "Ver estado del pedido",
       "missedTitle": "Pedido no aceptado a tiempo",
-      "missedBody": "Lamentablemente el restaurante no pudo aceptar tu pedido a tiempo, por lo que no se procesó. Si pagaste en línea, cualquier autorización se libera automáticamente: no se te cobrará."
+      "missedBody": "Lamentablemente el restaurante no pudo aceptar tu pedido a tiempo, por lo que no se procesó. Si pagaste en línea, cualquier autorización se libera automáticamente: no se te cobrará.",
+      "creditReturned": "El importe de {amount} que pagaste con {label} se ha devuelto a tu monedero."
     },
     "orderRejected": {
       "subject": "Pedido #{orderNumber} rechazado",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} ha emitido un reembolso de tu pedido. El importe indicado a continuación se ha devuelto a tu método de pago original.",
       "amountLabel": "Importe del reembolso",
       "timing": "Puede tardar entre 5 y 10 días hábiles en aparecer en tu estado de cuenta.",
-      "contactLine": "Si tienes alguna pregunta, solo responde a este correo electrónico."
+      "contactLine": "Si tienes alguna pregunta, solo responde a este correo electrónico.",
+      "creditReturned": "El importe de {amount} que pagaste con {label} también se ha devuelto a tu monedero."
     },
     "couponAssigned": {
       "subject": "Has recibido un cupón de {restaurantName} — {discountLabel}",

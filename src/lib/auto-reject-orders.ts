@@ -108,7 +108,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       smartLinkCounterApplied: true,
       placedWhileClosed: true,
       restaurant: {
-        select: { id: true, name: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true, defaultLanguage: true, stripeAccountId: true },
+        select: { id: true, name: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true, defaultLanguage: true, stripeAccountId: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true },
       },
     },
   });
@@ -397,6 +397,18 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
             order.paymentMethod === "card" || order.paymentMethod === "paypal"
               ? ["authorized", "paid", "refunded"].includes(order.paymentStatus ?? "")
               : false,
+          // Store credit spent on the missed order goes back to the wallet
+          // (releaseRewardForOrder above) — say so, or a fully-bucks-paid
+          // customer reads "nothing to refund". Feature-gated. 2026-07-11.
+          ...(order.restaurant.rewardsEnabled === true && (order.creditApplied ?? 0) > 0
+            ? {
+                creditApplied: order.creditApplied ?? 0,
+                rewardLabel:
+                  order.restaurant.rewardLabelPlural?.trim() ||
+                  order.restaurant.rewardLabelSingular?.trim() ||
+                  null,
+              }
+            : {}),
           trackingUrl: restaurantOrderUrl(order.restaurant, `/status/${order.id}`),
         },
       }).catch((e: unknown) => console.error("[auto-reject notifyCustomer]", e));

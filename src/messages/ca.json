@@ -4747,7 +4747,8 @@
       "callUs": "Preguntes o necessiteu ajuda? Truqueu a {restaurantName}: {phone}",
       "trackingCta": "Veure l'estat de la comanda",
       "missedTitle": "Comanda no acceptada a temps",
-      "missedBody": "Malauradament el restaurant no ha pogut acceptar la comanda a temps, així que no s'ha processat. Si has pagat en línia, qualsevol autorització s'allibera automàticament — no se't cobrarà."
+      "missedBody": "Malauradament el restaurant no ha pogut acceptar la comanda a temps, així que no s'ha processat. Si has pagat en línia, qualsevol autorització s'allibera automàticament — no se't cobrarà.",
+      "creditReturned": "L'import de {amount} que vas pagar amb {label} s'ha retornat al teu moneder."
     },
     "orderRejected": {
       "subject": "Comanda #{orderNumber} rebutjada",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} ha emès un reembossament de la teva comanda. L'import indicat a continuació s'ha retornat al teu mètode de pagament original.",
       "amountLabel": "Import del reembossament",
       "timing": "Pot trigar de 5 a 10 dies hàbils a aparèixer al teu extracte.",
-      "contactLine": "Si tens cap pregunta, només cal que responguis aquest correu."
+      "contactLine": "Si tens cap pregunta, només cal que responguis aquest correu.",
+      "creditReturned": "L'import de {amount} que vas pagar amb {label} també s'ha retornat al teu moneder."
     },
     "couponAssigned": {
       "subject": "Has rebut un cupó de {restaurantName} — {discountLabel}",

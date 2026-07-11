@@ -48,7 +48,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       orderNumber: true,
       customerName: true,
       customerEmail: true,
-      restaurant: { select: { currency: true, name: true, defaultLanguage: true } },
+      restaurant: { select: { currency: true, name: true, defaultLanguage: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true } },
     },
   });
   if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 });
@@ -157,6 +157,14 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   // refund (amount + partial/full). Fire-and-forget so a slow/failed email
   // never blocks the refund response. Skipped when there's no email on file.
   if (order.customerEmail) {
+    // On a FULL refund the spent store credit goes back to the WALLET (the
+    // refundRewardForOrder call above) — the email must say so, or a
+    // $10-bucks + $20-card order reads "Full refund — $20.00" with the
+    // bucks unexplained (audit 2026-07-11). Feature-gated on rewardsEnabled.
+    const creditBack =
+      isFull && order.restaurant.rewardsEnabled === true && (order.creditApplied ?? 0) > 0
+        ? order.creditApplied!
+        : 0;
     after(
       sendOrderRefundEmail({
         to: order.customerEmail,
@@ -165,6 +173,11 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
         customerName: order.customerName,
         refundAmountLabel: formatCurrency(amount, currency),
         isFull,
+        creditReturnedLabel: creditBack > 0 ? formatCurrency(creditBack, currency) : undefined,
+        rewardLabel:
+          creditBack > 0
+            ? order.restaurant.rewardLabelPlural?.trim() || order.restaurant.rewardLabelSingular?.trim() || null
+            : undefined,
         locale: order.restaurant.defaultLanguage || "en",
       }).catch((e) => console.error("[refund email]", e instanceof Error ? e.message : e)),
     );

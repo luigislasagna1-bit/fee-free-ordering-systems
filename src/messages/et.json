@@ -4747,7 +4747,8 @@
       "callUs": "Küsimused või vajate abi? Helistage {restaurantName}: {phone}",
       "trackingCta": "Vaata tellimuse olekut",
       "missedTitle": "Tellimust ei võetud õigel ajal vastu",
-      "missedBody": "Kahjuks ei jõudnud restoran teie tellimust õigel ajal vastu võtta, seega see ei läinud läbi. Kui maksite veebis, vabastatakse võimalik broneering automaatselt — teilt ei võeta tasu."
+      "missedBody": "Kahjuks ei jõudnud restoran teie tellimust õigel ajal vastu võtta, seega see ei läinud läbi. Kui maksite veebis, vabastatakse võimalik broneering automaatselt — teilt ei võeta tasu.",
+      "creditReturned": "Summa {amount}, mille tasusite {label} abil, on tagastatud teie rahakotti."
     },
     "orderRejected": {
       "subject": "Tellimus #{orderNumber} tagasi lükatud",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} on teie tellimuse eest teinud tagasimakse. Allpool näidatud summa on tagastatud teie algsele maksevahendile.",
       "amountLabel": "Tagasimakse summa",
       "timing": "Summa ilmumine teie kontoväljavõttele võib võtta 5–10 tööpäeva.",
-      "contactLine": "Kui teil on küsimusi, vastake lihtsalt sellele e-kirjale."
+      "contactLine": "Kui teil on küsimusi, vastake lihtsalt sellele e-kirjale.",
+      "creditReturned": "Ka summa {amount}, mille tasusite {label} abil, on tagastatud teie rahakotti."
     },
     "couponAssigned": {
       "subject": "Said kupongi restoranilt {restaurantName} — {discountLabel}",

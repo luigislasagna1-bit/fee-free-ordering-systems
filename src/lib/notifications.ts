@@ -23,6 +23,7 @@
 
 import prisma from "@/lib/db";
 import { formatTime } from "@/lib/format-time";
+import { formatCurrency } from "@/lib/utils";
 import {
   sendNewOrderNotificationEmail,
   sendOrderAcceptedNotificationEmail,
@@ -242,7 +243,9 @@ export type StaffEventPayload =
       // Full order detail — passed for orderPlaced so the kitchen "new order" email is
       // ITEMIZED (not the minimal "see breakdown in admin" fallback). Luigi 2026-06-25.
       items?: EmailOrderItem[]; subtotal?: number; taxAmount?: number; deliveryFee?: number;
-      tip?: number; depositTotal?: number; discount?: number; orderType?: string; paidOnline?: boolean;
+      tip?: number; depositTotal?: number; discount?: number;
+      serviceFees?: Array<{ name?: string; amount?: number }>;
+      orderType?: string; paidOnline?: boolean;
       // Raw payment method ("cash" | "card" | "card_in_person" | "paypal" |
       // "reward_credit") — when the order ISN'T paid online, the staff email
       // chip says WHAT to collect (cash vs card at handoff). Luigi 2026-07-04.
@@ -349,6 +352,7 @@ async function dispatchStaffEvent(
         tip: payload.tip,
         depositTotal: payload.depositTotal,
         discount: payload.discount,
+        serviceFees: payload.serviceFees,
         orderType: payload.orderType,
         paidOnline: payload.paidOnline,
         paymentMethod: payload.paymentMethod,
@@ -478,8 +482,18 @@ export type CustomerEventPayload =
       // "Subtotal" silently fell back to the TOTAL and tax/tip/discount rows
       // never rendered. creditApplied/rewardLabel only set when rewards are ON.
       subtotal?: number; taxAmount?: number; deliveryFee?: number; tip?: number; depositTotal?: number; discount?: number;
-      creditApplied?: number; rewardLabel?: string | null; paymentMethod?: string | null; paidStatus?: string | null }
-  | { event: "orderStatusUpdate"; customerName: string; orderNumber: string; status: string; estimatedReady?: Date; rejectionReason?: string; trackingUrl?: string; paidOnline?: boolean; paymentMethod?: string }
+      serviceFees?: Array<{ name?: string; amount?: number }>;
+      creditApplied?: number; rewardLabel?: string | null; paymentMethod?: string | null; paidStatus?: string | null;
+      /** True when the platform already captured the money (Stripe card, PayPal,
+       *  or fully covered by store credit) — drives the green "Paid online" badge.
+       *  Was NEVER passed before 2026-07-11, so every customer receipt email
+       *  showed the amber "Pay at store" badge, even on card/PayPal orders. */
+      paidOnline?: boolean }
+  | { event: "orderStatusUpdate"; customerName: string; orderNumber: string; status: string; estimatedReady?: Date; rejectionReason?: string; trackingUrl?: string; paidOnline?: boolean; paymentMethod?: string;
+      /** Store credit the reject/cancel path returned to the wallet — caller
+       *  gates on rewardsEnabled; the email adds the "returned to your wallet"
+       *  card so a bucks-paid customer never reads "nothing to refund". */
+      creditApplied?: number; rewardLabel?: string | null }
   /** Kitchen pushed back the ready time. Fired from POST /api/orders/[id]/delay
    *  whenever staff hits "+5 / +10 / Custom" on the order detail. Customer
    *  always gets this (no toggle gate) because a delay is the kind of news
@@ -611,6 +625,7 @@ export async function notifyCustomer(args: {
           tip: payload.tip,
           depositTotal: payload.depositTotal,
           discount: payload.discount,
+          serviceFees: payload.serviceFees,
           orderType: payload.orderType,
           estimatedTime: payload.estimatedTime,
           scheduledFor: payload.scheduledFor ?? null,
@@ -628,6 +643,7 @@ export async function notifyCustomer(args: {
           rewardLabel: payload.rewardLabel,
           paymentMethod: payload.paymentMethod,
           paidStatus: payload.paidStatus,
+          paidOnline: payload.paidOnline,
         });
       });
       await fireSms();
@@ -678,6 +694,14 @@ export async function notifyCustomer(args: {
           trackingUrl: payload.trackingUrl,
           paidOnline: payload.paidOnline,
           paymentMethod: payload.paymentMethod,
+          // Wallet-returned store credit — formatted here (this is where the
+          // restaurant's currency lives); template shows it on negative
+          // statuses only. Caller already gated on rewardsEnabled.
+          creditReturned:
+            (payload.creditApplied ?? 0) > 0
+              ? formatCurrency(payload.creditApplied!, restaurant.currency)
+              : undefined,
+          rewardLabel: payload.rewardLabel,
           restaurantPhone: restaurant.phone,
           restaurantEmail: restaurant.email,
           restaurantUrl: restaurantOrderUrl(restaurant, ""),

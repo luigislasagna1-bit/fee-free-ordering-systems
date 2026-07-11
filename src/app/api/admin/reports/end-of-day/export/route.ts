@@ -74,11 +74,21 @@ export async function GET(req: NextRequest) {
     ["SALES BREAKDOWN"],
     ["Line", "Amount"],
     ["Subtotal", round2(snapshot.subTotals)],
+    // Discounts + store-credit reconciliation rows — the page renders them
+    // (b0242876) but this export was missed, so the file an owner hands the
+    // bookkeeper didn't reconcile (audit 2026-07-11). Nonzero-gated like the page.
+    ...(round2(snapshot.discounts ?? 0) > 0 ? [["Discounts", -round2(snapshot.discounts)]] : []),
     ["Tax", round2(snapshot.taxAmount)],
     ["Delivery fees", round2(snapshot.deliveryFees)],
     ["Tips", round2(snapshot.tips)],
     ["Other fees", round2(snapshot.otherFees)],
     ["Total", round2(snapshot.total)],
+    ...(round2(snapshot.storeCreditRedeemed ?? 0) > 0
+      ? [
+          ["Store credit redeemed", -round2(snapshot.storeCreditRedeemed)],
+          ["Collected (cash/card)", round2(snapshot.collected ?? Math.max(0, snapshot.total - snapshot.storeCreditRedeemed))],
+        ]
+      : []),
   ];
 
   return buildExportResponse({

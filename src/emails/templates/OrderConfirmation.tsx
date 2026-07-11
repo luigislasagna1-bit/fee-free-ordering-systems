@@ -48,6 +48,9 @@ export type OrderConfirmationProps = {
   tip?: number;
   depositTotal?: number;
   discount?: number;
+  /** Per-order service/other fees (parsed [{name, amount}]) — named rows so
+   *  the breakdown reconciles to Total on fee-bearing stores. 2026-07-11. */
+  serviceFees?: Array<{ name?: string; amount?: number }>;
   total: number;
   /** Delivery address — only shown when orderType === "delivery". */
   deliveryAddress?: string | null;
@@ -88,7 +91,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
   const {
     customerName, orderNumber, restaurantName, orderType, paidOnline,
     estimatedMinutes, scheduledLabel, reservationPartySize, reservationLabel, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
-    depositTotal, discount, total, deliveryAddress, trackingUrl, restaurantUrl,
+    depositTotal, discount, serviceFees, total, deliveryAddress, trackingUrl, restaurantUrl,
     restaurantEmail, restaurantPhone, imprint, logoUrl, currency,
     appliedPromos, creditApplied, rewardLabel, paymentValue, paidStatus, t,
   } = props;
@@ -266,6 +269,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
           depositTotal={depositTotal}
           depositTotalLabel={t("ordering.refundableDepositNotTaxed")}
           discount={discount}
+          serviceFees={serviceFees}
           total={total}
           currency={currency ?? "usd"}
           // Customer email → every row label localized (receipt.customer.*),

@@ -4747,7 +4747,8 @@
       "callUs": "Spørsmål eller trenger du hjelp? Ring {restaurantName}: {phone}",
       "trackingCta": "Se bestillingsstatus",
       "missedTitle": "Bestillingen ble ikke akseptert i tide",
-      "missedBody": "Dessverre klarte ikke restauranten å akseptere bestillingen din i tide, så den gikk ikke gjennom. Hvis du betalte på nett, frigis eventuell autorisasjon automatisk — du blir ikke belastet."
+      "missedBody": "Dessverre klarte ikke restauranten å akseptere bestillingen din i tide, så den gikk ikke gjennom. Hvis du betalte på nett, frigis eventuell autorisasjon automatisk — du blir ikke belastet.",
+      "creditReturned": "Beløpet {amount} som du betalte med {label}, er tilbakeført til lommeboken din."
     },
     "orderRejected": {
       "subject": "Bestilling #{orderNumber} avvist",
@@ -4919,7 +4920,8 @@
       "body": "{restaurantName} har utstedt en refusjon på bestillingen din. Beløpet nedenfor er returnert til den opprinnelige betalingsmåten din.",
       "amountLabel": "Refundert beløp",
       "timing": "Det kan ta 5–10 virkedager før det vises på kontoutskriften din.",
-      "contactLine": "Har du spørsmål, er det bare å svare på denne e-posten."
+      "contactLine": "Har du spørsmål, er det bare å svare på denne e-posten.",
+      "creditReturned": "Beløpet {amount} som du betalte med {label}, er også tilbakeført til lommeboken din."
     },
     "couponAssigned": {
       "subject": "Du har fått en kupong fra {restaurantName} – {discountLabel}",

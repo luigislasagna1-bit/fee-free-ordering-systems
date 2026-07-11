@@ -4747,7 +4747,8 @@
       "callUs": "Tem dúvidas ou precisa de ajuda? Contacte {restaurantName}: {phone}",
       "trackingCta": "Ver estado da encomenda",
       "missedTitle": "Pedido não aceite a tempo",
-      "missedBody": "Infelizmente o restaurante não conseguiu aceitar o seu pedido a tempo, pelo que não foi processado. Se pagou online, qualquer autorização é libertada automaticamente — não será cobrado."
+      "missedBody": "Infelizmente o restaurante não conseguiu aceitar o seu pedido a tempo, pelo que não foi processado. Se pagou online, qualquer autorização é libertada automaticamente — não será cobrado.",
+      "creditReturned": "O valor de {amount} que pagou com {label} foi devolvido à sua carteira."
     },
     "orderRejected": {
       "subject": "Pedido #{orderNumber} recusado",
@@ -4919,7 +4920,8 @@
       "body": "A {restaurantName} emitiu um reembolso do seu pedido. O valor abaixo foi devolvido para o seu método de pagamento original.",
       "amountLabel": "Valor reembolsado",
       "timing": "Pode demorar 5 a 10 dias úteis a aparecer no seu extrato.",
-      "contactLine": "Se tiver alguma questão, basta responder a este e-mail."
+      "contactLine": "Se tiver alguma questão, basta responder a este e-mail.",
+      "creditReturned": "O valor de {amount} que pagou com {label} também foi devolvido à sua carteira."
     },
     "couponAssigned": {
       "subject": "Recebeu um cupão de {restaurantName} — {discountLabel}",
