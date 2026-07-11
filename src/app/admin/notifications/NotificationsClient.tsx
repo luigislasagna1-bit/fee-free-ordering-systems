@@ -16,6 +16,7 @@ type Recipient = {
   orderAheadConfirmed: boolean;
   dineInConfirmed: boolean;
   orderPlaced: boolean;
+  customerSignup: boolean;
   orderAccepted: boolean;
   orderRejected: boolean;
   orderCanceled: boolean;
@@ -50,6 +51,9 @@ const CONFIRMATION_TOGGLES: { key: keyof Recipient; tk: string }[] = [
 // The schema columns stay so the data isn't lost if we re-enable later.
 const OPERATIONAL_TOGGLES: { key: keyof Recipient; tk: string }[] = [
   { key: "orderPlaced",    tk: "orderPlaced" },
+  // New customer account created at this restaurant (Luigi 2026-07-11).
+  // Defaults OFF (schema) — the owner opts in per recipient.
+  { key: "customerSignup", tk: "customerSignup" },
   { key: "orderRejected",  tk: "orderRejected" },
   { key: "orderCanceled",  tk: "orderCanceled" },
 ];

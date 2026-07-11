@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Informe de final de dia",
       "endOfMonthReport": "Informe de final de mes",
       "testEmail": "Envia un correu de prova",
-      "noRecipients": "Encara no hi ha destinataris del personal"
+      "noRecipients": "Encara no hi ha destinataris del personal",
+      "customerSignup": "Nou registre de client"
     },
     "receipts": {
       "title": "Rebuts",
@@ -4956,6 +4957,20 @@
       "usageGuest": "En finalitzar la compra, introdueix aquesta adreça de correu electrònic ({email}) i el teu {discountLabel} s'aplica automàticament: no cal escriure cap codi.",
       "accountTip": "Consell: crea un compte gratuït amb aquest correu electrònic per desar les teves dades i trobar totes les teves ofertes VIP en un sol lloc.",
       "defaultMemberLabel": "membre VIP"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: nou compte de client — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} t'ha regalat {amount} en {label}!",
+      "preview": "{restaurantName} ha afegit {amount} {label} al teu moneder",
+      "title": "Has rebut {label}!",
+      "greeting": "Hola {customerName},",
+      "badge": "Un regal per a tu",
+      "body": "{restaurantName} acaba d'afegir {amount} en {label} al teu moneder — un petit agraïment del restaurant.",
+      "balanceLine": "El teu saldo ara és {balance}",
+      "spendHint": "Els teus {label} s'apliquen al moment de pagar — dona't un caprici a la propera comanda.",
+      "cta": "Demana ara"
     }
   },
   "marketing": {

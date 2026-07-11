@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Izvještaj na kraju dana",
       "endOfMonthReport": "Izvještaj na kraju mjeseca",
       "testEmail": "Pošalji testni e-mail",
-      "noRecipients": "Još nema primatelja za osoblje"
+      "noRecipients": "Još nema primatelja za osoblje",
+      "customerSignup": "Nova registracija kupca"
     },
     "receipts": {
       "title": "Računi",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Pri naplati unesite ovu adresu e-pošte ({email}) i vaš {discountLabel} automatski se primjenjuje — bez upisivanja koda.",
       "accountTip": "Savjet: izradite besplatan račun s ovom e-poštom kako biste spremili svoje podatke i pronašli sve svoje VIP ponude na jednom mjestu.",
       "defaultMemberLabel": "VIP član"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: novi korisnički račun — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} vam je poklonio {amount} u {label}!",
+      "preview": "{restaurantName} je dodao {amount} {label} u vaš novčanik",
+      "title": "Primili ste {label}!",
+      "greeting": "Bok {customerName},",
+      "badge": "Poklon za vas",
+      "body": "{restaurantName} je upravo dodao {amount} u {label} u vaš novčanik — mala zahvala restorana.",
+      "balanceLine": "Vaš saldo sada iznosi {balance}",
+      "spendHint": "Vaši {label} primjenjuju se pri plaćanju — počastite se kod sljedeće narudžbe.",
+      "cta": "Naruči odmah"
     }
   },
   "marketing": {

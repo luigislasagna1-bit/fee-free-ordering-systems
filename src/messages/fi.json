@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Päiväraportti",
       "endOfMonthReport": "Kuukausiraportti",
       "testEmail": "Lähetä testisähköposti",
-      "noRecipients": "Ei henkilökunnan vastaanottajia vielä"
+      "noRecipients": "Ei henkilökunnan vastaanottajia vielä",
+      "customerSignup": "Uuden asiakkaan rekisteröityminen"
     },
     "receipts": {
       "title": "Kuitit",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Syötä kassalla tämä sähköpostiosoite ({email}), niin {discountLabel} otetaan käyttöön automaattisesti — koodia ei tarvitse kirjoittaa.",
       "accountTip": "Vinkki: luo maksuton tili tällä sähköpostiosoitteella, niin voit tallentaa tietosi ja löytää kaikki VIP-tarjouksesi yhdestä paikasta.",
       "defaultMemberLabel": "VIP-jäsen"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: uusi asiakastili — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} lahjoitti sinulle {amount} ({label})!",
+      "preview": "{restaurantName} lisäsi lompakkoosi {amount} {label}",
+      "title": "Sait {label}!",
+      "greeting": "Hei {customerName},",
+      "badge": "Lahja sinulle",
+      "body": "{restaurantName} lisäsi juuri lompakkoosi {amount} ({label}) — pieni kiitos ravintolalta.",
+      "balanceLine": "Saldosi on nyt {balance}",
+      "spendHint": "{label} käytetään kassalla — hemmottele itseäsi seuraavalla tilauksella.",
+      "cta": "Tilaa nyt"
     }
   },
   "marketing": {

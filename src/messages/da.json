@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Daglig rapport",
       "endOfMonthReport": "Månedlig rapport",
       "testEmail": "Send test-e-mail",
-      "noRecipients": "Ingen personalemodtagere endnu"
+      "noRecipients": "Ingen personalemodtagere endnu",
+      "customerSignup": "Ny kunderegistrering"
     },
     "receipts": {
       "title": "Kvitteringer",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Ved kassen skal du indtaste denne e-mailadresse ({email}), så anvendes din {discountLabel} automatisk — ingen kode at indtaste.",
       "accountTip": "Tip: opret en gratis konto med denne e-mail for at gemme dine oplysninger og finde alle dine VIP-tilbud ét sted.",
       "defaultMemberLabel": "VIP-medlem"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: ny kundekonto — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} har givet dig {amount} i {label}!",
+      "preview": "{restaurantName} har tilføjet {amount} {label} til din saldo",
+      "title": "Du har modtaget {label}!",
+      "greeting": "Hej {customerName},",
+      "badge": "En gave til dig",
+      "body": "{restaurantName} har netop tilføjet {amount} i {label} til din saldo — en lille tak fra restauranten.",
+      "balanceLine": "Din saldo er nu {balance}",
+      "spendHint": "Dine {label} bruges ved kassen — forkæl dig selv ved din næste bestilling.",
+      "cta": "Bestil nu"
     }
   },
   "marketing": {

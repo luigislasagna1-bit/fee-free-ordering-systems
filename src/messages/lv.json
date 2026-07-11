@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Dienas beigu atskaite",
       "endOfMonthReport": "Mēneša beigu atskaite",
       "testEmail": "Nosūtīt testa e-pastu",
-      "noRecipients": "Vēl nav darbinieku saņēmēju"
+      "noRecipients": "Vēl nav darbinieku saņēmēju",
+      "customerSignup": "Jauna klienta reģistrācija"
     },
     "receipts": {
       "title": "Čeki",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Noformējot pasūtījumu, ievadiet šo e-pasta adresi ({email}), un jūsu {discountLabel} tiks piemērots automātiski — nekas nav jāievada.",
       "accountTip": "Padoms: izveidojiet bezmaksas kontu ar šo e-pastu, lai saglabātu savus datus un atrastu visus savus VIP piedāvājumus vienuviet.",
       "defaultMemberLabel": "VIP dalībnieks"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: jauns klienta konts — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} uzdāvināja jums {amount} {label}!",
+      "preview": "{restaurantName} pievienoja jūsu makam {amount} {label}",
+      "title": "Jūs saņēmāt {label}!",
+      "greeting": "Sveiki, {customerName}!",
+      "badge": "Dāvana jums",
+      "body": "{restaurantName} tikko pievienoja jūsu makam {amount} {label} — neliela pateicība no restorāna.",
+      "balanceLine": "Jūsu atlikums tagad ir {balance}",
+      "spendHint": "Jūsu {label} tiek piemēroti norēķinoties — palutiniet sevi ar nākamo pasūtījumu.",
+      "cta": "Pasūtīt tagad"
     }
   },
   "marketing": {

@@ -10,7 +10,7 @@ import prisma from "@/lib/db";
 const TOGGLES = [
   "isActive", "emailLanguage",
   "deliveryConfirmed", "pickupConfirmed", "tableReservationConfirmed", "orderAheadConfirmed", "dineInConfirmed",
-  "orderPlaced", "orderAccepted", "orderRejected", "orderCanceled", "orderMissed",
+  "orderPlaced", "customerSignup", "orderAccepted", "orderRejected", "orderCanceled", "orderMissed",
   "endOfDayReport", "endOfMonthReport",
   // Dead toggles intentionally excluded (no handler ever reads them):
   //   "orderNotPlaced", "lowBattery", "badInternet"

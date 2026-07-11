@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Report fine giornata",
       "endOfMonthReport": "Report fine mese",
       "testEmail": "Invia e-mail di prova",
-      "noRecipients": "Nessun destinatario"
+      "noRecipients": "Nessun destinatario",
+      "customerSignup": "Nuova registrazione cliente"
     },
     "receipts": {
       "title": "Ricevute",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Al checkout, inserisci questo indirizzo email ({email}) e il tuo {discountLabel} viene applicato automaticamente, senza alcun codice da digitare.",
       "accountTip": "Suggerimento: crea un account gratuito con questa email per salvare i tuoi dati e trovare tutte le tue offerte VIP in un unico posto.",
       "defaultMemberLabel": "membro VIP"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: nuovo account cliente — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} ti ha regalato {amount} in {label}!",
+      "preview": "{restaurantName} ha aggiunto {amount} {label} al tuo portafoglio",
+      "title": "Hai ricevuto {label}!",
+      "greeting": "Ciao {customerName},",
+      "badge": "Un regalo per te",
+      "body": "{restaurantName} ha appena aggiunto {amount} in {label} al tuo portafoglio — un piccolo ringraziamento dal ristorante.",
+      "balanceLine": "Il tuo saldo ora è {balance}",
+      "spendHint": "I tuoi {label} si applicano al momento del pagamento — concediti qualcosa al prossimo ordine.",
+      "cta": "Ordina ora"
     }
   },
   "marketing": {

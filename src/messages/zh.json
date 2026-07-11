@@ -1286,7 +1286,8 @@
       "endOfDayReport": "每日报告",
       "endOfMonthReport": "每月报告",
       "testEmail": "发送测试邮件",
-      "noRecipients": "暂无员工接收人"
+      "noRecipients": "暂无员工接收人",
+      "customerSignup": "新客户注册"
     },
     "receipts": {
       "title": "收据",
@@ -4956,6 +4957,20 @@
       "usageGuest": "结账时输入此邮箱地址（{email}），您的 {discountLabel} 即可自动生效——无需输入任何优惠码。",
       "accountTip": "小贴士：用此邮箱创建一个免费账户，即可保存您的信息，并在一处集中查看您所有的 VIP 优惠。",
       "defaultMemberLabel": "VIP 会员"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}：新客户账户 — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant}赠送您 {amount} {label}！",
+      "preview": "{restaurantName}已将 {amount} {label} 加入您的钱包",
+      "title": "您收到了{label}！",
+      "greeting": "{customerName}，您好！",
+      "badge": "送给您的礼物",
+      "body": "{restaurantName}刚刚向您的钱包添加了 {amount} {label}——来自餐厅的小小心意。",
+      "balanceLine": "您的余额现为 {balance}",
+      "spendHint": "您的{label}将在结账时抵扣——下次下单时犒劳一下自己吧。",
+      "cta": "立即下单"
     }
   },
   "marketing": {

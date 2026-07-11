@@ -1286,7 +1286,8 @@
       "endOfDayReport": "日次レポート",
       "endOfMonthReport": "月次レポート",
       "testEmail": "テストメールを送信",
-      "noRecipients": "スタッフの宛先はまだありません"
+      "noRecipients": "スタッフの宛先はまだありません",
+      "customerSignup": "新規顧客の登録"
     },
     "receipts": {
       "title": "レシート",
@@ -4956,6 +4957,20 @@
       "usageGuest": "お会計時にこのメールアドレス（{email}）を入力すると、{discountLabel} が自動的に適用されます — コードの入力は不要です。",
       "accountTip": "ヒント：このメールアドレスで無料アカウントを作成すると、お客様情報を保存でき、すべてのVIP特典を一か所でまとめて確認できます。",
       "defaultMemberLabel": "VIP会員"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}：新規顧客アカウント — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant}から{amount}分の{label}が贈られました！",
+      "preview": "{restaurantName}が{amount}の{label}をウォレットに追加しました",
+      "title": "{label}を受け取りました！",
+      "greeting": "{customerName}様",
+      "badge": "あなたへのギフト",
+      "body": "{restaurantName}があなたのウォレットに{amount}分の{label}を追加しました。レストランからのささやかな感謝の気持ちです。",
+      "balanceLine": "現在の残高は{balance}です",
+      "spendHint": "{label}はお会計時に適用されます。次のご注文でぜひご利用ください。",
+      "cta": "今すぐ注文"
     }
   },
   "marketing": {

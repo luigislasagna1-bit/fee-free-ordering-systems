@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Dagrapport",
       "endOfMonthReport": "Månadsrapport",
       "testEmail": "Skicka testmejl",
-      "noRecipients": "Inga personalmottagare ännu"
+      "noRecipients": "Inga personalmottagare ännu",
+      "customerSignup": "Ny kundregistrering"
     },
     "receipts": {
       "title": "Kvitton",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Ange den här e-postadressen ({email}) i kassan, så tillämpas din {discountLabel} automatiskt – ingen kod att skriva.",
       "accountTip": "Tips: skapa ett gratis konto med den här e-postadressen för att spara dina uppgifter och hitta alla dina VIP-erbjudanden på ett ställe.",
       "defaultMemberLabel": "VIP-medlem"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: nytt kundkonto — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} har gett dig {amount} i {label}!",
+      "preview": "{restaurantName} har lagt till {amount} {label} i din plånbok",
+      "title": "Du har fått {label}!",
+      "greeting": "Hej {customerName},",
+      "badge": "En gåva till dig",
+      "body": "{restaurantName} har precis lagt till {amount} i {label} i din plånbok — ett litet tack från restaurangen.",
+      "balanceLine": "Ditt saldo är nu {balance}",
+      "spendHint": "Dina {label} används i kassan — unna dig något vid nästa beställning.",
+      "cta": "Beställ nu"
     }
   },
   "marketing": {

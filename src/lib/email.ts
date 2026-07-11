@@ -30,6 +30,8 @@ import OrderDelayed              from "@/emails/templates/OrderDelayed";
 import OrderRejected             from "@/emails/templates/OrderRejected";
 import OrderCanceled             from "@/emails/templates/OrderCanceled";
 import OrderRefund               from "@/emails/templates/OrderRefund";
+import CustomerSignupNotification from "@/emails/templates/CustomerSignupNotification";
+import RewardGift                from "@/emails/templates/RewardGift";
 import ReservationConfirmation   from "@/emails/templates/ReservationConfirmation";
 import NewReservationNotification from "@/emails/templates/NewReservationNotification";
 import PasswordReset             from "@/emails/templates/PasswordReset";
@@ -859,6 +861,73 @@ export async function sendOrderCanceledEmail(params: {
   return send({
     to: params.to,
     subject: t("email.orderCanceled.subject", { orderNumber: params.orderNumber }),
+    html,
+    fromName: params.restaurantName,
+  });
+}
+
+/** STAFF ping: a new customer created an account at the restaurant (Luigi
+ *  2026-07-11). Body English-only (staff convention); subject localized to
+ *  the recipient's emailLanguage. Gated upstream by the NotificationRecipient
+ *  `customerSignup` toggle (default OFF). */
+export async function sendCustomerSignupNotificationEmail(params: {
+  to: string;
+  restaurantName: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone?: string | null;
+  dashboardUrl: string;
+  locale?: string;
+}) {
+  const t = await getDict(params.locale);
+  const html = await renderEmail(
+    CustomerSignupNotification({
+      restaurantName: params.restaurantName,
+      customerName: params.customerName,
+      customerEmail: params.customerEmail,
+      customerPhone: params.customerPhone,
+      dashboardUrl: params.dashboardUrl,
+      imprint: currentImprint(),
+    })
+  );
+  return send({
+    to: params.to,
+    subject: t("email.customerSignup.subject", { restaurant: params.restaurantName, customer: params.customerName }),
+    html,
+  });
+}
+
+/** CUSTOMER email: the restaurant gifted them reward dollars (Luigi
+ *  2026-07-11). Fully localized; caller gates on rewardsEnabled +
+ *  marketingConsent and pre-formats the amounts. */
+export async function sendRewardGiftEmail(params: {
+  to: string;
+  customerName: string;
+  restaurantName: string;
+  amountLabel: string;
+  rewardLabel: string;
+  balanceLabel: string;
+  note?: string | null;
+  orderUrl: string;
+  locale?: string;
+}) {
+  const t = await getDict(params.locale);
+  const html = await renderEmail(
+    RewardGift({
+      t,
+      customerName: params.customerName,
+      restaurantName: params.restaurantName,
+      amountLabel: params.amountLabel,
+      rewardLabel: params.rewardLabel,
+      balanceLabel: params.balanceLabel,
+      note: params.note,
+      orderUrl: params.orderUrl,
+      imprint: currentImprint(),
+    })
+  );
+  return send({
+    to: params.to,
+    subject: t("email.rewardGift.subject", { restaurant: params.restaurantName, amount: params.amountLabel, label: params.rewardLabel }),
     html,
     fromName: params.restaurantName,
   });

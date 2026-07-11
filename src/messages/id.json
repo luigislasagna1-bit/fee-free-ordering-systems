@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Laporan akhir hari",
       "endOfMonthReport": "Laporan akhir bulan",
       "testEmail": "Kirim email uji",
-      "noRecipients": "Belum ada penerima staf"
+      "noRecipients": "Belum ada penerima staf",
+      "customerSignup": "Pendaftaran pelanggan baru"
     },
     "receipts": {
       "title": "Kwitansi",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Saat checkout, masukkan alamat email ini ({email}) dan {discountLabel} Anda diterapkan otomatis — tanpa perlu mengetik kode.",
       "accountTip": "Tips: buat akun gratis dengan email ini untuk menyimpan detail Anda dan menemukan semua penawaran VIP Anda di satu tempat.",
       "defaultMemberLabel": "Member VIP"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: akun pelanggan baru — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} menghadiahkan Anda {amount} dalam {label}!",
+      "preview": "{restaurantName} menambahkan {amount} {label} ke dompet Anda",
+      "title": "Anda menerima {label}!",
+      "greeting": "Halo {customerName},",
+      "badge": "Hadiah untuk Anda",
+      "body": "{restaurantName} baru saja menambahkan {amount} dalam {label} ke dompet Anda — ucapan terima kasih kecil dari restoran.",
+      "balanceLine": "Saldo Anda sekarang {balance}",
+      "spendHint": "{label} Anda diterapkan saat checkout — manjakan diri di pesanan berikutnya.",
+      "cta": "Pesan sekarang"
     }
   },
   "marketing": {

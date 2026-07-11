@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Αναφορά τέλους ημέρας",
       "endOfMonthReport": "Αναφορά τέλους μήνα",
       "testEmail": "Αποστολή δοκιμαστικού email",
-      "noRecipients": "Δεν υπάρχουν παραλήπτες προσωπικού ακόμα"
+      "noRecipients": "Δεν υπάρχουν παραλήπτες προσωπικού ακόμα",
+      "customerSignup": "Νέα εγγραφή πελάτη"
     },
     "receipts": {
       "title": "Αποδείξεις",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Κατά την ολοκλήρωση της παραγγελίας, εισαγάγετε αυτή τη διεύθυνση email ({email}) και το {discountLabel} εφαρμόζεται αυτόματα — χωρίς να πληκτρολογήσετε κωδικό.",
       "accountTip": "Συμβουλή: δημιουργήστε δωρεάν λογαριασμό με αυτό το email για να αποθηκεύσετε τα στοιχεία σας και να βρίσκετε όλες τις προσφορές VIP σας σε ένα μέρος.",
       "defaultMemberLabel": "μέλος VIP"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: νέος λογαριασμός πελάτη — {customer}"
+    },
+    "rewardGift": {
+      "subject": "Το {restaurant} σας χάρισε {amount} σε {label}!",
+      "preview": "Το {restaurantName} πρόσθεσε {amount} {label} στο πορτοφόλι σας",
+      "title": "Λάβατε {label}!",
+      "greeting": "Γεια σας {customerName},",
+      "badge": "Ένα δώρο για εσάς",
+      "body": "Το {restaurantName} μόλις πρόσθεσε {amount} σε {label} στο πορτοφόλι σας — ένα μικρό ευχαριστώ από το εστιατόριο.",
+      "balanceLine": "Το υπόλοιπό σας είναι τώρα {balance}",
+      "spendHint": "Τα {label} σας εφαρμόζονται στο ταμείο — περιποιηθείτε τον εαυτό σας στην επόμενη παραγγελία.",
+      "cta": "Παραγγείλετε τώρα"
     }
   },
   "marketing": {

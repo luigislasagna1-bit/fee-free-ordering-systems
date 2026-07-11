@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Rapport de fin de journée",
       "endOfMonthReport": "Rapport de fin de mois",
       "testEmail": "Envoyer un e-mail test",
-      "noRecipients": "Aucun destinataire du personnel"
+      "noRecipients": "Aucun destinataire du personnel",
+      "customerSignup": "Nouvelle inscription client"
     },
     "receipts": {
       "title": "Reçus",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Au moment du paiement, saisissez cette adresse e-mail ({email}) et votre {discountLabel} est appliqué automatiquement — aucun code à taper.",
       "accountTip": "Astuce : créez un compte gratuit avec cet e-mail pour enregistrer vos informations et retrouver toutes vos offres VIP au même endroit.",
       "defaultMemberLabel": "membre VIP"
+    },
+    "customerSignup": {
+      "subject": "{restaurant} : nouveau compte client — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} vous offre {amount} en {label} !",
+      "preview": "{restaurantName} a ajouté {amount} {label} à votre cagnotte",
+      "title": "Vous avez reçu des {label} !",
+      "greeting": "Bonjour {customerName},",
+      "badge": "Un cadeau pour vous",
+      "body": "{restaurantName} vient d'ajouter {amount} en {label} à votre cagnotte — un petit merci du restaurant.",
+      "balanceLine": "Votre solde est maintenant de {balance}",
+      "spendHint": "Vos {label} s'appliquent au moment du paiement — faites-vous plaisir à la prochaine commande.",
+      "cta": "Commander"
     }
   },
   "marketing": {

@@ -26,6 +26,7 @@ import { formatTime } from "@/lib/format-time";
 import { formatCurrency } from "@/lib/utils";
 import {
   sendNewOrderNotificationEmail,
+  sendCustomerSignupNotificationEmail,
   sendOrderAcceptedNotificationEmail,
   sendNewReservationNotification,
   sendOrderConfirmationEmail,
@@ -184,6 +185,9 @@ async function withImprint<T>(restaurantId: string, fn: () => Promise<T>): Promi
 const STAFF_TOGGLE_FOR_EVENT: Record<StaffEvent, keyof NotificationRecipientToggles> = {
   // Customer placed an order — fires *before* the restaurant accepts it.
   orderPlaced: "orderPlaced",
+  // A new customer created an ACCOUNT at this restaurant (Luigi 2026-07-11).
+  // Toggle defaults OFF — the owner opts in per recipient.
+  customerSignup: "customerSignup",
   // Restaurant accepted an order. The toggle that fires depends on the order
   // type — see `togglesForAcceptance()` for the per-type fan-out.
   orderAcceptedDelivery: "deliveryConfirmed",
@@ -203,6 +207,7 @@ const STAFF_TOGGLE_FOR_EVENT: Record<StaffEvent, keyof NotificationRecipientTogg
 
 export type StaffEvent =
   | "orderPlaced"
+  | "customerSignup"
   | "orderAcceptedDelivery"
   | "orderAcceptedPickup"
   | "orderAcceptedDineIn"
@@ -223,6 +228,7 @@ type NotificationRecipientToggles = {
   orderAheadConfirmed: boolean;
   dineInConfirmed: boolean;
   orderPlaced: boolean;
+  customerSignup: boolean;
   orderAccepted: boolean;
   orderRejected: boolean;
   orderCanceled: boolean;
@@ -255,6 +261,7 @@ export type StaffEventPayload =
       // Store-credit part-payment → "Paid with X" / "To collect" rows so staff
       // never over-collect (Luigi 2026-07-02). Only set when rewards are ON.
       creditApplied?: number; rewardLabel?: string | null }
+  | { event: "customerSignup"; customerName: string; customerEmail: string; customerPhone?: string | null; dashboardUrl: string }
   | { event: "orderRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string }
   | { event: "orderCanceled" | "orderMissed"; orderNumber: string; customerName: string; dashboardUrl: string }
   | { event: "reservationConfirmed"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "confirmed" | "pending"; dashboardUrl: string }
@@ -399,6 +406,17 @@ async function dispatchStaffEvent(
       });
       return;
     }
+    case "customerSignup":
+      await sendCustomerSignupNotificationEmail({
+        to,
+        restaurantName,
+        customerName: payload.customerName,
+        customerEmail: payload.customerEmail,
+        customerPhone: payload.customerPhone ?? null,
+        dashboardUrl: payload.dashboardUrl,
+        locale,
+      });
+      return;
     case "orderRejected":
       await sendOrderRejectedEmail({
         to,

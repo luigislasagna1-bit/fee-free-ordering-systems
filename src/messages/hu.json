@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Napi zárás riport",
       "endOfMonthReport": "Havi zárás riport",
       "testEmail": "Teszt e-mail küldése",
-      "noRecipients": "Még nincsenek személyzeti értesítési címek"
+      "noRecipients": "Még nincsenek személyzeti értesítési címek",
+      "customerSignup": "Új ügyfél-regisztráció"
     },
     "receipts": {
       "title": "Nyugták",
@@ -4956,6 +4957,20 @@
       "usageGuest": "A fizetésnél add meg ezt az e-mail-címet ({email}), és a(z) {discountLabel} automatikusan érvényesül — nem kell kódot beírnod.",
       "accountTip": "Tipp: hozz létre egy ingyenes fiókot ezzel az e-mail-címmel, hogy elmentsd az adataidat, és egy helyen megtaláld az összes VIP-ajánlatodat.",
       "defaultMemberLabel": "VIP tag"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: új ügyfélfiók — {customer}"
+    },
+    "rewardGift": {
+      "subject": "A(z) {restaurant} {amount} értékű {label} ajándékot adott Önnek!",
+      "preview": "A(z) {restaurantName} {amount} {label} összeget írt jóvá a tárcájában",
+      "title": "Ön {label} ajándékot kapott!",
+      "greeting": "Kedves {customerName}!",
+      "badge": "Ajándék Önnek",
+      "body": "A(z) {restaurantName} most írt jóvá {amount} értékű {label} összeget a tárcájában — egy kis köszönet az étteremtől.",
+      "balanceLine": "Egyenlege most {balance}",
+      "spendHint": "A {label} a fizetéskor kerül felhasználásra — kényeztesse magát a következő rendelésnél.",
+      "cta": "Rendeljen most"
     }
   },
   "marketing": {

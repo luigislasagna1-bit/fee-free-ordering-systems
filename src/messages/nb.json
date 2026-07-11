@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Daglig sluttrapport",
       "endOfMonthReport": "Månedlig sluttrapport",
       "testEmail": "Send teste-post",
-      "noRecipients": "Ingen ansattemottakere ennå"
+      "noRecipients": "Ingen ansattemottakere ennå",
+      "customerSignup": "Ny kunderegistrering"
     },
     "receipts": {
       "title": "Kvitteringer",
@@ -4956,6 +4957,20 @@
       "usageGuest": "I kassen oppgir du denne e-postadressen ({email}), så legges din {discountLabel} til automatisk – ingen kode å skrive.",
       "accountTip": "Tips: opprett en gratis konto med denne e-postadressen for å lagre opplysningene dine og finne alle VIP-tilbudene dine på ett sted.",
       "defaultMemberLabel": "VIP-medlem"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: ny kundekonto — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} har gitt deg {amount} i {label}!",
+      "preview": "{restaurantName} har lagt til {amount} {label} i lommeboken din",
+      "title": "Du har mottatt {label}!",
+      "greeting": "Hei {customerName},",
+      "badge": "En gave til deg",
+      "body": "{restaurantName} har nettopp lagt til {amount} i {label} i lommeboken din — en liten takk fra restauranten.",
+      "balanceLine": "Saldoen din er nå {balance}",
+      "spendHint": "Dine {label} brukes i kassen — unn deg noe ved neste bestilling.",
+      "cta": "Bestill nå"
     }
   },
   "marketing": {

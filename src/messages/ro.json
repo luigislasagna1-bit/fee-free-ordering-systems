@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Raport de sfârșit de zi",
       "endOfMonthReport": "Raport de sfârșit de lună",
       "testEmail": "Trimite email de test",
-      "noRecipients": "Niciun destinatar din personal încă"
+      "noRecipients": "Niciun destinatar din personal încă",
+      "customerSignup": "Înregistrare client nou"
     },
     "receipts": {
       "title": "Chitanțe",
@@ -4956,6 +4957,20 @@
       "usageGuest": "La finalizarea comenzii, introdu această adresă de email ({email}) și {discountLabel} se aplică automat — fără cod de tastat.",
       "accountTip": "Sfat: creează-ți un cont gratuit cu acest email pentru a-ți salva datele și a găsi toate ofertele tale VIP într-un singur loc.",
       "defaultMemberLabel": "membru VIP"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: cont nou de client — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} ți-a oferit {amount} în {label}!",
+      "preview": "{restaurantName} a adăugat {amount} {label} în portofelul tău",
+      "title": "Ai primit {label}!",
+      "greeting": "Bună, {customerName},",
+      "badge": "Un cadou pentru tine",
+      "body": "{restaurantName} tocmai a adăugat {amount} în {label} în portofelul tău — o mică mulțumire din partea restaurantului.",
+      "balanceLine": "Soldul tău este acum {balance}",
+      "spendHint": "{label} se aplică la finalizarea comenzii — răsfață-te la următoarea comandă.",
+      "cta": "Comandă acum"
     }
   },
   "marketing": {

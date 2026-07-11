@@ -623,6 +623,11 @@ model NotificationRecipient {
   orderCanceled  Boolean @default(true)
   orderMissed    Boolean @default(true)
   orderNotPlaced Boolean @default(true)
+  /// Email when a NEW CUSTOMER creates an account at this restaurant
+  /// (Luigi 2026-07-11). Default OFF — a brand-new event type; existing
+  /// recipients shouldn't start receiving it unasked (the order toggles
+  /// default true because they predate every recipient).
+  customerSignup Boolean @default(false)
 
   // System events
   lowBattery       Boolean @default(true)

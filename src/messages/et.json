@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Päeva lõpu aruanne",
       "endOfMonthReport": "Kuu lõpu aruanne",
       "testEmail": "Saada testmeil",
-      "noRecipients": "Töötajate saajaid pole veel"
+      "noRecipients": "Töötajate saajaid pole veel",
+      "customerSignup": "Uue kliendi registreerumine"
     },
     "receipts": {
       "title": "Kviitungid",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Sisesta kassas see e-posti aadress ({email}) ja sinu {discountLabel} rakendub automaatselt — koodi pole vaja sisestada.",
       "accountTip": "Nõuanne: loo selle e-posti aadressiga tasuta konto, et salvestada oma andmed ja leida kõik oma VIP-pakkumised ühest kohast.",
       "defaultMemberLabel": "VIP-liige"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: uus kliendikonto — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} kinkis teile {amount} {label}!",
+      "preview": "{restaurantName} lisas teie rahakotti {amount} {label}",
+      "title": "Saite {label}!",
+      "greeting": "Tere, {customerName}!",
+      "badge": "Kingitus teile",
+      "body": "{restaurantName} lisas just teie rahakotti {amount} {label} — väike tänu restoranilt.",
+      "balanceLine": "Teie saldo on nüüd {balance}",
+      "spendHint": "Teie {label} rakenduvad maksmisel — lubage endale midagi järgmise tellimusega.",
+      "cta": "Telli kohe"
     }
   },
   "marketing": {

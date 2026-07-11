@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Raport dobowy",
       "endOfMonthReport": "Raport miesięczny",
       "testEmail": "Wyślij e-mail testowy",
-      "noRecipients": "Brak odbiorców personelu"
+      "noRecipients": "Brak odbiorców personelu",
+      "customerSignup": "Nowa rejestracja klienta"
     },
     "receipts": {
       "title": "Paragony",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Przy płatności podaj ten adres e-mail ({email}), a Twoja oferta {discountLabel} zostanie zastosowana automatycznie — bez wpisywania kodu.",
       "accountTip": "Wskazówka: załóż darmowe konto z tym adresem e-mail, aby zapisać swoje dane i mieć wszystkie oferty VIP w jednym miejscu.",
       "defaultMemberLabel": "członek VIP"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: nowe konto klienta — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} podarował Ci {amount} w {label}!",
+      "preview": "{restaurantName} dodał {amount} {label} do Twojego portfela",
+      "title": "Otrzymałeś {label}!",
+      "greeting": "Cześć {customerName},",
+      "badge": "Prezent dla Ciebie",
+      "body": "{restaurantName} właśnie dodał {amount} w {label} do Twojego portfela — małe podziękowanie od restauracji.",
+      "balanceLine": "Twoje saldo wynosi teraz {balance}",
+      "spendHint": "Twoje {label} są naliczane przy płatności — zrób sobie przyjemność przy następnym zamówieniu.",
+      "cta": "Zamów teraz"
     }
   },
   "marketing": {

@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Báo cáo cuối ngày",
       "endOfMonthReport": "Báo cáo cuối tháng",
       "testEmail": "Gửi email thử",
-      "noRecipients": "Chưa có người nhận nội bộ"
+      "noRecipients": "Chưa có người nhận nội bộ",
+      "customerSignup": "Khách hàng mới đăng ký"
     },
     "receipts": {
       "title": "Hóa đơn",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Khi thanh toán, hãy nhập địa chỉ email này ({email}) và {discountLabel} của bạn sẽ được áp dụng tự động — không cần nhập mã.",
       "accountTip": "Mẹo: tạo một tài khoản miễn phí với email này để lưu thông tin của bạn và tìm tất cả ưu đãi VIP ở cùng một nơi.",
       "defaultMemberLabel": "Thành viên VIP"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: tài khoản khách hàng mới — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} đã tặng bạn {amount} {label}!",
+      "preview": "{restaurantName} đã thêm {amount} {label} vào ví của bạn",
+      "title": "Bạn đã nhận được {label}!",
+      "greeting": "Chào {customerName},",
+      "badge": "Món quà dành cho bạn",
+      "body": "{restaurantName} vừa thêm {amount} {label} vào ví của bạn — một lời cảm ơn nhỏ từ nhà hàng.",
+      "balanceLine": "Số dư của bạn hiện là {balance}",
+      "spendHint": "{label} của bạn được áp dụng khi thanh toán — hãy tự thưởng cho mình ở đơn hàng tiếp theo.",
+      "cta": "Đặt hàng ngay"
     }
   },
   "marketing": {

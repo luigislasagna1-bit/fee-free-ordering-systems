@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Denný výkaz",
       "endOfMonthReport": "Mesačný výkaz",
       "testEmail": "Odoslať testovací e-mail",
-      "noRecipients": "Zatiaľ žiadni príjemcovia z personálu"
+      "noRecipients": "Zatiaľ žiadni príjemcovia z personálu",
+      "customerSignup": "Nová registrácia zákazníka"
     },
     "receipts": {
       "title": "Účtenky",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Pri platbe zadajte túto e-mailovú adresu ({email}) a vaša ponuka {discountLabel} sa uplatní automaticky — žiadny kód nemusíte zadávať.",
       "accountTip": "Tip: vytvorte si s týmto e-mailom bezplatný účet, aby ste si uložili svoje údaje a našli všetky svoje VIP ponuky na jednom mieste.",
       "defaultMemberLabel": "VIP člen"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: nový zákaznícky účet — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} vám daroval {amount} v {label}!",
+      "preview": "{restaurantName} pridal {amount} {label} do vašej peňaženky",
+      "title": "Dostali ste {label}!",
+      "greeting": "Dobrý deň, {customerName},",
+      "badge": "Darček pre vás",
+      "body": "{restaurantName} práve pridal {amount} v {label} do vašej peňaženky — malé poďakovanie od reštaurácie.",
+      "balanceLine": "Váš zostatok je teraz {balance}",
+      "spendHint": "Vaše {label} sa uplatnia pri platbe — doprajte si niečo pri ďalšej objednávke.",
+      "cta": "Objednať teraz"
     }
   },
   "marketing": {

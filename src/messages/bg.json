@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Дневен отчет",
       "endOfMonthReport": "Месечен отчет",
       "testEmail": "Изпрати тестов имейл",
-      "noRecipients": "Все още няма получатели от персонала"
+      "noRecipients": "Все още няма получатели от персонала",
+      "customerSignup": "Нова регистрация на клиент"
     },
     "receipts": {
       "title": "Касови бележки",
@@ -4956,6 +4957,20 @@
       "usageGuest": "При плащане въведете този имейл адрес ({email}) и вашата отстъпка {discountLabel} се прилага автоматично — без код за въвеждане.",
       "accountTip": "Съвет: създайте безплатен акаунт с този имейл, за да запазите данните си и да намерите всичките си VIP оферти на едно място.",
       "defaultMemberLabel": "VIP член"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: нов клиентски акаунт — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} ви подари {amount} в {label}!",
+      "preview": "{restaurantName} добави {amount} {label} към портфейла ви",
+      "title": "Получихте {label}!",
+      "greeting": "Здравейте, {customerName},",
+      "badge": "Подарък за вас",
+      "body": "{restaurantName} току-що добави {amount} в {label} към портфейла ви — малка благодарност от ресторанта.",
+      "balanceLine": "Балансът ви вече е {balance}",
+      "spendHint": "Вашите {label} се прилагат при плащане — поглезете се при следващата поръчка.",
+      "cta": "Поръчайте сега"
     }
   },
   "marketing": {

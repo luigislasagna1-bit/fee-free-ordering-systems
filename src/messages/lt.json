@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Dienos pabaigos ataskaita",
       "endOfMonthReport": "Mėnesio pabaigos ataskaita",
       "testEmail": "Siųsti bandomąjį el. laišką",
-      "noRecipients": "Dar nėra personalo gavėjų"
+      "noRecipients": "Dar nėra personalo gavėjų",
+      "customerSignup": "Naujo kliento registracija"
     },
     "receipts": {
       "title": "Kvitai",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Atsiskaitydami įveskite šį el. pašto adresą ({email}) ir jūsų {discountLabel} bus pritaikytas automatiškai — jokio kodo įvesti nereikia.",
       "accountTip": "Patarimas: susikurkite nemokamą paskyrą su šiuo el. paštu, kad išsaugotumėte savo duomenis ir rastumėte visus savo VIP pasiūlymus vienoje vietoje.",
       "defaultMemberLabel": "VIP narys"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: nauja kliento paskyra — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} padovanojo jums {amount} {label}!",
+      "preview": "{restaurantName} pridėjo {amount} {label} į jūsų piniginę",
+      "title": "Gavote {label}!",
+      "greeting": "Sveiki, {customerName},",
+      "badge": "Dovana jums",
+      "body": "{restaurantName} ką tik pridėjo {amount} {label} į jūsų piniginę — mažas restorano padėkos ženklas.",
+      "balanceLine": "Jūsų likutis dabar yra {balance}",
+      "spendHint": "Jūsų {label} pritaikomi atsiskaitant — pasilepinkite kitą kartą užsakydami.",
+      "cta": "Užsakyti dabar"
     }
   },
   "marketing": {

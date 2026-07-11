@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Звіт за день",
       "endOfMonthReport": "Звіт за місяць",
       "testEmail": "Надіслати тестовий лист",
-      "noRecipients": "Поки немає одержувачів серед персоналу"
+      "noRecipients": "Поки немає одержувачів серед персоналу",
+      "customerSignup": "Нова реєстрація клієнта"
     },
     "receipts": {
       "title": "Чеки",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Під час оформлення вкажіть цю електронну адресу ({email}), і ваша знижка {discountLabel} застосується автоматично — без введення коду.",
       "accountTip": "Порада: створіть безкоштовний акаунт із цією адресою, щоб зберегти свої дані та знайти всі VIP-пропозиції в одному місці.",
       "defaultMemberLabel": "VIP-учасник"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: новий обліковий запис клієнта — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} подарував вам {amount} у {label}!",
+      "preview": "{restaurantName} додав {amount} {label} до вашого гаманця",
+      "title": "Ви отримали {label}!",
+      "greeting": "Вітаємо, {customerName}!",
+      "badge": "Подарунок для вас",
+      "body": "{restaurantName} щойно додав {amount} у {label} до вашого гаманця — маленька подяка від ресторану.",
+      "balanceLine": "Ваш баланс тепер {balance}",
+      "spendHint": "Ваші {label} застосовуються під час оформлення — потіште себе наступним замовленням.",
+      "cta": "Замовити зараз"
     }
   },
   "marketing": {

@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Rapport einde dag",
       "endOfMonthReport": "Maandelijks rapport",
       "testEmail": "Test-e-mail verzenden",
-      "noRecipients": "Nog geen personeelontvangers"
+      "noRecipients": "Nog geen personeelontvangers",
+      "customerSignup": "Nieuwe klantregistratie"
     },
     "receipts": {
       "title": "Bonnen",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Voer bij het afrekenen dit e-mailadres in ({email}) en je {discountLabel} wordt automatisch toegepast — geen code om in te typen.",
       "accountTip": "Tip: maak een gratis account aan met dit e-mailadres om je gegevens op te slaan en al je VIP-aanbiedingen op één plek terug te vinden.",
       "defaultMemberLabel": "VIP-lid"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: nieuw klantaccount — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} heeft je {amount} aan {label} cadeau gedaan!",
+      "preview": "{restaurantName} heeft {amount} {label} aan je tegoed toegevoegd",
+      "title": "Je hebt {label} ontvangen!",
+      "greeting": "Hoi {customerName},",
+      "badge": "Een cadeautje voor jou",
+      "body": "{restaurantName} heeft zojuist {amount} aan {label} aan je tegoed toegevoegd — een klein bedankje van het restaurant.",
+      "balanceLine": "Je saldo is nu {balance}",
+      "spendHint": "Je {label} worden bij het afrekenen verrekend — verwen jezelf bij je volgende bestelling.",
+      "cta": "Nu bestellen"
     }
   },
   "marketing": {

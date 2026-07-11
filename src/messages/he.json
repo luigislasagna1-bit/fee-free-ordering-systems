@@ -1286,7 +1286,8 @@
       "endOfDayReport": "דוח יומי",
       "endOfMonthReport": "דוח חודשי",
       "testEmail": "שלח אימייל בדיקה",
-      "noRecipients": "אין נמענים מהצוות עדיין"
+      "noRecipients": "אין נמענים מהצוות עדיין",
+      "customerSignup": "הרשמת לקוח חדש"
     },
     "receipts": {
       "title": "קבלות",
@@ -4956,6 +4957,20 @@
       "usageGuest": "בקופה, הזן את כתובת הדוא\"ל הזו ({email}) וה-{discountLabel} שלך מוחל אוטומטית — ללא צורך להקליד קוד.",
       "accountTip": "טיפ: צור חשבון חינמי עם כתובת דוא\"ל זו כדי לשמור את הפרטים שלך ולמצוא את כל מבצעי ה-VIP שלך במקום אחד.",
       "defaultMemberLabel": "חבר VIP"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: חשבון לקוח חדש — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} העניק לכם {amount} ב{label}!",
+      "preview": "{restaurantName} הוסיף {amount} {label} לארנק שלכם",
+      "title": "קיבלתם {label}!",
+      "greeting": "שלום {customerName},",
+      "badge": "מתנה בשבילכם",
+      "body": "{restaurantName} הוסיף זה עתה {amount} ב{label} לארנק שלכם — תודה קטנה מהמסעדה.",
+      "balanceLine": "היתרה שלכם כעת {balance}",
+      "spendHint": "ה{label} שלכם מיושמים בקופה — פנקו את עצמכם בהזמנה הבאה.",
+      "cta": "להזמין עכשיו"
     }
   },
   "marketing": {

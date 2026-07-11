@@ -235,6 +235,29 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
   // accounts is built. Account works immediately without verification.)
   void emailVerifyToken;
 
+  // Staff ping: "a new customer signed up" (Luigi 2026-07-11). Fire-and-forget
+  // — the toggle check (NotificationRecipient.customerSignup, default OFF)
+  // lives inside notifyStaff, so this is a silent no-op until the owner
+  // enables it. Fired once, for THIS restaurant (not every chain sibling).
+  (async () => {
+    try {
+      const { notifyStaff } = await import("@/lib/notifications");
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://feefreeordering.com";
+      await notifyStaff({
+        restaurantId: restaurant.id,
+        payload: {
+          event: "customerSignup",
+          customerName: name,
+          customerEmail: email,
+          customerPhone: phone,
+          dashboardUrl: `${baseUrl}/admin/customers`,
+        },
+      });
+    } catch (e) {
+      console.error("[signup notifyStaff customerSignup]", e);
+    }
+  })();
+
   // Issue session cookie.
   const token = signRestaurantCustomerToken({ customerId: here.id, restaurantId: restaurant.id });
   const cookieStore = await cookies();

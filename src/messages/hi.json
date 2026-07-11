@@ -1309,7 +1309,8 @@
       "endOfDayReport": "दिन के अंत की रिपोर्ट",
       "endOfMonthReport": "महीने के अंत की रिपोर्ट",
       "testEmail": "परीक्षण ईमेल भेजें",
-      "noRecipients": "अभी तक कोई स्टाफ प्राप्तकर्ता नहीं"
+      "noRecipients": "अभी तक कोई स्टाफ प्राप्तकर्ता नहीं",
+      "customerSignup": "नए ग्राहक का साइन-अप"
     },
     "receipts": {
       "title": "रसीदें",
@@ -4956,6 +4957,20 @@
       "usageGuest": "चेकआउट पर यह ईमेल पता ({email}) दर्ज करें और आपका {discountLabel} अपने-आप लागू हो जाता है — कोई कोड टाइप करने की ज़रूरत नहीं.",
       "accountTip": "टिप: इस ईमेल से एक मुफ़्त अकाउंट बनाएँ ताकि आप अपनी जानकारी सहेज सकें और अपने सभी VIP ऑफ़र एक ही जगह पा सकें.",
       "defaultMemberLabel": "VIP सदस्य"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: नया ग्राहक खाता — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} ने आपको {amount} के {label} उपहार में दिए!",
+      "preview": "{restaurantName} ने आपके वॉलेट में {amount} {label} जोड़े",
+      "title": "आपको {label} मिले हैं!",
+      "greeting": "नमस्ते {customerName},",
+      "badge": "आपके लिए एक उपहार",
+      "body": "{restaurantName} ने अभी आपके वॉलेट में {amount} के {label} जोड़े — रेस्टोरेंट की ओर से एक छोटा-सा धन्यवाद।",
+      "balanceLine": "आपका बैलेंस अब {balance} है",
+      "spendHint": "आपके {label} चेकआउट पर लागू होते हैं — अगले ऑर्डर पर खुद को ट्रीट दें।",
+      "cta": "अभी ऑर्डर करें"
     }
   },
   "marketing": {

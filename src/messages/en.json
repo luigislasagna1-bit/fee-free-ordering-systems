@@ -1354,7 +1354,8 @@
       "endOfDayReport": "End-of-day report",
       "endOfMonthReport": "End-of-month report",
       "testEmail": "Send test email",
-      "noRecipients": "No staff recipients yet"
+      "noRecipients": "No staff recipients yet",
+      "customerSignup": "New customer sign-up"
     },
     "receipts": {
       "title": "Receipts",
@@ -4956,6 +4957,20 @@
       "usageAccount": "Just sign in to your account and order — your {discountLabel} is applied automatically at checkout.",
       "usageGuest": "At checkout, enter this email address ({email}) and your {discountLabel} is applied automatically — no code to type.",
       "accountTip": "Tip: create a free account with this email to save your details and find all your VIP offers in one place."
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: new customer account — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} gifted you {amount} in {label}!",
+      "preview": "{restaurantName} added {amount} {label} to your wallet",
+      "title": "You've received {label}!",
+      "greeting": "Hi {customerName},",
+      "badge": "A gift for you",
+      "body": "{restaurantName} just added {amount} in {label} to your wallet — a little thank-you from the restaurant.",
+      "balanceLine": "Your balance is now {balance}",
+      "spendHint": "Your {label} are applied at checkout — treat yourself on your next order.",
+      "cta": "Order now"
     }
   },
   "marketing": {

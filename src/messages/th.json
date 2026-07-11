@@ -1286,7 +1286,8 @@
       "endOfDayReport": "รายงานสิ้นวัน",
       "endOfMonthReport": "รายงานสิ้นเดือน",
       "testEmail": "ส่งอีเมลทดสอบ",
-      "noRecipients": "ยังไม่มีผู้รับฝ่ายพนักงาน"
+      "noRecipients": "ยังไม่มีผู้รับฝ่ายพนักงาน",
+      "customerSignup": "ลูกค้าใหม่สมัครสมาชิก"
     },
     "receipts": {
       "title": "ใบเสร็จ",
@@ -4956,6 +4957,20 @@
       "usageGuest": "เมื่อชำระเงิน ให้กรอกอีเมลนี้ ({email}) แล้วส่วนลด {discountLabel} ของคุณจะถูกใช้โดยอัตโนมัติ — ไม่ต้องพิมพ์โค้ดใดๆ",
       "accountTip": "เคล็ดลับ: สร้างบัญชีฟรีด้วยอีเมลนี้เพื่อบันทึกข้อมูลของคุณและดูข้อเสนอ VIP ทั้งหมดของคุณได้ในที่เดียว",
       "defaultMemberLabel": "สมาชิก VIP"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: บัญชีลูกค้าใหม่ — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} มอบ {label} มูลค่า {amount} ให้คุณ!",
+      "preview": "{restaurantName} เพิ่ม {label} จำนวน {amount} เข้ากระเป๋าเงินของคุณ",
+      "title": "คุณได้รับ {label}!",
+      "greeting": "สวัสดี {customerName}",
+      "badge": "ของขวัญสำหรับคุณ",
+      "body": "{restaurantName} เพิ่ง เพิ่ม {label} มูลค่า {amount} เข้ากระเป๋าเงินของคุณ — คำขอบคุณเล็ก ๆ จากร้าน",
+      "balanceLine": "ยอดคงเหลือของคุณตอนนี้คือ {balance}",
+      "spendHint": "{label} ของคุณจะถูกใช้ตอนชำระเงิน — ให้รางวัลตัวเองในออเดอร์ถัดไป",
+      "cta": "สั่งเลย"
     }
   },
   "marketing": {

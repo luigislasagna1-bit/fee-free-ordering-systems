@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Отчёт за день",
       "endOfMonthReport": "Отчёт за месяц",
       "testEmail": "Отправить тестовое письмо",
-      "noRecipients": "Получателей-сотрудников пока нет"
+      "noRecipients": "Получателей-сотрудников пока нет",
+      "customerSignup": "Новая регистрация клиента"
     },
     "receipts": {
       "title": "Чеки",
@@ -4956,6 +4957,20 @@
       "usageGuest": "При оформлении укажите этот адрес эл. почты ({email}), и ваше предложение {discountLabel} применится автоматически — никакой код вводить не нужно.",
       "accountTip": "Совет: создайте бесплатный аккаунт с этим адресом эл. почты, чтобы сохранить свои данные и видеть все свои VIP-предложения в одном месте.",
       "defaultMemberLabel": "VIP-участник"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: новый аккаунт клиента — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} подарил вам {amount} в {label}!",
+      "preview": "{restaurantName} добавил {amount} {label} в ваш кошелёк",
+      "title": "Вы получили {label}!",
+      "greeting": "Здравствуйте, {customerName}!",
+      "badge": "Подарок для вас",
+      "body": "{restaurantName} только что добавил {amount} в {label} в ваш кошелёк — небольшая благодарность от ресторана.",
+      "balanceLine": "Ваш баланс теперь {balance}",
+      "spendHint": "Ваши {label} применяются при оформлении заказа — побалуйте себя в следующий раз.",
+      "cta": "Заказать сейчас"
     }
   },
   "marketing": {

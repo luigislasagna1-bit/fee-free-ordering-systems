@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Tagesbericht",
       "endOfMonthReport": "Monatsbericht",
       "testEmail": "Test-E-Mail senden",
-      "noRecipients": "Noch keine Mitarbeiter-Empfänger"
+      "noRecipients": "Noch keine Mitarbeiter-Empfänger",
+      "customerSignup": "Neue Kundenregistrierung"
     },
     "receipts": {
       "title": "Belege",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Gib an der Kasse diese E-Mail-Adresse ({email}) ein und dein {discountLabel} wird automatisch angewendet — kein Code zum Eintippen.",
       "accountTip": "Tipp: Erstelle mit dieser E-Mail-Adresse ein kostenloses Konto, um deine Daten zu speichern und alle deine VIP-Angebote an einem Ort zu finden.",
       "defaultMemberLabel": "VIP-Mitglied"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: neues Kundenkonto — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} hat Ihnen {amount} in {label} geschenkt!",
+      "preview": "{restaurantName} hat {amount} {label} Ihrem Guthaben hinzugefügt",
+      "title": "Sie haben {label} erhalten!",
+      "greeting": "Hallo {customerName},",
+      "badge": "Ein Geschenk für Sie",
+      "body": "{restaurantName} hat Ihrem Guthaben soeben {amount} in {label} hinzugefügt — ein kleines Dankeschön vom Restaurant.",
+      "balanceLine": "Ihr Guthaben beträgt jetzt {balance}",
+      "spendHint": "Ihre {label} werden an der Kasse angerechnet — gönnen Sie sich etwas bei der nächsten Bestellung.",
+      "cta": "Jetzt bestellen"
     }
   },
   "marketing": {

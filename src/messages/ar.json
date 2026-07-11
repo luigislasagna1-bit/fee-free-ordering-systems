@@ -1286,7 +1286,8 @@
       "endOfDayReport": "تقرير نهاية اليوم",
       "endOfMonthReport": "تقرير نهاية الشهر",
       "testEmail": "إرسال بريد اختباري",
-      "noRecipients": "لا يوجد موظفون مستلمون بعد"
+      "noRecipients": "لا يوجد موظفون مستلمون بعد",
+      "customerSignup": "تسجيل عميل جديد"
     },
     "receipts": {
       "title": "الإيصالات",
@@ -4956,6 +4957,20 @@
       "usageGuest": "عند الدفع، أدخل عنوان البريد الإلكتروني هذا ({email}) ويُطبَّق {discountLabel} تلقائيًا — دون الحاجة إلى كتابة أي رمز.",
       "accountTip": "نصيحة: أنشئ حسابًا مجانيًا بهذا البريد الإلكتروني لحفظ بياناتك والعثور على جميع عروض VIP الخاصة بك في مكان واحد.",
       "defaultMemberLabel": "عضو VIP"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: حساب عميل جديد — {customer}"
+    },
+    "rewardGift": {
+      "subject": "أهداك {restaurant} {amount} من {label}!",
+      "preview": "أضاف {restaurantName} {amount} من {label} إلى محفظتك",
+      "title": "لقد تلقيت {label}!",
+      "greeting": "مرحبًا {customerName}،",
+      "badge": "هدية لك",
+      "body": "أضاف {restaurantName} للتو {amount} من {label} إلى محفظتك — شكر بسيط من المطعم.",
+      "balanceLine": "رصيدك الآن {balance}",
+      "spendHint": "تُطبق {label} عند الدفع — دلّل نفسك في طلبك القادم.",
+      "cta": "اطلب الآن"
     }
   },
   "marketing": {

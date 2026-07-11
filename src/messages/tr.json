@@ -1286,7 +1286,8 @@
       "endOfDayReport": "Günlük rapor",
       "endOfMonthReport": "Aylık rapor",
       "testEmail": "Test e-postası gönder",
-      "noRecipients": "Henüz personel alıcısı yok"
+      "noRecipients": "Henüz personel alıcısı yok",
+      "customerSignup": "Yeni müşteri kaydı"
     },
     "receipts": {
       "title": "Makbuzlar",
@@ -4956,6 +4957,20 @@
       "usageGuest": "Ödeme sırasında bu e-posta adresini ({email}) girin; {discountLabel} indiriminiz otomatik olarak uygulanır — yazılacak bir kod yok.",
       "accountTip": "İpucu: Bu e-postayla ücretsiz bir hesap oluşturarak bilgilerinizi kaydedin ve tüm VIP tekliflerinizi tek bir yerde bulun.",
       "defaultMemberLabel": "VIP üye"
+    },
+    "customerSignup": {
+      "subject": "{restaurant}: yeni müşteri hesabı — {customer}"
+    },
+    "rewardGift": {
+      "subject": "{restaurant} size {amount} tutarında {label} hediye etti!",
+      "preview": "{restaurantName} cüzdanınıza {amount} {label} ekledi",
+      "title": "{label} kazandınız!",
+      "greeting": "Merhaba {customerName},",
+      "badge": "Size bir hediye",
+      "body": "{restaurantName} cüzdanınıza az önce {amount} tutarında {label} ekledi — restorandan küçük bir teşekkür.",
+      "balanceLine": "Bakiyeniz şimdi {balance}",
+      "spendHint": "{label} ödeme sırasında uygulanır — bir sonraki siparişinizde kendinizi şımartın.",
+      "cta": "Şimdi sipariş ver"
     }
   },
   "marketing": {
