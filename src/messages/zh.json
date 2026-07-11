@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "之后附加功能将关闭——您可随时重新订阅。",
       "willBeLocked": "将被锁定",
       "dontCancel": "不取消——保留此服务",
-      "yesCancel": "确认取消"
+      "yesCancel": "确认取消",
+      "compFreeUntil": "免费至 {date}",
+      "compExplainer": "此附加功能在该日期前免费——不会自动续订。立即订阅即可保留：您的卡今天保存，免费期结束后才开始计费。",
+      "compSubscribeCta": "订阅以保留"
     },
     "setupWizard": {
       "heroBadgeLive": "已上线",

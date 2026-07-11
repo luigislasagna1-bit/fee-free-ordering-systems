@@ -5,19 +5,20 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-07-10 by Claude (A3 keystore backup → DONE LOG).
+**Last updated:** 2026-07-11 by Claude (A1 rewritten — comped-card Subscribe flow built, awaiting deploy; A3 → DONE LOG).
 
 ---
 
 ## A. DO NOW — this week, in priority order
 
 ### A1. ☐ Re-subscribe "Online Payments" with your real card — DEADLINE THURSDAY JULY 17
-**Why:** your free partner period ends July 17. When it does, card checkout on luigispizzapastawings.com STOPS until this is done. Doing it early also gives us the first live test of restaurants paying the platform.
-1. Go to `feefreeordering.com/admin` and log in.
-2. Left sidebar → **Billing** → open the **Add-ons** page.
-3. Find **Online Payments ($39.99/mo)** → click **Subscribe**.
-4. Pay with your real business card in the Stripe checkout that opens.
-5. Tell Claude "done A1" → Claude verifies the subscription + invoice landed on the platform Stripe account.
+**Why:** your free partner period ends July 17. When it does, card checkout on luigispizzapastawings.com STOPS until this is done.
+**⚠️ 2026-07-11 update:** you tried this and the page showed "Renews automatically" with NO Subscribe button — that was a bug (the free-period card looked subscribed and the system even refused an early subscribe). Claude built the fix: the card now says **"Free until July 17, 2026"** with a **"Subscribe to keep it"** button, and subscribing early does NOT double-charge — your card is saved now and the first charge lands only when the free period ends. **Waiting on Luigi to say "deploy" first.**
+1. (After Claude deploys) go to `feefreeordering.com/admin` → **Billing** → **Add-ons**.
+2. On the **Online Payments ($39.99/mo)** card, click **"Subscribe to keep it"**.
+3. Complete the Stripe checkout with your real business card ($0.00 due today — billing starts July 17).
+4. Tell Claude "done A1" → Claude verifies the subscription is attached on the platform Stripe account.
+*(Note: this covers ONLY Online Payments. Your other complimentary add-ons each show the same button now — subscribe to each one you want to keep past its free date.)*
 
 ### A2. ☐ One click to activate refund-sync: "Test connection"
 **Why:** this registers the new webhook on your Stripe account so refunds made in the Stripe dashboard update orders + Luigi Bucks automatically.

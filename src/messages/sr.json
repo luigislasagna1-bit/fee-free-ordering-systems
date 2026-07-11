@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Nakon toga, dodatak se isključuje — možete se ponovo pretplatiti u bilo kom trenutku.",
       "willBeLocked": "biće zaključano",
       "dontCancel": "Ne otkazuj — zadrži ovu uslugu",
-      "yesCancel": "Da, otkaži"
+      "yesCancel": "Da, otkaži",
+      "compFreeUntil": "Besplatno do {date}",
+      "compExplainer": "Ovaj dodatak je besplatan do tada — ne obnavlja se sam. Pretplatite se sada da ga zadržite: kartica se čuva danas, a naplata počinje tek kad se završi besplatni period.",
+      "compSubscribeCta": "Pretplatite se da ga zadržite"
     },
     "setupWizard": {
       "heroBadgeLive": "Aktivno",

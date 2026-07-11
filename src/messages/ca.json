@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Després d'això, el complement es desactiva — podeu tornar a subscriure-us quan vulgueu.",
       "willBeLocked": "quedarà bloquejat",
       "dontCancel": "No cancel·lis — mantén aquest servei",
-      "yesCancel": "Sí, cancel·la"
+      "yesCancel": "Sí, cancel·la",
+      "compFreeUntil": "Gratuït fins al {date}",
+      "compExplainer": "Aquest complement és de cortesia fins llavors — no es renova sol. Subscriu-t'hi ara per conservar-lo: la targeta es desa avui i el cobrament només comença quan acabi el període gratuït.",
+      "compSubscribeCta": "Subscriu-t'hi per conservar-lo"
     },
     "setupWizard": {
       "heroBadgeLive": "En directe",

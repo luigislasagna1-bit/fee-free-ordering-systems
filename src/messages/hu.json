@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Ezután a bővítmény kikapcsol — bármikor újra feliratkozhat.",
       "willBeLocked": "zárolásra kerül",
       "dontCancel": "Ne mondja le — tartsa meg ezt a szolgáltatást",
-      "yesCancel": "Igen, lemondás"
+      "yesCancel": "Igen, lemondás",
+      "compFreeUntil": "Ingyenes eddig: {date}",
+      "compExplainer": "Ez a bővítmény addig ingyenes — magától nem újul meg. Fizessen elő most, hogy megtartsa: a kártyáját ma elmentjük, a számlázás pedig csak az ingyenes időszak végén indul.",
+      "compSubscribeCta": "Előfizetés a megtartáshoz"
     },
     "setupWizard": {
       "heroBadgeLive": "Élő",

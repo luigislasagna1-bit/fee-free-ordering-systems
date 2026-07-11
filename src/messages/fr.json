@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Après cela, le module est désactivé — vous pouvez vous réabonner à tout moment.",
       "willBeLocked": "sera verrouillé",
       "dontCancel": "Ne pas annuler — conserver ce service",
-      "yesCancel": "Oui, annuler"
+      "yesCancel": "Oui, annuler",
+      "compFreeUntil": "Gratuit jusqu'au {date}",
+      "compExplainer": "Ce module est offert jusqu'à cette date — il ne se renouvelle pas tout seul. Abonnez-vous dès maintenant pour le conserver : votre carte est enregistrée aujourd'hui et la facturation ne commence qu'à la fin de la période gratuite.",
+      "compSubscribeCta": "S'abonner pour le conserver"
     },
     "setupWizard": {
       "heroBadgeLive": "En ligne",

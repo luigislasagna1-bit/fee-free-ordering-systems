@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "לאחר מכן, התוספת תכבה — ניתן להירשם מחדש בכל עת.",
       "willBeLocked": "יינעל",
       "dontCancel": "אל תבטל — שמור שירות זה",
-      "yesCancel": "כן, בטל"
+      "yesCancel": "כן, בטל",
+      "compFreeUntil": "חינם עד {date}",
+      "compExplainer": "התוסף הזה חינמי עד אז — הוא לא מתחדש מעצמו. הירשמו עכשיו כדי לשמור עליו: הכרטיס נשמר היום והחיוב מתחיל רק בתום התקופה החינמית.",
+      "compSubscribeCta": "הירשמו כדי לשמור עליו"
     },
     "setupWizard": {
       "heroBadgeLive": "פעיל",

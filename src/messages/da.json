@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Herefter slukkes tilvalget — du kan abonnere igen når som helst.",
       "willBeLocked": "vil blive låst",
       "dontCancel": "Annuller ikke — behold denne tjeneste",
-      "yesCancel": "Ja, annuller"
+      "yesCancel": "Ja, annuller",
+      "compFreeUntil": "Gratis indtil {date}",
+      "compExplainer": "Denne tilføjelse er gratis indtil da — den fornyes ikke af sig selv. Abonnér nu for at beholde den: dit kort gemmes i dag, og betalingen starter først, når gratisperioden udløber.",
+      "compSubscribeCta": "Abonnér for at beholde"
     },
     "setupWizard": {
       "heroBadgeLive": "Live",

@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Pärast seda lisa välja lülitatakse — saad igal ajal uuesti tellida.",
       "willBeLocked": "lukustatakse",
       "dontCancel": "Ära tühista — hoia see teenus",
-      "yesCancel": "Jah, tühista"
+      "yesCancel": "Jah, tühista",
+      "compFreeUntil": "Tasuta kuni {date}",
+      "compExplainer": "See lisamoodul on seni tasuta — see ei pikene ise. Telli kohe, et see alles jääks: kaart salvestatakse täna ja arveldus algab alles tasuta perioodi lõppedes.",
+      "compSubscribeCta": "Telli, et alles hoida"
     },
     "setupWizard": {
       "heroBadgeLive": "Elus",

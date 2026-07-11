@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Danach wird das Add-On deaktiviert — Sie können jederzeit erneut abonnieren.",
       "willBeLocked": "wird gesperrt",
       "dontCancel": "Nicht kündigen — diesen Service behalten",
-      "yesCancel": "Ja, kündigen"
+      "yesCancel": "Ja, kündigen",
+      "compFreeUntil": "Kostenlos bis {date}",
+      "compExplainer": "Dieses Add-on ist bis dahin kostenlos — es verlängert sich nicht von selbst. Abonnieren Sie jetzt, um es zu behalten: Ihre Karte wird heute hinterlegt, abgerechnet wird erst nach Ablauf des Gratiszeitraums.",
+      "compSubscribeCta": "Abonnieren und behalten"
     },
     "setupWizard": {
       "heroBadgeLive": "Live",

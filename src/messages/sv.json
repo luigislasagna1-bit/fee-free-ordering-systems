@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Därefter stängs tillägget av — du kan prenumerera igen när som helst.",
       "willBeLocked": "låses",
       "dontCancel": "Avbryt inte — behåll den här tjänsten",
-      "yesCancel": "Ja, avbryt"
+      "yesCancel": "Ja, avbryt",
+      "compFreeUntil": "Gratis till {date}",
+      "compExplainer": "Det här tillägget är gratis fram till dess — det förnyas inte av sig självt. Prenumerera nu för att behålla det: kortet sparas idag och debiteringen börjar först när gratisperioden tar slut.",
+      "compSubscribeCta": "Prenumerera för att behålla"
     },
     "setupWizard": {
       "heroBadgeLive": "Live",

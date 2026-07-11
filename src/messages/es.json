@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Después, el complemento se desactiva — puedes volver a suscribirte cuando quieras.",
       "willBeLocked": "quedará bloqueado",
       "dontCancel": "No cancelar — mantener este servicio",
-      "yesCancel": "Sí, cancelar"
+      "yesCancel": "Sí, cancelar",
+      "compFreeUntil": "Gratis hasta el {date}",
+      "compExplainer": "Este complemento es gratuito hasta esa fecha; no se renueva por sí solo. Suscríbete ahora para conservarlo: tu tarjeta se guarda hoy y el cobro empieza solo cuando termine el período gratuito.",
+      "compSubscribeCta": "Suscribirse para conservarlo"
     },
     "setupWizard": {
       "heroBadgeLive": "En vivo",

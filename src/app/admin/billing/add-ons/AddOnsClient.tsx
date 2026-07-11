@@ -46,6 +46,10 @@ type AddOnView = {
     status: string;
     currentPeriodEnd: Date | string | null;
     cancelAtPeriodEnd: boolean;
+    /** Free partner period: active-looking but UNBILLED — switches off at
+     *  trialEndsAt unless the owner subscribes. Card must not say "renews". */
+    isComplimentary?: boolean;
+    trialEndsAt?: Date | string | null;
   } | null;
 };
 
@@ -417,6 +421,50 @@ export function AddOnsClient({
                         </Link>
                       </div>
                     )}
+                    {a.subscription?.isComplimentary ? (
+                      /* Free partner period: this row is comped and UNBILLED —
+                         the cron switches it off at trialEndsAt. Saying
+                         "Renews automatically" here misled Luigi into thinking
+                         he was subscribed (2026-07-11). Tell the truth + offer
+                         the convert-to-paid checkout (billing starts when the
+                         free period ends — see checkout route trial_end). The
+                         Cancel button is omitted: the cancel API 404s on rows
+                         with no Stripe sub, and a comped service ends on its
+                         own anyway. */
+                      <div className="space-y-2">
+                        <div className="rounded-lg bg-sky-50 border border-sky-200 px-3 py-2.5 text-xs text-sky-900">
+                          <div className="font-semibold flex items-center gap-1.5 mb-0.5">
+                            <Clock className="w-3.5 h-3.5" />
+                            {t("compFreeUntil", {
+                              date: a.subscription?.trialEndsAt
+                                ? new Date(a.subscription.trialEndsAt).toLocaleDateString(undefined, {
+                                    month: "long",
+                                    day: "numeric",
+                                    year: "numeric",
+                                  })
+                                : "",
+                            })}
+                          </div>
+                          <span>{t("compExplainer")}</span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => subscribe(a.slug)}
+                          disabled={busy || notSynced || a.monthlyPriceCents <= 0}
+                          className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                          title={
+                            notSynced
+                              ? t("titleNotSynced")
+                              : a.monthlyPriceCents <= 0
+                              ? t("titleNoPrice")
+                              : ""
+                          }
+                        >
+                          {busy && <Loader2 className="w-4 h-4 animate-spin" />}
+                          {busy ? t("loading") : t("compSubscribeCta")}
+                        </button>
+                      </div>
+                    ) : (
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-600">
                         {periodEnd
@@ -432,6 +480,7 @@ export function AddOnsClient({
                         {busy ? t("working") : t("cancel")}
                       </button>
                     </div>
+                    )}
                   </div>
                 ) : a.comingSoon ? (
                   // Coming-soon: no subscribe path at all. Show a

@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "După aceea, suplimentul se dezactivează — te poți reabona oricând.",
       "willBeLocked": "va fi blocat",
       "dontCancel": "Nu anula — păstrează acest serviciu",
-      "yesCancel": "Da, anulează"
+      "yesCancel": "Da, anulează",
+      "compFreeUntil": "Gratuit până la {date}",
+      "compExplainer": "Acest supliment este gratuit până atunci — nu se reînnoiește singur. Abonează-te acum ca să îl păstrezi: cardul este salvat azi, iar facturarea începe doar când se încheie perioada gratuită.",
+      "compSubscribeCta": "Abonează-te ca să îl păstrezi"
     },
     "setupWizard": {
       "heroBadgeLive": "Activ",

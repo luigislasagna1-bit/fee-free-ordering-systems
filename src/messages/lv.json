@@ -1617,7 +1617,10 @@
       "modalAfterThatOff": "Pēc tam papildinājums tiek izslēgts — varat to abonēt atkārtoti jebkurā laikā.",
       "willBeLocked": "tiks bloķēts",
       "dontCancel": "Neatcelt — paturēt šo pakalpojumu",
-      "yesCancel": "Jā, atcelt"
+      "yesCancel": "Jā, atcelt",
+      "compFreeUntil": "Bez maksas līdz {date}",
+      "compExplainer": "Šis papildinājums līdz tam ir bez maksas — tas neatjaunojas pats. Abonējiet tagad, lai to paturētu: karte tiek saglabāta šodien, un maksa sākas tikai pēc bezmaksas perioda beigām.",
+      "compSubscribeCta": "Abonēt, lai paturētu"
     },
     "setupWizard": {
       "heroBadgeLive": "Aktīvs",

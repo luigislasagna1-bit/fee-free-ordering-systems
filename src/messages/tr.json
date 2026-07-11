@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Bundan sonra eklenti kapanır — istediğiniz zaman yeniden abone olabilirsiniz.",
       "willBeLocked": "kilitlenecek",
       "dontCancel": "İptal etme — bu hizmeti koru",
-      "yesCancel": "Evet, iptal et"
+      "yesCancel": "Evet, iptal et",
+      "compFreeUntil": "{date} tarihine kadar ücretsiz",
+      "compExplainer": "Bu eklenti o tarihe kadar ücretsizdir — kendiliğinden yenilenmez. Elde tutmak için şimdi abone olun: kartınız bugün kaydedilir, ücretlendirme yalnızca ücretsiz dönem bitince başlar.",
+      "compSubscribeCta": "Devam ettirmek için abone olun"
     },
     "setupWizard": {
       "heroBadgeLive": "Yayında",

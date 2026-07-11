@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Etter det slås tillegget av — du kan abonnere på nytt når som helst.",
       "willBeLocked": "vil bli låst",
       "dontCancel": "Ikke kanseller — behold denne tjenesten",
-      "yesCancel": "Ja, kanseller"
+      "yesCancel": "Ja, kanseller",
+      "compFreeUntil": "Gratis til {date}",
+      "compExplainer": "Dette tillegget er gratis frem til da — det fornyes ikke av seg selv. Abonner nå for å beholde det: kortet lagres i dag, og fakturering starter først når gratisperioden er over.",
+      "compSubscribeCta": "Abonner for å beholde"
     },
     "setupWizard": {
       "heroBadgeLive": "Live",

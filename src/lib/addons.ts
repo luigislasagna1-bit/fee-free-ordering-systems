@@ -10,6 +10,7 @@
 
 import prisma from "@/lib/db";
 import { getStripe, stripeReady } from "@/lib/stripe";
+import { isComplimentaryAddOnRow } from "@/lib/addon-comp";
 
 /** Public listing — includes the restaurant's own subscription state. */
 export async function listAddOnsForRestaurant(restaurantId: string) {
@@ -45,6 +46,12 @@ export async function listAddOnsForRestaurant(restaurantId: string) {
           status: subBySlug.get(a.slug)!.status,
           currentPeriodEnd: subBySlug.get(a.slug)!.currentPeriodEnd,
           cancelAtPeriodEnd: subBySlug.get(a.slug)!.cancelAtPeriodEnd,
+          // Free partner period (Luigi 2026-07-10): a trialing row with no
+          // Stripe subscription is COMPLIMENTARY — it does not renew; the
+          // expire-addon-trials cron switches it off at trialEndsAt. The card
+          // must say so (and offer Subscribe) instead of "Renews automatically".
+          isComplimentary: isComplimentaryAddOnRow(subBySlug.get(a.slug)!),
+          trialEndsAt: subBySlug.get(a.slug)!.trialEndsAt,
         }
       : null,
   }));

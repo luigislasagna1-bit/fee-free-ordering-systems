@@ -1617,7 +1617,10 @@
       "modalAfterThatOff": "Po to papildinys išsijungia — galite prenumeruoti iš naujo bet kada.",
       "willBeLocked": "bus užblokuota",
       "dontCancel": "Neatšaukti — pasilaikyti šią paslaugą",
-      "yesCancel": "Taip, atšaukti"
+      "yesCancel": "Taip, atšaukti",
+      "compFreeUntil": "Nemokamai iki {date}",
+      "compExplainer": "Šis priedas iki tol nemokamas — jis savaime neatsinaujina. Užsiprenumeruokite dabar, kad jį išlaikytumėte: kortelė išsaugoma šiandien, o mokestis pradedamas skaičiuoti tik pasibaigus nemokamam laikotarpiui.",
+      "compSubscribeCta": "Prenumeruoti ir išlaikyti"
     },
     "setupWizard": {
       "heroBadgeLive": "Aktyvus",

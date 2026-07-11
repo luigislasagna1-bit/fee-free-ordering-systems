@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "その後、アドオンはオフになります — いつでも再サブスクライブできます。",
       "willBeLocked": "ロックされます",
       "dontCancel": "キャンセルしない — このサービスを維持する",
-      "yesCancel": "はい、キャンセルする"
+      "yesCancel": "はい、キャンセルする",
+      "compFreeUntil": "{date}まで無料",
+      "compExplainer": "このアドオンはその日まで無料です（自動更新はされません）。今すぐ購読すると継続できます。カードは本日保存され、請求は無料期間の終了後に始まります。",
+      "compSubscribeCta": "購読して継続する"
     },
     "setupWizard": {
       "heroBadgeLive": "公開中",

@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Dopo di ciò, il componente aggiuntivo si disattiva — puoi riabbonarti in qualsiasi momento.",
       "willBeLocked": "sarà bloccato",
       "dontCancel": "Non annullare — mantieni questo servizio",
-      "yesCancel": "Sì, annulla"
+      "yesCancel": "Sì, annulla",
+      "compFreeUntil": "Gratuito fino al {date}",
+      "compExplainer": "Questo componente aggiuntivo è in omaggio fino a quella data — non si rinnova da solo. Abbonati ora per mantenerlo: la carta viene salvata oggi e l'addebito parte solo alla fine del periodo gratuito.",
+      "compSubscribeCta": "Abbonati per mantenerlo"
     },
     "setupWizard": {
       "heroBadgeLive": "Online",

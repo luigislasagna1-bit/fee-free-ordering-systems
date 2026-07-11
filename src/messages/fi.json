@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Sen jälkeen lisäominaisuus poistuu käytöstä — voit tilata sen uudelleen milloin tahansa.",
       "willBeLocked": "lukitaan",
       "dontCancel": "Älä peruuta — pidä tämä palvelu",
-      "yesCancel": "Kyllä, peruuta"
+      "yesCancel": "Kyllä, peruuta",
+      "compFreeUntil": "Ilmainen {date} asti",
+      "compExplainer": "Tämä lisäosa on maksuton siihen asti — se ei uusiudu itsestään. Tilaa nyt pitääksesi sen: kortti tallennetaan tänään ja laskutus alkaa vasta ilmaisjakson päätyttyä.",
+      "compSubscribeCta": "Tilaa säilyttääksesi"
     },
     "setupWizard": {
       "heroBadgeLive": "Live",

@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Daarna wordt de add-on uitgeschakeld — u kunt zich op elk moment opnieuw abonneren.",
       "willBeLocked": "wordt vergrendeld",
       "dontCancel": "Niet annuleren — deze dienst behouden",
-      "yesCancel": "Ja, annuleren"
+      "yesCancel": "Ja, annuleren",
+      "compFreeUntil": "Gratis tot {date}",
+      "compExplainer": "Deze add-on is tot die datum gratis — hij verlengt zichzelf niet. Abonneer nu om hem te houden: je kaart wordt vandaag opgeslagen en de facturering begint pas als de gratis periode afloopt.",
+      "compSubscribeCta": "Abonneer en behoud"
     },
     "setupWizard": {
       "heroBadgeLive": "Live",

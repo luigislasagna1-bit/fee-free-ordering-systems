@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Potom sa doplnok vypne — môžete sa prihlásiť znovu kedykoľvek.",
       "willBeLocked": "bude zamknuté",
       "dontCancel": "Nezrušiť — ponechať túto službu",
-      "yesCancel": "Áno, zrušiť"
+      "yesCancel": "Áno, zrušiť",
+      "compFreeUntil": "Zadarmo do {date}",
+      "compExplainer": "Tento doplnok je dovtedy zadarmo — sám sa neobnovuje. Predplaťte si ho teraz, aby ste oň neprišli: karta sa uloží dnes a účtovanie začne až po skončení bezplatného obdobia.",
+      "compSubscribeCta": "Predplatiť a ponechať"
     },
     "setupWizard": {
       "heroBadgeLive": "Živé",

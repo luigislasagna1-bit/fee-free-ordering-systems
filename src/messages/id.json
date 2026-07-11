@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Setelah itu, add-on dinonaktifkan — Anda dapat berlangganan kembali kapan saja.",
       "willBeLocked": "akan dikunci",
       "dontCancel": "Jangan batalkan — pertahankan layanan ini",
-      "yesCancel": "Ya, batalkan"
+      "yesCancel": "Ya, batalkan",
+      "compFreeUntil": "Gratis hingga {date}",
+      "compExplainer": "Add-on ini gratis sampai saat itu — tidak diperpanjang otomatis. Berlangganan sekarang untuk mempertahankannya: kartu Anda disimpan hari ini dan penagihan baru dimulai saat periode gratis berakhir.",
+      "compSubscribeCta": "Berlangganan untuk mempertahankan"
     },
     "setupWizard": {
       "heroBadgeLive": "Aktif",

@@ -4,6 +4,10 @@ import { getSessionUser } from "@/lib/session";
 import { requireRestaurantAccess } from "@/lib/access";
 import { getStripe, stripeReady } from "@/lib/stripe";
 import { ensureStripeCustomerForRestaurant } from "@/lib/addons";
+import {
+  isComplimentaryAddOnRow,
+  complimentaryTrialCarryOverSec,
+} from "@/lib/addon-comp";
 import { getMarketplaceEligibility } from "@/lib/marketplace-eligibility";
 import { euVatSubscriptionBlock } from "@/lib/vies";
 
@@ -51,11 +55,16 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Block duplicate subscriptions
+  // Block duplicate subscriptions — EXCEPT free-partner-period rows
+  // (trialing, no Stripe sub): those must be convertible to a real paid
+  // subscription BEFORE the expire-addon-trials cron switches them off,
+  // otherwise the owner literally cannot subscribe until after service
+  // has already been interrupted (Luigi hit this on A1, 2026-07-11).
   const existing = await prisma.restaurantAddOn.findUnique({
     where: { restaurantId_addOnId: { restaurantId: user.restaurantId, addOnId: addOn.id } },
   });
-  if (existing && ["active", "trialing"].includes(existing.status)) {
+  const convertingComplimentary = isComplimentaryAddOnRow(existing);
+  if (existing && ["active", "trialing"].includes(existing.status) && !convertingComplimentary) {
     return NextResponse.json({ error: "already_subscribed" }, { status: 409 });
   }
 
@@ -105,6 +114,14 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // Converting a complimentary row: carry the remaining free days into
+  // Stripe as trial_end, so the card is attached NOW but the first charge
+  // lands when the promised free period ends — subscribing early must never
+  // mean paying for days that were already free. Near-expiry ends are clamped
+  // up to Stripe's 48h trial minimum (owner never billed EARLY); null only
+  // when the free period is already over → billing starts immediately.
+  const carryTrialEndSec = complimentaryTrialCarryOverSec(existing);
+
   const customerId = await ensureStripeCustomerForRestaurant(user.restaurantId);
   const stripe = await getStripe();
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || req.nextUrl.origin;
@@ -120,7 +137,9 @@ export async function POST(req: NextRequest) {
       },
       // No trial_period_days — we no longer offer add-on trials. The
       // trialDays column on AddOn is kept for legacy compatibility but
-      // is intentionally ignored here.
+      // is intentionally ignored here. trial_end below is NOT a trial in
+      // that sense: it defers billing on a free-partner-period conversion.
+      ...(carryTrialEndSec ? { trial_end: carryTrialEndSec } : {}),
     },
     metadata: {
       addOnSlug: addOn.slug,

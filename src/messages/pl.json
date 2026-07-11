@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Po tym czasie dodatek zostanie wyłączony — możesz ponownie subskrybować w dowolnym momencie.",
       "willBeLocked": "zostanie zablokowane",
       "dontCancel": "Nie anuluj — zachowaj tę usługę",
-      "yesCancel": "Tak, anuluj"
+      "yesCancel": "Tak, anuluj",
+      "compFreeUntil": "Bezpłatnie do {date}",
+      "compExplainer": "Ten dodatek jest do tego czasu bezpłatny — nie odnawia się sam. Subskrybuj teraz, aby go zachować: karta zostanie zapisana dziś, a opłaty zaczną się dopiero po zakończeniu darmowego okresu.",
+      "compSubscribeCta": "Subskrybuj, aby zachować"
     },
     "setupWizard": {
       "heroBadgeLive": "Na żywo",

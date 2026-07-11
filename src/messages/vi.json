@@ -1695,7 +1695,10 @@
       "modalAfterThatOff": "Sau đó, tiện ích tắt — bạn có thể đăng ký lại bất kỳ lúc nào.",
       "willBeLocked": "sẽ bị khóa",
       "dontCancel": "Không hủy — giữ dịch vụ này",
-      "yesCancel": "Có, hủy"
+      "yesCancel": "Có, hủy",
+      "compFreeUntil": "Miễn phí đến {date}",
+      "compExplainer": "Tiện ích này miễn phí đến lúc đó — nó không tự gia hạn. Đăng ký ngay để giữ lại: thẻ của bạn được lưu hôm nay và chỉ bắt đầu tính phí khi hết thời gian miễn phí.",
+      "compSubscribeCta": "Đăng ký để giữ lại"
     },
     "setupWizard": {
       "heroBadgeLive": "Đang hoạt động",
