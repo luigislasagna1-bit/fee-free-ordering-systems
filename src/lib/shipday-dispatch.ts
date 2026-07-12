@@ -40,7 +40,8 @@ export async function dispatchOrderNow(orderId: string): Promise<DispatchNowResu
       restaurantId: true, type: true, status: true, shipdayOrderId: true,
       orderNumber: true, customerName: true, customerEmail: true,
       customerPhone: true, deliveryAddress: true, deliveryCity: true,
-      deliveryZip: true, notes: true, subtotal: true, taxAmount: true,
+      deliveryZip: true, deliveryLat: true, deliveryLng: true,
+      notes: true, subtotal: true, taxAmount: true,
       deliveryFee: true, tip: true, total: true, creditApplied: true,
       paymentMethod: true, paymentStatus: true, preparationTime: true,
       items: { select: { name: true, quantity: true, price: true } },
@@ -83,6 +84,11 @@ export async function dispatchOrderNow(orderId: string): Promise<DispatchNowResu
     customerEmail: full.customerEmail,
     customerPhone: full.customerPhone,
     customerAddress,
+    // Exact checkout-time pin — ShipDay skips its own geocoding when
+    // coordinates are provided, so the driver goes where the customer
+    // actually pointed, not where the address string happens to resolve.
+    customerLat: full.deliveryLat,
+    customerLng: full.deliveryLng,
     restaurantName: full.restaurant.name,
     restaurantAddress,
     restaurantPhone: full.restaurant.phone,

@@ -19,7 +19,11 @@
 import prisma from "@/lib/db";
 import { decrypt } from "@/lib/encrypt";
 import { hasFeature } from "@/lib/entitlements";
-import { sanitizePhone } from "@/lib/phone";
+import { buildShipdayOrderBody, type DispatchInput } from "@/lib/shipday-payload";
+
+// Payload construction lives in the prisma-free shipday-payload.ts so its
+// contract is unit-tested; re-exported here for existing importers.
+export { buildShipdayOrderBody, type DispatchInput } from "@/lib/shipday-payload";
 
 const SHIPDAY_BASE_URL = "https://api.shipday.com";
 
@@ -129,43 +133,6 @@ export async function testShipdayKey(apiKey: string): Promise<{ ok: boolean; sta
   }
 }
 
-type DispatchInput = {
-  orderId: string;
-  orderNumber: string;
-  customerName: string;
-  customerEmail: string | null;
-  customerPhone: string | null;
-  customerAddress: string;
-  customerLat?: number | null;
-  customerLng?: number | null;
-  restaurantName: string;
-  restaurantAddress: string;
-  restaurantPhone: string | null;
-  restaurantLat?: number | null;
-  restaurantLng?: number | null;
-  /** Pre-tax subtotal in dollars. */
-  subtotal: number;
-  /** Tax in dollars. */
-  taxAmount: number;
-  /** Delivery fee in dollars (what the customer paid). */
-  deliveryFee: number;
-  /** Tip in dollars. */
-  tip: number;
-  /** Order total in dollars (gross — before store credit). */
-  total: number;
-  /** Reward Dollars / store credit already paid in dollars (Order.creditApplied).
-   *  Deducted from totalOrderCost so a COD driver collects total − credit,
-   *  never the gross total (Luigi 2026-07-02 money normalization). This is a
-   *  PAYMENT fact, not a display toggle — no rewardsEnabled gate. */
-  creditApplied?: number;
-  /** Restaurant-set prep time in minutes. Used to compute expectedPickupTime. */
-  preparationMinutes: number;
-  deliveryInstruction: string | null;
-  /** Line items for the ShipDay dashboard/driver app ({name, quantity,
-   *  unitPrice}). Optional — totals stay authoritative either way. */
-  items?: Array<{ name: string; quantity: number; unitPrice: number }>;
-};
-
 type ShipdayCreateResponse = {
   orderId?: number;
   orderNumber?: string;
@@ -191,55 +158,7 @@ export async function dispatchOrderToShipday(
     return { ok: false, error: "No ShipDay API key configured" };
   }
 
-  const pickupAt = new Date(Date.now() + input.preparationMinutes * 60_000);
-  const pickupAtIso = pickupAt.toISOString();
-  const pickupDate = pickupAtIso.slice(0, 10);
-  const pickupTime = pickupAtIso.slice(11, 19);
-  // Delivery ETA estimate = pickup + 25 min drive; ShipDay only uses these
-  // for display/ETA, drivers aren't held to them.
-  const deliveryAtIso = new Date(pickupAt.getTime() + 25 * 60_000).toISOString();
-
-  // ShipDay's contract (docs.shipday.com/reference/insert-delivery-order):
-  // expectedPickupTime / expectedDeliveryTime are TIME-ONLY "hh:mm:ss" (UTC) —
-  // a full ISO datetime here made ShipDay reject the insert with HTTP 200 +
-  // success:false (Luigi's first live test orders, 2026-07-12). Phones must be
-  // E.164 with country code — same sanitizer Twilio uses; if a number can't be
-  // normalized we send the raw digits and let ShipDay's (now-surfaced) error
-  // say so rather than silently dropping a required field.
-  const body: Record<string, unknown> = {
-    orderNumber: input.orderNumber,
-    customerName: input.customerName,
-    customerAddress: input.customerAddress,
-    customerEmail: input.customerEmail ?? undefined,
-    customerPhoneNumber: sanitizePhone(input.customerPhone) ?? input.customerPhone ?? undefined,
-    restaurantName: input.restaurantName,
-    restaurantAddress: input.restaurantAddress,
-    restaurantPhoneNumber: sanitizePhone(input.restaurantPhone) ?? input.restaurantPhone ?? undefined,
-    expectedPickupTime: pickupTime,
-    expectedDeliveryDate: deliveryAtIso.slice(0, 10),
-    expectedDeliveryTime: deliveryAtIso.slice(11, 19),
-    // Line items — so the ShipDay dashboard + driver app show WHAT the order
-    // is, not just totals (GloriaFood parity).
-    orderItem: (input.items ?? []).map((i) => ({
-      name: i.name,
-      quantity: i.quantity,
-      unitPrice: Math.round(i.unitPrice * 100) / 100,
-    })),
-    pickupLatitude: input.restaurantLat ?? undefined,
-    pickupLongitude: input.restaurantLng ?? undefined,
-    deliveryLatitude: input.customerLat ?? undefined,
-    deliveryLongitude: input.customerLng ?? undefined,
-    tips: input.tip,
-    tax: input.taxAmount,
-    deliveryFee: input.deliveryFee,
-    // What the driver actually collects on COD: total minus any store credit
-    // the customer already paid with. Sending the gross total made drivers
-    // over-collect on credit-part-paid orders.
-    totalOrderCost: Math.round(Math.max(0, input.total - (input.creditApplied ?? 0)) * 100) / 100,
-    deliveryInstruction: input.deliveryInstruction ?? undefined,
-    orderSource: "Fee Free Ordering",
-    additionalId: input.orderId,
-  };
+  const body = buildShipdayOrderBody(input, new Date());
 
   try {
     const res = await fetch(`${SHIPDAY_BASE_URL}/orders`, {
