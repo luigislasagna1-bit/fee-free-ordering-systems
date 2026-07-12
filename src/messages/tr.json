@@ -1404,7 +1404,15 @@
       "rejectReason": "Red Sebebi",
       "noOrders": "Henüz sipariş yok",
       "viewDetails": "Ayrıntıları Gör",
-      "hasNotes": "Notlu"
+      "hasNotes": "Notlu",
+      "shipdayTitle": "ShipDay teslimatı",
+      "shipdaySent": "ShipDay'e gönderildi",
+      "shipdayNotSent": "ShipDay'e gönderilmedi",
+      "shipdaySendButton": "ShipDay'e gönder",
+      "shipdaySending": "Gönderiliyor…",
+      "shipdaySendSuccess": "Sipariş ShipDay'de — sevkiyat panelinizi kontrol edin.",
+      "shipdaySendError": "ShipDay siparişi reddetti: {error}",
+      "shipdaySkipped": "Gönderilmedi — {reason}"
     },
     "customers": {
       "title": "Müşteriler",

@@ -1404,7 +1404,15 @@
       "rejectReason": "Avsvisningsårsak",
       "noOrders": "Ingen bestillinger ennå",
       "viewDetails": "Vis detaljer",
-      "hasNotes": "Har notater"
+      "hasNotes": "Har notater",
+      "shipdayTitle": "ShipDay-levering",
+      "shipdaySent": "Sendt til ShipDay",
+      "shipdayNotSent": "Ikke sendt til ShipDay",
+      "shipdaySendButton": "Send til ShipDay",
+      "shipdaySending": "Sender…",
+      "shipdaySendSuccess": "Bestillingen er hos ShipDay — sjekk dispatch-dashbordet ditt.",
+      "shipdaySendError": "ShipDay avviste bestillingen: {error}",
+      "shipdaySkipped": "Ikke sendt — {reason}"
     },
     "customers": {
       "title": "Kunder",

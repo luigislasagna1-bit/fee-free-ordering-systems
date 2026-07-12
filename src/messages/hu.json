@@ -1404,7 +1404,15 @@
       "rejectReason": "Visszautasítás oka",
       "noOrders": "Még nincsenek rendelések",
       "viewDetails": "Részletek megtekintése",
-      "hasNotes": "Megjegyzéssel"
+      "hasNotes": "Megjegyzéssel",
+      "shipdayTitle": "ShipDay-szállítás",
+      "shipdaySent": "Elküldve a ShipDay-nek",
+      "shipdayNotSent": "Nincs elküldve a ShipDay-nek",
+      "shipdaySendButton": "Küldés a ShipDay-nek",
+      "shipdaySending": "Küldés…",
+      "shipdaySendSuccess": "A rendelés a ShipDay-nél van — ellenőrizze a diszpécser-irányítópultot.",
+      "shipdaySendError": "A ShipDay elutasította a rendelést: {error}",
+      "shipdaySkipped": "Nincs elküldve — {reason}"
     },
     "customers": {
       "title": "Ügyfelek",

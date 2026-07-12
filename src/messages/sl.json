@@ -1404,7 +1404,15 @@
       "rejectReason": "Razlog zavrnitve",
       "noOrders": "Še ni naročil",
       "viewDetails": "Ogled podrobnosti",
-      "hasNotes": "Z opombami"
+      "hasNotes": "Z opombami",
+      "shipdayTitle": "Dostava ShipDay",
+      "shipdaySent": "Poslano v ShipDay",
+      "shipdayNotSent": "Ni poslano v ShipDay",
+      "shipdaySendButton": "Pošlji v ShipDay",
+      "shipdaySending": "Pošiljanje…",
+      "shipdaySendSuccess": "Naročilo je v ShipDayu — preverite nadzorno ploščo za odpremo.",
+      "shipdaySendError": "ShipDay je zavrnil naročilo: {error}",
+      "shipdaySkipped": "Ni poslano — {reason}"
     },
     "customers": {
       "title": "Stranke",

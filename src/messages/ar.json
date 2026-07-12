@@ -1404,7 +1404,15 @@
       "rejectReason": "سبب الرفض",
       "noOrders": "لا طلبات بعد",
       "viewDetails": "عرض التفاصيل",
-      "hasNotes": "بها ملاحظات"
+      "hasNotes": "بها ملاحظات",
+      "shipdayTitle": "توصيل ShipDay",
+      "shipdaySent": "تم الإرسال إلى ShipDay",
+      "shipdayNotSent": "لم يُرسل إلى ShipDay",
+      "shipdaySendButton": "إرسال إلى ShipDay",
+      "shipdaySending": "جاري الإرسال…",
+      "shipdaySendSuccess": "الطلب موجود على ShipDay — تحقّق من لوحة الإرسال الخاصة بك.",
+      "shipdaySendError": "رفض ShipDay الطلب: {error}",
+      "shipdaySkipped": "لم يُرسل — {reason}"
     },
     "customers": {
       "title": "العملاء",

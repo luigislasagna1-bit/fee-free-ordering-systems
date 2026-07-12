@@ -1404,7 +1404,15 @@
       "rejectReason": "거절 사유",
       "noOrders": "아직 주문이 없습니다",
       "viewDetails": "상세 보기",
-      "hasNotes": "메모 있음"
+      "hasNotes": "메모 있음",
+      "shipdayTitle": "ShipDay 배달",
+      "shipdaySent": "ShipDay로 전송됨",
+      "shipdayNotSent": "ShipDay로 전송되지 않음",
+      "shipdaySendButton": "ShipDay로 전송",
+      "shipdaySending": "발송 중…",
+      "shipdaySendSuccess": "주문이 ShipDay에 등록되었습니다 — 배차 대시보드를 확인하세요.",
+      "shipdaySendError": "ShipDay가 주문을 거부했습니다: {error}",
+      "shipdaySkipped": "전송되지 않음 — {reason}"
     },
     "customers": {
       "title": "고객",

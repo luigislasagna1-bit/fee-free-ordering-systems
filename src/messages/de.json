@@ -1404,7 +1404,15 @@
       "rejectReason": "Ablehnungsgrund",
       "noOrders": "Noch keine Bestellungen",
       "viewDetails": "Details anzeigen",
-      "hasNotes": "Mit Notizen"
+      "hasNotes": "Mit Notizen",
+      "shipdayTitle": "ShipDay-Lieferung",
+      "shipdaySent": "An ShipDay gesendet",
+      "shipdayNotSent": "Nicht an ShipDay gesendet",
+      "shipdaySendButton": "An ShipDay senden",
+      "shipdaySending": "Wird gesendet…",
+      "shipdaySendSuccess": "Die Bestellung ist bei ShipDay — prüfen Sie Ihr Dispatch-Dashboard.",
+      "shipdaySendError": "ShipDay hat die Bestellung abgelehnt: {error}",
+      "shipdaySkipped": "Nicht gesendet — {reason}"
     },
     "customers": {
       "title": "Kunden",

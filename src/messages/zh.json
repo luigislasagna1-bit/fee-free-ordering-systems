@@ -1404,7 +1404,15 @@
       "rejectReason": "拒绝原因",
       "noOrders": "暂无订单",
       "viewDetails": "查看详情",
-      "hasNotes": "有备注"
+      "hasNotes": "有备注",
+      "shipdayTitle": "ShipDay 配送",
+      "shipdaySent": "已发送至 ShipDay",
+      "shipdayNotSent": "未发送至 ShipDay",
+      "shipdaySendButton": "发送至 ShipDay",
+      "shipdaySending": "发送中…",
+      "shipdaySendSuccess": "订单已在 ShipDay 上 — 请查看您的调度仪表盘。",
+      "shipdaySendError": "ShipDay 拒绝了该订单：{error}",
+      "shipdaySkipped": "未发送 — {reason}"
     },
     "customers": {
       "title": "顾客",

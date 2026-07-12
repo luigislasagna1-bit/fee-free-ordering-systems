@@ -1404,7 +1404,15 @@
       "rejectReason": "เหตุผลที่ปฏิเสธ",
       "noOrders": "ยังไม่มีออเดอร์",
       "viewDetails": "ดูรายละเอียด",
-      "hasNotes": "มีหมายเหตุ"
+      "hasNotes": "มีหมายเหตุ",
+      "shipdayTitle": "การจัดส่ง ShipDay",
+      "shipdaySent": "ส่งไปยัง ShipDay แล้ว",
+      "shipdayNotSent": "ยังไม่ได้ส่งไปยัง ShipDay",
+      "shipdaySendButton": "ส่งไปยัง ShipDay",
+      "shipdaySending": "กำลังส่ง…",
+      "shipdaySendSuccess": "ออเดอร์อยู่บน ShipDay แล้ว — ตรวจสอบแดชบอร์ดการจัดส่งของคุณ",
+      "shipdaySendError": "ShipDay ปฏิเสธออเดอร์: {error}",
+      "shipdaySkipped": "ไม่ได้ส่ง — {reason}"
     },
     "customers": {
       "title": "ลูกค้า",

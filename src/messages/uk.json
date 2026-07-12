@@ -1404,7 +1404,15 @@
       "rejectReason": "Причина відхилення",
       "noOrders": "Поки немає замовлень",
       "viewDetails": "Переглянути деталі",
-      "hasNotes": "Є нотатки"
+      "hasNotes": "Є нотатки",
+      "shipdayTitle": "Доставка ShipDay",
+      "shipdaySent": "Надіслано до ShipDay",
+      "shipdayNotSent": "Не надіслано до ShipDay",
+      "shipdaySendButton": "Надіслати до ShipDay",
+      "shipdaySending": "Надсилання…",
+      "shipdaySendSuccess": "Замовлення в ShipDay — перевірте свою диспетчерську панель.",
+      "shipdaySendError": "ShipDay відхилив замовлення: {error}",
+      "shipdaySkipped": "Не надіслано — {reason}"
     },
     "customers": {
       "title": "Клієнти",

@@ -1404,7 +1404,15 @@
       "rejectReason": "Λόγος απόρριψης",
       "noOrders": "Δεν υπάρχουν παραγγελίες ακόμα",
       "viewDetails": "Προβολή λεπτομερειών",
-      "hasNotes": "Με σημειώσεις"
+      "hasNotes": "Με σημειώσεις",
+      "shipdayTitle": "Παράδοση ShipDay",
+      "shipdaySent": "Στάλθηκε στο ShipDay",
+      "shipdayNotSent": "Δεν στάλθηκε στο ShipDay",
+      "shipdaySendButton": "Αποστολή στο ShipDay",
+      "shipdaySending": "Αποστολή…",
+      "shipdaySendSuccess": "Η παραγγελία είναι στο ShipDay — ελέγξτε τον πίνακα αποστολών σας.",
+      "shipdaySendError": "Το ShipDay απέρριψε την παραγγελία: {error}",
+      "shipdaySkipped": "Δεν στάλθηκε — {reason}"
     },
     "customers": {
       "title": "Πελάτες",

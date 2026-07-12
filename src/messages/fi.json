@@ -1404,7 +1404,15 @@
       "rejectReason": "Hylkäyksen syy",
       "noOrders": "Ei tilauksia vielä",
       "viewDetails": "Näytä tiedot",
-      "hasNotes": "Sisältää muistiinpanoja"
+      "hasNotes": "Sisältää muistiinpanoja",
+      "shipdayTitle": "ShipDay-toimitus",
+      "shipdaySent": "Lähetetty ShipDay-palveluun",
+      "shipdayNotSent": "Ei lähetetty ShipDay-palveluun",
+      "shipdaySendButton": "Lähetä ShipDay-palveluun",
+      "shipdaySending": "Lähetetään…",
+      "shipdaySendSuccess": "Tilaus on ShipDay-palvelussa — tarkista toimitusten kojelauta.",
+      "shipdaySendError": "ShipDay hylkäsi tilauksen: {error}",
+      "shipdaySkipped": "Ei lähetetty — {reason}"
     },
     "customers": {
       "title": "Asiakkaat",

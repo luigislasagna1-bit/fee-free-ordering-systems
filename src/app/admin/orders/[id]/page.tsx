@@ -10,6 +10,7 @@ import { resolveReportScope } from "@/lib/reports/report-scope";
 import { formatCurrency } from "@/lib/utils";
 import { getOrderRewardSummary } from "@/lib/reward-ledger";
 import { paymentMethodLabelKey } from "@/lib/payment-label";
+import { ShipdayDispatchCard } from "./ShipdayDispatchCard";
 
 /**
  * Admin order-detail page. The reports List View links each order here
@@ -104,6 +105,21 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
   })();
   const refunded = order.refundedAmount ?? 0;
 
+  // ShipDay card — delivery orders where dispatch is configured (or the order
+  // already carries dispatch state). Single indexed lookup; not a hot path.
+  const shipdayCfg = isDelivery
+    ? await prisma.shipdayConfig.findUnique({
+        where: { restaurantId: order.restaurantId },
+        select: { enabled: true, apiKeyEnc: true, deliverySource: true },
+      })
+    : null;
+  const shipdayConfigOn =
+    !!shipdayCfg?.enabled && !!shipdayCfg.apiKeyEnc && shipdayCfg.deliverySource !== "own";
+  const showShipdayCard = isDelivery && (shipdayConfigOn || !!order.shipdayOrderId);
+  const dispatchedAtLabel = order.dispatchedAt
+    ? order.dispatchedAt.toLocaleString([], { timeZone: tz, month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })
+    : null;
+
   return (
     <div className="max-w-3xl mx-auto p-4 sm:p-6">
       <Link href="/admin/reports/list/orders" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800 mb-4">
@@ -129,6 +145,17 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
           <span aria-hidden>📅</span>
           <span>{isDelivery ? "Deliver " : "Ready for pickup "}{scheduledAt}</span>
         </div>
+      )}
+
+      {showShipdayCard && (
+        <ShipdayDispatchCard
+          orderId={order.id}
+          orderStatus={order.status}
+          shipdayOrderId={order.shipdayOrderId ?? null}
+          shipdayStatus={order.shipdayStatus ?? null}
+          dispatchedAtLabel={dispatchedAtLabel}
+          configOn={shipdayConfigOn}
+        />
       )}
 
       <div className="grid md:grid-cols-2 gap-4">

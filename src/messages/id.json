@@ -1404,7 +1404,15 @@
       "rejectReason": "Alasan penolakan",
       "noOrders": "Belum ada pesanan",
       "viewDetails": "Lihat detail",
-      "hasNotes": "Ada catatan"
+      "hasNotes": "Ada catatan",
+      "shipdayTitle": "Pengiriman ShipDay",
+      "shipdaySent": "Terkirim ke ShipDay",
+      "shipdayNotSent": "Belum dikirim ke ShipDay",
+      "shipdaySendButton": "Kirim ke ShipDay",
+      "shipdaySending": "Mengirim…",
+      "shipdaySendSuccess": "Pesanan sudah ada di ShipDay — periksa dasbor pengiriman Anda.",
+      "shipdaySendError": "ShipDay menolak pesanan: {error}",
+      "shipdaySkipped": "Tidak dikirim — {reason}"
     },
     "customers": {
       "title": "Pelanggan",

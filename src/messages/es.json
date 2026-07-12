@@ -1393,7 +1393,15 @@
       "rejectReason": "Razón del rechazo",
       "noOrders": "Aún no hay pedidos",
       "viewDetails": "Ver detalles",
-      "hasNotes": "Con notas"
+      "hasNotes": "Con notas",
+      "shipdayTitle": "Entrega ShipDay",
+      "shipdaySent": "Enviado a ShipDay",
+      "shipdayNotSent": "No enviado a ShipDay",
+      "shipdaySendButton": "Enviar a ShipDay",
+      "shipdaySending": "Enviando…",
+      "shipdaySendSuccess": "El pedido está en ShipDay — revisa tu panel de despacho.",
+      "shipdaySendError": "ShipDay rechazó el pedido: {error}",
+      "shipdaySkipped": "No enviado — {reason}"
     },
     "customers": {
       "title": "Clientes",

@@ -1404,7 +1404,15 @@
       "rejectReason": "Motiu del rebuig",
       "noOrders": "Encara no hi ha comandes",
       "viewDetails": "Veure detalls",
-      "hasNotes": "Amb notes"
+      "hasNotes": "Amb notes",
+      "shipdayTitle": "Lliurament ShipDay",
+      "shipdaySent": "Enviada a ShipDay",
+      "shipdayNotSent": "No enviada a ShipDay",
+      "shipdaySendButton": "Envia a ShipDay",
+      "shipdaySending": "Enviant…",
+      "shipdaySendSuccess": "La comanda és a ShipDay — reviseu el vostre tauler de repartiment.",
+      "shipdaySendError": "ShipDay ha rebutjat la comanda: {error}",
+      "shipdaySkipped": "No enviada — {reason}"
     },
     "customers": {
       "title": "Clients",

@@ -1404,7 +1404,15 @@
       "rejectReason": "Motiv respingere",
       "noOrders": "Nicio comandă încă",
       "viewDetails": "Vezi detalii",
-      "hasNotes": "Cu note"
+      "hasNotes": "Cu note",
+      "shipdayTitle": "Livrare ShipDay",
+      "shipdaySent": "Trimisă la ShipDay",
+      "shipdayNotSent": "Netrimisă la ShipDay",
+      "shipdaySendButton": "Trimite la ShipDay",
+      "shipdaySending": "Se trimite…",
+      "shipdaySendSuccess": "Comanda este pe ShipDay — verificați panoul dvs. de dispecerat.",
+      "shipdaySendError": "ShipDay a refuzat comanda: {error}",
+      "shipdaySkipped": "Netrimisă — {reason}"
     },
     "customers": {
       "title": "Clienți",

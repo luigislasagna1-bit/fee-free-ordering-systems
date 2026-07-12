@@ -1404,7 +1404,15 @@
       "rejectReason": "Причина отказа",
       "noOrders": "Заказов пока нет",
       "viewDetails": "Подробности",
-      "hasNotes": "Есть заметки"
+      "hasNotes": "Есть заметки",
+      "shipdayTitle": "Доставка ShipDay",
+      "shipdaySent": "Отправлено в ShipDay",
+      "shipdayNotSent": "Не отправлено в ShipDay",
+      "shipdaySendButton": "Отправить в ShipDay",
+      "shipdaySending": "Отправка…",
+      "shipdaySendSuccess": "Заказ в ShipDay — проверьте свою диспетчерскую панель.",
+      "shipdaySendError": "ShipDay отклонил заказ: {error}",
+      "shipdaySkipped": "Не отправлено — {reason}"
     },
     "customers": {
       "title": "Клиенты",

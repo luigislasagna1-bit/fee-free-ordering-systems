@@ -1404,7 +1404,15 @@
       "rejectReason": "Razlog odbijanja",
       "noOrders": "Još nema porudžbina",
       "viewDetails": "Pogledaj detalje",
-      "hasNotes": "Има напомене"
+      "hasNotes": "Има напомене",
+      "shipdayTitle": "ShipDay dostava",
+      "shipdaySent": "Poslata na ShipDay",
+      "shipdayNotSent": "Nije poslata na ShipDay",
+      "shipdaySendButton": "Pošalji na ShipDay",
+      "shipdaySending": "Slanje…",
+      "shipdaySendSuccess": "Porudžbina je na ShipDayu — proverite svoju dispečersku tablu.",
+      "shipdaySendError": "ShipDay je odbio porudžbinu: {error}",
+      "shipdaySkipped": "Nije poslata — {reason}"
     },
     "customers": {
       "title": "Kupci",

@@ -1404,7 +1404,15 @@
       "rejectReason": "Lý do từ chối",
       "noOrders": "Chưa có đơn hàng",
       "viewDetails": "Xem chi tiết",
-      "hasNotes": "Có ghi chú"
+      "hasNotes": "Có ghi chú",
+      "shipdayTitle": "Giao hàng ShipDay",
+      "shipdaySent": "Đã gửi đến ShipDay",
+      "shipdayNotSent": "Chưa gửi đến ShipDay",
+      "shipdaySendButton": "Gửi đến ShipDay",
+      "shipdaySending": "Đang gửi…",
+      "shipdaySendSuccess": "Đơn hàng đã có trên ShipDay — hãy kiểm tra bảng điều khiển điều phối của bạn.",
+      "shipdaySendError": "ShipDay đã từ chối đơn hàng: {error}",
+      "shipdaySkipped": "Chưa gửi — {reason}"
     },
     "customers": {
       "title": "Khách hàng",

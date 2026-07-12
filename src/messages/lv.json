@@ -1404,7 +1404,15 @@
       "rejectReason": "Noraidīšanas iemesls",
       "noOrders": "Vēl nav pasūtījumu",
       "viewDetails": "Skatīt detaļas",
-      "hasNotes": "Ar piezīmēm"
+      "hasNotes": "Ar piezīmēm",
+      "shipdayTitle": "ShipDay piegāde",
+      "shipdaySent": "Nosūtīts uz ShipDay",
+      "shipdayNotSent": "Nav nosūtīts uz ShipDay",
+      "shipdaySendButton": "Nosūtīt uz ShipDay",
+      "shipdaySending": "Sūta…",
+      "shipdaySendSuccess": "Pasūtījums ir ShipDay sistēmā — pārbaudiet savu dispečera paneli.",
+      "shipdaySendError": "ShipDay noraidīja pasūtījumu: {error}",
+      "shipdaySkipped": "Nav nosūtīts — {reason}"
     },
     "customers": {
       "title": "Klienti",

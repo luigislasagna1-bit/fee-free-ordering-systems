@@ -1404,7 +1404,15 @@
       "rejectReason": "Dôvod odmietnutia",
       "noOrders": "Zatiaľ žiadne objednávky",
       "viewDetails": "Zobraziť detaily",
-      "hasNotes": "S poznámkami"
+      "hasNotes": "S poznámkami",
+      "shipdayTitle": "Doručenie cez ShipDay",
+      "shipdaySent": "Odoslané do ShipDay",
+      "shipdayNotSent": "Neodoslané do ShipDay",
+      "shipdaySendButton": "Odoslať do ShipDay",
+      "shipdaySending": "Odosielam…",
+      "shipdaySendSuccess": "Objednávka je v ShipDay — skontrolujte svoj dispečerský panel.",
+      "shipdaySendError": "ShipDay objednávku odmietol: {error}",
+      "shipdaySkipped": "Neodoslané — {reason}"
     },
     "customers": {
       "title": "Zákazníci",

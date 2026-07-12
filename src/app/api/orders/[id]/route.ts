@@ -17,7 +17,8 @@ import {
 import { isStripeAlreadyCaptured, isPaypalAlreadyCaptured } from "@/lib/capture-idempotency";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
-import { dispatchOrderToShipday, cancelShipdayOrder, shouldDispatchToShipday } from "@/lib/shipday";
+import { cancelShipdayOrder } from "@/lib/shipday";
+import { dispatchOrderNow } from "@/lib/shipday-dispatch";
 import { verifyOrderToken } from "@/lib/order-status-token";
 import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { redeemForOrder as redeemRewardForOrder, releaseForOrder as releaseRewardForOrder, refundForOrder as refundRewardForOrder, awardForOrder as awardRewardForOrder, getOrderRewardSummary } from "@/lib/reward-ledger";
@@ -610,77 +611,15 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   // the shipdayOrderId fills in within a second or two.
   if (newStatus === "accepted" && existing.type === "delivery" && !existing.shipdayOrderId) {
     after(
-      (async () => {
-        try {
-          const should = await shouldDispatchToShipday(existing.restaurantId);
-          if (!should) return;
-          // Pull the full order + restaurant context now (we couldn't put
-          // everything in the existing select — would have been wasteful
-          // for orders that don't need it).
-          const full = await prisma.order.findUnique({
-            where: { id },
-            select: {
-              orderNumber: true, customerName: true, customerEmail: true,
-              customerPhone: true, deliveryAddress: true, deliveryCity: true,
-              deliveryZip: true, notes: true, subtotal: true, taxAmount: true,
-              deliveryFee: true, tip: true, total: true, creditApplied: true,
-              paymentMethod: true, paymentStatus: true, preparationTime: true,
-              restaurant: { select: { name: true, address: true, city: true, state: true, zip: true, phone: true, lat: true, lng: true } },
-            },
-          });
-          if (!full) return;
-          const customerAddress = [full.deliveryAddress, full.deliveryCity, full.deliveryZip].filter(Boolean).join(", ");
-          const restaurantAddress = [full.restaurant.address, full.restaurant.city, full.restaurant.state, full.restaurant.zip].filter(Boolean).join(", ");
-          if (!customerAddress || !restaurantAddress) {
-            console.error("[orders PATCH] ShipDay dispatch skipped — missing address", { orderId: id });
-            return;
+      dispatchOrderNow(id)
+        .then((r) => {
+          if (!r.ok && !r.skipped) {
+            // ShipDay itself rejected — surfaced in the admin order page's
+            // ShipDay card (Send/Retry button), which shares this code path.
+            console.error("[orders PATCH] ShipDay rejected the dispatch", { orderId: id, error: r.error });
           }
-          // ShipDay orders MUST be prepaid (Luigi 2026-07-04): the driver only
-          // picks up + drops off — an unpaid order would be uncollectable. The
-          // checkout + order route already block this; this guard covers edge
-          // paths (admin-created orders, legacy data). "Prepaid" = the online
-          // charge captured OR store credit covering the whole total.
-          const fullyPrepaid =
-            full.paymentStatus === "paid" ||
-            full.total - (full.creditApplied ?? 0) <= 0.009;
-          if (!fullyPrepaid) {
-            console.warn(
-              `[orders PATCH] ShipDay dispatch REFUSED for ${id}: order not prepaid ` +
-              `(method=${full.paymentMethod}, status=${full.paymentStatus}) — ShipDay drivers can't collect at the door.`,
-            );
-            return;
-          }
-          const res = await dispatchOrderToShipday(existing.restaurantId, {
-            orderId: id,
-            orderNumber: full.orderNumber,
-            customerName: full.customerName,
-            customerEmail: full.customerEmail,
-            customerPhone: full.customerPhone,
-            customerAddress,
-            restaurantName: full.restaurant.name,
-            restaurantAddress,
-            restaurantPhone: full.restaurant.phone,
-            restaurantLat: full.restaurant.lat,
-            restaurantLng: full.restaurant.lng,
-            subtotal: full.subtotal,
-            taxAmount: full.taxAmount,
-            deliveryFee: full.deliveryFee,
-            tip: full.tip ?? 0,
-            total: full.total,
-            creditApplied: full.creditApplied ?? 0,
-            preparationMinutes: full.preparationTime ?? 30,
-            deliveryInstruction: full.notes,
-          });
-          if (res.ok && res.shipdayOrderId) {
-            await prisma.order.update({
-              where: { id },
-              data: { shipdayOrderId: res.shipdayOrderId, shipdayStatus: "assigned", dispatchedAt: new Date() },
-            });
-          }
-        } catch (e) {
-          console.error("[orders PATCH] ShipDay dispatch threw:", e);
-        }
-      })(),
+        })
+        .catch((e) => console.error("[orders PATCH] ShipDay dispatch threw:", e)),
     );
   }
 

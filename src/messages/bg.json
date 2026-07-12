@@ -1404,7 +1404,15 @@
       "rejectReason": "Причина за отказ",
       "noOrders": "Все още няма поръчки",
       "viewDetails": "Виж детайли",
-      "hasNotes": "С бележки"
+      "hasNotes": "С бележки",
+      "shipdayTitle": "Доставка чрез ShipDay",
+      "shipdaySent": "Изпратена към ShipDay",
+      "shipdayNotSent": "Не е изпратена към ShipDay",
+      "shipdaySendButton": "Изпрати към ShipDay",
+      "shipdaySending": "Изпращане…",
+      "shipdaySendSuccess": "Поръчката е в ShipDay — проверете диспечерското си табло.",
+      "shipdaySendError": "ShipDay отказа поръчката: {error}",
+      "shipdaySkipped": "Не е изпратена — {reason}"
     },
     "customers": {
       "title": "Клиенти",

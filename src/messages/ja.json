@@ -1404,7 +1404,15 @@
       "rejectReason": "断る理由",
       "noOrders": "まだ注文はありません",
       "viewDetails": "詳細を見る",
-      "hasNotes": "メモあり"
+      "hasNotes": "メモあり",
+      "shipdayTitle": "ShipDay デリバリー",
+      "shipdaySent": "ShipDay に送信済み",
+      "shipdayNotSent": "ShipDay に未送信",
+      "shipdaySendButton": "ShipDay に送信",
+      "shipdaySending": "送信中…",
+      "shipdaySendSuccess": "注文は ShipDay に登録されました — 配車ダッシュボードをご確認ください。",
+      "shipdaySendError": "ShipDay が注文を拒否しました：{error}",
+      "shipdaySkipped": "未送信 — {reason}"
     },
     "customers": {
       "title": "顧客",

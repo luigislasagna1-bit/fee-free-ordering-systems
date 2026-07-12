@@ -1404,7 +1404,15 @@
       "rejectReason": "Atmetimo priežastis",
       "noOrders": "Dar nėra užsakymų",
       "viewDetails": "Peržiūrėti detales",
-      "hasNotes": "Su pastabomis"
+      "hasNotes": "Su pastabomis",
+      "shipdayTitle": "ShipDay pristatymas",
+      "shipdaySent": "Išsiųsta į ShipDay",
+      "shipdayNotSent": "Neišsiųsta į ShipDay",
+      "shipdaySendButton": "Siųsti į ShipDay",
+      "shipdaySending": "Siunčiama…",
+      "shipdaySendSuccess": "Užsakymas jau ShipDay sistemoje — patikrinkite savo dispečerio skydelį.",
+      "shipdaySendError": "ShipDay atmetė užsakymą: {error}",
+      "shipdaySkipped": "Neišsiųsta — {reason}"
     },
     "customers": {
       "title": "Klientai",

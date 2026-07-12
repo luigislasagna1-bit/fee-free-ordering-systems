@@ -1404,7 +1404,15 @@
       "rejectReason": "Powód odrzucenia",
       "noOrders": "Brak zamówień",
       "viewDetails": "Zobacz szczegóły",
-      "hasNotes": "Z notatkami"
+      "hasNotes": "Z notatkami",
+      "shipdayTitle": "Dostawa ShipDay",
+      "shipdaySent": "Wysłano do ShipDay",
+      "shipdayNotSent": "Nie wysłano do ShipDay",
+      "shipdaySendButton": "Wyślij do ShipDay",
+      "shipdaySending": "Wysyłanie…",
+      "shipdaySendSuccess": "Zamówienie jest w ShipDay — sprawdź swój panel dyspozytorski.",
+      "shipdaySendError": "ShipDay odrzucił zamówienie: {error}",
+      "shipdaySkipped": "Nie wysłano — {reason}"
     },
     "customers": {
       "title": "Klienci",

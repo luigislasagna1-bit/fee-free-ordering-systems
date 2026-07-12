@@ -1404,7 +1404,15 @@
       "rejectReason": "סיבת דחייה",
       "noOrders": "אין הזמנות עדיין",
       "viewDetails": "צפה בפרטים",
-      "hasNotes": "יש הערות"
+      "hasNotes": "יש הערות",
+      "shipdayTitle": "משלוח ShipDay",
+      "shipdaySent": "נשלח ל-ShipDay",
+      "shipdayNotSent": "לא נשלח ל-ShipDay",
+      "shipdaySendButton": "שלח ל-ShipDay",
+      "shipdaySending": "שולח…",
+      "shipdaySendSuccess": "ההזמנה נמצאת ב-ShipDay — בדוק את לוח השילוח שלך.",
+      "shipdaySendError": "ShipDay דחה את ההזמנה: {error}",
+      "shipdaySkipped": "לא נשלח — {reason}"
     },
     "customers": {
       "title": "לקוחות",

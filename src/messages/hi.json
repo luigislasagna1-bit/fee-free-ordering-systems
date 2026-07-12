@@ -1476,7 +1476,15 @@
       "rejectReason": "अस्वीकृति का कारण",
       "noOrders": "अभी तक कोई ऑर्डर नहीं",
       "viewDetails": "विवरण देखें",
-      "hasNotes": "नोट्स के साथ"
+      "hasNotes": "नोट्स के साथ",
+      "shipdayTitle": "ShipDay डिलीवरी",
+      "shipdaySent": "ShipDay को भेजा गया",
+      "shipdayNotSent": "ShipDay को नहीं भेजा गया",
+      "shipdaySendButton": "ShipDay को भेजें",
+      "shipdaySending": "भेजा जा रहा है…",
+      "shipdaySendSuccess": "ऑर्डर ShipDay पर है — अपना डिस्पैच डैशबोर्ड देखें।",
+      "shipdaySendError": "ShipDay ने ऑर्डर अस्वीकार कर दिया: {error}",
+      "shipdaySkipped": "नहीं भेजा गया — {reason}"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "किचन वर्कफ़्लो",

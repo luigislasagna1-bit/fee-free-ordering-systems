@@ -1404,7 +1404,15 @@
       "rejectReason": "Reden voor afwijzing",
       "noOrders": "Nog geen bestellingen",
       "viewDetails": "Details bekijken",
-      "hasNotes": "Met notities"
+      "hasNotes": "Met notities",
+      "shipdayTitle": "ShipDay-bezorging",
+      "shipdaySent": "Naar ShipDay verzonden",
+      "shipdayNotSent": "Niet naar ShipDay verzonden",
+      "shipdaySendButton": "Naar ShipDay verzenden",
+      "shipdaySending": "Verzenden…",
+      "shipdaySendSuccess": "De bestelling staat in ShipDay — bekijk uw dispatch-dashboard.",
+      "shipdaySendError": "ShipDay heeft de bestelling geweigerd: {error}",
+      "shipdaySkipped": "Niet verzonden — {reason}"
     },
     "customers": {
       "title": "Klanten",

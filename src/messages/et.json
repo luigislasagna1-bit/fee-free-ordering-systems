@@ -1404,7 +1404,15 @@
       "rejectReason": "Tagasilükkamise põhjus",
       "noOrders": "Tellimusi pole veel",
       "viewDetails": "Vaata üksikasju",
-      "hasNotes": "Märkmetega"
+      "hasNotes": "Märkmetega",
+      "shipdayTitle": "ShipDay kojuvedu",
+      "shipdaySent": "Saadetud ShipDaysse",
+      "shipdayNotSent": "Pole ShipDaysse saadetud",
+      "shipdaySendButton": "Saada ShipDaysse",
+      "shipdaySending": "Saatmine…",
+      "shipdaySendSuccess": "Tellimus on ShipDays — kontrollige oma lähetuste juhtpaneeli.",
+      "shipdaySendError": "ShipDay lükkas tellimuse tagasi: {error}",
+      "shipdaySkipped": "Pole saadetud — {reason}"
     },
     "customers": {
       "title": "Kliendid",

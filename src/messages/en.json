@@ -1521,7 +1521,15 @@
       "rejectReason": "Rejection reason",
       "noOrders": "No orders yet",
       "viewDetails": "View details",
-      "hasNotes": "Has notes"
+      "hasNotes": "Has notes",
+      "shipdayTitle": "ShipDay delivery",
+      "shipdaySent": "Sent to ShipDay",
+      "shipdayNotSent": "Not sent to ShipDay",
+      "shipdaySendButton": "Send to ShipDay",
+      "shipdaySending": "Sending…",
+      "shipdaySendSuccess": "Order is on ShipDay — check your dispatch dashboard.",
+      "shipdaySendError": "ShipDay refused the order: {error}",
+      "shipdaySkipped": "Not sent — {reason}"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Kitchen workflow",

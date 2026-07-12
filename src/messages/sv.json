@@ -1404,7 +1404,15 @@
       "rejectReason": "Anledning till avvisning",
       "noOrders": "Inga beställningar ännu",
       "viewDetails": "Visa detaljer",
-      "hasNotes": "Har anteckningar"
+      "hasNotes": "Har anteckningar",
+      "shipdayTitle": "ShipDay-leverans",
+      "shipdaySent": "Skickad till ShipDay",
+      "shipdayNotSent": "Inte skickad till ShipDay",
+      "shipdaySendButton": "Skicka till ShipDay",
+      "shipdaySending": "Skickar…",
+      "shipdaySendSuccess": "Beställningen är hos ShipDay — kolla din leveranspanel.",
+      "shipdaySendError": "ShipDay avvisade beställningen: {error}",
+      "shipdaySkipped": "Inte skickad — {reason}"
     },
     "customers": {
       "title": "Kunder",

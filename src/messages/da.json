@@ -1404,7 +1404,15 @@
       "rejectReason": "Årsag til afvisning",
       "noOrders": "Ingen ordrer endnu",
       "viewDetails": "Se detaljer",
-      "hasNotes": "Har noter"
+      "hasNotes": "Har noter",
+      "shipdayTitle": "ShipDay-levering",
+      "shipdaySent": "Sendt til ShipDay",
+      "shipdayNotSent": "Ikke sendt til ShipDay",
+      "shipdaySendButton": "Send til ShipDay",
+      "shipdaySending": "Sender…",
+      "shipdaySendSuccess": "Ordren er hos ShipDay — tjek dit dispatch-dashboard.",
+      "shipdaySendError": "ShipDay afviste ordren: {error}",
+      "shipdaySkipped": "Ikke sendt — {reason}"
     },
     "customers": {
       "title": "Kunder",
