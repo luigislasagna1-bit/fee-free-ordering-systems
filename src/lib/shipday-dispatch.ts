@@ -43,6 +43,7 @@ export async function dispatchOrderNow(orderId: string): Promise<DispatchNowResu
       deliveryZip: true, notes: true, subtotal: true, taxAmount: true,
       deliveryFee: true, tip: true, total: true, creditApplied: true,
       paymentMethod: true, paymentStatus: true, preparationTime: true,
+      items: { select: { name: true, quantity: true, price: true } },
       restaurant: { select: { name: true, address: true, city: true, state: true, zip: true, phone: true, lat: true, lng: true } },
     },
   });
@@ -95,6 +96,7 @@ export async function dispatchOrderNow(orderId: string): Promise<DispatchNowResu
     creditApplied: full.creditApplied ?? 0,
     preparationMinutes: full.preparationTime ?? 30,
     deliveryInstruction: full.notes,
+    items: full.items.map((i) => ({ name: i.name, quantity: i.quantity, unitPrice: i.price })),
   });
   if (res.ok && res.shipdayOrderId) {
     await prisma.order.update({

@@ -19,6 +19,7 @@
 import prisma from "@/lib/db";
 import { decrypt } from "@/lib/encrypt";
 import { hasFeature } from "@/lib/entitlements";
+import { sanitizePhone } from "@/lib/phone";
 
 const SHIPDAY_BASE_URL = "https://api.shipday.com";
 
@@ -160,6 +161,9 @@ type DispatchInput = {
   /** Restaurant-set prep time in minutes. Used to compute expectedPickupTime. */
   preparationMinutes: number;
   deliveryInstruction: string | null;
+  /** Line items for the ShipDay dashboard/driver app ({name, quantity,
+   *  unitPrice}). Optional — totals stay authoritative either way. */
+  items?: Array<{ name: string; quantity: number; unitPrice: number }>;
 };
 
 type ShipdayCreateResponse = {
@@ -191,19 +195,36 @@ export async function dispatchOrderToShipday(
   const pickupAtIso = pickupAt.toISOString();
   const pickupDate = pickupAtIso.slice(0, 10);
   const pickupTime = pickupAtIso.slice(11, 19);
+  // Delivery ETA estimate = pickup + 25 min drive; ShipDay only uses these
+  // for display/ETA, drivers aren't held to them.
+  const deliveryAtIso = new Date(pickupAt.getTime() + 25 * 60_000).toISOString();
 
+  // ShipDay's contract (docs.shipday.com/reference/insert-delivery-order):
+  // expectedPickupTime / expectedDeliveryTime are TIME-ONLY "hh:mm:ss" (UTC) —
+  // a full ISO datetime here made ShipDay reject the insert with HTTP 200 +
+  // success:false (Luigi's first live test orders, 2026-07-12). Phones must be
+  // E.164 with country code — same sanitizer Twilio uses; if a number can't be
+  // normalized we send the raw digits and let ShipDay's (now-surfaced) error
+  // say so rather than silently dropping a required field.
   const body: Record<string, unknown> = {
     orderNumber: input.orderNumber,
     customerName: input.customerName,
     customerAddress: input.customerAddress,
     customerEmail: input.customerEmail ?? undefined,
-    customerPhoneNumber: input.customerPhone ?? undefined,
+    customerPhoneNumber: sanitizePhone(input.customerPhone) ?? input.customerPhone ?? undefined,
     restaurantName: input.restaurantName,
     restaurantAddress: input.restaurantAddress,
-    restaurantPhoneNumber: input.restaurantPhone ?? undefined,
-    expectedPickupTime: pickupAtIso,
-    expectedDeliveryDate: pickupDate,
-    expectedDeliveryTime: pickupTime,
+    restaurantPhoneNumber: sanitizePhone(input.restaurantPhone) ?? input.restaurantPhone ?? undefined,
+    expectedPickupTime: pickupTime,
+    expectedDeliveryDate: deliveryAtIso.slice(0, 10),
+    expectedDeliveryTime: deliveryAtIso.slice(11, 19),
+    // Line items — so the ShipDay dashboard + driver app show WHAT the order
+    // is, not just totals (GloriaFood parity).
+    orderItem: (input.items ?? []).map((i) => ({
+      name: i.name,
+      quantity: i.quantity,
+      unitPrice: Math.round(i.unitPrice * 100) / 100,
+    })),
     pickupLatitude: input.restaurantLat ?? undefined,
     pickupLongitude: input.restaurantLng ?? undefined,
     deliveryLatitude: input.customerLat ?? undefined,
