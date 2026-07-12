@@ -3166,7 +3166,10 @@
       "webhookVerifiedMsg": "Webhook verified — driver updates are flowing.",
       "webhookWaiting": "Waiting for the first update from ShipDay…",
       "webhookCheckNow": "Check now",
-      "webhookSaveFirst": "Save your settings once (with a ShipDay source selected) and your personal webhook link appears here."
+      "webhookSaveFirst": "Save your settings once (with a ShipDay source selected) and your personal webhook link appears here.",
+      "feeFromZonesTitle": "Customer delivery fees",
+      "feeFromZonesBody": "What your customers pay for delivery is set on the Delivery Zones page — same as with your own drivers. ShipDay bills your restaurant separately for each delivery; ask your ShipDay contact about your per-delivery rate.",
+      "feeFromZonesLink": "Open Delivery Zones"
     },
     "brandDashboard": {
       "brandDashboardBadge": "Brand dashboard",

@@ -2168,7 +2168,10 @@
       "webhookVerifiedMsg": "Webhook patvirtintas — vairuotojo atnaujinimai gaunami.",
       "webhookWaiting": "Laukiama pirmo atnaujinimo iš ShipDay…",
       "webhookCheckNow": "Tikrinti dabar",
-      "webhookSaveFirst": "Vieną kartą išsaugokite nustatymus (pasirinkę ShipDay šaltinį) ir čia atsiras jūsų asmeninė webhook nuoroda."
+      "webhookSaveFirst": "Vieną kartą išsaugokite nustatymus (pasirinkę ShipDay šaltinį) ir čia atsiras jūsų asmeninė webhook nuoroda.",
+      "feeFromZonesTitle": "Klientų pristatymo mokesčiai",
+      "feeFromZonesBody": "Tai, kiek jūsų klientai moka už pristatymą, nustatoma puslapyje Pristatymo zonos — lygiai taip pat kaip ir su savais vairuotojais. ShipDay jūsų restoranui už kiekvieną pristatymą išrašo atskirą sąskaitą; savo įkainio už pristatymą teiraukitės savo ShipDay kontaktinio asmens.",
+      "feeFromZonesLink": "Atidaryti puslapį „Pristatymo zonos“"
     },
     "driverPoolLocked": {
       "addonBadge": "Papildinys",

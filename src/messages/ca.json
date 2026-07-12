@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook verificat — les actualitzacions del conductor estan arribant.",
       "webhookWaiting": "Esperant la primera actualització de ShipDay…",
       "webhookCheckNow": "Comprovar ara",
-      "webhookSaveFirst": "Deseu la configuració un cop (amb una font ShipDay seleccionada) i el vostre enllaç de webhook personal apareixerà aquí."
+      "webhookSaveFirst": "Deseu la configuració un cop (amb una font ShipDay seleccionada) i el vostre enllaç de webhook personal apareixerà aquí.",
+      "feeFromZonesTitle": "Tarifes de lliurament per als clients",
+      "feeFromZonesBody": "El que els vostres clients paguen pel lliurament es configura a la pàgina Zones de lliurament — igual que amb els vostres propis conductors. ShipDay factura el vostre restaurant per separat per cada lliurament; pregunteu al vostre contacte de ShipDay quina és la vostra tarifa per lliurament.",
+      "feeFromZonesLink": "Obre la pàgina Zones de lliurament"
     },
     "driverPoolLocked": {
       "addonBadge": "Complement",

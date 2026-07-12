@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook vérifié — les mises à jour du livreur arrivent bien.",
       "webhookWaiting": "En attente de la première mise à jour de ShipDay…",
       "webhookCheckNow": "Vérifier maintenant",
-      "webhookSaveFirst": "Enregistrez vos paramètres une première fois (avec une source ShipDay sélectionnée) et votre lien webhook personnel apparaîtra ici."
+      "webhookSaveFirst": "Enregistrez vos paramètres une première fois (avec une source ShipDay sélectionnée) et votre lien webhook personnel apparaîtra ici.",
+      "feeFromZonesTitle": "Frais de livraison des clients",
+      "feeFromZonesBody": "Ce que vos clients paient pour la livraison se définit sur la page Zones de livraison — comme avec vos propres livreurs. ShipDay facture votre restaurant séparément pour chaque livraison ; demandez à votre contact ShipDay quel est votre tarif par livraison.",
+      "feeFromZonesLink": "Ouvrir la page Zones de livraison"
     },
     "driverPoolLocked": {
       "addonBadge": "Module",

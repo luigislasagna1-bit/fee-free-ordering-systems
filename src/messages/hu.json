@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook ellenőrizve — a sofőrfrissítések érkeznek.",
       "webhookWaiting": "Várakozás az első ShipDay-frissítésre…",
       "webhookCheckNow": "Ellenőrzés most",
-      "webhookSaveFirst": "Mentse el egyszer a beállításokat (kiválasztott ShipDay-forrással), és itt megjelenik a személyes webhook-linkje."
+      "webhookSaveFirst": "Mentse el egyszer a beállításokat (kiválasztott ShipDay-forrással), és itt megjelenik a személyes webhook-linkje.",
+      "feeFromZonesTitle": "Az ügyfelek szállítási díjai",
+      "feeFromZonesBody": "Azt, hogy az ügyfelei mennyit fizetnek a szállításért, a Szállítási zónák oldalon állíthatja be — ugyanúgy, mint a saját sofőrök esetében. A ShipDay minden szállítást külön számláz az éttermének; a szállításonkénti díjáról érdeklődjön a ShipDay-kapcsolattartójánál.",
+      "feeFromZonesLink": "Szállítási zónák megnyitása"
     },
     "driverPoolLocked": {
       "addonBadge": "Bővítmény",

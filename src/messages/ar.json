@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "تم التحقق من webhook — تحديثات السائق تتدفق.",
       "webhookWaiting": "في انتظار أول تحديث من ShipDay…",
       "webhookCheckNow": "تحقق الآن",
-      "webhookSaveFirst": "احفظ إعداداتك مرة واحدة (مع تحديد مصدر ShipDay) وسيظهر رابط webhook الشخصي الخاص بك هنا."
+      "webhookSaveFirst": "احفظ إعداداتك مرة واحدة (مع تحديد مصدر ShipDay) وسيظهر رابط webhook الشخصي الخاص بك هنا.",
+      "feeFromZonesTitle": "رسوم التوصيل للعملاء",
+      "feeFromZonesBody": "ما يدفعه عملاؤك مقابل التوصيل يُحدد في صفحة مناطق التوصيل — تماماً كما هو الحال مع سائقيك الخاصين. يُصدر ShipDay فاتورة لمطعمك بشكل منفصل عن كل توصيل؛ اسأل جهة اتصالك في ShipDay عن سعرك لكل توصيل.",
+      "feeFromZonesLink": "فتح مناطق التوصيل"
     },
     "driverPoolLocked": {
       "addonBadge": "إضافة",

@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook geverifieerd — chauffeursupdates komen binnen.",
       "webhookWaiting": "Wachten op de eerste update van ShipDay…",
       "webhookCheckNow": "Nu controleren",
-      "webhookSaveFirst": "Sla uw instellingen één keer op (met een ShipDay-bron geselecteerd) en uw persoonlijke webhook-link verschijnt hier."
+      "webhookSaveFirst": "Sla uw instellingen één keer op (met een ShipDay-bron geselecteerd) en uw persoonlijke webhook-link verschijnt hier.",
+      "feeFromZonesTitle": "Bezorgkosten voor klanten",
+      "feeFromZonesBody": "Wat uw klanten voor bezorging betalen, stelt u in op de pagina Bezorgzones — net als bij uw eigen chauffeurs. ShipDay factureert uw restaurant apart voor elke bezorging; vraag uw ShipDay-contactpersoon naar uw tarief per bezorging.",
+      "feeFromZonesLink": "Bezorgzones openen"
     },
     "driverPoolLocked": {
       "addonBadge": "Add-on",

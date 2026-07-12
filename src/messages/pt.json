@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook verificado — as atualizações do motorista estão a chegar.",
       "webhookWaiting": "A aguardar a primeira atualização da ShipDay…",
       "webhookCheckNow": "Verificar agora",
-      "webhookSaveFirst": "Guarde as suas definições uma vez (com uma fonte ShipDay selecionada) e o seu link de webhook pessoal aparece aqui."
+      "webhookSaveFirst": "Guarde as suas definições uma vez (com uma fonte ShipDay selecionada) e o seu link de webhook pessoal aparece aqui.",
+      "feeFromZonesTitle": "Taxas de entrega do cliente",
+      "feeFromZonesBody": "O que seus clientes pagam pela entrega é definido na página Áreas de entrega — igual a quando usa seus próprios motoristas. O ShipDay cobra do seu restaurante separadamente por cada entrega; pergunte ao seu contato ShipDay qual é a sua tarifa por entrega.",
+      "feeFromZonesLink": "Abrir Áreas de entrega"
     },
     "driverPoolLocked": {
       "addonBadge": "Complemento",

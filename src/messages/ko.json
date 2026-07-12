@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "웹훅 확인됨 — 드라이버 업데이트가 들어오고 있습니다.",
       "webhookWaiting": "ShipDay의 첫 업데이트를 기다리는 중…",
       "webhookCheckNow": "지금 확인",
-      "webhookSaveFirst": "설정을 한 번 저장하면(ShipDay 소스를 선택한 상태로) 본인 전용 웹훅 링크가 여기에 표시됩니다."
+      "webhookSaveFirst": "설정을 한 번 저장하면(ShipDay 소스를 선택한 상태로) 본인 전용 웹훅 링크가 여기에 표시됩니다.",
+      "feeFromZonesTitle": "고객 배달 요금",
+      "feeFromZonesBody": "고객이 배달에 대해 지불하는 금액은 배달 구역 페이지에서 설정합니다 — 자체 드라이버를 사용할 때와 동일합니다. ShipDay는 배달 건마다 레스토랑에 별도로 청구합니다. 배달당 요금은 ShipDay 담당자에게 문의하세요.",
+      "feeFromZonesLink": "배달 구역 열기"
     },
     "driverPoolLocked": {
       "addonBadge": "추가 기능",

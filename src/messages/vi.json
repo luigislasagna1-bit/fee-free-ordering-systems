@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook đã được xác minh — cập nhật của tài xế đang đổ về.",
       "webhookWaiting": "Đang chờ cập nhật đầu tiên từ ShipDay…",
       "webhookCheckNow": "Kiểm tra ngay",
-      "webhookSaveFirst": "Lưu cài đặt của bạn một lần (với nguồn ShipDay đã chọn) và liên kết webhook cá nhân của bạn sẽ xuất hiện ở đây."
+      "webhookSaveFirst": "Lưu cài đặt của bạn một lần (với nguồn ShipDay đã chọn) và liên kết webhook cá nhân của bạn sẽ xuất hiện ở đây.",
+      "feeFromZonesTitle": "Phí giao hàng của khách hàng",
+      "feeFromZonesBody": "Số tiền khách hàng của bạn trả cho việc giao hàng được thiết lập trên trang Khu vực giao hàng — giống như với tài xế của nhà hàng. ShipDay tính phí nhà hàng của bạn riêng cho mỗi lần giao; hãy hỏi đầu mối liên hệ ShipDay của bạn về mức phí mỗi lần giao.",
+      "feeFromZonesLink": "Mở Khu vực giao hàng"
     },
     "driverPoolLocked": {
       "addonBadge": "Tiện ích bổ sung",

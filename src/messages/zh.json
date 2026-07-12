@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook 已验证——司机状态更新正在同步。",
       "webhookWaiting": "正在等待 ShipDay 的第一条更新……",
       "webhookCheckNow": "立即检查",
-      "webhookSaveFirst": "保存一次设置（选择 ShipDay 作为配送来源），您的专属 Webhook 链接就会显示在这里。"
+      "webhookSaveFirst": "保存一次设置（选择 ShipDay 作为配送来源），您的专属 Webhook 链接就会显示在这里。",
+      "feeFromZonesTitle": "顾客配送费用",
+      "feeFromZonesBody": "顾客支付的配送费用在“配送区域”页面设置——与使用自有司机时相同。ShipDay 会就每笔配送单独向您的餐厅收费；请向您的 ShipDay 联系人询问您的每单配送费率。",
+      "feeFromZonesLink": "打开配送区域"
     },
     "driverPoolLocked": {
       "addonBadge": "附加功能",

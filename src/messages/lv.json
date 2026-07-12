@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook apstiprināts — vadītāja atjauninājumi pienāk.",
       "webhookWaiting": "Gaidām pirmo atjauninājumu no ShipDay…",
       "webhookCheckNow": "Pārbaudīt tagad",
-      "webhookSaveFirst": "Vienreiz saglabājiet iestatījumus (ar izvēlētu ShipDay avotu), un šeit parādīsies jūsu personīgā webhook saite."
+      "webhookSaveFirst": "Vienreiz saglabājiet iestatījumus (ar izvēlētu ShipDay avotu), un šeit parādīsies jūsu personīgā webhook saite.",
+      "feeFromZonesTitle": "Klientu piegādes maksas",
+      "feeFromZonesBody": "Tas, ko jūsu klienti maksā par piegādi, tiek iestatīts lapā Piegādes zonas — tāpat kā ar saviem vadītājiem. ShipDay izraksta jūsu restorānam atsevišķu rēķinu par katru piegādi; jautājiet savai ShipDay kontaktpersonai par savu likmi par piegādi.",
+      "feeFromZonesLink": "Atvērt Piegādes zonas"
     },
     "driverPoolLocked": {
       "addonBadge": "Papildinājums",

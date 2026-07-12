@@ -2177,7 +2177,10 @@
       "webhookVerifiedMsg": "Webhook overený — aktualizácie vodiča chodia.",
       "webhookWaiting": "Čakáme na prvú aktualizáciu od ShipDay…",
       "webhookCheckNow": "Skontrolovať teraz",
-      "webhookSaveFirst": "Raz uložte nastavenia (s vybraným zdrojom ShipDay) a tu sa objaví váš osobný webhook odkaz."
+      "webhookSaveFirst": "Raz uložte nastavenia (s vybraným zdrojom ShipDay) a tu sa objaví váš osobný webhook odkaz.",
+      "feeFromZonesTitle": "Poplatky za doručenie pre zákazníkov",
+      "feeFromZonesBody": "Koľko vaši zákazníci platia za doručenie, sa nastavuje na stránke Zóny doručenia — rovnako ako pri vašich vlastných vodičoch. ShipDay účtuje vašej reštaurácii každé doručenie zvlášť; na svoju sadzbu za doručenie sa opýtajte svojho kontaktu v ShipDay.",
+      "feeFromZonesLink": "Otvoriť Zóny doručenia"
     },
     "driverPoolLocked": {
       "addonBadge": "Doplnok",

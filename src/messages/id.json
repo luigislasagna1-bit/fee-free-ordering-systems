@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook terverifikasi — pembaruan driver mengalir masuk.",
       "webhookWaiting": "Menunggu pembaruan pertama dari ShipDay…",
       "webhookCheckNow": "Periksa sekarang",
-      "webhookSaveFirst": "Simpan pengaturan Anda sekali (dengan sumber ShipDay dipilih) dan tautan webhook pribadi Anda akan muncul di sini."
+      "webhookSaveFirst": "Simpan pengaturan Anda sekali (dengan sumber ShipDay dipilih) dan tautan webhook pribadi Anda akan muncul di sini.",
+      "feeFromZonesTitle": "Biaya pengiriman pelanggan",
+      "feeFromZonesBody": "Jumlah yang dibayar pelanggan Anda untuk pengiriman diatur di halaman Zona Pengiriman — sama seperti dengan driver Anda sendiri. ShipDay menagih restoran Anda secara terpisah untuk setiap pengiriman; tanyakan tarif per pengiriman Anda kepada kontak ShipDay Anda.",
+      "feeFromZonesLink": "Buka Zona Pengiriman"
     },
     "driverPoolLocked": {
       "addonBadge": "Add-on",

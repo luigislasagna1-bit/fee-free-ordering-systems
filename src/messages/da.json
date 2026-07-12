@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook verificeret — chaufføropdateringer strømmer ind.",
       "webhookWaiting": "Venter på den første opdatering fra ShipDay…",
       "webhookCheckNow": "Tjek nu",
-      "webhookSaveFirst": "Gem dine indstillinger én gang (med en ShipDay-kilde valgt), så vises dit personlige webhook-link her."
+      "webhookSaveFirst": "Gem dine indstillinger én gang (med en ShipDay-kilde valgt), så vises dit personlige webhook-link her.",
+      "feeFromZonesTitle": "Leveringsgebyrer for kunder",
+      "feeFromZonesBody": "Hvad dine kunder betaler for levering, indstilles på siden Leveringszoner — ligesom med dine egne chauffører. ShipDay fakturerer din restaurant separat for hver levering; spørg din ShipDay-kontakt om din pris pr. levering.",
+      "feeFromZonesLink": "Åbn Leveringszoner"
     },
     "driverPoolLocked": {
       "addonBadge": "Tilvalg",

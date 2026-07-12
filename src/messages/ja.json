@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook 認証済み — ドライバーの更新情報が届いています。",
       "webhookWaiting": "ShipDay からの最初の更新を待っています…",
       "webhookCheckNow": "今すぐ確認",
-      "webhookSaveFirst": "（ShipDay のソースを選択した状態で）設定を一度保存すると、あなた専用の Webhook リンクがここに表示されます。"
+      "webhookSaveFirst": "（ShipDay のソースを選択した状態で）設定を一度保存すると、あなた専用の Webhook リンクがここに表示されます。",
+      "feeFromZonesTitle": "顧客が支払う配達料金",
+      "feeFromZonesBody": "顧客が配達に支払う金額は「デリバリーエリア」ページで設定します — 自社ドライバーの場合と同じです。ShipDay は配達ごとに別途レストランに請求します。配達ごとの料金については ShipDay の担当者にお問い合わせください。",
+      "feeFromZonesLink": "デリバリーエリアを開く"
     },
     "driverPoolLocked": {
       "addonBadge": "アドオン",

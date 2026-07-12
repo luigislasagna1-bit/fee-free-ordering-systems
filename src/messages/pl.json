@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook zweryfikowany — aktualizacje kierowcy spływają.",
       "webhookWaiting": "Oczekiwanie na pierwszą aktualizację od ShipDay…",
       "webhookCheckNow": "Sprawdź teraz",
-      "webhookSaveFirst": "Zapisz ustawienia raz (z wybranym źródłem ShipDay), a Twój osobisty link webhooka pojawi się tutaj."
+      "webhookSaveFirst": "Zapisz ustawienia raz (z wybranym źródłem ShipDay), a Twój osobisty link webhooka pojawi się tutaj.",
+      "feeFromZonesTitle": "Opłaty za dostawę dla klientów",
+      "feeFromZonesBody": "To, ile Twoi klienci płacą za dostawę, ustawiasz na stronie Strefy dostawy — tak samo jak w przypadku własnych kierowców. ShipDay rozlicza Twoją restaurację osobno za każdą dostawę; o swoją stawkę za dostawę zapytaj swoją osobę kontaktową w ShipDay.",
+      "feeFromZonesLink": "Otwórz Strefy dostawy"
     },
     "driverPoolLocked": {
       "addonBadge": "Dodatek",

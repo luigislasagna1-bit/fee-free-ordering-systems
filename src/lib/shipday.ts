@@ -237,8 +237,19 @@ export async function dispatchOrderToShipday(
       console.error("[shipday] dispatch failed", { restaurantId, orderId: input.orderId, status: res.status, body: text.slice(0, 500) });
       return { ok: false, error: `ShipDay returned ${res.status}: ${text.slice(0, 200)}` };
     }
-    const shipdayOrderId = json.orderId != null ? String(json.orderId) : input.orderNumber;
-    return { ok: true, shipdayOrderId };
+    // ShipDay can REJECT an order with HTTP 200 + {"success": false, ...}
+    // (bad address, missing required field). Treating any 2xx as dispatched
+    // stamped orders "assigned" that never existed on ShipDay's side — found
+    // live on Luigi's first real test order (2026-07-12): 200-with-no-orderId,
+    // nothing in the ShipDay dashboard. success:false OR a missing orderId is
+    // a failure; the raw body is logged so the real reason is visible.
+    if (json.success === false || json.orderId == null) {
+      console.error("[shipday] dispatch rejected by ShipDay (2xx)", {
+        restaurantId, orderId: input.orderId, body: text.slice(0, 500),
+      });
+      return { ok: false, error: `ShipDay rejected the order: ${(json.response ?? text).slice(0, 200)}` };
+    }
+    return { ok: true, shipdayOrderId: String(json.orderId) };
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : String(e);
     console.error("[shipday] dispatch network error", { restaurantId, orderId: input.orderId, msg });

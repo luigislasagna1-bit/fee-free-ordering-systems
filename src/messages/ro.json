@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook verificat — actualizările șoferului sosesc.",
       "webhookWaiting": "Se așteaptă prima actualizare de la ShipDay…",
       "webhookCheckNow": "Verifică acum",
-      "webhookSaveFirst": "Salvați setările o dată (cu o sursă ShipDay selectată) și linkul dvs. personal de webhook va apărea aici."
+      "webhookSaveFirst": "Salvați setările o dată (cu o sursă ShipDay selectată) și linkul dvs. personal de webhook va apărea aici.",
+      "feeFromZonesTitle": "Taxele de livrare pentru clienți",
+      "feeFromZonesBody": "Cât plătesc clienții tăi pentru livrare se setează pe pagina Zone de livrare — la fel ca în cazul propriilor șoferi. ShipDay îți facturează restaurantul separat pentru fiecare livrare; întreabă-ți contactul ShipDay care este tariful tău per livrare.",
+      "feeFromZonesLink": "Deschide pagina Zone de livrare"
     },
     "driverPoolLocked": {
       "addonBadge": "Supliment",

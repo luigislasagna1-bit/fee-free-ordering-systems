@@ -3073,7 +3073,10 @@
       "webhookVerifiedMsg": "Webhook vahvistettu — kuljettajapäivitykset virtaavat.",
       "webhookWaiting": "Odotetaan ensimmäistä päivitystä ShipDaylta…",
       "webhookCheckNow": "Tarkista nyt",
-      "webhookSaveFirst": "Tallenna asetuksesi kerran (ShipDay-lähde valittuna), niin henkilökohtainen webhook-linkkisi ilmestyy tähän."
+      "webhookSaveFirst": "Tallenna asetuksesi kerran (ShipDay-lähde valittuna), niin henkilökohtainen webhook-linkkisi ilmestyy tähän.",
+      "feeFromZonesTitle": "Asiakkaan toimitusmaksut",
+      "feeFromZonesBody": "Se, mitä asiakkaasi maksavat toimituksesta, määritetään Toimitusalueet-sivulla — aivan kuten omien kuljettajiesi kanssa. ShipDay laskuttaa ravintolaasi erikseen jokaisesta toimituksesta; kysy toimituskohtaista hintaasi ShipDay-yhteyshenkilöltäsi.",
+      "feeFromZonesLink": "Avaa Toimitusalueet"
     },
     "driverPoolLocked": {
       "addonBadge": "Lisäosa",

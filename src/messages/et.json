@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook kinnitatud — juhi uuendused liiguvad.",
       "webhookWaiting": "Ootame esimest uuendust ShipDay'lt…",
       "webhookCheckNow": "Kontrolli kohe",
-      "webhookSaveFirst": "Salvestage seaded üks kord (valitud ShipDay allikaga) ja siia ilmub teie isiklik webhooki link."
+      "webhookSaveFirst": "Salvestage seaded üks kord (valitud ShipDay allikaga) ja siia ilmub teie isiklik webhooki link.",
+      "feeFromZonesTitle": "Kliendi kojuveotasud",
+      "feeFromZonesBody": "See, mida sinu kliendid kojuveo eest maksavad, määratakse lehel Tarnepiirkonnad — täpselt nagu oma juhtide puhul. ShipDay esitab sinu restoranile iga kojuveo eest eraldi arve; küsi oma ShipDay kontaktilt oma kojuveopõhist hinda.",
+      "feeFromZonesLink": "Ava Tarnepiirkonnad"
     },
     "driverPoolLocked": {
       "addonBadge": "Lisandmoodul",

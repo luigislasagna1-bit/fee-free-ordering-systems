@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook doğrulandı — sürücü güncellemeleri akıyor.",
       "webhookWaiting": "ShipDay'den ilk güncelleme bekleniyor…",
       "webhookCheckNow": "Şimdi kontrol et",
-      "webhookSaveFirst": "Ayarlarınızı bir kez kaydedin (bir ShipDay kaynağı seçiliyken), kişisel webhook bağlantınız burada görünür."
+      "webhookSaveFirst": "Ayarlarınızı bir kez kaydedin (bir ShipDay kaynağı seçiliyken), kişisel webhook bağlantınız burada görünür.",
+      "feeFromZonesTitle": "Müşteri teslimat ücretleri",
+      "feeFromZonesBody": "Müşterilerinizin teslimat için ödediği tutar Teslimat Bölgeleri sayfasında ayarlanır — kendi sürücülerinizde olduğu gibi. ShipDay her teslimat için restoranınıza ayrıca fatura keser; teslimat başına ücretinizi ShipDay yetkilinize sorun.",
+      "feeFromZonesLink": "Teslimat Bölgeleri'ni aç"
     },
     "driverPoolLocked": {
       "addonBadge": "Eklenti",

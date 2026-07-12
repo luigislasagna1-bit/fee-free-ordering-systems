@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "Webhook potvrđen — ažuriranja vozača stižu.",
       "webhookWaiting": "Čeka se prvo ažuriranje od ShipDaya…",
       "webhookCheckNow": "Proveri sada",
-      "webhookSaveFirst": "Sačuvajte podešavanja jednom (sa izabranim ShipDay izvorom) i ovde će se pojaviti vaš lični webhook link."
+      "webhookSaveFirst": "Sačuvajte podešavanja jednom (sa izabranim ShipDay izvorom) i ovde će se pojaviti vaš lični webhook link.",
+      "feeFromZonesTitle": "Naknade za dostavu za kupce",
+      "feeFromZonesBody": "Ono što vaši kupci plaćaju za dostavu podešava se na stranici Zone dostave — isto kao i sa sopstvenim vozačima. ShipDay vašem restoranu zasebno naplaćuje svaku dostavu; pitajte svoj ShipDay kontakt kolika je vaša cena po dostavi.",
+      "feeFromZonesLink": "Otvori Zone dostave"
     },
     "driverPoolLocked": {
       "addonBadge": "Dodatak",

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
-import { Loader2, Truck, User, Users, Key, DollarSign, Check, X, Plus, Trash2, Lock, ArrowRight, Copy, RefreshCw } from "lucide-react";
+import { Loader2, Truck, User, Users, Key, Check, X, Lock, ArrowRight, Copy, RefreshCw } from "lucide-react";
 
 /**
  * Driver pool / ShipDay configuration UI.
@@ -44,9 +44,12 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
   const router = useRouter();
   const [enabled, setEnabled] = useState(initial.enabled);
   const [deliverySource, setDeliverySource] = useState<Initial["deliverySource"]>(initial.deliverySource);
-  const [deliveryFeeMode, setDeliveryFeeMode] = useState<Initial["deliveryFeeMode"]>(initial.deliveryFeeMode);
-  const [flatDeliveryFee, setFlatDeliveryFee] = useState<number>(initial.flatDeliveryFee);
-  const [tieredRules, setTieredRules] = useState<Tier[]>(initial.tieredRules);
+  // Fee-mode fields are read-only pass-through now (the picker UI was removed —
+  // dormant scaffolding; fees come from Delivery Zones). Saved values echo back
+  // unchanged so the API payload shape stays identical.
+  const [deliveryFeeMode] = useState<Initial["deliveryFeeMode"]>(initial.deliveryFeeMode);
+  const [flatDeliveryFee] = useState<number>(initial.flatDeliveryFee);
+  const [tieredRules] = useState<Tier[]>(initial.tieredRules);
   const [apiKey, setApiKey] = useState<string>("");
   const [replacingKey, setReplacingKey] = useState(!initial.hasApiKey);
   const [saving, setSaving] = useState(false);
@@ -481,101 +484,23 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
         </Section>
       )}
 
-      {/* Section 3: Customer-facing fee */}
+      {/* Section 3: where delivery fees actually live. The old
+          pass-through/flat/tiered picker was DORMANT scaffolding — nothing in
+          the money path ever read ShipdayConfig.deliveryFeeMode, so checkout
+          priced delivery from Delivery Zones the whole time. An owner setting
+          "Flat $0" here believed they'd made delivery free and hadn't. Replaced
+          with the truth + a link (Luigi caught it live, 2026-07-12). Schema
+          fields kept for a future wired-in version. */}
       {needsShipDay && (
-        <Section
-          title={t("feeSectionTitle")}
-          description={t("feeSectionDescription")}
-        >
-          <div className="space-y-3">
-            <FeeModeOption
-              id="pass_through"
-              label={t("feePassThroughLabel")}
-              description={t("feePassThroughDescription")}
-              selected={deliveryFeeMode === "pass_through"}
-              onClick={() => setDeliveryFeeMode("pass_through")}
-            />
-            <FeeModeOption
-              id="flat"
-              label={t("feeFlatLabel")}
-              description={t("feeFlatDescription")}
-              selected={deliveryFeeMode === "flat"}
-              onClick={() => setDeliveryFeeMode("flat")}
+        <Section title={t("feeFromZonesTitle")}>
+          <div className="rounded-xl bg-gray-50 border border-gray-200 p-4 space-y-3">
+            <p className="text-[13px] text-gray-700 leading-snug">{t("feeFromZonesBody")}</p>
+            <Link
+              href="/admin/delivery"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:underline"
             >
-              {deliveryFeeMode === "flat" && (
-                <div className="mt-3 flex items-center gap-2">
-                  <DollarSign className="w-4 h-4 text-gray-400" />
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    value={flatDeliveryFee}
-                    onChange={(e) => setFlatDeliveryFee(parseFloat(e.target.value) || 0)}
-                    className="w-32 px-3 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
-                  />
-                  <span className="text-xs text-gray-500">{t("flatFeeInputHint")}</span>
-                </div>
-              )}
-            </FeeModeOption>
-            <FeeModeOption
-              id="tiered"
-              label={t("feeTieredLabel")}
-              description={t("feeTieredDescription")}
-              selected={deliveryFeeMode === "tiered"}
-              onClick={() => setDeliveryFeeMode("tiered")}
-            >
-              {deliveryFeeMode === "tiered" && (
-                <div className="mt-3 space-y-2">
-                  {tieredRules.map((rule, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      <span className="text-xs text-gray-600 w-12">{t("tierOver")}</span>
-                      <DollarSign className="w-3.5 h-3.5 text-gray-400" />
-                      <input
-                        type="number"
-                        step="0.01"
-                        min="0"
-                        value={rule.minOrderTotal}
-                        onChange={(e) => {
-                          const next = [...tieredRules];
-                          next[i] = { ...rule, minOrderTotal: parseFloat(e.target.value) || 0 };
-                          setTieredRules(next);
-                        }}
-                        className="w-24 px-2 py-1 border border-gray-300 rounded text-sm"
-                      />
-                      <span className="text-xs text-gray-600">{t("tierCustomerPays")}</span>
-                      <DollarSign className="w-3.5 h-3.5 text-gray-400" />
-                      <input
-                        type="number"
-                        step="0.01"
-                        min="0"
-                        value={rule.customerFee}
-                        onChange={(e) => {
-                          const next = [...tieredRules];
-                          next[i] = { ...rule, customerFee: parseFloat(e.target.value) || 0 };
-                          setTieredRules(next);
-                        }}
-                        className="w-24 px-2 py-1 border border-gray-300 rounded text-sm"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setTieredRules(tieredRules.filter((_, j) => j !== i))}
-                        className="p-1 text-gray-400 hover:text-red-500"
-                        aria-label={t("removeTierAriaLabel")}
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  ))}
-                  <button
-                    type="button"
-                    onClick={() => setTieredRules([...tieredRules, { minOrderTotal: 0, customerFee: 0 }])}
-                    className="text-xs font-medium text-blue-600 hover:underline inline-flex items-center gap-1"
-                  >
-                    <Plus className="w-3 h-3" /> {t("addTier")}
-                  </button>
-                </div>
-              )}
-            </FeeModeOption>
+              {t("feeFromZonesLink")} <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </Section>
       )}
@@ -682,36 +607,3 @@ function SourceCard({
   );
 }
 
-function FeeModeOption({
-  label, description, selected, onClick, children,
-}: {
-  id: string;
-  label: string;
-  description: string;
-  selected: boolean;
-  onClick: () => void;
-  children?: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`w-full text-left rounded-xl border-2 p-4 transition ${
-        selected ? "border-blue-400 bg-blue-50" : "border-gray-200 bg-white hover:border-gray-300"
-      }`}
-    >
-      <div className="flex items-start gap-3">
-        <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 mt-0.5 flex items-center justify-center ${
-          selected ? "border-blue-500 bg-blue-500" : "border-gray-300 bg-white"
-        }`}>
-          {selected && <Check className="w-3 h-3 text-white" />}
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="font-bold text-gray-900 text-sm">{label}</div>
-          <p className="text-xs text-gray-600 mt-0.5 leading-snug">{description}</p>
-          {children}
-        </div>
-      </div>
-    </button>
-  );
-}

@@ -3108,7 +3108,10 @@
       "webhookVerifiedMsg": "ה-webhook אומת — עדכוני הנהג זורמים.",
       "webhookWaiting": "ממתינים לעדכון הראשון מ-ShipDay…",
       "webhookCheckNow": "בדיקה עכשיו",
-      "webhookSaveFirst": "שמרו את ההגדרות פעם אחת (עם מקור ShipDay שנבחר) וקישור ה-webhook האישי שלכם יופיע כאן."
+      "webhookSaveFirst": "שמרו את ההגדרות פעם אחת (עם מקור ShipDay שנבחר) וקישור ה-webhook האישי שלכם יופיע כאן.",
+      "feeFromZonesTitle": "דמי משלוח ללקוחות",
+      "feeFromZonesBody": "מה שהלקוחות שלכם משלמים על משלוח נקבע בעמוד אזורי משלוח — בדיוק כמו עם הנהגים שלכם. ShipDay מחייב את המסעדה שלכם בנפרד על כל משלוח; שאלו את איש הקשר שלכם ב-ShipDay מה התעריף שלכם למשלוח.",
+      "feeFromZonesLink": "פתיחת אזורי משלוח"
     },
     "driverPoolLocked": {
       "addonBadge": "תוסף",
